@@ -281,6 +281,29 @@ export function setMainSiteId(id: string): void {
   notify(); // reuse the same 'permamap-places-changed' event listeners already subscribe to
 }
 
+/**
+ * Scope a list of drawn features (land parcels, water areas) to the place the farmer
+ * currently has open.
+ *
+ * The map panel used to list EVERY feature on the account no matter which place was
+ * selected, so opening Ubhejane Crèche showed Carl and Sandys Place's six parcels.
+ * Each row was already chip-labelled with the owning place's name, which is exactly
+ * why it survived so long: the data and the labelling were right, only the filtering
+ * was missing, so the panel looked informative rather than wrong.
+ *
+ * Features carrying no placeId are deliberately kept in EVERY view. They pre-date the
+ * place↔feature link, or were drawn with no place open, so no place can claim them —
+ * and hiding them would make a farmer's own traced land look deleted. Showing an
+ * orphan once too often is recoverable; appearing to lose it is not.
+ */
+export function featuresForPlace<T extends { placeId?: string }>(
+  features: T[],
+  activePlaceId: string | null | undefined,
+): T[] {
+  if (!activePlaceId) return features;
+  return features.filter((f) => !f.placeId || f.placeId === activePlaceId);
+}
+
 // Pure resolver (takes the already-loaded list) so callers can reuse a single
 // loadPlaces() read and so this stays trivially testable.
 export function resolveMainSite(places: SavedPlace[]): SavedPlace | null {

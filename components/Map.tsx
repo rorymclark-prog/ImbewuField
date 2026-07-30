@@ -11,7 +11,7 @@ import turfLength from '@turf/length';
 import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import type { SiteData, WaterData, LocationData } from '@/lib/types';
-import { loadPlaces, savePlace, deletePlace, updatePlacePosition, generateId, promptNearbyUpdate, mergeIncomingPlaces, PLACE_LABELS, placeColor, resolveColor, type SavedPlace, type PlaceLabel } from '@/lib/saved-places';
+import { loadPlaces, savePlace, deletePlace, updatePlacePosition, generateId, promptNearbyUpdate, mergeIncomingPlaces, featuresForPlace, PLACE_LABELS, placeColor, resolveColor, type SavedPlace, type PlaceLabel } from '@/lib/saved-places';
 import { loadWaterPoints, saveWaterPoint, deleteWaterPoint, generateWaterPointId, mergeIncomingWaterPoints, WATER_POINT_CATEGORIES, categoryColor, type WaterPoint } from '@/lib/water-points';
 import { loadSiteElements, saveSiteElement, deleteSiteElement, getElementMeta, ELEMENT_TYPES, reconcileSiteElements, subscribeSiteElementsLive, type SiteElement, type SiteElementType } from '@/lib/site-elements';
 import { designSiteIdFromLocation } from '@/lib/design-studio';
@@ -236,6 +236,12 @@ interface Props {
   onDrawingChange?: (active: boolean) => void;
   locationData?: LocationData | null;
   onPlaceSelect?: (info: { name: string; id: string } | null) => void;
+  // Which place the farmer currently has open. The panel's parcel and water lists scope
+  // to it — without this they listed every feature on the account, so opening one place
+  // showed another's land (each row correctly chip-labelled with the other place's name,
+  // which is why it read as informative rather than broken). Owned by the parent because
+  // selection also happens there (restoring the main site on load), not only from the map.
+  activePlaceId?: string | null;
   people?: PeopleMarker[];
   showPeople?: boolean;
   onTogglePeople?: () => void;
@@ -258,7 +264,7 @@ interface Props {
 const TANK_SIZE_OPTIONS_L = [750, 1000, 2500, 5000, 10000];
 const TREE_SPECIES_OPTIONS = ['Mango', 'Avocado', 'Lemon', 'Orange', 'Banana (single plant)', 'Mulberry', 'Pawpaw', 'Natal plum', 'Wild plum', 'Waterberry', 'Other tree'];
 
-export default function PermaMap({ onLocationSelect, selectedLocation, loading, onMapCapture, onSiteDrawn, onWaterDrawn, onCaptureClick, jumpTo, onJumpComplete, onDrawingChange, locationData, onPlaceSelect, people, showPeople, onTogglePeople, showDesign, onDesignPresenceChange, guided }: Props) {
+export default function PermaMap({ onLocationSelect, selectedLocation, loading, onMapCapture, onSiteDrawn, onWaterDrawn, onCaptureClick, jumpTo, onJumpComplete, onDrawingChange, locationData, onPlaceSelect, activePlaceId, people, showPeople, onTogglePeople, showDesign, onDesignPresenceChange, guided }: Props) {
   const { t } = useLanguage();
   const { user } = useAuth();
   const mapRef = useRef<MapRef>(null);
@@ -1869,11 +1875,36 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const [waterFeatures, setWaterFeatures] = useState<Array<{ id: string; estVolumeKL: number; name?: string; category?: string; centroid: [number, number] | null; bbox: [number, number, number, number]; placeId?: string; hatchIdx: number }>>([]);
   useEffect(() => { setWaterFeatures(getWaterFeatures()); }, [waterStats, getWaterFeatures]);
 
-  // Set of place IDs that have at least one drawn feature (site or water)
+  // Set of place IDs that have at least one drawn feature (site or water).
+  // Deliberately built from the UNSCOPED lists — it answers "does this place own
+  // anything", which every place needs regardless of which one is open.
   const pinsWithFeatures = useMemo(() => new Set([
     ...siteFeatures.flatMap(sf => sf.placeId ? [sf.placeId] : []),
     ...waterFeatures.flatMap(wf => wf.placeId ? [wf.placeId] : []),
   ]), [siteFeatures, waterFeatures]);
+
+  // What the panel LISTS: only the open place's land and water. Everything else on the
+  // map — fit-bounds, the toolbar's has-anything checks, pinsWithFeatures — keeps using
+  // the full lists, because those are about the account, not about the open place.
+  const visibleSiteFeatures = useMemo(
+    () => featuresForPlace(siteFeatures, activePlaceId),
+    [siteFeatures, activePlaceId],
+  );
+  const visibleWaterFeatures = useMemo(
+    () => featuresForPlace(waterFeatures, activePlaceId),
+    [waterFeatures, activePlaceId],
+  );
+  // Section headers must total the rows actually on screen, or the count contradicts the
+  // list. Summing the already-rounded per-row areas (rather than re-deriving from
+  // geometry) is what makes header and rows agree digit for digit.
+  const visibleSiteAreaHa = useMemo(
+    () => Math.round(visibleSiteFeatures.reduce((sum, sf) => sum + sf.areaHa, 0) * 100) / 100,
+    [visibleSiteFeatures],
+  );
+  const visibleWaterKL = useMemo(
+    () => visibleWaterFeatures.reduce((sum, wf) => sum + wf.estVolumeKL, 0),
+    [visibleWaterFeatures],
+  );
 
   // ── Name & categorise a drawn parcel / water store (opens after drawing, and any
   // time via the row's name). Stored on the feature so it persists + shows in lists. ──
@@ -3147,9 +3178,9 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 <div className="flex items-center gap-1.5">
                   <ChevronDown size={13} style={{ color: 'rgba(234,243,226,0.4)', transition: 'transform 0.2s', transform: sectionParcels ? 'rotate(0deg)' : 'rotate(-90deg)', flexShrink: 0 }} />
                   <span className="font-sans" style={{ fontSize: 11, fontWeight: 800, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(234,243,226,0.5)' }}>
-                    {t('parcelsSectionLabel')}{siteStats ? ` · ${siteStats.count ?? 1}` : ''}
+                    {t('parcelsSectionLabel')}{visibleSiteFeatures.length ? ` · ${visibleSiteFeatures.length}` : ''}
                   </span>
-                  {siteStats && <span className="font-sans" style={{ fontSize: 11.5, color: 'rgba(234,243,226,0.4)' }}>{siteStats.areaHa} ha</span>}
+                  {visibleSiteFeatures.length > 0 && <span className="font-sans" style={{ fontSize: 11.5, color: 'rgba(234,243,226,0.4)' }}>{visibleSiteAreaHa} ha</span>}
                 </div>
               </button>
               {/* Toggle row — sits below section header, wraps on narrow panels */}
@@ -3191,9 +3222,9 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               </div>
               {sectionParcels && (
                 <>
-                  {siteStats ? (
+                  {visibleSiteFeatures.length > 0 ? (
                     <div className="w-full flex flex-col gap-1.5 mt-1.5">
-                      {siteFeatures.map((sf, idx) => (
+                      {visibleSiteFeatures.map((sf, idx) => (
                         <div key={sf.id} className="flex items-center gap-3 font-sans"
                           style={{ background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', borderRadius: 14, padding: '13px 13px 13px 15px' }}>
                           <div className="flex-shrink-0 rounded-[4px]" style={{ width: 10, height: 34, background: LAND_PALETTE[sf.hatchIdx % LAND_PALETTE.length].edge }} />
@@ -3249,16 +3280,19 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 <div className="flex items-center gap-1.5">
                   <ChevronDown size={13} style={{ color: 'rgba(234,243,226,0.4)', transition: 'transform 0.2s', transform: sectionWater ? 'rotate(0deg)' : 'rotate(-90deg)', flexShrink: 0 }} />
                   <span className="font-sans" style={{ fontSize: 11, fontWeight: 800, letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(234,243,226,0.5)' }}>
-                    {t('waterSectionLabel')}{waterStats ? ` · ${waterStats.count}` : ''}
+                    {t('waterSectionLabel')}{visibleWaterFeatures.length ? ` · ${visibleWaterFeatures.length}` : ''}
                   </span>
-                  {waterStats && <span className="font-sans" style={{ fontSize: 11.5, color: 'rgba(234,243,226,0.4)' }}>~{waterStats.estVolumeKL.toLocaleString()} kL</span>}
+                  {visibleWaterFeatures.length > 0 && <span className="font-sans" style={{ fontSize: 11.5, color: 'rgba(234,243,226,0.4)' }}>~{visibleWaterKL.toLocaleString()} kL</span>}
                 </div>
               </button>
               {sectionWater && (
                 <>
-                  {waterStats ? (
+                  {/* Water POINTS carry no placeId, so they keep the rich branch alive even
+                      when this place has no traced water area — otherwise scoping the areas
+                      would silently take the farmer's pumps and taps off the panel too. */}
+                  {visibleWaterFeatures.length > 0 || waterPoints.length > 0 ? (
                     <div className="w-full flex flex-col gap-1.5 mt-1.5">
-                      {waterFeatures.map((wf, idx) => (
+                      {visibleWaterFeatures.map((wf, idx) => (
                         <div key={wf.id} className="flex items-center gap-3 font-sans"
                           style={{ background: 'rgba(247,242,233,0.08)', border: '1px solid rgba(234,243,226,0.16)', borderRadius: 14, padding: '13px 13px 13px 15px' }}>
                           <div className="flex-shrink-0 rounded-[4px]" style={{ width: 10, height: 34, background: WATER_PALETTE[wf.hatchIdx % WATER_PALETTE.length].edge }} />

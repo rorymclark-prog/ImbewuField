@@ -34,6 +34,7 @@ const events: string[] = [];
 const {
   deletePlace,
   distanceMeters,
+  featuresForPlace,
   findNearbyPlace,
   isValidSavedPlace,
   loadPlaces,
@@ -273,4 +274,45 @@ test('mergeIncomingPlaces: a shared place edited AFTER this device\'s local tomb
   const sharedNewer = { ...place('p1', -29.6, 30.4), updatedAt: now - 1000 }; // postdates the tombstone
   const items = mergeIncomingPlaces([sharedNewer]);
   assert.deepEqual(items, [sharedNewer]);
+});
+
+// ── featuresForPlace ───────────────────────────────────────────────────────────
+// The bug: the map panel listed EVERY parcel on the account no matter which place was
+// open, so selecting Ubhejane Crèche showed Carl and Sandys Place's six parcels. Each
+// row was already chip-labelled with its owning place, which is exactly why it lasted —
+// the panel looked informative rather than wrong.
+
+test('featuresForPlace keeps only the open place\'s features — the Ubhejane/Carl-and-Sandys bug', () => {
+  const features = [
+    { id: 'a', placeId: 'ubhejane' },
+    { id: 'b', placeId: 'carl' },
+    { id: 'c', placeId: 'carl' },
+    { id: 'd', placeId: 'ubhejane' },
+  ];
+  assert.deepEqual(featuresForPlace(features, 'ubhejane').map((f) => f.id), ['a', 'd']);
+  assert.deepEqual(featuresForPlace(features, 'carl').map((f) => f.id), ['b', 'c']);
+});
+
+test('featuresForPlace keeps unassigned features in EVERY view rather than stranding them', () => {
+  // A parcel with no placeId pre-dates the place↔feature link (or was drawn with no place
+  // open), so no place can claim it. Filtering it out would make a farmer's own traced land
+  // look deleted — a far worse failure than showing it under more than one place.
+  const features = [
+    { id: 'legacy' },
+    { id: 'owned', placeId: 'carl' },
+  ];
+  assert.deepEqual(featuresForPlace(features, 'ubhejane').map((f) => f.id), ['legacy']);
+  assert.deepEqual(featuresForPlace(features, 'carl').map((f) => f.id), ['legacy', 'owned']);
+});
+
+test('featuresForPlace with no place open shows everything, and never copies the array needlessly', () => {
+  const features = [{ id: 'a', placeId: 'x' }, { id: 'b' }];
+  assert.equal(featuresForPlace(features, null), features);
+  assert.equal(featuresForPlace(features, undefined), features);
+  assert.equal(featuresForPlace(features, ''), features); // empty id is "no place", not a place named ''
+});
+
+test('featuresForPlace returns an empty list when the open place owns nothing, so the panel can offer Draw instead', () => {
+  const features = [{ id: 'a', placeId: 'carl' }];
+  assert.deepEqual(featuresForPlace(features, 'ubhejane'), []);
 });

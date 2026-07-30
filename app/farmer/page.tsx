@@ -520,6 +520,7 @@ function HomeInner() {
               onDrawingChange={setDrawing}
               locationData={data}
               onPlaceSelect={handlePlaceSelect}
+              activePlaceId={activePlaceId}
               people={peopleMarkers}
               showPeople={showPeople}
               onTogglePeople={() => setShowPeople(v => !v)}
