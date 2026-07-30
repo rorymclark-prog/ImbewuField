@@ -1194,9 +1194,21 @@ function DesignStudioInner() {
     const revertMPerPx = scaledMPerPx(freshFrame.mPerPx, canvasState?.scaleFactor);
     setFrame((prev) => (prev ? { ...prev, mPerPx: revertMPerPx, satDataUrl: null } : prev));
     if (satUrl) {
-      fetchImageAsDataUrl(satUrl)
+      // THROUGH fetchBasemapForFrame, never fetchImageAsDataUrl directly. That function is the one
+      // place that decides who serves the photo, and its own doc warns that a second provider
+      // branch somewhere else is how the wrong provider ships twice. This was that second branch:
+      // reverting always fetched the Mapbox still regardless of the configured provider, so a
+      // farmer on Esri who switched away from their drone photo and back got Mapbox imagery and no
+      // indication why (Rory: "it gave the previous models satlite not even esris new one").
+      fetchBasemapForFrame(freshFrame, satUrl, fetchImageAsDataUrl)
         .then((dataUrl) => setFrame((prev) => (prev ? { ...prev, satDataUrl: dataUrl } : prev)))
-        .catch(() => {});
+        // Esri can legitimately refuse (no ArcGIS key configured). Falling back to the Mapbox
+        // still keeps a revert working rather than leaving the farmer on a blank canvas.
+        .catch(() => {
+          fetchImageAsDataUrl(satUrl)
+            .then((dataUrl) => setFrame((prev) => (prev ? { ...prev, satDataUrl: dataUrl } : prev)))
+            .catch(() => {});
+        });
     }
   }, [handleChange, layers, lat, lon, canvasState?.scaleFactor]);
 
