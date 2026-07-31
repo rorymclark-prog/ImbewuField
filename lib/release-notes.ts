@@ -20,6 +20,11 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '31 July',
     changes: [
+      'The sun diagram shows summer and winter paths, at your latitude\'s real angles',
+      'It also gives the midwinter shadow length — where a shade tree can stand',
+      'Zone numbers no longer land on top of each other',
+      'NEW: a Playground, so play areas are on the plan and kept clear',
+      'The bed-block row only appears when you are actually placing beds',
       'Your traced house and driveway now follow the Fill slider like everything else',
       'Fill and Plants sliders go all the way to 100%',
       'Drip all beds in one tap — a line down the centre of each; you add the mainline',
