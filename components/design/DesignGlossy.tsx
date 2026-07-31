@@ -5486,13 +5486,21 @@ function drawSectorAnalysis(
     const directClaims: Array<{ x0: number; x1: number; y0: number; y1: number }> = [
       { x0: 0, x1: W * 0.33, y0: 0, y1: H * 0.18 },
     ];
-    const fs = Math.max(18, Math.round(W * 0.0115));
-    const lineH = Math.round(fs * 1.08);
+    // A stroke halo alone was not enough: it was sized for a flat cartographic tint, and this base
+    // is a real drone photo — dense foliage, bare soil, tin roof and shadow all in the same frame,
+    // several of them darker AND more saturated than the halo could out-contrast. Rory, looking at
+    // an actual farm sheet on his phone: "I can't see anything on this image." Every direct label
+    // now sits on its own solid dark plate — same technique as the AI-queue "AI?" chip elsewhere on
+    // this canvas — so contrast is guaranteed by what's UNDER the label, never by what's under the
+    // photo. Font bumped alongside it: 18px-min/×0.0115 was sized before this sheet carried a real
+    // photo at phone-viewing scale.
+    const fs = Math.max(21, Math.round(W * 0.0135));
+    const lineH = Math.round(fs * 1.1);
     for (const request of directLabelRequests) {
       ctx.save();
       ctx.font = `800 ${fs}px ${REFERENCE_LABEL_FONT}`;
-      const halfW = Math.max(...request.lines.map((line) => ctx.measureText(line).width)) / 2 + fs * 0.4;
-      const halfH = (lineH * request.lines.length) / 2 + fs * 0.32;
+      const halfW = Math.max(...request.lines.map((line) => ctx.measureText(line).width)) / 2 + fs * 0.55;
+      const halfH = (lineH * request.lines.length) / 2 + fs * 0.42;
       const candidates: Array<[number, number]> = [
         [request.tangentBias ?? 0, 0],
         [request.tangentBias ?? 0, lineH * 2.4],
@@ -5513,11 +5521,17 @@ function drawSectorAnalysis(
         if (!overlaps) break;
       }
       directClaims.push({ x0: lx - halfW, x1: lx + halfW, y0: ly - halfH, y1: ly + halfH });
+      roundRectPath(ctx, lx - halfW, ly - halfH, halfW * 2, halfH * 2, Math.min(12, fs * 0.32));
+      ctx.fillStyle = 'rgba(8,14,10,0.82)';
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(255,255,255,0.14)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.lineJoin = 'round';
-      ctx.lineWidth = Math.max(3.5, W * 0.0021);
-      ctx.strokeStyle = 'rgba(8,18,12,0.9)';
+      ctx.lineWidth = Math.max(2.5, W * 0.0015);
+      ctx.strokeStyle = 'rgba(6,12,8,0.85)';
       request.lines.forEach((line, index) => ctx.strokeText(line, lx, ly + index * lineH));
       ctx.fillStyle = request.color;
       request.lines.forEach((line, index) => ctx.fillText(line, lx, ly + index * lineH));
@@ -6113,7 +6127,16 @@ function drawSectorAnalysis(
   const subtitleStr = placeName ?? 'Site energies · sun · wind · water · fire';
   // Scrim FIRST — before any of the up-to-four lines that land in this corner, so it sits
   // underneath every one of them rather than needing each line to protect itself.
-  if (isAiBase) {
+  //
+  // isAiBase alone was the wrong gate: it means "an AI-illustrated ground", but the thing that
+  // actually threatens this title's legibility is ANY real photographic ground — the exact sheet's
+  // drone photo (frame.satDataUrl) is every bit as dark/saturated in places as AI art, and unlike
+  // AI art it was never gated on needing a scrim at all. Rory, on a real farm sheet: "the text and
+  // font sizes and everything is terrible, I can't see anything on this image" — dense KZN bush
+  // under white title text, no scrim, exactly this case. The flat-colour fallback (no satDataUrl,
+  // solid #727466 — see drawAnalysisBase) is the one base that was genuinely always light enough;
+  // that's the only case this now leaves unscrimmed.
+  if (isAiBase || frame.satDataUrl) {
     drawTitleBlockScrim(
       ctx, pad,
       externalLegend ? [titleStr, subtitleStr] : [titleStr, subtitleStr, dataStripStr, sourcesStr],
