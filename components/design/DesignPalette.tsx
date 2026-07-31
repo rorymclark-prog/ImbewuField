@@ -37,6 +37,10 @@
 // ancestor of it) is allowed to clip/scroll.
 
 import { useCallback, useEffect, useRef, useState } from 'react';
+
+// How long a tip stays before closing itself. See the state that drives it for why this is not
+// the four seconds first suggested: four is under the reading time of the tips themselves.
+const HINT_VISIBLE_MS = 8000;
 import type { GroundFeatureKind, LineShape, WizardStep } from '@/lib/design-canvas';
 import { normaliseRotation, MIN_MAP_TEXT_SCALE, MAX_MAP_TEXT_SCALE } from '@/lib/design-canvas';
 import { MIN_BED_COUNT, MAX_BED_COUNT } from '@/lib/bed-block';
@@ -352,6 +356,19 @@ export default function DesignPalette({
 }: DesignPaletteProps) {
   const { t } = useLanguage();
   const [hintDefId, setHintDefId] = useState<string | null>(null);
+  // The tip line closes itself, and can be closed by hand (Rory: "we should be able to close this
+  // and it should disappear after 4 seconds or however long you think?").
+  //
+  // EIGHT seconds, not four. Four is under the reading time of the tip it is showing — "Keep
+  // within daily-visit distance of the kitchen door; full sun, north-facing rows" is about
+  // eighteen words, roughly five and a half seconds at an easy pace, before the farmer has even
+  // reached the "Learn about this" link beneath it. This app also ships in eleven languages and
+  // several of them run longer than the English. A tip that vanishes mid-sentence has to be
+  // re-summoned, which costs more taps than it ever saved.
+  const [dismissedHintKey, setDismissedHintKey] = useState<string | null>(null);
+  // ...and the clock stops while a finger or the keyboard is on it, so it can never disappear out
+  // from under someone reaching for the lesson link.
+  const [hintHeld, setHintHeld] = useState(false);
   const [layersOpen, setLayersOpen] = useState(false);
   // Raw text for the bed-block number fields while they are being edited. Held as strings so a
   // comma decimal, a trailing separator or an empty box survives long enough to finish typing.
@@ -504,6 +521,15 @@ export default function DesignPalette({
           : tool === 'line'
             ? t('designPaletteTapCorners')
             : null;
+
+  // Identity of the tip currently on screen. A NEW tip is a new key, so closing one never
+  // suppresses the next — the farmer dismisses a sentence, not the feature.
+  const hintKey = hintDef ? `def:${hintDef.id}` : armedHintLabel ? `armed:${armedHintLabel}` : null;
+  useEffect(() => {
+    if (!hintKey || dismissedHintKey === hintKey || hintHeld) return undefined;
+    const timer = setTimeout(() => setDismissedHintKey(hintKey), HINT_VISIBLE_MS);
+    return () => clearTimeout(timer);
+  }, [hintKey, dismissedHintKey, hintHeld]);
 
   // The lesson for whatever's currently armed — connects zones, ground features, drawn lines and
   // placed elements to their teaching lesson from the same hint box (no extra UI rows).
@@ -1336,18 +1362,50 @@ export default function DesignPalette({
 
   function renderHint() {
     if (!(armedHintLabel || hintDef)) return null;
+    if (hintKey && dismissedHintKey === hintKey) return null;
     return (
       /* Hint line: armed state, or a def tip on tap */
       <div
+        onPointerEnter={() => setHintHeld(true)}
+        onPointerLeave={() => setHintHeld(false)}
+        onFocusCapture={() => setHintHeld(true)}
+        onBlurCapture={() => setHintHeld(false)}
         style={{
+          position: 'relative',
           fontSize: 11.5,
           color: DARK,
           background: 'rgba(247,201,126,0.25)',
           border: '1px solid rgba(0,0,0,0.08)',
           borderRadius: 8,
-          padding: '6px 10px',
+          // Room on the right so the close button never lands on top of the tip's own words.
+          padding: '6px 34px 6px 10px',
         }}
       >
+        <button
+          type="button"
+          onClick={() => setDismissedHintKey(hintKey)}
+          aria-label={t('designAdvisorCloseTip')}
+          title={t('designAdvisorCloseTip')}
+          style={{
+            position: 'absolute',
+            top: 2,
+            right: 2,
+            width: 30,
+            height: 30,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            border: 'none',
+            background: 'transparent',
+            color: DARK,
+            opacity: 0.55,
+            fontSize: 15,
+            lineHeight: 1,
+            cursor: 'pointer',
+          }}
+        >
+          ×
+        </button>
         {hintDef ? (
           <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
             <div>

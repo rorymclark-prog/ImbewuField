@@ -333,9 +333,13 @@ function lineStroke(kind: LineShape['kind']): { stroke: string; width: number; d
     case 'path':
       return { stroke: '#E8D9B8', width: 2.5, dash: '4 5' };
     case 'bedpath':
-      // Same family as a walking path — it IS one — but tighter and a touch stronger, because it
-      // is read at bed scale between two beds rather than across the whole farm.
-      return { stroke: '#E8D9B8', width: 2, dash: '3 3' };
+      // A WALKING STRIP, NOT A GUIDE LINE. This was 2px of pale cream on a 3/3 dash, and between
+      // two light-green beds at bed scale that is invisible — the legend said "Bed path ×8" while
+      // the farmer looked at the map and saw nothing between his beds, and reported the paths
+      // missing for a fourth time. A dashed hairline reads as an annotation; a solid band with a
+      // dark casing reads as ground you can walk on, which is what it is. Wider and solid, and
+      // the casing below carries it over pale soil as well as dark beds.
+      return { stroke: '#F2E3C0', width: 5 };
     case 'windbreak':
       return { stroke: '#2F7A4A', width: 6, opacity: 0.5 };
     default:
@@ -2657,9 +2661,12 @@ export default function DesignCanvas({
                     points={polylinePoints(effectivePoints, imgW, imgH)}
                     fill="none"
                     stroke={CONTOUR_CASING}
-                    strokeWidth={chrome(style.width + 2)}
+                    strokeWidth={chrome(style.width + 3)}
                     strokeDasharray={chromeDash(style.dash)}
-                    opacity={0.45}
+                    // Was 0.45, which let the casing wash out over bright soil and took the strip
+                    // with it. The casing is what guarantees the path survives whatever it crosses
+                    // — see lib/contour-cartography.ts for the same lesson measured properly.
+                    opacity={0.75}
                     strokeLinecap="round"
                     style={{ pointerEvents: 'none' }}
                   />
