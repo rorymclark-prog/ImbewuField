@@ -35,9 +35,16 @@ export interface OverlayElementsText {
   contextElementGroups: ExactElementLegendGroup[];
 }
 
+// Earthworks (05) is a model-authored sheet now too (full AI support, same as Water/Planting) —
+// omitting it here silently starved buildShowcasePrompt/the Full Treatment prompt of any factual
+// inventory, so the model would have had to invent swales/berms/terraces instead of being told
+// what the farmer actually placed. Without this, `overlayElementsText(sheet: 'earthworks')` fell
+// through to the "three exact sheets never use this" empty-inventory branch below, which is the
+// wrong branch for a sheet that DOES take AI Hybrid/Full Treatment.
 const OVERLAY_FILTERS = new Set<ExactPlanSheetKey>([
   'zones',
   'water',
+  'earthworks',
   'planting',
   'structures',
   'all',
@@ -45,7 +52,12 @@ const OVERLAY_FILTERS = new Set<ExactPlanSheetKey>([
 
 const SECTION: Record<string, string> = {
   water: 'WATER',
-  earthworks: 'WATER',
+  // Earthworks items now print their own EARTHWORKS legend section (berm/terrace/half_moon), not
+  // WATER — matching the sheet split in lib/glossy-filters.ts. The two earthworks-category items
+  // that stay on the Water sheet (greywater_basin, infiltration_basin) are exempted below via
+  // SECTION_BY_ID, which is checked before this category fallback, so this default only applies to
+  // items that actually moved.
+  earthworks: 'EARTHWORKS',
   growing: 'PLANTING',
   structure: 'INFRASTRUCTURE',
   animal: 'INFRASTRUCTURE',
@@ -126,8 +138,9 @@ function itemSection(group: ExactElementLegendGroup, filter: GlossyLayerFilter):
  * context channels because they must stay visible without becoming this sheet's designed content.
  *
  * The three exact sheets that never use Satellite Overlay return an empty inventory deliberately;
- * including them makes the all-eight-sheet agreement contract explicit rather than silently
- * testing only the five model-authored sheets.
+ * including them makes the all-nine-sheet agreement contract explicit rather than silently
+ * testing only the six model-authored sheets (zones/water/earthworks/planting/structures/all —
+ * Earthworks joined this list once it became its own sheet with full AI support).
  */
 export function overlayElementsText(
   state: DesignCanvasState,

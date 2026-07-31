@@ -334,7 +334,7 @@ export function buildProducerPromptLegacy(
 // instructions replace all of that: absence beats negation, and each sheet's marker legend now only
 // ever names markers that CAN exist on that sheet (mirrors itemInFilter/lineInFilter below), so a
 // non-Zones sheet structurally cannot be told about zones — no counter-rule needed.
-export type ShowcaseSheetKind = 'all' | 'zones' | 'water' | 'planting' | 'structures';
+export type ShowcaseSheetKind = 'all' | 'zones' | 'water' | 'earthworks' | 'planting' | 'structures';
 
 // Shared plan-set anchor, appended to every style. This is the cross-sheet CONSISTENCY fix: the 5
 // sheets of one batch are 5 independent, stateless OpenAI calls (no seed, no shared reference image
@@ -475,7 +475,10 @@ type ShowcaseMarkerKey = keyof typeof M;
 const SHOWCASE_MARKERS_BY_SHEET: Record<ShowcaseSheetKind, ShowcaseMarkerKey[]> = {
   all: ['bed', 'tree', 'windbreak', 'tank', 'tap', 'dam', 'borehole', 'swale', 'pipe', 'drip', 'building', 'hive', 'patio', 'fence', 'path', 'driveway', 'tree_basin', 'banana_circle', 'mulch_bank', 'greywater_basin', 'greywater_line', 'greywater_fitting', 'half_moon', 'berm', 'terrace', 'coop', 'chicken_tractor', 'nursery', 'compost', 'worm_farm', 'goat_pen', 'pig_pen', 'kraal', 'rabbit_hutch', 'duck_pond', 'livestock_trough', 'biodigester', 'market_stall', 'playground', 'zones'],
   zones: ['zones', 'driveway'],
-  water: ['tank', 'tap', 'dam', 'borehole', 'swale', 'pipe', 'drip', 'driveway', 'tree_basin', 'banana_circle', 'greywater_basin', 'greywater_line', 'greywater_fitting', 'half_moon', 'berm', 'terrace'],
+  water: ['tank', 'tap', 'dam', 'borehole', 'pipe', 'drip', 'driveway', 'tree_basin', 'banana_circle', 'greywater_basin', 'greywater_line', 'greywater_fitting'],
+  // Sheet 05. Swale, berm, terrace and half-moon moved off Water when earthworks became its own
+  // setting-out drawing; the driveway stays as the orientation mark every sheet carries.
+  earthworks: ['swale', 'berm', 'terrace', 'half_moon', 'driveway'],
   planting: ['bed', 'tree', 'windbreak', 'driveway', 'tree_basin', 'banana_circle', 'mulch_bank'],
   structures: ['building', 'hive', 'patio', 'fence', 'path', 'driveway', 'coop', 'chicken_tractor', 'nursery', 'compost', 'worm_farm', 'goat_pen', 'pig_pen', 'kraal', 'rabbit_hutch', 'duck_pond', 'livestock_trough', 'biodigester', 'market_stall', 'playground'],
 };
@@ -595,7 +598,7 @@ export function buildShowcasePrompt(
 // claiming the same number, which makes referring to a sheet by number useless.
 // (Analysis precedes design in the canonical order: 01 Base, 02 Sector, then the design sheets.)
 export const SHEET_NO: Record<ShowcaseSheetKind, string> = {
-  zones: '03', water: '04', planting: '05', structures: '06', all: '07',
+  zones: '03', water: '04', earthworks: '05', planting: '06', structures: '07', all: '08',
 };
 
 // One icon description per marker type. The composite hands the model flat coloured placeholder
@@ -689,10 +692,11 @@ const OVERLAY_ICONS: Record<string, string> = {
 const ICON_KEYS_BY_SHEET: Record<ShowcaseSheetKind, string[]> = {
   all:        ['bed', 'tree', 'windbreak', 'tank', 'tap', 'dam', 'basin', 'greywater_fitting', 'tree_basin', 'banana', 'mulch', 'vetiver_row', 'borehole', 'water_trough', 'first_flush', 'pump_filter', 'half_moon', 'berm', 'terrace', 'swale', 'pipe', 'drip', 'building', 'hive', 'coop', 'chicken_tractor', 'nursery', 'compost', 'worm_farm', 'goat_pen', 'pig_pen', 'kraal', 'rabbit_hutch', 'duck_pond', 'livestock_trough', 'biodigester', 'market_stall', 'playground', 'pollinator', 'patio', 'fence', 'path'],
   zones:      ['building', 'path', 'fence'],
-  // half_moon/berm/terrace are 'earthworks' category, which sheetForElement routes to 'water' —
-  // same authority DesignGlossy.tsx's sheetForElement/SHEET_OVERRIDE use, so this list can't drift
-  // from which sheet an element actually prints on.
-  water:      ['tank', 'tap', 'dam', 'basin', 'greywater_fitting', 'tree_basin', 'banana', 'mulch', 'borehole', 'water_trough', 'first_flush', 'pump_filter', 'half_moon', 'berm', 'terrace', 'swale', 'pipe', 'drip'],
+  // half_moon/berm/terrace/swale are 'earthworks' category, which sheetForElement now routes to
+  // its own 'earthworks' sheet — same authority DesignGlossy.tsx uses, so this list cannot drift
+  // from which sheet an element actually prints on. The two basins stay on Water by SHEET_OVERRIDE.
+  water:      ['tank', 'tap', 'dam', 'basin', 'greywater_fitting', 'tree_basin', 'banana', 'mulch', 'borehole', 'water_trough', 'first_flush', 'pump_filter', 'pipe', 'drip'],
+  earthworks: ['swale', 'half_moon', 'berm', 'terrace'],
   planting:   ['bed', 'tree', 'windbreak', 'mulch', 'vetiver_row', 'banana', 'tree_basin', 'pollinator'],
   structures: ['building', 'hive', 'coop', 'chicken_tractor', 'nursery', 'compost', 'worm_farm', 'goat_pen', 'pig_pen', 'kraal', 'rabbit_hutch', 'duck_pond', 'livestock_trough', 'biodigester', 'market_stall', 'playground', 'patio', 'fence', 'path'],
 };

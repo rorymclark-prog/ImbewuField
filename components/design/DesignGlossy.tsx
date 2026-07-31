@@ -166,6 +166,19 @@ const FILTER_THEME: Record<GlossyLayerFilter, { title: string; focus: string; em
       'keep the layout editorial and legible, with a right-hand legend block and short label pills BESIDE the real water marks',
     ],
   },
+  // Sheet 05. The one theme with NO blue in it: a swale printed in irrigation blue on the water
+  // plan is exactly what made a farmer unable to tell a dug trench from a buried pipe, and is why
+  // this sheet was split out. Earth palette only, and the marks stay as drawn like every layer.
+  earthworks: {
+    title: 'earthworks & contour plan',
+    focus: 'an EARTHWORKS background: dry worked-soil ground in ochre, umber and raw sienna, reading as a civil setting-out drawing rather than a garden picture',
+    emphasise: [
+      'tint the editable open ground in earth tones — ochre, umber, raw sienna — and use NO blue anywhere on this sheet; blue belongs to the water plan',
+      'every earthwork already drawn (swale trenches and their berms, contour banks, terrace steps, half-moon bunds) stays exactly as drawn — shade the ground AROUND each one so its raised side reads, never redraw, thicken, move or duplicate the mark itself',
+      'where a platform is cut into a slope, shade the cut side darker and the filled side lighter so cut and fill are readable at a glance',
+      'keep the layout editorial and legible, with a right-hand legend block and short label pills BESIDE the real earthworks',
+    ],
+  },
   zones: {
     title: 'zone map',
     focus: 'a ZONE-MAP background: calm, slightly desaturated ground texture so the coloured zone shapes already painted on the image are the loudest thing on the map',
@@ -300,18 +313,19 @@ const GLOSSY_FILTERS: Array<{ key: GlossyLayerFilter; label: string }> = [
   { key: 'all', label: 'Whole design' },
   { key: 'zones', label: 'Zones' },
   { key: 'water', label: 'Water' },
+  { key: 'earthworks', label: 'Earthworks' },
   { key: 'planting', label: 'Planting' },
   { key: 'structures', label: 'Structures' },
 ];
 
-// The canonical plan set (docs/PLAN-SET-SPEC.md), shown as ONE numbered 01–08 list in the
+// The canonical plan set (docs/PLAN-SET-SPEC.md), shown as ONE numbered 01–09 list in the
 // Design-maps picker so it reads exactly like the printed set — analysis (01–02) before design
-// (03–07) before implementation (08). EVERY sheet has BOTH an AI version (the default) and an
+// (03–08) before implementation (09). EVERY sheet has BOTH an AI version (the default) and an
 // exact/no-AI version (the option), chosen with the mode switch:
-//   • 01/02/08 are analytical — their EXACT render is a rules-engine sheet (exactSheet), and their
+//   • 01/02/09 are analytical — their EXACT render is a rules-engine sheet (exactSheet), and their
 //     AI render is the matching Gemini analysis map (aiAnalysis: base/sector/implementation), i.e.
 //     the old "Analysis maps" row, now folded into these sheets.
-//   • 03–07 are design layers — EXACT is the deterministic blueprint (filter alone), AI is the
+//   • 03–08 are design layers — EXACT is the deterministic blueprint (filter alone), AI is the
 //     image-producer / gpt-image-2 showcase pipeline (filter + a Style).
 // `'exact' in sheet` narrows to the analytical variant.
 type DesignSheet =
@@ -323,10 +337,14 @@ const DESIGN_SHEETS: DesignSheet[] = [
   { no: '02', label: 'Sector', exact: 'sector', aiAnalysis: 'sector' },
   { no: '03', label: 'Zones', filter: 'zones' },
   { no: '04', label: 'Water', filter: 'water' },
-  { no: '05', label: 'Planting', filter: 'planting' },
-  { no: '06', label: 'Structures', filter: 'structures' },
-  { no: '07', label: 'Whole', filter: 'all' },
-  { no: '08', label: 'Phasing', exact: 'implementation', aiAnalysis: 'implementation' },
+  // Earthworks — the land-shaping / setting-out sheet, split out of Water so a swale (an
+  // earthwork you dig) no longer prints in irrigation blue (a pipe you plumb). See FILTER_THEME
+  // 'earthworks' above for the full rationale.
+  { no: '05', label: 'Earthworks', filter: 'earthworks' },
+  { no: '06', label: 'Planting', filter: 'planting' },
+  { no: '07', label: 'Structures', filter: 'structures' },
+  { no: '08', label: 'Whole', filter: 'all' },
+  { no: '09', label: 'Phasing', exact: 'implementation', aiAnalysis: 'implementation' },
 ];
 // DEFAULT_PRODUCER_STYLE now lives in lib/sheet-render-route.ts (imported above) so that pure lib
 // has no dependency on this component; every call site here keeps the same name.
@@ -412,6 +430,9 @@ const EMPTY_LAYER_STEP: Record<GlossyLayerFilter, string> = {
   all: 'design',
   water: 'Water',
   zones: 'Zones',
+  // Earthworks has no wizard step of its own — swales, berms and terraces are placed from the
+  // Water step's palette (category 'earthworks'), which is where an empty sheet must send you.
+  earthworks: 'Water',
   planting: 'Planting',
   structures: 'Structures',
 };
@@ -1236,7 +1257,7 @@ function loadImage(src: string): Promise<HTMLImageElement> {
  * Downscales a saved sheet's full render (1-3 MB, per lib/sheet-store.ts's own sizing note) into a
  * small JPEG for gallery grid display. The grid used to point every thumbnail's <img> straight at
  * the full-resolution PNG data URL — a farmer with a few dozen saved maps (very plausible after
- * iterating across all 8 sheets x 3 output modes) was decoding tens of MB of image data into the DOM
+ * iterating across all 9 sheets x 3 output modes) was decoding tens of MB of image data into the DOM
  * at once, on a phone, just to show 3-column thumbnails. JPEG at moderate quality is fine here
  * because this is presentation-only: the full-resolution image is what's actually saved and shown
  * in the zoomed detail view; this function never touches or replaces it.
@@ -2982,7 +3003,7 @@ interface BlueprintLegendRow {
 
 /** Generic legend rows (swatch + optional icon + label). Returns the y after the last row.
  *  The icon and the label-ellipsis are both no-ops for the water sheet's short, icon-less rows,
- *  so it keeps rendering exactly as before; sheets 05/06 need them for long species names. */
+ *  so it keeps rendering exactly as before; sheets 06/07 need them for long species names. */
 function drawBlueprintLegendRows(
   ctx: CanvasRenderingContext2D,
   lg: BlueprintLegend,
@@ -3348,7 +3369,7 @@ function blueprintLegendCapacity(H: number, pad: number, rowH: number): number {
 // WHY a palette instead of def.color: def.color is a per-CATEGORY accent — every one of the 21
 // 'growing' elements is the same #4E8B3B, every 'structure' the same #7A5C3E. That's right for the
 // studio canvas (category at a glance) but useless on a planting sheet, where the entire job is
-// telling Macadamia from Citrus. So sheets 05/06 colour by SPECIES.
+// telling Macadamia from Citrus. So sheets 06/07 colour by SPECIES.
 //
 // The index is the element's position within ITS OWN SHEET's category set (planting = growing;
 // structures = structure+animal+access). That makes the colour:
@@ -4704,7 +4725,7 @@ async function buildExactLayerOverlay(
   return canvas.toDataURL('image/png');
 }
 
-// Deterministic "Blueprint" PLANTING map — sheet 05 in docs/PLAN-SET-SPEC.md ("Planting &
+// Deterministic "Blueprint" PLANTING map — sheet 06 in docs/PLAN-SET-SPEC.md ("Planting &
 // Agroforestry Plan"). Same chrome as the zone/water sheets; the content layer is every growing
 // element at its TRUE canopy/bed footprint, coloured per SPECIES (def.color is a per-category
 // accent — all 21 growing elements share one green — which is useless on the one sheet whose
@@ -4791,7 +4812,7 @@ export async function buildBlueprintPlantingMapLegacy(
   return canvas.toDataURL('image/png');
 }
 
-// Deterministic "Blueprint" STRUCTURES map — sheet 06 in docs/PLAN-SET-SPEC.md ("Small Livestock
+// Deterministic "Blueprint" STRUCTURES map — sheet 07 in docs/PLAN-SET-SPEC.md ("Small Livestock
 // & Infrastructure Plan"). Structures + animals + access at true footprint, plus the access/
 // boundary LINES (fence/path — NOT windbreak, which lineInFilter files under Planting) that
 // lineInFilter assigns to this layer — a farmer who has drawn only paths and fences still has real
@@ -4859,7 +4880,7 @@ export async function buildBlueprintStructuresMapLegacy(
   // painted area with no key entry is the phantom-legend defect in reverse.
   const fixed: BlueprintLegendRow[] = [...groundRows(state, refLayers, 'structures')];
   if (kinds.has('path')) fixed.push({ color: '#C9A227', label: 'Path', style: 'line' });
-  // Windbreak is NOT legended here — lineInFilter files it under Planting (sheet 05), which is
+  // Windbreak is NOT legended here — lineInFilter files it under Planting (sheet 06), which is
   // now where it is drawn; a row here would advertise a line this sheet's own filter excludes.
   // Swatch must match the line now drawn: solid violet with posts, not a grey dash.
   if (kinds.has('fence')) fixed.push({ color: LINE_COLORS.fence, label: 'Internal fence', style: 'line' });
@@ -5146,6 +5167,16 @@ export function buildBlueprintWaterMap(
   return buildReferenceBlueprintMap(state, frame, refLayers, 'water', placeName);
 }
 
+// Earthworks = sheet 05, the land-shaping setting-out sheet split out of Water.
+export function buildBlueprintEarthworksMap(
+  state: DesignCanvasState,
+  frame: CanvasFrame,
+  refLayers: DesignGlossyProps['refLayers'],
+  placeName?: string,
+): Promise<string> {
+  return buildReferenceBlueprintMap(state, frame, refLayers, 'earthworks', placeName);
+}
+
 export function buildBlueprintPlantingMap(
   state: DesignCanvasState,
   frame: CanvasFrame,
@@ -5173,7 +5204,7 @@ export function buildBlueprintWholeMap(
   return buildReferenceBlueprintMap(state, frame, refLayers, 'all', placeName);
 }
 
-// ── Sheet 07: Implementation & Phasing ────────────────────────────────────────────────────────
+// ── Sheet 09: Implementation & Phasing ────────────────────────────────────────────────────────
 // Contrast text for a number sitting on a phase-colour chip/pin. The phase palette spans chalk and
 // light green (readable only with dark text) through to deep canopy green and magenta (readable
 // only with white) — so the label colour is chosen from the chip's luminance, never fixed.
@@ -6417,7 +6448,7 @@ function drawSectorAnalysis(
 // are WHY the zones/water/planting sit where they do). Draws the site's REAL energies — sun (from
 // the north in the SH), summer/winter wind, dry-season fire approach, downslope water flow + on-
 // contour lines, and frost drainage — from lib/sector.deriveSectorModel. Nothing is invented; each
-// energy degrades independently when its data is missing. Same Blueprint chrome as sheets 03–08.
+// energy degrades independently when its data is missing. Same Blueprint chrome as sheets 03–09.
 //
 // ONE COMPOSER, TWO BASES. This used to be the whole exact-sheet builder, with a second, PARALLEL
 // function (buildSectorOverlayImage, now deleted) drawing only the chrome for the AI path onto a
@@ -6533,7 +6564,7 @@ async function composeSectorSheet(
   // He is right about the fill and the driveway; the driveway keeps its meaning through the access
   // arrow and legend row 7 (bearing — dust & noise), which is the only sector-relevant fact the tar
   // carries. Neither change touches saved geometry: this is what gets PAINTED, not what is stored,
-  // and sheets 01 and 03–08 are untouched — the existing fabric is their subject.
+  // and sheets 01 and 03–09 are untouched — the existing fabric is their subject.
   //
   // THE HOUSE OUTLINE ONLY SURVIVES WHERE THERE IS NO BASE IMAGE — "the double roof". A hollow
   // outline over a photograph that ALREADY shows the roof draws a second roof by construction: a
@@ -6628,13 +6659,13 @@ export async function buildBlueprintSectorMap(
   return composeSectorSheet(null, state, frame, refLayers, site, placeName);
 }
 
-// Single source of truth for sheet 08's complete map-plus-schedule envelope. The exact sheet, both
+// Single source of truth for sheet 09's complete map-plus-schedule envelope. The exact sheet, both
 // AI inputs, the panel blank-out and the protect mask must agree byte-for-byte about these bounds:
 // a private size in any one path either exposes real schedule text to the model or restores it into
-// the wrong place. calculatePhasingSheetSize shares the same map + readable-column rule as 01–07.
+// the wrong place. calculatePhasingSheetSize shares the same map + readable-column rule as 01–08.
 //
 // Those four used to derive W/H from the RAW frame while nothing else did, which was fine only
-// while sheet 08 alone stayed 3:2. The moment it follows the boundary like sheets 01–07, any path
+// while sheet 08 alone stayed 3:2. The moment it follows the boundary like sheets 01–08, any path
 // still measuring the raw frame puts phasingPanelRect somewhere the panel is not — blanking the
 // wrong rectangle, protecting the wrong pixels, and exposing real schedule text to the model. That
 // is the precise failure the comment on phasingPanelRect warns about, one level up.
@@ -6909,12 +6940,12 @@ function buildPhasingProtectMask(frame: CanvasFrame, refLayers: DesignGlossyProp
   return canvas.toDataURL('image/png');
 }
 
-// Deterministic "Blueprint" IMPLEMENTATION & PHASING sheet — sheet 08 in docs/PLAN-SET-SPEC.md,
+// Deterministic "Blueprint" IMPLEMENTATION & PHASING sheet — sheet 09 in docs/PLAN-SET-SPEC.md,
 // the product differentiator. This is the EXACT / reliable counterpart to the Gemini
 // 'Implementation' ANALYSIS style: that one is an illustrated free-hand render (great to look at,
 // not guaranteed); THIS one is a RULES-ENGINE render — lib/phasing.buildPhasePlan derives the
 // phases deterministically from the placed design + the permaculture Scale of Permanence + the
-// rainfall season, and we draw them precisely. Same chrome as sheets 03–06 (satellite + scrim, tar
+// rainfall season, and we draw them precisely. Same chrome as sheets 03–07 (satellite + scrim, tar
 // driveway, fence-tick boundary, title, scale) plus a north arrow. The content layer is numbered
 // phase PINS at each phase's element centroid + a right-hand panel listing every phase (colour
 // chip, number, title, week range, tasks, Hold Point), a CRITICAL ORDER list and a SITE RULES box.
@@ -6925,7 +6956,7 @@ export async function buildImplementationMap(
   site: DesignGlossyProps['site'],
   placeName?: string,
 ): Promise<string> {
-  // FRAMED TO THE BOUNDARY, with a separate schedule column like sheets 01–07.
+  // FRAMED TO THE BOUNDARY, with a separate schedule column like sheets 01–08.
   //
   // v57 made the map follow the boundary but left the schedule sitting on top of it, so 08 still
   // had no column in its outer dimensions. That kept its print aspect unlike 01–07 and let a tall
@@ -8556,7 +8587,7 @@ export default function DesignGlossy({
   const lockActive = renderPolicy.exactGeometry;
   // Output mode — AI illustration is the DEFAULT; exact/no-AI is the option (Rory's ask). A sheet's
   // chip + this switch together decide which generator runs (see applySheet). selectedNo tracks
-  // which of the 8 sheets is active so toggling mode re-maps the SAME sheet to the other generator.
+  // which of the 9 sheets is active so toggling mode re-maps the SAME sheet to the other generator.
   const [mode, setMode] = useState<'ai' | 'exact'>('ai');
   // "More options" collapse (mockup): engine, AI-legend toggle, Gemini analysis maps, style-all.
   const [moreOpen, setMoreOpen] = useState(false);
@@ -8884,6 +8915,9 @@ export default function DesignGlossy({
             all: 'overall',
             water: 'water',
             zones: 'zone',
+            // Its own theme, not 'water' — a swale drawn in irrigation blue is the whole reason
+            // this sheet was split out. See layerTheme's 'earthworks' case.
+            earthworks: 'earthworks',
             planting: 'planting',
             structures: 'overall',
           };
@@ -10960,7 +10994,7 @@ export default function DesignGlossy({
           one primary CTA → collapsed More options. The old top banner + big Output switch are
           gone: beta lives as a pill ON the AI preview, exact is reached via the links. */}
       <div>
-        {/* SHEET — the plan set as a compact 4-up grid (Rory's mockup), canonical 01–08 order.
+        {/* SHEET — the plan set as a compact 4-up grid (Rory's mockup), canonical 01–09 order.
             Tapping a chip selects it in the CURRENT mode (AI by default); the "View non-AI exact
             version" link under the preview flips the same sheet to its exact render and back. */}
         {!compact && (
@@ -11231,7 +11265,7 @@ export default function DesignGlossy({
                 : sectorAiMode
                 ? ` · Sector analysis (sheet 02) · ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label}`
                 : exactSheet === 'implementation'
-                ? ' · Implementation & phasing (sheet 08)'
+                ? ' · Implementation & phasing (sheet 09)'
                 : producerStyle
                 ? ` · ${filter === 'all' ? 'Whole design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label} · ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label}`
                 : analysisStyle
@@ -11346,7 +11380,7 @@ export default function DesignGlossy({
       )}
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
-        {/* Gemini note for the analytical sheets (01/02/08 in AI mode) — no Style, no engine. */}
+        {/* Gemini note for the analytical sheets (01/02/09 in AI mode) — no Style, no engine. */}
         {!producerStyle && analysisStyle && (
           <div style={{ fontSize: 11.5, opacity: 0.7 }}>
             {t('designGlossyGeminiNote')}
@@ -11418,7 +11452,7 @@ export default function DesignGlossy({
                   builders stay exported for a developer-level rollback, which is what they were
                   always for. */}
 
-              {/* (The old "Analysis maps · Gemini" chip row is RETIRED — Rory. Sheets 01/02/08 in
+              {/* (The old "Analysis maps · Gemini" chip row is RETIRED — Rory. Sheets 01/02/09 in
                   AI mode still use the Gemini analysis path via applySheet; only the extra picker
                   row (incl. the sheet-less Opportunities map) is gone.) */}
 

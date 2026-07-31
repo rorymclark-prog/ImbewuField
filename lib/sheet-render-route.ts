@@ -21,10 +21,14 @@ import type { GlossyLayerFilter } from '@/lib/glossy-filters';
 // unchanged.
 export const DEFAULT_PRODUCER_STYLE: StylePreset = 'precision_atlas';
 
-// The 8 plan-set sheets (docs/PLAN-SET-SPEC.md / DESIGN_SHEETS in DesignGlossy.tsx): three
-// analytical sheets with their own deterministic renderer (01 Site/base, 02 Sector/sector, 08
-// Phasing/implementation), and five design-layer sheets identified by GlossyLayerFilter (03 Zones,
-// 04 Water, 05 Planting, 06 Structures, 07 Whole/'all').
+// The 9 plan-set sheets (docs/PLAN-SET-SPEC.md / DESIGN_SHEETS in DesignGlossy.tsx): three
+// analytical sheets with their own deterministic renderer (01 Site/base, 02 Sector/sector, 09
+// Phasing/implementation), and six design-layer sheets identified by GlossyLayerFilter (03 Zones,
+// 04 Water, 05 Earthworks, 06 Planting, 07 Structures, 08 Whole/'all'). Earthworks split out of
+// Water as its own sheet (05, renumbering Planting/Structures/Whole/Phasing up one each) but needed
+// no new SheetRoutePath here — it is a { filter: GlossyLayerFilter } SheetSpec like every other
+// design-layer sheet, so it already falls through the generic (not 'exact' in sheet) branch below
+// and gets full Hybrid/Full Treatment support the same way Water and Planting do.
 export type SheetSpec =
   | { exact: 'base' | 'sector' | 'implementation' }
   | { filter: GlossyLayerFilter };
@@ -108,13 +112,13 @@ export function sheetRenderRoute(
   // mode is 'hybrid' | 'full' from here.
   //
   // THE THREE ANALYSIS SHEETS CANNOT RUN A MODEL-CHROME STYLE. Site (01), Sector (02) and Phasing
-  // (08) composite their own analysis marks, schedule text, labels and legend back over whatever
+  // (09) composite their own analysis marks, schedule text, labels and legend back over whatever
   // the model returns — that is the entire contract of composeSectorSheet and composePhasingSheet.
   // satellite_overlay's premise is the opposite: the model letters its own page. Running one
   // through the other produces two legends and two sets of labels fighting on one sheet.
   //
   // This rule used to live inside lockedPolishStyle, which applied it to EVERY sheet and so also
-  // blocked satellite_overlay on the five design-layer sheets where it is the whole point — the
+  // blocked satellite_overlay on the six design-layer sheets where it is the whole point — the
   // Full Treatment dead-end of e0bf17a. c252349 removed it from there, correctly, and did not put
   // it back anywhere, so applySheet's comment promising "a non-satellite_overlay producer style"
   // became untrue. It belongs here, where the sheet is known.

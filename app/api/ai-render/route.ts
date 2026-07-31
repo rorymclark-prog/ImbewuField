@@ -12,7 +12,7 @@ const GEMINI_MODELS = {
 } as const;
 type GeminiModel = keyof typeof GEMINI_MODELS;
 
-type RenderLayer = 'overall' | 'base' | 'sector' | 'zone' | 'water' | 'opportunity' | 'planting' | 'implementation';
+type RenderLayer = 'overall' | 'base' | 'sector' | 'zone' | 'water' | 'earthworks' | 'opportunity' | 'planting' | 'implementation';
 
 interface SurveyCtx {
   siteType?: string;
@@ -166,18 +166,44 @@ INCLUDE:
 • DRIP IRRIGATION: fine dashed blue lines running across vegetable garden beds. Small tap-point markers (⊕) at each connection. Label "Drip irrigation".
 • TAP POINTS: small ⊕ marker at house and garden tap locations.
 • SURFACE RUNOFF: bold blue arrows showing water flowing downhill following the visible slope. Arrows INSIDE the boundary ONLY.
-• SWALES ON CONTOUR: dashed blue lines running ACROSS the slope (not downhill). Label "Swale on contour — slow, spread, sink".
 • DAM / POND: if visible or suitable at lowest point, mark with a blue water body icon.
-• INFILTRATION BASIN: small basin symbol at the base of swales.
+• INFILTRATION BASIN / GREYWATER BASIN: small basin symbol where the supplied map marks one — these are the END of a water run and belong here.
 • Bottom note: "Water law: consult DWS before storing >100 kL"
 
 DO NOT:
 • Show zone badges (0–5) — suppress them entirely
 • Send overflow arrows toward the house foundations
-• Draw swales running downhill
+• Draw swales, contour berms, terraces or half-moon basins — LAND SHAPING HAS ITS OWN SHEET (05, Earthworks). If the supplied map shows one, leave it as the faint grey context it already is; do not promote it, colour it blue or label it.
 • Annotate anything outside the green boundary
 
 VISUAL RULE: Blue dominates. Mute all non-water features to very soft grey outlines only. Water movement must be easy to read at a glance.`;
+
+    // SHEET 05 — split out of 'water' when earthworks became its own layer. A swale is a
+    // SETTING-OUT drawing (contour, level, cut and fill), built first and with different plant
+    // from everything after it; printing it in irrigation blue on the water plan is what made a
+    // farmer unable to tell the trench from the pipework. Brown/ochre earth palette throughout,
+    // and NO tanks or pipes — those belong to sheet 04.
+    case 'earthworks':
+      return `MAP TYPE: EARTHWORKS & CONTOUR PLAN — "How is the land itself shaped, and in what order is it dug?"
+
+This is a CIVIL SETTING-OUT drawing, not a water-services drawing. Everything on it is moved earth.
+
+INCLUDE:
+• CONTOUR LINES: fine dashed lines following the land's true contour across the whole property, the quiet armature the whole sheet is read against.
+• SWALES ON CONTOUR: the trench and its downhill berm drawn as a PAIR — a cut line and a raised mound beside it, in earth brown/ochre, running ACROSS the slope and dead level. Label "Swale on contour — slow, spread, sink".
+• CONTOUR BERMS / BANKS: raised earth banks on contour, same brown family, with a visible mound shadow so a farmer can see which side is raised.
+• TERRACES: level platforms cut into the slope, each with its riser face shaded so the step reads clearly from above.
+• HALF-MOON BASINS: crescent earth bunds opening uphill to catch runoff.
+• CUT AND FILL: where a platform is cut, show the cut side darker and the filled side lighter — the single most useful thing on this sheet.
+• A short setting-out note: "Set out with an A-frame or line level. Check level along the full run before digging."
+
+DO NOT:
+• Draw tanks, pipes, taps, drip lines or greywater routes — those are sheet 04 (Water). If the supplied map shows them, leave them as faint grey context.
+• Draw zone badges (0–5), planting detail, crops or tree canopies beyond faint context.
+• Run any swale, berm or terrace downhill. They are level, always. A sloping swale is a washaway.
+• Invent a contour, a level or a slope percentage that is not derivable from the supplied map.
+
+VISUAL RULE: Earth tones dominate — ochre, umber, raw sienna. Blue appears NOWHERE except an optional thin runoff arrow. The sheet should read as a groundworks drawing a machine operator could set out from.`;
 
     case 'opportunity':
       return `MAP TYPE: OPPORTUNITY MAP — "Where are the best upgrades?"

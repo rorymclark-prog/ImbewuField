@@ -299,13 +299,20 @@ const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   designTankDailyUse: 'Daily use (ℓ)',
   designTankMethod: 'From this site’s 30-yr rainfall, 0.85 roof runoff. A typical year — size up for drought.',
   designTankEnterValues: 'Enter a roof area and daily use to size your tanks.',
-  designGlossyPlanSet: 'Your plan set · 8 sheets (01–08)',
+  // 9 sheets now (was 8): Earthworks (05) split out of Water as its own sheet, renumbering
+  // Planting/Structures/Whole/Phasing up one each — see lib/glossy-filters.ts.
+  designGlossyPlanSet: 'Your plan set · 9 sheets (01–09)',
   designGlossySheetNumber: 'sheet {number}',
   designGlossySheet: 'sheet',
   designGlossySheets: 'sheets',
+  // STILL FIVE, deliberately. Earthworks (05) has full AI support on its own sheet, but the
+  // one-tap BATCH stays at five: MAX_RENDER_SHEETS_PER_JOB is 5 and that number is enforced in
+  // firestore.rules as well as both render-job-contract copies, so a client that batches six
+  // would have every job rejected until those rules are deployed. Promising six here while
+  // sending five is the worse failure — the button would simply not do what it says.
   designGlossyGenerateFive: '✨ Generate 5 design sheets — AI (gpt-image-2)',
   designGlossyRenderingBackground: 'Rendering with gpt-image-2 in the background…',
-  designGlossyBatchNote: 'Whole · Zones · Water · Planting · Structures. Site & Phasing stay exact; Sector has an AI option on its own sheet — lands in your gallery in a few minutes.',
+  designGlossyBatchNote: 'Whole · Zones · Water · Planting · Structures. Site & Phasing stay exact; Sector and Earthworks each have an AI option on their own sheet — lands in your gallery in a few minutes.',
   designGlossyDrawing: 'Drawing…',
   designGlossyAllExact: 'All sheets — exact, no AI →',
   designGlossyStyle: 'Style',

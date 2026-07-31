@@ -18,7 +18,7 @@ import { WATER_ROUTE_STYLE } from '@/lib/water-cartography';
 // Per-layer glossy: 'all' = the whole design; the others render just one theme (with the
 // base map + ground context always kept so the picture is legible). Only the drawn marks in
 // the chosen layer are locked; everything else is repainted as background.
-export type GlossyLayerFilter = 'all' | 'water' | 'zones' | 'planting' | 'structures';
+export type GlossyLayerFilter = 'all' | 'water' | 'zones' | 'earthworks' | 'planting' | 'structures';
 
 /** Formal titles shared by every deterministic-chrome render path. Keep these separate from the
  * short tab labels: the Water tab should stay compact, while its printed sheet needs to say what
@@ -26,6 +26,7 @@ export type GlossyLayerFilter = 'all' | 'water' | 'zones' | 'planting' | 'struct
 export const REFERENCE_SHEET_LABEL: Record<GlossyLayerFilter, string> = {
   zones: 'Permaculture zone map',
   water: 'Water, greywater & irrigation',
+  earthworks: 'Earthworks & contour setting-out',
   planting: 'Planting & agroforestry',
   structures: 'Small livestock & infrastructure',
   all: 'Final integrated masterplan',
@@ -41,6 +42,7 @@ export type ExactPlanSheetKey =
   | 'sector'
   | 'zones'
   | 'water'
+  | 'earthworks'
   | 'planting'
   | 'structures'
   | 'all'
@@ -107,6 +109,18 @@ export const INTEGRATED_LEGEND_FAMILIES: ReadonlyArray<{
     matches: (def) =>
       (sheetForElement(def.category, def.id) === 'water' && def.category === 'earthworks')
       || (sheetsForElement(def.category, def.id).includes('water') && /pond|basin|banana circle/i.test(def.name)),
+  },
+  {
+    // THE EARTHWORKS SPLIT'S OWN LEGEND FAMILY. The family above used to catch every
+    // earthworks-category element, because sheetForElement sent them all to 'water'. The moment
+    // swale, contour berm, terrace and half-moon moved to their own sheet, that clause stopped
+    // matching them and they matched NO family at all — so on the integrated masterplan they were
+    // still drawn at full strength with zero legend representation. A mark on the map that the
+    // legend cannot account for is the exact failure legend-map-agreement exists to catch, and it
+    // caught this. Keyed off the SHEET rather than the category so it cannot drift from
+    // sheetForElement the way a hand-listed defId set would.
+    text: 'Land-shaping earthworks', swatch: '#A9743F', section: 'WATER',
+    matches: (def) => sheetForElement(def.category, def.id) === 'earthworks',
   },
   {
     text: 'Production beds & crops', swatch: '#6E7F45', section: 'PLANTING',
@@ -249,16 +263,22 @@ export function exactSheetZoneLegendGroups(
   return groups;
 }
 
-// NOTE: 'earthworks' is deliberately NOT its own glossy/print layer — it folds into 'water'.
-// A GlossyLayerFilter is not just a UI filter: FILTER_TO_LAYER below maps it to the API's
-// RenderLayer union ('overall'|'base'|'sector'|'zone'|'water'|'opportunity'|'planting'|
-// 'implementation'), which has no earthworks theme, and an unmapped filter falls through to the
-// full-design theme — the exact bug that made the AI invent ponds and orchards on a layer map.
-// Folding into 'water' is also the honest reading: earthworks IS the water layer's land-shaping
-// (basins, berms and banana circles are how water is slowed, spread and sunk), and the water
-// theme's blue-green "water plan" wash suits them. 'structures' already folds to 'overall' the
-// same way. Adding a real earthworks layer means an API-side RenderLayer + layerTheme prompt
-// block first — see docs/DESIGN-TAXONOMY.md.
+// EARTHWORKS IS NOW ITS OWN SHEET (05). It used to fold into 'water', and the note here recorded
+// the two prerequisites for splitting it out: an API-side RenderLayer plus a layerTheme prompt
+// block, because FILTER_TO_LAYER maps a GlossyLayerFilter onto the API's RenderLayer union and an
+// UNMAPPED filter falls through to the full-design theme — the bug that made the AI invent ponds
+// and orchards on a layer map. Both now exist (app/api/ai-render/route.ts), so the fold is gone.
+//
+// Why separate, in Rory's words: "is this traditional for permaculture to have a separate layer".
+// It is. Earthworks is a SETTING-OUT drawing — contour, level, cut and fill — built first and with
+// different plant (a machine or a team with an A-frame) from everything that follows. Water is a
+// services drawing: tanks, pipes, taps, routes. Reading them off one sheet is what made a swale
+// print in irrigation blue instead of cut-and-fill brown.
+//
+// The split is LAND-SHAPING ONLY (Rory's call). Swale, contour berm, terrace and half-moon move to
+// Earthworks. Greywater and infiltration basins STAY on Water: a farmer reads them as the end of
+// the greywater run, not as civil works. The five planting beds keep their existing overrides
+// below. 'structures' still folds to 'overall'.
 // PER-ELEMENT OVERRIDES, because filing by CATEGORY is the wrong grain. 'earthworks' is a build
 // category — how the ground is shaped — and it mixes two things a farmer reads on different sheets:
 // water-shaping (swale berms, infiltration and greywater basins, contour berms) and PLANTING beds
@@ -271,15 +291,23 @@ export function exactSheetZoneLegendGroups(
 // changed the legend HEADING but not which sheet the element was drawn on — hence a sheet titled
 // WATER PLAN carrying a legend section headed PLANTING. This is that same knowledge applied one
 // level up, where it decides the sheet instead of the caption.
-// These five are the whole of it: every OTHER earthworks element (greywater_basin,
-// infiltration_basin, half_moon, berm, terrace) really is water-shaping and correctly stays on the
-// Water sheet. Vetiver Bank needs no entry — it is already category 'growing'.
+// Vetiver Bank needs no entry — it is already category 'growing'. greywater_basin and
+// infiltration_basin need none either: they are the only 'earthworks' elements that stay on Water,
+// which is what the category now falls through to... except the category's DEFAULT is Earthworks
+// (see sheetForElement), so they are listed explicitly here instead. Everything is now on this
+// table by name, which is the honest state of affairs for a category this mixed.
 const SHEET_OVERRIDE: Record<string, GlossyLayerFilter> = {
+  // Earth-shaped PLANTING beds — built by hand, filled with compost, planted at once.
   banana_circle: 'planting',
   tree_basin: 'planting',
   raised_bed: 'planting',
   keyhole_bed: 'planting',
   herb_spiral: 'planting',
+  // The two basins a farmer reads as the END OF A WATER RUN rather than as civil works. Dug, yes,
+  // but a greywater basin without the greywater line that feeds it is meaningless, and that line
+  // lives on the Water sheet.
+  greywater_basin: 'water',
+  infiltration_basin: 'water',
 };
 
 type ElementLayerSheet = Exclude<GlossyLayerFilter, 'all' | 'zones'>;
@@ -300,8 +328,11 @@ export function sheetForElement(category: string, defId?: string): ElementLayerS
   if (defId && SHEET_OVERRIDE[defId]) return SHEET_OVERRIDE[defId] as ElementLayerSheet;
   switch (category) {
     case 'water':
-    case 'earthworks':
       return 'water';
+    // Land-shaping is its own sheet now (05). The two basins that read as water infrastructure
+    // rather than civil works are pulled back to Water by SHEET_OVERRIDE above.
+    case 'earthworks':
+      return 'earthworks';
     case 'growing':
       return 'planting';
     case 'structure':
@@ -367,7 +398,17 @@ export function lineInFilter(kind: string, filter: GlossyLayerFilter): boolean {
     case 'all':
       return true;
     case 'water':
-      return kind === 'swale' || kind === 'pipe' || kind === 'drip' || kind === 'greywater';
+      // Swale is NOT here any more — it is the one line kind that is dug rather than plumbed, and
+      // it moved with the rest of the land-shaping to sheet 05.
+      return kind === 'pipe' || kind === 'drip' || kind === 'greywater';
+    // THE SWALE IS A LINE, NOT AN ELEMENT — the half of the earthworks split that sheetForElement
+    // cannot reach. Elements (berm, terrace, half-moon) route by category; a swale is a LineShape
+    // and routes only through here. Missing it meant layerContentCount('earthworks') read 0 on a
+    // farm whose earthworks are entirely swales, so the sheet would refuse to render as empty, and
+    // no swale could ever appear in the Earthworks legend — the sheet would have shipped broken
+    // for the single most common earthwork there is.
+    case 'earthworks':
+      return kind === 'swale';
     case 'planting':
       // A bed path is part of the veg garden it separates — same reasoning that put the KIND on
       // the planting LAYER (lib/design-canvas.ts). Missing here, every bed path a farmer placed

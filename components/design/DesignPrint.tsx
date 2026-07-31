@@ -1,16 +1,16 @@
 'use client';
 
 // Design Studio — Print / Export composer. Turns the EXACT (deterministic) design maps into a
-// publishable plan set: the canonical 8-map package (docs/PLAN-SET-SPEC.md), each a print page with
+// publishable plan set: the canonical 9-map package (docs/PLAN-SET-SPEC.md), each a print page with
 // a numbered title block, then a multi-page PDF or per-sheet PNGs. Everything is deterministic (no
 // AI) so the output is always correct and print-ready.
 //
 // TWO kinds of page:
-//  • SELF-CHROMED sheets (02 Sector, 03 Zones, 04 Water, 05 Planting, 06 Structures, 08
-//    Implementation) already carry their own legend / scale / north from the Blueprint chrome, so
+//  • SELF-CHROMED sheets (02 Sector, 03 Zones, 04 Water, 05 Earthworks, 06 Planting, 07 Structures,
+//    09 Implementation) already carry their own legend / scale / north from the Blueprint chrome, so
 //    the page just adds a numbered title strip and letterboxes the sheet FULL WIDTH (no paper
 //    legend column — that would double-chrome).
-//  • PAPER-FURNITURE sheets (01 Base, 07 Masterplan) are plain composites, so the page draws the
+//  • PAPER-FURNITURE sheets (01 Base, 08 Masterplan) are plain composites, so the page draws the
 //    title block + legend column + scale bar + north arrow around them, as before.
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
@@ -25,6 +25,7 @@ import {
   buildBlueprintSectorMap,
   buildBlueprintZoneMap,
   buildBlueprintWaterMap,
+  buildBlueprintEarthworksMap,
   buildBlueprintPlantingMap,
   buildBlueprintStructuresMap,
   buildImplementationMap,
@@ -61,7 +62,7 @@ const DARK = '#0B120B';
 
 type PrintLayer = {
   key: string;
-  no: string; // '01'..'08'
+  no: string; // '01'..'09'
   label: string;
   selfChromed: boolean; // sheet carries its own legend/scale/north (a Blueprint sheet)
   render: (state: DesignCanvasState, frame: CanvasFrame, refLayers: RefLayers, site: SectorSite | null, placeName?: string) => Promise<string>;
@@ -70,16 +71,21 @@ type PrintLayer = {
   drawDesign?: boolean;
 };
 
-// The canonical 8-map package, in order (docs/PLAN-SET-SPEC.md). Analysis (02) precedes design.
+// The canonical 9-map package, in order (docs/PLAN-SET-SPEC.md). Analysis (02) precedes design.
 const PRINT_LAYERS: PrintLayer[] = [
   { key: 'base', no: '01', label: 'Existing Site & Base', selfChromed: false, filter: 'all', drawDesign: false, render: (s, f, r) => buildComposite(s, f, r, 'all', false) },
   { key: 'sector', no: '02', label: 'Sector Analysis', selfChromed: true, render: (s, f, r, site, pn) => buildBlueprintSectorMap(s, f, r, site, pn) },
   { key: 'zones', no: '03', label: 'Permaculture Zones', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintZoneMap(s, f, r, pn) },
   { key: 'water', no: '04', label: 'Water & Irrigation', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintWaterMap(s, f, r, pn) },
-  { key: 'planting', no: '05', label: 'Planting & Agroforestry', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintPlantingMap(s, f, r, pn) },
-  { key: 'structures', no: '06', label: 'Livestock & Infrastructure', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintStructuresMap(s, f, r, pn) },
-  { key: 'all', no: '07', label: 'Integrated Masterplan', selfChromed: false, filter: 'all', drawDesign: true, render: (s, f, r) => buildComposite(s, f, r, 'all', true) },
-  { key: 'implementation', no: '08', label: 'Implementation & Phasing', selfChromed: true, render: (s, f, r, site, pn) => buildImplementationMap(s, f, r, site, pn) },
+  // Sheet 05, NEW. Earthworks is the land-shaping / contour setting-out sheet split out of Water —
+  // swale, contour berm, terrace and half-moon now print here instead (SHEET_OVERRIDE keeps the
+  // two basin types on Water). Same pattern as the other filter-based layer sheets: the exact
+  // Blueprint builder for the 'earthworks' GlossyLayerFilter, self-chromed like its siblings.
+  { key: 'earthworks', no: '05', label: 'Earthworks & Contour Setting-Out', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintEarthworksMap(s, f, r, pn) },
+  { key: 'planting', no: '06', label: 'Planting & Agroforestry', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintPlantingMap(s, f, r, pn) },
+  { key: 'structures', no: '07', label: 'Livestock & Infrastructure', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintStructuresMap(s, f, r, pn) },
+  { key: 'all', no: '08', label: 'Integrated Masterplan', selfChromed: false, filter: 'all', drawDesign: true, render: (s, f, r) => buildComposite(s, f, r, 'all', true) },
+  { key: 'implementation', no: '09', label: 'Implementation & Phasing', selfChromed: true, render: (s, f, r, site, pn) => buildImplementationMap(s, f, r, site, pn) },
 ];
 
 // A sheet is exportable only when it has something true to say — mirrors the Glossy generate-all
@@ -87,10 +93,10 @@ const PRINT_LAYERS: PrintLayer[] = [
 // plan set must never show a confident page built on nothing).
 function isLayerAvailable(layer: PrintLayer, state: DesignCanvasState, refLayers: RefLayers, site: SectorSite | null): boolean {
   if (layer.key === 'implementation') return buildPhasePlan(state, refLayers, site).phases.length > 0;
-  if (layer.key === 'zones' || layer.key === 'water' || layer.key === 'planting' || layer.key === 'structures') {
+  if (layer.key === 'zones' || layer.key === 'water' || layer.key === 'earthworks' || layer.key === 'planting' || layer.key === 'structures') {
     return layerContentCount(state, refLayers, layer.key) > 0;
   }
-  return true; // 01 base · 02 sector · 07 masterplan are always meaningful (satellite + boundary + energies)
+  return true; // 01 base · 02 sector · 08 masterplan are always meaningful (satellite + boundary + energies)
 }
 
 // Paper pixel sizes at ~150 DPI, portrait [w, h].

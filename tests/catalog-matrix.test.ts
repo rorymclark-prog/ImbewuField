@@ -196,7 +196,7 @@ test('LAYER TOGGLE: every catalog category resolves to a defined activeLayers ke
   }
 });
 
-// ── System 1 + 2 + 3 cross-check: the deliberate three-way divergence ──────────────────────
+// ── System 1 + 2 + 3 cross-check: the deliberate divergence ────────────────────────────────
 //
 // A raised bed, keyhole bed, herb spiral, banana circle and tree basin are category 'earthworks'
 // (WIZARD STEP + LAYER TOGGLE = 'water', via CATEGORY_STEP/categoryLayerKey) but SHEET_OVERRIDE'd
@@ -204,21 +204,55 @@ test('LAYER TOGGLE: every catalog category resolves to a defined activeLayers ke
 // to find them printed where he plants, not where he dug (lib/design-elements.ts's own comment on
 // CATEGORY_STEP). This is DESIGNED behaviour, twice adversarially reviewed (2026-07-21) after an
 // earlier version conflated "which step placed it" with "which sheet it prints on" and locked
-// these five elements the instant they were placed. Locking in the exact divergent set here means
-// a future change that collapses it back to one answer — reintroducing that exact bug — fails a
-// test instead of shipping quietly.
-test('the SHEET_OVERRIDE five are the ONLY elements where step, layer toggle and output sheet all disagree', () => {
+// these five elements the instant they were placed — step, layer toggle and output sheet all
+// three disagree for this group.
+//
+// The Earthworks sheet split (05, docs/PLAN-SET-SPEC.md) added a SECOND, differently-shaped
+// divergence: half_moon, berm and terrace are also category 'earthworks' (step = Water) but their
+// OUTPUT SHEET is now the new 'earthworks' sheet — the same answer as their LAYER TOGGLE. Unlike
+// the five SHEET_OVERRIDE beds, only their step disagrees; layer toggle and output sheet now
+// agree with each other. Both groups still trip the same step-vs-sheet filter below, so this test
+// locks in the WHOLE eight-element divergent set, split into its two distinct shapes, so a future
+// change that collapses either group back to agreement — or blurs the difference between them —
+// fails a test instead of shipping quietly.
+test('eight elements diverge from their wizard step: five three-way (SHEET_OVERRIDE beds) and three step-only (Earthworks-native land-shaping)', () => {
   const divergent = CATALOG
     .filter((def) => CATEGORY_STEP[def.category] !== sheetForElement(def.category, def.id))
     .map((def) => def.id)
     .sort();
-  assert.deepEqual(divergent, ['banana_circle', 'herb_spiral', 'keyhole_bed', 'raised_bed', 'tree_basin']);
-  for (const id of divergent) {
+  assert.deepEqual(divergent, ['banana_circle', 'berm', 'half_moon', 'herb_spiral', 'keyhole_bed', 'raised_bed', 'terrace', 'tree_basin']);
+
+  const SHEET_OVERRIDE_BEDS = ['banana_circle', 'herb_spiral', 'keyhole_bed', 'raised_bed', 'tree_basin'];
+  const EARTHWORKS_NATIVE = ['berm', 'half_moon', 'terrace'];
+  assert.deepEqual(
+    [...SHEET_OVERRIDE_BEDS, ...EARTHWORKS_NATIVE].sort(),
+    divergent,
+    'the two groups must together account for every divergent element, with no third kind hiding in the count',
+  );
+
+  for (const id of SHEET_OVERRIDE_BEDS) {
     const def = CATALOG.find((d) => d.id === id)!;
     assert.equal(def.category, 'earthworks', `${id} should be category 'earthworks'`);
     assert.equal(CATEGORY_STEP[def.category], 'water', `${id} step should be Water`);
     assert.equal(CATEGORY_LAYER_KEY[def.category], 'earthworks', `${id} layer toggle should be Earthworks`);
     assert.equal(sheetForElement(def.category, id), 'planting', `${id} output sheet should be Planting`);
+    assert.notEqual(
+      CATEGORY_LAYER_KEY[def.category],
+      sheetForElement(def.category, id),
+      `${id} layer toggle and output sheet must ALSO disagree with each other — the three-way divergence`,
+    );
+  }
+  for (const id of EARTHWORKS_NATIVE) {
+    const def = CATALOG.find((d) => d.id === id)!;
+    assert.equal(def.category, 'earthworks', `${id} should be category 'earthworks'`);
+    assert.equal(CATEGORY_STEP[def.category], 'water', `${id} step should be Water`);
+    assert.equal(CATEGORY_LAYER_KEY[def.category], 'earthworks', `${id} layer toggle should be Earthworks`);
+    assert.equal(sheetForElement(def.category, id), 'earthworks', `${id} output sheet should be Earthworks`);
+    assert.equal(
+      CATEGORY_LAYER_KEY[def.category],
+      sheetForElement(def.category, id),
+      `${id} layer toggle and output sheet now AGREE — only the wizard step disagrees`,
+    );
   }
 });
 
@@ -280,11 +314,18 @@ test('LEGEND presence: every catalog element passes the same itemInFilter gate s
 // (decoupled from the narrower FEATURE_VISUALS symbol/scale map that used to double as its only
 // source), matching waterLegendSectionForFeature / plantingLegendSectionForFeature's idiom — every
 // Water, Planting AND Structures element now gets a named legend section.
+//
+// The Earthworks sheet split moved half_moon, berm and terrace off Water onto the new 'earthworks'
+// output sheet (lib/glossy-filters.ts's sheetForElement). There is no earthworks-cartography.ts
+// section registry (this system is explicitly scoped to water/planting/structures, per its own
+// name), so those three are out of scope here rather than silently ungrouped — System 6a's LEGEND
+// PRESENCE test above still guarantees they get a legend row on their own Earthworks sheet.
 
 test('LEGEND section grouping: water, planting and structures each section every element', () => {
   const ungroupedByOutputSheet: Record<LayerSheet, string[]> = { water: [], planting: [], structures: [] };
   for (const def of CATALOG) {
-    const sheet = sheetForElement(def.category, def.id) as LayerSheet;
+    const sheet = sheetForElement(def.category, def.id);
+    if (sheet !== 'water' && sheet !== 'planting' && sheet !== 'structures') continue; // Earthworks: out of this system's scope, see comment above
     if (legendSection(def.id, sheet) === null) ungroupedByOutputSheet[sheet].push(def.id);
   }
   assert.deepEqual(ungroupedByOutputSheet.water, [], 'every Water element should have a named legend section');

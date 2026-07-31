@@ -15,7 +15,8 @@ import { lineInFilter } from '../lib/glossy-filters.ts';
 // because you added a kind to that union: add it here AND decide which step owns it.
 
 const ALL_LINE_KINDS = ['swale', 'fence', 'path', 'bedpath', 'pipe', 'drip', 'windbreak', 'greywater'] as const;
-const OWNING_FILTERS = ['water', 'planting', 'structures'] as const;
+// Earthworks (05) owns the swale since the land-shaping split out of Water.
+const OWNING_FILTERS = ['water', 'earthworks', 'planting', 'structures'] as const;
 
 test('every line kind is OWNED by at least one step — no kind may be a permanent ghost', () => {
   for (const kind of ALL_LINE_KINDS) {

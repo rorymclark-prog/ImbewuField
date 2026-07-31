@@ -33,7 +33,7 @@ const JOB_TTL_MS = 30 * 24 * 60 * 60 * 1000;
 
 /** What the caller hands enqueueRenderJob per sheet — the built composite + the full model prompt. */
 export interface RenderSheetSpec {
-  key: string; // stable per-layer id: 'all' | 'water' | 'zones' | 'planting' | 'structures'
+  key: string; // stable per-layer id: 'all' | 'water' | 'zones' | 'earthworks' | 'planting' | 'structures'
   label: string;
   prompt: string; // the complete prompt (built client-side so all prompt logic stays here)
   compositeDataUrl: string; // data:image/png;base64,… — the model input

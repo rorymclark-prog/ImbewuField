@@ -5,6 +5,11 @@ export const RENDER_SHEET_KEYS = [
   'all',
   'water',
   'zones',
+  // Earthworks (sheet 05) split out of Water with full AI support. This is the SERVER-side copy of
+  // the key allow-list — the actual billing/security authority — and it must stay identical to
+  // lib/render-job-contract.ts. tests/render-jobs.test.ts's cross-bundle drift check exists
+  // precisely to catch a one-sided edit here, and it did.
+  'earthworks',
   'planting',
   'structures',
   'sector',

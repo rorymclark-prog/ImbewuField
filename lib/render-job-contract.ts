@@ -7,6 +7,19 @@ export const RENDER_SHEET_KEYS = [
   'all',
   'water',
   'zones',
+  // Earthworks (05) split out of Water and got full AI support (Hybrid + Full Treatment), so its
+  // per-sheet queue jobs (key 'earthworks', via sheetRenderRoute's 'one-via-queue' path) need to
+  // pass this contract's key allow-list — otherwise renderSheetContractError rejects every
+  // Earthworks AI render with "Unknown render sheet" before it ever reaches the worker. This is a
+  // plain string array, not typed against GlossyLayerFilter, so tsc could not have caught the gap.
+  //
+  // functions/src/render-job-contract.ts is a second, independent copy of this same list (Cloud
+  // Functions has its own deployment bundle and cannot import this file — see that file's header
+  // comment). It carries the identical 'earthworks' entry; tests/render-jobs.test.ts's
+  // cross-bundle drift check enforces that the two stay in step, and caught it when only this
+  // side had been updated. The Functions change is in the source tree but is NOT live until the
+  // functions bundle is deployed.
+  'earthworks',
   'planting',
   'structures',
   'sector',

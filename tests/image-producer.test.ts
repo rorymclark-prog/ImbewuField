@@ -713,9 +713,11 @@ test('an empty element list is refused, never sent', () => {
 });
 
 test('every AI sheet number matches the canonical plan set, none collide', () => {
-  // Previously all=01 zones=02 water=03 planting=04 structures=05 — and every one of those numbers
-  // was a DIFFERENT sheet in the printed set (02 is Sector Analysis, not Zones).
-  assert.deepEqual(SHEET_NO, { zones: '03', water: '04', planting: '05', structures: '06', all: '07' });
+  // Originally all=01 zones=02 water=03 planting=04 structures=05 — and every one of those numbers
+  // was a DIFFERENT sheet in the printed set (02 is Sector Analysis, not Zones). Renumbered once to
+  // zones=03 water=04 planting=05 structures=06 all=07, then again when Earthworks became its own
+  // sheet (05, docs/PLAN-SET-SPEC.md) and everything from Planting on shifted up by one.
+  assert.deepEqual(SHEET_NO, { zones: '03', water: '04', earthworks: '05', planting: '06', structures: '07', all: '08' });
   assert.equal(new Set(Object.values(SHEET_NO)).size, Object.keys(SHEET_NO).length, 'numbers must be unique');
 });
 

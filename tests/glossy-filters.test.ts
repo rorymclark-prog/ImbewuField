@@ -23,7 +23,9 @@ import { waterRouteStyleFor } from '../lib/water-cartography.ts';
 // false for every category reached production and produced a "ZONES PLAN" with no zones on it and a
 // legend of invented tanks and veg beds. This file is that missing guard.
 
-const LAYER_SHEETS: GlossyLayerFilter[] = ['water', 'planting', 'structures'];
+// The design-layer sheets a line/element can be OWNED by. Earthworks (05) joined when the
+// land-shaping split out of Water — a swale is owned here now, not by Water.
+const LAYER_SHEETS: GlossyLayerFilter[] = ['water', 'earthworks', 'planting', 'structures'];
 const LINE_KINDS = ['swale', 'fence', 'path', 'pipe', 'drip', 'windbreak', 'greywater'] as const;
 
 test('every catalog element has exactly one primary layer sheet', () => {
@@ -103,7 +105,13 @@ test('subtropical planting palette hides deprecated and wrong-climate fruit tree
 
 // The regression Rory reported directly: "the farmer places a Banana Circle from the Planting step,
 // then finds it on sheet 04 Water & Irrigation, not on 05 Planting & Agroforestry."
-test('earth-shaped beds are planting, while integrated basins also belong on Water', () => {
+//
+// The Earthworks sheet split (05, docs/PLAN-SET-SPEC.md) moved half_moon, berm and terrace off
+// Water onto the new dedicated Earthworks sheet — land-shaping only, per Rory's call ("is this
+// traditional for permaculture to have a separate layer" — it is: contour, level, cut and fill,
+// built first, different plant from irrigation). greywater_basin and infiltration_basin STAY on
+// Water: a farmer reads them as the end of a water run, not as civil works.
+test('earth-shaped beds are planting, integrated basins belong on Water, and land-shaping earthworks belong on Earthworks', () => {
   for (const id of ['banana_circle', 'tree_basin']) {
     const def = ELEMENT_CATALOG.find((d) => d.id === id);
     assert.ok(def, `${id} vanished from the catalog`);
@@ -116,10 +124,15 @@ test('earth-shaped beds are planting, while integrated basins also belong on Wat
     assert.equal(sheetForElement(def.category, id), 'planting', `${id} should be on the Planting sheet`);
     assert.equal(itemInFilter(def.category, 'water', id), false, `${id} stays Water context, not content`);
   }
-  for (const id of ['greywater_basin', 'infiltration_basin', 'half_moon', 'berm', 'terrace']) {
+  for (const id of ['greywater_basin', 'infiltration_basin']) {
     const def = ELEMENT_CATALOG.find((d) => d.id === id);
     assert.ok(def, `${id} vanished from the catalog`);
-    assert.equal(sheetForElement(def!.category, id), 'water', `${id} shapes land for WATER and belongs on Water`);
+    assert.equal(sheetForElement(def!.category, id), 'water', `${id} reads as the end of a water run and belongs on Water`);
+  }
+  for (const id of ['half_moon', 'berm', 'terrace']) {
+    const def = ELEMENT_CATALOG.find((d) => d.id === id);
+    assert.ok(def, `${id} vanished from the catalog`);
+    assert.equal(sheetForElement(def!.category, id), 'earthworks', `${id} is land-shaping and belongs on the Earthworks sheet, not Water`);
   }
 });
 
@@ -214,9 +227,18 @@ test('a greywater run is a real line kind, and it belongs to the water sheet', (
   assert.equal(lineInFilter('greywater', 'all'), true, 'the masterplan carries everything');
 });
 
-test('every Water-sheet line has deterministic cartography and no non-Water line does', () => {
+test('every routed line has deterministic cartography, and no unrouted line does', () => {
+  // WAS "Water-sheet line". The invariant is unchanged in strength — a line kind must have a
+  // deterministic route style if and only if it is drawn on a sheet that draws routes — but there
+  // are TWO such sheets now. The swale kept its entry in the route table and moved sheets: it is
+  // dug, not plumbed, so it prints on Earthworks (05) in cut-and-fill brown via
+  // EARTHWORKS_ROUTE_STYLE instead of on Water in irrigation blue. Asserting against 'water'
+  // alone would now force the wrong repair — deleting the swale's cartography — which is the exact
+  // mistake a test like this exists to prevent.
+  const ROUTE_SHEETS = ['water', 'earthworks'] as const;
   for (const kind of LINE_KINDS) {
-    assert.equal(Boolean(waterRouteStyleFor(kind)), lineInFilter(kind, 'water'), kind);
+    const routed = ROUTE_SHEETS.some((sheet) => lineInFilter(kind, sheet));
+    assert.equal(Boolean(waterRouteStyleFor(kind)), routed, kind);
   }
 });
 
@@ -224,7 +246,7 @@ test('every line kind still lands on exactly one layer sheet', () => {
   // Re-stated for the widened union: adding a kind must not silently orphan or double-file it.
   const KINDS = ['swale', 'fence', 'path', 'pipe', 'drip', 'windbreak', 'greywater'] as const;
   for (const kind of KINDS) {
-    const on = (['water', 'planting', 'structures'] as const).filter((f) => lineInFilter(kind, f));
+    const on = (['water', 'earthworks', 'planting', 'structures'] as const).filter((f) => lineInFilter(kind, f));
     assert.equal(on.length, 1, `${kind} is on ${on.length} sheets (${on.join('+') || 'none'})`);
   }
 });

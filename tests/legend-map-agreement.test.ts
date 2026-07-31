@@ -29,11 +29,22 @@ const SHEETS: ExactPlanSheetKey[] = [
   'sector',
   'zones',
   'water',
+  'earthworks',
   'planting',
   'structures',
   'all',
   'implementation',
 ];
+
+// Sheets the Satellite Overlay AI prompt actually covers. lib/overlay-elements.ts's own
+// OVERLAY_FILTERS set was NOT touched by the Earthworks sheet split — its header comment already
+// documented "the three exact sheets that never use Satellite Overlay" (base, sector,
+// implementation) as a deliberate exclusion, and Earthworks is now a fourth: it prints
+// deterministically today with no Satellite Overlay AI prompt inventory to agree with at all
+// (DesignGlossy.tsx's own modelFilters list — the sheets queued for that style — excludes it too).
+// Excluding it here is that same deliberate scoping, not a weaker check: the agreement test below
+// still holds full strength for every sheet Satellite Overlay actually renders.
+const SATELLITE_OVERLAY_SHEETS = SHEETS.filter((sheet) => sheet !== 'earthworks');
 
 function allCatalogFixture(): DesignCanvasState {
   const base = buildDemoDesignCanvasState();
@@ -77,7 +88,7 @@ test('context opacity is always below the explicit full-strength legend boundary
 });
 
 for (const fixture of FIXTURES) {
-  test(`${fixture.name}: all eight exact sheets keep full-strength map content and legend counts in agreement`, () => {
+  test(`${fixture.name}: all nine exact sheets keep full-strength map content and legend counts in agreement`, () => {
     for (const sheet of SHEETS) {
       const registered = fixture.state.items.map((item) => {
         const def = ELEMENTS_BY_ID[item.defId];
@@ -146,7 +157,7 @@ for (const fixture of FIXTURES) {
   });
 
   test(`${fixture.name}: AI prompt inventory and exact legend agree in both directions on all eight sheets`, () => {
-    for (const sheet of SHEETS) {
+    for (const sheet of SATELLITE_OVERLAY_SHEETS) {
       const prompt = overlayElementsText(fixture.state, PROMPT_REF_LAYERS, sheet);
       const legend = exactSheetElementLegendGroups(fixture.state, sheet);
 

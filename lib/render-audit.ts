@@ -34,7 +34,7 @@ export type RenderAuditOutcome = 'kept' | 'rejected' | 'unscored' | 'blocked';
 export interface RenderAuditEntry {
   /** ISO timestamp, supplied by the caller — this module stays free of clocks so it can be tested. */
   at: string;
-  /** Which of the eight sheets. */
+  /** Which of the nine sheets (free-form key, not a union — Earthworks (05) needs no change here). */
   sheetKey: string;
   stage: PaidRenderStage;
   /** What the farmer asked for, which is the whole point: 'full' here with no polish entry is the bug. */

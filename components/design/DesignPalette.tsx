@@ -469,6 +469,63 @@ export default function DesignPalette({
     if (!el) return;
     setStripAtEnd(el.scrollLeft + el.clientWidth >= el.scrollWidth - 2);
   }, []);
+
+  // TWO MODES FOR THE ELEMENT CHIPS — docked strip, or a floating panel you can drag out of the
+  // way (Rory: "move these chips to the side in a movable hovering modal of its own so we can have
+  // two modes and you just scroll down"). The docked strip is one horizontal scroller: fine for a
+  // handful of chips, but Pro on the Structures step carries thirty-odd, and a farmer hunting for
+  // "Kraal" is scrolling sideways past everything else. Floating turns the same chips into a
+  // wrapped grid you scroll DOWNWARD, parked wherever there is dead space on the map.
+  //
+  // Both modes render the SAME chip nodes — built once in renderElementCatalog and handed to
+  // whichever shell is active — so a chip can never behave differently depending on where it sits.
+  const [chipsFloating, setChipsFloating] = useState(false);
+  const [floatPos, setFloatPos] = useState<{ x: number; y: number }>({ x: 16, y: 96 });
+  const floatDragRef = useRef<{ dx: number; dy: number } | null>(null);
+  // Mode and position persist: a farmer who parks the panel bottom-right expects it there on the
+  // next step and the next session, not re-centred every render.
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem('imbewu_palette_float');
+      if (!raw) return;
+      const saved = JSON.parse(raw) as { floating?: boolean; x?: number; y?: number };
+      if (typeof saved.floating === 'boolean') setChipsFloating(saved.floating);
+      if (Number.isFinite(saved.x) && Number.isFinite(saved.y)) {
+        setFloatPos({ x: saved.x as number, y: saved.y as number });
+      }
+    } catch { /* corrupt or unavailable storage — the defaults above are already correct */ }
+  }, []);
+  useEffect(() => {
+    try {
+      localStorage.setItem('imbewu_palette_float', JSON.stringify({ floating: chipsFloating, ...floatPos }));
+    } catch { /* private mode / quota — position is a convenience, never worth throwing over */ }
+  }, [chipsFloating, floatPos]);
+  // Drag on window, not on the header: a pointer that outruns the 8px header (easy on a phone)
+  // must not drop the panel mid-move. Clamped so the panel can never be dragged fully off-screen
+  // and stranded — losing your palette behind the viewport edge is unrecoverable without storage
+  // surgery.
+  useEffect(() => {
+    if (!floatDragRef.current) return undefined;
+    const onMove = (e: PointerEvent) => {
+      const d = floatDragRef.current;
+      if (!d) return;
+      const PANEL_W = 300;
+      setFloatPos({
+        x: Math.max(8, Math.min(window.innerWidth - 72, e.clientX - d.dx)),
+        y: Math.max(8, Math.min(window.innerHeight - 72, e.clientY - d.dy)),
+      });
+      void PANEL_W;
+    };
+    const onUp = () => { floatDragRef.current = null; };
+    window.addEventListener('pointermove', onMove);
+    window.addEventListener('pointerup', onUp);
+    window.addEventListener('pointercancel', onUp);
+    return () => {
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('pointerup', onUp);
+      window.removeEventListener('pointercancel', onUp);
+    };
+  });
   // Phone bottom-sheet open/collapsed state (see the module comment for why phone gets a
   // different root entirely). Defaults OPEN: the whole reason this sheet exists is that the
   // element catalog must be visible with no extra action required — that was exactly what broke
@@ -1242,11 +1299,164 @@ export default function DesignPalette({
     );
   }
 
+
+  /** The chips as a draggable, vertically-scrolling panel over the map. Portalled to <body> for
+   *  the same reason the species picker is: this panel's ancestors include the tool row's
+   *  overflow:hidden scroller, which would clip it to a sliver. */
+  function renderFloatingChipPanel(chipNodes: React.ReactNode): React.ReactNode {
+    if (typeof document === 'undefined') return null;
+    return createPortal(
+      <div
+        style={{
+          position: 'fixed',
+          left: floatPos.x,
+          top: floatPos.y,
+          width: 300,
+          maxWidth: 'calc(100vw - 16px)',
+          maxHeight: '52dvh',
+          background: PAPER,
+          border: '1px solid rgba(0,0,0,0.12)',
+          borderRadius: 12,
+          boxShadow: '0 8px 28px rgba(0,0,0,0.22)',
+          display: 'flex',
+          flexDirection: 'column',
+          zIndex: 900,
+          overflow: 'hidden',
+        }}
+      >
+        <div
+          onPointerDown={(e) => {
+            floatDragRef.current = { dx: e.clientX - floatPos.x, dy: e.clientY - floatPos.y };
+            // Force the drag effect to re-subscribe now that the ref is set.
+            setFloatPos((p) => ({ ...p }));
+          }}
+          style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8,
+            padding: '7px 8px 7px 11px', background: '#F8F5EE',
+            borderBottom: '1px solid rgba(0,0,0,0.08)',
+            cursor: 'grab', touchAction: 'none', flexShrink: 0,
+          }}
+        >
+          <span style={{ fontSize: 12, fontWeight: 700, color: DARK, whiteSpace: 'nowrap' }}>
+            ⠿ Elements
+          </span>
+          <button
+            type="button"
+            onClick={() => setChipsFloating(false)}
+            title="Dock the palette back into the panel"
+            aria-label="Dock the element palette"
+            style={{
+              border: '1px solid rgba(0,0,0,0.12)', background: PAPER, color: '#6B6355',
+              borderRadius: 8, padding: '3px 8px', fontSize: 11, fontWeight: 600, cursor: 'pointer',
+            }}
+          >
+            Dock
+          </button>
+        </div>
+        {/* flex + minHeight:0 so this actually scrolls inside the clamped panel rather than
+            growing past maxHeight and being silently clipped with no scrollbar. */}
+        <div
+          style={{
+            flex: '1 1 auto', minHeight: 0, overflowY: 'auto', WebkitOverflowScrolling: 'touch',
+            padding: 9, display: 'flex', flexWrap: 'wrap', alignContent: 'flex-start', gap: 6,
+          }}
+        >
+          {chipNodes}
+        </div>
+      </div>,
+      document.body,
+    );
+  }
+
+  /** The element + line chips, as an array both palette shells render. Extracted so the docked
+   *  strip and the floating panel are literally the same chips, never two drifting copies. */
+  function elementChipNodes(): React.ReactNode {
+    return (
+      <>
+      {orderedCatalog.map((def) => {
+        // …or it IS the thing you have selected on the map (selectedIdentity).
+        const active = (placeDefId === def.id && tool === 'place') || selectedIdentity?.defId === def.id;
+        const suited = !climateFilterActive || elementSuitsClimate(def.id, siteClimates);
+        return (
+          <button
+            key={def.id}
+            type="button"
+            onClick={() => pickElement(def)}
+            title={suited ? undefined : formatDesignTranslation(t('designPaletteClimateTitle'), { name: def.name })}
+            // ONE ROW, not three stacked lines. Emoji over name over size made every card as
+            // tall as three lines of type, and this strip sits in a panel already carrying a
+            // status row, a tool row, a hint and the bed-block controls — the map was losing
+            // close to half the screen to chrome (Rory: "the element button are to big this
+            // bottom modal needs to be smalle you need to conserv space someow"). Guided keeps
+            // a 44px target: shrinking a first-time farmer's tap area to save pixels trades
+            // the wrong thing.
+            style={{
+              position: 'relative',
+              minHeight: guided ? 44 : 34,
+              padding: guided ? '4px 10px' : '3px 8px',
+              borderRadius: 9,
+              ...selectionRing(active),
+              background: active ? GREEN : PAPER,
+              color: active ? PAPER : DARK,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 5,
+              flexShrink: 0,
+              cursor: 'pointer',
+              opacity: suited ? 1 : 0.45,
+            }}
+          >
+            <span style={{ fontSize: guided ? 16 : 13, lineHeight: 1 }}>{def.icon}</span>
+            <span style={{ fontSize: guided ? 11.5 : 10, fontWeight: 600, whiteSpace: 'nowrap' }}>{def.name}</span>
+            <span style={{ fontSize: guided ? 9.5 : 8.5, opacity: 0.6, whiteSpace: 'nowrap' }}>
+              {def.shape === 'circle' ? `⌀${def.wM}m` : `${def.wM}×${def.hM}m`}
+            </span>
+          </button>
+        );
+      })}
+      {/* Line kinds ride in the SAME strip as the elements. On the Planting step there is
+          exactly one of them (windbreak), and it was being given a full row of its own —
+          ~60px of the farmer's map spent on a single chip. They are the same gesture to the
+          farmer anyway: pick a thing, put it on the land. renderLineChips() below still owns
+          the steps that have no element catalog to ride in. */}
+      {showLineChips && lineChipsForStep.map((lk) => {
+        const active = (lineKind === lk.id && tool === 'line') || selectedIdentity?.lineKind === lk.id;
+        return (
+          <button
+            key={`line-${lk.id}`}
+            type="button"
+            onClick={() => pickLine(lk.id)}
+            style={{
+              minHeight: guided ? 44 : 34,
+              padding: guided ? '4px 10px' : '3px 8px',
+              borderRadius: 9,
+              ...selectionRing(active),
+              background: active ? GREEN : PAPER,
+              color: active ? PAPER : DARK,
+              display: 'flex', alignItems: 'center', gap: 5,
+              flexShrink: 0, cursor: 'pointer',
+            }}
+          >
+            <span style={{ fontSize: guided ? 16 : 13, lineHeight: 1 }}>{lk.icon}</span>
+            <span style={{ fontSize: guided ? 11.5 : 10, fontWeight: 600, whiteSpace: 'nowrap' }}>{t(lk.labelKey)}</span>
+          </button>
+        );
+      })}
+      </>
+    );
+  }
+
   function renderElementCatalog() {
     if (!showElementCatalog) return null;
+    // The element and line chips, built ONCE. The docked strip below and the floating panel both
+    // render this same array, so a chip cannot pick up different behaviour depending on which
+    // shell it happens to be sitting in — the failure mode of every "just duplicate the markup for
+    // the other mode" refactor.
+    const chipNodes = elementChipNodes();
     return (
       /* Element chips: shown on placing steps (and all steps in Pro) */
       <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+        {chipsFloating && renderFloatingChipPanel(chipNodes)}
         {showFullCatalogNote && (
           <div style={{ fontSize: 11.5, color: '#6B6355' }}>
             {orderedCatalog.length === 0
@@ -1260,8 +1470,26 @@ export default function DesignPalette({
         {/* Wrapped so the "there is more to the right" fade can sit over the strip's right edge.
             Without it a 22-element catalog looks like a 16-element one: the scrollbar is a few
             faint pixels and nothing else says the row continues. */}
-        <div style={{ position: 'relative', minWidth: 0 }}>
+        <div style={{ position: 'relative', minWidth: 0, display: chipsFloating ? 'none' : undefined }}>
         <div ref={stripRef} onScroll={syncStripEnd} style={scrollStripStyle(guided ? 10 : 6)}>
+          {/* Pop the chips out into the draggable panel. Lives at the HEAD of the strip so it is
+              reachable without scrolling — the thing you reach for when the row is too long is the
+              one control that must never be at the far end of that row. */}
+          <button
+            type="button"
+            onClick={() => setChipsFloating(true)}
+            title="Float the element palette — drag it anywhere and scroll down through the chips"
+            aria-label="Float the element palette"
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: 4, flexShrink: 0,
+              minHeight: guided ? 44 : 34, padding: '0 9px', borderRadius: 9,
+              border: '1px solid rgba(0,0,0,0.12)', background: PAPER, color: '#6B6355',
+              fontSize: guided ? 12 : 11, fontWeight: 600, cursor: 'pointer',
+            }}
+          >
+            <span aria-hidden>⧉</span>
+            <span style={{ whiteSpace: 'nowrap' }}>Float</span>
+          </button>
           {climateFilterActive && (
             <span
               title={`${t('designPaletteClimate')}${siteBiome ? formatDesignTranslation(t('designPaletteClimateFor'), { biome: siteBiome }) : ''}${t('designPaletteClimateHidden')}`}
@@ -1275,75 +1503,7 @@ export default function DesignPalette({
               ⓘ
             </span>
           )}
-          {orderedCatalog.map((def) => {
-            // …or it IS the thing you have selected on the map (selectedIdentity).
-            const active = (placeDefId === def.id && tool === 'place') || selectedIdentity?.defId === def.id;
-            const suited = !climateFilterActive || elementSuitsClimate(def.id, siteClimates);
-            return (
-              <button
-                key={def.id}
-                type="button"
-                onClick={() => pickElement(def)}
-                title={suited ? undefined : formatDesignTranslation(t('designPaletteClimateTitle'), { name: def.name })}
-                // ONE ROW, not three stacked lines. Emoji over name over size made every card as
-                // tall as three lines of type, and this strip sits in a panel already carrying a
-                // status row, a tool row, a hint and the bed-block controls — the map was losing
-                // close to half the screen to chrome (Rory: "the element button are to big this
-                // bottom modal needs to be smalle you need to conserv space someow"). Guided keeps
-                // a 44px target: shrinking a first-time farmer's tap area to save pixels trades
-                // the wrong thing.
-                style={{
-                  position: 'relative',
-                  minHeight: guided ? 44 : 34,
-                  padding: guided ? '4px 10px' : '3px 8px',
-                  borderRadius: 9,
-                  ...selectionRing(active),
-                  background: active ? GREEN : PAPER,
-                  color: active ? PAPER : DARK,
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 5,
-                  flexShrink: 0,
-                  cursor: 'pointer',
-                  opacity: suited ? 1 : 0.45,
-                }}
-              >
-                <span style={{ fontSize: guided ? 16 : 13, lineHeight: 1 }}>{def.icon}</span>
-                <span style={{ fontSize: guided ? 11.5 : 10, fontWeight: 600, whiteSpace: 'nowrap' }}>{def.name}</span>
-                <span style={{ fontSize: guided ? 9.5 : 8.5, opacity: 0.6, whiteSpace: 'nowrap' }}>
-                  {def.shape === 'circle' ? `⌀${def.wM}m` : `${def.wM}×${def.hM}m`}
-                </span>
-              </button>
-            );
-          })}
-          {/* Line kinds ride in the SAME strip as the elements. On the Planting step there is
-              exactly one of them (windbreak), and it was being given a full row of its own —
-              ~60px of the farmer's map spent on a single chip. They are the same gesture to the
-              farmer anyway: pick a thing, put it on the land. renderLineChips() below still owns
-              the steps that have no element catalog to ride in. */}
-          {showLineChips && lineChipsForStep.map((lk) => {
-            const active = (lineKind === lk.id && tool === 'line') || selectedIdentity?.lineKind === lk.id;
-            return (
-              <button
-                key={`line-${lk.id}`}
-                type="button"
-                onClick={() => pickLine(lk.id)}
-                style={{
-                  minHeight: guided ? 44 : 34,
-                  padding: guided ? '4px 10px' : '3px 8px',
-                  borderRadius: 9,
-                  ...selectionRing(active),
-                  background: active ? GREEN : PAPER,
-                  color: active ? PAPER : DARK,
-                  display: 'flex', alignItems: 'center', gap: 5,
-                  flexShrink: 0, cursor: 'pointer',
-                }}
-              >
-                <span style={{ fontSize: guided ? 16 : 13, lineHeight: 1 }}>{lk.icon}</span>
-                <span style={{ fontSize: guided ? 11.5 : 10, fontWeight: 600, whiteSpace: 'nowrap' }}>{t(lk.labelKey)}</span>
-              </button>
-            );
-          })}
+          {chipNodes}
         </div>
         {!stripAtEnd && (
           <div

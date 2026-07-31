@@ -67,8 +67,11 @@ export const WATER_ROUTE_STYLE: Record<WaterRouteKind, WaterRouteStyle> = {
 };
 
 /** The Earthworks-only editor view paints the swale's physical cut-and-fill, not its water-route
- * function. There is no separate Earthworks print filter yet, so the exported Water sheet keeps
- * WATER_ROUTE_STYLE's blue ink; this registry is deliberately editor-only presentation. */
+ * function. An Earthworks PRINT sheet now exists (05, lib/glossy-filters.ts), but lineInFilter
+ * there still classifies 'swale' only under 'water' and has no 'earthworks' case, so the exported
+ * Earthworks sheet does not yet register swale as its content and the Water sheet still prints it
+ * in WATER_ROUTE_STYLE's blue ink; this registry remains editor-only presentation until that
+ * routing is fixed (out of scope here — lineInFilter is owned elsewhere). Flagged, not fixed. */
 export interface EarthworksRouteStyle {
   casing: string;
   color: string;
