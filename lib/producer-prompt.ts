@@ -32,6 +32,21 @@ export function isModelChromeStyle(style: StylePreset): boolean {
   return style === 'satellite_overlay';
 }
 
+/**
+ * photo_plan and satellite_overlay both keep the real aerial photograph as the map (see their
+ * STYLE_LINES entries: "every pixel that is not overlay/design stays the supplied satellite
+ * image... under any circumstances"). Every other style paints the ground away. buildSectorRestylePrompt
+ * used to send the SAME "turn this into one finished illustrated map, edge to edge" body regardless
+ * of style — for these two, that body flatly contradicts the style line it's appended to in the
+ * same prompt, and a model resolving that contradiction toward the stronger, absolute-language
+ * instruction (STYLE_LINES) produces a "hybrid" indistinguishable from the exact sheet. Rory,
+ * after a real paid render: "the hybrid is out and i am not happy with th hybrid... it still the
+ * same!" — three tiers (Exact/Hybrid/Full) all near-identical was the visible symptom of this.
+ */
+export function isPhotoPreservingStyle(style: StylePreset): boolean {
+  return style === 'photo_plan' || style === 'satellite_overlay';
+}
+
 // STYLE_LINES lives further down (with the showcase-prompt rewrite) since both the strict
 // buildProducerPrompt below and the showcase prompts share the one definition.
 
@@ -1071,6 +1086,24 @@ export function buildSectorRestylePrompt(stylePreset: StylePreset, placeName?: s
     `NO INVENT: add no tree, bed, tank, pond, path, fence, hedge or building that is not already visible in the source photograph. Where the ground is open it stays open.`;
   const noAnalysis =
     `DO NOT DRAW THE ANALYSIS: draw no arrows, arcs, wedges, compass letters (N/E/S/W), bearing text, distance rings, or any sun, wind, fire, water or frost annotation. Draw no callouts, no legend panel, no title block, no north arrow, no scale bar and no lettering of any kind, anywhere on the sheet. This sheet is a restyle of the ground only — the app draws all of the sun/wind/fire/water/frost analysis afterwards from the site's real measured data, never from anything guessed off this image.`;
+  // photo_plan / satellite_overlay: the style line already forbids stylising the ground "under any
+  // circumstances" — asking for a full illustrated repaint in the SAME prompt is a direct
+  // contradiction, and it resolved toward the style line's stronger wording, i.e. toward doing
+  // nothing (see isPhotoPreservingStyle's doc comment). This branch gives the paid pass an honest,
+  // achievable job that doesn't fight the style: a real photographic enhancement pass, not a
+  // repaint — so Hybrid/Full actually look different from Exact under these two styles, instead of
+  // asking for something the model correctly refuses.
+  if (isPhotoPreservingStyle(stylePreset)) {
+    const enhanceBody = [
+      `TASK: enhance this real aerial photograph of a South African smallholding${placeName ? ` (${placeName})` : ''} — a photographic correction pass, not an illustration. This is the background of a sector-analysis sheet; the sun, wind, fire, water and frost analysis is drawn by the app afterwards from measured site data, on top of this photograph.`,
+      `PHOTOGRAPHIC ENHANCEMENT ONLY: correct exposure, white balance, contrast, dehaze and sharpness so the photograph reads clearly at print size — richer greens, clearer soil colour, crisper detail in shadowed areas — the way a real estate or survey photographer would grade a drone photo. Every object, edge and shadow stays exactly where and what it photographically is: the same roofs, the same trees, the same tracks, the same ground. This is colour and clarity correction, never repainting, never illustration, never a stylised or painterly look.`,
+      restyleOnly,
+      noInvent,
+      noAnalysis,
+      `FINAL CHECK: this is recognisably the same photograph, corrected — not repainted, not illustrated, nothing added or removed, no text, no arrow, no arc anywhere.`,
+    ].join('\n\n');
+    return `${STYLE_LINES[stylePreset]}\n\n${enhanceBody}`;
+  }
   const body = [
     `TASK: turn this whole aerial photograph of a real South African smallholding${placeName ? ` (${placeName})` : ''} into one finished illustrated map, edge to edge, in the style below. This is the background of a sector-analysis sheet; the sun, wind, fire, water and frost analysis is drawn by the app afterwards from measured site data, on top of this artwork.`,
     edgeToEdge,
@@ -1098,11 +1131,19 @@ export function buildSectorRestylePrompt(stylePreset: StylePreset, placeName?: s
  * variation can never destroy the authoritative bearings.
  */
 export function buildSectorSheetPolishPrompt(stylePreset: StylePreset, placeName?: string): string {
+  // Same contradiction as buildSectorRestylePrompt, one level up: "improve the aerial
+  // ILLUSTRATION... in the requested style" reads as a repaint instruction, which fights
+  // photo_plan/satellite_overlay's own "stays photographic under any circumstances" style line.
+  // For these two, ask for photographic polish instead — the ground is a photograph, not an
+  // illustration, and never was one.
+  const polishClause = isPhotoPreservingStyle(stylePreset)
+    ? `POLISH, DO NOT REDESIGN: improve the photograph's clarity, exposure, contrast and colour, and the analytical marks' hierarchy, line finish, arrow rendering, legend spacing, icon quality and typography. The ground stays a photograph, corrected and crisp — never repainted, never illustrated. Make the analytical marks feel deliberately integrated with the real landscape rather than pasted over it. Keep the ground calm enough that arrows and labels are immediately readable.`
+    : `POLISH, DO NOT REDESIGN: improve the aerial illustration, hierarchy, line finish, arrow rendering, legend spacing, icon quality, typography, contrast and overall visual unity in the requested style. Make the analytical marks feel deliberately integrated with the landscape rather than pasted over it. Keep the ground calm enough that arrows and labels are immediately readable.`;
   const body = [
-    `TASK: polish this COMPLETE, already-correct Sector Analysis plan sheet${placeName ? ` for ${placeName}` : ''} into a frame-worthy professional cartographic illustration. The supplied image already contains the final map crop, property geometry, title, labels, arrows, sectors, sun paths, slope direction, legend, north arrow and scale bar.`,
+    `TASK: polish this COMPLETE, already-correct Sector Analysis plan sheet${placeName ? ` for ${placeName}` : ''} into a frame-worthy professional cartographic sheet. The supplied image already contains the final map crop, property geometry, title, labels, arrows, sectors, sun paths, slope direction, legend, north arrow and scale bar.`,
     `USE THE WHOLE INPUT AS THE BLUEPRINT: preserve the same canvas aspect ratio, panel width, map crop, north-up orientation and top-down view. Do not zoom, crop, rotate, recenter, tilt or replace the site.`,
     `PRESERVE CONTENT: keep every existing arrow's start, end, direction and colour family; keep every sun arc, sector wedge, slope arrow, boundary, house and driveway in the same position. Keep every legend row and map label. Do not add, remove, merge or rename any analytical feature.`,
-    `POLISH, DO NOT REDESIGN: improve the aerial illustration, hierarchy, line finish, arrow rendering, legend spacing, icon quality, typography, contrast and overall visual unity in the requested style. Make the analytical marks feel deliberately integrated with the landscape rather than pasted over it. Keep the ground calm enough that arrows and labels are immediately readable.`,
+    polishClause,
     `NO INVENTION: add no new wind, fire, rain, sun, frost, contour, access, slope or site claim. Add no tree, bed, pond, tank, path, fence or building. Do not infer any new direction from the photograph.`,
     `TEXT: copy the supplied wording exactly. Do not paraphrase, translate or add commentary. If a word cannot be rendered confidently, retain the supplied printed text rather than inventing replacement text.`,
     `FINAL CHECK: this is visibly more polished than the supplied exact sheet, but it is recognisably the same Sector Analysis with the same site, same analytical geometry, same directions, same labels and same legend.`,
