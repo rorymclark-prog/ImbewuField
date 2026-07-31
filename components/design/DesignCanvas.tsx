@@ -2045,8 +2045,38 @@ export default function DesignCanvas({
    * to another step — all of them leave every visible shape inert with no owner on screen to
    * explain why.
    */
+  /**
+   * IS A MODIFIER DOWN RIGHT NOW?
+   *
+   * The exclusive-selection lock makes every non-selected shape pointer-transparent, which is what
+   * lets a tap fall through and release it. That also swallowed Cmd/Shift-click, so on a laptop
+   * there was no way to add a second shape to a selection — and Snap on two rings needs exactly
+   * that (Rory: "we must be able to multi select pressing command for example on mac").
+   *
+   * A modifier held during the CLICK cannot help: the lock is a render-time decision about
+   * pointer-events, and by the time the event exists the shape is already untappable. So the
+   * modifier has to be known while rendering, which means tracking the key itself. Held → the lock
+   * stands aside and every shape is live, exactly as before the lock existed.
+   *
+   * Blur clears it: alt-tabbing away with Cmd down and back without it would otherwise leave the
+   * canvas permanently unlocked with no way to tell why.
+   */
+  const [modifierHeld, setModifierHeld] = useState(false);
+  useEffect(() => {
+    const read = (e: KeyboardEvent) => setModifierHeld(e.shiftKey || e.metaKey || e.ctrlKey);
+    const clear = () => setModifierHeld(false);
+    window.addEventListener('keydown', read);
+    window.addEventListener('keyup', read);
+    window.addEventListener('blur', clear);
+    return () => {
+      window.removeEventListener('keydown', read);
+      window.removeEventListener('keyup', read);
+      window.removeEventListener('blur', clear);
+    };
+  }, []);
+
   const lockOwnerId: string | null = (() => {
-    if (tool !== 'select' || measureOn || additiveSelect) return null;
+    if (tool !== 'select' || measureOn || additiveSelect || modifierHeld) return null;
     if (selectedIds.length !== 1) return null;
     const id = selectedIds[0];
     const z = state.zones.find((s2) => s2.id === id);
