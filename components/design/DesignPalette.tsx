@@ -281,6 +281,29 @@ function toolGlyph(label: string): { glyph: string; full: string } {
   return { glyph: m ? m[1] : full, full: m ? m[2] : full };
 }
 
+/**
+ * SELECTED — the state a farmer must never have to hunt for, on chips whose own colour we do not
+ * control.
+ *
+ * It was a lone 2px gold hairline, repeated at nine call sites and reported three times as
+ * invisible ("i still cant see the outline of the tool once selected very nicely"). The reason is
+ * structural, not a matter of picking a better colour: these chips are ALREADY multicoloured —
+ * six zone colours, element categories, a dark-green armed tool — so any single accent is
+ * guaranteed to land on a chip that shares its hue and disappear. Gold on the olive "Garden &
+ * orchard" chip is exactly that case.
+ *
+ * So selection is carried by FORM, in three layers that cannot all fail at once: a light inner
+ * ring that separates from the chip's own fill, a paper gap, and a near-black outer ring that
+ * separates from the page. Whatever the chip is coloured, at least two of the three are in strong
+ * contrast — including in direct sun, where hue differences go first. It rides in box-shadow, so
+ * nothing reflows when the selection moves.
+ */
+function selectionRing(active: boolean): React.CSSProperties {
+  return active
+    ? { border: `2px solid ${GOLD}`, boxShadow: `0 0 0 2px ${PAPER}, 0 0 0 4px ${DARK}` }
+    : { border: '1px solid rgba(0,0,0,0.15)', boxShadow: 'none' };
+}
+
 function toolButtonStyle(active: boolean, guided: boolean): React.CSSProperties {
   // Pro trims to a 36px target — a returning farmer on a laptop scanning a dense drafting view
   // gets the screen back. Guided stays at the 44px comfortable-touch minimum, which is not a
@@ -290,7 +313,7 @@ function toolButtonStyle(active: boolean, guided: boolean): React.CSSProperties 
     minWidth: guided ? 48 : 36,
     padding: guided ? '0 14px' : '0 10px',
     borderRadius: 10,
-    border: active ? `2px solid ${GOLD}` : '1px solid rgba(0,0,0,0.15)',
+    ...selectionRing(active),
     background: active ? GREEN : PAPER,
     color: active ? PAPER : DARK,
     fontWeight: 600,
@@ -1080,7 +1103,7 @@ export default function DesignPalette({
                   minHeight: guided ? 44 : 34,
                   padding: guided ? '4px 10px' : '3px 8px',
                   borderRadius: 9,
-                  border: active ? `2px solid ${GOLD}` : '1px solid rgba(0,0,0,0.15)',
+                  ...selectionRing(active),
                   background: active ? GREEN : PAPER,
                   color: active ? PAPER : DARK,
                   display: 'flex',
@@ -1115,7 +1138,7 @@ export default function DesignPalette({
                   minHeight: guided ? 44 : 34,
                   padding: guided ? '4px 10px' : '3px 8px',
                   borderRadius: 9,
-                  border: active ? `2px solid ${GOLD}` : '1px solid rgba(0,0,0,0.15)',
+                  ...selectionRing(active),
                   background: active ? GREEN : PAPER,
                   color: active ? PAPER : DARK,
                   display: 'flex', alignItems: 'center', gap: 5,
@@ -1174,7 +1197,7 @@ export default function DesignPalette({
                   minHeight: guided ? 52 : 44,
                   padding: guided ? '8px 14px' : '6px 12px',
                   borderRadius: 10,
-                  border: active ? `2px solid ${GOLD}` : '1px solid rgba(0,0,0,0.15)',
+                  ...selectionRing(active),
                   background: active ? GREEN : PAPER,
                   color: active ? PAPER : DARK,
                   display: 'flex',
@@ -1297,7 +1320,7 @@ export default function DesignPalette({
                     minWidth: guided ? 44 : 36,
                     padding: '0 8px',
                     borderRadius: 10,
-                    border: active ? `2px solid ${GOLD}` : '1px solid rgba(0,0,0,0.15)',
+                    ...selectionRing(active),
                     background: active ? GREEN : PAPER,
                     color: active ? PAPER : DARK,
                     flexShrink: 0,
@@ -1348,8 +1371,7 @@ export default function DesignPalette({
                 minHeight: guided ? 52 : 44,
                 padding: guided ? '8px 16px' : '6px 12px',
                 borderRadius: 10,
-                border: active ? `2px solid ${GOLD}` : '1px solid rgba(0,0,0,0.15)',
-                boxShadow: active ? `0 0 0 3px ${GOLD}33` : 'none',
+                ...selectionRing(active),
                 background: def.color,
                 color: PAPER,
                 display: 'flex',
@@ -1389,7 +1411,7 @@ export default function DesignPalette({
                 minHeight: guided ? 52 : 44,
                 padding: guided ? '8px 16px' : '6px 12px',
                 borderRadius: 10,
-                border: active ? `2px solid ${GOLD}` : '1px solid rgba(0,0,0,0.15)',
+                ...selectionRing(active),
                 background: active ? GREEN : PAPER,
                 color: active ? PAPER : DARK,
                 display: 'flex',
@@ -1541,7 +1563,10 @@ export default function DesignPalette({
             // Matches the element chips beside it. At 52 this button was the tallest thing in the
             // panel and dragged the whole row's height up with it for no extra reachability.
             minHeight: guided ? 44 : 36, padding: '0 14px', borderRadius: 10, flexShrink: 0,
-            border: armed ? `2px solid ${GOLD}` : `1px solid ${GREEN}`,
+            // Armed IS selected — the block is about to land on the next tap, which is the one
+            // state in this palette with a consequence, so it wears the same unmistakable ring.
+            ...selectionRing(armed),
+            ...(armed ? null : { border: `1px solid ${GREEN}` }),
             background: armed ? GREEN : 'transparent',
             color: armed ? PAPER : GREEN,
             fontWeight: 800, fontSize: 12.5, cursor: 'pointer',

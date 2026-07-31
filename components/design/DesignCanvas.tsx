@@ -713,6 +713,22 @@ export default function DesignCanvas({
   const [measureOn, setMeasureOn] = useState(false);
   const [measurePts, setMeasurePts] = useState<Array<[number, number]>>([]);
 
+  // …and the other direction. Arming a real tool — a chip, a "Do this", a deep link — is an
+  // unambiguous statement that the farmer is done measuring, so the ruler steps aside rather than
+  // sitting armed behind a tool it will silently outrank on the next tap. Keyed on the tool
+  // CHANGING (not on measureOn), because switching the ruler on sets the tool to 'select' itself
+  // and this must not read that as a reason to switch straight back off.
+  const prevToolRef = useRef(tool);
+  useEffect(() => {
+    const changed = prevToolRef.current !== tool;
+    prevToolRef.current = tool;
+    if (!changed || tool === 'select') return;
+    setMeasureOn((on) => {
+      if (on) setMeasurePts([]);
+      return false;
+    });
+  }, [tool]);
+
   // Drag state for a zone/feature/line NAME LABEL — moves just the label (a normalised offset from
   // the shape's anchor point — ring centroid for zones, midpoint for lines), not the shape itself,
   // so a farmer can pull a label off a feature/line it overlaps. `kind` dispatches which of
@@ -920,7 +936,11 @@ export default function DesignCanvas({
     onToolChange?.('select');
   }
 
-  function handleBackgroundPointerDown(e: React.PointerEvent<SVGSVGElement>) {
+  // `Element`, not `SVGSVGElement`: these three also serve the transparent measuring sheet, which
+  // is a div. Nothing in them touches SVG-specific API — only clientX/clientY, pointerId, button
+  // and capture — so widening the type costs nothing and keeps the sheet honest about sharing the
+  // exact code path the canvas uses, rather than a cast or a parallel copy.
+  function handleBackgroundPointerDown(e: React.PointerEvent<Element>) {
     // Middle mouse button always pans, regardless of tool — preventDefault stops the
     // browser's native middle-click auto-scroll cursor from taking over.
     if (e.button === 1) {
@@ -1010,7 +1030,7 @@ export default function DesignCanvas({
     };
   }
 
-  function runTapAction(e: React.PointerEvent<SVGSVGElement>) {
+  function runTapAction(e: React.PointerEvent<Element>) {
     if (tool === 'select') {
       onSelect(null);
       setActiveTracedId(null); // tapping empty canvas also dismisses a stray "Use in design" popup
@@ -1053,7 +1073,7 @@ export default function DesignCanvas({
     }
   }
 
-  function handleBackgroundPointerMove(e: React.PointerEvent<SVGSVGElement>) {
+  function handleBackgroundPointerMove(e: React.PointerEvent<Element>) {
     if (activePointers.current.has(e.pointerId)) {
       activePointers.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
     }
@@ -1136,7 +1156,7 @@ export default function DesignCanvas({
     return ids;
   }
 
-  function handleBackgroundPointerUp(e: React.PointerEvent<SVGSVGElement>) {
+  function handleBackgroundPointerUp(e: React.PointerEvent<Element>) {
     activePointers.current.delete(e.pointerId);
     if (activePointers.current.size < 2) pinchState.current = null;
 
@@ -1168,7 +1188,7 @@ export default function DesignCanvas({
   // pointercancel, not pointerup — clear every live drag/pan/pinch ref WITHOUT
   // committing a partial edit, so an interrupted gesture can't leave state half-moved
   // or a ref permanently "stuck" armed.
-  function handleBackgroundPointerCancel(e: React.PointerEvent<SVGSVGElement>) {
+  function handleBackgroundPointerCancel(e: React.PointerEvent<Element>) {
     activePointers.current.delete(e.pointerId);
     if (activePointers.current.size < 2) pinchState.current = null;
     if (panState.current?.pointerId === e.pointerId) panState.current = null;
@@ -3693,6 +3713,27 @@ export default function DesignCanvas({
         })()}
       </svg>
 
+      {/* THE RULER IS MODAL, and this sheet is what makes it true (Rory: "when you work with the
+          ruler no tools must be able to be selected automatically").
+          The measure branch lives in the BACKGROUND pointer handler, so it only ever caught taps
+          that landed on bare map. Every drawn thing on top of it — a zone body, a line, an item,
+          a vertex grip, a label — is its own event target with its own handler, so measuring
+          across your own design selected whatever you tapped through and armed that thing's tool
+          instead of dropping a measuring point. One transparent sheet above the whole canvas
+          fixes the class rather than the instances: while the ruler is on, every tap is a
+          measurement, and no amount of new shape handlers below can change that. It sits ABOVE
+          the svg and BELOW the floating buttons, so the ruler itself (and zoom, and layers) stays
+          reachable. */}
+      {measureOn && (
+        <div
+          aria-hidden
+          onPointerDown={handleBackgroundPointerDown}
+          onPointerMove={handleBackgroundPointerMove}
+          onPointerUp={handleBackgroundPointerUp}
+          style={{ position: 'absolute', inset: 0, touchAction: 'none', cursor: 'crosshair' }}
+        />
+      )}
+
       {/* Contours note — top-centre. Shown only when the layer is on so the farmer knows the
           lines are a slope-based guide (and why they're absent on flat ground). */}
       {activeLayers.contours && contours.status !== 'unavailable' && (
@@ -3821,7 +3862,14 @@ export default function DesignCanvas({
         aria-label={t(measureOn ? 'designCanvasMeasureOn' : 'designCanvasMeasure')}
         title={t('designCanvasMeasureHint')}
         onClick={() => {
-          setMeasureOn((v) => !v);
+          setMeasureOn((v) => {
+            // Switching the ruler ON disarms whatever was armed. A lit element chip with the
+            // ruler also lit is a screen making two promises: the farmer reads "Mango Tree" as
+            // selected and expects the next tap to plant one, and the app expects it to measure.
+            // The ruler wins while it is on, so it says so by putting the palette back to Select.
+            if (!v) onToolChange?.('select');
+            return !v;
+          });
           setMeasurePts([]);
         }}
         style={{

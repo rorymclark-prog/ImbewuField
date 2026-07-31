@@ -1,5 +1,6 @@
 import { execSync } from 'child_process';
 import { NextResponse } from 'next/server';
+import { visibleNotes } from '@/lib/release-notes';
 
 export const dynamic = 'force-dynamic';
 
@@ -34,6 +35,13 @@ export async function GET() {
       branch,
       sha,
       repoRoot,
+      // WHAT THE NEW BUILD CHANGED, from the new build. The banner used to render
+      // visibleNotes() out of the bundle already running in the tab — so it announced a sha it
+      // had just learned from here, and then described the release the farmer was already on.
+      // Structurally one build stale, every time ("still show stale update info"). This route
+      // runs on the deployment being announced, so its import of lib/release-notes is the new
+      // one; the client prefers these and only falls back to its own copy if they are missing.
+      notes: visibleNotes(),
       source: branch && sha ? (process.env.VERCEL_GIT_COMMIT_SHA || process.env.GITHUB_SHA ? 'env' : 'git') : 'fallback',
     },
     {

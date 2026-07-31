@@ -6,6 +6,8 @@ import { visibleNotes } from '@/lib/release-notes';
 
 interface BuildInfo {
   sha?: string | null;
+  /** The new build's own release notes — see the comment in app/api/build-info/route.ts. */
+  notes?: unknown;
 }
 
 interface PWAUpdateNotifierProps {
@@ -26,6 +28,8 @@ const UPDATE_RELOAD_TIMEOUT_MS = 1_200;
 export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateNotifierProps) {
   const [updateAvailable, setUpdateAvailable] = useState(false);
   const [nextBuildSha, setNextBuildSha] = useState<string | null>(null);
+  // Null until the server tells us; the local copy is the offline/older-server fallback.
+  const [nextBuildNotes, setNextBuildNotes] = useState<string[] | null>(null);
   const [refreshing, setRefreshing] = useState(false);
   const registrationRef = useRef<ServiceWorkerRegistration | null>(null);
   // Seeded by the server-rendered layout, so a deployment that lands before the first network
@@ -49,6 +53,12 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
       if (!loadedBuildShaRef.current) {
         loadedBuildShaRef.current = latestSha;
       } else if (isDifferentBuild(loadedBuildShaRef.current, latestSha)) {
+        // Only trust a well-formed list of strings — this text goes straight on screen, and the
+        // fallback (our own bundle's notes) is a perfectly good answer if the shape is off.
+        const served = Array.isArray(data.notes)
+          ? data.notes.filter((n): n is string => typeof n === 'string' && n.trim().length > 0)
+          : [];
+        setNextBuildNotes(served.length > 0 ? served : null);
         markUpdateAvailable(latestSha);
       }
     } catch {
@@ -155,7 +165,9 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
   }, [refreshing]);
 
   if (!updateAvailable) return null;
-  const notes = visibleNotes();
+  // The NEW build's notes when the server could supply them; ours only as a fallback (a
+  // service-worker-triggered update never hits /api/build-info, and an offline tab cannot ask).
+  const notes = nextBuildNotes ?? visibleNotes();
 
   return (
     <div
