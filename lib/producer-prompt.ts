@@ -1143,40 +1143,41 @@ export function buildSectorRestylePrompt(stylePreset: StylePreset, placeName?: s
  * variation can never destroy the authoritative bearings.
  */
 export function buildSectorSheetPolishPrompt(stylePreset: StylePreset, placeName?: string): string {
-  // WHY THIS WAS REWRITTEN (twice). First pass: Full Treatment on Sector reverted to Hybrid on
-  // almost every attempt. render-difference.ts's gate needs >=10% of the COMPARED pixels (ground
-  // only — boundary/driveway/outside/house-halo are protect-masked out) to change visibly. The old
-  // wording — "POLISH, DO NOT REDESIGN", "keep the ground calm" — asked for exactly the restrained
-  // nudge that gate is built to reject.
+  // WHY THIS WAS REWRITTEN (three times — read all three, they are one story).
   //
-  // Second pass, after the first fix actually started clearing the gate: every label, arrow and
-  // legend row came back DOUBLED — a ghosted model-repainted copy sitting behind the app's own
-  // crisp redraw. Mechanism: sectorProtectMaskOptions() protects site fabric (boundary/driveway/
-  // outside/house), never the analysis overlay — it was written for the Hybrid stage, whose input
-  // has no overlay baked in yet. But the POLISH stage's input is the FINISHED Hybrid sheet, with
-  // every label/arrow/legend pixel already baked in, and the old prompt explicitly asked the model
-  // to "sharpen the analytical marks' typography, arrow rendering, legend spacing" — an instruction
-  // the model can only half-obey (it cannot reproduce our exact type/position), and
-  // composeSectorSheet then draws the real, correct overlay on top regardless of what the model
-  // did (finishSectorRef.current runs unconditionally — "no paid result is trusted as factual").
-  // So any model attempt at the overlay was pure waste at best, visible ghosting at worst. Fix:
-  // stop asking for it. Tell the model plainly that the overlay is discarded and redrawn afterward
-  // no matter what it does, so touching those pixels can only hurt, never help.
+  // First: Full Treatment reverted to Hybrid on almost every attempt. render-difference.ts's gate
+  // needs >=10% of the compared pixels to change visibly, and the old "POLISH, DO NOT REDESIGN /
+  // keep the ground calm" wording asked for exactly the restrained nudge that gate rejects.
+  //
+  // Second: once past the gate, every label came back DOUBLED — the model's half-redrawn overlay
+  // ghosting behind the app's own recomposed one. The interim fix told the model to leave the
+  // overlay pixels alone entirely, because the finisher was going to redraw them anyway.
+  //
+  // Third, the real one: that finisher WAS THE BUG. Rory, after two weeks and a lot of paid
+  // renders: "there's no third AI polish render at all... The second is an AI generated underlay
+  // with elements overdrawn." He was right — the completion handler cropped the model's polished
+  // page back to the map panel and rebuilt the entire overlay deterministically, so the paid third
+  // pass could never look different from the Hybrid no matter what it painted. That crop+recompose
+  // is now gone for this stage (see DesignGlossy's completion handler): the model's page IS the
+  // Full Treatment result, exactly as extendProtectMaskToStyleSheet's docblock always promised
+  // ("deliberately leaves the chrome editable so the second paid pass can produce the richer
+  // typography, pictorial legend and notes layout that distinguish it from Hybrid"). So this
+  // prompt now asks for the whole authored page: ground AND marks AND typography, redrawn
+  // beautifully, with the wording and geometry copied faithfully. The exact master is saved
+  // separately before this runs and remains the factual authority; the difference gate still
+  // rejects a lazy copy; the sheet is captioned as the AI-authored version.
   const polishClause = isPhotoPreservingStyle(stylePreset)
-    ? `GIVE THE PHOTOGRAPH A REAL, VISIBLE CORRECTION PASS: this is not a subtle nudge. Push exposure, white balance, contrast, dehaze and sharpness hard enough that the ground clearly looks like a different, better photograph — richer greens, cleaner soil colour, real depth in shadowed areas, crisp texture instead of a flat haze. A farmer should be able to tell the difference at a glance without hunting for it. The ground stays a photograph, never repainted or illustrated — but "corrected" here means a strong, confident grade, not a 2% tweak.`
-    : `REDRAW THE GROUND MATERIALS FOR REAL: this is not a subtle nudge. Give every ground surface — lawn, veld, bare and tilled soil, tracks, paved areas, tree canopies — real, visibly different material and lighting in the requested style: texture, one consistent light direction with real shadow, richer and more varied colour than the supplied draft. RETURNING THE GROUND LOOKING THE SAME IS A FAILED RESULT, and so is a flat colour filter or vignette over the top — a farmer should see a genuinely re-rendered landscape at a glance, not a tint.`;
-  const leaveOverlayAlone =
-    `DO NOT TOUCH THE OVERLAY — IT IS DISCARDED EITHER WAY: every label pill, legend panel, title block, arrow, arc, sector wedge, slope line, north arrow and scale bar in the supplied image is replaced afterward by the app's own exact version, pixel for pixel, no matter what you do to them here. You cannot improve them and you cannot preserve them by redrawing them — either way your version is thrown away. Repainting, sharpening or restyling that text and those marks only risks a smeared or doubled letterform showing through behind the real one. Leave every one of those pixels exactly as supplied, untouched — spend all of your effort on the ground underneath and around them instead.`;
+    ? `THE GROUND: give the photograph a real, visible correction pass — push exposure, white balance, contrast, dehaze and sharpness hard enough that the ground clearly reads as a better photograph: richer greens, cleaner soil colour, real depth in shadow, crisp texture. The ground stays a photograph, never illustrated. THE MARKS AND TEXT: redraw every label, arrow, arc, wedge, legend row, title, north arrow and scale bar yourself, in clean professional cartographic typography — crisp lettering on well-shaped plates, confident arrowheads, even line weights, a beautifully set legend panel with real hierarchy. The marks should look deliberately designed over the photograph, never pasted on it.`
+    : `THE WHOLE PAGE IS YOURS TO REDRAW: repaint the ground in the requested style with real materials, texture and one consistent light direction, and redraw every label, arrow, arc, wedge, legend row, title, north arrow and scale bar yourself in the same hand — clean professional cartographic typography, confident arrowheads, even line weights, a beautifully set legend panel with real hierarchy. RETURNING THE PAGE LOOKING THE SAME IS A FAILED RESULT, and so is a flat filter or vignette over the top — someone paid for this pass specifically to get an authored sheet the earlier passes could not produce.`;
   const body = [
-    `TASK: polish this COMPLETE, already-correct Sector Analysis plan sheet${placeName ? ` for ${placeName}` : ''} into a frame-worthy professional cartographic sheet. The supplied image already contains the final map crop, property geometry, title, labels, arrows, sectors, sun paths, slope direction, legend, north arrow and scale bar.`,
-    `USE THE WHOLE INPUT AS THE BLUEPRINT: preserve the same canvas aspect ratio, panel width, map crop, north-up orientation and top-down view. Do not zoom, crop, rotate, recenter, tilt or replace the site.`,
-    `PRESERVE CONTENT, NOT PIXELS: keep every existing arrow's start, end, direction and colour family; keep every sun arc, sector wedge, slope arrow, boundary, house and driveway in the same position. Keep every legend row and map label. Do not add, remove, merge or rename any analytical feature — but "keep in place" is about geometry and meaning, not about leaving the ground pixels untouched underneath them.`,
+    `TASK: repaint this COMPLETE, already-correct Sector Analysis plan sheet${placeName ? ` for ${placeName}` : ''} as one finished, frame-worthy professional cartographic artwork in the requested style. The supplied image already contains the final map crop, property geometry, title, labels, arrows, sectors, sun paths, slope direction, legend, north arrow and scale bar — it is your complete and only blueprint.`,
+    `USE THE WHOLE INPUT AS THE BLUEPRINT: preserve the same canvas aspect ratio, panel layout, map crop, north-up orientation and top-down view. Do not zoom, crop, rotate, recenter, tilt or replace the site.`,
+    `PRESERVE CONTENT, NOT PIXELS: keep every existing arrow's start, end, direction and colour family; keep every sun arc, sector wedge, slope arrow, boundary, house and driveway in the same position. Keep every legend row and map label. Do not add, remove, merge or rename any analytical feature. Redraw all of them; move none of them.`,
     polishClause,
-    leaveOverlayAlone,
     `NO INVENTION: add no new wind, fire, rain, sun, frost, contour, access, slope or site claim. Add no tree, bed, pond, tank, path, fence or building. Do not infer any new direction from the photograph.`,
     noZoning,
-    `TEXT: this sheet's words are not yours to compose — copy the supplied wording exactly if you touch it at all, never paraphrase, translate or add commentary, though the strong preference above is that you leave the lettering untouched completely rather than attempt to copy it.`,
-    `FINAL CHECK: place this beside the sheet you were given — if a farmer could not tell within two seconds which one is visibly more polished, the pass has failed. It must still be recognisably the same Sector Analysis: same site, same analytical geometry, same directions, same position, same labels and same legend — just confidently better ground artwork underneath, with every label, arrow and legend row exactly where and how it already was.`,
+    `TEXT: copy the supplied wording exactly, letter for letter — every bearing, every legend row, every note. Never paraphrase, translate, abbreviate or add commentary. If a word cannot be rendered confidently, reproduce the supplied letterforms as closely as you can rather than substituting different text.`,
+    `FINAL CHECK: place this beside the sheet you were given — if a farmer could not tell within two seconds which one is visibly more polished, the pass has failed. It must still be recognisably the same Sector Analysis: same site, same analytical geometry, same directions, same position, same labels and same legend — an unmistakably better-drawn edition of the identical document.`,
   ].join('\n\n');
   return `${STYLE_LINES[stylePreset]}\n\n${body}`;
 }

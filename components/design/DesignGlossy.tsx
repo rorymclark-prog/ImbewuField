@@ -3111,11 +3111,24 @@ function drawBlueprintLegendNote(
 // the panel read as two documents stacked. A drawing set is set in ONE family at several weights;
 // that is what makes it look like a drawing set.
 //
-// So: one normal-width grotesque, everywhere, at weights. Helvetica Neue/Helvetica/Arial is the
-// most reliably present neutral sans across macOS, Windows and Android; Segoe UI and Roboto cover
-// the rest; system-ui is the last resort. No webfont, because these sheets render on a farmer's
-// phone with no guarantee of a network — a font that fails to load is a sheet that changes shape.
-const SHEET_SANS = '"Helvetica Neue", Helvetica, Arial, "Segoe UI", Roboto, system-ui, sans-serif';
+// So: one normal-width grotesque, everywhere, at weights — and it is the APP'S OWN grotesque.
+// Rory, repeatedly, sheet after sheet: change the fonts. The sheets were the one surface still set
+// in whatever neutral sans the device happened to have (Helvetica on his phone, Arial on Windows,
+// Roboto on Android), which is exactly the "no decision was made" look, and it didn't even match
+// the app around it. The app already self-hosts Public Sans through next/font (--font-sans on
+// <html>, see app/layout.tsx) — the same face the farmer has been reading in every panel and
+// button — so the sheets now resolve that first. Resolved at runtime because next/font's real
+// family name is build-scrambled ('__Public_Sans_xxx'); never a network fetch at render time —
+// the face is either already in the document (self-hosted, cached with the app shell) or the
+// stack falls through to the old device-native names, so an offline sheet still cannot change
+// shape mid-print. SSR import gets the fallback only; the canvas only ever draws client-side.
+function appSheetSans(): string {
+  const DEVICE_FALLBACK = '"Public Sans", "Helvetica Neue", Helvetica, Arial, "Segoe UI", Roboto, system-ui, sans-serif';
+  if (typeof document === 'undefined') return DEVICE_FALLBACK;
+  const appSans = getComputedStyle(document.documentElement).getPropertyValue('--font-sans').trim();
+  return appSans ? `${appSans}, ${DEVICE_FALLBACK}` : DEVICE_FALLBACK;
+}
+const SHEET_SANS = appSheetSans();
 const SHEET_GLYPH_FONT = 'sans-serif';
 const SHEET_TITLE_FONT = SHEET_SANS;
 const REFERENCE_LABEL_FONT = SHEET_SANS;
@@ -5403,29 +5416,65 @@ function drawSectorAnalysis(
   }
 
   // Inward energy arrow: tail OUTSIDE the ring in `fromVec`, head INSIDE — energy entering the site.
+  // Arrow bodies claim their space so the direct labels dodge THEM, not just each other. The
+  // opaque label plates made this visible: a plate that lands on an arrow now fully hides it
+  // (Rory: "the text blocks the arrows a lot"), where the old translucent pill merely dimmed it.
+  // Fed into flushDirectLabels' claims as pre-seeded boxes.
+  const arrowClaims: Array<{ x0: number; x1: number; y0: number; y1: number }> = [];
+  const claimArrowBox = (x1: number, y1: number, x2: number, y2: number, pad: number): void => {
+    if (!externalLegend) return;
+    arrowClaims.push({
+      x0: Math.min(x1, x2) - pad,
+      x1: Math.max(x1, x2) + pad,
+      y0: Math.min(y1, y2) - pad,
+      y1: Math.max(y1, y2) + pad,
+    });
+  };
   const drawArrow = (fromVec: [number, number], color: string, width: number, dash: number[], lenIn = R * 0.4) => {
     const sxp = cx + fromVec[0] * (R + arrowLen * 0.75), syp = cy + fromVec[1] * (R + arrowLen * 0.75);
     const exp = cx + fromVec[0] * (R - lenIn), eyp = cy + fromVec[1] * (R - lenIn);
+    const ang = Math.atan2(eyp - syp, exp - sxp);
+    const ah = Math.max(12, width * (externalLegend ? 3.4 : 2.6));
+    const shaft = () => {
+      ctx.beginPath();
+      ctx.moveTo(sxp, syp);
+      ctx.lineTo(exp, eyp);
+      ctx.stroke();
+    };
+    const head = () => {
+      ctx.beginPath();
+      ctx.moveTo(exp, eyp);
+      ctx.lineTo(exp - ah * Math.cos(ang - 0.42), eyp - ah * Math.sin(ang - 0.42));
+      ctx.lineTo(exp - ah * Math.cos(ang + 0.42), eyp - ah * Math.sin(ang + 0.42));
+      ctx.closePath();
+    };
     ctx.save();
+    // Same route-casing lesson as drawBroadEnergyArrow: on the composed sheet these thin arrows
+    // (driveway access especially — mid-grey on a grey-scrimmed photo) vanished entirely. A cream
+    // under-stroke separates the arrow from any ground before the colour goes down; the legacy
+    // in-canvas view (externalLegend false) keeps its original quiet look.
+    if (externalLegend) {
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.strokeStyle = 'rgba(252,250,240,0.92)';
+      ctx.lineWidth = width + Math.max(4, W * 0.003);
+      ctx.setLineDash(dash);
+      shaft();
+      ctx.setLineDash([]);
+      head();
+      ctx.stroke();
+    }
     ctx.strokeStyle = color;
     ctx.fillStyle = color;
     ctx.lineWidth = width;
     ctx.lineCap = 'round';
     ctx.setLineDash(dash);
-    ctx.beginPath();
-    ctx.moveTo(sxp, syp);
-    ctx.lineTo(exp, eyp);
-    ctx.stroke();
+    shaft();
     ctx.setLineDash([]);
-    const ang = Math.atan2(eyp - syp, exp - sxp);
-    const ah = Math.max(12, width * (externalLegend ? 3.4 : 2.6));
-    ctx.beginPath();
-    ctx.moveTo(exp, eyp);
-    ctx.lineTo(exp - ah * Math.cos(ang - 0.42), eyp - ah * Math.sin(ang - 0.42));
-    ctx.lineTo(exp - ah * Math.cos(ang + 0.42), eyp - ah * Math.sin(ang + 0.42));
-    ctx.closePath();
+    head();
     ctx.fill();
     ctx.restore();
+    claimArrowBox(sxp, syp, exp, eyp, ah);
     return { sxp, syp };
   };
   // Every energy label goes through here, and they used to be drawn wherever their own geometry
@@ -5485,6 +5534,9 @@ function drawSectorAnalysis(
     if (!externalLegend || directLabelRequests.length === 0) return;
     const directClaims: Array<{ x0: number; x1: number; y0: number; y1: number }> = [
       { x0: 0, x1: W * 0.33, y0: 0, y1: H * 0.18 },
+      // Every drawn arrow claimed its body earlier — labels must clear the arrows they annotate,
+      // not sit on top of them (an opaque plate on an arrow deletes the arrow from the sheet).
+      ...arrowClaims,
     ];
     // A stroke halo alone was not enough: it was sized for a flat cartographic tint, and this base
     // is a real drone photo — dense foliage, bare soil, tin roof and shadow all in the same frame,
@@ -5647,25 +5699,29 @@ function drawSectorAnalysis(
     ctx.lineTo(headBaseX - nx * shaftHalf, headBaseY - ny * shaftHalf);
     ctx.lineTo(tailX - nx * shaftHalf, tailY - ny * shaftHalf);
     ctx.closePath();
-    // Dark halo outline FIRST — a 30%-alpha fill and a 76%-alpha edge were built for a flat tint,
-    // and disappear into a busy AI-painted ground exactly the way the text labels used to. Traced
-    // on the same closed path as the real stroke below, so it reads as one outlined arrow, not a
-    // second shape.
-    ctx.globalAlpha = 0.55;
-    ctx.strokeStyle = 'rgba(6,10,8,0.9)';
-    ctx.lineWidth = Math.max(2, W * 0.0015) + Math.max(3, W * 0.0022);
+    // ROUTE-CASING TREATMENT, not a tint. The previous pass (30%-alpha fill, 76%-alpha edge, a
+    // half-strength dark halo) was three translucent layers stacked on a photograph whose foliage
+    // is often darker AND more saturated than the arrow colour — Rory, on the shipped Hybrid:
+    // "you can't see the arrows." Same lesson the labels already learned: on a real photo,
+    // visibility comes from an opaque body with a light casing (the Google-Maps route convention),
+    // never from alpha. Cream casing first so the arrow is separated from the ground on every
+    // terrain, then a near-solid colour body, then a crisp dark edge to hold the silhouette.
+    ctx.globalAlpha = 1;
+    ctx.strokeStyle = 'rgba(252,250,240,0.92)';
+    ctx.lineWidth = Math.max(7, W * 0.0055);
+    ctx.lineJoin = 'round';
     ctx.stroke();
-    ctx.globalAlpha = 0.3;
+    ctx.globalAlpha = 0.9;
     ctx.fillStyle = color;
     ctx.fill();
-    ctx.globalAlpha = 0.76;
-    ctx.strokeStyle = color;
+    ctx.globalAlpha = 1;
+    ctx.strokeStyle = 'rgba(6,10,8,0.85)';
     ctx.lineWidth = Math.max(2, W * 0.0015);
     ctx.stroke();
     // Regional assumptions remain visibly dashed, but the dash is a quiet provenance spine
     // inside one broad benchmark arrow rather than a second arrow and arrowhead on top.
-    ctx.globalAlpha = 0.64;
-    ctx.strokeStyle = 'rgba(249,246,234,0.9)';
+    ctx.globalAlpha = 0.85;
+    ctx.strokeStyle = 'rgba(252,250,240,0.95)';
     ctx.lineWidth = Math.max(2, W * 0.0018);
     ctx.setLineDash([12, 9]);
     ctx.beginPath();
@@ -5673,6 +5729,7 @@ function drawSectorAnalysis(
     ctx.lineTo(headBaseX + ux * headLen * 0.22, headBaseY + uy * headLen * 0.22);
     ctx.stroke();
     ctx.restore();
+    claimArrowBox(tailX, tailY, tipX, tipY, headHalf);
     return { sxp: tailX, syp: tailY };
   };
 
@@ -10518,18 +10575,33 @@ export default function DesignGlossy({
               // meaningless for a sheet with no GlossyLayerFilter — `sheet.key as GlossyLayerFilter`
               // becomes a lie the moment 'sector' can reach this code (RENDER-INVESTIGATION.md
               // 'sector-ai' finding 3), so route it to the dedicated finisher instead of casting.
-              // 'base' and 'sector': both stages finish deterministically. Full Treatment may return
-              // a complete page, so first extract its map panel; then restore the app-owned house,
-              // ground, boundary, analysis marks, labels and chrome. No paid result is trusted as
-              // factual merely because its prompt asked the model not to move anything.
+              //
+              // SECTOR'S TWO STAGES NOW GENUINELY DIFFER — this is the "no third render" fix.
+              // Hybrid stage: finish deterministically (crop the model's ground, recompose every
+              // app-drawn fact on top). Polish stage (showcase:true): the model's returned page IS
+              // the result. For two weeks this branch cropped the polished page back to the map
+              // panel and rebuilt the whole overlay deterministically — so the paid second pass
+              // could never look different from the Hybrid no matter what it painted, which is
+              // exactly what Rory kept reporting ("it's as if all that's happening is the hybrid
+              // stage... no third AI polish render at all"). It also contradicted both
+              // extendProtectMaskToStyleSheet's docblock (chrome left editable so the polish "can
+              // produce the richer typography, pictorial legend and notes layout that distinguish
+              // it from Hybrid") and the enqueue site's own showcase comment. Factual safety does
+              // not regress to trust: the exact master is saved separately BEFORE this runs, the
+              // difference gate still rejects a lazy copy, the caption marks it as the AI-authored
+              // edition, and the prompt pins wording and geometry to the supplied blueprint.
+              // Skipping restoreProtectedPixels here is deliberate too: byte-restoring photo
+              // fabric into a fully repainted page would punch photographic patches through the
+              // model's artwork — the Hybrid stage remains the geometry-restored tier.
               // 'implementation' (Phasing 08): BOTH stages route to finishPhasingRef, unlike every
               // other sheet's showcase:true branch. The polish stage never earns a "ship raw" exit
               // here — a build calendar's dates/tasks/hold-points must never be AI-authored, so
               // finishPhasingRef's composePhasingSheet always redraws the real schedule panel and
               // every exact fact (ground, structures, boundary, phase pins) back on top, regardless
               // of which stage produced the model's decorative background underneath it.
+              const sectorPolishOwnsPage = showcase && sheet.key === 'sector';
               let factualModelImage = raw;
-              if (sheet.key === 'sector' && sourceImage && protectMask) {
+              if (sheet.key === 'sector' && sourceImage && protectMask && !sectorPolishOwnsPage) {
                 try {
                   factualModelImage = await restoreProtectedPixels(sourceImage, raw, protectMask);
                 } catch (restoreError) {
@@ -10537,7 +10609,7 @@ export default function DesignGlossy({
                   factualModelImage = sourceImage;
                 }
               }
-              if (showcase && (sheet.key === 'sector' || sheet.key === 'base')) {
+              if (showcase && sheet.key === 'base') {
                 const presentation = await boundaryPresentationContext(state, frame, refLayers);
                 factualModelImage = await cropStyleSheetToMap(
                   factualModelImage,
@@ -10547,6 +10619,8 @@ export default function DesignGlossy({
               }
               const finalSheet = sheet.key === 'implementation'
                 ? await finishPhasingRef.current(raw)
+                : sectorPolishOwnsPage
+                ? raw
                 : sheet.key === 'sector'
                 ? await finishSectorRef.current(factualModelImage)
                 : sheet.key === 'base'
@@ -10554,11 +10628,13 @@ export default function DesignGlossy({
                 : styleDef
                   ? await finishRef.current(raw, sheet.key as GlossyLayerFilter, styleDef, showcase, sourceImage, protectMask, locked)
                   : raw;
-              const finalGeometryLocked = locked
+              // A model-owned page is honestly NOT geometry-locked — that is the whole point of
+              // the tier, and the provenance flag must say so rather than borrow Hybrid's claim.
+              const finalGeometryLocked = !sectorPolishOwnsPage && (locked
                 || sheet.key === 'implementation'
                 || sheet.key === 'sector'
                 || sheet.key === 'base'
-                || (showcase && Boolean(protectMask));
+                || (showcase && Boolean(protectMask)));
               const targetMapKey = `producer:${styleKey}:${sheet.key}`;
               const handoffTargetIsCurrent = job.sheets.length === 1
                 && job.siteId === state.siteId

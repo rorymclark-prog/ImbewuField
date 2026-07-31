@@ -380,8 +380,22 @@ test('wires Sector jobs through authoritative houses and protected-pixel restora
   assert.match(queue, /sectorProtectMaskOptions\(\)/);
   assert.match(queue, /protectMaskDataUrl, useProtectMaskForEdit: false/);
 
-  const restoreAt = completion.indexOf("sheet.key === 'sector' && sourceImage && protectMask");
-  const cropAt = completion.indexOf("showcase && (sheet.key === 'sector' || sheet.key === 'base')");
-  assert.ok(restoreAt >= 0, 'Sector must restore protected source pixels');
-  assert.ok(cropAt > restoreAt, 'Sector must restore protected pixels before cropping the polished sheet');
+  // THE TWO STAGES MUST STAY DIFFERENT — this block used to assert the opposite (restore, then
+  // crop the polished page back to the map panel) and that contract WAS the "no third render"
+  // bug: the paid polish pass was cropped and recomposed into something visually identical to the
+  // Hybrid, every time, for two weeks of paid renders. Now: the Hybrid stage restores protected
+  // pixels and finishes deterministically; the polish stage (sectorPolishOwnsPage) ships the
+  // model's complete page raw — no restore, no crop, no recompose — and honestly drops the
+  // geometry-locked provenance flag.
+  const ownsPageAt = completion.indexOf("const sectorPolishOwnsPage = showcase && sheet.key === 'sector'");
+  const restoreAt = completion.indexOf("sheet.key === 'sector' && sourceImage && protectMask && !sectorPolishOwnsPage");
+  assert.ok(ownsPageAt >= 0, 'the polish stage must own the page — cropping+recomposing it back into a Hybrid was the two-week "no third render" bug');
+  assert.ok(restoreAt > ownsPageAt, 'the HYBRID stage (and only it) must still restore protected source pixels');
+  assert.match(completion, /: sectorPolishOwnsPage\s*\n\s*\? raw/, 'the polish result is the model page itself, never a recomposed sheet');
+  assert.match(completion, /!sectorPolishOwnsPage && \(locked/, 'a model-owned page must not claim geometry-locked provenance');
+  assert.doesNotMatch(
+    completion.slice(0, completion.indexOf('const finalSheet')),
+    /showcase && \(sheet\.key === 'sector' \|\| sheet\.key === 'base'\)/,
+    'the polished Sector page must never be cropped back to the map panel — that erases the paid pass',
+  );
 });
