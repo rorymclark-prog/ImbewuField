@@ -102,6 +102,12 @@ export interface PlacedItem {
   note?: string;
   /** Already on the farm, or part of the proposal. See ElementStatus above. */
   status?: ElementStatus;
+  /** Chosen species from the catalog, if this is a planted element. */
+  speciesId?: string;
+  speciesBotanical?: string;
+  speciesCrownForm?: string;
+  speciesHeightM?: number;
+  speciesWidthM?: number;
 }
 
 // Real ground/built features the farmer traces on their own site (house outline, paving,

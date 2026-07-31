@@ -719,6 +719,7 @@ function DesignStudioInner() {
     }
   }, []);
   const [placeDefId, setPlaceDefId] = useState<string | null>(null);
+  const [placeSpeciesId, setPlaceSpeciesId] = useState<string | null>(null);
   const [zoneDraw, setZoneDraw] = useState<0 | 1 | 2 | 3 | 4 | 5>(1);
   // Armed ground-feature label (house/patio/…) for the shared polygon-draw tool; null = the
   // zone tool draws a plain permaculture effort-zone.
@@ -2896,6 +2897,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               onChange={(next) => handleChange(() => next)}
               tool={tool}
               placeDefId={placeDefId}
+              placeSpeciesId={placeSpeciesId}
               zoneDraw={zoneDraw}
               areaFeature={areaFeature}
               lineKind={lineKind}
@@ -3455,6 +3457,8 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           setTool={handleSetTool}
           placeDefId={placeDefId}
           setPlaceDefId={setPlaceDefId}
+          placeSpeciesId={placeSpeciesId}
+          setPlaceSpeciesId={setPlaceSpeciesId}
           zoneDraw={zoneDraw}
           setZoneDraw={setZoneDraw}
           selectedZone={selectedZone}

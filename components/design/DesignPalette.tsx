@@ -49,6 +49,7 @@ import {
 import { MIN_BED_COUNT, MAX_BED_COUNT } from '@/lib/bed-block';
 import { CATEGORY_META, CATEGORY_STEP, ELEMENT_CATALOG, GROUND_FEATURES, ZONE_DEFS, biomeClimates, elementSuitsClimate, elementVisibleInPalette, type DesignElementDef } from '@/lib/design-elements';
 import { COMPASS16_ORDER, isCompassDirection16, type LocalWindObservation } from '@/lib/local-wind';
+import SpeciesPicker from './SpeciesPicker';
 import { usePhoneViewport } from '@/lib/use-phone-viewport';
 import ChromeHandle from '@/components/design/ChromeHandle';
 import { BOTTOM_STOPS, bottomVisibility, type BottomStop } from '@/lib/design-chrome';
@@ -85,6 +86,8 @@ export interface DesignPaletteProps {
   setTool: (t: ToolKind) => void;
   placeDefId: string | null;
   setPlaceDefId: (id: string | null) => void;
+  placeSpeciesId: string | null;
+  setPlaceSpeciesId: (id: string | null) => void;
   zoneDraw: 0 | 1 | 2 | 3 | 4 | 5;
   setZoneDraw: (z: 0 | 1 | 2 | 3 | 4 | 5) => void;
   /** The zone number the current SELECTION is, or null when the selection isn't a single
@@ -370,6 +373,8 @@ export default function DesignPalette({
   setTool,
   placeDefId,
   setPlaceDefId,
+  placeSpeciesId,
+  setPlaceSpeciesId,
   zoneDraw,
   selectedZone,
   selectedIdentity,
@@ -415,6 +420,7 @@ export default function DesignPalette({
   // ...and the clock stops while a finger or the keyboard is on it, so it can never disappear out
   // from under someone reaching for the lesson link.
   const [hintHeld, setHintHeld] = useState(false);
+  const [speciesPickerOpen, setSpeciesPickerOpen] = useState(false);
   const [layersOpen, setLayersOpen] = useState(false);
   // Raw text for the bed-block number fields while they are being edited. Held as strings so a
   // comma decimal, a trailing separator or an empty box survives long enough to finish typing.
@@ -627,6 +633,19 @@ export default function DesignPalette({
           : tool === 'line'
             ? `line:${lineKind}`
             : null;
+
+  // ---- Tools --------------------------------------------------------------------------------
+
+  const canShowSpecies = tool === 'place' && armedDef?.category === 'growing' && armedDef?.id !== 'veg_bed';
+
+  useEffect(() => {
+    if (canShowSpecies) {
+      setSpeciesPickerOpen(true);
+    } else {
+      setSpeciesPickerOpen(false);
+      setPlaceSpeciesId(null);
+    }
+  }, [tool, placeDefId]);
 
   // ---- Row renderers ------------------------------------------------------------------------
   // Shared by the desktop docked layout and the phone bottom sheet, so there is exactly ONE copy
@@ -926,6 +945,65 @@ export default function DesignPalette({
             {toolGlyph(t('designPaletteDelete')).glyph}
           </button>
           </div>
+
+          {canShowSpecies && (
+            <div style={{ position: 'relative', flexShrink: 0, marginRight: 6 }}>
+              <button
+                type="button"
+                onClick={() => setSpeciesPickerOpen((v) => !v)}
+                aria-expanded={speciesPickerOpen}
+                style={{
+                  minHeight: guided ? 40 : 32,
+                  padding: '4px 12px',
+                  borderRadius: 16,
+                  border: '1px solid rgba(0,0,0,0.15)',
+                  background: speciesPickerOpen ? '#2F7A4A' : placeSpeciesId ? 'rgba(47,122,74,0.1)' : '#FFFEFA',
+                  color: speciesPickerOpen ? '#FFFEFA' : '#0B120B',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: 5,
+                  cursor: 'pointer',
+                  fontSize: 11.5,
+                  fontWeight: 700,
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                <span aria-hidden>🌱</span>
+                <span>{placeSpeciesId ? 'Species picked' : 'Pick species'}</span>
+              </button>
+              {speciesPickerOpen && (
+                <div
+                  style={{
+                    position: 'absolute',
+                    bottom: 'calc(100% + 8px)',
+                    right: 0,
+                    width: 360,
+                    maxWidth: '90vw',
+                    maxHeight: '45dvh',
+                    background: '#FFFEFA',
+                    border: '1px solid rgba(0,0,0,0.1)',
+                    borderRadius: 12,
+                    boxShadow: '0 -4px 16px rgba(0,0,0,0.15)',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    zIndex: 30,
+                    overflow: 'hidden',
+                  }}
+                >
+                  <SpeciesPicker
+                    siteBiome={siteBiome}
+                    selectedSpeciesId={placeSpeciesId}
+                    onSelect={(id) => {
+                      setPlaceSpeciesId(id);
+                      setSpeciesPickerOpen(false);
+                    }}
+                    onClose={() => setSpeciesPickerOpen(false)}
+                  />
+                </div>
+              )}
+            </div>
+          )}
+
           {/* Layers — pinned right of the tool row, always on screen. Popover opens upward over
               the map (its wrapper isn't an overflow container, so it's never clipped) — true in
               BOTH the desktop docked layout and the phone sheet; neither root ever sets
