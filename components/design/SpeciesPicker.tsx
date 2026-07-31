@@ -1,9 +1,11 @@
 import React from 'react';
 import { SPECIES } from '@/lib/species-catalog';
 import { sectionedPaletteFor, broadReachPalette, type Species } from '@/lib/species-palette';
+import { BIOMES } from '@/lib/biome';
 import { useLanguage } from '@/lib/i18n';
 
 interface SpeciesPickerProps {
+  /** A lib/biome.ts BIOMES registry key ("IOCB"), never the display name — see biomeKeyForName. */
   siteBiome?: string;
   selectedSpeciesId: string | null;
   onSelect: (id: string) => void;
@@ -21,28 +23,29 @@ export default function SpeciesPicker({
   const sections = siteBiome
     ? sectionedPaletteFor(SPECIES, siteBiome)
     : [{ section: 'Broad-reach species (site climate unknown)', species: broadReachPalette(SPECIES) }];
+  // The registry key is what filtering needs; the farmer reads its name, not "IOCB".
+  const siteBiomeName = siteBiome ? (BIOMES[siteBiome]?.name ?? siteBiome) : undefined;
 
   return (
     <div
       style={{
-        position: 'absolute',
-        bottom: '100%',
-        left: 0,
-        right: 0,
-        maxHeight: '45dvh',
-        background: '#FFFEFA',
-        borderTop: '1px solid rgba(0,0,0,0.1)',
-        boxShadow: '0 -4px 12px rgba(0,0,0,0.05)',
+        // No positioning of its own: the caller (DesignPalette's portal wrapper) already owns
+        // position/size/background/shadow/z-index. This double-owned the job once — this div was
+        // `position:absolute` too, sized from a parent whose own height came from THIS div (since
+        // an absolutely-positioned child contributes nothing to its parent's intrinsic size) —
+        // a circular sizing dependency that collapsed the whole panel to 2x2px with no error
+        // anywhere. Just fill the space the caller already gives it.
+        width: '100%',
+        height: '100%',
         display: 'flex',
         flexDirection: 'column',
-        zIndex: 10,
       }}
     >
       <div style={{ padding: '8px 12px', background: '#F8F5EE', borderBottom: '1px solid rgba(0,0,0,0.08)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
           <h3 style={{ margin: 0, fontSize: 14, color: '#0B120B' }}>Plant Catalog</h3>
           <p style={{ margin: 0, fontSize: 11, color: '#A9743F', fontWeight: 600 }}>
-            {siteBiome ? `Filtered for ${siteBiome} biome` : 'Showing broad-reach species'}
+            {siteBiomeName ? `Filtered for ${siteBiomeName} biome` : 'Showing broad-reach species'}
           </p>
         </div>
         <button

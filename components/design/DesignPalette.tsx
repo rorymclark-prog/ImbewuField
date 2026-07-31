@@ -37,6 +37,7 @@
 // ancestor of it) is allowed to clip/scroll.
 
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 // How long a tip stays before closing itself. See the state that drives it for why this is not
 // the four seconds first suggested: four is under the reading time of the tips themselves.
@@ -421,6 +422,34 @@ export default function DesignPalette({
   // from under someone reaching for the lesson link.
   const [hintHeld, setHintHeld] = useState(false);
   const [speciesPickerOpen, setSpeciesPickerOpen] = useState(false);
+  // The trigger button's own screen position, captured whenever the picker opens (and kept live
+  // on resize/scroll while it's open). This exists because the panel itself is portalled straight
+  // to <body> — see the render site below for why: its natural parent measured a real,
+  // non-zero-looking bounding rect (found live, an ancestor collapsed to 2px tall with
+  // overflow:hidden — likely a flex-sizing quirk of this exact toolbar, not something worth
+  // chasing further) and silently clipped the whole panel to nothing, with no console error and
+  // no visual trace. Rory: "its there but i cant see the selector for choosing a species" — the
+  // button worked, the state flipped, the panel existed in the DOM at a plausible-looking rect,
+  // and none of that mattered because its container's box was two pixels tall. A portal sidesteps
+  // the question of which ancestor is at fault by not having one.
+  const speciesButtonRef = useRef<HTMLButtonElement | null>(null);
+  const [speciesAnchor, setSpeciesAnchor] = useState<{ top: number; right: number } | null>(null);
+  useEffect(() => {
+    if (!speciesPickerOpen) return undefined;
+    const measure = () => {
+      const el = speciesButtonRef.current;
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      setSpeciesAnchor({ top: window.innerHeight - rect.top, right: window.innerWidth - rect.right });
+    };
+    measure();
+    window.addEventListener('resize', measure);
+    window.addEventListener('scroll', measure, true);
+    return () => {
+      window.removeEventListener('resize', measure);
+      window.removeEventListener('scroll', measure, true);
+    };
+  }, [speciesPickerOpen]);
   const [layersOpen, setLayersOpen] = useState(false);
   // Raw text for the bed-block number fields while they are being edited. Held as strings so a
   // comma decimal, a trailing separator or an empty box survives long enough to finish typing.
@@ -949,6 +978,7 @@ export default function DesignPalette({
           {canShowSpecies && (
             <div style={{ position: 'relative', flexShrink: 0, marginRight: 6 }}>
               <button
+                ref={speciesButtonRef}
                 type="button"
                 onClick={() => setSpeciesPickerOpen((v) => !v)}
                 aria-expanded={speciesPickerOpen}
@@ -971,12 +1001,12 @@ export default function DesignPalette({
                 <span aria-hidden>🌱</span>
                 <span>{placeSpeciesId ? 'Species picked' : 'Pick species'}</span>
               </button>
-              {speciesPickerOpen && (
+              {speciesPickerOpen && speciesAnchor && typeof document !== 'undefined' && createPortal(
                 <div
                   style={{
-                    position: 'absolute',
-                    bottom: 'calc(100% + 8px)',
-                    right: 0,
+                    position: 'fixed',
+                    bottom: speciesAnchor.top + 8,
+                    right: speciesAnchor.right,
                     width: 360,
                     maxWidth: '90vw',
                     maxHeight: '45dvh',
@@ -986,7 +1016,7 @@ export default function DesignPalette({
                     boxShadow: '0 -4px 16px rgba(0,0,0,0.15)',
                     display: 'flex',
                     flexDirection: 'column',
-                    zIndex: 30,
+                    zIndex: 1000,
                     overflow: 'hidden',
                   }}
                 >
@@ -999,7 +1029,8 @@ export default function DesignPalette({
                     }}
                     onClose={() => setSpeciesPickerOpen(false)}
                   />
-                </div>
+                </div>,
+                document.body,
               )}
             </div>
           )}

@@ -89,6 +89,7 @@ import {
   type AlignItemsResult,
 } from '@/lib/align-items';
 import { ELEMENT_CATALOG, ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_DEFS, type ElementCategory } from '@/lib/design-elements';
+import { biomeKeyForName } from '@/lib/biome';
 import { loadSiteElements, type SiteElementType } from '@/lib/site-elements';
 import type { LineShape } from '@/lib/design-canvas';
 import { suggestZones } from '@/lib/design-suggest';
@@ -3484,7 +3485,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           angleControl={angleControl}
           sizeControl={sizeControl}
           windControl={windControl}
-          siteBiome={site?.biome}
+          siteBiome={biomeKeyForName(site?.biome)}
         />
       )}
 

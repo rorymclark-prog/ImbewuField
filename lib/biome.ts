@@ -147,6 +147,23 @@ export const BIOMES: Record<string, SABiome> = {
   },
 };
 
+/**
+ * site.biome (see biomeClimates in lib/design-elements.ts) stores the human NAME — "Indian Ocean
+ * Coastal Belt" — because that's what a farmer reads. lib/species-catalog.ts's SpeciesBiomeFit
+ * stores the BIOMES registry KEY — "IOCB" — because that's what a lookup table needs. Nothing
+ * converted between the two: the species picker passed the name straight through as if it were
+ * the key, so `rankIn` never matched a single species for any farm, in any biome, ever — an empty
+ * "Plant Catalog" with no error, indistinguishable from "this biome genuinely has no fruit trees".
+ * This is the one place that conversion happens; every other biome-name consumer keeps using the
+ * name as it always has (biomeClimates, site.biome itself, anywhere it's shown to a farmer).
+ */
+export function biomeKeyForName(name?: string | null): string | undefined {
+  if (!name) return undefined;
+  const trimmed = name.trim().toLowerCase();
+  const entry = Object.entries(BIOMES).find(([, b]) => b.name.toLowerCase() === trimmed);
+  return entry?.[0];
+}
+
 type LonLat = readonly [lon: number, lat: number];
 
 function pointOnSegment(lon: number, lat: number, a: LonLat, b: LonLat): boolean {
