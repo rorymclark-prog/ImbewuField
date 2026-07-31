@@ -102,7 +102,7 @@ Palette:
 `designPaletteLayerLabels`, `designPaletteLayerIcons`, `designPaletteLayerContours`,
 `designPaletteLayerSector`, `designPaletteSymbolSize`,
 `designPaletteAreaFill`, `designPaletteAreaFillHatch`, `designPaletteAreaFillTint`,
-`designPaletteAreaFillStrength`,
+`designPaletteAreaFillStrength`, `designPalettePlantFill`,
 `designPaletteBedBlock`, `designPaletteBedLength`, `designPaletteBedWidth`,
 `designPaletteBedPath`, `designPaletteBedCount`, `designPaletteBedBlockPlace`,
 `designPaletteBedBlockCancel`.

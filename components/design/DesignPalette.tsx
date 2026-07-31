@@ -105,7 +105,7 @@ export interface DesignPaletteProps {
    *  it entirely, same "nothing to act on" convention the other optional controls use. */
   textScaleControl: { value: number; onChange: (v: number) => void } | null;
   /** Hatch vs flat tint for traced surfaces, and how strong. Paint only — see AREA_FILL_STYLES. */
-  areaFillControl: { value: { style: AreaFillStyle; opacity: number }; onChange: (v: { style: AreaFillStyle; opacity: number }) => void } | null;
+  areaFillControl: { value: { style: AreaFillStyle; opacity: number; plantOpacity: number }; onChange: (v: { style: AreaFillStyle; opacity: number; plantOpacity: number }) => void } | null;
   /** Bed-block inserter: type the bed length, bed width, path width and count, then arm it and
    *  tap a corner on the canvas. null hides the whole control. */
   bedBlockControl: {
@@ -1092,6 +1092,29 @@ export default function DesignPalette({
                     />
                     <span style={{ fontSize: 11, fontWeight: 700, minWidth: 34, textAlign: 'right', fontVariantNumeric: 'tabular-nums' }}>
                       {Math.round(areaFillControl.value.opacity * 100)}%
+                    </span>
+                  </div>
+                )}
+                {/* PLANTS GET THEIR OWN DIAL. Turning the areas down to read the ground underneath
+                    also turned every tree canopy down, because one number drove both (Rory: "we
+                    should set the plant tint to a certain level or better be able to adjust it —
+                    the plant hatching is not that visible"). They are different jobs: an area tint
+                    is a wash you want out of the way, a canopy is a thing you are counting. */}
+                {areaFillControl && (
+                  <div style={{ flexBasis: '100%', display: 'flex', alignItems: 'center', gap: 8, padding: '2px 2px 0' }}>
+                    <span style={{ fontSize: 11.5, whiteSpace: 'nowrap' }}>🌿 {t('designPalettePlantFill')}</span>
+                    <input
+                      type="range"
+                      min={MIN_AREA_FILL_OPACITY}
+                      max={MAX_AREA_FILL_OPACITY}
+                      step={0.01}
+                      value={areaFillControl.value.plantOpacity}
+                      onChange={(e) => areaFillControl.onChange({ ...areaFillControl.value, plantOpacity: Number(e.target.value) })}
+                      aria-label={t('designPalettePlantFill')}
+                      style={{ flex: 1, minWidth: 80, accentColor: GREEN, cursor: 'pointer' }}
+                    />
+                    <span style={{ fontSize: 11, fontWeight: 700, minWidth: 34, textAlign: 'right', fontVariantNumeric: 'tabular-nums' }}>
+                      {Math.round(areaFillControl.value.plantOpacity * 100)}%
                     </span>
                   </div>
                 )}

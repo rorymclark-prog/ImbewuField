@@ -3344,10 +3344,12 @@ export default function DesignCanvas({
                   </>
                 )}
                 {/* True-scale footprint (soft fill + stroke) */}
+                {/* Its own strength, not the areas' — a canopy is a thing you count, a zone tint is
+                    a wash you want out of the way. See DEFAULT_AREA_FILL in lib/design-canvas.ts. */}
                 {def.shape === 'circle' ? (
-                  <circle r={wPx / 2} fill={def.color} fillOpacity={0.35} stroke={def.color} strokeWidth={chrome(1.5)} />
+                  <circle r={wPx / 2} fill={def.color} fillOpacity={areaFill.plantOpacity} stroke={def.color} strokeWidth={chrome(1.5)} />
                 ) : (
-                  <rect x={-wPx / 2} y={-hPx / 2} width={wPx} height={hPx} fill={def.color} fillOpacity={0.35} stroke={def.color} strokeWidth={chrome(1.5)} />
+                  <rect x={-wPx / 2} y={-hPx / 2} width={wPx} height={hPx} fill={def.color} fillOpacity={areaFill.plantOpacity} stroke={def.color} strokeWidth={chrome(1.5)} />
                 )}
               </g>
               {/* Centred icon disc: optional, because dense water/planting edits become unreadable

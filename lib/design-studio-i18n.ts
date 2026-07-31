@@ -191,6 +191,7 @@ export const DESIGN_STUDIO_REST_KEYS = {
   paletteAreaFillHatch: 'designPaletteAreaFillHatch',
   paletteAreaFillTint: 'designPaletteAreaFillTint',
   paletteAreaFillStrength: 'designPaletteAreaFillStrength',
+  palettePlantFill: 'designPalettePlantFill',
   paletteBedBlock: 'designPaletteBedBlock',
   paletteBedLength: 'designPaletteBedLength',
   paletteBedWidth: 'designPaletteBedWidth',

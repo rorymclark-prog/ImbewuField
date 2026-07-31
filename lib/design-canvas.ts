@@ -824,19 +824,34 @@ export const MAX_MAP_TEXT_SCALE = 2.5;
 export const AREA_FILL_STYLES = ['hatch', 'tint'] as const;
 export type AreaFillStyle = (typeof AREA_FILL_STYLES)[number];
 export const MIN_AREA_FILL_OPACITY = 0.05;
-export const MAX_AREA_FILL_OPACITY = 0.7;
+export const MAX_AREA_FILL_OPACITY = 0.85;
 /** What the canvas drew before there was a control: the hatch at its old strength. */
-export const DEFAULT_AREA_FILL: { style: AreaFillStyle; opacity: number } = { style: 'hatch', opacity: 0.28 };
+/**
+ * `plantOpacity` is SEPARATE from `opacity`, and that separation is the whole point.
+ *
+ * Rory, looking at a Review sheet with the area fill turned down to 5%: "we should set the plant
+ * tint to a certain level or better be able to adjust it — you can see here the plant hatching is
+ * not that visible." Turning the ZONES down to read the ground underneath also turned the tree
+ * canopies down, because one number drove both. They are different jobs: a zone tint is a wash you
+ * want out of the way, and a canopy is a thing you are counting. One slider each.
+ */
+export const DEFAULT_AREA_FILL: { style: AreaFillStyle; opacity: number; plantOpacity: number } =
+  { style: 'hatch', opacity: 0.28, plantOpacity: 0.35 };
 
 export function clampAreaFillOpacity(v: unknown): number {
   const n = typeof v === 'number' && Number.isFinite(v) ? v : DEFAULT_AREA_FILL.opacity;
   return Math.min(MAX_AREA_FILL_OPACITY, Math.max(MIN_AREA_FILL_OPACITY, n));
 }
 
-export function normaliseAreaFill(raw: unknown): { style: AreaFillStyle; opacity: number } {
-  const o = (raw ?? {}) as { style?: unknown; opacity?: unknown };
+export function normaliseAreaFill(raw: unknown): { style: AreaFillStyle; opacity: number; plantOpacity: number } {
+  const o = (raw ?? {}) as { style?: unknown; opacity?: unknown; plantOpacity?: unknown };
   const style = AREA_FILL_STYLES.find((s) => s === o.style) ?? DEFAULT_AREA_FILL.style;
-  return { style, opacity: clampAreaFillOpacity(o.opacity) };
+  // A design saved before plants had their own dial keeps the strength they were drawn at, rather
+  // than inheriting whatever the areas happen to be set to and changing on reload.
+  const plantOpacity = o.plantOpacity == null
+    ? DEFAULT_AREA_FILL.plantOpacity
+    : clampAreaFillOpacity(o.plantOpacity);
+  return { style, opacity: clampAreaFillOpacity(o.opacity), plantOpacity };
 }
 
 export const MIN_SCALE_FACTOR = 0.05;

@@ -750,14 +750,14 @@ function DesignStudioInner() {
   // symbol-size slider beside it, because it is the kind of preference a farmer sets once for how
   // they like to read their own map; and unlike a hidden panel, a fill you cannot see is visible
   // on screen as soon as you look at it, so there is nothing to be confused about on return.
-  const [areaFill, setAreaFill] = useState<{ style: AreaFillStyle; opacity: number }>(DEFAULT_AREA_FILL);
+  const [areaFill, setAreaFill] = useState<{ style: AreaFillStyle; opacity: number; plantOpacity: number }>(DEFAULT_AREA_FILL);
   useEffect(() => {
     try {
       const raw = window.localStorage.getItem(AREA_FILL_PREF_KEY);
       if (raw) setAreaFill(normaliseAreaFill(JSON.parse(raw)));
     } catch { /* a corrupt preference is not worth a broken Studio */ }
   }, []);
-  const changeAreaFill = useCallback((next: { style: AreaFillStyle; opacity: number }) => {
+  const changeAreaFill = useCallback((next: { style: AreaFillStyle; opacity: number; plantOpacity: number }) => {
     const clean = normaliseAreaFill(next);
     setAreaFill(clean);
     try { window.localStorage.setItem(AREA_FILL_PREF_KEY, JSON.stringify(clean)); } catch { /* non-fatal */ }

@@ -204,6 +204,7 @@ const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   designPaletteAreaFillHatch: 'Hatch',
   designPaletteAreaFillTint: 'Tint',
   designPaletteAreaFillStrength: 'Fill strength',
+  designPalettePlantFill: 'Plants',
   designPaletteBedBlock: 'Bed block',
   designPaletteBedLength: 'Length m',
   designPaletteBedWidth: 'Width m',
