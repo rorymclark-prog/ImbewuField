@@ -110,34 +110,75 @@ export function buildLockedIllustrationPrompt(
   // others; reusing showcaseMarkerGlossary rather than writing a fourth table is the point, so the
   // next bed/basin/vetiver correction cannot miss the app's most-used renderer again.
   const markerGlossary = showcaseMarkerGlossary(showcaseSheetKindForLabel(layerLabel), elementsText);
+  const photoPreserving = isPhotoPreservingStyle(stylePreset);
   const waterArtDirection = /water/i.test(layerLabel)
     ? [
         `WATER FEATURE ROLE: polish every already-marked tank, tap, basin, pond and fitting into a recognisable realistic top-down farm feature at its exact saved centre, count, orientation and footprint. Keep buried water pipe blue, filtered-greywater routes purple, and drip irrigation blue with sparse emitters. The app reinforces the measured routes, leaders, labels and legend afterwards.`,
-        `TONAL HIERARCHY: use a deep dark-green illustrated forest context beyond the property, with a moderate olive/moss property interior. Keep the whole sheet high-contrast, moody and editorial from directly overhead; do not brighten or pale the land relative to the source.`,
-        `MATERIAL SEPARATION: distinguish mown lawn, rough veld, bare soil, tilled ground, planted beds and paving through layered watercolor-and-gouache texture with fine dry-brush grain. Keep the driveway quiet, flat and charcoal, with no bright border, kerb, raised edge, hatch, shadow or roof-like treatment.`,
+        // TONAL HIERARCHY and MATERIAL SEPARATION order a painted-illustration ground treatment —
+        // "layered watercolor-and-gouache texture", a repainted "high-contrast, moody" forest
+        // context — which is the exact contradiction fixed below for the sheet body: photo_plan and
+        // satellite_overlay must not repaint the ground at all. Skipped for those two styles so this
+        // block cannot reopen the contradiction the sheet-level branch just closed.
+        photoPreserving ? '' : `TONAL HIERARCHY: use a deep dark-green illustrated forest context beyond the property, with a moderate olive/moss property interior. Keep the whole sheet high-contrast, moody and editorial from directly overhead; do not brighten or pale the land relative to the source.`,
+        photoPreserving ? '' : `MATERIAL SEPARATION: distinguish mown lawn, rough veld, bare soil, tilled ground, planted beds and paving through layered watercolor-and-gouache texture with fine dry-brush grain. Keep the driveway quiet, flat and charcoal, with no bright border, kerb, raised edge, hatch, shadow or roof-like treatment.`,
         `SOURCE LOCK: preserve the exact top-down source crop, scale, aspect ratio, camera position and geometry. Invent nothing: add no trees, beds, tanks, ponds, paths, fences, buildings or other features not already visible or marked. Add no writing or sheet furniture; the app adds those afterwards.`,
-      ].join('\n\n')
+      ].filter(Boolean).join('\n\n')
     : '';
-  return [
-    STYLE_LINES[stylePreset],
-    `TASK: turn this exact saved design composite into one visibly polished hand-illustrated ${layer} map. Paint edge to edge — every corner becomes artwork, including the land beyond the property boundary.`,
-    exactFeatures,
-    markerGlossary ? `WHAT THE MARKERS ARE: ${markerGlossary}.` : '',
-    designBrief.trim() ? `WHOLE-SITE CONSISTENCY BRIEF: ${designBrief.trim()}` : '',
-    `PLACED-FEATURE CONTRACT: every coloured footprint, route and editor marker already visible in the source is a saved feature, not a suggestion. Replace each marker with a realistic orthographic illustration of that named feature at the same centre, count, rotation and footprint. Keep the illustration confined to its saved footprint. Do not duplicate it, omit it, move it or leave an emoji/tool marker in the finished artwork.`,
-    `HYBRID FINISH: the app restores protected roof, driveway, boundary and context pixels, then reinforces exact feature outlines, technical routes, labels and legend over your artwork. Make the painted trees, beds, tanks, basins, structures and ground visually rich enough to remain visible beneath that precise cartographic linework.`,
-    waterArtDirection,
+  // PHOTO PLAN / SATELLITE OVERLAY — do not repaint the ground, ever.
+  //
+  // Rory, on a "Full design · Photo Plan · AI hybrid" result: "look how the vegetation from the
+  // base image shine through — it muddies the image." The cause is the same contradiction
+  // isPhotoPreservingStyle's doc comment already names and buildSectorRestylePrompt already works
+  // around (see its own isPhotoPreservingStyle branch, a few hundred lines below) — but this
+  // function, the app's MOST-USED AI path, never got the same fix.
+  //
+  // STYLE_LINES.photo_plan is explicit: "Every pixel that is not a design element stays the
+  // supplied satellite image... Do not stylise, filter, wash, engrave, hatch, blur, relight or
+  // re-colour the ground under any circumstances." The generic body below it used to say the
+  // opposite in the same prompt: "turn this into one hand-illustrated map, paint edge to edge...
+  // illustrate the real landscape... existing trees and shrubs as drawn canopies." A model asked to
+  // simultaneously preserve every non-design pixel AND repaint the entire landscape resolves the
+  // conflict by doing a bit of both — a canopy half-painted over the real bush it was supposed to
+  // replace, with the original photographic texture still visible through and around it. That is
+  // "muddy" by construction, not a rendering-quality problem to prompt harder against.
+  //
+  // The fix is the one buildSectorRestylePrompt already proved: give the photo-preserving styles an
+  // honest, achievable job that does not fight their own style line — draw ONLY the marked design
+  // elements as real objects sitting on the untouched photograph, exactly what STYLE_LINES.photo_plan
+  // itself already promises ("vegetable beds as tidy planted rows, fruit trees as full painted
+  // canopies... water tanks as solid cylinders... with soft realistic drop shadows so it sits ON the
+  // land"). Every other (painted) style keeps the original edge-to-edge illustration instruction —
+  // unchanged, so this fix cannot touch the eight styles it was never wrong for.
+  const task = photoPreserving
+    ? `TASK: the real aerial photograph beneath this composite is the map and survives intact — see the style line above. Add ONLY the marked design elements from the register below as real illustrated objects sitting on top of the untouched photograph, each with a soft realistic drop shadow so it reads as built or planted on the land, not floating above it.`
+    : `TASK: turn this exact saved design composite into one visibly polished hand-illustrated ${layer} map. Paint edge to edge — every corner becomes artwork, including the land beyond the property boundary.`;
+  const groundClause = photoPreserving
+    ? `KEEP THE PHOTOGRAPH: everything already visible in the source — existing trees, shrubs, hedges, treelines, mown lawn, rough veld, bare and tilled soil, tracks and driveways, paved ground, every roof, neighbouring plots — stays the real photographed pixels, exactly as supplied: native grain, native colour, native shadow. Do not repaint, illustrate, stylise, filter, wash, hatch, blur, relight or re-colour any of it, and do not extend or invent terrain beyond what the photograph shows. The ONLY new artwork anywhere on this sheet is the marked design elements themselves.`
     // Same gap, same fix as buildSectorRestylePrompt's paintWhatIsThere (see its comment): no
     // vocabulary for paved ground meant a concrete slab beside a building had nowhere to go except
     // "more roof". This is the Geometry Lock path — the most-used of the three AI-illustration
     // prompts in this file that each independently describe ground texture — so the gap here is
     // the highest-impact of the three to have missed.
-    `PAINT WHAT IS THERE: illustrate the real landscape the photo already shows — existing trees and shrubs as drawn canopies, hedges and treelines, mown lawn, rough veld, bare and tilled soil, tracks and driveways, paved ground (patios, concrete slabs, hard standing) as flat light-grey paving — never roofed, never the driveway's tar-black — and every building as its full roof seen from directly above. Neighbouring plots are painted in the same hand as the rest of the sheet, never left as raw photograph.`,
-    `INVENT NOTHING: add no tree, bed, tank, pond, path, fence, hedge or building that is not already visible or marked in the source. Where the ground is open it stays open — illustrated, but empty. Do not decorate, fill space or redesign the site.`,
+    : `PAINT WHAT IS THERE: illustrate the real landscape the photo already shows — existing trees and shrubs as drawn canopies, hedges and treelines, mown lawn, rough veld, bare and tilled soil, tracks and driveways, paved ground (patios, concrete slabs, hard standing) as flat light-grey paving — never roofed, never the driveway's tar-black — and every building as its full roof seen from directly above. Neighbouring plots are painted in the same hand as the rest of the sheet, never left as raw photograph.`;
+  return [
+    STYLE_LINES[stylePreset],
+    task,
+    exactFeatures,
+    markerGlossary ? `WHAT THE MARKERS ARE: ${markerGlossary}.` : '',
+    designBrief.trim() ? `WHOLE-SITE CONSISTENCY BRIEF: ${designBrief.trim()}` : '',
+    `PLACED-FEATURE CONTRACT: every coloured footprint, route and editor marker already visible in the source is a saved feature, not a suggestion. Replace each marker with a realistic orthographic illustration of that named feature at the same centre, count, rotation and footprint. Keep the illustration confined to its saved footprint. Do not duplicate it, omit it, move it or leave an emoji/tool marker in the finished artwork.`,
+    photoPreserving
+      ? ''
+      : `HYBRID FINISH: the app restores protected roof, driveway, boundary and context pixels, then reinforces exact feature outlines, technical routes, labels and legend over your artwork. Make the painted trees, beds, tanks, basins, structures and ground visually rich enough to remain visible beneath that precise cartographic linework.`,
+    waterArtDirection,
+    groundClause,
+    `INVENT NOTHING: add no tree, bed, tank, pond, path, fence, hedge or building that is not already visible or marked in the source. Where the ground is open it stays open — ${photoPreserving ? 'the real photographed ground' : 'illustrated, but empty'}. Do not decorate, fill space or redesign the site.`,
     `KEEP THE GEOMETRY: every roof outline, driveway edge, boundary and treeline keeps exactly the shape, size and position the photo shows. Never crop, shrink, rotate, straighten, cover or plant over any part of a roof.`,
     `VIEW AND FRAMING: flat orthographic top-down, north-up plan only. Keep exactly the source crop, scale, aspect ratio and camera position. No oblique view, perspective tilt, 3D camera, horizon, isometric view, rotation, zoom, recentering or reframing.`,
     `NO SHEET FURNITURE: no writing, numbers, title, legend, key, panel, border, compass, north arrow, scale bar, pin, icon or emoji anywhere in the image. The app draws all of those afterwards.`,
-    `FINAL CHECK: the entire frame is illustrated; every saved feature has the exact same count and position; every roof and boundary stays where the source put it; nothing is added; there is no text anywhere.`,
+    photoPreserving
+      ? `FINAL CHECK: the photograph itself is pixel-for-pixel the same land the source shows, unrepainted; every marked design element is added on top of it at the right place; every roof and boundary stays where the source put it; there is no text anywhere.`
+      : `FINAL CHECK: the entire frame is illustrated; every saved feature has the exact same count and position; every roof and boundary stays where the source put it; nothing is added; there is no text anywhere.`,
   ].filter(Boolean).join('\n\n');
 }
 

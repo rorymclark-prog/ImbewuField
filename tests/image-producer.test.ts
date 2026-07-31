@@ -1401,3 +1401,48 @@ test('a sheet with no staple garden is never told to draw one', () => {
   assert.match(stapleOnly, /maize/i);
   assert.doesNotMatch(stapleOnly, /PLANTED vegetable bed/);
 });
+
+// ── Geometry Lock's photo-preserving styles must not fight their own STYLE_LINES ────────────────
+//
+// Rory, on a "Full design · Photo Plan · AI hybrid" result: "look how the vegetation from the base
+// image shine through — it muddies the image." STYLE_LINES.photo_plan (checked above, in
+// isolation) forbids repainting the ground "under any circumstances" — but buildLockedIllustrationPrompt
+// used to append "turn this into one hand-illustrated map, paint edge to edge... existing trees and
+// shrubs as drawn canopies" right after it, in the SAME prompt. A model asked to both preserve and
+// repaint every non-design pixel does a bit of both, which is exactly the muddy half-painted
+// canopy over still-visible real bush Rory saw. This is the composed-prompt regression the two
+// STYLE_LINES-only tests above could not catch — buildSectorRestylePrompt already had the same fix
+// (isPhotoPreservingStyle), and this checks the app's most-used AI path finally matches it.
+
+test('the Geometry Lock hybrid never tells a photo-preserving style to repaint the ground', () => {
+  const photoPlan = buildLockedIllustrationPrompt('Planting', 'photo_plan', '🥬 Vegetable Bed ×9');
+  for (const paintWord of ['paint edge to edge', 'drawn canopies', 'hand-illustrated']) {
+    assert.doesNotMatch(photoPlan, new RegExp(paintWord, 'i'));
+  }
+  assert.match(photoPlan, /stays the real photographed pixels/i);
+  assert.match(photoPlan, /Do not repaint, illustrate, stylise/i);
+  // The one thing it IS allowed to add.
+  assert.match(photoPlan, /PLANTED vegetable bed in full growth/);
+
+  const satOverlay = buildLockedIllustrationPrompt('Planting', 'satellite_overlay', '🥬 Vegetable Bed ×9');
+  assert.doesNotMatch(satOverlay, /paint edge to edge/i);
+  assert.match(satOverlay, /stays the real photographed pixels/i);
+});
+
+test('a painted style keeps the full edge-to-edge illustration instruction unchanged', () => {
+  // The photo-preserving fix must be scoped to photo_plan/satellite_overlay only — every other
+  // style painted the ground correctly before this change and must still be asked to.
+  const p = buildLockedIllustrationPrompt('Planting', 'precision_atlas', '🥬 Vegetable Bed ×9');
+  assert.match(p, /paint edge to edge/i);
+  assert.match(p, /PAINT WHAT IS THERE/);
+  assert.doesNotMatch(p, /stays the real photographed pixels/i);
+});
+
+test('the water sheet\'s MATERIAL SEPARATION clause is also style-gated, not just the ground clause', () => {
+  // waterArtDirection's "layered watercolor-and-gouache texture" line was a second, independent
+  // place the same contradiction could reappear for a Water sheet specifically.
+  const waterPhoto = buildLockedIllustrationPrompt('Water', 'photo_plan', 'JoJo Tank 2500L ×2');
+  assert.doesNotMatch(waterPhoto, /watercolor-and-gouache/i);
+  const waterPainted = buildLockedIllustrationPrompt('Water', 'precision_atlas', 'JoJo Tank 2500L ×2');
+  assert.match(waterPainted, /watercolor-and-gouache/i);
+});
