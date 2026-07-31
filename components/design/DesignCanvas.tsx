@@ -2020,6 +2020,13 @@ export default function DesignCanvas({
   // sites (zone body, ground-feature body, the draft ring, and the pattern defs) and they must
   // never disagree with each other.
   const areaFill = normaliseAreaFill(areaFillRaw);
+  // The hatch <pattern> set is built from the STATIC catalogs, so a traced layer whose colour is
+  // not in them would resolve url(#hatch-…) to nothing and render with no fill at all. Union in
+  // whatever colours are actually on screen this render.
+  const hatchColors = Array.from(new Set([
+    ...HATCH_COLORS,
+    ...(tracedLayers ?? []).map((l) => l.color).filter(Boolean),
+  ]));
   const areaFillOf = (color: string) => (areaFill.style === 'tint' ? color : hatchFill(color));
 
   /**
@@ -2196,7 +2203,7 @@ export default function DesignCanvas({
       >
         <defs>
           {/* Subtle diagonal hatch, one per zone/ground-feature colour — see hatchFill() above. */}
-          {HATCH_COLORS.map((c) => (
+          {hatchColors.map((c) => (
             <pattern
               key={c}
               id={hatchPatternId(c)}
@@ -2359,10 +2366,18 @@ export default function DesignCanvas({
                     strokeWidth={16}
                     {...hitProps}
                   />
+                  {/* THE SAME FILL CONTROL AS EVERY OTHER POLYGON (Rory: "any polygon like house
+                      etc must be able to be hatched filled and adjusted via slider"). These were
+                      pinned at 8% — invisible over a photograph — and ignored the Hatch/Tint
+                      choice and the strength slider entirely, which is why the house and the
+                      driveway would not respond to it. They are a different code path from the
+                      design's own zones, and that is the only reason they were left behind.
+                      What still says "traced, not yet part of your design" is the DASHED stroke,
+                      which is a better carrier for that than being too faint to see. */}
                   <polygon
                     points={ringToPx(layer.points, imgW, imgH)}
-                    fill={layer.color}
-                    fillOpacity={isActive ? 0.16 : 0.08}
+                    fill={areaFillOf(layer.color)}
+                    fillOpacity={areaFill.opacity}
                     stroke={layer.color}
                     strokeWidth={chrome(isActive ? 2.5 : 1.75)}
                     strokeDasharray={chromeDash('2 4')}

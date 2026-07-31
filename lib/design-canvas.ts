@@ -824,7 +824,17 @@ export const MAX_MAP_TEXT_SCALE = 2.5;
 export const AREA_FILL_STYLES = ['hatch', 'tint'] as const;
 export type AreaFillStyle = (typeof AREA_FILL_STYLES)[number];
 export const MIN_AREA_FILL_OPACITY = 0.05;
-export const MAX_AREA_FILL_OPACITY = 0.85;
+/**
+ * All the way to solid (Rory: "we must also change the slider to 100% from 70").
+ *
+ * The cap started at 0.7 on the reasoning that a design is drawn OVER a photograph and hiding the
+ * photograph defeats the point. True for the usual case and wrong as a limit: sometimes the
+ * photograph is the noise — a busy canopy, harsh midday shadow, a drone shot that is sharper than
+ * it is useful — and the only way to read the plan is to paint over it. That is a judgement about
+ * the sheet in front of you, not something a constant should be making. The control is display
+ * only and reversible in one drag, so there is nothing to protect the farmer from here.
+ */
+export const MAX_AREA_FILL_OPACITY = 1;
 /** What the canvas drew before there was a control: the hatch at its old strength. */
 /**
  * `plantOpacity` is SEPARATE from `opacity`, and that separation is the whole point.
