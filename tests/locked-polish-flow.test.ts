@@ -254,6 +254,35 @@ test('DesignGlossy wires queue completion into the mounted handoff and queue pro
   );
 });
 
+// THE HANDOFF KEY AND THE CACHE KEY ARE THE SAME KEY, AND MUST BE BUILT THE SAME WAY.
+//
+// mapKey for a producer sheet is `producer:<style>:<filter>:<mode>`. The handoff comparison was
+// written against `producer:<style>:<sheet>` and never updated when the `:<mode>` segment was
+// added to give Exact/Hybrid/Full their own cache slots. The two strings could then never be
+// equal, so handoffTargetIsCurrent was always false and EVERY Full Treatment aborted the instant
+// its Hybrid completed — surfacing as "the AI hybrid finished but its image was not captured"
+// while the Hybrid sat finished and saved in the gallery. Two weeks of "it never gets past the
+// hybrid" was this one string comparison.
+//
+// Asserted structurally because the failure is invisible at runtime without paying for a render:
+// the abort path looks exactly like a legitimate "farmer navigated away".
+test('the Full Treatment handoff tolerates the cache key mode suffix', () => {
+  assert.match(
+    DESIGN_GLOSSY_SOURCE,
+    /mapKeyRef\.current\.startsWith\(`\$\{targetMapKey\}:`\)/,
+    'the handoff must accept mapKey mode suffixes — exact-equality against the bare key can never match a producer sheet',
+  );
+
+  // And the composed key really does carry a fourth segment, so the prefix test above is load-
+  // bearing rather than defensive decoration. If mapKey is ever flattened back to three segments,
+  // this fails and whoever does it is told to re-check the handoff.
+  assert.match(
+    DESIGN_GLOSSY_SOURCE,
+    /`producer:\$\{producerStyle\}:\$\{filter\}:\$\{requestedMode\}`/,
+    'producer mapKey is style:filter:mode — the handoff prefix match depends on this shape',
+  );
+});
+
 test('Hybrid mode advances exact render -> switch to hybrid -> hybrid render, then stops', () => {
   assert.equal(lockedPolishAction({
     ...READY,

@@ -10742,10 +10742,25 @@ export default function DesignGlossy({
                 || sheet.key === 'sector'
                 || sheet.key === 'base'
                 || (showcase && Boolean(protectMask)));
+              // THE HANDOFF KEY MUST BE BUILT THE SAME WAY THE CACHE KEY IS. This compared
+              // `producer:<style>:<sheet>` against mapKeyRef, but mapKey for a producer sheet is
+              // `producer:<style>:<filter>:<mode>` — it grew a fourth `:<mode>` segment when Exact,
+              // Hybrid and Full Treatment were given separate cache slots, and this comparison was
+              // never updated to match. So the strings could never be equal on the producer path,
+              // handoffTargetIsCurrent was ALWAYS false, and every Full Treatment aborted the
+              // moment its Hybrid stage completed — reporting "the AI hybrid finished but its
+              // image was not captured" even though the Hybrid had rendered perfectly and been
+              // saved to the gallery. That is the "it never gets past the hybrid" report.
+              //
+              // Compared on style + sheet and deliberately NOT on mode: the question this guard
+              // asks is "is the farmer still looking at the sheet this paid job was for", and
+              // during a Full Treatment the mode segment is mid-flight by definition.
               const targetMapKey = `producer:${styleKey}:${sheet.key}`;
+              const stillOnTargetSheet = mapKeyRef.current === targetMapKey
+                || mapKeyRef.current.startsWith(`${targetMapKey}:`);
               const handoffTargetIsCurrent = job.sheets.length === 1
                 && job.siteId === state.siteId
-                && mapKeyRef.current === targetMapKey;
+                && stillOnTargetSheet;
               // Full Treatment only: this completion IS the Hybrid stage — stash its finished image
               // so the polish stage (generateOneViaQueue's 'polish' branch) has something genuinely
               // painted to polish, instead of silently falling back to the bare exact sheet again.

@@ -377,7 +377,13 @@ const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   designGlossyBuildingExact: 'Building the exact geometry-locked map — no AI render cost…',
   designGlossyPaintingHybrid: 'Step 2 of {total} — painting the AI hybrid underlayer, then locking your exact elements back on top…',
   designGlossyPreparingHybrid: 'Preparing a geometry-locked AI hybrid from this exact sheet…',
-  designGlossyMissingHybrid: 'The AI hybrid finished but its image was not captured — please try again.',
+  // Says what actually happened. This used to read "the AI hybrid finished but its image was not
+  // captured", which was never true on this path — the Hybrid rendered fine and is in the gallery.
+  // The only reason this branch runs is that the farmer moved to a different sheet, style or farm
+  // while the Hybrid was rendering, so the second paid pass was withheld rather than spent on
+  // whatever is on screen now. Telling someone their image was lost, when it is saved and visible,
+  // sent them round the loop paying for another render to fix nothing.
+  designGlossyMissingHybrid: 'Your AI hybrid is finished and saved. The second polish pass was not started because you moved to a different sheet — open that sheet and choose Full Treatment to run it.',
   designGlossyStartingPolish: 'Step 3 of 3 — starting one paid gpt-image-2 polish pass over the AI hybrid…',
   designGlossyPolishing: 'Polishing the AI hybrid sheet…',
   designGlossyRefreshing: 'Refreshing the current sheet…',
