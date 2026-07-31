@@ -7838,6 +7838,16 @@ interface SavedGlossy {
   image: string;
   provider: 'gemini' | 'falgpt' | 'exact';
   at: string;
+  /**
+   * Which treatment produced this picture — 'exact', 'hybrid' or 'full'.
+   *
+   * It recorded the provider and the timestamp but never this, so a cached Hybrid and a cached
+   * Full Treatment were indistinguishable and nothing downstream could tell they had been swapped.
+   * The cache key carries the mode now (see requestedMode), which is what actually prevents the
+   * collision; this is the belt to that pair of braces, and it makes an old record — written
+   * before the key scheme changed — identifiable rather than anonymous.
+   */
+  mode?: SheetOutputMode;
 }
 
 // 'all' keeps the original site-scoped key (so existing saved renders survive); each other
@@ -8273,6 +8283,24 @@ export default function DesignGlossy({
    *  separate value Full was downgraded to Hybrid between those two effects, so enqueue 2 could
    *  never happen. The audit uses the same stable intent. See lib/render-audit.ts. */
   const requestedModeRef = useRef<SheetOutputMode>('exact');
+  /**
+   * THE SAME VALUE AS THE REF, AS STATE, BECAUSE THE CACHE KEY HAS TO SEE IT.
+   *
+   * Rory, repeatedly and finally: "this looks definitely like the hybrid even tho i selected the
+   * full treatment — i can't keep correcting these things." He is right that it keeps coming back,
+   * and this is why: the render pipeline was fixed more than once, and the CACHE was never part of
+   * the fix. mapKey was `producer:<style>:<filter>` with no output mode in it, so Exact, Hybrid and
+   * Full Treatment all read from and wrote to ONE localStorage slot. Render a Hybrid, then ask for
+   * Full Treatment, and the cache hands back the Hybrid — with no way for anything downstream to
+   * notice, because SavedGlossy recorded the provider and the timestamp but never which of the
+   * three treatments produced the picture.
+   *
+   * A ref cannot fix it: mapKey is computed during render and a ref change does not re-render, so
+   * the key would keep lagging a frame behind the mode. Hence state, set beside every write to the
+   * ref rather than replacing it — the ref is read inside callbacks and async continuations where
+   * a stale closure would be worse than the bug it fixes.
+   */
+  const [requestedMode, setRequestedMode] = useState<SheetOutputMode>('exact');
   const polishStyleRef = useRef<StylePreset>(DEFAULT_PRODUCER_STYLE);
   // Full Treatment's polish stage feeds on the Hybrid stage's OWN finished sheet — not a rebuilt
   // exact sheet — so there is something actually painted for the model to polish. Set when the
@@ -8443,7 +8471,9 @@ export default function DesignGlossy({
       : restyleAiKind && producerStyle
         ? `producer:${producerStyle}:${restyleAiKind}`
       : producerStyle
-        ? `producer:${producerStyle}:${filter}`
+        // …:<mode> so Exact, Hybrid and Full Treatment can never share a slot. Without it the
+        // three treatments overwrote and re-served each other's pictures — see requestedMode.
+        ? `producer:${producerStyle}:${filter}:${requestedMode}`
         : (analysisStyle ?? filter);
   const mapKeyRef = useRef(mapKey);
   mapKeyRef.current = mapKey;
@@ -10185,6 +10215,7 @@ export default function DesignGlossy({
     setError(null);
     setNotice(null);
     requestedModeRef.current = 'exact';
+    setRequestedMode('exact');
     setHybridHandoffReady(false);
     if (mode === 'exact' && isExactRender) {
       void runCurrentSheet();
@@ -10213,6 +10244,7 @@ export default function DesignGlossy({
     hybridAfterExactRef.current = true;
     polishAfterHybridRef.current = targetMode === 'full';
     requestedModeRef.current = targetMode;
+    setRequestedMode(targetMode);
     hybridResultRef.current = null;
     setHybridHandoffReady(false);
     // Clear the last run's "the polish pass returned the same map" note. Leaving it up over a fresh
