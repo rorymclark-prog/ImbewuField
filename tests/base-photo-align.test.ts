@@ -120,3 +120,25 @@ test('degenerate inputs yield null, never NaN or a zero scale', () => {
   assert.equal(carriedMPerPx(0, t), null);
   assert.equal(carriedMPerPx(-1, t), null);
 });
+
+// A STORED PHOTO IS NO LONGER FRAME-SIZED, and the carry must not care.
+//
+// Base photos are saved at BASE_PHOTO_EXPORT_SCALE (a supersample of the same framing) so a
+// drone shot is not reduced to 0.6 megapixels. That makes the cover scale of a reopened photo
+// 1/3, not 1 — and carriedMPerPx used to divide by exactly that, which would have tripled the
+// farmer's scale the moment they reopened "Adjust photo" and pressed Use. The framing at zoom 1
+// is identical however many pixels the file has, so the carry factor is the ZOOM.
+test('carrying a scale is unaffected by how many pixels the stored photo has', () => {
+  const stored = 0.05;
+  const frame = { frameW: 960, frameH: 640, rotationDeg: 0, panX: 0, panY: 0 };
+
+  // Frame-sized (the old assumption) and supersampled 3x must agree exactly.
+  const sameSize = carriedMPerPx(stored, { ...frame, naturalW: 960, naturalH: 640, zoom: 1 });
+  const superSampled = carriedMPerPx(stored, { ...frame, naturalW: 2880, naturalH: 1920, zoom: 1 });
+  assert.equal(sameSize, stored);
+  assert.equal(superSampled, stored, 'a sharper file is the same ground, not a third of it');
+
+  // And an actual zoom still carries, at any stored resolution.
+  assert.equal(carriedMPerPx(stored, { ...frame, naturalW: 2880, naturalH: 1920, zoom: 2 }), stored / 2);
+  assert.equal(carriedMPerPx(stored, { ...frame, naturalW: 960, naturalH: 640, zoom: 2 }), stored / 2);
+});

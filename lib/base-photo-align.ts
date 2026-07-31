@@ -183,8 +183,19 @@ export function resolveBaseAlign(
  */
 export function carriedMPerPx(storedMPerPx: number, current: PhotoTransform): number | null {
   if (!Number.isFinite(storedMPerPx) || storedMPerPx <= 0) return null;
-  const s = coverScale(current);
-  if (!Number.isFinite(s) || s <= 0) return null;
-  const m = storedMPerPx / s;
+  // THE CARRY FACTOR IS THE ZOOM, not the raw cover scale.
+  //
+  // These are the same number only while the stored photo happens to be exactly frame-sized,
+  // which stopped being true when base photos began storing at BASE_PHOTO_EXPORT_SCALE. A
+  // 2880-wide bake of a 960 frame has a cover scale of 1/3, so dividing by it would have TRIPLED
+  // the farmer's scale the moment they reopened Adjust photo and pressed Use — the same
+  // silent-rescale defect this file was written to end.
+  //
+  // Zoom is the honest quantity: at zoom 1 the framing is identical whatever the pixel count, so
+  // the stored metres come back untouched; at zoom 2 every feature spans twice the frame pixels,
+  // so each frame pixel is worth half as many metres.
+  const z = current.zoom;
+  if (!Number.isFinite(z) || z <= 0) return null;
+  const m = storedMPerPx / z;
   return Number.isFinite(m) && m > 0 ? m : null;
 }

@@ -17,7 +17,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Camera, Loader2, RotateCcw, RotateCw, X } from 'lucide-react';
-import { DEFAULT_IMG_W, DEFAULT_IMG_H } from '@/lib/design-canvas';
+import { DEFAULT_IMG_W, DEFAULT_IMG_H, BASE_PHOTO_EXPORT_SCALE } from '@/lib/design-canvas';
 import { calibratedMPerPx, canvasToPhoto, carriedMPerPx, photoToCanvas, type PhotoPoint, type PhotoTransform } from '@/lib/base-photo-align';
 import { uploadPhoto } from '@/lib/db/queries';
 import { formatDesignTranslation } from '@/lib/design-studio-i18n';
@@ -142,6 +142,33 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
       }
     : null;
 
+  // The photo, with the farmer's current transform, in LOGICAL frame coordinates. Shared by the
+  // on-screen canvas and by the full-resolution export, so the pixels the farmer aligns and the
+  // pixels that get saved can never be drawn by two different pieces of arithmetic.
+  const drawPhotoInto = useCallback((ctx: CanvasRenderingContext2D, alpha = 1) => {
+    if (!img) return;
+    const rad = (rotationDeg * Math.PI) / 180;
+    const w = img.naturalWidth;
+    const h = img.naturalHeight;
+    const cos = Math.abs(Math.cos(rad));
+    const sin = Math.abs(Math.sin(rad));
+    const rotatedW = w * cos + h * sin;
+    const rotatedH = w * sin + h * cos;
+    // "Cover" fit — same idea as the SVG satellite <image>'s preserveAspectRatio="xMidYMid
+    // slice": scale up until the rotated photo fully covers the frame, centred, cropping
+    // whatever spills over the edges. The farmer's zoom rides on top of it as a multiplier, so
+    // 1 is always "exactly covers" whatever the photo's own proportions are.
+    const scale = Math.max(DEFAULT_IMG_W / rotatedW, DEFAULT_IMG_H / rotatedH) * zoom;
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    ctx.imageSmoothingQuality = 'high';
+    ctx.translate(DEFAULT_IMG_W / 2 + pan.x, DEFAULT_IMG_H / 2 + pan.y);
+    ctx.rotate(rad);
+    ctx.scale(scale, scale);
+    ctx.drawImage(img, -w / 2, -h / 2, w, h);
+    ctx.restore();
+  }, [img, rotationDeg, zoom, pan.x, pan.y]);
+
   const draw = useCallback((forExport = false) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -163,28 +190,9 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
     }
     if (!img) return;
 
-    const rad = (rotationDeg * Math.PI) / 180;
-    const w = img.naturalWidth;
-    const h = img.naturalHeight;
-    const cos = Math.abs(Math.cos(rad));
-    const sin = Math.abs(Math.sin(rad));
-    const rotatedW = w * cos + h * sin;
-    const rotatedH = w * sin + h * cos;
-    // "Cover" fit — same idea as the SVG satellite <image>'s preserveAspectRatio="xMidYMid
-    // slice": scale up until the rotated photo fully covers the frame, centred, cropping
-    // whatever spills over the edges. The farmer's zoom rides on top of it as a multiplier, so
-    // 1 is always "exactly covers" whatever the photo's own proportions are.
-    const scale = Math.max(DEFAULT_IMG_W / rotatedW, DEFAULT_IMG_H / rotatedH) * zoom;
-
-    ctx.save();
     // Translucent while aligning, fully opaque in the saved pixels — the farmer is adjusting how
     // they SEE it, never what gets stored.
-    if (!forExport) ctx.globalAlpha = photoOpacity;
-    ctx.translate(DEFAULT_IMG_W / 2 + pan.x, DEFAULT_IMG_H / 2 + pan.y);
-    ctx.rotate(rad);
-    ctx.scale(scale, scale);
-    ctx.drawImage(img, -w / 2, -h / 2, w, h);
-    ctx.restore();
+    drawPhotoInto(ctx, forExport ? 1 : photoOpacity);
 
     if (forExport) return;
 
@@ -299,15 +307,30 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
     setBusy(true);
     setError('');
     try {
-      // Repaint WITHOUT the backdrop, the translucency or the calibration markers before the
-      // canvas is read. Both reads below take this same canvas, so anything on it at this instant
-      // is what the farmer is stuck with on every plan sheet from now on.
-      draw(true);
-      const previewDataUrl = canvas.toDataURL('image/jpeg', 0.88);
-      const blob: Blob | null = await new Promise((resolve) => canvas.toBlob(resolve, 'image/jpeg', 0.88));
-      // Put the working view back, so a failed upload leaves the farmer where they were rather
-      // than staring at an opaque photo with their alignment markers gone.
-      draw();
+      // EXPORTED AT FULL RESOLUTION, NOT AT THE SIZE OF THE CANVAS ON SCREEN.
+      //
+      // This used to read the display canvas itself, which is DEFAULT_IMG_W x DEFAULT_IMG_H —
+      // 960x640. So a 12-megapixel drone photo was permanently reduced to 0.6 of a megapixel the
+      // instant the farmer tapped Use, and that thumbnail became the base for the Studio AND for
+      // every printed plan sheet forever (Rory: "the image quality inserted was so poor").
+      // The auto-fit made it plainer still: a photo shot wider than the frame is drawn ENLARGED,
+      // so those 960 pixels were then being stretched.
+      //
+      // The export is a pure SUPERSAMPLE of the very same framing — identical transform, identical
+      // crop, just more pixels — so nothing about the calibration changes: mPerPx stays metres per
+      // FRAME pixel, and the frame is still 960 wide by definition.
+      const exportCanvas = document.createElement('canvas');
+      exportCanvas.width = DEFAULT_IMG_W * BASE_PHOTO_EXPORT_SCALE;
+      exportCanvas.height = DEFAULT_IMG_H * BASE_PHOTO_EXPORT_SCALE;
+      const exportCtx = exportCanvas.getContext('2d');
+      if (!exportCtx) throw new Error(t('designPhotoPrepareError'));
+      exportCtx.imageSmoothingQuality = 'high';
+      exportCtx.scale(BASE_PHOTO_EXPORT_SCALE, BASE_PHOTO_EXPORT_SCALE);
+      drawPhotoInto(exportCtx);
+      // 0.92 rather than 0.88: at this resolution the extra bytes are worth it, and a base photo
+      // is re-encoded again downstream by the alignment bake, so early loss compounds.
+      const previewDataUrl = exportCanvas.toDataURL('image/jpeg', 0.92);
+      const blob: Blob | null = await new Promise((resolve) => exportCanvas.toBlob(resolve, 'image/jpeg', 0.92));
       if (!blob) throw new Error(t('designPhotoPrepareError'));
       const file = new File([blob], `site-photo-${Date.now()}.jpg`, { type: 'image/jpeg' });
       const url = await uploadPhoto(file, 'design-base');

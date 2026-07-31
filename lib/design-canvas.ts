@@ -638,11 +638,22 @@ export async function bakeBaseAlignment(
 
   const img = await loadImageEl(sourceDataUrl);
 
+  // BAKE AT THE SOURCE'S OWN RESOLUTION, not at the logical frame size. Baking a 2880-wide photo
+  // into a 960-wide canvas would throw away exactly the detail BASE_PHOTO_EXPORT_SCALE exists to
+  // keep — and it would do it on every nudge and every turn, so the farmer's photo would get
+  // softer the more they adjusted it. All the drawing below stays in LOGICAL frame coordinates;
+  // the context is scaled once, so this is a pure supersample and no geometry changes.
+  const superSample = Math.min(
+    BASE_PHOTO_EXPORT_SCALE,
+    Math.max(1, Math.round((img.naturalWidth || frameW) / frameW)),
+  );
   const canvas = document.createElement('canvas');
-  canvas.width = frameW;
-  canvas.height = frameH;
+  canvas.width = frameW * superSample;
+  canvas.height = frameH * superSample;
   const ctx = canvas.getContext('2d');
   if (!ctx) return sourceDataUrl;
+  ctx.imageSmoothingQuality = 'high';
+  ctx.scale(superSample, superSample);
 
   // Backdrop first, untransformed. The satellite is what is genuinely under the photo, so it is
   // the honest thing to show where the photo no longer reaches; the flat tone is only for the
@@ -671,7 +682,10 @@ export async function bakeBaseAlignment(
   // element uses, so a zero alignment and a baked alignment agree pixel-for-pixel.
   ctx.drawImage(img, -cx, -cy, frameW, frameH);
   ctx.restore();
-  return canvas.toDataURL('image/png');
+  // JPEG, not PNG. The backdrop above makes this canvas fully opaque, so there is no alpha to
+  // preserve — and a supersampled photographic PNG is several megabytes of base64 held in React
+  // state and rebuilt on every nudge, which is how the last memory crash happened.
+  return canvas.toDataURL('image/jpeg', 0.92);
 }
 
 export async function fetchImageAsDataUrl(url: string): Promise<string> {
@@ -693,6 +707,22 @@ const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN ?? '';
 // image sources must never disagree about the CanvasFrame's imgW/imgH.
 export const DEFAULT_IMG_W = 960;
 export const DEFAULT_IMG_H = 640;
+
+/**
+ * How many real pixels a farmer's own base photo is stored at, per LOGICAL frame pixel.
+ *
+ * The frame is 960x640 because that is the coordinate system every renderer and every saved
+ * design is expressed in — but there is no reason the IMAGE has to be that small. It used to be:
+ * the aligner exported its on-screen canvas, so a 12-megapixel drone photo was reduced to 0.6 of
+ * one the instant it was applied, and that thumbnail became the base for the Studio and for every
+ * printed plan sheet (Rory: "the image quality inserted was so poor"). The auto-fit made it worse
+ * again, since a photo shot wider than the frame is drawn ENLARGED from those few pixels.
+ *
+ * 3x gives 2880x1920 — sharp on a phone, sharp when a plan sheet is printed, and still a
+ * sane JPEG. It is a pure supersample of the same framing, so it changes no coordinate and no
+ * measurement: mPerPx remains metres per FRAME pixel, and the frame is still 960 wide.
+ */
+export const BASE_PHOTO_EXPORT_SCALE = 3;
 const METRES_PER_DEGREE_LAT = 111.32;
 
 /** Bounds on a hand-calibrated scale correction (DesignCanvasState.scaleFactor). Wide enough for
