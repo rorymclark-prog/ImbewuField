@@ -70,14 +70,26 @@ export function legendRowFontSize(
   rowCount: number,
 ): number {
   const safeWidth = Number.isFinite(legendWidth) && legendWidth >= 0 ? legendWidth : 0;
-  const baseSize = Math.max(14, Math.round(safeWidth * 0.036));
+  // BIGGER, because it was too small and Rory has said so on every sheet he has looked at.
+  //
+  // The old floor was 14px at 3.6% of the panel width, with a ceiling at 5.2% — numbers chosen
+  // when the legend was set in a CONDENSED face, where more characters fit per line and the type
+  // could be small without wrapping. The sheets are set in a normal-width sans now (see
+  // SHEET_SANS in DesignGlossy.tsx), the word LEGEND no longer eats a line of the panel, and this
+  // is read at arm's length on paper. 4.6% with a 17px floor is roughly a quarter larger, which
+  // is the difference between squinting and reading.
+  //
+  // The fitting search above it is unchanged and still authoritative: a legend with too many rows
+  // to fit at this size steps DOWN until it fits, so a bigger base can never push rows off the
+  // panel — it only stops a sparse legend from staying needlessly small.
+  const baseSize = Math.max(17, Math.round(safeWidth * 0.046));
   if (
     !Number.isFinite(availableHeight)
     || availableHeight <= 0
     || !Number.isSafeInteger(rowCount)
     || rowCount <= 0
   ) return baseSize;
-  const widthCap = Math.max(baseSize, Math.round(safeWidth * 0.052));
+  const widthCap = Math.max(baseSize, Math.round(safeWidth * 0.066));
   const trackTarget = Math.max(baseSize, Math.round((availableHeight / rowCount) * 0.11));
   const tallTarget = Math.min(widthCap, trackTarget);
   const fillRatio = legendHeightFillRatio(rowCount);

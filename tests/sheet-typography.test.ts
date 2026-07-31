@@ -44,9 +44,25 @@ test('every font on a sheet names a declared constant, never a literal family', 
 test('the sheet is set in two faces, and the glyph entry is deliberately a third', () => {
   const decl = (name: string) => SOURCE.match(new RegExp(`^const ${name} = (.+);$`, 'm'))?.[1];
 
-  assert.equal(decl('SHEET_TITLE_FONT'), "'Georgia, serif'");
+  // THIS TEST USED TO ASSERT THE OPPOSITE, and the reversal is the point.
+  //
+  // It required a Georgia title over a CONDENSED body, on the reasoning that condensed lettering
+  // competes less with the drawing. In the hand it did the opposite: a legend is read at arm's
+  // length, on paper, by someone checking a count, and most machines lack Avenir Next Condensed so
+  // the real fallback was Arial Narrow — the least legible face in the stack doing the most
+  // important job on the sheet. Meanwhile the serif title over a narrow sans made the panel read
+  // as two documents stacked. Rory said so on every sheet he looked at, finally: "big text, change
+  // fonts, for the love of god, once and for all, across all sheets."
+  //
+  // So the rule now is ONE NORMAL-WIDTH FAMILY at several weights, which is how a drawing set is
+  // actually set. Asserted as intent, not as a string, so the stack can be tuned without the test
+  // becoming a change-detector — but a return to condensed, or a second family, fails here.
+  assert.equal(decl('SHEET_TITLE_FONT'), decl('SHEET_BODY_FONT'), 'a drawing set is one family, not two');
   assert.equal(decl('SHEET_BODY_FONT'), decl('REFERENCE_LABEL_FONT'), 'body and map labels are one face');
-  assert.ok(decl('SHEET_BODY_FONT')?.includes('Condensed'), 'sheet lettering is condensed — it competes with the drawing');
+  const family = SOURCE.match(/^const SHEET_SANS = (.+);$/m)?.[1] ?? '';
+  assert.ok(family.length > 0, 'the sheet family is gone — every face here resolves through SHEET_SANS');
+  assert.doesNotMatch(family, /Condensed|Narrow/, 'sheet lettering must be normal width — it is read at arm\'s length on paper');
+  assert.doesNotMatch(family, /https?:|url\(/, 'no webfont: a face that fails to load offline changes the shape of a printed sheet');
 
   // Icon and emoji glyphs must NOT move to a condensed text face: it is not guaranteed to contain
   // those codepoints, and canvas falls back silently at a different metric, so a symbol that looked

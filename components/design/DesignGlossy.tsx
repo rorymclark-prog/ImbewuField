@@ -3092,10 +3092,34 @@ function drawBlueprintLegendNote(
 // looked centred jumps. Four sites draw glyphs and two neighbouring ones draw zone NUMBERS, which
 // is why this sweep could not be a find-and-replace: in the source the two cases are the same
 // line, and they differ only in what reaches fillText.
+// THE SHEET'S TYPE, settled once and applied everywhere.
+//
+// Rory, more times than I can count and finally: "i still og gawd help me hate the legend! …
+// big text, change fonts, for the love of god do it now and once and for all forever and across
+// all sheets."
+//
+// TWO THINGS WERE WRONG, and both were in these four lines.
+//
+// CONDENSED. Every label, every legend row, every section heading was set in a CONDENSED stack —
+// Avenir Next Condensed, falling back to Roboto Condensed and then Arial Narrow. Condensed faces
+// exist to fit more characters into less width, which is the opposite of what a plan legend needs:
+// it is read at arm's length, on paper, in daylight, by someone checking a count. Worse, most
+// machines do not have Avenir Next Condensed, so the real-world fallback was Arial Narrow — the
+// least legible face in the stack, doing the most important job on the sheet.
+//
+// TWO FAMILIES FIGHTING. The title was Georgia while everything under it was a narrow sans, so
+// the panel read as two documents stacked. A drawing set is set in ONE family at several weights;
+// that is what makes it look like a drawing set.
+//
+// So: one normal-width grotesque, everywhere, at weights. Helvetica Neue/Helvetica/Arial is the
+// most reliably present neutral sans across macOS, Windows and Android; Segoe UI and Roboto cover
+// the rest; system-ui is the last resort. No webfont, because these sheets render on a farmer's
+// phone with no guarantee of a network — a font that fails to load is a sheet that changes shape.
+const SHEET_SANS = '"Helvetica Neue", Helvetica, Arial, "Segoe UI", Roboto, system-ui, sans-serif';
 const SHEET_GLYPH_FONT = 'sans-serif';
-const SHEET_TITLE_FONT = 'Georgia, serif';
-const REFERENCE_LABEL_FONT = '"Avenir Next Condensed", "Roboto Condensed", "Arial Narrow", sans-serif';
-const SHEET_BODY_FONT = '"Avenir Next Condensed", "Roboto Condensed", "Arial Narrow", sans-serif';
+const SHEET_TITLE_FONT = SHEET_SANS;
+const REFERENCE_LABEL_FONT = SHEET_SANS;
+const SHEET_BODY_FONT = SHEET_SANS;
 
 /** Draw benchmark-style map lettering directly over the artwork. A dark outline replaces the
  * dashboard pill while keeping the label readable over both pale lawn and dark forest. */
@@ -7327,7 +7351,7 @@ async function composeStyleSheet(
   ctx.textBaseline = 'alphabetic';
   let y = panelInset + pad + Math.round(legendW * 0.07);
   ctx.fillStyle = '#20190F';
-  const titleSize = Math.round(legendW * 0.067);
+  const titleSize = Math.round(legendW * 0.078);
   ctx.font = `800 ${titleSize}px ${REFERENCE_LABEL_FONT}`;
   const titleWords = `${options.sheetNumber ?? SHEET_NO[filter]} — ${layerLabel.toUpperCase()}`.split(/\s+/);
   const titleLines: string[] = [];
@@ -7348,7 +7372,7 @@ async function composeStyleSheet(
   }
   y += Math.round(legendW * 0.006);
   ctx.fillStyle = '#6B6355';
-  ctx.font = `700 ${Math.round(legendW * 0.045)}px ${SHEET_BODY_FONT}`;
+  ctx.font = `600 ${Math.round(legendW * 0.05)}px ${SHEET_BODY_FONT}`;
   const styleWords = styleLabel.split(/\s+/);
   const styleLines: string[] = [];
   let styleLine = '';
@@ -7368,7 +7392,7 @@ async function composeStyleSheet(
     y += styleLineH;
   }
   ctx.fillStyle = '#8A8172';
-  ctx.font = `600 ${Math.round(legendW * 0.04)}px ${SHEET_BODY_FONT}`;
+  ctx.font = `600 ${Math.round(legendW * 0.045)}px ${SHEET_BODY_FONT}`;
   ctx.fillText(placeName ?? 'Your design', lx, y);
   y += Math.round(legendW * 0.035);
   ctx.strokeStyle = 'rgba(11,18,11,0.25)';
@@ -7378,10 +7402,11 @@ async function composeStyleSheet(
   ctx.lineTo(maxX, y);
   ctx.stroke();
 
-  y += Math.round(legendW * 0.075);
-  ctx.fillStyle = '#1F4D2B';
-  ctx.font = `800 ${Math.round(legendW * 0.05)}px ${REFERENCE_LABEL_FONT}`;
-  ctx.fillText('LEGEND', lx, y);
+  // The word LEGEND is gone, and its line of vertical space with it. A key under a rule, on a plan
+  // sheet, beside a map, is a legend — printing the word tells the reader nothing they cannot see
+  // and costs the rows about 8% of the panel's height, which is exactly the height the type needed
+  // to grow into. The reference sheet Rory has sent me repeatedly does not have it either.
+  y += Math.round(legendW * 0.045);
 
   const rows = options.legendRows ?? sheetLegendRows(state, refLayers, filter, includeToolGlyphs);
   const legendTop = y + Math.round(legendW * 0.03);
@@ -7476,7 +7501,7 @@ async function composeStyleSheet(
     rowTextGap: number,
   ) => {
     const lineH = Math.max(11, Math.round(fontSize * 1.22));
-    const sectionFs = Math.max(9, Math.round(fontSize * 0.82));
+    const sectionFs = Math.max(12, Math.round(fontSize * 0.88));
     const sectionLineH = Math.max(10, Math.round(sectionFs * 1.15));
     const textWidth = Math.max(1, columnWidth - symbolSize - rowTextGap);
     let previousSection: string | undefined;
@@ -7581,7 +7606,7 @@ async function composeStyleSheet(
   ctx.clip();
   for (const column of columnPlans) {
     const lineH = Math.max(11, Math.round(column.fontSize * 1.22));
-    const sectionFs = Math.max(9, Math.round(column.fontSize * 0.82));
+    const sectionFs = Math.max(12, Math.round(column.fontSize * 0.88));
     ctx.save();
     ctx.translate(column.x, legendTop);
     for (const [
@@ -7591,7 +7616,11 @@ async function composeStyleSheet(
       y = column.columnLayout.offsets[index] ?? 0;
       if (headingHeight && row.section) {
         ctx.textBaseline = 'alphabetic';
-        ctx.fillStyle = '#1F4D2B';
+        // Near-black, not the brand green. A section heading is structure, not an accent: in green
+        // it competed with the coloured swatches beside it and read as one more piece of colour to
+        // decode. Ink says "this is a heading" and lets the swatches be the only colour that means
+        // something.
+        ctx.fillStyle = '#20190F';
         ctx.font = `800 ${sectionFs}px ${REFERENCE_LABEL_FONT}`;
         headingLines.forEach((line, headingIndex) => {
           ctx.fillText(line, 0, y + sectionFs + headingIndex * sectionLineH);
@@ -7652,8 +7681,8 @@ async function composeStyleSheet(
         ctx.lineTo(maxX, footerTop);
         ctx.stroke();
       }
-      ctx.fillStyle = '#1F4D2B';
-      ctx.font = `800 ${Math.round(legendW * 0.034)}px ${REFERENCE_LABEL_FONT}`;
+      ctx.fillStyle = '#20190F';
+      ctx.font = `800 ${Math.round(legendW * 0.04)}px ${REFERENCE_LABEL_FONT}`;
       ctx.fillText(options.footerHeading, footerTextX, footerY);
       footerY += footerHeadingH;
       ctx.fillStyle = '#6C6457';

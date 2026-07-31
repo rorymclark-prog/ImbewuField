@@ -103,9 +103,16 @@ test('four- and five-row layouts apportion expansion instead of crossing a hard 
 });
 
 test('a populated tall legend grows its facts while a sparse legend keeps the normal width scale', () => {
-  assert.equal(legendRowFontSize(445, 1_289, 3), 16);
-  assert.equal(legendRowFontSize(445, 1_289, 6), 23);
-  assert.equal(legendRowFontSize(445, 400, 6), 16, 'short panels do not force oversized type');
+  // The numbers moved up together when the sheets left their condensed face for a normal-width
+  // sans and the panel stopped spending a line on the word LEGEND — see SHEET_SANS in
+  // DesignGlossy.tsx and the base-size note in lib/sheet-legend-layout.ts. What this test protects
+  // is the SHAPE of the curve, not the constants: a sparse legend still sits near the width-derived
+  // base, a populated one still grows toward the cap, and a short panel still refuses to inflate.
+  assert.equal(legendRowFontSize(445, 1_289, 3), 20);
+  assert.equal(legendRowFontSize(445, 1_289, 6), 24);
+  assert.equal(legendRowFontSize(445, 400, 6), 20, 'short panels do not force oversized type');
+  assert.ok(legendRowFontSize(445, 1_289, 6) > legendRowFontSize(445, 1_289, 3), 'a fuller legend grows');
+  assert.ok(legendRowFontSize(445, 1_289, 3) >= 17, 'the floor is a readable size, not a fitting artefact');
 });
 
 test('an overfull factual legend partitions into readable columns without losing or reordering rows', () => {

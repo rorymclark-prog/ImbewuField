@@ -127,7 +127,11 @@ test('localising UI chrome does not translate load-bearing text painted onto exp
   const glossy = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
   const print = readFileSync(new URL('../components/design/DesignPrint.tsx', import.meta.url), 'utf8');
 
-  assert.match(glossy, /ctx\.fillText\('LEGEND'/, 'the exported glossy legend spelling moved behind UI translation');
+  // The glossy sheet no longer prints the word LEGEND at all — a key under a rule beside a map is
+  // a legend, and the line it occupied is the height the rows needed. What this test is really
+  // about survives below: nothing painted onto an exported sheet may come from the UI translator,
+  // because the sheet is a document that gets printed, filed and sent on, and it must not change
+  // language with whatever the app happened to be set to when it was rendered.
   assert.match(print, /ctx\.fillText\('Legend'/, 'the exported print legend spelling moved behind UI translation');
   assert.doesNotMatch(glossy, /ctx\.fillText\(t\(/, 'DesignGlossy now paints translated UI text into a sheet');
   assert.doesNotMatch(print, /ctx\.fillText\(t\(/, 'DesignPrint now paints translated UI text into a sheet');
