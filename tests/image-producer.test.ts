@@ -9,7 +9,7 @@ import { isDifferentBuild } from '../lib/pwa-update.ts';
 import { preserveCanvasNavigation, type DesignCanvasState } from '../lib/design-canvas.ts';
 import { exactModelInputMarks, hasConflictingRenderAuthority, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '../lib/render-policy.ts';
 import { REFERENCE_SHEET_LABEL } from '../lib/glossy-filters.ts';
-import { WATER_LEGEND_SECTION_ORDER, pairedWaterDestinationCanopyIds, waterFeaturePresentationDimensions, waterFeaturePresentationScale, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRouteLegendEntries, waterRoutesWithVisualBridges, waterRouteStyleFor } from '../lib/water-cartography.ts';
+import { EARTHWORKS_ROUTE_STYLE, WATER_LEGEND_SECTION_ORDER, pairedWaterDestinationCanopyIds, waterFeaturePresentationDimensions, waterFeaturePresentationScale, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRouteLegendEntries, waterRoutesWithVisualBridges, waterRouteStyleFor, earthworksRouteStyleFor } from '../lib/water-cartography.ts';
 
 function px(r: number, g: number, b: number, a: number): Uint8ClampedArray {
   return new Uint8ClampedArray([r, g, b, a]);
@@ -239,6 +239,17 @@ test('Water routes and small fittings stay legible over illustrated ground', () 
     waterFeaturePresentationDimensions('veg_bed', 60, 12, 1595),
     { width: 60, height: 12, scale: 1 },
   );
+});
+
+test('Earthworks-only swales read as brown cut-and-fill while Water remains blue', () => {
+  const earthworks = earthworksRouteStyleFor('swale');
+  assert.ok(earthworks);
+  assert.equal(earthworks, EARTHWORKS_ROUTE_STYLE.swale);
+  assert.equal(earthworks.color, '#A9743F');
+  assert.equal(earthworks.casing, '#5B3A22');
+  assert.deepEqual(earthworks.dash, []);
+  assert.notEqual(earthworks.color, waterRouteStyleFor('swale')?.color);
+  assert.equal(earthworksRouteStyleFor('pipe'), undefined);
 });
 
 test('Water context only borrows saved tree canopies paired with saved tree basins', () => {
