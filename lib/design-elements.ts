@@ -591,6 +591,23 @@ export const ELEMENT_CATALOG: DesignElementDef[] = [
     tip: 'Site close to a tap for daily seedling watering.',
   },
   {
+    // A crèche, a school or a community garden is a farm with children on it, and there was no way
+    // to say where they play — so the one part of the site that must NOT be planted with thorns,
+    // dosed with greywater or crossed by a driveway was invisible to every sheet that reads the
+    // design (Rory: "we need to add playground here"). 8 × 8 is a real play area rather than a
+    // token marker; it is resizable like any other footprint.
+    id: 'playground',
+    category: 'structure',
+    name: 'Playground',
+    icon: '🛝',
+    shape: 'rect',
+    wM: 8,
+    hM: 8,
+    color: '#7A5C3E',
+    zoneRec: [0, 1],
+    tip: 'Keep it clear of greywater, thorny species and vehicle access — and site it where it can be seen from the kitchen or classroom.',
+  },
+  {
     id: 'market_stall',
     category: 'structure',
     name: 'Market Stall',

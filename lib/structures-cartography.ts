@@ -67,7 +67,7 @@ const LIVESTOCK_AND_APIARY_FEATURES = new Set([
 // backward compatibility with its existing curated visual treatment even though its primary
 // output sheet is Water, not Structures — see FEATURE_VISUALS below.
 const SITE_ACCESS_AND_SERVICE_FEATURES = new Set([
-  'gate', 'tap_point', 'washline', 'shed', 'market_stall', 'other_structure', 'biodigester',
+  'gate', 'tap_point', 'washline', 'shed', 'market_stall', 'playground', 'other_structure', 'biodigester',
   'shade_sail', 'bench', 'sign', 'solar_panel_ground',
 ]);
 

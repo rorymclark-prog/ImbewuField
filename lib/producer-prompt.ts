@@ -435,16 +435,17 @@ const M = {
   livestock_trough: 'a narrow rectangular marker is a livestock water trough — a low open-topped galvanised-steel trough, no roof',
   biodigester: 'a small circular marker is a biodigester — a sealed dome-topped tank at ground level with one visible inlet pipe',
   market_stall: 'a square marker is a market stall — a simple open-sided timber stall with a pitched roof and a waist-high counter, empty of produce',
+  playground: 'a square marker is a children\'s play area — level open ground with a small climbing frame and swing, soft mulch or grass underfoot, no planting inside it and no vehicle track crossing it',
 } as const;
 
 type ShowcaseMarkerKey = keyof typeof M;
 
 const SHOWCASE_MARKERS_BY_SHEET: Record<ShowcaseSheetKind, ShowcaseMarkerKey[]> = {
-  all: ['bed', 'tree', 'windbreak', 'tank', 'tap', 'dam', 'borehole', 'swale', 'pipe', 'drip', 'building', 'hive', 'patio', 'fence', 'path', 'driveway', 'tree_basin', 'banana_circle', 'mulch_bank', 'greywater_basin', 'greywater_line', 'greywater_fitting', 'half_moon', 'berm', 'terrace', 'coop', 'chicken_tractor', 'nursery', 'compost', 'worm_farm', 'goat_pen', 'pig_pen', 'kraal', 'rabbit_hutch', 'duck_pond', 'livestock_trough', 'biodigester', 'market_stall', 'zones'],
+  all: ['bed', 'tree', 'windbreak', 'tank', 'tap', 'dam', 'borehole', 'swale', 'pipe', 'drip', 'building', 'hive', 'patio', 'fence', 'path', 'driveway', 'tree_basin', 'banana_circle', 'mulch_bank', 'greywater_basin', 'greywater_line', 'greywater_fitting', 'half_moon', 'berm', 'terrace', 'coop', 'chicken_tractor', 'nursery', 'compost', 'worm_farm', 'goat_pen', 'pig_pen', 'kraal', 'rabbit_hutch', 'duck_pond', 'livestock_trough', 'biodigester', 'market_stall', 'playground', 'zones'],
   zones: ['zones', 'driveway'],
   water: ['tank', 'tap', 'dam', 'borehole', 'swale', 'pipe', 'drip', 'driveway', 'tree_basin', 'banana_circle', 'greywater_basin', 'greywater_line', 'greywater_fitting', 'half_moon', 'berm', 'terrace'],
   planting: ['bed', 'tree', 'windbreak', 'driveway', 'tree_basin', 'banana_circle', 'mulch_bank'],
-  structures: ['building', 'hive', 'patio', 'fence', 'path', 'driveway', 'coop', 'chicken_tractor', 'nursery', 'compost', 'worm_farm', 'goat_pen', 'pig_pen', 'kraal', 'rabbit_hutch', 'duck_pond', 'livestock_trough', 'biodigester', 'market_stall'],
+  structures: ['building', 'hive', 'patio', 'fence', 'path', 'driveway', 'coop', 'chicken_tractor', 'nursery', 'compost', 'worm_farm', 'goat_pen', 'pig_pen', 'kraal', 'rabbit_hutch', 'duck_pond', 'livestock_trough', 'biodigester', 'market_stall', 'playground'],
 };
 
 const SHOWCASE_MARKER_MATCH: Record<ShowcaseMarkerKey, RegExp> = {
@@ -486,7 +487,7 @@ const SHOWCASE_MARKER_MATCH: Record<ShowcaseMarkerKey, RegExp> = {
   duck_pond: /duck pond/i,
   livestock_trough: /livestock trough/i,
   biodigester: /biodigester/i,
-  market_stall: /market stall/i,
+  market_stall: /market stall/i, playground: /playground|play area/i,
 };
 
 function showcaseMarkerGlossary(sheetKind: ShowcaseSheetKind, elementsText: string): string {
@@ -616,6 +617,7 @@ const OVERLAY_ICONS: Record<string, string> = {
   livestock_trough: 'a narrow rectangular marker → a low open-topped galvanised-steel livestock water trough, plain and utilitarian, no roof',
   biodigester: 'a small circular marker → a sealed dome-topped biodigester tank at ground level, dark grey-green plastic, one visible inlet pipe',
   market_stall: 'a square marker → a simple open-sided timber market stall with a pitched roof and a waist-high front counter, empty of produce',
+  playground: 'a square marker → a children\'s play area: level open ground with a small climbing frame and swing, soft mulch or grass underfoot, nothing planted inside it and no track crossing it',
   // Same defect as `mulch` above: pollinator_strip is rect 1x5 m, a narrow RECTANGLE, not a line.
   // "following exactly that line" sent the strips off along the boundary too — which is why the
   // pollinator labels came out sitting just off the fence.
@@ -647,14 +649,14 @@ const OVERLAY_ICONS: Record<string, string> = {
 };
 
 const ICON_KEYS_BY_SHEET: Record<ShowcaseSheetKind, string[]> = {
-  all:        ['bed', 'tree', 'windbreak', 'tank', 'tap', 'dam', 'basin', 'greywater_fitting', 'tree_basin', 'banana', 'mulch', 'vetiver_row', 'borehole', 'water_trough', 'first_flush', 'pump_filter', 'half_moon', 'berm', 'terrace', 'swale', 'pipe', 'drip', 'building', 'hive', 'coop', 'chicken_tractor', 'nursery', 'compost', 'worm_farm', 'goat_pen', 'pig_pen', 'kraal', 'rabbit_hutch', 'duck_pond', 'livestock_trough', 'biodigester', 'market_stall', 'pollinator', 'patio', 'fence', 'path'],
+  all:        ['bed', 'tree', 'windbreak', 'tank', 'tap', 'dam', 'basin', 'greywater_fitting', 'tree_basin', 'banana', 'mulch', 'vetiver_row', 'borehole', 'water_trough', 'first_flush', 'pump_filter', 'half_moon', 'berm', 'terrace', 'swale', 'pipe', 'drip', 'building', 'hive', 'coop', 'chicken_tractor', 'nursery', 'compost', 'worm_farm', 'goat_pen', 'pig_pen', 'kraal', 'rabbit_hutch', 'duck_pond', 'livestock_trough', 'biodigester', 'market_stall', 'playground', 'pollinator', 'patio', 'fence', 'path'],
   zones:      ['building', 'path', 'fence'],
   // half_moon/berm/terrace are 'earthworks' category, which sheetForElement routes to 'water' —
   // same authority DesignGlossy.tsx's sheetForElement/SHEET_OVERRIDE use, so this list can't drift
   // from which sheet an element actually prints on.
   water:      ['tank', 'tap', 'dam', 'basin', 'greywater_fitting', 'tree_basin', 'banana', 'mulch', 'borehole', 'water_trough', 'first_flush', 'pump_filter', 'half_moon', 'berm', 'terrace', 'swale', 'pipe', 'drip'],
   planting:   ['bed', 'tree', 'windbreak', 'mulch', 'vetiver_row', 'banana', 'tree_basin', 'pollinator'],
-  structures: ['building', 'hive', 'coop', 'chicken_tractor', 'nursery', 'compost', 'worm_farm', 'goat_pen', 'pig_pen', 'kraal', 'rabbit_hutch', 'duck_pond', 'livestock_trough', 'biodigester', 'market_stall', 'patio', 'fence', 'path'],
+  structures: ['building', 'hive', 'coop', 'chicken_tractor', 'nursery', 'compost', 'worm_farm', 'goat_pen', 'pig_pen', 'kraal', 'rabbit_hutch', 'duck_pond', 'livestock_trough', 'biodigester', 'market_stall', 'playground', 'patio', 'fence', 'path'],
 };
 
 // Only describe icons this sheet can actually contain. Describing an icon the sheet has no marker
@@ -673,7 +675,7 @@ const ICON_MATCH: Record<string, RegExp> = {
   coop: /chicken coop/i, chicken_tractor: /chicken tractor/i,
   nursery: /nursery/i, compost: /\bcompost\b/i, worm_farm: /worm farm/i,
   goat_pen: /goat pen/i, pig_pen: /pig pen/i, kraal: /\bkraal\b/i, rabbit_hutch: /rabbit hutch/i,
-  duck_pond: /duck pond/i, livestock_trough: /livestock trough/i, biodigester: /biodigester/i, market_stall: /market stall/i,
+  duck_pond: /duck pond/i, livestock_trough: /livestock trough/i, biodigester: /biodigester/i, market_stall: /market stall/i, playground: /playground|play area/i,
   pollinator: /pollinator/i, vetiver_row: /vetiver row/i, building: /\bshed\b|\bhut\b|\bbarn\b|shade house|greenhouse/i,
   patio: /patio|paving|courtyard/i, fence: /fence/i, path: /path|walkway/i,
   swale: /swale/i, pipe: /pipe/i, drip: /drip|irrigation/i, windbreak: /windbreak|hedge/i,
