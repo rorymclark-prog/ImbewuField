@@ -11,6 +11,7 @@ import {
   groundContentRingsForSheet,
   groundRegister,
   layerContentCount,
+  ownedByCurrentStep,
   type GlossyLayerFilter,
 } from '../lib/glossy-filters.ts';
 import { ELEMENT_CATALOG, ELEMENTS_BY_ID, biomeClimates, elementVisibleInPalette } from '../lib/design-elements.ts';
@@ -357,4 +358,37 @@ test('layerContentCount: a traced boundary ring never counts as ground content o
   for (const filter of ALL_SHEETS) {
     assert.equal(layerContentCount(state, EMPTY_REF, filter), 0, `boundary ring leaked into ${filter}'s count`);
   }
+});
+
+// ── Zone ownership: staple_garden is DESIGNED on Planting, not recorded on Base ─────────────────
+//
+// Every other ground-feature ring (house, patio, lawn, veg_garden, orchard, cleared, terrace_bank)
+// is "what's already here" — traced once on the Base step, then read-only context everywhere else.
+// staple_garden is the one feature a farmer places as part of the DESIGN, from its own chip on the
+// Planting step. Before this fix, ownedByCurrentStep's zone case answered `feature ? 'base' : ...`
+// for every feature uniformly, so a staple garden drawn on Planting rendered dimmed and
+// non-interactive on the very step that placed it — same bug class this function's own comments
+// already document for raised beds and Banana Circles (adversarial review, 2026-07-21), now
+// reproduced for a zone rather than an item. Rory hit it live: a washed-out, barely-legible ring
+// right after placing it.
+
+test('staple_garden is owned by the Planting step, not Base', () => {
+  assert.equal(ownedByCurrentStep('planting', { kind: 'zone', feature: 'staple_garden' }), true);
+  assert.equal(ownedByCurrentStep('base', { kind: 'zone', feature: 'staple_garden' }), false);
+  assert.equal(ownedByCurrentStep('water', { kind: 'zone', feature: 'staple_garden' }), false);
+  assert.equal(ownedByCurrentStep('structures', { kind: 'zone', feature: 'staple_garden' }), false);
+});
+
+test('every OTHER ground feature stays Base-owned — the staple_garden fix must not widen to the whole kind', () => {
+  const recordedOnSite: GroundFeatureKind[] = ['house', 'patio', 'driveway', 'lawn', 'veg_garden', 'orchard', 'cleared', 'terrace_bank'];
+  for (const feature of recordedOnSite) {
+    assert.equal(ownedByCurrentStep('base', { kind: 'zone', feature }), true, `${feature} must stay Base-owned`);
+    assert.equal(ownedByCurrentStep('planting', { kind: 'zone', feature }), false, `${feature} must not become Planting-owned`);
+  }
+});
+
+test('a plain effort-zone (no feature) is still owned only by the Zones step', () => {
+  assert.equal(ownedByCurrentStep('zones', { kind: 'zone' }), true);
+  assert.equal(ownedByCurrentStep('base', { kind: 'zone' }), false);
+  assert.equal(ownedByCurrentStep('planting', { kind: 'zone' }), false);
 });

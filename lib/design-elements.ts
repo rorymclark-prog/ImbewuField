@@ -168,12 +168,19 @@ export const GROUND_FEATURES: Record<GroundFeatureKind, { label: string; color: 
   veg_garden: { label: 'Veg garden', color: '#4E8B3B', icon: '🥬' },
   orchard: { label: 'Orchard / food forest', color: '#2F7A4A', icon: '🌳' },
   cleared: { label: 'Cleared / other', color: '#B8AF9E', icon: '⬚' },
-  // The household staple plot — maize with beans and pumpkin, the crop that fills the storeroom.
-  // Deliberately NOT veg_garden's kitchen green: a standing mielie field reads olive-gold from the
+  // The household staple plot — field-scale grains, legumes and tubers that fill the storeroom:
+  // maize, sorghum, groundnuts, amadumbe and the like, not just the one combination. Rory: "its not
+  // just for maize and beans byt way it for many staple crops" — the LABEL had over-narrowed to one
+  // example. The default AI illustration (see M.staple_garden / OVERLAY_ICONS.staple_garden in
+  // lib/producer-prompt.ts) still paints maize with beans and pumpkin specifically, because that is
+  // the single most common South African smallholder staple combination and a render needs one
+  // concrete default to paint — but the tool itself, and its name, cover the whole category.
+  //
+  // Deliberately NOT veg_garden's kitchen green: a standing field crop reads olive-gold from the
   // air, and every sheet's legend swatch is the colour the map is painted, so the two areas a
   // farmer is most likely to draw side by side must not arrive as near-identical greens. Distinct
   // in the same breath from lawn (#8FBF6B, soft) and the boundary line (#8CEB6A, bright).
-  staple_garden: { label: 'Staple garden (maize & beans)', color: '#96A32C', icon: '🌽' },
+  staple_garden: { label: 'Staple garden', color: '#96A32C', icon: '🌽' },
   // The retained/graded riser face between two levels — see docs/TERRACES-EARTHWORKS-SPEC-2026-07-21.md §2.
   terrace_bank: { label: 'Terrace bank / level change', color: '#8A6D3B', icon: '🪜' },
 };

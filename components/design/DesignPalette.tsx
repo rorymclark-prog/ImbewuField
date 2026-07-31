@@ -220,14 +220,6 @@ const LINE_KINDS: Array<{ id: LineShape['kind']; labelKey: string; icon: string 
 // then kitchen-out (house next).
 const GROUND_FEATURE_KINDS: GroundFeatureKind[] = ['boundary', 'house', 'patio', 'driveway', 'lawn', 'veg_garden', 'orchard', 'cleared'];
 
-// AREA chips offered on the PLANTING step. Every other ground feature above records what is
-// already on site, so those belong on the Base step and only there. A staple plot is the one
-// traced area a farmer DESIGNS rather than records — it is the biggest single piece of most
-// smallholdings' food production, and the farmer decides where it goes on the same step they lay
-// out beds and trees. Same tool, same ring engine, same 'ground' layer (which never switches off
-// per-step, so nothing drawn here can land on a hidden layer).
-const PLANTING_AREA_KINDS: GroundFeatureKind[] = ['staple_garden'];
-
 // Ordered by the Scale of Permanence (water → earthworks → access → structures → planting),
 // with the reference/overlay layers bracketing it.
 const LAYER_TOGGLES: Array<{ key: keyof ActiveLayers; labelKey: string; icon: string }> = [
@@ -637,8 +629,11 @@ export default function DesignPalette({
 
   // Which chip-driven controls are relevant for this step.
   const showZoneChips = step === 'zones';
-  const showAreaChips = step === 'base' || step === 'planting';
-  const areaChipKinds = step === 'planting' ? PLANTING_AREA_KINDS : GROUND_FEATURE_KINDS;
+  // Rory: "this chip must go with the other chips" — the staple garden rides in the SAME strip as
+  // the planting element chips (elementChipNodes below), not in its own separate area-chip block
+  // the way Base-step ground features (lawn, orchard...) do. Base is the only step that still uses
+  // the standalone area-chip strip.
+  const showAreaChips = step === 'base';
   const showLineChips = step === 'water' || step === 'structures' || step === 'planting';
   const WATER_LINE_IDS: Array<LineShape['kind']> = ['swale', 'pipe', 'drip', 'greywater'];
   const STRUCTURE_LINE_IDS: Array<LineShape['kind']> = ['fence', 'path'];
@@ -1423,6 +1418,36 @@ export default function DesignPalette({
           </button>
         );
       })}
+      {/* The staple garden rides in this SAME strip, not a separate area-chip block (Rory: "this
+          chip must go with the other chips"). Mechanically it is still a traced AREA — pickArea +
+          tool:'zone', same as every GroundFeatureKind — because its size is the whole point and a
+          fixed footprint would misrepresent it (see its own comment in lib/design-canvas.ts). Only
+          the CHIP is styled like an element chip; the underlying draw tool is unchanged. Shown only
+          on the Planting step: every other ground feature (lawn, orchard...) is "what's already
+          here", recorded on Base, but a staple garden is DESIGNED here, alongside beds and trees. */}
+      {step === 'planting' && (() => {
+        const feat = GROUND_FEATURES.staple_garden;
+        const active = (areaFeature === 'staple_garden' && tool === 'zone') || selectedIdentity?.feature === 'staple_garden';
+        return (
+          <button
+            type="button"
+            onClick={() => pickArea('staple_garden')}
+            style={{
+              minHeight: guided ? 44 : 34,
+              padding: guided ? '4px 10px' : '3px 8px',
+              borderRadius: 9,
+              ...selectionRing(active),
+              background: active ? GREEN : PAPER,
+              color: active ? PAPER : DARK,
+              display: 'flex', alignItems: 'center', gap: 5,
+              flexShrink: 0, cursor: 'pointer',
+            }}
+          >
+            <span aria-hidden style={{ width: 12, height: 12, borderRadius: 3, flexShrink: 0, background: feat.color, border: '1px solid rgba(11,18,11,0.3)' }} />
+            <span style={{ fontSize: guided ? 11.5 : 10, fontWeight: 600, whiteSpace: 'nowrap' }}>{feat.label}</span>
+          </button>
+        );
+      })()}
       {/* Line kinds ride in the SAME strip as the elements. On the Planting step there is
           exactly one of them (windbreak), and it was being given a full row of its own —
           ~60px of the farmer's map spent on a single chip. They are the same gesture to the
@@ -1546,12 +1571,9 @@ export default function DesignPalette({
       /* Base step: ground-feature chips — draw the real house / paving / lawn / veg garden /
           orchard / cleared ground that's already on site (filled labelled areas). */
       <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-        {/* The Base step's help line says "draw what is already here", which is true of every
-            chip on that step and false of the staple plot a farmer is DESIGNING on Planting —
-            so the planting strip carries the chip without it rather than a mis-describing line. */}
-        {step === 'base' && <div style={{ fontSize: 11.5, color: '#6B6355' }}>{t('designPaletteExistingHelp')}</div>}
+        <div style={{ fontSize: 11.5, color: '#6B6355' }}>{t('designPaletteExistingHelp')}</div>
         <div style={scrollStripStyle(guided ? 10 : 6)}>
-          {areaChipKinds.map((kind) => {
+          {GROUND_FEATURE_KINDS.map((kind) => {
             const gf = GROUND_FEATURES[kind];
             const active = (areaFeature === kind && tool === 'zone') || selectedIdentity?.feature === kind;
             return (

@@ -6500,7 +6500,9 @@ function drawSectorContextLabels(
     cleared: 'LOWER CLEARED GROUND',
     patio: 'PATIO / COURTYARD',
     terrace_bank: 'TERRACE BANK / LEVEL CHANGE',
-    staple_garden: 'STAPLE GARDEN — MAIZE, BEANS & PUMPKIN',
+    // Generic — the tool covers whatever staple crop the farmer actually grows there, not just one
+    // combination (Rory: "its not just for maize and beans byt way it for many staple crops").
+    staple_garden: 'STAPLE GARDEN',
   };
   const bestByKind = new Map<GroundFeatureKind, ZoneShape>();
   for (const zone of state.zones) {

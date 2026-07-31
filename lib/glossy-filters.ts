@@ -567,7 +567,16 @@ export function ownedByCurrentStep(
 ): boolean {
   switch (subject.kind) {
     case 'zone':
-      return subject.feature ? step === 'base' : step === 'zones';
+      if (!subject.feature) return step === 'zones';
+      // Every OTHER ground feature (house/patio/driveway/lawn/veg_garden/orchard/cleared/
+      // terrace_bank) is "what's already here" — recorded once on Base, then read-only context
+      // everywhere else. staple_garden is the one feature a farmer DESIGNS rather than records
+      // (see its own comment in lib/design-canvas.ts), placed from its chip on the Planting step —
+      // so treating it as Base-owned rendered it dimmed and non-interactive the instant it was
+      // drawn, on the very step that drew it. Same bug class this function's own comments already
+      // document for raised beds and Banana Circles (adversarial review, 2026-07-21/2026-08-01).
+      if (subject.feature === 'staple_garden') return step === 'planting';
+      return step === 'base';
     case 'line':
       if (step !== 'water' && step !== 'planting' && step !== 'structures') return false;
       return lineInFilter(subject.lineKind, step);
