@@ -101,6 +101,8 @@ Palette:
 `designPaletteLayerStructures`, `designPaletteLayerAccess`, `designPaletteLayerAnimals`,
 `designPaletteLayerLabels`, `designPaletteLayerIcons`, `designPaletteLayerContours`,
 `designPaletteLayerSector`, `designPaletteSymbolSize`,
+`designPaletteAreaFill`, `designPaletteAreaFillHatch`, `designPaletteAreaFillTint`,
+`designPaletteAreaFillStrength`,
 `designPaletteBedBlock`, `designPaletteBedLength`, `designPaletteBedWidth`,
 `designPaletteBedPath`, `designPaletteBedCount`, `designPaletteBedBlockPlace`,
 `designPaletteBedBlockCancel`.

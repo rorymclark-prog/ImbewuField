@@ -59,6 +59,9 @@ import {
   MAX_BASE_ROTATION,
   MIN_BASE_SCALE,
   MAX_BASE_SCALE,
+  DEFAULT_AREA_FILL,
+  normaliseAreaFill,
+  type AreaFillStyle,
 } from '@/lib/design-canvas';
 import { type BaseAlignment } from '@/lib/base-photo-align';
 import ChromeHandle from '@/components/design/ChromeHandle';
@@ -169,6 +172,8 @@ const GOLD = '#F7C97E';
 const GREEN = '#1F4D2B';
 const OCHRE = '#C07A1E';
 const DARK = '#0B120B';
+
+const AREA_FILL_PREF_KEY = 'imbewu_design_area_fill_v1';
 
 const MAX_UNDO = 25;
 
@@ -733,6 +738,22 @@ function DesignStudioInner() {
   // Icon + label size, as a multiplier. Presentation only: it changes how large symbols are
   // DRAWN and never touches a stored coordinate, so sliding it cannot move anyone's design.
   const [mapTextScale, setMapTextScale] = useState(1);
+  // HOW TRACED SURFACES ARE FILLED — hatch or flat tint, and how strongly. Persisted, unlike the
+  // symbol-size slider beside it, because it is the kind of preference a farmer sets once for how
+  // they like to read their own map; and unlike a hidden panel, a fill you cannot see is visible
+  // on screen as soon as you look at it, so there is nothing to be confused about on return.
+  const [areaFill, setAreaFill] = useState<{ style: AreaFillStyle; opacity: number }>(DEFAULT_AREA_FILL);
+  useEffect(() => {
+    try {
+      const raw = window.localStorage.getItem(AREA_FILL_PREF_KEY);
+      if (raw) setAreaFill(normaliseAreaFill(JSON.parse(raw)));
+    } catch { /* a corrupt preference is not worth a broken Studio */ }
+  }, []);
+  const changeAreaFill = useCallback((next: { style: AreaFillStyle; opacity: number }) => {
+    const clean = normaliseAreaFill(next);
+    setAreaFill(clean);
+    try { window.localStorage.setItem(AREA_FILL_PREF_KEY, JSON.stringify(clean)); } catch { /* non-fatal */ }
+  }, []);
   // Bed-block placement. The spec is what the farmer typed; `armed` is whether the next canvas
   // tap drops the block's corner. Defaults are a standard market-garden bed: 3 m long, 1.2 m
   // across (reachable from either side), 0.5 m paths.
@@ -2753,6 +2774,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               lineKind={lineKind}
               activeLayers={activeLayers}
               mapTextScale={mapTextScale}
+              areaFill={areaFill}
               baseAlign={canvasState?.useCustomBase ? (canvasState.customBase ?? null) : null}
               bedBlock={bedBlockArmed ? { spec: bedBlockSpec, defId: BED_BLOCK_DEF_ID } : null}
               onPlaceBedBlock={onPlaceBedBlock}
@@ -3289,6 +3311,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           setLineKind={setLineKind}
           activeLayers={activeLayers}
           textScaleControl={{ value: mapTextScale, onChange: setMapTextScale }}
+          areaFillControl={{ value: areaFill, onChange: changeAreaFill }}
           bedBlockControl={bedBlockControl}
           setActiveLayers={setActiveLayers}
           onUndo={handleUndo}

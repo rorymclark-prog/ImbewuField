@@ -12,7 +12,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Eye, EyeOff, CopyCheck } from 'lucide-react';
 import type { CanvasFrame, DesignCanvasState, DetectSuggestion, GroundFeatureKind, LineShape, PlacedItem, ZoneShape } from '@/lib/design-canvas';
-import { newId, groundFillPolys, nearestPointOnRing, normaliseRotation, MIN_MAP_TEXT_SCALE, MAX_MAP_TEXT_SCALE, clampBaseOpacity } from '@/lib/design-canvas';
+import { newId, groundFillPolys, nearestPointOnRing, normaliseRotation, MIN_MAP_TEXT_SCALE, MAX_MAP_TEXT_SCALE, clampBaseOpacity, normaliseAreaFill, type AreaFillStyle } from '@/lib/design-canvas';
 import { layoutBedBlock, bedBlockPaths, bedBlockFootprintM, type BedBlockPlacement, type BedBlockSpec } from '@/lib/bed-block';
 import { layoutCanvasLabels, estimatePillWidth, groupSameLabelPills, isUsableCanvasLabelInput } from '@/lib/canvas-labels';
 import { ownedByCurrentStep } from '@/lib/glossy-filters';
@@ -124,6 +124,9 @@ export interface DesignCanvasProps {
   activeLayers: ActiveLayers;
   /** Icon/label size multiplier from the Layers panel's Size slider. Clamped on read. */
   mapTextScale?: number;
+  /** How traced surfaces are filled — hatch or flat tint, and how strongly. Paint only, never
+   *  geometry; see AREA_FILL_STYLES in lib/design-canvas.ts. */
+  areaFill?: { style: AreaFillStyle; opacity: number };
   /** See-through level for the farmer's own base photo while lining it up against the satellite
    *  underneath. Display only, and deliberately the ONLY part of the alignment left as a live
    *  paint: the nudge and the angle are baked into the image itself (bakeBaseAlignment in
@@ -549,6 +552,7 @@ export default function DesignCanvas({
   lineKind,
   activeLayers,
   mapTextScale: mapTextScaleRaw = 1,
+  areaFill: areaFillRaw,
   baseAlign = null,
   bedBlock = null,
   onPlaceBedBlock,
@@ -1975,6 +1979,12 @@ export default function DesignCanvas({
   const mapTextScale = Number.isFinite(mapTextScaleRaw)
     ? clamp(mapTextScaleRaw, MIN_MAP_TEXT_SCALE, MAX_MAP_TEXT_SCALE)
     : 1;
+  // One normalise for the whole render: the fill style and its strength are read at four call
+  // sites (zone body, ground-feature body, the draft ring, and the pattern defs) and they must
+  // never disagree with each other.
+  const areaFill = normaliseAreaFill(areaFillRaw);
+  const areaFillOf = (color: string) => (areaFill.style === 'tint' ? color : hatchFill(color));
+
   const chrome = (w: number) => w / view.k;
   const chromeDash = (dash?: string) =>
     dash?.split(/[ ,]+/).map((n) => String(Number(n) / view.k)).join(' ');
@@ -2404,8 +2414,8 @@ export default function DesignCanvas({
                         .join(' ')
                     : `M ${effectivePoints.map(([x, y]) => `${(x * imgW).toFixed(1)},${(y * imgH).toFixed(1)}`).join(' L ')} Z`}
                   fillRule="evenodd"
-                  fill={hatchFill(color)}
-                  fillOpacity={feat ? 0.32 : 0.2}
+                  fill={areaFillOf(color)}
+                  fillOpacity={areaFill.opacity}
                   stroke="none"
                   style={{ cursor: interactive ? 'grab' : 'default', pointerEvents: interactive ? 'auto' : 'none' }}
                   onPointerDown={onZonePointerDown}
@@ -3055,8 +3065,8 @@ export default function DesignCanvas({
           return (
             <polygon
               points={ringToPx(draftPoints, imgW, imgH)}
-              fill={hatchFill(draftColor)}
-              fillOpacity={0.18}
+              fill={areaFillOf(draftColor)}
+              fillOpacity={areaFill.opacity * 0.65}
               stroke={draftColor}
               strokeWidth={chrome(2)}
               strokeDasharray={chromeDash('4 3')}

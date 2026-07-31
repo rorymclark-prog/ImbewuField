@@ -20,6 +20,9 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '31 July',
     changes: [
+      'Zones and traced ground can be a see-through colour instead of hatching, with a strength slider',
+      'The ruler is now the only thing listening — measuring never selects a shape by mistake',
+      'The selected chip is unmistakable now, on every colour',
       'Drag the edge handle and the panel follows your finger — down to just the map',
       'Every section has an ×, so you can close the one that is in your way and keep the rest',
       'The photo controls now stay while everything else folds away, instead of going first',

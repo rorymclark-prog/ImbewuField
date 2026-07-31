@@ -746,6 +746,41 @@ const METRES_PER_DEGREE_LAT = 111.32;
 export const MIN_MAP_TEXT_SCALE = 0.6;
 export const MAX_MAP_TEXT_SCALE = 2.5;
 
+/**
+ * HOW AREA SHAPES ARE FILLED — zones, lawn, orchard, patio, every traced surface.
+ *
+ * They were hatched, always, with no way to change it: the hatch says "this is a traced parcel"
+ * in the same visual language the farmer map uses, which is right when you are drawing them and
+ * wrong when you are trying to read the ground underneath, or show someone a zone plan (Rory:
+ * "with the zones i want to be able to select hatching… in the case of zones it must be a
+ * translucent colour that you can control with a slider").
+ *
+ * Presentational only, exactly like MAP_TEXT_SCALE above: it changes what is PAINTED, never what
+ * is stored, so no geometry moves and no area or price changes.
+ *
+ * The two styles are not interchangeable at the same number. A hatch carries its own internal
+ * opacities, so the slider modulates an already-sparse pattern; a tint is solid colour, so the
+ * same number reads far heavier. That is the point — each style gets the full range of the
+ * slider within its own character, rather than being scaled to look alike and neither working.
+ */
+export const AREA_FILL_STYLES = ['hatch', 'tint'] as const;
+export type AreaFillStyle = (typeof AREA_FILL_STYLES)[number];
+export const MIN_AREA_FILL_OPACITY = 0.05;
+export const MAX_AREA_FILL_OPACITY = 0.7;
+/** What the canvas drew before there was a control: the hatch at its old strength. */
+export const DEFAULT_AREA_FILL: { style: AreaFillStyle; opacity: number } = { style: 'hatch', opacity: 0.28 };
+
+export function clampAreaFillOpacity(v: unknown): number {
+  const n = typeof v === 'number' && Number.isFinite(v) ? v : DEFAULT_AREA_FILL.opacity;
+  return Math.min(MAX_AREA_FILL_OPACITY, Math.max(MIN_AREA_FILL_OPACITY, n));
+}
+
+export function normaliseAreaFill(raw: unknown): { style: AreaFillStyle; opacity: number } {
+  const o = (raw ?? {}) as { style?: unknown; opacity?: unknown };
+  const style = AREA_FILL_STYLES.find((s) => s === o.style) ?? DEFAULT_AREA_FILL.style;
+  return { style, opacity: clampAreaFillOpacity(o.opacity) };
+}
+
 export const MIN_SCALE_FACTOR = 0.05;
 export const MAX_SCALE_FACTOR = 20;
 

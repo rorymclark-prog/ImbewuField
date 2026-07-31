@@ -42,7 +42,10 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 // the four seconds first suggested: four is under the reading time of the tips themselves.
 const HINT_VISIBLE_MS = 8000;
 import type { GroundFeatureKind, LineShape, WizardStep } from '@/lib/design-canvas';
-import { normaliseRotation, MIN_MAP_TEXT_SCALE, MAX_MAP_TEXT_SCALE } from '@/lib/design-canvas';
+import {
+  normaliseRotation, MIN_MAP_TEXT_SCALE, MAX_MAP_TEXT_SCALE,
+  MIN_AREA_FILL_OPACITY, MAX_AREA_FILL_OPACITY, type AreaFillStyle,
+} from '@/lib/design-canvas';
 import { MIN_BED_COUNT, MAX_BED_COUNT } from '@/lib/bed-block';
 import { CATEGORY_META, CATEGORY_STEP, ELEMENT_CATALOG, GROUND_FEATURES, ZONE_DEFS, biomeClimates, elementSuitsClimate, elementVisibleInPalette, type DesignElementDef } from '@/lib/design-elements';
 import { COMPASS16_ORDER, isCompassDirection16, type LocalWindObservation } from '@/lib/local-wind';
@@ -98,6 +101,8 @@ export interface DesignPaletteProps {
   /** Icon/label size slider, shown inside the Layers panel beside Labels and Icons. null hides
    *  it entirely, same "nothing to act on" convention the other optional controls use. */
   textScaleControl: { value: number; onChange: (v: number) => void } | null;
+  /** Hatch vs flat tint for traced surfaces, and how strong. Paint only — see AREA_FILL_STYLES. */
+  areaFillControl: { value: { style: AreaFillStyle; opacity: number }; onChange: (v: { style: AreaFillStyle; opacity: number }) => void } | null;
   /** Bed-block inserter: type the bed length, bed width, path width and count, then arm it and
    *  tap a corner on the canvas. null hides the whole control. */
   bedBlockControl: {
@@ -371,6 +376,7 @@ export default function DesignPalette({
   activeLayers,
   setActiveLayers,
   textScaleControl,
+  areaFillControl,
   bedBlockControl,
   onUndo,
   canUndo,
@@ -1038,6 +1044,50 @@ export default function DesignPalette({
                     />
                     <span style={{ fontSize: 11, fontWeight: 700, minWidth: 34, textAlign: 'right', fontVariantNumeric: 'tabular-nums' }}>
                       {Math.round(textScaleControl.value * 100)}%
+                    </span>
+                  </div>
+                )}
+                {/* HOW SURFACES ARE FILLED. Zones, lawn, orchard, patio — everything traced — were
+                    hatched with no way to change it. The hatch is right while you are drawing (it
+                    says "traced parcel" in the farmer map's own language) and wrong when you want
+                    to read the ground under it, or hand someone a zone plan. Same home as the
+                    other paint controls: this is the same question they answer — how loud should
+                    the drawing be over the land. */}
+                {areaFillControl && (
+                  <div style={{ flexBasis: '100%', display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 8, padding: '6px 2px 0' }}>
+                    <span style={{ fontSize: 11.5, whiteSpace: 'nowrap' }}>🖌️ {t('designPaletteAreaFill')}</span>
+                    <span style={{ display: 'inline-flex', borderRadius: 8, overflow: 'hidden', border: `1px solid ${GREEN}`, flexShrink: 0 }}>
+                      {(['hatch', 'tint'] as AreaFillStyle[]).map((style) => {
+                        const on = areaFillControl.value.style === style;
+                        return (
+                          <button
+                            key={style}
+                            type="button"
+                            aria-pressed={on}
+                            onClick={() => areaFillControl.onChange({ ...areaFillControl.value, style })}
+                            style={{
+                              minHeight: 28, padding: '3px 10px', border: 'none', cursor: 'pointer',
+                              fontSize: 11.5, fontWeight: 700,
+                              background: on ? GREEN : PAPER, color: on ? PAPER : GREEN,
+                            }}
+                          >
+                            {t(style === 'hatch' ? 'designPaletteAreaFillHatch' : 'designPaletteAreaFillTint')}
+                          </button>
+                        );
+                      })}
+                    </span>
+                    <input
+                      type="range"
+                      min={MIN_AREA_FILL_OPACITY}
+                      max={MAX_AREA_FILL_OPACITY}
+                      step={0.01}
+                      value={areaFillControl.value.opacity}
+                      onChange={(e) => areaFillControl.onChange({ ...areaFillControl.value, opacity: Number(e.target.value) })}
+                      aria-label={t('designPaletteAreaFillStrength')}
+                      style={{ flex: 1, minWidth: 80, accentColor: GREEN, cursor: 'pointer' }}
+                    />
+                    <span style={{ fontSize: 11, fontWeight: 700, minWidth: 34, textAlign: 'right', fontVariantNumeric: 'tabular-nums' }}>
+                      {Math.round(areaFillControl.value.opacity * 100)}%
                     </span>
                   </div>
                 )}
