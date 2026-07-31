@@ -2893,6 +2893,26 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
                         {glyph}
                       </button>
                     ))}
+                    {/* A SLIDER AS WELL AS THE STEPPERS (Rory: "i want a slider to increase the
+                        size of the drone photo for micro adjustments to fit the satellite").
+                        Matching a photo to satellite features is a continuous judgement made by
+                        eye — you overshoot, come back, and settle — and that is a drag, not a
+                        count of taps. The steppers stay for the last fine increment, where a
+                        slider's pixel is coarser than one press. Both write through the same
+                        clamped path, so the two can never disagree. */}
+                    <input
+                      type="range"
+                      aria-label="Photo size"
+                      min={MIN_BASE_SCALE}
+                      max={MAX_BASE_SCALE}
+                      step={0.01}
+                      value={liveAlign.scale ?? 1}
+                      onChange={(e) => stepAlign((a) => ({ ...a, scale: Number(e.target.value) }))}
+                      onPointerUp={commitAlign}
+                      onKeyUp={commitAlign}
+                      onBlur={commitAlign}
+                      style={{ width: 96 }}
+                    />
                     <span style={{ fontSize: 11, opacity: 0.75, minWidth: 38, textAlign: 'right', fontVariantNumeric: 'tabular-nums' }}>
                       {Math.round((liveAlign.scale ?? 1) * 100)}%
                     </span>

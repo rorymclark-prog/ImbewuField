@@ -179,9 +179,18 @@ export interface CustomBaseImage {
   opacity?: number;
 }
 
-/** Alignment nudge bounds, as a fraction of the frame. A tenth of the frame each way is far more
- *  than any real georeferencing disagreement, and keeps a slip from flinging the photo off-map. */
-export const MAX_BASE_NUDGE = 0.1;
+/**
+ * Alignment nudge bounds, as a fraction of the frame.
+ *
+ * Was a tenth, on the reasoning that this exceeds "any real georeferencing disagreement". That
+ * reasoning only holds when the photo and the satellite were framed alike — and since a photo is
+ * now auto-fitted to the frame's ground scale on import, a shot taken well off-centre can land
+ * needing considerably more than a tenth of the frame to bring into register. A farmer who runs
+ * out of nudge has no way to finish the job (Rory: "the drone image is not lining perfectly with
+ * the satellite so i want to be able to adjust everything"). A third of the frame still cannot
+ * fling the photo off the map, which is all this bound was ever for.
+ */
+export const MAX_BASE_NUDGE = 0.35;
 
 /** Coerce a persisted/typed nudge into something that cannot put the photo somewhere unrecoverable.
  *  Non-finite reads as "no nudge" rather than propagating NaN into a transform. */
