@@ -35,13 +35,22 @@ export default function SpeciesPicker({
         // an absolutely-positioned child contributes nothing to its parent's intrinsic size) —
         // a circular sizing dependency that collapsed the whole panel to 2x2px with no error
         // anywhere. Just fill the space the caller already gives it.
+        //
+        // `flex:1 1 auto` + `minHeight:0` rather than `height:100%`: the wrapper only sets
+        // maxHeight (not height), so a percentage height here resolves to auto per CSS's
+        // indefinite-containing-block rule and this div grows to its full content size —
+        // which the wrapper then hard-clips via overflow:hidden with no scrollbar at all.
+        // Flex sizing (not percentage resolution) is what actually respects the wrapper's
+        // clamped size, and minHeight:0 removes the flex-item auto-min-size floor that would
+        // otherwise still refuse to shrink below full content height.
         width: '100%',
-        height: '100%',
+        flex: '1 1 auto',
+        minHeight: 0,
         display: 'flex',
         flexDirection: 'column',
       }}
     >
-      <div style={{ padding: '8px 12px', background: '#F8F5EE', borderBottom: '1px solid rgba(0,0,0,0.08)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div style={{ flexShrink: 0, padding: '8px 12px', background: '#F8F5EE', borderBottom: '1px solid rgba(0,0,0,0.08)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <div>
           <h3 style={{ margin: 0, fontSize: 14, color: '#0B120B' }}>Plant Catalog</h3>
           <p style={{ margin: 0, fontSize: 11, color: '#A9743F', fontWeight: 600 }}>
@@ -57,11 +66,11 @@ export default function SpeciesPicker({
       </div>
 
       {/* Honesty banner */}
-      <div style={{ padding: '6px 12px', background: '#FFF3CD', color: '#856404', fontSize: 11.5, borderBottom: '1px solid #FFEEBA' }}>
+      <div style={{ flexShrink: 0, padding: '6px 12px', background: '#FFF3CD', color: '#856404', fontSize: 11.5, borderBottom: '1px solid #FFEEBA' }}>
         <strong>Note:</strong> Not yet agronomist-reviewed. Use as a starting point.
       </div>
 
-      <div style={{ overflowY: 'auto', WebkitOverflowScrolling: 'touch', padding: 12 }}>
+      <div style={{ flex: '1 1 auto', minHeight: 0, overflowY: 'auto', WebkitOverflowScrolling: 'touch', padding: 12 }}>
         {sections.map((sec) => (
           <div key={sec.section} style={{ marginBottom: 16 }}>
             <h4 style={{ margin: '0 0 8px 0', fontSize: 13, color: '#2F7A4A', textTransform: 'uppercase', letterSpacing: 0.5 }}>
