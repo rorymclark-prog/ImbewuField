@@ -52,6 +52,7 @@ import { COMPASS16_ORDER, isCompassDirection16, type LocalWindObservation } from
 import { usePhoneViewport } from '@/lib/use-phone-viewport';
 import ChromeHandle from '@/components/design/ChromeHandle';
 import { BOTTOM_STOPS, bottomVisibility, type BottomStop } from '@/lib/design-chrome';
+import { BED_DEF_IDS } from '@/lib/design-beds-bridge';
 import { formatDesignTranslation } from '@/lib/design-studio-i18n';
 import { useLanguage } from '@/lib/i18n';
 import LessonLink from './LessonLink';
@@ -1579,6 +1580,14 @@ export default function DesignPalette({
   // place: it places many, with its own gesture.
   function renderBedBlock() {
     if (!bedBlockControl || step !== 'planting') return null;
+    // AND ONLY WHEN BEDS ARE IN PLAY (Rory: "this must only show if we have selected veg beds,
+    // otherwise its wasting space"). It sat on the Planting step permanently — a row of four
+    // number fields and a button, taking a line of a screen that is mostly map, for a farmer who
+    // is placing trees. It appears when the armed element IS a bed, or while the block itself is
+    // armed so the Cancel is never stranded. Choosing a bed chip is a clear statement that beds
+    // are what you are doing.
+    const bedArmed = !!placeDefId && (BED_DEF_IDS as readonly string[]).includes(placeDefId);
+    if (!bedArmed && !bedBlockControl.armed) return null;
     const { spec, armed, onSpecChange, onArm, onCancel } = bedBlockControl;
     // Label BESIDE the input, not above it. Stacked, this row stood taller than every other chip
     // strip and the parent clipped its bottom edge — the number boxes were cut in half and the

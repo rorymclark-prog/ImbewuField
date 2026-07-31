@@ -1860,15 +1860,48 @@ export default function DesignCanvas({
     (z: ZoneShape) => Math.abs(z.labelDx ?? 0) > 0.003 || Math.abs(z.labelDy ?? 0) > 0.003,
     [],
   );
+  // Hoisted above the label-offset memo below, which now sizes zone badges from it — a pure clamp
+  // of a prop, so it can sit anywhere before its first use.
+  const mapTextScale = Number.isFinite(mapTextScaleRaw)
+    ? clamp(mapTextScaleRaw, MIN_MAP_TEXT_SCALE, MAX_MAP_TEXT_SCALE)
+    : 1;
+
+  /**
+   * PUSH OVERLAPPING ZONE MARKS APART — word pills AND number badges.
+   *
+   * It only ever looked at ground features (`z.feature`), so the numbered effort-zone badges were
+   * excluded from de-collision entirely: Zone 0 and Zone 1 share an edge on almost every farm, so
+   * their centroids sit close together and their badges landed on top of each other (Rory: "zone 1
+   * icon is directly over zone 0"). Nothing pushed them apart because nothing was looking.
+   *
+   * It got worse rather than better when the badges started following the Size slider — at 250%
+   * they are three times the mark they were when these offsets were last judged by eye. So the
+   * size fed to the layout engine is the badge's REAL painted size, not a constant: a bigger badge
+   * asks for more room, which is the only version of this that stays right when the slider moves.
+   *
+   * A farmer who drags a mark still wins — labelMovedByUser excludes it here, and their own
+   * labelDx/labelDy is applied on top of whatever this returns.
+   */
   const groundLabelOffsets = useMemo(() => {
     const out = new Map<string, number>();
-    if (!activeLayers.labels) return out;
-    const rings = state.zones.filter((z) => z.feature && z.points.length >= 3 && !labelMovedByUser(z));
+    const wordsOn = activeLayers.labels;
+    const badgesOn = activeLayers.symbols;
+    if (!wordsOn && !badgesOn) return out;
+    const rings = state.zones.filter((z) => {
+      if (z.points.length < 3 || labelMovedByUser(z)) return false;
+      return z.feature ? wordsOn : badgesOn;
+    });
     if (rings.length < 2) return out;
+    const badgeR = 11 * mapTextScale;
     const laid = layoutCanvasLabels(
       rings.map((z) => {
         const c = ringCentroid(z.points);
-        const text = z.name ?? GROUND_FEATURES[z.feature!].label;
+        if (!z.feature) {
+          // A number badge is a DISC, so it wants the same clearance in both directions — and the
+          // radius it actually paints at, so the gap holds at every Size setting.
+          return { id: z.id, cx: c[0] * imgW, cy: c[1] * imgH, gap: 0, w: badgeR * 2, h: badgeR * 2, iconR: badgeR };
+        }
+        const text = z.name ?? GROUND_FEATURES[z.feature].label;
         return {
           id: z.id,
           cx: c[0] * imgW,
@@ -1885,7 +1918,7 @@ export default function DesignCanvas({
       out.set(pos.id, pos.y / imgH - ringCentroid(src.points)[1]);
     }
     return out;
-  }, [state.zones, activeLayers.labels, imgW, imgH, labelMovedByUser]);
+  }, [state.zones, activeLayers.labels, activeLayers.symbols, mapTextScale, imgW, imgH, labelMovedByUser]);
 
   // LINE LABEL GROUPING — the same tidy the item pills got, for lines (Rory, on seeing the item
   // grouping land: "very nice but look at all the drip irrigation labels now?"). Identical
@@ -2013,9 +2046,6 @@ export default function DesignCanvas({
   // they match the vertex dots' constant screen size.
   // Clamped here rather than trusted: a NaN or a 0 arriving from a persisted slider value would
   // collapse every icon and pill to nothing, and the map would look empty rather than broken.
-  const mapTextScale = Number.isFinite(mapTextScaleRaw)
-    ? clamp(mapTextScaleRaw, MIN_MAP_TEXT_SCALE, MAX_MAP_TEXT_SCALE)
-    : 1;
   // One normalise for the whole render: the fill style and its strength are read at four call
   // sites (zone body, ground-feature body, the draft ring, and the pattern defs) and they must
   // never disagree with each other.
