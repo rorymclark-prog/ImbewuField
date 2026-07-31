@@ -41,7 +41,32 @@ export interface DesignElementDef {
   // elements are honestly two things at once — a banana circle is a planted crop AND a greywater
   // sink — and forcing them into one category hid them from the step where the farmer looks.
   alsoSteps?: Array<'water' | 'planting' | 'structures'>;
+  /**
+   * EXTRA LAYERS this element belongs to, beyond the one its category implies.
+   *
+   * Rory: "earthworks should auto show raised beds in brown earth (auto mirroring where we put the
+   * raised beds in planting), same with swales — which brings me to another point, we need an
+   * earthworks layer?" The layer exists. What did not exist is an element belonging to more than
+   * ONE of them, and that is the whole of the problem: a raised bed IS a planting bed and IS a
+   * built soil structure; a swale IS a water feature and IS a cut-and-fill earthwork. Forcing each
+   * to pick one meant the Earthworks view showed an empty farm on a site full of earthworks.
+   *
+   * `alsoSteps` above is the same idea one level up — which STEP offers the element — and this is
+   * deliberately separate from it: where you are OFFERED a thing and which views it SHOWS UP in are
+   * different questions, and a swale you draw on the Water step must appear on Earthworks whether
+   * or not Earthworks ever offers you the tool.
+   *
+   * Membership only. What each view DRAWS — brown earth and a cut-and-fill profile on Earthworks
+   * versus a planted bed on Planting — is cartography, and belongs to each renderer.
+   */
+  alsoLayers?: DesignLayerKey[];
 }
+
+/** The layer toggles in the Layers panel. Kept here so element defs can name one without
+ *  importing a component. */
+export type DesignLayerKey =
+  | 'water' | 'earthworks' | 'zones' | 'planting' | 'structures' | 'access' | 'animals'
+  | 'ground' | 'baseMap' | 'boundary' | 'labels' | 'symbols' | 'contours' | 'sector';
 
 // A HEAT MAP, READ FROM THE CENTRE OUT (Rory: "zone colours are messed up — 0 should be red?
 // then orange and so on"). Permaculture literature fixes no exact hexes, but every zone diagram
@@ -307,6 +332,8 @@ export const ELEMENT_CATALOG: DesignElementDef[] = [
   // six re-tagged elements below take the earth tone rather than their old water/growing green.
   {
     id: 'raised_bed',
+    // Built soil: it is a planting bed AND an earthwork, and the Earthworks view was blind to it.
+    alsoLayers: ['earthworks'],
     category: 'earthworks',
     name: 'Raised Bed',
     icon: '🟫',

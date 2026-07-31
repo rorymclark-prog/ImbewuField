@@ -253,6 +253,23 @@ function clamp01(v: number): number {
 // default case on purpose: a new category must be a compile error here. The old `string` +
 // `default: return null` form meant an unmapped category silently returned null, and a null key
 // skips the gate at the call site — the element would render even with its layer switched off.
+/**
+ * EXTRA LAYERS a LINE KIND belongs to, beyond LINE_LAYER's primary.
+ *
+ * A swale is a water feature and a cut-and-fill earthwork at the same time; so is a berm. The
+ * Earthworks view showed an empty farm on a site full of them, because a line could only ever be
+ * on one layer. See DesignElementDef.alsoLayers in lib/design-elements.ts for the same idea on
+ * placed items and for why this is membership only — what Earthworks DRAWS is cartography.
+ */
+const LINE_ALSO_LAYERS: Partial<Record<LineShape['kind'], Array<keyof ActiveLayers>>> = {
+  swale: ['earthworks'],
+};
+
+/** Shown when ANY layer it belongs to is on — never only its primary. */
+function anyLayerOn(active: ActiveLayers, keys: Array<keyof ActiveLayers>): boolean {
+  return keys.some((k) => !!active[k]);
+}
+
 function categoryLayerKey(category: ElementCategory): keyof ActiveLayers {
   switch (category) {
     case 'water':
@@ -2129,7 +2146,7 @@ export default function DesignCanvas({
     if (it) {
       const def = ELEMENTS_BY_ID[it.defId];
       if (!def) return null;
-      return activeLayers[categoryLayerKey(def.category)]
+      return anyLayerOn(activeLayers, [categoryLayerKey(def.category), ...((def.alsoLayers ?? []) as Array<keyof ActiveLayers>)])
         && ownedByCurrentStep(state.step, { kind: 'item', category: def.category, defId: it.defId })
         ? id : null;
     }
@@ -2885,7 +2902,7 @@ export default function DesignCanvas({
         {[...state.lines]
           .sort((a, b) => (a.id === selectedId ? 1 : 0) - (b.id === selectedId ? 1 : 0))
           .map((line) => {
-            if (!activeLayers[LINE_LAYER[line.kind]]) return null;
+            if (!anyLayerOn(activeLayers, [LINE_LAYER[line.kind], ...(LINE_ALSO_LAYERS[line.kind] ?? [])])) return null;
             const style = lineStroke(line.kind);
             // See the zones loop above — same step-ownership lock (Rory's boundary-grab bug).
             const owned = ownedByCurrentStep(state.step, { kind: 'line', lineKind: line.kind });
@@ -3329,7 +3346,7 @@ export default function DesignCanvas({
           .map((item) => {
           const def = ELEMENTS_BY_ID[item.defId];
           if (!def) return null;
-          if (!activeLayers[categoryLayerKey(def.category)]) return null;
+          if (!anyLayerOn(activeLayers, [categoryLayerKey(def.category), ...((def.alsoLayers ?? []) as Array<keyof ActiveLayers>)])) return null;
 
           const isResizingThis = item.id === dragResizeId.current && resizePreview;
           const wM = isResizingThis ? resizePreview!.wM : item.wM ?? def.wM;
@@ -3540,7 +3557,7 @@ export default function DesignCanvas({
             .map((item) => {
               const def = ELEMENTS_BY_ID[item.defId];
               if (!def) return null;
-              if (!activeLayers[categoryLayerKey(def.category)]) return null;
+              if (!anyLayerOn(activeLayers, [categoryLayerKey(def.category), ...((def.alsoLayers ?? []) as Array<keyof ActiveLayers>)])) return null;
               const [nx, ny] = effectiveItemPos(item);
               const isResizingThis = item.id === dragResizeId.current && resizePreview;
               const wM = isResizingThis ? resizePreview!.wM : item.wM ?? def.wM;
