@@ -1239,11 +1239,13 @@ export default function DesignCanvas({
     }
     onSelect(id, additive);
     if (additive) return; // toggle membership — no drag, no handles.
+    armDragIntent(e);
     (e.target as Element).setPointerCapture?.(e.pointerId);
     dragItemId.current = id;
   }
 
   function moveDragItem(e: React.PointerEvent) {
+    if (!movedEnoughToDrag(e)) return;
     const id = dragItemId.current;
     if (!id) return;
     const pt = clientToNorm(e.clientX, e.clientY);
@@ -1313,6 +1315,35 @@ export default function DesignCanvas({
     setVertexPos(null);
   }
 
+  /**
+   * INTENT BEFORE MOTION. Pressing a shape's body, its label, or a multi-selection began moving
+   * geometry on the very first pointermove — no threshold at all — and endDrag* then committed
+   * whatever that produced. A 3mm finger roll on a tap you meant as "select this" translated and
+   * SAVED a whole polygon, which is the other half of "i cant select a zone and just work with a
+   * point without it moving everything else".
+   *
+   * Every other gesture in this file already has an intent threshold: the background pan uses 4px
+   * before it counts as a drag, tapOnly uses 6px before a delete is refused. Shape-body drags were
+   * the only ones without one. 6px matches tapOnly, so "held still enough to delete" and "moved
+   * enough to drag" are the same judgement.
+   *
+   * Deliberately NOT applied to vertex, resize or rotate grips: those are small handles the farmer
+   * has already aimed at, and a dead zone there would make fine adjustment feel broken.
+   */
+  const DRAG_INTENT_PX = 6;
+  const dragIntent = useRef<{ x: number; y: number; armed: boolean } | null>(null);
+  function armDragIntent(e: React.PointerEvent) {
+    dragIntent.current = { x: e.clientX, y: e.clientY, armed: false };
+  }
+  function movedEnoughToDrag(e: React.PointerEvent): boolean {
+    const d = dragIntent.current;
+    if (!d) return true;
+    if (d.armed) return true;
+    if (Math.hypot(e.clientX - d.x, e.clientY - d.y) < DRAG_INTENT_PX) return false;
+    d.armed = true;
+    return true;
+  }
+
   // Whole-shape (zone/line) translate drag: press-and-drag the body moves every point by
   // the same delta in one gesture — mirroring startDragItem's press-drag-moves pattern,
   // which zones/lines previously lacked entirely (only single-vertex drag existed).
@@ -1335,6 +1366,7 @@ export default function DesignCanvas({
     }
     onSelect(id, additive);
     if (additive) return; // toggle membership — no drag.
+    armDragIntent(e);
     (e.target as Element).setPointerCapture?.(e.pointerId);
     const w = worldFromClient(e.clientX, e.clientY);
     if (!w) return;
@@ -1370,11 +1402,13 @@ export default function DesignCanvas({
     if (itemOrigins.size + zoneOrigins.size + lineOrigins.size === 0) return; // nothing owned to move
     const w = worldFromClient(e.clientX, e.clientY);
     if (!w) return;
+    armDragIntent(e);
     (e.target as Element).setPointerCapture?.(e.pointerId);
     dragGroup.current = { itemOrigins, zoneOrigins, lineOrigins, startWorldX: w[0], startWorldY: w[1] };
   }
 
   function moveGroupDrag(e: React.PointerEvent) {
+    if (!movedEnoughToDrag(e)) return;
     const dg = dragGroup.current;
     if (!dg) return;
     const w = worldFromClient(e.clientX, e.clientY);
@@ -1420,6 +1454,7 @@ export default function DesignCanvas({
   }
 
   function moveDragShape(e: React.PointerEvent) {
+    if (!movedEnoughToDrag(e)) return;
     const ds = dragShape.current;
     if (!ds) return;
     const w = worldFromClient(e.clientX, e.clientY);
@@ -1461,11 +1496,13 @@ export default function DesignCanvas({
     onSelect(id, additiveSelect || e.shiftKey || e.metaKey || e.ctrlKey);
     const w = worldFromClient(e.clientX, e.clientY);
     if (!w) return;
+    armDragIntent(e);
     (e.target as Element).setPointerCapture?.(e.pointerId);
     dragLabel.current = { id, kind, startWorldX: w[0], startWorldY: w[1], originDx: shape.labelDx ?? 0, originDy: shape.labelDy ?? 0, startClientX: e.clientX, startClientY: e.clientY, moved: false };
   }
 
   function moveDragLabel(e: React.PointerEvent) {
+    if (!movedEnoughToDrag(e)) return;
     const dl = dragLabel.current;
     if (!dl) return;
     const w = worldFromClient(e.clientX, e.clientY);
@@ -1985,6 +2022,56 @@ export default function DesignCanvas({
   const areaFill = normaliseAreaFill(areaFillRaw);
   const areaFillOf = (color: string) => (areaFill.style === 'tint' ? color : hatchFill(color));
 
+  /**
+   * ONE SHAPE OWNS THE CANVAS — the "exclusive selection" the owner asked for: "it's super
+   * annoying that i cant select say a zone and just work with a point without it moving everything
+   * else — i think by default if you select something nothing else is selectable".
+   *
+   * IT IS A HIT-TEST RULE, NEVER A JAVASCRIPT BAIL. That distinction is the whole design. An early
+   * return inside a neighbour's handler does not re-route the pointer to the grip underneath —
+   * the browser has already delivered the event to whatever is painted on top — so a bail would
+   * turn "the wrong shape responds" into "the right shape is unreachable", and, because the tap
+   * would then bubble to the background, every mis-tap would silently clear the selection. Making
+   * the neighbour pointer-transparent instead means the tap genuinely passes THROUGH it.
+   *
+   * THE ESCAPE IS THE SAME TAP. A locked-out shape is transparent, so a tap on it lands on the
+   * background, which deselects — releasing the lock and visibly removing the selection ring. Tap
+   * again and that shape selects normally. Two taps to move on, no double-tap timing to learn (a
+   * gloved or wet hand rarely makes a 500ms double tap), and nothing is EVER silently ignored,
+   * which is what would otherwise read as a frozen app.
+   *
+   * ARMED ONLY WHEN ALL OF THIS HOLDS. Each clause is a way the lock could otherwise strand
+   * someone: locked to a shape that has been undone away, or hidden by a layer toggle, or belongs
+   * to another step — all of them leave every visible shape inert with no owner on screen to
+   * explain why.
+   */
+  const lockOwnerId: string | null = (() => {
+    if (tool !== 'select' || measureOn || additiveSelect) return null;
+    if (selectedIds.length !== 1) return null;
+    const id = selectedIds[0];
+    const z = state.zones.find((s2) => s2.id === id);
+    if (z) {
+      const layerOn = z.feature ? activeLayers.ground : activeLayers.zones;
+      return layerOn && ownedByCurrentStep(state.step, { kind: 'zone', feature: z.feature }) ? id : null;
+    }
+    const l = state.lines.find((s2) => s2.id === id);
+    if (l) {
+      return activeLayers[LINE_LAYER[l.kind]] && ownedByCurrentStep(state.step, { kind: 'line', lineKind: l.kind }) ? id : null;
+    }
+    const it = state.items.find((s2) => s2.id === id);
+    if (it) {
+      const def = ELEMENTS_BY_ID[it.defId];
+      if (!def) return null;
+      return activeLayers[categoryLayerKey(def.category)]
+        && ownedByCurrentStep(state.step, { kind: 'item', category: def.category, defId: it.defId })
+        ? id : null;
+    }
+    // A selection that resolves to nothing — after an undo, a sync, a delete — must never arm it.
+    return null;
+  })();
+  /** True for everything the locked shape is currently shutting out. */
+  const lockedOut = (id: string) => lockOwnerId !== null && lockOwnerId !== id;
+
   const chrome = (w: number) => w / view.k;
   const chromeDash = (dash?: string) =>
     dash?.split(/[ ,]+/).map((n) => String(Number(n) / view.k)).join(' ');
@@ -2195,7 +2282,9 @@ export default function DesignCanvas({
           // on the overlapping traced HOUSE would adopt it (adoptTracedLayer hardcodes roof/
           // structure→house, ignoring areaFeature) — so "add a Lawn" silently became "House"
           // (Rory). Disarm the chip to adopt intentionally.
-          const interactive = tool === 'select' && !adopted && !areaFeature;
+          // lockOwnerId: the traced layer is a THIRD channel with its own active id, so without
+          // this it would keep popping its "Use in design" card over a shape you are editing.
+          const interactive = tool === 'select' && !adopted && !areaFeature && lockOwnerId === null;
           // Only reveal the adopt button in Select mode, so an armed draw tool can neither
           // trigger adoption nor have the button overlap the drawing surface.
           const isActive = activeTracedId === layer.featureId && interactive;
@@ -2329,8 +2418,22 @@ export default function DesignCanvas({
         })}
 
         {/* Zones + ground features. Effort-zone rings follow the Zones toggle; farmer-drawn
-            ground areas (house/patio/lawn/…) follow the separate Ground toggle. */}
-        {state.zones.map((z) => {
+            ground areas (house/patio/lawn/…) follow the separate Ground toggle.
+
+            THE SELECTED ONE RENDERS LAST — the same fix the items loop below got on 2026-07-27,
+            which zones and lines never received. SVG has no z-index: paint order IS stacking
+            order, so a zone early in the array had its vertex grips, +/− badges and ✕ drawn UNDER
+            every zone after it. On a farm where beds, paths and a boundary overlap — which is
+            every farm — the corner you were reaching for was covered by the neighbour's fill, and
+            the tap went to the neighbour. That is the whole of "even if you close to another
+            polygon it registers the other one when you click" and half of "i cant select a zone
+            and just work with a point": a hit-test cannot be argued with from JavaScript, because
+            the browser delivers the event to whatever is on top. Sorting only lifts the single
+            selected shape to the end; every other keeps its order and the array is untouched —
+            presentation, never saved geometry. */}
+        {[...state.zones]
+          .sort((a, b) => (a.id === selectedId ? 1 : 0) - (b.id === selectedId ? 1 : 0))
+          .map((z) => {
             // AUTO-SEPARATED LABELS. Nested rings share a centroid almost exactly — a lawn drawn
             // just inside the property boundary puts "Lawn" and "Property boundary" on top of each
             // other, which is what Rory saw. layoutCanvasLabels (the engine already de-colliding
@@ -2343,7 +2446,7 @@ export default function DesignCanvas({
             // ownedByCurrentStep + the startDrag* guards above). `interactive` additionally
             // requires the select tool, matching every existing tool==='select' gate here.
             const owned = ownedByCurrentStep(state.step, { kind: 'zone', feature: z.feature });
-            const interactive = tool === 'select' && owned;
+            const interactive = tool === 'select' && owned && !lockedOut(z.id);
             const def = ZONE_DEFS[z.zone];
             // Ground features (house/patio/…) render as filled, labelled SOLID polygons —
             // "what is there"; plain zones keep their dashed effort-zone ring + number badge.
@@ -2573,9 +2676,14 @@ export default function DesignCanvas({
                     // It ALSO obeys the Icons toggle (Rory: "the zone icons also need to switch
                     // off when icons are toggled off") — the badge is a round glyph, and a farmer
                     // who turns icons off is asking for bare geometry.
+                    // The Size slider drives THIS badge too (Rory: "resize icons labels must
+                    // also effect zone icons"). It was fixed at r=11/11pt while every element
+                    // icon and label around it scaled, so turning the map up to 150% left the
+                    // zone numbers as the smallest marks on a sheet meant to be read at arm's
+                    // length. Paint only — the badge marks the zone's anchor, it is not geometry.
                     <>
-                      <circle r={11} fill={def.color} stroke="#FFFFFF" strokeWidth={2.5} />
-                      <text textAnchor="middle" dominantBaseline="central" fontSize={11} fontWeight={700} fill="#FFFFFF">
+                      <circle r={11 * mapTextScale} fill={def.color} stroke="#FFFFFF" strokeWidth={2.5 * mapTextScale} />
+                      <text textAnchor="middle" dominantBaseline="central" fontSize={11 * mapTextScale} fontWeight={700} fill="#FFFFFF">
                         {z.zone}
                       </text>
                     </>
@@ -2665,10 +2773,7 @@ export default function DesignCanvas({
                       ))}
                     <g
                       transform={`translate(${(centroid[0] * imgW + worldPx(16)).toFixed(1)},${(centroid[1] * imgH - worldPx(16)).toFixed(1)})`}
-                      onPointerDown={(e) => {
-                        e.stopPropagation();
-                        deleteZone(z.id);
-                      }}
+                      {...tapOnly(() => deleteZone(z.id))}
                       style={{ cursor: 'pointer' }}
                     >
                       <circle r={deleteVisibleR * 1.25} fill="#B53A3A" stroke="#FBF6EC" strokeWidth={vertexStrokeW * 0.6} />
@@ -2682,13 +2787,18 @@ export default function DesignCanvas({
             );
           })}
 
-        {/* Lines — each kind follows its functional layer (LINE_LAYER), not one generic toggle. */}
-        {state.lines.map((line) => {
+        {/* Lines — each kind follows its functional layer (LINE_LAYER), not one generic toggle.
+            Selected renders last, as in the zones loop above. Lines are the worse case: they paint
+            after EVERY zone unconditionally, so a fence or a path laid over a bed put its whole
+            cased stroke on top of that bed's editing chrome. */}
+        {[...state.lines]
+          .sort((a, b) => (a.id === selectedId ? 1 : 0) - (b.id === selectedId ? 1 : 0))
+          .map((line) => {
             if (!activeLayers[LINE_LAYER[line.kind]]) return null;
             const style = lineStroke(line.kind);
             // See the zones loop above — same step-ownership lock (Rory's boundary-grab bug).
             const owned = ownedByCurrentStep(state.step, { kind: 'line', lineKind: line.kind });
-            const interactive = tool === 'select' && owned;
+            const interactive = tool === 'select' && owned && !lockedOut(line.id);
             const isSelected = selectedId === line.id;
             const isHighlighted = selectedIds.includes(line.id);
             const isDraggingVertexOfThisShape = dragVertex.current?.shapeId === line.id && dragVertex.current.kind === 'line' && vertexPos;
@@ -2938,10 +3048,7 @@ export default function DesignCanvas({
                     {mid && (
                       <g
                         transform={`translate(${(mid[0] * imgW + worldPx(12)).toFixed(1)},${(mid[1] * imgH - worldPx(12)).toFixed(1)})`}
-                        onPointerDown={(e) => {
-                          e.stopPropagation();
-                          deleteLine(line.id);
-                        }}
+                        {...tapOnly(() => deleteLine(line.id))}
                         style={{ cursor: 'pointer' }}
                       >
                         <circle r={deleteVisibleR * 1.25} fill="#B53A3A" stroke="#FBF6EC" strokeWidth={vertexStrokeW * 0.6} />
@@ -3127,7 +3234,7 @@ export default function DesignCanvas({
           const isHighlighted = selectedIds.includes(item.id);
           // See the zones loop above — same step-ownership lock (Rory's boundary-grab bug).
           const owned = ownedByCurrentStep(state.step, { kind: 'item', category: def.category, defId: item.defId });
-          const interactive = tool === 'select' && owned;
+          const interactive = tool === 'select' && owned && !lockedOut(item.id);
           // The icon disc is a map SYMBOL, not geometry: chrome() holds it at one screen size at
           // every zoom (identical at k=1). Zoomed in it used to balloon with the footprint until
           // seven bed icons drowned the beds themselves (Rory: "maybe icons too?").
@@ -3212,11 +3319,7 @@ export default function DesignCanvas({
               {isSelected && owned && (
                 <g
                   transform={`translate(${actionX}, ${-hPx / 2 + itemActionR * 0.55})`}
-                  onPointerDown={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    deleteItem(item.id);
-                  }}
+                  {...tapOnly(() => deleteItem(item.id))}
                   style={{ cursor: 'pointer' }}
                 >
                   <circle r={itemActionHitR} fill="transparent" pointerEvents="fill" />
@@ -3877,7 +3980,9 @@ export default function DesignCanvas({
             // ruler also lit is a screen making two promises: the farmer reads "Mango Tree" as
             // selected and expects the next tap to plant one, and the app expects it to measure.
             // The ruler wins while it is on, so it says so by putting the palette back to Select.
-            if (!v) onToolChange?.('select');
+            // It also drops the SELECTION, so a farmer who measures for a few minutes does not
+            // come back to a canvas locked to a shape they have long since forgotten choosing.
+            if (!v) { onToolChange?.('select'); onSelect(null); }
             return !v;
           });
           setMeasurePts([]);

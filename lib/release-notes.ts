@@ -20,7 +20,10 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '31 July',
     changes: [
-      'Zones and traced ground can be a see-through colour instead of hatching, with a strength slider',
+      'Zones can be see-through colour instead of hatching, with a strength slider',
+      'Pick a shape and the ones around it stop grabbing your taps — tap the map to let it go',
+      'A shape only moves once your finger really moves, so a tap no longer nudges it',
+      'Zone numbers grow with the Size slider like every other label',
       'The ruler is now the only thing listening — measuring never selects a shape by mistake',
       'The selected chip is unmistakable now, on every colour',
       'Drag the edge handle and the panel follows your finger — down to just the map',
