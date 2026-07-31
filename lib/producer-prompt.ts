@@ -1049,6 +1049,16 @@ FINAL CHECK, in order of importance: (1) inside the boundary the land is cleanly
  * named in this list" (nothing is named here) and because both instruct the model to letter its own
  * labels/legend — exactly what a sector sheet must never do.
  */
+// A SECTOR SHEET IS NOT A ZONE SHEET. "Illustrate this smallholding as a permaculture map" is
+// exactly the prompt that makes an image model reach for the single most common permaculture
+// site-plan convention it has seen: concentric zone-0-to-5 rings or tinted bands radiating from
+// the house. Sector never asked for that and composeSectorSheet never draws one — but nothing told
+// the model NOT to invent it, and the result was an unexplained tinted ring/polygon ("ghost shape")
+// the app never put there and can't account for in the legend. Shared by both the ground-restyle
+// pass and the polish pass, since either one touches ground pixels the model could paint this onto.
+const noZoning =
+  `DO NOT DRAW PERMACULTURE ZONES: this is a sector-energy sheet (sun, wind, fire, water), never a zone-of-use sheet. Add no concentric rings, tinted bands, wedges or shaded regions radiating from the house or anywhere else that could read as "Zone 0/1/2/3/4/5" or any other zone-of-use diagram, even in a decorative or muted form. The only rings on this sheet are the sun-path arcs the app draws afterwards — do not pre-empt them.`;
+
 export function buildSectorRestylePrompt(stylePreset: StylePreset, placeName?: string): string {
   // EDGE TO EDGE, borrowed verbatim in spirit from buildLockedIllustrationPrompt, which is the one
   // restyle prompt with a track record. Without it the first AI sector sheet came back as a
@@ -1100,6 +1110,7 @@ export function buildSectorRestylePrompt(stylePreset: StylePreset, placeName?: s
       restyleOnly,
       noInvent,
       noAnalysis,
+      noZoning,
       `FINAL CHECK: this is recognisably the same photograph, corrected — not repainted, not illustrated, nothing added or removed, no text, no arrow, no arc anywhere.`,
     ].join('\n\n');
     return `${STYLE_LINES[stylePreset]}\n\n${enhanceBody}`;
@@ -1111,6 +1122,7 @@ export function buildSectorRestylePrompt(stylePreset: StylePreset, placeName?: s
     restyleOnly,
     noInvent,
     noAnalysis,
+    noZoning,
     `FINAL CHECK: the entire frame is illustrated with no photographic patches left and no hard edge anywhere; no building is drawn sharper or bolder than the ground around it; nothing has been added that was not already there; there is no text, arrow or arc anywhere.`,
     // Deliberately NOT geometryLockTail(): that tail asks the model to preserve boundary/roof/
     // driveway position exactly — the registration promise this prompt just dropped, and this path
@@ -1131,22 +1143,29 @@ export function buildSectorRestylePrompt(stylePreset: StylePreset, placeName?: s
  * variation can never destroy the authoritative bearings.
  */
 export function buildSectorSheetPolishPrompt(stylePreset: StylePreset, placeName?: string): string {
-  // Same contradiction as buildSectorRestylePrompt, one level up: "improve the aerial
-  // ILLUSTRATION... in the requested style" reads as a repaint instruction, which fights
-  // photo_plan/satellite_overlay's own "stays photographic under any circumstances" style line.
-  // For these two, ask for photographic polish instead — the ground is a photograph, not an
-  // illustration, and never was one.
+  // WHY THIS WAS REWRITTEN: Full Treatment on Sector reverted to Hybrid on almost every attempt.
+  // render-difference.ts's gate (lib/render-difference.ts) needs at least 10% of the COMPARED
+  // pixels (i.e. the ground — the boundary, house, driveway, arrows, labels and legend are all
+  // protect-masked out and excluded from comparison) to change by a visible amount. The OLD wording
+  // here — "POLISH, DO NOT REDESIGN", "keep the ground calm" — asked the model for exactly the kind
+  // of restrained, subtle nudge that a strict-redraw gate is built to reject. It wasn't a broken
+  // pipeline; the prompt's own conservatism and the gate's threshold were fighting each other, and
+  // the gate always won. Fixed the same way buildFinishedSheetPolishPrompt already works for every
+  // other sheet: demand a real, visible ground pass and say plainly that returning it unchanged is
+  // a failure — while still protecting the analytical content by leaving it un-redrawn in words,
+  // since the protect mask enforces that structurally regardless of what the model does.
   const polishClause = isPhotoPreservingStyle(stylePreset)
-    ? `POLISH, DO NOT REDESIGN: improve the photograph's clarity, exposure, contrast and colour, and the analytical marks' hierarchy, line finish, arrow rendering, legend spacing, icon quality and typography. The ground stays a photograph, corrected and crisp — never repainted, never illustrated. Make the analytical marks feel deliberately integrated with the real landscape rather than pasted over it. Keep the ground calm enough that arrows and labels are immediately readable.`
-    : `POLISH, DO NOT REDESIGN: improve the aerial illustration, hierarchy, line finish, arrow rendering, legend spacing, icon quality, typography, contrast and overall visual unity in the requested style. Make the analytical marks feel deliberately integrated with the landscape rather than pasted over it. Keep the ground calm enough that arrows and labels are immediately readable.`;
+    ? `GIVE THE PHOTOGRAPH A REAL, VISIBLE CORRECTION PASS: this is not a subtle nudge. Push exposure, white balance, contrast, dehaze and sharpness hard enough that the ground clearly looks like a different, better photograph — richer greens, cleaner soil colour, real depth in shadowed areas, crisp texture instead of a flat haze. A farmer should be able to tell the difference at a glance without hunting for it. The ground stays a photograph, never repainted or illustrated — but "corrected" here means a strong, confident grade, not a 2% tweak. Alongside that, sharpen the analytical marks' line finish, arrow rendering, legend spacing, icon quality and typography so they read as deliberately integrated with the corrected photograph.`
+    : `REDRAW THE GROUND MATERIALS FOR REAL: this is not a subtle nudge. Give every ground surface — lawn, veld, bare and tilled soil, tracks, paved areas, tree canopies — real, visibly different material and lighting in the requested style: texture, one consistent light direction with real shadow, richer and more varied colour than the supplied draft. RETURNING THE GROUND LOOKING THE SAME IS A FAILED RESULT, and so is a flat colour filter or vignette over the top — a farmer should see a genuinely re-rendered landscape at a glance, not a tint. Alongside that, sharpen the analytical marks' line finish, arrow rendering, legend spacing, icon quality and typography so they read as deliberately integrated with the redrawn ground rather than pasted over it.`;
   const body = [
     `TASK: polish this COMPLETE, already-correct Sector Analysis plan sheet${placeName ? ` for ${placeName}` : ''} into a frame-worthy professional cartographic sheet. The supplied image already contains the final map crop, property geometry, title, labels, arrows, sectors, sun paths, slope direction, legend, north arrow and scale bar.`,
     `USE THE WHOLE INPUT AS THE BLUEPRINT: preserve the same canvas aspect ratio, panel width, map crop, north-up orientation and top-down view. Do not zoom, crop, rotate, recenter, tilt or replace the site.`,
-    `PRESERVE CONTENT: keep every existing arrow's start, end, direction and colour family; keep every sun arc, sector wedge, slope arrow, boundary, house and driveway in the same position. Keep every legend row and map label. Do not add, remove, merge or rename any analytical feature.`,
+    `PRESERVE CONTENT, NOT PIXELS: keep every existing arrow's start, end, direction and colour family; keep every sun arc, sector wedge, slope arrow, boundary, house and driveway in the same position. Keep every legend row and map label. Do not add, remove, merge or rename any analytical feature — but "keep in place" is about geometry and meaning, not about leaving the ground pixels untouched underneath them.`,
     polishClause,
     `NO INVENTION: add no new wind, fire, rain, sun, frost, contour, access, slope or site claim. Add no tree, bed, pond, tank, path, fence or building. Do not infer any new direction from the photograph.`,
+    noZoning,
     `TEXT: copy the supplied wording exactly. Do not paraphrase, translate or add commentary. If a word cannot be rendered confidently, retain the supplied printed text rather than inventing replacement text.`,
-    `FINAL CHECK: this is visibly more polished than the supplied exact sheet, but it is recognisably the same Sector Analysis with the same site, same analytical geometry, same directions, same labels and same legend.`,
+    `FINAL CHECK: place this beside the sheet you were given — if a farmer could not tell within two seconds which one is visibly more polished, the pass has failed. It must still be recognisably the same Sector Analysis: same site, same analytical geometry, same directions, same position, same labels and same legend — just confidently better ground artwork underneath.`,
   ].join('\n\n');
   return `${STYLE_LINES[stylePreset]}\n\n${body}`;
 }
