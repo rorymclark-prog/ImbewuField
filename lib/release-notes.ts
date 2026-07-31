@@ -20,6 +20,10 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '31 July',
     changes: [
+      'Drip all beds in one tap — a line down the centre of each; you add the mainline',
+      'Tidy now squares up a slab or shed you traced by hand',
+      'Legend text is bigger and in one clear typeface on every sheet',
+      'Snap reaches further when nothing is close enough, and says so',
       'Snap to neighbour works — the update notice was sitting on top of its Confirm button',
       'The update notice shrinks out of the way, and you can close it',
       'Zone numbers sit on top of the shapes instead of being buried under them',

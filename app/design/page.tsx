@@ -71,6 +71,8 @@ import {
   type BottomStop, type TopStop, type ChromePref, type DismissibleBand,
 } from '@/lib/design-chrome';
 import { layoutBedBlock, normaliseBedBlockSpec, MIN_BED_COUNT, MAX_BED_COUNT, type BedBlockPlacement, type BedBlockSpec } from '@/lib/bed-block';
+import { dripLinesForBeds, bedDripSummary } from '@/lib/bed-drip';
+import { BED_DEF_IDS } from '@/lib/design-beds-bridge';
 import { tidyOutline, tidyOutlineSummary, type TidyOutlineResult } from '@/lib/tidy-outline';
 import { squareUp, squareUpSummary, type SquareUpResult } from '@/lib/square-up';
 import { type SnapRingKind } from '@/lib/snap-edges';
@@ -786,6 +788,9 @@ function DesignStudioInner() {
   const [editItemId, setEditItemId] = useState<string | null>(null);
 
   const [detectError, setDetectError] = useState<string | null>(null);
+  /** What the last 'Drip all beds' tap did — neutral, not an error, and it must always say
+   *  something, because a button that appears to do nothing reads as broken. */
+  const [dripNote, setDripNote] = useState<string | null>(null);
 
   // Copy/paste clipboard for selected shapes (Cmd/Ctrl+C / +V). Ref, not state — it never needs
   // to trigger a render, and paste reads it synchronously.
@@ -1920,6 +1925,59 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
     if (item) return { feature: null, lineKind: null, defId: item.defId };
     return null;
   }, [canvasState, selectedIds]);
+
+  /**
+   * DRIP DOWN EVERY BED, IN ONE TAP.
+   *
+   * Rory: "when it comes to drip on veg beds i want to be able to auto click a button and auto drip
+   * irrigation is pasted neatly down the centre of each bed, then we add the main pipe etc."
+   *
+   * The laterals are mechanical — one line down the middle of each bed, identical every time, and
+   * a chore to draw twenty of. The mainline is a route across the farm past everything else, which
+   * only the farmer can choose; guessing it would run a pipe through the house. So this does the
+   * chore and stops, and the summary says so.
+   */
+  const dripBeds = useMemo(() => {
+    if (!canvasState) return [];
+    return canvasState.items.flatMap((item) => {
+      if (!(BED_DEF_IDS as readonly string[]).includes(item.defId)) return [];
+      const def = ELEMENTS_BY_ID[item.defId];
+      if (!def) return [];
+      return [{
+        id: item.id,
+        x: item.x,
+        y: item.y,
+        wM: item.wM ?? def.wM,
+        hM: item.hM ?? def.hM,
+        rot: item.rot,
+        round: def.shape !== 'rect',
+        label: item.label,
+      }];
+    });
+  }, [canvasState]);
+
+  const onDripAllBeds = frame && canvasState && dripBeds.length > 0
+    ? () => {
+        const existing = canvasState.lines.filter((l) => l.kind === 'drip').map((l) => ({ points: l.points }));
+        const result = dripLinesForBeds(dripBeds, existing, frame);
+        setDripNote(bedDripSummary(result));
+        if (!result.changed) return;
+        // Drip rides the Water layer. Forcing it on is not a nicety: this app has shipped the
+        // "created, saved, and invisible because the step that made it had its layer off" bug
+        // more than once, and a farmer who presses a button and sees nothing concludes it is
+        // broken rather than hidden.
+        setActiveLayers((prev) => (prev.water ? prev : { ...prev, water: true }));
+        handleChange((prev) => ({
+          ...prev,
+          // ONE commit for every bed, so twenty laterals cost one undo rather than twenty.
+          lines: [
+            ...prev.lines,
+            ...result.lines.map((line) => ({ id: newId(), kind: 'drip' as const, points: [...line.points] })),
+          ],
+          updatedAt: new Date().toISOString(),
+        }));
+      }
+    : null;
 
   // Commit a whole block in ONE handleChange, so seven beds cost one undo, not seven — the same
   // single-commit rule the group angle and group size controls follow.
@@ -3189,6 +3247,25 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             <ChevronRight size={16} style={{ flexShrink: 0 }} />
           </button>
           <SectionClose onClick={() => hideSection('shortcuts')} what="the skip-ahead offer" />
+        </div>
+      )}
+
+      {/* DRIP DOWN EVERY BED — the Water step's one-tap chore button. Lives here, not on Planting,
+          because this is where a farmer is thinking about water, and it is deliberately a plain
+          labelled row rather than another glyph in the crowded tool strip. */}
+      {bottomShow.shortcuts && canvasState && canvasState.step === 'water' && onDripAllBeds && (
+        <div style={{ padding: '6px 12px 0', display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+          <button
+            type="button"
+            onClick={onDripAllBeds}
+            style={{ display: 'flex', alignItems: 'center', gap: 8, minHeight: 40, padding: '6px 14px', borderRadius: 12, border: `1px solid ${OCHRE}`, background: 'rgba(192,122,30,0.10)', color: GREEN, cursor: 'pointer', textAlign: 'left', fontSize: 12.5, flexShrink: 0 }}
+          >
+            <span aria-hidden>💧</span>
+            <span><span style={{ fontWeight: 800 }}>Drip all beds</span> — one line down the centre of each</span>
+          </button>
+          {dripNote && (
+            <span style={{ fontSize: 11.5, color: DARK, opacity: 0.75, flex: 1, minWidth: 0 }}>{dripNote}</span>
+          )}
         </div>
       )}
 
