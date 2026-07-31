@@ -5640,6 +5640,14 @@ function drawSectorAnalysis(
     ctx.lineTo(headBaseX - nx * shaftHalf, headBaseY - ny * shaftHalf);
     ctx.lineTo(tailX - nx * shaftHalf, tailY - ny * shaftHalf);
     ctx.closePath();
+    // Dark halo outline FIRST — a 30%-alpha fill and a 76%-alpha edge were built for a flat tint,
+    // and disappear into a busy AI-painted ground exactly the way the text labels used to. Traced
+    // on the same closed path as the real stroke below, so it reads as one outlined arrow, not a
+    // second shape.
+    ctx.globalAlpha = 0.55;
+    ctx.strokeStyle = 'rgba(6,10,8,0.9)';
+    ctx.lineWidth = Math.max(2, W * 0.0015) + Math.max(3, W * 0.0022);
+    ctx.stroke();
     ctx.globalAlpha = 0.3;
     ctx.fillStyle = color;
     ctx.fill();
@@ -5753,6 +5761,18 @@ function drawSectorAnalysis(
     const startAngle = bearingToCanvasAngle(path.sunriseAzDeg);
     const endAngle = bearingToCanvasAngle(path.sunsetAzDeg);
     ctx.save();
+    // A plain coloured stroke was the whole problem: Rory, on a real Hybrid render, "I can't see
+    // things — the blue, the orange, the sun path." Pale gold on an AI-painted ground that can be
+    // any tone at all is the same failure the labels had before their solid plate — this is that
+    // same fix applied to a LINE instead of text: a dark halo stroke first, the real colour on top.
+    if (externalLegend) {
+      ctx.strokeStyle = 'rgba(6,10,8,0.55)';
+      ctx.lineWidth = Math.max(2.5, W * 0.0022) + Math.max(3, W * 0.0026);
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, startAngle, endAngle, sweepNorth);
+      ctx.stroke();
+    }
     ctx.strokeStyle = color;
     ctx.lineWidth = Math.max(2.5, W * 0.0022);
     ctx.lineCap = 'round';
@@ -5903,6 +5923,36 @@ function drawSectorAnalysis(
     if (bnd.length >= 3) {
       blueprintRing(ctx, bnd, px, py);
       ctx.clip();
+    }
+    // Same fix as the sun arc and the wind arrows: a plain blue line at 76% alpha was built for a
+    // flat tint and vanishes into a busy AI-painted ground. One dark halo pass under the real line
+    // and arrowhead first — same path, wider, dark — then the actual colour on top.
+    if (externalLegend) {
+      ctx.strokeStyle = 'rgba(6,10,8,0.5)';
+      ctx.fillStyle = 'rgba(6,10,8,0.5)';
+      ctx.lineWidth = Math.max(4, W * 0.0048) + Math.max(3, W * 0.0026);
+      ctx.setLineDash(model.water.indicative ? [8, 6] : []);
+      ctx.lineCap = 'round';
+      for (const offset of slopeOffsets) {
+        const wsx = cx + dn[0] * siteR * startAlong + cross[0] * siteR * offset;
+        const wsy = cy + dn[1] * siteR * startAlong + cross[1] * siteR * offset;
+        const wex = cx + dn[0] * siteR * endAlong + cross[0] * siteR * offset;
+        const wey = cy + dn[1] * siteR * endAlong + cross[1] * siteR * offset;
+        ctx.beginPath();
+        ctx.moveTo(wsx, wsy);
+        ctx.lineTo(wex, wey);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        const wang = Math.atan2(wey - wsy, wex - wsx);
+        const wah = Math.max(13, W * 0.016) + Math.max(3, W * 0.0026);
+        ctx.beginPath();
+        ctx.moveTo(wex, wey);
+        ctx.lineTo(wex - wah * Math.cos(wang - 0.42), wey - wah * Math.sin(wang - 0.42));
+        ctx.lineTo(wex - wah * Math.cos(wang + 0.42), wey - wah * Math.sin(wang + 0.42));
+        ctx.closePath();
+        ctx.fill();
+        ctx.setLineDash(model.water.indicative ? [8, 6] : []);
+      }
     }
     ctx.strokeStyle = '#3A8EC4';
     ctx.fillStyle = '#3A8EC4';
@@ -8335,6 +8385,16 @@ export default function DesignGlossy({
   // Unlike the ref, this state also guarantees the switch-to-polish effect runs after the async
   // completion handler has stashed the image.
   const [hybridHandoffReady, setHybridHandoffReady] = useState(false);
+  // The Hybrid stage's OWN gallery entry id, kept past that job's subscription (which unmounts
+  // when the polish stage enqueues its own separate job — see the queueJobId effect). Full
+  // Treatment paid for a genuinely different Hybrid than a farmer already had, then the polish
+  // pass came back too similar to keep — the app correctly reverted to protect against paying for
+  // a copy, but said so only in a toast in the compose panel. Rory, looking at this exact saved
+  // Hybrid sheet later in the gallery, with no idea why it wasn't Full Treatment: "I'm sure it's
+  // just stuck on hybrid." It was never stuck — the outcome just never reached the one place he
+  // actually went to check it. Set when the Hybrid stage's own entry is pushed; consumed (and
+  // cleared) if the later polish pass is rejected, so the SAME saved sheet carries the explanation.
+  const hybridGalleryIdRef = useRef<string | null>(null);
   /** The image the paid polish pass was handed, kept so its output can be scored against it. */
   const polishInputRef = useRef<string | null>(null);
   /** Plain-English note when a paid pass came back with nothing new. Null when it went fine. */
@@ -10563,6 +10623,24 @@ export default function DesignGlossy({
                 // Keep the Hybrid on screen and add nothing to the gallery. A third near-identical
                 // thumbnail is exactly what made the gallery unreadable, and presenting a copy as a
                 // paid result is the app claiming something it did not get.
+                //
+                // But say so on the Hybrid entry itself, not only in a toast the farmer may never
+                // see again. Rory, looking at exactly this saved sheet later: "I'm sure it's just
+                // stuck on hybrid" — it wasn't stuck, Full Treatment ran and correctly reverted, but
+                // that outcome lived only in a dismissible banner in the compose panel. The gallery
+                // caption is the one place he actually goes to check a result, so it has to carry
+                // the explanation.
+                if (hybridGalleryIdRef.current) {
+                  const revertedId = hybridGalleryIdRef.current;
+                  const note = ' — Full Treatment was tried: the 2nd AI pass came back too similar to keep, so this Hybrid was kept instead.';
+                  setGallery((prev) => prev.map((g) => {
+                    if (g.id !== revertedId || g.label.includes('Full Treatment was tried')) return g;
+                    const amended = { ...g, label: `${g.label}${note}` };
+                    void saveSheet({ ...amended, siteId: state.siteId, at: new Date().toISOString(), planVersion: PLAN_VERSION });
+                    return amended;
+                  }));
+                  hybridGalleryIdRef.current = null;
+                }
                 setLockedPolishStage(null);
                 setHybridHandoffReady(false);
                 rejected.add(sheet.key);
@@ -10600,6 +10678,9 @@ export default function DesignGlossy({
                   showcase,
                 },
               );
+              // Only Full Treatment's own Hybrid stage can later need amending (see
+              // hybridGalleryIdRef above) — a plain Hybrid-only save has no polish stage to reject.
+              if (isHybridResult && polishAfterHybridRef.current) hybridGalleryIdRef.current = lastAssembledGalleryId;
               assembled.add(sheet.key);
               if (locked) lockedAssembled += 1;
             } catch (e) {
