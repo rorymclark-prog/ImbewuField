@@ -63,7 +63,7 @@ import {
 import { type BaseAlignment } from '@/lib/base-photo-align';
 import ChromeHandle from '@/components/design/ChromeHandle';
 import {
-  BOTTOM_STOPS, TOP_STOPS, CHROME_PREF_KEY, bottomVisibility, topVisibility, hiddenCount,
+  BOTTOM_STOPS, TOP_STOPS, CHROME_PREF_KEY, bottomVisibility, topVisibility,
   persistableChrome, restoreStop, type BottomStop, type TopStop, type ChromePref,
 } from '@/lib/design-chrome';
 import { layoutBedBlock, normaliseBedBlockSpec, MIN_BED_COUNT, MAX_BED_COUNT, type BedBlockPlacement, type BedBlockSpec } from '@/lib/bed-block';
@@ -2658,7 +2658,6 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               stops={TOP_STOPS}
               onChange={setTopStop}
               invert
-              hidden={hiddenCount(topShow)}
               label="Show or hide the steps and header"
             />
           </span>
@@ -3172,14 +3171,14 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
       {!topShow.stepNav && (
         <div style={{ position: 'fixed', top: 'calc(env(safe-area-inset-top, 0px) + 4px)', left: 0, right: 0, display: 'flex', justifyContent: 'center', zIndex: 30, pointerEvents: 'none' }}>
           <span style={{ pointerEvents: 'auto', background: PAPER, borderRadius: 999, padding: '0 12px', boxShadow: '0 4px 14px -6px rgba(0,0,0,0.35)', border: '1px solid #E2D8C4' }}>
-            <ChromeHandle stop={topStop} stops={TOP_STOPS} onChange={setTopStop} invert hidden={hiddenCount(topShow)} label="Show the steps again" />
+            <ChromeHandle stop={topStop} stops={TOP_STOPS} onChange={setTopStop} invert label="Show the steps again" />
           </span>
         </div>
       )}
       {!bottomShow.tools && (
         <div style={{ position: 'fixed', bottom: 'calc(env(safe-area-inset-bottom, 0px) + 4px)', left: 0, right: 0, display: 'flex', justifyContent: 'center', zIndex: 30, pointerEvents: 'none' }}>
           <span style={{ pointerEvents: 'auto', background: PAPER, borderRadius: 999, padding: '0 12px', boxShadow: '0 4px 14px -6px rgba(0,0,0,0.35)', border: '1px solid #E2D8C4' }}>
-            <ChromeHandle stop={bottomStop} stops={BOTTOM_STOPS} onChange={setBottomStop} hidden={hiddenCount(bottomShow)} label="Show the tools again" />
+            <ChromeHandle stop={bottomStop} stops={BOTTOM_STOPS} onChange={setBottomStop} label="Show the tools again" />
           </span>
         </div>
       )}

@@ -48,7 +48,7 @@ import { CATEGORY_META, CATEGORY_STEP, ELEMENT_CATALOG, GROUND_FEATURES, ZONE_DE
 import { COMPASS16_ORDER, isCompassDirection16, type LocalWindObservation } from '@/lib/local-wind';
 import { usePhoneViewport } from '@/lib/use-phone-viewport';
 import ChromeHandle from '@/components/design/ChromeHandle';
-import { BOTTOM_STOPS, bottomVisibility, hiddenCount, type BottomStop } from '@/lib/design-chrome';
+import { BOTTOM_STOPS, bottomVisibility, type BottomStop } from '@/lib/design-chrome';
 import { formatDesignTranslation } from '@/lib/design-studio-i18n';
 import { useLanguage } from '@/lib/i18n';
 import LessonLink from './LessonLink';
@@ -1588,7 +1588,6 @@ export default function DesignPalette({
           stop={bottomStop}
           stops={BOTTOM_STOPS}
           onChange={onBottomStopChange}
-          hidden={hiddenCount(bottomVisibility(bottomStop))}
           label={t(sheetOpen ? 'designPaletteCollapse' : 'designPaletteExpand')}
         />
         {/* Tool row — always present regardless of open/collapsed, and never inside the
@@ -1646,7 +1645,6 @@ export default function DesignPalette({
         stop={bottomStop}
         stops={BOTTOM_STOPS}
         onChange={onBottomStopChange}
-        hidden={hiddenCount(bottomVisibility(bottomStop))}
         label={t(sheetOpen ? 'designPaletteCollapse' : 'designPaletteExpand')}
       />
       {renderToolRow()}

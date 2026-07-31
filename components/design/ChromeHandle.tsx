@@ -22,7 +22,6 @@ export default function ChromeHandle<T extends string>({
   stops,
   onChange,
   invert = false,
-  hidden,
   label,
 }: {
   stop: T;
@@ -30,8 +29,6 @@ export default function ChromeHandle<T extends string>({
   onChange: (next: T) => void;
   /** Top edge: dragging DOWN opens. Both handles read as "drag the edge, not the panel". */
   invert?: boolean;
-  /** How many bands are folded away right now — shown so "where did it go" has an on-screen answer. */
-  hidden: number;
   label: string;
 }) {
   const dragRef = useRef<{ y: number; id: number } | null>(null);
@@ -77,25 +74,21 @@ export default function ChromeHandle<T extends string>({
         cursor: 'grab',
       }}
     >
-      <span aria-hidden style={{ width: 36, height: 5, borderRadius: 3, background: 'rgba(11,18,11,0.3)' }} />
-      <span aria-hidden style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>
-        {stops.map((s, i) => (
-          <span
-            key={s}
-            style={{
-              width: i === index ? 7 : 5,
-              height: i === index ? 7 : 5,
-              borderRadius: '50%',
-              background: i === index ? 'rgba(11,18,11,0.68)' : 'rgba(11,18,11,0.22)',
-            }}
-          />
-        ))}
-      </span>
-      {hidden > 0 && (
-        <span style={{ fontSize: 11, fontWeight: 600, color: 'rgba(11,18,11,0.5)' }}>
-          {hidden} hidden
-        </span>
-      )}
+      {/* JUST A HANDLE. It carried a tick per stop and a "3 hidden" count, and the verdict on
+          seeing it was "i dont understand this" — then, plainly: "cant we just have a handle its
+          more intuitive". A grabber pill is one of the few affordances that needs no explanation
+          in any of eleven languages: it says "drag me" by shape alone. The stops still exist
+          underneath; the farmer just does not have to read a diagram to use them. */}
+      <span
+        aria-hidden
+        style={{
+          width: 44,
+          height: 5,
+          borderRadius: 3,
+          // Solid enough to read as a grip rather than a divider line, on paper and over imagery.
+          background: 'rgba(11,18,11,0.34)',
+        }}
+      />
     </div>
   );
 }

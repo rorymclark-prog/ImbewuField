@@ -1895,13 +1895,50 @@ export default function DesignCanvas({
   const effectiveScale = view.k * renderScale || 1;
   const worldPx = (screenPx: number) => screenPx / effectiveScale;
   const visibleScreenR = clamp(Math.min(containerPx, containerHeightPx) * 0.018, 5, 8); // narrower canvas → smaller dot
+  // A DESTRUCTIVE CONTROL FIRES ON A TAP, NEVER ON TOUCH-DOWN. Deleting on pointerdown means the
+  // first instant of a DRAG destroys the thing being dragged — which is how a farmer loses a
+  // corner while trying to move it. This waits for the pointer to come back up in roughly the
+  // same place; any real movement is a drag and cancels the delete outright.
+  const tapOnly = (run: () => void) => {
+    let from: { x: number; y: number; id: number } | null = null;
+    return {
+      onPointerDown: (e: React.PointerEvent) => {
+        e.stopPropagation();
+        from = { x: e.clientX, y: e.clientY, id: e.pointerId };
+      },
+      onPointerUp: (e: React.PointerEvent) => {
+        e.stopPropagation();
+        const f = from;
+        from = null;
+        if (!f || f.id !== e.pointerId) return;
+        if (Math.hypot(e.clientX - f.x, e.clientY - f.y) > 6) return;
+        run();
+      },
+      onPointerCancel: () => { from = null; },
+    };
+  };
+
   const vertexHitR = worldPx(20); // ~40px tappable diameter, always
   const vertexVisibleR = worldPx(visibleScreenR);
   const vertexStrokeW = worldPx(2);
   const insertHitR = worldPx(20);
   const insertVisibleR = worldPx(Math.max(visibleScreenR - 1, 4));
-  const deleteHitR = worldPx(20);
+  // WHY THIS IS SMALLER THAN THE VERTEX AND FURTHER FROM IT.
+  //
+  // The delete badge used to have a 20px hit radius sitting 13px from a vertex whose own hit
+  // radius is also 20px — two circles that overlap almost completely. The badge is painted after
+  // the vertex, so it won every contested tap, and it fired on pointerDOWN, so even beginning to
+  // DRAG a corner destroyed it instead (Rory: "i cant tell you how many times i have deleted a
+  // point because the minus sign is so close to the point").
+  //
+  // Moving a corner is the common action and deleting one is rare and destructive, so the sizes
+  // now reflect that: the badge is smaller, pushed out to DELETE_BADGE_OFFSET, painted BENEATH
+  // the vertex, and only fires on a stationary tap.
+  const deleteHitR = worldPx(13);
   const deleteVisibleR = worldPx(Math.max(visibleScreenR + 1, 6));
+  /** Diagonal offset of a delete badge from its vertex. At 13 the two hit targets were the same
+   *  circle; at 24 the badge clears a 20px vertex radius with room to spare. */
+  const DELETE_BADGE_OFFSET = 24;
   const itemActionHitR = worldPx(20);
   const itemActionR = worldPx(12);
   const itemActionStrokeW = worldPx(1.5);
@@ -2580,7 +2617,7 @@ export default function DesignCanvas({
                         than the 3 points a polygon needs, so it can never be made degenerate. */}
                     {effectivePoints.length > 3 &&
                       effectivePoints.map(([x, y], i) => (
-                        <g key={`del-${i}`} transform={`translate(${(x * imgW + worldPx(13)).toFixed(1)},${(y * imgH - worldPx(13)).toFixed(1)})`}>
+                        <g key={`del-${i}`} transform={`translate(${(x * imgW + worldPx(DELETE_BADGE_OFFSET)).toFixed(1)},${(y * imgH - worldPx(DELETE_BADGE_OFFSET)).toFixed(1)})`}>
                           {/* Invisible enlarged hit circle — the visible badge alone (used to be
                               its only tap target) is well under the ~40px mobile touch-target
                               floor once it's allowed to shrink for visibility (see worldPx). */}
@@ -2588,10 +2625,7 @@ export default function DesignCanvas({
                             r={deleteHitR}
                             fill="transparent"
                             style={{ cursor: 'pointer', touchAction: 'none', pointerEvents: 'fill' }}
-                            onPointerDown={(e) => {
-                              e.stopPropagation();
-                              removeZoneVertex(z.id, i);
-                            }}
+                            {...tapOnly(() => removeZoneVertex(z.id, i))}
                           />
                           <circle r={deleteVisibleR} fill="#B53A3A" stroke="#FBF6EC" strokeWidth={vertexStrokeW * 0.6} pointerEvents="none" />
                           <text textAnchor="middle" dominantBaseline="central" fontSize={worldPx(11)} fontWeight={700} fill="#FBF6EC" pointerEvents="none">
@@ -2858,15 +2892,12 @@ export default function DesignCanvas({
                         minimum a line needs to stay a line. */}
                     {effectivePoints.length > 2 &&
                       effectivePoints.map(([x, y], i) => (
-                        <g key={`del-${i}`} transform={`translate(${(x * imgW + worldPx(13)).toFixed(1)},${(y * imgH - worldPx(13)).toFixed(1)})`}>
+                        <g key={`del-${i}`} transform={`translate(${(x * imgW + worldPx(DELETE_BADGE_OFFSET)).toFixed(1)},${(y * imgH - worldPx(DELETE_BADGE_OFFSET)).toFixed(1)})`}>
                           <circle
                             r={deleteHitR}
                             fill="transparent"
                             style={{ cursor: 'pointer', touchAction: 'none', pointerEvents: 'fill' }}
-                            onPointerDown={(e) => {
-                              e.stopPropagation();
-                              removeLineVertex(line.id, i);
-                            }}
+                            {...tapOnly(() => removeLineVertex(line.id, i))}
                           />
                           <circle r={deleteVisibleR} fill="#B53A3A" stroke="#FBF6EC" strokeWidth={vertexStrokeW * 0.6} pointerEvents="none" />
                           <text textAnchor="middle" dominantBaseline="central" fontSize={worldPx(11)} fontWeight={700} fill="#FBF6EC" pointerEvents="none">
