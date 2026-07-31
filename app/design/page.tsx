@@ -176,6 +176,11 @@ const DARK = '#0B120B';
 
 const AREA_FILL_PREF_KEY = 'imbewu_design_area_fill_v1';
 
+/** How far Snap will reach when its normal, deliberately-short reach finds nothing. Four metres
+ *  is a gap a farmer can see on screen and judge for themselves — and it is only ever applied
+ *  behind a preview they have to confirm. */
+const SNAP_REACH_M = 4;
+
 const MAX_UNDO = 25;
 
 /**
@@ -644,7 +649,7 @@ function DesignStudioInner() {
   // Batch Snap preview — pinned to the exact selected ring set. The pure orchestrator keeps each
   // vetoed ring byte-identical while letting other safe rings move, and confirmation still enters
   // the normal history path once for the whole batch.
-  const [snapPreview, setSnapPreview] = useState<{ ids: string[]; result: BulkSnapResult } | null>(null);
+  const [snapPreview, setSnapPreview] = useState<{ ids: string[]; result: BulkSnapResult; reached?: boolean } | null>(null);
   useEffect(() => {
     if (!snapPreview) return;
     const selectedSet = new Set(selectedIds);
@@ -2192,14 +2197,27 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
   // Tapping Snap computes only. The original design stays untouched until the single Confirm.
   const onSnapSelected = snapSelectionIsRings && snapSelectionHasMovableRing && frame && canvasState
     ? () => {
-        const result = snapSelectedRings(
-          selectedZonesForSnap.map(toBulkSnapRing),
-          canvasState.zones.map(toBulkSnapRing),
-          { frame },
-        );
+        const rings = selectedZonesForSnap.map(toBulkSnapRing);
+        const all = canvasState.zones.map(toBulkSnapRing);
+        const near = snapSelectedRings(rings, all, { frame });
+        // REACHING FURTHER, ON PURPOSE (Rory: "ok it doesnt work if its to far").
+        //
+        // The default reach is deliberately short — 1.5 m on a plain zone ring, 0.5 m on traced
+        // ground — because two shapes traced 3 m apart were traced that way by a real finger and
+        // closing that silently would be the app editing the farm. But refusing and saying nothing
+        // useful is its own failure: the gap the farmer wants closed is usually the one just
+        // outside the default, and "nothing happened" gives them nowhere to go.
+        //
+        // So when the short reach finds nothing, try a long one. If THAT finds something it is
+        // offered as a normal preview with the distance named in the sentence, and it still only
+        // happens on the farmer's confirm tap. Nothing is snapped further than they can see.
+        const reached = near.changed
+          ? null
+          : snapSelectedRings(rings, all, { frame, toleranceM: SNAP_REACH_M });
+        const result = near.changed ? near : (reached?.changed ? reached : near);
         setTidyPreview(null); // only one pending preview action at a time
         setCleanupPreview(null);
-        setSnapPreview({ ids: [...selectedIds], result });
+        setSnapPreview({ ids: [...selectedIds], result, reached: !near.changed && !!reached?.changed });
       }
     : null;
   // Confirm commits through handleChange — the SAME onChange/undo path onConfirmTidy (and every
@@ -2867,7 +2885,9 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
                 snapPreview
                   ? {
                       rings: snapPreview.result.updates.map(({ id, points }) => ({ id, points })),
-                      summary: snapSelectedRingsSummary(snapPreview.result),
+                      summary: snapPreview.reached
+                        ? `Nothing was within the usual reach, so this reaches up to ${SNAP_REACH_M} m. ${snapSelectedRingsSummary(snapPreview.result)}`
+                        : snapSelectedRingsSummary(snapPreview.result),
                       canConfirm: snapPreview.result.changed,
                     }
                   : null
