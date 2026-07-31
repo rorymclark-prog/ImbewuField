@@ -164,23 +164,82 @@ export default function SectorOverlay({ model, imgW: W, imgH: H, boundary }: Sec
     }
   }
 
-  // 3. SUN — a gold arc across the equator-facing sky (north for SH) + apex dot + midday ray.
+  // 3. SUN — TWO REAL PATHS, AT THIS LATITUDE'S REAL ANGLES.
+  //
+  // Rory: "sector sun azimuth should have the winter and also show sun angle according to global
+  // map position." He was right twice over. This drew ONE generic half-circle from due east to due
+  // west with a "SUN" label — no season, and no angle at all. (The SUMMER/WINTER labels he could
+  // see belong to the WIND arrows.) So the diagram said the same thing at the equator and at the
+  // Cape, which is the one thing a sector diagram exists not to do.
+  //
+  // Everything needed was already computed and thrown away: lib/solar.ts derives, from latitude
+  // and the Earth's obliquity, each season's sunrise and sunset azimuth, its noon ALTITUDE, and
+  // the shadow ratio that follows from it. Now it is drawn.
+  //
+  // Each season is one curve from its true sunrise bearing to its true sunset bearing, with the
+  // apex raised in proportion to that season's noon altitude — so a Highveld winter sun reads as
+  // a low flat path and midsummer as a high one, and the difference between them is the thing you
+  // are actually designing around. A quadratic Bézier through a computed apex: for a quadratic the
+  // curve's own midpoint is (P0 + 2C + P2)/4, so C = 2·apex − (P0 + P2)/2 puts the apex exactly
+  // where the altitude says it should be.
   const sunR = R + arrowLen * 0.45;
-  const sweep = isSH ? 1 : 0; // SH bulges over the TOP (north); NH over the bottom (south)
-  const apexY = isSH ? cy - sunR : cy + sunR;
-  els.push(
-    <path
-      key="sun-arc"
-      d={`M ${cx - sunR} ${cy} A ${sunR} ${sunR} 0 0 ${sweep} ${cx + sunR} ${cy}`}
-      fill="none"
-      stroke={SUN}
-      strokeWidth={Math.max(2.5, W * 0.005)}
-      strokeLinecap="round"
-    />,
-  );
-  els.push(<circle key="sun-apex" cx={cx} cy={apexY} r={Math.max(6, W * 0.011)} fill={SUN} />);
+  const sunSeasons = [
+    { key: 'summer', path: model.solar.summer, word: t('designSectorSummer') },
+    { key: 'winter', path: model.solar.winter, word: t('designSectorWinter') },
+  ] as const;
+  for (const { key, path, word } of sunSeasons) {
+    // A polar site can have no sunrise at all in one season — draw nothing rather than a guess.
+    if (path.sunriseAzDeg == null || path.sunsetAzDeg == null) continue;
+    const rise = bearingToUnitVector(path.sunriseAzDeg);
+    const set = bearingToUnitVector(path.sunsetAzDeg);
+    const p0 = [cx + rise[0] * sunR, cy + rise[1] * sunR];
+    const p2 = [cx + set[0] * sunR, cy + set[1] * sunR];
+    const lift = sunR * Math.max(0.12, Math.min(1, path.noonAltitudeDeg / 90));
+    const apex = [cx, isSH ? cy - lift : cy + lift];
+    const ctrl = [2 * apex[0] - (p0[0] + p2[0]) / 2, 2 * apex[1] - (p0[1] + p2[1]) / 2];
+    const winter = key === 'winter';
+    els.push(
+      <path
+        key={`sun-arc-${key}`}
+        d={`M ${p0[0].toFixed(1)} ${p0[1].toFixed(1)} Q ${ctrl[0].toFixed(1)} ${ctrl[1].toFixed(1)} ${p2[0].toFixed(1)} ${p2[1].toFixed(1)}`}
+        fill="none"
+        stroke={SUN}
+        strokeWidth={Math.max(winter ? 2 : 2.8, W * (winter ? 0.0038 : 0.005))}
+        strokeLinecap="round"
+        // The winter path is dashed as well as lower, so the two are told apart by shape and not
+        // by thickness alone — the first thing to go in direct sunlight on a phone.
+        strokeDasharray={winter ? '10 7' : undefined}
+        opacity={winter ? 0.85 : 1}
+      />,
+    );
+    els.push(<circle key={`sun-apex-${key}`} cx={apex[0]} cy={apex[1]} r={Math.max(winter ? 4 : 6, W * (winter ? 0.008 : 0.011))} fill={SUN} />);
+    // The altitude IS the label. A season word alone repeats what the two curves already show;
+    // "39°" is the number you use to work out whether that tree shades the beds in June.
+    els.push(label(
+      `sun-lbl-${key}`,
+      apex[0],
+      apex[1] + (isSH ? -1 : 1) * rowH * 0.75,
+      `${word.toUpperCase()} ${Math.round(path.noonAltitudeDeg)}°`,
+      SUN,
+    ));
+  }
   arrow('sun-ray', bearingToUnitVector(isSH ? 0 : 180), SUN, Math.max(3, W * 0.0045), undefined);
-  els.push(label('sun-lbl', cx, isSH ? cy - sunR - rowH * 0.7 : cy + sunR + rowH * 0.7, t('designSectorSun'), SUN));
+  // THE SHADOW RATIO, which is the altitude made useful: at the winter solstice a vertical metre
+  // throws this many metres of shadow at noon. It is the number that decides where a shade tree
+  // may stand without taking the winter sun off the beds — and it is the reason the altitude is
+  // worth drawing at all.
+  {
+    const r = model.solar.winter.shadowRatio;
+    if (r != null && Number.isFinite(r) && r > 0 && r < 20) {
+      els.push(label(
+        'sun-shadow',
+        cx,
+        isSH ? cy - sunR - rowH * 1.7 : cy + sunR + rowH * 1.7,
+        formatDesignTranslation(t('designSectorWinterShadow'), { ratio: r.toFixed(1) }),
+        SUN,
+      ));
+    }
+  }
 
   // 4. WIND — summer + winter arrows entering from where each wind blows FROM.
   const windWidth = (spd?: number) => Math.max(2.2, (2 + Math.min(spd ?? 3, 8) * 0.5) * (W / 700));

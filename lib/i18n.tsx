@@ -266,6 +266,7 @@ const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   designSectorWest: 'W',
   designSectorFire: 'FIRE',
   designSectorSun: 'SUN',
+  designSectorWinterShadow: 'Midwinter noon shadow ×{ratio}',
   designSectorSummer: 'SUMMER',
   designSectorWinter: 'WINTER',
   designSectorDownhill: 'DOWNHILL',

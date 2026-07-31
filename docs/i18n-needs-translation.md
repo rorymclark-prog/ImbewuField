@@ -124,7 +124,7 @@ Lesson chrome:
 
 Sector overlay and summary:
 `designSectorNorth`, `designSectorSouth`, `designSectorEast`, `designSectorWest`,
-`designSectorFire`, `designSectorSun`, `designSectorSummer`, `designSectorWinter`,
+`designSectorFire`, `designSectorSun`, `designSectorWinterShadow`, `designSectorSummer`, `designSectorWinter`,
 `designSectorDownhill`, `designSectorDownhillApprox`, `designSectorFrost`,
 `designSectorSeasonWind`, `designSectorDirectionNorth`, `designSectorDirectionNorthEast`,
 `designSectorDirectionEast`, `designSectorDirectionSouthEast`,

@@ -256,6 +256,7 @@ export const DESIGN_STUDIO_REST_KEYS = {
   sectorWest: 'designSectorWest',
   sectorFire: 'designSectorFire',
   sectorSun: 'designSectorSun',
+  sectorWinterShadow: 'designSectorWinterShadow',
   sectorSummer: 'designSectorSummer',
   sectorWinter: 'designSectorWinter',
   sectorDownhill: 'designSectorDownhill',
