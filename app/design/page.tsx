@@ -72,6 +72,7 @@ import {
 } from '@/lib/design-chrome';
 import { layoutBedBlock, normaliseBedBlockSpec, MIN_BED_COUNT, MAX_BED_COUNT, type BedBlockPlacement, type BedBlockSpec } from '@/lib/bed-block';
 import { tidyOutline, tidyOutlineSummary, type TidyOutlineResult } from '@/lib/tidy-outline';
+import { squareUp, squareUpSummary, type SquareUpResult } from '@/lib/square-up';
 import { type SnapRingKind } from '@/lib/snap-edges';
 import {
   snapSelectedRings,
@@ -628,7 +629,7 @@ function DesignStudioInner() {
   // remote edit that removes it can be detected and the stale preview dropped (see the effect
   // below). Never written to directly outside onTidySelected/onConfirmTidy/onCancelTidy/this
   // cleanup effect.
-  const [tidyPreview, setTidyPreview] = useState<{ id: string; kind: 'zone' | 'line'; result: TidyOutlineResult } | null>(null);
+  const [tidyPreview, setTidyPreview] = useState<{ id: string; kind: 'zone' | 'line'; result: TidyOutlineResult; squared?: SquareUpResult | null } | null>(null);
   useEffect(() => {
     if (!tidyPreview) return;
     const stillSelected = selectedId === tidyPreview.id;
@@ -2120,9 +2121,31 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
     ? () => {
         const kind: 'zone' | 'line' = selectedZoneForTidy ? 'zone' : 'line';
         const shapePoints = selectedZoneForTidy ? selectedZoneForTidy.points : selectedLineForTidy!.points;
-        const result = tidyOutline(shapePoints, { frame, closed: kind === 'zone' });
+        const tidied = tidyOutline(shapePoints, { frame, closed: kind === 'zone' });
+        // …AND THEN SQUARE IT (Rory: "i think tidy option should also work on making something
+        // square — it's difficult to get things square or rectangular by inserting points").
+        // One button, two operations, in the order that makes both work: dropping the redundant
+        // points first means the squaring sees the walls the farmer meant rather than a wall
+        // broken into three near-collinear fragments that each snap somewhere slightly different.
+        //
+        // Only rings, and only rings that were ALREADY nearly rectilinear — squareUp declines a
+        // contour or an organic boundary itself, so a swale can be tidied without being flattened
+        // into a polygon of right angles. Everything squareUp does is bounded and reversible, and
+        // it hands back the array it was given when it declines, so this composes safely.
+        const base = tidied.changed ? tidied.points : shapePoints;
+        const squared = kind === 'zone' ? squareUp(base, { frame }) : null;
+        const result = squared?.changed
+          ? {
+              ...tidied,
+              points: squared.points,
+              changed: true,
+              // The farmer sees both halves of what one tap did, in the order it happened.
+              reason: tidied.reason,
+              maxMovedM: Math.max(tidied.maxMovedM, squared.maxMovedM),
+            }
+          : tidied;
         setSnapPreview(null); // only one pending preview action at a time
-        setTidyPreview({ id: selectedId!, kind, result });
+        setTidyPreview({ id: selectedId!, kind, result, squared: squared?.changed ? squared : null });
       }
     : null;
   // Confirm commits through handleChange — the SAME onChange/undo path every other edit in this
@@ -2828,7 +2851,12 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
                   ? {
                       kind: tidyPreview.kind,
                       tidiedPoints: tidyPreview.result.points,
-                      summary: tidyOutlineSummary(tidyPreview.result),
+                      // Both halves, in the order they happened, so "Tidy" never does something
+                      // the sentence under it did not mention.
+                      summary: [
+                        tidyPreview.result.removed > 0 ? tidyOutlineSummary(tidyPreview.result) : null,
+                        tidyPreview.squared ? squareUpSummary(tidyPreview.squared) : null,
+                      ].filter(Boolean).join(' ') || tidyOutlineSummary(tidyPreview.result),
                       canConfirm: tidyPreview.result.changed,
                     }
                   : null

@@ -37,6 +37,58 @@ export interface CanvasFrame {
   underlayDataUrl?: string | null;
 }
 
+/**
+ * EXISTING OR PROPOSED — the one distinction a plan lives or dies on.
+ *
+ * Rory: "we need to audit how to handle structures new and old… my thoughts is that there is a
+ * big overlap but both can belong to different layers? new and old structures basically? so
+ * duplicate tools can open in both but they're recorded under different labels, for example
+ * existing fence versus new fence around a field"; then, decisively: "even existing water tanks
+ * for example etc etc must all be there".
+ *
+ * He is right about the distinction and I think wrong about duplicating the tools, for three
+ * reasons:
+ *
+ * 1. IT IS NOT A STRUCTURES PROBLEM. An existing orchard, an existing swale, an existing tank and
+ *    an existing fence are all the same question. Duplicating the structures catalog would answer
+ *    it for structures and leave every other layer as it was.
+ *
+ * 2. TWO CATALOGS DRIFT. This repo has already been bitten by exactly that: an audit of its plant
+ *    data found five separate datasets describing overlapping plants, none of them agreeing on
+ *    which fields exist. A parallel "existing" catalog would be the sixth.
+ *
+ * 3. THE APP ALREADY HAS THIS CONCEPT — badly. Right now "existing" is inferred from WHICH STEP
+ *    something was drawn on: the Base step traces what is already there, so its ground features
+ *    are treated as existing fabric (the render prompt even says so: "EXISTING SITE FABRIC — WHAT
+ *    IS ALREADY THERE, NOT PART OF THIS DESIGN… redrawn, never grown"). That inference is exactly
+ *    why there is no way to draw an existing fence: the fence tool lives on a later step, so the
+ *    only thing it can produce is a proposal.
+ *
+ * So it is ONE FIELD on everything, not two of every tool. What that unlocks beyond the label:
+ * a bill of quantities that prices the work rather than the farm (costing a fence that is already
+ * standing is not a rounding error, it is a wrong number in front of a funder), an implementation
+ * schedule that only schedules what is not built, and a monitoring sheet that finally has a real
+ * baseline to diff against.
+ *
+ * Undefined is not "unknown" — it is every design saved before this existed, and it has to keep
+ * meaning what it meant. statusOf() resolves it the way the app already behaved: traced ground
+ * fabric reads as existing, everything else as proposed.
+ */
+export type ElementStatus = 'existing' | 'proposed';
+
+/** What this shape is, honouring saved designs that predate the field. */
+export function statusOf(shape: { status?: ElementStatus; feature?: GroundFeatureKind }): ElementStatus {
+  if (shape.status === 'existing' || shape.status === 'proposed') return shape.status;
+  // A traced ground/built feature is, by the definition of the step that draws it, already there.
+  return shape.feature ? 'existing' : 'proposed';
+}
+
+/** What a newly created shape should be, given where the farmer is standing in the flow. */
+export function defaultStatusForStep(step: WizardStep): ElementStatus {
+  // The Base step's whole instruction is "Draw what's already here".
+  return step === 'base' ? 'existing' : 'proposed';
+}
+
 export interface PlacedItem {
   id: string;
   defId: string; // references DesignElementDef.id
@@ -48,6 +100,8 @@ export interface PlacedItem {
   // meaningful for rect-shaped elements (strips/beds/rows) — circles are rotation-invariant.
   label?: string;
   note?: string;
+  /** Already on the farm, or part of the proposal. See ElementStatus above. */
+  status?: ElementStatus;
 }
 
 // Real ground/built features the farmer traces on their own site (house outline, paving,
@@ -68,6 +122,8 @@ export interface ZoneShape {
   // permaculture effort-zone ring; `zone` then rides along as an inert value. Optional so
   // it is JSON-safe and survives migrateStateToFrame's spread untouched.
   feature?: GroundFeatureKind;
+  /** Already on the farm, or part of the proposal. See ElementStatus above. */
+  status?: ElementStatus;
   // Optional custom name shown on the label (tap the label to rename); falls back to the ground
   // feature's default label when unset.
   name?: string;
@@ -106,6 +162,8 @@ export interface LineShape {
   // follows the beds onto the planting layer and is visible exactly when they are.
   kind: 'swale' | 'fence' | 'path' | 'bedpath' | 'pipe' | 'drip' | 'windbreak' | 'greywater';
   points: Array<[number, number]>;
+  /** Already on the farm, or part of the proposal. See ElementStatus above. */
+  status?: ElementStatus;
   // Optional custom name shown on the on-canvas label pill (tap the label to rename); falls back
   // to the kind's default name (LINE_KIND_LABEL, components/design/DesignCanvas.tsx) when unset.
   // Mirrors ZoneShape.name above — same pattern, same reason (no on-canvas label existed for any
