@@ -1887,6 +1887,34 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
     [canvasState, selectedIds],
   );
 
+  /**
+   * WHAT YOU HAVE SELECTED, SAID BACK TO YOU IN THE TOOL BAR.
+   *
+   * Rory: "if i select a polygon it doesnt highlight what it is in the tool bar — again, any
+   * element no matter what, polygon tree irrigation etc, if selected must be highlighted in the
+   * tool bar." Zone rings already did this (selectedZone lights its number chip); ground features,
+   * lines and placed elements did not, so tapping a shape told you it was selected but never what
+   * it WAS — and on a map of twenty grey polygons that is the only question you are asking.
+   *
+   * Deliberately a HIGHLIGHT and not an arming. Arming the tool would change what your next tap on
+   * the map does — tapping a tree to identify it would leave you loaded to plant another one. The
+   * chip lights so you can read it; tapping that chip still arms it, exactly as before.
+   *
+   * Single selection only: with three things selected there is no "what is it" to answer, and
+   * lighting three chips at once would say something untrue about what a tap would do.
+   */
+  const selectedIdentity = useMemo(() => {
+    if (!canvasState || selectedIds.length !== 1) return null;
+    const id = selectedIds[0];
+    const zone = canvasState.zones.find((z) => z.id === id);
+    if (zone) return { feature: zone.feature ?? null, lineKind: null, defId: null };
+    const line = canvasState.lines.find((l) => l.id === id);
+    if (line) return { feature: null, lineKind: line.kind, defId: null };
+    const item = canvasState.items.find((i) => i.id === id);
+    if (item) return { feature: null, lineKind: null, defId: item.defId };
+    return null;
+  }, [canvasState, selectedIds]);
+
   // Commit a whole block in ONE handleChange, so seven beds cost one undo, not seven — the same
   // single-commit rule the group angle and group size controls follow.
   const onPlaceBedBlock = useCallback((
@@ -3311,6 +3339,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           setLineKind={setLineKind}
           activeLayers={activeLayers}
           textScaleControl={{ value: mapTextScale, onChange: setMapTextScale }}
+          selectedIdentity={selectedIdentity}
           areaFillControl={{ value: areaFill, onChange: changeAreaFill }}
           bedBlockControl={bedBlockControl}
           setActiveLayers={setActiveLayers}

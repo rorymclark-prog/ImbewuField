@@ -30,6 +30,17 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
   const [nextBuildSha, setNextBuildSha] = useState<string | null>(null);
   // Null until the server tells us; the local copy is the offline/older-server fallback.
   const [nextBuildNotes, setNextBuildNotes] = useState<string[] | null>(null);
+  // IT WAS SITTING ON TOP OF THE APP'S OWN CONTROLS. Fixed, bottom-centre, 432x254, z-index 9999
+  // — exactly where the Design Studio puts its Snap/Tidy confirm panel. Rory reported "snap to
+  // neighbour still doesn't work" three times; it worked perfectly, computed the right answer and
+  // rendered "✓ Snap to neighbour", and this banner was over the button. Verified by hit-testing
+  // the confirm's own centre: the topmost element there was this div.
+  //
+  // A notice must never outrank the work. It now shrinks to a small pill after a few seconds and
+  // can be dismissed outright — the update itself is not urgent (nothing breaks if you refresh in
+  // ten minutes), so the full card is a courtesy, not a claim on the screen.
+  const [expanded, setExpanded] = useState(true);
+  const [dismissed, setDismissed] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const registrationRef = useRef<ServiceWorkerRegistration | null>(null);
   // Seeded by the server-rendered layout, so a deployment that lands before the first network
@@ -164,10 +175,67 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
     }
   }, [refreshing]);
 
-  if (!updateAvailable) return null;
+  // Long enough to read the headline and the first note or two, short enough that it is out of the
+  // way before anyone reaches for a control underneath it.
+  useEffect(() => {
+    if (!updateAvailable || !expanded) return;
+    const t = window.setTimeout(() => setExpanded(false), 9000);
+    return () => window.clearTimeout(t);
+  }, [updateAvailable, expanded]);
+
+  // A new build re-expands: this is a different announcement, not the one already read past.
+  useEffect(() => {
+    if (!nextBuildSha) return;
+    setDismissed(false);
+    setExpanded(true);
+  }, [nextBuildSha]);
+
+  if (!updateAvailable || dismissed) return null;
   // The NEW build's notes when the server could supply them; ours only as a fallback (a
   // service-worker-triggered update never hits /api/build-info, and an offline tab cannot ask).
   const notes = nextBuildNotes ?? visibleNotes();
+
+  if (!expanded) {
+    // The whole notice, reduced to something that cannot cover a button: a small pill in the
+    // corner, out of the centre column where every confirm panel in this app lives.
+    return (
+      <div
+        role="status"
+        style={{
+          position: 'fixed', bottom: 'calc(env(safe-area-inset-bottom, 0px) + 0.5rem)', left: '0.5rem',
+          zIndex: 9999, display: 'flex', alignItems: 'center', gap: 6,
+          background: '#1f2937', color: '#fff', borderRadius: 999,
+          padding: '2px 4px 2px 10px', fontSize: '0.75rem',
+          boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+        }}
+      >
+        <button
+          type="button"
+          onClick={refreshToUpdate}
+          disabled={refreshing}
+          style={{ background: 'transparent', border: 'none', color: '#fff', font: 'inherit', fontWeight: 700, cursor: refreshing ? 'wait' : 'pointer', padding: '4px 2px' }}
+        >
+          {refreshing ? 'Refreshing…' : 'Update ready'}
+        </button>
+        <button
+          type="button"
+          onClick={() => setExpanded(true)}
+          aria-label="What changed"
+          style={{ background: 'transparent', border: 'none', color: '#fff', opacity: 0.7, cursor: 'pointer', padding: '4px 6px', font: 'inherit' }}
+        >
+          ⌃
+        </button>
+        <button
+          type="button"
+          onClick={() => setDismissed(true)}
+          aria-label="Dismiss until the next build"
+          style={{ background: 'transparent', border: 'none', color: '#fff', opacity: 0.7, cursor: 'pointer', padding: '4px 8px', font: 'inherit' }}
+        >
+          ✕
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div
@@ -191,7 +259,17 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
         fontSize: '0.875rem',
       }}
     >
-      <span>New version{nextBuildSha ? ` ${nextBuildSha}` : ''} available.</span>
+      <span style={{ display: 'flex', alignItems: 'center', gap: 8, alignSelf: 'stretch' }}>
+        <span style={{ flex: 1 }}>New version{nextBuildSha ? ` ${nextBuildSha}` : ''} available.</span>
+        <button
+          type="button"
+          onClick={() => setDismissed(true)}
+          aria-label="Dismiss until the next build"
+          style={{ background: 'transparent', border: 'none', color: '#fff', opacity: 0.6, cursor: 'pointer', padding: '2px 4px', font: 'inherit', lineHeight: 1 }}
+        >
+          ✕
+        </button>
+      </span>
       <button
         onClick={refreshToUpdate}
         disabled={refreshing}

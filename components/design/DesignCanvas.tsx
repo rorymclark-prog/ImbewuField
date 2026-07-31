@@ -2069,6 +2069,22 @@ export default function DesignCanvas({
     // A selection that resolves to nothing — after an undo, a sync, a delete — must never arm it.
     return null;
   })();
+  /**
+   * ZONE BADGES ARE PAINTED LAST, NOT WHERE THEY LIVE.
+   *
+   * A zone's number badge was drawn inside that zone's own group, so the FILL of every zone after
+   * it in the array painted straight over it — "zone icons and other icons are still buried
+   * underneath the polygon". SVG has no z-index; the only way a mark sits above every fill is to
+   * emit it after every fill.
+   *
+   * The badge is collected here during the zones pass and rendered once, after the zones and lines
+   * loops, above every area fill and every line. Only the PAINT moves: an invisible disc of the
+   * same size stays behind in the zone's own group so the badge is still what you grab to drag the
+   * label, and so the collector can never carry a pointer handler out of the group whose closure
+   * it belongs to.
+   */
+  const zoneBadges: Array<{ id: string; x: number; y: number; n: number; color: string }> = [];
+
   /** True for everything the locked shape is currently shutting out. */
   const lockedOut = (id: string) => lockOwnerId !== null && lockOwnerId !== id;
 
@@ -2666,7 +2682,7 @@ export default function DesignCanvas({
                       </div>
                     </foreignObject>
                     ) : null
-                  ) : activeLayers.labels && activeLayers.symbols ? (
+                  ) : activeLayers.symbols ? (
                     // Rory: "theres a bug when i toggle labels on and off it doesnt work" — this
                     // branch (a plain effort-zone ring's number badge) used to render
                     // UNCONDITIONALLY, never reading activeLayers.labels at all. On the Zones
@@ -2681,12 +2697,12 @@ export default function DesignCanvas({
                     // icon and label around it scaled, so turning the map up to 150% left the
                     // zone numbers as the smallest marks on a sheet meant to be read at arm's
                     // length. Paint only — the badge marks the zone's anchor, it is not geometry.
-                    <>
-                      <circle r={11 * mapTextScale} fill={def.color} stroke="#FFFFFF" strokeWidth={2.5 * mapTextScale} />
-                      <text textAnchor="middle" dominantBaseline="central" fontSize={11 * mapTextScale} fontWeight={700} fill="#FFFFFF">
-                        {z.zone}
-                      </text>
-                    </>
+                    (() => {
+                      // Paint goes to the late pass (see zoneBadges above); this disc stays so the
+                      // badge is still the drag handle for the zone's label.
+                      zoneBadges.push({ id: z.id, x: labelCx, y: labelCy, n: z.zone, color: def.color });
+                      return <circle r={11 * mapTextScale} fill="transparent" />;
+                    })()
                   ) : null}
                   </g>
                 </g>
@@ -3206,6 +3222,24 @@ export default function DesignCanvas({
               <circle cx={x * imgW} cy={y * imgH} r={vertexVisibleR} fill="#FFFEFA" stroke={GOLD} strokeWidth={vertexStrokeW} pointerEvents="none" />
             </g>
           ))}
+
+        {/* ZONE BADGES, PAINTED ABOVE EVERY FILL AND EVERY LINE.
+            Collected during the zones pass above (see zoneBadges) and emitted here, because the
+            badge was being buried by the fill of whatever zone came after it in the array — and
+            by any line laid across it. Paint only: the grab target for dragging the label is an
+            invisible disc that stayed behind in the zone's own group.
+            Rendered BEFORE the placed items so an element icon is never hidden behind a zone
+            number — icons sit above layers, and above each other in the order they were placed. */}
+        {zoneBadges.map((b) => (
+          <g key={`zbadge-${b.id}`} transform={`translate(${(b.x * imgW).toFixed(1)},${(b.y * imgH).toFixed(1)})`} pointerEvents="none">
+            <g transform={`scale(${(1 / view.k).toFixed(3)})`}>
+              <circle r={11 * mapTextScale} fill={b.color} stroke="#FFFFFF" strokeWidth={2.5 * mapTextScale} />
+              <text textAnchor="middle" dominantBaseline="central" fontSize={11 * mapTextScale} fontWeight={700} fill="#FFFFFF">
+                {b.n}
+              </text>
+            </g>
+          </g>
+        ))}
 
         {/* Placed items at true scale.
             SELECTED ITEM RENDERS LAST. SVG has no z-index — paint order IS stacking order — so an

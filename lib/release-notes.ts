@@ -20,6 +20,10 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '31 July',
     changes: [
+      'Snap to neighbour works — the update notice was sitting on top of its Confirm button',
+      'The update notice shrinks out of the way, and you can close it',
+      'Zone numbers sit on top of the shapes instead of being buried under them',
+      'Select anything and its chip lights up, so you can tell what it is',
       'Zones can be see-through colour instead of hatching, with a strength slider',
       'Pick a shape and the ones around it stop grabbing your taps — tap the map to let it go',
       'A shape only moves once your finger really moves, so a tap no longer nudges it',

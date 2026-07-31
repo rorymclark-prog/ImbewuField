@@ -92,6 +92,9 @@ export interface DesignPaletteProps {
    *  both "what am I holding?" and "what will I paint?", and before this it only answered
    *  the second. Computed in app/design/page.tsx, which owns selection state. */
   selectedZone: 0 | 1 | 2 | 3 | 4 | 5 | null;
+  /** What the single selected shape IS, so its chip lights up — see selectedIdentity in
+   *  app/design/page.tsx for why this highlights rather than arms. */
+  selectedIdentity?: { feature: GroundFeatureKind | null; lineKind: LineShape['kind'] | null; defId: string | null } | null;
   areaFeature: GroundFeatureKind | null;
   setAreaFeature: (f: GroundFeatureKind | null) => void;
   lineKind: LineShape['kind'];
@@ -368,6 +371,7 @@ export default function DesignPalette({
   setPlaceDefId,
   zoneDraw,
   selectedZone,
+  selectedIdentity,
   setZoneDraw,
   areaFeature,
   setAreaFeature,
@@ -1133,7 +1137,8 @@ export default function DesignPalette({
             </span>
           )}
           {orderedCatalog.map((def) => {
-            const active = placeDefId === def.id && tool === 'place';
+            // …or it IS the thing you have selected on the map (selectedIdentity).
+            const active = (placeDefId === def.id && tool === 'place') || selectedIdentity?.defId === def.id;
             const suited = !climateFilterActive || elementSuitsClimate(def.id, siteClimates);
             return (
               <button
@@ -1178,7 +1183,7 @@ export default function DesignPalette({
               farmer anyway: pick a thing, put it on the land. renderLineChips() below still owns
               the steps that have no element catalog to ride in. */}
           {showLineChips && lineChipsForStep.map((lk) => {
-            const active = lineKind === lk.id && tool === 'line';
+            const active = (lineKind === lk.id && tool === 'line') || selectedIdentity?.lineKind === lk.id;
             return (
               <button
                 key={`line-${lk.id}`}
@@ -1237,7 +1242,7 @@ export default function DesignPalette({
         <div style={scrollStripStyle(guided ? 10 : 6)}>
           {GROUND_FEATURE_KINDS.map((kind) => {
             const gf = GROUND_FEATURES[kind];
-            const active = areaFeature === kind && tool === 'zone';
+            const active = (areaFeature === kind && tool === 'zone') || selectedIdentity?.feature === kind;
             return (
               <button
                 key={kind}
@@ -1451,7 +1456,7 @@ export default function DesignPalette({
       /* Water/Structures step: compact line-kind chips row */
       <div style={scrollStripStyle(guided ? 10 : 6)}>
         {lineChipsForStep.map((lk) => {
-          const active = lineKind === lk.id && tool === 'line';
+          const active = (lineKind === lk.id && tool === 'line') || selectedIdentity?.lineKind === lk.id;
           return (
             <button
               key={lk.id}
