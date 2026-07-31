@@ -204,3 +204,28 @@ test('remote and navigation writes preserve timestamps and revisions verbatim', 
   assert.equal(changes, 2);
   assert.deepEqual(loadCanvasState(SITE_ID), { ...remote, step: 'glossy' });
 });
+
+test('normaliseCanvasState preserves species metadata properties on items', () => {
+  const withSpecies = state({
+    items: [
+      {
+        id: 'tree1',
+        defId: 'shade_tree',
+        x: 0.5,
+        y: 0.5,
+        speciesId: 'fever_tree',
+        speciesBotanical: 'Acacia xanthophloea',
+        speciesCrownForm: 'dome-shaped',
+        speciesHeightM: 15,
+        speciesWidthM: 10
+      },
+    ],
+  });
+  const loaded = normaliseCanvasState(JSON.parse(JSON.stringify(withSpecies)), SITE_ID);
+  const item = loaded!.items[0];
+  assert.equal(item.speciesId, 'fever_tree');
+  assert.equal(item.speciesBotanical, 'Acacia xanthophloea');
+  assert.equal(item.speciesCrownForm, 'dome-shaped');
+  assert.equal(item.speciesHeightM, 15);
+  assert.equal(item.speciesWidthM, 10);
+});
