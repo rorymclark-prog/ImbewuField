@@ -33,6 +33,7 @@ const report = (over: Partial<DifferenceReport> = {}): DifferenceReport => ({
   redrawnFraction: 0.42,
   meanDelta: 51,
   comparedPixels: 1_500_000,
+  protectedMismatches: 0,
   verdict: 'redrawn',
   ...over,
 });
