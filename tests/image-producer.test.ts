@@ -1319,3 +1319,85 @@ test('AI prompt injects tree canopy instructions when speciesCrownForm and label
   assert.match(pSat, /The tree marked 'Tree A' is a dome-shaped canopy tree/);
   assert.doesNotMatch(pSat, /Tree B/);
 });
+
+// ── The hybrid's missing marker glossary, and the bed wording that kept missing it ──────────────
+//
+// Rory, after weeks of paid hybrids: "the veg beds still look like a hedge and don't have
+// vegetables". buildLockedIllustrationPrompt — Geometry Lock, the most-used AI path in the app —
+// named every placed feature and described NONE of them, while its own PAINT WHAT IS THERE clause
+// offered "hedges and treelines" as one of the few concrete green textures it did describe. Every
+// other prompt path in producer-prompt.ts carries a marker glossary; the repeated fixes to the bed
+// wording had all landed in those tables only. These guard both halves.
+
+test('the Geometry Lock hybrid tells the model what a vegetable bed looks like', () => {
+  const p = buildLockedIllustrationPrompt('Planting', 'precision_atlas', '🥬 Vegetable Bed ×9');
+  assert.match(p, /WHAT THE MARKERS ARE:/);
+  assert.match(p, /PLANTED vegetable bed in full growth/);
+  // The observed failure, not a paraphrase of it: a row of beds collapsing into one green band.
+  assert.match(p, /never merged into one continuous green band, hedge, shrub row or treeline/);
+});
+
+test('the hybrid glossary is per-sheet, and silent when the sheet has no such marker', () => {
+  const water = buildLockedIllustrationPrompt('Water', 'precision_atlas', 'JoJo Tank 2500L ×2');
+  assert.match(water, /JoJo water tank/);
+  assert.doesNotMatch(water, /PLANTED vegetable bed/);
+  // An unrecognised label must fall back to the WIDEST glossary, never to none — going without one
+  // is the exact failure this mapper exists to fix.
+  const odd = buildLockedIllustrationPrompt('Some New Sheet', 'precision_atlas', 'Vegetable Bed ×3');
+  assert.match(odd, /PLANTED vegetable bed in full growth/);
+});
+
+test('every prompt path that can name a vegetable bed describes it as planted, not as bare ground', () => {
+  const bedText = '🥬 Vegetable Bed ×9';
+  const paths: Array<[string, string]> = [
+    ['locked hybrid', buildLockedIllustrationPrompt('Planting', 'precision_atlas', bedText)],
+    ['showcase', buildShowcasePrompt('Planting', 'precision_atlas', bedText, 'Ubhejane', 'planting')],
+    ['producer', buildProducerPrompt('Planting', 'precision_atlas', bedText, 'full')],
+    ['satellite overlay', buildSatelliteOverlayPrompt({
+      layerLabel: 'Planting', stylePreset: 'satellite_overlay', elementsText: bedText, sheetKind: 'planting',
+    })],
+  ];
+  for (const [name, prompt] of paths) {
+    assert.match(prompt, /PLANTED vegetable bed/, `${name} must say the bed is planted`);
+    assert.match(prompt, /never bare or freshly tilled ground/, `${name} must rule out an empty seedbed`);
+    assert.match(prompt, /hedge/, `${name} must rule out the hedge reading`);
+  }
+});
+
+// ── The staple garden ───────────────────────────────────────────────────────────────────────────
+//
+// A traced AREA, not a placed element, so it reaches the model through the register (painted
+// styles) or the fabric channel (Satellite Overlay) rather than as a marker to replace. Rory:
+// "when ai or hybrid rendering it needs to show maize and beans etc growing."
+
+test('a staple garden is rendered as a standing maize/bean/pumpkin crop on every AI path', () => {
+  const register = 'Staple garden (maize & beans), 🥬 Vegetable Bed ×4';
+  const paths: Array<[string, string]> = [
+    ['locked hybrid', buildLockedIllustrationPrompt('Planting', 'precision_atlas', register)],
+    ['showcase', buildShowcasePrompt('Planting', 'precision_atlas', register, 'Ubhejane', 'planting')],
+    ['producer', buildProducerPrompt('Planting', 'precision_atlas', register, 'full')],
+    ['satellite overlay', buildSatelliteOverlayPrompt({
+      layerLabel: 'Planting', stylePreset: 'satellite_overlay', elementsText: register, sheetKind: 'planting',
+    })],
+  ];
+  for (const [name, prompt] of paths) {
+    assert.match(prompt, /maize/i, `${name} must name the maize`);
+    assert.match(prompt, /bean/i, `${name} must name the beans`);
+    assert.match(prompt, /pumpkin/i, `${name} must name the pumpkin`);
+    // The failure mode for a large plain polygon is being painted away as grass.
+    assert.match(prompt, /never (mown )?lawn/i, `${name} must rule out painting the plot as lawn`);
+  }
+});
+
+test('a sheet with no staple garden is never told to draw one', () => {
+  const p = buildLockedIllustrationPrompt('Planting', 'precision_atlas', '🥬 Vegetable Bed ×9, Mango Tree');
+  assert.doesNotMatch(p, /maize/i);
+  // The bed match must not fire on "Staple garden" either — it once did, via a bare /garden/
+  // alternative, handing a maize field the planted-vegetable-bed description as well as its own.
+  const stapleOnly = buildSatelliteOverlayPrompt({
+    layerLabel: 'Planting', stylePreset: 'satellite_overlay',
+    elementsText: 'Staple garden (maize & beans)', sheetKind: 'planting',
+  });
+  assert.match(stapleOnly, /maize/i);
+  assert.doesNotMatch(stapleOnly, /PLANTED vegetable bed/);
+});

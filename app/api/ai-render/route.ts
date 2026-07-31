@@ -243,7 +243,8 @@ Show PLANT GROUPS in the right locations — not individual crop names crowded o
 
 INCLUDE (in the correct spatial locations):
 • Kitchen herbs near the house (label: "Herbs: basil, coriander, chives...")
-• Vegetables in existing/intensive beds (label "Veg beds")
+• Vegetables in existing/intensive beds (label "Veg beds") — beds are PLANTED, drawn as rows of individual leafy plants, and beds standing side by side stay separate rectangles rather than merging into one green band or hedge
+• Staple garden where one is marked (label "Staple garden") — the household's maize plot, drawn as a standing field crop of tall maize with beans climbing the stems and pumpkin running along the ground between the rows
 • Fruit trees in orchard zone to the NORTH (label: "Orchard: citrus, mango, avocado, indigenous fruit by biome")
 • Food forest edge — layered system at sunny boundary (label: "Food forest: canopy + understorey + groundcover")
 • Bananas or wet-loving plants near greywater outlet / moist low point

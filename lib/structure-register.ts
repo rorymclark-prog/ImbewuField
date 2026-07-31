@@ -28,6 +28,7 @@ const FLAT_WHAT: Partial<Record<GroundFeatureKind, [fallbackName: string, what: 
   cleared: ['The cleared area', 'open cleared ground, kept open'],
   veg_garden: ['The existing vegetable garden', 'a ground-level planted garden with nothing built over it'],
   orchard: ['The existing orchard', 'existing orchard trees on open ground'],
+  staple_garden: ['The staple garden', 'an open field of standing maize with beans and pumpkin through it — a crop growing on the ground, never a structure and never a roof'],
   terrace_bank: ['The terrace bank', 'a graded earth bank between two ground levels, not a wall and not a building'],
 };
 

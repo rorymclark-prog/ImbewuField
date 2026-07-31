@@ -220,6 +220,14 @@ const LINE_KINDS: Array<{ id: LineShape['kind']; labelKey: string; icon: string 
 // then kitchen-out (house next).
 const GROUND_FEATURE_KINDS: GroundFeatureKind[] = ['boundary', 'house', 'patio', 'driveway', 'lawn', 'veg_garden', 'orchard', 'cleared'];
 
+// AREA chips offered on the PLANTING step. Every other ground feature above records what is
+// already on site, so those belong on the Base step and only there. A staple plot is the one
+// traced area a farmer DESIGNS rather than records — it is the biggest single piece of most
+// smallholdings' food production, and the farmer decides where it goes on the same step they lay
+// out beds and trees. Same tool, same ring engine, same 'ground' layer (which never switches off
+// per-step, so nothing drawn here can land on a hidden layer).
+const PLANTING_AREA_KINDS: GroundFeatureKind[] = ['staple_garden'];
+
 // Ordered by the Scale of Permanence (water → earthworks → access → structures → planting),
 // with the reference/overlay layers bracketing it.
 const LAYER_TOGGLES: Array<{ key: keyof ActiveLayers; labelKey: string; icon: string }> = [
@@ -629,7 +637,8 @@ export default function DesignPalette({
 
   // Which chip-driven controls are relevant for this step.
   const showZoneChips = step === 'zones';
-  const showAreaChips = step === 'base';
+  const showAreaChips = step === 'base' || step === 'planting';
+  const areaChipKinds = step === 'planting' ? PLANTING_AREA_KINDS : GROUND_FEATURE_KINDS;
   const showLineChips = step === 'water' || step === 'structures' || step === 'planting';
   const WATER_LINE_IDS: Array<LineShape['kind']> = ['swale', 'pipe', 'drip', 'greywater'];
   const STRUCTURE_LINE_IDS: Array<LineShape['kind']> = ['fence', 'path'];
@@ -1537,9 +1546,12 @@ export default function DesignPalette({
       /* Base step: ground-feature chips — draw the real house / paving / lawn / veg garden /
           orchard / cleared ground that's already on site (filled labelled areas). */
       <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
-        <div style={{ fontSize: 11.5, color: '#6B6355' }}>{t('designPaletteExistingHelp')}</div>
+        {/* The Base step's help line says "draw what is already here", which is true of every
+            chip on that step and false of the staple plot a farmer is DESIGNING on Planting —
+            so the planting strip carries the chip without it rather than a mis-describing line. */}
+        {step === 'base' && <div style={{ fontSize: 11.5, color: '#6B6355' }}>{t('designPaletteExistingHelp')}</div>}
         <div style={scrollStripStyle(guided ? 10 : 6)}>
-          {GROUND_FEATURE_KINDS.map((kind) => {
+          {areaChipKinds.map((kind) => {
             const gf = GROUND_FEATURES[kind];
             const active = (areaFeature === kind && tool === 'zone') || selectedIdentity?.feature === kind;
             return (

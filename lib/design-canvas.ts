@@ -118,7 +118,23 @@ import polygonClipping from 'polygon-clipping';
 
 export type GroundFeatureKind =
   | 'house' | 'patio' | 'driveway' | 'lawn' | 'veg_garden' | 'orchard' | 'cleared' | 'boundary'
-  | 'terrace_bank'; // the retained/graded riser face between two levels — see docs/TERRACES-EARTHWORKS-SPEC-2026-07-21.md §2
+  | 'terrace_bank' // the retained/graded riser face between two levels — see docs/TERRACES-EARTHWORKS-SPEC-2026-07-21.md §2
+  // THE STAPLE PLOT — the field of maize, beans and pumpkin that feeds the household, and the
+  // single largest cultivated area on most South African smallholdings. The app had no way to
+  // draw one: 'veg_garden' is the intensive kitchen garden and 'veg_bed' is a 1.2 x 3 m bed, so a
+  // farmer whose main food production is a quarter-hectare of mielies had to either mis-label it
+  // as a veg garden or leave it off the plan entirely.
+  //
+  // It is an AREA, not an element, and that is why it rides here rather than in ELEMENT_CATALOG:
+  // a staple plot has no standard footprint to place — its size is the whole point, and the
+  // farmer traces the ground they actually crop. Same draw/edit/persist/adopt engine as every
+  // other traced ring; groundRegister already routes it to the Planting sheet as content.
+  //
+  // Maize-legume intercropping is the traditional smallholder practice across eastern and
+  // southern Africa, with pumpkin run through it as the ground layer, so the three crops are one
+  // plot and not three — which is exactly what an area (rather than three overlapping element
+  // footprints) models correctly.
+  | 'staple_garden';
 
 export interface ZoneShape {
   id: string;

@@ -1663,6 +1663,20 @@ function producerElementsText(
   if (zonesInFilter(filter)) {
     for (const z of state.zones.filter((z) => !z.feature)) parts.push(`Zone ${z.zone} — ${ZONE_DEFS[z.zone].label}`);
   }
+  // TRACED GROUND AREAS — the veg garden, orchard, staple garden, lawn and paving the farmer drew
+  // as rings. This list was ITEMS, LINES AND EFFORT-ZONES ONLY: `state.zones.filter((z) => !z.feature)`
+  // above deliberately drops every ground FEATURE, and nothing downstream put them back. So on every
+  // painted style — which is every style except Satellite Overlay, the one path that has its own
+  // `fabric` channel (buildSatelliteOverlayPrompt) — a farmer's traced orchard reached the model as
+  // an unexplained coloured polygon on the composite, while the prompt's own NO-INVENT clause told
+  // it "the feature list below is complete". A model resolves that by painting the polygon as
+  // whatever the surrounding land is, which is why traced cultivation kept coming back as lawn.
+  //
+  // Gated by groundRegister via groundRows — the same authority that decides the wash alpha and the
+  // legend row — so a ring is NAMED on exactly the sheets where it is the subject, and stays silent
+  // context on Water and Zones. NAMES ONLY, per this function's contract above: how to draw each
+  // one lives in the prompt body (the shared marker glossary in lib/producer-prompt.ts).
+  for (const row of groundRows(state, refLayers, filter)) parts.push(row.label);
   // Line features (fences, paths, swales, pipes, drip, windbreaks) are drawn into the composite
   // but were never NAMED here — a layer whose only content is a line handed the model a broken
   // sentence and zero guidance (audit find). Group by kind, respect the layer filter.
@@ -3452,6 +3466,9 @@ function groundLabelsForSheet(
         patio: 'Paving',
         veg_garden: 'Veg garden',
         orchard: 'Orchard',
+        // The chip has to say what the plot IS to a farmer choosing a tool ("Staple garden (maize
+        // & beans)"); the map has to fit inside the ring it labels. Same reasoning as 'cleared'.
+        staple_garden: 'Staple garden',
       };
       // Level suffix — appended BEFORE the dedup filter below, so two platforms of the same kind
       // at DIFFERENT levels (e.g. an upper and a lower lawn) produce two distinct labels, while
@@ -6483,6 +6500,7 @@ function drawSectorContextLabels(
     cleared: 'LOWER CLEARED GROUND',
     patio: 'PATIO / COURTYARD',
     terrace_bank: 'TERRACE BANK / LEVEL CHANGE',
+    staple_garden: 'STAPLE GARDEN — MAIZE, BEANS & PUMPKIN',
   };
   const bestByKind = new Map<GroundFeatureKind, ZoneShape>();
   for (const zone of state.zones) {

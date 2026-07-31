@@ -53,7 +53,10 @@ export function isPhotoPreservingStyle(style: StylePreset): boolean {
 // What each coloured placeholder marker on the input composite should become. Module-scoped so both
 // the strict buildProducerPrompt and the illustrated buildShowcasePrompt share the one legend.
 const FEATURE_LEGEND =
-  `a green rectangle marker → a tidy vegetable bed full of cabbages and leafy greens; a small cylinder/drum marker → a green cylindrical JoJo water tank; a hive marker → a striped beehive; a tree marker → a fruit tree with a full canopy; a hut/shed marker → that building; ` +
+  // Fourth copy of the bed wording (with M.bed, OVERLAY_ICONS.bed and — until this session — a
+  // buildLockedIllustrationPrompt that had no glossary at all). Kept in step with M.bed by
+  // tests/producer-prompt.test.ts's cross-table check rather than by anyone remembering.
+  `a green rectangle marker → a PLANTED vegetable bed in full growth, never bare or freshly tilled ground: dense rows of leafy vegetables filling the rectangle, individual plants visible from above as distinct rosettes and clumps, with only narrow strips of soil between the rows; beds side by side stay separate rectangles and never merge into one green band, hedge or shrub row; an olive-gold area marker → the staple garden: a standing field crop of tall maize with beans climbing the stems and broad pumpkin leaves along the rows, never lawn and never bare soil; a small cylinder/drum marker → a green cylindrical JoJo water tank; a hive marker → a striped beehive; a tree marker → a fruit tree with a full canopy; a hut/shed marker → that building; ` +
   `a grey/tan tinted polygon area → a real driveway surface (gravel or paving) exactly that shape and size, empty of vehicles; a warm-tan tinted polygon area → a paved outdoor patio exactly that shape and size; a blue tinted polygon area → a real dam or pond of open water exactly that shape and size; ` +
   // Line features — drawn into every composite but previously never explained (audit find):
   `a dusty-violet line → a real farm fence following exactly that path (posts + wire); a gold dashed line → a walking path of exactly that route; a light-blue dashed line → a swale (on-contour water-harvesting ditch with a planted berm) along exactly that line; a dark-blue solid line → a buried water pipe route (show as a subtle trench-line); a bright-blue solid line → a drip-irrigation line with sparse emitters along the beds it crosses; a solid violet line → a subsurface filtered-greywater route, buried and never an open channel; a deep-green line → a windbreak hedge of dense shrubs/trees along exactly that line. `;
@@ -89,6 +92,24 @@ export function buildLockedIllustrationPrompt(
   const exactFeatures = elementsText.trim()
     ? `AUTHORITATIVE FEATURE REGISTER: ${elementsText.trim()}.`
     : 'AUTHORITATIVE FEATURE REGISTER: use only the placed features already visible in the source.';
+  // WHAT EACH MARKER IS SUPPOSED TO LOOK LIKE — the gap that produced Rory's "the veg beds still
+  // look like a hedge and don't have vegetables", after weeks of paid hybrids.
+  //
+  // This prompt named every feature (the register above) and then described NONE of them. The
+  // PLACED-FEATURE CONTRACT below says "replace each marker with a realistic illustration of that
+  // named feature" — which asks the model to already know what a South African market-garden bed,
+  // a vetiver bank or a tree basin looks like from directly overhead, and to guess when it doesn't.
+  // Meanwhile PAINT WHAT IS THERE, a few lines down, hands it a short list of concrete green
+  // textures it CAN paint, and "hedges and treelines" is one of them. A strip of undescribed narrow
+  // green rectangles lands on the nearest thing the prompt actually described: a hedge.
+  //
+  // Every other AI path in this file already carries a glossary — FEATURE_LEGEND for
+  // buildProducerPrompt, M for buildShowcasePrompt, OVERLAY_ICONS for buildSatelliteOverlayPrompt —
+  // and the fifth fix to the bed wording (see M.bed) had been landing in those tables only. This is
+  // the fourth documented instance in this one file of a fix reaching some prompt paths and not
+  // others; reusing showcaseMarkerGlossary rather than writing a fourth table is the point, so the
+  // next bed/basin/vetiver correction cannot miss the app's most-used renderer again.
+  const markerGlossary = showcaseMarkerGlossary(showcaseSheetKindForLabel(layerLabel), elementsText);
   const waterArtDirection = /water/i.test(layerLabel)
     ? [
         `WATER FEATURE ROLE: polish every already-marked tank, tap, basin, pond and fitting into a recognisable realistic top-down farm feature at its exact saved centre, count, orientation and footprint. Keep buried water pipe blue, filtered-greywater routes purple, and drip irrigation blue with sparse emitters. The app reinforces the measured routes, leaders, labels and legend afterwards.`,
@@ -101,6 +122,7 @@ export function buildLockedIllustrationPrompt(
     STYLE_LINES[stylePreset],
     `TASK: turn this exact saved design composite into one visibly polished hand-illustrated ${layer} map. Paint edge to edge — every corner becomes artwork, including the land beyond the property boundary.`,
     exactFeatures,
+    markerGlossary ? `WHAT THE MARKERS ARE: ${markerGlossary}.` : '',
     designBrief.trim() ? `WHOLE-SITE CONSISTENCY BRIEF: ${designBrief.trim()}` : '',
     `PLACED-FEATURE CONTRACT: every coloured footprint, route and editor marker already visible in the source is a saved feature, not a suggestion. Replace each marker with a realistic orthographic illustration of that named feature at the same centre, count, rotation and footprint. Keep the illustration confined to its saved footprint. Do not duplicate it, omit it, move it or leave an emoji/tool marker in the finished artwork.`,
     `HYBRID FINISH: the app restores protected roof, driveway, boundary and context pixels, then reinforces exact feature outlines, technical routes, labels and legend over your artwork. Make the painted trees, beds, tanks, basins, structures and ground visually rich enough to remain visible beneath that precise cartographic linework.`,
@@ -408,7 +430,26 @@ export const STYLE_LINES: Record<StylePreset, string> = {
 // are never primed and zone entries can never leak onto a non-Zones sheet — by construction, not by
 // telling the model "never do X" (the thing the audit found backfires).
 const M = {
-  bed: 'green rectangles are vegetable beds full of cabbages and leafy greens',
+  // WAS: 'green rectangles are vegetable beds full of cabbages and leafy greens'. Rory, on a
+  // finished hybrid: "the veg beds still look like a hedge and don't have vegetables". Two causes,
+  // both fixed here. (1) That one clause was the whole instruction, and it led with the container
+  // rather than the crop, so a row of narrow green rectangles had nothing telling the model they
+  // are individually planted — while `windbreak` two lines down offers "a dense row of shrubs and
+  // trees" as a fully-described green band, which is what a strip of unexplained green rectangles
+  // collapses into. (2) The already-fixed wording lived only in OVERLAY_ICONS.bed, on the Satellite
+  // Overlay path — the same table-drift this file has now been bitten by four times (see the
+  // ADDED comments at tree_basin/tap below). Text mirrors OVERLAY_ICONS.bed deliberately: this is
+  // propagating an existing fix to the paths that were missing it, not new invention. Described by
+  // leaf and habit, never by species — naming a species in a prompt is a propagation
+  // recommendation, and which species may be propagated here is regulated (NEMBA).
+  bed: 'each green rectangle is a PLANTED vegetable bed in full growth, never bare or freshly tilled ground: dense regular rows of leafy vegetables filling that rectangle, individual plants clearly visible from above as distinct rosettes and clumps in several greens, with only narrow strips of brown soil showing between the rows. Beds standing side by side stay separate rectangles with their paths visible between them — never merged into one continuous green band, hedge, shrub row or treeline',
+  // The household staple plot. It is a traced AREA, so — like the zone bands and unlike every
+  // marker above — the instruction has to say "this whole region is one crop" or the model reads a
+  // large plain polygon as lawn and paints it away. Maize-legume intercropping with pumpkin run
+  // through it as the ground layer is the traditional smallholder practice across eastern and
+  // southern Africa; these three are named because the farmer chose this specific tool, so they
+  // are what the tool means, not a species recommendation the prompt invented.
+  staple_garden: 'the olive-gold area is the staple garden — a standing field crop filling that whole outline: regular rows of tall maize seen from directly above as a mass of star-shaped leaf whorls, with bean plants climbing the stems between them and broad pumpkin leaves running across the ground along the rows. It is a cropped field, never mown lawn, never bare soil, never a block of trees or shrubs',
   tank: 'a small drum marker is a green cylindrical JoJo water tank',
   hive: 'a hive marker is a striped beehive',
   tree: 'a tree marker is a fruit tree with a full canopy',
@@ -473,18 +514,19 @@ const M = {
 type ShowcaseMarkerKey = keyof typeof M;
 
 const SHOWCASE_MARKERS_BY_SHEET: Record<ShowcaseSheetKind, ShowcaseMarkerKey[]> = {
-  all: ['bed', 'tree', 'windbreak', 'tank', 'tap', 'dam', 'borehole', 'swale', 'pipe', 'drip', 'building', 'hive', 'patio', 'fence', 'path', 'driveway', 'tree_basin', 'banana_circle', 'mulch_bank', 'greywater_basin', 'greywater_line', 'greywater_fitting', 'half_moon', 'berm', 'terrace', 'coop', 'chicken_tractor', 'nursery', 'compost', 'worm_farm', 'goat_pen', 'pig_pen', 'kraal', 'rabbit_hutch', 'duck_pond', 'livestock_trough', 'biodigester', 'market_stall', 'playground', 'zones'],
+  all: ['bed', 'staple_garden', 'tree', 'windbreak', 'tank', 'tap', 'dam', 'borehole', 'swale', 'pipe', 'drip', 'building', 'hive', 'patio', 'fence', 'path', 'driveway', 'tree_basin', 'banana_circle', 'mulch_bank', 'greywater_basin', 'greywater_line', 'greywater_fitting', 'half_moon', 'berm', 'terrace', 'coop', 'chicken_tractor', 'nursery', 'compost', 'worm_farm', 'goat_pen', 'pig_pen', 'kraal', 'rabbit_hutch', 'duck_pond', 'livestock_trough', 'biodigester', 'market_stall', 'playground', 'zones'],
   zones: ['zones', 'driveway'],
   water: ['tank', 'tap', 'dam', 'borehole', 'pipe', 'drip', 'driveway', 'tree_basin', 'banana_circle', 'greywater_basin', 'greywater_line', 'greywater_fitting'],
   // Sheet 05. Swale, berm, terrace and half-moon moved off Water when earthworks became its own
   // setting-out drawing; the driveway stays as the orientation mark every sheet carries.
   earthworks: ['swale', 'berm', 'terrace', 'half_moon', 'driveway'],
-  planting: ['bed', 'tree', 'windbreak', 'driveway', 'tree_basin', 'banana_circle', 'mulch_bank'],
+  planting: ['bed', 'staple_garden', 'tree', 'windbreak', 'driveway', 'tree_basin', 'banana_circle', 'mulch_bank'],
   structures: ['building', 'hive', 'patio', 'fence', 'path', 'driveway', 'coop', 'chicken_tractor', 'nursery', 'compost', 'worm_farm', 'goat_pen', 'pig_pen', 'kraal', 'rabbit_hutch', 'duck_pond', 'livestock_trough', 'biodigester', 'market_stall', 'playground'],
 };
 
 const SHOWCASE_MARKER_MATCH: Record<ShowcaseMarkerKey, RegExp> = {
   bed: /bed|vegetable garden|veg garden/i,
+  staple_garden: /staple garden/i,
   tree: /\btree\b|orchard|fruit/i,
   windbreak: /windbreak|hedge/i,
   tank: /tank|jojo|rain barrel/i,
@@ -524,6 +566,25 @@ const SHOWCASE_MARKER_MATCH: Record<ShowcaseMarkerKey, RegExp> = {
   biodigester: /biodigester/i,
   market_stall: /market stall/i, playground: /playground|play area/i,
 };
+
+/**
+ * The plan-set sheet a human-facing layer LABEL names.
+ *
+ * buildLockedIllustrationPrompt — the Geometry Lock hybrid, the most-used AI path in the app — is
+ * handed the label ('Planting', 'Water', 'Full design'), never the filter key, so it had no way to
+ * ask for this sheet's marker glossary and simply went without one. Falls back to 'all', the widest
+ * glossary: an unrecognised label must never silence the marker descriptions entirely, which is the
+ * exact failure this mapper exists to fix.
+ */
+export function showcaseSheetKindForLabel(layerLabel: string): ShowcaseSheetKind {
+  const l = layerLabel.trim().toLowerCase();
+  if (l.startsWith('water')) return 'water';
+  if (l.startsWith('earthwork')) return 'earthworks';
+  if (l.startsWith('zone')) return 'zones';
+  if (l.startsWith('planting')) return 'planting';
+  if (l.startsWith('structure')) return 'structures';
+  return 'all';
+}
 
 function showcaseMarkerGlossary(sheetKind: ShowcaseSheetKind, elementsText: string): string {
   return SHOWCASE_MARKERS_BY_SHEET[sheetKind]
@@ -670,7 +731,11 @@ const OVERLAY_ICONS: Record<string, string> = {
   // crop is the subject now and the soil is what shows between the rows. Described by leaf and
   // habit, never by species: naming one in a prompt is a propagation recommendation, and which
   // species may be propagated here is regulated (NEMBA).
-  bed:       'a green rectangle marker → a PLANTED vegetable bed in full growth, never bare or freshly tilled ground: dense regular rows of leafy vegetables filling the rectangle, individual plants clearly visible from above as distinct rosettes and clumps in several greens, with only narrow strips of brown soil showing between the rows',
+  bed:       'a green rectangle marker → a PLANTED vegetable bed in full growth, never bare or freshly tilled ground: dense regular rows of leafy vegetables filling the rectangle, individual plants clearly visible from above as distinct rosettes and clumps in several greens, with only narrow strips of brown soil showing between the rows. Beds standing side by side stay separate rectangles with their paths visible between them — never merged into one continuous green band, hedge, shrub row or treeline',
+  // The household staple plot — a traced AREA, so it is described as a whole cropped region rather
+  // than as a marker to be replaced. See the M.staple_garden twin for why maize/beans/pumpkin are
+  // named here when almost nothing else in this table names a species.
+  staple_garden: 'an olive-gold area marker → the staple garden: a standing field crop filling that whole outline, regular rows of tall maize seen from directly above as a mass of star-shaped leaf whorls, bean plants climbing the stems between them, and broad pumpkin leaves running across the ground along the rows. A cropped field, never mown lawn, never bare soil, never a block of trees or shrubs',
   // The indigenous shade tree had no crown description here at all, so the model fell back to a
   // generic — and often conical, conifer-like — canopy. In South Africa that is not a neutral
   // default: it reads as a pine plantation, the invasive thing these plans usually exist to
@@ -690,14 +755,14 @@ const OVERLAY_ICONS: Record<string, string> = {
 };
 
 const ICON_KEYS_BY_SHEET: Record<ShowcaseSheetKind, string[]> = {
-  all:        ['bed', 'tree', 'windbreak', 'tank', 'tap', 'dam', 'basin', 'greywater_fitting', 'tree_basin', 'banana', 'mulch', 'vetiver_row', 'borehole', 'water_trough', 'first_flush', 'pump_filter', 'half_moon', 'berm', 'terrace', 'swale', 'pipe', 'drip', 'building', 'hive', 'coop', 'chicken_tractor', 'nursery', 'compost', 'worm_farm', 'goat_pen', 'pig_pen', 'kraal', 'rabbit_hutch', 'duck_pond', 'livestock_trough', 'biodigester', 'market_stall', 'playground', 'pollinator', 'patio', 'fence', 'path'],
+  all:        ['bed', 'staple_garden', 'tree', 'windbreak', 'tank', 'tap', 'dam', 'basin', 'greywater_fitting', 'tree_basin', 'banana', 'mulch', 'vetiver_row', 'borehole', 'water_trough', 'first_flush', 'pump_filter', 'half_moon', 'berm', 'terrace', 'swale', 'pipe', 'drip', 'building', 'hive', 'coop', 'chicken_tractor', 'nursery', 'compost', 'worm_farm', 'goat_pen', 'pig_pen', 'kraal', 'rabbit_hutch', 'duck_pond', 'livestock_trough', 'biodigester', 'market_stall', 'playground', 'pollinator', 'patio', 'fence', 'path'],
   zones:      ['building', 'path', 'fence'],
   // half_moon/berm/terrace/swale are 'earthworks' category, which sheetForElement now routes to
   // its own 'earthworks' sheet — same authority DesignGlossy.tsx uses, so this list cannot drift
   // from which sheet an element actually prints on. The two basins stay on Water by SHEET_OVERRIDE.
   water:      ['tank', 'tap', 'dam', 'basin', 'greywater_fitting', 'tree_basin', 'banana', 'mulch', 'borehole', 'water_trough', 'first_flush', 'pump_filter', 'pipe', 'drip'],
   earthworks: ['swale', 'half_moon', 'berm', 'terrace'],
-  planting:   ['bed', 'tree', 'windbreak', 'mulch', 'vetiver_row', 'banana', 'tree_basin', 'pollinator'],
+  planting:   ['bed', 'staple_garden', 'tree', 'windbreak', 'mulch', 'vetiver_row', 'banana', 'tree_basin', 'pollinator'],
   structures: ['building', 'hive', 'coop', 'chicken_tractor', 'nursery', 'compost', 'worm_farm', 'goat_pen', 'pig_pen', 'kraal', 'rabbit_hutch', 'duck_pond', 'livestock_trough', 'biodigester', 'market_stall', 'playground', 'patio', 'fence', 'path'],
 };
 
@@ -710,7 +775,10 @@ const ICON_MATCH: Record<string, RegExp> = {
   tree_basin: /tree basin/i, banana: /banana/i, mulch: /mulch bank|vetiver bank/i,
   borehole: /borehole|well/i, water_trough: /water trough/i, first_flush: /first-flush|first flush/i,
   pump_filter: /pump\s*&?\s*filter/i, half_moon: /half-moon|half moon/i, berm: /\bberm\b/i, terrace: /terrace|retaining bank/i,
-  bed: /bed|garden|veg/i, tree: /tree|orchard|fruit/i,
+  // Narrowed from /bed|garden|veg/i: the bare "garden" alternative also fired on "Staple garden",
+  // handing a maize field the planted-vegetable-bed description as well as its own. Aligned with
+  // SHOWCASE_MARKER_MATCH.bed so the two tables answer "is there a bed on this sheet" identically.
+  bed: /bed|vegetable garden|veg garden/i, staple_garden: /staple garden/i, tree: /tree|orchard|fruit/i,
   hive: /hive/i,
   // Split so a fixed Chicken Coop and a wheeled Chicken Tractor get their own, different, correct
   // descriptions instead of one regex routing both to whichever came first (audit finding 2026-07-25).
@@ -854,7 +922,7 @@ export function buildSatelliteOverlayPrompt(args: {
   // groundRegister's 'absent' case), so every kind that reaches this string shares one register.
   const fabricIsContent = groundRegister('lawn', sheetKind) === 'content';
   const siteFabric = fabric.trim()
-    ? `\n\nEXISTING SITE FABRIC — WHAT IS ALREADY THERE, NOT PART OF THIS DESIGN. The large, soft-edged, low-opacity tinted areas already on the photograph are ground the farmer has traced and named: ${fabric}. They are AREAS OF EXISTING GROUND, never placement markers: redraw each one as the real surface it already is, in place, keeping its exact outline — lawn as even mown grass, orchard and veg garden as the planting already visible in the photograph there, patio and paving as a clean flat slab, cleared ground as bare earth, driveway as the quiet grey tar rule 9 describes, house as the roof rule 8 describes, terrace bank / level change as a hatched, textured retained riser face — visibly distinct from the flat platforms either side of it, never flattened into the same lawn it retains. Nothing is invented inside one and no pictorial icon is placed on one. ADD NO NEW PLANTING ANYWHERE: existing site fabric is redrawn, never grown — no extra trees, canopies, shrubs, hedges or beds appear on or around it, and the open lawn between these areas stays open lawn.${fabricIsContent ? ' Give each one a small white caption naming it, and one legend row each under an EXISTING heading.' : ' On this sheet they carry no caption and no legend row of their own — they are context only, there so the reader can place this layer on the real site.'}`
+    ? `\n\nEXISTING SITE FABRIC — WHAT IS ALREADY THERE, NOT PART OF THIS DESIGN. The large, soft-edged, low-opacity tinted areas already on the photograph are ground the farmer has traced and named: ${fabric}. They are AREAS OF EXISTING GROUND, never placement markers: redraw each one as the real surface it already is, in place, keeping its exact outline — lawn as even mown grass, orchard and veg garden as the planting already visible in the photograph there, staple garden as one standing field crop filling its whole outline (rows of tall maize with beans climbing the stems and broad pumpkin leaves running along the ground between them — a cropped field, never lawn and never bare soil, whether or not the photograph shows a crop standing there today), patio and paving as a clean flat slab, cleared ground as bare earth, driveway as the quiet grey tar rule 9 describes, house as the roof rule 8 describes, terrace bank / level change as a hatched, textured retained riser face — visibly distinct from the flat platforms either side of it, never flattened into the same lawn it retains. Nothing is invented inside one and no pictorial icon is placed on one. ADD NO NEW PLANTING ANYWHERE: existing site fabric is redrawn, never grown — no extra trees, canopies, shrubs, hedges or beds appear on or around it, and the open lawn between these areas stays open lawn.${fabricIsContent ? ' Give each one a small white caption naming it, and one legend row each under an EXISTING heading.' : ' On this sheet they carry no caption and no legend row of their own — they are context only, there so the reader can place this layer on the real site.'}`
     : '';
 
   // Served fixtures need the same data/grammar split as the designed-element list below. `served`

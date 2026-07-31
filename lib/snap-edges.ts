@@ -62,7 +62,8 @@ export type SnapRingKind =
   | 'orchard'
   | 'cleared'
   | 'boundary'
-  | 'terrace_bank';
+  | 'terrace_bank'
+  | 'staple_garden';
 
 export interface SnapTargetRing {
   // Optional — when set, a neighbour carrying the SAME id is ignored defensively (a caller should
