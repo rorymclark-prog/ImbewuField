@@ -1279,3 +1279,30 @@ test('both photographic styles take the photo anchor, and every other style does
   assert.ok(STYLE_LINES.master_atlas.includes('never a satellite filter'),
     'master_atlas still deliberately replaces the photo — this is the style photo_plan answers');
 });
+
+test('AI prompt injects tree canopy instructions when speciesCrownForm and label are present', () => {
+  const items: import('../lib/design-canvas.ts').PlacedItem[] = [
+    { id: '1', defId: 'shade_tree', x: 0.5, y: 0.5, label: 'Tree A', speciesCrownForm: 'dome-shaped' },
+    { id: '2', defId: 'shade_tree', x: 0.6, y: 0.6, label: 'Tree B' }
+  ];
+  const p = buildShowcasePrompt(
+    'Planting',
+    'master_atlas',
+    'shade tree',
+    '',
+    'all',
+    items
+  );
+  assert.match(p, /The tree marked 'Tree A' is a dome-shaped canopy tree/);
+  assert.doesNotMatch(p, /Tree B/);
+
+  const pSat = buildSatelliteOverlayPrompt({
+    layerLabel: 'Planting',
+    stylePreset: 'satellite_overlay',
+    elementsText: 'shade tree',
+    sheetKind: 'all',
+    items
+  });
+  assert.match(pSat, /The tree marked 'Tree A' is a dome-shaped canopy tree/);
+  assert.doesNotMatch(pSat, /Tree B/);
+});

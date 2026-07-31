@@ -7,6 +7,7 @@
 // doc in lib/glossy-filters.ts. Importing the pure lib here (not the React component) keeps this
 // file server-safe.
 import { groundRegister } from '@/lib/glossy-filters';
+import type { PlacedItem } from '@/lib/design-canvas';
 
 export type StylePreset =
   | 'precision_atlas'
@@ -132,6 +133,7 @@ export function buildProducerPrompt(
   mapKind: 'base' | 'full' = 'full',
   retry = false,
   designBrief = '',
+  items: PlacedItem[] = [],
 ): string {
   // NEVER BRIEF THE MODEL ON NOTHING — same guard, same reasoning as buildSatelliteOverlayPrompt
   // (audit finding, 2026-07-25: this path had no guard at all, so a boundary-only design on any
@@ -164,8 +166,13 @@ export function buildProducerPrompt(
     `Do not rotate, zoom, shrink, crop, recenter or reframe the property. Use the selected style's palette and brushwork only; the app adds all sheet furniture afterwards.`;
   const noInvent =
     `NO INVENT: do not add any roads, roofs, trees, beds, ponds, paths, labels, shadows or other features that are not already marked or visible in the source image.`;
+  const speciesInstructions = items
+    .filter(i => i.speciesCrownForm && i.label)
+    .map(i => `The tree marked '${i.label}' is a ${i.speciesCrownForm} canopy tree.`)
+    .filter((v, i, a) => a.indexOf(v) === i)
+    .join(' ');
   const drawBlock =
-    `DRAW: ${FEATURE_LEGEND}${elementsText ? `The marked features for this sheet are: ${elementsText}. ` : ''}` +
+    `DRAW: ${FEATURE_LEGEND}${elementsText ? `The marked features for this sheet are: ${elementsText}. ` : ''}${speciesInstructions ? `${speciesInstructions} ` : ''}` +
     `Paint each marked feature as a clear, recognisable illustration, and only the features that are already marked.`;
   const markerCleanup =
     `MARKER CLEANUP: coloured footprints are temporary placement guides, not finished artwork. ` +
@@ -235,6 +242,7 @@ export function buildProducerPromptLegacy(
   mapKind: 'base' | 'full' = 'full',
   retry = false,
   designBrief = '',
+  items: PlacedItem[] = [],
 ): string {
   const noWrite =
     `ABSOLUTELY NO WRITING: the output image must contain ZERO text, letters, words, labels, captions, numbers, legends, banners, signage, compass rose or watermark — not on features, not in corners, nowhere. If you are about to draw any glyph, do not. (Labels are added separately afterwards.) `;
@@ -260,17 +268,26 @@ export function buildProducerPromptLegacy(
   const fillItCalm =
     `PAINT THE WHOLE PLOT, BUT CALMLY: illustrate the ENTIRE area inside the property boundary — never leave any area blank, white, plain or unpainted — but keep it a QUIET BASE: plain grass, veld, bare soil and existing tree canopies in flat, muted, low-contrast tones, matching the real photo's layout. The ${layerLabel} content must be the only thing that stands out. `;
 
+  const speciesInstructions = items
+    .filter(i => i.speciesCrownForm && i.label)
+    .map(i => `The tree marked '${i.label}' is a ${i.speciesCrownForm} canopy tree.`)
+    .filter((v, i, a) => a.indexOf(v) === i)
+    .join(' ');
+
+  const drawBlock =
+    `Redraw EACH marked feature as an attractive, instantly-recognisable illustration exactly where it is marked and at the same count — ` +
+    FEATURE_LEGEND +
+    (elementsText ? `The marked features are: ${elementsText}. ` : '') +
+    (speciesInstructions ? `${speciesInstructions} ` : '') +
+    `Keep the main house, driveway, road and the property boundary exactly in their true position, shape and size; ` +
+    `the driveway is a simple access track of the exact traced shape — do NOT turn it into a loop, roundabout, circular drive or turning circle, and do not add extra branches to it; ${orient}`;
+
   const rules =
     (retry ? `IMPORTANT — YOUR PREVIOUS ATTEMPT FAILED: it left the plot blank / plain white. That is unacceptable. Every part of the plot must be painted as living land this time. ` : '') +
     noWrite + noInvent +
     task +
     layerFocus +
-    (isLayerMap ? fillItCalm : fillIt) + roofs +
-    `Redraw EACH marked feature as an attractive, instantly-recognisable illustration exactly where it is marked and at the same count — ` +
-    FEATURE_LEGEND +
-    (elementsText ? `The marked features are: ${elementsText}. ` : '') +
-    `Keep the main house, driveway, road and the property boundary exactly in their true position, shape and size; ` +
-    `the driveway is a simple access track of the exact traced shape — do NOT turn it into a loop, roundabout, circular drive or turning circle, and do not add extra branches to it; ${orient}`;
+    (isLayerMap ? fillItCalm : fillIt) + roofs + drawBlock;
 
   const briefBlock = designBrief
     ? `\n\n=== MASTER DESIGN BRIEF — EVERY SHEET SHARES THIS ONE DESIGN ===\n` +
@@ -503,6 +520,7 @@ export function buildShowcasePrompt(
   elementsText: string,
   placeName = '',
   sheetKind: ShowcaseSheetKind = 'all',
+  items: PlacedItem[] = [],
 ): string {
   // NEVER BRIEF THE MODEL ON NOTHING — same guard as buildSatelliteOverlayPrompt (audit finding,
   // 2026-07-25: this path had no guard, and its own noInvent line below tells the model "the
@@ -533,6 +551,11 @@ export function buildShowcasePrompt(
     `MARKER CLEANUP: coloured footprints are temporary placement guides, not finished artwork. ` +
     `Replace them with the named real feature. Do not copy any emoji, map pin, tool icon, badge, ` +
     `selection handle or other editor symbol into the output.`;
+  const speciesInstructions = items
+    .filter(i => i.speciesCrownForm && i.label)
+    .map(i => `The tree marked '${i.label}' is a ${i.speciesCrownForm} canopy tree.`)
+    .filter((v, i, a) => a.indexOf(v) === i)
+    .join(' ');
   return [
     STYLE_LINES[stylePreset],
     `TASK: edit this satellite photo of a real South African smallholding into a beautiful hand-illustrated site plan sheet titled "${title}".`,
@@ -541,7 +564,7 @@ export function buildShowcasePrompt(
     `LAYOUT: use a landscape plan sheet with the map filling the left side and a clean right-hand title/legend panel on the right, like the direct-ChatGPT plan sheets.`,
     noInvent,
     waterRule,
-    `DRAW: each coloured marker on the photo is a placeholder. Paint the real thing in its place, same spot, same size and same count. Marker glossary for this sheet only: ${markerGlossary || 'no additional marker types'}. This sheet's complete feature list is: ${elementsText}. Ground with no marker stays open lawn or veld, unchanged.`,
+    `DRAW: each coloured marker on the photo is a placeholder. Paint the real thing in its place, same spot, same size and same count. Marker glossary for this sheet only: ${markerGlossary || 'no additional marker types'}. This sheet's complete feature list is: ${elementsText}. ${speciesInstructions ? `${speciesInstructions} ` : ''}Ground with no marker stays open lawn or veld, unchanged.`,
     markerCleanup,
     `LABELS AND PANELS: in the corner with the least map content, place a clean paper title block reading "${title}" as the largest lettering on the sheet, a tidy legend for the feature types, and a small north arrow. Label up to six important features in small elegant lettering beside them, using exactly these spellings: ${labels}. These are the only words anywhere on the sheet, all horizontal and print-legible.`,
     singleLayer,
@@ -704,8 +727,9 @@ export function buildSatelliteOverlayPrompt(args: {
   hasDriveway?: boolean;
   /** structureRegisterText() output — the computed truth about what each traced structure IS. */
   structureRegister?: string;
+  items?: PlacedItem[];
 }): string {
-  const { layerLabel, stylePreset, elementsText, fabric = '', served = '', systems, placeName, sheetKind, hasDriveway = false, structureRegister = '' } = args;
+  const { layerLabel, stylePreset, elementsText, fabric = '', served = '', systems, placeName, sheetKind, hasDriveway = false, structureRegister = '', items = [] } = args;
   const sheetNumber = SHEET_NO[sheetKind] ?? '01';
   const title = `${sheetNumber} — ${(layerLabel || 'SITE').toUpperCase()} PLAN`;
 
@@ -795,7 +819,7 @@ export function buildSatelliteOverlayPrompt(args: {
   // pictorial element, then lettered a confident legend for infrastructure the farmer never placed.
   // That is the "why is zones so bad" bug: the model was following instructions.
   const zoneBands = sheetKind === 'zones' || sheetKind === 'all'
-    ? `\n\nZONE BANDS — LARGE TRANSLUCENT AREAS, NOT MARKERS. The big soft-edged coloured areas already on the photograph are the permaculture effort-zones (Zone 0 nearest the house out to Zone 5 wildest). They are AREAS OF LAND, not placement guides: each one is redrawn as a soft translucent tinted wash lying over the clean redrawn ground, keeping its exact outline and its exact colour, so the ground, roofs and planting stay fully readable through it. A zone band NEVER becomes a pictorial icon, a tank, a bed, a pond or any other object, and nothing is invented inside one. Each band keeps its round number badge — the numeral drawn in white on a filled disc in the band's own colour, at the same spot — and that numeral is permitted lettering.${sheetKind === 'zones' ? ' THIS SHEET IS ABOUT THE ZONES THEMSELVES: the bands and their badges are the entire subject, the legend lists one row per zone with its number, name and colour swatch, and no other element, icon, tank, bed, tree or structure is added anywhere on the map.' : ''}`
+    ? `\n\nZONE BANDS — LARGE TRANSLUCENT AREAS, NOT MARKERS. The big soft-edged coloured areas already on the photograph are the permaculture effort-zones (Zone 0 nearest the house out to Zone 5 wildest). They are AREAS OF LAND, not placement guides: each one is redrawn as a soft translucent tinted wash laid over the clean redrawn ground, keeping its exact outline and its exact colour, so the ground, roofs and planting stay fully readable through it. A zone band NEVER becomes a pictorial icon, a tank, a bed, a pond or any other object, and nothing is invented inside one. Each band keeps its round number badge — the numeral drawn in white on a filled disc in the band's own colour, at the same spot — and that numeral is permitted lettering.${sheetKind === 'zones' ? ' THIS SHEET IS ABOUT THE ZONES THEMSELVES: the bands and their badges are the entire subject, the legend lists one row per zone with its number, name and colour swatch, and no other element, icon, tank, bed, tree or structure is added anywhere on the map.' : ''}`
     : '';
 
   // EXISTING SITE FABRIC — traced ground (lawn, orchard, veg garden, patio, cleared, driveway,
@@ -973,7 +997,7 @@ The boundary line itself is the crisp seam between the two.
 
 ${iconRule}
 
-7. THIS SHEET'S ELEMENTS AND EXACT SPELLINGS: ${mapNames}. The WATER / PLANTING / INFRASTRUCTURE headings are a printing order for the legend panel only. They say nothing about where anything sits and they are not a drawing order: never move an element to stand near others from its own legend section — each icon goes on its own marker and nowhere else. That list is the COMPLETE set of DESIGNED ELEMENTS on this ${(layerLabel || 'site').toUpperCase()} sheet — no other tank, bed, tree, structure or fitting is added anywhere, and the other layers of the plan set carry everything else. It is not the whole of what the sheet SHOWS: the existing ground, the boundary fence and anything named under the rules below are also on this sheet, and each is governed by its own rule. Nothing outside that list and those rules is drawn. Each marker on the photograph carries a small printed glyph identifying it; the finished pictorial icon replaces the whole marker, glyph included. The "×N" counts are the exact number of that icon to place: one marker, one icon — the marker count is the icon count. A "×N" is a QUANTITY, never part of an element’s name: it tells you how many to draw and it is never lettered onto the sheet. No drawn label contains a number of items, and no element is numbered or itemised — there is no "×1", no "×2", no "BED 1 / BED 2". Quantities appear in the legend panel and nowhere else.
+7. THIS SHEET'S ELEMENTS AND EXACT SPELLINGS: ${mapNames}. The WATER / PLANTING / INFRASTRUCTURE headings are a printing order for the legend panel only. They say nothing about where anything sits and they are not a drawing order: never move an element to stand near others from its own legend section — each icon goes on its own marker and nowhere else. That list is the COMPLETE set of DESIGNED ELEMENTS on this ${(layerLabel || 'site').toUpperCase()} sheet — no other tank, bed, tree, structure or fitting is added anywhere, and the other layers of the plan set carry everything else. It is not the whole of what the sheet SHOWS: the existing ground, the boundary fence and anything named under the rules below are also on this sheet, and each is governed by its own rule. Nothing outside that list and those rules is drawn. Each marker on the photograph carries a small printed glyph identifying it; the finished pictorial icon replaces the whole marker, glyph included. The "×N" counts are the exact number of that icon to place: one marker, one icon — the marker count is the icon count. A "×N" is a QUANTITY, never part of an element’s name: it tells you how many to draw and it is never lettered onto the sheet. No drawn label contains a number of items, and no element is numbered or itemised — there is no "×1", no "×2", no "BED 1 / BED 2". Quantities appear in the legend panel and nowhere else. ${items.filter(i => i.speciesCrownForm && i.label).map(i => `The tree marked '${i.label}' is a ${i.speciesCrownForm} canopy tree.`).filter((v, i, a) => a.indexOf(v) === i).join(' ')}
 
 8. THE ROOF AND THE ACCESS TRACK ARE DIFFERENT THINGS, AND THEY ARE DIFFERENT COLOURS. Slate grey #3C4247 is ROOF; near-black #12140F is TAR ON THE GROUND. Never draw one in the other's colour and never give the near-black shape a ridge, a hip, a pitched plane or a shadow. The bright white outline encloses the ROOF of the house, and the photograph inside that outline IS the real roof, shot from above — draw it as a building with ridges, hips and pitched planes casting a shadow, keeping every edge and every wing exactly as the photograph shows them. Nothing covers that roof: if it looks like a flat grey rectangle you are looking at the wrong thing. It is a building, and no part of it is ever paved, darkened or turned into road surface. The access track is separate, flat, at ground level, and lies where the photograph already shows it. They never merge and they never swap.
 

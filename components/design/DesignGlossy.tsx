@@ -9589,16 +9589,17 @@ export default function DesignGlossy({
               placeName,
               sheetKind: f,
               hasDriveway: renderRefLayers.driveway.length >= 2,
+              items: renderState.items,
             })
           : lockActive
           ? buildLockedIllustrationPrompt(layerLabel, styleKey, elementsText, designBrief)
           : effectiveModelChrome
             ? (promptRewrite
-              ? buildShowcasePrompt(layerLabel, styleKey, elementsText, placeName ?? '', f)
+              ? buildShowcasePrompt(layerLabel, styleKey, elementsText, placeName ?? '', f, renderState.items)
               : buildShowcasePromptLegacy(layerLabel, styleKey, elementsText, placeName ?? '', designBrief))
             : (promptRewrite
-              ? buildProducerPrompt(layerLabel, styleKey, elementsText, 'full', false, designBrief)
-              : buildProducerPromptLegacy(layerLabel, styleKey, elementsText, 'full', false, designBrief));
+              ? buildProducerPrompt(layerLabel, styleKey, elementsText, 'full', false, designBrief, renderState.items)
+              : buildProducerPromptLegacy(layerLabel, styleKey, elementsText, 'full', false, designBrief, renderState.items));
         sheets.push({
           key: f,
           label: layerLabel,
@@ -9745,16 +9746,16 @@ export default function DesignGlossy({
       const prompt = fullSheetPolish
         ? buildFinishedSheetPolishPrompt(layerLabel, styleKey, placeName, structureRegisterText(renderState, renderRefLayers))
         : isModelChromeStyle(styleKey)
-        ? buildSatelliteOverlayPrompt({ layerLabel, stylePreset: styleKey, elementsText, fabric, served, systems: waterSystemsPresent(renderState), placeName, sheetKind: filter, hasDriveway: renderRefLayers.driveway.length >= 2 })
+        ? buildSatelliteOverlayPrompt({ layerLabel, stylePreset: styleKey, elementsText, fabric, served, systems: waterSystemsPresent(renderState), placeName, sheetKind: filter, hasDriveway: renderRefLayers.driveway.length >= 2, items: renderState.items })
         : lockActive
         ? buildLockedIllustrationPrompt(layerLabel, styleKey, elementsText, designBrief)
         : useShowcase
           ? (promptRewrite
-            ? buildShowcasePrompt(layerLabel, styleKey, elementsText, placeName ?? '', filter)
+            ? buildShowcasePrompt(layerLabel, styleKey, elementsText, placeName ?? '', filter, renderState.items)
             : buildShowcasePromptLegacy(layerLabel, styleKey, elementsText, placeName ?? '', designBrief))
           : (promptRewrite
-            ? buildProducerPrompt(layerLabel, styleKey, elementsText, 'full', false, designBrief)
-            : buildProducerPromptLegacy(layerLabel, styleKey, elementsText, 'full', false, designBrief));
+            ? buildProducerPrompt(layerLabel, styleKey, elementsText, 'full', false, designBrief, renderState.items)
+            : buildProducerPromptLegacy(layerLabel, styleKey, elementsText, 'full', false, designBrief, renderState.items));
       const jobId = await enqueueRenderJob({
         siteId: state.siteId,
         style: styleKey,

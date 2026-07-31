@@ -18,6 +18,7 @@ import { layoutCanvasLabels, estimatePillWidth, groupSameLabelPills, isUsableCan
 import { ownedByCurrentStep } from '@/lib/glossy-filters';
 import { rectFromCorners, anyVertexInRect, itemCenterInRect, clampGroupDelta, type Rect } from '@/lib/marquee';
 import { ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_DEFS, type ElementCategory } from '@/lib/design-elements';
+import { SPECIES } from '@/lib/species-catalog';
 import type { DesignLayerType } from '@/lib/design-studio';
 import { computeContourLines } from '@/lib/contours';
 import { CONTOUR_CASING, CONTOUR_CASING_EXTRA, CONTOUR_CORE, CONTOUR_CORE_MAJOR } from '@/lib/contour-cartography';
@@ -116,6 +117,7 @@ export interface DesignCanvasProps {
   onChange: (next: DesignCanvasState) => void;
   tool: ToolKind;
   placeDefId: string | null;
+  placeSpeciesId: string | null;
   zoneDraw: 0 | 1 | 2 | 3 | 4 | 5;
   // When set, the armed zone tool draws a labelled GROUND FEATURE (house/patio/…) instead
   // of a permaculture effort-zone — stamped onto the committed ring's optional `feature`.
@@ -564,6 +566,7 @@ export default function DesignCanvas({
   onChange,
   tool,
   placeDefId,
+  placeSpeciesId,
   zoneDraw,
   areaFeature,
   lineKind,
@@ -1084,6 +1087,19 @@ export default function DesignCanvas({
       const def = ELEMENTS_BY_ID[placeDefId];
       if (!def) return;
       const item: PlacedItem = { id: newId(), defId: placeDefId, x: pt[0], y: pt[1] };
+      if (placeSpeciesId) {
+        item.speciesId = placeSpeciesId;
+        const sp = SPECIES.find(s => s.id === placeSpeciesId);
+        if (sp) {
+          item.speciesBotanical = sp.botanicalName;
+          item.speciesCrownForm = sp.crownForm;
+          item.speciesHeightM = sp.matureHeightM;
+          item.speciesWidthM = sp.matureWidthM;
+          // Apply the species mature width as the item's physical footprint size on the canvas
+          item.wM = sp.matureWidthM;
+          item.hM = sp.matureWidthM;
+        }
+      }
       onChange({ ...state, items: [...state.items, item] });
       onSelect(item.id);
       return;
