@@ -27,6 +27,9 @@ import { setGlobalOptions, logger } from 'firebase-functions/v2';
 import { initializeApp } from 'firebase-admin/app';
 import { getFirestore, FieldValue, Timestamp, type DocumentReference } from 'firebase-admin/firestore';
 import { getStorage } from 'firebase-admin/storage';
+import { PNG } from 'pngjs';
+import { compareRenders } from '../../lib/render-difference';
+import { geminiEdit } from './gemini';
 import {
   RENDER_SHEET_KEYS,
   workerRenderJobContractError,
@@ -35,6 +38,7 @@ import {
 initializeApp();
 const db = getFirestore();
 const OPENAI_API_KEY = defineSecret('OPENAI_API_KEY');
+const GEMINI_API_KEY = defineSecret('GEMINI_API_KEY');
 
 // Firestore-trigger region MUST equal the database region, or deploy is rejected.
 // fieldproof-sa's Firestore database is in europe-west1 (confirmed via firebase CLI 2026-07-18).
@@ -127,6 +131,7 @@ interface RenderJob {
   siteId: string;
   style: string;
   engine: string;
+  provider?: 'openai' | 'gemini';
   sheets: RenderSheet[];
   status: string;
 }
@@ -204,13 +209,13 @@ async function openaiEdit(
     form.append('moderation', 'low'); // less-restrictive filter — fewer spurious refusals on aerial land photos
     // Storage path is historically named "composite.jpg"/input-*.jpg (harmless — GCS doesn't care about
     // extensions), but the actual bytes are PNG; label the Blob correctly for OpenAI.
-    form.append('image[]', new Blob([buf], { type: 'image/png' }), 'composite.png');
+    form.append('image[]', new Blob([buf as unknown as BlobPart], { type: 'image/png' }), 'composite.png');
     if (styleReference) {
-      form.append('image[]', new Blob([styleReference], { type: 'image/jpeg' }), 'precision-atlas-style-reference.jpg');
+      form.append('image[]', new Blob([styleReference as unknown as BlobPart], { type: 'image/jpeg' }), 'precision-atlas-style-reference.jpg');
     }
     if (maskB64) {
       const maskBuf = Buffer.from(maskB64, 'base64');
-      form.append('mask', new Blob([maskBuf], { type: 'image/png' }), 'mask.png');
+      form.append('mask', new Blob([maskBuf as unknown as BlobPart], { type: 'image/png' }), 'mask.png');
     }
     res = await fetch('https://api.openai.com/v1/images/edits', {
       method: 'POST',
@@ -343,7 +348,7 @@ async function claimJob(ref: DocumentReference, jobId: string): Promise<ClaimRes
 }
 
 export const runRenderJob = onDocumentCreated(
-  { document: 'render_jobs/{jobId}', secrets: [OPENAI_API_KEY], timeoutSeconds: 540, memory: '1GiB' },
+  { document: 'render_jobs/{jobId}', secrets: [OPENAI_API_KEY, GEMINI_API_KEY], timeoutSeconds: 540, memory: '1GiB' },
   async (event) => {
     const snap = event.data;
     if (!snap) return;
@@ -361,6 +366,7 @@ export const runRenderJob = onDocumentCreated(
       }
 
       const key = OPENAI_API_KEY.value();
+      const geminiKey = job.provider === 'gemini' ? GEMINI_API_KEY.value() : '';
       const bucket = getStorage().bucket();
       const deadline = started + JOB_DEADLINE_MS;
 
@@ -400,12 +406,37 @@ export const runRenderJob = onDocumentCreated(
             // (job …_verify_run1): with two entries in image[] AND a mask, gpt-image-2 filled the
             // entire editable region with solid black — 20.6% of the sheet, matching the mask's
             // 20.3% editable area exactly, while the protected surround painted normally. The
-            // second image evidently breaks the mask's meaning. Single-image jobs are unaffected
+            // The second image evidently breaks the mask's meaning. Single-image jobs are unaffected
             // (every earlier render has 0% black), so gate the reference on there being no mask.
-            const styleReference = job.style === 'precision_atlas' && sheet.geometryLock === true && !maskB64
-              ? await loadPrecisionAtlasReference()
-              : null;
-            const outB64 = await openaiEdit(key, buf.toString('base64'), prompt, maskB64, styleReference);
+            let outB64: string;
+            
+            if (job.provider === 'gemini') {
+              outB64 = await geminiEdit(geminiKey, buf.toString('base64'), prompt);
+              
+              if (maskB64) {
+                 const maskBuf = Buffer.from(maskB64, 'base64');
+                 const maskPng = PNG.sync.read(maskBuf);
+                 const maskPixels = new Uint8ClampedArray(maskPng.data.buffer);
+                 
+                 const inPng = PNG.sync.read(buf);
+                 const inPixels = new Uint8ClampedArray(inPng.data.buffer);
+                 
+                 const outBuf = Buffer.from(outB64, 'base64');
+                 const outPng = PNG.sync.read(outBuf);
+                 const outPixels = new Uint8ClampedArray(outPng.data.buffer);
+                 
+                 const diff = compareRenders(inPixels, outPixels, { protectMask: maskPixels });
+                 if (diff.protectedMismatches > 0) {
+                    throw new Error(`gemini_protected_region_drift: found ${diff.protectedMismatches} changed pixels in protected area`);
+                 }
+              }
+            } else {
+              const styleReference = job.style === 'precision_atlas' && sheet.geometryLock === true && !maskB64
+                ? await loadPrecisionAtlasReference()
+                : null;
+              outB64 = await openaiEdit(key, buf.toString('base64'), prompt, maskB64, styleReference);
+            }
+            
             const outputPath = `renders/${job.uid}/${jobId}/output-${sheet.key}.png`; // output_format is png now
             // firebaseStorageDownloadTokens: without it, a client getDownloadURL() on an Admin-SDK
             // upload fails and the browser can never pull the finished sheet back (job says "done"

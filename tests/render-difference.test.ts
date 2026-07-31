@@ -112,6 +112,23 @@ test('protected pixels are excluded, so a good pass is not punished for the app 
   assert.ok(unmasked.redrawnFraction < 0.55);
 });
 
+test('a Gemini result differing inside the protected region is caught as a drift mismatch', () => {
+  const hybrid = solid(120, 130, 110);
+  const after = new Uint8ClampedArray(hybrid);
+  const mask = new Uint8ClampedArray(PIXELS * 4);
+  
+  // Protect the first half
+  for (let i = 0; i < (PIXELS / 2) * 4; i += 4) {
+    mask[i + 3] = 255;
+  }
+  
+  // Change a protected pixel
+  after[0] = 200; after[1] = 40; after[2] = 90;
+  
+  const r = compareRenders(hybrid, after, { protectMask: mask });
+  assert.equal(r.protectedMismatches, 1);
+});
+
 test('partially protected pixels are scored exactly as their visible blended result', () => {
   const before = solid(120, 130, 110);
   const after = repainted(before, 0.55);

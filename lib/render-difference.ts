@@ -39,6 +39,8 @@ export interface DifferenceReport {
   meanDelta: number;
   /** How many pixels were actually compared, after the protect mask. */
   comparedPixels: number;
+  /** How many fully protected pixels were changed. */
+  protectedMismatches: number;
   verdict: 'redrawn' | 'filtered-only' | 'unchanged';
 }
 
@@ -86,10 +88,21 @@ export function compareRenders(
   let touched = 0;
   let redrawn = 0;
   let deltaSum = 0;
+  let protectedMismatches = 0;
 
   for (let i = 0; i < before.length; i += 4) {
     const protection = protectMask ? protectMask[i + 3] / 255 : 0;
-    if (protection >= 1) continue; // restored byte-for-byte afterwards — not the model's work
+    if (protection >= 1) {
+      if (
+        before[i] !== after[i] ||
+        before[i + 1] !== after[i + 1] ||
+        before[i + 2] !== after[i + 2] ||
+        before[i + 3] !== after[i + 3]
+      ) {
+        protectedMismatches++;
+      }
+      continue; // restored byte-for-byte afterwards — not the model's work
+    }
     compared++;
 
     // Score what the farmer will actually see after restoreProtectedPixels.
@@ -108,10 +121,10 @@ export function compareRenders(
   }
 
   if (compared === 0) {
-    // Everything was protected, so the model was never allowed to change anything. That is a
+    // everything was protected, so the model was never allowed to change anything. That is a
     // configuration mistake rather than a bad render, and calling it "unchanged" would send
     // someone to re-prompt a model that was given no canvas to work on.
-    return { touchedFraction: 0, redrawnFraction: 0, meanDelta: 0, comparedPixels: 0, verdict: 'unchanged' };
+    return { touchedFraction: 0, redrawnFraction: 0, meanDelta: 0, comparedPixels: 0, protectedMismatches, verdict: 'unchanged' };
   }
 
   const touchedFraction = touched / compared;
@@ -125,7 +138,7 @@ export function compareRenders(
     verdict = touchedFraction >= FILTER_TOUCHED_FLOOR ? 'filtered-only' : 'unchanged';
   }
 
-  return { touchedFraction, redrawnFraction, meanDelta, comparedPixels: compared, verdict };
+  return { touchedFraction, redrawnFraction, meanDelta, comparedPixels: compared, protectedMismatches, verdict };
 }
 
 /**
