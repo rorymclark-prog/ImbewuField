@@ -181,6 +181,9 @@ export interface DesignPaletteProps {
    *  in the same order as this palette's own rows. */
   bottomStop: BottomStop;
   onBottomStopChange: (next: BottomStop) => void;
+  /** Sections the farmer closed one at a time with their ×. The count rides beside the handle so
+   *  "where did it go" is answered on screen instead of from memory. */
+  hiddenSections?: { count: number; onRestore: () => void };
 }
 
 const GOLD = '#F7C97E';
@@ -360,6 +363,7 @@ export default function DesignPalette({
   windControl,
   siteBiome,
   bottomStop,
+  hiddenSections,
   onBottomStopChange,
 }: DesignPaletteProps) {
   const { t } = useLanguage();
@@ -404,6 +408,38 @@ export default function DesignPalette({
   // The sheet body follows the ladder now. Kept as a derived boolean so every existing read below
   // (maxHeight, aria-expanded, the strip-end effect) works unchanged.
   const sheetOpen = bottomVisibility(bottomStop).body;
+
+  /** The grab strip, plus the count of individually-closed sections when there are any. */
+  function renderHandleRow() {
+    const handle = (
+      <ChromeHandle
+        stop={bottomStop}
+        stops={BOTTOM_STOPS}
+        onChange={onBottomStopChange}
+        label={t(sheetOpen ? 'designPaletteCollapse' : 'designPaletteExpand')}
+      />
+    );
+    if (!hiddenSections || hiddenSections.count < 1) return handle;
+    return (
+      // The chip rides ABOVE the strip rather than beside it: the grip has to stay centred on the
+      // panel, because an off-centre grip stops reading as an edge you can pull.
+      <div style={{ position: 'relative', display: 'flex', alignItems: 'center', flexShrink: 0 }}>
+        <span style={{ flex: 1, minWidth: 0 }}>{handle}</span>
+        <button
+          type="button"
+          onClick={hiddenSections.onRestore}
+          style={{
+            position: 'absolute', right: 4, top: '50%', transform: 'translateY(-50%)',
+            border: 'none', background: 'transparent', color: GREEN,
+            fontSize: 11.5, fontWeight: 700, cursor: 'pointer', padding: '2px 4px',
+            textDecoration: 'underline', textUnderlineOffset: 3, whiteSpace: 'nowrap',
+          }}
+        >
+          {hiddenSections.count} hidden
+        </button>
+      </div>
+    );
+  }
   const setSheetOpen = useCallback((v: boolean | ((p: boolean) => boolean)) => {
     const want = typeof v === 'function' ? v(sheetOpen) : v;
     onBottomStopChange(want ? 'full' : 'bar');
@@ -1581,15 +1617,10 @@ export default function DesignPalette({
           fontFamily: 'inherit',
         }}
       >
-        {/* Drag handle — tap toggles open/closed; dragging past a small threshold forces the
-            state in that direction. touchAction:'none' + pointer capture match the drag-handle
+        {/* Drag handle — drag it down and the panel follows your finger all the way closed; a tap
+            steps one rung and wraps. touchAction:'none' + pointer capture match the drag-handle
             pattern already used throughout DesignCanvas.tsx. */}
-        <ChromeHandle
-          stop={bottomStop}
-          stops={BOTTOM_STOPS}
-          onChange={onBottomStopChange}
-          label={t(sheetOpen ? 'designPaletteCollapse' : 'designPaletteExpand')}
-        />
+        {renderHandleRow()}
         {/* Tool row — always present regardless of open/collapsed, and never inside the
             scrollable body below, so the Layers popover keeps its "no overflow ancestor"
             guarantee and Select/Undo/Delete stay one tap away even collapsed. Its own content is
@@ -1641,12 +1672,7 @@ export default function DesignPalette({
       {/* THE SAME LADDER ON DESKTOP. This handle used to exist only in the phone branch above, so
           on a wide screen there was no way to collapse the bottom stack at all — which is exactly
           where the owner was looking for it. One component, one behaviour, both layouts. */}
-      <ChromeHandle
-        stop={bottomStop}
-        stops={BOTTOM_STOPS}
-        onChange={onBottomStopChange}
-        label={t(sheetOpen ? 'designPaletteCollapse' : 'designPaletteExpand')}
-      />
+      {renderHandleRow()}
       {renderToolRow()}
 
       {/* Below the tool row, everything is unbounded in height: the element catalog can carry a

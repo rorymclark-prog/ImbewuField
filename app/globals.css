@@ -511,6 +511,14 @@ html, body {
 }
 .u-sheet-grabber { width: 36px; height: 4px; border-radius: 9999px; background: var(--border-strong); margin: 8px auto; }
 
+/* Design Studio edge grips. The default focus ring drew a full-width blue box around a 20px
+   strip every time it was clicked, which is most of what "there is still a big gap now where the
+   minimise tool is" was describing. :focus-visible keeps the ring for keyboard users, where it is
+   the only way to know where you are, and drops it for the pointer, which already knows. */
+.chrome-handle { outline: none; -webkit-tap-highlight-color: transparent; }
+.chrome-handle:focus-visible { outline: 2px solid var(--ochre, #C07A1E); outline-offset: 1px; border-radius: 999px; }
+.chrome-handle:hover > span:last-child, .chrome-handle:active > span:last-child { background: rgba(11, 18, 11, 0.55); }
+
 @media (prefers-reduced-motion: reduce) {
   .u-anim-sheet, .u-anim-sheet.u-anim-dialog { animation: u-fadeIn var(--dur-base) linear !important; }
 }

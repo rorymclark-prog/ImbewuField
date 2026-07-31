@@ -64,7 +64,8 @@ import { type BaseAlignment } from '@/lib/base-photo-align';
 import ChromeHandle from '@/components/design/ChromeHandle';
 import {
   BOTTOM_STOPS, TOP_STOPS, CHROME_PREF_KEY, bottomVisibility, topVisibility,
-  persistableChrome, restoreStop, type BottomStop, type TopStop, type ChromePref,
+  persistableChrome, restoreStop, DISMISSED_KEY, restoreDismissed,
+  type BottomStop, type TopStop, type ChromePref, type DismissibleBand,
 } from '@/lib/design-chrome';
 import { layoutBedBlock, normaliseBedBlockSpec, MIN_BED_COUNT, MAX_BED_COUNT, type BedBlockPlacement, type BedBlockSpec } from '@/lib/bed-block';
 import { tidyOutline, tidyOutlineSummary, type TidyOutlineResult } from '@/lib/tidy-outline';
@@ -170,6 +171,31 @@ const OCHRE = '#C07A1E';
 const DARK = '#0B120B';
 
 const MAX_UNDO = 25;
+
+/**
+ * The × that closes ONE band of the bottom stack. Quiet by default and only firm on hover, because
+ * it sits inside rows whose real controls it must never outrank — and it is always paired with the
+ * "N hidden" chip beside the handle, which is the way back.
+ */
+function SectionClose({ onClick, what }: { onClick: () => void; what: string }) {
+  const title = `Hide ${what} — bring it back with “hidden” next to the handle`;
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      title={title}
+      aria-label={title}
+      style={{
+        display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+        width: 26, height: 26, flexShrink: 0,
+        border: 'none', background: 'transparent', borderRadius: 8,
+        color: DARK, opacity: 0.4, cursor: 'pointer', padding: 0,
+      }}
+    >
+      <X size={14} />
+    </button>
+  );
+}
 
 // Module-level flag set around this page's own saveCanvasState calls, so its own writes
 // (handleChange/handleUndo/setStep/migration) don't bounce back through
@@ -760,8 +786,37 @@ function DesignStudioInner() {
       window.localStorage.setItem(CHROME_PREF_KEY, JSON.stringify(persistableChrome({ top: topStop, bottom: bottomStop })));
     } catch { /* storage full is already surfaced by the design save path */ }
   }, [topStop, bottomStop]);
+  // CLOSING ONE SECTION. The ladder is coarse by design — it sheds in a fixed order — which is
+  // wrong when only one band is in the way ("the option to collapse specific sections… i cant
+  // work with the map adjustment tools without the huge tool section underneath"). Each band's ×
+  // lands here. This one persists, because the count chip beside the handle always offers it back.
+  const [dismissed, setDismissed] = useState<DismissibleBand[]>([]);
+  useEffect(() => {
+    try { setDismissed(restoreDismissed(window.localStorage.getItem(DISMISSED_KEY))); }
+    catch { /* a corrupt preference is not worth a broken Studio */ }
+  }, []);
+  const hideSection = useCallback((band: DismissibleBand) => {
+    setDismissed((prev) => {
+      if (prev.includes(band)) return prev;
+      const next = [...prev, band];
+      try { window.localStorage.setItem(DISMISSED_KEY, JSON.stringify(next)); } catch { /* non-fatal */ }
+      return next;
+    });
+  }, []);
+  const showAllSections = useCallback(() => {
+    setDismissed([]);
+    try { window.localStorage.removeItem(DISMISSED_KEY); } catch { /* non-fatal */ }
+  }, []);
+
   const topShow = topVisibility(topStop);
-  const bottomShow = bottomVisibility(bottomStop);
+  const rawBottomShow = bottomVisibility(bottomStop);
+  const bottomShow = {
+    ...rawBottomShow,
+    droneTools: rawBottomShow.droneTools && !dismissed.includes('droneTools'),
+    droneEntry: rawBottomShow.droneEntry && !dismissed.includes('droneTools'),
+    shortcuts: rawBottomShow.shortcuts && !dismissed.includes('shortcuts'),
+    stepBar: rawBottomShow.stepBar && !dismissed.includes('stepGuide'),
+  };
   // Kept so the existing phone auto-collapse effect and every other read still work unchanged.
   const chromeCollapsed = !topShow.wizard;
   const setChromeCollapsed = useCallback((v: boolean | ((p: boolean) => boolean)) => {
@@ -2963,6 +3018,10 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               >
                 Remove photo
               </button>
+              {/* Hides the STRIP, not the photo — "Remove photo" beside it is the one that
+                  touches the design, which is why that one is red and asks first and this one is
+                  a grey ×. */}
+              <SectionClose onClick={() => hideSection('droneTools')} what="the photo controls" />
             </div>
           ) : (
             /* Was a dashed, small-text row sitting in a stack of similar-looking dashed hint rows,
@@ -3019,11 +3078,11 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
       {/* "Just beds & trees" quick path — for the farmer who doesn't want the full permaculture
           plan. Offered on the first (Base) step; jumps straight to Planting. */}
       {bottomShow.shortcuts && canvasState && canvasState.step === 'base' && designMode === 'guided' && (
-        <div style={{ padding: '6px 12px 0' }}>
+        <div style={{ padding: '6px 12px 0', display: 'flex', alignItems: 'center', gap: 4 }}>
           <button
             type="button"
             onClick={() => { setDesignMode('guided'); setStep('planting'); }}
-            style={{ width: '100%', display: 'flex', alignItems: 'center', gap: 8, minHeight: 40, padding: '6px 12px', borderRadius: 12, border: '1px dashed rgba(31,77,43,0.4)', background: 'transparent', color: GREEN, cursor: 'pointer', textAlign: 'left', fontSize: 12.5 }}
+            style={{ flex: 1, minWidth: 0, display: 'flex', alignItems: 'center', gap: 8, minHeight: 40, padding: '6px 12px', borderRadius: 12, border: '1px dashed rgba(31,77,43,0.4)', background: 'transparent', color: GREEN, cursor: 'pointer', textAlign: 'left', fontSize: 12.5 }}
           >
             <Sprout size={15} style={{ flexShrink: 0 }} />
             <span style={{ flex: 1 }}>
@@ -3031,13 +3090,17 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             </span>
             <ChevronRight size={16} style={{ flexShrink: 0 }} />
           </button>
+          <SectionClose onClick={() => hideSection('shortcuts')} what="the skip-ahead offer" />
         </div>
       )}
 
       {/* Step-by-step guide — the walked micro-task checklist for the current step, with a
           "Do this" that arms the right tool and a "Why this matters" lesson. */}
-      {canvasState && canvasState.step !== 'glossy' && canvasState.step !== 'review' && (
+      {/* bottomShow.stepBar was computed and then never read — the guide was the one band the
+          ladder promised to fold and didn't. It is on the ladder now, and carries its own ×. */}
+      {bottomShow.stepBar && canvasState && canvasState.step !== 'glossy' && canvasState.step !== 'review' && (
         <StepGuide
+          onHide={() => hideSection('stepGuide')}
           step={canvasState.step}
           state={canvasState}
           ctx={{ hasBoundary: refLayers.boundary.length >= 3, hasHouse: refLayers.house.length >= 3 }}
@@ -3203,11 +3266,14 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
         </div>
       )}
 
-      {/* Palette (docked bottom) */}
-      {canvasState && canvasState.step !== 'glossy' && (
+      {/* Palette (docked bottom). bottomShow.tools is the last rung: without this gate the ladder's
+          `hidden` still left the whole tool row on screen, so "just the map" was never actually
+          reachable — the rail above is what brings it back. */}
+      {bottomShow.tools && canvasState && canvasState.step !== 'glossy' && (
         <DesignPalette
           bottomStop={bottomStop}
           onBottomStopChange={setBottomStop}
+          hiddenSections={{ count: dismissed.length, onRestore: showAllSections }}
           step={canvasState.step}
           mode={designMode}
           tool={tool}

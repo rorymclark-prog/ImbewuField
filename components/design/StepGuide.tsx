@@ -7,7 +7,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Link from 'next/link';
-import { Check, ChevronDown, ChevronUp, MapPin, Compass, HelpCircle, PartyPopper, ArrowRight, Sprout } from 'lucide-react';
+import { Check, ChevronDown, ChevronUp, MapPin, Compass, HelpCircle, PartyPopper, ArrowRight, Sprout, X } from 'lucide-react';
 import type { DesignCanvasState, WizardStep } from '@/lib/design-canvas';
 import { subStepsForStep, type SubStep, type SubStepArm, type SubStepCtx } from '@/lib/design-substeps';
 import { BED_DEF_IDS } from '@/lib/design-beds-bridge';
@@ -68,6 +68,8 @@ export interface StepGuideProps {
   // Simple Path handoff — link to the crop planner (shown on the Planting step once beds
   // exist), so a "just beds & trees" farmer can jump straight to planning what to grow.
   planCropsHref?: string;
+  /** Close this whole band for the session — see SectionClose in app/design/page.tsx. */
+  onHide?: () => void;
 }
 
 export default function StepGuide({
@@ -79,6 +81,7 @@ export default function StepGuide({
   onDailyWaterUseLChange,
   onNextStep,
   planCropsHref,
+  onHide,
 }: StepGuideProps) {
   const { t, lang } = useLanguage();
   const subSteps = useMemo(() => subStepsForStep(step), [step]);
@@ -162,12 +165,13 @@ export default function StepGuide({
   // ── Collapsed: one slim line ────────────────────────────────────────────────
   if (collapsed) {
     return (
-      <div style={{ padding: '6px 12px 0' }}>
+      <div style={{ padding: '6px 12px 0', display: 'flex', alignItems: 'center', gap: 4 }}>
         <button
           type="button"
           onClick={toggleCollapsed}
           style={{
-            width: '100%',
+            flex: 1,
+            minWidth: 0,
             display: 'flex',
             alignItems: 'center',
             gap: 8,
@@ -209,6 +213,24 @@ export default function StepGuide({
           </span>
           <ChevronDown size={16} color={accent} style={{ flexShrink: 0 }} />
         </button>
+        {/* Two different closes, deliberately: the bar itself expands/collapses the checklist,
+            this × folds the whole band away when the farmer wants the screen for the map. */}
+        {onHide && (
+          <button
+            type="button"
+            onClick={onHide}
+            title="Hide the step guide — bring it back with “hidden” next to the handle"
+            aria-label="Hide the step guide"
+            style={{
+              display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+              width: 26, height: 26, flexShrink: 0,
+              border: 'none', background: 'transparent', borderRadius: 8,
+              color: DARK, opacity: 0.4, cursor: 'pointer', padding: 0,
+            }}
+          >
+            <X size={14} />
+          </button>
+        )}
       </div>
     );
   }

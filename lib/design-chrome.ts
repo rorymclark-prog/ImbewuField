@@ -7,10 +7,14 @@
 // Pure and DOM-free on purpose: the interaction is fiddly (tap wraps, drag is direction-only,
 // bounds must never strand a farmer with no tools) and all of that is checkable without React.
 //
-// TAP IS PRIMARY, DRAG IS AN ACCELERATOR. A drag needs continuous visual tracking and clean
-// capacitive contact — both unreliable for a farmer outdoors in glare with dusty or wet hands —
-// and this canvas already owns dragging for drawing and panning. So a tap always advances one
-// stop, and a drag only says "more" or "less", never how much.
+// A DRAG DRAGS. The first cut made a drag worth exactly one stop, on the theory that metering by
+// distance asks a thumb to judge bands it cannot see. In the hand that read as broken: the owner
+// pulled the handle down, one band went, the rest stayed, and the verdict was "i want to be able
+// to collapse everything further and then completely… isnt it more intuitive to have a handle bar
+// to just drag things closed". It is. The edge now FOLLOWS THE FINGER — see followStop, which
+// compares how much chrome is actually on screen against how much the finger has asked for — so
+// one long pull closes the lot. A tap still advances one stop and wraps, for the farmer who would
+// rather poke than drag.
 
 /** Bottom stack, most open first. */
 export const BOTTOM_STOPS = ['full', 'compact', 'bar', 'hidden'] as const;
@@ -70,6 +74,37 @@ export function moreClosed<T extends string>(current: T, stops: readonly T[]): T
   return stops[Math.min(stops.length - 1, i + 1)];
 }
 
+/**
+ * How far a measurement may sit from the finger's request before the ladder moves. Wide enough
+ * that a hand resting on the handle does not flap between two stops, narrow enough that the edge
+ * still feels attached to the finger.
+ */
+export const FOLLOW_SLACK_PX = 14;
+
+/**
+ * THE DRAG, METERED AGAINST REALITY. `chromePx` is how much chrome is on screen between the
+ * handle and its edge right now; `targetPx` is how much the finger has asked for (where it
+ * started, minus how far it has pulled). One step per call — the caller re-measures and calls
+ * again on the next frame, which is what makes a long pull walk all the way down instead of
+ * guessing a distance-per-stop constant that would be wrong for every band.
+ *
+ * Measuring instead of guessing is the whole point: the bands are wildly different heights (a
+ * photo-alignment strip is 40px, the element catalog is 200+), so any fixed px-per-stop would
+ * either overshoot on one or stall on the other.
+ */
+export function followStop<T extends string>(
+  current: T,
+  chromePx: number,
+  targetPx: number,
+  stops: readonly T[],
+  slack: number = FOLLOW_SLACK_PX,
+): T {
+  if (!Number.isFinite(chromePx) || !Number.isFinite(targetPx)) return current;
+  if (chromePx > targetPx + slack) return moreClosed(current, stops);
+  if (chromePx < targetPx - slack) return moreOpen(current, stops);
+  return current;
+}
+
 /** Which tick is lit, for the dots beside the grab pill. */
 export function stopIndex<T extends string>(current: T, stops: readonly T[]): number {
   const i = stops.indexOf(current);
@@ -108,10 +143,13 @@ export function persistableChrome(pref: ChromePref): ChromePref {
 /**
  * WHAT EACH STOP SHOWS. One table, not guards scattered through the render.
  *
- * The order is the owner's: the drone alignment tools go FIRST, then Lima's advice, then the
- * step's supporting rows — because the least essential thing is whatever the farmer is not using
- * to author the design right now, and photo alignment is a one-time setup task while the tool row
- * is how anything gets drawn at all.
+ * THE ORDER WAS WRONG THE FIRST TIME. It shed the photo-alignment strip first, on the reasoning
+ * that alignment is one-time setup. It is not one-time — it is the job in hand for as long as it
+ * takes, and shedding it first meant the one band the owner was using vanished while the element
+ * catalog he was not using stayed ("its annoying that i cant work with the map adjustment tools
+ * without the huge tool section underneath"). Advice and shortcuts go first now, then the step
+ * guide and the catalog; the alignment strip and the tool row survive to the last rung, because
+ * those are the two things you actually operate the map with.
  */
 export interface BottomVisibility {
   /** Nudge/rotate/size/see-through/reset — the photo alignment cluster. */
@@ -135,11 +173,13 @@ export function bottomVisibility(stop: BottomStop): BottomVisibility {
     case 'full':
       return { droneTools: true, droneEntry: true, shortcuts: true, advisor: true, stepBar: true, body: true, tools: true };
     case 'compact':
-      // Photo alignment is setup, not authoring — it is the first thing a farmer stops needing.
-      // The way back to it (Adjust photo) deliberately survives, so folding is never a trap.
-      return { droneTools: false, droneEntry: true, shortcuts: false, advisor: true, stepBar: true, body: true, tools: true };
+      // Advice and the skip-ahead offer are the first things you stop reading; nothing you
+      // operate goes yet.
+      return { droneTools: true, droneEntry: true, shortcuts: false, advisor: false, stepBar: true, body: true, tools: true };
     case 'bar':
-      return { droneTools: false, droneEntry: false, shortcuts: false, advisor: false, stepBar: false, body: false, tools: true };
+      // Map + the photo strip + the tool row. This is the working rung: everything that is
+      // instruction or catalog is gone, everything you press is still there.
+      return { droneTools: true, droneEntry: true, shortcuts: false, advisor: false, stepBar: false, body: false, tools: true };
     case 'hidden':
     default:
       return { droneTools: false, droneEntry: false, shortcuts: false, advisor: false, stepBar: false, body: false, tools: false };
@@ -171,4 +211,36 @@ export function topVisibility(stop: TopStop): TopVisibility {
  *  answer on screen rather than requiring the farmer to remember. */
 export function hiddenCount(v: BottomVisibility | TopVisibility): number {
   return Object.values(v).filter((shown) => shown === false).length;
+}
+
+// ── CLOSING ONE SECTION ───────────────────────────────────────────────────────────────────────
+//
+// The ladder is a coarse control: it sheds bands in a fixed order, which is right when you just
+// want room and wrong when you want ONE thing gone ("and also the option to collapse specific
+// sections"). So every band that occupies a strip of the bottom stack also carries an ×, and a ×
+// puts that band — and only that band — in this set.
+//
+// This DOES persist, unlike the ladder's `hidden` rung. The reasoning differs: a hidden rung
+// leaves a screen with no controls and no memory of why, which reads as a broken app, whereas a
+// dismissed section is a deliberate, named choice and the count chip beside the handle always says
+// how many are folded and offers them back. A preference that announces itself is safe to keep.
+
+export const DISMISSIBLE_BANDS = ['droneTools', 'shortcuts', 'stepGuide'] as const;
+export type DismissibleBand = (typeof DISMISSIBLE_BANDS)[number];
+
+export const DISMISSED_KEY = 'imbewu_design_sections_hidden_v1';
+
+/** Whatever came back from storage, reduced to bands that still exist. */
+export function restoreDismissed(raw: unknown): DismissibleBand[] {
+  let parsed: unknown = raw;
+  if (typeof raw === 'string') {
+    try {
+      parsed = JSON.parse(raw);
+    } catch {
+      return [];
+    }
+  }
+  if (!Array.isArray(parsed)) return [];
+  const known = new Set<string>(DISMISSIBLE_BANDS);
+  return parsed.filter((b): b is DismissibleBand => typeof b === 'string' && known.has(b));
 }

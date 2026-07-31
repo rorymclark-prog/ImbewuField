@@ -20,6 +20,9 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '31 July',
     changes: [
+      'Pull the handle at the top or bottom edge and the panel follows your finger — all the way to just the map',
+      'Every section has an ×, so you can close the one that is in your way and keep the rest',
+      'The photo controls now stay while everything else folds away, instead of going first',
       'Your own photo now goes in at the right size, not leaving your farm a tiny patch',
       'Photos keep their detail instead of being shrunk when you add them',
       'Switch between satellite and your photo freely — your photo is kept either way',

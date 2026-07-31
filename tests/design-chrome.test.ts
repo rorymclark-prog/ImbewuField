@@ -1,0 +1,148 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+
+import {
+  BOTTOM_STOPS,
+  TOP_STOPS,
+  DISMISSIBLE_BANDS,
+  FOLLOW_SLACK_PX,
+  bottomVisibility,
+  topVisibility,
+  followStop,
+  nextStop,
+  moreClosed,
+  moreOpen,
+  restoreStop,
+  restoreDismissed,
+  persistableChrome,
+} from '../lib/design-chrome';
+
+// ── The shed order ────────────────────────────────────────────────────────────────────────────
+//
+// This is the part that has been wrong twice, in both directions, so it gets asserted rather than
+// described. The rule: the bands you OPERATE (the photo-alignment strip, the tool row) outlive the
+// bands you READ (advice, the skip-ahead offer, the step guide) and the band you PICK FROM (the
+// element catalog). Getting that backwards is what produced "i cant work with the map adjustment
+// tools without the huge tool section underneath".
+
+test('the photo controls and the tool row survive every rung except the last', () => {
+  for (const stop of ['full', 'compact', 'bar'] as const) {
+    const v = bottomVisibility(stop);
+    assert.equal(v.droneTools, true, `${stop} must keep the photo controls`);
+    assert.equal(v.tools, true, `${stop} must keep the tool row`);
+  }
+  const hidden = bottomVisibility('hidden');
+  assert.equal(hidden.droneTools, false);
+  assert.equal(hidden.tools, false);
+});
+
+test('advice and the skip-ahead offer go before anything you operate', () => {
+  const compact = bottomVisibility('compact');
+  assert.equal(compact.advisor, false);
+  assert.equal(compact.shortcuts, false);
+  // Nothing you press has gone yet at this rung.
+  assert.equal(compact.body, true);
+  assert.equal(compact.stepBar, true);
+});
+
+test('the working rung is map + photo strip + tool row and nothing else', () => {
+  const bar = bottomVisibility('bar');
+  assert.deepEqual(bar, {
+    droneTools: true,
+    droneEntry: true,
+    shortcuts: false,
+    advisor: false,
+    stepBar: false,
+    body: false,
+    tools: true,
+  });
+});
+
+test('every rung is reachable and strictly sheds — no rung shows more than the one above', () => {
+  const keys = Object.keys(bottomVisibility('full')) as (keyof ReturnType<typeof bottomVisibility>)[];
+  for (let i = 1; i < BOTTOM_STOPS.length; i += 1) {
+    const above = bottomVisibility(BOTTOM_STOPS[i - 1]);
+    const here = bottomVisibility(BOTTOM_STOPS[i]);
+    for (const k of keys) {
+      if (here[k]) assert.equal(above[k], true, `${BOTTOM_STOPS[i]} shows ${k} but ${BOTTOM_STOPS[i - 1]} does not`);
+    }
+    assert.notDeepEqual(here, above, `${BOTTOM_STOPS[i]} is indistinguishable from ${BOTTOM_STOPS[i - 1]}`);
+  }
+});
+
+test('the top ladder sheds monotonically too, ending at nothing', () => {
+  assert.deepEqual(topVisibility('hidden'), { header: false, wizard: false, stepNav: false });
+  assert.equal(topVisibility('slim').header, true);
+  assert.equal(topVisibility('slim').wizard, false);
+});
+
+// ── The drag ──────────────────────────────────────────────────────────────────────────────────
+
+test('a drag that asks for less chrome than is on screen sheds one band', () => {
+  // 300px of chrome showing, finger has asked for 200 — shed.
+  assert.equal(followStop('full', 300, 200, BOTTOM_STOPS), 'compact');
+  assert.equal(followStop('compact', 300, 200, BOTTOM_STOPS), 'bar');
+});
+
+test('a drag that asks for more chrome than is on screen restores one band', () => {
+  assert.equal(followStop('bar', 120, 300, BOTTOM_STOPS), 'compact');
+  assert.equal(followStop('compact', 120, 300, BOTTOM_STOPS), 'full');
+});
+
+test('within the slack the ladder holds still, so a resting hand does not flap', () => {
+  assert.equal(followStop('compact', 200, 200, BOTTOM_STOPS), 'compact');
+  assert.equal(followStop('compact', 200, 200 + FOLLOW_SLACK_PX - 1, BOTTOM_STOPS), 'compact');
+  assert.equal(followStop('compact', 200 + FOLLOW_SLACK_PX - 1, 200, BOTTOM_STOPS), 'compact');
+});
+
+test('the follow clamps at both ends — a long pull can never fall off the ladder', () => {
+  assert.equal(followStop('hidden', 40, -4000, BOTTOM_STOPS), 'hidden');
+  assert.equal(followStop('full', 400, 4000, BOTTOM_STOPS), 'full');
+});
+
+test('an unmeasurable handle changes nothing rather than guessing', () => {
+  assert.equal(followStop('compact', Number.NaN, 200, BOTTOM_STOPS), 'compact');
+  assert.equal(followStop('compact', 200, Number.NaN, BOTTOM_STOPS), 'compact');
+});
+
+test('a tap still wraps, so one control reaches every state and comes back', () => {
+  let stop: (typeof BOTTOM_STOPS)[number] = 'full';
+  const seen = new Set<string>();
+  for (let i = 0; i < BOTTOM_STOPS.length; i += 1) {
+    seen.add(stop);
+    stop = nextStop(stop, BOTTOM_STOPS);
+  }
+  assert.equal(seen.size, BOTTOM_STOPS.length);
+  assert.equal(stop, 'full');
+});
+
+test('moreClosed and moreOpen clamp instead of wrapping', () => {
+  assert.equal(moreClosed('hidden', BOTTOM_STOPS), 'hidden');
+  assert.equal(moreOpen('full', BOTTOM_STOPS), 'full');
+});
+
+// ── What is written down ──────────────────────────────────────────────────────────────────────
+
+test('hidden is never restored from storage — the Studio cannot reopen with no controls', () => {
+  assert.equal(restoreStop('hidden', BOTTOM_STOPS, 'full'), 'full');
+  assert.equal(restoreStop('hidden', TOP_STOPS, 'full'), 'full');
+  assert.equal(persistableChrome({ top: 'hidden', bottom: 'hidden' }).bottom, 'bar');
+  assert.equal(persistableChrome({ top: 'hidden', bottom: 'hidden' }).top, 'slim');
+});
+
+test('dismissed sections survive a reload, but only ones that still exist', () => {
+  assert.deepEqual(restoreDismissed(JSON.stringify(['droneTools', 'stepGuide'])), ['droneTools', 'stepGuide']);
+  assert.deepEqual(restoreDismissed(JSON.stringify(['droneTools', 'a-band-we-deleted'])), ['droneTools']);
+  assert.deepEqual(restoreDismissed('not json at all'), []);
+  assert.deepEqual(restoreDismissed(null), []);
+  assert.deepEqual(restoreDismissed(JSON.stringify({ droneTools: true })), []);
+});
+
+test('every dismissible band is a band the ladder also knows about', () => {
+  const known = Object.keys(bottomVisibility('full'));
+  for (const band of DISMISSIBLE_BANDS) {
+    // stepGuide is the ladder's `stepBar`; the rest match by name.
+    const ladderKey = band === 'stepGuide' ? 'stepBar' : band;
+    assert.ok(known.includes(ladderKey), `${band} has no matching visibility field`);
+  }
+});
