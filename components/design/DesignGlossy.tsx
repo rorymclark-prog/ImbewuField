@@ -6530,26 +6530,42 @@ async function composeSectorSheet(
   // against. Rory: "look at those polygons they mess up the image … if the underlying reproduction
   // is good, maybe we just leave it without basemap polygons, maybe just the fence line?"
   //
-  // He is right about the fill and the driveway; the house outline stays. A sector sheet's whole
-  // job is telling a farmer where the summer sun, the berg wind and the fire approach meet HIS
-  // BUILDINGS, and the reference sheets he benchmarks against all show the dwelling. So the house
-  // keeps its shape as a hairline with no fill, and the driveway keeps its meaning through the
-  // access arrow and legend row 7 (bearing — dust & noise), which is the only sector-relevant fact
-  // the tar carries. Neither change touches saved geometry: this is what gets PAINTED, not what is
-  // stored, and sheets 01 and 03–08 are untouched — the existing fabric is their subject.
-  ctx.save();
-  for (const footprint of authoritativeHouseFootprints(renderState, renderRefLayers)) {
-    drawBlueprintHouse(
-      ctx,
-      footprint,
-      px,
-      py,
-      SECTOR_CONTEXT_NO_FILL,
-      'rgba(255,255,255,0.92)',
-      Math.max(2, W * 0.0016),
-    );
+  // He is right about the fill and the driveway; the driveway keeps its meaning through the access
+  // arrow and legend row 7 (bearing — dust & noise), which is the only sector-relevant fact the tar
+  // carries. Neither change touches saved geometry: this is what gets PAINTED, not what is stored,
+  // and sheets 01 and 03–08 are untouched — the existing fabric is their subject.
+  //
+  // THE HOUSE OUTLINE ONLY SURVIVES WHERE THERE IS NO BASE IMAGE — "the double roof". A hollow
+  // outline over a photograph that ALREADY shows the roof draws a second roof by construction: a
+  // hand-traced polygon never lands exactly on a photographed roof edge, so the drawn hairline sits
+  // a few pixels off the real one and the farmer sees his building twice. Rory, on the drone-photo
+  // sheet: "genuinely a lot better but the double roof". Every other sheet escapes this because it
+  // fills the footprint (an opaque roof covers the photographed one — exactly one roof); sector
+  // deliberately cannot fill, per the paragraph above.
+  //
+  // So the conditional in Rory's own earlier sentence is the rule: "IF THE UNDERLYING REPRODUCTION
+  // IS GOOD, maybe we just leave it without basemap polygons, maybe just the fence line?" With a
+  // real aerial or an AI-illustrated ground the reproduction IS good — the buildings are plainly
+  // visible, and the outline adds nothing but the duplicate. It is also the only mark on this sheet
+  // with no legend row (rows 1–10 are sun, winds, fire, access, slope, contour, boundary), i.e. an
+  // unexplained polygon by this sheet's own standard. Drawn only on the flat-grey fallback base,
+  // where without it the buildings would not be visible at all.
+  const sectorHasImageryBase = baseImage !== null || Boolean(renderFrame.satDataUrl);
+  if (!sectorHasImageryBase) {
+    ctx.save();
+    for (const footprint of authoritativeHouseFootprints(renderState, renderRefLayers)) {
+      drawBlueprintHouse(
+        ctx,
+        footprint,
+        px,
+        py,
+        SECTOR_CONTEXT_NO_FILL,
+        'rgba(255,255,255,0.92)',
+        Math.max(2, W * 0.0016),
+      );
+    }
+    ctx.restore();
   }
-  ctx.restore();
   drawBlueprintBoundary(ctx, renderRefLayers.boundary, px, py, W, renderState, renderFrame);
 
   const analysis = drawSectorAnalysis(

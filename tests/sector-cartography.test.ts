@@ -377,6 +377,22 @@ test('wires Sector jobs through authoritative houses and protected-pixel restora
   const completion = source.slice(completionStart);
 
   assert.match(composer, /authoritativeHouseFootprints\(renderState, renderRefLayers\)/);
+  // THE DOUBLE ROOF. Sector cannot fill the house footprint (filled basemap polygons were rejected
+  // for this sheet), and a HOLLOW outline over a base that already shows the roof draws the
+  // building twice — a hand-traced polygon never lands exactly on a photographed roof edge. So the
+  // outline is allowed only on the flat-grey fallback base, where nothing else would show the
+  // buildings at all. Every other sheet is unaffected: they fill, and an opaque roof covers the
+  // photographed one.
+  assert.match(
+    composer,
+    /const sectorHasImageryBase = baseImage !== null \|\| Boolean\(renderFrame\.satDataUrl\)/,
+    'sector must know whether its base already shows the buildings',
+  );
+  assert.match(
+    composer,
+    /if \(!sectorHasImageryBase\) \{[\s\S]*?drawBlueprintHouse\(/,
+    'the house outline must stay gated — drawing it over real imagery is the double-roof bug',
+  );
   assert.match(queue, /sectorProtectMaskOptions\(\)/);
   assert.match(queue, /protectMaskDataUrl, useProtectMaskForEdit: false/);
 
