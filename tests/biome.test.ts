@@ -251,3 +251,38 @@ test('authoritative boundary geometry is immutable at every nesting level', () =
     }
   }
 });
+
+// ── Biome NAME vs registry KEY: the wiring that silently disabled the climate filter ──────────
+//
+// lib/design-elements.ts's biomeClimates() switches on the biome NAME ("Indian Ocean Coastal
+// Belt"); lib/species-catalog.ts keys its entries by the BIOMES registry KEY ("IOCB"). Both are
+// reached through DesignPalette's single `siteBiome` prop, so whichever form that prop carries,
+// ONE of them is wrong unless the conversion happens at the SpeciesPicker boundary inside the
+// palette.
+//
+// It was converted one level too early once, and nothing failed: biomeClimates fell through its
+// switch to `null`, which means "unknown biome — show every tree", so the palette quietly stopped
+// filtering and offered apple, pear, plum and olive on a subtropical KZN coast. A silent
+// permissive fallback is exactly the kind of bug a type checker cannot see, so it is pinned here.
+test('biomeClimates reads NAMES and species-catalog reads KEYS — they are not interchangeable', async () => {
+  const { biomeClimates } = await import('../lib/design-elements.ts');
+  const { biomeKeyForName } = await import('../lib/biome.ts');
+
+  for (const [key, biome] of Object.entries(BIOMES)) {
+    // Round-trip: the name a site stores resolves back to this registry key.
+    assert.equal(biomeKeyForName(biome.name), key, `${biome.name} must map to ${key}`);
+  }
+
+  // The two coastal/subtropical biomes the sample farm actually uses, stated explicitly: the NAME
+  // classifies, the KEY does not. If a future edit makes biomeClimates accept keys too, this test
+  // should be updated deliberately rather than deleted — the point is that they differ.
+  assert.deepEqual(biomeClimates('Indian Ocean Coastal Belt'), ['subtropical']);
+  assert.equal(biomeClimates('IOCB'), null, 'a registry key must NOT classify as a biome name');
+
+  // And the consequence that made it invisible: null means "show everything".
+  const { elementSuitsClimate } = await import('../lib/design-elements.ts');
+  assert.equal(elementSuitsClimate('tree_apple', biomeClimates('Indian Ocean Coastal Belt')), false,
+    'a temperate apple must be hidden on the subtropical coast');
+  assert.equal(elementSuitsClimate('tree_apple', biomeClimates('IOCB')), true,
+    'this is the silent failure: an unrecognised biome shows every tree');
+});

@@ -1102,6 +1102,13 @@ export default function DesignCanvas({
           // Apply the species mature width as the item's physical footprint size on the canvas
           item.wM = sp.matureWidthM;
           item.hM = sp.matureWidthM;
+          // NAME IT. Picking "Kei apple" and getting a chip that still says "Other Tree ×4" is
+          // what Rory saw: the size was applied but the identity was not, so the choice was
+          // invisible everywhere downstream. `label` is the one field the whole app reads for a
+          // plant's name — canvas labels, plan-sheet labels, the sheet legend's grouping key, the
+          // print set and the AI prompt's element list all resolve `it.label ?? def.name`. Setting
+          // it here is what makes a picked species actually appear as that species.
+          item.label = sp.commonName;
         }
       }
       onChange({ ...state, items: [...state.items, item] });

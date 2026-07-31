@@ -49,6 +49,7 @@ import {
 } from '@/lib/design-canvas';
 import { MIN_BED_COUNT, MAX_BED_COUNT } from '@/lib/bed-block';
 import { CATEGORY_META, CATEGORY_STEP, ELEMENT_CATALOG, GROUND_FEATURES, ZONE_DEFS, biomeClimates, elementSuitsClimate, elementVisibleInPalette, type DesignElementDef } from '@/lib/design-elements';
+import { biomeKeyForName } from '@/lib/biome';
 import { COMPASS16_ORDER, isCompassDirection16, type LocalWindObservation } from '@/lib/local-wind';
 import SpeciesPicker from './SpeciesPicker';
 import { usePhoneViewport } from '@/lib/use-phone-viewport';
@@ -1021,7 +1022,12 @@ export default function DesignPalette({
                   }}
                 >
                   <SpeciesPicker
-                    siteBiome={siteBiome}
+                    // THE ONE PLACE THE KEY IS NEEDED. `siteBiome` is the biome NAME everywhere
+                    // else in this component — biomeClimates() switches on it and the climate
+                    // tooltip prints it — while lib/species-catalog.ts keys its entries by the
+                    // BIOMES registry key. Convert at this single boundary; converting upstream
+                    // silently disabled the climate filter for the whole palette.
+                    siteBiome={biomeKeyForName(siteBiome)}
                     selectedSpeciesId={placeSpeciesId}
                     onSelect={(id) => {
                       setPlaceSpeciesId(id);

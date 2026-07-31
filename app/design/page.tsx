@@ -3485,7 +3485,11 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           angleControl={angleControl}
           sizeControl={sizeControl}
           windControl={windControl}
-          siteBiome={biomeKeyForName(site?.biome)}
+          // The biome NAME, never the registry key — the palette needs the name for
+          // biomeClimates() and converts to a key itself for SpeciesPicker. Passing the key here
+          // made biomeClimates fall through to "unknown biome, don't filter", which put temperate
+          // apple/pear/plum/olive chips on a subtropical coast.
+          siteBiome={site?.biome}
         />
       )}
 
