@@ -66,6 +66,29 @@ export const WATER_ROUTE_STYLE: Record<WaterRouteKind, WaterRouteStyle> = {
   greywater: { color: '#8A43B3', dash: [], width: 5.3, label: 'Filtered greywater line' },
 };
 
+/** The Earthworks-only editor view paints the swale's physical cut-and-fill, not its water-route
+ * function. There is no separate Earthworks print filter yet, so the exported Water sheet keeps
+ * WATER_ROUTE_STYLE's blue ink; this registry is deliberately editor-only presentation. */
+export interface EarthworksRouteStyle {
+  casing: string;
+  color: string;
+  dash: number[];
+  width: number;
+  label: string;
+}
+
+export type EarthworksRouteKind = Extract<LineShape['kind'], 'swale'>;
+
+export const EARTHWORKS_ROUTE_STYLE: Record<EarthworksRouteKind, EarthworksRouteStyle> = {
+  // Dark casing plus warm soil centre reads as a built bank/trench at phone scale, while the
+  // absence of blue and dashes stops the same saved line being mistaken for a water pipe.
+  swale: { casing: '#5B3A22', color: '#A9743F', dash: [], width: 5.2, label: 'Swale / cut-and-fill earthwork' },
+};
+
+export function earthworksRouteStyleFor(kind: LineShape['kind']): EarthworksRouteStyle | undefined {
+  return EARTHWORKS_ROUTE_STYLE[kind as EarthworksRouteKind];
+}
+
 export function waterRouteStyleFor(kind: LineShape['kind']): WaterRouteStyle | undefined {
   return WATER_ROUTE_STYLE[kind as WaterRouteKind];
 }

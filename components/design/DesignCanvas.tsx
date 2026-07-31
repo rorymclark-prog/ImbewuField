@@ -24,7 +24,7 @@ import { CONTOUR_CASING, CONTOUR_CASING_EXTRA, CONTOUR_CORE, CONTOUR_CORE_MAJOR 
 import { deriveSectorModel, type SectorSite } from '@/lib/sector';
 import { isValidEarthLatitude } from '@/lib/solar';
 import { effectivePrevailingWind, regionalPrevailingPick } from '@/lib/local-wind';
-import { WATER_ROUTE_STYLE, type WaterRouteKind } from '@/lib/water-cartography';
+import { EARTHWORKS_ROUTE_STYLE, WATER_ROUTE_STYLE, type WaterRouteKind } from '@/lib/water-cartography';
 import { formatDesignTranslation } from '@/lib/design-studio-i18n';
 import { useLanguage } from '@/lib/i18n';
 import SectorOverlay from './SectorOverlay';
@@ -321,7 +321,11 @@ const LINE_KIND_LABEL: Record<LineShape['kind'], string> = {
 
 const WATER_ROUTE_KINDS = new Set<string>(['swale', 'pipe', 'drip', 'greywater']);
 
-function lineStroke(kind: LineShape['kind']): { stroke: string; width: number; dash?: string; opacity?: number } {
+function lineStroke(kind: LineShape['kind'], earthworksOnly = false): { stroke: string; width: number; dash?: string; opacity?: number; casing?: string } {
+  if (earthworksOnly && kind === 'swale') {
+    const style = EARTHWORKS_ROUTE_STYLE.swale;
+    return { stroke: style.color, width: style.width, dash: style.dash.join(' '), casing: style.casing };
+  }
   // Water route COLOUR is sourced from lib/water-cartography.ts's WATER_ROUTE_STYLE — the same
   // constant the exact/exported sheets use — so editor and export can never independently drift
   // apart on what a swale/pipe/drip/greywater line is coloured (found live, editing here: swale
@@ -1953,7 +1957,7 @@ export default function DesignCanvas({
     type Cand = { id: string; ax: number; ay: number; moved: boolean };
     const groups = new Map<string, Cand[]>();
     for (const l of state.lines) {
-      if (!activeLayers[LINE_LAYER[l.kind]]) continue;
+      if (!anyLayerOn(activeLayers, [LINE_LAYER[l.kind], ...(LINE_ALSO_LAYERS[l.kind] ?? [])])) continue;
       if (selectedId === l.id || selectedIds.includes(l.id)) continue;
       if (editingLabelId === l.id && editingLabelKind === 'line') continue;
       const mid = l.points[Math.floor(l.points.length / 2)] ?? l.points[0];
@@ -2067,6 +2071,10 @@ export default function DesignCanvas({
   // sites (zone body, ground-feature body, the draft ring, and the pattern defs) and they must
   // never disagree with each other.
   const areaFill = normaliseAreaFill(areaFillRaw);
+  // Earthworks is a separate reading of the same saved design. When Water is also on, swales stay
+  // blue because the farmer is looking at their route function; Earthworks-only is the cut-and-fill
+  // view and deliberately strengthens the brown footprint so a bed is not just an icon on soil.
+  const earthworksOnly = activeLayers.earthworks && !activeLayers.water;
   // The hatch <pattern> set is built from the STATIC catalogs, so a traced layer whose colour is
   // not in them would resolve url(#hatch-…) to nothing and render with no fill at all. Union in
   // whatever colours are actually on screen this render.
@@ -2140,7 +2148,8 @@ export default function DesignCanvas({
     }
     const l = state.lines.find((s2) => s2.id === id);
     if (l) {
-      return activeLayers[LINE_LAYER[l.kind]] && ownedByCurrentStep(state.step, { kind: 'line', lineKind: l.kind }) ? id : null;
+      return anyLayerOn(activeLayers, [LINE_LAYER[l.kind], ...(LINE_ALSO_LAYERS[l.kind] ?? [])])
+        && ownedByCurrentStep(state.step, { kind: 'line', lineKind: l.kind }) ? id : null;
     }
     const it = state.items.find((s2) => s2.id === id);
     if (it) {
@@ -2903,7 +2912,7 @@ export default function DesignCanvas({
           .sort((a, b) => (a.id === selectedId ? 1 : 0) - (b.id === selectedId ? 1 : 0))
           .map((line) => {
             if (!anyLayerOn(activeLayers, [LINE_LAYER[line.kind], ...(LINE_ALSO_LAYERS[line.kind] ?? [])])) return null;
-            const style = lineStroke(line.kind);
+            const style = lineStroke(line.kind, earthworksOnly);
             // See the zones loop above — same step-ownership lock (Rory's boundary-grab bug).
             const owned = ownedByCurrentStep(state.step, { kind: 'line', lineKind: line.kind });
             const interactive = tool === 'select' && owned && !lockedOut(line.id);
@@ -2938,12 +2947,12 @@ export default function DesignCanvas({
                     a pale bed fill measures near 1:1 bare, and a bed block can put 59 of these on
                     the map at once. The casing also tells a bedpath from a walking path at a
                     glance — same family, one is cased, one is not. */}
-                {line.kind === 'bedpath' && (
+                {(line.kind === 'bedpath' || style.casing) && (
                   <polyline
                     points={polylinePoints(effectivePoints, imgW, imgH)}
                     fill="none"
-                    stroke={CONTOUR_CASING}
-                    strokeWidth={chrome(style.width + 3)}
+                    stroke={style.casing ?? CONTOUR_CASING}
+                    strokeWidth={chrome(style.width + (style.casing ? 4 : 3))}
                     strokeDasharray={chromeDash(style.dash)}
                     // Was 0.45, which let the casing wash out over bright soil and took the strip
                     // with it. The casing is what guarantees the path survives whatever it crosses
@@ -3288,15 +3297,29 @@ export default function DesignCanvas({
             />
           );
         })()}
-        {tool === 'line' && draftPoints.length > 0 && (
-          <polyline
-            points={polylinePoints(draftPoints, imgW, imgH)}
-            fill="none"
-            stroke={lineStroke(lineKind).stroke}
-            strokeWidth={chrome(2.5)}
-            strokeDasharray={chromeDash('3 3')}
-          />
-        )}
+        {tool === 'line' && draftPoints.length > 0 && (() => {
+          const style = lineStroke(lineKind, earthworksOnly);
+          return (
+            <>
+              {style.casing && (
+                <polyline
+                  points={polylinePoints(draftPoints, imgW, imgH)}
+                  fill="none"
+                  stroke={style.casing}
+                  strokeWidth={chrome(style.width + 4)}
+                  strokeDasharray={chromeDash(style.dash)}
+                />
+              )}
+              <polyline
+                points={polylinePoints(draftPoints, imgW, imgH)}
+                fill="none"
+                stroke={style.stroke}
+                strokeWidth={chrome(2.5)}
+                strokeDasharray={chromeDash(style.dash === undefined ? '3 3' : style.dash)}
+              />
+            </>
+          );
+        })()}
         {/* Draft vertex handles — grabbable mid-draw (before the shape is closed/accepted),
             matching the committed-shape handle's visual language so "show all corners"
             reads consistently whether a shape is being drawn or already placed. */}
@@ -3374,6 +3397,9 @@ export default function DesignCanvas({
           const rotXf = rot ? `rotate(${rot})` : undefined;
           const canRotate = def.shape === 'rect';
           const actionX = wPx / 2 + itemActionR + itemActionGap;
+          const footprintOpacity = earthworksOnly && def.category === 'earthworks'
+            ? Math.max(areaFill.plantOpacity, 0.68)
+            : areaFill.plantOpacity;
 
           return (
             <g
@@ -3409,9 +3435,9 @@ export default function DesignCanvas({
                 {/* Its own strength, not the areas' — a canopy is a thing you count, a zone tint is
                     a wash you want out of the way. See DEFAULT_AREA_FILL in lib/design-canvas.ts. */}
                 {def.shape === 'circle' ? (
-                  <circle r={wPx / 2} fill={def.color} fillOpacity={areaFill.plantOpacity} stroke={def.color} strokeWidth={chrome(1.5)} />
+                  <circle r={wPx / 2} fill={def.color} fillOpacity={footprintOpacity} stroke={def.color} strokeWidth={chrome(1.5)} />
                 ) : (
-                  <rect x={-wPx / 2} y={-hPx / 2} width={wPx} height={hPx} fill={def.color} fillOpacity={areaFill.plantOpacity} stroke={def.color} strokeWidth={chrome(1.5)} />
+                  <rect x={-wPx / 2} y={-hPx / 2} width={wPx} height={hPx} fill={def.color} fillOpacity={footprintOpacity} stroke={def.color} strokeWidth={chrome(1.5)} />
                 )}
               </g>
               {/* Centred icon disc: optional, because dense water/planting edits become unreadable
