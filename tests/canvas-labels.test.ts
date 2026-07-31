@@ -253,3 +253,25 @@ test('a suppressed entry emits no pill but its icon disc still blocks other pill
   const without = layoutCanvasLabels([a]);
   assert.equal(without[0].y, 130, 'sanity: alone, the pill sits at its natural spot');
 });
+
+// THE UPDATE BANNER MUST NOT DESCRIBE AN OLD BUILD.
+//
+// The banner correctly showed "New version 0fced9a available" while listing changes from days
+// earlier, because the newest block was labelled 'Latest' and nobody had touched it since it was
+// written (Rory: "your refresh updates always shows a historical version not the latest
+// updates?"). A block that calls itself 'Latest' can never stop claiming to be current, so the
+// list rots silently and the farmer is told the wrong thing about what they are refreshing into.
+//
+// Dating the newest block is what makes staleness VISIBLE rather than self-certifying.
+test('the newest release-notes block is dated, never self-declared "Latest"', () => {
+  const newest = RELEASE_NOTES[0];
+  assert.ok(newest, 'there must be at least one release-notes block');
+  assert.ok(newest.changes.length > 0, 'the newest block must actually list changes');
+  for (const banned of ['latest', 'current', 'now', 'newest']) {
+    assert.notEqual(
+      newest.when.trim().toLowerCase(),
+      banned,
+      `"${newest.when}" cannot go stale honestly — date the block instead`,
+    );
+  }
+});

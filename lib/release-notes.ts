@@ -18,7 +18,24 @@ export interface ReleaseNote {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
-    when: 'Latest',
+    when: '31 July',
+    changes: [
+      'Your own photo now goes in at the right size, not leaving your farm a tiny patch',
+      'Photos keep their detail instead of being shrunk when you add them',
+      'Switch between satellite and your photo freely — your photo is kept either way',
+      'Turn and resize your photo to line it up, without changing any measurement',
+      'Hold an arrow down to keep nudging, instead of tapping over and over',
+      'You can remove a photo you no longer want',
+      'The studio no longer freezes while you are working on your photo',
+      'Bed paths show up between your beds',
+      'Your parcels stay with their own place, instead of showing under every place',
+      'Every screen has a way back',
+      'Tips close themselves, and you can close them yourself',
+      'Plan sheets know which shapes are buildings, so slabs stop growing roofs',
+    ],
+  },
+  {
+    when: 'Earlier',
     changes: [
       'Paid AI maps are checked — if one comes back unchanged, you are told, not shown a copy',
       'Water sheets stop numbering the beds your irrigation feeds',
