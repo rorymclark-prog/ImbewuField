@@ -5420,15 +5420,21 @@ function drawSectorAnalysis(
   // opaque label plates made this visible: a plate that lands on an arrow now fully hides it
   // (Rory: "the text blocks the arrows a lot"), where the old translucent pill merely dimmed it.
   // Fed into flushDirectLabels' claims as pre-seeded boxes.
+  //
+  // SEGMENTED, not one bounding box: a benchmark-mass arrow entering at 45° has a bbox covering a
+  // quarter of the map, most of it empty — with two of those claimed, the sun labels' candidate
+  // scan found no free spot anywhere along the arc and fell back to overlapping the arrow name
+  // anyway. A chain of small boxes hugging the painted band claims what the arrow actually
+  // covers and nothing more, so the dodger keeps the empty corners to work with.
   const arrowClaims: Array<{ x0: number; x1: number; y0: number; y1: number }> = [];
   const claimArrowBox = (x1: number, y1: number, x2: number, y2: number, pad: number): void => {
     if (!externalLegend) return;
-    arrowClaims.push({
-      x0: Math.min(x1, x2) - pad,
-      x1: Math.max(x1, x2) + pad,
-      y0: Math.min(y1, y2) - pad,
-      y1: Math.max(y1, y2) + pad,
-    });
+    const steps = 4;
+    for (let i = 0; i <= steps; i++) {
+      const px = x1 + ((x2 - x1) * i) / steps;
+      const py = y1 + ((y2 - y1) * i) / steps;
+      arrowClaims.push({ x0: px - pad, x1: px + pad, y0: py - pad, y1: py + pad });
+    }
   };
   const drawArrow = (fromVec: [number, number], color: string, width: number, dash: number[], lenIn = R * 0.4) => {
     const sxp = cx + fromVec[0] * (R + arrowLen * 0.75), syp = cy + fromVec[1] * (R + arrowLen * 0.75);
@@ -5553,12 +5559,23 @@ function drawSectorAnalysis(
       ctx.font = `800 ${fs}px ${REFERENCE_LABEL_FONT}`;
       const halfW = Math.max(...request.lines.map((line) => ctx.measureText(line).width)) / 2 + fs * 0.55;
       const halfH = (lineH * request.lines.length) / 2 + fs * 0.42;
+      // Wider escape net than the original seven: with two benchmark-mass arrows, both sun arcs
+      // and the access arrow all anchored in the same top band, the close candidates are often
+      // ALL claimed, and a fallback that overlaps defeats the whole dodger. The far candidates
+      // (±4.8 lineH vertically, ±7 horizontally, and the diagonals) let a crowded-out label step
+      // down into the open arc interior instead of printing across a neighbour.
       const candidates: Array<[number, number]> = [
         [request.tangentBias ?? 0, 0],
         [request.tangentBias ?? 0, lineH * 2.4],
         [request.tangentBias ?? 0, -lineH * 2.4],
         [lineH * 4, 0], [-lineH * 4, 0],
         [lineH * 4, lineH * 2.4], [-lineH * 4, lineH * 2.4],
+        [request.tangentBias ?? 0, lineH * 4.8],
+        [request.tangentBias ?? 0, -lineH * 4.8],
+        [lineH * 4, -lineH * 2.4], [-lineH * 4, -lineH * 2.4],
+        [lineH * 7, 0], [-lineH * 7, 0],
+        [lineH * 7, lineH * 2.4], [-lineH * 7, lineH * 2.4],
+        [lineH * 4, lineH * 4.8], [-lineH * 4, lineH * 4.8],
       ];
       let lx = request.x;
       let ly = request.y;
@@ -5573,24 +5590,19 @@ function drawSectorAnalysis(
         if (!overlaps) break;
       }
       directClaims.push({ x0: lx - halfW, x1: lx + halfW, y0: ly - halfH, y1: ly + halfH });
-      roundRectPath(ctx, lx - halfW, ly - halfH, halfW * 2, halfH * 2, Math.min(12, fs * 0.32));
-      // Fully opaque, not 0.82: the Sector polish pass's INPUT is the finished Hybrid sheet with
-      // every label already baked into the base image, so whatever the model does to that pixel
-      // region — asked to leave it alone now, but a model is never fully compliant — sits directly
-      // under this same plate. 18% see-through was enough to let a model's own ghosted repaint of
-      // this exact label bleed through behind the real one (Rory: "same shit" on the doubled-text
-      // screenshot). This plate is the ONLY thing guaranteeing contrast per the comment above; it
-      // must hide the base completely, not almost completely.
-      ctx.fillStyle = 'rgba(8,14,10,1)';
-      ctx.fill();
-      ctx.strokeStyle = 'rgba(255,255,255,0.14)';
-      ctx.lineWidth = 1;
-      ctx.stroke();
+      // BENCHMARK LETTERING, NOT PLATES. design/benchmark/08...Sector_Analysis_Map.png sets every
+      // free-floating label as bold outlined type straight on the artwork — no black pill
+      // anywhere on the sheet. The pills were this renderer's own invention (first translucent,
+      // then opaque), and each step made a different complaint: translucent = "can't see
+      // anything", opaque = "the text blocks the arrows". The reference solves both at once: a
+      // HEAVY dark outline (~0.22em, far past the old 3px halo that failed on this photo) gives
+      // the contrast a plate used to, without hiding a single pixel of arrow, arc or ground —
+      // and the wind names moved inside their own arrows, so what floats here is short.
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
       ctx.lineJoin = 'round';
-      ctx.lineWidth = Math.max(2.5, W * 0.0015);
-      ctx.strokeStyle = 'rgba(6,12,8,0.85)';
+      ctx.lineWidth = Math.max(5, fs * 0.22);
+      ctx.strokeStyle = 'rgba(8,12,10,0.92)';
       request.lines.forEach((line, index) => ctx.strokeText(line, lx, ly + index * lineH));
       ctx.fillStyle = request.color;
       request.lines.forEach((line, index) => ctx.fillText(line, lx, ly + index * lineH));
@@ -5670,11 +5682,16 @@ function drawSectorAnalysis(
     fromVec: [number, number],
     color: string,
     emphasis = 1,
+    labelLines?: string[],
   ): { sxp: number; syp: number } => {
-    // Tail pushed further out to keep the arrow's length now that the tip stops at the boundary
-    // instead of driving to 0.42R — see SECTOR_ENERGY_TIP.
-    const tailX = cx + fromVec[0] * (R + arrowLen * 1.75);
-    const tailY = cy + fromVec[1] * (R + arrowLen * 1.75);
+    // BENCHMARK MASS. design/benchmark/08...Sector_Analysis_Map.png — the sheet this whole
+    // renderer answers to — draws each regional wind as a huge tapered wedge arrow that OWNS its
+    // corner of the frame and carries its own name inside its body. Ours was a fraction of that
+    // visual weight, which is why no casing/opacity tweak ever satisfied ("you can't see the
+    // arrows"): the arrow wasn't just faint, it was small. Tail wider than the shaft's head end
+    // gives the benchmark's wedge silhouette rather than a parallel-sided dart.
+    const tailX = cx + fromVec[0] * (R + arrowLen * 2.6);
+    const tailY = cy + fromVec[1] * (R + arrowLen * 2.6);
     const tipX = cx + fromVec[0] * R * SECTOR_ENERGY_TIP;
     const tipY = cy + fromVec[1] * R * SECTOR_ENERGY_TIP;
     const dx = tipX - tailX;
@@ -5684,20 +5701,21 @@ function drawSectorAnalysis(
     const uy = dy / len;
     const nx = -uy;
     const ny = ux;
-    const shaftHalf = Math.max(8, W * 0.0074) * emphasis;
-    const headHalf = shaftHalf * 2;
-    const headLen = Math.max(26, W * 0.029) * emphasis;
+    const tailHalf = Math.max(18, W * 0.017) * emphasis;
+    const shaftHalf = Math.max(11, W * 0.0105) * emphasis;
+    const headHalf = shaftHalf * 2.1;
+    const headLen = Math.max(40, W * 0.046) * emphasis;
     const headBaseX = tipX - ux * headLen;
     const headBaseY = tipY - uy * headLen;
     ctx.save();
     ctx.beginPath();
-    ctx.moveTo(tailX + nx * shaftHalf, tailY + ny * shaftHalf);
+    ctx.moveTo(tailX + nx * tailHalf, tailY + ny * tailHalf);
     ctx.lineTo(headBaseX + nx * shaftHalf, headBaseY + ny * shaftHalf);
     ctx.lineTo(headBaseX + nx * headHalf, headBaseY + ny * headHalf);
     ctx.lineTo(tipX, tipY);
     ctx.lineTo(headBaseX - nx * headHalf, headBaseY - ny * headHalf);
     ctx.lineTo(headBaseX - nx * shaftHalf, headBaseY - ny * shaftHalf);
-    ctx.lineTo(tailX - nx * shaftHalf, tailY - ny * shaftHalf);
+    ctx.lineTo(tailX - nx * tailHalf, tailY - ny * tailHalf);
     ctx.closePath();
     // ROUTE-CASING TREATMENT, not a tint. The previous pass (30%-alpha fill, 76%-alpha edge, a
     // half-strength dark halo) was three translucent layers stacked on a photograph whose foliage
@@ -5728,6 +5746,39 @@ function drawSectorAnalysis(
     ctx.moveTo(tailX + ux * shaftHalf * 0.35, tailY + uy * shaftHalf * 0.35);
     ctx.lineTo(headBaseX + ux * headLen * 0.22, headBaseY + uy * headLen * 0.22);
     ctx.stroke();
+    // THE ARROW CARRIES ITS OWN NAME — the benchmark's other answer to "the text blocks the
+    // arrows": there is no separate label to collide with the arrow when the label lives inside
+    // it. Horizontal (never rotated — the benchmark keeps all lettering upright), cream on the
+    // opaque colour with a dark outline so it reads on the teal and orange bodies alike. Biased
+    // toward the TAIL, as the benchmark sets its wind names near the frame edge — the mid-body
+    // point of a near-vertical arrow lands exactly in the sun-arc label band at the top of the
+    // sheet, which is how "HOT DRY BERG WIND" ended up printed across "SUMMER SUN". Clamped into
+    // the frame because these tails deliberately start beyond it. The caller must then NOT queue
+    // a floating directLabelAt for this energy.
+    if (labelLines?.length) {
+      const lfs = Math.max(19, Math.round(W * 0.0115));
+      const llh = Math.round(lfs * 1.12);
+      ctx.setLineDash([]);
+      ctx.globalAlpha = 1;
+      ctx.font = `800 ${lfs}px ${REFERENCE_LABEL_FONT}`;
+      const labelHalfW = Math.max(...labelLines.map((l) => ctx.measureText(l).width)) / 2;
+      const labelHalfH = (llh * labelLines.length) / 2;
+      const rawX = tailX + (headBaseX - tailX) * 0.42;
+      const rawY = tailY + (headBaseY - tailY) * 0.42;
+      const midX = Math.max(labelHalfW + W * 0.015, Math.min(W - labelHalfW - W * 0.015, rawX));
+      const midY = Math.max(labelHalfH + H * 0.03, Math.min(H - labelHalfH - H * 0.03, rawY));
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.lineJoin = 'round';
+      ctx.lineWidth = Math.max(4, lfs * 0.22);
+      ctx.strokeStyle = 'rgba(8,12,10,0.9)';
+      const firstY = midY - ((labelLines.length - 1) * llh) / 2;
+      labelLines.forEach((line, i) => ctx.strokeText(line, midX, firstY + i * llh));
+      ctx.fillStyle = 'rgba(252,250,240,0.98)';
+      labelLines.forEach((line, i) => ctx.fillText(line, midX, firstY + i * llh));
+      // The name's own box joins the claims so the flushed labels dodge it like any other mark.
+      arrowClaims.push({ x0: midX - labelHalfW, x1: midX + labelHalfW, y0: midY - labelHalfH, y1: midY + labelHalfH });
+    }
     ctx.restore();
     claimArrowBox(tailX, tailY, tipX, tipY, headHalf);
     return { sxp: tailX, syp: tailY };
@@ -5918,27 +5969,20 @@ function drawSectorAnalysis(
     const color = SECTOR_STYLES[kind].color;
     const lblColor = w.id === 'berg' ? BERG_LBL : w.id === 'cold_front' ? COLD_FRONT_LBL : SUMMER_COOLING_LBL;
     const v = bearingToUnitVector(w.bearingDeg);
-    const marker = externalLegend
-      ? drawBroadEnergyArrow(v, color, w.id === 'cold_front' ? 1.08 : 1)
-      : drawArrow(v, color, windWidth(kind), [...SECTOR_STYLES[kind].dash], R * 0.4);
-    if (w.id === 'cold_front') drawDrivingRain(w.bearingDeg, w.halfWidthDeg, color);
-    labelAt(cx + v[0] * (R + arrowLen), cy + v[1] * (R + arrowLen), `${w.title} ${w.fromLabel}`, lblColor);
-    drawSectorMarker(`wind:${w.id}`, marker.sxp, marker.syp, color);
     const directLines = w.id === 'berg'
       ? ['HOT DRY BERG WIND', w.fromLabel]
       : w.id === 'cold_front'
         ? ['COLD-FRONT WIND', w.fromLabel]
         : ['SUMMER COOLING WIND', w.fromLabel];
-    const tangentX = -v[1];
-    const tangentY = v[0];
-    const tangentShift = w.id === 'berg' ? -rowH * 2.8 : 0;
-    directLabelAt(
-      cx + v[0] * (R + arrowLen * 0.88) + tangentX * tangentShift,
-      cy + v[1] * (R + arrowLen * 0.88) + tangentY * tangentShift,
-      directLines,
-      lblColor,
-      w.id === 'berg' ? -rowH * 2 : 0,
-    );
+    // Composed sheet: the benchmark arrow carries its own name in its body, so there is no
+    // floating label to queue and nothing left to collide with the arrow (the old tangent-shifted
+    // directLabelAt pills were exactly what kept landing on top of the arrows they named).
+    const marker = externalLegend
+      ? drawBroadEnergyArrow(v, color, w.id === 'cold_front' ? 1.08 : 1, directLines)
+      : drawArrow(v, color, windWidth(kind), [...SECTOR_STYLES[kind].dash], R * 0.4);
+    if (w.id === 'cold_front') drawDrivingRain(w.bearingDeg, w.halfWidthDeg, color);
+    labelAt(cx + v[0] * (R + arrowLen), cy + v[1] * (R + arrowLen), `${w.title} ${w.fromLabel}`, lblColor);
+    drawSectorMarker(`wind:${w.id}`, marker.sxp, marker.syp, color);
   }
   // Fire and the berg wind deliberately share a bearing. Painting this when the fire wedge is
   // created lets the later berg arrow erase it, so the fire legend's red dashed swatch describes
@@ -5960,9 +6004,22 @@ function drawSectorAnalysis(
     const marker = drawArrow(v, DRIVEWAY_COLOR, sectorStrokeWidth('driveway', W) * (externalLegend ? 1.1 : 1), [], externalLegend ? R * 0.48 : R * 0.4);
     labelAt(cx + v[0] * (R + arrowLen), cy + v[1] * (R + arrowLen), `DRIVEWAY ACCESS — DUST & NOISE — ${model.driveway.fromLabel}`, DRIVEWAY_LBL);
     drawSectorMarker('driveway', marker.sxp, marker.syp, DRIVEWAY_COLOR);
+    // BESIDE the tail, never on the arrow's own axis — the benchmark sets this text to the side
+    // of its grey arrow. Anchored on-axis, the label's downward escape candidates were blocked by
+    // its own arrow's claim chain and its horizontal ones by the sun-arc labels, so the dodger
+    // had nowhere legal left and fell back onto "WINTER SUN". Tangent side picked outward (away
+    // from the plot centre), where the frame edge keeps ground mostly empty.
+    const accessTangent: [number, number] = [-v[1], v[0]];
+    const accessBaseX = cx + v[0] * (R + arrowLen * 1.05);
+    const accessBaseY = cy + v[1] * (R + arrowLen * 1.05);
+    const outwardSign =
+      Math.hypot(accessBaseX + accessTangent[0] - cx, accessBaseY + accessTangent[1] - cy)
+        >= Math.hypot(accessBaseX - accessTangent[0] - cx, accessBaseY - accessTangent[1] - cy)
+        ? 1
+        : -1;
     directLabelAt(
-      cx + v[0] * (R + arrowLen * 1.1),
-      cy + v[1] * (R + arrowLen * 1.1),
+      accessBaseX + outwardSign * accessTangent[0] * rowH * 3.4,
+      accessBaseY + outwardSign * accessTangent[1] * rowH * 3.4,
       ['ACCESS · DUST · NOISE', model.driveway.fromLabel],
       DRIVEWAY_LBL,
     );
