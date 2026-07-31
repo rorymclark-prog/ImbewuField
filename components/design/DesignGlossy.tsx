@@ -5522,7 +5522,14 @@ function drawSectorAnalysis(
       }
       directClaims.push({ x0: lx - halfW, x1: lx + halfW, y0: ly - halfH, y1: ly + halfH });
       roundRectPath(ctx, lx - halfW, ly - halfH, halfW * 2, halfH * 2, Math.min(12, fs * 0.32));
-      ctx.fillStyle = 'rgba(8,14,10,0.82)';
+      // Fully opaque, not 0.82: the Sector polish pass's INPUT is the finished Hybrid sheet with
+      // every label already baked into the base image, so whatever the model does to that pixel
+      // region — asked to leave it alone now, but a model is never fully compliant — sits directly
+      // under this same plate. 18% see-through was enough to let a model's own ghosted repaint of
+      // this exact label bleed through behind the real one (Rory: "same shit" on the doubled-text
+      // screenshot). This plate is the ONLY thing guaranteeing contrast per the comment above; it
+      // must hide the base completely, not almost completely.
+      ctx.fillStyle = 'rgba(8,14,10,1)';
       ctx.fill();
       ctx.strokeStyle = 'rgba(255,255,255,0.14)';
       ctx.lineWidth = 1;
