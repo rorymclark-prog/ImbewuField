@@ -104,3 +104,71 @@ export function persistableChrome(pref: ChromePref): ChromePref {
     bottom: pref.bottom === 'hidden' ? 'bar' : pref.bottom,
   };
 }
+
+/**
+ * WHAT EACH STOP SHOWS. One table, not guards scattered through the render.
+ *
+ * The order is the owner's: the drone alignment tools go FIRST, then Lima's advice, then the
+ * step's supporting rows — because the least essential thing is whatever the farmer is not using
+ * to author the design right now, and photo alignment is a one-time setup task while the tool row
+ * is how anything gets drawn at all.
+ */
+export interface BottomVisibility {
+  /** Nudge/rotate/size/see-through/reset — the photo alignment cluster. */
+  droneTools: boolean;
+  /** Satellite | My photo and Adjust photo: how you get BACK to alignment once it is folded. */
+  droneEntry: boolean;
+  /** "Just want beds & trees?" and other shortcut rows. */
+  shortcuts: boolean;
+  /** Lima's advice card. */
+  advisor: boolean;
+  /** The step/status bar. */
+  stepBar: boolean;
+  /** The palette body: element chips, zone chips, bed block, etc. */
+  body: boolean;
+  /** Select / Undo / Delete / Layers — never hidden except at `hidden`. */
+  tools: boolean;
+}
+
+export function bottomVisibility(stop: BottomStop): BottomVisibility {
+  switch (stop) {
+    case 'full':
+      return { droneTools: true, droneEntry: true, shortcuts: true, advisor: true, stepBar: true, body: true, tools: true };
+    case 'compact':
+      // Photo alignment is setup, not authoring — it is the first thing a farmer stops needing.
+      // The way back to it (Adjust photo) deliberately survives, so folding is never a trap.
+      return { droneTools: false, droneEntry: true, shortcuts: false, advisor: true, stepBar: true, body: true, tools: true };
+    case 'bar':
+      return { droneTools: false, droneEntry: false, shortcuts: false, advisor: false, stepBar: false, body: false, tools: true };
+    case 'hidden':
+    default:
+      return { droneTools: false, droneEntry: false, shortcuts: false, advisor: false, stepBar: false, body: false, tools: false };
+  }
+}
+
+export interface TopVisibility {
+  /** The full header: title, Learn, Print, build, save state. */
+  header: boolean;
+  /** The step wizard block. */
+  wizard: boolean;
+  /** The slim one-line step nav. */
+  stepNav: boolean;
+}
+
+export function topVisibility(stop: TopStop): TopVisibility {
+  switch (stop) {
+    case 'full':
+      return { header: true, wizard: true, stepNav: true };
+    case 'slim':
+      return { header: true, wizard: false, stepNav: true };
+    case 'hidden':
+    default:
+      return { header: false, wizard: false, stepNav: false };
+  }
+}
+
+/** How many bands a stop is currently hiding — shown beside the ticks so "where did it go" has an
+ *  answer on screen rather than requiring the farmer to remember. */
+export function hiddenCount(v: BottomVisibility | TopVisibility): number {
+  return Object.values(v).filter((shown) => shown === false).length;
+}

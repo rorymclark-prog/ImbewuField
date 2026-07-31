@@ -61,6 +61,11 @@ import {
   MAX_BASE_SCALE,
 } from '@/lib/design-canvas';
 import { type BaseAlignment } from '@/lib/base-photo-align';
+import ChromeHandle from '@/components/design/ChromeHandle';
+import {
+  BOTTOM_STOPS, TOP_STOPS, CHROME_PREF_KEY, bottomVisibility, topVisibility, hiddenCount,
+  persistableChrome, restoreStop, type BottomStop, type TopStop, type ChromePref,
+} from '@/lib/design-chrome';
 import { layoutBedBlock, normaliseBedBlockSpec, MIN_BED_COUNT, MAX_BED_COUNT, type BedBlockPlacement, type BedBlockSpec } from '@/lib/bed-block';
 import { tidyOutline, tidyOutlineSummary, type TidyOutlineResult } from '@/lib/tidy-outline';
 import { type SnapRingKind } from '@/lib/snap-edges';
@@ -735,7 +740,38 @@ function DesignStudioInner() {
 
   // Collapse the top chrome (auto-design bar + wizard) into a slim strip so the canvas
   // gets the full screen — the design surface was cramped into ~half the height.
-  const [chromeCollapsed, setChromeCollapsed] = useState(false);
+  // THE TWO LADDERS. Replaces a single boolean that could only hide the wizard: the farmer can now
+  // take each edge down in stages and, at the last stop, all the way to just the map — with the
+  // least essential band going first (see bottomVisibility). `hidden` is never persisted, so the
+  // Studio can never reopen with no visible tools.
+  const [topStop, setTopStop] = useState<TopStop>('full');
+  const [bottomStop, setBottomStop] = useState<BottomStop>('full');
+  useEffect(() => {
+    try {
+      const raw = window.localStorage.getItem(CHROME_PREF_KEY);
+      if (!raw) return;
+      const saved = JSON.parse(raw) as Partial<ChromePref>;
+      setTopStop(restoreStop(saved.top, TOP_STOPS, 'full'));
+      setBottomStop(restoreStop(saved.bottom, BOTTOM_STOPS, 'full'));
+    } catch { /* a corrupt preference is not worth a broken Studio */ }
+  }, []);
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(CHROME_PREF_KEY, JSON.stringify(persistableChrome({ top: topStop, bottom: bottomStop })));
+    } catch { /* storage full is already surfaced by the design save path */ }
+  }, [topStop, bottomStop]);
+  const topShow = topVisibility(topStop);
+  const bottomShow = bottomVisibility(bottomStop);
+  // Kept so the existing phone auto-collapse effect and every other read still work unchanged.
+  const chromeCollapsed = !topShow.wizard;
+  const setChromeCollapsed = useCallback((v: boolean | ((p: boolean) => boolean)) => {
+    setTopStop((prev) => {
+      const want = typeof v === 'function' ? v(prev !== 'full') : v;
+      // One-directional by contract: the auto-collapse may fold the wizard away, never restore it
+      // mid-drawing, and never take the header with it.
+      return want ? (prev === 'full' ? 'slim' : prev) : 'full';
+    });
+  }, []);
   // Phone-only: auto-collapse the instant the farmer starts actually interacting with the
   // canvas (a real drag, or a map scroll/zoom) — see the effect below, wired to canvasWrapRef.
   // Deliberately one-directional (only ever sets chromeCollapsed(true), never false): restoring
@@ -2613,10 +2649,23 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               <ImageIcon size={15} /> Preview map
             </button>
           )}
+          <span style={{ marginLeft: 'auto' }}>
+            {/* THE TOP HANDLE. Was a two-state "More space" toggle, which could reclaim the wizard
+                and nothing else — there was no way to get to just the map. Now a ladder: full →
+                slim → hidden, one tap at a time, wrapping back. */}
+            <ChromeHandle
+              stop={topStop}
+              stops={TOP_STOPS}
+              onChange={setTopStop}
+              invert
+              hidden={hiddenCount(topShow)}
+              label="Show or hide the steps and header"
+            />
+          </span>
           <button
             type="button"
-            onClick={() => setChromeCollapsed((c) => !c)}
-            style={{ marginLeft: canvasState.step !== 'glossy' ? 'auto' : 'auto', display: 'inline-flex', alignItems: 'center', gap: 4, background: 'transparent', border: 'none', color: GREEN, fontSize: 12.5, fontWeight: 700, cursor: 'pointer', minHeight: 34, padding: '0 4px' }}
+            onClick={() => setTopStop((c) => (c === 'full' ? 'slim' : 'full'))}
+            style={{ display: 'none' }}
           >
             {chromeCollapsed ? <><ChevronDown size={15} /> Show steps</> : <><ChevronUp size={15} /> More space</>}
           </button>
@@ -2725,7 +2774,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
         {/* Advisor (Lima) — rendered INSIDE the canvas container so it anchors to the canvas's
             bottom-left, which sits directly above the status bar + element palette. It can never
             overlap those bottom bars, and taps outside it dismiss it. */}
-        {canvasState && canvasState.step !== 'glossy' && (
+        {bottomShow.advisor && canvasState && canvasState.step !== 'glossy' && (
           <DesignAdvisor
             state={canvasState}
             site={site}
@@ -2738,7 +2787,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
       {/* Import your own photo — Base step only. Lets a farmer use a drone/aerial photo of their
           own land as the base to draw on, instead of the fetched satellite tile. See
           components/design/BasePhotoImport.tsx and CustomBaseImage (lib/design-canvas.ts). */}
-      {canvasState && canvasState.step === 'base' && (
+      {(bottomShow.droneTools || bottomShow.droneEntry) && canvasState && canvasState.step === 'base' && (
         <div style={{ padding: '6px 12px 0' }}>
           {basePhotoControls(canvasState).canToggle ? (
             <div
@@ -2793,7 +2842,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
                   so a scale handle here would quietly restate every area and every yield on the
                   plan, while rotation cannot — turning an image does not change what a pixel is
                   worth on the ground. */}
-              {basePhotoControls(canvasState).showingPhoto && canvasState.customBase && (
+              {bottomShow.droneTools && basePhotoControls(canvasState).showingPhoto && canvasState.customBase && (
                 <>
                   <span style={{ display: 'inline-flex', alignItems: 'center', gap: 2, flexShrink: 0 }}>
                     {([
@@ -2950,7 +2999,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
 
       {/* "Just beds & trees" quick path — for the farmer who doesn't want the full permaculture
           plan. Offered on the first (Base) step; jumps straight to Planting. */}
-      {canvasState && canvasState.step === 'base' && designMode === 'guided' && (
+      {bottomShow.shortcuts && canvasState && canvasState.step === 'base' && designMode === 'guided' && (
         <div style={{ padding: '6px 12px 0' }}>
           <button
             type="button"
@@ -3116,9 +3165,30 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
         </div>
       )}
 
+      {/* THE WAY BACK. `hidden` must never be a dead end: with both edges down there would
+          otherwise be no control on screen at all, and a canvas tap places an element rather than
+          restoring chrome — so tapping the map to get out would silently edit the design. These
+          rails are small, always present when their edge is hidden, and carry the same handle. */}
+      {!topShow.stepNav && (
+        <div style={{ position: 'fixed', top: 'calc(env(safe-area-inset-top, 0px) + 4px)', left: 0, right: 0, display: 'flex', justifyContent: 'center', zIndex: 30, pointerEvents: 'none' }}>
+          <span style={{ pointerEvents: 'auto', background: PAPER, borderRadius: 999, padding: '0 12px', boxShadow: '0 4px 14px -6px rgba(0,0,0,0.35)', border: '1px solid #E2D8C4' }}>
+            <ChromeHandle stop={topStop} stops={TOP_STOPS} onChange={setTopStop} invert hidden={hiddenCount(topShow)} label="Show the steps again" />
+          </span>
+        </div>
+      )}
+      {!bottomShow.tools && (
+        <div style={{ position: 'fixed', bottom: 'calc(env(safe-area-inset-bottom, 0px) + 4px)', left: 0, right: 0, display: 'flex', justifyContent: 'center', zIndex: 30, pointerEvents: 'none' }}>
+          <span style={{ pointerEvents: 'auto', background: PAPER, borderRadius: 999, padding: '0 12px', boxShadow: '0 4px 14px -6px rgba(0,0,0,0.35)', border: '1px solid #E2D8C4' }}>
+            <ChromeHandle stop={bottomStop} stops={BOTTOM_STOPS} onChange={setBottomStop} hidden={hiddenCount(bottomShow)} label="Show the tools again" />
+          </span>
+        </div>
+      )}
+
       {/* Palette (docked bottom) */}
       {canvasState && canvasState.step !== 'glossy' && (
         <DesignPalette
+          bottomStop={bottomStop}
+          onBottomStopChange={setBottomStop}
           step={canvasState.step}
           mode={designMode}
           tool={tool}

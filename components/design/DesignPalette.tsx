@@ -47,6 +47,8 @@ import { MIN_BED_COUNT, MAX_BED_COUNT } from '@/lib/bed-block';
 import { CATEGORY_META, CATEGORY_STEP, ELEMENT_CATALOG, GROUND_FEATURES, ZONE_DEFS, biomeClimates, elementSuitsClimate, elementVisibleInPalette, type DesignElementDef } from '@/lib/design-elements';
 import { COMPASS16_ORDER, isCompassDirection16, type LocalWindObservation } from '@/lib/local-wind';
 import { usePhoneViewport } from '@/lib/use-phone-viewport';
+import ChromeHandle from '@/components/design/ChromeHandle';
+import { BOTTOM_STOPS, bottomVisibility, hiddenCount, type BottomStop } from '@/lib/design-chrome';
 import { formatDesignTranslation } from '@/lib/design-studio-i18n';
 import { useLanguage } from '@/lib/i18n';
 import LessonLink from './LessonLink';
@@ -175,6 +177,10 @@ export interface DesignPaletteProps {
   // Site biome name (from lib/biome.ts) — used to surface climate-appropriate trees on the
   // planting step. Undefined = unknown, show all.
   siteBiome?: string;
+  /** The bottom chrome ladder, owned by the page so the drone bar and Lima (which live there) shed
+   *  in the same order as this palette's own rows. */
+  bottomStop: BottomStop;
+  onBottomStopChange: (next: BottomStop) => void;
 }
 
 const GOLD = '#F7C97E';
@@ -353,6 +359,8 @@ export default function DesignPalette({
   sizeControl,
   windControl,
   siteBiome,
+  bottomStop,
+  onBottomStopChange,
 }: DesignPaletteProps) {
   const { t } = useLanguage();
   const [hintDefId, setHintDefId] = useState<string | null>(null);
@@ -393,7 +401,13 @@ export default function DesignPalette({
   // (Rory: "i cant even see the element pallete"). Dragging the handle down, or tapping it,
   // collapses to the compact tool-row-only state to reclaim map space; it stays wherever the
   // farmer last left it (not reset per step) so repeated placing on one step doesn't fight it.
-  const [sheetOpen, setSheetOpen] = useState(true);
+  // The sheet body follows the ladder now. Kept as a derived boolean so every existing read below
+  // (maxHeight, aria-expanded, the strip-end effect) works unchanged.
+  const sheetOpen = bottomVisibility(bottomStop).body;
+  const setSheetOpen = useCallback((v: boolean | ((p: boolean) => boolean)) => {
+    const want = typeof v === 'function' ? v(sheetOpen) : v;
+    onBottomStopChange(want ? 'full' : 'bar');
+  }, [sheetOpen, onBottomStopChange]);
   const sheetDragRef = useRef<{ startY: number; pointerId: number } | null>(null);
   const isPhone = usePhoneViewport();
 
@@ -1570,32 +1584,13 @@ export default function DesignPalette({
         {/* Drag handle — tap toggles open/closed; dragging past a small threshold forces the
             state in that direction. touchAction:'none' + pointer capture match the drag-handle
             pattern already used throughout DesignCanvas.tsx. */}
-        <div
-          onPointerDown={handleHandlePointerDown}
-          onPointerUp={handleHandlePointerUp}
-          onPointerCancel={handleHandlePointerCancel}
-          role="button"
-          tabIndex={0}
-          aria-expanded={sheetOpen}
-          aria-label={t(sheetOpen ? 'designPaletteCollapse' : 'designPaletteExpand')}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' || e.key === ' ') {
-              e.preventDefault();
-              setSheetOpen((v) => !v);
-            }
-          }}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            minHeight: 28,
-            flexShrink: 0,
-            touchAction: 'none',
-            cursor: 'grab',
-          }}
-        >
-          <span aria-hidden style={{ width: 36, height: 5, borderRadius: 3, background: 'rgba(11,18,11,0.25)' }} />
-        </div>
+        <ChromeHandle
+          stop={bottomStop}
+          stops={BOTTOM_STOPS}
+          onChange={onBottomStopChange}
+          hidden={hiddenCount(bottomVisibility(bottomStop))}
+          label={t(sheetOpen ? 'designPaletteCollapse' : 'designPaletteExpand')}
+        />
         {/* Tool row — always present regardless of open/collapsed, and never inside the
             scrollable body below, so the Layers popover keeps its "no overflow ancestor"
             guarantee and Select/Undo/Delete stay one tap away even collapsed. Its own content is
@@ -1644,6 +1639,16 @@ export default function DesignPalette({
         paddingBottom: 'calc(6px + env(safe-area-inset-bottom))',
       }}
     >
+      {/* THE SAME LADDER ON DESKTOP. This handle used to exist only in the phone branch above, so
+          on a wide screen there was no way to collapse the bottom stack at all — which is exactly
+          where the owner was looking for it. One component, one behaviour, both layouts. */}
+      <ChromeHandle
+        stop={bottomStop}
+        stops={BOTTOM_STOPS}
+        onChange={onBottomStopChange}
+        hidden={hiddenCount(bottomVisibility(bottomStop))}
+        label={t(sheetOpen ? 'designPaletteCollapse' : 'designPaletteExpand')}
+      />
       {renderToolRow()}
 
       {/* Below the tool row, everything is unbounded in height: the element catalog can carry a
