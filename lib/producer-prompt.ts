@@ -621,8 +621,20 @@ const OVERLAY_ICONS: Record<string, string> = {
   // pollinator labels came out sitting just off the fence.
   pollinator: 'a narrow rectangular marker → a strip of low mixed wildflowers, yellow, white and mauve dots over grey-green foliage, filling exactly that rectangle and no larger, never extended along the fence or any other line',
   borehole:  'a borehole marker → a small blue concentric-circle target with a grey collar ring',
-  bed:       'a green rectangle marker → a vegetable bed: brown tilled soil in parallel strips with regular rows of small green plants',
-  tree:      'a tree marker → a canopy seen from above with a soft shadow to the lower-right, drawn to its species where the label names one: moringa feathery and pale, avocado dark glossy and dense, macadamia dense mid-green, citrus small round bright green flecked with orange fruit, mango broad and dark, pawpaw a crown of big lobed leaves on a bare stem',
+  // A PLANTED bed, not a prepared one (Rory: "veg beds must show up with veg in them in the ai
+  // polish"). The old wording led with the soil and mentioned plants last, and a model reading
+  // "brown tilled soil in parallel strips" reasonably drew exactly that — an empty seedbed. The
+  // crop is the subject now and the soil is what shows between the rows. Described by leaf and
+  // habit, never by species: naming one in a prompt is a propagation recommendation, and which
+  // species may be propagated here is regulated (NEMBA).
+  bed:       'a green rectangle marker → a PLANTED vegetable bed in full growth, never bare or freshly tilled ground: dense regular rows of leafy vegetables filling the rectangle, individual plants clearly visible from above as distinct rosettes and clumps in several greens, with only narrow strips of brown soil showing between the rows',
+  // The indigenous shade tree had no crown description here at all, so the model fell back to a
+  // generic — and often conical, conifer-like — canopy. In South Africa that is not a neutral
+  // default: it reads as a pine plantation, the invasive thing these plans usually exist to
+  // replace. The indigenous shade trees a farmer plants here are broad and flat- or dome-topped
+  // with fine foliage. Described by FORM, never by species: naming a species in a prompt is a
+  // propagation recommendation, and which species may be propagated is regulated (NEMBA).
+  tree:      'a tree marker → a canopy seen from above with a soft shadow to the lower-right, drawn to its species where the label names one: moringa feathery and pale, avocado dark glossy and dense, macadamia dense mid-green, citrus small round bright green flecked with orange fruit, mango broad and dark, pawpaw a crown of big lobed leaves on a bare stem, indigenous shade tree a broad flat-topped or dome-shaped crown of fine grey-green foliage spreading wider than it is tall — never conical, never a conifer, never a pine',
   hive:      'a hive marker → a small stacked striped beehive box',
   building:  'a hut or shed marker → leave the real roof from the photograph exactly as it is and outline it only',
   patio:     'a warm-tan area marker → a paved patio of exactly that shape, laid in a regular slab pattern',

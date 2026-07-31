@@ -714,7 +714,12 @@ export const ELEMENT_CATALOG: DesignElementDef[] = [
     id: 'tree_moringa',
     category: 'growing',
     name: 'Moringa Tree',
-    icon: '🌳',
+    // Moringa gives up 🌳 to the indigenous shade tree, which is the catalog's canonical BIG
+    // BROAD tree and has the better claim on the broad-canopy glyph. This is the more accurate
+    // pair anyway: moringa is thin-trunked with fine feathery foliage and is usually coppiced
+    // for leaf harvest, which 🌿 says and 🌳 does not. (Glyphs must stay unique — there is a
+    // test for it — so this was a swap, not an addition.)
+    icon: '🌿',
     shape: 'circle',
     wM: 4,
     hM: 4,
@@ -795,7 +800,14 @@ export const ELEMENT_CATALOG: DesignElementDef[] = [
     id: 'tree_indigenous',
     category: 'growing',
     name: 'Indigenous Shade Tree',
-    icon: '🌲',
+    // NOT a conifer (Rory: "in south africa if i insert a indig shade tree its generally a flat
+    // crown species not a conifer"). 🌲 is the evergreen-conifer glyph, and in South Africa that
+    // shape does not read as neutral — it reads as a pine plantation, which is the invasive
+    // thing a permaculture plan is usually trying to REPLACE. The indigenous shade trees a
+    // farmer actually plants here are broad and flat- or dome-crowned. No emoji is flat-topped,
+    // so 🌳 is the closest honest glyph; the crown FORM is described properly in the polish
+    // prompt (lib/producer-prompt.ts), which is where the picture is actually decided.
+    icon: '🌳',
     shape: 'circle',
     wM: 10,
     hM: 10,
