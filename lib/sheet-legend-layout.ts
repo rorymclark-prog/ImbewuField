@@ -63,7 +63,7 @@ export function legendHeightFillRatio(rowCount: number): number {
   );
 }
 
-/** Width establishes the normal type scale; a genuinely populated tall column may grow to 1.44×. */
+/** Width establishes the normal type scale; height is allowed to grow it when the panel can hold it. */
 export function legendRowFontSize(
   legendWidth: number,
   availableHeight: number,
@@ -89,11 +89,9 @@ export function legendRowFontSize(
     || !Number.isSafeInteger(rowCount)
     || rowCount <= 0
   ) return baseSize;
-  const widthCap = Math.max(baseSize, Math.round(safeWidth * 0.066));
   const trackTarget = Math.max(baseSize, Math.round((availableHeight / rowCount) * 0.11));
-  const tallTarget = Math.min(widthCap, trackTarget);
   const fillRatio = legendHeightFillRatio(rowCount);
-  return Math.round(baseSize + (tallTarget - baseSize) * fillRatio);
+  return Math.round(baseSize + (trackTarget - baseSize) * fillRatio);
 }
 
 export function legendRowGap(

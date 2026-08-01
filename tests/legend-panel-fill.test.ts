@@ -5,6 +5,7 @@ import {
   balancedLegendColumnRanges,
   COMPACT_LEGEND_MAX_ROWS,
   countedLegendText,
+  fitLegendFontSize,
   FULL_HEIGHT_LEGEND_MIN_ROWS,
   legendHeightFillRatio,
   layoutLegendColumn,
@@ -111,8 +112,30 @@ test('a populated tall legend grows its facts while a sparse legend keeps the no
   assert.equal(legendRowFontSize(445, 1_289, 3), 20);
   assert.equal(legendRowFontSize(445, 1_289, 6), 24);
   assert.equal(legendRowFontSize(445, 400, 6), 20, 'short panels do not force oversized type');
+  assert.ok(
+    legendRowFontSize(445, 4_000, 6) > 29,
+    'a tall panel is not capped by the old width-only ceiling',
+  );
   assert.ok(legendRowFontSize(445, 1_289, 6) > legendRowFontSize(445, 1_289, 3), 'a fuller legend grows');
   assert.ok(legendRowFontSize(445, 1_289, 3) >= 17, 'the floor is a readable size, not a fitting artefact');
+});
+
+test('fit-to-height chooses the largest sparse type that its measured rows can hold', () => {
+  const availableHeight = 1_289;
+  const measuredHeight = (fontSize: number) => fontSize * 6;
+  const fitted = fitLegendFontSize(measuredHeight, availableHeight, 300, 9);
+
+  assert.ok(fitted > 29, 'the search is allowed past the old width-derived ceiling');
+  assert.ok(measuredHeight(fitted) <= availableHeight);
+  assert.ok(measuredHeight(fitted + 1) > availableHeight, 'the next larger size would overflow');
+});
+
+test('the dense Planting inventory remains bounded by its existing readable baseline', () => {
+  const denseRows = 21;
+  const normal = legendRowFontSize(445, 1_289, denseRows);
+  const populatedBaseline = legendRowFontSize(445, 1_289, 6);
+  assert.ok(normal <= populatedBaseline, 'dense legends do not inherit sparse-panel inflation');
+  assert.ok(normal >= 17, 'dense legends retain the readable minimum before column fitting');
 });
 
 test('an overfull factual legend partitions into readable columns without losing or reordering rows', () => {
