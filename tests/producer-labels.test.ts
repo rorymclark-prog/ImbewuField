@@ -306,3 +306,29 @@ test('exported geometry helpers return finite fallbacks and retain only usable p
   ], Number.NaN);
   assert.deepEqual(clusters, [[valid]]);
 });
+
+// A SPREAD-OUT FARM MUST NOT PRODUCE A LEADER PER TREE. Rory's Planting sheet came back with 28
+// callouts — three separate avocado pills, three moringa, three litchi — because a cluster needs
+// GROUP_MIN_NAMES distinct species before it earns one shared header, and on a real farm the trees
+// are too far apart to cluster at the default radius. A hard cap was the previous fix and it was
+// worse: it silently dropped callouts, so the map disagreed with its own legend.
+test('a coarser radius merges scattered specimens instead of dropping any of them', () => {
+  // Six specimens in three widely separated pairs — the shape that produced the compass-prefixed
+  // NORTHERN / SOUTH-WESTERN / SOUTH-EASTERN pills.
+  const pts = [
+    { x: 0.10, y: 0.10, name: 'Avocado Tree', icon: '🥑' }, { x: 0.13, y: 0.12, name: 'Avocado Tree', icon: '🥑' },
+    { x: 0.85, y: 0.15, name: 'Avocado Tree', icon: '🥑' }, { x: 0.88, y: 0.17, name: 'Avocado Tree', icon: '🥑' },
+    { x: 0.50, y: 0.90, name: 'Avocado Tree', icon: '🥑' }, { x: 0.53, y: 0.92, name: 'Avocado Tree', icon: '🥑' },
+  ];
+
+  const tight = clusterByProximity(pts, 1, 0.18);
+  const coarse = clusterByProximity(pts, 1, 1.5); // the escalation ladder's top step
+
+  assert.equal(tight.length, 3, 'at the default radius these read as three separate places');
+  assert.equal(coarse.length, 1, 'a coarser radius must merge them into one callout');
+
+  // NOTHING MAY BE LOST in the merge — that was the whole failure of the cap.
+  const total = (groups: typeof tight) => groups.reduce((n, g) => n + g.length, 0);
+  assert.equal(total(tight), pts.length);
+  assert.equal(total(coarse), pts.length);
+});

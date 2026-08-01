@@ -58,7 +58,7 @@ import {
   REFERENCE_SHEET_LABEL,
   type GlossyLayerFilter,
 } from '@/lib/glossy-filters';
-import { compareLabelRows, producerLabels, plotBox } from '@/lib/producer-labels';
+import { compareLabelRows, producerLabels, producerLabelsWithinBudget, plotBox } from '@/lib/producer-labels';
 import { leaderLabelFontSize, placeLeaderLabel, stackLeaderRows, leaderPath } from '@/lib/leader-labels';
 import { exactModelInputMarks, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '@/lib/render-policy';
 import { EARTHWORKS_ROUTE_STYLE, WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, nearestWaterNeighbourPx, offsetPolyline, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRoutesWithVisualBridges, waterRouteStyleFor, type EarthworksRouteStyle, type WaterLegendSection } from '@/lib/water-cartography';
@@ -3339,7 +3339,9 @@ function referenceBlueprintLabels(
     zones: filter === 'all' ? state.zones.filter((zone) => Boolean(zone.feature)) : state.zones,
   };
   const labels = [
-    ...producerLabels(canonicalState, refLayers, W, H, filter, false),
+    // Budgeted for the design sheets: merges crowded clusters rather than dropping callouts.
+    // See producerLabelsWithinBudget for why a hard cap was the wrong fix in both directions.
+    ...producerLabelsWithinBudget(canonicalState, refLayers, W, H, filter, false),
     ...(filter === 'planting' ? groundLabelsForSheet(state, refLayers, W, H, filter) : []),
   ];
 
@@ -3383,6 +3385,8 @@ function referenceBlueprintLabels(
             : /DRIVEWAY/.test(label.text) ? 3 : 2;
         return rank(a) - rank(b) || compareLabelRows(a, b);
       });
+    // Already budgeted upstream by merging clusters, so nothing is dropped here — this only lays
+    // the surviving leaders out down the margins.
     return rebalance(ranked, ranked.length);
   }
   if (filter === 'structures') return rebalance(labels, 10);

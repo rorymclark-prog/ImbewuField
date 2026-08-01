@@ -120,7 +120,7 @@ export function compareLabelRows(
 
 /** Single-link clustering by proximity. `aspect` (W/H) makes the metric isotropic despite x and y
  *  both being normalised 0..1 over a non-square frame. Element counts are tens — O(n²) is fine. */
-export function clusterByProximity(pts: LabelPt[], aspect: number): LabelPt[][] {
+export function clusterByProximity(pts: LabelPt[], aspect: number, proximity = GROUP_PROXIMITY): LabelPt[][] {
   const validPts = pts.filter((point) => isNormalisedPoint([point.x, point.y]));
   const safeAspect = Number.isFinite(aspect) && aspect > 0 ? aspect : 1;
   const parent = validPts.map((_, i) => i);
@@ -131,7 +131,7 @@ export function clusterByProximity(pts: LabelPt[], aspect: number): LabelPt[][] 
         (validPts[i].x - validPts[j].x) * safeAspect,
         validPts[i].y - validPts[j].y,
       );
-      if (d <= GROUP_PROXIMITY) parent[find(i)] = find(j);
+      if (d <= proximity) parent[find(i)] = find(j);
     }
   }
   const by = new Map<number, LabelPt[]>();
@@ -153,6 +153,9 @@ export function producerLabels(
   H: number,
   filter: GlossyLayerFilter = 'all',
   includeToolGlyphs = true,
+  /** Cluster radius. Raised by the caller when a sheet is too crowded to read — see
+   *  producerLabelsWithinBudget below. Default is the tuned value for a normal design. */
+  proximity = GROUP_PROXIMITY,
 ): ProducerLabel[] {
   if (!Number.isFinite(W) || W <= 0 || !Number.isFinite(H) || H <= 0) return [];
   const fs = 26, padX = 14;
@@ -214,7 +217,7 @@ export function producerLabels(
   const aspect = H > 0 ? W / H : 1;
   const naming = sheetElementNaming(filter);
   for (const [family, pts] of families) {
-    const clusters = clusterByProximity(pts, aspect);
+    const clusters = clusterByProximity(pts, aspect, proximity);
     for (const cluster of clusters) {
       // Name groups within this cluster (renamed items get their own row), biggest first.
       const byName = new Map<string, { icon: string; ids: string[]; xs: number[]; ys: number[]; points: LabelPt[] }>();
@@ -233,7 +236,7 @@ export function producerLabels(
         // apart from EACH OTHER. Species labels must therefore re-cluster their own specimens,
         // otherwise one counted leader lands at the empty centroid between distant trees.
         for (const [name, g] of names) {
-          for (const specimens of clusterByProximity(g.points, aspect)) {
+          for (const specimens of clusterByProximity(g.points, aspect, proximity)) {
             const n = specimens.length;
             blocks.push({
               id: specimens.map((point) => point.id ?? `${point.name}:${point.x}:${point.y}`).sort().join('\u0000'),
@@ -457,4 +460,44 @@ export function producerLabels(
     });
   });
   return out;
+}
+
+/**
+ * MAP CALLOUTS ARE THE READING LAYER, NOT THE INVENTORY — the legend is the inventory.
+ *
+ * A hard cap on leaders silently dropped valid callouts, so the map disagreed with its own legend.
+ * Removing the cap swapped one bug for a worse one: on a spread-out farm nothing clusters (a group
+ * needs GROUP_MIN_NAMES distinct species to earn a shared header), so every specimen became its own
+ * compass-prefixed pill — 28 leaders across one Planting sheet, unreadable.
+ *
+ * This merges instead of dropping. Same clustering, coarser radius, escalated until the sheet fits
+ * its budget: two distant avocados stop being NORTHERN and SOUTH-EASTERN pills and become one
+ * avocado callout. Nothing is lost — a merged cluster still names every species it contains, and
+ * the legend still lists all of them with exact counts.
+ */
+export function producerLabelsWithinBudget(
+  state: DesignCanvasState,
+  refLayers: LabelRefLayers,
+  W: number,
+  H: number,
+  filter: GlossyLayerFilter = 'all',
+  includeToolGlyphs = true,
+  maxLeaders = 12,
+): ProducerLabel[] {
+  // Escalating radii, not a search: a handful of passes is cheaper than a bisection and the steps
+  // are the ones that visibly change grouping.
+  // The last step MUST be able to span the frame or the budget is unreachable on exactly the farms
+  // that need it. Normalised coordinates run 0..1 on each axis, so the diagonal is ~1.41 and a
+  // radius of 1.5 guarantees even opposite corners can merge. An earlier 0.6 ceiling looked
+  // generous and silently failed: three specimens spread across a farm are ~0.8 apart, so they
+  // never merged and the sheet stayed unreadable.
+  const radii = [GROUP_PROXIMITY, 0.26, 0.34, 0.45, 0.6, 0.9, 1.5];
+  let best: ProducerLabel[] = [];
+  for (const proximity of radii) {
+    best = producerLabels(state, refLayers, W, H, filter, includeToolGlyphs, proximity);
+    if (best.filter((label) => label.leader !== false).length <= maxLeaders) return best;
+  }
+  // Still over budget at the coarsest radius: return it anyway. A crowded sheet beats a wrong one,
+  // and every callout here is real — none has been dropped.
+  return best;
 }
