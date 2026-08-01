@@ -11,6 +11,7 @@ import type {
   DesignLayer,
   GeneratedDesignPlan,
 } from '../lib/design-studio.ts';
+import type { PhasePlan } from '../lib/phasing.ts';
 import { BIOMES } from '../lib/biome.ts';
 import type { LocationData } from '../lib/types.ts';
 import {
@@ -97,19 +98,53 @@ function build(
     location?: LocationData;
     layers?: DesignLayer[];
     plan?: GeneratedDesignPlan | null;
+    phasePlan?: PhasePlan;
   } = {},
 ): ReportDoc {
+  const layers = overrides.layers ?? [
+    layer('boundary', 'property_boundary', 20_000),
+    layer('roof', 'roof', 100),
+    layer('garden', 'cultivation', 250),
+  ];
+  const roofIds = layers.filter((item) => item.approved && item.layerType === 'roof').map((item) => item.id);
+  const gardenIds = layers.filter((item) => item.approved && item.layerType === 'cultivation').map((item) => item.id);
   return buildSkeletonReportDoc({
     id: 'report',
     siteId: 'site',
     location: overrides.location ?? location(),
     survey: null,
-    layers: overrides.layers ?? [
-      layer('boundary', 'property_boundary', 20_000),
-      layer('roof', 'roof', 100),
-      layer('garden', 'cultivation', 250),
-    ],
+    layers,
     plan: overrides.plan ?? null,
+    phasePlan: overrides.phasePlan ?? {
+      phases: [
+        {
+          n: 1,
+          key: 'access_water',
+          title: 'Safe Access & Water Spine',
+          colour: '#4EA6D8',
+          weekRange: 'Weeks 1–2',
+          weekStart: 0,
+          weekEnd: 2,
+          tasks: ['Connect roof gutters to a rainwater tank'],
+          holdPoint: 'Hold Point A: water route checked',
+          itemIds: roofIds,
+        },
+        {
+          n: 2,
+          key: 'beds',
+          title: 'Beds, Drip & Working Infra',
+          colour: '#7FD46B',
+          weekRange: 'Weeks 3–6',
+          weekStart: 3,
+          weekEnd: 6,
+          tasks: ['Expand kitchen-garden beds + drip irrigation'],
+          holdPoint: 'Hold Point B: beds ready',
+          itemIds: gardenIds,
+        },
+      ],
+      criticalOrder: ['water', 'beds'],
+      siteRules: [],
+    },
     createdAt: CREATED_AT,
   });
 }

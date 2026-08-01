@@ -9,6 +9,8 @@
 // were guaranteed to fail with "Timed out waiting for the render", which is exactly what a farmer
 // hit. (The stale comment here claimed "~30-90s" / "45x3000ms" — it had drifted from both the code
 // and reality.) A deadline says what we mean far better than a magic iteration count.
+import { paidApiHeaders } from '@/lib/api-client-auth';
+
 const RENDER_DEADLINE_MS = 8 * 60 * 1000;
 
 // Poll a fal queue job (gpt-image-2 async path) until the render is ready, or throw on
@@ -25,7 +27,7 @@ export async function pollFalRender(statusUrl: string, responseUrl: string): Pro
     delayMs = Math.min(6000, delayMs + 250);
     const pr = await fetch('/api/ai-render/poll', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...await paidApiHeaders() },
       body: JSON.stringify({ statusUrl, responseUrl }),
     });
     const pd: { image?: string; error?: string; detail?: string; pending?: boolean } = await pr
@@ -51,9 +53,10 @@ export async function pollFalRender(statusUrl: string, responseUrl: string): Pro
 // runAiRender does (json-catch → 'Server error…', !ok → error/detail, pending → poll),
 // and return the final image data URL.
 export async function requestRender(body: Record<string, unknown>): Promise<string> {
+  const authHeaders = await paidApiHeaders();
   const res = await fetch('/api/ai-render', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', ...authHeaders },
     body: JSON.stringify(body),
   });
 

@@ -11,6 +11,8 @@ import { preserveCanvasNavigation, type DesignCanvasState } from '../lib/design-
 import { exactModelInputMarks, hasConflictingRenderAuthority, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '../lib/render-policy.ts';
 import { REFERENCE_SHEET_LABEL } from '../lib/glossy-filters.ts';
 import { EARTHWORKS_ROUTE_STYLE, WATER_LEGEND_SECTION_ORDER, pairedWaterDestinationCanopyIds, waterFeaturePresentationDimensions, waterFeaturePresentationScale, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRouteLegendEntries, waterRoutesWithVisualBridges, waterRouteStyleFor, earthworksRouteStyleFor } from '../lib/water-cartography.ts';
+import { authenticateApiRequest, MAX_API_BODY_BYTES, oversizedApiBodyResponse } from '../lib/api-auth.ts';
+import './generate-report-sections.test.ts';
 
 function px(r: number, g: number, b: number, a: number): Uint8ClampedArray {
   return new Uint8ClampedArray([r, g, b, a]);
@@ -1472,4 +1474,41 @@ test('both exact render paths pass the filter through instead of enumerating she
   // The exact-ALL batch had its own hand-kept copy of the sheet list, which is how it shipped a
   // "complete" plan set with no sheet 05 in it at all.
   assert.doesNotMatch(src, /\{ f: 'zones', no: '03'/, 'the exact-all batch is hand-listing sheets again');
+});
+
+test('paid API auth returns the uid from a verified bearer token', async () => {
+  const req = new Request('https://example.test/api/paid', {
+    headers: { Authorization: 'Bearer signed-token' },
+  });
+  const result = await authenticateApiRequest(req, '/api/paid', async (token) => {
+    assert.equal(token, 'signed-token');
+    return { uid: 'farmer-123' };
+  });
+  assert.equal(result.uid, 'farmer-123');
+  assert.equal(result.response, undefined);
+});
+
+test('paid API auth is log-only by default when the verifier rejects a token', async () => {
+  const previous = process.env.REQUIRE_API_AUTH;
+  delete process.env.REQUIRE_API_AUTH;
+  try {
+    const req = new Request('https://example.test/api/paid', {
+      headers: { Authorization: 'Bearer bad-token' },
+    });
+    const result = await authenticateApiRequest(req, '/api/paid', async () => {
+      throw new Error('bad signature');
+    });
+    assert.equal(result.uid, null);
+    assert.equal(result.response, undefined);
+  } finally {
+    if (previous === undefined) delete process.env.REQUIRE_API_AUTH;
+    else process.env.REQUIRE_API_AUTH = previous;
+  }
+});
+
+test('oversized paid API bodies are rejected before parsing', () => {
+  const req = new Request('https://example.test/api/paid', {
+    headers: { 'content-length': String(MAX_API_BODY_BYTES + 1) },
+  });
+  assert.equal(oversizedApiBodyResponse(req, '/api/paid')?.status, 413);
 });

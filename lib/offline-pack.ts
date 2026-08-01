@@ -95,9 +95,8 @@ export function offlinePack(moduleId: string, lang: string, quality: PackQuality
   const deck = COURSE_DECKS[moduleId];
   if (deck) {
     for (const slide of deck.slides) {
-      // Per slide, not per deck. isiZulu is missing exactly one of Seeds' 24 slides, and the
-      // player falls back to English on that one alone — so the pack has to contain the English
-      // file for it, or the module reads as complete offline and shows a gap on slide 13.
+      // Per slide, not per deck. The player falls back to English when a localized image is
+      // absent, so the pack must include that fallback too or the module has a gap offline.
       const own = slideImageUrl(moduleId, lang, slide.slide);
       const url = own ?? slideImageUrl(moduleId, 'en', slide.slide);
       if (url) push(at(url, 'slide'));

@@ -15,23 +15,25 @@ import {
   MAX_GAP_TO_ROW_RHYTHM,
 } from '../lib/sheet-legend-layout.ts';
 
-test('a six-row Water legend reaches the notes block instead of abandoning most of a tall panel', () => {
-  // This is the production complaint, expressed as layout geometry rather than a screenshot pixel
-  // constant: two tanks + tap + buried main + drip laterals + swale make six countable rows. Once
-  // there are enough rows to establish a real column rhythm, the first and final row blocks must
-  // span all of the height the renderer reserved for them. The former universal rhythm cap left
-  // the final row above the panel midpoint on the saved 1927×1658 sheet.
-  const rowCount = 6;
-  const usedHeight = 360;
-  const availableHeight = 1_200;
+test('spare panel height never becomes holes between legend rows, however many rows there are', () => {
+  // REVERSED DELIBERATELY. This test used to assert the opposite — that six or more rows justify
+  // their slack across the column so the last row reaches the notes block. That policy read well
+  // on the six-row Water sheet it was written for and failed badly on the 22-row Planting sheet,
+  // where it produced 9px type with the leftover height poured into the gaps: "look at the legend,
+  // big spaces between items, icons way way too small and text way too small."
+  //
+  // Those were never three problems. Spare height is type size that was not claimed, so the
+  // fitting search in DesignGlossy claims it there first, and the gap keeps its rhythm ceiling at
+  // every row count. Space left at the FOOT of a panel is honest; space punched between every row
+  // is a layout pretending to be full.
   const lineHeight = 24;
-  const gap = legendRowGap(availableHeight, usedHeight, rowCount, lineHeight);
-
-  assert.equal(
-    usedHeight + gap * (rowCount - 1),
-    availableHeight,
-    'a populated legend must not retain a second empty lower panel after its rows',
-  );
+  for (const rowCount of [3, 4, 5, 6, 12, 22]) {
+    const gap = legendRowGap(1_200, 360, rowCount, lineHeight);
+    assert.ok(
+      gap <= lineHeight * MAX_GAP_TO_ROW_RHYTHM + 0.001,
+      `row count ${rowCount} must not exceed the rhythm ceiling`,
+    );
+  }
 });
 
 test('a sectioned Water legend uses one even rhythm instead of creating isolated section islands', () => {
@@ -52,7 +54,9 @@ test('a sectioned Water legend uses one even rhythm instead of creating isolated
 
   assert.equal(layout.overflow, false);
   assert.equal(layout.offsets[0], 0, 'the first section begins directly under LEGEND');
-  assert.equal(layout.contentBottom, availableHeight, 'the last section reaches the notes block');
+  // Was `contentBottom === availableHeight`. See the reversal note on the first test in this file:
+  // a legend no longer stretches to the notes block by inflating the space between its rows.
+  assert.ok(layout.contentBottom <= availableHeight, 'the column stays inside its reserved band');
 
   for (let index = 0; index < rows.length - 1; index += 1) {
     const gap = layout.offsets[index + 1] - layout.offsets[index] - rows[index].height;
@@ -84,24 +88,37 @@ test('three singleton sections remain a compact list instead of becoming three i
   }
 });
 
-test('four- and five-row layouts apportion expansion instead of crossing a hard threshold', () => {
+test('a legend column grows only with the rows it actually holds, never to fill the panel', () => {
+  // REVERSED with the two tests above — this asserted the middle of the same justify-to-fill curve
+  // (four rows part way, six rows all the way to the panel foot). What survives is the part that
+  // was always true and is still worth guarding: more rows make a taller column, every gap obeys
+  // one rhythm, and no row count reaches down to the notes block by stretching its gaps.
   const availableHeight = 1_000;
   const rowHeight = 50;
   const rowRhythm = 40;
-  const layouts = [3, 4, 5, 6].map((count) => layoutLegendColumn(
+  const counts = [3, 4, 5, 6];
+  const layouts = counts.map((count) => layoutLegendColumn(
     availableHeight,
     Array.from({ length: count }, () => ({ height: rowHeight })),
     rowRhythm,
   ));
 
+  // The fill-ratio curve itself stays exported and tested: it no longer sizes type or gaps, but it
+  // remains the file's stated sparse-vs-dense vocabulary and other layout code may still ask it.
   assert.equal(COMPACT_LEGEND_MAX_ROWS, 3);
   assert.equal(FULL_HEIGHT_LEGEND_MIN_ROWS, 6);
-  assert.deepEqual([3, 4, 5, 6].map(legendHeightFillRatio), [0, 1 / 3, 2 / 3, 1]);
-  assert.ok(layouts[0].contentBottom < layouts[1].contentBottom);
-  assert.ok(layouts[1].contentBottom < layouts[2].contentBottom);
-  assert.equal(layouts[3].contentBottom, availableHeight);
-  assert.ok(layouts[1].contentBottom < availableHeight, 'four rows do not jump straight to full height');
-  assert.ok(layouts[2].contentBottom < availableHeight, 'five rows leave the final third for six rows');
+  assert.deepEqual(counts.map(legendHeightFillRatio), [0, 1 / 3, 2 / 3, 1]);
+
+  for (let i = 1; i < layouts.length; i += 1) {
+    assert.ok(layouts[i - 1].contentBottom < layouts[i].contentBottom, 'more rows, taller column');
+  }
+  layouts.forEach((layout, index) => {
+    assert.ok(
+      layout.contentBottom < availableHeight,
+      `${counts[index]} rows must not stretch to the panel foot`,
+    );
+    assert.ok(layout.rowGap <= rowRhythm * MAX_GAP_TO_ROW_RHYTHM + 0.001);
+  });
 });
 
 test('legend type is ONE standard size across the whole plan set, whatever a sheet holds', () => {

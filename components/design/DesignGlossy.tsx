@@ -76,6 +76,7 @@ import {
   legendMaxFontSize,
   legendRowFontSize,
 } from '@/lib/sheet-legend-layout';
+import { SHEET_BASE_MUTE_STYLE, type SheetBaseMute } from '@/lib/sheet-base-mute';
 import { overlayElementsText } from '@/lib/overlay-elements';
 import { deriveWaterSystem } from '@/lib/water-system';
 import { drawCartographicWaterSymbol } from '@/lib/cartographic-water-symbols';
@@ -2593,19 +2594,32 @@ async function drawBlueprintBase(
   frame: CanvasFrame,
   W: number,
   H: number,
+  mute: SheetBaseMute = 'design',
 ): Promise<void> {
+  // MUTE THE BASE, DO NOT DARKEN IT. This used to lay an 18% BLACK veil over the aerial, which is
+  // the wrong direction twice over: it makes dense subtropical foliage darker and busier, and it
+  // pushes the photo's contrast UP against the drawn content rather than down. Rory, on the real
+  // planting sheet: "having a raw map in the background, especially the detailed drone photo, can
+  // be very distracting ... maybe dim everything in the boundary right back depending on the
+  // layer." lib/sheet-base-mute.ts holds that per-sheet policy, so the design sheets and the
+  // Sector sheet can no longer end up with independently invented treatments the way they had.
+  const style = SHEET_BASE_MUTE_STYLE[mute];
   if (frame.satDataUrl) {
     const img = await loadImage(frame.satDataUrl);
+    ctx.save();
+    // Guarded: Canvas filter support is not universal. Without it the paper veil below still
+    // lightens the photo, just with the greens left in — degraded, not broken.
+    if ('filter' in ctx) ctx.filter = style.filter;
     ctx.drawImage(img, 0, 0, W, H);
+    ctx.restore();
   } else {
-    ctx.fillStyle = '#22303a';
+    // No photo: a warm paper ground, not the old near-black slate. Every mark on these sheets is
+    // drawn for paper — cream casings, dark keylines, coloured hatch — so a dark fallback was
+    // inverting the whole sheet's contrast the moment imagery was unavailable.
+    ctx.fillStyle = '#EDE7D6';
     ctx.fillRect(0, 0, W, H);
   }
-  // The old 50% veil made the satellite near-black. That was survivable for opaque linework, but
-  // it compounded with planting's deliberately layered canopy paint and made real trees read as
-  // translucent. Keep enough quieting for labels while leaving the site's colour and contrast
-  // available to the exact planting, water and structures marks.
-  ctx.fillStyle = 'rgba(8,14,22,0.18)';
+  ctx.fillStyle = style.veil;
   ctx.fillRect(0, 0, W, H);
 }
 
@@ -2783,6 +2797,11 @@ function drawBlueprintGround(
   refLayers?: DesignGlossyProps['refLayers'],
   filter: GlossyLayerFilter = 'all',
   presentation: 'standard' | 'illustrated' = 'standard',
+  /** Sheet 01 only: the caller has already vetted these rings with existingSiteGroundRings, which
+   *  is the narrower "what is on the ground today" question. groundRegister answers the DESIGN
+   *  sheets' question and deliberately drops hard standing and the staple garden; on the site
+   *  record those are exactly the facts being recorded, so it must not be consulted here. */
+  siteRecord = false,
 ): void {
   // Skip only what a dedicated draw will genuinely cover. refLayers comes from the MAIN MAP, so an
   // empty one means the farmer traced this in the Studio and nothing else will draw it. The
@@ -2799,7 +2818,7 @@ function drawBlueprintGround(
     if (presentation === 'illustrated' && filter === 'water') return false;
     if (z.feature === 'house' && houseCovered) return false;
     if (z.feature === 'driveway' && drivewayCovered) return false;
-    return groundRegister(z.feature, filter) !== 'absent';
+    return siteRecord || groundRegister(z.feature, filter) !== 'absent';
   });
   if (!rings.length) return;
   // Biggest first — a lawn that wraps a veg patch must not bury the patch.
@@ -3297,7 +3316,11 @@ function drawBlueprintLabelPills(
   labels: ProducerLabel[],
 ): void {
   const W = ctx.canvas.width;
-  const fs = Math.max(20, Math.round(W * 0.012));
+  // Map callouts sit on a photograph and are read at arm's length on paper or on a phone, so they
+  // carry a floor as well as a scale factor. Lifted on Rory's ask across the whole set — "on all
+  // maps I think you can increase the map labels a bit more" — after the legend band was settled,
+  // so map type and panel type were judged against each other rather than one at a time.
+  const fs = Math.max(24, Math.round(W * 0.0145));
   const maxRun = W * LEADER_MAX_RUN_RATIO;
   for (const l of labels) {
     const isHeader = l.kind === 'header';
@@ -4231,9 +4254,17 @@ function drawPaintedReferenceFeature(
   const inheritedAlpha = ctx.globalAlpha;
 
   if (isMatureCanopy) {
-    // A pale, restrained backing separates a newly placed canopy from busy existing trees in the
-    // satellite photo. It stays below the translucent artwork and edge so overlapping placed
-    // canopies still expose one another's keylines and the ground beneath them.
+    // CASING FIRST, then an opaque backing — the route-line convention this file already uses for
+    // sector arrows and water pipes, applied to a canopy. The cream ring is what separates one
+    // placed tree from the next where they overlap, and separates all of them from the existing
+    // dark-green trees in the photograph. That separation used to be attempted with transparency,
+    // which is why Rory could not find his trees at all on a real render.
+    traceFootprint();
+    ctx.strokeStyle = 'rgba(252,248,236,0.95)';
+    ctx.globalAlpha = inheritedAlpha;
+    ctx.lineWidth = Math.max(3, outline * 3.2);
+    ctx.lineJoin = 'round';
+    ctx.stroke();
     traceFootprint();
     ctx.fillStyle = PLANTING_CANOPY_PAINT.baseColor;
     ctx.globalAlpha = inheritedAlpha * PLANTING_CANOPY_PAINT.baseAlpha;
@@ -4992,6 +5023,8 @@ async function buildExactLayerOverlay(
   phase: 'ground' | 'features' = 'features',
   groundPresentation: 'standard' | 'illustrated' = 'standard',
   featurePresentation: ExactFeaturePresentation = 'solid',
+  /** Sheet 01 only — see drawBlueprintGround's own note. */
+  siteRecord = false,
 ): Promise<string | undefined> {
   await preloadReferenceFeatureArtwork(state, filter, frame);
   const canvas = document.createElement('canvas');
@@ -5004,7 +5037,7 @@ async function buildExactLayerOverlay(
   const pxPerM = W / (frame.imgW * frame.mPerPx);
 
   if (phase === 'ground') {
-    drawBlueprintGround(ctx, state, px, py, W, refLayers, filter, groundPresentation);
+    drawBlueprintGround(ctx, state, px, py, W, refLayers, filter, groundPresentation, siteRecord);
     return canvas.toDataURL('image/png');
   }
 
@@ -5286,7 +5319,10 @@ export async function buildBlueprintBaseMap(
   const py = (n: number) => n * H;
   const pxPerM = W / (renderFrame.imgW * renderFrame.mPerPx);
 
-  await drawBlueprintBase(ctx, renderFrame, W, H);
+  // 'site': this sheet's SUBJECT is the photograph — it is the record of what is on the ground
+  // today — so it takes the gentlest mute in the set. Every other sheet pushes the aerial right
+  // back, because there the photo only says where you are standing.
+  await drawBlueprintBase(ctx, renderFrame, W, H, 'site');
   // THE FILL MUST OBEY THE SAME "what's already here" RULE THE LEGEND DOES. The legend below was
   // moved onto existingSiteGroundRings when the staple garden was first reported on this sheet;
   // this call was left passing 'all' — the filter meaning "the whole FINISHED DESIGN" — so the
@@ -5306,6 +5342,9 @@ export async function buildBlueprintBaseMap(
     W,
     H,
     'ground',
+    'standard',
+    'solid',
+    true,
   );
   if (ground) ctx.drawImage(await loadImage(ground), 0, 0, W, H);
   const sourceStructures = renderFrame.satDataUrl
@@ -7508,7 +7547,14 @@ export async function buildImplementationMap(
   const bulletDotX = innerX + Math.round(fsBody * 0.2);
   const bulletTextX = innerX + Math.round(fsBody * 1.0);
   const bulletTextW = lgX + lgW - ip - bulletTextX;
-  const panelTitleLines = wrap('08 — IMPLEMENTATION MAP & PHASING', innerW, headerFont);
+  // 09, not 08. This sheet printed the same number as the Whole-design sheet, so a plan set handed
+  // to a funder or a builder had two sheet 08s and no sheet 09 — see docs/PLAN-SET-SPEC.md, where
+  // Phasing has been 09 since Earthworks took 05. A hardcoded string is why it drifted; the number
+  // is now taken from the same table the sheet buttons read.
+  const phasingSheetNo = DESIGN_SHEETS.find(
+    (sheet) => 'exact' in sheet && sheet.exact === 'implementation',
+  )?.no ?? '09';
+  const panelTitleLines = wrap(`${phasingSheetNo} — IMPLEMENTATION MAP & PHASING`, innerW, headerFont);
 
   // ── Measurement (so we can size the phase area and pick the bullet cap) ──────────────────────
   const phaseBlockH = (phase: (typeof plan.phases)[number], bulletCap: number): number => {
@@ -8365,28 +8411,55 @@ async function composeStyleSheet(
   // Sector sheet's nine-row legend stuck at the bare floor ("the text and icons in the legend are
   // too small") — a dense legend was denied the search entirely rather than being allowed to grow
   // and then step back down. The step-down loop underneath already guarantees it fits.
+  //
+  // FINALLY: THE SEARCH MUST MEASURE THE LAYOUT IT WILL ACTUALLY USE. It only ever measured a
+  // ONE-COLUMN plan. A 22-row Planting inventory does not fit one column at any readable size, so
+  // the search bottomed out at the 9px floor, and the step-down loop below then started from 9 and
+  // "succeeded" immediately in two columns — 9px type with the leftover height justified into
+  // enormous gaps between rows. Rory, on exactly that sheet: "look at the legend, big spaces
+  // between items, icons way way too small and text way too small."
+  //
+  // Searching per column count fixes both symptoms at once, and they were always one bug: the
+  // space that became gaps is the space the type should have grown into. Fewest columns wins on a
+  // tie, so a sparse legend still stays a single readable list.
   const growthCeiling = legendMaxFontSize(legendW);
-  const desiredFs = rows.length > 0
-    ? fitLegendFontSize(
-        (fontSize) => {
-          const candidate = planColumns(1, fontSize);
-          if (!candidate.length || candidate.some(columnPlanOverflowsWidth)) {
-            return Number.POSITIVE_INFINITY;
-          }
-          return Math.max(...candidate.map((column) => column.columnLayout.contentBottom));
-        },
-        availableRowsH,
-        Math.max(normalFs, growthCeiling),
-        9,
-      )
-    : normalFs;
+  const fitForColumns = (columnCount: number): number => fitLegendFontSize(
+    (fontSize) => {
+      const candidate = planColumns(columnCount, fontSize);
+      if (!candidate.length || candidate.some(columnPlanOverflowsWidth)) {
+        return Number.POSITIVE_INFINITY;
+      }
+      return Math.max(...candidate.map((column) => column.columnLayout.contentBottom));
+    },
+    availableRowsH,
+    Math.max(normalFs, growthCeiling),
+    9,
+  );
+  let desiredFs = normalFs;
+  let desiredColumns = 1;
+  if (rows.length) {
+    desiredFs = 0;
+    for (let columnCount = 1; columnCount <= Math.min(3, rows.length); columnCount += 1) {
+      const fitted = fitForColumns(columnCount);
+      if (fitted > desiredFs) {
+        desiredFs = fitted;
+        desiredColumns = columnCount;
+      }
+    }
+    if (desiredFs <= 0) desiredFs = normalFs;
+  }
 
   let columnPlans: LegendColumnPlan[] = [];
   if (rows.length) {
     // Preserve legibility before compactness: a two-column 16px inventory is preferable to a
-    // one-column 9px inventory. At a shared font size, the fewest columns still wins.
+    // one-column 9px inventory. At a shared font size, the fewest columns still wins — except the
+    // count the search above actually sized for, which is tried first so its answer is not
+    // silently discarded in favour of a one-column plan that only "fits" by being smaller.
     outer: for (let fontSize = desiredFs; fontSize >= 9; fontSize -= 1) {
-      for (let columnCount = 1; columnCount <= Math.min(3, rows.length); columnCount += 1) {
+      for (const columnCount of [
+        desiredColumns,
+        ...Array.from({ length: Math.min(3, rows.length) }, (_, i) => i + 1),
+      ]) {
         const candidate = planColumns(columnCount, fontSize);
         if (candidate.length && candidate.every((column) => !column.columnLayout.overflow)) {
           columnPlans = candidate;

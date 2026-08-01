@@ -303,9 +303,22 @@ test('groundRegister: the boundary is ABSENT everywhere — it is a drawn line, 
   }
 });
 
+// Three ground kinds are now deliberate exceptions to the plain content/context rule, each after
+// a repeated report on real sheets. They are listed once, here, so the two table tests below stay
+// readable and so the reason travels with the exception:
+//
+//   staple_garden — DESIGNED planting, not site fabric. Content only where planting is the
+//     subject; absent elsewhere, because a crop that has not been planted yet reads as a fact
+//     about the ground on an analysis sheet. ("why is staple gardens polygons in here?")
+//   patio, cleared — hard standing. A site RECORD: it belongs on sheet 01, which does not consult
+//     this predicate at all (see existingSiteGroundRings + drawBlueprintGround's siteRecord flag).
+//     On a design sheet it is a big pale polygon carrying no decision. ("get rid of this stubborn
+//     slab polygon", "stray polygons again here, please remove the slab")
+const SHEET_ABSENT_GROUND_KINDS = new Set(['staple_garden', 'patio', 'cleared']);
+
 test('groundRegister: every other ground kind is CONTENT on the whole-design, Planting and Structures sheets', () => {
   for (const kind of GROUND_KINDS) {
-    if (kind === 'boundary') continue;
+    if (kind === 'boundary' || SHEET_ABSENT_GROUND_KINDS.has(kind)) continue;
     for (const filter of ['all', 'planting', 'structures'] as const) {
       assert.equal(groundRegister(kind, filter), 'content', `${kind} should be content on ${filter}`);
     }
@@ -314,9 +327,23 @@ test('groundRegister: every other ground kind is CONTENT on the whole-design, Pl
 
 test('groundRegister: every other ground kind is CONTEXT (orientation only) on Water and Zones', () => {
   for (const kind of GROUND_KINDS) {
-    if (kind === 'boundary') continue;
+    if (kind === 'boundary' || SHEET_ABSENT_GROUND_KINDS.has(kind)) continue;
     for (const filter of ['water', 'zones'] as const) {
       assert.equal(groundRegister(kind, filter), 'context', `${kind} should be context on ${filter}`);
+    }
+  }
+});
+
+test('groundRegister: the staple garden and hard standing stay off the sheets they are noise on', () => {
+  for (const filter of ['water', 'zones', 'earthworks', 'structures'] as const) {
+    assert.equal(groundRegister('staple_garden', filter), 'absent', `staple garden on ${filter}`);
+  }
+  for (const filter of ['all', 'planting'] as const) {
+    assert.equal(groundRegister('staple_garden', filter), 'content', `staple garden on ${filter}`);
+  }
+  for (const kind of ['patio', 'cleared'] as const) {
+    for (const filter of ALL_SHEETS) {
+      assert.equal(groundRegister(kind, filter), 'absent', `${kind} on ${filter}`);
     }
   }
 });

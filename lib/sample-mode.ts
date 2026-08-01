@@ -10,8 +10,8 @@
 //
 // 1. THE ROOT STORAGE SHIM (this file, installStorageShim below): while sample
 //    mode is on, EVERY window.localStorage read/write — no matter which of the
-//    app's ~38 writers makes it (Map.tsx farm shapes, water points, site
-//    elements, design canvas, surveys, caches…) — is redirected to an in-memory
+//    app's local-storage writers — Map.tsx farm shapes, water points, site
+//    elements, design canvas, surveys, caches and more — is redirected to an in-memory
 //    store seeded from the demo farm. Real localStorage is structurally
 //    unreachable because the PRIMITIVE is patched, not because each caller
 //    remembered to check.

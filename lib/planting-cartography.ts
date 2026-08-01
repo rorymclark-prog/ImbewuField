@@ -104,14 +104,24 @@ export interface PlantingCanopyPaintStyle {
  * neighbouring canopy, beds, paths or water lines beneath it.
  */
 export const PLANTING_CANOPY_PAINT: Readonly<PlantingCanopyPaintStyle> = {
-  // This backing is intentionally much quieter than either canopy fill. It separates a new tree
-  // from busy existing vegetation in the photo without turning an overlap of two placed trees into
-  // one opaque green mass.
-  baseAlpha: 0.06,
-  baseColor: '#D8E4AA',
-  // Moderate lift: enough presence against the lighter blueprint base, while two overlapping
-  // canopies still reveal each other's keylines and the ground below them.
-  artworkAlpha: 0.48,
+  // A PLANTED TREE IS A DECISION, NOT A TINT. Rory has now asked four separate times for the
+  // trees on sheet 06 to be visible, most recently: "i cant see any of the trees ... no plants are
+  // clearly visible. do something to make them more visible, they are also translucent?!"
+  //
+  // The old values (6% backing, 48% artwork) were chosen so two overlapping canopies would each
+  // stay readable through the other. That is a real drawing problem, but solving it with ALPHA is
+  // the exact mistake this repo has already made and undone twice — on the sector arrows ("you
+  // can't see the arrows") and on the map labels. Both landed on the same answer, the one every
+  // route on every road map uses: an opaque body with a LIGHT CASING around it. Alpha loses to a
+  // busy aerial photograph every time, and this photo is full of existing dark-green trees, which
+  // is the worst possible ground for a 48%-alpha green disc.
+  //
+  // So: a near-opaque cream backing carries the canopy clear of whatever is underneath, the
+  // artwork sits on that at near-full strength, and overlap is now resolved by the cream casing
+  // ring drawn between neighbours (see drawPaintedReferenceFeature) rather than by transparency.
+  baseAlpha: 0.92,
+  baseColor: '#F4EFDF',
+  artworkAlpha: 0.96,
   washAlpha: 0.4,
   detailAlphaMin: 0.11,
   detailAlphaMax: 0.15,

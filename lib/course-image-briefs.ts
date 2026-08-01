@@ -11,9 +11,8 @@
 // Guilds, Food Forest) are marked `hold` for exactly this reason: those lessons are ABOUT species
 // accuracy, which makes illustration the wrong medium — they need real photographs.
 //
-// Used by scripts/generate-course-images.mjs and mirrored in the human brief at
-// ~/Downloads/CHATGPT-INFOGRAPHIC-BRIEF.md, so the same direction is applied whether an image is
-// generated here or by hand in a chat.
+// Kept as reviewable source data for the human brief and any future image-production workflow,
+// so the same direction is applied whether an image is generated or made by hand.
 
 export interface CourseImageBrief {
   lessonId: string;

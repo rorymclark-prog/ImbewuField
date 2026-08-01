@@ -102,14 +102,19 @@ test('overlapping mature canopies preserve the lower tree edge and the ground be
   }
   assert.ok(style.detailAlphaMin <= style.detailAlphaMax);
 
-  // In the normal illustrated-asset path, the earlier tree's keyline survives the later tree more
-  // strongly than that later fill. This is the overlap itself becoming readable, not a paint-order
-  // swap that merely chooses which canopy wins.
-  const earlierAssetEdgeAfterOverlap = style.edgeAlpha * (1 - style.artworkAlpha);
-  assert.ok(
-    earlierAssetEdgeAfterOverlap > style.artworkAlpha,
-    'the later canopy fill must not erase the earlier canopy edge',
-  );
+  // REVERSED DELIBERATELY. This used to require the later canopy's FILL to be weak enough that the
+  // earlier canopy's keyline showed through it — i.e. overlap was resolved with transparency. That
+  // is why a placed tree could not be found at all on a real sheet over a subtropical aerial full
+  // of existing dark-green trees: Rory, four times, most plainly "i cant see any of the trees ...
+  // no plants are clearly visible. do something to make them more visible, they are also
+  // translucent?!"
+  //
+  // Overlap is now resolved the way this repo already resolved it for sector arrows and map labels
+  // after the identical complaint — an opaque body inside a light CASING (drawPaintedReferenceFeature
+  // strokes a cream ring before filling). A casing separates neighbours without asking the fill to
+  // be see-through, so the canopy can be as solid as it needs to be against the photograph.
+  assert.ok(style.artworkAlpha > 0.85, 'a placed canopy reads as a decision, not a tint');
+  assert.ok(style.baseAlpha > 0.75, 'the backing must carry the canopy clear of the photograph');
 
   // The fallback has a wash plus its densest leaf detail. Even where those coincide on both trees,
   // some underlying map remains visible instead of the pair becoming one solid green mass.

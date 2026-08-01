@@ -155,12 +155,18 @@ export function legendRowGap(
   if (rowCount === 1) return 0;
   const fullHeightGap = Math.max(0, (availableHeight - usedHeight) / (rowCount - 1));
   if (!Number.isFinite(rowRhythm)) return fullHeightGap;
-  const compactGap = Math.min(
-    fullHeightGap,
-    Math.max(0, rowRhythm) * MAX_GAP_TO_ROW_RHYTHM,
-  );
-  const fillRatio = legendHeightFillRatio(rowCount);
-  return compactGap + (fullHeightGap - compactGap) * fillRatio;
+  // THE RHYTHM CEILING NOW APPLIES AT EVERY ROW COUNT. It used to be relaxed as the legend got
+  // denser, on the reasoning that six or more rows read as one justified column. On a real
+  // 22-row Planting inventory that produced the opposite of a column: 9px type with the whole
+  // leftover panel height poured into the spaces between rows — "big spaces between items, icons
+  // way way too small and text way too small", which is one complaint, not three.
+  //
+  // Spare height belongs to the TYPE, and the fitting search in DesignGlossy now claims it there
+  // (it sizes for the column count it will really use). Whatever survives that search is genuinely
+  // spare, and spare space at the bottom of a panel is honest — a hole punched between every row
+  // is not. Note fillRatio still governs the sparse/dense GAP question via nothing else now, so
+  // legendHeightFillRatio remains the authority for row-block placement only.
+  return Math.min(fullHeightGap, Math.max(0, rowRhythm) * MAX_GAP_TO_ROW_RHYTHM);
 }
 
 /**

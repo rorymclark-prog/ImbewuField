@@ -1,7 +1,7 @@
 // ── ImbewuField structured report ("ReportDoc") ──────────────────────────────
 // The 11-section, map-linked report is the product differentiator. This is the
-// durable, typed source of truth: an instant LOCAL skeleton is built from data we
-// already have, then (Phase B) Claude enriches each section in the background.
+// durable, typed source of truth for the instant local skeleton built from data
+// already available in the farmer's design.
 import type { LocationData } from '@/lib/types';
 import type {
   DesignLayer,
@@ -9,6 +9,7 @@ import type {
   WaterCalcSummary,
 } from '@/lib/design-studio';
 import type { SiteSurvey } from '@/lib/site-survey';
+import type { PhasePlan } from '@/lib/phasing';
 import {
   WATER_SHEET_ROOF_RUNOFF_COEFFICIENT,
   roofHarvestLitres,
@@ -42,7 +43,7 @@ export const REPORT_SECTION_IDS = [
 ] as const;
 export type ReportSectionId = (typeof REPORT_SECTION_IDS)[number];
 
-export type SectionStatus = 'skeleton' | 'enriching' | 'ready' | 'error';
+export type SectionStatus = 'skeleton' | 'ready' | 'error';
 export interface ReportSectionMeta {
   id: ReportSectionId;
   title: string;
@@ -227,10 +228,11 @@ export function buildSkeletonReportDoc(args: {
   survey: SiteSurvey | null;
   layers: DesignLayer[];
   plan: GeneratedDesignPlan | null;
+  phasePlan: PhasePlan;
   lang?: string;
   createdAt: string;
 }): ReportDoc {
-  const { id, siteId, location, survey, layers, plan, createdAt } = args;
+  const { id, siteId, location, survey, layers, plan, phasePlan, createdAt } = args;
   const lang = args.lang ?? 'en';
   const wc = plan?.waterCalc;
   const biome = location.biome?.name ?? 'this region';
@@ -427,34 +429,20 @@ export function buildSkeletonReportDoc(args: {
       }],
   }];
 
-  // ── Implementation (default 3-phase ordering) ──
-  const roofIds = roofs.map((roof) => roof.id);
-  const gardenIds = gardens.map((garden) => garden.id);
-  const implementation: ImplementationPhase[] = [
-    {
-      phase: 1, label: 'Phase 1 — Water & Soil', monthRange: 'Months 1–3', budgetBand: 'low',
-      steps: [
-        { seq: 1, task: 'Build a compost system near the kitchen', layerIds: gardenIds, map: 'zone', why: 'Free fertility from day one.' },
-        { seq: 2, task: 'Connect roof gutters to a rainwater tank', layerIds: roofIds, map: 'water', why: harvestKL ? `Captures ~${harvestKL.toLocaleString()} kL/yr.` : 'Stores water for the dry season.' },
-        { seq: 3, task: 'Mark & dig the first swale on contour above the garden', layerIds: gardenIds, map: 'water', why: 'Slows, spreads and sinks runoff.' },
-      ],
-    },
-    {
-      phase: 2, label: 'Phase 2 — Planting', monthRange: 'Months 3–6', budgetBand: 'medium',
-      steps: [
-        { seq: 4, task: 'Plant fruit & nut trees in the orchard zone (north)', layerIds: [], map: 'zone', why: 'Establish perennials in the planting season.' },
-        { seq: 5, task: 'Expand kitchen-garden beds + drip irrigation', layerIds: gardenIds, map: 'zone', why: 'Daily food close to the house.' },
-        { seq: 6, task: 'Sow cover crops on bare ground', layerIds: [], map: 'base', why: 'Protect and build the soil.' },
-      ],
-    },
-    {
-      phase: 3, label: 'Phase 3 — Systems & Edges', monthRange: 'Months 6–12', budgetBand: 'medium',
-      steps: [
-        { seq: 7, task: 'Plant the windbreak / tree-belt edge', layerIds: trees.map((tree) => tree.id), map: 'sector', why: 'Wind protection + biodiversity.' },
-        ...(livestock.length ? [{ seq: 8, task: `Set up the ${livestock[0]} system with fencing & rotation`, layerIds: [], map: 'zone' as MapRef, why: 'Integrated fertility & pest control.' }] : []),
-      ],
-    },
-  ];
+  // Sheet 09 and the report consume the same pure phase plan. There is no
+  // report-only fallback schedule that can drift from what was drawn.
+  const implementation: ImplementationPhase[] = phasePlan.phases.map((phase) => ({
+    phase: phase.n,
+    label: `Phase ${phase.n} — ${phase.title}`,
+    monthRange: phase.weekRange,
+    steps: phase.tasks.map((task, index) => ({
+      seq: index + 1,
+      task,
+      layerIds: phase.itemIds,
+      map: 'implementation' as MapRef,
+      why: phase.holdPoint,
+    })),
+  }));
 
   const costLabour: CostLine[] = implementation.map((phase) => ({
     phase: phase.phase,

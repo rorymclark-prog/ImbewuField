@@ -467,6 +467,17 @@ export function groundRegister(kind: GroundFeatureKind, filter: GlossyLayerFilte
   // groundFeatureLayer in lib/design-canvas.ts already answers "whose ring is this" with 'planting'
   // for this one feature; this is the same answer expressed in sheet terms, and the two must agree.
   if (kind === 'staple_garden') return filter === 'all' || filter === 'planting' ? 'content' : 'absent';
+  // HARD STANDING IS A SITE RECORD, NOT PLAN CONTENT. A concrete slab, a paved yard or a cleared
+  // apron is something the farmer traces to record what is already there — it appears on sheet 01,
+  // where the subject is the site as it exists, and it is named there. On a design sheet it is a
+  // large pale hatched polygon sitting across the middle of the drawing carrying no decision, and
+  // Rory has now asked for it off four separate sheets in one evening: "get rid of this stubborn
+  // slab polygon", "stray polygons again here, please remove the slab".
+  //
+  // The Site sheet does NOT come through this predicate — buildBlueprintBaseMap vets its rings with
+  // existingSiteGroundRings and passes siteRecord to drawBlueprintGround — so making these absent
+  // here removes them from the design sheets without touching the one sheet they belong on.
+  if (kind === 'patio' || kind === 'cleared') return 'absent';
   return filter === 'all' || filter === 'planting' || filter === 'structures' ? 'content' : 'context';
 }
 

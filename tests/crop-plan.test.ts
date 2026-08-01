@@ -346,13 +346,24 @@ test('no page carries its own rival yield table — the sourced catalog is the o
   const offered = [...planSource.matchAll(/^\s{2}'?([A-Z][A-Za-z ]*?)'?:\s*\['(?:Winter|Summer|Spring|Autumn)/gm)]
     .map((m) => m[1].trim());
   assert.ok(offered.length > 10, 'expected to find the planner\'s crop list');
-  const mapped = planSource.slice(planSource.indexOf('CATALOG_KEY_FOR_CROP'));
+  const mappingSource = readFileSync(new URL('../lib/crop-display.ts', import.meta.url), 'utf8');
   for (const crop of offered) {
     assert.ok(
-      mapped.includes(`'${crop}'`) || new RegExp(`\\n  ${crop}:`).test(mapped),
+      mappingSource.includes(`${crop}:`) || mappingSource.includes(`'${crop}':`),
       `${crop} is offered by the planner but has no catalog key — it would show a zero harvest`,
     );
   }
+});
+
+test('calendar sowing marks come from the catalog window, not a rival month table', () => {
+  const calendarSource = readFileSync(new URL('../app/calendar/page.tsx', import.meta.url), 'utf8');
+  assert.match(calendarSource, /sowMarksForPattern/);
+  assert.match(calendarSource, /CALENDAR_RAIN_PATTERN\s*=\s*['"]summer['"]/);
+  assert.doesNotMatch(
+    calendarSource,
+    /marks:\s*\[['"]/,
+    'calendar must not carry a literal sow-month mark array',
+  );
 });
 
 test('every sourced row/in-row spacing pair keeps in-row spacing no wider than row spacing', () => {

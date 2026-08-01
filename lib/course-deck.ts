@@ -45,9 +45,9 @@ export interface ModuleDeck {
   /**
    * Slides a language is missing, by slide number.
    *
-   * A whole-deck fallback would be a lie here. The isiZulu deck has 23 of the 24 slides — every
-   * one of them correct — and showing English for all 24 because ONE is absent would take a
-   * finished isiZulu lesson away from the person it was made for.
+   * A whole-deck fallback would be a lie here. If one localized asset is absent, only that slide
+   * should fall back to English; showing English for every slide would take a finished lesson
+   * away from the person it was made for.
    */
   missingSlides?: Record<string, number[]>;
   slides: DeckSlide[];
@@ -162,10 +162,9 @@ export function slideImageUrl(moduleId: string, lang: string, slide: number): st
 /**
  * The image to show for one slide, and whether it is in the language asked for.
  *
- * PER SLIDE, not per deck. isiZulu has 23 of 24 slides; falling the whole module back to English
- * because one is missing would take a finished isiZulu lesson away from the person it was made
- * for. This way exactly one slide shows English, and `exact: false` is returned only on that
- * slide, so the UI's explanation appears where it is true and nowhere else.
+ * PER SLIDE, not per deck. Falling the whole module back to English because one localized asset
+ * is missing would take a finished lesson away from the person it was made for. `exact: false` is
+ * returned only on the fallback slide, so the UI's explanation appears where it is true.
  */
 export function slideImageFor(
   moduleId: string,
