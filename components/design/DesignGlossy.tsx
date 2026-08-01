@@ -11048,8 +11048,15 @@ export default function DesignGlossy({
         {/* SHEET — the plan set as a compact 4-up grid (Rory's mockup), canonical 01–09 order.
             Tapping a chip selects it in the CURRENT mode (AI by default); the "View non-AI exact
             version" link under the preview flips the same sheet to its exact render and back. */}
-        {!compact && (
-        <>
+        {/* THE SHEET PICKER SHOWS ON BOTH MOUNTS, including the compact Preview overlay.
+            Rory: "if i click preview map from any map section it should open the layer selector as
+            well". Preview used to inherit one filter from the wizard step with no way off it, so
+            the farmer had to close the overlay, walk to step 8 and start again just to see the
+            next sheet. It also made EARTHWORKS (05) unreachable from here: earthworks are DRAWN on
+            the Water step, so the step→filter map in app/design/page.tsx can only ever hand this
+            overlay 'water'. A picker is the fix for both.
+            What stays studio-only below is the money — the 5-sheet AI batch and the exact-all run
+            are plan-set actions, not "look at this layer" actions. */}
         <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55, marginBottom: 6 }}>
           {t('designGlossyPlanSet')}
         </div>
@@ -11088,6 +11095,8 @@ export default function DesignGlossy({
             );
           })}
         </div>
+        {!compact && (
+        <>
         {/* THE one-tap plan set: AI all-sheets, hard-wired to the gpt-image-2 background queue
             (never Gemini — Rory: "must only go to chat gpt"). With the AI-legend default ON this
             is the showcase pipeline for all 5 model sheets. */}
