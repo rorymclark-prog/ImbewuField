@@ -201,3 +201,88 @@ export function estimatePillWidth(text: string, fontSize: number, padX: number, 
   const safeMax = Number.isFinite(max) && max >= 0 ? max : 0;
   return Math.min(safeMax, safePadX * 2 + text.length * safeFontSize * PILL_CHAR_EM);
 }
+
+// ── Zone number badges ─────────────────────────────────────────────────────────────────────────
+
+export interface ZoneBadgeInput {
+  id: string;
+  /** Normalised ring the badge belongs to. */
+  points: Array<[number, number]>;
+  /** The farmer's own drag, if they have moved this badge. */
+  labelDx?: number;
+  labelDy?: number;
+}
+
+/** Below this, a labelDx/labelDy is rounding noise rather than a farmer's decision. Matches the
+ *  threshold DesignCanvas uses to decide whether to draw a leader back to the ring. */
+const BADGE_MOVED_EPS = 0.003;
+
+/**
+ * Where each zone's number badge sits, in normalised coordinates.
+ *
+ * Nesting is the whole reason these collide. Zones are drawn as rings inside rings — a Zone 1
+ * around the house sits inside Zone 2, which sits inside Zone 3 — and a small ring's centroid can
+ * land within a badge's width of its bigger neighbour's. Rory: "zone 1 icon is sitting over zone
+ * 0". Two numbers overlapping is worse than a number slightly off-centre, because a farmer reading
+ * a plan set has no way to tell which digit belongs to which band.
+ *
+ * A badge the farmer has DRAGGED is pinned and never moved by this: their placement is a decision,
+ * and an auto-layout that overrides it is the same bug in the other direction. Everything else
+ * relaxes apart from the pinned ones and from each other.
+ *
+ * `radius` is the badge's radius in normalised units (badge px / sheet width), so the same
+ * function serves the canvas and every sheet size.
+ */
+export function zoneBadgePositions(
+  zones: ZoneBadgeInput[],
+  radius: number,
+): Map<string, [number, number]> {
+  const out = new Map<string, [number, number]>();
+  if (!zones.length) return out;
+  const pinned = new Set<string>();
+  const pos: Array<{ id: string; x: number; y: number }> = [];
+  for (const z of zones) {
+    if (z.points.length < 3) continue;
+    let sx = 0, sy = 0;
+    for (const [x, y] of z.points) { sx += x; sy += y; }
+    const dx = z.labelDx ?? 0;
+    const dy = z.labelDy ?? 0;
+    if (Math.abs(dx) > BADGE_MOVED_EPS || Math.abs(dy) > BADGE_MOVED_EPS) pinned.add(z.id);
+    pos.push({ id: z.id, x: sx / z.points.length + dx, y: sy / z.points.length + dy });
+  }
+  // A handful of relaxation passes: enough to separate a realistic set of five or six zones,
+  // bounded so a pathological design can never make this loop expensive.
+  const minGap = radius * 2.15; // a hair of daylight between two touching discs
+  for (let pass = 0; pass < 12; pass++) {
+    let moved = false;
+    for (let i = 0; i < pos.length; i++) {
+      for (let j = i + 1; j < pos.length; j++) {
+        const a = pos[i], b = pos[j];
+        let vx = b.x - a.x;
+        let vy = b.y - a.y;
+        let d = Math.hypot(vx, vy);
+        if (d >= minGap) continue;
+        // Exactly coincident centroids have no direction to separate along — pick one, so two
+        // identically-placed rings still end up as two readable badges.
+        if (d < 1e-6) { vx = 0; vy = 1; d = 1e-6; }
+        const push = (minGap - d) / 2;
+        const ux = (vx / d) * push;
+        const uy = (vy / d) * push;
+        const aFixed = pinned.has(a.id);
+        const bFixed = pinned.has(b.id);
+        if (aFixed && bFixed) continue; // both are the farmer's; leave them exactly as placed
+        if (!aFixed) { a.x -= bFixed ? ux * 2 : ux; a.y -= bFixed ? uy * 2 : uy; }
+        if (!bFixed) { b.x += aFixed ? ux * 2 : ux; b.y += aFixed ? uy * 2 : uy; }
+        moved = true;
+      }
+    }
+    if (!moved) break;
+  }
+  for (const p of pos) {
+    out.set(p.id, [
+      Math.min(1 - radius, Math.max(radius, p.x)),
+      Math.min(1 - radius, Math.max(radius, p.y)),
+    ]);
+  }
+  return out;
+}

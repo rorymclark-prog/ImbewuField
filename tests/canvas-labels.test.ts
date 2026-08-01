@@ -275,3 +275,57 @@ test('the newest release-notes block is dated, never self-declared "Latest"', ()
     );
   }
 });
+
+// ── Zone number badges ─────────────────────────────────────────────────────────────────────────
+//
+// Zones nest — a Zone 1 ring around the house sits inside Zone 2, inside Zone 3 — so a small
+// ring's centroid can land within a badge's width of its bigger neighbour's, and the sheet printed
+// "1" on top of "0". Rory: "zone 1 icon is sitting over zone 0 we must also be able to move these
+// icons if needed". Both halves are here: badges separate, and a farmer's own drag outranks the
+// separator rather than being undone by it.
+import { zoneBadgePositions } from '../lib/canvas-labels.ts';
+
+const ringAt = (cx: number, cy: number): Array<[number, number]> => [
+  [cx - 0.05, cy - 0.05], [cx + 0.05, cy - 0.05], [cx + 0.05, cy + 0.05], [cx - 0.05, cy + 0.05],
+];
+
+test('two badges on top of each other are pushed apart', () => {
+  const r = 0.02;
+  const out = zoneBadgePositions([
+    { id: 'z0', points: ringAt(0.5, 0.5) },
+    { id: 'z1', points: ringAt(0.505, 0.5) },
+  ], r);
+  const a = out.get('z0')!;
+  const b = out.get('z1')!;
+  assert.ok(Math.hypot(a[0] - b[0], a[1] - b[1]) >= r * 2, 'badges still overlap');
+});
+
+test('exactly coincident centroids still yield two readable badges', () => {
+  const r = 0.02;
+  const out = zoneBadgePositions([
+    { id: 'z0', points: ringAt(0.5, 0.5) },
+    { id: 'z1', points: ringAt(0.5, 0.5) },
+  ], r);
+  assert.ok(Math.hypot(out.get('z0')![0] - out.get('z1')![0], out.get('z0')![1] - out.get('z1')![1]) >= r * 2);
+});
+
+test("a badge the farmer dragged is pinned — the separator moves the other one", () => {
+  const r = 0.02;
+  const out = zoneBadgePositions([
+    { id: 'moved', points: ringAt(0.5, 0.5), labelDx: 0.2, labelDy: 0 },
+    { id: 'auto', points: ringAt(0.7, 0.5) },
+  ], r);
+  const moved = out.get('moved')!;
+  const auto = out.get('auto')!;
+  assert.deepEqual(moved, [0.7, 0.5], 'the farmer’s placement must survive untouched');
+  // The two land on the same spot, so the un-dragged one absorbs the WHOLE separation itself.
+  assert.ok(Math.hypot(auto[0] - 0.7, auto[1] - 0.5) >= r * 2, 'the un-dragged badge should be the one that yields');
+});
+
+test('badges stay inside the sheet and a lone zone is left exactly where it is', () => {
+  const r = 0.03;
+  const out = zoneBadgePositions([{ id: 'edge', points: ringAt(0.0, 0.0) }], r);
+  assert.deepEqual(out.get('edge'), [r, r]);
+  const solo = zoneBadgePositions([{ id: 's', points: ringAt(0.42, 0.61) }], 0.02);
+  assert.deepEqual(solo.get('s')!.map((n) => Number(n.toFixed(6))), [0.42, 0.61]);
+});

@@ -30,6 +30,7 @@ import {
 } from '@/lib/boundary-geometry';
 import { structureRegisterText } from '@/lib/structure-register';
 import { buildFinishedSheetPolishPrompt, buildLockedIllustrationPrompt, buildPhasingRestylePrompt, buildSatelliteOverlayPrompt, buildSectorRestylePrompt, buildSectorSheetPolishPrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, SHEET_NO, type StylePreset } from '@/lib/producer-prompt';
+import { zoneBadgePositions } from '@/lib/canvas-labels';
 import { enqueueRenderJob, subscribeRenderJob, fetchRenderOutput } from '@/lib/render-jobs';
 // Extracted (behaviour-preserving) — see lib/glossy-filters.ts and lib/producer-labels.ts.
 // Re-exported below so existing consumers (lib/producer-prompt.ts comments, app/design/page.tsx,
@@ -779,6 +780,10 @@ export function drawMarks(
 
   // Zones — translucent fill (only when this layer is in the chosen filter, and design marks
   // are wanted — analysis maps like sector/base draw NO design overlay so Gemini renders clean)
+  const compositeZoneBadges = zoneBadgePositions(
+    state.zones.filter((z) => !z.feature && z.points.length >= 3),
+    15 / Math.max(1, imgW),
+  );
   for (const zone of drawDesign && zonesInFilter(filter) ? state.zones : []) {
     if (zone.points.length < 3 || zone.feature) continue; // skip ground-feature areas — not effort-zones
     const def = ZONE_DEFS[zone.zone];
@@ -803,8 +808,11 @@ export function drawMarks(
     ctx.lineWidth = 2;
     ctx.stroke();
     if (filter === 'zones') {
-      const cx = px(zone.points.reduce((s, p) => s + p[0], 0) / zone.points.length);
-      const cy = py(zone.points.reduce((s, p) => s + p[1], 0) / zone.points.length);
+      // Same placement authority as the exact overlay — farmer's drag honoured, collisions nudged.
+      const at = compositeZoneBadges.get(zone.id);
+      if (!at) continue;
+      const cx = px(at[0]);
+      const cy = py(at[1]);
       ctx.beginPath();
       ctx.arc(cx, cy, 15, 0, Math.PI * 2);
       ctx.fillStyle = def.color;
@@ -1745,12 +1753,20 @@ function buildZoneOverlay(
     ctx.lineWidth = 4;
     ctx.stroke();
   }
-  // Number badge at each zone centroid.
+  // Number badge per zone — at the centroid, PLUS whatever the farmer dragged it to on the canvas,
+  // and nudged apart from any badge it would otherwise sit on top of. Both halves were missing:
+  // the sheet computed a raw centroid, so nested rings printed "1" on top of "0" (Rory: "zone 1
+  // icon is sitting over zone 0 we must also be able to move these icons if needed"), and a farmer
+  // who moved the badge on the canvas saw the sheet ignore them. See zoneBadgePositions.
+  const badgeR = 20;
+  const badges = zoneBadgePositions(zones, badgeR / W);
   for (const z of zones) {
-    const cx = (z.points.reduce((s, p) => s + p[0], 0) / z.points.length) * W;
-    const cy = (z.points.reduce((s, p) => s + p[1], 0) / z.points.length) * H;
+    const at = badges.get(z.id);
+    if (!at) continue;
+    const cx = at[0] * W;
+    const cy = at[1] * H;
     ctx.beginPath();
-    ctx.arc(cx, cy, 20, 0, Math.PI * 2);
+    ctx.arc(cx, cy, badgeR, 0, Math.PI * 2);
     ctx.fillStyle = ZONE_DEFS[z.zone].color;
     ctx.fill();
     ctx.strokeStyle = '#FFFFFF';
@@ -2753,8 +2769,8 @@ function drawBlueprintGround(
     // Exact-only sheets keep the stronger standard treatment.
     const fillAlpha = illustrated
       ? hard ? (isContent ? '28' : '16') : (isContent ? '38' : '20')
-      : hard ? (isContent ? '55' : '33') : (isContent ? '99' : '55');
-    const strokeAlpha = illustrated ? (isContent ? '80' : '5A') : (isContent ? 'F2' : 'B0');
+      : hard ? (isContent ? '55' : '1E') : (isContent ? '99' : '3D');
+    const strokeAlpha = illustrated ? (isContent ? '80' : '5A') : (isContent ? 'F2' : '6E');
     // A ROOF IS NOT GROUND, SO IT GETS NO GROUND WASH.
     //
     // Rory, on a finished sheet: "the quality of the polygons everything is just not good at all",
@@ -2786,10 +2802,22 @@ function drawBlueprintGround(
       const x0 = Math.min(...xs), x1 = Math.max(...xs);
       const y0 = Math.min(...ys), y1 = Math.max(...ys);
       const h = y1 - y0;
-      ctx.strokeStyle = `${meta.color}${illustrated ? (isContent ? '55' : '30') : (isContent ? 'CC' : '80')}`;
-      ctx.lineWidth = illustrated ? 1.1 : 1.6;
+      // CONTEXT HATCHING IS ORIENTATION, NOT CONTENT. Rory, on the Water sheet: "in this layer we
+      // musnt have the slab or wha ever this polygon is leaking though its not approiate" — the
+      // traced slab was drawn there at 50% stroke, 1.6px, and the same spacing a CONTENT sheet
+      // uses, so a hard surface the water plan only mentions in passing became the loudest block
+      // on the page and read as this sheet's subject.
+      //
+      // It is not removed, because a slab is real to a water plan: it is the runoff catchment the
+      // pipes and the swale exist to deal with. It is demoted — twice the spacing, under half the
+      // line weight, a fraction of the alpha — so it registers where the hard ground is without
+      // competing with the pipework. Same marks, quieter voice, which is what the content/context
+      // split is supposed to mean in pixels and until now only meant in the prompt.
+      ctx.strokeStyle = `${meta.color}${illustrated ? (isContent ? '55' : '30') : (isContent ? 'CC' : '3A')}`;
+      ctx.lineWidth = illustrated ? 1.1 : (isContent ? 1.6 : 0.9);
+      const hatchStep = isContent ? step : step * 2;
       ctx.beginPath();
-      for (let d = x0 - h; d < x1; d += step) {
+      for (let d = x0 - h; d < x1; d += hatchStep) {
         ctx.moveTo(d, y0);
         ctx.lineTo(d + h, y1);
       }
@@ -2802,7 +2830,9 @@ function drawBlueprintGround(
     // treatment the model composite uses so a house looks the same on the free sheet and the paid
     // one. Every other feature keeps its own colour, which is how the legend stays readable.
     ctx.strokeStyle = isRoof ? 'rgba(255,255,255,0.96)' : `${meta.color}${strokeAlpha}`;
-    ctx.lineWidth = isRoof ? (illustrated ? 2.4 : 3.5) : (illustrated ? 1.4 : 2.5);
+    // A context ring's outline is demoted with its hatch, for the same reason — a 2.5px band
+    // around a slab is a claim, and on a sheet the slab is not the subject of it is a false one.
+    ctx.lineWidth = isRoof ? (illustrated ? 2.4 : 3.5) : (illustrated ? 1.4 : (isContent ? 2.5 : 1.4));
     ctx.stroke();
   }
 }
