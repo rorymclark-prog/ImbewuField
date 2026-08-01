@@ -11,8 +11,11 @@ import {
   makeMercatorProjector,
   makeMercatorUnprojector,
   migrateStateToFrame,
+  MAX_SWALE_WIDTH_M,
   normaliseRotation,
   normalizeZoneNumbers,
+  normaliseCanvasState,
+  parseSwaleWidthM,
   pointInRing,
   projectorForFrame,
   ringAreaOf,
@@ -176,6 +179,26 @@ test('legacy zone numbers normalise once, stay bounded, and preserve an already-
 
   assert.deepEqual(normalised.zones.map((zone) => zone.zone), [2, 5, 0, 0]);
   assert.deepEqual(legacy, original);
+});
+
+test('swale width survives save/load, clears to undefined, and rejects unsafe input', () => {
+  const stated = stateFixture();
+  stated.lines = [{ ...stated.lines[0], kind: 'swale', widthM: 4.25 }];
+  const loaded = normaliseCanvasState(JSON.parse(JSON.stringify(stated)), 'farm');
+  assert.equal(loaded?.lines[0].widthM, 4.25);
+
+  const clearedWidth = parseSwaleWidthM('   ');
+  assert.equal(clearedWidth, undefined);
+  const cleared = { ...stated, lines: [{ ...stated.lines[0], widthM: clearedWidth }] };
+  const loadedCleared = normaliseCanvasState(JSON.parse(JSON.stringify(cleared)), 'farm');
+  assert.equal(loadedCleared?.lines[0].widthM, undefined);
+  assert.notEqual(loadedCleared?.lines[0].widthM, 0);
+
+  assert.equal(parseSwaleWidthM('0'), null);
+  assert.equal(parseSwaleWidthM('-1'), null);
+  assert.equal(parseSwaleWidthM(String(MAX_SWALE_WIDTH_M + 1)), null);
+  const unsafe = { ...stated, lines: [{ ...stated.lines[0], widthM: MAX_SWALE_WIDTH_M + 1 }] };
+  assert.equal(normaliseCanvasState(JSON.parse(JSON.stringify(unsafe)), 'farm'), null);
 });
 
 test('geometry helpers respect nested GeoJSON, winding, concavity, and non-square metre scale', () => {

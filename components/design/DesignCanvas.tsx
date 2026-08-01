@@ -12,7 +12,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Eye, EyeOff, CopyCheck } from 'lucide-react';
 import type { CanvasFrame, DesignCanvasState, DetectSuggestion, GroundFeatureKind, LineShape, PlacedItem, ZoneShape } from '@/lib/design-canvas';
-import { newId, groundFillPolys, groundFeatureLayer, nearestPointOnRing, normaliseRotation, MIN_MAP_TEXT_SCALE, MAX_MAP_TEXT_SCALE, clampBaseOpacity, normaliseAreaFill, type AreaFillStyle } from '@/lib/design-canvas';
+import { newId, groundFillPolys, groundFeatureLayer, nearestPointOnRing, normaliseRotation, MIN_MAP_TEXT_SCALE, MAX_MAP_TEXT_SCALE, clampBaseOpacity, normaliseAreaFill, parseSwaleWidthM, type AreaFillStyle } from '@/lib/design-canvas';
 import { layoutBedBlock, bedBlockPaths, bedBlockFootprintM, type BedBlockPlacement, type BedBlockSpec } from '@/lib/bed-block';
 import { layoutCanvasLabels, estimatePillWidth, groupSameLabelPills, isUsableCanvasLabelInput } from '@/lib/canvas-labels';
 import { ownedByCurrentStep } from '@/lib/glossy-filters';
@@ -782,6 +782,7 @@ export default function DesignCanvas({
   // name-only editor (see the lines render loop below), so these two never apply to a line.
   const [editingLevelText, setEditingLevelText] = useState('');
   const [editingSlopeText, setEditingSlopeText] = useState('');
+  const [editingSwaleWidthText, setEditingSwaleWidthText] = useState('');
   const skipLabelCommit = useRef(false); // set on Escape so the blur that follows cancels instead of saving
   // Drop a stuck editor if its shape disappears (deleted, or replaced by a remote sync).
   useEffect(() => {
@@ -1594,6 +1595,7 @@ export default function DesignCanvas({
         const shape = state.lines.find((l) => l.id === dl.id);
         if (shape) {
           setEditingText(shape.name ?? LINE_KIND_LABEL[shape.kind]);
+          setEditingSwaleWidthText(shape.kind === 'swale' && shape.widthM != null ? String(shape.widthM) : '');
           setEditingLabelId(dl.id);
           setEditingLabelKind('line');
         }
@@ -1613,8 +1615,23 @@ export default function DesignCanvas({
       const defaultLabel = LINE_KIND_LABEL[shape.kind];
       // Empty, or unchanged from the default, → store no custom name (falls back to the default).
       const nextName = typed && typed !== defaultLabel ? typed : undefined;
-      if ((nextName ?? '') === (shape.name ?? '')) return; // no-op — skip a spurious undo entry
-      onChange({ ...state, lines: state.lines.map((l) => (l.id === id ? { ...l, name: nextName } : l)) });
+      const nextWidthM = shape.kind === 'swale' ? parseSwaleWidthM(editingSwaleWidthText) : undefined;
+      const widthValid = shape.kind !== 'swale' || nextWidthM !== null;
+      const widthToStore: number | undefined = nextWidthM === null ? shape.widthM : nextWidthM;
+      const nameChanged = (nextName ?? '') !== (shape.name ?? '');
+      const widthChanged = shape.kind === 'swale' && widthValid && nextWidthM !== shape.widthM;
+      if (!nameChanged && !widthChanged) return; // no-op — skip a spurious undo entry
+      onChange({
+        ...state,
+        lines: state.lines.map((l) => {
+          if (l.id !== id) return l;
+          return {
+            ...l,
+            name: nextName,
+            ...(l.kind === 'swale' && widthValid ? { widthM: widthToStore } : {}),
+          };
+        }),
+      });
       return;
     }
     const shape = state.zones.find((z) => z.id === id);
@@ -3057,9 +3074,23 @@ export default function DesignCanvas({
                       {/* Counter-scaled — pill and editor are chrome, constant screen size. */}
                       <g transform={`scale(${(1 / view.k).toFixed(3)})`}>
                         {isEditingThis ? (
-                          // Lighter than the zone/feature editor: a line only ever needs its name —
-                          // no level/slope fields apply to fences, paths, pipes, swales, etc.
-                          <foreignObject x={-75} y={-15} width={150} height={30} style={{ overflow: 'visible' }}>
+                          // Lines use the same inline editor idiom as zones. Swales additionally
+                          // carry the farmer's stated disturbed-ground width; other line kinds
+                          // remain the existing name-only editor.
+                          (() => {
+                            const isSwale = line.kind === 'swale';
+                            // Name input + labelled width input; the foreignObject is chrome and
+                            // must have room for both controls without changing saved geometry.
+                            const boxH = isSwale ? 68 : 30;
+                            const labelStyle = {
+                              display: 'block',
+                              color: '#FBF6EC',
+                              fontSize: 10,
+                              fontWeight: 700,
+                              lineHeight: '14px',
+                              textAlign: 'center' as const,
+                            };
+                            return <foreignObject x={-75} y={-boxH / 2} width={150} height={boxH} style={{ overflow: 'visible' }}>
                             <div
                               onBlur={(e) => {
                                 const group = e.currentTarget;
@@ -3099,8 +3130,42 @@ export default function DesignCanvas({
                                   boxSizing: 'border-box' as const,
                                 }}
                               />
+                              {isSwale && (
+                                <label style={{ display: 'block', marginTop: 3 }}>
+                                  <span style={labelStyle}>{t('designCanvasSwaleWidthLabel')}</span>
+                                  <input
+                                    value={editingSwaleWidthText}
+                                    onChange={(e) => setEditingSwaleWidthText(e.target.value)}
+                                    onPointerDown={(e) => e.stopPropagation()}
+                                    onKeyDown={(e) => {
+                                      if (e.key === 'Enter') e.currentTarget.blur();
+                                      else if (e.key === 'Escape') {
+                                        skipLabelCommit.current = true;
+                                        e.currentTarget.blur();
+                                      }
+                                    }}
+                                    placeholder={t('designCanvasSwaleWidthPlaceholder')}
+                                    inputMode="decimal"
+                                    aria-label={t('designCanvasSwaleWidthLabel')}
+                                    style={{
+                                      width: 150,
+                                      fontSize: 11,
+                                      fontWeight: 700,
+                                      textAlign: 'center' as const,
+                                      color: '#FBF6EC',
+                                      background: '#20190F',
+                                      border: `1px solid ${style.stroke}`,
+                                      borderRadius: 9,
+                                      padding: '2px 6px',
+                                      outline: 'none',
+                                      boxSizing: 'border-box' as const,
+                                    }}
+                                  />
+                                </label>
+                              )}
                             </div>
-                          </foreignObject>
+                          </foreignObject>;
+                          })()
                         ) : (
                           <foreignObject x={-56} y={-11} width={112} height={22} style={{ overflow: 'visible' }}>
                             <div

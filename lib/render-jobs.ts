@@ -72,11 +72,28 @@ export interface RenderSheetState {
   resultKind?: RenderResultKind;
 }
 
+/**
+ * How hard the paid model is asked to work. This is a MONEY dial, not a taste dial: at the size
+ * these sheets are rendered, 'high' costs roughly 4x 'medium' and roughly 35x 'low'.
+ *
+ * It is worth testing rather than assuming, because of what the AI is actually for here — it
+ * paints an underlayer, and every piece of exact geometry, every label and the whole legend are
+ * composited back on top afterwards (see lib/image-producer.ts). So the model is buying texture
+ * and tone, not accuracy, and a large part of the detail 'high' pays for is covered up again.
+ *
+ * Absent on older job docs, which the worker must read as 'high' — the setting the app used
+ * before this existed.
+ */
+export type RenderQuality = 'high' | 'medium' | 'low';
+
+export const RENDER_QUALITIES: readonly RenderQuality[] = ['high', 'medium', 'low'] as const;
+
 export interface RenderJobDoc {
   uid: string;
   siteId: string;
   style: string;
   engine: string;
+  quality?: RenderQuality;
   sheets: RenderSheetState[];
   status: RenderJobStatus;
   error?: string;
@@ -193,6 +210,8 @@ export async function enqueueRenderJob(opts: {
   siteId: string;
   style: string;
   engine: string;
+  /** Omitted means 'high' — the setting every render used before this dial existed. */
+  quality?: RenderQuality;
   sheets: RenderSheetSpec[];
 }): Promise<string> {
   // Sample farm is look-don't-spend: AI renders bill a real OpenAI account and write
@@ -269,6 +288,9 @@ export async function enqueueRenderJob(opts: {
       siteId: opts.siteId,
       style: opts.style,
       engine: opts.engine,
+      // Spread rather than assign: an explicit `undefined` is not a legal Firestore value, and a
+      // job doc WITHOUT this field must keep meaning 'high' for every render already in flight.
+      ...(opts.quality ? { quality: opts.quality } : {}),
       sheets,
       status: 'queued',
       createdAt: serverTimestamp(),

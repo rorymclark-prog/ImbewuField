@@ -230,6 +230,21 @@ export interface LineShape {
   widthM?: number;
 }
 
+/**
+ * Input safety cap for a farmer-entered swale width. This is deliberately only a typo guard:
+ * it prevents one misplaced zero from painting a strip across the farm, while real sizing stays
+ * with the farmer and their extension officer because it depends on rainfall, slope and soil.
+ */
+export const MAX_SWALE_WIDTH_M = 100;
+
+/** Blank means "not stated"; invalid numeric input is rejected with null. */
+export function parseSwaleWidthM(raw: string): number | undefined | null {
+  const text = raw.trim();
+  if (text === '') return undefined;
+  const widthM = Number(text);
+  return Number.isFinite(widthM) && widthM > 0 && widthM <= MAX_SWALE_WIDTH_M ? widthM : null;
+}
+
 // 'earthworks' is the land-shaping step: swales, berms, terraces, half-moons, banks. It was
 // drawn on the Water step for a long time, on the reasoning that a swale is a water structure.
 // It is — but it is also the one thing on the farm you dig with a machine, on contour, before
@@ -1218,7 +1233,13 @@ export function normaliseCanvasState(value: unknown, siteId: string): DesignCanv
         || candidate.points.length < 2 || !candidate.points.every(finiteCanvasPoint)) return false;
     return optionalCanvasText(candidate.name)
       && optionalFiniteCanvasNumber(candidate.labelDx)
-      && optionalFiniteCanvasNumber(candidate.labelDy);
+      && optionalFiniteCanvasNumber(candidate.labelDy)
+      && (candidate.widthM === undefined
+        || (candidate.kind === 'swale'
+          && typeof candidate.widthM === 'number'
+          && Number.isFinite(candidate.widthM)
+          && candidate.widthM > 0
+          && candidate.widthM <= MAX_SWALE_WIDTH_M));
   })) return null;
 
   if (value.useCustomBase !== undefined && typeof value.useCustomBase !== 'boolean') return null;

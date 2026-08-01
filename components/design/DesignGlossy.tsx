@@ -31,7 +31,7 @@ import {
 import { structureRegisterText } from '@/lib/structure-register';
 import { buildFinishedSheetPolishPrompt, buildLockedIllustrationPrompt, buildPhasingRestylePrompt, buildSatelliteOverlayPrompt, buildSectorRestylePrompt, buildSectorSheetPolishPrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, SHEET_NO, type StylePreset } from '@/lib/producer-prompt';
 import { zoneBadgePositions } from '@/lib/canvas-labels';
-import { enqueueRenderJob, subscribeRenderJob, fetchRenderOutput } from '@/lib/render-jobs';
+import { enqueueRenderJob, subscribeRenderJob, fetchRenderOutput, type RenderQuality } from '@/lib/render-jobs';
 // Extracted (behaviour-preserving) — see lib/glossy-filters.ts and lib/producer-labels.ts.
 // Re-exported below so existing consumers (lib/producer-prompt.ts comments, app/design/page.tsx,
 // components/design/DesignPrint.tsx) keep importing them from this module unchanged.
@@ -313,6 +313,26 @@ const LINE_COLORS: Record<string, string> = {
 // it. (The single-option picker below hides itself.)
 const ENGINES: Array<{ key: 'falgpt' | 'gemini'; label: string; sub: string }> = [
   { key: 'falgpt', label: 'gpt-image-2', sub: 'sharpest · background (~mins)' },
+];
+
+/**
+ * The three paid-render quality settings, offered so the SAME sheet can be rendered all three ways
+ * and compared before anyone commits to one.
+ *
+ * The costs in the sub-labels are the reason this exists. At the ~3.3 megapixels these sheets are
+ * rendered, 'high' is roughly 4x 'medium' and roughly 35x 'low'. Those are computed from OpenAI's
+ * own published rates and are estimates, not invoices — which is exactly why the worker now logs
+ * the API's real usage block (functions/src/index.ts) instead of discarding it. Treat these as
+ * "order of magnitude" until a real bill confirms them.
+ *
+ * Why 'high' may be waste here specifically: the model paints an UNDERLAYER. Every piece of exact
+ * geometry, every label and the whole legend are composited back on top afterwards, so much of the
+ * fine detail 'high' pays for is covered up again before the farmer ever sees the sheet.
+ */
+const RENDER_QUALITY_CHOICES: ReadonlyArray<{ key: RenderQuality; labelKey: string; subKey: string }> = [
+  { key: 'high', labelKey: 'designGlossyQualityHigh', subKey: 'designGlossyQualityHighSub' },
+  { key: 'medium', labelKey: 'designGlossyQualityMedium', subKey: 'designGlossyQualityMediumSub' },
+  { key: 'low', labelKey: 'designGlossyQualityLow', subKey: 'designGlossyQualityLowSub' },
 ];
 
 const GLOSSY_FILTERS: Array<{ key: GlossyLayerFilter; label: string }> = [
@@ -9145,6 +9165,58 @@ export default function DesignGlossy({
   // Render engine. Gemini is the DEFAULT because gpt-image-2 (via fal.ai) frequently 403s
   // (fal/OpenAI verification); gpt-image-2 stays selectable and auto-falls-back to Gemini on error.
   const [engine, setEngine] = useState<'falgpt' | 'gemini'>('falgpt');
+  // Defaults to 'high' — what every paid render used before this dial existed, so nothing changes
+  // for anyone who never opens More options.
+  const [quality, setQuality] = useState<RenderQuality>('high');
+
+  // Rendered in BOTH mounts. It lived inside More options, which is `!compact` — so the dial sat on
+  // a different screen from the AI Hybrid / Full Treatment buttons that actually spend the money.
+  // A money dial belongs beside the money buttons.
+  // QUALITY — a MONEY dial, and the only one in the app. Three options are shown rather than one
+  // best guess because the right answer genuinely isn't known yet: the AI paints an underlayer, and
+  // every piece of exact geometry, every label and the whole legend are composited back on top
+  // afterwards — so much of what 'high' pays for is covered up before the farmer sees the sheet.
+  // The point is to render the SAME sheet three ways and compare before committing to one.
+  const qualityPicker = (
+            <div>
+              <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55, marginBottom: 6 }}>
+                {t('designGlossyQuality')}
+              </div>
+              <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                {RENDER_QUALITY_CHOICES.map((q) => {
+                  const active = quality === q.key;
+                  return (
+                    <button
+                      key={q.key}
+                      type="button"
+                      onClick={() => setQuality(q.key)}
+                      disabled={loading !== null}
+                      aria-pressed={active}
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'flex-start',
+                        minHeight: 44,
+                        padding: '6px 14px',
+                        borderRadius: 12,
+                        border: active ? `2px solid ${GREEN}` : '1px solid rgba(0,0,0,0.18)',
+                        background: active ? GREEN : 'transparent',
+                        color: active ? PAPER : DARK,
+                        cursor: loading !== null ? 'default' : 'pointer',
+                        opacity: loading !== null && !active ? 0.5 : 1,
+                      }}
+                    >
+                      <span style={{ fontWeight: 800, fontSize: 13 }}>{t(q.labelKey)}</span>
+                      <span style={{ fontSize: 10.5, opacity: active ? 0.85 : 0.6 }}>{t(q.subKey)}</span>
+                    </button>
+                  );
+                })}
+              </div>
+              <div style={{ fontSize: 10.5, opacity: 0.6, marginTop: 6, lineHeight: 1.4 }}>
+                {t('designGlossyQualityNote')}
+              </div>
+            </div>
+  );
   // DURABLE gallery of every successful render (producer OR the strict/analysis paths), backed by
   // IndexedDB (lib/sheet-store.ts). It used to be session-only: created empty on every mount and
   // written nowhere, so closing the tab destroyed sheets that cost real money and minutes to
@@ -10252,7 +10324,7 @@ export default function DesignGlossy({
         setLoading(null);
         return;
       }
-      const jobId = await enqueueRenderJob({ siteId: state.siteId, style: styleKey, engine: 'openai', sheets });
+      const jobId = await enqueueRenderJob({ siteId: state.siteId, style: styleKey, engine: 'openai', quality, sheets });
       persistJobId(state.siteId, jobId);
       setQueueJobId(jobId);
       setNotice(formatDesignTranslation(t('designGlossyBackgroundCount'), {
@@ -10388,7 +10460,7 @@ export default function DesignGlossy({
       const jobId = await enqueueRenderJob({
         siteId: state.siteId,
         style: styleKey,
-        engine: 'openai',
+        engine: 'openai', quality,
         sheets: [{
           key: filter,
           label: layerLabel,
@@ -10625,7 +10697,7 @@ export default function DesignGlossy({
       const jobId = await enqueueRenderJob({
         siteId: state.siteId,
         style: styleKey,
-        engine: 'openai',
+        engine: 'openai', quality,
         sheets: [{
           key: kind,
           label: kind === 'sector' ? 'Sector analysis' : 'Existing site',
@@ -10726,7 +10798,7 @@ export default function DesignGlossy({
       const jobId = await enqueueRenderJob({
         siteId: state.siteId,
         style: styleKey,
-        engine: 'openai',
+        engine: 'openai', quality,
         sheets: [{
           key: 'implementation',
           label: 'Implementation & Phasing',
@@ -11955,6 +12027,8 @@ export default function DesignGlossy({
               </div>
               )}
 
+              {qualityPicker}
+
               {/* RETIRED — the Prompt-rewrite, Geometry Lock and AI-legend toggles used to live
                   here. Rory: "I even get confused every time; it's a layer of complexity I don't
                   want." They were also dishonest: Satellite Overlay overrides all three in code, so
@@ -12007,6 +12081,10 @@ export default function DesignGlossy({
         )}
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8, width: '100%' }}>
+          {/* On the compact Preview mount this is the ONLY place the quality dial appears, because
+              More options is hidden there — and the two buttons directly below it are the ones that
+              spend real money. On the full mount it also appears under More options. */}
+          {compact && selectedSheet && qualityPicker}
           {selectedSheet && (
             <div style={{ color: DARK, fontWeight: 850, fontSize: 13, letterSpacing: '0.03em', textTransform: 'uppercase' }}>
               {t('designGlossyFinishHeading')}

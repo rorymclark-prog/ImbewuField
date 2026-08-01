@@ -185,6 +185,10 @@ async function openaiEdit(
   maskB64?: string,
   styleReference?: Buffer | null,
   attempt = 0,
+  // A MONEY DIAL. At the size these sheets render, 'high' costs roughly 4x 'medium' and 35x 'low'.
+  // Defaulted here as well as at the call site so an old job doc written before the field existed
+  // still renders exactly as it always did.
+  quality: 'high' | 'medium' | 'low' = 'high',
 ): Promise<string> {
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), ATTEMPT_TIMEOUT_MS);
@@ -204,7 +208,7 @@ async function openaiEdit(
       : prompt);
     form.append('n', '1');
     form.append('size', pickSize(pngDims(buf) ?? jpegDims(buf))); // PNG first — composites are always PNG; 'auto' guarantees no detail
-    form.append('quality', 'high'); // documented maximum (low/medium/high/auto)
+    form.append('quality', quality); // low/medium/high/auto; 'high' is the documented maximum
     form.append('output_format', 'png'); // lossless — no JPEG ringing around fine legend lettering
     form.append('moderation', 'low'); // less-restrictive filter — fewer spurious refusals on aerial land photos
     // Storage path is historically named "composite.jpg"/input-*.jpg (harmless — GCS doesn't care about
@@ -227,7 +231,7 @@ async function openaiEdit(
     clearTimeout(timer);
     if (attempt < MAX_RETRIES) {
       await sleep(1500 * (attempt + 1));
-      return openaiEdit(key, imageB64, prompt, maskB64, styleReference, attempt + 1);
+      return openaiEdit(key, imageB64, prompt, maskB64, styleReference, attempt + 1, quality);
     }
     throw new Error(`network/abort: ${String(e)}`);
   }
@@ -247,8 +251,20 @@ async function openaiEdit(
     const detail = await res.text().catch(() => '');
     throw new Error(`OpenAI ${res.status}: ${detail.slice(0, 200)}`);
   }
-  const data = (await res.json()) as { data?: Array<{ b64_json?: string }> };
+  const data = (await res.json()) as {
+    data?: Array<{ b64_json?: string }>;
+    usage?: { input_tokens?: number; output_tokens?: number; total_tokens?: number;
+              input_tokens_details?: { image_tokens?: number; text_tokens?: number } };
+  };
+  // THE ONLY HONEST SOURCE OF COST. OpenAI publishes no dollar table above 1536x1024, and does not
+  // document the input-image token count for this model at all, so every per-render figure we have
+  // is an estimate. The API returns the real numbers on every response and this line used to
+  // discard them. Logging is free, changes no behaviour, and turns the next pricing decision into
+  // arithmetic on invoices instead of a guess.
   const b64 = data?.data?.[0]?.b64_json;
+  if (data?.usage) {
+    console.log('openai_image_usage', JSON.stringify({ quality, ...data.usage }));
+  }
   if (!b64) throw new Error('OpenAI returned no image');
   return b64;
 }
@@ -434,7 +450,10 @@ export const runRenderJob = onDocumentCreated(
               const styleReference = job.style === 'precision_atlas' && sheet.geometryLock === true && !maskB64
                 ? await loadPrecisionAtlasReference()
                 : null;
-              outB64 = await openaiEdit(key, buf.toString('base64'), prompt, maskB64, styleReference);
+              // Absent on job docs written before the quality dial existed — read as 'high', the
+              // setting every render used until then, so old and in-flight jobs are unchanged.
+              const quality = job.quality === 'medium' || job.quality === 'low' ? job.quality : 'high';
+              outB64 = await openaiEdit(key, buf.toString('base64'), prompt, maskB64, styleReference, 0, quality);
             }
             
             const outputPath = `renders/${job.uid}/${jobId}/output-${sheet.key}.png`; // output_format is png now
