@@ -129,9 +129,10 @@ self.addEventListener('fetch', function (event) {
           // Fall back through what a farmer can actually use: this exact page, then the app's
           // real entry point, then the root. '/' alone was the old behaviour and it was never
           // precached, so offline navigation simply failed.
-          // Chained, NOT `a || caches.match(b)` — caches.match returns a PROMISE, which is always
-          // truthy, so an || chain would stop at the first match call whether or not it resolved
-          // to anything.
+          // Chained, NOT a single 'hit || caches.match(next)' expression: caches.match returns a
+          // PROMISE, which is always truthy, so such a chain stops at the first match call whether
+          // or not it resolved to anything. (Backticks are banned in here — this file is one big
+          // template literal and a stray backtick silently ends it.)
           return caches.match(request)
             .then(function (hit) { return hit || caches.match('/home'); })
             .then(function (hit) { return hit || caches.match('/'); });
