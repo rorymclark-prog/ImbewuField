@@ -492,22 +492,33 @@ export default function DesignPalette({
   const floatDragRef = useRef<{ dx: number; dy: number } | null>(null);
   // Mode and position persist: a farmer who parks the panel bottom-right expects it there on the
   // next step and the next session, not re-centred every render.
+  // The two effects below are read-then-write on ONE key, so they must not race. The writer waits
+  // on this flag — and it is STATE, not a ref, deliberately: a ref set inside the reader flips in
+  // the SAME commit the writer runs in, so the writer would still fire while chipsFloating held
+  // the pre-restore default and stamp `floating:false` over the saved value. State forces the
+  // writer to skip that commit entirely and run on the next one, when the restored value has
+  // landed. Symptom this fixes: a parked panel came back docked on every reload and after every
+  // preview-map trip, i.e. the "persists ... not re-centred" promise above was never true.
+  const [floatHydrated, setFloatHydrated] = useState(false);
   useEffect(() => {
     try {
       const raw = localStorage.getItem('imbewu_palette_float');
-      if (!raw) return;
-      const saved = JSON.parse(raw) as { floating?: boolean; x?: number; y?: number };
-      if (typeof saved.floating === 'boolean') setChipsFloating(saved.floating);
-      if (Number.isFinite(saved.x) && Number.isFinite(saved.y)) {
-        setFloatPos({ x: saved.x as number, y: saved.y as number });
+      if (raw) {
+        const saved = JSON.parse(raw) as { floating?: boolean; x?: number; y?: number };
+        if (typeof saved.floating === 'boolean') setChipsFloating(saved.floating);
+        if (Number.isFinite(saved.x) && Number.isFinite(saved.y)) {
+          setFloatPos({ x: saved.x as number, y: saved.y as number });
+        }
       }
     } catch { /* corrupt or unavailable storage — the defaults above are already correct */ }
+    setFloatHydrated(true);
   }, []);
   useEffect(() => {
+    if (!floatHydrated) return;
     try {
       localStorage.setItem('imbewu_palette_float', JSON.stringify({ floating: chipsFloating, ...floatPos }));
     } catch { /* private mode / quota — position is a convenience, never worth throwing over */ }
-  }, [chipsFloating, floatPos]);
+  }, [floatHydrated, chipsFloating, floatPos]);
   // Drag on window, not on the header: a pointer that outruns the 8px header (easy on a phone)
   // must not drop the panel mid-move. Clamped so the panel can never be dragged fully off-screen
   // and stranded — losing your palette behind the viewport edge is unrecoverable without storage

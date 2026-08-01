@@ -3470,8 +3470,14 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
 
       {/* Palette (docked bottom). bottomShow.tools is the last rung: without this gate the ladder's
           `hidden` still left the whole tool row on screen, so "just the map" was never actually
-          reachable — the rail above is what brings it back. */}
-      {bottomShow.tools && canvasState && canvasState.step !== 'glossy' && (
+          reachable — the rail above is what brings it back.
+          `!previewFilter` because the palette's floating mode portals itself to <body> at
+          zIndex 900, ABOVE this page's Preview map overlay (zIndex 60) — so a parked Elements
+          panel followed the farmer onto the preview screen and sat over the sheet buttons. The
+          docked strip is covered by the opaque overlay anyway; only the portal escaped it.
+          Unmounting is safe: floating mode and position live in localStorage, not in the
+          component, so the panel comes back exactly where it was parked. */}
+      {bottomShow.tools && canvasState && canvasState.step !== 'glossy' && !previewFilter && (
         <DesignPalette
           bottomStop={bottomStop}
           onBottomStopChange={setBottomStop}
