@@ -2910,6 +2910,18 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               onPlaceBedBlock={onPlaceBedBlock}
               onToggleBaseMap={() => setActiveLayers((a) => ({ ...a, baseMap: !a.baseMap }))}
               onToggleSector={() => setActiveLayers((a) => ({ ...a, sector: !a.sector }))}
+              // Drone photo ⇄ satellite, on the canvas itself. Reuses the same two handlers the
+              // Base step's toggle uses, so there is exactly one way in and one way out of a
+              // custom base no matter which control the farmer reaches for.
+              basePhoto={
+                basePhotoControls(canvasState).canToggle
+                  ? {
+                      showing: basePhotoControls(canvasState).showingPhoto,
+                      onToggle: () =>
+                        basePhotoControls(canvasState).showingPhoto ? revertToSatellite() : restoreCustomBase(),
+                    }
+                  : null
+              }
               slopeDeg={locationData?.elevation?.slopeDeg}
               aspectDeg={locationData?.elevation?.aspectDeg}
               sectorSite={glossySite}

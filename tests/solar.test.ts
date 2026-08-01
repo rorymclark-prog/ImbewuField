@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { deriveSolar, isValidEarthLatitude, OBLIQUITY_DEG } from '../lib/solar.ts';
+import { deriveSolar, isValidEarthLatitude, OBLIQUITY_DEG, sunArcApexFraction, SUN_ARC_MIN_BULGE } from '../lib/solar.ts';
 
 const TOL = 0.05; // deg, per SECTOR-MODEL-SPEC-2026-07-21.md §1's unit-test table
 
@@ -131,4 +131,42 @@ test('every real latitude yields only finite or explicitly absent solar geometry
       }
     }
   }
+});
+
+// ── The drawn sun arc must clear its own rise/set chord ─────────────────────────────────────────
+//
+// A plan-view sun path is a curve from the sunrise bearing, through the noon sun, to the sunset
+// bearing. Placing that noon point by altitude ALONE (a fraction of the ring radius, measured from
+// the centre) is what shipped, and it is wrong for a low sun: at 28°S the June sun rises at 063°
+// and sets at 297°, so both ends already sit 45% of the way toward the noon side, while a 39°
+// altitude only lifts the apex 43%. The apex landed BEHIND its own endpoints and the arc drew as a
+// flat dashed rule across the map. Rory: "can you put the winter sun as well properly with angle".
+
+test('a low winter sun still bulges past its own chord', () => {
+  const winter = deriveSolar(-27.7).winter;
+  assert.ok(winter.sunriseAzDeg != null);
+  // How far the rise/set ends already lie toward the noon side (noon is north at 28°S).
+  const chord = Math.cos((winter.sunriseAzDeg! * Math.PI) / 180);
+  const apex = sunArcApexFraction(winter.noonAltitudeDeg, chord);
+  assert.ok(apex >= chord + SUN_ARC_MIN_BULGE, `apex ${apex} must clear chord ${chord}`);
+});
+
+test('summer always draws higher than winter at the same site', () => {
+  for (const lat of [-34, -27.7, -20, -5, 5, 20, 34, 51]) {
+    const { summer, winter } = deriveSolar(lat);
+    if (summer.sunriseAzDeg == null || winter.sunriseAzDeg == null) continue;
+    // Compare each season against its OWN noon side, which differs inside the tropics.
+    const chordOf = (az: number, north: boolean) => (north ? 1 : -1) * Math.cos((az * Math.PI) / 180);
+    const s = sunArcApexFraction(summer.noonAltitudeDeg, chordOf(summer.sunriseAzDeg, summer.noonSide !== 'S'));
+    const w = sunArcApexFraction(winter.noonAltitudeDeg, chordOf(winter.sunriseAzDeg, winter.noonSide !== 'S'));
+    assert.ok(s > w, `at ${lat}°: summer apex ${s} must sit higher than winter ${w}`);
+  }
+});
+
+test('the apex fraction is monotonic in altitude and survives junk input', () => {
+  assert.ok(sunArcApexFraction(80, 0) > sunArcApexFraction(40, 0));
+  assert.ok(sunArcApexFraction(40, 0) > sunArcApexFraction(10, 0));
+  assert.equal(sunArcApexFraction(Number.NaN, 0), 0.28);
+  assert.equal(sunArcApexFraction(0, Number.NaN), 0.28);
+  assert.ok(sunArcApexFraction(200, 0) <= 1);
 });

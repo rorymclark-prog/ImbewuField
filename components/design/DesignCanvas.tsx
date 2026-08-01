@@ -151,6 +151,10 @@ export interface DesignCanvasProps {
   // Quick in-canvas toggle of the Sector energies overlay (the top-left ☀️ button) — the
   // discoverable twin of the "Sector energies" entry in the Layers popover.
   onToggleSector?: () => void;
+  /** The farmer's own drone/phone photo as a canvas-rail switch. Null/absent when no photo has
+   *  been uploaded for this site — there is nothing to switch to, so no button. `showing` is the
+   *  live base, and `onToggle` swaps it; both come from basePhotoControls in lib/design-canvas. */
+  basePhoto?: { showing: boolean; onToggle: () => void } | null;
   // Slope + aspect (from lib/elevation) → the approximate on-contour guide lines.
   slopeDeg?: number;
   aspectDeg?: number;
@@ -582,6 +586,7 @@ export default function DesignCanvas({
   onPlaceBedBlock,
   onToggleBaseMap,
   onToggleSector,
+  basePhoto,
   slopeDeg,
   aspectDeg,
   sectorSite,
@@ -4184,6 +4189,41 @@ export default function DesignCanvas({
       >
         <span aria-hidden>📏</span>
       </button>
+
+      {/* DRONE PHOTO ⇄ SATELLITE, on the canvas rail (Rory: "i want to be able toggle on and off
+          drone photo here in this section"). The same switch exists on the Base step, but a farmer
+          checking whether a bed lines up with a real path wants it where they are working, not
+          four steps back. Only appears once a photo has actually been uploaded — basePhotoControls
+          keys on the photo EXISTING, never on which base is active, so this stays a two-way door
+          in both states (see its doc for the one-way-door bug that rule exists to prevent). */}
+      {basePhoto && (
+        <button
+          type="button"
+          aria-pressed={basePhoto.showing}
+          aria-label={t(basePhoto.showing ? 'designCanvasShowSatellite' : 'designCanvasShowPhoto')}
+          title={t(basePhoto.showing ? 'designCanvasPhotoShown' : 'designCanvasPhotoHidden')}
+          onClick={basePhoto.onToggle}
+          style={{
+            position: 'absolute',
+            top: (onToggleAdditive && tool === 'select' ? 156 : 108) + 48,
+            left: 12,
+            width: 40,
+            height: 40,
+            borderRadius: 20,
+            border: basePhoto.showing ? `2px solid ${GOLD}` : 'none',
+            background: basePhoto.showing ? 'rgba(31,77,43,0.92)' : 'rgba(11,18,11,0.82)',
+            color: basePhoto.showing ? GOLD : '#FBF6EC',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
+            cursor: 'pointer',
+            fontSize: 17,
+          }}
+        >
+          <span aria-hidden>{basePhoto.showing ? '🚁' : '🛰️'}</span>
+        </button>
+      )}
       {/* One-line coaching while measuring — without it the tool looks broken until the second
           tap, and the whole point is checking the scale against something real on the ground.
           Once a leg exists this same bar becomes the CALIBRATOR: the farmer states what that

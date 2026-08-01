@@ -18,6 +18,19 @@ export interface ReleaseNote {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '1 August',
+    changes: [
+      'NEW: a Staple garden — mielies, beans and pumpkin grow there on the AI maps',
+      'Preview map opens with all nine sheets, so Earthworks is one tap away',
+      'Pick a tree species and it goes down as a tree, not a square',
+      'The winter sun path is drawn at its real angle, with a sun at each end',
+      'Vegetable beds on the AI maps grow vegetables instead of turning into a hedge',
+      'On a Photo Plan your real photo stays sharp — the design sits on top of it',
+      'The staple garden turns off with your planting, not with what was already here',
+      'Map labels stop marching all the way to the edge of the sheet',
+    ],
+  },
+  {
     when: '31 July',
     changes: [
       'The sun diagram shows summer and winter paths, at your latitude\'s real angles',

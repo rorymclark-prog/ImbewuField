@@ -14,6 +14,7 @@
 
 import type { ReactElement } from 'react';
 import { bearingToUnitVector, type SectorModel } from '@/lib/sector';
+import { sunArcApexFraction } from '@/lib/solar';
 import { formatDesignTranslation } from '@/lib/design-studio-i18n';
 import { useLanguage } from '@/lib/i18n';
 
@@ -98,6 +99,30 @@ export default function SectorOverlay({ model, imgW: W, imgH: H, boundary }: Sec
     >
       {text}
     </text>
+  );
+
+  // A little sun: filled disc + eight short rays, with a dark halo so it survives on a bright
+  // satellite roof as well as on shadowed bush. Rays start clear of the disc (1.35r) so the glyph
+  // still reads as a sun at the ~4px end sizes a phone renders it at.
+  const sunGlyph = (key: string, x: number, y: number, r: number) => (
+    <g key={key}>
+      <circle cx={x} cy={y} r={r} fill={SUN} stroke={HALO} strokeWidth={Math.max(1, r * 0.3)} />
+      {Array.from({ length: 8 }, (_, i) => {
+        const a = (i * Math.PI) / 4;
+        return (
+          <line
+            key={i}
+            x1={x + Math.cos(a) * r * 1.35}
+            y1={y + Math.sin(a) * r * 1.35}
+            x2={x + Math.cos(a) * r * 2.05}
+            y2={y + Math.sin(a) * r * 2.05}
+            stroke={SUN}
+            strokeWidth={Math.max(1.2, r * 0.34)}
+            strokeLinecap="round"
+          />
+        );
+      })}
+    </g>
   );
 
   // Inward energy arrow: tail OUTSIDE the ring at `fromVec`, head INSIDE — energy entering the
@@ -194,8 +219,17 @@ export default function SectorOverlay({ model, imgW: W, imgH: H, boundary }: Sec
     const set = bearingToUnitVector(path.sunsetAzDeg);
     const p0 = [cx + rise[0] * sunR, cy + rise[1] * sunR];
     const p2 = [cx + set[0] * sunR, cy + set[1] * sunR];
-    const lift = sunR * Math.max(0.12, Math.min(1, path.noonAltitudeDeg / 90));
-    const apex = [cx, isSH ? cy - lift : cy + lift];
+    // WHICH SIDE noon is on is per-SEASON, not per-hemisphere: inside the tropics the two
+    // solstices genuinely disagree (solar.middayFrom === 'mixed'), and a site 20° south sees the
+    // December sun pass to the SOUTH while the June sun passes to the north. Reading `isSH` here
+    // drew both of that farm's arcs on the same wrong side. Matches the plan-set sheet, which
+    // already branches on path.noonSide (buildBlueprintSectorMap).
+    const noonNorth = path.noonSide === 'N' || (path.noonSide === 'overhead' && isSH);
+    const noon = bearingToUnitVector(noonNorth ? 0 : 180);
+    // How far the rise/set ends already lie along the noon bearing — see sunArcApexFraction.
+    const chordFraction = rise[0] * noon[0] + rise[1] * noon[1];
+    const apexF = sunArcApexFraction(path.noonAltitudeDeg, chordFraction);
+    const apex = [cx + noon[0] * apexF * sunR, cy + noon[1] * apexF * sunR];
     const ctrl = [2 * apex[0] - (p0[0] + p2[0]) / 2, 2 * apex[1] - (p0[1] + p2[1]) / 2];
     const winter = key === 'winter';
     els.push(
@@ -212,18 +246,30 @@ export default function SectorOverlay({ model, imgW: W, imgH: H, boundary }: Sec
         opacity={winter ? 0.85 : 1}
       />,
     );
-    els.push(<circle key={`sun-apex-${key}`} cx={apex[0]} cy={apex[1]} r={Math.max(winter ? 4 : 6, W * (winter ? 0.008 : 0.011))} fill={SUN} />);
+    // A LITTLE SUN AT EACH END OF THE AZIMUTH (Rory's ask), and a bigger one at noon. The ends
+    // are where the sun actually comes up and goes down on this farm — the two bearings a farmer
+    // walks out and checks against a hill or a neighbour's treeline — so they deserve a mark you
+    // read as the sun, not a bare line ending. Same three-glyph grammar the printed sheet 02
+    // already uses (drawSunIcon in buildBlueprintSectorMap), so the screen and the print agree.
+    const endR = Math.max(winter ? 3 : 3.6, W * (winter ? 0.0055 : 0.0065));
+    els.push(sunGlyph(`sun-rise-${key}`, p0[0], p0[1], endR));
+    els.push(sunGlyph(`sun-set-${key}`, p2[0], p2[1], endR));
+    els.push(sunGlyph(`sun-apex-${key}`, apex[0], apex[1], Math.max(winter ? 4 : 5.5, W * (winter ? 0.0072 : 0.0095))));
     // The altitude IS the label. A season word alone repeats what the two curves already show;
-    // "39°" is the number you use to work out whether that tree shades the beds in June.
+    // "39°" is the number you use to work out whether that tree shades the beds in June. It sits
+    // OUTSIDE the apex along the noon bearing so the glyph's rays never print through the text.
     els.push(label(
       `sun-lbl-${key}`,
-      apex[0],
-      apex[1] + (isSH ? -1 : 1) * rowH * 0.75,
+      apex[0] + noon[0] * rowH * 1.15,
+      apex[1] + noon[1] * rowH * 1.15,
       `${word.toUpperCase()} ${Math.round(path.noonAltitudeDeg)}°`,
       SUN,
     ));
   }
-  arrow('sun-ray', bearingToUnitVector(isSH ? 0 : 180), SUN, Math.max(3, W * 0.0045), undefined);
+  // The lone "sun comes from here" arrow that used to run down the noon axis is gone: it was
+  // drawn from the ring inward to 0.6R, which is exactly where a low winter sun's noon glyph now
+  // sits, so it speared its own arc. Two labelled arcs with suns on them say the same thing
+  // without a line through the middle of the farm.
   // THE SHADOW RATIO, which is the altitude made useful: at the winter solstice a vertical metre
   // throws this many metres of shadow at noon. It is the number that decides where a shade tree
   // may stand without taking the winter sun off the beds — and it is the reason the altitude is

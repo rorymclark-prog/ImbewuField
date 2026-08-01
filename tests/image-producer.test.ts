@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 
 import './hybrid-composite-registration.cases.ts';
 import { blendProtectedPixels, countProtectedPixelMismatches, maskEditableFraction, precisionAtlasContextPixels, shouldUseModelChrome } from '../lib/image-producer.ts';
@@ -1445,4 +1446,30 @@ test('the water sheet\'s MATERIAL SEPARATION clause is also style-gated, not jus
   assert.doesNotMatch(waterPhoto, /watercolor-and-gouache/i);
   const waterPainted = buildLockedIllustrationPrompt('Water', 'precision_atlas', 'JoJo Tank 2500L ×2');
   assert.match(waterPainted, /watercolor-and-gouache/i);
+});
+
+// ── The exact sheet must be CHOSEN by the filter, not by a ladder of comparisons ────────────────
+//
+// renderDesignMap used to pick its builder with `filter === 'zones' ? … : 'water' ? … : else
+// buildBlueprintWholeMap`. There was no earthworks rung, so selecting Earthworks fell all the way
+// through and rendered the masterplan — a sheet captioned "Earthworks map" with "08 — FINAL
+// INTEGRATED MASTERPLAN" printed inside it. Rory: "earth works is showing final master plan
+// sheet". The defect is the SHAPE, not the missing rung: a ladder whose last step is a real sheet
+// can only fail silently, and buildBlueprintEarthworksMap had existed the whole time. Both exact
+// paths now pass the filter straight through, so a seventh filter cannot repeat this.
+test('both exact render paths pass the filter through instead of enumerating sheets', () => {
+  const src = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
+  assert.match(
+    src,
+    /const composite = await buildReferenceBlueprintMap\(state, frame, refLayers, filter, placeName\)/,
+    'the single-sheet exact render must pass `filter`, not re-derive the sheet',
+  );
+  assert.doesNotMatch(
+    src,
+    /filter === 'zones'\s*\n?\s*\?\s*await buildBlueprintZoneMap/,
+    'the per-filter ladder is back — a filter it forgets becomes the masterplan',
+  );
+  // The exact-ALL batch had its own hand-kept copy of the sheet list, which is how it shipped a
+  // "complete" plan set with no sheet 05 in it at all.
+  assert.doesNotMatch(src, /\{ f: 'zones', no: '03'/, 'the exact-all batch is hand-listing sheets again');
 });

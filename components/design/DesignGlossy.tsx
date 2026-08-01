@@ -5978,10 +5978,14 @@ function drawSectorAnalysis(
       '#F7C97E',
     );
     drawSectorMarker('summer-sun', cx + summerApex[0] * summerR, cy + summerApex[1] * summerR, '#D89A35');
+    // The NOON ALTITUDE belongs on the banner, not only on the apex label the dodger is free to
+    // move or drop. Two arcs of different radii say "these are different seasons"; only the angle
+    // says HOW different, and it is the number a farmer measures a shade tree against. Rory, of
+    // the on-canvas twin: "put the winter sun as well properly with angle."
     directLabelAt(
       cx,
       H * 0.08,
-      [`SUMMER SUN · ${model.solar.summer.riseLabel16} → ${model.solar.summer.noonSide} → ${model.solar.summer.setLabel16}`],
+      [`SUMMER SUN · ${model.solar.summer.riseLabel16} → ${model.solar.summer.noonSide} → ${model.solar.summer.setLabel16} · NOON ${Math.round(model.solar.summer.noonAltitudeDeg)}°`],
       SECTOR_STYLES['summer-sun'].labelColor,
     );
   }
@@ -5996,7 +6000,7 @@ function drawSectorAnalysis(
     directLabelAt(
       cx,
       H * 0.125,
-      [`WINTER SUN · ${model.solar.winter.riseLabel16} → ${model.solar.winter.noonSide} → ${model.solar.winter.setLabel16}`],
+      [`WINTER SUN · ${model.solar.winter.riseLabel16} → ${model.solar.winter.noonSide} → ${model.solar.winter.setLabel16} · NOON ${Math.round(model.solar.winter.noonAltitudeDeg)}°`],
       SECTOR_STYLES['winter-sun'].labelColor,
     );
   }
@@ -9180,16 +9184,17 @@ export default function DesignGlossy({
     setError(null);
     try {
       // Every design layer, including the integrated masterplan, uses the same deterministic
-      // Reference Blueprint sheet template and exact source geometry.
-      const composite = filter === 'zones'
-        ? await buildBlueprintZoneMap(state, frame, refLayers, placeName)
-        : filter === 'water'
-          ? await buildBlueprintWaterMap(state, frame, refLayers, placeName)
-          : filter === 'planting'
-            ? await buildBlueprintPlantingMap(state, frame, refLayers, placeName)
-            : filter === 'structures'
-              ? await buildBlueprintStructuresMap(state, frame, refLayers, placeName)
-              : await buildBlueprintWholeMap(state, frame, refLayers, placeName);
+      // Reference Blueprint sheet template and exact source geometry — so the sheet is chosen by
+      // PASSING the filter, not by a hand-written chain of comparisons.
+      //
+      // It used to be that chain, and it had no `earthworks` branch: selecting Earthworks (05)
+      // fell through the whole ladder to the final else and rendered buildBlueprintWholeMap, so
+      // the sheet came back captioned "Earthworks map" with "08 — FINAL INTEGRATED MASTERPLAN"
+      // printed inside it. Rory: "earth works is showing final master plan sheet". A ladder whose
+      // last rung is a real sheet cannot fail loudly — every filter it forgets silently becomes
+      // the masterplan — and buildBlueprintEarthworksMap had existed the whole time. One call
+      // makes forgetting impossible.
+      const composite = await buildReferenceBlueprintMap(state, frame, refLayers, filter, placeName);
       setResultImage(composite);
       const record: SavedGlossy = { image: composite, provider: 'exact', at: new Date().toISOString() };
       saveGlossy(state.siteId, mapKey, record);
@@ -9344,23 +9349,28 @@ export default function DesignGlossy({
       step('01 · Existing site & base', await buildBlueprintBaseMap(state, frame, refLayers, placeName), 'base');
       // 02 — Sector analysis (always: the sun is real content even before slope/climate load).
       step('02 · Sector analysis', await buildBlueprintSectorMap(state, frame, refLayers, site, placeName), 'sector-exact');
-      // 03–06 — the design layers that have content.
-      const layers: Array<{ f: GlossyLayerFilter; no: string; build: () => Promise<string> }> = [
-        { f: 'zones', no: '03', build: () => buildBlueprintZoneMap(state, frame, refLayers, placeName) },
-        { f: 'water', no: '04', build: () => buildBlueprintWaterMap(state, frame, refLayers, placeName) },
-        { f: 'planting', no: '05', build: () => buildBlueprintPlantingMap(state, frame, refLayers, placeName) },
-        { f: 'structures', no: '06', build: () => buildBlueprintStructuresMap(state, frame, refLayers, placeName) },
-      ];
-      for (const { f, no, build } of layers) {
+      // 03–08 — every design layer that has content, driven off GLOSSY_FILTERS and the canonical
+      // SHEET_NO rather than a hand-kept copy. The copy had gone stale twice over: EARTHWORKS was
+      // missing outright (so "all exact" quietly produced a set with no sheet 05 in it), and the
+      // numbers it printed while working — planting 05, structures 06, whole 07 — were the numbers
+      // from before Earthworks was split out of Water, so the progress line disagreed with the
+      // number printed on the sheet it was rendering.
+      // Sorted by sheet number, not by GLOSSY_FILTERS' own order — that list leads with 'all'
+      // (it is a picker, and "Whole design" belongs at the top of a picker), while the plan set
+      // ends with it.
+      const sheetOrder = [...GLOSSY_FILTERS].sort((a, b) => SHEET_NO[a.key].localeCompare(SHEET_NO[b.key]));
+      for (const { key: f } of sheetOrder) {
         if (layerContentCount(state, refLayers, f) === 0) continue;
-        step(`${no} · ${GLOSSY_FILTERS.find((x) => x.key === f)?.label ?? f} map`, await build(), f);
+        step(
+          `${SHEET_NO[f]} · ${GLOSSY_FILTERS.find((x) => x.key === f)?.label ?? f} map`,
+          await buildReferenceBlueprintMap(state, frame, refLayers, f, placeName),
+          f,
+        );
       }
-      // 07 — Final integrated masterplan (the whole design over the satellite).
-      step('07 · Whole design (masterplan)', await buildBlueprintWholeMap(state, frame, refLayers, placeName), 'all');
-      // 08 — Implementation & phasing (exact rules-engine sheet), when there's anything to phase.
+      // 09 — Implementation & phasing (exact rules-engine sheet), when there's anything to phase.
       const plan = buildPhasePlan(state, refLayers, site);
       if (plan.phases.length > 0) {
-        step('08 · Implementation & phasing', await buildImplementationMap(state, frame, refLayers, site, placeName), 'implementation-exact');
+        step('09 · Implementation & phasing', await buildImplementationMap(state, frame, refLayers, site, placeName), 'implementation-exact');
       }
       setNotice(formatDesignTranslation(t('designGlossyDoneExact'), { count: made }));
       setGalleryViewId(null);

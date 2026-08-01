@@ -120,3 +120,34 @@ export function deriveSolar(latDeg: number): SolarModel {
     usable: Math.abs(latDeg) < 90 - OBLIQUITY_DEG,
   };
 }
+
+/** Minimum bulge of a drawn sun arc past its own rise/set chord, as a fraction of the ring
+ *  radius. Enough that a low winter sun still reads as a curve rather than a ruled line. */
+export const SUN_ARC_MIN_BULGE = 0.1;
+
+/**
+ * Where the noon sun sits on a PLAN-VIEW sun-path arc: the distance from the ring centre, as a
+ * fraction of the sun ring's radius, measured along the noon bearing. The arc is then a curve
+ * from the true sunrise bearing, through this point, to the true sunset bearing — so its height
+ * carries the season's noon altitude and its ends carry the season's azimuths.
+ *
+ * `chordFraction` is how far the rise/set endpoints ALREADY lie along that same noon bearing
+ * (the endpoint unit vector projected onto it; the two are mirror images, so one value covers
+ * both). Clearing them is the whole job of this function. A winter sun rises and sets well round
+ * toward the noon side — at 28°S the June sun comes up at 063° and goes down at 297°, both of
+ * them 45% of the way north already — so an apex measured from the CENTRE alone lands level with
+ * or BEHIND its own endpoints, and a quadratic through it draws as a flat line or a sag. That is
+ * exactly what shipped: a proper summer arc and a winter "path" that was a horizontal dashed
+ * rule. Rory: "can you put the winter sun as well properly with angle".
+ *
+ * The altitude term is deliberately compressed into 0.28–1.0 rather than 0–1: an arc whose apex
+ * sits on top of its own chord conveys nothing, and the ORDER of the two seasons (summer always
+ * visibly higher than winter) matters more to a farmer siting a shade tree than the absolute
+ * proportion does.
+ */
+export function sunArcApexFraction(noonAltitudeDeg: number, chordFraction: number): number {
+  const alt = clamp(Number.isFinite(noonAltitudeDeg) ? noonAltitudeDeg : 0, 0, 90);
+  const byAltitude = 0.28 + 0.72 * (alt / 90);
+  const clear = (Number.isFinite(chordFraction) ? chordFraction : 0) + SUN_ARC_MIN_BULGE;
+  return Math.max(byAltitude, clear);
+}
