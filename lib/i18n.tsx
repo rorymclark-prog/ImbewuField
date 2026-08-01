@@ -145,9 +145,12 @@ const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   designCanvasSnap: '✓ Snap to neighbour',
   designCanvasCleanup: '✓ Clean up',
   designCanvasMeasure: 'Measure a distance',
-  designCanvasMeasureOn: 'Measuring — tap two points',
-  designCanvasMeasureHint: 'Tap two points to measure the real distance between them.',
-  designCanvasMeasureAgain: 'Tap again to start a new measurement.',
+  designCanvasMeasureOn: 'Measuring — tap along a path',
+  // A swale runs on contour and a fence follows a boundary, so the ruler keeps adding legs and
+  // totals them. Two points still reads as one plain distance, which is the common case.
+  designCanvasMeasureHint: 'Tap two points for a distance, or keep tapping to measure along a path.',
+  designCanvasMeasureAgain: 'Keep tapping to add legs to the path.',
+  designCanvasMeasureClear: 'Start over',
   designCanvasMeasureActually: 'Actually',
   designPaletteSelect: '↖️ Select',
   designPaletteUndo: '↩️ Undo',

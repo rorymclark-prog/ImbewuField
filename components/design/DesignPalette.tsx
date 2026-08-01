@@ -642,12 +642,20 @@ export default function DesignPalette({
   // the way Base-step ground features (lawn, orchard...) do. Base is the only step that still uses
   // the standalone area-chip strip.
   const showAreaChips = step === 'base';
-  const showLineChips = step === 'water' || step === 'structures' || step === 'planting';
+  const showLineChips = step === 'water' || step === 'earthworks' || step === 'structures' || step === 'planting';
   const WATER_LINE_IDS: Array<LineShape['kind']> = ['swale', 'pipe', 'drip', 'greywater'];
+  // THE STEP THAT EXISTS TO DIG SWALES MUST OFFER THE SWALE TOOL. Rory, on the Earthworks step:
+  // "there's no swale clicker" — the step had the berm/terrace/bed CHIPS but no way to draw the
+  // line itself, because line tools were only ever wired for water/structures/planting. Earthworks
+  // gets swale alone: a pipe or a drip run is plumbing, and belongs on Water where it already is.
+  const EARTHWORKS_LINE_IDS: Array<LineShape['kind']> = ['swale'];
   const STRUCTURE_LINE_IDS: Array<LineShape['kind']> = ['fence', 'path'];
   const PLANTING_LINE_IDS: Array<LineShape['kind']> = ['windbreak']; // was unreachable before
   const lineChipsForStep = LINE_KINDS.filter((lk) =>
-    (step === 'water' ? WATER_LINE_IDS : step === 'planting' ? PLANTING_LINE_IDS : STRUCTURE_LINE_IDS).includes(lk.id)
+    (step === 'water' ? WATER_LINE_IDS
+      : step === 'earthworks' ? EARTHWORKS_LINE_IDS
+      : step === 'planting' ? PLANTING_LINE_IDS
+      : STRUCTURE_LINE_IDS).includes(lk.id)
   );
 
   function pickElement(def: DesignElementDef) {

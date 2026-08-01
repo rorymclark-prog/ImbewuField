@@ -998,9 +998,13 @@ export default function DesignCanvas({
     if (measureOn && activePointers.current.size === 0) {
       const pt = clientToNorm(e.clientX, e.clientY);
       if (pt) {
-        // Third tap starts a fresh measurement rather than growing a polyline — two points is
-        // the whole question ("how far is that?"), and a stale first leg is just confusing.
-        setMeasurePts((prev) => (prev.length >= 2 ? [pt] : [...prev, pt]));
+        // KEEPS GROWING INTO A PATH. It used to reset on the third tap, on the reasoning that
+        // "how far is that?" is a two-point question. It isn't, for the things this app is for:
+        // a swale runs on contour, a fence follows a boundary, a pipe turns corners — and their
+        // length is what you buy material by. Rory, on the Earthworks step: "supposed to have a
+        // tool to give [a] numb[er] with path". Each leg is labelled and the running total is
+        // shown at the end, so the two-point case reads exactly as it always did.
+        setMeasurePts((prev) => [...prev, pt]);
         return;
       }
     }
@@ -3228,33 +3232,56 @@ export default function DesignCanvas({
                 strokeWidth={chrome(2)}
               />
             ))}
-            {measurePts.length === 2 && (() => {
-              const [a, b] = measurePts;
+            {measurePts.length >= 2 && (() => {
               // Same arithmetic as lib/design-canvas distanceM: normalised → image pixels →
               // metres through the frame's own mPerPx, so the ruler can never disagree with the
               // scale bar or with a placed item's stated size.
-              const dxM = (a[0] - b[0]) * imgW * mPerPx;
-              const dyM = (a[1] - b[1]) * imgH * mPerPx;
-              const distM = Math.hypot(dxM, dyM);
-              const midX = ((a[0] + b[0]) / 2) * imgW;
-              const midY = ((a[1] + b[1]) / 2) * imgH;
+              const legM = (a: [number, number], b: [number, number]) =>
+                Math.hypot((a[0] - b[0]) * imgW * mPerPx, (a[1] - b[1]) * imgH * mPerPx);
+              const fmt = (m: number) => (m < 10 ? `${m.toFixed(2)} m` : `${m.toFixed(1)} m`);
+              const legs = measurePts.slice(1).map((b, i) => {
+                const a = measurePts[i];
+                return { a, b, m: legM(a, b) };
+              });
+              const totalM = legs.reduce((sum, leg) => sum + leg.m, 0);
+              const last = measurePts[measurePts.length - 1];
               return (
                 <>
-                  <line
-                    x1={a[0] * imgW}
-                    y1={a[1] * imgH}
-                    x2={b[0] * imgW}
-                    y2={b[1] * imgH}
+                  <polyline
+                    points={measurePts.map(([x, y]) => `${x * imgW},${y * imgH}`).join(' ')}
+                    fill="none"
                     stroke={GOLD}
                     strokeWidth={chrome(2)}
                     strokeDasharray={chromeDash('6 4')}
                   />
-                  <g transform={`translate(${midX.toFixed(1)},${(midY - worldPx(16)).toFixed(1)}) scale(${(1 / view.k).toFixed(3)})`}>
-                    <rect x={-38} y={-11} width={76} height={22} rx={11} fill="rgba(11,18,11,0.92)" stroke={GOLD} strokeWidth={1} />
-                    <text textAnchor="middle" dominantBaseline="central" fontSize={11} fontWeight={800} fill={GOLD}>
-                      {distM < 10 ? `${distM.toFixed(2)} m` : `${distM.toFixed(1)} m`}
-                    </text>
-                  </g>
+                  {/* Per-leg lengths. On a single leg this is the only pill and sits where the
+                      old two-point label always sat, so nothing changed for the common case. */}
+                  {legs.map((leg, i) => {
+                    const midX = ((leg.a[0] + leg.b[0]) / 2) * imgW;
+                    const midY = ((leg.a[1] + leg.b[1]) / 2) * imgH;
+                    return (
+                      <g
+                        key={`leg-${i}`}
+                        transform={`translate(${midX.toFixed(1)},${(midY - worldPx(16)).toFixed(1)}) scale(${(1 / view.k).toFixed(3)})`}
+                      >
+                        <rect x={-38} y={-11} width={76} height={22} rx={11} fill="rgba(11,18,11,0.92)" stroke={GOLD} strokeWidth={1} />
+                        <text textAnchor="middle" dominantBaseline="central" fontSize={11} fontWeight={800} fill={GOLD}>
+                          {fmt(leg.m)}
+                        </text>
+                      </g>
+                    );
+                  })}
+                  {/* Running total, once there is more than one leg to add up — the number you
+                      actually buy pipe or dig by. Anchored past the last point so it never sits
+                      on top of that leg's own label. */}
+                  {legs.length > 1 && (
+                    <g transform={`translate(${(last[0] * imgW).toFixed(1)},${(last[1] * imgH + worldPx(22)).toFixed(1)}) scale(${(1 / view.k).toFixed(3)})`}>
+                      <rect x={-52} y={-12} width={104} height={24} rx={12} fill={GOLD} stroke="rgba(11,18,11,0.92)" strokeWidth={1} />
+                      <text textAnchor="middle" dominantBaseline="central" fontSize={11.5} fontWeight={800} fill="#0B120B">
+                        {`total ${fmt(totalM)}`}
+                      </text>
+                    </g>
+                  )}
                 </>
               );
             })()}
@@ -4249,14 +4276,38 @@ export default function DesignCanvas({
             fontSize: 11.5,
             fontWeight: 600,
             lineHeight: 1.35,
-            pointerEvents: measurePts.length === 2 && onCalibrateScale ? 'auto' : 'none',
+            // Interactive as soon as there is anything to clear — the Start-over button lives here
+            // too now, not just the two-point calibration input.
+            pointerEvents: measurePts.length > 0 ? 'auto' : 'none',
             display: 'flex',
             alignItems: 'center',
             gap: 8,
             flexWrap: 'wrap',
           }}
         >
-          <span>{measurePts.length === 2 ? t('designCanvasMeasureAgain') : t('designCanvasMeasureHint')}</span>
+          <span>{measurePts.length >= 2 ? t('designCanvasMeasureAgain') : t('designCanvasMeasureHint')}</span>
+          {/* The path now grows without limit, so there has to be a way back to an empty ruler
+              that isn't "switch the whole tool off and on again". */}
+          {measurePts.length > 0 && (
+            <button
+              type="button"
+              onPointerDown={(e) => e.stopPropagation()}
+              onClick={() => setMeasurePts([])}
+              style={{
+                minHeight: 28,
+                padding: '3px 10px',
+                borderRadius: 999,
+                border: '1px solid rgba(251,246,236,0.45)',
+                background: 'transparent',
+                color: '#FBF6EC',
+                fontSize: 11.5,
+                fontWeight: 700,
+                cursor: 'pointer',
+              }}
+            >
+              {t('designCanvasMeasureClear')}
+            </button>
+          )}
           {measurePts.length === 2 && onCalibrateScale && (() => {
             const [a, b] = measurePts;
             const measuredM = Math.hypot((a[0] - b[0]) * imgW * mPerPx, (a[1] - b[1]) * imgH * mPerPx);
