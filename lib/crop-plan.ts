@@ -128,6 +128,23 @@ export function harvestMonth(sowMonth: number, days: number): number {
   return wrapMonth(sowMonth + offset);
 }
 
+/**
+ * Every calendar month a known planting occupies its bed: sowing through the
+ * end of the fresh-harvest window. A missing crop key or invalid sow month has
+ * no defensible occupancy, so returns no months rather than inventing one.
+ */
+export function occupiedMonthsForPlanting(
+  planting: Pick<Planting, 'cropKey' | 'sowMonth'>,
+): number[] {
+  const crop = cropByKey(planting.cropKey);
+  if (!crop || !Number.isInteger(planting.sowMonth) || planting.sowMonth < 1 || planting.sowMonth > 12) {
+    return [];
+  }
+  const maturityOffset = Math.max(1, Math.round(crop.daysToHarvest / 30));
+  const span = maturityOffset + (crop.harvestWindowMonths ?? 0) + 1;
+  return Array.from({ length: span }, (_, offset) => wrapMonth(planting.sowMonth + offset));
+}
+
 export interface CropTask {
   /** `${planting.id}:${action}` — stable across recomputation, since a single
    *  planting produces at most one task per action. Used by lib/task-board.ts
@@ -447,8 +464,9 @@ export function nextValidSowMonth(crop: CropDef, pattern: RainPattern, fromMonth
 
 /**
  * Seeds/seedlings bill-of-quantities: how many plants of each crop to buy or
- * raise, derived from the beds' real area and the catalog's own spacingCm —
- * no new inputs needed. Grouped by crop (successions of the same crop sum
+ * raise, derived from the beds' real area and the catalog's own row/in-row
+ * spacing where sourced, falling back to spacingCm otherwise — no new inputs
+ * needed. Grouped by crop (successions of the same crop sum
  * together); "already growing" plantings are excluded (nothing new to buy).
  * A +15% buffer on direct-sow seed counts covers the usual germination
  * losses — seedlings and vegetative propagation (slips/seed tubers, already
@@ -483,7 +501,9 @@ export function seedBoqForPlan(plantings: Planting[], beds: PlanBed[]): SeedBoqR
     const bed = beds.find((b) => b.id === p.bedId);
     if (!crop || !bed) continue;
     const areaM2 = bed.areaM2 * (p.areaFraction ?? 1);
-    const perPlantM2 = (crop.spacingCm / 100) ** 2;
+    const perPlantM2 = crop.rowSpacingCm !== undefined && crop.inRowSpacingCm !== undefined
+      ? (crop.rowSpacingCm / 100) * (crop.inRowSpacingCm / 100)
+      : (crop.spacingCm / 100) ** 2;
     const rawCount = areaM2 / perPlantM2;
     const needsBuffer = !crop.transplant && !PROPAGATION_UNIT[crop.key];
     const count = Math.max(1, Math.round(needsBuffer ? rawCount * SEED_GERMINATION_BUFFER : rawCount));
@@ -717,16 +737,9 @@ export function buildFieldUtilizationByMonth(plantings: Planting[], beds: PlanBe
     const bed = beds.find((b) => b.id === p.bedId);
     if (!crop || !bed) continue;
     const areaHere = bed.areaM2 * (p.areaFraction ?? 1);
-    const hMonth = harvestMonth(p.sowMonth, crop.daysToHarvest);
-    const hEnd = hMonth + (crop.harvestWindowMonths ?? 0);
-    const spanMonths = ((hEnd - p.sowMonth) % 12 + 12) % 12 + 1;
     let arr = perBed.get(bed.id);
     if (!arr) { arr = Array<number>(13).fill(0); perBed.set(bed.id, arr); }
-    let m = p.sowMonth;
-    for (let i = 0; i < spanMonths; i++) {
-      arr[m] += areaHere;
-      m = m === 12 ? 1 : m + 1;
-    }
+    for (const month of occupiedMonthsForPlanting(p)) arr[month] += areaHere;
   }
   const occupiedArea = Array<number>(13).fill(0);
   for (const bed of beds) {

@@ -307,6 +307,30 @@ test('every crop has complete, finite physical data without pinning agronomic va
   }
 });
 
+test('seed BOQ uses rectangular density when sourced and square density as the fallback', () => {
+  const rectangular = seedBoqForPlan([
+    { id: 'green-beans', bedId: BEDS[0].id, cropKey: 'green-beans', sowMonth: 10 },
+  ], BEDS).find((row) => row.cropKey === 'green-beans');
+  const fallback = seedBoqForPlan([
+    { id: 'pumpkin', bedId: BEDS[0].id, cropKey: 'pumpkin', sowMonth: 10 },
+  ], BEDS).find((row) => row.cropKey === 'pumpkin');
+
+  assert.ok(rectangular);
+  assert.equal(rectangular.count, 256, 'green beans must use 45cm × 8cm, plus the existing 15% buffer');
+  assert.ok(fallback);
+  assert.equal(fallback.count, 6, 'pumpkin has no row/in-row split and must keep its 120cm square fallback');
+});
+
+test('every sourced row/in-row spacing pair keeps in-row spacing no wider than row spacing', () => {
+  for (const crop of CROPS) {
+    if (crop.rowSpacingCm === undefined || crop.inRowSpacingCm === undefined) continue;
+    assert.ok(
+      crop.inRowSpacingCm <= crop.rowSpacingCm,
+      `${crop.key}: in-row spacing ${crop.inRowSpacingCm}cm exceeds row spacing ${crop.rowSpacingCm}cm`,
+    );
+  }
+});
+
 test('every rain-pattern window is a non-empty, unique calendar subset that clusters losslessly', () => {
   const patterns: RainPattern[] = ['summer', 'winter', 'all-year', 'mild-frost'];
 
