@@ -12,7 +12,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Eye, EyeOff, CopyCheck } from 'lucide-react';
 import type { CanvasFrame, DesignCanvasState, DetectSuggestion, GroundFeatureKind, LineShape, PlacedItem, ZoneShape } from '@/lib/design-canvas';
-import { newId, groundFillPolys, nearestPointOnRing, normaliseRotation, MIN_MAP_TEXT_SCALE, MAX_MAP_TEXT_SCALE, clampBaseOpacity, normaliseAreaFill, type AreaFillStyle } from '@/lib/design-canvas';
+import { newId, groundFillPolys, groundFeatureLayer, nearestPointOnRing, normaliseRotation, MIN_MAP_TEXT_SCALE, MAX_MAP_TEXT_SCALE, clampBaseOpacity, normaliseAreaFill, type AreaFillStyle } from '@/lib/design-canvas';
 import { layoutBedBlock, bedBlockPaths, bedBlockFootprintM, type BedBlockPlacement, type BedBlockSpec } from '@/lib/bed-block';
 import { layoutCanvasLabels, estimatePillWidth, groupSameLabelPills, isUsableCanvasLabelInput } from '@/lib/canvas-labels';
 import { ownedByCurrentStep } from '@/lib/glossy-filters';
@@ -2166,7 +2166,7 @@ export default function DesignCanvas({
     const id = selectedIds[0];
     const z = state.zones.find((s2) => s2.id === id);
     if (z) {
-      const layerOn = z.feature ? activeLayers.ground : activeLayers.zones;
+      const layerOn = z.feature ? activeLayers[groundFeatureLayer(z.feature)] : activeLayers.zones;
       return layerOn && ownedByCurrentStep(state.step, { kind: 'zone', feature: z.feature }) ? id : null;
     }
     const l = state.lines.find((s2) => s2.id === id);
@@ -2580,7 +2580,7 @@ export default function DesignCanvas({
             // the plant pills) pushes them apart; a farmer who drags a label still wins, because
             // their labelDx/labelDy is applied on top of the auto position.
             const auto = groundLabelOffsets.get(z.id) ?? 0;
-            if (z.feature ? !activeLayers.ground : !activeLayers.zones) return null;
+            if (z.feature ? !activeLayers[groundFeatureLayer(z.feature)] : !activeLayers.zones) return null;
             // Not owned by the current wizard step (e.g. the boundary while on Zones) — still
             // rendered for context, but locked: dimmed, and its own hit-targets inert (see
             // ownedByCurrentStep + the startDrag* guards above). `interactive` additionally

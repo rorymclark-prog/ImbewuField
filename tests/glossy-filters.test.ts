@@ -15,6 +15,7 @@ import {
   type GlossyLayerFilter,
 } from '../lib/glossy-filters.ts';
 import { ELEMENT_CATALOG, ELEMENTS_BY_ID, biomeClimates, elementVisibleInPalette } from '../lib/design-elements.ts';
+import { groundFeatureLayer } from '../lib/design-canvas.ts';
 import type { DesignCanvasState, GroundFeatureKind, ZoneShape } from '../lib/design-canvas.ts';
 import type { MapRefLayers } from '../lib/base-layers.ts';
 import { waterRouteStyleFor } from '../lib/water-cartography.ts';
@@ -384,6 +385,33 @@ test('every OTHER ground feature stays Base-owned — the staple_garden fix must
   for (const feature of recordedOnSite) {
     assert.equal(ownedByCurrentStep('base', { kind: 'zone', feature }), true, `${feature} must stay Base-owned`);
     assert.equal(ownedByCurrentStep('planting', { kind: 'zone', feature }), false, `${feature} must not become Planting-owned`);
+  }
+});
+
+// ── The LAYER-VISIBILITY twin of the ownership answer above ─────────────────────────────────────
+//
+// Two systems ask "whose ring is this": the wizard step (ownedByCurrentStep, above) and the Layers
+// panel (groundFeatureLayer). The staple_garden fix landed in the first and not the second, so the
+// polygons were interactive on Planting but answered the EXISTING switch — turning Planting off
+// left the maize standing next to hidden beds and trees. Rory: "strange staple crop polygons are
+// not connected to the plant layer". These two tests are deliberately adjacent to the ownership
+// pair above so the next feature added to GroundFeatureKind has to answer both questions at once.
+
+test('staple_garden rides the Planting layer switch, every other ground feature rides Existing', () => {
+  assert.equal(groundFeatureLayer('staple_garden'), 'planting');
+  const recordedOnSite: GroundFeatureKind[] = ['house', 'patio', 'driveway', 'lawn', 'veg_garden', 'orchard', 'cleared', 'terrace_bank', 'boundary'];
+  for (const feature of recordedOnSite) {
+    assert.equal(groundFeatureLayer(feature), 'ground', `${feature} must stay on the Existing switch`);
+  }
+});
+
+test('the layer switch and the owning step agree for every ground feature', () => {
+  const features: GroundFeatureKind[] = ['house', 'patio', 'driveway', 'lawn', 'veg_garden', 'orchard', 'cleared', 'terrace_bank', 'boundary', 'staple_garden'];
+  for (const feature of features) {
+    // A ring the Planting step owns must be switched by Planting; a ring Base owns must be
+    // switched by Existing. Disagreement is the shape of the bug this pair exists to catch.
+    const step = ownedByCurrentStep('planting', { kind: 'zone', feature }) ? 'planting' : 'ground';
+    assert.equal(groundFeatureLayer(feature), step, `${feature}: layer switch and owning step disagree`);
   }
 });
 

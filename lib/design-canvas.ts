@@ -136,6 +136,24 @@ export type GroundFeatureKind =
   // footprints) models correctly.
   | 'staple_garden';
 
+/**
+ * Which Layers-panel switch a traced ground ring rides on.
+ *
+ * Everything a farmer RECORDS — the house, the driveway, the lawn that was already there — is
+ * reference context and belongs to "Existing". The staple garden is the one ground feature they
+ * DESIGN, so it belongs to Planting: a quarter-hectare of mielies is the farm's main food crop,
+ * and turning the planting off must take it with the rest of the planting. Rory: "strange staple
+ * crop polygons are not connected to the plant layer" — they answered the Existing switch, next
+ * to the beds and trees that answered Planting.
+ *
+ * This is the layer-visibility twin of the ownership answer ownedByCurrentStep gives the wizard
+ * step (lib/glossy-filters.ts). Both questions are "whose is this ring", asked by two different
+ * systems, so they must agree; fixing one and not the other is what left this half-done.
+ */
+export function groundFeatureLayer(feature: GroundFeatureKind): 'ground' | 'planting' {
+  return feature === 'staple_garden' ? 'planting' : 'ground';
+}
+
 export interface ZoneShape {
   id: string;
   zone: 0 | 1 | 2 | 3 | 4 | 5;
