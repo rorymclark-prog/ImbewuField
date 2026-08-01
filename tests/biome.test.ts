@@ -286,3 +286,16 @@ test('biomeClimates reads NAMES and species-catalog reads KEYS — they are not 
   assert.equal(elementSuitsClimate('tree_apple', biomeClimates('IOCB')), true,
     'this is the silent failure: an unrecognised biome shows every tree');
 });
+
+test('the design catalog index preserves every unique placeable definition', async () => {
+  const { ELEMENT_CATALOG, ELEMENTS_BY_ID } = await import('../lib/design-elements.ts');
+  const ids = ELEMENT_CATALOG.map((def) => def.id);
+  assert.ok(ids.length > 0);
+  assert.equal(new Set(ids).size, ids.length, 'duplicate ids would overwrite a catalog entry');
+
+  for (const def of ELEMENT_CATALOG) {
+    assert.equal(ELEMENTS_BY_ID[def.id], def, `${def.id} must resolve to its catalog definition`);
+    assert.ok(def.wM > 0 && def.hM > 0, `${def.id} must have a drawable footprint`);
+    if (def.shape === 'circle') assert.equal(def.wM, def.hM, `${def.id} circle must be square`);
+  }
+});

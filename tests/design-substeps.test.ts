@@ -122,6 +122,40 @@ test('every live bed the catalog offers satisfies the vegetable-bed task', () =>
   }
 });
 
+test('the crop-planner bridge ignores non-beds and preserves placement order and size overrides', async () => {
+  const { bedsFromDesignCanvas } = await import('../lib/design-beds-bridge.ts');
+  const veg = ELEMENTS_BY_ID.veg_bed;
+  const state = canvas();
+  state.items.push(
+    { id: 'tank', defId: 'jojo_1000', x: 0.1, y: 0.1 },
+    { id: 'bed-1', defId: 'raised_bed', x: 0.2, y: 0.2, label: 'Kitchen bed', wM: 1.234, hM: 2.345 },
+    { id: 'bed-2', defId: 'veg_bed', x: 0.3, y: 0.3 },
+  );
+
+  assert.deepEqual(bedsFromDesignCanvas(state), [
+    { id: 'bed-1', label: 'Kitchen bed', areaM2: 2.9, minDimM: 1.234 },
+    { id: 'bed-2', label: 'Bed 2', areaM2: Math.round(veg.wM * veg.hM * 10) / 10, minDimM: Math.min(veg.wM, veg.hM) },
+  ]);
+  assert.deepEqual(bedsFromDesignCanvas(null), []);
+});
+
+test('the tree bridge groups shade-casting growing and earthworks choices in first-placement order', async () => {
+  const { treesFromDesignCanvas } = await import('../lib/design-beds-bridge.ts');
+  const state = canvas();
+  state.items.push(
+    { id: 'banana', defId: 'banana_circle', x: 0.1, y: 0.1 },
+    { id: 'citrus-1', defId: 'tree_citrus', x: 0.2, y: 0.2 },
+    { id: 'shed', defId: 'storage_shed', x: 0.3, y: 0.3 },
+    { id: 'citrus-2', defId: 'tree_citrus', x: 0.4, y: 0.4 },
+  );
+
+  assert.deepEqual(treesFromDesignCanvas(state), [
+    { defId: 'banana_circle', name: ELEMENTS_BY_ID.banana_circle.name, count: 1 },
+    { defId: 'tree_citrus', name: ELEMENTS_BY_ID.tree_citrus.name, count: 2 },
+  ]);
+  assert.deepEqual(treesFromDesignCanvas(null), []);
+});
+
 test('tree completion recognises current choices and retained legacy trees', () => {
   const task = stepById('plant-trees');
   const treeIds = ELEMENT_CATALOG

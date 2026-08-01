@@ -185,6 +185,23 @@ test('every catalog element and every buildable line is assigned to exactly one 
   assert.equal(new Set(assigned).size, assigned.length);
 });
 
+test('every earthworks catalog element has an intentional build phase', () => {
+  const earthworks = Object.values(ELEMENTS_BY_ID).filter((def) => def.category === 'earthworks');
+  assert.ok(earthworks.length > 0);
+
+  const handBuiltWithBeds = new Set(['raised_bed', 'keyhole_bed', 'herb_spiral', 'banana_circle']);
+  for (const def of earthworks) {
+    const phase = buildPhasePlan(state([item(`earth-${def.id}`, def.id)]), NO_REFS).phases
+      .find((entry) => entry.itemIds.includes(`earth-${def.id}`));
+    assert.ok(phase, `${def.id} must be assigned to a phase`);
+    assert.equal(
+      phase.key,
+      handBuiltWithBeds.has(def.id) ? 'beds' : 'earthworks',
+      `${def.id} must stay with the work it represents`,
+    );
+  }
+});
+
 test('phase output is independent of placement order and never mutates the saved design', () => {
   const design = completeDesign();
   const before = structuredClone(design);

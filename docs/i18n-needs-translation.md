@@ -72,6 +72,8 @@ Interactive canvas:
 `designCanvasShowBase`, `designCanvasBaseShown`, `designCanvasBaseHidden`,
 `designCanvasSectorOn`, `designCanvasShowSector`, `designCanvasSectorShown`,
 `designCanvasSectorHidden`, `designCanvasMultiOn`, `designCanvasSelectMultiple`,
+`designCanvasShowPhoto`, `designCanvasShowSatellite`, `designCanvasPhotoShown`,
+`designCanvasPhotoHidden`,
 `designCanvasSelectingMultiple`, `designCanvasCancel`, `designCanvasPoint`,
 `designCanvasFinish`, `designCanvasLine`, `designCanvasZone`, `designCanvasClose`,
 `designCanvasTidy`, `designCanvasSnap`, `designCanvasCleanup`,

@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
-import { deriveSectorModel } from '../lib/sector.ts';
+import { bearingToUnitVector, deriveSectorModel, labelToBearing } from '../lib/sector.ts';
 import { presentSectorCartography, sectorEvidenceSummary, SECTOR_STYLES, sectorFillColor, sectorStrokeWidth } from '../lib/sector-cartography.ts';
 import { contourIntervalForFrame } from '../lib/contours.ts';
 import { makeMercatorUnprojector } from '../lib/design-canvas.ts';
@@ -172,6 +172,26 @@ test('preserves mixed midday truth as two exact cardinal bearings', () => {
   const midday = presentSectorCartography(model).find((item) => item.key === 'midday-sun');
   assert.equal(midday?.label, 'Midday sun — mixed');
   assert.deepEqual(midday?.bearings, [0, 180]);
+});
+
+test('sector compass parsing is tolerant of presentation casing and whitespace', () => {
+  assert.equal(labelToBearing(' nne '), 22.5);
+  assert.equal(labelToBearing('W'), 270);
+  assert.equal(labelToBearing('not-a-compass-point'), null);
+  assert.equal(labelToBearing(null), null);
+});
+
+test('sector bearings use the shared screen convention', () => {
+  const north = bearingToUnitVector(0);
+  const east = bearingToUnitVector(90);
+  const south = bearingToUnitVector(180);
+  const west = bearingToUnitVector(270);
+  const close = (actual: number, expected: number) => assert.ok(Math.abs(actual - expected) < 1e-10);
+
+  close(north[0], 0); close(north[1], -1);
+  close(east[0], 1); close(east[1], 0);
+  close(south[0], 0); close(south[1], 1);
+  close(west[0], -1); close(west[1], 0);
 });
 
 test('converts sector presentation tokens into phone-readable drawing values', () => {
