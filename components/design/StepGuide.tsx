@@ -37,6 +37,9 @@ const STEP_ACCENT: Record<WizardStep, string> = {
   base: '#6B6355',
   sector: '#C07A1E', // sun gold/ochre — the "read the land's energies" step
   water: '#3E8FBF',
+  // Earth brown, deliberately NOT the water blue — the whole point of the split is that a swale
+  // you dig reads differently from a pipe you plumb (see FILTER_THEME 'earthworks').
+  earthworks: '#A9743F',
   zones: '#C07A1E',
   planting: '#2F7A4A',
   structures: '#7A5C3E',

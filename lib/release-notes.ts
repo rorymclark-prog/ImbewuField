@@ -20,8 +20,11 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '1 August',
     changes: [
+      'NEW: Earthworks is its own step — swales, berms and terraces have their own place',
       'NEW: a Staple garden — mielies, beans and pumpkin grow there on the AI maps',
+      'Earthworks 05 prints the Earthworks sheet, not the masterplan',
       'Preview map opens with all nine sheets, so Earthworks is one tap away',
+      'Zone numbers stop landing on top of each other, and stay where you drag them',
       'Pick a tree species and it goes down as a tree, not a square',
       'The winter sun path is drawn at its real angle, with a sun at each end',
       'Vegetable beds on the AI maps grow vegetables instead of turning into a hedge',

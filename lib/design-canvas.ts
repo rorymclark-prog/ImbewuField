@@ -216,7 +216,14 @@ export interface LineShape {
   labelDy?: number;
 }
 
-export type WizardStep = 'base' | 'sector' | 'water' | 'zones' | 'planting' | 'structures' | 'review' | 'glossy';
+// 'earthworks' is the land-shaping step: swales, berms, terraces, half-moons, banks. It was
+// drawn on the Water step for a long time, on the reasoning that a swale is a water structure.
+// It is — but it is also the one thing on the farm you dig with a machine, on contour, before
+// anything else gets built, and it has had its OWN plan sheet (05) since Water was split. Having
+// a sheet with no step behind it is what made it unreachable: the step→sheet map could only ever
+// hand the preview 'water', so a farmer who had just dug swales previewed Water and did not find
+// them. Rory: "earthworks still doesnt have it own layer".
+export type WizardStep = 'base' | 'sector' | 'water' | 'earthworks' | 'zones' | 'planting' | 'structures' | 'review' | 'glossy';
 
 // A farmer's own uploaded (drone/aerial) photo of their site, used as the Studio's base image
 // INSTEAD of the fetched satellite tile. Deliberately just a small Storage download URL + the
@@ -1005,7 +1012,7 @@ const keyFor = (
   ? activeAccountLocalStorageKey(baseKeyFor(siteId))
   : accountLocalStorageKey(baseKeyFor(siteId), ownerUid);
 const CANVAS_STEPS = new Set<WizardStep>([
-  'base', 'sector', 'water', 'zones', 'planting', 'structures', 'review', 'glossy',
+  'base', 'sector', 'water', 'earthworks', 'zones', 'planting', 'structures', 'review', 'glossy',
 ]);
 function canvasRecord(value: unknown): value is Record<string, unknown> {
   return !!value && typeof value === 'object' && !Array.isArray(value);

@@ -37,6 +37,18 @@ export const DESIGN_STEP_LESSONS: Record<Exclude<WizardStep, 'glossy'>, StepLess
     tip: 'Place a tank within 3 m of a roof downpipe. Every 10 mm of rain on a 100 m² roof gives you about 1,000 litres.',
     courseModuleId: 'water-harvesting',
   },
+  // NEW with the Earthworks step (2026-08-01) — not from the 4.2 draft, which predates the
+  // split of land-shaping out of Water. Written from the same source as the step's own one-liner
+  // in lib/lesson-registry.ts ("Shape the land once, on contour, so water and soil stay where you
+  // put them"), and deliberately carrying no measurements: swale spacing and bank batter depend on
+  // slope, soil and rainfall, and this app does not invent agronomic numbers.
+  earthworks: {
+    title: 'Shape the land once',
+    body: "Earthworks are the slowest thing to undo, and the first thing a machine should do while it can still reach the ground: swales dug along the contour, berms built from what comes out of them, terraces and banks cut into a slope. Get the levels right and every rain afterwards works for you — water walks slowly across your land instead of running off it. Get them wrong and you have moved a great deal of soil into the wrong place.",
+    principle: 'Work with nature, not against it — follow the contour the land already has.',
+    tip: 'Set your levels along the contour before you dig, and plant the bank as soon as it is shaped — a bare berm is the first thing a big rain takes away.',
+    courseModuleId: 'water-harvesting',
+  },
   zones: {
     title: 'Put things where your feet already go',
     body: 'Zones plan your energy, not just your space. Things you visit every day — herbs, veg beds, chickens — belong nearest the kitchen door. Things you visit weekly or monthly go further out. This one idea cuts real walking time over a season, and keeps your most-tended plants where you will actually notice if they need water.',

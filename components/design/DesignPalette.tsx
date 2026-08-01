@@ -272,6 +272,13 @@ function categoriesForStep(step: WizardStep): DesignElementDef['category'][] | '
     case 'planting':
     case 'structures':
       return (Object.keys(CATEGORY_STEP) as DesignElementDef['category'][]).filter((c) => CATEGORY_STEP[c] === step);
+    // Earthworks has its own step now, but CATEGORY_STEP still says the earthworks CATEGORY is
+    // owned by Water — deliberately. Moving ownership would take the raised bed, keyhole bed,
+    // herb spiral, tree basin and greywater basin off the Water palette with it, and those are
+    // water tasks a farmer expects to find there. So this step ADDS the category rather than
+    // claiming it, the same way alsoSteps lets a Banana Circle appear under Planting.
+    case 'earthworks':
+      return ['earthworks'];
     case 'base':
     case 'zones':
     case 'review':

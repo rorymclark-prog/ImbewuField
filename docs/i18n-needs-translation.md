@@ -9,6 +9,7 @@ review by a fluent speaker who understands the farming context.
 - `designStepBase`
 - `designStepSector`
 - `designStepWater`
+- `designStepEarthworks`
 - `designStepZones`
 - `designStepPlanting`
 - `designStepStructures`
@@ -17,6 +18,7 @@ review by a fluent speaker who understands the farming context.
 - `designGuidanceBase`
 - `designGuidanceSector`
 - `designGuidanceWater`
+- `designGuidanceEarthworks`
 - `designGuidanceZones`
 - `designGuidancePlanting`
 - `designGuidanceStructures`

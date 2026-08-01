@@ -305,6 +305,11 @@ function applyStepFocus(step: WizardStep): StepFocus {
       return { ...on([]), sector: true, baseMap: true };
     case 'water':
       return on(['water', 'earthworks']);
+    // Earthworks focuses its own layer. Water keeps 'earthworks' on as well, because the Water
+    // palette still offers earthworks chips (categoriesForStep) and a step must never switch off
+    // the layer its own chips draw onto — see the PLACE-THEN-VANISH GUARD above.
+    case 'earthworks':
+      return on(['earthworks']);
     case 'zones':
       return on(['zones']);
     case 'planting':
@@ -2840,6 +2845,8 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
                 setPreviewFilter(
                   canvasState.step === 'water'
                     ? 'water'
+                    : canvasState.step === 'earthworks'
+                    ? 'earthworks'
                     : canvasState.step === 'zones'
                       ? 'zones'
                       : canvasState.step === 'planting'

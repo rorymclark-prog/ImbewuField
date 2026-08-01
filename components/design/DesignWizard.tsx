@@ -41,7 +41,10 @@ interface DesignWizardProps {
   mode?: DesignMode;
 }
 
-export const STEP_ORDER: WizardStep[] = ['base', 'sector', 'water', 'zones', 'planting', 'structures', 'review', 'glossy'];
+// Earthworks sits directly after Water: you decide where the water goes, then you shape the
+// ground that holds it — which is also the order the phasing engine builds in (lib/phasing:
+// Climate → Landform → Water → Access → Earthworks).
+export const STEP_ORDER: WizardStep[] = ['base', 'sector', 'water', 'earthworks', 'zones', 'planting', 'structures', 'review', 'glossy'];
 
 // app/design still imports this compatibility map. Its English now comes from the same dictionary
 // keys as the translated wizard rather than a second hard-coded source.
@@ -62,6 +65,13 @@ function stepHasContent(step: WizardStep, state: DesignCanvasState, refLayersPre
         return cat === 'water' || cat === 'earthworks';
       }) ||
         state.lines.some((l) => l.kind === 'swale' || l.kind === 'pipe' || l.kind === 'drip');
+    case 'earthworks':
+      // The land-shaping content: swale lines, and the berm/terrace/half-moon that go with them.
+      // Deliberately NARROWER than the Water step's test above, which counts the whole earthworks
+      // category — a raised bed placed from Water must not make this step read as already done.
+      return state.lines.some((l) => l.kind === 'swale')
+        || state.items.some((it) => ['berm', 'terrace', 'half_moon'].includes(it.defId))
+        || state.zones.some((z) => z.feature === 'terrace_bank');
     case 'zones':
       return state.zones.length > 0;
     case 'planting':

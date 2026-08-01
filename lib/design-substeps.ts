@@ -210,6 +210,47 @@ export const STEP_SUBSTEPS: Record<Exclude<WizardStep, 'glossy' | 'review'>, Sub
       done: (s) => hasItem(s, ['pond_small', 'dam', 'greywater_basin', 'borehole']),
     },
   ],
+  // EARTHWORKS — the land-shaping step, split out of Water (2026-08-01). Water decides where the
+  // water goes; this decides the shape of the ground that holds it. The swale task appears on
+  // BOTH steps on purpose: it is the one earthwork every water plan needs, and both checklists
+  // read the same saved state, so doing it in either place ticks it off in both.
+  earthworks: [
+    {
+      id: 'earth-swale',
+      title: 'Draw swale lines across the slope',
+      instruction: 'Draw a line ACROSS the slope (on contour), not down it, so rain sinks in. Turn Contours on in Layers to see the lines to follow.',
+      where: 'Along the hillside, level end to end — above your beds and trees.',
+      arm: { kind: 'line', lineKind: 'swale' },
+      done: (s) => hasLine(s, ['swale']),
+    },
+    {
+      id: 'earth-berm',
+      title: 'Build the berm on the downhill side',
+      instruction: 'The soil you dig out of a swale goes on its downhill lip. Place a berm there, then plant it.',
+      where: 'Directly below each swale — never above it.',
+      arm: { kind: 'place', defId: 'berm' },
+      optional: true,
+      done: (s) => hasItem(s, ['berm']),
+    },
+    {
+      id: 'earth-terrace',
+      title: 'Terrace the steep ground',
+      instruction: 'On a slope too steep to plant across, cut level platforms with a bank between them.',
+      where: 'The steepest part of your land, where soil washes away now.',
+      arm: { kind: 'place', defId: 'terrace' },
+      optional: true,
+      done: (s) => hasItem(s, ['terrace']) || hasFeature(s, ['terrace_bank']),
+    },
+    {
+      id: 'earth-halfmoon',
+      title: 'Add half-moons for single trees',
+      instruction: 'A half-moon is a small crescent bank that catches runoff for one tree. Good where a full swale is more digging than you need.',
+      where: 'Uphill of a tree you want to keep alive through the dry season.',
+      arm: { kind: 'place', defId: 'half_moon' },
+      optional: true,
+      done: (s) => hasItem(s, ['half_moon']),
+    },
+  ],
   zones: [
     {
       id: 'zone-1',

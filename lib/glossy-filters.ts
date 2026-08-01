@@ -578,9 +578,16 @@ export function ownedByCurrentStep(
       if (subject.feature === 'staple_garden') return step === 'planting';
       return step === 'base';
     case 'line':
-      if (step !== 'water' && step !== 'planting' && step !== 'structures') return false;
+      // 'earthworks' is a step AND a sheet filter, and lineInFilter already files a swale under
+      // it — so a swale is editable from the step that exists to dig it, as well as from Water.
+      if (step !== 'water' && step !== 'earthworks' && step !== 'planting' && step !== 'structures') return false;
       return lineInFilter(subject.lineKind, step);
     case 'item':
+      // The Earthworks step OFFERS the earthworks category without owning it in CATEGORY_STEP
+      // (see categoriesForStep) — so it must claim editing rights explicitly, or every berm and
+      // terrace would render dimmed and untouchable on the step that placed it. That is the
+      // place-then-vanish bug this function's comments below already document twice.
+      if (step === 'earthworks') return subject.category === 'earthworks';
       if (step !== 'water' && step !== 'planting' && step !== 'structures') return false;
       // NOT sheetForElement — that answers "which OUTPUT SHEET does this print on", a different
       // question. A raised bed/keyhole bed/herb spiral/tree basin is category 'earthworks'
