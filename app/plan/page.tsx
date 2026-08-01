@@ -9,6 +9,7 @@ import BackButton from '@/components/BackButton';
 import { Leaf, Plus, Trash2, Minus, Sun, CloudRain, Snowflake, Sprout, CalendarCheck } from 'lucide-react';
 import LessonLink from '@/components/design/LessonLink';
 import { activeAccountLocalStorageKey } from '@/lib/account-local-storage';
+import { cropByKey, type CropDef } from '@/lib/crop-catalog';
 
 type Season = 'Summer' | 'Autumn' | 'Winter' | 'Spring';
 type Suitability = 'best' | 'soon' | 'off';
@@ -40,30 +41,66 @@ const CROP_SEASONS: Record<string, Season[]> = {
   'Swiss chard': ['Summer', 'Winter', 'Spring', 'Autumn'],
 };
 
-// Rough smallholder yield per standard bed (~1.2 m × 8 m ≈ 9.6 m²), used to
-// project plant counts and harvest weight from a bed count. Quantity flows on to
-// expected yield → finances, and seed/seedling counts → bill of quantities.
-const CROP_YIELD: Record<string, { plantsPerBed: number; kgPerBed: number }> = {
-  Spinach:        { plantsPerBed: 60,  kgPerBed: 30 },
-  Kale:           { plantsPerBed: 24,  kgPerBed: 36 },
-  Lettuce:        { plantsPerBed: 40,  kgPerBed: 20 },
-  Carrots:        { plantsPerBed: 200, kgPerBed: 30 },
-  Beetroot:       { plantsPerBed: 80,  kgPerBed: 24 },
-  Peas:           { plantsPerBed: 60,  kgPerBed: 12 },
-  Garlic:         { plantsPerBed: 100, kgPerBed: 10 },
-  Broccoli:       { plantsPerBed: 20,  kgPerBed: 16 },
-  'Sweet potato': { plantsPerBed: 30,  kgPerBed: 45 },
-  Tomatoes:       { plantsPerBed: 18,  kgPerBed: 54 },
-  Maize:          { plantsPerBed: 60,  kgPerBed: 24 },
-  Beans:          { plantsPerBed: 80,  kgPerBed: 16 },
-  Butternut:      { plantsPerBed: 8,   kgPerBed: 40 },
-  Peppers:        { plantsPerBed: 24,  kgPerBed: 24 },
-  Cucumber:       { plantsPerBed: 16,  kgPerBed: 32 },
-  Pumpkin:        { plantsPerBed: 6,   kgPerBed: 48 },
-  'Swiss chard':  { plantsPerBed: 40,  kgPerBed: 28 },
+// YIELD AND PLANT COUNTS COME FROM THE SOURCED CATALOG — not a second table.
+//
+// This page used to carry its own hardcoded kgPerBed/plantsPerBed figures. Every one of them
+// over-promised against lib/crop-catalog.ts, whose numbers carry per-crop citations: maize said
+// 24 kg a bed where the sourced figure gives 2.9 (8.3x), pumpkin 3.3x, green beans 2.8x, sweet
+// potato 2.3x. Not one crop under-promised. A farmer plans their food security on this screen, so
+// two rival answers to "how much will I get" is not a tidiness problem.
+//
+// The bed size below was already this page's own stated assumption; it is now used rather than
+// baked into a table, and it is shown to the farmer instead of being a comment.
+const BED_AREA_M2 = 9.6; // a standard smallholder bed, ~1.2 m x 8 m
+
+// The page speaks in display names; the catalog is keyed. Names map to catalog KEYS, never to
+// free text, so a renamed crop breaks the build instead of silently falling back to a default.
+// ('Spinach' is South African usage for Swiss chard, hence the shared key.)
+const CATALOG_KEY_FOR_CROP: Record<string, string> = {
+  Spinach: 'swiss-chard',
+  Kale: 'kale',
+  Lettuce: 'lettuce',
+  Carrots: 'carrots',
+  Beetroot: 'beetroot',
+  Peas: 'peas',
+  Garlic: 'garlic',
+  Broccoli: 'broccoli',
+  'Sweet potato': 'sweet-potato',
+  Tomatoes: 'tomatoes',
+  Maize: 'maize',
+  Beans: 'green-beans',
+  Butternut: 'butternut',
+  Peppers: 'peppers',
+  Cucumber: 'cucumber',
+  Pumpkin: 'pumpkin',
+  'Swiss chard': 'swiss-chard',
 };
-const DEFAULT_YIELD = { plantsPerBed: 40, kgPerBed: 25 };
-const yieldFor = (crop: string) => CROP_YIELD[crop] ?? DEFAULT_YIELD;
+
+// Same density rule the seed BOQ uses (lib/crop-plan.ts seedBoqForPlan): the sourced rectangular
+// row x in-row split where the catalog has one, the single spacing figure squared where it does
+// not. Kept identical deliberately — a farmer must not be told one plant count here and another
+// on the bill of quantities.
+function plantsPerBedFor(crop: CropDef): number {
+  const perPlantM2 = crop.rowSpacingCm !== undefined && crop.inRowSpacingCm !== undefined
+    ? (crop.rowSpacingCm / 100) * (crop.inRowSpacingCm / 100)
+    : (crop.spacingCm / 100) ** 2;
+  return Math.max(1, Math.round(BED_AREA_M2 / perPlantM2));
+}
+
+const yieldFor = (crop: string) => {
+  const key = CATALOG_KEY_FOR_CROP[crop];
+  const def = key ? cropByKey(key) : undefined;
+  // NO CATALOG ENTRY MEANS NO NUMBER. The previous code fell back to an invented
+  // flat 40 plants and 25 kg a bed for anything unmapped — figures with no source at all, shown
+  // to a farmer as an estimate.
+  // Zeroes are honest and unreachable in practice: a test asserts every crop this page offers has
+  // a mapping, so an unmapped crop fails the suite rather than quietly inventing a harvest.
+  if (!def) return { plantsPerBed: 0, kgPerBed: 0 };
+  return {
+    plantsPerBed: plantsPerBedFor(def),
+    kgPerBed: Math.round(def.yieldKgPerM2 * BED_AREA_M2 * 10) / 10,
+  };
+};
 
 const NEXT_SEASON: Record<Season, Season> = {
   Winter: 'Spring', Spring: 'Summer', Summer: 'Autumn', Autumn: 'Winter',

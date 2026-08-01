@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import test from 'node:test';
 
 import {
@@ -319,6 +320,39 @@ test('seed BOQ uses rectangular density when sourced and square density as the f
   assert.equal(rectangular.count, 256, 'green beans must use 45cm × 8cm, plus the existing 15% buffer');
   assert.ok(fallback);
   assert.equal(fallback.count, 6, 'pumpkin has no row/in-row split and must keep its 120cm square fallback');
+});
+
+test('no page carries its own rival yield table — the sourced catalog is the only answer', () => {
+  // /plan used to hold hardcoded kgPerBed figures that over-promised against the cited catalog on
+  // EVERY crop: maize 8.3x, pumpkin 3.3x, green beans 2.8x. A farmer plans food security on that
+  // screen. Two rival answers to "how much will I get" is a correctness problem, not tidiness.
+  for (const page of ['../app/plan/page.tsx', '../app/calendar/page.tsx']) {
+    const source = readFileSync(new URL(page, import.meta.url), 'utf8');
+    // The defect is a per-crop RECORD of literal yields, not any mention of the field — a single
+    // derived value and an honest zero fallback are fine, and the point is that no page keeps its
+    // own table to drift from the catalog.
+    assert.doesNotMatch(
+      source,
+      /Record<string,\s*\{[^}]*kgPerBed/,
+      `${page} must derive yield from lib/crop-catalog.ts, not a literal per-crop yield table`,
+    );
+    const literalYields = [...source.matchAll(/kgPerBed:\s*[1-9]/g)].length;
+    assert.equal(literalYields, 0, `${page} still has ${literalYields} hardcoded kgPerBed figures`);
+  }
+
+  // Every crop the planner OFFERS must map to a catalog key, or yieldFor returns zeroes. This is
+  // what makes the honest no-invented-number fallback safe to leave in place.
+  const planSource = readFileSync(new URL('../app/plan/page.tsx', import.meta.url), 'utf8');
+  const offered = [...planSource.matchAll(/^\s{2}'?([A-Z][A-Za-z ]*?)'?:\s*\['(?:Winter|Summer|Spring|Autumn)/gm)]
+    .map((m) => m[1].trim());
+  assert.ok(offered.length > 10, 'expected to find the planner\'s crop list');
+  const mapped = planSource.slice(planSource.indexOf('CATALOG_KEY_FOR_CROP'));
+  for (const crop of offered) {
+    assert.ok(
+      mapped.includes(`'${crop}'`) || new RegExp(`\\n  ${crop}:`).test(mapped),
+      `${crop} is offered by the planner but has no catalog key — it would show a zero harvest`,
+    );
+  }
 });
 
 test('every sourced row/in-row spacing pair keeps in-row spacing no wider than row spacing', () => {
