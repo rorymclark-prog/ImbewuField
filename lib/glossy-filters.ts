@@ -485,6 +485,17 @@ function exactLegendRingArea(points: Array<[number, number]>): number {
   return Math.abs(area / 2);
 }
 
+function legendGroupsFromRings(rings: DesignCanvasState['zones']): ExactGroundLegendGroup[] {
+  return rings
+    .sort((left, right) => exactLegendRingArea(right.points) - exactLegendRingArea(left.points))
+    .map((zone) => ({
+      text: zone.name ?? GROUND_FEATURES[zone.feature!].label,
+      color: GROUND_FEATURES[zone.feature!].color,
+      feature: zone.feature!,
+    }))
+    .filter((row, index, all) => all.findIndex((candidate) => candidate.text === row.text) === index);
+}
+
 /** Named ground rows shared by the prompt fabric channel and the exact legend. Context callers may
  * request `all` to name everything the model must preserve; only callers using the current sheet
  * key are entitled to print these as content rows. */
@@ -493,14 +504,49 @@ export function exactSheetGroundLegendGroups(
   refLayers: Pick<MapRefLayers, 'house' | 'driveway'> | undefined,
   sheet: GlossyLayerFilter,
 ): ExactGroundLegendGroup[] {
-  return groundContentRingsForSheet(state, refLayers, sheet)
-    .sort((left, right) => exactLegendRingArea(right.points) - exactLegendRingArea(left.points))
-    .map((zone) => ({
-      text: zone.name ?? GROUND_FEATURES[zone.feature!].label,
-      color: GROUND_FEATURES[zone.feature!].color,
-      feature: zone.feature!,
-    }))
-    .filter((row, index, all) => all.findIndex((candidate) => candidate.text === row.text) === index);
+  return legendGroupsFromRings(groundContentRingsForSheet(state, refLayers, sheet));
+}
+
+/**
+ * Ground rings that belong on the SITE/BASE sheet — "what's already here" — as distinct from a
+ * design-layer sheet's CONTENT under groundRegister.
+ *
+ * Those are not the same question, and conflating them is exactly the confusion Rory named: "we
+ * need to sort out once and for all the difference between existing and base map ... it will
+ * confuse rural farmers." buildBlueprintBaseMap had no sheet key of its own (GlossyLayerFilter has
+ * no 'base' member — Base isn't an AI-rendered design layer) and reused 'all' to mean "show every
+ * ground ring" — but 'all' means "the whole FINISHED DESIGN", and under that reading staple_garden
+ * reads as content too, because groundRegister resolves every non-boundary feature to 'content' on
+ * 'all'. That is how a plot the farmer has not planted yet, and will only design once they reach
+ * Planting, ended up printed as fact on the Site sheet's legend — "staple garden ... came under
+ * base map in map generation."
+ *
+ * The Base sheet's real question is narrower: only what a farmer RECORDS about the site as it
+ * exists TODAY, and staple_garden is the one ground feature that is DESIGNED, not recorded (see
+ * its own doc comment in lib/design-canvas.ts). ownedByCurrentStep('base', ...) already answers
+ * exactly that split — it is the wizard's own "which step may edit this" authority — so reusing it
+ * here means this answer can never drift from the one the canvas itself already enforces. */
+export function existingSiteGroundRings(
+  state: Pick<DesignCanvasState, 'zones'>,
+  refLayers: Pick<MapRefLayers, 'house' | 'driveway'> | undefined,
+): DesignCanvasState['zones'] {
+  const houseCovered = (refLayers?.house.length ?? 0) >= 3;
+  const drivewayCovered = (refLayers?.driveway.length ?? 0) >= 2;
+  return state.zones.filter((zone) => {
+    if (!zone.feature || zone.points.length < 3) return false;
+    if (zone.feature === 'house' && houseCovered) return false;
+    if (zone.feature === 'driveway' && drivewayCovered) return false;
+    return ownedByCurrentStep('base', { kind: 'zone', feature: zone.feature });
+  });
+}
+
+/** Legend-group twin of existingSiteGroundRings — same rows exactSheetGroundLegendGroups would
+ *  build, for the ring set the Base sheet is actually entitled to name. */
+export function existingSiteGroundLegendGroups(
+  state: Pick<DesignCanvasState, 'zones'>,
+  refLayers: Pick<MapRefLayers, 'house' | 'driveway'> | undefined,
+): ExactGroundLegendGroup[] {
+  return legendGroupsFromRings(existingSiteGroundRings(state, refLayers));
 }
 
 // How many REAL things the farmer has drawn on this layer. A layer map with zero content is always

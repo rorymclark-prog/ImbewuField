@@ -50,6 +50,8 @@ import {
   INTEGRATED_LEGEND_FAMILIES,
   exactSheetElementLegendGroups,
   exactSheetGroundLegendGroups,
+  existingSiteGroundRings,
+  existingSiteGroundLegendGroups,
   exactSheetLineLegendGroups,
   exactSheetZoneLegendGroups,
   REFERENCE_SHEET_LABEL,
@@ -66,6 +68,7 @@ import { referenceFeatureArtworkUrl } from '@/lib/reference-feature-art';
 import {
   balancedLegendColumnRanges,
   countedLegendText,
+  fitLegendFontSize,
   layoutLegendColumn,
   legendRowFontSize,
 } from '@/lib/sheet-legend-layout';
@@ -3497,10 +3500,20 @@ function groundLabelsForSheet(
   // labels to the right margin regardless of what else occupies that corner. Optional so every
   // OTHER caller (sheet 01, the AI-composite path) is unaffected.
   avoidTopRight?: { x0: number; y0: number; x1: number; y1: number },
+  // Overrides `filter`'s own selection with a caller-supplied ring set. The Base/Site sheet has no
+  // GlossyLayerFilter of its own to pass (it isn't an AI-rendered design layer) and needs a
+  // different question answered — see existingSiteGroundRings. Every other caller omits this and
+  // keeps today's groundRegister-based selection exactly as before.
+  ringsOverride?: DesignCanvasState['zones'],
+  // Fixed extra pills this sheet must print that are not Studio zones at all — the Base sheet's
+  // main-map house/driveway, whose real geometry lives in refLayers with no name attached (see
+  // authoritativeHouseFootprints). Laid out through the SAME left/right column algorithm as every
+  // ring pill below, so a farmer reads one consistent kind of label for "what's already here".
+  extraRows?: Array<{ id: string; text: string; cx: number; cy: number }>,
 ): ProducerLabel[] {
   const fs = 26, padX = 14, pillH = fs + 14;
-  const rings = groundContentRingsForSheet(state, refLayers, filter);
-  if (!rings.length) return [];
+  const rings = ringsOverride ?? groundContentRingsForSheet(state, refLayers, filter);
+  if (!rings.length && !extraRows?.length) return [];
   const rows = rings
     .sort((a, b) => ringArea(b.points) - ringArea(a.points))
     .map((z) => {
@@ -3529,7 +3542,14 @@ function groundLabelsForSheet(
     // One row per NAME: two lawns AT THE SAME LEVEL are one label, or the margin fills with
     // repeats — but the level suffix above means two lawns at different levels no longer share
     // a name, so this correctly keeps both.
-    .filter((r, i, all) => all.findIndex((o) => o.text === r.text) === i);
+    .filter((r, i, all) => all.findIndex((o) => o.text === r.text) === i)
+    .concat((extraRows ?? []).map((r) => ({
+      id: r.id,
+      text: r.text,
+      cx: r.cx,
+      cy: r.cy,
+      pw: Math.min(W - 28, padX * 2 + r.text.length * fs * 0.62),
+    })));
 
   // Same margin-column layout the producer labels use: pinned to the nearer side, pushed down only
   // as far as needed to clear the row above, so leaders cannot tangle.
@@ -5001,11 +5021,49 @@ export async function buildBlueprintBaseMap(
     : undefined;
   if (sourceStructures) ctx.drawImage(await loadImage(sourceStructures), 0, 0, W, H);
   drawBlueprintBoundary(ctx, renderRefLayers.boundary, px, py, W, renderState, renderFrame);
-  drawBlueprintLabelPills(ctx, groundLabelsForSheet(renderState, renderRefLayers, W, H, 'all'));
 
-  const legendRows: StyleLegendRow[] = groundRows(renderState, renderRefLayers, 'all').map((row) => ({
-    swatch: row.color,
-    text: row.label,
+  // THE SITE SHEET SHOWS "WHAT'S ALREADY HERE", NOTHING ELSE. Rory: "still more staple garden
+  // issues - it came under base map in map generation ... we need to sort out once and for all
+  // the difference between existing and base map." The old call passed filter 'all' — the
+  // GlossyLayerFilter meaning "the whole FINISHED DESIGN" — because this sheet has no filter of
+  // its own (it isn't an AI-rendered design layer). Under 'all' every ground feature reads as
+  // content, staple_garden included, so a plot the farmer has not even reached Planting to design
+  // yet printed on the Site sheet as if it were surveyed fact. existingSiteGroundRings answers the
+  // narrower, correct question via ownedByCurrentStep('base', ...) — the SAME authority the wizard
+  // itself already uses to decide what the Base step may edit — so this can never drift from it.
+  const baseRings = existingSiteGroundRings(renderState, renderRefLayers);
+
+  // A MAP MISSING ITS OWN HOUSE LABEL. The refLayers-sourced house/driveway (traced on the main
+  // map before the Studio, the common path — see authoritativeHouseFootprints) has always
+  // rendered as an outline only, with a legend swatch but no on-map callout — while a Studio-
+  // traced ground ring next to it (a Slab, a lawn) gets a proper pointer-and-pill. Rory: "you can
+  // see there is labels missing for house etc." Same words a Studio-traced house zone would
+  // receive (GROUND_FEATURES.house/driveway .label), so a farmer reads one consistent label
+  // regardless of which tool put the shape there.
+  const extraRows: Array<{ id: string; text: string; cx: number; cy: number }> = [];
+  if (renderRefLayers.house.length >= 3) {
+    const pts = renderRefLayers.house;
+    extraRows.push({
+      id: 'reflayer-house',
+      text: GROUND_FEATURES.house.label.toUpperCase(),
+      cx: (pts.reduce((s, p) => s + p[0], 0) / pts.length) * W,
+      cy: (pts.reduce((s, p) => s + p[1], 0) / pts.length) * H,
+    });
+  }
+  if (renderRefLayers.driveway.length >= 2) {
+    const pts = renderRefLayers.driveway;
+    extraRows.push({
+      id: 'reflayer-driveway',
+      text: GROUND_FEATURES.driveway.label.toUpperCase(),
+      cx: (pts.reduce((s, p) => s + p[0], 0) / pts.length) * W,
+      cy: (pts.reduce((s, p) => s + p[1], 0) / pts.length) * H,
+    });
+  }
+  drawBlueprintLabelPills(ctx, groundLabelsForSheet(renderState, renderRefLayers, W, H, 'all', undefined, baseRings, extraRows));
+
+  const legendRows: StyleLegendRow[] = existingSiteGroundLegendGroups(renderState, renderRefLayers).map((group) => ({
+    swatch: group.color,
+    text: group.text,
     kind: 'ground',
   }));
   if (renderRefLayers.house.length >= 3) {
@@ -7760,7 +7818,7 @@ async function composeStyleSheet(
   const footerTop = panelBottom - pad - footerBlockH;
   const availableRowsH = Math.max(1, footerTop - legendTop);
   const contentW = maxX - lx;
-  const desiredFs = legendRowFontSize(legendW, availableRowsH, rows.length);
+  const normalFs = legendRowFontSize(legendW, availableRowsH, rows.length);
   const baseSw = Math.round(legendW * 0.064);
   const columnGap = Math.max(10, Math.round(legendW * 0.025));
   const singleColumnTextGap = Math.round(legendW * 0.03);
@@ -7892,6 +7950,25 @@ async function composeStyleSheet(
       };
     });
   };
+
+  // The old pass started at a width-derived size and only counted DOWN. That made the panel's
+  // height irrelevant for a sparse Water legend: its rows occupied a small block, then the
+  // renderer justified the unused space into giant gaps. Measure the finished row blocks at each
+  // candidate size instead. Sparse legends stay in one column, so their extra height becomes type
+  // and icon size; a dense Planting inventory keeps the existing column search and its step-down.
+  const desiredFs = rows.length > 0 && rows.length <= 8
+    ? fitLegendFontSize(
+        (fontSize) => {
+          const candidate = planColumns(1, fontSize);
+          return candidate.length
+            ? Math.max(...candidate.map((column) => column.columnLayout.contentBottom))
+            : Number.POSITIVE_INFINITY;
+        },
+        availableRowsH,
+        Math.max(normalFs, Math.round(availableRowsH / rows.length)),
+        9,
+      )
+    : normalFs;
 
   let columnPlans: LegendColumnPlan[] = [];
   if (rows.length) {
@@ -10107,7 +10184,34 @@ export default function DesignGlossy({
       // Ground-feature label pills (patio, lawn, veg garden, ...) — same call buildBlueprintBaseMap
       // makes on the exact sheet. Without this the Hybrid result had no labels at all (adversarial
       // review, 2026-07-25, noted this as an acknowledged follow-up rather than a safety gap).
-      drawBlueprintLabelPills(ctx, groundLabelsForSheet(renderState, renderRefLayers, W, H, 'all'));
+      //
+      // existingSiteGroundRings + the refLayers house/driveway extraRows: the SAME existing-vs-
+      // design split buildBlueprintBaseMap now applies (Rory: "still more staple garden issues -
+      // it came under base map ... also labels missing for house"). Keeping this Hybrid sheet on
+      // the OLD 'all'-filter selection while the exact sheet used the new one would have put the
+      // two Site sheets back into disagreement — exactly the invariant this function's own comment
+      // below says must never happen.
+      const hybridBaseRings = existingSiteGroundRings(renderState, renderRefLayers);
+      const hybridExtraRows: Array<{ id: string; text: string; cx: number; cy: number }> = [];
+      if (renderRefLayers.house.length >= 3) {
+        const pts = renderRefLayers.house;
+        hybridExtraRows.push({
+          id: 'reflayer-house',
+          text: GROUND_FEATURES.house.label.toUpperCase(),
+          cx: (pts.reduce((s, p) => s + p[0], 0) / pts.length) * W,
+          cy: (pts.reduce((s, p) => s + p[1], 0) / pts.length) * H,
+        });
+      }
+      if (renderRefLayers.driveway.length >= 2) {
+        const pts = renderRefLayers.driveway;
+        hybridExtraRows.push({
+          id: 'reflayer-driveway',
+          text: GROUND_FEATURES.driveway.label.toUpperCase(),
+          cx: (pts.reduce((s, p) => s + p[0], 0) / pts.length) * W,
+          cy: (pts.reduce((s, p) => s + p[1], 0) / pts.length) * H,
+        });
+      }
+      drawBlueprintLabelPills(ctx, groundLabelsForSheet(renderState, renderRefLayers, W, H, 'all', undefined, hybridBaseRings, hybridExtraRows));
 
       // Title, legend, north arrow and scale — the other half of "our exact elements locked back on
       // top" that every other sheet's Hybrid mode already delivers. Same legend-row recipe as
@@ -10115,9 +10219,9 @@ export default function DesignGlossy({
       // ground features. styleLabel reflects the CHOSEN style (unlike the exact sheet, which is
       // always labelled "Reference Blueprint" since it has no style choice) — matching how every
       // other sheet's finishStyledSheet passes styleDef.label through to composeStyleSheet.
-      const legendRows: StyleLegendRow[] = groundRows(renderState, renderRefLayers, 'all').map((row) => ({
-        swatch: row.color,
-        text: row.label,
+      const legendRows: StyleLegendRow[] = existingSiteGroundLegendGroups(renderState, renderRefLayers).map((group) => ({
+        swatch: group.color,
+        text: group.text,
         kind: 'ground',
       }));
       if (renderRefLayers.house.length >= 3) {
