@@ -132,6 +132,9 @@ interface RenderJob {
   style: string;
   engine: string;
   provider?: 'openai' | 'gemini';
+  /** Absent on jobs written before the quality dial existed — read as 'high', which is what every
+   *  render used until then. Must stay optional: old docs in the queue have no such field. */
+  quality?: 'high' | 'medium' | 'low';
   sheets: RenderSheet[];
   status: string;
 }
@@ -213,13 +216,13 @@ async function openaiEdit(
     form.append('moderation', 'low'); // less-restrictive filter — fewer spurious refusals on aerial land photos
     // Storage path is historically named "composite.jpg"/input-*.jpg (harmless — GCS doesn't care about
     // extensions), but the actual bytes are PNG; label the Blob correctly for OpenAI.
-    form.append('image[]', new Blob([buf as unknown as BlobPart], { type: 'image/png' }), 'composite.png');
+    form.append('image[]', new Blob([buf as unknown as Uint8Array], { type: 'image/png' }), 'composite.png');
     if (styleReference) {
-      form.append('image[]', new Blob([styleReference as unknown as BlobPart], { type: 'image/jpeg' }), 'precision-atlas-style-reference.jpg');
+      form.append('image[]', new Blob([styleReference as unknown as Uint8Array], { type: 'image/jpeg' }), 'precision-atlas-style-reference.jpg');
     }
     if (maskB64) {
       const maskBuf = Buffer.from(maskB64, 'base64');
-      form.append('mask', new Blob([maskBuf as unknown as BlobPart], { type: 'image/png' }), 'mask.png');
+      form.append('mask', new Blob([maskBuf as unknown as Uint8Array], { type: 'image/png' }), 'mask.png');
     }
     res = await fetch('https://api.openai.com/v1/images/edits', {
       method: 'POST',

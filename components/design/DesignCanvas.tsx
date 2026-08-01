@@ -327,10 +327,25 @@ const LINE_KIND_LABEL: Record<LineShape['kind'], string> = {
 
 const WATER_ROUTE_KINDS = new Set<string>(['swale', 'pipe', 'drip', 'greywater']);
 
-function lineStroke(kind: LineShape['kind'], earthworksOnly = false): { stroke: string; width: number; dash?: string; opacity?: number; casing?: string } {
+function lineStroke(
+  kind: LineShape['kind'],
+  earthworksOnly = false,
+  /** The farmer's stated disturbed-ground width, and the px-per-metre to draw it at. Both are
+   *  needed together: a width in metres means nothing without the canvas scale. */
+  swaleWidthM?: number,
+  pxPerM?: number,
+): { stroke: string; width: number; dash?: string; opacity?: number; casing?: string } {
   if (earthworksOnly && kind === 'swale') {
     const style = EARTHWORKS_ROUTE_STYLE.swale;
-    return { stroke: style.color, width: style.width, dash: style.dash.join(' '), casing: style.casing };
+    // A STATED WIDTH MUST BE VISIBLE WHERE IT WAS TYPED. The exact sheets already draw a swale at
+    // its real ground width, but this editor drew every swale at one fixed pixel weight — so a
+    // farmer could set 3 m, watch the canvas not move, and reasonably conclude the control was
+    // broken. Same "saved but invisible" class this file's own comments document elsewhere.
+    // Undefined width keeps the original fixed weight exactly, so nothing changes until stated.
+    const width = swaleWidthM && pxPerM && pxPerM > 0
+      ? Math.max(style.width, swaleWidthM * pxPerM)
+      : style.width;
+    return { stroke: style.color, width, dash: style.dash.join(' '), casing: style.casing };
   }
   // Water route COLOUR is sourced from lib/water-cartography.ts's WATER_ROUTE_STYLE — the same
   // constant the exact/exported sheets use — so editor and export can never independently drift
@@ -2965,7 +2980,7 @@ export default function DesignCanvas({
           .sort((a, b) => (a.id === selectedId ? 1 : 0) - (b.id === selectedId ? 1 : 0))
           .map((line) => {
             if (!anyLayerOn(activeLayers, [LINE_LAYER[line.kind], ...(LINE_ALSO_LAYERS[line.kind] ?? [])])) return null;
-            const style = lineStroke(line.kind, earthworksOnly);
+            const style = lineStroke(line.kind, earthworksOnly, line.widthM, mPerPx > 0 ? 1 / mPerPx : undefined);
             // See the zones loop above — same step-ownership lock (Rory's boundary-grab bug).
             const owned = ownedByCurrentStep(state.step, { kind: 'line', lineKind: line.kind });
             const interactive = tool === 'select' && owned && !lockedOut(line.id);
