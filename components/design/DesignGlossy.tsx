@@ -60,7 +60,7 @@ import {
 import { compareLabelRows, producerLabels, plotBox } from '@/lib/producer-labels';
 import { leaderLabelFontSize, placeLeaderLabel, stackLeaderRows, leaderPath } from '@/lib/leader-labels';
 import { exactModelInputMarks, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '@/lib/render-policy';
-import { WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, nearestWaterNeighbourPx, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRoutesWithVisualBridges, waterRouteStyleFor, type WaterLegendSection } from '@/lib/water-cartography';
+import { EARTHWORKS_ROUTE_STYLE, WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, nearestWaterNeighbourPx, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRoutesWithVisualBridges, waterRouteStyleFor, type WaterLegendSection } from '@/lib/water-cartography';
 import { PLANTING_CANOPY_PAINT, PLANTING_LEGEND_SECTION_ORDER, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
 import { STRUCTURES_LEGEND_SECTION_ORDER, structuresFeaturePresentationDimensions, structuresLegendSectionForFeature, structuresRouteVisualFor, type StructuresLegendSection } from '@/lib/structures-cartography';
 import { presentSectorCartography, sectorEvidenceSummary, SECTOR_STYLES, sectorFillColor, sectorStrokeWidth, type SectorLegendIcon, type SectorVisualKind } from '@/lib/sector-cartography';
@@ -2523,7 +2523,7 @@ function roundRectPath(ctx: CanvasRenderingContext2D, x: number, y: number, w: n
 
 // ── Shared Blueprint sheet chrome ─────────────────────────────────────────────────────────────
 // Every deterministic Blueprint sheet (02 Zones, 03 Water, 04 Planting, 05 Structures) wears the
-// SAME chrome — see docs/PLAN-SET-SPEC.md "Sheet anatomy": satellite + dark scrim, tar driveway,
+// SAME chrome — see docs/PLAN-SET-SPEC.md "Sheet anatomy": satellite + restrained scrim, tar driveway,
 // fence-tick boundary, title block, legend panel, scale bar. That chrome was written twice (zone +
 // water) and would have been written FOUR times once 04/05 landed. It lives here once instead,
 // because the spec's load-bearing principle is that every sheet in the set agrees with every other
@@ -2538,7 +2538,7 @@ function roundRectPath(ctx: CanvasRenderingContext2D, x: number, y: number, w: n
 // Blueprint sheets have never drawn a north arrow — only composeStyleSheet does. Adding one here
 // would change the zone/water sheets, which this refactor must not do. Left as a known gap.
 
-/** Satellite base + the blueprint scrim that makes graphics pop on a moody dark ground. */
+/** Satellite base + a restrained blueprint scrim that keeps labels legible without drowning the map. */
 async function drawBlueprintBase(
   ctx: CanvasRenderingContext2D,
   frame: CanvasFrame,
@@ -2552,13 +2552,18 @@ async function drawBlueprintBase(
     ctx.fillStyle = '#22303a';
     ctx.fillRect(0, 0, W, H);
   }
-  ctx.fillStyle = 'rgba(8,14,22,0.5)';
+  // The old 50% veil made the satellite near-black. That was survivable for opaque linework, but
+  // it compounded with planting's deliberately layered canopy paint and made real trees read as
+  // translucent. Keep enough quieting for labels while leaving the site's colour and contrast
+  // available to the exact planting, water and structures marks.
+  ctx.fillStyle = 'rgba(8,14,22,0.18)';
   ctx.fillRect(0, 0, W, H);
 }
 
 /** Satellite under an ANALYSIS sheet: desaturated and lightened to a quiet paper tone.
  *
- *  drawBlueprintBase lays a dark scrim so bright design graphics pop on a moody ground, which is
+ *  drawBlueprintBase lays a restrained scrim so bright design graphics remain legible over the
+ *  satellite, which is
  *  right for the design sheets. The analysis sheets are the opposite problem: their content is
  *  thin coloured arrows, arcs and dotted lines, and on dark subtropical bush a dark scrim leaves
  *  them competing with near-black. Nothing here moves a pixel — the geometry is untouched, only
@@ -4391,14 +4396,31 @@ function drawTrueFootprint(
       }
     } else {
       const rows = Math.max(2, Math.min(6, Math.floor(shortPx / 5)));
-      ctx.strokeStyle = '#B8D77E';
-      ctx.lineWidth = Math.max(1, outline * 0.75);
+      // A single hairline per row collapsed into a flat brown block at normal sheet size. Keep
+      // the saved bed footprint, but make the planting readable as repeated rows at a glance.
+      ctx.strokeStyle = '#B9E36C';
+      ctx.lineWidth = Math.max(1.4, outline * 1.15);
       for (let i = 1; i <= rows; i++) {
         const y = -hPx / 2 + (i / (rows + 1)) * hPx;
         ctx.beginPath();
         ctx.moveTo(-wPx / 2 + 2, y);
         ctx.lineTo(wPx / 2 - 2, y);
         ctx.stroke();
+
+        const plantCount = Math.max(3, Math.min(10, Math.round(wPx / 12)));
+        const spacing = (wPx - 8) / plantCount;
+        const leafSize = Math.max(1.2, Math.min(3, shortPx * 0.09));
+        ctx.lineWidth = Math.max(1.1, outline * 0.9);
+        ctx.strokeStyle = '#D5F28A';
+        for (let j = 0; j < plantCount; j++) {
+          const x = -wPx / 2 + 4 + spacing * (j + 0.5);
+          ctx.beginPath();
+          ctx.moveTo(x, y);
+          ctx.lineTo(x - leafSize, y - leafSize * 0.85);
+          ctx.moveTo(x, y);
+          ctx.lineTo(x + leafSize, y + leafSize * 0.85);
+          ctx.stroke();
+        }
       }
     }
     ctx.restore();
@@ -4521,6 +4543,9 @@ function drawFilteredLines(
   for (const l of state.lines) {
     const color = LINE_COLORS[l.kind];
     if (!color || l.points.length < 2 || !lineInFilter(l.kind, filter)) continue;
+    const earthworksStyle = filter === 'earthworks' && l.kind === 'swale'
+      ? EARTHWORKS_ROUTE_STYLE.swale
+      : undefined;
     const trace = () => {
       const drawPoints = polishedRenderPoints(
         l.points.map(([x, y]) => [px(x), py(y)] as RenderPoint),
@@ -4529,6 +4554,19 @@ function drawFilteredLines(
       drawPoints.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, x, y));
     };
     const routeVisual = filter === 'structures' ? structuresRouteVisualFor(l.kind) : null;
+    if (earthworksStyle) {
+      trace();
+      ctx.setLineDash(earthworksStyle.dash);
+      ctx.strokeStyle = earthworksStyle.casing;
+      ctx.lineWidth = earthworksStyle.width + 4;
+      ctx.stroke();
+      trace();
+      ctx.setLineDash(earthworksStyle.dash);
+      ctx.strokeStyle = earthworksStyle.color;
+      ctx.lineWidth = earthworksStyle.width;
+      ctx.stroke();
+      continue;
+    }
     const routeDash = routeVisual?.dash ?? [];
     trace();
     ctx.setLineDash([...routeDash]);
@@ -7467,13 +7505,15 @@ export function sheetLegendRows(
   for (const group of exactSheetLineLegendGroups(state, filter)) {
     const kind = group.lineKind;
     if (!kind) continue;
+    const earthworksStyle = filter === 'earthworks' && kind === 'swale' ? EARTHWORKS_ROUTE_STYLE.swale : undefined;
     const waterStyle = filter === 'water' ? waterRouteStyleFor(kind) : undefined;
     const plantingStyle = filter === 'planting' ? plantingRouteStyleFor(kind) : undefined;
     rows.push({
-      swatch: waterStyle?.color ?? plantingStyle?.color ?? LINE_COLORS[kind] ?? '#8C8577',
+      swatch: earthworksStyle?.color ?? waterStyle?.color ?? plantingStyle?.color ?? LINE_COLORS[kind] ?? '#8C8577',
       text: countedLegendText(group.text, group.count),
       lineKind: kind,
-      section: waterStyle
+      section: earthworksStyle ? 'WATER EARTHWORKS'
+        : waterStyle
         ? waterLegendSectionForRoute(kind as Parameters<typeof waterLegendSectionForRoute>[0])
         : plantingStyle ? 'PRODUCTION PLANTING' : undefined,
     });

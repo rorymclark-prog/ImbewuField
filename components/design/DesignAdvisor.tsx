@@ -193,12 +193,14 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId }: De
   // Review steps have no single layer, so they show everything.
   const stepLayer: AdviceLayer | null =
     state.step === 'water' ? 'water'
+    : state.step === 'earthworks' ? 'earthworks'
     : state.step === 'zones' ? 'zones'
     : state.step === 'planting' ? 'planting'
     : state.step === 'structures' ? 'structures'
     : null;
   const layerName =
     stepLayer === 'water' ? t('designAdvisorLayerWater')
+    : stepLayer === 'earthworks' ? t('designStepEarthworks')
     : stepLayer === 'zones' ? t('designAdvisorLayerZones')
     : stepLayer === 'planting' ? t('designAdvisorLayerPlanting')
     : stepLayer === 'structures' ? t('designAdvisorLayerStructures')

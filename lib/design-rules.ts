@@ -17,7 +17,7 @@ import { effectiveSlopeForRing, recommendTerraceMethod } from '@/lib/terracing';
 
 // Which design LAYER a piece of advice belongs to, so the advisor can show the farmer only the
 // tips for the layer they're working on (a zones-step advisor showing tank/shade tips is noise).
-export type AdviceLayer = 'water' | 'zones' | 'planting' | 'structures' | 'general';
+export type AdviceLayer = 'water' | 'earthworks' | 'zones' | 'planting' | 'structures' | 'general';
 
 export interface Advice {
   severity: 'warn' | 'tip';
@@ -300,7 +300,7 @@ export function evaluateDesign(
         severity: 'tip',
         msg: `${label}: no slope known yet — walk the site and pace the slope, or open this place on the map to fetch one, before choosing a terrace method.`,
         itemId,
-        layer: 'zones',
+        layer: 'earthworks',
       });
       return;
     }
@@ -338,7 +338,10 @@ export function evaluateDesign(
       severity: highRisk ? 'warn' : 'tip',
       msg: `${label} at ~${Math.round(eff.pct)}% slope: ${row.copy}${whichSlope}${boundaryNote} ${REGIONAL_FOOTER}`,
       itemId,
-      layer: 'zones',
+      // This is a ground-shaping decision, not an effort-zone decision. Keeping it on Zones made
+      // the warning disappear from the new Earthworks step — the farmer could place a terrace,
+      // then never see the safety disclosure where the work is actually being planned.
+      layer: 'earthworks',
     });
   };
   for (const item of state.items) {

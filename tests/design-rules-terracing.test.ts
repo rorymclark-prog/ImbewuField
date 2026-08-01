@@ -34,7 +34,7 @@ function baseState(zoneOverrides: Partial<DesignCanvasState['zones'][number]>): 
 
 function terraceMsg(state: DesignCanvasState, site?: { slopePct?: number }) {
   const advice = evaluateDesign(state, {}, site);
-  const found = advice.find((a) => a.itemId === undefined && a.layer === 'zones' && /slope/.test(a.msg));
+  const found = advice.find((a) => a.itemId === undefined && a.layer === 'earthworks' && /slope/.test(a.msg));
   assert.ok(found, 'expected a terrace tip in the advice list');
   return found!;
 }
@@ -194,6 +194,7 @@ test('banana-circle feed advice clears only for a real nearby basin or pipe', ()
   }), ELEMENTS_BY_ID);
 
   assert.ok(noFeed.some((entry) => /Feed the Banana Circle/.test(entry.msg)));
+  assert.equal(noFeed.find((entry) => /Feed the Banana Circle/.test(entry.msg))?.layer, 'water');
   assert.equal(nearbyBasin.some((entry) => /Feed the Banana Circle/.test(entry.msg)), false);
   assert.equal(nearbyPipe.some((entry) => /Feed the Banana Circle/.test(entry.msg)), false);
 });

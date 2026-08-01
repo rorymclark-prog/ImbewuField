@@ -13,7 +13,7 @@ import {
 } from '@/lib/design-elements';
 import type { MapRefLayers } from '@/lib/base-layers';
 import { PLANTING_ROUTE_STYLE } from '@/lib/planting-cartography';
-import { WATER_ROUTE_STYLE } from '@/lib/water-cartography';
+import { EARTHWORKS_ROUTE_STYLE, WATER_ROUTE_STYLE } from '@/lib/water-cartography';
 
 // Per-layer glossy: 'all' = the whole design; the others render just one theme (with the
 // base map + ground context always kept so the picture is legible). Only the drawn marks in
@@ -231,7 +231,9 @@ export function exactSheetLineLegendGroups(
     if (!lineInFilter(kind, sheet)) continue;
     const count = state.lines.filter((line) => line.kind === kind && line.points.length >= 2).length;
     if (!count) continue;
-    const text = sheet === 'water'
+    const text = sheet === 'earthworks'
+      ? EARTHWORKS_ROUTE_STYLE[kind as keyof typeof EARTHWORKS_ROUTE_STYLE]?.label
+      : sheet === 'water'
       ? WATER_ROUTE_STYLE[kind as keyof typeof WATER_ROUTE_STYLE]?.label
       : sheet === 'planting'
         ? PLANTING_ROUTE_STYLE[kind as keyof typeof PLANTING_ROUTE_STYLE]?.label

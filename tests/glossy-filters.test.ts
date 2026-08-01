@@ -415,6 +415,50 @@ test('the layer switch and the owning step agree for every ground feature', () =
   }
 });
 
+// Items and lines have the same two answers as ground rings: who may edit the saved shape, and
+// which layer switch must be on for that shape's layer. Keep the focus table here in the same
+// shape as app/design/page.tsx's applyStepFocus so a new step or layer cannot silently create a
+// place-then-vanish item. Water intentionally keeps Earthworks ON because its palette still offers
+// earthworks and the swale checklist is shared; the swale's actual editable owner is Earthworks.
+test('every owned item and line has its semantic layer focused on by that owner step', () => {
+  const steps = ['water', 'earthworks', 'planting', 'structures'] as const;
+  const focusedLayers: Record<(typeof steps)[number], readonly GlossyLayerFilter[]> = {
+    water: ['water', 'earthworks'],
+    earthworks: ['earthworks'],
+    planting: ['planting', 'earthworks'],
+    structures: ['structures'],
+  };
+  const categoryLayer: Record<string, GlossyLayerFilter> = {
+    water: 'water',
+    earthworks: 'earthworks',
+    growing: 'planting',
+    structure: 'structures',
+    animal: 'structures',
+    access: 'structures',
+  };
+
+  for (const def of ELEMENT_CATALOG) {
+    const layer = categoryLayer[def.category];
+    assert.ok(layer, `${def.id} has no semantic layer in the agreement test`);
+    for (const step of steps) {
+      if (!ownedByCurrentStep(step, { kind: 'item', category: def.category, defId: def.id })) continue;
+      assert.ok(focusedLayers[step].includes(layer), `${def.id}: ${step} owns an item on an off layer`);
+    }
+  }
+
+  const kinds = ['swale', 'fence', 'path', 'bedpath', 'pipe', 'drip', 'windbreak', 'greywater'] as const;
+  for (const kind of kinds) {
+    const layer = (['water', 'earthworks', 'planting', 'structures'] as const)
+      .find((candidate) => lineInFilter(kind, candidate));
+    if (!layer) assert.fail(`${kind} has no semantic layer in the agreement test`);
+    const owners = steps.filter((step) => ownedByCurrentStep(step, { kind: 'line', lineKind: kind }));
+    assert.ok(owners.length > 0, `${kind} has no editing owner`);
+    for (const step of owners) {
+      assert.ok(focusedLayers[step].includes(layer), `${kind}: ${step} owns a line on an off layer`);
+    }
+  }
+});
+
 test('a plain effort-zone (no feature) is still owned only by the Zones step', () => {
   assert.equal(ownedByCurrentStep('zones', { kind: 'zone' }), true);
   assert.equal(ownedByCurrentStep('base', { kind: 'zone' }), false);

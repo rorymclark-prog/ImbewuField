@@ -101,13 +101,15 @@ export interface PlantingCanopyPaintStyle {
  * neighbouring canopy, beds, paths or water lines beneath it.
  */
 export const PLANTING_CANOPY_PAINT: Readonly<PlantingCanopyPaintStyle> = {
-  artworkAlpha: 0.44,
-  washAlpha: 0.34,
-  detailAlphaMin: 0.1,
-  detailAlphaMax: 0.16,
+  // Moderate lift: enough presence against the lighter blueprint base, while two overlapping
+  // canopies still reveal each other's keylines and the ground below them.
+  artworkAlpha: 0.48,
+  washAlpha: 0.4,
+  detailAlphaMin: 0.11,
+  detailAlphaMax: 0.15,
   edgeColor: '#24482D',
-  edgeAlpha: 0.94,
-  edgeWidthScale: 0.9,
+  edgeAlpha: 0.98,
+  edgeWidthScale: 1.05,
 };
 
 /**

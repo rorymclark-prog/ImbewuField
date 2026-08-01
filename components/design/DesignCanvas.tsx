@@ -2099,10 +2099,13 @@ export default function DesignCanvas({
   // sites (zone body, ground-feature body, the draft ring, and the pattern defs) and they must
   // never disagree with each other.
   const areaFill = normaliseAreaFill(areaFillRaw);
-  // Earthworks is a separate reading of the same saved design. When Water is also on, swales stay
-  // blue because the farmer is looking at their route function; Earthworks-only is the cut-and-fill
-  // view and deliberately strengthens the brown footprint so a bed is not just an icon on soil.
-  const earthworksOnly = activeLayers.earthworks && !activeLayers.water;
+  // Earthworks is a separate reading of the same saved design. The Earthworks step itself wins
+  // over a stale simultaneous Water toggle: otherwise a saved/manual Water=true state makes the
+  // swale fall back to the thin blue route style on the very step whose job is to set out its
+  // ditch and berm. Outside that step, the explicit Earthworks-only layer combination keeps the
+  // existing Water-vs-Earthworks toggle semantics.
+  const earthworksOnly = activeLayers.earthworks
+    && (state.step === 'earthworks' || !activeLayers.water);
   // The hatch <pattern> set is built from the STATIC catalogs, so a traced layer whose colour is
   // not in them would resolve url(#hatch-…) to nothing and render with no fill at all. Union in
   // whatever colours are actually on screen this render.
@@ -4088,6 +4091,7 @@ export default function DesignCanvas({
       {onToggleBaseMap && (
         <button
           type="button"
+          aria-pressed={!!activeLayers.baseMap}
           aria-label={t(activeLayers.baseMap ? 'designCanvasHideBase' : 'designCanvasShowBase')}
           title={t(activeLayers.baseMap ? 'designCanvasBaseShown' : 'designCanvasBaseHidden')}
           onClick={onToggleBaseMap}
