@@ -6711,10 +6711,11 @@ function drawSectorAnalysis(
   // under white title text, no scrim, exactly this case. The flat-colour fallback (no satDataUrl,
   // solid #727466 — see drawAnalysisBase) is the one base that was genuinely always light enough;
   // that's the only case this now leaves unscrimmed.
-  if (isAiBase || frame.satDataUrl) {
+  // No title on the map when the panel carries it, so no scrim is needed to protect one.
+  if ((isAiBase || frame.satDataUrl) && !externalLegend) {
     drawTitleBlockScrim(
       ctx, pad,
-      externalLegend ? [titleStr, subtitleStr] : [titleStr, subtitleStr, dataStripStr, sourcesStr],
+      [titleStr, subtitleStr, dataStripStr, sourcesStr],
       externalLegend
         ? [`800 ${Math.round(W * 0.028)}px ${SHEET_TITLE_FONT}`, `600 ${Math.round(W * 0.015)}px ${SHEET_BODY_FONT}`]
         : [`800 ${Math.round(W * 0.028)}px ${SHEET_TITLE_FONT}`, `600 ${Math.round(W * 0.015)}px ${SHEET_BODY_FONT}`, `600 ${Math.round(W * 0.013)}px ${SHEET_BODY_FONT}`, `600 ${Math.round(W * 0.011)}px ${SHEET_BODY_FONT}`],
@@ -6738,7 +6739,12 @@ function drawSectorAnalysis(
     ctx.fillText(sourcesStr, pad, pad + Math.round(W * 0.028) + Math.round(W * 0.024) + Math.round(W * 0.022) + Math.round(W * 0.018));
     ctx.restore();
   }
-  drawBlueprintTitle(ctx, W, pad, titleStr, subtitleStr);
+  // GATED like the two lines above it. When the sheet has an external legend panel, that panel
+  // already prints "02 — SECTOR ANALYSIS" and the place name — so burning the same title onto the
+  // map said it twice AND crowded the top-left corner, where the berg-wind arrow and both sun-path
+  // labels also land. The dataStrip and sources lines directly above were already gated this way;
+  // the title simply missed the gate.
+  if (!externalLegend) drawBlueprintTitle(ctx, W, pad, titleStr, subtitleStr);
   const CIRCLED = ['①', '②', '③', '④', '⑤', '⑥', '⑦', '⑧', '⑨', '⑩', '⑪', '⑫'];
   const markerIcon = (key: string): string | undefined => {
     const n = sectorMarkerIndex.get(key);
