@@ -86,6 +86,9 @@ export interface PlantingPresentationDimensions {
 }
 
 export interface PlantingCanopyPaintStyle {
+  /** A quiet backing that separates a placed canopy from busy photographic tree texture. */
+  baseAlpha: number;
+  baseColor: string;
   artworkAlpha: number;
   washAlpha: number;
   detailAlphaMin: number;
@@ -101,6 +104,11 @@ export interface PlantingCanopyPaintStyle {
  * neighbouring canopy, beds, paths or water lines beneath it.
  */
 export const PLANTING_CANOPY_PAINT: Readonly<PlantingCanopyPaintStyle> = {
+  // This backing is intentionally much quieter than either canopy fill. It separates a new tree
+  // from busy existing vegetation in the photo without turning an overlap of two placed trees into
+  // one opaque green mass.
+  baseAlpha: 0.06,
+  baseColor: '#D8E4AA',
   // Moderate lift: enough presence against the lighter blueprint base, while two overlapping
   // canopies still reveal each other's keylines and the ground below them.
   artworkAlpha: 0.48,

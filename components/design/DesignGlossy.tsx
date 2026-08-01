@@ -3327,7 +3327,10 @@ function referenceBlueprintLabels(
     // largest source of crossed leaders and is not present in the supplied masterplan benchmark.
     zones: filter === 'all' ? state.zones.filter((zone) => Boolean(zone.feature)) : state.zones,
   };
-  const labels = producerLabels(canonicalState, refLayers, W, H, filter, false);
+  const labels = [
+    ...producerLabels(canonicalState, refLayers, W, H, filter, false),
+    ...(filter === 'planting' ? groundLabelsForSheet(state, refLayers, W, H, filter) : []),
+  ];
 
   // The legend is the exhaustive inventory. Map callouts are the editorial reading layer: one
   // leader per meaningful system, never the old margin directory where silent member rows formed
@@ -3359,7 +3362,8 @@ function referenceBlueprintLabels(
 
   if (filter === 'planting') {
     // Group headers carry the representative leader. Their member species remain exhaustive in the
-    // illustrated legend, avoiding the 12-row left/right label ladders seen in the first v23 QA.
+    // illustrated legend. Every leader is retained: a dense inventory may need a crowded margin,
+    // but silently dropping a valid tree/bed callout makes the map disagree with its own legend.
     const ranked = labels
       .filter((label) => label.leader !== false)
       .sort((a, b) => {
@@ -3368,7 +3372,7 @@ function referenceBlueprintLabels(
             : /DRIVEWAY/.test(label.text) ? 3 : 2;
         return rank(a) - rank(b) || compareLabelRows(a, b);
       });
-    return rebalance(ranked, 10);
+    return rebalance(ranked, ranked.length);
   }
   if (filter === 'structures') return rebalance(labels, 10);
   if (filter !== 'all') return rebalance(labels, 10);
@@ -4172,6 +4176,18 @@ function drawPaintedReferenceFeature(
   if (def.shape === 'rect' && it.rot) ctx.rotate((it.rot * Math.PI) / 180);
   ctx.lineJoin = 'round';
   const isMatureCanopy = def.category === 'growing' && def.shape === 'circle';
+  const inheritedAlpha = ctx.globalAlpha;
+
+  if (isMatureCanopy) {
+    // A pale, restrained backing separates a newly placed canopy from busy existing trees in the
+    // satellite photo. It stays below the translucent artwork and edge so overlapping placed
+    // canopies still expose one another's keylines and the ground beneath them.
+    traceFootprint();
+    ctx.fillStyle = PLANTING_CANOPY_PAINT.baseColor;
+    ctx.globalAlpha = inheritedAlpha * PLANTING_CANOPY_PAINT.baseAlpha;
+    ctx.fill();
+    ctx.globalAlpha = inheritedAlpha;
+  }
 
   ctx.save();
   traceFootprint();
@@ -4316,6 +4332,14 @@ function drawTrueFootprint(
       ctx.closePath();
     };
 
+    // The pale backing quiets busy satellite texture beneath a newly placed tree without the
+    // alpha increase that previously made overlapping placed canopies merge into one wash.
+    traceCanopy();
+    ctx.fillStyle = PLANTING_CANOPY_PAINT.baseColor;
+    ctx.globalAlpha = inheritedAlpha * PLANTING_CANOPY_PAINT.baseAlpha;
+    ctx.fill();
+    ctx.globalAlpha = inheritedAlpha;
+
     traceCanopy();
     ctx.shadowColor = 'rgba(20,28,18,0.26)';
     ctx.shadowBlur = Math.max(2, r * 0.13);
@@ -4444,17 +4468,37 @@ function drawTrueFootprint(
 
         const plantCount = Math.max(3, Math.min(10, Math.round(wPx / 12)));
         const spacing = (wPx - 8) / plantCount;
-        const leafSize = Math.max(1.2, Math.min(3, shortPx * 0.09));
+        // A pair of angled ticks read as generic grass at sheet scale. A small repeated rosette
+        // reads as a planted vegetable without pretending to identify a particular crop species.
+        const rosetteRadius = Math.max(1.6, Math.min(3.2, shortPx * 0.11));
+        const petalRadius = rosetteRadius * 0.62;
         ctx.lineWidth = Math.max(1.1, outline * 0.9);
-        ctx.strokeStyle = '#D5F28A';
         for (let j = 0; j < plantCount; j++) {
           const x = -wPx / 2 + 4 + spacing * (j + 0.5);
+          ctx.save();
+          ctx.translate(x, y);
+          for (let petal = 0; petal < 5; petal++) {
+            const angle = (petal / 5) * Math.PI * 2 - Math.PI / 2;
+            ctx.beginPath();
+            ctx.ellipse(
+              Math.cos(angle) * rosetteRadius * 0.38,
+              Math.sin(angle) * rosetteRadius * 0.38,
+              petalRadius * 0.48,
+              petalRadius * 0.76,
+              angle,
+              0,
+              Math.PI * 2,
+            );
+            ctx.fillStyle = '#A7D266';
+            ctx.fill();
+            ctx.strokeStyle = '#D5F28A';
+            ctx.stroke();
+          }
           ctx.beginPath();
-          ctx.moveTo(x, y);
-          ctx.lineTo(x - leafSize, y - leafSize * 0.85);
-          ctx.moveTo(x, y);
-          ctx.lineTo(x + leafSize, y + leafSize * 0.85);
-          ctx.stroke();
+          ctx.arc(0, 0, Math.max(0.9, rosetteRadius * 0.24), 0, Math.PI * 2);
+          ctx.fillStyle = '#6F9C45';
+          ctx.fill();
+          ctx.restore();
         }
       }
     }
@@ -4934,7 +4978,14 @@ export async function buildBlueprintPlantingMapLegacy(
   // 4b. Name every species ON THE MAP, grouped, with one leader per group — the same margin-pill
   //     layout the water sheet has had all along. Until now this sheet drew canopies with no way
   //     to tell a mango from a macadamia except by matching legend swatch colours by eye.
-  drawBlueprintLabelPills(ctx, producerLabels(state, refLayers, W, H, 'planting'));
+  // Traced planting ground is full-strength content on this sheet, not anonymous background:
+  // without its own callouts a lawn or vegetable-garden wash reads as an unexplained slab even
+  // though the legend correctly lists it. Keep the ground and placed-plant labels in the same
+  // output so both factual layers are named on the map.
+  drawBlueprintLabelPills(ctx, [
+    ...groundLabelsForSheet(state, refLayers, W, H, 'planting'),
+    ...producerLabels(state, refLayers, W, H, 'planting'),
+  ]);
 
   // 5. Boundary — green line with perpendicular fence ticks.
   drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W);
