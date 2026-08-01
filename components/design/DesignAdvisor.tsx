@@ -376,6 +376,7 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId }: De
         {moreCount > 0 && (
           <button
             onClick={() => setExpanded((e) => !e)}
+            aria-expanded={expanded}
             style={{
               minHeight: 32,
               padding: '4px 10px',

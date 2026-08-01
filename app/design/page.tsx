@@ -2649,6 +2649,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           type="button"
           onClick={toggleDesignMode}
           aria-label={`Switch to ${designMode === 'pro' ? 'Guided' : 'Pro'} mode`}
+          aria-pressed={designMode === 'pro'}
           title={designMode === 'pro' ? 'Pro — full designer: every tool, jump any step' : 'Guided — simple step-by-step, one focus at a time'}
           style={{
             marginLeft: 'auto',
@@ -2859,7 +2860,8 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
                           : 'all',
                 )
               }
-              style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 4, background: 'transparent', border: 'none', color: OCHRE, fontSize: 12.5, fontWeight: 700, cursor: 'pointer', minHeight: 34, padding: '0 4px' }}
+              aria-label="Preview map and choose a plan sheet"
+              style={{ marginLeft: 'auto', display: 'inline-flex', alignItems: 'center', gap: 4, background: 'transparent', border: 'none', color: OCHRE, fontSize: 12.5, fontWeight: 700, cursor: 'pointer', minHeight: 44, padding: '0 4px' }}
             >
               <ImageIcon size={15} /> Preview map
             </button>

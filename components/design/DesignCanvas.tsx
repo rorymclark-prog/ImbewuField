@@ -4402,14 +4402,15 @@ export default function DesignCanvas({
         }}
       >
         {[
-          { label: '+', onClick: () => zoomAbout(imgW / 2, imgH / 2, 1.3) },
-          { label: '−', onClick: () => zoomAbout(imgW / 2, imgH / 2, 1 / 1.3) },
-          { label: '⤢', onClick: runAutoFit },
-        ].map(({ label, onClick }) => (
+          { label: '+', ariaLabel: 'Zoom in', onClick: () => zoomAbout(imgW / 2, imgH / 2, 1.3) },
+          { label: '−', ariaLabel: 'Zoom out', onClick: () => zoomAbout(imgW / 2, imgH / 2, 1 / 1.3) },
+          { label: '⤢', ariaLabel: 'Fit map to view', onClick: runAutoFit },
+        ].map(({ label, ariaLabel, onClick }) => (
           <button
             key={label}
             type="button"
             onClick={onClick}
+            aria-label={ariaLabel}
             style={{
               width: 40,
               height: 40,

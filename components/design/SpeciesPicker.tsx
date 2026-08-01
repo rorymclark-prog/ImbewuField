@@ -58,8 +58,10 @@ export default function SpeciesPicker({
           </p>
         </div>
         <button
+          type="button"
           onClick={onClose}
-          style={{ background: 'transparent', border: 'none', cursor: 'pointer', fontSize: 18, color: '#0B120B' }}
+          aria-label={t('designClose')}
+          style={{ background: 'transparent', border: 'none', cursor: 'pointer', fontSize: 18, color: '#0B120B', minWidth: 44, minHeight: 44, display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}
         >
           ✕
         </button>

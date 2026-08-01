@@ -71,6 +71,7 @@ import {
   countedLegendText,
   fitLegendFontSize,
   layoutLegendColumn,
+  legendHeightFillRatio,
   legendRowFontSize,
 } from '@/lib/sheet-legend-layout';
 import { overlayElementsText } from '@/lib/overlay-elements';
@@ -435,8 +436,8 @@ const EMPTY_LAYER_STEP: Record<GlossyLayerFilter, string> = {
   all: 'design',
   water: 'Water',
   zones: 'Zones',
-  // Earthworks has no wizard step of its own — swales, berms and terraces are placed from the
-  // Water step's palette (category 'earthworks'), which is where an empty sheet must send you.
+  // Earthworks has its own wizard step now. The fallback remains Water because the category is
+  // also offered there for existing designs and for earth-shaped water features.
   earthworks: 'Water',
   planting: 'Planting',
   structures: 'Structures',
@@ -582,16 +583,6 @@ function sectorProtectMaskOptions(): ProtectMaskOptions {
  * carrying it. If the roof ever needs hard protection, the mask must first be built from the house
  * feature zone as well as refLayers.house, and must never be sent when it protects nothing.
  */
-const UNUSED_OVERLAY_PROTECT_MASK_OPTIONS: ProtectMaskOptions = {
-  protectOutside: false,
-  protectBoundary: false,
-  protectDriveway: false,
-  protectLines: false,
-  protectItems: false,
-  houseHaloRatio: 0.002,
-  houseFeatherRatio: 0.001,
-};
-
 export function drawMarks(
   ctx: CanvasRenderingContext2D,
   state: DesignCanvasState,
@@ -7589,6 +7580,7 @@ interface StyleLegendRow {
   text: string;
   defId?: string;
   lineKind?: string;
+  lineVisual?: 'earthworks-swale';
   kind?: 'zone' | 'ground' | 'surface';
   section?: WaterLegendSection | PlantingLegendSection | StructuresLegendSection
     | 'SITE EDGE' | 'WATER' | 'PLANTING' | 'INFRASTRUCTURE';
@@ -7707,6 +7699,7 @@ export function sheetLegendRows(
       swatch: earthworksStyle?.color ?? waterStyle?.color ?? plantingStyle?.color ?? LINE_COLORS[kind] ?? '#8C8577',
       text: countedLegendText(group.text, group.count),
       lineKind: kind,
+      ...(earthworksStyle ? { lineVisual: 'earthworks-swale' as const } : {}),
       section: earthworksStyle ? 'WATER EARTHWORKS'
         : waterStyle
         ? waterLegendSectionForRoute(kind as Parameters<typeof waterLegendSectionForRoute>[0])
@@ -7830,6 +7823,37 @@ function drawStyleLegendSymbol(
       );
       return;
     }
+  }
+
+  if (row.lineVisual === 'earthworks-swale') {
+    // The Earthworks map draws a swale as a cut ditch, a spoil berm and hachures. A flat brown
+    // stroke in its legend was the last place that still described the old route-only symbol.
+    const mid = y;
+    const half = Math.max(5, h * 0.27);
+    const path = (fromY: number, toY: number, color: string, width: number) => {
+      ctx.beginPath();
+      ctx.moveTo(x, fromY);
+      ctx.lineTo(x + w, toY);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = width;
+      ctx.stroke();
+    };
+    ctx.save();
+    ctx.lineCap = 'butt';
+    path(mid, mid, EARTHWORKS_ROUTE_STYLE.swale.casing, half * 2.2);
+    path(mid - half * 0.28, mid - half * 0.28, '#4A2F1B', half);
+    path(mid + half * 0.28, mid + half * 0.28, row.swatch, half);
+    ctx.strokeStyle = EARTHWORKS_ROUTE_STYLE.swale.casing;
+    ctx.lineWidth = Math.max(1, half * 0.16);
+    for (let px = x + w * 0.16; px < x + w; px += Math.max(8, w * 0.22)) {
+      ctx.beginPath();
+      ctx.moveTo(px, mid);
+      ctx.lineTo(px, mid + half * 0.82);
+      ctx.stroke();
+    }
+    path(mid, mid, 'rgba(246,240,222,0.8)', Math.max(1, half * 0.12));
+    ctx.restore();
+    return;
   }
 
   if (row.lineKind) {
@@ -8219,6 +8243,23 @@ async function composeStyleSheet(
   // renderer justified the unused space into giant gaps. Measure the finished row blocks at each
   // candidate size instead. Sparse legends stay in one column, so their extra height becomes type
   // and icon size; a dense Planting inventory keeps the existing column search and its step-down.
+  // THE CEILING MUST OBEY THE SAME SPARSE/DENSE POLICY THE REST OF THE PANEL DOES.
+  //
+  // It was availableRowsH / rows.length outright: on the Site sheet — three rows in a tall panel —
+  // that is a ceiling near 300px, and the search happily returned type that dwarfed the sheet's own
+  // title (Rory: "look at the text size for this legend", "the font ... is over sized"). Capping
+  // the search by measured WIDTH stopped the words running off the edge but did nothing about the
+  // scale, because three enormous words still fit a wide panel.
+  //
+  // lib/sheet-legend-layout.ts already owns this decision for gaps: a legend of three rows or fewer
+  // is A LIST and must stay compact; six or more is an inventory that may span the reserved height;
+  // four and five interpolate. legendHeightFillRatio IS that curve. Type now rides the same curve,
+  // so a sparse legend cannot grow past its width-derived size, and a dense one keeps the
+  // fill-the-panel behaviour that fixed the Water sheet.
+  const heightCeiling = Math.round(availableRowsH / rows.length);
+  const growthCeiling = Math.round(
+    normalFs + Math.max(0, heightCeiling - normalFs) * legendHeightFillRatio(rows.length),
+  );
   const desiredFs = rows.length > 0 && rows.length <= 8
     ? fitLegendFontSize(
         (fontSize) => {
@@ -8229,7 +8270,7 @@ async function composeStyleSheet(
           return Math.max(...candidate.map((column) => column.columnLayout.contentBottom));
         },
         availableRowsH,
-        Math.max(normalFs, Math.round(availableRowsH / rows.length)),
+        Math.max(normalFs, growthCeiling),
         9,
       )
     : normalFs;
@@ -11464,9 +11505,8 @@ export default function DesignGlossy({
             Rory: "if i click preview map from any map section it should open the layer selector as
             well". Preview used to inherit one filter from the wizard step with no way off it, so
             the farmer had to close the overlay, walk to step 8 and start again just to see the
-            next sheet. It also made EARTHWORKS (05) unreachable from here: earthworks are DRAWN on
-            the Water step, so the step→filter map in app/design/page.tsx can only ever hand this
-            overlay 'water'. A picker is the fix for both.
+            next sheet. Earthworks now has its own wizard step and picker entry, so it remains
+            reachable even though some earth-shaped elements are still offered from Water.
             What stays studio-only below is the money — the 5-sheet AI batch and the exact-all run
             are plan-set actions, not "look at this layer" actions. */}
         <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55, marginBottom: 6 }}>

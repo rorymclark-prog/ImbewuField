@@ -13,16 +13,16 @@ import type { SheetOutputMode } from '@/lib/locked-polish-flow';
 import type { StylePreset } from '@/lib/producer-prompt';
 import type { GlossyLayerFilter } from '@/lib/glossy-filters';
 
-// The 8 plan-set sheets (DESIGN_SHEETS in DesignGlossy.tsx): 3 analytical/exact sheets + the 5
-// GlossyLayerFilter design layers.
-const LAYER_FILTERS: GlossyLayerFilter[] = ['all', 'water', 'zones', 'planting', 'structures'];
+// The 9 plan-set sheets (DESIGN_SHEETS in DesignGlossy.tsx): 3 analytical/exact sheets + the 6
+// GlossyLayerFilter design layers, including Earthworks (05).
+const LAYER_FILTERS: GlossyLayerFilter[] = ['all', 'water', 'zones', 'earthworks', 'planting', 'structures'];
 const SHEETS: Array<{ label: string; spec: SheetSpec }> = [
   { label: 'base', spec: { exact: 'base' } },
   { label: 'sector', spec: { exact: 'sector' } },
   { label: 'implementation', spec: { exact: 'implementation' } },
   ...LAYER_FILTERS.map((filter) => ({ label: `filter:${filter}`, spec: { filter } as SheetSpec })),
 ];
-assert.equal(SHEETS.length, 8, 'expected exactly the 8 plan-set sheets');
+assert.equal(SHEETS.length, 9, 'expected exactly the 9 plan-set sheets');
 
 const MODES: SheetOutputMode[] = ['exact', 'hybrid', 'full'];
 // EVERY style, not a sample of two. The table used to cover satellite_overlay and precision_atlas
