@@ -3195,19 +3195,35 @@ function drawReferenceMapText(
 }
 
 /** Burn short editorial labels with leaders onto a Blueprint-style sheet. */
+// Longest a map callout's leader may run before the label is pulled in off the sheet edge and
+// placed closer to its own feature instead. Was unconditional: textX always jumped to the far
+// canvas margin regardless of how close the feature already was, which is what put a leader
+// clear across the sheet on anything sitting near the centre — the Hybrid Masterplan QA kit's
+// #1 finding ("TREES is not connected by a full-width line across the building", "leader lines
+// dominate the map"), and visible on Rory's own reference screenshot. 0.22 ≈ the kit's own
+// 360px-on-a-1540px-map-panel rule (~23%), applied against the full canvas width here since this
+// renderer has no separate map/legend panel split to measure against.
+const LEADER_MAX_RUN_RATIO = 0.22;
+
 function drawBlueprintLabelPills(
   ctx: CanvasRenderingContext2D,
   labels: ProducerLabel[],
 ): void {
   const W = ctx.canvas.width;
   const fs = Math.max(20, Math.round(W * 0.012));
+  const maxRun = W * LEADER_MAX_RUN_RATIO;
   for (const l of labels) {
     const isHeader = l.kind === 'header';
     const weight = isHeader ? 800 : 650;
     ctx.font = `${weight} ${fs}px ${REFERENCE_LABEL_FONT}`;
     const textW = ctx.measureText(l.text).width;
     const onLeft = l.ax < W / 2;
-    const textX = onLeft ? Math.max(20, W * 0.012) : Math.min(W - 20, W * 0.988);
+    // The far-edge position stays the FLOOR/CEILING — a feature already near the margin still
+    // reads exactly as it always did. Only a feature far from the edge is pulled in: the leader
+    // stops at maxRun and the label sits back toward its own feature, mid-canvas, rather than
+    // being marched all the way across.
+    const edgeX = onLeft ? Math.max(20, W * 0.012) : Math.min(W - 20, W * 0.988);
+    const textX = onLeft ? Math.max(edgeX, l.cx - maxRun) : Math.min(edgeX, l.cx + maxRun);
     const align: CanvasTextAlign = onLeft ? 'left' : 'right';
     const leaderEndX = onLeft ? textX + textW + fs * 0.35 : textX - textW - fs * 0.35;
     if (l.leader !== false) {
