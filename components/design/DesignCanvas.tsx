@@ -532,6 +532,7 @@ function adoptTracedLayer(
       y: cy,
       wM: isCircle ? Math.max(wM, hM) : wM,
       hM: isCircle ? Math.max(wM, hM) : hM,
+      status: 'proposed',
       sourceFeatureId: src,
     };
     return { ...state, items: [...state.items, item] };
@@ -1095,7 +1096,7 @@ export default function DesignCanvas({
     if (tool === 'place' && placeDefId) {
       const def = ELEMENTS_BY_ID[placeDefId];
       if (!def) return;
-      const item: PlacedItem = { id: newId(), defId: placeDefId, x: pt[0], y: pt[1] };
+      const item: PlacedItem = { id: newId(), defId: placeDefId, x: pt[0], y: pt[1], status: 'proposed' };
       if (placeSpeciesId) {
         item.speciesId = placeSpeciesId;
         const sp = SPECIES.find(s => s.id === placeSpeciesId);

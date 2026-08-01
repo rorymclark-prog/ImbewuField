@@ -41,6 +41,7 @@ import {
   DESIGN_CANVAS_CHANGED_EVENT,
   type CanvasFrame,
   type DesignCanvasState,
+  type ElementStatus,
   type GroundFeatureKind,
   type PlacedItem,
   type WizardStep,
@@ -1300,7 +1301,7 @@ function DesignStudioInner() {
           const defId = SITE_ELEMENT_TO_DEF[el.type];
           if (!defId || !ELEMENTS_BY_ID[defId]) continue;
           const [x, y] = project([el.lon, el.lat]);
-          items.push({ id: newId(), defId, x, y, label: el.label, note: el.note });
+          items.push({ id: newId(), defId, x, y, label: el.label, note: el.note, status: 'proposed' });
         }
         const freshWithItems = { ...fresh, items };
         // fresh.zones is always [] (freshState seeds no zones — see freshState above), so this
@@ -1868,7 +1869,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
         ];
         const newItems: PlacedItem[] = canvasState.items
           .filter((it) => ids.has(it.id))
-          .map((it) => ({ ...it, id: newId(), x: Math.min(0.98, it.x + DUPLICATE_OFFSET), y: Math.min(0.98, it.y + DUPLICATE_OFFSET) }));
+          .map((it) => ({ ...it, id: newId(), x: Math.min(0.98, it.x + DUPLICATE_OFFSET), y: Math.min(0.98, it.y + DUPLICATE_OFFSET), status: 'proposed' as const }));
         const newZones: ZoneShape[] = canvasState.zones
           .filter((z) => ids.has(z.id))
           .map((z) => ({ ...z, id: newId(), points: z.points.map(offsetPt) }));
@@ -2010,6 +2011,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           y: b.y,
           wM: b.wM,
           hM: b.hM,
+          status: 'proposed' as const,
           // Spread rather than assign: rot is deliberately absent at natural orientation, and
           // writing `rot: undefined` would put an explicit undefined into the saved JSON.
           ...(b.rot != null ? { rot: b.rot } : {}),
@@ -2406,6 +2408,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           id: newId(),
           x: Math.min(0.98, it.x + 0.03),
           y: Math.min(0.98, it.y + 0.03),
+          status: 'proposed',
         }));
         const pastedZones: ZoneShape[] = clip.zones.map((z) => ({ ...z, id: newId(), points: z.points.map(offsetPt) }));
         const pastedLines: LineShape[] = clip.lines.map((l) => ({ ...l, id: newId(), points: l.points.map(offsetPt) }));
@@ -3575,6 +3578,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
 interface ItemEditPatch {
   label?: string;
   note?: string;
+  status?: ElementStatus;
   wM?: number;
   hM?: number;
   rot?: number;
@@ -3595,6 +3599,7 @@ function ItemEditSheet({
   const isRect = def?.shape === 'rect';
   const [label, setLabel] = useState(item.label ?? '');
   const [note, setNote] = useState(item.note ?? '');
+  const [status, setStatus] = useState<ElementStatus>(item.status === 'existing' ? 'existing' : 'proposed');
   const [wM, setWM] = useState(String(item.wM ?? def?.wM ?? 1));
   const [hM, setHM] = useState(String(item.hM ?? def?.hM ?? 1));
   const [rot, setRot] = useState(String(Math.round(item.rot ?? 0)));
@@ -3605,6 +3610,7 @@ function ItemEditSheet({
     const patch: ItemEditPatch = {
       label: label.trim() ? label.trim() : undefined,
       note: note.trim() ? note.trim() : undefined,
+      status,
     };
     if (Number.isFinite(parsedW) && parsedW > 0) {
       patch.wM = parsedW;
@@ -3685,6 +3691,26 @@ function ItemEditSheet({
               color: DARK,
             }}
           />
+        </label>
+
+        <label style={{ display: 'flex', flexDirection: 'column', gap: 4, fontSize: 12.5, color: DARK }}>
+          Status
+          <select
+            value={status}
+            onChange={(e) => setStatus(e.target.value as ElementStatus)}
+            style={{
+              minHeight: 44,
+              borderRadius: 10,
+              border: '1px solid rgba(11,18,11,0.2)',
+              padding: '0 12px',
+              fontSize: 14,
+              background: '#FFFFFF',
+              color: DARK,
+            }}
+          >
+            <option value="proposed">Part of my design</option>
+            <option value="existing">Already here</option>
+          </select>
         </label>
 
         <div style={{ display: 'flex', gap: 10 }}>

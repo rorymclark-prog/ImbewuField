@@ -1183,7 +1183,8 @@ export function normaliseCanvasState(value: unknown, siteId: string): DesignCanv
         || (typeof candidate.hM === 'number' && Number.isFinite(candidate.hM) && candidate.hM > 0))
       && optionalFiniteCanvasNumber(candidate.rot)
       && optionalCanvasText(candidate.label)
-      && optionalCanvasText(candidate.note);
+      && optionalCanvasText(candidate.note)
+      && (candidate.status === undefined || candidate.status === 'existing' || candidate.status === 'proposed');
   })) return null;
 
   if (!value.zones.every((candidate) => {

@@ -10,13 +10,14 @@ import {
   sheetsForElement,
   groundContentRingsForSheet,
   groundRegister,
+  existingSiteItems,
   layerContentCount,
   ownedByCurrentStep,
   type GlossyLayerFilter,
 } from '../lib/glossy-filters.ts';
 import { ELEMENT_CATALOG, ELEMENTS_BY_ID, biomeClimates, elementVisibleInPalette } from '../lib/design-elements.ts';
 import { groundFeatureLayer } from '../lib/design-canvas.ts';
-import type { DesignCanvasState, GroundFeatureKind, ZoneShape } from '../lib/design-canvas.ts';
+import type { DesignCanvasState, GroundFeatureKind, PlacedItem, ZoneShape } from '../lib/design-canvas.ts';
 import type { MapRefLayers } from '../lib/base-layers.ts';
 import { waterRouteStyleFor } from '../lib/water-cartography.ts';
 
@@ -67,6 +68,16 @@ test('the whole-design sheet carries everything', () => {
   }
   for (const kind of LINE_KINDS) assert.ok(lineInFilter(kind, 'all'), `${kind} missing from the masterplan`);
   assert.ok(zonesInFilter('all'));
+});
+
+test('the Site sheet carries every category explicitly marked already here, but not proposals', () => {
+  const categories = ['water', 'earthworks', 'growing', 'structure', 'animal', 'access'] as const;
+  const items: PlacedItem[] = categories.map((category, index) => {
+    const def = ELEMENT_CATALOG.find((candidate) => candidate.category === category)!;
+    return { id: `existing-${category}`, defId: def.id, x: index / 10, y: index / 10, status: 'existing' as const };
+  });
+  items.push({ id: 'proposed', defId: items[0].defId, x: 0.9, y: 0.9, status: 'proposed' as const });
+  assert.deepEqual(existingSiteItems({ items }).map((item) => item.id), categories.map((category) => `existing-${category}`));
 });
 
 test('cartographic stacking paints tree basins below every circular tree canopy', () => {

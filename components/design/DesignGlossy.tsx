@@ -51,6 +51,7 @@ import {
   exactSheetElementLegendGroups,
   exactSheetGroundLegendGroups,
   existingSiteGroundRings,
+  existingSiteItems,
   existingSiteGroundLegendGroups,
   exactSheetLineLegendGroups,
   exactSheetZoneLegendGroups,
@@ -3481,6 +3482,40 @@ function speciesColor(defId: string): string {
   return SPECIES_PALETTE[i % SPECIES_PALETTE.length];
 }
 
+/** Existing placed items are discrete site facts, not another ground ring. Keep their marks in
+ * the same exact footprint renderer as the design sheets, then name them through the Base sheet's
+ * existing extraRows label path so exact and paid Site sheets cannot invent separate callouts. */
+function drawExistingSiteItems(
+  ctx: CanvasRenderingContext2D,
+  state: DesignCanvasState,
+  px: (n: number) => number,
+  py: (n: number) => number,
+  pxPerM: number,
+): void {
+  for (const item of existingSiteItems(state)) {
+    const def = ELEMENTS_BY_ID[item.defId];
+    if (!def) continue;
+    drawTrueFootprint(ctx, item, def, px, py, pxPerM);
+  }
+}
+
+function existingSiteItemRows(
+  state: DesignCanvasState,
+  W: number,
+  H: number,
+): Array<{ id: string; text: string; cx: number; cy: number }> {
+  return existingSiteItems(state).flatMap((item) => {
+    const def = ELEMENTS_BY_ID[item.defId];
+    if (!def) return [];
+    return [{
+      id: `existing-item-${item.id}`,
+      text: (item.label ?? def.name).toUpperCase(),
+      cx: item.x * W,
+      cy: item.y * H,
+    }];
+  });
+}
+
 /** Legend rows for the traced ground drawn by drawBlueprintGround — same exclusions, same order
  *  (biggest first), so the panel reads down in the order the eye meets the washes. Renamed rings
  *  keep their own name, matching how the farmer labelled them in the editor. */
@@ -5042,6 +5077,7 @@ export async function buildBlueprintBaseMap(
   if (!ctx) throw new Error('Canvas unavailable');
   const px = (n: number) => n * W;
   const py = (n: number) => n * H;
+  const pxPerM = W / (renderFrame.imgW * renderFrame.mPerPx);
 
   await drawBlueprintBase(ctx, renderFrame, W, H);
   const ground = await buildExactLayerOverlay(renderState, renderFrame, renderRefLayers, 'all', W, H, 'ground');
@@ -5059,6 +5095,9 @@ export async function buildBlueprintBaseMap(
     : undefined;
   if (sourceStructures) ctx.drawImage(await loadImage(sourceStructures), 0, 0, W, H);
   drawBlueprintBoundary(ctx, renderRefLayers.boundary, px, py, W, renderState, renderFrame);
+  // Existing placed items are discrete site facts, so they sit above the traced ground and locked
+  // source structures as symbols/footprints rather than becoming another zone wash.
+  drawExistingSiteItems(ctx, renderState, px, py, pxPerM);
 
   // THE SITE SHEET SHOWS "WHAT'S ALREADY HERE", NOTHING ELSE. Rory: "still more staple garden
   // issues - it came under base map in map generation ... we need to sort out once and for all
@@ -5097,6 +5136,7 @@ export async function buildBlueprintBaseMap(
       cy: (pts.reduce((s, p) => s + p[1], 0) / pts.length) * H,
     });
   }
+  extraRows.push(...existingSiteItemRows(renderState, W, H));
   drawBlueprintLabelPills(ctx, groundLabelsForSheet(renderState, renderRefLayers, W, H, 'all', undefined, baseRings, extraRows));
 
   const legendRows: StyleLegendRow[] = existingSiteGroundLegendGroups(renderState, renderRefLayers).map((group) => ({
@@ -10193,6 +10233,7 @@ export default function DesignGlossy({
       if (!ctx) return modelImage; // fallback: ship the raw model image rather than nothing
       const px = (n: number) => n * W;
       const py = (n: number) => n * H;
+      const pxPerM = W / (renderFrame.imgW * renderFrame.mPerPx);
       // Model's painted ground is the underlayer.
       ctx.drawImage(await loadImage(modelImage), 0, 0, W, H);
       // Exact existing ground, then house + driveway from source pixels. The AI is texture only:
@@ -10221,6 +10262,8 @@ export default function DesignGlossy({
       }
       // Property boundary — vector data, always exact regardless of what the model painted.
       drawBlueprintBoundary(ctx, renderRefLayers.boundary, px, py, W, renderState, renderFrame);
+      // Keep the Site Hybrid's discrete existing-item facts identical to the free exact Site map.
+      drawExistingSiteItems(ctx, renderState, px, py, pxPerM);
       // Ground-feature label pills (patio, lawn, veg garden, ...) — same call buildBlueprintBaseMap
       // makes on the exact sheet. Without this the Hybrid result had no labels at all (adversarial
       // review, 2026-07-25, noted this as an acknowledged follow-up rather than a safety gap).
@@ -10251,6 +10294,7 @@ export default function DesignGlossy({
           cy: (pts.reduce((s, p) => s + p[1], 0) / pts.length) * H,
         });
       }
+      hybridExtraRows.push(...existingSiteItemRows(renderState, W, H));
       drawBlueprintLabelPills(ctx, groundLabelsForSheet(renderState, renderRefLayers, W, H, 'all', undefined, hybridBaseRings, hybridExtraRows));
 
       // Title, legend, north arrow and scale — the other half of "our exact elements locked back on

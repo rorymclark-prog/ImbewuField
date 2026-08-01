@@ -542,6 +542,15 @@ export function existingSiteGroundRings(
   });
 }
 
+/** Discrete placed things the farmer says are already on the farm. Unlike ground rings, these are
+ * point/footprint facts: a tank, tree or shed belongs on the Site sheet without becoming a ground
+ * wash. Undefined keeps its pre-status meaning (proposed) for older saved designs. */
+export function existingSiteItems(
+  state: Pick<DesignCanvasState, 'items'>,
+): DesignCanvasState['items'] {
+  return state.items.filter((item) => item.status === 'existing');
+}
+
 /** Legend-group twin of existingSiteGroundRings — same rows exactSheetGroundLegendGroups would
  *  build, for the ring set the Base sheet is actually entitled to name. */
 export function existingSiteGroundLegendGroups(
