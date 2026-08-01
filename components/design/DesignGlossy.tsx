@@ -61,7 +61,7 @@ import {
 import { compareLabelRows, producerLabels, plotBox } from '@/lib/producer-labels';
 import { leaderLabelFontSize, placeLeaderLabel, stackLeaderRows, leaderPath } from '@/lib/leader-labels';
 import { exactModelInputMarks, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '@/lib/render-policy';
-import { EARTHWORKS_ROUTE_STYLE, WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, nearestWaterNeighbourPx, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRoutesWithVisualBridges, waterRouteStyleFor, type WaterLegendSection } from '@/lib/water-cartography';
+import { EARTHWORKS_ROUTE_STYLE, WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, nearestWaterNeighbourPx, offsetPolyline, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRoutesWithVisualBridges, waterRouteStyleFor, type EarthworksRouteStyle, type WaterLegendSection } from '@/lib/water-cartography';
 import { PLANTING_CANOPY_PAINT, PLANTING_LEGEND_SECTION_ORDER, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
 import { STRUCTURES_LEGEND_SECTION_ORDER, structuresFeaturePresentationDimensions, structuresLegendSectionForFeature, structuresRouteVisualFor, type StructuresLegendSection } from '@/lib/structures-cartography';
 import { presentSectorCartography, sectorEvidenceSummary, SECTOR_STYLES, sectorFillColor, sectorStrokeWidth, type SectorLegendIcon, type SectorVisualKind } from '@/lib/sector-cartography';
@@ -4609,12 +4609,119 @@ function drawTrueFootprint(
  *  Planting, so the two disagreed on every plan set (docs/LAYER-AUDIT-2026-07-20.md item on
  *  windbreak). Driving the loop off lineInFilter instead of a per-sheet style-key list makes that
  *  drift structurally impossible. */
+/**
+ * Drawing fallback for a swale whose width the farmer has not set — how wide the band is PAINTED,
+ * not advice about how wide to dig. Nothing prints it as a dimension, and a farmer who sets
+ * LineShape.widthM overrides it entirely. Real swale sizing depends on rainfall, slope and soil,
+ * which is a decision for the farmer and their extension officer, not a constant in a renderer.
+ */
+const SWALE_DEFAULT_WIDTH_M = 1.5;
+
+/** Paints a swale as the earthwork it is: a cut ditch, a spoil berm beside it, and the pegged
+ *  contour centreline between them — so the sheet can be used to set the work out on the ground
+ *  rather than only showing the route water takes. Geometry is offset for drawing only; the saved
+ *  centreline is never modified. See offsetPolyline for the side convention and why. */
+function drawSwaleCrossSection(
+  ctx: CanvasRenderingContext2D,
+  screenPoints: Array<[number, number]>,
+  style: EarthworksRouteStyle,
+  pxPerM?: number,
+  widthM?: number,
+): void {
+  if (screenPoints.length < 2) return;
+  const smooth = polishedRenderPoints(screenPoints as RenderPoint[]) as Array<[number, number]>;
+  // GROUND SIZE, NOT PIXEL WEIGHT. Drawn from the saved width where the scale is known, so the
+  // band covers the ground it will actually occupy; the pixel width is only the fallback for
+  // callers that cannot supply a scale, and a floor so the swale never vanishes when zoomed out.
+  const groundHalf = pxPerM && pxPerM > 0
+    ? (widthM ?? SWALE_DEFAULT_WIDTH_M) * pxPerM * 0.5
+    : 0;
+  const half = Math.max(style.width * 0.9, groundHalf);
+  // Each half of the band is one LANE. Its stroke is `half` wide, so its centreline sits at
+  // half/2 — a stroke centred on the full offset would hang outside the band and leave the
+  // middle showing bare casing, which is what made the first attempt read as three flat stripes.
+  const lane = half;
+  const ditch = offsetPolyline(smooth, half / 2);
+  const berm = offsetPolyline(smooth, -half / 2);
+  const path = (pts: Array<[number, number]>) => {
+    ctx.beginPath();
+    pts.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, x, y));
+  };
+
+  ctx.save();
+  ctx.lineCap = 'butt';
+  ctx.lineJoin = 'round';
+
+  // The whole disturbed strip first, as one dark cut edge, so ditch and berm read as one built
+  // thing rather than two unrelated lines running side by side.
+  path(smooth);
+  ctx.strokeStyle = style.casing;
+  ctx.lineWidth = half * 2 + Math.max(2, lane * 0.28);
+  ctx.stroke();
+
+  // The DITCH: the excavated channel. Darker than the spoil, because it is a hole.
+  path(ditch);
+  ctx.strokeStyle = '#4A2F1B';
+  ctx.lineWidth = lane;
+  ctx.stroke();
+
+  // The BERM: the spoil bank, in the warmer loose-soil tone.
+  path(berm);
+  ctx.strokeStyle = style.color;
+  ctx.lineWidth = lane;
+  ctx.stroke();
+
+  // Hachure ticks ACROSS the berm — the standard plan symbol for an embankment, and the thing
+  // that stops a two-tone band still reading as one flat plank. They run down the face of the
+  // bank, from the pegged contour out to its toe, the way a surveyor draws a batter.
+  //
+  // Stepped along the line by DISTANCE and interpolated WITHIN each segment. Hanging them off the
+  // saved vertices instead put three ticks on a near-straight swale, hundreds of pixels apart,
+  // because a straight run has almost no vertices to hang them from — so the bank went on reading
+  // as a plain block no matter how the spacing rule was tuned.
+  ctx.strokeStyle = style.casing;
+  ctx.lineWidth = Math.max(1, lane * 0.16);
+  const tickGap = Math.max(6, lane * 1.25);
+  let carry = 0;
+  for (let i = 1; i < smooth.length; i++) {
+    const [ax, ay] = smooth[i - 1];
+    const [bx, by] = smooth[i];
+    const segLen = Math.hypot(bx - ax, by - ay);
+    if (segLen < 1e-6) continue;
+    // Unit normal pointing at the berm — the same side offsetPolyline puts a negative offset on.
+    const nx = (by - ay) / segLen;
+    const ny = -(bx - ax) / segLen;
+    for (let d = carry; d < segLen; d += tickGap) {
+      const t = d / segLen;
+      const x = ax + (bx - ax) * t;
+      const y = ay + (by - ay) * t;
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(x + nx * half, y + ny * half);
+      ctx.stroke();
+    }
+    carry = (carry - segLen) % tickGap;
+    if (carry < 0) carry += tickGap;
+  }
+
+  // The pegged contour itself, hairline, between the two — this is the line the farmer sets out
+  // with an A-frame before anything is cut (phasing text: "Peg the contour ... before you cut").
+  path(smooth);
+  ctx.strokeStyle = 'rgba(246,240,222,0.8)';
+  ctx.lineWidth = Math.max(0.8, lane * 0.12);
+  ctx.stroke();
+  ctx.restore();
+}
+
 function drawFilteredLines(
   ctx: CanvasRenderingContext2D,
   state: DesignCanvasState,
   filter: GlossyLayerFilter,
   px: (n: number) => number,
   py: (n: number) => number,
+  /** Pixels per ground metre. Supplied so an EARTHWORK can be drawn at the size it will actually
+   *  be dug, rather than at a fixed pixel width that shrinks to a hairline on a big sheet. */
+  pxPerM?: number,
 ): void {
   ctx.save();
   ctx.lineCap = 'round';
@@ -4634,16 +4741,13 @@ function drawFilteredLines(
     };
     const routeVisual = filter === 'structures' ? structuresRouteVisualFor(l.kind) : null;
     if (earthworksStyle) {
-      trace();
-      ctx.setLineDash(earthworksStyle.dash);
-      ctx.strokeStyle = earthworksStyle.casing;
-      ctx.lineWidth = earthworksStyle.width + 4;
-      ctx.stroke();
-      trace();
-      ctx.setLineDash(earthworksStyle.dash);
-      ctx.strokeStyle = earthworksStyle.color;
-      ctx.lineWidth = earthworksStyle.width;
-      ctx.stroke();
+      drawSwaleCrossSection(
+        ctx,
+        l.points.map(([x, y]) => [px(x), py(y)] as [number, number]),
+        earthworksStyle,
+        pxPerM,
+        l.widthM,
+      );
       continue;
     }
     const routeDash = routeVisual?.dash ?? [];
@@ -4893,8 +4997,8 @@ async function buildExactLayerOverlay(
   } else if (filter === 'all') {
     // Zone bands have a dedicated analytical sheet. The integrated benchmark is a physical
     // masterplan, so repeating translucent effort zones here only muddies planting and water.
-    drawFilteredLines(ctx, state, 'planting', px, py);
-    drawFilteredLines(ctx, state, 'structures', px, py);
+    drawFilteredLines(ctx, state, 'planting', px, py, pxPerM);
+    drawFilteredLines(ctx, state, 'structures', px, py, pxPerM);
     // Routes sit over the ground but below every placed feature. Water and non-Water items then
     // share one biggest-first stack, so a small canopy/fitting is never hidden merely because its
     // category happened to be painted in an earlier subsystem pass.
@@ -4907,15 +5011,15 @@ async function buildExactLayerOverlay(
     // sheet. It is not counted or legended as Structures content.
     ctx.save();
     ctx.globalAlpha = EXACT_CONTEXT_ALPHA.structures;
-    drawFilteredLines(ctx, state, 'planting', px, py);
+    drawFilteredLines(ctx, state, 'planting', px, py, pxPerM);
     drawFilteredItems(ctx, state, 'planting', px, py, pxPerM);
     ctx.restore();
-    drawFilteredLines(ctx, state, filter, px, py);
+    drawFilteredLines(ctx, state, filter, px, py, pxPerM);
     drawExactFeaturesWithPresentation(ctx, W, H, featurePresentation, (featureCtx) => {
       drawFilteredItems(featureCtx, state, filter, px, py, pxPerM);
     });
   } else {
-    drawFilteredLines(ctx, state, filter, px, py);
+    drawFilteredLines(ctx, state, filter, px, py, pxPerM);
     drawExactFeaturesWithPresentation(ctx, W, H, featurePresentation, (featureCtx) => {
       drawFilteredItems(featureCtx, state, filter, px, py, pxPerM);
     });
@@ -4963,7 +5067,7 @@ export async function buildBlueprintPlantingMapLegacy(
 
   // 3. Windbreak lines — drawn BEFORE the planting itself so a canopy overlapping the hedgerow
   //    still reads on top of it, same stacking as the structures sheet's fence/path lines.
-  drawFilteredLines(ctx, state, 'planting', px, py);
+  drawFilteredLines(ctx, state, 'planting', px, py, pxPerM);
 
   // 3b. The planting itself, at true footprint.
   for (const it of byCartographicStack(state, 'planting')) {
@@ -5067,7 +5171,7 @@ export async function buildBlueprintStructuresMapLegacy(
   // lineInFilter files it under Planting (docs/LAYER-AUDIT-2026-07-20.md); a shared helper keyed off
   // the same predicate that legends and counts it makes that pair of sheets structurally unable to
   // disagree again.
-  drawFilteredLines(ctx, state, 'structures', px, py);
+  drawFilteredLines(ctx, state, 'structures', px, py, pxPerM);
 
   // 4. Structures / animals / access, at true footprint.
   for (const it of byCartographicStack(state, 'structures')) {

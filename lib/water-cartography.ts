@@ -368,3 +368,47 @@ export function waterRoutesWithVisualBridges(
   }
   return [...routes, ...bridges];
 }
+
+/**
+ * A SWALE IS A DITCH AND A BERM, NOT A LINE.
+ *
+ * Rory, looking at the rendered Earthworks sheet: "its just a path naow thin and scraggly but
+ * swale is made up of the ditch and berm". A single stroke — however thick or brown — draws the
+ * ROUTE the water takes, not the earthwork the farmer has to dig, so the sheet could not be used
+ * to set the work out on the ground.
+ *
+ * This offsets the saved centreline to both sides so the renderer can paint the two halves
+ * separately: the cut on one side, the spoil bank on the other. The saved geometry is never
+ * touched — this returns new points and the centreline stays exactly what the farmer drew.
+ *
+ * Side convention: the berm sits to the RIGHT of the direction the line was drawn. Slope
+ * direction is not saved per-line, so the sheet cannot know which side is truly downhill; the
+ * phasing text already tells the farmer the rule that matters ("spread the spoil onto the
+ * downhill berm"). A consistent schematic side keeps the drawing legible without asserting a
+ * fact about their slope that the app has not measured.
+ */
+export function offsetPolyline(points: Array<[number, number]>, offset: number): Array<[number, number]> {
+  if (points.length < 2 || !Number.isFinite(offset)) return points.map(([x, y]) => [x, y]);
+  return points.map(([x, y], index) => {
+    // Direction at this vertex: the segment ahead for the first point, behind for the last, and
+    // the average of both elsewhere so corners bisect instead of kinking.
+    const prev = points[index - 1];
+    const next = points[index + 1];
+    const dirs: Array<[number, number]> = [];
+    if (prev) dirs.push([x - prev[0], y - prev[1]]);
+    if (next) dirs.push([next[0] - x, next[1] - y]);
+    let dx = 0;
+    let dy = 0;
+    for (const [ux, uy] of dirs) {
+      const len = Math.hypot(ux, uy);
+      if (len > 1e-9) {
+        dx += ux / len;
+        dy += uy / len;
+      }
+    }
+    const len = Math.hypot(dx, dy);
+    if (len < 1e-9) return [x, y] as [number, number];
+    // Left normal of the unit direction; a negative offset therefore lands on the right.
+    return [x - (dy / len) * offset, y + (dx / len) * offset] as [number, number];
+  });
+}

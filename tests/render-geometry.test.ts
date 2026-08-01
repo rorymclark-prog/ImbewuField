@@ -109,3 +109,47 @@ test('a non-finite point set is refused instead of passed to a canvas path', () 
     );
   }
 });
+
+// A SWALE IS A DITCH AND A BERM. offsetPolyline is what lets the Earthworks sheet draw those two
+// halves either side of the pegged contour instead of one thick stroke (Rory: "its just a path
+// naow thin and scraggly but swale is made up of the ditch and berm"). The saved centreline is
+// the farmer's surveyed contour, so the one thing this must never do is move it.
+test('offsetPolyline shifts a copy to a consistent side and never touches the saved centreline', async () => {
+  const { offsetPolyline } = await import('@/lib/water-cartography');
+  const centreline: Array<[number, number]> = [[0, 0], [10, 0], [20, 0]];
+  const frozen = JSON.parse(JSON.stringify(centreline));
+
+  const right = offsetPolyline(centreline, -4);
+  const left = offsetPolyline(centreline, 4);
+
+  assert.deepEqual(centreline, frozen, 'the surveyed contour must never be mutated for drawing');
+  // Horizontal run: the two offsets land on opposite sides, each a clean 4 units away.
+  for (let i = 0; i < centreline.length; i++) {
+    assert.equal(right[i][0], centreline[i][0], 'a straight run must not drift along its own axis');
+    assert.equal(left[i][0], centreline[i][0]);
+    assert.ok(Math.abs(right[i][1] - centreline[i][1]) - 4 < 1e-9);
+    assert.ok(Math.abs(left[i][1] - centreline[i][1]) - 4 < 1e-9);
+    assert.ok((right[i][1] - centreline[i][1]) * (left[i][1] - centreline[i][1]) < 0,
+      'ditch and berm must end up on OPPOSITE sides, or the swale renders as one lopsided band');
+  }
+});
+
+test('offsetPolyline bisects a corner instead of kinking, and survives degenerate input', async () => {
+  const { offsetPolyline } = await import('@/lib/water-cartography');
+  // A right-angle bend: the offset vertex must sit on the corner's bisector, further from the
+  // original than a straight-run offset would be — that's what keeps the bank width even round a
+  // bend rather than pinching to nothing.
+  const bend: Array<[number, number]> = [[0, 0], [10, 0], [10, 10]];
+  const out = offsetPolyline(bend, 4);
+  const moved = Math.hypot(out[1][0] - bend[1][0], out[1][1] - bend[1][1]);
+  assert.ok(moved > 3.9, `corner vertex should still be offset (was ${moved})`);
+
+  // Degenerate inputs return the geometry unchanged rather than NaN coordinates, which would
+  // silently blank the whole line on the canvas.
+  assert.deepEqual(offsetPolyline([[1, 2]], 4), [[1, 2]]);
+  assert.deepEqual(offsetPolyline([], 4), []);
+  const duplicate: Array<[number, number]> = [[5, 5], [5, 5]];
+  for (const [x, y] of offsetPolyline(duplicate, 4)) {
+    assert.ok(Number.isFinite(x) && Number.isFinite(y), 'repeated points must not produce NaN');
+  }
+});

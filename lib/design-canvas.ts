@@ -214,6 +214,20 @@ export interface LineShape {
   // Undefined = pinned at the midpoint.
   labelDx?: number;
   labelDy?: number;
+  /**
+   * How wide the DISTURBED GROUND is, in metres — ditch plus berm together for a swale.
+   *
+   * A swale had no width at all, so the plan sheets drew it at a fixed pixel weight: on a large
+   * sheet it shrank to a hairline and read as a footpath rather than the biggest earthwork on the
+   * farm (Rory: "its just a path naow thin and scraggly ... should be correctly sized (maybe we
+   * can adjust it too)"). Width belongs on the SHAPE, not the renderer, so every sheet and the
+   * live canvas agree and one swale can differ from another.
+   *
+   * Undefined means "not stated" and falls back to a drawing default — deliberately NOT a
+   * recommendation about how wide to dig, which depends on the farmer's rainfall, slope and soil.
+   * Nothing prints this as a dimension; it only sets how big the band is drawn.
+   */
+  widthM?: number;
 }
 
 // 'earthworks' is the land-shaping step: swales, berms, terraces, half-moons, banks. It was
