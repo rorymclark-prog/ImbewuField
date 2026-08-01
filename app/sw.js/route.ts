@@ -23,7 +23,16 @@ const SW_SOURCE = `
 const CACHE_VERSION = ${JSON.stringify(BUILD_ID)};
 const SHELL_CACHE = 'imbewufield-shell-' + CACHE_VERSION;
 const RUNTIME_CACHE = 'imbewufield-runtime-' + CACHE_VERSION;
-const PRECACHE_URLS = ['/manifest.json', '/icon-192.png', '/icon-512.png'];
+// THE APP SHELL MUST BE IN HERE OR THE APP CANNOT OPEN OFFLINE. This list held a manifest and two
+// icons — no HTML, no JS — so nothing a farmer could actually open was ever precached. Combined
+// with RUNTIME_CACHE being version-named (the activate sweep below drops the previous build's), a
+// farmer who loaded a new build on the last bar of signal and then went home had NOTHING: the
+// navigate fallback reached for '/', which was never precached either.
+// These are the routes a farmer opens on a phone with no signal.
+const PRECACHE_URLS = [
+  '/manifest.json', '/icon-192.png', '/icon-512.png',
+  '/', '/home', '/farmer', '/student',
+];
 
 // COURSE DOWNLOADS — deliberately NOT versioned by CACHE_VERSION, and deliberately spared by the
 // activate sweep below.
@@ -41,7 +50,12 @@ const COURSE_PATH = /^\\/course-(decks|audio|animations|images)\\//;
 self.addEventListener('install', function (event) {
   event.waitUntil(
     caches.open(SHELL_CACHE).then(function (cache) {
-      return cache.addAll(PRECACHE_URLS);
+      // ONE URL AT A TIME, NOT addAll. addAll is atomic: a single 404 or redirect rejects the whole
+      // precache, and the .catch below would swallow it — leaving the farmer with no shell at all
+      // and no signal that anything went wrong. Per-URL means a bad entry costs only that entry.
+      return Promise.all(PRECACHE_URLS.map(function (url) {
+        return cache.add(url).catch(function () {});
+      }));
     }).catch(function () {})
   );
   // Activate this worker immediately instead of waiting for every other open
@@ -112,9 +126,15 @@ self.addEventListener('fetch', function (event) {
           return response;
         })
         .catch(function () {
-          return caches.match(request).then(function (cached) {
-            return cached || caches.match('/');
-          });
+          // Fall back through what a farmer can actually use: this exact page, then the app's
+          // real entry point, then the root. '/' alone was the old behaviour and it was never
+          // precached, so offline navigation simply failed.
+          // Chained, NOT `a || caches.match(b)` — caches.match returns a PROMISE, which is always
+          // truthy, so an || chain would stop at the first match call whether or not it resolved
+          // to anything.
+          return caches.match(request)
+            .then(function (hit) { return hit || caches.match('/home'); })
+            .then(function (hit) { return hit || caches.match('/'); });
         })
     );
     return;

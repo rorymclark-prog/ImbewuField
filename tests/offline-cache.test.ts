@@ -88,6 +88,38 @@ test('the paid-for course cache is stable across deploys and explicitly spared f
   assert.doesNotMatch(source, /COURSE_CACHE\s*=\s*['"][^'"]*['"]\s*\+\s*(?:CACHE_VERSION|BUILD_ID)/);
 });
 
+test('the app shell a farmer opens with no signal is actually precached', () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+  const list = source.match(/const PRECACHE_URLS = \[([\s\S]*?)\];/)?.[1] ?? '';
+
+  // The whole promise of this app is that it works at a homestead with no signal. That needs the
+  // SHELL, not just a manifest and two icons — which is all this list held. A farmer who loaded a
+  // new build on the last bar of signal and went home could not open the app at all, with their
+  // downloaded lessons sitting on the phone.
+  for (const route of ['/', '/home', '/farmer', '/student']) {
+    assert.ok(
+      new RegExp(`'${route}'`).test(list),
+      `PRECACHE_URLS must contain ${route} or the app cannot open offline`,
+    );
+  }
+
+  // addAll is ATOMIC: one 404 or redirect rejects the whole precache, and the catch that follows
+  // swallows it — so the farmer gets no shell AND no error. Per-URL means one bad entry costs
+  // only that entry.
+  assert.doesNotMatch(source, /cache\.addAll\(PRECACHE_URLS\)/);
+  assert.match(source, /PRECACHE_URLS\.map\(/);
+});
+
+test('offline navigation falls back through pages that are really cached', () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+
+  // caches.match returns a PROMISE, which is always truthy, so `hit || caches.match(next)` in a
+  // single expression stops at the first call whether or not it resolved to anything. The fallback
+  // has to be chained through .then to actually try the next candidate.
+  assert.doesNotMatch(source, /cached \|\| caches\.match\('\/'\)/);
+  assert.match(source, /\.then\(function \(hit\) \{ return hit \|\| caches\.match\('\/home'\); \}\)/);
+});
+
 test('status comes from real cache entries, not a persistent downloaded flag', async () => {
   const cache = new MemoryCache();
   cache.rows.set('/slide-a.png', new Response('a', { status: 200 }));
