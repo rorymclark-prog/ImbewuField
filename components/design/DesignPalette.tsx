@@ -48,7 +48,8 @@ import {
   MIN_AREA_FILL_OPACITY, MAX_AREA_FILL_OPACITY, type AreaFillStyle,
 } from '@/lib/design-canvas';
 import { MIN_BED_COUNT, MAX_BED_COUNT } from '@/lib/bed-block';
-import { CATEGORY_META, CATEGORY_STEP, ELEMENT_CATALOG, GROUND_FEATURES, ZONE_DEFS, biomeClimates, elementSuitsClimate, elementVisibleInPalette, type DesignElementDef } from '@/lib/design-elements';
+import { CATEGORY_META, CATEGORY_STEP, ELEMENT_CATALOG, ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_DEFS, biomeClimates, elementSuitsClimate, elementVisibleInPalette, type DesignElementDef } from '@/lib/design-elements';
+import { SPECIES } from '@/lib/species-catalog';
 import { biomeKeyForName } from '@/lib/biome';
 import { COMPASS16_ORDER, isCompassDirection16, type LocalWindObservation } from '@/lib/local-wind';
 import SpeciesPicker from './SpeciesPicker';
@@ -1092,6 +1093,29 @@ export default function DesignPalette({
                     selectedSpeciesId={placeSpeciesId}
                     onSelect={(id) => {
                       setPlaceSpeciesId(id);
+                      // A TREE IS A CANOPY, NOT A BOX. Rory, on a placed Wild date palm and a
+                      // Num-num: "square?" — both had come out as translucent green RECTANGLES.
+                      //
+                      // Picking a species only ever set placeSpeciesId. The placed item's SHAPE
+                      // comes from the armed chip's def (DesignCanvas runTapAction: `defId:
+                      // placeDefId`), and nothing reconciled the two — so picking a canopy tree
+                      // while the generic "Other planting" chip (rect, 2×2 m) was armed produced a
+                      // square with a palm's name and a palm's mature width. The size and the name
+                      // were both applied correctly; only the footprint silently disagreed.
+                      //
+                      // `stratum` is the catalog's own answer to "is this a woody plant with a
+                      // crown". canopy / sub-canopy / shrub get a round canopy footprint; herb,
+                      // groundcover and climber keep whatever the farmer armed, because those
+                      // genuinely do belong in a rectangular bed, strip or row.
+                      //
+                      // Only re-arms when the current chip is NOT already round: a farmer who armed
+                      // Citrus Tree or Mango Tree and then picked a cultivar keeps their own choice.
+                      // The item's wM/hM are still overwritten with the species' true mature width
+                      // downstream, so this changes the SHAPE, never the size.
+                      const sp = SPECIES.find((s) => s.id === id);
+                      const woody = sp?.stratum === 'canopy' || sp?.stratum === 'sub-canopy' || sp?.stratum === 'shrub';
+                      const armed = placeDefId ? ELEMENTS_BY_ID[placeDefId] : null;
+                      if (woody && armed?.shape !== 'circle') setPlaceDefId('tree_other');
                       setSpeciesPickerOpen(false);
                     }}
                     onClose={() => setSpeciesPickerOpen(false)}
