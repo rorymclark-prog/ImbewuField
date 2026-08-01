@@ -7985,6 +7985,7 @@ async function composeStyleSheet(
     fontSize: number;
     symbolSize: number;
     textX: number;
+    columnWidth: number;
     rowLayout: ReturnType<typeof layoutRows>;
     columnLayout: ReturnType<typeof layoutLegendColumn>;
   };
@@ -8021,6 +8022,7 @@ async function composeStyleSheet(
         fontSize,
         symbolSize,
         textX: symbolSize + rowTextGap,
+        columnWidth,
         rowLayout,
         columnLayout: layoutLegendColumn(
           availableRowsH,
@@ -8029,6 +8031,32 @@ async function composeStyleSheet(
         ),
       };
     });
+  };
+
+  // wrapLegendText/wrapSectionHeading only break BETWEEN words — a single word or short heading
+  // that alone is wider than the column cannot be shrunk by wrapping. A sparse legend (as little
+  // as one row) was reaching this search with an enormous height-derived ceiling (availableRowsH
+  // divided by a tiny row count), and because "WATER EARTHWORKS" / "Swale / cut-and-fill
+  // earthworks x1" never wrap into enough EXTRA lines to blow the height budget, the height-only
+  // fit accepted a font size whose individual words ran off the edge of the panel (Rory: "font
+  // size now in the legend is over sized"). Reject any candidate where a rendered line's actual
+  // width overflows its column, not just its total height.
+  const columnPlanOverflowsWidth = (plan: LegendColumnPlan): boolean => {
+    const bodyTextWidth = Math.max(1, plan.columnWidth - plan.textX);
+    const sectionFs = Math.max(12, Math.round(plan.fontSize * 0.88));
+    for (const measured of plan.rowLayout) {
+      ctx.font = `600 ${plan.fontSize}px ${SHEET_BODY_FONT}`;
+      for (const line of measured.lines) {
+        if (ctx.measureText(line).width > bodyTextWidth) return true;
+      }
+      if (measured.headingLines.length) {
+        ctx.font = `800 ${sectionFs}px ${REFERENCE_LABEL_FONT}`;
+        for (const line of measured.headingLines) {
+          if (ctx.measureText(line).width > plan.columnWidth) return true;
+        }
+      }
+    }
+    return false;
   };
 
   // The old pass started at a width-derived size and only counted DOWN. That made the panel's
@@ -8040,9 +8068,10 @@ async function composeStyleSheet(
     ? fitLegendFontSize(
         (fontSize) => {
           const candidate = planColumns(1, fontSize);
-          return candidate.length
-            ? Math.max(...candidate.map((column) => column.columnLayout.contentBottom))
-            : Number.POSITIVE_INFINITY;
+          if (!candidate.length || candidate.some(columnPlanOverflowsWidth)) {
+            return Number.POSITIVE_INFINITY;
+          }
+          return Math.max(...candidate.map((column) => column.columnLayout.contentBottom));
         },
         availableRowsH,
         Math.max(normalFs, Math.round(availableRowsH / rows.length)),
