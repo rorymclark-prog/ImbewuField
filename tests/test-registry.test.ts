@@ -16,6 +16,9 @@ import { readdirSync, readFileSync } from 'node:fs';
 // checks itself.
 
 const ROOT = new URL('..', import.meta.url);
+// The Firestore rules suite requires a separately started emulator and is intentionally excluded
+// from the canonical no-services npm test lane. Its package.json test:rules script is explicit.
+const EXTERNAL_TEST_FILES = new Set(['firestore-rules.test.ts']);
 
 test('every test file on disk is registered in the npm test script', () => {
   const pkg = JSON.parse(readFileSync(new URL('package.json', ROOT), 'utf8'));
@@ -23,7 +26,7 @@ test('every test file on disk is registered in the npm test script', () => {
   const registered = new Set(script.match(/tests\/[A-Za-z0-9._-]+\.test\.ts/g) ?? []);
 
   const onDisk = readdirSync(new URL('tests', ROOT))
-    .filter((f) => f.endsWith('.test.ts'))
+    .filter((f) => f.endsWith('.test.ts') && !EXTERNAL_TEST_FILES.has(f))
     .map((f) => `tests/${f}`);
 
   const orphans = onDisk.filter((f) => !registered.has(f));
@@ -43,7 +46,7 @@ test('the npm test script does not name a file that no longer exists', () => {
 
   const onDisk = new Set(
     readdirSync(new URL('tests', ROOT))
-      .filter((f) => f.endsWith('.test.ts'))
+      .filter((f) => f.endsWith('.test.ts') && !EXTERNAL_TEST_FILES.has(f))
       .map((f) => `tests/${f}`),
   );
 
