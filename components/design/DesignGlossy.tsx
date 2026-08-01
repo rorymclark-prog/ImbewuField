@@ -25,6 +25,7 @@ import { fetchSheetContours, type SheetContourResult } from '@/lib/sheet-contour
 import {
   gateBoundaryBreaks,
   boundarySegmentsWithBreaks,
+  polygonAreaCentroid,
   type GateLike as GateLikeGeom,
   type FrameLike as BoundaryFrameGeom,
 } from '@/lib/boundary-geometry';
@@ -72,6 +73,7 @@ import {
   fitLegendFontSize,
   layoutLegendColumn,
   legendHeightFillRatio,
+  legendMaxFontSize,
   legendRowFontSize,
 } from '@/lib/sheet-legend-layout';
 import { overlayElementsText } from '@/lib/overlay-elements';
@@ -1761,6 +1763,41 @@ function buildZoneOverlay(
     }
     ctx.fillStyle = `${def.color}3D`;
     ctx.fill('evenodd'); // outer + hole rings in one path → real holes
+    // HATCH THE FILL, because the legend swatch has always been hatched and the map never was.
+    // That is this file's own stated rule — a swatch must look like the thing on the map — broken
+    // on the one sheet whose entire job is telling zones apart. Rory, on a real render: "you have
+    // hatched (lines) the zones here, don't just keep them as polygon fills."
+    //
+    // It is also the second identity channel. A 24%-alpha wash over an aerial photograph inherits
+    // whatever is underneath it; ruled lines have their own geometry, so they survive the busy
+    // ground, greyscale printing and colour blindness alike. Same direction and rhythm as the
+    // swatch in drawStyleLegendSymbol — if you change one, change both.
+    ctx.save();
+    ctx.clip('evenodd');
+    const hatchStep = Math.max(9, W * 0.011);
+    for (const [stroke, width] of [
+      ['rgba(252,250,240,0.5)', Math.max(3, W * 0.0034)] as const,
+      [`${def.color}D9`, Math.max(1.6, W * 0.0018)] as const,
+    ]) {
+      ctx.strokeStyle = stroke;
+      ctx.lineWidth = width;
+      ctx.beginPath();
+      for (let d = 0; d < W + H; d += hatchStep) {
+        ctx.moveTo(d, 0);
+        ctx.lineTo(d - H, H);
+      }
+      ctx.stroke();
+    }
+    ctx.restore();
+    // Re-declare the path: clip() left it intact but the fill rings must be re-walked for the
+    // outline strokes below to describe the same donut the fill did.
+    ctx.beginPath();
+    for (const poly of zoneFillPolys(state, refLayers, z)) {
+      for (const ring of poly) {
+        ring.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, x * W, y * H));
+        ctx.closePath();
+      }
+    }
     ctx.strokeStyle = 'rgba(32,25,15,0.42)';
     ctx.lineWidth = 7;
     ctx.stroke();
@@ -5250,7 +5287,26 @@ export async function buildBlueprintBaseMap(
   const pxPerM = W / (renderFrame.imgW * renderFrame.mPerPx);
 
   await drawBlueprintBase(ctx, renderFrame, W, H);
-  const ground = await buildExactLayerOverlay(renderState, renderFrame, renderRefLayers, 'all', W, H, 'ground');
+  // THE FILL MUST OBEY THE SAME "what's already here" RULE THE LEGEND DOES. The legend below was
+  // moved onto existingSiteGroundRings when the staple garden was first reported on this sheet;
+  // this call was left passing 'all' — the filter meaning "the whole FINISHED DESIGN" — so the
+  // garden stopped being NAMED on the Site sheet while still being PAINTED on it. That is worse
+  // than the original bug, not better: four green polygons with no legend row at all, which is
+  // this sheet's own stated invariant ("nothing drawn without a legend row") broken. Rory, on the
+  // real render: "why is staple gardens polygons in here?"
+  //
+  // One selector now feeds both, so a future change to what counts as existing cannot move the
+  // legend without moving the paint with it.
+  const baseRings = existingSiteGroundRings(renderState, renderRefLayers);
+  const ground = await buildExactLayerOverlay(
+    { ...renderState, zones: baseRings },
+    renderFrame,
+    renderRefLayers,
+    'all',
+    W,
+    H,
+    'ground',
+  );
   if (ground) ctx.drawImage(await loadImage(ground), 0, 0, W, H);
   const sourceStructures = renderFrame.satDataUrl
     ? await buildLockedStructureOverlay(
@@ -5278,7 +5334,7 @@ export async function buildBlueprintBaseMap(
   // yet printed on the Site sheet as if it were surveyed fact. existingSiteGroundRings answers the
   // narrower, correct question via ownedByCurrentStep('base', ...) — the SAME authority the wizard
   // itself already uses to decide what the Base step may edit — so this can never drift from it.
-  const baseRings = existingSiteGroundRings(renderState, renderRefLayers);
+  // (Computed above, where the ground fill is built from the very same list.)
 
   // A MAP MISSING ITS OWN HOUSE LABEL. The refLayers-sourced house/driveway (traced on the main
   // map before the Studio, the common path — see authoritativeHouseFootprints) has always
@@ -5776,10 +5832,17 @@ function drawSectorAnalysis(
   //    + labels stay inside the frame and clear the top-right legend and top-left title.
   let cx = W / 2, cy = H / 2, siteR = Math.min(W, H) * 0.22;
   if (bnd.length >= 3) {
-    let minX = 1, minY = 1, maxX = 0, maxY = 0, sx = 0, sy = 0;
-    for (const [x, y] of bnd) { minX = Math.min(minX, x); minY = Math.min(minY, y); maxX = Math.max(maxX, x); maxY = Math.max(maxY, y); sx += x; sy += y; }
-    cx = (sx / bnd.length) * W;
-    cy = (sy / bnd.length) * H;
+    let minX = 1, minY = 1, maxX = 0, maxY = 0;
+    for (const [x, y] of bnd) { minX = Math.min(minX, x); minY = Math.min(minY, y); maxX = Math.max(maxX, x); maxY = Math.max(maxY, y); }
+    // AREA centroid, not the average of the vertices. Rory, on a real sector sheet: "center the
+    // azimuth properly in the centre of the site." The vertex average is only the centre of a
+    // polygon whose corners are evenly spaced — and a farmer's traced boundary never is. Ubhejane's
+    // has dozens of points crowded along the walked road edge and four on the straight far side, so
+    // the mean was dragged bodily toward the road and the whole sun-path ring with it. Area
+    // centroid is indifferent to how densely an edge happens to have been tapped.
+    const centre = polygonAreaCentroid(bnd);
+    cx = centre[0] * W;
+    cy = centre[1] * H;
     siteR = 0.5 * Math.hypot((maxX - minX) * W, (maxY - minY) * H);
   }
   const margin = Math.round(W * 0.035);
@@ -6295,10 +6358,15 @@ function drawSectorAnalysis(
     ctx.arc(cx, cy, r, startAngle, endAngle, sweepNorth);
     ctx.stroke();
     const apexVec = bearingToUnitVector(sweepNorth ? 0 : 180);
-    const sunR = Math.max(6, W * 0.0048);
-    drawSunIcon(cx + Math.cos(startAngle) * r, cy + Math.sin(startAngle) * r, sunR * 0.75, color);
-    drawSunIcon(cx + apexVec[0] * r, cy + apexVec[1] * r, sunR, color);
-    drawSunIcon(cx + Math.cos(endAngle) * r, cy + Math.sin(endAngle) * r, sunR * 0.75, color);
+    // MUCH bigger, and the ARC ENDS especially — Rory: "make the suns bigger at the ends of the
+    // arcs, like much bigger." The ends are sunrise and sunset, which is the pair of facts a
+    // farmer actually sites a windbreak or a shade tree against; they were drawn at three
+    // quarters of the noon sun and vanished into the photograph entirely. They now lead, and the
+    // noon marker (which already has the banner and the altitude number carrying it) follows.
+    const sunR = Math.max(14, W * 0.0125);
+    drawSunIcon(cx + Math.cos(startAngle) * r, cy + Math.sin(startAngle) * r, sunR, color);
+    drawSunIcon(cx + apexVec[0] * r, cy + apexVec[1] * r, sunR * 0.82, color);
+    drawSunIcon(cx + Math.cos(endAngle) * r, cy + Math.sin(endAngle) * r, sunR, color);
     ctx.restore();
     return apexVec;
   };
@@ -8286,11 +8354,19 @@ async function composeStyleSheet(
   // four and five interpolate. legendHeightFillRatio IS that curve. Type now rides the same curve,
   // so a sparse legend cannot grow past its width-derived size, and a dense one keeps the
   // fill-the-panel behaviour that fixed the Water sheet.
-  const heightCeiling = Math.round(availableRowsH / rows.length);
-  const growthCeiling = Math.round(
-    normalFs + Math.max(0, heightCeiling - normalFs) * legendHeightFillRatio(rows.length),
-  );
-  const desiredFs = rows.length > 0 && rows.length <= 8
+  //
+  // AND THE CURVE ALONE WAS STILL NOT ENOUGH, because it is entirely height-derived. On sheet 01
+  // and sheet 03 — four rows in a tall boundary-framed panel — the interpolated ceiling still
+  // landed near 120px, so "House / building" and "Zone 0 — Home & hub" set larger than the sheet
+  // title and wrapped over three lines each. legendMaxFontSize is the missing absolute bound: it
+  // comes from panel WIDTH, the thing that actually decides how many characters fit on a line.
+  //
+  // The row-count gate below went with it. Capping the fitting search at 8 rows is what left the
+  // Sector sheet's nine-row legend stuck at the bare floor ("the text and icons in the legend are
+  // too small") — a dense legend was denied the search entirely rather than being allowed to grow
+  // and then step back down. The step-down loop underneath already guarantees it fits.
+  const growthCeiling = legendMaxFontSize(legendW);
+  const desiredFs = rows.length > 0
     ? fitLegendFontSize(
         (fontSize) => {
           const candidate = planColumns(1, fontSize);

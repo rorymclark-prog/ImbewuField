@@ -82,16 +82,55 @@ export function legendRowFontSize(
   // The fitting search above it is unchanged and still authoritative: a legend with too many rows
   // to fit at this size steps DOWN until it fits, so a bigger base can never push rows off the
   // panel — it only stops a sparse legend from staying needlessly small.
-  const baseSize = Math.max(17, Math.round(safeWidth * 0.046));
-  if (
-    !Number.isFinite(availableHeight)
-    || availableHeight <= 0
-    || !Number.isSafeInteger(rowCount)
-    || rowCount <= 0
-  ) return baseSize;
-  const trackTarget = Math.max(baseSize, Math.round((availableHeight / rowCount) * 0.11));
-  const fillRatio = legendHeightFillRatio(rowCount);
-  return Math.round(baseSize + (trackTarget - baseSize) * fillRatio);
+  // ONE STANDARD SIZE, derived from panel width alone — row count no longer participates.
+  //
+  // The row-count curve is why Rory had to report legend type FOUR times in one evening, twice in
+  // each direction: "the text in the legend is way too big" (sheet 03, four rows), "the text and
+  // icons in the legend are too small" (sheet 02, nine rows), "the text in the legend is terribly
+  // small again" (sheet 05, one row). Those are not four defects. They are one policy — let a
+  // sparse legend grow into its spare height — producing a different type size on every sheet in
+  // the set, which is precisely what he then asked for the opposite of: "try keep this standard
+  // throughout the maps."
+  //
+  // So type is now a constant fraction of the panel, exactly as the icons already were. A legend
+  // with genuinely too much text still shrinks, but through the step-down search in DesignGlossy
+  // that measures whether the rows actually fit — a real constraint — rather than through a guess
+  // made from how many rows there happen to be. availableHeight/rowCount stay in the signature
+  // because the caller's overflow search still needs them; they no longer set the size.
+  void availableHeight;
+  void rowCount;
+  return Math.min(legendMaxFontSize(safeWidth), Math.max(22, Math.round(safeWidth * 0.072)));
+}
+
+/**
+ * The absolute readability ceiling for legend type, derived from PANEL WIDTH.
+ *
+ * Everything else in this file sizes type from the panel's spare HEIGHT, which is why the same
+ * policy produced both complaints Rory raised on one night of real sheets: sheet 01 (four rows in
+ * a tall panel) grew to roughly seven times the floor — "House / building" set larger than the
+ * sheet's own title, every row wrapping over three lines — while sheet 02 (nine rows) could not
+ * grow at all and stayed at the floor: "the text and icons in the legend are too small".
+ *
+ * A height-derived size has no idea how WIDE the words are, so it happily picks a size at which
+ * two words fill the panel. Width does know: it is what decides how many characters fit on a line,
+ * which is the thing being read. This ceiling is what stops a sparse legend from turning four
+ * facts into a poster, and it is deliberately generous enough that a dense legend still has real
+ * room to grow into — the two failures are opposite ends of one missing band, not two policies.
+ *
+ * The band is deliberately NARROW — floor 6.2% of panel width, ceiling 8.0% — because Rory's next
+ * ask after seeing it working was for the sheets to agree with each other: "try keep this standard
+ * throughout the maps, as standard as possible; I know some maps have much text so big text is not
+ * possible." A tight band is what makes a nine-row sheet and a four-row sheet look like they came
+ * from the same drawing office, while still letting a genuinely overloaded legend step down.
+ *
+ * The model for this is the legend ICONS, which Rory singled out as already right on sheet 04.
+ * They have always been sized from COLUMN WIDTH (symbolSizeFor in DesignGlossy.tsx: ~12% of the
+ * column) and so have always been consistent sheet to sheet. Type was the odd one out. This makes
+ * type follow the icons' rule rather than the panel's leftover height.
+ */
+export function legendMaxFontSize(legendWidth: number): number {
+  const safeWidth = Number.isFinite(legendWidth) && legendWidth >= 0 ? legendWidth : 0;
+  return Math.max(22, Math.round(safeWidth * 0.080));
 }
 
 export function legendRowGap(

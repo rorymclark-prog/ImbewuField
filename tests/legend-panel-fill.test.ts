@@ -9,6 +9,7 @@ import {
   FULL_HEIGHT_LEGEND_MIN_ROWS,
   legendHeightFillRatio,
   layoutLegendColumn,
+  legendMaxFontSize,
   legendRowFontSize,
   legendRowGap,
   MAX_GAP_TO_ROW_RHYTHM,
@@ -103,21 +104,37 @@ test('four- and five-row layouts apportion expansion instead of crossing a hard 
   assert.ok(layouts[2].contentBottom < availableHeight, 'five rows leave the final third for six rows');
 });
 
-test('a populated tall legend grows its facts while a sparse legend keeps the normal width scale', () => {
-  // The numbers moved up together when the sheets left their condensed face for a normal-width
-  // sans and the panel stopped spending a line on the word LEGEND — see SHEET_SANS in
-  // DesignGlossy.tsx and the base-size note in lib/sheet-legend-layout.ts. What this test protects
-  // is the SHAPE of the curve, not the constants: a sparse legend still sits near the width-derived
-  // base, a populated one still grows toward the cap, and a short panel still refuses to inflate.
-  assert.equal(legendRowFontSize(445, 1_289, 3), 20);
-  assert.equal(legendRowFontSize(445, 1_289, 6), 24);
-  assert.equal(legendRowFontSize(445, 400, 6), 20, 'short panels do not force oversized type');
-  assert.ok(
-    legendRowFontSize(445, 4_000, 6) > 29,
-    'a tall panel is not capped by the old width-only ceiling',
-  );
-  assert.ok(legendRowFontSize(445, 1_289, 6) > legendRowFontSize(445, 1_289, 3), 'a fuller legend grows');
-  assert.ok(legendRowFontSize(445, 1_289, 3) >= 17, 'the floor is a readable size, not a fitting artefact');
+test('legend type is ONE standard size across the whole plan set, whatever a sheet holds', () => {
+  // THIS TEST USED TO ASSERT THE OPPOSITE, and it was retired deliberately rather than adjusted.
+  //
+  // It pinned a curve that let a sparse legend grow into its spare panel height. That policy is
+  // what made Rory report legend type four times in one evening of real sheets, twice in each
+  // direction — "way too big" on the four-row Zones sheet, "too small" on the nine-row Sector
+  // sheet, "terribly small again" on the one-row Earthworks sheet — and then ask for the thing
+  // those complaints have in common: "try keep this standard throughout the maps, as standard as
+  // possible." A per-sheet size cannot be standard across sheets. The curve had to go, not move.
+  //
+  // Height and row count are still parameters (the caller's overflow search needs them) but must
+  // no longer influence the answer at all — that is the property worth guarding, because
+  // reintroducing either one is exactly how this regresses.
+  const standard = legendRowFontSize(445, 1_289, 3);
+  for (const rowCount of [1, 3, 4, 5, 6, 9, 14]) {
+    for (const panelHeight of [400, 1_289, 4_000]) {
+      assert.equal(
+        legendRowFontSize(445, panelHeight, rowCount),
+        standard,
+        `row count ${rowCount} at panel height ${panelHeight} must not change legend type size`,
+      );
+    }
+  }
+
+  // The band itself: a constant fraction of PANEL WIDTH, which is what decides how many characters
+  // fit on a line — the same rule the legend icons have always used (symbolSizeFor in
+  // DesignGlossy.tsx), and the reason the icons were the one part Rory said was already right.
+  assert.equal(standard, 32);
+  assert.ok(standard <= legendMaxFontSize(445), 'the standard size sits inside its own ceiling');
+  assert.ok(legendRowFontSize(890, 1_289, 3) > standard, 'a wider panel still scales up');
+  assert.ok(standard >= 22, 'the floor is a readable size, not a fitting artefact');
 });
 
 test('fit-to-height chooses the largest sparse type that its measured rows can hold', () => {

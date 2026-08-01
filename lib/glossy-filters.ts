@@ -454,6 +454,19 @@ export type GroundRegister = 'content' | 'context' | 'absent';
  *    every sheet — so it has no content/context register of its own to pick. */
 export function groundRegister(kind: GroundFeatureKind, filter: GlossyLayerFilter): GroundRegister {
   if (kind === 'boundary') return 'absent';
+  // THE STAPLE GARDEN IS DESIGNED PLANTING, NOT SITE FABRIC — and that is the whole reason it may
+  // not ride the same rule as a lawn or a patio. Every other ground ring is something the farmer
+  // RECORDS about the site, so drawing it quietly on a Water or Zones sheet genuinely orients the
+  // reader: the pipe runs under that paving whether or not this sheet is about paving. A quarter
+  // hectare of mielies the farmer has not planted yet orients nobody — it is a proposal, and on an
+  // analysis sheet it reads as a fact about the ground. Rory has now reported it twice on two
+  // different sheets: "why is staple gardens polygons in here?" (Site) and "again the staple garden
+  // polygons are here, get rid of these things" (Water).
+  //
+  // So it is content exactly where the design it belongs to is the subject, and absent elsewhere.
+  // groundFeatureLayer in lib/design-canvas.ts already answers "whose ring is this" with 'planting'
+  // for this one feature; this is the same answer expressed in sheet terms, and the two must agree.
+  if (kind === 'staple_garden') return filter === 'all' || filter === 'planting' ? 'content' : 'absent';
   return filter === 'all' || filter === 'planting' || filter === 'structures' ? 'content' : 'context';
 }
 

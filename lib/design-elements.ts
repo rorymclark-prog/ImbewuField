@@ -76,13 +76,27 @@ export type DesignLayerKey =
 // looking ring and red arrived at 1. Same muted app tones as before, shifted one ring inward;
 // only 3's yellow-green is a new tone (in-family, between 2's amber and 4's green). The numeral
 // badge always rides on the ring, so identity never rests on colour alone.
+// THEN THE HEAT MAP LOST TO LEGIBILITY, on Rory's own rendered zone sheet: "i cant easily tell
+// the zones by the colour ... red orange yellow green blue and purple?" He is right, and the
+// reason is that the ramp above was a ramp — 2 amber, 3 yellow-green and 4 green are ADJACENT
+// hues, deliberately so, and adjacent muted hues laid at 24% over a green-and-red-soil aerial
+// photograph are not separable. A decaying-intensity story only survives on white paper.
+//
+// This is a full-spectrum categorical scale instead: six hues spread right around the wheel, so
+// no two zones are neighbours in hue AND no two are close in lightness. Red still marks the hub,
+// so the "hottest where you walk most" reading survives at the one end a farmer looks for first;
+// past that, telling zone 3 from zone 4 at a glance beats narrating a gradient.
+//
+// Identity never rests on hue alone regardless: every ring carries its numeral badge, and the map
+// fill is hatched to match its legend swatch (buildZoneOverlay) — so the sheet still works in
+// greyscale, in print, and for a colourblind reader.
 export const ZONE_COLORS: Record<0 | 1 | 2 | 3 | 4 | 5, string> = {
-  0: '#B53A3A',
-  1: '#C66A1C',
-  2: '#9B8B1E',
-  3: '#6E8A2E',
-  4: '#2F7A4A',
-  5: '#1A6B58',
+  0: '#D02A2A',
+  1: '#E67514',
+  2: '#E0B517',
+  3: '#3E9B32',
+  4: '#2C6FD1',
+  5: '#7B44C4',
 };
 
 // LABELS THAT FIT A CRÈCHE, A SCHOOL OR A COMMUNITY CENTRE, NOT JUST A FARMHOUSE.

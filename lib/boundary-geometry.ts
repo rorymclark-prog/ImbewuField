@@ -191,3 +191,36 @@ export function boundarySegmentsWithBreaks(
       return pts;
     });
 }
+
+/**
+ * Area centroid of a closed ring (shoelace), in the ring's own coordinate space.
+ *
+ * NOT the average of the vertices, which is what several render paths reached for and is only the
+ * same thing when the corners happen to be evenly spaced. A farmer's traced boundary never is:
+ * they walk the road edge tapping every few metres and then cut straight across the back in four
+ * points, so the vertex mean sits bodily over the road. Anything centred on "the middle of the
+ * site" — the sector sheet's sun-path ring, a sheet-wide label anchor — must use this instead.
+ *
+ * Falls back to the vertex mean for a degenerate ring (fewer than 3 points, or zero signed area,
+ * e.g. every point collinear or duplicated), because that is the only defined answer left and it
+ * is better than NaN reaching a canvas.
+ */
+export function polygonAreaCentroid(points: NormPoint[]): NormPoint {
+  if (!points.length) return [0.5, 0.5];
+  const mean = (): NormPoint => [
+    points.reduce((sum, p) => sum + p[0], 0) / points.length,
+    points.reduce((sum, p) => sum + p[1], 0) / points.length,
+  ];
+  if (points.length < 3) return mean();
+  let twiceArea = 0;
+  let cx = 0;
+  let cy = 0;
+  for (let i = 0, j = points.length - 1; i < points.length; j = i++) {
+    const cross = points[j][0] * points[i][1] - points[i][0] * points[j][1];
+    twiceArea += cross;
+    cx += (points[j][0] + points[i][0]) * cross;
+    cy += (points[j][1] + points[i][1]) * cross;
+  }
+  if (!Number.isFinite(twiceArea) || Math.abs(twiceArea) < 1e-12) return mean();
+  return [cx / (3 * twiceArea), cy / (3 * twiceArea)];
+}
