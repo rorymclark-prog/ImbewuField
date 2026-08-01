@@ -347,6 +347,10 @@ export const ELEMENT_CATALOG: DesignElementDef[] = [
     id: 'raised_bed',
     // Built soil: it is a planting bed AND an earthwork, and the Earthworks view was blind to it.
     alsoLayers: ['earthworks'],
+    // ...and it is a bed you grow vegetables in, so the Planting step must offer it too. It
+    // already PRINTS on the Planting sheet (SHEET_OVERRIDE), so a farmer laying out their
+    // planting could see beds on the finished sheet with no way to place one from that step.
+    alsoSteps: ['planting'],
     category: 'earthworks',
     name: 'Raised Bed',
     icon: '🟫',
@@ -362,6 +366,7 @@ export const ELEMENT_CATALOG: DesignElementDef[] = [
   {
     id: 'keyhole_bed',
     category: 'earthworks',
+    alsoSteps: ['planting'], // a bed you plant, not just soil you shape
     name: 'Keyhole Bed',
     icon: '🔑',
     shape: 'circle',
@@ -375,6 +380,7 @@ export const ELEMENT_CATALOG: DesignElementDef[] = [
   {
     id: 'herb_spiral',
     category: 'earthworks',
+    alsoSteps: ['planting'], // herbs are a crop; the spiral is how they are grown
     name: 'Herb Spiral',
     icon: '🌀',
     shape: 'circle',
@@ -403,6 +409,7 @@ export const ELEMENT_CATALOG: DesignElementDef[] = [
   {
     id: 'tree_basin',
     category: 'earthworks',
+    alsoSteps: ['planting'], // you dig it in order to plant a tree in it
     name: 'Tree Basin',
     icon: '🟤',
     shape: 'circle',

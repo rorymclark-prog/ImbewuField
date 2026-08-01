@@ -137,6 +137,30 @@ test('earth-shaped beds are planting, integrated basins belong on Water, and lan
     assert.equal(sheetForElement(def.category, id), 'planting', `${id} should be on the Planting sheet`);
     assert.equal(itemInFilter(def.category, 'water', id), false, `${id} stays Water context, not content`);
   }
+});
+
+// A bed that PRINTS on the Planting sheet but cannot be PLACED from the Planting step is a farmer
+// staring at beds on their finished planting plan with no chip to add one (Rory, testing live: "no
+// raised beds in here!"). alsoSteps is the mechanism — Banana Circle already used it — and
+// ownedByCurrentStep honours it, so editing rights follow placement rather than dimming the bed on
+// the very step that drew it.
+test('every earth-shaped bed that prints on Planting can also be placed and edited from that step', () => {
+  for (const id of ['raised_bed', 'keyhole_bed', 'herb_spiral', 'banana_circle', 'tree_basin']) {
+    const def = ELEMENT_CATALOG.find((d) => d.id === id)!;
+    assert.equal(sheetForElement(def.category, id), 'planting', `${id} prints on Planting`);
+    assert.ok(def.alsoSteps?.includes('planting'), `${id} must be offered from the Planting palette`);
+    assert.equal(
+      ownedByCurrentStep('planting', { kind: 'item', category: def.category, defId: id }),
+      true,
+      `${id} must stay editable on the step that placed it`,
+    );
+    // Still owned by its earthworks home, so nothing is taken away from Water/Earthworks.
+    assert.equal(
+      ownedByCurrentStep('earthworks', { kind: 'item', category: def.category, defId: id }),
+      true,
+      `${id} must remain editable from Earthworks too`,
+    );
+  }
   for (const id of ['greywater_basin', 'infiltration_basin']) {
     const def = ELEMENT_CATALOG.find((d) => d.id === id);
     assert.ok(def, `${id} vanished from the catalog`);
