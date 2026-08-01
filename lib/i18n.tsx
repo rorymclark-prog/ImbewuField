@@ -278,7 +278,11 @@ const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   designSectorDownhill: 'DOWNHILL',
   designSectorDownhillApprox: 'DOWNHILL ~',
   designSectorFrost: 'FROST',
-  designSectorSeasonWind: '{season} {direction}',
+  // The printed sheet's own wind wedges always carry the word WIND ("HOT DRY BERG WIND",
+  // "SUMMER COOLING WIND" — see buildBlueprintSectorMap). The on-canvas overlay's generic arrows
+  // read just "{season} {direction}" ("SUMMER ESE") with nothing to say what the arrow even is —
+  // Rory: "nobody is gonna know that's a wind". Now they agree.
+  designSectorSeasonWind: '{season} wind · {direction}',
   designSectorDirectionNorth: 'north',
   designSectorDirectionNorthEast: 'north-east',
   designSectorDirectionEast: 'east',

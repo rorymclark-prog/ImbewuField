@@ -342,7 +342,12 @@ export default function SectorOverlay({ model, imgW: W, imgH: H, boundary }: Sec
   }
 
   return (
-    <g pointerEvents="none" opacity={0.7}>
+    // Was 0.7 group-wide, deliberately "light" so the overlay didn't fight the farmer's own
+    // design underneath. Rory, zoomed in on the wind arrow: "translucent, should we make them
+    // bolder so they stand out". Every energy shares this one opacity, so raising it here lifts
+    // sun, wind, fire and water together rather than singling one out — each already carries its
+    // own dark HALO stroke on the label text, which is what keeps it legible even bolder.
+    <g pointerEvents="none" opacity={0.88}>
       {els}
     </g>
   );
