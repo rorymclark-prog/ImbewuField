@@ -7,6 +7,8 @@ import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
 import { activeAccountLocalStorageKey } from '@/lib/account-local-storage';
+import { CATALOG_KEY_FOR_CROP } from '@/lib/crop-display';
+import { sowMarksForPattern, type PlantMark } from '@/lib/crop-calendar';
 
 // ---------------------------------------------------------------------------
 // Data
@@ -17,66 +19,28 @@ const MONTH_ABBR = [
   'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
 ];
 
-// 'B' = best time, 'P' = possible/transitional, '' = not recommended
-// Index: 0=Jan ... 11=Dec
-type PlantMark = 'B' | 'P' | '';
-
 interface CropRow {
   name: string;
+  catalogKey: string;
   marks: PlantMark[];
   harvestMonths: number[]; // 0-indexed
 }
 
+const CALENDAR_RAIN_PATTERN = 'summer' as const;
+
 const CROPS: CropRow[] = [
-  {
-    name: 'Spinach',
-    // Plant Apr–Aug (best), shoulder months Mar & Sep possible
-    marks: ['', '', 'P', 'B', 'B', 'B', 'B', 'B', 'P', '', '', ''],
-    harvestMonths: [5, 6, 7, 8, 9],
-  },
-  {
-    name: 'Tomatoes',
-    // Plant Sep–Nov (best), Aug & Dec possible
-    marks: ['', '', '', '', '', '', '', 'P', 'B', 'B', 'B', 'P'],
-    harvestMonths: [11, 0, 1, 2],
-  },
-  {
-    name: 'Maize',
-    // Plant Oct–Jan (best), Sep & Feb possible
-    marks: ['B', 'P', '', '', '', '', '', '', 'P', 'B', 'B', 'B'],
-    harvestMonths: [1, 2, 3],
-  },
-  {
-    name: 'Beans',
-    // Plant Sep–Dec (best), Aug & Jan possible
-    marks: ['P', '', '', '', '', '', '', 'P', 'B', 'B', 'B', 'B'],
-    harvestMonths: [11, 0, 1, 2],
-  },
-  {
-    name: 'Carrots',
-    // Plant Mar–Jul (best), Feb & Aug possible
-    marks: ['', '', 'P', 'B', 'B', 'B', 'B', 'P', '', '', '', ''],
-    harvestMonths: [5, 6, 7, 8],
-  },
-  {
-    name: 'Sweet Potato',
-    // Plant Oct–Jan (best), Sep & Feb possible
-    marks: ['B', 'P', '', '', '', '', '', '', 'P', 'B', 'B', 'B'],
-    harvestMonths: [1, 2, 3],
-  },
-  {
-    name: 'Garlic',
-    // Plant Apr–Jun (best), Mar & Jul possible
-    marks: ['', '', 'P', 'B', 'B', 'B', 'P', '', '', '', '', ''],
-    harvestMonths: [8, 9, 10],
-  },
-  {
-    name: 'Pumpkin',
-    // Plant Oct–Jan (best), Sep & Feb possible
-    marks: ['B', 'P', '', '', '', '', '', '', 'P', 'B', 'B', 'B'],
-    harvestMonths: [1, 2, 3],
-  },
-];
+  { name: 'Spinach', catalogKey: CATALOG_KEY_FOR_CROP.Spinach, harvestMonths: [5, 6, 7, 8, 9] },
+  { name: 'Tomatoes', catalogKey: CATALOG_KEY_FOR_CROP.Tomatoes, harvestMonths: [11, 0, 1, 2] },
+  { name: 'Maize', catalogKey: CATALOG_KEY_FOR_CROP.Maize, harvestMonths: [1, 2, 3] },
+  { name: 'Beans', catalogKey: CATALOG_KEY_FOR_CROP.Beans, harvestMonths: [11, 0, 1, 2] },
+  { name: 'Carrots', catalogKey: CATALOG_KEY_FOR_CROP.Carrots, harvestMonths: [5, 6, 7, 8] },
+  { name: 'Sweet Potato', catalogKey: CATALOG_KEY_FOR_CROP['Sweet potato'], harvestMonths: [1, 2, 3] },
+  { name: 'Garlic', catalogKey: CATALOG_KEY_FOR_CROP.Garlic, harvestMonths: [8, 9, 10] },
+  { name: 'Pumpkin', catalogKey: CATALOG_KEY_FOR_CROP.Pumpkin, harvestMonths: [1, 2, 3] },
+].map((crop) => ({
+  ...crop,
+  marks: sowMarksForPattern(crop.catalogKey, CALENDAR_RAIN_PATTERN),
+}));
 
 // ---------------------------------------------------------------------------
 // Monthly planting / harvest / maintain data
@@ -340,21 +304,6 @@ function Dot({ mark }: { mark: PlantMark }) {
           flexShrink: 0,
         }}
         aria-label="Best time to plant"
-      />
-    );
-  }
-  if (mark === 'P') {
-    return (
-      <span
-        style={{
-          display: 'inline-block',
-          width: 10,
-          height: 10,
-          borderRadius: '50%',
-          background: '#C07A1E',
-          flexShrink: 0,
-        }}
-        aria-label="Possible / transitional"
       />
     );
   }
@@ -702,21 +651,18 @@ export default function CalendarPage() {
                       color: '#5C5040',
                     }}
                   >
-                    Best time
+                    In catalog sowing window
                   </span>
                 </div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 5 }}>
-                  <Dot mark="P" />
-                  <span
-                    style={{
-                      fontSize: 11,
-                      fontFamily: 'var(--font-mono, monospace)',
-                      color: '#5C5040',
-                    }}
-                  >
-                    Possible
-                  </span>
-                </div>
+                <span
+                  style={{
+                    fontSize: 11,
+                    fontFamily: 'var(--font-mono, monospace)',
+                    color: '#5C5040',
+                  }}
+                >
+                  Summer-rainfall pattern
+                </span>
               </div>
             </div>
 
