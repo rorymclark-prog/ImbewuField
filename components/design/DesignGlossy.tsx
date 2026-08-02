@@ -4,7 +4,7 @@
 // the app owns factual geometry, placed features, labels and sheet chrome. Satellite
 // Overlay remains the explicit model-authored comparison/rollback style.
 
-import { useCallback, useEffect, useRef, useState, type Dispatch, type SetStateAction } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, type Dispatch, type SetStateAction } from 'react';
 import { Download, RefreshCw, Gem, FlaskConical, Images, X, Trash2, Share2, Check } from 'lucide-react';
 import { jsPDF } from 'jspdf';
 import {
@@ -87,6 +87,7 @@ import {
   legendRowFontSize,
 } from '@/lib/sheet-legend-layout';
 import { SHEET_BASE_MUTE_STYLE, SHEET_STRUCTURE_MUTE_STYLE, type SheetBaseMute } from '@/lib/sheet-base-mute';
+import { canChooseUnderlay, frameForUnderlay, underlayCacheSuffix, type SheetUnderlay } from '@/lib/sheet-underlay';
 import {
   bedCropRows,
   cropGlyphFor,
@@ -9901,7 +9902,7 @@ function galleryTileChip(kind: SheetResultKind): { text: string; bg: string; fg:
 
 export default function DesignGlossy({
   state,
-  frame,
+  frame: frameProp,
   refLayers,
   site,
   placeName,
@@ -9910,6 +9911,28 @@ export default function DesignGlossy({
   initialFilter,
 }: DesignGlossyProps) {
   const { t } = useLanguage();
+  /**
+   * WHICH PICTURE THE SHEETS ARE DRAWN ON. Rory: "I want the option when rendering the map to have
+   * the drone image as underlay or satellite."
+   *
+   * Both already exist and are already aligned. When a farmer brings their own aerial, the Studio
+   * swaps it INTO frame.satDataUrl — the single field every sheet, composite and export reads — and
+   * keeps the true satellite tile beside it in `underlayDataUrl` so the two can be lined up. So the
+   * choice is not a new pipeline; it is which of two images that one field carries.
+   *
+   * Deliberately implemented by SHADOWING the `frame` prop rather than threading a flag through the
+   * thirty-odd render call sites below. Every one of them reads `frame`, so one decision here
+   * reaches all of them and there is no call site that can be forgotten and quietly keep rendering
+   * the other picture — which is this codebase's most-repeated bug (two systems answering one
+   * question, then drifting).
+   *
+   * A drone photo is sharper and current; the satellite is what the neighbours, the roads and the
+   * surrounding land are on, and it is what a reader outside the farm recognises. Neither is
+   * correct in general, which is why it is a control and not a constant.
+   */
+  const [underlay, setUnderlay] = useState<SheetUnderlay>('photo');
+  const hasOwnPhoto = canChooseUnderlay(frameProp);
+  const frame = useMemo(() => frameForUnderlay(frameProp, underlay), [frameProp, underlay]);
   const [loading, setLoading] = useState<'gemini' | 'falgpt' | 'exact' | null>(null);
   const [error, setError] = useState<string | null>(null);
   // Non-alarming status line (green) — e.g. "used Gemini instead" after a gpt-image-2 fallback, or
@@ -10190,7 +10213,13 @@ export default function DesignGlossy({
 
   // A stable cache key per chosen map (producer style OR design filter OR analysis style).
   // Each map+style combination caches its own render (e.g. producer:storybook:zones).
-  const mapKey = exactSheet === 'base'
+  // The chosen underlay is part of a sheet's identity: the same sheet on the drone photo and on the
+  // satellite are two different pictures, and a cache that cannot tell them apart re-serves the one
+  // you just switched away from. Suffixed rather than woven in, so every branch below inherits it
+  // and no key can be left out. Absent entirely on the default, which keeps every sheet already in
+  // a farmer's gallery addressable by the key it was stored under.
+  const underlaySuffix = underlayCacheSuffix(underlay);
+  const mapKey = (exactSheet === 'base'
     ? 'base-exact'
     : exactSheet === 'sector'
     ? 'sector-exact'
@@ -10208,7 +10237,7 @@ export default function DesignGlossy({
         // …:<mode> so Exact, Hybrid and Full Treatment can never share a slot. Without it the
         // three treatments overwrote and re-served each other's pictures — see requestedMode.
         ? `producer:${producerStyle}:${filter}:${requestedMode}`
-        : (analysisStyle ?? filter);
+        : (analysisStyle ?? filter)) + underlaySuffix;
   const mapKeyRef = useRef(mapKey);
   mapKeyRef.current = mapKey;
   const galleryViewItem = gallery.find((g) => g.id === galleryViewId) ?? null;
@@ -12691,6 +12720,37 @@ export default function DesignGlossy({
             );
           })}
         </div>
+        {/* WHICH PICTURE THE SHEETS SIT ON — shown only where there is genuinely a choice, i.e. the
+            farmer has supplied their own aerial and the satellite is still held beside it. On every
+            other site this control would be a switch with one position. */}
+        {hasOwnPhoto && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', marginTop: 10 }}>
+            <span style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55 }}>
+              Underlay
+            </span>
+            {([
+              { key: 'photo', label: 'Your photo', hint: 'sharper · current' },
+              { key: 'satellite', label: 'Satellite', hint: 'shows the surrounding land' },
+            ] as const).map((opt) => {
+              const active = underlay === opt.key;
+              return (
+                <button
+                  key={opt.key}
+                  type="button"
+                  onClick={() => setUnderlay(opt.key)}
+                  disabled={loading !== null}
+                  aria-pressed={active}
+                  style={{ padding: '6px 12px', borderRadius: 999, border: `1px solid ${active ? DARK : '#E2D8C4'}`, background: active ? DARK : PAPER, color: active ? PAPER : '#5C5040', fontWeight: 700, fontSize: 12, cursor: loading !== null ? 'default' : 'pointer' }}
+                >
+                  {opt.label}
+                </button>
+              );
+            })}
+            <span style={{ fontSize: 10.5, opacity: 0.6 }}>
+              {underlay === 'photo' ? 'sharper · current' : 'shows the surrounding land'}
+            </span>
+          </div>
+        )}
         {!compact && (
         <>
         {/* THE one-tap plan set: AI all-sheets, hard-wired to the gpt-image-2 background queue
