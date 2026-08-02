@@ -95,14 +95,41 @@ export function loadCropPriceOverrides(): Record<string, CropPrice> {
     );
     if (!raw) return {};
     const parsed = JSON.parse(raw);
-    return typeof parsed === 'object' && parsed !== null ? parsed : {};
+    if (typeof parsed !== 'object' || parsed === null) return {};
+    // A ZERO OR NEGATIVE OVERRIDE IS NOT AN OPINION ABOUT PRICE, IT IS A BROKEN FIELD.
+    //
+    // Both editor inputs coerced with `Number(value) || 0` and wrote through on every keystroke, so
+    // clearing a field to retype it persisted `0`. priceFor() falls back with `??`, which only
+    // treats null/undefined as missing, so a stored 0 permanently shadowed the researched default —
+    // and there is no reset control on the page, so it could not be undone. Every month of that crop
+    // then contributed R0 to the income chart and to the year estimate, with no per-crop tooltip to
+    // show which crop had gone silent.
+    //
+    // Dropped on READ as well as on write, because the bad values already in farmers' browsers have
+    // to heal themselves; a write-side guard alone would only protect people who had not hit it yet.
+    return Object.fromEntries(
+      Object.entries(parsed as Record<string, unknown>).filter(([, v]) => isUsablePrice(v)),
+    ) as Record<string, CropPrice>;
   } catch {
     return {};
   }
 }
 
+/** A price a farmer could actually sell at: both figures present, finite and above zero. */
+export function isUsablePrice(value: unknown): boolean {
+  if (typeof value !== 'object' || value === null) return false;
+  const p = value as { retailPerKg?: unknown; wholesalePerKg?: unknown };
+  const ok = (n: unknown) => typeof n === 'number' && Number.isFinite(n) && n > 0;
+  return ok(p.retailPerKg) && ok(p.wholesalePerKg);
+}
+
 export function saveCropPriceOverrides(overrides: Record<string, CropPrice>): void {
   if (typeof window === 'undefined' || !window.localStorage) return;
+  // Never persist an unusable override — see isUsablePrice. Dropping the key restores the
+  // researched default, which is the only "reset" the editor has.
+  overrides = Object.fromEntries(
+    Object.entries(overrides ?? {}).filter(([, v]) => isUsablePrice(v)),
+  ) as Record<string, CropPrice>;
   try {
     window.localStorage.setItem(
       activeAccountLocalStorageKey(PRICE_OVERRIDES_KEY),

@@ -1602,6 +1602,7 @@ function FoodAvailabilityChart({
                       R
                       <input
                         type="number"
+                        min="0"
                         value={price.retailPerKg}
                         onChange={(e) => onPriceOverrideChange(cropKey, { ...price, retailPerKg: Number(e.target.value) || 0, confidence: 'estimated' })}
                         style={{ width: 54, padding: '2px 4px', border: '1px solid #E2D8C4', borderRadius: 4, background: '#FFFFFF' }}
@@ -1612,6 +1613,7 @@ function FoodAvailabilityChart({
                       R
                       <input
                         type="number"
+                        min="0"
                         value={price.wholesalePerKg}
                         onChange={(e) => onPriceOverrideChange(cropKey, { ...price, wholesalePerKg: Number(e.target.value) || 0, confidence: 'estimated' })}
                         style={{ width: 54, padding: '2px 4px', border: '1px solid #E2D8C4', borderRadius: 4, background: '#FFFFFF' }}
