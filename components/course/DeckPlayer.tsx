@@ -24,10 +24,10 @@ import { COURSE_CACHE } from '@/lib/offline-cache';
 //    with the size printed on the button. lib/course-modules.ts already says video is never given
 //    an inline player for this audience because KZN connectivity cannot stream it per visit.
 //
-// 2. It says what it does not have, on the slide where it is true. isiZulu has 23 of the 24
-//    slides; the one it is missing shows English and says so, and the other 23 say nothing
-//    because there is nothing to apologise for. A whole-module warning would make a finished
-//    isiZulu lesson look unfinished to the person it was made for.
+// 2. It says what it does not have, on the slide where it is true. If a localized asset is
+//    absent, that slide falls back to English and says so; the other slides say nothing because
+//    there is nothing to apologise for. A whole-module warning would make a finished lesson look
+//    unfinished to the person it was made for.
 //
 // 3. It works with the sound off. Every slide carries its title and the narration is optional, so
 //    a learner in a noisy room or without earphones still gets the sequence.
@@ -308,9 +308,9 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
       )}
 
       {img && !img.exact && (
-        // Only on the slide it is actually true of. The isiZulu deck is missing ONE of its 24
-        // slides, so saying "these slides are in English" across the whole module would be false
-        // 23 times out of 24 — and would make a finished isiZulu lesson look unfinished.
+        // Only on the slide it is actually true of. A localized deck can have one missing asset,
+        // so saying "these slides are in English" across the whole module would be false for the
+        // rest of the lesson and would make a finished lesson look unfinished.
         <p style={{ margin: 0, fontSize: 11.5, lineHeight: 1.4, color: MUTED }}>
           This one slide is only in English. The spoken lesson is in your language.
         </p>
