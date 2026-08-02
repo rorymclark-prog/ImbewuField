@@ -2,7 +2,7 @@
 
 import { initializeApp, getApps, getApp, type FirebaseApp } from 'firebase/app';
 import { getAuth, connectAuthEmulator, type Auth } from 'firebase/auth';
-import { initializeFirestore, getFirestore, connectFirestoreEmulator, type Firestore } from 'firebase/firestore';
+import { initializeFirestore, getFirestore, connectFirestoreEmulator, persistentLocalCache, persistentMultipleTabManager, type Firestore } from 'firebase/firestore';
 import { getStorage, connectStorageEmulator, type FirebaseStorage } from 'firebase/storage';
 
 // Firebase web config — all public (security is enforced by Firestore rules + Auth,
@@ -76,9 +76,30 @@ export function getFirebase() {
   // undefined" and the write silently fails (data saved locally but never synced).
   // initializeFirestore throws if the instance already exists (HMR / module re-eval) —
   // fall back to the existing one.
+  //
+  // PERSISTENT CACHE, because a farmer with no signal was being shown R0 as if it were a fact.
+  // Firestore had no local cache of any kind, so the in-memory one was empty on every load. An
+  // offline getDocs does not reject — it FULFILS with an empty snapshot — so /finances rendered
+  // "R 0" income and "No sales logged yet", indistinguishable from a genuinely empty ledger, while
+  // the farmer's real figures sat safe in Firestore and unreachable. The allSettled handler on that
+  // page could not help: nothing had rejected.
+  //
+  // With a persistent cache the same read is served from disk and she sees her own numbers. It also
+  // makes an offline write queue and replay, which is what a smallholding with intermittent signal
+  // actually needs. Multi-tab manager because the app is a PWA and a farmer may well have it open
+  // twice.
   let db: Firestore;
-  try { db = initializeFirestore(app, { ignoreUndefinedProperties: true }); }
-  catch { db = getFirestore(app); }
+  try {
+    db = initializeFirestore(app, {
+      ignoreUndefinedProperties: true,
+      localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() }),
+    });
+  } catch {
+    // Thrown when the instance already exists (HMR / module re-eval), and also where persistence
+    // is unavailable — private browsing, or a browser with IndexedDB disabled. Falling back to the
+    // default in-memory instance keeps the app working; it just loses the offline benefit.
+    db = getFirestore(app);
+  }
   const auth = getAuth(app);
   const storage = getStorage(app);
   connectEmulatorsOnce(auth, db, storage);

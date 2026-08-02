@@ -865,6 +865,26 @@ export default function FinancesPage() {
   const [editing, setEditing] = useState<EditTarget>(null);
   const [desktopEntryOpen, setDesktopEntryOpen] = useState(false);
   const [seeding, setSeeding] = useState(false);
+  /**
+   * WHETHER THE DEVICE IS ONLINE. An empty ledger and an unreachable one rendered identically —
+   * "R 0" and "No sales logged yet" — because an offline getDocs FULFILS with an empty snapshot
+   * rather than rejecting, so the allSettled handler below never saw a failure to report.
+   *
+   * This drives two things: an honest banner, and suppressing the sample-data offer. That offer
+   * calls the REAL addSale/addExpense/saveInvoice, so a farmer looking at a wrongly-empty screen
+   * could tap it and write thirteen fake rows permanently into her own books.
+   */
+  const [online, setOnline] = useState(true);
+  useEffect(() => {
+    const sync = () => setOnline(typeof navigator === 'undefined' ? true : navigator.onLine !== false);
+    sync();
+    window.addEventListener('online', sync);
+    window.addEventListener('offline', sync);
+    return () => {
+      window.removeEventListener('online', sync);
+      window.removeEventListener('offline', sync);
+    };
+  }, []);
   const [period, setPeriod] = useState<Period>('month');
   const now = useMemo(() => new Date(), []);
 
@@ -1042,7 +1062,18 @@ export default function FinancesPage() {
                 loading={dataLoading}
               />
               <HarvestReconciliation production={production} sales={sales} period="month" now={now} loading={dataLoading} />
-              {!dataLoading && !hasAnyData && (
+              {/* Never offered while offline: "no data" may only mean "not reachable", and this
+                  button writes real rows into the farmer's real ledger. */}
+              {!online && (
+                <div
+                  className="w-full flex items-center justify-center gap-2 py-3 px-4 rounded-2xl text-sm font-display"
+                  style={{ background: '#FDF3E3', border: '1px solid #E8D6B0', color: '#7A5B18' }}
+                >
+                  You are offline — showing what is saved on this device. Anything missing will
+                  appear when you have signal again.
+                </div>
+              )}
+              {!dataLoading && !hasAnyData && online && (
                 <button
                   type="button"
                   onClick={handleLoadSampleData}
