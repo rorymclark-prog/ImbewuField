@@ -3666,6 +3666,33 @@ function drawBlueprintLabelPills(
       ctx.lineWidth = 1;
       ctx.stroke();
     }
+    // A CALLOUT SITS ON ITS OWN PLAQUE.
+    //
+    // Cream text with a dark outline is a halo, and a halo only works where the ground behind it is
+    // reasonably even. These labels do not land on even ground: the leader-length cap (above) exists
+    // precisely to stop a label marching to the sheet edge, so a callout for a feature mid-canvas is
+    // placed back over the drawing — on the planting sheet, straight across two painted tree
+    // canopies, where "AVOCADO TREE" and "SOUTH-WESTERN MORINGA TREE" read as words scattered on
+    // foliage rather than as labels.
+    //
+    // The fix is the one this file already uses for canopies, sector arrows and route lines when
+    // they cross busy ground: an opaque body inside a light casing. The plaque is the label's body.
+    // It goes UNDER the text and OVER the leader, so the line visibly runs to the plaque's edge and
+    // stops, which is what tells the eye the two belong together.
+    const padX = fs * 0.34;
+    const padY = fs * 0.3;
+    const plaqueX = (align === 'left' ? textX : textX - textW) - padX;
+    const plaqueY = l.ay + 1 - fs * 0.5 - padY;
+    const plaqueW = textW + padX * 2;
+    const plaqueH = fs + padY * 2;
+    ctx.save();
+    roundRectPath(ctx, plaqueX, plaqueY, plaqueW, plaqueH, Math.min(plaqueH * 0.34, fs * 0.42));
+    ctx.fillStyle = 'rgba(24,32,26,0.9)';
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(243,238,219,0.72)';
+    ctx.lineWidth = Math.max(1.2, fs * 0.045);
+    ctx.stroke();
+    ctx.restore();
     drawReferenceMapText(ctx, l.text, textX, l.ay + 1, fs, weight, align);
   }
 }
@@ -10282,9 +10309,12 @@ export default function DesignGlossy({
    * screen are the same object.
    */
   const encodeSheet = useCallback(
-    async (src: string, format: Exclude<SheetExportFormat, 'pdf'>, quality: SheetExportQuality) => {
+    // Named `level`, not `quality`: the component already has a `quality` state of its own for PAID
+    // AI renders, with the same three string values and a completely different meaning. Shadowing
+    // it here would compile perfectly and be wrong.
+    async (src: string, format: Exclude<SheetExportFormat, 'pdf'>, level: SheetExportQuality) => {
       const img = await loadImage(src);
-      const profile = SHEET_EXPORT_PROFILES[quality];
+      const profile = SHEET_EXPORT_PROFILES[level];
       const w = Math.max(1, Math.round(img.naturalWidth * profile.scale));
       const h = Math.max(1, Math.round(img.naturalHeight * profile.scale));
       const canvas = document.createElement('canvas');
@@ -10305,13 +10335,13 @@ export default function DesignGlossy({
 
   /** One PDF carrying every chosen sheet, a page each, at its own aspect. */
   const buildGalleryPdf = useCallback(
-    async (picked: GalleryItem[], quality: SheetExportQuality) => {
+    async (picked: GalleryItem[], level: SheetExportQuality) => {
       let doc: jsPDF | null = null;
       for (const item of picked) {
         // PDF pages carry JPEG regardless of the format chips: those choose the FILE the farmer
         // gets, and inside a PDF a lossless page would multiply the size of a document whose whole
         // job is to be small enough to send.
-        const { dataUrl, w, h } = await encodeSheet(item.image, 'jpeg', quality);
+        const { dataUrl, w, h } = await encodeSheet(item.image, 'jpeg', level);
         const orientation = w >= h ? 'landscape' : 'portrait';
         if (!doc) doc = new jsPDF({ unit: 'px', format: [w, h], orientation, hotfixes: ['px_scaling'] });
         else doc.addPage([w, h], orientation);
