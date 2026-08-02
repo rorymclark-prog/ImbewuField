@@ -56,9 +56,25 @@ export type SheetElementNaming = 'individual' | 'grouped';
  * obligation to give that element family a legend row. */
 export const EXACT_FULL_STRENGTH_ALPHA = 1;
 export const EXACT_CONTEXT_ALPHA = {
+  // The zone bands are the whole subject of sheet 03 and they are translucent themselves, so the
+  // element ghosts underneath stay very quiet or the sheet becomes two competing layers.
   zones: 0.2,
   water: 0.72,
-  structures: 0.24,
+  /**
+   * Raised from 0.24. Rory, on sheet 07: "plantings trees are barely visible again … maybe make
+   * the plants and other elements not translucent."
+   *
+   * He is right, and the old number was hard to defend beside its neighbours: the water sheet
+   * showed the same kind of orientation context at 0.72 while structures showed it at 0.24, for
+   * the same job. At 0.24 over a muted aerial a tree canopy is a smudge — it fails even as
+   * context, because context you cannot see does not orient anyone.
+   *
+   * NOT raised to 1, deliberately, and the constant above says why: full strength carries the
+   * obligation of a legend row, and a legend listing every tree on the structures sheet would be
+   * claiming them as this sheet's content when the sheet is about the compost bay and the path.
+   * 0.55 is plainly visible and just as plainly subordinate to the full-strength marks beside it.
+   */
+  structures: 0.55,
   implementation: 0.88,
 } as const;
 

@@ -57,6 +57,7 @@ import {
   groundRegister,
   groundContentRingsForSheet,
   EXACT_CONTEXT_ALPHA,
+  EXACT_FULL_STRENGTH_ALPHA,
   EXACT_DRIVEWAY_LEGEND_TEXT,
   INTEGRATED_LEGEND_FAMILIES,
   exactSheetElementLegendGroups,
@@ -1368,16 +1369,28 @@ async function preloadReferenceFeatureArtwork(
   filter: GlossyLayerFilter,
   _frame?: CanvasFrame,
 ): Promise<void> {
+  // PRELOAD FOR EVERYTHING THE SHEET MIGHT DRAW, NOT FOR WHAT THE FILTER OWNS.
+  //
+  // This used to gate on itemInFilter || isContextElement, and isContextElement returns false for
+  // every sheet except Water. But sheets draw context passes of their own: the Structures sheet
+  // paints the planting layer underneath its infrastructure, and the Zones sheet paints element
+  // ghosts under its bands. Neither of those items passed the gate, so their artwork was never
+  // loaded and drawPaintedReferenceFeature fell through to the flat wash — which is why a tree on
+  // sheet 07 came out as a pale disc with speckles rather than a tree, and why raising that sheet's
+  // context alpha made it more conspicuous instead of more legible.
+  //
+  // The gate is dropped rather than extended per sheet, because "which sheets draw which other
+  // layer as context" is exactly the kind of second list that drifts from the renderer. The cost is
+  // loading a few more small PNGs into a cache that is shared across every sheet in the set, and
+  // any sheet rendered after the first pays nothing.
   const urls = new Set<string>();
   for (const item of state.items) {
     const def = ELEMENTS_BY_ID[item.defId];
-    if (!def || (
-      !itemInFilter(def.category, filter, def.id)
-      && !isContextElement(def, filter)
-    )) continue;
+    if (!def) continue;
     const url = referenceFeatureArtworkUrl(def.id);
     if (url && !referenceFeatureArtworkCache.has(url)) urls.add(url);
   }
+  void filter;
   await Promise.all([...urls].map(async (url) => {
     try {
       referenceFeatureArtworkCache.set(url, await loadImage(url));
@@ -4196,7 +4209,15 @@ function drawPaintedReferenceFeature(
   const isMatureCanopy = def.category === 'growing' && def.shape === 'circle';
   const inheritedAlpha = ctx.globalAlpha;
 
-  if (isMatureCanopy) {
+  // A CONTEXT CANOPY MUST NOT WEAR THE CASING. The cream ring and opaque backing below exist to
+  // separate a canopy this sheet is ABOUT from busy ground and from its neighbours. Drawn at a
+  // context alpha they do the opposite: the cream dominates the artwork and a tree comes out as a
+  // pale frosted disc — conspicuous, and no longer recognisable as a tree. Raising the structures
+  // context alpha to make trees visible made this plainly worse rather than better, which is how
+  // it was found. Below full strength, the artwork alone is what reads as a tree.
+  const isContextDraw = inheritedAlpha < EXACT_FULL_STRENGTH_ALPHA;
+
+  if (isMatureCanopy && !isContextDraw) {
     // CASING FIRST, then an opaque backing — the route-line convention this file already uses for
     // sector arrows and water pipes, applied to a canopy. The cream ring is what separates one
     // placed tree from the next where they overlap, and separates all of them from the existing
