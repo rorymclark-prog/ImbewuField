@@ -51,6 +51,20 @@ jobs:
       # workflow invoked `test:rules` — so a test asserting that a self-signed-up mentor cannot read
       # every farmer's sales figures sat there failing, silently, while the rules shipped.
       # A security rule with no enforced test is a comment.
+      #
+      # The emulator needs a JVM and the Firebase CLI, neither of which is on the runner. The CLI is
+      # installed here rather than added to package.json: it is a ~100 MB tool used by one CI step
+      # and by Rory locally, and putting it in devDependencies would tax every `npm ci` in every
+      # other workflow for it. Pinned, because an unpinned global install is a build that changes
+      # under you.
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - name: Install Firebase CLI
+        run: npm i -g firebase-tools@14
+
       - name: Firestore rules
         run: npm run test:rules
 
