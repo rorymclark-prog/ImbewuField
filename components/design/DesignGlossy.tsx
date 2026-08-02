@@ -7990,7 +7990,7 @@ export function sheetLegendRows(
       contentRows.push({
         swatch: summary.swatch,
         defId: group.defId,
-        text: `${summary.text} ×${group.count}`,
+        text: countedLegendText(summary.text, group.count, group.status),
         section: summary.section,
       });
     }
@@ -8017,6 +8017,7 @@ export function sheetLegendRows(
       defId: group.defId,
       color: speciesColor(group.defId),
       n: group.count,
+      status: group.status,
       section: filter === 'water'
         ? waterLegendSectionForFeature(group.defId)
         : filter === 'planting'
@@ -8038,7 +8039,7 @@ export function sheetLegendRows(
     rows.push({
       swatch: group.color,
       defId: group.defId,
-      text: countedLegendText(group.name, group.n),
+      text: countedLegendText(group.name, group.n, group.status),
       section: group.section,
       // SHEET 05 DOES NOT PAINT ITS AREAS THE WAY THE OTHER SHEETS DO. drawEarthworksFeatures
       // gives every earth feature a cream casing over bare mulched soil, because on this sheet a

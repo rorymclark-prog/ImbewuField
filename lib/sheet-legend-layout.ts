@@ -307,9 +307,15 @@ export function fitLegendFontSize(
 
 /** Countable map content always says how many markers/routes the row represents. An omitted count
  * used to mean either "one" or "not counted", which a farmer could not distinguish. */
-export function countedLegendText(label: string, count: number): string {
+export function countedLegendText(label: string, count: number, status?: 'existing' | 'proposed'): string {
   if (!Number.isSafeInteger(count) || count < 0) {
     throw new RangeError('Legend count must be a non-negative safe integer');
   }
-  return `${label} ×${count}`;
+  // EXISTING IS THE ONE THAT GETS SAID. Marking the proposal "(proposed)" would put the word on
+  // nearly every row of nearly every sheet, and a qualifier that is almost always true carries no
+  // information — the sheet is a proposal; that is what a plan is. What a reader cannot infer, and
+  // must not have to guess, is which rows are already standing on the farm and therefore are not
+  // being asked for. Silence means proposed.
+  const qualified = status === 'existing' ? `${label} (existing)` : label;
+  return `${qualified} ×${count}`;
 }

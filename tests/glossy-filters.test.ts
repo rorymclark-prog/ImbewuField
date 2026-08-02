@@ -542,3 +542,69 @@ test('a plain effort-zone (no feature) is still owned only by the Zones step', (
   assert.equal(ownedByCurrentStep('base', { kind: 'zone' }), false);
   assert.equal(ownedByCurrentStep('planting', { kind: 'zone' }), false);
 });
+
+// ─────────────────────────────────────────────────────────────────────────────────────────────
+// EXISTING vs PROPOSED IN THE LEGEND
+//
+// `statusOf` had zero callers anywhere in the repo: a farmer could mark their standing tank as
+// existing and the plan set listed it beside the ones they are asking a funder to buy, with
+// nothing to tell them apart. The single most important thing a plan says is which parts of it do
+// not exist yet, so a legend that cannot say it overstates the proposal on every sheet.
+import { exactSheetElementLegendGroups } from '../lib/glossy-filters.ts';
+import { countedLegendText } from '../lib/sheet-legend-layout.ts';
+
+const legendState = (items: PlacedItem[]): DesignCanvasState =>
+  ({ siteId: 's', items, lines: [], zones: [] }) as unknown as DesignCanvasState;
+
+test('a row is split when the same thing is part standing and part proposed', () => {
+  const tank = ELEMENT_CATALOG.find((def) => def.category === 'water')!;
+  const groups = exactSheetElementLegendGroups(
+    legendState([
+      { id: 'a', defId: tank.id, x: 0.2, y: 0.2, status: 'existing' },
+      { id: 'b', defId: tank.id, x: 0.3, y: 0.3, status: 'existing' },
+      { id: 'c', defId: tank.id, x: 0.4, y: 0.4, status: 'proposed' },
+    ]),
+    'water',
+  ).filter((group) => group.defId === tank.id);
+
+  assert.equal(groups.length, 2, 'three tanks, two of them already standing, is not one row of four');
+  const proposed = groups.find((group) => group.status === 'proposed')!;
+  const existing = groups.find((group) => group.status === 'existing')!;
+  assert.equal(proposed.count, 1);
+  assert.equal(existing.count, 2);
+  // Proposed first: a plan is read to find out what is being asked for.
+  assert.equal(groups[0].status, 'proposed');
+});
+
+test('an all-proposed inventory is unchanged — one row, no qualifier', () => {
+  const tank = ELEMENT_CATALOG.find((def) => def.category === 'water')!;
+  const groups = exactSheetElementLegendGroups(
+    legendState([
+      { id: 'a', defId: tank.id, x: 0.2, y: 0.2, status: 'proposed' },
+      { id: 'b', defId: tank.id, x: 0.3, y: 0.3, status: 'proposed' },
+    ]),
+    'water',
+  ).filter((group) => group.defId === tank.id);
+  assert.equal(groups.length, 1);
+  assert.equal(groups[0].count, 2);
+  assert.equal(countedLegendText(groups[0].text, groups[0].count, groups[0].status), `${tank.name} ×2`);
+});
+
+test('only "existing" is spelled out, because the sheet is already a proposal', () => {
+  assert.equal(countedLegendText('JoJo Tank', 3, 'proposed'), 'JoJo Tank ×3');
+  assert.equal(countedLegendText('JoJo Tank', 3), 'JoJo Tank ×3');
+  assert.equal(countedLegendText('JoJo Tank', 3, 'existing'), 'JoJo Tank (existing) ×3');
+});
+
+test('an item with no saved status still lands in a group', () => {
+  // Every design saved before this field existed. statusOf resolves it rather than dropping it,
+  // and a dropped item would be a mark on the map with no legend row.
+  const tank = ELEMENT_CATALOG.find((def) => def.category === 'water')!;
+  const groups = exactSheetElementLegendGroups(
+    legendState([{ id: 'a', defId: tank.id, x: 0.2, y: 0.2 }]),
+    'water',
+  ).filter((group) => group.defId === tank.id);
+  assert.equal(groups.length, 1);
+  assert.equal(groups[0].count, 1);
+  assert.ok(groups[0].status === 'proposed' || groups[0].status === 'existing');
+});

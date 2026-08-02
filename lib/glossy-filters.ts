@@ -2,7 +2,7 @@
 // components/design/DesignGlossy.tsx so the pure layer-membership logic is unit-testable
 // without pulling in the whole (5,000+ line) React component. Comments preserved as-is.
 
-import type { DesignCanvasState, GroundFeatureKind, LineShape, WizardStep } from '@/lib/design-canvas';
+import { statusOf, type DesignCanvasState, type ElementStatus, type GroundFeatureKind, type LineShape, type WizardStep } from '@/lib/design-canvas';
 import {
   CATEGORY_STEP,
   ELEMENTS_BY_ID,
@@ -146,6 +146,19 @@ export interface ExactElementLegendGroup {
   text: string;
   count: number;
   defId: string;
+  /**
+   * Whether these are already standing or are being proposed.
+   *
+   * THE FARMER HAS ALWAYS BEEN ABLE TO SET THIS AND NOTHING HAS EVER READ IT. `statusOf` had zero
+   * callers in the whole repo: a farmer could mark their existing tank as existing and the plan set
+   * would list it beside the four they are asking a funder to buy, indistinguishable. That is not a
+   * cosmetic gap — the single most important thing a plan says is which parts of it do not exist
+   * yet, and a legend that cannot say so overstates the proposal every time.
+   *
+   * Items are grouped by name AND status, so three existing tanks and one proposed tank are two
+   * rows rather than "Tank x4".
+   */
+  status: ElementStatus;
 }
 
 export interface ExactLineLegendGroup {
@@ -180,21 +193,35 @@ export function exactSheetElementLegendGroups(
     return Boolean(def && exactSheetElementRegister(def, sheet) === 'content');
   });
 
+  // PROPOSED FIRST, THEN EXISTING. A plan is read to find out what is being asked for; what is
+  // already standing is the context for that. Within each status the original ordering is kept, so
+  // this only ever splits a row in two — it never reshuffles a sheet's inventory.
+  const byStatus = (items: typeof content, status: ElementStatus) =>
+    items.filter((item) => statusOf(item) === status);
+
   if (sheetElementNaming(sheet) === 'grouped') {
     const groups: ExactElementLegendGroup[] = [];
-    for (const family of INTEGRATED_LEGEND_FAMILIES) {
-      const matches = content.filter((item) => family.matches(ELEMENTS_BY_ID[item.defId]));
-      if (matches.length) groups.push({ text: family.text, count: matches.length, defId: matches[0].defId });
+    for (const status of ['proposed', 'existing'] as const) {
+      const slice = byStatus(content, status);
+      for (const family of INTEGRATED_LEGEND_FAMILIES) {
+        const matches = slice.filter((item) => family.matches(ELEMENTS_BY_ID[item.defId]));
+        if (matches.length) {
+          groups.push({ text: family.text, count: matches.length, defId: matches[0].defId, status });
+        }
+      }
     }
     return groups;
   }
 
   const groups = new Map<string, ExactElementLegendGroup>();
-  for (const item of content) {
-    const def = ELEMENTS_BY_ID[item.defId];
-    const group = groups.get(def.name) ?? { text: def.name, count: 0, defId: def.id };
-    group.count += 1;
-    groups.set(def.name, group);
+  for (const status of ['proposed', 'existing'] as const) {
+    for (const item of byStatus(content, status)) {
+      const def = ELEMENTS_BY_ID[item.defId];
+      const key = `${status}:${def.name}`;
+      const group = groups.get(key) ?? { text: def.name, count: 0, defId: def.id, status };
+      group.count += 1;
+      groups.set(key, group);
+    }
   }
   return [...groups.values()];
 }

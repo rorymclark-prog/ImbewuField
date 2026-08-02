@@ -1,5 +1,5 @@
 import type { MapRefLayers } from '@/lib/base-layers';
-import type { DesignCanvasState } from '@/lib/design-canvas';
+import { statusOf, type DesignCanvasState } from '@/lib/design-canvas';
 import { ELEMENTS_BY_ID } from '@/lib/design-elements';
 import {
   INTEGRATED_LEGEND_FAMILIES,
@@ -111,9 +111,12 @@ function contextElementGroups(
   for (const item of state.items) {
     const def = ELEMENTS_BY_ID[item.defId];
     if (!def || !isContextElement(def, filter)) continue;
-    const group = groups.get(def.name) ?? { text: def.name, count: 0, defId: def.id };
+    // Split by status for the same reason the content groups are — see ExactElementLegendGroup.
+    const status = statusOf(item);
+    const key = `${status}:${def.name}`;
+    const group = groups.get(key) ?? { text: def.name, count: 0, defId: def.id, status };
     group.count += 1;
-    groups.set(def.name, group);
+    groups.set(key, group);
   }
   return [...groups.values()];
 }
