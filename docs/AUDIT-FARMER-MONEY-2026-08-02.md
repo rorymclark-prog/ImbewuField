@@ -1,3 +1,30 @@
+> ## STATUS — 2026-08-02, updated as items land
+>
+> 93 findings raised by a 102-agent audit, 76 survived independent refutation, 27 queued.
+>
+> **DONE by Claude (committed, pushed, CI green):**
+> - **Q22 + Q23 — security.** Anyone could sign up as "Mentor" and read every farmer's sales,
+>   production and expense records; and a farmer could re-point their own sale into someone else's
+>   books. Also closed: `shared_sites` could be LISTED, exposing every shared farm design to an
+>   unauthenticated caller. `tests/firestore-rules.test.ts` had asserted two of these since it was
+>   written and had **never once run** — it now runs in CI. **RULES ARE NOT DEPLOYED. Rory must run
+>   `firebase deploy --only firestore:rules`.**
+> - **Q1, Q2, Q3 — the printed BOQ.** Charged for things already standing (a traced boundary, track
+>   and dam ≈ R268 000 on the funder's copy while the screen showed R0); priced a tank bank off its
+>   combined litres (R39 000 vs R21 000, error grows with every tank); costed swales on the wrong
+>   basis from a hand-kept list that had lost `swalew`.
+> - **Q6, Q7 — invoices.** 12.5 kg billed as 12, always in the farmer's disfavour; and a failed save
+>   still printed and WhatsApped the invoice while burning the number.
+> - **Q15 — crop prices.** Clearing a price field persisted R0 and permanently shadowed the
+>   researched default, with no reset control to undo it.
+>
+> **NEXT, in harm order:** Q21 (offline renders R0 as fact, then offers to seed fake money into the
+> real books), Q27, Q17, Q19, Q18, then the rest of the partition below.
+>
+> A Codex brief for Group A already exists at `~/ImbewuField-money/CODEX-TASK.md` (worktree on
+> branch `codex/farmer-money-boq`) — now superseded for Q1-Q3, but the format is the template for
+> handing over the remaining groups.
+
 ## 1. DO NOT TOUCH — standing rules
 
 1. **Never change a number.** No price, rate, yield, VAT figure, spacing, depth constant, or agronomic value may be edited. Changing *how a number is calculated, labelled, filtered, formatted, or sourced* is queue work. Changing the number itself is section 3, always. This explicitly includes `PRICE_BOOK` `zar` values, `DEFAULT_CROP_PRICES`, `CROPS[].yieldKgPerM2`, `POND_ASSUMED_DEPTH_M`, `DEFAULT_CASHFLOW_SETTINGS`, and `TANK_SIZES`.
