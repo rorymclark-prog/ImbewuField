@@ -2346,8 +2346,20 @@ function drawWaterLeaderLabels(
       const placed = placeLeaderLabel({
         text, side, W, plotX0: box.x0, plotX1: box.x1, fontSize, measure,
       });
-      const { x, textW } = placed;
+      const { textW } = placed;
       const drawSize = placed.fontSize;
+      // THE SAME LEADER CAP THE OTHER PAINTER HAS. placeLeaderLabel puts the callout at the PLOT
+      // edge, which is right for something already near that edge and wrong for anything mid-map:
+      // the greywater line's midpoint sits in the middle of the site, so its label went to the far
+      // margin and dragged a horizontal rule clear across the sheet, over the beds, the tank and
+      // the boundary. Capping the run pulls the label back toward its own feature — the far edge
+      // stays the limit, not the destination. Identical rule and identical constant to
+      // drawBlueprintLabelPills, because two label systems drifting apart is the defect, not a
+      // detail of one of them.
+      const maxRun = W * LEADER_MAX_RUN_RATIO;
+      const x = side === 'left'
+        ? Math.max(placed.x, group.target[0] - maxRun - textW)
+        : Math.min(placed.x, group.target[0] + maxRun);
       const leaderEndX = side === 'left' ? x + textW + drawSize * 0.35 : x - drawSize * 0.35;
       const elbowX = side === 'left'
         ? Math.min(group.target[0] - 16, leaderEndX + Math.round(W * 0.025))
@@ -2374,6 +2386,7 @@ function drawWaterLeaderLabels(
       ctx.lineWidth = 1;
       ctx.stroke();
 
+      drawLabelPlaque(ctx, x, positions[index], textW, drawSize, 'left');
       drawReferenceMapText(ctx, text, x, positions[index], drawSize, 700, 'left');
     });
   };
@@ -3599,6 +3612,48 @@ function drawReferenceMapText(
 // renderer has no separate map/legend panel split to measure against.
 const LEADER_MAX_RUN_RATIO = 0.22;
 
+/**
+ * A CALLOUT SITS ON ITS OWN PLAQUE.
+ *
+ * Cream text with a dark outline is a halo, and a halo only works where the ground behind it is
+ * reasonably even. These labels do not land on even ground: the leader-length cap exists precisely
+ * to stop a label marching to the sheet edge, so a callout for a feature mid-canvas is placed back
+ * over the drawing — on the planting sheet, straight across two painted tree canopies, where
+ * "AVOCADO TREE" read as words scattered on foliage rather than as a label.
+ *
+ * This is the move the file already makes for canopies, sector arrows and routes crossing busy
+ * ground: an opaque body inside a light casing. The plaque is the label's body. It goes UNDER the
+ * text and OVER the leader, so the line visibly runs to the plaque's edge and stops, which is what
+ * tells the eye the two belong together.
+ *
+ * Shared by BOTH label painters. The sheets have two — drawBlueprintLabelPills for the design
+ * layers and drawWaterLeaderLabels for sheet 04 — and giving only one of them the plaque is how a
+ * fix ends up landing on seven sheets out of nine.
+ */
+function drawLabelPlaque(
+  ctx: CanvasRenderingContext2D,
+  textX: number,
+  centreY: number,
+  textW: number,
+  fontSize: number,
+  align: CanvasTextAlign,
+): void {
+  const padX = fontSize * 0.34;
+  const padY = fontSize * 0.3;
+  const x = (align === 'right' ? textX - textW : textX) - padX;
+  const y = centreY - fontSize * 0.5 - padY;
+  const w = textW + padX * 2;
+  const h = fontSize + padY * 2;
+  ctx.save();
+  roundRectPath(ctx, x, y, w, h, Math.min(h * 0.34, fontSize * 0.42));
+  ctx.fillStyle = 'rgba(24,32,26,0.9)';
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(243,238,219,0.72)';
+  ctx.lineWidth = Math.max(1.2, fontSize * 0.045);
+  ctx.stroke();
+  ctx.restore();
+}
+
 function drawBlueprintLabelPills(
   ctx: CanvasRenderingContext2D,
   labels: ProducerLabel[],
@@ -3667,33 +3722,7 @@ function drawBlueprintLabelPills(
       ctx.lineWidth = 1;
       ctx.stroke();
     }
-    // A CALLOUT SITS ON ITS OWN PLAQUE.
-    //
-    // Cream text with a dark outline is a halo, and a halo only works where the ground behind it is
-    // reasonably even. These labels do not land on even ground: the leader-length cap (above) exists
-    // precisely to stop a label marching to the sheet edge, so a callout for a feature mid-canvas is
-    // placed back over the drawing — on the planting sheet, straight across two painted tree
-    // canopies, where "AVOCADO TREE" and "SOUTH-WESTERN MORINGA TREE" read as words scattered on
-    // foliage rather than as labels.
-    //
-    // The fix is the one this file already uses for canopies, sector arrows and route lines when
-    // they cross busy ground: an opaque body inside a light casing. The plaque is the label's body.
-    // It goes UNDER the text and OVER the leader, so the line visibly runs to the plaque's edge and
-    // stops, which is what tells the eye the two belong together.
-    const padX = fs * 0.34;
-    const padY = fs * 0.3;
-    const plaqueX = (align === 'left' ? textX : textX - textW) - padX;
-    const plaqueY = l.ay + 1 - fs * 0.5 - padY;
-    const plaqueW = textW + padX * 2;
-    const plaqueH = fs + padY * 2;
-    ctx.save();
-    roundRectPath(ctx, plaqueX, plaqueY, plaqueW, plaqueH, Math.min(plaqueH * 0.34, fs * 0.42));
-    ctx.fillStyle = 'rgba(24,32,26,0.9)';
-    ctx.fill();
-    ctx.strokeStyle = 'rgba(243,238,219,0.72)';
-    ctx.lineWidth = Math.max(1.2, fs * 0.045);
-    ctx.stroke();
-    ctx.restore();
+    drawLabelPlaque(ctx, textX, l.ay + 1, textW, fs, align);
     drawReferenceMapText(ctx, l.text, textX, l.ay + 1, fs, weight, align);
   }
 }
@@ -9013,18 +9042,32 @@ async function composeStyleSheet(
     ctx.font = options.footerHeading
       ? `600 ${footerFs}px ${SHEET_BODY_FONT}`
       : `italic 500 ${footerFs}px ${SHEET_BODY_FONT}`;
+    // A NEWLINE IS A HARD BREAK, NOT A SPACE.
+    //
+    // This wrapped on /\s+/, which treats "\n" as whitespace like any other. The Water sheet's
+    // budget is built as one fact per line and joined with newlines, so every fact ran into the
+    // next: "Roof catchment traced: 144 m² Annual rainfall: 768 mm Runoff coefficient: 0.8 (generic
+    // roof) Harvestable: ~88,474 L a year…". A block of numbers a farmer is meant to check against
+    // their own tank came out as an unreadable paragraph — the data was right and the page was
+    // wrong, which is the pairing this file keeps having to fix.
+    //
+    // Callers that pass a single line are unaffected: a string with no newline yields one segment
+    // and wraps exactly as before.
     const lines: string[] = [];
-    let current = '';
-    for (const word of value.split(/\s+/)) {
-      const next = current ? `${current} ${word}` : word;
-      if (current && ctx.measureText(next).width > footerTextW) {
-        lines.push(current);
-        current = word;
-      } else {
-        current = next;
+    for (const segment of value.split('\n')) {
+      if (!segment.trim()) continue;
+      let current = '';
+      for (const word of segment.split(/\s+/)) {
+        const next = current ? `${current} ${word}` : word;
+        if (current && ctx.measureText(next).width > footerTextW) {
+          lines.push(current);
+          current = word;
+        } else {
+          current = next;
+        }
       }
+      if (current) lines.push(current);
     }
-    if (current) lines.push(current);
     return lines;
   };
   const customFooterLines = options.footerText ? wrapFooterText(options.footerText) : [];
