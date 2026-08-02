@@ -88,6 +88,7 @@ import {
 } from '@/lib/sheet-legend-layout';
 import { SHEET_BASE_MUTE_STYLE, SHEET_STRUCTURE_MUTE_STYLE, type SheetBaseMute } from '@/lib/sheet-base-mute';
 import { canChooseUnderlay, frameForUnderlay, underlayCacheSuffix, type SheetUnderlay } from '@/lib/sheet-underlay';
+import { overlandFlowArrows, overlandFlowLegendText, type FlowArrow } from '@/lib/overland-flow';
 import {
   bedCropRows,
   cropGlyphFor,
@@ -2712,6 +2713,53 @@ async function muteStructureCutout(
   ctx.fillRect(0, 0, W, H);
   ctx.globalCompositeOperation = 'source-over';
   return canvas;
+}
+
+/**
+ * Paint the overland-flow field.
+ *
+ * Deliberately quiet: this is the CONDITION the water plan responds to, not part of the plan, so it
+ * must be readable without competing with a pipe or a tank. Rory, on what may sit over the
+ * photograph: "remember this mustn't overlay base map etc etc" — hence a thin stroke, a wide gap
+ * between arrows, and a cream casing rather than a heavier colour, which is how every other mark on
+ * these sheets survives busy ground without shouting.
+ */
+function drawOverlandFlowArrows(
+  ctx: CanvasRenderingContext2D,
+  arrows: FlowArrow[],
+  W: number,
+  H: number,
+): void {
+  if (!arrows.length) return;
+  const width = Math.max(1.6, W * 0.0016);
+  const head = Math.max(6, W * 0.0055);
+  ctx.save();
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  for (const [stroke, lineWidth] of [
+    ['rgba(250,246,232,0.72)', width * 2.6] as const,
+    ['rgba(28,96,140,0.62)', width] as const,
+  ]) {
+    ctx.strokeStyle = stroke;
+    ctx.lineWidth = lineWidth;
+    ctx.beginPath();
+    for (const arrow of arrows) {
+      const fx = arrow.from[0] * W;
+      const fy = arrow.from[1] * H;
+      const tx = arrow.to[0] * W;
+      const ty = arrow.to[1] * H;
+      const angle = Math.atan2(ty - fy, tx - fx);
+      ctx.moveTo(fx, fy);
+      ctx.lineTo(tx, ty);
+      // Open V head, not a filled triangle: at this weight a solid head reads as a blob and the
+      // arrow stops looking like a direction.
+      ctx.moveTo(tx - Math.cos(angle - 0.42) * head, ty - Math.sin(angle - 0.42) * head);
+      ctx.lineTo(tx, ty);
+      ctx.lineTo(tx - Math.cos(angle + 0.42) * head, ty - Math.sin(angle + 0.42) * head);
+    }
+    ctx.stroke();
+  }
+  ctx.restore();
 }
 
 /** Satellite base + a restrained blueprint scrim that keeps labels legible without drowning the map. */
@@ -6234,6 +6282,24 @@ async function buildReferenceBlueprintMap(
     drawBlueprintDriveway(ctx, renderRefLayers, px, py, pxPerM, filter === 'structures');
   }
 
+  // WHERE THE RAIN GOES ONCE IT IS ON THE GROUND — under the plumbing, because it is the condition
+  // the plumbing answers, not a thing the farmer placed. Rory: "show arrows of where the rain
+  // drains on the roof and ground?"
+  //
+  // Only the ground half is drawn, and only when the app actually knows: aspectDeg comes from a real
+  // elevation sample and arrives with a confidence flag that is 'unconfirmed' on ground too flat to
+  // call. A roof's fall is NOT known — a traced outline says nothing about ridge, pitch or which
+  // wall the gutter is on — so no arrow is drawn off a roof. See lib/overland-flow.ts.
+  const flowArrows = filter === 'water'
+    ? overlandFlowArrows({
+      boundary: renderRefLayers.boundary,
+      aspectDeg: site?.elevation?.aspectDeg ?? Number.NaN,
+      slopeDeg: site?.elevation?.slopeDeg ?? Number.NaN,
+      directionConfidence: site?.elevation?.directionConfidence,
+    })
+    : [];
+  drawOverlandFlowArrows(ctx, flowArrows, W, H);
+
   const featureOverlay = await buildExactLayerOverlay(renderState, renderFrame, renderRefLayers, filter, W, H, 'features');
   if (featureOverlay) ctx.drawImage(await loadImage(featureOverlay), 0, 0, W, H);
 
@@ -6267,9 +6333,30 @@ async function buildReferenceBlueprintMap(
     REFERENCE_SHEET_LABEL[filter],
     false,
     true,
-    waterBudget.length
-      ? { footerHeading: 'WATER BUDGET', footerText: waterBudget.join('\n'), footerBox: true }
-      : {},
+    {
+      ...(waterBudget.length
+        ? { footerHeading: 'WATER BUDGET', footerText: waterBudget.join('\n'), footerBox: true }
+        : {}),
+      // NOTHING IS DRAWN WITHOUT A ROW, and the converse: the row exists only when the arrows do.
+      // The flow field is computed from site elevation, which sheetLegendRows never sees, so it
+      // could not derive this one — hence extraLegendRows rather than a special case in there.
+      ...(flowArrows.length
+        ? {
+          extraLegendRows: [{
+            swatch: '#1C608C',
+            visual: 'flow-arrow' as const,
+            text: overlandFlowLegendText(
+              site?.elevation?.slopeDeg ?? Number.NaN,
+              site?.elevation?.aspectLabel ?? 'downhill',
+            ),
+            // No section, deliberately. The headed sections on this sheet name what the farmer has
+            // PLACED — rainwater, filtered greywater, irrigation. Overland flow is not placed and
+            // cannot be moved; it is the condition all of that responds to. Filing it under a
+            // "WATER" heading of its own put a heading on the sheet that read as a fourth system.
+          }]
+        }
+        : {}),
+    },
   );
 }
 
@@ -8461,7 +8548,7 @@ interface StyleLegendRow {
   /** A swatch that must be drawn as a specific symbol rather than derived from `swatch`/`defId`.
    *  Named `visual`, not `lineVisual`, because it is no longer only for lines: sheet 05 paints its
    *  areas with a soil treatment that no generic footprint painter reproduces. */
-  visual?: 'earthworks-swale' | 'earthworks-soil';
+  visual?: 'earthworks-swale' | 'earthworks-soil' | 'flow-arrow';
   kind?: 'zone' | 'ground' | 'surface';
   section?: WaterLegendSection | PlantingLegendSection | StructuresLegendSection
     | 'SITE EDGE' | 'WATER' | 'PLANTING' | 'INFRASTRUCTURE';
@@ -8702,6 +8789,30 @@ function drawStyleLegendSymbol(
     return;
   }
 
+  if (row.visual === 'flow-arrow') {
+    // The same open V the map draws, at chip scale — a filled head would read as a different symbol.
+    const head = Math.max(4, h * 0.16);
+    ctx.save();
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+    for (const [stroke, lineWidth] of [
+      ['rgba(250,246,232,0.85)', Math.max(3, h * 0.11)] as const,
+      [row.swatch, Math.max(1.4, h * 0.045)] as const,
+    ]) {
+      ctx.strokeStyle = stroke;
+      ctx.lineWidth = lineWidth;
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.lineTo(x + w, y);
+      ctx.moveTo(x + w - head, y - head * 0.7);
+      ctx.lineTo(x + w, y);
+      ctx.lineTo(x + w - head, y + head * 0.7);
+      ctx.stroke();
+    }
+    ctx.restore();
+    return;
+  }
+
   if (row.visual === 'earthworks-soil') {
     // The same three moves drawEarthworksFeatures makes on the map: cream casing, bare mulched
     // soil, and the element's own shape. Circles stay circles — a tree pit keyed as a rectangle
@@ -8924,6 +9035,10 @@ async function composeStyleSheet(
   options: {
     sheetNumber?: string;
     legendRows?: StyleLegendRow[];
+    /** Rows a SHEET adds that sheetLegendRows cannot derive from the design alone — sheet 04's
+     *  overland-flow field is computed from site elevation, which the legend builder never sees.
+     *  Appended, never replacing, so the derived inventory stays complete. */
+    extraLegendRows?: StyleLegendRow[];
     footerHeading?: string;
     footerText?: string;
     footerBox?: boolean;
@@ -9031,7 +9146,10 @@ async function composeStyleSheet(
   // to grow into. The reference sheet Rory has sent me repeatedly does not have it either.
   y += Math.round(legendW * 0.045);
 
-  const rows = options.legendRows ?? sheetLegendRows(state, refLayers, filter, includeToolGlyphs, frame);
+  const rows = [
+    ...(options.legendRows ?? sheetLegendRows(state, refLayers, filter, includeToolGlyphs, frame)),
+    ...(options.extraLegendRows ?? []),
+  ];
   const legendTop = y + Math.round(legendW * 0.03);
   const footerFs = options.footerText ? Math.max(9, Math.round(legendW * 0.025)) : Math.round(legendW * 0.036);
   const footerLineH = Math.max(11, Math.round(footerFs * 1.28));
