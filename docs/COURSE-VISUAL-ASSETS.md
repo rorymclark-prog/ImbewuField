@@ -79,6 +79,53 @@ resolve (in `LessonPanel` in `app/student/page.tsx`, via `LESSON_INDEX`), so if 
 does slip through, a farmer sees nothing rather than a dead button — but the test is what's
 supposed to catch it first, in CI, before it ships.
 
+## Producing a module end to end
+
+`npm run course:status` prints what every module is missing and who does it. The order below is
+forced by one fact: **the narration script also defines the deck.** One `**Slide N — Title**` block
+becomes one slide, so the script has to exist before there is anything to render or record.
+
+| # | Step | Who | Command |
+|---|---|---|---|
+| 1 | Write the English narration script | GPT | `npm run course:script-prompt -- <module>` → paste the output to GPT → save its reply to `docs/narration/<module>.en.md` |
+| 2 | Fact-check it against the source | anyone | see below — this is not optional |
+| 3 | Draft the isiZulu | GPT | `npm run course:script-prompt -- <module> zu`, then a first-language isiZulu speaker who farms reads it before anything is recorded |
+| 4 | Render the deck | `npm run` | `node scripts/make-lesson-slides.mjs <module> en` |
+| 5 | Cut the recording sheets | `npm run` | `npm run course:record-sheet -- <module> en` |
+| 6 | Record the narration | Rory, in Antigravity | one clip per slide, en-ZA voice, named as `RECORD.md` says |
+| 7 | Bring the clips back | `npm run` | `npm run course:import-audio -- <module> <folder>` |
+| 8 | Assemble the video | `npm run` | `node scripts/build-lesson-video.mjs <module> en <slides-dir>` |
+
+### Step 2 is not optional
+
+Every first draft of the six scripts written in one sitting contained at least one factual defect,
+and eleven of the twelve were **the same defect**: a fact the lesson states flatly, narrated as a
+possibility. "A wall that casts **no** shade in summer" came back as "little shade". "**Dies at**
+the first Highveld frost" came back as "**can die after**" — and a farmer who hears that plants the
+tree anyway. Softening does not feel like softening from the inside, which is why the check has to
+be someone other than the writer, reading the script against `lib/course-modules.ts` line by line.
+
+`scripts/course-script-prompt.mjs` now names those four real examples in the prompt rather than
+saying "do not soften", because the abstraction did not survive contact. Check anyway.
+
+Also check the numbers and the species. No number may appear that is not in the lesson content,
+and no species may be named that the source does not name — some are illegal to propagate in South
+Africa under NEMBA, and this course must not be the thing that suggests one.
+
+### What the deck generator will not guess
+
+Two places refuse to fill a gap with a guess, because a confident wrong answer is worse than a
+visible absence:
+
+- **Artwork on a "Watch:" slide** is taken from the lesson it belongs to, by position — sound,
+  because the format allows one watch slide per lesson in lesson order. The index does **not**
+  wrap. If the counts stop lining up the slide gets no picture, rather than whichever picture the
+  arithmetic landed on. A picture that contradicts the words under it is the failure that cost
+  eleven Seeds slides.
+- **The title picture** only crops to fill when little is lost. Some lesson artwork is a
+  record-keeping table or a layer cutaway, and a full-bleed crop of a table slices the grid
+  mid-cell and reads as a printing fault.
+
 ## Generating the facilitator video (slides + narration → mp4)
 
 Three scripts, run in order:
