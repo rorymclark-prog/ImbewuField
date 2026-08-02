@@ -512,7 +512,12 @@ export const ELEMENT_CATALOG: DesignElementDef[] = [
     hM: 10,
     color: '#A9743F',
     zoneRec: [2, 3, 4],
-    tip: 'The mound on the DOWNHILL side of a swale trench — build it on contour and plant it straight away so it binds.',
+    // Both readings, because the element carries both names and a farmer may mean either. The
+    // distinction is real and worth stating plainly: a swale is a level trench that soaks water in
+    // where it falls; a contour bank is a ridge that catches runoff and leads it away safely, and
+    // in South African soil-conservation practice it is usually laid on a slight grade to a
+    // grassed waterway rather than dead level. Same earth, opposite intent.
+    tip: 'A raised earth ridge on contour. Either the mound on the downhill side of a swale trench, or a standalone contour bank that catches runoff and leads it to a safe outlet. Plant it as soon as it is built so it binds.',
   },
   {
     id: 'terrace',

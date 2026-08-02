@@ -41,10 +41,21 @@ export const SHEET_BASE_MUTE_STYLE: Readonly<Record<SheetBaseMute, SheetBaseMute
   // needed this. These are the values that sheet already shipped with and Rory accepted.
   analysis: { filter: 'saturate(0.42) brightness(0.96) contrast(0.9)', veil: 'rgba(238, 234, 218, 0.2)' },
   // Zones, Water, Earthworks, Planting, Structures, Whole design, Phasing. The photo here is
-  // purely locational — it tells the farmer WHERE on his farm he is looking, and nothing else on
-  // these sheets comes from it. Pushed back hard so hatched zones, cream-cased canopies, brown
-  // earthworks and blue pipework are unmistakably the figure and the ground is the ground.
-  design: { filter: 'saturate(0.3) brightness(1.14) contrast(0.86)', veil: 'rgba(246, 241, 227, 0.44)' },
+  // locational: it tells the farmer WHERE on their farm they are looking. It must recede behind
+  // the drawn design — and it must still be a photograph of their farm.
+  //
+  // THE FIRST ATTEMPT AT THIS OVERSHOT, and the overshoot is instructive. Pushed to saturate(0.3),
+  // brightness(1.14) and a 44% veil, the aerial went to a flat grey: the design read beautifully
+  // and the site underneath it disappeared — roofs, tree canopies and worked ground all bleached
+  // to the same tone. Rory: "things are looking a lot better BUT ... I can [not] see much now,
+  // which is also not good."
+  //
+  // Both failures are real and they pull opposite ways: a full-strength drone photo drowns the
+  // plan, a bleached one stops being evidence. These values sit between them — colour clearly
+  // drained so nothing on the photo competes with a zone or a canopy for "brightest thing on the
+  // sheet", but enough contrast left that a farmer can still recognise their own yard under the
+  // drawing. If this needs to move again, move it a step at a time and look at a real sheet.
+  design: { filter: 'saturate(0.52) brightness(1.05) contrast(0.95)', veil: 'rgba(246, 241, 227, 0.26)' },
 };
 
 /**

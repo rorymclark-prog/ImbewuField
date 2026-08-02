@@ -1770,7 +1770,18 @@ function buildZoneOverlay(
         ctx.closePath();
       }
     }
-    ctx.fillStyle = `${def.color}3D`;
+    // A WHISPER OF A WASH, because the HATCH is now carrying the colour.
+    //
+    // Hatching was added on top of the old 24% wash, and the two together closed the zone up into
+    // a solid slab — Rory, on that render: "can you audit whether hatching is best, I have a
+    // feeling not, it would be good here to see a bit more what's underneath the polygons."
+    //
+    // Hatching IS the right technique here; the mistake was stacking it. In cartography a ruled
+    // fill REPLACES a solid one rather than joining it — the whole point of ruling an area is that
+    // the ground shows through between the lines, which is what lets a reader see the orchard, the
+    // roof or the bare soil a zone has been drawn over while still reading the zone. A tint this
+    // light only keeps the area from looking hollow where the hatch lines are far apart.
+    ctx.fillStyle = `${def.color}16`;
     ctx.fill('evenodd'); // outer + hole rings in one path → real holes
     // HATCH THE FILL, because the legend swatch has always been hatched and the map never was.
     // That is this file's own stated rule — a swatch must look like the thing on the map — broken
@@ -1783,10 +1794,12 @@ function buildZoneOverlay(
     // swatch in drawStyleLegendSymbol — if you change one, change both.
     ctx.save();
     ctx.clip('evenodd');
-    const hatchStep = Math.max(9, W * 0.011);
+    // Wider spacing and a lighter casing than the first attempt: the gap between the rules is the
+    // part that shows the farmer their own ground, so it has to be a real gap, not a seam.
+    const hatchStep = Math.max(13, W * 0.017);
     for (const [stroke, width] of [
-      ['rgba(252,250,240,0.5)', Math.max(3, W * 0.0034)] as const,
-      [`${def.color}D9`, Math.max(1.6, W * 0.0018)] as const,
+      ['rgba(252,250,240,0.34)', Math.max(2.4, W * 0.0026)] as const,
+      [`${def.color}E0`, Math.max(1.6, W * 0.0019)] as const,
     ]) {
       ctx.strokeStyle = stroke;
       ctx.lineWidth = width;
@@ -4558,6 +4571,48 @@ function drawEarthworksFeatures(
     // Mulch: deterministic flecks, so the same bed stipples identically on every render and every
     // device. Straw over bare soil is what these features actually look like once built, and it is
     // the fastest way to read "this is a finished earthwork" rather than "this is a coloured box".
+    // A MOUND IS NOT A CUT, AND MUST NOT LOOK LIKE ONE. Rory, looking at sheet 05: "what is the
+    // difference between a berm/contour bank and a swale?" — asked because the sheet was drawing
+    // them as near-identical brown bars, when they are opposite structures. A swale is a level
+    // trench that INFILTRATES water where it falls; a contour bank is a raised, usually graded
+    // ridge that INTERCEPTS runoff and leads it to a safe outlet. Drawing them alike tells a
+    // farmer to build the wrong one.
+    //
+    // The swale already reads as a cut (ditch lane plus hachures, the standard convention for a
+    // cut face — see drawSwaleCrossSection). These read as raised ground instead: a lit crest
+    // along the ridge with a shadow down one flank, and deliberately NO hachures, because
+    // hachures on a mound would say "excavated" about something that was heaped up.
+    if (EARTH_MOUND_IDS.has(def.id)) {
+      ctx.save();
+      trace();
+      ctx.clip();
+      const alongX = wPx >= hPx;
+      const half = (alongX ? hPx : wPx) / 2;
+      const grad = alongX
+        ? ctx.createLinearGradient(0, -half, 0, half)
+        : ctx.createLinearGradient(-half, 0, half, 0);
+      grad.addColorStop(0, 'rgba(0,0,0,0.22)');
+      grad.addColorStop(0.42, 'rgba(233,205,158,0.5)');
+      grad.addColorStop(0.55, 'rgba(198,161,110,0.32)');
+      grad.addColorStop(1, 'rgba(0,0,0,0.34)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(-wPx / 2, -hPx / 2, wPx, hPx);
+      // The crest line: where the ridge actually peaks, and the thing a farmer pegs to.
+      ctx.strokeStyle = 'rgba(244,226,190,0.85)';
+      ctx.lineWidth = Math.max(1, half * 0.16);
+      ctx.beginPath();
+      if (alongX) { ctx.moveTo(-wPx / 2, -half * 0.12); ctx.lineTo(wPx / 2, -half * 0.12); }
+      else { ctx.moveTo(-half * 0.12, -hPx / 2); ctx.lineTo(-half * 0.12, hPx / 2); }
+      ctx.stroke();
+      ctx.restore();
+      trace();
+      ctx.strokeStyle = 'rgba(40,28,17,0.92)';
+      ctx.lineWidth = casing * 0.75;
+      ctx.stroke();
+      ctx.restore();
+      continue;
+    }
+
     ctx.save();
     trace();
     ctx.clip();
@@ -4584,6 +4639,10 @@ function drawEarthworksFeatures(
     ctx.restore();
   }
 }
+
+/** Earthworks that are HEAPED UP rather than dug out, and so must read as raised ground. A swale is
+ *  the opposite case and keeps its cut treatment; see the note in drawEarthworksFeatures. */
+const EARTH_MOUND_IDS = new Set(['berm', 'terrace', 'mulch_bank', 'half_moon']);
 
 /** The beds that get drawn as rows of a real crop rather than one shared bed illustration. */
 const PRODUCTION_BED_IDS = new Set(['veg_bed', 'raised_bed']);
@@ -5943,9 +6002,11 @@ async function buildReferenceBlueprintMap(
     // saturated blob on a pale sheet — the one thing on the page shouting, and it is context.
     // Same filter, one step lighter than the ground, so the building still reads as the most
     // definite object on the sheet without being the loudest.
+    // The gentler 'site' mute, not the design one: a building is the most recognisable thing on a
+    // farmer's own plot and the anchor they orient everything else from. It should sit in the same
+    // tonal world as the muted ground without being bleached into it.
     ctx.save();
-    if ('filter' in ctx) ctx.filter = SHEET_BASE_MUTE_STYLE.design.filter;
-    ctx.globalAlpha = 0.92;
+    if ('filter' in ctx) ctx.filter = SHEET_BASE_MUTE_STYLE.site.filter;
     ctx.drawImage(await loadImage(sourceStructures), 0, 0, W, H);
     ctx.restore();
   } else {
@@ -8424,24 +8485,32 @@ function drawStyleLegendSymbol(
   }
 
   ctx.save();
+  const ruledArea = row.kind === 'zone' || row.kind === 'ground';
   roundRectPath(ctx, x, y - h * 0.34, w, h * 0.68, Math.max(2, h * 0.08));
   ctx.fillStyle = row.swatch;
-  ctx.globalAlpha = row.kind === 'zone' ? 0.72 : 0.9;
+  // A RULED AREA'S SWATCH IS RULED, NOT SOLID. The map draws these as a faint tint under coloured
+  // rules so the ground shows between them; a solid 72% chip beside that is a different symbol,
+  // and this sheet's own rule is that a swatch must look like the thing on the map. Same tint,
+  // same rule colour, same 45-degree direction — only the spacing is tighter, because the chip is
+  // a fraction of the width of the area it stands for and needs a few rules to read as ruled.
+  ctx.globalAlpha = ruledArea ? 0.14 : 0.9;
   ctx.fill();
   ctx.globalAlpha = 1;
-  ctx.strokeStyle = 'rgba(32,25,15,0.38)';
-  ctx.lineWidth = 1;
-  ctx.stroke();
-  if (row.kind === 'zone' || row.kind === 'ground') {
+  if (ruledArea) {
     ctx.save();
     roundRectPath(ctx, x, y - h * 0.34, w, h * 0.68, Math.max(2, h * 0.08));
     ctx.clip();
-    ctx.strokeStyle = 'rgba(255,255,255,0.45)';
-    for (let d = -h; d < w + h; d += Math.max(5, h * 0.28)) {
+    ctx.strokeStyle = row.swatch;
+    ctx.lineWidth = Math.max(1.1, h * 0.055);
+    for (let d = -h; d < w + h; d += Math.max(5, h * 0.26)) {
       ctx.beginPath(); ctx.moveTo(x + d, y - h / 2); ctx.lineTo(x + d - h, y + h / 2); ctx.stroke();
     }
     ctx.restore();
   }
+  roundRectPath(ctx, x, y - h * 0.34, w, h * 0.68, Math.max(2, h * 0.08));
+  ctx.strokeStyle = ruledArea ? row.swatch : 'rgba(32,25,15,0.38)';
+  ctx.lineWidth = ruledArea ? Math.max(1.4, h * 0.06) : 1;
+  ctx.stroke();
   ctx.restore();
 }
 
