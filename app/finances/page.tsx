@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import { suspectedDuplicateIncomeIds, DUPLICATE_ROW_NOTE, DUPLICATE_LEDGER_FOOTER } from '@/lib/duplicate-income';
 import Link from 'next/link';
 import { TrendingUp, Scale, Receipt, Plus, Sprout, FileText, Download, Camera, Loader2, Pencil, Trash2, Sparkles } from 'lucide-react';
 import { onAuthStateChanged, type User } from 'firebase/auth';
@@ -655,7 +656,7 @@ function inPeriod(iso: string | null | undefined, period: Period, now: Date): bo
   return saSeasonMonths(now.getMonth()).includes(d.getMonth());
 }
 
-interface LedgerRow { kind: 'sale' | 'expense' | 'harvest' | 'invoice'; id: string; iso: string; date: string; desc: string; qty: string; inAmt: number | null; source: string; outAmt: number | null }
+interface LedgerRow { kind: 'sale' | 'expense' | 'harvest' | 'invoice'; id: string; iso: string; date: string; desc: string; qty: string; inAmt: number | null; source: string; outAmt: number | null; duplicateSuspect?: boolean }
 
 // Builds the unified ledger (sales + expenses + harvest + paid invoices) for a period.
 // Shared by the desktop sheet and the phone CSV export so both stay in sync.
@@ -672,12 +673,31 @@ function buildLedgerRows(sales: SalesLog[], expenses: ExpenseLog[], production: 
   const invoiceRows: LedgerRow[] = invoices
     .filter((i) => i.status === 'paid' && inPeriod(i.paidAt, period, now))
     .map((i) => ({ kind: 'invoice' as const, id: i.id, iso: i.paidAt ?? i.dateISO, date: fmtDate(i.paidAt ?? i.dateISO), desc: `Invoice #${i.no} — ${i.billTo || 'No buyer'}`, qty: '—', inAmt: i.total ?? 0, source: i.paymentMethod ? `Invoice · ${paymentMethodLabel(i.paymentMethod)}` : 'Invoice', outAmt: null }));
-  return [...saleRows, ...expenseRows, ...harvestRows, ...invoiceRows].sort((a, b) => (b.iso ?? '').localeCompare(a.iso ?? ''));
+  // THE SAME SALE CAN BE COUNTED TWICE. Revenue is sales plus paid invoices with no matching key,
+  // and the model cannot express the link — a SavedInvoice has no sale reference and a SalesLog has
+  // no invoice field. The app then pushes the farmer into it: harvest reconciliation is never shown
+  // the invoices, so an invoice-only sale reads as "40 kg unaccounted for", and clearing that flag
+  // by logging the sale is exactly what doubles the money.
+  //
+  // Flagged, never merged. Which row is the real one — or whether a paid invoice should create its
+  // sale automatically — changes what the farmer's books SAY, and that is Rory's decision (D9), not
+  // a heuristic's.
+  const suspect = suspectedDuplicateIncomeIds(
+    [...saleRows, ...invoiceRows].map((r) => ({
+      id: `${r.kind}-${r.id}`,
+      kind: r.kind === 'invoice' ? 'invoice' as const : 'sale' as const,
+      amount: r.inAmt ?? 0,
+      iso: r.iso,
+    })),
+  );
+  return [...saleRows, ...expenseRows, ...harvestRows, ...invoiceRows]
+    .map((r) => ({ ...r, duplicateSuspect: suspect.has(`${r.kind}-${r.id}`) }))
+    .sort((a, b) => (b.iso ?? '').localeCompare(a.iso ?? ''));
 }
 
 function exportLedgerCsv(rows: LedgerRow[], period: Period) {
-  const head = ['Date', 'Description', 'Qty', 'In', 'Source', 'Out'];
-  const body = rows.map((r) => [r.date, r.desc, r.qty, r.inAmt != null ? fmtZAR(r.inAmt) : '', r.source, r.outAmt != null ? fmtZAR(r.outAmt) : '']);
+  const head = ['Date', 'Description', 'Qty', 'In', 'Source', 'Out', 'Check'];
+  const body = rows.map((r) => [r.date, r.desc, r.qty, r.inAmt != null ? fmtZAR(r.inAmt) : '', r.source, r.outAmt != null ? fmtZAR(r.outAmt) : '', r.duplicateSuspect ? DUPLICATE_ROW_NOTE : '']);
   const csv = [head, ...body].map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(',')).join('\n');
   const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv' }));
   const a = document.createElement('a');
@@ -767,12 +787,19 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
           <tbody>
             {rows.length === 0 ? (
               <tr><td colSpan={7} className="px-5 py-10 text-center font-sans" style={{ fontSize: 14, color: '#8C7A62' }}>
-                No entries for this {period}. Use the Add-entry button, the Invoice tool, or your phone — everything shows here.
+                No entries for this {period}. Use the Add-entry button, the Invoice tool, or your phone — everything shows here. {DUPLICATE_LEDGER_FOOTER}
               </td></tr>
             ) : rows.map((r, i) => (
               <tr key={`${r.kind}-${r.id}`} style={{ borderBottom: i < rows.length - 1 ? '1px solid #E2D8C4' : 'none' }}>
                 <td className="px-5 py-3 font-sans" style={{ fontSize: 14, color: '#5C5040', whiteSpace: 'nowrap' }}>{r.date}</td>
-                <td className="px-5 py-3 font-display font-medium" style={{ fontSize: 14, color: '#20190F' }}>{r.desc}</td>
+                <td className="px-5 py-3 font-display font-medium" style={{ fontSize: 14, color: '#20190F' }}>
+                  {r.desc}
+                  {r.duplicateSuspect && (
+                    <span className="block font-sans" style={{ fontSize: 11.5, color: '#B07A1E', marginTop: 2 }}>
+                      {DUPLICATE_ROW_NOTE}
+                    </span>
+                  )}
+                </td>
                 <td className="px-5 py-3 font-sans" style={{ fontSize: 14, color: '#5C5040', whiteSpace: 'nowrap' }}>{r.qty}</td>
                 <td className="px-5 py-3 font-display font-semibold tabular-nums" style={{ fontSize: 14, color: '#2E6B3A', textAlign: 'right', whiteSpace: 'nowrap' }}>{r.inAmt != null ? fmtZAR(r.inAmt) : '—'}</td>
                 <td className="px-5 py-3 font-sans" style={{ fontSize: 14, color: '#8C7A62' }}>{r.source}</td>
