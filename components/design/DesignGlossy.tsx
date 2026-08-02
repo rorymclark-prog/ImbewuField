@@ -8429,7 +8429,10 @@ interface StyleLegendRow {
   text: string;
   defId?: string;
   lineKind?: string;
-  lineVisual?: 'earthworks-swale';
+  /** A swatch that must be drawn as a specific symbol rather than derived from `swatch`/`defId`.
+   *  Named `visual`, not `lineVisual`, because it is no longer only for lines: sheet 05 paints its
+   *  areas with a soil treatment that no generic footprint painter reproduces. */
+  visual?: 'earthworks-swale' | 'earthworks-soil';
   kind?: 'zone' | 'ground' | 'surface';
   section?: WaterLegendSection | PlantingLegendSection | StructuresLegendSection
     | 'SITE EDGE' | 'WATER' | 'PLANTING' | 'INFRASTRUCTURE';
@@ -8454,6 +8457,8 @@ export function sheetLegendRows(
       rows.push({
         swatch: ELEMENTS_BY_ID.tree_basin?.color ?? '#A9743F',
         text: countedLegendText('Tree pit to dig (one per tree)', pits),
+        defId: 'tree_basin',
+        visual: 'earthworks-soil',
       });
     }
   }
@@ -8550,6 +8555,13 @@ export function sheetLegendRows(
       defId: group.defId,
       text: countedLegendText(group.name, group.n),
       section: group.section,
+      // SHEET 05 DOES NOT PAINT ITS AREAS THE WAY THE OTHER SHEETS DO. drawEarthworksFeatures
+      // gives every earth feature a cream casing over bare mulched soil, because on this sheet a
+      // vegetable bed is a hole to dig rather than a thing to grow in — Rory: "in the earthworks
+      // section raised beds must just be brown". Deriving these swatches from the generic footprint
+      // painter keyed the same bed with its green planting icon, so the sheet's key described a
+      // different drawing from the one beside it.
+      ...(filter === 'earthworks' ? { visual: 'earthworks-soil' as const } : {}),
     });
   }
   for (const group of exactSheetLineLegendGroups(state, filter)) {
@@ -8562,7 +8574,7 @@ export function sheetLegendRows(
       swatch: earthworksStyle?.color ?? waterStyle?.color ?? plantingStyle?.color ?? LINE_COLORS[kind] ?? '#8C8577',
       text: countedLegendText(group.text, group.count),
       lineKind: kind,
-      ...(earthworksStyle ? { lineVisual: 'earthworks-swale' as const } : {}),
+      ...(earthworksStyle ? { visual: 'earthworks-swale' as const } : {}),
       section: earthworksStyle ? 'WATER EARTHWORKS'
         : waterStyle
         ? waterLegendSectionForRoute(kind as Parameters<typeof waterLegendSectionForRoute>[0])
@@ -8661,6 +8673,34 @@ function drawStyleLegendSymbol(
     return;
   }
 
+  if (row.visual === 'earthworks-soil') {
+    // The same three moves drawEarthworksFeatures makes on the map: cream casing, bare mulched
+    // soil, and the element's own shape. Circles stay circles — a tree pit keyed as a rectangle
+    // sends a farmer out to dig the wrong hole.
+    const def = row.defId ? ELEMENTS_BY_ID[row.defId] : undefined;
+    const round = def?.shape === 'circle';
+    const boxH = h * 0.72;
+    const boxW = round ? boxH : w;
+    const boxX = round ? x + (w - boxW) / 2 : x;
+    const boxY = y - boxH / 2;
+    const shape = () => {
+      ctx.beginPath();
+      if (round) ctx.ellipse(boxX + boxW / 2, y, boxW / 2, boxH / 2, 0, 0, Math.PI * 2);
+      else roundRectPath(ctx, boxX, boxY, boxW, boxH, Math.min(boxW, boxH) * 0.1);
+    };
+    ctx.save();
+    shape();
+    ctx.strokeStyle = 'rgba(252,248,236,0.92)';
+    ctx.lineWidth = Math.max(2, h * 0.07);
+    ctx.lineJoin = 'round';
+    ctx.stroke();
+    shape();
+    ctx.fillStyle = CROP_SOIL_COLOR;
+    ctx.fill();
+    ctx.restore();
+    return;
+  }
+
   if (row.defId) {
     const def = ELEMENTS_BY_ID[row.defId];
     if (def) {
@@ -8688,7 +8728,7 @@ function drawStyleLegendSymbol(
     }
   }
 
-  if (row.lineVisual === 'earthworks-swale') {
+  if (row.visual === 'earthworks-swale') {
     // The Earthworks map draws a swale as a cut ditch, a spoil berm and hachures. A flat brown
     // stroke in its legend was the last place that still described the old route-only symbol.
     const mid = y;
