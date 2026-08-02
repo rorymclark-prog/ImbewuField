@@ -14,7 +14,7 @@ service cloud.firestore {
     function isMentor()    { return myRole() == 'mentor'; }
     function owns(d)       { return signedIn() && d.profile_id == request.auth.uid; }
     function ownsField(d, field) { return signedIn() && d[field] == request.auth.uid; }
-    function sameOrg(d)    { return isStaff() && d.org_id == myOrg(); }
+    function sameOrg(d)    { return isStaff() && myOrg() != null && d.org_id == myOrg(); }
     // Stricter than sameOrg(): also admits mentors, and refuses to match two org-less
     // accounts against each other (null == null would otherwise be true).
     function inMyOrg(d)      { return signedIn() && myOrg() != null && d.org_id == myOrg(); }
@@ -41,7 +41,7 @@ service cloud.firestore {
       // Self-service signup may pick one of the offered roles, but NEVER admin, and may
       // never self-assign an org (that grants cross-tenant access). org_id is admin-driven.
       allow create: if signedIn() && uid == request.auth.uid
-        && request.resource.data.role in ['farmer', 'mentor', 'student', 'ngo', 'funder']
+        && request.resource.data.role in ['farmer', 'student']
         && (!('org_id' in request.resource.data) || request.resource.data.org_id == null);
       // role and org_id are IMMUTABLE from the client — pin them to the existing values so a
       // user can edit name/photo/language but can never self-promote to admin or spoof an org.
@@ -81,7 +81,7 @@ service cloud.firestore {
     // by explicit garden id, which the scoped per-garden rule above already permits.
 
     match /production_logs/{id} {
-      allow read:   if owns(resource.data) || sameOrg(resource.data) || isMentor();
+      allow read:   if owns(resource.data) || sameOrg(resource.data) || (isMentor() && inMyOrg(resource.data));
       allow create: if signedIn()
         && request.resource.data.profile_id == request.auth.uid
         && request.resource.data.kg is number && request.resource.data.kg > 0
@@ -90,7 +90,7 @@ service cloud.firestore {
     }
 
     match /sales_logs/{id} {
-      allow read:   if owns(resource.data) || sameOrg(resource.data) || isMentor();
+      allow read:   if owns(resource.data) || sameOrg(resource.data) || (isMentor() && inMyOrg(resource.data));
       allow create: if signedIn()
         && request.resource.data.profile_id == request.auth.uid
         && request.resource.data.kg is number && request.resource.data.kg > 0
@@ -100,7 +100,7 @@ service cloud.firestore {
     }
 
     match /expense_logs/{id} {
-      allow read:   if owns(resource.data) || sameOrg(resource.data) || isMentor();
+      allow read:   if owns(resource.data) || sameOrg(resource.data) || (isMentor() && inMyOrg(resource.data));
       allow create: if signedIn()
         && request.resource.data.profile_id == request.auth.uid
         && request.resource.data.amount is number && request.resource.data.amount >= 0
@@ -115,7 +115,7 @@ service cloud.firestore {
     }
 
     match /reports/{id} {
-      allow read:   if ownsField(resource.data, 'owner_id') || sameOrg(resource.data) || isMentor();
+      allow read:   if ownsField(resource.data, 'owner_id') || sameOrg(resource.data) || (isMentor() && inMyOrg(resource.data));
       allow create: if signedIn() && request.resource.data.owner_id == request.auth.uid;
       allow update, delete: if ownsField(resource.data, 'owner_id');
     }
@@ -221,7 +221,14 @@ service cloud.firestore {
     }
 
     match /shared_sites/{code} {
-      allow read: if true;
+      // GET, NOT READ. `read` covers both `get` and `list`, so `allow read: if true` let anyone —
+      // unauthenticated — call getDocs(collection('shared_sites')) and walk out with every farm
+      // design anyone has ever shared, geojson and all. The six-character code is the capability:
+      // it is meant to be unguessable, and an enumerable collection makes guessing unnecessary.
+      // tests/firestore-rules.test.ts has asserted this since it was written; the assertion had
+      // never once executed, because no workflow ran `test:rules`.
+      allow get:  if true;
+      allow list: if false;
       allow create: if request.auth != null
         && request.resource.data.code is string
         && request.resource.data.code.size() == 6

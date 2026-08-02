@@ -46,6 +46,14 @@ jobs:
       - name: Test
         run: npm test
 
+      # THE RULES TESTS HAVE NEVER RUN IN CI. tests/firestore-rules.test.ts is deliberately outside
+      # `npm test` (it needs the Firestore emulator, so it lives in EXTERNAL_TEST_FILES), and no
+      # workflow invoked `test:rules` — so a test asserting that a self-signed-up mentor cannot read
+      # every farmer's sales figures sat there failing, silently, while the rules shipped.
+      # A security rule with no enforced test is a comment.
+      - name: Firestore rules
+        run: npm run test:rules
+
       # Deliberately NOT running `npm run build` here. app/layout.tsx imports
       # Newsreader and Public Sans via next/font/google, so a build needs network
       # access to fonts.googleapis.com at compile time. It succeeds on Vercel and

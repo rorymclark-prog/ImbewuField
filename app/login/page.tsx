@@ -9,12 +9,23 @@ import type { UserRole } from '@/lib/db/types';
 
 type Mode = 'signin' | 'create' | 'reset';
 
+/**
+ * SELF-SERVICE SIGNUP CAN ONLY PICK AN UNPRIVILEGED ROLE.
+ *
+ * Mentor, NGO coordinator and Funder were in this dropdown, and firestore.rules let a new account
+ * self-assign any of them. `isMentor()` is a bare role check that never looks at `resource.data`,
+ * and it appeared in `allow read` on production_logs, sales_logs, expense_logs and reports — which
+ * authorises an UNFILTERED collection list. So anyone who signed up and chose "Mentor" could read
+ * every farmer's crop, kilograms and rand figures across every org, and `allow list` on /profiles
+ * let them attach names and phone numbers to it.
+ *
+ * These three roles now come only from a trusted Admin-SDK path, exactly as `org_id` already did.
+ * The rules and this list have to agree: leaving a role here that the rules reject would fail the
+ * signup after the auth account was already created.
+ */
 const SIGNUP_ROLES: { value: UserRole; label: string }[] = [
   { value: 'farmer',  label: 'Farmer' },
-  { value: 'mentor',  label: 'Mentor (trainer / field supervisor)' },
   { value: 'student', label: 'Student' },
-  { value: 'ngo',     label: 'NGO coordinator' },
-  { value: 'funder',  label: 'Funder / donor' },
 ];
 
 // Google icon (verbatim SVG — no Lucide equivalent)
