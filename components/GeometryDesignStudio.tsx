@@ -57,9 +57,11 @@ import { ELEMENTS_BY_ID, ZONE_COLORS, ZONE_KEY } from '@/lib/design-elements';
 import { reportId } from '@/lib/saved-reports';
 import { activeAccountLocalStorageKey } from '@/lib/account-local-storage';
 import { buildSkeletonReportDoc, type MapRef, type ImplementationPhase } from '@/lib/report-doc';
+import { buildPhasePlan } from '@/lib/phasing';
 import ReportDocView from '@/components/ReportDocView';
 import HybridRender from '@/components/HybridRender';
 import polygonClipping from 'polygon-clipping';
+import { paidApiHeaders } from '@/lib/api-client-auth';
 
 // ── Contract types (kept in sync with /api/design-plan) ──────────────────────
 
@@ -3124,7 +3126,7 @@ export default function GeometryDesignStudio({ locationData, siteName }: Props) 
 
       const res = await fetch('/api/ai-render', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...await paidApiHeaders() },
         body: JSON.stringify({ imageBase64: compositeDataUrl, satBase64: satRef, maskBase64, photos, context, provider: aiProvider, geminiModel }),
       });
       let data: { image?: string; error?: string; detail?: string; pending?: boolean; statusUrl?: string; responseUrl?: string } = {};
@@ -3210,7 +3212,7 @@ export default function GeometryDesignStudio({ locationData, siteName }: Props) 
 
     const res = await fetch('/api/ai-render', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...await paidApiHeaders() },
       body: JSON.stringify({
         imageBase64: stripDataUrl(aiRender),
         maskBase64: stripDataUrl(maskDataUrl),
@@ -3296,6 +3298,12 @@ export default function GeometryDesignStudio({ locationData, siteName }: Props) 
       survey: loadSurvey(siteId),
       layers: studio.layers,
       plan: studio.generatedPlan ?? null,
+      phasePlan: studioBuild
+        ? buildPhasePlan(studioBuild, { boundary: [], house: [], driveway: [] }, {
+          biome: locationData?.biome?.name,
+          rainfallMm: locationData?.rainfall?.annual,
+        })
+        : { phases: [], criticalOrder: [], siteRules: [] },
       createdAt: new Date().toISOString(),
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
