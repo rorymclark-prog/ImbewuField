@@ -7,6 +7,7 @@ import {
   costForMeasuredAreaLine,
   costForItem,
   costForLine,
+  isAreaPricedItem,
   formatZar,
   totalZar,
   type CostLine,
@@ -147,5 +148,63 @@ test('non-finite values are never formatted as plausible currency', () => {
   for (const value of [Number.NaN, Number.POSITIVE_INFINITY, Number.NEGATIVE_INFINITY]) {
     assert.equal(formatZar(value), '—');
     assert.doesNotMatch(formatZar(value), /NaN|Infinity|R/);
+  }
+});
+
+// ─────────────────────────────────────────────────────────────────────────────────────────────
+// THE PRINTED BILL OF QUANTITIES OVERSTATED WHAT A FARMER MUST PAY.
+// Three defects, all on the pack that goes to a funder, all making the printed total higher than
+// the on-screen budget for the same design. These pin the arithmetic the print page now relies on.
+
+test('a bank of tanks costs the sum of its tanks, never the price of their combined litres', () => {
+  // The print page summed every tank's litres into one figure, passed THAT to costForItem — which
+  // snapped it to the nearest size in the book — and then multiplied the result by the tank count.
+  const one5k = costForItem('tank', 2, 2, 5000);
+  const combined = costForItem('tank', 2, 2, 15000);
+  assert.ok(one5k && combined, 'guard: both tank sizes are priced');
+
+  // Three 5 000 L tanks.
+  assert.equal(one5k!.zar * 3, 21000);
+  // What the bug produced: 15 000 L snaps UP to the 10 000 L rate, then x3.
+  assert.equal(combined!.zar * 3, 39000);
+  assert.notEqual(combined!.zar * 3, one5k!.zar * 3);
+
+  // A MIXED bank is why an average of the litres is not a fix either: one 2 500 and one 10 000
+  // average to two 5 000s, which is wrong in both directions.
+  const small = costForItem('tank', 2, 2, 2500)!;
+  const large = costForItem('tank', 2, 2, 10000)!;
+  const avg = costForItem('tank', 2, 2, (2500 + 10000) / 2)!;
+  assert.notEqual(small.zar + large.zar, avg.zar * 2);
+});
+
+test('isAreaPricedItem answers for every per_m2 entry, including swalew', () => {
+  // The print page kept its own hardcoded list of area-priced types and had already lost `swalew`
+  // — the one per-m2 entry missing from it — so every swale was costed on the wrong basis.
+  assert.equal(isAreaPricedItem('swalew'), true);
+  for (const type of ['bed', 'hugel', 'foodforest', 'nursery', 'greenhouse', 'tunnel', 'shed', 'reedbed', 'pond', 'firebreak']) {
+    assert.equal(isAreaPricedItem(type), true, `${type} is priced by area`);
+  }
+  // Per-unit and unpriced things are not area-priced, and a tank is never area-priced.
+  assert.equal(isAreaPricedItem('tank'), false);
+  assert.equal(isAreaPricedItem('well'), false);
+  assert.equal(isAreaPricedItem('not-a-real-type'), false);
+});
+
+test('isAreaPricedItem agrees with what costForItem actually charges', () => {
+  // The invariant that matters, asserted through the public API rather than by exporting internals:
+  // the predicate the print page branches on must agree with the unit the price book bills in. If
+  // these two ever disagree, an item is measured one way and charged another.
+  const TYPES = [
+    'bed', 'hugel', 'foodforest', 'nursery', 'greenhouse', 'tunnel', 'shed', 'reedbed',
+    'pond', 'firebreak', 'swalew', 'well', 'biogas', 'beehive', 'chicken_coop', 'tank',
+  ];
+  for (const type of TYPES) {
+    const line = costForItem(type, 10, 10, type === 'tank' ? 5000 : undefined);
+    if (!line) continue;
+    assert.equal(
+      isAreaPricedItem(type),
+      line.unit === 'm²',
+      `${type}: predicate says ${isAreaPricedItem(type)}, price book bills in ${line.unit}`,
+    );
   }
 });

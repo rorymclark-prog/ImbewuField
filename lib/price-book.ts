@@ -331,6 +331,20 @@ const ITEM_TYPE_MAP: Record<string, string> = {
  * @param hM        height/depth in metres (used for area basis)
  * @param litres    tank volume in litres, when type === 'tank'
  */
+/**
+ * Is this facilitator element priced by AREA rather than per unit?
+ *
+ * Exported because the print pack was carrying its own hardcoded list of area-priced types, and a
+ * hand-kept copy of a fact this file already owns can only drift — it had already lost `swalew`,
+ * the one per-m2 entry missing from it, so every swale on a printed bill of quantities was costed
+ * on the wrong basis. Ask the price book instead of remembering what it says.
+ */
+export function isAreaPricedItem(type: string): boolean {
+  const mapped = ITEM_TYPE_MAP[type];
+  if (!mapped || mapped === '__tank__') return false;
+  return PRICE_BOOK[mapped]?.unit === 'per_m2';
+}
+
 export function costForItem(
   type: string,
   wM: number,

@@ -22,7 +22,7 @@ import {
   loadFacilitatorState, DEFAULT_PX_PER_M,
   LAYER_ORDER, LAYERS, defaultLayerForType, defaultLayerForLine, AREA_LINE_KINDS,
 } from '@/lib/facilitator-design';
-import { costForItem, costForLine, costForMeasuredAreaLine, formatZar, DISCLAIMER } from '@/lib/price-book';
+import { costForItem, costForLine, costForMeasuredAreaLine, formatZar, isAreaPricedItem, DISCLAIMER } from '@/lib/price-book';
 import { describeHarvest } from '@/lib/water-calc';
 
 // ── Copied label/colour tables (kept in sync manually with FacilitatorCanvas.tsx) ──
@@ -418,9 +418,29 @@ export default function FacilitatorPrintPage() {
       }
     });
 
+    // ONLY WHAT IS BEING PROPOSED IS COSTED.
+    //
+    // The canvas has always excluded the 'existing' layer before costing (FacilitatorCanvas's
+    // plannedItems/plannedLines) and shows the rest under "Already on the land — not counted in
+    // the budget". This page had no notion of it at all: every traced feature was priced.
+    //
+    // Existing geometry is not rare or hand-marked — it is created automatically. Accepting "Find
+    // map features" writes the property boundary as an existing fence, map water as an existing
+    // waterbody and OSM roads as existing paths, and the "What's there" step exists precisely to
+    // record what is already standing. So a farmer who traced a 400 m boundary, a 300 m track and
+    // a dam saw R0 for them on screen and a printed total tens of thousands of rand higher — on
+    // the document that goes to a funder.
+    //
+    // lib/price-book.ts states the intended rule in its own note on the dam price: "Only applies
+    // when planning a NEW dam — an existing one traced from the map is not costed."
+    const plannedItemPts = itemPts.filter(({ it }) => resolveItemLayer(it) !== 'existing');
+    const plannedLinePts = linePts.filter(({ l }) => resolveLineLayer(l) !== 'existing');
+    const existingItemPts = itemPts.filter(({ it }) => resolveItemLayer(it) === 'existing');
+    const existingLinePts = linePts.filter(({ l }) => resolveLineLayer(l) === 'existing');
+
     // Legend + BOQ tallies.
     const itemTally: Partial<Record<ElType, { count: number; areaM2: number; litres: number }>> = {};
-    itemPts.forEach(({ it }) => {
+    plannedItemPts.forEach(({ it }) => {
       const cur = itemTally[it.type] ?? { count: 0, areaM2: 0, litres: 0 };
       // A marker can represent several trees at once (Item.count, e.g. "5
       // mango trees" placed as one pin) — the printed BOQ must reflect the
@@ -439,7 +459,7 @@ export default function FacilitatorPrintPage() {
     });
 
     const lineTally: Partial<Record<LineKind, { count: number; m: number; areaM2?: number }>> = {};
-    linePts.forEach(({ l, pts }) => {
+    plannedLinePts.forEach(({ l, pts }) => {
       const cur = lineTally[l.kind] ?? { count: 0, m: 0 };
       cur.count += 1;
       cur.m += polylineLengthM(pts, l.closed ?? false);
@@ -460,14 +480,31 @@ export default function FacilitatorPrintPage() {
       const cost = costForItem(type, t.areaM2 > 0 && c.shape === 'rect' ? (t.areaM2 / t.count) : c.w, c.h, t.litres > 0 ? t.litres / t.count : undefined);
       let zar: number | null = null;
       let qty = `×${t.count}`;
-      if (type === 'bed' || type === 'hugel' || type === 'foodforest' || type === 'nursery' || type === 'greenhouse' || type === 'tunnel' || type === 'shed' || type === 'reedbed' || type === 'pond' || type === 'firebreak') {
+      // ASK THE PRICE BOOK WHICH ITEMS ARE AREA-PRICED, rather than keeping a second list of them
+      // here. The hardcoded list this replaces had already lost `swalew` — the only per-m2 entry
+      // missing from it — so every swale fell through to the per-unit branch and was costed on the
+      // wrong basis. A copy of a fact another file owns will drift; this cannot.
+      if (isAreaPricedItem(type)) {
         qty = `${t.areaM2.toFixed(1)} m²`;
         const c2 = costForItem(type, t.areaM2, 1);
         zar = c2 ? c2.zar : null;
       } else if (type === 'tank') {
+        // PER TANK, NOT PER BANK. `t.litres` is the SUM across every tank of this type, and passing
+        // that sum to costForItem snapped it to the nearest SIZE in the price book before the
+        // result was multiplied by the count again. Three 5 000 L tanks became one 15 000 L tank,
+        // snapped up to the 10 000 L rate, times three — R39 000 printed against R21 000 on screen.
+        // The error grows with every tank added and always overstates.
+        //
+        // Summing each tank's own cost also prices a MIXED bank correctly, which an average of the
+        // litres could not: one 2 500 and one 10 000 average to two 5 000s and are wrong both ways.
         qty = `×${t.count} (${Math.round(t.litres).toLocaleString()} L)`;
-        const c2 = costForItem(type, c.w, c.h, t.litres);
-        zar = c2 ? c2.zar * t.count : null;
+        const perTank = plannedItemPts
+          .filter(({ it }) => it.type === type)
+          .map(({ it }) => {
+            const line = costForItem(type, c.w, c.h, it.litres ?? 5000);
+            return line ? line.zar * (it.count ?? 1) : null;
+          });
+        zar = perTank.every((v) => v !== null) ? (perTank as number[]).reduce((a, b) => a + b, 0) : null;
       } else if (cost) {
         zar = cost.zar * t.count;
       }
@@ -486,6 +523,33 @@ export default function FacilitatorPrintPage() {
       boqRows.push({ label: L.label, icon: L.icon, qty, zar: cost ? cost.zar : null });
     });
 
+    // ALREADY ON THE LAND — listed, never priced. Dropping existing geometry out of the BOQ must
+    // not make it disappear from the printed pack: a funder reading the plan needs to see that the
+    // dam and the boundary fence exist, precisely so they understand why they are not being asked
+    // to pay for them. Mirrors the on-screen "Already on the land" block.
+    const existingRows: BoqRow[] = [];
+    {
+      const tally = new Map<string, { label: string; icon: string; count: number; m: number }>();
+      existingItemPts.forEach(({ it }) => {
+        const c2 = CATALOG[it.type];
+        const cur = tally.get(`i:${it.type}`) ?? { label: c2.label, icon: c2.icon, count: 0, m: 0 };
+        cur.count += it.count ?? 1;
+        tally.set(`i:${it.type}`, cur);
+      });
+      existingLinePts.forEach(({ l, pts }) => {
+        const L2 = LINES[l.kind];
+        const cur = tally.get(`l:${l.kind}`) ?? { label: L2.label, icon: L2.icon, count: 0, m: 0 };
+        cur.m += polylineLengthM(pts, l.closed ?? false);
+        tally.set(`l:${l.kind}`, cur);
+      });
+      tally.forEach((v) => existingRows.push({
+        label: v.label,
+        icon: v.icon,
+        qty: v.m > 0 ? `${v.m.toFixed(1)} m` : `×${v.count}`,
+        zar: null,
+      }));
+    }
+
     const harvest = roofM2 >= 10 && state.bgSite
       ? describeHarvest(roofM2, state.bgSite.lat, state.bgSite.lon)
       : null;
@@ -501,7 +565,7 @@ export default function FacilitatorPrintPage() {
 
     return {
       pxPerM, itemPts, linePts, sectorPts, toDraw, scale,
-      drawW, drawH, roofM2, itemTally, lineTally, boqRows, total, harvest, scaleBarM,
+      drawW, drawH, roofM2, itemTally, lineTally, boqRows, existingRows, total, harvest, scaleBarM,
       boxMinX, boxMinY, boxW, boxH, gridLines, layersPresent,
     };
   }, [state]);
@@ -704,6 +768,24 @@ export default function FacilitatorPrintPage() {
                     </tr>
                   </tfoot>
                 </table>
+                {c.existingRows.length > 0 && (
+                  <div style={{ marginTop: 8 }}>
+                    <div style={{ fontSize: 8, fontWeight: 700, color: '#5C5040' }}>
+                      Already on the land — not counted in the budget
+                    </div>
+                    <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: 8, color: '#5C5040' }}>
+                      <tbody>
+                        {c.existingRows.map((r, i) => (
+                          <tr key={i}>
+                            <td style={{ padding: '2px 0' }}>{r.icon}</td>
+                            <td style={{ padding: '2px 0' }}>{r.label}</td>
+                            <td style={{ textAlign: 'right', padding: '2px 0' }}>{r.qty}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
                 <div style={{ fontSize: 7.5, color: '#9A8268', marginTop: 4, lineHeight: 1.35 }}>{DISCLAIMER}</div>
               </div>
             </div>
