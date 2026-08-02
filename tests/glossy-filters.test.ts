@@ -45,9 +45,25 @@ test('only explicit integrated systems are factual content on two layer sheets',
     .filter(({ sheets }) => sheets.length > 1)
     .map(({ id, sheets }) => `${id}:${sheets.join('+')}`)
     .sort();
+  // This allow-list is doing its job: it caught the earthworks additions below the moment they
+  // were made, which is exactly what it is for. Every entry is a feature the farmer DIGS, added to
+  // sheet 05 because that sheet was showing swales and nothing else — as if a farm's only
+  // earthwork were a ditch, when the same farm has beds to build, basins to dig and a spiral to
+  // shape before a single plant goes in. Rory: "where the raised bed for vegetables? ... we need
+  // to include tree basins? also greywater basins."
+  //
+  // Primary sheets are unchanged (asserted below), so palette ownership, editing rules and the
+  // counts on Planting and Water all stay exactly as they were. Anything NOT dug must stay off
+  // this list — that is the line this guard is holding.
   assert.deepEqual(shared, [
-    'banana_circle:water+planting',
-    'tree_basin:water+planting',
+    'banana_circle:water+earthworks+planting',
+    'greywater_basin:water+earthworks',
+    'herb_spiral:earthworks+planting',
+    'infiltration_basin:water+earthworks',
+    'keyhole_bed:earthworks+planting',
+    'raised_bed:earthworks+planting',
+    'tree_basin:water+earthworks+planting',
+    'veg_bed:earthworks+planting',
   ]);
   for (const def of ELEMENT_CATALOG) {
     const sheets = sheetsForElement(def.category, def.id);

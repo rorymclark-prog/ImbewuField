@@ -81,6 +81,7 @@ import {
   bedCropRows,
   cropGlyphFor,
   polygonCropRows,
+  stableUnit,
   type CropGlyph,
   type CropRowLayout,
 } from '@/lib/crop-row-cartography';
@@ -2836,6 +2837,11 @@ function drawBlueprintGround(
     if (presentation === 'illustrated' && filter === 'water') return false;
     if (z.feature === 'house' && houseCovered) return false;
     if (z.feature === 'driveway' && drivewayCovered) return false;
+    // The boundary is a drawn LINE, never a fill wash — that exclusion is universal and must
+    // survive the siteRecord bypass. Without this, a farmer who traced their boundary as a ground
+    // ring (rather than with the boundary tool) would get the whole property flooded with a colour
+    // wash on sheet 01, and a second "Property boundary" legend row beside the real one.
+    if (z.feature === 'boundary') return false;
     return siteRecord || groundRegister(z.feature, filter) !== 'absent';
   });
   if (!rings.length) return;
@@ -4496,6 +4502,89 @@ function stableCartographicUnit(seed: string, index: number): number {
  * Emoji are editor controls, not plan symbols. They used to be burned into exact sheets and copied
  * by the image model. Area features keep their footprint; tiny infrastructure uses a bounded point
  * symbol at the same centre and rotation so it remains readable over an AI-painted base. */
+/**
+ * Sheet 05 treatment for every dug/built feature: bare worked soil, a mulch stipple, a dark
+ * keyline, all inside a cream casing.
+ *
+ * This is the same footprint the Planting and Water sheets draw — same centre, same rotation, same
+ * saved size, nothing is moved or resized. What changes is that it is shown as GROUND rather than
+ * as a planted thing, because that is what sheet 05 is for: the state of the site after the
+ * digging and before the planting. A green bed on a setting-out drawing tells a farmer to plant;
+ * a brown one tells them to dig, which is the instruction this sheet exists to give.
+ */
+function drawEarthworksFeatures(
+  ctx: CanvasRenderingContext2D,
+  state: DesignCanvasState,
+  filter: GlossyLayerFilter,
+  px: (n: number) => number,
+  py: (n: number) => number,
+  pxPerM: number,
+): void {
+  const items = state.items
+    .map((item) => ({ item, def: ELEMENTS_BY_ID[item.defId] }))
+    .filter((entry): entry is { item: PlacedItem; def: DesignElementDef } =>
+      !!entry.def && itemInFilter(entry.def.category, filter, entry.def.id))
+    .sort((a, b) => {
+      const areaA = (a.item.wM ?? a.def.wM) * (a.item.hM ?? a.def.hM);
+      const areaB = (b.item.wM ?? b.def.wM) * (b.item.hM ?? b.def.hM);
+      return areaB - areaA;
+    });
+  const casing = Math.max(2.5, ctx.canvas.width * 0.0021);
+  for (const { item, def } of items) {
+    const wPx = Math.max(4, (item.wM ?? def.wM) * pxPerM);
+    const hPx = Math.max(4, (item.hM ?? def.hM) * pxPerM);
+    const cx = px(item.x);
+    const cy = py(item.y);
+    ctx.save();
+    ctx.translate(cx, cy);
+    if (def.shape === 'rect' && item.rot) ctx.rotate((item.rot * Math.PI) / 180);
+    const trace = () => {
+      if (def.shape === 'circle') {
+        ctx.beginPath();
+        ctx.ellipse(0, 0, wPx / 2, hPx / 2, 0, 0, Math.PI * 2);
+      } else {
+        roundRectPath(ctx, -wPx / 2, -hPx / 2, wPx, hPx, Math.min(wPx, hPx) * 0.1);
+      }
+    };
+    trace();
+    ctx.strokeStyle = 'rgba(252,248,236,0.92)';
+    ctx.lineWidth = casing * 1.5;
+    ctx.lineJoin = 'round';
+    ctx.stroke();
+    trace();
+    ctx.fillStyle = CROP_SOIL_COLOR;
+    ctx.fill();
+
+    // Mulch: deterministic flecks, so the same bed stipples identically on every render and every
+    // device. Straw over bare soil is what these features actually look like once built, and it is
+    // the fastest way to read "this is a finished earthwork" rather than "this is a coloured box".
+    ctx.save();
+    trace();
+    ctx.clip();
+    const fleck = Math.max(1.6, Math.min(wPx, hPx) * 0.055);
+    const count = Math.min(90, Math.max(8, Math.round((wPx * hPx) / (fleck * fleck * 26))));
+    ctx.lineCap = 'round';
+    ctx.lineWidth = Math.max(0.9, fleck * 0.34);
+    for (let i = 0; i < count; i += 1) {
+      const fx = (stableUnit(item.id, i * 3) - 0.5) * wPx;
+      const fy = (stableUnit(item.id, i * 3 + 1) - 0.5) * hPx;
+      const angle = stableUnit(item.id, i * 3 + 2) * Math.PI;
+      ctx.strokeStyle = i % 3 === 0 ? 'rgba(214,188,142,0.75)' : 'rgba(150,118,80,0.75)';
+      ctx.beginPath();
+      ctx.moveTo(fx - Math.cos(angle) * fleck, fy - Math.sin(angle) * fleck);
+      ctx.lineTo(fx + Math.cos(angle) * fleck, fy + Math.sin(angle) * fleck);
+      ctx.stroke();
+    }
+    ctx.restore();
+
+    trace();
+    ctx.strokeStyle = 'rgba(40,28,17,0.92)';
+    ctx.lineWidth = casing * 0.75;
+    ctx.stroke();
+    ctx.restore();
+  }
+}
+
 /** The beds that get drawn as rows of a real crop rather than one shared bed illustration. */
 const PRODUCTION_BED_IDS = new Set(['veg_bed', 'raised_bed']);
 
@@ -5362,6 +5451,14 @@ async function buildExactLayerOverlay(
     drawExactFeaturesWithPresentation(ctx, W, H, featurePresentation, (featureCtx) => {
       drawFilteredItems(featureCtx, state, filter, px, py, pxPerM);
     });
+  } else if (filter === 'earthworks') {
+    // EARTH, NOT FOLIAGE. Sheet 05 is what a farmer digs before anything is planted, so a raised
+    // bed here is bare soil with mulch on it — not the green, planted-up bed the Planting sheet
+    // rightly shows. Rory: "in the earth works section raised beds must just be brown ... all
+    // earth coloured possibly with mulch." Same saved footprints, same centres and rotations;
+    // only the surface treatment differs, which is exactly what a per-sheet register means.
+    drawFilteredLines(ctx, state, filter, px, py, pxPerM);
+    drawEarthworksFeatures(ctx, state, filter, px, py, pxPerM);
   } else {
     drawFilteredLines(ctx, state, filter, px, py, pxPerM);
     drawExactFeaturesWithPresentation(ctx, W, H, featurePresentation, (featureCtx) => {
@@ -6303,9 +6400,19 @@ function drawSectorAnalysis(
     lines: string[],
     color: string,
     tangentBias = 0,
+    /** Fixed sheet furniture: placed before anything else and never nudged. See below. */
+    reserved = false,
   ): void => {
     if (!externalLegend) return;
-    directLabelRequests.push({ x, y, lines, color, tangentBias });
+    // THE DODGER IS FIRST-COME-FIRST-SERVED, SO QUEUE ORDER IS A DESIGN DECISION.
+    //
+    // The two sun-path banners are the headline facts of this sheet and sit in a fixed band across
+    // the top, like a title block — they are the one thing on it a farmer looks up. But they were
+    // queued AFTER the fire-approach label, so fire claimed the band first and the winter banner
+    // was pushed down onto it: two pieces of text printed over each other in the most important
+    // strip of the sheet. Reserved requests go to the front, so the movable labels move.
+    if (reserved) directLabelRequests.unshift({ x, y, lines, color, tangentBias });
+    else directLabelRequests.push({ x, y, lines, color, tangentBias });
   };
   const flushDirectLabels = (): void => {
     if (!externalLegend || directLabelRequests.length === 0) return;
@@ -6699,6 +6806,8 @@ function drawSectorAnalysis(
       H * 0.08,
       [`SUMMER SUN · ${model.solar.summer.riseLabel16} → ${model.solar.summer.noonSide} → ${model.solar.summer.setLabel16} · NOON ${Math.round(model.solar.summer.noonAltitudeDeg)}°`],
       SECTOR_STYLES['summer-sun'].labelColor,
+      0,
+      true,
     );
   }
   if (winterApex) {
@@ -6714,6 +6823,8 @@ function drawSectorAnalysis(
       H * 0.125,
       [`WINTER SUN · ${model.solar.winter.riseLabel16} → ${model.solar.winter.noonSide} → ${model.solar.winter.setLabel16} · NOON ${Math.round(model.solar.winter.noonAltitudeDeg)}°`],
       SECTOR_STYLES['winter-sun'].labelColor,
+      0,
+      true,
     );
   }
   // MIDDAY SUN ray — a simple orienting spike toward whichever side(s) the noon sun sits on.
@@ -6907,16 +7018,26 @@ function drawSectorAnalysis(
       // the authoritative sheet crop.
       blueprintRing(ctx, bnd, px, py);
       ctx.clip();
-      ctx.strokeStyle = 'rgba(126,212,107,0.9)';
+      // MORE PRESENT — Rory: "make the contours a little more prominent." They were drawn at 46%
+      // alpha on the finished sheet, which on a real aerial is barely a suggestion, and contours
+      // are the one thing on this sheet a swale is actually set out against. Lifted to 78%, with
+      // index (major) lines properly heavier than intermediates as on any topographic sheet, and
+      // a dark casing under the colour — the same body-inside-a-casing rule the arrows, canopies
+      // and crop rows all follow, and the only thing that reliably survives dark foliage.
       ctx.setLineDash([7, 6]);
-      ctx.globalAlpha = externalLegend ? 0.46 : 1;
+      ctx.globalAlpha = externalLegend ? 0.78 : 1;
       for (const line of sheetContours.lines) {
-        ctx.lineWidth = line.major ? 3 : 2;
+        const core = line.major ? 3.4 : 2.2;
         ctx.beginPath();
         line.points.forEach(([x, y], index) => {
           if (index === 0) ctx.moveTo(px(x), py(y));
           else ctx.lineTo(px(x), py(y));
         });
+        ctx.strokeStyle = 'rgba(10,22,10,0.55)';
+        ctx.lineWidth = core + 2.4;
+        ctx.stroke();
+        ctx.strokeStyle = line.major ? 'rgba(160,235,140,0.98)' : 'rgba(126,212,107,0.95)';
+        ctx.lineWidth = core;
         ctx.stroke();
       }
       // Absolute elevations come from Terrain-RGB thresholds, not relative offsets on a plane.

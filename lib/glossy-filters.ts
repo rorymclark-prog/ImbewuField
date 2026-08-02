@@ -320,8 +320,27 @@ type ElementLayerSheet = Exclude<GlossyLayerFilter, 'all' | 'zones'>;
 // broad category overlap would put every planting bed on Water and recreate the clutter this module
 // was extracted to prevent.
 const ADDITIONAL_SHEETS: Readonly<Record<string, readonly ElementLayerSheet[]>> = {
-  banana_circle: ['water'], // planted guild and greywater sink
-  tree_basin: ['water'], // planting earthwork and runoff/greywater sink
+  banana_circle: ['water', 'earthworks'], // planted guild, greywater sink, and a dug basin
+  tree_basin: ['water', 'earthworks'], // planting earthwork and runoff/greywater sink
+  // EVERY ONE OF THESE IS DUG, so every one of them belongs on the setting-out sheet.
+  //
+  // Sheet 05 was showing swales and nothing else, which made it look like a farm whose only
+  // earthwork is a ditch — when the same farm has beds to build up, basins to dig and a spiral to
+  // shape, all of them ground the farmer moves with a spade before anything is planted. Rory:
+  // "where the raised bed for vegetables? ... we need to include tree basins? also greywater
+  // basins." Their PRIMARY sheet is unchanged, so nothing moves in the palette, in editing
+  // ownership or in the counts on Planting and Water — this only adds the factual second
+  // appearance on the sheet that says what to dig, which is what this allow-list is for.
+  // veg_bed AND raised_bed both: "where the raised bed for vegetables?" is a question about the
+  // bed a farmer actually has, and on most saved designs that is a veg_bed. Building a bed is
+  // ground work — you mark it out, dig the path either side and heap the soil — whichever of the
+  // two names it was placed under.
+  veg_bed: ['earthworks'],
+  raised_bed: ['earthworks'],
+  keyhole_bed: ['earthworks'],
+  herb_spiral: ['earthworks'],
+  greywater_basin: ['earthworks'],
+  infiltration_basin: ['earthworks'],
 };
 
 /** Which PRIMARY layer sheet an element belongs on. Additional factual appearances are returned by
