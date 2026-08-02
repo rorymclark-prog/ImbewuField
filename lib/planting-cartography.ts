@@ -59,24 +59,26 @@ export function plantingLegendSectionForFeature(id: string): PlantingLegendSecti
 }
 
 /**
- * Print-scale emphasis for point-like planting symbols. Mapped beds, hedges and strips retain
- * their true dimensions so a correctly sized canvas feature cannot grow in the finished sheet.
+ * NOTHING ON A SCALED SHEET IS DRAWN BIGGER THAN IT IS.
+ *
+ * There used to be a blanket print-scale emphasis here: trees ×1.36, basins ×1.28, banana clumps
+ * ×1.3, on the reasoning that a point-like symbol needs help to read. The reasoning is fine and the
+ * implementation was not, because these sheets carry a SCALE BAR. A 4 m citrus drawn at 1.36
+ * measures 5.4 m against that bar, and canopy spacing is exactly the decision the planting sheet
+ * exists to support — plant a mango at its drawn width and it goes in a metre and a half too close.
+ * The sheet's own footer says "geometry and counts come from your saved design"; a multiplier
+ * applied after the geometry makes that untrue for the most-measured symbols on the page.
+ *
+ * A symbol may legitimately be drawn larger than scale only when at scale it would be too small to
+ * see at all, which is the standard minimum-symbol-size rule and is handled by the legibility floor
+ * in plantingPresentationDimensions below. The difference matters: the floor fires only for things
+ * already too small to measure, and on a real sheet (~40 px per metre) it never fires for a tree.
+ * The blanket multiplier fired for every tree at every zoom, including the ones a farmer is
+ * measuring.
+ *
+ * Visibility is carried by the opaque canopy backing and outline in PLANTING_CANOPY_PAINT — which
+ * is what actually fixed "I can't see any of the trees" — not by drawing them oversized.
  */
-export function plantingFeaturePresentationScale(id: string): number {
-  if (
-    id === 'veg_bed'
-    || id === 'raised_bed'
-    || id === 'keyhole_bed'
-    || id === 'herb_spiral'
-    || id === 'pollinator_strip'
-    || id === 'spekboom_hedge'
-    || id === 'vetiver_row'
-  ) return 1;
-  if (GREYWATER_READY_BASINS.has(id)) return 1.28;
-  if (id === 'banana_clump') return 1.3;
-  if (id.startsWith('tree_')) return 1.36;
-  return 1;
-}
 
 
 export interface PlantingPresentationDimensions {
@@ -131,10 +133,20 @@ export const PLANTING_CANOPY_PAINT: Readonly<PlantingCanopyPaintStyle> = {
 };
 
 /**
- * Bounded print emphasis for planting symbols. This preserves the saved centre, rotation and
- * aspect ratio while preventing small beds, tree basins and young-tree canopies from disappearing
- * in the exported sheet or a phone-sized reduction. Large mapped beds are capped so emphasis never
- * turns a true footprint into a different geometry.
+ * MINIMUM SYMBOL SIZE — the only reason a planting symbol is ever drawn off-scale.
+ *
+ * Every map has a size below which a mark stops being a mark, and the standard answer is a floor:
+ * anything that would render smaller than the floor is drawn AT the floor. That is a legibility
+ * rule, and it is honest in a way a blanket multiplier is not, because it can only affect symbols
+ * that were already too small to measure. On a real sheet — roughly 40 px per metre — the floor
+ * never fires for a tree canopy or a bed; it rescues a 30 cm herb spiral on a phone-sized export.
+ *
+ * The saved centre, rotation and aspect ratio are untouched: `scale` is returned for the caller to
+ * paint with, and nothing here writes to the design.
+ *
+ * `id` is retained in the signature deliberately. It is no longer consulted — every planting symbol
+ * now obeys one rule instead of a per-species table — and the parameter stays so a future
+ * per-symbol exception has an obvious place to go, rather than being reinvented at a call site.
  */
 export function plantingFeaturePresentationDimensions(
   id: string,
@@ -142,6 +154,7 @@ export function plantingFeaturePresentationDimensions(
   naturalHeight: number,
   canvasWidth: number,
 ): PlantingPresentationDimensions {
+  void id;
   if (
     !Number.isFinite(naturalWidth)
     || naturalWidth <= 0
@@ -150,18 +163,28 @@ export function plantingFeaturePresentationDimensions(
   ) {
     return { width: 0, height: 0, scale: 1 };
   }
-  const baseScale = plantingFeaturePresentationScale(id);
-  if (baseScale === 1 || !Number.isFinite(canvasWidth) || canvasWidth <= 0) {
+  if (!Number.isFinite(canvasWidth) || canvasWidth <= 0) {
     return { width: naturalWidth, height: naturalHeight, scale: 1 };
   }
-  const shortSide = Math.max(0.01, Math.min(naturalWidth, naturalHeight));
-  const longSide = Math.max(naturalWidth, naturalHeight);
-  const minimumShortSide = Math.max(22, canvasWidth * 0.013);
+  const longSide = Math.max(0.01, naturalWidth, naturalHeight);
+  // TWO CORRECTIONS TO THE OLD FLOOR, and the second is the interesting one.
+  //
+  // 22 px was right while this only ever applied to symbols already enlarged for emphasis. As a
+  // universal rule it is far too coarse — it was lifting a 20 px vegetable bed by 10%, the same
+  // false measurement in miniature. This is the size below which a mark stops being visible at
+  // all, not the size at which it becomes comfortable to look at.
+  //
+  // And it is measured on the LONGEST side, not the shortest. A shape disappears when the whole
+  // shape is too small, not when it is thin: a 180 × 8 px pollinator strip is perfectly legible as
+  // a strip, and its 8 px width is a real planting measurement a farmer may take off the sheet.
+  // Keying off the short side rescued nothing and quietly widened every hedge, row and strip on
+  // the sheet.
+  const minimumLongSide = Math.max(9, canvasWidth * 0.005);
   // Long beds and hedges need room to read at phone size. This is a presentation cap, not a
   // geometry edit: the saved centre, rotation and aspect ratio remain untouched by the caller.
-  const maximumLongSide = Math.max(minimumShortSide, canvasWidth * 0.16);
-  const requestedScale = Math.max(baseScale, minimumShortSide / shortSide);
-  const cappedScale = Math.min(requestedScale, maximumLongSide / Math.max(0.01, longSide));
+  const maximumLongSide = Math.max(minimumLongSide, canvasWidth * 0.16);
+  const requestedScale = minimumLongSide / longSide;
+  const cappedScale = Math.min(requestedScale, maximumLongSide / longSide);
   const scale = Math.max(1, cappedScale);
   const width = naturalWidth * scale;
   const height = naturalHeight * scale;

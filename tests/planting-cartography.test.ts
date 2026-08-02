@@ -5,7 +5,6 @@ import {
   PLANTING_CANOPY_PAINT,
   PLANTING_LEGEND_SECTION_ORDER,
   PLANTING_ROUTE_STYLE,
-  plantingFeaturePresentationScale,
   plantingFeaturePresentationDimensions,
   plantingLegendSectionForFeature,
   plantingRouteStyleFor,
@@ -35,21 +34,29 @@ test('classification is factual and does not invent unknown features', () => {
   assert.equal(plantingLegendSectionForFeature('Tree Mango'), null);
 });
 
-test('presentation scale is deterministic and leaves centres and saved geometry to the caller', () => {
-  assert.equal(plantingFeaturePresentationScale('tree_mango'), 1.36);
-  assert.equal(plantingFeaturePresentationScale('veg_bed'), 1);
-  assert.equal(plantingFeaturePresentationScale('banana_circle'), 1.28);
-  assert.equal(plantingFeaturePresentationScale('pollinator_strip'), 1);
-  assert.equal(plantingFeaturePresentationScale('jojo_5000'), 1);
-  assert.equal(plantingFeaturePresentationScale('tree_mango'), plantingFeaturePresentationScale('tree_mango'));
+// THE SHEET CARRIES A SCALE BAR, so a symbol measured against it must be the size of the thing.
+//
+// Trees used to be drawn ×1.36, basins ×1.28, banana clumps ×1.3 as print emphasis. That makes a
+// 4 m citrus measure 5.4 m, and canopy spacing is the decision the planting sheet exists to
+// support. These tests pin the replacement rule: one legibility floor for every symbol, which by
+// construction can only affect symbols already too small to measure.
+test('a symbol big enough to measure is drawn at its true size, whatever it is', () => {
+  // ~33 px per metre, which is a real A2 sheet: a 4 m canopy is 132 px, far above any floor.
+  for (const id of ['tree_mango', 'tree_citrus', 'banana_circle', 'tree_basin', 'veg_bed']) {
+    const drawn = plantingFeaturePresentationDimensions(id, 132, 132, 2517);
+    assert.equal(drawn.scale, 1, `${id} must not be inflated on a scaled sheet`);
+    assert.equal(drawn.width, 132);
+    assert.equal(drawn.height, 132);
+  }
 });
 
-test('presentation dimensions preserve aspect ratio with bounded print emphasis', () => {
-  const basin = plantingFeaturePresentationDimensions('tree_basin', 7, 5, 1595);
-  assert.equal(Math.round((basin.width / basin.height) * 1000), 1400);
-  assert.ok(basin.height >= 22);
-  assert.ok(basin.scale > 1);
+test('the legibility floor lifts only what would otherwise be invisible, and keeps the aspect', () => {
+  const tiny = plantingFeaturePresentationDimensions('herb_spiral', 7, 5, 1595);
+  assert.equal(Math.round((tiny.width / tiny.height) * 1000), 1400);
+  assert.ok(tiny.width >= 9, 'a symbol too small to see at all is lifted to where it can be seen');
+  assert.ok(tiny.scale > 1);
 
+  // Anything already legible passes through untouched, long or square.
   const longBed = plantingFeaturePresentationDimensions('veg_bed', 150, 20, 1595);
   assert.equal(Math.round((longBed.width / longBed.height) * 1000), 7500);
   assert.deepEqual(longBed, { width: 150, height: 20, scale: 1 });
@@ -60,9 +67,18 @@ test('presentation dimensions preserve aspect ratio with bounded print emphasis'
   assert.equal(longStrip.height, 8);
   assert.ok(Math.abs(longStrip.width / longStrip.height - 22.5) < 0.0001);
 
+  // The floor is a property of the SIZE, not of the id: an unknown feature drawn too small gets
+  // the same rescue a known one does, and no id gets a multiplier of its own.
+  const unknownTiny = plantingFeaturePresentationDimensions('jojo_5000', 3, 3, 1595);
+  const knownTiny = plantingFeaturePresentationDimensions('tree_mango', 3, 3, 1595);
+  assert.deepEqual(unknownTiny, knownTiny);
+  assert.ok(unknownTiny.height >= 9);
+
+  // A vegetable bed at a size a farmer can still measure passes through untouched — the floor is
+  // for marks that would vanish, and 20 px on a 1595 px sheet does not vanish.
   assert.deepEqual(
-    plantingFeaturePresentationDimensions('jojo_5000', 9, 9, 1595),
-    { width: 9, height: 9, scale: 1 },
+    plantingFeaturePresentationDimensions('veg_bed', 24, 20, 1595),
+    { width: 24, height: 20, scale: 1 },
   );
 });
 
