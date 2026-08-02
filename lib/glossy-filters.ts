@@ -400,8 +400,16 @@ export function lineInFilter(kind: string, filter: GlossyLayerFilter): boolean {
     case 'all':
       return true;
     case 'water':
-      // Swale is NOT here any more — it is the one line kind that is dug rather than plumbed, and
-      // it moved with the rest of the land-shaping to sheet 05.
+      // Swale is NOT here — it is the one line kind that is dug rather than plumbed, and it moved
+      // with the rest of the land-shaping to sheet 05.
+      //
+      // This predicate was correct all along; the DRAWING did not follow it. drawWaterRoutes kept
+      // painting swales on the Water sheet in pipe-blue, so the finished sheet carried a labelled
+      // line that this function had already decided was not part of it — hence no legend row for
+      // it, breaking the "nothing drawn without a legend row" rule these sheets are built on.
+      // Rory found the symptom rather than the cause: "straight away the swale with blue pipe is
+      // off, i have told you several times before it cant be a blue pipe looking path its
+      // confusin." One half of a deliberate move had simply never been applied.
       return kind === 'pipe' || kind === 'drip' || kind === 'greywater';
     // THE SWALE IS A LINE, NOT AN ELEMENT — the half of the earthworks split that sheetForElement
     // cannot reach. Elements (berm, terrace, half-moon) route by category; a swale is a LineShape

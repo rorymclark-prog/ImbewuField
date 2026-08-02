@@ -59,7 +59,19 @@ export type RenderWaterRoute = Pick<LineShape, 'id' | 'kind' | 'points'> & {
 
 /** One drawing registry for every line kind assigned to the Water sheet. */
 export const WATER_ROUTE_STYLE: Record<WaterRouteKind, WaterRouteStyle> = {
-  swale: { color: '#258DBA', dash: [], width: 5.6, label: 'Swale / contour water line' },
+  // A SWALE IS NOT PLUMBING, AND MUST NEVER BE DRAWN AS IF IT WERE.
+  //
+  // This was `#258DBA`, solid, 5.6 wide, sitting directly beside a buried pipe at `#087CB8`,
+  // solid, 6.2 wide: two blues a shade apart, both unbroken, weights within ten percent, with no
+  // remaining visual dimension to tell them apart. Rory, repeatedly: "it cant be a blue pipe
+  // looking path its confusin."
+  //
+  // The swale's home is sheet 05, and the Water sheet no longer draws it at all (lineInFilter has
+  // said so for a while; drawWaterRoutes now actually asks). This entry survives because the
+  // Whole-design sheet still legends every water line kind from this table — so it is kept in the
+  // earth tone sheet 05 uses and dashed, which is what stops the masterplan reproducing the very
+  // confusion this fixed.
+  swale: { color: '#A9743F', dash: [16, 9], width: 5.6, label: 'Swale — earthwork (see sheet 05)' },
   // A buried main reads as one continuous pipe; repeated connector dots made the final sheet busy.
   pipe: { color: '#087CB8', dash: [], width: 6.2, label: 'Buried water pipe' },
   drip: { color: '#238ACB', dash: [], width: 4.2, label: 'Drip header and laterals' },

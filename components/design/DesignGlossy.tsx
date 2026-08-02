@@ -77,6 +77,13 @@ import {
   legendRowFontSize,
 } from '@/lib/sheet-legend-layout';
 import { SHEET_BASE_MUTE_STYLE, type SheetBaseMute } from '@/lib/sheet-base-mute';
+import {
+  bedCropRows,
+  cropGlyphFor,
+  polygonCropRows,
+  type CropGlyph,
+  type CropRowLayout,
+} from '@/lib/crop-row-cartography';
 import { overlayElementsText } from '@/lib/overlay-elements';
 import { deriveWaterSystem } from '@/lib/water-system';
 import { drawCartographicWaterSymbol } from '@/lib/cartographic-water-symbols';
@@ -1881,8 +1888,14 @@ function drawWaterRoutes(ctx: CanvasRenderingContext2D, state: DesignCanvasState
     }
   };
   for (const line of waterRoutesWithVisualBridges(state.lines, frame)) {
+    // OBEY THE SHEET'S OWN MEMBERSHIP RULE. lineInFilter decided long ago that a swale is dug, not
+    // plumbed, and belongs to Earthworks (sheet 05) — but only the LEGEND was taught that. This
+    // loop kept drawing every water-styled route, so a swale still appeared on the Water sheet in
+    // pipe-blue with no legend row to explain it: a line the panel had already disowned. Asking
+    // lineInFilter here is what makes the two halves of that decision agree, and it means a future
+    // move of any line kind between sheets cannot go half-applied the same way.
     const style = waterRouteStyleFor(line.kind);
-    if (!style || line.points.length < 2) continue;
+    if (!style || line.points.length < 2 || !lineInFilter(line.kind, 'water')) continue;
     const trace = () => {
       ctx.beginPath();
       line.points.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, x * W, y * H));
@@ -2211,7 +2224,12 @@ function drawWaterLeaderLabels(
   const routeNames = new Set(Object.values(WATER_LINE_NAME).filter((name): name is string => Boolean(name)));
   for (const line of state.lines) {
     const name = WATER_LINE_NAME[line.kind];
-    if (!name || line.points.length < 2) continue;
+    // A LABEL FOR A LINE THIS SHEET DOES NOT DRAW IS A LEADER POINTING AT NOTHING. Third place the
+    // same half-applied move surfaced: when swales left the Water sheet, the legend was told and
+    // the renderer was not — and neither was this. Stopping drawWaterRoutes alone left a "SWALE"
+    // callout with a leader running to bare ground. Asking lineInFilter here keeps callouts,
+    // strokes and legend rows answering to one authority.
+    if (!name || line.points.length < 2 || !lineInFilter(line.kind, 'water')) continue;
     const mid = line.points[Math.floor(line.points.length / 2)];
     const group = grouped.get(name) ?? { name, points: [] };
     group.points.push([mid[0] * W, mid[1] * H]);
@@ -2899,6 +2917,32 @@ function drawBlueprintGround(
       }
       ctx.stroke();
     }
+    // A STAPLE PLOT IS A FIELD OF CROPS, NOT A COLOURED SHAPE. Rory, twice, on two different
+    // sheets: "staple plot polygons ... they need to have actual rows of maize, beans, potatoes,
+    // and another for 4 plots! not a polygon!"
+    //
+    // He is right, and it is also how the drawing convention works: on a planting plan the pattern
+    // inside the outline IS the instruction, because the farmer sets out to the rows he can see.
+    // Maize with beans through it and pumpkin on the ground is the traditional southern-African
+    // intercrop this feature was added to model in the first place (see GroundFeatureKind's own
+    // note), so the rows cycle through those three silhouettes.
+    //
+    // Rows are drawn only where the plot is big enough on THIS sheet to read as rows — below that
+    // the plain wash above is left alone, because a field of illegible dots is worse than an
+    // honest polygon. Nothing here is agronomic: the rhythm is a drawing rhythm, and no spacing,
+    // yield or variety is implied. See lib/crop-row-cartography.ts.
+    if (z.feature === 'staple_garden' && isContent) {
+      const ring = z.points.map(([x, y]) => [px(x), py(y)] as [number, number]);
+      const rowGap = Math.max(11, W * 0.011);
+      const layout = polygonCropRows(ring, STAPLE_PLOT_GLYPHS, z.id, rowGap);
+      if (layout.plants.length) {
+        ctx.save();
+        blueprintRing(ctx, z.points, px, py);
+        ctx.clip();
+        drawCropRowLayout(ctx, layout, meta.color);
+        ctx.restore();
+      }
+    }
     ctx.restore();
     blueprintRing(ctx, z.points, px, py);
     // With no fill behind it, a roof's outline is the only thing marking the building — and the
@@ -2910,6 +2954,150 @@ function drawBlueprintGround(
     // around a slab is a claim, and on a sheet the slab is not the subject of it is a false one.
     ctx.lineWidth = isRoof ? (illustrated ? 2.4 : 3.5) : (illustrated ? 1.4 : (isContent ? 2.5 : 1.4));
     ctx.stroke();
+  }
+}
+
+/** The intercrop a staple plot is drawn as: maize with beans through it and pumpkin on the ground.
+ *  That is the traditional maize-legume-cucurbit plot this ground feature exists to model, stated
+ *  in GroundFeatureKind's own doc comment — not a recommendation this renderer is inventing. */
+const STAPLE_PLOT_GLYPHS: CropGlyph[] = ['grain', 'legume', 'grain', 'vine'];
+
+/** Soil under a crop bed: the brown a worked bed actually is, so plants read as plants on it. */
+const CROP_SOIL_COLOR = '#5A4130';
+
+/**
+ * Paint one crop-row layout: a faint drill line per row, then a plant glyph at every position.
+ *
+ * Every glyph gets a cream casing before its own colour, the same treatment the canopies, sector
+ * arrows and route lines use — these sit on an aerial photograph and a thin green stroke on green
+ * ground is invisible, which is the failure this whole evening has been about.
+ */
+function drawCropRowLayout(
+  ctx: CanvasRenderingContext2D,
+  layout: CropRowLayout,
+  accent: string,
+): void {
+  const unit = Math.max(3.4, layout.rowGapPx * 0.42);
+  ctx.save();
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+
+  // Drill lines: what a farmer sees from the air before the crop closes over.
+  ctx.strokeStyle = 'rgba(46,32,20,0.34)';
+  ctx.lineWidth = Math.max(0.8, unit * 0.14);
+  ctx.beginPath();
+  for (const row of layout.rows) {
+    ctx.moveTo(row.x0, row.y0);
+    ctx.lineTo(row.x1, row.y1);
+  }
+  ctx.stroke();
+
+  for (const plant of layout.plants) {
+    const s = unit * (0.82 + plant.jitter * 0.36);
+    ctx.save();
+    ctx.translate(plant.x, plant.y);
+    // Casing first, then the plant — see the note above.
+    for (const pass of ['casing', 'body'] as const) {
+      const casing = pass === 'casing';
+      ctx.strokeStyle = casing ? 'rgba(252,248,236,0.9)' : CROP_GLYPH_COLOR[plant.glyph] ?? accent;
+      ctx.fillStyle = casing ? 'rgba(252,248,236,0.9)' : CROP_GLYPH_COLOR[plant.glyph] ?? accent;
+      ctx.lineWidth = casing ? Math.max(2, s * 0.5) : Math.max(1, s * 0.22);
+      drawCropGlyphPath(ctx, plant.glyph, s, casing);
+    }
+    ctx.restore();
+  }
+  ctx.restore();
+}
+
+/** One colour per silhouette. Distinct enough that a maize row and a bean row read apart at
+ *  sheet scale, which is the entire reason for drawing rows rather than a fill. */
+const CROP_GLYPH_COLOR: Record<CropGlyph, string> = {
+  grain: '#C9A227',
+  legume: '#4E9A3E',
+  vine: '#2F7A4A',
+  root: '#8A5A2B',
+  staked: '#C1462F',
+  rosette: '#54903F',
+  generic: '#5E8C43',
+};
+
+/** Draw one plant silhouette at the current origin. `casingOnly` strokes the same path fatter so
+ *  the body that follows sits inside a light halo. */
+function drawCropGlyphPath(
+  ctx: CanvasRenderingContext2D,
+  glyph: CropGlyph,
+  s: number,
+  casingOnly: boolean,
+): void {
+  switch (glyph) {
+    case 'grain': {
+      // A maize stalk: upright stem, two blade leaves, and the ear that makes it unmistakable.
+      ctx.beginPath();
+      ctx.moveTo(0, s * 0.9);
+      ctx.lineTo(0, -s * 0.95);
+      ctx.moveTo(0, -s * 0.15); ctx.lineTo(s * 0.62, -s * 0.62);
+      ctx.moveTo(0, s * 0.12); ctx.lineTo(-s * 0.62, -s * 0.35);
+      ctx.stroke();
+      if (!casingOnly) {
+        ctx.beginPath();
+        ctx.ellipse(0, -s * 0.72, s * 0.2, s * 0.34, 0, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      return;
+    }
+    case 'legume': {
+      // A climbing bean: a slim twining stroke with a leaf pair.
+      ctx.beginPath();
+      ctx.moveTo(0, s * 0.85);
+      ctx.quadraticCurveTo(s * 0.4, s * 0.1, 0, -s * 0.8);
+      ctx.moveTo(0, -s * 0.2); ctx.lineTo(s * 0.5, -s * 0.42);
+      ctx.stroke();
+      return;
+    }
+    case 'vine': {
+      // Pumpkin on the ground: a wide low lobe, deliberately sprawling rather than upright.
+      ctx.beginPath();
+      ctx.ellipse(0, s * 0.15, s * 0.95, s * 0.5, 0, 0, Math.PI * 2);
+      casingOnly ? ctx.stroke() : ctx.fill();
+      return;
+    }
+    case 'root': {
+      // Root crop: a low mound with a leaf tuft, the half-below-ground convention.
+      ctx.beginPath();
+      ctx.arc(0, s * 0.3, s * 0.5, Math.PI, 0);
+      casingOnly ? ctx.stroke() : ctx.fill();
+      ctx.beginPath();
+      ctx.moveTo(0, s * 0.25); ctx.lineTo(0, -s * 0.7);
+      ctx.moveTo(0, -s * 0.3); ctx.lineTo(s * 0.42, -s * 0.72);
+      ctx.moveTo(0, -s * 0.3); ctx.lineTo(-s * 0.42, -s * 0.72);
+      ctx.stroke();
+      return;
+    }
+    case 'staked': {
+      // Tomato or pepper: a stake with a fruiting canopy on it.
+      ctx.beginPath();
+      ctx.moveTo(0, s); ctx.lineTo(0, -s * 0.35);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(0, -s * 0.5, s * 0.55, 0, Math.PI * 2);
+      casingOnly ? ctx.stroke() : ctx.fill();
+      return;
+    }
+    case 'rosette':
+    default: {
+      // A leafy head seen from above — cabbage, spinach, chard: concentric, tight, ground-hugging.
+      ctx.beginPath();
+      ctx.arc(0, 0, s * 0.62, 0, Math.PI * 2);
+      casingOnly ? ctx.stroke() : ctx.fill();
+      if (!casingOnly) {
+        ctx.beginPath();
+        ctx.arc(0, 0, s * 0.3, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(252,248,236,0.75)';
+        ctx.lineWidth = Math.max(0.7, s * 0.16);
+        ctx.stroke();
+      }
+      return;
+    }
   }
 }
 
@@ -4308,6 +4496,63 @@ function stableCartographicUnit(seed: string, index: number): number {
  * Emoji are editor controls, not plan symbols. They used to be burned into exact sheets and copied
  * by the image model. Area features keep their footprint; tiny infrastructure uses a bounded point
  * symbol at the same centre and rotation so it remains readable over an AI-painted base. */
+/** The beds that get drawn as rows of a real crop rather than one shared bed illustration. */
+const PRODUCTION_BED_IDS = new Set(['veg_bed', 'raised_bed']);
+
+/**
+ * Draw a production bed as worked soil with its actual crop in rows. Returns false when the bed is
+ * too small on this sheet for rows to read, so the caller can fall back to the shared artwork.
+ *
+ * The crop comes from the bed's own saved data — its chosen species, else the farmer's label — and
+ * an unrecognised name draws a plain plant rather than guessing at a crop. Nothing about spacing,
+ * plant count or variety is asserted: this draws what the farmer chose, at a drawing rhythm.
+ */
+function drawProductionBedCrop(
+  ctx: CanvasRenderingContext2D,
+  it: PlacedItem,
+  def: DesignElementDef,
+  px: (n: number) => number,
+  py: (n: number) => number,
+  pxPerM: number,
+): boolean {
+  const wPx = Math.max(1, (it.wM ?? def.wM) * pxPerM);
+  const hPx = Math.max(1, (it.hM ?? def.hM) * pxPerM);
+  const glyph = cropGlyphFor(it.speciesId ?? it.label);
+  const layout = bedCropRows(wPx, hPx, glyph, it.id, Math.max(10, ctx.canvas.width * 0.0085));
+  if (layout.plants.length < 3) return false;
+
+  const cx = px(it.x);
+  const cy = py(it.y);
+  const radius = Math.min(wPx, hPx) * 0.1;
+  ctx.save();
+  ctx.translate(cx, cy);
+  if (it.rot) ctx.rotate((it.rot * Math.PI) / 180);
+  ctx.lineJoin = 'round';
+
+  // Cream casing, then worked soil, then the crop — the same body-inside-a-casing order every
+  // other mark on these sheets now uses to survive an aerial photograph.
+  roundRectPath(ctx, -wPx / 2, -hPx / 2, wPx, hPx, radius);
+  ctx.strokeStyle = 'rgba(252,248,236,0.92)';
+  ctx.lineWidth = Math.max(2.5, ctx.canvas.width * 0.0022);
+  ctx.stroke();
+  roundRectPath(ctx, -wPx / 2, -hPx / 2, wPx, hPx, radius);
+  ctx.fillStyle = CROP_SOIL_COLOR;
+  ctx.fill();
+
+  ctx.save();
+  roundRectPath(ctx, -wPx / 2, -hPx / 2, wPx, hPx, radius);
+  ctx.clip();
+  drawCropRowLayout(ctx, layout, '#6B8F4E');
+  ctx.restore();
+
+  roundRectPath(ctx, -wPx / 2, -hPx / 2, wPx, hPx, radius);
+  ctx.strokeStyle = 'rgba(38,28,18,0.9)';
+  ctx.lineWidth = Math.max(1.2, ctx.canvas.width * 0.0011);
+  ctx.stroke();
+  ctx.restore();
+  return true;
+}
+
 function drawTrueFootprint(
   ctx: CanvasRenderingContext2D,
   it: PlacedItem,
@@ -4322,6 +4567,20 @@ function drawTrueFootprint(
     'banana_circle', 'tree_basin', 'greywater_basin', 'infiltration_basin',
     'half_moon', 'berm', 'terrace', 'mulch_bank', 'duck_pond',
   ].includes(def.id);
+  // A PRODUCTION BED SHOWS THE CROP THAT IS IN IT. Every vegetable and raised bed on every sheet
+  // shared ONE piece of artwork (production-bed-v1.png), so nine beds of nine different crops
+  // printed as nine identical green rectangles. Rory, having asked before: "veg beds improve,
+  // brown background with actual veg — i hav asked and asked gawd please do it! put cabbages
+  // tomotoes etc etc".
+  //
+  // Drawn rather than painted, because the crop is per-bed data: the bed's chosen species (or the
+  // farmer's own label) picks the silhouette, so a cabbage bed and a tomato bed are different
+  // drawings of the farm rather than the same sticker twice. Falls through to the shared artwork
+  // when the bed is too small on this sheet to read as rows — an unreadable smudge of dots is
+  // worse than the rectangle it replaced.
+  if (PRODUCTION_BED_IDS.has(def.id)) {
+    if (drawProductionBedCrop(ctx, it, def, px, py, pxPerM)) return;
+  }
   const artUrl = referenceFeatureArtworkUrl(def.id);
   if (artUrl && referenceFeatureArtworkCache.has(artUrl)) {
     // Reusable art improves material and detail. Area features keep their literal footprint; tiny
@@ -5581,7 +5840,17 @@ async function buildReferenceBlueprintMap(
     ? await buildLockedStructureOverlay(source, renderState, renderFrame, renderRefLayers, W, H, 'precision_atlas')
     : undefined;
   if (sourceStructures) {
+    // MUTE THE BUILDING CUTOUT WITH THE GROUND IT SITS ON. This overlay is a slice of the SAME
+    // photograph as the base, restored at full strength so a roof stays sharp. Once the base was
+    // pushed back for legibility (lib/sheet-base-mute.ts) that made every traced building a dark,
+    // saturated blob on a pale sheet — the one thing on the page shouting, and it is context.
+    // Same filter, one step lighter than the ground, so the building still reads as the most
+    // definite object on the sheet without being the loudest.
+    ctx.save();
+    if ('filter' in ctx) ctx.filter = SHEET_BASE_MUTE_STYLE.design.filter;
+    ctx.globalAlpha = 0.92;
     ctx.drawImage(await loadImage(sourceStructures), 0, 0, W, H);
+    ctx.restore();
   } else {
     const px = (n: number) => n * W;
     const py = (n: number) => n * H;

@@ -15,3 +15,7 @@ serviceAccount.json
 firebase-debug.log
 firestore-debug.log
 ui-debug.log
+
+# Dev-only plan-sheet captures (app/api/dev-capture) — evidence images, never source.
+.sheet-captures/
+.playwright-mcp/

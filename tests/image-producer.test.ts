@@ -9,7 +9,7 @@ import { ELEMENT_CATALOG } from '../lib/design-elements.ts';
 import { isDifferentBuild } from '../lib/pwa-update.ts';
 import { preserveCanvasNavigation, type DesignCanvasState } from '../lib/design-canvas.ts';
 import { exactModelInputMarks, hasConflictingRenderAuthority, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '../lib/render-policy.ts';
-import { REFERENCE_SHEET_LABEL } from '../lib/glossy-filters.ts';
+import { lineInFilter, REFERENCE_SHEET_LABEL } from '../lib/glossy-filters.ts';
 import { EARTHWORKS_ROUTE_STYLE, WATER_LEGEND_SECTION_ORDER, pairedWaterDestinationCanopyIds, waterFeaturePresentationDimensions, waterFeaturePresentationScale, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRouteLegendEntries, waterRoutesWithVisualBridges, waterRouteStyleFor, earthworksRouteStyleFor } from '../lib/water-cartography.ts';
 import { authenticateApiRequest, MAX_API_BODY_BYTES, oversizedApiBodyResponse } from '../lib/api-auth.ts';
 import './generate-report-sections.test.ts';
@@ -251,8 +251,20 @@ test('Earthworks-only swales read as brown cut-and-fill while Water remains blue
   assert.equal(earthworks.color, '#A9743F');
   assert.equal(earthworks.casing, '#5B3A22');
   assert.deepEqual(earthworks.dash, []);
-  assert.notEqual(earthworks.color, waterRouteStyleFor('swale')?.color);
   assert.equal(earthworksRouteStyleFor('pipe'), undefined);
+
+  // The old assertion here was `earthworks.color !== waterRouteStyleFor('swale').color` — it
+  // required the two swale styles to DIFFER, which is backwards now. The Water sheet no longer
+  // draws swales at all (lineInFilter says they belong to sheet 05, and drawWaterRoutes finally
+  // asks). The water entry survives only because the Whole-design sheet legends every water line
+  // kind from that table, so what matters is that the masterplan uses the SAME earth tone as
+  // sheet 05 rather than reproducing the pipe-blue confusion Rory reported.
+  const waterSwale = waterRouteStyleFor('swale');
+  assert.ok(waterSwale);
+  assert.equal(waterSwale.color, earthworks.color, 'one swale colour across every sheet that names it');
+  assert.ok(waterSwale.dash.length > 0, 'dashed, so it can never read as a continuous pressurised pipe');
+  assert.equal(lineInFilter('swale', 'water'), false, 'the Water sheet does not carry swales');
+  assert.equal(lineInFilter('swale', 'earthworks'), true, 'sheet 05 does');
 });
 
 test('Water context only borrows saved tree canopies paired with saved tree basins', () => {
