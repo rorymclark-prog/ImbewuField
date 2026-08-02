@@ -295,6 +295,16 @@ function drawFencePosts(
  *  line and the drip runs are greens, and a green ring around the plot was read as a planted row.
  *  Bone reads as built infrastructure at any zoom, on pale ground and dark. */
 const BOUNDARY_BONE = '#EDE7D9';
+/**
+ * The colour drawBlueprintBoundary actually strokes the property line in — bright green over a dark
+ * casing — and therefore the colour its legend swatch has to be.
+ *
+ * Three legend rows stood for the boundary and all three used BOUNDARY_BONE, which is the cream of
+ * the vertex dots, not the line. On cream paper that swatch is very nearly invisible: the key for
+ * the one mark that appears on every sheet was a pale smudge. Named, so the next person to add a
+ * boundary row cannot pick the wrong one of the two colours involved.
+ */
+const BOUNDARY_LINE_GREEN = '#A8D35F';
 
 /** TAR. One constant, and deliberately near-black rather than slate.
  *
@@ -5441,7 +5451,7 @@ export async function buildBlueprintBaseMap(
     legendRows.push({ swatch: '#5A5D57', text: 'Existing tarred driveway', kind: 'surface' });
   }
   if (renderRefLayers.boundary.length >= 3) {
-    legendRows.push({ swatch: BOUNDARY_BONE, text: 'Property boundary', lineKind: 'fence' });
+    legendRows.push({ swatch: BOUNDARY_LINE_GREEN, text: 'Property boundary', lineKind: 'fence' });
   }
 
   return composeStyleSheet(
@@ -7957,7 +7967,7 @@ export function sheetLegendRows(
   if (filter === 'all') {
     const siteRows: StyleLegendRow[] = rows.splice(0).map((row) => ({ ...row, section: 'SITE EDGE' }));
     if (refLayers.boundary.length >= 3) {
-      siteRows.push({ swatch: BOUNDARY_BONE, text: 'Property boundary', lineKind: 'fence', section: 'SITE EDGE' });
+      siteRows.push({ swatch: BOUNDARY_LINE_GREEN, text: 'Property boundary', lineKind: 'fence', section: 'SITE EDGE' });
     }
     if (refLayers.driveway.length >= 2) {
       siteRows.push({ swatch: '#5A5D57', text: EXACT_DRIVEWAY_LEGEND_TEXT, kind: 'surface', section: 'SITE EDGE' });
@@ -8067,6 +8077,32 @@ export function sheetLegendRows(
       return leftOrder - rightOrder;
     });
     rows.splice(0, rows.length, ...contextRows, ...systemRows);
+  }
+
+  // THE MARKS EVERY SHEET DRAWS AND ONLY ONE SHEET KEYED.
+  //
+  // The property boundary and the driveway are drawn on all nine sheets — the boundary as a bone
+  // line with fence ticks, the driveway as dark tar — and until now they were legended only on
+  // sheet 08, because the rows that describe them sat inside `if (filter === 'all')`. Six sheets
+  // therefore carried a distinctive green-and-bone line, at full strength, with nothing anywhere
+  // saying what it was. It is not self-evident: a farmer who has also drawn fences cannot tell
+  // from the drawing whether that line is their cadastral boundary or one of their fences, and
+  // those are different things to build.
+  //
+  // Appended last and without a section heading, which is both the conventional plan-set order —
+  // the sheet's own content first, the site context it sits in afterwards — and the thing that
+  // keeps it out of the per-sheet section sort above.
+  //
+  // The traced BUILDING deliberately gets no row. On these sheets it is not a drawn symbol at all:
+  // it is the photograph itself, restored to full sharpness inside its own outline. A key explains
+  // marks the renderer invented, and an aerial photograph of a roof needs no key.
+  // Sheet 08 has already returned by here with its own SITE EDGE section, so this is exactly the
+  // six sheets that were missing these rows.
+  if (refLayers.boundary.length >= 3) {
+    rows.push({ swatch: BOUNDARY_LINE_GREEN, text: 'Property boundary', lineKind: 'fence' });
+  }
+  if (refLayers.driveway.length >= 2) {
+    rows.push({ swatch: '#5A5D57', text: EXACT_DRIVEWAY_LEGEND_TEXT, kind: 'surface' });
   }
   return rows;
 }
@@ -11273,7 +11309,7 @@ export default function DesignGlossy({
         legendRows.push({ swatch: '#5A5D57', text: 'Existing tarred driveway', kind: 'surface' });
       }
       if (renderRefLayers.boundary.length >= 3) {
-        legendRows.push({ swatch: BOUNDARY_BONE, text: 'Property boundary', lineKind: 'fence' });
+        legendRows.push({ swatch: BOUNDARY_LINE_GREEN, text: 'Property boundary', lineKind: 'fence' });
       }
       const styleLabel = PRODUCER_STYLES.find((s) => s.key === styleKey)?.label ?? 'AI Hybrid';
 
