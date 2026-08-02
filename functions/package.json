@@ -5,9 +5,9 @@
   "engines": {
     "node": "20"
   },
-  "main": "lib/index.js",
+  "main": "lib/functions/src/index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "tsc && node ./verify-entry.mjs",
     "serve": "npm run build && firebase emulators:start --only functions",
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log"
