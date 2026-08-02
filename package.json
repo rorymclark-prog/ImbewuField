@@ -14,7 +14,8 @@
     "course:status": "node --import ./tests/register-alias.mjs scripts/course-status.mjs",
     "course:script-prompt": "node --import ./tests/register-alias.mjs scripts/course-script-prompt.mjs",
     "assets:sizes": "node scripts/gen-asset-sizes.mjs",
-    "course:import-audio": "node --import ./tests/register-alias.mjs scripts/import-course-audio.mjs"
+    "course:import-audio": "node --import ./tests/register-alias.mjs scripts/import-course-audio.mjs",
+    "course:record-sheet": "node --import ./tests/register-alias.mjs scripts/course-narration-export.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.37.0",

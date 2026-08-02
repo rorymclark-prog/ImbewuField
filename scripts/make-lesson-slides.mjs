@@ -56,11 +56,11 @@ const MONOLINGUAL = /^\*\*(?:Slide|Ikhasi)\s*(\d+)\s*[—-]\s*([^*\n]+?)\s*\*\*\
 const slides = [];
 let m;
 while ((m = BILINGUAL.exec(raw))) {
-  slides.push({ n: Number(m[1]), title: m[2].trim(), subtitle: m[3].trim(), start: m.index + m[0].length });
+  slides.push({ n: Number(m[1]), title: m[2].trim(), subtitle: m[3].trim(), head: m.index, start: m.index + m[0].length });
 }
 if (slides.length === 0) {
   while ((m = MONOLINGUAL.exec(raw))) {
-    slides.push({ n: Number(m[1]), title: m[2].trim(), subtitle: '', start: m.index + m[0].length });
+    slides.push({ n: Number(m[1]), title: m[2].trim(), subtitle: '', head: m.index, start: m.index + m[0].length });
   }
 }
 slides.sort((a, b) => a.n - b.n);
@@ -71,7 +71,10 @@ if (slides.length === 0) {
 
 // Body between this heading and the next, minus stage directions and rules.
 slides.forEach((s, i) => {
-  const end = i + 1 < slides.length ? raw.lastIndexOf('**', slides[i + 1].start) : raw.length;
+  // Where the NEXT heading BEGINS. Searching backwards for '**' from the next block's start
+  // lands on that heading's CLOSING marker, so the body kept the whole of the next slide's title.
+  // It stayed invisible only because the bullet cap usually cut it off first.
+  const end = i + 1 < slides.length ? slides[i + 1].head : raw.length;
   s.body = raw
     .slice(s.start, end)
     .replace(/\[pause\]/gi, '')
