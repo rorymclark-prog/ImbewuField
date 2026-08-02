@@ -92,7 +92,19 @@ function bullets(paras) {
   for (const p of paras) {
     const first = (p.split(/(?<=[.!?])\s/)[0] || p).trim();
     if (first.length < 12) continue;
-    out.push(first.length > 90 ? first.slice(0, 87).replace(/[,\s]+$/, '') + '…' : first);
+    // Cut at a WORD boundary, and not at 90 characters.
+    //
+    // isiZulu is agglutinative — "angamasentimitha" is one word for what English says in three —
+    // so a character cap tuned to English bites far harder there, and slicing blind produced
+    // "i-greens ezingam…" mid-word, which reads as a rendering fault rather than an elision.
+    // The block is centred and free to take a second line now, so the cap can be generous.
+    let s = first;
+    if (s.length > 132) {
+      const cut = s.slice(0, 130);
+      const sp = cut.lastIndexOf(' ');
+      s = (sp > 60 ? cut.slice(0, sp) : cut).replace(/[,;:\s]+$/, '') + '…';
+    }
+    out.push(s);
     // Four, not three. A "Learning Outcomes" slide opens with a lead-in sentence and then lists
     // three outcomes, so a cap of three silently dropped the last one off every such slide.
     if (out.length === 4) break;
