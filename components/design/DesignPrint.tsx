@@ -21,7 +21,8 @@ import LessonLink from './LessonLink';
 import type { CanvasFrame, DesignCanvasState } from '@/lib/design-canvas';
 import type { SectorSite } from '@/lib/sector';
 import {
-  buildComposite,
+  buildBlueprintBaseMap,
+  buildBlueprintWholeMap,
   buildBlueprintSectorMap,
   buildBlueprintZoneMap,
   buildBlueprintWaterMap,
@@ -73,7 +74,16 @@ type PrintLayer = {
 
 // The canonical 9-map package, in order (docs/PLAN-SET-SPEC.md). Analysis (02) precedes design.
 const PRINT_LAYERS: PrintLayer[] = [
-  { key: 'base', no: '01', label: 'Existing Site & Base', selfChromed: false, filter: 'all', drawDesign: false, render: (s, f, r) => buildComposite(s, f, r, 'all', false) },
+  // THE PRINTED SET USED A DIFFERENT RENDERER FOR THESE TWO SHEETS, and that is why fixes kept
+  // "not landing" on paper. 01 and 08 rendered through buildComposite -- an older path that never
+  // received the exact-sheet work -- while buildBlueprintWholeMap, the correct masterplan builder,
+  // sat in DesignGlossy.tsx with ZERO call sites. So the PDF a funder opens first and last carried
+  // the staple-garden polygons Rory reported twice, the pipe-blue swale, unlegended zone bands and
+  // emoji glyphs, all of them already fixed everywhere else in the app.
+  //
+  // Both now use the same builders the on-screen plan set uses, self-chromed like every other
+  // sheet in this list. A defect fixed once is now fixed on screen AND on paper.
+  { key: 'base', no: '01', label: 'Existing Site & Base', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintBaseMap(s, f, r, pn) },
   { key: 'sector', no: '02', label: 'Sector Analysis', selfChromed: true, render: (s, f, r, site, pn) => buildBlueprintSectorMap(s, f, r, site, pn) },
   { key: 'zones', no: '03', label: 'Permaculture Zones', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintZoneMap(s, f, r, pn) },
   { key: 'water', no: '04', label: 'Water & Irrigation', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintWaterMap(s, f, r, pn) },
@@ -84,7 +94,7 @@ const PRINT_LAYERS: PrintLayer[] = [
   { key: 'earthworks', no: '05', label: 'Earthworks & Contour Setting-Out', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintEarthworksMap(s, f, r, pn) },
   { key: 'planting', no: '06', label: 'Planting & Agroforestry', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintPlantingMap(s, f, r, pn) },
   { key: 'structures', no: '07', label: 'Livestock & Infrastructure', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintStructuresMap(s, f, r, pn) },
-  { key: 'all', no: '08', label: 'Integrated Masterplan', selfChromed: false, filter: 'all', drawDesign: true, render: (s, f, r) => buildComposite(s, f, r, 'all', true) },
+  { key: 'all', no: '08', label: 'Integrated Masterplan', selfChromed: true, render: (s, f, r, _site, pn) => buildBlueprintWholeMap(s, f, r, pn) },
   { key: 'implementation', no: '09', label: 'Implementation & Phasing', selfChromed: true, render: (s, f, r, site, pn) => buildImplementationMap(s, f, r, site, pn) },
 ];
 
