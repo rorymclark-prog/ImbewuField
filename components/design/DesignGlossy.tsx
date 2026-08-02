@@ -5,7 +5,17 @@
 // Overlay remains the explicit model-authored comparison/rollback style.
 
 import { useCallback, useEffect, useRef, useState, type Dispatch, type SetStateAction } from 'react';
-import { Download, RefreshCw, Gem, FlaskConical, Images, X, Trash2, Share2 } from 'lucide-react';
+import { Download, RefreshCw, Gem, FlaskConical, Images, X, Trash2, Share2, Check } from 'lucide-react';
+import { jsPDF } from 'jspdf';
+import {
+  SHEET_EXPORT_PROFILES,
+  imageMimeType,
+  isMultiSheetFormat,
+  sheetExportFileName,
+  sheetSetFileName,
+  type SheetExportFormat,
+  type SheetExportQuality,
+} from '@/lib/sheet-export';
 
 import polygonClipping from 'polygon-clipping';
 
@@ -1278,6 +1288,26 @@ function compass8(x: number, y: number): string {
   const dirs = ['N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'];
   const idx = Math.round(deg / 45) % 8;
   return dirs[idx];
+}
+
+/**
+ * Hand finished files to the phone's own share sheet.
+ *
+ * WhatsApp-first, because that is how a plan actually reaches a mentor, an NGO officer or a buyer
+ * in South Africa — not email, and not a link to a site with no signal to load it. `canShare` is
+ * checked with the real files rather than assumed: some browsers expose `share` but refuse file
+ * payloads, and finding that out after building six JPEGs is the wrong order.
+ */
+async function shareSheetFiles(files: File[], labels: string[]): Promise<void> {
+  const one = labels.length === 1;
+  const title = one ? labels[0] : `${labels.length} plan sheets`;
+  const text = one
+    ? `${labels[0]} — my farm plan, made with ImbewuField`
+    : `${labels.length} sheets from my farm plan, made with ImbewuField`;
+  if (typeof navigator === 'undefined' || !navigator.canShare?.({ files })) {
+    throw new Error('This phone cannot share files directly — use Download instead.');
+  }
+  await navigator.share({ files, title, text });
 }
 
 function loadImage(src: string): Promise<HTMLImageElement> {
@@ -10111,6 +10141,24 @@ export default function DesignGlossy({
   const [galleryOpen, setGalleryOpen] = useState(false);
   const [galleryViewId, setGalleryViewId] = useState<string | null>(null);
   const [galleryZoomOpen, setGalleryZoomOpen] = useState(false);
+  /**
+   * TAKING SEVERAL SHEETS OFF THE PHONE AT ONCE. Rory: "let's be able to select and download
+   * multiple files at once with a quality selector and also perhaps just have a share option?
+   * file options jpeg or pdf etc."
+   *
+   * Selection is a MODE rather than a permanent row of tick boxes, because the common action on
+   * this grid is opening one sheet to look at it, and a grid that is always armed for selection
+   * makes the common action the awkward one. Same shape as every phone photo gallery: tap opens,
+   * "Select" arms, then tap picks.
+   *
+   * The decisions themselves — what a file is called, what a quality step costs, which formats can
+   * carry a whole set — live in lib/sheet-export.ts, where they are testable without a canvas.
+   */
+  const [exportMode, setExportMode] = useState(false);
+  const [exportSel, setExportSel] = useState<Set<string>>(() => new Set());
+  const [exportFormat, setExportFormat] = useState<SheetExportFormat>('jpeg');
+  const [exportQuality, setExportQuality] = useState<SheetExportQuality>('high');
+  const [exportBusy, setExportBusy] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   // A stable cache key per chosen map (producer style OR design filter OR analysis style).
@@ -10224,6 +10272,116 @@ export default function DesignGlossy({
 
   // Remove one saved map, from the screen AND from storage. If the deleted item is the one open in
   // the detail view, drop back to the grid.
+  /**
+   * Re-encode one saved sheet at a chosen size and format.
+   *
+   * A saved sheet is a full-size PNG. Both other formats need a real re-encode rather than a
+   * rename: JPEG has NO ALPHA CHANNEL, so every transparent pixel encodes as black unless something
+   * opaque is painted first — which on an A2 sheet with margins is most of the page. The paper fill
+   * below is that something, and it is the sheet's own cream so a downloaded JPEG and the sheet on
+   * screen are the same object.
+   */
+  const encodeSheet = useCallback(
+    async (src: string, format: Exclude<SheetExportFormat, 'pdf'>, quality: SheetExportQuality) => {
+      const img = await loadImage(src);
+      const profile = SHEET_EXPORT_PROFILES[quality];
+      const w = Math.max(1, Math.round(img.naturalWidth * profile.scale));
+      const h = Math.max(1, Math.round(img.naturalHeight * profile.scale));
+      const canvas = document.createElement('canvas');
+      canvas.width = w;
+      canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) throw new Error('Canvas unavailable');
+      if (format === 'jpeg') {
+        ctx.fillStyle = '#FBF6EC';
+        ctx.fillRect(0, 0, w, h);
+      }
+      ctx.imageSmoothingQuality = 'high';
+      ctx.drawImage(img, 0, 0, w, h);
+      return { dataUrl: canvas.toDataURL(imageMimeType(format), profile.jpegQuality), w, h };
+    },
+    [],
+  );
+
+  /** One PDF carrying every chosen sheet, a page each, at its own aspect. */
+  const buildGalleryPdf = useCallback(
+    async (picked: GalleryItem[], quality: SheetExportQuality) => {
+      let doc: jsPDF | null = null;
+      for (const item of picked) {
+        // PDF pages carry JPEG regardless of the format chips: those choose the FILE the farmer
+        // gets, and inside a PDF a lossless page would multiply the size of a document whose whole
+        // job is to be small enough to send.
+        const { dataUrl, w, h } = await encodeSheet(item.image, 'jpeg', quality);
+        const orientation = w >= h ? 'landscape' : 'portrait';
+        if (!doc) doc = new jsPDF({ unit: 'px', format: [w, h], orientation, hotfixes: ['px_scaling'] });
+        else doc.addPage([w, h], orientation);
+        doc.addImage(dataUrl, 'JPEG', 0, 0, w, h);
+      }
+      return doc;
+    },
+    [encodeSheet],
+  );
+
+  const exportSelection = useCallback(
+    async (mode: 'download' | 'share') => {
+      const picked = gallery.filter((g) => exportSel.has(g.id));
+      if (!picked.length || exportBusy) return;
+      setExportBusy(true);
+      setError(null);
+      try {
+        if (isMultiSheetFormat(exportFormat)) {
+          const doc = await buildGalleryPdf(picked, exportQuality);
+          if (!doc) return;
+          const name = picked.length === 1
+            ? sheetExportFileName(placeName, picked[0].label, 'pdf')
+            : sheetSetFileName(placeName, picked.length);
+          if (mode === 'download') {
+            doc.save(name);
+          } else {
+            const file = new File([doc.output('blob')], name, { type: 'application/pdf' });
+            await shareSheetFiles([file], picked.map((g) => g.label));
+          }
+          return;
+        }
+
+        const files: File[] = [];
+        for (let i = 0; i < picked.length; i++) {
+          const { dataUrl } = await encodeSheet(picked[i].image, exportFormat, exportQuality);
+          const name = sheetExportFileName(
+            placeName,
+            picked[i].label,
+            exportFormat,
+            picked.length > 1 ? i : undefined,
+          );
+          if (mode === 'share') {
+            const blob = await (await fetch(dataUrl)).blob();
+            files.push(new File([blob], name, { type: blob.type || imageMimeType(exportFormat) }));
+            continue;
+          }
+          // SEQUENTIAL, WITH A GAP. A browser asked to start six downloads in one tick treats the
+          // second onwards as a popup and silently drops them; the farmer sees one file and assumes
+          // the feature is broken. Yielding between anchors is what makes "download 6" mean six.
+          const a = document.createElement('a');
+          a.href = dataUrl;
+          a.download = name;
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+          if (i < picked.length - 1) await new Promise((r) => setTimeout(r, 350));
+        }
+        if (mode === 'share' && files.length) await shareSheetFiles(files, picked.map((g) => g.label));
+      } catch (err) {
+        if (!(err instanceof DOMException && err.name === 'AbortError')) {
+          setError(err instanceof Error ? err.message : String(err));
+        }
+      } finally {
+        setExportBusy(false);
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [gallery, exportSel, exportFormat, exportQuality, exportBusy, placeName, encodeSheet, buildGalleryPdf],
+  );
+
   const removeGallery = useCallback((id: string) => {
     setGallery((prev) => prev.filter((g) => g.id !== id));
     setGalleryViewId((cur) => (cur === id ? null : cur));
@@ -13179,7 +13337,12 @@ export default function DesignGlossy({
       {galleryOpen && (
         <div
           style={{
-            position: 'absolute',
+            // FIXED, NOT ABSOLUTE. `inset: 0` on an absolute box covers the nearest positioned
+            // ancestor, and that is the whole Studio — which is several screens tall. So the panel's
+            // maxHeight of 90% meant 90% of the PAGE, and its bottom (the storage note, Clear all,
+            // and now the export bar) sat below the fold with no way to scroll to it: the modal
+            // itself was the thing that had run off the screen, not its contents.
+            position: 'fixed',
             inset: 0,
             zIndex: 50,
             display: 'flex',
@@ -13204,9 +13367,24 @@ export default function DesignGlossy({
             }}
           >
             <div style={{ padding: '12px 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, borderBottom: '1px solid #E2D8C4' }}>
-              <span style={{ fontSize: 14, fontWeight: 700, color: '#9E5C08' }}>🖼 {formatDesignTranslation(t('designGlossySavedMaps'), { count: gallery.length })}</span>
+              <span style={{ fontSize: 14, fontWeight: 700, color: '#9E5C08' }}>
+                {exportMode
+                  ? `${exportSel.size} selected`
+                  : `🖼 ${formatDesignTranslation(t('designGlossySavedMaps'), { count: gallery.length })}`}
+              </span>
+              {!galleryViewItem && gallery.length > 0 && (
+                <button
+                  onClick={() => {
+                    setExportMode((on) => !on);
+                    setExportSel(new Set());
+                  }}
+                  style={{ marginLeft: 'auto', padding: '5px 11px', borderRadius: 9, background: exportMode ? GREEN : '#EDE7DB', border: `1px solid ${exportMode ? GREEN : '#E2D8C4'}`, color: exportMode ? PAPER : '#5C5040', fontWeight: 700, fontSize: 12, cursor: 'pointer', whiteSpace: 'nowrap' }}
+                >
+                  {exportMode ? 'Cancel' : 'Select'}
+                </button>
+              )}
               <button
-                onClick={() => { setGalleryOpen(false); setGalleryViewId(null); setGalleryZoomOpen(false); }}
+                onClick={() => { setGalleryOpen(false); setGalleryViewId(null); setGalleryZoomOpen(false); setExportMode(false); setExportSel(new Set()); }}
                 aria-label={t('designGlossyCloseSaved')}
                 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: 28, height: 28, borderRadius: 8, background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#9A8268', cursor: 'pointer' }}
               >
@@ -13300,6 +13478,18 @@ export default function DesignGlossy({
                       >
                         <button
                           onClick={() => {
+                            // In select mode the tile PICKS instead of opening. One control, two
+                            // jobs, decided by the mode — rather than a second invisible hit area
+                            // over a 100px thumbnail, which on a phone is a coin toss.
+                            if (exportMode) {
+                              setExportSel((prev) => {
+                                const next = new Set(prev);
+                                if (next.has(g.id)) next.delete(g.id);
+                                else next.add(g.id);
+                                return next;
+                              });
+                              return;
+                            }
                             setGalleryViewId(g.id);
                             setGalleryZoomOpen(true);
                           }}
@@ -13308,10 +13498,15 @@ export default function DesignGlossy({
                           // reader users hit the same wall Rory did, with no thumbnail to fall
                           // back on, so the provenance goes in the label too — full words, not
                           // the chip's abbreviation.
-                          aria-label={formatDesignTranslation(t('designGlossyOpenResult'), {
-                            label: g.label,
-                            result: galleryResultBadge(g),
-                          })}
+                          aria-label={
+                            exportMode
+                              ? `${exportSel.has(g.id) ? 'Deselect' : 'Select'} ${g.label}`
+                              : formatDesignTranslation(t('designGlossyOpenResult'), {
+                                  label: g.label,
+                                  result: galleryResultBadge(g),
+                                })
+                          }
+                          aria-pressed={exportMode ? exportSel.has(g.id) : undefined}
                           style={{ position: 'absolute', inset: 0, padding: 0, border: 'none', background: 'transparent', cursor: 'pointer' }}
                         >
                           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -13329,17 +13524,100 @@ export default function DesignGlossy({
                             );
                           })()}
                           <span style={{ position: 'absolute', left: 0, right: 0, bottom: 0, fontSize: 9, padding: '2px 4px', background: 'rgba(20,16,10,0.6)', color: '#fff', textAlign: 'left', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{g.label}</span>
+                          {exportMode && (
+                            <span
+                              aria-hidden
+                              style={{ position: 'absolute', inset: 0, background: exportSel.has(g.id) ? 'rgba(47,109,58,0.32)' : 'rgba(20,16,10,0.18)', pointerEvents: 'none' }}
+                            />
+                          )}
                         </button>
-                        <button
-                          onClick={() => removeGallery(g.id)}
-                          aria-label={formatDesignTranslation(t('designGlossyDeleteNamed'), { label: g.label })}
-                          style={{ position: 'absolute', top: 4, right: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', width: 26, height: 26, borderRadius: 8, background: 'rgba(181,58,58,0.92)', border: '1px solid rgba(255,255,255,0.35)', color: '#fff', cursor: 'pointer', boxShadow: '0 1px 4px rgba(20,16,10,0.4)' }}
-                        >
-                          <Trash2 size={13} />
-                        </button>
+                        {/* The tick sits where the delete button was, so the corner a farmer
+                            already reaches for is the corner that answers in select mode. */}
+                        {exportMode ? (
+                          <span
+                            aria-hidden
+                            style={{ position: 'absolute', top: 4, right: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', width: 26, height: 26, borderRadius: 999, background: exportSel.has(g.id) ? GREEN : 'rgba(255,253,244,0.85)', border: `2px solid ${exportSel.has(g.id) ? PAPER : 'rgba(92,80,64,0.5)'}`, color: PAPER, boxShadow: '0 1px 4px rgba(20,16,10,0.4)', pointerEvents: 'none' }}
+                          >
+                            {exportSel.has(g.id) && <Check size={14} strokeWidth={3.5} />}
+                          </span>
+                        ) : (
+                          <button
+                            onClick={() => removeGallery(g.id)}
+                            aria-label={formatDesignTranslation(t('designGlossyDeleteNamed'), { label: g.label })}
+                            style={{ position: 'absolute', top: 4, right: 4, display: 'flex', alignItems: 'center', justifyContent: 'center', width: 26, height: 26, borderRadius: 8, background: 'rgba(181,58,58,0.92)', border: '1px solid rgba(255,255,255,0.35)', color: '#fff', cursor: 'pointer', boxShadow: '0 1px 4px rgba(20,16,10,0.4)' }}
+                          >
+                            <Trash2 size={13} />
+                          </button>
+                        )}
                       </div>
                     ))}
                   </div>
+                  {exportMode && (
+                    // STICKY, because the grid is as long as the farmer's history. With 30-odd
+                    // saved sheets the controls sat below all of them: pick two tiles at the top,
+                    // then scroll past everything you did not pick to find Download. The bar is
+                    // the point of the mode, so it stays on screen for as long as the mode does.
+                    <div style={{ position: 'sticky', bottom: 0, zIndex: 1, display: 'flex', flexDirection: 'column', gap: 9, padding: 11, borderRadius: 12, background: '#F4EEE1', border: '1px solid #E2D8C4', boxShadow: '0 -6px 18px rgba(20,16,10,0.13)' }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+                        <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: '0.05em', color: '#8A7B64', textTransform: 'uppercase' }}>Format</span>
+                        {(['jpeg', 'png', 'pdf'] as const).map((f) => (
+                          <button
+                            key={f}
+                            onClick={() => setExportFormat(f)}
+                            aria-pressed={exportFormat === f}
+                            style={{ padding: '5px 11px', borderRadius: 999, background: exportFormat === f ? DARK : PAPER, border: `1px solid ${exportFormat === f ? DARK : '#E2D8C4'}`, color: exportFormat === f ? PAPER : '#5C5040', fontWeight: 700, fontSize: 12, cursor: 'pointer' }}
+                          >
+                            {f === 'jpeg' ? 'JPEG' : f === 'png' ? 'PNG' : 'PDF'}
+                          </button>
+                        ))}
+                        <span style={{ fontSize: 10.5, color: '#8A7B64' }}>
+                          {/* Says what the choice DOES, because "PDF" only means "one file" to
+                              someone who already knows that, and it is the whole reason to pick it. */}
+                          {exportFormat === 'pdf'
+                            ? exportSel.size > 1 ? `all ${exportSel.size} sheets in one file` : 'one document'
+                            : exportFormat === 'png' ? 'lossless — bigger files' : 'smallest — best for WhatsApp'}
+                        </span>
+                      </div>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
+                        <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: '0.05em', color: '#8A7B64', textTransform: 'uppercase' }}>Quality</span>
+                        {(['high', 'medium', 'low'] as const).map((q) => (
+                          <button
+                            key={q}
+                            onClick={() => setExportQuality(q)}
+                            aria-pressed={exportQuality === q}
+                            style={{ padding: '5px 11px', borderRadius: 999, background: exportQuality === q ? DARK : PAPER, border: `1px solid ${exportQuality === q ? DARK : '#E2D8C4'}`, color: exportQuality === q ? PAPER : '#5C5040', fontWeight: 700, fontSize: 12, cursor: 'pointer' }}
+                          >
+                            {SHEET_EXPORT_PROFILES[q].label}
+                          </button>
+                        ))}
+                        <span style={{ fontSize: 10.5, color: '#8A7B64' }}>{SHEET_EXPORT_PROFILES[exportQuality].hint}</span>
+                      </div>
+                      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                        <button
+                          onClick={() => void exportSelection('download')}
+                          disabled={exportSel.size === 0 || exportBusy}
+                          style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '8px 14px', borderRadius: 12, background: exportSel.size && !exportBusy ? GREEN : '#CFC6B4', color: PAPER, border: 'none', fontWeight: 700, fontSize: 13, cursor: exportSel.size && !exportBusy ? 'pointer' : 'default' }}
+                        >
+                          <Download size={15} /> {exportBusy ? 'Preparing…' : `Download${exportSel.size ? ` (${exportSel.size})` : ''}`}
+                        </button>
+                        {typeof navigator !== 'undefined' && 'share' in navigator && (
+                          <button
+                            onClick={() => void exportSelection('share')}
+                            disabled={exportSel.size === 0 || exportBusy}
+                            style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '8px 14px', borderRadius: 12, background: 'transparent', border: `2px solid ${exportSel.size && !exportBusy ? GREEN : '#CFC6B4'}`, color: exportSel.size && !exportBusy ? GREEN : '#9A8268', fontWeight: 700, fontSize: 13, cursor: exportSel.size && !exportBusy ? 'pointer' : 'default' }}
+                          >
+                            <Share2 size={15} /> {t('designShare')}
+                          </button>
+                        )}
+                        <button
+                          onClick={() => setExportSel(new Set(exportSel.size === gallery.length ? [] : gallery.map((g) => g.id)))}
+                          style={{ marginLeft: 'auto', padding: '8px 12px', borderRadius: 12, background: '#EDE7DB', border: '1px solid #E2D8C4', color: '#5C5040', fontWeight: 700, fontSize: 12, cursor: 'pointer', whiteSpace: 'nowrap' }}
+                        >
+                          {exportSel.size === gallery.length ? 'Select none' : 'Select all'}
+                        </button>
+                      </div>
+                    </div>
+                  )}
                   <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
                     <p style={{ fontSize: 10, color: storageWarning ? '#B53A3A' : '#9A8268', margin: 0 }}>
                       {storageWarning ?? t('designGlossySavedOnDevice')}

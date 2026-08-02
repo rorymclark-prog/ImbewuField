@@ -40,8 +40,14 @@ export const SHEET_EXPORT_PROFILES: Readonly<Record<SheetExportQuality, SheetExp
 };
 
 /** PDF carries a whole set in one file; the image formats produce one file per sheet. This is the
- *  difference that decides whether "download 6" means one download or six. */
-export function isMultiSheetFormat(format: SheetExportFormat): boolean {
+ *  difference that decides whether "download 6" means one download or six.
+ *
+ *  Written as a type predicate so that a caller which handles the PDF branch and returns is left
+ *  holding an image format the compiler agrees is an image format — the encoder below cannot accept
+ *  'pdf', and this is what makes that unrepresentable at the call site rather than a runtime check. */
+export function isMultiSheetFormat(
+  format: SheetExportFormat,
+): format is Extract<SheetExportFormat, 'pdf'> {
   return format === 'pdf';
 }
 
