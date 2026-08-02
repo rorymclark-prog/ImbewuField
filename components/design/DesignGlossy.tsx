@@ -76,7 +76,7 @@ import {
   legendMaxFontSize,
   legendRowFontSize,
 } from '@/lib/sheet-legend-layout';
-import { SHEET_BASE_MUTE_STYLE, type SheetBaseMute } from '@/lib/sheet-base-mute';
+import { SHEET_BASE_MUTE_STYLE, SHEET_STRUCTURE_MUTE_STYLE, type SheetBaseMute } from '@/lib/sheet-base-mute';
 import {
   bedCropRows,
   cropGlyphFor,
@@ -1772,44 +1772,51 @@ function buildZoneOverlay(
         ctx.closePath();
       }
     }
-    // A WHISPER OF A WASH, because the HATCH is now carrying the colour.
+    // A ZONE IS A FLAT TRANSLUCENT COLOUR. NOT HATCHED. Rory has now said this twice — "in the
+    // case of zones it must be a translucent colour you can control with a slider", and, looking
+    // at a ruled Zones sheet, "I don't like hatching for zones" — and the second time was because
+    // of a decision made here, not a misunderstanding of the first.
     //
-    // Hatching was added on top of the old 24% wash, and the two together closed the zone up into
-    // a solid slab — Rory, on that render: "can you audit whether hatching is best, I have a
-    // feeling not, it would be good here to see a bit more what's underneath the polygons."
+    // What happened is worth keeping, because it is this file's documented failure mode wearing a
+    // new coat. The rule "a hatch REPLACES a fill rather than stacking on it" is correct, and it
+    // was the right fix for the ground surfaces — driveway, patio, cleared ground — where ruling
+    // says "hard surface" in the same language a site plan already uses. It was then applied to
+    // every ruled area at once, zones included, which quietly overrode a direct instruction about
+    // one specific layer with a general principle about another. General rules do not get to
+    // outvote the farmer on the sheet he actually looked at.
     //
-    // Hatching IS the right technique here; the mistake was stacking it. In cartography a ruled
-    // fill REPLACES a solid one rather than joining it — the whole point of ruling an area is that
-    // the ground shows through between the lines, which is what lets a reader see the orchard, the
-    // roof or the bare soil a zone has been drawn over while still reading the zone. A tint this
-    // light only keeps the area from looking hollow where the hatch lines are far apart.
-    ctx.fillStyle = `${def.color}16`;
+    // Zones are also the wrong candidate for ruling on the merits. Ruling is a CATEGORY symbol —
+    // it separates kinds of surface. Zones are an ORDERED SERIES, 0 out to 5, and the thing a
+    // reader needs from them is sequence, which colour carries and line-spacing does not. Six
+    // ruled fills over an aerial photograph read as one texture with six tints in it.
+    ctx.save();
+    ctx.globalAlpha = 0.3;
+    ctx.fillStyle = def.color;
     ctx.fill('evenodd'); // outer + hole rings in one path → real holes
-    // HATCH THE FILL, because the legend swatch has always been hatched and the map never was.
-    // That is this file's own stated rule — a swatch must look like the thing on the map — broken
-    // on the one sheet whose entire job is telling zones apart. Rory, on a real render: "you have
-    // hatched (lines) the zones here, don't just keep them as polygon fills."
+    ctx.restore();
+    // IDENTITY LIVES AT THE EDGE, so the middle can stay see-through.
     //
-    // It is also the second identity channel. A 24%-alpha wash over an aerial photograph inherits
-    // whatever is underneath it; ruled lines have their own geometry, so they survive the busy
-    // ground, greyscale printing and colour blindness alike. Same direction and rhythm as the
-    // swatch in drawStyleLegendSymbol — if you change one, change both.
+    // A flat tint strong enough to name its colour across a whole paddock is also strong enough to
+    // hide the ground under it, and the ground is the thing Rory asked to see. Planning-designation
+    // maps solve exactly this with a graduated edge: a saturated band just inside the boundary,
+    // falling away to a light wash in the middle. The band is where zones meet, which is where a
+    // reader compares them, so the colour is at its strongest precisely where the comparison is
+    // made — and the centre of a zone, where nothing needs comparing, is the clearest ground on
+    // the sheet.
+    //
+    // Drawn by stroking the zone's own outline inside a clip of itself: half the stroke falls
+    // outside the shape and is discarded, so a 2-pass stroke becomes a band that follows every
+    // corner and hole without any offset geometry to get wrong.
     ctx.save();
     ctx.clip('evenodd');
-    // Wider spacing and a lighter casing than the first attempt: the gap between the rules is the
-    // part that shows the farmer their own ground, so it has to be a real gap, not a seam.
-    const hatchStep = Math.max(13, W * 0.017);
-    for (const [stroke, width] of [
-      ['rgba(252,250,240,0.34)', Math.max(2.4, W * 0.0026)] as const,
-      [`${def.color}E0`, Math.max(1.6, W * 0.0019)] as const,
+    ctx.lineJoin = 'round';
+    ctx.strokeStyle = def.color;
+    for (const [alpha, width] of [
+      [0.3, Math.max(14, W * 0.028)] as const,
+      [0.42, Math.max(7, W * 0.013)] as const,
     ]) {
-      ctx.strokeStyle = stroke;
+      ctx.globalAlpha = alpha;
       ctx.lineWidth = width;
-      ctx.beginPath();
-      for (let d = 0; d < W + H; d += hatchStep) {
-        ctx.moveTo(d, 0);
-        ctx.lineTo(d - H, H);
-      }
       ctx.stroke();
     }
     ctx.restore();
@@ -2632,6 +2639,36 @@ function roundRectPath(ctx: CanvasRenderingContext2D, x: number, y: number, w: n
 // NB: there is deliberately no north-arrow helper. Despite the sheet anatomy listing one, the
 // Blueprint sheets have never drawn a north arrow — only composeStyleSheet does. Adding one here
 // would change the zone/water sheets, which this refactor must not do. Left as a known gap.
+
+/**
+ * Push a traced-building photo cutout back into the sheet's tonal range.
+ *
+ * The veil has to be confined to the cutout's own pixels — it is a transparent PNG with a building
+ * shape in it, and a veil painted straight onto the sheet would wash everything already drawn.
+ * `source-atop` on an offscreen canvas does exactly that: it paints only where the cutout is
+ * already opaque, and leaves the rest transparent for the caller to draw through.
+ *
+ * See SHEET_STRUCTURE_MUTE_STYLE for why a building takes different values from its ground.
+ */
+async function muteStructureCutout(
+  cutout: CanvasImageSource,
+  W: number,
+  H: number,
+): Promise<HTMLCanvasElement> {
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return canvas;
+  if ('filter' in ctx) ctx.filter = SHEET_STRUCTURE_MUTE_STYLE.filter;
+  ctx.drawImage(cutout, 0, 0, W, H);
+  if ('filter' in ctx) ctx.filter = 'none';
+  ctx.globalCompositeOperation = 'source-atop';
+  ctx.fillStyle = SHEET_STRUCTURE_MUTE_STYLE.veil;
+  ctx.fillRect(0, 0, W, H);
+  ctx.globalCompositeOperation = 'source-over';
+  return canvas;
+}
 
 /** Satellite base + a restrained blueprint scrim that keeps labels legible without drowning the map. */
 async function drawBlueprintBase(
@@ -6087,9 +6124,20 @@ async function buildReferenceBlueprintMap(
     // The gentler 'site' mute, not the design one: a building is the most recognisable thing on a
     // farmer's own plot and the anchor they orient everything else from. It should sit in the same
     // tonal world as the muted ground without being bleached into it.
+    //
+    // THE VEIL HAD TO BE APPLIED THROUGH THE CUTOUT, NOT UNDER IT. Filtering alone left the
+    // building outside the sheet's tonal range on any site with dark roofs — see
+    // SHEET_STRUCTURE_MUTE_STYLE. It is composited offscreen because the veil must land on the
+    // building's own pixels and nothing else: painting it straight onto `ctx` would wash the ground,
+    // the boundary and every mark already drawn underneath.
     ctx.save();
-    if ('filter' in ctx) ctx.filter = SHEET_BASE_MUTE_STYLE.site.filter;
-    ctx.drawImage(await loadImage(sourceStructures), 0, 0, W, H);
+    ctx.drawImage(
+      await muteStructureCutout(await loadImage(sourceStructures), W, H),
+      0,
+      0,
+      W,
+      H,
+    );
     ctx.restore();
   } else {
     const px = (n: number) => n * W;
@@ -8647,20 +8695,29 @@ function drawStyleLegendSymbol(
   }
 
   ctx.save();
-  const ruledArea = row.kind === 'zone' || row.kind === 'ground';
-  roundRectPath(ctx, x, y - h * 0.34, w, h * 0.68, Math.max(2, h * 0.08));
+  // A SWATCH MUST LOOK LIKE THE THING ON THE MAP. That is this file's rule and it is the only
+  // reason these two branches differ.
+  //
+  // GROUND surfaces — driveway, patio, cleared ground — are ruled on the map, because ruling is
+  // how a site plan says "hard surface", so their chips are ruled too.
+  //
+  // ZONES are a flat translucent colour with a stronger band at the edge (buildZoneOverlay), so
+  // their chips are that. They were ruled here, and stayed ruled after the map stopped being —
+  // which is exactly the "two systems answering one question" drift this codebase keeps finding:
+  // the swatch and the map are two descriptions of one symbol, and only one of them got updated.
+  const ruledArea = row.kind === 'ground';
+  const zoneArea = row.kind === 'zone';
+  const swatchTop = y - h * 0.34;
+  const swatchH = h * 0.68;
+  const swatchR = Math.max(2, h * 0.08);
+  roundRectPath(ctx, x, swatchTop, w, swatchH, swatchR);
   ctx.fillStyle = row.swatch;
-  // A RULED AREA'S SWATCH IS RULED, NOT SOLID. The map draws these as a faint tint under coloured
-  // rules so the ground shows between them; a solid 72% chip beside that is a different symbol,
-  // and this sheet's own rule is that a swatch must look like the thing on the map. Same tint,
-  // same rule colour, same 45-degree direction — only the spacing is tighter, because the chip is
-  // a fraction of the width of the area it stands for and needs a few rules to read as ruled.
-  ctx.globalAlpha = ruledArea ? 0.14 : 0.9;
+  ctx.globalAlpha = ruledArea ? 0.14 : zoneArea ? 0.3 : 0.9;
   ctx.fill();
   ctx.globalAlpha = 1;
   if (ruledArea) {
     ctx.save();
-    roundRectPath(ctx, x, y - h * 0.34, w, h * 0.68, Math.max(2, h * 0.08));
+    roundRectPath(ctx, x, swatchTop, w, swatchH, swatchR);
     ctx.clip();
     ctx.strokeStyle = row.swatch;
     ctx.lineWidth = Math.max(1.1, h * 0.055);
@@ -8668,10 +8725,23 @@ function drawStyleLegendSymbol(
       ctx.beginPath(); ctx.moveTo(x + d, y - h / 2); ctx.lineTo(x + d - h, y + h / 2); ctx.stroke();
     }
     ctx.restore();
+  } else if (zoneArea) {
+    // The map's edge band, at chip scale: stroked inside a clip of the chip so only the inner half
+    // lands, same as buildZoneOverlay does around a real zone.
+    ctx.save();
+    roundRectPath(ctx, x, swatchTop, w, swatchH, swatchR);
+    ctx.clip();
+    roundRectPath(ctx, x, swatchTop, w, swatchH, swatchR);
+    ctx.strokeStyle = row.swatch;
+    ctx.globalAlpha = 0.42;
+    ctx.lineWidth = Math.max(3, swatchH * 0.34);
+    ctx.stroke();
+    ctx.globalAlpha = 1;
+    ctx.restore();
   }
-  roundRectPath(ctx, x, y - h * 0.34, w, h * 0.68, Math.max(2, h * 0.08));
-  ctx.strokeStyle = ruledArea ? row.swatch : 'rgba(32,25,15,0.38)';
-  ctx.lineWidth = ruledArea ? Math.max(1.4, h * 0.06) : 1;
+  roundRectPath(ctx, x, swatchTop, w, swatchH, swatchR);
+  ctx.strokeStyle = ruledArea || zoneArea ? row.swatch : 'rgba(32,25,15,0.38)';
+  ctx.lineWidth = ruledArea || zoneArea ? Math.max(1.4, h * 0.06) : 1;
   ctx.stroke();
   ctx.restore();
 }

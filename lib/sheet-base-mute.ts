@@ -59,6 +59,30 @@ export const SHEET_BASE_MUTE_STYLE: Readonly<Record<SheetBaseMute, SheetBaseMute
 };
 
 /**
+ * How a traced BUILDING is pushed back — which is a different problem from the ground it sits on.
+ *
+ * A building on a design sheet is not painted; it is a cutout of the SAME photograph as the base,
+ * restored so the roof stays sharp while everything around it is muted. That is the right idea and
+ * it had a hole in it: the base got a filter AND a paper veil, the cutout got the filter only. On a
+ * site whose roofs photograph dark — corrugated iron in shadow, which is most of rural KwaZulu-Natal
+ * — the result is a black slab sitting in a pale sheet, the loudest thing on a page where it is
+ * only context. On the Zones sheet it was reading as the subject.
+ *
+ * Two changes close it. The veil now applies to the cutout as well, so the building lands in the
+ * same tonal world as its ground rather than beside it. And the brightness lift is larger than the
+ * base's, because the failure is asymmetric: a light roof that goes slightly lighter still reads,
+ * a dark roof that stays dark becomes a hole. Saturation stays higher than the ground's so the
+ * building is still the most DEFINITE object on the sheet — which was the original intent — it just
+ * is not the darkest one any more.
+ *
+ * Still photograph, still nothing moved: brightness and saturation only.
+ */
+export const SHEET_STRUCTURE_MUTE_STYLE: SheetBaseMuteStyle = {
+  filter: 'saturate(0.7) brightness(1.2) contrast(0.92)',
+  veil: 'rgba(246, 241, 227, 0.2)',
+};
+
+/**
  * Which mute a finished sheet takes.
  *
  * Two sheets pass their level explicitly rather than a filter, because neither is an AI-rendered
