@@ -7904,7 +7904,15 @@ export async function buildImplementationMap(
   const naSize = Math.max(30, Math.round(mapW * 0.026));
   drawImplNorthArrow(ctx, lgX - pad - naSize * 0.6, H - pad - naSize * 0.6, naSize);
 
-  return canvas.toDataURL('image/png');
+  // ONE PAPER SIZE FOR THE WHOLE SET. Sheet 09 builds its own canvas and returns it directly rather
+  // than going through composeStyleSheet, so it was the only sheet that never reached the paper
+  // step: eight sheets came out at the A-series 1.414 and this one at 1.985. A plan set is bound,
+  // printed and read as one document, and a sheet that is a different shape from its siblings
+  // announces itself as an afterthought before anyone has read a word of it.
+  //
+  // padToPaperSheet only ever ADDS margin around a finished sheet, so nothing here moves relative
+  // to anything else and nothing can be clipped.
+  return padToPaperSheet(canvas);
 }
 
 // Legend rows for a Style sheet — the real design content on this layer (zones, grouped
