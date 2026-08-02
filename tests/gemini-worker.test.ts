@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert';
-import { geminiEdit } from '../functions/src/gemini.ts';
+import { geminiEdit, GEMINI_IMAGE_MODELS } from '../functions/src/gemini.ts';
 
 test('geminiEdit sends the correct shape and strict prompt', async (t) => {
   let fetchCall: any;
@@ -32,7 +32,15 @@ test('geminiEdit sends the correct shape and strict prompt', async (t) => {
     assert.equal(res, 'dummyb64');
 
     assert.ok(fetchCall, 'fetch was called');
-    assert.equal(fetchCall.url, 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=fake_key');
+    // The worker asks an IMAGE model for an image. It used to ask gemini-2.5-flash, a text model,
+    // for responseModalities:["IMAGE"] — a call that cannot succeed, and whose failure is
+    // indistinguishable from a bad key or an outage. This test pinned that mistake in place, so it
+    // now pins the opposite: whatever model id is used here must be one of the image models.
+    assert.equal(fetchCall.url, 'https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-image:generateContent?key=fake_key');
+    assert.ok(
+      Object.values(GEMINI_IMAGE_MODELS).some((id) => fetchCall.url.includes(`/models/${id}:`)),
+      'the worker must call a Gemini model that can return an image',
+    );
     assert.equal(fetchCall.init.method, 'POST');
     
     const body = JSON.parse(fetchCall.init.body);
