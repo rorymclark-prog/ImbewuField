@@ -5,11 +5,28 @@ name: Deploy Cloud Functions
 # branch via the Actions tab ("Run workflow") — that path exists so a stale
 # worker allow-list can be fixed from a phone, with no laptop involved.
 #
+# THIS JOB FAILS WHEN IT CANNOT DEPLOY. It used to warn and skip, and every
+# skipped run reported success: eight green "Deploy Cloud Functions ✓" ticks,
+# 13–23 seconds each, deploying nothing. Meanwhile the live worker sat on the
+# 2026-07-24 build for nine days while ten commits to functions/ piled up in
+# main — including the one that taught it the 'implementation' key. Phasing AI
+# renders came back "unknown sheet" and read as an app bug, because the green
+# tick said the worker was current. A red X that means "your worker is stale"
+# is worth more than a green one that means nothing, so a missing credential is
+# now a failure, not a warning.
+#
 # Needs ONE repo secret: FIREBASE_SERVICE_ACCOUNT — the full JSON key of a
 # Google Cloud service account on project fieldproof-sa with roles
-# "Editor" + "Service Account User". The workflow skips with a warning until
-# the secret exists. The OpenAI key is NOT needed here: it already lives in
-# Secret Manager and deploys bind to it by name.
+# "Editor" + "Service Account User".
+#
+# SECOND PREREQUISITE, and it is not optional: every secret named in a
+# defineSecret() call must already exist in Secret Manager on fieldproof-sa,
+# because deploys bind them by name. runRenderJob declares OPENAI_API_KEY
+# (exists) and GEMINI_API_KEY (does NOT exist as of 2026-08-02). Until someone
+# creates GEMINI_API_KEY, this deploy fails — and it takes the whole worker
+# down with it, including sheets that have nothing to do with Gemini. A dormant
+# feature must not hold the bundle hostage: either create the secret or drop it
+# from the secrets: array in functions/src/index.ts.
 
 on:
   push:
@@ -31,26 +48,30 @@ jobs:
       - name: Check credential
         run: |
           if [ -z "$FIREBASE_SERVICE_ACCOUNT" ]; then
-            echo "::warning::Add the FIREBASE_SERVICE_ACCOUNT secret (service-account JSON for fieldproof-sa) to enable functions auto-deploy."
-            echo "HAS=false" >> "$GITHUB_ENV"
-          else
-            echo "HAS=true" >> "$GITHUB_ENV"
+            {
+              echo "## The render worker was NOT deployed"
+              echo
+              echo "\`FIREBASE_SERVICE_ACCOUNT\` is not set on this repository, so production is"
+              echo "still running whatever build was last pushed by hand — not the code on main."
+              echo
+              echo "Fix: add a repo secret \`FIREBASE_SERVICE_ACCOUNT\` containing the full JSON"
+              echo "key of a service account on project \`fieldproof-sa\` with roles **Editor**"
+              echo "and **Service Account User**, then re-run this workflow."
+            } >> "$GITHUB_STEP_SUMMARY"
+            echo "::error::FIREBASE_SERVICE_ACCOUNT is not set — the render worker was NOT deployed and production is running a stale build."
+            exit 1
           fi
       - uses: actions/setup-node@v4
-        if: env.HAS == 'true'
         with:
           node-version: '20'
       - name: Write credential file
-        if: env.HAS == 'true'
         run: printf '%s' "$FIREBASE_SERVICE_ACCOUNT" > "$RUNNER_TEMP/sa.json"
       - name: Build functions
-        if: env.HAS == 'true'
         working-directory: functions
         run: |
           npm ci
           npm run build
       - name: Deploy
-        if: env.HAS == 'true'
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/sa.json
         run: npx firebase-tools@latest deploy --only functions --project fieldproof-sa --non-interactive --force
