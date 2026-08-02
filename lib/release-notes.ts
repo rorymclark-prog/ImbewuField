@@ -13,12 +13,51 @@ export interface ReleaseNote {
   /** Short human date — no clock time; the farmer only needs the ordering. */
   when: string;
   changes: string[];
+  /**
+   * The newest commit this entry covers.
+   *
+   * WHY A SHA IS IN A FARMER-FACING FILE. This list is written by hand, and on 2026-08-02 Rory
+   * reported the banner "keeps showing me old updates not the new ones". Nothing was broken: the
+   * banner faithfully renders the newest notes it has, and the newest notes were from 1 August
+   * while FIFTY-FIVE commits touching app/, components/ and lib/ had landed since — a whole day
+   * of money bugs, sheet fixes and a Mentor privilege hole, none of it written down. A build
+   * number that moves while the notes stand still is worse than no notes, because it tells the
+   * farmer these ARE the changes.
+   *
+   * So each entry records where it was written from, and `npm run notes:pending` lists what has
+   * shipped since. The drift is now a question anyone can ask in one command instead of something
+   * you notice weeks later from a screenshot.
+   */
+  sha?: string;
 }
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '2 August',
+    sha: 'a6d035f',
+    changes: [
+      'Plan sheets fill the whole page now — the blank border is real aerial photo instead',
+      'Money: one sale could be counted twice, and the app pushed you into doing it',
+      'Money: with no signal the app showed R0 as if it were true, and offered to write it in',
+      'Clearing a crop price no longer wipes that crop\'s income for good',
+      'Invoices: 12.5 kg was billed as 12 kg, and a save that failed still printed',
+      'Only invited mentors can see your farm — signing up as one no longer works',
+      'The bill of quantities stops charging you for things already standing on your land',
+      'Save several sheets at once: pick the format and size, then download or share',
+      'Zones are flat colour you can tell apart, and your buildings are no longer black holes',
+      'Water sheet shows where rain runs on the ground, separately from where it runs off a roof',
+      'Earthworks 05: what you dig now appears on the sheet that tells you to dig it',
+      'The legend says which parts of the plan are already there and which are still to build',
+      'Map callouts sit on their own plaque, and merge when crowded instead of vanishing',
+      'Nothing on a sheet with a scale bar is drawn bigger than it really is',
+      'Printed PDFs use the same renderer as the screen — that is why fixes kept missing paper',
+      'Trees in the examples are drawn as trees; the artwork was never being loaded',
+    ],
+  },
+  {
     when: '1 August',
+    sha: '1ec415e',
     changes: [
       'NEW: Earthworks is its own step — swales, berms and terraces have their own place',
       'NEW: a Staple garden — mielies, beans and pumpkin grow there on the AI maps',
