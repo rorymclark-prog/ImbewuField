@@ -24,6 +24,8 @@
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
+import { hasNarrationBlocker } from '../lib/narration-blockers.ts';
+
 const ROOT = new URL('..', import.meta.url).pathname;
 const TODO_ONLY = process.argv.includes('--todo');
 
@@ -55,7 +57,10 @@ function scriptBlocks(moduleId, lang) {
   const text = readFileSync(path, 'utf8');
   return {
     blocks: (text.match(SLIDE_HEADING) || []).length,
-    draft: /DRAFT FOR HUMAN REVIEW|NOT SHIPPABLE/i.test(text),
+    // Shared with tests/narration-scripts.test.ts. These used to be two different lists, and
+    // the board printed "isiZulu script reviewed" for seven drafts the test was correctly
+    // refusing to release.
+    draft: hasNarrationBlocker(text),
   };
 }
 

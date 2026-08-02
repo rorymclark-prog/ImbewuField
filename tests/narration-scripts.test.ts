@@ -4,6 +4,7 @@ import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 import { COURSE_NARRATION } from '@/lib/course-audio';
+import { NARRATION_BLOCKER_MARKERS } from '@/lib/narration-blockers';
 
 // A NARRATION SCRIPT IS READ ALOUD TO A FARMER AS INSTRUCTION. Whatever is in the file is what
 // they hear, so the file's contents are a safety surface, not just content.
@@ -30,12 +31,10 @@ const DIR = join(process.cwd(), 'docs/narration');
 const SCRIPTS = readdirSync(DIR).filter((f) => f.endsWith('.md'));
 
 /** Phrases a script uses to say, in its own words, that it is not ready. */
-const BLOCKER_MARKERS = [
-  /TERMS NEEDING REVIEW/i,
-  /draft translation only/i,
-  /Notes for the Human Reviewer/i,
-  /before this script goes anywhere near a learner/i,
-];
+// Shared with scripts/course-status.mjs. This list used to live here alone, and the production
+// board carried a DIFFERENT one — so the board printed "isiZulu script reviewed, not yet recorded"
+// for seven drafts this test was correctly refusing to release.
+const BLOCKER_MARKERS = NARRATION_BLOCKER_MARKERS;
 
 interface Script { file: string; moduleId: string; lang: string; text: string; }
 
