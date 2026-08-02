@@ -56,14 +56,15 @@ jobs:
       # installed here rather than added to package.json: it is a ~100 MB tool used by one CI step
       # and by Rory locally, and putting it in devDependencies would tax every `npm ci` in every
       # other workflow for it. Pinned, because an unpinned global install is a build that changes
-      # under you.
+      # under you. Pinned to the SAME major Rory runs locally (15) so a rules change that passes on
+      # his machine cannot fail here for a reason that is only a CLI version.
       - uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
 
       - name: Install Firebase CLI
-        run: npm i -g firebase-tools@14
+        run: npm i -g firebase-tools@15
 
       - name: Firestore rules
         run: npm run test:rules
