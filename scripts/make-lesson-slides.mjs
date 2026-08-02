@@ -77,6 +77,10 @@ slides.forEach((s, i) => {
   const end = i + 1 < slides.length ? slides[i + 1].head : raw.length;
   s.body = raw
     .slice(s.start, end)
+    // Stop at an appendix. A reviewer appendix sits under its own '## ' heading after the last
+    // slide, and the last block runs to end-of-file — so the final slide would otherwise bullet
+    // the reviewer's notes.
+    .split(/^#{1,6}\s/m)[0]
     .replace(/\[pause\]/gi, '')
     .replace(/^---\s*$/gm, '')
     .split('\n')

@@ -66,9 +66,13 @@ function parse(raw) {
     // What is actually SPOKEN: no stage directions, no rules, no headings, no markdown emphasis.
     s.text = raw
       .slice(s.start, end)
+      // STOP AT AN APPENDIX. A reviewer appendix lives under its own '## ' heading AFTER the last
+      // slide, and the last block runs to end-of-file — so without this the final clip is the
+      // whole appendix read aloud. That is not hypothetical: vegetables-staples.zu.md's glossary
+      // sat there and made block 18 thirteen times its English length.
+      .split(/^#{1,6}\s/m)[0]
       .replace(/\[pause\]/gi, '')
       .replace(/^---\s*$/gm, '')
-      .replace(/^#{1,6}\s.*$/gm, '')
       .replace(/\*\*/g, '')
       .split('\n')
       .map((x) => x.trim())

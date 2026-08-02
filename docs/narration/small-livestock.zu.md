@@ -203,3 +203,40 @@ Lungisa umbhede ongenalutho ukuze wamukele izinkukhu ngemva kokuvuna, hlola inda
 Ungabeki izinkukhu eduze kwezithombo.
 
 Bhala ukuthi isilwane sidlani, sikhiqizani, nokuthi ipulazi lisinika ini ngokubuyisela.
+
+## Notes for the Human Reviewer
+
+**This is a draft translation only. It must be read by a first-language isiZulu speaker who
+farms before this script goes anywhere near a learner.** Nothing here has been reviewed by a
+person.
+
+It was written to match `docs/narration/small-livestock.en.md` slide for slide — 20 isiZulu blocks
+against 20 English ones — so the deck and the narration cannot drift apart.
+
+**The instruction was to BORROW, never to coin.** An earlier isiZulu draft in this course invented
+22 agronomic terms and is still blocked from recording because of it, so where no everyday isiZulu
+word exists the English word was kept and carried on an isiZulu noun-class prefix instead. Those
+borrowings are listed below — they are the first thing to check, because a borrowing that a farmer
+would not actually say out loud is the same failure as a coined term:
+
+- `ama-slug`
+- `i-chicken`
+- `i-compost`
+- `i-guinea`
+- `i-hive`
+- `i-split`
+- `i-super`
+- `i-understorey`
+- `ku-hive`
+- `ku-watermelon`
+
+Please also confirm:
+
+- The register is ordinary spoken farming isiZulu — the words a KwaZulu-Natal farmer uses aloud,
+  not written or academic isiZulu.
+- Every number and every plant or animal name matches the English script. Nothing was to be added,
+  and no species may be named that the English does not name.
+- Nothing addresses a room. The learner is alone on a phone; there is no group and no facilitator.
+
+When the review is done, correct the script and delete this appendix. Deleting the appendix without
+doing the review defeats the guard in `tests/narration-scripts.test.ts` that is holding this back.
