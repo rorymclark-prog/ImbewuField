@@ -7,6 +7,8 @@ import {
   calculatePhasingSheetSize,
   MAX_PRESENTATION_MAP_ASPECT,
   MAX_PRESENTATION_SHEET_ASPECT,
+  PAPER_SHEET_RATIO,
+  paperSheetCanvas,
 } from '@/lib/reference-presentation';
 
 const FRAME = { imgW: 960, imgH: 640, mPerPx: 0.4 };
@@ -130,4 +132,26 @@ test('a one-to-six plot can have a map over four-to-one while sheet 08 still sta
   assert.ok(sheet.mapH / sheet.mapW > 4);
   assert.ok(sheet.aspect <= MAX_PRESENTATION_SHEET_ASPECT);
   assert.ok(sheet.legendWidth >= 360);
+});
+
+test('every finished sheet is padded to A-series landscape, and padding only ever ADDS paper', () => {
+  // A2 landscape, on Rory's call. The ratio is what matters to a renderer working in pixels: a
+  // root-2 sheet drops onto A2, A3 or A4 with no re-layout.
+  for (const [w, h] of [[2496, 1280], [1600, 1600], [1200, 2400], [3000, 900], [1414, 1000]]) {
+    const paper = paperSheetCanvas(w, h);
+    assert.ok(paper.width >= w, `padding must never crop width (${w}x${h})`);
+    assert.ok(paper.height >= h, `padding must never crop height (${w}x${h})`);
+    assert.ok(
+      Math.abs(paper.width / paper.height - PAPER_SHEET_RATIO) < 0.005,
+      `${w}x${h} padded to ${paper.width}x${paper.height} is not A-series`,
+    );
+    assert.ok(paper.width > paper.height, 'landscape, not portrait');
+  }
+  // Degenerate input must not produce a zero or non-finite canvas — a sheet that cannot be drawn
+  // is worse than an unpadded one.
+  for (const [w, h] of [[0, 100], [100, 0], [Number.NaN, 100]]) {
+    const paper = paperSheetCanvas(w, h);
+    assert.ok(Number.isFinite(paper.width) && paper.width >= 1);
+    assert.ok(Number.isFinite(paper.height) && paper.height >= 1);
+  }
 });

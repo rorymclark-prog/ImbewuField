@@ -222,3 +222,34 @@ export function calculateBoundaryPresentationCrop(
 
   return { cropX, cropY, cropFraction };
 }
+
+/**
+ * ISO 216 ratio — 1:√2, shared by A0 through A6.
+ *
+ * THE PLAN SET PRINTS ON A2 LANDSCAPE. Rory: "don't you think maps should be standard A4 A3 A2
+ * proportions?", then "A2 ... in landscape of course." A2 is the standard large-format sheet a
+ * South African town print shop can produce, and it holds a nine-sheet set at a scale where a
+ * 1.2 m bed is still a readable object. The renderer works in pixels, so what matters here is the
+ * RATIO: a √2 sheet drops onto A2, A3 or A4 paper with no re-layout.
+ *
+ * HOW IT IS APPLIED MATTERS, and the first attempt got it wrong. Forcing the ratio through the MAP
+ * viewport — making the map whatever shape leaves the sheet at √2 — trips the layout's "the crop
+ * must fit inside the source image" guard on some farms, which returns null and silently drops the
+ * sheet back to an unframed fallback. That trades a regression for a ratio. The paper is added as
+ * MARGIN around the finished sheet instead: metres-per-pixel, the boundary framing and every saved
+ * coordinate are untouched, and the surplus is a clean paper border — which is what a printed plan
+ * has anyway.
+ */
+export const PAPER_SHEET_RATIO = Math.SQRT2;
+
+/** The canvas a finished sheet must be padded to so it prints A-series landscape. Never smaller
+ *  than the sheet itself: this only ever ADDS paper, so nothing composed can be cropped by it. */
+export function paperSheetCanvas(width: number, height: number): { width: number; height: number } {
+  if (!Number.isFinite(width) || !Number.isFinite(height) || width <= 0 || height <= 0) {
+    return { width: Math.max(1, width || 1), height: Math.max(1, height || 1) };
+  }
+  const ratio = width / height;
+  if (ratio > PAPER_SHEET_RATIO) return { width, height: Math.round(width / PAPER_SHEET_RATIO) };
+  if (ratio < PAPER_SHEET_RATIO) return { width: Math.round(height * PAPER_SHEET_RATIO), height };
+  return { width, height };
+}

@@ -102,6 +102,7 @@ import { sheetRenderRoute, DEFAULT_PRODUCER_STYLE, type SheetSpec, type SheetRou
 import {
   calculateBoundaryPresentationLayout,
   calculatePhasingSheetSize,
+  paperSheetCanvas,
   styleSheetLegendWidth,
 } from '@/lib/reference-presentation';
 import { loadSheets, saveSheet, deleteSheet, clearSheets, type SheetProvider, type SheetResultKind } from '@/lib/sheet-store';
@@ -8679,6 +8680,39 @@ function drawStyleLegendSymbol(
 // scale bar + north arrow over the map — the layout of the reference plan sets (see
 // docs/PLAN-SET-SPEC.md). The Blueprint maps bake this in; the Style output never had it, which is
 // most of the visible gap vs ChatGPT's sheets. All drawn deterministically from the real design.
+/**
+ * Centre a finished sheet on A-series landscape paper.
+ *
+ * Pure addition: the composed sheet is drawn unchanged into a larger paper-coloured canvas, so no
+ * mark moves relative to any other mark and nothing can be clipped. Where the plot's shape does not
+ * match the paper the difference shows as margin, which is what the research on odd-shaped sites
+ * recommends over cropping the property or rotating the sheet (rotating would break the Sector
+ * sheet, whose sun and wind arrows depend on true north).
+ *
+ * Applied at the very end of composeStyleSheet, which is the FINAL composer on every path —
+ * including the paid ones, where the model has already rendered and this only adds chrome. No AI
+ * input is ever a padded sheet.
+ */
+function padToPaperSheet(sheet: HTMLCanvasElement): string {
+  const paper = paperSheetCanvas(sheet.width, sheet.height);
+  if (paper.width === sheet.width && paper.height === sheet.height) return sheet.toDataURL('image/png');
+  const canvas = document.createElement('canvas');
+  canvas.width = paper.width;
+  canvas.height = paper.height;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return sheet.toDataURL('image/png');
+  // The legend panel's own cream, so the margin reads as the sheet's paper rather than as a border
+  // someone forgot to fill.
+  ctx.fillStyle = '#FBF6EC';
+  ctx.fillRect(0, 0, paper.width, paper.height);
+  ctx.drawImage(
+    sheet,
+    Math.round((paper.width - sheet.width) / 2),
+    Math.round((paper.height - sheet.height) / 2),
+  );
+  return canvas.toDataURL('image/png');
+}
+
 async function composeStyleSheet(
   mapDataUrl: string,
   state: DesignCanvasState,
@@ -9273,7 +9307,8 @@ async function composeStyleSheet(
   ctx.fillStyle = '#FBF6EC';
   ctx.fillText('N', nx, ny - 34);
 
-  return canvas.toDataURL('image/png');
+  // A2 LANDSCAPE, added as PAPER rather than taken out of the map. See PAPER_SHEET_RATIO.
+  return padToPaperSheet(canvas);
 }
 
 /**
