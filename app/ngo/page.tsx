@@ -1,8 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import { LayoutDashboard, Inbox } from 'lucide-react';
+import { useAuth } from '@/lib/auth';
+import { isBackendConfigured } from '@/lib/firebase/init';
 import RoleSwitcher from '@/components/RoleSwitcher';
 import BackButton from '@/components/BackButton';
 import SettingsButton from '@/components/SettingsButton';
@@ -20,9 +23,29 @@ const NgoDashboard = dynamic(() => import('@/components/NgoDashboard'), {
   ),
 });
 
+const NGO_ALLOWED_ROLES = new Set(['ngo', 'admin']);
+
 export default function NgoPage() {
+  const { user, role, loading } = useAuth();
+  const router = useRouter();
+  const isLive = isBackendConfigured();
   const [view, setView] = useState<'dashboard' | 'messages'>('dashboard');
   const [msgUnread, setMsgUnread] = useState(0);
+
+  useEffect(() => {
+    if (!loading && !user && isLive) router.replace('/login');
+  }, [user, loading, router, isLive]);
+
+  if (!loading && user && isLive && role && !NGO_ALLOWED_ROLES.has(role)) {
+    return (
+      <div className="flex h-screen items-center justify-center px-4" style={{ background: 'var(--bg-0)' }}>
+        <div className="rounded-2xl px-6 py-8 text-center max-w-xs" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
+          <p className="text-sm font-display font-semibold mb-1" style={{ color: '#20190F' }}>This is the NGO area</p>
+          <p className="text-xs font-sans leading-relaxed" style={{ color: '#8C7A62' }}>This dashboard is for NGO programme teams and administrators.</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>

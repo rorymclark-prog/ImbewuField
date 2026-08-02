@@ -72,9 +72,6 @@ function SectionShell({
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, marginBottom: 8 }}>
         <h3 style={{ fontFamily: 'Georgia, serif', fontWeight: 800, fontSize: 17, color: GREEN, margin: 0 }}>
           {title}
-          {status === 'enriching' && (
-            <span style={{ fontSize: 10, color: ORANGE, marginLeft: 8 }}>enriching…</span>
-          )}
         </h3>
         <button
           onClick={() => onViewMap(map)}

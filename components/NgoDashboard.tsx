@@ -7,6 +7,7 @@ import { Loader2, MapPin, User, Camera, BookOpen, Check, Map as MapIcon, FileTex
 import { onAuthStateChanged } from 'firebase/auth';
 import { listGardens, listGardeners, getGardenerProfile } from '@/lib/db/queries';
 import { getFirebase } from '@/lib/firebase/init';
+import { COURSE_MODULES } from '@/lib/course-modules';
 import type { Garden as DbGarden, GardenMember, Profile, GardenerProfile as DbGardenerProfile, ProductionLog, SalesLog, CourseProgress } from '@/lib/db/types';
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
@@ -45,8 +46,6 @@ const CROPS = [
 ];
 const MONTHS = ['Feb', 'Mar', 'Apr', 'May', 'Jun'];
 const BUYERS = ['Local market', 'Spaza shop', 'School feeding', 'Bakkie trader', 'Neighbours'];
-const COURSES = ['Soil & compost', 'Water harvesting', 'Planting calendar', 'Pest & disease', 'Seed saving', 'Markets & records'];
-
 function seeded(seed: string) {
   let s = 2166136261;
   for (const ch of seed) s = Math.imul(s ^ ch.charCodeAt(0), 16777619) >>> 0;
@@ -67,7 +66,7 @@ function gardenersFor(garden: Garden): Gardener[] {
   const n = rint(r, 3, 4);
   return Array.from({ length: n }).map((_, i) => {
     const trainingPct = Math.max(20, Math.min(100, garden.training + rint(r, -14, 14)));
-    const doneCount = Math.round((trainingPct / 100) * COURSES.length);
+    const doneCount = Math.round((trainingPct / 100) * COURSE_MODULES.length);
     return {
       id: `${garden.id}-${i}`,
       profileId: `${garden.id}-${i}`,
@@ -78,7 +77,7 @@ function gardenersFor(garden: Garden): Gardener[] {
       lat: garden.lat + (r() - 0.5) * 0.012,
       lon: garden.lon + (r() - 0.5) * 0.012,
       trainingPct,
-      courses: COURSES.map((name, idx) => ({ name, done: idx < doneCount })),
+      courses: COURSE_MODULES.map((module, idx) => ({ name: module.title, done: idx < doneCount })),
       production: Array.from({ length: rint(r, 4, 6) }).map(() => ({ date: `${rint(r, 2, 27)} ${pick(r, MONTHS)}`, crop: pick(r, CROPS), kg: rint(r, 4, 38) })),
       sales: Array.from({ length: rint(r, 2, 4) }).map(() => { const kg = rint(r, 3, 22); return { date: `${rint(r, 2, 27)} ${pick(r, MONTHS)}`, crop: pick(r, CROPS), kg, rand: kg * rint(r, 11, 19), buyer: pick(r, BUYERS) }; }),
     };
@@ -139,11 +138,11 @@ function mapDbGardenerFull(gp: DbGardenerProfile, garden: Garden, base: Gardener
   const { profile, production, sales, courses } = gp;
 
   const doneCount = courses.filter((c) => c.done).length;
-  const trainingPct = COURSES.length > 0 ? Math.round((doneCount / COURSES.length) * 100) : 0;
+  const trainingPct = COURSE_MODULES.length > 0 ? Math.round((doneCount / COURSE_MODULES.length) * 100) : 0;
 
   const courseMap = new Map<string, boolean>();
   courses.forEach((c: CourseProgress) => courseMap.set(c.module, c.done));
-  const mappedCourses = COURSES.map((name) => ({ name, done: courseMap.get(name) ?? false }));
+  const mappedCourses = COURSE_MODULES.map((module) => ({ name: module.title, done: courseMap.get(module.id) ?? false }));
 
   const mappedProd: ProdRow[] = production.map((p: ProductionLog) => ({
     date: fmtDate(p.logged_at),
@@ -216,8 +215,9 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
   const mapRef = useRef<MapRef>(null);
 
   // Live data state
-  const [liveGardens, setLiveGardens] = useState<Garden[] | null>(null); // null = loading, [] = failed/empty
+  const [liveGardens, setLiveGardens] = useState<Garden[] | null>(null); // null = loading, [] = confirmed empty
   const [isDemo, setIsDemo] = useState(false);
+  const [gardensLoadError, setGardensLoadError] = useState(false);
   const [gardensLoading, setGardensLoading] = useState(true);
 
   // Per-garden gardeners (live)
@@ -241,21 +241,29 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
   // ── Fetch gardens once auth is ready ──
   useEffect(() => {
     if (!authReady) return;
+    const fb = getFirebase();
+    if (!fb) {
+      setIsDemo(true);
+      setLiveGardens(null);
+      setGardensLoadError(false);
+      setGardensLoading(false);
+      return;
+    }
     let cancelled = false;
     setGardensLoading(true);
+    setIsDemo(false);
+    setGardensLoadError(false);
     listGardens()
       .then((rows) => {
         if (cancelled) return;
-        if (rows.length === 0) {
-          setIsDemo(true);
-          setLiveGardens([]);
-        } else {
-          setLiveGardens(rows.map(mapDbGarden));
-          setIsDemo(false);
-        }
+        setLiveGardens(rows.map(mapDbGarden));
       })
       .catch(() => {
-        if (!cancelled) { setIsDemo(true); setLiveGardens([]); }
+        if (!cancelled) {
+          setIsDemo(false);
+          setLiveGardens([]);
+          setGardensLoadError(true);
+        }
       })
       .finally(() => { if (!cancelled) setGardensLoading(false); });
     return () => { cancelled = true; };
@@ -263,9 +271,19 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
 
   // Which gardens to display
   const gardens = useMemo<Garden[]>(() => {
-    if (isDemo || !liveGardens || liveGardens.length === 0) return SAMPLE_GARDENS;
-    return liveGardens;
+    if (isDemo) return SAMPLE_GARDENS;
+    return liveGardens ?? [];
   }, [isDemo, liveGardens]);
+
+  const dashboardTotals = useMemo(() => {
+    if (isDemo) return TOTALS;
+    const farmers = gardens.reduce((sum, g) => sum + g.farmers, 0);
+    const produceKg = gardens.reduce((sum, g) => sum + g.produceKg, 0);
+    const training = gardens.length > 0
+      ? Math.round(gardens.reduce((sum, g) => sum + g.training, 0) / gardens.length)
+      : 0;
+    return { gardens: gardens.length, farmers, produceT: produceKg / 1000, training, deployed: null };
+  }, [gardens, isDemo]);
 
   // ── Fetch gardeners when a garden is selected ──
   useEffect(() => {
@@ -348,17 +366,17 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
       <div className="flex-shrink-0 grid grid-cols-2 gap-2 px-3 py-3 md:flex md:gap-3 md:px-4" style={{ borderBottom: '1px solid #E2D8C4' }}>
         {mode === 'funder' ? (
           <>
-            <Stat label="Funds deployed" value={TOTALS.deployed} sub="presidential fund + IDC" color="#9E5C08" />
-            <Stat label="Gardens" value={TOTALS.gardens.toString()} sub="9 provinces" color="#1F4D2B" />
-            <Stat label="Livelihoods" value={TOTALS.farmers.toLocaleString()} sub="farmers supported" color="#20190F" />
-            <Stat label="Food grown" value={`${TOTALS.produceT} t`} sub="this season" color="#2F6F9E" />
+            {isDemo && <Stat label="Funds deployed" value={TOTALS.deployed} sub="presidential fund + IDC" color="#9E5C08" />}
+            <Stat label="Gardens" value={dashboardTotals.gardens.toString()} sub={isDemo ? '9 provinces' : 'in your organisation'} color="#1F4D2B" />
+            <Stat label="Livelihoods" value={dashboardTotals.farmers.toLocaleString()} sub="farmers supported" color="#20190F" />
+            <Stat label="Food grown" value={`${dashboardTotals.produceT} t`} sub="this season" color="#2F6F9E" />
           </>
         ) : (
           <>
-            <Stat label="Active gardens" value={TOTALS.gardens.toString()} sub="across 9 provinces" color="#1F4D2B" />
-            <Stat label="Farmers" value={TOTALS.farmers.toLocaleString()} sub="enrolled this cycle" color="#20190F" />
-            <Stat label="Produce, season" value={`${TOTALS.produceT} t`} sub="logged by supervisors" color="#2F6F9E" />
-            <Stat label="Training done" value={`${TOTALS.training}%`} sub="9-month programme" color="#9E5C08" />
+            <Stat label="Active gardens" value={dashboardTotals.gardens.toString()} sub={isDemo ? 'across 9 provinces' : 'in your organisation'} color="#1F4D2B" />
+            <Stat label="Farmers" value={dashboardTotals.farmers.toLocaleString()} sub="enrolled this cycle" color="#20190F" />
+            <Stat label="Produce, season" value={`${dashboardTotals.produceT} t`} sub="logged by supervisors" color="#2F6F9E" />
+            <Stat label="Training done" value={`${dashboardTotals.training}%`} sub="across active gardens" color="#9E5C08" />
           </>
         )}
       </div>
@@ -396,6 +414,14 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
               <div className="space-y-1">
                 <SkeletonRow /><SkeletonRow /><SkeletonRow /><SkeletonRow />
               </div>
+            ) : gardensLoadError ? (
+              <div className="rounded-lg px-3 py-4 text-xs font-sans leading-relaxed" style={{ background: '#FFFEFA', border: '1px solid #D8B7A8', color: '#8C4938' }}>
+                We could not load the gardens for this organisation. Check your account access and try again.
+              </div>
+            ) : gardens.length === 0 ? (
+              <div className="rounded-lg px-3 py-4 text-xs font-sans leading-relaxed" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#8C7A62' }}>
+                No gardens have been added yet.
+              </div>
             ) : (
               <div className="space-y-1">
                 {gardens.map((g) => (
@@ -428,7 +454,11 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
             <span className="text-xs font-mono flex items-center gap-1" style={{ color: '#9A8268' }}>
               {gardener
                 ? <><MapPin size={12} style={{ color: '#9A8268' }} /> {`${gardener.name} · ${gardener.lat.toFixed(4)}, ${gardener.lon.toFixed(4)}`}</>
-                : `Showing ${gardens.length} of ${TOTALS.gardens} gardens${isDemo ? ' · demo' : ''}`}
+                : isDemo
+                  ? `Showing ${gardens.length} of ${TOTALS.gardens} gardens · demo`
+                  : gardensLoadError
+                    ? 'Gardens unavailable'
+                    : `Showing ${gardens.length} gardens`}
             </span>
           </div>
           <ReactMapGL ref={mapRef} mapboxAccessToken={TOKEN} initialViewState={{ longitude: 25, latitude: -29, zoom: 4.4 }} mapStyle="mapbox://styles/mapbox/dark-v11" style={{ width: '100%', height: '100%' }}>

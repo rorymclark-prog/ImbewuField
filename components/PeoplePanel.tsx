@@ -24,6 +24,7 @@ const ROLE_COLOR: Record<string, string> = {
 interface Props {
   people: Profile[];
   loading: boolean;
+  error?: boolean;
   currentUserId?: string;
   onOpenProfile: () => void;
 }
@@ -226,9 +227,22 @@ function PersonCard({
 }
 
 /* ── Main component ─────────────────────────────────────────────────────── */
-export default function PeoplePanel({ people, loading, currentUserId, onOpenProfile }: Props) {
+export default function PeoplePanel({ people, loading, error = false, currentUserId, onOpenProfile }: Props) {
   const currentUser = currentUserId ? people.find((p) => p.id === currentUserId) ?? null : null;
   const otherPeople = people.filter((p) => p.id !== currentUserId);
+
+  /* A rules denial must not be presented as an empty organisation directory. */
+  if (!loading && error) {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '40px 24px', textAlign: 'center', gap: 12 }}>
+        <div style={{ width: 48, height: 48, borderRadius: '50%', background: 'rgba(192,83,30,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          <MapPin size={22} style={{ color: '#C0531E' }} />
+        </div>
+        <p style={{ margin: 0, fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 14, color: '#20190F' }}>People unavailable</p>
+        <p style={{ margin: 0, fontFamily: 'var(--font-sans)', fontSize: 12, lineHeight: 1.5, color: '#8C7A62' }}>You may not have access to your organisation directory, or the connection is unavailable.</p>
+      </div>
+    );
+  }
 
   /* Empty state */
   if (!loading && people.length === 0) {

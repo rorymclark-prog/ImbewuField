@@ -460,6 +460,7 @@ export default function StudentPage() {
   const [today, setToday] = useState<string | null>(null);
   const [fetching, setFetching] = useState(true);
   const [toggling, setToggling] = useState<string | null>(null);
+  const [progressError, setProgressError] = useState(false);
   const [expandedModuleId, setExpandedModuleId] = useState<string | null>(null);
   // Set by a "related lessons" jump, cleared once the scroll below has fired. One-shot signal,
   // not durable UI state — see jumpToLesson() and the effect that consumes it.
@@ -473,19 +474,31 @@ export default function StudentPage() {
 
   const load = useCallback(async () => {
     setFetching(true);
-    if (isLive && user) {
-      // An assignments/submissions read that fails (rules, offline) must not blank out
-      // progress — the learner can still work through the course without a mentor's list.
-      const [rows, mine, subs] = await Promise.all([
-        myCourseProgress(),
-        myAssignments().catch(() => [] as CourseAssignment[]),
-        myCourseSubmissions().catch(() => [] as CourseSubmission[]),
-      ]);
-      setDoneIds(new Set(rows.filter((r) => r.done).map((r) => r.module)));
-      setAssignments(mine);
-      setSubmissions(subs);
+    setProgressError(false);
+    try {
+      if (isLive && user) {
+        // An assignments/submissions read that fails (rules, offline) must not blank out
+        // progress — the learner can still work through the course without a mentor's list.
+        let rows: Awaited<ReturnType<typeof myCourseProgress>> = [];
+        try {
+          rows = await myCourseProgress();
+        } catch {
+          // A denied progress read is different from a learner who has completed nothing.
+          setProgressError(true);
+        }
+        const [mine, subs] = await Promise.all([
+          myAssignments().catch(() => [] as CourseAssignment[]),
+          myCourseSubmissions().catch(() => [] as CourseSubmission[]),
+        ]);
+        setDoneIds(new Set(rows.filter((r) => r.done).map((r) => r.module)));
+        setAssignments(mine);
+        setSubmissions(subs);
+      }
+    } catch {
+      setProgressError(true);
+    } finally {
+      setFetching(false);
     }
-    setFetching(false);
   }, [isLive, user]);
 
   useEffect(() => { if (!loading) load(); }, [loading, load]);
@@ -500,8 +513,18 @@ export default function StudentPage() {
     });
     if (isLive) {
       setToggling(moduleId);
-      await setCourseProgress(moduleId, willBeDone);
-      setToggling(null);
+      try {
+        await setCourseProgress(moduleId, willBeDone);
+      } catch {
+        setProgressError(true);
+        setDoneIds((prev) => {
+          const next = new Set(prev);
+          willBeDone ? next.delete(moduleId) : next.add(moduleId);
+          return next;
+        });
+      } finally {
+        setToggling(null);
+      }
     }
   }
 
@@ -670,6 +693,11 @@ export default function StudentPage() {
             <div className="font-sans text-xs mt-1" style={{ color: '#5C5040' }}>
               {doneCount} of {TOTAL_MODULES} modules complete
             </div>
+            {progressError && (
+              <div className="font-sans text-xs mt-2 leading-relaxed" style={{ color: '#8C4938' }}>
+                Progress could not be loaded or saved. Check your connection or account access.
+              </div>
+            )}
             {pct < 100 && totalMins > 0 && (
               <div className="flex items-center gap-1.5 mt-2">
                 <Clock size={12} style={{ color: '#8C7A62' }} />

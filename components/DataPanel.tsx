@@ -53,6 +53,7 @@ interface Props {
   activePlaceId?: string;
   people?: Profile[];
   peopleLoading?: boolean;
+  peopleError?: boolean;
   currentUserId?: string;
   onOpenProfile?: () => void;
   initialChatQuery?: string | null;
@@ -281,7 +282,7 @@ function Skeleton() {
 }
 
 /* ── Main component ───────────────────────────────── */
-export default function DataPanel({ data, loading, coords, mapCapture, siteData, waterData, forcedTab, onTabChange, onOpenReport, onJumpTo, onViewReport, appLang, placeName, activePlaceId, people, peopleLoading, currentUserId, onOpenProfile, initialChatQuery, initialChatPhoto, onChatDeepLinkConsumed, openSurvey, onSurveyOpened }: Props) {
+export default function DataPanel({ data, loading, coords, mapCapture, siteData, waterData, forcedTab, onTabChange, onOpenReport, onJumpTo, onViewReport, appLang, placeName, activePlaceId, people, peopleLoading, peopleError, currentUserId, onOpenProfile, initialChatQuery, initialChatPhoto, onChatDeepLinkConsumed, openSurvey, onSurveyOpened }: Props) {
   const { t } = useLanguage();
   const REPORT_GROUP_LABEL: Record<string, string> = {
     water: t('reportGroupWater'), structures: t('reportGroupStructures'),
@@ -1033,6 +1034,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
           <PeoplePanel
             people={people ?? []}
             loading={peopleLoading ?? false}
+            error={peopleError ?? false}
             currentUserId={currentUserId}
             onOpenProfile={onOpenProfile ?? (() => {})}
           />

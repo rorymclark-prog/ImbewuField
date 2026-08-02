@@ -121,6 +121,7 @@ function HomeInner() {
   const [addOpen, setAddOpen] = useState(false); // shared "+ Add" catalog sheet (spec §2.3)
   const [people, setPeople] = useState<Profile[]>([]);
   const [peopleLoading, setPeopleLoading] = useState(false);
+  const [peopleError, setPeopleError] = useState(false);
   const [showPeople, setShowPeople] = useState(false);
   const [profileSheetOpen, setProfileSheetOpen] = useState(false);
   const [myProfile, setMyProfile] = useState<Profile | null>(null);
@@ -349,11 +350,21 @@ function HomeInner() {
     let cancelled = false;
     async function load() {
       setPeopleLoading(true);
-      const [team, me] = await Promise.all([listOrgPeople(), getMyProfile()]);
-      if (!cancelled) {
-        setPeople(team);
-        setMyProfile(me);
-        setPeopleLoading(false);
+      setPeopleError(false);
+      try {
+        const [team, me] = await Promise.all([listOrgPeople(), getMyProfile()]);
+        if (!cancelled) {
+          setPeople(team);
+          setMyProfile(me);
+        }
+      } catch {
+        if (!cancelled) {
+          setPeople([]);
+          setMyProfile(null);
+          setPeopleError(true);
+        }
+      } finally {
+        if (!cancelled) setPeopleLoading(false);
       }
     }
     load();
@@ -613,6 +624,7 @@ function HomeInner() {
               placeName={activePlaceName}
               people={people}
               peopleLoading={peopleLoading}
+              peopleError={peopleError}
               currentUserId={myProfile?.id}
               onOpenProfile={() => setProfileSheetOpen(true)}
               initialChatQuery={initialChatQuery}
@@ -732,6 +744,7 @@ function HomeInner() {
                 placeName={activePlaceName}
                 people={people}
                 peopleLoading={peopleLoading}
+                peopleError={peopleError}
                 currentUserId={myProfile?.id}
                 onOpenProfile={() => setProfileSheetOpen(true)}
                 initialChatQuery={initialChatQuery}

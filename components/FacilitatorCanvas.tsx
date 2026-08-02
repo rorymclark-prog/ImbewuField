@@ -22,6 +22,7 @@ import {
 import { costForItem, costForLine, costForMeasuredAreaLine, formatZar, DISCLAIMER } from '@/lib/price-book';
 import { describeHarvest } from '@/lib/water-calc';
 import { requestRender, stripDataUrl, pollFalRender } from '@/lib/ai-render-client';
+import { paidApiHeaders } from '@/lib/api-client-auth';
 import { compositeAccurateMap, boundaryStageToOutput, estimateBlankFraction, type ProducerLabel, type LabelStyle } from '@/lib/image-producer';
 import { activeAccountLocalStorageKey } from '@/lib/account-local-storage';
 
@@ -2818,7 +2819,7 @@ export default function FacilitatorCanvas({ siteText, language, initialSite }: {
   ): Promise<string> {
     const res = await fetch('/api/image-producer', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', ...await paidApiHeaders() },
       body: JSON.stringify({ imageBase64, layerLabel, elementsText, stylePreset: producerStyle, model: 'pro-preview', mapKind, retry, engine: producerEngine }),
     });
     const data = await res.json().catch(() => ({}));

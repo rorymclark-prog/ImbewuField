@@ -9,7 +9,11 @@ import { PLACE_LABELS, placeColor, type SavedPlace } from '@/lib/saved-places';
 import { Loader2, Check, Circle, ChevronRight, Share2, MapPin } from 'lucide-react';
 import { loadSurvey } from '@/lib/site-survey';
 import { getSiteEvidence } from '@/lib/site-evidence';
-import { designSiteIdFromLocation } from '@/lib/design-studio';
+import { designSiteIdFromLocation, loadDesignStudioState } from '@/lib/design-studio';
+import { loadCanvasState } from '@/lib/design-canvas';
+import { resolveBaseLayers } from '@/lib/base-layers';
+import { buildPhasePlan } from '@/lib/phasing';
+import { paidApiHeaders } from '@/lib/api-client-auth';
 
 const ALL_SECTIONS = [
   'Executive Summary',
@@ -291,14 +295,27 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         }
       }
 
+      const siteId = designSiteIdFromLocation(d);
+      const studio = loadDesignStudioState(siteId);
+      const canvas = loadCanvasState(siteId);
+      const phasePlan = canvas
+        ? buildPhasePlan(
+          canvas,
+          resolveBaseLayers(canvas, { boundary: [], house: [], driveway: [] }),
+          { biome: d.biome.name, rainfallMm: d.rainfall.annual },
+        )
+        : null;
+
       const res = await fetch('/api/generate-report', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...await paidApiHeaders() },
         body: JSON.stringify({
           locationData: d,
           photoAnalysis: photoAnalysis || undefined,
           siteData: siteData || undefined,
           waterData: waterData || undefined,
+          studioLayers: studio.layers,
+          phasePlan: phasePlan ?? undefined,
           surveyData: loadSurvey(designSiteIdFromLocation(d)) ?? undefined,
           evidenceData: Object.keys(evidenceData).length > 0 ? evidenceData : undefined,
           sections: Array.from(selected),

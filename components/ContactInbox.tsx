@@ -42,6 +42,8 @@ function formatDate(ts: ContactMessage['created_at']): string {
 export default function ContactInbox({ recipient, onUnreadCount }: Props) {
   const [messages, setMessages] = useState<ContactMessage[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
+  const [actionError, setActionError] = useState(false);
   const [expanded, setExpanded] = useState<string | null>(null);
   const [replyText, setReplyText] = useState<Record<string, string>>({});
   const [replySending, setReplySending] = useState<string | null>(null);
@@ -49,6 +51,7 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
   const isLive = isBackendConfigured();
 
   const load = useCallback(async () => {
+    setLoadError(false);
     if (!isLive) { setLoading(false); return; }
     const fb = getFirebase();
     if (!fb) { setLoading(false); return; }
@@ -63,9 +66,11 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
       setMessages(msgs);
       onUnreadCount?.(msgs.filter((m) => m.status === 'unread').length);
     } catch {
-      // Missing index or no messages — fail silently
+      // A rules denial or missing index is not the same state as an empty inbox.
+      setLoadError(true);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   }, [recipient, isLive, onUnreadCount]);
 
   useEffect(() => { load(); }, [load]);
@@ -73,12 +78,16 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
   async function markRead(id: string) {
     const fb = getFirebase();
     if (!fb) return;
-    await updateDoc(doc(fb.db, 'contact_messages', id), { status: 'read' });
-    setMessages((prev) => {
-      const next = prev.map((m) => m.id === id ? { ...m, status: 'read' as const } : m);
-      onUnreadCount?.(next.filter((m) => m.status === 'unread').length);
-      return next;
-    });
+    try {
+      await updateDoc(doc(fb.db, 'contact_messages', id), { status: 'read' });
+      setMessages((prev) => {
+        const next = prev.map((m) => m.id === id ? { ...m, status: 'read' as const } : m);
+        onUnreadCount?.(next.filter((m) => m.status === 'unread').length);
+        return next;
+      });
+    } catch {
+      setActionError(true);
+    }
   }
 
   function toggleExpand(id: string) {
@@ -98,20 +107,26 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
     setReplySending(msg.id);
     const auth = getAuth(fb.app);
     const me = auth.currentUser;
-    await addDoc(collection(fb.db, 'contact_replies'), {
-      message_id: msg.id,
-      for_uid: msg.from_uid,
-      reply_body: text,
-      replied_at: serverTimestamp(),
-      replied_by_name: me?.displayName ?? me?.email ?? 'Your mentor',
-      recipient_label: recipient,
-    });
-    await updateDoc(doc(fb.db, 'contact_messages', msg.id), { status: 'replied' });
-    setMessages((prev) => prev.map((m) => m.id === msg.id ? { ...m, status: 'replied' as const } : m));
-    setReplySent((s) => new Set(s).add(msg.id));
-    setReplyText((t) => ({ ...t, [msg.id]: '' }));
-    setReplySending(null);
-    setTimeout(() => setReplySent((s) => { const n = new Set(s); n.delete(msg.id); return n; }), 3000);
+    setActionError(false);
+    try {
+      await addDoc(collection(fb.db, 'contact_replies'), {
+        message_id: msg.id,
+        for_uid: msg.from_uid,
+        reply_body: text,
+        replied_at: serverTimestamp(),
+        replied_by_name: me?.displayName ?? me?.email ?? 'Your mentor',
+        recipient_label: recipient,
+      });
+      await updateDoc(doc(fb.db, 'contact_messages', msg.id), { status: 'replied' });
+      setMessages((prev) => prev.map((m) => m.id === msg.id ? { ...m, status: 'replied' as const } : m));
+      setReplySent((s) => new Set(s).add(msg.id));
+      setReplyText((t) => ({ ...t, [msg.id]: '' }));
+      setTimeout(() => setReplySent((s) => { const n = new Set(s); n.delete(msg.id); return n; }), 3000);
+    } catch {
+      setActionError(true);
+    } finally {
+      setReplySending(null);
+    }
   }
 
   const unreadCount = messages.filter((m) => m.status === 'unread').length;
@@ -134,6 +149,16 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
     );
   }
 
+  if (loadError) {
+    return (
+      <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FFFEFA', border: '1px solid #D8B7A8' }}>
+        <Mail size={26} style={{ color: '#8C4938', margin: '0 auto 10px' }} strokeWidth={1.5} />
+        <p className="text-sm font-display font-semibold" style={{ color: '#8C4938' }}>Messages unavailable</p>
+        <p className="text-xs font-sans mt-1" style={{ color: '#8C7A62' }}>You may not have access, or the connection is unavailable.</p>
+      </div>
+    );
+  }
+
   if (messages.length === 0) {
     return (
       <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
@@ -146,6 +171,11 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
 
   return (
     <div className="space-y-2">
+      {actionError && (
+        <div className="rounded-xl px-3 py-2 text-xs font-sans" style={{ background: '#FFF4EF', border: '1px solid #D8B7A8', color: '#8C4938' }}>
+          That action could not be saved. Check your account access or connection and try again.
+        </div>
+      )}
       {/* Unread banner */}
       {unreadCount > 0 && (
         <div

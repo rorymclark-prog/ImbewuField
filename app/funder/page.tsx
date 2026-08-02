@@ -1,11 +1,15 @@
 'use client';
 
+import { useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import RoleSwitcher from '@/components/RoleSwitcher';
 import BackButton from '@/components/BackButton';
 import SettingsButton from '@/components/SettingsButton';
 import BrandLogo from '@/components/BrandLogo';
 import LessonLink from '@/components/design/LessonLink';
+import { useAuth } from '@/lib/auth';
+import { isBackendConfigured } from '@/lib/firebase/init';
 
 const NgoDashboard = dynamic(() => import('@/components/NgoDashboard'), {
   ssr: false,
@@ -16,7 +20,28 @@ const NgoDashboard = dynamic(() => import('@/components/NgoDashboard'), {
   ),
 });
 
+const FUNDER_ALLOWED_ROLES = new Set(['funder', 'admin']);
+
 export default function FunderPage() {
+  const { user, role, loading } = useAuth();
+  const router = useRouter();
+  const isLive = isBackendConfigured();
+
+  useEffect(() => {
+    if (!loading && !user && isLive) router.replace('/login');
+  }, [user, loading, router, isLive]);
+
+  if (!loading && user && isLive && role && !FUNDER_ALLOWED_ROLES.has(role)) {
+    return (
+      <div className="flex h-screen items-center justify-center px-4" style={{ background: '#E4DCC6' }}>
+        <div className="rounded-2xl px-6 py-8 text-center max-w-xs" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
+          <p className="text-sm font-display font-semibold mb-1" style={{ color: '#20190F' }}>This is the Funder area</p>
+          <p className="text-xs font-sans leading-relaxed" style={{ color: '#8C7A62' }}>This dashboard is for funders and administrators.</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="h-screen flex flex-col" style={{ background: '#E4DCC6' }}>
       <header className="flex-shrink-0 flex items-center px-3 md:px-5 gap-2 md:gap-4 overflow-x-auto"

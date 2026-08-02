@@ -10,6 +10,7 @@ import { Leaf, Plus, Trash2, Minus, Sun, CloudRain, Snowflake, Sprout, CalendarC
 import LessonLink from '@/components/design/LessonLink';
 import { activeAccountLocalStorageKey } from '@/lib/account-local-storage';
 import { cropByKey, type CropDef } from '@/lib/crop-catalog';
+import { CATALOG_KEY_FOR_CROP } from '@/lib/crop-display';
 
 type Season = 'Summer' | 'Autumn' | 'Winter' | 'Spring';
 type Suitability = 'best' | 'soon' | 'off';
@@ -56,26 +57,6 @@ const BED_AREA_M2 = 9.6; // a standard smallholder bed, ~1.2 m x 8 m
 // The page speaks in display names; the catalog is keyed. Names map to catalog KEYS, never to
 // free text, so a renamed crop breaks the build instead of silently falling back to a default.
 // ('Spinach' is South African usage for Swiss chard, hence the shared key.)
-const CATALOG_KEY_FOR_CROP: Record<string, string> = {
-  Spinach: 'swiss-chard',
-  Kale: 'kale',
-  Lettuce: 'lettuce',
-  Carrots: 'carrots',
-  Beetroot: 'beetroot',
-  Peas: 'peas',
-  Garlic: 'garlic',
-  Broccoli: 'broccoli',
-  'Sweet potato': 'sweet-potato',
-  Tomatoes: 'tomatoes',
-  Maize: 'maize',
-  Beans: 'green-beans',
-  Butternut: 'butternut',
-  Peppers: 'peppers',
-  Cucumber: 'cucumber',
-  Pumpkin: 'pumpkin',
-  'Swiss chard': 'swiss-chard',
-};
-
 // Same density rule the seed BOQ uses (lib/crop-plan.ts seedBoqForPlan): the sourced rectangular
 // row x in-row split where the catalog has one, the single spacing figure squared where it does
 // not. Kept identical deliberately — a farmer must not be told one plant count here and another
