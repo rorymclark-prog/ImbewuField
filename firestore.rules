@@ -86,7 +86,20 @@ service cloud.firestore {
         && request.resource.data.profile_id == request.auth.uid
         && request.resource.data.kg is number && request.resource.data.kg > 0
         && request.resource.data.crop is string && request.resource.data.crop.size() > 0;
-      allow update, delete: if owns(resource.data);
+      // UPDATE MUST PIN OWNERSHIP AND RE-VALIDATE. `owns(resource.data)` only inspects the document
+      // as it was BEFORE the write, so nothing stopped a farmer re-pointing their own row at
+      // somebody else: updateDoc(myRow, { profile_id: '<victim uid>', amount: 90000 }) landed in the
+      // victim's ledger, because /finances queries where('profile_id','==',uid). The create-time
+      // checks were not re-applied either, so a negative amount persisted and subtracted from their
+      // income. This file already pins exactly these fields on /profiles, /course_enrollments and
+      // /board_posts — these three money collections were the outliers. Predicates below are copied
+      // verbatim from this collection's own create rule.
+      allow update: if owns(resource.data)
+        && request.resource.data.profile_id == resource.data.profile_id
+        && request.resource.data.org_id == resource.data.org_id
+        && request.resource.data.kg is number && request.resource.data.kg > 0
+        && request.resource.data.crop is string && request.resource.data.crop.size() > 0;
+      allow delete: if owns(resource.data);
     }
 
     match /sales_logs/{id} {
@@ -96,7 +109,21 @@ service cloud.firestore {
         && request.resource.data.kg is number && request.resource.data.kg > 0
         && request.resource.data.amount is number && request.resource.data.amount >= 0
         && request.resource.data.crop is string && request.resource.data.crop.size() > 0;
-      allow update, delete: if owns(resource.data);
+      // UPDATE MUST PIN OWNERSHIP AND RE-VALIDATE. `owns(resource.data)` only inspects the document
+      // as it was BEFORE the write, so nothing stopped a farmer re-pointing their own row at
+      // somebody else: updateDoc(myRow, { profile_id: '<victim uid>', amount: 90000 }) landed in the
+      // victim's ledger, because /finances queries where('profile_id','==',uid). The create-time
+      // checks were not re-applied either, so a negative amount persisted and subtracted from their
+      // income. This file already pins exactly these fields on /profiles, /course_enrollments and
+      // /board_posts — these three money collections were the outliers. Predicates below are copied
+      // verbatim from this collection's own create rule.
+      allow update: if owns(resource.data)
+        && request.resource.data.profile_id == resource.data.profile_id
+        && request.resource.data.org_id == resource.data.org_id
+        && request.resource.data.kg is number && request.resource.data.kg > 0
+        && request.resource.data.amount is number && request.resource.data.amount >= 0
+        && request.resource.data.crop is string && request.resource.data.crop.size() > 0;
+      allow delete: if owns(resource.data);
     }
 
     match /expense_logs/{id} {
@@ -105,7 +132,20 @@ service cloud.firestore {
         && request.resource.data.profile_id == request.auth.uid
         && request.resource.data.amount is number && request.resource.data.amount >= 0
         && request.resource.data.item is string && request.resource.data.item.size() > 0;
-      allow update, delete: if owns(resource.data);
+      // UPDATE MUST PIN OWNERSHIP AND RE-VALIDATE. `owns(resource.data)` only inspects the document
+      // as it was BEFORE the write, so nothing stopped a farmer re-pointing their own row at
+      // somebody else: updateDoc(myRow, { profile_id: '<victim uid>', amount: 90000 }) landed in the
+      // victim's ledger, because /finances queries where('profile_id','==',uid). The create-time
+      // checks were not re-applied either, so a negative amount persisted and subtracted from their
+      // income. This file already pins exactly these fields on /profiles, /course_enrollments and
+      // /board_posts — these three money collections were the outliers. Predicates below are copied
+      // verbatim from this collection's own create rule.
+      allow update: if owns(resource.data)
+        && request.resource.data.profile_id == resource.data.profile_id
+        && request.resource.data.org_id == resource.data.org_id
+        && request.resource.data.amount is number && request.resource.data.amount >= 0
+        && request.resource.data.item is string && request.resource.data.item.size() > 0;
+      allow delete: if owns(resource.data);
     }
 
     match /designs/{id} {

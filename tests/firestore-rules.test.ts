@@ -196,6 +196,26 @@ test('a shared site is readable by exact code but its collection cannot be liste
   await assertFails(getDocs(collection(anonymous, 'shared_sites')));
 });
 
+test('a farmer cannot re-point their own financial row at another farmer', async () => {
+  // owns() only inspects the document as it was BEFORE the write, so without pinning, this landed
+  // R90 000 of imaginary income in the victim's ledger — /finances queries by profile_id.
+  const db = env.authenticatedContext(FARMER_WITH_LINK).firestore();
+  await assertFails(updateDoc(doc(db, 'sales_logs', `${FARMER_WITH_LINK}-sales_logs`), {
+    profile_id: FARMER_WITHOUT_LINK, amount: 90000,
+  }));
+  await assertFails(updateDoc(doc(db, 'sales_logs', `${FARMER_WITH_LINK}-sales_logs`), {
+    org_id: 'org-2',
+  }));
+});
+
+test('create-time validation is re-applied on update, so a negative amount cannot be saved', async () => {
+  const db = env.authenticatedContext(FARMER_WITH_LINK).firestore();
+  await assertFails(updateDoc(doc(db, 'sales_logs', `${FARMER_WITH_LINK}-sales_logs`), { amount: -90000 }));
+  await assertFails(updateDoc(doc(db, 'production_logs', `${FARMER_WITH_LINK}-production_logs`), { kg: 0 }));
+  // An ordinary, valid correction still works — this must not become a read-only ledger.
+  await assertSucceeds(updateDoc(doc(db, 'sales_logs', `${FARMER_WITH_LINK}-sales_logs`), { amount: 250 }));
+});
+
 test('a profile owner cannot change role or org_id, but can edit an ordinary profile field', async () => {
   const db = env.authenticatedContext(FARMER_WITH_LINK).firestore();
   await assertFails(updateDoc(doc(db, 'profiles', FARMER_WITH_LINK), { role: 'admin' }));
