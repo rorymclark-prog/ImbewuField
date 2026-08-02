@@ -20,6 +20,7 @@ import {
   exactSheetLineLegendGroups,
   exactSheetZoneLegendGroups,
   groundRegister,
+  lineInFilter,
   type ExactPlanSheetKey,
   type GlossyLayerFilter,
 } from '../lib/glossy-filters.ts';
@@ -357,5 +358,44 @@ test('Planting callouts use the same species identities as the Planting legend',
       .replace(/^(?:(?:NORTH|SOUTH|CENTRAL)-(?:WESTERN|EASTERN)|NORTHERN|SOUTHERN|EASTERN|WESTERN|CENTRAL) /, '')
       .replace(/ ×\d+$/, '');
     assert.ok(legendNames.has(identity), `Planting callout "${label.text}" has no matching legend identity`);
+  }
+});
+
+// EVERY LINE KIND THE LEGEND CLAIMS MUST BE ONE THIS SHEET WILL ACTUALLY PAINT.
+//
+// This file's other line check compares the legend against the AI PROMPT inventory — and both are
+// built from exactSheetLineLegendGroups, so the two agree with each other by construction and
+// neither notices what the canvas did. That blind spot let a real regression through: a membership
+// check inside the route painter was written with the sheet hard-coded to 'water', but that same
+// painter is the ONLY route painter for the masterplan (filter 'all'), so every swale silently
+// vanished from sheet 08 while the legend carried on listing it. An adversarial audit found it;
+// no test did.
+//
+// The rule this pins is the one the renderer must obey: a line kind may only be legended on a
+// sheet whose lineInFilter admits it. It is deliberately expressed against lineInFilter rather
+// than against a painter, because lineInFilter is the single authority every painter is now
+// required to consult.
+test('no sheet legends a line kind that its own membership rule excludes', () => {
+  const kinds = ['swale', 'pipe', 'drip', 'greywater', 'fence', 'path', 'bedpath', 'windbreak'] as const;
+  const state = {
+    lines: kinds.map((kind, index) => ({
+      id: `line-${kind}`,
+      kind,
+      points: [[0.3, 0.3 + index * 0.01], [0.7, 0.32 + index * 0.01]] as Array<[number, number]>,
+    })),
+  } as unknown as Parameters<typeof exactSheetLineLegendGroups>[0];
+
+  // 'base', 'sector' and 'implementation' legend no line kinds at all, so they have nothing to
+  // check; the layer sheets and the masterplan are where a mismatch can occur.
+  const lineSheets: GlossyLayerFilter[] = ['zones', 'water', 'earthworks', 'planting', 'structures', 'all'];
+  for (const sheet of lineSheets) {
+    for (const group of exactSheetLineLegendGroups(state, sheet as ExactPlanSheetKey)) {
+      if (!group.lineKind) continue;
+      assert.ok(
+        lineInFilter(group.lineKind, sheet),
+        `sheet ${sheet} legends "${group.text}" but lineInFilter(${group.lineKind}, ${sheet}) is false — `
+        + 'the legend would print a row for a mark the renderer is not allowed to draw',
+      );
+    }
   }
 });

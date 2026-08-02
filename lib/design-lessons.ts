@@ -11,6 +11,9 @@ export interface StepLesson {
   body: string;
   principle: string;
   tip: string;
+  /** A named confusion this step invites, answered before the farmer hits it on site. Only added
+   *  where two things a farmer places really are mistaken for each other — not a general FAQ. */
+  didYouKnow?: { question: string; answer: string };
   /** Must exist in lib/course-modules.ts COURSE_MODULES. Omitted where the plan specifies none. */
   courseModuleId?: string;
 }
@@ -47,6 +50,19 @@ export const DESIGN_STEP_LESSONS: Record<Exclude<WizardStep, 'glossy'>, StepLess
     body: "Earthworks are the slowest thing to undo, and the first thing a machine should do while it can still reach the ground: swales dug along the contour, berms built from what comes out of them, terraces and banks cut into a slope. Get the levels right and every rain afterwards works for you — water walks slowly across your land instead of running off it. Get them wrong and you have moved a great deal of soil into the wrong place.",
     principle: 'Work with nature, not against it — follow the contour the land already has.',
     tip: 'Set your levels along the contour before you dig, and plant the bank as soon as it is shaped — a bare berm is the first thing a big rain takes away.',
+    // THE ONE THING PEOPLE MIX UP ON THIS STEP, so it gets said in the lesson rather than left to
+    // be discovered on site. Rory asked for it after the two structures rendered alike on sheet 05
+    // and he had to ask which was which: "this needs to be in our study notes and also as a hey do
+    // you know this tip on the design page, people may get confused."
+    //
+    // Deliberately no numbers beyond the grade range, which is the documented soil-conservation
+    // practice rather than a recommendation this app is making for a particular farm. Whether a
+    // given slope wants a swale or a bank depends on soil and rainfall, and that decision is
+    // pointed at a person, not answered here.
+    didYouKnow: {
+      question: 'Swale or contour bank — what is the difference?',
+      answer: 'A swale is a CUT: a level trench dug on contour, with the spoil heaped downhill as its bank. It soaks water into the ground where it falls, so it is laid dead level — any fall turns it into a drain and it scours. A contour bank is a HEAP: a raised ridge across the slope, often with no trench at all, laid on a slight grade (about 0.2–0.5%) to lead runoff to a safe outlet like a grassed waterway. In short: a swale keeps water where it falls, a bank moves it somewhere safe. Swales suit soil that drains; banks suit erodible cropland, and clay or dispersive soils where a swale would waterlog and slump the slope. If you are not sure which your land wants, ask someone who knows the soil before you dig.',
+    },
     courseModuleId: 'water-harvesting',
   },
   zones: {

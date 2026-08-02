@@ -7,13 +7,22 @@
 // assumption is the more honest one:
 // https://www.dhs.gov.za/sites/default/files/documents/Redbook/REDBOOK_Section_J_Water_v1-1.pdf
 //
-// Changing a farmer-facing agronomic figure needs Rory's approval. Until then, preserve the two
-// existing outputs here, visibly and audibly, instead of silently changing the Tank Calculator
-// from 0.85 to the recommended 0.80. Both consumers now derive from this object, so a future
-// decision is one reviewed edit and the values cannot drift unnoticed in distant modules.
+// DECIDED, 2026-08-02: one coefficient, 0.80, everywhere. Rory's call, on the recommendation
+// above — asked whether the Water sheet's 0.80 and the Tank Calculator's 0.85 should be one
+// number, and answered "you decide".
+//
+// 0.80 rather than 0.85 because the app still does not ask for roof material, gutter condition or
+// first-flush loss, and 0.85 is the figure for a pitched TILED roof specifically. Applying the
+// best-case coefficient to an unknown roof makes storage look more sufficient than it is, and the
+// farmer discovers the error in a dry September. Between two defensible numbers, the one that
+// under-promises is the one to publish.
+//
+// The Tank Calculator therefore sizes slightly more conservatively than it used to: the same roof
+// and rainfall now yield about 6% less harvestable water, so a farmer following it buys marginally
+// more storage. That is the intended direction of the error.
 export const ROOF_RUNOFF_COEFFICIENTS = Object.freeze({
   waterSheet: 0.8,
-  tankCalculator: 0.85,
+  tankCalculator: 0.8,
 } as const);
 
 export const WATER_SHEET_ROOF_RUNOFF_COEFFICIENT = ROOF_RUNOFF_COEFFICIENTS.waterSheet;

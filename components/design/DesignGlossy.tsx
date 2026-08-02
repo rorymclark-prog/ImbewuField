@@ -86,7 +86,8 @@ import {
   type CropRowLayout,
 } from '@/lib/crop-row-cartography';
 import { overlayElementsText } from '@/lib/overlay-elements';
-import { deriveWaterSystem } from '@/lib/water-system';
+import { annualRoofHarvestLitres, deriveWaterSystem, ringAreaM2, statedTankCapacityLitres } from '@/lib/water-system';
+import { WATER_SHEET_ROOF_RUNOFF_COEFFICIENT } from '@/lib/roof-runoff';
 import { drawCartographicWaterSymbol } from '@/lib/cartographic-water-symbols';
 import { drawCartographicStructureSymbol } from '@/lib/cartographic-structure-symbols';
 import {
@@ -1871,7 +1872,8 @@ function waterItemsFor(state: DesignCanvasState): PlacedItem[] {
     });
 }
 
-function drawWaterRoutes(ctx: CanvasRenderingContext2D, state: DesignCanvasState, frame: CanvasFrame, W: number, H: number) {
+/** @param sheet which sheet is being painted — NOT always Water. See the membership note below. */
+function drawWaterRoutes(ctx: CanvasRenderingContext2D, state: DesignCanvasState, frame: CanvasFrame, W: number, H: number, sheet: GlossyLayerFilter = 'water') {
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
   const routeDots = (
@@ -1902,14 +1904,24 @@ function drawWaterRoutes(ctx: CanvasRenderingContext2D, state: DesignCanvasState
     }
   };
   for (const line of waterRoutesWithVisualBridges(state.lines, frame)) {
-    // OBEY THE SHEET'S OWN MEMBERSHIP RULE. lineInFilter decided long ago that a swale is dug, not
-    // plumbed, and belongs to Earthworks (sheet 05) — but only the LEGEND was taught that. This
-    // loop kept drawing every water-styled route, so a swale still appeared on the Water sheet in
-    // pipe-blue with no legend row to explain it: a line the panel had already disowned. Asking
-    // lineInFilter here is what makes the two halves of that decision agree, and it means a future
-    // move of any line kind between sheets cannot go half-applied the same way.
+    // OBEY THE SHEET'S OWN MEMBERSHIP RULE — AND IT IS THE CALLER'S SHEET, NOT ALWAYS WATER.
+    //
+    // lineInFilter decided long ago that a swale is dug, not plumbed, and belongs to Earthworks
+    // (sheet 05) — but only the LEGEND was taught that, so a swale still appeared on the Water
+    // sheet in pipe-blue with no legend row to explain it. Asking lineInFilter here is what makes
+    // the two halves of that decision agree.
+    //
+    // The first version of this check hard-coded 'water', which was wrong in a way that only shows
+    // up two sheets away: this function is ALSO the only route painter for the masterplan (sheet
+    // 08, filter 'all') — the drawFilteredLines calls beside it there cover planting and
+    // structures, neither of which owns a swale. So hard-coding the sheet silently deleted every
+    // swale from sheet 08 while exactSheetLineLegendGroups('all') carried on listing it: the exact
+    // "nothing in the legend without a mark on the map" invariant this change set out to restore,
+    // broken again one sheet over. Caught by an adversarial audit of this very commit, not by the
+    // tests — tests/legend-map-agreement.test.ts compares the legend against the AI prompt
+    // inventory, and both are built from the same helper, so neither notices what the canvas did.
     const style = waterRouteStyleFor(line.kind);
-    if (!style || line.points.length < 2 || !lineInFilter(line.kind, 'water')) continue;
+    if (!style || line.points.length < 2 || !lineInFilter(line.kind, sheet)) continue;
     const trace = () => {
       ctx.beginPath();
       line.points.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, x * W, y * H));
@@ -4638,6 +4650,72 @@ function drawEarthworksFeatures(
     ctx.stroke();
     ctx.restore();
   }
+
+  // A PIT PER TREE, because that is the ground work planting a tree actually is. Rory: "tree basin
+  // should automatically appear here" — on the setting-out sheet, every tree the design places is
+  // a hole somebody has to dig, and a sheet that lists swales and beds but not thirty-two tree
+  // pits under-states the job.
+  //
+  // DERIVED, NOT PLACED. These are drawn from the trees, never written into the saved design and
+  // never counted in the Bill of Quantities — a farmer who also placed real tree_basin elements
+  // would otherwise find every pit listed twice, and a render that silently added items to a
+  // design would break the rule that rendering never mutates what the farmer drew. Trees that DO
+  // already have their own basin element are skipped, so the two can never double up on the page
+  // either.
+  const placedBasins = state.items.filter((item) => item.defId === 'tree_basin');
+  const basinDef = ELEMENTS_BY_ID.tree_basin;
+  if (basinDef) {
+    for (const item of state.items) {
+      const def = ELEMENTS_BY_ID[item.defId];
+      if (!def || def.category !== 'growing' || def.shape !== 'circle') continue;
+      const alreadyDug = placedBasins.some((basin) => {
+        const dx = (basin.x - item.x) * ctx.canvas.width;
+        const dy = (basin.y - item.y) * ctx.canvas.height;
+        return Math.hypot(dx, dy) < Math.max(6, (basinDef.wM * pxPerM) * 0.75);
+      });
+      if (alreadyDug) continue;
+      const r = Math.max(5, (basinDef.wM * pxPerM) / 2);
+      const cx = px(item.x);
+      const cy = py(item.y);
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(252,248,236,0.9)';
+      ctx.lineWidth = casing * 1.2;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.fillStyle = CROP_SOIL_COLOR;
+      ctx.globalAlpha = 0.9;
+      ctx.fill();
+      ctx.globalAlpha = 1;
+      ctx.setLineDash([Math.max(3, r * 0.3), Math.max(2, r * 0.22)]);
+      ctx.strokeStyle = 'rgba(40,28,17,0.9)';
+      ctx.lineWidth = casing * 0.6;
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.restore();
+    }
+  }
+}
+
+/** How many tree pits sheet 05 will DERIVE — trees with no basin of their own already placed.
+ *  Exported so the legend can name them: nothing is drawn on these sheets without a legend row,
+ *  and a derived mark is no exception. */
+export function derivedTreeBasinCount(state: DesignCanvasState, frame: CanvasFrame): number {
+  const basinDef = ELEMENTS_BY_ID.tree_basin;
+  if (!basinDef) return 0;
+  const pxPerM = 1 / frame.mPerPx;
+  const placed = state.items.filter((item) => item.defId === 'tree_basin');
+  return state.items.filter((item) => {
+    const def = ELEMENTS_BY_ID[item.defId];
+    if (!def || def.category !== 'growing' || def.shape !== 'circle') return false;
+    return !placed.some((basin) => {
+      const dx = (basin.x - item.x) * frame.imgW;
+      const dy = (basin.y - item.y) * frame.imgH;
+      return Math.hypot(dx, dy) < Math.max(6, basinDef.wM * pxPerM * 0.75);
+    });
+  }).length;
 }
 
 /** Earthworks that are HEAPED UP rather than dug out, and so must read as raised ground. A swale is
@@ -5473,7 +5551,7 @@ async function buildExactLayerOverlay(
       );
       drawContextItems(featureCtx, state, filter, px, py, pxPerM, frame);
     });
-    drawWaterRoutes(ctx, state, frame, W, H);
+    drawWaterRoutes(ctx, state, frame, W, H, filter);
     drawExactFeaturesWithPresentation(ctx, W, H, featurePresentation, (featureCtx) => {
       drawWaterFeatures(
         featureCtx,
@@ -5494,7 +5572,7 @@ async function buildExactLayerOverlay(
     // Routes sit over the ground but below every placed feature. Water and non-Water items then
     // share one biggest-first stack, so a small canopy/fitting is never hidden merely because its
     // category happened to be painted in an earlier subsystem pass.
-    drawWaterRoutes(ctx, state, frame, W, H);
+    drawWaterRoutes(ctx, state, frame, W, H, filter);
     drawExactFeaturesWithPresentation(ctx, W, H, featurePresentation, (featureCtx) => {
       drawFilteredItems(featureCtx, state, filter, px, py, pxPerM);
     });
@@ -5971,6 +6049,9 @@ async function buildReferenceBlueprintMap(
   refLayers: DesignGlossyProps['refLayers'],
   filter: GlossyLayerFilter,
   placeName?: string,
+  /** Only the Water sheet uses this today, for its harvest block. Optional everywhere else, and
+   *  the block simply does not print without it — see roofHarvestFooterLines. */
+  site?: DesignGlossyProps['site'],
 ): Promise<string> {
   const presentation = await boundaryPresentationContext(state, frame, refLayers);
   const renderState = presentation.state;
@@ -6026,6 +6107,19 @@ async function buildReferenceBlueprintMap(
     drawBlueprintLabelPills(ctx, referenceBlueprintLabels(renderState, renderRefLayers, W, H, filter));
   }
 
+  // THE WATER SHEET CARRIES ITS OWN SIZING CALCULATION. That is how real rainwater-harvesting
+  // drawings work: the sheet that shows the tanks also shows the arithmetic that says whether they
+  // are big enough, so a farmer or a funder can check it without a second document. Rory: "should
+  // you show info like how rain can be harvested on the roof?"
+  //
+  // Every figure is measured or sourced — traced roof area, the site's own annual rainfall, and
+  // the runoff coefficient from lib/roof-runoff.ts (0.80, cited to the CSIR Red Book). Nothing
+  // here is estimated into existence: when the roof is untraced or the rainfall unknown the block
+  // simply does not print, because a harvest figure resting on a guessed roof is worse than none.
+  const waterBudget = filter === 'water'
+    ? roofHarvestFooterLines(renderState, renderFrame, renderRefLayers, site ?? null)
+    : [];
+
   return composeStyleSheet(
     canvas.toDataURL('image/png'),
     renderState,
@@ -6037,7 +6131,59 @@ async function buildReferenceBlueprintMap(
     REFERENCE_SHEET_LABEL[filter],
     false,
     true,
+    waterBudget.length
+      ? { footerHeading: 'WATER BUDGET', footerText: waterBudget.join('\n'), footerBox: true }
+      : {},
   );
+}
+
+/**
+ * The Water sheet's rainwater-harvest block: roof area × annual rainfall × runoff coefficient,
+ * against the storage actually placed.
+ *
+ * Returns an EMPTY list rather than a partial block whenever a term is missing. A harvest figure
+ * is only as good as the roof it is measured from, and a farmer sizing tanks off an invented roof
+ * area would be worse served than by no number at all — the same rule statedTankCapacityLitres
+ * already follows when a tank's name does not state its size.
+ */
+function roofHarvestFooterLines(
+  state: DesignCanvasState,
+  frame: CanvasFrame,
+  refLayers: DesignGlossyProps['refLayers'],
+  site: DesignGlossyProps['site'],
+): string[] {
+  const metrics = { imgW: frame.imgW, imgH: frame.imgH, mPerPx: frame.mPerPx };
+  const roofRings: Array<Array<[number, number]>> = [];
+  if (refLayers.house.length >= 3) roofRings.push(refLayers.house);
+  for (const zone of state.zones) {
+    if (zone.feature === 'house' && zone.points.length >= 3) roofRings.push(zone.points);
+  }
+  const roofM2 = roofRings.reduce((sum, ring) => sum + ringAreaM2(ring, metrics), 0);
+  const rainfallMm = site?.rainfallMm;
+  if (!(roofM2 > 1) || !Number.isFinite(rainfallMm ?? NaN) || !((rainfallMm ?? 0) > 0)) return [];
+
+  const harvestL = annualRoofHarvestLitres(roofM2, rainfallMm as number);
+  if (!(harvestL > 0)) return [];
+  const storedL = state.items.reduce((sum, item) => {
+    const def = ELEMENTS_BY_ID[item.defId];
+    if (!def || !itemInFilter(def.category, 'water', def.id)) return sum;
+    return sum + (statedTankCapacityLitres(def) ?? 0);
+  }, 0);
+
+  const lines = [
+    `Roof catchment traced: ${Math.round(roofM2).toLocaleString()} m²`,
+    `Annual rainfall: ${Math.round(rainfallMm as number).toLocaleString()} mm`,
+    `Runoff coefficient: ${WATER_SHEET_ROOF_RUNOFF_COEFFICIENT} (generic roof)`,
+    `Harvestable: ~${Math.round(harvestL).toLocaleString()} L a year`,
+  ];
+  // Storage is stated only when the catalog actually knows the capacities. A "Rain Barrel" with no
+  // size in its name contributes nothing, so a total built from those would understate the storage
+  // and make it look inadequate.
+  if (storedL > 0) {
+    lines.push(`Storage placed: ${Math.round(storedL).toLocaleString()} L`);
+    lines.push(`That is ${Math.round((storedL / harvestL) * 100)}% of one year's harvest.`);
+  }
+  return lines;
 }
 
 export function buildBlueprintZoneMap(
@@ -6054,8 +6200,9 @@ export function buildBlueprintWaterMap(
   frame: CanvasFrame,
   refLayers: DesignGlossyProps['refLayers'],
   placeName?: string,
+  site?: DesignGlossyProps['site'],
 ): Promise<string> {
-  return buildReferenceBlueprintMap(state, frame, refLayers, 'water', placeName);
+  return buildReferenceBlueprintMap(state, frame, refLayers, 'water', placeName, site);
 }
 
 // Earthworks = sheet 05, the land-shaping setting-out sheet split out of Water.
@@ -8187,8 +8334,22 @@ export function sheetLegendRows(
   refLayers: DesignGlossyProps['refLayers'],
   filter: GlossyLayerFilter,
   _includeToolGlyphs = false,
+  /** Needed only by sheet 05's derived tree pits, which are counted in metre space. */
+  legendFrame: CanvasFrame = { imgW: 1000, imgH: 1000, mPerPx: 0.1 } as CanvasFrame,
 ): StyleLegendRow[] {
   const rows: StyleLegendRow[] = [];
+  // Sheet 05 derives a pit for every tree that has no basin of its own (drawEarthworksFeatures).
+  // Derived or not, it is a mark on the map, so it gets a row — that rule has no exceptions, and
+  // the word "derived" in the label is what stops a reader counting it as something they placed.
+  if (filter === 'earthworks') {
+    const pits = derivedTreeBasinCount(state, legendFrame);
+    if (pits > 0) {
+      rows.push({
+        swatch: ELEMENTS_BY_ID.tree_basin?.color ?? '#A9743F',
+        text: countedLegendText('Tree pit to dig (one per tree)', pits),
+      });
+    }
+  }
   if (filter === 'zones') {
     for (const group of exactSheetZoneLegendGroups(state, filter)) {
       rows.push({ swatch: ZONE_DEFS[group.zone].color, text: group.text, kind: 'zone' });
@@ -8639,7 +8800,7 @@ async function composeStyleSheet(
   // to grow into. The reference sheet Rory has sent me repeatedly does not have it either.
   y += Math.round(legendW * 0.045);
 
-  const rows = options.legendRows ?? sheetLegendRows(state, refLayers, filter, includeToolGlyphs);
+  const rows = options.legendRows ?? sheetLegendRows(state, refLayers, filter, includeToolGlyphs, frame);
   const legendTop = y + Math.round(legendW * 0.03);
   const footerFs = options.footerText ? Math.max(9, Math.round(legendW * 0.025)) : Math.round(legendW * 0.036);
   const footerLineH = Math.max(11, Math.round(footerFs * 1.28));
@@ -10296,7 +10457,7 @@ export default function DesignGlossy({
       // last rung is a real sheet cannot fail loudly — every filter it forgets silently becomes
       // the masterplan — and buildBlueprintEarthworksMap had existed the whole time. One call
       // makes forgetting impossible.
-      const composite = await buildReferenceBlueprintMap(state, frame, refLayers, filter, placeName);
+      const composite = await buildReferenceBlueprintMap(state, frame, refLayers, filter, placeName, site);
       setResultImage(composite);
       const record: SavedGlossy = { image: composite, provider: 'exact', at: new Date().toISOString() };
       saveGlossy(state.siteId, mapKey, record);
@@ -10465,7 +10626,7 @@ export default function DesignGlossy({
         if (layerContentCount(state, refLayers, f) === 0) continue;
         step(
           `${SHEET_NO[f]} · ${GLOSSY_FILTERS.find((x) => x.key === f)?.label ?? f} map`,
-          await buildReferenceBlueprintMap(state, frame, refLayers, f, placeName),
+          await buildReferenceBlueprintMap(state, frame, refLayers, f, placeName, site),
           f,
         );
       }

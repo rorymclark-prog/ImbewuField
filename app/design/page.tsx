@@ -310,7 +310,17 @@ function applyStepFocus(step: WizardStep): StepFocus {
     // palette still offers earthworks chips (categoriesForStep) and a step must never switch off
     // the layer its own chips draw onto — see the PLACE-THEN-VANISH GUARD above.
     case 'earthworks':
-      return on(['earthworks']);
+      // PLANTING IS ON HERE TOO, because half the earth-moving on a smallholding is planting work.
+      // A raised bed is built, a tree is a pit somebody digs, and both were placed on the Planting
+      // step — so with only the earthworks layer lit, a farmer arriving at Earthworks saw swales
+      // and an empty field, with no sign of the beds they had just drawn. Rory: "the raised beds
+      // ... should appear here, auto generated from when i inserted them in planting."
+      //
+      // This is the step-level twin of the sheet-level answer: lib/glossy-filters.ts already gives
+      // beds, basins, keyhole beds and herb spirals a second, factual home on sheet 05. The canvas
+      // has to agree with the sheet, or the step shows one thing and its own printed output shows
+      // another.
+      return on(['earthworks', 'planting']);
     case 'zones':
       return on(['zones']);
     case 'planting':

@@ -1475,7 +1475,9 @@ test('both exact render paths pass the filter through instead of enumerating she
   const src = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
   assert.match(
     src,
-    /const composite = await buildReferenceBlueprintMap\(state, frame, refLayers, filter, placeName\)/,
+    // `site` was appended after placeName so the Water sheet can print its harvest block; the
+    // property this guards is unchanged — `filter` is passed through, never re-derived here.
+    /const composite = await buildReferenceBlueprintMap\(state, frame, refLayers, filter, placeName(, site)?\)/,
     'the single-sheet exact render must pass `filter`, not re-derive the sheet',
   );
   assert.doesNotMatch(
