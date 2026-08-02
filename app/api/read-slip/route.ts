@@ -1,11 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
+import { guardPaidApiRequest } from '@/lib/api-auth';
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
 
 // Lima reads a photographed till slip / receipt and pulls out the total, a short
 // description and the supplier, so the farmer can log a cost without typing.
 export async function POST(req: NextRequest) {
+  const auth = await guardPaidApiRequest(req, '/api/read-slip');
+  if (auth.response) return auth.response;
   const { image }: { image?: { data: string; mediaType: string } } = await req.json();
   if (!image?.data) return NextResponse.json({ error: 'No image provided' }, { status: 400 });
 

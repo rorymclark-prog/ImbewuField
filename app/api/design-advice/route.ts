@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
+import { guardPaidApiRequest } from '@/lib/api-auth';
 
 // Advice calls are small and frequent (fired on most canvas edits) — allow up to 30s
 // but keep them cheap: claude-haiku-4-5, short system prompt, short max_tokens.
@@ -18,7 +19,9 @@ interface DesignAdviceAI {
   suggestions: string[];
 }
 
-export async function POST(req: NextRequest): Promise<NextResponse> {
+export async function POST(req: NextRequest) {
+  const auth = await guardPaidApiRequest(req, '/api/design-advice');
+  if (auth.response) return auth.response;
   let body: unknown;
   try {
     body = await req.json();

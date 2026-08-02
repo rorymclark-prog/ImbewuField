@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
+import { guardPaidApiRequest } from '@/lib/api-auth';
 
 // AI Auto-Design — ONE vision call that plans the WHOLE farm. The model REASONS over the real
 // satellite plot + the farmer's questionnaire answers and returns INTENT only (per-element
@@ -69,6 +70,8 @@ function ringForPrompt(ring: Ring | undefined, max = 24): string {
 const client = process.env.ANTHROPIC_API_KEY ? new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY }) : null;
 
 export async function POST(req: NextRequest) {
+  const auth = await guardPaidApiRequest(req, '/api/auto-design');
+  if (auth.response) return auth.response;
   let body: AutoDesignBody;
   try {
     body = await req.json();

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
+import { guardPaidApiRequest } from '@/lib/api-auth';
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
 
@@ -7,6 +8,8 @@ const ALLOWED_MEDIA = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'] as 
 type AllowedMedia = (typeof ALLOWED_MEDIA)[number];
 
 export async function POST(req: NextRequest) {
+  const auth = await guardPaidApiRequest(req, '/api/lima-vision');
+  if (auth.response) return auth.response;
   const { image, mode }: {
     image: { data: string; mediaType: string };
     mode: 'crop' | 'weigh';

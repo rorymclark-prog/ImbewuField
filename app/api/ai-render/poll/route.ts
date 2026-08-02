@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { guardPaidApiRequest } from '@/lib/api-auth';
 
 // Polls a fal.ai queue request (used by the gpt-image-2 async path). The client calls this
 // every few seconds with the status/response URLs fal handed back at submit time. Each call
@@ -9,6 +10,8 @@ export const maxDuration = 30;
 const isFalQueueUrl = (u?: string) => !!u && /^https:\/\/queue\.fal\.run\//.test(u);
 
 export async function POST(req: NextRequest) {
+  const auth = await guardPaidApiRequest(req, '/api/ai-render/poll');
+  if (auth.response) return auth.response;
   const key = process.env.FAL_KEY;
   if (!key) {
     return NextResponse.json({ error: 'FAL_KEY is not configured on the server.' }, { status: 500 });

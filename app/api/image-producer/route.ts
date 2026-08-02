@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { buildProducerPrompt, buildProducerPromptLegacy, STYLE_LINES, type StylePreset } from '@/lib/producer-prompt';
+import { guardPaidApiRequest } from '@/lib/api-auth';
 
 // Strict single-purpose "restyle, never redesign" endpoint. The caller has already
 // composited the exact scene (satellite + placed elements + boundary) — this route
@@ -168,6 +169,8 @@ async function submitGptImage2(key: string, imageBase64: string, prompt: string)
 }
 
 export async function POST(req: NextRequest) {
+  const auth = await guardPaidApiRequest(req, '/api/image-producer');
+  if (auth.response) return auth.response;
   if (isRateLimited(clientIp(req))) {
     return NextResponse.json(
       { error: 'Too many produce requests from this connection — please wait a few minutes and try again.' },

@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 import type { LocationData } from '@/lib/types';
+import { guardPaidApiRequest } from '@/lib/api-auth';
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
 
@@ -11,6 +12,8 @@ const LANGUAGES: Record<string, string> = {
 };
 
 export async function POST(req: NextRequest) {
+  const auth = await guardPaidApiRequest(req, '/api/design');
+  if (auth.response) return auth.response;
   let body: { images: Array<{ data: string; mediaType: string }>; locationData: LocationData; photoAnalysis?: string; language?: string; tone?: 'simple' | 'professional' };
   try {
     body = await req.json();

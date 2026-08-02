@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
+import { guardPaidApiRequest } from '@/lib/api-auth';
 
 export const maxDuration = 60;
 
@@ -310,6 +311,8 @@ async function detectWithClaude(body: DetectBody): Promise<DetectResult> {
 }
 
 export async function POST(req: NextRequest) {
+  const auth = await guardPaidApiRequest(req, '/api/design-detect');
+  if (auth.response) return auth.response;
   let body: DetectBody;
   try {
     body = await req.json();

@@ -6,6 +6,10 @@ import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import type { SiteSurvey } from '@/lib/site-survey';
 import { surveyToPrompt } from '@/lib/site-survey';
 import { deriveSolar, isValidEarthLatitude } from '@/lib/solar';
+import { guardPaidApiRequest } from '@/lib/api-auth';
+import { WATER_SHEET_ROOF_RUNOFF_COEFFICIENT } from '@/lib/roof-runoff';
+import type { DesignLayer } from '@/lib/design-studio';
+import type { PhasePlan } from '@/lib/phasing';
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
 
@@ -75,12 +79,38 @@ const LANGUAGES: Record<string, string> = {
   nr: 'isiNdebele',
 };
 
+const MONTH_INDEX = new Map(MONTHS.map((month, index) => [month.toLowerCase(), index]));
+
+function drySeasonMonthIndices(drySeason: string, pattern: string): number[] {
+  const namedMonths = [...drySeason.matchAll(/Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec/gi)]
+    .map((match) => MONTH_INDEX.get(match[0].toLowerCase()))
+    .filter((month): month is number => month !== undefined);
+  if (namedMonths.length >= 2) {
+    const [start, end] = namedMonths;
+    const months: number[] = [];
+    for (let month = start, count = 0; count < 12; count += 1) {
+      months.push(month);
+      if (month === end) return months;
+      month = (month + 1) % 12;
+    }
+    return months;
+  }
+  if (namedMonths.length === 1) return namedMonths;
+  if (pattern === 'summer') return [4, 5, 6, 7]; // May–Aug, the catalogued summer-rainfall dry season
+  if (pattern === 'winter') return [10, 11, 0, 1, 2]; // Nov–Mar, the catalogued winter-rainfall dry season
+  return [];
+}
+
 export async function POST(req: NextRequest) {
+  const auth = await guardPaidApiRequest(req, '/api/generate-report');
+  if (auth.response) return auth.response;
   let body: {
     locationData: LocationData;
     photoAnalysis?: string;
     siteData?: SiteData;
     waterData?: WaterData;
+    studioLayers?: DesignLayer[];
+    phasePlan?: PhasePlan;
     surveyData?: SiteSurvey;
     evidenceData?: Record<string, { count: number; notes: string[] }>;
     sections: string[];
@@ -97,7 +127,7 @@ export async function POST(req: NextRequest) {
       headers: { 'Content-Type': 'application/json' },
     });
   }
-  const { locationData, photoAnalysis, siteData, waterData, surveyData, evidenceData, sections, language, bilingual, tone, length } = body;
+  const { locationData, photoAnalysis, siteData, waterData, studioLayers, phasePlan, surveyData, evidenceData, sections, language, bilingual, tone, length } = body;
 
   // DoS hardening: drop any section name not in the canonical allow-list so an
   // attacker cannot drive unbounded parallel Anthropic calls via a crafted request.
@@ -183,13 +213,27 @@ export async function POST(req: NextRequest) {
   const solar = deriveSolar(d.lat);
   const sunSummerNoon = Math.round(solar.summer.noonAltitudeDeg);
   const sunWinterNoon = Math.round(solar.winter.noonAltitudeDeg);
+  const compassWord = (side: 'N' | 'S' | 'overhead') =>
+    side === 'N' ? 'NORTH' : side === 'S' ? 'SOUTH' : 'OVERHEAD';
+  const winterShadowSide = solar.winter.noonSide === 'N'
+    ? 'SOUTH'
+    : solar.winter.noonSide === 'S'
+    ? 'NORTH'
+    : 'directly below the sun';
   const sunSkyText =
     solar.middayFrom === 'N'
-      ? 'Sun is in the NORTHERN sky at midday → north-facing aspects get the most sun, south-facing are shaded/cooler.'
+      ? `Sun is in the ${compassWord(solar.summer.noonSide)} sky at midday → north-facing aspects get the most sun, south-facing are shaded/cooler.`
       : solar.middayFrom === 'S'
-      ? 'Sun is in the SOUTHERN sky at midday → south-facing aspects get the most sun, north-facing are shaded/cooler.'
-      : `This site sits inside the tropics — the midday sun swings sides through the year (from the ${solar.winter.noonSide} in winter to the ${solar.summer.noonSide} in summer), so both north- and south-facing aspects get strong sun at different times of year.`;
-  const sunData = `${sunSkyText} Noon sun elevation: ~${sunSummerNoon}° in summer (high), ~${sunWinterNoon}° in winter (low${solar.middayFrom === 'S' ? ' — long shadows to the north' : ' — long shadows to the south'}). Day length: ~${dayLen(-DECL)}h summer / ~${dayLen(DECL)}h winter.`;
+      ? `Sun is in the ${compassWord(solar.winter.noonSide)} sky at midday → south-facing aspects get the most sun, north-facing are shaded/cooler.`
+      : `This site sits inside the tropics — the midday sun swings sides through the year (from the ${compassWord(solar.winter.noonSide)} in winter to the ${compassWord(solar.summer.noonSide)} in summer), so both north- and south-facing aspects get strong sun at different times of year.`;
+  const sunData = `${sunSkyText} Noon sun elevation: ~${sunSummerNoon}° in summer (high), ~${sunWinterNoon}° in winter (low — longest shadows toward the ${winterShadowSide}). Day length: ~${dayLen(-DECL)}h summer / ~${dayLen(DECL)}h winter.`;
+  const dryMonths = drySeasonMonthIndices(d.rainfall.drySeason, d.rainfall.pattern);
+  const drySeasonRainMm = dryMonths.reduce((total, month) => total + (d.rainfall.monthly[month] ?? 0), 0);
+  const summerSunSide = compassWord(solar.summer.noonSide);
+  const winterSunSide = compassWord(solar.winter.noonSide);
+  const preferredSunSide = solar.middayFrom === 'mixed'
+    ? `${summerSunSide} in summer and ${winterSunSide} in winter`
+    : compassWord(solar.middayFrom);
 
   const buildPrompt = (sections: string[], withTitle: boolean) => `You are an expert permaculture designer creating a permaculture site report for a small-scale farmer in South Africa. Name REAL species suited to the site, give practical actions, and use the actual site data. No generic permaculture theory.${languageInstruction}${toneInstruction}${lengthInstruction}
 
@@ -224,6 +268,16 @@ ${waterData ? `\nWATER STORAGE (user-drawn on map)
 ${waterData.count} water storage feature(s) drawn — total surface area ${waterData.areaM2.toLocaleString()} m².
 Estimated capacity: ~${waterData.estVolumeKL.toLocaleString()} kL (${(waterData.estVolumeKL * 1000).toLocaleString()} L), assuming ${waterData.avgDepthM}m average depth.
 Use this existing/planned storage in the water plan: compare it to the dry-season demand and rainfall capture, and say whether it is enough or more is needed. Treat the estimate as approximate (real depth varies).` : ''}
+${studioLayers && studioLayers.some((layer) => layer.approved) ? `
+DESIGN AS DRAWN (approved geometry — treat this as the farmer's actual plan, not a suggestion)
+${studioLayers.filter((layer) => layer.approved).map((layer) => `- ${layer.layerType}: ${layer.name || 'Unnamed feature'} — ${Number.isFinite(layer.areaM2) ? layer.areaM2 : 0} m²`).join('\n')}
+${phasePlan ? `
+BUILD PHASES (derived from the same design)
+${phasePlan.phases.map((phase) => `Phase ${phase.n} — ${phase.title} (${phase.weekRange})\n  Tasks: ${phase.tasks.join(' · ')}\n  Hold point: ${phase.holdPoint}`).join('\n')}
+Critical order: ${phasePlan.criticalOrder.join(' → ')}
+Site rules: ${phasePlan.siteRules.join(' · ')}` : ''}` : `
+DESIGN AS DRAWN
+No approved Design Studio layers were supplied. Do not describe a drawn layout as if one exists.`}
 ${photoAnalysis ? `\nSITE PHOTO ANALYSIS:\n${photoAnalysis}` : ''}
 ${surveyData ? `\nSITE SURVEY (farmer-completed — treat this as authoritative ground truth about the site):\n${surveyToPrompt(surveyData, d.rainfall.annual)}` : ''}
 ${evidenceData && Object.keys(evidenceData).length > 0 ? `\nFARMER'S EVIDENCE (items the farmer has photographed, measured or noted on this site — treat as ACTUAL observed conditions, not estimates):\n${
@@ -291,11 +345,11 @@ Keep the tone and length consistent with the rest of the report.
 3. **[Earthwork name]** — [details]
 
 ### Calculations
-- **Roof catchment yield:** 1m² roof × 1mm rain = 1L → 100m² roof × ${d.rainfall.annual}mm = **${Math.round(d.rainfall.annual * 100).toLocaleString()} L/year** (first-flush loss ~10%: **${Math.round(d.rainfall.annual * 90).toLocaleString()} L usable**)
+- **Roof catchment yield:** 1m² roof × 1mm rain = 1L → 100m² roof × ${d.rainfall.annual}mm × reviewed runoff coefficient ${WATER_SHEET_ROOF_RUNOFF_COEFFICIENT} = **${Math.round(d.rainfall.annual * 100 * WATER_SHEET_ROOF_RUNOFF_COEFFICIENT).toLocaleString()} L usable/year**
 ${siteData ? `- **Total site catchment:** ${siteData.areaHa} ha × ${d.rainfall.annual}mm = **${Math.round(siteData.areaM2 * d.rainfall.annual / 1000).toLocaleString()} kL/year** potential capture (realistic 30–50% harvest: **${Math.round(siteData.areaM2 * d.rainfall.annual / 1000 * 0.4).toLocaleString()} kL**)` : ''}
 - **Swale spacing** on ${d.elevation.slopeDeg}° slope: approx every **${Math.max(5, Math.round(40 / Math.max(d.elevation.slopeDeg, 1)))}m** vertical interval${siteData ? ` — approximately ${Math.max(1, Math.round(siteData.perimeterM / Math.max(5, Math.round(40 / Math.max(d.elevation.slopeDeg, 1))) / 4))} swales on this ${siteData.areaHa} ha site` : ''}
-- **Dry season storage gap:** ${d.rainfall.drySeason} = ~${Math.round(d.rainfall.monthly.filter((_, i) => i >= 4 && i <= 7).reduce((a,b) => a+b,0))}mm total — minimum tank size for food garden: **[X,XXX L]**
-- **ETo vs rainfall:** Dry season ETo est. ${(d.climate.solarRadiation * 1.1 * 90).toFixed(0)}mm vs ${Math.round(d.rainfall.monthly.filter((_, i) => i >= 4 && i <= 7).reduce((a,b) => a+b,0))}mm rain → **deficit: [Xmm] — must be covered by storage or irrigation**
+- **Dry season storage gap:** ${d.rainfall.drySeason} = ~${Math.round(drySeasonRainMm)}mm total — minimum tank size for food garden: **[X,XXX L]**
+- **ETo vs rainfall:** Dry season ETo est. ${(d.climate.solarRadiation * 1.1 * 90).toFixed(0)}mm vs ${Math.round(drySeasonRainMm)}mm rain → **deficit: [Xmm] — must be covered by storage or irrigation**
 ${waterData ? `- **Drawn water storage:** ${waterData.count} store(s), ~**${waterData.estVolumeKL.toLocaleString()} kL** capacity (est. ${waterData.avgDepthM}m avg depth over ${waterData.areaM2.toLocaleString()} m²). State clearly whether this covers the dry-season deficit above, and if not, how much more storage is needed.` : ''}
 
 ### Implementation Timeline
@@ -490,8 +544,8 @@ Small animals suited to ${siteData ? `a ${siteData.areaHa} ha property` : 'a sma
 ` : ''}${sections.includes('Sun & Solar') ? `## Sun & Solar
 
 ${sunData}
-- **Placement:** face the house, sun-loving crops and any solar panels NORTH. Keep tall trees on the south side so they don't shade growing areas.
-- **Winter sun:** the low ~${sunWinterNoon}° winter sun throws long shadows south — plan so winter beds stay sunny.
+- **Placement:** face the house, sun-loving crops and any solar panels toward the ${preferredSunSide} sun. Keep tall trees on the side opposite the winter sun (${winterShadowSide}) so they don't shade growing areas.
+- **Winter sun:** the low ~${sunWinterNoon}° winter sun sits in the ${winterSunSide} and throws its longest shadows toward the ${winterShadowSide} — plan so winter beds stay sunny.
 - **Solar power:** at ${d.climate.solarRadiation} kWh/m²/day this site has ${d.climate.solarRadiation > 5.5 ? 'excellent' : 'good'} solar potential — roughly **${Math.round(d.climate.solarRadiation * 0.75 * 365).toLocaleString()} kWh/year per 1 kW** of panels. Good for water pumping, lights, fencing.
 - **Summer shade:** deciduous trees on the north/west give shade in summer then drop leaves for winter sun.
 
@@ -609,14 +663,20 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
   const batchResults: string[] = new Array(batches.length);
 
   const runBatch = async (batchSections: string[], idx: number): Promise<void> => {
-    batchResults[idx] = await client.messages
-      .create({
+    try {
+      const msg = await client.messages.create({
         model: 'claude-sonnet-4-6',
         max_tokens: perBatchTokens,
         messages: [{ role: 'user', content: buildPrompt(batchSections, idx === 0) }],
-      })
-      .then((msg) => msg.content.map((b) => (b.type === 'text' ? b.text : '')).join(''))
-      .catch(() => `\n\n_[A section could not be generated — please regenerate the report.]_\n`);
+      });
+      const text = msg.content.map((b) => (b.type === 'text' ? b.text : '')).join('');
+      const cutShort = msg.stop_reason === 'max_tokens';
+      batchResults[idx] = text + (cutShort
+        ? '\n\n_[This section may be incomplete: the model reached its output limit.]_\n'
+        : '');
+    } catch {
+      batchResults[idx] = '\n\n_[A section could not be generated — please regenerate the report.]_\n';
+    }
   };
 
   // Execute batches in chunks of CONCURRENCY, preserving original order.

@@ -1,5 +1,6 @@
 import { NextRequest } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
+import { guardPaidApiRequest } from '@/lib/api-auth';
 
 export const maxDuration = 30;
 
@@ -39,6 +40,8 @@ const USER_PROMPT = `Identify the tree in this photo and return ONLY a JSON obje
 - needsBaseShot: true if you'd like a base & trunk photo for more info`;
 
 export async function POST(req: NextRequest) {
+  const auth = await guardPaidApiRequest(req, '/api/tree-id');
+  if (auth.response) return auth.response;
   const { imageBase64, mediaType } = await req.json();
   if (!imageBase64) return new Response('Missing imageBase64', { status: 400 });
 

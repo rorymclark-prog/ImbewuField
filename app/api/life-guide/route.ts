@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 import type { LocationData } from '@/lib/types';
+import { guardPaidApiRequest } from '@/lib/api-auth';
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
 
@@ -94,6 +95,8 @@ const TOOL_SCHEMA: Anthropic.Tool = {
 };
 
 export async function POST(req: NextRequest) {
+  const auth = await guardPaidApiRequest(req, '/api/life-guide');
+  if (auth.response) return auth.response;
   const { locationData }: { locationData: LocationData } = await req.json();
   if (!locationData?.biome) return NextResponse.json({ error: 'No location data' }, { status: 400 });
 

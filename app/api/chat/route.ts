@@ -1,6 +1,7 @@
 import { NextRequest } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
+import { guardPaidApiRequest } from '@/lib/api-auth';
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
 
@@ -108,6 +109,8 @@ const ALLOWED_MEDIA_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp
 type AllowedMediaType = typeof ALLOWED_MEDIA_TYPES[number];
 
 export async function POST(req: NextRequest) {
+  const auth = await guardPaidApiRequest(req, '/api/chat');
+  if (auth.response) return auth.response;
   let body: any;
   try {
     body = await req.json();

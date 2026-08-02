@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
+import { guardPaidApiRequest } from '@/lib/api-auth';
 
 // Hybrid AI-vision zone suggest — the model REASONS over the real satellite plot and returns
 // INTENT (per-zone anchor + size + outward direction + rationale), NOT raw polygons. Clean
@@ -53,6 +54,8 @@ function ringForPrompt(ring: Ring | undefined, max = 24): string {
 const client = process.env.ANTHROPIC_API_KEY ? new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY }) : null;
 
 export async function POST(req: NextRequest) {
+  const auth = await guardPaidApiRequest(req, '/api/suggest-zones-ai');
+  if (auth.response) return auth.response;
   let body: ZonePlanBody;
   try {
     body = await req.json();

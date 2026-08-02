@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
+import { guardPaidApiRequest } from '@/lib/api-auth';
 
 // Claude design generation can take 15-40s — allow up to 60s so the (best-effort,
 // background) enrichment call isn't killed by the default serverless timeout.
@@ -97,7 +98,9 @@ AnchorHint must be one of: "house" | "near-house" | "existing-garden" | "tree-be
 Return ONLY the JSON object — nothing else.`;
 
 // ── Route handler ─────────────────────────────────────────────────────────────
-export async function POST(req: NextRequest): Promise<NextResponse> {
+export async function POST(req: NextRequest) {
+  const auth = await guardPaidApiRequest(req, '/api/design-plan');
+  if (auth.response) return auth.response;
   let body: unknown;
   try {
     body = await req.json();

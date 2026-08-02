@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 import type { LocationData } from '@/lib/types';
+import { guardPaidApiRequest } from '@/lib/api-auth';
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
 
@@ -66,6 +67,8 @@ Month-by-month key activities tied to the actual rainfall pattern (${d.rainfall.
 }
 
 export async function POST(req: NextRequest) {
+  const auth = await guardPaidApiRequest(req, '/api/ai-insights');
+  if (auth.response) return auth.response;
   let data: LocationData;
   try {
     data = await req.json();

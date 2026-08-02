@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { middayFromLat } from '@/lib/sector';
 import { isValidEarthLatitude } from '@/lib/solar';
+import { guardPaidApiRequest } from '@/lib/api-auth';
 
 // Gemini image generation can take 10-60s — Vercel max.
 export const maxDuration = 60;
@@ -797,6 +798,8 @@ async function submitFalGptQueue(
 }
 
 export async function POST(req: NextRequest) {
+  const auth = await guardPaidApiRequest(req, '/api/ai-render');
+  if (auth.response) return auth.response;
   let body: { imageBase64?: string; satBase64?: string; maskBase64?: string; photos?: string[]; context?: RenderContext; provider?: 'gemini' | 'openai' | 'fal' | 'falgpt'; geminiModel?: GeminiModel; touchupPrompt?: string };
   try {
     body = await req.json();
