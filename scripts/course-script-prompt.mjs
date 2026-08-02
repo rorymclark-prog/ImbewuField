@@ -133,6 +133,11 @@ RULES
 - In between, four to six slides per lesson, in the lesson order given above.
 - Where an idea is better shown than told, title that slide "Watch: <what is shown>" and keep the
   words to what the picture cannot say. Do not add more than one per lesson.
+- A "Watch:" slide gets 15–35 WORDS. Not 40, not a paragraph. This is a hard budget and it is the
+  rule most often broken: every module's first draft has come back with watch slides the same
+  length as its teaching slides, which is the picture and the voice competing to teach the same
+  thing at the same moment. Orient the eye and stop — "Follow the water from the roof to the
+  tank." A list of items the picture already shows is exactly what does not belong here.
 - Separate every block with a line containing only ---
 - Never put a markdown heading (#, ##) inside a block. A heading ends the block, and a glossary
   written without one was once counted as 1 052 words of slide 18's narration.
@@ -145,6 +150,12 @@ WHAT YOU MAY NOT DO
 - Do not name a plant species that does not appear above. Some species are illegal to propagate in
   South Africa under NEMBA, and this course must not be the thing that suggests one.
 - Do not contradict, soften or "improve" a lesson's facts. Narrate what is written.
+- DO NOT HEDGE A DEFINITE CLAIM. This is the single most common failure and it is always the same
+  shape: the source says a thing happens and the narration says it might. "dies at the first
+  Highveld frost" became "can die after"; "won't fruit" became "may not fruit"; "casts no shade in
+  summer" became "casts little shade"; "most smallholders" became "many". Every one of those
+  reads as caution and is actually a different, weaker instruction — a farmer who hears "may not
+  fruit" plants the tree anyway. If the lesson states it flatly, state it flatly.
 - Do not invent a farmer's experience, a place name, or a story presented as real.
 
 Write the full script now.
