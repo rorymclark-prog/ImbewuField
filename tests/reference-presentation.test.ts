@@ -68,14 +68,58 @@ test('large properties retain the original frame', () => {
   ]), null);
 });
 
-test('long-thin and square farms receive different finished-sheet shapes', () => {
-  const square = calculateBoundaryPresentationLayout(SQUARE_BOUNDARY, FRAME);
-  const wide = calculateBoundaryPresentationLayout(WIDE_BOUNDARY, FRAME);
+test('a farm of any shape lands on A-series paper with no cream band left to pad', () => {
+  // This used to assert the OPPOSITE — that a long-thin farm and a square farm got different
+  // sheet shapes, because the plot chose the map shape and the paper was added afterwards as
+  // margin. Rory, looking at a rendered plan: "when we do a map it does[n't] fill out the A3
+  // ratio, we need to make the satellite image bigger so there is no blank space." Standard
+  // paper means every sheet is the SAME shape; the farm's shape shows in the boundary, not in
+  // the trim. So the surplus is now more aerial photograph, and padToPaperSheet has nothing
+  // left to do.
+  for (const boundary of [SQUARE_BOUNDARY, WIDE_BOUNDARY, TALL_BOUNDARY]) {
+    const layout = calculateBoundaryPresentationLayout(boundary, FRAME);
+    assert.ok(layout);
+    assert.ok(
+      Math.abs(layout.sheetAspect - PAPER_SHEET_RATIO) < 0.01,
+      `sheet aspect ${layout.sheetAspect} is not A-series`,
+    );
 
-  assert.ok(square);
-  assert.ok(wide);
-  assert.notEqual(wide.imgW / wide.imgH, square.imgW / square.imgH);
-  assert.notEqual(wide.sheetAspect, square.sheetAspect);
+    // Not pixel-exact, and it does not need to be: imgW/imgH and the legend width are all
+    // rounded to whole pixels, so the achieved ratio lands a couple of pixels off √2. What
+    // matters is that the residual band is invisible — half a percent of the sheet is well
+    // under a millimetre on A2 — not that it is literally zero.
+    const sheetW = layout.imgW * 2 + layout.legendWidth;
+    const sheetH = layout.imgH * 2;
+    const paper = paperSheetCanvas(sheetW, sheetH);
+    assert.ok(
+      paper.width - sheetW <= sheetW * 0.005,
+      `${sheetW}x${sheetH} still needs ${paper.width - sheetW}px of width padding`,
+    );
+    assert.ok(
+      paper.height - sheetH <= sheetH * 0.005,
+      `${sheetW}x${sheetH} still needs ${paper.height - sheetH}px of height padding`,
+    );
+  }
+});
+
+test('a photo too small to cover A-series degrades to a smaller sheet, never to nothing', () => {
+  // The guarantee that makes the paper ratio safe to chase. A boundary filling most of the
+  // source leaves no room to widen the crop toward the paper shape — and the first A-series
+  // attempt returned null exactly here, which silently dropped the sheet to an unframed
+  // fallback. It must come back with a real (if under-sized) layout whose crop is still wholly
+  // inside the photo; padToPaperSheet then adds the margin, as it always did.
+  const nearlyFull: Array<[number, number]> = [
+    [0.06, 0.06],
+    [0.94, 0.06],
+    [0.94, 0.94],
+    [0.06, 0.94],
+  ];
+  const layout = calculateBoundaryPresentationLayout(nearlyFull, FRAME);
+
+  assert.ok(layout, 'a too-small photo must not blank the sheet');
+  assert.ok(layout.cropX >= 0 && layout.cropY >= 0);
+  assert.ok(layout.cropX + layout.cropWidth <= 1 + 1e-9, 'crop must stay inside the photo');
+  assert.ok(layout.cropY + layout.cropHeight <= 1 + 1e-9, 'crop must stay inside the photo');
 });
 
 test('every derived viewport keeps one truthful metres-per-pixel scale on both axes', () => {
@@ -120,7 +164,11 @@ test('sheet 08 adds the same panel column as the rest of a tall plan set', () =>
   assert.ok(sheet.aspect <= MAX_PRESENTATION_SHEET_ASPECT);
 });
 
-test('a one-to-six plot can have a map over four-to-one while sheet 08 still stays within three-to-one', () => {
+test('a one-to-six plot fills the paper with neighbouring ground instead of a tall letterbox', () => {
+  // Previously asserted `sheet.mapH / sheet.mapW > 4` — a map as tall and thin as the plot,
+  // which left the sheet nowhere near A-series and so printed inside two wide cream bands. The
+  // sliver of land is now framed by the ground around it, which is where a farmer's water
+  // arrives from and where the wind comes over, and the sheet fills the page.
   const boundary: Array<[number, number]> = [
     [0.475, 0.275],
     [0.525, 0.275],
@@ -129,7 +177,7 @@ test('a one-to-six plot can have a map over four-to-one while sheet 08 still sta
   ];
   const sheet = calculatePhasingSheetSize(boundary, FRAME);
 
-  assert.ok(sheet.mapH / sheet.mapW > 4);
+  assert.ok(Math.abs(sheet.aspect - PAPER_SHEET_RATIO) < 0.01, `sheet aspect ${sheet.aspect}`);
   assert.ok(sheet.aspect <= MAX_PRESENTATION_SHEET_ASPECT);
   assert.ok(sheet.legendWidth >= 360);
 });

@@ -27,27 +27,22 @@ const MEASURES: Array<[string, (t: string, s: number) => number]> = [
 const LONGEST = 'GREYWATER DIVERTER & FILTER ×3';
 const SIDES: LeaderSide[] = ['left', 'right'];
 
-test('callout type keeps its map-width hierarchy across square, wide and tall farm sheets', () => {
-  const frame = { imgW: 960, imgH: 640, mPerPx: 0.4 };
-  const boundaries: Record<'square' | 'wide' | 'tall', Array<[number, number]>> = {
-    square: [[0.4, 0.35], [0.6, 0.35], [0.6, 0.65], [0.4, 0.65]],
-    wide: [[0.3, 0.425], [0.7, 0.425], [0.7, 0.575], [0.3, 0.575]],
-    tall: [[0.45, 0.2], [0.55, 0.2], [0.55, 0.8], [0.45, 0.8]],
-  };
-  const mapWidths = Object.fromEntries(Object.entries(boundaries).map(([name, boundary]) => {
-    const layout = calculateBoundaryPresentationLayout(boundary, frame);
-    assert.ok(layout);
-    return [name, layout.imgW * 2];
-  })) as Record<keyof typeof boundaries, number>;
+test('callout type keeps its map-width hierarchy', () => {
+  // This used to derive its three widths from calculateBoundaryPresentationLayout on a square, a
+  // wide and a tall boundary, on the assumption that the farm's shape sets the map's shape. It no
+  // longer does: sheets are now targeted at A-series so they fill the paper, which means every
+  // farm shape yields the SAME map width and the three sizes came out equal. That coupling was
+  // never the point — the rule under test belongs to leaderLabelFontSize, so exercise it directly
+  // at widths that stand for a narrow, a normal and a wide map.
+  const mapWidths = { tall: 900, square: 1600, wide: 2600 };
   const sizes = {
     tall: leaderLabelFontSize(mapWidths.tall),
     square: leaderLabelFontSize(mapWidths.square),
     wide: leaderLabelFontSize(mapWidths.wide),
   };
 
-  // This is the user-facing rule: a boundary-derived map that doubles in width gets larger type,
-  // while the narrowest printable map stops at the named legibility floor. The former hard floor
-  // made tall and square equal and this ordering fail.
+  // The user-facing rule: a map that doubles in width gets larger type, while the narrowest
+  // printable map stops at the named legibility floor.
   assert.ok(sizes.tall < sizes.square);
   assert.ok(sizes.square < sizes.wide);
   assert.ok(sizes.tall >= MIN_FONT_SIZE, 'no map may be given type below the legibility floor');
@@ -57,6 +52,25 @@ test('callout type keeps its map-width hierarchy across square, wide and tall fa
   const squareShare = sizes.square / mapWidths.square;
   const wideShare = sizes.wide / mapWidths.wide;
   assert.ok(Math.abs(squareShare - wideShare) < 0.001);
+});
+
+test('every farm shape now gets the same A-series map width', () => {
+  // The flip side of the change above, pinned so it is a decision and not an accident: the sheet
+  // shape is the paper's, and the farm's shape shows in the boundary drawn on it.
+  const frame = { imgW: 960, imgH: 640, mPerPx: 0.4 };
+  const boundaries: Array<[number, number]>[] = [
+    [[0.4, 0.35], [0.6, 0.35], [0.6, 0.65], [0.4, 0.65]],
+    [[0.3, 0.425], [0.7, 0.425], [0.7, 0.575], [0.3, 0.575]],
+    [[0.45, 0.2], [0.55, 0.2], [0.55, 0.8], [0.45, 0.8]],
+  ];
+  const widths = boundaries.map((boundary) => {
+    const layout = calculateBoundaryPresentationLayout(boundary, frame);
+    assert.ok(layout);
+    return layout.imgW * 2;
+  });
+
+  for (const width of widths) assert.equal(width, widths[0]);
+  assert.ok(leaderLabelFontSize(widths[0]) >= MIN_FONT_SIZE);
 });
 
 // This assertion used to read `assert.equal(sizes.tall, MIN_FONT_SIZE)` inside the test above —

@@ -136,46 +136,117 @@ export function calculateBoundaryPresentationLayout(
     sheetMetrics = sheetMetricsForAspect(mapAspect);
   }
 
-  const { imgW, imgH, legendWidth, sheetAspect } = sheetMetrics;
-  // Apply the same relative breathing room to both boundary dimensions, then choose ONE scale
-  // large enough to contain both. If the source is already tight, reduce that shared padding
-  // factor rather than clipping or inventing axis-specific zoom.
-  const outputAspect = imgW / imgH;
-  const cropWidthAtUnitPadding = Math.max(spanX, spanY * outputAspect);
-  const cropHeightAtUnitPadding = Math.max(spanY, spanX / outputAspect);
-  const paddingFactor = Math.max(
-    1,
-    Math.min(
-      1.24,
-      frame.imgW / cropWidthAtUnitPadding,
-      frame.imgH / cropHeightAtUnitPadding,
-    ),
-  );
-  const sourcePixelsPerOutputPixel = Math.max(
-    0.08,
-    (spanX * paddingFactor) / imgW,
-    (spanY * paddingFactor) / imgH,
-  );
-  const cropWidthPx = imgW * sourcePixelsPerOutputPixel;
-  const cropHeightPx = imgH * sourcePixelsPerOutputPixel;
-  if (cropWidthPx > frame.imgW + 1e-6 || cropHeightPx > frame.imgH + 1e-6) return null;
+  /**
+   * Everything below the aspect choice: given a map shape, work out the crop that frames the
+   * boundary inside it. Returns null when that crop would reach outside the source image, which
+   * is the one thing this layout may never do — a crop wider than its photo would either clip the
+   * farm or paint an edge of nothing.
+   */
+  const layoutForAspect = (aspect: number): BoundaryPresentationLayout | null => {
+    const { imgW, imgH, legendWidth, sheetAspect } = sheetMetricsForAspect(aspect);
+    // Apply the same relative breathing room to both boundary dimensions, then choose ONE scale
+    // large enough to contain both. If the source is already tight, reduce that shared padding
+    // factor rather than clipping or inventing axis-specific zoom.
+    const outputAspect = imgW / imgH;
+    const cropWidthAtUnitPadding = Math.max(spanX, spanY * outputAspect);
+    const cropHeightAtUnitPadding = Math.max(spanY, spanX / outputAspect);
+    const paddingFactor = Math.max(
+      1,
+      Math.min(
+        1.24,
+        frame.imgW / cropWidthAtUnitPadding,
+        frame.imgH / cropHeightAtUnitPadding,
+      ),
+    );
+    const sourcePixelsPerOutputPixel = Math.max(
+      0.08,
+      (spanX * paddingFactor) / imgW,
+      (spanY * paddingFactor) / imgH,
+    );
+    const cropWidthPx = imgW * sourcePixelsPerOutputPixel;
+    const cropHeightPx = imgH * sourcePixelsPerOutputPixel;
+    if (cropWidthPx > frame.imgW + 1e-6 || cropHeightPx > frame.imgH + 1e-6) return null;
 
-  const centerX = ((bounds.minX + bounds.maxX) / 2) * frame.imgW;
-  const centerY = ((bounds.minY + bounds.maxY) / 2) * frame.imgH;
-  const cropLeftPx = Math.max(0, Math.min(frame.imgW - cropWidthPx, centerX - cropWidthPx / 2));
-  const cropTopPx = Math.max(0, Math.min(frame.imgH - cropHeightPx, centerY - cropHeightPx / 2));
+    const centerX = ((bounds.minX + bounds.maxX) / 2) * frame.imgW;
+    const centerY = ((bounds.minY + bounds.maxY) / 2) * frame.imgH;
+    const cropLeftPx = Math.max(0, Math.min(frame.imgW - cropWidthPx, centerX - cropWidthPx / 2));
+    const cropTopPx = Math.max(0, Math.min(frame.imgH - cropHeightPx, centerY - cropHeightPx / 2));
 
-  return {
-    cropX: cropLeftPx / frame.imgW,
-    cropY: cropTopPx / frame.imgH,
-    cropWidth: cropWidthPx / frame.imgW,
-    cropHeight: cropHeightPx / frame.imgH,
-    imgW,
-    imgH,
-    sourcePixelsPerOutputPixel,
-    legendWidth,
-    sheetAspect,
+    return {
+      cropX: cropLeftPx / frame.imgW,
+      cropY: cropTopPx / frame.imgH,
+      cropWidth: cropWidthPx / frame.imgW,
+      cropHeight: cropHeightPx / frame.imgH,
+      imgW,
+      imgH,
+      sourcePixelsPerOutputPixel,
+      legendWidth,
+      sheetAspect,
+    };
   };
+
+  // ── Fill the paper with ground, not with cream ────────────────────────────────────────────────
+  //
+  // The finished sheet is centred on ISO 216 landscape paper at the very end of composeStyleSheet
+  // (paperSheetCanvas → padToPaperSheet). Whatever the sheet does not fill shows up as a cream band
+  // down two edges. Rory, looking at a rendered plan: "when we do a map it does[n't] fill out the
+  // A3 ratio, we need to make the satellite image bigger so there is no blank space."
+  //
+  // So aim the MAP at the shape whose composed sheet is ALREADY 1:√2, and let the surplus be real
+  // aerial photograph instead of blank paper. Neighbouring land is worth more to a farmer than a
+  // margin is: it is where the water arrives from and where the wind comes over.
+  //
+  // WHY THIS IS A TARGET AND NOT A CONSTRAINT. The first attempt at A-series (see PAPER_SHEET_RATIO
+  // below) forced the ratio through this viewport and returned null when the resulting crop fell
+  // outside the source image — which silently dropped the whole sheet back to an unframed fallback.
+  // That traded a regression for a ratio, and it is why the paper ended up applied as margin
+  // instead. Here the paper ratio is only ever ATTEMPTED: if its crop does not fit the photo, we
+  // walk back toward the boundary-derived shape until one does. The worst case is therefore exactly
+  // the old sheet, with the old margin — never a fallback, never a clipped farm.
+  const sheetRatioForAspect = (aspect: number): number => {
+    const { imgW, imgH } = dimensionsForAspect(aspect);
+    const sheet = calculateStyleSheetSize(imgW * renderScale, imgH * renderScale);
+    return sheet.W / sheet.H;
+  };
+
+  // Sheet ratio rises monotonically with map aspect — a wider map can only make a wider sheet —
+  // so bisection lands on the map shape that needs no padding at all.
+  const paperMapAspect = (() => {
+    let lo = 0.05;
+    let hi = MAX_PRESENTATION_MAP_ASPECT;
+    if (sheetRatioForAspect(lo) >= PAPER_SHEET_RATIO) return lo;
+    if (sheetRatioForAspect(hi) <= PAPER_SHEET_RATIO) return hi;
+    for (let i = 0; i < 48; i++) {
+      const mid = (lo + hi) / 2;
+      if (sheetRatioForAspect(mid) < PAPER_SHEET_RATIO) lo = mid;
+      else hi = mid;
+    }
+    return (lo + hi) / 2;
+  })();
+
+  const paperLayout = layoutForAspect(paperMapAspect);
+  if (paperLayout) return paperLayout;
+
+  // The photo cannot cover a full A-series frame around this boundary. Fall back to the shape the
+  // plot itself asks for, then creep as far toward the paper shape as the photo actually allows —
+  // less cream than before, and never less sheet than before.
+  const boundaryLayout = layoutForAspect(mapAspect);
+  if (!boundaryLayout) return null;
+
+  let best = boundaryLayout;
+  let fits = mapAspect;
+  let misses = paperMapAspect;
+  for (let i = 0; i < 24; i++) {
+    const candidate = (fits + misses) / 2;
+    const layout = layoutForAspect(candidate);
+    if (layout) {
+      best = layout;
+      fits = candidate;
+    } else {
+      misses = candidate;
+    }
+  }
+  return best;
 }
 
 /**
