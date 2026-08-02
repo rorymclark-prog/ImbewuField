@@ -96,19 +96,14 @@ function bullets(paras) {
   for (const p of paras) {
     const first = (p.split(/(?<=[.!?])\s/)[0] || p).trim();
     if (first.length < 12) continue;
-    // Cut at a WORD boundary, and not at 90 characters.
+    // NEVER TRUNCATE. A character cap cut teaching sentences off mid-thought all over the deck —
+    // "yields close to 72,000 litres – enough for a family…", "which is blackwater and needs
+    // separate…" — and a farmer cannot recover the missing half from a slide. An ellipsis is
+    // honest about an omitted list; it is not honest about a sentence that simply stops.
     //
-    // isiZulu is agglutinative — "angamasentimitha" is one word for what English says in three —
-    // so a character cap tuned to English bites far harder there, and slicing blind produced
-    // "i-greens ezingam…" mid-word, which reads as a rendering fault rather than an elision.
-    // The block is centred and free to take a second line now, so the cap can be generous.
-    let s = first;
-    if (s.length > 132) {
-      const cut = s.slice(0, 130);
-      const sp = cut.lastIndexOf(' ');
-      s = (sp > 60 ? cut.slice(0, sp) : cut).replace(/[,;:\s]+$/, '') + '…';
-    }
-    out.push(s);
+    // The bullet takes as many lines as it needs. Overflow is handled where it can actually be
+    // measured, in the renderer, by showing FEWER bullets rather than half-sentences.
+    out.push(first);
     // Four, not three. A "Learning Outcomes" slide opens with a lead-in sentence and then lists
     // three outcomes, so a cap of three silently dropped the last one off every such slide.
     if (out.length === 4) break;
@@ -135,8 +130,19 @@ const h1English = ((h1Clean.match(/\(([^)]+)\)\s*$/) || [])[1] || '').trim();
 // script's own H1 as an override for the languages that do carry one.
 const mod = COURSE_MODULES.find((m) => m.id === moduleId);
 const moduleNumber = COURSE_MODULES.findIndex((m) => m.id === moduleId) + 1;
-const deckTitle = h1Local || mod?.title || moduleId;
-const deckTagline = h1English || mod?.description || '';
+
+// Slide 1's own heading is sometimes a structural marker ("Title", "Isihloko") and sometimes the
+// real module name — the isiZulu scripts carry it bilingually, e.g.
+//   **Ikhasi 1 — Impilo Yomhlabathi (Slide 1 — Soil Health & Composting)**
+// Falling straight through to the English module title put an ENTIRELY ENGLISH title card on the
+// front of every isiZulu deck, with isiZulu on all nineteen slides behind it.
+const MARKER_TITLE = /^(title|isihloko)$/i;
+const s1 = slides.find((s) => s.n === 1);
+const s1Title = s1 && !MARKER_TITLE.test(s1.title.trim()) ? s1.title.trim() : '';
+const s1Sub = s1?.subtitle?.trim() || '';
+
+const deckTitle = h1Local || s1Title || mod?.title || moduleId;
+const deckTagline = h1English || s1Sub || mod?.description || '';
 
 // A slide the script marked as carried by a picture: "Watch: Bare Soil and Mulch". The words are
 // deliberately thin on these — the picture is the teaching — so they get their own layout rather
@@ -340,7 +346,7 @@ for s in cfg['slides']:
             d.text((x, y), ln, font=F_TAG, fill=RUST); y += 52
         track(d, (x, H - 98), 'HOME-STUDY LESSON', F_EYE, GREEN)
 
-    elif s.get('watch'):
+    elif s.get('watch') and illus:
         eyebrow(d, x, 64, EYE + ' · Animation')
         y = 138
         for ln in wrap(d, s['title'], F_TITLE, W - x - 240):
@@ -363,6 +369,12 @@ for s in cfg['slides']:
                 d.text((W // 2, cy), ln, font=F_CAP, fill=INK, anchor='ma'); cy += 38
 
     else:
+        # A watch slide whose picture does not exist lands here rather than in the branch above.
+        # Its words were written thin BECAUSE a picture was meant to carry it, so drawing the
+        # empty frame leaves a hole with a caption floating under it; showing the caption as the
+        # slide's one line is honest and tidy. water-harvesting has six watch slides and four
+        # lesson illustrations — it was written before the one-per-lesson rule existed.
+        body = s['bullets'] or ([s['caption']] if s.get('caption') else [])
         text_w = int(W * 0.46) if illus else (W - x - 300)
         eyebrow(d, x, 64, EYE)
         y = 138
@@ -378,9 +390,18 @@ for s in cfg['slides']:
         # Measure before drawing, then centre the block in the space between the rule and the
         # footer. Three short points drawn from the top left the bottom HALF of every text-only
         # slide empty, which reads as a slide that failed to finish rather than as white space.
-        blocks = [wrap(d, b, F_BULL, text_w - 48) for b in s['bullets']]
-        block_h = sum(len(ls) * 46 + 30 for ls in blocks) - (30 if blocks else 0)
+        blocks = [wrap(d, b, F_BULL, text_w - 48) for b in body]
         avail = (H - 120) - y
+
+        # Drop whole bullets until the block fits, rather than letting one run under the footer.
+        # Nothing is truncated mid-sentence any more, so a bullet is either shown in full or not
+        # shown — a slide is a signpost and the narration carries the detail either way.
+        def height(bs):
+            return sum(len(ls) * 46 + 30 for ls in bs) - (30 if bs else 0)
+        while len(blocks) > 1 and height(blocks) > avail:
+            blocks.pop()
+
+        block_h = height(blocks)
         if block_h < avail:
             y += (avail - block_h) // 2
         for ls in blocks:
