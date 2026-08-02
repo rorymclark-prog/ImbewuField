@@ -30,6 +30,7 @@ import { getStorage } from 'firebase-admin/storage';
 import { PNG } from 'pngjs';
 import { compareRenders } from '../../lib/render-difference';
 import { geminiEdit } from './gemini';
+import { friendlyProviderError } from './provider-errors';
 import {
   RENDER_SHEET_KEYS,
   workerRenderJobContractError,
@@ -252,7 +253,14 @@ async function openaiEdit(
   }
   if (!res.ok) {
     const detail = await res.text().catch(() => '');
-    throw new Error(`OpenAI ${res.status}: ${detail.slice(0, 200)}`);
+    // The payload goes to the function log where a developer can read it. The farmer gets a
+    // sentence: this string lands in the sheet's `error` field and is printed, in red, under the
+    // Design Studio's own controls. Rory hit the unmapped version — a whole 400 body reading
+    // `{"error":{"message":"Billing hard limit has been reached",...,"code":"hard_limit_reached"}}`
+    // on screen, which says nothing to someone standing in a field and does not even hint that the
+    // free exact sheets still work perfectly.
+    console.error('openai_error', JSON.stringify({ status: res.status, detail: detail.slice(0, 400) }));
+    throw new Error(friendlyProviderError(res.status, detail));
   }
   const data = (await res.json()) as {
     data?: Array<{ b64_json?: string }>;
