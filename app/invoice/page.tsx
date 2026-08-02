@@ -41,6 +41,9 @@ export default function InvoicePage() {
   const [products, setProducts] = useState<{ desc: string; unit: string; price: number }[]>([]);
   const [saved, setSaved] = useState<SavedInvoice[]>([]);
   const [showSaved, setShowSaved] = useState(false);
+  /** Set when persist() could not store the invoice. Shown next to the actions, because an error
+   *  the farmer never sees is the same defect as no error at all. */
+  const [saveError, setSaveError] = useState<string | null>(null);
 
   useEffect(() => {
     const nextNumber = loadNextInvoiceNumber();
@@ -78,30 +81,52 @@ export default function InvoicePage() {
     setItems((prev) => (prev.length > 1 ? prev.filter((it) => it.id !== id) : prev));
   }
 
-  // Persist the customer, item presets and the invoice record. Returns its id.
-  function persist(): string {
+  /**
+   * Persist the customer, item presets and the invoice record.
+   *
+   * RETURNS null WHEN NOTHING WAS STORED, and that is the whole point. saveInvoice returns the
+   * DURABLE ledger and deliberately returns the prior list unchanged when the record is rejected or
+   * the write fails; saveNextInvoiceNumber returns false the same way. This function read neither.
+   * It advanced the sequence, persisted it and set currentId regardless — so the farmer printed and
+   * WhatsApped invoice #0044 for R3 500, the ledger had no #0044, /finances and the CSV omitted it,
+   * and the counter moved to #0045 leaving a permanent hole in the numbering.
+   *
+   * Two reachable triggers: a line whose quantity rounded to zero (see the quantity field above),
+   * and localStorage quota exhaustion — this repo has already had one production incident where the
+   * render cache starved other saves.
+   */
+  function persist(): string | null {
     const id = currentId ?? invoiceId();
     const existing = saved.find((s) => s.id === id);
     addCustomer(billTo);
     items.forEach((it) => { if (it.desc.trim()) addProduct({ desc: it.desc.trim(), unit: it.unit, price: it.price }); });
-    saveInvoice({
+    const list = saveInvoice({
       id, no: currentNo, billTo: billTo.trim(),
       items: items.filter((it) => it.desc.trim()).map(({ desc, qty, unit, price }) => ({ desc, qty, unit, price })),
       total, dateISO: new Date().toISOString(),
       status: existing?.status ?? 'unpaid',
       paidAt: existing?.paidAt,
     });
+    if (!list.some((x) => x.id === id)) {
+      setSaveError('This invoice could not be saved on this device, so it has not been issued. Check your storage and try again.');
+      return null;
+    }
     if (currentId === null) {
       const nextSeq = currentNo + 1;
-      setSeq(nextSeq);
-      saveNextInvoiceNumber(nextSeq);
+      // Only burn the number once the invoice it belongs to is genuinely on disk AND the new
+      // counter is too. If the counter write fails, loadNextInvoiceNumber falls back to the old
+      // value and a second, different invoice would be issued under the same number.
+      if (saveNextInvoiceNumber(nextSeq)) setSeq(nextSeq);
     }
+    setSaveError(null);
     setCurrentId(id);
     return id;
   }
 
   function printInvoice() {
-    if (valid) persist();
+    // Nothing reaches paper or a buyer unless it is in the ledger.
+    if (!valid) return;
+    if (persist() === null) return;
     window.print();
   }
 
@@ -154,7 +179,7 @@ export default function InvoicePage() {
   // Falls back to a download where file-sharing isn't supported (e.g. desktop).
   async function shareInvoice() {
     if (!valid) return;
-    persist();
+    if (persist() === null) return;
     let file: File;
     try { file = await buildInvoiceFile(); } catch { return; }
     const nav = navigator as Navigator & { canShare?: (d: ShareData) => boolean };
@@ -381,7 +406,13 @@ export default function InvoicePage() {
                     </button>
                   </div>
                   <div className="flex items-center gap-2">
-                    <input type="number" min={0} inputMode="numeric" value={it.qty || ''} onChange={(e) => updateItem(it.id, { qty: Math.max(0, parseInt(e.target.value, 10) || 0) })}
+                    {/* parseFloat, not parseInt: UNITS includes kg and crates, and 12.5 kg of tomatoes became 12 —
+                        the farmer underpaid on the document the buyer pays from, always in the same
+                        direction. Worse, a sub-unit line (0.75 kg of chillies) became 0, which
+                        cleanInvoice rejects, which rejects the WHOLE invoice, which meant a printed
+                        and WhatsApped invoice with no stored record. The price field one line below
+                        has always used parseFloat; only the quantity destroyed the number. */}
+                    <input type="number" min={0} step="0.01" inputMode="decimal" value={it.qty || ''} onChange={(e) => updateItem(it.id, { qty: Math.max(0, parseFloat(e.target.value) || 0) })}
                       placeholder="Qty"
                       className="w-16 text-sm font-display outline-none rounded-lg px-2.5 py-2 tabular-nums"
                       style={{ background: '#fff', border: '1px solid #E2D8C4', color: '#20190F' }} />
@@ -421,6 +452,12 @@ export default function InvoicePage() {
                 <Printer size={15} />Print
               </button>
             </div>
+
+            {saveError && (
+              <p className="text-center text-xs font-sans px-3 py-2 rounded-lg" style={{ color: '#B53A3A', background: '#FBEAEA', border: '1px solid #E8C4C4' }}>
+                {saveError}
+              </p>
+            )}
 
             {!valid && (
               <p className="text-center text-xs font-sans flex items-center justify-center gap-1.5" style={{ color: '#8C7A62' }}>

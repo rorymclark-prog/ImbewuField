@@ -336,3 +336,47 @@ test('payment labels are total and generated ids remain non-empty and distinct',
   assert.equal(ids.size, 20);
   assert.ok([...ids].every((id) => id.length > 5));
 });
+
+// ─────────────────────────────────────────────────────────────────────────────────────────────
+// A KILOGRAM IS NOT AN INTEGER. The invoice quantity field parsed with parseInt while UNITS
+// includes 'kg' and 'crates', so 12.5 kg of tomatoes was billed as 12 — on the document the buyer
+// pays from, and always in the farmer's disfavour. This asserts the persistence contract the input
+// must honour: fractional quantities are legal, survive a save, and total correctly.
+test('a fractional kilogram line survives a save and totals correctly', () => {
+  installBrowser();
+  const list = saveInvoice({
+    id: 'inv-frac', no: 44, billTo: 'Buyer',
+    items: [{ desc: 'Tomatoes', qty: 12.5, unit: 'kg', price: 29 }],
+    total: 362.5, dateISO: '2026-08-02T00:00:00.000Z', status: 'unpaid',
+  });
+  const stored = list.find((x) => x.id === 'inv-frac');
+  assert.ok(stored, 'a fractional-quantity invoice must be storable');
+  assert.equal(stored!.items[0].qty, 12.5);
+  assert.equal(stored!.total, 362.5);
+
+  // And it round-trips, because the ledger is what /finances and the CSV read.
+  const reloaded = loadInvoices().find((x) => x.id === 'inv-frac');
+  assert.equal(reloaded?.items[0].qty, 12.5);
+});
+
+// A ZERO-QUANTITY LINE REJECTS THE WHOLE INVOICE — which is correct, and is exactly why the UI
+// must not print when the save was refused. This pins the signal persist() now reads: saveInvoice
+// returns the DURABLE ledger, so a rejected record is absent from what comes back.
+test('a rejected invoice is absent from the returned ledger, which is how the caller knows', () => {
+  installBrowser();
+  const before = saveInvoice({
+    id: 'inv-good', no: 44, billTo: 'Buyer',
+    items: [{ desc: 'Spinach', qty: 3, unit: 'bunches', price: 10 }],
+    total: 30, dateISO: '2026-08-02T00:00:00.000Z', status: 'unpaid',
+  });
+  assert.ok(before.some((x) => x.id === 'inv-good'));
+
+  const after = saveInvoice({
+    id: 'inv-bad', no: 45, billTo: 'Buyer',
+    items: [{ desc: 'Chillies', qty: 0, unit: 'kg', price: 80 }],
+    total: 0, dateISO: '2026-08-02T00:00:00.000Z', status: 'unpaid',
+  });
+  assert.equal(after.some((x) => x.id === 'inv-bad'), false, 'a zero-quantity line must not be stored');
+  // The prior ledger is preserved, not clobbered — that is the contract persist() relies on.
+  assert.ok(after.some((x) => x.id === 'inv-good'));
+});
