@@ -5,6 +5,10 @@ import {
   cartographicItemPaintRank,
   itemInFilter,
   lineInFilter,
+  exactSheetLineRegister,
+  exactSheetLineLegendGroups,
+  EXACT_CONTEXT_ALPHA,
+  EXACT_FULL_STRENGTH_ALPHA,
   zonesInFilter,
   sheetForElement,
   sheetsForElement,
@@ -607,4 +611,41 @@ test('an item with no saved status still lands in a group', () => {
   assert.equal(groups.length, 1);
   assert.equal(groups[0].count, 1);
   assert.ok(groups[0].status === 'proposed' || groups[0].status === 'existing');
+});
+
+test('a swale is owned by Earthworks alone, but shows as context on the Water sheet', () => {
+  // THE INVARIANT THAT MUST NOT MOVE. An earlier attempt at showing swales on sheet 04 simply
+  // added 'swale' to lineInFilter's water case and broke four tests enforcing "no line kind is
+  // owned by two steps" — which is what makes Design Studio step focus mean anything.
+  assert.equal(lineInFilter('swale', 'earthworks'), true);
+  assert.equal(lineInFilter('swale', 'water'), false, 'ownership must stay with Earthworks');
+
+  // The register answers the second, different question: should this sheet SHOW it.
+  assert.equal(exactSheetLineRegister('swale', 'earthworks'), 'content');
+  assert.equal(exactSheetLineRegister('swale', 'water'), 'context');
+  assert.equal(exactSheetLineRegister('pipe', 'water'), 'content');
+  assert.equal(exactSheetLineRegister('pipe', 'earthworks'), 'absent');
+
+  // Context sits below full strength, which is precisely what frees it of a legend row — the rule
+  // that made the earlier attempt unshippable.
+  assert.ok(EXACT_CONTEXT_ALPHA.water < EXACT_FULL_STRENGTH_ALPHA);
+});
+
+test('a context line never earns a legend row', () => {
+  // "Nothing drawn without a legend row" applies to full-strength marks. A quiet swale under the
+  // Water sheet's flow arrows is context for them, not an item of the water plan's inventory —
+  // and if this ever flips, the sheet starts claiming the swale is part of its plumbing.
+  const state = {
+    lines: [
+      { id: 'swale-1', kind: 'swale' as const, points: [[0.1, 0.2], [0.8, 0.25]] as Array<[number, number]> },
+      { id: 'pipe-1', kind: 'pipe' as const, points: [[0.2, 0.3], [0.6, 0.4]] as Array<[number, number]> },
+    ],
+  };
+  const kinds = exactSheetLineLegendGroups(state, 'water').map((group) => group.lineKind);
+  assert.ok(kinds.includes('pipe'), 'the water sheet still lists its own pipework');
+  assert.ok(!kinds.includes('swale'), 'a context swale must not appear in the Water legend');
+  assert.ok(
+    exactSheetLineLegendGroups(state, 'earthworks').map((group) => group.lineKind).includes('swale'),
+    'and it is still listed where it is content',
+  );
 });

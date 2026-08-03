@@ -66,6 +66,7 @@ import {
   existingSiteItems,
   existingSiteGroundLegendGroups,
   exactSheetLineLegendGroups,
+  exactSheetLineRegister,
   exactSheetZoneLegendGroups,
   REFERENCE_SHEET_LABEL,
   type GlossyLayerFilter,
@@ -1987,7 +1988,15 @@ function drawWaterRoutes(ctx: CanvasRenderingContext2D, state: DesignCanvasState
     // tests — tests/legend-map-agreement.test.ts compares the legend against the AI prompt
     // inventory, and both are built from the same helper, so neither notices what the canvas did.
     const style = waterRouteStyleFor(line.kind);
-    if (!style || line.points.length < 2 || !lineInFilter(line.kind, sheet)) continue;
+    // Membership is now the three-state register, not the yes/no of lineInFilter. Ownership is
+    // unchanged — lineInFilter still says the swale belongs to Earthworks and nowhere else — but a
+    // sheet may additionally show a line it does not own, quietly, when the sheet cannot be read
+    // without it. See exactSheetLineRegister.
+    const register = exactSheetLineRegister(line.kind, sheet);
+    if (!style || line.points.length < 2 || register === 'absent') continue;
+    const routeAlpha = register === 'context'
+      ? (EXACT_CONTEXT_ALPHA[sheet as keyof typeof EXACT_CONTEXT_ALPHA] ?? 0.72)
+      : 1;
     const trace = () => {
       ctx.beginPath();
       line.points.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, x * W, y * H));
@@ -2004,7 +2013,15 @@ function drawWaterRoutes(ctx: CanvasRenderingContext2D, state: DesignCanvasState
     //
     // So reuse sheet 05's cross-section, which draws from the SAVED width at true ground size.
     // Geometry, width and membership are untouched; this is a drawing choice only.
-    if (line.kind === 'swale' && sheet !== 'water') {
+    if (line.kind === 'swale') {
+      // Now drawn on the WATER sheet too, quietly, as a context earthwork. It used to be excluded
+      // there and then excluded entirely, which left sheet 04's overland-flow arrows running
+      // downhill into blank ground — the swale is where that water is going. Rory, twice: "we
+      // should have arrows in the swales and show swales too?" and "theres no swale arrows? or
+      // swale?". Drawn as the dug cross-section rather than a dashed blue stroke, because reading
+      // as plumbing is exactly what got it removed from this sheet in the first place.
+      ctx.save();
+      ctx.globalAlpha *= routeAlpha;
       drawSwaleCrossSection(
         ctx,
         line.points.map(([x, y]) => [x * W, y * H] as [number, number]),
@@ -2012,6 +2029,7 @@ function drawWaterRoutes(ctx: CanvasRenderingContext2D, state: DesignCanvasState
         frame.mPerPx > 0 ? W / (frame.imgW * frame.mPerPx) : undefined,
         line.widthM,
       );
+      ctx.restore();
       continue;
     }
     if (line.kind === 'drip') {
@@ -2055,7 +2073,10 @@ function drawWaterRoutes(ctx: CanvasRenderingContext2D, state: DesignCanvasState
     }
     trace();
     ctx.setLineDash([]);
-    ctx.strokeStyle = line.kind === 'swale' ? 'rgba(43,52,43,0.78)' : 'rgba(14,42,54,0.72)';
+    // Every swale now takes the cross-section branch above and never reaches here, so the casing
+    // is plumbing-dark unconditionally. The swale arm of the old ternary was dead code that tsc
+    // caught the moment the branch stopped being conditional on the sheet.
+    ctx.strokeStyle = 'rgba(14,42,54,0.72)';
     ctx.lineWidth = Math.max(style.width + 4.8, W * 0.005);
     ctx.stroke();
     trace();

@@ -104,6 +104,41 @@ export function exactSheetElementRegister(
   return 'absent';
 }
 
+/**
+ * The same three-state register elements have, for LINES.
+ *
+ * WHY LINES NEEDED ONE. Elements could already be 'content' on their own sheet and 'context' on a
+ * neighbouring one — that is how planting shows up as quiet ghosts under the Structures sheet.
+ * Lines only ever had a boolean: lineInFilter says yes or no, and a swale that is not 'yes' on the
+ * Water sheet is simply not drawn there.
+ *
+ * That boolean is why the Water sheet has no swale on it. Rory, twice: "we should have arrows in
+ * the swales and show swales too?" and "theres no swale arrows? or swale?" — and he is right that
+ * it belongs. The first attempt at this simply added 'swale' to lineInFilter's water case and broke
+ * four tests enforcing "no line kind is owned by two steps — double ownership makes focus dimming
+ * meaningless", which is load-bearing for the Design Studio's step focus. Relaxing that rule to get
+ * a swale onto one sheet would have been trading a real invariant for a drawing.
+ *
+ * So ownership is untouched: lineInFilter still says the swale belongs to Earthworks and nowhere
+ * else, and every one of those tests still passes. This adds the SECOND question next to it — not
+ * "does this sheet own the line" but "should this sheet show it, quietly, because you cannot read
+ * this sheet without it". Water is exactly that case: the swale is where the runoff on sheet 04 is
+ * going, so a Water sheet without it draws arrows pointing at nothing.
+ *
+ * And because context sits below EXACT_FULL_STRENGTH_ALPHA, it carries no legend-row obligation —
+ * which is what kept the earlier attempt honest-but-broken and this one honest-and-drawable.
+ */
+export function exactSheetLineRegister(kind: string, sheet: ExactPlanSheetKey): ExactElementRegister {
+  if (sheet === 'base' || sheet === 'sector') return 'absent';
+  if (sheet === 'zones' || sheet === 'implementation') return 'context';
+  if (sheet === 'all' || lineInFilter(kind, sheet)) return 'content';
+  // A swale is the destination of the Water sheet's own overland-flow arrows. Shown as the
+  // earthwork it is (see drawSwaleCrossSection) and never as another blue plumbing line, which is
+  // the confusion that got it removed from this sheet in the first place.
+  if (sheet === 'water' && kind === 'swale') return 'context';
+  return 'absent';
+}
+
 export type IntegratedLegendSection = 'WATER' | 'PLANTING' | 'INFRASTRUCTURE';
 
 /** Families used by the integrated-sheet legend. An item may intentionally belong to more than
