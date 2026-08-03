@@ -79,6 +79,70 @@ export function cropGlyphFor(name: string | undefined): CropGlyph {
 }
 
 /**
+ * The four silhouettes an UNNAMED vegetable bed is drawn with, rotated bed by bed.
+ *
+ * WHY THIS IS NOT A RECOMMENDATION. Seven beds a farmer has not yet assigned crops to were all
+ * drawn 'generic', so a sheet showed seven identical rectangles of identical dots and read as
+ * wallpaper (Rory: "can we improve the veg on the veg beds maybe alternate the beds with different
+ * veg"). A mixed home garden is what a vegetable garden IS, and the drawing should look like one.
+ *
+ * The critical line: this varies the SILHOUETTE only. Nothing downstream is told a bed contains
+ * cabbage — the legend still reads "Vegetable Bed ×7", no callout names a crop, no BOQ row appears
+ * and no yield is claimed. The moment a farmer assigns a species or types a recognisable label,
+ * cropGlyphFor wins and this is never consulted. So the sheet says "a mixed vegetable garden",
+ * which is true, and never "plant cabbage in bed 3", which would not be ours to say.
+ *
+ * The four are the ones a southern-African homestead garden actually carries, and — just as
+ * important for a drawing — they are the four that stay apart from each other at sheet scale.
+ */
+const UNNAMED_BED_GLYPHS: readonly CropGlyph[] = ['rosette', 'root', 'staked', 'legume'];
+
+/**
+ * The three sisters, rotated so neighbouring staple plots do not draw as identical patches.
+ *
+ * Maize with beans climbing it and pumpkin running along the ground is what this feature exists to
+ * model, and it stays the mix on every plot — what changes plot to plot is which of the three
+ * leads. That is what a real multi-plot staple garden looks like, because the plots are rotated;
+ * drawing four identical patches was the thing that made a four-plot garden read as one texture
+ * repeated (Rory: "maybe you can do maizes on one plot beans on another etc etc" — and, on the
+ * pumpkin specifically, "pumpkins").
+ */
+const STAPLE_ROTATIONS: readonly (readonly CropGlyph[])[] = [
+  ['grain', 'legume', 'grain', 'vine'],
+  ['legume', 'grain', 'vine', 'legume'],
+  ['vine', 'grain', 'legume', 'grain'],
+  ['grain', 'vine', 'legume', 'vine'],
+];
+
+/** Stable 0..1 from an id, so a bed keeps its silhouette across every render of the design. */
+function idUnit(seed: string): number {
+  let hash = 2166136261;
+  for (let i = 0; i < seed.length; i++) {
+    hash ^= seed.charCodeAt(i);
+    hash = Math.imul(hash, 16777619);
+  }
+  return ((hash >>> 0) % 100000) / 100000;
+}
+
+/**
+ * The silhouette for a bed the farmer has not named a crop for.
+ *
+ * Keyed on the bed's own id rather than its position in the item list. Position looked tidier — it
+ * would cycle 1,2,3,4 exactly — but the list holds every item on the farm, not just beds, so beds
+ * landing on a stride of four would all take the SAME glyph and the garden would come out uniform
+ * again by a different route. Two beds sharing a silhouette is not a defect anyway: a real garden
+ * has two beds of greens.
+ */
+export function unnamedBedGlyph(seed: string): CropGlyph {
+  return UNNAMED_BED_GLYPHS[Math.floor(idUnit(seed) * UNNAMED_BED_GLYPHS.length) % UNNAMED_BED_GLYPHS.length];
+}
+
+/** The three-sisters row sequence for one staple plot, rotated so plots differ from each other. */
+export function staplePlotGlyphs(seed: string): readonly CropGlyph[] {
+  return STAPLE_ROTATIONS[Math.floor(idUnit(seed) * STAPLE_ROTATIONS.length) % STAPLE_ROTATIONS.length];
+}
+
+/**
  * Lay out rows of plants inside an axis-aligned rectangle, in the rectangle's own local space
  * (origin at its centre, +x right, +y down). The caller applies the bed's rotation.
  *
@@ -143,7 +207,7 @@ export function bedCropRows(
  */
 export function polygonCropRows(
   ring: Array<[number, number]>,
-  crops: CropGlyph[],
+  crops: readonly CropGlyph[],
   seed: string,
   rowGapPx: number,
 ): CropRowLayout {

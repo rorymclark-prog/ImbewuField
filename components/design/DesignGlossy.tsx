@@ -96,6 +96,8 @@ import {
   cropGlyphFor,
   polygonCropRows,
   stableUnit,
+  staplePlotGlyphs,
+  unnamedBedGlyph,
   type CropGlyph,
   type CropRowLayout,
 } from '@/lib/crop-row-cartography';
@@ -3141,7 +3143,8 @@ function drawBlueprintGround(
     if (z.feature === 'staple_garden' && isContent) {
       const ring = z.points.map(([x, y]) => [px(x), py(y)] as [number, number]);
       const rowGap = Math.max(11, W * 0.011);
-      const layout = polygonCropRows(ring, STAPLE_PLOT_GLYPHS, z.id, rowGap);
+      // Rotated per plot, so four staple plots read as four plots rather than one texture repeated.
+      const layout = polygonCropRows(ring, staplePlotGlyphs(z.id), z.id, rowGap);
       if (layout.plants.length) {
         ctx.save();
         blueprintRing(ctx, z.points, px, py);
@@ -3163,11 +3166,6 @@ function drawBlueprintGround(
     ctx.stroke();
   }
 }
-
-/** The intercrop a staple plot is drawn as: maize with beans through it and pumpkin on the ground.
- *  That is the traditional maize-legume-cucurbit plot this ground feature exists to model, stated
- *  in GroundFeatureKind's own doc comment — not a recommendation this renderer is inventing. */
-const STAPLE_PLOT_GLYPHS: CropGlyph[] = ['grain', 'legume', 'grain', 'vine'];
 
 /** Soil under a crop bed: the brown a worked bed actually is, so plants read as plants on it. */
 const CROP_SOIL_COLOR = '#5A4130';
@@ -4553,7 +4551,12 @@ function drawProductionBedCrop(
 ): boolean {
   const wPx = Math.max(1, (it.wM ?? def.wM) * pxPerM);
   const hPx = Math.max(1, (it.hM ?? def.hM) * pxPerM);
-  const glyph = cropGlyphFor(it.speciesId ?? it.label);
+  // A named crop always wins. Only when the farmer has told us nothing usable — no species, and a
+  // label like "Bed 3" that names no plant — does the bed take a rotated silhouette so a garden of
+  // seven unassigned beds stops printing as seven identical rectangles. See unnamedBedGlyph for why
+  // this varies the DRAWING and never the legend, the callouts or the BOQ.
+  const named = cropGlyphFor(it.speciesId ?? it.label);
+  const glyph = named === 'generic' ? unnamedBedGlyph(it.id) : named;
   const layout = bedCropRows(wPx, hPx, glyph, it.id, Math.max(10, ctx.canvas.width * 0.0085));
   if (layout.plants.length < 3) return false;
 
