@@ -35,13 +35,15 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '3 August',
-    sha: '8fc26cc',
+    sha: '9f5e15d',
     changes: [
+      'New "Plain paper" choice: your plan drawn on paper, with no photo behind it',
+      'Every tree now stands in a mulched basin instead of on a white disc',
+      'Each staple plot is one crop — maize on one, beans on the next',
       'Vetiver is drawn as a hedge seen from above, not a photo taken from the side',
       'Map callouts keep one size — a long name drops one step, never five sizes',
       'Trees wear a thin dark outline instead of a white halo',
       'Unassigned veg beds show a mixed garden, not seven identical patches',
-      'Staple plots differ from each other — maize, beans and pumpkin rotate',
       'The swale is back on the water sheet, so the runoff arrows point at something',
       'The property line no longer draws across tree canopies',
       'Summer sun is warm and winter sun cool, and the two noon suns no longer overlap',
