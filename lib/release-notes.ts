@@ -35,9 +35,11 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '3 August',
-    sha: '5f9326e',
+    sha: '101e815',
     changes: [
-      'Every plant now carries a short code — find it in the legend to see what it is',
+      'Plant labels are now a choice: short codes on every plant, or names on the map',
+      'Vetiver hedges are drawn at the width you set them, not wider',
+      'On plain paper the house and driveway sit back — the planting is the subject',
       'New "Plain paper" choice: your plan drawn on paper, with no photo behind it',
       'Every tree now stands in a mulched basin instead of on a white disc',
       'Each staple plot is one crop — maize on one, beans on the next',
