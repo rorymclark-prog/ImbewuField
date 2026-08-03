@@ -35,8 +35,11 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '3 August',
-    sha: '7ba7a2f',
+    sha: '9714053',
     changes: [
+      'The Studio was drawing narrow things wider than you saved them — a hedge is now its real width',
+      'Plant labels have a third choice: the name printed under each plant',
+      'A tree with planting under it now has a dashed edge, so you can see what is beneath it',
       'Every tree is now named on the plan — no more "Moringa x5" pointing at one of them',
       'Labels moved off the drawing into a clear margin down each side of the map',
       'Beds, rows and strips stay grouped with a count, so a big garden is one label not thirty',
