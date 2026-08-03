@@ -57,6 +57,10 @@ const HATCH_COLORS: string[] = Array.from(
 // A shape NOT owned by the current wizard step (see ownedByCurrentStep) still renders — the
 // farmer needs the boundary visible while placing zones — but reads as quiet background
 // context rather than a live, editable thing. Not near-invisible: it must still orient you.
+/** Smallest clickable footprint, in SCREEN units (chrome-scaled), for an item drawn narrower than
+ *  a finger. A grab target only — it is never drawn and never restates a width. */
+const MIN_ITEM_HIT_PX = 12;
+
 const LOCKED_OPACITY = 0.42;
 
 // A shape the farmer already traced on the live map, classified + projected to this
@@ -3513,8 +3517,31 @@ export default function DesignCanvas({
           const isResizingThis = item.id === dragResizeId.current && resizePreview;
           const wM = isResizingThis ? resizePreview!.wM : item.wM ?? def.wM;
           const hM = isResizingThis ? resizePreview!.hM : item.hM ?? def.hM;
-          const wPx = Math.max(wM / mPerPx, 6);
-          const hPx = Math.max(hM / mPerPx, 6);
+          // TRUE SCALE, ALWAYS. This used to be Math.max(wM / mPerPx, 6) — a floor on the drawn
+          // FOOTPRINT — and the rect below has called itself the "true-scale footprint" the whole
+          // time it was not one.
+          //
+          // The floor is invisible on a small plot and grows with the farm. A 0,52 m vetiver row
+          // computes to 5.6 canvas units on the demo (floored to 6: harmless), but to 1.9 on a farm
+          // three times the size, where it is still drawn at 6 — three times its saved width. The
+          // farmer then DRAFTS AGAINST THAT: lays out plots against a hedge the editor is drawing
+          // three times too fat, exports the sheet, and the sheet — which does draw true — looks
+          // wrong. Rory, twice, from opposite directions: "this is how wide the vetiver is and
+          // [this] is how wide you keep making it", then "it's not wide enough … it MUST be drawn
+          // to the same size I drafted it in the design studio." Both reports are the same bug, and
+          // it was never in the sheets.
+          //
+          // This is the rule the sheet code already states (see plantingFeaturePresentationDimensions
+          // and vetiverHedgeGeometry): a legibility floor may rescue a mark that is too small to
+          // SEE; it may never restate a width the farmer set. The editor is where that matters most,
+          // because it is the drawing being designed against.
+          //
+          // What the floor was really buying is a grab target — a 2-unit strip is not clickable — so
+          // that is what it now buys, invisibly, and nothing else. See hitW/hitH below.
+          const wPx = wM / mPerPx;
+          const hPx = hM / mPerPx;
+          const hitW = Math.max(wPx, chrome(MIN_ITEM_HIT_PX));
+          const hitH = Math.max(hPx, chrome(MIN_ITEM_HIT_PX));
           const [px, py] = effectiveItemPos(item);
           const cx = px * imgW;
           const cy = py * imgH;
@@ -3551,6 +3578,20 @@ export default function DesignCanvas({
               {/* Footprint + selection outline rotate together (rect only); the icon disc,
                   label and action handles below stay upright/screen-aligned. */}
               <g transform={rotXf}>
+                {/* The grab target, and ONLY the grab target. A hedge two units wide is drawn two
+                    units wide and would be unclickable; this keeps it catchable without telling the
+                    farmer it is wider than they made it. Invisible, so it can never be mistaken for
+                    the footprint — which is exactly how the old floor went unnoticed. */}
+                {(hitW > wPx || hitH > hPx) && (
+                  <rect
+                    x={-hitW / 2}
+                    y={-hitH / 2}
+                    width={hitW}
+                    height={hitH}
+                    fill="transparent"
+                    stroke="none"
+                  />
+                )}
                 {isHighlighted && (
                   <>
                     {def.shape === 'circle' ? (
@@ -3727,8 +3768,10 @@ export default function DesignCanvas({
               const isResizingThis = item.id === dragResizeId.current && resizePreview;
               const wM = isResizingThis ? resizePreview!.wM : item.wM ?? def.wM;
               const hM = isResizingThis ? resizePreview!.hM : item.hM ?? def.hM;
-              const wPx = Math.max(wM / mPerPx, 6);
-              const hPx = Math.max(hM / mPerPx, 6);
+              // True scale, as above — a label placed off a floored footprint sits away from the
+              // thing it names by exactly the amount the floor was lying by.
+              const wPx = wM / mPerPx;
+              const hPx = hM / mPerPx;
               const text = item.note
                 ? `${item.label ?? def.name} · ${item.note}`
                 : item.label ?? def.name;
@@ -4039,8 +4082,10 @@ export default function DesignCanvas({
               if (!def) return null;
               const wM = orig.wM ?? def.wM;
               const hM = orig.hM ?? def.hM;
-              const wPx = Math.max(wM / mPerPx, 6);
-              const hPx = Math.max(hM / mPerPx, 6);
+              // True scale — the tidy-up preview must show the same shape the canvas does, or the
+              // ghost and the item disagree about how wide the thing being moved is.
+              const wPx = wM / mPerPx;
+              const hPx = hM / mPerPx;
               const cx = aligned.x * imgW;
               const cy = aligned.y * imgH;
               const rot = def.shape === 'rect' ? aligned.rot ?? 0 : 0;

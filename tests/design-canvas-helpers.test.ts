@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 
 import {
   clampBaseNudge,
@@ -498,4 +499,32 @@ test('a custom-base design is NEVER geographically re-projected — the photo is
   const satState = { ...state, useCustomBase: false as const, customBase: undefined };
   const satMigrated = migrateStateToFrame(satState, newFrame, project);
   assert.notEqual(satMigrated.items[0].x, 0.25);
+});
+
+test('the Design Studio draws a footprint at its saved width, never at a floor', () => {
+  // THE BUG THIS GUARDS. DesignCanvas drew every item at Math.max(wM / mPerPx, 6) — a floor on the
+  // drawn FOOTPRINT, sitting directly under a comment calling it the "true-scale footprint".
+  //
+  // It is invisible on a small plot and grows with the farm: a 0,52 m vetiver row computes to 5.6
+  // canvas units on the demo (floored to 6, harmless) but to about 1.9 on a farm three times the
+  // size, where it is still drawn at 6 — three times its saved width. Measured on the real editor:
+  // a hedge saved at 0,15 m drew at 0,336 m. The farmer then DRAFTS AGAINST THAT and the exported
+  // sheet, which draws true, looks wrong. Rory reported it from both directions before it was
+  // found: "how wide you keep making it", then "it's not wide enough … it MUST be drawn to the same
+  // size I drafted it in the design studio."
+  //
+  // The rule is the one the sheet code already states (plantingFeaturePresentationDimensions,
+  // vetiverHedgeGeometry): a legibility floor may rescue a mark too small to SEE, never restate a
+  // width the farmer set. What the floor was really buying — a grab target — is now a transparent
+  // hit rect that is never drawn.
+  const source = readFileSync(new URL('../components/design/DesignCanvas.tsx', import.meta.url), 'utf8')
+    // Comments quote the old expression on purpose — that is the record of why it went. Strip them
+    // so the guard reads the CODE, not the explanation of the bug.
+    .split('\n').filter((line) => !line.trim().startsWith('//') && !line.trim().startsWith('*')).join('\n');
+  assert.equal(
+    /Math\.max\(\s*[whWH]M \/ mPerPx\s*,/.test(source),
+    false,
+    'a floor is back on a drawn footprint — use MIN_ITEM_HIT_PX on the hit rect instead',
+  );
+  assert.ok(source.includes('MIN_ITEM_HIT_PX'), 'the grab target must still exist');
 });
