@@ -306,6 +306,10 @@ export default function ReportDocView({
                 {table.rows.map((row, index) => (
                   <p key={`${table.category}-${index}`} style={{ margin: '3px 0' }}>
                     <strong>{row.species}</strong>
+                    {/* The counted qty was in the row type all along and never printed — a species
+                        row from the farmer's own Studio plan is only checkable against the plan
+                        sheets when its count is visible. */}
+                    {row.qty ? <Chip v={row.qty} /> : null}
                     <span style={{ color: '#7B6A52' }}> — {row.spacing}; {row.season}. {row.purpose}</span>
                   </p>
                 ))}

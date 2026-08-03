@@ -48,6 +48,7 @@ import {
   type DesignCanvasState,
   type LineShape,
 } from '@/lib/design-canvas';
+import { summariseDesignStudio } from '@/lib/design-studio-report';
 import {
   ESRI_PROVIDER,
   satelliteProvider,
@@ -3291,12 +3292,18 @@ export default function GeometryDesignStudio({ locationData, siteName }: Props) 
   // and the remaining sections come in a later phase.
   const reportDoc = useMemo(() => {
     const siteId = designSiteIdFromLocation(locationData);
+    // The report reads the SAME saved Design Studio plan the sheets render — the report was
+    // blind to it for months while saying "Master design pending" to farmers with a finished
+    // design one tab away. Null when the farmer has no Studio plan; the builder then keeps its
+    // placeholders, so nothing regresses for a geometry-only user.
+    const canvasState = loadCanvasState(siteId);
     return buildSkeletonReportDoc({
       id: reportId(),
       siteId,
       location: locationData ?? ({} as NonNullable<typeof locationData>),
       survey: loadSurvey(siteId),
       layers: studio.layers,
+      studio: canvasState ? summariseDesignStudio(canvasState) : null,
       plan: studio.generatedPlan ?? null,
       phasePlan: studioBuild
         ? buildPhasePlan(studioBuild, { boundary: [], house: [], driveway: [] }, {

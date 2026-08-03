@@ -14,6 +14,7 @@ import {
   WATER_SHEET_ROOF_RUNOFF_COEFFICIENT,
   roofHarvestLitres,
 } from '@/lib/roof-runoff';
+import { studioSummaryHasContent, type StudioReportSummary } from '@/lib/design-studio-report';
 
 // Which map each report section links to ("View [X] map").
 export type MapRef = 'base' | 'water' | 'sector' | 'zone' | 'design' | 'implementation';
@@ -124,6 +125,9 @@ export interface DesignFeature {
   maintenance: string[];
 }
 export type PlantCategory =
+  // 'placed' = species the farmer actually put on their Design Studio plan, with a counted qty —
+  // as opposed to the advisory buckets below, which describe roles a species could fill.
+  | 'placed'
   | 'trees' | 'shrubs' | 'groundcovers' | 'climbers' | 'n-fixers' | 'windbreak' | 'pioneer' | 'to-select';
 export interface PlantingTable {
   category: PlantCategory;
@@ -229,10 +233,13 @@ export function buildSkeletonReportDoc(args: {
   layers: DesignLayer[];
   plan: GeneratedDesignPlan | null;
   phasePlan: PhasePlan;
+  /** Facts from the farmer's saved Design Studio plan (lib/design-studio-report.ts). Optional so
+   *  every existing caller keeps working; null/empty falls back to the pending placeholders. */
+  studio?: StudioReportSummary | null;
   lang?: string;
   createdAt: string;
 }): ReportDoc {
-  const { id, siteId, location, survey, layers, plan, phasePlan, createdAt } = args;
+  const { id, siteId, location, survey, layers, plan, phasePlan, studio, createdAt } = args;
   const lang = args.lang ?? 'en';
   const wc = plan?.waterCalc;
   const biome = location.biome?.name ?? 'this region';
@@ -393,16 +400,56 @@ export function buildSkeletonReportDoc(args: {
   // These remain deliberately non-numeric until the farmer approves exact
   // features, species and spacing. A visible pending row is safer than a
   // section that silently disappears from an “11-section” report.
-  const masterDesign: DesignFeature[] = approved.length
-    ? approved.map((layer) => ({
-      key: layer.id,
-      name: layer.name || layer.layerType,
-      layerIds: [layer.id],
-      purpose: `Use the approved ${layer.layerType.replace(/_/g, ' ')} footprint shown on the design map.`,
-      dimensions: areaOf(layer) > 0 ? `${Math.round(areaOf(layer))} m² traced area` : undefined,
-      construction: ['Confirm materials and construction detail before work starts.'],
-      maintenance: ['Check this feature during the seasonal design review.'],
-    }))
+  // ── What the farmer actually designed (Design Studio) ──
+  // For as long as the report was blind to the Studio, this section said "Master design pending"
+  // to a farmer whose finished plan was one tab away. Studio facts lead; the approved geometry
+  // layers still follow; the pending placeholder appears only when there is genuinely nothing.
+  const studioFacts = studioSummaryHasContent(studio) ? studio : null;
+  const studioFeatures: DesignFeature[] = studioFacts
+    ? [
+      ...studioFacts.elements.map((group) => ({
+        key: `studio-${group.defId}-${group.name}`,
+        name: group.count > 1 ? `${group.name} ×${group.count}` : group.name,
+        layerIds: [],
+        purpose: group.status === 'existing'
+          ? 'Already on the farm — recorded in your Design Studio plan.'
+          : group.status === 'mixed'
+            ? 'Partly existing, partly planned — from your Design Studio plan.'
+            : 'Planned — placed by you in the Design Studio.',
+        construction: ['Positions and sizes are on the plan sheets.'],
+        maintenance: [],
+      })),
+      ...studioFacts.routes.map((route) => ({
+        key: `studio-route-${route.kind}`,
+        name: route.count > 1 ? `${route.label} ×${route.count}` : route.label,
+        layerIds: [],
+        purpose: 'Traced route from your Design Studio plan.',
+        dimensions: `${Math.round(route.totalLengthM)} m total${route.statedWidthM ? ` · stated width ${route.statedWidthM} m` : ''}`,
+        construction: [],
+        maintenance: [],
+      })),
+      ...studioFacts.groundAreas.map((area) => ({
+        key: `studio-ground-${area.name}`,
+        name: area.name,
+        layerIds: [],
+        purpose: 'Traced ground area from your Design Studio plan.',
+        dimensions: `${area.areaM2.toLocaleString()} m² traced area`,
+        construction: [],
+        maintenance: [],
+      })),
+    ]
+    : [];
+  const approvedFeatures: DesignFeature[] = approved.map((layer) => ({
+    key: layer.id,
+    name: layer.name || layer.layerType,
+    layerIds: [layer.id],
+    purpose: `Use the approved ${layer.layerType.replace(/_/g, ' ')} footprint shown on the design map.`,
+    dimensions: areaOf(layer) > 0 ? `${Math.round(areaOf(layer))} m² traced area` : undefined,
+    construction: ['Confirm materials and construction detail before work starts.'],
+    maintenance: ['Check this feature during the seasonal design review.'],
+  }));
+  const masterDesign: DesignFeature[] = studioFeatures.length || approvedFeatures.length
+    ? [...studioFeatures, ...approvedFeatures]
     : [{
       key: 'design-pending',
       name: 'Master design pending',
@@ -412,7 +459,26 @@ export function buildSkeletonReportDoc(args: {
       maintenance: ['Review after the first site walk.'],
     }];
 
-  const planting: PlantingTable[] = [{
+  // Placed species lead the planting section, with the count the farmer can check against their
+  // own sheets. 'user-reported' because a design is the farmer's statement of intent, restated —
+  // not a measurement and not an estimate.
+  const placedPlanting: PlantingTable[] = studioFacts && studioFacts.planted.length
+    ? [{
+      category: 'placed',
+      rows: studioFacts.planted.map((group) => ({
+        species: group.name,
+        qty: {
+          value: group.count,
+          provenance: 'user-reported' as const,
+          basis: 'counted from your saved Design Studio plan',
+        },
+        spacing: 'As placed on the plan sheets',
+        season: group.status === 'existing' ? 'Already growing' : 'To plant',
+        purpose: 'From your Design Studio plan.',
+      })),
+    }]
+    : [];
+  const planting: PlantingTable[] = [...placedPlanting, {
     category: 'to-select',
     rows: crops.length
       ? crops.map((crop) => ({
