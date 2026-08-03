@@ -5293,6 +5293,22 @@ async function buildExactLayerOverlay(
     return canvas.toDataURL('image/png');
   }
 
+  // THE PROPERTY LINE IS A SITE FACT, NOT THE TOP OF THE DRAWING.
+  //
+  // This used to be the LAST thing this function drew, so on every exact sheet the boundary was
+  // stroked at full weight across whatever the design had already put there — most visibly the
+  // tree canopies that overhang it. Rory, on sheet 06: "the fence is on the top layer over
+  // threes!?" A canopy that crosses the property line is a real thing on the ground, and the
+  // drawing should show the tree in front of the line, the way it looks standing there.
+  //
+  // It cannot simply move into the 'ground' phase: drawBlueprintGround deliberately excludes the
+  // boundary ("a drawn LINE, never a fill wash"), so that phase never strokes it and gating it
+  // there would delete the property line from every exact sheet. Drawing it FIRST inside this
+  // phase keeps one stroke, at the same weight, on the same sheets — the planting simply sits
+  // over it now. Sheets that stroke the boundary again themselves after compositing this overlay
+  // (the phasing sheet, where walking and pegging the boundary IS phase 1) are unaffected.
+  drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W, state, frame);
+
   if (filter === 'zones') {
     // Quiet element ghosts make the effort zones falsifiable without claiming those elements as
     // zone content. The exact zone bands then sit above them, as in the benchmark plan.
@@ -5370,7 +5386,6 @@ async function buildExactLayerOverlay(
     });
   }
 
-  drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W, state, frame);
   return canvas.toDataURL('image/png');
 }
 
