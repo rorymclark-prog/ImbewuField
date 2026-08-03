@@ -10717,7 +10717,49 @@ export default function DesignGlossy({
   // Rendered in BOTH mounts. It lived inside More options, which is `!compact` — so the dial sat on
   // a different screen from the AI Hybrid / Full Treatment buttons that actually spend the money.
   // A money dial belongs beside the money buttons.
-  // QUALITY — a MONEY dial, and the only one in the app. Three options are shown rather than one
+  // ENGINE — the OTHER money dial, and the one that decides WHICH ACCOUNT gets charged. It lived
+  // only inside More options, on a different screen from the buttons that spend, for the same
+  // reason the quality dial did; it now renders in both mounts alongside it. Hidden when there is
+  // only one engine to choose, because a picker with one option is furniture, not a choice.
+  const enginePicker = ENGINES.length > 1 ? (
+              <div>
+                <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55, marginBottom: 6 }}>
+                  {t('designGlossyEngine')}
+                </div>
+                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+                  {ENGINES.map((e) => {
+                    const active = engine === e.key;
+                    return (
+                      <button
+                        key={e.key}
+                        type="button"
+                        onClick={() => setEngine(e.key)}
+                        disabled={loading !== null}
+                        aria-pressed={active}
+                        style={{
+                          display: 'flex',
+                          flexDirection: 'column',
+                          alignItems: 'flex-start',
+                          minHeight: 44,
+                          padding: '6px 14px',
+                          borderRadius: 12,
+                          border: active ? `2px solid ${GREEN}` : '1px solid rgba(0,0,0,0.18)',
+                          background: active ? GREEN : 'transparent',
+                          color: active ? PAPER : DARK,
+                          cursor: loading !== null ? 'default' : 'pointer',
+                          opacity: loading !== null && !active ? 0.5 : 1,
+                        }}
+                      >
+                        <span style={{ fontWeight: 800, fontSize: 13 }}>{e.label}</span>
+                        <span style={{ fontSize: 10.5, opacity: active ? 0.85 : 0.6 }}>{e.sub}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+  ) : null;
+
+  // QUALITY — the other MONEY dial. Three options are shown rather than one
   // best guess because the right answer genuinely isn't known yet: the AI paints an underlayer, and
   // every piece of exact geometry, every label and the whole legend are composited back on top
   // afterwards — so much of what 'high' pays for is covered up before the farmer sees the sheet.
@@ -13726,45 +13768,7 @@ export default function DesignGlossy({
           </button>
           {moreOpen && (
             <div style={{ padding: '0 12px 12px', display: 'flex', flexDirection: 'column', gap: 12 }}>
-              {/* Engine picker — only shown if there's more than one engine to choose. Gemini is
-                  switched off, so this hides; everything renders with gpt-image-2. */}
-              {ENGINES.length > 1 && (
-              <div>
-                <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55, marginBottom: 6 }}>
-                  {t('designGlossyEngine')}
-                </div>
-                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-                  {ENGINES.map((e) => {
-                    const active = engine === e.key;
-                    return (
-                      <button
-                        key={e.key}
-                        type="button"
-                        onClick={() => setEngine(e.key)}
-                        disabled={loading !== null}
-                        aria-pressed={active}
-                        style={{
-                          display: 'flex',
-                          flexDirection: 'column',
-                          alignItems: 'flex-start',
-                          minHeight: 44,
-                          padding: '6px 14px',
-                          borderRadius: 12,
-                          border: active ? `2px solid ${GREEN}` : '1px solid rgba(0,0,0,0.18)',
-                          background: active ? GREEN : 'transparent',
-                          color: active ? PAPER : DARK,
-                          cursor: loading !== null ? 'default' : 'pointer',
-                          opacity: loading !== null && !active ? 0.5 : 1,
-                        }}
-                      >
-                        <span style={{ fontWeight: 800, fontSize: 13 }}>{e.label}</span>
-                        <span style={{ fontSize: 10.5, opacity: active ? 0.85 : 0.6 }}>{e.sub}</span>
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-              )}
+              {enginePicker}
 
               {qualityPicker}
 
@@ -13820,9 +13824,12 @@ export default function DesignGlossy({
         )}
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8, width: '100%' }}>
-          {/* On the compact Preview mount this is the ONLY place the quality dial appears, because
-              More options is hidden there — and the two buttons directly below it are the ones that
-              spend real money. On the full mount it also appears under More options. */}
+          {/* On the compact Preview mount this is the ONLY place the money dials appear, because
+              More options is hidden there — and the two buttons directly below them are the ones
+              that spend real money. Engine decides WHICH account is charged and quality decides how
+              much, so neither belongs a screen away from the button. Both also appear under More
+              options on the full mount. */}
+          {compact && selectedSheet && enginePicker}
           {compact && selectedSheet && qualityPicker}
           {selectedSheet && (
             <div style={{ color: DARK, fontWeight: 850, fontSize: 13, letterSpacing: '0.03em', textTransform: 'uppercase' }}>
