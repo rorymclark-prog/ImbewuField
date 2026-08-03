@@ -9797,18 +9797,35 @@ async function composeStyleSheet(
     // one-column 9px inventory. At a shared font size, the fewest columns still wins — except the
     // count the search above actually sized for, which is tried first so its answer is not
     // silently discarded in favour of a one-column plan that only "fits" by being smaller.
-    outer: for (let fontSize = desiredFs; fontSize >= 9; fontSize -= 1) {
-      for (const columnCount of [
-        desiredColumns,
-        ...Array.from({ length: Math.min(3, rows.length) }, (_, i) => i + 1),
-      ]) {
-        const candidate = planColumns(columnCount, fontSize);
-        if (candidate.length && candidate.every((column) => !column.columnLayout.overflow)) {
-          columnPlans = candidate;
-          break outer;
+    // THE FALLBACK MUST NOT ACCEPT WHAT THE SEARCH REFUSED. The fitting search above rejects any
+    // candidate whose text overruns its column (columnPlanOverflowsWidth) AND targets the panel
+    // height; this loop only ever checked `columnLayout.overflow`, which is height alone. So a plan
+    // the search had already ruled out on WIDTH could be selected here — and nothing downstream
+    // reports it, because the clip rect below quietly cuts whatever crosses the panel edge. A
+    // silent crop is the worst available outcome: the sheet still looks finished, and the farmer
+    // just gets a legend row with its end sliced off.
+    //
+    // Width-clean plans are therefore tried first, at every size, before any height-only plan is
+    // considered. The second pass is kept deliberately: without it a legend with one unbreakably
+    // long word would fit nothing and hit the throw below, turning a cosmetic crop into a sheet
+    // that will not render at all. Degrade to the old behaviour, never to nothing.
+    const findPlan = (requireWidthFit: boolean): LegendColumnPlan[] => {
+      for (let fontSize = desiredFs; fontSize >= 9; fontSize -= 1) {
+        for (const columnCount of [
+          desiredColumns,
+          ...Array.from({ length: Math.min(3, rows.length) }, (_, i) => i + 1),
+        ]) {
+          const candidate = planColumns(columnCount, fontSize);
+          if (!candidate.length) continue;
+          if (candidate.some((column) => column.columnLayout.overflow)) continue;
+          if (requireWidthFit && candidate.some(columnPlanOverflowsWidth)) continue;
+          return candidate;
         }
       }
-    }
+      return [];
+    };
+    columnPlans = findPlan(true);
+    if (!columnPlans.length) columnPlans = findPlan(false);
     if (!columnPlans.length) {
       throw new Error('Legend facts cannot fit the finished sheet at the 9px readability floor.');
     }
