@@ -12603,7 +12603,10 @@ export default function DesignGlossy({
       // sheetRenderRoute returns the same path for 'hybrid' and 'full'.
       const outputMode: SheetOutputMode = isExactRender ? 'exact' : 'hybrid';
       const route = sheetRenderRoute(spec, outputMode, producerStyle);
-      const viaQueue = !producerStyle || engine === 'falgpt' || geometryLock || isModelChromeStyle(producerStyle);
+      // Every engine now takes the queue, so this no longer depends on which one is selected. It is
+      // kept as a named constant rather than inlined because sheetRenderRoute's model still has a
+      // non-queue slot, and the disagreement check below is what would catch a re-divergence.
+      const viaQueue = true;
       const actual: SheetRoutePath | null =
         exactSheet === 'base' ? 'render-base'
         : exactSheet === 'sector' ? 'render-sector'
@@ -12630,16 +12633,21 @@ export default function DesignGlossy({
     // last held, i.e. it would render the wrong sheet (e.g. re-render "Whole design").
     if (restyleAiKind) return generateSectorViaQueue(restyleAiKind);
     if (producerStyle) {
-      // Geometry Lock only EXISTS on the queue path: /api/image-producer accepts no protect mask
-      // and generateProducer sends the unlocked prompt, so running a locked sheet there tells the
-      // model to paint every feature while the browser also draws the deterministic overlay —
-      // duplicated tanks and pipes, the exact thing the lock is meant to prevent. Keep the lock on
-      // the one path that implements it.
-      // Satellite Overlay is queue-only for the same reason: generateProducer always clips to the
-      // boundary and burns our own labels, which would crop the model's legend panel clean off.
-      return engine === 'falgpt' || geometryLock || isModelChromeStyle(producerStyle)
-        ? generateOneViaQueue()
-        : generateProducer();
+      // EVERY ENGINE GOES THROUGH THE QUEUE. This used to send Gemini to generateProducer — the
+      // direct /api/image-producer route — which is why "I tried Gemini and it didn't work" left no
+      // trace anywhere: it never wrote a render_jobs doc, so there was no job, no error field and
+      // no worker log to read. The picker was not choosing an ENGINE, it was choosing a whole
+      // different PIPELINE, and the older one silently dropped everything the newer one does.
+      //
+      // What that path cannot do is the reason it must not be the Gemini default: it accepts no
+      // protect mask and sends the unlocked prompt, so a locked sheet tells the model to paint
+      // every feature while the browser also draws the deterministic overlay — duplicated tanks and
+      // pipes, the exact thing Geometry Lock exists to prevent. It also always clips to the boundary
+      // and burns our own labels, which crops a model-lettered legend panel clean off. Quota, the
+      // kill switch and the render audit trail live on the queue too.
+      //
+      // generateProducer is left defined and unreferenced so restoring it is a one-line change.
+      return generateOneViaQueue();
     }
     if (analysisStyle) return generate('gemini');
     return renderDesignMap();
@@ -13599,7 +13607,7 @@ export default function DesignGlossy({
             : exactSheet === 'implementation'
             ? 'Draw your Implementation & Phasing sheet (plan-set 08) — the build order, week ranges, hold points, critical order and site rules, all worked out from your real design by the rules engine (permaculture Scale of Permanence + your rainfall). Deterministic and exact: no AI, no guessing. This is the reliable version of the illustrated Implementation analysis map.'
             : producerStyle
-            ? `Generate your ${filter === 'all' ? 'whole design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map in the ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} style. ${engine === 'falgpt' ? (effectiveModelChrome ? 'gpt-image-2 paints the whole sheet with its own legend & labels. Renders in the background (~mins); it lands in your gallery.' : 'gpt-image-2 paints the map artwork in the background (~mins); exact framing, protected geometry, labels, legend, north arrow and scale are composited afterwards.') : 'Gemini renders in about a minute — your real satellite, boundary and labels are composited back on top, so it stays boundary-accurate.'}`
+            ? `Generate your ${filter === 'all' ? 'whole design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map in the ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} style. ${engine === 'falgpt' ? (effectiveModelChrome ? 'gpt-image-2 paints the whole sheet with its own legend & labels. Renders in the background (~mins); it lands in your gallery.' : 'gpt-image-2 paints the map artwork in the background (~mins); exact framing, protected geometry, labels, legend, north arrow and scale are composited afterwards.') : 'Gemini paints the map artwork in the background (~mins); exact framing, protected geometry, labels, legend, north arrow and scale are composited afterwards. It lands in your gallery.'}`
             : analysisStyle
               ? `Generate the ${GLOSSY_STYLES.find((s) => s.key === analysisStyle)?.label} analysis map — an illustrated Gemini render (sun/wind, opportunities, phasing) over your real site. These are freer than the design maps: great to look at, less exact on geometry. Takes about a minute.`
               : filter === 'all'
@@ -13808,7 +13816,7 @@ export default function DesignGlossy({
                   Gemini → synchronous. */}
               <div>
                 <button
-                  onClick={engine === 'gemini' ? generateAllStyledSheets : generateAllViaQueue}
+                  onClick={generateAllViaQueue}
                   disabled={loading !== null}
                   style={{
                     display: 'flex',
@@ -13833,7 +13841,7 @@ export default function DesignGlossy({
                 </button>
                 <div style={{ fontSize: 11, opacity: 0.72, lineHeight: 1.5, marginTop: 6 }}>
                   {engine === 'gemini'
-                    ? 'Runs now with Gemini — about a minute per sheet, varies shot to shot.'
+                    ? 'Gemini renders in the background — cheaper per sheet; the sheets drop into your gallery when ready and you can keep working. (Print / Export always builds the exact plan set.)'
                     : 'gpt-image-2 renders in the background — sharpest result, a few minutes; the sheets drop into your gallery when ready and you can keep working. (Print / Export always builds the exact plan set.)'}
                 </div>
               </div>
@@ -13982,7 +13990,7 @@ export default function DesignGlossy({
                 : exactSheet === 'implementation'
                   ? `${resultImage ? 'Redraw' : 'Draw'} my implementation & phasing sheet · instant`
                   : producerStyle
-                    ? `✨ ${resultImage ? 'Regenerate' : 'Generate'} this sheet — ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} ${engine === 'falgpt' ? '(background · ~mins)' : '(~1 min)'}`
+                    ? `✨ ${resultImage ? 'Regenerate' : 'Generate'} this sheet — ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} (background · ~mins)`
                     : analysisStyle
                       ? `✨ ${resultImage ? 'Regenerate' : 'Generate'} this sheet — ${GLOSSY_STYLES.find((s) => s.key === analysisStyle)?.label} (~1 min)`
                       : `${resultImage ? 'Redraw' : 'Draw'} this sheet — exact · instant`}

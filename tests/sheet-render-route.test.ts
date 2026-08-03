@@ -156,3 +156,38 @@ test('sheetRenderRoute: base and sector both route to sector-queue (one function
   assert.equal(sheetRenderRoute({ exact: 'base' }, 'full', 'field_ledger').path, 'sector-queue');
   assert.equal(sheetRenderRoute({ exact: 'sector' }, 'full', 'field_ledger').path, 'sector-queue');
 });
+
+// THE ENGINE PICKER MUST CHOOSE AN ENGINE, NOT A PIPELINE.
+//
+// Rory: "gemini didnt work". The UI said "Producer failed (413)" and nothing else existed to look
+// at — no render_jobs doc, no error field, no worker log — because selecting Gemini did not change
+// which model rendered the sheet, it changed which SYSTEM rendered it. Gemini was routed to
+// generateProducer, the direct /api/image-producer call, which POSTs the whole ~3.3 megapixel
+// composite as a JSON body to a Vercel function capped at 4.5 MB. 413 every time, by construction.
+//
+// The queue exists precisely to avoid that: it uploads composites to Storage and passes PATHS. It
+// is also the only path with a protect mask, Geometry Lock, quota, the kill switch and the render
+// audit trail — so a second pipeline reachable by picking an engine was never a smaller version of
+// the queue, it was a different product with the safety removed.
+//
+// Source greps rather than behavioural assertions, because the defect is the EXISTENCE of a branch:
+// a unit test can only exercise the path it is told about, and this one was chosen by a UI toggle.
+test('no engine can route a sheet away from the render queue', async () => {
+  const { readFileSync } = await import('node:fs');
+  const source = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
+  const code = source
+    .split('\n')
+    .filter((line) => !/^\s*(\/\/|\*|\/\*)/.test(line))
+    .join('\n');
+
+  // The per-sheet dispatch must not call the direct producer at all.
+  assert.doesNotMatch(code, /:\s*generateProducer\(\)/);
+  assert.doesNotMatch(code, /\?\s*generateOneViaQueue\(\)/);
+
+  // The "all sheets" button must not pick its handler by engine.
+  assert.doesNotMatch(code, /engine === 'gemini' \? generateAllStyledSheets/);
+  assert.match(code, /onClick=\{generateAllViaQueue\}/);
+
+  // And the route-agreement constant must not consult the engine again.
+  assert.doesNotMatch(code, /const viaQueue = [^;]*engine ===/);
+});
