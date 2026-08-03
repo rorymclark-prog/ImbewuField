@@ -1,22 +1,3 @@
-# Vegetables and Staple Crops — Narration Script
-**For:** Gemini TTS, ElevenLabs, or any text-to-speech engine
-**Deck:** ImbewuField_Module_02_Vegetables_and_Staples_Deck.pptx (18 slides)
-
-Each block below is written for listening, not reading — short sentences, one idea at a time, key
-facts repeated. Paste each block into your TTS tool as one clip, in order. Where you see `[pause]`,
-insert a beat of silence.
-
-**This is the HOME-STUDY voice.** The deck's speaker notes are written for a facilitator standing
-in front of a group ("SAY… ASK… DO… CHECK"). A learner listening alone has nobody to ask, so every
-"ASK" has become a question they answer for themselves, out loud or on paper, and every "DO" has
-become something they go and do on their own land. The teaching is identical; only the person in
-the room has changed.
-
-**Facts, figures and crop names come from `lib/course-modules.ts` and were verified against South
-African sources.** Do not add a number, a spacing, or a crop that is not already in the lesson.
-
----
-
 **Slide 1 — Title**
 
 Welcome. This is Vegetables and Staple Crops. It's one of the ten modules in the ImbewuField training.
