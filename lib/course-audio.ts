@@ -81,6 +81,38 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
       { slide: 24,  lesson: null,                        title: 'Field Action',                                titleByLang: { zu: 'Isenzo Sasensimini' } },
     ],
   },
+  'intro-permaculture': {
+    languages: ['en'],
+    // 22 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural (Antigravity's batch run) and
+    // verified by import-course-audio: 22/22 clips matched their script blocks, median 3.22 w/s.
+    // NOTE the voice differs from seeds-sovereignty's en-ZA-LeahNeural — the eight modules
+    // recorded after this one share Luke, so seeds is the odd one out; Rory decides whether to
+    // re-record seeds EN for a single course voice.
+    tracks: [
+      { slide: 1,  lesson: null,                    title: 'Introduction to Permaculture' },
+      { slide: 2,  lesson: null,                    title: 'Why This Matters' },
+      { slide: 3,  lesson: null,                    title: 'Learning Outcomes' },
+      { slide: 4,  lesson: 'intro-permaculture-l1', title: 'Earth Care' },
+      { slide: 5,  lesson: 'intro-permaculture-l1', title: 'People Care' },
+      { slide: 6,  lesson: 'intro-permaculture-l1', title: 'Fair Share' },
+      { slide: 7,  lesson: 'intro-permaculture-l1', title: 'Watch: One Decision, Three Ethics' },
+      { slide: 8,  lesson: 'intro-permaculture-l1', title: 'When There Is No Rulebook' },
+      { slide: 9,  lesson: 'intro-permaculture-l2', title: 'Twelve Principles' },
+      { slide: 10, lesson: 'intro-permaculture-l2', title: 'Observe and Interact' },
+      { slide: 11, lesson: 'intro-permaculture-l2', title: 'Catch and Store Energy' },
+      { slide: 12, lesson: 'intro-permaculture-l2', title: 'Use Edges and Value the Marginal' },
+      { slide: 13, lesson: 'intro-permaculture-l2', title: 'Watch: Diversity Against One Bad Day' },
+      { slide: 14, lesson: 'intro-permaculture-l2', title: 'Integrate Rather Than Segregate' },
+      { slide: 15, lesson: 'intro-permaculture-l3', title: 'Zones: Organising by How Often You Visit' },
+      { slide: 16, lesson: 'intro-permaculture-l3', title: 'Why Zone 1 Is Not Negotiable' },
+      { slide: 17, lesson: 'intro-permaculture-l3', title: 'Zones Plan Your Labour' },
+      { slide: 18, lesson: 'intro-permaculture-l3', title: 'Sectors: The Energies Arriving From Outside' },
+      { slide: 19, lesson: 'intro-permaculture-l3', title: 'Watch: A Windbreak Belongs On The Wind Side' },
+      { slide: 20, lesson: 'intro-permaculture-l3', title: 'Sketch It And You Have A Design' },
+      { slide: 21, lesson: null,                    title: 'Field Assignment' },
+      { slide: 22, lesson: null,                    title: 'Field Action' },
+    ],
+  },
 };
 
 export function narrationFor(moduleId: string): ModuleNarration | null {

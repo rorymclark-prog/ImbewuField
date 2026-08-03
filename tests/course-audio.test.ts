@@ -13,12 +13,18 @@ const PUBLIC_AUDIO = join(process.cwd(), 'public', 'course-audio');
 const pad2 = (n: number) => String(n).padStart(2, '0');
 
 test('a module with no recording is a normal state, not an error', () => {
-  assert.equal(hasNarration('intro-permaculture'), false);
-  assert.equal(narrationFor('intro-permaculture'), null);
-  assert.deepEqual(allTracks('intro-permaculture'), []);
-  assert.deepEqual(tracksForLesson('intro-permaculture', 'intro-permaculture-l1'), []);
-  assert.equal(trackUrl('intro-permaculture', 'zu', 1), null);
-  assert.equal(resolveNarrationLang('intro-permaculture', 'zu'), null);
+  // The example used to be 'intro-permaculture', which flipped this test the day that module WAS
+  // recorded — and every real module is on the recording schedule, so any real id here is a time
+  // bomb. The behaviour under test is "absent from the manifest answers empty, never throws",
+  // and these lookups never consult COURSE_MODULES, so an id no module will ever use pins it
+  // permanently.
+  const unrecorded = 'module-with-no-recording';
+  assert.equal(hasNarration(unrecorded), false);
+  assert.equal(narrationFor(unrecorded), null);
+  assert.deepEqual(allTracks(unrecorded), []);
+  assert.deepEqual(tracksForLesson(unrecorded, 'intro-permaculture-l1'), []);
+  assert.equal(trackUrl(unrecorded, 'zu', 1), null);
+  assert.equal(resolveNarrationLang(unrecorded, 'zu'), null);
 });
 
 test('the seeds module is recorded in isiZulu and English', () => {
