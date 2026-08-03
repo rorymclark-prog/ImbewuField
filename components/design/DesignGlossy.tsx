@@ -44,6 +44,7 @@ import { buildFinishedSheetPolishPrompt, buildLockedIllustrationPrompt, buildPha
 import { zoneBadgePositions } from '@/lib/canvas-labels';
 import { enqueueRenderJob, subscribeRenderJob, fetchRenderOutput, type RenderQuality } from '@/lib/render-jobs';
 import type { RenderEngine } from '@/lib/render-job-contract';
+import { authoritativeHouseFootprints } from '@/lib/house-footprints';
 // Extracted (behaviour-preserving) — see lib/glossy-filters.ts and lib/producer-labels.ts.
 // Re-exported below so existing consumers (lib/producer-prompt.ts comments, app/design/page.tsx,
 // components/design/DesignPrint.tsx) keep importing them from this module unchanged.
@@ -563,17 +564,6 @@ export interface DesignGlossyProps {
  * created it. Older projects can carry the house in refLayers while Design Studio projects store
  * it as a ground-feature zone. Render safety must protect and restore both forms.
  */
-export function authoritativeHouseFootprints(
-  state: DesignCanvasState,
-  refLayers: DesignGlossyProps['refLayers'],
-): Array<Array<[number, number]>> {
-  const footprints: Array<Array<[number, number]>> = [];
-  if (refLayers.house.length >= 3) footprints.push(refLayers.house);
-  for (const zone of state.zones) {
-    if (zone.feature === 'house' && zone.points.length >= 3) footprints.push(zone.points);
-  }
-  return footprints;
-}
 
 export const SCALE = 2;
 
@@ -6434,15 +6424,27 @@ async function buildReferenceBlueprintMap(
     // on this sheet — and on paper they must be drawn as a plan draws them, not as the near-solid
     // marks that were tuned to survive a busy aerial. See PLAIN_HARD_SURFACE_PAINT.
     const onPaper = !renderFrame.satDataUrl;
-    drawBlueprintHouse(
-      ctx,
-      renderRefLayers.house,
-      px,
-      py,
-      onPaper ? PLAIN_HARD_SURFACE_PAINT.houseFill : 'rgba(48,54,59,0.94)',
-      onPaper ? PLAIN_HARD_SURFACE_PAINT.houseStroke : '#FBF6EC',
-      3,
-    );
+    // EVERY BUILDING, NOT THE BIGGEST ONE. This drew `renderRefLayers.house` alone — a single ring —
+    // while drawBlueprintGround drops EVERY house zone whenever houseCovered is true, and
+    // resolveBaseLayers guarantees it is true by promoting the largest Studio house ring into
+    // refLayers.house. So a farm with a house and a store room drew the house, and the store room
+    // was suppressed by the ground pass and never picked up by this one. Rory, on a plain-paper
+    // sheet: "store room not showing".
+    //
+    // It only went missing on PAPER. The photo path composes through buildHouseOverlay, which has
+    // always used authoritativeHouseFootprints and so has always known about both — which is
+    // exactly why this survived: the same sheet, rendered on satellite, looked right.
+    for (const footprint of authoritativeHouseFootprints(state, renderRefLayers)) {
+      drawBlueprintHouse(
+        ctx,
+        footprint,
+        px,
+        py,
+        onPaper ? PLAIN_HARD_SURFACE_PAINT.houseFill : 'rgba(48,54,59,0.94)',
+        onPaper ? PLAIN_HARD_SURFACE_PAINT.houseStroke : '#FBF6EC',
+        3,
+      );
+    }
     drawBlueprintDriveway(ctx, renderRefLayers, px, py, pxPerM, filter === 'structures', onPaper);
   }
 
