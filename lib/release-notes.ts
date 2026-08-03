@@ -35,9 +35,12 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '3 August',
-    sha: '101e815',
+    sha: '7ba7a2f',
     changes: [
-      'Plant labels are now a choice: short codes on every plant, or names on the map',
+      'Every tree is now named on the plan — no more "Moringa x5" pointing at one of them',
+      'Labels moved off the drawing into a clear margin down each side of the map',
+      'Beds, rows and strips stay grouped with a count, so a big garden is one label not thirty',
+      'Plant labels are now a choice: short codes on every plant, or names in the margin',
       'Vetiver hedges are drawn at the width you set them, not wider',
       'On plain paper the house and driveway sit back — the planting is the subject',
       'New "Plain paper" choice: your plan drawn on paper, with no photo behind it',
