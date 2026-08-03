@@ -37,7 +37,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     when: '3 August',
     sha: '9714053',
     changes: [
-      'The Studio was drawing narrow things wider than you saved them — a hedge is now its real width',
+      'The Studio drew narrow things too wide — a hedge is now its real width',
       'Plant labels have a third choice: the name printed under each plant',
       'A tree with planting under it now has a dashed edge, so you can see what is beneath it',
       'Every tree is now named on the plan — no more "Moringa x5" pointing at one of them',

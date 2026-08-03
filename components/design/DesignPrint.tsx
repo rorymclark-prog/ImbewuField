@@ -110,9 +110,27 @@ function isLayerAvailable(layer: PrintLayer, state: DesignCanvasState, refLayers
 }
 
 // Paper pixel sizes at ~150 DPI, portrait [w, h].
+/**
+ * Page size in pixels, portrait, at 225 dpi.
+ *
+ * These were 1240x1754 and 1754x2480 — 150 dpi, which is half of print standard and is most of why
+ * an exported sheet does not survive being looked at closely. Rory: "its blurry when you zoom in so
+ * printing is not gonna be nice."
+ *
+ * WHY 225 AND NOT 300. iOS Safari refuses to allocate a canvas over roughly 16.7 megapixels and
+ * silently hands back a blank one — no error, just an empty page. A3 landscape at 300 dpi is
+ * 4961x3508 = 17.4 Mpx, over the cliff, and A3 is the size a farmer takes to a funder. 225 dpi puts
+ * A3 landscape at 9.8 Mpx with room to spare and still buys half as much resolution again as
+ * before. Raising it further needs the export to tile the page rather than allocate it whole.
+ */
+const PRINT_DPI = 225;
+const PAPER_MM: Record<'a4' | 'a3', [number, number]> = {
+  a4: [210, 297],
+  a3: [297, 420],
+};
 const PAPER_PX: Record<'a4' | 'a3', [number, number]> = {
-  a4: [1240, 1754],
-  a3: [1754, 2480],
+  a4: PAPER_MM.a4.map((mm) => Math.round((mm / 25.4) * PRINT_DPI)) as [number, number],
+  a3: PAPER_MM.a3.map((mm) => Math.round((mm / 25.4) * PRINT_DPI)) as [number, number],
 };
 
 const slug = (s: string) => s.replace(/[^a-z0-9.\-]+/gi, '_').replace(/^_+|_+$/g, '') || 'site';

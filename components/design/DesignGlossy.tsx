@@ -4116,18 +4116,6 @@ function sheetGutterLayout(
     : new Set<string>();
   const rows: GutterRow[] = [
     ...gutterCalloutRows(state, refLayers, W, H, filter, coded),
-    // Prefixed: the layout keys rows by id, and a traced ring's id and a placed item's id come from
-    // two different spaces with nothing stopping them coinciding. One collision would silently drop
-    // a row (a Map assignment overwrites) rather than fail loudly.
-    ...(filter === 'planting'
-      ? groundLabelsForSheet(state, refLayers, W, H, filter)
-        .map((label, i) => ({
-          id: `ground:${label.id ?? i}`,
-          cx: label.cx,
-          cy: label.cy,
-          text: sentenceCase(label.text),
-        }))
-      : []),
   ];
   return layoutGutterRows(rows, {
     mapWidth: W,
@@ -4138,6 +4126,52 @@ function sheetGutterLayout(
     // Clear of the scale bar, which is burned into the bottom-left of the map afterwards.
     bottom: H - Math.round(H * 0.075),
   });
+}
+
+/**
+ * The name of a traced AREA, written inside the area.
+ *
+ * An area label is not a callout. A callout points at a thing too small to write on; a staple
+ * garden or a lawn terrace is a region, and every plan sheet ever drawn writes the region's name
+ * across the region. Sending these to the label gutter gave "Staple garden" a row on the far right
+ * of the sheet with a leader running the whole width of the drawing to reach a plot that was in
+ * plain sight — Rory: "look at staple garden label". The leader was carrying no information the
+ * position had not already given.
+ *
+ * Drawn before the per-plant marks, so a plant's own name wins where the two meet: the plot is the
+ * context, the plant is the detail.
+ */
+function drawGroundAreaNames(
+  ctx: CanvasRenderingContext2D,
+  state: DesignCanvasState,
+  refLayers: DesignGlossyProps['refLayers'],
+  W: number,
+  H: number,
+  filter: GlossyLayerFilter,
+): void {
+  const rings = groundLabelsForSheet(state, refLayers, W, H, filter);
+  if (!rings.length) return;
+  const fs = Math.max(13, Math.round(W * 0.0115));
+  ctx.save();
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.font = `800 ${fs}px ${REFERENCE_LABEL_FONT}`;
+  for (const ring of rings) {
+    const text = sentenceCase(ring.text);
+    const textW = ctx.measureText(text).width;
+    const padX = fs * 0.5;
+    const boxW = textW + padX * 2;
+    const boxH = fs * 1.55;
+    roundRectPath(ctx, ring.cx - boxW / 2, ring.cy - boxH / 2, boxW, boxH, boxH * 0.32);
+    ctx.fillStyle = 'rgba(24,32,26,0.86)';
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(243,238,219,0.6)';
+    ctx.lineWidth = Math.max(0.9, fs * 0.06);
+    ctx.stroke();
+    ctx.fillStyle = '#F6F1E2';
+    ctx.fillText(text, ring.cx, ring.cy + fs * 0.04);
+  }
+  ctx.restore();
 }
 
 function referenceBlueprintLabels(
@@ -5788,14 +5822,22 @@ function drawPlantMarks(
     // A mark wider than the plant it belongs to stops being a mark ON that plant and becomes a mark
     // NEAR several of them. Below the floor the plant keeps its legend row and no mark — an
     // unreadable label is a worse answer than the honest absence of one.
-    if (shortSide < 22) continue;
+    //
+    // A CODE has to fit ON the plant, so it is gated on the SHORT side. A NAME sits under the
+    // footprint and does not, so gating it the same way silently dropped every vegetable bed: a bed
+    // is long and narrow, and on a big farm its short side falls under the floor while the bed
+    // itself is one of the largest things on the sheet. Rory: "no label for veg beds?"
+    const gateSide = mode === 'onplant'
+      ? Math.max(printed.width, printed.height)
+      : shortSide;
+    if (gateSide < 22) continue;
 
     // TWO SIZES, AND ONLY TWO. Rory: "you can have 2 size fonts again to accommodate name length."
     // A free shrink-to-fit is what produced three different callout sizes on one sheet and it is
     // still the wrong answer; one deliberate smaller step for the long names is not. The chip is
     // measured at each size in turn and takes the first that fits.
     const baseFs = mode === 'onplant'
-      ? Math.max(11, Math.min(shortSide * 0.34, ctx.canvas.width * 0.0125))
+      ? Math.max(11, Math.min(gateSide * 0.34, ctx.canvas.width * 0.0125))
       : Math.max(9, Math.min(shortSide * 0.3, ctx.canvas.width * 0.0115));
     // A name may run wider than its own plant — it sits below the footprint, not on it — but not so
     // far that it reaches the next one. A code must stay within its plant.
@@ -6157,12 +6199,55 @@ interface ReferencePresentationContext {
  * dimensions remain untouched; one uniform source-to-output scale owns both axes, so an accurately
  * sized bed stays accurately sized and the scale bar stays truthful after the visual zoom.
  */
+/**
+ * The extent the finished sheet has to FRAME — the plot, plus everything drawn on it.
+ *
+ * The viewport used to be derived from the boundary alone, which is right about the land and wrong
+ * about the drawing: a tree planted on the fence line has a canopy several metres across, and half
+ * of it falls outside the boundary. The crop then cut through it and through its label, so the
+ * sheet showed a tree sliced off by the edge of the page. Rory, on his own planting sheet: "icons
+ * are clipped?"
+ *
+ * Item CENTRES are inside the plot by construction, so nothing here can run away with the framing —
+ * the extent grows by at most one canopy radius, which is exactly the amount that was being cut.
+ * Saved metres, not printed pixels: the presentation scale is what this feeds into, so using the
+ * printed size would be circular.
+ */
+function presentationExtentRing(
+  state: DesignCanvasState,
+  frame: CanvasFrame,
+  boundary: Array<[number, number]>,
+): Array<[number, number]> {
+  const frameWm = frame.imgW * frame.mPerPx;
+  const frameHm = frame.imgH * frame.mPerPx;
+  if (!(frameWm > 0) || !(frameHm > 0) || boundary.length < 3) return boundary;
+  const points: Array<[number, number]> = [...boundary];
+  for (const it of state.items) {
+    const def = ELEMENTS_BY_ID[it.defId];
+    if (!def || !Number.isFinite(it.x) || !Number.isFinite(it.y)) continue;
+    const halfX = ((it.wM ?? def.wM) / 2) / frameWm;
+    const halfY = ((it.hM ?? def.hM) / 2) / frameHm;
+    if (!Number.isFinite(halfX) || !Number.isFinite(halfY)) continue;
+    points.push([it.x - halfX, it.y - halfY], [it.x + halfX, it.y + halfY]);
+  }
+  // Clamped: the crop may never reach outside the source photograph, and a canopy hanging past the
+  // edge of the imagery cannot be framed however much the viewport would like to.
+  return points.map(([x, y]) => [
+    Math.min(1, Math.max(0, x)),
+    Math.min(1, Math.max(0, y)),
+  ] as [number, number]);
+}
+
 async function boundaryPresentationContext(
   state: DesignCanvasState,
   frame: CanvasFrame,
   refLayers: DesignGlossyProps['refLayers'],
 ): Promise<ReferencePresentationContext> {
-  const layout = calculateBoundaryPresentationLayout(refLayers.boundary, frame, SCALE);
+  const layout = calculateBoundaryPresentationLayout(
+    presentationExtentRing(state, frame, refLayers.boundary),
+    frame,
+    SCALE,
+  );
   if (!layout) return { state, frame, refLayers };
   const {
     cropX,
@@ -6369,6 +6454,7 @@ async function buildReferenceBlueprintMap(
   // Codes before the gutter, not after. They used to be drawn last because the on-map pills covered
   // them; with the callouts moved into a reserved band there is nothing left to hide behind, and
   // the band must be free to cover anything that strays into it.
+  if (filter === 'planting') drawGroundAreaNames(ctx, renderState, renderRefLayers, W, H, filter);
   drawPlantMarks(ctx, renderState, filter, px, py, W / (renderFrame.imgW * renderFrame.mPerPx), labelMode);
   // CALLOUTS ARE NOT DRAWN HERE ANY MORE. They live in the sheet's label gutters, which only exist
   // once composeStyleSheet has widened the map into a sheet — see drawLabelGutter. What is computed
