@@ -53,9 +53,21 @@ test('geminiEdit sends the correct shape and strict prompt', async (t) => {
     const parts = body.contents[0].parts;
     assert.equal(parts.length, 2);
     
-    // Strict prompt verification
-    assert.ok(parts[0].text.includes('FINAL RULE: DO NOT alter the house footprint, driveway, boundary line or any traced structure.'), 'strict rule is prepended');
-    assert.ok(parts[0].text.includes('user prompt'), 'user prompt is included');
+    // THE PROMPT IS THE CALLER'S, VERBATIM — no engine-specific additions.
+    //
+    // This asserted that a Gemini-only "FINAL RULE: DO NOT alter the house footprint…" was
+    // prepended. The first real Gemini render is what proved that rule was not a free safety net:
+    // the composed sheet reserves blank cream gutters and an empty NOTES box by design, so a model
+    // told to paint the page AND forbidden to alter it refused outright — finishReason STOP, "it
+    // contains several empty white boxes that I am not able to replace with the required elements
+    // while still adhering to the 'do not alter' policy." gpt-image-2 renders the same composite
+    // happily, because it never received the clause.
+    //
+    // Geometry is held by the protect mask and by the app compositing exact elements back on top,
+    // not by a sentence one engine gets and the other does not. Divergence between a never-run path
+    // and a proven one is the defect this file keeps producing; pin the absence of it.
+    assert.equal(parts[0].text, 'user prompt', 'the caller\'s prompt must reach Gemini unmodified');
+    assert.doesNotMatch(parts[0].text, /FINAL RULE|pixel-identical/);
     
     // Image data verification
     assert.equal(parts[1].inlineData.mimeType, 'image/png');

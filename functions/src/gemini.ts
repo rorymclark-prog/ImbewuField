@@ -40,7 +40,27 @@ export async function geminiEdit(
   const timer = setTimeout(() => ctrl.abort(), ATTEMPT_TIMEOUT_MS);
   let res: Response;
   try {
-    const strictPrompt = "FINAL RULE: DO NOT alter the house footprint, driveway, boundary line or any traced structure. They must remain pixel-identical to the source image.\n\n" + prompt;
+    // NO GEMINI-ONLY CLAUSE. This used to prepend "FINAL RULE: DO NOT alter the house footprint,
+    // driveway, boundary line or any traced structure. They must remain pixel-identical to the
+    // source image." — a rule gpt-image-2 never sees, on a branch that had never run in production.
+    //
+    // The first real Gemini render is what showed why that is not a free safety net. The composed
+    // sheet is [gutter][map][gutter][legend]: the gutters are RESERVED BLANK CREAM PAPER by design,
+    // and there is an empty NOTES box. Asked to paint the page while also forbidden to alter it,
+    // Gemini did the honest thing and refused — finishReason STOP, with: "it contains several empty
+    // white boxes that I am not able to replace with the required elements while still adhering to
+    // the 'do not alter' policy." A blank panel it was told to leave alone reads as a placeholder it
+    // was told to fill, and the two instructions cannot both be satisfied.
+    //
+    // gpt-image-2 renders the same composite without complaint precisely because it never received
+    // this clause. Geometry is protected by the PROTECT MASK and by the app compositing exact
+    // elements back on top afterwards — mechanisms that hold regardless of what any model is asked.
+    // An extra sentence on one engine only was never what was keeping the house in place; it was
+    // just the one difference between the engine that works and the engine that did not.
+    //
+    // Same lesson as the responseModalities fix: where a never-run path diverges from the proven
+    // one, the proven one wins.
+    const strictPrompt = prompt;
     
     res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_IMAGE_MODELS[model]}:generateContent?key=${key}`, {
       method: 'POST',
