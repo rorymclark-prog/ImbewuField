@@ -35,9 +35,13 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '3 August',
-    sha: '9714053',
+    sha: '40bc865',
     changes: [
       'The Studio drew narrow things too wide — a hedge is now its real width',
+      'Printed and exported sheets are half as sharp again (150 dpi pages were the cause)',
+      'Trees on the fence line are no longer sliced off by the edge of the page',
+      'Vegetable beds get their name back on the plan',
+      'An area like a staple garden is named across the area, not on a line off the side',
       'Plant labels have a third choice: the name printed under each plant',
       'A tree with planting under it now has a dashed edge, so you can see what is beneath it',
       'Every tree is now named on the plan — no more "Moringa x5" pointing at one of them',
