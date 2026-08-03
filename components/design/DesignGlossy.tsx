@@ -5823,13 +5823,15 @@ function drawPlantMarks(
     // NEAR several of them. Below the floor the plant keeps its legend row and no mark — an
     // unreadable label is a worse answer than the honest absence of one.
     //
-    // A CODE has to fit ON the plant, so it is gated on the SHORT side. A NAME sits under the
-    // footprint and does not, so gating it the same way silently dropped every vegetable bed: a bed
-    // is long and narrow, and on a big farm its short side falls under the floor while the bed
-    // itself is one of the largest things on the sheet. Rory: "no label for veg beds?"
-    const gateSide = mode === 'onplant'
-      ? Math.max(printed.width, printed.height)
-      : shortSide;
+    // GATED ON THE LONG SIDE, for a code as much as for a name. Gating on the short side reads as
+    // the careful choice — a mark should fit on the thing it marks — and it silently deletes every
+    // vegetable bed: a bed is long and narrow, so on a real farm its short side falls under the
+    // floor while the bed itself is one of the largest objects on the sheet. Rory has now reported
+    // it twice, once per mode: "no label for veg beds?", then "vegetable beds not named".
+    //
+    // A chip lying across a narrow bed overhangs it slightly and still reads as belonging to it —
+    // there is nothing else it could belong to. An unmarked bed reads as an unidentified rectangle.
+    const gateSide = Math.max(printed.width, printed.height);
     if (gateSide < 22) continue;
 
     // TWO SIZES, AND ONLY TWO. Rory: "you can have 2 size fonts again to accommodate name length."
@@ -5838,10 +5840,16 @@ function drawPlantMarks(
     // measured at each size in turn and takes the first that fits.
     const baseFs = mode === 'onplant'
       ? Math.max(11, Math.min(gateSide * 0.34, ctx.canvas.width * 0.0125))
-      : Math.max(9, Math.min(shortSide * 0.3, ctx.canvas.width * 0.0115));
+      // Sized off the SHORT side so a code stays proportionate to the plant, floored so it stays
+      // readable — a long bed does not want a code as tall as it is wide.
+      : Math.max(9, Math.min(Math.max(shortSide, 22) * 0.3, ctx.canvas.width * 0.0115));
     // A name may run wider than its own plant — it sits below the footprint, not on it — but not so
     // far that it reaches the next one. A code must stay within its plant.
-    const widthBudget = mode === 'onplant' ? printed.width * 1.9 : printed.width * 0.92;
+    // Measured against the LONG side for the same reason the gate is: a code lies across a bed, and
+    // "does it fit within the bed's WIDTH" is a question about the wrong axis.
+    const widthBudget = mode === 'onplant'
+      ? gateSide * 1.9
+      : Math.max(printed.width, gateSide * 0.55);
     const sizes = mode === 'onplant' ? [baseFs, baseFs * 0.76] : [baseFs];
 
     let fs = 0;
