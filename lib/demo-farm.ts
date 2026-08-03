@@ -399,6 +399,23 @@ export function buildDemoDesignCanvasState(): DesignCanvasState {
     points: z.ringM.map(([xM, yM]) => toNorm(xM, yM)),
   }));
 
+  // Four separate fields, not one large polygon with four textures inside it. The exact planting
+  // and masterplan painters deliberately give each traced staple plot one crop silhouette, so the
+  // sample farm exercises the same rotation-readable drawing a real four-block field needs. These
+  // are illustrative geometry only: the fixture records no crop plan, spacing or yield claim.
+  const staplePlots: ZoneShape[] = [
+    [[22, 12], [28, 12], [28, 15.5], [22, 15.5]],
+    [[29, 12], [35, 12], [35, 15.5], [29, 15.5]],
+    [[22, 16.5], [28, 16.5], [28, 20], [22, 20]],
+    [[29, 16.5], [35, 16.5], [35, 20], [29, 20]],
+  ].map((ringM, index) => ({
+    id: `demo-staple-${index + 1}`,
+    zone: 2,
+    feature: 'staple_garden',
+    points: ringM.map(([xM, yM]) => toNorm(xM, yM)),
+  }));
+  zones.push(...staplePlots);
+
   // ── Lines ──────────────────────────────────────────────────────────────
   const pathM: Array<[number, number]> = [[20, 2], [20, 12], [12, 18]];      // gate → down → into beds
   const swaleM: Array<[number, number]> = [[3, 20.5], [20, 20.8], [37, 20.5]]; // on-contour, just above the orchard

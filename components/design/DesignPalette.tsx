@@ -174,6 +174,15 @@ export interface DesignPaletteProps {
     wM: number | null;
     hM: number | null;
   } | null;
+  /** The single selected swale's measured route length and optional stated disturbed-ground
+   *  width. Blank stays blank: this is a farmer-entered construction note, not a place to infer
+   *  one from the drawing. */
+  swaleControl: {
+    widthM: number | undefined;
+    lengthM: number;
+    /** Returns false for invalid input, so the field can restore the saved value without writing it. */
+    onSetWidth: (raw: string) => boolean;
+  } | null;
   // Sector step: confirm/override control for the farmer's on-site wind observation
   // (lib/local-wind.ts LocalWindObservation) — the local counterpart to ZoneShape.measuredSlopePct.
   // null hides the whole control, same "nothing to act on" convention as onDuplicateSelected going
@@ -409,6 +418,7 @@ export default function DesignPalette({
   onCleanupSelected,
   angleControl,
   sizeControl,
+  swaleControl,
   windControl,
   siteBiome,
   bottomStop,
@@ -1043,6 +1053,71 @@ export default function DesignPalette({
                   />
                 </span>
               ))}
+              <span style={{ fontSize: guided ? 12 : 10.5, opacity: 0.75 }}>m</span>
+            </div>
+          )}
+          {/* A swale is a traced route, not a resizeable rectangle. Its length is therefore a
+              readout of the existing points, while width is an explicitly stated earthwork
+              dimension. Leaving this input blank means "not stated" all the way to the sheet
+              legend; a visible drawing band must never be mistaken for a recommendation. */}
+          {swaleControl && (
+            <div
+              style={{
+                minHeight: guided ? 52 : 44,
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: 5,
+                flexShrink: 0,
+                padding: guided ? '0 12px' : '0 10px',
+                borderRadius: 10,
+                border: '1px solid rgba(0,0,0,0.15)',
+                background: PAPER,
+                color: DARK,
+                fontWeight: 600,
+                fontSize: guided ? 14.5 : 13,
+              }}
+            >
+              <span aria-hidden style={{ fontSize: guided ? 13 : 11.5 }}>⌇</span>
+              <span style={{ fontSize: guided ? 12 : 10.5, opacity: 0.75 }}>Swale</span>
+              <span title="Measured along the line you drew" style={{ fontSize: guided ? 12 : 10.5, opacity: 0.75, whiteSpace: 'nowrap' }}>
+                {`${swaleControl.lengthM.toFixed(1)} m long`}
+              </span>
+              <span style={{ fontSize: guided ? 12 : 10.5, opacity: 0.75 }}>Width</span>
+              <input
+                // Uncontrolled + keyed follows the same commit-only rule as Size: no half-typed
+                // value reaches saved state, while undo, reload and another selected swale remount
+                // the field from the actual stated width.
+                key={swaleControl.widthM ?? 'unstated'}
+                defaultValue={swaleControl.widthM != null ? String(swaleControl.widthM) : ''}
+                placeholder="not stated"
+                title="Stated disturbed-ground width; leave blank when it has not been set"
+                aria-label="Stated swale width in metres"
+                type="number"
+                inputMode="decimal"
+                min={0.01}
+                max={100}
+                step={0.1}
+                onPointerDown={(e) => e.stopPropagation()}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') e.currentTarget.blur();
+                }}
+                onBlur={(e) => {
+                  if (swaleControl.onSetWidth(e.currentTarget.value)) return;
+                  e.currentTarget.value = swaleControl.widthM != null ? String(swaleControl.widthM) : '';
+                }}
+                style={{
+                  width: 74,
+                  minHeight: guided ? 34 : 28,
+                  border: '1px solid rgba(0,0,0,0.18)',
+                  borderRadius: 7,
+                  background: PAPER,
+                  color: DARK,
+                  fontSize: guided ? 13.5 : 12,
+                  fontWeight: 700,
+                  textAlign: 'center',
+                  padding: '2px 2px',
+                }}
+              />
               <span style={{ fontSize: guided ? 12 : 10.5, opacity: 0.75 }}>m</span>
             </div>
           )}

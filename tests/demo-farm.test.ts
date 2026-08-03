@@ -15,6 +15,8 @@ import {
 import { bedsFromDesignCanvas } from '../lib/design-beds-bridge.ts';
 import { cropByKey } from '../lib/crop-catalog.ts';
 import { ELEMENTS_BY_ID } from '../lib/design-elements.ts';
+import { groundRegister } from '../lib/glossy-filters.ts';
+import { polygonCropRows, staplePlotGlyphs, staplePlotOrdinalById, type CropGlyph } from '../lib/crop-row-cartography.ts';
 
 function assertUnique(values: string[], label: string): void {
   assert.equal(new Set(values).size, values.length, `${label} must be unique`);
@@ -90,6 +92,34 @@ test('the authored canvas is finite, normalized and resolvable by the real catal
       assert.ok(point[1] >= 0 && point[1] <= 1);
     }
   }
+});
+
+test('the full demo farm renders four one-crop staple blocks on sheets 06 and 08', () => {
+  // This is deliberately the complete demo fixture, not four convenient synthetic squares. The
+  // real failure was that the sample farm had no separate staple zones for the common renderer to
+  // paint, so unit coverage of crop glyphs passed while both plan sheets showed one merged field.
+  const state = buildDemoDesignCanvasState();
+  const plots = state.zones.filter((zone) => zone.feature === 'staple_garden');
+  assert.equal(plots.length, 4, 'the demo needs four traced blocks, not one merged staple polygon');
+
+  for (const sheet of ['planting', 'all'] as const) {
+    assert.ok(
+      plots.every((plot) => groundRegister(plot.feature!, sheet) === 'content'),
+      `${sheet === 'planting' ? 'sheet 06' : 'sheet 08'} must pass every staple block to the shared ground painter`,
+    );
+  }
+
+  const ordinals = staplePlotOrdinalById(state.zones);
+  const drawn: CropGlyph[] = plots.map((plot) => {
+    const ring = plot.points.map(([x, y]) => [x * 1200, y * 900] as [number, number]);
+    const layout = polygonCropRows(ring, staplePlotGlyphs(ordinals.get(plot.id) ?? -1), plot.id, 12);
+    const crops = new Set(layout.plants.map((plant) => plant.glyph));
+    assert.ok(crops.size > 0, `${plot.id} has enough real fixture area to read as rows`);
+    assert.equal(crops.size, 1, `${plot.id} must remain one crop block, never an intercropped texture`);
+    return [...crops][0];
+  });
+  assert.deepEqual(drawn, ['grain', 'legume', 'vine', 'generic']);
+  assert.equal(new Set(drawn).size, 4, 'four demo blocks must remain visually distinct');
 });
 
 test('map boundary, saved place, water points and canvas all identify one site', () => {

@@ -18,6 +18,7 @@ import {
   exactSheetElementRegister,
   exactSheetGroundLegendGroups,
   exactSheetLineLegendGroups,
+  exactSheetLineRegister,
   exactSheetZoneLegendGroups,
   groundRegister,
   lineInFilter,
@@ -372,10 +373,10 @@ test('Planting callouts use the same species identities as the Planting legend',
 // no test did.
 //
 // The rule this pins is the one the renderer must obey: a line kind may only be legended on a
-// sheet whose lineInFilter admits it. It is deliberately expressed against lineInFilter rather
-// than against a painter, because lineInFilter is the single authority every painter is now
-// required to consult.
-test('no sheet legends a line kind that its own membership rule excludes', () => {
+// sheet whose shared draw register admits it. `lineInFilter` owns step focus, while the register
+// separately admits the Water sheet's quiet swale context; that distinction prevents a stated
+// width from disappearing without falsely making Water own the earthwork.
+test('no sheet legends a line kind that its shared draw register excludes', () => {
   const kinds = ['swale', 'pipe', 'drip', 'greywater', 'fence', 'path', 'bedpath', 'windbreak'] as const;
   const state = {
     lines: kinds.map((kind, index) => ({
@@ -392,8 +393,8 @@ test('no sheet legends a line kind that its own membership rule excludes', () =>
     for (const group of exactSheetLineLegendGroups(state, sheet as ExactPlanSheetKey)) {
       if (!group.lineKind) continue;
       assert.ok(
-        lineInFilter(group.lineKind, sheet),
-        `sheet ${sheet} legends "${group.text}" but lineInFilter(${group.lineKind}, ${sheet}) is false — `
+        exactSheetLineRegister(group.lineKind, sheet) !== 'absent',
+        `sheet ${sheet} legends "${group.text}" but exactSheetLineRegister(${group.lineKind}, ${sheet}) is absent — `
         + 'the legend would print a row for a mark the renderer is not allowed to draw',
       );
     }

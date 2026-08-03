@@ -1,3 +1,5 @@
+import type { ZoneShape } from '@/lib/design-canvas';
+
 /**
  * Rows of actual crops, drawn inside a bed or a staple plot.
  *
@@ -117,7 +119,10 @@ const UNNAMED_BED_GLYPHS: readonly CropGlyph[] = ['rosette', 'root', 'staked', '
  * read apart, in the order the farmer created them. It states no seed rate, spacing, rotation
  * sequence or yield, no legend row names a crop, and nothing downstream reads it as advice.
  */
-const STAPLE_PLOT_CROPS: readonly CropGlyph[] = ['grain', 'legume', 'vine', 'root'];
+// The fourth block stays deliberately generic/mixed. The first three silhouettes describe the
+// familiar visible crops; inventing a fourth named crop just to complete the drawing would turn a
+// sample-plan convention into farming advice.
+const STAPLE_PLOT_CROPS: readonly CropGlyph[] = ['grain', 'legume', 'vine', 'generic'];
 
 /** Stable 0..1 from an id, so a bed keeps its silhouette across every render of the design. */
 function idUnit(seed: string): number {
@@ -148,10 +153,10 @@ export function unnamedBedGlyph(seed: string): CropGlyph {
  * ORDINAL, NOT HASH. Every other glyph choice in this file is keyed on an id hash, and that is
  * right for beds, where two beds of greens is realistic and a farm may hold thirty of them. It is
  * wrong here: four plots drawn from a hash collide, and the whole point is that a farmer who cut
- * their field into four sees four crops. Ordinal is what guarantees plot 1..4 are grain, legume,
- * vine, root — never two the same until there are more plots than crops. The caller numbers plots
- * in the farmer's own creation order, so the plot they drew first is the maize block on every
- * render and does not swap crops when they add a fifth.
+ * their field into four sees four crop blocks. Ordinal is what guarantees plot 1..4 are grain,
+ * legume, vine, generic/mixed — never two the same until there are more plots than silhouettes.
+ * The caller numbers plots in the farmer's own creation order, so the plot they drew first is the
+ * maize block on every render and does not swap crops when they add a fifth.
  */
 export function staplePlotGlyph(ordinal: number): CropGlyph {
   const index = Number.isFinite(ordinal) ? Math.max(0, Math.floor(ordinal)) : 0;
@@ -161,6 +166,21 @@ export function staplePlotGlyph(ordinal: number): CropGlyph {
 /** The row sequence for one staple plot: a single crop, so the plot reads as a crop block. */
 export function staplePlotGlyphs(ordinal: number): readonly CropGlyph[] {
   return [staplePlotGlyph(ordinal)];
+}
+
+/**
+ * Creation order is the crop-block order for the exact sheets. It must be derived once from the
+ * saved zone list, before either sheet changes paint order for visual stacking: sorting by area
+ * made two blocks exchange their maize/bean silhouettes when a farmer merely adjusted a corner.
+ */
+export function staplePlotOrdinalById(
+  zones: ReadonlyArray<Pick<ZoneShape, 'id' | 'feature'>>,
+): ReadonlyMap<string, number> {
+  const ordinals = new Map<string, number>();
+  for (const zone of zones) {
+    if (zone.feature === 'staple_garden') ordinals.set(zone.id, ordinals.size);
+  }
+  return ordinals;
 }
 
 /**

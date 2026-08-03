@@ -631,21 +631,27 @@ test('a swale is owned by Earthworks alone, but shows as context on the Water sh
   assert.ok(EXACT_CONTEXT_ALPHA.water < EXACT_FULL_STRENGTH_ALPHA);
 });
 
-test('a context line never earns a legend row', () => {
-  // "Nothing drawn without a legend row" applies to full-strength marks. A quiet swale under the
-  // Water sheet's flow arrows is context for them, not an item of the water plan's inventory —
-  // and if this ever flips, the sheet starts claiming the swale is part of its plumbing.
+test('a stated swale keeps its width wherever the exact sheets draw it', () => {
+  // The Water sheet does not own a swale, but it does draw it as the destination of its flow
+  // arrows. When the farmer has stated its width, hiding that fact there turns the only earthwork
+  // on the water-reading sheet back into an unlabelled band. The unowned status stays context;
+  // the printed measurement does not turn it into plumbing or a recommended dimension.
   const state = {
     lines: [
-      { id: 'swale-1', kind: 'swale' as const, points: [[0.1, 0.2], [0.8, 0.25]] as Array<[number, number]> },
+      { id: 'swale-1', kind: 'swale' as const, widthM: 1.5, points: [[0.1, 0.2], [0.8, 0.25]] as Array<[number, number]> },
       { id: 'pipe-1', kind: 'pipe' as const, points: [[0.2, 0.3], [0.6, 0.4]] as Array<[number, number]> },
     ],
   };
-  const kinds = exactSheetLineLegendGroups(state, 'water').map((group) => group.lineKind);
-  assert.ok(kinds.includes('pipe'), 'the water sheet still lists its own pipework');
-  assert.ok(!kinds.includes('swale'), 'a context swale must not appear in the Water legend');
-  assert.ok(
-    exactSheetLineLegendGroups(state, 'earthworks').map((group) => group.lineKind).includes('swale'),
-    'and it is still listed where it is content',
-  );
+  for (const sheet of ['water', 'earthworks'] as const) {
+    const row = exactSheetLineLegendGroups(state, sheet).find((group) => group.lineKind === 'swale');
+    assert.equal(row?.text.endsWith('— 1.5 m wide'), true, `${sheet} carries the farmer's stated width`);
+  }
+  assert.ok(exactSheetLineLegendGroups(state, 'water').some((group) => group.lineKind === 'pipe'));
+
+  const unstated = { lines: [{ ...state.lines[0], widthM: undefined }] };
+  for (const sheet of ['water', 'earthworks'] as const) {
+    const row = exactSheetLineLegendGroups(unstated, sheet).find((group) => group.lineKind === 'swale');
+    assert.ok(row, `${sheet} still keys an unstated swale`);
+    assert.equal(row!.text.includes('wide'), false, `${sheet} does not invent a width`);
+  }
 });
