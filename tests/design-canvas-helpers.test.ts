@@ -528,3 +528,18 @@ test('the Design Studio draws a footprint at its saved width, never at a floor',
   );
   assert.ok(source.includes('MIN_ITEM_HIT_PX'), 'the grab target must still exist');
 });
+
+test('an exact-sheet swale never applies its pixel legibility floor to a stated width', () => {
+  // A fixed-pixel hairline is not an earthwork, but widening a saved swale is also wrong: its
+  // width is a measurement a farmer can take from the scale bar. Only the unstated fallback may
+  // use the renderer's legibility floor.
+  const source = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
+  const start = source.indexOf('function drawSwaleCrossSection(');
+  const end = source.indexOf('\nfunction drawFilteredLines(', start);
+  assert.ok(start >= 0 && end > start, 'expected the shared exact-sheet swale painter');
+  const painter = source.slice(start, end);
+  assert.match(painter, /const statedHalf = hasStatedWidth && pxPerM && pxPerM > 0/);
+  assert.match(painter, /const unstatedHalf = pxPerM && pxPerM > 0/);
+  assert.match(painter, /const half = statedHalf \?\? Math\.max\(style\.width \* 0\.9, unstatedHalf\)/);
+  assert.doesNotMatch(painter, /Math\.max\(style\.width \* 0\.9, groundHalf\)/);
+});

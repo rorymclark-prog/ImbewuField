@@ -14,6 +14,7 @@
 
 import type { ReactElement } from 'react';
 import { bearingToUnitVector, type SectorModel } from '@/lib/sector';
+import { seasonalSunArcRadii } from '@/lib/sector-cartography';
 import { sunArcApexFraction } from '@/lib/solar';
 import { formatDesignTranslation } from '@/lib/design-studio-i18n';
 import { useLanguage } from '@/lib/i18n';
@@ -298,7 +299,10 @@ export default function SectorOverlay({ model, imgW: W, imgH: H, boundary }: Sec
   // are actually designing around. A quadratic Bézier through a computed apex: for a quadratic the
   // curve's own midpoint is (P0 + 2C + P2)/4, so C = 2·apex − (P0 + P2)/2 puts the apex exactly
   // where the altitude says it should be.
-  const sunR = R + arrowLen * 0.45;
+  // Keep the Studio twin in the same seasonal order as sheet 02. A dashed winter curve still
+  // needs to sit inside summer: otherwise a farmer reads the lower winter sun as travelling
+  // farther across their land than the high summer sun.
+  const { summerR, winterR } = seasonalSunArcRadii(R, arrowLen, Math.max(4, W * 0.0072));
   const sunSeasons = [
     { key: 'summer', path: model.solar.summer, word: t('designSectorSummer') },
     { key: 'winter', path: model.solar.winter, word: t('designSectorWinter') },
@@ -306,6 +310,7 @@ export default function SectorOverlay({ model, imgW: W, imgH: H, boundary }: Sec
   for (const { key, path, word } of sunSeasons) {
     // A polar site can have no sunrise at all in one season — draw nothing rather than a guess.
     if (path.sunriseAzDeg == null || path.sunsetAzDeg == null) continue;
+    const sunR = key === 'summer' ? summerR : winterR;
     const rise = bearingToUnitVector(path.sunriseAzDeg);
     const set = bearingToUnitVector(path.sunsetAzDeg);
     const p0 = [cx + rise[0] * sunR, cy + rise[1] * sunR];
@@ -372,7 +377,7 @@ export default function SectorOverlay({ model, imgW: W, imgH: H, boundary }: Sec
       els.push(label(
         'sun-shadow',
         cx,
-        isSH ? cy - sunR - rowH * 1.7 : cy + sunR + rowH * 1.7,
+        isSH ? cy - summerR - rowH * 1.7 : cy + summerR + rowH * 1.7,
         formatDesignTranslation(t('designSectorWinterShadow'), { ratio: r.toFixed(1) }),
         SUN,
       ));
