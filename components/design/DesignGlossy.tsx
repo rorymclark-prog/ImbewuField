@@ -20,6 +20,7 @@ import {
 import polygonClipping from 'polygon-clipping';
 
 import type { CanvasFrame, DesignCanvasState, GroundFeatureKind, LineShape, PlacedItem, ZoneShape } from '@/lib/design-canvas';
+import { groundFeatureLayer } from '@/lib/design-canvas';
 import type { DesignElementDef } from '@/lib/design-elements';
 import { ELEMENT_CATALOG, ELEMENTS_BY_ID } from '@/lib/design-elements';
 import { GROUND_FEATURES, ZONE_DEFS } from '@/lib/design-elements';
@@ -84,7 +85,7 @@ import {
 import { leaderLabelFontSize, placeLeaderLabel, stackLeaderRows, leaderPath } from '@/lib/leader-labels';
 import { exactModelInputMarks, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '@/lib/render-policy';
 import { EARTHWORKS_ROUTE_STYLE, WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, nearestWaterNeighbourPx, offsetPolyline, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRoutesWithVisualBridges, waterRouteStyleFor, type EarthworksRouteStyle, type WaterLegendSection } from '@/lib/water-cartography';
-import { PLANTING_CANOPY_PAINT, PLANTING_LEGEND_SECTION_ORDER, overstoryCanopyIds, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
+import { PLANTING_CANOPY_PAINT, PLANTING_LEGEND_SECTION_ORDER, PLANTING_ROUTE_STYLE, overstoryCanopyIds, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
 import { STRUCTURES_LEGEND_SECTION_ORDER, structuresFeaturePresentationDimensions, structuresLegendSectionForFeature, structuresRouteVisualFor, type StructuresLegendSection } from '@/lib/structures-cartography';
 import { presentSectorCartography, sectorEvidenceSummary, SECTOR_STYLES, sectorFillColor, sectorStrokeWidth, type SectorLegendIcon, type SectorVisualKind } from '@/lib/sector-cartography';
 import { referenceFeatureArtworkUrl } from '@/lib/reference-feature-art';
@@ -354,6 +355,14 @@ const LINE_COLORS: Record<string, string> = {
   swale: '#4EA6D8',
   fence: '#8E7CC3', // dusty violet — distinct from boundary-green; CAD convention for fencing
   path: '#C9A227',
+  // 'bedpath' missing from this map was Rory's sheet-08 "ghost worms": every renderer keys off
+  // LINE_COLORS, so the kind was SKIPPED by drawFilteredLines (invisible on the exact sheets it
+  // is admitted to) while buildComposite's `?? '#8C8577'` fallback painted it pale grey into the
+  // paid model input — where the protect mask punches an editable ribbon along every line, so the
+  // model repainted each bed path as a pale unfinished worm and nothing burned the real path back.
+  // Fourth registration site for this line kind; tests/line-kind-coverage.test.ts guards the
+  // others, and a LINE_COLORS completeness check now guards this one.
+  bedpath: PLANTING_ROUTE_STYLE.bedpath.color,
   pipe: WATER_ROUTE_STYLE.pipe.color,
   drip: WATER_ROUTE_STYLE.drip.color,
   windbreak: '#2F7A4A',
@@ -882,7 +891,13 @@ export function drawMarks(
     state.zones.filter((z) => !z.feature && z.points.length >= 3),
     15 / Math.max(1, imgW),
   );
-  for (const zone of drawDesign && zonesInFilter(filter) ? state.zones : []) {
+  // 'zones' ONLY — not zonesInFilter, which also admits 'all'. On sheet 08 the finisher
+  // deliberately burns back NO zone bands ("repeating translucent effort zones here only muddies
+  // planting and water"), so a ring shown to the model here had nothing drawn over it afterwards:
+  // the model's repaint of each boundary survived in the mask ribbon as the pale worms tracing
+  // Rory's zone outlines across open ground on the flagship masterplan. What the model must not
+  // be asked to preserve, it must not be shown.
+  for (const zone of drawDesign && filter === 'zones' ? state.zones : []) {
     if (zone.points.length < 3 || zone.feature) continue; // skip ground-feature areas — not effort-zones
     const def = ZONE_DEFS[zone.zone];
     // Zones nest: cut each one back by any lower zone + the house so a Zone-1 ring around the
@@ -936,7 +951,7 @@ export function drawMarks(
     });
     ctx.strokeStyle = LINE_COLORS[line.kind] ?? '#8C8577';
     ctx.lineWidth = line.kind === 'fence' ? 3 : 4;
-    if (line.kind === 'swale' || line.kind === 'path') ctx.setLineDash([6, 4]);
+    if (line.kind === 'swale' || line.kind === 'path' || line.kind === 'bedpath') ctx.setLineDash([6, 4]);
     else ctx.setLineDash([]); // fence is SOLID (dashed reads as underground/proposed) — posts mark it
     ctx.stroke();
     ctx.setLineDash([]);
@@ -1143,8 +1158,11 @@ async function buildProtectMask(
     ctx.strokeStyle = '#000000';
 
     // Effort-zone boundaries get a modest editable band, not a whole editable field where an AI
-    // could invent buildings or gardens. The exact zone polygons are burned back afterwards.
-    if (zonesInFilter(filter)) {
+    // could invent buildings or gardens. 'zones' ONLY, matching drawMarks above: the "burned back
+    // afterwards" promise this comment used to make held on the zones sheet and was FALSE on
+    // 'all', where buildExactLayerOverlay draws no zone bands — the carve preserved model paint
+    // that nothing ever covered.
+    if (filter === 'zones') {
       for (const zone of state.zones) {
         if (zone.feature || zone.points.length < 3) continue;
         ctx.beginPath();
@@ -4051,11 +4069,25 @@ function drawLabelGutter(
   if (widest > 1) fs = Math.max(Math.round(baseFs * 0.78), Math.round(fs / widest));
   setFont(fs);
 
+  // A row may never paint past its band. "Allowed to be a shade wide" was fine when wide meant
+  // nudging the map edge; for a LEFT row right-aligned at the band's inner edge it means growing
+  // past x=0, and a cropped head prints as the beheaded fragments Rory read on the flagship
+  // ("VE", "ANA", "ROV ×2"). Wrap first; the ellipsis is the last resort, because a truncated
+  // tail at least announces itself.
+  const trimToRoom = (text: string): string => {
+    if (ctx.measureText(text).width <= room) return text;
+    let t = text;
+    while (t.length > 1 && ctx.measureText(`${t}…`).width > room) t = t.slice(0, -1);
+    return `${t.trimEnd()}…`;
+  };
   const lineH = fs * 1.12;
   for (const row of rows) {
-    // Two lines only where the pitch can hold them; otherwise the row stays on one line at the
-    // shrink floor and is allowed to be a shade wide rather than to collide with its neighbour.
-    const lines = pitch >= lineH * 2.1 ? wrapGutterText(ctx, row.text, room) : [row.text];
+    // Two lines where the pitch can hold them — and ALSO whenever the single line would overrun
+    // the band, pitch or no pitch: colliding with a neighbour is recoverable by the reader,
+    // beheaded text is not.
+    const overruns = ctx.measureText(row.text).width > room;
+    const lines = (pitch >= lineH * 2.1 || overruns ? wrapGutterText(ctx, row.text, room) : [row.text])
+      .map(trimToRoom);
     const textX = row.side === 'left' ? edgeX.left - inset : edgeX.right + inset;
     const align: CanvasTextAlign = row.side === 'left' ? 'right' : 'left';
     const top = row.ay - ((lines.length - 1) * lineH) / 2;
@@ -4110,8 +4142,13 @@ function sheetGutterLayout(
   labelMode: SheetLabelMode,
 ): GutterLayout {
   // Both marking modes put the plant's identity on the drawing, so neither may also spend a gutter
-  // row on it — one answer per plant.
-  const coded = marksPlantsOnMap(labelMode)
+  // row on it — one answer per plant. But that trade only holds where codes are actually DRAWN:
+  // drawPlantMarks returns early unless sheetElementNaming(filter) === 'individual', and on a
+  // grouped sheet ('all') the legend groups still emit one representative defId per family — so
+  // gating on labelMode alone silently dropped those defIds' gutter rows on the masterplan while
+  // nothing on the map identified them either. Same bug class as "created on a layer its own step
+  // switches off": skipped here on the promise of a mark drawn elsewhere, under a different gate.
+  const coded = sheetElementNaming(filter) === 'individual' && marksPlantsOnMap(labelMode)
     ? new Set(plantCodesForSheet(exactSheetElementLegendGroups(state, filter).map((g) => g.defId)).keys())
     : new Set<string>();
   const rows: GutterRow[] = [
@@ -4126,6 +4163,41 @@ function sheetGutterLayout(
     // Clear of the scale bar, which is burned into the bottom-left of the map afterwards.
     bottom: H - Math.round(H * 0.075),
   });
+}
+
+/**
+ * THE LABEL LAYER, AS ONE REUSABLE STEP. This is the exact builder's own label block
+ * (see buildReferenceBlueprintMap: drawGroundAreaNames + drawPlantMarks + sheetGutterLayout)
+ * extracted so the PAID paths can run it too. Before this existed, the Hybrid finisher stripped
+ * every coded plant from its pill layer on the promise of codes it never drew and gutter rows it
+ * never laid out — Rory, on the polished planting sheet: "theres no labels". Text is never the
+ * model's to draw: everything here is canvas-drawn from the saved design, after the model has
+ * returned, so a paid sheet's names are exactly the exact sheet's names.
+ */
+async function burnExactLabelLayer(
+  mapDataUrl: string,
+  state: DesignCanvasState,
+  frame: CanvasFrame,
+  refLayers: DesignGlossyProps['refLayers'],
+  filter: GlossyLayerFilter,
+  W: number,
+  H: number,
+  labelMode: SheetLabelMode,
+): Promise<{ map: string; gutterLayout?: GutterLayout }> {
+  const gutterLayout = filter === 'planting' || filter === 'structures' || filter === 'all'
+    ? sheetGutterLayout(state, refLayers, W, H, filter, labelMode)
+    : undefined;
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return { map: mapDataUrl, gutterLayout };
+  ctx.drawImage(await loadImage(mapDataUrl), 0, 0, W, H);
+  const px = (n: number) => n * W;
+  const py = (n: number) => n * H;
+  if (filter === 'planting') drawGroundAreaNames(ctx, state, refLayers, W, H, filter);
+  drawPlantMarks(ctx, state, filter, px, py, W / (frame.imgW * frame.mPerPx), labelMode);
+  return { map: canvas.toDataURL('image/png'), gutterLayout };
 }
 
 /**
@@ -5579,7 +5651,14 @@ function drawFilteredLines(
       ctx.beginPath();
       drawPoints.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, x, y));
     };
-    const routeVisual = filter === 'structures' ? structuresRouteVisualFor(l.kind) : null;
+    // A bed path prints with planting-cartography's own tight-dash hairline wherever it is
+    // admitted (planting + all) — the declared style, not the generic 3.5px route stroke.
+    // Windbreak stays on its LINE_COLORS stroke deliberately: restyling it here would change
+    // sheets this fix has no business touching.
+    const routeVisual = filter === 'structures'
+      ? structuresRouteVisualFor(l.kind)
+      : l.kind === 'bedpath' ? PLANTING_ROUTE_STYLE.bedpath
+      : null;
     if (earthworksStyle) {
       drawSwaleCrossSection(
         ctx,
@@ -8874,13 +8953,28 @@ export function sheetLegendRows(
   // list those by name, same as the Blueprint builders do. On a CONTEXT sheet (water/zones) that
   // call returns [] by construction: the quieter wash is deliberately orientation context, never
   // a caption or legend claim.
-  const contentGround = groundRows(state, refLayers, filter);
-  if (contentGround.length) {
-    for (const g of contentGround) rows.push({ swatch: g.color, text: g.label, kind: 'ground' });
+  const contentGround = exactSheetGroundLegendGroups(state, refLayers, filter);
+  for (const g of contentGround) {
+    rows.push({
+      swatch: g.color,
+      text: g.text,
+      kind: 'ground',
+      // The staple garden is DESIGNED planting, not site fabric. groundFeatureLayer is the same
+      // authority that hands its ring to the Planting layer switch — a third system asking "whose
+      // is this ring" must give the same answer as the other two. Tagged only on 'all' because the
+      // blanket SITE EDGE stamp below is the only place a ground row gets a section at all.
+      ...(filter === 'all' && groundFeatureLayer(g.feature) === 'planting'
+        ? { section: 'PLANTING' as const }
+        : {}),
+    });
   }
 
   if (filter === 'all') {
-    const siteRows: StyleLegendRow[] = rows.splice(0).map((row) => ({ ...row, section: 'SITE EDGE' }));
+    const allGround = rows.splice(0);
+    const plantingGround = allGround.filter((row) => row.section === 'PLANTING');
+    const siteRows: StyleLegendRow[] = allGround
+      .filter((row) => row.section !== 'PLANTING')
+      .map((row) => ({ ...row, section: 'SITE EDGE' }));
     if (refLayers.boundary.length >= 3) {
       siteRows.push({ swatch: BOUNDARY_LINE_GREEN, text: 'Property boundary', lineKind: 'fence', section: 'SITE EDGE' });
     }
@@ -8920,6 +9014,10 @@ export function sheetLegendRows(
     const orderedContent = [
       ...contentRows.filter((row) => row.section === 'WATER'),
       ...waterRows,
+      // Planting-owned ground (the staple garden) sits WITH the planting cluster: the renderer
+      // prints a heading whenever row.section changes, so a stray PLANTING row inside the SITE
+      // EDGE run would print the heading twice.
+      ...plantingGround,
       ...contentRows.filter((row) => row.section === 'PLANTING'),
       ...contentRows.filter((row) => row.section === 'INFRASTRUCTURE'),
     ];
@@ -10586,6 +10684,14 @@ export default function DesignGlossy({
   const hybridGalleryIdRef = useRef<string | null>(null);
   /** The image the paid polish pass was handed, kept so its output can be scored against it. */
   const polishInputRef = useRef<string | null>(null);
+  /** The Hybrid's finished MAP — exact content burned back, NO text — stashed by finishStyledSheet
+   *  for the polish stage. This, not the composed page, is what Full Treatment sends to the model:
+   *  a model shown no text can mangle no text. Keyed by filter so a stale map from another sheet
+   *  can never be polished by mistake. */
+  const hybridMapForPolishRef = useRef<{ key: GlossyLayerFilter; map: string } | null>(null);
+  /** The polished MAP as returned (post-restore, pre-chrome), so the difference gate scores the
+   *  model's actual work map-against-map rather than page-against-map. */
+  const polishedMapRef = useRef<string | null>(null);
   /** Plain-English note when a paid pass came back with nothing new. Null when it went fine. */
   const [polishNoChange, setPolishNoChange] = useState<string | null>(null);
   const [lockedPolishStage, setLockedPolishStage] = useState<'exact' | 'hybrid' | 'polish' | null>(null);
@@ -10864,8 +10970,18 @@ export default function DesignGlossy({
   // sheet's identity for exactly the reason the underlay is — a cache that cannot tell them apart
   // re-serves the one you just switched away from. Empty unless the sheet HAS codes, so switching
   // the control on a sheet it does not affect cannot split that sheet's cache in two.
+  // RECIPE TOKEN — the narrow alternative to a PLAN_VERSION bump. The last-render display effect
+  // re-serves whatever localStorage holds for this key on mount, so after a renderer fix the
+  // farmer (and Rory, checking the fix) sees the PRE-fix picture without rendering — the "code
+  // change looks like it did nothing" trap. Bumping this token orphans only the last-render
+  // display slots (a cache miss shows an empty slot; it never enqueues or re-charges anything, and
+  // the gallery keeps every paid sheet addressable). PLAN_VERSION stays untouched — bumping THAT
+  // re-keys the gallery and takes paid renders away from farmers. Bump the token whenever a change
+  // alters what a sheet LOOKS like: r1 = bedpath registration + zone-ring removal + legend
+  // grouping + gutter architecture on paid sheets (2026-08-03).
   const underlaySuffix = underlayCacheSuffix(underlay)
-    + (sheetHasPlantCodes ? labelModeCacheSuffix(labelMode) : '');
+    + (sheetHasPlantCodes ? labelModeCacheSuffix(labelMode) : '')
+    + ':r1';
   const mapKey = (exactSheet === 'base'
     ? 'base-exact'
     : exactSheet === 'sector'
@@ -10887,6 +11003,10 @@ export default function DesignGlossy({
         : (analysisStyle ?? filter)) + underlaySuffix;
   const mapKeyRef = useRef(mapKey);
   mapKeyRef.current = mapKey;
+  // The queue-completion handler needs the CURRENT suffix when it builds a save key — it runs in
+  // an effect whose closure would otherwise pin the value from the render that armed it.
+  const underlaySuffixRef = useRef(underlaySuffix);
+  underlaySuffixRef.current = underlaySuffix;
   const galleryViewItem = gallery.find((g) => g.id === galleryViewId) ?? null;
 
   useEffect(() => {
@@ -11824,13 +11944,47 @@ export default function DesignGlossy({
         return sheetImage;
       }
 
-      // Full Treatment's second paid pass receives the complete finished Hybrid page. Its
-      // sheet-sized mask now restores only the narrow boundary ring. Broad source-pixel restoration
-      // (outside, roof and driveway) was measured in production and visibly recreated the ragged
-      // satellite keyholes the paid pass had already removed.
+      // Full Treatment's second paid pass now receives the Hybrid's MAP PANEL, text-free — the
+      // same contract the Hybrid pass itself has always had. It used to receive the complete
+      // finished page, whose prompt then had to demand "WRITE NOTHING" and "keep the supplied
+      // labels with their exact spellings" IN THE SAME BREATH: the flagship render resolved that
+      // contradiction by erasing every map label and repainting the legend. The model polishes
+      // artwork; every glyph of text is drawn HERE, afterwards, from the saved design — the same
+      // burnExactLabelLayer + composeStyleSheet tail the Hybrid uses, so the two paid tiers differ
+      // only in their map pixels. (The sector precedent that made recompose-after-polish look
+      // dangerous re-burned exact OVERLAYS over the model's art; nothing here touches the map.)
       if (showcase && !locked && protectMask && sourceImage) {
         try {
-          return await restoreProtectedPixels(sourceImage, modelImage, protectMask);
+          const src = await loadImage(sourceImage);
+          const polished = await restoreProtectedPixels(sourceImage, modelImage, protectMask);
+          // An in-flight job enqueued before this change carries the full PAGE as its input;
+          // recomposing chrome around a page would nest a sheet inside a sheet. Ship it the old
+          // way and let the next render pick up the new contract.
+          if (Math.abs(src.width - W) > 2 || Math.abs(src.height - H) > 2) return polished;
+          polishedMapRef.current = polished;
+          const labelled = await burnExactLabelLayer(polished, renderState, renderFrame, renderRefLayers, f, W, H, labelMode);
+          return await composeStyleSheet(
+            labelled.map,
+            renderState,
+            renderFrame,
+            renderRefLayers,
+            f,
+            placeName,
+            styleDef.label,
+            REFERENCE_SHEET_LABEL[f],
+            false,
+            true,
+            {
+              labelMode,
+              gutterLayout: labelled.gutterLayout,
+              ...(f === 'water'
+                ? {
+                    footerHeading: 'NOTES',
+                    footerText: waterReferenceFooterText(renderState, renderFrame, renderRefLayers, site),
+                  }
+                : {}),
+            },
+          );
         } catch (err) {
           console.error('[glossy] Full Treatment restore failed; keeping the exact Hybrid', err);
           return sourceImage;
@@ -11882,7 +12036,11 @@ export default function DesignGlossy({
       // called with includeLeaderLabels = locked and already draws every water label itself.
       // Passing labels here too burned a SECOND set a few pixels off the first, which is why every
       // pill had a half-hidden twin behind it ("MULCH BANK" over "MU…", "SMALL POND" over "SM…").
-      const labels = f === 'water' && locked
+      // Planting/structures/all now match the exact architecture instead of the pre-gutter one:
+      // no on-map pills — names live in the label gutters and the plant codes, both drawn by
+      // burnExactLabelLayer below. Keeping the pills alongside them would name one plant twice.
+      const gutterOwnsLabels = locked && (f === 'planting' || f === 'structures' || f === 'all');
+      const labels = (f === 'water' && locked) || gutterOwnsLabels
         ? []
         : locked
           ? referenceBlueprintLabels(renderState, renderRefLayers, W, H, f)
@@ -11912,8 +12070,15 @@ export default function DesignGlossy({
         width: W,
         height: H,
       });
+      // Full Treatment polishes THIS image — the finished map with exact content burned back and
+      // not one glyph of text on it. Stashed pre-labels, so what the model receives has nothing
+      // writable to mangle; the label layer is re-drawn from the design over its output.
+      if (locked) hybridMapForPolishRef.current = { key: f, map: final };
+      const labelled = gutterOwnsLabels
+        ? await burnExactLabelLayer(final, renderState, renderFrame, renderRefLayers, f, W, H, labelMode)
+        : { map: final, gutterLayout: undefined };
       return composeStyleSheet(
-        final,
+        labelled.map,
         renderState,
         renderFrame,
         renderRefLayers,
@@ -11923,15 +12088,23 @@ export default function DesignGlossy({
         locked ? REFERENCE_SHEET_LABEL[f] : layerLabel,
         !locked,
         locked,
-        locked && f === 'water'
+        locked
           ? {
-              footerHeading: 'NOTES',
-              footerText: waterReferenceFooterText(renderState, renderFrame, renderRefLayers, site),
+              // The legend prints code prefixes only in the mode that draws them, and the gutter
+              // rows must honour the farmer's label-mode choice — same contract as the exact sheet.
+              labelMode,
+              gutterLayout: labelled.gutterLayout,
+              ...(f === 'water'
+                ? {
+                    footerHeading: 'NOTES',
+                    footerText: waterReferenceFooterText(renderState, renderFrame, renderRefLayers, site),
+                  }
+                : {}),
             }
           : {},
       );
     },
-    [state, frame, refLayers, site, placeName],
+    [state, frame, refLayers, site, placeName, labelMode],
   );
 
   // "AI · ALL sheets" when the engine is gpt-image-2: enqueue a background job for the model sheets
@@ -12113,18 +12286,24 @@ export default function DesignGlossy({
       // this two-stage rewrite exists to fix (Water's paid result used to look untouched because
       // there was nothing painted underneath for the polish pass to actually polish).
       const fullSheetPolish = lockedPolishStage === 'polish';
-      if (fullSheetPolish && !hybridResultRef.current) {
+      // The polish input is the Hybrid's MAP — exact content burned back, no text — stashed by
+      // finishStyledSheet, keyed by filter so another sheet's map can never be polished by
+      // mistake. The composed PAGE (hybridResultRef) is no longer what the model receives: a page
+      // input forced the prompt to say "WRITE NOTHING" and "keep the supplied labels" at once,
+      // and the flagship render obeyed both by erasing the labels and repainting the legend.
+      const polishSource = fullSheetPolish ? hybridMapForPolishRef.current : null;
+      if (fullSheetPolish && (!polishSource || polishSource.key !== filter)) {
         throw new Error('The AI hybrid sheet was not available to polish — please try again.');
       }
-      const exactSheetInput = fullSheetPolish ? hybridResultRef.current : null;
+      const exactSheetInput = fullSheetPolish && polishSource ? polishSource.map : null;
       // Keep a SECOND reference to the same image, deliberately not consumed. The paid pass has to
-      // be scored against what it was actually given, and hybridResultRef is nulled on the next
-      // line so a stale hybrid can never leak into an unrelated render. Without this copy there is
-      // nothing left to compare the paid result to, which is precisely why six attempts to fix
-      // "the polished sheet looks identical to the hybrid" could each be signed off green: no code
-      // in this app has ever looked at the output image.
+      // be scored against what it was actually given, and the refs are nulled below so a stale
+      // hybrid can never leak into an unrelated render. Without this copy there is nothing left to
+      // compare the paid result to, which is precisely why six attempts to fix "the polished sheet
+      // looks identical to the hybrid" could each be signed off green: no code in this app had
+      // ever looked at the output image.
       if (fullSheetPolish) polishInputRef.current = exactSheetInput;
-      if (fullSheetPolish) hybridResultRef.current = null; // consume-once — never leaks into an unrelated render
+      if (fullSheetPolish) { hybridMapForPolishRef.current = null; hybridResultRef.current = null; } // consume-once
       const presentation = await boundaryPresentationContext(state, frame, refLayers);
       const renderState = presentation.state;
       const renderFrame = presentation.frame;
@@ -12171,17 +12350,19 @@ export default function DesignGlossy({
       // OpenAI edit mask. That preserves the style reference and still restores protected pixels.
       let protectMaskDataUrl: string | undefined;
       if (fullSheetPolish) {
-        // The second pass improves the complete map artwork and sheet design. Restore only the
-        // narrow boundary ring afterwards; broader Hybrid source restoration creates photographic
-        // seams and blurred roof/driveway keyholes in otherwise unified artwork.
-        const mapMask = await buildProtectMask(
+        // The second pass improves the map artwork. Restore only the narrow boundary ring
+        // afterwards; broader Hybrid source restoration creates photographic seams and blurred
+        // roof/driveway keyholes in otherwise unified artwork. The mask stays at MAP dimensions —
+        // the input is the map now, and extendProtectMaskToStyleSheet built its sheet at a
+        // geometry (map at x=0, no gutters) the composed page never had, so its rescaled restores
+        // landed displaced. With no page in the pipeline there is nothing to extend over.
+        protectMaskDataUrl = await buildProtectMask(
           renderState,
           renderFrame,
           renderRefLayers,
           filter,
           fullTreatmentProtectPolicy(),
         );
-        protectMaskDataUrl = await extendProtectMaskToStyleSheet(mapMask, mapW, mapH, false);
       } else if (authorityFlags.geometryLock) {
         protectMaskDataUrl = await buildProtectMask(
           renderState,
@@ -13116,7 +13297,14 @@ export default function DesignGlossy({
               let polishRejected = false;
               if (isPolishedResult && polishInputRef.current) {
                 try {
-                  const diff = await measureRenderDifference(polishInputRef.current, finalSheet, protectMask);
+                  // Map against map: the finisher now composes deterministic chrome around the
+                  // polished map, and scoring the composed PAGE against the map input would count
+                  // our own gutter and legend as the model's work. polishedMapRef is the restored
+                  // model output before any chrome; the page is only the fallback for a legacy
+                  // in-flight job that still carried a page input.
+                  const polishedArtifact = polishedMapRef.current ?? finalSheet;
+                  polishedMapRef.current = null;
+                  const diff = await measureRenderDifference(polishInputRef.current, polishedArtifact, protectMask);
                   const decision = paidRenderDecision(diff, 'polish');
                   console.info('[glossy] paid polish difference', sheet.key, diff);
                   recordRenderAudit(auditFromReport(
@@ -13170,7 +13358,17 @@ export default function DesignGlossy({
                 continue;
               }
               const record: SavedGlossy = { image: finalSheet, provider: 'falgpt', at: new Date().toISOString() };
-              try { saveGlossy(siteId, `producer:${styleKey}:${sheet.key}`, record); } catch { /* cache full */ }
+              // The display effect reads `producer:<style>:<filter>:<mode>` plus the underlay/
+              // label-mode suffixes; this save used a three-segment key, so every queue-rendered
+              // Hybrid and Full Treatment was written to a slot NOTHING reads — the farmer came
+              // back to a blank sheet while orphan entries piled up against the localStorage
+              // quota. Sector/Phasing/restyle keys genuinely have no mode segment, so only
+              // design-layer sheets append one.
+              const savedMode: SheetOutputMode = isPolishedResult ? 'full' : 'hybrid';
+              const saveKey = GLOSSY_FILTERS.some((x) => x.key === sheet.key)
+                ? `producer:${styleKey}:${sheet.key}:${savedMode}${underlaySuffixRef.current}`
+                : `producer:${styleKey}:${sheet.key}${underlaySuffixRef.current}`;
+              try { saveGlossy(siteId, saveKey, record); } catch { /* cache full */ }
               // A one-sheet refresh must update the actual preview, not only append a gallery
               // thumbnail, but only while its original target remains open. Batch jobs still
               // collect every sheet without flickering the preview.

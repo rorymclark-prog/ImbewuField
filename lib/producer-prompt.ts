@@ -1337,10 +1337,16 @@ export function buildPhasingRestylePrompt(stylePreset: StylePreset, placeName?: 
 }
 
 /**
- * Paid design-sheet polish — the input is the complete deterministic sheet saved by Step 1.
+ * Paid design-sheet polish — the input is the Hybrid's finished MAP PANEL, text-free.
  *
- * The exact master remains the authority. Step 2 may redraw the presentation, including pictorial
- * legend swatches, but may not redesign the farm or change any saved geometry or count.
+ * The exact master remains the authority. Step 2 may redraw the artwork's presentation, but may
+ * not redesign the farm or change any saved geometry or count. It is deliberately shown NO text:
+ * the page version of this prompt had to demand "WRITE NOTHING" (style block) and "keep the
+ * supplied labels with their exact spellings" (TEXT block) at once, and the first flagship render
+ * resolved that contradiction by erasing every map label and repainting the legend. Title, legend,
+ * codes and callouts are all drawn by the app afterwards from the saved design
+ * (burnExactLabelLayer + composeStyleSheet in DesignGlossy.tsx) — the same contract as the Hybrid
+ * pass and the Phasing restyle.
  */
 export function buildFinishedSheetPolishPrompt(
   layerLabel: string,
@@ -1352,20 +1358,21 @@ export function buildFinishedSheetPolishPrompt(
   structureRegister?: string,
 ): string {
   const body = [
-    `WHAT YOU HAVE BEEN GIVEN: a FIRST-PASS AI render of a ${layerLabel} plan sheet${placeName ? ` for ${placeName}` : ''}. It is a draft, not a finished sheet. Its geometry is correct and must stay correct, but its ARTWORK is unfinished: symbols are flat and diagrammatic, materials read as coloured shapes rather than real surfaces, linework is thin and uniform, ground texture is muddy and evenly lit, and the whole page has the look of something plotted rather than drawn.`,
-    `YOUR JOB IS THE SECOND PASS: bring that draft up to a frame-worthy authored illustration in the requested style. Give every surface a real material — corrugated roofing, turned soil, mulch, standing water, plastic tank walls, gravel, grass. Vary line weight so structure reads before detail. Light the whole page from one consistent direction with real shadow. Replace flat map symbols with orthographic top-down illustrations of the SAME named things, and make the legend swatches match the symbols you actually drew.`,
-    `RETURNING THE SUPPLIED IMAGE UNCHANGED IS A FAILED RESULT. So is returning it with a global filter, grain, warmth or vignette over the top. This is a second pass over an image that already looks acceptable at a glance — the temptation is to copy it, and a copy is worthless here. Someone has paid for this pass specifically to get artwork the first pass could not produce. Every surface on the page should be visibly re-rendered.`,
-    `WHAT MUST NOT MOVE: canvas aspect ratio, map crop, north-up view, panel placement, and the position, shape, size and count of the boundary, house, driveway, zones, beds, trees, tanks, basins, ponds, structures and routes. Redraw all of them; move none of them. Keep blue water pipes, blue drip emitters and purple greywater routes distinct, with every connection and endpoint where it already is. Invent nothing that is not already on the sheet, and leave open ground open.`,
-    `SOURCE INVENTORY: the supplied map and legend together are authoritative. Draw only features already present on that map, at the counts the map and legend show. Never reinterpret a dark roof, driveway or paving patch as a tank, basin, building or other new feature. A circular tank may be redrawn only where a circular tank already exists in the supplied map. If a shape is ambiguous, preserve it as the same roof or ground surface instead of inventing an object.`,
+    `WHAT YOU HAVE BEEN GIVEN: a FIRST-PASS AI render of the MAP of a ${layerLabel} plan sheet${placeName ? ` for ${placeName}` : ''}. It is a draft, not finished artwork. Its geometry is correct and must stay correct, but its ARTWORK is unfinished: symbols are flat and diagrammatic, materials read as coloured shapes rather than real surfaces, linework is thin and uniform, ground texture is muddy and evenly lit, and the whole image has the look of something plotted rather than drawn.`,
+    `YOUR JOB IS THE SECOND PASS: bring that draft up to a frame-worthy authored illustration in the requested style. Give every surface a real material — corrugated roofing, turned soil, mulch, standing water, plastic tank walls, gravel, grass. Vary line weight so structure reads before detail. Light the whole image from one consistent direction with real shadow. Replace flat map symbols with orthographic top-down illustrations of the SAME things, in place.`,
+    `RETURNING THE SUPPLIED IMAGE UNCHANGED IS A FAILED RESULT. So is returning it with a global filter, grain, warmth or vignette over the top. This is a second pass over an image that already looks acceptable at a glance — the temptation is to copy it, and a copy is worthless here. Someone has paid for this pass specifically to get artwork the first pass could not produce. Every surface should be visibly re-rendered.`,
+    `WHAT MUST NOT MOVE: canvas aspect ratio, map crop, north-up view, and the position, shape, size and count of the boundary, house, driveway, beds, trees, tanks, basins, ponds, structures and routes. Redraw all of them; move none of them. Keep blue water pipes, blue drip emitters and purple greywater routes distinct, with every connection and endpoint where it already is. Invent nothing that is not already on the map, and leave open ground open.`,
+    `WRITE NOTHING: no labels, no numbers, no legend, no title, no scale bar, no north arrow, no lettering of any kind anywhere on the image — the sheet's title, legend, plant codes and callouts are drawn afterwards from the farmer's saved design, and any text you add will collide with them and be wrong.`,
+    `SOURCE INVENTORY: the supplied map is authoritative. Draw only features already present on it, at the counts it shows. Never reinterpret a dark roof, driveway or paving patch as a tank, basin, building or other new feature. A circular tank may be redrawn only where a circular tank already exists in the supplied map. If a shape is ambiguous, preserve it as the same roof or ground surface instead of inventing an object.`,
     ...(structureRegister?.trim()
       ? [
           `STRUCTURE REGISTER: ${structureRegister.trim()} Roof ONLY the buildings this register calls roofed — one roof per building, on its exact footprint, and never merge neighbouring structures under one shared roof. Everything the register calls flat, ground-level or a track stays fully open to the sky: bare concrete reads as bare concrete and a tar or gravel track reads as tar or gravel, drawn in this sheet's art style but never as a building. A small existing building already visible inside the supplied photo keeps its own roof exactly where it is.`,
         ]
       : []),
-    `PLANTED CONTENT: a marked vegetable bed is a growing bed, not bare soil — fill each bed with neat top-down rows of leafy green crops at the bed's own scale, visibly planted, without adding or naming any species the legend does not already name. Marked hedges, banks and windbreak rows read as dense living plants, not flat strips. This planted detail belongs only inside features the map already marks; unmarked open ground still stays open.`,
+    `EARTHWORKS ARE DUG GROUND, NOT ROUTES: a brown band running across the slope — a darker excavated lane on one side, a warmer soil ridge on the other, short cross-ticks along the ridge — is a SWALE, an on-contour water-harvesting earthwork. Redraw it as moved earth on exactly the same route and width: a level channel of bare turned soil on the darker side, and along the lighter side a continuous raised spoil berm with a lit crest and a cast shadow down its outer face, grassed along its top, its ends feathering out into the ground. It is dug into the land, so it sits UNDER the light that falls on everything else — a smooth glossy brown tube lying ON the grass means the earthwork has been misread as a pipe.`,
+    `PLANTED CONTENT: a marked vegetable bed is a growing bed, not bare soil — fill each bed with neat top-down rows of leafy green crops at the bed's own scale, visibly planted. Marked hedges, banks and windbreak rows read as dense living plants, not flat strips. This planted detail belongs only inside features the map already marks; unmarked open ground still stays open.`,
     `FEATURES: fully opaque, solid, confidently coloured — never translucent. No grey halo, white halo, selection ring, badge, pin or handle around anything; that is editor residue from the draft and removing it is part of the job. Neighbouring tanks keep their centres but must read as separate vessels with distinct rims and visible ground between them.`,
-    `TEXT: keep the supplied title, place name, labels and legend entries with their exact spellings and quantities. Set them in a strong condensed technical cartographic sans-serif, bold uppercase headings, narrow body text, no bookish serif display face. Fill the legend panel vertically — balanced sections, larger pictorial swatches matching the map, a separated NOTES block at the bottom, no large empty middle.`,
-    `FINAL CHECK: place this sheet beside the one you were given. If a farmer could not tell within two seconds which is the finished one, the pass has failed. It must be the same plan — same geometry, counts, labels, routes and legend — and unmistakably better drawn.`,
+    `FINAL CHECK: place this image beside the one you were given. If a farmer could not tell within two seconds which is the finished one, the pass has failed. It must be the same map — same geometry, same counts, same routes, no text — and unmistakably better drawn.`,
   ].join('\n\n');
   return `${STYLE_LINES[stylePreset]}\n\n${body}`;
 }

@@ -119,5 +119,11 @@ export function structureRegisterText(
     flat.push(`"The driveway" (${where(refLayers.driveway)}) is ${what}.`);
   }
 
-  return [...roofedLines, ...flat].join(' ');
+  // Identical sentences collapse to one. Four staple plots in the same compass octant each
+  // produced the same sentence, so the flagship prompt said "The staple garden … is an open field
+  // of standing maize … never a structure and never a roof" FOUR TIMES in a row — pure repetition
+  // that reads as noise to a person and, worse, hammers on the negated nouns the repo's own
+  // negation-backfire doctrine warns prime exactly what they forbid. Two same-named rings in
+  // DIFFERENT parts of the site still produce two different sentences and both survive.
+  return [...roofedLines, ...Array.from(new Set(flat))].join(' ');
 }

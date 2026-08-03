@@ -919,10 +919,25 @@ test('the paid second pass is told it received a DRAFT, and that copying it is a
   // 5. Geometry still may not move — the point was never to let it redesign the farm.
   assert.match(p, /move none of them|WHAT MUST NOT MOVE/);
   assert.match(p, /Invent nothing/i);
+  // The polish input is now the Hybrid's MAP, text-free — no page, no panel, no legend. The prior
+  // page contract forced this prompt to demand "WRITE NOTHING" and "keep the supplied labels
+  // verbatim" at once, and the first flagship render obeyed both: it erased every map label and
+  // repainted the legend. So the authority claim names the map alone, and the prompt must also
+  // forbid ALL text — the app draws title, legend, codes and callouts afterwards from saved data.
   assert.match(
     p,
-    /map and legend together are authoritative|source map and legend.*authoritative/i,
-    'the supplied map and legend must be treated as the exhaustive factual inventory',
+    /supplied map is authoritative/i,
+    'the supplied map must be treated as the exhaustive factual inventory',
+  );
+  assert.match(
+    p,
+    /WRITE NOTHING/,
+    'the model may not draw a glyph of text — labels and legend are burned back deterministically',
+  );
+  assert.doesNotMatch(
+    p,
+    /keep the supplied title|legend entries with their exact spellings|Fill the legend panel/i,
+    'no instruction may ask the model to preserve or draw text — that is the contradiction that erased the flagship labels',
   );
   assert.match(
     p,
@@ -934,11 +949,9 @@ test('the paid second pass is told it received a DRAFT, and that copying it is a
     /growing bed, not bare soil|visibly planted/i,
     'marked vegetable beds must render as planted crops, never empty soil (Rory, judging the first v93 render)',
   );
-  assert.match(
-    p,
-    /without adding or naming any species/i,
-    'planted-bed detail may not introduce species the legend does not name (NEMBA)',
-  );
+  // The NEMBA species concern was "the model writes a species name the design never chose". With
+  // a text-free input and WRITE NOTHING in force, the model cannot name anything at all — the
+  // guard moved from a per-paragraph clause to the contract itself (asserted above).
 
   // 6. Preservation must not swamp the ask. The old prompt was five parts preservation to one part
   //    instruction; that ratio is what made a copy compliant.

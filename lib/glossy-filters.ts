@@ -293,9 +293,11 @@ export function exactSheetLineLegendGroups(
 
   if (sheet === 'all') {
     const groups: ExactLineLegendGroup[] = [];
+    // 'bedpath' counts with the access family: the masterplan draws it (lineInFilter admits it on
+    // 'all'), and a mark on the sheet with no legend key is this module's own definition of a bug.
     const accessCount = state.lines.filter((line) =>
       line.points.length >= 2
-      && (line.kind === 'path' || line.kind === 'fence' || line.kind === 'windbreak')).length;
+      && (line.kind === 'path' || line.kind === 'bedpath' || line.kind === 'fence' || line.kind === 'windbreak')).length;
     if (accessCount) groups.push({ text: 'Paths, fences & windbreaks', count: accessCount });
     for (const kind of ['swale', 'pipe', 'drip', 'greywater'] as const) {
       const count = state.lines.filter((line) => line.kind === kind && line.points.length >= 2).length;

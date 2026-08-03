@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 
 import { lineInFilter } from '../lib/glossy-filters.ts';
 
@@ -40,4 +41,26 @@ test("the 'all' filter accepts every kind and the fallback rejects unknowns", ()
   // An unknown kind must fail loudly-ish (excluded everywhere) rather than leak onto a sheet.
   assert.equal(lineInFilter('not-a-kind', 'water'), false);
   assert.equal(lineInFilter('not-a-kind', 'planting'), false);
+});
+
+test('every line kind has a LINE_COLORS entry — the FOURTH registration site', () => {
+  // Third strike for 'bedpath', and the first one that cost money: LINE_COLORS is module-private
+  // to DesignGlossy.tsx, and every renderer keys off it. A kind with no entry is SKIPPED by
+  // drawFilteredLines (`if (!color) continue` — invisible on its own exact sheets) while
+  // buildComposite's `?? '#8C8577'` fallback paints it PALE GREY into the paid model input, where
+  // the protect mask punches an editable ribbon along every line — so the model repainted each bed
+  // path as the pale unfinished worms Rory circled on the flagship masterplan, and no burn-back
+  // pass owned them afterwards. Same defect, two opposite symptoms, one missing map entry.
+  // LINE_COLORS is not exported (a 14k-line component file must not become a test import), so this
+  // reads the map literal out of the source, comment lines stripped so prose cannot satisfy it.
+  const source = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
+  const start = source.indexOf('const LINE_COLORS: Record<string, string> = {');
+  assert.ok(start >= 0, 'LINE_COLORS moved — update this guard');
+  const body = source.slice(start, source.indexOf('};', start))
+    .split('\n')
+    .filter((line) => !line.trim().startsWith('//'))
+    .join('\n');
+  for (const kind of ALL_LINE_KINDS) {
+    assert.match(body, new RegExp(`\\b${kind}:`), `'${kind}' has no LINE_COLORS entry`);
+  }
 });
