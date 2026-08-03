@@ -68,6 +68,7 @@ import {
   exactSheetLineLegendGroups,
   exactSheetLineRegister,
   exactSheetZoneLegendGroups,
+  sheetElementNaming,
   REFERENCE_SHEET_LABEL,
   type GlossyLayerFilter,
 } from '@/lib/glossy-filters';
@@ -79,6 +80,7 @@ import { PLANTING_CANOPY_PAINT, PLANTING_LEGEND_SECTION_ORDER, plantingFeaturePr
 import { STRUCTURES_LEGEND_SECTION_ORDER, structuresFeaturePresentationDimensions, structuresLegendSectionForFeature, structuresRouteVisualFor, type StructuresLegendSection } from '@/lib/structures-cartography';
 import { presentSectorCartography, sectorEvidenceSummary, SECTOR_STYLES, sectorFillColor, sectorStrokeWidth, type SectorLegendIcon, type SectorVisualKind } from '@/lib/sector-cartography';
 import { referenceFeatureArtworkUrl } from '@/lib/reference-feature-art';
+import { codedLegendText, plantCodesForSheet } from '@/lib/plant-codes';
 import { drawVetiverHedge, vetiverHedgeGeometry, VETIVER_HEDGE_IDS } from '@/lib/vetiver-hedge';
 import {
   balancedLegendColumnRanges,
@@ -5437,6 +5439,83 @@ function drawFilteredItems(
   }
 }
 
+/**
+ * A short code on every plant, keyed to the legend row that names it — see lib/plant-codes.ts.
+ *
+ * DRAWN LAST, AFTER THE CALLOUT PILLS, and that ordering is the whole reason this is its own pass
+ * rather than a few lines inside drawTrueFootprint. Two things want the same pixels: a leader
+ * terminates at an item's centre, and the pills are burned onto the sheet after the feature overlay
+ * is composited. Drawn with the footprints, both moringas on the first real render carried a code
+ * that the moringa pill then sat straight on top of — a mark that identifies nothing. Lifting the
+ * chip off centre only moved which pill covered it. A code is small and a pill is large, so the
+ * only ordering where neither is destroyed is this one.
+ *
+ * Only where the legend names species individually. On the masterplan the legend groups them into
+ * families, so a code there would be a mark with nothing to look it up in — which is the "nothing
+ * drawn without a legend row" invariant, read in the other direction.
+ */
+function drawPlantCodes(
+  ctx: CanvasRenderingContext2D,
+  state: DesignCanvasState,
+  filter: GlossyLayerFilter,
+  px: (n: number) => number,
+  py: (n: number) => number,
+  pxPerM: number,
+): void {
+  if (sheetElementNaming(filter) !== 'individual') return;
+  // THE LEGEND ASSIGNS THE CODES, NOT THE MAP. Both sides call plantCodesForSheet with the SAME
+  // input — this sheet's legend groups — so the two cannot drift apart. Deriving map codes from the
+  // drawn items instead would work today and break the first time a farmer adds a plant the catalog
+  // does not know, because an unknown plant's code is derived and therefore depends on what else is
+  // in the set. A code that does not appear in the legend is a mark with no key.
+  const codes = plantCodesForSheet(exactSheetElementLegendGroups(state, filter).map((g) => g.defId));
+  if (!codes.size) return;
+  // The same stack the footprints were drawn from, so a code cannot appear on a plant this sheet
+  // did not draw.
+  const drawable = byCartographicStack(state, filter).filter((it) => codes.has(it.defId));
+  if (!drawable.length) return;
+
+  ctx.save();
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.lineJoin = 'round';
+  for (const it of drawable) {
+    const def = ELEMENTS_BY_ID[it.defId];
+    const code = codes.get(def.id);
+    if (!code) continue;
+    const naturalW = Math.max(1, (it.wM ?? def.wM) * pxPerM);
+    const naturalH = Math.max(1, (it.hM ?? def.hM) * pxPerM);
+    const printed = plantingFeaturePresentationDimensions(def.id, naturalW, naturalH, ctx.canvas.width);
+    const shortSide = Math.min(printed.width, printed.height);
+    // A chip wider than the plant it sits on stops being a mark ON the plant and becomes a mark
+    // NEAR several of them. Below the floor the plant keeps its grouped callout and no code — an
+    // unreadable two letters is a worse answer than the honest absence of one.
+    if (shortSide < 22) continue;
+    const fs = Math.max(9, Math.min(shortSide * 0.3, ctx.canvas.width * 0.0115));
+    ctx.font = `800 ${fs}px ${REFERENCE_LABEL_FONT}`;
+    const textW = ctx.measureText(code).width;
+    const padX = fs * 0.42;
+    const chipW = textW + padX * 2;
+    const chipH = fs * 1.5;
+    if (chipW > printed.width * 0.92) continue;
+    const cx = px(it.x);
+    // Lifted slightly off centre so the leader's own terminus dot stays visible under it. The chip
+    // is still unambiguously on its own plant; the pill collision is handled by draw ORDER, above.
+    const cy = py(it.y) - printed.height * 0.18;
+    // The same dark plaque the map callouts and sector marks wear. A code has to survive landing on
+    // dark foliage, on cream mulch and on plain paper, and only an opaque plate does all three.
+    roundRectPath(ctx, cx - chipW / 2, cy - chipH / 2, chipW, chipH, chipH * 0.34);
+    ctx.fillStyle = 'rgba(24,32,26,0.9)';
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(243,238,219,0.72)';
+    ctx.lineWidth = Math.max(0.8, fs * 0.07);
+    ctx.stroke();
+    ctx.fillStyle = '#F6F1E2';
+    ctx.fillText(code, cx, cy + fs * 0.04);
+  }
+  ctx.restore();
+}
+
 type ExactFeaturePresentation = 'solid' | 'hybrid';
 
 /**
@@ -5950,6 +6029,9 @@ async function buildReferenceBlueprintMap(
   if (filter === 'planting' || filter === 'structures' || filter === 'all') {
     drawBlueprintLabelPills(ctx, referenceBlueprintLabels(renderState, renderRefLayers, W, H, filter));
   }
+  // AFTER the pills, deliberately — see drawPlantCodes. This is the mark that makes the third
+  // pawpaw identifiable, and a callout pill landing on it would undo exactly that.
+  drawPlantCodes(ctx, renderState, filter, px, py, W / (renderFrame.imgW * renderFrame.mPerPx));
 
   // THE WATER SHEET CARRIES ITS OWN SIZING CALCULATION. That is how real rainwater-harvesting
   // drawings work: the sheet that shows the tanks also shows the arithmetic that says whether they
@@ -8358,11 +8440,14 @@ export function sheetLegendRows(
     const rightOrder = right.section ? sectionOrder.indexOf(right.section) : Number.MAX_SAFE_INTEGER;
     return leftOrder - rightOrder || left.name.localeCompare(right.name);
   });
+  // The key the map codes are looked up in — same function, same input as drawPlantCodes, so a code
+  // on a canopy and the row that explains it can never disagree. See lib/plant-codes.ts.
+  const legendPlantCodes = plantCodesForSheet(groups.map((group) => group.defId));
   for (const group of orderedGroups) {
     rows.push({
       swatch: group.color,
       defId: group.defId,
-      text: countedLegendText(group.name, group.n, group.status),
+      text: codedLegendText(legendPlantCodes.get(group.defId), countedLegendText(group.name, group.n, group.status)),
       section: group.section,
       // SHEET 05 DOES NOT PAINT ITS AREAS THE WAY THE OTHER SHEETS DO. drawEarthworksFeatures
       // gives every earth feature a cream casing over bare mulched soil, because on this sheet a
