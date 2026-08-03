@@ -263,3 +263,50 @@ export const PLANTING_ROUTE_STYLE: Readonly<{ windbreak: PlantingRouteStyle; bed
 export function plantingRouteStyleFor(kind: string): PlantingRouteStyle | undefined {
   return kind === 'windbreak' || kind === 'bedpath' ? PLANTING_ROUTE_STYLE[kind] : undefined;
 }
+
+/**
+ * WHICH TREES HAVE SOMETHING PLANTED UNDERNEATH THEM.
+ *
+ * Rory: "bigger trees should always be above smaller? how do we show them underneath?"
+ *
+ * Half of that is already right and must stay right. The sheets draw the LARGEST canopy first and
+ * the smallest last, so a pawpaw planted under a mango is visible on top of it. That is the correct
+ * choice for a plan even though it inverts the physics: the job of a planting sheet is to say what
+ * is planted where, and a drawing that hides plants under a canopy fails at its only job. Guild
+ * planting is the whole point of the sheet — an understory you cannot see is an understory nobody
+ * plants.
+ *
+ * What was missing is the SIGNAL. Drawn solid, the small tree reads as sitting ON the big one's
+ * leaves rather than beneath them. The drafting convention for anything overhead is a DASHED line —
+ * the same mark a floor plan uses for a roof overhang — so a canopy with planting under it draws
+ * its edge dashed and the understory stays solid on top of it. The reader gets both facts: the
+ * small plant is there, and the big one is above it.
+ *
+ * Only canopies that ACTUALLY have something under them are dashed. Dashing every tree would make
+ * the mark meaningless, and a lone tree with nothing beneath it has nothing to disambiguate.
+ */
+export interface CanopyOverlapInput {
+  id: string;
+  cx: number;
+  cy: number;
+  /** Half the drawn footprint's short side — the disc a plant's centre has to fall inside. */
+  rPx: number;
+}
+
+export function overstoryCanopyIds(items: readonly CanopyOverlapInput[]): Set<string> {
+  const out = new Set<string>();
+  for (const canopy of items) {
+    if (!Number.isFinite(canopy.rPx) || canopy.rPx <= 0) continue;
+    for (const other of items) {
+      if (other.id === canopy.id) continue;
+      // Strictly smaller: two touching canopies of the same size are neighbours, not a guild, and
+      // dashing both of them would say each is above the other.
+      if (!(other.rPx < canopy.rPx * 0.92)) continue;
+      if (Math.hypot(other.cx - canopy.cx, other.cy - canopy.cy) <= canopy.rPx) {
+        out.add(canopy.id);
+        break;
+      }
+    }
+  }
+  return out;
+}
