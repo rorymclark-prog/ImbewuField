@@ -15,6 +15,7 @@ import {
   zonesInFilter,
   type GlossyLayerFilter,
 } from '@/lib/glossy-filters';
+import { gutterLabelText, labelsEverySpecimen, type GutterRow } from '@/lib/plan-label-gutter';
 
 /** Structural stand-in for DesignGlossyProps['refLayers'] (components/design/DesignGlossy.tsx) —
  *  kept identical field-for-field so the two stay assignable to each other. */
@@ -460,6 +461,104 @@ export function producerLabels(
     });
   });
   return out;
+}
+
+/**
+ * ONE ROW PER THING, FOR THE GUTTER — the layout Rory has been asking for since the first sheet.
+ *
+ * producerLabels above answers a different question and answers it well: given a crowded map and a
+ * budget of twelve leaders, which callouts earn one? Its whole apparatus — family clustering,
+ * compass disambiguation, silent member rows, "+N MORE" — exists to fit MORE information into
+ * FEWER leaders. That is the right trade when labels have to live on the map.
+ *
+ * Once the callouts move off the map and into a reserved gutter (lib/plan-label-gutter.ts) the
+ * trade changes completely. A gutter row costs a row, not a piece of the drawing, so the honest
+ * answer is simply to name everything and let the column length be what it is. Rory: "perhaps
+ * better label every plant."
+ *
+ * TWO THINGS THIS FIXES THAT THE OLD ENGINE COULD NOT.
+ *
+ * A count is no longer a substitute for identity. "MORINGA TREE ×5" on one leader told the reader
+ * five exist and pointed at one of them; the other four were unlabelled marks. Every specimen of a
+ * perennial now carries its own row and its own leader.
+ *
+ * And a leader never lands on empty ground. The old grouped pill aimed at the arithmetic CENTROID
+ * of its specimens, which for two trees at opposite ends of a plot is the gap between them — the
+ * bug the compass-disambiguation passes were written to paper over. Grouped rows (beds, rows,
+ * strips — see labelsEverySpecimen) now anchor on the specimen NEAREST that centroid, so the leader
+ * always terminates on something real.
+ */
+export function gutterCalloutRows(
+  state: DesignCanvasState,
+  refLayers: LabelRefLayers,
+  W: number,
+  H: number,
+  filter: GlossyLayerFilter = 'all',
+  /** defIds already identified ON the map by a plant code, which therefore need no gutter row of
+   *  their own — the legend keys them. Empty in 'names' mode. */
+  coded: ReadonlySet<string> = new Set(),
+): GutterRow[] {
+  if (!Number.isFinite(W) || W <= 0 || !Number.isFinite(H) || H <= 0) return [];
+  type Specimen = { id: string; x: number; y: number; label?: string };
+  // GROUPED BY WHAT IT IS, NOT BY WHAT IT IS CALLED. Keying on defId+label looks harmless and is
+  // how the first real render came back with "Bed 1 ... Bed 7" ranged down the gutter: the Studio
+  // auto-names beds, so seven identical beds arrived as seven groups of one and every rule about
+  // grouping quietly did not apply to them.
+  const groups = new Map<string, Specimen[]>();
+  for (const it of state.items) {
+    const def = ELEMENTS_BY_ID[it.defId];
+    if (
+      !def
+      || !itemInFilter(def.category, filter, def.id)
+      || !isNormalisedPoint([it.x, it.y])
+      || coded.has(it.defId)
+    ) continue;
+    const group = groups.get(it.defId) ?? [];
+    group.push({ id: it.id, x: it.x, y: it.y, label: it.label });
+    groups.set(it.defId, group);
+  }
+
+  const rows: GutterRow[] = [];
+  for (const [defId, specimens] of groups) {
+    const n = specimens.length;
+    if (labelsEverySpecimen(defId, n)) {
+      // Deliberately NO count on an individual row. "Moringa Tree x5" five times over reads as
+      // twenty-five trees; the count belongs to the legend, which is the inventory. Each specimen
+      // keeps its own name where it has one -- a per-specimen row is the one place where a
+      // farmer's own naming genuinely tells two things apart.
+      for (const s of specimens) {
+        rows.push({ id: s.id, cx: s.x * W, cy: s.y * H, text: gutterLabelText(defId, s.label, 1) });
+      }
+      continue;
+    }
+    // One row for the group. A name they ALL share is the farmer's word for the whole system and
+    // is kept; seven different names for seven beds are not a name for the system, so the
+    // catalogue's name is used and the count carries the rest.
+    const custom = new Set(specimens.map((s) => s.label ?? '')).size === 1
+      ? specimens[0].label
+      : undefined;
+    const cx = specimens.reduce((sum, s) => sum + s.x, 0) / n;
+    const cy = specimens.reduce((sum, s) => sum + s.y, 0) / n;
+    const anchor = specimens.reduce((best, s) => (
+      Math.hypot(s.x - cx, s.y - cy) < Math.hypot(best.x - cx, best.y - cy) ? s : best
+    ), specimens[0]);
+    rows.push({
+      id: anchor.id,
+      cx: anchor.x * W,
+      cy: anchor.y * H,
+      text: gutterLabelText(defId, custom, n),
+    });
+  }
+
+  // The driveway is not a placed item, and the same masterplan-only rule applies as above: on a
+  // layer sheet it is context, and context is never captioned.
+  if (refLayers.driveway.length >= 2 && filter === 'all') {
+    const mid = refLayers.driveway[Math.floor(refLayers.driveway.length / 2)];
+    if (isNormalisedPoint(mid)) {
+      rows.push({ id: 'driveway', cx: mid[0] * W, cy: mid[1] * H, text: 'Driveway' });
+    }
+  }
+  return rows;
 }
 
 /**

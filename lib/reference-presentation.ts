@@ -1,3 +1,5 @@
+import { sheetGutterWidth } from '@/lib/plan-label-gutter';
+
 export interface BoundaryPresentationCrop {
   cropX: number;
   cropY: number;
@@ -19,6 +21,8 @@ export interface BoundaryPresentationLayout {
 export interface StyleSheetSize {
   mapW: number;
   mapH: number;
+  /** Label-gutter width, per side. */
+  gutter: number;
   legendWidth: number;
   W: number;
   H: number;
@@ -32,12 +36,29 @@ export function styleSheetLegendWidth(mapWidth: number): number {
   return Math.min(620, Math.max(360, Math.round(mapWidth * 0.3)));
 }
 
+/**
+ * A finished sheet is [gutter][map][gutter][legend].
+ *
+ * THE GUTTERS ARE COUNTED HERE, not bolted on at compose time, and that is the whole point. This
+ * function is what the A-series aspect search bisects against (see PAPER_SHEET_RATIO): it asks
+ * "what map shape makes a composed sheet that fills the paper?". Add 26% of the map's width to the
+ * sheet afterwards and the search's answer is wrong by exactly that much, which comes back as a
+ * cream band across the top and bottom of every printed plan — the "we need to make the satellite
+ * image bigger so there is no blank space" complaint, reintroduced by a layout change.
+ *
+ * The legend keys off the gutter-inclusive canvas rather than the bare map, because that is what
+ * composeStyleSheet measures when it derives the panel width from the image it is handed. The two
+ * must agree or the composed sheet is not the sheet that was searched for.
+ */
 export function calculateStyleSheetSize(mapW: number, mapH: number): StyleSheetSize {
-  const legendWidth = styleSheetLegendWidth(mapW);
-  const W = mapW + legendWidth;
+  const gutter = sheetGutterWidth(mapW);
+  const canvasW = mapW + gutter * 2;
+  const legendWidth = styleSheetLegendWidth(canvasW);
+  const W = canvasW + legendWidth;
   return {
     mapW,
     mapH,
+    gutter,
     legendWidth,
     W,
     H: mapH,

@@ -10,6 +10,7 @@ import {
   PAPER_SHEET_RATIO,
   paperSheetCanvas,
 } from '@/lib/reference-presentation';
+import { sheetGutterWidth } from '@/lib/plan-label-gutter';
 
 const FRAME = { imgW: 960, imgH: 640, mPerPx: 0.4 };
 const SQUARE_BOUNDARY: Array<[number, number]> = [
@@ -88,7 +89,9 @@ test('a farm of any shape lands on A-series paper with no cream band left to pad
     // rounded to whole pixels, so the achieved ratio lands a couple of pixels off √2. What
     // matters is that the residual band is invisible — half a percent of the sheet is well
     // under a millimetre on A2 — not that it is literally zero.
-    const sheetW = layout.imgW * 2 + layout.legendWidth;
+    // Gutters included: the composed sheet is [gutter][map][gutter][legend], and leaving them out
+    // here would assert the ratio of a sheet nobody prints.
+    const sheetW = layout.imgW * 2 + sheetGutterWidth(layout.imgW * 2) * 2 + layout.legendWidth;
     const sheetH = layout.imgH * 2;
     const paper = paperSheetCanvas(sheetW, sheetH);
     assert.ok(
@@ -158,7 +161,7 @@ test('sheet 08 adds the same panel column as the rest of a tall plan set', () =>
   assert.ok(layout);
   assert.equal(sheet.mapW, layout.imgW * 2);
   assert.equal(sheet.mapH, layout.imgH * 2);
-  assert.equal(sheet.W, sheet.mapW + sheet.legendWidth);
+  assert.equal(sheet.W, sheet.mapW + sheet.gutter * 2 + sheet.legendWidth);
   assert.ok(sheet.W > sheet.mapW, 'the schedule must own a column instead of covering the map');
   assert.equal(sheet.aspect, layout.sheetAspect);
   assert.ok(sheet.aspect <= MAX_PRESENTATION_SHEET_ASPECT);

@@ -72,7 +72,13 @@ import {
   REFERENCE_SHEET_LABEL,
   type GlossyLayerFilter,
 } from '@/lib/glossy-filters';
-import { compareLabelRows, producerLabels, producerLabelsWithinBudget, plotBox } from '@/lib/producer-labels';
+import { compareLabelRows, gutterCalloutRows, producerLabels, producerLabelsWithinBudget, plotBox } from '@/lib/producer-labels';
+import {
+  layoutGutterRows,
+  sheetGutterWidth,
+  type GutterLayout,
+  type GutterRow,
+} from '@/lib/plan-label-gutter';
 import { leaderLabelFontSize, placeLeaderLabel, stackLeaderRows, leaderPath } from '@/lib/leader-labels';
 import { exactModelInputMarks, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '@/lib/render-policy';
 import { EARTHWORKS_ROUTE_STYLE, WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, nearestWaterNeighbourPx, offsetPolyline, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRoutesWithVisualBridges, waterRouteStyleFor, type EarthworksRouteStyle, type WaterLegendSection } from '@/lib/water-cartography';
@@ -3946,6 +3952,189 @@ function drawBlueprintLabelPills(
   }
 }
 
+/** "STAPLE GARDEN" → "Staple garden". Ground labels are built in CAPS for on-map pills, and a
+ *  gutter is a schedule that has to read as the legend's twin, so it takes the legend's case. */
+function sentenceCase(text: string): string {
+  const trimmed = text.trim();
+  if (!trimmed) return trimmed;
+  return trimmed.charAt(0).toUpperCase() + trimmed.slice(1).toLowerCase();
+}
+
+/** Greedy two-line wrap. One line is always preferred; a name only breaks when it cannot be made
+ *  to fit at the shrink floor, because a column of mixed one- and two-line rows is harder to scan
+ *  than a column of slightly smaller ones. */
+function wrapGutterText(
+  ctx: CanvasRenderingContext2D,
+  text: string,
+  maxWidth: number,
+): string[] {
+  if (ctx.measureText(text).width <= maxWidth) return [text];
+  const words = text.split(/\s+/).filter(Boolean);
+  if (words.length < 2) return [text];
+  let best: [string, string] | null = null;
+  let bestWorst = Infinity;
+  for (let split = 1; split < words.length; split++) {
+    const first = words.slice(0, split).join(' ');
+    const second = words.slice(split).join(' ');
+    const worst = Math.max(ctx.measureText(first).width, ctx.measureText(second).width);
+    if (worst < bestWorst) {
+      bestWorst = worst;
+      best = [first, second];
+    }
+  }
+  return best ?? [text];
+}
+
+/**
+ * THE LABEL GUTTER — a reserved paper band down each side of the map, and every callout in it.
+ *
+ * Rory: "the labels must not be drawn over the design, they must be to the side of the design."
+ * lib/plan-label-gutter.ts holds the why, the reserve and the row policy; this is the paint.
+ *
+ * WHAT IS DELIBERATE HERE, so it survives the next edit:
+ *
+ * The band is drawn AFTER the map and its overlays and BEFORE the leaders, so it covers whatever
+ * photograph was under it and no leader is ever clipped by its own label's background. The rule
+ * line at the band's inner edge is what makes the band read as drawing furniture rather than as a
+ * badly cropped photo — without it the sheet looks broken rather than composed.
+ *
+ * Rows carry NO plaque. A plaque exists to hold a label together against a busy aerial; on clean
+ * paper it is just a dark box shouting on a quiet margin. Losing it is also what buys the long
+ * names their single line — a plaque costs about 20% of the band's width in padding alone.
+ *
+ * Text is flush to the MAP, ragged to the outside. That is the way ranged callouts are set on every
+ * plan sheet, and it is not decoration: it keeps every leader's horizontal run the same short
+ * length, so the eye reads them as a set rather than as a fan.
+ */
+function drawLabelGutter(
+  ctx: CanvasRenderingContext2D,
+  layout: GutterLayout,
+  mapX: number,
+  mapW: number,
+  H: number,
+): void {
+  const { gutter, rows, pitch } = layout;
+  if (!rows.length || gutter <= 0) return;
+  const inset = Math.max(6, Math.round(mapW * 0.006));
+  const bandX = { left: 0, right: mapX + mapW };
+  const edgeX = { left: mapX, right: mapX + mapW };
+
+  for (const side of ['left', 'right'] as const) {
+    ctx.save();
+    ctx.fillStyle = '#FBF6EC';
+    ctx.fillRect(bandX[side], 0, gutter, H);
+    ctx.strokeStyle = 'rgba(32,25,15,0.34)';
+    ctx.lineWidth = Math.max(1, Math.round(mapW * 0.0009));
+    ctx.beginPath();
+    ctx.moveTo(edgeX[side], 0);
+    ctx.lineTo(edgeX[side], H);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  // One size for the whole column. The sheet audit caught three different callout sizes on one
+  // sheet once already; a per-row "shrink until it fits" is exactly how that happens, so the shrink
+  // below is a single factor derived from the WORST row and then applied to every row.
+  const maxFs = Math.round(mapW * 0.0155);
+  const baseFs = Math.max(15, Math.min(maxFs, Math.round(pitch * 0.46)));
+  const room = Math.max(10, gutter - inset * 2);
+  const setFont = (size: number) => {
+    ctx.font = `650 ${size}px ${REFERENCE_LABEL_FONT}`;
+  };
+  let fs = baseFs;
+  setFont(fs);
+  let widest = 1;
+  for (const row of rows) widest = Math.max(widest, ctx.measureText(row.text).width / room);
+  if (widest > 1) fs = Math.max(Math.round(baseFs * 0.78), Math.round(fs / widest));
+  setFont(fs);
+
+  const lineH = fs * 1.12;
+  for (const row of rows) {
+    // Two lines only where the pitch can hold them; otherwise the row stays on one line at the
+    // shrink floor and is allowed to be a shade wide rather than to collide with its neighbour.
+    const lines = pitch >= lineH * 2.1 ? wrapGutterText(ctx, row.text, room) : [row.text];
+    const textX = row.side === 'left' ? edgeX.left - inset : edgeX.right + inset;
+    const align: CanvasTextAlign = row.side === 'left' ? 'right' : 'left';
+    const top = row.ay - ((lines.length - 1) * lineH) / 2;
+
+    // Leader: out of the band's inner edge, along its OWN row, then a single diagonal to the mark.
+    // Same rule as the pills — the long run rides the de-collided label row, never the element's
+    // undecollided y, or two leaders at nearly the same feature height merge into one line.
+    const targetX = mapX + row.cx;
+    const startX = row.side === 'left' ? edgeX.left : edgeX.right;
+    const elbowX = row.side === 'left'
+      ? Math.min(targetX - fs * 0.5, startX + mapW * 0.02)
+      : Math.max(targetX + fs * 0.5, startX - mapW * 0.02);
+    ctx.save();
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.moveTo(startX, row.ay);
+    ctx.lineTo(elbowX, row.ay);
+    ctx.lineTo(targetX, row.cy);
+    ctx.strokeStyle = 'rgba(248,244,232,0.9)';
+    ctx.lineWidth = Math.max(3, mapW * 0.0022);
+    ctx.stroke();
+    ctx.strokeStyle = 'rgba(20,28,22,0.82)';
+    ctx.lineWidth = Math.max(1.2, mapW * 0.0009);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(targetX, row.cy, Math.max(3, mapW * 0.0022), 0, Math.PI * 2);
+    ctx.fillStyle = '#24362E';
+    ctx.fill();
+    ctx.strokeStyle = '#F3EEDB';
+    ctx.lineWidth = Math.max(1, mapW * 0.0007);
+    ctx.stroke();
+    ctx.restore();
+
+    ctx.save();
+    setFont(fs);
+    ctx.textAlign = align;
+    ctx.textBaseline = 'middle';
+    ctx.fillStyle = '#20190F';
+    lines.forEach((line, i) => ctx.fillText(line, textX, top + i * lineH));
+    ctx.restore();
+  }
+}
+
+/** Everything the gutter needs for one sheet: the widths it may take, and the rows to range in it.
+ *  Kept apart from the paint so a test can assert the layout without a canvas. */
+function sheetGutterLayout(
+  state: DesignCanvasState,
+  refLayers: DesignGlossyProps['refLayers'],
+  W: number,
+  H: number,
+  filter: GlossyLayerFilter,
+  labelMode: SheetLabelMode,
+): GutterLayout {
+  const coded = labelMode === 'codes'
+    ? new Set(plantCodesForSheet(exactSheetElementLegendGroups(state, filter).map((g) => g.defId)).keys())
+    : new Set<string>();
+  const rows: GutterRow[] = [
+    ...gutterCalloutRows(state, refLayers, W, H, filter, coded),
+    // Prefixed: the layout keys rows by id, and a traced ring's id and a placed item's id come from
+    // two different spaces with nothing stopping them coinciding. One collision would silently drop
+    // a row (a Map assignment overwrites) rather than fail loudly.
+    ...(filter === 'planting'
+      ? groundLabelsForSheet(state, refLayers, W, H, filter)
+        .map((label, i) => ({
+          id: `ground:${label.id ?? i}`,
+          cx: label.cx,
+          cy: label.cy,
+          text: sentenceCase(label.text),
+        }))
+      : []),
+  ];
+  return layoutGutterRows(rows, {
+    mapWidth: W,
+    gutter: sheetGutterWidth(W),
+    minPitch: Math.max(26, Math.round(H * 0.026)),
+    maxPitch: Math.max(44, Math.round(H * 0.052)),
+    top: Math.round(H * 0.045),
+    // Clear of the scale bar, which is burned into the bottom-left of the map afterwards.
+    bottom: H - Math.round(H * 0.075),
+  });
+}
+
 function referenceBlueprintLabels(
   state: DesignCanvasState,
   refLayers: DesignGlossyProps['refLayers'],
@@ -6088,15 +6277,19 @@ async function buildReferenceBlueprintMap(
 
   const px = (n: number) => n * W;
   const py = (n: number) => n * H;
-  if (filter === 'planting' || filter === 'structures' || filter === 'all') {
-    drawBlueprintLabelPills(ctx, referenceBlueprintLabels(renderState, renderRefLayers, W, H, filter, labelMode));
-  }
-  // AFTER the pills, deliberately — see drawPlantCodes. Nothing coded still carries a pill in this
-  // mode, but the uncoded callouts are laid out around the whole design and can still land on a
-  // plant that is not theirs.
+  // Codes before the gutter, not after. They used to be drawn last because the on-map pills covered
+  // them; with the callouts moved into a reserved band there is nothing left to hide behind, and
+  // the band must be free to cover anything that strays into it.
   if (labelMode === 'codes') {
     drawPlantCodes(ctx, renderState, filter, px, py, W / (renderFrame.imgW * renderFrame.mPerPx));
   }
+  // CALLOUTS ARE NOT DRAWN HERE ANY MORE. They live in the sheet's label gutters, which only exist
+  // once composeStyleSheet has widened the map into a sheet — see drawLabelGutter. What is computed
+  // here is only the LAYOUT, because this is where the presentation-space state and refLayers are
+  // in hand; the paint happens below, at sheet coordinates.
+  const gutterLayout = filter === 'planting' || filter === 'structures' || filter === 'all'
+    ? sheetGutterLayout(renderState, renderRefLayers, W, H, filter, labelMode)
+    : undefined;
 
   // THE WATER SHEET CARRIES ITS OWN SIZING CALCULATION. That is how real rainwater-harvesting
   // drawings work: the sheet that shows the tanks also shows the arithmetic that says whether they
@@ -6126,6 +6319,7 @@ async function buildReferenceBlueprintMap(
       // The legend is the key the map codes are looked up in, so it only carries them in the mode
       // that draws them. A "MG ·" prefix on a sheet with no MG anywhere is a key to nothing.
       labelMode,
+      gutterLayout,
       ...(waterBudget.length
         ? { footerHeading: 'WATER BUDGET', footerText: waterBudget.join('\n'), footerBox: true }
         : {}),
@@ -7825,13 +8019,21 @@ function phasingSheetSize(
   return calculatePhasingSheetSize(refLayers.boundary, frame, SCALE);
 }
 
+/** Where the Phasing sheet's schedule panel sits.
+ *
+ * `mapX` is the label gutter: sheet 09 composes its own panel instead of going through
+ * composeStyleSheet, so it has to inset the map by hand or its column geometry stops matching the
+ * rest of the set — and, worse, stops matching calculateStyleSheetSize, which is what the A-series
+ * aspect search solves against. A sheet whose panel is drawn one gutter left of where the size
+ * calculation says it is prints with the schedule half over the map. */
 function phasingPanelRect(size: ReturnType<typeof calculatePhasingSheetSize>) {
   const pad = Math.round(size.mapW * 0.02);
   const lgW = size.legendWidth;
-  const lgX = size.mapW;
+  const mapX = size.gutter;
+  const lgX = mapX + size.mapW + size.gutter;
   const lgY = 0;
   const lgBottom = size.H;
-  return { pad, lgW, lgX, lgY, lgBottom };
+  return { pad, lgW, lgX, lgY, lgBottom, mapX };
 }
 
 // Draws every EXACT-content layer of the Phasing sheet that is not the schedule panel itself:
@@ -7979,21 +8181,28 @@ async function composePhasingSheet(
   canvas.height = H;
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('Canvas unavailable');
-  const { pad, lgX } = phasingPanelRect(size);
+  const { pad, lgX, mapX } = phasingPanelRect(size);
   const pxPerM = mapW / (renderFrame.imgW * renderFrame.mPerPx);
 
-  // 1. The model's decorative illustrated background, normalised to the complete sheet size.
+  // 1. The model's decorative illustrated background, normalised to the MAP column — not the whole
+  //    sheet. The gutters are drawing furniture and must stay paper; letting the model's art run
+  //    into them is how a "margin" turns back into more picture.
+  ctx.fillStyle = '#FBF6EC';
+  ctx.fillRect(0, 0, W, H);
   const modelImg = await loadImage(baseImage);
-  ctx.drawImage(modelImg, 0, 0, W, H);
+  ctx.drawImage(modelImg, mapX, 0, mapW, H);
 
   // 2. Every exact fact — ground, structures, boundary, phase pins — redrawn on top from saved
   //    design data into the map column only, never copied from (or left as) the model's paint.
+  ctx.save();
+  ctx.translate(mapX, 0);
   await drawPhasingExactContent(ctx, renderState, renderFrame, renderRefLayers, plan, mapW, mapH);
 
   // 3. Scale bar and north arrow, drawn as exact vector chrome (not a photographic strip copied
   //    from a separately rendered sheet, which risked a hard seam and could clip the north arrow).
   const scaleRowH = Math.round(mapW * 0.026);
   drawBlueprintScaleBar(ctx, mapW, mapH, pad, scaleRowH, pxPerM);
+  ctx.restore();
   const naSize = Math.max(30, Math.round(mapW * 0.026));
   drawImplNorthArrow(ctx, lgX - pad - naSize * 0.6, H - pad - naSize * 0.6, naSize);
 
@@ -8123,9 +8332,13 @@ export async function buildImplementationMap(
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('Canvas unavailable');
   const pxPerM = mapW / (renderFrame.imgW * renderFrame.mPerPx);
-  const { pad, lgW, lgX, lgY, lgBottom } = phasingPanelRect(size);
+  const { pad, lgW, lgX, lgY, lgBottom, mapX } = phasingPanelRect(size);
 
-  // 1. Satellite + scrim.
+  // 1. Satellite + scrim, inset into the map column so the label gutters stay paper.
+  ctx.fillStyle = '#FBF6EC';
+  ctx.fillRect(0, 0, W, H);
+  ctx.save();
+  ctx.translate(mapX, 0);
   await drawBlueprintBase(ctx, renderFrame, mapW, mapH);
 
   // 2-4. The complete saved design UNDER the phase pins — ground, structures, features, boundary,
@@ -8141,6 +8354,7 @@ export async function buildImplementationMap(
   //    the panel's foot (this sheet adds a north arrow the other Blueprints still lack).
   const scaleRowH = Math.round(mapW * 0.026);
   drawBlueprintScaleBar(ctx, mapW, mapH, pad, scaleRowH, pxPerM);
+  ctx.restore(); // end of the map column — the panel below is in SHEET coordinates
 
   // 7. Right-hand panel — the phasing schedule. Type follows the panel width, not the changing map
   //    or widened sheet width. When content would overflow we shed task bullets and surplus site
@@ -8923,11 +9137,19 @@ async function composeStyleSheet(
     /** Whether this sheet's map carries plant codes. The legend keys them, so it must only print
      *  them in the mode that draws them — see SheetLabelMode. */
     labelMode?: SheetLabelMode;
+    /** Ranged callouts for the label gutters, already laid out in MAP coordinates. Omitted by the
+     *  sheets that burn their own on-map labels (01, 02, 09) — they still get the gutter WIDTH, so
+     *  every sheet in the set carries the same margins, they just leave it as clean paper. */
+    gutterLayout?: GutterLayout;
   } = {},
 ): Promise<string> {
   const map = await loadImage(mapDataUrl);
-  const W = map.width;
+  // THE SHEET IS [gutter][map][gutter][legend]. `W` remains "everything left of the legend panel",
+  // which is what every measurement below already means by it, so the panel code is untouched.
+  const mapW = map.width;
   const H = map.height;
+  const gutter = sheetGutterWidth(mapW);
+  const W = mapW + gutter * 2;
   const legendW = styleSheetLegendWidth(W);
   const outW = W + legendW;
   const canvas = document.createElement('canvas');
@@ -8935,7 +9157,11 @@ async function composeStyleSheet(
   canvas.height = H;
   const ctx = canvas.getContext('2d');
   if (!ctx) return mapDataUrl;
-  ctx.drawImage(map, 0, 0);
+  // Paper under the bands first: the map is inset, and whatever is not map must read as sheet.
+  ctx.fillStyle = '#FBF6EC';
+  ctx.fillRect(0, 0, W, H);
+  ctx.drawImage(map, gutter, 0);
+  if (options.gutterLayout) drawLabelGutter(ctx, options.gutterLayout, gutter, mapW, H);
 
   // ── Legend panel ──
   const benchmarkPanel = styleLabel === 'Reference Blueprint' && (filter === 'water' || filter === 'planting' || filter === 'structures');
@@ -9470,12 +9696,17 @@ async function composeStyleSheet(
   }
 
   // ── Scale bar (over the map, bottom-left) ──
-  const pxPerM = W / (frame.imgW * frame.mPerPx);
+  //
+  // MEASURED AGAINST THE MAP, NOT THE SHEET. `W` is everything left of the legend panel, which now
+  // includes a label gutter on each side; deriving pxPerM from it would draw a bar 26% longer than
+  // the distance it claims. A scale bar is the one mark on a plan a farmer is entitled to hold a
+  // ruler against, so this must key off the map's own width and sit inside the map's own column.
+  const pxPerM = mapW / (frame.imgW * frame.mPerPx);
   const niceM = [5, 10, 20, 25, 50, 100, 200];
   let m = niceM[0];
-  for (const nm of niceM) if (nm * pxPerM <= W * 0.18) m = nm;
+  for (const nm of niceM) if (nm * pxPerM <= mapW * 0.18) m = nm;
   const barW = m * pxPerM;
-  const bx = Math.round(W * 0.03);
+  const bx = gutter + Math.round(mapW * 0.03);
   const by = H - Math.round(H * 0.045);
   ctx.lineCap = 'butt';
   ctx.strokeStyle = 'rgba(11,14,10,0.55)';
@@ -9492,7 +9723,7 @@ async function composeStyleSheet(
   ctx.moveTo(bx, by - 9); ctx.lineTo(bx, by + 9);
   ctx.moveTo(bx + barW, by - 9); ctx.lineTo(bx + barW, by + 9);
   ctx.stroke();
-  ctx.font = `700 ${Math.round(W * 0.016)}px ${REFERENCE_LABEL_FONT}`;
+  ctx.font = `700 ${Math.round(mapW * 0.016)}px ${REFERENCE_LABEL_FONT}`;
   ctx.textAlign = 'left';
   ctx.textBaseline = 'bottom';
   ctx.lineWidth = 4;
@@ -9502,7 +9733,7 @@ async function composeStyleSheet(
   ctx.fillText(`${m} m`, bx, by - 14);
 
   // ── North arrow (over the map, top-right) ──
-  const nx = W - Math.round(W * 0.04);
+  const nx = gutter + mapW - Math.round(mapW * 0.04);
   const ny = Math.round(H * 0.08);
   ctx.beginPath();
   ctx.moveTo(nx, ny - 30);
@@ -9515,7 +9746,7 @@ async function composeStyleSheet(
   ctx.lineWidth = 3;
   ctx.stroke();
   ctx.fill();
-  ctx.font = `700 ${Math.round(W * 0.017)}px ${REFERENCE_LABEL_FONT}`;
+  ctx.font = `700 ${Math.round(mapW * 0.017)}px ${REFERENCE_LABEL_FONT}`;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'bottom';
   ctx.lineWidth = 4;
