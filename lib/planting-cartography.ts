@@ -129,7 +129,12 @@ export const PLANTING_CANOPY_PAINT: Readonly<PlantingCanopyPaintStyle> = {
   detailAlphaMax: 0.15,
   edgeColor: '#24482D',
   edgeAlpha: 0.98,
-  edgeWidthScale: 1.05,
+  // The dark edge is now the border the eye actually reads, because the cream casing behind it was
+  // cut from 3.2x to a hairline (drawPaintedReferenceFeature). Rory asked for "a black border
+  // exactly around everything" instead of the halo; this is that border, kept dark-green rather
+  // than true black so it belongs to the same drawing as the canopies and the boundary line, and
+  // kept over a sliver of cream so it survives landing on dark photographic foliage.
+  edgeWidthScale: 1.4,
 };
 
 /**

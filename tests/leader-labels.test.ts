@@ -289,6 +289,33 @@ test('callouts on one sheet stay within a readable spread of each other', () => 
     `sizes diverged: ${sizes.join(', ')}`);
 });
 
+test('a sheet never shows more than two callout sizes', () => {
+  // The band alone was not enough. A per-pixel shrink loop made every size in the 72-100% band
+  // reachable, so the rendered water sheet carried TAP POINT at full size, JOJO TANK 5000L a little
+  // under, and BANANA CIRCLE at the floor — a page that reads as broken rather than as designed.
+  // Rory: "should we keep same size font as far as possible? perhaps we have 2 fonts sizes".
+  const base = leaderLabelFontSize(2517);
+  const narrow = { W: 2517, plotX0: 0.075, plotX1: 0.93, fontSize: base, measure: FALLBACK };
+  // Every real callout off the Ubhejane water sheet, plus the worst name in the catalog.
+  const names = [
+    'SWALE', 'DRIP LINE', 'BURIED PIPE', 'TAP POINT ×7', 'BANANA CIRCLE',
+    'JOJO TANK 2500L', 'JOJO TANK 5000L ×2', 'GREYWATER LINE', LONGEST,
+  ];
+  for (const [label, measure] of MEASURES) {
+    for (const side of SIDES) {
+      const sizes = new Set(
+        names.map((text) => placeLeaderLabel({ text, side, ...narrow, measure }).fontSize),
+      );
+      assert.ok(sizes.size <= 2, `${label}/${side} produced ${sizes.size} sizes: ${[...sizes].join(', ')}`);
+      // And they are the two the sheet chose, not two arbitrary ones a fit loop happened to land on.
+      for (const size of sizes) {
+        assert.ok(size === base || size === minSizeFor(base),
+          `${label}/${side}: ${size} is neither the base ${base} nor the step ${minSizeFor(base)}`);
+      }
+    }
+  }
+});
+
 test('a label that overruns its margin still starts on the sheet, never off the left edge', () => {
   const base = leaderLabelFontSize(2517);
   const placed = placeLeaderLabel({

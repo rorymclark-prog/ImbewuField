@@ -78,6 +78,7 @@ import { PLANTING_CANOPY_PAINT, PLANTING_LEGEND_SECTION_ORDER, plantingFeaturePr
 import { STRUCTURES_LEGEND_SECTION_ORDER, structuresFeaturePresentationDimensions, structuresLegendSectionForFeature, structuresRouteVisualFor, type StructuresLegendSection } from '@/lib/structures-cartography';
 import { presentSectorCartography, sectorEvidenceSummary, SECTOR_STYLES, sectorFillColor, sectorStrokeWidth, type SectorLegendIcon, type SectorVisualKind } from '@/lib/sector-cartography';
 import { referenceFeatureArtworkUrl } from '@/lib/reference-feature-art';
+import { drawVetiverHedge, vetiverHedgeGeometry, VETIVER_HEDGE_IDS } from '@/lib/vetiver-hedge';
 import {
   balancedLegendColumnRanges,
   countedLegendText,
@@ -4248,7 +4249,13 @@ function drawPaintedReferenceFeature(
     traceFootprint();
     ctx.strokeStyle = 'rgba(252,248,236,0.95)';
     ctx.globalAlpha = inheritedAlpha;
-    ctx.lineWidth = Math.max(3, outline * 3.2);
+    // A SEPARATOR, NOT A HALO. At 3.2x this read as a cut-out sticker rim — Rory: "it just looks
+    // like its a bit wrong or off". The casing only has to do one job, which is stop the dark edge
+    // below from disappearing into dark photographic foliage; past a hairline it stops separating
+    // and starts framing. It cannot go to zero, because a dark-on-dark edge with no casing is
+    // exactly the render where he could not find his trees at all — see PLANTING_CANOPY_PAINT.
+    // Half the stroke is covered by the artwork drawn over it, so this shows as ~1px of cream.
+    ctx.lineWidth = Math.max(1.6, outline * 1.5);
     ctx.lineJoin = 'round';
     ctx.stroke();
     traceFootprint();
@@ -4500,6 +4507,42 @@ const PRODUCTION_BED_IDS = new Set(['veg_bed', 'raised_bed']);
  * an unrecognised name draws a plain plant rather than guessing at a crop. Nothing about spacing,
  * plant count or variety is asserted: this draws what the farmer chose, at a drawing rhythm.
  */
+/**
+ * Vetiver: drawn from above rather than pasted in from the side. The geometry, the reasoning and
+ * the constants live in lib/vetiver-hedge.ts so they can be tested and rendered on their own.
+ */
+function paintVetiverHedge(
+  ctx: CanvasRenderingContext2D,
+  it: PlacedItem,
+  def: DesignElementDef,
+  px: (n: number) => number,
+  py: (n: number) => number,
+  pxPerM: number,
+): boolean {
+  const wM = it.wM ?? def.wM;
+  const hM = it.hM ?? def.hM;
+  const wPx = Math.max(1, wM * pxPerM);
+  const hPx = Math.max(1, hM * pxPerM);
+  // A clump below this is a smudge rather than a plant, so the hedge becomes a legible map symbol
+  // instead of a literal one-mark-per-slip drawing. See lib/vetiver-hedge.ts.
+  const minClumpPx = Math.max(2.6, ctx.canvas.width * 0.0015);
+  const geometry = vetiverHedgeGeometry(wPx, hPx, wM, hM, pxPerM, minClumpPx, it.id);
+  if (!geometry) return false;
+
+  ctx.save();
+  ctx.translate(px(it.x), py(it.y));
+  if (it.rot) ctx.rotate((it.rot * Math.PI) / 180);
+  const radius = Math.min(wPx, hPx) * 0.34;
+  drawVetiverHedge(
+    ctx,
+    geometry,
+    () => roundRectPath(ctx, -wPx / 2, -hPx / 2, wPx, hPx, radius),
+    Math.max(2, ctx.canvas.width * 0.0018),
+  );
+  ctx.restore();
+  return true;
+}
+
 function drawProductionBedCrop(
   ctx: CanvasRenderingContext2D,
   it: PlacedItem,
@@ -4573,6 +4616,12 @@ function drawTrueFootprint(
   // worse than the rectangle it replaced.
   if (PRODUCTION_BED_IDS.has(def.id)) {
     if (drawProductionBedCrop(ctx, it, def, px, py, pxPerM)) return;
+  }
+  // Ahead of the artwork for the same reason production beds are: the shared asset is a photograph
+  // taken from the side, and this draws the thing itself, from above. Falls through only when the
+  // footprint is too short to read as a hedge at all.
+  if (VETIVER_HEDGE_IDS.has(def.id)) {
+    if (paintVetiverHedge(ctx, it, def, px, py, pxPerM)) return;
   }
   const artUrl = referenceFeatureArtworkUrl(def.id);
   if (artUrl && referenceFeatureArtworkCache.has(artUrl)) {

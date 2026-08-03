@@ -66,7 +66,21 @@ export const LABEL_GAP_RATIO = 0.025;
 export const MIN_FONT_SIZE = 12;
 
 /**
- * A callout may never shrink below this fraction of the sheet's own callout size.
+ * The ONE smaller step a callout is allowed to take, and the floor it stops at.
+ *
+ * A sheet gets AT MOST TWO SIZES: the base size, and this. Nothing in between.
+ *
+ * It used to be a floor on a per-pixel shrink loop, which meant every value in the 72–100% band was
+ * reachable and a sheet could show five different sizes at once. Rory, on the rendered water sheet:
+ * "should we keep same size font as far as possible? perhaps we have 2 fonts sizes just incase on
+ * the rare occasion something is very long worded." That is the right instinct — a continuously
+ * variable size reads as a page that has gone wrong, while two consistent sizes read as a decision.
+ *
+ * Fitting exactly is worth less than matching. A name needing 3% less room now drops the whole 28%
+ * rather than landing on its own private 97%, because the sheet is judged as a page: a label that is
+ * visibly a size DOWN is fine, a label that is almost-but-not-quite its neighbour's size is not. The
+ * step is deliberately wide enough to read as intentional — two sizes 10% apart just look like a
+ * mistake.
  *
  * MIN_FONT_SIZE alone is an absolute floor, and on a 2517px sheet the base size is 50px — so a name
  * that did not fit its margin was allowed to fall all the way to 12px, a quarter the size of its
@@ -149,14 +163,15 @@ export function placeLeaderLabel(input: LeaderLabelInput): LeaderLabelPlacement 
     return Number.isFinite(width) && width >= 0 ? width : 0;
   };
   let textW = measuredWidth(fontSize);
-  // Shrink to fit rather than clip. A name is the whole point of a callout, so losing its tail is
-  // losing the information; losing a couple of points of size is not. But only down to
-  // minSizeFor() — past that the label stops shrinking and overruns onto the map, because a sheet
-  // whose callouts are four different sizes reads worse than one whose longest name crosses the
-  // plot edge. See MIN_RELATIVE_SIZE.
+  // ONE STEP DOWN, NEVER A LADDER. A name that does not fit its margin takes the single smaller
+  // size and stops there — it does not get fitted to the pixel, because a callout tuned to its own
+  // private size is what made one sheet carry five of them. If it still overruns at the small size
+  // it is allowed to run onto the map: placeLeaderLabel keeps it on the sheet and every glyph
+  // carries a dark halo, so a slightly long label crossing the plot edge is legible, whereas a page
+  // of mismatched type is just wrong. See MIN_RELATIVE_SIZE.
   const floor = minSizeFor(input.fontSize);
-  while (textW > available && fontSize > floor) {
-    fontSize -= 1;
+  if (textW > available && fontSize > floor) {
+    fontSize = floor;
     textW = measuredWidth(fontSize);
   }
   const shrunk = fontSize < input.fontSize;
