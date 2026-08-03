@@ -35,8 +35,9 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '3 August',
-    sha: '9f5e15d',
+    sha: '5f9326e',
     changes: [
+      'Every plant now carries a short code — find it in the legend to see what it is',
       'New "Plain paper" choice: your plan drawn on paper, with no photo behind it',
       'Every tree now stands in a mulched basin instead of on a white disc',
       'Each staple plot is one crop — maize on one, beans on the next',
