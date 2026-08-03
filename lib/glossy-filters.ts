@@ -218,6 +218,25 @@ export interface ExactLineLegendGroup {
   lineKind?: LineShape['kind'];
 }
 
+/**
+ * Splits swales by the widths the farmer actually stated, rather than collapsing different
+ * earthworks into one vague count. An omitted width remains omitted: the cartographic band has a
+ * legibility treatment, but that paint decision is not a construction dimension and must never
+ * reach a printed legend as one.
+ */
+function swaleLegendGroups(lines: LineShape[], label: string): ExactLineLegendGroup[] {
+  const groups = new Map<number | undefined, number>();
+  for (const line of lines) {
+    const widthM = Number.isFinite(line.widthM) && (line.widthM as number) > 0 ? line.widthM : undefined;
+    groups.set(widthM, (groups.get(widthM) ?? 0) + 1);
+  }
+  return [...groups.entries()].map(([widthM, count]) => ({
+    text: widthM == null ? label : `${label} — ${String(widthM)} m wide`,
+    count,
+    lineKind: 'swale',
+  }));
+}
+
 export interface ExactZoneLegendGroup {
   text: string;
   zone: 0 | 1 | 2 | 3 | 4 | 5;
@@ -298,17 +317,25 @@ export function exactSheetLineLegendGroups(
       && (line.kind === 'path' || line.kind === 'fence' || line.kind === 'windbreak')).length;
     if (accessCount) groups.push({ text: 'Paths, fences & windbreaks', count: accessCount });
     for (const kind of ['swale', 'pipe', 'drip', 'greywater'] as const) {
-      const count = state.lines.filter((line) => line.kind === kind && line.points.length >= 2).length;
-      if (count) groups.push({ text: WATER_ROUTE_STYLE[kind].label, count, lineKind: kind });
+      const lines = state.lines.filter((line) => line.kind === kind && line.points.length >= 2);
+      if (!lines.length) continue;
+      if (kind === 'swale') {
+        groups.push(...swaleLegendGroups(lines, WATER_ROUTE_STYLE.swale.label));
+      } else {
+        groups.push({ text: WATER_ROUTE_STYLE[kind].label, count: lines.length, lineKind: kind });
+      }
     }
     return groups;
   }
 
   const groups: ExactLineLegendGroup[] = [];
   for (const kind of ['swale', 'fence', 'path', 'bedpath', 'pipe', 'drip', 'windbreak', 'greywater'] as const) {
-    if (!lineInFilter(kind, sheet)) continue;
-    const count = state.lines.filter((line) => line.kind === kind && line.points.length >= 2).length;
-    if (!count) continue;
+    // A Water-sheet swale is quiet orientation context, but a stated width is a factual
+    // earthwork measurement a farmer needs while reading the runoff sheet. List that one
+    // context mark without assigning the swale's Design Studio ownership away from Earthworks.
+    if (!lineInFilter(kind, sheet) && !(sheet === 'water' && kind === 'swale')) continue;
+    const lines = state.lines.filter((line) => line.kind === kind && line.points.length >= 2);
+    if (!lines.length) continue;
     const text = sheet === 'earthworks'
       ? EARTHWORKS_ROUTE_STYLE[kind as keyof typeof EARTHWORKS_ROUTE_STYLE]?.label
       : sheet === 'water'
@@ -316,9 +343,13 @@ export function exactSheetLineLegendGroups(
       : sheet === 'planting'
         ? PLANTING_ROUTE_STYLE[kind as keyof typeof PLANTING_ROUTE_STYLE]?.label
         : undefined;
+    if (kind === 'swale') {
+      groups.push(...swaleLegendGroups(lines, text ?? 'Swale'));
+      continue;
+    }
     groups.push({
       text: text ?? kind.charAt(0).toUpperCase() + kind.slice(1),
-      count,
+      count: lines.length,
       lineKind: kind,
     });
   }

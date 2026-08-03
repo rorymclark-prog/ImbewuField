@@ -62,6 +62,7 @@ import {
   MAX_BASE_SCALE,
   DEFAULT_AREA_FILL,
   normaliseAreaFill,
+  parseSwaleWidthM,
   type AreaFillStyle,
 } from '@/lib/design-canvas';
 import { type BaseAlignment } from '@/lib/base-photo-align';
@@ -2197,6 +2198,36 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
   // ring/polyline to tidy, so it is excluded the same way angleControl excludes zones/lines).
   const selectedZoneForTidy = selectedId ? canvasState?.zones.find((z) => z.id === selectedId) ?? null : null;
   const selectedLineForTidy = selectedZoneForTidy ? null : selectedId ? canvasState?.lines.find((l) => l.id === selectedId) ?? null : null;
+
+  // A swale's length is a readout of the line the farmer already traced, never a replacement
+  // geometry. The width field is deliberately optional too: only a width the farmer enters is
+  // saved and later printed. A drawing legibility floor may help a narrow mark be seen, but it
+  // must never turn into a claimed construction dimension.
+  const swaleControl = selectedLineForTidy?.kind === 'swale' && frame
+    ? {
+        widthM: selectedLineForTidy.widthM,
+        lengthM: selectedLineForTidy.points.slice(1).reduce((total, point, index) => {
+          const previous = selectedLineForTidy.points[index];
+          return total + Math.hypot(
+            (point[0] - previous[0]) * frame.imgW,
+            (point[1] - previous[1]) * frame.imgH,
+          ) * frame.mPerPx;
+        }, 0),
+        onSetWidth: (raw: string) => {
+          const widthM = parseSwaleWidthM(raw);
+          if (widthM === null) return false;
+          if (widthM === selectedLineForTidy.widthM) return true;
+          handleChange((prev) => ({
+            ...prev,
+            // Keep every traced point byte-for-byte as drawn. This control changes the stated
+            // disturbed-ground width for presentation, not the farmer's mapped earthwork route.
+            lines: prev.lines.map((line) => line.id === selectedLineForTidy.id ? { ...line, widthM } : line),
+            updatedAt: new Date().toISOString(),
+          }));
+          return true;
+        },
+      }
+    : null;
   // Tapping Tidy only COMPUTES and OPENS a preview — it never itself edits the design. See
   // DesignCanvas's tidyPreview prop for the overlay + confirm/cancel panel this feeds.
   const onTidySelected = (selectedZoneForTidy || selectedLineForTidy) && frame
@@ -3524,6 +3555,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           onCleanupSelected={onCleanupSelected}
           angleControl={angleControl}
           sizeControl={sizeControl}
+          swaleControl={swaleControl}
           windControl={windControl}
           // The biome NAME, never the registry key — the palette needs the name for
           // biomeClimates() and converts to a key itself for SpeciesPicker. Passing the key here
