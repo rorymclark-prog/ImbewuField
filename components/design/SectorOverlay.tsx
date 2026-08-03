@@ -21,6 +21,25 @@ import { useLanguage } from '@/lib/i18n';
 // Palette lifted verbatim from buildBlueprintSectorMap so the overlay and the printed sheet read
 // as the same analysis. Kept a touch lighter here (thin strokes + a group-wide ~0.7 opacity).
 const SUN = '#F7C97E';
+/**
+ * SUMMER READS HOT, WINTER READS COLD.
+ *
+ * Both arcs were one tan, so the only thing telling the two solstices apart was reading the
+ * altitude number off the label — on the diagram whose whole job is to make that difference
+ * obvious at a glance. Rory: "summer sun part of it including line and sun is a dark orange? and
+ * the winter one make it cooler?".
+ *
+ * Warm/cool is the right encoding here because it is not arbitrary: the high summer arc IS the
+ * heat you shade against and the low winter arc IS the light you must not block. A farmer reads
+ * temperature off colour before they read a number off a label.
+ *
+ * The winter blue is deliberately far from WATER (#3A8EC4) and FROST (#9FD0E8) — three cool marks
+ * on one small diagram is how a sun path starts reading as a drainage line.
+ */
+const SUN_SUMMER = '#E2761B';
+const SUN_SUMMER_LBL = '#F5A65B';
+const SUN_WINTER = '#6FA8C7';
+const SUN_WINTER_LBL = '#B4D8EC';
 const SUMMER = '#E08A2C';
 const SUMMER_LBL = '#F0B76A';
 const WINTER = '#C97B25';
@@ -81,25 +100,97 @@ export default function SectorOverlay({ model, imgW: W, imgH: H, boundary }: Sec
 
   const els: ReactElement[] = [];
 
-  const label = (key: string, x: number, y: number, text: string, color: string) => (
-    <text
-      key={key}
-      x={x}
-      y={y}
-      textAnchor="middle"
-      dominantBaseline="central"
-      fontSize={labelFont}
-      fontWeight={800}
-      fontFamily="system-ui, sans-serif"
-      fill={color}
-      stroke={HALO}
-      strokeWidth={labelFont * 0.28}
-      strokeLinejoin="round"
-      style={{ paintOrder: 'stroke' }}
-    >
-      {text}
-    </text>
-  );
+  /**
+   * SECTOR ENERGIES MUST NOT COMPETE WITH EACH OTHER.
+   *
+   * Rory, on the Sector step: "dont let elements compete with eachother! like this wind thing is
+   * over the sun". Every mark here was positioned from its own bearing and nothing else — the sun
+   * labels off the arc apex, the wind labels off the ring — so any two energies with similar
+   * bearings printed on top of one another. On his farm the summer wind is ESE and the sun's noon
+   * side is north, and the ESE label landed across the sun arc.
+   *
+   * The plan sheet solved this long ago: DesignGlossy keeps a list of claimed boxes, clamps names
+   * into the frame and prints a wind's name INSIDE its own arrow, with a comment recording that
+   * "HOT DRY BERG WIND" once printed across "SUMMER SUN". That work never reached this overlay —
+   * the same one-surface-only pattern as the vetiver and the swale. This is the overlay's share of
+   * it: claim boxes and displacement, which is the standard cartographic answer to symbol conflict.
+   *
+   * Two parts, because they fix different halves:
+   *  - the PLAQUE stops a label fighting whatever it sits on (an arc, an arrow, a bright roof).
+   *    Rory: "this black border thing really works put it around all the sector map stuff". A halo
+   *    alone only works over even ground, and a sun arc under lettering is not even ground.
+   *  - DISPLACEMENT stops two labels sharing a spot, which no amount of plaque can fix.
+   */
+  const claims: Array<{ x0: number; y0: number; x1: number; y1: number }> = [];
+  const hits = (a: typeof claims[number], b: typeof claims[number]) =>
+    a.x0 < b.x1 && a.x1 > b.x0 && a.y0 < b.y1 && a.y1 > b.y0;
+
+  /**
+   * Place a label clear of everything already placed, then draw it on its own plaque.
+   *
+   * `push` is the direction to move if the spot is taken — always AWAY from the site centre along
+   * the energy's own bearing, so a displaced label stays beside the arrow or arc it names instead
+   * of drifting somewhere that reads as belonging to a different energy. Width is estimated from
+   * the character count rather than measured: SVG has no measureText here, and for displacement a
+   * slightly generous box is the safe error, where for clipping it would not be.
+   */
+  const label = (
+    key: string,
+    x: number,
+    y: number,
+    text: string,
+    color: string,
+    push: [number, number] = [0, 1],
+  ) => {
+    const halfW = Math.max(labelFont, text.length * labelFont * 0.31);
+    const halfH = labelFont * 0.74;
+    const step = labelFont * 1.5;
+    const len = Math.hypot(push[0], push[1]) || 1;
+    const dir: [number, number] = [push[0] / len, push[1] / len];
+    let lx = x;
+    let ly = y;
+    let box = { x0: lx - halfW, y0: ly - halfH, x1: lx + halfW, y1: ly + halfH };
+    // Bounded: after this many nudges the sheet is simply too crowded, and a label parked a little
+    // further out beats one that walks off the map hunting for space.
+    for (let attempt = 0; attempt < 12 && claims.some((c) => hits(c, box)); attempt++) {
+      lx += dir[0] * step;
+      ly += dir[1] * step;
+      box = { x0: lx - halfW, y0: ly - halfH, x1: lx + halfW, y1: ly + halfH };
+    }
+    claims.push(box);
+    const padX = labelFont * 0.42;
+    const padY = labelFont * 0.3;
+    return (
+      <g key={key}>
+        <rect
+          x={lx - halfW - padX}
+          y={ly - halfH - padY}
+          width={(halfW + padX) * 2}
+          height={(halfH + padY) * 2}
+          rx={labelFont * 0.5}
+          fill="rgba(24,32,26,0.9)"
+          stroke="rgba(243,238,219,0.72)"
+          strokeWidth={Math.max(1, labelFont * 0.06)}
+        />
+        <text
+          x={lx}
+          y={ly}
+          textAnchor="middle"
+          dominantBaseline="central"
+          fontSize={labelFont}
+          fontWeight={800}
+          fontFamily="system-ui, sans-serif"
+          fill={color}
+          stroke={HALO}
+          strokeWidth={labelFont * 0.28}
+          strokeLinejoin="round"
+          style={{ paintOrder: 'stroke' }}
+        >
+          {text}
+        </text>
+      </g>
+    );
+  };
 
   // A little sun: filled disc + eight short rays, with a dark halo so it survives on a bright
   // satellite roof as well as on shadowed bush. Rays start clear of the disc (1.35r) so the glyph
@@ -264,6 +355,7 @@ export default function SectorOverlay({ model, imgW: W, imgH: H, boundary }: Sec
       apex[1] + noon[1] * rowH * 1.15,
       `${word.toUpperCase()} ${Math.round(path.noonAltitudeDeg)}°`,
       SUN,
+      noon,
     ));
   }
   // The lone "sun comes from here" arrow that used to run down the noon axis is gone: it was
@@ -295,7 +387,7 @@ export default function SectorOverlay({ model, imgW: W, imgH: H, boundary }: Sec
     els.push(label('wind-s-lbl', cx + v[0] * (R + arrowLen), cy + v[1] * (R + arrowLen), formatDesignTranslation(t('designSectorSeasonWind'), {
       season: t('designSectorSummer'),
       direction: model.windSummer.fromLabel,
-    }), SUMMER_LBL));
+    }), SUMMER_LBL, v));
   }
   if (model.windWinter) {
     const v = bearingToUnitVector(model.windWinter.bearingDeg);
@@ -303,7 +395,7 @@ export default function SectorOverlay({ model, imgW: W, imgH: H, boundary }: Sec
     els.push(label('wind-w-lbl', cx + v[0] * (R + arrowLen), cy + v[1] * (R + arrowLen), formatDesignTranslation(t('designSectorSeasonWind'), {
       season: t('designSectorWinter'),
       direction: model.windWinter.fromLabel,
-    }), WINTER_LBL));
+    }), WINTER_LBL, v));
   }
 
   // 5. WATER — a downslope arrow through the centre (dashed when the slope is SRTM-indicative).

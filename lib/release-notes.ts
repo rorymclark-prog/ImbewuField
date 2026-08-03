@@ -34,6 +34,20 @@ export interface ReleaseNote {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '3 August',
+    sha: '8fc26cc',
+    changes: [
+      'Vetiver is drawn as a hedge seen from above, not a photo taken from the side',
+      'Map callouts keep one size — a long name drops one step, never five sizes',
+      'Trees wear a thin dark outline instead of a white halo',
+      'Unassigned veg beds show a mixed garden, not seven identical patches',
+      'Staple plots differ from each other — maize, beans and pumpkin rotate',
+      'The swale is back on the water sheet, so the runoff arrows point at something',
+      'The property line no longer draws across tree canopies',
+      'Summer sun is warm and winter sun cool, and the two noon suns no longer overlap',
+    ],
+  },
+  {
     when: '2 August',
     sha: 'a6d035f',
     changes: [

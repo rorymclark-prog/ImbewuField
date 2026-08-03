@@ -3726,6 +3726,24 @@ function drawReferenceMapText(
 const LEADER_MAX_RUN_RATIO = 0.22;
 
 /**
+ * SEASONAL SUN — WARM FOR SUMMER, COOL FOR WINTER.
+ *
+ * The two solstice arcs were near-identical creams (#F7C97E and #F5DFA6), so the only thing
+ * distinguishing them was reading the noon altitude off each label — on the diagram whose entire
+ * job is to make that difference obvious at a glance. Rory: "summer sun part of it including line
+ * and sun is a dark orange? and the winter one make it cooler?".
+ *
+ * The encoding earns its keep: the high summer arc IS the heat you plant shade against, and the
+ * low winter arc IS the light you must not block. Warm/cool reads before any number does.
+ *
+ * The winter blue is deliberately kept clear of the water arrow's blue, so a sun path can never be
+ * mistaken for drainage on a sheet that carries both.
+ */
+const SUN_SUMMER_COLOR = '#E2761B';
+const SUN_WINTER_COLOR = '#8FC0DC';
+
+
+/**
  * A CALLOUT SITS ON ITS OWN PLAQUE.
  *
  * Cream text with a dark outline is a halo, and a halo only works where the ground behind it is
@@ -4540,12 +4558,29 @@ function paintVetiverHedge(
 ): boolean {
   const wM = it.wM ?? def.wM;
   const hM = it.hM ?? def.hM;
-  const wPx = Math.max(1, wM * pxPerM);
-  const hPx = Math.max(1, hM * pxPerM);
+  // THE SAME PRESENTATION STEP EVERY OTHER PLANTING FEATURE GETS. Drawing the hedge before the
+  // artwork block also stepped around plantingFeaturePresentationDimensions, which every bed,
+  // canopy and strip on this sheet passes through — so a vetiver bank came out smaller on the
+  // finished sheet than the identical bank the farmer had just placed on the canvas beside it.
+  // Rory: "look at the width/height of the vetiver here compared to the map i posted earlier on
+  // the final sheet its way to small - i want it true to width just like when i post the element
+  // in designing." The floor only ever enlarges a symbol already too small to measure and never
+  // shrinks one, so this restores agreement without overriding a stated size.
+  const printed = plantingFeaturePresentationDimensions(
+    def.id,
+    Math.max(1, wM * pxPerM),
+    Math.max(1, hM * pxPerM),
+    ctx.canvas.width,
+  );
+  const wPx = printed.width;
+  const hPx = printed.height;
+  // Metres per drawn pixel follow the printed size, so the tuft geometry stays consistent with the
+  // band it is drawn in rather than with the unscaled footprint.
+  const drawnPxPerM = wM > 0 ? wPx / wM : pxPerM;
   // A clump below this is a smudge rather than a plant, so the hedge becomes a legible map symbol
   // instead of a literal one-mark-per-slip drawing. See lib/vetiver-hedge.ts.
   const minClumpPx = Math.max(2.6, ctx.canvas.width * 0.0015);
-  const geometry = vetiverHedgeGeometry(wPx, hPx, wM, hM, pxPerM, minClumpPx, it.id);
+  const geometry = vetiverHedgeGeometry(wPx, hPx, wM, hM, drawnPxPerM, minClumpPx, it.id);
   if (!geometry) return false;
 
   ctx.save();
@@ -6679,7 +6714,7 @@ function drawSectorAnalysis(
     }
     ctx.restore();
   };
-  const drawSunArc = (path: SolarModel['summer'], r: number, color: string) => {
+  const drawSunArc = (path: SolarModel['summer'], r: number, color: string, endCaptions = false) => {
     if (path.sunriseAzDeg == null || path.sunsetAzDeg == null) return null;
     const sweepNorth = path.noonSide !== 'S';
     const startAngle = bearingToCanvasAngle(path.sunriseAzDeg);
@@ -6713,19 +6748,61 @@ function drawSectorAnalysis(
     drawSunIcon(cx + Math.cos(startAngle) * r, cy + Math.sin(startAngle) * r, sunR, color);
     drawSunIcon(cx + apexVec[0] * r, cy + apexVec[1] * r, sunR * 0.82, color);
     drawSunIcon(cx + Math.cos(endAngle) * r, cy + Math.sin(endAngle) * r, sunR, color);
+    // SAY WHICH END IS WHICH. Two suns on the ends of an arc are obvious to anyone who has read a
+    // sun-path diagram before and mean nothing to anyone who has not — and this sheet is printed
+    // for farmers, not for designers. Rory: "maybe put sunrise and sun set under the suns as rural
+    // farmers might not understand".
+    //
+    // Only on ONE arc, and the outer one. Both seasons put a sun at each end on their own rise and
+    // set bearings, so captioning both would put four words on a crowded ring and risk exactly the
+    // symbol overlap this sheet has just been cleared of. The word is the same for either season;
+    // the compass point that differs is already spelled out in each arc's own banner.
+    if (endCaptions) {
+      const capFs = Math.max(13, Math.round(W * 0.0072));
+      ctx.font = `800 ${capFs}px ${REFERENCE_LABEL_FONT}`;
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.lineJoin = 'round';
+      const caption = (ax: number, ay: number, text: string) => {
+        const tx = cx + Math.cos(ax) * r;
+        const ty = cy + Math.sin(ax) * r + sunR * 1.9;
+        ctx.lineWidth = Math.max(3.5, capFs * 0.24);
+        ctx.strokeStyle = 'rgba(8,12,10,0.9)';
+        ctx.strokeText(text, tx, ty);
+        ctx.fillStyle = 'rgba(252,250,240,0.98)';
+        ctx.fillText(text, tx, ty);
+        void ay;
+      };
+      caption(startAngle, 0, 'SUNRISE');
+      caption(endAngle, 0, 'SUNSET');
+    }
     ctx.restore();
     return apexVec;
   };
   const summerR = R + arrowLen * 0.30;
-  const winterR = R + arrowLen * 0.62;
-  const summerApex = drawSunArc(model.solar.summer, summerR, '#F7C97E');
-  const winterApex = drawSunArc(model.solar.winter, winterR, '#F5DFA6');
+  // THE TWO NOON SUNS MUST NOT TOUCH. Both arcs put a sun icon on the same noon bearing, so their
+  // radial gap is the ONLY thing keeping those two icons apart — and at arrowLen * 0.32 it was
+  // smaller than the icons themselves, which fused them into a single snowman with two labels
+  // stacked on it. Rory: "symbol overlap". The gap is now derived from the icon that has to fit
+  // through it rather than from a fraction that happened to look right at one canvas width.
+  const noonIconR = Math.max(14, W * 0.0125) * 0.82;
+  const winterR = Math.max(R + arrowLen * 0.62, summerR + noonIconR * 2.6);
+  // WARM FOR SUMMER, COOL FOR WINTER. Both arcs were near-identical creams, so the only thing
+  // separating the two solstices was reading the altitude off the label — on the diagram whose
+  // entire job is to make that difference obvious at a glance. Rory: "summer sun part of it
+  // including line and sun is a dark orange? and the winter one make it cooler?".
+  //
+  // The encoding is not arbitrary: the high summer arc IS the heat you shade against, and the low
+  // winter arc IS the light you must not block. Colour carries that before a number does. The
+  // winter blue is kept clear of the water arrow's blue so a sun path never reads as drainage.
+  const summerApex = drawSunArc(model.solar.summer, summerR, SUN_SUMMER_COLOR);
+  const winterApex = drawSunArc(model.solar.winter, winterR, SUN_WINTER_COLOR, true);
   if (summerApex) {
     labelAt(
       cx + summerApex[0] * (summerR + rowH * 0.7),
       cy + summerApex[1] * (summerR + rowH * 0.7),
       `SUMMER SUN · ${model.solar.summer.riseLabel16} → ${model.solar.summer.noonSide} → ${model.solar.summer.setLabel16} · noon ${Math.round(model.solar.summer.noonAltitudeDeg)}°`,
-      '#F7C97E',
+      SUN_SUMMER_COLOR,
     );
     drawSectorMarker('summer-sun', cx + summerApex[0] * summerR, cy + summerApex[1] * summerR, '#D89A35');
     // The NOON ALTITUDE belongs on the banner, not only on the apex label the dodger is free to
@@ -6746,7 +6823,7 @@ function drawSectorAnalysis(
       cx + winterApex[0] * (winterR + rowH * 0.7),
       cy + winterApex[1] * (winterR + rowH * 0.7),
       `WINTER SUN · ${model.solar.winter.riseLabel16} → ${model.solar.winter.noonSide} → ${model.solar.winter.setLabel16} · noon ${Math.round(model.solar.winter.noonAltitudeDeg)}°`,
-      '#F5DFA6',
+      SUN_WINTER_COLOR,
     );
     drawSectorMarker('winter-sun', cx + winterApex[0] * winterR, cy + winterApex[1] * winterR, '#C9AA5B');
     directLabelAt(
@@ -7184,7 +7261,7 @@ function drawSectorAnalysis(
   // polar circles (never reachable at a South African latitude, but honoured anyway per the
   // HARD INVARIANT: no legend row for geometry that wasn't drawn).
   if (summerApex) rows.push({ color: '#F7C97E', label: sectorPresentationByKey.get('summer-sun')?.label ?? 'Summer sun', style: 'line', icon: markerIcon('summer-sun'), sectorIcon: 'sun' });
-  if (winterApex) rows.push({ color: '#F5DFA6', label: sectorPresentationByKey.get('winter-sun')?.label ?? 'Winter sun', style: 'line', icon: markerIcon('winter-sun'), sectorIcon: 'sun' });
+  if (winterApex) rows.push({ color: SUN_WINTER_COLOR, label: sectorPresentationByKey.get('winter-sun')?.label ?? 'Winter sun', style: 'line', icon: markerIcon('winter-sun'), sectorIcon: 'sun' });
   if (!externalLegend) {
     rows.push({ color: '#F7C97E', label: `Midday sun (${middayLabel})`, style: 'line', icon: markerIcon('midday-sun'), sectorIcon: 'sun' });
   }

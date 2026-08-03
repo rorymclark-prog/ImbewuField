@@ -46,6 +46,18 @@ jobs:
       - name: Test
         run: npm test
 
+      # THE UPDATE BANNER GOES STALE UNLESS SOMETHING ASKS. scripts/release-notes-pending.mjs was
+      # written on 2 August for exactly this complaint and then wired to nothing, so on 3 August
+      # Rory hit it again: "still old updates on the refresh button please oh please fix". The
+      # banner was telling the truth both times — RELEASE_NOTES simply had not been written since.
+      #
+      # Advisory, not blocking. A work-in-progress push should not fail CI for having no farmer
+      # note yet; the point is that the gap is VISIBLE in the run, in the same place the tests are,
+      # instead of only being found by the person using the app.
+      - name: Pending release notes
+        continue-on-error: true
+        run: npm run notes:pending
+
       # THE RULES TESTS HAVE NEVER RUN IN CI. tests/firestore-rules.test.ts is deliberately outside
       # `npm test` (it needs the Firestore emulator, so it lives in EXTERNAL_TEST_FILES), and no
       # workflow invoked `test:rules` — so a test asserting that a self-signed-up mentor cannot read
