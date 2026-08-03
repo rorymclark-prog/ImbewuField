@@ -115,6 +115,7 @@ import {
   polygonCropRows,
   stableUnit,
   staplePlotGlyphs,
+  staplePlotOrdinalById,
   unnamedBedGlyph,
   type CropGlyph,
   type CropRowLayout,
@@ -3128,14 +3129,10 @@ function drawBlueprintGround(
   if (!rings.length) return;
   // Biggest first — a lawn that wraps a veg patch must not bury the patch.
   const sorted = [...rings].sort((a, b) => ringArea(b.points) - ringArea(a.points));
-  // WHICH PLOT IS PLOT ONE. Numbered off state.zones, not off `sorted`: the farmer's creation
-  // order is stable, whereas area order re-shuffles the crops the moment they nudge a corner and
-  // one plot overtakes another. Counted over every staple plot in the design, not just the ones
-  // this sheet draws, so a plot keeps the same crop on every sheet it appears on.
-  const staplePlotOrdinal = new Map<string, number>();
-  for (const zone of state.zones) {
-    if (zone.feature === 'staple_garden') staplePlotOrdinal.set(zone.id, staplePlotOrdinal.size);
-  }
+  // Counted over every staple plot in the design, not just the ones this sheet draws, so a plot
+  // keeps the same crop on every sheet it appears on. The helper deliberately uses saved creation
+  // order rather than this area's paint order — see its own no-swap rule in crop-row-cartography.
+  const staplePlotOrdinal = staplePlotOrdinalById(state.zones);
   // Hard / bare surfaces read as SURFACE, not vegetation, so they take a hatch instead of a
   // solid wash (Rory: "driveway patio all those types of polygons should get hatching").
   // The driveway is tar: solid and dark, never hatched — hatching a carriageway reads as gravel.
@@ -3219,8 +3216,8 @@ function drawBlueprintGround(
     // He is right, and it is also how the drawing convention works: on a planting plan the pattern
     // inside the outline IS the instruction, because the farmer sets out to the rows he can see.
     // Each plot draws as ONE crop and neighbouring plots draw as different crops — maize, then
-    // beans, then pumpkin, then potatoes — because that is the distinction a reader can actually
-    // make at plan scale. Two earlier versions varied the MIX inside each plot instead, and both
+    // beans, then pumpkin, then an identity-neutral mixed block — because that is the distinction
+    // a reader can actually make at plan scale. Two earlier versions varied the MIX inside each plot instead, and both
     // came out as four patches of identical speckle; see staplePlotGlyph for that history.
     //
     // Rows are drawn only where the plot is big enough on THIS sheet to read as rows — below that
