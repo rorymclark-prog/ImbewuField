@@ -1431,6 +1431,7 @@ async function burnOverlayOnSheetMap(sheetDataUrl: string, overlayDataUrl: strin
   canvas.height = sheet.naturalHeight || sheet.height;
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('Canvas unavailable');
+  useHighQualityScaling(ctx);
   ctx.drawImage(sheet, 0, 0);
   const overlayWidth = overlay.naturalWidth || overlay.width;
   const overlayHeight = overlay.naturalHeight || overlay.height;
@@ -1451,6 +1452,7 @@ async function extendWithLegendPanel(
   canvas.height = H;
   const ctx = canvas.getContext('2d');
   if (!ctx) return { dataUrl: mapDataUrl, width: W, height: H };
+  useHighQualityScaling(ctx);
   const img = await loadImage(mapDataUrl);
   ctx.fillStyle = '#12140F'; // sheet frame / bleed
   ctx.fillRect(0, 0, outW, H);
@@ -3726,6 +3728,36 @@ function drawReferenceMapText(
 const LEADER_MAX_RUN_RATIO = 0.22;
 
 /**
+ * How far a canopy's artwork is drawn past its own footprint, to close the artwork's clear margin.
+ *
+ * Measured off the assets rather than guessed: orchard-canopy-v1 and its siblings are ~450px square
+ * with roughly 6-7% of clear space on each side, so ~1.14 puts the painted foliage on the ring.
+ * The footprint clip means this can only ever fill the gap, never enlarge the tree.
+ */
+const ARTWORK_EDGE_BLEED = 1.14;
+
+/**
+ * Turn on the browser's best resampling for a canvas that is about to scale an image.
+ *
+ * Canvas defaults to a fast, low-quality filter. Exactly ONE place in this file had ever set
+ * `imageSmoothingQuality = 'high'`, while every plan sheet resamples the aerial photograph at least
+ * twice on its way to the page — crop, then composite — and each of those passes at the default
+ * setting is visible softness that no amount of drawing detail can win back. Rory: "the quality of
+ * the image is very poor please increase the quality so things are more crisp".
+ *
+ * This is free: no extra pixels, no extra fetches, just asking for the better filter that is
+ * already there. It does NOT create detail that was never captured — see the note on asset and
+ * imagery resolution, which is the real ceiling.
+ */
+function useHighQualityScaling(ctx: CanvasRenderingContext2D): CanvasRenderingContext2D {
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
+  return ctx;
+}
+
+
+
+/**
  * SEASONAL SUN — WARM FOR SUMMER, COOL FOR WINTER.
  *
  * The two solstice arcs were near-identical creams (#F7C97E and #F5DFA6), so the only thing
@@ -4306,7 +4338,22 @@ function drawPaintedReferenceFeature(
   traceFootprint();
   ctx.clip();
   if (isMatureCanopy) ctx.globalAlpha *= PLANTING_CANOPY_PAINT.artworkAlpha;
-  ctx.drawImage(image, -wPx / 2, -hPx / 2, wPx, hPx);
+  // THE BORDER MUST SNUG THE LEAVES, NOT FLOAT OFF THEM.
+  //
+  // Every one of these PNGs is painted with clear space around the subject, so drawing it at
+  // exactly the footprint left the leaves stopping short of the ring — and the cream backing
+  // filled that gap, which is the pale band Rory saw between the canopy and its outline: "black
+  // border must wrap around the leaves and snug the element, look its offset". Thinning the ring
+  // could never fix that, because the gap is not the ring: it is the artwork's own margin.
+  //
+  // Overdrawing past the footprint pushes the painted subject out to the edge the ring is on. The
+  // clip above is what makes this safe — nothing escapes the saved footprint, so the tree still
+  // occupies exactly the ground the farmer allocated and no spacing claim changes. Only canopies
+  // and beds get it; a tank or a gate is drawn to its own outline and has no margin to close.
+  const bleed = isMatureCanopy ? ARTWORK_EDGE_BLEED : 1;
+  ctx.imageSmoothingEnabled = true;
+  ctx.imageSmoothingQuality = 'high';
+  ctx.drawImage(image, (-wPx / 2) * bleed, (-hPx / 2) * bleed, wPx * bleed, hPx * bleed);
   ctx.restore();
 
   // A mature canopy is spacing evidence, not an opaque sticker: its illustrated fill lets the
@@ -5685,6 +5732,7 @@ async function boundaryPresentationContext(
     cropCanvas.height = Math.max(1, Math.round(imgH * sourcePixelScale));
     const cropCtx = cropCanvas.getContext('2d');
     if (cropCtx) {
+      useHighQualityScaling(cropCtx);
       cropCtx.drawImage(
         source,
         cropX * sourceWidth,

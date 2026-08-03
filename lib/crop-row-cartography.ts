@@ -107,10 +107,26 @@ const UNNAMED_BED_GLYPHS: readonly CropGlyph[] = ['rosette', 'root', 'staked', '
  * repeated (Rory: "maybe you can do maizes on one plot beans on another etc etc" — and, on the
  * pumpkin specifically, "pumpkins").
  */
+/**
+ * EACH PLOT NEEDS A CROP YOU CAN NAME FROM ACROSS THE ROOM.
+ *
+ * The first attempt at this shuffled the same three sisters into four different orders. On paper
+ * that is four different sequences; on the sheet it is four plots of the same speckle, because a
+ * 1-in-4 change of glyph is invisible at plan scale. Rory: "the staple plot issue is still not
+ * sorted" — he asked for "maize on one plot beans on another", and shuffling is not that.
+ *
+ * So each plot now has a clear lead crop at three rows in four, with a companion row through it.
+ * That is what a rotated staple garden looks like from the air: this year's maize block, this
+ * year's bean block, this year's pumpkin ground — each still interplanted, none of them pure.
+ *
+ * The ratio is a DRAWING rhythm, as the header says of every number in this file. It says "this
+ * plot is mostly maize", which is what the farmer chose when they made four separate plots; it
+ * does not state a seed rate, a spacing or a yield, and nothing downstream reads it as one.
+ */
 const STAPLE_ROTATIONS: readonly (readonly CropGlyph[])[] = [
-  ['grain', 'legume', 'grain', 'vine'],
-  ['legume', 'grain', 'vine', 'legume'],
-  ['vine', 'grain', 'legume', 'grain'],
+  ['grain', 'grain', 'legume', 'grain'],
+  ['legume', 'legume', 'grain', 'legume'],
+  ['vine', 'vine', 'grain', 'vine'],
   ['grain', 'vine', 'legume', 'vine'],
 ];
 
