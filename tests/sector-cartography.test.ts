@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
 import { bearingToUnitVector, deriveSectorModel, labelToBearing } from '../lib/sector.ts';
-import { presentSectorCartography, sectorEvidenceSummary, SECTOR_STYLES, sectorFillColor, sectorStrokeWidth } from '../lib/sector-cartography.ts';
+import { presentSectorCartography, seasonalSunArcRadii, sectorEvidenceSummary, SECTOR_STYLES, sectorFillColor, sectorStrokeWidth } from '../lib/sector-cartography.ts';
 import { contourIntervalForFrame } from '../lib/contours.ts';
 import { makeMercatorUnprojector } from '../lib/design-canvas.ts';
 import { fetchSheetContours } from '../lib/sheet-contours.ts';
@@ -29,6 +29,15 @@ test('presents the benchmark palette, line register, and priority order', () => 
   assert.equal(SECTOR_STYLES['summer-cooling-wind'].fillAlpha, 0.14);
   assert.equal(SECTOR_STYLES.driveway.lineStyle, 'solid');
   assert.equal(SECTOR_STYLES.fire.fillAlpha, 0.12);
+});
+
+test('winter sun stays inside summer even when noon-icon clearance changes', () => {
+  // Sheet 02 once used the overlap clearance in the wrong direction, placing winter outside the
+  // summer arc. That makes the lower southern-hemisphere sun read as the longer path.
+  for (const [ring, arrow, icon] of [[120, 30, 9], [240, 75, 18]] as const) {
+    const { summerR, winterR } = seasonalSunArcRadii(ring, arrow, icon);
+    assert.ok(summerR > winterR, `${JSON.stringify({ ring, arrow, icon })} reverses the seasons`);
+  }
 });
 
 test('copies exact bearings and provenance into presentation records', () => {
@@ -434,4 +443,19 @@ test('wires Sector jobs through authoritative houses and protected-pixel restora
     /showcase && \(sheet\.key === 'sector' \|\| sheet\.key === 'base'\)/,
     'the polished Sector page must never be cropped back to the map panel — that erases the paid pass',
   );
+});
+
+test('the shared exact-layer stack puts the boundary below every sheet’s canopies', () => {
+  // Sheet 06 was corrected first, but a Structures-only repair would leave sheet 07 drawing a
+  // fence over context trees. The shared overlay owns this order, before any sheet branch.
+  const source = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
+  const start = source.indexOf('async function buildExactLayerOverlay(');
+  const end = source.indexOf('/** Sheet 01 uses the same measured editorial composition', start);
+  assert.ok(start >= 0 && end > start, 'expected the shared exact-layer overlay');
+  const overlay = source.slice(start, end);
+  const boundary = overlay.indexOf('drawBlueprintBoundary(ctx, refLayers.boundary, px, py, W, state, frame);');
+  const firstSheetBranch = overlay.indexOf("if (filter === 'zones')");
+  assert.ok(boundary >= 0 && boundary < firstSheetBranch, 'boundary must paint before context or content items');
+  const calls = overlay.match(/^\s*drawBlueprintBoundary\(/gm) ?? [];
+  assert.equal(calls.length, 1, 'one shared boundary pass prevents sheet-specific draw-order drift');
 });

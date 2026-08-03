@@ -260,6 +260,21 @@ test('every supported structure symbol executes finite geometry and restores can
   }
 });
 
+test('a gate reads as a fence opening with one swinging leaf, not parallel rails', () => {
+  // The former two-leaf glyph read as a stray ladder/cattle grid on sheet 07. The conventional
+  // plan-view grammar is two stopped fence runs, one hinged leaf and its swing arc.
+  const { ctx, calls } = recordingContext();
+  assert.equal(drawCartographicStructureSymbol(ctx, 'gate', 100, 40, 2), true);
+  const leafAndFenceRuns = calls.filter((call) => call.name === 'lineTo');
+  assert.equal(leafAndFenceRuns.length, 3, 'two fence fragments and one open leaf, never parallel rails');
+  const swing = calls.filter((call) => call.name === 'arc');
+  assert.equal(swing.length, 1, 'the opening direction must be visible as one swing arc');
+  assert.ok(
+    Math.abs(Number(swing[0]?.args[0]) + 28) < 1e-9 && Number(swing[0]?.args[1]) === 0,
+    'the arc must originate at the gate hinge',
+  );
+});
+
 test('invalid structure frames and unknown kinds are no-ops', () => {
   const invalidCases: Array<Partial<{ width: number; height: number; outlineWidth: number }>> = [
     { width: 0 },

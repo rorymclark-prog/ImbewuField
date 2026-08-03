@@ -86,7 +86,7 @@ import { exactModelInputMarks, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, re
 import { EARTHWORKS_ROUTE_STYLE, WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, nearestWaterNeighbourPx, offsetPolyline, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRoutesWithVisualBridges, waterRouteStyleFor, type EarthworksRouteStyle, type WaterLegendSection } from '@/lib/water-cartography';
 import { PLANTING_CANOPY_PAINT, PLANTING_LEGEND_SECTION_ORDER, overstoryCanopyIds, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
 import { STRUCTURES_LEGEND_SECTION_ORDER, structuresFeaturePresentationDimensions, structuresLegendSectionForFeature, structuresRouteVisualFor, type StructuresLegendSection } from '@/lib/structures-cartography';
-import { presentSectorCartography, sectorEvidenceSummary, SECTOR_STYLES, sectorFillColor, sectorStrokeWidth, type SectorLegendIcon, type SectorVisualKind } from '@/lib/sector-cartography';
+import { presentSectorCartography, seasonalSunArcRadii, sectorEvidenceSummary, SECTOR_STYLES, sectorFillColor, sectorStrokeWidth, type SectorLegendIcon, type SectorVisualKind } from '@/lib/sector-cartography';
 import { referenceFeatureArtworkUrl } from '@/lib/reference-feature-art';
 import {
   DEFAULT_SHEET_LABEL_MODE,
@@ -5470,13 +5470,20 @@ function drawSwaleCrossSection(
 ): void {
   if (screenPoints.length < 2) return;
   const smooth = polishedRenderPoints(screenPoints as RenderPoint[]) as Array<[number, number]>;
-  // GROUND SIZE, NOT PIXEL WEIGHT. Drawn from the saved width where the scale is known, so the
-  // band covers the ground it will actually occupy; the pixel width is only the fallback for
-  // callers that cannot supply a scale, and a floor so the swale never vanishes when zoomed out.
-  const groundHalf = pxPerM && pxPerM > 0
-    ? (widthM ?? SWALE_DEFAULT_WIDTH_M) * pxPerM * 0.5
-    : 0;
-  const half = Math.max(style.width * 0.9, groundHalf);
+  // GROUND SIZE, NOT PIXEL WEIGHT. A stated width is a farmer's measurement, so it owns the
+  // printed band outright: the old Math.max below a pixel floor quietly redrew narrow swales
+  // wider than they were saved. Only an UNSTATED width may take the scale-aware presentation
+  // fallback; it is deliberately never printed as a dimension or offered as digging advice.
+  const hasStatedWidth = Number.isFinite(widthM) && (widthM as number) > 0;
+  const statedHalf = hasStatedWidth && pxPerM && pxPerM > 0
+    ? (widthM as number) * pxPerM * 0.5
+    : null;
+  const unstatedHalf = pxPerM && pxPerM > 0
+    ? SWALE_DEFAULT_WIDTH_M * pxPerM * 0.5
+    : style.width * 0.9;
+  // A caller without a map scale cannot convert saved metres to pixels. Its single line is a
+  // visibility fallback only; every exact sheet supplies pxPerM and therefore preserves width.
+  const half = statedHalf ?? Math.max(style.width * 0.9, unstatedHalf);
   // Each half of the band is one LANE. Its stroke is `half` wide, so its centreline sits at
   // half/2 — a stroke centred on the full offset would hang outside the band and leave the
   // middle showing bare casing, which is what made the first attempt read as three flat stripes.
@@ -7455,14 +7462,11 @@ function drawSectorAnalysis(
     ctx.restore();
     return apexVec;
   };
-  const summerR = R + arrowLen * 0.30;
-  // THE TWO NOON SUNS MUST NOT TOUCH. Both arcs put a sun icon on the same noon bearing, so their
-  // radial gap is the ONLY thing keeping those two icons apart — and at arrowLen * 0.32 it was
-  // smaller than the icons themselves, which fused them into a single snowman with two labels
-  // stacked on it. Rory: "symbol overlap". The gap is now derived from the icon that has to fit
-  // through it rather than from a fraction that happened to look right at one canvas width.
+  // THE TWO NOON SUNS MUST NOT TOUCH, but their clearance may never reverse the seasons. Both
+  // arcs put an icon on the same noon bearing, so the radial gap keeps them apart while the shared
+  // layout helper keeps the low winter arc INSIDE the high summer one.
   const noonIconR = Math.max(14, W * 0.0125) * 0.82;
-  const winterR = Math.max(R + arrowLen * 0.62, summerR + noonIconR * 2.6);
+  const { summerR, winterR } = seasonalSunArcRadii(R, arrowLen, noonIconR);
   // WARM FOR SUMMER, COOL FOR WINTER. Both arcs were near-identical creams, so the only thing
   // separating the two solstices was reading the altitude off the label — on the diagram whose
   // entire job is to make that difference obvious at a glance. Rory: "summer sun part of it

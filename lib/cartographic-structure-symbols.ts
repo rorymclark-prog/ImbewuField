@@ -270,18 +270,24 @@ function drawSymbol(ctx: CanvasRenderingContext2D, kind: SymbolKind, w: number, 
       }
       break;
     case 'gate':
-      ellipse(ctx, -w * 0.43, 0, s * 1.2, s * 1.2, wood, dark, s * 0.5);
-      ellipse(ctx, w * 0.43, 0, s * 1.2, s * 1.2, wood, dark, s * 0.5);
-      line(ctx, [[-w * 0.4, 0], [-w * 0.05, -h * 0.38]], '#D5C49D', s * 1.05);
-      line(ctx, [[w * 0.4, 0], [w * 0.05, -h * 0.38]], '#D5C49D', s * 1.05);
+      // Two parallel rails looked like a ladder or cattle grid lying in the field. A plan-view
+      // gate needs three unambiguous parts instead: fence runs that STOP at an opening, a hinge,
+      // and one leaf shown in its open swing. The break is symbolic here; boundary gates also cut
+      // their exact measured opening through drawBlueprintBoundary.
+      const hingeX = -w * 0.28;
+      const latchX = w * 0.28;
+      const leafR = Math.min(w * 0.56, h * 0.86);
+      const openAngle = -Math.PI / 3;
+      line(ctx, [[-w / 2, 0], [hingeX, 0]], '#A8D35F', s * 1.05);
+      line(ctx, [[latchX, 0], [w / 2, 0]], '#A8D35F', s * 1.05);
+      ellipse(ctx, hingeX, 0, s * 1.2, s * 1.2, wood, dark, s * 0.5);
+      ellipse(ctx, latchX, 0, s * 1.2, s * 1.2, wood, dark, s * 0.5);
+      line(ctx, [[hingeX, 0], [hingeX + Math.cos(openAngle) * leafR, Math.sin(openAngle) * leafR]], '#D5C49D', s * 1.2);
       ctx.beginPath();
-      ctx.arc(-w * 0.4, 0, Math.min(w * 0.36, h * 0.4), -Math.PI * 0.8, 0);
+      ctx.arc(hingeX, 0, leafR, openAngle, 0);
       ctx.strokeStyle = 'rgba(213,196,157,0.55)';
       ctx.lineWidth = s * 0.5;
       ctx.setLineDash([s * 1.5, s * 1.5]);
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.arc(w * 0.4, 0, Math.min(w * 0.36, h * 0.4), Math.PI, Math.PI * 1.8);
       ctx.stroke();
       ctx.setLineDash([]);
       break;

@@ -147,6 +147,27 @@ export function presentSectorCartography(model: SectorModel): SectorPresentation
   return result;
 }
 
+/**
+ * The two seasonal paths share one centre, so their radius is part of the message rather than
+ * decoration: the lower, shorter winter path belongs INSIDE the high summer path. Keeping this
+ * calculation here prevents the exact sheet and Studio overlay from quietly teaching opposite
+ * readings of the same solar model.
+ */
+export function seasonalSunArcRadii(
+  ringRadius: number,
+  arrowLength: number,
+  noonIconRadius: number,
+): { summerR: number; winterR: number } {
+  const safeRing = Number.isFinite(ringRadius) && ringRadius > 0 ? ringRadius : 0;
+  const safeArrow = Number.isFinite(arrowLength) && arrowLength > 0 ? arrowLength : 0;
+  const safeIcon = Number.isFinite(noonIconRadius) && noonIconRadius > 0 ? noonIconRadius : 0;
+  const winterR = safeRing + safeArrow * 0.30;
+  // The marker gap is a paint-time clearance only. It must push summer outward, never put the
+  // winter sun outside the path it is meant to describe.
+  const summerR = Math.max(safeRing + safeArrow * 0.62, winterR + safeIcon * 2.6);
+  return { summerR, winterR };
+}
+
 export function sectorStrokeWidth(kind: SectorVisualKind, frameWidthPx: number): number {
   const token = SECTOR_STYLES[kind].width;
   return Math.max(token.minPx, frameWidthPx * token.frameRatio);
