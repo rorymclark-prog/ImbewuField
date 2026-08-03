@@ -41,14 +41,19 @@ import { plantingLegendSectionForFeature } from '@/lib/planting-cartography';
  * 'codes'  — a two-letter mark on EVERY plant, looked up in the legend. Every plant identified;
  *            the map stays quiet enough to read the design through. What a published planting
  *            plan does, and the only mode that can name the third pawpaw.
- * 'names'  — the callout pills: the plant's name in words, one per kind with a count, on a leader.
- *            Readable with no legend lookup at all, but names one plant of each kind and leaves
- *            the rest unmarked. What the sheets did before codes existed.
+ * 'names'  — the plant's name in words, ranged down the label gutter beside the map on a leader.
+ *            Nothing is written on the drawing at all; long names get room. Beds, rows and strips
+ *            are grouped with a count, so a big garden is one row and not thirty.
+ * 'onplant' — the plant's name in words, printed just under the plant itself. Rory: "can we have a
+ *            third one, names just under plant or on tree/plant?" No lookup and no leader to
+ *            follow — the answer is where the question is. It costs the most ink on the drawing and
+ *            it is the mode that runs out of room first, so a name that will not fit beside its own
+ *            plant is dropped rather than shrunk past reading (the legend still lists it).
  *
- * The choice is genuine — neither is right in general, which is why this is a control and not a
+ * The choice is genuine — none is right in general, which is why this is a control and not a
  * constant. Codes lead because they are the mode that answers the complaint that produced them.
  */
-export type SheetLabelMode = 'codes' | 'names';
+export type SheetLabelMode = 'codes' | 'names' | 'onplant';
 
 export const DEFAULT_SHEET_LABEL_MODE: SheetLabelMode = 'codes';
 
@@ -56,6 +61,13 @@ export const DEFAULT_SHEET_LABEL_MODE: SheetLabelMode = 'codes';
  *  farmer's gallery stays addressable under the key it was stored with. */
 export function labelModeCacheSuffix(mode: SheetLabelMode): string {
   return mode === DEFAULT_SHEET_LABEL_MODE ? '' : `:${mode}`;
+}
+
+/** Whether this mode writes the plant's identity ON the drawing. Both marking modes therefore
+ *  withhold those plants from the gutter — one answer per plant is the rule the label control was
+ *  created to enforce, and it has to hold for the third mode too. */
+export function marksPlantsOnMap(mode: SheetLabelMode): boolean {
+  return mode !== 'names';
 }
 
 /**

@@ -82,7 +82,7 @@ import {
 import { leaderLabelFontSize, placeLeaderLabel, stackLeaderRows, leaderPath } from '@/lib/leader-labels';
 import { exactModelInputMarks, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '@/lib/render-policy';
 import { EARTHWORKS_ROUTE_STYLE, WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, nearestWaterNeighbourPx, offsetPolyline, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRoutesWithVisualBridges, waterRouteStyleFor, type EarthworksRouteStyle, type WaterLegendSection } from '@/lib/water-cartography';
-import { PLANTING_CANOPY_PAINT, PLANTING_LEGEND_SECTION_ORDER, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
+import { PLANTING_CANOPY_PAINT, PLANTING_LEGEND_SECTION_ORDER, overstoryCanopyIds, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
 import { STRUCTURES_LEGEND_SECTION_ORDER, structuresFeaturePresentationDimensions, structuresLegendSectionForFeature, structuresRouteVisualFor, type StructuresLegendSection } from '@/lib/structures-cartography';
 import { presentSectorCartography, sectorEvidenceSummary, SECTOR_STYLES, sectorFillColor, sectorStrokeWidth, type SectorLegendIcon, type SectorVisualKind } from '@/lib/sector-cartography';
 import { referenceFeatureArtworkUrl } from '@/lib/reference-feature-art';
@@ -90,6 +90,7 @@ import {
   DEFAULT_SHEET_LABEL_MODE,
   codedLegendText,
   labelModeCacheSuffix,
+  marksPlantsOnMap,
   plantCodesForSheet,
   type SheetLabelMode,
 } from '@/lib/plant-codes';
@@ -583,13 +584,15 @@ const UNDERLAY_HINT: Readonly<Record<SheetUnderlay, string>> = {
 /** Farmer-facing names for the plant-label control. */
 const LABEL_MODE_LABEL: Readonly<Record<SheetLabelMode, string>> = {
   codes: 'Codes',
-  names: 'Names',
+  names: 'Beside',
+  onplant: 'On plant',
 };
 
 /** The trade-off each mode makes, in one line — this is a genuine choice, so say what it costs. */
 const LABEL_MODE_HINT: Readonly<Record<SheetLabelMode, string>> = {
   codes: 'every plant marked · look the code up in the legend',
-  names: 'names written on the map · one plant of each kind',
+  names: 'full names in the margin · nothing written on the drawing',
+  onplant: 'full name under each plant · no lookup, most ink on the map',
 };
 
 export interface CompositeMarkOptions {
@@ -4106,7 +4109,9 @@ function sheetGutterLayout(
   filter: GlossyLayerFilter,
   labelMode: SheetLabelMode,
 ): GutterLayout {
-  const coded = labelMode === 'codes'
+  // Both marking modes put the plant's identity on the drawing, so neither may also spend a gutter
+  // row on it — one answer per plant.
+  const coded = marksPlantsOnMap(labelMode)
     ? new Set(plantCodesForSheet(exactSheetElementLegendGroups(state, filter).map((g) => g.defId)).keys())
     : new Set<string>();
   const rows: GutterRow[] = [
@@ -4536,6 +4541,8 @@ function drawPaintedReferenceFeature(
   wPx: number,
   hPx: number,
   outline: number,
+  /** True when something smaller is planted inside this canopy — see overstoryCanopyIds. */
+  isOverstory = false,
 ): boolean {
   const url = referenceFeatureArtworkUrl(def.id);
   const image = url ? referenceFeatureArtworkCache.get(url) : undefined;
@@ -4657,7 +4664,16 @@ function drawPaintedReferenceFeature(
   ctx.lineWidth = isMatureCanopy
     ? Math.max(1, outline * PLANTING_CANOPY_PAINT.edgeWidthScale)
     : Math.max(0.7, outline * 0.5);
+  // A DASHED EDGE MEANS "THIS IS ABOVE WHAT YOU CAN SEE INSIDE IT" — the same mark a floor plan
+  // uses for a roof overhang, and the answer to "how do we show them underneath?". The understory
+  // still draws solid and on top, because a plan that hides plants under a canopy fails at its only
+  // job; the dash is what stops the small tree reading as sitting ON the big one's leaves.
+  if (isOverstory && isMatureCanopy) {
+    const dash = Math.max(4, Math.min(wPx, hPx) * 0.055);
+    ctx.setLineDash([dash, dash * 0.72]);
+  }
   ctx.stroke();
+  ctx.setLineDash([]);
   ctx.restore();
   return true;
 }
@@ -5001,6 +5017,8 @@ function drawTrueFootprint(
   pxPerM: number,
   emphasizeSmallFeatures = true,
   nearestNeighbourPx?: number,
+  /** Ids of canopies with something smaller planted inside them — see overstoryCanopyIds. */
+  overstory?: ReadonlySet<string>,
 ): void {
   const waterArtwork = def.category === 'water' || [
     'banana_circle', 'tree_basin', 'greywater_basin', 'infiltration_basin',
@@ -5054,6 +5072,7 @@ function drawTrueFootprint(
       printed.width * assetInset,
       printed.height * assetInset,
       outline,
+      overstory?.has(it.id) ?? false,
     )) return;
   }
   if (waterArtwork) {
@@ -5655,6 +5674,22 @@ function drawFilteredItems(
     cx: px(it.x),
     cy: py(it.y),
   }));
+  // Which canopies have something planted UNDER them. Measured off the printed footprint, not the
+  // saved metres, because the question is about the drawing: does another plant's centre fall
+  // inside this one's disc as it will appear on the sheet. See overstoryCanopyIds.
+  const overstory = overstoryCanopyIds(items.map((it) => {
+    const def = ELEMENTS_BY_ID[it.defId];
+    if (!def) return { id: it.id, cx: px(it.x), cy: py(it.y), rPx: 0 };
+    const naturalW = Math.max(1, (it.wM ?? def.wM) * pxPerM);
+    const naturalH = Math.max(1, (it.hM ?? def.hM) * pxPerM);
+    const printed = plantingFeaturePresentationDimensions(def.id, naturalW, naturalH, ctx.canvas.width);
+    return {
+      id: it.id,
+      cx: px(it.x),
+      cy: py(it.y),
+      rPx: def.shape === 'circle' ? Math.min(printed.width, printed.height) / 2 : 0,
+    };
+  }));
   for (let index = 0; index < items.length; index++) {
     const it = items[index];
     const def = ELEMENTS_BY_ID[it.defId];
@@ -5671,6 +5706,7 @@ function drawFilteredItems(
       pxPerM,
       true,
       nearestWaterNeighbourPx(neighbourInputs, index),
+      overstory,
     );
   }
 }
@@ -5690,23 +5726,41 @@ function drawFilteredItems(
  * families, so a code there would be a mark with nothing to look it up in — which is the "nothing
  * drawn without a legend row" invariant, read in the other direction.
  */
-function drawPlantCodes(
+/**
+ * The plant's own identity, written ON the drawing — a two-letter code, or its full name.
+ *
+ * ONE FUNCTION FOR BOTH because they are the same decision made at two lengths: is this plant big
+ * enough on the page to carry its own identity, and where does the mark sit so it belongs to that
+ * plant and no other. Splitting them produced two answers to those questions within a week.
+ *
+ * 'codes'   sits just above the plant's centre — a two-letter chip fits on almost anything.
+ * 'onplant' sits just UNDER the plant's footprint, because a full name rarely fits on top of one
+ *           without covering the artwork the farmer is trying to read. Rory: "names just under
+ *           plant or on tree/plant".
+ */
+function drawPlantMarks(
   ctx: CanvasRenderingContext2D,
   state: DesignCanvasState,
   filter: GlossyLayerFilter,
   px: (n: number) => number,
   py: (n: number) => number,
   pxPerM: number,
+  mode: SheetLabelMode,
 ): void {
   if (sheetElementNaming(filter) !== 'individual') return;
+  if (!marksPlantsOnMap(mode)) return;
   // THE LEGEND ASSIGNS THE CODES, NOT THE MAP. Both sides call plantCodesForSheet with the SAME
   // input — this sheet's legend groups — so the two cannot drift apart. Deriving map codes from the
   // drawn items instead would work today and break the first time a farmer adds a plant the catalog
   // does not know, because an unknown plant's code is derived and therefore depends on what else is
   // in the set. A code that does not appear in the legend is a mark with no key.
+  //
+  // In 'onplant' the set still decides WHICH plants are marked, for the same reason: a plant with
+  // no legend row of its own is one the sheet has grouped, and writing its species on the map would
+  // contradict the key.
   const codes = plantCodesForSheet(exactSheetElementLegendGroups(state, filter).map((g) => g.defId));
   if (!codes.size) return;
-  // The same stack the footprints were drawn from, so a code cannot appear on a plant this sheet
+  // The same stack the footprints were drawn from, so a mark cannot appear on a plant this sheet
   // did not draw.
   const drawable = byCartographicStack(state, filter).filter((it) => codes.has(it.defId));
   if (!drawable.length) return;
@@ -5715,39 +5769,74 @@ function drawPlantCodes(
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.lineJoin = 'round';
+  // Placed chips, so a name can refuse to land on one already written. Names are long and plants
+  // are close together; without this the dense corner of a sheet becomes a pile of overlapping
+  // words, which is less readable than the honest absence of a few. Nothing is lost — the legend is
+  // the inventory, and a dropped name is a name the legend still carries.
+  const placed: Array<{ x0: number; y0: number; x1: number; y1: number }> = [];
+  const clashes = (x0: number, y0: number, x1: number, y1: number) =>
+    placed.some((r) => x0 < r.x1 && x1 > r.x0 && y0 < r.y1 && y1 > r.y0);
+
   for (const it of drawable) {
     const def = ELEMENTS_BY_ID[it.defId];
-    const code = codes.get(def.id);
-    if (!code) continue;
+    const text = mode === 'onplant' ? (it.label ?? def.name) : codes.get(def.id);
+    if (!text) continue;
     const naturalW = Math.max(1, (it.wM ?? def.wM) * pxPerM);
     const naturalH = Math.max(1, (it.hM ?? def.hM) * pxPerM);
     const printed = plantingFeaturePresentationDimensions(def.id, naturalW, naturalH, ctx.canvas.width);
     const shortSide = Math.min(printed.width, printed.height);
-    // A chip wider than the plant it sits on stops being a mark ON the plant and becomes a mark
-    // NEAR several of them. Below the floor the plant keeps its grouped callout and no code — an
-    // unreadable two letters is a worse answer than the honest absence of one.
+    // A mark wider than the plant it belongs to stops being a mark ON that plant and becomes a mark
+    // NEAR several of them. Below the floor the plant keeps its legend row and no mark — an
+    // unreadable label is a worse answer than the honest absence of one.
     if (shortSide < 22) continue;
-    const fs = Math.max(9, Math.min(shortSide * 0.3, ctx.canvas.width * 0.0115));
+
+    // TWO SIZES, AND ONLY TWO. Rory: "you can have 2 size fonts again to accommodate name length."
+    // A free shrink-to-fit is what produced three different callout sizes on one sheet and it is
+    // still the wrong answer; one deliberate smaller step for the long names is not. The chip is
+    // measured at each size in turn and takes the first that fits.
+    const baseFs = mode === 'onplant'
+      ? Math.max(11, Math.min(shortSide * 0.34, ctx.canvas.width * 0.0125))
+      : Math.max(9, Math.min(shortSide * 0.3, ctx.canvas.width * 0.0115));
+    // A name may run wider than its own plant — it sits below the footprint, not on it — but not so
+    // far that it reaches the next one. A code must stay within its plant.
+    const widthBudget = mode === 'onplant' ? printed.width * 1.9 : printed.width * 0.92;
+    const sizes = mode === 'onplant' ? [baseFs, baseFs * 0.76] : [baseFs];
+
+    let fs = 0;
+    let chipW = 0;
+    for (const candidate of sizes) {
+      ctx.font = `800 ${candidate}px ${REFERENCE_LABEL_FONT}`;
+      const w = ctx.measureText(text).width + candidate * 0.84;
+      if (w <= widthBudget || candidate === sizes[sizes.length - 1]) {
+        fs = candidate;
+        chipW = w;
+        if (w <= widthBudget) break;
+      }
+    }
+    if (!fs || chipW > widthBudget) continue;
+
     ctx.font = `800 ${fs}px ${REFERENCE_LABEL_FONT}`;
-    const textW = ctx.measureText(code).width;
-    const padX = fs * 0.42;
-    const chipW = textW + padX * 2;
     const chipH = fs * 1.5;
-    if (chipW > printed.width * 0.92) continue;
     const cx = px(it.x);
-    // Lifted slightly off centre so the leader's own terminus dot stays visible under it. The chip
-    // is still unambiguously on its own plant; the pill collision is handled by draw ORDER, above.
-    const cy = py(it.y) - printed.height * 0.18;
-    // The same dark plaque the map callouts and sector marks wear. A code has to survive landing on
+    // 'codes' lifts slightly off centre so the leader's own terminus dot stays visible under it.
+    // 'onplant' clears the footprint entirely, so the name never covers the plant it names.
+    const cy = mode === 'onplant'
+      ? py(it.y) + printed.height * 0.5 + chipH * 0.62
+      : py(it.y) - printed.height * 0.18;
+    const box = { x0: cx - chipW / 2, y0: cy - chipH / 2, x1: cx + chipW / 2, y1: cy + chipH / 2 };
+    if (mode === 'onplant' && clashes(box.x0, box.y0, box.x1, box.y1)) continue;
+    placed.push(box);
+
+    // The same dark plaque the map callouts and sector marks wear. A mark has to survive landing on
     // dark foliage, on cream mulch and on plain paper, and only an opaque plate does all three.
-    roundRectPath(ctx, cx - chipW / 2, cy - chipH / 2, chipW, chipH, chipH * 0.34);
+    roundRectPath(ctx, box.x0, box.y0, chipW, chipH, chipH * 0.34);
     ctx.fillStyle = 'rgba(24,32,26,0.9)';
     ctx.fill();
     ctx.strokeStyle = 'rgba(243,238,219,0.72)';
     ctx.lineWidth = Math.max(0.8, fs * 0.07);
     ctx.stroke();
     ctx.fillStyle = '#F6F1E2';
-    ctx.fillText(code, cx, cy + fs * 0.04);
+    ctx.fillText(text, cx, cy + fs * 0.04);
   }
   ctx.restore();
 }
@@ -6280,9 +6369,7 @@ async function buildReferenceBlueprintMap(
   // Codes before the gutter, not after. They used to be drawn last because the on-map pills covered
   // them; with the callouts moved into a reserved band there is nothing left to hide behind, and
   // the band must be free to cover anything that strays into it.
-  if (labelMode === 'codes') {
-    drawPlantCodes(ctx, renderState, filter, px, py, W / (renderFrame.imgW * renderFrame.mPerPx));
-  }
+  drawPlantMarks(ctx, renderState, filter, px, py, W / (renderFrame.imgW * renderFrame.mPerPx), labelMode);
   // CALLOUTS ARE NOT DRAWN HERE ANY MORE. They live in the sheet's label gutters, which only exist
   // once composeStyleSheet has widened the map into a sheet — see drawLabelGutter. What is computed
   // here is only the LAYOUT, because this is where the presentation-space state and refLayers are
@@ -6303,6 +6390,29 @@ async function buildReferenceBlueprintMap(
   const waterBudget = filter === 'water'
     ? roofHarvestFooterLines(renderState, renderFrame, renderRefLayers, site ?? null)
     : [];
+
+  // NOTHING IS DRAWN WITHOUT A ROW. A dashed canopy edge is meaningless to a reader who has not
+  // been told what it means, so the row appears only when at least one canopy has actually earned
+  // the dash — recomputed here from the same printed geometry drawFilteredItems uses.
+  const canopiesAbove = (filter === 'planting' || filter === 'all')
+    ? overstoryCanopyIds(byCartographicStack(renderState, filter).map((it) => {
+      const def = ELEMENTS_BY_ID[it.defId];
+      if (!def) return { id: it.id, cx: px(it.x), cy: py(it.y), rPx: 0 };
+      const scale = W / (renderFrame.imgW * renderFrame.mPerPx);
+      const printed = plantingFeaturePresentationDimensions(
+        def.id,
+        Math.max(1, (it.wM ?? def.wM) * scale),
+        Math.max(1, (it.hM ?? def.hM) * scale),
+        W,
+      );
+      return {
+        id: it.id,
+        cx: px(it.x),
+        cy: py(it.y),
+        rPx: def.shape === 'circle' ? Math.min(printed.width, printed.height) / 2 : 0,
+      };
+    })).size
+    : 0;
 
   return composeStyleSheet(
     canvas.toDataURL('image/png'),
@@ -6326,6 +6436,15 @@ async function buildReferenceBlueprintMap(
       // NOTHING IS DRAWN WITHOUT A ROW, and the converse: the row exists only when the arrows do.
       // The flow field is computed from site elevation, which sheetLegendRows never sees, so it
       // could not derive this one — hence extraLegendRows rather than a special case in there.
+      ...(canopiesAbove
+        ? {
+          extraLegendRows: [{
+            swatch: PLANTING_CANOPY_PAINT.edgeColor,
+            visual: 'canopy-above' as const,
+            text: 'Dashed canopy — tree above; planting shown beneath it',
+          }],
+        }
+        : {}),
       ...(flowArrows.length
         ? {
           extraLegendRows: [{
@@ -8604,7 +8723,7 @@ interface StyleLegendRow {
   /** A swatch that must be drawn as a specific symbol rather than derived from `swatch`/`defId`.
    *  Named `visual`, not `lineVisual`, because it is no longer only for lines: sheet 05 paints its
    *  areas with a soil treatment that no generic footprint painter reproduces. */
-  visual?: 'earthworks-swale' | 'earthworks-soil' | 'flow-arrow';
+  visual?: 'earthworks-swale' | 'earthworks-soil' | 'flow-arrow' | 'canopy-above';
   kind?: 'zone' | 'ground' | 'surface';
   section?: WaterLegendSection | PlantingLegendSection | StructuresLegendSection
     | 'SITE EDGE' | 'WATER' | 'PLANTING' | 'INFRASTRUCTURE';
@@ -8725,7 +8844,7 @@ export function sheetLegendRows(
     const rightOrder = right.section ? sectionOrder.indexOf(right.section) : Number.MAX_SAFE_INTEGER;
     return leftOrder - rightOrder || left.name.localeCompare(right.name);
   });
-  // The key the map codes are looked up in — same function, same input as drawPlantCodes, so a code
+  // The key the map codes are looked up in — same function, same input as drawPlantMarks, so a code
   // on a canopy and the row that explains it can never disagree. See lib/plant-codes.ts. Empty in
   // 'names' mode, where the map carries no codes for this to be a key to.
   const legendPlantCodes = labelMode === 'codes'
@@ -8877,6 +8996,28 @@ function drawStyleLegendSymbol(
       ctx.moveTo(cx + r * 1.55, y - r * 0.9); ctx.lineTo(cx - r * 1.55, y + r * 0.9);
       ctx.stroke();
     }
+    ctx.restore();
+    return;
+  }
+
+  if (row.visual === 'canopy-above') {
+    // The mark it explains: a dashed ring with something solid inside it. Nothing is drawn on these
+    // sheets without a legend row to explain it, and a dashed canopy edge is meaningless to a reader
+    // who has not been told it means "tree above".
+    const r = Math.min(w, h) * 0.42;
+    const cx = x + w / 2;
+    ctx.save();
+    ctx.strokeStyle = row.swatch;
+    ctx.lineWidth = Math.max(1.4, h * 0.05);
+    ctx.setLineDash([Math.max(3, r * 0.34), Math.max(2, r * 0.24)]);
+    ctx.beginPath();
+    ctx.arc(cx, y, r, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.fillStyle = row.swatch;
+    ctx.beginPath();
+    ctx.arc(cx, y, r * 0.34, 0, Math.PI * 2);
+    ctx.fill();
     ctx.restore();
     return;
   }
@@ -13092,7 +13233,7 @@ export default function DesignGlossy({
             <span style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55 }}>
               Plant labels
             </span>
-            {(['codes', 'names'] as const).map((key) => {
+            {(['codes', 'names', 'onplant'] as const).map((key) => {
               const active = labelMode === key;
               return (
                 <button
