@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert';
+import { readFileSync } from 'node:fs';
 import { geminiEdit, GEMINI_IMAGE_MODELS } from '../functions/src/gemini.ts';
 
 test('geminiEdit sends the correct shape and strict prompt', async (t) => {
@@ -60,8 +61,23 @@ test('geminiEdit sends the correct shape and strict prompt', async (t) => {
     assert.equal(parts[1].inlineData.mimeType, 'image/png');
     assert.equal(parts[1].inlineData.data, 'image_data');
 
-    // Modalities verification
-    assert.deepEqual(body.generationConfig.responseModalities, ['IMAGE']);
+    // MODALITIES — pinned to the route that actually works, not to a literal.
+    //
+    // This assertion used to read `['IMAGE']`, which is just the code restated: it would have gone
+    // on passing however wrong the value was. The worker's Gemini branch has never run in
+    // production, so nothing about it is known-good; app/api/ai-render/route.ts, by contrast, has
+    // returned real images against this key. Where the two disagreed, the proven one wins — and a
+    // rejected modality config fails indistinguishably from a bad key, so this must not drift again.
+    const routeSrc = readFileSync(new URL('../app/api/ai-render/route.ts', import.meta.url), 'utf8');
+    const routeModalities = routeSrc.match(/responseModalities:\s*\[([^\]]+)\]/)?.[1]
+      ?.split(',').map((s) => s.trim().replace(/^['"]|['"]$/g, ''));
+    assert.ok(routeModalities?.length, 'could not read the working route\'s responseModalities');
+    assert.deepEqual(
+      body.generationConfig.responseModalities,
+      routeModalities,
+      'the worker must ask for the same modalities as the route that is known to return images',
+    );
+    assert.ok(body.generationConfig.responseModalities.includes('image'));
 
   } finally {
     global.fetch = originalFetch;

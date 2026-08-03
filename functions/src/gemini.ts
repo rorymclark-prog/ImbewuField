@@ -54,7 +54,13 @@ export async function geminiEdit(
           ]
         }],
         generationConfig: {
-          responseModalities: ["IMAGE"]
+          // MATCHES app/api/ai-render/route.ts EXACTLY, and that is the whole point. This worker's
+          // branch has never run in production, so nothing here is known to work; that route's
+          // shape has actually returned images against this same key. Where the two differed, the
+          // proven one wins — this asked for ["IMAGE"] alone, which may or may not be accepted,
+          // and a rejected modality config fails indistinguishably from a bad key. The parser
+          // below picks the image part out with .find(), so the extra text part costs nothing.
+          responseModalities: ['image', 'text']
         }
       }),
       signal: ctrl.signal,
@@ -89,7 +95,19 @@ export async function geminiEdit(
   const imagePart = parts?.find((p: any) => p.inlineData && p.inlineData.mimeType.startsWith('image/'));
   
   if (!imagePart?.inlineData?.data) {
-    throw new Error('Gemini returned no image');
+    // SAY WHY. A 200 with no image is the model declining, or a safety block, or a modality config
+    // it did not honour — three very different problems that all look identical as "no image", and
+    // this branch has never run in production, so its first real failure is the one that has to be
+    // readable. The reason is right there in the response; carry it.
+    const reason = data?.candidates?.[0]?.finishReason;
+    const said = parts?.filter((p: any) => typeof p?.text === 'string').map((p: any) => p.text).join(' ').trim();
+    const blocked = data?.promptFeedback?.blockReason;
+    const why = [
+      blocked ? `blocked: ${blocked}` : '',
+      reason ? `finishReason: ${reason}` : '',
+      said ? `model said: ${said.slice(0, 300)}` : '',
+    ].filter(Boolean).join(' | ');
+    throw new Error(`Gemini returned no image${why ? ` (${why})` : ' (no reason given)'}`);
   }
   return imagePart.inlineData.data;
 }
