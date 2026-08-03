@@ -90,7 +90,7 @@ import {
   legendRowFontSize,
 } from '@/lib/sheet-legend-layout';
 import { SHEET_BASE_MUTE_STYLE, SHEET_STRUCTURE_MUTE_STYLE, type SheetBaseMute } from '@/lib/sheet-base-mute';
-import { canChooseUnderlay, frameForUnderlay, underlayCacheSuffix, type SheetUnderlay } from '@/lib/sheet-underlay';
+import { frameForUnderlay, sheetUnderlayOptions, underlayCacheSuffix, type SheetUnderlay } from '@/lib/sheet-underlay';
 import { overlandFlowArrows, overlandFlowLegendText, type FlowArrow } from '@/lib/overland-flow';
 import {
   bedCropRows,
@@ -551,6 +551,20 @@ export function authoritativeHouseFootprints(
 }
 
 export const SCALE = 2;
+
+/** Farmer-facing names for the underlay control. Short enough to sit on a pill on a phone. */
+const UNDERLAY_LABEL: Readonly<Record<SheetUnderlay, string>> = {
+  photo: 'Your photo',
+  satellite: 'Satellite',
+  plain: 'Plain paper',
+};
+
+/** One line saying what each underlay is FOR — the reason to pick it, not what it looks like. */
+const UNDERLAY_HINT: Readonly<Record<SheetUnderlay, string>> = {
+  photo: 'sharper · current',
+  satellite: 'shows the surrounding land',
+  plain: 'no photo — the crispest sheet to print',
+};
 
 export interface CompositeMarkOptions {
   showToolGlyphs?: boolean;
@@ -3073,6 +3087,14 @@ function drawBlueprintGround(
   if (!rings.length) return;
   // Biggest first — a lawn that wraps a veg patch must not bury the patch.
   const sorted = [...rings].sort((a, b) => ringArea(b.points) - ringArea(a.points));
+  // WHICH PLOT IS PLOT ONE. Numbered off state.zones, not off `sorted`: the farmer's creation
+  // order is stable, whereas area order re-shuffles the crops the moment they nudge a corner and
+  // one plot overtakes another. Counted over every staple plot in the design, not just the ones
+  // this sheet draws, so a plot keeps the same crop on every sheet it appears on.
+  const staplePlotOrdinal = new Map<string, number>();
+  for (const zone of state.zones) {
+    if (zone.feature === 'staple_garden') staplePlotOrdinal.set(zone.id, staplePlotOrdinal.size);
+  }
   // Hard / bare surfaces read as SURFACE, not vegetation, so they take a hatch instead of a
   // solid wash (Rory: "driveway patio all those types of polygons should get hatching").
   // The driveway is tar: solid and dark, never hatched — hatching a carriageway reads as gravel.
@@ -3155,9 +3177,10 @@ function drawBlueprintGround(
     //
     // He is right, and it is also how the drawing convention works: on a planting plan the pattern
     // inside the outline IS the instruction, because the farmer sets out to the rows he can see.
-    // Maize with beans through it and pumpkin on the ground is the traditional southern-African
-    // intercrop this feature was added to model in the first place (see GroundFeatureKind's own
-    // note), so the rows cycle through those three silhouettes.
+    // Each plot draws as ONE crop and neighbouring plots draw as different crops — maize, then
+    // beans, then pumpkin, then potatoes — because that is the distinction a reader can actually
+    // make at plan scale. Two earlier versions varied the MIX inside each plot instead, and both
+    // came out as four patches of identical speckle; see staplePlotGlyph for that history.
     //
     // Rows are drawn only where the plot is big enough on THIS sheet to read as rows — below that
     // the plain wash above is left alone, because a field of illegible dots is worse than an
@@ -3166,8 +3189,9 @@ function drawBlueprintGround(
     if (z.feature === 'staple_garden' && isContent) {
       const ring = z.points.map(([x, y]) => [px(x), py(y)] as [number, number]);
       const rowGap = Math.max(11, W * 0.011);
-      // Rotated per plot, so four staple plots read as four plots rather than one texture repeated.
-      const layout = polygonCropRows(ring, staplePlotGlyphs(z.id), z.id, rowGap);
+      // One crop per plot, so four staple plots read as four crops rather than one texture
+      // repeated — see staplePlotGlyph for why mixing inside each plot never survived plan scale.
+      const layout = polygonCropRows(ring, staplePlotGlyphs(staplePlotOrdinal.get(z.id) ?? 0), z.id, rowGap);
       if (layout.plants.length) {
         ctx.save();
         blueprintRing(ctx, z.points, px, py);
@@ -4327,10 +4351,45 @@ function drawPaintedReferenceFeature(
     ctx.lineWidth = Math.max(1.6, outline * 1.5);
     ctx.lineJoin = 'round';
     ctx.stroke();
+    // THE BACKING IS THE BASIN THE TREE STANDS IN — see PLANTING_CANOPY_PAINT's note. A flat cream
+    // disc only ever looked right under a dense crown; under an open-crowned pawpaw or moringa the
+    // gaps the artwork is painted with showed white, and the tree read as leaves on a coin.
     traceFootprint();
-    ctx.fillStyle = PLANTING_CANOPY_PAINT.baseColor;
+    const soilR = Math.max(1, Math.min(wPx, hPx) / 2);
+    const soil = ctx.createRadialGradient(0, 0, soilR * 0.06, 0, 0, soilR);
+    soil.addColorStop(0, PLANTING_CANOPY_PAINT.basinCoreColor);
+    soil.addColorStop(0.62, PLANTING_CANOPY_PAINT.basinSoilColor);
+    soil.addColorStop(1, PLANTING_CANOPY_PAINT.basinRimColor);
+    ctx.fillStyle = soil;
     ctx.globalAlpha = inheritedAlpha * PLANTING_CANOPY_PAINT.baseAlpha;
     ctx.fill();
+    // Mulch, so the soil is ground rather than an airbrushed disc. Clipped to the footprint and
+    // seeded off the item's own id: the same tree stipples identically on every render, and two
+    // trees side by side do not stamp as copies of each other.
+    if (soilR > 9) {
+      ctx.save();
+      traceFootprint();
+      ctx.clip();
+      ctx.globalAlpha = inheritedAlpha * PLANTING_CANOPY_PAINT.mulchAlpha;
+      ctx.strokeStyle = PLANTING_CANOPY_PAINT.basinCoreColor;
+      ctx.lineCap = 'round';
+      ctx.lineWidth = Math.max(0.7, soilR * 0.035);
+      ctx.beginPath();
+      const flecks = Math.min(46, Math.max(12, Math.round(soilR * 0.5)));
+      for (let i = 0; i < flecks; i++) {
+        const angle = stableCartographicUnit(it.id, i * 3) * Math.PI * 2;
+        // sqrt spreads the flecks evenly over the AREA instead of crowding them at the centre.
+        const dist = Math.sqrt(stableCartographicUnit(it.id, i * 3 + 1)) * soilR * 0.93;
+        const lie = stableCartographicUnit(it.id, i * 3 + 2) * Math.PI;
+        const len = soilR * 0.1;
+        const fx = Math.cos(angle) * dist;
+        const fy = Math.sin(angle) * dist;
+        ctx.moveTo(fx - Math.cos(lie) * len, fy - Math.sin(lie) * len);
+        ctx.lineTo(fx + Math.cos(lie) * len, fy + Math.sin(lie) * len);
+      }
+      ctx.stroke();
+      ctx.restore();
+    }
     ctx.globalAlpha = inheritedAlpha;
   }
 
@@ -8853,7 +8912,14 @@ async function composeStyleSheet(
   // Esri's imagery must be credited wherever it is shown — a licence term, not a courtesy — so the
   // exact-plan footer grows a fourth line for it. basemapAttribution() is '' on Mapbox, so this
   // reserves no extra space and changes nothing until NEXT_PUBLIC_ARCGIS_API_KEY is actually set.
-  const attributionLine = basemapAttribution();
+  //
+  // "WHEREVER IT IS SHOWN" CUTS BOTH WAYS. On the 'plain' underlay there is no photograph on the
+  // sheet at all (lib/sheet-underlay.ts), and a credit for imagery that is not there is a false
+  // statement about the drawing's sources — the opposite failure to an uncredited one, and on a
+  // plan a farmer may hand to a funder it is the more embarrassing of the two. The absence of
+  // satDataUrl is the same condition drawBlueprintBase uses to lay paper instead of a photo, so the
+  // credit and the picture can never disagree.
+  const attributionLine = frame.satDataUrl ? basemapAttribution() : '';
   const footerBlockH = customFooterLines.length
     ? customFooterLines.length * footerLineH
       + footerHeadingH
@@ -9788,11 +9854,12 @@ export default function DesignGlossy({
    * question, then drifting).
    *
    * A drone photo is sharper and current; the satellite is what the neighbours, the roads and the
-   * surrounding land are on, and it is what a reader outside the farm recognises. Neither is
-   * correct in general, which is why it is a control and not a constant.
+   * surrounding land are on, and it is what a reader outside the farm recognises; plain paper is
+   * the drawing on its own, at full sheet resolution with nothing soft behind it. None is correct
+   * in general, which is why it is a control and not a constant.
    */
   const [underlay, setUnderlay] = useState<SheetUnderlay>('photo');
-  const hasOwnPhoto = canChooseUnderlay(frameProp);
+  const underlayOptions = useMemo(() => sheetUnderlayOptions(frameProp), [frameProp]);
   const frame = useMemo(() => frameForUnderlay(frameProp, underlay), [frameProp, underlay]);
   const [loading, setLoading] = useState<'gemini' | 'falgpt' | 'exact' | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -12581,37 +12648,32 @@ export default function DesignGlossy({
             );
           })}
         </div>
-        {/* WHICH PICTURE THE SHEETS SIT ON — shown only where there is genuinely a choice, i.e. the
-            farmer has supplied their own aerial and the satellite is still held beside it. On every
-            other site this control would be a switch with one position. */}
-        {hasOwnPhoto && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', marginTop: 10 }}>
-            <span style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55 }}>
-              Underlay
-            </span>
-            {([
-              { key: 'photo', label: 'Your photo', hint: 'sharper · current' },
-              { key: 'satellite', label: 'Satellite', hint: 'shows the surrounding land' },
-            ] as const).map((opt) => {
-              const active = underlay === opt.key;
-              return (
-                <button
-                  key={opt.key}
-                  type="button"
-                  onClick={() => setUnderlay(opt.key)}
-                  disabled={loading !== null}
-                  aria-pressed={active}
-                  style={{ padding: '6px 12px', borderRadius: 999, border: `1px solid ${active ? DARK : '#E2D8C4'}`, background: active ? DARK : PAPER, color: active ? PAPER : '#5C5040', fontWeight: 700, fontSize: 12, cursor: loading !== null ? 'default' : 'pointer' }}
-                >
-                  {opt.label}
-                </button>
-              );
-            })}
-            <span style={{ fontSize: 10.5, opacity: 0.6 }}>
-              {underlay === 'photo' ? 'sharper · current' : 'shows the surrounding land'}
-            </span>
-          </div>
-        )}
+        {/* WHICH PICTURE THE SHEETS SIT ON. This used to hide itself unless the farmer had supplied
+            their own aerial, because with one photograph it was a switch with one position. It is
+            always shown now: 'Plain paper' needs no imagery, so every site has a real choice — and
+            on a site whose aerial is poor, dropping the photograph is the one thing that actually
+            makes the sheet crisper. See lib/sheet-underlay.ts. */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', marginTop: 10 }}>
+          <span style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55 }}>
+            Underlay
+          </span>
+          {underlayOptions.map((key) => {
+            const active = underlay === key;
+            return (
+              <button
+                key={key}
+                type="button"
+                onClick={() => setUnderlay(key)}
+                disabled={loading !== null}
+                aria-pressed={active}
+                style={{ padding: '6px 12px', borderRadius: 999, border: `1px solid ${active ? DARK : '#E2D8C4'}`, background: active ? DARK : PAPER, color: active ? PAPER : '#5C5040', fontWeight: 700, fontSize: 12, cursor: loading !== null ? 'default' : 'pointer' }}
+              >
+                {UNDERLAY_LABEL[key]}
+              </button>
+            );
+          })}
+          <span style={{ fontSize: 10.5, opacity: 0.6 }}>{UNDERLAY_HINT[underlay]}</span>
+        </div>
         {!compact && (
         <>
         {/* THE one-tap plan set: AI all-sheets, hard-wired to the gpt-image-2 background queue

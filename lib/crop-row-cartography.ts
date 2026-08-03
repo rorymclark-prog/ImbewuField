@@ -98,37 +98,26 @@ export function cropGlyphFor(name: string | undefined): CropGlyph {
 const UNNAMED_BED_GLYPHS: readonly CropGlyph[] = ['rosette', 'root', 'staked', 'legume'];
 
 /**
- * The three sisters, rotated so neighbouring staple plots do not draw as identical patches.
+ * ONE CROP PER PLOT — Rory's words, three times: "maizes on one plot beans on another etc etc".
  *
- * Maize with beans climbing it and pumpkin running along the ground is what this feature exists to
- * model, and it stays the mix on every plot — what changes plot to plot is which of the three
- * leads. That is what a real multi-plot staple garden looks like, because the plots are rotated;
- * drawing four identical patches was the thing that made a four-plot garden read as one texture
- * repeated (Rory: "maybe you can do maizes on one plot beans on another etc etc" — and, on the
- * pumpkin specifically, "pumpkins").
+ * Two earlier attempts got this wrong in the same way. Both mixed several crops INSIDE each plot
+ * and varied the mixture between plots: first four orderings of the same three sisters, then a
+ * three-rows-in-four lead crop with a companion row through it. On paper those are four different
+ * patterns. On a sheet they are four patches of the same speckle, because a reader at plan scale
+ * sees a plot's overall texture, never its row sequence — so "which crop leads here" was a
+ * distinction only the code could perceive. That is why the complaint kept coming back unchanged.
+ *
+ * A plot is now a single crop, and neighbouring plots are different crops. That is the only version
+ * you can read from across the room, and it is also what a rotated staple garden IS: the reason a
+ * farmer divides one field into four plots is so that this year's maize block becomes next year's
+ * bean block. Four blocks with the same speckle is a drawing of the thing they specifically did
+ * not do.
+ *
+ * NOT AGRONOMIC, as with every number in this file. It draws the four plots as four crops so they
+ * read apart, in the order the farmer created them. It states no seed rate, spacing, rotation
+ * sequence or yield, no legend row names a crop, and nothing downstream reads it as advice.
  */
-/**
- * EACH PLOT NEEDS A CROP YOU CAN NAME FROM ACROSS THE ROOM.
- *
- * The first attempt at this shuffled the same three sisters into four different orders. On paper
- * that is four different sequences; on the sheet it is four plots of the same speckle, because a
- * 1-in-4 change of glyph is invisible at plan scale. Rory: "the staple plot issue is still not
- * sorted" — he asked for "maize on one plot beans on another", and shuffling is not that.
- *
- * So each plot now has a clear lead crop at three rows in four, with a companion row through it.
- * That is what a rotated staple garden looks like from the air: this year's maize block, this
- * year's bean block, this year's pumpkin ground — each still interplanted, none of them pure.
- *
- * The ratio is a DRAWING rhythm, as the header says of every number in this file. It says "this
- * plot is mostly maize", which is what the farmer chose when they made four separate plots; it
- * does not state a seed rate, a spacing or a yield, and nothing downstream reads it as one.
- */
-const STAPLE_ROTATIONS: readonly (readonly CropGlyph[])[] = [
-  ['grain', 'grain', 'legume', 'grain'],
-  ['legume', 'legume', 'grain', 'legume'],
-  ['vine', 'vine', 'grain', 'vine'],
-  ['grain', 'vine', 'legume', 'vine'],
-];
+const STAPLE_PLOT_CROPS: readonly CropGlyph[] = ['grain', 'legume', 'vine', 'root'];
 
 /** Stable 0..1 from an id, so a bed keeps its silhouette across every render of the design. */
 function idUnit(seed: string): number {
@@ -153,9 +142,25 @@ export function unnamedBedGlyph(seed: string): CropGlyph {
   return UNNAMED_BED_GLYPHS[Math.floor(idUnit(seed) * UNNAMED_BED_GLYPHS.length) % UNNAMED_BED_GLYPHS.length];
 }
 
-/** The three-sisters row sequence for one staple plot, rotated so plots differ from each other. */
-export function staplePlotGlyphs(seed: string): readonly CropGlyph[] {
-  return STAPLE_ROTATIONS[Math.floor(idUnit(seed) * STAPLE_ROTATIONS.length) % STAPLE_ROTATIONS.length];
+/**
+ * The single crop one staple plot is drawn with, by the plot's position among the staple plots.
+ *
+ * ORDINAL, NOT HASH. Every other glyph choice in this file is keyed on an id hash, and that is
+ * right for beds, where two beds of greens is realistic and a farm may hold thirty of them. It is
+ * wrong here: four plots drawn from a hash collide, and the whole point is that a farmer who cut
+ * their field into four sees four crops. Ordinal is what guarantees plot 1..4 are grain, legume,
+ * vine, root — never two the same until there are more plots than crops. The caller numbers plots
+ * in the farmer's own creation order, so the plot they drew first is the maize block on every
+ * render and does not swap crops when they add a fifth.
+ */
+export function staplePlotGlyph(ordinal: number): CropGlyph {
+  const index = Number.isFinite(ordinal) ? Math.max(0, Math.floor(ordinal)) : 0;
+  return STAPLE_PLOT_CROPS[index % STAPLE_PLOT_CROPS.length];
+}
+
+/** The row sequence for one staple plot: a single crop, so the plot reads as a crop block. */
+export function staplePlotGlyphs(ordinal: number): readonly CropGlyph[] {
+  return [staplePlotGlyph(ordinal)];
 }
 
 /**

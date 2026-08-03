@@ -21,17 +21,47 @@
 
 import type { CanvasFrame } from '@/lib/design-canvas';
 
-export type SheetUnderlay = 'photo' | 'satellite';
+/**
+ * THE THIRD OPTION IS NO PHOTOGRAPH AT ALL. Rory: "i think there need to be a third option —
+ * satellite, my photo, and white background?", asked in the same breath as "the quality of the
+ * image is very poor please ramp up the quality".
+ *
+ * Those two are the same request. Aerial imagery over rural South Africa is low-resolution at
+ * source (see docs and the Esri stitcher work) and no amount of render scale sharpens a picture
+ * that was never sharp — but every OTHER mark on a plan sheet is vector, and on a plain ground it
+ * is drawn at the sheet's full resolution with nothing soft behind it. So "plain" is not merely a
+ * style: it is the only underlay whose crispness we control, and it is the one to print from.
+ *
+ * It is also what a plan sheet conventionally IS. A published planting or earthworks drawing is
+ * ink on paper — the photograph is a survey aid. A farmer handing a plan to a funder, a contractor
+ * or an extension officer usually wants the drawing, not the picture of their yard underneath it.
+ */
+export type SheetUnderlay = 'photo' | 'satellite' | 'plain';
 
 /**
- * True only where there is genuinely a choice to offer.
+ * True only where there is genuinely a choice BETWEEN THE TWO PHOTOGRAPHS.
  *
  * `underlayDataUrl` is populated ONLY while a custom base is in use, so its presence is exactly the
- * condition "this farmer supplied their own aerial, and we still hold the satellite". On every
- * other site the control would be a switch with one position, which is worse than no switch.
+ * condition "this farmer supplied their own aerial, and we still hold the satellite". Kept as its
+ * own question rather than folded into sheetUnderlayOptions: 'plain' needs no imagery whatsoever,
+ * so it can never stand in for having a second photograph, and a caller asking "are there two
+ * pictures here" must not be answered yes because a paper option exists.
  */
 export function canChooseUnderlay(frame: Pick<CanvasFrame, 'satDataUrl' | 'underlayDataUrl'>): boolean {
   return Boolean(frame.underlayDataUrl) && Boolean(frame.satDataUrl);
+}
+
+/**
+ * Every underlay this frame can actually be drawn on, in the order to offer them.
+ *
+ * The photo leads because it is the default and the one that shows the farmer their own land.
+ * 'plain' is always available — it needs nothing — which is what makes this control worth showing
+ * on a site with only one photograph, where the old two-position switch was correctly hidden.
+ */
+export function sheetUnderlayOptions(
+  frame: Pick<CanvasFrame, 'satDataUrl' | 'underlayDataUrl'>,
+): readonly SheetUnderlay[] {
+  return canChooseUnderlay(frame) ? ['photo', 'satellite', 'plain'] : ['photo', 'plain'];
 }
 
 /**
@@ -41,8 +71,14 @@ export function canChooseUnderlay(frame: Pick<CanvasFrame, 'satDataUrl' | 'under
  * re-renders or re-fetches merely because this function was called. Falls back to the frame
  * unchanged when the satellite is asked for but absent — a missing base must never become a blank
  * sheet, and there is no second image to fall back to in that case.
+ *
+ * 'plain' drops the base image, which every renderer already handles: drawBlueprintBase falls back
+ * to a warm paper ground when satDataUrl is absent, and the structure-lock and AI-composite paths
+ * are each guarded on it. It deliberately does NOT clear underlayDataUrl, so switching back to a
+ * photograph is a state change in the control and never a lost image.
  */
 export function frameForUnderlay(frame: CanvasFrame, choice: SheetUnderlay): CanvasFrame {
+  if (choice === 'plain') return frame.satDataUrl === null ? frame : { ...frame, satDataUrl: null };
   if (choice !== 'satellite' || !frame.underlayDataUrl) return frame;
   return { ...frame, satDataUrl: frame.underlayDataUrl };
 }
@@ -56,5 +92,7 @@ export function frameForUnderlay(frame: CanvasFrame, choice: SheetUnderlay): Can
  * they have already paid for.
  */
 export function underlayCacheSuffix(choice: SheetUnderlay): string {
-  return choice === 'satellite' ? ':satellite' : '';
+  if (choice === 'satellite') return ':satellite';
+  if (choice === 'plain') return ':plain';
+  return '';
 }

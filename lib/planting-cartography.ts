@@ -91,6 +91,14 @@ export interface PlantingCanopyPaintStyle {
   /** A quiet backing that separates a placed canopy from busy photographic tree texture. */
   baseAlpha: number;
   baseColor: string;
+  /** Damp shaded soil directly under the trunk — the centre of the basin. */
+  basinCoreColor: string;
+  /** Worked soil across the body of the basin. */
+  basinSoilColor: string;
+  /** Drier straw-toned mulch at the basin rim, where the sun reaches it. */
+  basinRimColor: string;
+  /** Strength of the deterministic mulch stipple laid over the soil. */
+  mulchAlpha: number;
   artworkAlpha: number;
   washAlpha: number;
   detailAlphaMin: number;
@@ -123,6 +131,30 @@ export const PLANTING_CANOPY_PAINT: Readonly<PlantingCanopyPaintStyle> = {
   // ring drawn between neighbours (see drawPaintedReferenceFeature) rather than by transparency.
   baseAlpha: 0.92,
   baseColor: '#F4EFDF',
+  // A TREE STANDS ON SOIL, NOT ON PAPER.
+  //
+  // The cream backing above was measured against the wrong artwork. orchard-canopy-v1 is 85%
+  // opaque across its disc, so almost none of the cream ever showed and the treatment looked
+  // settled. pawpaw-tree-v1 is 48% and moringa-tree-v1 59% — these are airy, open-crowned trees,
+  // deliberately painted with gaps you can see the ground through — so on those the cream is the
+  // majority of the symbol, and a pawpaw came out as leaves floating on a white coin. Rory: "slight
+  // white on the trees still ... either these get the plant basin underneath or the leaves get
+  // bordered with black but not against a white background."
+  //
+  // The basin is the right half of that choice, because it is also the truth: sheet 05 already
+  // derives a tree pit for every tree that has no basin element of its own, on the grounds that
+  // digging one is the ground work planting a tree IS (see drawEarthworksFeatures). So what shows
+  // through an open crown is the mulched basin the tree is standing in — which reads correctly at
+  // any crown density, where a flat backing only ever read correctly at high ones. Damp shaded
+  // soil under the trunk out to drier straw at the rim, which is what a mulch basin looks like
+  // from above and gives the disc a centre without a highlight.
+  //
+  // Nothing is counted, legended or billed by this: it is ground under a symbol, exactly as the
+  // derived pits are, and the Bill of Quantities still counts only basins the farmer placed.
+  basinCoreColor: '#4B3C2A',
+  basinSoilColor: '#6B583C',
+  basinRimColor: '#8A7454',
+  mulchAlpha: 0.3,
   artworkAlpha: 0.96,
   washAlpha: 0.4,
   detailAlphaMin: 0.11,

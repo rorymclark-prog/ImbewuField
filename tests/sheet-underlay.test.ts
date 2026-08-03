@@ -4,6 +4,7 @@ import test from 'node:test';
 import {
   canChooseUnderlay,
   frameForUnderlay,
+  sheetUnderlayOptions,
   underlayCacheSuffix,
 } from '@/lib/sheet-underlay';
 import type { CanvasFrame } from '@/lib/design-canvas';
@@ -68,4 +69,43 @@ test('the underlay is part of a sheet identity, and the default key is unchanged
   // it was stored with, so this cannot orphan renders they have already paid for.
   assert.equal(underlayCacheSuffix('photo'), '');
   assert.equal(`producer:atlas:water:hybrid${underlayCacheSuffix('photo')}`, 'producer:atlas:water:hybrid');
+});
+
+test('plain paper is offered on every site, because it needs no imagery', () => {
+  // The control used to hide itself unless the farmer had supplied their own aerial. With a third
+  // option that requires nothing, every site has a real choice — and on a site whose aerial is
+  // poor (which is most of rural South Africa) dropping the photograph is the only thing that
+  // actually makes the sheet crisper.
+  assert.deepEqual(sheetUnderlayOptions(frame('data:photo', 'data:satellite')), ['photo', 'satellite', 'plain']);
+  assert.deepEqual(sheetUnderlayOptions(frame('data:satellite')), ['photo', 'plain']);
+  assert.deepEqual(sheetUnderlayOptions(frame(null)), ['photo', 'plain']);
+  // But it is NOT a second photograph, and must never be counted as one.
+  assert.equal(canChooseUnderlay(frame('data:satellite')), false);
+});
+
+test('choosing plain paper drops the base image and keeps the photograph in hand', () => {
+  const withPhoto = frame('data:photo', 'data:satellite');
+  const rendered = frameForUnderlay(withPhoto, 'plain');
+  assert.equal(rendered.satDataUrl, null);
+  // Switching back must be a state change in the control, never a lost image.
+  assert.equal(rendered.underlayDataUrl, 'data:satellite');
+  assert.equal(withPhoto.satDataUrl, 'data:photo', 'rendering never edits the design');
+  // Geo-registration survives: the drawing is still at the right scale in the right place, which
+  // is the whole reason a plain sheet is a plan and not a sketch.
+  assert.equal(rendered.mPerPx, withPhoto.mPerPx);
+  assert.equal(rendered.imgW, withPhoto.imgW);
+  assert.equal(rendered.imgH, withPhoto.imgH);
+  assert.equal(rendered.centerLat, withPhoto.centerLat);
+  // A frame that already has no base is returned unchanged, so nothing re-renders for asking.
+  const noBase = frame(null);
+  assert.equal(frameForUnderlay(noBase, 'plain'), noBase);
+});
+
+test('a plain sheet is its own picture, so it cannot be served from a photo cache slot', () => {
+  const keys = new Set([
+    underlayCacheSuffix('photo'),
+    underlayCacheSuffix('satellite'),
+    underlayCacheSuffix('plain'),
+  ]);
+  assert.equal(keys.size, 3, 'two underlays sharing a cache key re-serves the wrong picture');
 });
