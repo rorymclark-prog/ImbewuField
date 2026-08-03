@@ -52,7 +52,10 @@ export function waterLegendSectionForRoute(kind: WaterRouteKind): WaterLegendSec
   return 'IRRIGATION';
 }
 
-export type RenderWaterRoute = Pick<LineShape, 'id' | 'kind' | 'points'> & {
+// widthM rides along because a swale is drawn at its SAVED GROUND WIDTH on the masterplan and the
+// phasing sheet (see drawWaterRoutes). Dropping it here silently downgraded every swale on those
+// sheets to the pixel-weight fallback, which is the "thin brown line" Rory saw on sheet 09.
+export type RenderWaterRoute = Pick<LineShape, 'id' | 'kind' | 'points' | 'widthM'> & {
   kind: WaterRouteKind;
   visualBridge?: true;
 };
@@ -303,7 +306,7 @@ export function waterRoutesWithVisualBridges(
 ): RenderWaterRoute[] {
   const routes: RenderWaterRoute[] = lines
     .filter((line): line is LineShape & { kind: WaterRouteKind } => !!waterRouteStyleFor(line.kind) && line.points.length >= 2)
-    .map((line) => ({ id: line.id, kind: line.kind, points: line.points }));
+    .map((line) => ({ id: line.id, kind: line.kind, points: line.points, widthM: line.widthM }));
   const connectable = new Set<WaterRouteKind>(['pipe', 'drip', 'greywater']);
   const endpoints: RouteEndpoint[] = [];
   const toM = ([x, y]: [number, number]): [number, number] => [

@@ -1989,6 +1989,28 @@ function drawWaterRoutes(ctx: CanvasRenderingContext2D, state: DesignCanvasState
       ctx.beginPath();
       line.points.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, x * W, y * H));
     };
+    // A SWALE IS DUG, NOT PLUMBED — AND WHERE IT IS THE SUBJECT, IT MUST LOOK DUG.
+    //
+    // Water (sheet 04) keeps the flat dashed stroke on purpose: there the swale is a CROSS-
+    // REFERENCE, labelled "see sheet 05", and a full earthwork band would compete with the
+    // plumbing the sheet is actually about. But this function is also the only route painter for
+    // the masterplan (filter 'all') and the phasing sheet (09), and on those the swale is the
+    // thing itself — phase 3 on 09 tells the farmer to "dig the swales on true contour and spread
+    // the spoil onto the downhill berm", beside a 5.6px dash that shows neither ditch nor berm nor
+    // the ground the work occupies. Rory, looking at 09: "this thin brown line".
+    //
+    // So reuse sheet 05's cross-section, which draws from the SAVED width at true ground size.
+    // Geometry, width and membership are untouched; this is a drawing choice only.
+    if (line.kind === 'swale' && sheet !== 'water') {
+      drawSwaleCrossSection(
+        ctx,
+        line.points.map(([x, y]) => [x * W, y * H] as [number, number]),
+        EARTHWORKS_ROUTE_STYLE.swale,
+        frame.mPerPx > 0 ? W / (frame.imgW * frame.mPerPx) : undefined,
+        line.widthM,
+      );
+      continue;
+    }
     if (line.kind === 'drip') {
       // Benchmark grammar: clean blue tubing with sparse emitters. Too many dots read as noise
       // once the finished sheet is reduced to phone/gallery size.

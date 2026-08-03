@@ -208,6 +208,21 @@ test('render-only Water cleanup bridges only tiny aligned gaps of the same route
   assert.deepEqual(bridges[0].points, [[0.2, 0.2], [0.202, 0.2]]);
 });
 
+test('a swale keeps its saved ground width through render prep, so a sheet can draw the real earthwork', () => {
+  // WHY THIS EXISTS. drawWaterRoutes paints the swale on the masterplan and the phasing sheet (09)
+  // with drawSwaleCrossSection, which sizes the ditch and the spoil berm from the SAVED width.
+  // This mapper used to rebuild each route as { id, kind, points } and silently dropped widthM, so
+  // every swale on those sheets fell back to the 5.6px pixel-weight default — the "thin brown
+  // line" Rory reported on sheet 09. Nothing failed to make that visible: the legend still listed
+  // the swale, the geometry was untouched, and the sheet simply drew a dug channel too small to
+  // read as something you dig. A dropped optional field is invisible to every other test here.
+  const frame = { imgW: 1000, imgH: 1000, mPerPx: 0.1 };
+  const routes = waterRoutesWithVisualBridges([
+    { id: 'swale-1', kind: 'swale', points: [[0.1, 0.3], [0.6, 0.32]], widthM: 1.8 },
+  ], frame);
+  assert.equal(routes.find((route) => route.id === 'swale-1')?.widthM, 1.8);
+});
+
 test('render-only Water cleanup leaves large and side-by-side gaps untouched', () => {
   const frame = { imgW: 1000, imgH: 1000, mPerPx: 0.1 };
   const routes = waterRoutesWithVisualBridges([
