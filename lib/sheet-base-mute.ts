@@ -82,6 +82,39 @@ export const SHEET_STRUCTURE_MUTE_STYLE: SheetBaseMuteStyle = {
   veil: 'rgba(246, 241, 227, 0.2)',
 };
 
+export interface PlainHardSurfacePaint {
+  houseFill: string;
+  houseStroke: string;
+  tarFill: string;
+  tarEdge: string;
+}
+
+/**
+ * HOW HARD SURFACES ARE DRAWN WHEN THERE IS NO PHOTOGRAPH UNDER THEM.
+ *
+ * On the photo underlays a building is a cutout of the aerial and the driveway is near-solid tar,
+ * and both are fine there: they sit on a busy photograph, and a near-solid mark is what it takes to
+ * be seen at all. On the plain-paper underlay the same paint is the loudest thing on the page. Rory,
+ * on the first plain planting sheet: "can you mute the driveways and other infrastructure like
+ * house etc" — and on a PLANTING sheet he is plainly right, because the house and the driveway are
+ * not what that sheet is about.
+ *
+ * It is also the drawing convention. On an ink plan a building is an outline with a light tone
+ * inside it, and a carriageway is two edges with a wash between — a solid black slab is what you
+ * draw when the building IS the subject, which is sheet 07 and nothing else.
+ *
+ * The keyline stays strong while the fill drops right back. That is the part worth keeping if these
+ * numbers ever move: what makes a house read on paper is its EDGE, not its tone, so muting the fill
+ * costs nothing and muting the outline would lose the building altogether.
+ */
+export const PLAIN_HARD_SURFACE_PAINT: Readonly<PlainHardSurfacePaint> = {
+  houseFill: 'rgba(96,104,98,0.20)',
+  houseStroke: 'rgba(34,42,36,0.82)',
+  tarFill: 'rgba(96,104,98,0.24)',
+  // Tar has no kerb drawn on these sheets, so its own edge is the only thing giving it a shape.
+  tarEdge: 'rgba(34,42,36,0.55)',
+};
+
 /**
  * Which mute a finished sheet takes.
  *

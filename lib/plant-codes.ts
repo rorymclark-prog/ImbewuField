@@ -29,6 +29,36 @@ import { ELEMENTS_BY_ID } from '@/lib/design-elements';
 import { plantingLegendSectionForFeature } from '@/lib/planting-cartography';
 
 /**
+ * HOW A SHEET NAMES ITS PLANTS. One or the other, never both.
+ *
+ * Running codes AND named callouts together was the first version, and one render of the real
+ * Ubhejane farm settled it — a BA chip landed inside the "BANANA CLUMP ×5" pill, spelling
+ * "B(IT)ANA CLUMP", and an LC chip sat in the middle of "MACADAMIA TREE". Rory: "i think the
+ * labels have to be one or the other". He is right, and not only because of collisions: they are
+ * two answers to the same question, and a sheet that gives both answers at once is asking the
+ * reader to work out which one to trust.
+ *
+ * 'codes'  — a two-letter mark on EVERY plant, looked up in the legend. Every plant identified;
+ *            the map stays quiet enough to read the design through. What a published planting
+ *            plan does, and the only mode that can name the third pawpaw.
+ * 'names'  — the callout pills: the plant's name in words, one per kind with a count, on a leader.
+ *            Readable with no legend lookup at all, but names one plant of each kind and leaves
+ *            the rest unmarked. What the sheets did before codes existed.
+ *
+ * The choice is genuine — neither is right in general, which is why this is a control and not a
+ * constant. Codes lead because they are the mode that answers the complaint that produced them.
+ */
+export type SheetLabelMode = 'codes' | 'names';
+
+export const DEFAULT_SHEET_LABEL_MODE: SheetLabelMode = 'codes';
+
+/** What to append to a sheet's cache key. Empty on the default, so every sheet already in a
+ *  farmer's gallery stays addressable under the key it was stored with. */
+export function labelModeCacheSuffix(mode: SheetLabelMode): string {
+  return mode === DEFAULT_SHEET_LABEL_MODE ? '' : `:${mode}`;
+}
+
+/**
  * Codes for the catalog, chosen to be readable as abbreviations of their own names rather than
  * derived — MG is a mango to anyone holding the sheet, whereas a generated code is a lookup every
  * single time. Derivation is the fallback for a plant the catalog does not know, not the rule.

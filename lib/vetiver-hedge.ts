@@ -33,6 +33,25 @@ export const VETIVER_CLUMP_RADIUS_M = 0.15;
 /** A bank deeper than one slip line holds parallel contour lines, not one impossibly fat hedge. */
 export const VETIVER_LINE_SPACING_M = 0.6;
 
+/** Longest blade, as a multiple of its own crown's radius (traceTufts: 0.95 + 0.75 jitter). */
+export const VETIVER_BLADE_LENGTH_FACTOR = 1.7;
+
+/**
+ * How far the outermost blade tip can land from a tuft's NOMINAL position, in clump radii.
+ *
+ * Derived from the crown builder and traceTufts rather than guessed, so it cannot drift out of
+ * agreement with the drawing: a crown's own radius runs to clumpR x 1.22 (0.8 + 0.42 jitter), its
+ * blades to that x VETIVER_BLADE_LENGTH_FACTOR, and the crown's own wobble adds a further 0.175
+ * (0.35 / 2). 1.22 x 1.7 + 0.175 = 2.249. Rounded up.
+ *
+ * It exists because a hedge's drawn width is NOT its clump radius — it is this multiple of it, and
+ * that difference is the whole reason a 0.52 m row was coming out at about twice its stated width.
+ */
+export const VETIVER_BLADE_REACH = 2.3;
+
+/** Below this the band cannot carry a drawing of any kind, however the floor is tuned. */
+const MIN_BAND_PX = 2;
+
 export interface VetiverHedgeGeometry {
   /** Slip lines across the bank's short axis: 1 for a row, several for a 2 m deep bank. */
   lines: number;
@@ -87,7 +106,26 @@ export function vetiverHedgeGeometry(
   // one-mark-per-slip and becomes a map symbol at legible size — fewer, larger tufts still reading
   // as "vetiver hedge". That is a cartographic choice and not an agronomic one: nothing anywhere
   // counts tufts (callouts count placed ITEMS), so no stated number moves with it.
-  const clumpR = Math.max(minClumpPx, VETIVER_CLUMP_RADIUS_M * pxPerM);
+  //
+  // THE BAND OVERRULES THE FLOOR, and this is the third time Rory has reported the width. He
+  // measured it himself: a Vetiver Row saved at W 0,52 m drew on the sheet at roughly twice that.
+  // The floor was the cause. It lifts the clump radius, the blades then reach VETIVER_BLADE_REACH x
+  // that radius, and NOTHING was comparing the result with the band it was supposed to sit in — so
+  // the narrower the hedge, the further past its own edges it grew.
+  //
+  // This is exactly the mistake plantingFeaturePresentationDimensions already documents and fixed
+  // ("keying off the short side rescued nothing and quietly widened every hedge, row and strip").
+  // A legibility floor may rescue a mark that is too small to SEE; it may never widen one the
+  // farmer has stated a width for, because on a sheet with a scale bar that width is a measurement.
+  // So the floor applies only while it fits, and the band wins whenever the two disagree.
+  const bandLimitedR = bandPx / (2 * VETIVER_BLADE_REACH);
+  const clumpR = Math.min(Math.max(minClumpPx, VETIVER_CLUMP_RADIUS_M * pxPerM), bandLimitedR);
+  if (!Number.isFinite(clumpR) || clumpR <= 0) return null;
+  // The sub-symbol guard is now on the BAND, not on the clump. It used to be `runPx < clumpR * 3`
+  // alone, which worked only while the clump had a floor under it: once the band is allowed to
+  // shrink the clump, a footprint of a fraction of a pixel produces a proportionally tiny clump and
+  // sails through its own guard. The band is the thing that has to be able to carry a drawing.
+  if (bandPx < MIN_BAND_PX) return null;
   if (runPx < clumpR * 3) return null;
 
   const lineFit = Math.max(1, Math.floor(bandPx / (clumpR * 1.7)));
@@ -96,10 +134,14 @@ export function vetiverHedgeGeometry(
   const perLine = Math.max(3, Math.min(180, Math.round(runPx / stepPx)));
 
   const crowns: VetiverHedgeGeometry['crowns'] = [];
-  const acrossGap = lines > 1 ? (bandPx - clumpR * 2) / (lines - 1) : 0;
+  // Inset by the full blade REACH, not by the crown radius: it is the blade tips that have to stay
+  // inside the saved footprint, and insetting by the radius alone left every outer tuft hanging a
+  // clump's width over the edge of the band.
+  const inset = Math.min(clumpR * VETIVER_BLADE_REACH, bandPx / 2);
+  const acrossGap = lines > 1 ? Math.max(0, bandPx - inset * 2) / (lines - 1) : 0;
   const alongGap = (runPx - clumpR * 1.6) / Math.max(1, perLine - 1);
   for (let line = 0; line < lines; line++) {
-    const across = lines > 1 ? -(bandPx / 2) + clumpR + line * acrossGap : 0;
+    const across = lines > 1 ? -(bandPx / 2) + inset + line * acrossGap : 0;
     for (let slip = 0; slip < perLine; slip++) {
       const along = -(runPx / 2) + clumpR * 0.8 + slip * alongGap;
       const seed = `${seedId}:${line}:${slip}`;

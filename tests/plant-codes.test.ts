@@ -4,8 +4,10 @@ import test from 'node:test';
 import { ELEMENTS_BY_ID } from '@/lib/design-elements';
 import { plantingLegendSectionForFeature } from '@/lib/planting-cartography';
 import {
+  DEFAULT_SHEET_LABEL_MODE,
   PLANT_CODES,
   codedLegendText,
+  labelModeCacheSuffix,
   plantCodesForSheet,
   plantTakesCode,
 } from '@/lib/plant-codes';
@@ -79,4 +81,17 @@ test('a legend row wears its code, and a row without one is left alone', () => {
   // appear with nothing in front of it.
   assert.equal(codedLegendText(undefined, 'Property boundary'), 'Property boundary');
   assert.equal(codedLegendText('', 'Property boundary'), 'Property boundary');
+});
+
+test('a sheet names its plants ONE way, and the cache can tell the two apart', () => {
+  // Running codes AND named callouts together was the first version. One render of the real farm
+  // settled it: a BA chip landed inside the "BANANA CLUMP ×5" pill, spelling "B(IT)ANA CLUMP".
+  // Rory: "i think the labels have to be one or the other."
+  assert.notEqual(labelModeCacheSuffix('codes'), labelModeCacheSuffix('names'));
+  // Empty on the default, so every sheet already in a farmer's gallery stays addressable under the
+  // key it was stored with — the same rule the underlay suffix follows.
+  assert.equal(labelModeCacheSuffix(DEFAULT_SHEET_LABEL_MODE), '');
+  // Codes lead, because they are the mode that answers the complaint that produced them: they are
+  // the only one that can identify the third pawpaw.
+  assert.equal(DEFAULT_SHEET_LABEL_MODE, 'codes');
 });

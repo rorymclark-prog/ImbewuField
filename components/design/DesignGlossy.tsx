@@ -80,7 +80,13 @@ import { PLANTING_CANOPY_PAINT, PLANTING_LEGEND_SECTION_ORDER, plantingFeaturePr
 import { STRUCTURES_LEGEND_SECTION_ORDER, structuresFeaturePresentationDimensions, structuresLegendSectionForFeature, structuresRouteVisualFor, type StructuresLegendSection } from '@/lib/structures-cartography';
 import { presentSectorCartography, sectorEvidenceSummary, SECTOR_STYLES, sectorFillColor, sectorStrokeWidth, type SectorLegendIcon, type SectorVisualKind } from '@/lib/sector-cartography';
 import { referenceFeatureArtworkUrl } from '@/lib/reference-feature-art';
-import { codedLegendText, plantCodesForSheet } from '@/lib/plant-codes';
+import {
+  DEFAULT_SHEET_LABEL_MODE,
+  codedLegendText,
+  labelModeCacheSuffix,
+  plantCodesForSheet,
+  type SheetLabelMode,
+} from '@/lib/plant-codes';
 import { drawVetiverHedge, vetiverHedgeGeometry, VETIVER_HEDGE_IDS } from '@/lib/vetiver-hedge';
 import {
   balancedLegendColumnRanges,
@@ -91,7 +97,7 @@ import {
   legendMaxFontSize,
   legendRowFontSize,
 } from '@/lib/sheet-legend-layout';
-import { SHEET_BASE_MUTE_STYLE, SHEET_STRUCTURE_MUTE_STYLE, type SheetBaseMute } from '@/lib/sheet-base-mute';
+import { PLAIN_HARD_SURFACE_PAINT, SHEET_BASE_MUTE_STYLE, SHEET_STRUCTURE_MUTE_STYLE, type SheetBaseMute } from '@/lib/sheet-base-mute';
 import { frameForUnderlay, sheetUnderlayOptions, underlayCacheSuffix, type SheetUnderlay } from '@/lib/sheet-underlay';
 import { overlandFlowArrows, overlandFlowLegendText, type FlowArrow } from '@/lib/overland-flow';
 import {
@@ -566,6 +572,18 @@ const UNDERLAY_HINT: Readonly<Record<SheetUnderlay, string>> = {
   photo: 'sharper · current',
   satellite: 'shows the surrounding land',
   plain: 'no photo — the crispest sheet to print',
+};
+
+/** Farmer-facing names for the plant-label control. */
+const LABEL_MODE_LABEL: Readonly<Record<SheetLabelMode, string>> = {
+  codes: 'Codes',
+  names: 'Names',
+};
+
+/** The trade-off each mode makes, in one line — this is a genuine choice, so say what it costs. */
+const LABEL_MODE_HINT: Readonly<Record<SheetLabelMode, string>> = {
+  codes: 'every plant marked · look the code up in the legend',
+  names: 'names written on the map · one plant of each kind',
 };
 
 export interface CompositeMarkOptions {
@@ -2968,7 +2986,12 @@ function drawBlueprintHouse(
 }
 
 /** Tar driveway — filled when traced as an AREA, else a ~3 m carriageway stroke (clamped).
- *  Decorative kerbs are globally disabled: existing access must stay quiet site context. */
+ *  Decorative kerbs are globally disabled: existing access must stay quiet site context.
+ *
+ *  ON PAPER IT IS A WASH BETWEEN EDGES, NOT A SLAB. Near-solid tar is the right weight over a
+ *  photograph and the wrong one over paper, where it becomes the darkest thing on a sheet about
+ *  planting — see PLAIN_HARD_SURFACE_PAINT. The white dashed edge goes with it: white dashes on a
+ *  pale wash are invisible, so the edge is drawn dark instead and is what gives the run its shape. */
 function drawBlueprintDriveway(
   ctx: CanvasRenderingContext2D,
   refLayers: DesignGlossyProps['refLayers'],
@@ -2976,11 +2999,13 @@ function drawBlueprintDriveway(
   py: (n: number) => number,
   pxPerM: number,
   dashedEdge: boolean,
+  onPaper = false,
 ): void {
   if (refLayers.driveway.length < 2) return;
   ctx.save();
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
+  const tar = onPaper ? PLAIN_HARD_SURFACE_PAINT.tarFill : TAR;
   const trace = () => {
     const drawPoints = polishedRenderPoints(
       refLayers.driveway.map(([x, y]) => [px(x), py(y)] as RenderPoint),
@@ -2992,24 +3017,29 @@ function drawBlueprintDriveway(
   if (refLayers.drivewayClosed && refLayers.driveway.length >= 3) {
     trace();
     ctx.closePath();
-    ctx.fillStyle = TAR;
+    ctx.fillStyle = tar;
     ctx.fill();
+    if (onPaper) {
+      ctx.strokeStyle = PLAIN_HARD_SURFACE_PAINT.tarEdge;
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    }
     if (dashedEdge && RENDERED_DRIVEWAY_EDGE) {
       ctx.setLineDash([10, 7]);
-      ctx.strokeStyle = 'rgba(255,255,255,0.8)';
+      ctx.strokeStyle = onPaper ? PLAIN_HARD_SURFACE_PAINT.tarEdge : 'rgba(255,255,255,0.8)';
       ctx.lineWidth = 2.5;
       ctx.stroke();
       ctx.setLineDash([]);
     }
   } else {
     trace();
-    ctx.strokeStyle = TAR;
+    ctx.strokeStyle = tar;
     ctx.lineWidth = Math.min(46, Math.max(11, pxPerM * 3)); // ~3 m carriageway, clamped
     ctx.stroke();
     if (dashedEdge && RENDERED_DRIVEWAY_EDGE) {
       trace();
       ctx.setLineDash([10, 7]);
-      ctx.strokeStyle = 'rgba(255,255,255,0.7)';
+      ctx.strokeStyle = onPaper ? PLAIN_HARD_SURFACE_PAINT.tarEdge : 'rgba(255,255,255,0.7)';
       ctx.lineWidth = 2;
       ctx.stroke();
       ctx.setLineDash([]);
@@ -3922,10 +3952,22 @@ function referenceBlueprintLabels(
   W: number,
   H: number,
   filter: GlossyLayerFilter,
+  labelMode: SheetLabelMode = DEFAULT_SHEET_LABEL_MODE,
 ): ProducerLabel[] {
+  // ONE ANSWER PER PLANT. In 'codes' mode the coded plants are withheld from the label engine
+  // entirely rather than having their pills drawn and then hidden — a pill that exists is a pill
+  // the layout has already spent a leader slot and a margin row on, so suppressing it late would
+  // leave the remaining callouts spread as if the plant were still there. Everything WITHOUT a
+  // code — tanks, gates, ground features, routes — keeps its callout in both modes, because a
+  // legend key it does not appear in cannot name it.
+  const coded = labelMode === 'codes'
+    ? plantCodesForSheet(exactSheetElementLegendGroups(state, filter).map((group) => group.defId))
+    : new Map<string, string>();
   const canonicalState: DesignCanvasState = {
     ...state,
-    items: state.items.map(({ label: _label, ...item }) => item),
+    items: state.items
+      .filter((item) => !coded.has(item.defId))
+      .map(({ label: _label, ...item }) => item),
     // The integrated masterplan carries the physical design, not the abstract effort-zone bands.
     // Zones retain their own complete sheet and legend; repeating every zone label here was the
     // largest source of crossed leaders and is not present in the supplied masterplan benchmark.
@@ -4695,11 +4737,16 @@ function paintVetiverHedge(
   ctx.translate(px(it.x), py(it.y));
   if (it.rot) ctx.rotate((it.rot * Math.PI) / 180);
   const radius = Math.min(wPx, hPx) * 0.34;
+  // THE CASING IS A HAIRLINE, NOT A SECOND HEDGE. It is stroked ON the plate edge, so half of it
+  // lies outside the saved footprint — on a 0.52 m row that was another ~55% of width added to a
+  // band already drawn too wide. Capped against the band for the same reason the clump radius is:
+  // a legibility device may not enlarge a stated measurement. See VETIVER_BLADE_REACH.
+  const casing = Math.min(Math.max(2, ctx.canvas.width * 0.0018), Math.min(wPx, hPx) * 0.3);
   drawVetiverHedge(
     ctx,
     geometry,
     () => roundRectPath(ctx, -wPx / 2, -hPx / 2, wPx, hPx, radius),
-    Math.max(2, ctx.canvas.width * 0.0018),
+    casing,
   );
   ctx.restore();
   return true;
@@ -5946,6 +5993,9 @@ async function buildReferenceBlueprintMap(
   /** Only the Water sheet uses this today, for its harvest block. Optional everywhere else, and
    *  the block simply does not print without it — see roofHarvestFooterLines. */
   site?: DesignGlossyProps['site'],
+  /** Codes on every plant, or named callouts on one plant per kind — see SheetLabelMode. Optional
+   *  so DesignPrint's per-layer render table keeps the default without a signature change. */
+  labelMode: SheetLabelMode = DEFAULT_SHEET_LABEL_MODE,
 ): Promise<string> {
   const presentation = await boundaryPresentationContext(state, frame, refLayers);
   const renderState = presentation.state;
@@ -5999,8 +6049,20 @@ async function buildReferenceBlueprintMap(
     const px = (n: number) => n * W;
     const py = (n: number) => n * H;
     const pxPerM = W / (renderFrame.imgW * renderFrame.mPerPx);
-    drawBlueprintHouse(ctx, renderRefLayers.house, px, py, 'rgba(48,54,59,0.94)', '#FBF6EC', 3);
-    drawBlueprintDriveway(ctx, renderRefLayers, px, py, pxPerM, filter === 'structures');
+    // NO PHOTOGRAPH MEANS NO CUTOUT TO RESTORE, so these vectors ARE the building and the access
+    // on this sheet — and on paper they must be drawn as a plan draws them, not as the near-solid
+    // marks that were tuned to survive a busy aerial. See PLAIN_HARD_SURFACE_PAINT.
+    const onPaper = !renderFrame.satDataUrl;
+    drawBlueprintHouse(
+      ctx,
+      renderRefLayers.house,
+      px,
+      py,
+      onPaper ? PLAIN_HARD_SURFACE_PAINT.houseFill : 'rgba(48,54,59,0.94)',
+      onPaper ? PLAIN_HARD_SURFACE_PAINT.houseStroke : '#FBF6EC',
+      3,
+    );
+    drawBlueprintDriveway(ctx, renderRefLayers, px, py, pxPerM, filter === 'structures', onPaper);
   }
 
   // WHERE THE RAIN GOES ONCE IT IS ON THE GROUND — under the plumbing, because it is the condition
@@ -6027,11 +6089,14 @@ async function buildReferenceBlueprintMap(
   const px = (n: number) => n * W;
   const py = (n: number) => n * H;
   if (filter === 'planting' || filter === 'structures' || filter === 'all') {
-    drawBlueprintLabelPills(ctx, referenceBlueprintLabels(renderState, renderRefLayers, W, H, filter));
+    drawBlueprintLabelPills(ctx, referenceBlueprintLabels(renderState, renderRefLayers, W, H, filter, labelMode));
   }
-  // AFTER the pills, deliberately — see drawPlantCodes. This is the mark that makes the third
-  // pawpaw identifiable, and a callout pill landing on it would undo exactly that.
-  drawPlantCodes(ctx, renderState, filter, px, py, W / (renderFrame.imgW * renderFrame.mPerPx));
+  // AFTER the pills, deliberately — see drawPlantCodes. Nothing coded still carries a pill in this
+  // mode, but the uncoded callouts are laid out around the whole design and can still land on a
+  // plant that is not theirs.
+  if (labelMode === 'codes') {
+    drawPlantCodes(ctx, renderState, filter, px, py, W / (renderFrame.imgW * renderFrame.mPerPx));
+  }
 
   // THE WATER SHEET CARRIES ITS OWN SIZING CALCULATION. That is how real rainwater-harvesting
   // drawings work: the sheet that shows the tanks also shows the arithmetic that says whether they
@@ -6058,6 +6123,9 @@ async function buildReferenceBlueprintMap(
     false,
     true,
     {
+      // The legend is the key the map codes are looked up in, so it only carries them in the mode
+      // that draws them. A "MG ·" prefix on a sheet with no MG anywhere is a key to nothing.
+      labelMode,
       ...(waterBudget.length
         ? { footerHeading: 'WATER BUDGET', footerText: waterBudget.join('\n'), footerBox: true }
         : {}),
@@ -8336,6 +8404,9 @@ export function sheetLegendRows(
   _includeToolGlyphs = false,
   /** Needed only by sheet 05's derived tree pits, which are counted in metre space. */
   legendFrame: CanvasFrame = { imgW: 1000, imgH: 1000, mPerPx: 0.1 } as CanvasFrame,
+  /** The legend is the key the map's plant codes are looked up in, so it prints them only in the
+   *  mode that draws them — a "MG ·" prefix on a sheet with no MG anywhere keys nothing. */
+  labelMode: SheetLabelMode = DEFAULT_SHEET_LABEL_MODE,
 ): StyleLegendRow[] {
   const rows: StyleLegendRow[] = [];
   // Sheet 05 derives a pit for every tree that has no basin of its own (drawEarthworksFeatures).
@@ -8441,8 +8512,11 @@ export function sheetLegendRows(
     return leftOrder - rightOrder || left.name.localeCompare(right.name);
   });
   // The key the map codes are looked up in — same function, same input as drawPlantCodes, so a code
-  // on a canopy and the row that explains it can never disagree. See lib/plant-codes.ts.
-  const legendPlantCodes = plantCodesForSheet(groups.map((group) => group.defId));
+  // on a canopy and the row that explains it can never disagree. See lib/plant-codes.ts. Empty in
+  // 'names' mode, where the map carries no codes for this to be a key to.
+  const legendPlantCodes = labelMode === 'codes'
+    ? plantCodesForSheet(groups.map((group) => group.defId))
+    : new Map<string, string>();
   for (const group of orderedGroups) {
     rows.push({
       swatch: group.color,
@@ -8846,6 +8920,9 @@ async function composeStyleSheet(
     footerHeading?: string;
     footerText?: string;
     footerBox?: boolean;
+    /** Whether this sheet's map carries plant codes. The legend keys them, so it must only print
+     *  them in the mode that draws them — see SheetLabelMode. */
+    labelMode?: SheetLabelMode;
   } = {},
 ): Promise<string> {
   const map = await loadImage(mapDataUrl);
@@ -8951,7 +9028,7 @@ async function composeStyleSheet(
   y += Math.round(legendW * 0.045);
 
   const rows = [
-    ...(options.legendRows ?? sheetLegendRows(state, refLayers, filter, includeToolGlyphs, frame)),
+    ...(options.legendRows ?? sheetLegendRows(state, refLayers, filter, includeToolGlyphs, frame, options.labelMode ?? DEFAULT_SHEET_LABEL_MODE)),
     ...(options.extraLegendRows ?? []),
   ];
   const legendTop = y + Math.round(legendW * 0.03);
@@ -10024,6 +10101,18 @@ export default function DesignGlossy({
   const [resultImage, setResultImage] = useState<string | null>(null);
   const [saved, setSaved] = useState<SavedGlossy | null>(null);
   const [filter, setFilter] = useState<GlossyLayerFilter>(initialFilter ?? 'all');
+  /**
+   * CODES OR NAMES — see SheetLabelMode. Offered only where this sheet actually has coded plants,
+   * which is a question about THIS design on THIS sheet, not a fixed list of sheets: a farm with no
+   * planting on the Water sheet must not be shown a control with nothing to control. Same call and
+   * same input the renderer and the legend use, so the control cannot appear when the sheet would
+   * draw no codes, or vanish when it would.
+   */
+  const [labelMode, setLabelMode] = useState<SheetLabelMode>(DEFAULT_SHEET_LABEL_MODE);
+  const sheetHasPlantCodes = useMemo(
+    () => plantCodesForSheet(exactSheetElementLegendGroups(state, filter).map((group) => group.defId)).size > 0,
+    [state, filter],
+  );
   // When set, an analysis map style is chosen instead of a design-layer filter — it always
   // renders via Gemini's generative path (see GLOSSY_STYLES). null = a design-layer map.
   const [analysisStyle, setAnalysisStyle] = useState<AnalysisStyle | null>(null);
@@ -10231,7 +10320,12 @@ export default function DesignGlossy({
   // you just switched away from. Suffixed rather than woven in, so every branch below inherits it
   // and no key can be left out. Absent entirely on the default, which keeps every sheet already in
   // a farmer's gallery addressable by the key it was stored under.
-  const underlaySuffix = underlayCacheSuffix(underlay);
+  // The same sheet in codes and in names is two different pictures, so the mode is part of a
+  // sheet's identity for exactly the reason the underlay is — a cache that cannot tell them apart
+  // re-serves the one you just switched away from. Empty unless the sheet HAS codes, so switching
+  // the control on a sheet it does not affect cannot split that sheet's cache in two.
+  const underlaySuffix = underlayCacheSuffix(underlay)
+    + (sheetHasPlantCodes ? labelModeCacheSuffix(labelMode) : '');
   const mapKey = (exactSheet === 'base'
     ? 'base-exact'
     : exactSheet === 'sector'
@@ -10792,7 +10886,7 @@ export default function DesignGlossy({
       // last rung is a real sheet cannot fail loudly — every filter it forgets silently becomes
       // the masterplan — and buildBlueprintEarthworksMap had existed the whole time. One call
       // makes forgetting impossible.
-      const composite = await buildReferenceBlueprintMap(state, frame, refLayers, filter, placeName, site);
+      const composite = await buildReferenceBlueprintMap(state, frame, refLayers, filter, placeName, site, labelMode);
       setResultImage(composite);
       const record: SavedGlossy = { image: composite, provider: 'exact', at: new Date().toISOString() };
       saveGlossy(state.siteId, mapKey, record);
@@ -10961,7 +11055,7 @@ export default function DesignGlossy({
         if (layerContentCount(state, refLayers, f) === 0) continue;
         step(
           `${SHEET_NO[f]} · ${GLOSSY_FILTERS.find((x) => x.key === f)?.label ?? f} map`,
-          await buildReferenceBlueprintMap(state, frame, refLayers, f, placeName, site),
+          await buildReferenceBlueprintMap(state, frame, refLayers, f, placeName, site, labelMode),
           f,
         );
       }
@@ -12759,6 +12853,32 @@ export default function DesignGlossy({
           })}
           <span style={{ fontSize: 10.5, opacity: 0.6 }}>{UNDERLAY_HINT[underlay]}</span>
         </div>
+        {/* HOW THIS SHEET NAMES ITS PLANTS — one or the other, never both. Shown only where the
+            selected sheet actually has coded plants, so it appears on Planting and disappears on
+            Site or Sector rather than sitting there doing nothing. See lib/plant-codes.ts. */}
+        {sheetHasPlantCodes && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', marginTop: 8 }}>
+            <span style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55 }}>
+              Plant labels
+            </span>
+            {(['codes', 'names'] as const).map((key) => {
+              const active = labelMode === key;
+              return (
+                <button
+                  key={key}
+                  type="button"
+                  onClick={() => setLabelMode(key)}
+                  disabled={loading !== null}
+                  aria-pressed={active}
+                  style={{ padding: '6px 12px', borderRadius: 999, border: `1px solid ${active ? DARK : '#E2D8C4'}`, background: active ? DARK : PAPER, color: active ? PAPER : '#5C5040', fontWeight: 700, fontSize: 12, cursor: loading !== null ? 'default' : 'pointer' }}
+                >
+                  {LABEL_MODE_LABEL[key]}
+                </button>
+              );
+            })}
+            <span style={{ fontSize: 10.5, opacity: 0.6 }}>{LABEL_MODE_HINT[labelMode]}</span>
+          </div>
+        )}
         {!compact && (
         <>
         {/* THE one-tap plan set: AI all-sheets, hard-wired to the gpt-image-2 background queue

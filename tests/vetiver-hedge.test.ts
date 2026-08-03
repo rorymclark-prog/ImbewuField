@@ -3,6 +3,8 @@ import test from 'node:test';
 
 import { ELEMENTS_BY_ID } from '@/lib/design-elements';
 import {
+  VETIVER_BLADE_LENGTH_FACTOR,
+  VETIVER_BLADE_REACH,
   VETIVER_HEDGE_IDS,
   VETIVER_CLUMP_RADIUS_M,
   VETIVER_LINE_SPACING_M,
@@ -86,17 +88,48 @@ test('the same design draws the same hedge every time, and two banks differ', ()
   assert.notDeepEqual(a.crowns, b.crowns, 'two banks on one sheet must not be identical stamps');
 });
 
-test('a clump never falls below the legibility floor, however small the sheet', () => {
-  // On a phone-sized export the true 15 cm clump radius is sub-pixel. Below the floor the drawing
-  // becomes a legible map symbol rather than a literal one — a smudge says nothing.
+test('the legibility floor lifts a clump, but never past the band it sits in', () => {
+  // On a phone-sized export the true 15 cm clump radius is sub-pixel, and the floor rescues it.
+  // What the floor may NOT do is make the hedge wider than the farmer said it is — Rory measured
+  // that himself: a row saved at W 0,52 m drawing at about twice that. See VETIVER_BLADE_REACH.
   for (const pxPerM of [4, 8, 14, 40, 120]) {
     const geometry = geometryFor(2, 2, pxPerM);
     if (!geometry) continue;
-    assert.ok(geometry.clumpR >= MIN_CLUMP_PX - 1e-9, `${pxPerM} px/m gave r=${geometry.clumpR}`);
+    const bandPx = 2 * pxPerM;
+    const floored = Math.min(Math.max(MIN_CLUMP_PX, VETIVER_CLUMP_RADIUS_M * pxPerM), bandPx / (2 * VETIVER_BLADE_REACH));
+    assert.ok(Math.abs(geometry.clumpR - floored) < 1e-9, `${pxPerM} px/m gave r=${geometry.clumpR}`);
     if (pxPerM >= 40) {
       assert.ok(
         Math.abs(geometry.clumpR - VETIVER_CLUMP_RADIUS_M * pxPerM) < 1e-9,
-        'at sheet scale the real clump size wins, not the floor',
+        'at sheet scale the real clump size wins, not the floor and not the cap',
+      );
+    }
+  }
+});
+
+test('a hedge is never drawn wider than the width it was saved at', () => {
+  // THE defect, three times reported. The clump floor raised the radius, the blades reached
+  // VETIVER_BLADE_REACH x that, and nothing compared the result with the band — so the narrower the
+  // hedge, the further past its own edges it grew. Rory's own reading off the canvas: "this is how
+  // wide the vetiver is and the second image is how wide you keep making it", W 0,52 m.
+  const cases: Array<[number, number, number]> = [
+    [0.52, 15.29, 14], // the row he measured
+    [0.3, 5, 40],
+    [2, 2, 40],
+    [1.2, 12, 8], // phone-sized export, where the floor bites hardest
+    [0.52, 15.29, 90],
+  ];
+  for (const [wM, hM, pxPerM] of cases) {
+    const geometry = geometryFor(wM, hM, pxPerM);
+    if (!geometry) continue;
+    const bandHalf = (Math.min(wM, hM) * pxPerM) / 2;
+    for (const crown of geometry.crowns) {
+      // Blade tips, not crown centres — the tips are what a reader sees as the hedge's edge.
+      const across = geometry.alongY ? Math.abs(crown.x) : Math.abs(crown.y);
+      const reach = across + crown.r * VETIVER_BLADE_LENGTH_FACTOR;
+      assert.ok(
+        reach <= bandHalf + 0.5,
+        `${wM}x${hM} @ ${pxPerM}px/m: a blade reached ${reach.toFixed(2)} past a ${bandHalf.toFixed(2)} half-band`,
       );
     }
   }
