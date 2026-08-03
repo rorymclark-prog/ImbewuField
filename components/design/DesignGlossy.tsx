@@ -43,6 +43,7 @@ import { structureRegisterText } from '@/lib/structure-register';
 import { buildFinishedSheetPolishPrompt, buildLockedIllustrationPrompt, buildPhasingRestylePrompt, buildSatelliteOverlayPrompt, buildSectorRestylePrompt, buildSectorSheetPolishPrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, SHEET_NO, type StylePreset } from '@/lib/producer-prompt';
 import { zoneBadgePositions } from '@/lib/canvas-labels';
 import { enqueueRenderJob, subscribeRenderJob, fetchRenderOutput, type RenderQuality } from '@/lib/render-jobs';
+import type { RenderEngine } from '@/lib/render-job-contract';
 // Extracted (behaviour-preserving) — see lib/glossy-filters.ts and lib/producer-labels.ts.
 // Re-exported below so existing consumers (lib/producer-prompt.ts comments, app/design/page.tsx,
 // components/design/DesignPrint.tsx) keep importing them from this module unchanged.
@@ -363,11 +364,20 @@ const LINE_COLORS: Record<string, string> = {
 // Gemini is listed first and is the DEFAULT: gpt-image-2 (via fal.ai) frequently returns 403
 // (fal/OpenAI verification), so it can't be the reliable default. When it IS picked and fails,
 // generateProducer falls back to Gemini automatically (see the try/catch there).
-// Gemini is switched OFF (Rory, 2026-07-18) — every AI render now goes to gpt-image-2. The
-// 'gemini' key is kept in the union only so the legacy branches still type-check; nothing offers
-// it. (The single-option picker below hides itself.)
+// Gemini was switched OFF (Rory, 2026-07-18) and is back ON (Rory, 2026-08-03: "then we need to
+// try hook it up") now that the account is on a paid Gemini tier with a real spend cap.
+//
+// It had never actually worked from here, and not for one reason. Selecting Gemini did nothing to
+// the queue — all four enqueueRenderJob call sites hardcoded engine 'openai' and ignored this
+// picker entirely — and even a job that DID carry 'gemini' would have been rendered on OpenAI,
+// because the worker branched on a `provider` field nothing ever wrote. Both are fixed; see
+// RENDER_ENGINES in lib/render-job-contract.ts.
+//
+// gpt-image-2 stays the DEFAULT. Changing which vendor a render bills to is Rory's call, not a
+// side effect of making the other one selectable.
 const ENGINES: Array<{ key: 'falgpt' | 'gemini'; label: string; sub: string }> = [
   { key: 'falgpt', label: 'gpt-image-2', sub: 'sharpest · background (~mins)' },
+  { key: 'gemini', label: 'Gemini', sub: 'cheaper · background (~mins)' },
 ];
 
 /**
@@ -10694,9 +10704,12 @@ export default function DesignGlossy({
   const [exactSheet, setExactSheet] = useState<null | 'base' | 'sector' | 'implementation'>(null);
   // Whether the CURRENT selection renders without any model — drives the honest caption/pill.
   const isExactRender = exactSheet !== null || (!producerStyle && !analysisStyle);
-  // Render engine. Gemini is the DEFAULT because gpt-image-2 (via fal.ai) frequently 403s
-  // (fal/OpenAI verification); gpt-image-2 stays selectable and auto-falls-back to Gemini on error.
+  // Render engine. gpt-image-2 is the default; Gemini is selectable again (see ENGINES).
   const [engine, setEngine] = useState<'falgpt' | 'gemini'>('falgpt');
+  // The picker's key is a UI label ('falgpt'); the job doc's is a VENDOR ('openai'). Every queue
+  // enqueue below must use this rather than a literal — four of them hardcoded 'openai', which is
+  // why picking Gemini and pressing Hybrid silently rendered on OpenAI instead of failing.
+  const queueEngine: RenderEngine = engine === 'gemini' ? 'gemini' : 'openai';
   // Defaults to 'high' — what every paid render used before this dial existed, so nothing changes
   // for anyone who never opens More options.
   const [quality, setQuality] = useState<RenderQuality>('high');
@@ -11998,7 +12011,7 @@ export default function DesignGlossy({
         setLoading(null);
         return;
       }
-      const jobId = await enqueueRenderJob({ siteId: state.siteId, style: styleKey, engine: 'openai', quality, sheets });
+      const jobId = await enqueueRenderJob({ siteId: state.siteId, style: styleKey, engine: queueEngine, quality, sheets });
       persistJobId(state.siteId, jobId);
       setQueueJobId(jobId);
       setNotice(formatDesignTranslation(t('designGlossyBackgroundCount'), {
@@ -12010,7 +12023,7 @@ export default function DesignGlossy({
       setError(err instanceof Error ? err.message : t('designGlossyCouldNotStart'));
       setLoading(null);
     }
-  }, [producerStyle, state, frame, refLayers, site, placeName, finishStyledSheet, pushGallery, effectiveModelChrome, lockActive, promptRewrite]);
+  }, [producerStyle, state, frame, refLayers, site, placeName, finishStyledSheet, pushGallery, effectiveModelChrome, lockActive, promptRewrite, queueEngine, quality]);
 
   // Single-sheet gpt-image-2 via the SAME background queue as "AI · ALL" (direct OpenAI). This is
   // what the per-sheet "Generate my … Blueprint" button routes to when gpt-image-2 is selected —
@@ -12134,7 +12147,7 @@ export default function DesignGlossy({
       const jobId = await enqueueRenderJob({
         siteId: state.siteId,
         style: styleKey,
-        engine: 'openai', quality,
+        engine: queueEngine, quality,
         sheets: [{
           key: filter,
           label: layerLabel,
@@ -12160,7 +12173,7 @@ export default function DesignGlossy({
       setError(err instanceof Error ? err.message : t('designGlossyCouldNotStart'));
       setLoading(null);
     }
-  }, [producerStyle, state, frame, refLayers, site, placeName, filter, effectiveModelChrome, lockActive, promptRewrite, lockedPolishStage]);
+  }, [producerStyle, state, frame, refLayers, site, placeName, filter, effectiveModelChrome, lockActive, promptRewrite, lockedPolishStage, queueEngine, quality]);
 
   // Compatibility finisher for older queued Sector jobs, which contain a ground-only AI pass.
   // New paid Sector jobs persist showcase:true and return the model's complete polished sheet
@@ -12371,7 +12384,7 @@ export default function DesignGlossy({
       const jobId = await enqueueRenderJob({
         siteId: state.siteId,
         style: styleKey,
-        engine: 'openai', quality,
+        engine: queueEngine, quality,
         sheets: [{
           key: kind,
           label: kind === 'sector' ? 'Sector analysis' : 'Existing site',
@@ -12401,7 +12414,7 @@ export default function DesignGlossy({
       setError(err instanceof Error ? err.message : t('designGlossyCouldNotStart'));
       setLoading(null);
     }
-  }, [producerStyle, state, frame, refLayers, site, placeName, lockedPolishStage]);
+  }, [producerStyle, state, frame, refLayers, site, placeName, lockedPolishStage, queueEngine, quality]);
 
   // Phasing (08) AI Hybrid + Full Treatment — mirrors generateSectorViaQueue's two-stage pattern.
   //
@@ -12472,7 +12485,7 @@ export default function DesignGlossy({
       const jobId = await enqueueRenderJob({
         siteId: state.siteId,
         style: styleKey,
-        engine: 'openai', quality,
+        engine: queueEngine, quality,
         sheets: [{
           key: 'implementation',
           label: 'Implementation & Phasing',
@@ -12506,7 +12519,7 @@ export default function DesignGlossy({
       setError(err instanceof Error ? err.message : t('designGlossyCouldNotStart'));
       setLoading(null);
     }
-  }, [producerStyle, state, frame, refLayers, site, placeName, lockedPolishStage]);
+  }, [producerStyle, state, frame, refLayers, site, placeName, lockedPolishStage, queueEngine, quality]);
 
   // One explicit rerun path for the visible refresh button and the main CTA.
   const runCurrentSheet = useCallback(() => {

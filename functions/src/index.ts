@@ -131,8 +131,11 @@ interface RenderJob {
   uid: string;
   siteId: string;
   style: string;
+  /** Which image API this job is billed against — 'openai' or 'gemini'. The contract validates it
+   *  (workerRenderJobContractError) before a single byte is sent anywhere. There used to be a
+   *  second field, `provider`, which this worker branched on and NOTHING ever wrote; see the note
+   *  on RENDER_ENGINES in render-job-contract.ts for why that had to go rather than be populated. */
   engine: string;
-  provider?: 'openai' | 'gemini';
   /** Absent on jobs written before the quality dial existed — read as 'high', which is what every
    *  render used until then. Must stay optional: old docs in the queue have no such field. */
   quality?: 'high' | 'medium' | 'low';
@@ -393,7 +396,16 @@ export const runRenderJob = onDocumentCreated(
       }
 
       const key = OPENAI_API_KEY.value();
-      const geminiKey = job.provider === 'gemini' ? GEMINI_API_KEY.value() : '';
+      // A Gemini job with no Gemini secret must die HERE, named, before any sheet is attempted.
+      // The branch below has never run in production, and its last bug (asking a text model for an
+      // image) failed in a way indistinguishable from a bad key — so the one failure this worker
+      // can identify with certainty is the one it must not let through as a generic render error.
+      const geminiKey = job.engine === 'gemini' ? GEMINI_API_KEY.value() : '';
+      if (job.engine === 'gemini' && !geminiKey) {
+        await ref.update({ status: 'error', error: 'Gemini rendering is not configured on the server (GEMINI_API_KEY secret is missing).', updatedAt: FieldValue.serverTimestamp() });
+        logger.error(JSON.stringify({ evt: 'job_failed', jobId, uid: job.uid, reason: 'missing_gemini_secret' }));
+        return;
+      }
       const bucket = getStorage().bucket();
       const deadline = started + JOB_DEADLINE_MS;
 
@@ -437,7 +449,7 @@ export const runRenderJob = onDocumentCreated(
             // (every earlier render has 0% black), so gate the reference on there being no mask.
             let outB64: string;
             
-            if (job.provider === 'gemini') {
+            if (job.engine === 'gemini') {
               outB64 = await geminiEdit(geminiKey, buf.toString('base64'), prompt);
               
               if (maskB64) {

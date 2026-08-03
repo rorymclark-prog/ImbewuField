@@ -15,10 +15,12 @@ import {
 } from '../lib/render-jobs.ts';
 import {
   MAX_RENDER_SHEETS_PER_JOB as CLIENT_MAX,
+  RENDER_ENGINES as CLIENT_ENGINES,
   RENDER_SHEET_KEYS as CLIENT_KEYS,
 } from '../lib/render-job-contract.ts';
 import {
   MAX_RENDER_SHEETS_PER_JOB as WORKER_MAX,
+  RENDER_ENGINES as WORKER_ENGINES,
   RENDER_SHEET_KEYS as WORKER_KEYS,
   workerRenderJobContractError,
 } from '../functions/src/render-job-contract.ts';
@@ -97,6 +99,65 @@ test('the worker rejects malformed jobs before either usage counter is read or w
   const counters = source.indexOf("db.doc(`render_usage/");
   assert.ok(validation >= 0);
   assert.ok(counters > validation);
+});
+
+test('web client and worker share one render-engine contract', () => {
+  assert.deepEqual([...CLIENT_ENGINES].sort(), [...WORKER_ENGINES].sort());
+});
+
+test('both sides accept every contracted engine and reject anything else', () => {
+  for (const engine of CLIENT_ENGINES) {
+    assert.equal(
+      workerRenderJobContractError({ ...workerJob([{ key: 'water', prompt: 'render' }]), engine }),
+      null,
+      `worker rejected contracted engine ${engine}`,
+    );
+  }
+  for (const bogus of ['fal', 'falgpt', 'OpenAI', '', null, undefined, 7]) {
+    assert.equal(
+      workerRenderJobContractError({ ...workerJob([{ key: 'water', prompt: 'render' }]), engine: bogus }),
+      'invalid engine',
+      `worker accepted bogus engine ${String(bogus)}`,
+    );
+  }
+});
+
+/**
+ * THE PHANTOM FIELD. The worker used to choose its vendor from `job.provider` while the client only
+ * ever wrote `job.engine`, so `provider === 'gemini'` was permanently false: a Gemini job would
+ * validate, run, and be rendered and BILLED on OpenAI, returning a perfectly good picture with
+ * nothing anywhere reporting that the wrong vendor had been charged.
+ *
+ * That is why this is a source grep and not a behavioural test. A unit test can only check the
+ * branch it knows about; the defect was a branch keyed to a field that never arrived, which reads
+ * as working code both to a reviewer and to a passing suite. The invariant worth pinning is
+ * structural: the job's vendor is decided by exactly ONE field, and it is the one the client writes.
+ */
+test('the worker chooses its vendor from the same field the client writes, and no other', () => {
+  const worker = readFileSync(new URL('../functions/src/index.ts', import.meta.url), 'utf8');
+  const client = readFileSync(new URL('../lib/render-jobs.ts', import.meta.url), 'utf8');
+
+  // The client writes `engine` into the job doc...
+  assert.match(client, /engine: opts\.engine/);
+  // ...and the worker branches on that same field.
+  assert.match(worker, /job\.engine === 'gemini'/);
+
+  // Nothing on either side may resurrect a second vendor field. Comment lines are stripped first so
+  // the note explaining this history cannot satisfy its own guard.
+  const code = (src: string) => src.split('\n')
+    .filter((l) => !/^\s*(\/\/|\*|\/\*)/.test(l))
+    .join('\n');
+  assert.doesNotMatch(code(worker), /job\.provider/);
+  assert.doesNotMatch(code(client), /provider:/);
+});
+
+test('a Gemini job with no server secret fails by name before any sheet is attempted', () => {
+  const source = readFileSync(new URL('../functions/src/index.ts', import.meta.url), 'utf8');
+  const guard = source.indexOf('missing_gemini_secret');
+  const firstEdit = source.indexOf('await geminiEdit(');
+  assert.ok(guard >= 0, 'no missing-secret guard');
+  assert.ok(firstEdit > guard, 'the guard must precede any Gemini call');
+  assert.match(source, /GEMINI_API_KEY secret is missing/);
 });
 
 test('the worker derives every privileged Storage path from owner, job and sheet identity', () => {

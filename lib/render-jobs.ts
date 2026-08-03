@@ -18,6 +18,7 @@ import { hasConflictingRenderAuthority } from '@/lib/render-policy';
 import {
   MAX_RENDER_SHEETS_PER_JOB,
   RENDER_SHEET_KEYS,
+  isRenderEngine,
   renderSheetContractError,
 } from '@/lib/render-job-contract';
 
@@ -223,7 +224,7 @@ export async function enqueueRenderJob(opts: {
   const requestError = renderJobRequestError(opts.sheets);
   if (requestError) throw new RenderJobError(requestError);
   if (!opts.siteId.trim()) throw new RenderJobError('Choose a farm before rendering AI sheets.');
-  if (opts.engine !== 'openai') throw new RenderJobError('Unknown AI render engine.');
+  if (!isRenderEngine(opts.engine)) throw new RenderJobError('Unknown AI render engine.');
   if (!opts.style.trim()) throw new RenderJobError('Choose a render style.');
   const fb = getFirebase();
   const uid = fb?.auth.currentUser?.uid;
@@ -319,7 +320,7 @@ export function normaliseRenderJobDoc(jobId: string, value: unknown): RenderJobD
     || !jobId.startsWith(`${job.uid}_`)
     || !nonEmptyString(job.siteId)
     || !nonEmptyString(job.style)
-    || job.engine !== 'openai'
+    || !isRenderEngine(job.engine)
     || typeof job.status !== 'string'
     || !JOB_STATUSES.has(job.status as RenderJobStatus)
     || !Array.isArray(job.sheets)

@@ -29,6 +29,26 @@ export const RENDER_SHEET_KEYS = [
 
 export type RenderSheetKey = typeof RENDER_SHEET_KEYS[number];
 
+/**
+ * Which image APIs a job may be billed against. Second independent copy of
+ * functions/src/render-job-contract.ts's RENDER_ENGINES (same deployment-bundle split as the sheet
+ * keys above); the drift check in tests/render-jobs.test.ts enforces that the two stay in step.
+ *
+ * Read that file's RENDER_ENGINES note before adding one: the worker used to branch on a `provider`
+ * field the client never wrote, so a job could name one vendor and be billed to another with no
+ * error anywhere. An engine is only real when the SAME field is written here, validated on both
+ * sides, and read by the worker.
+ */
+export const RENDER_ENGINES = ['openai', 'gemini'] as const;
+
+export type RenderEngine = typeof RENDER_ENGINES[number];
+
+/** Type predicate, not a bare `includes`: the old `engine !== 'openai'` check NARROWED, and callers
+ *  downstream rely on that to treat the field as a known vendor rather than `unknown`. */
+export function isRenderEngine(value: unknown): value is RenderEngine {
+  return typeof value === 'string' && (RENDER_ENGINES as readonly string[]).includes(value);
+}
+
 export const MAX_RENDER_SHEETS_PER_JOB = 5;
 
 export interface RenderSheetIdentity {
