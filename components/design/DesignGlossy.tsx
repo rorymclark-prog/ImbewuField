@@ -96,7 +96,7 @@ import {
   plantCodesForSheet,
   type SheetLabelMode,
 } from '@/lib/plant-codes';
-import { drawVetiverHedge, vetiverHedgeGeometry, VETIVER_HEDGE_IDS } from '@/lib/vetiver-hedge';
+import { paintTopDownVetiverHedge, VETIVER_HEDGE_IDS } from '@/lib/vetiver-hedge';
 import {
   balancedLegendColumnRanges,
   countedLegendText,
@@ -4969,9 +4969,6 @@ function paintVetiverHedge(
   // A clump below this is a smudge rather than a plant, so the hedge becomes a legible map symbol
   // instead of a literal one-mark-per-slip drawing. See lib/vetiver-hedge.ts.
   const minClumpPx = Math.max(2.6, ctx.canvas.width * 0.0015);
-  const geometry = vetiverHedgeGeometry(wPx, hPx, wM, hM, drawnPxPerM, minClumpPx, it.id);
-  if (!geometry) return false;
-
   ctx.save();
   ctx.translate(px(it.x), py(it.y));
   if (it.rot) ctx.rotate((it.rot * Math.PI) / 180);
@@ -4981,14 +4978,22 @@ function paintVetiverHedge(
   // band already drawn too wide. Capped against the band for the same reason the clump radius is:
   // a legibility device may not enlarge a stated measurement. See VETIVER_BLADE_REACH.
   const casing = Math.min(Math.max(2, ctx.canvas.width * 0.0018), Math.min(wPx, hPx) * 0.3);
-  drawVetiverHedge(
+  const painted = paintTopDownVetiverHedge(
     ctx,
-    geometry,
-    () => roundRectPath(ctx, -wPx / 2, -hPx / 2, wPx, hPx, radius),
-    casing,
+    {
+      widthPx: wPx,
+      heightPx: hPx,
+      widthM: wM,
+      heightM: hM,
+      pxPerM: drawnPxPerM,
+      minClumpPx,
+      seedId: it.id,
+      casingWidth: casing,
+      tracePlate: () => roundRectPath(ctx, -wPx / 2, -hPx / 2, wPx, hPx, radius),
+    },
   );
   ctx.restore();
-  return true;
+  return painted;
 }
 
 function drawProductionBedCrop(

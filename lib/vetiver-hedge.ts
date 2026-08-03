@@ -17,11 +17,9 @@
 // Deterministic wins here for the reasons it won on the plan sheets generally: exact, free,
 // identical on every render, and correct at every scale.
 //
-// NOTE FOR WHOEVER TOUCHES THIS NEXT: the Water sheet draws vetiver through its own symbol
-// (`vetiverBank` in lib/cartographic-water-symbols.ts), so the two sheets still draw the same plant
-// two ways. That is the repo's standing bug class — a fix that reaches one sheet — and it is worth
-// unifying, but the water symbol belongs to that sheet's gradient-wash symbol language and changing
-// it is a separate, visible decision.
+// Every plan surface calls the same top-down painter below. A renderer may choose its own footprint
+// and print scale, but it may not substitute a separate side-view or gradient-wash vetiver symbol:
+// a farmer should never have to learn two map marks for the same living hedge.
 
 /** Both catalog ids that are physically the same thing: a line of vetiver knitted into a hedge. */
 export const VETIVER_HEDGE_IDS: ReadonlySet<string> = new Set(['vetiver_row', 'mulch_bank']);
@@ -63,6 +61,18 @@ export interface VetiverHedgeGeometry {
   alongY: boolean;
   /** Every tuft crown, in the item's own centred local space. */
   crowns: Array<{ x: number; y: number; r: number; seed: string }>;
+}
+
+export interface TopDownVetiverHedgePaintOptions {
+  widthPx: number;
+  heightPx: number;
+  widthM: number;
+  heightM: number;
+  pxPerM: number;
+  minClumpPx: number;
+  seedId: string;
+  casingWidth: number;
+  tracePlate: () => void;
 }
 
 /** Deterministic 0..1 from a seed string — same crown positions on every render of a design. */
@@ -155,6 +165,29 @@ export function vetiverHedgeGeometry(
     }
   }
   return { lines, perLine, clumpR, alongY, crowns };
+}
+
+/**
+ * The one render authority for vetiver on plan sheets and symbol keys. Callers own their local
+ * footprint path and presentation dimensions; this function owns the top-down tuft treatment so
+ * an old sheet cannot quietly regress to a different plant drawing.
+ */
+export function paintTopDownVetiverHedge(
+  ctx: CanvasRenderingContext2D,
+  options: TopDownVetiverHedgePaintOptions,
+): boolean {
+  const geometry = vetiverHedgeGeometry(
+    options.widthPx,
+    options.heightPx,
+    options.widthM,
+    options.heightM,
+    options.pxPerM,
+    options.minClumpPx,
+    options.seedId,
+  );
+  if (!geometry) return false;
+  drawVetiverHedge(ctx, geometry, options.tracePlate, options.casingWidth);
+  return true;
 }
 
 /** Blades per crown. Enough to read as a clump-forming grass, few enough to stay fine at print. */

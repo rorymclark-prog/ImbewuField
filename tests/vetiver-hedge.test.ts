@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import test from 'node:test';
 
 import { ELEMENTS_BY_ID } from '@/lib/design-elements';
@@ -27,6 +28,23 @@ test('both catalog ids that mean "vetiver" are drawn as a hedge', () => {
   }
   assert.ok(VETIVER_HEDGE_IDS.has('vetiver_row'));
   assert.ok(VETIVER_HEDGE_IDS.has('mulch_bank'));
+});
+
+test('every exact-sheet vetiver path delegates to the one top-down hedge painter', () => {
+  // Water once kept a gradient-wash vetiverBank while Planting used the top-down tufts. The
+  // library may retain a sheet-specific footprint, but the plant itself must have one authority.
+  const glossy = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
+  const waterSymbols = readFileSync(new URL('../lib/cartographic-water-symbols.ts', import.meta.url), 'utf8');
+  assert.match(glossy, /paintTopDownVetiverHedge\(\s*ctx,/);
+  assert.match(waterSymbols, /paintTopDownVetiverHedge\(ctx, \{/);
+  const waterVetiverStart = waterSymbols.indexOf('function vetiverBank(');
+  const waterVetiverEnd = waterSymbols.indexOf('\nfunction earthwork(', waterVetiverStart);
+  assert.ok(waterVetiverStart >= 0 && waterVetiverEnd > waterVetiverStart, 'expected Water’s vetiver path');
+  assert.doesNotMatch(
+    waterSymbols.slice(waterVetiverStart, waterVetiverEnd),
+    /createLinearGradient|quadraticCurveTo/,
+    'Water must not grow a second, differently drawn vetiver hedge',
+  );
 });
 
 test('a Vetiver Row is one slip line and a Vetiver Bank is several', () => {

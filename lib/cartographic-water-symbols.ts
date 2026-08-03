@@ -4,6 +4,7 @@
  */
 
 import { normaliseLookupKey } from '@/lib/key-normalisation';
+import { paintTopDownVetiverHedge } from '@/lib/vetiver-hedge';
 
 export type CartographicWaterSymbolId =
   | 'jojo-tank'
@@ -281,47 +282,26 @@ function trough(ctx: CanvasRenderingContext2D, w: number, h: number, stroke: num
 }
 
 function vetiverBank(ctx: CanvasRenderingContext2D, w: number, h: number, stroke: number, seed: number): void {
-  const alongX = w >= h;
-  const cross = Math.max(1, Math.min(w, h));
-  const length = Math.max(w, h);
-  const bankWash = alongX
-    ? ctx.createLinearGradient(0, -h / 2, 0, h / 2)
-    : ctx.createLinearGradient(-w / 2, 0, w / 2, 0);
-  bankWash.addColorStop(0, '#31482E');
-  bankWash.addColorStop(0.5, '#657944');
-  bankWash.addColorStop(1, '#354E31');
-  ctx.fillStyle = bankWash;
-  ctx.fillRect(-w / 2, -h / 2, w, h);
-  ctx.strokeStyle = '#9EB56A';
-  ctx.lineWidth = stroke;
-  ctx.strokeRect(-w / 2, -h / 2, w, h);
-  const count = Math.max(5, Math.min(52, Math.round(length / Math.max(3.5, cross * 0.56))));
-  for (let i = 0; i < count; i += 1) {
-    const t = (i + 0.5) / count - 0.5;
-    const bx = alongX ? t * w : (hash(seed, i) - 0.5) * cross * 0.12;
-    const by = alongX ? (hash(seed, 40 + i) - 0.5) * cross * 0.12 : t * h;
-    ctx.lineWidth = Math.max(0.6, stroke * 0.42);
-    for (let blade = -3; blade <= 3; blade += 1) {
-      const spread = (blade / 3) * cross * (0.34 + hash(seed, 80 + i + blade) * 0.1);
-      const alongJitter = (hash(seed, 130 + i * 7 + blade) - 0.5) * cross * 0.22;
-      const tipX = alongX ? bx + alongJitter : bx + spread;
-      const tipY = alongX ? by + spread : by + alongJitter;
+  // This symbol used to carry its own gradient-wash grass drawing while the plan sheets painted
+  // the same hedge as top-down tufts. A legend key is still a plan mark: route it through the
+  // shared painter so it cannot teach a second visual language for vetiver.
+  paintTopDownVetiverHedge(ctx, {
+    widthPx: w,
+    heightPx: h,
+    // The symbol library receives pixels only. Treat that local footprint as a 1 px/m frame so
+    // the shared geometry still derives its rows from the same long/short-axis rule; no physical
+    // size is shown or inferred by this key.
+    widthM: w,
+    heightM: h,
+    pxPerM: 1,
+    minClumpPx: Math.max(1.2, Math.min(w, h) * 0.05),
+    seedId: `water-symbol:${seed}`,
+    casingWidth: Math.min(Math.max(0.8, stroke), Math.min(w, h) * 0.3),
+    tracePlate: () => {
       ctx.beginPath();
-      ctx.moveTo(bx, by);
-      ctx.quadraticCurveTo(
-        (bx + tipX) / 2 + (alongX ? 0 : spread * 0.08),
-        (by + tipY) / 2 + (alongX ? spread * 0.08 : 0),
-        tipX,
-        tipY,
-      );
-      ctx.strokeStyle = blade % 2 ? '#B0C67A' : '#789A50';
-      ctx.stroke();
-    }
-    ctx.beginPath();
-    ctx.arc(bx, by, Math.max(0.55, stroke * 0.38), 0, TAU);
-    ctx.fillStyle = '#263D29';
-    ctx.fill();
-  }
+      ctx.rect(-w / 2, -h / 2, w, h);
+    },
+  });
 }
 
 function earthwork(ctx: CanvasRenderingContext2D, w: number, h: number, stroke: number, kind: 'half-moon' | 'berm' | 'terrace'): void {
