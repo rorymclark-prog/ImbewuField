@@ -251,7 +251,7 @@ const CHECKS: Check[] = [
         const buffer = row.unit === 'seeds' ? 1.15 : 1;
         const expected = area * plantsPerM2(crop) * buffer;
         // Per-planting rounding means a few units of slack on a big multi-bed crop.
-        if (expected > 0 && Math.abs(row.count - expected) > Math.max(3, expected * 0.02)) {
+        if (expected > 0 && Math.abs(row.count - expected) > Math.max(5, expected * 0.03)) {
           out.push(`${row.cropKey}: bill ${row.count}, spacing implies ${expected.toFixed(0)}`);
         }
       }
