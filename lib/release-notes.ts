@@ -34,6 +34,16 @@ export interface ReleaseNote {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '5 August (later)',
+    sha: '038bfcc',
+    changes: [
+      'The printed plan now opens with your year at a glance, not a wall of text',
+      'One page shows every bed and plot across all twelve months',
+      'Each month is a tick-off field sheet with room to write what you did',
+      'Sowing into trays and planting into the bed are now separate jobs',
+    ],
+  },
+  {
     when: '5 August',
     sha: 'e84e988',
     changes: [
