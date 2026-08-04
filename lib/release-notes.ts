@@ -35,9 +35,10 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '5 August (late night)',
-    sha: '2de009e',
+    sha: '092e10a',
     changes: [
       'Bed 1 keeps its July planting - one crop no longer swallows a whole bed',
+      'The AI-polished map gets its legend and labels back, without ghost ribbons',
     ],
   },
   {
