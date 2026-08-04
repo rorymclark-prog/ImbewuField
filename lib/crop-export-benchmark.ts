@@ -1,0 +1,546 @@
+// ── The crop plan reorganised around who reads it ───────────────────────────
+//
+// The old export was one long scroll: cover, bed list, buying list, then a
+// month-by-month wall of single-action lines. Every fact was there and none of
+// it was addressed to anybody. A garden manager deciding labour, a buyer
+// placing an order and a field worker doing Tuesday's job all had to read the
+// same undifferentiated text and extract their own view.
+//
+// This module builds the five views a crop plan is actually used through:
+//
+//   1. DASHBOARD    — scale, yield, peak harvest, peak workload, what to decide
+//   2. YEAR IN NUMBERS — harvest by month, workload by month, biggest crops
+//   3. LAND OCCUPANCY  — every bed and plot across all twelve months at once
+//   4. FULL PLAN       — every planting, as columns instead of prose
+//   5. WORKING DOCS    — a monthly field sheet you tick off, and a harvest record
+//
+// Everything here is PURE DATA. The renderer (lib/crop-export-pdf.ts) decides
+// what it looks like; nothing in this file knows about paper. That split is
+// what makes the numbers testable — the interrogation suite asserts on these
+// builders directly rather than trying to read a PDF back.
+//
+// It also fixes a real defect by construction. The old month list printed
+// "Sow tomatoes - rows 90cm apart - 40cm apart in the row" in the month the
+// seed goes into TRAYS, where row spacing is meaningless and actively wrong.
+// Here a tray sowing is a NURSERY row and the field spacing travels with the
+// transplant, because they are different sections of the sheet.
+
+import type { CropDef } from '@/lib/crop-catalog';
+import { cropByKey, plantSpacingCm } from '@/lib/crop-catalog';
+import type { FoodGroup } from '@/lib/crop-groups';
+import { foodGroupOf } from '@/lib/crop-groups';
+import type { CropTask, PlanBed, Planting } from '@/lib/crop-plan';
+import {
+  buildFoodValueByMonth,
+  estimatedYieldKgAdjusted,
+  harvestMonth,
+  yieldByCrop,
+} from '@/lib/crop-plan';
+import { MONTH_NAMES, monthShort, rollingMonths, wrapMonth } from '@/lib/crop-export-schedule';
+
+// ── 1. Dashboard ────────────────────────────────────────────────────────────
+
+export interface DashboardStat {
+  value: string;
+  label: string;
+  detail: string;
+}
+
+export interface PlanDashboard {
+  stats: DashboardStat[];
+  /** Observations read straight off the plan's own numbers — never advice. */
+  signals: string[];
+  /** Questions the plan cannot answer for the reader. Prompts, not instructions. */
+  decisions: string[];
+  grossKg: number;
+  netKg: number;
+  peakMonth: number;
+  peakKg: number;
+}
+
+export interface DashboardOptions {
+  lossPercent?: number;
+  nowMonth: number;
+}
+
+/**
+ * Page one answers "how big, how much, when is it busiest, what must I decide"
+ * before it shows a single planting. Every stat is derived, never stored: the
+ * gross figure sums the SAME per-planting function the bed tables print, so the
+ * cover and the detail cannot drift (they did, by 26kg, until 2026-08-05).
+ */
+export function buildPlanDashboard(
+  plantings: Planting[],
+  beds: PlanBed[],
+  tasks: CropTask[],
+  opts: DashboardOptions,
+): PlanDashboard {
+  const loss = Math.max(0, Math.min(100, opts.lossPercent ?? 0));
+  const areaM2 = beds.reduce((s, b) => s + b.areaM2, 0);
+
+  const byMonth = buildFoodValueByMonth(plantings, beds, {});
+  const grossKg = byMonth.slice(1, 13).reduce((s, v) => s + v.kg, 0);
+  const netKg = grossKg * (1 - loss / 100);
+
+  let peakMonth = 1;
+  for (let m = 2; m <= 12; m++) if (byMonth[m].kg > byMonth[peakMonth].kg) peakMonth = m;
+  const peakKg = byMonth[peakMonth].kg;
+
+  const workload = buildWorkloadSeries(tasks, opts.nowMonth);
+  const busiest = [...workload].sort((a, b) => b.count - a.count).slice(0, 3)
+    .sort((a, b) => workload.findIndex((w) => w.month === a.month) - workload.findIndex((w) => w.month === b.month));
+
+  const bedCount = beds.filter((b) => b.kind !== 'plot').length;
+  const plotCount = beds.filter((b) => b.kind === 'plot').length;
+
+  const stats: DashboardStat[] = [
+    {
+      value: `${areaM2.toFixed(1)} m2`,
+      label: 'growing space',
+      detail: `${bedCount} bed${bedCount === 1 ? '' : 's'}${plotCount ? ` + ${plotCount} staple plot${plotCount === 1 ? '' : 's'}` : ''}`,
+    },
+    { value: `${grossKg.toFixed(1)} kg`, label: 'planned gross yield', detail: 'sum of every crop line' },
+    loss > 0
+      ? { value: `${netKg.toFixed(1)} kg`, label: `after ${loss}% loss`, detail: 'the figure to plan meals against' }
+      : { value: `${grossKg.toFixed(1)} kg`, label: 'no loss allowance set', detail: 'add one to plan meals against' },
+    { value: `${peakKg.toFixed(0)} kg`, label: 'peak harvest month', detail: MONTH_NAMES[peakMonth - 1] },
+  ];
+
+  const signals: string[] = [];
+  const top = buildTopCrops(plantings, beds, 2);
+  if (top[0]) signals.push(`${top[0].name} is the largest single harvest at ${top[0].kg.toFixed(1)} kg.`);
+  if (top[1]) signals.push(`${top[1].name} follows at ${top[1].kg.toFixed(1)} kg.`);
+  if (busiest.length) {
+    const names = busiest.map((b) => monthShort(b.month));
+    signals.push(`${names.join(', ')} carry the heaviest work load.`);
+  }
+  const idle = idleBedMonths(plantings, beds);
+  if (idle.count > 0) {
+    signals.push(`${idle.count} bed-month${idle.count === 1 ? '' : 's'} of the year have no crop in the ground.`);
+  }
+
+  const decisions: string[] = [];
+  if (top[0]) decisions.push(`Plan storage and kitchen use before the ${top[0].name.toLowerCase()} harvest.`);
+  decisions.push('Check whether the site can use, preserve or sell the planned surplus.');
+  if (busiest.length) {
+    decisions.push(`Assign people and weeks before the ${monthShort(busiest[0].month)}-${monthShort(busiest[busiest.length - 1].month)} work peak.`);
+  }
+  if (loss === 0) decisions.push('Set a loss allowance so the usable figure is not the gross one.');
+
+  return { stats, signals, decisions, grossKg, netKg, peakMonth, peakKg };
+}
+
+/** Bed-months with nothing in the ground — the honest counterweight to a big total. */
+export function idleBedMonths(plantings: Planting[], beds: PlanBed[]): { count: number; total: number } {
+  const occupied = new Map<string, Set<number>>();
+  for (const p of plantings) {
+    const crop = cropByKey(p.cropKey);
+    if (!crop) continue;
+    let set = occupied.get(p.bedId);
+    if (!set) { set = new Set(); occupied.set(p.bedId, set); }
+    for (const m of holdMonths(p.sowMonth, crop)) set.add(m);
+  }
+  let count = 0;
+  for (const bed of beds) count += 12 - (occupied.get(bed.id)?.size ?? 0);
+  return { count, total: beds.length * 12 };
+}
+
+/**
+ * The months a planting physically holds its GROUND: from the month it enters
+ * the bed to the end of its fresh-harvest window. A bed being picked is still a
+ * bed in use — that half of the span matches the planner's own occupancy model.
+ *
+ * The other half deliberately does not. A tray crop's sow month is spent in the
+ * nursery, not in the bed, so a page headed "land occupancy" that starts the bar
+ * at the tray sowing shows a bed as full while it is standing empty. Same
+ * distinction the field sheets make, applied to the calendar.
+ */
+function holdMonths(sowMonth: number, crop: CropDef): number[] {
+  const h = harvestMonth(sowMonth, crop.daysToHarvest);
+  const span = crop.harvestWindowMonths ?? 0;
+  const out: number[] = [];
+  let m = crop.transplant ? wrapMonth(sowMonth + 1) : sowMonth;
+  for (let guard = 0; guard < 24; guard++) {
+    out.push(m);
+    if (m === wrapMonth(h + span)) break;
+    m = wrapMonth(m + 1);
+  }
+  return out;
+}
+
+// ── 2. Year in numbers ──────────────────────────────────────────────────────
+
+export interface MonthValue { month: number; kg: number }
+export interface MonthCount { month: number; count: number }
+export interface CropVolume { cropKey: string; name: string; kg: number; group: FoodGroup }
+
+/** Harvest by month, in the plan's own reading order (starts at nowMonth, not January). */
+export function buildHarvestSeries(plantings: Planting[], beds: PlanBed[], nowMonth: number): MonthValue[] {
+  const byMonth = buildFoodValueByMonth(plantings, beds, {});
+  return rollingMonths(nowMonth).map((m) => ({ month: m, kg: byMonth[m].kg }));
+}
+
+/** How many jobs land in each month — the labour curve the kg chart never shows. */
+export function buildWorkloadSeries(tasks: CropTask[], nowMonth: number): MonthCount[] {
+  const counts = new Map<number, number>();
+  for (const t of tasks) counts.set(t.month, (counts.get(t.month) ?? 0) + 1);
+  return rollingMonths(nowMonth).map((m) => ({ month: m, count: counts.get(m) ?? 0 }));
+}
+
+/** Biggest crops by planned volume, for the "what dominates this plan" bar. */
+export function buildTopCrops(plantings: Planting[], beds: PlanBed[], limit = 7): CropVolume[] {
+  return yieldByCrop(plantings, beds)
+    .slice(0, limit)
+    .map((c) => {
+      const crop = cropByKey(c.cropKey);
+      return {
+        cropKey: c.cropKey,
+        name: c.name,
+        kg: c.kg,
+        group: crop ? foodGroupOf(crop) : 'leafy_green',
+      };
+    });
+}
+
+// ── 3. Land occupancy calendar ──────────────────────────────────────────────
+
+export interface CalendarEntry {
+  cropKey: string;
+  abbr: string;
+  /** '1/3', '1/2', 'Full' — what share of the bed this crop holds. */
+  share: string;
+  group: FoodGroup;
+  /** True in months where this planting is being picked, not just growing. */
+  harvesting: boolean;
+}
+
+export interface CalendarRow {
+  bedId: string;
+  label: string;
+  areaM2: number;
+  kind: PlanBed['kind'];
+  /** One cell per month, in the plan's reading order. */
+  cells: CalendarEntry[][];
+}
+
+/**
+ * Short codes for the calendar grid, derived — never hand-maintained, because a
+ * hand-maintained abbreviation table silently mislabels the day someone adds a
+ * crop to the catalog. Two-word names give initials (Green beans -> GB); one
+ * word gives its first two letters (Kale -> Ka). Collisions are broken by
+ * lengthening the loser, so codes are unique WITHIN a plan and stable for it.
+ */
+export function cropAbbreviations(plantings: Planting[]): Map<string, string> {
+  const keys = [...new Set(plantings.map((p) => p.cropKey))].sort();
+  const out = new Map<string, string>();
+  const taken = new Set<string>();
+
+  const base = (name: string): string => {
+    const clean = name.replace(/\([^)]*\)/g, ' ').replace(/[^A-Za-z ]/g, ' ').trim();
+    const words = clean.split(/\s+/).filter(Boolean);
+    if (words.length >= 2) return (words[0][0] + words[1][0]).toUpperCase();
+    return (words[0]?.slice(0, 2) ?? '??').replace(/^./, (c) => c.toUpperCase());
+  };
+
+  for (const key of keys) {
+    const crop = cropByKey(key);
+    if (!crop) continue;
+    const letters = crop.name.replace(/\([^)]*\)/g, ' ').replace(/[^A-Za-z]/g, '');
+    let code = base(crop.name);
+    for (let extra = 2; taken.has(code) && extra < letters.length; extra++) {
+      code = letters.slice(0, extra + 1).replace(/^./, (c) => c.toUpperCase());
+    }
+    let n = 2;
+    while (taken.has(code)) code = `${base(crop.name)}${n++}`;
+    taken.add(code);
+    out.set(key, code);
+  }
+  return out;
+}
+
+/** Every bed and plot across twelve months — the view that shows idle ground at a glance. */
+export function buildOccupancyCalendar(
+  plantings: Planting[],
+  beds: PlanBed[],
+  nowMonth: number,
+): CalendarRow[] {
+  const abbr = cropAbbreviations(plantings);
+  const months = rollingMonths(nowMonth);
+
+  return beds.map((bed) => {
+    const cells: CalendarEntry[][] = months.map(() => []);
+    for (const p of plantings) {
+      if (p.bedId !== bed.id) continue;
+      const crop = cropByKey(p.cropKey);
+      if (!crop) continue;
+      const h = harvestMonth(p.sowMonth, crop.daysToHarvest);
+      const pickWindow = new Set(
+        Array.from({ length: (crop.harvestWindowMonths ?? 0) + 1 }, (_, i) => wrapMonth(h + i)),
+      );
+      for (const m of holdMonths(p.sowMonth, crop)) {
+        const idx = months.indexOf(m);
+        if (idx < 0) continue;
+        cells[idx].push({
+          cropKey: p.cropKey,
+          abbr: abbr.get(p.cropKey) ?? '??',
+          share: shareCode(p.areaFraction ?? 1),
+          group: foodGroupOf(crop),
+          harvesting: pickWindow.has(m),
+        });
+      }
+    }
+    for (const cell of cells) cell.sort((a, b) => a.abbr.localeCompare(b.abbr));
+    return { bedId: bed.id, label: bed.label, areaM2: bed.areaM2, kind: bed.kind, cells };
+  });
+}
+
+function shareCode(fraction: number): string {
+  if (fraction >= 0.99) return 'Full';
+  if (Math.abs(fraction - 0.5) < 0.02) return '1/2';
+  if (Math.abs(fraction - 1 / 3) < 0.02) return '1/3';
+  if (Math.abs(fraction - 0.25) < 0.02) return '1/4';
+  return `${Math.round(fraction * 100)}%`;
+}
+
+// ── 5. Monthly field sheet ──────────────────────────────────────────────────
+
+export interface FieldSheetRow {
+  /** Where the work happens — one bed, or several when the job is identical. */
+  place: string;
+  work: string;
+}
+
+export interface FieldSheetSection {
+  title: string;
+  rows: FieldSheetRow[];
+}
+
+export interface FieldSheet {
+  month: number;
+  monthLabel: string;
+  sourceLines: number;
+  workRows: number;
+  plantingFocus: number;
+  harvestFocus: number;
+  sections: FieldSheetSection[];
+}
+
+const SECTION_ORDER = [
+  'Nursery - raise seedlings',
+  'Direct sowing and planting',
+  'Prepare for the next planting',
+  'Harvest and record',
+  'Maintenance',
+] as const;
+
+/**
+ * One month of work, as a sheet a person can carry and tick off.
+ *
+ * Three things happen here that the old flat list never did.
+ *
+ * NURSERY IS ITS OWN SECTION. A `transplant` crop's sow task puts seed in
+ * TRAYS; its field spacing belongs to the transplant a month later. Printing
+ * "rows 90cm apart" against a tray sowing was wrong every single time.
+ *
+ * WATERING IS NOT A SEPARATE JOB. "Sow X" followed by "Water in & mulch X" is
+ * one action at the bed, and printing it as two lines doubled the apparent
+ * workload of every sowing month.
+ *
+ * ONE ROW PER BED PER JOB. Four harvest lines on one bed become one row naming
+ * the four crops — which is how someone standing at the bed actually works.
+ */
+export function buildFieldSheet(
+  month: number,
+  tasks: CropTask[],
+  now: Date,
+): FieldSheet {
+  const mine = tasks.filter((t) => t.month === month);
+  const mulchedCrops = new Set(mine.filter((t) => t.action === 'mulch').map((t) => `${t.bedLabel}::${t.cropKey}`));
+
+  // A row is one BED and one kind of job. Within it each crop keeps its own
+  // spacing in brackets — merging the crops but not their instructions is how
+  // "Sow at rows 47cm apart. Sow at about 17cm each way." ended up in one
+  // sentence with nothing saying which crop either belonged to.
+  interface Bucket {
+    sow: string[]; transplant: string[]; plain: string[]; extra: Set<string>;
+    waterSow: boolean; waterTransplant: boolean;
+  }
+  const buckets = new Map<string, Map<string, Bucket>>();
+  const bucketFor = (section: string, place: string): Bucket => {
+    let byPlace = buckets.get(section);
+    if (!byPlace) { byPlace = new Map(); buckets.set(section, byPlace); }
+    let entry = byPlace.get(place);
+    if (!entry) {
+      entry = { sow: [], transplant: [], plain: [], extra: new Set(), waterSow: false, waterTransplant: false };
+      byPlace.set(place, entry);
+    }
+    return entry;
+  };
+
+  for (const t of mine) {
+    const crop = cropByKey(t.cropKey);
+    const watered = mulchedCrops.has(`${t.bedLabel}::${t.cropKey}`);
+    const name = t.cropName.toLowerCase();
+    switch (t.action) {
+      case 'sow':
+        if (crop?.transplant) {
+          const b = bucketFor('Nursery - raise seedlings', 'Nursery');
+          b.plain.push(`${name} for ${t.bedLabel}`);
+          b.extra.add(`Transplant in ${monthShort(wrapMonth(t.month + 1))}.`);
+        } else {
+          const b = bucketFor('Direct sowing and planting', t.bedLabel);
+          b.sow.push(`${name} (${spacingPhrase(crop)})`);
+          b.waterSow ||= watered;
+        }
+        break;
+      case 'transplant': {
+        const b = bucketFor('Direct sowing and planting', t.bedLabel);
+        b.transplant.push(`${name} (${spacingPhrase(crop)})`);
+        b.waterTransplant ||= watered;
+        break;
+      }
+      case 'prep': {
+        const b = bucketFor('Prepare for the next planting', t.bedLabel);
+        b.plain.push(name);
+        if (t.prepText) b.extra.add(`${capitalise(stripPrepWrapper(t.prepText))}.`);
+        break;
+      }
+      case 'harvest': {
+        const b = bucketFor('Harvest and record', t.bedLabel);
+        b.plain.push(name);
+        b.extra.add('Record kilograms and where it went.');
+        break;
+      }
+      case 'weed-early':
+      case 'weed-mid':
+        bucketFor('Maintenance', t.bedLabel).plain.push(name);
+        break;
+      case 'mulch':
+        // Folded into the sow/transplant row above — never its own line.
+        break;
+    }
+  }
+
+  const sections: FieldSheetSection[] = [];
+  for (const title of SECTION_ORDER) {
+    const byPlace = buckets.get(title);
+    if (!byPlace) continue;
+    const rows: FieldSheetRow[] = [];
+    for (const [place, b] of byPlace) {
+      const parts: string[] = [];
+      if (title === 'Nursery - raise seedlings') parts.push(`Raise and label trays for ${joinList(unique(b.plain))}.`);
+      else if (title === 'Prepare for the next planting') parts.push(`Prepare the ground for ${joinList(unique(b.plain))}.`);
+      else if (title === 'Harvest and record') parts.push(`Harvest ${joinList(unique(b.plain))}.`);
+      else if (title === 'Maintenance') parts.push(`Weed and check for pests around ${joinList(unique(b.plain))}.`);
+      if (b.sow.length) parts.push(`Sow ${joinList(unique(b.sow))}.`);
+      if (b.transplant.length) parts.push(`Transplant ${joinList(unique(b.transplant))}.`);
+      // ONE watering sentence per row. A bed that is both sown and planted into
+      // in the same month used to end "...Water and mulch. Water, mulch and
+      // check they take." — the same walk down the bed, told twice.
+      if (b.waterTransplant) parts.push('Water, mulch and check they take.');
+      else if (b.waterSow) parts.push('Water and mulch.');
+      parts.push(...b.extra);
+      rows.push({ place, work: parts.filter(Boolean).join(' ') });
+    }
+    sections.push({ title, rows });
+  }
+
+  const workRows = sections.reduce((s, x) => s + x.rows.length, 0);
+  return {
+    month,
+    monthLabel: `${MONTH_NAMES[month - 1]} ${resolveYear(month, now)}`,
+    sourceLines: mine.length,
+    workRows,
+    plantingFocus: mine.filter((t) => t.action === 'sow' || t.action === 'transplant').length,
+    harvestFocus: mine.filter((t) => t.action === 'harvest').length,
+    sections,
+  };
+}
+
+/**
+ * Spacing as a bracketed phrase, never a sentence — so it can sit beside the
+ * crop it belongs to inside a merged row. Sowing depth only appears on a direct
+ * sowing; there is no such thing as the depth of a transplant.
+ */
+function spacingPhrase(crop: CropDef | undefined): string {
+  if (!crop) return 'spacing not recorded';
+  const { rowCm, inRowCm } = plantSpacingCm(crop);
+  const spacing = rowCm === inRowCm
+    ? `about ${inRowCm} cm each way`
+    : `rows ${rowCm} cm apart, ${inRowCm} cm in the row`;
+  const depth = !crop.transplant && crop.sowDepthCm ? `, ${crop.sowDepthCm} cm deep` : '';
+  return `${spacing}${depth}`;
+}
+
+/** tasksForPlan phrases bed prep as "prep bed (compost + kraal manure...)" — a
+ *  label, not a sentence. Unwrap it so the field sheet reads as an instruction. */
+function stripPrepWrapper(text: string): string {
+  const m = /^prep bed \((.*)\)$/.exec(text.trim());
+  return m ? m[1] : text.trim();
+}
+
+function capitalise(text: string): string {
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
+function unique(items: string[]): string[] {
+  return [...new Set(items)];
+}
+
+function joinList(items: string[]): string {
+  const lower = items.map((s) => (/^[A-Z]{2,}/.test(s) ? s : s.charAt(0).toLowerCase() + s.slice(1)));
+  if (lower.length <= 1) return lower[0] ?? '';
+  if (lower.length === 2) return `${lower[0]} and ${lower[1]}`;
+  return `${lower.slice(0, -1).join(', ')} and ${lower[lower.length - 1]}`;
+}
+
+function resolveYear(month: number, now: Date): number {
+  const nowMonth = now.getMonth() + 1;
+  return month >= nowMonth ? now.getFullYear() : now.getFullYear() + 1;
+}
+
+// ── 4. Full plan table rows ─────────────────────────────────────────────────
+
+export interface PlanTableRow {
+  area: string;
+  isFirstOfArea: boolean;
+  crop: string;
+  share: string;
+  establish: string;
+  intoField: string;
+  harvest: string;
+  yieldKg: number;
+}
+
+/**
+ * The bed-by-bed plan as columns. "Establish" and "Into field" are separate
+ * because for a tray crop they are different months and different jobs — the
+ * single "sow" column they used to share is what let nursery and field work
+ * blur together in the first place.
+ */
+export function buildPlanTableRows(plantings: Planting[], beds: PlanBed[]): PlanTableRow[] {
+  const rows: PlanTableRow[] = [];
+  for (const bed of beds) {
+    const mine = plantings
+      .filter((p) => p.bedId === bed.id)
+      .map((p) => ({ p, crop: cropByKey(p.cropKey) }))
+      .filter((x): x is { p: Planting; crop: CropDef } => !!x.crop)
+      .sort((a, b) => a.p.sowMonth - b.p.sowMonth || a.crop.name.localeCompare(b.crop.name));
+
+    mine.forEach(({ p, crop }, i) => {
+      const h = harvestMonth(p.sowMonth, crop.daysToHarvest);
+      const end = wrapMonth(h + (crop.harvestWindowMonths ?? 0));
+      rows.push({
+        area: bed.label,
+        isFirstOfArea: i === 0,
+        crop: crop.name,
+        share: shareCode(p.areaFraction ?? 1),
+        establish: crop.transplant ? `Nursery ${monthShort(p.sowMonth)}` : `Direct sow ${monthShort(p.sowMonth)}`,
+        intoField: crop.transplant ? `Transplant ${monthShort(wrapMonth(p.sowMonth + 1))}` : 'Direct',
+        harvest: h === end ? monthShort(h) : `${monthShort(h)}-${monthShort(end)}`,
+        yieldKg: estimatedYieldKgAdjusted(p, bed.areaM2, plantings),
+      });
+    });
+  }
+  return rows;
+}

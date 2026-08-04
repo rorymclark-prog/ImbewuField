@@ -346,7 +346,7 @@ test('every kg printed beside a bed is a kg the year total counted', () => {
 test('the staggering sentence counts beds that exist, and counts them right', () => {
   const wrong: string[] = [];
   for (const run of sweep([8])) {
-    const line = buildYearReport(run.plantings, run.beds, { lossPercent: 0 })
+    const line = buildYearReport(run.plantings, run.beds)
       .find((l) => l.includes('staggered the same way'));
     if (!line) continue;
     const claimed = Number(/and (\d+) other bed/.exec(line)?.[1] ?? 0);

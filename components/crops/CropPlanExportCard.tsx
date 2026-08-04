@@ -180,7 +180,8 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearR
       <div className="font-sans mt-2.5" style={{ fontSize: 11, color: '#8C7A62', lineHeight: 1.55 }}>
         The calendar file works with Google Calendar and Apple Calendar. Tasks land as whole-day entries on the
         first of their month — this plan works in months, not exact days — with a reminder three days before.
-        The PDF includes the seed and seedling buying schedule, grouped by the month to buy in.
+        The PDF opens with the year at a glance, then a one-page calendar of every bed, the full plan bed by bed,
+        the seed and seedling buying schedule, and a tick-off field sheet for each month.
       </div>
 
       {status && (
