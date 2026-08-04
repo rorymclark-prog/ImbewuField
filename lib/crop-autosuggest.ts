@@ -202,6 +202,9 @@ function capForCrop(crop: CropDef): number {
 }
 
 const BED_FRACTION_PRESETS = [1, 0.5, 1 / 3, 0.25];
+/** The smallest share any pass will give a crop — so any remainder below it is
+ *  dead ground until whatever holds the bed comes out. See leavesDeadSliver. */
+const SMALLEST_USABLE_SHARE = 0.25;
 function closestPreset(target: number): number {
   return BED_FRACTION_PRESETS.reduce((best, p) => (Math.abs(p - target) < Math.abs(best - target) ? p : best));
 }
@@ -1116,6 +1119,7 @@ function fillRemainingGaps(
       const reaching = reachingCandidates(bedPool, pattern, nowMonth, gapMonth, GAP_FILL_HORIZON_MONTHS);
       let chosen: { crop: CropDef; sowMonth: number; fraction: number } | null = null;
 
+
       // Sow-month scarcity leads, THEN longest empty-month cover. Cover-first alone (the
       // 2026-08-04-morning fix) did convert winter "rests" into bridges — but by always
       // preferring the longest span it made every bed bridge from the SAME early sow month,
@@ -1127,30 +1131,60 @@ function fillRemainingGaps(
       const emptyCover = (c: { crop: CropDef; sowMonth: number }): number =>
         occupiedMonths(c.sowMonth, c.crop)
           .filter((mo) => occupancy.fractionAt(bed.id, mo) === 0).length;
-      for (const fraction of fractionPresetsFor(bed)) {
-        const fitting = reaching
-          .filter((c) => occupancy.fits(bed.id, c.sowMonth, c.crop, fraction))
-          // Crop spread leads the sort now (see spreadRank): this pass places more crops
-          // than any other, so it is where "chard again" was decided over and over. A crop
-          // the plan has not used yet now wins ahead of the highest-scoring one, which is
-          // also what finally reaches the eleven catalog crops no pass ever offered.
-          .sort((a, b) =>
-            (spreadRank(spread, a.crop.key, bed.id, spreadCap) - spreadRank(spread, b.crop.key, bed.id, spreadCap))
-            || (sowCountAt(sowCounts, a.sowMonth) - sowCountAt(sowCounts, b.sowMonth))
-            || (emptyCover(b) - emptyCover(a))
-            || (a.startGap - b.startGap)
-            || (commercialScore(b.crop) - commercialScore(a.crop)));
-        if (!fitting.length) continue; // this fraction can't fit anything — try a smaller share
+      /**
+       * DON'T LEAVE A SLIVER NOBODY CAN PLANT IN.
+       *
+       * The smallest share this planner will ever give a crop is a quarter of a
+       * bed, so any remainder between nothing and a quarter is dead ground for
+       * as long as the planting holds it. Bed 1 is the case the owner kept
+       * reporting: February had two-thirds free, eleven candidates fitted at a
+       * HALF, a third and a quarter — and taking the largest, a half, left
+       * 0.17 of the bed. Every later pass then found "free=0.17, fits: 0 at
+       * every fraction" and gave up, five months running. A third would have
+       * left a clean third, and a third bed of food.
+       *
+       * So: prefer the largest share that leaves either nothing or a plantable
+       * remainder. Only if no such share exists do we fall back to the old
+       * largest-fits-wins rule, because half a bed of food still beats none.
+       */
+      const leavesDeadSliver = (cand: { crop: CropDef; sowMonth: number }, fraction: number): boolean => {
+        let tightestFree = 1;
+        for (const mo of occupiedMonths(cand.sowMonth, cand.crop)) {
+          tightestFree = Math.min(tightestFree, 1 - occupancy.fractionAt(bed.id, mo));
+        }
+        const leftover = tightestFree - fraction;
+        return leftover > 0.01 && leftover < SMALLEST_USABLE_SHARE - 0.01;
+      };
 
-        const nonRepeating = fitting.filter((c) => !rotation.repeats(bed.id, foodGroupOf(c.crop)));
-        if (!nonRepeating.length) continue;
-        const nonConflicting = nonRepeating.filter((c) => !rotation.conflicts(bed.id, foodGroupOf(c.crop)));
-        const pool2 = nonConflicting.length ? nonConflicting : nonRepeating;
-        const nonRepeat = pool2.filter((c) => c.crop.key !== lastCropByBed.get(bed.id));
-        const pick = nonRepeat[0] ?? pool2[0];
-        chosen = { crop: pick.crop, sowMonth: pick.sowMonth, fraction };
-        break; // biggest fraction with ANY fitting candidate wins — never shrink the share more than necessary
-      }
+      const tryFractions = (avoidSlivers: boolean): typeof chosen => {
+        for (const fraction of fractionPresetsFor(bed)) {
+          const fitting = reaching
+            .filter((c) => occupancy.fits(bed.id, c.sowMonth, c.crop, fraction))
+            // Crop spread leads the sort now (see spreadRank): this pass places more crops
+            // than any other, so it is where "chard again" was decided over and over. A crop
+            // the plan has not used yet now wins ahead of the highest-scoring one, which is
+            // also what finally reaches the eleven catalog crops no pass ever offered.
+            .sort((a, b) =>
+              (spreadRank(spread, a.crop.key, bed.id, spreadCap) - spreadRank(spread, b.crop.key, bed.id, spreadCap))
+              || (sowCountAt(sowCounts, a.sowMonth) - sowCountAt(sowCounts, b.sowMonth))
+              || (emptyCover(b) - emptyCover(a))
+              || (a.startGap - b.startGap)
+              || (commercialScore(b.crop) - commercialScore(a.crop)));
+          if (!fitting.length) continue; // this fraction can't fit anything — try a smaller share
+
+          const nonRepeating = fitting.filter((c) => !rotation.repeats(bed.id, foodGroupOf(c.crop)));
+          if (!nonRepeating.length) continue;
+          const nonConflicting = nonRepeating.filter((c) => !rotation.conflicts(bed.id, foodGroupOf(c.crop)));
+          const pool2 = nonConflicting.length ? nonConflicting : nonRepeating;
+          const nonRepeat = pool2.filter((c) => c.crop.key !== lastCropByBed.get(bed.id));
+          const pick = nonRepeat[0] ?? pool2[0];
+          if (avoidSlivers && leavesDeadSliver(pick, fraction)) continue;
+          return { crop: pick.crop, sowMonth: pick.sowMonth, fraction };
+        }
+        return null;
+      };
+
+      chosen = tryFractions(true) ?? tryFractions(false);
 
       if (!chosen) { stuckMonths.add(gapMonth); continue; } // this month can't be filled — remember it, keep trying the bed's OTHER gaps
 

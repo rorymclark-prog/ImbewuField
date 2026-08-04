@@ -367,3 +367,43 @@ test('the staggering sentence counts beds that exist, and counts them right', ()
   }
   assert.deepEqual(wrong.slice(0, 6), []);
 });
+
+// ── 9. No share of a bed is too small to plant ──────────────────────────────
+
+/**
+ * "Why does bed one still show so little planting towards the end of the year -
+ * I feel like I have been trying to correct this for weeks?"
+ *
+ * He was right, and the two causes I proposed first were both wrong. Tracing
+ * the fill loop showed February offering eleven candidates that fitted at a
+ * HALF, a third and a quarter of the bed. The planner always took the largest,
+ * which left 0.17 of the bed - below the 0.25 minimum any pass will ever plant.
+ * Every later pass then read "free = 0.17, fits: 0 at every fraction" and gave
+ * up, five months running, and the bed looked half empty because it WAS.
+ *
+ * The rule now is: prefer the largest share that leaves either nothing or a
+ * plantable remainder. This measures the outcome rather than the rule - dead
+ * slivers across the whole parameter sweep were 16.8% of all bed-months before
+ * the change and 7.3% after, so anything approaching the old figure is a
+ * regression even if every other test still passes.
+ */
+test('a bed is never left with a share too small for any crop', () => {
+  let slivers = 0;
+  let total = 0;
+  for (const run of sweep()) {
+    for (const [bedId, months] of occupancyByBed(run)) {
+      if (run.beds.find((b) => b.id === bedId)?.kind === 'plot') continue;
+      for (let m = 1; m <= 12; m++) {
+        total++;
+        const free = 1 - months[m];
+        // Free, but less than the smallest share the planner will ever use.
+        if (free > 0.01 && free < 0.24) slivers++;
+      }
+    }
+  }
+  const ratio = slivers / total;
+  assert.ok(
+    ratio <= 0.09,
+    `${slivers} of ${total} bed-months (${(ratio * 100).toFixed(1)}%) are left with a share too small to plant - was 16.8% before the fraction fix, 7.3% after`,
+  );
+});
