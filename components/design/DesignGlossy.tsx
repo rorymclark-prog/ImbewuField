@@ -11905,7 +11905,15 @@ export default function DesignGlossy({
       // Model-authored pages and geometry-locked pages must use the same boundary-focused frame
       // as the image sent to GPT. Otherwise exact overlays are rebuilt in the original satellite
       // coordinates and land as a tiny or displaced design on the returned page.
-      const useBoundaryPresentation = locked || isModelChromeStyle(styleDef.key);
+      //
+      // The polish stage arrives with locked=false (its provenance is honest: the model owns the
+      // artwork) but its INPUT was the Hybrid's map, built in this same boundary-focused frame.
+      // Finishing it in the raw frame made W/H disagree with the input by design, so the legacy
+      // page-size guard below swallowed every polish: the very first production run of the
+      // map-only polish contract (job …_1wvtpj) shipped with no labels, no legend and no title
+      // because of this line. A showcase job that carries a protect mask is that polish.
+      const useBoundaryPresentation = locked || isModelChromeStyle(styleDef.key)
+        || (showcase && Boolean(protectMask));
       const presentation = useBoundaryPresentation
         ? await boundaryPresentationContext(state, frame, refLayers)
         : { state, frame, refLayers };
@@ -11962,11 +11970,31 @@ export default function DesignGlossy({
       if (showcase && !locked && protectMask && sourceImage) {
         try {
           const src = await loadImage(sourceImage);
-          const polished = await restoreProtectedPixels(sourceImage, modelImage, protectMask);
           // An in-flight job enqueued before this change carries the full PAGE as its input;
           // recomposing chrome around a page would nest a sheet inside a sheet. Ship it the old
           // way and let the next render pick up the new contract.
-          if (Math.abs(src.width - W) > 2 || Math.abs(src.height - H) > 2) return polished;
+          if (Math.abs(src.width - W) > 2 || Math.abs(src.height - H) > 2) {
+            return await restoreProtectedPixels(sourceImage, modelImage, protectMask);
+          }
+          // NO byte-restore on the polish tier. The mask's boundary corridor used to stamp the
+          // Hybrid's PHOTO ground (plus the drawn line and its vertex dots) back through the
+          // model's fully repainted artwork — a 15-to-23-pixel photographic ribbon around the
+          // whole site. That ribbon IS the "ghost zone worms" on job …_1wvtpj: the model had
+          // kept the fence perfectly (thin, crisp, posts); the restore then defaced its own
+          // render. The property line is a site FACT, so the app draws it here, as a vector, at
+          // the exact saved position — same authority model as labels and the legend. The mask
+          // still ships with the job: the difference gate uses it to exclude the line corridor
+          // from its moved-pixels score.
+          const model = await loadImage(modelImage);
+          const mapCanvas = document.createElement('canvas');
+          mapCanvas.width = W;
+          mapCanvas.height = H;
+          const mapCtx = mapCanvas.getContext('2d');
+          if (!mapCtx) throw new Error('polish finish: 2D context unavailable');
+          useHighQualityScaling(mapCtx);
+          mapCtx.drawImage(model, 0, 0, W, H);
+          drawBlueprintBoundary(mapCtx, renderRefLayers.boundary, (n) => n * W, (n) => n * H, W, renderState, renderFrame);
+          const polished = mapCanvas.toDataURL('image/png');
           polishedMapRef.current = polished;
           const labelled = await burnExactLabelLayer(polished, renderState, renderFrame, renderRefLayers, f, W, H, labelMode);
           return await composeStyleSheet(
