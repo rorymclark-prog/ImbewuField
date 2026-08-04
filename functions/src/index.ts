@@ -29,7 +29,7 @@ import { getFirestore, FieldValue, Timestamp, type DocumentReference } from 'fir
 import { getStorage } from 'firebase-admin/storage';
 import { PNG } from 'pngjs';
 import { compareRenders } from '../../lib/render-difference';
-import { geminiEdit } from './gemini';
+import { geminiEdit, geminiAspectRatio, geminiImageSize } from './gemini';
 import { friendlyProviderError } from './provider-errors';
 import {
   RENDER_SHEET_KEYS,
@@ -449,9 +449,25 @@ export const runRenderJob = onDocumentCreated(
             // (every earlier render has 0% black), so gate the reference on there being no mask.
             let outB64: string;
             
+            // Absent on job docs written before the quality dial existed — read as 'high', the
+            // setting every render used until then, so old and in-flight jobs are unchanged.
+            const quality = job.quality === 'medium' || job.quality === 'low' ? job.quality : 'high';
+
             if (job.engine === 'gemini') {
-              outB64 = await geminiEdit(geminiKey, buf.toString('base64'), prompt);
-              
+              // PARITY WITH THE OPENAI BRANCH. This used to hand Gemini a prompt and an image and
+              // nothing else: no aspect match (openaiEdit computes one via pickSize) and no quality
+              // dial (job.quality was read only in the else). An engine given less to work with
+              // returns less, and the paid-render difference gate — which is deliberately
+              // engine-blind and must stay that way, it is what stops us charging for a render
+              // that changed nothing — then reads that as a Hybrid not worth polishing and cancels
+              // Full Treatment. Both arguments are best-effort: geminiEdit retries without them if
+              // the API rejects the field.
+              const geminiConfig = {
+                ...(geminiAspectRatio(pngDims(buf)) ? { aspectRatio: geminiAspectRatio(pngDims(buf))! } : {}),
+                imageSize: geminiImageSize(quality),
+              };
+              outB64 = await geminiEdit(geminiKey, buf.toString('base64'), prompt, 0, undefined, geminiConfig);
+
               if (maskB64) {
                  const maskBuf = Buffer.from(maskB64, 'base64');
                  const maskPng = PNG.sync.read(maskBuf);
@@ -473,9 +489,6 @@ export const runRenderJob = onDocumentCreated(
               const styleReference = job.style === 'precision_atlas' && sheet.geometryLock === true && !maskB64
                 ? await loadPrecisionAtlasReference()
                 : null;
-              // Absent on job docs written before the quality dial existed — read as 'high', the
-              // setting every render used until then, so old and in-flight jobs are unchanged.
-              const quality = job.quality === 'medium' || job.quality === 'low' ? job.quality : 'high';
               outB64 = await openaiEdit(key, buf.toString('base64'), prompt, maskB64, styleReference, 0, quality);
             }
             

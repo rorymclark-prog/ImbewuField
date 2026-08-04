@@ -23,10 +23,14 @@
 
 import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 import { hasNarrationBlocker } from '../lib/narration-blockers.ts';
 
-const ROOT = new URL('..', import.meta.url).pathname;
+// fileURLToPath, not .pathname — .pathname keeps the percent-encoding, so on a
+// checkout path containing a space every existsSync below silently reported false
+// and this tool confidently announced "0/10 modules produced" (2026-08-04).
+const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const TODO_ONLY = process.argv.includes('--todo');
 
 const { COURSE_MODULES } = await import(join(ROOT, 'lib/course-modules.ts'));

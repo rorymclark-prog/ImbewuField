@@ -7,6 +7,7 @@ import { COURSE_ASSET_SIZES } from '@/lib/course-asset-sizes';
 import { offlinePack, downloadableModules, wholeCourseBytes, formatPackSize } from '@/lib/offline-pack';
 import { COURSE_DECKS, slideImageFor } from '@/lib/course-deck';
 import { COURSE_NARRATION } from '@/lib/course-audio';
+import { COURSE_MODULES } from '@/lib/course-modules';
 
 const PUBLIC = join(process.cwd(), 'public');
 
@@ -48,9 +49,33 @@ test('the deck manifest states each clip\'s true size — the play button is a p
 test('a pack names no file that does not exist', () => {
   // `missing` travels with the pack rather than throwing, so this is where it has to be empty.
   // A download that reports success with a hole in it is worse than one that refuses to start.
-  for (const moduleId of Object.keys(COURSE_DECKS)) {
+  //
+  // EVERY module, not just the ones with slide decks. This loop used to iterate
+  // Object.keys(COURSE_DECKS) — one key — so when nine modules gained English narration
+  // (2026-08-04) and the generated size manifest was not rebuilt, offlinePack quietly
+  // dropped all ~20 clips per module and the suite stayed green: farmers were offered a
+  // "whole course" download that was infographics only. Iterating COURSE_MODULES is what
+  // makes this test actually guard the promise in its own name.
+  for (const { id: moduleId } of COURSE_MODULES) {
     for (const lang of ['en', 'zu']) {
       assert.deepEqual(offlinePack(moduleId, lang).missing, [], `${moduleId}/${lang}`);
+    }
+  }
+});
+
+test('every module a language claims narration for actually packs that narration', () => {
+  // The complement of the test above: `missing` only catches a file the manifest forgot.
+  // It cannot catch a pack that never ASKED for the audio, which is the other half of how
+  // the 2026-08-04 regression stayed invisible — a stale manifest and an unasked-for asset
+  // both look like "0 missing". COURSE_NARRATION is the promise; the pack must honour it.
+  for (const [moduleId, narration] of Object.entries(COURSE_NARRATION)) {
+    for (const lang of narration.languages) {
+      const audio = offlinePack(moduleId, lang).entries.filter((e) => e.kind === 'audio');
+      assert.equal(
+        audio.length,
+        narration.tracks.length,
+        `${moduleId}/${lang}: narration promises ${narration.tracks.length} clips, pack carries ${audio.length}`,
+      );
     }
   }
 });

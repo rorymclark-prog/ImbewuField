@@ -15,6 +15,7 @@
  */
 
 import { existsSync, readFileSync } from 'fs';
+import { fileURLToPath } from 'node:url';
 import { initializeApp, cert } from 'firebase-admin/app';
 import { getAuth } from 'firebase-admin/auth';
 import { getFirestore, FieldValue } from 'firebase-admin/firestore';
@@ -35,7 +36,10 @@ function loadServiceAccount() {
     return JSON.parse(readFileSync(p, 'utf8'));
   }
   // 3. serviceAccount.json in project root (convenience)
-  const fallback = new URL('../serviceAccount.json', import.meta.url).pathname;
+  // fileURLToPath, not .pathname — .pathname stays percent-encoded, so on a checkout
+  // path containing a space this fallback never matched and the script reported "no
+  // service account found" with the file sitting right there (2026-08-04).
+  const fallback = fileURLToPath(new URL('../serviceAccount.json', import.meta.url));
   if (existsSync(fallback)) return JSON.parse(readFileSync(fallback, 'utf8'));
 
   throw new Error(

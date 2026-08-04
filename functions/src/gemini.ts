@@ -29,12 +29,63 @@ function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
+/** Aspect ratios this model family accepts, as width/height. */
+const GEMINI_ASPECT_RATIOS: { label: string; ratio: number }[] = [
+  { label: '1:1', ratio: 1 },
+  { label: '2:3', ratio: 2 / 3 },
+  { label: '3:2', ratio: 3 / 2 },
+  { label: '3:4', ratio: 3 / 4 },
+  { label: '4:3', ratio: 4 / 3 },
+  { label: '4:5', ratio: 4 / 5 },
+  { label: '5:4', ratio: 5 / 4 },
+  { label: '9:16', ratio: 9 / 16 },
+  { label: '16:9', ratio: 16 / 9 },
+  { label: '21:9', ratio: 21 / 9 },
+];
+
+/**
+ * The closest supported aspect ratio to the sheet we are handing over.
+ *
+ * PARITY, NOT DECORATION. openaiEdit asks for an aspect-matched output size via pickSize();
+ * this branch asked for nothing and took whatever shape Gemini felt like returning. A sheet
+ * handed back at a different aspect is either letterboxed or cropped, and the app then
+ * composites its exact geometry back on top of a page whose proportions moved — so every
+ * downstream comparison, and the farmer's own eye, sees a sheet that does not line up.
+ */
+export function geminiAspectRatio(dims: { w: number; h: number } | null): string | null {
+  if (!dims || !dims.w || !dims.h) return null;
+  const target = dims.w / dims.h;
+  let best = GEMINI_ASPECT_RATIOS[0];
+  for (const candidate of GEMINI_ASPECT_RATIOS) {
+    if (Math.abs(candidate.ratio - target) < Math.abs(best.ratio - target)) best = candidate;
+  }
+  return best.label;
+}
+
+/**
+ * The job's quality dial, translated into this engine's units.
+ *
+ * It was being dropped on the floor: `job.quality` is read only on the OpenAI branch, so a
+ * farmer who chose a quality got it on one engine and silently not on the other.
+ *
+ * 'high' maps to 2K, NOT 4K, deliberately. openaiEdit targets ~3.3 MP and 2K is the nearest
+ * equivalent; 4K is roughly four times the pixels and a matching jump in what a render costs,
+ * and nobody has decided to spend that. Wiring an existing user-chosen dial to its engine
+ * equivalent is parity; quietly buying a bigger image than the other engine gets is not.
+ */
+export function geminiImageSize(quality: 'high' | 'medium' | 'low'): '1K' | '2K' {
+  return quality === 'low' ? '1K' : '2K';
+}
+
 export async function geminiEdit(
   key: string,
   imageB64: string,
   prompt: string,
   attempt = 0,
   model: GeminiImageModel = DEFAULT_GEMINI_IMAGE_MODEL,
+  imageConfig?: { aspectRatio?: string; imageSize?: string },
+  // Set once we have proof this key/model rejects imageConfig — see the catch below.
+  dropImageConfig = false,
 ): Promise<string> {
   const ctrl = new AbortController();
   const timer = setTimeout(() => ctrl.abort(), ATTEMPT_TIMEOUT_MS);
@@ -80,7 +131,13 @@ export async function geminiEdit(
           // proven one wins — this asked for ["IMAGE"] alone, which may or may not be accepted,
           // and a rejected modality config fails indistinguishably from a bad key. The parser
           // below picks the image part out with .find(), so the extra text part costs nothing.
-          responseModalities: ['image', 'text']
+          responseModalities: ['image', 'text'],
+          // ADDED BEHIND A FALLBACK, on purpose. Gemini's hybrid render works today; an
+          // unrecognised config field would 400 and break the one thing on this branch that
+          // does work. So it is sent, and a 400 whose body names imageConfig retries once
+          // without it (see below) — parity where the API supports it, no regression where
+          // it does not.
+          ...(imageConfig && !dropImageConfig ? { imageConfig } : {}),
         }
       }),
       signal: ctrl.signal,
@@ -89,7 +146,7 @@ export async function geminiEdit(
     clearTimeout(timer);
     if (attempt < MAX_RETRIES) {
       await sleep(1500 * (attempt + 1));
-      return geminiEdit(key, imageB64, prompt, attempt + 1, model);
+      return geminiEdit(key, imageB64, prompt, attempt + 1, model, imageConfig, dropImageConfig);
     }
     throw new Error(`gemini network/abort: ${String(e)}`);
   }
@@ -107,6 +164,12 @@ export async function geminiEdit(
   }
   if (!res.ok) {
     const detail = await res.text().catch(() => '');
+    // The imageConfig escape hatch. If this key or model does not know the field, the request
+    // 400s naming it — retry once without, so asking for parity can never cost us the render
+    // that already worked. Any other 400 is a real error and still throws.
+    if (res.status === 400 && imageConfig && !dropImageConfig && /imageConfig|aspectRatio|imageSize|image_config/i.test(detail)) {
+      return geminiEdit(key, imageB64, prompt, attempt, model, imageConfig, true);
+    }
     throw new Error(`Gemini ${res.status}: ${detail.slice(0, 200)}`);
   }
   

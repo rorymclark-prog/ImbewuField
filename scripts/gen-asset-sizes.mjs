@@ -55,7 +55,11 @@ ${rows}
 `;
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+// Compared as decoded FILE PATHS, not as strings: import.meta.url percent-encodes,
+// so on a checkout whose path contains a space this guard read false and the whole
+// generator silently no-opped — which is exactly how the manifest went a week stale
+// while `npm run assets:sizes` kept exiting 0 (2026-08-04).
+if (fileURLToPath(import.meta.url) === process.argv[1]) {
   const sizes = collectSizes();
   const out = join(ROOT, 'lib', 'course-asset-sizes.ts');
   writeFileSync(out, render(sizes));
