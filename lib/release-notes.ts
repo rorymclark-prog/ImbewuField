@@ -34,6 +34,17 @@ export interface ReleaseNote {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '4 August (evening)',
+    sha: 'f8f98dd',
+    changes: [
+      'The crop plan now plants something in every sowable month — winter included',
+      'Charts show "An established year" by default: the full rhythm once your plan repeats',
+      'Your staple plots from the map are now rows in the crop plan — one crop, full plot',
+      'Auto-suggest gives four plots four different courses and rotates them each season',
+      'A beds button in the crop plan header lists every bed and plot with its real size',
+    ],
+  },
+  {
     when: '4 August (afternoon)',
     sha: 'c22fa37',
     changes: [
