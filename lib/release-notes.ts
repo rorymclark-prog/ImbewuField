@@ -38,6 +38,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     sha: '092e10a',
     changes: [
       'Bed 1 keeps its July planting - one crop no longer swallows a whole bed',
+      'Every bed now sows into the winter tail - July is planted, not skipped',
       'The AI-polished map gets its legend and labels back, without ghost ribbons',
     ],
   },
