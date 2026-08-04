@@ -62,14 +62,9 @@ const contracts: SourceContract[] = [
     forbiddenBareArgument:
       /localStorage\.(?:getItem|setItem|removeItem)\(\s*BACKUP_KEY\b/,
   },
-  {
-    file: 'components/GeometryDesignStudio.tsx',
-    scopedExpression:
-      /activeAccountLocalStorageKey\(`imbewu_airender_\$\{sid\}`\)/,
-    scopedUses: 4,
-    forbiddenBareArgument:
-      /localStorage\.(?:getItem|setItem|removeItem)\(\s*`imbewu_airender_/,
-  },
+  // components/GeometryDesignStudio.tsx had a contract here until 2026-08-04, when the file was
+  // deleted outright: it was the /design prototype whose map-math was copied into
+  // lib/design-canvas.ts and lib/ai-render-client.ts, after which nothing imported it.
 ];
 
 test('sensitive TSX storage call sites pass every account-owned key through the account boundary', () => {
