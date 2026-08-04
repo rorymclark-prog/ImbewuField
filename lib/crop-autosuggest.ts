@@ -369,6 +369,88 @@ const fractionPresetsFor = (bed: PlanBed): readonly number[] =>
   bed.kind === 'plot' ? [1] : BED_FRACTION_PRESETS;
 
 /**
+ * Would giving this crop `fraction` of the bed strand a strip too narrow for
+ * anything to follow it?
+ *
+ * The smallest share any pass will ever plant is SMALLEST_USABLE_SHARE, so a
+ * remainder between nothing and that is dead ground for as long as this crop
+ * holds the bed. Bed 1 is the case the owner reported for weeks: February had
+ * two-thirds free and eleven candidates fitting at a half, a third AND a
+ * quarter. Taking the largest — a half — left 0.17, and every later pass then
+ * read "free = 0.17, fits: 0 at every fraction" and gave up, five months
+ * running.
+ *
+ * Checked across the crop's WHOLE span, not just its sow month: a bed is only
+ * as free as its tightest month while the crop is standing in it.
+ *
+ * Lives at module scope on purpose. Two passes choose fractions — this one and
+ * fillRemainingGaps — and fixing only the second left Beds 4, 6, 7 and 9 still
+ * carrying unplantable strips. One rule, one copy.
+ */
+function leavesDeadSliver(
+  occupancy: Occupancy,
+  bedId: string,
+  sowMonth: number,
+  crop: CropDef,
+  fraction: number,
+): boolean {
+  let tightestFree = 1;
+  for (const mo of occupiedMonths(sowMonth, crop)) {
+    tightestFree = Math.min(tightestFree, 1 - occupancy.fractionAt(bedId, mo));
+  }
+  const leftover = tightestFree - fraction;
+  return leftover > 0.01 && leftover < SMALLEST_USABLE_SHARE - 0.01;
+}
+
+/**
+ * The share to actually give a crop that has ASKED for `wanted`.
+ *
+ * Returns the requested share when it fits and strands nothing; otherwise the
+ * largest smaller preset that fits cleanly; otherwise the largest that simply
+ * fits (half a bed of food beats none); null when nothing fits at all.
+ *
+ * A succession batch asks for a fixed slice — a half, or a third — computed
+ * from how many batches there are, with no knowledge of what is already in the
+ * bed. On a big site that is where most remaining strips came from: a half-bed
+ * batch dropped beside an existing third leaves 0.17 nobody can ever use. A
+ * plot's ladder is [1], so plots keep taking their whole area unchanged.
+ */
+function usableShare(
+  occupancy: Occupancy,
+  bed: PlanBed,
+  sowMonth: number,
+  crop: CropDef,
+  wanted: number,
+  max = 1,
+): number | null {
+  if (bed.kind === 'plot') return occupancy.fits(bed.id, sowMonth, crop, 1) ? 1 : null;
+
+  // THE LADDER DOES NOT TILE. Halves, thirds and quarters mix into remainders
+  // that are none of them — a third plus a quarter plus a third fills 92% of a
+  // bed and strands 8%. No choice from the ladder alone can always avoid that,
+  // which is why fixing four placement sites in a row still left even ONE-BED
+  // farms with an 8% strip. So "whatever is actually left" is always on offer:
+  // it strands nothing by construction, and a crop given 42% of a bed is a
+  // perfectly ordinary thing to write on a plan.
+  let tightestFree = 1;
+  for (const mo of occupiedMonths(sowMonth, crop)) {
+    tightestFree = Math.min(tightestFree, 1 - occupancy.fractionAt(bed.id, mo));
+  }
+  const rest = Math.round(tightestFree * 1000) / 1000;
+
+  const ladder = [wanted, ...fractionPresetsFor(bed).filter((f) => f < wanted - 0.001), rest];
+  const fits = [...new Set(ladder)]
+    .filter((f) => f >= SMALLEST_USABLE_SHARE - 0.001 && f <= max + 0.001)
+    .filter((f) => occupancy.fits(bed.id, sowMonth, crop, f));
+  if (!fits.length) return null;
+
+  const clean = fits.filter((f) => !leavesDeadSliver(occupancy, bed.id, sowMonth, crop, f));
+  const pool = clean.length ? clean : fits;
+  // Closest to the share the caller asked for; ties go to the larger share.
+  return pool.sort((a, b) => Math.abs(a - wanted) - Math.abs(b - wanted) || b - a)[0];
+}
+
+/**
  * Which crops a given bed may be planted with — THE single choke point, and the
  * answer to "the staple crop section allocated everything but staple crops".
  *
@@ -610,9 +692,14 @@ function planSuccession(
         // A plot never hosts a fraction (see fractionPresetsFor) — today's callers only
         // reach a plot with whole-area placements, so this is armour, not a live branch.
         if (bed.kind === 'plot' && perBatchFraction < 1) continue;
-        if (occupancy.fits(bed.id, sowMonth, crop, perBatchFraction)) {
-          occupancy.add(bed.id, sowMonth, crop, perBatchFraction);
-          const areaFraction = perBatchFraction < 1 ? perBatchFraction : undefined;
+        // Step down the ladder rather than strand a strip too narrow to plant —
+        // see usableShare. A batch slice is computed from the batch COUNT and
+        // knows nothing about what is already in the bed, which is where most
+        // of a big site's unplantable strips came from.
+        const share = usableShare(occupancy, bed, sowMonth, crop, perBatchFraction);
+        if (share !== null) {
+          occupancy.add(bed.id, sowMonth, crop, share);
+          const areaFraction = share < 1 ? share : undefined;
           plantings.push({
             id: plantingId(bed.id, crop.key, sowMonth, areaFraction),
             bedId: bed.id,
@@ -861,7 +948,13 @@ function backfillWinterGaps(
     // in-winter succession sowings covers the same months AND keeps fresh food maturing
     // through late winter into the September the bridgers leave bare. Plots stay whole-area
     // by identity (fractionPresetsFor).
-    const bridgeFraction = bed.kind === 'plot' ? 1 : 0.5;
+    // ...but half only when half leaves something plantable. A half-bed bridger
+    // dropped beside an existing third leaves 0.17 — the single biggest source
+    // of unplantable strips on a large site, because a big farm gets far more
+    // winter bridgers. usableShare keeps the half wherever a half is clean.
+    const wantedBridge = bed.kind === 'plot' ? 1 : 0.5;
+    const bridgeFraction = usableShare(occupancy, bed, chosen.sowMonth, chosen.crop, wantedBridge);
+    if (bridgeFraction === null) continue;
     occupancy.add(bed.id, chosen.sowMonth, chosen.crop, bridgeFraction);
     rotation.recordUse(bed.id, foodGroupOf(chosen.crop));
     bumpSow(sowCounts, chosen.sowMonth);
@@ -873,7 +966,7 @@ function backfillWinterGaps(
       sowMonth: chosen.sowMonth,
       areaFraction,
     });
-    notes.push(`${bed.label} would otherwise rest all winter — added ${chosen.crop.name} (sow ${MONTHS_SHORT[chosen.sowMonth - 1]}) to half of it, leaving room for winter sowings alongside.`);
+    notes.push(`${bed.label} would otherwise rest all winter — added ${chosen.crop.name} (sow ${MONTHS_SHORT[chosen.sowMonth - 1]}) to ${bridgeFraction >= 1 ? 'it' : `${Math.round(bridgeFraction * 100)}% of it`}, leaving room for winter sowings alongside.`);
   }
 
   return { plantings, notes, laterThisYear };
@@ -936,8 +1029,13 @@ function ensureSowingCadence(
         if (!(crop.sowMonths[pattern] ?? []).includes(m)) continue;
         if (!fitsBedWidth(crop, bed)) continue;
         if (rotation.repeats(bed.id, foodGroupOf(crop))) continue;
-        for (const fraction of fractions) {
-          if (!occupancy.fits(bed.id, m, crop, fraction)) continue;
+        // Largest share that fits AND leaves a plantable remainder; only if no
+        // such share exists does the biggest-fitting rule apply. Taking the
+        // biggest unconditionally here is what left the 17% strips on Beds 4,
+        // 6, 7 and 9 that no later pass could ever use.
+        const share = usableShare(occupancy, bed, m, crop, fractions[0], 0.5);
+        if (share === null) continue;
+        for (const fraction of [share]) {
           const freeAtM = 1 - occupancy.fractionAt(bed.id, m);
           const conflictPenalty = rotation.conflicts(bed.id, foodGroupOf(crop)) ? 1 : 0;
           const bestPenalty = best && rotation.conflicts(best.bed.id, foodGroupOf(best.crop)) ? 1 : 0;
@@ -1147,15 +1245,6 @@ function fillRemainingGaps(
        * remainder. Only if no such share exists do we fall back to the old
        * largest-fits-wins rule, because half a bed of food still beats none.
        */
-      const leavesDeadSliver = (cand: { crop: CropDef; sowMonth: number }, fraction: number): boolean => {
-        let tightestFree = 1;
-        for (const mo of occupiedMonths(cand.sowMonth, cand.crop)) {
-          tightestFree = Math.min(tightestFree, 1 - occupancy.fractionAt(bed.id, mo));
-        }
-        const leftover = tightestFree - fraction;
-        return leftover > 0.01 && leftover < SMALLEST_USABLE_SHARE - 0.01;
-      };
-
       const tryFractions = (avoidSlivers: boolean): typeof chosen => {
         for (const fraction of fractionPresetsFor(bed)) {
           const fitting = reaching
@@ -1178,7 +1267,14 @@ function fillRemainingGaps(
           const pool2 = nonConflicting.length ? nonConflicting : nonRepeating;
           const nonRepeat = pool2.filter((c) => c.crop.key !== lastCropByBed.get(bed.id));
           const pick = nonRepeat[0] ?? pool2[0];
-          if (avoidSlivers && leavesDeadSliver(pick, fraction)) continue;
+          if (avoidSlivers) {
+            // usableShare can widen the share to exactly what is left, which no
+            // rung of the ladder may equal — the only way to be certain nothing
+            // is stranded.
+            const share = usableShare(occupancy, bed, pick.sowMonth, pick.crop, fraction);
+            if (share === null || leavesDeadSliver(occupancy, bed.id, pick.sowMonth, pick.crop, share)) continue;
+            return { crop: pick.crop, sowMonth: pick.sowMonth, fraction: share };
+          }
           return { crop: pick.crop, sowMonth: pick.sowMonth, fraction };
         }
         return null;

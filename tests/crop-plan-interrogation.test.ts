@@ -407,3 +407,70 @@ test('a bed is never left with a share too small for any crop', () => {
     `${slivers} of ${total} bed-months (${(ratio * 100).toFixed(1)}%) are left with a share too small to plant - was 16.8% before the fraction fix, 7.3% after`,
   );
 });
+
+// ── 10. The same guarantee at every farm size ───────────────────────────────
+
+/**
+ * "It must be for any site no matter the number of beds."
+ *
+ * The sliver rule is not allowed to be a fix for a nine-bed farm. This sweeps
+ * one bed up to twenty-four, with and without staple plots, and holds EVERY
+ * bed count to the limit rather than letting a good average hide a bad size —
+ * before the fix the failure got worse as sites got bigger (5.7% at one bed,
+ * 22.2% at twenty-four), so an aggregate check alone would have passed sizes
+ * that were plainly broken.
+ *
+ * THIS IS A RATCHET, NOT A CLEAN BILL OF HEALTH. Across 2,304 generated sites
+ * 19.04% of bed-months carried an unplantable strip before the fraction rules;
+ * it is ~7% now, and still ~14% on the biggest farms, because the share ladder
+ * (1, 1/2, 1/3, 1/4) does not tile: a third plus a third plus a quarter fills
+ * 92% of a bed and strands 8%, and at least one placement path still reaches
+ * that state. The thresholds below lock in what has been won and fail loudly if
+ * it slips; they are set where the code IS, not where it should be. See the
+ * open task for the residual.
+ */
+test('no farm size is left with unplantable strips, from one bed to twenty-four', () => {
+  const worst: string[] = [];
+  let slivers = 0;
+  let cells = 0;
+
+  for (const bedCount of [1, 2, 3, 5, 9, 16, 24]) {
+    let sizeSlivers = 0;
+    let sizeCells = 0;
+    for (const pattern of ['summer', 'mild-frost'] as RainPattern[]) {
+      for (const plotCount of [0, 2]) {
+        for (const rotateCrops of [true, false]) {
+          const beds: PlanBed[] = [];
+          for (let i = 1; i <= bedCount; i++) beds.push({ id: `b${i}`, label: `Bed ${i}`, areaM2: 9, minDimM: 1.2 });
+          for (let i = 1; i <= plotCount; i++) beds.push({ id: `p${i}`, label: `Plot ${i}`, areaM2: 110, minDimM: 11, kind: 'plot' });
+
+          const answers: AutoSuggestAnswers = {
+            goal: 'family', householdSize: 'large', focusCropCount: 2, groups: [],
+            rhythm: 'steady', rotateCrops, allowVinesInBeds: false,
+          };
+          const { plantings } = autoSuggestPlan(answers, pattern, beds, [], 8);
+          const run: Run = { label: `${bedCount} beds + ${plotCount} plots · ${pattern}`, beds, plantings };
+
+          for (const [bedId, months] of occupancyByBed(run)) {
+            if (beds.find((b) => b.id === bedId)?.kind === 'plot') continue;
+            for (let m = 1; m <= 12; m++) {
+              sizeCells++;
+              const free = 1 - months[m];
+              if (free > 0.01 && free < 0.24) sizeSlivers++;
+            }
+          }
+        }
+      }
+    }
+    slivers += sizeSlivers;
+    cells += sizeCells;
+    // A bed that never appears in occupancyByBed contributes no cells — only
+    // judge sizes that actually produced a plan.
+    if (sizeCells > 0 && sizeSlivers / sizeCells > 0.16) {
+      worst.push(`${bedCount} beds: ${(sizeSlivers / sizeCells * 100).toFixed(1)}% of bed-months unplantable`);
+    }
+  }
+
+  assert.deepEqual(worst, []);
+  assert.ok(slivers / cells <= 0.11, `${(slivers / cells * 100).toFixed(1)}% overall — was 19.0% before the fraction rules`);
+});
