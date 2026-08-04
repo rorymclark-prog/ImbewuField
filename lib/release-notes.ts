@@ -34,6 +34,16 @@ export interface ReleaseNote {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '4 August (late night)',
+    sha: 'd12447a',
+    changes: [
+      'A bed now stays busy while its crop is still being picked, so no bed is planned twice over',
+      'Seed amounts match the spacing printed beside them — beans, peas and garlic were too high',
+      'The harvest figure in the chart and in the words beside it are now the same number',
+      'On a computer the plan saves to your downloads, or opens ready to print',
+    ],
+  },
+  {
     when: '4 August (night)',
     sha: 'c76dbc0',
     changes: [
