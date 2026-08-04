@@ -78,7 +78,10 @@ function usableTrack(points: Array<[number, number]>): boolean {
   });
 }
 
-function largestStudioRing(state: DesignCanvasState, feature: GroundFeatureKind): Array<[number, number]> | null {
+/** Exported so anything that needs "which ring IS the house/boundary/driveway" answers it the same
+ *  way the renderers do. The survey's roof auto-fill re-deriving its own choice is exactly how a
+ *  farmer ends up with one roof area on the Water sheet and a different one in the questionnaire. */
+export function largestStudioRing(state: DesignCanvasState, feature: GroundFeatureKind): Array<[number, number]> | null {
   let best: Array<[number, number]> | null = null;
   let bestArea = -1;
   for (const z of state.zones) {

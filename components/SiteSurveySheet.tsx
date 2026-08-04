@@ -4,6 +4,8 @@ import { X, ChevronRight, ChevronLeft, Check, Users, Droplets, Home, Leaf, Alert
 import { saveSurvey, loadSurvey, type SiteSurvey } from '@/lib/site-survey';
 import { loadPlaces } from '@/lib/saved-places';
 import { designSiteIdFromLocation, computeTracedAreaTotals } from '@/lib/design-studio';
+import { loadCanvasState } from '@/lib/design-canvas';
+import { surveyRoofAreaM2 } from '@/lib/studio-traced-areas';
 import type { LocationData } from '@/lib/types';
 
 interface Props {
@@ -91,7 +93,7 @@ function AutoFillNote({ areaM2 }: { areaM2: number }) {
   return (
     <div className="font-sans flex items-center gap-1.5 mt-1.5" style={{ fontSize: 12, color: '#1F4D2B' }}>
       <Sparkles size={12} />
-      Auto-filled from your traced map shapes ({Math.round(areaM2)} m²) — tap to adjust
+      Auto-filled from your traced shapes ({Math.round(areaM2)} m²) — tap to adjust
     </div>
   );
 }
@@ -103,6 +105,11 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
   const siteId = designSiteIdFromLocation(siteLoc ? ({ lat: siteLoc.lat, lon: siteLoc.lon } as LocationData) : null);
   const existing = loadSurvey(siteId);
   const tracedAreas = computeTracedAreaTotals(siteId, siteLoc?.lat ?? null, siteLoc?.lon ?? null);
+  // computeTracedAreaTotals can only see main-map shapes and the legacy design blob, so a roof
+  // traced in the Design Studio left this field empty while the Water sheet was already sizing a
+  // tank off that very ring. Studio ring wins when present — the same precedence resolveBaseLayers
+  // applies everywhere else — else the legacy total, unchanged, for map-only farmers.
+  const roofAreaM2 = surveyRoofAreaM2(loadCanvasState(siteId), tracedAreas.roofAreaM2);
 
   const [step, setStep] = useState(0);
 
@@ -128,11 +135,11 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
   );
   const [roofMain, setRoofMain] = useState(() => {
     if (existing?.roofMainM2 != null && roofAreaSourceIsManual) return existing.roofMainM2.toString();
-    if (tracedAreas.roofAreaM2 > 0) return String(Math.round(tracedAreas.roofAreaM2));
+    if (roofAreaM2 > 0) return String(Math.round(roofAreaM2));
     return existing?.roofMainM2?.toString() ?? '';
   });
   const [roofSource, setRoofSource] = useState<'auto' | 'manual' | undefined>(() =>
-    roofAreaSourceIsManual ? 'manual' : (tracedAreas.roofAreaM2 > 0 ? 'auto' : undefined)
+    roofAreaSourceIsManual ? 'manual' : (roofAreaM2 > 0 ? 'auto' : undefined)
   );
   const [roofSecondary, setRoofSecondary] = useState(existing?.roofSecondaryM2?.toString() ?? '');
   const [hasGutters, setHasGutters] = useState(existing?.hasGutters ?? false);
@@ -377,7 +384,7 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
               <SectionLabel>Main building roof area (m²)</SectionLabel>
               <div className="font-sans mb-2" style={{ fontSize: 12, color: '#8C7A62' }}>Rough guide: 2-bedroom house ≈ 60 m², 3-bedroom ≈ 100 m², large farmhouse ≈ 150+ m²</div>
               <NumInput value={roofMain} onChange={v => { setRoofMain(v); setRoofSource('manual'); }} placeholder="e.g. 100" hint="Floor area of the building, not the footprint of the roof pitch" />
-              {roofSource === 'auto' && <AutoFillNote areaM2={tracedAreas.roofAreaM2} />}
+              {roofSource === 'auto' && <AutoFillNote areaM2={roofAreaM2} />}
             </div>
 
             <div>
