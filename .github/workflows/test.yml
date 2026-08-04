@@ -31,6 +31,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          # FULL HISTORY, because the release-notes drift check below asks git what has
+          # landed since the sha the notes were stamped with. actions/checkout defaults to
+          # a depth-1 clone, which holds neither that commit nor any history to walk, so
+          # the check died on "fatal: bad revision <sha>..HEAD" — and because it was made
+          # blocking on main (2026-08-03), that turned the whole Tests job red on every
+          # push for a reason that had nothing to do with any test.
+          fetch-depth: 0
 
       - uses: actions/setup-node@v4
         with:
