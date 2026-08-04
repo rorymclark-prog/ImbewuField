@@ -1011,6 +1011,76 @@ function backfillWinterGaps(
  * the pool is genuinely sowable are skipped in silence —
  * reportStillRestingBeds remains the only honest voice for real limits.
  */
+/**
+ * WRAP-TAIL RESERVATION — the months planned LAST can only sow while the rest
+ * of the year is still unplanned. The plan year runs nowMonth..nowMonth+11, so
+ * every pass hands out shares that cross nowMonth's "wall" first, and by
+ * closing-pass time the tail months (May/Jun/Jul when planning from August)
+ * find all such shares taken. Measured on the reference farm before this pass:
+ * July got ONE sowing farm-wide against August's eight, the lowest mean
+ * occupancy of any month (81%), and the only bed-month under 50% — while NINE
+ * catalog crops could sow in July under mild frost, every one blocked because
+ * its span crosses a full August. The owner, after weeks of winter-tail Gantt
+ * reports: "July July July".
+ *
+ * Each shared bed therefore reserves ONE tail sowing up front — latest month
+ * first, modest share — and the main fill packs the rest of the year around
+ * it. Cross-bed variety comes from the used-count sort, not chance.
+ */
+function reserveWrapTailSowings(
+  pool: CropDef[],
+  beds: PlanBed[],
+  occupancy: Occupancy,
+  pattern: RainPattern,
+  nowMonth: number,
+  rotation: BedRotation,
+  allowVinesInBeds: boolean,
+): { plantings: Planting[] } {
+  const plantings: Planting[] = [];
+  const bedEligiblePool = allowVinesInBeds ? pool : pool.filter((c) => !isSpaceHungry(c));
+  const tailMonths = [wrapMonth(nowMonth + 11), wrapMonth(nowMonth + 10), wrapMonth(nowMonth + 9)];
+  const used = new Map<string, number>();
+  let bedOrdinal = 0;
+  for (const bed of beds) {
+    if (bed.kind === 'plot') continue;
+    // Rotate which tail month each bed starts with — an all-July reservation
+    // measured July at 96% while pushing May and June down to 78% each: the
+    // wall does not disappear when every bed claims the same month, it moves.
+    const startAt = bedOrdinal % tailMonths.length;
+    const bedTailMonths = [...tailMonths.slice(startAt), ...tailMonths.slice(0, startAt)];
+    bedOrdinal += 1;
+    let placed = false;
+    for (const m of bedTailMonths) {
+      if (placed) break;
+      const candidates = bedEligiblePool
+        .filter((c) => (c.sowMonths[pattern] ?? []).includes(m))
+        .filter((c) => fitsBedWidth(c, bed))
+        .filter((c) => !rotation.repeats(bed.id, foodGroupOf(c)))
+        .sort((a, b2) =>
+          ((used.get(a.key) ?? 0) - (used.get(b2.key) ?? 0))
+          || (commercialScore(b2) - commercialScore(a)));
+      for (const crop of candidates) {
+        const share = usableShare(occupancy, bed, m, crop, 1 / 3, 0.5);
+        if (share === null) continue;
+        occupancy.add(bed.id, m, crop, share);
+        rotation.recordUse(bed.id, foodGroupOf(crop));
+        used.set(crop.key, (used.get(crop.key) ?? 0) + 1);
+        const areaFraction = share < 1 ? share : undefined;
+        plantings.push({
+          id: plantingId(bed.id, crop.key, m, areaFraction),
+          bedId: bed.id,
+          cropKey: crop.key,
+          sowMonth: m,
+          areaFraction,
+        });
+        placed = true;
+        break;
+      }
+    }
+  }
+  return { plantings };
+}
+
 function ensureSowingCadence(
   pool: CropDef[],
   beds: PlanBed[],
@@ -1690,6 +1760,20 @@ export function autoSuggestPlan(
   // Plots never join the shared-bed passes: runFamilyBreadthFirst splits beds by fraction
   // across many crops, and a plot's whole identity is one crop at full area.
   const sharedBeds = beds.filter((b) => !dedicated.has(b.id) && b.kind !== 'plot');
+
+  // Must run BEFORE the goal passes: they hand out every share that crosses
+  // the planning wall, and the tail months can only sow while some remain —
+  // see reserveWrapTailSowings. FAMILY beds only: the reservation feeds the
+  // kitchen through the winter tail, and its crop mix costs annual tonnage
+  // (measured: -12% kg at a 40-bed farm) — a commercial grower's contract is
+  // tonnage-first, so commercial beds and hybrid's sell beds are exempt. The
+  // slice below mirrors the hybrid branch's own sell/family split exactly.
+  const hybridSellBedCount = answers.goal === 'hybrid' && (answers.focusCropCount ?? 0) > 0
+    ? Math.min(answers.focusCropCount ?? 0, Math.max(0, sharedBeds.length - 1))
+    : 0;
+  const tailReserveBeds = answers.goal === 'commercial' ? [] : sharedBeds.slice(hybridSellBedCount);
+  const tailReserved = reserveWrapTailSowings(pool, tailReserveBeds, occupancy, pattern, nowMonth, rotation, answers.allowVinesInBeds);
+  added.push(...tailReserved.plantings);
 
   if (answers.goal === 'commercial') {
     const result = runCommercialConcentration(pool, sharedBeds, answers.focusCropCount ?? 1, pattern, occupancy, nowMonth, answers.rhythm, rotation);

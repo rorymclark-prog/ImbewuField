@@ -404,9 +404,12 @@ test('a bed is never left with a share too small for any crop', () => {
     }
   }
   const ratio = slivers / total;
+  // 16.8% before the fraction fix, 7.3% after it, and ~1% once the wrap-tail
+  // reservation seeded every family bed with a one-third anchor the rest of
+  // the ladder tiles against. Ratcheted to where the code IS.
   assert.ok(
-    ratio <= 0.09,
-    `${slivers} of ${total} bed-months (${(ratio * 100).toFixed(1)}%) are left with a share too small to plant - was 16.8% before the fraction fix, 7.3% after`,
+    ratio <= 0.03,
+    `${slivers} of ${total} bed-months (${(ratio * 100).toFixed(1)}%) are left with a share too small to plant - was 16.8% pre-fraction-fix, 7.3% pre-reservation, ~1% now`,
   );
 });
 
@@ -468,13 +471,18 @@ test('no farm size is left with unplantable strips, from one bed to forty', () =
     cells += sizeCells;
     // A bed that never appears in occupancyByBed contributes no cells — only
     // judge sizes that actually produced a plan.
-    if (sizeCells > 0 && sizeSlivers / sizeCells > 0.16) {
+    if (sizeCells > 0 && sizeSlivers / sizeCells > 0.06) {
       worst.push(`${bedCount} beds: ${(sizeSlivers / sizeCells * 100).toFixed(1)}% of bed-months unplantable`);
     }
   }
 
   assert.deepEqual(worst, []);
-  assert.ok(slivers / cells <= 0.11, `${(slivers / cells * 100).toFixed(1)}% overall — was 19.0% before the fraction rules`);
+  // 19.0% before the fraction rules, ~10.5% after them, 1.26% once the
+  // wrap-tail reservation gave every family bed a third-of-a-bed anchor —
+  // the share ladder tiles against it, so the "structural floor" this file
+  // used to document is gone on family farms. Ratchet set just above the
+  // measured level; if it fails, the anchors stopped tiling.
+  assert.ok(slivers / cells <= 0.025, `${(slivers / cells * 100).toFixed(1)}% overall — was 19.0% pre-fraction-rules, 1.26% at the reservation ratchet`);
 });
 
 // ── 11. The field sheet scales with the catalog, not the farm ───────────────
