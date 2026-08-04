@@ -145,6 +145,34 @@ export function occupiedMonthsForPlanting(
   return Array.from({ length: span }, (_, offset) => wrapMonth(planting.sowMonth + offset));
 }
 
+/**
+ * Is the offset-th month of this planting's life ALREADY OVER for an existing crop?
+ *
+ * The month aggregations below are keyed by year-free calendar month, restated modulo 12 —
+ * which is correct for the repeating annual PLAN, but wrong for `existing` (farmer-confirmed,
+ * already-growing) crops: an existing crop sown last March that finished harvesting in May
+ * kept stamping calendar Mar-May as occupied FOREVER, so the utilization chart said 100% for
+ * months in which the Gantt (which resolves existing crops to their real, possibly-past
+ * offset and hides finished spans) correctly showed the beds empty. Same phantom put an
+ * already-eaten harvest's kilograms into the forward-looking value chart.
+ *
+ * The resolution mirrors the Gantt's own nearestSignedOffset rule (app/facilitator/crops/
+ * page.tsx): an existing crop's sow month means the NEAREST occurrence, past or future; every
+ * life-month whose resolved offset lands before today is history and contributes nothing.
+ * Planned/suggested plantings are never past — they haven't happened yet — and callers that
+ * don't pass `nowMonth` keep the pure-cycle behaviour unchanged.
+ */
+function slotIsPast(
+  planting: Pick<Planting, 'sowMonth' | 'existing'>,
+  nowMonth: number | undefined,
+  offsetFromSow: number,
+): boolean {
+  if (!nowMonth || planting.existing !== true) return false;
+  const fwd = ((planting.sowMonth - nowMonth) % 12 + 12) % 12;
+  const signedSowOffset = fwd > 6 ? fwd - 12 : fwd;
+  return signedSowOffset + offsetFromSow < 0;
+}
+
 export interface CropTask {
   /** `${planting.id}:${action}` — stable across recomputation, since a single
    *  planting produces at most one task per action. Used by lib/task-board.ts
@@ -629,19 +657,25 @@ export interface FoodAvailabilityItem {
  * different from buildYearReport's "what's new from this plan" framing.
  * 1-indexed like kgByMonth above ([0] unused, months are 1-12).
  */
-export function buildFoodAvailability(plantings: Planting[], beds: PlanBed[]): FoodAvailabilityItem[][] {
+export function buildFoodAvailability(plantings: Planting[], beds: PlanBed[], nowMonth?: number): FoodAvailabilityItem[][] {
   const byMonth: Map<string, FoodAvailabilityStatus>[] = Array.from({ length: 13 }, () => new Map());
   for (const p of plantings) {
     const crop = cropByKey(p.cropKey);
     const bed = beds.find((b) => b.id === p.bedId);
     if (!crop || !bed) continue;
     const hMonth = harvestMonth(p.sowMonth, crop.daysToHarvest);
+    const maturityOffset = Math.max(1, Math.round(crop.daysToHarvest / 30));
     const freshSpan = crop.harvestWindowMonths ?? 0;
     for (let off = 0; off <= freshSpan; off++) {
+      // Fresh months an existing crop already delivered are over — but note the storage tail
+      // below is judged per-month too: a crop harvested two months ago and holding 6 months of
+      // shelf life is genuinely still on the table today, and stays counted.
+      if (slotIsPast(p, nowMonth, maturityOffset + off)) continue;
       byMonth[wrapMonth(hMonth + off)].set(crop.key, 'fresh');
     }
     const storageSpan = crop.storageMonths ?? 0;
     for (let off = 1; off <= storageSpan; off++) {
+      if (slotIsPast(p, nowMonth, maturityOffset + freshSpan + off)) continue;
       const m = wrapMonth(hMonth + freshSpan + off);
       if (byMonth[m].get(crop.key) !== 'fresh') byMonth[m].set(crop.key, 'stored');
     }
@@ -685,6 +719,7 @@ export function buildFoodValueByMonth(
   plantings: Planting[],
   beds: PlanBed[],
   priceOverrides: Record<string, CropPrice>,
+  nowMonth?: number,
 ): FoodValueMonth[] {
   const byMonth: FoodValueMonth[] = Array.from({ length: 13 }, () => ({ kg: 0, retailValue: 0, wholesaleValue: 0, byCrop: {} }));
   for (const p of plantings) {
@@ -694,10 +729,13 @@ export function buildFoodValueByMonth(
     const price = priceFor(crop.key, priceOverrides);
     const totalKg = estimatedYieldKgAdjusted(p, bed.areaM2, plantings);
     const hMonth = harvestMonth(p.sowMonth, crop.daysToHarvest);
+    const maturityOffset = Math.max(1, Math.round(crop.daysToHarvest / 30));
     const freshSpan = crop.harvestWindowMonths ?? 0;
     const monthsCount = freshSpan + 1;
     const kgPerMonth = totalKg / monthsCount;
     for (let off = 0; off <= freshSpan; off++) {
+      // An existing crop's already-eaten harvest months carry no forward value — see slotIsPast.
+      if (slotIsPast(p, nowMonth, maturityOffset + off)) continue;
       const m = wrapMonth(hMonth + off);
       byMonth[m].kg += kgPerMonth;
       byMonth[m].byCrop[crop.key] = (byMonth[m].byCrop[crop.key] ?? 0) + kgPerMonth;
@@ -721,7 +759,7 @@ export function buildFoodValueByMonth(
  * capped at its own area before the site total is calculated: overlapping
  * successions cannot make one bed more than 100% occupied.
  */
-export function buildFieldUtilizationByMonth(plantings: Planting[], beds: PlanBed[]): number[] {
+export function buildFieldUtilizationByMonth(plantings: Planting[], beds: PlanBed[], nowMonth?: number): number[] {
   const totalArea = beds.reduce((s, b) => s + b.areaM2, 0);
   if (totalArea <= 0) return Array<number>(13).fill(0);
   // Occupancy is accumulated PER BED per month, then each bed is clamped to its
@@ -739,7 +777,10 @@ export function buildFieldUtilizationByMonth(plantings: Planting[], beds: PlanBe
     const areaHere = bed.areaM2 * (p.areaFraction ?? 1);
     let arr = perBed.get(bed.id);
     if (!arr) { arr = Array<number>(13).fill(0); perBed.set(bed.id, arr); }
-    for (const month of occupiedMonthsForPlanting(p)) arr[month] += areaHere;
+    occupiedMonthsForPlanting(p).forEach((month, offsetFromSow) => {
+      if (slotIsPast(p, nowMonth, offsetFromSow)) return; // finished months of an existing crop are history, not occupancy
+      arr[month] += areaHere;
+    });
   }
   const occupiedArea = Array<number>(13).fill(0);
   for (const bed of beds) {

@@ -528,9 +528,28 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
     });
   }
 
+  // iPhone photos are HEIC, which Chrome cannot decode natively — the single biggest source of
+  // "the add-photos button doesn't work". The wasm converter is loaded lazily, only when a HEIC
+  // file is actually picked, so everyone else pays nothing. Returns the original file on any
+  // failure so the existing skip-with-a-visible-note path still catches it.
+  async function convertIfHeic(f: File): Promise<File> {
+    const isHeic = /heic|heif/i.test(f.type) || /\.hei[cf]$/i.test(f.name);
+    if (!isHeic) return f;
+    try {
+      const heic2any = (await import('heic2any')).default;
+      const out = await heic2any({ blob: f, toType: 'image/jpeg', quality: 0.9 });
+      const blob = Array.isArray(out) ? out[0] : out;
+      return new File([blob], f.name.replace(/\.hei[cf]$/i, '.jpg'), { type: 'image/jpeg' });
+    } catch {
+      return f;
+    }
+  }
+
   async function handlePromptFiles(files: FileList | null) {
     if (!files?.length) return;
-    const candidates = Array.from(files).filter(f => f.type.startsWith('image/')).slice(0, 6);
+    const candidates = (await Promise.all(
+      Array.from(files).slice(0, 6).map(convertIfHeic),
+    )).filter(f => f.type.startsWith('image/'));
     const results = await Promise.all(candidates.map(async (f, i) => ({ f, i, r: await resizeForPrompt(f) })));
     const good = results.filter(x => x.r !== null);
     setPromptSkipped(results.length - good.length);
@@ -1815,7 +1834,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             <input
               ref={promptInputRef}
               type="file"
-              accept="image/*"
+              accept="image/*,.heic,.heif"
               multiple
               className="hidden"
               onChange={(e) => handlePromptFiles(e.target.files)}

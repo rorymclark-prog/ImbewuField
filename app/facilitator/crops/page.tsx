@@ -671,9 +671,12 @@ function FacilitatorCropsPageInner() {
 
   const seedBoq = useMemo(() => seedBoqForPlan(plantings, beds), [plantings, beds]);
   const yearReport = useMemo(() => buildYearReport(plantings, beds), [plantings, beds]);
-  const foodAvailability = useMemo(() => buildFoodAvailability(plantings, beds), [plantings, beds]);
-  const foodValueByMonth = useMemo(() => buildFoodValueByMonth(plantings, beds, priceOverrides), [plantings, beds, priceOverrides]);
-  const fieldUtilizationByMonth = useMemo(() => buildFieldUtilizationByMonth(plantings, beds), [plantings, beds]);
+  // currentMonth lets the aggregations drop the ALREADY-FINISHED months of existing crops —
+  // without it, an existing crop sown last March stamps calendar Mar-May as occupied forever,
+  // and the utilization chart reads 100% for months the Gantt correctly shows as empty beds.
+  const foodAvailability = useMemo(() => buildFoodAvailability(plantings, beds, currentMonth), [plantings, beds, currentMonth]);
+  const foodValueByMonth = useMemo(() => buildFoodValueByMonth(plantings, beds, priceOverrides, currentMonth), [plantings, beds, priceOverrides, currentMonth]);
+  const fieldUtilizationByMonth = useMemo(() => buildFieldUtilizationByMonth(plantings, beds, currentMonth), [plantings, beds, currentMonth]);
 
   function shareTasks() {
     const text = `🌱 Crop plan tasks\n${monthLabel(currentMonth)}: ${taskSentence(currentTasks)}\n${monthLabel(nextMonth)}: ${taskSentence(nextTasks)}`;
@@ -1431,7 +1434,9 @@ function FoodAvailabilityChart({
         <p className="font-sans mb-3" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.4 }}>
           How much of your total bed area is actually growing something each month — a quick way to spot a bed
           sitting idle between plantings. A bed counts as occupied from sowing through the end of its harvest
-          window (storage life afterward doesn&apos;t count — that&apos;s off the bed, not in the ground).
+          window (storage life afterward doesn&apos;t count — that&apos;s off the bed, not in the ground). Crops
+          you marked as already growing only count from today onward — a crop that finished months ago no longer
+          holds its bed here, matching the timeline above.
         </p>
       ) : (
         <p className="font-sans mb-3" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.4 }}>

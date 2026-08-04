@@ -657,9 +657,13 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
   const batches: string[][] = [];
   for (let i = 0; i < safeSections.length; i += BATCH_SIZE) batches.push(safeSections.slice(i, i + BATCH_SIZE));
 
-  // Fan-out concurrency is capped at 4 batches at a time so even a legitimate
-  // max-section request cannot burst all Anthropic calls simultaneously.
-  const CONCURRENCY = 4;
+  // ALL batches run concurrently. The old wave loop (4 at a time, each wave awaited before the
+  // next started) made wall-clock = sum of the slowest batch PER WAVE — a Comprehensive report
+  // (7+ batches × 16k-token generations, several minutes each) needed two waves and blew the
+  // function's maxDuration, so Vercel killed it with zero bytes sent and the farmer saw a bare
+  // "500". Concurrent, wall-clock = the single slowest batch, comfortably inside the window.
+  // The section allow-list above already caps how many batches a request can create; a dozen
+  // parallel calls is well inside Anthropic rate limits.
   const batchResults: string[] = new Array(batches.length);
 
   const runBatch = async (batchSections: string[], idx: number): Promise<void> => {
@@ -668,6 +672,10 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
         model: 'claude-sonnet-4-6',
         max_tokens: perBatchTokens,
         messages: [{ role: 'user', content: buildPrompt(batchSections, idx === 0) }],
+      }, {
+        // One hung upstream call must not eat the whole maxDuration window — the catch below
+        // ships an honest per-section placeholder instead.
+        signal: AbortSignal.timeout(240_000),
       });
       const text = msg.content.map((b) => (b.type === 'text' ? b.text : '')).join('');
       const cutShort = msg.stop_reason === 'max_tokens';
@@ -679,10 +687,7 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
     }
   };
 
-  // Execute batches in chunks of CONCURRENCY, preserving original order.
-  for (let i = 0; i < batches.length; i += CONCURRENCY) {
-    await Promise.all(batches.slice(i, i + CONCURRENCY).map((b, j) => runBatch(b, i + j)));
-  }
+  await Promise.all(batches.map((b, i) => runBatch(b, i)));
 
   const encoder = new TextEncoder();
   const readable = new ReadableStream({

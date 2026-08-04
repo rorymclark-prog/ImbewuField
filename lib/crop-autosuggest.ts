@@ -566,10 +566,17 @@ function nearestWinterCoveringSowMonth(crop: CropDef, pattern: RainPattern, nowM
  *
  * A candidate's nearest covering sow month can legitimately be up to 11
  * months out (monthsForward wraps mod 12) — e.g. asked in June, onions'
- * only covering window is next March. That's NOT this year's gap being
- * fixed, so it must not be silently committed to the plan alongside
- * genuinely-imminent plantings; it's routed to laterThisYear instead, same
- * as planSuccession's own DELAYED_START handling everywhere else in this file.
+ * only covering window is next March. That used to be routed to
+ * laterThisYear and NOT planted — which made this pass a guaranteed no-op
+ * whenever it ran between June and September (every covering sow month is
+ * then 6-11 months forward), the engine-side half of "half the garden rests
+ * all winter". The plan is a repeating annual cycle and the owner has
+ * explicitly authorised sowings that flow into the next season, so a
+ * far-out bridging sowing is now COMMITTED like any other planting — its
+ * sow month shows on the timeline's forward columns, exactly like
+ * fillRemainingGaps' own 11-month-horizon placements. laterThisYear remains
+ * only as a guard beyond the shared horizon (unreachable today: mod-12
+ * forward distance never exceeds 11).
  */
 function backfillWinterGaps(
   pool: CropDef[],
@@ -606,9 +613,8 @@ function backfillWinterGaps(
     if (!nonRepeating.length) continue;
     const chosen = nonRepeating.find((c) => !rotation.conflicts(bed.id, foodGroupOf(c.crop))) ?? nonRepeating[0];
     const gap = monthsForward(nowMonth, chosen.sowMonth);
-    if (gap > DELAYED_START_THRESHOLD_MONTHS) {
+    if (gap > GAP_FILL_HORIZON_MONTHS) {
       laterThisYear.push({ cropKey: chosen.crop.key, nextWindowMonth: chosen.sowMonth });
-      notes.push(`${bed.label} will rest over winter this time round — ${chosen.crop.name} could bridge it, but not until ${MONTHS_SHORT[chosen.sowMonth - 1]} (too far out to plant now).`);
       continue;
     }
     occupancy.add(bed.id, chosen.sowMonth, chosen.crop.daysToHarvest, 1);
@@ -739,23 +745,38 @@ function fillRemainingGaps(
     const stuckMonths = new Set<number>();
 
     for (let fillCount = 0; fillCount < MAX_GAP_FILLS_PER_BED; fillCount++) {
+      // SCARCITY-FIRST month choice. The old pick was most-empty-room-first, which spends the
+      // shoulder months (Aug-Nov, Feb-May) on quick high-score crops before winter is even
+      // attempted — and winter's only bridgers are LONG crops (onions, garlic, broad beans)
+      // whose spans need those very shoulder months free. By the time Jun-Jul came up, every
+      // candidate failed occupancy and the hole was permanent. Resolving the month with the
+      // FEWEST reaching candidates first plants the hard months while the space they need is
+      // still open; easy months fill afterwards regardless of order.
       let gapMonth: number | null = null;
-      let gapMonthRoom = 0;
+      let gapMonthOptions = Infinity;
       for (let i = 0; i < 12; i++) {
         const m = wrapMonth(nowMonth + i);
         if (stuckMonths.has(m)) continue;
-        const room = 1 - occupancy.fractionAt(bed.id, m);
-        if (room > 0.0001 && room > gapMonthRoom) { gapMonth = m; gapMonthRoom = room; }
+        if (1 - occupancy.fractionAt(bed.id, m) <= 0.0001) continue;
+        const options = reachingCandidates(eligiblePool, pattern, nowMonth, m, GAP_FILL_HORIZON_MONTHS).length;
+        if (options < gapMonthOptions) { gapMonth = m; gapMonthOptions = options; }
       }
       if (gapMonth === null) break; // every still-empty month already tried, or bed is fully covered
 
       const reaching = reachingCandidates(eligiblePool, pattern, nowMonth, gapMonth, GAP_FILL_HORIZON_MONTHS);
       let chosen: { crop: CropDef; sowMonth: number; fraction: number } | null = null;
 
+      // Prefer the candidate covering the MOST currently-empty months of this bed — a long
+      // winter-spanning crop beats a quick high-score crop for a long empty stretch. Verified
+      // against the live engine: this ordering alone converts Jun-Jul "rests" into full-bed
+      // broad-bean bridges. Nearness and score only break ties.
+      const emptyCover = (c: { crop: CropDef; sowMonth: number }): number =>
+        occupiedMonths(c.sowMonth, c.crop.daysToHarvest)
+          .filter((mo) => occupancy.fractionAt(bed.id, mo) === 0).length;
       for (const fraction of BED_FRACTION_PRESETS) {
         const fitting = reaching
           .filter((c) => occupancy.fits(bed.id, c.sowMonth, c.crop.daysToHarvest, fraction))
-          .sort((a, b) => (a.startGap - b.startGap) || (commercialScore(b.crop) - commercialScore(a.crop)));
+          .sort((a, b) => (emptyCover(b) - emptyCover(a)) || (a.startGap - b.startGap) || (commercialScore(b.crop) - commercialScore(a.crop)));
         if (!fitting.length) continue; // this fraction can't fit anything — try a smaller share
 
         const nonRepeating = fitting.filter((c) => !rotation.repeats(bed.id, foodGroupOf(c.crop)));
@@ -818,6 +839,12 @@ function reportStillRestingBeds(
   const smallestFraction = BED_FRACTION_PRESETS[BED_FRACTION_PRESETS.length - 1];
   const canFill = (crops: CropDef[], bedId: string, month: number): boolean =>
     reachingCandidates(crops, pattern, nowMonth, month, GAP_FILL_HORIZON_MONTHS).some((c) => occupancy.fits(bedId, c.sowMonth, c.crop.daysToHarvest, smallestFraction));
+  // Reach WITHOUT the occupancy check — the difference between "no crop's window covers this
+  // stretch" (a seasonal fact about the catalogue) and "a crop could cover it but this bed's
+  // plan is already too full around it" (a fact about the plan). The old copy blamed the
+  // catalogue for both, which read as "nothing can grow here" on a bed the plan itself packed.
+  const canReach = (crops: CropDef[], month: number): boolean =>
+    reachingCandidates(crops, pattern, nowMonth, month, GAP_FILL_HORIZON_MONTHS).length > 0;
 
   for (const bed of beds) {
     const emptyMonths: number[] = [];
@@ -831,6 +858,8 @@ function reportStillRestingBeds(
     const catalogCanFillSome = emptyMonths.some((m) => canFill(CROPS, bed.id, m));
     if (!poolCanFillSome && catalogCanFillSome) {
       notes.push(`${bed.label} still rests in ${label} — a crop outside your selected groups could cover it; widen your selection if you want it filled.`);
+    } else if (!catalogCanFillSome && emptyMonths.some((m) => canReach(CROPS, m))) {
+      notes.push(`${bed.label} still rests in ${label} — crops exist for that stretch, but this bed's surrounding months are already fully planted, so nothing long enough can fit. Freeing space nearby (or resting the bed) are both fine choices.`);
     } else if (!catalogCanFillSome) {
       notes.push(`${bed.label} still rests in ${label} — no crop in the catalog can be sown to cover that stretch under a '${pattern}' rainfall pattern (frost risk or genuinely out of season). That's a real seasonal limit, not a gap in the plan.`);
     }
