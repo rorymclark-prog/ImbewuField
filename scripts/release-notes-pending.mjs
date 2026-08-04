@@ -19,8 +19,9 @@
 
 import { execFileSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 
-const ROOT = new URL('..', import.meta.url).pathname;
+const ROOT = fileURLToPath(new URL('..', import.meta.url));
 
 // Where a farmer-visible change can come from. Docs, tests, scripts and functions/ are excluded
 // on purpose: none of them change what is on the screen in front of someone standing in a field.

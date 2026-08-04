@@ -34,6 +34,21 @@ export interface ReleaseNote {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '4 August',
+    // Stamped at commit time by the same push that carries these changes.
+    sha: 'e79c07e',
+    changes: [
+      'The crop plan no longer rests half the garden all winter — long crops bridge May–August',
+      'Suggested sowings can start later in the year and flow into next season',
+      'Field utilization no longer counts crops that already finished — it matches your beds',
+      'The questionnaire fills in roof areas from your traced roofs — store room included',
+      '"Boundary traced" now accepts a boundary drawn in the Design Studio',
+      'The "Your land" card shows area and perimeter from your Studio boundary too',
+      'iPhone HEIC photos convert automatically; an unreadable photo now says so',
+      'Comprehensive reports no longer fail with a plain "500"',
+    ],
+  },
+  {
     when: '3 August',
     sha: '40bc865',
     changes: [
