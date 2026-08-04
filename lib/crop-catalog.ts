@@ -596,6 +596,48 @@ export function cropByKey(k: string): CropDef | undefined {
   return CROPS.find((c) => c.key === k);
 }
 
+/**
+ * The two spacings a farmer actually plants to, resolved from whatever the
+ * catalog knows. THE SINGLE SOURCE OF TRUTH — every seed quantity and every
+ * printed sowing instruction must come through here, or the plan tells the
+ * farmer one thing and charges him for another.
+ *
+ * It did exactly that until 2026-08-04. seedBoqForPlan used
+ * `(rowSpacingCm && inRowSpacingCm) ? row*inRow : spacingCm**2`, so a crop
+ * that had only ONE of the sourced figures had it silently thrown away and
+ * the legacy single figure squared instead. The printed line then
+ * contradicted itself: "Dry beans ~11362 seeds · 15cm apart in the row" —
+ * 11362 is the 10cm-square number, and nobody following the printed
+ * instruction would ever need it. Peas were worse: the catalog's own comment
+ * records that the 8cm spacingCm "conflated inter-row-on-bed spacing with
+ * along-row spacing", and that discredited 8 was exactly what got squared.
+ *
+ * The fallbacks, and why:
+ *  - in-row ← spacingCm. spacingCm is a plant-to-plant figure, which is what
+ *    in-row means. Garlic's own comment says its in-row was left "as the
+ *    spacingCm fallback for now", so this is the documented intent.
+ *  - row    ← the in-row figure BEFORE spacingCm. A sourced split value is
+ *    higher-confidence than the legacy single one (the 2026-07-15 agronomy
+ *    pass exists because the legacy figures were wrong), and square planting
+ *    is how an intensive raised bed is actually laid out.
+ *
+ * Dry beans keep an unsourced row spacing — the catalog flags it "medium
+ * confidence, flagged for re-verification" — so 15x15 is what this app can
+ * honestly claim, not a field row spacing invented here.
+ */
+export function plantSpacingCm(crop: CropDef): { rowCm: number; inRowCm: number } {
+  const inRowCm = crop.inRowSpacingCm ?? crop.spacingCm;
+  const rowCm = crop.rowSpacingCm ?? crop.inRowSpacingCm ?? crop.spacingCm;
+  return { rowCm, inRowCm };
+}
+
+/** Plants per square metre, derived from plantSpacingCm and nothing else. */
+export function plantsPerM2(crop: CropDef): number {
+  const { rowCm, inRowCm } = plantSpacingCm(crop);
+  const perPlantM2 = (rowCm / 100) * (inRowCm / 100);
+  return perPlantM2 > 0 ? 1 / perPlantM2 : 0;
+}
+
 export const MONTHS_SHORT: string[] = [
   'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec',
 ];

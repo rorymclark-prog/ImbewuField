@@ -1,51 +1,22 @@
-// Getting a generated file (a .pdf plan, a .ics calendar) off the screen and
-// onto the farmer's device.
+// Kept as the crop plan's door onto the shared file-delivery helper.
 //
-// Share sheet FIRST where the platform can carry a file. ImbewuField's
-// manifest declares `"display": "standalone"`, so an installed app has no
-// browser chrome — and on iOS the share sheet is the only route that ends with
-// the file actually saved (or sent straight into WhatsApp, which is how a plan
-// reaches a facilitator in practice). Everywhere else, and whenever the share
-// sheet cannot take files, a plain blob download — which is what a desktop
-// browser wants anyway.
+// This module used to hold its own copy of the share-then-download logic, and
+// lib/report-pdf.ts held a second copy of the same thing — both carrying the
+// same bug (share sheet first on a desktop, where the sheet cannot save a
+// file at all). Its own comment already said "worth merging into one helper
+// once the report work lands". It landed; the merged helper is
+// lib/file-delivery.ts, which also explains what went wrong.
 //
-// This mirrors deliverPdf in lib/report-pdf.ts, which solves the same problem
-// for the site-analysis report. It is deliberately NOT imported from there:
-// that module is the report screen's, it is mid-change, and a shared checkout
-// is a poor place to couple two features together. Worth merging into one
-// helper once the report work lands.
+// The re-export stays so crop-plan code keeps importing from the module that
+// reads as its own, and so this filename still turns up in a search for "how
+// does the crop plan export".
 
-export type FileDelivery = 'shared' | 'downloaded';
-
-export async function deliverFile(blob: Blob, filename: string, shareTitle: string): Promise<FileDelivery> {
-  const nav = typeof navigator === 'undefined'
-    ? undefined
-    : (navigator as Navigator & { canShare?: (d: ShareData) => boolean });
-
-  if (nav?.share && nav.canShare) {
-    try {
-      const file = new File([blob], filename, { type: blob.type });
-      if (nav.canShare({ files: [file] })) {
-        await nav.share({ files: [file], title: shareTitle });
-        return 'shared';
-      }
-    } catch (err) {
-      // AbortError = the farmer dismissed the sheet. That is a completed
-      // action, not a failed export — falling through would then ALSO trigger
-      // a download they just declined.
-      if (err instanceof Error && err.name === 'AbortError') return 'shared';
-    }
-  }
-
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = filename;
-  a.rel = 'noopener';
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  // Revoking immediately can cancel the download on some WebKit builds.
-  setTimeout(() => URL.revokeObjectURL(url), 10_000);
-  return 'downloaded';
-}
+export {
+  deliverFile,
+  downloadFile,
+  shareFile,
+  openFileInTab,
+  canShareFiles,
+  prefersShareSheet,
+  type FileDelivery,
+} from '@/lib/file-delivery';

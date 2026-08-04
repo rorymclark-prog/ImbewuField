@@ -1,5 +1,5 @@
 import type { CropDef, RainPattern } from './crop-catalog';
-import { cropByKey, CROPS, MONTHS_SHORT } from './crop-catalog';
+import { cropByKey, CROPS, MONTHS_SHORT, plantsPerM2 } from './crop-catalog';
 import { foodGroupOf } from './crop-groups';
 import { priceFor, type CropPrice } from './crop-prices';
 import {
@@ -547,10 +547,10 @@ export function seedBoqForPlan(plantings: Planting[], beds: PlanBed[]): SeedBoqR
     const bed = beds.find((b) => b.id === p.bedId);
     if (!crop || !bed) continue;
     const areaM2 = bed.areaM2 * (p.areaFraction ?? 1);
-    const perPlantM2 = crop.rowSpacingCm !== undefined && crop.inRowSpacingCm !== undefined
-      ? (crop.rowSpacingCm / 100) * (crop.inRowSpacingCm / 100)
-      : (crop.spacingCm / 100) ** 2;
-    const rawCount = areaM2 / perPlantM2;
+    // plantsPerM2 is the ONLY place a planting density is decided — the same
+    // helper sowingInstruction prints from, so the quantity on the page and
+    // the spacing on the page can never disagree again (see crop-catalog.ts).
+    const rawCount = areaM2 * plantsPerM2(crop);
     const needsBuffer = !crop.transplant && !PROPAGATION_UNIT[crop.key];
     const count = Math.max(1, Math.round(needsBuffer ? rawCount * SEED_GERMINATION_BUFFER : rawCount));
     byCrop.set(crop.key, (byCrop.get(crop.key) ?? 0) + count);
@@ -577,15 +577,23 @@ export function buildYearReport(plantings: Planting[], beds: PlanBed[]): string[
   const toPlant = plantings.filter((p) => !p.existing);
   if (!toPlant.length) return [];
 
+  // ONE MODEL, NOT TWO (2026-08-04). This used to lump a planting's whole yield
+  // into harvestMonth() while the chart three inches away spread it across the
+  // real picking window — so the same screen said "Feb 212.1kg" in the chart and
+  // "peaking around Feb (~200kg that month)" in this prose, and the two differed
+  // by up to 47kg in other months. Worse, the lumped model showed May and June at
+  // zero on a plan whose chart had chard and kale being cut in both, and the quiet-
+  // stretch sentence below then told the farmer nothing was due. Reading the chart's
+  // own builder makes disagreement impossible rather than merely unlikely.
   const kgByMonth = Array<number>(13).fill(0); // 1-indexed, [0] unused
   const kgByCrop = new Map<string, number>();
+  const valueByMonth = buildFoodValueByMonth(toPlant, beds, {});
+  for (let m = 1; m <= 12; m++) kgByMonth[m] = valueByMonth[m].kg;
   for (const p of toPlant) {
     const crop = cropByKey(p.cropKey);
     const bed = beds.find((b) => b.id === p.bedId);
     if (!crop || !bed) continue;
-    const kg = estimatedYieldKgAdjusted(p, bed.areaM2, plantings);
-    kgByMonth[harvestMonth(p.sowMonth, crop.daysToHarvest)] += kg;
-    kgByCrop.set(crop.key, (kgByCrop.get(crop.key) ?? 0) + kg);
+    kgByCrop.set(crop.key, (kgByCrop.get(crop.key) ?? 0) + estimatedYieldKgAdjusted(p, bed.areaM2, plantings));
   }
 
   const totalKg = kgByMonth.reduce((a, b) => a + b, 0);
@@ -643,8 +651,13 @@ export function buildYearReport(plantings: Planting[], beds: PlanBed[]): string[
     const cropKey = key.split('::')[1];
     const crop = cropByKey(cropKey);
     if (crop) {
-      const others = staggeredBedCount > 1 ? ` (and ${staggeredBedCount - 1} other bed${staggeredBedCount > 2 ? 's' : ''} too)` : '';
-      paragraphs.push(`${crop.name} is staggered ${count} times on the same bed${others} — sown in slices a few weeks apart so harvests keep coming instead of one big flush followed by a gap.`);
+      // staggeredBedCount counts bed+crop PAIRINGS across every crop, not this
+      // crop's beds — so the old "(and 11 other beds too)" read as a claim that
+      // Swiss chard was on twelve beds, which it was not. Say what is counted.
+      const others = staggeredBedCount > 1
+        ? ` — and ${staggeredBedCount - 1} other bed${staggeredBedCount > 2 ? 's are' : ' is'} staggered the same way`
+        : '';
+      paragraphs.push(`${crop.name} is staggered ${count} times on one bed${others}: sown in slices a few weeks apart so harvests keep coming instead of one big flush followed by a gap.`);
     }
   }
 

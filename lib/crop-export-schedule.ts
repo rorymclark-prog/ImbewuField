@@ -18,7 +18,7 @@
 // drift into describing the same task three different ways.
 
 import type { CropDef } from '@/lib/crop-catalog';
-import { MONTHS_SHORT, cropByKey } from '@/lib/crop-catalog';
+import { MONTHS_SHORT, cropByKey, plantSpacingCm } from '@/lib/crop-catalog';
 import type { CropTask, PlanBed, Planting } from '@/lib/crop-plan';
 import { harvestMonth, seedBoqForPlan } from '@/lib/crop-plan';
 
@@ -74,22 +74,21 @@ export function monthYearLabel(month: number, now: Date): string {
 // ── Task wording ────────────────────────────────────────────────────────────
 
 /**
- * Farmer-facing "how to sow" line — row spacing / in-row spacing / sow depth
- * where a sourced split exists (lib/crop-catalog.ts rowSpacingCm/
- * inRowSpacingCm/sowDepthCm), falling back to the single spacingCm figure for
- * the crops with no sourced split. Never fabricates a number that isn't on the
- * crop record.
+ * Farmer-facing "how to sow" line. BOTH axes, always, and both resolved by
+ * plantSpacingCm — the same helper seedBoqForPlan counts seed with, so the
+ * spacing on the page and the quantity on the page cannot disagree.
+ *
+ * They did disagree until 2026-08-04: the printed plan read "Dry beans ~11362
+ * seeds · 15cm apart in the row" while 11362 was counted on a 10cm square.
+ * Garlic printed "rows 25cm apart" and nothing else — an instruction nobody
+ * can plant from. Never fabricates: every number here is on the crop record.
  */
 export function sowingInstruction(crop: CropDef): string {
   const parts: string[] = [];
-  if (crop.rowSpacingCm) parts.push(`rows ${crop.rowSpacingCm}cm apart`);
-  if (crop.inRowSpacingCm) parts.push(`${crop.inRowSpacingCm}cm apart in the row`);
+  const { rowCm, inRowCm } = plantSpacingCm(crop);
+  if (rowCm === inRowCm) parts.push(`plant spacing ~${rowCm}cm each way`);
+  else parts.push(`rows ${rowCm}cm apart`, `${inRowCm}cm apart in the row`);
   if (crop.sowDepthCm) parts.push(`sow ${crop.sowDepthCm}cm deep`);
-  // Always surface an actual plant-spacing figure when there is no row/in-row split — a crop
-  // with only a sow-depth (carrots, onions) must still show spacing, not just depth.
-  if (!crop.rowSpacingCm && !crop.inRowSpacingCm && crop.spacingCm) {
-    parts.unshift(`plant spacing ~${crop.spacingCm}cm`);
-  }
   return parts.join(' · ');
 }
 

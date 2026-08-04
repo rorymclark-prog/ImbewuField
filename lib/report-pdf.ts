@@ -17,6 +17,8 @@
 // The markdown → block parsing is deliberately pure and exported so it can be
 // tested without a DOM, a browser, or jsPDF.
 
+import { deliverFile, type FileDelivery } from '@/lib/file-delivery';
+
 export type ReportBlock =
   | { kind: 'title'; text: string }
   | { kind: 'h2'; text: string }
@@ -295,43 +297,18 @@ export async function buildReportPdf(markdown: string, meta: ReportPdfMeta): Pro
   return doc.output('blob');
 }
 
-export type PdfDelivery = 'shared' | 'downloaded';
+export type PdfDelivery = FileDelivery;
 
 /**
- * Get the finished PDF onto the farmer's device.
+ * Get the finished report PDF onto the farmer's device.
  *
- * Share-sheet first where it can carry a file (iOS/Android): that is the only
- * route on an installed iOS PWA that ends with the file actually saved. Falls
- * back to a blob download, which is what desktop browsers want anyway.
+ * The share-then-download logic used to live here in full, with a second copy
+ * in lib/crop-export-deliver.ts. Both preferred the share sheet whenever
+ * canShare({files}) allowed it — which desktop Chrome does, while the macOS
+ * share sheet offers no way to save a file, so the download was unreachable on
+ * exactly the machine that wanted it. One helper now: lib/file-delivery.ts,
+ * which also documents how that dead end was found.
  */
 export async function deliverPdf(blob: Blob, filename: string): Promise<PdfDelivery> {
-  const nav = typeof navigator === 'undefined'
-    ? undefined
-    : (navigator as Navigator & { canShare?: (d: ShareData) => boolean });
-
-  if (nav?.share && nav.canShare) {
-    try {
-      const file = new File([blob], filename, { type: 'application/pdf' });
-      if (nav.canShare({ files: [file] })) {
-        await nav.share({ files: [file], title: 'ImbewuField Site Analysis Report' });
-        return 'shared';
-      }
-    } catch (err) {
-      // AbortError = the farmer dismissed the sheet; that is a completed action,
-      // not a failure to export. Anything else falls through to the download.
-      if (err instanceof Error && err.name === 'AbortError') return 'shared';
-    }
-  }
-
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = filename;
-  a.rel = 'noopener';
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  // Revoking immediately can cancel the download on some WebKit builds.
-  setTimeout(() => URL.revokeObjectURL(url), 10_000);
-  return 'downloaded';
+  return deliverFile(blob, filename, 'ImbewuField Site Analysis Report');
 }

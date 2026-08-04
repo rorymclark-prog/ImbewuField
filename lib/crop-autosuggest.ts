@@ -143,24 +143,45 @@ function nearestEntry(nowMonth: number, months: number[]): { month: number; gap:
 }
 
 /**
- * Total months spanned by a sow→harvest run (inclusive of both ends),
- * mirroring lib/crop-plan.ts's harvestMonth offset exactly. Deriving this
- * from daysToHarvest directly (rather than from comparing sowMonth to an
- * already-wrapped harvestEnd month) avoids a real ambiguity: a crop whose
- * daysToHarvest rounds to an exact 12-month offset wraps harvestEnd back to
- * the SAME numeric month as sowMonth, which is indistinguishable from "only
- * occupies 1 month" if you only ever compare the two endpoint months.
- * daysToHarvest<=0 (used for the unknown-crop-key fallback below) means
- * "nothing more is known" — occupy just the sow month itself.
+ * The two facts that decide how long a crop HOLDS ground. Deliberately a
+ * structural type rather than the whole CropDef: the unknown-crop-key
+ * fallback below has neither field, and a caller must not be able to pass a
+ * bare daysToHarvest number by accident — which is exactly the bug this
+ * shape exists to prevent (see holdSpanMonths).
  */
-function spanMonths(daysToHarvest: number): number {
-  if (daysToHarvest <= 0) return 1;
-  return Math.max(1, Math.round(daysToHarvest / 30)) + 1;
+export type BedHold = Pick<CropDef, 'daysToHarvest' | 'harvestWindowMonths'>;
+
+/**
+ * Total months a planting OCCUPIES ITS BED: sowing through the end of the
+ * fresh-harvest window, inclusive of both ends. Mirrors lib/crop-plan.ts's
+ * occupiedMonthsForPlanting exactly — the two must agree, because one decides
+ * where crops go and the other draws the utilisation chart the farmer reads.
+ *
+ * THE HARVEST WINDOW IS THE WHOLE POINT (2026-08-04). This used to be
+ * maturity only, so the planner freed a bed the day its crop was ripe. A
+ * half-bed of Swiss chard sown in January was treated as finished in March
+ * when it is in fact cut until June — and the planner stacked another half
+ * bed on top of it. Measured on a 9-bed fixture, Bed 1 came out at 150-167%
+ * occupied in nine months of twelve, which buildFieldUtilizationByMonth then
+ * clamped to 100% so nothing ever showed it. The owner saw the other end of
+ * it: "there is no sowing in bed one after april" — the bed had no room left
+ * to offer because its room had already been sold twice.
+ *
+ * Deriving the span from daysToHarvest directly (rather than comparing
+ * sowMonth to an already-wrapped harvestEnd month) avoids a real ambiguity: a
+ * crop whose daysToHarvest rounds to an exact 12-month offset wraps harvestEnd
+ * back to the SAME numeric month as sowMonth, indistinguishable from "occupies
+ * 1 month" if you only compare endpoints. daysToHarvest<=0 (the unknown-crop
+ * fallback) means "nothing more is known" — occupy just the sow month.
+ */
+function holdSpanMonths(crop: BedHold): number {
+  if (crop.daysToHarvest <= 0) return 1;
+  return Math.max(1, Math.round(crop.daysToHarvest / 30)) + 1 + (crop.harvestWindowMonths ?? 0);
 }
 
-/** Every calendar month (1-12) a sow→harvest span actually occupies, wrap-safe. */
-function occupiedMonths(sowMonth: number, daysToHarvest: number): number[] {
-  const span = spanMonths(daysToHarvest);
+/** Every calendar month (1-12) a planting actually holds its bed, wrap-safe. */
+function occupiedMonths(sowMonth: number, crop: BedHold): number[] {
+  const span = holdSpanMonths(crop);
   const months: number[] = [];
   let m = sowMonth;
   for (let i = 0; i < span; i++) {
@@ -210,7 +231,7 @@ const MIN_DEDICATED_BED_WIDTH_M = 2;
 class Occupancy {
   private byBed = new Map<string, Map<number, number>>();
 
-  seed(plantings: Planting[], daysToHarvestOf: (p: Planting) => number) {
+  seed(plantings: Planting[], holdOf: (p: Planting) => BedHold) {
     for (const p of plantings) {
       if (!Number.isInteger(p.sowMonth) || p.sowMonth < 1 || p.sowMonth > 12) continue;
       const fraction = p.areaFraction;
@@ -219,7 +240,7 @@ class Occupancy {
         : Number.isFinite(fraction) && fraction > 0 && fraction <= 1
           ? fraction
           : 1;
-      this.add(p.bedId, p.sowMonth, daysToHarvestOf(p), safeFraction);
+      this.add(p.bedId, p.sowMonth, holdOf(p), safeFraction);
     }
   }
 
@@ -230,14 +251,14 @@ class Occupancy {
   }
 
   /** Would adding this fraction over this span push any occupied month past 100%? */
-  fits(bedId: string, sowMonth: number, daysToHarvest: number, fraction: number): boolean {
+  fits(bedId: string, sowMonth: number, crop: BedHold, fraction: number): boolean {
     const m = this.monthMap(bedId);
-    return occupiedMonths(sowMonth, daysToHarvest).every((mo) => (m.get(mo) ?? 0) + fraction <= 1.0001);
+    return occupiedMonths(sowMonth, crop).every((mo) => (m.get(mo) ?? 0) + fraction <= 1.0001);
   }
 
-  add(bedId: string, sowMonth: number, daysToHarvest: number, fraction: number) {
+  add(bedId: string, sowMonth: number, crop: BedHold, fraction: number) {
     const m = this.monthMap(bedId);
-    for (const mo of occupiedMonths(sowMonth, daysToHarvest)) m.set(mo, (m.get(mo) ?? 0) + fraction);
+    for (const mo of occupiedMonths(sowMonth, crop)) m.set(mo, (m.get(mo) ?? 0) + fraction);
   }
 
   /** Read-only: how much of `bedId` is committed in a given calendar month. */
@@ -586,8 +607,8 @@ function planSuccession(
         // A plot never hosts a fraction (see fractionPresetsFor) — today's callers only
         // reach a plot with whole-area placements, so this is armour, not a live branch.
         if (bed.kind === 'plot' && perBatchFraction < 1) continue;
-        if (occupancy.fits(bed.id, sowMonth, crop.daysToHarvest, perBatchFraction)) {
-          occupancy.add(bed.id, sowMonth, crop.daysToHarvest, perBatchFraction);
+        if (occupancy.fits(bed.id, sowMonth, crop, perBatchFraction)) {
+          occupancy.add(bed.id, sowMonth, crop, perBatchFraction);
           const areaFraction = perBatchFraction < 1 ? perBatchFraction : undefined;
           plantings.push({
             id: plantingId(bed.id, crop.key, sowMonth, areaFraction),
@@ -740,7 +761,7 @@ function winterCoveringSowMonths(crop: CropDef, pattern: RainPattern): number[] 
   const out: number[] = [];
   for (const cluster of clusterSowMonths(crop.sowMonths[pattern])) {
     for (const m of cluster.months) {
-      if (WINTER_MONTHS.every((wm) => occupiedMonths(m, crop.daysToHarvest).includes(wm))) out.push(m);
+      if (WINTER_MONTHS.every((wm) => occupiedMonths(m, crop).includes(wm))) out.push(m);
     }
   }
   return out;
@@ -800,7 +821,7 @@ function backfillWinterGaps(
     const candidates = bridgePool
       .flatMap((crop) => winterCoveringSowMonths(crop, pattern).map((sowMonth) => ({ crop, sowMonth })))
       .filter((x) => fitsBedWidth(x.crop, bed))
-      .filter((x) => occupancy.fits(bed.id, x.sowMonth, x.crop.daysToHarvest, 1))
+      .filter((x) => occupancy.fits(bed.id, x.sowMonth, x.crop, 1))
       .sort((a, b) =>
         // On a PLOT the winter slot belongs to the cover crop, ahead of everything else.
         // Without this a staple wins the bridge on score — potato took the May slot on
@@ -838,7 +859,7 @@ function backfillWinterGaps(
     // through late winter into the September the bridgers leave bare. Plots stay whole-area
     // by identity (fractionPresetsFor).
     const bridgeFraction = bed.kind === 'plot' ? 1 : 0.5;
-    occupancy.add(bed.id, chosen.sowMonth, chosen.crop.daysToHarvest, bridgeFraction);
+    occupancy.add(bed.id, chosen.sowMonth, chosen.crop, bridgeFraction);
     rotation.recordUse(bed.id, foodGroupOf(chosen.crop));
     bumpSow(sowCounts, chosen.sowMonth);
     const areaFraction = bridgeFraction < 1 ? bridgeFraction : undefined;
@@ -913,7 +934,7 @@ function ensureSowingCadence(
         if (!fitsBedWidth(crop, bed)) continue;
         if (rotation.repeats(bed.id, foodGroupOf(crop))) continue;
         for (const fraction of fractions) {
-          if (!occupancy.fits(bed.id, m, crop.daysToHarvest, fraction)) continue;
+          if (!occupancy.fits(bed.id, m, crop, fraction)) continue;
           const freeAtM = 1 - occupancy.fractionAt(bed.id, m);
           const conflictPenalty = rotation.conflicts(bed.id, foodGroupOf(crop)) ? 1 : 0;
           const bestPenalty = best && rotation.conflicts(best.bed.id, foodGroupOf(best.crop)) ? 1 : 0;
@@ -936,7 +957,7 @@ function ensureSowingCadence(
     }
     if (!best) continue;
 
-    occupancy.add(best.bed.id, m, best.crop.daysToHarvest, best.fraction);
+    occupancy.add(best.bed.id, m, best.crop, best.fraction);
     rotation.recordUse(best.bed.id, foodGroupOf(best.crop));
     bumpSow(sowCounts, m);
     noteCropBed(spread, best.crop.key, best.bed.id);
@@ -998,7 +1019,7 @@ function reachingCandidates(
       for (const sowMonth of cluster.months) {
         const startGap = monthsForward(nowMonth, sowMonth);
         if (startGap > maxStartGap) continue;
-        if (!occupiedMonths(sowMonth, crop.daysToHarvest).includes(targetMonth)) continue;
+        if (!occupiedMonths(sowMonth, crop).includes(targetMonth)) continue;
         out.push({ crop, sowMonth, startGap });
       }
     }
@@ -1104,11 +1125,11 @@ function fillRemainingGaps(
       // months the plan hasn't used — a June-sown pea cohort covers Jun-Aug AND matures food
       // for the very months the bridgers go quiet. Cover, nearness and score break ties.
       const emptyCover = (c: { crop: CropDef; sowMonth: number }): number =>
-        occupiedMonths(c.sowMonth, c.crop.daysToHarvest)
+        occupiedMonths(c.sowMonth, c.crop)
           .filter((mo) => occupancy.fractionAt(bed.id, mo) === 0).length;
       for (const fraction of fractionPresetsFor(bed)) {
         const fitting = reaching
-          .filter((c) => occupancy.fits(bed.id, c.sowMonth, c.crop.daysToHarvest, fraction))
+          .filter((c) => occupancy.fits(bed.id, c.sowMonth, c.crop, fraction))
           // Crop spread leads the sort now (see spreadRank): this pass places more crops
           // than any other, so it is where "chard again" was decided over and over. A crop
           // the plan has not used yet now wins ahead of the highest-scoring one, which is
@@ -1133,7 +1154,7 @@ function fillRemainingGaps(
 
       if (!chosen) { stuckMonths.add(gapMonth); continue; } // this month can't be filled — remember it, keep trying the bed's OTHER gaps
 
-      occupancy.add(bed.id, chosen.sowMonth, chosen.crop.daysToHarvest, chosen.fraction);
+      occupancy.add(bed.id, chosen.sowMonth, chosen.crop, chosen.fraction);
       rotation.recordUse(bed.id, foodGroupOf(chosen.crop));
       bumpSow(sowCounts, chosen.sowMonth);
       noteCropBed(spread, chosen.crop.key, bed.id);
@@ -1188,7 +1209,7 @@ function reportStillRestingBeds(
     return presets[presets.length - 1];
   };
   const canFill = (crops: CropDef[], bed: PlanBed, month: number): boolean =>
-    reachingCandidates(crops, pattern, nowMonth, month, GAP_FILL_HORIZON_MONTHS).some((c) => occupancy.fits(bed.id, c.sowMonth, c.crop.daysToHarvest, smallestFractionFor(bed)));
+    reachingCandidates(crops, pattern, nowMonth, month, GAP_FILL_HORIZON_MONTHS).some((c) => occupancy.fits(bed.id, c.sowMonth, c.crop, smallestFractionFor(bed)));
   // Reach WITHOUT the occupancy check — the difference between "no crop's window covers this
   // stretch" (a seasonal fact about the catalogue) and "a crop could cover it but this bed's
   // plan is already too full around it" (a fact about the plan). The old copy blamed the
@@ -1274,7 +1295,8 @@ export function autoSuggestPlan(
   const occupancy = new Occupancy();
   occupancy.seed(usableExistingPlantings, (p) => {
     const crop = CROPS.find((c) => c.key === p.cropKey);
-    return crop ? crop.daysToHarvest : 0; // unknown crop key — occupy just the sow month (spanMonths(0) === 1)
+    // Unknown crop key — nothing more is known, so occupy just the sow month (holdSpanMonths(0) === 1).
+    return crop ?? { daysToHarvest: 0 };
   });
 
   // Bed → the food group grown MOST RECENTLY (nearest-behind-now harvest,
@@ -1418,7 +1440,7 @@ export function autoSuggestPlan(
           for (const sowMonth of cluster.months) {
             const startGap = monthsForward(nowMonth, sowMonth);
             if (startGap > GAP_FILL_HORIZON_MONTHS) continue;
-            if (!occupancy.fits(plot.id, sowMonth, crop.daysToHarvest, 1)) continue;
+            if (!occupancy.fits(plot.id, sowMonth, crop, 1)) continue;
             candidates.push({ crop, sowMonth, startGap });
           }
         }
@@ -1443,7 +1465,7 @@ export function autoSuggestPlan(
       const chosen = pickFrom[0];
       const chosenCourse = stapleCourseOf(chosen.crop);
       if (chosenCourse) coursesUsedOnPlots.add(chosenCourse);
-      occupancy.add(plot.id, chosen.sowMonth, chosen.crop.daysToHarvest, 1);
+      occupancy.add(plot.id, chosen.sowMonth, chosen.crop, 1);
       rotation.recordUse(plot.id, foodGroupOf(chosen.crop));
       bumpSow(plotSowTally, chosen.sowMonth);
       added.push({

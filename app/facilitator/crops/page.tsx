@@ -2172,7 +2172,7 @@ function CropPickerModal({
               )}
             </div>
             <div className="font-sans mb-3" style={{ fontSize: 13, color: '#5C5040', lineHeight: 1.5 }}>
-              Spacing {crop.spacingCm} cm · {crop.daysToHarvest} days to harvest<br />
+              {sowingInstruction(crop)} · {crop.daysToHarvest} days to harvest<br />
               {crop.note}
             </div>
             {isSpaceHungry(crop) && (
@@ -2349,7 +2349,7 @@ function PlantingPopover({ planting, bedAreaM2, allPlantings, substitute, onEdit
         )}
         <div className="font-sans space-y-1 mb-3" style={{ fontSize: 12.5, color: '#5C5040', lineHeight: 1.5 }}>
           <div>Sow {monthLabel(planting.sowMonth)} → harvest {harvestLabel}</div>
-          <div>Spacing {crop.spacingCm} cm · {crop.daysToHarvest} days to harvest</div>
+          <div>{sowingInstruction(crop)} · {crop.daysToHarvest} days to harvest</div>
           <div>{crop.note}</div>
         </div>
         <div className="font-mono font-bold mb-3" style={{ fontSize: 18, color: '#1F4D2B' }}>≈ {yieldKg.toFixed(1)} kg est. yield</div>

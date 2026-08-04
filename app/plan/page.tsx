@@ -9,7 +9,7 @@ import BackButton from '@/components/BackButton';
 import { Leaf, Plus, Trash2, Minus, Sun, CloudRain, Snowflake, Sprout, CalendarCheck } from 'lucide-react';
 import LessonLink from '@/components/design/LessonLink';
 import { activeAccountLocalStorageKey } from '@/lib/account-local-storage';
-import { cropByKey, type CropDef } from '@/lib/crop-catalog';
+import { cropByKey, plantsPerM2, type CropDef } from '@/lib/crop-catalog';
 import { CATALOG_KEY_FOR_CROP } from '@/lib/crop-display';
 
 type Season = 'Summer' | 'Autumn' | 'Winter' | 'Spring';
@@ -57,15 +57,12 @@ const BED_AREA_M2 = 9.6; // a standard smallholder bed, ~1.2 m x 8 m
 // The page speaks in display names; the catalog is keyed. Names map to catalog KEYS, never to
 // free text, so a renamed crop breaks the build instead of silently falling back to a default.
 // ('Spinach' is South African usage for Swiss chard, hence the shared key.)
-// Same density rule the seed BOQ uses (lib/crop-plan.ts seedBoqForPlan): the sourced rectangular
-// row x in-row split where the catalog has one, the single spacing figure squared where it does
-// not. Kept identical deliberately — a farmer must not be told one plant count here and another
-// on the bill of quantities.
+// Density comes from the shared plantsPerM2 helper, same as the seed BOQ — a farmer must not be
+// told one plant count here and another on the bill of quantities. That was the stated intent
+// before, but it was implemented by COPYING the formula, and when the BOQ's version was fixed on
+// 2026-08-04 this copy would have silently kept the old wrong answer. Call it, don't clone it.
 function plantsPerBedFor(crop: CropDef): number {
-  const perPlantM2 = crop.rowSpacingCm !== undefined && crop.inRowSpacingCm !== undefined
-    ? (crop.rowSpacingCm / 100) * (crop.inRowSpacingCm / 100)
-    : (crop.spacingCm / 100) ** 2;
-  return Math.max(1, Math.round(BED_AREA_M2 / perPlantM2));
+  return Math.max(1, Math.round(BED_AREA_M2 * plantsPerM2(crop)));
 }
 
 const yieldFor = (crop: string) => {

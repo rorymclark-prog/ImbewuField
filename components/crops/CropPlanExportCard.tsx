@@ -11,11 +11,13 @@
 // The heavy work (jsPDF) is behind a dynamic import inside the builder, so
 // opening the crop plan does not pay for a document nobody asked for.
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import type { CropTask, PlanBed, Planting } from '@/lib/crop-plan';
 import { buildCropPlanIcs, cropPlanIcsFilename } from '@/lib/crop-calendar-ics';
 import { buildCropPlanPdf, cropPlanPdfFilename, type CropPlanPdfMeta } from '@/lib/crop-export-pdf';
-import { deliverFile } from '@/lib/crop-export-deliver';
+import {
+  canShareFiles, deliverFile, downloadFile, openFileInTab, prefersShareSheet,
+} from '@/lib/crop-export-deliver';
 
 export interface CropPlanExportCardProps {
   plantings: Planting[];
@@ -55,20 +57,61 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearR
     }
   }
 
-  async function exportPdf() {
+  // BOTH ROUTES, ALWAYS. The owner pressed "Print / export PDF" on a Mac and
+  // got the macOS share sheet, which has no Save to Files and no Print — and
+  // the download fallback never ran, because as far as the code was concerned
+  // the share had succeeded. There was no way to get the file: "there is no
+  // print options how do we save a pdf to downloads or email etc". Whichever
+  // route this device prefers, the other one stays one tap away.
+  const [canShare, setCanShare] = useState(false);
+  const [shareFirst, setShareFirst] = useState(false);
+  useEffect(() => {
+    // After mount only — navigator and matchMedia do not exist during SSR, and
+    // guessing on the server would render the wrong button for half our users.
+    setCanShare(canShareFiles('application/pdf'));
+    setShareFirst(prefersShareSheet());
+  }, []);
+
+  async function withPdf(run: (blob: Blob) => void | Promise<void>, done: string) {
     if (busy) return;
     setBusy('pdf');
     setStatus(null);
     try {
       const blob = await buildCropPlanPdf({ plantings, beds, tasks, meta, yearReport });
-      const how = await deliverFile(blob, cropPlanPdfFilename(meta.planTitle), 'ImbewuField crop plan');
-      setStatus(how === 'shared' ? 'Plan shared — print it or save it to your files.' : 'Plan downloaded — open it to print.');
+      await run(blob);
+      setStatus(done);
     } catch (err) {
       setStatus(`Could not build the PDF: ${err instanceof Error ? err.message : 'unknown error'}`);
     } finally {
       setBusy(null);
     }
   }
+
+  const exportPdf = () => withPdf(
+    async (blob) => {
+      const how = await deliverFile(blob, cropPlanPdfFilename(meta.planTitle), 'ImbewuField crop plan');
+      if (how === 'downloaded') return;
+    },
+    shareFirst ? 'Plan shared — save it to your files or send it on.' : 'Plan saved to your downloads — open it to print.',
+  );
+
+  const downloadPdf = () => withPdf(
+    (blob) => { downloadFile(blob, cropPlanPdfFilename(meta.planTitle)); },
+    'Plan saved to your downloads.',
+  );
+
+  const sharePdf = () => withPdf(
+    async (blob) => { await deliverFile(blob, cropPlanPdfFilename(meta.planTitle), 'ImbewuField crop plan'); },
+    'Plan shared.',
+  );
+
+  // The real answer to "there is no print options": the browser's own PDF
+  // viewer opens with Print and Download already in it, which beats any button
+  // this card could offer. Falls back to a download if a popup blocker bites.
+  const printPdf = () => withPdf(
+    (blob) => { if (!openFileInTab(blob)) downloadFile(blob, cropPlanPdfFilename(meta.planTitle)); },
+    'Opened in a new tab — use your browser\'s Print button there.',
+  );
 
   const buttonStyle = (primary: boolean, disabled: boolean) => ({
     fontSize: 13,
@@ -107,8 +150,31 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearR
           style={buttonStyle(false, busy !== null)}
           title="The whole plan as a PDF — bed by bed, what seed to buy when, and every month's jobs"
         >
-          {busy === 'pdf' ? '⏳ Building…' : '🖨 Print / export PDF'}
+          {busy === 'pdf' ? '⏳ Building…' : shareFirst ? '📤 Share the plan (PDF)' : '⬇ Download the plan (PDF)'}
         </button>
+      </div>
+
+      <div className="font-sans mt-2" style={{ fontSize: 11.5, color: '#5C5040', lineHeight: 1.6 }}>
+        Or:{' '}
+        <button onClick={printPdf} disabled={busy !== null} className="underline" style={{ color: '#1F4D2B' }}>
+          open it to print
+        </button>
+        {shareFirst && (
+          <>
+            {' · '}
+            <button onClick={downloadPdf} disabled={busy !== null} className="underline" style={{ color: '#1F4D2B' }}>
+              save it to this device
+            </button>
+          </>
+        )}
+        {!shareFirst && canShare && (
+          <>
+            {' · '}
+            <button onClick={sharePdf} disabled={busy !== null} className="underline" style={{ color: '#1F4D2B' }}>
+              send it somewhere
+            </button>
+          </>
+        )}
       </div>
 
       <div className="font-sans mt-2.5" style={{ fontSize: 11, color: '#8C7A62', lineHeight: 1.55 }}>
