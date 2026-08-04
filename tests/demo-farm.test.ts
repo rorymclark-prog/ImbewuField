@@ -52,10 +52,21 @@ test('the crop plan only references real, matching beds and catalog crops', () =
       .filter((item) => item.type === 'bed' || item.type === 'hugel')
       .map((item) => [item.id, item.wM * item.hM]),
   );
-  const canvasBeds = new Map(bedsFromDesignCanvas(canvas).map((bed) => [bed.id, bed.areaM2]));
+  // The bridge started returning staple-garden zones as kind:'plot' rows on 2026-08-04 —
+  // real crop-plan ground, but the legacy facilitator item map this parity check mirrors
+  // never carried plots, so the comparison stays beds-vs-beds by design; the demo farm's
+  // four plots get their own assertions instead.
+  const canvasAll = bedsFromDesignCanvas(canvas);
+  const canvasBeds = new Map(canvasAll.filter((bed) => bed.kind !== 'plot').map((bed) => [bed.id, bed.areaM2]));
 
   assert.ok(facilitatorBeds.size > 0);
   assert.deepEqual(canvasBeds, facilitatorBeds);
+  const canvasPlots = canvasAll.filter((bed) => bed.kind === 'plot');
+  assert.equal(canvasPlots.length, 4, 'the demo farm traces four staple plots');
+  for (const plot of canvasPlots) {
+    assert.match(plot.id, /^demo-staple-\d$/);
+    assert.ok(plot.areaM2 > 10 && plot.areaM2 < 40, `${plot.id} area ${plot.areaM2} m² is outside the fixture's realistic range`);
+  }
   assertUnique(plan.plantings.map((planting) => planting.id), 'planting IDs');
   for (const planting of plan.plantings) {
     assert.ok(facilitatorBeds.has(planting.bedId), `${planting.id} references a missing bed`);

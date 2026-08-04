@@ -279,7 +279,10 @@ function taskSentence(tasks: CropTask[]): string {
     // the bed is already laid out, so repeating it there would just be noise.
     const crop = t.action === 'sow' ? cropByKey(t.cropKey) : undefined;
     const spacing = crop ? ` — ${sowingInstruction(crop)}` : '';
-    return `${TASK_VERB[t.action]} ${t.cropName.toLowerCase()}${spacing} (${t.bedLabel})`;
+    // Prep wording is per-ground: tasksForPlan says plough/rip for a staple PLOT and
+    // compost-and-rest for a bed (CropTask.prepText); the static verb is the fallback.
+    const verb = (t.action === 'prep' && t.prepText) ? `${t.prepText} for` : TASK_VERB[t.action];
+    return `${verb} ${t.cropName.toLowerCase()}${spacing} (${t.bedLabel})`;
   }).join(' · ');
 }
 
@@ -332,6 +335,7 @@ function FacilitatorCropsPageInner() {
   const [navOpen, setNavOpen] = useState(false);
 
   const [pickerBedId, setPickerBedId] = useState<string | null>(null);
+  const [showBedCheck, setShowBedCheck] = useState(false);
   const [pickerSearch, setPickerSearch] = useState('');
   const [pickerCrop, setPickerCrop] = useState<CropDef | null>(null);
   const [pickerMonth, setPickerMonth] = useState(1);
@@ -671,12 +675,20 @@ function FacilitatorCropsPageInner() {
 
   const seedBoq = useMemo(() => seedBoqForPlan(plantings, beds), [plantings, beds]);
   const yearReport = useMemo(() => buildYearReport(plantings, beds), [plantings, beds]);
-  // currentMonth lets the aggregations drop the ALREADY-FINISHED months of existing crops —
-  // without it, an existing crop sown last March stamps calendar Mar-May as occupied forever,
-  // and the utilization chart reads 100% for months the Gantt correctly shows as empty beds.
-  const foodAvailability = useMemo(() => buildFoodAvailability(plantings, beds, currentMonth), [plantings, beds, currentMonth]);
-  const foodValueByMonth = useMemo(() => buildFoodValueByMonth(plantings, beds, priceOverrides, currentMonth), [plantings, beds, priceOverrides, currentMonth]);
-  const fieldUtilizationByMonth = useMemo(() => buildFieldUtilizationByMonth(plantings, beds, currentMonth), [plantings, beds, currentMonth]);
+  // TWO honest years, one chart (2026-08-04, Rory: "i want to show what a full years season
+  // will look like... i am tired of not seeing a full ideal planting").
+  // 'established' omits nowMonth, so the builders fold every planting mod-12 — the plan
+  // repeated every year, the steady state a garden grows into. It is the DEFAULT because it
+  // is the picture the plan is FOR; a garden starting today inevitably shows near-empty
+  // early months, which reads as a broken plan rather than a young one.
+  // 'fromToday' passes currentMonth so the aggregations drop the ALREADY-FINISHED months of
+  // existing crops — without that, a crop sown last March stamps Mar-May as occupied forever
+  // and utilization reads 100% over beds the Gantt correctly shows empty.
+  const [yearMode, setYearMode] = useState<'established' | 'fromToday'>('established');
+  const chartNowMonth = yearMode === 'fromToday' ? currentMonth : undefined;
+  const foodAvailability = useMemo(() => buildFoodAvailability(plantings, beds, chartNowMonth), [plantings, beds, chartNowMonth]);
+  const foodValueByMonth = useMemo(() => buildFoodValueByMonth(plantings, beds, priceOverrides, chartNowMonth), [plantings, beds, priceOverrides, chartNowMonth]);
+  const fieldUtilizationByMonth = useMemo(() => buildFieldUtilizationByMonth(plantings, beds, chartNowMonth), [plantings, beds, chartNowMonth]);
 
   function shareTasks() {
     const text = `🌱 Crop plan tasks\n${monthLabel(currentMonth)}: ${taskSentence(currentTasks)}\n${monthLabel(nextMonth)}: ${taskSentence(nextTasks)}`;
@@ -801,6 +813,21 @@ function FacilitatorCropsPageInner() {
           </div>
         )}
         <div className="flex-1" />
+        {beds.length > 0 && (
+          <button
+            onClick={() => setShowBedCheck((v) => !v)}
+            className="flex-shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-sans font-semibold"
+            title="Check the beds and plots this plan is using — count, sizes and where they came from"
+            style={{
+              fontSize: 12, cursor: 'pointer',
+              background: showBedCheck ? '#1F4D2B' : '#F5F0E8',
+              color: showBedCheck ? '#F7F2E9' : '#5C5040',
+              border: `1px solid ${showBedCheck ? '#1F4D2B' : '#E2D8C4'}`,
+            }}
+          >
+            📐 {beds.filter((b) => b.kind !== 'plot').length} beds{beds.some((b) => b.kind === 'plot') ? ` · ${beds.filter((b) => b.kind === 'plot').length} plots` : ''}
+          </button>
+        )}
         <LessonLink id="crops:planner" label="Learn" />
         {region ? (
           <span className="flex-shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-sans" style={{ fontSize: 12, background: 'rgba(31,77,43,0.08)', color: '#1F4D2B', border: '1px solid rgba(31,77,43,0.18)' }}>
@@ -812,6 +839,35 @@ function FacilitatorCropsPageInner() {
           </span>
         )}
       </header>
+
+      {/* Bed check — "button or clicker... to verify number and size" (Rory, 2026-08-03).
+          Reads the SAME beds array the plan itself uses, so what it lists is by
+          construction what the engine plans over — no separate lookup to drift. */}
+      {showBedCheck && beds.length > 0 && (
+        <div className="flex-shrink-0 px-4 py-3" style={{ background: '#FBF6EC', borderBottom: '1px solid #E2D8C4' }}>
+          <div className="font-sans mb-2" style={{ fontSize: 11.5, color: '#5C5040' }}>
+            This plan grows on{' '}
+            <strong style={{ color: '#20190F' }}>
+              {beds.filter((b) => b.kind !== 'plot').length} bed{beds.filter((b) => b.kind !== 'plot').length === 1 ? '' : 's'}
+              {beds.some((b) => b.kind === 'plot') ? ` and ${beds.filter((b) => b.kind === 'plot').length} staple plot${beds.filter((b) => b.kind === 'plot').length === 1 ? '' : 's'}` : ''}
+            </strong>{' '}
+            — {beds.reduce((s, b) => s + b.areaM2, 0).toFixed(1)} m² of growing space
+            {canvasSite ? ', traced in your Design Studio map. Resize or add beds there and they update here.' : '.'}
+          </div>
+          <div className="flex flex-wrap gap-1.5">
+            {beds.map((b) => (
+              <span
+                key={b.id}
+                className="font-mono inline-flex items-center gap-1 px-2 py-1 rounded-lg"
+                style={{ fontSize: 11, color: '#20190F', background: '#FFFEFA', border: `1px solid ${b.kind === 'plot' ? '#E0CD9E' : '#E2D8C4'}` }}
+              >
+                {b.kind === 'plot' ? '🌽' : '🌱'} {b.label} · {b.areaM2.toFixed(1)} m²
+                {b.minDimM !== undefined ? ` · ${b.minDimM.toFixed(1)}m wide` : ''}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
 
       {loading ? (
         <div className="flex-1 flex items-center justify-center">
@@ -996,6 +1052,8 @@ function FacilitatorCropsPageInner() {
               onPriceOverrideChange={updatePriceOverride}
               cashflowSettings={cashflowSettings}
               onCashflowSettingsChange={updateCashflowSettings}
+              yearMode={yearMode}
+              onYearModeChange={setYearMode}
             />
 
             {/* Tasks + harvest */}
@@ -1198,6 +1256,7 @@ function FacilitatorCropsPageInner() {
           onMonth={setPickerMonth}
           onConfirm={confirmAdd}
           onClose={closePicker}
+          isPlot={beds.find((b) => b.id === pickerBedId)?.kind === 'plot'}
         />
       )}
 
@@ -1348,7 +1407,7 @@ type FoodValueMode = 'availability' | 'harvest' | 'utilization' | 'retail' | 'wh
 
 function FoodAvailabilityChart({
   monthOrder, availability, valueByMonth, utilizationByMonth, plantings, priceOverrides, onPriceOverrideChange,
-  cashflowSettings, onCashflowSettingsChange,
+  cashflowSettings, onCashflowSettingsChange, yearMode, onYearModeChange,
 }: {
   monthOrder: number[];
   availability: FoodAvailabilityItem[][];
@@ -1359,6 +1418,8 @@ function FoodAvailabilityChart({
   onPriceOverrideChange: (cropKey: string, price: CropPrice) => void;
   cashflowSettings: CashflowSettings;
   onCashflowSettingsChange: (s: CashflowSettings) => void;
+  yearMode: 'established' | 'fromToday';
+  onYearModeChange: (m: 'established' | 'fromToday') => void;
 }) {
   const [mode, setMode] = useState<FoodValueMode>('availability');
   const [editingPrices, setEditingPrices] = useState(false);
@@ -1399,7 +1460,7 @@ function FoodAvailabilityChart({
     <div className="rounded-2xl p-4 mt-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
       <div className="font-display font-semibold mb-1" style={{ fontSize: 15, color: '#20190F' }}>🍽️ Food, field & cashflow — resilience by month</div>
 
-      <div className="inline-flex flex-wrap rounded-full p-0.5 mb-3" style={{ background: '#F5F0E8', border: '1px solid #E2D8C4' }}>
+      <div className="inline-flex flex-wrap rounded-full p-0.5 mb-2" style={{ background: '#F5F0E8', border: '1px solid #E2D8C4' }}>
         {([['availability', '🍽️ Availability'], ['harvest', '⚖️ Kg harvested'], ['utilization', '🌱 Field utilization'], ['retail', '💰 Retail value'], ['wholesale', '💰 Wholesale value']] as [FoodValueMode, string][]).map(([m, label]) => (
           <button
             key={m}
@@ -1414,6 +1475,31 @@ function FoodAvailabilityChart({
             {label}
           </button>
         ))}
+      </div>
+
+      {/* Which YEAR the charts describe — see the parent's yearMode comment. */}
+      <div className="flex flex-wrap items-center gap-2 mb-3">
+        <div className="inline-flex rounded-full p-0.5" style={{ background: '#F5F0E8', border: '1px solid #E2D8C4' }}>
+          {([['established', '🌳 An established year'], ['fromToday', '🌱 From today']] as ['established' | 'fromToday', string][]).map(([m, label]) => (
+            <button
+              key={m}
+              onClick={() => onYearModeChange(m)}
+              className="font-sans font-semibold"
+              style={{
+                fontSize: 11, padding: '4px 10px', borderRadius: 999, border: 'none', cursor: 'pointer',
+                background: yearMode === m ? '#5C5040' : 'transparent',
+                color: yearMode === m ? '#F7F2E9' : '#5C5040',
+              }}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+        <span className="font-sans" style={{ fontSize: 11, color: '#8C7A62', lineHeight: 1.4 }}>
+          {yearMode === 'established'
+            ? 'The full yearly rhythm once this plan repeats every season — a garden starting now grows into this picture over its first year.'
+            : 'Only what is actually ahead of a garden starting now — already-finished months of existing crops don’t count.'}
+        </span>
       </div>
 
       {mode === 'availability' ? (
@@ -1434,9 +1520,10 @@ function FoodAvailabilityChart({
         <p className="font-sans mb-3" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.4 }}>
           How much of your total bed area is actually growing something each month — a quick way to spot a bed
           sitting idle between plantings. A bed counts as occupied from sowing through the end of its harvest
-          window (storage life afterward doesn&apos;t count — that&apos;s off the bed, not in the ground). Crops
-          you marked as already growing only count from today onward — a crop that finished months ago no longer
-          holds its bed here, matching the timeline above.
+          window (storage life afterward doesn&apos;t count — that&apos;s off the bed, not in the ground).{' '}
+          {yearMode === 'fromToday'
+            ? 'Crops you marked as already growing only count from today onward — a crop that finished months ago no longer holds its bed here, matching the timeline above.'
+            : 'In an established year every planting counts in its calendar months, because the plan repeats — high utilization with low kg in the same month simply means beds full of young crops.'}
         </p>
       ) : (
         <p className="font-sans mb-3" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.4 }}>
@@ -1763,8 +1850,19 @@ function BedRow({ bed, plantings, currentMonth, onAddCrop, onTapPlanting }: {
 
   return (
     <div className="flex" style={{ borderBottom: '1px solid #E2D8C4' }}>
-      <div style={{ position: 'sticky', left: 0, zIndex: 2, width: 128, flexShrink: 0, background: '#FFFEFA', borderRight: '1px solid #E2D8C4', padding: '10px 10px' }}>
-        <div className="font-display font-semibold" style={{ fontSize: 13, color: '#20190F' }}>{bed.label}</div>
+      <div style={{ position: 'sticky', left: 0, zIndex: 2, width: 128, flexShrink: 0, background: bed.kind === 'plot' ? '#FBF6EC' : '#FFFEFA', borderRight: '1px solid #E2D8C4', padding: '10px 10px' }}>
+        <div className="font-display font-semibold" style={{ fontSize: 13, color: '#20190F' }}>
+          {bed.label}
+          {bed.kind === 'plot' && (
+            <span
+              className="font-sans font-semibold uppercase"
+              title="A staple plot from your Design Studio map — one field crop at full area per season, rotating year to year"
+              style={{ fontSize: 8.5, letterSpacing: '0.06em', color: '#7A5B24', background: '#F0E4C8', border: '1px solid #E0CD9E', borderRadius: 6, padding: '1px 5px', marginLeft: 5, verticalAlign: 'middle' }}
+            >
+              🌽 plot
+            </span>
+          )}
+        </div>
         <div className="font-mono" style={{ fontSize: 11, color: '#8C7A62' }}>{bed.areaM2.toFixed(1)} m²</div>
         {bedGroups.length > 0 && (
           <div
@@ -1925,6 +2023,7 @@ function PlantingBar({ planting, currentMonth, onTap }: { planting: Planting; cu
 function CropPickerModal({
   search, onSearch, crop, month, pattern, fraction, onFraction, existing, onExisting, overlap,
   isEditing, favouriteCropKeys, onToggleFavourite, allowBedSharing, onEnableBedSharing, onPick, onBack, onMonth, onConfirm, onClose,
+  isPlot,
 }: {
   search: string;
   onSearch: (v: string) => void;
@@ -1946,6 +2045,8 @@ function CropPickerModal({
   onMonth: (m: number) => void;
   onConfirm: () => void;
   onClose: () => void;
+  /** A staple plot takes one crop at FULL area — no fraction presets, no sharing opt-in. */
+  isPlot: boolean;
 }) {
   // Favourites sort to the top of whatever's currently filtered — a quick-
   // access shortlist, same idea as Tend's personal Crop Library, just
@@ -2102,8 +2203,13 @@ function CropPickerModal({
               <div className="font-sans mb-3" style={{ fontSize: 11, color: '#9A6018' }}>⚠ Outside the usual sowing window for this region — still allowed.</div>
             )}
 
-            <div className="font-sans uppercase tracking-widest mb-1.5 mt-2" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.08em' }}>How much of the bed?</div>
-            {allowBedSharing || fraction < 1 ? (
+            <div className="font-sans uppercase tracking-widest mb-1.5 mt-2" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.08em' }}>{isPlot ? 'How much of the plot?' : 'How much of the bed?'}</div>
+            {isPlot ? (
+              <div className="font-sans mb-2 px-2.5 py-2 rounded-lg" style={{ fontSize: 11.5, color: '#5C5040', background: '#FBF6EC', border: '1px solid #E0CD9E' }}>
+                🌽 The whole plot — a staple plot grows one field crop at a time and rotates to a
+                different group next season, so there are no half-shares here.
+              </div>
+            ) : allowBedSharing || fraction < 1 ? (
               <>
                 <div className="grid grid-cols-4 gap-1.5 mb-2">
                   {FRACTION_PRESETS.map((f) => (

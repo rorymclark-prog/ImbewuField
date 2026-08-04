@@ -20,6 +20,48 @@ export const BED_DEF_IDS = ['veg_bed', 'raised_bed', 'keyhole_bed', 'herb_spiral
 const round1 = (n: number): number => Math.round(n * 10) / 10;
 
 /**
+ * Ground metres-per-normalised-unit on each axis, with the farmer's scale correction applied —
+ * mirrors lib/studio-traced-areas.ts's own (unexported) metreExtent exactly: same precedence
+ * (scaleFactor first, frame.mPerPx underneath), same simplification (frame.mPerPx only — a custom
+ * base photo's own calibrated mPerPx isn't consulted here either, matching that module). Copied
+ * rather than imported because that module exports no such helper and is owned by another
+ * engineer right now; this is the SAME projection, not a second one — see studio-traced-areas.ts's
+ * own module comment for why a second opinion on this maths is the thing to avoid.
+ */
+function metreExtent(state: DesignCanvasState): { wMetres: number; hMetres: number } {
+  const scale = state.scaleFactor && Number.isFinite(state.scaleFactor) && state.scaleFactor > 0
+    ? state.scaleFactor
+    : 1;
+  const mPerPx = state.frame.mPerPx * scale;
+  return { wMetres: state.frame.imgW * mPerPx, hMetres: state.frame.imgH * mPerPx };
+}
+
+/**
+ * Real-world area (shoelace, same maths as studio-traced-areas.ts's ringAreaM2) plus the ring's
+ * bounding-box short side, both in metres, for a normalised ring evaluated at this frame's scale.
+ * `<3` points or a ~zero area is degenerate — the caller skips it rather than plant a phantom plot.
+ */
+function ringMetrics(
+  points: ReadonlyArray<readonly [number, number]>,
+  wMetres: number,
+  hMetres: number,
+): { areaM2: number; minDimM: number } {
+  if (points.length < 3) return { areaM2: 0, minDimM: 0 };
+  let twice = 0;
+  let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+  for (let i = 0, j = points.length - 1; i < points.length; j = i++) {
+    const xi = points[i][0] * wMetres, yi = points[i][1] * hMetres;
+    const xj = points[j][0] * wMetres, yj = points[j][1] * hMetres;
+    twice += xj * yi - xi * yj;
+    if (xi < minX) minX = xi;
+    if (xi > maxX) maxX = xi;
+    if (yi < minY) minY = yi;
+    if (yi > maxY) maxY = yi;
+  }
+  return { areaM2: Math.abs(twice) / 2, minDimM: Math.min(maxX - minX, maxY - minY) };
+}
+
+/**
  * Design-Studio canvas items → crop-planner beds. Pure; returns [] when state is
  * null. Only items whose defId is a plantable bed are included, in canvas
  * (array) placement order. Each bed's real-world area comes from the item's own
@@ -27,6 +69,18 @@ const round1 = (n: number): number => Math.round(n * 10) / 10;
  * that def — matching how the old facilitator computeDesignBeds derives area.
  * For circle-footprint defs (keyhole bed, herb spiral) wM === hM === diameter,
  * so wM*hM is the bounding-box area, consistent with the legacy bed maths.
+ *
+ * Staple plots (ZoneShape rings with feature === 'staple_garden' — the field of
+ * maize/beans/pumpkin, see GroundFeatureKind) come AFTER the item beds, as
+ * kind: 'plot' PlanBeds: this is the ONE place a DesignCanvasState becomes crop-
+ * planner beds, so every caller (crop planner, task board, harvest reconciliation,
+ * site progress) gets plot rotation for free rather than needing its own zone scan.
+ * A plot's id is its ZoneShape.id VERBATIM — rotation history and the plan-sheet
+ * cartography (staplePlotOrdinalById, lib/crop-row-cartography.ts) both key off it,
+ * so it can never be re-derived or re-numbered here. Plots are numbered in SAVED
+ * (zones array) order — the same creation-order ordinal staplePlotOrdinalById uses,
+ * so a plot's number never disagrees between the crop plan and the printed sheet —
+ * with a zone's own `name` preferred when the farmer set one.
  */
 export function bedsFromDesignCanvas(state: DesignCanvasState | null): PlanBed[] {
   if (!state) return [];
@@ -46,6 +100,27 @@ export function bedsFromDesignCanvas(state: DesignCanvasState | null): PlanBed[]
       minDimM: Math.min(wM, hM),
     });
   }
+
+  const { wMetres, hMetres } = metreExtent(state);
+  let plotN = 0;
+  for (const zone of state.zones) {
+    if (zone.feature !== 'staple_garden') continue;
+    // Ordinal counts every staple-garden zone, degenerate or not — matching
+    // staplePlotOrdinalById, which has no notion of "degenerate" either — so a plot
+    // that IS plantable never shifts number just because an earlier one got skipped.
+    plotN += 1;
+    if (!(wMetres > 0) || !(hMetres > 0)) continue;
+    const { areaM2, minDimM } = ringMetrics(zone.points, wMetres, hMetres);
+    if (zone.points.length < 3 || !(areaM2 > 0)) continue; // degenerate ring — nothing to plant
+    beds.push({
+      id: zone.id,
+      label: zone.name ?? `Plot ${plotN}`,
+      areaM2: round1(areaM2),
+      minDimM,
+      kind: 'plot',
+    });
+  }
+
   return beds;
 }
 

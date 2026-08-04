@@ -20,6 +20,12 @@ export interface PlanBed {
    *  still be a too-narrow strip for a sprawling vine — area alone can't tell
    *  the difference, this can. */
   minDimM?: number;
+  /** 'bed' (the default — absent reads as 'bed', so every plan built before this field
+   *  existed keeps behaving exactly as before) is a small worked bed. 'plot' is a
+   *  field-scale rotation unit — a traced staple garden (maize/beans/pumpkin block) that
+   *  takes ONE crop across its WHOLE area at a time, the way a farmer rotates a quarter-
+   *  hectare field, not several plantings sharing a bed. */
+  kind?: 'bed' | 'plot';
 }
 
 export interface Planting {
@@ -187,11 +193,20 @@ export interface CropTask {
   cropKey: string;
   icon: string;
   action: 'prep' | 'sow' | 'transplant' | 'mulch' | 'harvest' | 'weed-early' | 'weed-mid';
+  /** Only set on 'prep' tasks — the ground-prep instruction, which differs by the bed's
+   *  kind (PlanBed.kind above): a worked BED gets the compost-and-rest wording, a
+   *  field-scale staple PLOT gets the plough/manure wording, because a quarter-hectare
+   *  of maize isn't prepped the way a 1.2x3m bed is. Undefined bed kind (i.e. a plain
+   *  'bed', including every plan built before PlanBed.kind existed) reads as the bed
+   *  wording. */
+  prepText?: string;
 }
 
 export function tasksForPlan(plantings: Planting[], beds: PlanBed[]): CropTask[] {
   const bedLabel = (bedId: string): string =>
     beds.find((b) => b.id === bedId)?.label ?? 'Unknown bed';
+  const bedKind = (bedId: string): PlanBed['kind'] =>
+    beds.find((b) => b.id === bedId)?.kind;
 
   const tasks: CropTask[] = [];
 
@@ -215,6 +230,9 @@ export function tasksForPlan(plantings: Planting[], beds: PlanBed[]): CropTask[]
         cropKey: crop.key,
         icon: crop.icon,
         action: 'prep',
+        prepText: bedKind(p.bedId) === 'plot'
+          ? 'plough or rip the plot, work in kraal manure'
+          : 'prep bed (compost + kraal manure, then let it rest)',
       });
 
       tasks.push({
