@@ -47,13 +47,15 @@ test('every palette entry resolves to the layer that offers it', () => {
   }
 });
 
-test('every area-priced line kind is a polygon and both BOQ builders use the shared authority', () => {
+test('every area-priced line kind is a polygon and the BOQ builder uses the shared authority', () => {
   assert.ok(AREA_LINE_KINDS.length > 0);
   for (const kind of AREA_LINE_KINDS) {
     assert.ok(POLYGON_LINE_KINDS.includes(kind), `${kind} must be closed before its area can be measured`);
   }
 
-  for (const file of ['components/FacilitatorCanvas.tsx', 'app/facilitator/print/page.tsx']) {
+  // FacilitatorCanvas.tsx was the second builder until 2026-08-04, when the legacy Design
+  // canvas page was retired; the print page is the remaining consumer of the legacy store.
+  for (const file of ['app/facilitator/print/page.tsx']) {
     const source = readFileSync(new URL(`../${file}`, import.meta.url), 'utf8');
     assert.match(source, /AREA_LINE_KINDS/);
     assert.match(source, /costForMeasuredAreaLine/);

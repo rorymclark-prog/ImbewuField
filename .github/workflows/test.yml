@@ -51,11 +51,12 @@ jobs:
       # Rory hit it again: "still old updates on the refresh button please oh please fix". The
       # banner was telling the truth both times — RELEASE_NOTES simply had not been written since.
       #
-      # Advisory, not blocking. A work-in-progress push should not fail CI for having no farmer
-      # note yet; the point is that the gap is VISIBLE in the run, in the same place the tests are,
-      # instead of only being found by the person using the app.
+      # Blocking on main, advisory elsewhere. A work-in-progress branch push should not fail CI
+      # for having no farmer note yet — but a push to main IS a production deploy, and the fourth
+      # recurrence of "STILL shows old updates" (4 August) proved visibility alone does not make
+      # anyone write the notes. If user-facing code ships to main, the note ships in the same push.
       - name: Pending release notes
-        continue-on-error: true
+        continue-on-error: ${{ github.ref != 'refs/heads/main' }}
         run: npm run notes:pending
 
       # THE RULES TESTS HAVE NEVER RUN IN CI. tests/firestore-rules.test.ts is deliberately outside

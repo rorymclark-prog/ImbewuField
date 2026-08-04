@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import {
   X, Map, DollarSign, GraduationCap, Wheat, FileText,
   MessageCircle, Leaf, CalendarDays, LayoutGrid, ClipboardList,
-  Camera, Home, User, Users, BarChart3, Building2, Sprout, Palette, Handshake,
+  Camera, Home, User, Users, BarChart3, Building2, Palette, Handshake, Sparkles,
 } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
 import { communityEnabled } from '@/lib/community/flag';
@@ -53,7 +53,6 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
         { href: '/mentor',      Icon: Users,         label: t('homeRoleMentorLabel') },
         { href: '/ngo',         Icon: BarChart3,     label: t('navNGODashboard') },
         { href: '/funder',      Icon: Building2,     label: t('homeRoleFunderLabel') },
-        { href: '/facilitator', Icon: Sprout,        label: t('navFacilitator') },
         { href: '/design',      Icon: Palette,       label: 'Design Studio' },
       ],
     },
@@ -61,6 +60,7 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
       label: t('tabAccount'),
       items: [
         { href: '/account', Icon: User, label: t('navMyAccount') },
+        { href: '/updates', Icon: Sparkles, label: "What's new" },
       ],
     },
   ];

@@ -55,16 +55,12 @@ const contracts: SourceContract[] = [
     forbiddenBareArgument:
       /localStorage\.(?:getItem|setItem|removeItem)\(\s*['"]imbewu-recent-searches['"]/,
   },
-  {
-    file: 'components/FacilitatorCanvas.tsx',
-    scopedExpression: /activeAccountLocalStorageKey\(BACKUP_KEY\)/,
-    scopedUses: 4,
-    forbiddenBareArgument:
-      /localStorage\.(?:getItem|setItem|removeItem)\(\s*BACKUP_KEY\b/,
-  },
   // components/GeometryDesignStudio.tsx had a contract here until 2026-08-04, when the file was
   // deleted outright: it was the /design prototype whose map-math was copied into
   // lib/design-canvas.ts and lib/ai-render-client.ts, after which nothing imported it.
+  // components/FacilitatorCanvas.tsx followed the same day: the legacy "Design canvas" page was
+  // retired in favour of the Design Studio. Its STORE lives on (lib/facilitator-design.ts, read
+  // by /facilitator/crops and /facilitator/print), and that lib keeps its own account scoping.
 ];
 
 test('sensitive TSX storage call sites pass every account-owned key through the account boundary', () => {
