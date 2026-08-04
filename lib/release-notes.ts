@@ -34,6 +34,14 @@ export interface ReleaseNote {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '5 August',
+    sha: 'e84e988',
+    changes: [
+      'The kg beside each bed now add up to the year total on the cover',
+      'The plan no longer says more beds are staggered than your farm has',
+    ],
+  },
+  {
     when: '4 August (late night)',
     sha: 'd12447a',
     changes: [
