@@ -20,7 +20,7 @@
 import type { CropDef } from '@/lib/crop-catalog';
 import { MONTHS_SHORT, cropByKey, plantSpacingCm } from '@/lib/crop-catalog';
 import type { CropTask, PlanBed, Planting } from '@/lib/crop-plan';
-import { harvestMonth, seedBoqForPlan } from '@/lib/crop-plan';
+import { estimatedYieldKgAdjusted, harvestMonth, seedBoqForPlan } from '@/lib/crop-plan';
 
 export const MONTH_NAMES = [
   'January', 'February', 'March', 'April', 'May', 'June',
@@ -212,7 +212,12 @@ export function buildBedPlanRows(plantings: Planting[], beds: PlanBed[]): BedPla
         transplant: !!crop.transplant,
         existing: !!p.existing,
         shareLabel: bedShareLabel(fraction),
-        estimatedKg: crop.yieldKgPerM2 * bed.areaM2 * fraction,
+        // A FOURTH copy of the yield formula used to live here — and unlike the
+        // others it skipped the intercropping discount, so every shared bed row
+        // printed ~10% more than the same planting contributed to the year
+        // total on the page above it (866kg of bed rows under an 840kg
+        // headline). Ask the one function that owns the discount.
+        estimatedKg: estimatedYieldKgAdjusted(p, bed.areaM2, plantings),
       });
     }
     crops.sort((a, b) => a.sowMonth - b.sowMonth || a.cropName.localeCompare(b.cropName));

@@ -21,7 +21,7 @@ import test from 'node:test';
 
 import { CROPS, cropByKey, plantsPerM2 } from '@/lib/crop-catalog';
 import type { RainPattern } from '@/lib/crop-catalog';
-import { sowingInstruction } from '@/lib/crop-export-schedule';
+import { buildBedPlanRows, sowingInstruction } from '@/lib/crop-export-schedule';
 import { autoSuggestPlan } from '@/lib/crop-autosuggest';
 import type { AutoSuggestAnswers, GardenGoal, HouseholdSize, HarvestRhythm } from '@/lib/crop-autosuggest';
 import {
@@ -309,4 +309,61 @@ test('the twelve monthly kg figures sum to the plan total, every time', () => {
     }
   }
   assert.deepEqual(drift.slice(0, 6), []);
+});
+
+// ── 7. The bed rows and the headline are the same food ──────────────────────
+
+/**
+ * The owner exported his plan on 2026-08-04 and page 1 said 840kg while the
+ * bed-by-bed rows on pages 1-2 summed to 866kg. Neither number was wrong on
+ * its own: the year total asks estimatedYieldKgAdjusted (which discounts a
+ * planting that genuinely shares its bed with another crop), and the printed
+ * bed row multiplied the yield out by hand and skipped the discount. A fourth
+ * copy of the same formula, drifting from the other three.
+ */
+test('every kg printed beside a bed is a kg the year total counted', () => {
+  const gaps: string[] = [];
+  for (const run of sweep([8])) {
+    const rows = buildBedPlanRows(run.plantings, run.beds);
+    const printed = rows.reduce((s, r) => s + r.crops.reduce((a, c) => a + c.estimatedKg, 0), 0);
+    const counted = buildFoodValueByMonth(run.plantings, run.beds, {})
+      .slice(1, 13).reduce((s, v) => s + v.kg, 0);
+    if (Math.abs(printed - counted) > 0.01) {
+      gaps.push(`${run.label} — beds print ${printed.toFixed(1)}kg, headline counts ${counted.toFixed(1)}kg`);
+    }
+  }
+  assert.deepEqual(gaps.slice(0, 6), []);
+});
+
+// ── 8. The plan never claims more beds than the farm has ────────────────────
+
+/**
+ * "Swiss chard is staggered 2 times on one bed - and 11 other beds are
+ * staggered the same way" printed on a farm with NINE beds. The count was of
+ * bed+crop pairings, not beds, so one bed staggering three crops counted three
+ * times. A farmer can disprove this one by looking out of the window.
+ */
+test('the staggering sentence counts beds that exist, and counts them right', () => {
+  const wrong: string[] = [];
+  for (const run of sweep([8])) {
+    const line = buildYearReport(run.plantings, run.beds, { lossPercent: 0 })
+      .find((l) => l.includes('staggered the same way'));
+    if (!line) continue;
+    const claimed = Number(/and (\d+) other bed/.exec(line)?.[1] ?? 0);
+
+    const perPair = new Map<string, number>();
+    for (const p of run.plantings) {
+      const k = `${p.bedId}::${p.cropKey}`;
+      perPair.set(k, (perPair.get(k) ?? 0) + 1);
+    }
+    const staggeredBeds = new Set(
+      [...perPair.entries()].filter(([, c]) => c >= 2).map(([k]) => k.split('::')[0]),
+    );
+    if (claimed + 1 > run.beds.length) {
+      wrong.push(`${run.label} — claims ${claimed + 1} staggered beds, farm has ${run.beds.length}`);
+    } else if (claimed + 1 !== staggeredBeds.size) {
+      wrong.push(`${run.label} — claims ${claimed + 1} staggered beds, actually ${staggeredBeds.size}`);
+    }
+  }
+  assert.deepEqual(wrong.slice(0, 6), []);
 });

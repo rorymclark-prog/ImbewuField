@@ -645,17 +645,21 @@ export function buildYearReport(plantings: Planting[], beds: PlanBed[]): string[
     staggeredCounts.set(key, (staggeredCounts.get(key) ?? 0) + 1);
   }
   const staggeredExample = [...staggeredCounts.entries()].find(([, count]) => count >= 2);
-  const staggeredBedCount = [...staggeredCounts.values()].filter((count) => count >= 2).length;
+  // Count BEDS, not bed+crop pairings. One bed staggering three different crops
+  // is one staggered bed; counting pairings said "11 other beds" on a farm with
+  // nine, which a farmer can disprove by looking out of the window. Rewording
+  // it was not enough — the number itself had to change.
+  const staggeredBeds = new Set(
+    [...staggeredCounts.entries()].filter(([, count]) => count >= 2).map(([key]) => key.split('::')[0]),
+  );
   if (staggeredExample) {
     const [key, count] = staggeredExample;
     const cropKey = key.split('::')[1];
     const crop = cropByKey(cropKey);
     if (crop) {
-      // staggeredBedCount counts bed+crop PAIRINGS across every crop, not this
-      // crop's beds — so the old "(and 11 other beds too)" read as a claim that
-      // Swiss chard was on twelve beds, which it was not. Say what is counted.
-      const others = staggeredBedCount > 1
-        ? ` — and ${staggeredBedCount - 1} other bed${staggeredBedCount > 2 ? 's are' : ' is'} staggered the same way`
+      const otherBeds = [...staggeredBeds].filter((bedId) => bedId !== key.split('::')[0]).length;
+      const others = otherBeds > 0
+        ? ` — and ${otherBeds} other bed${otherBeds > 1 ? 's are' : ' is'} staggered the same way`
         : '';
       paragraphs.push(`${crop.name} is staggered ${count} times on one bed${others}: sown in slices a few weeks apart so harvests keep coming instead of one big flush followed by a gap.`);
     }
