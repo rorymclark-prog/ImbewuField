@@ -14,6 +14,7 @@ import { useSearchParams } from 'next/navigation';
 import { Search, X, Menu, ChevronDown, Home } from 'lucide-react';
 import NavDrawer from '@/components/NavDrawer';
 import LessonLink from '@/components/design/LessonLink';
+import CropPlanExportCard from '@/components/crops/CropPlanExportCard';
 import { loadCanvasState, DESIGN_CANVAS_CHANGED_EVENT } from '@/lib/design-canvas';
 import { bedsFromDesignCanvas } from '@/lib/design-beds-bridge';
 import { loadPlaces, resolveMainSite } from '@/lib/saved-places';
@@ -24,7 +25,7 @@ import { myDesigns } from '@/lib/db/queries';
 import { nearestRainfall } from '@/lib/water-calc';
 import type { CropDef, RainPattern } from '@/lib/crop-catalog';
 import { CROPS, cropByKey, MONTHS_SHORT } from '@/lib/crop-catalog';
-import type { PlanBed, Planting, CropPlanState, CropTask, FoodAvailabilityItem, FoodValueMonth, CashflowSettings } from '@/lib/crop-plan';
+import type { PlanBed, Planting, CropPlanState, FoodAvailabilityItem, FoodValueMonth, CashflowSettings } from '@/lib/crop-plan';
 import {
   loadCropPlan, saveCropPlan, harvestMonth, tasksForPlan, estimatedYieldKgAdjusted, nextValidSowMonth,
   isSpaceHungry, bedOverlapFraction, seedBoqForPlan, buildYearReport, buildFoodAvailability, buildFoodValueByMonth,
@@ -37,6 +38,10 @@ import type { AutoSuggestAnswers, AutoSuggestResult, GardenGoal, HouseholdSize, 
 import { autoSuggestPlan } from '@/lib/crop-autosuggest';
 import type { CropPrice } from '@/lib/crop-prices';
 import { UNPRICED_CROPS, priceFor, loadCropPriceOverrides, saveCropPriceOverrides } from '@/lib/crop-prices';
+// Task wording lives in the export module now, not here: the screen, the
+// calendar file and the printed plan all have to describe a task the same way,
+// and three copies of that sentence is how they stop doing so.
+import { sowingInstruction, taskSentence } from '@/lib/crop-export-schedule';
 
 const ALL_GROUPS: FoodGroup[] = ['leafy_green', 'legume', 'root_tuber', 'allium_aromatic', 'fruiting_veg', 'staple_grain'];
 
@@ -81,26 +86,6 @@ function fractionLabel(f: number): string {
   if (Math.abs(f - 1 / 3) < 0.01) return '⅓';
   if (Math.abs(f - 0.25) < 0.01) return '¼';
   return `${Math.round(f * 100)}%`;
-}
-
-/**
- * Farmer-facing "how to sow" line — row spacing / in-row spacing / sow depth
- * where a sourced split exists (lib/crop-catalog.ts rowSpacingCm/
- * inRowSpacingCm/sowDepthCm), falling back to the single spacingCm figure
- * for the crops with no sourced split. Never fabricates a number that isn't
- * on the crop record.
- */
-function sowingInstruction(crop: CropDef): string {
-  const parts: string[] = [];
-  if (crop.rowSpacingCm) parts.push(`rows ${crop.rowSpacingCm}cm apart`);
-  if (crop.inRowSpacingCm) parts.push(`${crop.inRowSpacingCm}cm apart in the row`);
-  if (crop.sowDepthCm) parts.push(`sow ${crop.sowDepthCm}cm deep`);
-  // Always surface an actual plant-spacing figure when there is no row/in-row split — a crop
-  // with only a sow-depth (carrots, onions) must still show spacing, not just depth.
-  if (!crop.rowSpacingCm && !crop.inRowSpacingCm && crop.spacingCm) {
-    parts.unshift(`plant spacing ~${crop.spacingCm}cm`);
-  }
-  return parts.join(' · ');
 }
 
 /** 🌱 = sown direct from seed, 🪴 = started as a seedling/transplant. */
@@ -259,33 +244,6 @@ const PATTERN_META: Record<RainPattern, { icon: string; label: string }> = {
   'mild-frost': { icon: '🌤️', label: 'Summer rainfall · mild winter frost' },
 };
 
-// Verb phrase per task action — 'prep'/'mulch' need a bit more than a single
-// word to say what's actually involved (compost/kraal manure, water-in), the
-// others read fine as plain verbs.
-const TASK_VERB: Record<CropTask['action'], string> = {
-  prep: 'prep bed (compost + kraal manure, then let it rest) for',
-  sow: 'sow',
-  transplant: 'transplant',
-  mulch: 'water in & mulch',
-  harvest: 'harvest',
-  'weed-early': 'weed around',
-  'weed-mid': 'weed & check for pests around',
-};
-
-function taskSentence(tasks: CropTask[]): string {
-  if (tasks.length === 0) return 'nothing due';
-  return tasks.map((t) => {
-    // Spacing only matters at sowing time — by transplant/mulch/weed/harvest
-    // the bed is already laid out, so repeating it there would just be noise.
-    const crop = t.action === 'sow' ? cropByKey(t.cropKey) : undefined;
-    const spacing = crop ? ` — ${sowingInstruction(crop)}` : '';
-    // Prep wording is per-ground: tasksForPlan says plough/rip for a staple PLOT and
-    // compost-and-rest for a bed (CropTask.prepText); the static verb is the fallback.
-    const verb = (t.action === 'prep' && t.prepText) ? `${t.prepText} for` : TASK_VERB[t.action];
-    return `${verb} ${t.cropName.toLowerCase()}${spacing} (${t.bedLabel})`;
-  }).join(' · ');
-}
-
 // ── Page ─────────────────────────────────────────────────────────────────
 
 function FacilitatorCropsPageInner() {
@@ -312,6 +270,20 @@ function FacilitatorCropsPageInner() {
     } catch { /* corrupt cache — legacy behaviour stands */ }
   }, [canvasSiteParam]);
   const canvasSite = canvasSiteParam ?? fallbackCanvasSite;
+
+  // The saved place's own name, for the printed plan's cover. Beds coming from
+  // the Design Studio canvas carry no design title at all, so without this a
+  // farmer's printout is headed "Garden design" while every other screen calls
+  // it by name. `site:<lat>,<lon>` is the canvas key format built above.
+  const [placeName, setPlaceName] = useState<string | null>(null);
+  useEffect(() => {
+    if (!canvasSite?.startsWith('site:')) return;
+    try {
+      const [lat, lon] = canvasSite.slice(5).split(',');
+      const match = loadPlaces().find((p) => p.lat.toFixed(5) === lat && p.lon.toFixed(5) === lon);
+      if (match?.name) setPlaceName(match.name);
+    } catch { /* corrupt cache — the design title stands */ }
+  }, [canvasSite]);
   // "Back to design" always means the NEW Design Studio — the flow audit caught these links
   // pointing at the legacy /facilitator canvas, which made farmers think their design vanished.
   const designHref = canvasSite?.startsWith('site:')
@@ -690,6 +662,24 @@ function FacilitatorCropsPageInner() {
   const foodValueByMonth = useMemo(() => buildFoodValueByMonth(plantings, beds, priceOverrides, chartNowMonth), [plantings, beds, priceOverrides, chartNowMonth]);
   const fieldUtilizationByMonth = useMemo(() => buildFieldUtilizationByMonth(plantings, beds, chartNowMonth), [plantings, beds, chartNowMonth]);
 
+  // Cover-page facts for the printed plan and the calendar's name. Built from
+  // the same values the header and the bed-check strip already show, so the
+  // paper copy can't claim a different garden from the screen.
+  const exportMeta = useMemo(() => {
+    const plotCount = beds.filter((b) => b.kind === 'plot').length;
+    const bedCount = beds.length - plotCount;
+    return {
+      planTitle: (canvasSite ? placeName : null) ?? designTitle,
+      siteLine: region ? `${region.name} · ${patternMeta.label}` : `No site set · assuming ${patternMeta.label.toLowerCase()}`,
+      bedsSummary: `${bedCount} bed${bedCount === 1 ? '' : 's'}`
+        + `${plotCount ? ` · ${plotCount} staple plot${plotCount === 1 ? '' : 's'}` : ''}`
+        + ` · ${beds.reduce((s, b) => s + b.areaM2, 0).toFixed(1)} m² of growing space`,
+      dateLabel: new Date().toLocaleDateString('en-ZA', { day: 'numeric', month: 'long', year: 'numeric' }),
+      estimatedKgPerYear: newYieldKg * harvestLossFactor,
+      lossPercent: cashflowSettings.lossPercent,
+    };
+  }, [beds, canvasSite, placeName, designTitle, region, patternMeta, newYieldKg, harvestLossFactor, cashflowSettings.lossPercent]);
+
   function shareTasks() {
     const text = `🌱 Crop plan tasks\n${monthLabel(currentMonth)}: ${taskSentence(currentTasks)}\n${monthLabel(nextMonth)}: ${taskSentence(nextTasks)}`;
     window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
@@ -1030,6 +1020,15 @@ function FacilitatorCropsPageInner() {
               </div>
             </div>
             <div className="font-sans mb-5" style={{ fontSize: 11.5, color: '#8C7A62', lineHeight: 1.5, marginTop: -12 }}>
+              <span
+                className="font-sans"
+                style={{ fontWeight: 600, color: '#9A6018', border: '1px solid rgba(154,96,24,0.35)', borderRadius: 4, padding: '0 3px', fontSize: 10 }}
+              >
+                🪴 transplant
+              </span>{' '}
+              marks the month seedlings raised in a tray move out into the bed — tap it (or the crop bar) for that
+              planting&apos;s details. Only crops started in trays show one.
+              <br />
               ↻ marks where the timeline wraps into next year — this plan repeats on the same annual cycle rather
               than holding a separate plan per year. When a new season actually starts, tap{' '}
               <strong style={{ color: '#5C5040' }}>Auto-suggest a plan</strong> again with{' '}
@@ -1177,6 +1176,17 @@ function FacilitatorCropsPageInner() {
                 </div>
               </div>
             </div>
+
+            {/* Off the screen and onto a calendar / a piece of paper. Sits
+                between the task list it exports and the seed BOQ it prints,
+                so it is next to both things it is about. */}
+            <CropPlanExportCard
+              plantings={plantings}
+              beds={beds}
+              tasks={allTasks}
+              yearReport={yearReport}
+              meta={exportMeta}
+            />
 
             {/* Seed BOQ + year-ahead report */}
             <div className="grid gap-4 mt-4" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
@@ -2003,16 +2013,28 @@ function PlantingBar({ planting, currentMonth, onTap }: { planting: Planting; cu
           )}
         </button>
       ))}
-      {trOffset !== null && trOffset >= 0 && trOffset <= 11 && (
-        <div
+      {/* The transplant marker. It used to read "(tr)", which the app's own
+          owner looked at and asked what it stood for — an abbreviation nobody
+          can decode is not a label, it's a puzzle. It now says the word, wears
+          the same 🪴 seedling glyph the picker and the seed BOQ use for
+          "raised in a tray first", and is TAPPABLE (opening the same planting
+          popover the bar itself opens) so the meaning is reachable rather than
+          guessable. The timeline legend below the grid spells it out too. */}
+      {trOffset !== null && trOffset >= 0 && trOffset <= DISPLAY_MONTHS - 1 && (
+        <button
+          onClick={onTap}
+          className="font-sans"
           style={{
-            position: 'absolute', left: `${leftPct(trOffset) + COL_PCT / 2}%`, top: -2, transform: 'translateX(-50%)',
-            fontSize: 9, fontWeight: 700, color: '#9A6018', background: '#FFFEFA', padding: '0 2px', borderRadius: 3,
-            pointerEvents: 'none', whiteSpace: 'nowrap',
+            position: 'absolute', left: `${leftPct(trOffset) + COL_PCT / 2}%`, top: -3, transform: 'translateX(-50%)',
+            fontSize: 9, fontWeight: 700, color: '#9A6018', background: '#FFFEFA',
+            border: '1px solid rgba(154,96,24,0.35)', padding: '0 3px', borderRadius: 4,
+            whiteSpace: 'nowrap', cursor: 'pointer', lineHeight: 1.5, zIndex: 2,
           }}
+          title={`Transplant — move the ${crop.name.toLowerCase()} seedlings out of their tray and into the bed in ${monthLabel(planting.sowMonth + 1)}`}
+          aria-label={`Transplant ${crop.name} in ${monthLabel(planting.sowMonth + 1)}`}
         >
-          (tr)
-        </div>
+          🪴 transplant
+        </button>
       )}
     </div>
   );
