@@ -34,12 +34,21 @@ export interface ReleaseNote {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '4 August (night)',
+    sha: 'c76dbc0',
+    changes: [
+      'Send your whole crop plan to your phone calendar, with a reminder before each job',
+      'Print the crop plan, including when to buy each seed and seedling',
+      'The "(tr)" mark on the timeline now says "transplant" — tap it to see what it means',
+    ],
+  },
+  {
     when: '4 August (late)',
     sha: 'f56e4b7',
     changes: [
       'Your staple plots now grow staples — maize, beans, pumpkin, potatoes — not salad crops',
       'Maize goes in the field where it can be block-planted, never in a narrow raised bed',
-      'One crop can no longer take over half your beds, and the plan reaches far more of what you can grow',
+      'One crop can no longer take over half your beds, and more of your crops get planted',
       'Site reports no longer describe a dam or borehole your farm does not have',
       'Export PDF works on the report, and the report now fits and reads properly on a phone',
       'Saving the course to your phone now includes the spoken lessons, not just the pictures',
