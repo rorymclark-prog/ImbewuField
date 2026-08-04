@@ -34,6 +34,14 @@ export interface ReleaseNote {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '5 August (night)',
+    sha: '5b7d3b5',
+    changes: [
+      'Bigger gardens (25-75 beds) waste far less bed space and plan more food',
+      'The monthly field sheet says "Beds 3, 7, 12" once instead of repeating the same job per bed',
+    ],
+  },
+  {
     when: '5 August (evening)',
     sha: '36d41c9',
     changes: [
