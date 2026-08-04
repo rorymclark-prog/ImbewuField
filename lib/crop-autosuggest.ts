@@ -424,6 +424,7 @@ function usableShare(
   crop: CropDef,
   wanted: number,
   max = 1,
+  preferAtOrBelow = false,
 ): number | null {
   if (bed.kind === 'plot') return occupancy.fits(bed.id, sowMonth, crop, 1) ? 1 : null;
 
@@ -451,8 +452,19 @@ function usableShare(
 
   const clean = fits.filter((f) => !leavesDeadSliver(occupancy, bed.id, sowMonth, crop, f));
   const pool = clean.length ? clean : fits;
+  // SUCCESSION ONLY: a batch's ask is a per-batch slice, and later batches of
+  // OTHER crops are still coming for the same bed — so a share above the ask
+  // is only for when every clean at-or-below share strands a sliver. Letting
+  // "the rest" outbid a clean preset merged two plantings into one: Bed 1's
+  // peas swallowed 0.666 (floored rest sat 0.001 nearer a 0.5 ask than the
+  // third did) where peas-then-chard used to stand, and the chard covered
+  // July. Gap-fill and the winter bridger keep rest-can-win: they run LAST,
+  // nothing is coming after them, and preferring smaller there measured
+  // 8.5% -> 11.1% strips on the interrogation farms.
+  const atOrBelow = preferAtOrBelow ? pool.filter((f) => f <= wanted + 0.001) : [];
+  const candidates = atOrBelow.length ? atOrBelow : pool;
   // Closest to the share the caller asked for; ties go to the larger share.
-  return pool.sort((a, b) => Math.abs(a - wanted) - Math.abs(b - wanted) || b - a)[0];
+  return candidates.sort((a, b) => Math.abs(a - wanted) - Math.abs(b - wanted) || b - a)[0];
 }
 
 /**
@@ -701,7 +713,7 @@ function planSuccession(
         // see usableShare. A batch slice is computed from the batch COUNT and
         // knows nothing about what is already in the bed, which is where most
         // of a big site's unplantable strips came from.
-        const share = usableShare(occupancy, bed, sowMonth, crop, perBatchFraction);
+        const share = usableShare(occupancy, bed, sowMonth, crop, perBatchFraction, 1, true);
         if (share !== null) {
           occupancy.add(bed.id, sowMonth, crop, share);
           const areaFraction = share < 1 ? share : undefined;
@@ -1220,7 +1232,14 @@ function fillRemainingGaps(
       if (gapMonth === null) break; // every still-empty month already tried, or bed is fully covered
 
       const reaching = reachingCandidates(bedPool, pattern, nowMonth, gapMonth, GAP_FILL_HORIZON_MONTHS);
-      let chosen: { crop: CropDef; sowMonth: number; fraction: number } | null = null;
+      let chosen: {
+        crop: CropDef;
+        sowMonth: number;
+        fraction: number;
+        /** A second crop placed in the SAME iteration to consume the leftover
+         *  the first one declined — see the companion note in tryFractions. */
+        companion?: { crop: CropDef; sowMonth: number; fraction: number };
+      } | null = null;
 
 
       // Sow-month scarcity leads, THEN longest empty-month cover. Cover-first alone (the
@@ -1250,20 +1269,24 @@ function fillRemainingGaps(
        * remainder. Only if no such share exists do we fall back to the old
        * largest-fits-wins rule, because half a bed of food still beats none.
        */
+      // Crop spread leads the sort (see spreadRank): this pass places more crops
+      // than any other, so it is where "chard again" was decided over and over. A crop
+      // the plan has not used yet now wins ahead of the highest-scoring one, which is
+      // also what finally reaches the eleven catalog crops no pass ever offered.
+      // Shared by the pick sort AND the companion search below — the companion
+      // taking `reaching` in raw order picked a short-span crop and left Bed 1's
+      // July bare all over again.
+      const preferenceRank = (a: (typeof reaching)[number], b: (typeof reaching)[number]) =>
+        (spreadRank(spread, a.crop.key, bed.id, spreadCap) - spreadRank(spread, b.crop.key, bed.id, spreadCap))
+        || (sowCountAt(sowCounts, a.sowMonth) - sowCountAt(sowCounts, b.sowMonth))
+        || (emptyCover(b) - emptyCover(a))
+        || (a.startGap - b.startGap)
+        || (commercialScore(b.crop) - commercialScore(a.crop));
       const tryFractions = (avoidSlivers: boolean): typeof chosen => {
         for (const fraction of fractionPresetsFor(bed)) {
           const fitting = reaching
             .filter((c) => occupancy.fits(bed.id, c.sowMonth, c.crop, fraction))
-            // Crop spread leads the sort now (see spreadRank): this pass places more crops
-            // than any other, so it is where "chard again" was decided over and over. A crop
-            // the plan has not used yet now wins ahead of the highest-scoring one, which is
-            // also what finally reaches the eleven catalog crops no pass ever offered.
-            .sort((a, b) =>
-              (spreadRank(spread, a.crop.key, bed.id, spreadCap) - spreadRank(spread, b.crop.key, bed.id, spreadCap))
-              || (sowCountAt(sowCounts, a.sowMonth) - sowCountAt(sowCounts, b.sowMonth))
-              || (emptyCover(b) - emptyCover(a))
-              || (a.startGap - b.startGap)
-              || (commercialScore(b.crop) - commercialScore(a.crop)));
+            .sort(preferenceRank);
           if (!fitting.length) continue; // this fraction can't fit anything — try a smaller share
 
           const nonRepeating = fitting.filter((c) => !rotation.repeats(bed.id, foodGroupOf(c.crop)));
@@ -1276,8 +1299,45 @@ function fillRemainingGaps(
             // usableShare can widen the share to exactly what is left, which no
             // rung of the ladder may equal — the only way to be certain nothing
             // is stranded.
-            const share = usableShare(occupancy, bed, pick.sowMonth, pick.crop, fraction);
-            if (share === null || leavesDeadSliver(occupancy, bed.id, pick.sowMonth, pick.crop, share)) continue;
+            const wide = usableShare(occupancy, bed, pick.sowMonth, pick.crop, fraction);
+            if (wide === null || leavesDeadSliver(occupancy, bed.id, pick.sowMonth, pick.crop, wide)) continue;
+            let share = wide;
+            // Widening past the ask spends space a SECOND crop may be waiting
+            // for: Bed 1's peas took 0.666 where peas-then-chard used to
+            // stand, and the chard was what covered July. But preferring the
+            // ask-sized share unconditionally measured 8.5% -> 11.1% strips
+            // on the interrogation farms — on a big site the leftover often
+            // goes unclaimed and later sliver-tolerant passes chew it ragged.
+            // So SIMULATE: place the ask-sized share, ask whether any OTHER
+            // candidate could still claim the leftover cleanly, and only keep
+            // the smaller share when someone actually can.
+            const askSized = usableShare(occupancy, bed, pick.sowMonth, pick.crop, fraction, 1, true);
+            if (askSized !== null && askSized < wide - 0.001
+              && !leavesDeadSliver(occupancy, bed.id, pick.sowMonth, pick.crop, askSized)) {
+              occupancy.add(bed.id, pick.sowMonth, pick.crop, askSized);
+              // The claimant must consume the WHOLE leftover cleanly, and it
+              // is placed HERE, in the same iteration, as a companion — a
+              // simulated "someone will claim it later" measured +0.5pt of
+              // strips at 24-40 beds, because by the claimant's actual turn
+              // the fill loop had wandered to other beds and the leftover
+              // decayed into exactly the ragged state this pass prevents.
+              const leftover = wide - askSized;
+              let companion: { crop: CropDef; sowMonth: number; fraction: number } | undefined;
+              for (const c of [...reaching].sort(preferenceRank)) {
+                if (c.crop.key === pick.crop.key) continue;
+                if (rotation.repeats(bed.id, foodGroupOf(c.crop))) continue;
+                const f = fractionPresetsFor(bed)
+                  .filter((fr) => fr >= leftover - 0.001
+                    && occupancy.fits(bed.id, c.sowMonth, c.crop, fr)
+                    && !leavesDeadSliver(occupancy, bed.id, c.sowMonth, c.crop, fr))
+                  .sort((a, b) => a - b)[0];
+                if (f !== undefined) { companion = { crop: c.crop, sowMonth: c.sowMonth, fraction: f }; break; }
+              }
+              occupancy.add(bed.id, pick.sowMonth, pick.crop, -askSized);
+              if (companion) {
+                return { crop: pick.crop, sowMonth: pick.sowMonth, fraction: askSized, companion };
+              }
+            }
             return { crop: pick.crop, sowMonth: pick.sowMonth, fraction: share };
           }
           return { crop: pick.crop, sowMonth: pick.sowMonth, fraction };
@@ -1289,19 +1349,30 @@ function fillRemainingGaps(
 
       if (!chosen) { stuckMonths.add(gapMonth); continue; } // this month can't be filled — remember it, keep trying the bed's OTHER gaps
 
-      occupancy.add(bed.id, chosen.sowMonth, chosen.crop, chosen.fraction);
-      rotation.recordUse(bed.id, foodGroupOf(chosen.crop));
-      bumpSow(sowCounts, chosen.sowMonth);
-      noteCropBed(spread, chosen.crop.key, bed.id);
-      lastCropByBed.set(bed.id, chosen.crop.key);
-      const areaFraction = chosen.fraction < 1 ? chosen.fraction : undefined;
-      plantings.push({
-        id: plantingId(bed.id, chosen.crop.key, chosen.sowMonth, areaFraction),
-        bedId: bed.id,
-        cropKey: chosen.crop.key,
-        sowMonth: chosen.sowMonth,
-        areaFraction,
-      });
+      // The companion was validated against occupancy WITH the first share in
+      // place; placing both here, back to back, is what makes the pair real —
+      // deferring the second to a later iteration measured it decaying into
+      // strips at 24-40 beds while Bed 1's July stayed bare at nine. The
+      // fits() re-check runs inside the loop, i.e. after the first share has
+      // actually landed — the state the companion was validated in.
+      const toPlace = chosen.companion ? [chosen, chosen.companion] : [chosen];
+      for (const placement of toPlace) {
+        if (placement === chosen.companion
+          && !occupancy.fits(bed.id, placement.sowMonth, placement.crop, placement.fraction)) continue;
+        occupancy.add(bed.id, placement.sowMonth, placement.crop, placement.fraction);
+        rotation.recordUse(bed.id, foodGroupOf(placement.crop));
+        bumpSow(sowCounts, placement.sowMonth);
+        noteCropBed(spread, placement.crop.key, bed.id);
+        lastCropByBed.set(bed.id, placement.crop.key);
+        const areaFraction = placement.fraction < 1 ? placement.fraction : undefined;
+        plantings.push({
+          id: plantingId(bed.id, placement.crop.key, placement.sowMonth, areaFraction),
+          bedId: bed.id,
+          cropKey: placement.crop.key,
+          sowMonth: placement.sowMonth,
+          areaFraction,
+        });
+      }
     }
   }
   return { plantings };

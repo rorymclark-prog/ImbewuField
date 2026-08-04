@@ -508,3 +508,48 @@ test('a month\'s field sheet stays printable at any farm size', () => {
     }
   }
 });
+
+// ── 12. A family bed is never left completely bare ──────────────────────────
+
+/**
+ * The regression the strip gates were blind to. The 5b7d3b5 fraction rules cut
+ * strips at 25-75 beds — and on the owner's own nine-bed farm quietly undid the
+ * morning's marquee fix: "the rest" outbid a clean third by 0.001 (floored
+ * remainder vs a 0.5 ask), one peas planting swallowed 0.666 of Bed 1 where
+ * peas-then-chard used to stand, and the chard was what covered July. Bed 1
+ * went back to a bare winter month the same evening it was fixed; every strip
+ * and yield gate stayed green because a fully-bare month is not a strip and
+ * the kg change was noise. His next message was the Gantt again: "It's worse".
+ *
+ * So pin the artefact itself: on the reference family farm every VEGETABLE bed
+ * has something growing in every month. Plots are exempt — their catalog is
+ * genuinely seasonal (see the staple-crops pool); a 9 m² bed with the full
+ * 25-crop catalog behind it has no such excuse under mild frost.
+ */
+test('no vegetable bed on the reference family farm is completely bare in any month', () => {
+  const beds: PlanBed[] = [];
+  for (let i = 1; i <= 9; i++) beds.push({ id: `bed-${i}`, label: `Bed ${i}`, areaM2: 9, minDimM: 1.2 });
+  for (let i = 1; i <= 4; i++) beds.push({ id: `plot-${i}`, label: `Plot ${i}`, areaM2: 123, minDimM: 11, kind: 'plot' });
+  const answers: AutoSuggestAnswers = {
+    goal: 'family', householdSize: 'large', groups: [],
+    rhythm: 'steady', rotateCrops: true, allowVinesInBeds: false,
+  };
+  const { plantings } = autoSuggestPlan(answers, 'mild-frost', beds, [], 8);
+
+  const occ = new Map<string, number[]>();
+  for (const p of plantings) {
+    const months = occ.get(p.bedId) ?? Array(13).fill(0);
+    for (const m of occupiedMonthsForPlanting(p)) months[m] += p.areaFraction ?? 1;
+    occ.set(p.bedId, months);
+  }
+
+  const bare: string[] = [];
+  for (const bed of beds) {
+    if (bed.kind === 'plot') continue;
+    const months = occ.get(bed.id) ?? Array(13).fill(0);
+    for (let m = 1; m <= 12; m++) {
+      if (months[m] <= 0.01) bare.push(`${bed.label} month ${m}`);
+    }
+  }
+  assert.deepEqual(bare, [], `bare bed-months on the reference farm: ${bare.join(', ')}`);
+});
