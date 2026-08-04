@@ -23,6 +23,8 @@ import NextStepCoach from './NextStepCoach';
 import SpeakButton from './SpeakButton';
 import SiteManageMenu from './SiteManageMenu';
 import { readLocalFarmShapes } from '@/lib/map-sync';
+import { loadCanvasState } from '@/lib/design-canvas';
+import { studioBoundaryMetrics } from '@/lib/studio-traced-areas';
 import { computeCompletionScore, type CompletionScoreInputs } from '@/lib/completion-score';
 import { gatherSiteInputs } from '@/lib/site-progress';
 import turfArea from '@turf/area';
@@ -417,6 +419,26 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
           areaHa: Math.round((turfArea(f) / 10000) * 100) / 100,
         })),
       };
+    }
+
+    if (!land) {
+      // No map-drawn parcels near this pin — but a boundary traced in the Design Studio is the
+      // same fact through the other door, and the plan sheets already render it. Measured here,
+      // never copied, so the card, the checklist and the sheets all describe one ring.
+      const studio = studioBoundaryMetrics(
+        loadCanvasState(designSiteIdFromLocation({ lat: coords.lat, lon: coords.lon } as LocationData)),
+      );
+      if (studio) {
+        const areaHa = Math.round((studio.areaM2 / 10000) * 100) / 100;
+        land = {
+          areaM2: Math.round(studio.areaM2),
+          areaHa,
+          perimeterM: Math.round(studio.perimeterM),
+          perimeterKm: Math.round((studio.perimeterM / 1000) * 100) / 100,
+          count: 1,
+          features: [{ name: 'Design Studio boundary', category: undefined, areaHa }],
+        };
+      }
     }
 
     let water: WaterData | null = null;

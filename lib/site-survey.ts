@@ -28,6 +28,7 @@ export interface SiteSurvey {
   roofSecondaryM2: number | null;
   hasGutters: boolean;
   roofAreaSource?: 'auto' | 'manual'; // 'auto' = last set from traced map shapes, farmer hasn't overridden
+  roofSecondarySource?: 'auto' | 'manual'; // same contract, for the store-room/shed/barn sum
 
   // Screen 3 — Land & soil
   landPrepMethod: string;   // 'hand' | 'tractor' | 'animal' | 'none'
@@ -78,6 +79,9 @@ function normaliseSurvey(value: unknown, siteId: string): SiteSurvey | null {
   const roofAreaSource = row.roofAreaSource === 'auto' || row.roofAreaSource === 'manual'
     ? row.roofAreaSource
     : undefined;
+  const roofSecondarySource = row.roofSecondarySource === 'auto' || row.roofSecondarySource === 'manual'
+    ? row.roofSecondarySource
+    : undefined;
   const existingGrowingAreaSource = row.existingGrowingAreaSource === 'auto'
     || row.existingGrowingAreaSource === 'manual'
     ? row.existingGrowingAreaSource
@@ -102,6 +106,7 @@ function normaliseSurvey(value: unknown, siteId: string): SiteSurvey | null {
     roofSecondaryM2: areaValue(row.roofSecondaryM2),
     hasGutters: row.hasGutters === true,
     roofAreaSource,
+    roofSecondarySource,
     landPrepMethod: stringValue(row.landPrepMethod),
     soilCondition: stringValue(row.soilCondition),
     soilAmendments: stringArray(row.soilAmendments),

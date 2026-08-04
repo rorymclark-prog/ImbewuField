@@ -5,7 +5,7 @@ import { saveSurvey, loadSurvey, type SiteSurvey } from '@/lib/site-survey';
 import { loadPlaces } from '@/lib/saved-places';
 import { designSiteIdFromLocation, computeTracedAreaTotals } from '@/lib/design-studio';
 import { loadCanvasState } from '@/lib/design-canvas';
-import { surveyRoofAreaM2 } from '@/lib/studio-traced-areas';
+import { studioRoofAreasM2, surveyRoofAreaM2 } from '@/lib/studio-traced-areas';
 import type { LocationData } from '@/lib/types';
 
 interface Props {
@@ -109,7 +109,10 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
   // traced in the Design Studio left this field empty while the Water sheet was already sizing a
   // tank off that very ring. Studio ring wins when present — the same precedence resolveBaseLayers
   // applies everywhere else — else the legacy total, unchanged, for map-only farmers.
-  const roofAreaM2 = surveyRoofAreaM2(loadCanvasState(siteId), tracedAreas.roofAreaM2);
+  const studioCanvas = loadCanvasState(siteId);
+  const roofAreaM2 = surveyRoofAreaM2(studioCanvas, tracedAreas.roofAreaM2);
+  // Every building beyond the largest — the store room, the shed — sums into "Secondary roofs".
+  const secondaryRoofM2 = studioRoofAreasM2(studioCanvas).secondaryM2;
 
   const [step, setStep] = useState(0);
 
@@ -141,7 +144,20 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
   const [roofSource, setRoofSource] = useState<'auto' | 'manual' | undefined>(() =>
     roofAreaSourceIsManual ? 'manual' : (roofAreaM2 > 0 ? 'auto' : undefined)
   );
-  const [roofSecondary, setRoofSecondary] = useState(existing?.roofSecondaryM2?.toString() ?? '');
+  // Same manual-first contract as the main roof: a figure the farmer typed (or any pre-source
+  // saved value) is never clobbered by auto-fill.
+  const roofSecondarySourceIsManual = !!existing && (
+    existing.roofSecondarySource === 'manual' ||
+    (existing.roofSecondarySource == null && ((existing.roofSecondaryM2 ?? 0) !== 0))
+  );
+  const [roofSecondary, setRoofSecondary] = useState(() => {
+    if (existing?.roofSecondaryM2 != null && roofSecondarySourceIsManual) return existing.roofSecondaryM2.toString();
+    if (secondaryRoofM2 > 0) return String(Math.round(secondaryRoofM2));
+    return existing?.roofSecondaryM2?.toString() ?? '';
+  });
+  const [roofSecondarySource, setRoofSecondarySource] = useState<'auto' | 'manual' | undefined>(() =>
+    roofSecondarySourceIsManual ? 'manual' : (secondaryRoofM2 > 0 ? 'auto' : undefined)
+  );
   const [hasGutters, setHasGutters] = useState(existing?.hasGutters ?? false);
 
   // Step 3 — Land & soil
@@ -197,6 +213,7 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
       roofMainM2: roofMain ? Number(roofMain) : null,
       roofSecondaryM2: roofSecondary ? Number(roofSecondary) : null,
       roofAreaSource: roofSource,
+      roofSecondarySource,
       hasGutters,
       landPrepMethod: landPrep,
       soilCondition,
@@ -389,7 +406,8 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
 
             <div>
               <SectionLabel>Secondary roofs — barn, shed, workshop (m²) — optional</SectionLabel>
-              <NumInput value={roofSecondary} onChange={setRoofSecondary} placeholder="e.g. 60" hint="Add areas of all other harvestable roofs" />
+              <NumInput value={roofSecondary} onChange={v => { setRoofSecondary(v); setRoofSecondarySource('manual'); }} placeholder="e.g. 60" hint="Add areas of all other harvestable roofs" />
+              {roofSecondarySource === 'auto' && <AutoFillNote areaM2={secondaryRoofM2} />}
             </div>
 
             <Toggle label="Gutters & downpipes in place" sub="Directs rain to tanks or storage area" on={hasGutters} onChange={setHasGutters} />

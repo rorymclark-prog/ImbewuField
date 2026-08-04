@@ -5,7 +5,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { studioRoofAreaM2, surveyRoofAreaM2 } from '../lib/studio-traced-areas.ts';
+import { studioBoundaryMetrics, studioRoofAreaM2, studioRoofAreasM2, surveyRoofAreaM2 } from '../lib/studio-traced-areas.ts';
 import { resolveBaseLayers } from '../lib/base-layers.ts';
 import type { DesignCanvasState } from '../lib/design-canvas.ts';
 
@@ -71,6 +71,49 @@ test('a boundary ring is not a roof', () => {
     zones: [{ id: 'b', zone: 0, feature: 'boundary', points: ring(0, 0, 0.9) }] as DesignCanvasState['zones'],
   });
   assert.equal(studioRoofAreaM2(s), 0);
+});
+
+// ── Two roofs: the store room lands in "Secondary roofs" ─────────────────────
+
+test('the largest building is the main roof; every other building sums into secondary', () => {
+  // Ubhejane's real shape: a main building and a smaller store room.
+  const s = state({
+    zones: [
+      house('main', ring(0.1, 0.1, 0.1)),      // 100 m²
+      house('store', ring(0.5, 0.5, 0.06)),    // 36 m²
+      house('shed', ring(0.7, 0.2, 0.04)),     // 16 m²
+    ] as DesignCanvasState['zones'],
+  });
+  const areas = studioRoofAreasM2(s);
+  assert.equal(areas.mainM2, 100);
+  assert.equal(Math.round(areas.secondaryM2), 52, 'store room + shed, never the main building twice');
+});
+
+test('one building means no secondary figure — the optional field stays empty', () => {
+  const s = state({ zones: [house('main', ring(0.1, 0.1, 0.1))] as DesignCanvasState['zones'] });
+  assert.equal(studioRoofAreasM2(s).secondaryM2, 0);
+});
+
+// ── Boundary metrics: what the checklist and the land card read ──────────────
+
+test('a Studio boundary measures area, perimeter and vertex count', () => {
+  const s = state({
+    zones: [{ id: 'b', zone: 0, feature: 'boundary', points: ring(0.1, 0.1, 0.5) }] as DesignCanvasState['zones'],
+  });
+  const m = studioBoundaryMetrics(s);
+  assert.ok(m);
+  assert.equal(m.areaM2, 2500, '50 m × 50 m');
+  assert.equal(Math.round(m.perimeterM), 200);
+  assert.equal(m.vertexCount, 4, 'what the "Boundary traced" checklist scores');
+});
+
+test('no boundary ring → null, so map-shapes answers are never overridden by nothing', () => {
+  assert.equal(studioBoundaryMetrics(state({})), null);
+  assert.equal(studioBoundaryMetrics(null), null);
+  const degenerate = state({
+    zones: [{ id: 'b', zone: 0, feature: 'boundary', points: [[0.1, 0.1], [0.2, 0.1]] }] as DesignCanvasState['zones'],
+  });
+  assert.equal(studioBoundaryMetrics(degenerate), null);
 });
 
 // ── Precedence against the legacy main-map total ─────────────────────────────

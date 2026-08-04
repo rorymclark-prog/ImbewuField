@@ -17,6 +17,7 @@ import { loadCanvasState } from '@/lib/design-canvas';
 import { CROP_PLAN_CHANGED_EVENT, loadCropPlan, type CropPlanState } from '@/lib/crop-plan';
 import { bedsFromDesignCanvas } from '@/lib/design-beds-bridge';
 import { readLocalFarmShapes } from '@/lib/map-sync';
+import { studioBoundaryMetrics } from '@/lib/studio-traced-areas';
 import { designSiteIdFromLocation } from '@/lib/design-studio';
 import {
   computeCompletionScore,
@@ -129,9 +130,14 @@ export function gatherSiteInputs(c: Coords, opts?: { assumeSaved?: boolean }): C
   const zoneCount = Array.isArray(canvas?.zones) ? canvas.zones.length : 0;
   const elementCount = Array.isArray(canvas?.items) ? canvas.items.length : 0;
   const cropPlan = loadCropPlan();
+  // A boundary traced in the Design Studio is a traced boundary. The sheets already render it
+  // (resolveBaseLayers prefers the Studio ring), so a checklist that kept saying "Not started"
+  // was asking the farmer to trace the same line twice. No proximity test is needed on this
+  // source: the canvas was loaded by the siteId derived from these exact coords.
+  const studioBoundary = studioBoundaryMetrics(canvas);
   return {
     hasSite: !!opts?.assumeSaved || savedPlaceAtCoords(c),
-    boundaryPointCount: boundaryPointCountNearCoords(c),
+    boundaryPointCount: Math.max(boundaryPointCountNearCoords(c), studioBoundary?.vertexCount ?? 0),
     surveyFilledFields: surveyFilledCount(survey),
     surveyTotalFields: SURVEY_TOTAL_FIELDS,
     zoneCount,
