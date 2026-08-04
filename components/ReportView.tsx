@@ -6,7 +6,8 @@ import RainfallChart from './RainfallChart';
 import { loadReports, saveReport, deleteReport, reportId, type SavedReport } from '@/lib/saved-reports';
 import { isSampleMode } from '@/lib/sample-mode';
 import { PLACE_LABELS, placeColor, type SavedPlace } from '@/lib/saved-places';
-import { Loader2, Check, Circle, ChevronRight, Share2, MapPin } from 'lucide-react';
+import { Loader2, Check, Circle, ChevronRight, Share2, MapPin, SlidersHorizontal, FileText } from 'lucide-react';
+import { buildReportPdf, deliverPdf, reportPdfFilename } from '@/lib/report-pdf';
 import { loadSurvey } from '@/lib/site-survey';
 import { getSiteEvidence } from '@/lib/site-evidence';
 import { designSiteIdFromLocation, loadDesignStudioState } from '@/lib/design-studio';
@@ -241,12 +242,34 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   const [savedList, setSavedList] = useState<SavedReport[]>([]);
   const [justSaved, setJustSaved] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [pdfState, setPdfState] = useState<'idle' | 'working' | 'done' | 'error'>('idle');
   useEffect(() => {
     const refresh = () => setSavedList(loadReports());
     refresh();
     window.addEventListener('imbewu-reports-changed', refresh);
     return () => window.removeEventListener('imbewu-reports-changed', refresh);
   }, []);
+
+  // ── Narrow-screen layout ───────────────────────────────────────────────────
+  // On a phone the settings column and the report cannot share the width: 232px
+  // of controls out of 375px leaves the report in a ~140px gutter that is
+  // unreadable. So on narrow screens they take turns — the report is the
+  // primary read once one exists, and the controls come back on demand.
+  // Desktop keeps the two-column layout untouched.
+  const [isWide, setIsWide] = useState(true);
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 768px)');
+    const apply = () => setIsWide(mq.matches);
+    apply();
+    mq.addEventListener('change', apply);
+    return () => mq.removeEventListener('change', apply);
+  }, []);
+
+  // Controls start open (nothing to read yet) unless we opened straight into a
+  // saved report, which already has content.
+  const [panelOpen, setPanelOpen] = useState(!savedReport);
+  const showPanel = isWide || panelOpen;
+  const showReportColumn = isWide || !panelOpen;
 
   const handleSaveReport = useCallback(() => {
     if (!report) return;
@@ -264,13 +287,22 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     setTimeout(() => setJustSaved(false), 2500);
   }, [report, activeSaved, d, siteData, waterData, language]);
 
+  // Once there is a report to read, a phone should be showing the report — not
+  // the settings that produced it. Read the media query at call time rather than
+  // closing over `isWide`, so this never acts on a stale value.
+  const collapsePanelOnNarrow = useCallback(() => {
+    if (typeof window === 'undefined') return;
+    if (!window.matchMedia('(min-width: 768px)').matches) setPanelOpen(false);
+  }, []);
+
   const openSaved = useCallback((r: SavedReport) => {
     setActiveSaved(r);
     setReport(r.report);
     setLanguage(r.lang);
     setGenerated(true);
     setError('');
-  }, []);
+    collapsePanelOnNarrow();
+  }, [collapsePanelOnNarrow]);
 
   const bColor = BIOME_COLORS[d.biome.code] ?? '#6BA84F';
 
@@ -281,6 +313,9 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     setError('');
     setLoading(true);
     setGenerated(false);
+    // Hand the screen to the report the moment generation starts — the farmer
+    // wants to watch it stream in, not stare at the section checkboxes.
+    collapsePanelOnNarrow();
 
     try {
       // Build evidence summary (strip base64 thumbnails — send counts + notes only)
@@ -342,11 +377,35 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     } finally {
       setLoading(false);
     }
-  }, [d, photoAnalysis, siteData, waterData, selected, language, bilingual, tone, length]);
+  }, [d, photoAnalysis, siteData, waterData, selected, language, bilingual, tone, length, collapsePanelOnNarrow]);
 
-  function printReport() {
-    window.print();
-  }
+  // "Export PDF". This used to be window.print(), which is a silent no-op in an
+  // installed iOS PWA (manifest display: standalone) — the button looked dead on
+  // a phone and threw nothing anyone could catch. We build the PDF ourselves and
+  // hand it to the device. See lib/report-pdf.ts.
+  const exportPdf = useCallback(async () => {
+    if (!report) return;
+    setPdfState('working');
+    try {
+      const blob = await buildReportPdf(report, {
+        biome: d.biome.name,
+        lat: d.lat,
+        lon: d.lon,
+        rainfallMm: d.rainfall.annual,
+        soilPh: d.soil.ph,
+        meanTempC: d.climate.meanTemp,
+        dateLabel: new Date().toLocaleDateString('en-ZA', { year: 'numeric', month: 'long', day: 'numeric' }),
+      });
+      await deliverPdf(blob, reportPdfFilename(d.biome.name));
+      setPdfState('done');
+      setTimeout(() => setPdfState('idle'), 2500);
+    } catch (err) {
+      // Never fail silently again — that was the whole bug.
+      setPdfState('error');
+      setError(err instanceof Error ? `Could not build the PDF: ${err.message}` : 'Could not build the PDF.');
+      setTimeout(() => setPdfState('idle'), 4000);
+    }
+  }, [report, d]);
 
   async function shareReport() {
     if (!d || !report) return;
@@ -362,103 +421,140 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   return (
     <div className="fixed inset-0 z-50 flex flex-col" style={{ background: '#E4DCC6' }}>
 
-      {/* ── Toolbar ──────────────────────────────── */}
+      {/* ── Toolbar ──────────────────────────────────────────────────────────
+          Wraps rather than scrolls. At 375px the old single non-wrapping row was
+          731px wide, so Share and Generate sat off-screen with no way to reach
+          them (the row was not scrollable either). Title and actions are now two
+          wrapping groups: every control stays on screen at any width.
+      */}
       <div
-        className="no-print flex-shrink-0 flex items-center gap-3 px-6 py-3"
+        className="no-print flex-shrink-0 flex flex-wrap items-center gap-x-3 gap-y-2 px-3 md:px-6 py-2.5 md:py-3"
         style={{ background: 'rgba(226,216,196,0.3)', borderBottom: '1px solid #E2D8C4' }}
       >
-        <button onClick={onClose} className="text-xs font-mono px-3 py-1.5 rounded-lg transition-all"
+        <button onClick={onClose} className="text-xs font-mono px-3 py-1.5 rounded-lg transition-all flex-shrink-0"
                 style={{ color: '#5C5040', background: 'rgba(226,216,196,0.5)', border: '1px solid #E2D8C4' }}>
           Back
         </button>
 
-        <div className="text-sm font-display font-semibold" style={{ color: '#20190F' }}>
-          Site Analysis Report
-        </div>
-        <div className="text-xs font-mono" style={{ color: '#5C5040' }}>
-          {d.biome.name} · {Math.abs(d.lat).toFixed(3)}°S {d.lon.toFixed(3)}°E
+        <div className="min-w-0 flex-1">
+          <div className="text-sm font-display font-semibold truncate" style={{ color: '#20190F' }}>
+            Site Analysis Report
+          </div>
+          <div className="text-xs font-mono truncate" style={{ color: '#5C5040' }}>
+            {d.biome.name} · {Math.abs(d.lat).toFixed(3)}°S {d.lon.toFixed(3)}°E
+          </div>
         </div>
 
-        <div className="flex-1" />
-
-        {generated && (
+        {/* Settings toggle — phone only. The controls column and the report take
+            turns on a narrow screen, so this is the way back to either one. */}
+        {!isWide && (
           <button
-            onClick={handleSaveReport}
-            className="flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-xs font-display font-medium transition-all"
-            style={justSaved
+            onClick={() => setPanelOpen((v) => !v)}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-display font-medium transition-all flex-shrink-0"
+            style={panelOpen
               ? { background: 'rgba(31,77,43,0.15)', border: '1px solid rgba(31,77,43,0.4)', color: '#1F4D2B' }
-              : { background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.3)', color: '#1F4D2B' }}
+              : { background: 'rgba(226,216,196,0.5)', border: '1px solid #E2D8C4', color: '#5C5040' }}
           >
-            {justSaved ? (isSampleMode() ? 'Demo — not saved' : 'Saved') : 'Save report'}
+            {panelOpen && report
+              ? <><FileText size={12} />Report</>
+              : <><SlidersHorizontal size={12} />Settings</>}
           </button>
         )}
 
-        {generated && (
+        {/* Action group — wraps to its own row on a phone, sits inline on desktop */}
+        <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">
+          <div className="hidden md:block flex-1" />
+
+          {generated && (
+            <button
+              onClick={handleSaveReport}
+              className="flex items-center gap-1.5 px-3 md:px-4 py-1.5 rounded-lg text-xs font-display font-medium transition-all"
+              style={justSaved
+                ? { background: 'rgba(31,77,43,0.15)', border: '1px solid rgba(31,77,43,0.4)', color: '#1F4D2B' }
+                : { background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.3)', color: '#1F4D2B' }}
+            >
+              {justSaved ? (isSampleMode() ? 'Demo — not saved' : 'Saved') : 'Save'}
+            </button>
+          )}
+
+          {generated && (
+            <button
+              onClick={exportPdf}
+              disabled={pdfState === 'working'}
+              className="flex items-center gap-1.5 px-3 md:px-4 py-1.5 rounded-lg text-xs font-display font-medium transition-all"
+              style={{
+                background: 'linear-gradient(135deg, rgba(192,122,30,0.15), rgba(192,122,30,0.06))',
+                border: '1px solid rgba(192,122,30,0.35)',
+                color: '#C07A1E',
+                opacity: pdfState === 'working' ? 0.6 : 1,
+              }}
+            >
+              {pdfState === 'working' && <Loader2 size={12} className="animate-spin" />}
+              {pdfState === 'working' ? 'Building…' : pdfState === 'done' ? 'PDF ready' : 'Export PDF'}
+            </button>
+          )}
+
+          {generated && (
+            <button
+              onClick={shareReport}
+              className="flex items-center gap-1.5 px-3 md:px-4 py-1.5 rounded-lg text-xs font-display font-medium transition-all"
+              style={{
+                background: copied ? 'rgba(35,94,134,0.15)' : 'rgba(35,94,134,0.08)',
+                border: '1px solid rgba(35,94,134,0.3)',
+                color: '#235E86',
+              }}
+            >
+              <Share2 size={12} />{copied ? 'Copied!' : 'Share'}
+            </button>
+          )}
+
+          {/* One regenerate control, not two — the primary button below already
+              switches its own label to "Regenerate" once a report exists. */}
           <button
-            onClick={printReport}
-            className="flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-xs font-display font-medium transition-all"
-            style={{
-              background: 'linear-gradient(135deg, rgba(192,122,30,0.15), rgba(192,122,30,0.06))',
-              border: '1px solid rgba(192,122,30,0.35)',
-              color: '#C07A1E',
-            }}
+            onClick={generate}
+            disabled={loading || selected.size === 0}
+            className="flex items-center gap-1.5 px-3 md:px-4 py-1.5 rounded-lg text-xs font-display font-semibold transition-all"
+            style={
+              loading || selected.size === 0
+                ? { background: 'rgba(226,216,196,0.6)', color: '#5C5040', border: '1px solid #E2D8C4' }
+                : {
+                    background: '#1F4D2B',
+                    border: '1px solid rgba(31,77,43,0.6)',
+                    color: '#F7F2E9',
+                    boxShadow: '0 0 16px rgba(31,77,43,0.2)',
+                  }
+            }
           >
-            Export PDF
+            {loading ? <><Loader2 size={14} className="animate-spin inline mr-1" /> Generating...</> : generated ? 'Regenerate' : 'Generate report'}
           </button>
-        )}
-
-        {generated && (
-          <button
-            onClick={shareReport}
-            className="flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-xs font-display font-medium transition-all"
-            style={{
-              background: copied ? 'rgba(35,94,134,0.15)' : 'rgba(35,94,134,0.08)',
-              border: '1px solid rgba(35,94,134,0.3)',
-              color: '#235E86',
-            }}
-          >
-            <Share2 size={12} />{copied ? 'Copied!' : 'Share'}
-          </button>
-        )}
-
-        {generated && (
-          <button onClick={generate}
-            disabled={loading}
-            className="flex items-center gap-1.5 font-sans font-semibold transition-all"
-            style={{ padding: '0 14px', height: 36, borderRadius: 10, background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.3)', color: '#1F4D2B', fontSize: 13, cursor: loading ? 'default' : 'pointer', opacity: loading ? 0.5 : 1 }}>
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8" />
-              <path d="M21 3v5h-5" />
-              <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16" />
-            </svg>
-            Regenerate
-          </button>
-        )}
-
-        <button
-          onClick={generate}
-          disabled={loading || selected.size === 0}
-          className="flex items-center gap-1.5 px-4 py-1.5 rounded-lg text-xs font-display font-semibold transition-all"
-          style={
-            loading || selected.size === 0
-              ? { background: 'rgba(226,216,196,0.6)', color: '#5C5040', border: '1px solid #E2D8C4' }
-              : {
-                  background: '#1F4D2B',
-                  border: '1px solid rgba(31,77,43,0.6)',
-                  color: '#F7F2E9',
-                  boxShadow: '0 0 16px rgba(31,77,43,0.2)',
-                }
-          }
-        >
-          {loading ? <><Loader2 size={14} className="animate-spin inline mr-1" /> Generating...</> : generated ? 'Regenerate' : 'Generate report'}
-        </button>
+        </div>
       </div>
 
       <div className="flex-1 flex overflow-hidden">
 
-        {/* ── Section controls sidebar ─────────── */}
+        {/* ── Section controls sidebar ───────────
+            Desktop: a fixed 232px column beside the report (unchanged).
+            Phone: full width, and only one of the two is displayed at a time.
+            Both stay mounted so reportRef and the report's scroll position
+            survive toggling. */}
         <div className="no-print flex-shrink-0 overflow-y-auto py-4 px-3"
-             style={{ width: 232, background: '#FFFEFA', borderRight: '1px solid #E2D8C4' }}>
+             style={{
+               width: isWide ? 232 : '100%',
+               display: showPanel ? 'block' : 'none',
+               background: '#FFFEFA',
+               borderRight: isWide ? '1px solid #E2D8C4' : 'none',
+             }}>
+
+          {/* Phone: the report is the primary read once it exists */}
+          {!isWide && report && (
+            <button
+              onClick={() => setPanelOpen(false)}
+              className="w-full flex items-center justify-center gap-2 mb-4 py-2.5 rounded-lg text-sm font-display font-semibold"
+              style={{ background: '#1F4D2B', color: '#F7F2E9', border: 'none' }}
+            >
+              <FileText size={14} />Read the report
+            </button>
+          )}
 
           {/* Saved reports — reopen a past report without regenerating */}
           {savedList.length > 0 && (
@@ -630,8 +726,14 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                     <button
                       key={id}
                       onClick={() => {
-                        const el = reportRef.current?.querySelector(`#${id}`);
-                        el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        // On a phone the report column is display:none while this
+                        // panel is open — scrolling a hidden element does nothing,
+                        // so show it first and scroll on the next frame.
+                        setPanelOpen(false);
+                        requestAnimationFrame(() => {
+                          const el = reportRef.current?.querySelector(`#${id}`);
+                          el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        });
                       }}
                       className="w-full text-left px-2 py-1.5 rounded-lg text-xs font-display transition-all"
                       style={{ color: '#5C5040', background: 'transparent', border: '1px solid transparent' }}
@@ -648,7 +750,9 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         </div>
 
         {/* ── Report content ────────────────────── */}
-        <div className="flex-1 overflow-y-auto relative" ref={reportRef}>
+        <div className="report-column flex-1 overflow-y-auto relative"
+             ref={reportRef}
+             style={{ display: showReportColumn ? 'block' : 'none' }}>
           {report && (
             <div
               style={{
@@ -664,7 +768,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
               }} />
             </div>
           )}
-          <div className="max-w-3xl mx-auto px-8 py-8">
+          <div className="max-w-3xl mx-auto px-4 md:px-8 py-6 md:py-8">
 
             {/* Print header */}
             <div className="print-header mb-8 pb-6" style={{ borderBottom: '2px solid #E2D8C4' }}>
@@ -685,7 +789,9 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
               </div>
 
               {/* Site summary bar */}
-              <div className={`mt-5 grid gap-3 ${['', '', 'grid-cols-2', 'grid-cols-3', 'grid-cols-4', 'grid-cols-5', 'grid-cols-6', 'grid-cols-7', 'grid-cols-8'][4 + (siteData ? 1 : 0) + (waterData ? 1 : 0) + (d.vegetation ? 1 : 0) + (d.bru ? 1 : 0)]}`}>
+              {/* Two columns on a phone — six 60px-wide tiles wrap every value
+                  onto its own line and read as noise. Desktop keeps one row. */}
+              <div className={`mt-5 grid gap-3 grid-cols-2 ${['', '', 'md:grid-cols-2', 'md:grid-cols-3', 'md:grid-cols-4', 'md:grid-cols-5', 'md:grid-cols-6', 'md:grid-cols-7', 'md:grid-cols-8'][4 + (siteData ? 1 : 0) + (waterData ? 1 : 0) + (d.vegetation ? 1 : 0) + (d.bru ? 1 : 0)]}`}>
                 {[
                   { label: 'Biome', value: d.biome.name, color: bColor },
                   { label: 'Rainfall', value: `${d.rainfall.annual}mm/yr`, color: '#235E86' },
@@ -823,10 +929,19 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         }
 
         /* ══════════════════════════════════════════════════════════════════
-           PRINT / PDF STYLES
-           These fire when the user clicks "Export PDF" → window.print()
+           PRINT STYLES
+           "Export PDF" no longer goes through window.print() — it builds the
+           document with jsPDF (lib/report-pdf.ts) because window.print() is a
+           silent no-op in an installed iOS PWA. These rules still matter for
+           anyone printing from the browser's own menu on desktop.
         ══════════════════════════════════════════════════════════════════ */
         @media print {
+
+          /* On a phone the report column is display:none while the settings
+             panel is showing. A printed page must still contain the report. */
+          .report-column {
+            display: block !important;
+          }
 
           /* Page geometry */
           @page {

@@ -267,7 +267,9 @@ Use these exact figures in all calculations. Scale recommendations to this site 
 ${waterData ? `\nWATER STORAGE (user-drawn on map)
 ${waterData.count} water storage feature(s) drawn — total surface area ${waterData.areaM2.toLocaleString()} m².
 Estimated capacity: ~${waterData.estVolumeKL.toLocaleString()} kL (${(waterData.estVolumeKL * 1000).toLocaleString()} L), assuming ${waterData.avgDepthM}m average depth.
-Use this existing/planned storage in the water plan: compare it to the dry-season demand and rainfall capture, and say whether it is enough or more is needed. Treat the estimate as approximate (real depth varies).` : ''}
+Use this existing/planned storage in the water plan: compare it to the dry-season demand and rainfall capture, and say whether it is enough or more is needed. Treat the estimate as approximate (real depth varies).` : `\nWATER STORAGE
+No water storage has been drawn or recorded on this site. There is NO dam, pond, reservoir, borehole or river here.
+Do not describe any of them as existing, and never attach a capacity, depth, level or percentage to storage that does not exist. Any storage you recommend must be written plainly as something to BUILD or BUY, with no assumed current volume.`}
 ${studioLayers && studioLayers.some((layer) => layer.approved) ? `
 DESIGN AS DRAWN (approved geometry — treat this as the farmer's actual plan, not a suggestion)
 ${studioLayers.filter((layer) => layer.approved).map((layer) => `- ${layer.layerType}: ${layer.name || 'Unnamed feature'} — ${Number.isFinite(layer.areaM2) ? layer.areaM2 : 0} m²`).join('\n')}
@@ -671,6 +673,23 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
       const msg = await client.messages.create({
         model: 'claude-sonnet-4-6',
         max_tokens: perBatchTokens,
+        // THE ANTI-INVENTION RULE, and why it is a system prompt rather than another
+        // paragraph in the user message: sections are generated in independent parallel
+        // batches that cannot see each other, so a rule stated once inside one batch's
+        // prompt does not bind the others. This binds every batch equally.
+        //
+        // It exists because a report for a crèche with a 2,500 L JoJo tank and a municipal
+        // tap told the farmer to "monitor the dam weekly with a marked depth gauge" and
+        // computed a 38-day buffer from a 193 kL reserve. There is no dam. Both numbers
+        // were the model's own arithmetic, filling a storage section the prompt demanded
+        // while nothing in the context said what water the site actually had.
+        system: [
+          'You are writing a site report a South African smallholder will act on and spend money against.',
+          'NEVER state that a physical structure exists — a dam, borehole, reservoir, tank, pond, river, well, pump, fence or building — unless it appears in the site facts supplied to you.',
+          'NEVER attach a capacity, depth, water level, percentage or age to a structure that is not in those facts.',
+          'Where the facts are silent, the honest reading is that the thing is absent. Write recommendations as something to BUILD or BUY, not as something to monitor or draw down.',
+          'Prefer saying a figure is unknown over supplying a plausible one. An invented number in this report is worse than a missing one, because the farmer cannot tell them apart.',
+        ].join(' '),
         messages: [{ role: 'user', content: buildPrompt(batchSections, idx === 0) }],
       }, {
         // One hung upstream call must not eat the whole maxDuration window — the catch below
