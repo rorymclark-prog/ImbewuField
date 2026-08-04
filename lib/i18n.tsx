@@ -699,6 +699,8 @@ const T: Record<string, Dict> = {
     photoLabelWhatsGrowing: "What's growing",
     photoDetailWhatsGrowing: 'Trees, plants, bare patches, any crops',
     photoTapToAdd: 'Tap to add photos',
+    // en-only for now — t() falls back to English for the other locales until translated.
+    photoSkippedNote: "Some photos couldn't be read, so they weren't added. iPhone photos are often HEIC, which this browser can't open — try JPEG/PNG copies or screenshots.",
     photoAnalysingButton: 'Analysing photos…',
     photoAnalyseGenerateButton: 'Analyse & generate plan',
     photoSkipButton: 'Skip — generate without photos',

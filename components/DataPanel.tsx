@@ -492,6 +492,10 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
   const [promptPreviews, setPromptPreviews] = useState<string[]>([]);
   const [promptImageData, setPromptImageData] = useState<Array<{ data: string; mediaType: string }>>([]);
   const [promptLoading, setPromptLoading] = useState(false);
+  // How many of the farmer's last selection could not be decoded (HEIC in Chrome, corrupt file).
+  // This used to be only a console.warn — "skip silently" — which read as a dead button: no
+  // preview appeared AND the Analyse button (which only renders once previews exist) never came.
+  const [promptSkipped, setPromptSkipped] = useState(0);
   const promptInputRef = useRef<HTMLInputElement>(null);
 
   async function resizeForPrompt(file: File): Promise<{ data: string; mediaType: string } | null> {
@@ -529,8 +533,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
     const candidates = Array.from(files).filter(f => f.type.startsWith('image/')).slice(0, 6);
     const results = await Promise.all(candidates.map(async (f, i) => ({ f, i, r: await resizeForPrompt(f) })));
     const good = results.filter(x => x.r !== null);
-    const skipped = results.length - good.length;
-    if (skipped > 0) console.warn(`${skipped} photo(s) could not be decoded (possibly HEIC — use JPEG/PNG)`);
+    setPromptSkipped(results.length - good.length);
     setPromptPreviews(prev => [...prev, ...good.map(x => URL.createObjectURL(x.f))].slice(0, 6));
     setPromptImageData(prev => [...prev, ...good.map(x => x.r!)].slice(0, 6));
   }
@@ -1839,6 +1842,12 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                     <span style={{ fontSize: 20, color: '#1F4D2B', lineHeight: 1 }}>+</span>
                   </button>
                 )}
+              </div>
+            )}
+
+            {promptSkipped > 0 && (
+              <div className="font-sans" style={{ marginTop: 10, padding: '9px 12px', borderRadius: 10, background: 'rgba(178,109,17,0.10)', border: '1px solid rgba(178,109,17,0.3)', fontSize: 12.5, color: '#7A4E0E', lineHeight: 1.5 }}>
+                {t('photoSkippedNote')}
               </div>
             )}
 
