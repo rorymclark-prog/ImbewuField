@@ -394,12 +394,14 @@ function leavesDeadSliver(
   crop: CropDef,
   fraction: number,
 ): boolean {
-  let tightestFree = 1;
+  // EVERY month of the span, not just the tightest: a crop held Nov-Mar meets a
+  // different neighbour each month, and judging only the tightest said "a half
+  // fits March exactly, clean" while stranding 17% in the other four.
   for (const mo of occupiedMonths(sowMonth, crop)) {
-    tightestFree = Math.min(tightestFree, 1 - occupancy.fractionAt(bedId, mo));
+    const leftover = 1 - occupancy.fractionAt(bedId, mo) - fraction;
+    if (leftover > 0.01 && leftover < SMALLEST_USABLE_SHARE - 0.01) return true;
   }
-  const leftover = tightestFree - fraction;
-  return leftover > 0.01 && leftover < SMALLEST_USABLE_SHARE - 0.01;
+  return false;
 }
 
 /**
@@ -436,7 +438,10 @@ function usableShare(
   for (const mo of occupiedMonths(sowMonth, crop)) {
     tightestFree = Math.min(tightestFree, 1 - occupancy.fractionAt(bed.id, mo));
   }
-  const rest = Math.round(tightestFree * 1000) / 1000;
+  // FLOOR, never round: 0.41666 rounded UP to 0.417 is 0.0002 too big for
+  // Occupancy.fits (tolerance 1.0001), so "take the rest" silently never
+  // fitted and every caller fell back to the ladder.
+  const rest = Math.floor(tightestFree * 1000) / 1000;
 
   const ladder = [wanted, ...fractionPresetsFor(bed).filter((f) => f < wanted - 0.001), rest];
   const fits = [...new Set(ladder)]

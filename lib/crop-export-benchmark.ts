@@ -385,7 +385,9 @@ export function buildFieldSheet(
       case 'sow':
         if (crop?.transplant) {
           const b = bucketFor('Nursery - raise seedlings', 'Nursery');
-          b.plain.push(`${name} for ${t.bedLabel}`);
+          // Keyed crop|||bed so the section build can say "tomatoes for Beds
+          // 10, 11, 12" instead of naming the same crop once per bed.
+          b.plain.push(`${name}|||${t.bedLabel}`);
           b.extra.add(`Transplant in ${monthShort(wrapMonth(t.month + 1))}.`);
         } else {
           const b = bucketFor('Direct sowing and planting', t.bedLabel);
@@ -428,7 +430,17 @@ export function buildFieldSheet(
     const rows: FieldSheetRow[] = [];
     for (const [place, b] of byPlace) {
       const parts: string[] = [];
-      if (title === 'Nursery - raise seedlings') parts.push(`Raise and label trays for ${joinList(unique(b.plain))}.`);
+      if (title === 'Nursery - raise seedlings') {
+        const byCrop = new Map<string, string[]>();
+        for (const entry of unique(b.plain)) {
+          const [crop, bedLabel] = entry.split('|||');
+          const list = byCrop.get(crop);
+          if (list) list.push(bedLabel);
+          else byCrop.set(crop, [bedLabel]);
+        }
+        const phrases = [...byCrop.entries()].map(([crop, bedsOf]) => `${crop} for ${compactPlaces(bedsOf)}`);
+        parts.push(`Raise and label trays for ${joinList(phrases)}.`);
+      }
       else if (title === 'Prepare for the next planting') parts.push(`Prepare the ground for ${joinList(unique(b.plain))}.`);
       else if (title === 'Harvest and record') parts.push(`Harvest ${joinList(unique(b.plain))}.`);
       else if (title === 'Maintenance') parts.push(`Weed and check for pests around ${joinList(unique(b.plain))}.`);
@@ -442,7 +454,7 @@ export function buildFieldSheet(
       parts.push(...b.extra);
       rows.push({ place, work: parts.filter(Boolean).join(' ') });
     }
-    sections.push({ title, rows });
+    sections.push({ title, rows: mergeIdenticalWork(rows) });
   }
 
   const workRows = sections.reduce((s, x) => s + x.rows.length, 0);
@@ -497,6 +509,40 @@ function joinList(items: string[]): string {
 function resolveYear(month: number, now: Date): number {
   const nowMonth = now.getMonth() + 1;
   return month >= nowMonth ? now.getFullYear() : now.getFullYear() + 1;
+}
+
+/**
+ * One row per JOB, not per bed. On a market garden the same instruction
+ * repeats across many beds — at 100 beds, "Harvest carrots. Record kilograms
+ * and where it went." printed up to a hundred times, and a month's field
+ * sheet ran to nine pages of identical sentences (the whole export was ~900
+ * pages at 1,000 beds). Rows whose work text is identical merge into one,
+ * naming every place: "Beds 3, 7, 12". Row count now scales with the number
+ * of DISTINCT jobs — bounded by the catalog — not with the number of beds.
+ * Order is kept from the first appearance of each job.
+ */
+function mergeIdenticalWork(rows: FieldSheetRow[]): FieldSheetRow[] {
+  const byWork = new Map<string, string[]>();
+  for (const row of rows) {
+    const places = byWork.get(row.work);
+    if (places) places.push(row.place);
+    else byWork.set(row.work, [row.place]);
+  }
+  return [...byWork.entries()].map(([work, places]) => ({ place: compactPlaces(places), work }));
+}
+
+/** "Bed 3" + "Bed 7" + "Bed 12" -> "Beds 3, 7, 12"; anything mixed just joins. */
+function compactPlaces(places: string[]): string {
+  if (places.length === 1) return places[0];
+  const bedNums = places.map((p) => /^Bed (\d+)$/.exec(p)?.[1]);
+  if (bedNums.every((n): n is string => n !== undefined)) {
+    return `Beds ${bedNums.map(Number).sort((a, b) => a - b).join(', ')}`;
+  }
+  const plotNums = places.map((p) => /^Plot (\d+)$/.exec(p)?.[1]);
+  if (plotNums.every((n): n is string => n !== undefined)) {
+    return `Plots ${plotNums.map(Number).sort((a, b) => a - b).join(', ')}`;
+  }
+  return places.join(', ');
 }
 
 // ── 4. Full plan table rows ─────────────────────────────────────────────────

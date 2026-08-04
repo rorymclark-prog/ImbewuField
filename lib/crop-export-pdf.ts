@@ -900,7 +900,12 @@ function drawFieldSheets(
       for (const row of section.rows) {
         s.font(8);
         const lines = s.doc.splitTextToSize(pdfSafe(row.work), cWork - 12) as string[];
-        const rowH = Math.max(24, lines.length * 10.5 + 10);
+        // A merged row's place can be "Beds 3, 7, 12, 18" — wrap it like the
+        // work text and size the row to whichever column is taller, or the bed
+        // list silently overprints the instruction beside it.
+        s.font(8, true);
+        const placeLines = s.doc.splitTextToSize(pdfSafe(row.place), cPlace - 8) as string[];
+        const rowH = Math.max(24, lines.length * 10.5 + 10, placeLines.length * 10.5 + 10);
         if (s.need(rowH)) { continued(); headRow(); }
 
         // The checkbox — the reason this page exists on paper.
@@ -910,7 +915,7 @@ function drawFieldSheets(
 
         s.font(8, true);
         s.ink(INK.text);
-        s.doc.text(pdfSafe(row.place), s.margin + cTick + 4, s.y + 13);
+        s.doc.text(placeLines, s.margin + cTick + 4, s.y + 13);
         s.font(8);
         s.ink(INK.text);
         s.doc.text(lines, s.margin + cTick + cPlace + 4, s.y + 13);

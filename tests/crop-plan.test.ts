@@ -49,7 +49,15 @@ function cropFor(planting: Planting) {
 
 function occupiedMonths(planting: Planting): number[] {
   const crop = cropFor(planting);
-  const span = Math.max(1, Math.round(crop.daysToHarvest / 30)) + 1;
+  // Sow month through the END OF THE PICKING WINDOW — the same span the
+  // planner's own occupancy model uses (holdSpanMonths, 2026-08-04). This
+  // helper predated that fix and stopped at maturity, which made the winter
+  // test call a bed "bare in month 7" while a cut-and-come-again chard was
+  // STANDING IN IT being picked. A bed being harvested is not a bare bed —
+  // that principle is the owner's own (task #61, "there is no sowing in bed
+  // one after april!"), and coverage must be measured by the same model the
+  // planner plans with, or the two disagree forever.
+  const span = Math.max(1, Math.round(crop.daysToHarvest / 30)) + 1 + (crop.harvestWindowMonths ?? 0);
   return Array.from({ length: span }, (_, offset) => ((planting.sowMonth + offset - 1) % 12) + 1);
 }
 

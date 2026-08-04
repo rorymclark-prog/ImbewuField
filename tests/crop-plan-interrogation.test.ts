@@ -22,6 +22,7 @@ import test from 'node:test';
 import { CROPS, cropByKey, plantsPerM2 } from '@/lib/crop-catalog';
 import type { RainPattern } from '@/lib/crop-catalog';
 import { buildBedPlanRows, sowingInstruction } from '@/lib/crop-export-schedule';
+import { buildFieldSheet } from '@/lib/crop-export-benchmark';
 import { autoSuggestPlan } from '@/lib/crop-autosuggest';
 import type { AutoSuggestAnswers, GardenGoal, HouseholdSize, HarvestRhythm } from '@/lib/crop-autosuggest';
 import {
@@ -30,6 +31,7 @@ import {
   buildYearReport,
   occupiedMonthsForPlanting,
   seedBoqForPlan,
+  tasksForPlan,
   type PlanBed,
   type Planting,
 } from '@/lib/crop-plan';
@@ -429,12 +431,12 @@ test('a bed is never left with a share too small for any crop', () => {
  * it slips; they are set where the code IS, not where it should be. See the
  * open task for the residual.
  */
-test('no farm size is left with unplantable strips, from one bed to twenty-four', () => {
+test('no farm size is left with unplantable strips, from one bed to forty', () => {
   const worst: string[] = [];
   let slivers = 0;
   let cells = 0;
 
-  for (const bedCount of [1, 2, 3, 5, 9, 16, 24]) {
+  for (const bedCount of [1, 2, 3, 5, 9, 16, 24, 40]) {
     let sizeSlivers = 0;
     let sizeCells = 0;
     for (const pattern of ['summer', 'mild-frost'] as RainPattern[]) {
@@ -473,4 +475,36 @@ test('no farm size is left with unplantable strips, from one bed to twenty-four'
 
   assert.deepEqual(worst, []);
   assert.ok(slivers / cells <= 0.11, `${(slivers / cells * 100).toFixed(1)}% overall — was 19.0% before the fraction rules`);
+});
+
+// ── 11. The field sheet scales with the catalog, not the farm ───────────────
+
+/**
+ * "We will probably go from 1 bed to 1000." At 1,000 beds the field sheets
+ * used to run one row per bed per job — ~22,600 lines a year, a ~900-page
+ * document. Identical work now merges into one row naming its beds ("Beds 3,
+ * 7, 12"), so a month's sheet is bounded by the number of DISTINCT jobs (a
+ * function of the 25-crop catalog), not by how many beds the farm has.
+ * Measured after the merge: worst month 45 rows at 40 beds, 49 at 100, 50 at
+ * 1,000 — the plateau IS the point. 80 is generous headroom over all three.
+ */
+test('a month\'s field sheet stays printable at any farm size', () => {
+  const now = new Date('2026-08-04T00:00:00Z');
+  for (const bedCount of [40, 100, 400]) {
+    const beds: PlanBed[] = [];
+    for (let i = 1; i <= bedCount; i++) beds.push({ id: `b${i}`, label: `Bed ${i}`, areaM2: 9, minDimM: 1.2 });
+    const answers: AutoSuggestAnswers = {
+      goal: 'family', householdSize: 'large', focusCropCount: 2, groups: [],
+      rhythm: 'steady', rotateCrops: true, allowVinesInBeds: false,
+    };
+    const { plantings } = autoSuggestPlan(answers, 'summer', beds, [], 8);
+    const tasks = tasksForPlan(plantings, beds);
+    for (let m = 1; m <= 12; m++) {
+      const sheet = buildFieldSheet(m, tasks, now);
+      assert.ok(
+        sheet.workRows <= 80,
+        `${bedCount} beds, month ${m}: ${sheet.workRows} rows — the per-bed explosion is back`,
+      );
+    }
+  }
 });
