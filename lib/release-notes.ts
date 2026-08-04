@@ -34,6 +34,15 @@ export interface ReleaseNote {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '4 August (afternoon)',
+    sha: 'c22fa37',
+    changes: [
+      'Generate report and photo analysis work again — both were failing with a plain "500"',
+      'The old Design canvas is retired — the Design Studio is the one place designs are made',
+      '"What’s new" in the menu keeps the full list of updates and fixed bugs',
+    ],
+  },
+  {
     when: '4 August',
     // Stamped at commit time by the same push that carries these changes.
     sha: 'e79c07e',
