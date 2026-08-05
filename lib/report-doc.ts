@@ -2,7 +2,7 @@
 // The 11-section, map-linked report is the product differentiator. This is the
 // durable, typed source of truth for the instant local skeleton built from data
 // already available in the farmer's design.
-import type { LocationData } from '@/lib/types';
+import type { LocationData, SoilData } from '@/lib/types';
 import type {
   DesignLayer,
   GeneratedDesignPlan,
@@ -224,6 +224,23 @@ function finitePositive(value: unknown): number | undefined {
   return finite !== undefined && finite > 0 ? finite : undefined;
 }
 
+/**
+ * What to print as the BASIS of a soil figure — the source that actually answered.
+ *
+ * SoilGrids is only the basis when SoilGrids replied. When the ISRIC call fails the app
+ * substitutes the same seven numbers for every site on Earth (Loam, pH 6.5, 1.2% OC), and
+ * naming SoilGrids beside those is a citation of a source that was never consulted. An
+ * older stored site carries no `soilSource` at all, and unknown provenance is stated as
+ * unknown rather than assumed good.
+ */
+function soilBasis(soil: SoilData | undefined, suffix = ''): string {
+  if (soil?.soilSource === 'soilgrids') return `SoilGrids model${suffix}`;
+  if (soil?.soilSource === 'estimate') {
+    return `no soil data for this point — app default, not a reading${suffix || ' — a soil test is the only way to know'}`;
+  }
+  return `source not recorded — treat as unverified${suffix || ' — a soil test is the only way to know'}`;
+}
+
 // ── Instant LOCAL skeleton — no AI, renders in <1s ───────────────────────────
 export function buildSkeletonReportDoc(args: {
   id: string;
@@ -346,8 +363,14 @@ export function buildSkeletonReportDoc(args: {
     slope: slopeDeg !== undefined ? { value: slopeDeg, unit: '°', provenance: 'estimated', basis: 'coarse elevation grid — confirm on site' } : undefined,
     aspect: el?.aspectLabel ?? 'unknown',
     soilTexture: so?.textureClass ?? 'unknown',
-    ph: ph !== undefined ? { value: ph, provenance: 'estimated', basis: 'SoilGrids model — confirm with a soil test' } : undefined,
-    organicMatter: organicCarbon !== undefined ? { value: organicCarbon, unit: '% OC', provenance: 'estimated', basis: 'SoilGrids model' } : undefined,
+    // The basis has to name what was ACTUALLY consulted. When the ISRIC call fails, the
+    // route substitutes Loam / pH 6.5 / 1.2% OC for every site alike, and this line used to
+    // print "SoilGrids model" beside those constants — crediting a source that never
+    // answered. A farmer reading "SoilGrids model" reasonably believes something looked at
+    // their land, and the 45-page Ubhejane report built its whole soil section on exactly
+    // that misplaced trust. See SoilData.soilSource.
+    ph: ph !== undefined ? { value: ph, provenance: 'estimated', basis: soilBasis(so, ' — confirm with a soil test') } : undefined,
+    organicMatter: organicCarbon !== undefined ? { value: organicCarbon, unit: '% OC', provenance: 'estimated', basis: soilBasis(so) } : undefined,
     compaction: survey?.soilCondition === 'compacted' ? 'Reported compacted — aerate before planting.' : 'Assess by digging a test hole.',
     erosion: water.erosionRisk,
     improvementPlan: [

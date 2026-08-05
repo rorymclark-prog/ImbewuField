@@ -36,8 +36,16 @@ export async function GET(req: NextRequest) {
             climate: defaultClimate(),
           };
 
+    // Tag the provenance. Until now the failure path substituted the defaults and said
+    // nothing, so a caller could not tell a SoilGrids reading from the app's constant —
+    // and on 2026-08-06 every point tried, Ubhejane's own coordinates included, was
+    // silently returning that constant while elevation, slope, vegetation and the KZN
+    // bioresource unit for the SAME request came back as real site data. Anything that
+    // prints these numbers to a farmer has to know which of the two it is holding.
     const soilData =
-      soil.status === 'fulfilled' ? soil.value : defaultSoil();
+      soil.status === 'fulfilled'
+        ? { ...soil.value, soilSource: 'soilgrids' as const }
+        : defaultSoil();
 
     const elevData =
       elevation.status === 'fulfilled' ? elevation.value : defaultElevation();
@@ -73,7 +81,14 @@ function defaultClimate() {
 }
 
 function defaultSoil() {
-  return { textureClass: 'Loam', ph: 6.5, organicCarbon: 1.2, clay: 25, sand: 45, silt: 30, bulkDensity: 1.3 };
+  // NOT a reading. These are the same seven numbers for every point on Earth, returned
+  // whenever the ISRIC call fails. Tagged so nothing downstream can attribute them to a
+  // source that was never asked.
+  return {
+    textureClass: 'Loam', ph: 6.5, organicCarbon: 1.2,
+    clay: 25, sand: 45, silt: 30, bulkDensity: 1.3,
+    soilSource: 'estimate' as const,
+  };
 }
 
 function defaultElevation() {

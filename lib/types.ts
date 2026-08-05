@@ -45,6 +45,24 @@ export interface SoilData {
   sand: number;
   silt: number;
   bulkDensity: number;
+  /**
+   * Where these numbers came from. 'soilgrids' = ISRIC answered for this point;
+   * 'estimate' = it did not, and these are the app's generic defaults.
+   *
+   * WHY THIS FIELD EXISTS. When the ISRIC call fails the route substitutes
+   * Loam / pH 6.5 / 1.2% OC and says nothing, so every site reads back identical
+   * soil — verified at Ubhejane's own coordinates and at Nairobi on the same
+   * day, while elevation, slope, vegetation and the KZN bioresource unit all
+   * came back as real site data for the same request. The generated report then
+   * printed that constant with `basis: 'SoilGrids model'` beside it, naming a
+   * source that had not been consulted, and the 45-page Ubhejane report built
+   * its entire soil section and both amendment quantities on top of it.
+   * `rainfall` has carried `rainfallSource` all along; soil carried nothing, and
+   * that asymmetry is exactly what let a default pass for a reading. Optional so
+   * stored sites keep loading — absent means unknown provenance, which is itself
+   * worth showing rather than hiding.
+   */
+  soilSource?: 'soilgrids' | 'estimate';
 }
 
 export interface ElevationData {
