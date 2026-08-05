@@ -754,6 +754,11 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
           <Link href="/invoice" className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg font-sans font-semibold" style={{ background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.3)', color: '#C07A1E', fontSize: 14, textDecoration: 'none' }}>
             <FileText size={15} />New invoice
           </Link>
+          <Link href="/farmer?panel=Farm"
+            className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg font-sans font-semibold"
+            style={{ background: 'rgba(35,94,134,0.10)', border: '1px solid rgba(35,94,134,0.25)', color: '#235E86', fontSize: 14, textDecoration: 'none' }}>
+            <Sprout size={15} />Log harvest
+          </Link>
           <button onClick={onAddEntry}
             className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg font-sans font-semibold transition-all"
             style={{ background: '#1F4D2B', border: '1px solid rgba(31,77,43,0.22)', color: '#F7F2E9', fontSize: 14, cursor: 'pointer' }}>
@@ -1093,6 +1098,13 @@ export default function FinancesPage() {
                 invoices={invoices}
                 loading={dataLoading}
               />
+              <Link
+                href="/farmer?panel=Farm"
+                className="w-full flex items-center justify-center gap-2 py-3 rounded-2xl text-sm font-display font-semibold transition-all"
+                style={{ background: 'rgba(35,94,134,0.10)', border: '1px solid rgba(35,94,134,0.25)', color: '#235E86', textDecoration: 'none' }}
+              >
+                <Sprout size={16} />Log harvest
+              </Link>
               <HarvestReconciliation production={production} sales={sales} period="month" now={now} loading={dataLoading} />
               {/* Never offered while offline: "no data" may only mean "not reachable", and this
                   button writes real rows into the farmer's real ledger. */}
