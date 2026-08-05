@@ -35,6 +35,13 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '5 August (night)',
+    sha: '96f0250',
+    changes: [
+      'Money: sales you log now appear in your sales total and recent-sales list',
+    ],
+  },
+  {
+    when: '5 August (night)',
     sha: '66b5ba2',
     changes: [
       'Money: log a harvest straight from Finance — no need to find a hidden screen',
