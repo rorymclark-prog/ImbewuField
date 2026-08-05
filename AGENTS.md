@@ -53,6 +53,13 @@ HTTP 403 (no registry access) and any Google Fonts fetch failure.
 
 ## 1b. There is a queue
 
+> **2026-08-05 — READ THE TOP OF THE QUEUE BEFORE ANYTHING ELSE.** Rory is out of Claude usage
+> until Saturday 8 August. Everywhere this repo says *"Claude reviews and merges behind you"*, that
+> is suspended for the window: you push, you read the CI result, and **you merge to `main` yourself**
+> once `test.yml` is green. `docs/CODEX-QUEUE.md` states the full temporary mode and — more
+> importantly — what has **not** been widened. Every guardrail in §4 still binds, and the
+> `PLAN_VERSION` rule below binds harder, because nobody is reviewing behind you.
+
 `docs/CODEX-QUEUE.md` holds the current backlog, in priority order, one branch per item. Take the
 top unstarted item unless you have been given something else. Every item in it was verified real
 before it was written down — if you find one is already fixed or its premise is wrong, say so and
