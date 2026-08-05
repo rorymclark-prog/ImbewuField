@@ -34,6 +34,20 @@ export interface ReleaseNote {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '6 August (evening)',
+    sha: '451cd18',
+    changes: [
+      'Your report now opens with a cover page and contents, and its sections are numbered',
+      'It ends with a costed bill of quantities, measured off your own map',
+      'It says plainly which items it could not price, instead of leaving them out',
+      'It now carries a monitoring plan and a risk list, both built from your own figures',
+      'New Network map: every farm in the programme - open one to read its record',
+      'New Exchange and Field Journal pages, both in the menu',
+      'New Atlas: look up growing conditions anywhere in the world',
+      'Seed quantities corrected for 11 crops, from the KZN agriculture spacing table',
+    ],
+  },
+  {
     when: '6 August',
     changes: [
       'The crop plan timeline now runs two full years - pan sideways to see year two',
