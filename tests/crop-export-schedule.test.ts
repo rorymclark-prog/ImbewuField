@@ -88,8 +88,11 @@ test('taskLine is sentence-cased for standalone reading', () => {
 
 test('sowingInstruction never invents a number the catalog does not have', () => {
   assert.equal(sowingInstruction(cropByKey('maize')!), 'rows 90cm apart · 20cm apart in the row · sow 4cm deep');
-  // Onions have a sow depth but no row/in-row split — spacing must still show.
-  assert.match(sowingInstruction(cropByKey('onions')!), /^plant spacing ~10cm/);
+  // Kale is a crop the KZN DARD spacing table doesn't carry, so it still has
+  // only the single legacy figure — the fallback wording must show that rather
+  // than invent a row split. (Was onions, until the 2026-08-05 DARD pass gave
+  // onions a sourced split and this fixture went stale.)
+  assert.match(sowingInstruction(cropByKey('kale')!), /^plant spacing ~45cm/);
 });
 
 // ── Bed-by-bed plan ─────────────────────────────────────────────────────────

@@ -108,11 +108,15 @@ export const CROPS: CropDef[] = [
     },
     daysToHarvest: 115, // ~115 (range 109-121) — N2Africa 'Better sugar beans' Southern Africa production booklet
     spacingCm: 10,
-    // row/depth not populated — sourced only via search-engine extract of a
-    // DALRRD brochure (direct fetch blocked), medium confidence, flagged for
-    // re-verification. inRow is cross-confirmed against the SADC Sugar Bean
-    // guideline.
-    inRowSpacingCm: 15, // 10-20cm — SADC Sugar Bean guideline
+    // Row spacing now sourced: sugar beans are bush-type, and KZN DARD's own
+    // spacing table prints the bush-bean row directly. Until 2026-08-05 only
+    // the SADC in-row figure existed, so rowCm fell back to it — 15x15 =
+    // 44 plants/m² (444,000/ha), ~3x any real sugar-bean population and one of
+    // the worst seed over-orders in the catalog. 15x52.5 = 12.7/m² = 127,000/ha,
+    // inside the dryland 100-180k/ha range.
+    rowSpacingCm: 52.5, // 450-600mm — KZN DARD 'Plant Establishment', spacing table (Bean, bush)
+    inRowSpacingCm: 15, // 10-20cm — SADC Sugar Bean guideline (kept over DARD's 50-80mm bush-bean figure: sugar-bean-specific source)
+    sowDepthCm: 3, // 20-40mm — KZN DARD 'Plant Establishment', spacing table (Bean, bush)
     yieldKgPerM2: 0.2, // ~0.2 (1.8-2.2 t/ha) — Grain SA 'Know the value of DRY BEANS'
     note: 'Leave pods to dry and rattle on the plant before shelling and storing.',
     storageMonths: 12,
@@ -166,8 +170,13 @@ export const CROPS: CropDef[] = [
     },
     daysToHarvest: 87, // ~85-90 (range 80-95 for summer-sown varieties; 110 was a winter-planting figure) — Starke Ayres Pumpkin days-to-maturity pages
     spacingCm: 120,
-    // row/inRow not populated — source gives only planting density
-    // (semi-bush 6,500-7,000/ha, vining 5,000/ha, dryland 3,500/ha), no cm split.
+    // Cross-check: 65x250cm = 0.62 plants/m² = 6,150/ha — agrees with the
+    // density source's own semi-bush 6,500-7,000/ha figure below.
+    rowSpacingCm: 250, // 2500mm — KZN DARD 'Plant Establishment', spacing table (Pumpkin)
+    inRowSpacingCm: 65, // 600-700mm — same table, same row
+    sowDepthCm: 2.5, // 20-30mm — same table
+    // Prior density-only source (semi-bush 6,500-7,000/ha, vining 5,000/ha,
+    // dryland 3,500/ha) kept as the sanity bound on the cm split above.
     yieldKgPerM2: 1.5, // ~1.5 (12-20 t/ha) — KZN DARD Expected Yields Table 8
     note: 'Needs bees for pollination; hand-pollinate with a small brush if fruit set is poor.',
     storageMonths: 4,
@@ -230,8 +239,14 @@ export const CROPS: CropDef[] = [
     daysToHarvest: 90,
     transplant: true,
     spacingCm: 45,
-    rowSpacingCm: 65, // 60-70cm loose-head market (45-55cm for bagging market) — Starke Ayres Cabbage Production Guideline 2019 sec 3.4
-    inRowSpacingCm: 60, // 25cm for baby cabbage — same guideline
+    // Switched to KZN DARD's table (350-450 x 500-600mm) on 2026-08-05. The
+    // previous pair mixed a Starke Ayres commercial loose-head row (60-70cm)
+    // with an inRow of 60 whose own comment cited "25cm for baby cabbage" — a
+    // transcription casualty. At 60x65 the plan UNDER-planted cabbage
+    // (2.6 plants/m² vs DARD's 4.5), the one spacing error that cost yield
+    // rather than seed money.
+    rowSpacingCm: 55, // 500-600mm — KZN DARD 'Plant Establishment', spacing table (Cabbage)
+    inRowSpacingCm: 40, // 350-450mm — same table, same row
     yieldKgPerM2: 3, // = 30 t/ha, the "conservative" commercial yield — KZN DARD Expected Yields Table 8 (Cabbage 30/50/80-90 conservative/likely/target); kept deliberately conservative since a home garden without commercial inputs won't reach the 50-90 t/ha likely/target range
     note: 'Firm the soil well at transplanting to help heads form tightly.',
     varieties: [
@@ -254,7 +269,11 @@ export const CROPS: CropDef[] = [
     },
     daysToHarvest: 100, // ~100 (true range 90-105 summer / 110-120 winter — single-number compromise, season-split not modeled) — Starke Ayres Allyance/Kuroda/Chantenay Karoo variety pages
     spacingCm: 8,
-    // row/inRow not populated — only aggregate population (600,000-3,500,000/ha) found, no direct cm split.
+    // 3.5x30cm = 95 plants/m² = 950,000/ha — inside the previously-found
+    // aggregate population range (600,000-3,500,000/ha). The old 8x8 square
+    // fallback gave 156/m², over-ordering seed ~1.6x.
+    rowSpacingCm: 30, // 200-400mm — KZN DARD 'Plant Establishment', spacing table (Carrot)
+    inRowSpacingCm: 3.5, // 20-50mm — same table, same row
     sowDepthCm: 1.0, // 0.5-1.5cm — Starke Ayres Carrot Production Guideline 2019 sec 3.3.2
     yieldKgPerM2: 2.2, // ~2.2 (20-25 t/ha) — KZN DARD Expected Yields Table 8
     note: "Direct-sow only — carrots don't transplant well. Keep the bed loose and stone-free.",
@@ -298,7 +317,11 @@ export const CROPS: CropDef[] = [
     transplant: true,
     spacingCm: 10,
     sowDepthCm: 1.5, // 1-2cm — Starke Ayres Onion Production Guideline 2019 sec 3.3
-    // row/inRow not populated — only aggregate population (700,000-800,000 plants/ha) found, no explicit cm split.
+    // Midpoints give 7x25cm = 57 plants/m² = 570,000/ha; the previously-found
+    // aggregate population (700,000-800,000/ha) sits at the dense end of the
+    // DARD ranges (60x200mm = 830,000/ha), so both sources are consistent.
+    rowSpacingCm: 25, // 200-300mm — KZN DARD 'Plant Establishment', spacing table (Onion)
+    inRowSpacingCm: 7, // 60-80mm — same table, same row
     yieldKgPerM2: 2.0, // ~2.0 (15-25 t/ha) — KZN DARD Expected Yields Table 8
     note: 'Long-season crop — sow into trays in autumn, transplant seedlings about six weeks later.',
     varieties: [
@@ -370,9 +393,11 @@ export const CROPS: CropDef[] = [
     // butternut/watermelon can spread 2-4m+), but more than a plain root
     // crop, so it gets a middle-ground spacing instead of either extreme.
     spacingCm: 60,
-    // row/inRow not populated — official NDA/DAFF brochure unreachable, only
-    // a secondary consumer-facing source found (medium confidence, flagged
-    // for re-verification), so left as spacingCm fallback for now.
+    // Cross-check: 32.5x95cm = 3.24 plants/m² = 32,400/ha — matches the same
+    // table's own stated planting rate of 30,000-35,000 cuttings/ha exactly.
+    // Supersedes the earlier "no primary source reachable" gap.
+    rowSpacingCm: 95, // 900-1000mm ridges — KZN DARD 'Plant Establishment', spacing table (Sweet potato)
+    inRowSpacingCm: 32.5, // 250-400mm on the ridge — same table, same row
     yieldKgPerM2: 2.0, // ~2.0 (15-25 t/ha) — KZN DARD Expected Yields Table 8
     note: 'Grown from rooted slips, not seed — plant into ridged soil for easy digging later.',
     storageMonths: 3,
@@ -415,6 +440,9 @@ export const CROPS: CropDef[] = [
     },
     daysToHarvest: 45,
     spacingCm: 25,
+    rowSpacingCm: 45, // 400-500mm — KZN DARD 'Plant Establishment', spacing table (Lettuce)
+    inRowSpacingCm: 30, // 250-350mm — same table, same row
+    sowDepthCm: 1.75, // 15-20mm — same table
     yieldKgPerM2: 2, // = 20 t/ha, the "likely" commercial yield's lower end — KZN DARD Expected Yields Table 8 (Lettuce 12-15/20-25/30-40 conservative/likely/target)
     note: 'Bolts quickly in heat — sow little and often rather than one big batch.',
     varieties: [
@@ -494,10 +522,15 @@ export const CROPS: CropDef[] = [
     },
     daysToHarvest: 65,
     spacingCm: 8,
-    // Along-row plant spacing is 15-20cm — the catalog's original 8cm figure
-    // conflated inter-row-on-bed spacing with along-row spacing, per source.
-    inRowSpacingCm: 17, // 15-20cm — SeedCo Group (Botswana) Pea Production Guide
-    sowDepthCm: 3.25, // 2.5-4cm, same guide
+    // Sources disagree on in-row: KZN DARD's spacing table says 50-80mm, the
+    // SeedCo (Botswana) guide says 15-20cm. DARD wins here — it is the KZN
+    // authority the catalog's yields already anchor to, its 50-80mm agrees
+    // with the original 8cm figure, and taking both numbers from ONE table row
+    // beats mixing sources. (The SeedCo 17cm reading also had no row figure,
+    // so rowCm fell back to it: 17x17 = 34.6 plants/m², ~1.4x over.)
+    rowSpacingCm: 60, // 600mm — KZN DARD 'Plant Establishment', spacing table (Pea)
+    inRowSpacingCm: 6.5, // 50-80mm — same table, same row
+    sowDepthCm: 3.25, // 2.5-4cm — SeedCo guide, inside DARD's 30-60mm
     yieldKgPerM2: 0.5, // ~0.5 (4-6 t/ha) — KZN DARD Expected Yields Table 8
     note: 'Give climbing types a trellis; pick pods while still glossy for the sweetest peas.',
     harvestWindowMonths: 1,
@@ -543,6 +576,8 @@ export const CROPS: CropDef[] = [
     daysToHarvest: 80,
     transplant: true,
     spacingCm: 45,
+    rowSpacingCm: 65, // 600-700mm — KZN DARD 'Plant Establishment', spacing table (Broccoli)
+    inRowSpacingCm: 37.5, // 300-450mm — same table, same row
     yieldKgPerM2: 0.65, // ~0.65 (5-8 t/ha) — KZN DARD Expected Yields Table 8
     note: 'Harvest the central head before the flowers open, then side shoots keep coming.',
     harvestWindowMonths: 1,
@@ -559,6 +594,12 @@ export const CROPS: CropDef[] = [
     },
     daysToHarvest: 65, // 60-70 — Starke Ayres Cucumber Ashley product page
     spacingCm: 40,
+    // Field spacing (ground vines). The old 40x40 square fallback gave
+    // 6.25 plants/m² — 3.5x this figure, over-ordering seed accordingly.
+    // A trellised garden bed can go denser; the catalog carries one figure.
+    rowSpacingCm: 130, // 1200-1400mm — KZN DARD 'Plant Establishment', spacing table (Cucumber)
+    inRowSpacingCm: 42.5, // 350-500mm — same table, same row
+    sowDepthCm: 2.5, // 20-30mm — same table
     yieldKgPerM2: 2.0, // ~2.0 (15-25 t/ha) — KZN DARD Expected Yields Table 8
     note: 'Keep watering even — irregular water is the main cause of bitter fruit.',
     harvestWindowMonths: 2,
@@ -575,6 +616,9 @@ export const CROPS: CropDef[] = [
     },
     daysToHarvest: 90,
     spacingCm: 150,
+    rowSpacingCm: 185, // 1700-2000mm — KZN DARD 'Plant Establishment', spacing table (Watermelon)
+    inRowSpacingCm: 55, // 500-600mm — same table, same row
+    sowDepthCm: 5, // 40-60mm — same table
     yieldKgPerM2: 2.0, // ~2.0 (15-25 t/ha) — KZN DARD Expected Yields Table 8
     note: 'Needs a long hot season and plenty of room to vine out.',
     storageMonths: 1,
@@ -676,9 +720,14 @@ export function cropByKey(k: string): CropDef | undefined {
  *    pass exists because the legacy figures were wrong), and square planting
  *    is how an intensive raised bed is actually laid out.
  *
- * Dry beans keep an unsourced row spacing — the catalog flags it "medium
- * confidence, flagged for re-verification" — so 15x15 is what this app can
- * honestly claim, not a field row spacing invented here.
+ * 2026-08-05: the fallbacks are now the EXCEPTION, not the rule. The KZN DARD
+ * 'Plant Establishment' spacing table supplied sourced row+in-row pairs for
+ * the crops that were still square-fallback (dry beans included — its old
+ * paragraph here defending 15x15 is superseded by DARD's printed bush-bean
+ * row). Remaining fallback crops are the ones DARD's table doesn't carry:
+ * kale, amadumbe, garlic (in-row only), butternut/swiss-chard/beetroot/
+ * peppers/green-beans (Starke Ayres splits kept), tomatoes (deliberate
+ * hand-bed estimate, see its comment), oats (broadcast).
  */
 export function plantSpacingCm(crop: CropDef): { rowCm: number; inRowCm: number } {
   const inRowCm = crop.inRowSpacingCm ?? crop.spacingCm;
