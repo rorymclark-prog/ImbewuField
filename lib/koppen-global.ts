@@ -18,6 +18,34 @@
 // January-first, plus latitude (which half of the year is summer depends on which
 // hemisphere you are standing in — and getting that backwards silently turns every
 // Mediterranean climate into a monsoon one).
+//
+// ── THE LIMIT IS THE INPUT, NOT THE RULES ────────────────────────────────────
+// Measured against eight real points using live NASA POWER data through
+// /api/location-data, this classifier corrects the old one at Cape Town (Csa ->
+// Csb), Upington (BSh -> BWh), Alice Springs (BSh -> BWh) and — most starkly —
+// Ulaanbaatar, which the old one called a HOT semi-arid steppe at a coldest-month
+// mean of -20.9 C, and this one calls Dwc. It also fixes Bergen's seasonality
+// letter: 2715 mm a year was being reported as a dry-winter climate.
+//
+// It still disagrees with the published class at two of the eight, and the cause
+// is the DATA rather than the arithmetic. NASA POWER's climatology is a ~0.5°
+// (~55 km) grid, and at coastal and mountain sites that cell averages across
+// terrain the site is not in:
+//   • Durban comes back with a coldest month of 20.0 C (really nearer 17). The
+//     A/C boundary sits at exactly 18, so the grid's warm coastal bias tips it
+//     from Cfa to Aw. Nairobi tips the same way.
+//   • Bergen comes back at -2.1 C (really around +1.5), and the C/D boundary sits
+//     at 0, so the grid's cold inland bias tips it from Cfb to Dfb.
+// Both boundaries are knife-edge by definition, so a degree or two of grid bias
+// changes the letter. That is not fixable here — it needs a finer temperature
+// source, the way lib/nasa-power.ts already prefers Open-Meteo's ~9 km grid for
+// RAINFALL when the two disagree by more than 30%.
+//
+// CONSEQUENCE FOR ANY UI BUILT ON THIS: show the measured numbers — annual
+// rainfall, coldest and hottest month — as the primary reading, and the Köppen
+// code as a secondary label, said to be modelled. A farmer can judge "coldest
+// month 17 C" for themselves; "Aw" they have to take on trust, and at a coastal
+// site that trust would occasionally be misplaced.
 
 /** Jan-first monthly climatology for one point. */
 export interface MonthlyClimate {
