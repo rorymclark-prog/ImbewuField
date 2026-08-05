@@ -327,9 +327,18 @@ function HomeInner() {
 
   // Sample mode: auto-load the real Ubhejane Creche site so the evaluator lands
   // straight on a populated map instead of an empty "tap to survey" state.
+  //
+  // The camera move is NOT optional. Selecting the site loads its data but
+  // leaves the map wherever it was — zoom 5.2, the whole of South Africa — so
+  // the flagship screen opened on Botswana and Lesotho with the farm an
+  // invisible speck. Same setJumpTo-after-a-beat pattern the saved-place and
+  // main-site paths above use; the delay lets the map finish mounting before
+  // it is told to fly.
   useEffect(() => {
     if (isSampleMode() && !selected) {
       handleLocationSelect(DEMO_SITE.lat, DEMO_SITE.lon);
+      const t = setTimeout(() => setJumpTo({ lat: DEMO_SITE.lat, lon: DEMO_SITE.lon }), 800);
+      return () => clearTimeout(t);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

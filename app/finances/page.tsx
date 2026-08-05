@@ -912,7 +912,12 @@ export default function FinancesPage() {
       window.removeEventListener('offline', sync);
     };
   }, []);
-  const [period, setPeriod] = useState<Period>('month');
+  // OPENS ON THE SEASON, not the calendar month. A smallholder's money arrives
+  // in harvest flushes and leaves in capital lumps — a tank, a fence — so a
+  // month window routinely opens on two rows and no expenses at all, which
+  // reads as "this farm does nothing" rather than "you are looking at 4 days".
+  // The toggle is right there for anyone who wants the tighter window.
+  const [period, setPeriod] = useState<Period>('season');
   const now = useMemo(() => new Date(), []);
 
   // Auth: same pattern as MyRecords

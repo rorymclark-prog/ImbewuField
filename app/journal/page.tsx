@@ -4,13 +4,20 @@ import FieldJournal from '@/components/journal/FieldJournal';
 import TabBar from '@/components/TabBar';
 import SettingsButton from '@/components/SettingsButton';
 import BrandLogo from '@/components/BrandLogo';
+import BackButton from '@/components/BackButton';
 import LessonLink from '@/components/design/LessonLink';
 
 export default function JournalPage() {
   return (
     <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
       {/* Header */}
+      {/* The in-header BackButton is what keeps the global floating back pill
+          away (see lib/back-routes.ts and components/BackControl): without it
+          the pill rendered on top of the brand logo and clipped the title, so
+          the page read "ield Journal". Suppressing the pill instead would
+          strand the page — tests/back-control.test.ts defends that. */}
       <header className="flex-shrink-0 flex items-center px-4 gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
+        <BackButton fallback="/home" />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
         <span className="text-xs font-display" style={{ color: '#5C5040' }}>Field Journal</span>
