@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import {
   X, Map, DollarSign, GraduationCap, Wheat, FileText,
   MessageCircle, Leaf, CalendarDays, LayoutGrid, ClipboardList,
-  Camera, Home, User, Users, BarChart3, Building2, Palette, Handshake, Sparkles,
+  Camera, Home, User, Users, BarChart3, Building2, Palette, Handshake, Sparkles, Earth,
 } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
 import { communityEnabled } from '@/lib/community/flag';
@@ -23,6 +23,7 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
   const mainItems = [
     { href: '/home',    Icon: Home,          label: t('tabHome') },
     { href: '/farmer',  Icon: Map,           label: t('navDesignMap') },
+    { href: '/atlas',   Icon: Earth,         label: 'Atlas' },
     { href: '/finances', Icon: DollarSign,   label: t('tabFinance') },
     { href: '/student', Icon: GraduationCap, label: t('homeQuickStudy') },
     { href: '/contact', Icon: MessageCircle, label: t('homeQuickContact') },
