@@ -7,6 +7,7 @@ import { getFirebase } from '@/lib/firebase/init';
 import { useLanguage } from '@/lib/i18n';
 import {
   myProduction,
+  mySales,
   addProduction,
   addSale,
   designsSharedWithMe,
@@ -641,8 +642,9 @@ export default function MyRecords() {
   const loadData = useCallback(async (isCancelled?: () => boolean) => {
     setDataLoading(true);
     try {
-      const [prod, des] = await Promise.all([
+      const [prod, saleRows, des] = await Promise.all([
         myProduction(),
+        mySales(),
         designsSharedWithMe(),
       ]);
       if (isCancelled?.()) return;
@@ -651,10 +653,8 @@ export default function MyRecords() {
         return (b.logged_at ?? '').localeCompare(a.logged_at ?? '');
       });
       setProduction(sortedProd);
+      setSales([...saleRows].sort((a, b) => (b.sold_at ?? '').localeCompare(a.sold_at ?? '')));
       setDesigns(des);
-      // Sales: re-fetch via a separate call is not available in queries, so we
-      // keep the list that was accumulated via onSaved callbacks only.
-      // (myProduction covers the production side; sales appended below)
     } finally {
       if (!isCancelled?.()) setDataLoading(false);
     }
@@ -770,12 +770,7 @@ export default function MyRecords() {
 
       {/* ── Log sale ────────────────────────────────── */}
       <LogSaleForm
-        onSaved={() => {
-          // Sales aren't fetched from Firestore here (no myS ales query yet) —
-          // optimistic append gives instant feedback without a round-trip.
-          // The parent orchestrator (DataPanel) can trigger a full reload if needed.
-          void loadData();
-        }}
+        onSaved={() => { void loadData(); }}
       />
 
       {/* ── Sales summary ────────────────────────────── */}
