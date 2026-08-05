@@ -21,7 +21,7 @@
     "crops:stress": "node --import ./tests/register-alias.mjs tests/crop-plan-stress.ts"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.37.0",
+    "@anthropic-ai/sdk": "^0.115.0",
     "@mapbox/mapbox-gl-draw": "^1.5.1",
     "@turf/area": "^7.3.5",
     "@turf/boolean-point-in-polygon": "^7.3.5",

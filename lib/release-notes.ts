@@ -39,6 +39,8 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       'The crop plan timeline now runs two full years - pan sideways to see year two',
       'Year two is drawn faded: the same cycle again, not a plan you have decided on',
       'No more empty months at the end of the timeline',
+      'The assistant can now look things up, and shows you where its answers came from',
+      'It will say "I don\'t know" instead of guessing a price or a planting date',
     ],
   },
   {
