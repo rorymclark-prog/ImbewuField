@@ -234,6 +234,11 @@ function finitePositive(value: unknown): number | undefined {
  * unknown rather than assumed good.
  */
 function soilBasis(soil: SoilData | undefined, suffix = ''): string {
+  // A lab result takes no hedging suffix. Every branch below ends by telling
+  // the farmer to get a soil test; once they have, repeating it is noise — and
+  // worse, it casts doubt on the one figure in the document that actually
+  // measured their ground.
+  if (soil?.soilSource === 'lab') return 'your uploaded soil test — measured on this site';
   if (soil?.soilSource === 'soilgrids') return `SoilGrids model${suffix}`;
   if (soil?.soilSource === 'estimate') {
     return `no soil data for this point — app default, not a reading${suffix || ' — a soil test is the only way to know'}`;

@@ -48,8 +48,14 @@ export interface SoilData {
   silt: number;
   bulkDensity: number;
   /**
-   * Where these numbers came from. 'soilgrids' = ISRIC answered for this point;
-   * 'estimate' = it did not, and these are the app's generic defaults.
+   * Where these numbers came from, BEST FIRST — this is a ranking, not a set.
+   *  'lab'       a soil test the farmer uploaded for this site. Outranks
+   *              everything: it is the only source that measured THIS ground,
+   *              so it must override the model rather than sit beside it.
+   *  'soilgrids' ISRIC answered for this point — a model reading an area far
+   *              wider than one field. The district, not your soil.
+   *  'estimate'  it did not answer, and these are the app's generic defaults.
+   *              The same seven numbers anywhere on Earth.
    *
    * WHY THIS FIELD EXISTS. When the ISRIC call fails the route substitutes
    * Loam / pH 6.5 / 1.2% OC and says nothing, so every site reads back identical
@@ -64,7 +70,7 @@ export interface SoilData {
    * stored sites keep loading — absent means unknown provenance, which is itself
    * worth showing rather than hiding.
    */
-  soilSource?: 'soilgrids' | 'estimate';
+  soilSource?: 'lab' | 'soilgrids' | 'estimate';
 }
 
 export interface ElevationData {

@@ -43,6 +43,7 @@ import {
   type CalendarRow, type MonthCount, type MonthValue,
 } from '@/lib/crop-export-benchmark';
 import { cropByKey } from '@/lib/crop-catalog';
+import { ASSURANCE_TITLE, ASSURANCE_PARAGRAPHS, ASSURANCE_ONE_LINE } from '@/lib/plan-assurance';
 
 export interface CropPlanPdfMeta {
   /** The design/site this plan belongs to. */
@@ -196,7 +197,7 @@ class Sheet {
     // ran straight into the centred note on a portrait page.
     this.doc.text(pdfSafe(this.footerNote), this.margin, this.height - 26);
     this.doc.text(
-      pdfSafe('Planning guide only - adjust to your own rainfall, frost and field observations'),
+      pdfSafe(ASSURANCE_ONE_LINE),
       this.width / 2, this.height - 26, { align: 'center' },
     );
     this.doc.text(String(this.doc.getNumberOfPages()), this.width - this.margin, this.height - 26, { align: 'right' });
@@ -421,6 +422,22 @@ function drawDashboard(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: n
     ],
   });
   s.y += h + 12;
+
+  // HOW MUCH TO TRUST THIS — on page one, not in small print at the back.
+  //
+  // A farmer decides what to plant and what seed to buy from the front of the
+  // document. A caution they meet after that decision is a record that we said
+  // it, not a warning that reached them. The wording is IMPORTED, never written
+  // here: the crop plan, the site report and the in-app view must not each grow
+  // their own version, because the weakest one becomes the promise the product
+  // is judged on. See lib/plan-assurance.ts for the full reasoning.
+  const assuranceH = panel(s, {
+    title: ASSURANCE_TITLE.toUpperCase(),
+    accent: INK.gold,
+    bg: INK.panelCream,
+    body: ASSURANCE_PARAGRAPHS.map(pdfSafe),
+  });
+  s.y += assuranceH + 12;
 
   // "Say a rule once." The year-report prose opens with the annual total, the
   // peak month and the biggest crop — all three are already tiles or signals
