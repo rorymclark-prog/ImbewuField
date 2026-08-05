@@ -1,6 +1,6 @@
 'use client';
 
-import MyRecords from '@/components/MyRecords';
+import FieldJournal from '@/components/journal/FieldJournal';
 import TabBar from '@/components/TabBar';
 import SettingsButton from '@/components/SettingsButton';
 import BrandLogo from '@/components/BrandLogo';
@@ -19,9 +19,12 @@ export default function JournalPage() {
         <SettingsButton />
       </header>
 
-      {/* Body */}
+      {/* Body — the dated record of what actually happened on the land. Harvest
+          weights and sales stay on /finances (and /farmer?panel=Farm, which still
+          mounts MyRecords), where the ledger, the harvest reconciliation and the
+          CSV export already live. */}
       <main className="flex-1 overflow-y-auto" style={{ background: '#E4DCC6' }}>
-        <MyRecords />
+        <FieldJournal />
       </main>
 
       <TabBar />

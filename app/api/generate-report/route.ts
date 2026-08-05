@@ -10,6 +10,19 @@ import { guardPaidApiRequest } from '@/lib/api-auth';
 import { WATER_SHEET_ROOF_RUNOFF_COEFFICIENT } from '@/lib/roof-runoff';
 import type { DesignLayer } from '@/lib/design-studio';
 import type { PhasePlan } from '@/lib/phasing';
+import {
+  assuranceMarkdown,
+  buildReportHeaderMarkdown,
+  cropPlanPromptBlock,
+  designPromptBlock,
+  irrigationRowsBlock,
+  measurementsPromptBlock,
+  normaliseReportSiteFacts,
+  roofCalcLine,
+  waterPromptBlock,
+  zonePromptBlock,
+  type ReportSiteFacts,
+} from '@/lib/report-site-facts';
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
 
@@ -110,6 +123,9 @@ export async function POST(req: NextRequest) {
     siteData?: SiteData;
     waterData?: WaterData;
     studioLayers?: DesignLayer[];
+    /** What the farmer actually drew and recorded — see lib/report-site-facts.ts. Untyped here on
+     *  purpose: it crosses the wire from a client we do not control and is validated, not trusted. */
+    siteFacts?: unknown;
     phasePlan?: PhasePlan;
     surveyData?: SiteSurvey;
     evidenceData?: Record<string, { count: number; notes: string[] }>;
@@ -127,7 +143,12 @@ export async function POST(req: NextRequest) {
       headers: { 'Content-Type': 'application/json' },
     });
   }
-  const { locationData, photoAnalysis, siteData, waterData, studioLayers, phasePlan, surveyData, evidenceData, sections, language, bilingual, tone, length } = body;
+  const { locationData, photoAnalysis, siteData, waterData, phasePlan, surveyData, evidenceData, sections, language, bilingual, tone, length } = body;
+
+  // The farmer's drawn geometry, validated. `studioLayers` (the old approved-DesignLayer path) is
+  // deliberately no longer read: nothing in the app ever sets `approved: true`, so the branch that
+  // consumed it could never run and every report printed "no design exists" over a finished plan.
+  const facts: ReportSiteFacts | null = normaliseReportSiteFacts(body.siteFacts);
 
   // DoS hardening: drop any section name not in the canonical allow-list so an
   // attacker cannot drive unbounded parallel Anthropic calls via a crafted request.
@@ -235,6 +256,30 @@ export async function POST(req: NextRequest) {
     ? `${summerSunSide} in summer and ${winterSunSide} in winter`
     : compassWord(solar.middayFrom);
 
+  // ── SITE BOUNDARY ────────────────────────────────────────────────────────────
+  // siteData is the SUM of every non-water polygon on the map (components/Map.tsx), so a farm that
+  // has traced its house roof and driveway INSIDE its own boundary has its land counted twice —
+  // Ubhejane reports 1,232 m² against a traced boundary of 1,037 m², and that ~19% error then
+  // propagates into catchment, swale count and carrying capacity. The traced boundary ring is the
+  // honest figure and wins whenever one exists; the sum stays as a labelled fallback, and its
+  // compactness ratio (a shape metric of nothing, over a mixed sum) is not printed for it.
+  const boundaryFact = facts?.boundary;
+  const boundaryBlock = boundaryFact
+    ? `\nSITE BOUNDARY (traced by the farmer — measured, not estimated)
+Area: ${Math.round(boundaryFact.areaM2).toLocaleString()} m² (${(boundaryFact.areaM2 / 10000).toFixed(boundaryFact.areaM2 < 10000 ? 3 : 2)} ha)${boundaryFact.perimeterM ? `\nPerimeter: ${Math.round(boundaryFact.perimeterM).toLocaleString()} m` : ''}
+Source: ${boundaryFact.source}${boundaryFact.label ? ` — "${boundaryFact.label}"` : ''}
+Use these exact figures in all calculations and scale every recommendation to this size.${siteData && Math.abs(siteData.areaM2 - boundaryFact.areaM2) > boundaryFact.areaM2 * 0.05 ? `\nNOTE: the map also holds other traced shapes (roof, driveway) that sit INSIDE this boundary; their combined total is ${siteData.areaM2.toLocaleString()} m². Do not add them to the boundary — the property is ${Math.round(boundaryFact.areaM2).toLocaleString()} m².` : ''}`
+    : siteData
+    ? `\nMAPPED SITE AREA (the SUM of every shape drawn on the map — not one traced boundary)
+Total area of all drawn shapes: ${siteData.areaHa} ha (${siteData.areaM2.toLocaleString()} m²) across ${siteData.count ?? 1} shape(s)
+Combined perimeter: ${siteData.perimeterKm} km (${siteData.perimeterM.toLocaleString()} m)
+Treat this as an upper bound on the property, not a measured boundary — shapes drawn inside one another are counted twice. Say so if you lean on it heavily.`
+    : '\n(No site boundary drawn or traced — give general recommendations scalable to the property, and say the site size is not known)';
+
+  // Which area figure the per-hectare maths is allowed to use, and what it honestly is.
+  const siteAreaForCalcM2 = boundaryFact?.areaM2 ?? siteData?.areaM2 ?? null;
+  const siteAreaSourceNote = boundaryFact ? 'traced boundary' : 'sum of all drawn shapes — an upper bound';
+
   const buildPrompt = (sections: string[], withTitle: boolean) => `You are an expert permaculture designer creating a permaculture site report for a small-scale farmer in South Africa. Name REAL species suited to the site, give practical actions, and use the actual site data. No generic permaculture theory.${languageInstruction}${toneInstruction}${lengthInstruction}
 
 ---
@@ -259,27 +304,24 @@ Clay: ${d.soil.clay}% · Sand: ${d.soil.sand}% · Silt: ${d.soil.silt}% · Bulk 
 
 BIOME KEY SPECIES: ${d.biome.keySpecies.join(', ')}
 BIOME CHALLENGES: ${d.biome.challenges.join(' · ')}
-${siteData ? `\nSITE BOUNDARY (user-drawn polygon)
-Area: ${siteData.areaHa} ha (${siteData.areaM2.toLocaleString()} m²)
-Perimeter: ${siteData.perimeterKm} km (${siteData.perimeterM.toLocaleString()} m)
-Compactness ratio: ${(4 * Math.PI * siteData.areaM2 / (siteData.perimeterM ** 2)).toFixed(2)} (1.0 = perfect circle)
-Use these exact figures in all calculations. Scale recommendations to this site size.` : '\n(No site boundary drawn — give general recommendations scalable to the property)'}
-${waterData ? `\nWATER STORAGE (user-drawn on map)
+${boundaryBlock}
+${waterData ? `\nWATER STORAGE POLYGONS (user-drawn on map)
 ${waterData.count} water storage feature(s) drawn — total surface area ${waterData.areaM2.toLocaleString()} m².
 Estimated capacity: ~${waterData.estVolumeKL.toLocaleString()} kL (${(waterData.estVolumeKL * 1000).toLocaleString()} L), assuming ${waterData.avgDepthM}m average depth.
-Use this existing/planned storage in the water plan: compare it to the dry-season demand and rainfall capture, and say whether it is enough or more is needed. Treat the estimate as approximate (real depth varies).` : `\nWATER STORAGE
-No water storage has been drawn or recorded on this site. There is NO dam, pond, reservoir, borehole or river here.
-Do not describe any of them as existing, and never attach a capacity, depth, level or percentage to storage that does not exist. Any storage you recommend must be written plainly as something to BUILD or BUY, with no assumed current volume.`}
-${studioLayers && studioLayers.some((layer) => layer.approved) ? `
-DESIGN AS DRAWN (approved geometry — treat this as the farmer's actual plan, not a suggestion)
-${studioLayers.filter((layer) => layer.approved).map((layer) => `- ${layer.layerType}: ${layer.name || 'Unnamed feature'} — ${Number.isFinite(layer.areaM2) ? layer.areaM2 : 0} m²`).join('\n')}
-${phasePlan ? `
-BUILD PHASES (derived from the same design)
+Use this existing/planned storage in the water plan: compare it to the dry-season demand and rainfall capture, and say whether it is enough or more is needed. Treat the estimate as approximate (real depth varies).` : ''}
+
+${waterPromptBlock(facts, Boolean(waterData))}
+
+${facts ? designPromptBlock(facts) : `DESIGN AS DRAWN
+No design has been drawn for this site yet. Do not describe a drawn layout, a bed count or a planted area as if one exists.`}${phasePlan && phasePlan.phases.length > 0 ? `
+
+BUILD PHASES (derived from the same drawn design — the farmer's own build programme)
 ${phasePlan.phases.map((phase) => `Phase ${phase.n} — ${phase.title} (${phase.weekRange})\n  Tasks: ${phase.tasks.join(' · ')}\n  Hold point: ${phase.holdPoint}`).join('\n')}
 Critical order: ${phasePlan.criticalOrder.join(' → ')}
-Site rules: ${phasePlan.siteRules.join(' · ')}` : ''}` : `
-DESIGN AS DRAWN
-No approved Design Studio layers were supplied. Do not describe a drawn layout as if one exists.`}
+Site rules: ${phasePlan.siteRules.join(' · ')}
+Refer to these phases by number when you sequence work. Do not invent a different phase order.` : ''}
+${facts ? `\n${measurementsPromptBlock(facts)}` : ''}
+${facts?.crop ? `\n${cropPlanPromptBlock(facts)}` : ''}
 ${photoAnalysis ? `\nSITE PHOTO ANALYSIS:\n${photoAnalysis}` : ''}
 ${surveyData ? `\nSITE SURVEY (farmer-completed — treat this as authoritative ground truth about the site):\n${surveyToPrompt(surveyData, d.rainfall.annual)}` : ''}
 ${evidenceData && Object.keys(evidenceData).length > 0 ? `\nFARMER'S EVIDENCE (items the farmer has photographed, measured or noted on this site — treat as ACTUAL observed conditions, not estimates):\n${
@@ -289,12 +331,14 @@ ${evidenceData && Object.keys(evidenceData).length > 0 ? `\nFARMER'S EVIDENCE (i
 }\nReference this evidence where relevant — if water items exist, mention them in the Water Harvesting section; soil items in Soil Strategy; etc. This is real ground-truth data.` : ''}
 ---
 
-${withTitle ? `Begin with this title line exactly:\n# Permaculture Site Report\nthen a one-line subheading naming the biome and region, then the sections below.\n\n` : `Do NOT write any document title, introduction or preamble. Output ONLY the section(s) requested below, starting directly with the first "## " heading.\n\n`}Generate ONLY the sections listed here, in this order: ${sections.join(', ')}
+${withTitle ? `The document title, its subheading and a "Site at a Glance" table of this farm's measured figures have ALREADY been written for you and will be placed above your output — every figure in them is measured, so never contradict one. Do NOT write a title, a subheading, an introduction or a preamble of your own.\n\n` : ''}Do NOT write any document title, introduction or preamble. Output ONLY the section(s) requested below, starting directly with the first "## " heading.
+
+Generate ONLY the sections listed here, in this order: ${sections.join(', ')}
 
 Use this exact markdown structure for each section (copy the headings exactly):
 
 ${sections.includes('Executive Summary') ? `## Executive Summary
-[3–5 sentences. Most critical site characteristics, biggest opportunity, biggest constraint, and the single most important first action. Be specific — name the slope, the rainfall, the soil pH.]
+[3–5 sentences. Most critical site characteristics, biggest opportunity, biggest constraint, and the single most important first action. Be specific — name the slope, the rainfall, the soil pH.${facts ? ` A "Site at a Glance" table of this farm's measured figures has ALREADY been printed above this section, so do not repeat it as a table — instead write about ${[facts.farmName ?? 'this site', facts.design ? `its ${facts.design.growingAreaM2} m² of drawn growing area` : null, facts.water && facts.water.statedStorageLitres > 0 ? `its ${facts.water.statedStorageLitres.toLocaleString()} L of planned tank storage` : null].filter(Boolean).join(', ')} by name and by number.` : ''}]
 
 ` : ''}${sections.includes('Site Conditions') ? `## Site Conditions
 
@@ -347,12 +391,13 @@ Keep the tone and length consistent with the rest of the report.
 3. **[Earthwork name]** — [details]
 
 ### Calculations
-- **Roof catchment yield:** 1m² roof × 1mm rain = 1L → 100m² roof × ${d.rainfall.annual}mm × reviewed runoff coefficient ${WATER_SHEET_ROOF_RUNOFF_COEFFICIENT} = **${Math.round(d.rainfall.annual * 100 * WATER_SHEET_ROOF_RUNOFF_COEFFICIENT).toLocaleString()} L usable/year**
-${siteData ? `- **Total site catchment:** ${siteData.areaHa} ha × ${d.rainfall.annual}mm = **${Math.round(siteData.areaM2 * d.rainfall.annual / 1000).toLocaleString()} kL/year** potential capture (realistic 30–50% harvest: **${Math.round(siteData.areaM2 * d.rainfall.annual / 1000 * 0.4).toLocaleString()} kL**)` : ''}
-- **Swale spacing** on ${d.elevation.slopeDeg}° slope: approx every **${Math.max(5, Math.round(40 / Math.max(d.elevation.slopeDeg, 1)))}m** vertical interval${siteData ? ` — approximately ${Math.max(1, Math.round(siteData.perimeterM / Math.max(5, Math.round(40 / Math.max(d.elevation.slopeDeg, 1))) / 4))} swales on this ${siteData.areaHa} ha site` : ''}
+${roofCalcLine(facts, d.rainfall.annual)}
+${siteAreaForCalcM2 ? `- **Total site catchment:** ${(siteAreaForCalcM2 / 10000).toFixed(siteAreaForCalcM2 < 10000 ? 3 : 2)} ha (${Math.round(siteAreaForCalcM2).toLocaleString()} m², ${siteAreaSourceNote}) × ${d.rainfall.annual}mm = **${Math.round(siteAreaForCalcM2 * d.rainfall.annual / 1000).toLocaleString()} kL/year** potential capture (realistic 30–50% harvest: **${Math.round(siteAreaForCalcM2 * d.rainfall.annual / 1000 * 0.4).toLocaleString()} kL**)` : '- **Total site catchment:** the site area is not known (no boundary traced), so do NOT calculate one. Say what the farmer must measure to get it.'}
+- **Swale spacing** on ${d.elevation.slopeDeg}° slope: approx every **${Math.max(5, Math.round(40 / Math.max(d.elevation.slopeDeg, 1)))}m** vertical interval${facts?.design?.routes.some((route) => /swale/i.test(route.label)) ? ` — the farmer has ALREADY traced ${facts.design.routes.filter((route) => /swale/i.test(route.label)).map((route) => `${route.totalLengthM} m of swale`).join(' and ')} on this plan, so start from that line rather than proposing a fresh layout` : ''}
 - **Dry season storage gap:** ${d.rainfall.drySeason} = ~${Math.round(drySeasonRainMm)}mm total — minimum tank size for food garden: **[X,XXX L]**
 - **ETo vs rainfall:** Dry season ETo est. ${(d.climate.solarRadiation * 1.1 * 90).toFixed(0)}mm vs ${Math.round(drySeasonRainMm)}mm rain → **deficit: [Xmm] — must be covered by storage or irrigation**
 ${waterData ? `- **Drawn water storage:** ${waterData.count} store(s), ~**${waterData.estVolumeKL.toLocaleString()} kL** capacity (est. ${waterData.avgDepthM}m avg depth over ${waterData.areaM2.toLocaleString()} m²). State clearly whether this covers the dry-season deficit above, and if not, how much more storage is needed.` : ''}
+${facts?.water && facts.water.statedStorageLitres > 0 ? `- **Tank storage on the plan:** **${facts.water.statedStorageLitres.toLocaleString()} L** stated capacity (${facts.water.tanks.map((tank) => `${tank.name} x${tank.count}`).join(', ')}). Compare THIS number to the dry-season need you calculate above and say plainly whether it is enough, and if not by how much.` : ''}
 
 ### Implementation Timeline
 When to build each earthwork relative to the ${d.rainfall.wetSeason} wet season.
@@ -376,7 +421,7 @@ When to build each earthwork relative to the ${d.rainfall.wetSeason} wet season.
 
 ` : ''}${sections.includes('Planting Calendar') ? `## Year-Round Planting Calendar
 
-A month-by-month guide of WHAT TO PLANT at this site, based on ${d.rainfall.pattern} rainfall (wet: ${d.rainfall.wetSeason}, dry: ${d.rainfall.drySeason}), ${d.climate.minTemp}–${d.climate.maxTemp}°C temperatures, and ${d.rainfall.annual}mm/year. Focus on vegetables and food crops that feed a family all year and suit ${d.biome.name}.
+A month-by-month guide of WHAT TO PLANT at this site, based on ${d.rainfall.pattern} rainfall (wet: ${d.rainfall.wetSeason}, dry: ${d.rainfall.drySeason}), ${d.climate.minTemp}–${d.climate.maxTemp}°C temperatures, and ${d.rainfall.annual}mm/year. Focus on vegetables and food crops that feed a family all year and suit ${d.biome.name}.${facts?.crop ? `\n\nThis farmer has ALREADY entered ${facts.crop.plantingCount} plantings (listed in the site data above). In the "Plant now" column, put THEIR crop in that month first and mark it (already planned), then add what is missing. Do not silently replace their plan with a different one.` : ''}
 
 | Month | Plant now | Ready to harvest | Tip |
 |-------|-----------|------------------|-----|
@@ -498,11 +543,16 @@ A simple rotation to keep soil healthy and cut pests and disease WITHOUT chemica
 
 Explain the 4 rotation groups in plain words (Legumes that feed the soil → Leafy greens → Fruiting crops → Roots), then give a simple bed-by-bed plan a small plot can follow.
 
-### Example 4-bed rotation
+${facts?.design && facts.design.bedCount > 0 ? `### Rotation across the beds this farmer has actually drawn
+Their beds are: ${facts.design.beds.filter((bed) => bed.kind === 'bed').map((bed) => `${bed.label} (${bed.areaM2} m²)`).join(', ')}${facts.design.plotCount > 0 ? `, plus ${facts.design.plotCount} traced staple plots totalling ${facts.design.plotAreaM2} m²` : ''}.
+
+Build the rotation table with ONE COLUMN PER BED, using these EXACT bed names in this order. Do not renumber them, do not invent a bed, and do not fall back to a generic "Bed 1–4" example. Rows: one per season for a full cycle, showing which rotation group lands in which bed.${facts.design.plotCount > 0 ? ` Add one line for the staple plots, which rotate on their own longer cycle.` : ''}` : `### Example 4-bed rotation
 | Season | Bed 1 | Bed 2 | Bed 3 | Bed 4 |
 |--------|-------|-------|-------|-------|
 | ${d.rainfall.pattern === 'winter' ? 'Autumn' : 'Spring'} | [group] | [group] | [group] | [group] |
 | Next season | [shift each bed one group along] | | | |
+
+(No beds have been drawn for this site, so this is a generic example — say so.)`}
 
 One or two short rules to remember (e.g. "never plant the same family in the same bed two seasons running").
 
@@ -511,17 +561,13 @@ One or two short rules to remember (e.g. "never plant the same family in the sam
 Work out the water needed to irrigate the growing areas through the dry season (${d.rainfall.drySeason}).
 - A vegetable garden needs roughly 5–6mm of water per day in dry-season heat. Rule: 1mm over 1m² = 1 litre, so 100m² × 5mm = 500 L/day.
 
-| Growing area | Size | Daily need (dry season) | Over the dry season | Best method |
-|--------------|------|--------------------------|---------------------|-------------|
-| Kitchen garden | [m²] | [L/day] | [L total] | [drip / mulch basin] |
-| Young fruit trees | [m²] | [L/day] | [L total] | [deep watering] |
-| [field / orchard] | [m²] | [L/day] | [L total] | [method] |
+${irrigationRowsBlock(facts)}
 
-Recommend the cheapest effective method for this ${d.soil.textureClass} soil and how to cut water use (mulch, shade, swales).${siteData ? ` Scale to the ${siteData.areaHa} ha site.` : ''}${waterData ? ` Compare the total need to the ~${waterData.estVolumeKL.toLocaleString()} kL of drawn storage and say if it is enough.` : ''}
+Recommend the cheapest effective method for this ${d.soil.textureClass} soil and how to cut water use (mulch, shade, swales).${siteAreaForCalcM2 ? ` Scale to the ${(siteAreaForCalcM2 / 10000).toFixed(siteAreaForCalcM2 < 10000 ? 3 : 2)} ha site.` : ''}${waterData ? ` Compare the total need to the ~${waterData.estVolumeKL.toLocaleString()} kL of drawn storage and say if it is enough.` : ''}${facts?.water && facts.water.statedStorageLitres > 0 ? ` Compare the total daily need to the **${facts.water.statedStorageLitres.toLocaleString()} L** of tank storage on the plan and say how many days it covers.` : ''}
 
 ` : ''}${sections.includes('Year-Round Food Production') ? `## All-Year-Round Food Production
 
-How to harvest something every month — the heart of food security.
+How to harvest something every month — the heart of food security.${facts?.crop ? `\n\nStart from the plan this farmer has already entered (${facts.crop.plantingCount} plantings, ${facts.crop.crops.length} crops, listed in the site data above): name which months their own plan already covers and which months it leaves bare, and fill only the bare ones. Do not print a yield or a rand figure for any crop.` : ''}
 - **Succession planting:** plant small batches of fast crops every 2–3 weeks, not all at once.
 - **Storage crops:** which to grow that keep for months (pumpkin, sweet potato, dried beans, onions, garlic).
 - **Preserving:** simple methods for this climate (drying, fermenting, bottling).
@@ -532,7 +578,7 @@ End with a one-line plan: "for food all year — plant X for summer, Y for winte
 
 ` : ''}${sections.includes('Animals & Livestock') ? `## Animals & Livestock
 
-Small animals suited to ${siteData ? `a ${siteData.areaHa} ha property` : 'a small property'} here — for eggs, meat, manure and pest control. Recommend HARDY INDIGENOUS SA breeds over exotics.
+Small animals suited to ${siteAreaForCalcM2 ? `a ${(siteAreaForCalcM2 / 10000).toFixed(siteAreaForCalcM2 < 10000 ? 3 : 2)} ha property (${siteAreaSourceNote})` : 'a property whose size is not known'} here — for eggs, meat, manure and pest control. Recommend HARDY INDIGENOUS SA breeds over exotics.
 
 | Animal | Suited? | Recommended SA breed(s) | Why / notes |
 |--------|---------|--------------------------|-------------|
@@ -540,7 +586,7 @@ Small animals suited to ${siteData ? `a ${siteData.areaHa} ha property` : 'a sma
 | Chickens (meat) | [yes/maybe] | [breed] | [notes] |
 | [Goats / Ducks / Rabbits / Bees] | [yes/maybe] | [breed/type] | [notes] |
 
-- How many animals the land can carry without overgrazing${siteData ? ` (scale to ${siteData.areaHa} ha)` : ''}.
+- How many animals the land can carry without overgrazing${siteAreaForCalcM2 ? ` (scale to ${(siteAreaForCalcM2 / 10000).toFixed(siteAreaForCalcM2 < 10000 ? 3 : 2)} ha — ${siteAreaSourceNote})` : ' — say the site area is not known rather than assuming one'}.
 - How animals fit the system: chicken tractors for pests/weeds, manure for compost, rotational grazing.
 
 ` : ''}${sections.includes('Sun & Solar') ? `## Sun & Solar
@@ -568,7 +614,7 @@ Prevailing wind is FROM the ${d.climate.windFromSummer} in summer and FROM the $
 
 ` : ''}${sections.includes('Economic Opportunities') ? `## Economic Opportunities
 
-Ways this ${siteData ? `${siteData.areaHa} ha ` : ''}property could earn income for a small-scale farmer in this area. Ground EVERYTHING in the real location — use the municipality, district and province named in the SITE DATA above${admin ? ` (${admin.label})` : ''}.
+Ways this ${siteAreaForCalcM2 ? `${(siteAreaForCalcM2 / 10000).toFixed(siteAreaForCalcM2 < 10000 ? 3 : 2)} ha ` : ''}property could earn income for a small-scale farmer in this area. Ground EVERYTHING in the real location — use the municipality, district and province named in the SITE DATA above${admin ? ` (${admin.label})` : ''}.
 - **Where this farm sits:** name the local municipality, the district municipality and the province, and one line on the character of the area (rural/peri-urban, distance to the nearest town/city).
 - **What this area is known for in agriculture:** the dominant commercial and small-scale farming of THIS municipality/district (e.g. specific crops, livestock, forestry, citrus, sugarcane, deciduous fruit, dryland grain). Be specific to the place, not generic.
 - **Economic zone & infrastructure:** any relevant economic context near here — agri-parks, Fresh Produce Markets, a Special Economic Zone or development corridor, co-ops, pack-houses, abattoirs, or major buyers (mines, lodges, hospitals, retailers) within reach. Note the nearest market town.
@@ -604,14 +650,7 @@ Design 3 guilds specifically for ${d.biome.name} biome, ${d.climate.koppen} clim
 
 ` : ''}${sections.includes('Zone Design') ? `## Zone Design
 
-Layout recommendations for ${d.biome.name} biome and this terrain.
-
-**Zone 0 — House:** [orientation, passive solar considerations for ${d.climate.meanTemp}°C mean temp, ${d.climate.minTemp}°C winter]
-**Zone 1 — Kitchen garden:** [what to grow immediately adjacent, water proximity]
-**Zone 2 — Food forest:** [canopy species, size, placement relative to ${d.elevation.aspectLabel}-facing slope]
-**Zone 3 — Main production:** [field crops, pasture, guilds relevant to ${d.biome.name}]
-**Zone 4 — Managed wild:** [indigenous species to establish, water harvesting]
-**Zone 5 — Wilderness:** [what to protect, let regenerate]
+${zonePromptBlock(facts)}
 
 ` : ''}${sections.includes('Seasonal Calendar') ? `## Seasonal Action Calendar
 
@@ -708,13 +747,48 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
 
   await Promise.all(batches.map((b, i) => runBatch(b, i)));
 
+  // ── Front matter and back matter, written in CODE ────────────────────────────
+  //
+  // The title, the standfirst and the SITE AT A GLANCE table are the first thing a reader sees and
+  // are therefore the last thing that should be generated: every figure in them is measured off
+  // this farm's own map or read from a named data source, and none of it can drift because no
+  // model touches it. The trust statement (lib/plan-assurance.ts) closes the document for the same
+  // reason — the crop-plan PDF has carried it since the agronomic review, and the site report, the
+  // document most likely to be handed to a funder or an extension officer, carried none of it.
+  const header = buildReportHeaderMarkdown({
+    facts,
+    biomeName: d.biome.name,
+    vegUnit: d.vegetation?.vegUnit ?? null,
+    bruLabel: d.bru?.nearestBrg ?? null,
+    adminLabel: admin?.label ?? null,
+    lat: d.lat,
+    lon: d.lon,
+    dateLabel: new Date().toLocaleDateString('en-ZA', { year: 'numeric', month: 'long', day: 'numeric' }),
+    rainfallMm: d.rainfall.annual,
+    rainfallSource: d.rainfall.rainfallSource,
+    wetSeason: d.rainfall.wetSeason,
+    drySeason: d.rainfall.drySeason,
+    soilPh: d.soil.ph,
+    soilOrganicCarbon: d.soil.organicCarbon,
+    soilTexture: d.soil.textureClass,
+    soilSource: d.soil.soilSource,
+    elevationM: d.elevation.elevation,
+    slopeDeg: d.elevation.slopeDeg,
+    aspectLabel: d.elevation.aspectLabel,
+    siteAreaM2: siteData?.areaM2,
+    sitePerimeterM: siteData?.perimeterM,
+    hasMapWaterPolygons: Boolean(waterData),
+  });
+
   const encoder = new TextEncoder();
   const readable = new ReadableStream({
     async start(controller) {
       try {
+        controller.enqueue(encoder.encode(`${header}\n\n`));
         for (const text of batchResults) {
           controller.enqueue(encoder.encode(text.trimEnd() + '\n\n'));
         }
+        controller.enqueue(encoder.encode(`${assuranceMarkdown()}\n`));
       } finally {
         controller.close();
       }

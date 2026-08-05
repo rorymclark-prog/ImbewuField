@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import {
   X, Map, DollarSign, GraduationCap, Wheat, FileText,
   MessageCircle, Leaf, CalendarDays, LayoutGrid, ClipboardList,
-  Camera, Home, User, Users, BarChart3, Building2, Palette, Handshake, Sparkles, Earth,
+  Camera, Home, User, Users, BarChart3, Building2, Palette, Handshake, Sparkles, Earth, Sprout,
 } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
 import { communityEnabled } from '@/lib/community/flag';
@@ -27,6 +27,11 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
     { href: '/finances', Icon: DollarSign,   label: t('tabFinance') },
     { href: '/student', Icon: GraduationCap, label: t('homeQuickStudy') },
     { href: '/contact', Icon: MessageCircle, label: t('homeQuickContact') },
+    // Ungated on purpose: neither route reads Firestore or another account's
+    // data — both run entirely on their own declared sample sets, so there is
+    // nothing here for a kill switch to protect.
+    { href: '/network',  Icon: Users,     label: 'Network' },
+    { href: '/exchange', Icon: Sprout,    label: 'Exchange' },
     // Invisible when the master kill switch is off — no entry point, no reads.
     ...(communityEnabled() ? [{ href: '/community', Icon: Handshake, label: t('navCommunity') }] : []),
   ];

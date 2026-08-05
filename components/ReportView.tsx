@@ -10,10 +10,11 @@ import { Loader2, Check, Circle, ChevronRight, Share2, MapPin, SlidersHorizontal
 import { buildReportPdf, deliverPdf, reportPdfFilename } from '@/lib/report-pdf';
 import { loadSurvey } from '@/lib/site-survey';
 import { getSiteEvidence } from '@/lib/site-evidence';
-import { designSiteIdFromLocation, loadDesignStudioState } from '@/lib/design-studio';
+import { designSiteIdFromLocation } from '@/lib/design-studio';
 import { loadCanvasState } from '@/lib/design-canvas';
 import { resolveBaseLayers } from '@/lib/base-layers';
 import { buildPhasePlan } from '@/lib/phasing';
+import { collectReportSiteFacts } from '@/lib/report-site-facts-collect';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 
 const ALL_SECTIONS = [
@@ -130,6 +131,15 @@ function renderReport(text: string) {
         <h3 key={i} className="font-display font-semibold text-base mt-5 mb-2" style={{ color: '#C07A1E' }}>
           {line.replace('### ', '')}
         </h3>
+      );
+    } else if (line.startsWith('# ')) {
+      // The document title. It used to fall through to the paragraph branch and print its own
+      // literal "# " on screen; now that the title carries the farm's name it is the first thing
+      // a reader sees, so it renders as a title.
+      elements.push(
+        <h1 key={i} className="font-display font-bold text-2xl mt-1 mb-1" style={{ color: '#20190F' }}>
+          {line.slice(2).replace(/\*\*/g, '')}
+        </h1>
       );
     } else if (line.startsWith('**') && line.endsWith('**')) {
       elements.push(
@@ -331,7 +341,6 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       }
 
       const siteId = designSiteIdFromLocation(d);
-      const studio = loadDesignStudioState(siteId);
       const canvas = loadCanvasState(siteId);
       const phasePlan = canvas
         ? buildPhasePlan(
@@ -341,6 +350,19 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         )
         : null;
 
+      // What the farmer actually DREW — beds, species, zones, routes, tanks, the traced roof and
+      // boundary. Until this existed the report was told "no design exists" on every single run
+      // (the old studioLayers gate keyed off an `approved` flag nothing in the app ever sets), so
+      // a finished plan one tab away never reached the document. See lib/report-site-facts.ts.
+      const siteFacts = collectReportSiteFacts({
+        siteId,
+        lat: d.lat,
+        lon: d.lon,
+        canvas,
+        farmName: (activePlaceId ? savedPlaces?.find((place) => place.id === activePlaceId)?.name : undefined)
+          ?? savedPlaces?.[0]?.name,
+      });
+
       const res = await fetch('/api/generate-report', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', ...await paidApiHeaders() },
@@ -349,7 +371,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           photoAnalysis: photoAnalysis || undefined,
           siteData: siteData || undefined,
           waterData: waterData || undefined,
-          studioLayers: studio.layers,
+          siteFacts,
           phasePlan: phasePlan ?? undefined,
           surveyData: loadSurvey(designSiteIdFromLocation(d)) ?? undefined,
           evidenceData: Object.keys(evidenceData).length > 0 ? evidenceData : undefined,
@@ -377,7 +399,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     } finally {
       setLoading(false);
     }
-  }, [d, photoAnalysis, siteData, waterData, selected, language, bilingual, tone, length, collapsePanelOnNarrow]);
+  }, [d, photoAnalysis, siteData, waterData, savedPlaces, activePlaceId, selected, language, bilingual, tone, length, collapsePanelOnNarrow]);
 
   // "Export PDF". This used to be window.print(), which is a silent no-op in an
   // installed iOS PWA (manifest display: standalone) — the button looked dead on
