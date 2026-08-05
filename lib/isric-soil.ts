@@ -14,46 +14,114 @@ function textureClass(sand: number, clay: number, silt: number): string {
   return 'Sandy loam';
 }
 
+/**
+ * The three SoilGrids v2.0 topsoil depths, with the centimetres each covers.
+ *
+ * `0-30cm` — what this file asked for until 2026-08-06 — IS NOT A SOILGRIDS
+ * DEPTH. The API answers an unknown depth with HTTP 500, so `fetchSoilData`
+ * threw on EVERY request, for every point on Earth, and the route substituted
+ * its constant. That is why the app served Loam / pH 6.5 / 1.2% OC to every
+ * site: not an outage, not a coverage gap, one wrong query parameter.
+ * Confirmed at Ubhejane (-27.7262, 31.9632): `0-30cm` -> HTTP 500, while all
+ * three depths below -> HTTP 200 with real values on the same day.
+ *
+ * SoilGrids publishes 0-5 / 5-15 / 15-30 separately, so the 0-30cm root zone
+ * the app reasons about has to be assembled here. The weights are simply how
+ * many centimetres each band contributes — a depth-weighted mean of measured
+ * values, which invents nothing.
+ */
+const DEPTHS: { label: string; cm: number }[] = [
+  { label: '0-5cm', cm: 5 },
+  { label: '5-15cm', cm: 10 },
+  { label: '15-30cm', cm: 15 },
+];
+const TOTAL_CM = DEPTHS.reduce((s, d) => s + d.cm, 0);
+
+interface IsricLayer {
+  name: string;
+  unit_measure?: { d_factor?: number };
+  depths?: { label: string; values?: { mean?: number | null } }[];
+}
+
 export async function fetchSoilData(lat: number, lon: number): Promise<SoilData> {
-  const params = new URLSearchParams({
-    lon: lon.toFixed(4),
-    lat: lat.toFixed(4),
-    property: 'phh2o,soc,clay,sand,silt,bdod',
-    depth: '0-30cm',
-    value: 'mean',
-  });
+  // property and depth REPEAT as separate keys — SoilGrids does not accept a
+  // comma-joined list, which is the other half of why the old call failed.
+  const params = new URLSearchParams();
+  params.set('lon', lon.toFixed(4));
+  params.set('lat', lat.toFixed(4));
+  for (const p of ['phh2o', 'soc', 'clay', 'sand', 'silt', 'bdod']) params.append('property', p);
+  for (const d of DEPTHS) params.append('depth', d.label);
+  params.set('value', 'mean');
 
   const res = await fetch(
     `https://rest.isric.org/soilgrids/v2.0/properties/query?${params}`,
     { next: { revalidate: 86400 } }
   );
 
-  if (!res.ok) throw new Error(`ISRIC API error: ${res.status}`);
+  if (!res.ok) {
+    // The status and body, not just the status. The old message said only
+    // "ISRIC API error: 500", which is exactly why a parameter bug survived
+    // this long looking like an upstream outage.
+    const body = await res.text().catch(() => '');
+    throw new Error(`ISRIC API error: ${res.status} ${res.statusText} — ${body.slice(0, 200)}`);
+  }
   const data = await res.json();
+  const layers: IsricLayer[] = data?.properties?.layers ?? [];
 
-  const getValue = (name: string): number => {
-    const layer = data.properties.layers.find((l: { name: string }) => l.name === name);
-    return layer?.depths?.[0]?.values?.mean ?? null;
+  /**
+   * Depth-weighted mean in the property's own real units.
+   *
+   * THROWS rather than substitutes. The previous version fell back to `?? 25`,
+   * `?? 6.5`, `?? 1.0` per property INSIDE the fetcher, so a partial response
+   * returned invented numbers that the route then tagged
+   * `soilSource: 'soilgrids'` — a fallback wearing a real source's name, the
+   * same defect the soilSource field was added to expose. A missing property
+   * is a failed read, and the caller already handles a failed read honestly.
+   */
+  const weightedValue = (name: string): number => {
+    const layer = layers.find((l) => l.name === name);
+    if (!layer) throw new Error(`ISRIC returned no '${name}' layer for ${lat},${lon}`);
+    // d_factor comes from the response itself rather than a hardcoded divisor,
+    // so a units change upstream cannot silently rescale a farmer's soil.
+    const factor = layer.unit_measure?.d_factor;
+    if (!factor) throw new Error(`ISRIC gave no d_factor for '${name}' — cannot convert to real units`);
+
+    let sum = 0;
+    let cm = 0;
+    for (const d of DEPTHS) {
+      const mean = layer.depths?.find((x) => x.label === d.label)?.values?.mean;
+      if (mean == null) continue; // a single missing band is tolerable; none is not
+      sum += mean * d.cm;
+      cm += d.cm;
+    }
+    if (cm === 0) throw new Error(`ISRIC has no topsoil values for '${name}' at ${lat},${lon}`);
+    if (cm < TOTAL_CM) console.warn(`ISRIC: '${name}' covers only ${cm}/${TOTAL_CM}cm at ${lat},${lon}`);
+    return sum / cm / factor;
   };
 
-  const phRaw = getValue('phh2o');      // pH * 10
-  const socRaw = getValue('soc');       // dg/kg → divide by 10 = %
-  const clayRaw = getValue('clay');     // g/kg → divide by 10 = %
-  const sandRaw = getValue('sand');
-  const siltRaw = getValue('silt');
-  const bdRaw = getValue('bdod');       // cg/cm³ → divide by 100 = g/cm³
+  const round = (v: number, dp: number) => parseFloat(v.toFixed(dp));
+  const clay = round(weightedValue('clay'), 1);
+  const sand = round(weightedValue('sand'), 1);
+  const silt = round(weightedValue('silt'), 1);
 
-  const clay = clayRaw != null ? parseFloat((clayRaw / 10).toFixed(1)) : 25;
-  const sand = sandRaw != null ? parseFloat((sandRaw / 10).toFixed(1)) : 50;
-  const silt = siltRaw != null ? parseFloat((siltRaw / 10).toFixed(1)) : 25;
+  // soc IS THE ONE PROPERTY d_factor DOES NOT FINISH. d_factor takes the stored
+  // integer to the property's CONVENTIONAL unit, and those units differ: clay,
+  // sand and silt land directly on % and pH lands on pH, but soc lands on g/kg,
+  // which is a further factor of 10 away from the % this app stores and prints.
+  // Caught by reading the output, not by a test: the first run returned 18.18,
+  // and 18% organic carbon is a peat bog, not a Zululand sandy clay loam. (The
+  // pre-2026-08-06 code had the same missing step — `socRaw / 10` commented
+  // "dg/kg -> divide by 10 = %" — but it never surfaced, because the 0-30cm
+  // parameter meant this function threw before it could ever return a number.)
+  const organicCarbonPct = weightedValue('soc') / 10;
 
   return {
     textureClass: textureClass(sand, clay, silt),
-    ph: phRaw != null ? parseFloat((phRaw / 10).toFixed(1)) : 6.5,
-    organicCarbon: socRaw != null ? parseFloat((socRaw / 10).toFixed(2)) : 1.0,
+    ph: round(weightedValue('phh2o'), 1),
+    organicCarbon: round(organicCarbonPct, 2),
     clay,
     sand,
     silt,
-    bulkDensity: bdRaw != null ? parseFloat((bdRaw / 100).toFixed(2)) : 1.3,
+    bulkDensity: round(weightedValue('bdod'), 2),
   };
 }
