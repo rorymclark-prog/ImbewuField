@@ -155,8 +155,20 @@ function renderReport(text: string) {
         i++;
       }
       const [header, , ...body] = tableRows;
-      const headers = header.split('|').filter(h => h.trim());
-      const rows = body.map(r => r.split('|').filter(c => c.trim()));
+      // Drop ONLY the empty cells the leading and trailing pipes produce — never an interior
+      // one. `.filter(c => c.trim())` used to strip every blank cell, which silently shifted
+      // each remaining cell one column left: a bill-of-quantities group row ("| **Water** | | |
+      // | |") collapsed to a single cell, and a two-column table with a blank header rendered
+      // its body wider than its head. lib/report-pdf.ts has always split correctly, so the
+      // exported PDF and the on-screen report disagreed about the same table.
+      const splitRow = (row: string): string[] => {
+        const cells = row.split('|');
+        if (cells.length && cells[0].trim() === '') cells.shift();
+        if (cells.length && cells[cells.length - 1].trim() === '') cells.pop();
+        return cells;
+      };
+      const headers = splitRow(header);
+      const rows = body.map(splitRow);
       elements.push(
         <div key={`table-${i}`} className="overflow-x-auto my-4">
           <table className="w-full text-xs font-display border-collapse">

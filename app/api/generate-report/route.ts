@@ -23,6 +23,11 @@ import {
   zonePromptBlock,
   type ReportSiteFacts,
 } from '@/lib/report-site-facts';
+import { buildBillOfQuantities, billOfQuantitiesMarkdown } from '@/lib/report-boq';
+import { buildCoverMarkdown } from '@/lib/report-cover';
+import { buildMonitoringPlan, monitoringMarkdown } from '@/lib/report-monitoring';
+import { buildRiskRegister, riskRegisterMarkdown } from '@/lib/report-risk';
+import { assembleReportDocument } from '@/lib/report-assemble';
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
 
@@ -755,15 +760,20 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
   // model touches it. The trust statement (lib/plan-assurance.ts) closes the document for the same
   // reason — the crop-plan PDF has carried it since the agronomic review, and the site report, the
   // document most likely to be handed to a funder or an extension officer, carried none of it.
+  const now = new Date();
+  const dateLabel = now.toLocaleDateString('en-ZA', { year: 'numeric', month: 'long', day: 'numeric' });
+
   const header = buildReportHeaderMarkdown({
     facts,
+    // The cover page owns the document's single `# ` heading from here on.
+    omitTitle: true,
     biomeName: d.biome.name,
     vegUnit: d.vegetation?.vegUnit ?? null,
     bruLabel: d.bru?.nearestBrg ?? null,
     adminLabel: admin?.label ?? null,
     lat: d.lat,
     lon: d.lon,
-    dateLabel: new Date().toLocaleDateString('en-ZA', { year: 'numeric', month: 'long', day: 'numeric' }),
+    dateLabel,
     rainfallMm: d.rainfall.annual,
     rainfallSource: d.rainfall.rainfallSource,
     wetSeason: d.rainfall.wetSeason,
@@ -780,15 +790,51 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
     hasMapWaterPolygons: Boolean(waterData),
   });
 
+  // ── The consulting-document furniture ────────────────────────────────────────
+  //
+  // Cover, contents, section numbers, figure captions, a priced bill of quantities, an M&E plan
+  // and a risk register. All of it is written in CODE for the same reason the glance table is:
+  // these are the parts a funder reads first and quotes back, and a generated cost total is
+  // indistinguishable on the page from a measured one.
+  const cover = buildCoverMarkdown({
+    farmName: facts?.farmName ?? null,
+    bioregion: d.vegetation?.vegUnit ? `${d.vegetation.vegUnit} (${d.biome.name})` : d.biome.name,
+    adminLabel: admin?.label ?? null,
+    lat: d.lat,
+    lon: d.lon,
+    dateLabel,
+    isoDate: now.toISOString(),
+    sectionCount: safeSections.length,
+    lengthLabel: reportLength === 'one-pager' ? 'One page' : reportLength === 'comprehensive' ? 'Comprehensive' : 'Standard',
+  });
+
+  const boq = buildBillOfQuantities(facts);
+  const risks = buildRiskRegister({
+    facts,
+    rainfallMm: d.rainfall.annual,
+    slopeDeg: d.elevation.slopeDeg,
+    minTempC: d.climate.minTemp,
+    soilSource: d.soil.soilSource,
+    unpricedBoqLines: boq.unpricedCount,
+  });
+
+  const assembled = assembleReportDocument({
+    cover,
+    glance: header,
+    body: batchResults,
+    backMatter: [
+      billOfQuantitiesMarkdown(boq),
+      monitoringMarkdown(buildMonitoringPlan(facts)),
+      riskRegisterMarkdown(risks),
+      assuranceMarkdown(),
+    ],
+  });
+
   const encoder = new TextEncoder();
   const readable = new ReadableStream({
     async start(controller) {
       try {
-        controller.enqueue(encoder.encode(`${header}\n\n`));
-        for (const text of batchResults) {
-          controller.enqueue(encoder.encode(text.trimEnd() + '\n\n'));
-        }
-        controller.enqueue(encoder.encode(`${assuranceMarkdown()}\n`));
+        controller.enqueue(encoder.encode(assembled.markdown));
       } finally {
         controller.close();
       }

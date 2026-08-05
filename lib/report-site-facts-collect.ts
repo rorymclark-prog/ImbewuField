@@ -185,6 +185,9 @@ export function collectReportSiteFacts(input: CollectFactsInput): ReportSiteFact
           category: groupItem.category,
           count: groupItem.count,
           status: groupItem.status,
+          // The catalog id rides along so the BOQ prices off a stable key rather than a display
+          // name the farmer is free to change — see FactElementGroup.defId and lib/report-boq.ts.
+          defId: groupItem.defId,
         }));
       const planBeds = bedsFromDesignCanvas(canvas);
       const beds = planBeds.map((bed) => ({
@@ -198,6 +201,7 @@ export function collectReportSiteFacts(input: CollectFactsInput): ReportSiteFact
         label: route.label,
         count: route.count,
         totalLengthM: route.totalLengthM,
+        kind: route.kind,
       }));
       const zones = collectZones(canvas);
       if (beds.length || elements.length || routes.length || zones.length) {

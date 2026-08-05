@@ -37,12 +37,28 @@ export interface FactElementGroup {
   category: string;
   count: number;
   status: FactStatus;
+  /**
+   * The catalog id from lib/design-elements.ts ('jojo_5000', 'tree_citrus', …).
+   *
+   * `name` is the DISPLAY name and the farmer may rename any item, so it is not a key — two
+   * farmers' "Big tank" are not the same product, and one farmer's renamed tank stops matching
+   * itself. The BOQ prices off this id (lib/report-boq.ts) precisely so a rename cannot change
+   * a cost. Optional because a report generated before this field shipped has no id, and an
+   * unpriced line is the correct outcome there rather than a guess from the label.
+   */
+  defId?: string;
 }
 
 export interface FactRoute {
   label: string;
   count: number;
   totalLengthM: number;
+  /**
+   * The traced line's kind ('swale' | 'fence' | 'path' | 'pipe' | 'drip' | 'windbreak' |
+   * 'bedpath' | 'greywater'), carried for the same reason as `defId` above: `label` is prose
+   * ("Swale (on-contour earthwork)") and prose is not a rate key.
+   */
+  kind?: string;
 }
 
 /** A rotation unit: an item bed, or a traced staple plot. */
@@ -232,11 +248,13 @@ export function normaliseReportSiteFacts(value: unknown): ReportSiteFacts | null
       const name = text(item.name, 48);
       const count = num(item.count, { min: 1, max: 10000 });
       if (!name || count === null) return null;
+      const defId = text(item.defId, 40);
       return {
         name,
         category: text(item.category, 20) ?? 'other',
         count: Math.round(count),
         status: status(item.status),
+        ...(defId ? { defId } : {}),
       };
     });
     const routes = rows<FactRoute>(d.routes, (item) => {
@@ -245,7 +263,13 @@ export function normaliseReportSiteFacts(value: unknown): ReportSiteFacts | null
       const totalLengthM = num(item.totalLengthM, { min: 0.1, max: 1e6 });
       const count = num(item.count, { min: 1, max: 10000 });
       if (!label || totalLengthM === null || count === null) return null;
-      return { label, count: Math.round(count), totalLengthM: round1(totalLengthM) };
+      const kind = text(item.kind, 24);
+      return {
+        label,
+        count: Math.round(count),
+        totalLengthM: round1(totalLengthM),
+        ...(kind ? { kind } : {}),
+      };
     });
     const zones = rows<FactZone>(d.zones, (item) => {
       if (!isRec(item)) return null;
@@ -659,6 +683,15 @@ export interface ReportHeaderInput {
   siteAreaM2?: number;
   sitePerimeterM?: number;
   hasMapWaterPolygons: boolean;
+  /**
+   * Drop the `# ` title and the standfirst, emitting only the Site at a Glance table.
+   *
+   * Set when a cover page (lib/report-cover.ts) has already opened the document. A markdown file
+   * with two `# ` lines has two roots, and every downstream consumer — the contents builder, the
+   * PDF exporter, the in-app reader's heading outline — then disagrees about which one is the
+   * document's title. Defaults to false so the pre-cover behaviour is unchanged.
+   */
+  omitTitle?: boolean;
 }
 
 const SOIL_SOURCE_LABEL: Record<string, string> = {
@@ -679,19 +712,21 @@ export function buildReportHeaderMarkdown(input: ReportHeaderInput): string {
   const { facts } = input;
   const out: string[] = [];
 
-  const title = facts?.farmName
-    ? `# Site Report — ${facts.farmName}`
-    : '# Permaculture Site Report';
-  out.push(title);
-  const standfirstParts = [
-    input.vegUnit ? `${input.vegUnit} (${input.biomeName})` : input.biomeName,
-    input.adminLabel ?? null,
-    `${Math.abs(input.lat).toFixed(4)}°S, ${input.lon.toFixed(4)}°E`,
-    input.dateLabel,
-  ].filter(Boolean) as string[];
-  out.push('');
-  out.push(standfirstParts.join(' · '));
-  out.push('');
+  if (!input.omitTitle) {
+    const title = facts?.farmName
+      ? `# Site Report — ${facts.farmName}`
+      : '# Permaculture Site Report';
+    out.push(title);
+    const standfirstParts = [
+      input.vegUnit ? `${input.vegUnit} (${input.biomeName})` : input.biomeName,
+      input.adminLabel ?? null,
+      `${Math.abs(input.lat).toFixed(4)}°S, ${input.lon.toFixed(4)}°E`,
+      input.dateLabel,
+    ].filter(Boolean) as string[];
+    out.push('');
+    out.push(standfirstParts.join(' · '));
+    out.push('');
+  }
   out.push('## Site at a Glance');
   out.push('');
   out.push('Nothing in this table was written by the report generator. Each figure is either measured off this farm\'s own map or read from the data source named beside it.');
