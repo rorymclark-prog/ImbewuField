@@ -46,13 +46,25 @@ import { sowingInstruction, taskSentence } from '@/lib/crop-export-schedule';
 const ALL_GROUPS: FoodGroup[] = ['leafy_green', 'legume', 'root_tuber', 'allium_aromatic', 'fruiting_veg', 'staple_grain'];
 
 // The rolling timeline shows this many months ahead from today (column 0),
-// scrollable — a full year plus a few months' overflow (not a hard
-// 12-month wall, and not a full 2nd year either — "today's date till next
-// this date, overflow by 2-3 months" is the ask this matches), so a
-// genuinely-reachable future planting isn't cut off arbitrarily at column
-// 12. Grid container min-widths below scale off this so columns stay a
-// readable size rather than getting squeezed as this grows.
-const DISPLAY_MONTHS = 15;
+// scrollable. TWO FULL YEARS as of 2026-08-05 (Rory: "the last month i feel
+// is not fully utilised... should we make it 2 years and then we just pan
+// sideways").
+//
+// The previous 15 was a half-measure that actively created the problem it
+// was meant to soften. A planting is drawn from an offset forced into 0-11
+// (forwardOnlyOffset), so NO bar can ever START in column 12, 13 or 14 —
+// those columns could only ever hold the tail of something sown earlier.
+// The window's last months were therefore blank BY CONSTRUCTION, on every
+// bed, however good the plan was. Widening alone would have made that
+// worse; the fix is width PLUS drawing the cycle's repeat (see
+// barInstances), which is what this plan literally is — one annual cycle
+// that recurs until the farmer re-runs it with rotation on.
+const DISPLAY_MONTHS = 24;
+// The resilience chart below keeps the previous window: it plots the annual
+// RHYTHM, and a second identical copy of every column adds no information
+// there (unlike the timeline, where the repeat is what makes a wrapped bar
+// legible). Deliberately not DISPLAY_MONTHS.
+const CHART_MONTHS = 15;
 const GRID_MIN_WIDTH = Math.round((760 * DISPLAY_MONTHS) / 12);
 
 // Bed-sharing presets — "half a bed" or a 3-way intercrop split. A custom
@@ -100,11 +112,14 @@ function SeedBadge({ transplant, large }: { transplant: boolean; large?: boolean
   );
 }
 
-// Segment.start/end are already DISPLAY-COLUMN indices (0-11, 0 = this
-// month) — not real calendar months. There's only ever one segment now (see
-// barSegments below), clipped to the visible window if it runs off either
-// edge.
-interface Segment { start: number; end: number }
+// Segment.start/end are already DISPLAY-COLUMN indices (0 = this month) —
+// not real calendar months — clipped to the visible window if the span runs
+// off either edge. `rawStart` is the UNCLIPPED start, kept because the
+// harvest-cap geometry has to measure from where the crop actually began,
+// not from where the left edge happened to cut it — and because which side of
+// the year-two seam a copy belongs to is decided by where it STARTED, not by
+// where clipping left it (see isYearTwo).
+interface Segment { start: number; end: number; rawStart: number }
 
 // The grid is a ROLLING 12-month window starting from the current real
 // month (column 0 = this month), not a fixed Jan-Dec calendar year — a
@@ -139,23 +154,41 @@ function forwardOnlyOffset(m: number, originMonth: number): number {
 }
 
 /**
- * The single visible bar segment for a sow→harvest span, in display-column
- * space, clipped to the DISPLAY_MONTHS-column window. `harvest` is always
- * the crop's OWN forward span from `sowMonth` (a crop never takes longer
- * than ~12 months, so this offset is unambiguous regardless of "today");
- * `sowOffset` is the CALLER's already-resolved position of the sow event
- * itself (nearest-direction for an existing crop, forward-only otherwise —
- * see nearestSignedOffset/forwardOnlyOffset above). Returns [] if the whole
- * span falls outside the visible window (a long-since-fully-harvested
- * existing crop, or a genuinely far-future manual entry).
+ * Every visible copy of a sow→harvest span, in display-column space, clipped
+ * to the DISPLAY_MONTHS-column window. `harvest` is always the crop's OWN
+ * forward span from `sowMonth` (a crop never takes longer than ~12 months, so
+ * this offset is unambiguous regardless of "today"); `sowOffset` is the
+ * CALLER's already-resolved position of the sow event itself
+ * (nearest-direction for an existing crop, forward-only otherwise — see
+ * nearestSignedOffset/forwardOnlyOffset above).
+ *
+ * WHY MORE THAN ONE COPY: this plan holds no year field anywhere — it is a
+ * single annual cycle that recurs until the farmer re-runs auto-suggest with
+ * Rotate crops on (the caption under the grid has always said so). Drawing
+ * each planting exactly once was therefore an under-drawing of the plan, not
+ * a faithful one, and it is what made the far columns look barren: a sow
+ * offset is forced into 0-11, so nothing could ever START past column 11 and
+ * the tail of the window could only ever hold leftovers. Repeating the cycle
+ * every 12 columns fills those months with what actually happens in them.
+ *
+ * Only FORWARD repeats (cycle >= 0). A backward repeat would put crops in the
+ * ground at column 0 that this plan never sowed — the establishment-year lie
+ * tracked separately as "the printed plan has no first year". The left edge
+ * stays honestly "from today"; it is the right edge this fixes.
+ *
+ * Returns [] if no copy lands in the window (a long-since-harvested existing
+ * crop, or a genuinely far-future manual entry).
  */
-function barSegments(sowOffset: number, sowMonth: number, harvest: number): Segment[] {
+function barInstances(sowOffset: number, sowMonth: number, harvest: number): Segment[] {
   const spanMonths = ((harvest - sowMonth) % 12 + 12) % 12; // crop's own forward duration, 0-11
-  const harvestOffset = sowOffset + spanMonths;
-  const start = Math.max(sowOffset, 0);
-  const end = Math.min(harvestOffset, DISPLAY_MONTHS - 1);
-  if (end < start) return [];
-  return [{ start, end }];
+  const out: Segment[] = [];
+  for (let cycle = 0; sowOffset + cycle * 12 <= DISPLAY_MONTHS - 1; cycle++) {
+    const rawStart = sowOffset + cycle * 12;
+    const start = Math.max(rawStart, 0);
+    const end = Math.min(rawStart + spanMonths, DISPLAY_MONTHS - 1);
+    if (end >= start) out.push({ start, end, rawStart });
+  }
+  return out;
 }
 
 const COL_PCT = 100 / DISPLAY_MONTHS;
@@ -626,6 +659,13 @@ function FacilitatorCropsPageInner() {
   // months before anything useful starts. Scrollable out to a full 2 years
   // ahead rather than a hard 12-month wall.
   const monthOrder = useMemo(() => Array.from({ length: DISPLAY_MONTHS }, (_, i) => wrapMonth(currentMonth + i)), [currentMonth]);
+  // The resilience chart and the "Looking ahead" task list keep the shorter
+  // window. Both are ANNUAL readings — "what does a year of this plan put on
+  // the table", "what do I do next" — and a second identical copy of every
+  // month would add a repeated task list and a mirrored chart, neither of
+  // which tells the farmer anything the first year didn't. Only the timeline
+  // needs the repeat, because only the timeline has bars that wrap.
+  const chartMonthOrder = useMemo(() => Array.from({ length: CHART_MONTHS }, (_, i) => wrapMonth(currentMonth + i)), [currentMonth]);
 
   const totalYieldKg = plantings.reduce((sum, p) => sum + estimatedYieldKgAdjusted(p, bedAreaFor(p.bedId), plantings), 0);
   // Already-growing crops are informational (the farmer planted them before
@@ -1029,8 +1069,11 @@ function FacilitatorCropsPageInner() {
               marks the month seedlings raised in a tray move out into the bed — tap it (or the crop bar) for that
               planting&apos;s details. Only crops started in trays show one.
               <br />
-              ↻ marks where the timeline wraps into next year — this plan repeats on the same annual cycle rather
-              than holding a separate plan per year. When a new season actually starts, tap{' '}
+              ↻ marks where year two begins. The timeline shows <strong style={{ color: '#5C5040' }}>two full years</strong> — pan
+              sideways to reach the second one. This plan holds one annual cycle rather than a separate plan per
+              year, so year two is that same cycle coming round again, drawn <em>faded</em> to say so: it is what
+              these beds do if nothing changes, not a second year you have decided on. When a new season actually
+              starts, tap{' '}
               <strong style={{ color: '#5C5040' }}>Auto-suggest a plan</strong> again with{' '}
               <strong style={{ color: '#5C5040' }}>Rotate crops</strong> on: it reads what&apos;s currently in each
               bed as last season&apos;s history and plans the next rotation around it, so re-running this each
@@ -1042,7 +1085,7 @@ function FacilitatorCropsPageInner() {
                 since it's the single view most likely to answer "am I actually
                 covered month to month" at a glance. */}
             <FoodAvailabilityChart
-              monthOrder={monthOrder}
+              monthOrder={chartMonthOrder}
               availability={foodAvailability}
               valueByMonth={foodValueByMonth}
               utilizationByMonth={fieldUtilizationByMonth}
@@ -1084,7 +1127,7 @@ function FacilitatorCropsPageInner() {
                   {showLookingAhead && (
                     <div className="space-y-1 mt-1.5">
                       {/* i<2 (this month, next month) is already shown above — repeating it here just eats space for no new information. */}
-                      {monthOrder.map((m, i) => {
+                      {chartMonthOrder.map((m, i) => {
                         if (i < 2) return null;
                         const t = allTasks.filter((task) => task.month === m);
                         if (t.length === 0) return null;
@@ -1941,12 +1984,9 @@ function PlantingBar({ planting, currentMonth, onTap }: { planting: Planting; cu
   const sowOffset = planting.existing
     ? nearestSignedOffset(planting.sowMonth, currentMonth)
     : forwardOnlyOffset(planting.sowMonth, currentMonth);
-  const segments = barSegments(sowOffset, planting.sowMonth, harvestEnd);
-  if (!segments.length) return null; // entirely outside the visible window
-  // The transplant marker is anchored to THIS crop's own sow offset (not
-  // re-derived independently) so it always lands right after the sow
-  // segment, never contradicting it.
-  const trOffset = crop.transplant && !planting.existing ? sowOffset + 1 : null;
+  // One entry per visible repeat of the annual cycle (see barInstances).
+  const instances = barInstances(sowOffset, planting.sowMonth, harvestEnd);
+  if (!instances.length) return null; // entirely outside the visible window
   const fraction = planting.areaFraction ?? 1;
   const fLabel = fractionLabel(fraction);
   // Existing (already-growing) crops get a muted olive treatment so the eye
@@ -1955,41 +1995,54 @@ function PlantingBar({ planting, currentMonth, onTap }: { planting: Planting; cu
   // length, so you can see how far along a planting is at a glance.
   const [barFrom, barTo] = planting.existing ? ['#8C8654', '#B8934A'] : ['#7FAE6E', '#D4A017'];
   const segMonthCount = (seg: Segment) => seg.end - seg.start + 1;
-  const totalMonths = segments.reduce((s, seg) => s + segMonthCount(seg), 0);
-  const lastSegIdx = segments.length - 1;
-  // How many of the LAST segment's months are the "ready to pick" window.
-  // Anchored to where harvest actually STARTS (sowOffset + green duration),
-  // not just a flat harvestWindowMonths+1 count — a flat count is only
-  // correct when nothing gets clipped. When the display window's right edge
-  // clips the segment (a long harvestWindowMonths crop landing near the far
-  // edge of the rolling timeline), a flat count swallows still-green months
-  // into the gold cap, painting the whole bar as "ready" when part of it
-  // hasn't started growing yet. Clamping against seg.start also still
-  // correctly renders 100% gold for an existing crop whose green phase is
-  // entirely in the past (harvestStartOffset < seg.start).
+  // How many of a copy's months are its "ready to pick" window. Anchored to
+  // where harvest actually STARTS (that copy's OWN unclipped start + green
+  // duration), not a flat harvestWindowMonths+1 count — a flat count is only
+  // correct when nothing gets clipped. When the window's right edge clips the
+  // bar (a long harvestWindowMonths crop landing near the far edge), a flat
+  // count swallows still-green months into the gold cap, painting the whole
+  // bar as "ready" when part of it hasn't started growing yet. Clamping
+  // against seg.start also still correctly renders 100% gold for an existing
+  // crop whose green phase is entirely in the past.
+  //
+  // Measured per COPY (seg.rawStart, not the shared sowOffset): the second
+  // cycle's harvest starts 12 months after the first one's, and measuring
+  // both from cycle 0 would paint the repeat gold from end to end.
   const greenSpan = ((harvest - planting.sowMonth) % 12 + 12) % 12;
-  const harvestStartOffset = sowOffset + greenSpan;
-  const lastSeg = segments[lastSegIdx];
-  const readyMonths = Math.max(0, Math.min(lastSeg.end - Math.max(harvestStartOffset, lastSeg.start) + 1, segMonthCount(lastSeg)));
+  const readyMonthsFor = (seg: Segment) =>
+    Math.max(0, Math.min(seg.end - Math.max(seg.rawStart + greenSpan, seg.start) + 1, segMonthCount(seg)));
+  // Year two is a POSITION on the axis (past the ↻ seam), not "the second copy
+  // of this bar". Those two are not the same thing and using the copy index
+  // looked wrong on screen: an already-growing crop resolves to a negative sow
+  // offset, so ITS second copy lands in, say, March — inside year one — and
+  // faded it while the bed's other bars stayed solid. Whatever sits left of the
+  // seam is the year the farmer is planting; that reads full strength.
+  const isYearTwo = (seg: Segment) => seg.rawStart >= 12;
   const harvestLabel = crop.harvestWindowMonths ? `${monthLabel(harvest)}-${monthLabel(harvestEnd)}` : monthLabel(harvest);
 
   return (
     <div style={{ position: 'relative', height: 30, marginBottom: 3 }}>
-      {segments.map((seg, i) => (
+      {instances.map((seg, i) => (
         <button
           key={i}
           onClick={onTap}
           className="font-sans"
           style={{
             position: 'absolute', left: `${leftPct(seg.start)}%`, width: `${widthPct(seg)}%`, top: 2, bottom: 2,
-            background: BAR_STYLE === 'gradient' ? barGradient(seg, seg.start, totalMonths, barFrom, barTo) : barFrom,
+            background: BAR_STYLE === 'gradient' ? barGradient(seg, seg.start, segMonthCount(seg), barFrom, barTo) : barFrom,
             color: '#fff', border: 'none', borderRadius: 6,
             fontSize: 11, fontWeight: 600, textAlign: 'left', paddingLeft: 6, paddingRight: 4,
             overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis', cursor: 'pointer',
+            // The repeat is drawn quieter than the year you are about to
+            // plant. It is the same plan coming round again, not a second,
+            // separately-decided year — and with Rotate crops on it is
+            // explicitly NOT what next season will look like. Full-strength
+            // colour on both would claim a certainty this plan doesn't have.
+            opacity: isYearTwo(seg) ? 0.5 : 1,
           }}
-          title={`${crop.name} — sow ${monthLabel(planting.sowMonth)}, harvest ${harvestLabel}${fraction < 1 ? ` · ${fLabel} of bed` : ''}${planting.existing ? ' · already growing' : ''}`}
+          title={`${crop.name} — sow ${monthLabel(planting.sowMonth)}, harvest ${harvestLabel}${fraction < 1 ? ` · ${fLabel} of bed` : ''}${planting.existing ? ' · already growing' : ''}${isYearTwo(seg) ? ' · year two, the same cycle coming round again' : ''}`}
         >
-          {BAR_STYLE === 'solid' && i === lastSegIdx && (
+          {BAR_STYLE === 'solid' && (
             // The "ready to harvest" marker — a hard colour + a line, not a
             // blend: a solid gold cap over the crop's WHOLE fresh-harvest
             // window (one month for a one-shot harvest, several for a
@@ -2001,16 +2054,18 @@ function PlantingBar({ planting, currentMonth, onTap }: { planting: Planting; cu
             // name out entirely.
             <div
               style={{
-                position: 'absolute', top: 0, bottom: 0, right: 0, width: `${(100 * readyMonths) / segMonthCount(seg)}%`,
+                position: 'absolute', top: 0, bottom: 0, right: 0, width: `${(100 * readyMonthsFor(seg)) / segMonthCount(seg)}%`,
                 background: barTo, borderLeft: '2px solid rgba(255,255,255,0.85)',
               }}
             />
           )}
-          {i === 0 && (
-            <span style={{ position: 'relative', zIndex: 1 }}>
-              {crop.icon} {crop.name}{fLabel ? ` (${fLabel})` : ''}
-            </span>
-          )}
+          {/* Every copy carries the crop name. A repeat with no label is the
+              thing that made the far columns unreadable in the first place —
+              a farmer panning right must be able to see WHAT is in the bed
+              there without panning back a year to find out. */}
+          <span style={{ position: 'relative', zIndex: 1 }}>
+            {crop.icon} {crop.name}{fLabel ? ` (${fLabel})` : ''}
+          </span>
         </button>
       ))}
       {/* The transplant marker. It used to read "(tr)", which the app's own
@@ -2020,22 +2075,32 @@ function PlantingBar({ planting, currentMonth, onTap }: { planting: Planting; cu
           "raised in a tray first", and is TAPPABLE (opening the same planting
           popover the bar itself opens) so the meaning is reachable rather than
           guessable. The timeline legend below the grid spells it out too. */}
-      {trOffset !== null && trOffset >= 0 && trOffset <= DISPLAY_MONTHS - 1 && (
-        <button
-          onClick={onTap}
-          className="font-sans"
-          style={{
-            position: 'absolute', left: `${leftPct(trOffset) + COL_PCT / 2}%`, top: -3, transform: 'translateX(-50%)',
-            fontSize: 9, fontWeight: 700, color: '#9A6018', background: '#FFFEFA',
-            border: '1px solid rgba(154,96,24,0.35)', padding: '0 3px', borderRadius: 4,
-            whiteSpace: 'nowrap', cursor: 'pointer', lineHeight: 1.5, zIndex: 2,
-          }}
-          title={`Transplant — move the ${crop.name.toLowerCase()} seedlings out of their tray and into the bed in ${monthLabel(planting.sowMonth + 1)}`}
-          aria-label={`Transplant ${crop.name} in ${monthLabel(planting.sowMonth + 1)}`}
-        >
-          🪴 transplant
-        </button>
-      )}
+      {crop.transplant && !planting.existing && instances.map((seg, i) => {
+        // Anchored to THIS copy's own unclipped sow offset (not re-derived
+        // independently, and not shared across copies) so it always lands
+        // right after that copy's sow month and never contradicts the bar
+        // it belongs to.
+        const trOffset = seg.rawStart + 1;
+        if (trOffset < 0 || trOffset > DISPLAY_MONTHS - 1) return null;
+        return (
+          <button
+            key={`tr${i}`}
+            onClick={onTap}
+            className="font-sans"
+            style={{
+              position: 'absolute', left: `${leftPct(trOffset) + COL_PCT / 2}%`, top: -3, transform: 'translateX(-50%)',
+              fontSize: 9, fontWeight: 700, color: '#9A6018', background: '#FFFEFA',
+              border: '1px solid rgba(154,96,24,0.35)', padding: '0 3px', borderRadius: 4,
+              whiteSpace: 'nowrap', cursor: 'pointer', lineHeight: 1.5, zIndex: 2,
+              opacity: isYearTwo(seg) ? 0.5 : 1,
+            }}
+            title={`Transplant — move the ${crop.name.toLowerCase()} seedlings out of their tray and into the bed in ${monthLabel(planting.sowMonth + 1)}`}
+            aria-label={`Transplant ${crop.name} in ${monthLabel(planting.sowMonth + 1)}`}
+          >
+            🪴 transplant
+          </button>
+        );
+      })}
     </div>
   );
 }

@@ -34,6 +34,14 @@ export interface ReleaseNote {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '6 August',
+    changes: [
+      'The crop plan timeline now runs two full years - pan sideways to see year two',
+      'Year two is drawn faded: the same cycle again, not a plan you have decided on',
+      'No more empty months at the end of the timeline',
+    ],
+  },
+  {
     when: '5 August (late night)',
     sha: '092e10a',
     changes: [
