@@ -50,6 +50,12 @@ export function nextInRotation(group: FoodGroup): FoodGroup {
 
 export const FOOD_GROUP: Record<string, FoodGroup> = {
   maize: 'staple_grain',
+  // A cereal, and grouped as one on purpose: that is exactly what makes it a
+  // legal winter cover after a LEGUME staple course, where broad beans is a
+  // rotation repeat. The mirror case holds too — after a maize course oats is
+  // the repeat and broad beans is legal — so the two covers together answer all
+  // four staple courses. See PLOT_WINTER_COVER_KEYS in lib/staple-crops.ts.
+  oats: 'staple_grain',
   'dry-beans': 'legume',
   'green-beans': 'legume',
   'broad-beans': 'legume',

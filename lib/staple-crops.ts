@@ -113,11 +113,47 @@ export function nextStapleCourse(course: StapleCourse): StapleCourse {
  * they're the cover crop offered — and unlike a true green manure they also
  * feed the household, which is the right trade-off for a smallholder who
  * cannot afford to grow something purely to dig it back in.
+ *
+ * ORDER MATTERS HERE — broad beans stays FIRST for exactly the reason above.
+ * Oats is the fallback, and it exists because a one-crop cover list quietly
+ * stranded a whole plot: broad beans is a legume, so on a plot whose staple
+ * course was ALSO a legume (dry beans, groundnuts) BedRotation.repeats — a
+ * hard filter, unlike the soft conflicts — disqualified the only cover there
+ * was, at every fraction and every gap month. The plot could then never be
+ * planted again that season, by construction rather than by bad luck. Measured
+ * on Ubhejane's own generated plan: Plot 1, 98.8 m², bare 7 of 12 months =
+ * 692 m²-months, 56% of every idle square metre on that farm.
+ *
+ * A cereal answers it because it is a different food group. After a legume
+ * course, oats is legal and broad beans is not; after the GRAIN course the
+ * mirror holds and broad beans is legal where oats is not. Two covers of two
+ * groups therefore answer all four staple courses, and neither ever repeats
+ * its own plot's last group. The household-food principle is not overturned —
+ * oats is only reached where the rotation has already ruled the legume out, so
+ * the real comparison is not oats vs. broad beans, it is oats vs. bare ground.
  */
-export const PLOT_WINTER_COVER_KEYS: string[] = ['broad-beans'];
+export const PLOT_WINTER_COVER_KEYS: string[] = ['broad-beans', 'oats'];
 
 export function isPlotWinterCover(crop: CropDef): boolean {
   return PLOT_WINTER_COVER_KEYS.includes(crop.key);
+}
+
+/**
+ * The covers in PREFERENCE order — broad beans before oats, because the array
+ * above is a ranking and not a set.
+ *
+ * Order has to be carried explicitly like this because nothing downstream would
+ * honour it otherwise: fillRemainingGaps sorts candidates spread-first, and a
+ * never-yet-used crop wins that sort outright. Measured — offering both covers
+ * as an unranked pool handed oats to Plot 4, which already had a perfectly
+ * legal broad-bean cover, and because oats matures faster (100d vs 126d) that
+ * plot's idle months went UP, from 2 to 4. The caller is expected to take the
+ * first cover the rotation permits, not the best-scoring one.
+ */
+export function plotWinterCovers(crops: readonly CropDef[]): CropDef[] {
+  return PLOT_WINTER_COVER_KEYS
+    .map((k) => crops.find((c) => c.key === k))
+    .filter((c): c is CropDef => c !== undefined);
 }
 
 /**

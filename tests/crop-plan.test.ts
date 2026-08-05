@@ -9,6 +9,7 @@ import {
 } from '@/lib/crop-autosuggest';
 import { cropByKey, CROPS, MONTHS_SHORT, type RainPattern } from '@/lib/crop-catalog';
 import { FOOD_GROUP, GROUP_PRIORITY, foodGroupOf } from '@/lib/crop-groups';
+import { isPlotWinterCover } from '@/lib/staple-crops';
 import {
   bedOverlapFraction,
   buildFieldUtilizationByMonth,
@@ -299,6 +300,17 @@ test('every crop has complete, finite physical data without pinning agronomic va
     assert.ok(crop.note.trim(), `${crop.key} has no planting guidance`);
     assert.doesNotMatch(`${crop.name} ${crop.note}`, /NaN|Infinity/);
     for (const field of requiredPositive) {
+      // A zero yield is legal for exactly one thing: a cover crop, which is cut
+      // or rolled down rather than eaten. Rather than relax the rule, this
+      // TIGHTENS it — such a crop must be a declared plot winter cover, so a
+      // food crop can never reach 0 by accident and pass as green manure.
+      if (field === 'yieldKgPerM2' && crop.yieldKgPerM2 === 0) {
+        assert.ok(
+          isPlotWinterCover(crop),
+          `${crop.key} yields no food but is not a declared cover crop — a food crop at 0 kg/m² is a bug, not a green manure`,
+        );
+        continue;
+      }
       assert.ok(Number.isFinite(crop[field]) && crop[field] > 0, `${crop.key}.${field} is unusable`);
     }
     for (const field of optionalPositive) {

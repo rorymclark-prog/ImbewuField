@@ -9,6 +9,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 
 import { CROPS, cropByKey } from '@/lib/crop-catalog';
+import { foodGroupOf } from '@/lib/crop-groups';
 import type { PlanBed } from '@/lib/crop-plan';
 import { autoSuggestPlan } from '@/lib/crop-autosuggest';
 import type { AutoSuggestAnswers } from '@/lib/crop-autosuggest';
@@ -18,6 +19,7 @@ import {
   STAPLE_CROP_KEYS,
   PLOT_WINTER_COVER_KEYS,
   isStapleCrop,
+  plotWinterCovers,
   stapleCourseOf,
 } from '@/lib/staple-crops';
 
@@ -183,4 +185,48 @@ test('four plots take four different staple courses', () => {
   assert.equal(courseByPlot.size, 4, 'not every plot got a staple course');
   const courses = [...courseByPlot.values()];
   assert.equal(new Set(courses).size, 4, `plots took ${courses.join(', ')} — expected four different courses`);
+});
+
+test('no staple course can strand its plot without a legal winter cover', () => {
+  // THE BUG THIS PINS. PLOT_WINTER_COVER_KEYS held exactly one crop, broad
+  // beans, and broad beans is a legume. So a plot whose staple course was ALSO
+  // a legume (dry beans, groundnuts) had its entire cover list disqualified by
+  // BedRotation.repeats — a HARD filter, unlike the soft conflicts — and could
+  // never be planted again that season, at any fraction, in any gap month.
+  // Measured on Ubhejane's own generated plan: Plot 1, 98.8 m², bare 7 of 12
+  // months = 692 m²-months, 56% of every idle square metre on that farm.
+  //
+  // Structural rather than behavioural on purpose: it fails the moment the
+  // cover list and the staple list share a food group with nothing left over,
+  // which is the actual precondition, instead of waiting for one fixture's
+  // occupancy to drift.
+  const covers = plotWinterCovers(CROPS);
+  assert.ok(covers.length, 'no winter cover crops are declared at all');
+  for (const key of STAPLE_CROP_KEYS) {
+    const staple = cropByKey(key)!;
+    const legal = covers.filter((c) => foodGroupOf(c) !== foodGroupOf(staple));
+    assert.ok(
+      legal.length > 0,
+      `a plot growing ${key} (${foodGroupOf(staple)}) has no winter cover in a different food group — `
+      + `every cover would be a hard rotation repeat, so that plot sits bare all winter`,
+    );
+  }
+});
+
+test('the household-food cover crop is offered before the green manure', () => {
+  // Order in PLOT_WINTER_COVER_KEYS is a RANKING, not a set. Broad beans feeds
+  // the household; oats is cut or rolled down and feeds only the soil, so it
+  // must never be reached while the legume is legal. Nothing downstream would
+  // enforce this on its own — fillRemainingGaps sorts spread-first and a
+  // never-used crop wins that sort outright, which measurably cost Plot 4 two
+  // extra bare months when both covers were offered as an unranked pool.
+  const covers = plotWinterCovers(CROPS);
+  assert.ok(covers[0].yieldKgPerM2 > 0, 'the first-choice winter cover must be one the household can eat');
+  const manures = covers.filter((c) => c.yieldKgPerM2 === 0);
+  for (const m of manures) {
+    assert.ok(
+      covers.indexOf(m) > 0,
+      `${m.key} yields no food and must rank below an edible cover, not above it`,
+    );
+  }
 });

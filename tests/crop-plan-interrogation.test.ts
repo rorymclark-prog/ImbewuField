@@ -216,10 +216,17 @@ test('the seed bill counts every crop at exactly the shared density, not its own
 });
 
 test('no crop is counted at an impossible planting density', () => {
-  // 200/m² is 7cm each way — denser than anything in this catalog is grown,
-  // and a deliberately loose bound: it is a trap for a formula that has gone
-  // wrong by an order of magnitude, not an agronomic opinion.
-  const absurd = CROPS.filter((c) => plantsPerM2(c) > 200 || plantsPerM2(c) <= 0)
+  // 200/m² is 7cm each way — denser than any HAND-SPACED crop in this catalog
+  // is grown, and a deliberately loose bound: it is a trap for a formula that
+  // has gone wrong by an order of magnitude, not an agronomic opinion.
+  //
+  // A broadcast cereal cover crop is genuinely denser than that — it is sown by
+  // the handful, not spaced plant by plant — so it gets its own, still-loose
+  // ceiling rather than being waved through. The order-of-magnitude trap is
+  // what matters and both bounds keep it: 200 catches a vegetable off by 10x,
+  // 500 catches a cover crop off by 10x.
+  const ceiling = (c: (typeof CROPS)[number]) => (c.yieldKgPerM2 === 0 ? 500 : 200);
+  const absurd = CROPS.filter((c) => plantsPerM2(c) > ceiling(c) || plantsPerM2(c) <= 0)
     .map((c) => `${c.key} at ${plantsPerM2(c).toFixed(0)}/m²`);
   assert.deepEqual(absurd, []);
 });

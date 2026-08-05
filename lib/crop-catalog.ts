@@ -590,6 +590,48 @@ export const CROPS: CropDef[] = [
     yieldKgPerM2: 1.5,
     note: 'Bolts fast in heat and long days — sow in cooler months for leafy growth.',
   },
+  {
+    // THE ONLY NON-FOOD CROP IN THIS CATALOG, and it is here for one reason:
+    // without it, a staple plot whose course is a legume can never be planted
+    // again that season. Broad beans is the plot winter cover and broad beans
+    // is a legume, so BedRotation.repeats (a HARD filter) disqualified the
+    // entire cover list on any plot that grew dry beans or groundnuts. Measured
+    // on Ubhejane's own plan: Plot 1, 98.8 m², bare 7 of 12 months — 56% of
+    // every idle square metre on that farm. See lib/staple-crops.ts.
+    //
+    // It stays SECOND choice behind broad beans, deliberately: the cover-crop
+    // docblock in staple-crops.ts argues a smallholder "cannot afford to grow
+    // something purely to dig it back in", and that principle is right. This is
+    // only reached when the rotation has disqualified the legume — the real
+    // comparison is not oats vs. broad beans, it is oats vs. seven months of
+    // bare ground.
+    //
+    // EVERY FIGURE BELOW IS MANAGEMENT GUIDANCE, NOT A SOURCED YIELD TABLE, and
+    // wants an agronomist's confirmation for the local district — same standing
+    // caveat as coriander above. yieldKgPerM2 is 0 because that is the truth:
+    // this is cut or rolled down as green manure, not carried to the kitchen,
+    // and a smallholder catalog must not book soil-building as food.
+    key: 'oats',
+    name: 'Oats (winter cover crop)',
+    icon: '🌾',
+    sowMonths: {
+      // The autumn cover window: into the ground as the summer staple comes
+      // off, grown through the cold, terminated before the spring course.
+      summer: [2, 3, 4, 5],
+      winter: [3, 4, 5],
+      'all-year': [2, 3, 4, 5],
+      'mild-frost': [2, 3, 4, 5],
+    },
+    daysToHarvest: 100, // to flowering, when a cover is cut or rolled — NOT to grain
+    // Not a hand-spaced crop: a cereal cover is broadcast or drilled to a dense
+    // stand. 6cm square encodes ~275 plants/m², which is roughly what the usual
+    // smallholder seeding rate produces — recorded this way because
+    // plantsPerM2() derives seed quantity from spacing alone, so leaving a
+    // vegetable-style 15cm here would under-order the seed several-fold.
+    spacingCm: 6,
+    yieldKgPerM2: 0,
+    note: 'A cover crop, not a food crop — it holds the soil over winter and is cut or rolled down before the next staple goes in. Nothing to harvest for the kitchen.',
+  },
 ];
 
 export function cropByKey(k: string): CropDef | undefined {

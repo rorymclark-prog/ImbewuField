@@ -13,7 +13,7 @@ import { isSpaceHungry, harvestMonth } from './crop-plan';
 import type { FoodGroup } from './crop-groups';
 import { foodGroupOf, GROUP_PRIORITY, nextInRotation } from './crop-groups';
 import type { StapleCourse } from './staple-crops';
-import { plotPool, stapleCourseOf, STAPLE_COURSE_SEQUENCE, isPlotWinterCover } from './staple-crops';
+import { plotPool, plotWinterCovers, stapleCourseOf, STAPLE_COURSE_SEQUENCE, isPlotWinterCover } from './staple-crops';
 
 export type GardenGoal = 'family' | 'commercial' | 'hybrid';
 export type HarvestRhythm = 'steady' | 'few-big';
@@ -483,6 +483,8 @@ function poolForBed(
   allowVinesInBeds: boolean,
   /** Plots whose staple course for this season is already decided — see below. */
   plotsWithCourse?: ReadonlySet<string>,
+  /** Rotation state — decides WHICH winter cover a plot may legally take. */
+  rotation?: BedRotation,
 ): CropDef[] {
   if (bed.kind === 'plot') {
     // ONE COURSE PER PLOT PER SEASON. Once the staple pass has given a plot its crop,
@@ -492,8 +494,21 @@ function poolForBed(
     // on three of four plots as a "gap fill" and spending the tuber course before the
     // summer rotation began. A plot resting between its crop and its cover is correct.
     if (plotsWithCourse?.has(bed.id)) {
-      const cover = pool.filter(isPlotWinterCover);
-      return cover.length ? cover : CROPS.filter(isPlotWinterCover);
+      // Drawn from the WHOLE catalog, never from `pool`. A cover crop is soil
+      // management, not an answer to the food-group questionnaire, and it has
+      // to offer both covers here or the rotation can strand the plot: broad
+      // beans is a legume, so after a legume staple course it is a hard
+      // rotation repeat and oats is the only legal cover — and after the grain
+      // course the mirror holds. Filtering these by the farmer's food answers
+      // would hand back a one-crop list again and re-open exactly that hole.
+      //
+      // ONE cover is returned, not a menu: the FIRST the rotation permits, in
+      // the declared preference order. Handing both down as a pool let the
+      // spread-first sort promote the fallback over the household-food choice —
+      // measured, that cost Plot 4 two extra bare months. See plotWinterCovers.
+      const covers = plotWinterCovers(CROPS);
+      const legal = covers.filter((c) => !rotation?.repeats(bed.id, foodGroupOf(c)));
+      return legal.length ? [legal[0]] : covers;
     }
     const staples = plotPool(pool);
     // The food-group answers describe the VEG BEDS. A plot the farmer traced as a
@@ -503,6 +518,9 @@ function poolForBed(
     // crop in a field.
     return staples.length ? staples : plotPool(CROPS);
   }
+  // No cover-crop guard needed here: `pool` is built from edible crops only
+  // (see autoSuggestPlan), so a zero-yield green manure can never reach a bed
+  // by any route, not just this one.
   return allowVinesInBeds ? pool : pool.filter((c) => !isSpaceHungry(c));
 }
 
@@ -924,7 +942,7 @@ function backfillWinterGaps(
     // A plot bridges winter with a staple or its winter cover — never with the cabbage
     // that used to win here on score alone. Veg beds keep the full pool (this pass also
     // covers dedicated vine beds, which are exactly the ones empty all winter).
-    const bridgePool = bed.kind === 'plot' ? poolForBed(bed, pool, true, plotsWithCourse) : pool;
+    const bridgePool = bed.kind === 'plot' ? poolForBed(bed, pool, true, plotsWithCourse, rotation) : pool;
     const candidates = bridgePool
       .flatMap((crop) => winterCoveringSowMonths(crop, pattern).map((sowMonth) => ({ crop, sowMonth })))
       .filter((x) => fitsBedWidth(x.crop, bed))
@@ -1270,7 +1288,7 @@ function fillRemainingGaps(
     // cucurbit, so nothing is lost, and the salad crops that used to fill plots here
     // are now excluded by identity rather than out-scored by luck. Beds keep the
     // vine-exclusion policy, plus the row-width test below.
-    const bedPool = poolForBed(bed, pool, allowVinesInBeds, plotsWithCourse).filter((c) => fitsBedWidth(c, bed));
+    const bedPool = poolForBed(bed, pool, allowVinesInBeds, plotsWithCourse, rotation).filter((c) => fitsBedWidth(c, bed));
     // Months this bed's search has already tried and failed to fill — without
     // this, hitting ONE unfillable month would `break` and abandon the WHOLE
     // bed, silently skipping over other, genuinely-fillable months later in
@@ -1594,8 +1612,16 @@ export function autoSuggestPlan(
   const rotation = new BedRotation(bedLastGroup, answers.rotateCrops);
 
   const selectedGroups = answers.groups.length ? new Set(answers.groups) : null;
-  let pool = CROPS.filter((c) => !selectedGroups || selectedGroups.has(foodGroupOf(c)));
-  if (!pool.length) pool = CROPS; // "not sure" fallback — consider everything
+  // THE POOL IS FOOD. A crop that yields nothing to eat (the oats cover crop)
+  // is soil management, not an answer to "which foods do you want to grow", and
+  // it must never reach a pass that is choosing what the kitchen gets. Filtered
+  // HERE rather than in poolForBed because several passes read `pool` directly —
+  // the food-group map and the space-hungry pre-pass among them — so a guard
+  // further downstream would leave those routes open. Plots get the cover crop
+  // back from the full catalog in poolForBed, which is where it belongs.
+  const edible = CROPS.filter((c) => c.yieldKgPerM2 > 0);
+  let pool = edible.filter((c) => !selectedGroups || selectedGroups.has(foodGroupOf(c)));
+  if (!pool.length) pool = edible; // "not sure" fallback — consider everything
 
   const dedicated = new Set<string>();
 
