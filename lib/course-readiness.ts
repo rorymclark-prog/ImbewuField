@@ -89,8 +89,36 @@ export function readinessLabel(moduleId: string): { text: string; detail: string
       detail: `All ${d.totalLessons} lessons illustrated, narrated in ${d.narrationLanguages.length} languages, with slides and animations.`,
     };
   }
+  // DERIVED, like everything else in this file. The constant that used to sit here went stale the
+  // moment a module gained anything.
+  //
+  // It read "Reading and pictures are ready. Narration and slides are still being made." That was
+  // true of all nine in-progress modules the day it was written. It stopped being true on
+  // 2026-08-03 when nine of them gained English narration, and it became flatly wrong for the first
+  // module to get a generated deck: the card announced that the slides were still being made while
+  // the learner was one tap away from watching them. A label attached to a module has to read the
+  // module.
+  const has = ['Reading and pictures are ready'];
+  if (d.narrationLanguages.length > 0) has.push(`narration is recorded in ${languageList(d.narrationLanguages)}`);
+  if (d.hasDeck) has.push('the slide deck is built');
+
+  const toCome: string[] = [];
+  if (!d.hasDeck) toCome.push('slides');
+  // isiZulu specifically, not "a second language". moduleReadinessDetail sets two languages as the
+  // bar for the reason stated there — this audience is isiZulu-first — and English-only narration
+  // is progress, not arrival.
+  if (!d.narrationLanguages.includes('zu')) toCome.push('isiZulu narration');
+  if (d.illustratedLessons < d.totalLessons) toCome.push('lesson pictures');
+
   return {
-    text: 'Lessons only',
-    detail: 'Reading and pictures are ready. Narration and slides are still being made.',
+    text: d.hasDeck ? 'Lessons and slides' : 'Lessons only',
+    detail: `${has.join(', ')}.${toCome.length ? ` Still to come: ${toCome.join(', ')}.` : ''}`,
   };
+}
+
+/** "English", or "English and isiZulu". Only the two languages the course is produced in are
+ *  named; anything else shows as its code rather than as a guess at what it is called. */
+function languageList(codes: string[]): string {
+  const names = codes.map((c) => ({ en: 'English', zu: 'isiZulu' }[c] ?? c));
+  return names.length > 1 ? `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}` : names[0];
 }
