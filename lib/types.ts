@@ -32,6 +32,8 @@ export interface ClimateData {
   solarRadiation: number;
   koppen: string;
   koppenDesc: string;
+  /** One sentence a grower can act on, from the Köppen class. Optional — stored climate predates it. */
+  koppenNote?: string;
   windSpeed: number;        // m/s, annual mean at 2m
   windFromSummer: string;   // compass label wind blows FROM in summer (DJF)
   windFromWinter: string;   // compass label wind blows FROM in winter (JJA)

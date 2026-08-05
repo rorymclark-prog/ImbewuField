@@ -1,5 +1,6 @@
 import type { MonthlyRainfall, ClimateData } from './types';
-import { koppenClassify, aspectLabel } from './biome';
+import { aspectLabel } from './biome';
+import { classifyKoppen } from './koppen-global';
 
 const MONTH_KEYS = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 const DAYS_IN_MONTH = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
@@ -295,12 +296,32 @@ export async function fetchNasaPower(lat: number, lon: number): Promise<{
 
   const maxTemp = parseFloat(hotMonthTemp.toFixed(1));
   const minTemp = parseFloat(coldMonthTemp.toFixed(1));
-  const { code: koppen, description: koppenDesc } = koppenClassify(
-    annual, meanTemp, maxTemp, minTemp, summerRain, winterRain
-  );
+  // THE GLOBAL CLASSIFIER, not the six-scalar one that used to be called here.
+  //
+  // classifyKoppen shipped in 598c3ec with its own tests and was then imported
+  // by NOTHING, so every site kept getting the old summariser — which was tuned
+  // against South African cases and, run against a spread of world farmland,
+  // produced three codes for twelve climates with no A (tropical) or B (arid)
+  // group at all: the Netherlands and Andalusia both came back 'Dwb', a
+  // Manchurian continental code; Maharashtra's monsoon came back 'Csa', which
+  // means dry SUMMER — the season inverted; Punjab, a hot desert, came back
+  // 'Dwb' too. Those are not near-misses, and Atlas cannot mean anything
+  // outside South Africa on top of them.
+  //
+  // The real definition needs the twelve monthly pairs, not annual and seasonal
+  // totals: the aridity threshold that separates B from everything else, and
+  // the s/w/f season letter, are both defined on the driest and wettest MONTH
+  // within each half-year. Collapsing to summerRain/winterRain destroys exactly
+  // the information the letters are made of, which is why the old one could
+  // never have been right however its thresholds were tuned.
+  const { code: koppen, description: koppenDesc, growerNote: koppenNote } = classifyKoppen({
+    tempC: monthlyTemp,
+    precipMm: monthly,
+    lat, // sign only — it picks which six months are summer
+  });
 
   return {
     rainfall: { monthly, annual: parseFloat(annual.toFixed(0)), pattern, wetSeason, drySeason, rainfallSource },
-    climate: { meanTemp, maxTemp, minTemp, monthlyTemp, solarRadiation, koppen, koppenDesc, windSpeed, windFromSummer, windFromWinter },
+    climate: { meanTemp, maxTemp, minTemp, monthlyTemp, solarRadiation, koppen, koppenDesc, koppenNote, windSpeed, windFromSummer, windFromWinter },
   };
 }
