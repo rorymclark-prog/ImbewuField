@@ -389,9 +389,15 @@ export const CROPS: CropDef[] = [
     },
     daysToHarvest: 100,
     spacingCm: 30,
-    // row/depth not populated — ARC source reached only via search-engine
-    // extract (not the primary PDF), medium confidence, flagged for
-    // re-verification against ARC-VOPI Production Guidelines directly.
+    // The ARC figure this once waited on is superseded: KZN DARD's own spacing
+    // table gives both numbers directly. Until now only the 30cm plant spacing
+    // existed, so it was squared to 30x30 = 11.1 plants/m² — roughly 3.7x the
+    // real density, and potato is bought as certified seed tubers, so the
+    // Ubhejane plan asked for 1,141 where ~309 is right. The most expensive
+    // single error in the buying list.
+    rowSpacingCm: 95, // 900-1000mm — KZN DARD 'Plant Establishment', spacing table (Potato)
+    inRowSpacingCm: 35, // 300-400mm — same table, same row
+    sowDepthCm: 8.5, // 70-100mm — same table
     yieldKgPerM2: 1.4, // ~1.4 (10-17 t/ha dryland) — KZN DARD Expected Yields Table 8
     note: 'Plant certified seed potatoes and earth up the stems as they grow to prevent greening.',
     storageMonths: 3,
@@ -512,6 +518,13 @@ export const CROPS: CropDef[] = [
     },
     daysToHarvest: 126, // ~18 weeks — gardeninginsouthafrica.co.za Broad Beans (Vicia faba) guide
     spacingCm: 20,
+    // WAS THE WORST OVER-ORDER IN THE CATALOG. With no row figure, plantSpacingCm
+    // squared the 20cm plant spacing to 20x20 = 25 plants/m², four times the real
+    // density — the Ubhejane plan's buying list asked for 9,444 seeds where ~2,360
+    // is right. KZN DARD prints the two spacings separately: Plant 200mm, Rows 800mm.
+    rowSpacingCm: 80, // 800mm — KZN DARD 'Plant Establishment', spacing table (Bean, broad)
+    inRowSpacingCm: 20, // 200mm — same table, same row
+    sowDepthCm: 4.5, // 40-50mm — same table
     yieldKgPerM2: 0.4, // ~0.4 (3-5 t/ha) — KZN DARD Expected Yields Table 8
     note: "The classic 'grows through winter' legume — sow in autumn, it stands through frost and pods in spring.",
     harvestWindowMonths: 1,
