@@ -162,8 +162,13 @@ html[data-theme="earth"] {
   --bg-4: rgba(236,227,201,0.70);
   --bg-5: rgba(236,227,201,0.85);
 
-  --border: #ECE3C9;
-  --border-bright: #ECE3C9;
+  /* #E2D8C4, matching the :root hairline, NOT the #ECE3C9 this used to carry.
+     This selector is the one that actually renders: the app always sets
+     data-theme="earth", and html[data-theme] outranks :root, so whatever sits
+     here wins over both :root declarations regardless of their order. Fixing
+     only the duplicate in :root would have changed nothing on screen. */
+  --border: #E2D8C4;
+  --border-bright: #ECE3C9;   /* deliberately lighter than --border */
   --border-glow: rgba(90,148,45,0.35);
 
   --text-primary: #261B10;
@@ -336,7 +341,14 @@ html, body {
   --bg-3: rgba(236,227,201,0.55);
   --bg-4: rgba(236,227,201,0.70);
   --bg-5: rgba(236,227,201,0.85);
-  --border:        #ECE3C9;
+  /* --border is NOT redeclared here. It is set once, at the top of this file, and this
+     block is a legacy alias shim — the same selector as that one, so a value here silently
+     beat it on source order alone. It carried #ECE3C9 while the authoritative declaration
+     said #E2D8C4, which is why /home rendered 51 hairlines in one colour and 41 in the
+     other: everything reading var(--border) got the shim's value, and the 518 places that
+     hardcode #e2d8c4 got the real one. Two hairlines on one screen, invisible in review
+     because the two greys are a shade apart. Add nothing to this block that the top of the
+     file already owns. */
   --border-bright: #ECE3C9;
   --border-glow:   rgba(31,77,43,0.25);
   --text-primary:  #20190F;

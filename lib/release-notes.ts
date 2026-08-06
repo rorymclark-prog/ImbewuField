@@ -35,6 +35,13 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '6 August',
+    sha: '08cb7a3',
+    changes: [
+      'Card and panel outlines are all the same colour now, instead of two shades',
+    ],
+  },
+  {
+    when: '6 August',
     sha: 'aaa19e1',
     changes: [
       'Harvests, sales and invoices now have crop pickers with honest guide prices',
