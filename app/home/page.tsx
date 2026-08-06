@@ -319,7 +319,7 @@ function HomeLandingInner() {
     { href: '/contact',           Icon: MessageCircle, label: t('homeQuickContact'),     desc: t('homeQuickContactDesc'),     color: '#5A7A3A', bg: 'rgba(90,122,58,0.10)' },
     { href: '/journal',           Icon: Leaf,          label: t('homeQuickJournal'),     desc: t('homeQuickJournalDesc'),     color: '#1F4D2B', bg: 'rgba(31,77,43,0.08)' },
     { href: '/facilitator/crops', Icon: CalendarDays,  label: t('homeQuickCropPlanner'), desc: t('homeQuickCropPlannerDesc'), color: '#1F4D2B', bg: 'rgba(31,77,43,0.08)' },
-    { href: '/farmer?panel=Farm', Icon: Wheat,         label: t('homeQuickMyRecords'),   desc: t('homeQuickMyRecordsDesc'),   color: '#1F4D2B', bg: 'rgba(31,77,43,0.08)' },
+    { href: '/records',           Icon: Wheat,         label: t('homeQuickMyRecords'),   desc: t('homeQuickMyRecordsDesc'),   color: '#1F4D2B', bg: 'rgba(31,77,43,0.08)' },
   ];
 
   return (

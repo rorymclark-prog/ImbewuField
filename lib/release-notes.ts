@@ -35,6 +35,13 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '6 August',
+    sha: 'f19d925',
+    changes: [
+      'Log harvest now opens a full records page, without the map beside it',
+    ],
+  },
+  {
+    when: '6 August',
     sha: 'a5d9cc0',
     changes: [
       'Sample finance never shows income dated later today',
