@@ -14,11 +14,20 @@ import {
   paymentMethodLabel, type SavedInvoice, type PaymentMethod,
 } from '@/lib/invoices';
 import LessonLink from '@/components/design/LessonLink';
+import CropSelect from '@/components/CropSelect';
+import { cropEntryOption } from '@/lib/crop-entry';
+import { loadCropPriceOverrides, priceFor, type CropPrice } from '@/lib/crop-prices';
+import { syncInvoiceSales } from '@/lib/db/queries';
 
 interface LineItem { id: number; desc: string; qty: number; unit: string; price: number }
 
 const UNITS = ['bags', 'kg', 'crates', 'bunches', 'trays', 'each'];
 const PAYMENT_METHODS: PaymentMethod[] = ['cash', 'eft', 'card', 'mobile', 'other'];
+const BUYER_TYPES = [
+  'Neighbour', 'Farm gate', 'Spaza shop', 'Bakkie trader', 'Market stall', 'Hawker',
+  'School', 'Crèche', 'Church', 'Restaurant or lodge', 'Co-op',
+];
+const WHOLESALE_BUYERS = ['spaza shop', 'bakkie trader', 'market stall', 'hawker', 'school', 'crèche', 'restaurant or lodge', 'co-op'];
 
 function todayLong() {
   return new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -31,6 +40,7 @@ export default function InvoicePage() {
   const [currentNo, setCurrentNo] = useState(44); // number shown on the current doc
   const [currentId, setCurrentId] = useState<string | null>(null); // set when reprinting a saved one
   const [billTo, setBillTo] = useState('');
+  const [customBuyer, setCustomBuyer] = useState(false);
   const [items, setItems] = useState<LineItem[]>([
     { id: 1, desc: '', qty: 1, unit: 'bags', price: 0 },
   ]);
@@ -44,6 +54,8 @@ export default function InvoicePage() {
   /** Set when persist() could not store the invoice. Shown next to the actions, because an error
    *  the farmer never sees is the same defect as no error at all. */
   const [saveError, setSaveError] = useState<string | null>(null);
+  const [priceOverrides, setPriceOverrides] = useState<Record<string, CropPrice>>({});
+  const [syncingInvoiceId, setSyncingInvoiceId] = useState<string | null>(null);
 
   useEffect(() => {
     const nextNumber = loadNextInvoiceNumber();
@@ -51,6 +63,7 @@ export default function InvoicePage() {
     setCurrentNo(nextNumber);
     const refresh = () => { setCustomers(loadCustomers()); setProducts(loadProducts()); setSaved(loadInvoices()); };
     refresh();
+    setPriceOverrides(loadCropPriceOverrides());
     window.addEventListener('imbewu-invoices-changed', refresh);
     return () => window.removeEventListener('imbewu-invoices-changed', refresh);
   }, [user?.uid]);
@@ -71,6 +84,21 @@ export default function InvoicePage() {
         if (match && it.price === 0) { next.unit = match.unit; next.price = match.price; }
       }
       return next;
+    }));
+  }
+  function chooseCrop(id: number, crop: string, cropKey: string | null) {
+    setItems((prev) => prev.map((item) => {
+      if (item.id !== id) return item;
+      const remembered = products.find(
+        (product) => product.desc.toLocaleLowerCase('en-ZA') === crop.toLocaleLowerCase('en-ZA'),
+      );
+      if (remembered && remembered.unit === 'kg') {
+        return { ...item, desc: crop, unit: 'kg', price: remembered.price };
+      }
+      // Every researched guide is per kg. A catalogue selection must therefore
+      // change the unit before any guide is shown, and a guide is never copied
+      // into the farmer's actual invoice-price field.
+      return { ...item, desc: crop, unit: cropKey ? 'kg' : (remembered?.unit ?? 'kg'), price: remembered?.price ?? 0 };
     }));
   }
   function addItem() {
@@ -95,7 +123,7 @@ export default function InvoicePage() {
    * and localStorage quota exhaustion — this repo has already had one production incident where the
    * render cache starved other saves.
    */
-  function persist(): string | null {
+  async function persist(): Promise<string | null> {
     const id = currentId ?? invoiceId();
     const existing = saved.find((s) => s.id === id);
     addCustomer(billTo);
@@ -107,9 +135,19 @@ export default function InvoicePage() {
       status: existing?.status ?? 'unpaid',
       paidAt: existing?.paidAt,
     });
-    if (!list.some((x) => x.id === id)) {
+    const stored = list.find((x) => x.id === id);
+    if (!stored) {
       setSaveError('This invoice could not be saved on this device, so it has not been issued. Check your storage and try again.');
       return null;
+    }
+    if (stored.status === 'paid') {
+      try {
+        await syncInvoiceSales(stored);
+      } catch {
+        if (existing) saveInvoice(existing);
+        setSaveError('This paid invoice could not update the sales book. Nothing was printed or shared; check your connection and try again.');
+        return null;
+      }
     }
     if (currentId === null) {
       const nextSeq = currentNo + 1;
@@ -123,10 +161,10 @@ export default function InvoicePage() {
     return id;
   }
 
-  function printInvoice() {
+  async function printInvoice() {
     // Nothing reaches paper or a buyer unless it is in the ledger.
     if (!valid) return;
-    if (persist() === null) return;
+    if (await persist() === null) return;
     window.print();
   }
 
@@ -179,7 +217,7 @@ export default function InvoicePage() {
   // Falls back to a download where file-sharing isn't supported (e.g. desktop).
   async function shareInvoice() {
     if (!valid) return;
-    if (persist() === null) return;
+    if (await persist() === null) return;
     let file: File;
     try { file = await buildInvoiceFile(); } catch { return; }
     const nav = navigator as Navigator & { canShare?: (d: ShareData) => boolean };
@@ -199,6 +237,7 @@ export default function InvoicePage() {
     setCurrentId(null);
     setCurrentNo(seq);
     setBillTo('');
+    setCustomBuyer(false);
     setItems([{ id: 1, desc: '', qty: 1, unit: 'bags', price: 0 }]);
     setNextId(2);
     setShowSaved(false);
@@ -208,9 +247,38 @@ export default function InvoicePage() {
     setCurrentId(inv.id);
     setCurrentNo(inv.no);
     setBillTo(inv.billTo);
+    setCustomBuyer(
+      !customers.some((name) => name.toLocaleLowerCase('en-ZA') === inv.billTo.toLocaleLowerCase('en-ZA'))
+      && !BUYER_TYPES.some((name) => name.toLocaleLowerCase('en-ZA') === inv.billTo.toLocaleLowerCase('en-ZA')),
+    );
     setItems(inv.items.map((it, i) => ({ id: i + 1, ...it })));
     setNextId(inv.items.length + 1);
     setShowSaved(false);
+  }
+
+  async function changeInvoiceStatus(
+    invoice: SavedInvoice,
+    status: 'paid' | 'unpaid',
+    method?: PaymentMethod,
+  ) {
+    if (syncingInvoiceId) return;
+    setSyncingInvoiceId(invoice.id);
+    setSaveError(null);
+    const changed = setInvoiceStatus(invoice.id, status, method);
+    const updated = changed.find((row) => row.id === invoice.id);
+    if (!updated) {
+      setSyncingInvoiceId(null);
+      return;
+    }
+    setSaved(changed);
+    try {
+      await syncInvoiceSales(updated);
+    } catch {
+      setSaved(saveInvoice(invoice));
+      setSaveError('The invoice status was not changed because its crop sales could not be updated. Check your connection and try again.');
+    } finally {
+      setSyncingInvoiceId(null);
+    }
   }
 
   const money = (n: number) => `R${n.toLocaleString('en-ZA')}`;
@@ -307,10 +375,6 @@ export default function InvoicePage() {
           {/* ── Editor (screen only) ───────────────────────────────────── */}
           <div className="no-print space-y-4">
 
-            {/* Autocomplete sources — remembered customers & item presets */}
-            <datalist id="customers-list">{customers.map((c) => <option key={c} value={c} />)}</datalist>
-            <datalist id="products-list">{products.map((p) => <option key={p.desc} value={p.desc} />)}</datalist>
-
             {/* New invoice + recall past invoices */}
             <div className="flex items-center gap-2">
               <button onClick={newInvoice}
@@ -331,6 +395,10 @@ export default function InvoicePage() {
             {/* Saved-invoices list — tap to reopen/reprint */}
             {showSaved && (
               <div className="rounded-xl overflow-hidden" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
+                <div className="px-3 py-2 text-xs font-sans leading-relaxed" style={{ color: '#5C5040', background: '#F7F2E9', borderBottom: '1px solid #E2D8C4' }}>
+                  Marking an invoice paid adds its kg crop lines to My Records automatically.
+                  Bags, crates and bunches are not converted because their weight is unknown.
+                </div>
                 {saved.length === 0 ? (
                   <div className="px-3 py-3 text-xs font-sans" style={{ color: '#8C7A62' }}>
                     No saved invoices yet — Print or Share one and it&apos;s kept here.
@@ -347,7 +415,8 @@ export default function InvoicePage() {
                         </div>
                       </button>
                       <button
-                        onClick={() => setSaved(setInvoiceStatus(inv.id, inv.status === 'paid' ? 'unpaid' : 'paid'))}
+                        onClick={() => void changeInvoiceStatus(inv, inv.status === 'paid' ? 'unpaid' : 'paid')}
+                        disabled={syncingInvoiceId === inv.id}
                         aria-label={inv.status === 'paid' ? 'Mark unpaid' : 'Mark paid'}
                         className="flex-shrink-0 px-2 py-1 rounded-full text-xs font-display font-semibold"
                         style={inv.status === 'paid'
@@ -363,7 +432,8 @@ export default function InvoicePage() {
                     {inv.status === 'paid' && (
                       <div className="flex flex-wrap gap-1.5 mt-2 pl-0.5">
                         {PAYMENT_METHODS.map((m) => (
-                          <button key={m} onClick={() => setSaved(setInvoiceStatus(inv.id, 'paid', m))}
+                          <button key={m} onClick={() => void changeInvoiceStatus(inv, 'paid', m)}
+                            disabled={syncingInvoiceId === inv.id}
                             className="px-2.5 py-1 rounded-full text-xs font-sans font-semibold capitalize transition-all"
                             style={inv.paymentMethod === m
                               ? { background: '#1F4D2B', color: '#fff', border: '1px solid #1F4D2B', cursor: 'pointer' }
@@ -381,11 +451,42 @@ export default function InvoicePage() {
             {/* Bill to */}
             <label className="block">
               <div className="text-xs font-sans uppercase tracking-wider mb-1" style={{ color: '#8C7A62' }}>Bill to</div>
-              <input value={billTo} onChange={(e) => setBillTo(e.target.value)}
-                list="customers-list" autoComplete="off"
-                placeholder="e.g. Spar Nquthu (wholesale)"
+              <select
+                aria-label="Bill to"
+                value={customBuyer ? '__custom__' : billTo}
+                onChange={(event) => {
+                  if (event.target.value === '__custom__') {
+                    setCustomBuyer(true);
+                    setBillTo('');
+                  } else {
+                    setCustomBuyer(false);
+                    setBillTo(event.target.value);
+                  }
+                }}
                 className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5"
-                style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#20190F' }} />
+                style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#20190F' }}
+              >
+                <option value="">Choose a customer</option>
+                {customers.length > 0 && (
+                  <optgroup label="Your saved customers">
+                    {customers.map((name) => <option key={name} value={name}>{name}</option>)}
+                  </optgroup>
+                )}
+                <optgroup label="Customer types">
+                  {BUYER_TYPES.map((name) => <option key={name} value={name}>{name}</option>)}
+                </optgroup>
+                <option value="__custom__">＋ Add another customer…</option>
+              </select>
+              {customBuyer && (
+                <input
+                  autoFocus
+                  value={billTo}
+                  onChange={(event) => setBillTo(event.target.value)}
+                  placeholder="Customer name"
+                  className="w-full mt-2 text-sm font-display outline-none rounded-xl px-3 py-2.5"
+                  style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#20190F' }}
+                />
+              )}
             </label>
 
             {/* Line item editors */}
@@ -393,12 +494,15 @@ export default function InvoicePage() {
               <div className="text-xs font-sans uppercase tracking-wider" style={{ color: '#8C7A62' }}>Line items</div>
               {items.map((it) => (
                 <div key={it.id} className="rounded-xl p-3 space-y-2" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-                  <div className="flex items-center gap-2">
-                    <input value={it.desc} onChange={(e) => updateItem(it.id, { desc: e.target.value })}
-                      list="products-list" autoComplete="off"
-                      placeholder="Crop / item (e.g. Amadumbe)"
-                      className="flex-1 text-sm font-display outline-none rounded-lg px-2.5 py-2"
-                      style={{ background: '#fff', border: '1px solid #E2D8C4', color: '#20190F' }} />
+                  <div className="flex items-start gap-2">
+                    <div className="flex-1 min-w-0">
+                      <CropSelect
+                        ariaLabel="Crop or product"
+                        value={it.desc}
+                        rememberedCrops={products.map((product) => product.desc)}
+                        onChange={(crop, cropKey) => chooseCrop(it.id, crop, cropKey)}
+                      />
+                    </div>
                     <button onClick={() => removeItem(it.id)} aria-label="Remove item"
                       className="flex-shrink-0 opacity-40 hover:opacity-80 transition-opacity"
                       style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: '#5C5040' }}>
@@ -416,7 +520,10 @@ export default function InvoicePage() {
                       placeholder="Qty"
                       className="w-16 text-sm font-display outline-none rounded-lg px-2.5 py-2 tabular-nums"
                       style={{ background: '#fff', border: '1px solid #E2D8C4', color: '#20190F' }} />
-                    <select value={it.unit} onChange={(e) => updateItem(it.id, { unit: e.target.value })}
+                    <select value={it.unit} onChange={(e) => updateItem(it.id, {
+                      unit: e.target.value,
+                      ...(it.unit === 'kg' && e.target.value !== 'kg' ? { price: 0 } : {}),
+                    })}
                       className="text-sm font-display outline-none rounded-lg px-2 py-2 appearance-none"
                       style={{ background: '#fff', border: '1px solid #E2D8C4', color: '#20190F' }}>
                       {UNITS.map((u) => <option key={u} value={u}>{u}</option>)}
@@ -430,6 +537,24 @@ export default function InvoicePage() {
                       <span className="text-xs font-sans whitespace-nowrap" style={{ color: '#8C7A62' }}>each</span>
                     </div>
                   </div>
+                  {(() => {
+                    const crop = cropEntryOption(it.desc);
+                    const guide = crop ? priceFor(crop.key, priceOverrides) : null;
+                    if (!guide || it.unit !== 'kg') return null;
+                    const wholesaleFirst = WHOLESALE_BUYERS.includes(billTo.trim().toLocaleLowerCase('en-ZA'));
+                    const first = wholesaleFirst
+                      ? `Shops/bulk about R${guide.wholesalePerKg}/kg`
+                      : `Direct/farm gate about R${guide.retailPerKg}/kg`;
+                    const second = wholesaleFirst
+                      ? `direct/farm gate about R${guide.retailPerKg}/kg`
+                      : `shops/bulk about R${guide.wholesalePerKg}/kg`;
+                    return (
+                      <div className="rounded-lg px-2.5 py-2 text-xs font-sans leading-relaxed" style={{ background: '#F7F2E9', color: '#5C5040' }}>
+                        <strong style={{ color: '#20190F' }}>{first}</strong> · {second} — guide price, July 2026.
+                        {' '}{guide.confidence === 'estimated' ? 'Estimated; confirm locally.' : 'Sourced guide; enter your agreed price.'}
+                      </div>
+                    );
+                  })()}
                 </div>
               ))}
 

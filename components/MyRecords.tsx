@@ -25,6 +25,8 @@ import {
   Ruler,
 } from 'lucide-react';
 import type { ProductionLog, SalesLog, Design } from '@/lib/db/types';
+import CropSelect from '@/components/CropSelect';
+import { loadCropPriceOverrides, priceFor, type CropPrice } from '@/lib/crop-prices';
 
 /* ── Tiny shared primitives (match DataPanel style) ──────────────────────── */
 
@@ -181,6 +183,7 @@ function SignInPrompt() {
 
 interface ProdFormState {
   crop: string;
+  cropKey: string | null;
   kg: string;
   photoFile: File | null;
   photoPreview: string;
@@ -192,6 +195,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
   const { t } = useLanguage();
   const [form, setForm] = useState<ProdFormState>({
     crop: '',
+    cropKey: null,
     kg: '',
     photoFile: null,
     photoPreview: '',
@@ -237,6 +241,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
         if (f.photoPreview) URL.revokeObjectURL(f.photoPreview);
         return {
           crop: '',
+          cropKey: null,
           kg: '',
           photoFile: null,
           photoPreview: '',
@@ -257,11 +262,10 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
       <form onSubmit={handleSubmit} className="space-y-3">
         <div>
           <FieldLabel>{t('myRecordsCropLabel')}</FieldLabel>
-          <Input
-            type="text"
-            placeholder={t('myRecordsCropPlaceholder')}
+          <CropSelect
+            ariaLabel={t('myRecordsCropLabel')}
             value={form.crop}
-            onChange={(e) => setForm((f) => ({ ...f, crop: e.target.value }))}
+            onChange={(crop, cropKey) => setForm((f) => ({ ...f, crop, cropKey }))}
           />
         </div>
         <div>
@@ -336,6 +340,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
 
 interface SaleFormState {
   crop: string;
+  cropKey: string | null;
   kg: string;
   amount: string;
   buyer: string;
@@ -347,12 +352,21 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
   const { t } = useLanguage();
   const [form, setForm] = useState<SaleFormState>({
     crop: '',
+    cropKey: null,
     kg: '',
     amount: '',
     buyer: '',
     loading: false,
     error: '',
   });
+  const [priceOverrides, setPriceOverrides] = useState<Record<string, CropPrice>>({});
+
+  useEffect(() => setPriceOverrides(loadCropPriceOverrides()), []);
+
+  const guide = form.cropKey ? priceFor(form.cropKey, priceOverrides) : null;
+  const saleKg = parseFloat(form.kg);
+  const guideLow = guide ? Math.min(guide.wholesalePerKg, guide.retailPerKg) : null;
+  const guideHigh = guide ? Math.max(guide.wholesalePerKg, guide.retailPerKg) : null;
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -375,7 +389,7 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
         buyer: form.buyer.trim() || null,
         sold_at: new Date().toISOString(),
       });
-      setForm({ crop: '', kg: '', amount: '', buyer: '', loading: false, error: '' });
+      setForm({ crop: '', cropKey: null, kg: '', amount: '', buyer: '', loading: false, error: '' });
       onSaved();
     } catch {
       setForm((f) => ({ ...f, loading: false, error: t('myRecordsSaveError') }));
@@ -389,11 +403,10 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
         <div className="grid grid-cols-2 gap-2">
           <div>
             <FieldLabel>{t('myRecordsCropLabel')}</FieldLabel>
-            <Input
-              type="text"
-              placeholder={t('myRecordsCropSalePlaceholder')}
+            <CropSelect
+              ariaLabel={t('myRecordsCropLabel')}
               value={form.crop}
-              onChange={(e) => setForm((f) => ({ ...f, crop: e.target.value }))}
+              onChange={(crop, cropKey) => setForm((f) => ({ ...f, crop, cropKey }))}
             />
           </div>
           <div>
@@ -408,6 +421,27 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
             />
           </div>
         </div>
+        {form.crop && (
+          <div
+            className="rounded-lg px-3 py-2 text-xs font-sans leading-relaxed"
+            style={{ background: '#F7F2E9', border: '1px solid #E2D8C4', color: '#5C5040' }}
+          >
+            {guide && guideLow !== null && guideHigh !== null ? (
+              <>
+                <strong style={{ color: '#20190F' }}>Guide price, July 2026:</strong>{' '}
+                shops about R{guide.wholesalePerKg}/kg · direct/farm gate about R{guide.retailPerKg}/kg.
+                {Number.isFinite(saleKg) && saleKg > 0 && (
+                  <> For {saleKg} kg, that is roughly R{(guideLow * saleKg).toFixed(2)}–R{(guideHigh * saleKg).toFixed(2)}.</>
+                )}{' '}
+                {guide.confidence === 'estimated'
+                  ? 'Estimated guide — confirm the local price.'
+                  : 'Sourced guide — enter the price you actually agreed.'}
+              </>
+            ) : (
+              <>No trustworthy guide price is stored for this crop. Enter the price you actually agreed.</>
+            )}
+          </div>
+        )}
         <div className="grid grid-cols-2 gap-2">
           <div>
             <FieldLabel>{t('myRecordsAmountLabel')}</FieldLabel>

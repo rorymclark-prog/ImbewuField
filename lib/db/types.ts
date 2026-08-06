@@ -40,6 +40,9 @@ export interface ProductionLog {
 export interface SalesLog {
   id: string; profile_id: string; garden_id: string | null; crop: string; kg: number;
   amount: number; buyer: string | null; sold_at: string; created_at: string;
+  /** Present when this crop-sale row was generated from a paid invoice. */
+  invoice_id?: string | null;
+  invoice_line?: number | null;
 }
 
 export type ExpenseCategory = 'feed' | 'seed' | 'fuel' | 'equipment' | 'labour' | 'transport' | 'other';
