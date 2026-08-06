@@ -67,10 +67,23 @@ becomes near-white" actually means. `app/globals.css` says of this exact value: 
 **never #fff**"*.
 
 That comment is a decision someone made deliberately for an app used outdoors in bright sun, where a
-near-white ground glares and a warm one does not. Rory has chosen the cool direction and that
-overrides it — but **it must be looked at on a phone outdoors before it merges**, not judged on a
-desktop monitor indoors. If it glares, `--color-canvas` moves toward the pack's own
-`--color-sand-100 #F3E9D6` and everything else in this map still stands.
+near-white ground glares and a warm one does not.
+
+**DECIDED 2026-08-06 — go near-white, do not wait for a sun test.** Rory: *"most work is going to be
+done indoors design finance loging just about everything except taking photos of diseased plants
+etc so i would go with what we feel best and if that proves to need tweaking in a few months so be
+it."*
+
+The reasoning holds, and holds harder than stated: the one screen genuinely used standing in a field
+is the map, and the map is mostly satellite imagery with **dark-on-photo chrome** that this token
+does not touch (see the three-layer split — imagery, chrome, data marks). `--color-canvas` governs
+the document-like screens, which are the indoor ones.
+
+If a glare problem ever does surface, the fix is one line — `--color-canvas` moves toward the pack's
+own `--color-sand-100 #F3E9D6` — and **every other row in this map still stands**. That is precisely
+why the migration goes through tokens first: this decision stays reversible at one site instead of
+5,217. The screens to re-check first if it is ever revisited are the two that are plausibly used
+outdoors: the field journal and harvest logging.
 
 ## The remaining third
 
