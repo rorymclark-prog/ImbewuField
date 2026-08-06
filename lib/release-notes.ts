@@ -35,6 +35,12 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '6 August',
+    changes: [
+      'Moved the chat button and Add buttons so they do not cover the map logo',
+    ],
+  },
+  {
+    when: '6 August',
     sha: '78df299',
     changes: [
       'Your survey can now record food, livestock and sales you report yourself',
