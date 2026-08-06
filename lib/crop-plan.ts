@@ -301,7 +301,10 @@ export function benchmarkAreaConflictBedLabels(
         continue;
       }
       const span = occupiedMonthsForPlanting(planting).length;
-      const [start] = plantingBedEntryOffsets(planting, nowMonth, 1);
+      // Planned cohorts can start up to twelve months ahead (plus nursery
+      // lead time). A one-month horizon silently dropped every future crop,
+      // so an unknown-timing whole-bed crop appeared not to overlap anything.
+      const [start] = plantingBedEntryOffsets(planting, nowMonth, 24);
       if (!span || start === undefined) continue;
       const end = start + span - 1;
       if (planting.existing && end < 0) continue;

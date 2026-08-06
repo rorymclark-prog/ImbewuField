@@ -139,6 +139,26 @@ test('an unresolved shared-bed layout withholds reconciliation benchmark kg thro
   assert.deepEqual(result.notYetHarvested, []);
 });
 
+test('reconciliation anchors an existing crop once instead of reviving it beside next year’s crop', () => {
+  const now = new Date('2026-11-15T12:00:00Z');
+  const plantings = [
+    planting('existing-cabbage', 'cabbage', 'bed-a', { sowMonth: 8, existing: true }),
+    planting('next-beans', 'green-beans', 'bed-a', { sowMonth: 9 }),
+  ];
+
+  const intended = intendedKgByCropCycle(plantings, BEDS, 11);
+  assert.ok((intended.get('cabbage') ?? 0) > 0);
+  assert.ok((intended.get('green-beans') ?? 0) > 0);
+
+  const result = buildReconciliation(plantings, BEDS, [], [], 'year', now);
+  assert.deepEqual(
+    result.notYetHarvested.map((row) => row.cropKey).sort(),
+    ['cabbage', 'green-beans'],
+    'the later bean cohort is legal once existing cabbage is kept in its one real year',
+  );
+  assert.ok(result.notYetHarvested.every((row) => row.intendedKg !== null));
+});
+
 test('month and season reconciliation expose no intended kg when sources only give crop-cycle totals', () => {
   const onions = [planting('onion-a', 'onions', 'bed-a', { sowMonth: 4 })];
   for (const period of ['month', 'season'] as const) {

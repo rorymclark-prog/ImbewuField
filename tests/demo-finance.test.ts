@@ -17,10 +17,10 @@ import {
 } from '../lib/demo-farm.ts';
 import { DEFAULT_CROP_PRICES } from '../lib/crop-prices.ts';
 import { cropByKey } from '../lib/crop-catalog.ts';
+import { benchmarkAreaConflictBedLabels, estimatedYieldKgAdjusted } from '../lib/crop-plan.ts';
 import {
   bedsFromDesign,
   buildCropAliasIndex,
-  intendedKgByCropCycle,
   matchCropKey,
 } from '../lib/harvest-reconciliation.ts';
 import { suspectedDuplicateIncomeIds } from '../lib/duplicate-income.ts';
@@ -73,7 +73,25 @@ test('no sample harvest exceeds the seeded area at the catalog’s published upp
   const { production } = buildDemoFinance();
   const beds = bedsFromDesign(buildDemoFacilitatorState());
   const plantings = buildDemoCropPlan().plantings;
-  const intended = intendedKgByCropCycle(plantings, beds);
+  for (let month = 1; month <= 12; month++) {
+    assert.deepEqual(
+      benchmarkAreaConflictBedLabels(plantings, beds, month),
+      [],
+      `the sample plan overbooks mapped land when opened in month ${month}`,
+    );
+  }
+
+  // Once the independent area check above proves the plan is not granting two
+  // crops the same land, sum the complete crop-cycle area benchmarks. This
+  // fixture check deliberately includes finished one-off crops: its harvest
+  // ledger spans the full trailing year, not only what remains in the ground.
+  const intended = new Map<string, number>();
+  for (const planting of plantings) {
+    const bed = beds.find((candidate) => candidate.id === planting.bedId);
+    assert.ok(bed, `${planting.cropKey} is planted on a bed missing from the demo map`);
+    const kg = estimatedYieldKgAdjusted(planting, bed.areaM2, plantings);
+    if (kg > 0) intended.set(planting.cropKey, (intended.get(planting.cropKey) ?? 0) + kg);
+  }
 
   const harvested = new Map<string, number>();
   for (const row of production) {

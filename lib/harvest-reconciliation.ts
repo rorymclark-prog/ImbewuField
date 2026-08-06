@@ -193,15 +193,21 @@ export function matchCropKey(loggedText: string, index: Map<string, string>): st
  * Keep this total at crop-cycle scope. A caller may compare it with an actual
  * crop cycle only after it can identify that cycle's start and completion;
  * Planting currently has month numbers but no calendar year or completion
- * record, so this module deliberately does not perform that comparison.
+ * record, so this module deliberately does not perform that comparison. When
+ * the caller supplies `nowMonth`, one-off existing crops are anchored to their
+ * real forward cohort instead of being folded into the annual template.
  */
-export function intendedKgByCropCycle(plantings: Planting[], beds: PlanBed[]): Map<string, number> {
+export function intendedKgByCropCycle(
+  plantings: Planting[],
+  beds: PlanBed[],
+  nowMonth?: number,
+): Map<string, number> {
   // Delegate both arithmetic and its uncertainty gate to the plan's one
   // benchmark authority. In particular, an unverified-timing full-bed maize
   // record beside another crop has unknown overlap: computing each crop here
   // independently used to resurrect the exact double-counted kg that
   // buildPlanYieldBenchmark had correctly withheld.
-  const benchmark = buildPlanYieldBenchmark(plantings, beds);
+  const benchmark = buildPlanYieldBenchmark(plantings, beds, nowMonth);
   if (benchmark.knownKg === null) return new Map();
   return new Map(benchmark.byCrop.map((row) => [row.cropKey, row.kg]));
 }
@@ -341,7 +347,7 @@ export function buildReconciliation(
   if (periodMonths.length === 0) {
     return { matched: [], notYetHarvested: [], unmatchedPlanned: [], unplannedActivity: [] };
   }
-  const intendedByCrop = intendedKgByCropCycle(plantings, beds);
+  const intendedByCrop = intendedKgByCropCycle(plantings, beds, now.getMonth() + 1);
   const cropKeys = new Set(plantings.map((p) => p.cropKey));
 
   const productionInPeriod = uniqueLogsById(

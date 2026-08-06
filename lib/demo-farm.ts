@@ -77,6 +77,8 @@ const BED_DEFS: BedDef[] = [
   { id: 'demo-bed-4', xM: 4, yM: 17, wM: 1.5, hM: 4, type: 'bed' },
   { id: 'demo-bed-5', xM: 6.5, yM: 17, wM: 1.5, hM: 4, type: 'bed' },
   { id: 'demo-bed-6', xM: 9, yM: 17, wM: 2, hM: 4, type: 'bed' },
+  { id: 'demo-bed-7', xM: 12, yM: 17, wM: 1.5, hM: 4, type: 'bed' },
+  { id: 'demo-bed-8', xM: 14.5, yM: 17, wM: 1.5, hM: 4, type: 'bed' },
   { id: 'demo-hugel-1', xM: 12, yM: 13, wM: 2, hM: 3, type: 'hugel' },
 ];
 
@@ -117,7 +119,7 @@ export function buildDemoFacilitatorState(): FacilitatorDesignState {
   };
 }
 
-/* ── Crop plan: a full year across the 7 beds above ───────────────────────
+/* ── Crop plan: a full year across the 9 growing beds above ───────────────
    'mild-frost' rain pattern (summer rainfall, mild winter frost — matches
    DEMO_SITE). Mixes already-growing (existing:true) plantings with future
    ones, reuses each bed across the year (rotation), stacks a staggered
@@ -134,16 +136,20 @@ export function buildDemoCropPlan(): CropPlanState {
     { id: 'demo-planting-2', bedId: 'demo-bed-1', cropKey: 'green-beans', sowMonth: 10 },
     { id: 'demo-planting-3', bedId: 'demo-bed-1', cropKey: 'broccoli', sowMonth: 2 },
 
-    { id: 'demo-planting-4', bedId: 'demo-bed-2', cropKey: 'cabbage', sowMonth: 3, existing: true },
-    { id: 'demo-planting-5', bedId: 'demo-bed-2', cropKey: 'carrots', sowMonth: 7 },
-    { id: 'demo-planting-6', bedId: 'demo-bed-2', cropKey: 'tomatoes', sowMonth: 10 },
+    // The cabbage and carrot shares can coexist while their verified bed
+    // occupancy overlaps; together they stay below the whole mapped bed.
+    { id: 'demo-planting-4', bedId: 'demo-bed-2', cropKey: 'cabbage', sowMonth: 3, areaFraction: 0.55, existing: true },
+    { id: 'demo-planting-5', bedId: 'demo-bed-2', cropKey: 'carrots', sowMonth: 4, areaFraction: 0.4 },
+    { id: 'demo-planting-6', bedId: 'demo-bed-8', cropKey: 'tomatoes', sowMonth: 10 },
 
     { id: 'demo-planting-7', bedId: 'demo-bed-3', cropKey: 'lettuce', sowMonth: 5, areaFraction: 1 / 3, existing: true },
     { id: 'demo-planting-8', bedId: 'demo-bed-3', cropKey: 'lettuce', sowMonth: 7, areaFraction: 1 / 3 },
     { id: 'demo-planting-9', bedId: 'demo-bed-3', cropKey: 'lettuce', sowMonth: 9, areaFraction: 1 / 3 },
 
     { id: 'demo-planting-10', bedId: 'demo-bed-4', cropKey: 'onions', sowMonth: 4, existing: true },
-    { id: 'demo-planting-11', bedId: 'demo-bed-4', cropKey: 'maize', sowMonth: 10 },
+    // Grain-maize timing is not verified strongly enough to share a benchmark
+    // bed with onions, so the demo gives it its own mapped bed.
+    { id: 'demo-planting-11', bedId: 'demo-bed-7', cropKey: 'maize', sowMonth: 10 },
 
     { id: 'demo-planting-12', bedId: 'demo-bed-5', cropKey: 'garlic', sowMonth: 5, existing: true },
 
