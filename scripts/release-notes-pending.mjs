@@ -20,8 +20,16 @@
 import { execFileSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
+import { join } from 'node:path';
 
-const ROOT = fileURLToPath(new URL('..', import.meta.url));
+// NOTES_REPO_ROOT EXISTS SO THIS CHECK CAN BE TESTED, AND IT IS TEST-ONLY.
+//
+// The first version of the one-commit tolerance below shipped with no test, passed on its branch,
+// and failed the moment it merged. There was no way to write that test: the script always resolved
+// its own repository, so a fixture with known commits could not be handed to it. A gate nobody can
+// build a fixture for is a gate that gets fixed by pushing and hoping — which is what happened.
+// tests/release-notes-gate.test.ts now builds throwaway repositories and drives the real script.
+const ROOT = process.env.NOTES_REPO_ROOT || fileURLToPath(new URL('..', import.meta.url));
 
 // Where a farmer-visible change can come from. Docs, tests, scripts and functions/ are excluded
 // on purpose: none of them change what is on the screen in front of someone standing in a field.
@@ -33,7 +41,7 @@ function sh(args) {
   return execFileSync('git', args, { cwd: ROOT, encoding: 'utf8' }).trim();
 }
 
-const source = readFileSync(new URL('../lib/release-notes.ts', import.meta.url), 'utf8');
+const source = readFileSync(join(ROOT, 'lib/release-notes.ts'), 'utf8');
 const shaMatch = source.match(/sha:\s*'([0-9a-f]{7,40})'/);
 
 if (!shaMatch) {
@@ -67,7 +75,7 @@ if (rows.length === 0) {
   process.exit(0);
 }
 
-// ONE COMMIT OF LAG IS TOLERATED, AND ONLY WHEN IT IS HEAD ITSELF.
+// EXACTLY ONE UNNOTED USER-FACING COMMIT IS TOLERATED. TWO IS DRIFT AND STILL FAILS.
 //
 // WHY: made blocking on main (2026-08-03), this check turned main red on six consecutive merges on
 // 6 August — every one of them a false alarm. A squash merge creates a NEW commit on main, and the
@@ -78,14 +86,20 @@ if (rows.length === 0) {
 //
 // The fix is not to weaken the rule but to state it correctly: what matters is that notes do not
 // DRIFT. A note that lands on the next push, minutes later, is not the stale banner Rory complained
-// about four times — 55 unnoted commits was. So one commit of lag passes and TWO still fail, which
-// is what stops drift from accumulating. Anything older than HEAD is real drift and stays blocking.
-const headSha = sh(['rev-parse', 'HEAD']);
-if (rows.length === 1 && sh(['rev-parse', rows[0][0]]) === headSha) {
-  console.log('  ⚠ 1 commit — HEAD itself — has no note yet:\n');
+// about four times — 55 unnoted commits was.
+//
+// THE FIRST ATTEMPT AT THIS TOLERATED ONE COMMIT ONLY WHEN IT WAS HEAD ITSELF, AND THAT WAS WRONG.
+// It passed on the branch and failed the moment it merged: the merge commit (cb08fe9) touched only
+// .github/, scripts/ and docs/, so it is not user-facing and does not appear here — which left the
+// tolerated commit (b99560c) one place below HEAD and no longer matching. Any docs-only or CI-only
+// commit landing on top would have done the same. Position is not the property worth testing;
+// COUNT is. One unnoted user-facing commit is a note that has not been written yet, wherever it
+// sits. Two means one was skipped, which is the drift this check exists to stop.
+if (rows.length === 1) {
+  console.log('  ⚠ 1 commit has no farmer-facing note yet:\n');
   console.log(`     ${rows[0][0]}  ${rows[0][1]}  ${rows[0][2]}\n`);
-  console.log(`  Tolerated: a squash merge cannot carry a note stamped with its own sha. Stamp the
-  next entry with '${sh(['rev-parse', '--short', 'HEAD'])}' and this clears. A SECOND unnoted commit fails.\n`);
+  console.log(`  Tolerated — a squash merge cannot carry a note stamped with its own sha. Stamp the
+  next entry with '${sh(['rev-parse', '--short', 'HEAD'])}'. A SECOND unnoted commit fails this check.\n`);
   process.exit(0);
 }
 
