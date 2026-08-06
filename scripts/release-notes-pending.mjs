@@ -67,6 +67,28 @@ if (rows.length === 0) {
   process.exit(0);
 }
 
+// ONE COMMIT OF LAG IS TOLERATED, AND ONLY WHEN IT IS HEAD ITSELF.
+//
+// WHY: made blocking on main (2026-08-03), this check turned main red on six consecutive merges on
+// 6 August — every one of them a false alarm. A squash merge creates a NEW commit on main, and the
+// note travelling inside it was necessarily stamped with a sha that predates it. So the note can
+// never cover the commit that carries it, and the next branch stamps THAT sha and lands another
+// unnoted squash. Codex chased its own tail, permanently exactly one commit behind, and the job
+// died at this step on every push — which also meant the Firestore rules step below it never ran.
+//
+// The fix is not to weaken the rule but to state it correctly: what matters is that notes do not
+// DRIFT. A note that lands on the next push, minutes later, is not the stale banner Rory complained
+// about four times — 55 unnoted commits was. So one commit of lag passes and TWO still fail, which
+// is what stops drift from accumulating. Anything older than HEAD is real drift and stays blocking.
+const headSha = sh(['rev-parse', 'HEAD']);
+if (rows.length === 1 && sh(['rev-parse', rows[0][0]]) === headSha) {
+  console.log('  ⚠ 1 commit — HEAD itself — has no note yet:\n');
+  console.log(`     ${rows[0][0]}  ${rows[0][1]}  ${rows[0][2]}\n`);
+  console.log(`  Tolerated: a squash merge cannot carry a note stamped with its own sha. Stamp the
+  next entry with '${sh(['rev-parse', '--short', 'HEAD'])}' and this clears. A SECOND unnoted commit fails.\n`);
+  process.exit(0);
+}
+
 console.log(`  ⚠ ${rows.length} commit(s) touching app/ components/ lib/ have no farmer-facing note:\n`);
 for (const [sha, date, subject] of rows) console.log(`     ${sha}  ${date}  ${subject}`);
 console.log(`
