@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { registerHooks } from 'node:module';
+import { readFileSync } from 'node:fs';
 
 import type { SavedInvoice } from '../lib/invoices.ts';
 
@@ -39,6 +40,17 @@ const {
   saveNextInvoiceNumber,
   setInvoiceStatus,
 } = await import('../lib/invoices.ts');
+const {
+  CROP_ENTRY_OPTIONS,
+  cropEntryOption,
+  loadCustomCropNames,
+  saveCustomCropName,
+} = await import('../lib/crop-entry.ts');
+const {
+  cashLedgerSales,
+  invoiceSaleDocumentId,
+  invoiceSalesForPaidInvoice,
+} = await import('../lib/invoice-sales.ts');
 const { accountLocalStorageKey } = await import('../lib/account-local-storage.ts');
 hooks.deregister();
 
@@ -112,6 +124,63 @@ test('products keep legitimate zero prices but reject unknown or impossible mone
     { desc: 'spinach', unit: 'kg', price: 20 },
     { desc: 'Donation', unit: 'each', price: 0 },
   ]);
+});
+
+test('crop pickers come from the reviewed catalogue and remember a farmer-added crop per account', () => {
+  installBrowser();
+  assert.ok(CROP_ENTRY_OPTIONS.length >= 20);
+  assert.equal(cropEntryOption('Spinach')?.key, 'swiss-chard');
+  assert.equal(cropEntryOption('dry-beans')?.label, 'Dry beans (sugar beans)');
+
+  assert.equal(saveCustomCropName('  Garden special  '), 'Garden special');
+  assert.equal(saveCustomCropName('garden special'), 'garden special');
+  assert.deepEqual(loadCustomCropNames(), ['garden special']);
+
+  // A catalogue alias resolves to its reviewed name instead of creating a rival crop entry.
+  assert.equal(saveCustomCropName(' spinach '), 'Swiss chard (spinach)');
+  assert.deepEqual(loadCustomCropNames(), ['garden special']);
+});
+
+test('a paid invoice creates kg crop-sale evidence while cash totals still count the invoice once', () => {
+  const paid = invoice({
+    id: 'invoice-kg',
+    billTo: 'Spaza shop',
+    status: 'paid',
+    paidAt: '2026-08-06T09:00:00.000Z',
+    items: [
+      { desc: 'Cabbage', qty: 12.5, unit: 'kg', price: 9 },
+      { desc: 'Spinach', qty: 2, unit: 'crates', price: 80 },
+    ],
+  });
+  const generated = invoiceSalesForPaidInvoice(paid);
+  assert.deepEqual(generated, [{
+    crop: 'Cabbage', kg: 12.5, amount: 112.5, buyer: 'Spaza shop',
+    sold_at: paid.paidAt, invoice_id: 'invoice-kg', invoice_line: 0,
+  }]);
+  assert.deepEqual(invoiceSalesForPaidInvoice({ ...paid, status: 'unpaid', paidAt: undefined }), []);
+  assert.equal(
+    invoiceSaleDocumentId('farmer/one', 'invoice/kg', 0),
+    'farmer%2Fone_invoice_invoice%2Fkg_0',
+  );
+
+  const manual = { invoice_id: null, amount: 40 };
+  const linked = { invoice_id: 'invoice-kg', amount: 112.5 };
+  assert.deepEqual(cashLedgerSales([manual, linked], ['invoice-kg']), [manual]);
+  assert.deepEqual(
+    cashLedgerSales([manual, linked], []),
+    [manual, linked],
+    'a second device without the local invoice must not make its cloud sale income disappear',
+  );
+});
+
+test('the invoice and records screens wire the crop picker, price book and paid-invoice sale sync', () => {
+  const invoicePage = readFileSync(new URL('../app/invoice/page.tsx', import.meta.url), 'utf8');
+  const records = readFileSync(new URL('../components/MyRecords.tsx', import.meta.url), 'utf8');
+  assert.match(invoicePage, /<CropSelect/);
+  assert.match(invoicePage, /await syncInvoiceSales\(updated\)/);
+  assert.match(invoicePage, /guide price, July 2026/);
+  assert.match(records, /<CropSelect/);
+  assert.match(records, /priceFor\(form\.cropKey, priceOverrides\)/);
 });
 
 test('invoice totals are reconciled from valid line items rather than trusted storage', () => {

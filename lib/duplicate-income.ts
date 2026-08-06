@@ -1,20 +1,18 @@
 /**
  * Spotting the same sale counted twice.
  *
- * THE PROBLEM. The finances screen adds SalesLog rows to paid-invoice totals with no matching key,
- * no dedupe and no warning, and the data model cannot express the link: a SavedInvoice carries no
- * sale reference and a SalesLog carries no invoice field.
+ * THE PROBLEM. A farmer can still manually enter a sale that is already represented by a paid
+ * invoice. Invoice-generated crop rows now carry invoice_id and are excluded from cash totals;
+ * this heuristic is for older and manually duplicated rows that carry no such exact link.
  *
- * Worse, the app actively pushes a farmer into the double entry. The harvest reconciliation panel
- * is passed only production and sales — never invoices — so a sale made by invoice alone makes it
- * report "harvested 40 kg, only 0 kg sold, 40 kg unaccounted for". The farmer then logs the sale to
- * clear that flag, and logging it is exactly what doubles the money: 40 kg of spinach to a shop for
- * R1 200 shows as R2 400 of income, with both rows going into the CSV handed to an accountant.
+ * Paid invoice lines measured in kg now create exact linked sale rows. Those rows give harvest
+ * reconciliation the crop and weight it needs without asking the farmer to enter the sale again,
+ * while invoice_id keeps the linked row out of cash totals on the device holding that invoice.
+ * Older invoices and manually duplicated sales have no exact link, so this heuristic still matters.
  *
- * WHAT THIS DOES AND DELIBERATELY DOES NOT DO. It flags suspicion. It does not merge rows, suppress
- * one, or auto-create anything — all of those change what is RECORDED, and what a farmer's books
- * say is not a decision a heuristic gets to make. Whether a paid invoice should auto-create its
- * matching sale is an open question for Rory (D9 in the audit).
+ * WHAT THIS DOES AND DELIBERATELY DOES NOT DO. It flags suspicion. It does not merge or suppress
+ * unlinked historical rows, because what a farmer's books say is not a decision a heuristic gets
+ * to make. Exact invoice-created rows are handled by their invoice_id, not by this amount matcher.
  *
  * The rule is deliberately narrow so it does not cry wolf: the same amount, within a few days. Two
  * genuinely separate sales of the same value in the same week will occasionally be flagged, and
@@ -78,4 +76,4 @@ export const DUPLICATE_ROW_NOTE =
 
 /** Shown once under the ledger, whether or not anything is flagged. */
 export const DUPLICATE_LEDGER_FOOTER =
-  'A paid invoice already counts as income. Do not also log it as a sale.';
+  'Paid invoice crop lines enter the sales book automatically and count once. Do not enter them again.';

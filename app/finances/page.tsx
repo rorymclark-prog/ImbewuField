@@ -23,6 +23,7 @@ import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
+import { cashLedgerSales } from '@/lib/invoice-sales';
 
 /* ── Format helpers ──────────────────────────────────────────────────────── */
 
@@ -79,7 +80,8 @@ interface SummaryProps {
 }
 
 function SummaryCards({ sales, production, expenses, invoices, loading }: SummaryProps) {
-  const thisMonthSales = sales.filter((s) => isThisMonth(s.sold_at));
+  const thisMonthSales = cashLedgerSales(sales, invoices.map((invoice) => invoice.id))
+    .filter((s) => isThisMonth(s.sold_at));
   const thisMonthPaidInvoices = invoices.filter((i) => i.status === 'paid' && isThisMonth(i.paidAt));
   const totalRevenue = thisMonthSales.reduce((acc, s) => acc + (s.amount ?? 0), 0)
     + thisMonthPaidInvoices.reduce((acc, i) => acc + (i.total ?? 0), 0);
@@ -167,7 +169,7 @@ interface PhoneRow {
 }
 
 function toPhoneRows(sales: SalesLog[], expenses: ExpenseLog[], invoices: SavedInvoice[]): PhoneRow[] {
-  const saleRows: PhoneRow[] = sales.map((s) => ({
+  const saleRows: PhoneRow[] = cashLedgerSales(sales, invoices.map((invoice) => invoice.id)).map((s) => ({
     kind: 'sale', id: s.id, iso: s.sold_at ?? '',
     title: s.crop, subtitle: s.buyer ? `via ${s.buyer} · ${s.kg} kg` : `${s.kg} kg`,
     amount: s.amount ?? 0, positive: true,
@@ -661,7 +663,7 @@ interface LedgerRow { kind: 'sale' | 'expense' | 'harvest' | 'invoice'; id: stri
 // Builds the unified ledger (sales + expenses + harvest + paid invoices) for a period.
 // Shared by the desktop sheet and the phone CSV export so both stay in sync.
 function buildLedgerRows(sales: SalesLog[], expenses: ExpenseLog[], production: ProductionLog[], invoices: SavedInvoice[], period: Period, now: Date): LedgerRow[] {
-  const saleRows: LedgerRow[] = sales
+  const saleRows: LedgerRow[] = cashLedgerSales(sales, invoices.map((invoice) => invoice.id))
     .filter((s) => inPeriod(s.sold_at, period, now))
     .map((s) => ({ kind: 'sale' as const, id: s.id, iso: s.sold_at ?? '', date: fmtDate(s.sold_at), desc: `${s.crop} sale`, qty: `${s.kg} kg`, inAmt: s.amount ?? 0, source: s.buyer || 'Direct sale', outAmt: null }));
   const expenseRows: LedgerRow[] = expenses
@@ -673,15 +675,10 @@ function buildLedgerRows(sales: SalesLog[], expenses: ExpenseLog[], production: 
   const invoiceRows: LedgerRow[] = invoices
     .filter((i) => i.status === 'paid' && inPeriod(i.paidAt, period, now))
     .map((i) => ({ kind: 'invoice' as const, id: i.id, iso: i.paidAt ?? i.dateISO, date: fmtDate(i.paidAt ?? i.dateISO), desc: `Invoice #${i.no} — ${i.billTo || 'No buyer'}`, qty: '—', inAmt: i.total ?? 0, source: i.paymentMethod ? `Invoice · ${paymentMethodLabel(i.paymentMethod)}` : 'Invoice', outAmt: null }));
-  // THE SAME SALE CAN BE COUNTED TWICE. Revenue is sales plus paid invoices with no matching key,
-  // and the model cannot express the link — a SavedInvoice has no sale reference and a SalesLog has
-  // no invoice field. The app then pushes the farmer into it: harvest reconciliation is never shown
-  // the invoices, so an invoice-only sale reads as "40 kg unaccounted for", and clearing that flag
-  // by logging the sale is exactly what doubles the money.
-  //
-  // Flagged, never merged. Which row is the real one — or whether a paid invoice should create its
-  // sale automatically — changes what the farmer's books SAY, and that is Rory's decision (D9), not
-  // a heuristic's.
+  // Invoice-generated crop rows carry invoice_id and are deliberately absent from saleRows above:
+  // the invoice is the money entry while its linked sale rows supply crop/kg evidence to harvest
+  // reconciliation. This remaining heuristic catches a farmer manually entering the same sale as
+  // well; those unlinked rows still need human review rather than silent deletion.
   const suspect = suspectedDuplicateIncomeIds(
     [...saleRows, ...invoiceRows].map((r) => ({
       id: `${r.kind}-${r.id}`,

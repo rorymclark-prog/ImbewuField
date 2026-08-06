@@ -35,6 +35,14 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '6 August',
+    sha: 'aaa19e1',
+    changes: [
+      'Harvests, sales and invoices now have crop pickers with honest guide prices',
+      'Paid invoice kg lines now appear in My Records automatically and count once',
+    ],
+  },
+  {
+    when: '6 August',
     sha: 'f19d925',
     changes: [
       'Log harvest now opens a full records page, without the map beside it',

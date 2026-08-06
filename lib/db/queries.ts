@@ -6,7 +6,7 @@
 
 import {
   collection, doc, getDoc, getDocs, setDoc, updateDoc, deleteDoc,
-  addDoc, query, where, orderBy, serverTimestamp,
+  addDoc, query, where, orderBy, serverTimestamp, writeBatch,
 } from 'firebase/firestore';
 import { ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { getFirebase } from '@/lib/firebase/init';
@@ -28,6 +28,8 @@ import type { CourseAssignment } from '@/lib/course-assignments';
 import { assignmentDocId } from '@/lib/course-assignments';
 import type { CourseSubmission } from '@/lib/course-gating';
 import { courseSubmissionDocId } from '@/lib/course-gating';
+import type { SavedInvoice } from '@/lib/invoices';
+import { invoiceSaleDocumentId, invoiceSalesForPaidInvoice } from '@/lib/invoice-sales';
 
 // Every function below is a real Firestore/Storage writer or a reader that could
 // surface the real signed-in user's data. Each checks isSampleMode() FIRST and
@@ -137,6 +139,47 @@ export async function addSale(row: Partial<SalesLog>): Promise<void> {
   const f = fb(); const u = uid(); if (!f || !u) return;
   const me = await getMyProfile();
   await addDoc(collection(f.db, 'sales_logs'), { ...row, profile_id: u, org_id: me?.org_id ?? null, created_at: serverTimestamp() });
+}
+
+/** Keep the crop-sale book in lockstep with one invoice's paid state. */
+export async function syncInvoiceSales(invoice: SavedInvoice): Promise<void> {
+  const drafts = invoiceSalesForPaidInvoice(invoice);
+  if (isSampleMode()) {
+    getSandboxSales()
+      .filter((sale) => sale.invoice_id === invoice.id)
+      .forEach((sale) => deleteSandboxSale(sale.id));
+    drafts.forEach((draft) => addSandboxSale({
+      ...draft,
+      id: invoiceSaleDocumentId('demo', invoice.id, draft.invoice_line ?? 0),
+    }));
+    return;
+  }
+  const f = fb(); const u = uid();
+  if (!f || !u) throw new Error('Sign in before marking an invoice paid');
+  const existing = await getDocs(query(
+    collection(f.db, 'sales_logs'),
+    where('profile_id', '==', u),
+    where('invoice_id', '==', invoice.id),
+  ));
+  const me = await getMyProfile();
+  const batch = writeBatch(f.db);
+  const desiredIds = new Set(drafts.map((draft) => (
+    invoiceSaleDocumentId(u, invoice.id, draft.invoice_line ?? 0)
+  )));
+  existing.docs.forEach((row) => {
+    if (!desiredIds.has(row.id)) batch.delete(row.ref);
+  });
+  drafts.forEach((draft) => {
+    const id = invoiceSaleDocumentId(u, invoice.id, draft.invoice_line ?? 0);
+    batch.set(doc(f.db, 'sales_logs', id), {
+      ...draft,
+      profile_id: u,
+      org_id: me?.org_id ?? null,
+      garden_id: null,
+      created_at: serverTimestamp(),
+    });
+  });
+  await batch.commit();
 }
 export async function updateSale(id: string, patch: Partial<SalesLog>): Promise<void> {
   if (isSampleMode()) { updateSandboxSale(id, patch); return; }
