@@ -603,10 +603,27 @@ export function buildYearReport(plantings: Planting[], beds: PlanBed[]): string[
   const peakMonth = harvestMonths.reduce((best, m) => (kgByMonth[m] > kgByMonth[best] ? m : best), harvestMonths[0]);
   const quietMonths = months.filter((m) => kgByMonth[m] === 0);
 
+  // NAME THE SCOPE, OR THE TWO NUMBERS READ AS A CONTRADICTION.
+  //
+  // This paragraph counts NEW plantings only; the food charts three inches away count everything
+  // in the ground, because they answer "what will be on the table" (see buildFoodAvailability).
+  // Both framings are deliberate and both are right — but nothing said so, and the gap is not
+  // small. Measured on a four-planting garden with two crops already growing: the chart drew 80kg
+  // peaking in July while this sentence said 20kg peaking in April. Four times the total and a
+  // different month, on one screen, with no word to reconcile them.
+  //
+  // The fix is not to make the numbers match. Forcing one set of inputs would delete the
+  // food-security framing that already has its own reason. What was missing is the disclosure.
+  const existingCount = plantings.length - toPlant.length;
   const paragraphs: string[] = [];
   paragraphs.push(
-    `This plan should bring in roughly ${totalKg.toFixed(0)}kg over the year, peaking around ` +
-    `${MONTHS_SHORT[peakMonth - 1]} (~${kgByMonth[peakMonth].toFixed(0)}kg that month).`,
+    existingCount > 0
+      ? `The new plantings in this plan should add roughly ${totalKg.toFixed(0)}kg over the year, `
+        + `peaking around ${MONTHS_SHORT[peakMonth - 1]} (~${kgByMonth[peakMonth].toFixed(0)}kg that month). `
+        + `${existingCount === 1 ? 'One crop' : `${existingCount} crops`} already in the ground `
+        + `${existingCount === 1 ? 'is' : 'are'} not counted here — the food charts include ${existingCount === 1 ? 'it' : 'them'}.`
+      : `This plan should bring in roughly ${totalKg.toFixed(0)}kg over the year, peaking around `
+        + `${MONTHS_SHORT[peakMonth - 1]} (~${kgByMonth[peakMonth].toFixed(0)}kg that month).`,
   );
 
   if (quietMonths.length) {

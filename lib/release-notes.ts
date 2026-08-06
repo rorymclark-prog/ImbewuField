@@ -35,13 +35,14 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '6 August',
-    sha: '57921b6',
+    sha: '41774a4',
     changes: [
       'Card and panel outlines are all the same colour now, instead of two shades',
       'When you sold more than you logged picking, Finance now says the kept amount is not known',
       'It no longer blames a short harvest on you when the picking was simply not written down',
       'The printed crop plan shows your climate again, instead of saying "Not set"',
       'The work-load chart no longer counts mulching twice, so busy months are not overstated',
+      'The year summary now says when crops already growing are not counted in its total',
     ],
   },
   {

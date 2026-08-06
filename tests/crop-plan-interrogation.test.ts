@@ -233,13 +233,24 @@ test('no crop is counted at an impossible planting density', () => {
 
 // ── 4. One quantity, one number ─────────────────────────────────────────────
 
+// THIS GUARD USED TO REBUILD THE CHART WITH THE PROSE'S OWN `!p.existing` FILTER, so it compared
+// the prose against a chart nobody draws and could not fail. app/facilitator/crops/page.tsx:702
+// passes ALL plantings. Measured with two crops already growing, the real chart drew 80kg peaking
+// in July while the prose said 20kg peaking in April — four times the total, a different month,
+// and this test green throughout.
+//
+// The two scopes are deliberate: the prose is "what's new from this plan", the charts are "what
+// will be on the table". So equality is only required where the scopes coincide — no existing
+// plantings — and where they do not, what is required is that the prose SAYS so. Both halves can
+// fail, which is the point.
 test('the year-ahead prose quotes the same monthly kg the chart draws', () => {
   const disagreements: string[] = [];
   for (const run of sweep([8])) {
+    if (run.plantings.some((p) => p.existing)) continue; // scopes differ on purpose — covered below
     const prose = buildYearReport(run.plantings, run.beds);
     const peak = prose[0]?.match(/peaking around (\w+) \(~([\d.]+)kg that month\)/);
     if (!peak) continue;
-    const chart = buildFoodValueByMonth(run.plantings.filter((p) => !p.existing), run.beds, {});
+    const chart = buildFoodValueByMonth(run.plantings, run.beds, {});
     const monthIdx = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].indexOf(peak[1]) + 1;
     const drawn = chart[monthIdx].kg;
     // Both sides round to whole kg for display; a whole-kg tolerance is display
@@ -255,6 +266,58 @@ test('the year-ahead prose quotes the same monthly kg the chart draws', () => {
     }
   }
   assert.deepEqual(disagreements.slice(0, 6), [], `${disagreements.length} screens showing two numbers for one quantity`);
+});
+
+test('when crops are already growing, the prose says what it is not counting', () => {
+  // The other half of the same defect. Where the prose counts less than the chart beside it, a
+  // farmer is owed a sentence explaining why — otherwise the smaller number reads as the plan
+  // failing, or the larger one as the prose being wrong.
+  // Built here rather than taken from sweep(): the sweep's generated plans never mark a planting
+  // `existing`, so a version of this test that read from it passed without exercising anything.
+  // That failure is why the `checked > 0` assertion below exists and stays.
+  const runs = [1, 2].map((existingCount) => {
+    const beds = [
+      { id: 'b1', label: 'Bed 1', areaM2: 10 },
+      { id: 'b2', label: 'Bed 2', areaM2: 10 },
+      { id: 'b3', label: 'Bed 3', areaM2: 10 },
+    ];
+    const growing = [
+      { id: 'e1', cropKey: 'swiss-chard', bedId: 'b1', sowMonth: 3, existing: true },
+      { id: 'e2', cropKey: 'cabbage', bedId: 'b2', sowMonth: 4, existing: true },
+    ].slice(0, existingCount);
+    return {
+      label: `${existingCount} already growing`,
+      beds,
+      plantings: [
+        ...growing,
+        { id: 'n1', cropKey: 'lettuce', bedId: 'b3', sowMonth: 2 },
+        { id: 'n2', cropKey: 'carrot', bedId: 'b3', sowMonth: 8 },
+      ],
+    };
+  }) as unknown as { label: string; beds: PlanBed[]; plantings: Planting[] }[];
+
+  const silent: string[] = [];
+  let checked = 0;
+  for (const run of runs) {
+    const existing = run.plantings.filter((p) => p.existing);
+    if (!existing.length) continue;
+    const prose = buildYearReport(run.plantings, run.beds);
+    if (!prose.length) continue;
+    checked += 1;
+
+    const chartKg = buildFoodValueByMonth(run.plantings, run.beds, {});
+    const chartTotal = Array.from({ length: 12 }, (_, i) => chartKg[i + 1].kg).reduce((a, b) => a + b, 0);
+    const quoted = Number(prose[0].match(/roughly ([\d.]+)kg/)?.[1] ?? NaN);
+    if (!Number.isFinite(quoted)) continue;
+
+    // Only demand the disclosure where the numbers actually diverge enough to read as a conflict.
+    if (Math.abs(chartTotal - quoted) <= 1) continue;
+    if (!/not counted here/.test(prose[0])) {
+      silent.push(`${run.label} — prose says ${quoted}kg, charts total ${chartTotal.toFixed(0)}kg, no explanation`);
+    }
+  }
+  assert.ok(checked > 0, 'no swept plan had an already-growing crop, so this proves nothing — fix the sweep');
+  assert.deepEqual(silent.slice(0, 6), [], `${silent.length} screens where two totals sit together unexplained`);
 });
 
 test('the prose never calls a month quiet while the chart shows food coming in', () => {
