@@ -28,6 +28,7 @@ import { buildCoverMarkdown } from '@/lib/report-cover';
 import { buildMonitoringPlan, monitoringMarkdown } from '@/lib/report-monitoring';
 import { buildRiskRegister, riskRegisterMarkdown } from '@/lib/report-risk';
 import { assembleReportDocument } from '@/lib/report-assemble';
+import { describeGenerationFailure } from '@/lib/report-generation-errors';
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
 
@@ -745,8 +746,28 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
       batchResults[idx] = text + (cutShort
         ? '\n\n_[This section may be incomplete: the model reached its output limit.]_\n'
         : '');
-    } catch {
-      batchResults[idx] = '\n\n_[A section could not be generated — please regenerate the report.]_\n';
+    } catch (err) {
+      // THE BARE `catch {}` THIS REPLACES COST A WHOLE AFTERNOON.
+      //
+      // On 2026-08-06 Rory generated a Comprehensive report and got eleven identical placeholders:
+      // "A section could not be generated — please regenerate the report." Every one of the 11
+      // batches had failed, so the document was three pages of code-authored sections and nothing
+      // else. He reported the report generator as broken.
+      //
+      // It was not broken. The API had answered every call with a clear, actionable 400:
+      // "Your credit balance is too low to access the Anthropic API." The catch had no error
+      // binding at all, threw that away, and substituted advice of its own — advice that could
+      // never work, because regenerating costs credit that does not exist. It would have failed
+      // identically, forever. Diagnosing it took reading the route, counting the batches and
+      // calling the API by hand.
+      //
+      // This is the app's own signature bug wearing a new coat: a plausible value standing in for
+      // a real one, indistinguishable in the output. Here the value was an error message.
+      //
+      // So: say what happened, and never tell the farmer to retry something that cannot succeed.
+      const detail = describeGenerationFailure(err);
+      console.error(`[generate-report] batch ${idx} failed: ${detail.log}`);
+      batchResults[idx] = `\n\n_[${detail.reader}]_\n`;
     }
   };
 

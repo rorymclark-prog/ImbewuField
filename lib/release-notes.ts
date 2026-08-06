@@ -35,7 +35,7 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '6 August',
-    sha: '41774a4',
+    sha: '49040ed',
     changes: [
       'Card and panel outlines are all the same colour now, instead of two shades',
       'When you sold more than you logged picking, Finance now says the kept amount is not known',
