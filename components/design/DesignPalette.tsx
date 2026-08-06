@@ -72,7 +72,7 @@ interface ActiveLayers {
   access: boolean;
   animals: boolean;
   ground: boolean;
-  baseMap: boolean;
+  references: boolean;
   boundary: boolean;
   labels: boolean;
   symbols: boolean;
@@ -261,15 +261,14 @@ const GROUND_FEATURE_KINDS: GroundFeatureKind[] = ['boundary', 'house', 'patio',
 // Ordered by the Scale of Permanence (water → earthworks → access → structures → planting),
 // with the reference/overlay layers bracketing it.
 const LAYER_TOGGLES: Array<{ key: keyof ActiveLayers; labelKey: string; icon: string }> = [
-  { key: 'baseMap', labelKey: 'designPaletteLayerBase', icon: '🛰️' },
-  // The property fence, sitting next to Base map because it is the other reference layer the
+  { key: 'references', labelKey: 'designPaletteLayerBase', icon: '🛰️' },
+  // The property fence, sitting next to Site references because it is the other reference layer the
   // farmer did not draw in the Studio. Before this it had no switch of its own: a boundary
-  // inherited from a ring traced on the main map could only be removed by hiding the satellite
-  // photo along with it.
+  // inherited from a ring traced on the main map could only be removed by hiding all site context.
   { key: 'boundary', labelKey: 'designPaletteLayerBoundary', icon: '🚧' },
   // "Existing", not "Ground": this layer is the farmer's EXISTING site reality (house/patio/lawn/
   // veg garden the app draws), i.e. the "Draw what's already here" chips — distinct from the
-  // proposed Structures layer and from the satellite Base map. (Fable Q1; internal key stays.)
+  // proposed Structures layer and from site-reference context. (Fable Q1; internal key stays.)
   { key: 'ground', labelKey: 'designPaletteLayerExisting', icon: '🏠' },
   { key: 'water', labelKey: 'designPaletteLayerWater', icon: '💧' },
   { key: 'earthworks', labelKey: 'designPaletteLayerEarthworks', icon: '⛏️' },

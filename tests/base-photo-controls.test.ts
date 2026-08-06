@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 
 import {
   activeBaseMPerPx,
@@ -52,6 +53,18 @@ test('the flag alone never shows a photo that does not exist', () => {
   // A stale/corrupt flag with no image behind it must read as "on the satellite", not as a
   // photo base with nothing to paint.
   assert.equal(basePhotoControls({ useCustomBase: true, customBase: null }).showingPhoto, false);
+});
+
+test('paper mode, not the site-reference layer, is the one authority for base imagery', () => {
+  const canvas = readFileSync(new URL('../components/design/DesignCanvas.tsx', import.meta.url), 'utf8');
+  const i18n = readFileSync(new URL('../lib/i18n.tsx', import.meta.url), 'utf8');
+
+  assert.match(canvas, /const onPaper = basePhoto\?\.mode === 'blank';/);
+  assert.match(canvas, /\{satDataUrl \? \(/, 'satellite pixels must not be gated by the reference-layer switch');
+  assert.match(canvas, /activeLayers\.references/, 'the separate overlay state must name site references');
+  assert.doesNotMatch(canvas, /activeLayers\.baseMap/, 'a name that implies image control invites a second base authority');
+  assert.match(i18n, /designCanvasHideBase: 'Hide site references'/);
+  assert.match(i18n, /designPaletteLayerBase: 'Site references'/);
 });
 
 test('blank keeps every placed-area reading from the base it replaced', () => {

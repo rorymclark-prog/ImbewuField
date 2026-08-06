@@ -98,12 +98,12 @@ interface ActiveLayers {
   access: boolean; // paths/gates/driveway only
   animals: boolean;
   ground: boolean; // farmer-drawn ground areas (house/patio/lawn/veg/orchard/cleared)
-  baseMap: boolean; // satellite reference underlay (auto-detected roof/driveway/… + the boundary)
-  // The property fence, on its own switch. It used to ride on baseMap alone, so a farmer who
+  references: boolean; // boundary + auto-detected/traced site context; never the satellite pixels
+  // The property fence, on its own switch. It used to ride on references alone, so a farmer who
   // wanted the fence off the drawing had to turn the satellite photo off with it — and when the
   // boundary comes from a ring traced on the main map (the usual case) there was no other control
   // for it anywhere in the Studio (Rory: "i need to be able to get rid of this fence"). Still
-  // nested under baseMap: "Base map off" keeps meaning "all reference context off".
+  // nested under references: "Site references off" keeps meaning "all reference context off".
   boundary: boolean;
   labels: boolean; // the text name pills on every feature — off = declutter the map
   symbols: boolean; // centred item icon discs — off = cleaner dense drafting view
@@ -173,9 +173,9 @@ export interface DesignCanvasProps {
    *  The page commits both in ONE onChange, so a block of seven beds and its six paths is one
    *  undo entry rather than thirteen. */
   onPlaceBedBlock?: (placements: BedBlockPlacement[], paths: Array<Array<[number, number]>>) => void;
-  // Quick in-canvas toggle of the base-map layer (the top-left eye). Optional so the canvas
+  // Quick in-canvas toggle of site references (the top-left eye). Optional so the canvas
   // still renders if a caller doesn't wire it.
-  onToggleBaseMap?: () => void;
+  onToggleSiteReferences?: () => void;
   // Quick in-canvas toggle of the Sector energies overlay (the top-left ☀️ button) — the
   // discoverable twin of the "Sector energies" entry in the Layers popover.
   onToggleSector?: () => void;
@@ -628,7 +628,7 @@ export default function DesignCanvas({
   baseAlign = null,
   bedBlock = null,
   onPlaceBedBlock,
-  onToggleBaseMap,
+  onToggleSiteReferences,
   onToggleSector,
   basePhoto,
   slopeDeg,
@@ -1937,9 +1937,9 @@ export default function DesignCanvas({
   // Reference-layer (boundary + traced/adopted underlay) visibility, derived from the toggle.
   // 'hidden' drops them from the tree entirely (so they neither clutter nor interact);
   // 'dimmed' fades them to a faint context layer; 'shown' is today's full-strength render.
-  // Base-map reference (boundary + auto-detected/traced underlay) is shown/hidden by the
-  // "Base map" layer toggle now — one consistent control alongside every other layer.
-  const refShown = activeLayers.baseMap;
+  // Site references (boundary + auto-detected/traced underlay) are shown/hidden independently
+  // of the imagery choice. Satellite/blank is the only authority for the painted base.
+  const refShown = activeLayers.references;
   const refOpacityFactor = 1;
 
   // Approximate on-contour guide lines (parallel, perpendicular to the slope). Cheap to compute
@@ -4311,16 +4311,15 @@ export default function DesignCanvas({
         </div>
       )}
 
-      {/* Quick base-map declutter — top-left. Toggles the "Base map" layer (boundary +
-          auto-detected/traced underlay) so the farmer can clear the satellite in one tap
-          while placing/drawing. Same state as the "Base map" chip in the palette. */}
-      {onToggleBaseMap && (
+      {/* Quick site-reference declutter — top-left. This hides boundary and traced context, never
+          satellite or paper; the base-mode rail is the one authority for those pixels. */}
+      {onToggleSiteReferences && (
         <button
           type="button"
-          aria-pressed={!!activeLayers.baseMap}
-          aria-label={t(activeLayers.baseMap ? 'designCanvasHideBase' : 'designCanvasShowBase')}
-          title={t(activeLayers.baseMap ? 'designCanvasBaseShown' : 'designCanvasBaseHidden')}
-          onClick={onToggleBaseMap}
+          aria-pressed={!!activeLayers.references}
+          aria-label={t(activeLayers.references ? 'designCanvasHideBase' : 'designCanvasShowBase')}
+          title={t(activeLayers.references ? 'designCanvasBaseShown' : 'designCanvasBaseHidden')}
+          onClick={onToggleSiteReferences}
           style={{
             position: 'absolute',
             top: 12,
@@ -4336,10 +4335,10 @@ export default function DesignCanvas({
             justifyContent: 'center',
             boxShadow: '0 2px 8px rgba(0,0,0,0.3)',
             cursor: 'pointer',
-            opacity: activeLayers.baseMap ? 1 : 0.7,
+            opacity: activeLayers.references ? 1 : 0.7,
           }}
         >
-          {activeLayers.baseMap ? <Eye size={18} /> : <EyeOff size={18} />}
+          {activeLayers.references ? <Eye size={18} /> : <EyeOff size={18} />}
         </button>
       )}
 

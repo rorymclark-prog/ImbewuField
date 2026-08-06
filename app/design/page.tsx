@@ -297,16 +297,16 @@ function persistCanvasState(state: DesignCanvasState): DesignCanvasState | null 
   }
 }
 
-// Auto-focus: on a step change, which ELEMENT layers to show. Context layers (baseMap, ground,
+// Auto-focus: on a step change, which ELEMENT layers to show. Context layers (references, ground,
 // labels, contours) are NOT touched here — they stay as the farmer set them. Line kinds follow
 // their functional layer (LINE_LAYER in DesignCanvas), so focusing 'water' also shows drip/pipe/
 // swale automatically. Base = trace-only (all element layers off); Review/Glossy = everything on.
 const ELEMENT_LAYER_KEYS = ['water', 'earthworks', 'zones', 'planting', 'structures', 'access', 'animals'] as const;
-// Element layers are always set; the context layers `sector`/`baseMap` are only present in the
+// Element layers are always set; the context layers `sector`/`references` are only present in the
 // return when a step actively FORCES them (today just the Sector step). Steps that omit them
-// leave `a.sector`/`a.baseMap` untouched through the spread in setStep — the same "preserve what
+// leave `a.sector`/`a.references` untouched through the spread in setStep — the same "preserve what
 // the farmer toggled" rule contours already follow (see page.tsx guided-mode reset).
-type StepFocus = Record<(typeof ELEMENT_LAYER_KEYS)[number], boolean> & Partial<Record<'sector' | 'baseMap', boolean>>;
+type StepFocus = Record<(typeof ELEMENT_LAYER_KEYS)[number], boolean> & Partial<Record<'sector' | 'references', boolean>>;
 // PLACE-THEN-VANISH GUARD. An element with `alsoSteps` is OFFERED on a step outside its own
 // category — Banana Circle is category 'earthworks' but alsoSteps: ['planting'], so it appears in
 // the Planting palette. If that step then focuses layers OFF for its category, tapping the chip
@@ -339,10 +339,10 @@ function applyStepFocus(step: WizardStep): StepFocus {
   switch (step) {
     case 'sector':
       // Analysis-before-design reveal: nothing to draw, so all element layers OFF (like Base),
-      // but force the Sector energies overlay + satellite ON so the farmer immediately SEES the
+      // but force the Sector energies overlay + site references ON so the farmer immediately SEES the
       // sun/wind/fire/water. Only the Sector step returns `sector`, so once past it the value is
       // preserved across steps (design WITH the energies) until the farmer toggles it off.
-      return { ...on([]), sector: true, baseMap: true };
+      return { ...on([]), sector: true, references: true };
     case 'water':
       return on(['water', 'earthworks']);
     // Earthworks focuses its own layer. Water keeps 'earthworks' on as well, because the Water
@@ -793,7 +793,7 @@ function DesignStudioInner() {
     access: true,
     animals: true,
     ground: true,
-    baseMap: true,
+    references: true,
     boundary: true, // the property fence — on by default, but now removable on its own
     labels: true,
     symbols: true,
@@ -856,7 +856,7 @@ function DesignStudioInner() {
   // and switching modes putting it back is just the fence returning uninvited.
   useEffect(() => {
     if (designMode === 'guided') {
-      setActiveLayers((a) => ({ water: true, earthworks: true, zones: true, planting: true, structures: true, access: true, animals: true, ground: true, baseMap: true, boundary: a.boundary, labels: true, symbols: true, contours: a.contours, sector: a.sector }));
+      setActiveLayers((a) => ({ water: true, earthworks: true, zones: true, planting: true, structures: true, access: true, animals: true, ground: true, references: true, boundary: a.boundary, labels: true, symbols: true, contours: a.contours, sector: a.sector }));
     }
   }, [designMode]);
 
@@ -2585,7 +2585,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
     // review of the step-locking feature, 2026-07-21).
     setSelectedIds([]);
     // AUTO-FOCUS the step's own layer (Rory: "when we move to a layer, switch that layer on and
-    // the others off"). Only the ELEMENT layers are focused; context layers (baseMap, ground/
+    // the others off"). Only the ELEMENT layers are focused; context layers (references, ground/
     // Existing, labels, contours) are left exactly as the farmer set them — you always need the
     // satellite + existing site to place against. Fires once per explicit step tap (not on
     // re-render or remote sync), so a manual toggle mid-step is never stomped until the next tap.
@@ -3054,7 +3054,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               baseAlign={designBaseMode(canvasState) === 'photo' ? (canvasState?.customBase ?? null) : null}
               bedBlock={bedBlockArmed ? { spec: bedBlockSpec, defId: BED_BLOCK_DEF_ID } : null}
               onPlaceBedBlock={onPlaceBedBlock}
-              onToggleBaseMap={() => setActiveLayers((a) => ({ ...a, baseMap: !a.baseMap }))}
+              onToggleSiteReferences={() => setActiveLayers((a) => ({ ...a, references: !a.references }))}
               onToggleSector={() => setActiveLayers((a) => ({ ...a, sector: !a.sector }))}
               // Satellite → drone photo → blank, on the canvas itself. These are the same three
               // handlers as the Base step, so blank cannot acquire a second, divergent scale rule.
