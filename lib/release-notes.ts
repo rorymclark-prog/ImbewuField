@@ -34,6 +34,20 @@ export interface ReleaseNote {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '6 August',
+    sha: 'a5d9cc0',
+    changes: [
+      'Sample finance never shows income dated later today',
+    ],
+  },
+  {
+    when: '6 August',
+    sha: 'a3f0977',
+    changes: [
+      'Money: Log harvest now opens your crop record, even before you map a site',
+    ],
+  },
+  {
     when: '5 August (night)',
     sha: '96f0250',
     changes: [
