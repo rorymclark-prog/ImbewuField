@@ -3,6 +3,8 @@ import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import { buildFarmMetrics } from '../lib/farm-metrics.ts';
 import type { ExpenseLog, ProductionLog, SalesLog } from '../lib/db/types.ts';
+import type { SavedInvoice } from '../lib/invoices.ts';
+import { cashLedgerSales } from '../lib/invoice-sales.ts';
 
 test('Finances puts harvest logging one tap from the harvested-kilogram figure', () => {
   const source = readFileSync(new URL('../app/finances/page.tsx', import.meta.url), 'utf8');
@@ -52,4 +54,30 @@ test('NGO farmer summary does not turn kept kilograms into a blanket-price money
   assert.match(source, /Sales received/);
   assert.match(source, /Food kept:/);
   assert.doesNotMatch(source, /kept\s*\*\s*15/);
+});
+
+test('garden gross margin includes paid invoice money that the headline includes', () => {
+  const now = new Date('2026-08-06T12:00:00.000Z');
+  const at = '2026-08-06T09:00:00.000Z';
+  const invoice: SavedInvoice = {
+    id: 'invoice-42', no: 42, billTo: 'Ubhejane parents fund',
+    items: [{ desc: 'Spinach', qty: 4, unit: 'kg', price: 12.5 }], total: 50,
+    dateISO: at, status: 'paid', paidAt: at, paymentMethod: 'eft',
+  };
+  const sales: SalesLog[] = [
+    { id: 'direct', profile_id: 'farmer', garden_id: null, crop: 'Lettuce', kg: 5, amount: 114, buyer: null, sold_at: at, created_at: at },
+  ];
+  const expenses: ExpenseLog[] = [{ id: 'seed', profile_id: 'farmer', garden_id: null, item: 'Lettuce seed', amount: 35, supplier: null, spent_at: at, created_at: at }];
+  const metrics = buildFarmMetrics(
+    [{ id: 'spinach-bed', bedId: 'bed-1', cropKey: 'swiss-chard', sowMonth: 8 }],
+    [{ id: 'bed-1', label: 'Bed 1', areaM2: 4 }],
+    [], sales, expenses, 'month', now, [invoice],
+  );
+  const headlineSales = cashLedgerSales(sales, [invoice.id]).reduce((sum, sale) => sum + sale.amount, 0) + invoice.total;
+
+  assert.equal(headlineSales - expenses[0].amount, metrics.gardenMargins[0].grossMarginZar);
+  const spinach = metrics.crops.find((crop) => crop.cropKey === 'swiss-chard');
+  assert.ok(spinach);
+  assert.equal(spinach.turnoverZarPerM2, 12.5, 'paid invoice kg lines must count in crop turnover');
+  assert.equal(spinach.priceZarPerKg, 12.5);
 });

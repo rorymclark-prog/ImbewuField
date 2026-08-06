@@ -862,7 +862,7 @@ function metricNumber(value: number | null, unit: string): string {
   return value === null || !Number.isFinite(value) ? 'Unknown' : `${value.toFixed(1)} ${unit}`;
 }
 
-function FarmMetrics({ sales, production, expenses, period, now, loading }: { sales: SalesLog[]; production: ProductionLog[]; expenses: ExpenseLog[]; period: FinancePeriod; now: Date; loading: boolean }) {
+function FarmMetrics({ sales, production, expenses, invoices, period, now, loading }: { sales: SalesLog[]; production: ProductionLog[]; expenses: ExpenseLog[]; invoices: SavedInvoice[]; period: FinancePeriod; now: Date; loading: boolean }) {
   const [plantings, setPlantings] = useState<Planting[]>([]);
   const [beds, setBeds] = useState<PlanBed[]>([]);
   const [planLoaded, setPlanLoaded] = useState(false);
@@ -889,8 +889,8 @@ function FarmMetrics({ sales, production, expenses, period, now, loading }: { sa
   }, []);
 
   const metrics = useMemo(
-    () => buildFarmMetrics(plantings, beds, production, sales, expenses, period, now),
-    [plantings, beds, production, sales, expenses, period, now],
+    () => buildFarmMetrics(plantings, beds, production, sales, expenses, period, now, invoices),
+    [plantings, beds, production, sales, expenses, period, now, invoices],
   );
   const waiting = loading || !planLoaded;
 
@@ -1174,7 +1174,7 @@ export default function FinancesPage() {
                 onEditSale={(row) => { setEditing({ type: 'sale', row }); setDesktopEntryOpen(true); }}
                 onEditExpense={(row) => { setEditing({ type: 'expense', row }); setDesktopEntryOpen(true); }}
               />
-              <FarmMetrics sales={sales} production={production} expenses={expenses} period={period} now={now} loading={dataLoading} />
+              <FarmMetrics sales={sales} production={production} expenses={expenses} invoices={invoices} period={period} now={now} loading={dataLoading} />
               <HarvestReconciliation production={production} sales={sales} period={period} now={now} loading={dataLoading} />
               {/* Same LogSaleForm as the phone branch, hosted in a modal. Mounted
                   only while open so every dismissal starts the next entry fresh. */}
@@ -1213,7 +1213,7 @@ export default function FinancesPage() {
                 <Sprout size={16} />Log harvest
               </Link>
               <HarvestReconciliation production={production} sales={sales} period="month" now={now} loading={dataLoading} />
-              <FarmMetrics sales={sales} production={production} expenses={expenses} period="month" now={now} loading={dataLoading} />
+              <FarmMetrics sales={sales} production={production} expenses={expenses} invoices={invoices} period="month" now={now} loading={dataLoading} />
               {/* Never offered while offline: "no data" may only mean "not reachable", and this
                   button writes real rows into the farmer's real ledger. */}
               {!online && (

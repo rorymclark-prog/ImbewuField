@@ -7,6 +7,8 @@ import type { PlanBed, Planting } from './crop-plan';
 import { cropByKey } from './crop-catalog';
 import { buildCropAliasIndex, matchCropKey } from './harvest-reconciliation';
 import type { ExpenseLog, ProductionLog, SalesLog } from './db/types';
+import type { SavedInvoice } from './invoices';
+import { cashLedgerSales, invoiceSalesForPaidInvoice } from './invoice-sales';
 
 export type FinancePeriod = 'month' | 'season' | 'year';
 
@@ -75,7 +77,7 @@ function cropMapKey(identity: { key: string | null; label: string }): string {
   return identity.key ? `crop:${identity.key}` : `written:${identity.label.toLocaleLowerCase()}`;
 }
 
-function dateFor(row: ProductionLog | SalesLog | ExpenseLog): string {
+function dateFor(row: Pick<ProductionLog, 'logged_at'> | Pick<SalesLog, 'sold_at'> | Pick<ExpenseLog, 'spent_at'>): string {
   return 'logged_at' in row ? row.logged_at : 'sold_at' in row ? row.sold_at : row.spent_at;
 }
 
@@ -86,6 +88,8 @@ function dateFor(row: ProductionLog | SalesLog | ExpenseLog): string {
  * was logged but is not assigned to one of those beds returns null, rather than
  * making the whole garden a denominator. Expenses are grouped by crop only when
  * their optional crop tag is present; the remaining costs stay visibly unassigned.
+ * Paid invoices are the money entry, so their kg lines supply crop turnover while
+ * the invoice total supplies gross margin — never both as separate income.
  */
 export function buildFarmMetrics(
   plantings: Planting[],
@@ -95,8 +99,20 @@ export function buildFarmMetrics(
   expenses: ExpenseLog[],
   period: FinancePeriod,
   now: Date,
+  invoices: SavedInvoice[] = [],
 ): FarmMetrics {
   const aliases = buildCropAliasIndex();
+  const invoiceIds = invoices.map((invoice) => invoice.id);
+  const paidInvoices = invoices.filter((invoice) => invoice.status === 'paid'
+    && !!invoice.paidAt && Number.isFinite(Date.parse(invoice.paidAt)));
+  // This precisely mirrors the FinancialSheet headline: linked sale rows yield
+  // crop/kg evidence, while the paid invoice is the one money entry. Rebuilding
+  // invoice kg lines also covers older/sample invoices that have no local rows.
+  const cashSales = cashLedgerSales(sales, invoiceIds);
+  const cropTurnoverSales = [
+    ...cashSales,
+    ...paidInvoices.flatMap(invoiceSalesForPaidInvoice).map((sale) => ({ ...sale, garden_id: null })),
+  ];
   const rows = new Map<string, Omit<CropMetric, 'yieldKgPerM2' | 'turnoverZarPerM2' | 'priceZarPerKg' | 'taggedCostZarPerM2'>>();
   const ensure = (identity: { key: string | null; label: string }) => {
     const key = cropMapKey(identity);
@@ -134,7 +150,7 @@ export function buildFarmMetrics(
     row.hasHarvest = true;
     row.harvestedKg += finiteNonNegative(harvest.kg);
   }
-  for (const sale of sales) {
+  for (const sale of cropTurnoverSales) {
     if (!isInFinancePeriod(dateFor(sale), period, now)) continue;
     const row = ensure(cropIdentity(sale.crop, aliases));
     row.hasSale = true;
@@ -166,8 +182,11 @@ export function buildFarmMetrics(
     margins.set(key, created);
     return created;
   };
-  for (const sale of sales) {
+  for (const sale of cashSales) {
     if (isInFinancePeriod(dateFor(sale), period, now)) garden(sale.garden_id).salesZar += finiteNonNegative(sale.amount);
+  }
+  for (const invoice of paidInvoices) {
+    if (isInFinancePeriod(invoice.paidAt, period, now)) garden(null).salesZar += finiteNonNegative(invoice.total);
   }
   for (const expense of expenses) {
     if (isInFinancePeriod(dateFor(expense), period, now)) garden(expense.garden_id).expensesZar += finiteNonNegative(expense.amount);
