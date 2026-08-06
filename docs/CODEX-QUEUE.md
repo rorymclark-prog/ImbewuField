@@ -8,10 +8,30 @@ it: it carries a retired `PLAN_VERSION` instruction that now causes harm. See th
 
 ---
 
-## ⚠ OPERATING MODE FROM 2026-08-05: CLAUDE IS OFFLINE UNTIL SATURDAY
+## ⚠ OPERATING MODE — UPDATED 2026-08-06 17:00. START AT QD1.
 
-Rory is out of Claude usage until **Saturday 8 August 2026**. Every previous version of this file
-said *"Claude reviews and merges behind you"*. **That is now false and you must not wait for it.**
+**Rory is away from the computer and Claude is not watching your run.** You own the whole loop:
+build it, push it, read BOTH CI jobs, merge it yourself, log it on issue #35, take the next item.
+
+**Start with QD1, then QD2, then QD3** (Priority 1c, below the Priority 2 block). Those three are
+the Vision 2 design work Rory asked for today and they are written against code that was verified
+this afternoon — file paths and line numbers in them are current as of `origin/main`.
+
+**Nine items were closed today and are marked ✅ DONE. Do not reopen them.** Two of those had wrong
+premises — Q3(a) was already fixed by #40, and Q10's "hardcoded seller details" had read the
+signed-in profile since the file's first commit. **Before starting ANY item, check its premise
+against the real code.** Finding an item already done is a useful result and `AGENTS.md` says so;
+rebuilding something that works is not.
+
+Also true as of today, and worth knowing before you touch anything:
+
+- **The Firestore and Storage rules were deployed for the first time on 6 August**, after 19 days
+  stale. Three live holes closed. The rules in the repo are now what production runs — so a rules
+  change you merge is still INERT until Rory deploys, and that matters more than it did.
+- **The Anthropic API account is out of credit.** Fifteen routes are down, including `/api/chat`
+  (Ask Lima) and `/api/generate-report`. If you are testing anything AI-backed and it fails, that is
+  why — it is not a bug you introduced and not one to chase. Gemini-backed paths (sheet renders,
+  image producer, the Functions worker) are on separate billing and still work.
 
 **You own the whole loop until Saturday.** For each item:
 
@@ -481,6 +501,93 @@ visibility work must be checked by drawing something on each layer and confirmin
 **Verify by looking.** `npm test` cannot see a squashed tray, a tile with no caption, or a layer
 toggle that hides the wrong thing. Open the preview URL your push creates, place a rain barrel and a
 water trough on the Water step, toggle every layer, and say in the ledger what you actually saw.
+
+### QD2. The baseline survey — the unlock for everything food-security — `codex/baseline-survey`
+
+**DO THIS BEFORE ANY FOOD-SECURITY DASHBOARD.** Every panel in Rory's two mockups reads from data
+this survey does not yet collect, and building the dashboard first would force you to invent it.
+
+**The insight that makes this buildable.** The app has yield data for **25 crops**
+(`lib/crop-catalog.ts`). It has **none** for fruit, nuts, berries, eggs, chicken, rabbits or honey —
+`lib/species-catalog.ts` carries 197 species with height, water need and biome but **no yield and no
+bearing age**, and beehive / chicken_coop / rabbit_hutch exist only as drawable objects in
+`lib/design-elements.ts`. So the app cannot compute those categories. **But it does not have to.**
+The mockup's own "CURRENT PRODUCTION SURVEY — Item / Qty per Year / Used by Family / Sold / Income"
+is the farmer *reporting* her production. A reported figure is not an invented one. The survey is
+the data source; the dashboard renders what she said.
+
+**What exists today.** `lib/site-survey.ts` records PRESENCE and never QUANTITY:
+`existingCrops: string[]` (:40) and `livestock: string[]` (:43) say *which* — never how many, never
+what it earned. `isCommercial` (:49) is a boolean. So the app knows she has chickens and cannot say
+whether that is two or two hundred, which is why no impact claim can be made from it.
+
+**Extend `SiteSurvey` with, per production category:** quantity per year and its unit, how much the
+household used, how much was sold, and what it earned. Cover the nine categories in the mockups —
+leafy greens, other vegetables, staple crops, fruit, nuts and berries, eggs, poultry, rabbits,
+honey — plus a free row for anything else. Everything OPTIONAL: a farmer who does not know her egg
+count must be able to finish the survey, and a blank must stay blank rather than become a zero.
+Follow the file's existing shape (`loadSurvey`/`saveSurvey`, `updatedAt` newest-wins) — do not add a
+parallel store.
+
+Structure it as the mockup's seven sections: Household Info · Land & Location · Current Production ·
+Livestock & Poultry · Income & Sales · Resources & Inputs · Challenges. Four already exist in some
+form; reuse those screens rather than duplicating them.
+
+**THE TWO SCORES IN THE MOCKUPS MUST NOT BE BUILT.** "Food Diversity Score 82/100" and
+"Nutritional Diversity Score 8.6/10" have no defined inputs, no weighting, no scale and no source.
+Inventing a 0–100 scale for a household's nutrition is exactly the harm `AGENTS.md` §4 forbids, and
+a funder would quote it.
+
+**Build these instead, and cite them:**
+
+- **Food groups covered, out of 12** — the mockup's own "11/12" is already the right shape. Twelve
+  food groups is the FAO **Household Dietary Diversity Score**. Use that group list, name it on
+  screen, and count it from what she reported. Published instrument, explicable in one sentence,
+  and more use to a farmer than "82/100".
+- **Self-sufficiency** — only if the survey asks BOTH halves: what the household ate, and how much
+  of it she grew. Do not model the denominator from household size. If either half is missing, the
+  figure is unknown and the screen says so.
+- **Months with food** and **months with a gap** — countable today from `buildFoodAvailability`
+  (`lib/crop-plan.ts:712`) for the catalogued crops, and from reported harvest months for the rest.
+
+**Every figure carries where it came from**, the way the site report's "Where it comes from" column
+already does: `reported by the farmer`, `measured from the map`, `from the crop catalog`. A funder
+reading a household number must be able to see which of the three it is.
+
+**Verify by filling it in.** Complete the survey as a farmer on the preview URL, then read the
+figures back and check each against what you typed. A survey that loses an answer is worse than no
+survey, because the farmer believes it was recorded.
+
+---
+
+### QD3. The design foundation — take the spec, hold the palette — `codex/vision2-foundation`
+
+The pack lives at `ImbewuField_Vision_2_Complete_Design_Pack/Design_System/`. Rory has the zip;
+ask him for the files rather than guessing at values.
+
+**TAKE, in this order — all additive, none of it changes a colour:**
+
+1. **Touch targets.** `--target-min: 44px`, `--target-field: 48px`. This is a field app used outdoors
+   with wet or gloved hands and it matters more than anything else in the pack. Audit against the
+   real controls; report what is currently below 44 px rather than silently resizing layouts.
+2. **The spacing scale** (4/8/12/16/20/24/32/40/48/64/80/96) and **radius scale** (4/8/12/16/24/999)
+   as tokens. The app has neither; every value today is a literal.
+3. **The shadow ramp** (four levels) and the **`prefers-reduced-motion`** block, which is drop-in.
+4. **Typography.** The spec names Newsreader + Public Sans — **exactly what `app/layout.tsx` already
+   loads**, so this is a scale-and-weight change, not a font change. Do not add a webfont.
+
+**DO NOT TAKE THE PALETTE.** Measured on `origin/main`: the pack proposes 22 colours; this app uses
+**852 distinct colours across 5,166 uses**; the overlap is **ONE — `#ffffff`**. Of the twenty most-used
+colours, covering 67% of all uses, exactly one appears in the pack. It is a new visual identity, not
+a token map, and there is no row anywhere in ~100 pack files mapping an existing hex to a token.
+
+It also contradicts this repo in writing: `app/globals.css` says of the page background *"warm paper,
+**never #fff**"*, and the pack proposes `--color-surface: #FFFFFF`. Adopting it moves the whole app
+from warm to cool. **That is Rory's decision and it is not part of this item. Do not run a
+`hex → var()` codemod. Do not "harmonise" colours as you go.**
+
+Note the naming differs too — `--color-border` vs this app's `--border`, `--color-ink` vs `--text` —
+so it is not even a drop-in rename.
 
 ---
 
