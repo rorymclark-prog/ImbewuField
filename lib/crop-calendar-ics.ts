@@ -38,10 +38,11 @@
 //    yearly-repeating event never stops, and this app tells the farmer to
 //    re-run the planner every season with rotation on, which means next
 //    year's October is deliberately NOT this year's October. A forever-repeat
-//    would quietly become wrong. One dated occurrence per task, one year of
-//    calendar, re-export when the plan changes.
+//    would quietly become wrong. One dated occurrence per task, preserving the
+//    planting cohort even when its last harvest falls beyond twelve months;
+//    re-export when the plan changes.
 
-import type { CropTask } from '@/lib/crop-plan';
+import { taskMonthsFromNow, type CropTask } from '@/lib/crop-plan';
 import { cropByKey } from '@/lib/crop-catalog';
 import { monthLong, resolveMonthYear, sowingInstruction, taskLine, taskTitle, wrapMonth } from '@/lib/crop-export-schedule';
 
@@ -51,7 +52,7 @@ const UID_DOMAIN = 'imbewufield.app';
 const ALARM_LEAD_DAYS = 3;
 
 export interface IcsOptions {
-  /** "Today" — decides which calendar year each month-only task lands in. Defaults to now. */
+  /** "Today" — anchors each planting cohort to its next real occurrence. Defaults to now. */
   now?: Date;
   /** DTSTAMP/LAST-MODIFIED for every event. Defaults to `now`; injectable so tests are deterministic. */
   stamp?: Date;
@@ -175,6 +176,20 @@ export function resolveTaskDate(month: number, now: Date): { year: number; month
   return { year: resolveTaskYear(month, now), month: wrapMonth(month), day: 1 };
 }
 
+/** Resolve a generated task as part of its planting cohort, rather than as an
+ * independent month name. This is the distinction between November this year
+ * and the November harvest that follows a September sowing next year. */
+export function resolveCropTaskDate(task: CropTask, now: Date): { year: number; month: number; day: number } {
+  const nowMonth = now.getMonth() + 1;
+  const monthsAway = taskMonthsFromNow(task, nowMonth);
+  const absoluteMonth = now.getFullYear() * 12 + (nowMonth - 1) + monthsAway;
+  return {
+    year: Math.floor(absoluteMonth / 12),
+    month: ((absoluteMonth % 12) + 12) % 12 + 1,
+    day: 1,
+  };
+}
+
 // ── Event text ──────────────────────────────────────────────────────────────
 
 /**
@@ -236,13 +251,13 @@ export function buildCropPlanIcs(tasks: CropTask[], options: IcsOptions = {}): s
   // Non-standard, but Google and Apple both honour it: without a name the
   // import lands in a calendar called after the filename.
   pushText(out, 'X-WR-CALNAME', calendarName);
-  pushText(out, 'X-WR-CALDESC', 'Ground prep, sowing, transplanting, weeding and harvest for the year ahead.');
+  pushText(out, 'X-WR-CALDESC', 'Ground prep, sowing, transplanting, weeding and harvest for this crop plan.');
 
   // Sorted by resolved date so the file reads chronologically if anyone opens
   // it in a text editor, and so the output order cannot depend on the order
   // tasksForPlan happened to return.
   const dated = tasks
-    .map((task) => ({ task, date: resolveTaskDate(task.month, now) }))
+    .map((task) => ({ task, date: resolveCropTaskDate(task, now) }))
     .sort((a, b) =>
       a.date.year - b.date.year
       || a.date.month - b.date.month

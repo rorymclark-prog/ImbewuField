@@ -24,24 +24,27 @@ import type { Design } from '@/lib/db/types';
 import { myDesigns } from '@/lib/db/queries';
 import { nearestRainfall } from '@/lib/water-calc';
 import type { CropDef, RainPattern } from '@/lib/crop-catalog';
-import { CROPS, cropByKey, MONTHS_SHORT } from '@/lib/crop-catalog';
-import type { PlanBed, Planting, CropPlanState, FoodAvailabilityItem, FoodValueMonth, CashflowSettings } from '@/lib/crop-plan';
+import { CROPS, cropByKey, hasAutomaticPlanningBasis, hasPlanningYield, MONTHS_SHORT } from '@/lib/crop-catalog';
+import type { PlanBed, Planting, CropPlanState, FoodAvailabilityItem, PlanYieldBenchmark, CashflowSettings } from '@/lib/crop-plan';
 import {
-  loadCropPlan, saveCropPlan, harvestMonth, tasksForPlan, estimatedYieldKgAdjusted, nextValidSowMonth,
-  isSpaceHungry, bedOverlapFraction, seedBoqForPlan, buildYearReport, buildFoodAvailability, buildFoodValueByMonth,
-  buildFieldUtilizationByMonth, suggestSubstituteCrop, loadFavouriteCropKeys, saveFavouriteCropKeys, isGenuinelyIntercropped,
-  loadAllowBedSharing, saveAllowBedSharing, loadCashflowSettings, saveCashflowSettings, yieldByCrop,
+  loadCropPlan, saveCropPlan, bedEntryMonth, latestBedEntryMonth, plannedBedEntryMonth, harvestEndMonthForCrop, harvestMonthForCrop, tasksForPlan, taskMonthsFromNow, estimatedYieldKgAdjusted, nextValidSowMonth,
+  isSpaceHungry, bedOverlapFraction, bedHasUnverifiedTiming, seedBoqForPlan, buildYearReport, buildFoodAvailability, buildPlanYieldBenchmark,
+  buildFieldUtilizationByMonth, loadFavouriteCropKeys, saveFavouriteCropKeys, isGenuinelyIntercropped, plantingBedEntryOffsets, plantingIsActiveOrPlanned, recurringPlanPlantings,
+  loadAllowBedSharing, saveAllowBedSharing, loadCashflowSettings, saveCashflowSettings,
 } from '@/lib/crop-plan';
 import type { FoodGroup } from '@/lib/crop-groups';
-import { FOOD_GROUP_META, foodGroupOf, ROTATION_SEQUENCE, ROTATION_BLURB } from '@/lib/crop-groups';
-import type { AutoSuggestAnswers, AutoSuggestResult, GardenGoal, HouseholdSize, HarvestRhythm } from '@/lib/crop-autosuggest';
+import { FOOD_GROUP_META, foodGroupOf, ROTATION_FAMILY_META, rotationFamilyOf } from '@/lib/crop-groups';
+import type { AutoSuggestAnswers, AutoSuggestResult, GardenGoal, HarvestRhythm } from '@/lib/crop-autosuggest';
 import { autoSuggestPlan } from '@/lib/crop-autosuggest';
 import type { CropPrice } from '@/lib/crop-prices';
-import { UNPRICED_CROPS, priceFor, loadCropPriceOverrides, saveCropPriceOverrides } from '@/lib/crop-prices';
+import { UNPRICED_CROPS, isUsablePrice, priceFor, loadCropPriceOverrides, saveCropPriceOverrides } from '@/lib/crop-prices';
 // Task wording lives in the export module now, not here: the screen, the
 // calendar file and the printed plan all have to describe a task the same way,
 // and three copies of that sentence is how they stop doing so.
-import { sowingInstruction, taskSentence } from '@/lib/crop-export-schedule';
+import {
+  positionRangeLabel, sowingInstruction, SUCCESSION_TIMING_GUIDANCE,
+  taskSentence, TRANSPLANT_NURSERY_GUIDANCE,
+} from '@/lib/crop-export-schedule';
 
 const ALL_GROUPS: FoodGroup[] = ['leafy_green', 'legume', 'root_tuber', 'allium_aromatic', 'fruiting_veg', 'staple_grain'];
 
@@ -52,13 +55,13 @@ const ALL_GROUPS: FoodGroup[] = ['leafy_green', 'legume', 'root_tuber', 'allium_
 //
 // The previous 15 was a half-measure that actively created the problem it
 // was meant to soften. A planting is drawn from an offset forced into 0-11
-// (forwardOnlyOffset), so NO bar can ever START in column 12, 13 or 14 —
+// (the first annual occurrence), so NO bar can ever START in column 12, 13 or 14 —
 // those columns could only ever hold the tail of something sown earlier.
 // The window's last months were therefore blank BY CONSTRUCTION, on every
 // bed, however good the plan was. Widening alone would have made that
 // worse; the fix is width PLUS drawing the cycle's repeat (see
 // barInstances), which is what this plan literally is — one annual cycle
-// that recurs until the farmer re-runs it with rotation on.
+// repeated for visibility, not a stored second-season rotation.
 const DISPLAY_MONTHS = 24;
 // The resilience chart below keeps the previous window: it plots the annual
 // RHYTHM, and a second identical copy of every column adds no information
@@ -87,13 +90,37 @@ function wrapMonth(m: number): number {
 function monthLabel(m: number): string {
   return MONTHS_SHORT[wrapMonth(m) - 1];
 }
+
+function cropDurationLabel(crop: CropDef): string {
+  if (crop.timingVerified === false) return 'timing not verified';
+  if (crop.daysToHarvestRange) {
+    const [minimum, maximum] = crop.daysToHarvestRange;
+    return `${minimum}–${maximum} days`;
+  }
+  return `about ${crop.daysToHarvest} days`;
+}
+
+function pickingPeriodLabel(crop: CropDef): string | null {
+  if (crop.harvestPeriodNote) return crop.harvestPeriodNote;
+  if (crop.harvestPeriodRangeWeeks) {
+    const [minimum, maximum] = crop.harvestPeriodRangeWeeks;
+    return minimum === maximum
+      ? `${minimum} week${minimum === 1 ? '' : 's'}`
+      : `${minimum}–${maximum} weeks`;
+  }
+  if (!crop.harvestPeriodRangeMonths) return null;
+  const [minimum, maximum] = crop.harvestPeriodRangeMonths;
+  return minimum === maximum
+    ? `${minimum} month${minimum === 1 ? '' : 's'}`
+    : `${minimum}–${maximum} months`;
+}
 function genId(prefix: string): string {
   return `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 8)}`;
 }
 
 /** Compact glyph for a bed-share fraction — falls back to a rounded percentage. */
 function fractionLabel(f: number): string {
-  if (f >= 1) return '';
+  if (f >= 1) return '1/1';
   if (Math.abs(f - 0.5) < 0.01) return '½';
   if (Math.abs(f - 1 / 3) < 0.01) return '⅓';
   if (Math.abs(f - 0.25) < 0.01) return '¼';
@@ -130,37 +157,13 @@ interface Segment { start: number; end: number; rawStart: number }
 // anywhere in this data model) — it could mean "the next time this month
 // comes around" OR "the most recent time it happened" (e.g. an `existing`
 // crop sown a couple of months ago, already growing). For an EXISTING crop,
-// picking whichever direction (forward or back) is NEARER to today is
-// correct — that's specifically for a farmer-confirmed already-growing
-// crop, which really could be a few months in the past.
-function nearestSignedOffset(m: number, originMonth: number): number {
-  const fwd = ((m - originMonth) % 12 + 12) % 12; // 0..11
-  return fwd > 6 ? fwd - 12 : fwd; // prefer whichever direction is closer; ties favour forward
-}
-
-// For a NOT-YET-existing (planned/suggested, never confirmed as actually
-// sown) planting, "nearest direction" is the WRONG resolution — it's never
-// legitimately in the past; it hasn't happened yet. This matters concretely
-// now that fillRemainingGaps (lib/crop-autosuggest.ts) can place a sowMonth
-// up to 11 months forward: nearestSignedOffset flips anything past 6 months
-// forward to read as "months ago" instead, making a freshly-suggested,
-// never-sown crop render as an already-concluded phantom the moment it's
-// generated (not just after time passes) — exactly the "why does this
-// start from Feb" bug this was built to fix. Always resolves forward
-// (0-11), matching how the auto-suggest engine itself always chooses a
-// sowMonth for a non-existing entry in the first place.
-function forwardOnlyOffset(m: number, originMonth: number): number {
-  return ((m - originMonth) % 12 + 12) % 12;
-}
-
 /**
  * Every visible copy of a sow→harvest span, in display-column space, clipped
  * to the DISPLAY_MONTHS-column window. `harvest` is always the crop's OWN
  * forward span from `sowMonth` (a crop never takes longer than ~12 months, so
  * this offset is unambiguous regardless of "today"); `sowOffset` is the
- * CALLER's already-resolved position of the sow event itself
- * (nearest-direction for an existing crop, forward-only otherwise — see
- * nearestSignedOffset/forwardOnlyOffset above).
+ * `sowOffsets` carries the caller's absolute bed-entry occurrences. Planned
+ * rows repeat annually; an existing row contributes one observed cohort.
  *
  * WHY MORE THAN ONE COPY: this plan holds no year field anywhere — it is a
  * single annual cycle that recurs until the farmer re-runs auto-suggest with
@@ -179,11 +182,10 @@ function forwardOnlyOffset(m: number, originMonth: number): number {
  * Returns [] if no copy lands in the window (a long-since-harvested existing
  * crop, or a genuinely far-future manual entry).
  */
-function barInstances(sowOffset: number, sowMonth: number, harvest: number): Segment[] {
+function barInstances(sowOffsets: number[], sowMonth: number, harvest: number): Segment[] {
   const spanMonths = ((harvest - sowMonth) % 12 + 12) % 12; // crop's own forward duration, 0-11
   const out: Segment[] = [];
-  for (let cycle = 0; sowOffset + cycle * 12 <= DISPLAY_MONTHS - 1; cycle++) {
-    const rawStart = sowOffset + cycle * 12;
+  for (const rawStart of sowOffsets) {
     const start = Math.max(rawStart, 0);
     const end = Math.min(rawStart + spanMonths, DISPLAY_MONTHS - 1);
     if (end >= start) out.push({ start, end, rawStart });
@@ -358,52 +360,66 @@ function FacilitatorCropsPageInner() {
   // existing plantings, only adds to them (safe to re-run).
   const [autoPhase, setAutoPhase] = useState<'idle' | 'questions' | 'review'>('idle');
   const [aGoal, setAGoal] = useState<GardenGoal>('family');
-  const [aHousehold, setAHousehold] = useState<HouseholdSize>('medium');
   const [aFocusCount, setAFocusCount] = useState(1);
   const [aGroups, setAGroups] = useState<FoodGroup[]>(ALL_GROUPS);
+  const [aCropKeys, setACropKeys] = useState<string[]>([]);
   const [aRhythm, setARhythm] = useState<HarvestRhythm>('steady');
-  // Default on — good rotation practice, and it's how "plan for next season
-  // too" actually works here: there's no separate multi-year planner, but a
-  // rotation-aware plan today naturally leaves next season's beds able to
-  // rotate correctly once you run this again with today's plantings still
-  // showing (see the toggle's own blurb in the modal for the honest caveat).
+  const [aPattern, setAPattern] = useState<RainPattern>('summer');
+  // Default on — prevents an immediate repeat of the same botanical family.
+  // This one-year plan does not claim to hold a complete multi-year history.
   const [aRotateCrops, setARotateCrops] = useState(true);
   // Default off — a vine dedicating a whole veg bed for months, filling it
   // with nothing else all year, is a bad outcome for precious rotational bed
   // space. Off by default = recommend a dedicated plot/edge/food-forest area
   // instead; the farmer has to actively opt in to place one in a veg bed.
   const [aAllowVinesInBeds, setAAllowVinesInBeds] = useState(false);
+  const [aReliableIrrigation, setAReliableIrrigation] = useState(false);
   const [autoResult, setAutoResult] = useState<AutoSuggestResult | null>(null);
 
   function openAutoSuggest() {
     setAGoal('family');
-    setAHousehold('medium');
     setAFocusCount(1);
     setAGroups(ALL_GROUPS); // family default = all checked (diversify); commercial flips this on toggle
+    setACropKeys([]);
     setARhythm('steady');
+    setAPattern(pattern);
     setARotateCrops(true);
     setAAllowVinesInBeds(false);
+    setAReliableIrrigation(false);
     setAutoResult(null);
     setAutoPhase('questions');
   }
   function chooseGoal(g: GardenGoal) {
     setAGoal(g);
     setAGroups(g === 'commercial' ? [] : ALL_GROUPS); // commercial starts empty — must actively concentrate
+    setACropKeys([]);
   }
   function toggleGroup(g: FoodGroup) {
     setAGroups((prev) => (prev.includes(g) ? prev.filter((x) => x !== g) : [...prev, g]));
   }
+  function toggleAutoCrop(cropKey: string) {
+    setACropKeys((prev) => prev.includes(cropKey) ? prev.filter((key) => key !== cropKey) : [...prev, cropKey]);
+  }
   function runAutoSuggest() {
     const answers: AutoSuggestAnswers = {
       goal: aGoal,
-      householdSize: aGoal !== 'commercial' ? aHousehold : undefined,
       focusCropCount: aGoal !== 'family' ? aFocusCount : undefined,
       groups: aGroups,
+      cropKeys: aCropKeys,
       rhythm: aRhythm,
       rotateCrops: aRotateCrops,
       allowVinesInBeds: aAllowVinesInBeds,
+      // Auto-suggest cannot prove that an arbitrary pair has a workable row
+      // layout in the mapped bed. Farmers can still split beds manually after
+      // reviewing a named pair; the optimiser never invents that geometry.
+      allowMixedCropsInBed: false,
+      reliableIrrigation: aReliableIrrigation,
     };
-    setAutoResult(autoSuggestPlan(answers, pattern, beds, plantings, currentMonth));
+    const suggested = autoSuggestPlan(answers, aPattern, beds, plantings, currentMonth);
+    setAutoResult({
+      ...suggested,
+      notes: [`Climate used: ${PATTERN_META[aPattern].label}.`, ...suggested.notes],
+    });
     setAutoPhase('review');
   }
   // Snapshot the plan as it stood BEFORE a mutation, onto the undo stack —
@@ -423,7 +439,13 @@ function FacilitatorCropsPageInner() {
     pushPlanHistory();
     setPlan((prev) => {
       const base = prev ?? { version: 1 as const, plantings: [], updatedAt: Date.now() };
-      return { version: 1, plantings: [...base.plantings, ...autoResult.plantings], updatedAt: Date.now() };
+      return {
+        ...base,
+        version: 1,
+        rainPattern: aPattern,
+        plantings: [...base.plantings, ...autoResult.plantings],
+        updatedAt: Date.now(),
+      };
     });
     // Clear immediately (not just close the modal) — a second click landing
     // before React re-renders would otherwise still see a non-null
@@ -476,7 +498,9 @@ function FacilitatorCropsPageInner() {
   const [priceOverrides, setPriceOverrides] = useState<Record<string, CropPrice>>({});
   function updatePriceOverride(cropKey: string, price: CropPrice) {
     setPriceOverrides((prev) => {
-      const next = { ...prev, [cropKey]: price };
+      const next = { ...prev };
+      if (isUsablePrice(price)) next[cropKey] = price;
+      else delete next[cropKey];
       saveCropPriceOverrides(next);
       return next;
     });
@@ -487,7 +511,7 @@ function FacilitatorCropsPageInner() {
   // before it ever becomes harvestable. No default loss (0%) — inventing a
   // "typical" loss rate isn't something to guess at; it's the farmer's own
   // estimate to set.
-  const [cashflowSettings, setCashflowSettings] = useState<CashflowSettings>({ sellPercent: 100, lossPercent: 0 });
+  const [cashflowSettings, setCashflowSettings] = useState<CashflowSettings>({ sellPercent: 100, lossPercent: 0, confirmed: false });
   function updateCashflowSettings(next: CashflowSettings) {
     setCashflowSettings(next);
     saveCashflowSettings(next);
@@ -571,12 +595,16 @@ function FacilitatorCropsPageInner() {
     openAutoSuggest();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [mounted, autoParam, beds.length]);
-  // A region flagged 'mild' frostRisk (e.g. Durban's coastal hinterland) still
-  // gets the same warm-season windows as plain 'summer' — those crops don't
-  // shrug off even light frost — but frost-hardy crops get 'mild-frost'
-  // windows (as forgiving as 'all-year') instead of sitting idle May-Aug.
-  const pattern: RainPattern =
+  // A region flagged 'mild' frostRisk (e.g. Durban's coastal hinterland) uses
+  // KZN DARD's warm/light-frost sowing column rather than treating coast and
+  // frost-prone interior as interchangeable. Auto-suggest asks the farmer to
+  // confirm this broad map estimate before it plans.
+  const mapPattern: RainPattern =
     region?.frostRisk === 'mild' && region.pattern === 'summer' ? 'mild-frost' : (region?.pattern ?? 'summer');
+  // The farmer confirms or corrects the broad map estimate in Auto-suggest.
+  // Keep that answer as part of the saved plan: otherwise accepting a plan
+  // quietly switched its screen, jobs and exports back to the map guess.
+  const pattern: RainPattern = plan?.rainPattern ?? mapPattern;
   const patternMeta = PATTERN_META[pattern];
   const designTitle = design?.title || design?.bgSite?.name || 'Garden design';
 
@@ -602,7 +630,7 @@ function FacilitatorCropsPageInner() {
         areaFraction: areaFraction < 1 ? areaFraction : undefined,
         existing: existing || undefined,
       };
-      return { version: 1, plantings: [...base.plantings, next], updatedAt: Date.now() };
+      return { ...base, version: 1, plantings: [...base.plantings, next], updatedAt: Date.now() };
     });
   }
   function updatePlanting(id: string, cropKey: string, sowMonth: number, areaFraction: number, existing: boolean) {
@@ -610,6 +638,7 @@ function FacilitatorCropsPageInner() {
     setPlan((prev) => {
       if (!prev) return prev;
       return {
+        ...prev,
         version: 1,
         plantings: prev.plantings.map((p) => p.id === id
           ? { ...p, cropKey, sowMonth, areaFraction: areaFraction < 1 ? areaFraction : undefined, existing: existing || undefined }
@@ -622,19 +651,8 @@ function FacilitatorCropsPageInner() {
     pushPlanHistory();
     setPlan((prev) => {
       if (!prev) return prev;
-      return { version: 1, plantings: prev.plantings.filter((p) => p.id !== id), updatedAt: Date.now() };
+      return { ...prev, version: 1, plantings: prev.plantings.filter((p) => p.id !== id), updatedAt: Date.now() };
     });
-  }
-  // Swap a planting for a different crop in place (same bed/fraction/
-  // existing-flag) — re-derives the sow month for the NEW crop nearest the
-  // old one's, since the replacement crop's own valid sow window may not
-  // include the original month at all.
-  function replacePlanting(id: string, newCropKey: string) {
-    const p = plantings.find((pl) => pl.id === id);
-    const newCrop = cropByKey(newCropKey);
-    if (!p || !newCrop) return;
-    const sowMonth = nextValidSowMonth(newCrop, pattern, p.sowMonth);
-    updatePlanting(id, newCropKey, sowMonth, p.areaFraction ?? 1, !!p.existing);
   }
   // Only drops plantings on beds actually shown right now (matches the
   // `plantings` derived read below) — never touches plantings parked under a
@@ -646,14 +664,20 @@ function FacilitatorCropsPageInner() {
     setPlan((prev) => {
       if (!prev) return prev;
       const bedIds = new Set(beds.map((b) => b.id));
-      return { version: 1, plantings: prev.plantings.filter((p) => !bedIds.has(p.bedId)), updatedAt: Date.now() };
+      return { ...prev, version: 1, plantings: prev.plantings.filter((p) => !bedIds.has(p.bedId)), updatedAt: Date.now() };
     });
   }
 
-  const allTasks = useMemo(() => (mounted ? tasksForPlan(plantings, beds) : []), [mounted, plantings, beds]);
+  // Existing crops are real, one-off plantings rather than an annual template:
+  // pass today so a harvest that already happened is not rolled forward and
+  // shown again next year on screen or in the PDF built from this same list.
+  const allTasks = useMemo(
+    () => (mounted ? tasksForPlan(plantings, beds, currentMonth) : []),
+    [mounted, plantings, beds, currentMonth],
+  );
   const nextMonth = wrapMonth(currentMonth + 1);
-  const currentTasks = allTasks.filter((t) => t.month === currentMonth);
-  const nextTasks = allTasks.filter((t) => t.month === nextMonth);
+  const currentTasks = allTasks.filter((task) => taskMonthsFromNow(task, currentMonth) === 0);
+  const nextTasks = allTasks.filter((task) => taskMonthsFromNow(task, currentMonth) === 1);
   // The rolling DISPLAY_MONTHS-month display order — column 0 is always THIS
   // month, not always January, so opening the plan never shows already-past
   // months before anything useful starts. Scrollable out to a full 2 years
@@ -667,24 +691,46 @@ function FacilitatorCropsPageInner() {
   // needs the repeat, because only the timeline has bars that wrap.
   const chartMonthOrder = useMemo(() => Array.from({ length: CHART_MONTHS }, (_, i) => wrapMonth(currentMonth + i)), [currentMonth]);
 
-  const totalYieldKg = plantings.reduce((sum, p) => sum + estimatedYieldKgAdjusted(p, bedAreaFor(p.bedId), plantings), 0);
-  // Already-growing crops are informational (the farmer planted them before
-  // using the app) — split them out of the "to plant" total the same way
-  // the design map's BOQ keeps existing features out of the budget.
-  const existingYieldKg = plantings.filter((p) => p.existing).reduce((sum, p) => sum + estimatedYieldKgAdjusted(p, bedAreaFor(p.bedId), plantings), 0);
-  const newYieldKg = totalYieldKg - existingYieldKg;
-  const yieldByBed = beds
-    .map((b) => ({
-      bed: b,
-      kg: plantings.filter((p) => p.bedId === b.id).reduce((sum, p) => sum + estimatedYieldKgAdjusted(p, b.areaM2, plantings), 0),
-    }))
-    .filter((row) => row.kg > 0);
-  const yieldByCropList = useMemo(() => yieldByCrop(plantings, beds), [plantings, beds]);
-  // Same loss% the Retail/Wholesale value tabs use (cashflowSettings,
-  // shared/persisted state) — one loss control for the whole plan, not a
-  // second independent slider that could disagree with it.
-  const harvestLossFactor = 1 - cashflowSettings.lossPercent / 100;
-
+  const benchmarkPlantings = useMemo(
+    () => plantings.filter((planting) => plantingIsActiveOrPlanned(planting, currentMonth)),
+    [plantings, currentMonth],
+  );
+  const planYieldBenchmark = useMemo(
+    () => buildPlanYieldBenchmark(plantings, beds, currentMonth),
+    [plantings, beds, currentMonth],
+  );
+  const hasAreaConflict = planYieldBenchmark.areaConflictBedLabels.length > 0;
+  const totalYieldKg = planYieldBenchmark.knownKg;
+  const unknownYieldPlantings = benchmarkPlantings.filter((planting) => {
+    const crop = cropByKey(planting.cropKey);
+    return crop?.yieldKgPerM2 === null;
+  });
+  const coverCropPlantings = benchmarkPlantings.filter((planting) => cropByKey(planting.cropKey)?.yieldKgPerM2 === 0);
+  const unknownYieldNames = planYieldBenchmark.unknownYieldCrops;
+  const coverCropNames = planYieldBenchmark.nonFoodCrops;
+  const hasKnownYield = !hasAreaConflict && benchmarkPlantings.some((planting) => {
+    const crop = cropByKey(planting.cropKey);
+    return crop !== undefined && hasPlanningYield(crop);
+  });
+  const yieldByBed = hasAreaConflict ? [] : beds
+    .map((bed) => {
+      const bedPlantings = benchmarkPlantings.filter((planting) => planting.bedId === bed.id);
+      return {
+        bed,
+        kg: bedPlantings.reduce((sum, planting) => sum + estimatedYieldKgAdjusted(planting, bed.areaM2, plantings), 0),
+        unknownNames: [...new Set(bedPlantings.flatMap((planting) => {
+          const crop = cropByKey(planting.cropKey);
+          return crop?.yieldKgPerM2 === null ? [crop.name] : [];
+        }))],
+        coverNames: [...new Set(bedPlantings.flatMap((planting) => {
+          const crop = cropByKey(planting.cropKey);
+          return crop?.yieldKgPerM2 === 0 ? [crop.name] : [];
+        }))],
+        hasPlantings: bedPlantings.length > 0,
+      };
+    })
+    .filter((row) => row.hasPlantings);
+  const yieldByCropList = planYieldBenchmark.byCrop;
   const seedBoq = useMemo(() => seedBoqForPlan(plantings, beds), [plantings, beds]);
   const yearReport = useMemo(() => buildYearReport(plantings, beds), [plantings, beds]);
   // TWO honest years, one chart (2026-08-04, Rory: "i want to show what a full years season
@@ -698,9 +744,12 @@ function FacilitatorCropsPageInner() {
   // and utilization reads 100% over beds the Gantt correctly shows empty.
   const [yearMode, setYearMode] = useState<'established' | 'fromToday'>('established');
   const chartNowMonth = yearMode === 'fromToday' ? currentMonth : undefined;
-  const foodAvailability = useMemo(() => buildFoodAvailability(plantings, beds, chartNowMonth), [plantings, beds, chartNowMonth]);
-  const foodValueByMonth = useMemo(() => buildFoodValueByMonth(plantings, beds, priceOverrides, chartNowMonth), [plantings, beds, priceOverrides, chartNowMonth]);
-  const fieldUtilizationByMonth = useMemo(() => buildFieldUtilizationByMonth(plantings, beds, chartNowMonth), [plantings, beds, chartNowMonth]);
+  const chartPlantings = useMemo(
+    () => yearMode === 'established' ? recurringPlanPlantings(plantings) : plantings,
+    [yearMode, plantings],
+  );
+  const foodAvailability = useMemo(() => buildFoodAvailability(chartPlantings, beds, chartNowMonth), [chartPlantings, beds, chartNowMonth]);
+  const fieldUtilizationByMonth = useMemo(() => buildFieldUtilizationByMonth(chartPlantings, beds, chartNowMonth), [chartPlantings, beds, chartNowMonth]);
 
   // Cover-page facts for the printed plan and the calendar's name. Built from
   // the same values the header and the bed-check strip already show, so the
@@ -719,10 +768,11 @@ function FacilitatorCropsPageInner() {
         + `${plotCount ? ` · ${plotCount} staple plot${plotCount === 1 ? '' : 's'}` : ''}`
         + ` · ${beds.reduce((s, b) => s + b.areaM2, 0).toFixed(1)} m² of growing space`,
       dateLabel: new Date().toLocaleDateString('en-ZA', { day: 'numeric', month: 'long', year: 'numeric' }),
-      estimatedKgPerYear: newYieldKg * harvestLossFactor,
+      estimatedKgPerYear: totalYieldKg,
       lossPercent: cashflowSettings.lossPercent,
+      lossAllowanceConfirmed: cashflowSettings.confirmed === true,
     };
-  }, [beds, canvasSite, placeName, designTitle, region, patternMeta, newYieldKg, harvestLossFactor, cashflowSettings.lossPercent]);
+  }, [beds, canvasSite, placeName, designTitle, region, patternMeta, totalYieldKg, cashflowSettings.lossPercent, cashflowSettings.confirmed]);
 
   function shareTasks() {
     const text = `🌱 Crop plan tasks\n${monthLabel(currentMonth)}: ${taskSentence(currentTasks)}\n${monthLabel(nextMonth)}: ${taskSentence(nextTasks)}`;
@@ -767,6 +817,7 @@ function FacilitatorCropsPageInner() {
   }
   function confirmAdd() {
     if (!pickerBedId || !pickerCrop) return;
+    if (pickerCrop.timingVerified === false) return;
     if (editingPlantingId) {
       updatePlanting(editingPlantingId, pickerCrop.key, pickerMonth, pickerFraction, pickerExisting);
     } else {
@@ -779,11 +830,17 @@ function FacilitatorCropsPageInner() {
   // one — shown as a soft nudge, never a hard block.
   const pickerOverlap = useMemo(() => {
     if (!pickerBedId || !pickerCrop) return 0;
-    const harvest = harvestMonth(pickerMonth, pickerCrop.daysToHarvest);
+    const entry = plannedBedEntryMonth(pickerMonth, pickerCrop);
+    const harvest = harvestEndMonthForCrop(pickerMonth, pickerCrop);
     // Exclude the planting being edited from its own overlap check — otherwise
     // editing would always see itself as "already committed" on this bed.
-    return bedOverlapFraction(pickerBedId, pickerMonth, harvest, plantings, editingPlantingId ?? undefined);
+    return bedOverlapFraction(pickerBedId, entry, harvest, plantings, editingPlantingId ?? undefined);
   }, [pickerBedId, pickerCrop, pickerMonth, plantings, editingPlantingId]);
+  const pickerHasUnverifiedTiming = useMemo(() =>
+    pickerBedId
+      ? bedHasUnverifiedTiming(pickerBedId, plantings, editingPlantingId ?? undefined)
+      : false,
+  [pickerBedId, plantings, editingPlantingId]);
 
   const loading = design === undefined || plan === null || !mounted;
 
@@ -1068,20 +1125,18 @@ function FacilitatorCropsPageInner() {
                 className="font-sans"
                 style={{ fontWeight: 600, color: '#9A6018', border: '1px solid rgba(154,96,24,0.35)', borderRadius: 4, padding: '0 3px', fontSize: 10 }}
               >
-                🪴 transplant
+                🪴 check / transplant
               </span>{' '}
-              marks the month seedlings raised in a tray move out into the bed — tap it (or the crop bar) for that
-              planting&apos;s details. Only crops started in trays show one.
+              marks when to start checking seedlings raised in a tray. The crop bar starts at the planned transplant month;
+              if seedlings are delayed, update the planting instead of treating the bed as occupied. Tap it (or the crop bar) for details.
               <br />
               ↻ marks where year two begins. The timeline shows <strong style={{ color: '#5C5040' }}>two full years</strong> — pan
               sideways to reach the second one. This plan holds one annual cycle rather than a separate plan per
               year, so year two is that same cycle coming round again, drawn <em>faded</em> to say so: it is what
-              these beds do if nothing changes, not a second year you have decided on. When a new season actually
-              starts, tap{' '}
-              <strong style={{ color: '#5C5040' }}>Auto-suggest a plan</strong> again with{' '}
-              <strong style={{ color: '#5C5040' }}>Rotate crops</strong> on: it reads what&apos;s currently in each
-              bed as last season&apos;s history and plans the next rotation around it, so re-running this each
-              season is how &quot;planning next year&quot; actually works here.
+              these beds do if nothing changes, not a second year you have decided on.{' '}
+              <strong style={{ color: '#5C5040' }}>Rotate crops</strong> only avoids immediate same-family
+              sequences inside this annual plan and after a crop marked as already growing. A sound multi-year
+              rotation needs dated records from earlier seasons; this screen does not store or invent them.
             </div>
 
             {/* Food/field/cashflow resilience — moved directly under the plan
@@ -1091,7 +1146,7 @@ function FacilitatorCropsPageInner() {
             <FoodAvailabilityChart
               monthOrder={chartMonthOrder}
               availability={foodAvailability}
-              valueByMonth={foodValueByMonth}
+              yieldBenchmark={planYieldBenchmark}
               utilizationByMonth={fieldUtilizationByMonth}
               plantings={plantings}
               priceOverrides={priceOverrides}
@@ -1106,6 +1161,9 @@ function FacilitatorCropsPageInner() {
             <div className="grid gap-4" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
               <div className="rounded-2xl p-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
                 <div className="font-display font-semibold mb-2" style={{ fontSize: 15, color: '#20190F' }}>📋 Tasks</div>
+                <div className="font-sans rounded-lg px-2.5 py-2 mb-3" style={{ fontSize: 11.5, color: '#7A4A12', lineHeight: 1.45, background: '#FFF8E8', border: '1px solid rgba(154,96,24,0.3)' }}>
+                  {SUCCESSION_TIMING_GUIDANCE}
+                </div>
                 <div className="font-sans mb-1" style={{ fontSize: 13, color: '#20190F' }}>
                   <strong>{monthLabel(currentMonth)}:</strong> <span style={{ color: '#5C5040' }}>{taskSentence(currentTasks)}</span>
                 </div>
@@ -1133,7 +1191,7 @@ function FacilitatorCropsPageInner() {
                       {/* i<2 (this month, next month) is already shown above — repeating it here just eats space for no new information. */}
                       {chartMonthOrder.map((m, i) => {
                         if (i < 2) return null;
-                        const t = allTasks.filter((task) => task.month === m);
+                        const t = allTasks.filter((task) => taskMonthsFromNow(task, currentMonth) === i);
                         if (t.length === 0) return null;
                         return (
                           <div key={i} className="font-sans" style={{ fontSize: 12, color: '#5C5040' }}>
@@ -1151,7 +1209,7 @@ function FacilitatorCropsPageInner() {
 
               <div className="rounded-2xl p-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
                 <div className="flex items-center justify-between mb-2 gap-2">
-                  <div className="font-display font-semibold" style={{ fontSize: 15, color: '#20190F' }}>🥬 Estimated harvest</div>
+                  <div className="font-display font-semibold" style={{ fontSize: 15, color: '#20190F' }}>🥬 Conservative benchmark comparison</div>
                   <div className="flex rounded-lg overflow-hidden flex-shrink-0" style={{ border: '1px solid #E2D8C4' }}>
                     {(['crop', 'bed'] as const).map((v) => (
                       <button
@@ -1170,29 +1228,38 @@ function FacilitatorCropsPageInner() {
                   </div>
                 </div>
                 <div className="font-mono font-bold mb-1" style={{ fontSize: 26, color: '#1F4D2B' }}>
-                  {(newYieldKg * harvestLossFactor).toFixed(1)} <span style={{ fontSize: 14, fontWeight: 500, color: '#8C7A62' }}>kg/yr to plant</span>
+                  {hasAreaConflict ? (
+                    <span style={{ fontSize: 18 }}>Resolve overlapping bed space</span>
+                  ) : hasKnownYield && totalYieldKg !== null ? (
+                    <>{totalYieldKg.toFixed(1)} <span style={{ fontSize: 14, fontWeight: 500, color: '#8C7A62' }}>kg across active and planned crop cycles</span></>
+                  ) : unknownYieldNames.length > 0 ? (
+                    <span style={{ fontSize: 18 }}>No verified kg total</span>
+                  ) : coverCropNames.length > 0 ? (
+                    <span style={{ fontSize: 18 }}>No food-yield total</span>
+                  ) : (
+                    <>0.0 <span style={{ fontSize: 14, fontWeight: 500, color: '#8C7A62' }}>kg · no crops to plant</span></>
+                  )}
                 </div>
-                <div className="font-sans mb-2" style={{ fontSize: 11, color: '#8C7A62' }}>
-                  {cashflowSettings.lossPercent > 0 ? `after ~${cashflowSettings.lossPercent}% loss` : 'no loss assumed yet'} · gross {newYieldKg.toFixed(1)} kg/yr
-                </div>
-                {existingYieldKg > 0 && (
-                  <div className="font-sans mb-2" style={{ fontSize: 12, color: '#8C7A62' }}>
-                    + {(existingYieldKg * harvestLossFactor).toFixed(1)} kg/yr already growing (not new)
+                {hasAreaConflict && (
+                  <div className="font-sans mb-2" style={{ fontSize: 11, color: '#A83A2C', lineHeight: 1.45 }}>
+                    No kg or value total is shown because {planYieldBenchmark.areaConflictBedLabels.join(', ')} {planYieldBenchmark.areaConflictBedLabels.length === 1 ? 'has' : 'have'} overlapping or invalid planting shares. Edit those beds instead of guessing which crop loses growing area.
                   </div>
                 )}
-
-                {/* Same loss% as the Retail/Wholesale value-tab slider below (shared
-                    cashflowSettings) — dragging either one moves both, so there's
-                    exactly one "expected loss" number for the whole plan. */}
-                <div className="flex items-center justify-between mb-1">
-                  <span className="font-sans" style={{ fontSize: 11, color: '#8C7A62' }}>% expected loss (disease, failure, underperformance)</span>
-                  <span className="font-mono font-semibold" style={{ fontSize: 12, color: '#20190F' }}>{cashflowSettings.lossPercent}%</span>
-                </div>
-                <input
-                  type="range" min={0} max={100} value={cashflowSettings.lossPercent}
-                  onChange={(e) => updateCashflowSettings({ ...cashflowSettings, lossPercent: Number(e.target.value) })}
-                  className="w-full mb-3" style={{ accentColor: '#1F4D2B' }}
-                />
+                {hasKnownYield && (
+                  <div className="font-sans mb-2" style={{ fontSize: 11, color: '#8C7A62' }}>
+                    Conservative mapped-area comparison for one cycle of each active or planned planting; no loss allowance or within-month picking curve is applied here. A finished one-off crop is not repeated into a later year.
+                  </div>
+                )}
+                {unknownYieldNames.length > 0 && (
+                  <div className="font-sans mb-2" style={{ fontSize: 11, color: '#9A6018', lineHeight: 1.45 }}>
+                    Excludes {unknownYieldNames.join(', ')}: no verified kg/m² benchmark is available, so the app does not turn those crops into zero or invent a total.
+                  </div>
+                )}
+                {coverCropNames.length > 0 && (
+                  <div className="font-sans mb-2" style={{ fontSize: 11, color: '#7A5B24', lineHeight: 1.45 }}>
+                    {coverCropNames.join(', ')} {coverCropNames.length === 1 ? 'is a' : 'are'} soil-cover crop{coverCropNames.length === 1 ? '' : 's'}, recorded as 0 food kg rather than counted as harvest.
+                  </div>
+                )}
 
                 <div className="space-y-1">
                   {harvestBoxView === 'crop' ? (
@@ -1200,22 +1267,48 @@ function FacilitatorCropsPageInner() {
                       {yieldByCropList.map(({ cropKey, name, icon, kg }) => (
                         <div key={cropKey} className="flex items-center justify-between font-sans" style={{ fontSize: 13, color: '#5C5040' }}>
                           <span>{icon} {name}</span>
-                          <span className="font-mono" style={{ color: '#20190F' }}>{(kg * harvestLossFactor).toFixed(1)} kg</span>
+                          <span className="font-mono" style={{ color: '#20190F' }}>{kg.toFixed(1)} kg</span>
                         </div>
                       ))}
-                      {yieldByCropList.length === 0 && (
+                      {[...new Set(unknownYieldPlantings.map((planting) => planting.cropKey))].map((cropKey) => {
+                        const crop = cropByKey(cropKey);
+                        if (!crop) return null;
+                        return (
+                          <div key={cropKey} className="flex items-center justify-between font-sans" style={{ fontSize: 13, color: '#5C5040' }}>
+                            <span>{crop.icon} {crop.name}</span>
+                            <span className="font-mono" style={{ color: '#9A6018' }}>not verified</span>
+                          </div>
+                        );
+                      })}
+                      {[...new Set(coverCropPlantings.map((planting) => planting.cropKey))].map((cropKey) => {
+                        const crop = cropByKey(cropKey);
+                        if (!crop) return null;
+                        return (
+                          <div key={cropKey} className="flex items-center justify-between font-sans" style={{ fontSize: 13, color: '#5C5040' }}>
+                            <span>{crop.icon} {crop.name}</span>
+                            <span className="font-mono" style={{ color: '#7A5B24' }}>soil cover · 0 food kg</span>
+                          </div>
+                        );
+                      })}
+                      {plantings.length === 0 && (
                         <div className="font-sans" style={{ fontSize: 12, color: '#8C7A62' }}>Nothing planted yet.</div>
                       )}
                     </>
                   ) : (
                     <>
-                      {yieldByBed.map(({ bed, kg }) => (
+                      {yieldByBed.map(({ bed, kg, unknownNames, coverNames }) => (
                         <div key={bed.id} className="flex items-center justify-between font-sans" style={{ fontSize: 13, color: '#5C5040' }}>
                           <span>{bed.label}</span>
-                          <span className="font-mono" style={{ color: '#20190F' }}>{(kg * harvestLossFactor).toFixed(1)} kg</span>
+                          <span className="font-mono text-right" style={{ color: '#20190F' }}>
+                            {kg > 0 && `${kg.toFixed(1)} kg known`}
+                            {kg > 0 && unknownNames.length > 0 && <br />}
+                            {unknownNames.length > 0 && <span style={{ color: '#9A6018' }}>{unknownNames.join(', ')} not verified</span>}
+                            {(kg > 0 || unknownNames.length > 0) && coverNames.length > 0 && <br />}
+                            {coverNames.length > 0 && <span style={{ color: '#7A5B24' }}>{coverNames.join(', ')} soil cover</span>}
+                          </span>
                         </div>
                       ))}
-                      {yieldByBed.length === 0 && (
+                      {plantings.length === 0 && (
                         <div className="font-sans" style={{ fontSize: 12, color: '#8C7A62' }}>Nothing planted yet.</div>
                       )}
                     </>
@@ -1246,12 +1339,25 @@ function FacilitatorCropsPageInner() {
                       <div key={row.cropKey} className="pb-2" style={{ borderBottom: '1px solid #F0EAD8' }}>
                         <div className="flex items-center justify-between font-sans" style={{ fontSize: 13, color: '#5C5040' }}>
                           <span>{row.icon} {row.cropName}</span>
-                          <span className="font-mono" style={{ color: '#20190F' }}>~{row.count} {row.unit}</span>
+                          <span className="font-mono text-right" style={{ color: '#20190F' }}>
+                            {row.quantityStatus === 'spacing-confirmation-required'
+                              ? 'confirm spacing first'
+                              : row.quantityStatus === 'packet-rate-required'
+                                ? 'packet rate needed'
+                                : row.quantityStatus === 'counted-piece-range' && row.countRange
+                                  ? `~${positionRangeLabel(row.countRange)} ${row.unit} positions`
+                                  : row.count === null
+                                    ? 'confirm quantity'
+                                    : `~${row.count.toLocaleString('en-ZA')} ${row.unit} positions`}
+                          </span>
                         </div>
                         {crop && (
                           <div className="font-sans mt-0.5 flex items-center gap-1" style={{ fontSize: 11, color: '#8C7A62' }}>
                             <SeedBadge transplant={!!crop.transplant} />
-                            <span>{crop.transplant ? 'transplant' : 'direct-sow'} · {sowingInstruction(crop)}</span>
+                            <span>
+                              {crop.transplant ? 'transplant' : 'direct-sow'} · {sowingInstruction(crop)}
+                              {row.quantityStatus === 'packet-rate-required' ? ` · ~${positionRangeLabel(row.finalPlantPositionsRange)} final plant positions` : ''}
+                            </span>
                           </div>
                         )}
                       </div>
@@ -1262,7 +1368,11 @@ function FacilitatorCropsPageInner() {
                   )}
                 </div>
                 <p className="font-mono mt-2" style={{ fontSize: 10, color: '#9A8268' }}>
-                  Quantities estimated from bed area and each crop's usual spacing — direct-sow counts include a buffer for germination loss. Row/in-row spacing and sowing depth are shown where a source confirms them; otherwise just the overall plant spacing.
+                  Field-position ranges come from mapped area and published spacing; they are not guaranteed buy quantities
+                  or germination/loss allowances. Supplier and crop-specific guidance may change what to purchase. Botanical seed quantity is
+                  not inferred from mature spacing: use the packet&apos;s crop-specific direct-sowing rate and germination
+                  guidance. Planting-piece ranges are shown only for seedlings, cloves, corms, slips and seed potatoes when both spacing
+                  axes are verified. Where a row layout is not verified, confirm it locally before buying material.
                 </p>
               </div>
 
@@ -1278,6 +1388,31 @@ function FacilitatorCropsPageInner() {
                   <div className="font-sans" style={{ fontSize: 12, color: '#8C7A62' }}>Add some plantings to see a year-ahead summary.</div>
                 )}
               </div>
+            </div>
+
+            <div className="rounded-2xl p-4 mt-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
+              <div className="font-display font-semibold mb-2" style={{ fontSize: 15, color: '#20190F' }}>🔎 What the planner can prove</div>
+              <p className="font-sans mb-2" style={{ fontSize: 12.5, color: '#5C5040', lineHeight: 1.5 }}>
+                Yield points use the conservative end of published commercial KZN benchmarks where that crop is
+                listed. They compare plans; they do not predict this household&apos;s harvest. The warm/light-frost
+                windows, spacing and duration use the official tables where those tables cover the crop; catalog
+                fallbacks and other regional patterns still need local confirmation. Bed occupancy uses the upper
+                published maturity/picking endpoint so two crops are not booked onto the same ground, but the
+                source says these times are approximate and assume optimum conditions; actual crops may mature later.
+                Every later sowing or transplant is conditional on observing that the previous crop is finished and the bed is clear. The
+                app does not split a crop-cycle total into invented monthly kilograms. Auto-suggest only ranks crops
+                with verified yield, duration and field-spacing support, only uses crops you select, and requires irrigation because intensive
+                succession without a farm water plan is not defensible. Its packing is a transparent
+                heuristic, not proof of a global maximum or of a physical row layout. Commercial ranking is fresh
+                weight per crop cycle; it is not profit, nutrition or evidence of buyer demand.
+              </p>
+              <p className="font-sans" style={{ fontSize: 11.5, color: '#5C5040', lineHeight: 1.55 }}>
+                Official KZN DARD tables:{' '}
+                <a href="https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/expected_yields.pdf" target="_blank" rel="noopener noreferrer" style={{ color: '#1F4D2B', textDecoration: 'underline' }}>yield benchmarks</a>,{' '}
+                <a href="https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/plant_establishment.pdf" target="_blank" rel="noopener noreferrer" style={{ color: '#1F4D2B', textDecoration: 'underline' }}>sowing and establishment</a>,{' '}
+                <a href="https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/length_of_growing_period.pdf" target="_blank" rel="noopener noreferrer" style={{ color: '#1F4D2B', textDecoration: 'underline' }}>growing and picking periods</a>, and{' '}
+                <a href="https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/successional_cropping.pdf" target="_blank" rel="noopener noreferrer" style={{ color: '#1F4D2B', textDecoration: 'underline' }}>succession limits and farmer choice</a>.
+              </p>
             </div>
 
             <RotationExplanationCard />
@@ -1303,6 +1438,7 @@ function FacilitatorCropsPageInner() {
           existing={pickerExisting}
           onExisting={setPickerExisting}
           overlap={pickerOverlap}
+          hasUnverifiedTiming={pickerHasUnverifiedTiming}
           isEditing={!!editingPlantingId}
           favouriteCropKeys={favouriteCropKeys}
           onToggleFavourite={toggleFavourite}
@@ -1323,10 +1459,8 @@ function FacilitatorCropsPageInner() {
           planting={activePlanting}
           bedAreaM2={bedAreaFor(activePlanting.bedId)}
           allPlantings={plantings}
-          substitute={suggestSubstituteCrop(activePlanting, plantings)}
           onEdit={() => { openEditPicker(activePlanting); setActivePlanting(null); }}
           onRemove={() => { removePlanting(activePlanting.id); setActivePlanting(null); }}
-          onReplace={(cropKey) => { replacePlanting(activePlanting.id, cropKey); setActivePlanting(null); }}
           onClose={() => setActivePlanting(null)}
         />
       )}
@@ -1336,12 +1470,14 @@ function FacilitatorCropsPageInner() {
         <AutoSuggestModal
           phase={autoPhase}
           goal={aGoal} onGoal={chooseGoal}
-          household={aHousehold} onHousehold={setAHousehold}
           focusCount={aFocusCount} onFocusCount={setAFocusCount}
           groups={aGroups} onToggleGroup={toggleGroup}
+          cropKeys={aCropKeys} onToggleCrop={toggleAutoCrop} onSetCrops={setACropKeys}
           rhythm={aRhythm} onRhythm={setARhythm}
+          pattern={aPattern} onPattern={setAPattern}
           rotateCrops={aRotateCrops} onRotateCrops={setARotateCrops}
           allowVinesInBeds={aAllowVinesInBeds} onAllowVinesInBeds={setAAllowVinesInBeds}
+          reliableIrrigation={aReliableIrrigation} onReliableIrrigation={setAReliableIrrigation}
           result={autoResult}
           onGenerate={runAutoSuggest}
           onAccept={acceptAutoSuggest}
@@ -1460,15 +1596,15 @@ function MonthLineChart({
   );
 }
 
-type FoodValueMode = 'availability' | 'harvest' | 'utilization' | 'retail' | 'wholesale';
+type FoodValueMode = 'availability' | 'utilization' | 'value';
 
 function FoodAvailabilityChart({
-  monthOrder, availability, valueByMonth, utilizationByMonth, plantings, priceOverrides, onPriceOverrideChange,
+  monthOrder, availability, yieldBenchmark, utilizationByMonth, plantings, priceOverrides, onPriceOverrideChange,
   cashflowSettings, onCashflowSettingsChange, yearMode, onYearModeChange,
 }: {
   monthOrder: number[];
   availability: FoodAvailabilityItem[][];
-  valueByMonth: FoodValueMonth[];
+  yieldBenchmark: PlanYieldBenchmark;
   utilizationByMonth: number[];
   plantings: Planting[];
   priceOverrides: Record<string, CropPrice>;
@@ -1479,302 +1615,166 @@ function FoodAvailabilityChart({
   onYearModeChange: (m: 'established' | 'fromToday') => void;
 }) {
   const [mode, setMode] = useState<FoodValueMode>('availability');
+  const [valuePriceMode, setValuePriceMode] = useState<'retail' | 'wholesale'>('retail');
   const [editingPrices, setEditingPrices] = useState(false);
-  const isMoneyMode = mode === 'retail' || mode === 'wholesale';
-
   const cols = monthOrder.map((m) => {
     const items = availability[m] ?? [];
     return { m, fresh: items.filter((it) => it.status === 'fresh'), stored: items.filter((it) => it.status === 'stored') };
   });
   const maxTotal = Math.max(1, ...cols.map((c) => c.fresh.length + c.stored.length));
-  const BAR_MAX_H = 56;
-  const isEmpty = cols.every((c) => c.fresh.length + c.stored.length === 0);
-  const lossFactor = 1 - cashflowSettings.lossPercent / 100;
-  const sellFactor = cashflowSettings.sellPercent / 100;
-  const moneyMax = Math.max(1, ...monthOrder.map((m) => (mode === 'retail' ? valueByMonth[m].retailValue : valueByMonth[m].wholesaleValue) * lossFactor));
+  const hasStoredItems = cols.some((c) => c.stored.length > 0);
+  const isAvailabilityEmpty = cols.every((c) => c.fresh.length + c.stored.length === 0);
   const utilMax = Math.max(1, ...monthOrder.map((m) => utilizationByMonth[m] ?? 0));
-  const kgMax = Math.max(1, ...monthOrder.map((m) => valueByMonth[m].kg));
-  // Whole-year total from the SAME per-month figures the chart plots — always
-  // reconciles to "Estimated harvest" above by construction (buildFoodValueByMonth
-  // spreads each planting's total yield across its real harvest window, so
-  // summing all 12 calendar months recovers that total exactly once).
-  const totalHarvestKg = valueByMonth.slice(1, 13).reduce((s, v) => s + v.kg, 0);
-
-  const pricedCropKeys = [...new Set(plantings.map((p) => p.cropKey))].filter((k) => !UNPRICED_CROPS.has(k)).sort();
-
-  // Total across the TRUE 12-month cycle (indices 1-12), not the display
-  // width — buildFoodValueByMonth is keyed by calendar month regardless of
-  // how many columns DISPLAY_MONTHS happens to show, so this is the honest
-  // "whole year" figure even when the timeline itself is showing 15+ columns.
-  const fullHarvestableValue = (mode === 'retail' || mode === 'wholesale')
-    ? valueByMonth.slice(1, 13).reduce((s, v) => s + (mode === 'retail' ? v.retailValue : v.wholesaleValue), 0)
-    : 0;
-  const totalHarvestableValue = fullHarvestableValue * lossFactor;
-  const totalCashIncome = totalHarvestableValue * sellFactor;
-  const totalHomeValue = totalHarvestableValue * (1 - sellFactor);
+  const pricedCropKeys = [...new Set(plantings.map((p) => p.cropKey))].filter((key) => !UNPRICED_CROPS.has(key)).sort();
+  const unpricedBenchmarkCrops = yieldBenchmark.byCrop.filter((row) => !priceFor(row.cropKey, priceOverrides)).map((row) => row.name);
+  const cashValueAtSelectedChannel = yieldBenchmark.byCrop.reduce((sum, row) => {
+    const price = priceFor(row.cropKey, priceOverrides);
+    if (!price) return sum;
+    return sum + row.kg * (valuePriceMode === 'retail' ? price.retailPerKg : price.wholesalePerKg);
+  }, 0);
+  const homeReplacementValueAtRetail = yieldBenchmark.byCrop.reduce((sum, row) => {
+    const price = priceFor(row.cropKey, priceOverrides);
+    if (!price) return sum;
+    return sum + row.kg * price.retailPerKg;
+  }, 0);
+  const assumptionsConfirmed = cashflowSettings.confirmed === true;
+  const harvestableFraction = 1 - cashflowSettings.lossPercent / 100;
+  const soldFraction = cashflowSettings.sellPercent / 100;
+  const cashIncome = cashValueAtSelectedChannel * harvestableFraction * soldFraction;
+  // Produce kept at home replaces a retail purchase regardless of which sale
+  // channel is selected. Reusing the wholesale toggle here understated the
+  // home side and made one label describe two different calculations.
+  const homeValue = homeReplacementValueAtRetail * harvestableFraction * (1 - soldFraction);
+  const BAR_MAX_H = 56;
 
   return (
     <div className="rounded-2xl p-4 mt-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-      <div className="font-display font-semibold mb-1" style={{ fontSize: 15, color: '#20190F' }}>🍽️ Food, field & cashflow — resilience by month</div>
-
-      <div className="inline-flex flex-wrap rounded-full p-0.5 mb-2" style={{ background: '#F5F0E8', border: '1px solid #E2D8C4' }}>
-        {([['availability', '🍽️ Availability'], ['harvest', '⚖️ Kg harvested'], ['utilization', '🌱 Field utilization'], ['retail', '💰 Retail value'], ['wholesale', '💰 Wholesale value']] as [FoodValueMode, string][]).map(([m, label]) => (
-          <button
-            key={m}
-            onClick={() => setMode(m)}
-            className="font-sans font-semibold"
-            style={{
-              fontSize: 11.5, padding: '5px 12px', borderRadius: 999, border: 'none', cursor: 'pointer',
-              background: mode === m ? '#1F4D2B' : 'transparent',
-              color: mode === m ? '#F7F2E9' : '#5C5040',
-            }}
-          >
+      <div className="font-display font-semibold mb-1" style={{ fontSize: 15, color: '#20190F' }}>🍽️ Food, field & value</div>
+      <div className="inline-flex flex-wrap rounded-full p-0.5 mb-3" style={{ background: '#F5F0E8', border: '1px solid #E2D8C4' }}>
+        {([['availability', '🍽️ Availability'], ['utilization', '🌱 Field utilization'], ['value', '💰 Plan-cycle value']] as [FoodValueMode, string][]).map(([nextMode, label]) => (
+          <button key={nextMode} onClick={() => setMode(nextMode)} className="font-sans font-semibold" style={{ fontSize: 11.5, padding: '5px 12px', borderRadius: 999, border: 'none', cursor: 'pointer', background: mode === nextMode ? '#1F4D2B' : 'transparent', color: mode === nextMode ? '#F7F2E9' : '#5C5040' }}>
             {label}
           </button>
         ))}
       </div>
 
-      {/* Which YEAR the charts describe — see the parent's yearMode comment. */}
-      <div className="flex flex-wrap items-center gap-2 mb-3">
-        <div className="inline-flex rounded-full p-0.5" style={{ background: '#F5F0E8', border: '1px solid #E2D8C4' }}>
-          {([['established', '🌳 An established year'], ['fromToday', '🌱 From today']] as ['established' | 'fromToday', string][]).map(([m, label]) => (
-            <button
-              key={m}
-              onClick={() => onYearModeChange(m)}
-              className="font-sans font-semibold"
-              style={{
-                fontSize: 11, padding: '4px 10px', borderRadius: 999, border: 'none', cursor: 'pointer',
-                background: yearMode === m ? '#5C5040' : 'transparent',
-                color: yearMode === m ? '#F7F2E9' : '#5C5040',
-              }}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
-        <span className="font-sans" style={{ fontSize: 11, color: '#8C7A62', lineHeight: 1.4 }}>
-          {yearMode === 'established'
-            ? 'The full yearly rhythm once this plan repeats every season — a garden starting now grows into this picture over its first year.'
-            : 'Only what is actually ahead of a garden starting now — already-finished months of existing crops don’t count.'}
-        </span>
-      </div>
-
-      {mode === 'availability' ? (
-        <p className="font-sans mb-3" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.4 }}>
-          What this plan should put on the table each month — fresh picks, plus anything still keeping in storage
-          from an earlier harvest (maize, pumpkin, onions and other storable crops). Shows what&apos;s on hand, not
-          an exact kg count — see the &quot;Kg harvested&quot; view for that.
-        </p>
-      ) : mode === 'harvest' ? (
-        <p className="font-sans mb-3" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.4 }}>
-          How many kg actually come off the beds each month — each planting&apos;s total estimated yield spread
-          evenly across its real fresh-harvest window (one lump for a one-shot crop like onions, several months
-          for a cut-and-come-again crop like Swiss chard), so every month is only counted once and the 12 months
-          add up to the {totalHarvestKg.toFixed(1)}kg/yr total exactly. Hover a point for which crops make up
-          that month.
-        </p>
-      ) : mode === 'utilization' ? (
-        <p className="font-sans mb-3" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.4 }}>
-          How much of your total bed area is actually growing something each month — a quick way to spot a bed
-          sitting idle between plantings. A bed counts as occupied from sowing through the end of its harvest
-          window (storage life afterward doesn&apos;t count — that&apos;s off the bed, not in the ground).{' '}
-          {yearMode === 'fromToday'
-            ? 'Crops you marked as already growing only count from today onward — a crop that finished months ago no longer holds its bed here, matching the timeline above.'
-            : 'In an established year every planting counts in its calendar months, because the plan repeats — high utilization with low kg in the same month simply means beds full of young crops.'}
-        </p>
-      ) : (
-        <p className="font-sans mb-3" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.4 }}>
-          Estimated Rand value of what&apos;s harvested each month, using researched South African {mode} prices
-          (2026-07-14) — a one-time researched snapshot, not a live market feed, spread across each crop&apos;s own
-          harvest window so the same batch is never counted twice.{' '}
-          {mode === 'retail' ? (
-            <>This is what you&apos;d get selling direct to the customer yourself — a farm stall, neighbours, a
-            local market stand — at ordinary non-organic retail prices, not a premium organic markup. You keep the
-            full retail margin because there&apos;s no middleman.</>
-          ) : (
-            <>This is what you&apos;d get selling in bulk to someone else who then resells it — another retailer,
-            a stall-holder, a trader — lower per-kg than retail, but in volume and off your hands in one sale
-            rather than piece by piece.</>
-          )}{' '}
-          Edit the prices below to match your own market.
-        </p>
-      )}
-
-      {isMoneyMode && !isEmpty && (
-        <div className="rounded-xl p-3 mb-3" style={{ background: '#F5F0E8', border: '1px solid #E2D8C4' }}>
-          <div className="flex items-center justify-between mb-2">
-            <span className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>
-              % sold (rest feeds the household)
-            </span>
-            <span className="font-mono font-semibold" style={{ fontSize: 12, color: '#20190F' }}>{cashflowSettings.sellPercent}%</span>
+      {mode !== 'value' && (
+        <div className="flex flex-wrap items-center gap-2 mb-3">
+          <div className="inline-flex rounded-full p-0.5" style={{ background: '#F5F0E8', border: '1px solid #E2D8C4' }}>
+            {([['established', '🌳 An established year'], ['fromToday', '🌱 From today']] as ['established' | 'fromToday', string][]).map(([nextYearMode, label]) => (
+              <button key={nextYearMode} onClick={() => onYearModeChange(nextYearMode)} className="font-sans font-semibold" style={{ fontSize: 11, padding: '4px 10px', borderRadius: 999, border: 'none', cursor: 'pointer', background: yearMode === nextYearMode ? '#5C5040' : 'transparent', color: yearMode === nextYearMode ? '#F7F2E9' : '#5C5040' }}>
+                {label}
+              </button>
+            ))}
           </div>
-          <input
-            type="range" min={0} max={100} value={cashflowSettings.sellPercent}
-            onChange={(e) => onCashflowSettingsChange({ ...cashflowSettings, sellPercent: Number(e.target.value) })}
-            style={{ width: '100%', accentColor: '#1F4D2B' }}
-          />
-          <div className="flex items-center justify-between mb-2 mt-2">
-            <span className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>
-              % expected loss (disease, failure, underperformance)
-            </span>
-            <span className="font-mono font-semibold" style={{ fontSize: 12, color: '#20190F' }}>{cashflowSettings.lossPercent}%</span>
-          </div>
-          <input
-            type="range" min={0} max={100} value={cashflowSettings.lossPercent}
-            onChange={(e) => onCashflowSettingsChange({ ...cashflowSettings, lossPercent: Number(e.target.value) })}
-            style={{ width: '100%', accentColor: '#B33A3A' }}
-          />
-          <div className="mt-3 pt-3" style={{ borderTop: '1px solid #E2D8C4' }}>
-            <div className="font-sans uppercase tracking-widest mb-1" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.08em' }}>
-              Estimated for the year
-            </div>
-            <div className="font-mono font-bold" style={{ fontSize: 20, color: '#1F4D2B' }}>
-              R{Math.round(totalCashIncome).toLocaleString()} <span style={{ fontSize: 12, fontWeight: 500, color: '#8C7A62' }}>cash income ({cashflowSettings.sellPercent}% sold)</span>
-            </div>
-            {totalHomeValue > 0.5 && (
-              <div className="font-mono" style={{ fontSize: 13, color: '#5C5040', marginTop: 2 }}>
-                + R{Math.round(totalHomeValue).toLocaleString()} <span style={{ fontSize: 11.5, color: '#8C7A62' }}>home-consumption value (not cash — what you&apos;d have paid to buy it)</span>
-              </div>
-            )}
-            {(cashflowSettings.sellPercent < 100 || cashflowSettings.lossPercent > 0) && (
-              <div className="font-mono" style={{ fontSize: 11.5, color: '#8C7A62', marginTop: 6, paddingTop: 6, borderTop: '1px dashed #E2D8C4' }}>
-                R{Math.round(fullHarvestableValue).toLocaleString()} full {mode} value if everything sold, nothing lost
-              </div>
-            )}
-          </div>
+          <span className="font-sans" style={{ fontSize: 11, color: '#8C7A62', lineHeight: 1.4 }}>
+            {yearMode === 'established' ? 'The repeated annual timing of planned rows; one-off existing crops are not repeated.' : 'Only timing still ahead from today; finished existing crops do not remain on the chart.'}
+          </span>
         </div>
       )}
 
-      {isEmpty ? (
-        <div className="font-sans" style={{ fontSize: 12, color: '#8C7A62' }}>Add some plantings to see what&apos;s available month to month.</div>
-      ) : mode === 'availability' ? (
+      {mode === 'availability' && (
         <>
-          <div className="flex items-center gap-4 mb-3 font-sans" style={{ fontSize: 11, color: '#5C5040' }}>
-            <span className="inline-flex items-center gap-1.5">
-              <span style={{ width: 9, height: 9, borderRadius: 2, background: '#7FAE6E', display: 'inline-block' }} /> Fresh harvest
-            </span>
-            <span className="inline-flex items-center gap-1.5">
-              <span style={{ width: 9, height: 9, borderRadius: 2, background: '#D4A017', display: 'inline-block' }} /> In storage
-            </span>
-          </div>
-          <div style={{ overflowX: 'auto' }}>
-            <div className="flex" style={{ minWidth: GRID_MIN_WIDTH, gap: 6 }}>
-              {cols.map(({ m, fresh, stored }, i) => {
-                const total = fresh.length + stored.length;
-                const hPx = total === 0 ? 0 : Math.max(8, Math.round((total / maxTotal) * BAR_MAX_H));
-                const storedHPx = total === 0 ? 0 : Math.round((stored.length / total) * hPx);
-                const freshHPx = hPx - storedHPx;
-                const title = [...stored, ...fresh]
-                  .map((it) => `${it.icon} ${it.name} — ${it.status === 'fresh' ? 'fresh' : 'stored'}`)
-                  .join('\n');
-                return (
-                  <div key={i} style={{ flex: 1, textAlign: 'center', minWidth: 56 }}>
-                    <div style={{ height: BAR_MAX_H, display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
-                      {total === 0 ? (
-                        <div style={{ width: '60%', height: 2, background: '#E2D8C4', borderRadius: 1 }} />
-                      ) : (
-                        <div
-                          style={{ width: '60%', display: 'flex', flexDirection: 'column', borderRadius: 4, overflow: 'hidden' }}
-                          title={title}
-                        >
-                          {storedHPx > 0 && <div style={{ height: storedHPx, background: '#D4A017' }} />}
-                          {storedHPx > 0 && freshHPx > 0 && <div style={{ height: 2, background: '#FFFEFA' }} />}
-                          {freshHPx > 0 && <div style={{ height: freshHPx, background: '#7FAE6E' }} />}
+          <p className="font-sans mb-3" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.4 }}>
+            Fresh-picking windows only. Storage appears only with sourced conditions. The source does not provide a within-window kg curve, so this chart deliberately shows no monthly kilograms or money.
+          </p>
+          {isAvailabilityEmpty ? (
+            <div className="font-sans" style={{ fontSize: 12, color: '#8C7A62' }}>Add a planting with verified timing to see availability.</div>
+          ) : (
+            <>
+              <div className="flex items-center gap-4 mb-3 font-sans" style={{ fontSize: 11, color: '#5C5040' }}>
+                <span className="inline-flex items-center gap-1.5"><span style={{ width: 9, height: 9, borderRadius: 2, background: '#7FAE6E', display: 'inline-block' }} /> Fresh</span>
+                {hasStoredItems && <span className="inline-flex items-center gap-1.5"><span style={{ width: 9, height: 9, borderRadius: 2, background: '#D4A017', display: 'inline-block' }} /> Stored under named conditions</span>}
+              </div>
+              <div style={{ overflowX: 'auto' }}>
+                <div className="flex" style={{ minWidth: GRID_MIN_WIDTH, gap: 6 }}>
+                  {cols.map(({ m, fresh, stored }, i) => {
+                    const total = fresh.length + stored.length;
+                    const height = total === 0 ? 0 : Math.max(8, Math.round((total / maxTotal) * BAR_MAX_H));
+                    const storedHeight = total === 0 ? 0 : Math.round((stored.length / total) * height);
+                    return (
+                      <div key={i} style={{ flex: 1, textAlign: 'center', minWidth: 56 }}>
+                        <div style={{ height: BAR_MAX_H, display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
+                          {total === 0 ? <div style={{ width: '60%', height: 2, background: '#E2D8C4', borderRadius: 1 }} /> : (
+                            <div title={[...stored, ...fresh].map((item) => `${item.icon} ${item.name} — ${item.status}`).join('\n')} style={{ width: '60%', display: 'flex', flexDirection: 'column', borderRadius: 4, overflow: 'hidden' }}>
+                              {storedHeight > 0 && <div style={{ height: storedHeight, background: '#D4A017' }} />}
+                              {height - storedHeight > 0 && <div style={{ height: height - storedHeight, background: '#7FAE6E' }} />}
+                            </div>
+                          )}
                         </div>
-                      )}
-                    </div>
-                    <div className="font-sans" style={{ fontSize: 10, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? '#1F4D2B' : '#8C7A62', marginTop: 4 }}>
-                      {MONTHS_SHORT[m - 1]}
-                    </div>
-                    <div style={{ fontSize: 13, lineHeight: 1.3, minHeight: 16 }}>{fresh.map((it) => it.icon).join('')}</div>
-                    <div style={{ fontSize: 13, lineHeight: 1.3, minHeight: 16, opacity: 0.6 }}>{stored.map((it) => it.icon).join('')}</div>
-                  </div>
-                );
-              })}
-            </div>
-          </div>
+                        <div className="font-sans" style={{ fontSize: 10, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? '#1F4D2B' : '#8C7A62', marginTop: 4 }}>{MONTHS_SHORT[m - 1]}</div>
+                        <div style={{ fontSize: 13, minHeight: 16 }}>{fresh.map((item) => item.icon).join('')}</div>
+                        <div style={{ fontSize: 13, minHeight: 16, opacity: 0.6 }}>{stored.map((item) => item.icon).join('')}</div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </>
+          )}
         </>
-      ) : mode === 'harvest' ? (
-        <MonthLineChart
-          monthOrder={monthOrder}
-          values={monthOrder.map((m) => valueByMonth[m].kg)}
-          max={kgMax}
-          color="#7FAE6E"
-          formatLabel={(v) => (v > 0 ? `${v.toFixed(1)}kg` : '')}
-          tooltipFor={(i) => {
-            const byCrop = valueByMonth[monthOrder[i]].byCrop;
-            const rows = Object.entries(byCrop).filter(([, kg]) => kg > 0.05).sort((a, b) => b[1] - a[1]);
-            if (!rows.length) return undefined;
-            return rows.map(([cropKey, kg]) => `${cropByKey(cropKey)?.name ?? cropKey}: ${kg.toFixed(1)}kg`).join('\n');
-          }}
-        />
-      ) : mode === 'utilization' ? (
-        <MonthLineChart
-          monthOrder={monthOrder}
-          values={monthOrder.map((m) => utilizationByMonth[m] ?? 0)}
-          max={utilMax}
-          color="#5C7FA6"
-          referenceValue={1}
-          dotColor={(v) => (v <= 0 ? '#D8CFBC' : v > 1 ? '#B33A3A' : '#5C7FA6')}
-          labelColor={(v) => (v > 1 ? '#B33A3A' : '#20190F')}
-          formatLabel={(v) => `${Math.round(v * 100)}%`}
-        />
-      ) : (
-        <MonthLineChart
-          monthOrder={monthOrder}
-          values={monthOrder.map((m) => (mode === 'retail' ? valueByMonth[m].retailValue : valueByMonth[m].wholesaleValue) * lossFactor)}
-          max={moneyMax}
-          color={mode === 'retail' ? '#D4A017' : '#C4A46A'}
-          formatLabel={(v) => (v > 0 ? `R${Math.round(v)}` : '')}
-        />
       )}
 
-      {!isEmpty && pricedCropKeys.length > 0 && (
-        <div className="mt-3" style={{ borderTop: '1px solid #E2D8C4', paddingTop: 8 }}>
-          <button
-            onClick={() => setEditingPrices((v) => !v)}
-            className="font-sans underline"
-            style={{ fontSize: 11.5, color: '#1F4D2B', background: 'none', border: 'none', cursor: 'pointer' }}
-          >
-            {editingPrices ? 'Hide prices' : '✏️ Edit prices used above'}
-          </button>
-          {editingPrices && (
-            <div className="mt-2 space-y-1.5">
-              {pricedCropKeys.map((cropKey) => {
+      {mode === 'utilization' && (
+        <>
+          <p className="font-sans mb-3" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.4 }}>
+            Share of mapped growing area occupied each month. The planner reserves each crop through the upper end of its supported maturity and picking range to avoid double-booking; finish a crop earlier only after checking the bed.
+          </p>
+          <MonthLineChart monthOrder={monthOrder} values={monthOrder.map((m) => utilizationByMonth[m] ?? 0)} max={utilMax} color="#5C7FA6" referenceValue={1} dotColor={(value) => (value <= 0 ? '#D8CFBC' : value > 1 ? '#B33A3A' : '#5C7FA6')} labelColor={(value) => (value > 1 ? '#B33A3A' : '#20190F')} formatLabel={(value) => `${Math.round(value * 100)}%`} />
+        </>
+      )}
+
+      {mode === 'value' && (
+        <>
+          <p className="font-sans mb-3" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.45 }}>
+            What-if value for the saved plan&apos;s crop-cycle benchmark totals. It is not a monthly cashflow forecast, annual profit, live market quote or harvest promise. Default prices are an editable South African snapshot from 14 July 2026; confirm a real buyer and current local price before planting for sale.
+          </p>
+          <div className="inline-flex rounded-full p-0.5 mb-3" style={{ background: '#F5F0E8', border: '1px solid #E2D8C4' }}>
+            {(['retail', 'wholesale'] as const).map((priceMode) => <button key={priceMode} onClick={() => setValuePriceMode(priceMode)} className="font-sans font-semibold" style={{ fontSize: 11, padding: '4px 10px', borderRadius: 999, border: 'none', cursor: 'pointer', background: valuePriceMode === priceMode ? '#5C5040' : 'transparent', color: valuePriceMode === priceMode ? '#F7F2E9' : '#5C5040' }}>{priceMode === 'retail' ? 'Direct retail' : 'Wholesale'}</button>)}
+          </div>
+          {plantings.length === 0 ? <div className="font-sans" style={{ fontSize: 12, color: '#8C7A62' }}>Add plantings before building a value scenario.</div> : yieldBenchmark.areaConflictBedLabels.length > 0 ? (
+            <div className="font-sans rounded-xl p-3" style={{ fontSize: 12, color: '#A83A2C', lineHeight: 1.45, background: '#FFF6F3', border: '1px solid rgba(168,58,44,0.25)' }}>
+              No value subtotal is calculated because {yieldBenchmark.areaConflictBedLabels.join(', ')} {yieldBenchmark.areaConflictBedLabels.length === 1 ? 'has' : 'have'} overlapping or invalid planting shares. Resolve the bed layout first.
+            </div>
+          ) : (
+            <div className="rounded-xl p-3" style={{ background: '#F5F0E8', border: '1px solid #E2D8C4' }}>
+              <div className="flex items-center justify-between mb-1"><span className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>% sold (rest kept at home)</span><span className="font-mono font-semibold" style={{ fontSize: 12 }}>{cashflowSettings.sellPercent}%</span></div>
+              <input aria-label="Percent sold" type="range" min={0} max={100} value={cashflowSettings.sellPercent} onChange={(event) => onCashflowSettingsChange({ ...cashflowSettings, sellPercent: Number(event.target.value), confirmed: false })} style={{ width: '100%', accentColor: '#1F4D2B' }} />
+              <div className="flex items-center justify-between mb-1 mt-2"><span className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>% loss or underperformance</span><span className="font-mono font-semibold" style={{ fontSize: 12 }}>{cashflowSettings.lossPercent}%</span></div>
+              <input aria-label="Percent loss" type="range" min={0} max={100} value={cashflowSettings.lossPercent} onChange={(event) => onCashflowSettingsChange({ ...cashflowSettings, lossPercent: Number(event.target.value), confirmed: false })} style={{ width: '100%', accentColor: '#B33A3A' }} />
+              {!assumptionsConfirmed ? (
+                <div className="mt-3 pt-3" style={{ borderTop: '1px solid #E2D8C4' }}>
+                  <div className="font-sans mb-2" style={{ fontSize: 12, color: '#9A6018' }}>Not calculated yet: 100% sold and 0% loss are placeholders, not an estimate. Review both assumptions first.</div>
+                  <button onClick={() => onCashflowSettingsChange({ ...cashflowSettings, confirmed: true })} className="font-display font-semibold rounded-lg px-3 py-2" style={{ fontSize: 12.5, color: '#F7F2E9', background: '#1F4D2B', border: 'none', cursor: 'pointer' }}>Use these assumptions</button>
+                </div>
+              ) : (
+                <div className="mt-3 pt-3" style={{ borderTop: '1px solid #E2D8C4' }}>
+                  <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#8C7A62' }}>Known benchmark subtotal for this plan cycle</div>
+                  <div className="font-mono font-bold" style={{ fontSize: 20, color: '#1F4D2B' }}>R{Math.round(cashIncome).toLocaleString()} <span style={{ fontSize: 12, fontWeight: 500, color: '#8C7A62' }}>cash scenario</span></div>
+                  {homeValue > 0.5 && <div className="font-mono" style={{ fontSize: 13, color: '#5C5040' }}>+ R{Math.round(homeValue).toLocaleString()} <span style={{ fontSize: 11.5, color: '#8C7A62' }}>home-use replacement-value scenario</span></div>}
+                </div>
+              )}
+              {(yieldBenchmark.unknownYieldCrops.length > 0 || unpricedBenchmarkCrops.length > 0) && <div className="font-sans mt-2" style={{ fontSize: 11, color: '#9A6018', lineHeight: 1.4 }}>Subtotal excludes {[...new Set([...yieldBenchmark.unknownYieldCrops, ...unpricedBenchmarkCrops])].join(', ')} because a verified yield or usable per-kg price is missing.</div>}
+            </div>
+          )}
+          {pricedCropKeys.length > 0 && (
+            <div className="mt-3" style={{ borderTop: '1px solid #E2D8C4', paddingTop: 8 }}>
+              <button onClick={() => setEditingPrices((open) => !open)} className="font-sans underline" style={{ fontSize: 11.5, color: '#1F4D2B', background: 'none', border: 'none', cursor: 'pointer' }}>{editingPrices ? 'Hide price assumptions' : '✏️ Review and edit price assumptions'}</button>
+              {editingPrices && <div className="mt-2 space-y-2">{pricedCropKeys.map((cropKey) => {
                 const crop = cropByKey(cropKey);
                 const price = priceFor(cropKey, priceOverrides);
                 if (!crop || !price) return null;
-                return (
-                  <div key={cropKey} className="flex items-center gap-2 font-sans" style={{ fontSize: 12, color: '#5C5040' }}>
-                    <span style={{ flex: 1 }}>{crop.icon} {crop.name}</span>
-                    <label className="flex items-center gap-1">
-                      R
-                      <input
-                        type="number"
-                        min="0"
-                        value={price.retailPerKg}
-                        onChange={(e) => onPriceOverrideChange(cropKey, { ...price, retailPerKg: Number(e.target.value) || 0, confidence: 'estimated' })}
-                        style={{ width: 54, padding: '2px 4px', border: '1px solid #E2D8C4', borderRadius: 4, background: '#FFFFFF' }}
-                      />
-                      /kg retail
-                    </label>
-                    <label className="flex items-center gap-1">
-                      R
-                      <input
-                        type="number"
-                        min="0"
-                        value={price.wholesalePerKg}
-                        onChange={(e) => onPriceOverrideChange(cropKey, { ...price, wholesalePerKg: Number(e.target.value) || 0, confidence: 'estimated' })}
-                        style={{ width: 54, padding: '2px 4px', border: '1px solid #E2D8C4', borderRadius: 4, background: '#FFFFFF' }}
-                      />
-                      /kg wholesale
-                    </label>
+                return <div key={cropKey} className="font-sans rounded-lg p-2" style={{ fontSize: 12, color: '#5C5040', background: '#FFFFFF', border: '1px solid #E2D8C4' }}>
+                  <div className="flex items-center justify-between mb-1"><span>{crop.icon} {crop.name}</span><span style={{ fontSize: 10, color: price.confidence === 'sourced' ? '#1F4D2B' : '#9A6018' }}>{price.confidence === 'sourced' ? 'dated source snapshot' : 'rough estimate'}</span></div>
+                  <div className="flex flex-wrap gap-2">
+                    <label>Retail R <input type="number" min="0.01" step="0.01" value={price.retailPerKg} onChange={(event) => onPriceOverrideChange(cropKey, { ...price, retailPerKg: Number(event.target.value), confidence: 'estimated' })} style={{ width: 62, padding: '2px 4px', border: '1px solid #E2D8C4', borderRadius: 4 }} /> /kg</label>
+                    <label>Wholesale R <input type="number" min="0.01" step="0.01" value={price.wholesalePerKg} onChange={(event) => onPriceOverrideChange(cropKey, { ...price, wholesalePerKg: Number(event.target.value), confidence: 'estimated' })} style={{ width: 62, padding: '2px 4px', border: '1px solid #E2D8C4', borderRadius: 4 }} /> /kg</label>
                   </div>
-                );
-              })}
+                </div>;
+              })}</div>}
             </div>
           )}
-        </div>
+        </>
       )}
     </div>
   );
@@ -1783,45 +1783,35 @@ function FoodAvailabilityChart({
 function RotationExplanationCard() {
   return (
     <div className="rounded-2xl p-4 mt-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-      <div className="font-display font-semibold mb-2" style={{ fontSize: 15, color: '#20190F' }}>🔄 Why rotate by food group</div>
+      <div className="font-display font-semibold mb-2" style={{ fontSize: 15, color: '#20190F' }}>🔄 Rotate by botanical family</div>
       <p className="font-sans mb-3" style={{ fontSize: 12.5, color: '#5C5040', lineHeight: 1.5 }}>
-        Each bed&apos;s label above shows which food group is currently growing there. With &quot;Rotate crops&quot;
-        turned on in Auto-suggest, each bed actively targets the NEXT group in this order (falling back to
-        whatever fits if nothing from that group is available) — not just avoiding a repeat, but following the
-        cycle below. This keeps soil-borne pests and diseases from building up, and matches each group&apos;s
-        needs to what the last crop left behind — general permaculture practice, not a guaranteed schedule.
+        Food groups describe what a household eats; rotation follows plant relatives that share pests and
+        diseases. With &quot;Rotate crops&quot; on, Auto-suggest avoids an immediate repeat of the same family — for
+        example potato after tomato, or beetroot after Swiss chard. It does not prescribe a universal sequence.
+        The ARC crop-rotation manual treats rotation as a multi-season decision, so keep earlier-season records too.{' '}
+        <a href="https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Climate%20Smart%20Production%20Types/Manual/Microsoft%20Word%20-%20CA%20Crop%20rotation%20Manual.pdf" target="_blank" rel="noopener noreferrer" style={{ color: '#1F4D2B', textDecoration: 'underline' }}>Read the ARC manual</a>.
       </p>
-      <div className="space-y-1.5">
-        {ROTATION_SEQUENCE.map((g) => {
-          const meta = FOOD_GROUP_META[g];
-          return (
-            <div key={g} className="font-sans" style={{ fontSize: 12.5, color: '#5C5040', lineHeight: 1.5 }}>
-              <strong style={{ color: '#20190F' }}>{meta.icon} {meta.label}</strong> — {ROTATION_BLURB[g]}
-            </div>
-          );
+      <div className="font-sans" style={{ fontSize: 12, color: '#5C5040', lineHeight: 1.55 }}>
+        {Object.entries(ROTATION_FAMILY_META).map(([family, meta]) => {
+          const names = CROPS.filter((crop) => rotationFamilyOf(crop) === family).map((crop) => crop.name).join(', ');
+          return <div key={family}><strong style={{ color: '#20190F' }}>{meta.label}:</strong> {names}</div>;
         })}
       </div>
     </div>
   );
 }
 
-/**
- * Static organic-inputs reference (2026-07-15 agronomy handoff) — read-only
- * guidance, NOT per-crop numeric fields and NOT auto-scheduled spray tasks.
- * Fertilisation is the derived-from-commercial-rate general amounts the
- * handoff explicitly said are safe to ship as a reference card, not a fixed
- * per-crop schedule (Talborne's own FAQ says rates should come from soil/
- * leaf testing). Pest section is monitoring-first — "if you see X, consider
- * Y" — deliberately no numeric economic thresholds and no auto-inserted
- * spray tasks, since no SA-specific source backs either.
- */
+/** Read-only safety boundaries for inputs and crop protection. The previous
+ * card printed generic product rates and efficacy/safety claims without a
+ * current registered label for the farmer's exact crop and problem. */
 function OrganicGuideCard() {
   const [openSection, setOpenSection] = useState<'feed' | 'protect' | null>(null);
   return (
     <div className="rounded-2xl p-4 mt-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
       <div className="font-display font-semibold mb-1" style={{ fontSize: 15, color: '#20190F' }}>🌿 Growing organically</div>
       <p className="font-sans mb-2" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.5 }}>
-        General guidance, not a fixed schedule — adjust to your soil, local conditions and (if certified) your organic certifier&apos;s rules. Not a substitute for an extension officer.
+        This plan does not prescribe a fertiliser or pesticide programme. Soil condition, the diagnosed problem,
+        the exact crop and the current South African label all matter; ask a local extension officer or qualified adviser where possible.
       </p>
 
       <button
@@ -1834,23 +1824,13 @@ function OrganicGuideCard() {
       {openSection === 'feed' && (
         <div className="space-y-2 pb-2 mb-2" style={{ borderBottom: '1px solid #E2D8C4' }}>
           <p className="font-sans" style={{ fontSize: 12.5, color: '#5C5040', lineHeight: 1.5 }}>
-            <strong>Bed prep:</strong> compost worked into the top 15-20cm (~2-3 kg/m²), plus well-rotted kraal (cattle) manure — ~0.5-1 kg/m² for most crops, up to 2-4 kg/m² for heavy feeders. Manure must be well-rotted and worked in at least 3-4 weeks before sowing/transplanting — fresh manure is a food-safety risk, especially for root crops and leafy greens.
+            <strong>Check before adding:</strong> look at drainage, soil condition and prior amendments. Use a soil or compost analysis where accessible and local advice before deciding whether an amendment is needed. The app does not turn a generic crop name into a compost, manure, lime or fertiliser rate.
           </p>
           <p className="font-sans" style={{ fontSize: 12.5, color: '#5C5040', lineHeight: 1.5 }}>
-            <strong>Legumes help the next crop:</strong> dry beans, green beans, peas, broad beans and groundnuts all reduce the following crop&apos;s fertiliser need — already built into this plan&apos;s bed rotation.
+            <strong>Legumes can support a following crop:</strong> dry beans, green beans, peas, broad beans and groundnuts are useful rotation crops. This planner avoids immediate family repeats; it does not calculate a fertiliser credit.
           </p>
-          <p className="font-sans" style={{ fontSize: 12.5, color: '#20190F', lineHeight: 1.5 }}>
-            <strong>Real SA organic products</strong> (label rates, not universal science — check the current label):
-          </p>
-          <ul className="font-sans space-y-1" style={{ fontSize: 12, color: '#5C5040', lineHeight: 1.5, paddingLeft: 16 }}>
-            <li>Talborne Vita Veg 6:3:4(16) — leafy/fruiting veg, apply at the base and water in, reapply every 6-8 weeks.</li>
-            <li>Talborne Vita Bone Phos 4:10:0(14) (bonemeal) — till into new beds before planting, especially low-phosphorus soils.</li>
-            <li>Talborne Soft Rock Phosphate — ~25g/m²/year, broadcast, banded, or in the planting hole.</li>
-            <li>Atlantic Bio Ocean (seaweed, fishmeal, humic acid, poultry manure pellets) — 1-2 handfuls/m² every 6 weeks, pH-neutral and won&apos;t burn plants.</li>
-            <li>Biogrow Bio Ganic / Bio Rock — real SA organic products; confirm the current application rate on the label.</li>
-          </ul>
           <p className="font-sans" style={{ fontSize: 11, color: '#9A8268', lineHeight: 1.5 }}>
-            No fixed per-crop feeding schedule is given here on purpose — even Talborne&apos;s own guidance says rates should come from a soil or leaf test, not a blanket number. PGS SA (Participatory Guarantee System) is a realistic low-cost organic-certification route for smallholders, if that&apos;s a goal.
+            If you use a commercial input, check the current product label and your certifier&apos;s current rules. “Organic” does not establish a safe dose or prove that a product suits this soil.
           </p>
         </div>
       )}
@@ -1865,22 +1845,18 @@ function OrganicGuideCard() {
       {openSection === 'protect' && (
         <div className="space-y-2">
           <p className="font-sans" style={{ fontSize: 12.5, color: '#5C5040', lineHeight: 1.5 }}>
-            <strong>Prevent first:</strong> rotate crops (built into this plan), companion planting (marigold against nematodes/whitefly; garlic, onion or wild garlic/Artemisia afra as general repellents; basil near tomatoes; let some carrot, fennel, dill or yarrow flower for beneficial insects), sanitation (remove diseased material — don&apos;t compost it unless hot-composting; clean tools; avoid late-day overhead watering), disease-resistant varieties where labelled, and insect mesh over brassica/seedling beds.
+            <strong>Observe and record:</strong> note the affected crop, symptoms, which part of the plant is damaged and how the problem changes. Confirm the pest, disease or nutrient problem before treating it; similar symptoms can need different responses.
           </p>
           <p className="font-sans" style={{ fontSize: 12.5, color: '#5C5040', lineHeight: 1.5 }}>
-            <strong>Scout weekly:</strong> walk your beds and note what you see — no diagnosis needed, just catching problems while they&apos;re small. Yellow sticky traps give early warning of flying pests.
+            <strong>Use the least hazardous suitable response:</strong> after a sound diagnosis, consider appropriate sanitation, barriers, removal or other non-chemical controls. This app does not claim that a named companion plant controls a pest.
           </p>
           <p className="font-sans" style={{ fontSize: 12.5, color: '#20190F', lineHeight: 1.5 }}>
-            <strong>If you see it, consider this</strong> — confirm the diagnosis before spraying anything:
+            <strong>If an agricultural remedy is needed in South Africa:</strong> use only a product currently registered for the exact crop and problem. Follow its current label for dose, protective equipment, re-entry, pre-harvest interval, storage and disposal. Never infer safety from “natural” or “organic.”
           </p>
-          <ul className="font-sans space-y-1" style={{ fontSize: 12, color: '#5C5040', lineHeight: 1.5, paddingLeft: 16 }}>
-            <li><strong>Caterpillars</strong> — Bt (Bacillus thuringiensis kurstaki), e.g. Margaret Roberts Biological Caterpillar Insecticide — targets caterpillars only, safe for other insects.</li>
-            <li><strong>Aphids, whitefly, mites, mealybug, thrips, scale</strong> — rotate between neem (Biogrow Bioneem), insecticidal soap (Biogrow Neudosan) and pyrethrum (Biogrow Pyrol — evening only, toxic to bees while wet), or a garlic/canola contact spray (Margaret Roberts Organic Insecticide).</li>
-            <li><strong>Fungal disease</strong> (powdery/downy mildew, rust, blight, black rot) — sulphur-based sprays (watch temperatures above 30°C) or preventive copper soap. Go easy on copper — it builds up in soil over years; check your certifier&apos;s limit rather than assuming a number.</li>
-            <li><strong>Slugs, snails, cutworms</strong> — physical barriers and hand-removal first; an iron/ferric-phosphate bait as a spot treatment if it&apos;s still a problem.</li>
-          </ul>
           <p className="font-sans" style={{ fontSize: 11, color: '#9A8268', lineHeight: 1.5 }}>
-            This is a starting point, not a spray calendar — nothing in this plan auto-schedules a spray. Confirm what you&apos;re seeing before treating it, and check your organic certifier&apos;s current approved-input list if you&apos;re certified.
+            Check the Department of Agriculture&apos;s{' '}
+            <a href="https://www.nda.gov.za/index.php/publication/616-registered-products" target="_blank" rel="noopener noreferrer" style={{ color: '#1F4D2B', textDecoration: 'underline' }}>current registered-products lists</a>{' '}
+            and the label on the product in hand. Nothing in this crop plan automatically schedules a spray.
           </p>
         </div>
       )}
@@ -1913,7 +1889,7 @@ function BedRow({ bed, plantings, currentMonth, onAddCrop, onTapPlanting }: {
           {bed.kind === 'plot' && (
             <span
               className="font-sans font-semibold uppercase"
-              title="A staple plot from your Design Studio map — one field crop at full area per season, rotating year to year"
+              title="A staple plot from your Design Studio map — one field crop at full area; multi-year rotation needs dated records"
               style={{ fontSize: 8.5, letterSpacing: '0.06em', color: '#7A5B24', background: '#F0E4C8', border: '1px solid #E0CD9E', borderRadius: 6, padding: '1px 5px', marginLeft: 5, verticalAlign: 'middle' }}
             >
               🌽 plot
@@ -1970,7 +1946,11 @@ function BedRow({ bed, plantings, currentMonth, onAddCrop, onTapPlanting }: {
 function PlantingBar({ planting, currentMonth, onTap }: { planting: Planting; currentMonth: number; onTap: () => void }) {
   const crop = cropByKey(planting.cropKey);
   if (!crop) return null;
-  const harvest = harvestMonth(planting.sowMonth, crop.daysToHarvest);
+  const readinessStart = bedEntryMonth(planting.sowMonth, crop);
+  const entry = plannedBedEntryMonth(planting.sowMonth, crop);
+  const harvest = crop.timingVerified === false
+    ? entry
+    : harvestMonthForCrop(planting.sowMonth, crop);
   // Harvest isn't always a single-month instant — cut-and-come-again crops
   // (harvestWindowMonths) go on yielding for several more months after the
   // first picking, and the bar should show the WHOLE window you can pick
@@ -1979,17 +1959,16 @@ function PlantingBar({ planting, currentMonth, onTap }: { planting: Planting; cu
   // kept afterward) are deliberately NOT extended here — that's a
   // fresh-in-the-BED question, not a stored-on-the-shelf one; see the Food
   // availability chart for the storage story.
-  const harvestEnd = harvest + (crop.harvestWindowMonths ?? 0);
-  // A farmer-confirmed already-growing crop can legitimately be a few
-  // months in the past (nearest direction); a planned-but-not-yet-sown one
-  // (auto-suggested or manually added) never can be — it hasn't happened,
-  // so it always resolves to its NEXT reachable occurrence. See
-  // forwardOnlyOffset's own comment for why this matters concretely now.
-  const sowOffset = planting.existing
-    ? nearestSignedOffset(planting.sowMonth, currentMonth)
-    : forwardOnlyOffset(planting.sowMonth, currentMonth);
-  // One entry per visible repeat of the annual cycle (see barInstances).
-  const instances = barInstances(sowOffset, planting.sowMonth, harvestEnd);
+  const harvestEnd = crop.timingVerified === false
+    ? entry
+    : harvestEndMonthForCrop(planting.sowMonth, crop);
+  const latestEntry = latestBedEntryMonth(planting.sowMonth, crop);
+  // Resolve the recorded SOW occurrence first, then add the nursery offset.
+  // Resolving January field-entry independently from a December sowing moves
+  // an existing tray cohort back a year. Planned rows repeat annually for the
+  // second-year preview; observed existing rows have exactly one occurrence.
+  const entryOffsets = plantingBedEntryOffsets(planting, currentMonth, DISPLAY_MONTHS);
+  const instances = barInstances(entryOffsets, entry, harvestEnd);
   if (!instances.length) return null; // entirely outside the visible window
   const fraction = planting.areaFraction ?? 1;
   const fLabel = fractionLabel(fraction);
@@ -2012,7 +1991,7 @@ function PlantingBar({ planting, currentMonth, onTap }: { planting: Planting; cu
   // Measured per COPY (seg.rawStart, not the shared sowOffset): the second
   // cycle's harvest starts 12 months after the first one's, and measuring
   // both from cycle 0 would paint the repeat gold from end to end.
-  const greenSpan = ((harvest - planting.sowMonth) % 12 + 12) % 12;
+  const greenSpan = ((harvest - entry) % 12 + 12) % 12;
   const readyMonthsFor = (seg: Segment) =>
     Math.max(0, Math.min(seg.end - Math.max(seg.rawStart + greenSpan, seg.start) + 1, segMonthCount(seg)));
   // Year two is a POSITION on the axis (past the ↻ seam), not "the second copy
@@ -2023,6 +2002,9 @@ function PlantingBar({ planting, currentMonth, onTap }: { planting: Planting; cu
   // seam is the year the farmer is planting; that reads full strength.
   const isYearTwo = (seg: Segment) => seg.rawStart >= 12;
   const harvestLabel = crop.harvestWindowMonths ? `${monthLabel(harvest)}-${monthLabel(harvestEnd)}` : monthLabel(harvest);
+  const finishLabel = crop.timingVerified === false
+    ? 'termination timing not verified'
+    : crop.yieldKgPerM2 === 0 ? `cut or roll down ${harvestLabel}` : `harvest ${harvestLabel}`;
 
   return (
     <div style={{ position: 'relative', height: 30, marginBottom: 3 }}>
@@ -2044,7 +2026,7 @@ function PlantingBar({ planting, currentMonth, onTap }: { planting: Planting; cu
             // colour on both would claim a certainty this plan doesn't have.
             opacity: isYearTwo(seg) ? 0.5 : 1,
           }}
-          title={`${crop.name} — sow ${monthLabel(planting.sowMonth)}, harvest ${harvestLabel}${fraction < 1 ? ` · ${fLabel} of bed` : ''}${planting.existing ? ' · already growing' : ''}${isYearTwo(seg) ? ' · year two, the same cycle coming round again' : ''}`}
+          title={`${crop.name} — sow ${monthLabel(planting.sowMonth)}, ${finishLabel} · ${fLabel} bed${planting.existing ? ' · already growing' : ''}${isYearTwo(seg) ? ' · year two, the same cycle coming round again' : ''}`}
         >
           {BAR_STYLE === 'solid' && (
             // The "ready to harvest" marker — a hard colour + a line, not a
@@ -2084,7 +2066,7 @@ function PlantingBar({ planting, currentMonth, onTap }: { planting: Planting; cu
         // independently, and not shared across copies) so it always lands
         // right after that copy's sow month and never contradicts the bar
         // it belongs to.
-        const trOffset = seg.rawStart + 1;
+        const trOffset = seg.rawStart;
         if (trOffset < 0 || trOffset > DISPLAY_MONTHS - 1) return null;
         return (
           <button
@@ -2098,10 +2080,10 @@ function PlantingBar({ planting, currentMonth, onTap }: { planting: Planting; cu
               whiteSpace: 'nowrap', cursor: 'pointer', lineHeight: 1.5, zIndex: 2,
               opacity: isYearTwo(seg) ? 0.5 : 1,
             }}
-            title={`Transplant — move the ${crop.name.toLowerCase()} seedlings out of their tray and into the bed in ${monthLabel(planting.sowMonth + 1)}`}
-            aria-label={`Transplant ${crop.name} in ${monthLabel(planting.sowMonth + 1)}`}
+            title={`Plan to transplant ${crop.name.toLowerCase()} in ${monthLabel(entry)}. Start checking seedlings in ${monthLabel(readinessStart)}; if they are still not ready by ${monthLabel(latestEntry)}, update the plan instead of treating the bed as occupied.`}
+            aria-label={`Plan to transplant ${crop.name} in ${monthLabel(entry)}`}
           >
-            🪴 transplant
+            🪴 check / transplant
           </button>
         );
       })}
@@ -2112,7 +2094,7 @@ function PlantingBar({ planting, currentMonth, onTap }: { planting: Planting; cu
 // ── Crop picker modal ────────────────────────────────────────────────────
 
 function CropPickerModal({
-  search, onSearch, crop, month, pattern, fraction, onFraction, existing, onExisting, overlap,
+  search, onSearch, crop, month, pattern, fraction, onFraction, existing, onExisting, overlap, hasUnverifiedTiming,
   isEditing, favouriteCropKeys, onToggleFavourite, allowBedSharing, onEnableBedSharing, onPick, onBack, onMonth, onConfirm, onClose,
   isPlot,
 }: {
@@ -2126,6 +2108,7 @@ function CropPickerModal({
   existing: boolean;
   onExisting: (v: boolean) => void;
   overlap: number;
+  hasUnverifiedTiming: boolean;
   isEditing: boolean;
   favouriteCropKeys: Set<string>;
   onToggleFavourite: (cropKey: string) => void;
@@ -2143,6 +2126,10 @@ function CropPickerModal({
   // access shortlist, same idea as Tend's personal Crop Library, just
   // without per-farmer custom crop data.
   const filtered = CROPS
+    // A crop with no verified duration cannot truthfully be placed onto this
+    // month-by-month schedule. Keep it in the catalog for legacy records, but
+    // do not offer it as a new manual planting.
+    .filter((c) => c.timingVerified !== false)
     .filter((c) => c.name.toLowerCase().includes(search.toLowerCase()))
     .sort((a, b) => Number(favouriteCropKeys.has(b.key)) - Number(favouriteCropKeys.has(a.key)));
   return (
@@ -2241,7 +2228,11 @@ function CropPickerModal({
               )}
             </div>
             <div className="font-sans mb-3" style={{ fontSize: 13, color: '#5C5040', lineHeight: 1.5 }}>
-              {sowingInstruction(crop)} · {crop.daysToHarvest} days to harvest<br />
+              {sowingInstruction(crop)}
+              {crop.timingVerified === false
+                ? ' · exact sow-to-finish timing is not verified'
+                : ` · ${cropDurationLabel(crop)} ${crop.yieldKgPerM2 === 0 ? 'to flowering, then cut or roll down' : crop.transplant ? 'from transplant to harvest' : 'from sowing to harvest'}`}<br />
+              {pickingPeriodLabel(crop) && <>Usual picking period: {pickingPeriodLabel(crop)}; the plan keeps the bed occupied through the upper end unless you finish it earlier.<br /></>}
               {crop.note}
             </div>
             {isSpaceHungry(crop) && (
@@ -2263,34 +2254,56 @@ function CropPickerModal({
                 </div>
               </div>
             )}
-            <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.08em' }}>Sow month</div>
-            <div className="grid grid-cols-6 gap-1.5 mb-1.5">
-              {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => {
-                const inWindow = crop.sowMonths[pattern].includes(m);
-                const selected = m === month;
-                return (
-                  <button
-                    key={m}
-                    onClick={() => onMonth(m)}
-                    className="font-sans font-semibold rounded-lg py-1.5"
-                    style={{
-                      fontSize: 12,
-                      background: selected ? '#1F4D2B' : inWindow ? 'rgba(63,122,60,0.12)' : 'rgba(192,122,30,0.12)',
-                      color: selected ? '#F7F2E9' : inWindow ? '#1F4D2B' : '#9A6018',
-                      border: selected ? 'none' : `1px solid ${inWindow ? 'rgba(63,122,60,0.3)' : 'rgba(192,122,30,0.35)'}`,
-                      cursor: 'pointer',
-                    }}
-                  >
-                    {MONTHS_SHORT[m - 1]}
-                  </button>
-                );
-              })}
-            </div>
-            <div className="font-sans mb-1.5" style={{ fontSize: 12, color: '#5C5040' }}>
-              Harvest window: <strong style={{ color: '#20190F' }}>{monthLabel(harvestMonth(month, crop.daysToHarvest))}</strong>
-              {crop.transplant && <> · transplant around <strong style={{ color: '#20190F' }}>{monthLabel(month + 1)}</strong></>}
-            </div>
-            {!crop.sowMonths[pattern].includes(month) && (
+            {crop.timingVerified === false && (
+              <div className="font-sans mb-3 px-2.5 py-2 rounded-lg" style={{ fontSize: 12, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: '#9A6018' }}>
+                This legacy record can be kept or removed, but it cannot be rescheduled until a source-backed local duration is available.
+              </div>
+            )}
+            {crop.timingVerified === false ? (
+              <div className="font-sans mb-3" style={{ fontSize: 12, color: '#5C5040' }}>
+                Recorded sowing: <strong style={{ color: '#20190F' }}>{monthLabel(month)}</strong> · finish timing: <strong style={{ color: '#20190F' }}>confirm locally</strong>
+              </div>
+            ) : (
+              <>
+                <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.08em' }}>Sow month</div>
+                <div className="grid grid-cols-6 gap-1.5 mb-1.5">
+                  {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => {
+                    const inWindow = crop.sowMonths[pattern].includes(m);
+                    const selected = m === month;
+                    return (
+                      <button
+                        key={m}
+                        onClick={() => onMonth(m)}
+                        className="font-sans font-semibold rounded-lg py-1.5"
+                        style={{
+                          fontSize: 12,
+                          background: selected ? '#1F4D2B' : inWindow ? 'rgba(63,122,60,0.12)' : 'rgba(192,122,30,0.12)',
+                          color: selected ? '#F7F2E9' : inWindow ? '#1F4D2B' : '#9A6018',
+                          border: selected ? 'none' : `1px solid ${inWindow ? 'rgba(63,122,60,0.3)' : 'rgba(192,122,30,0.35)'}`,
+                          cursor: 'pointer',
+                        }}
+                      >
+                        {MONTHS_SHORT[m - 1]}
+                      </button>
+                    );
+                  })}
+                </div>
+                <div className="font-sans mb-1.5" style={{ fontSize: 12, color: '#5C5040' }}>
+                  {crop.transplant ? 'Conservative harvest window' : 'Harvest window'}: <strong style={{ color: '#20190F' }}>
+                    {(() => {
+                      const start = harvestMonthForCrop(month, crop);
+                      const end = harvestEndMonthForCrop(month, crop);
+                      return start === end ? monthLabel(start) : `${monthLabel(start)}–${monthLabel(end)}`;
+                    })()}
+                  </strong>
+                  {crop.transplant && <> · check/transplant when ready <strong style={{ color: '#20190F' }}>{monthLabel(bedEntryMonth(month, crop))}–{monthLabel(latestBedEntryMonth(month, crop))}</strong></>}
+                </div>
+              </>
+            )}
+            {crop.transplant && (
+              <div className="font-sans mb-2" style={{ fontSize: 11, color: '#8C7A62' }}>{TRANSPLANT_NURSERY_GUIDANCE}</div>
+            )}
+            {crop.timingVerified !== false && !crop.sowMonths[pattern].includes(month) && (
               <div className="font-sans mb-3" style={{ fontSize: 11, color: '#9A6018' }}>⚠ Outside the usual sowing window for this region — still allowed.</div>
             )}
 
@@ -2298,7 +2311,7 @@ function CropPickerModal({
             {isPlot ? (
               <div className="font-sans mb-2 px-2.5 py-2 rounded-lg" style={{ fontSize: 11.5, color: '#5C5040', background: '#FBF6EC', border: '1px solid #E0CD9E' }}>
                 🌽 The whole plot — a staple plot grows one field crop at a time and rotates to a
-                different group next season, so there are no half-shares here.
+                different botanical family in a later rotation, so there are no half-shares here.
               </div>
             ) : allowBedSharing || fraction < 1 ? (
               <>
@@ -2343,6 +2356,12 @@ function CropPickerModal({
               </div>
             )}
 
+            {hasUnverifiedTiming && (
+              <div className="font-sans mb-2" style={{ fontSize: 11, color: '#9A6018' }}>
+                ⚠ This bed has a legacy crop whose finish timing is not verified. It is excluded from the percentage above; check that the ground is actually free before adding another crop.
+              </div>
+            )}
+
             <label className="flex items-center gap-2 font-sans mb-3 cursor-pointer" style={{ fontSize: 13, color: '#5C5040' }}>
               <input type="checkbox" checked={existing} onChange={(e) => onExisting(e.target.checked)} style={{ accentColor: '#1F4D2B' }} />
               This is already growing (not a new planting)
@@ -2350,8 +2369,9 @@ function CropPickerModal({
 
             <button
               onClick={onConfirm}
+              disabled={crop.timingVerified === false}
               className="w-full font-display font-semibold rounded-xl py-2.5 mt-1"
-              style={{ fontSize: 14, background: '#1F4D2B', color: '#F7F2E9', border: 'none', cursor: 'pointer' }}
+              style={{ fontSize: 14, background: crop.timingVerified === false ? '#D8D3C9' : '#1F4D2B', color: crop.timingVerified === false ? '#81796D' : '#F7F2E9', border: 'none', cursor: crop.timingVerified === false ? 'not-allowed' : 'pointer' }}
             >
               {isEditing ? 'Save changes' : existing ? 'Add as existing' : 'Add to bed'}
             </button>
@@ -2364,26 +2384,24 @@ function CropPickerModal({
 
 // ── Planting popover ─────────────────────────────────────────────────────
 
-function PlantingPopover({ planting, bedAreaM2, allPlantings, substitute, onEdit, onRemove, onReplace, onClose }: {
+function PlantingPopover({ planting, bedAreaM2, allPlantings, onEdit, onRemove, onClose }: {
   planting: Planting;
   bedAreaM2: number;
   allPlantings: Planting[];
-  substitute: CropDef | null;
   onEdit: () => void;
   onRemove: () => void;
-  onReplace: (cropKey: string) => void;
   onClose: () => void;
 }) {
-  // Remove asks first, rather than removing immediately — the substitute
-  // suggestion (when there is one) IS the "can't get this seed, what
-  // instead?" answer, and this is the natural place to offer it: right when
-  // the farmer has already decided this crop isn't happening.
+  // Removal stays deliberately separate from choosing a crop. The accepted
+  // plan does not persist the farmer's original whitelist, so this screen
+  // cannot safely infer which alternative food they would actually choose.
   const [confirmingRemove, setConfirmingRemove] = useState(false);
   const crop = cropByKey(planting.cropKey);
   if (!crop) return null;
-  const harvest = harvestMonth(planting.sowMonth, crop.daysToHarvest);
-  const harvestEnd = harvest + (crop.harvestWindowMonths ?? 0);
+  const harvest = harvestMonthForCrop(planting.sowMonth, crop);
+  const harvestEnd = harvestEndMonthForCrop(planting.sowMonth, crop);
   const harvestLabel = crop.harvestWindowMonths ? `${monthLabel(harvest)}-${monthLabel(harvestEnd)}` : monthLabel(harvest);
+  const isCoverCrop = crop.yieldKgPerM2 === 0;
   const yieldKg = estimatedYieldKgAdjusted(planting, bedAreaM2, allPlantings);
   const genuinelyIntercropped = isGenuinelyIntercropped(planting, allPlantings);
   return (
@@ -2401,14 +2419,12 @@ function PlantingPopover({ planting, bedAreaM2, allPlantings, substitute, onEdit
             <X size={16} />
           </button>
         </div>
-        {(planting.areaFraction ?? 1) < 1 && (
-          <div className="inline-block font-sans font-semibold mb-2 px-2 py-0.5 rounded-full" style={{ fontSize: 11, background: 'rgba(63,122,60,0.12)', color: '#1F4D2B' }}>
-            {fractionLabel(planting.areaFraction ?? 1)} of bed{genuinelyIntercropped ? ' — intercropped' : ''}
-          </div>
-        )}
+        <div className="inline-block font-sans font-semibold mb-2 px-2 py-0.5 rounded-full" style={{ fontSize: 11, background: 'rgba(63,122,60,0.12)', color: '#1F4D2B' }}>
+          {fractionLabel(planting.areaFraction ?? 1)} bed{genuinelyIntercropped ? ' — intercropped' : ''}
+        </div>
         {genuinelyIntercropped && (
           <p className="font-sans mb-2" style={{ fontSize: 11, color: '#9A8268' }}>
-            Sharing this bed with another crop at the same time — yield estimated at 90% to allow for the two competing a little, not counted as fully independent.
+            Sharing this bed with another crop at the same time. The kilogram comparison uses each crop&apos;s allocated area only; no generic intercropping bonus or penalty is invented.
           </p>
         )}
         {planting.existing && (
@@ -2417,23 +2433,27 @@ function PlantingPopover({ planting, bedAreaM2, allPlantings, substitute, onEdit
           </div>
         )}
         <div className="font-sans space-y-1 mb-3" style={{ fontSize: 12.5, color: '#5C5040', lineHeight: 1.5 }}>
-          <div>Sow {monthLabel(planting.sowMonth)} → harvest {harvestLabel}</div>
-          <div>{sowingInstruction(crop)} · {crop.daysToHarvest} days to harvest</div>
+          <div>{crop.timingVerified === false
+            ? `Recorded sowing: ${monthLabel(planting.sowMonth)} · finish timing not verified`
+            : `Sow ${monthLabel(planting.sowMonth)} → ${isCoverCrop ? 'cut or roll down' : 'harvest'} ${harvestLabel}`}</div>
+          <div>{sowingInstruction(crop)}{crop.timingVerified === false ? '' : ` · ${cropDurationLabel(crop)} ${crop.transplant ? 'after transplant' : 'from sowing'} ${isCoverCrop ? 'to flowering' : 'to first harvest'}`}</div>
+          {pickingPeriodLabel(crop) && <div>Usual picking period: {pickingPeriodLabel(crop)} · bed reserved through the upper end unless you finish it earlier</div>}
+          {crop.transplant && <div>Field-readiness window: {monthLabel(bedEntryMonth(planting.sowMonth, crop))}–{monthLabel(latestBedEntryMonth(planting.sowMonth, crop))}; transplant when ready.</div>}
+          {crop.transplant && <div>{TRANSPLANT_NURSERY_GUIDANCE}</div>}
           <div>{crop.note}</div>
         </div>
-        <div className="font-mono font-bold mb-3" style={{ fontSize: 18, color: '#1F4D2B' }}>≈ {yieldKg.toFixed(1)} kg est. yield</div>
+        <div className="font-mono font-bold mb-3" style={{ fontSize: 18, color: '#1F4D2B' }}>
+          {hasPlanningYield(crop)
+            ? `≈ ${yieldKg.toFixed(1)} kg benchmark`
+            : crop.yieldKgPerM2 === 0
+              ? 'Soil cover crop · no food yield'
+              : 'Yield benchmark not verified'}
+        </div>
         {confirmingRemove ? (
           <div className="space-y-2">
-            <div className="font-sans" style={{ fontSize: 12.5, color: '#5C5040' }}>Remove {crop.name}?</div>
-            {substitute && (
-              <button
-                onClick={() => onReplace(substitute.key)}
-                className="w-full text-left font-display font-semibold rounded-xl py-2 px-3"
-                style={{ fontSize: 13, background: 'rgba(31,77,43,0.10)', border: '1px solid rgba(31,77,43,0.3)', color: '#1F4D2B', cursor: 'pointer' }}
-              >
-                🔄 Replace with {substitute.icon} {substitute.name} instead
-              </button>
-            )}
+            <div className="font-sans" style={{ fontSize: 12.5, color: '#5C5040' }}>
+              Remove {crop.name}? To choose another crop yourself, cancel and use Edit.
+            </div>
             <div className="flex gap-2">
               <button
                 onClick={() => setConfirmingRemove(false)}
@@ -2447,7 +2467,7 @@ function PlantingPopover({ planting, bedAreaM2, allPlantings, substitute, onEdit
                 className="flex-1 font-display font-semibold rounded-xl py-2"
                 style={{ fontSize: 13, background: 'rgba(180,50,40,0.1)', color: '#A83A2C', border: '1px solid rgba(180,50,40,0.25)', cursor: 'pointer' }}
               >
-                Remove without replacing
+                Remove crop
               </button>
             </div>
           </div>
@@ -2478,39 +2498,48 @@ function PlantingPopover({ planting, bedAreaM2, allPlantings, substitute, onEdit
 
 const GOAL_OPTIONS: { key: GardenGoal; label: string; blurb: string }[] = [
   { key: 'family', label: 'Feed my family', blurb: 'Grow a variety for the household' },
-  { key: 'commercial', label: 'Grow extra to sell', blurb: 'Concentrate on a few crops' },
-  { key: 'hybrid', label: 'Both', blurb: 'Feed us first, sell the surplus' },
-];
-const HOUSEHOLD_OPTIONS: { key: HouseholdSize; label: string }[] = [
-  { key: 'small', label: '1-2 people' },
-  { key: 'medium', label: '3-5 people' },
-  { key: 'large', label: '6+ people' },
+  { key: 'commercial', label: 'Grow crops to sell', blurb: 'Concentrate chosen sale crops in a few beds' },
+  { key: 'hybrid', label: 'Household and sales', blurb: 'Set aside sale beds and use the rest for household crops' },
 ];
 const RHYTHM_OPTIONS: { key: HarvestRhythm; label: string; blurb: string }[] = [
-  { key: 'steady', label: 'Steady supply', blurb: 'A little, regularly' },
+  { key: 'steady', label: 'More regular harvests', blurb: 'Prefer staggered opportunities' },
   { key: 'few-big', label: 'A few big harvests', blurb: 'One flush at a time is fine' },
+];
+const CLIMATE_OPTIONS: { key: RainPattern; label: string; blurb: string }[] = [
+  { key: 'mild-frost', label: 'Summer rain · light frost', blurb: 'Warm KZN-type hinterland' },
+  { key: 'summer', label: 'Summer rain · stronger frost', blurb: 'Colder inland winter' },
+  { key: 'all-year', label: 'Rain in all seasons · frost-free', blurb: 'Warm coastal conditions' },
+  { key: 'winter', label: 'Winter rain · dry summer', blurb: 'Western Cape pattern' },
 ];
 
 function AutoSuggestModal({
-  phase, goal, onGoal, household, onHousehold, focusCount, onFocusCount,
-  groups, onToggleGroup, rhythm, onRhythm, rotateCrops, onRotateCrops,
-  allowVinesInBeds, onAllowVinesInBeds, result, onGenerate, onAccept, onBackToQuestions, onClose,
+  phase, goal, onGoal, focusCount, onFocusCount,
+  groups, onToggleGroup, cropKeys, onToggleCrop, onSetCrops, rhythm, onRhythm, pattern, onPattern, rotateCrops, onRotateCrops,
+  allowVinesInBeds, onAllowVinesInBeds, reliableIrrigation, onReliableIrrigation,
+  result, onGenerate, onAccept, onBackToQuestions, onClose,
 }: {
   phase: 'questions' | 'review';
   goal: GardenGoal; onGoal: (g: GardenGoal) => void;
-  household: HouseholdSize; onHousehold: (h: HouseholdSize) => void;
   focusCount: number; onFocusCount: (n: number) => void;
   groups: FoodGroup[]; onToggleGroup: (g: FoodGroup) => void;
+  cropKeys: string[]; onToggleCrop: (cropKey: string) => void; onSetCrops: (cropKeys: string[]) => void;
   rhythm: HarvestRhythm; onRhythm: (r: HarvestRhythm) => void;
+  pattern: RainPattern; onPattern: (pattern: RainPattern) => void;
   rotateCrops: boolean; onRotateCrops: (v: boolean) => void;
   allowVinesInBeds: boolean; onAllowVinesInBeds: (v: boolean) => void;
+  reliableIrrigation: boolean; onReliableIrrigation: (v: boolean) => void;
   result: AutoSuggestResult | null;
   onGenerate: () => void; onAccept: () => void; onBackToQuestions: () => void; onClose: () => void;
 }) {
+  const [cropSearch, setCropSearch] = useState('');
   const tileStyle = (active: boolean): CSSProperties => ({
     background: active ? '#1F4D2B' : '#FFFFFF', color: active ? '#F7F2E9' : '#5C5040',
     border: `1px solid ${active ? '#1F4D2B' : '#E2D8C4'}`, cursor: 'pointer',
   });
+  const cropChoices = CROPS
+    .filter((crop) => groups.length === 0 || groups.includes(foodGroupOf(crop)))
+    .filter((crop) => crop.name.toLowerCase().includes(cropSearch.trim().toLowerCase()));
+  const supportedShown = cropChoices.filter(hasAutomaticPlanningBasis);
 
   return (
     <div style={{ position: 'fixed', inset: 0, zIndex: 70, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
@@ -2542,18 +2571,6 @@ function AutoSuggestModal({
               </div>
             </div>
 
-            {goal !== 'commercial' && (
-              <div>
-                <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.08em' }}>About how many people eat from this garden?</div>
-                <div className="grid grid-cols-3 gap-1.5">
-                  {HOUSEHOLD_OPTIONS.map((o) => (
-                    <button key={o.key} onClick={() => onHousehold(o.key)} className="py-1.5 rounded-lg text-center font-display font-semibold transition-all" style={{ ...tileStyle(household === o.key), fontSize: 12.5 }}>
-                      {o.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            )}
             {goal !== 'family' && (
               <div>
                 <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.08em' }}>How many crops do you want to focus on selling?</div>
@@ -2569,7 +2586,7 @@ function AutoSuggestModal({
 
             <div>
               <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.08em' }}>
-                What do you want to grow? {goal === 'commercial' ? '(pick 1-3)' : ''}
+                Filter crop types (optional)
               </div>
               <div className="grid grid-cols-2 gap-1.5">
                 {ALL_GROUPS.map((g) => {
@@ -2583,10 +2600,60 @@ function AutoSuggestModal({
               </div>
               <p className="font-mono mt-1.5" style={{ fontSize: 10.5, color: '#9A8268' }}>
                 {groups.length === 0
-                  ? (goal === 'commercial'
-                    ? 'Nothing picked yet — leave it this way to rank the whole catalogue by productivity, or pick 1-3 to focus on a specific kind of crop.'
-                    : "Not sure — we'll suggest for you.")
+                  ? 'No type filter: the crop list below shows every crop with supported yield, duration and field spacing.'
                   : `${groups.length} of ${ALL_GROUPS.length} selected.`}
+              </p>
+            </div>
+
+            <div>
+              <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.08em' }}>
+                Which crops do your household or buyers actually want?
+              </div>
+              <input
+                value={cropSearch}
+                onChange={(event) => setCropSearch(event.target.value)}
+                placeholder="Search crops, e.g. maize or tomatoes"
+                className="w-full font-sans rounded-lg px-2.5 py-2"
+                style={{ fontSize: 12.5, color: '#5C5040', background: '#FFFFFF', border: '1px solid #E2D8C4' }}
+              />
+              <div className="flex gap-2 my-2">
+                <button type="button" onClick={() => onSetCrops([...new Set([...cropKeys, ...supportedShown.map((crop) => crop.key)])])} className="font-sans rounded-lg px-2 py-1" style={{ fontSize: 11, border: '1px solid #B9C9B9', color: '#1F4D2B', background: '#F5F8F3' }}>Select all shown</button>
+                <button type="button" onClick={() => onSetCrops([])} className="font-sans rounded-lg px-2 py-1" style={{ fontSize: 11, border: '1px solid #E2D8C4', color: '#5C5040', background: '#FFFFFF' }}>Clear</button>
+              </div>
+              <div className="rounded-lg" style={{ maxHeight: 220, overflowY: 'auto', border: '1px solid #E2D8C4', background: '#FFFFFF' }}>
+                {cropChoices.map((crop) => {
+                  const supported = hasAutomaticPlanningBasis(crop);
+                  return (
+                    <label key={crop.key} className="flex items-center gap-2 px-2.5 py-2 font-sans" style={{ fontSize: 12, borderBottom: '1px solid #F0E9DC', cursor: supported ? 'pointer' : 'not-allowed', opacity: supported ? 1 : 0.62 }}>
+                      <input type="checkbox" checked={cropKeys.includes(crop.key)} disabled={!supported} onChange={() => onToggleCrop(crop.key)} />
+                      <span style={{ flex: 1 }}>{crop.icon} {crop.name}</span>
+                      {!supported && <span style={{ fontSize: 9.5, color: '#9A6018' }}>manual — confirm locally</span>}
+                    </label>
+                  );
+                })}
+              </div>
+              <p className="font-mono mt-1.5" style={{ fontSize: 10.5, color: '#9A6018', lineHeight: 1.4 }}>
+                Every crop stays visible. Unticked disabled crops, including grain maize, need locally confirmed timing or field spacing before automatic planning can safely place them.
+              </p>
+              {cropKeys.length > 0 && (
+                <div className="flex flex-wrap gap-1.5 mt-2">
+                  {cropKeys.map((key) => {
+                    const crop = cropByKey(key);
+                    if (!crop) return null;
+                    return (
+                      <button key={key} onClick={() => onToggleCrop(key)} className="font-sans rounded-full px-2 py-1" style={{ fontSize: 11, color: '#1F4D2B', background: 'rgba(31,77,43,0.09)', border: '1px solid rgba(31,77,43,0.22)', cursor: 'pointer' }}>
+                        {crop.icon} {crop.name} ×
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+              <p className="font-mono mt-1.5" style={{ fontSize: 10.5, color: '#9A8268' }}>
+                {cropKeys.length
+                  ? (goal === 'commercial'
+                    ? 'Only these crops will be used. Commercial mode compares conservative fresh-weight kg/m² per crop cycle where a supported sowing slot fits; it is not profit, nutrition, buyer demand or proof of a global annual maximum.'
+                    : 'Only these crops will be used. The planner balances supported sowing slots, variety and your harvest rhythm; it will not substitute an unchosen crop or claim a guaranteed maximum.')
+                  : 'Choose at least one crop. Auto-suggest will use only crops you name.'}
               </p>
             </div>
 
@@ -2602,6 +2669,21 @@ function AutoSuggestModal({
               </div>
             </div>
 
+            <div>
+              <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.08em' }}>Confirm this garden's climate</div>
+              <div className="grid grid-cols-2 gap-1.5">
+                {CLIMATE_OPTIONS.map((option) => (
+                  <button key={option.key} onClick={() => onPattern(option.key)} className="py-1.5 px-2 rounded-lg text-left transition-all" style={tileStyle(pattern === option.key)}>
+                    <div className="font-display font-semibold" style={{ fontSize: 12 }}>{option.label}</div>
+                    <div className="font-mono" style={{ fontSize: 9.5, opacity: 0.85 }}>{option.blurb}</div>
+                  </button>
+                ))}
+              </div>
+              <p className="font-mono mt-1.5" style={{ fontSize: 10.5, color: '#9A8268' }}>
+                Preselected from the map&apos;s broad regional estimate. Change it if the garden&apos;s actual frost or rainfall differs. The warm/light-frost calendar has the crop-by-crop KZN source audit; other broad regional calendars still need local extension confirmation.
+              </p>
+            </div>
+
             <button
               onClick={() => onRotateCrops(!rotateCrops)}
               className="w-full text-left px-3 py-2.5 rounded-xl transition-all flex items-start gap-2.5"
@@ -2611,9 +2693,9 @@ function AutoSuggestModal({
               <span>
                 <div className="font-display font-semibold" style={{ fontSize: 12.5 }}>Rotate crops between beds</div>
                 <div className="font-mono" style={{ fontSize: 10.5, opacity: 0.85 }}>
-                  Avoids repeating the same crop family on a bed that just grew it — good practice, and keeps
-                  next season's beds rotation-friendly too (run this again next season with this year's plan still
-                  showing, and it reads that history).
+                  Avoids immediate same-family sequences inside this plan and after a crop marked already
+                  growing — including tomato after potato and beetroot after Swiss chard. This is not a stored
+                  multi-year rotation history.
                 </div>
               </span>
             </button>
@@ -2635,9 +2717,36 @@ function AutoSuggestModal({
             </button>
 
             <button
+              onClick={() => onReliableIrrigation(!reliableIrrigation)}
+              className="w-full text-left px-3 py-2.5 rounded-xl transition-all flex items-start gap-2.5"
+              style={tileStyle(reliableIrrigation)}
+            >
+              <span style={{ fontSize: 16, lineHeight: 1 }}>{reliableIrrigation ? '💧' : '⭘'}</span>
+              <span>
+                <div className="font-display font-semibold" style={{ fontSize: 12.5 }}>Reliable irrigation for every crop cycle (required)</div>
+                <div className="font-mono" style={{ fontSize: 10.5, opacity: 0.85 }}>
+                  This automatic plan deliberately packs successive crop cycles. A rainfall region does not
+                  prove farm water, so it stays off unless you can irrigate throughout every suggested cycle.
+                </div>
+              </span>
+            </button>
+
+            <p className="font-mono" style={{ fontSize: 10.5, color: '#9A8268', lineHeight: 1.45 }}>
+              Auto-suggest keeps one crop in each bed section at a time. You can split a bed manually after
+              choosing a real crop pair and row layout; the planner will not guess intercropping geometry.
+            </p>
+
+            <button
               onClick={onGenerate}
+              disabled={cropKeys.length === 0 || !reliableIrrigation}
               className="w-full font-display font-semibold rounded-xl py-2.5"
-              style={{ fontSize: 14, background: '#1F4D2B', color: '#F7F2E9', border: 'none', cursor: 'pointer' }}
+              style={{
+                fontSize: 14,
+                background: cropKeys.length > 0 && reliableIrrigation ? '#1F4D2B' : '#D8D3C9',
+                color: cropKeys.length > 0 && reliableIrrigation ? '#F7F2E9' : '#81796D',
+                border: 'none',
+                cursor: cropKeys.length > 0 && reliableIrrigation ? 'pointer' : 'not-allowed',
+              }}
             >
               ✨ Suggest a plan
             </button>
@@ -2646,7 +2755,7 @@ function AutoSuggestModal({
           <div className="p-4 space-y-3">
             {!result || result.plantings.length === 0 ? (
               <p className="font-sans" style={{ fontSize: 13, color: '#5C5040' }}>
-                Nothing fit this time — your beds may already be full, or the crops you picked are all out of season right now. Try different food groups, or check "Later this year" below.
+                Nothing fit this time — your beds may already be full, or the exact crops you picked have no supported slot that fits. Review the climate choice or crop list, or check "Later this year" below.
               </p>
             ) : (
               <>
@@ -2655,11 +2764,16 @@ function AutoSuggestModal({
                   {result.plantings.map((p) => {
                     const crop = cropByKey(p.cropKey);
                     if (!crop) return null;
-                    const h = harvestMonth(p.sowMonth, crop.daysToHarvest);
+                    const h = harvestMonthForCrop(p.sowMonth, crop);
+                    const fieldEntry = plannedBedEntryMonth(p.sowMonth, crop);
                     return (
                       <div key={p.id} className="flex items-center justify-between px-3 py-2 rounded-lg font-sans" style={{ fontSize: 12.5, background: '#FFFFFF', border: '1px solid #E2D8C4' }}>
-                        <span>{crop.icon} {crop.name}{p.areaFraction && p.areaFraction < 1 ? ` (${fractionLabel(p.areaFraction)})` : ''}</span>
-                        <span style={{ color: '#8C7A62' }}>sow {monthLabel(p.sowMonth)} → harvest {monthLabel(h)}</span>
+                        <span>{crop.icon} {crop.name} ({fractionLabel(p.areaFraction ?? 1)} bed)</span>
+                        <span style={{ color: '#8C7A62', textAlign: 'right' }}>
+                          {crop.transplant
+                            ? `start tray ${monthLabel(p.sowMonth)} → transplant ${monthLabel(fieldEntry)} → harvest ${monthLabel(h)} (${cropDurationLabel(crop)} in bed)`
+                            : `sow ${monthLabel(p.sowMonth)} → ${crop.yieldKgPerM2 === 0 ? 'cut/roll down' : 'harvest'} ${monthLabel(h)}`}
+                        </span>
                       </div>
                     );
                   })}
@@ -2676,7 +2790,7 @@ function AutoSuggestModal({
                 <div className="font-display font-semibold mb-1" style={{ fontSize: 11.5, color: '#20190F' }}>Later this year</div>
                 {result.laterThisYear.map((l) => {
                   const crop = cropByKey(l.cropKey);
-                  return <div key={l.cropKey}>{crop?.icon} {crop?.name} — best sown around {monthLabel(l.nextWindowMonth)}</div>;
+                  return <div key={l.cropKey}>{crop?.icon} {crop?.name} — the next recorded sowing window starts around {monthLabel(l.nextWindowMonth)}</div>;
                 })}
               </div>
             )}

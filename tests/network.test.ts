@@ -202,7 +202,7 @@ test('money, kilograms and training add up the way the dashboards state them', (
   assert.equal(m.daysSinceActivity, 26);
 });
 
-test('plan delivery comes from the reconciliation, and is null without a plan', () => {
+test('an undated crop-cycle benchmark remains context and never becomes a delivery percentage', () => {
   const reconciliation: ReconciliationResult = {
     matched: [{
       cropKey: 'maize', cropName: 'Maize (mielies)', icon: '🌽',
@@ -223,7 +223,7 @@ test('plan delivery comes from the reconciliation, and is null without a plan', 
   });
   assert.equal(withPlan.plannedKg, 300);
   assert.equal(withPlan.harvestedKg, 120);
-  assert.equal(withPlan.harvestedVsPlannedPct, 40);
+  assert.equal(withPlan.harvestedVsPlannedPct, null);
   assert.equal(withPlan.coverage.plan, true);
 
   const noPlan = buildFarmerMetrics(farmer(), {
@@ -615,13 +615,16 @@ test('every demo farmer is internally coherent', () => {
     assert.ok(m.surveyFilled !== null && m.surveyTotal !== null);
     assert.ok(m.surveyFilled <= m.surveyTotal, where);
 
-    // No crop plan before month 5, so no plan-vs-actual figure either.
+    // The demo may expose that a plan exists after month 5, but its latent
+    // generation model is not a dated farmer target. It must never surface as
+    // a plan-vs-actual percentage or invented benchmark.
     if (m.monthsActive < 5) {
-      assert.equal(m.plannedKg, null, `${where}: has a plan it should not`);
-      assert.equal(m.harvestedVsPlannedPct, null, where);
+      assert.equal(m.coverage.plan, false, `${where}: has a plan it should not`);
     } else {
-      assert.ok(m.plannedKg !== null && m.plannedKg > 0, where);
+      assert.equal(m.coverage.plan, true, `${where}: should expose plan coverage`);
     }
+    assert.equal(m.plannedKg, null, `${where}: demo generation scale leaked as a farmer target`);
+    assert.equal(m.harvestedVsPlannedPct, null, where);
 
     // Every logged crop name resolves to the real catalog.
     const catalogNames = new Set(CROPS.map((c) => c.name));
@@ -653,9 +656,10 @@ test('the demo portfolio contains both a success story and a problem case', () =
   const clean = rows.filter((r) => attentionFlags(r).length === 0);
   assert.ok(flagged.length > 0, 'nothing needs attention — the demo has no story');
   assert.ok(clean.length > 0, 'everything needs attention — the demo looks broken');
-  assert.ok(
+  assert.equal(
     flagged.some((r) => attentionFlags(r).some((f) => f.kind === 'under_plan')),
-    'no site is under-delivering against its plan',
+    false,
+    'an undated crop-cycle benchmark must not accuse a farmer of under-delivery',
   );
   // A portfolio where nobody ever goes quiet is not one a funder recognises,
   // and the dormancy flag would never be demonstrable on stage.

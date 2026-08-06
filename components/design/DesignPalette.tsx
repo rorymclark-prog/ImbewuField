@@ -500,6 +500,43 @@ export default function DesignPalette({
     };
   }, [speciesPickerOpen]);
   const [layersOpen, setLayersOpen] = useState(false);
+  const layersButtonRef = useRef<HTMLButtonElement | null>(null);
+  const [layersAnchor, setLayersAnchor] = useState<{
+    top: number;
+    bottom: number;
+    right: number;
+    openBelow: boolean;
+    maxHeight: number;
+  } | null>(null);
+  const syncLayersAnchor = useCallback(() => {
+    const button = layersButtonRef.current;
+    if (!button) return;
+    const rect = button.getBoundingClientRect();
+    const below = window.innerHeight - rect.bottom - 8;
+    const above = rect.top - 8;
+    // The desktop sidebar puts the tool row near the top, so opening upward hid most of this
+    // tall panel behind the app header (Rory: "layers is cropped off"). Phones keep the useful
+    // upward opening when that is genuinely where the room is. Either way the measured viewport
+    // space, not an assumed screen height, owns the scroll boundary.
+    const openBelow = desktopAside || below >= above;
+    setLayersAnchor({
+      top: rect.top,
+      bottom: rect.bottom,
+      right: Math.max(8, window.innerWidth - rect.right),
+      openBelow,
+      maxHeight: Math.max(120, (openBelow ? below : above) - 6),
+    });
+  }, [desktopAside]);
+  useEffect(() => {
+    if (!layersOpen) return undefined;
+    syncLayersAnchor();
+    window.addEventListener('resize', syncLayersAnchor);
+    window.addEventListener('scroll', syncLayersAnchor, true);
+    return () => {
+      window.removeEventListener('resize', syncLayersAnchor);
+      window.removeEventListener('scroll', syncLayersAnchor, true);
+    };
+  }, [layersOpen, syncLayersAnchor]);
   // Raw text for the bed-block number fields while they are being edited. Held as strings so a
   // comma decimal, a trailing separator or an empty box survives long enough to finish typing.
   const [draft, setDraft] = useState<Partial<Record<'bedLengthM' | 'bedWidthM' | 'pathWidthM' | 'count', string>>>({});
@@ -1263,6 +1300,7 @@ export default function DesignPalette({
               overflow:hidden/auto (see the module comment at the top of this file). */}
           <div style={{ position: 'relative', flexShrink: 0 }}>
             <button
+              ref={layersButtonRef}
               type="button"
               onClick={() => setLayersOpen((v) => !v)}
               aria-expanded={layersOpen}
@@ -1288,18 +1326,22 @@ export default function DesignPalette({
                 <span style={{ fontSize: 10, fontWeight: 800, color: layersOpen ? GOLD : GREEN }}>{hiddenLayerCount} {t('designPaletteOff')}</span>
               )}
             </button>
-            {layersOpen && (
+            {layersOpen && layersAnchor && (
               <div
                 style={{
-                  position: 'absolute',
-                  bottom: 'calc(100% + 6px)',
-                  right: 0,
-                  zIndex: 30,
+                  position: 'fixed',
+                  top: layersAnchor.openBelow ? layersAnchor.bottom + 6 : undefined,
+                  bottom: layersAnchor.openBelow ? undefined : window.innerHeight - layersAnchor.top + 6,
+                  right: layersAnchor.right,
+                  zIndex: 1000,
                   display: 'flex',
                   flexWrap: 'wrap',
                   gap: 6,
                   width: 300,
-                  maxWidth: '80vw',
+                  maxWidth: 'calc(100vw - 16px)',
+                  maxHeight: layersAnchor.maxHeight,
+                  overflowY: 'auto',
+                  overscrollBehavior: 'contain',
                   padding: 10,
                   borderRadius: 12,
                   background: PAPER,
@@ -1950,8 +1992,12 @@ export default function DesignPalette({
   function renderZoneChips() {
     if (!showZoneChips) return null;
     return (
-      /* Zones step: always show the zone 0-5 colour chips row */
-      <div style={scrollStripStyle(guided ? 10 : 6)}>
+      /* The fixed desktop sidebar is already a vertical scroller. A sideways strip there hid
+         Zone 0 at one edge and Zone 5 at the other; stack the six choices in reading order.
+         The phone bottom sheet keeps its compact horizontal strip. */
+      <div style={desktopAside
+        ? { display: 'flex', flexDirection: 'column', gap: guided ? 10 : 6, width: '100%' }
+        : scrollStripStyle(guided ? 10 : 6)}>
         {/* .map(Number) is load-bearing, not tidying. Object.keys returns STRINGS, and the old
             `as unknown as Array<0|1|2|3|4|5>` cast asserted otherwise without changing anything,
             so `z` was '3' at runtime. That stayed invisible because it was self-consistent:
@@ -1985,6 +2031,9 @@ export default function DesignPalette({
                 display: 'flex',
                 alignItems: 'center',
                 gap: 6,
+                width: desktopAside ? '100%' : undefined,
+                justifyContent: desktopAside ? 'flex-start' : undefined,
+                boxSizing: 'border-box',
                 flexShrink: 0,
                 cursor: 'pointer',
                 fontWeight: 700,

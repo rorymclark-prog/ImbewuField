@@ -22,7 +22,7 @@ function fmtKg(n: number): string {
 
 const PERIOD_LABEL: Record<Period, string> = { month: 'this month', season: 'this season', year: 'this year' };
 
-function MatchedRow({ row, periodLabel }: { row: CropRow; periodLabel: string }) {
+function MatchedRow({ row }: { row: CropRow }) {
   return (
     <div className="px-4 py-3">
       <div className="flex items-center justify-between gap-3">
@@ -33,10 +33,9 @@ function MatchedRow({ row, periodLabel }: { row: CropRow; periodLabel: string })
           Harvested {fmtKg(row.harvestedKg)} · Sold {fmtKg(row.soldKg)}
         </p>
       </div>
-      {row.yieldGap && (
-        <p className="text-xs font-sans mt-1.5 flex items-start gap-1.5" style={{ color: '#C07A1E' }}>
-          <AlertTriangle size={12} style={{ flexShrink: 0, marginTop: 2 }} />
-          <span>Harvested {fmtKg(row.harvestedKg)} — plan expected ~{fmtKg(row.intendedKg)} {periodLabel}.</span>
+      {row.intendedKg !== null && (
+        <p className="text-xs font-sans mt-1.5" style={{ color: '#8C7A62' }}>
+          Plan context: {fmtKg(row.intendedKg)} is the benchmark for one complete crop-plan cycle, not an expectation for this calendar year.
         </p>
       )}
       {row.keptGap && row.keptKg !== null && (
@@ -58,14 +57,13 @@ function MatchedRow({ row, periodLabel }: { row: CropRow; periodLabel: string })
   );
 }
 
-function SoftRow({ row, tone }: { row: CropRow; tone: 'wait' | 'flag' }) {
+function SoftRow({ row }: { row: CropRow }) {
   return (
     <div className="flex items-center justify-between gap-3 px-4 py-2.5">
       <p className="text-sm font-display" style={{ color: '#20190F' }}>{row.icon} {row.cropName}</p>
-      <p className="text-xs font-sans flex-shrink-0" style={{ color: tone === 'flag' ? '#C07A1E' : '#8C7A62' }}>
-        {tone === 'flag'
-          ? `Expected ~${fmtKg(row.intendedKg)} — nothing logged yet`
-          : 'Not yet harvested'}
+      <p className="text-xs font-sans text-right" style={{ color: '#8C7A62' }}>
+        No harvest logged this year
+        {row.intendedKg !== null && <><br />{fmtKg(row.intendedKg)} one-cycle benchmark</>}
       </p>
     </div>
   );
@@ -129,23 +127,23 @@ export default function HarvestReconciliation({ production, sales, period, now, 
         <div className="flex flex-col items-center justify-center gap-2 py-8 px-4 text-center">
           <Sprout size={20} style={{ color: '#1F4D2B' }} />
           <p className="text-sm font-display" style={{ color: '#5C5040' }}>
-            No crop plan yet — build one in Design & Plan to compare intended vs actual harvest.
+            No crop plan yet — build one in Design & Plan to view the plan beside actual harvest records.
           </p>
         </div>
       ) : !hasAnything ? (
         <div className="px-4 py-6 text-xs font-sans" style={{ color: '#8C7A62' }}>
-          Nothing to reconcile {periodLabel} — no plan activity due and nothing logged.
+          Nothing logged {periodLabel}. Monthly and seasonal targets are not invented from a crop-cycle benchmark.
         </div>
       ) : (
         <div className="divide-y" style={{ borderColor: '#E2D8C4' }}>
           {result.matched.map((row) => (
-            <MatchedRow key={row.cropKey} row={row} periodLabel={periodLabel} />
+            <MatchedRow key={row.cropKey} row={row} />
           ))}
           {result.unmatchedPlanned.map((row) => (
-            <SoftRow key={row.cropKey} row={row} tone="flag" />
+            <SoftRow key={row.cropKey} row={row} />
           ))}
           {result.notYetHarvested.map((row) => (
-            <SoftRow key={row.cropKey} row={row} tone="wait" />
+            <SoftRow key={row.cropKey} row={row} />
           ))}
           {result.unplannedActivity.length > 0 && (
             <div>

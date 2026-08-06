@@ -1,5 +1,5 @@
 import { activeAccountLocalStorageKey } from './account-local-storage';
-import { CROPS } from './crop-catalog';
+import { CROPS, hasPlanningYield } from './crop-catalog';
 
 export interface CropEntryOption {
   key: string;
@@ -8,10 +8,12 @@ export interface CropEntryOption {
 
 const CUSTOM_CROPS_KEY = 'imbewu_custom_crop_names_v1';
 
-// A cover crop with no food harvest does not belong in a produce-sale picker.
+// A cover crop with no food harvest does not belong in a produce-sale picker. A null planning
+// yield is different: it means the catalog does not yet have a verified kg/m² figure, not that a
+// farmer cannot harvest or sell that crop. Keep those edible crops available for factual records.
 // The names themselves remain owned by the reviewed crop catalogue.
 export const CROP_ENTRY_OPTIONS: CropEntryOption[] = CROPS
-  .filter((crop) => crop.yieldKgPerM2 > 0)
+  .filter((crop) => crop.yieldKgPerM2 === null || hasPlanningYield(crop))
   .map((crop) => ({ key: crop.key, label: crop.name }));
 
 function normalise(value: string): string {

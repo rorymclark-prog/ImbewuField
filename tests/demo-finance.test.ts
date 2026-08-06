@@ -2,7 +2,7 @@
 // three rules buildDemoFinance() is written to (see the comment block above it
 // in lib/demo-farm.ts) are asserted here rather than left to inspection:
 //   1. nothing is sold that was not harvested first;
-//   2. nothing is harvested that the crop plan could not grow;
+//   2. no sample harvest exceeds the catalog's published planning band;
 //   3. every rand is kilograms times a price from the app's own price table.
 // The fixture that preceded this one broke rule 1 on every crop — 26.5 kg sold
 // against 19 kg logged — which is exactly the kind of error no type check and
@@ -16,10 +16,11 @@ import {
   buildDemoFinance,
 } from '../lib/demo-farm.ts';
 import { DEFAULT_CROP_PRICES } from '../lib/crop-prices.ts';
+import { cropByKey } from '../lib/crop-catalog.ts';
+import { benchmarkAreaConflictBedLabels, estimatedYieldKgAdjusted } from '../lib/crop-plan.ts';
 import {
   bedsFromDesign,
   buildCropAliasIndex,
-  intendedKgByMonthPerCrop,
   matchCropKey,
 } from '../lib/harvest-reconciliation.ts';
 import { suspectedDuplicateIncomeIds } from '../lib/duplicate-income.ts';
@@ -68,11 +69,29 @@ test('no sample crop is ever sold before it was harvested', () => {
   }
 });
 
-test('no sample harvest beats what the seeded crop plan can actually grow', () => {
+test('no sample harvest exceeds the seeded area at the catalog’s published upper benchmark', () => {
   const { production } = buildDemoFinance();
   const beds = bedsFromDesign(buildDemoFacilitatorState());
   const plantings = buildDemoCropPlan().plantings;
-  const intended = intendedKgByMonthPerCrop(plantings, beds);
+  for (let month = 1; month <= 12; month++) {
+    assert.deepEqual(
+      benchmarkAreaConflictBedLabels(plantings, beds, month),
+      [],
+      `the sample plan overbooks mapped land when opened in month ${month}`,
+    );
+  }
+
+  // Once the independent area check above proves the plan is not granting two
+  // crops the same land, sum the complete crop-cycle area benchmarks. This
+  // fixture check deliberately includes finished one-off crops: its harvest
+  // ledger spans the full trailing year, not only what remains in the ground.
+  const intended = new Map<string, number>();
+  for (const planting of plantings) {
+    const bed = beds.find((candidate) => candidate.id === planting.bedId);
+    assert.ok(bed, `${planting.cropKey} is planted on a bed missing from the demo map`);
+    const kg = estimatedYieldKgAdjusted(planting, bed.areaM2, plantings);
+    if (kg > 0) intended.set(planting.cropKey, (intended.get(planting.cropKey) ?? 0) + kg);
+  }
 
   const harvested = new Map<string, number>();
   for (const row of production) {
@@ -80,20 +99,15 @@ test('no sample harvest beats what the seeded crop plan can actually grow', () =
     harvested.set(key, (harvested.get(key) ?? 0) + row.kg);
   }
 
-  let plannedTotal = 0;
-  let loggedTotal = 0;
   for (const [key, kg] of harvested) {
-    const months = intended.get(key);
-    assert.ok(months, `${key} is logged as harvested but is not in the demo crop plan at all`);
-    const planned = months.reduce((sum, m) => sum + m, 0);
-    assert.ok(kg <= planned + 1e-9, `${key}: logged ${kg} kg against a plan of only ${planned.toFixed(1)} kg`);
-    plannedTotal += planned;
-    loggedTotal += kg;
+    const planned = intended.get(key);
+    assert.ok(planned !== undefined, `${key} is logged as harvested but is not in the demo crop plan at all`);
+    const crop = cropByKey(key)!;
+    const upperPerM2 = crop.yieldRangeKgPerM2?.[1] ?? crop.yieldKgPerM2;
+    assert.ok(crop.yieldKgPerM2 !== null && upperPerM2 !== null && upperPerM2 > 0, `${key} has no yield evidence for the demo claim`);
+    const upper = planned * (upperPerM2 / crop.yieldKgPerM2);
+    assert.ok(kg <= upper + 1e-9, `${key}: logged ${kg} kg above the published area-scaled upper benchmark of ${upper.toFixed(1)} kg`);
   }
-  // A demo farm hitting 100% of an estimate reads as fiction; well under it reads
-  // as a farm that is failing. Keep it in the believable band.
-  const ratio = loggedTotal / plannedTotal;
-  assert.ok(ratio > 0.8 && ratio < 0.99, `the sample farm should run at 80-99% of plan, not ${(ratio * 100).toFixed(0)}%`);
 });
 
 test('the sample books never trip the app\'s own double-counted-income warning', () => {

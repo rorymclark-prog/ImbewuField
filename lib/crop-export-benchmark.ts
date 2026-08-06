@@ -8,8 +8,8 @@
 //
 // This module builds the five views a crop plan is actually used through:
 //
-//   1. DASHBOARD    — scale, yield, peak harvest, peak workload, what to decide
-//   2. YEAR IN NUMBERS — harvest by month, workload by month, biggest crops
+//   1. DASHBOARD    — scale, crop-cycle benchmark, fresh windows, decisions
+//   2. YEAR IN NUMBERS — workload by month, biggest benchmarked crops
 //   3. LAND OCCUPANCY  — every bed and plot across all twelve months at once
 //   4. FULL PLAN       — every planting, as columns instead of prose
 //   5. WORKING DOCS    — a monthly field sheet you tick off, and a harvest record
@@ -26,14 +26,20 @@
 // transplant, because they are different sections of the sheet.
 
 import type { CropDef } from '@/lib/crop-catalog';
-import { cropByKey, plantSpacingCm } from '@/lib/crop-catalog';
+import { cropByKey, plantSpacingCm, plantSpacingRangeCm } from '@/lib/crop-catalog';
 import type { FoodGroup } from '@/lib/crop-groups';
 import { foodGroupOf } from '@/lib/crop-groups';
 import type { CropTask, PlanBed, Planting } from '@/lib/crop-plan';
 import {
-  buildFoodValueByMonth,
+  bedEntryMonth,
+  buildFoodAvailability,
+  buildPlanYieldBenchmark,
   estimatedYieldKgAdjusted,
-  harvestMonth,
+  harvestMonthForCrop,
+  latestBedEntryMonth,
+  plannedBedEntryMonth,
+  plantingBedEntryOffsets,
+  taskMonthsFromNow,
   yieldByCrop,
 } from '@/lib/crop-plan';
 import { MONTH_NAMES, monthShort, rollingMonths, wrapMonth } from '@/lib/crop-export-schedule';
@@ -52,19 +58,30 @@ export interface PlanDashboard {
   signals: string[];
   /** Questions the plan cannot answer for the reader. Prompts, not instructions. */
   decisions: string[];
-  grossKg: number;
-  netKg: number;
-  peakMonth: number;
-  peakKg: number;
+  grossKg: number | null;
+  /** Null until a loss allowance has been explicitly confirmed. */
+  netKg: number | null;
+  /** Months with at least one verified fresh-picking window. Timing only. */
+  freshPickingMonths: number;
+  /** Food crops omitted from every kg figure because the catalog has no
+   * verified kg/m² benchmark for them. */
+  unknownYieldCrops: string[];
+  /** Whether any crop in the plan can honestly support a kg comparison. */
+  hasKnownYield: boolean;
+  /** Beds that must be resolved before a kg or Rand total is defensible. */
+  areaConflictBedLabels: string[];
 }
 
 export interface DashboardOptions {
   lossPercent?: number;
+  /** A stored/default 0 is not evidence that the farmer confirmed 0% loss. */
+  lossAllowanceConfirmed?: boolean;
   nowMonth: number;
 }
 
 /**
- * Page one answers "how big, how much, when is it busiest, what must I decide"
+ * Page one answers "how big, what is the crop-cycle benchmark, when is work
+ * busiest, what must I decide"
  * before it shows a single planting. Every stat is derived, never stored: the
  * gross figure sums the SAME per-planting function the bed tables print, so the
  * cover and the detail cannot drift (they did, by 26kg, until 2026-08-05).
@@ -75,16 +92,21 @@ export function buildPlanDashboard(
   tasks: CropTask[],
   opts: DashboardOptions,
 ): PlanDashboard {
+  const lossConfirmed = opts.lossAllowanceConfirmed === true;
   const loss = Math.max(0, Math.min(100, opts.lossPercent ?? 0));
   const areaM2 = beds.reduce((s, b) => s + b.areaM2, 0);
 
-  const byMonth = buildFoodValueByMonth(plantings, beds, {});
-  const grossKg = byMonth.slice(1, 13).reduce((s, v) => s + v.kg, 0);
-  const netKg = grossKg * (1 - loss / 100);
-
-  let peakMonth = 1;
-  for (let m = 2; m <= 12; m++) if (byMonth[m].kg > byMonth[peakMonth].kg) peakMonth = m;
-  const peakKg = byMonth[peakMonth].kg;
+  const bedIds = new Set(beds.map((bed) => bed.id));
+  const accountedPlantings = plantings.filter((planting) => bedIds.has(planting.bedId));
+  const benchmark = buildPlanYieldBenchmark(accountedPlantings, beds, opts.nowMonth);
+  const grossKg = benchmark.knownKg;
+  const netKg = lossConfirmed && grossKg !== null ? grossKg * (1 - loss / 100) : null;
+  const unknownYieldCrops = benchmark.unknownYieldCrops;
+  const areaConflictBedLabels = benchmark.areaConflictBedLabels;
+  const hasKnownYield = grossKg !== null && benchmark.byCrop.length > 0;
+  const availability = buildFoodAvailability(accountedPlantings, beds, opts.nowMonth);
+  const freshPickingMonths = availability.slice(1, 13)
+    .filter((month) => month.some((item) => item.status === 'fresh')).length;
 
   const workload = buildWorkloadSeries(tasks, opts.nowMonth);
   const busiest = [...workload].sort((a, b) => b.count - a.count).slice(0, 3)
@@ -99,17 +121,47 @@ export function buildPlanDashboard(
       label: 'growing space',
       detail: `${bedCount} bed${bedCount === 1 ? '' : 's'}${plotCount ? ` + ${plotCount} staple plot${plotCount === 1 ? '' : 's'}` : ''}`,
     },
-    { value: `${grossKg.toFixed(1)} kg`, label: 'planned gross yield', detail: 'sum of every crop line' },
-    loss > 0
-      ? { value: `${netKg.toFixed(1)} kg`, label: `after ${loss}% loss`, detail: 'the figure to plan meals against' }
-      : { value: `${grossKg.toFixed(1)} kg`, label: 'no loss allowance set', detail: 'add one to plan meals against' },
-    { value: `${peakKg.toFixed(0)} kg`, label: 'peak harvest month', detail: MONTH_NAMES[peakMonth - 1] },
+    {
+      value: hasKnownYield ? `${grossKg!.toFixed(1)} kg` : 'Not shown',
+      label: areaConflictBedLabels.length ? 'benchmark total blocked' : 'known benchmark total',
+      detail: areaConflictBedLabels.length
+        ? `resolve overlapping shares in ${areaConflictBedLabels.join(', ')}`
+        : hasKnownYield ? 'verified kg/m² crop entries only' : 'no verified kg/m² crop entry',
+    },
+    lossConfirmed
+      ? {
+        value: hasKnownYield && netKg !== null ? `${netKg.toFixed(1)} kg` : 'Not shown',
+        label: `known total after ${loss}% loss`,
+        detail: 'uses the loss allowance you confirmed',
+      }
+      : {
+        value: 'Not calculated',
+        label: 'loss-adjusted total',
+        detail: 'confirm a loss allowance from actual records',
+      },
+    {
+      value: `${freshPickingMonths}/12`,
+      label: 'fresh-picking months',
+      detail: 'timing windows only; no monthly kg inferred',
+    },
   ];
 
   const signals: string[] = [];
-  const top = buildTopCrops(plantings, beds, 2);
-  if (top[0]) signals.push(`${top[0].name} is the largest single harvest at ${top[0].kg.toFixed(1)} kg.`);
-  if (top[1]) signals.push(`${top[1].name} follows at ${top[1].kg.toFixed(1)} kg.`);
+  const top = benchmark.byCrop.slice(0, 2).map((entry) => ({
+    ...entry,
+    group: foodGroupOf(cropByKey(entry.cropKey)!),
+  }));
+  if (areaConflictBedLabels.length) {
+    signals.push(`${areaConflictBedLabels.join(', ')} ${areaConflictBedLabels.length === 1 ? 'has' : 'have'} overlapping or invalid planting shares, so every kg and value subtotal is withheld.`);
+  } else if (top[0]) {
+    signals.push(`${top[0].name} has the largest known benchmark volume at ${top[0].kg.toFixed(1)} kg.`);
+  }
+  if (!areaConflictBedLabels.length && top[1]) signals.push(`${top[1].name} follows in the benchmark comparison at ${top[1].kg.toFixed(1)} kg.`);
+  if (unknownYieldCrops.length) {
+    signals.push(`${unknownYieldCrops.join(', ')} ${unknownYieldCrops.length === 1 ? 'has' : 'have'} no verified kg/m² benchmark and ${unknownYieldCrops.length === 1 ? 'is' : 'are'} excluded from every kg total, not counted as 0kg.`);
+  } else if (!hasKnownYield) {
+    signals.push('No crop in this plan has a verified kg/m² food-yield benchmark, so no kilogram comparison is shown.');
+  }
   if (busiest.length) {
     // THE CAVEAT TRAVELS WITH THE CLAIM. It used to live alone on page 2, three pages away from
     // the staffing decision below — so page 1 read as a measured labour finding when it is a count
@@ -117,24 +169,36 @@ export function buildPlanDashboard(
     const names = busiest.map((b) => monthShort(b.month));
     signals.push(`${names.join(', ')} carry the most planned jobs — counted as jobs, not hours.`);
   }
-  const idle = idleBedMonths(plantings, beds);
+  const idle = idleBedMonths(plantings, beds, opts.nowMonth);
   if (idle.count > 0) {
     signals.push(`${idle.count} bed-month${idle.count === 1 ? '' : 's'} of the year have no crop in the ground.`);
   }
 
   const decisions: string[] = [];
-  if (top[0]) decisions.push(`Plan storage and kitchen use before the ${top[0].name.toLowerCase()} harvest.`);
-  decisions.push('Check whether the site can use, preserve or sell the planned surplus.');
+  if (areaConflictBedLabels.length) {
+    decisions.push(`Resolve the planting shares in ${areaConflictBedLabels.join(', ')} before using any crop benchmark or value scenario.`);
+  } else if (top[0]) {
+    decisions.push(`Compare the ${top[0].name.toLowerCase()} benchmark with actual harvest records before planning storage or sales.`);
+  }
+  decisions.push('Check actual household demand and recorded harvests; the benchmark comparison is not a meal or surplus guarantee.');
   if (busiest.length) {
     decisions.push(`Check who is available before the ${monthShort(busiest[0].month)}-${monthShort(busiest[busiest.length - 1].month)} job peak, and time the work against real hours.`);
   }
-  if (loss === 0) decisions.push('Set a loss allowance so the usable figure is not the gross one.');
+  if (!lossConfirmed) decisions.push('Confirm a loss allowance from actual records before calculating a usable total.');
 
-  return { stats, signals, decisions, grossKg, netKg, peakMonth, peakKg };
+  return { stats, signals, decisions, grossKg, netKg, freshPickingMonths, unknownYieldCrops, hasKnownYield, areaConflictBedLabels };
 }
 
 /** Bed-months with nothing in the ground — the honest counterweight to a big total. */
-export function idleBedMonths(plantings: Planting[], beds: PlanBed[]): { count: number; total: number } {
+export function idleBedMonths(plantings: Planting[], beds: PlanBed[], nowMonth?: number): { count: number; total: number } {
+  if (nowMonth !== undefined) {
+    const rows = buildOccupancyCalendar(plantings, beds, nowMonth);
+    const count = rows.reduce(
+      (sum, row) => sum + row.cells.filter((cell) => cell.length === 0).length,
+      0,
+    );
+    return { count, total: beds.length * 12 };
+  }
   const occupied = new Map<string, Set<number>>();
   for (const p of plantings) {
     const crop = cropByKey(p.cropKey);
@@ -159,10 +223,14 @@ export function idleBedMonths(plantings: Planting[], beds: PlanBed[]): { count: 
  * distinction the field sheets make, applied to the calendar.
  */
 function holdMonths(sowMonth: number, crop: CropDef): number[] {
-  const h = harvestMonth(sowMonth, crop.daysToHarvest);
+  // Unknown duration cannot honestly become an occupancy bar or idle-ground
+  // deduction. Keep the legacy crop record elsewhere, but exclude it from
+  // numeric land-use claims until its finish date is locally confirmed.
+  if (crop.timingVerified === false) return [];
+  const h = harvestMonthForCrop(sowMonth, crop);
   const span = crop.harvestWindowMonths ?? 0;
   const out: number[] = [];
-  let m = crop.transplant ? wrapMonth(sowMonth + 1) : sowMonth;
+  let m = bedEntryMonth(sowMonth, crop);
   for (let guard = 0; guard < 24; guard++) {
     out.push(m);
     if (m === wrapMonth(h + span)) break;
@@ -173,15 +241,8 @@ function holdMonths(sowMonth: number, crop: CropDef): number[] {
 
 // ── 2. Year in numbers ──────────────────────────────────────────────────────
 
-export interface MonthValue { month: number; kg: number }
 export interface MonthCount { month: number; count: number }
 export interface CropVolume { cropKey: string; name: string; kg: number; group: FoodGroup }
-
-/** Harvest by month, in the plan's own reading order (starts at nowMonth, not January). */
-export function buildHarvestSeries(plantings: Planting[], beds: PlanBed[], nowMonth: number): MonthValue[] {
-  const byMonth = buildFoodValueByMonth(plantings, beds, {});
-  return rollingMonths(nowMonth).map((m) => ({ month: m, kg: byMonth[m].kg }));
-}
 
 /**
  * Actions that are part of another job rather than a job of their own, so nothing may count them
@@ -210,7 +271,13 @@ export function buildWorkloadSeries(tasks: CropTask[], nowMonth: number): MonthC
   const counts = new Map<number, number>();
   for (const t of tasks) {
     if (FOLDED_ACTIONS.has(t.action)) continue;
-    counts.set(t.month, (counts.get(t.month) ?? 0) + 1);
+    const monthsAway = taskMonthsFromNow(t, nowMonth);
+    // This chart is explicitly the next twelve months. A later occurrence of
+    // the same named month belongs to the following crop year and must not be
+    // folded into the current month's workload.
+    if (monthsAway < 0 || monthsAway >= 12) continue;
+    const month = wrapMonth(nowMonth + monthsAway);
+    counts.set(month, (counts.get(month) ?? 0) + 1);
   }
   return rollingMonths(nowMonth).map((m) => ({ month: m, count: counts.get(m) ?? 0 }));
 }
@@ -293,28 +360,29 @@ export function buildOccupancyCalendar(
   nowMonth: number,
 ): CalendarRow[] {
   const abbr = cropAbbreviations(plantings);
-  const months = rollingMonths(nowMonth);
-
   return beds.map((bed) => {
-    const cells: CalendarEntry[][] = months.map(() => []);
+    const cells: CalendarEntry[][] = Array.from({ length: 12 }, () => []);
     for (const p of plantings) {
       if (p.bedId !== bed.id) continue;
       const crop = cropByKey(p.cropKey);
       if (!crop) continue;
-      const h = harvestMonth(p.sowMonth, crop.daysToHarvest);
-      const pickWindow = new Set(
-        Array.from({ length: (crop.harvestWindowMonths ?? 0) + 1 }, (_, i) => wrapMonth(h + i)),
-      );
-      for (const m of holdMonths(p.sowMonth, crop)) {
-        const idx = months.indexOf(m);
-        if (idx < 0) continue;
-        cells[idx].push({
-          cropKey: p.cropKey,
-          abbr: abbr.get(p.cropKey) ?? '??',
-          share: shareCode(p.areaFraction ?? 1),
-          group: foodGroupOf(crop),
-          harvesting: pickWindow.has(m),
-        });
+      if (crop.timingVerified === false) continue;
+      const span = holdMonths(p.sowMonth, crop).length;
+      const entry = plannedBedEntryMonth(p.sowMonth, crop);
+      const harvest = harvestMonthForCrop(p.sowMonth, crop);
+      const greenSpan = ((harvest - entry) % 12 + 12) % 12;
+      for (const start of plantingBedEntryOffsets(p, nowMonth, 12)) {
+        for (let lifeMonth = 0; lifeMonth < span; lifeMonth++) {
+          const idx = start + lifeMonth;
+          if (idx < 0 || idx >= 12) continue;
+          cells[idx].push({
+            cropKey: p.cropKey,
+            abbr: abbr.get(p.cropKey) ?? '??',
+            share: shareCode(p.areaFraction ?? 1),
+            group: foodGroupOf(crop),
+            harvesting: lifeMonth >= greenSpan,
+          });
+        }
       }
     }
     for (const cell of cells) cell.sort((a, b) => a.abbr.localeCompare(b.abbr));
@@ -358,6 +426,7 @@ const SECTION_ORDER = [
   'Direct sowing and planting',
   'Prepare for the next planting',
   'Harvest and record',
+  'End the cover crop',
   'Maintenance',
 ] as const;
 
@@ -367,7 +436,7 @@ const SECTION_ORDER = [
  * Three things happen here that the old flat list never did.
  *
  * NURSERY IS ITS OWN SECTION. A `transplant` crop's sow task puts seed in
- * TRAYS; its field spacing belongs to the transplant a month later. Printing
+ * TRAYS; its field spacing belongs to the readiness-based transplant window. Printing
  * "rows 90cm apart" against a tray sowing was wrong every single time.
  *
  * WATERING IS NOT A SEPARATE JOB. "Sow X" followed by "Water in & mulch X" is
@@ -382,7 +451,12 @@ export function buildFieldSheet(
   tasks: CropTask[],
   now: Date,
 ): FieldSheet {
-  const mine = tasks.filter((t) => t.month === month);
+  const nowMonth = now.getMonth() + 1;
+  const targetOffset = ((wrapMonth(month) - nowMonth) % 12 + 12) % 12;
+  // Printed field sheets cover one actionable year. Resolve each task through
+  // its cohort so a next-year November harvest is not printed on the current
+  // November sheet merely because both are called "November".
+  const mine = tasks.filter((t) => taskMonthsFromNow(t, nowMonth) === targetOffset);
   const mulchedCrops = new Set(mine.filter((t) => t.action === 'mulch').map((t) => `${t.bedLabel}::${t.cropKey}`));
 
   // A row is one BED and one kind of job. Within it each crop keeps its own
@@ -415,8 +489,12 @@ export function buildFieldSheet(
           const b = bucketFor('Nursery - raise seedlings', 'Nursery');
           // Keyed crop|||bed so the section build can say "tomatoes for Beds
           // 10, 11, 12" instead of naming the same crop once per bed.
-          b.plain.push(`${name}|||${t.bedLabel}`);
-          b.extra.add(`Transplant in ${monthShort(wrapMonth(t.month + 1))}.`);
+          const trayDepth = sowDepthPhrase(crop);
+          b.plain.push(`${name}${trayDepth ? ` (${trayDepth})` : ''}|||${t.bedLabel}`);
+          const sowMonth = t.cohortSowMonth ?? t.month;
+          const earliest = bedEntryMonth(sowMonth, crop);
+          const latest = latestBedEntryMonth(sowMonth, crop);
+          b.extra.add(`Start checking in ${monthShort(earliest)}; transplant when ready, within the planning window through ${monthShort(latest)}.`);
         } else {
           const b = bucketFor('Direct sowing and planting', t.bedLabel);
           b.sow.push(`${name} (${spacingPhrase(crop)})`);
@@ -441,6 +519,12 @@ export function buildFieldSheet(
         b.extra.add('Record kilograms and where it went.');
         break;
       }
+      case 'terminate-cover':
+        // A green manure is field management, not food. Keeping it out of the
+        // harvest bucket prevents the printed sheet from asking for kilograms
+        // of biomass that is cut or rolled down for the soil.
+        bucketFor('End the cover crop', t.bedLabel).plain.push(name);
+        break;
       case 'weed-early':
       case 'weed-mid':
         bucketFor('Maintenance', t.bedLabel).plain.push(name);
@@ -471,11 +555,12 @@ export function buildFieldSheet(
         const phrases = [...byCrop.entries()].map(([crop, bedsOf]) => `${crop} for ${compactPlaces(bedsOf)}`);
         parts.push(`Raise and label trays for ${joinList(phrases)}.`);
       }
-      else if (title === 'Prepare for the next planting') parts.push(`Prepare the ground for ${joinList(unique(b.plain))}.`);
+      else if (title === 'Prepare for the next planting') parts.push(`If this follows another crop, confirm it is finished and the bed is clear; then prepare the ground for ${joinList(unique(b.plain))}.`);
       else if (title === 'Harvest and record') parts.push(`Harvest ${joinList(unique(b.plain))}.`);
+      else if (title === 'End the cover crop') parts.push(`Cut or roll down ${joinList(unique(b.plain))} before the next crop.`);
       else if (title === 'Maintenance') parts.push(`Weed and check for pests around ${joinList(unique(b.plain))}.`);
       if (b.sow.length) parts.push(`Sow ${joinList(unique(b.sow))}.`);
-      if (b.transplant.length) parts.push(`Transplant ${joinList(unique(b.transplant))}.`);
+      if (b.transplant.length) parts.push(`From this month, transplant ${joinList(unique(b.transplant))} when seedlings and the bed are ready.`);
       // ONE watering sentence per row. A bed that is both sown and planted into
       // in the same month used to end "...Water and mulch. Water, mulch and
       // check they take." — the same walk down the bed, told twice.
@@ -506,16 +591,32 @@ export function buildFieldSheet(
  */
 function spacingPhrase(crop: CropDef | undefined): string {
   if (!crop) return 'spacing not recorded';
+  if (crop.fieldSpacingInstruction) return crop.fieldSpacingInstruction;
   const { rowCm, inRowCm } = plantSpacingCm(crop);
-  const spacing = rowCm === inRowCm
-    ? `about ${inRowCm} cm each way`
-    : `rows ${rowCm} cm apart, ${inRowCm} cm in the row`;
-  const depth = !crop.transplant && crop.sowDepthCm ? `, ${crop.sowDepthCm} cm deep` : '';
+  const ranges = plantSpacingRangeCm(crop);
+  const exact = ranges.rowCm[0] === ranges.rowCm[1]
+    && ranges.inRowCm[0] === ranges.inRowCm[1];
+  const spacing = exact && rowCm === inRowCm
+    ? `${formatCmRange(ranges.inRowCm)} cm each way`
+    : `rows ${formatCmRange(ranges.rowCm)} cm apart, ${formatCmRange(ranges.inRowCm)} cm in the row`;
+  const depthRange = crop.sowDepthRangeCm
+    ?? (crop.sowDepthCm ? [crop.sowDepthCm, crop.sowDepthCm] as const : null);
+  const depth = !crop.transplant && depthRange ? `, ${formatCmRange(depthRange)} cm deep` : '';
   return `${spacing}${depth}`;
 }
 
-/** tasksForPlan phrases bed prep as "prep bed (compost + kraal manure...)" — a
- *  label, not a sentence. Unwrap it so the field sheet reads as an instruction. */
+function sowDepthPhrase(crop: CropDef): string | null {
+  const range = crop.sowDepthRangeCm
+    ?? (crop.sowDepthCm ? [crop.sowDepthCm, crop.sowDepthCm] as const : null);
+  return range ? `sow ${formatCmRange(range)} cm deep` : null;
+}
+
+function formatCmRange(range: readonly [number, number]): string {
+  return range[0] === range[1] ? String(range[0]) : `${range[0]}–${range[1]}`;
+}
+
+/** Older saved tasks may phrase bed prep as "prep bed (...)" — unwrap that
+ *  legacy label so a field sheet still reads as an instruction. */
 function stripPrepWrapper(text: string): string {
   const m = /^prep bed \((.*)\)$/.exec(text.trim());
   return m ? m[1] : text.trim();
@@ -585,7 +686,8 @@ export interface PlanTableRow {
   establish: string;
   intoField: string;
   harvest: string;
-  yieldKg: number;
+  /** Null means no verified kg/m² benchmark; it must never be formatted as 0kg. */
+  yieldKg: number | null;
 }
 
 /**
@@ -604,17 +706,23 @@ export function buildPlanTableRows(plantings: Planting[], beds: PlanBed[]): Plan
       .sort((a, b) => a.p.sowMonth - b.p.sowMonth || a.crop.name.localeCompare(b.crop.name));
 
     mine.forEach(({ p, crop }, i) => {
-      const h = harvestMonth(p.sowMonth, crop.daysToHarvest);
-      const end = wrapMonth(h + (crop.harvestWindowMonths ?? 0));
+      const h = crop.timingVerified === false ? null : harvestMonthForCrop(p.sowMonth, crop);
+      const end = h === null ? null : wrapMonth(h + (crop.harvestWindowMonths ?? 0));
       rows.push({
         area: bed.label,
         isFirstOfArea: i === 0,
         crop: crop.name,
         share: shareCode(p.areaFraction ?? 1),
         establish: crop.transplant ? `Nursery ${monthShort(p.sowMonth)}` : `Direct sow ${monthShort(p.sowMonth)}`,
-        intoField: crop.transplant ? `Transplant ${monthShort(wrapMonth(p.sowMonth + 1))}` : 'Direct',
-        harvest: h === end ? monthShort(h) : `${monthShort(h)}-${monthShort(end)}`,
-        yieldKg: estimatedYieldKgAdjusted(p, bed.areaM2, plantings),
+        intoField: crop.transplant
+          ? `Check ${monthShort(bedEntryMonth(p.sowMonth, crop))}-${monthShort(latestBedEntryMonth(p.sowMonth, crop))}; transplant when ready`
+          : 'Direct',
+        harvest: h === null || end === null
+          ? 'Confirm locally'
+          : h === end ? monthShort(h) : `${monthShort(h)}-${monthShort(end)}`,
+        yieldKg: crop.yieldKgPerM2 === null
+          ? null
+          : estimatedYieldKgAdjusted(p, bed.areaM2, plantings),
       });
     });
   }

@@ -131,6 +131,9 @@ test('crop pickers come from the reviewed catalogue and remember a farmer-added 
   assert.ok(CROP_ENTRY_OPTIONS.length >= 20);
   assert.equal(cropEntryOption('Spinach')?.key, 'swiss-chard');
   assert.equal(cropEntryOption('dry-beans')?.label, 'Dry beans (sugar beans)');
+  assert.equal(cropEntryOption('Kale')?.key, 'kale', 'missing planning yield must not erase a real harvested crop from sale records');
+  assert.equal(cropEntryOption('Coriander')?.key, 'coriander', 'an unverified kg/m² figure does not mean the crop cannot be sold');
+  assert.equal(cropEntryOption('Oats (winter cover crop)'), null, 'a soil-building cover with no food harvest is not produce');
 
   assert.equal(saveCustomCropName('  Garden special  '), 'Garden special');
   assert.equal(saveCustomCropName('garden special'), 'garden special');
