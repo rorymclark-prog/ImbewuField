@@ -197,6 +197,67 @@ reads is a number someone hires against.
 
 ---
 
+## Priority 1b — asked for directly by Rory, 6 August
+
+### QR1. Invoice: preloaded product and customer pickers with price guidance — `codex/invoice-pickers`
+
+Rory, looking at a blank invoice line: *"i want to add a whole lot of premade option with price
+sugestion for products products must be a drop down menu as well preloaded as well as customers,
+we can also have some presaved customer options neighbour spaza shop etc etc"*
+
+`app/invoice/page.tsx` already has the memory half of this: `products` (line 41) learns
+`{desc, unit, price}` from what the farmer has typed before, and `updateItem` (line 68) auto-fills
+unit and price on a name match. **It is empty on day one, which is the whole complaint.** Do not
+replace that mechanism — seed it, and put a picker in front of it.
+
+**Where the prices come from — the only acceptable source.** `lib/crop-prices.ts`
+(`DEFAULT_CROP_PRICES`, `priceFor()`, plus the farmer's saved overrides). It carries
+`retailPerKg` and `wholesalePerKg` per crop. **Do not write a new price table.** Do not derive a
+price for a crop the book does not carry.
+
+**Four constraints. Each one is a way this feature could quietly lie to a farmer about money.**
+
+1. **The book is per KILOGRAM. The form defaults to `bags`.** Suggesting R15/kg into a line whose
+   unit is "bags" is wrong by whatever a bag weighs, and it will be wrong on a printed invoice a
+   farmer hands to a shop. So: picking a crop from the catalogue **snaps the unit to `kg`**. If the
+   farmer then changes the unit to bags/crates/bunches/trays, the suggested price must be
+   **cleared**, not carried across — a per-kg figure sitting in a per-bag row is exactly the silent
+   substitution this repo keeps getting bitten by.
+
+2. **A suggestion is a band, never a price.** 14 of the book's 24 entries are `confidence:
+   'estimated'`, and the whole snapshot is dated 2026-07-14. Show both ends with the date, e.g.
+   *"Shops pay about R14/kg · at the gate about R29/kg — guide price, July 2026"*. Never pre-fill
+   the price field so that it looks like a decision the app made. The farmer's own number always
+   wins and is remembered by the existing `addProduct` path.
+
+3. **`UNPRICED_CROPS` gets no suggestion at all** — not R0, not a blank that reads as free.
+   Coriander is in that set deliberately. Show the crop in the list with no price line.
+
+4. **`confidence: 'estimated'` must be visible**, not hidden behind an average. A farmer pricing
+   dry beans off a sourced R65 and a farmer pricing something off a proxy figure are in different
+   positions and are entitled to know which they are in.
+
+**Customers.** Two groups in one dropdown: the farmer's own saved buyers first (from their existing
+invoices — `billTo` is already stored per invoice, so build the list from saved invoices), then a
+preset group of the buyer TYPES that actually exist for a KZN smallholder — neighbour, farm gate,
+spaza shop, bakkie trader, market stall, hawker, school, crèche, church, restaurant or lodge,
+co-op. These are categories, not invented business names: never ship a fake customer called
+"Spar Nquthu" as though it were a real account. The existing placeholder already reads
+"e.g. Spar Nquthu (wholesale)" — keep that an example, not an entry.
+
+**The one genuinely good idea here — connect the two dropdowns.** The buyer type tells you which
+end of the band to show. Neighbour, farm gate and church sit at the retail end; spaza, bakkie
+trader, market stall and school sit at the wholesale end. So choosing "spaza shop" and then
+"cabbage" should surface the wholesale figure first, with the retail figure still visible beside
+it. This needs no new data and it is the thing no other invoicing app can do for this farmer,
+because no other app holds both her buyer and a researched price for her crop.
+
+**Verify by using it.** Open `/invoice`, pick a customer type, pick a crop, and read the line back:
+does the unit say kg, does the guide price name its date, and does switching the unit to bags clear
+the suggestion? A test that asserts the dropdown has 24 entries proves nothing about any of that.
+
+---
+
 ## Priority 2 — the funder demo (Rory is showing this)
 
 ### Q8. Ubhejane must click through to its design, plan and report — `codex/network-ubhejane-deeplink`
