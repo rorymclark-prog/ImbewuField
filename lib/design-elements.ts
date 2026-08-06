@@ -18,6 +18,9 @@ export interface DesignElementDef {
   category: ElementCategory;
   name: string;
   icon: string; // emoji
+  /** Optional hand-drawn tile artwork, served from public/elements/. The emoji remains the
+   * fallback so adding this display seam cannot change an existing farmer's saved element. */
+  art?: string;
   shape: 'circle' | 'rect'; // footprint drawn at true scale
   wM: number; // footprint metres (circle: wM = diameter, hM = wM)
   hM: number;

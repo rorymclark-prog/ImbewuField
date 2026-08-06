@@ -80,6 +80,24 @@ interface ActiveLayers {
   sector: boolean;
 }
 
+export type WaterInfrastructureLayer = 'storage' | 'tapPoints' | 'pipes' | 'drip' | 'swales';
+export type WaterInfrastructureVisibility = Record<WaterInfrastructureLayer, boolean>;
+export type WaterInfrastructureOpacity = Record<WaterInfrastructureLayer, number>;
+
+function waterInfrastructureForElement(defId: string | null): WaterInfrastructureLayer | null {
+  if (!defId) return null;
+  if (defId === 'tap_point') return 'tapPoints';
+  if (defId === 'rain_barrel' || defId.startsWith('jojo_')) return 'storage';
+  return null;
+}
+
+function waterInfrastructureForLine(kind: LineShape['kind']): WaterInfrastructureLayer | null {
+  if (kind === 'pipe' || kind === 'greywater') return 'pipes';
+  if (kind === 'drip') return 'drip';
+  if (kind === 'swale') return 'swales';
+  return null;
+}
+
 export type DesignMode = 'guided' | 'pro';
 
 export interface DesignPaletteProps {
@@ -108,6 +126,16 @@ export interface DesignPaletteProps {
   setLineKind: (k: LineShape['kind']) => void;
   activeLayers: ActiveLayers;
   setActiveLayers: (layers: ActiveLayers) => void;
+  /** Water's working sublayers are presentation controls only. They never alter the saved
+   * geometry; the canvas decides which existing marks to paint. */
+  waterInfrastructure?: {
+    visibility: WaterInfrastructureVisibility;
+    opacity: WaterInfrastructureOpacity;
+    onVisibilityChange: (next: WaterInfrastructureVisibility) => void;
+    onOpacityChange: (next: WaterInfrastructureOpacity) => void;
+  } | null;
+  /** Wide screens have a fixed right-side quick-actions pane. Phones retain the bottom sheet. */
+  desktopAside?: boolean;
   /** Icon/label size slider, shown inside the Layers panel beside Labels and Icons. null hides
    *  it entirely, same "nothing to act on" convention the other optional controls use. */
   textScaleControl: { value: number; onChange: (v: number) => void } | null;
@@ -404,6 +432,8 @@ export default function DesignPalette({
   setLineKind,
   activeLayers,
   setActiveLayers,
+  waterInfrastructure = null,
+  desktopAside = false,
   textScaleControl,
   areaFillControl,
   bedBlockControl,
@@ -1331,6 +1361,58 @@ export default function DesignPalette({
                     </button>
                   );
                 })}
+                {waterInfrastructure && (
+                  <div style={{ flexBasis: '100%', display: 'flex', flexDirection: 'column', gap: 5, padding: '8px 2px 0', borderTop: '1px solid rgba(11,18,11,0.12)' }}>
+                    <span style={{ fontSize: 10, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.5, opacity: 0.6 }}>
+                      Water infrastructure
+                    </span>
+                    {([
+                      ['storage', 'JoJo tanks & rain barrels'],
+                      ['tapPoints', 'Tap points'],
+                      ['pipes', 'Pipes & lines'],
+                      ['drip', 'Drip irrigation'],
+                      ['swales', 'Swales'],
+                    ] as const).map(([key, label]) => {
+                      const on = waterInfrastructure.visibility[key];
+                      const opacity = waterInfrastructure.opacity[key];
+                      return (
+                        <div key={key} style={{ display: 'grid', gridTemplateColumns: '32px minmax(0, 1fr) 68px 34px', alignItems: 'center', gap: 5 }}>
+                          <button
+                            type="button"
+                            aria-label={`${on ? 'Hide' : 'Show'} ${label}`}
+                            aria-pressed={on}
+                            onClick={() => {
+                              // Do not leave a placement tool armed for a mark we just hid. It
+                              // would save correctly but render nothing, the exact "my work
+                              // disappeared" failure this panel is meant to prevent.
+                              if (on && (
+                                waterInfrastructureForElement(placeDefId) === key
+                                || (tool === 'line' && waterInfrastructureForLine(lineKind) === key)
+                              )) setTool('select');
+                              waterInfrastructure.onVisibilityChange({ ...waterInfrastructure.visibility, [key]: !on });
+                            }}
+                            style={{ minWidth: 32, minHeight: 32, padding: 0, borderRadius: 8, border: '1px solid rgba(11,18,11,0.16)', background: on ? 'rgba(31,77,43,0.12)' : 'transparent', color: DARK, cursor: 'pointer', fontSize: 14 }}
+                          >
+                            {on ? '◉' : '○'}
+                          </button>
+                          <span style={{ minWidth: 0, fontSize: 11.5, opacity: on ? 1 : 0.5 }}>{label}</span>
+                          <input
+                            type="range"
+                            min={0.2}
+                            max={1}
+                            step={0.1}
+                            value={opacity}
+                            disabled={!on}
+                            aria-label={`${label} opacity`}
+                            onChange={(e) => waterInfrastructure.onOpacityChange({ ...waterInfrastructure.opacity, [key]: Number(e.target.value) })}
+                            style={{ width: '100%', accentColor: GREEN, cursor: on ? 'pointer' : 'default' }}
+                          />
+                          <span style={{ fontSize: 10.5, fontWeight: 700, textAlign: 'right', fontVariantNumeric: 'tabular-nums', opacity: on ? 1 : 0.5 }}>{Math.round(opacity * 100)}%</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
                 {/* Icon + label size. Lives with Labels and Icons because it is the same
                     question — how loud should the annotation be — and a farmer who has just
                     turned Labels on to read them wants the size control in the same place.
@@ -1512,13 +1594,9 @@ export default function DesignPalette({
             type="button"
             onClick={() => pickElement(def)}
             title={suited ? undefined : formatDesignTranslation(t('designPaletteClimateTitle'), { name: def.name })}
-            // ONE ROW, not three stacked lines. Emoji over name over size made every card as
-            // tall as three lines of type, and this strip sits in a panel already carrying a
-            // status row, a tool row, a hint and the bed-block controls — the map was losing
-            // close to half the screen to chrome (Rory: "the element button are to big this
-            // bottom modal needs to be smalle you need to conserv space someow"). Guided keeps
-            // a 44px target: shrinking a first-time farmer's tap area to save pixels trades
-            // the wrong thing.
+            // The photograph seam stays optional. Until an illustrator supplies a real asset the
+            // farmer sees the exact emoji she saw before; fake generated symbols would make a
+            // tool look more finished while saying less clearly what it places.
             style={{
               position: 'relative',
               minHeight: guided ? 44 : 34,
@@ -1530,15 +1608,26 @@ export default function DesignPalette({
               display: 'flex',
               alignItems: 'center',
               gap: 5,
+              flexDirection: desktopAside ? 'column' : 'row',
+              justifyContent: desktopAside ? 'center' : undefined,
+              textAlign: desktopAside ? 'center' : 'left',
+              width: desktopAside ? 'calc(50% - 3px)' : undefined,
+              boxSizing: 'border-box',
               flexShrink: 0,
               cursor: 'pointer',
               opacity: suited ? 1 : 0.45,
             }}
           >
-            <span style={{ fontSize: guided ? 16 : 13, lineHeight: 1 }}>{def.icon}</span>
-            <span style={{ fontSize: guided ? 11.5 : 10, fontWeight: 600, whiteSpace: 'nowrap' }}>{def.name}</span>
-            <span style={{ fontSize: guided ? 9.5 : 8.5, opacity: 0.6, whiteSpace: 'nowrap' }}>
-              {def.shape === 'circle' ? `⌀${def.wM}m` : `${def.wM}×${def.hM}m`}
+            {def.art ? (
+              <img src={def.art} alt="" aria-hidden style={{ width: guided ? 22 : 18, height: guided ? 22 : 18, objectFit: 'contain' }} />
+            ) : (
+              <span style={{ fontSize: guided ? 16 : 13, lineHeight: 1 }}>{def.icon}</span>
+            )}
+            <span style={{ display: 'flex', flexDirection: 'column', alignItems: desktopAside ? 'center' : 'flex-start', minWidth: 0 }}>
+              <span style={{ fontSize: guided ? 11.5 : 10, fontWeight: 600, whiteSpace: 'nowrap' }}>{def.name}</span>
+              <span style={{ fontSize: guided ? 9.5 : 8.5, opacity: 0.6, whiteSpace: 'nowrap' }}>
+                {def.shape === 'circle' ? `Ø ${def.wM} m` : `${def.wM}×${def.hM} m`}
+              </span>
             </span>
           </button>
         );
@@ -1630,7 +1719,13 @@ export default function DesignPalette({
             Without it a 22-element catalog looks like a 16-element one: the scrollbar is a few
             faint pixels and nothing else says the row continues. */}
         <div style={{ position: 'relative', minWidth: 0, display: chipsFloating ? 'none' : undefined }}>
-        <div ref={stripRef} onScroll={syncStripEnd} style={scrollStripStyle(guided ? 10 : 6)}>
+        <div
+          ref={stripRef}
+          onScroll={syncStripEnd}
+          style={desktopAside
+            ? { display: 'flex', flexWrap: 'wrap', alignContent: 'flex-start', gap: 6 }
+            : scrollStripStyle(guided ? 10 : 6)}
+        >
           {/* Pop the chips out into the draggable panel. Lives at the HEAD of the strip so it is
               reachable without scrolling — the thing you reach for when the row is too long is the
               one control that must never be at the far end of that row. */}
@@ -1664,7 +1759,7 @@ export default function DesignPalette({
           )}
           {chipNodes}
         </div>
-        {!stripAtEnd && (
+        {!desktopAside && !stripAtEnd && (
           <div
             aria-hidden
             style={{
@@ -2209,10 +2304,26 @@ export default function DesignPalette({
         flexDirection: 'column',
         gap: guided ? 10 : 6,
         fontFamily: 'inherit',
-        // Docked bar: gutter so chips don't touch the screen edges, and safe-area padding so the
-        // bottom row clears the phone's home indicator instead of rendering below the viewport.
-        padding: '0 12px',
-        paddingBottom: 'calc(6px + env(safe-area-inset-bottom))',
+        ...(desktopAside
+          ? {
+              position: 'fixed' as const,
+              top: 76,
+              right: 12,
+              bottom: 12,
+              width: 304,
+              zIndex: 15,
+              padding: 10,
+              background: PAPER,
+              border: '1px solid rgba(11,18,11,0.16)',
+              borderRadius: 16,
+              boxShadow: '0 8px 28px rgba(11,18,11,0.14)',
+            }
+          : {
+              // Docked bar: gutter so chips don't touch the screen edges, and safe-area padding so the
+              // bottom row clears the phone's home indicator instead of rendering below the viewport.
+              padding: '0 12px',
+              paddingBottom: 'calc(6px + env(safe-area-inset-bottom))',
+            }),
       }}
     >
       {/* THE SAME LADDER ON DESKTOP. This handle used to exist only in the phone branch above, so
@@ -2234,7 +2345,7 @@ export default function DesignPalette({
           window. Scoped to start AFTER the tool row on purpose: the Layers popover lives inside
           the tool row and opens upward with no overflow ancestor of its own ("never clipped" —
           see its comment above); wrapping the tool row in this too would clip it. */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: guided ? 10 : 6, overflowY: 'auto', WebkitOverflowScrolling: 'touch', minHeight: 0, maxHeight: '30dvh' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: guided ? 10 : 6, overflowY: 'auto', WebkitOverflowScrolling: 'touch', minHeight: 0, flex: desktopAside ? 1 : undefined, maxHeight: desktopAside ? undefined : '30dvh' }}>
         {renderBodyRows()}
       </div>
     </div>

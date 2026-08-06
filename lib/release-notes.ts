@@ -35,6 +35,15 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '6 August',
+    sha: 'df2a98d',
+    changes: [
+      'Design Studio tools now sit beside your map on a tablet or computer',
+      'Water marks can be shown one at a time or faded while you explain the plan',
+      'Element tiles show their real size and are ready for hand-drawn pictures',
+    ],
+  },
+  {
+    when: '6 August',
     sha: '41774a4',
     changes: [
       'Card and panel outlines are all the same colour now, instead of two shades',
