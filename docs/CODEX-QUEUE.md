@@ -74,6 +74,48 @@ if the item has none.
 
 ---
 
+## Q0 — DO THIS FIRST. Q1 shipped broken and it is live.
+
+**Rory tapped "Log harvest" on the deployed app and landed on the map with no panel open.**
+
+Q1 (PR #36, merged `f114cf8`) added the right link. The destination refuses to render it.
+
+`components/DataPanel.tsx:638`:
+
+```ts
+if (!data && !loading) return <EmptyState />;
+```
+
+`data` is the SITE ANALYSIS for a selected location. Arriving from `/finances` there is no site
+selected, so `data` is null, so DataPanel returns `<EmptyState />` — the "Tap anywhere in South
+Africa to get a full permaculture plan" placeholder — and it returns **before any tab rendering
+happens**. `forcedTab` is set correctly at `app/farmer/page.tsx:168`; nothing ever reads it.
+
+Confirmed signed-in on production (Rory's own screenshot) and signed-out in sample mode, where it
+stops one step earlier at the "Sign in to keep your own records" gate. Both dead ends.
+
+**Branch:** `codex/q1-farm-panel-needs-no-site`
+
+**The question to settle first, because it decides the fix:** does the harvest log actually depend
+on the site analysis at all? `ProductionLog` (`lib/db/types.ts:35`) carries `garden_id`, not
+coordinates. If the Farm tab does not need `data`, the honest fix is to let it render without one
+rather than to fake a site for it. `lib/last-site.ts` (`setLastSite` is called at
+`app/farmer/page.tsx:313`) is the other candidate — hydrate the last site when a panel is
+deep-linked — but that only works for a farmer who has already analysed somewhere, so it fixes the
+common case and leaves a new farmer at the same dead end.
+
+**Verify by USING IT, not by adding a test.** Deep-link `/farmer?panel=Farm` in a browser with no
+site selected and confirm a crop field and a kg field are on screen. A test that mounts the panel
+with `data` already present will pass while the bug is still there — that is precisely how this
+shipped.
+
+**Why this is Q0.** It went out on a green suite of 1,992 tests and a new test file of its own,
+and the first human to touch it found it in about thirty seconds. Nothing in the suite could have
+caught it, because every test supplies `data`. Read §"Verification is not `npm test`" above again
+before starting.
+
+---
+
 ## Priority 1 — the app tells the farmer something untrue
 
 Ordered by how badly the app misleads. Do these first.
