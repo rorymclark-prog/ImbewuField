@@ -30,11 +30,9 @@
 // dvh units) independent of what the flex column above it does, so it can never be pushed off
 // the bottom edge by unrelated content overflowing above it — see renderPhoneSheet below.
 //
-// The Layers popover (inside renderToolRow) opens upward with position:absolute and is
-// documented there as needing NO overflow ancestor. That guarantee must hold in BOTH layouts:
-// neither the desktop docked wrapper nor the phone sheet's own root may ever gain
-// overflow:hidden/auto — only the scrollable BODY region (a sibling of the tool row, never an
-// ancestor of it) is allowed to clip/scroll.
+// The Layers popover (inside renderToolRow) must not have an overflow ancestor. It opens down
+// into a desktop aside (there is room below) and upward from the phone sheet (there is not), with
+// its own scroll cap in either case. Only the BODY region, a sibling of the tool row, may clip.
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
@@ -1256,10 +1254,9 @@ export default function DesignPalette({
             </div>
           )}
 
-          {/* Layers — pinned right of the tool row, always on screen. Popover opens upward over
-              the map (its wrapper isn't an overflow container, so it's never clipped) — true in
-              BOTH the desktop docked layout and the phone sheet; neither root ever sets
-              overflow:hidden/auto (see the module comment at the top of this file). */}
+          {/* Layers — pinned right of the tool row, always on screen. A desktop aside has room
+              below the button, so its panel opens down; the phone sheet opens up over the map.
+              Its own cap is scrollable, rather than allowing either edge to leave the viewport. */}
           <div style={{ position: 'relative', flexShrink: 0 }}>
             <button
               type="button"
@@ -1291,7 +1288,8 @@ export default function DesignPalette({
               <div
                 style={{
                   position: 'absolute',
-                  bottom: 'calc(100% + 6px)',
+                  top: desktopAside ? 'calc(100% + 6px)' : undefined,
+                  bottom: desktopAside ? undefined : 'calc(100% + 6px)',
                   right: 0,
                   zIndex: 30,
                   display: 'flex',
@@ -1299,6 +1297,8 @@ export default function DesignPalette({
                   gap: 6,
                   width: 300,
                   maxWidth: '80vw',
+                  maxHeight: '60dvh',
+                  overflowY: 'auto',
                   padding: 10,
                   borderRadius: 12,
                   background: PAPER,
@@ -2249,9 +2249,8 @@ export default function DesignPalette({
           background: PAPER,
           borderRadius: '16px 16px 0 0',
           boxShadow: '0 -6px 20px rgba(0,0,0,0.18)',
-          // NEVER overflow:hidden/auto on this root — the Layers popover (inside renderToolRow)
-          // opens upward with position:absolute and needs no clipping ancestor. Only the body
-          // region below (a sibling of the tool row, not an ancestor) is allowed to scroll.
+          // NEVER overflow:hidden/auto on this root — the Layers popover needs no clipping
+          // ancestor. Only the body region below (a sibling of the tool row) may scroll.
           overflow: 'visible',
           maxHeight: sheetOpen ? PHONE_SHEET_EXPANDED_MAX : undefined,
           fontFamily: 'inherit',
@@ -2341,9 +2340,8 @@ export default function DesignPalette({
           the fixed bottom sheet above instead) there is normally enough room for this region's
           own content to fit inside its 30dvh cap with no internal scrolling ever engaging; the
           cap plus overflow-y:auto stays here as a safety net for an unusually short desktop
-          window. Scoped to start AFTER the tool row on purpose: the Layers popover lives inside
-          the tool row and opens upward with no overflow ancestor of its own ("never clipped" —
-          see its comment above); wrapping the tool row in this too would clip it. */}
+          window. Scoped to start AFTER the tool row on purpose: the Layers popover owns its own
+          scroll cap and must not inherit this clipping region. */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: guided ? 10 : 6, overflowY: 'auto', WebkitOverflowScrolling: 'touch', minHeight: 0, flex: desktopAside ? 1 : undefined, maxHeight: desktopAside ? undefined : '30dvh' }}>
         {renderBodyRows()}
       </div>

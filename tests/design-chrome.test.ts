@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 
 import {
   BOTTOM_STOPS,
@@ -145,4 +146,13 @@ test('every dismissible band is a band the ladder also knows about', () => {
     const ladderKey = band === 'stepGuide' ? 'stepBar' : band;
     assert.ok(known.includes(ladderKey), `${band} has no matching visibility field`);
   }
+});
+
+test('wide-screen Layers opens into the usable palette space, not above the viewport', () => {
+  const palette = readFileSync(new URL('../components/design/DesignPalette.tsx', import.meta.url), 'utf8');
+
+  assert.match(palette, /top: desktopAside \? 'calc\(100% \+ 6px\)' : undefined/);
+  assert.match(palette, /bottom: desktopAside \? undefined : 'calc\(100% \+ 6px\)'/);
+  assert.match(palette, /maxHeight: '60dvh'/);
+  assert.match(palette, /overflowY: 'auto'/);
 });
