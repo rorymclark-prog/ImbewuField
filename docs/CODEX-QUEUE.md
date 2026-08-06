@@ -17,9 +17,26 @@ said *"Claude reviews and merges behind you"*. **That is now false and you must 
 
 1. Branch, build it, verify it — `npx tsc --noEmit`, then `npm test`, then **look at the output**.
 2. Push the branch.
-3. Read the CI result on that push. If `test.yml` is green, **merge it to `main` yourself.**
+3. Read the CI result on that push. **`test.yml` now has TWO jobs — `test` and `rules` — and both
+   must be green before you merge.** Check the jobs, not the run summary:
+   `gh run view <id> --json jobs --jq '.jobs[] | "\(.name): \(.conclusion)"'`
 4. Append one line to the ledger, issue #35: what merged, and what Rory should look at.
 5. Take the next item immediately.
+
+> **2026-08-06, Claude — READ THIS BEFORE YOUR NEXT MERGE.** Six merges landed on `main` today
+> (`c80cec7`, `3390441`, `01c462f`, `f19d925`, `aaa19e1`, `b99560c`) and **`main` was red after
+> every one of them.** That is not a reprimand: the gate was structurally unsatisfiable and no
+> amount of care on your side could have passed it. A squash merge creates a NEW commit, and the
+> release note riding inside it was necessarily stamped with a sha that predates it — so the note
+> could never cover the commit carrying it, and the next branch stamped THAT sha and landed another
+> unnoted squash. You were exactly one commit behind, permanently, by construction.
+>
+> It is fixed (`claude/ci-gate-order`): one commit of lag passes when that commit is HEAD itself,
+> two still fail. **But the second fault is the one that matters.** The Firestore rules tests sat
+> downstream of that gate in the same job, and on `main` the gate is blocking — so the job stopped
+> before the emulator ever started. **The rules tests did not run on any of those six merges.** A
+> security check that a cosmetic check can switch off is not a check; they are now a separate
+> `rules` job. This is why step 3 above now says *both jobs*.
 
 This is a deliberate, temporary widening of your authority, granted because the alternative is a
 queue of finished branches that nobody merges for three days. The guardrails in `AGENTS.md` §4 are
@@ -45,17 +62,27 @@ If your change alters what a sheet looks like, **say so in the ledger** — "thi
   code-level work only, verified against cached or local output.
 - **Do not deploy Firestore or Storage rules.** `firestore.rules` and `storage.rules` are read-only
   to agents. Propose a diff in the ledger; do not `firebase deploy`.
+- **A rules change is NEVER "done", and you must not write that it is.** Verified on 6 August:
+  **nothing in this repository has ever deployed the rules.** No workflow, no npm script, no
+  Makefile target calls `firebase deploy --only firestore:rules` or `storage:rules` — `firebase.json`
+  declares both files and nobody ships them. So a merged rules commit changes a text file and
+  changes nothing a farmer's phone talks to. An external audit spent thirty-one pages reasoning
+  about those two files as though they were production; they may not be.
+  **Every ledger line for a rules change ends with `INERT UNTIL RORY DEPLOYS`**, and the item is not
+  closed until he confirms he has. Passing `npm run test:rules` proves the rule you wrote does what
+  you meant *in the emulator* — it says nothing about what is live.
 - **Never `git add -A` or `git add .`** — always explicit paths. Other work shares this checkout.
 - **Never commit** secrets, `.env*`, `serviceAccount.json`, CareLink/medical data, logs, `.venv/`.
 - **Invent no number that reads as an agronomic or financial recommendation.** If a figure is not
   measured or sourced, the honest output says it is unknown. This app's outputs are instructions
   real smallholders spend money against.
-- **The release-notes gate is blocking and it is easy to trip.** `test.yml` runs
+- **The release-notes gate is blocking on `main` and it is still easy to trip.** `test.yml` runs
   `npm run notes:pending`, which FAILS when commits touching `app/`, `components/` or `lib/` carry
-  no farmer-facing note. It was red on **every** push on 5 August for exactly this reason. Add an
-  entry to `lib/release-notes.ts` stamped with your newest sha, in the farmer's language,
-  **≤ 90 characters per line** — enforced by `tests/canvas-labels.test.ts`, and a first draft
-  usually breaches it.
+  no farmer-facing note. Add an entry to `lib/release-notes.ts` stamped with your newest sha, in the
+  farmer's language, **≤ 90 characters per line** — enforced by `tests/canvas-labels.test.ts`, and a
+  first draft usually breaches it. Since 6 August it tolerates exactly one commit of lag when that
+  commit is HEAD itself, so a squash merge no longer fails on arrival — **but two unnoted commits
+  still fail, which means you cannot skip a note twice running.**
 - **Push each branch once, when it is finished.** Vercel allows 100 deployments/24h across the whole
   account; an overnight run has already exhausted it and frozen production twice.
 
@@ -194,6 +221,35 @@ item: one function, both callers.
 
 And page 1 draws **uncaveated staffing conclusions** from that chart. A staffing number a funder
 reads is a number someone hires against.
+
+### Q22. `--border` is defined twice at equal specificity and the wrong one wins — `codex/border-token-collision`
+
+Measured on `b99560c`. `app/globals.css` declares `--border` in **two separate `:root` blocks**:
+
+- line 54 — `#E2D8C4`, commented *"the actually-used hairline (~warm ink)"*
+- line 339 — `#ECE3C9`, inside a *"legacy alias"* shim added so old `var(--bg-0)` callers pick up
+  almanac colours
+
+Same selector, same specificity, so **the later one wins and `--border` resolves to `#ECE3C9`** —
+the shim, not the block that documents itself as authoritative. This is `AGENTS.md` §6's recurring
+bug exactly: two places answering one question and silently diverging.
+
+**Why it is Priority 1 and not a cosmetics item.** `#e2d8c4` is the **second most-used colour
+literal in the codebase — 518 occurrences** (`#1f4d2b` leads with 539; 5 334 hex uses in total,
+855 distinct, top 20 covering 66.9%). A `hex → var()` migration would rewrite those 518 sites to
+`var(--border)` and repaint every one of them to a different colour. Both values are pale warm
+greys, so the diff reads as correct and the screen is wrong — a silent substitution across 518
+sites, which is this repo's signature failure mode.
+
+Fix the collision only: decide which value is the real hairline, make it the single definition, and
+delete the loser. **Do not migrate any colours in this item.** Add a test that fails when a token is
+declared twice at the same specificity — that is the check that must be able to fail.
+
+- **Do NOT run a `hex → var()` codemod, on any branch, until Q22 has merged and Rory has approved a
+  token map.** A design audit is in progress and will propose one. Applying it over the current
+  `globals.css` corrupts 518 borders silently and no existing test would notice. The app has **four**
+  themes — `earth`, `earth.dark`, `slate`, `slate.dark` — so any token map with one value per token
+  is incomplete by construction.
 
 ---
 
