@@ -111,8 +111,11 @@ export function buildPlanDashboard(
   if (top[0]) signals.push(`${top[0].name} is the largest single harvest at ${top[0].kg.toFixed(1)} kg.`);
   if (top[1]) signals.push(`${top[1].name} follows at ${top[1].kg.toFixed(1)} kg.`);
   if (busiest.length) {
+    // THE CAVEAT TRAVELS WITH THE CLAIM. It used to live alone on page 2, three pages away from
+    // the staffing decision below — so page 1 read as a measured labour finding when it is a count
+    // of planned jobs, each of unknown length. A funder reads page 1 and hires against it.
     const names = busiest.map((b) => monthShort(b.month));
-    signals.push(`${names.join(', ')} carry the heaviest work load.`);
+    signals.push(`${names.join(', ')} carry the most planned jobs — counted as jobs, not hours.`);
   }
   const idle = idleBedMonths(plantings, beds);
   if (idle.count > 0) {
@@ -123,7 +126,7 @@ export function buildPlanDashboard(
   if (top[0]) decisions.push(`Plan storage and kitchen use before the ${top[0].name.toLowerCase()} harvest.`);
   decisions.push('Check whether the site can use, preserve or sell the planned surplus.');
   if (busiest.length) {
-    decisions.push(`Assign people and weeks before the ${monthShort(busiest[0].month)}-${monthShort(busiest[busiest.length - 1].month)} work peak.`);
+    decisions.push(`Check who is available before the ${monthShort(busiest[0].month)}-${monthShort(busiest[busiest.length - 1].month)} job peak, and time the work against real hours.`);
   }
   if (loss === 0) decisions.push('Set a loss allowance so the usable figure is not the gross one.');
 
@@ -180,10 +183,35 @@ export function buildHarvestSeries(plantings: Planting[], beds: PlanBed[], nowMo
   return rollingMonths(nowMonth).map((m) => ({ month: m, kg: byMonth[m].kg }));
 }
 
+/**
+ * Actions that are part of another job rather than a job of their own, so nothing may count them
+ * as a separate visit to the bed.
+ *
+ * THE FIELD SHEET ALREADY KNEW THIS AND THE CHART DID NOT. `mulch` is emitted at the same month as
+ * its own planting's sow or transplant (lib/crop-plan.ts), and buildFieldSheet folds it — see the
+ * `case 'mulch'` arm below and the doctrine above it: "WATERING IS NOT A SEPARATE JOB. 'Sow X'
+ * followed by 'Water in & mulch X' is one action at the bed, and printing it as two lines doubled
+ * the apparent workload of every sowing month."
+ *
+ * buildWorkloadSeries counted every task with no filter, so it did to the chart exactly what that
+ * comment describes fixing on the page: measured on a four-planting plan, sowing months came out
+ * up to 50% too high. Page 1 then reads the peak off that curve and prints "carry the heaviest
+ * work load" and "assign people and weeks before the … work peak" — a staffing conclusion a funder
+ * hires against, drawn from a doubled month.
+ *
+ * Weeding is deliberately NOT in here: `weed-early` and `weed-mid` get their own Maintenance row,
+ * so they are real separate visits. This constant exists so the two readers cannot drift apart
+ * again — the fold rule is stated once and imported, not restated.
+ */
+export const FOLDED_ACTIONS: ReadonlySet<CropTask['action']> = new Set(['mulch']);
+
 /** How many jobs land in each month — the labour curve the kg chart never shows. */
 export function buildWorkloadSeries(tasks: CropTask[], nowMonth: number): MonthCount[] {
   const counts = new Map<number, number>();
-  for (const t of tasks) counts.set(t.month, (counts.get(t.month) ?? 0) + 1);
+  for (const t of tasks) {
+    if (FOLDED_ACTIONS.has(t.action)) continue;
+    counts.set(t.month, (counts.get(t.month) ?? 0) + 1);
+  }
   return rollingMonths(nowMonth).map((m) => ({ month: m, count: counts.get(m) ?? 0 }));
 }
 
@@ -418,7 +446,9 @@ export function buildFieldSheet(
         bucketFor('Maintenance', t.bedLabel).plain.push(name);
         break;
       case 'mulch':
-        // Folded into the sow/transplant row above — never its own line.
+        // Folded into the sow/transplant row above — never its own line, and never its own count.
+        // FOLDED_ACTIONS is the single statement of that rule; buildWorkloadSeries reads the same
+        // constant, which is what stopped the chart and this sheet disagreeing about the same job.
         break;
     }
   }
