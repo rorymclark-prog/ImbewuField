@@ -77,8 +77,6 @@ const BED_DEFS: BedDef[] = [
   { id: 'demo-bed-4', xM: 4, yM: 17, wM: 1.5, hM: 4, type: 'bed' },
   { id: 'demo-bed-5', xM: 6.5, yM: 17, wM: 1.5, hM: 4, type: 'bed' },
   { id: 'demo-bed-6', xM: 9, yM: 17, wM: 2, hM: 4, type: 'bed' },
-  { id: 'demo-bed-7', xM: 12, yM: 17, wM: 1.5, hM: 4, type: 'bed' },
-  { id: 'demo-bed-8', xM: 14.5, yM: 17, wM: 1.5, hM: 4, type: 'bed' },
   { id: 'demo-hugel-1', xM: 12, yM: 13, wM: 2, hM: 3, type: 'hugel' },
 ];
 
@@ -119,45 +117,31 @@ export function buildDemoFacilitatorState(): FacilitatorDesignState {
   };
 }
 
-/* ── Crop plan: a full year across the 9 growing beds above ───────────────
+/* ── Crop plan: a full year across the 7 growing beds above ───────────────
    'mild-frost' rain pattern (summer rainfall, mild winter frost — matches
-   DEMO_SITE). Mixes already-growing (existing:true) plantings with future
-   ones, reuses each bed across the year (rotation), stacks a staggered
-   3-way lettuce succession on demo-bed-3, and genuinely intercrops lettuce +
-   carrots on demo-bed-6 (sown the same month, so their sow→harvest windows
-   actually overlap — the intercrop detector keys off that window, not the
-   longer post-harvest fresh/storage life) — the same rotation/succession/
-   intercrop features the crop planner already supports, all visible in one
-   seeded plan. */
+   DEMO_SITE). It mixes already-growing (existing:true) plantings with future
+   ones and divides several beds into measured strips. The fractions below
+   were checked against every month of the audited crop-duration calendar:
+   concurrent strips never exceed the mapped bed, and the harvested sample kg
+   remain at or below the catalog's published upper benchmark. */
 
 export function buildDemoCropPlan(): CropPlanState {
   const plantings: Planting[] = [
-    { id: 'demo-planting-1', bedId: 'demo-bed-1', cropKey: 'swiss-chard', sowMonth: 4, existing: true },
-    { id: 'demo-planting-2', bedId: 'demo-bed-1', cropKey: 'green-beans', sowMonth: 10 },
-    { id: 'demo-planting-3', bedId: 'demo-bed-1', cropKey: 'broccoli', sowMonth: 2 },
-
-    // The cabbage and carrot shares can coexist while their verified bed
-    // occupancy overlaps; together they stay below the whole mapped bed.
-    { id: 'demo-planting-4', bedId: 'demo-bed-2', cropKey: 'cabbage', sowMonth: 3, areaFraction: 0.55, existing: true },
-    { id: 'demo-planting-5', bedId: 'demo-bed-2', cropKey: 'carrots', sowMonth: 4, areaFraction: 0.4 },
-    { id: 'demo-planting-6', bedId: 'demo-bed-8', cropKey: 'tomatoes', sowMonth: 10 },
-
-    { id: 'demo-planting-7', bedId: 'demo-bed-3', cropKey: 'lettuce', sowMonth: 5, areaFraction: 1 / 3, existing: true },
-    { id: 'demo-planting-8', bedId: 'demo-bed-3', cropKey: 'lettuce', sowMonth: 7, areaFraction: 1 / 3 },
-    { id: 'demo-planting-9', bedId: 'demo-bed-3', cropKey: 'lettuce', sowMonth: 9, areaFraction: 1 / 3 },
-
-    { id: 'demo-planting-10', bedId: 'demo-bed-4', cropKey: 'onions', sowMonth: 4, existing: true },
-    // Grain-maize timing is not verified strongly enough to share a benchmark
-    // bed with onions, so the demo gives it its own mapped bed.
-    { id: 'demo-planting-11', bedId: 'demo-bed-7', cropKey: 'maize', sowMonth: 10 },
-
-    { id: 'demo-planting-12', bedId: 'demo-bed-5', cropKey: 'garlic', sowMonth: 5, existing: true },
-
-    { id: 'demo-planting-13', bedId: 'demo-bed-6', cropKey: 'lettuce', sowMonth: 4, areaFraction: 0.5, existing: true },
-    { id: 'demo-planting-14', bedId: 'demo-bed-6', cropKey: 'carrots', sowMonth: 4, areaFraction: 0.5, existing: true },
-    { id: 'demo-planting-15', bedId: 'demo-bed-6', cropKey: 'butternut', sowMonth: 12 },
-
-    { id: 'demo-planting-16', bedId: 'demo-hugel-1', cropKey: 'sweet-potato', sowMonth: 10 },
+    { id: 'demo-planting-1', bedId: 'demo-bed-6', cropKey: 'garlic', sowMonth: 5, areaFraction: 0.5, existing: true },
+    { id: 'demo-planting-2', bedId: 'demo-bed-1', cropKey: 'onions', sowMonth: 3, areaFraction: 3.67 / 6, existing: true },
+    { id: 'demo-planting-3', bedId: 'demo-bed-3', cropKey: 'butternut', sowMonth: 12 },
+    { id: 'demo-planting-4', bedId: 'demo-bed-5', cropKey: 'swiss-chard', sowMonth: 4, areaFraction: 5.67 / 6, existing: true },
+    { id: 'demo-planting-5', bedId: 'demo-bed-4', cropKey: 'tomatoes', sowMonth: 10, areaFraction: 0.75 },
+    { id: 'demo-planting-6', bedId: 'demo-hugel-1', cropKey: 'maize', sowMonth: 10, areaFraction: 5 / 6 },
+    { id: 'demo-planting-7', bedId: 'demo-bed-5', cropKey: 'green-beans', sowMonth: 10, areaFraction: 4.13 / 6 },
+    { id: 'demo-planting-8', bedId: 'demo-bed-2', cropKey: 'lettuce', sowMonth: 9, areaFraction: 3.7 / 6 },
+    { id: 'demo-planting-9', bedId: 'demo-bed-6', cropKey: 'broccoli', sowMonth: 2, areaFraction: 3.75 / 8 },
+    { id: 'demo-planting-10', bedId: 'demo-bed-6', cropKey: 'sweet-potato', sowMonth: 10, areaFraction: 3.67 / 8 },
+    { id: 'demo-planting-11', bedId: 'demo-bed-1', cropKey: 'cabbage', sowMonth: 3, areaFraction: 2.33 / 6, existing: true },
+    { id: 'demo-planting-12', bedId: 'demo-bed-2', cropKey: 'cabbage', sowMonth: 3, areaFraction: 0.87 / 6, existing: true },
+    { id: 'demo-planting-13', bedId: 'demo-bed-2', cropKey: 'carrots', sowMonth: 4, areaFraction: 5.13 / 6 },
+    { id: 'demo-planting-14', bedId: 'demo-bed-4', cropKey: 'carrots', sowMonth: 4, areaFraction: 1.21 / 6 },
+    { id: 'demo-planting-15', bedId: 'demo-bed-3', cropKey: 'lettuce', sowMonth: 5, areaFraction: 3.7 / 6, existing: true },
   ];
 
   return { version: 1, plantings, updatedAt: Date.now() };
@@ -287,7 +271,7 @@ const DEMO_HARVESTS: DemoHarvestSpec[] = [
   { month: 2, day: 24, cropKey: 'sweet-potato', kg: 11 },
   { month: 2, day: 26, cropKey: 'maize', kg: 1.5 },
   { month: 3, day: 8, cropKey: 'tomatoes', kg: 7 },
-  { month: 4, day: 18, cropKey: 'butternut', kg: 11 },
+  { month: 4, day: 18, cropKey: 'butternut', kg: 10.8 },
   { month: 5, day: 16, cropKey: 'broccoli', kg: 1.5 },
   { month: 6, day: 6, cropKey: 'swiss-chard', kg: 4.5 },
   { month: 6, day: 12, cropKey: 'broccoli', kg: 1.5 },
