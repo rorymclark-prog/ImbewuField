@@ -39,9 +39,19 @@ function MatchedRow({ row, periodLabel }: { row: CropRow; periodLabel: string })
           <span>Harvested {fmtKg(row.harvestedKg)} — plan expected ~{fmtKg(row.intendedKg)} {periodLabel}.</span>
         </p>
       )}
-      {row.unaccountedGap && (
+      {row.keptGap && row.keptKg !== null && (
         <p className="text-xs font-sans mt-1.5" style={{ color: '#5C5040' }}>
-          Harvested {fmtKg(row.harvestedKg)}, only {fmtKg(row.soldKg)} sold — {fmtKg(row.unaccountedKg)} unaccounted for: home-eaten, given away, or spoiled?
+          Harvested {fmtKg(row.harvestedKg)}, sold {fmtKg(row.soldKg)} — {fmtKg(row.keptKg)} kept: eaten at home, given away, fed out, saved for seed or spoiled.
+        </p>
+      )}
+      {/* SAYING "I DO NOT KNOW" IS THE FEATURE. This branch used to be unreachable: the kept figure
+          was clamped to zero, so a farmer who had logged only some of her picking was told she kept
+          nothing — most wrongly, in the exact case where she had kept most of it. The two possible
+          causes are named because the app genuinely cannot tell them apart, and naming only the
+          farmer's omission would blame her for the app's blind spot. */}
+      {row.soldExceedsHarvested && (
+        <p className="text-xs font-sans mt-1.5" style={{ color: '#5C5040' }}>
+          Sold {fmtKg(row.soldKg)} but only {fmtKg(row.harvestedKg)} logged as harvested, so how much you kept is not known — either some picking was not written down, or these sales came from an earlier harvest.
         </p>
       )}
     </div>
