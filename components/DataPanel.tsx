@@ -69,6 +69,7 @@ interface Props {
 
 const TABS = ['Overview', 'Ask', 'Reports', 'People', 'Water', 'Soil', 'Climate', 'Nature', 'Area', 'Photos', 'Design', 'AI', 'Places', 'Farm'] as const;
 type Tab = typeof TABS[number];
+const wantsFarmRecords = (tab: Tab, forcedTab?: string | null): boolean => tab === 'Farm' || forcedTab === 'Farm';
 // Farm and Reports live on the home screen quick actions and are reached via
 // deep link (/farmer?panel=Farm). Keep them in TABS so the panel still renders,
 // but hide them from the scrollable tab strip to reduce clutter.
@@ -635,6 +636,10 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
     }
   }, [forcedTab, onTabChange]);
 
+  // Production and sales records belong to the farmer, not to a map pin. A deep link from
+  // Finance can therefore arrive before any site is analysed; returning the map empty state
+  // here used to make its "Log harvest" action a dead end for exactly those farmers.
+  if (wantsFarmRecords(tab, forcedTab)) return <MyRecords />;
   if (!data && !loading) return <EmptyState />;
   if (loading && !data) return <Skeleton />;
   if (!data) return null;
