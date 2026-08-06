@@ -406,7 +406,10 @@ export function buildDemoFinance(): DemoFinance {
     const lastDay = new Date(anchor.getFullYear(), anchor.getMonth() + 1, 0).getDate();
     const cap = monthsBefore === 0 ? Math.min(nowDay, lastDay) : lastDay;
     const clamped = Math.min(Math.max(1, Math.trunc(day)), cap);
-    return new Date(anchor.getFullYear(), anchor.getMonth(), clamped, 9, 0, 0, 0).toISOString();
+    const atNine = new Date(anchor.getFullYear(), anchor.getMonth(), clamped, 9, 0, 0, 0);
+    // On the current day, 09:00 may still be ahead of the real clock. The demo must
+    // never show money already earned later today, even when a test or a farmer opens it early.
+    return new Date(Math.min(atNine.getTime(), now.getTime())).toISOString();
   };
   /** The most recent occurrence of calendar month 1-12: 0 = this month, 11 = a
    *  year ago next month. Twelve calendar months therefore cover the trailing
