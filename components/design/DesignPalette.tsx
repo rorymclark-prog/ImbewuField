@@ -46,7 +46,7 @@ import {
   MIN_AREA_FILL_OPACITY, MAX_AREA_FILL_OPACITY, type AreaFillStyle,
 } from '@/lib/design-canvas';
 import { MIN_BED_COUNT, MAX_BED_COUNT } from '@/lib/bed-block';
-import { CATEGORY_META, CATEGORY_STEP, ELEMENT_CATALOG, ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_DEFS, biomeClimates, elementSuitsClimate, elementVisibleInPalette, type DesignElementDef } from '@/lib/design-elements';
+import { CATEGORY_META, CATEGORY_STEP, ELEMENT_CATALOG, ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_DEFS, biomeClimates, elementSuitsClimate, elementVisibleInPalette, type DesignElementDef, type DesignLayerState } from '@/lib/design-elements';
 import { SPECIES } from '@/lib/species-catalog';
 import { biomeKeyForName } from '@/lib/biome';
 import { COMPASS16_ORDER, isCompassDirection16, type LocalWindObservation } from '@/lib/local-wind';
@@ -61,22 +61,7 @@ import LessonLink from './LessonLink';
 
 type ToolKind = 'select' | 'place' | 'zone' | 'line';
 
-interface ActiveLayers {
-  water: boolean;
-  earthworks: boolean;
-  zones: boolean;
-  planting: boolean;
-  structures: boolean;
-  access: boolean;
-  animals: boolean;
-  ground: boolean;
-  references: boolean;
-  boundary: boolean;
-  labels: boolean;
-  symbols: boolean;
-  contours: boolean;
-  sector: boolean;
-}
+type ActiveLayers = DesignLayerState;
 
 export type WaterInfrastructureLayer = 'storage' | 'tapPoints' | 'pipes' | 'drip' | 'swales';
 export type WaterInfrastructureVisibility = Record<WaterInfrastructureLayer, boolean>;

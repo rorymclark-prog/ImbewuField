@@ -17,7 +17,7 @@ import { layoutBedBlock, bedBlockPaths, bedBlockFootprintM, type BedBlockPlaceme
 import { layoutCanvasLabels, estimatePillWidth, groupSameLabelPills, isUsableCanvasLabelInput } from '@/lib/canvas-labels';
 import { ownedByCurrentStep } from '@/lib/glossy-filters';
 import { rectFromCorners, anyVertexInRect, itemCenterInRect, clampGroupDelta, type Rect } from '@/lib/marquee';
-import { ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_DEFS, type ElementCategory } from '@/lib/design-elements';
+import { ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_DEFS, type DesignLayerState, type ElementCategory } from '@/lib/design-elements';
 import { SPECIES } from '@/lib/species-catalog';
 import type { DesignLayerType } from '@/lib/design-studio';
 import { computeContourLines } from '@/lib/contours';
@@ -89,27 +89,7 @@ function readSourceFeatureId(shape: unknown): string | undefined {
   return (shape as { sourceFeatureId?: string }).sourceFeatureId;
 }
 
-interface ActiveLayers {
-  water: boolean;
-  earthworks: boolean; // land-shaping: raised beds, basins, banana circles, berms, terraces
-  zones: boolean;
-  planting: boolean;
-  structures: boolean;
-  access: boolean; // paths/gates/driveway only
-  animals: boolean;
-  ground: boolean; // farmer-drawn ground areas (house/patio/lawn/veg/orchard/cleared)
-  references: boolean; // boundary + auto-detected/traced site context; never the satellite pixels
-  // The property fence, on its own switch. It used to ride on references alone, so a farmer who
-  // wanted the fence off the drawing had to turn the satellite photo off with it — and when the
-  // boundary comes from a ring traced on the main map (the usual case) there was no other control
-  // for it anywhere in the Studio (Rory: "i need to be able to get rid of this fence"). Still
-  // nested under references: "Site references off" keeps meaning "all reference context off".
-  boundary: boolean;
-  labels: boolean; // the text name pills on every feature — off = declutter the map
-  symbols: boolean; // centred item icon discs — off = cleaner dense drafting view
-  contours: boolean; // approximate on-contour guide lines (from slope + aspect)
-  sector: boolean; // sun/wind/fire/water/frost energies overlay (from lib/sector, deterministic)
-}
+type ActiveLayers = DesignLayerState;
 
 type WaterInfrastructureLayer = 'storage' | 'tapPoints' | 'pipes' | 'drip' | 'swales';
 type WaterInfrastructurePresentation = {
@@ -2269,7 +2249,7 @@ export default function DesignCanvas({
       const def = ELEMENTS_BY_ID[it.defId];
       if (!def) return null;
       return waterPresentation(waterInfrastructureForElement(it.defId)).visible
-        && anyLayerOn(activeLayers, [categoryLayerKey(def.category), ...((def.alsoLayers ?? []) as Array<keyof ActiveLayers>)])
+        && anyLayerOn(activeLayers, [categoryLayerKey(def.category), ...(def.alsoLayers ?? [])])
         && ownedByCurrentStep(state.step, { kind: 'item', category: def.category, defId: it.defId })
         ? id : null;
     }
@@ -3582,7 +3562,7 @@ export default function DesignCanvas({
           if (!def) return null;
           const water = waterPresentation(waterInfrastructureForElement(item.defId));
           if (!water.visible) return null;
-          if (!anyLayerOn(activeLayers, [categoryLayerKey(def.category), ...((def.alsoLayers ?? []) as Array<keyof ActiveLayers>)])) return null;
+          if (!anyLayerOn(activeLayers, [categoryLayerKey(def.category), ...(def.alsoLayers ?? [])])) return null;
 
           const isResizingThis = item.id === dragResizeId.current && resizePreview;
           const wM = isResizingThis ? resizePreview!.wM : item.wM ?? def.wM;
@@ -3835,7 +3815,7 @@ export default function DesignCanvas({
               if (!def) return null;
               const water = waterPresentation(waterInfrastructureForElement(item.defId));
               if (!water.visible) return null;
-              if (!anyLayerOn(activeLayers, [categoryLayerKey(def.category), ...((def.alsoLayers ?? []) as Array<keyof ActiveLayers>)])) return null;
+              if (!anyLayerOn(activeLayers, [categoryLayerKey(def.category), ...(def.alsoLayers ?? [])])) return null;
               const [nx, ny] = effectiveItemPos(item);
               const isResizingThis = item.id === dragResizeId.current && resizePreview;
               const wM = isResizingThis ? resizePreview!.wM : item.wM ?? def.wM;

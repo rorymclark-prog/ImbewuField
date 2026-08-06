@@ -93,7 +93,7 @@ import {
   type AlignInputItem,
   type AlignItemsResult,
 } from '@/lib/align-items';
-import { ELEMENT_CATALOG, ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_DEFS, type ElementCategory } from '@/lib/design-elements';
+import { ELEMENT_CATALOG, ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_DEFS, type DesignLayerState, type ElementCategory } from '@/lib/design-elements';
 import { biomeKeyForName } from '@/lib/biome';
 import { loadSiteElements, type SiteElementType } from '@/lib/site-elements';
 import type { LineShape } from '@/lib/design-canvas';
@@ -784,7 +784,7 @@ function DesignStudioInner() {
   // Every element layer MUST default to true: the Pro catalog filter and the canvas both gate
   // on these, so a key defaulting to false (or missing) silently hides that category's elements
   // from the palette AND the map.
-  const [activeLayers, setActiveLayers] = useState({
+  const [activeLayers, setActiveLayers] = useState<DesignLayerState>({
     water: true,
     earthworks: true,
     zones: true,
