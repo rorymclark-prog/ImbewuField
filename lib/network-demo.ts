@@ -693,7 +693,12 @@ function buildRecord(seed: DemoSiteSeed, now: Date): DemoFarmerRecord {
       });
     }
 
-    const unaccountedKg = round(Math.max(0, harvestedKg - soldKg), 1);
+    // Demo rows follow the same honesty rule as the real ones: when a crop shows more sold than
+    // harvested, the kept figure is unknown rather than zero. It is generated data, so this should
+    // never fire — but a demo that models the clamp would teach the wrong shape to anyone reading
+    // it, and would drift from CropRow the moment the real rule changed again.
+    const soldExceedsHarvested = soldKg > harvestedKg;
+    const keptKg = soldExceedsHarvested ? null : round(harvestedKg - soldKg, 1);
     cropRows.push({
       cropKey,
       cropName,
@@ -701,9 +706,10 @@ function buildRecord(seed: DemoSiteSeed, now: Date): DemoFarmerRecord {
       intendedKg,
       harvestedKg,
       soldKg,
-      unaccountedKg,
-      yieldGap: harvestedKg < intendedKg * 0.8,
-      unaccountedGap: unaccountedKg > harvestedKg * 0.5,
+      keptKg,
+      yieldGap: soldExceedsHarvested ? false : harvestedKg < intendedKg * 0.8,
+      keptGap: keptKg !== null && keptKg > harvestedKg * 0.5,
+      soldExceedsHarvested,
     });
   });
 

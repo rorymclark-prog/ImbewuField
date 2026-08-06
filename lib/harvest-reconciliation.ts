@@ -291,11 +291,29 @@ export interface CropRow {
   intendedKg: number;
   harvestedKg: number;
   soldKg: number;
-  unaccountedKg: number;
+  /**
+   * Harvested minus sold — the food that stayed on the farm. **`null` means unknown**, and the
+   * screen must print nothing rather than a number when it is.
+   *
+   * "KEPT", NOT "EATEN". It covers home-eaten, given away, spoiled, fed to animals and seed
+   * saved. Calling the whole quantity "eaten" overstated home consumption by 122% against the
+   * sample books, and for a subsistence household that figure is not trivia — it is the part of
+   * the harvest that never became income, and it belongs in the record under a word that is true.
+   */
+  keptKg: number | null;
   /** Harvested meaningfully below what the plan expected this period. */
   yieldGap: boolean;
-  /** Harvested meaningfully more than was sold — home-eaten/given away/spoiled? */
-  unaccountedGap: boolean;
+  /** Meaningfully more was harvested than sold — worth asking where the rest went. */
+  keptGap: boolean;
+  /**
+   * More was sold this period than was logged as harvested, so `keptKg` is unknowable.
+   *
+   * Deliberately states the OBSERVATION and not a cause, because there are two and the app
+   * cannot tell them apart: picking that was never logged (money is memorable, picking is not),
+   * or sales of an earlier period's harvest. Only one of those is the farmer's omission, and a
+   * screen that assumes the wrong one blames her for the app's own blind spot.
+   */
+  soldExceedsHarvested: boolean;
 }
 
 export interface UnplannedRow {
@@ -377,12 +395,26 @@ export function buildReconciliation(
     const harvestedKg = safeKgTotal(harvestRows, (row) => row.kg);
     const soldKg = safeKgTotal(saleRows, (row) => row.kg);
 
+    // SELLING MORE THAN YOU LOGGED PICKING MEANS THE HARVEST FIGURE IS NOT THE HARVEST.
+    //
+    // This used to be `Math.max(harvestedKg - soldKg, 0)`, and the clamp failed in the direction
+    // that matters. Measured against the sample books with the harvest log at 30% — the common
+    // case, because money is memorable and picking is not — the app told a subsistence farmer she
+    // had kept 0.5 kg when the honest figure was 10.5 kg, AND fired four "the plan expected X, you
+    // only got Y" warnings blaming her for what was a logging artefact. It never once said "I do
+    // not know", which was the only true thing available to it.
+    //
+    // So the derived quantity goes to null, and the yield-gap flag is withheld too: a harvest
+    // total that is provably missing rows cannot be evidence that the plan was missed.
+    const soldExceedsHarvested = soldKg > harvestedKg;
+
     const row: CropRow = {
       cropKey, cropName: crop.name, icon: crop.icon,
       intendedKg, harvestedKg, soldKg,
-      unaccountedKg: Math.max(harvestedKg - soldKg, 0),
-      yieldGap: isMeaningfulGap(harvestedKg, intendedKg),
-      unaccountedGap: isMeaningfulGap(soldKg, harvestedKg),
+      keptKg: soldExceedsHarvested ? null : harvestedKg - soldKg,
+      yieldGap: soldExceedsHarvested ? false : isMeaningfulGap(harvestedKg, intendedKg),
+      keptGap: soldExceedsHarvested ? false : isMeaningfulGap(soldKg, harvestedKg),
+      soldExceedsHarvested,
     };
 
     if (harvestedKg > 0 || soldKg > 0) {

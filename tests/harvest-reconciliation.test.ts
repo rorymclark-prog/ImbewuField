@@ -77,19 +77,19 @@ function everyNumber(result: ReconciliationResult): number[] {
       row.intendedKg,
       row.harvestedKg,
       row.soldKg,
-      row.unaccountedKg,
+      ...(row.keptKg === null ? [] : [row.keptKg]),
     ]),
     ...result.notYetHarvested.flatMap((row) => [
       row.intendedKg,
       row.harvestedKg,
       row.soldKg,
-      row.unaccountedKg,
+      ...(row.keptKg === null ? [] : [row.keptKg]),
     ]),
     ...result.unmatchedPlanned.flatMap((row) => [
       row.intendedKg,
       row.harvestedKg,
       row.soldKg,
-      row.unaccountedKg,
+      ...(row.keptKg === null ? [] : [row.keptKg]),
     ]),
     ...result.unplannedActivity.flatMap((row) => [
       row.harvestedKg,
@@ -163,7 +163,7 @@ test('sales accounting does not overwrite or disguise the harvested shortfall', 
   assert.equal(result.matched[0].intendedKg, intended);
   assert.equal(result.matched[0].harvestedKg, harvested);
   assert.equal(result.matched[0].soldKg, sold);
-  assert.equal(result.matched[0].unaccountedKg, harvested - sold);
+  assert.equal(result.matched[0].keptKg, harvested - sold);
   assert.equal(result.matched[0].yieldGap, true);
 });
 
@@ -331,4 +331,93 @@ test('crop aliases match exactly, while ambiguous names are never guessed', () =
   const beanCandidates = matchCropCandidates('beans', index);
   assert.ok(beanCandidates.length > 1);
   assert.equal(matchCropKey('beans', index), null);
+});
+
+/* ── Selling more than you logged picking ────────────────────────────────────
+   The clamp these replace failed in the direction that mattered. Measured against
+   the sample books with the harvest log at 30% — the common case, because money is
+   memorable and picking is not — the app told a subsistence farmer she had kept
+   0.5 kg when the honest figure was 10.5 kg, and fired four "the plan expected X,
+   you only got Y" warnings blaming her for a logging artefact. */
+
+test('kept is unknown, not zero, when more was sold than logged as harvested', () => {
+  const result = buildReconciliation(
+    [planting('lettuce-a', 'lettuce', 'bed-a')],
+    BEDS,
+    [production('harvest', 'Lettuce', 9)],
+    [sale('sale', 'Lettuce', 37.5)],
+    'year',
+    NOW,
+  );
+
+  assert.equal(result.matched.length, 1);
+  const row = result.matched[0];
+  assert.equal(row.soldExceedsHarvested, true);
+  assert.equal(row.keptKg, null, 'a clamp would report 0 kg kept here, which is a confident lie');
+  assert.equal(row.keptGap, false, 'no kept figure means nothing to explain');
+});
+
+test('a provably incomplete harvest log cannot also be evidence the plan was missed', () => {
+  // Same rows as above. The old code raised a yield gap because harvestedKg (9) sits far below
+  // intendedKg — true arithmetic, false accusation: the harvest total is missing rows and the
+  // farmer is told she under-produced.
+  const result = buildReconciliation(
+    [planting('lettuce-a', 'lettuce', 'bed-a')],
+    BEDS,
+    [production('harvest', 'Lettuce', 9)],
+    [sale('sale', 'Lettuce', 37.5)],
+    'year',
+    NOW,
+  );
+
+  const row = result.matched[0];
+  assert.ok(row.intendedKg > row.harvestedKg, 'the arithmetic gap is real');
+  assert.equal(row.yieldGap, false, 'but it is withheld while the harvest log is provably short');
+});
+
+test('nothing logged as harvested, sales complete: still unknown, never zero', () => {
+  const result = buildReconciliation(
+    [planting('lettuce-a', 'lettuce', 'bed-a')],
+    BEDS,
+    [],
+    [sale('sale', 'Lettuce', 37.5)],
+    'year',
+    NOW,
+  );
+
+  const row = result.matched[0];
+  assert.equal(row.harvestedKg, 0);
+  assert.equal(row.soldExceedsHarvested, true);
+  assert.equal(row.keptKg, null);
+  assert.equal(row.yieldGap, false);
+});
+
+test('both books complete: kept is a real number and the flag stays down', () => {
+  const result = buildReconciliation(
+    [planting('lettuce-a', 'lettuce', 'bed-a')],
+    BEDS,
+    [production('harvest', 'Lettuce', 48)],
+    [sale('sale', 'Lettuce', 37.5)],
+    'year',
+    NOW,
+  );
+
+  const row = result.matched[0];
+  assert.equal(row.soldExceedsHarvested, false);
+  assert.equal(row.keptKg, 10.5, 'harvested minus sold, stated plainly');
+});
+
+test('selling exactly what you harvested is complete books, not an unknown', () => {
+  const result = buildReconciliation(
+    [planting('lettuce-a', 'lettuce', 'bed-a')],
+    BEDS,
+    [production('harvest', 'Lettuce', 20)],
+    [sale('sale', 'Lettuce', 20)],
+    'year',
+    NOW,
+  );
+
+  const row = result.matched[0];
+  assert.equal(row.soldExceedsHarvested, false, 'equal is not "more sold than harvested"');
+  assert.equal(row.keptKg, 0, 'kept really is zero here, and saying so is correct');
 });

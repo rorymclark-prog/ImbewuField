@@ -206,14 +206,14 @@ test('plan delivery comes from the reconciliation, and is null without a plan', 
   const reconciliation: ReconciliationResult = {
     matched: [{
       cropKey: 'maize', cropName: 'Maize (mielies)', icon: '🌽',
-      intendedKg: 200, harvestedKg: 120, soldKg: 90, unaccountedKg: 30,
-      yieldGap: true, unaccountedGap: false,
+      intendedKg: 200, harvestedKg: 120, soldKg: 90, keptKg: 30,
+      yieldGap: true, keptGap: false, soldExceedsHarvested: false,
     }],
     notYetHarvested: [],
     unmatchedPlanned: [{
       cropKey: 'cabbage', cropName: 'Cabbage', icon: '🥬',
-      intendedKg: 100, harvestedKg: 0, soldKg: 0, unaccountedKg: 0,
-      yieldGap: true, unaccountedGap: false,
+      intendedKg: 100, harvestedKg: 0, soldKg: 0, keptKg: 0,
+      yieldGap: true, keptGap: false, soldExceedsHarvested: false,
     }],
     unplannedActivity: [],
   };
