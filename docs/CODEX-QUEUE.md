@@ -8,10 +8,30 @@ it: it carries a retired `PLAN_VERSION` instruction that now causes harm. See th
 
 ---
 
-## ⚠ OPERATING MODE FROM 2026-08-05: CLAUDE IS OFFLINE UNTIL SATURDAY
+## ⚠ OPERATING MODE — UPDATED 2026-08-06 17:00. START AT QD1.
 
-Rory is out of Claude usage until **Saturday 8 August 2026**. Every previous version of this file
-said *"Claude reviews and merges behind you"*. **That is now false and you must not wait for it.**
+**Rory is away from the computer and Claude is not watching your run.** You own the whole loop:
+build it, push it, read BOTH CI jobs, merge it yourself, log it on issue #35, take the next item.
+
+**Start with QD1, then QD2, then QD3** (Priority 1c, below the Priority 2 block). Those three are
+the Vision 2 design work Rory asked for today and they are written against code that was verified
+this afternoon — file paths and line numbers in them are current as of `origin/main`.
+
+**Nine items were closed today and are marked ✅ DONE. Do not reopen them.** Two of those had wrong
+premises — Q3(a) was already fixed by #40, and Q10's "hardcoded seller details" had read the
+signed-in profile since the file's first commit. **Before starting ANY item, check its premise
+against the real code.** Finding an item already done is a useful result and `AGENTS.md` says so;
+rebuilding something that works is not.
+
+Also true as of today, and worth knowing before you touch anything:
+
+- **The Firestore and Storage rules were deployed for the first time on 6 August**, after 19 days
+  stale. Three live holes closed. The rules in the repo are now what production runs — so a rules
+  change you merge is still INERT until Rory deploys, and that matters more than it did.
+- **The Anthropic API account is out of credit.** Fifteen routes are down, including `/api/chat`
+  (Ask Lima) and `/api/generate-report`. If you are testing anything AI-backed and it fails, that is
+  why — it is not a bug you introduced and not one to chase. Gemini-backed paths (sheet renders,
+  image producer, the Functions worker) are on separate billing and still work.
 
 **You own the whole loop until Saturday.** For each item:
 
@@ -147,7 +167,10 @@ before starting.
 
 Ordered by how badly the app misleads. Do these first.
 
-### Q1. `/finances` shows harvest data it gives you no way to enter — `codex/finances-harvest-entry`
+### ✅ DONE #36 — Q1. `/finances` shows harvest data it gives you no way to enter — `codex/finances-harvest-entry`
+
+> **Closed 2026-08-06.** shipped, then repaired by Q0
+
 
 `app/finances/page.tsx:112` displays "Kg harvested" and mounts the whole harvest-reconciliation
 panel (lines ~1066, ~1096). The page contains **no form and no link** that can create a
@@ -162,7 +185,10 @@ route to it at all.
 Fix the reachability, not the display. A farmer looking at "0 kg harvested" must be one tap from
 logging a harvest.
 
-### Q2. The sales list on that same screen is permanently empty — `codex/myrecords-sales-dead`
+### ✅ DONE #37 — Q2. The sales list on that same screen is permanently empty — `codex/myrecords-sales-dead`
+
+> **Closed 2026-08-06.** sales list now loads
+
 
 `components/MyRecords.tsx:624` declares `const [sales, setSales] = useState<SalesLog[]>([])`.
 `setSales` is called **once**, at line 670, with `[]`. `mySales()` is exported at
@@ -170,7 +196,10 @@ logging a harvest.
 that does not exist. The "Sales summary" card (line 781) and "Recent sales" list (line 819) stay
 empty **even immediately after the farmer logs a sale on that screen**.
 
-### Q3. Home consumption overstated 122%, and "eaten" clamped to zero — `codex/reconciliation-truth`
+### ✅ DONE #44 — Q3. Home consumption overstated 122%, and "eaten" clamped to zero — `codex/reconciliation-truth`
+
+> **Closed 2026-08-06.** (a) was ALREADY FIXED by #40 — invoice kg reach reconciliation via lib/invoice-sales.ts. (b) fixed: keptKg is number|null, yield-gap withheld when the harvest log is provably short
+
 
 Two defects in one section. Both measured on the app's own sample farm.
 
@@ -206,23 +235,35 @@ the leakage is real and the honest word covers it.
 Month 1 tells the farmer to harvest crops it never sowed. The most directly actionable falsehood the
 app prints.
 
-### Q5. "Climate: Not set" is a separator bug — `codex/pdf-separator` (task #80)
+### ✅ DONE #45 — Q5. "Climate: Not set" is a separator bug — `codex/pdf-separator` (task #80)
+
+> **Closed 2026-08-06.** U+00B7 MIDDLE DOT joined, ASCII hyphen split — all 7 regions printed "Not set". locationLine/climateLine are now their own fields
+
 
 The PDF splits on `-` while the app joins with `·`. Small, contained, and it makes the export look
 broken to exactly the audience the export exists for.
 
-### Q6. Chart and prose compute monthly kg two different ways — `codex/monthly-kg-one-authority`
+### ✅ DONE #47 — Q6. Chart and prose compute monthly kg two different ways — `codex/monthly-kg-one-authority`
+
+> **Closed 2026-08-06.** #64 was already fixed 4 Aug. The remaining half was two SCOPES, both deliberate, undisclosed — the prose now names what it omits. Its guard could not fail and now can
+
 
 Tasks #64 and #68. Two authorities for one question — the recurring bug `AGENTS.md` §6 names. #68 is
 the same fault surfacing again when a crop is already growing or loss is above zero. Fix as one
 item: one function, both callers.
 
-### Q7. Workload chart counts phantom mulch jobs — `codex/workload-phantom-jobs` (task #81)
+### ✅ DONE #46 — Q7. Workload chart counts phantom mulch jobs — `codex/workload-phantom-jobs` (task #81)
+
+> **Closed 2026-08-06.** mulch counted as a second visit; up to +50% on sowing months. FOLDED_ACTIONS is now read by both the chart and the field sheet
+
 
 And page 1 draws **uncaveated staffing conclusions** from that chart. A staffing number a funder
 reads is a number someone hires against.
 
-### Q22. `--border` is defined twice at equal specificity and the wrong one wins — `codex/border-token-collision`
+### ✅ DONE #43 — Q22. `--border` is defined twice at equal specificity and the wrong one wins — `codex/border-token-collision`
+
+> **Closed 2026-08-06.** two :root blocks disagreed; /home drew 51 hairlines in one colour and 41 in another. Fixed and verified live in production
+
 
 Measured on `b99560c`. `app/globals.css` declares `--border` in **two separate `:root` blocks**:
 
@@ -255,7 +296,10 @@ declared twice at the same specificity — that is the check that must be able t
 
 ## Priority 1b — asked for directly by Rory, 6 August
 
-### QR1. Invoice: preloaded product and customer pickers with price guidance — `codex/invoice-pickers`
+### ✅ DONE 3390441 — QR1. Invoice: preloaded product and customer pickers with price guidance — `codex/invoice-pickers`
+
+> **Closed 2026-08-06.** invoice pickers
+
 
 Rory, looking at a blank invoice line: *"i want to add a whole lot of premade option with price
 sugestion for products products must be a drop down menu as well preloaded as well as customers,
@@ -346,7 +390,10 @@ Three contradictions an attentive funder will catch, found by the adversarial re
 
 One coherent timeline. The demo data is a claim about a real farm; it should survive close reading.
 
-### Q10. The invoice page is hardcoded to the wrong farm — `codex/invoice-hardcoded`
+### ✅ DONE #48 — Q10. The invoice page is hardcoded to the wrong farm — `codex/invoice-hardcoded`
+
+> **Closed 2026-08-06.** seller name/phone were NEVER hardcoded — half the premise was wrong. 'Tugela Valley smallholding' was, on both render paths; now Profile.farm_name
+
 
 `app/invoice/page.tsx` says **"Tugela Valley smallholding"** at lines 144 and 257 regardless of whose
 invoice it is, and its footer carries the **retired domain** `fieldproof.vercel.app` at lines 172 and
@@ -375,9 +422,172 @@ Three presentation bugs belong in the same item:
 - `lib/harvest-reconciliation.ts:94` treats "this year" as the **calendar** year, so in January it
   shows almost nothing. Trailing 12 months is what the farmer means.
 
-### Q12. "Tap to add photos" is a dead button — `codex/add-photos-dead` (task #44)
+### Q12. "Tap to add photos" is a dead button — ~~`codex/add-photos-dead`~~ (task #44)
 
-In the Add-site-photos modal. Small, and photographs are what a funder puts in their board pack.
+**ALREADY FIXED — DO NOT START THIS.** Verified 2026-08-06 against `origin/main`. The control is
+wired: `components/DataPanel.tsx:1850` is `onClick={() => promptInputRef.current?.click()}` and the
+ref is attached to a real input eleven lines above at `:1839-1846`. The two silences that made it
+*read* dead were closed on 4 August (`04bf23d`), before this queue was written. Two narrow residuals
+remain and are NOT this item: non-`image/*` files are filtered out at `DataPanel.tsx:553` *before*
+the skip count is computed at `:556`, so a HEIC that fails conversion vanishes with no amber note;
+and the input's `value` is never cleared, so re-picking the same file fires no change event.
+
+---
+
+## Priority 1c — the Vision 2 design direction, starting with Design Studio
+
+Rory, 2026-08-06, on the Water-step mockup: *"i want to impliment most of the design style ui and
+want to start with this... i like this very much look at thos elements at the bottom we need a rain
+barrel and water trough and i like the graphics on these very much"*
+
+### QD1. Design Studio: element tray artwork and the desktop layout — `codex/studio-vision2-shell`
+
+**READ THIS BEFORE TOUCHING ANYTHING. THE TWO ELEMENTS HE ASKED FOR ALREADY EXIST.** Verified on
+`origin/main`:
+
+| | |
+|---|---|
+| `lib/design-elements.ts:256` | `id: 'rain_barrel'`, `category: 'water'`, `0.6 × 0.6 m`, `icon: '🪣'` |
+| `lib/design-elements.ts:317` | `id: 'water_trough'`, `category: 'water'`, `0.6 × 2 m`, `icon: '🥛'` |
+
+The mockup captions read `Ø 0.6 m` and `0.6×2 m`. **Those are this catalog's own numbers** — the
+mockup was drawn from the app, so there is nothing to add and nothing to size. Adding a second
+`rain_barrel` would split every existing farmer's saved geometry across two ids. **Do not add,
+rename or re-dimension either one.**
+
+What he is actually asking for is the **presentation**, and there are three separable pieces.
+
+**(a) Element tiles can show artwork instead of an emoji.** Today every tile is
+`<span style={{ fontSize: 20 }}>{def?.icon}</span>` — `app/design/page.tsx:3704` — and the repo
+contains **no element artwork at all** (no `public/elements`, `public/icons` or `public/symbols`).
+The pictures in the mockup do not exist anywhere and you cannot generate them.
+
+So build the *seam*, not the art: add an optional `art?: string` to `ElementDef`
+(`lib/design-elements.ts:18`) holding a path under `public/elements/`, and render it when present
+with the existing emoji as the fallback. Ship with `art` unset on every element — the tray must look
+exactly as it does today until artwork is committed, so this change is provably zero-risk. Artwork
+arrives separately, per element, and each addition is then a one-line data change.
+**Do not invent placeholder art. Do not restyle the emoji into fake artwork.**
+
+Add the dimension caption under each tile from the def's own `wM`/`hM` — that IS in the mockup, it
+is measured data the catalog already holds, and it is the one part of the tile you can complete now.
+Circles read `Ø {wM} m`, rectangles `{wM}×{hM} m`.
+
+**(b) The tablet/desktop layout.** The design review's top finding for this screen, and the one
+that changes someone's day: a facilitator works on an iPad and currently gets the phone layout. The
+mockup's three panes — tool rail left, canvas centre, layers/quick-actions right — are the target.
+`app/design/page.tsx` is 3,959 lines; **add a breakpoint branch, do not restructure the file.**
+
+**(c) The layer panel: nested sub-layers and per-layer opacity.** The mockup nests JoJo Tanks / Tap
+Points / Pipes & Lines / Drip Irrigation / Swales under *Water infrastructure*, each with its own
+eye toggle and percentage. Check what `lib/design-studio.ts` already models before designing a new
+shape — several things in this app are built and merely unwired.
+
+**BEWARE THE LAYER-FOCUS BUG CLASS.** A step that creates a shape on a layer it has switched off
+saves the shape and shows nothing, and the farmer believes the work was lost. Any per-layer
+visibility work must be checked by drawing something on each layer and confirming it appears.
+
+**Guardrails specific to this item:**
+- **Never mutate saved geometry.** Presentation is paint-time only; the farmer's measurements are
+  the product. This item touches no coordinate.
+- **Leave `PLAN_VERSION` exactly as you found it** (`components/design/DesignGlossy.tsx:10419`).
+  If a tray or layer change alters what a rendered sheet looks like, say so in the ledger.
+- **[NO PAID RENDER].** Nothing here needs a Gemini call.
+- **Do not apply any colour from the design pack.** Its palette shares exactly ONE hex with this
+  app — `#ffffff` — out of 852 distinct values in 5,166 uses. It is a new identity, not a token map,
+  and adopting it is Rory's decision and not part of this item. Typography, spacing, radii, shadow
+  and the 44/48 px touch targets from `Design_System/design-tokens.css` ARE safe and welcome.
+
+**Verify by looking.** `npm test` cannot see a squashed tray, a tile with no caption, or a layer
+toggle that hides the wrong thing. Open the preview URL your push creates, place a rain barrel and a
+water trough on the Water step, toggle every layer, and say in the ledger what you actually saw.
+
+### QD2. The baseline survey — the unlock for everything food-security — `codex/baseline-survey`
+
+**DO THIS BEFORE ANY FOOD-SECURITY DASHBOARD.** Every panel in Rory's two mockups reads from data
+this survey does not yet collect, and building the dashboard first would force you to invent it.
+
+**The insight that makes this buildable.** The app has yield data for **25 crops**
+(`lib/crop-catalog.ts`). It has **none** for fruit, nuts, berries, eggs, chicken, rabbits or honey —
+`lib/species-catalog.ts` carries 197 species with height, water need and biome but **no yield and no
+bearing age**, and beehive / chicken_coop / rabbit_hutch exist only as drawable objects in
+`lib/design-elements.ts`. So the app cannot compute those categories. **But it does not have to.**
+The mockup's own "CURRENT PRODUCTION SURVEY — Item / Qty per Year / Used by Family / Sold / Income"
+is the farmer *reporting* her production. A reported figure is not an invented one. The survey is
+the data source; the dashboard renders what she said.
+
+**What exists today.** `lib/site-survey.ts` records PRESENCE and never QUANTITY:
+`existingCrops: string[]` (:40) and `livestock: string[]` (:43) say *which* — never how many, never
+what it earned. `isCommercial` (:49) is a boolean. So the app knows she has chickens and cannot say
+whether that is two or two hundred, which is why no impact claim can be made from it.
+
+**Extend `SiteSurvey` with, per production category:** quantity per year and its unit, how much the
+household used, how much was sold, and what it earned. Cover the nine categories in the mockups —
+leafy greens, other vegetables, staple crops, fruit, nuts and berries, eggs, poultry, rabbits,
+honey — plus a free row for anything else. Everything OPTIONAL: a farmer who does not know her egg
+count must be able to finish the survey, and a blank must stay blank rather than become a zero.
+Follow the file's existing shape (`loadSurvey`/`saveSurvey`, `updatedAt` newest-wins) — do not add a
+parallel store.
+
+Structure it as the mockup's seven sections: Household Info · Land & Location · Current Production ·
+Livestock & Poultry · Income & Sales · Resources & Inputs · Challenges. Four already exist in some
+form; reuse those screens rather than duplicating them.
+
+**THE TWO SCORES IN THE MOCKUPS MUST NOT BE BUILT.** "Food Diversity Score 82/100" and
+"Nutritional Diversity Score 8.6/10" have no defined inputs, no weighting, no scale and no source.
+Inventing a 0–100 scale for a household's nutrition is exactly the harm `AGENTS.md` §4 forbids, and
+a funder would quote it.
+
+**Build these instead, and cite them:**
+
+- **Food groups covered, out of 12** — the mockup's own "11/12" is already the right shape. Twelve
+  food groups is the FAO **Household Dietary Diversity Score**. Use that group list, name it on
+  screen, and count it from what she reported. Published instrument, explicable in one sentence,
+  and more use to a farmer than "82/100".
+- **Self-sufficiency** — only if the survey asks BOTH halves: what the household ate, and how much
+  of it she grew. Do not model the denominator from household size. If either half is missing, the
+  figure is unknown and the screen says so.
+- **Months with food** and **months with a gap** — countable today from `buildFoodAvailability`
+  (`lib/crop-plan.ts:712`) for the catalogued crops, and from reported harvest months for the rest.
+
+**Every figure carries where it came from**, the way the site report's "Where it comes from" column
+already does: `reported by the farmer`, `measured from the map`, `from the crop catalog`. A funder
+reading a household number must be able to see which of the three it is.
+
+**Verify by filling it in.** Complete the survey as a farmer on the preview URL, then read the
+figures back and check each against what you typed. A survey that loses an answer is worse than no
+survey, because the farmer believes it was recorded.
+
+---
+
+### QD3. The design foundation — take the spec, hold the palette — `codex/vision2-foundation`
+
+The pack lives at `ImbewuField_Vision_2_Complete_Design_Pack/Design_System/`. Rory has the zip;
+ask him for the files rather than guessing at values.
+
+**TAKE, in this order — all additive, none of it changes a colour:**
+
+1. **Touch targets.** `--target-min: 44px`, `--target-field: 48px`. This is a field app used outdoors
+   with wet or gloved hands and it matters more than anything else in the pack. Audit against the
+   real controls; report what is currently below 44 px rather than silently resizing layouts.
+2. **The spacing scale** (4/8/12/16/20/24/32/40/48/64/80/96) and **radius scale** (4/8/12/16/24/999)
+   as tokens. The app has neither; every value today is a literal.
+3. **The shadow ramp** (four levels) and the **`prefers-reduced-motion`** block, which is drop-in.
+4. **Typography.** The spec names Newsreader + Public Sans — **exactly what `app/layout.tsx` already
+   loads**, so this is a scale-and-weight change, not a font change. Do not add a webfont.
+
+**DO NOT TAKE THE PALETTE.** Measured on `origin/main`: the pack proposes 22 colours; this app uses
+**852 distinct colours across 5,166 uses**; the overlap is **ONE — `#ffffff`**. Of the twenty most-used
+colours, covering 67% of all uses, exactly one appears in the pack. It is a new visual identity, not
+a token map, and there is no row anywhere in ~100 pack files mapping an existing hex to a token.
+
+It also contradicts this repo in writing: `app/globals.css` says of the page background *"warm paper,
+**never #fff**"*, and the pack proposes `--color-surface: #FFFFFF`. Adopting it moves the whole app
+from warm to cool. **That is Rory's decision and it is not part of this item. Do not run a
+`hex → var()` codemod. Do not "harmonise" colours as you go.**
+
+Note the naming differs too — `--color-border` vs this app's `--border`, `--color-ink` vs `--text` —
+so it is not even a drop-in rename.
 
 ---
 
