@@ -98,7 +98,11 @@ import { suggestZones } from '@/lib/design-suggest';
 import { resolveBaseLayers, type MapRefLayers } from '@/lib/base-layers';
 import { fetchBasemapForFrame } from '@/lib/basemap-imagery';
 import DesignCanvas, { type TracedLayer } from '@/components/design/DesignCanvas';
-import DesignPalette, { type DesignMode } from '@/components/design/DesignPalette';
+import DesignPalette, {
+  type DesignMode,
+  type WaterInfrastructureOpacity,
+  type WaterInfrastructureVisibility,
+} from '@/components/design/DesignPalette';
 import DesignWizard, { STEP_ORDER, STEP_LABELS } from '@/components/design/DesignWizard';
 import { STUDIO_AREA_FOR, type AddActionId } from '@/lib/add-actions';
 import type { GlossyLayerFilter } from '@/components/design/DesignGlossy';
@@ -124,6 +128,37 @@ const BASE_ROTATE_STEP = 0.5;
 // One size step, as a multiplier. Compounding rather than adding keeps a tap the same PERCEIVED
 // change whether the photo is currently large or small.
 const BASE_SCALE_STEP = 1.01;
+
+// These are view controls, not plan data. A facilitator can fade a busy water system while
+// explaining it without moving, changing, or hiding the farmer's saved geometry on return.
+const DEFAULT_WATER_INFRASTRUCTURE_VISIBILITY: WaterInfrastructureVisibility = {
+  storage: true,
+  tapPoints: true,
+  pipes: true,
+  drip: true,
+  swales: true,
+};
+const DEFAULT_WATER_INFRASTRUCTURE_OPACITY: WaterInfrastructureOpacity = {
+  storage: 1,
+  tapPoints: 1,
+  pipes: 1,
+  drip: 1,
+  swales: 1,
+};
+
+function waterInfrastructureForElement(defId: string | null): keyof WaterInfrastructureVisibility | null {
+  if (!defId) return null;
+  if (defId === 'tap_point') return 'tapPoints';
+  if (defId === 'rain_barrel' || defId.startsWith('jojo_')) return 'storage';
+  return null;
+}
+
+function waterInfrastructureForLine(kind: LineShape['kind']): keyof WaterInfrastructureVisibility | null {
+  if (kind === 'pipe' || kind === 'greywater') return 'pipes';
+  if (kind === 'drip') return 'drip';
+  if (kind === 'swale') return 'swales';
+  return null;
+}
 
 // PRESS AND HOLD on any of these controls to keep adjusting, accelerating as you go (Rory: "when
 // i hold down with the mouse on these arrows it must go without having to click repeatedly for
@@ -762,6 +797,25 @@ function DesignStudioInner() {
     contours: false, // opt-in overlay (approximate, from slope + aspect)
     sector: false, // opt-in overlay (deterministic sun/wind/fire/water/frost energies, from lib/sector)
   });
+  const [waterInfrastructureVisibility, setWaterInfrastructureVisibility] = useState<WaterInfrastructureVisibility>(
+    DEFAULT_WATER_INFRASTRUCTURE_VISIBILITY,
+  );
+  const [waterInfrastructureOpacity, setWaterInfrastructureOpacity] = useState<WaterInfrastructureOpacity>(
+    DEFAULT_WATER_INFRASTRUCTURE_OPACITY,
+  );
+  useEffect(() => {
+    const key = waterInfrastructureForElement(placeDefId);
+    if (!key) return;
+    setActiveLayers((layers) => (layers.water ? layers : { ...layers, water: true }));
+    setWaterInfrastructureVisibility((layers) => (layers[key] ? layers : { ...layers, [key]: true }));
+  }, [placeDefId]);
+  useEffect(() => {
+    if (tool !== 'line') return;
+    const key = waterInfrastructureForLine(lineKind);
+    if (!key) return;
+    setActiveLayers((layers) => (layers.water ? layers : { ...layers, water: true }));
+    setWaterInfrastructureVisibility((layers) => (layers[key] ? layers : { ...layers, [key]: true }));
+  }, [lineKind, tool]);
   // Icon + label size, as a multiplier. Presentation only: it changes how large symbols are
   // DRAWN and never touches a stored coordinate, so sliding it cannot move anyone's design.
   const [mapTextScale, setMapTextScale] = useState(1);
@@ -1986,6 +2040,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
         // more than once, and a farmer who presses a button and sees nothing concludes it is
         // broken rather than hidden.
         setActiveLayers((prev) => (prev.water ? prev : { ...prev, water: true }));
+        setWaterInfrastructureVisibility((prev) => (prev.drip ? prev : { ...prev, drip: true }));
         handleChange((prev) => ({
           ...prev,
           // ONE commit for every bed, so twenty laterals cost one undo rather than twenty.
@@ -2504,6 +2559,10 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
     // satellite + existing site to place against. Fires once per explicit step tap (not on
     // re-render or remote sync), so a manual toggle mid-step is never stomped until the next tap.
     setActiveLayers((a) => ({ ...a, ...applyStepFocus(step) }));
+    // Water's detailed switches are for explaining an already-dense drawing, never a way to
+    // strand the next thing a farmer places. Returning to the Water step restores every
+    // sublayer before its placement tools are offered.
+    if (step === 'water') setWaterInfrastructureVisibility(DEFAULT_WATER_INFRASTRUCTURE_VISIBILITY);
     setCanvasState((prev) => {
       if (!prev) return prev;
       // NAVIGATION IS NOT AN EDIT. This used to go through persistCanvasState, which restamps
@@ -2827,16 +2886,18 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
 
       {/* Wizard (top) */}
       {canvasState && (
-        <DesignWizard
-          step={canvasState.step}
-          setStep={setStep}
-          state={canvasState}
-          refLayersPresent={{
-            boundary: refLayers.boundary.length > 2,
-            house: refLayers.house.length > 2,
-          }}
-          mode={designMode}
-        />
+        <div style={isPhone ? undefined : { position: 'fixed', top: 76, left: 12, width: 208, maxHeight: 'calc(100dvh - 88px)', overflowY: 'auto', zIndex: 15 }}>
+          <DesignWizard
+            step={canvasState.step}
+            setStep={setStep}
+            state={canvasState}
+            refLayersPresent={{
+              boundary: refLayers.boundary.length > 2,
+              house: refLayers.house.length > 2,
+            }}
+            mode={designMode}
+          />
+        </div>
       )}
       {detectError && (
         <div
@@ -2932,7 +2993,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
       {/* Canvas (middle). minHeight floor (not 0) so the map can never be squeezed to a sliver
           on a phone by the tool chrome below it — it always keeps ~45% of the screen.
           canvasWrapRef feeds the phone-only auto-collapse-top-chrome-on-drag effect above. */}
-      <div ref={canvasWrapRef} style={{ flex: 1, position: 'relative', minHeight: '45dvh' }}>
+      <div ref={canvasWrapRef} style={{ flex: 1, position: 'relative', minHeight: '45dvh', marginLeft: isPhone ? 0 : 232, marginRight: isPhone ? 0 : 328 }}>
         {canvasState && frame && canvasState.step === 'glossy' ? (
           <DesignGlossyLazy
             state={canvasState}
@@ -2956,6 +3017,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               areaFeature={areaFeature}
               lineKind={lineKind}
               activeLayers={activeLayers}
+              waterInfrastructure={{ visibility: waterInfrastructureVisibility, opacity: waterInfrastructureOpacity }}
               mapTextScale={mapTextScale}
               areaFill={areaFill}
               baseAlign={canvasState?.useCustomBase ? (canvasState.customBase ?? null) : null}
@@ -3539,6 +3601,13 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           lineKind={lineKind}
           setLineKind={setLineKind}
           activeLayers={activeLayers}
+          waterInfrastructure={{
+            visibility: waterInfrastructureVisibility,
+            opacity: waterInfrastructureOpacity,
+            onVisibilityChange: setWaterInfrastructureVisibility,
+            onOpacityChange: setWaterInfrastructureOpacity,
+          }}
+          desktopAside={!isPhone}
           textScaleControl={{ value: mapTextScale, onChange: setMapTextScale }}
           selectedIdentity={selectedIdentity}
           areaFillControl={{ value: areaFill, onChange: changeAreaFill }}

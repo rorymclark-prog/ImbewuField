@@ -109,6 +109,25 @@ interface ActiveLayers {
   sector: boolean; // sun/wind/fire/water/frost energies overlay (from lib/sector, deterministic)
 }
 
+type WaterInfrastructureLayer = 'storage' | 'tapPoints' | 'pipes' | 'drip' | 'swales';
+type WaterInfrastructurePresentation = {
+  visibility: Record<WaterInfrastructureLayer, boolean>;
+  opacity: Record<WaterInfrastructureLayer, number>;
+};
+
+function waterInfrastructureForElement(defId: string): WaterInfrastructureLayer | null {
+  if (defId === 'tap_point') return 'tapPoints';
+  if (defId === 'rain_barrel' || defId.startsWith('jojo_')) return 'storage';
+  return null;
+}
+
+function waterInfrastructureForLine(kind: LineShape['kind']): WaterInfrastructureLayer | null {
+  if (kind === 'pipe' || kind === 'greywater') return 'pipes';
+  if (kind === 'drip') return 'drip';
+  if (kind === 'swale') return 'swales';
+  return null;
+}
+
 interface RefLayers {
   boundary: Array<[number, number]>;
   house: Array<[number, number]>;
@@ -128,6 +147,9 @@ export interface DesignCanvasProps {
   areaFeature?: GroundFeatureKind | null;
   lineKind: LineShape['kind'];
   activeLayers: ActiveLayers;
+  /** Visibility and opacity for Water's named sublayers. Paint-time only: no saved geometry
+   * or plan state is altered by a facilitator fading a route to explain it. */
+  waterInfrastructure?: WaterInfrastructurePresentation;
   /** Icon/label size multiplier from the Layers panel's Size slider. Clamped on read. */
   mapTextScale?: number;
   /** How traced surfaces are filled — hatch or flat tint, and how strongly. Paint only, never
@@ -599,6 +621,7 @@ export default function DesignCanvas({
   areaFeature,
   lineKind,
   activeLayers,
+  waterInfrastructure,
   mapTextScale: mapTextScaleRaw = 1,
   areaFill: areaFillRaw,
   baseAlign = null,
@@ -640,6 +663,13 @@ export default function DesignCanvas({
   // Clamped on READ, never trusted from storage: a corrupt value should paint the photo slightly
   // wrong, not reject the farmer's whole design on load.
   const baseOpacity = clampBaseOpacity(baseAlign?.opacity);
+  const waterPresentation = (key: WaterInfrastructureLayer | null) => {
+    if (!key || !waterInfrastructure) return { visible: true, opacity: 1 };
+    return {
+      visible: waterInfrastructure.visibility[key],
+      opacity: waterInfrastructure.opacity[key],
+    };
+  };
 
   // Which traced layer is currently tapped (shows its "Use in design" affordance).
   const [activeTracedId, setActiveTracedId] = useState<string | null>(null);
@@ -2220,14 +2250,16 @@ export default function DesignCanvas({
     }
     const l = state.lines.find((s2) => s2.id === id);
     if (l) {
-      return anyLayerOn(activeLayers, [LINE_LAYER[l.kind], ...(LINE_ALSO_LAYERS[l.kind] ?? [])])
+      return waterPresentation(waterInfrastructureForLine(l.kind)).visible
+        && anyLayerOn(activeLayers, [LINE_LAYER[l.kind], ...(LINE_ALSO_LAYERS[l.kind] ?? [])])
         && ownedByCurrentStep(state.step, { kind: 'line', lineKind: l.kind }) ? id : null;
     }
     const it = state.items.find((s2) => s2.id === id);
     if (it) {
       const def = ELEMENTS_BY_ID[it.defId];
       if (!def) return null;
-      return anyLayerOn(activeLayers, [categoryLayerKey(def.category), ...((def.alsoLayers ?? []) as Array<keyof ActiveLayers>)])
+      return waterPresentation(waterInfrastructureForElement(it.defId)).visible
+        && anyLayerOn(activeLayers, [categoryLayerKey(def.category), ...((def.alsoLayers ?? []) as Array<keyof ActiveLayers>)])
         && ownedByCurrentStep(state.step, { kind: 'item', category: def.category, defId: it.defId })
         ? id : null;
     }
@@ -2983,6 +3015,8 @@ export default function DesignCanvas({
         {[...state.lines]
           .sort((a, b) => (a.id === selectedId ? 1 : 0) - (b.id === selectedId ? 1 : 0))
           .map((line) => {
+            const water = waterPresentation(waterInfrastructureForLine(line.kind));
+            if (!water.visible) return null;
             if (!anyLayerOn(activeLayers, [LINE_LAYER[line.kind], ...(LINE_ALSO_LAYERS[line.kind] ?? [])])) return null;
             const style = lineStroke(line.kind, earthworksOnly, line.widthM, mPerPx > 0 ? 1 / mPerPx : undefined);
             // See the zones loop above — same step-ownership lock (Rory's boundary-grab bug).
@@ -3003,7 +3037,7 @@ export default function DesignCanvas({
               : line.points;
             const mid = effectivePoints[Math.floor(effectivePoints.length / 2)] ?? effectivePoints[0];
             return (
-              <g key={line.id} opacity={owned ? 1 : LOCKED_OPACITY}>
+              <g key={line.id} opacity={(owned ? 1 : LOCKED_OPACITY) * water.opacity}>
                 {/* Invisible fat hit-stroke — thin visible lines are hard to tap precisely,
                     so a wide transparent duplicate underneath catches the pointer instead. */}
                 <polyline
@@ -3512,6 +3546,8 @@ export default function DesignCanvas({
           .map((item) => {
           const def = ELEMENTS_BY_ID[item.defId];
           if (!def) return null;
+          const water = waterPresentation(waterInfrastructureForElement(item.defId));
+          if (!water.visible) return null;
           if (!anyLayerOn(activeLayers, [categoryLayerKey(def.category), ...((def.alsoLayers ?? []) as Array<keyof ActiveLayers>)])) return null;
 
           const isResizingThis = item.id === dragResizeId.current && resizePreview;
@@ -3572,7 +3608,7 @@ export default function DesignCanvas({
               key={item.id}
               transform={`translate(${cx.toFixed(1)},${cy.toFixed(1)})`}
               onPointerDown={(e) => startDragItem(e, item.id)}
-              opacity={owned ? 1 : LOCKED_OPACITY}
+              opacity={(owned ? 1 : LOCKED_OPACITY) * water.opacity}
               style={{ cursor: interactive ? 'grab' : 'default', pointerEvents: owned ? 'auto' : 'none' }}
             >
               {/* Footprint + selection outline rotate together (rect only); the icon disc,
@@ -3763,6 +3799,8 @@ export default function DesignCanvas({
             .map((item) => {
               const def = ELEMENTS_BY_ID[item.defId];
               if (!def) return null;
+              const water = waterPresentation(waterInfrastructureForElement(item.defId));
+              if (!water.visible) return null;
               if (!anyLayerOn(activeLayers, [categoryLayerKey(def.category), ...((def.alsoLayers ?? []) as Array<keyof ActiveLayers>)])) return null;
               const [nx, ny] = effectiveItemPos(item);
               const isResizingThis = item.id === dragResizeId.current && resizePreview;
@@ -3791,6 +3829,7 @@ export default function DesignCanvas({
                 w: estimatePillWidth(text, PILL_FS, PILL_PADX, PILL_MAX) / view.k,
                 h: PILL_H / view.k,
                 text,
+                opacity: water.opacity,
               };
             })
             .filter((v): v is NonNullable<typeof v> => !!v && isUsableCanvasLabelInput(v));
@@ -3816,7 +3855,7 @@ export default function DesignCanvas({
               {laid.map((pos, i) => {
                 const s = pillOwners[i];
                 return (
-                  <g key={s.id}>
+                  <g key={s.id} opacity={s.opacity}>
                     {/* Leader only when de-collision actually moved the pill — an un-moved pill is
                         already unambiguous, and a line to every pill is just more clutter. */}
                     {pos.moved && (
