@@ -25,10 +25,11 @@ import { plotPool, plotWinterCovers, stapleCourseOf, STAPLE_COURSE_SEQUENCE, isP
 // become a new automatic suggestion or make a rest-period explanation claim
 // that a schedulable crop exists when it does not.
 const SCHEDULABLE_CROPS = CROPS.filter(hasVerifiedFieldPlan);
-// Rest-period explanations are about crops this engine could really add, not
-// every readable catalog row. A duration and spacing can locate a crop on the
-// timeline, but without a supported planning-yield benchmark it still lacks
-// the full basis required by auto-suggest.
+// Yield-backed crops can be compared by kg/m². A farmer's exact crop choice
+// needs a different threshold: verified timing and field spacing are enough
+// to put amadumbe on a bed calendar, while its kilograms and value remain
+// deliberately unknown. Conflating those questions greyed out a culturally
+// important crop even though the catalog can defend when and how to plant it.
 const AUTOMATIC_PLANNING_CROPS = CROPS.filter(hasAutomaticPlanningBasis);
 
 export type GardenGoal = 'family' | 'commercial' | 'hybrid';
@@ -1847,7 +1848,9 @@ function reportStillRestingBeds(
   strictCropKeys?: ReadonlySet<string>,
 ): string[] {
   const notes: string[] = [];
-  const automaticPool = pool.filter(hasAutomaticPlanningBasis);
+  const automaticPool = strictCropKeys
+    ? pool.filter(hasVerifiedFieldPlan)
+    : pool.filter(hasAutomaticPlanningBasis);
   const canFill = (crops: CropDef[], bed: PlanBed, month: number): boolean =>
     reachingCandidates(crops, pattern, nowMonth, month, GAP_FILL_HORIZON_MONTHS, supportedMonths)
       .filter((candidate) => supportsAutomaticPlacement(candidate.crop, bed))
@@ -1970,22 +1973,30 @@ export function autoSuggestPlan(
   // the food-group map and the space-hungry pre-pass among them — so a guard
   // further downstream would leave those routes open. Plots get the cover crop
   // back from the verified schedulable catalog in poolForBed, where it belongs.
-  const edible = SCHEDULABLE_CROPS.filter(hasAutomaticPlanningBasis);
+  const yieldBackedFood = SCHEDULABLE_CROPS.filter(hasAutomaticPlanningBasis);
   const explicitCropKeys = new Set((answers.cropKeys ?? []).filter(Boolean));
   // Exact household/buyer choices outrank the broader UI category filter. A
   // farmer may select a crop and then collapse its category while reviewing;
   // that must not silently erase the explicit choice or introduce substitutes.
   let pool = explicitCropKeys.size
-    ? edible.filter((c) => explicitCropKeys.has(c.key))
-    : edible.filter((c) => !selectedGroups || selectedGroups.has(foodGroupOf(c)));
+    ? SCHEDULABLE_CROPS.filter((c) => explicitCropKeys.has(c.key))
+    : yieldBackedFood.filter((c) => !selectedGroups || selectedGroups.has(foodGroupOf(c)));
   if (!pool.length) {
     if (explicitCropKeys.size) {
-      notes.push('None of the crops this household chose has all three facts needed for automatic planning: a supported yield benchmark, crop duration and field-spacing basis. Review those crops manually or choose a fully supported crop; the planner will not guess a substitute.');
+      notes.push('None of the crops this household chose has a verified crop duration and field-spacing basis for automatic scheduling. Review those crops manually or choose a schedulable crop; the planner will not guess a substitute.');
       return { plantings: [], notes, laterThisYear: [] };
     }
-    pool = edible; // "not sure" fallback — consider every source-backed crop
+    pool = yieldBackedFood; // "not sure" fallback — compare only crops with sourced yield benchmarks
   }
-  notes.push('Automatic choices use only crops with a verified planning-yield benchmark, duration and field-spacing basis. A crop with any of those facts unresolved stays available for records or manual review, but cannot drive the automatic plan.');
+  const chosenWithoutYield = explicitCropKeys.size
+    ? pool.filter((crop) => !hasAutomaticPlanningBasis(crop))
+    : [];
+  if (chosenWithoutYield.length) {
+    notes.push(`${chosenWithoutYield.map((crop) => crop.name).join(', ')} ${chosenWithoutYield.length === 1 ? 'has' : 'have'} verified timing and field spacing, so ${chosenWithoutYield.length === 1 ? 'it can' : 'they can'} be scheduled. No supported yield benchmark is available, so kilograms and value remain blank rather than being guessed.`);
+  }
+  notes.push(explicitCropKeys.size
+    ? 'Exact crop choices need verified duration and field spacing for scheduling. Yield benchmarks are used only where the catalog has them; missing kilograms are never invented.'
+    : 'Broad automatic choices use crops with verified yield, duration and field spacing so their productivity comparison has a common evidence basis.');
   notes.push('Household headcount is not used to guess planting quantity. Auto-suggest tries the exact crops chosen; mapped space, sow windows and rotation determine what fits.');
 
   const exactFamilies = explicitCropKeys.size
