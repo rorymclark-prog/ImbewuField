@@ -60,6 +60,8 @@ export interface ExpenseLog {
   id: string; profile_id: string; garden_id: string | null; item: string;
   amount: number; supplier: string | null; spent_at: string; created_at: string;
   category?: ExpenseCategory | null;
+  /** Optional: only tag a crop when this cost was genuinely for that crop. */
+  crop?: string | null;
 }
 
 export interface Design {

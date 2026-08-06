@@ -1,6 +1,8 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
+import { buildFarmMetrics } from '../lib/farm-metrics.ts';
+import type { ExpenseLog, ProductionLog, SalesLog } from '../lib/db/types.ts';
 
 test('Finances puts harvest logging one tap from the harvested-kilogram figure', () => {
   const source = readFileSync(new URL('../app/finances/page.tsx', import.meta.url), 'utf8');
@@ -14,4 +16,40 @@ test('Finances puts harvest logging one tap from the harvested-kilogram figure',
   assert.match(homeSource, /href: '\/records'.*homeQuickMyRecords/, 'the home My Records action must use the same records screen');
   assert.match(recordsSource, /<MyRecords \/>/, 'the records screen must mount the real harvest and sales forms');
   assert.doesNotMatch(recordsSource, /DataPanel|MapView/, 'logging weights must not require or render the land map');
+});
+
+test('Finance measures each crop from its own planned area and never assigns shared costs', () => {
+  const now = new Date('2026-08-06T12:00:00.000Z');
+  const at = '2026-08-06T09:00:00.000Z';
+  const harvest = (crop: string, kg: number): ProductionLog => ({ id: `harvest-${crop}`, profile_id: 'farmer', garden_id: 'garden-a', crop, kg, photo_url: null, logged_at: at, created_at: at });
+  const sale = (crop: string, kg: number, amount: number): SalesLog => ({ id: `sale-${crop}`, profile_id: 'farmer', garden_id: 'garden-a', crop, kg, amount, buyer: null, sold_at: at, created_at: at });
+  const expense = (id: string, amount: number, crop?: string): ExpenseLog => ({ id, profile_id: 'farmer', garden_id: 'garden-a', item: id, amount, supplier: null, spent_at: at, created_at: at, crop });
+  const metrics = buildFarmMetrics(
+    [{ id: 'p-spinach', bedId: 'bed-1', cropKey: 'swiss-chard', sowMonth: 8 }],
+    [{ id: 'bed-1', label: 'Bed 1', areaM2: 4 }],
+    [harvest('Spinach', 8), harvest('Tomatoes', 10)],
+    [sale('Spinach', 4, 100), sale('Tomatoes', 5, 150)],
+    [expense('seedlings', 20, 'Spinach'), expense('manure', 30)],
+    'month', now,
+  );
+
+  const spinach = metrics.crops.find((crop) => crop.cropKey === 'swiss-chard');
+  assert.ok(spinach);
+  assert.equal(spinach.yieldKgPerM2, 2);
+  assert.equal(spinach.turnoverZarPerM2, 25);
+  assert.equal(spinach.priceZarPerKg, 25);
+  assert.equal(spinach.taggedCostZarPerM2, 5);
+  const tomatoes = metrics.crops.find((crop) => crop.cropName === 'Tomatoes');
+  assert.ok(tomatoes);
+  assert.equal(tomatoes.areaM2, null, 'the whole garden must never become a tomato denominator');
+  assert.equal(tomatoes.yieldKgPerM2, null);
+  assert.equal(metrics.unattributedExpensesZar, 30);
+  assert.equal(metrics.gardenMargins[0].grossMarginZar, 200);
+});
+
+test('NGO farmer summary does not turn kept kilograms into a blanket-price money figure', () => {
+  const source = readFileSync(new URL('../components/NgoDashboard.tsx', import.meta.url), 'utf8');
+  assert.match(source, /Sales received/);
+  assert.match(source, /Food kept:/);
+  assert.doesNotMatch(source, /kept\s*\*\s*15/);
 });
