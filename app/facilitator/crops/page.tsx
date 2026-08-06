@@ -24,7 +24,7 @@ import type { Design } from '@/lib/db/types';
 import { myDesigns } from '@/lib/db/queries';
 import { nearestRainfall } from '@/lib/water-calc';
 import type { CropDef, RainPattern } from '@/lib/crop-catalog';
-import { CROPS, cropByKey, hasAutomaticPlanningBasis, hasPlanningYield, MONTHS_SHORT } from '@/lib/crop-catalog';
+import { CROPS, cropByKey, hasAutomaticPlanningBasis, hasPlanningYield, hasVerifiedFieldPlan, MONTHS_SHORT } from '@/lib/crop-catalog';
 import type { PlanBed, Planting, CropPlanState, FoodAvailabilityItem, PlanYieldBenchmark, CashflowSettings } from '@/lib/crop-plan';
 import {
   loadCropPlan, saveCropPlan, bedEntryMonth, latestBedEntryMonth, plannedBedEntryMonth, harvestEndMonthForCrop, harvestMonthForCrop, tasksForPlan, taskMonthsFromNow, estimatedYieldKgAdjusted, nextValidSowMonth,
@@ -364,7 +364,6 @@ function FacilitatorCropsPageInner() {
   const [aGroups, setAGroups] = useState<FoodGroup[]>(ALL_GROUPS);
   const [aCropKeys, setACropKeys] = useState<string[]>([]);
   const [aRhythm, setARhythm] = useState<HarvestRhythm>('steady');
-  const [aPattern, setAPattern] = useState<RainPattern>('summer');
   // Default on — prevents an immediate repeat of the same botanical family.
   // This one-year plan does not claim to hold a complete multi-year history.
   const [aRotateCrops, setARotateCrops] = useState(true);
@@ -373,6 +372,10 @@ function FacilitatorCropsPageInner() {
   // space. Off by default = recommend a dedicated plot/edge/food-forest area
   // instead; the farmer has to actively opt in to place one in a veg bed.
   const [aAllowVinesInBeds, setAAllowVinesInBeds] = useState(false);
+  // Rory asked for full, half, third and quarter-bed plantings so one long
+  // crop does not force the rest of a bed to sit blank. These are adjacent
+  // bed sections, not an invented claim that arbitrary crops intercrop well.
+  const [aAllowMixedCropsInBed, setAAllowMixedCropsInBed] = useState(true);
   const [aReliableIrrigation, setAReliableIrrigation] = useState(false);
   const [autoResult, setAutoResult] = useState<AutoSuggestResult | null>(null);
 
@@ -382,9 +385,9 @@ function FacilitatorCropsPageInner() {
     setAGroups(ALL_GROUPS); // family default = all checked (diversify); commercial flips this on toggle
     setACropKeys([]);
     setARhythm('steady');
-    setAPattern(pattern);
     setARotateCrops(true);
     setAAllowVinesInBeds(false);
+    setAAllowMixedCropsInBed(true);
     setAReliableIrrigation(false);
     setAutoResult(null);
     setAutoPhase('questions');
@@ -409,16 +412,13 @@ function FacilitatorCropsPageInner() {
       rhythm: aRhythm,
       rotateCrops: aRotateCrops,
       allowVinesInBeds: aAllowVinesInBeds,
-      // Auto-suggest cannot prove that an arbitrary pair has a workable row
-      // layout in the mapped bed. Farmers can still split beds manually after
-      // reviewing a named pair; the optimiser never invents that geometry.
-      allowMixedCropsInBed: false,
+      allowMixedCropsInBed: aAllowMixedCropsInBed,
       reliableIrrigation: aReliableIrrigation,
     };
-    const suggested = autoSuggestPlan(answers, aPattern, beds, plantings, currentMonth);
+    const suggested = autoSuggestPlan(answers, pattern, beds, plantings, currentMonth);
     setAutoResult({
       ...suggested,
-      notes: [`Climate used: ${PATTERN_META[aPattern].label}.`, ...suggested.notes],
+      notes: [`Climate used from this site's map data: ${PATTERN_META[pattern].label}.`, ...suggested.notes],
     });
     setAutoPhase('review');
   }
@@ -442,7 +442,7 @@ function FacilitatorCropsPageInner() {
       return {
         ...base,
         version: 1,
-        rainPattern: aPattern,
+        rainPattern: pattern,
         plantings: [...base.plantings, ...autoResult.plantings],
         updatedAt: Date.now(),
       };
@@ -597,14 +597,16 @@ function FacilitatorCropsPageInner() {
   }, [mounted, autoParam, beds.length]);
   // A region flagged 'mild' frostRisk (e.g. Durban's coastal hinterland) uses
   // KZN DARD's warm/light-frost sowing column rather than treating coast and
-  // frost-prone interior as interchangeable. Auto-suggest asks the farmer to
-  // confirm this broad map estimate before it plans.
+  // frost-prone interior as interchangeable. This mapped result is shown to
+  // the farmer for transparency but is not turned into a rainfall quiz.
   const mapPattern: RainPattern =
     region?.frostRisk === 'mild' && region.pattern === 'summer' ? 'mild-frost' : (region?.pattern ?? 'summer');
-  // The farmer confirms or corrects the broad map estimate in Auto-suggest.
-  // Keep that answer as part of the saved plan: otherwise accepting a plan
-  // quietly switched its screen, jobs and exports back to the map guess.
-  const pattern: RainPattern = plan?.rainPattern ?? mapPattern;
+  // Climate is a site fact, not a questionnaire. Rory's field test made the
+  // problem plain: many farmers do not know which rainfall label describes
+  // them, while the app already has the mapped location needed to decide it.
+  // A plan made without a mapped site uses the visible summer-rain fallback;
+  // it never invites the farmer to make an uninformed climate guess.
+  const pattern: RainPattern = mapPattern;
   const patternMeta = PATTERN_META[pattern];
   const designTitle = design?.title || design?.bgSite?.name || 'Garden design';
 
@@ -1474,9 +1476,10 @@ function FacilitatorCropsPageInner() {
           groups={aGroups} onToggleGroup={toggleGroup}
           cropKeys={aCropKeys} onToggleCrop={toggleAutoCrop} onSetCrops={setACropKeys}
           rhythm={aRhythm} onRhythm={setARhythm}
-          pattern={aPattern} onPattern={setAPattern}
+          pattern={pattern} climateFromMap={region !== null}
           rotateCrops={aRotateCrops} onRotateCrops={setARotateCrops}
           allowVinesInBeds={aAllowVinesInBeds} onAllowVinesInBeds={setAAllowVinesInBeds}
+          allowMixedCropsInBed={aAllowMixedCropsInBed} onAllowMixedCropsInBed={setAAllowMixedCropsInBed}
           reliableIrrigation={aReliableIrrigation} onReliableIrrigation={setAReliableIrrigation}
           result={autoResult}
           onGenerate={runAutoSuggest}
@@ -2505,17 +2508,10 @@ const RHYTHM_OPTIONS: { key: HarvestRhythm; label: string; blurb: string }[] = [
   { key: 'steady', label: 'More regular harvests', blurb: 'Prefer staggered opportunities' },
   { key: 'few-big', label: 'A few big harvests', blurb: 'One flush at a time is fine' },
 ];
-const CLIMATE_OPTIONS: { key: RainPattern; label: string; blurb: string }[] = [
-  { key: 'mild-frost', label: 'Summer rain · light frost', blurb: 'Warm KZN-type hinterland' },
-  { key: 'summer', label: 'Summer rain · stronger frost', blurb: 'Colder inland winter' },
-  { key: 'all-year', label: 'Rain in all seasons · frost-free', blurb: 'Warm coastal conditions' },
-  { key: 'winter', label: 'Winter rain · dry summer', blurb: 'Western Cape pattern' },
-];
-
 function AutoSuggestModal({
   phase, goal, onGoal, focusCount, onFocusCount,
-  groups, onToggleGroup, cropKeys, onToggleCrop, onSetCrops, rhythm, onRhythm, pattern, onPattern, rotateCrops, onRotateCrops,
-  allowVinesInBeds, onAllowVinesInBeds, reliableIrrigation, onReliableIrrigation,
+  groups, onToggleGroup, cropKeys, onToggleCrop, onSetCrops, rhythm, onRhythm, pattern, climateFromMap, rotateCrops, onRotateCrops,
+  allowVinesInBeds, onAllowVinesInBeds, allowMixedCropsInBed, onAllowMixedCropsInBed, reliableIrrigation, onReliableIrrigation,
   result, onGenerate, onAccept, onBackToQuestions, onClose,
 }: {
   phase: 'questions' | 'review';
@@ -2524,9 +2520,10 @@ function AutoSuggestModal({
   groups: FoodGroup[]; onToggleGroup: (g: FoodGroup) => void;
   cropKeys: string[]; onToggleCrop: (cropKey: string) => void; onSetCrops: (cropKeys: string[]) => void;
   rhythm: HarvestRhythm; onRhythm: (r: HarvestRhythm) => void;
-  pattern: RainPattern; onPattern: (pattern: RainPattern) => void;
+  pattern: RainPattern; climateFromMap: boolean;
   rotateCrops: boolean; onRotateCrops: (v: boolean) => void;
   allowVinesInBeds: boolean; onAllowVinesInBeds: (v: boolean) => void;
+  allowMixedCropsInBed: boolean; onAllowMixedCropsInBed: (v: boolean) => void;
   reliableIrrigation: boolean; onReliableIrrigation: (v: boolean) => void;
   result: AutoSuggestResult | null;
   onGenerate: () => void; onAccept: () => void; onBackToQuestions: () => void; onClose: () => void;
@@ -2539,7 +2536,7 @@ function AutoSuggestModal({
   const cropChoices = CROPS
     .filter((crop) => groups.length === 0 || groups.includes(foodGroupOf(crop)))
     .filter((crop) => crop.name.toLowerCase().includes(cropSearch.trim().toLowerCase()));
-  const supportedShown = cropChoices.filter(hasAutomaticPlanningBasis);
+  const schedulableShown = cropChoices.filter(hasVerifiedFieldPlan);
 
   return (
     <div style={{ position: 'fixed', inset: 0, zIndex: 70, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
@@ -2617,23 +2614,25 @@ function AutoSuggestModal({
                 style={{ fontSize: 12.5, color: '#5C5040', background: '#FFFFFF', border: '1px solid #E2D8C4' }}
               />
               <div className="flex gap-2 my-2">
-                <button type="button" onClick={() => onSetCrops([...new Set([...cropKeys, ...supportedShown.map((crop) => crop.key)])])} className="font-sans rounded-lg px-2 py-1" style={{ fontSize: 11, border: '1px solid #B9C9B9', color: '#1F4D2B', background: '#F5F8F3' }}>Select all shown</button>
+                <button type="button" onClick={() => onSetCrops([...new Set([...cropKeys, ...schedulableShown.map((crop) => crop.key)])])} className="font-sans rounded-lg px-2 py-1" style={{ fontSize: 11, border: '1px solid #B9C9B9', color: '#1F4D2B', background: '#F5F8F3' }}>Select all shown</button>
                 <button type="button" onClick={() => onSetCrops([])} className="font-sans rounded-lg px-2 py-1" style={{ fontSize: 11, border: '1px solid #E2D8C4', color: '#5C5040', background: '#FFFFFF' }}>Clear</button>
               </div>
               <div className="rounded-lg" style={{ maxHeight: 220, overflowY: 'auto', border: '1px solid #E2D8C4', background: '#FFFFFF' }}>
                 {cropChoices.map((crop) => {
-                  const supported = hasAutomaticPlanningBasis(crop);
+                  const schedulable = hasVerifiedFieldPlan(crop);
+                  const hasYieldBenchmark = hasAutomaticPlanningBasis(crop);
                   return (
-                    <label key={crop.key} className="flex items-center gap-2 px-2.5 py-2 font-sans" style={{ fontSize: 12, borderBottom: '1px solid #F0E9DC', cursor: supported ? 'pointer' : 'not-allowed', opacity: supported ? 1 : 0.62 }}>
-                      <input type="checkbox" checked={cropKeys.includes(crop.key)} disabled={!supported} onChange={() => onToggleCrop(crop.key)} />
+                    <label key={crop.key} className="flex items-center gap-2 px-2.5 py-2 font-sans" style={{ fontSize: 12, borderBottom: '1px solid #F0E9DC', cursor: schedulable ? 'pointer' : 'not-allowed', opacity: schedulable ? 1 : 0.62 }}>
+                      <input type="checkbox" checked={cropKeys.includes(crop.key)} disabled={!schedulable} onChange={() => onToggleCrop(crop.key)} />
                       <span style={{ flex: 1 }}>{crop.icon} {crop.name}</span>
-                      {!supported && <span style={{ fontSize: 9.5, color: '#9A6018' }}>manual — confirm locally</span>}
+                      {schedulable && !hasYieldBenchmark && <span style={{ fontSize: 9.5, color: '#9A6018' }}>no yield estimate</span>}
+                      {!schedulable && <span style={{ fontSize: 9.5, color: '#9A6018' }}>manual — confirm locally</span>}
                     </label>
                   );
                 })}
               </div>
               <p className="font-mono mt-1.5" style={{ fontSize: 10.5, color: '#9A6018', lineHeight: 1.4 }}>
-                Every crop stays visible. Unticked disabled crops, including grain maize, need locally confirmed timing or field spacing before automatic planning can safely place them.
+                Crops with verified field timing and spacing can be scheduled. “No yield estimate” means the crop can go on the calendar, but kilograms and value stay blank rather than being guessed. Disabled crops still need local timing or field-spacing confirmation.
               </p>
               {cropKeys.length > 0 && (
                 <div className="flex flex-wrap gap-1.5 mt-2">
@@ -2669,20 +2668,31 @@ function AutoSuggestModal({
               </div>
             </div>
 
-            <div>
-              <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.08em' }}>Confirm this garden's climate</div>
-              <div className="grid grid-cols-2 gap-1.5">
-                {CLIMATE_OPTIONS.map((option) => (
-                  <button key={option.key} onClick={() => onPattern(option.key)} className="py-1.5 px-2 rounded-lg text-left transition-all" style={tileStyle(pattern === option.key)}>
-                    <div className="font-display font-semibold" style={{ fontSize: 12 }}>{option.label}</div>
-                    <div className="font-mono" style={{ fontSize: 9.5, opacity: 0.85 }}>{option.blurb}</div>
-                  </button>
-                ))}
+            <div className="rounded-xl px-3 py-2.5" style={{ background: '#F5F8F3', border: '1px solid #B9C9B9' }}>
+              <div className="font-sans uppercase tracking-widest mb-1" style={{ fontSize: 10, color: '#5F735F', letterSpacing: '0.08em' }}>Climate used automatically</div>
+              <div className="font-display font-semibold" style={{ fontSize: 12.5, color: '#1F4D2B' }}>
+                {PATTERN_META[pattern].icon} {PATTERN_META[pattern].label}
               </div>
-              <p className="font-mono mt-1.5" style={{ fontSize: 10.5, color: '#9A8268' }}>
-                Preselected from the map&apos;s broad regional estimate. Change it if the garden&apos;s actual frost or rainfall differs. The warm/light-frost calendar has the crop-by-crop KZN source audit; other broad regional calendars still need local extension confirmation.
+              <p className="font-mono mt-1" style={{ fontSize: 10.5, color: '#687768', lineHeight: 1.4 }}>
+                {climateFromMap
+                  ? 'Taken from this garden’s mapped location. You do not need to choose a rainfall type.'
+                  : 'No mapped location is attached, so the planner is using the visible summer-rainfall fallback. Map the garden for a location-based climate profile.'}
               </p>
             </div>
+
+            <button
+              onClick={() => onAllowMixedCropsInBed(!allowMixedCropsInBed)}
+              className="w-full text-left px-3 py-2.5 rounded-xl transition-all flex items-start gap-2.5"
+              style={tileStyle(allowMixedCropsInBed)}
+            >
+              <span style={{ fontSize: 16, lineHeight: 1 }}>{allowMixedCropsInBed ? '▦' : '⭘'}</span>
+              <span>
+                <div className="font-display font-semibold" style={{ fontSize: 12.5 }}>Divide beds into crop sections</div>
+                <div className="font-mono" style={{ fontSize: 10.5, opacity: 0.85 }}>
+                  On by default: Auto-suggest may use full, half, third or quarter-bed sections side by side so a long crop does not leave the whole bed blank. These are area shares, not a claimed intercropping row layout; check the section positions on the ground.
+                </div>
+              </span>
+            </button>
 
             <button
               onClick={() => onRotateCrops(!rotateCrops)}
@@ -2732,8 +2742,9 @@ function AutoSuggestModal({
             </button>
 
             <p className="font-mono" style={{ fontSize: 10.5, color: '#9A8268', lineHeight: 1.45 }}>
-              Auto-suggest keeps one crop in each bed section at a time. You can split a bed manually after
-              choosing a real crop pair and row layout; the planner will not guess intercropping geometry.
+              {allowMixedCropsInBed
+                ? 'Auto-suggest will use only full, half, third or quarter-bed sections. It does not claim a globally maximum plan or invent an exact row layout.'
+                : 'Whole-bed mode is on. Short blank periods can remain between full-bed crop cycles because the planner will not overlap two different crops in one bed.'}
             </p>
 
             <button

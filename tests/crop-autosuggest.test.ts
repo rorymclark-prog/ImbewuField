@@ -91,6 +91,26 @@ test('tomatoes have a verified household-garden basis and can be selected explic
   assert.ok(result.plantings.every((planting) => planting.cropKey === 'tomatoes'));
 });
 
+test('amadumbe can be scheduled from verified timing and spacing without inventing a yield', () => {
+  // A missing kg benchmark is a reason to leave the yield/value charts blank,
+  // not a reason to grey out a culturally important crop whose field calendar
+  // and spacing are sourced. The previous UI conflated ranking evidence with
+  // scheduling evidence and made Amadumbe impossible to choose.
+  const amadumbe = cropByKey('amadumbe');
+  assert.ok(amadumbe);
+  assert.equal(hasVerifiedFieldPlan(amadumbe), true);
+  assert.equal(hasAutomaticPlanningBasis(amadumbe), false);
+  const result = autoSuggestPlan({
+    ...FAMILY,
+    cropKeys: ['amadumbe'],
+    groups: [],
+    allowMixedCropsInBed: true,
+  }, 'mild-frost', NINE_BEDS, [], 8);
+  assert.ok(result.plantings.length > 0, 'Amadumbe remained impossible to schedule');
+  assert.ok(result.plantings.every((planting) => planting.cropKey === 'amadumbe'));
+  assert.match(result.notes.join(' '), /No supported yield benchmark.*kilograms and value remain blank/i);
+});
+
 test('automatic vegetable plantings use only full, half, third or quarter beds', () => {
   const result = autoSuggestPlan({
     ...FAMILY,
