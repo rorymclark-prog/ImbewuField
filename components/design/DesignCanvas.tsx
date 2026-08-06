@@ -11,7 +11,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Eye, EyeOff, CopyCheck } from 'lucide-react';
-import type { CanvasFrame, DesignCanvasState, DetectSuggestion, GroundFeatureKind, LineShape, PlacedItem, ZoneShape } from '@/lib/design-canvas';
+import type { CanvasFrame, DesignBaseMode, DesignCanvasState, DetectSuggestion, GroundFeatureKind, LineShape, PlacedItem, ZoneShape } from '@/lib/design-canvas';
 import { newId, groundFillPolys, groundFeatureLayer, nearestPointOnRing, normaliseRotation, MIN_MAP_TEXT_SCALE, MAX_MAP_TEXT_SCALE, clampBaseOpacity, normaliseAreaFill, parseSwaleWidthM, type AreaFillStyle } from '@/lib/design-canvas';
 import { layoutBedBlock, bedBlockPaths, bedBlockFootprintM, type BedBlockPlacement, type BedBlockSpec } from '@/lib/bed-block';
 import { layoutCanvasLabels, estimatePillWidth, groupSameLabelPills, isUsableCanvasLabelInput } from '@/lib/canvas-labels';
@@ -27,6 +27,8 @@ import { isValidEarthLatitude } from '@/lib/solar';
 import { effectivePrevailingWind, regionalPrevailingPick } from '@/lib/local-wind';
 import { EARTHWORKS_ROUTE_STYLE, WATER_ROUTE_STYLE, type WaterRouteKind } from '@/lib/water-cartography';
 import { formatDesignTranslation } from '@/lib/design-studio-i18n';
+import { PLAIN_HARD_SURFACE_PAINT } from '@/lib/sheet-base-mute';
+import { authoritativeHouseFootprints, sameFootprint } from '@/lib/house-footprints';
 import { useLanguage } from '@/lib/i18n';
 import SectorOverlay from './SectorOverlay';
 
@@ -177,10 +179,9 @@ export interface DesignCanvasProps {
   // Quick in-canvas toggle of the Sector energies overlay (the top-left ☀️ button) — the
   // discoverable twin of the "Sector energies" entry in the Layers popover.
   onToggleSector?: () => void;
-  /** The farmer's own drone/phone photo as a canvas-rail switch. Null/absent when no photo has
-   *  been uploaded for this site — there is nothing to switch to, so no button. `showing` is the
-   *  live base, and `onToggle` swaps it; both come from basePhotoControls in lib/design-canvas. */
-  basePhoto?: { showing: boolean; onToggle: () => void } | null;
+  /** Satellite, farmer photo, and the paper ground are one three-position base control. It only
+   * appears after a photo upload because that is when satellite/blank become a useful comparison. */
+  basePhoto?: { mode: DesignBaseMode; onSelect: (mode: DesignBaseMode) => void } | null;
   // Slope + aspect (from lib/elevation) → the approximate on-contour guide lines.
   slopeDeg?: number;
   aspectDeg?: number;
@@ -660,6 +661,15 @@ export default function DesignCanvas({
   const svgRef = useRef<SVGSVGElement>(null);
   const { imgW, imgH, mPerPx, satDataUrl } = frame;
   const underlayDataUrl = frame.underlayDataUrl ?? null;
+  const onPaper = basePhoto?.mode === 'blank';
+  // The sheet renderer has the established paper convention for buildings. A map-sourced house
+  // can exist only in refLayers (before it is adopted as a Studio zone), so ask the shared
+  // authority for every real footprint and draw only the ones the zone loop will not paint below.
+  const paperReferenceHouses = onPaper
+    ? authoritativeHouseFootprints(state, refLayers).filter((footprint) => !state.zones.some(
+      (zone) => zone.feature === 'house' && sameFootprint(zone.points, footprint),
+    ))
+    : [];
   // Clamped on READ, never trusted from storage: a corrupt value should paint the photo slightly
   // wrong, not reject the farmer's whole design on load.
   const baseOpacity = clampBaseOpacity(baseAlign?.opacity);
@@ -2411,6 +2421,20 @@ export default function DesignCanvas({
           <rect x={0} y={0} width={imgW} height={imgH} fill="#FFFEFA" />
         )}
 
+        {/* A blank Studio is the paper plan, not an empty map. A referenced house may not yet be
+            a Studio zone, so retain its light fill and definite edge using the sheet's one shared
+            paper paint. Adopted houses are painted by the zone loop below, never twice. */}
+        {paperReferenceHouses.map((footprint, index) => (
+          <polygon
+            key={`paper-house-${index}`}
+            points={ringToPx(footprint, imgW, imgH)}
+            fill={PLAIN_HARD_SURFACE_PAINT.houseFill}
+            stroke={PLAIN_HARD_SURFACE_PAINT.houseStroke}
+            strokeWidth={chrome(2)}
+            pointerEvents="none"
+          />
+        ))}
+
         {/* Contour guide lines — approximate, on-contour direction from slope+aspect. Clipped to
             the property. Off by default; toggled via the Contours layer. */}
         {activeLayers.contours && contours.lines.length > 0 && (
@@ -2673,6 +2697,14 @@ export default function DesignCanvas({
             // "what is there"; plain zones keep their dashed effort-zone ring + number badge.
             const feat = z.feature ? GROUND_FEATURES[z.feature] : null;
             const color = feat ? feat.color : def.color;
+            // Use the exact same paper language as the sheets: a hard surface's outline carries
+            // its shape, while a pale interior keeps the farmer's plan readable. This is paint
+            // only — the saved ring and every metre it represents are left untouched.
+            const paperPaint = onPaper && z.feature === 'house'
+              ? { fill: PLAIN_HARD_SURFACE_PAINT.houseFill, stroke: PLAIN_HARD_SURFACE_PAINT.houseStroke }
+              : onPaper && z.feature === 'driveway'
+                ? { fill: PLAIN_HARD_SURFACE_PAINT.tarFill, stroke: PLAIN_HARD_SURFACE_PAINT.tarEdge }
+                : null;
             const isSelected = selectedId === z.id;
             const isHighlighted = selectedIds.includes(z.id);
             const isDraggingVertexOfThisShape = dragVertex.current?.shapeId === z.id && dragVertex.current.kind === 'zone' && vertexPos;
@@ -2738,8 +2770,8 @@ export default function DesignCanvas({
                         .join(' ')
                     : `M ${effectivePoints.map(([x, y]) => `${(x * imgW).toFixed(1)},${(y * imgH).toFixed(1)}`).join(' L ')} Z`}
                   fillRule="evenodd"
-                  fill={areaFillOf(color)}
-                  fillOpacity={areaFill.opacity}
+                  fill={paperPaint?.fill ?? areaFillOf(color)}
+                  fillOpacity={paperPaint ? undefined : areaFill.opacity}
                   stroke="none"
                   style={{ cursor: interactive ? 'grab' : 'default', pointerEvents: interactive ? 'auto' : 'none' }}
                   onPointerDown={onZonePointerDown}
@@ -2748,7 +2780,7 @@ export default function DesignCanvas({
                 <polygon
                   points={ringToPx(effectivePoints, imgW, imgH)}
                   fill="none"
-                  stroke={color}
+                  stroke={paperPaint?.stroke ?? color}
                   strokeWidth={chrome(feat ? 2 : 1.5)}
                   strokeDasharray={feat ? undefined : chromeDash('6 4')}
                   pointerEvents="none"
@@ -4386,19 +4418,17 @@ export default function DesignCanvas({
         <span aria-hidden>📏</span>
       </button>
 
-      {/* DRONE PHOTO ⇄ SATELLITE, on the canvas rail (Rory: "i want to be able toggle on and off
-          drone photo here in this section"). The same switch exists on the Base step, but a farmer
-          checking whether a bed lines up with a real path wants it where they are working, not
-          four steps back. Only appears once a photo has actually been uploaded — basePhotoControls
-          keys on the photo EXISTING, never on which base is active, so this stays a two-way door
-          in both states (see its doc for the one-way-door bug that rule exists to prevent). */}
+      {/* SATELLITE → DRONE PHOTO → BLANK, on the canvas rail. Blank retains the active ground
+          scale but removes the pixels, so this is also the on-screen check of the printed plan. */}
       {basePhoto && (
         <button
           type="button"
-          aria-pressed={basePhoto.showing}
-          aria-label={t(basePhoto.showing ? 'designCanvasShowSatellite' : 'designCanvasShowPhoto')}
-          title={t(basePhoto.showing ? 'designCanvasPhotoShown' : 'designCanvasPhotoHidden')}
-          onClick={basePhoto.onToggle}
+          aria-pressed={basePhoto.mode !== 'satellite'}
+          aria-label={`Base: ${basePhoto.mode}. Switch base.`}
+          title={`Base: ${basePhoto.mode}. Switch to ${basePhoto.mode === 'satellite' ? 'drone photo' : basePhoto.mode === 'photo' ? 'blank' : 'satellite'}.`}
+          onClick={() => basePhoto.onSelect(
+            basePhoto.mode === 'satellite' ? 'photo' : basePhoto.mode === 'photo' ? 'blank' : 'satellite',
+          )}
           style={{
             position: 'absolute',
             top: (onToggleAdditive && tool === 'select' ? 156 : 108) + 48,
@@ -4406,9 +4436,9 @@ export default function DesignCanvas({
             width: 40,
             height: 40,
             borderRadius: 20,
-            border: basePhoto.showing ? `2px solid ${GOLD}` : 'none',
-            background: basePhoto.showing ? 'rgba(31,77,43,0.92)' : 'rgba(11,18,11,0.82)',
-            color: basePhoto.showing ? GOLD : '#FBF6EC',
+            border: basePhoto.mode !== 'satellite' ? `2px solid ${GOLD}` : 'none',
+            background: basePhoto.mode !== 'satellite' ? 'rgba(31,77,43,0.92)' : 'rgba(11,18,11,0.82)',
+            color: basePhoto.mode !== 'satellite' ? GOLD : '#FBF6EC',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -4417,7 +4447,7 @@ export default function DesignCanvas({
             fontSize: 17,
           }}
         >
-          <span aria-hidden>{basePhoto.showing ? '🚁' : '🛰️'}</span>
+          <span aria-hidden>{basePhoto.mode === 'photo' ? '🚁' : basePhoto.mode === 'blank' ? '▤' : '🛰️'}</span>
         </button>
       )}
       {/* One-line coaching while measuring — without it the tool looks broken until the second

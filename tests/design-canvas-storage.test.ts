@@ -100,6 +100,8 @@ test('local and cloud canvas paths reject the same malformed frame and geometry 
     { ...valid, step: 'finished' },
     { ...valid, updatedAt: 'not-a-date' },
     { ...valid, customBase: { url: 'photo', mPerPx: 0.2, uploadedAt: 'not-a-date' } },
+    { ...valid, baseMode: 'blank' },
+    { ...valid, baseMode: 'blank', blankMPerPx: 0 },
     { ...valid, localWind: { prevailingFrom: 'south', recordedAt: valid.updatedAt } },
     { ...valid, dailyWaterUseL: Number.POSITIVE_INFINITY },
   ];
@@ -110,6 +112,22 @@ test('local and cloud canvas paths reject the same malformed frame and geometry 
     localStorage.setItem(KEY, JSON.stringify(value));
     assert.equal(loadCanvasState(SITE_ID), null);
   }
+});
+
+test('blank base reloads with the inherited ground scale, never a fresh satellite estimate', () => {
+  localStorage.clear();
+  const blank = state({
+    baseMode: 'blank',
+    blankMPerPx: 0.137,
+    useCustomBase: false,
+    customBase: { url: 'https://example/drone.jpg', mPerPx: 0.137, uploadedAt: '2026-08-06T00:00:00.000Z' },
+  });
+
+  assert.ok(saveCanvasState(blank));
+  const reloaded = loadCanvasState(SITE_ID);
+  assert.equal(reloaded?.baseMode, 'blank');
+  assert.equal(reloaded?.blankMPerPx, 0.137);
+  assert.equal(reloaded?.customBase?.url, blank.customBase?.url);
 });
 
 test('legacy zone numbers repair on read without mutating the decoded source', () => {

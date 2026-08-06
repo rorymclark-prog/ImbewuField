@@ -2,15 +2,18 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import {
+  activeBaseMPerPx,
   basePhotoControls,
   clampBaseRotation,
   clampBaseScale,
   customBaseMPerPx,
+  setDesignBaseMode,
   MAX_BASE_ROTATION,
   MIN_BASE_SCALE,
   MAX_BASE_SCALE,
 } from '@/lib/design-canvas';
 import { resolveBaseAlign } from '@/lib/base-photo-align';
+import { ringAreaM2 } from '@/lib/water-system';
 
 // THE BUG CLASS THIS GUARDS: a control that exists in one direction only. "Switch to satellite
 // view" was deliberately non-destructive — it flips useCustomBase off and KEEPS customBase, so
@@ -46,6 +49,53 @@ test('the flag alone never shows a photo that does not exist', () => {
   // A stale/corrupt flag with no image behind it must read as "on the satellite", not as a
   // photo base with nothing to paint.
   assert.equal(basePhotoControls({ useCustomBase: true, customBase: null }).showingPhoto, false);
+});
+
+test('blank keeps every placed-area reading from the base it replaced', () => {
+  // THE SILENT-SUBSTITUTION BUG. Satellite metres come from Web Mercator, while a drone photo
+  // can carry the farmer's own wall measurement. Falling back to satellite metres when the photo
+  // disappears would leave the same beds and zones on screen but quietly change every area.
+  const satelliteMPerPx = 0.2;
+  const photo = { url: 'https://example/drone.jpg', mPerPx: 0.4, scale: 2, uploadedAt: '2026-08-06T00:00:00Z' };
+  const placed = {
+    siteId: 'farm',
+    frame: { centerLng: 31, centerLat: -29, zoom: 18, imgW: 100, imgH: 100, mPerPx: satelliteMPerPx },
+    items: [{ id: 'bed', defId: 'veg_bed', x: 0.25, y: 0.25, wM: 4, hM: 1.2 }],
+    zones: [{ id: 'house', zone: 1 as const, feature: 'house' as const, points: [[0.2, 0.2], [0.6, 0.2], [0.6, 0.5], [0.2, 0.5]] as Array<[number, number]> }],
+    lines: [],
+    step: 'base' as const,
+    updatedAt: '2026-08-06T00:00:00Z',
+    customBase: photo,
+  };
+  const area = (mPerPx: number) => ringAreaM2(placed.zones[0].points, { ...placed.frame, mPerPx });
+
+  const satellite = setDesignBaseMode(placed, 'satellite', satelliteMPerPx);
+  const drone = setDesignBaseMode(satellite, 'photo', satelliteMPerPx);
+  const blank = setDesignBaseMode(drone, 'blank', activeBaseMPerPx(drone, satelliteMPerPx));
+
+  assert.equal(activeBaseMPerPx(satellite, satelliteMPerPx), satelliteMPerPx);
+  assert.equal(activeBaseMPerPx(drone, satelliteMPerPx), satelliteMPerPx);
+  assert.equal(activeBaseMPerPx(blank, satelliteMPerPx), satelliteMPerPx);
+  assert.equal(area(activeBaseMPerPx(satellite, satelliteMPerPx)), area(activeBaseMPerPx(drone, satelliteMPerPx)));
+  assert.equal(area(activeBaseMPerPx(drone, satelliteMPerPx)), area(activeBaseMPerPx(blank, satelliteMPerPx)));
+
+  // A farmer can subsequently correct their drone calibration against a wall. This is the case
+  // that catches a blank view falling back to satellite m/px: the drawing is unchanged, but the
+  // same house would suddenly report a different area unless blank carries the photo's value.
+  const calibratedDrone = setDesignBaseMode({
+    ...placed,
+    customBase: { ...photo, scale: 1 },
+  }, 'photo', satelliteMPerPx);
+  const calibratedBlank = setDesignBaseMode(
+    calibratedDrone,
+    'blank',
+    activeBaseMPerPx(calibratedDrone, satelliteMPerPx),
+  );
+  assert.equal(activeBaseMPerPx(calibratedBlank, satelliteMPerPx), 0.4);
+  assert.equal(
+    area(activeBaseMPerPx(calibratedBlank, satelliteMPerPx)),
+    area(activeBaseMPerPx(calibratedDrone, satelliteMPerPx)),
+  );
 });
 
 test('rotation is bounded and non-finite input reads as square', () => {

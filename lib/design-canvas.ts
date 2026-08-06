@@ -372,6 +372,10 @@ export function customBaseMPerPx(base: Pick<CustomBaseImage, 'mPerPx' | 'scale'>
   return base.mPerPx / clampBaseScale(base.scale);
 }
 
+/** The three visual grounds a farmer can draw over. `useCustomBase` remains below solely so
+ * designs saved before the third choice existed keep opening on the base they had selected. */
+export type DesignBaseMode = 'satellite' | 'photo' | 'blank';
+
 /** Opacity for painting the custom base over the satellite. Undefined/!finite = fully opaque. */
 export function clampBaseOpacity(v: unknown): number {
   return typeof v === 'number' && Number.isFinite(v) ? Math.min(1, Math.max(0.1, v)) : 1;
@@ -383,6 +387,58 @@ export interface BasePhotoControls {
   canToggle: boolean;
   /** The farmer's photo is the base being drawn on right now. */
   showingPhoto: boolean;
+}
+
+/**
+ * The single back-compatible answer to which ground is showing.
+ *
+ * `useCustomBase` was the old two-state storage contract. Do not let each caller interpret it
+ * while also adding blank: old saved farms must still resolve exactly as they did before mode was
+ * introduced, or a reload turns a farmer's chosen photo into a different map without asking.
+ */
+export function designBaseMode(
+  state: Pick<DesignCanvasState, 'baseMode' | 'useCustomBase' | 'customBase'> | null | undefined,
+): DesignBaseMode {
+  if (state?.baseMode === 'satellite' || state?.baseMode === 'blank') return state.baseMode;
+  if (state?.baseMode === 'photo') return state.customBase ? 'photo' : 'satellite';
+  return state?.useCustomBase === true && state.customBase ? 'photo' : 'satellite';
+}
+
+/**
+ * The frame scale for the selected ground. Blank is deliberately not derived from the satellite:
+ * it carries the precise scale being used when the photograph was removed, so a tap cannot
+ * silently change areas, spacing, or tank calculations while every drawn pixel stays put.
+ */
+export function activeBaseMPerPx(
+  state: Pick<DesignCanvasState, 'baseMode' | 'blankMPerPx' | 'useCustomBase' | 'customBase'> | null | undefined,
+  satelliteMPerPx: number,
+): number {
+  const mode = designBaseMode(state);
+  if (mode === 'photo' && state?.customBase) return customBaseMPerPx(state.customBase);
+  if (mode === 'blank' && typeof state?.blankMPerPx === 'number'
+      && Number.isFinite(state.blankMPerPx) && state.blankMPerPx > 0) return state.blankMPerPx;
+  return satelliteMPerPx;
+}
+
+/**
+ * Persist a base change without touching a single saved point. The live frame supplies the
+ * currently measured m/px because its value can be a farmer's custom-photo calibration; storing
+ * that value alongside blank is what lets blank survive a reload and another device's sync.
+ */
+export function setDesignBaseMode(
+  state: DesignCanvasState,
+  mode: DesignBaseMode,
+  activeMPerPx: number,
+): DesignCanvasState {
+  if (mode === 'photo' && !state.customBase) return state;
+  if (mode === 'blank' && (!Number.isFinite(activeMPerPx) || activeMPerPx <= 0)) return state;
+  return {
+    ...state,
+    baseMode: mode,
+    // Keep writing the legacy flag while readers in older deployed clients still exist.
+    useCustomBase: mode === 'photo',
+    ...(mode === 'blank' ? { blankMPerPx: activeMPerPx } : {}),
+  };
 }
 
 /**
@@ -398,10 +454,10 @@ export interface BasePhotoControls {
  * means a two-way toggle, in both flag states.
  */
 export function basePhotoControls(
-  state: Pick<DesignCanvasState, 'useCustomBase' | 'customBase'> | null | undefined,
+  state: Pick<DesignCanvasState, 'baseMode' | 'useCustomBase' | 'customBase'> | null | undefined,
 ): BasePhotoControls {
   const hasPhoto = !!state?.customBase;
-  return { canToggle: hasPhoto, showingPhoto: hasPhoto && state?.useCustomBase === true };
+  return { canToggle: hasPhoto, showingPhoto: hasPhoto && designBaseMode(state) === 'photo' };
 }
 
 export interface DesignCanvasState {
@@ -412,6 +468,10 @@ export interface DesignCanvasState {
   lines: LineShape[];
   step: WizardStep;
   updatedAt: string;
+  /** The saved visual ground. Absent rows use `useCustomBase` below for back-compat. */
+  baseMode?: DesignBaseMode;
+  /** The inherited live m/px while `baseMode` is blank. It must never fall back silently. */
+  blankMPerPx?: number;
   // Optional back-compat pair: when useCustomBase is true and customBase is set, the Studio shows
   // the farmer's own uploaded photo (customBase.url, fetched into the ephemeral CanvasFrame at
   // render time exactly like the satellite tile is) and frame.mPerPx is overridden by
@@ -701,7 +761,7 @@ export function migrateStateToFrame(
   // (a re-traced boundary is enough to trigger that) would slide the whole design off the
   // photo it was drawn on. The frame stamp still updates so the no-op fast path above works on
   // the next call; the points stay exactly where the farmer put them.
-  if (state.useCustomBase && state.customBase) {
+  if ((designBaseMode(state) === 'photo' && state.customBase) || designBaseMode(state) === 'blank') {
     return { ...state, frame: newFrame };
   }
 
@@ -1243,6 +1303,14 @@ export function normaliseCanvasState(value: unknown, siteId: string): DesignCanv
   })) return null;
 
   if (value.useCustomBase !== undefined && typeof value.useCustomBase !== 'boolean') return null;
+  if (value.baseMode !== undefined
+      && value.baseMode !== 'satellite' && value.baseMode !== 'photo' && value.baseMode !== 'blank') return null;
+  if (value.blankMPerPx !== undefined
+      && (typeof value.blankMPerPx !== 'number' || !Number.isFinite(value.blankMPerPx) || value.blankMPerPx <= 0)) return null;
+  // Blank has no imagery from which a scale can be recomputed. Accept every older boolean row,
+  // but reject a new blank row without its inherited value rather than make it look plausible at
+  // the satellite scale.
+  if (value.baseMode === 'blank' && value.blankMPerPx === undefined) return null;
   // A corrupt or absurd factor must not silently rescale a farm. Out-of-range is rejected as
   // invalid state rather than clamped: a stored 0 or a 500× is not a scale anyone measured, and
   // quietly "fixing" it to a bound would hide the corruption behind plausible-looking metres.

@@ -35,6 +35,13 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '6 August',
+    changes: [
+      'Choose Satellite, your drone photo, or Blank to see the same plan on paper',
+      'Blank keeps the same measurements as the base you just left',
+    ],
+  },
+  {
+    when: '6 August',
     sha: '78df299',
     changes: [
       'Your survey can now record food, livestock and sales you report yourself',

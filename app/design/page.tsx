@@ -56,6 +56,9 @@ import {
   clampBaseScale,
   customBaseMPerPx,
   basePhotoControls,
+  activeBaseMPerPx,
+  designBaseMode,
+  setDesignBaseMode,
   bakeBaseAlignment,
   MAX_BASE_ROTATION,
   MIN_BASE_SCALE,
@@ -1195,7 +1198,8 @@ function DesignStudioInner() {
       // satellite tile in first. A farmer who never uploads a photo gets undefined/null here and
       // every branch below behaves exactly as it did before this feature existed.
       const savedForBase = loadCanvasState(siteId);
-      const customBase = savedForBase?.useCustomBase ? (savedForBase.customBase ?? null) : null;
+      const savedBaseMode = designBaseMode(savedForBase);
+      const customBase = savedBaseMode === 'photo' ? (savedForBase?.customBase ?? null) : null;
       // The farmer's own scale correction rides on top of whichever base is in play, so it must be
       // re-applied every time the frame is rebuilt — otherwise a reload silently reverts him to the
       // projection's metres, which is the very number he corrected.
@@ -1210,8 +1214,10 @@ function DesignStudioInner() {
       // photo's scale depended on whether the image fetch resolved before or after the frame
       // update — the same import could land at two different sizes on two loads, and no amount
       // of re-importing would settle it (Rory: "i couldnt adjust it once inserted").
-      const baseMPerPx = (f: typeof frameNoImg) =>
-        customBase ? customBaseMPerPx(customBase) : scaledMPerPx(f.mPerPx, savedScale);
+      const baseMPerPx = (f: typeof frameNoImg) => activeBaseMPerPx(
+        savedForBase,
+        scaledMPerPx(f.mPerPx, savedScale),
+      );
       const loadCustomBase = (targetFrame: typeof frameNoImg) => {
         if (!customBase) return;
         if (loadedCustomBaseUrlRef.current === customBase.url) return;
@@ -1278,7 +1284,12 @@ function DesignStudioInner() {
 
       if (frameMoved) {
         lastFetchedFrame = { centerLng: frameNoImg.centerLng, centerLat: frameNoImg.centerLat, zoom: frameNoImg.zoom };
-        if (customBase) {
+        if (savedBaseMode === 'blank') {
+          // Blank is the printed-plan ground: no satellite or drone pixels, but the exact m/px
+          // the farmer was using stays with the drawing. Never let this branch fall through to a
+          // newly computed satellite frame — that would make the same visible beds measure anew.
+          setFrame({ ...frameNoImg, mPerPx: baseMPerPx(frameNoImg), satDataUrl: null, underlayDataUrl: null });
+        } else if (customBase) {
           setFrame((prev) => ({
             ...frameNoImg,
             mPerPx: customBaseMPerPx(customBase),
@@ -1299,14 +1310,18 @@ function DesignStudioInner() {
           }
         }
       } else {
-        setFrame((prev) => ({
-          ...frameNoImg,
-          mPerPx: baseMPerPx(frameNoImg),
-          satDataUrl: prev?.satDataUrl ?? null,
-          underlayDataUrl: prev?.underlayDataUrl ?? null,
-        }));
-        loadCustomBase(frameNoImg);
-        loadUnderlay(frameNoImg);
+        if (savedBaseMode === 'blank') {
+          setFrame({ ...frameNoImg, mPerPx: baseMPerPx(frameNoImg), satDataUrl: null, underlayDataUrl: null });
+        } else {
+          setFrame((prev) => ({
+            ...frameNoImg,
+            mPerPx: baseMPerPx(frameNoImg),
+            satDataUrl: prev?.satDataUrl ?? null,
+            underlayDataUrl: prev?.underlayDataUrl ?? null,
+          }));
+          loadCustomBase(frameNoImg);
+          loadUnderlay(frameNoImg);
+        }
       }
 
       // A frame migration is DERIVED, not authored: it fires on its own whenever the satellite
@@ -1514,6 +1529,7 @@ function DesignStudioInner() {
         : 1;
       handleChange((prev) => ({
         ...prev,
+        baseMode: 'photo',
         useCustomBase: true,
         customBase: {
           url: result.url,
@@ -1559,7 +1575,7 @@ function DesignStudioInner() {
   const holdAlignRef = useRef<BaseAlignment | null>(null);
   const bakeTokenRef = useRef(0);
   useEffect(() => {
-    const photo = canvasState?.useCustomBase ? canvasState.customBase : null;
+    const photo = designBaseMode(canvasState) === 'photo' ? canvasState?.customBase : null;
     if (!photo || !frame) return;
     const source = customBaseSourceRef.current;
     // The pristine original has not arrived yet. Whoever fetches it bumps customBaseSourceRev,
@@ -1592,6 +1608,7 @@ function DesignStudioInner() {
     // so depending on the whole object makes it its own trigger — the second half of the loop
     // above. Every field the bake actually uses is listed individually.
   }, [
+    canvasState?.baseMode,
     canvasState?.useCustomBase,
     canvasState?.customBase,
     holdAlign,
@@ -1605,11 +1622,11 @@ function DesignStudioInner() {
   // included — otherwise the scale bar and every measurement lag a held resize by a whole
   // gesture and read as broken.
   useEffect(() => {
-    const photo = canvasState?.useCustomBase ? canvasState.customBase : null;
+    const photo = designBaseMode(canvasState) === 'photo' ? canvasState?.customBase : null;
     if (!photo || !holdAlign) return;
     const live = customBaseMPerPx({ mPerPx: photo.mPerPx, scale: holdAlign.scale });
     setFrame((prev) => (prev && prev.mPerPx !== live ? { ...prev, mPerPx: live } : prev));
-  }, [canvasState?.useCustomBase, canvasState?.customBase, holdAlign]);
+  }, [canvasState?.baseMode, canvasState?.useCustomBase, canvasState?.customBase, holdAlign]);
 
   // THE LIVE VALUE WHILE A BUTTON IS HELD DOWN. A held arrow fires many times a second, and
   // every one of those ticks going through handleChange would mean a localStorage write, a cloud
@@ -1752,7 +1769,7 @@ function DesignStudioInner() {
     // The photo is no longer painted, so the loaded-photo marker must not claim it is — otherwise
     // switching back finds the fetch "already done" and never repaints.
     loadedCustomBaseUrlRef.current = null;
-    handleChange((prev) => ({ ...prev, useCustomBase: false }));
+    handleChange((prev) => ({ ...prev, baseMode: 'satellite', useCustomBase: false }));
     const { frame: freshFrame, url: satUrl } = computeCanvasFrame(layers, lat, lon);
     // Re-apply the farmer's ruler calibration. Reverting used to hand back the raw projection
     // metres, silently discarding the correction they measured on their own wall — so switching
@@ -1787,6 +1804,20 @@ function DesignStudioInner() {
     }
   }, [handleChange, layers, lat, lon, canvasState?.scaleFactor]);
 
+  // Blank is not an empty canvas. It is the same design on the paper ground used by the printed
+  // sheets, with no photograph beneath it. Save the live scale before removing the pixels: on a
+  // calibrated drone base that number is the farmer's measurement, not a value we may recreate
+  // from Web Mercator after the fact.
+  const useBlankBase = useCallback(() => {
+    const mPerPx = frame?.mPerPx;
+    if (!Number.isFinite(mPerPx) || !mPerPx || mPerPx <= 0) return;
+    baseRequestRef.current += 1;
+    handleChange((prev) => setDesignBaseMode(prev, 'blank', mPerPx));
+    setFrame((prev) => (prev
+      ? { ...prev, mPerPx, satDataUrl: null, underlayDataUrl: null }
+      : prev));
+  }, [frame?.mPerPx, handleChange]);
+
   // The other half of revertToSatellite, which never existed. Reverting keeps `customBase` on
   // purpose — the whole point is that the photo comes back without a re-upload or a
   // re-calibration — but nothing in the UI could turn it back on, so "Switch to satellite view"
@@ -1803,7 +1834,7 @@ function DesignStudioInner() {
     // land afterwards and paint the tile while these photo metres are in force.
     const token = baseRequestRef.current + 1;
     baseRequestRef.current = token;
-    handleChange((prev) => ({ ...prev, useCustomBase: true }));
+    handleChange((prev) => ({ ...prev, baseMode: 'photo', useCustomBase: true }));
     loadedCustomBaseUrlRef.current = null;
     // Reverting cleared the underlay; if the toggle was flipped before its refetch landed there
     // is nothing to hand across, and the key must be cleared or loadUnderlay decides it already
@@ -2205,7 +2236,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
         // very save re-ran the frame effect, which recomputed mPerPx from the untouched
         // customBase.mPerPx — the act of saving the correction reverted it on screen
         // (Rory: "look what it did to the scale i inserted at the right scale").
-        if (prev.useCustomBase && prev.customBase) {
+        if (designBaseMode(prev) === 'photo' && prev.customBase) {
           const corrected = prev.customBase.mPerPx * factor;
           if (!Number.isFinite(corrected) || corrected <= 0) return prev;
           return {
@@ -3020,20 +3051,22 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               waterInfrastructure={{ visibility: waterInfrastructureVisibility, opacity: waterInfrastructureOpacity }}
               mapTextScale={mapTextScale}
               areaFill={areaFill}
-              baseAlign={canvasState?.useCustomBase ? (canvasState.customBase ?? null) : null}
+              baseAlign={designBaseMode(canvasState) === 'photo' ? (canvasState?.customBase ?? null) : null}
               bedBlock={bedBlockArmed ? { spec: bedBlockSpec, defId: BED_BLOCK_DEF_ID } : null}
               onPlaceBedBlock={onPlaceBedBlock}
               onToggleBaseMap={() => setActiveLayers((a) => ({ ...a, baseMap: !a.baseMap }))}
               onToggleSector={() => setActiveLayers((a) => ({ ...a, sector: !a.sector }))}
-              // Drone photo ⇄ satellite, on the canvas itself. Reuses the same two handlers the
-              // Base step's toggle uses, so there is exactly one way in and one way out of a
-              // custom base no matter which control the farmer reaches for.
+              // Satellite → drone photo → blank, on the canvas itself. These are the same three
+              // handlers as the Base step, so blank cannot acquire a second, divergent scale rule.
               basePhoto={
                 basePhotoControls(canvasState).canToggle
                   ? {
-                      showing: basePhotoControls(canvasState).showingPhoto,
-                      onToggle: () =>
-                        basePhotoControls(canvasState).showingPhoto ? revertToSatellite() : restoreCustomBase(),
+                      mode: designBaseMode(canvasState),
+                      onSelect: (mode) => {
+                        if (mode === 'photo') restoreCustomBase();
+                        else if (mode === 'blank') useBlankBase();
+                        else revertToSatellite();
+                      },
                     }
                   : null
               }
@@ -3146,23 +3179,22 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               }}
             >
               <ImageIcon size={15} style={{ flexShrink: 0, color: OCHRE }} />
-              {/* A REAL TWO-WAY TOGGLE. "Switch to satellite view" always kept the photo — the
-                  whole point of keeping it was that it could come back — but the only control on
-                  offer once the flag was off was a from-scratch import, so the photo was saved
-                  and unreachable and coming back meant re-picking the file, re-aligning and
-                  re-measuring the wall (Rory: "i still cant toggle on satelite or drone once the
-                  dorne is added"). The toggle now shows whenever a photo EXISTS, in both states —
-                  see basePhotoControls in lib/design-canvas.ts, which is where that rule is
-                  tested. */}
+              {/* Three honest grounds for the same plan. Blank is the paper version: it removes
+                  only imagery and carries the active m/px with it, so a farmer can compare their
+                  working map with the sheet without their areas silently changing. */}
               <span style={{ display: 'inline-flex', borderRadius: 9, overflow: 'hidden', border: `1px solid ${OCHRE}`, flexShrink: 0 }}>
-                {([['Satellite', false], ['My photo', true]] as const).map(([label, wantsPhoto]) => {
-                  const on = basePhotoControls(canvasState).showingPhoto === wantsPhoto;
+                {([['Satellite', 'satellite'], ['My photo', 'photo'], ['Blank', 'blank']] as const).map(([label, mode]) => {
+                  const on = designBaseMode(canvasState) === mode;
                   return (
                     <button
                       key={label}
                       type="button"
                       aria-pressed={on}
-                      onClick={() => (wantsPhoto ? restoreCustomBase() : revertToSatellite())}
+                      onClick={() => {
+                        if (mode === 'photo') restoreCustomBase();
+                        else if (mode === 'blank') useBlankBase();
+                        else revertToSatellite();
+                      }}
                       style={{
                         minHeight: 30, padding: '4px 11px', border: 'none', cursor: 'pointer',
                         fontSize: 12.5, fontWeight: 700,
@@ -3182,7 +3214,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
                   so a scale handle here would quietly restate every area and every yield on the
                   plan, while rotation cannot — turning an image does not change what a pixel is
                   worth on the ground. */}
-              {bottomShow.droneTools && basePhotoControls(canvasState).showingPhoto && canvasState.customBase && (
+              {bottomShow.droneTools && designBaseMode(canvasState) === 'photo' && canvasState.customBase && (
                 <>
                   <span style={{ display: 'inline-flex', alignItems: 'center', gap: 2, flexShrink: 0 }}>
                     {([
@@ -3293,7 +3325,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
                 onClick={() => setShowPhotoImport(true)}
                 style={{ border: 'none', background: 'transparent', color: OCHRE, fontWeight: 700, cursor: 'pointer', fontSize: 12.5, padding: '4px 6px' }}
               >
-                {basePhotoControls(canvasState).showingPhoto ? 'Adjust photo' : 'Use a different photo'}
+                {designBaseMode(canvasState) === 'photo' ? 'Adjust photo' : 'Use a different photo'}
               </button>
               {/* Destructive, so it is quiet, last in the row, and asks first. */}
               <button
