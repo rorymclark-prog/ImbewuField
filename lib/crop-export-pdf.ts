@@ -48,8 +48,29 @@ import { ASSURANCE_TITLE, ASSURANCE_PARAGRAPHS, ASSURANCE_ONE_LINE } from '@/lib
 export interface CropPlanPdfMeta {
   /** The design/site this plan belongs to. */
   planTitle: string;
-  /** "KZN Midlands · Summer rainfall", or an honest "No site set" line. */
+  /**
+   * "KZN Midlands · Summer rainfall", or an honest "No site set" line.
+   *
+   * FOR DISPLAY ONLY. Never take this apart again to recover the two halves — see locationLine.
+   */
   siteLine: string;
+  /**
+   * The place, on its own: "KZN midlands", or "No site set".
+   *
+   * THE PDF USED TO RE-DERIVE THIS BY SPLITTING siteLine, AND IT WAS WRONG FOR EVERY SITE.
+   * siteLine is joined with U+00B7 MIDDLE DOT and the split was on an ASCII hyphen, so all seven
+   * regions in lib/water-calc.ts produced a one-element array: LOCATION got the whole string and
+   * CLIMATE fell through to "Not set" while the climate was sitting right there. Worse where the
+   * pattern label carries its own hyphen — "Karoo · All-year rainfall" split on THAT, printing
+   * LOCATION "Karoo · All" and CLIMATE "year rainfall".
+   *
+   * The lesson is not "use the right separator". A display string is a rendering, and parsing one
+   * back into fields is a second authority for a question that already had an answer. Region name
+   * and climate label are two values at the source; they travel as two values.
+   */
+  locationLine: string;
+  /** The climate pattern, on its own: "Summer rainfall". Empty when genuinely unknown. */
+  climateLine: string;
   /** "6 beds · 2 staple plots · 48.0 m² of growing space". */
   bedsSummary: string;
   /** Already-localised date string for the cover line. */
@@ -345,8 +366,8 @@ function drawDashboard(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: n
 
   // Site strip — four facts, evenly spread, in the benchmark's header band.
   const facts = [
-    { k: 'LOCATION', v: meta.siteLine.split(/\s*-\s*/)[0] || meta.siteLine },
-    { k: 'CLIMATE', v: meta.siteLine.split(/\s*-\s*/).slice(1).join(' - ') || 'Not set' },
+    { k: 'LOCATION', v: meta.locationLine || meta.siteLine },
+    { k: 'CLIMATE', v: meta.climateLine || 'Not set' },
     { k: 'PLAN PERIOD', v: period },
     { k: 'GENERATED', v: meta.dateLabel },
   ];

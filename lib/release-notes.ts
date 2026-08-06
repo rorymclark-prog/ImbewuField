@@ -35,11 +35,12 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '6 August',
-    sha: 'd66a963',
+    sha: '7f6b41f',
     changes: [
       'Card and panel outlines are all the same colour now, instead of two shades',
       'When you sold more than you logged picking, Finance now says the kept amount is not known',
       'It no longer blames a short harvest on you when the picking was simply not written down',
+      'The printed crop plan shows your climate again, instead of saying "Not set"',
     ],
   },
   {

@@ -711,6 +711,10 @@ function FacilitatorCropsPageInner() {
     return {
       planTitle: (canvasSite ? placeName : null) ?? designTitle,
       siteLine: region ? `${region.name} · ${patternMeta.label}` : `No site set · assuming ${patternMeta.label.toLowerCase()}`,
+      // The same two facts as separate values, because the PDF needs them apart and recovering
+      // them by splitting siteLine printed "Climate: Not set" for every region in the country.
+      locationLine: region ? region.name : 'No site set',
+      climateLine: region ? patternMeta.label : `Assuming ${patternMeta.label.toLowerCase()}`,
       bedsSummary: `${bedCount} bed${bedCount === 1 ? '' : 's'}`
         + `${plotCount ? ` · ${plotCount} staple plot${plotCount === 1 ? '' : 's'}` : ''}`
         + ` · ${beds.reduce((s, b) => s + b.areaM2, 0).toFixed(1)} m² of growing space`,
