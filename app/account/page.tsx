@@ -38,7 +38,7 @@ export default function AccountPage() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [editing, setEditing] = useState(false);
   const [saving, setSaving] = useState(false);
-  const [form, setForm] = useState({ name: '', phone: '', language: 'en' });
+  const [form, setForm] = useState({ name: '', phone: '', farmName: '', language: 'en' });
   const [photoUploading, setPhotoUploading] = useState(false);
   const photoInputRef = useRef<HTMLInputElement>(null);
   const [changingPw, setChangingPw] = useState(false);
@@ -53,7 +53,7 @@ export default function AccountPage() {
   }, [user, loading, router]);
 
   useEffect(() => {
-    if (profile) setForm({ name: profile.full_name ?? '', phone: profile.phone ?? '', language: profile.language ?? 'en' });
+    if (profile) setForm({ name: profile.full_name ?? '', phone: profile.phone ?? '', farmName: profile.farm_name ?? '', language: profile.language ?? 'en' });
   }, [profile]);
 
   async function handleSignOut() {
@@ -67,7 +67,7 @@ export default function AccountPage() {
 
   async function saveProfile() {
     setSaving(true);
-    await updateMyProfile({ full_name: form.name.trim() || undefined, phone: form.phone.trim() || null, language: form.language });
+    await updateMyProfile({ full_name: form.name.trim() || undefined, phone: form.phone.trim() || null, farm_name: form.farmName.trim() || null, language: form.language });
     await refreshProfile();
     setSaving(false);
     setEditing(false);
@@ -189,6 +189,16 @@ export default function AccountPage() {
                 <input value={form.phone} onChange={(e) => setForm((f) => ({ ...f, phone: e.target.value }))}
                   placeholder="+27 ..."
                   type="tel"
+                  className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5"
+                  style={{ background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }} />
+              </label>
+
+              {/* Printed under your name on every invoice. Blank is fine — it simply prints
+                  nothing, which is why there is no placeholder value standing in for it. */}
+              <label className="block">
+                <div className="text-xs font-mono mb-1" style={{ color: '#8C7A62' }}>Farm name <span style={{ opacity: 0.7 }}>(shown on invoices)</span></div>
+                <input value={form.farmName} onChange={(e) => setForm((f) => ({ ...f, farmName: e.target.value }))}
+                  placeholder="e.g. Plot 14, Nquthu"
                   className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5"
                   style={{ background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }} />
               </label>

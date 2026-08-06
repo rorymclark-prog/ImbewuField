@@ -16,6 +16,15 @@ export interface Profile {
   id: string; full_name: string | null; role: UserRole; org_id: string | null;
   language: string; id_number: string | null; phone: string | null; photo_url: string | null; created_at: string;
   bio?: string | null;
+  /**
+   * What the farmer calls their farm — "Tugela Valley smallholding", "Plot 14, Nquthu".
+   *
+   * Printed under the seller's name on every invoice. It was a hardcoded string until 2026-08-06,
+   * so every farmer in the country invoiced their buyers from one particular smallholding in the
+   * Tugela valley. Optional on purpose: an invoice with no farm line is fine, an invoice naming
+   * the wrong farm is not, so an unset value prints nothing rather than a placeholder.
+   */
+  farm_name?: string | null;
   skills?: string[] | null;
   showOnMap?: boolean;
   mapLat?: number | null;
