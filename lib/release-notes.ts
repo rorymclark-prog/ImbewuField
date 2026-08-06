@@ -35,7 +35,7 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '6 August',
-    sha: '34aae6e',
+    sha: 'a553e1d',
     changes: [
       'Crop suggestions use only crops you choose; coriander is never assumed',
       'One crop no longer takes every bed while another chosen crop is available',
