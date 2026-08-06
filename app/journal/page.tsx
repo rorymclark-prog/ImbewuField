@@ -27,9 +27,8 @@ export default function JournalPage() {
       </header>
 
       {/* Body — the dated record of what actually happened on the land. Harvest
-          weights and sales stay on /finances (and /farmer?panel=Farm, which still
-          mounts MyRecords), where the ledger, the harvest reconciliation and the
-          CSV export already live. */}
+          weights and sales stay in /records and /finances, where the ledger, the
+          harvest reconciliation and the CSV export already live. */}
       <main className="flex-1 overflow-y-auto" style={{ background: '#E4DCC6' }}>
         <FieldJournal />
       </main>
