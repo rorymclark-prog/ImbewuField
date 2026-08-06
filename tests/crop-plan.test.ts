@@ -31,6 +31,7 @@ import {
   harvestMonthForCrop,
   isGenuinelyIntercropped,
   latestBedEntryMonth,
+  plannedBedEntryMonth,
   nextValidSowMonth,
   occupiedMonthsForPlanting,
   plantingBedEntryOffsets,
@@ -328,7 +329,7 @@ test('audited duration ranges reserve beds through their conservative upper endp
 });
 
 test('legacy crop records remain named while unresolved timing or spacing blocks auto-scheduling', () => {
-  for (const key of ['maize', 'dry-beans', 'kale', 'tomatoes', 'oats']) {
+  for (const key of ['maize', 'dry-beans', 'kale', 'oats']) {
     const crop = cropByKey(key);
     assert.ok(crop, `${key} can no longer be read from a saved record`);
     assert.ok(crop.name.trim() && crop.icon.trim() && crop.note.trim());
@@ -543,11 +544,11 @@ test('coarse maturity planning rounds supported day counts up instead of freeing
   assert.equal(planningMaturityMonths(70), 3);
 });
 
-test('a tray crop reserves the bed from earliest readiness through harvest based on latest readiness', () => {
+test('a tray crop keeps its readiness window separate from actual bed occupancy', () => {
   // KZN DARD gives a 4–6 week warm-condition nursery period that may double
   // in cold conditions. The month plan may start checking at one month, but
-  // it must not promise that field entry happened before the three-month
-  // conservative boundary used to calculate harvest and release the bed.
+  // the actual calendar commits to one planned transplant month. Nursery
+  // uncertainty must not be painted as occupied field space.
   const lettuce = cropByKey('lettuce');
   assert.ok(lettuce?.transplant);
   const planting: Planting = {
@@ -558,13 +559,14 @@ test('a tray crop reserves the bed from earliest readiness through harvest based
   };
 
   assert.equal(bedEntryMonth(planting.sowMonth, lettuce), 9);
+  assert.equal(plannedBedEntryMonth(planting.sowMonth, lettuce), 10);
   assert.equal(latestBedEntryMonth(planting.sowMonth, lettuce), 11);
-  assert.equal(harvestMonthForCrop(planting.sowMonth, lettuce), 2);
-  assert.deepEqual(occupiedMonthsForPlanting(planting), [9, 10, 11, 12, 1, 2]);
+  assert.equal(harvestMonthForCrop(planting.sowMonth, lettuce), 1);
+  assert.deepEqual(occupiedMonthsForPlanting(planting), [10, 11, 12, 1]);
   assert.equal(
     tasksForPlan([planting], BEDS).find((task) => task.action === 'transplant')?.month,
     9,
-    'the dated marker starts the readiness check; harvest still uses the conservative latest entry',
+    'the earlier dated marker is a readiness check, not occupied bed time',
   );
 });
 
@@ -572,9 +574,9 @@ test('already-growing crops keep current and future harvests but never resurrect
   const existing: Planting[] = [
     // The audited 125-day field endpoint plus the conservative nursery window
     // puts these three tray sowings at July / August / September respectively.
-    { id: 'finished', bedId: BEDS[0].id, cropKey: 'cabbage', sowMonth: 11, existing: true },
-    { id: 'due-now', bedId: BEDS[1].id, cropKey: 'cabbage', sowMonth: 12, existing: true },
-    { id: 'still-ahead', bedId: BEDS[2].id, cropKey: 'cabbage', sowMonth: 1, existing: true },
+    { id: 'finished', bedId: BEDS[0].id, cropKey: 'cabbage', sowMonth: 12, existing: true },
+    { id: 'due-now', bedId: BEDS[1].id, cropKey: 'cabbage', sowMonth: 1, existing: true },
+    { id: 'still-ahead', bedId: BEDS[2].id, cropKey: 'cabbage', sowMonth: 2, existing: true },
   ];
   const first = tasksForPlan(existing, BEDS, 8);
   const second = tasksForPlan(structuredClone(existing), structuredClone(BEDS), 8);
@@ -593,7 +595,7 @@ test('an existing picking window keeps this month but drops its already-eaten fi
     id: 'existing-tomato',
     bedId: BEDS[0].id,
     cropKey: 'tomatoes',
-    sowMonth: 6,
+    sowMonth: 7,
     existing: true,
   };
 
@@ -790,8 +792,8 @@ test('timeline offsets anchor field entry to sowing and never repeat an existing
     ...existingTrayCrop, id: 'planned-tray', sowMonth: 10, existing: undefined,
   };
 
-  assert.deepEqual(plantingBedEntryOffsets(existingTrayCrop, 11, 24), [1]);
-  assert.deepEqual(plantingBedEntryOffsets(nextOctoberTrayCrop, 11, 24), [12]);
+  assert.deepEqual(plantingBedEntryOffsets(existingTrayCrop, 11, 24), [2]);
+  assert.deepEqual(plantingBedEntryOffsets(nextOctoberTrayCrop, 11, 24), [13]);
   assert.equal(plantingIsActiveOrPlanned({ ...existingTrayCrop, sowMonth: 1 }, 11), false);
   assert.deepEqual(recurringPlanPlantings([existingTrayCrop, nextOctoberTrayCrop]), [nextOctoberTrayCrop]);
 });
@@ -833,7 +835,7 @@ test('an existing transplanted crop remains available and occupied in its curren
     id: 'existing-cabbage',
     bedId: BEDS[0].id,
     cropKey: 'cabbage',
-    sowMonth: 12,
+    sowMonth: 1,
     existing: true,
   };
   const oneBed = [BEDS[0]];

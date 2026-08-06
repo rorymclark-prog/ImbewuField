@@ -38,7 +38,7 @@ export const MONTH_NAMES = [
  * 4–6 weeks under warm conditions, while cold conditions can double that
  * period. The calendar remains month-sized, so readiness—not the column edge—
  * decides the real planting-out day. */
-export const TRANSPLANT_NURSERY_GUIDANCE = 'Usually 4–6 weeks in warm conditions; cold conditions can take about twice as long (8–12 weeks). Start checking from the first field month and transplant when seedlings and the bed are ready. The plan reserves the possible 1–3 month nursery range so it does not free the bed early.';
+export const TRANSPLANT_NURSERY_GUIDANCE = 'Usually 4–6 weeks in warm conditions; cold conditions can take about twice as long (8–12 weeks). Start checking from the first readiness month and transplant when seedlings and the bed are ready. The bed calendar uses the middle month as its working transplant date; update the planting if the seedlings are delayed.';
 
 /** The source describes maturity under optimum conditions. A reserved month is
  * therefore a planning slot, never evidence that the previous crop has left

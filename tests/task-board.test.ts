@@ -107,8 +107,8 @@ test('planned January tray work viewed in December stays one coherent forward gr
 
 test('later harvest-window tasks stay anchored after their own future sowing', () => {
   // Viewed in September, this August sowing belongs to NEXT year. Its supported
-  // conservative nursery boundary plus upper tomato picking window runs
-  // February through April, 17–19 months away. Reverse-parsing
+  // planned nursery entry plus upper tomato picking window runs January
+  // through March, 16–18 months away. Reverse-parsing
   // `tomato:west:harvest:1` as if it ended in `:harvest` used to lose the
   // planting and pull the January task forward to four months away — before
   // the seed itself was due.
@@ -118,9 +118,9 @@ test('later harvest-window tasks stay anchored after their own future sowing', (
   const harvests = tasks.filter((task) => task.id.includes(':harvest'));
 
   assert.deepEqual(harvests.map((task) => [task.id, task.monthsAway, task.dueMonth]), [
-    ['tomato:west:harvest', 17, 2],
-    ['tomato:west:harvest:1', 18, 3],
-    ['tomato:west:harvest:2', 19, 4],
+    ['tomato:west:harvest', 16, 1],
+    ['tomato:west:harvest:1', 17, 2],
+    ['tomato:west:harvest:2', 18, 3],
   ]);
   const sow = tasks.find((task) => task.id === 'tomato:west:sow');
   assert.ok(sow);

@@ -445,20 +445,15 @@ export const CROPS: CropDef[] = [
     daysToHarvest: 90, // upper end of 75–90 days from transplant — KZN DARD Length of Growing Period
     daysToHarvestRange: [75, 90],
     transplant: true,
-    spacingCm: 50,
-    // NOT source-backed: the only cited figure (Starke Ayres Tomato Guideline
-    // 2019 sec 3.4) is a COMMERCIAL 180-250cm row spec — field-tractor spacing,
-    // wrong for a hand-worked home bed. 90cm is a general home-garden estimate
-    // for staked tomatoes (typical bed practice ~60-90cm rows), deliberately
-    // used instead — an estimate to adjust, not a verified number.
-    rowSpacingCm: 90,
-    inRowSpacingCm: 40, // not closer than 35-40cm — same guideline (high confidence)
-    // Only the in-row minimum is verified for a staked home bed. The 90cm row
-    // value remains an internal geometry estimate until a relevant primary
-    // source is found; never print it as an instruction or use it to sell an
-    // exact number of seedlings.
-    fieldSpacingVerified: false,
-    fieldSpacingInstruction: 'at least 40cm apart in the row · choose row width for the support system and bed; a verified home-bed row spacing is not available',
+    spacingCm: 45,
+    // Gauteng Department of Agriculture and Rural Development, Vegetable
+    // Production Guidelines for a Household Food Garden, tomato row.
+    rowSpacingCm: 105,
+    inRowSpacingCm: 45,
+    sowDepthCm: 1,
+    rowSpacingRangeCm: [90, 120],
+    inRowSpacingRangeCm: [30, 60],
+    sowDepthRangeCm: [1, 1],
     yieldKgPerM2: 3,
     yieldRangeKgPerM2: [3, 5], // conservative through likely (30; 45-50 t/ha) — KZN DARD Expected Yields Table 8
     note: 'Stake or cage plants early; feed consistently once fruit starts to set.',
@@ -922,7 +917,7 @@ export function hasAutomaticPlanningBasis(
  * 'Plant Establishment' spacing table supplied sourced row+in-row pairs for
  * the crops that were still square-fallback. Every crop used for an automatic
  * count now has both axes; mixed-source or legacy cases (grain maize, dry
- * beans, kale, tomatoes and oats) suppress exact counts through the verification
+ * beans, kale and oats) suppress exact counts through the verification
  * gate instead of letting this fallback manufacture authority.
  */
 export function plantSpacingCm(crop: CropDef): { rowCm: number; inRowCm: number } {

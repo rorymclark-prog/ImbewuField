@@ -160,6 +160,18 @@ export function planningMaturityMonths(days: number): number {
  * the actual day. */
 export const TRANSPLANT_ENTRY_EARLIEST_MONTHS = 1;
 export const TRANSPLANT_ENTRY_LATEST_MONTHS = 3;
+/**
+ * The month used by the actual bed plan for a tray-grown crop.
+ *
+ * The 1-3 month range above is a readiness CHECK window, not three months of
+ * bed occupancy. Painting from its earliest edge and harvesting from its
+ * latest edge made an 80-day lettuce crop look as though it occupied a bed
+ * for six months. A crop plan needs one committed working date; two months is
+ * the conservative end of the published usual 4-6 week warm-condition range.
+ * If cold nursery conditions delay a real tray beyond that date, the farmer
+ * moves the planting rather than the planner silently blocking empty ground.
+ */
+export const TRANSPLANT_ENTRY_PLANNED_MONTHS = 2;
 
 /** Earliest month a tray crop may occupy the bed. Reserving from this edge
  * prevents another crop being placed on ground seedlings may already need. */
@@ -174,6 +186,11 @@ export function latestBedEntryMonth(sowMonth: number, crop: Pick<CropDef, 'trans
   return wrapMonth(sowMonth + (crop.transplant ? TRANSPLANT_ENTRY_LATEST_MONTHS : 0));
 }
 
+/** The single field-entry month used for occupancy, harvests and bars. */
+export function plannedBedEntryMonth(sowMonth: number, crop: Pick<CropDef, 'transplant'>): number {
+  return wrapMonth(sowMonth + (crop.transplant ? TRANSPLANT_ENTRY_PLANNED_MONTHS : 0));
+}
+
 /** Harvest timing on the same sow-month timeline shown to the farmer. South
  * African production guides state the growing period for transplanted crops
  * from transplanting, so their nursery month must be added once. */
@@ -183,7 +200,7 @@ export function harvestMonthForCrop(
 ): number {
   return wrapMonth(
     harvestMonth(sowMonth, crop.daysToHarvest)
-    + (crop.transplant ? TRANSPLANT_ENTRY_LATEST_MONTHS : 0),
+    + (crop.transplant ? TRANSPLANT_ENTRY_PLANNED_MONTHS : 0),
   );
 }
 
@@ -216,11 +233,8 @@ export function occupiedMonthsForPlanting(
     return [];
   }
   const maturityOffset = planningMaturityMonths(crop.daysToHarvest);
-  const nurseryUncertainty = crop.transplant
-    ? TRANSPLANT_ENTRY_LATEST_MONTHS - TRANSPLANT_ENTRY_EARLIEST_MONTHS
-    : 0;
-  const span = maturityOffset + nurseryUncertainty + (crop.harvestWindowMonths ?? 0) + 1;
-  const starts = bedEntryMonth(planting.sowMonth, crop);
+  const span = maturityOffset + (crop.harvestWindowMonths ?? 0) + 1;
+  const starts = plannedBedEntryMonth(planting.sowMonth, crop);
   return Array.from({ length: span }, (_, offset) => wrapMonth(starts + offset));
 }
 
@@ -237,7 +251,7 @@ export function plantingBedEntryOffsets(
 ): number[] {
   const crop = cropByKey(planting.cropKey);
   if (!crop || horizonMonths <= 0) return [];
-  const nurseryOffset = crop.transplant ? TRANSPLANT_ENTRY_EARLIEST_MONTHS : 0;
+  const nurseryOffset = crop.transplant ? TRANSPLANT_ENTRY_PLANNED_MONTHS : 0;
   const first = planting.existing
     ? existingSowOffset(planting.sowMonth, nowMonth) + nurseryOffset
     : ((planting.sowMonth - nowMonth) % 12 + 12) % 12 + nurseryOffset;
@@ -614,7 +628,7 @@ export function tasksForPlan(plantings: Planting[], beds: PlanBed[], nowMonth?: 
 
     const firstHarvest = harvestMonthForCrop(p.sowMonth, crop);
     const maturityOffset = planningMaturityMonths(crop.daysToHarvest)
-      + (crop.transplant ? TRANSPLANT_ENTRY_LATEST_MONTHS : 0);
+      + (crop.transplant ? TRANSPLANT_ENTRY_PLANNED_MONTHS : 0);
 
     // A zero-food cover reaches flowering so it can be cut or rolled down; it
     // is not carried to the kitchen. Calling this a harvest made the field
@@ -885,7 +899,7 @@ export function bedOverlapFraction(
     .reduce((sum, p) => {
       const crop = cropByKey(p.cropKey);
       if (!crop || crop.timingVerified === false) return sum;
-      const pStart = bedEntryMonth(p.sowMonth, crop);
+      const pStart = plannedBedEntryMonth(p.sowMonth, crop);
       const pHarvestEnd = harvestEndMonthForCrop(p.sowMonth, crop);
       return overlaps(sowMonth, harvestEndMonth, pStart, pHarvestEnd) ? sum + (p.areaFraction ?? 1) : sum;
     }, 0);
@@ -1260,7 +1274,7 @@ export function buildFoodAvailability(plantings: Planting[], beds: PlanBed[], no
     if (!crop || !bed || crop.timingVerified === false || crop.yieldKgPerM2 === 0) continue;
     const hMonth = harvestMonthForCrop(p.sowMonth, crop);
     const maturityOffset = planningMaturityMonths(crop.daysToHarvest)
-      + (crop.transplant ? TRANSPLANT_ENTRY_LATEST_MONTHS : 0);
+      + (crop.transplant ? TRANSPLANT_ENTRY_PLANNED_MONTHS : 0);
     const freshSpan = crop.harvestWindowMonths ?? 0;
     for (let off = 0; off <= freshSpan; off++) {
       // Fresh months an existing crop already delivered are over. A storage
@@ -1316,7 +1330,7 @@ export function buildFieldUtilizationByMonth(plantings: Planting[], beds: PlanBe
     if (!arr) { arr = Array<number>(13).fill(0); perBed.set(bed.id, arr); }
     occupiedMonthsForPlanting(p).forEach((month, offsetFromBedEntry) => {
       const offsetFromSow = offsetFromBedEntry
-        + (crop.transplant ? TRANSPLANT_ENTRY_EARLIEST_MONTHS : 0);
+        + (crop.transplant ? TRANSPLANT_ENTRY_PLANNED_MONTHS : 0);
       if (slotIsPast(p, nowMonth, offsetFromSow)) return; // finished months of an existing crop are history, not occupancy
       arr[month] += areaHere;
     });

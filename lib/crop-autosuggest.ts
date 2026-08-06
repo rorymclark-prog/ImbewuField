@@ -13,8 +13,7 @@ import {
   existingSowOffset,
   isSpaceHungry,
   planningMaturityMonths,
-  TRANSPLANT_ENTRY_EARLIEST_MONTHS,
-  TRANSPLANT_ENTRY_LATEST_MONTHS,
+  TRANSPLANT_ENTRY_PLANNED_MONTHS,
 } from './crop-plan';
 import type { FoodGroup, RotationFamily } from './crop-groups';
 import { foodGroupOf, GROUP_PRIORITY, ROTATION_FAMILY_META, rotationFamilyOf } from './crop-groups';
@@ -104,11 +103,11 @@ function consolidatePlantings(plantings: readonly Planting[]): Planting[] {
       byCohort.set(key, { ...planting });
       continue;
     }
-    const combinedFraction = Math.min(
-      1,
-      (existing.areaFraction ?? 1) + (planting.areaFraction ?? 1),
-    );
-    existing.areaFraction = combinedFraction < 1 ? combinedFraction : undefined;
+    // Independent passes choosing the same crop, bed and month describe one
+    // cohort, not extra strips to add together. Keeping the larger named share
+    // prevents opaque 58%, 67% or 83% bed allocations in the farmer's plan.
+    const cohortFraction = Math.max(existing.areaFraction ?? 1, planting.areaFraction ?? 1);
+    existing.areaFraction = cohortFraction < 1 ? cohortFraction : undefined;
   }
   return [...byCohort.values()].map((planting) => ({
     ...planting,
@@ -206,11 +205,7 @@ export type BedHold = Pick<CropDef, 'key' | 'daysToHarvest' | 'transplant' | 'ha
  */
 function holdSpanMonths(crop: BedHold): number {
   if (crop.daysToHarvest <= 0) return 1;
-  const nurseryUncertainty = crop.transplant
-    ? TRANSPLANT_ENTRY_LATEST_MONTHS - TRANSPLANT_ENTRY_EARLIEST_MONTHS
-    : 0;
   return planningMaturityMonths(crop.daysToHarvest)
-    + nurseryUncertainty
     + 1
     + (crop.harvestWindowMonths ?? 0);
 }
@@ -222,7 +217,7 @@ function occupiedMonths(sowMonth: number, crop: BedHold): number[] {
   // KZN DARD expresses the growing period for starred/transplanted crops from
   // transplanting. Their tray month is nursery time, not occupied bed time.
   let m = wrapMonth(
-    sowMonth + (crop.transplant ? TRANSPLANT_ENTRY_EARLIEST_MONTHS : 0),
+    sowMonth + (crop.transplant ? TRANSPLANT_ENTRY_PLANNED_MONTHS : 0),
   );
   for (let i = 0; i < span; i++) {
     months.push(m);
@@ -240,7 +235,7 @@ function plannedOccupiedOffsets(
   crop: BedHold,
 ): number[] {
   const startOffset = monthsForward(nowMonth, sowMonth)
-    + (crop.transplant ? TRANSPLANT_ENTRY_EARLIEST_MONTHS : 0);
+    + (crop.transplant ? TRANSPLANT_ENTRY_PLANNED_MONTHS : 0);
   return Array.from({ length: holdSpanMonths(crop) }, (_, index) => startOffset + index);
 }
 
@@ -257,7 +252,11 @@ export function plannedCohortReachesMonth(
     .includes(monthsForward(nowMonth, targetMonth));
 }
 
-const BED_FRACTION_PRESETS = [1, 0.5, 1 / 3, 0.25];
+export const BED_FRACTION_PRESETS = [1, 0.5, 1 / 3, 0.25] as const;
+export function isStandardBedFraction(fraction: number | undefined): boolean {
+  const value = fraction ?? 1;
+  return BED_FRACTION_PRESETS.some((preset) => Math.abs(preset - value) < 0.001);
+}
 function closestPreset(target: number): number {
   return BED_FRACTION_PRESETS.reduce((best, p) => (Math.abs(p - target) < Math.abs(best - target) ? p : best));
 }
@@ -298,6 +297,10 @@ class Occupancy {
     this.nowMonth = nowMonth;
   }
 
+  allowsBedSharing(): boolean {
+    return this.allowMixedCropsInBed;
+  }
+
   seed(plantings: Planting[], holdOf: (p: Planting) => BedHold, nowMonth: number) {
     for (const p of plantings) {
       if (!Number.isInteger(p.sowMonth) || p.sowMonth < 1 || p.sowMonth > 12) continue;
@@ -310,7 +313,7 @@ class Occupancy {
       const crop = holdOf(p);
       if (p.existing) {
         const entryOffset = existingSowOffset(p.sowMonth, nowMonth)
-          + (crop.transplant ? TRANSPLANT_ENTRY_EARLIEST_MONTHS : 0);
+          + (crop.transplant ? TRANSPLANT_ENTRY_PLANNED_MONTHS : 0);
         for (let index = 0; index < holdSpanMonths(crop); index++) {
           const offset = entryOffset + index;
           if (offset >= 0) this.addExistingOffset(p.bedId, offset, crop.key, safeFraction);
@@ -619,11 +622,10 @@ function leavesDeadSliver(
  * otherwise the largest that fits the occupancy arithmetic; null when nothing
  * fits. None of these checks proves an actual row layout.
  *
- * A succession batch asks for a fixed slice — a half, or a third — computed
- * from how many batches there are, with no knowledge of what is already in the
- * bed. The actual remainder is also offered when the preset ladder does not
- * tile, provided the crop's sourced spacing says at least one plant fits. A
- * plot's ladder is [1], so plots keep taking their whole area unchanged.
+ * A succession batch asks for a named share — full, half, third or quarter.
+ * We never invent a remainder such as 42%; if no standard share fits, the
+ * planner leaves and explains the gap instead of handing the farmer an
+ * impractical measurement. A plot's ladder is [1].
  */
 function usableShare(
   occupancy: Occupancy,
@@ -635,24 +637,9 @@ function usableShare(
   preferAtOrBelow = false,
 ): number | null {
   if (bed.kind === 'plot') return occupancy.fits(bed.id, sowMonth, crop, 1) ? 1 : null;
+  if (!occupancy.allowsBedSharing()) return occupancy.fits(bed.id, sowMonth, crop, 1) ? 1 : null;
 
-  // THE LADDER DOES NOT TILE. Halves, thirds and quarters mix into remainders
-  // that are none of them — a third plus a quarter plus a third fills 92% of a
-  // bed and strands 8%. No choice from the ladder alone can always avoid that,
-  // which is why fixing four placement sites in a row still left even ONE-BED
-  // farms with an 8% strip. So "whatever is actually left" is always on offer:
-  // it strands nothing by construction, and a crop given 42% of a bed is a
-  // perfectly ordinary thing to write on a plan.
-  let tightestFree = 1;
-  for (const occupiedFraction of occupancy.fractionsDuring(bed.id, sowMonth, crop)) {
-    tightestFree = Math.min(tightestFree, 1 - occupiedFraction);
-  }
-  // FLOOR, never round: 0.41666 rounded UP to 0.417 is 0.0002 too big for
-  // Occupancy.fits (tolerance 1.0001), so "take the rest" silently never
-  // fitted and every caller fell back to the ladder.
-  const rest = Math.floor(tightestFree * 1000) / 1000;
-
-  const ladder = [wanted, ...fractionPresetsFor(bed).filter((f) => f < wanted - 0.001), rest];
+  const ladder = [wanted, ...fractionPresetsFor(bed).filter((f) => f < wanted - 0.001)];
   const fits = [...new Set(ladder)]
     .filter((f) => f > 0.001 && f <= max + 0.001 && bed.areaM2 * f * plantsPerM2(crop) >= 1)
     .filter((f) => occupancy.fits(bed.id, sowMonth, crop, f));
@@ -811,7 +798,7 @@ class BedRotation {
       ? existingSowOffset(sowMonth, this.nowMonth)
       : monthsForward(this.nowMonth, sowMonth);
     const startOffset = sowOffset
-      + (crop.transplant ? TRANSPLANT_ENTRY_EARLIEST_MONTHS : 0);
+      + (crop.transplant ? TRANSPLANT_ENTRY_PLANNED_MONTHS : 0);
     return {
       cropKey: crop.key,
       family: rotationFamilyOf(crop),

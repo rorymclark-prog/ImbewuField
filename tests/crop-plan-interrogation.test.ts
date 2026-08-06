@@ -290,7 +290,10 @@ test('every farmer-facing spacing line prints the published bounds that define i
   // Internal geometry estimates may remain for reading legacy records, but
   // the farmer-facing line must suppress the exact values the source audit
   // rejected rather than laundering them through the generic formatter.
-  assert.doesNotMatch(sowingInstruction(cropByKey('tomatoes')!), /rows 90cm/i);
+  assert.equal(
+    sowingInstruction(cropByKey('tomatoes')!),
+    'rows 90–120cm apart · 30–60cm apart in the row · sow 1cm deep',
+  );
   assert.doesNotMatch(sowingInstruction(cropByKey('garlic')!), /(?:^|· )10cm apart in the row/i);
   assert.doesNotMatch(sowingInstruction(cropByKey('oats')!), /6cm|100 days?/i);
 });

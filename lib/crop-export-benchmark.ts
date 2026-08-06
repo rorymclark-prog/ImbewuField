@@ -37,6 +37,7 @@ import {
   estimatedYieldKgAdjusted,
   harvestMonthForCrop,
   latestBedEntryMonth,
+  plannedBedEntryMonth,
   plantingBedEntryOffsets,
   taskMonthsFromNow,
   yieldByCrop,
@@ -367,7 +368,7 @@ export function buildOccupancyCalendar(
       if (!crop) continue;
       if (crop.timingVerified === false) continue;
       const span = holdMonths(p.sowMonth, crop).length;
-      const entry = bedEntryMonth(p.sowMonth, crop);
+      const entry = plannedBedEntryMonth(p.sowMonth, crop);
       const harvest = harvestMonthForCrop(p.sowMonth, crop);
       const greenSpan = ((harvest - entry) % 12 + 12) % 12;
       for (const start of plantingBedEntryOffsets(p, nowMonth, 12)) {

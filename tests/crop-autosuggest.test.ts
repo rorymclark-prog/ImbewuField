@@ -15,6 +15,7 @@ import assert from 'node:assert/strict';
 
 import {
   autoSuggestPlan,
+  isStandardBedFraction,
   plannedCohortReachesMonth,
   planningWeightBenchmarkScore,
   type AutoSuggestAnswers,
@@ -62,7 +63,7 @@ test('auto-suggest refuses to invent a production plan until reliable irrigation
 test('a crop with unresolved timing or field geometry stays readable but cannot enter auto-suggest', () => {
   // These legacy catalog rows still decode saved records. None has the full
   // duration + field-layout basis needed to generate a new planting schedule.
-  for (const key of ['maize', 'dry-beans', 'kale', 'tomatoes', 'oats']) {
+  for (const key of ['maize', 'dry-beans', 'kale', 'oats']) {
     const crop = cropByKey(key);
     assert.ok(crop, `${key} disappeared from historical crop lookup`);
     assert.ok(crop.name.trim() && crop.note.trim(), `${key} is no longer readable as a named record`);
@@ -79,6 +80,25 @@ test('a crop with unresolved timing or field geometry stays readable but cannot 
     assert.match(result.notes.join(' '), /crop duration and field-spacing basis/i);
     assert.doesNotMatch(result.notes.join(' '), /widen.*(?:group|selection)/i);
   }
+});
+
+test('tomatoes have a verified household-garden basis and can be selected explicitly', () => {
+  const tomato = cropByKey('tomatoes');
+  assert.ok(tomato);
+  assert.equal(hasAutomaticPlanningBasis(tomato), true);
+  const result = autoSuggestPlan({ ...FAMILY, cropKeys: ['tomatoes'], groups: [] }, 'mild-frost', NINE_BEDS, [], 8);
+  assert.ok(result.plantings.some((planting) => planting.cropKey === 'tomatoes'));
+  assert.ok(result.plantings.every((planting) => planting.cropKey === 'tomatoes'));
+});
+
+test('automatic vegetable plantings use only full, half, third or quarter beds', () => {
+  const result = autoSuggestPlan({
+    ...FAMILY,
+    cropKeys: ['tomatoes', 'swiss-chard', 'lettuce', 'carrots', 'green-beans'],
+    groups: [],
+  }, 'mild-frost', NINE_BEDS, [], 8);
+  assert.ok(result.plantings.length > 0);
+  assert.ok(result.plantings.every((planting) => isStandardBedFraction(planting.areaFraction)));
 });
 
 test('exact crop choices remain a strict whitelist on veg beds and staple plots', () => {

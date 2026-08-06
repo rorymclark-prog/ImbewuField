@@ -84,9 +84,9 @@ test('a crop with a multi-month picking window creates work in every picking mon
     { id: 'tomato-window', bedId: 'bed-1', cropKey: 'tomatoes', sowMonth: 8 },
   ], BEDS).filter((task) => task.action === 'harvest');
   assert.deepEqual(Object.fromEntries(tasks.map((task) => [task.id, task.month])), {
-    'tomato-window:harvest': 2,
-    'tomato-window:harvest:1': 3,
-    'tomato-window:harvest:2': 4,
+    'tomato-window:harvest': 1,
+    'tomato-window:harvest:1': 2,
+    'tomato-window:harvest:2': 3,
   });
 });
 
@@ -180,7 +180,7 @@ test('sowingInstruction prints published bounds and suppresses unverified legacy
   assert.doesNotMatch(sowingInstruction(cropByKey('kale')!), /45cm/i);
 });
 
-test('source-audited transplant timing reserves the full 1–3 month nursery range', () => {
+test('source-audited transplant timing shows readiness without painting it as field occupancy', () => {
   const lettuce = cropByKey('lettuce')!;
   const peppers = cropByKey('peppers')!;
   assert.equal(lettuce.transplant, true);
@@ -195,8 +195,8 @@ test('source-audited transplant timing reserves the full 1–3 month nursery ran
   assert.equal(lettuceRow.bedMonthLatest, 11, 'the plan reserves through November because cold nursery conditions can take 8–12 weeks');
   assert.equal(
     lettuceRow.harvestMonth,
-    2,
-    'the conservative harvest marker uses the latest possible bed entry plus the 80-day upper endpoint',
+    1,
+    'the harvest marker uses the planned October field entry plus the 80-day upper endpoint',
   );
 });
 
@@ -218,9 +218,10 @@ test('unverified layouts withhold quantities while verified living-material rang
   const garlic = rows.find((row) => row.cropKey === 'garlic')!;
   const amadumbe = rows.find((row) => row.cropKey === 'amadumbe')!;
 
-  assert.equal(tomato.quantityStatus, 'spacing-confirmation-required');
+  assert.equal(tomato.quantityStatus, 'counted-piece-range');
   assert.equal(tomato.count, null);
-  assert.doesNotMatch(sowingInstruction(cropByKey('tomatoes')!), /rows 90cm/i);
+  assert.deepEqual(tomato.countRange, tomato.finalPlantPositionsRange);
+  assert.match(sowingInstruction(cropByKey('tomatoes')!), /rows 90–120cm apart/);
   assert.equal(garlic.quantityStatus, 'counted-piece-range');
   assert.equal(garlic.count, null, 'the midpoint must not become an exact clove order');
   assert.deepEqual(garlic.countRange, garlic.finalPlantPositionsRange);
@@ -253,7 +254,7 @@ test('a transplant crop exposes its earliest and latest readiness months', () =>
   assert.equal(onions.sowMonth, 4, 'seed into trays');
   assert.equal(onions.bedMonth, 5, 'start checking seedling and bed readiness in May');
   assert.equal(onions.bedMonthLatest, 7, 'keep July available for the supported cold-condition nursery duration');
-  assert.equal(onions.harvestMonth, 1, 'the conservative six-month field period starts from the latest possible July transplant');
+  assert.equal(onions.harvestMonth, 12, 'the six-month field period starts from the planned June transplant');
   assert.equal(onions.transplant, true);
 
   const carrots = rows.find((r) => r.bedId === 'bed-1')!.crops.find((c) => c.cropKey === 'carrots')!;
@@ -266,19 +267,21 @@ test('printed field and occupancy tables keep the nursery month out of a transpl
   const planRow = buildPlanTableRows(onionOnly, BEDS)[0];
   assert.equal(planRow.establish, 'Nursery Apr');
   assert.equal(planRow.intoField, 'Check May-Jul; transplant when ready');
-  assert.equal(planRow.harvest, 'Jan', '180 days are counted from the conservative latest field-entry month, not tray sowing');
+  assert.equal(planRow.harvest, 'Dec', '180 days are counted from the planned field-entry month, not tray sowing');
 
   const onionCalendar = buildOccupancyCalendar(onionOnly, BEDS, 4)
     .find((row) => row.bedId === 'bed-2')!;
   const months = rollingMonths(4);
   const april = onionCalendar.cells[months.indexOf(4)];
   const may = onionCalendar.cells[months.indexOf(5)];
+  const june = onionCalendar.cells[months.indexOf(6)];
   const july = onionCalendar.cells[months.indexOf(7)];
-  const january = onionCalendar.cells[months.indexOf(1)];
+  const december = onionCalendar.cells[months.indexOf(12)];
   assert.deepEqual(april, [], 'seedlings in a nursery do not occupy the bed');
-  assert.equal(may[0]?.harvesting, false, 'the field calendar reserves the bed from the first readiness check');
-  assert.equal(july[0]?.harvesting, false, 'the field calendar keeps the bed reserved through the latest readiness month');
-  assert.equal(january[0]?.harvesting, true, 'the field calendar marks harvest from the conservative latest field entry');
+  assert.deepEqual(may, [], 'the first readiness check does not itself occupy the bed');
+  assert.equal(june[0]?.harvesting, false, 'the field calendar starts at the planned transplant month');
+  assert.equal(july[0]?.harvesting, false, 'the crop remains in the field after transplant');
+  assert.equal(december[0]?.harvesting, true, 'the field calendar marks harvest from the planned field entry');
 });
 
 test('a cut-and-come-again crop shows a harvest window, a one-shot crop shows one month', () => {
@@ -447,7 +450,7 @@ test('ready seedlings use the readiness window while own seed is sourced before 
   assert.equal(onions.sowMonth, 4, 'trays');
   assert.equal(onions.bedMonth, 5, 'first readiness check');
   assert.equal(onions.bedMonthLatest, 7, 'latest readiness month');
-  assert.equal(onions.harvestMonth, 1, 'the buying sheet must reserve the full nursery range before field maturity');
+  assert.equal(onions.harvestMonth, 12, 'the buying sheet separates the readiness range from planned field maturity');
   assert.match(onions.note, /planning window is May–July/i);
   assert.match(onions.note, /only when the bed and seedlings are ready/i);
   assert.match(onions.note, /Source packet seed before the April tray-sowing month/i);
@@ -455,7 +458,7 @@ test('ready seedlings use the readiness window while own seed is sourced before 
   assert.match(onions.note, /sow trays in April/i);
   assert.match(onions.note, /4–6 weeks/);
   assert.match(onions.note, /twice as long \(8–12 weeks\)/);
-  assert.match(onions.note, /reserves the possible 1–3 month nursery range/i);
+  assert.match(onions.note, /middle month as its working transplant date/i);
   assert.match(onions.note, /ready-grown seedlings/);
 });
 

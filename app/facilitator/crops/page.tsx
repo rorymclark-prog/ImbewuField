@@ -27,7 +27,7 @@ import type { CropDef, RainPattern } from '@/lib/crop-catalog';
 import { CROPS, cropByKey, hasAutomaticPlanningBasis, hasPlanningYield, MONTHS_SHORT } from '@/lib/crop-catalog';
 import type { PlanBed, Planting, CropPlanState, FoodAvailabilityItem, PlanYieldBenchmark, CashflowSettings } from '@/lib/crop-plan';
 import {
-  loadCropPlan, saveCropPlan, bedEntryMonth, latestBedEntryMonth, harvestEndMonthForCrop, harvestMonthForCrop, tasksForPlan, taskMonthsFromNow, estimatedYieldKgAdjusted, nextValidSowMonth,
+  loadCropPlan, saveCropPlan, bedEntryMonth, latestBedEntryMonth, plannedBedEntryMonth, harvestEndMonthForCrop, harvestMonthForCrop, tasksForPlan, taskMonthsFromNow, estimatedYieldKgAdjusted, nextValidSowMonth,
   isSpaceHungry, bedOverlapFraction, bedHasUnverifiedTiming, seedBoqForPlan, buildYearReport, buildFoodAvailability, buildPlanYieldBenchmark,
   buildFieldUtilizationByMonth, loadFavouriteCropKeys, saveFavouriteCropKeys, isGenuinelyIntercropped, plantingBedEntryOffsets, plantingIsActiveOrPlanned, recurringPlanPlantings,
   loadAllowBedSharing, saveAllowBedSharing, loadCashflowSettings, saveCashflowSettings,
@@ -120,7 +120,7 @@ function genId(prefix: string): string {
 
 /** Compact glyph for a bed-share fraction — falls back to a rounded percentage. */
 function fractionLabel(f: number): string {
-  if (f >= 1) return '';
+  if (f >= 1) return '1/1';
   if (Math.abs(f - 0.5) < 0.01) return '½';
   if (Math.abs(f - 1 / 3) < 0.01) return '⅓';
   if (Math.abs(f - 0.25) < 0.01) return '¼';
@@ -830,7 +830,7 @@ function FacilitatorCropsPageInner() {
   // one — shown as a soft nudge, never a hard block.
   const pickerOverlap = useMemo(() => {
     if (!pickerBedId || !pickerCrop) return 0;
-    const entry = bedEntryMonth(pickerMonth, pickerCrop);
+    const entry = plannedBedEntryMonth(pickerMonth, pickerCrop);
     const harvest = harvestEndMonthForCrop(pickerMonth, pickerCrop);
     // Exclude the planting being edited from its own overlap check — otherwise
     // editing would always see itself as "already committed" on this bed.
@@ -1127,8 +1127,8 @@ function FacilitatorCropsPageInner() {
               >
                 🪴 check / transplant
               </span>{' '}
-              marks the first month to check seedlings raised in a tray. Transplant when they and the bed are ready;
-              the plan reserves the full supported nursery range. Tap it (or the crop bar) for details.
+              marks when to start checking seedlings raised in a tray. The crop bar starts at the planned transplant month;
+              if seedlings are delayed, update the planting instead of treating the bed as occupied. Tap it (or the crop bar) for details.
               <br />
               ↻ marks where year two begins. The timeline shows <strong style={{ color: '#5C5040' }}>two full years</strong> — pan
               sideways to reach the second one. This plan holds one annual cycle rather than a separate plan per
@@ -1472,7 +1472,7 @@ function FacilitatorCropsPageInner() {
           goal={aGoal} onGoal={chooseGoal}
           focusCount={aFocusCount} onFocusCount={setAFocusCount}
           groups={aGroups} onToggleGroup={toggleGroup}
-          cropKeys={aCropKeys} onToggleCrop={toggleAutoCrop}
+          cropKeys={aCropKeys} onToggleCrop={toggleAutoCrop} onSetCrops={setACropKeys}
           rhythm={aRhythm} onRhythm={setARhythm}
           pattern={aPattern} onPattern={setAPattern}
           rotateCrops={aRotateCrops} onRotateCrops={setARotateCrops}
@@ -1946,7 +1946,8 @@ function BedRow({ bed, plantings, currentMonth, onAddCrop, onTapPlanting }: {
 function PlantingBar({ planting, currentMonth, onTap }: { planting: Planting; currentMonth: number; onTap: () => void }) {
   const crop = cropByKey(planting.cropKey);
   if (!crop) return null;
-  const entry = bedEntryMonth(planting.sowMonth, crop);
+  const readinessStart = bedEntryMonth(planting.sowMonth, crop);
+  const entry = plannedBedEntryMonth(planting.sowMonth, crop);
   const harvest = crop.timingVerified === false
     ? entry
     : harvestMonthForCrop(planting.sowMonth, crop);
@@ -2025,7 +2026,7 @@ function PlantingBar({ planting, currentMonth, onTap }: { planting: Planting; cu
             // colour on both would claim a certainty this plan doesn't have.
             opacity: isYearTwo(seg) ? 0.5 : 1,
           }}
-          title={`${crop.name} — sow ${monthLabel(planting.sowMonth)}, ${finishLabel}${fraction < 1 ? ` · ${fLabel} of bed` : ''}${planting.existing ? ' · already growing' : ''}${isYearTwo(seg) ? ' · year two, the same cycle coming round again' : ''}`}
+          title={`${crop.name} — sow ${monthLabel(planting.sowMonth)}, ${finishLabel} · ${fLabel} bed${planting.existing ? ' · already growing' : ''}${isYearTwo(seg) ? ' · year two, the same cycle coming round again' : ''}`}
         >
           {BAR_STYLE === 'solid' && (
             // The "ready to harvest" marker — a hard colour + a line, not a
@@ -2079,8 +2080,8 @@ function PlantingBar({ planting, currentMonth, onTap }: { planting: Planting; cu
               whiteSpace: 'nowrap', cursor: 'pointer', lineHeight: 1.5, zIndex: 2,
               opacity: isYearTwo(seg) ? 0.5 : 1,
             }}
-            title={`From ${monthLabel(entry)}, check ${crop.name.toLowerCase()} seedlings and transplant when ready. The planning window runs through ${monthLabel(latestEntry)}.`}
-            aria-label={`Check ${crop.name} seedlings from ${monthLabel(entry)} and transplant when ready`}
+            title={`Plan to transplant ${crop.name.toLowerCase()} in ${monthLabel(entry)}. Start checking seedlings in ${monthLabel(readinessStart)}; if they are still not ready by ${monthLabel(latestEntry)}, update the plan instead of treating the bed as occupied.`}
+            aria-label={`Plan to transplant ${crop.name} in ${monthLabel(entry)}`}
           >
             🪴 check / transplant
           </button>
@@ -2418,11 +2419,9 @@ function PlantingPopover({ planting, bedAreaM2, allPlantings, onEdit, onRemove, 
             <X size={16} />
           </button>
         </div>
-        {(planting.areaFraction ?? 1) < 1 && (
-          <div className="inline-block font-sans font-semibold mb-2 px-2 py-0.5 rounded-full" style={{ fontSize: 11, background: 'rgba(63,122,60,0.12)', color: '#1F4D2B' }}>
-            {fractionLabel(planting.areaFraction ?? 1)} of bed{genuinelyIntercropped ? ' — intercropped' : ''}
-          </div>
-        )}
+        <div className="inline-block font-sans font-semibold mb-2 px-2 py-0.5 rounded-full" style={{ fontSize: 11, background: 'rgba(63,122,60,0.12)', color: '#1F4D2B' }}>
+          {fractionLabel(planting.areaFraction ?? 1)} bed{genuinelyIntercropped ? ' — intercropped' : ''}
+        </div>
         {genuinelyIntercropped && (
           <p className="font-sans mb-2" style={{ fontSize: 11, color: '#9A8268' }}>
             Sharing this bed with another crop at the same time. The kilogram comparison uses each crop&apos;s allocated area only; no generic intercropping bonus or penalty is invented.
@@ -2515,7 +2514,7 @@ const CLIMATE_OPTIONS: { key: RainPattern; label: string; blurb: string }[] = [
 
 function AutoSuggestModal({
   phase, goal, onGoal, focusCount, onFocusCount,
-  groups, onToggleGroup, cropKeys, onToggleCrop, rhythm, onRhythm, pattern, onPattern, rotateCrops, onRotateCrops,
+  groups, onToggleGroup, cropKeys, onToggleCrop, onSetCrops, rhythm, onRhythm, pattern, onPattern, rotateCrops, onRotateCrops,
   allowVinesInBeds, onAllowVinesInBeds, reliableIrrigation, onReliableIrrigation,
   result, onGenerate, onAccept, onBackToQuestions, onClose,
 }: {
@@ -2523,7 +2522,7 @@ function AutoSuggestModal({
   goal: GardenGoal; onGoal: (g: GardenGoal) => void;
   focusCount: number; onFocusCount: (n: number) => void;
   groups: FoodGroup[]; onToggleGroup: (g: FoodGroup) => void;
-  cropKeys: string[]; onToggleCrop: (cropKey: string) => void;
+  cropKeys: string[]; onToggleCrop: (cropKey: string) => void; onSetCrops: (cropKeys: string[]) => void;
   rhythm: HarvestRhythm; onRhythm: (r: HarvestRhythm) => void;
   pattern: RainPattern; onPattern: (pattern: RainPattern) => void;
   rotateCrops: boolean; onRotateCrops: (v: boolean) => void;
@@ -2532,13 +2531,15 @@ function AutoSuggestModal({
   result: AutoSuggestResult | null;
   onGenerate: () => void; onAccept: () => void; onBackToQuestions: () => void; onClose: () => void;
 }) {
+  const [cropSearch, setCropSearch] = useState('');
   const tileStyle = (active: boolean): CSSProperties => ({
     background: active ? '#1F4D2B' : '#FFFFFF', color: active ? '#F7F2E9' : '#5C5040',
     border: `1px solid ${active ? '#1F4D2B' : '#E2D8C4'}`, cursor: 'pointer',
   });
   const cropChoices = CROPS
-    .filter(hasAutomaticPlanningBasis)
-    .filter((crop) => groups.length === 0 || groups.includes(foodGroupOf(crop)));
+    .filter((crop) => groups.length === 0 || groups.includes(foodGroupOf(crop)))
+    .filter((crop) => crop.name.toLowerCase().includes(cropSearch.trim().toLowerCase()));
+  const supportedShown = cropChoices.filter(hasAutomaticPlanningBasis);
 
   return (
     <div style={{ position: 'fixed', inset: 0, zIndex: 70, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
@@ -2608,19 +2609,31 @@ function AutoSuggestModal({
               <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.08em' }}>
                 Which crops do your household or buyers actually want?
               </div>
-              <select
-                value=""
-                onChange={(event) => { if (event.target.value) onToggleCrop(event.target.value); }}
+              <input
+                value={cropSearch}
+                onChange={(event) => setCropSearch(event.target.value)}
+                placeholder="Search crops, e.g. maize or tomatoes"
                 className="w-full font-sans rounded-lg px-2.5 py-2"
                 style={{ fontSize: 12.5, color: '#5C5040', background: '#FFFFFF', border: '1px solid #E2D8C4' }}
-              >
-                <option value="">Choose a crop the household eats…</option>
-                {cropChoices.filter((crop) => !cropKeys.includes(crop.key)).map((crop) => (
-                  <option key={crop.key} value={crop.key}>{crop.icon} {crop.name}</option>
-                ))}
-              </select>
+              />
+              <div className="flex gap-2 my-2">
+                <button type="button" onClick={() => onSetCrops([...new Set([...cropKeys, ...supportedShown.map((crop) => crop.key)])])} className="font-sans rounded-lg px-2 py-1" style={{ fontSize: 11, border: '1px solid #B9C9B9', color: '#1F4D2B', background: '#F5F8F3' }}>Select all shown</button>
+                <button type="button" onClick={() => onSetCrops([])} className="font-sans rounded-lg px-2 py-1" style={{ fontSize: 11, border: '1px solid #E2D8C4', color: '#5C5040', background: '#FFFFFF' }}>Clear</button>
+              </div>
+              <div className="rounded-lg" style={{ maxHeight: 220, overflowY: 'auto', border: '1px solid #E2D8C4', background: '#FFFFFF' }}>
+                {cropChoices.map((crop) => {
+                  const supported = hasAutomaticPlanningBasis(crop);
+                  return (
+                    <label key={crop.key} className="flex items-center gap-2 px-2.5 py-2 font-sans" style={{ fontSize: 12, borderBottom: '1px solid #F0E9DC', cursor: supported ? 'pointer' : 'not-allowed', opacity: supported ? 1 : 0.62 }}>
+                      <input type="checkbox" checked={cropKeys.includes(crop.key)} disabled={!supported} onChange={() => onToggleCrop(crop.key)} />
+                      <span style={{ flex: 1 }}>{crop.icon} {crop.name}</span>
+                      {!supported && <span style={{ fontSize: 9.5, color: '#9A6018' }}>manual — confirm locally</span>}
+                    </label>
+                  );
+                })}
+              </div>
               <p className="font-mono mt-1.5" style={{ fontSize: 10.5, color: '#9A6018', lineHeight: 1.4 }}>
-                Crops missing a supported yield, duration or field-spacing basis are intentionally excluded from auto-suggest; they remain manual or record-only. No crop is inferred from a location or from “rural”.
+                Every crop stays visible. Unticked disabled crops, including grain maize, need locally confirmed timing or field spacing before automatic planning can safely place them.
               </p>
               {cropKeys.length > 0 && (
                 <div className="flex flex-wrap gap-1.5 mt-2">
@@ -2752,10 +2765,15 @@ function AutoSuggestModal({
                     const crop = cropByKey(p.cropKey);
                     if (!crop) return null;
                     const h = harvestMonthForCrop(p.sowMonth, crop);
+                    const fieldEntry = plannedBedEntryMonth(p.sowMonth, crop);
                     return (
                       <div key={p.id} className="flex items-center justify-between px-3 py-2 rounded-lg font-sans" style={{ fontSize: 12.5, background: '#FFFFFF', border: '1px solid #E2D8C4' }}>
-                        <span>{crop.icon} {crop.name}{p.areaFraction && p.areaFraction < 1 ? ` (${fractionLabel(p.areaFraction)})` : ''}</span>
-                        <span style={{ color: '#8C7A62' }}>sow {monthLabel(p.sowMonth)} → {crop.yieldKgPerM2 === 0 ? 'cut/roll down' : 'harvest'} {monthLabel(h)}</span>
+                        <span>{crop.icon} {crop.name} ({fractionLabel(p.areaFraction ?? 1)} bed)</span>
+                        <span style={{ color: '#8C7A62', textAlign: 'right' }}>
+                          {crop.transplant
+                            ? `start tray ${monthLabel(p.sowMonth)} → transplant ${monthLabel(fieldEntry)} → harvest ${monthLabel(h)} (${cropDurationLabel(crop)} in bed)`
+                            : `sow ${monthLabel(p.sowMonth)} → ${crop.yieldKgPerM2 === 0 ? 'cut/roll down' : 'harvest'} ${monthLabel(h)}`}
+                        </span>
                       </div>
                     );
                   })}
