@@ -1,7 +1,15 @@
 'use client';
 import { useState, useCallback } from 'react';
 import { X, ChevronRight, ChevronLeft, Check, Users, Droplets, Home, Leaf, AlertTriangle, FileText, Sparkles } from 'lucide-react';
-import { saveSurvey, loadSurvey, type SiteSurvey } from '@/lib/site-survey';
+import {
+  saveSurvey,
+  loadSurvey,
+  reportedFoodGroups,
+  type HddsFoodGroup,
+  type ProductionCategory,
+  type ReportedProduction,
+  type SiteSurvey,
+} from '@/lib/site-survey';
 import { loadPlaces } from '@/lib/saved-places';
 import { designSiteIdFromLocation, computeTracedAreaTotals } from '@/lib/design-studio';
 import { loadCanvasState } from '@/lib/design-canvas';
@@ -18,8 +26,29 @@ interface Props {
   onClose: () => void;
 }
 
-const STEPS = ['Site & Goals', 'Water', 'Roof Catchment', 'Land & Soil', "What Exists", 'Challenges'];
-const STEP_ICONS = [Users, Droplets, Home, Leaf, Leaf, AlertTriangle];
+const STEPS = ['Household Info', 'Land & Location', 'Current Production', 'Livestock & Poultry', 'Income & Sales', 'Resources & Inputs', 'Challenges'];
+const STEP_ICONS = [Users, Leaf, Leaf, Users, FileText, Droplets, AlertTriangle];
+
+const PRODUCTION_ROWS: Array<{ category: ProductionCategory; label: string; hint: string }> = [
+  { category: 'leafy_greens', label: 'Leafy greens', hint: 'e.g. spinach, kale, cabbage leaves' },
+  { category: 'other_vegetables', label: 'Other vegetables', hint: 'e.g. tomatoes, onions, pumpkins' },
+  { category: 'staple_crops', label: 'Staple crops', hint: 'e.g. maize, beans, potatoes' },
+  { category: 'fruit', label: 'Fruit', hint: 'e.g. citrus, bananas, mangoes' },
+  { category: 'nuts_berries', label: 'Nuts and berries', hint: 'Report what you harvest; no food group is guessed' },
+  { category: 'eggs', label: 'Eggs', hint: '' },
+  { category: 'poultry', label: 'Poultry', hint: '' },
+  { category: 'rabbits', label: 'Rabbits', hint: '' },
+  { category: 'honey', label: 'Honey', hint: '' },
+  { category: 'other', label: 'Something else', hint: 'Name it and choose its food group if you know it' },
+];
+
+const HDDS_LABELS: Record<HddsFoodGroup, string> = {
+  cereals: 'Cereals', roots_tubers: 'Roots and tubers', vegetables: 'Vegetables', fruit: 'Fruit',
+  meat_poultry: 'Meat and poultry', eggs: 'Eggs', fish: 'Fish', pulses_nuts_seeds: 'Pulses, nuts and seeds',
+  milk: 'Milk products', oils_fats: 'Oils and fats', sugars_honey: 'Sugars and honey', spices_beverages: 'Spices and beverages',
+};
+const MONTH_LABELS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const AMBIGUOUS_FOOD_GROUP_CATEGORIES = new Set<ProductionCategory>(['staple_crops', 'nuts_berries', 'other']);
 
 function toggle(arr: string[], v: string): string[] {
   return arr.includes(v) ? arr.filter(x => x !== v) : [...arr, v];
@@ -178,6 +207,31 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
   );
   const [livestock, setLivestock] = useState<string[]>(existing?.livestock ?? []);
   const [otherInfra, setOtherInfra] = useState<string[]>(existing?.otherInfra ?? []);
+  const [reportedProduction, setReportedProduction] = useState<ReportedProduction[]>(existing?.reportedProduction ?? []);
+  const productionRow = (category: ProductionCategory): ReportedProduction =>
+    reportedProduction.find((row) => row.category === category) ?? {
+      category,
+      quantityPerYear: null,
+      unit: '',
+      usedByHousehold: null,
+      sold: null,
+      incomeZar: null,
+      harvestMonths: [],
+    };
+  const patchProduction = (category: ProductionCategory, patch: Partial<ReportedProduction>) => {
+    setReportedProduction((rows) => {
+      const prior = rows.find((row) => row.category === category) ?? {
+        category,
+        quantityPerYear: null,
+        unit: '',
+        usedByHousehold: null,
+        sold: null,
+        incomeZar: null,
+        harvestMonths: [],
+      };
+      return [...rows.filter((row) => row.category !== category), { ...prior, ...patch }];
+    });
+  };
 
   // Step 5 — Challenges
   const [practice, setPractice] = useState(existing?.farmingPractice ?? '');
@@ -188,14 +242,16 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
 
   const totalRoof = (Number(roofMain) || 0) + (Number(roofSecondary) || 0);
   const roofHarvest600 = totalRoof > 0 ? Math.round(totalRoof * 600 * (hasGutters ? 0.8 : 0.6) / 1000) : 0;
+  const reportedGroups = reportedFoodGroups(reportedProduction);
 
   const canNext = [
     siteType && goals.length > 0,  // step 0
-    waterSource.length > 0 && waterDelivery.length > 0,  // step 1
-    true,  // step 2 — catchment is optional
-    !!landPrep && !!soilCondition,  // step 3
-    true,  // step 4 — what exists is optional
-    !!practice && challenges.length > 0,  // step 5
+    !!landPrep && !!soilCondition,  // step 1
+    true,  // step 2 — reported production is optional
+    true,  // step 3 — livestock is optional
+    true,  // step 4 — income and sales are optional
+    waterSource.length > 0 && waterDelivery.length > 0,  // step 5
+    !!practice && challenges.length > 0,  // step 6
   ][step];
 
   const handleSave = useCallback(() => {
@@ -228,11 +284,16 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
       challenges,
       isCommercial,
       marketType: isCommercial ? marketType : undefined,
+      reportedProduction: reportedProduction.filter((row) =>
+        !!row.name || !!row.unit || row.quantityPerYear !== null || row.usedByHousehold !== null
+        || row.sold !== null || row.incomeZar !== null || (row.harvestMonths?.length ?? 0) > 0
+        || !!row.foodGroup,
+      ),
       notes,
     };
     const saved = saveSurvey(survey);
     if (saved) onSaved(saved);
-  }, [siteId, placeId, siteType, adults, memberCount, goals, waterSource, waterDelivery, waterStorage, roofMain, roofSecondary, roofSource, hasGutters, landPrep, soilCondition, soilAmendments, fencing, crops, existingGrowingArea, growingAreaSource, livestock, otherInfra, practice, challenges, isCommercial, marketType, notes, onSaved]);
+  }, [siteId, placeId, siteType, adults, memberCount, goals, waterSource, waterDelivery, waterStorage, roofMain, roofSecondary, roofSource, hasGutters, landPrep, soilCondition, soilAmendments, fencing, crops, existingGrowingArea, growingAreaSource, livestock, otherInfra, practice, challenges, isCommercial, marketType, reportedProduction, notes, onSaved]);
 
   const Icon = STEP_ICONS[step];
 
@@ -330,8 +391,8 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
           </div>
         )}
 
-        {/* ── Step 1: Water Resources ── */}
-        {step === 1 && (
+        {/* ── Step 5: Resources & Inputs — Water ── */}
+        {step === 5 && (
           <div className="space-y-5">
             <div>
               <SectionLabel>Water sources available on this site (select all)</SectionLabel>
@@ -387,8 +448,8 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
           </div>
         )}
 
-        {/* ── Step 2: Roof Catchment ── */}
-        {step === 2 && (
+        {/* ── Step 5: Resources & Inputs — Roof catchment ── */}
+        {step === 5 && (
           <div className="space-y-5">
             <div style={{ background: 'rgba(35,94,134,0.06)', borderRadius: 14, padding: '12px 14px', border: '1px solid rgba(35,94,134,0.18)' }}>
               <p className="font-sans" style={{ fontSize: 12.5, color: '#4A3F2E', lineHeight: 1.5 }}>
@@ -425,8 +486,8 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
           </div>
         )}
 
-        {/* ── Step 3: Land & Soil ── */}
-        {step === 3 && (
+        {/* ── Step 1: Land & Location ── */}
+        {step === 1 && (
           <div className="space-y-5">
             <div>
               <SectionLabel>How is the land prepared?</SectionLabel>
@@ -494,8 +555,8 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
           </div>
         )}
 
-        {/* ── Step 4: What Exists ── */}
-        {step === 4 && (
+        {/* ── Step 2: Current production ── */}
+        {step === 2 && (
           <div className="space-y-5">
             <div>
               <SectionLabel>Crops already growing (select all)</SectionLabel>
@@ -521,6 +582,78 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
             </div>
 
             <div>
+              <SectionLabel>Current production survey</SectionLabel>
+              <div className="font-sans mb-3" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.45 }}>
+                Report what you know. Blank means not reported, not zero. All quantities use the unit you write for that row.
+              </div>
+              <div className="space-y-3">
+                {PRODUCTION_ROWS.map(({ category, label, hint }) => {
+                  const row = productionRow(category);
+                  const number = (value: number | null) => value === null ? '' : String(value);
+                  return (
+                    <div key={category} style={{ padding: '12px', borderRadius: 12, background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
+                      <div className="font-sans font-semibold" style={{ fontSize: 13.5, color: '#20190F' }}>{label}</div>
+                      {hint && <div className="font-sans mt-0.5" style={{ fontSize: 11.5, color: '#8C7A62' }}>{hint}</div>}
+                      {category === 'other' && (
+                        <input value={row.name ?? ''} onChange={(e) => patchProduction(category, { name: e.target.value })} placeholder="What do you produce?"
+                          className="w-full font-sans mt-2" style={{ minHeight: 44, padding: '8px 10px', borderRadius: 9, background: '#FFFEFA', border: '1px solid #E2D8C4', fontSize: 13, color: '#20190F' }} />
+                      )}
+                      <div className="grid grid-cols-2 gap-2 mt-2">
+                        <label className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>Qty / year
+                          <input type="number" min="0" value={number(row.quantityPerYear)} onChange={(e) => patchProduction(category, { quantityPerYear: e.target.value === '' ? null : Number(e.target.value) })} className="w-full mt-1" style={{ minHeight: 40, padding: '6px 8px', borderRadius: 8, border: '1px solid #E2D8C4', background: '#FFFEFA' }} />
+                        </label>
+                        <label className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>Unit
+                          <input value={row.unit} onChange={(e) => patchProduction(category, { unit: e.target.value })} placeholder="e.g. kg, eggs" className="w-full mt-1" style={{ minHeight: 40, padding: '6px 8px', borderRadius: 8, border: '1px solid #E2D8C4', background: '#FFFEFA' }} />
+                        </label>
+                        <label className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>Used by household
+                          <input type="number" min="0" value={number(row.usedByHousehold)} onChange={(e) => patchProduction(category, { usedByHousehold: e.target.value === '' ? null : Number(e.target.value) })} className="w-full mt-1" style={{ minHeight: 40, padding: '6px 8px', borderRadius: 8, border: '1px solid #E2D8C4', background: '#FFFEFA' }} />
+                        </label>
+                        <label className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>Sold
+                          <input type="number" min="0" value={number(row.sold)} onChange={(e) => patchProduction(category, { sold: e.target.value === '' ? null : Number(e.target.value) })} className="w-full mt-1" style={{ minHeight: 40, padding: '6px 8px', borderRadius: 8, border: '1px solid #E2D8C4', background: '#FFFEFA' }} />
+                        </label>
+                      </div>
+                      <label className="font-sans block mt-2" style={{ fontSize: 11.5, color: '#5C5040' }}>Income earned (R)
+                        <input type="number" min="0" value={number(row.incomeZar)} onChange={(e) => patchProduction(category, { incomeZar: e.target.value === '' ? null : Number(e.target.value) })} className="w-full mt-1" style={{ minHeight: 40, padding: '6px 8px', borderRadius: 8, border: '1px solid #E2D8C4', background: '#FFFEFA' }} />
+                      </label>
+                      <div className="mt-3">
+                        <div className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>Harvest months (if known)</div>
+                        <div className="grid grid-cols-4 gap-1 mt-1">
+                          {MONTH_LABELS.map((month, index) => {
+                            const monthNumber = index + 1;
+                            const selected = row.harvestMonths?.includes(monthNumber) ?? false;
+                            return <button key={month} type="button" onClick={() => patchProduction(category, {
+                              harvestMonths: selected
+                                ? (row.harvestMonths ?? []).filter((value) => value !== monthNumber)
+                                : [...(row.harvestMonths ?? []), monthNumber].sort((a, b) => a - b),
+                            })} className="font-sans" style={{ minHeight: 40, borderRadius: 8, border: `1px solid ${selected ? '#1F4D2B' : '#E2D8C4'}`, background: selected ? '#1F4D2B' : '#FFFEFA', color: selected ? '#FFFEFA' : '#5C5040', fontSize: 11.5 }}>{month}</button>;
+                          })}
+                        </div>
+                      </div>
+                      {AMBIGUOUS_FOOD_GROUP_CATEGORIES.has(category) && (
+                        <label className="font-sans block mt-2" style={{ fontSize: 11.5, color: '#5C5040' }}>FAO food group (optional)
+                          <select value={row.foodGroup ?? ''} onChange={(e) => patchProduction(category, { foodGroup: (e.target.value || undefined) as HddsFoodGroup | undefined })} className="w-full mt-1" style={{ minHeight: 40, padding: '6px 8px', borderRadius: 8, border: '1px solid #E2D8C4', background: '#FFFEFA' }}>
+                            <option value="">Not sure</option>
+                            {Object.entries(HDDS_LABELS).map(([value, group]) => <option key={value} value={value}>{group}</option>)}
+                          </select>
+                        </label>
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="font-sans mt-3" style={{ padding: '10px 12px', borderRadius: 10, background: 'rgba(31,77,43,0.06)', color: '#1F4D2B', fontSize: 12.5, lineHeight: 1.45 }}>
+                {reportedGroups.length > 0 ? <><strong>Food groups reported: {reportedGroups.length} of 12.</strong> </> : <><strong>Food groups: not reported yet.</strong> </>}
+                FAO Household Dietary Diversity Score food groups · reported by the farmer, not a nutrition score.
+              </div>
+            </div>
+
+          </div>
+        )}
+
+        {/* ── Step 3: Livestock & Poultry ── */}
+        {step === 3 && (
+          <div className="space-y-5">
+            <div>
               <SectionLabel>Livestock on site (select all)</SectionLabel>
               <div className="flex flex-wrap gap-2">
                 {[
@@ -535,7 +668,6 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
                 ))}
               </div>
             </div>
-
             <div>
               <SectionLabel>Other infrastructure (select all)</SectionLabel>
               <div className="flex flex-wrap gap-2">
@@ -553,8 +685,33 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
           </div>
         )}
 
-        {/* ── Step 5: Challenges & Notes ── */}
-        {step === 5 && (
+        {/* ── Step 4: Income & Sales ── */}
+        {step === 4 && (
+          <div className="space-y-5">
+            <Toggle label="We sell or plan to sell produce" sub="Your production rows can record what was sold and income earned" on={isCommercial} onChange={setIsCommercial} />
+            {isCommercial && (
+              <div>
+                <SectionLabel>Current or target market</SectionLabel>
+                <div className="space-y-2">
+                  {[
+                    { v: 'farm-stall',    label: 'On-site farm stall' },
+                    { v: 'local-market',  label: 'Local community / informal market' },
+                    { v: 'wholesale',     label: 'Wholesale / bulk buyers' },
+                    { v: 'not-sure',      label: 'Not sure yet' },
+                  ].map(o => (
+                    <Radio key={o.v} label={o.label} on={marketType === o.v} onClick={() => setMarketType(o.v)} />
+                  ))}
+                </div>
+              </div>
+            )}
+            <div className="font-sans" style={{ padding: '12px 14px', borderRadius: 12, background: 'rgba(31,77,43,0.06)', color: '#4A3F2E', fontSize: 12.5, lineHeight: 1.5 }}>
+              Sales and income are reported by you in Current Production. A blank is shown as not reported, not zero.
+            </div>
+          </div>
+        )}
+
+        {/* ── Step 6: Challenges & Notes ── */}
+        {step === 6 && (
           <div className="space-y-5">
             <div>
               <SectionLabel>Farming approach</SectionLabel>
@@ -588,24 +745,6 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
                 ))}
               </div>
             </div>
-
-            <Toggle label="We sell or plan to sell produce" sub="Enables market-access questions" on={isCommercial} onChange={setIsCommercial} />
-
-            {isCommercial && (
-              <div>
-                <SectionLabel>Current or target market</SectionLabel>
-                <div className="space-y-2">
-                  {[
-                    { v: 'farm-stall',    label: 'On-site farm stall' },
-                    { v: 'local-market',  label: 'Local community / informal market' },
-                    { v: 'wholesale',     label: 'Wholesale / bulk buyers' },
-                    { v: 'not-sure',      label: 'Not sure yet' },
-                  ].map(o => (
-                    <Radio key={o.v} label={o.label} on={marketType === o.v} onClick={() => setMarketType(o.v)} />
-                  ))}
-                </div>
-              </div>
-            )}
 
             <div>
               <SectionLabel>Anything else Lima should know?</SectionLabel>

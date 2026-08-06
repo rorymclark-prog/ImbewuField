@@ -35,6 +35,14 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '6 August',
+    sha: '78df299',
+    changes: [
+      'Your survey can now record food, livestock and sales you report yourself',
+      'Food groups say what you reported, never a made-up nutrition score',
+    ],
+  },
+  {
+    when: '6 August',
     sha: 'df2a98d',
     changes: [
       'Design Studio tools now sit beside your map on a tablet or computer',

@@ -4,6 +4,57 @@ import { loadPlaces } from './saved-places';
 import { canonicalCoordinateSiteId, coordinateSiteIdParts } from './site-id';
 import { activeAccountLocalStorageKey } from './account-local-storage';
 
+// The FAO Household Dietary Diversity Score uses these twelve food groups. This is a count of
+// reported groups, never a made-up nutrition score or an estimate of what a household eats.
+export const HDDS_FOOD_GROUPS = [
+  'cereals', 'roots_tubers', 'vegetables', 'fruit', 'meat_poultry', 'eggs',
+  'fish', 'pulses_nuts_seeds', 'milk', 'oils_fats', 'sugars_honey', 'spices_beverages',
+] as const;
+export type HddsFoodGroup = typeof HDDS_FOOD_GROUPS[number];
+
+export const PRODUCTION_CATEGORIES = [
+  'leafy_greens', 'other_vegetables', 'staple_crops', 'fruit', 'nuts_berries',
+  'eggs', 'poultry', 'rabbits', 'honey', 'other',
+] as const;
+export type ProductionCategory = typeof PRODUCTION_CATEGORIES[number];
+
+export interface ReportedProduction {
+  category: ProductionCategory;
+  /** The farmer names the free row; catalog categories carry their own label. */
+  name?: string;
+  quantityPerYear: number | null;
+  unit: string;
+  usedByHousehold: number | null;
+  sold: number | null;
+  incomeZar: number | null;
+  /** Harvest timing is farmer-reported so non-catalogued production can feed a future gap view. */
+  harvestMonths?: number[];
+  /** Some category labels cover several FAO groups, so the farmer may name the group. */
+  foodGroup?: HddsFoodGroup;
+}
+
+const CATEGORY_FOOD_GROUP: Partial<Record<ProductionCategory, HddsFoodGroup>> = {
+  leafy_greens: 'vegetables',
+  other_vegetables: 'vegetables',
+  fruit: 'fruit',
+  eggs: 'eggs',
+  poultry: 'meat_poultry',
+  rabbits: 'meat_poultry',
+  honey: 'sugars_honey',
+};
+
+/** Counts only a production row the farmer has actually reported. Empty fields stay unknown,
+ * rather than becoming a zero or a claimed food group. */
+export function reportedFoodGroups(rows: readonly ReportedProduction[]): HddsFoodGroup[] {
+  const groups = new Set<HddsFoodGroup>();
+  for (const row of rows) {
+    if (row.quantityPerYear === null || row.quantityPerYear <= 0 || !row.unit.trim()) continue;
+    const group = row.foodGroup ?? CATEGORY_FOOD_GROUP[row.category];
+    if (group) groups.add(group);
+  }
+  return HDDS_FOOD_GROUPS.filter((group) => groups.has(group));
+}
+
 export interface SiteSurvey {
   siteId: string;   // canonical key: designSiteIdFromLocation()'s `site:${lat.toFixed(5)},${lon.toFixed(5)}`
   placeId: string;  // legacy key (SavedPlace id) — kept for provenance/migration, no longer used to store
@@ -49,6 +100,10 @@ export interface SiteSurvey {
   isCommercial: boolean;
   marketType?: string;      // 'farm-stall' | 'local-market' | 'wholesale' | 'not-sure'
 
+  // Farmer-reported production, not a modelled yield. All row values are optional: a blank egg
+  // count or income must remain blank rather than becoming a false zero in a funder report.
+  reportedProduction?: ReportedProduction[];
+
   notes: string;
 }
 
@@ -71,6 +126,48 @@ function stringArray(value: unknown): string[] {
 
 function areaValue(value: unknown): number | null {
   return typeof value === 'number' && Number.isFinite(value) && value >= 0 ? value : null;
+}
+
+function moneyOrQuantity(value: unknown): number | null {
+  return typeof value === 'number' && Number.isFinite(value) && value >= 0 ? value : null;
+}
+
+function monthArray(value: unknown): number[] {
+  if (!Array.isArray(value)) return [];
+  return [...new Set(value.filter((month): month is number =>
+    typeof month === 'number' && Number.isInteger(month) && month >= 1 && month <= 12,
+  ))].sort((a, b) => a - b);
+}
+
+function normaliseReportedProduction(value: unknown): ReportedProduction[] {
+  if (!Array.isArray(value)) return [];
+  const seen = new Set<ProductionCategory>();
+  const rows: ReportedProduction[] = [];
+  for (const entry of value) {
+    if (!entry || typeof entry !== 'object' || Array.isArray(entry)) continue;
+    const row = entry as Partial<ReportedProduction>;
+    if (!PRODUCTION_CATEGORIES.includes(row.category as ProductionCategory) || seen.has(row.category as ProductionCategory)) continue;
+    const category = row.category as ProductionCategory;
+    const foodGroup = HDDS_FOOD_GROUPS.includes(row.foodGroup as HddsFoodGroup) ? row.foodGroup as HddsFoodGroup : undefined;
+    const name = stringValue(row.name);
+    // A nameless free row is not a report at all. Named catalog rows are never expected here.
+    if (category === 'other' && !name) continue;
+    seen.add(category);
+    const clean: ReportedProduction = {
+      category,
+      quantityPerYear: moneyOrQuantity(row.quantityPerYear),
+      unit: stringValue(row.unit),
+      usedByHousehold: moneyOrQuantity(row.usedByHousehold),
+      sold: moneyOrQuantity(row.sold),
+      incomeZar: moneyOrQuantity(row.incomeZar),
+    };
+    if (name) clean.name = name;
+    const harvestMonths = monthArray(row.harvestMonths);
+    if (harvestMonths.length) clean.harvestMonths = harvestMonths;
+    if (foodGroup) clean.foodGroup = foodGroup;
+    rows.push(clean);
+  }
+  return rows;
 }
 
 function normaliseSurvey(value: unknown, siteId: string): SiteSurvey | null {
@@ -120,6 +217,7 @@ function normaliseSurvey(value: unknown, siteId: string): SiteSurvey | null {
     challenges: stringArray(row.challenges),
     isCommercial: row.isCommercial === true,
     marketType: stringValue(row.marketType) || undefined,
+    reportedProduction: normaliseReportedProduction(row.reportedProduction),
     notes: stringValue(row.notes),
   };
 }
