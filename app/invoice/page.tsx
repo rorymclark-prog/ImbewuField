@@ -70,6 +70,11 @@ export default function InvoicePage() {
 
   const sellerName = profile?.full_name ?? user?.displayName ?? 'Your name';
   const sellerPhone = profile?.phone ?? '';
+  // NO FALLBACK, DELIBERATELY. This line read 'Tugela Valley smallholding' for every farmer in the
+  // country until 2026-08-06 — a real place, printed on invoices sent to real buyers by people who
+  // have never been there. An unset farm name prints nothing; the name and phone above already
+  // identify the seller, and a blank line is honest where a borrowed one is not.
+  const sellerFarm = profile?.farm_name?.trim() ?? '';
   const invoiceNo = `#${String(currentNo).padStart(4, '0')}`;
   const total = items.reduce((s, it) => s + it.qty * it.price, 0);
   const valid = billTo.trim() !== '' && items.some((it) => it.desc.trim() !== '' && it.qty > 0);
@@ -179,7 +184,7 @@ export default function InvoicePage() {
     doc.setFont('helvetica', 'bold'); doc.setFontSize(18); doc.setTextColor(32, 25, 15);
     doc.text(sellerName, M, y);
     doc.setFont('helvetica', 'normal'); doc.setFontSize(10); doc.setTextColor(92, 80, 64);
-    y += 16; doc.text('Tugela Valley smallholding', M, y);
+    if (sellerFarm) { y += 16; doc.text(sellerFarm, M, y); }
     if (sellerPhone) { y += 13; doc.text(sellerPhone, M, y); }
 
     doc.setFillColor(31, 77, 43); doc.roundedRect(W - M - 30, 54, 30, 30, 5, 5, 'F');
@@ -322,7 +327,7 @@ export default function InvoicePage() {
             <div className="flex items-start justify-between mb-4">
               <div>
                 <div className="font-display font-bold text-lg" style={{ color: '#20190F', lineHeight: 1.15 }}>{sellerName}</div>
-                <div className="text-xs font-sans mt-0.5" style={{ color: '#5C5040' }}>Tugela Valley smallholding</div>
+                {sellerFarm && <div className="text-xs font-sans mt-0.5" style={{ color: '#5C5040' }}>{sellerFarm}</div>}
                 {sellerPhone && <div className="text-xs font-sans" style={{ color: '#5C5040' }}>{sellerPhone}</div>}
               </div>
               <div className="flex items-center justify-center rounded-xl flex-shrink-0" style={{ width: 40, height: 40, background: '#1F4D2B' }}>
