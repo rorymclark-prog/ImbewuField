@@ -383,8 +383,10 @@ export function clampBaseOpacity(v: unknown): number {
 
 /** Which base-image controls the Base step must offer, given the saved state. */
 export interface BasePhotoControls {
-  /** Both directions are reachable — the photo can be switched off AND back on. */
+  /** Satellite and blank are the permanent paper-preview switch, even with no photo. */
   canToggle: boolean;
+  /** The third, photo position is available only after the farmer has uploaded one. */
+  hasPhoto: boolean;
   /** The farmer's photo is the base being drawn on right now. */
   showingPhoto: boolean;
 }
@@ -450,14 +452,15 @@ export function setDesignBaseMode(
  * re-picking the file, re-aligning it and re-measuring the scale (Rory: "i still cant toggle on
  * satelite or drone once the dorne is added").
  *
- * The rule is therefore about the PHOTO EXISTING, never about which base is active: a saved photo
- * means a two-way toggle, in both flag states.
+ * Satellite and blank are for EVERY plan: blank is how a farmer checks the paper version before
+ * printing, even if they never own a drone. A saved photo adds a third position, and remains
+ * reachable from either of the two permanent positions.
  */
 export function basePhotoControls(
   state: Pick<DesignCanvasState, 'baseMode' | 'useCustomBase' | 'customBase'> | null | undefined,
 ): BasePhotoControls {
   const hasPhoto = !!state?.customBase;
-  return { canToggle: hasPhoto, showingPhoto: hasPhoto && designBaseMode(state) === 'photo' };
+  return { canToggle: true, hasPhoto, showingPhoto: hasPhoto && designBaseMode(state) === 'photo' };
 }
 
 export interface DesignCanvasState {

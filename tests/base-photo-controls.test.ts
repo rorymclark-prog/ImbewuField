@@ -29,18 +29,21 @@ test('a saved photo is reachable from BOTH base states — no one-way door', () 
 
   const onPhoto = basePhotoControls({ useCustomBase: true, customBase: photo });
   assert.equal(onPhoto.canToggle, true);
+  assert.equal(onPhoto.hasPhoto, true);
   assert.equal(onPhoto.showingPhoto, true);
 
   // The regression: photo saved, satellite showing. The farmer MUST still be able to get back.
   const onSatellite = basePhotoControls({ useCustomBase: false, customBase: photo });
   assert.equal(onSatellite.canToggle, true, 'a saved photo with the flag off must stay reachable');
+  assert.equal(onSatellite.hasPhoto, true);
   assert.equal(onSatellite.showingPhoto, false);
 });
 
-test('a farmer who never imported a photo is offered no toggle', () => {
+test('every farmer can switch between satellite and blank, even without a photo', () => {
   for (const state of [null, undefined, {}, { useCustomBase: false }, { customBase: null }]) {
     const controls = basePhotoControls(state as Parameters<typeof basePhotoControls>[0]);
-    assert.equal(controls.canToggle, false);
+    assert.equal(controls.canToggle, true);
+    assert.equal(controls.hasPhoto, false);
     assert.equal(controls.showingPhoto, false);
   }
 });
@@ -68,6 +71,14 @@ test('blank keeps every placed-area reading from the base it replaced', () => {
     customBase: photo,
   };
   const area = (mPerPx: number) => ringAreaM2(placed.zones[0].points, { ...placed.frame, mPerPx });
+
+  // The common case is no drone photograph at all. Blank still has to exist as the paper preview,
+  // and satellite is the only scale it may inherit in that case.
+  const noPhotoSatellite = setDesignBaseMode({ ...placed, customBase: undefined }, 'satellite', satelliteMPerPx);
+  const noPhotoBlank = setDesignBaseMode(noPhotoSatellite, 'blank', activeBaseMPerPx(noPhotoSatellite, satelliteMPerPx));
+  const noPhotoBackToSatellite = setDesignBaseMode(noPhotoBlank, 'satellite', activeBaseMPerPx(noPhotoBlank, satelliteMPerPx));
+  assert.equal(area(activeBaseMPerPx(noPhotoSatellite, satelliteMPerPx)), area(activeBaseMPerPx(noPhotoBlank, satelliteMPerPx)));
+  assert.equal(area(activeBaseMPerPx(noPhotoBlank, satelliteMPerPx)), area(activeBaseMPerPx(noPhotoBackToSatellite, satelliteMPerPx)));
 
   const satellite = setDesignBaseMode(placed, 'satellite', satelliteMPerPx);
   const drone = setDesignBaseMode(satellite, 'photo', satelliteMPerPx);

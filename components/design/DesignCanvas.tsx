@@ -179,9 +179,9 @@ export interface DesignCanvasProps {
   // Quick in-canvas toggle of the Sector energies overlay (the top-left ☀️ button) — the
   // discoverable twin of the "Sector energies" entry in the Layers popover.
   onToggleSector?: () => void;
-  /** Satellite, farmer photo, and the paper ground are one three-position base control. It only
-   * appears after a photo upload because that is when satellite/blank become a useful comparison. */
-  basePhoto?: { mode: DesignBaseMode; onSelect: (mode: DesignBaseMode) => void } | null;
+  /** Satellite and paper are always available; a farmer photo becomes a third position after
+   * upload. The rail never hides the paper-preview control from a no-photo farm. */
+  basePhoto?: { mode: DesignBaseMode; hasPhoto: boolean; onSelect: (mode: DesignBaseMode) => void } | null;
   // Slope + aspect (from lib/elevation) → the approximate on-contour guide lines.
   slopeDeg?: number;
   aspectDeg?: number;
@@ -2344,7 +2344,9 @@ export default function DesignCanvas({
         ref={svgRef}
         viewBox={`0 0 ${imgW} ${imgH}`}
         preserveAspectRatio="xMidYMid meet"
-        style={{ display: 'block', width: '100%', height: '100%', touchAction: 'none', background: '#0B120B' }}
+        // The letterbox belongs to the canvas as much as the drawn frame does. Keeping it dark
+        // on the blank base made the paper-preview read like a black map with a white strip.
+        style={{ display: 'block', width: '100%', height: '100%', touchAction: 'none', background: onPaper ? '#FFFEFA' : '#0B120B' }}
         onPointerDown={handleBackgroundPointerDown}
         onPointerMove={(e) => {
           handleBackgroundPointerMove(e);
@@ -4418,16 +4420,16 @@ export default function DesignCanvas({
         <span aria-hidden>📏</span>
       </button>
 
-      {/* SATELLITE → DRONE PHOTO → BLANK, on the canvas rail. Blank retains the active ground
-          scale but removes the pixels, so this is also the on-screen check of the printed plan. */}
+      {/* SATELLITE ⇄ BLANK on every farm; photo becomes the middle stop after upload. Blank
+          retains the active ground scale, so this is the on-screen check of the printed plan. */}
       {basePhoto && (
         <button
           type="button"
           aria-pressed={basePhoto.mode !== 'satellite'}
           aria-label={`Base: ${basePhoto.mode}. Switch base.`}
-          title={`Base: ${basePhoto.mode}. Switch to ${basePhoto.mode === 'satellite' ? 'drone photo' : basePhoto.mode === 'photo' ? 'blank' : 'satellite'}.`}
+          title={`Base: ${basePhoto.mode}. Switch to ${basePhoto.mode === 'satellite' ? (basePhoto.hasPhoto ? 'drone photo' : 'blank') : basePhoto.mode === 'photo' ? 'blank' : 'satellite'}.`}
           onClick={() => basePhoto.onSelect(
-            basePhoto.mode === 'satellite' ? 'photo' : basePhoto.mode === 'photo' ? 'blank' : 'satellite',
+            basePhoto.mode === 'satellite' ? (basePhoto.hasPhoto ? 'photo' : 'blank') : basePhoto.mode === 'photo' ? 'blank' : 'satellite',
           )}
           style={{
             position: 'absolute',

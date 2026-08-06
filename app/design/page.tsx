@@ -3062,6 +3062,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
                 basePhotoControls(canvasState).canToggle
                   ? {
                       mode: designBaseMode(canvasState),
+                      hasPhoto: basePhotoControls(canvasState).hasPhoto,
                       onSelect: (mode) => {
                         if (mode === 'photo') restoreCustomBase();
                         else if (mode === 'blank') useBlankBase();
@@ -3183,7 +3184,9 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
                   only imagery and carries the active m/px with it, so a farmer can compare their
                   working map with the sheet without their areas silently changing. */}
               <span style={{ display: 'inline-flex', borderRadius: 9, overflow: 'hidden', border: `1px solid ${OCHRE}`, flexShrink: 0 }}>
-                {([['Satellite', 'satellite'], ['My photo', 'photo'], ['Blank', 'blank']] as const).map(([label, mode]) => {
+                {([['Satellite', 'satellite'], ['My photo', 'photo'], ['Blank', 'blank']] as const)
+                  .filter(([, mode]) => mode !== 'photo' || basePhotoControls(canvasState).hasPhoto)
+                  .map(([label, mode]) => {
                   const on = designBaseMode(canvasState) === mode;
                   return (
                     <button
@@ -3204,7 +3207,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
                       {label}
                     </button>
                   );
-                })}
+                  })}
               </span>
               {/* MICRO-ADJUSTMENT, in place, on the real map — not in a dialog. A drone shot and a
                   satellite tile disagree by a few metres and a few degrees more often than not
@@ -3325,17 +3328,21 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
                 onClick={() => setShowPhotoImport(true)}
                 style={{ border: 'none', background: 'transparent', color: OCHRE, fontWeight: 700, cursor: 'pointer', fontSize: 12.5, padding: '4px 6px' }}
               >
-                {designBaseMode(canvasState) === 'photo' ? 'Adjust photo' : 'Use a different photo'}
+                {designBaseMode(canvasState) === 'photo'
+                  ? 'Adjust photo'
+                  : basePhotoControls(canvasState).hasPhoto ? 'Use a different photo' : 'Use your own aerial photo'}
               </button>
               {/* Destructive, so it is quiet, last in the row, and asks first. */}
-              <button
-                type="button"
-                onClick={deleteCustomBase}
-                title="Remove your photo and go back to the satellite. Your design is not affected."
-                style={{ border: 'none', background: 'transparent', color: '#B53A3A', fontWeight: 600, cursor: 'pointer', fontSize: 12.5, padding: '4px 6px' }}
-              >
-                Remove photo
-              </button>
+              {basePhotoControls(canvasState).hasPhoto && (
+                <button
+                  type="button"
+                  onClick={deleteCustomBase}
+                  title="Remove your photo and go back to the satellite. Your design is not affected."
+                  style={{ border: 'none', background: 'transparent', color: '#B53A3A', fontWeight: 600, cursor: 'pointer', fontSize: 12.5, padding: '4px 6px' }}
+                >
+                  Remove photo
+                </button>
+              )}
               {/* Hides the STRIP, not the photo — "Remove photo" beside it is the one that
                   touches the design, which is why that one is red and asks first and this one is
                   a grey ×. */}
