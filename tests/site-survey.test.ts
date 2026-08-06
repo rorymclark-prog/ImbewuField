@@ -4,6 +4,7 @@ import assert from 'node:assert/strict';
 import {
   canonicalSurveySiteId,
   loadSurvey,
+  reportedFoodGroups,
   saveSurvey,
   surveyToPrompt,
   type SiteSurvey,
@@ -121,6 +122,38 @@ test('older malformed array fields cannot crash report generation', () => {
   const missing = surveyToPrompt(null as unknown as SiteSurvey, 800);
   assert.match(missing, /not specified/);
   assert.doesNotMatch(missing, /NaN|Infinity|undefined|\[object Object\]/);
+});
+
+test('production remains farmer-reported: old surveys stay blank and bad figures never become zero', () => {
+  const { local } = installBrowser();
+  const siteId = 'site:-29.00000,31.00000';
+  local.setItem(`imbewu_site_survey_${siteId}`, JSON.stringify({
+    ...survey(),
+    reportedProduction: [
+      { category: 'eggs', quantityPerYear: 120, unit: ' eggs ', usedByHousehold: 100, sold: 20, incomeZar: 400, harvestMonths: [12, 1, 12, 13] },
+      { category: 'eggs', quantityPerYear: 999, unit: 'eggs', usedByHousehold: 0, sold: 0, incomeZar: 0 },
+      { category: 'poultry', quantityPerYear: Infinity, unit: 'birds', usedByHousehold: -1, sold: Number.NaN, incomeZar: -2 },
+      { category: 'other', name: ' ', quantityPerYear: 3, unit: 'kg' },
+    ],
+  }));
+  const loaded = loadSurvey(siteId);
+  assert.ok(loaded);
+  assert.deepEqual(loaded.reportedProduction, [{
+    category: 'eggs', quantityPerYear: 120, unit: 'eggs', usedByHousehold: 100, sold: 20, incomeZar: 400, harvestMonths: [1, 12],
+  }, {
+    category: 'poultry', quantityPerYear: null, unit: 'birds', usedByHousehold: null, sold: null, incomeZar: null,
+  }]);
+  assert.deepEqual(reportedFoodGroups(loaded.reportedProduction ?? []), ['eggs']);
+});
+
+test('food-group count never guesses from a blank quantity, blank unit, or ambiguous category', () => {
+  const groups = reportedFoodGroups([
+    { category: 'fruit', quantityPerYear: 10, unit: '', usedByHousehold: null, sold: null, incomeZar: null },
+    { category: 'nuts_berries', quantityPerYear: 10, unit: 'kg', usedByHousehold: null, sold: null, incomeZar: null },
+    { category: 'staple_crops', quantityPerYear: 10, unit: 'kg', usedByHousehold: null, sold: null, incomeZar: null },
+    { category: 'other', name: 'Beans', quantityPerYear: 10, unit: 'kg', usedByHousehold: null, sold: null, incomeZar: null, foodGroup: 'pulses_nuts_seeds' },
+  ]);
+  assert.deepEqual(groups, ['pulses_nuts_seeds']);
 });
 
 test('direct loads repair types and bind the record to the requested site', () => {
