@@ -7,6 +7,7 @@
 // than trusted.
 
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import test from 'node:test';
 
 import {
@@ -14,6 +15,11 @@ import {
   SOIL_CAUTION, SOIL_TEST_INVITE,
 } from '@/lib/plan-assurance';
 import { pdfSafe } from '@/lib/crop-export-pdf';
+
+const CROP_PLAN_SCREEN = readFileSync(
+  new URL('../app/facilitator/crops/page.tsx', import.meta.url),
+  'utf8',
+);
 
 test('the plan says plainly that no agronomist has checked it', () => {
   const all = ASSURANCE_PARAGRAPHS.join(' ').toLowerCase();
@@ -91,5 +97,44 @@ test('the soil-test invite explains what uploading actually changes', () => {
     SOIL_TEST_INVITE.toLowerCase(),
     /rebuilt|instead of a global model|your real numbers/,
     'never says what changes if they do it',
+  );
+});
+
+test('removing a crop cannot silently recommend an unchosen replacement', () => {
+  assert.doesNotMatch(
+    CROP_PLAN_SCREEN,
+    /suggestSubstituteCrop|Replace with .* instead|onReplace|substitute=/,
+    'the saved plan does not retain the farmer whitelist, so it cannot choose a safe substitute',
+  );
+  assert.match(
+    CROP_PLAN_SCREEN,
+    /To choose another crop yourself, cancel and use Edit\./,
+    'the screen must point back to the manual crop picker instead of inventing a replacement',
+  );
+});
+
+test('accepting auto-suggest keeps the climate answer the farmer confirmed', () => {
+  assert.match(
+    CROP_PLAN_SCREEN,
+    /rainPattern:\s*aPattern/,
+    'accepting suggestions must save the questionnaire climate with the plan',
+  );
+  assert.match(
+    CROP_PLAN_SCREEN,
+    /plan\?\.rainPattern\s*\?\?\s*mapPattern/,
+    'screen tasks and exports must prefer the accepted climate over the map estimate',
+  );
+});
+
+test('the on-screen task list keeps next-year work in its real cohort', () => {
+  assert.match(
+    CROP_PLAN_SCREEN,
+    /taskMonthsFromNow\(task, currentMonth\) === i/,
+    'looking ahead must group by real distance from today, not month name alone',
+  );
+  assert.doesNotMatch(
+    CROP_PLAN_SCREEN,
+    /allTasks\.filter\(\(task\) => task\.month === m\)/,
+    'month-only grouping aliases next-year tasks into this year',
   );
 });

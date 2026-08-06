@@ -97,9 +97,11 @@ export function catalogMonthFor(month: number, lat: number): number {
 /**
  * Catalog crops with a sowing window open in the given (catalog) month under
  * the given pattern. Descriptive, not advisory: it reads the researched
- * windows as-is. Crops with no stated yield (yieldKgPerM2 <= 0) are excluded
- * — those entries exist in the catalog for other reasons and listing them
- * here would present a placeholder as a plantable crop.
+ * windows as-is. A missing kg/m² benchmark does not make a food crop
+ * unsowable: that benchmark controls harvest estimates and auto-suggest, not
+ * this calendar readout. A timing-unverified legacy window is different: it
+ * cannot be presented as open. Zero-food entries such as a green-manure cover
+ * are excluded because they are not crops a visitor can expect to harvest.
  *
  * @param month 1-12, already hemisphere-adjusted via catalogMonthFor
  */
@@ -109,6 +111,8 @@ export function sowableInMonth(
   crops: readonly CropDef[] = CROPS,
 ): CropDef[] {
   return crops.filter(
-    (c) => c.yieldKgPerM2 > 0 && (c.sowMonths[pattern] ?? []).includes(month),
+    (c) => c.timingVerified !== false
+      && (c.yieldKgPerM2 === null || c.yieldKgPerM2 > 0)
+      && (c.sowMonths[pattern] ?? []).includes(month),
   );
 }

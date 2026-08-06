@@ -45,9 +45,10 @@
  *     boundary, the design canvas and the crop plan all live there (or in
  *     localStorage, which is worse: it never leaves the farmer's browser).
  *     THEREFORE: `progressPct`, `stage`, `steps`, `surveyFilled`,
- *     `plannedKg` and `harvestedVsPlannedPct` CAN NEVER BE COMPUTED FOR
- *     ANOTHER USER under the rules as deployed. In this build they come from
- *     demo data. There is no client-side fix; see below.
+ *     `plannedKg` cannot be read for another user under the rules as deployed.
+ *     Even with access, `harvestedVsPlannedPct` remains unavailable until the
+ *     plan records a sowing year and completed crop cycle. There is no
+ *     client-side fix; see below.
  *
  * ── WHAT MUST BE TRUE BEFORE ANY REAL FARMER APPEARS IN THIS VIEW ─────────
  *
@@ -309,10 +310,11 @@ export interface NetworkFarmerMetrics {
    */
   estimatedValueZar: number | null;
 
-  // ── plan delivery (crop plan is self-only today — see precondition 4) ──
+  // ── plan context (crop plan is self-only today — see precondition 4) ──
+  /** Benchmark for one complete crop-plan cycle, not a dated target. */
   plannedKg: number | null;
   harvestedKg: number | null;
-  /** 0-100+, harvested ÷ intended for the period. >100 means over-delivery. */
+  /** Withheld until the plan can identify a dated, completed crop cycle. */
   harvestedVsPlannedPct: number | null;
 
   // ── site progress (self-only today — see precondition 4) ──
@@ -485,14 +487,15 @@ export function buildFarmerMetrics(
       ...reconciliation.notYetHarvested,
       ...reconciliation.unmatchedPlanned,
     ];
-    plannedKg = round(sumBy(rows, (r) => r.intendedKg), 1);
+    const knownCycleBenchmarks = rows.flatMap((row) => row.intendedKg === null ? [] : [row.intendedKg]);
+    plannedKg = knownCycleBenchmarks.length ? round(knownCycleBenchmarks.reduce((sum, kg) => sum + kg, 0), 1) : null;
     reconciledHarvestKg = round(sumBy(rows, (r) => r.harvestedKg), 1);
   }
   const harvestedKg = reconciledHarvestKg ?? producedKg;
-  const harvestedVsPlannedPct =
-    plannedKg !== null && plannedKg > 0 && harvestedKg !== null
-      ? pct(harvestedKg, plannedKg)
-      : null;
+  // A crop-cycle benchmark has no sowing year or completed-cycle marker. It
+  // may be shown as context, but comparing calendar logs with it would accuse
+  // a farmer of missing a target the data cannot date.
+  const harvestedVsPlannedPct = null;
 
   // ── site progress ──
   const scored = completion ? computeCompletionScore(completion) : null;
@@ -597,14 +600,6 @@ export function attentionFlags(row: NetworkFarmerSummary): NetworkAttentionFlag[
       kind: 'dormant',
       label: `No logs for ${m.daysSinceActivity} days`,
       severity: m.daysSinceActivity > DORMANT_DAYS * 2 ? 'urgent' : 'watch',
-    });
-  }
-
-  if (m.harvestedVsPlannedPct !== null && m.harvestedVsPlannedPct < 60) {
-    flags.push({
-      kind: 'under_plan',
-      label: `Harvested ${Math.round(m.harvestedVsPlannedPct)}% of plan`,
-      severity: m.harvestedVsPlannedPct < 35 ? 'urgent' : 'watch',
     });
   }
 

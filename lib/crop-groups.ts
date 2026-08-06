@@ -21,33 +21,6 @@ export const FOOD_GROUP_META: Record<FoodGroup, { label: string; icon: string }>
 // first; grain last (most bed-space per calorie, least dietary urgency).
 export const GROUP_PRIORITY: FoodGroup[] = ['leafy_green', 'legume', 'root_tuber', 'allium_aromatic', 'fruiting_veg', 'staple_grain'];
 
-// The actual crop-ROTATION sequence — a fixed cycle each bed is meant to
-// move through over successive plantings, general permaculture practice:
-// legumes fix nitrogen for the heavy-feeding leafy greens that follow them;
-// fruiting veg draws on what's left without repeating a heavy feeder twice;
-// roots want soil that ISN'T freshly rich, so they suit a bed a heavy feeder
-// just drew down; alliums are light feeders that rest the bed gently; grain
-// is the bulk "reset" year before the cycle returns to legumes. Used by
-// BedRotation (lib/crop-autosuggest.ts) to actively TARGET each bed's next
-// group (a preference, not a hard rule — falls back to any bed rather than
-// leaving a bed unplanted), and by the crop-plan page's explanation card.
-export const ROTATION_SEQUENCE: FoodGroup[] = ['legume', 'leafy_green', 'fruiting_veg', 'root_tuber', 'allium_aromatic', 'staple_grain'];
-
-export const ROTATION_BLURB: Record<FoodGroup, string> = {
-  legume: 'Pulls nitrogen from the air into the soil as it grows — the best group to plant right before a hungry leafy green or fruiting crop.',
-  leafy_green: 'Fast turnover, heavy nitrogen feeders — do best following legumes, and quick enough to only hold a bed for part of a season.',
-  fruiting_veg: 'Heavy feeders with their own soil-borne pests and diseases — the group most worth never repeating in the same bed two seasons running.',
-  root_tuber: "Dig deep and don't want freshly-manured soil — a good match for a bed that carried heavy feeders the season before.",
-  allium_aromatic: 'Light feeders with natural pest-deterrent oils — a gentle "rest" crop between hungrier groups.',
-  staple_grain: 'Bulk biomass with moderate needs — often the long "reset" year in a multi-bed rotation.',
-};
-
-/** The food group that should ideally follow `group` in the rotation cycle. */
-export function nextInRotation(group: FoodGroup): FoodGroup {
-  const idx = ROTATION_SEQUENCE.indexOf(group);
-  return ROTATION_SEQUENCE[(idx + 1) % ROTATION_SEQUENCE.length];
-}
-
 export const FOOD_GROUP: Record<string, FoodGroup> = {
   maize: 'staple_grain',
   // A cereal, and grouped as one on purpose: that is exactly what makes it a
@@ -66,7 +39,7 @@ export const FOOD_GROUP: Record<string, FoodGroup> = {
   cabbage: 'leafy_green',
   lettuce: 'leafy_green',
   broccoli: 'leafy_green',
-  coriander: 'leafy_green',
+  coriander: 'allium_aromatic',
   carrots: 'root_tuber',
   beetroot: 'root_tuber',
   'sweet-potato': 'root_tuber',
@@ -84,4 +57,81 @@ export const FOOD_GROUP: Record<string, FoodGroup> = {
 
 export function foodGroupOf(crop: CropDef): FoodGroup {
   return FOOD_GROUP[crop.key] ?? 'fruiting_veg';
+}
+
+/**
+ * Botanical families used for crop-rotation checks. These deliberately stay
+ * separate from `FoodGroup`: potato and tomato feed different household needs
+ * but share Solanaceae pests and diseases, while beetroot and Swiss chard are
+ * the same Amaranthaceae family despite appearing in different food groups.
+ *
+ * ARC's Conservation Agriculture crop-rotation manual treats rotation as a
+ * multi-season decision built from crop relationships and local constraints.
+ * This authority records family relationships only. It does not invent a
+ * universal sequence or claim that one year of generated history proves a
+ * multi-year rotation.
+ * https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Climate%20Smart%20Production%20Types/Manual/Microsoft%20Word%20-%20CA%20Crop%20rotation%20Manual.pdf
+ */
+export type RotationFamily =
+  | 'amaranthaceae'
+  | 'amaryllidaceae'
+  | 'apiaceae'
+  | 'araceae'
+  | 'asteraceae'
+  | 'brassicaceae'
+  | 'convolvulaceae'
+  | 'cucurbitaceae'
+  | 'fabaceae'
+  | 'poaceae'
+  | 'solanaceae';
+
+export const ROTATION_FAMILY_META: Record<RotationFamily, { label: string }> = {
+  amaranthaceae: { label: 'Beet & chard family' },
+  amaryllidaceae: { label: 'Onion family' },
+  apiaceae: { label: 'Carrot family' },
+  araceae: { label: 'Amadumbe family' },
+  asteraceae: { label: 'Lettuce family' },
+  brassicaceae: { label: 'Cabbage family' },
+  convolvulaceae: { label: 'Sweet-potato family' },
+  cucurbitaceae: { label: 'Pumpkin family' },
+  fabaceae: { label: 'Bean & pea family' },
+  poaceae: { label: 'Grass family' },
+  solanaceae: { label: 'Tomato & potato family' },
+};
+
+export const ROTATION_FAMILY: Record<string, RotationFamily> = {
+  maize: 'poaceae',
+  oats: 'poaceae',
+  'dry-beans': 'fabaceae',
+  'green-beans': 'fabaceae',
+  'broad-beans': 'fabaceae',
+  groundnuts: 'fabaceae',
+  peas: 'fabaceae',
+  'swiss-chard': 'amaranthaceae',
+  beetroot: 'amaranthaceae',
+  kale: 'brassicaceae',
+  cabbage: 'brassicaceae',
+  broccoli: 'brassicaceae',
+  lettuce: 'asteraceae',
+  carrots: 'apiaceae',
+  coriander: 'apiaceae',
+  onions: 'amaryllidaceae',
+  garlic: 'amaryllidaceae',
+  tomatoes: 'solanaceae',
+  peppers: 'solanaceae',
+  potato: 'solanaceae',
+  'sweet-potato': 'convolvulaceae',
+  amadumbe: 'araceae',
+  butternut: 'cucurbitaceae',
+  pumpkin: 'cucurbitaceae',
+  cucumber: 'cucurbitaceae',
+  watermelon: 'cucurbitaceae',
+};
+
+export function rotationFamilyOf(crop: CropDef): RotationFamily {
+  const family = ROTATION_FAMILY[crop.key];
+  if (!family) {
+    throw new Error(`Crop "${crop.key}" has no botanical rotation family`);
+  }
+  return family;
 }

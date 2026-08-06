@@ -1,19 +1,8 @@
-// The printed plan's workload chart counted mulching as a separate visit to the bed, and page 1
-// turned the resulting peak into a staffing instruction.
-//
-// `mulch` is emitted at the SAME month as its own planting's sow or transplant (lib/crop-plan.ts),
-// because watering-in and mulching happen while you are standing there with the seedling. The
-// field sheet has always known that — `case 'mulch':` folds it, under a comment that says in as
-// many words: "'Sow X' followed by 'Water in & mulch X' is one action at the bed, and printing it
-// as two lines doubled the apparent workload of every sowing month."
-//
-// buildWorkloadSeries did not know it. It counted every task, so every sowing month came out with
-// twice the jobs it had — measured at up to +50% on a four-planting plan — and page 1 read the
-// peak off that curve to print "carry the heaviest work load" and "assign people and weeks".
-// Two authorities for one question, which is the bug AGENTS.md §6 names, and the more expensive
-// half is that a funder hires against the answer.
-//
-// These tests hold the two readers to the same rule. The first would have failed on the old code.
+// Soil cover and weeding depend on observed soil cover, weed pressure, crop stage and local
+// practice. The crop catalogue does not contain evidence for universal dates, so generated plans
+// must not turn either job into a dated instruction or inflate a staffing chart with invented work.
+// `FOLDED_ACTIONS` remains compatible with old saved mulch tasks, but is not authority to create
+// new agronomy instructions.
 
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
@@ -26,8 +15,8 @@ const BEDS: PlanBed[] = [
   { id: 'b3', label: 'Bed 3', areaM2: 10 },
 ];
 
-// Deliberately mixed: lettuce and carrot are direct-sown, cabbage is raised and transplanted, so
-// the fold has to work on both the sow month and the transplant month.
+// Deliberately mixed across direct-sown and transplanted crops so the absence of generic field
+// maintenance is not an artefact of one establishment method.
 const PLANTINGS = [
   { id: 'p1', cropKey: 'lettuce', bedId: 'b1', sowMonth: 2 },
   { id: 'p2', cropKey: 'swiss-chard', bedId: 'b2', sowMonth: 3 },
@@ -35,46 +24,21 @@ const PLANTINGS = [
   { id: 'p4', cropKey: 'carrot', bedId: 'b1', sowMonth: 8 },
 ] as Planting[];
 
-test('mulching is not counted as its own visit to the bed', () => {
+test('generated plans do not invent generic mulch or weeding dates', () => {
   const tasks = tasksForPlan(PLANTINGS, BEDS);
-  const mulchTasks = tasks.filter((t) => t.action === 'mulch');
-  assert.ok(mulchTasks.length > 0, 'this plan must actually produce mulch tasks or it proves nothing');
-
-  const charted = buildWorkloadSeries(tasks, 1);
-  const withoutMulchTasks = buildWorkloadSeries(tasks.filter((t) => t.action !== 'mulch'), 1);
-
+  const unsupported = new Set(['mulch', 'weed-early', 'weed-mid']);
   assert.deepEqual(
-    charted,
-    withoutMulchTasks,
-    'the workload curve changed when mulch tasks were removed, so it was counting them',
+    tasks.filter((task) => unsupported.has(task.action)),
+    [],
+    'a generated workload must contain only work for which the plan has timing evidence',
   );
 });
 
-test('every mulch task shares a month with its own sow or transplant', () => {
-  // The premise the fold rests on. If mulching ever moved to its own month it would become a real
-  // separate visit, and folding it would then be the bug.
-  const tasks = tasksForPlan(PLANTINGS, BEDS);
-  for (const mulch of tasks.filter((t) => t.action === 'mulch')) {
-    const planted = tasks.filter(
-      (t) => (t.action === 'sow' || t.action === 'transplant')
-        && t.cropKey === mulch.cropKey
-        && t.bedLabel === mulch.bedLabel,
-    );
-    assert.ok(
-      planted.some((t) => t.month === mulch.month),
-      `mulch for ${mulch.cropName} on ${mulch.bedLabel} lands in month ${mulch.month} with no sow or transplant there`,
-    );
+test('legacy mulch tasks remain folded without hiding supported plan work', () => {
+  assert.deepEqual([...FOLDED_ACTIONS], ['mulch']);
+  for (const action of ['harvest', 'sow', 'prep'] as const) {
+    assert.equal(FOLDED_ACTIONS.has(action), false);
   }
-});
-
-test('weeding is still counted — it is a real separate visit', () => {
-  // The field sheet gives weed-early and weed-mid their own Maintenance row, so they are jobs.
-  // Folding them would understate the workload, which is the opposite failure and just as wrong.
-  assert.equal(FOLDED_ACTIONS.has('weed-early'), false);
-  assert.equal(FOLDED_ACTIONS.has('weed-mid'), false);
-  assert.equal(FOLDED_ACTIONS.has('harvest'), false);
-  assert.equal(FOLDED_ACTIONS.has('sow'), false);
-  assert.equal(FOLDED_ACTIONS.has('prep'), false);
 });
 
 test('a plan of nothing has no workload, and no month invents one', () => {

@@ -5,7 +5,7 @@ import {
   bedsFromDesign,
   buildCropAliasIndex,
   buildReconciliation,
-  intendedKgByMonthPerCrop,
+  intendedKgByCropCycle,
   matchCropCandidates,
   matchCropKey,
   monthsForPeriod,
@@ -74,19 +74,19 @@ function sale(
 function everyNumber(result: ReconciliationResult): number[] {
   return [
     ...result.matched.flatMap((row) => [
-      row.intendedKg,
+      ...(row.intendedKg === null ? [] : [row.intendedKg]),
       row.harvestedKg,
       row.soldKg,
       ...(row.keptKg === null ? [] : [row.keptKg]),
     ]),
     ...result.notYetHarvested.flatMap((row) => [
-      row.intendedKg,
+      ...(row.intendedKg === null ? [] : [row.intendedKg]),
       row.harvestedKg,
       row.soldKg,
       ...(row.keptKg === null ? [] : [row.keptKg]),
     ]),
     ...result.unmatchedPlanned.flatMap((row) => [
-      row.intendedKg,
+      ...(row.intendedKg === null ? [] : [row.intendedKg]),
       row.harvestedKg,
       row.soldKg,
       ...(row.keptKg === null ? [] : [row.keptKg]),
@@ -98,24 +98,79 @@ function everyNumber(result: ReconciliationResult): number[] {
   ];
 }
 
-test('spreading a harvest across months preserves each planting total exactly once', () => {
+test('crop-cycle benchmarks preserve each planting total without inventing monthly shares', () => {
   const plantings = [
     planting('lettuce-a', 'lettuce', 'bed-a'),
     planting('chard-b', 'swiss-chard', 'bed-b', { areaFraction: 0.5 }),
   ];
-  const intended = intendedKgByMonthPerCrop(plantings, BEDS);
+  const intended = intendedKgByCropCycle(plantings, BEDS);
 
   for (const p of plantings) {
     const bed = BEDS.find((candidate) => candidate.id === p.bedId);
     assert.ok(bed);
     const expected = estimatedYieldKgAdjusted(p, bed.areaM2, plantings);
-    const cropMonths = intended.get(p.cropKey);
-    assert.ok(cropMonths);
-    assert.equal(cropMonths.slice(1).reduce((sum, kg) => sum + kg, 0), expected);
+    assert.equal(intended.get(p.cropKey), expected);
   }
 });
 
-test('one crop surplus never averages away another crop shortfall', () => {
+test('an unresolved shared-bed layout withholds reconciliation benchmark kg through the plan authority', () => {
+  const plantings = [
+    planting('legacy-maize', 'maize', 'bed-a', { sowMonth: 11, existing: true }),
+    planting('carrots', 'carrots', 'bed-a', { sowMonth: 3 }),
+  ];
+
+  assert.deepEqual(
+    [...intendedKgByCropCycle(plantings, BEDS)],
+    [],
+    'unknown maize timing cannot become zero overlap and grant both crops a full-bed benchmark',
+  );
+
+  const result = buildReconciliation(
+    plantings,
+    BEDS,
+    [production('carrot-log', 'Carrots', 5)],
+    [],
+    'year',
+    NOW,
+  );
+  assert.equal(result.matched.length, 1, 'actual records remain visible when planning kg is withheld');
+  assert.equal(result.matched[0].cropKey, 'carrots');
+  assert.equal(result.matched[0].intendedKg, null);
+  assert.deepEqual(result.notYetHarvested, []);
+});
+
+test('month and season reconciliation expose no intended kg when sources only give crop-cycle totals', () => {
+  const onions = [planting('onion-a', 'onions', 'bed-a', { sowMonth: 4 })];
+  for (const period of ['month', 'season'] as const) {
+    const result = buildReconciliation(
+      onions,
+      BEDS,
+      [production(`${period}-harvest`, 'Onions', 3)],
+      [],
+      period,
+      NOW,
+    );
+    assert.equal(result.matched.length, 1);
+    assert.equal(result.matched[0].intendedKg, null);
+    assert.equal(result.matched[0].harvestedKg, 3, 'actual logs remain available');
+    assert.equal(result.matched[0].yieldGap, false, 'no monthly allocation means no partial-period gap claim');
+  }
+});
+
+test('partial-period views never create an expected-yield row when nothing was logged', () => {
+  const plantings = [planting('chard-a', 'swiss-chard', 'bed-a', { sowMonth: 9 })];
+  for (const period of ['month', 'season'] as const) {
+    const result = buildReconciliation(plantings, BEDS, [], [], period, NOW);
+    assert.deepEqual(result, {
+      matched: [],
+      notYetHarvested: [],
+      unmatchedPlanned: [],
+      unplannedActivity: [],
+    });
+  }
+});
+
+test('annual view keeps each crop-cycle benchmark separate without calling a partial cycle a shortfall', () => {
   const plantings = [
     planting('lettuce-a', 'lettuce', 'bed-a'),
     planting('chard-b', 'swiss-chard', 'bed-b'),
@@ -141,11 +196,11 @@ test('one crop surplus never averages away another crop shortfall', () => {
   assert.ok(chard);
   assert.equal(lettuce.intendedKg, lettuceExpected);
   assert.equal(lettuce.harvestedKg, lettuceActual);
-  assert.equal(lettuce.yieldGap, true);
+  assert.equal(lettuce.yieldGap, false, 'the planting has no dated completed-cycle marker');
   assert.equal(chard.yieldGap, false);
 });
 
-test('sales accounting does not overwrite or disguise the harvested shortfall', () => {
+test('sales accounting stays separate from a non-date-aligned crop-cycle benchmark', () => {
   const plantings = [planting('lettuce-a', 'lettuce', 'bed-a')];
   const intended = estimatedYieldKgAdjusted(plantings[0], BEDS[0].areaM2, plantings);
   const harvested = intended / 3;
@@ -164,7 +219,7 @@ test('sales accounting does not overwrite or disguise the harvested shortfall', 
   assert.equal(result.matched[0].harvestedKg, harvested);
   assert.equal(result.matched[0].soldKg, sold);
   assert.equal(result.matched[0].keptKg, harvested - sold);
-  assert.equal(result.matched[0].yieldGap, true);
+  assert.equal(result.matched[0].yieldGap, false);
 });
 
 test('the December-February season includes only the same crossing season', () => {
@@ -219,7 +274,7 @@ test('invalid weights are ignored instead of erasing valid reconciliation data',
   }
 });
 
-test('invalid planting geometry cannot put NaN or negative kg in the result', () => {
+test('invalid planting geometry withholds the bed benchmark instead of salvaging a partial total', () => {
   const plantings = [
     planting('valid', 'lettuce', 'bed-a'),
     planting('nan-fraction', 'lettuce', 'bed-a', { areaFraction: Number.NaN }),
@@ -231,11 +286,7 @@ test('invalid planting geometry cannot put NaN or negative kg in the result', ()
     ...result.notYetHarvested,
     ...result.unmatchedPlanned,
   ];
-  assert.equal(rows.length, 1);
-  assert.equal(
-    rows[0].intendedKg,
-    estimatedYieldKgAdjusted(plantings[0], BEDS[0].areaM2, [plantings[0]]),
-  );
+  assert.equal(rows.length, 0, 'an invalid share makes the whole bed allocation unresolved');
   for (const value of everyNumber(result)) {
     assert.ok(Number.isFinite(value));
     assert.ok(value >= 0);
@@ -357,10 +408,10 @@ test('kept is unknown, not zero, when more was sold than logged as harvested', (
   assert.equal(row.keptGap, false, 'no kept figure means nothing to explain');
 });
 
-test('a provably incomplete harvest log cannot also be evidence the plan was missed', () => {
+test('neither incomplete books nor an undated cycle can be evidence the plan was missed', () => {
   // Same rows as above. The old code raised a yield gap because harvestedKg (9) sits far below
-  // intendedKg — true arithmetic, false accusation: the harvest total is missing rows and the
-  // farmer is told she under-produced.
+  // the crop-cycle benchmark — true arithmetic, false accusation: the harvest total is missing
+  // rows and the planting has no dated completion marker.
   const result = buildReconciliation(
     [planting('lettuce-a', 'lettuce', 'bed-a')],
     BEDS,
@@ -371,7 +422,7 @@ test('a provably incomplete harvest log cannot also be evidence the plan was mis
   );
 
   const row = result.matched[0];
-  assert.ok(row.intendedKg > row.harvestedKg, 'the arithmetic gap is real');
+  assert.ok(row.intendedKg !== null && row.intendedKg > row.harvestedKg, 'the arithmetic gap is real');
   assert.equal(row.yieldGap, false, 'but it is withheld while the harvest log is provably short');
 });
 

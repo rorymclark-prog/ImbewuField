@@ -7,19 +7,38 @@ import {
   clusterSowMonths,
   type AutoSuggestAnswers,
 } from '@/lib/crop-autosuggest';
-import { cropByKey, CROPS, MONTHS_SHORT, type RainPattern } from '@/lib/crop-catalog';
-import { FOOD_GROUP, GROUP_PRIORITY, foodGroupOf } from '@/lib/crop-groups';
+import {
+  cropByKey,
+  CROPS,
+  hasAutomaticPlanningBasis,
+  hasVerifiedFieldPlan,
+  MONTHS_SHORT,
+  plantsPerM2,
+  type RainPattern,
+} from '@/lib/crop-catalog';
+import { FOOD_GROUP, GROUP_PRIORITY, foodGroupOf, rotationFamilyOf } from '@/lib/crop-groups';
 import { isPlotWinterCover } from '@/lib/staple-crops';
 import {
+  bedEntryMonth,
   bedOverlapFraction,
+  bedHasUnverifiedTiming,
   buildFieldUtilizationByMonth,
   buildFoodAvailability,
-  buildFoodValueByMonth,
+  buildPlanYieldBenchmark,
+  buildYearReport,
   estimatedYieldKgAdjusted,
   harvestMonth,
+  harvestMonthForCrop,
   isGenuinelyIntercropped,
+  latestBedEntryMonth,
   nextValidSowMonth,
+  occupiedMonthsForPlanting,
+  plantingBedEntryOffsets,
+  plantingIsActiveOrPlanned,
+  planningMaturityMonths,
+  recurringPlanPlantings,
   seedBoqForPlan,
+  taskMonthsFromNow,
   tasksForPlan,
   yieldByCrop,
   type PlanBed,
@@ -40,6 +59,7 @@ const ANSWERS: AutoSuggestAnswers = {
   rhythm: 'steady',
   rotateCrops: true,
   allowVinesInBeds: false,
+  reliableIrrigation: true,
 };
 
 function cropFor(planting: Planting) {
@@ -49,17 +69,8 @@ function cropFor(planting: Planting) {
 }
 
 function occupiedMonths(planting: Planting): number[] {
-  const crop = cropFor(planting);
-  // Sow month through the END OF THE PICKING WINDOW — the same span the
-  // planner's own occupancy model uses (holdSpanMonths, 2026-08-04). This
-  // helper predated that fix and stopped at maturity, which made the winter
-  // test call a bed "bare in month 7" while a cut-and-come-again chard was
-  // STANDING IN IT being picked. A bed being harvested is not a bare bed —
-  // that principle is the owner's own (task #61, "there is no sowing in bed
-  // one after april!"), and coverage must be measured by the same model the
-  // planner plans with, or the two disagree forever.
-  const span = Math.max(1, Math.round(crop.daysToHarvest / 30)) + 1 + (crop.harvestWindowMonths ?? 0);
-  return Array.from({ length: span }, (_, offset) => ((planting.sowMonth + offset - 1) % 12) + 1);
+  cropFor(planting); // keep the assertion that the fixture names a real crop
+  return occupiedMonthsForPlanting(planting);
 }
 
 function semanticPlan(plantings: Planting[]): string[] {
@@ -68,7 +79,7 @@ function semanticPlan(plantings: Planting[]): string[] {
     .sort();
 }
 
-test('rotation starts each bed with a different crop group from its previous season', () => {
+test('rotation starts each bed with a different botanical family from its previous season', () => {
   // Dry beans sown in November finish in March. April is therefore a clean
   // next-season boundary, and the full catalog gives the engine ample
   // non-legume alternatives: repeating legumes here is never necessary.
@@ -85,15 +96,15 @@ test('rotation starts each bed with a different crop group from its previous sea
     existing,
     4,
   );
-  const previousGroup = foodGroupOf(cropFor(existing[0]));
+  const previousFamily = rotationFamilyOf(cropFor(existing[0]));
 
   for (const bed of BEDS) {
     const first = result.plantings.find((planting) => planting.bedId === bed.id);
     assert.ok(first, `${bed.label} received no next-season plan`);
     assert.notEqual(
-      foodGroupOf(cropFor(first)),
-      previousGroup,
-      `${bed.label} repeats ${previousGroup} in consecutive seasons`,
+      rotationFamilyOf(cropFor(first)),
+      previousFamily,
+      `${bed.label} repeats ${previousFamily} in consecutive seasons`,
     );
   }
 });
@@ -107,18 +118,31 @@ test('every design bed receives at least one planting', () => {
   }
 });
 
-test('the year-round plan keeps every bed covered throughout the winter window', () => {
-  const result = autoSuggestPlan(ANSWERS, 'mild-frost', BEDS, [], 7);
+test('a no-mixing plan discloses every winter rest instead of painting the chart full', () => {
+  // Confirmed water permits succession; it does not prove that every sourced
+  // crop duration can tile every whole bed without a gap. With mixed-crop
+  // geometry deliberately disabled, the honest result may include rest. The
+  // farmer must be shown each resting bed rather than given a cosmetic fill.
+  const result = autoSuggestPlan({ ...ANSWERS, reliableIrrigation: true }, 'mild-frost', BEDS, [], 7);
   const winterMonths = [5, 6, 7, 8];
+  let coveredBedMonths = 0;
 
   for (const bed of BEDS) {
     for (const month of winterMonths) {
       const covered = result.plantings.some(
         (planting) => planting.bedId === bed.id && occupiedMonths(planting).includes(month),
       );
-      assert.ok(covered, `${bed.label} is bare in winter month ${month}`);
+      if (covered) {
+        coveredBedMonths++;
+      } else {
+        assert.ok(
+          result.notes.some((note) => note.startsWith(`${bed.label} still rests in`)),
+          `${bed.label}'s winter month ${month} rest is hidden`,
+        );
+      }
     }
   }
+  assert.ok(coveredBedMonths > 0, 'the irrigated plan abandoned every bed for the whole winter');
 });
 
 test('every suggestion stays inside that crop’s sowing window for the site pattern', () => {
@@ -284,8 +308,37 @@ test('the crop catalogue has stable unique identities and a complete lookup', ()
   }
 });
 
-test('every crop has complete, finite physical data without pinning agronomic values', () => {
-  const requiredPositive = ['daysToHarvest', 'spacingCm', 'yieldKgPerM2'] as const;
+test('audited duration ranges reserve beds through their conservative upper endpoint', () => {
+  // These are published crop/cultivar ranges, not generic constants. Planning
+  // uses the upper supported endpoint so slow-but-still-normal crops do not get
+  // a successor placed on top of them.
+  const auditedRanges = {
+    cabbage: [65, 125],
+    lettuce: [45, 80],
+    garlic: [180, 210],
+    groundnuts: [150, 160],
+  } as const;
+
+  for (const [key, expectedRange] of Object.entries(auditedRanges)) {
+    const crop = cropByKey(key);
+    assert.ok(crop);
+    assert.deepEqual(crop.daysToHarvestRange, expectedRange, `${key} lost its audited duration range`);
+    assert.equal(crop.daysToHarvest, expectedRange[1], `${key} no longer plans to the conservative endpoint`);
+  }
+});
+
+test('legacy crop records remain named while unresolved timing or spacing blocks auto-scheduling', () => {
+  for (const key of ['maize', 'dry-beans', 'kale', 'tomatoes', 'oats']) {
+    const crop = cropByKey(key);
+    assert.ok(crop, `${key} can no longer be read from a saved record`);
+    assert.ok(crop.name.trim() && crop.icon.trim() && crop.note.trim());
+    assert.equal(hasVerifiedFieldPlan(crop), false, `${key} unexpectedly has a verified timed field plan`);
+    assert.equal(hasAutomaticPlanningBasis(crop), false, `${key} can still enter automatic planning`);
+  }
+});
+
+test('every crop has complete physical data and an honest yield state without pinning agronomic values', () => {
+  const requiredPositive = ['daysToHarvest', 'spacingCm'] as const;
   const optionalPositive = [
     'rowSpacingCm',
     'inRowSpacingCm',
@@ -300,18 +353,26 @@ test('every crop has complete, finite physical data without pinning agronomic va
     assert.ok(crop.note.trim(), `${crop.key} has no planting guidance`);
     assert.doesNotMatch(`${crop.name} ${crop.note}`, /NaN|Infinity/);
     for (const field of requiredPositive) {
-      // A zero yield is legal for exactly one thing: a cover crop, which is cut
-      // or rolled down rather than eaten. Rather than relax the rule, this
-      // TIGHTENS it — such a crop must be a declared plot winter cover, so a
-      // food crop can never reach 0 by accident and pass as green manure.
-      if (field === 'yieldKgPerM2' && crop.yieldKgPerM2 === 0) {
-        assert.ok(
-          isPlotWinterCover(crop),
-          `${crop.key} yields no food but is not a declared cover crop — a food crop at 0 kg/m² is a bug, not a green manure`,
-        );
-        continue;
-      }
       assert.ok(Number.isFinite(crop[field]) && crop[field] > 0, `${crop.key}.${field} is unusable`);
+    }
+    // Yield has three intentionally different states: positive sourced
+    // planning figure; zero for a non-food cover; null when no defensible
+    // number was found. A zero-yield legacy cover may stay in the catalog so
+    // saved records retain their identity, but without verified timing it must
+    // be excluded from the automatic cover list.
+    if (crop.yieldKgPerM2 === 0) {
+      assert.ok(isPlotWinterCover(crop) || crop.timingVerified === false, `${crop.key} is zero-yield without being a declared or legacy cover`);
+      if (crop.timingVerified === false) assert.equal(isPlotWinterCover(crop), false, `${crop.key} has unverified timing but can still be auto-planned`);
+    } else if (crop.yieldKgPerM2 !== null) {
+      assert.ok(Number.isFinite(crop.yieldKgPerM2) && crop.yieldKgPerM2 > 0, `${crop.key}.yieldKgPerM2 is unusable`);
+    }
+    if (crop.yieldRangeKgPerM2 !== undefined) {
+      const [low, high] = crop.yieldRangeKgPerM2;
+      assert.ok(Number.isFinite(low) && Number.isFinite(high) && low > 0 && high >= low, `${crop.key} has an invalid published yield range`);
+      assert.ok(
+        crop.yieldKgPerM2 !== null && crop.yieldKgPerM2 >= low && crop.yieldKgPerM2 <= high,
+        `${crop.key}'s planning point falls outside its published range`,
+      );
     }
     for (const field of optionalPositive) {
       const value = crop[field];
@@ -324,22 +385,32 @@ test('every crop has complete, finite physical data without pinning agronomic va
     }
     if (crop.storageMonths !== undefined) {
       assert.ok(Number.isInteger(crop.storageMonths), `${crop.key} has a fractional storage life`);
+      assert.ok(crop.storageSourceUrl?.startsWith('https://'), `${crop.key} has a storage duration without a source`);
+      assert.ok(crop.storageConditions?.trim(), `${crop.key} has a storage duration without named conditions`);
     }
   }
 });
 
-test('seed BOQ uses rectangular density when sourced and square density as the fallback', () => {
+test('seed BOQ reports final field positions without inventing a botanical-seed buy count', () => {
   const rectangular = seedBoqForPlan([
     { id: 'green-beans', bedId: BEDS[0].id, cropKey: 'green-beans', sowMonth: 10 },
   ], BEDS).find((row) => row.cropKey === 'green-beans');
-  const fallback = seedBoqForPlan([
-    { id: 'pumpkin', bedId: BEDS[0].id, cropKey: 'pumpkin', sowMonth: 10 },
-  ], BEDS).find((row) => row.cropKey === 'pumpkin');
+  const seedlings = seedBoqForPlan([
+    { id: 'cabbage', bedId: BEDS[0].id, cropKey: 'cabbage', sowMonth: 4 },
+  ], BEDS).find((row) => row.cropKey === 'cabbage');
 
   assert.ok(rectangular);
-  assert.equal(rectangular.count, 256, 'green beans must use 45cm × 8cm, plus the existing 15% buffer');
-  assert.ok(fallback);
-  assert.equal(fallback.count, 6, 'pumpkin has no row/in-row split and must keep its 120cm square fallback');
+  assert.equal(rectangular.count, null, 'mature field spacing is not an exact direct-seed buying rate');
+  assert.equal(
+    rectangular.finalPlantPositions,
+    Math.round(BEDS[0].areaM2 * plantsPerM2(cropByKey('green-beans')!)),
+  );
+  assert.ok(seedlings);
+  assert.equal(seedlings.count, null, 'a published spacing range must not collapse into one exact seedling order');
+  assert.deepEqual(seedlings.countRange, seedlings.finalPlantPositionsRange);
+  assert.equal(seedlings.quantityStatus, 'counted-piece-range');
+  assert.ok(seedlings.countRange![0] <= seedlings.finalPlantPositions);
+  assert.ok(seedlings.countRange![1] >= seedlings.finalPlantPositions);
 });
 
 test('no page carries its own rival yield table — the sourced catalog is the only answer', () => {
@@ -360,19 +431,12 @@ test('no page carries its own rival yield table — the sourced catalog is the o
     assert.equal(literalYields, 0, `${page} still has ${literalYields} hardcoded kgPerBed figures`);
   }
 
-  // Every crop the planner OFFERS must map to a catalog key, or yieldFor returns zeroes. This is
-  // what makes the honest no-invented-number fallback safe to leave in place.
+  // `/plan` used to be a second calculator with a guessed bed size and season
+  // table. The stronger rule is one planning authority, not a better-maintained
+  // duplicate: the legacy route must delegate to the mapped bed-by-bed plan.
   const planSource = readFileSync(new URL('../app/plan/page.tsx', import.meta.url), 'utf8');
-  const offered = [...planSource.matchAll(/^\s{2}'?([A-Z][A-Za-z ]*?)'?:\s*\['(?:Winter|Summer|Spring|Autumn)/gm)]
-    .map((m) => m[1].trim());
-  assert.ok(offered.length > 10, 'expected to find the planner\'s crop list');
-  const mappingSource = readFileSync(new URL('../lib/crop-display.ts', import.meta.url), 'utf8');
-  for (const crop of offered) {
-    assert.ok(
-      mappingSource.includes(`${crop}:`) || mappingSource.includes(`'${crop}':`),
-      `${crop} is offered by the planner but has no catalog key — it would show a zero harvest`,
-    );
-  }
+  assert.match(planSource, /redirect\(['"]\/facilitator\/crops['"]\)/);
+  assert.doesNotMatch(planSource, /BED_AREA_M2|CROP_SEASONS|kgPerBed|plantsPerBed/);
 });
 
 test('calendar sowing marks come from the catalog window, not a rival month table', () => {
@@ -473,34 +537,114 @@ test('harvest and next-sowing month arithmetic stays inside the calendar and wra
   }
 });
 
-test('already-growing crops produce only future harvest work and task ids remain stable', () => {
-  const existing: Planting = {
-    id: 'already-there',
+test('coarse maturity planning rounds supported day counts up instead of freeing a bed early', () => {
+  assert.equal(planningMaturityMonths(30), 1);
+  assert.equal(planningMaturityMonths(31), 2);
+  assert.equal(planningMaturityMonths(70), 3);
+});
+
+test('a tray crop reserves the bed from earliest readiness through harvest based on latest readiness', () => {
+  // KZN DARD gives a 4–6 week warm-condition nursery period that may double
+  // in cold conditions. The month plan may start checking at one month, but
+  // it must not promise that field entry happened before the three-month
+  // conservative boundary used to calculate harvest and release the bed.
+  const lettuce = cropByKey('lettuce');
+  assert.ok(lettuce?.transplant);
+  const planting: Planting = {
+    id: 'nursery-window',
     bedId: BEDS[0].id,
-    cropKey: 'cabbage',
-    sowMonth: 11,
-    existing: true,
+    cropKey: lettuce.key,
+    sowMonth: 8,
   };
-  const first = tasksForPlan([existing], BEDS);
-  const second = tasksForPlan([structuredClone(existing)], structuredClone(BEDS));
+
+  assert.equal(bedEntryMonth(planting.sowMonth, lettuce), 9);
+  assert.equal(latestBedEntryMonth(planting.sowMonth, lettuce), 11);
+  assert.equal(harvestMonthForCrop(planting.sowMonth, lettuce), 2);
+  assert.deepEqual(occupiedMonthsForPlanting(planting), [9, 10, 11, 12, 1, 2]);
+  assert.equal(
+    tasksForPlan([planting], BEDS).find((task) => task.action === 'transplant')?.month,
+    9,
+    'the dated marker starts the readiness check; harvest still uses the conservative latest entry',
+  );
+});
+
+test('already-growing crops keep current and future harvests but never resurrect a finished one next year', () => {
+  const existing: Planting[] = [
+    // The audited 125-day field endpoint plus the conservative nursery window
+    // puts these three tray sowings at July / August / September respectively.
+    { id: 'finished', bedId: BEDS[0].id, cropKey: 'cabbage', sowMonth: 11, existing: true },
+    { id: 'due-now', bedId: BEDS[1].id, cropKey: 'cabbage', sowMonth: 12, existing: true },
+    { id: 'still-ahead', bedId: BEDS[2].id, cropKey: 'cabbage', sowMonth: 1, existing: true },
+  ];
+  const first = tasksForPlan(existing, BEDS, 8);
+  const second = tasksForPlan(structuredClone(existing), structuredClone(BEDS), 8);
 
   assert.deepEqual(second, first);
-  assert.deepEqual(first.map((task) => task.action), ['harvest']);
-  assert.deepEqual(first.map((task) => task.id), ['already-there:harvest']);
+  assert.deepEqual(first.map((task) => task.id), ['due-now:harvest', 'still-ahead:harvest']);
+  assert.deepEqual(first.map((task) => task.plantingId), ['due-now', 'still-ahead']);
+  assert.ok(first.every((task) => task.action === 'harvest'));
+});
+
+test('an existing picking window keeps this month but drops its already-eaten first month', () => {
+  // KZN DARD supports a tomato picking period through February. Viewed in
+  // January, December is history while January and February are actionable;
+  // each subsequent view drops only work that has actually passed.
+  const tomato: Planting = {
+    id: 'existing-tomato',
+    bedId: BEDS[0].id,
+    cropKey: 'tomatoes',
+    sowMonth: 6,
+    existing: true,
+  };
+
+  assert.deepEqual(
+    tasksForPlan([tomato], BEDS, 1).map((task) => task.id),
+    ['existing-tomato:harvest:1', 'existing-tomato:harvest:2'],
+  );
+  assert.deepEqual(
+    tasksForPlan([tomato], BEDS, 2).map((task) => task.id),
+    ['existing-tomato:harvest:2'],
+  );
+  assert.deepEqual(tasksForPlan([tomato], BEDS, 3), []);
 });
 
 test('task generation skips unknown crops, names an absent bed honestly, and stays calendar-sorted', () => {
   const plantings: Planting[] = [
     { id: 'unknown-crop', bedId: 'missing', cropKey: 'not-in-catalogue', sowMonth: 5 },
-    { id: 'known-crop', bedId: 'missing', cropKey: 'dry-beans', sowMonth: 1 },
+    { id: 'known-crop', bedId: 'missing', cropKey: 'green-beans', sowMonth: 1 },
   ];
   const tasks = tasksForPlan(plantings, []);
 
   assert.ok(tasks.length > 0);
-  assert.ok(tasks.every((task) => task.cropKey === 'dry-beans'));
+  assert.ok(tasks.every((task) => task.cropKey === 'green-beans'));
   assert.ok(tasks.every((task) => task.bedLabel === 'Unknown bed'));
   assert.deepEqual(tasks.map((task) => task.month), [...tasks.map((task) => task.month)].sort((a, b) => a - b));
   assert.equal(new Set(tasks.map((task) => task.id)).size, tasks.length);
+});
+
+test('a next-September cohort cannot put its following harvest into the current November', () => {
+  const currentMonth = 11;
+  const tasks = tasksForPlan([{
+    id: 'next-september-beans',
+    bedId: BEDS[0].id,
+    cropKey: 'green-beans',
+    sowMonth: 9,
+  }], BEDS, currentMonth);
+
+  assert.deepEqual(
+    tasks.map((task) => [task.id, taskMonthsFromNow(task, currentMonth)]),
+    [
+      ['next-september-beans:prep', 9],
+      ['next-september-beans:sow', 10],
+      ['next-september-beans:harvest', 12],
+    ],
+  );
+  assert.equal(
+    tasks.some((task) => task.month === currentMonth),
+    false,
+    'the November harvest is next year, not work due this November',
+  );
+  assert.equal(tasks.find((task) => task.action === 'harvest')?.month, 23);
 });
 
 test('genuine intercropping requires a fractional, different crop sharing one bed at the same time', () => {
@@ -543,7 +687,22 @@ test('bed overlap is wrap-safe, additive by occupied fraction, and excludes the 
 
   assert.equal(bedOverlapFraction('bed-1', 12, 2, plantings), 0.75);
   assert.equal(bedOverlapFraction('bed-1', 12, 2, plantings, 'first'), 0.25);
-  assert.equal(bedOverlapFraction('bed-1', 6, 7, plantings), 0);
+  assert.equal(
+    bedOverlapFraction('bed-1', 6, 7, plantings),
+    0.25,
+    'a December cabbage may still hold the bed in June when nursery readiness took the conservative three months',
+  );
+  assert.equal(
+    bedOverlapFraction('bed-1', 7, 8, plantings),
+    0.25,
+    'the audited 125-day field endpoint keeps a December cabbage through August',
+  );
+  assert.equal(bedOverlapFraction('bed-1', 9, 10, plantings), 0);
+
+  const withLegacy: Planting[] = [...plantings, { id: 'legacy-oats', bedId: 'bed-1', cropKey: 'oats', sowMonth: 4 }];
+  assert.equal(bedHasUnverifiedTiming('bed-1', withLegacy), true);
+  assert.equal(bedHasUnverifiedTiming('bed-1', withLegacy, 'legacy-oats'), false);
+  assert.equal(bedOverlapFraction('bed-1', 4, 8, [withLegacy.at(-1)!]), 0, 'unverified timing must not be converted into the old 100-day overlap');
 });
 
 test('crop totals reconcile exactly with adjusted per-planting yields, including existing crops', () => {
@@ -566,7 +725,7 @@ test('crop totals reconcile exactly with adjusted per-planting yields, including
   assert.ok(rows.every((row, index) => index === 0 || rows[index - 1].kg >= row.kg));
 });
 
-test('monthly food value counts each harvest kilogram exactly once and reconciles crop breakdowns', () => {
+test('crop-cycle benchmark counts each planting once without inventing monthly kg or Rand', () => {
   const crop = CROPS.find((candidate) => (candidate.harvestWindowMonths ?? 0) > 0);
   assert.ok(crop, 'catalogue must contain a repeat-harvest crop');
   const planting: Planting = {
@@ -575,41 +734,160 @@ test('monthly food value counts each harvest kilogram exactly once and reconcile
     cropKey: crop.key,
     sowMonth: 11,
   };
-  const price = { retailPerKg: 10, wholesalePerKg: 4, confidence: 'sourced' as const };
-  const values = buildFoodValueByMonth([planting], BEDS, { [crop.key]: price });
+  const benchmark = buildPlanYieldBenchmark([planting], BEDS);
   const expectedKg = estimatedYieldKgAdjusted(planting, BEDS[0].areaM2, [planting]);
-  const total = values.reduce(
-    (sum, month) => ({
-      kg: sum.kg + month.kg,
-      retail: sum.retail + month.retailValue,
-      wholesale: sum.wholesale + month.wholesaleValue,
-    }),
-    { kg: 0, retail: 0, wholesale: 0 },
-  );
 
-  assert.ok(Math.abs(total.kg - expectedKg) < 1e-9);
-  assert.ok(Math.abs(total.retail - expectedKg * price.retailPerKg) < 1e-9);
-  assert.ok(Math.abs(total.wholesale - expectedKg * price.wholesalePerKg) < 1e-9);
-  assert.ok(values.every((month) =>
-    Math.abs(Object.values(month.byCrop).reduce((sum, kg) => sum + kg, 0) - month.kg) < 1e-9));
+  assert.notEqual(benchmark.knownKg, null);
+  assert.ok(Math.abs(benchmark.knownKg! - expectedKg) < 1e-9);
+  assert.ok(Math.abs(benchmark.byCrop.reduce((sum, row) => sum + row.kg, 0) - expectedKg) < 1e-9);
+  assert.equal('byMonth' in benchmark, false);
+  assert.equal('retailValue' in benchmark, false);
+  assert.equal('wholesaleValue' in benchmark, false);
+  assert.doesNotMatch(
+    readFileSync(new URL('../lib/crop-plan.ts', import.meta.url), 'utf8'),
+    /buildFoodValueByMonth|kgPerMonth/,
+    'production must not recreate an even monthly split from a crop-cycle benchmark',
+  );
 });
 
-test('availability distinguishes fresh food from stored food without double-labelling a crop', () => {
+test('overlapping manual bed shares withhold every kg and value benchmark instead of double-counting land', () => {
+  const conflict: Planting[] = [
+    { id: 'whole-a', bedId: BEDS[0].id, cropKey: 'carrots', sowMonth: 3 },
+    { id: 'whole-b', bedId: BEDS[0].id, cropKey: 'beetroot', sowMonth: 3 },
+  ];
+  const benchmark = buildPlanYieldBenchmark(conflict, BEDS);
+
+  assert.equal(benchmark.knownKg, null);
+  assert.deepEqual(benchmark.byCrop, [], 'an inflated crop breakdown could still leak into Rand totals');
+  assert.deepEqual(benchmark.areaConflictBedLabels, [BEDS[0].label]);
+  assert.match(buildYearReport(conflict, BEDS).join(' '), /No kilogram or value total.*overlapping/i);
+});
+
+test('a one-off existing crop does not become an annual benchmark conflict with next season', () => {
+  const oneBed = [BEDS[0]];
+  const activeCabbage: Planting = {
+    id: 'existing-cabbage', bedId: BEDS[0].id, cropKey: 'cabbage', sowMonth: 8, existing: true,
+  };
+  const nextSeptemberBeans: Planting = {
+    id: 'next-beans', bedId: BEDS[0].id, cropKey: 'green-beans', sowMonth: 9,
+  };
+
+  const benchmark = buildPlanYieldBenchmark([activeCabbage, nextSeptemberBeans], oneBed, 11);
+  assert.deepEqual(benchmark.areaConflictBedLabels, []);
+  assert.notEqual(benchmark.knownKg, null);
+
+  const finishedCabbage = { ...activeCabbage, sowMonth: 1 };
+  const afterFinish = buildPlanYieldBenchmark([finishedCabbage, nextSeptemberBeans], oneBed, 11);
+  const beansOnly = buildPlanYieldBenchmark([nextSeptemberBeans], oneBed, 11);
+  assert.equal(afterFinish.knownKg, beansOnly.knownKg, 'a stale existing cohort must not return as yield next year');
+});
+
+test('timeline offsets anchor field entry to sowing and never repeat an existing cohort', () => {
+  const existingTrayCrop: Planting = {
+    id: 'existing-tray', bedId: BEDS[0].id, cropKey: 'cabbage', sowMonth: 11, existing: true,
+  };
+  const nextOctoberTrayCrop: Planting = {
+    ...existingTrayCrop, id: 'planned-tray', sowMonth: 10, existing: undefined,
+  };
+
+  assert.deepEqual(plantingBedEntryOffsets(existingTrayCrop, 11, 24), [1]);
+  assert.deepEqual(plantingBedEntryOffsets(nextOctoberTrayCrop, 11, 24), [12]);
+  assert.equal(plantingIsActiveOrPlanned({ ...existingTrayCrop, sowMonth: 1 }, 11), false);
+  assert.deepEqual(recurringPlanPlantings([existingTrayCrop, nextOctoberTrayCrop]), [nextOctoberTrayCrop]);
+});
+
+test('positive-yield legacy timing makes a shared-bed benchmark unknown instead of double-counting the bed', () => {
+  const legacyAndKnown: Planting[] = [
+    { id: 'legacy-maize', bedId: BEDS[0].id, cropKey: 'maize', sowMonth: 11, existing: true },
+    { id: 'carrots', bedId: BEDS[0].id, cropKey: 'carrots', sowMonth: 3 },
+  ];
+  const blocked = buildPlanYieldBenchmark(legacyAndKnown, BEDS);
+
+  assert.equal(blocked.knownKg, null);
+  assert.deepEqual(blocked.byCrop, []);
+  assert.deepEqual(blocked.areaConflictBedLabels, [BEDS[0].label]);
+
+  const legacyAlone = buildPlanYieldBenchmark([legacyAndKnown[0]], BEDS);
+  assert.notEqual(legacyAlone.knownKg, null, 'unknown timing alone does not erase a sourced crop-cycle yield');
+  assert.deepEqual(legacyAlone.areaConflictBedLabels, []);
+});
+
+test('availability shows fresh picking windows without inventing an unsourced storage life', () => {
   const freshCrop = CROPS.find((candidate) => (candidate.harvestWindowMonths ?? 0) > 0);
-  const storedCrop = CROPS.find((candidate) => (candidate.storageMonths ?? 0) > 0);
-  assert.ok(freshCrop && storedCrop);
+  assert.ok(freshCrop);
   const plantings: Planting[] = [
     { id: 'fresh', bedId: BEDS[0].id, cropKey: freshCrop.key, sowMonth: 11 },
-    { id: 'stored', bedId: BEDS[1].id, cropKey: storedCrop.key, sowMonth: 11, existing: true },
   ];
   const availability = buildFoodAvailability(plantings, BEDS);
 
   assert.equal(availability.length, 13);
   assert.ok(availability.flat().some((item) => item.cropKey === freshCrop.key && item.status === 'fresh'));
-  assert.ok(availability.flat().some((item) => item.cropKey === storedCrop.key && item.status === 'stored'));
+  assert.equal(availability.flat().some((item) => item.status === 'stored'), false);
   for (const month of availability) {
     assert.equal(new Set(month.map((item) => item.cropKey)).size, month.length);
   }
+});
+
+test('an existing transplanted crop remains available and occupied in its current harvest month', () => {
+  const cabbage: Planting = {
+    id: 'existing-cabbage',
+    bedId: BEDS[0].id,
+    cropKey: 'cabbage',
+    sowMonth: 12,
+    existing: true,
+  };
+  const oneBed = [BEDS[0]];
+
+  const availability = buildFoodAvailability([cabbage], oneBed, 8);
+  const utilization = buildFieldUtilizationByMonth([cabbage], oneBed, 8);
+
+  assert.deepEqual(availability[8].map((item) => item.cropKey), ['cabbage']);
+  assert.ok(availability[8].every((item) => !('kg' in item) && !('retailValue' in item)), 'fresh windows carry timing only');
+  assert.equal(utilization[8], 1);
+  assert.ok(utilization.slice(1, 8).every((fraction) => fraction === 0), 'finished nursery/field months are history');
+});
+
+test('a long existing amadumbe crop resolves to last April rather than inventing next April', () => {
+  const amadumbe: Planting = {
+    id: 'existing-amadumbe',
+    bedId: BEDS[0].id,
+    cropKey: 'amadumbe',
+    sowMonth: 4,
+    existing: true,
+  };
+  const utilization = buildFieldUtilizationByMonth([amadumbe], [BEDS[0]], 11);
+
+  assert.deepEqual(
+    Array.from({ length: 12 }, (_, index) => index + 1).filter((month) => utilization[month] > 0),
+    [1, 2, 11, 12],
+    'DAFF gives 8–10 months; the conservative 10-month endpoint keeps February occupied too',
+  );
+});
+
+test('a finished existing crop does not occupy the next annual plan when rotation is off', () => {
+  const bed = [BEDS[0]];
+  const finishedCabbage: Planting = {
+    id: 'finished-cabbage',
+    bedId: BEDS[0].id,
+    cropKey: 'cabbage',
+    sowMonth: 1,
+    existing: true,
+  };
+  const answers: AutoSuggestAnswers = {
+    ...ANSWERS,
+    cropKeys: ['garlic'],
+    rotateCrops: false,
+  };
+  const baseline = autoSuggestPlan(answers, 'mild-frost', bed, [], 11);
+  const afterFinishedCrop = autoSuggestPlan(answers, 'mild-frost', bed, [finishedCabbage], 11);
+  const shape = (plantings: Planting[]) => plantings.map((planting) => ({
+    cropKey: planting.cropKey,
+    sowMonth: planting.sowMonth,
+    areaFraction: planting.areaFraction ?? 1,
+  }));
+
+  assert.ok(baseline.plantings.length > 0);
+  assert.deepEqual(shape(afterFinishedCrop.plantings), shape(baseline.plantings));
 });
 
 test('field utilisation is physically bounded per bed even when saved plantings over-commit it', () => {
@@ -626,21 +904,21 @@ test('field utilisation is physically bounded per bed even when saved plantings 
   assert.deepEqual(buildFieldUtilizationByMonth(plantings, []), Array<number>(13).fill(0));
 });
 
-test('seed quantities aggregate successions, exclude existing crops, and use positive material units', () => {
+test('planting-material rows round once per sowing cohort, exclude existing crops, and distinguish seed packets from pieces', () => {
   const plantings: Planting[] = [
     { id: 'new-a', bedId: BEDS[0].id, cropKey: 'dry-beans', sowMonth: 4, areaFraction: 0.5 },
     { id: 'new-b', bedId: BEDS[1].id, cropKey: 'dry-beans', sowMonth: 8, areaFraction: 0.5 },
     { id: 'existing', bedId: BEDS[2].id, cropKey: 'cabbage', sowMonth: 5, existing: true },
   ];
   const together = seedBoqForPlan(plantings, BEDS);
-  const separately = [
-    ...seedBoqForPlan([plantings[0]], BEDS),
-    ...seedBoqForPlan([plantings[1]], BEDS),
-  ];
   const beans = together.find((row) => row.cropKey === 'dry-beans');
 
   assert.ok(beans);
-  assert.equal(beans.count, separately.reduce((sum, row) => sum + row.count, 0));
+  const crop = cropByKey('dry-beans')!;
+  const expectedPositions = Math.round(BEDS[0].areaM2 * 0.5 * plantsPerM2(crop))
+    + Math.round(BEDS[1].areaM2 * 0.5 * plantsPerM2(crop));
+  assert.equal(beans.count, null, 'the app must not derive a packet quantity from mature spacing');
+  assert.equal(beans.finalPlantPositions, expectedPositions);
   assert.equal(together.some((row) => row.cropKey === 'cabbage'), false);
-  assert.ok(together.every((row) => row.count > 0 && row.unit.trim().length > 0));
+  assert.ok(together.every((row) => row.finalPlantPositions > 0 && row.unit.trim().length > 0));
 });

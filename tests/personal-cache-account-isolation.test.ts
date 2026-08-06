@@ -90,9 +90,10 @@ const taskBoard = await import('../lib/task-board.ts');
 const siteProgress = await import('../lib/site-progress.ts');
 const facilitatorDesign = await import('../lib/facilitator-design.ts');
 
-function plan(id: string): import('../lib/crop-plan.ts').CropPlanState {
+function plan(id: string, rainPattern: import('../lib/crop-catalog.ts').RainPattern): import('../lib/crop-plan.ts').CropPlanState {
   return {
     version: 1,
+    rainPattern,
     plantings: [{
       id,
       bedId: `${id}-bed`,
@@ -126,10 +127,10 @@ function design(id: string): import('../lib/facilitator-design.ts').FacilitatorD
 
 test('a direct farmer switch keeps planning, progress and facilitator caches with their owner', () => {
   accountState.currentUid = 'farmer-a';
-  cropPlan.saveCropPlan(plan('a-plan'));
+  cropPlan.saveCropPlan(plan('a-plan', 'winter'));
   cropPlan.saveFavouriteCropKeys(new Set(['lettuce']));
   cropPlan.saveAllowBedSharing(true);
-  cropPlan.saveCashflowSettings({ sellPercent: 75, lossPercent: 5 });
+  cropPlan.saveCashflowSettings({ sellPercent: 75, lossPercent: 5, confirmed: true });
   cropPrices.saveCropPriceOverrides({
     lettuce: { retailPerKg: 111, wholesalePerKg: 22, confidence: 'estimated' },
   });
@@ -141,7 +142,7 @@ test('a direct farmer switch keeps planning, progress and facilitator caches wit
   assert.deepEqual(cropPlan.loadCropPlan().plantings, []);
   assert.deepEqual([...cropPlan.loadFavouriteCropKeys()], []);
   assert.equal(cropPlan.loadAllowBedSharing(), false);
-  assert.deepEqual(cropPlan.loadCashflowSettings(), { sellPercent: 100, lossPercent: 0 });
+  assert.deepEqual(cropPlan.loadCashflowSettings(), { sellPercent: 100, lossPercent: 0, confirmed: false });
   assert.deepEqual(cropPrices.loadCropPriceOverrides(), {});
   assert.deepEqual([...taskBoard.loadCompletedTaskIds()], []);
   assert.deepEqual(siteProgress.getGuidedState(), {
@@ -151,10 +152,10 @@ test('a direct farmer switch keeps planning, progress and facilitator caches wit
   });
   assert.equal(facilitatorDesign.loadFacilitatorState(), null);
 
-  cropPlan.saveCropPlan(plan('b-plan'));
+  cropPlan.saveCropPlan(plan('b-plan', 'summer'));
   cropPlan.saveFavouriteCropKeys(new Set(['cabbage']));
   cropPlan.saveAllowBedSharing(false);
-  cropPlan.saveCashflowSettings({ sellPercent: 20, lossPercent: 10 });
+  cropPlan.saveCashflowSettings({ sellPercent: 20, lossPercent: 10, confirmed: false });
   cropPrices.saveCropPriceOverrides({
     cabbage: { retailPerKg: 222, wholesalePerKg: 33, confidence: 'estimated' },
   });
@@ -164,9 +165,10 @@ test('a direct farmer switch keeps planning, progress and facilitator caches wit
 
   accountState.currentUid = 'farmer-a';
   assert.equal(cropPlan.loadCropPlan().plantings[0]?.id, 'a-plan');
+  assert.equal(cropPlan.loadCropPlan().rainPattern, 'winter', 'the climate answer accepted with a crop plan must survive persistence');
   assert.deepEqual([...cropPlan.loadFavouriteCropKeys()], ['lettuce']);
   assert.equal(cropPlan.loadAllowBedSharing(), true);
-  assert.deepEqual(cropPlan.loadCashflowSettings(), { sellPercent: 75, lossPercent: 5 });
+  assert.deepEqual(cropPlan.loadCashflowSettings(), { sellPercent: 75, lossPercent: 5, confirmed: true });
   assert.equal(cropPrices.loadCropPriceOverrides().lettuce?.retailPerKg, 111);
   assert.deepEqual([...taskBoard.loadCompletedTaskIds()], ['a-plan:sow']);
   assert.deepEqual(siteProgress.getGuidedState(), {

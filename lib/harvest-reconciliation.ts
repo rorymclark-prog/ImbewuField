@@ -1,21 +1,18 @@
-// Cross-references the crop plan's INTENDED yield (lib/crop-plan.ts) against
-// what was actually logged as harvested (ProductionLog) and sold (SalesLog).
+// Cross-references crop-plan cycle benchmarks (lib/crop-plan.ts) with what was
+// actually logged as harvested (ProductionLog) and sold (SalesLog). It never
+// turns a crop-cycle total into invented monthly production.
 // Pure functions only — no React, no Firestore/localStorage writes. The two
 // read-only localStorage loads the caller needs (loadCropPlan, in-progress
 // facilitator design) stay in the calling component; this module only takes
 // already-loaded data in.
 
 import type { Planting, PlanBed } from './crop-plan';
-import { harvestMonth, estimatedYieldKgAdjusted } from './crop-plan';
+import { buildPlanYieldBenchmark } from './crop-plan';
 import type { FacilitatorDesignState } from './facilitator-design';
 import { cropByKey, CROPS } from './crop-catalog';
 import type { ProductionLog, SalesLog } from './db/types';
 
 export type Period = 'month' | 'season' | 'year';
-
-function wrapMonth(m: number): number {
-  return ((m - 1) % 12 + 12) % 12 + 1;
-}
 
 // Mirrors app/facilitator/crops/page.tsx's VIRTUAL_BED: with no design beds
 // placed, the crop planner puts every planting on this bed, so intended-yield
@@ -182,74 +179,43 @@ export function matchCropKey(loggedText: string, index: Map<string, string>): st
   return candidates.length === 1 ? candidates[0] : null;
 }
 
-/* ── Intended yield, spread across each crop's harvest window ──────────── */
+/* ── Crop-cycle benchmark yield ─────────────────────────────── */
 
 /**
- * Per-crop version of lib/crop-plan.ts's buildFoodValueByMonth: a planting's
- * total estimated yield spread evenly across its fresh-harvest window
- * (1 month for a one-shot harvest, harvestWindowMonths+1 for cut-and-come-
- * again), summed by cropKey. Summing all 13 months for a crop always equals
- * that crop's real total intended yield exactly once.
+ * Planning benchmark for one complete crop cycle, grouped by crop.
+ *
+ * The source tables provide a total yield per planted area and, separately,
+ * a picking-window range. They do not say what share is picked in each month.
+ * The old implementation divided the cycle total evenly across that window;
+ * those monthly kg were invented and made a partial-period harvest look
+ * measurably ahead or behind when no monthly benchmark existed.
+ *
+ * Keep this total at crop-cycle scope. A caller may compare it with an actual
+ * crop cycle only after it can identify that cycle's start and completion;
+ * Planting currently has month numbers but no calendar year or completion
+ * record, so this module deliberately does not perform that comparison.
  */
-export function intendedKgByMonthPerCrop(plantings: Planting[], beds: PlanBed[]): Map<string, number[]> {
-  const byCrop = new Map<string, number[]>();
-  for (const p of plantings) {
-    const crop = cropByKey(p.cropKey);
-    const bed = beds.find((b) => b.id === p.bedId);
-    if (!crop || !bed) continue;
-    const rawTotalKg = estimatedYieldKgAdjusted(p, bed.areaM2, plantings);
-    // A malformed legacy planting must not poison the whole crop's total.
-    // Invalid or non-positive contributions carry no defensible intended kg.
-    if (!Number.isFinite(rawTotalKg) || rawTotalKg <= 0) continue;
-    const totalKg = rawTotalKg;
-    const hMonth = harvestMonth(p.sowMonth, crop.daysToHarvest);
-    const freshSpan = crop.harvestWindowMonths ?? 0;
-    const kgPerMonth = totalKg / (freshSpan + 1);
-    const arr = byCrop.get(crop.key) ?? Array<number>(13).fill(0);
-    for (let off = 0; off <= freshSpan; off++) {
-      const month = wrapMonth(hMonth + off);
-      const next = arr[month] + kgPerMonth;
-      if (Number.isFinite(next)) arr[month] = next;
-    }
-    byCrop.set(crop.key, arr);
-  }
-  return byCrop;
+export function intendedKgByCropCycle(plantings: Planting[], beds: PlanBed[]): Map<string, number> {
+  // Delegate both arithmetic and its uncertainty gate to the plan's one
+  // benchmark authority. In particular, an unverified-timing full-bed maize
+  // record beside another crop has unknown overlap: computing each crop here
+  // independently used to resurrect the exact double-counted kg that
+  // buildPlanYieldBenchmark had correctly withheld.
+  const benchmark = buildPlanYieldBenchmark(plantings, beds);
+  if (benchmark.knownKg === null) return new Map();
+  return new Map(benchmark.byCrop.map((row) => [row.cropKey, row.kg]));
 }
 
-/**
- * Whether a zero-logged crop's harvest should already have started (worth
- * flagging as a possible miss/misnamed entry) vs is still genuinely ahead
- * (soften as "not yet harvested"). A Planting only carries a month, no year,
- * so there's no exact "did this already happen this year" answer — this
- * treats being within the first half of the 12-month cycle since the
- * nominal harvest start (or within the harvest window itself, if longer) as
- * "should have data by now", and the other half as "coming up soon".
- * Deliberately a simple, documented heuristic, not exact date arithmetic.
- */
-function isHarvestOverdue(cropKey: string, plantings: Planting[], currentMonth: number): boolean {
-  const crop = cropByKey(cropKey);
-  if (!crop) return false;
-  return plantings
-    .filter((p) => p.cropKey === cropKey)
-    .some((p) => {
-      const hStart = harvestMonth(p.sowMonth, crop.daysToHarvest);
-      const monthsSinceStart = ((currentMonth - hStart) % 12 + 12) % 12;
-      const windowLen = crop.harvestWindowMonths ?? 0;
-      return monthsSinceStart <= Math.max(windowLen, 6);
-    });
-}
+/* ── Kept-produce prompt ──────────────────────────────────────────────────
+   This threshold only controls when to ask what happened to actually logged
+   produce. It is not an agronomic yield claim. */
+const KEPT_RELATIVE_THRESHOLD = 0.15;
+const KEPT_ABSOLUTE_FLOOR_KG = 2;
 
-/* ── Gap flags ───────────────────────────────────────────────────────────
-   Threshold is a product/UX judgement call (flagged as an open question in
-   the handoff) — this is a starting default, not a hard-coded fact. */
-const GAP_RELATIVE_THRESHOLD = 0.15;
-const GAP_ABSOLUTE_FLOOR_KG = 2;
-
-function isMeaningfulGap(actual: number, expected: number): boolean {
-  if (expected <= 0) return false;
-  const gap = expected - actual;
-  if (gap <= 0) return false;
-  return gap >= GAP_ABSOLUTE_FLOOR_KG && gap / expected >= GAP_RELATIVE_THRESHOLD;
+function hasMeaningfulKeptAmount(sold: number, harvested: number): boolean {
+  if (harvested <= 0) return false;
+  const kept = harvested - sold;
+  return kept >= KEPT_ABSOLUTE_FLOOR_KG && kept / harvested >= KEPT_RELATIVE_THRESHOLD;
 }
 
 function validLoggedKg(value: unknown): number {
@@ -288,7 +254,17 @@ export interface CropRow {
   cropKey: string;
   cropName: string;
   icon: string;
-  intendedKg: number;
+  /**
+   * Area-scaled benchmark for one complete crop-plan cycle. `null` means the
+   * selected period has no defensible intended-kg figure: month/season cannot
+   * be derived from a crop-cycle total, and some crops have no verified yield
+   * benchmark at all.
+   *
+   * Even when present for the year view, this is not a date-aligned comparison:
+   * Planting has no sowing year or completed-cycle marker. UI must call it a
+   * crop-cycle benchmark, never "expected this year".
+   */
+  intendedKg: number | null;
   harvestedKg: number;
   soldKg: number;
   /**
@@ -301,7 +277,11 @@ export interface CropRow {
    * the harvest that never became income, and it belongs in the record under a word that is true.
    */
   keptKg: number | null;
-  /** Harvested meaningfully below what the plan expected this period. */
+  /**
+   * Always false until plantings record a dated, completed crop cycle. Kept
+   * for consumer compatibility; a partial calendar period cannot prove that
+   * a crop-cycle benchmark was missed.
+   */
   yieldGap: boolean;
   /** Meaningfully more was harvested than sold — worth asking where the rest went. */
   keptGap: boolean;
@@ -332,15 +312,16 @@ export interface ReconciliationResult {
 }
 
 /**
- * The top-level cross-reference: intended (crop plan) vs actually harvested
- * (ProductionLog) vs actually sold (SalesLog), for one period.
+ * The top-level cross-reference: crop-cycle planning benchmark, actually
+ * harvested (ProductionLog), and actually sold (SalesLog).
  *
  * - `matched`: planned crops with real harvest and/or sale activity this period.
- * - `notYetHarvested`: planned crops with intended yield this period but zero
- *   logs at all, whose harvest window hasn't started yet (early-season — not a problem).
- * - `unmatchedPlanned`: same zero-logs case, but the harvest window should
- *   already have started — worth a look (missed logging, or logged under a
- *   name the alias matcher didn't recognize).
+ * - `notYetHarvested`: legacy result bucket used only by the year view for a
+ *   benchmark crop with no logs. Its name is not a timing conclusion; without
+ *   sowing years the app cannot know whether that cycle is ahead or complete.
+ * - `unmatchedPlanned`: retained for result compatibility but deliberately
+ *   empty. No dated completed-cycle marker exists to justify a missed-harvest
+ *   accusation.
  * - `unplannedActivity`: logged production/sales that never matched anything
  *   in this farmer's actual plan (eggs, livestock, off-plan crops) — shown
  *   plainly, no gap analysis, since there's no "intended" to compare against.
@@ -357,9 +338,11 @@ export function buildReconciliation(
 ): ReconciliationResult {
   const aliasIndex = buildCropAliasIndex();
   const periodMonths = monthsForPeriod(period, now);
-  const intendedByCrop = intendedKgByMonthPerCrop(plantings, beds);
+  if (periodMonths.length === 0) {
+    return { matched: [], notYetHarvested: [], unmatchedPlanned: [], unplannedActivity: [] };
+  }
+  const intendedByCrop = intendedKgByCropCycle(plantings, beds);
   const cropKeys = new Set(plantings.map((p) => p.cropKey));
-  const currentMonth = now.getMonth() + 1;
 
   const productionInPeriod = uniqueLogsById(
     production.filter((p) => inPeriod(p.logged_at, period, now)),
@@ -378,10 +361,12 @@ export function buildReconciliation(
     const crop = cropByKey(cropKey);
     if (!crop) continue;
 
-    const monthArr = intendedByCrop.get(cropKey);
-    const intendedKg = monthArr
-      ? safeKgTotal(periodMonths, (month) => monthArr[month] ?? 0)
-      : 0;
+    // Month/season intended kg is genuinely unavailable. A crop-cycle total
+    // cannot be divided across picking months without an observed production
+    // profile. The year view may show the complete-cycle benchmark, but may
+    // not treat it as a calendar-year expectation or calculate a shortfall.
+    const cropCycleBenchmarkKg = intendedByCrop.get(cropKey) ?? null;
+    const intendedKg = period === 'year' ? cropCycleBenchmarkKg : null;
 
     const harvestRows = productionInPeriod.filter(
       (p) => matchCropKey(loggedCropLabel(p.crop), aliasIndex) === cropKey,
@@ -410,17 +395,18 @@ export function buildReconciliation(
 
     const row: CropRow = {
       cropKey, cropName: crop.name, icon: crop.icon,
-      intendedKg, harvestedKg, soldKg,
+      intendedKg,
+      harvestedKg, soldKg,
       keptKg: soldExceedsHarvested ? null : harvestedKg - soldKg,
-      yieldGap: soldExceedsHarvested ? false : isMeaningfulGap(harvestedKg, intendedKg),
-      keptGap: soldExceedsHarvested ? false : isMeaningfulGap(soldKg, harvestedKg),
+      yieldGap: false,
+      keptGap: soldExceedsHarvested ? false : hasMeaningfulKeptAmount(soldKg, harvestedKg),
       soldExceedsHarvested,
     };
 
     if (harvestedKg > 0 || soldKg > 0) {
       matched.push(row);
-    } else if (intendedKg > 0) {
-      (isHarvestOverdue(cropKey, plantings, currentMonth) ? unmatchedPlanned : notYetHarvested).push(row);
+    } else if (intendedKg !== null && intendedKg > 0) {
+      notYetHarvested.push(row);
     }
   }
 
@@ -453,8 +439,8 @@ export function buildReconciliation(
   }
 
   matched.sort((a, b) => (b.harvestedKg + b.soldKg) - (a.harvestedKg + a.soldKg));
-  notYetHarvested.sort((a, b) => b.intendedKg - a.intendedKg);
-  unmatchedPlanned.sort((a, b) => b.intendedKg - a.intendedKg);
+  notYetHarvested.sort((a, b) => (b.intendedKg ?? 0) - (a.intendedKg ?? 0));
+  unmatchedPlanned.sort((a, b) => (b.intendedKg ?? 0) - (a.intendedKg ?? 0));
   const unplannedActivity = [...unplannedMap.values()]
     .filter((row) => row.harvestedKg > 0 || row.soldKg > 0)
     .sort((a, b) => (b.harvestedKg + b.soldKg) - (a.harvestedKg + a.soldKg));

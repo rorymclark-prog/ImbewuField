@@ -18,14 +18,32 @@
 // drift into describing the same task three different ways.
 
 import type { CropDef } from '@/lib/crop-catalog';
-import { MONTHS_SHORT, cropByKey, plantSpacingCm } from '@/lib/crop-catalog';
-import type { CropTask, PlanBed, Planting } from '@/lib/crop-plan';
-import { estimatedYieldKgAdjusted, harvestMonth, seedBoqForPlan } from '@/lib/crop-plan';
+import { MONTHS_SHORT, cropByKey, plantSpacingCm, plantSpacingRangeCm } from '@/lib/crop-catalog';
+import type { CropTask, PlanBed, Planting, SeedBoqRow } from '@/lib/crop-plan';
+import {
+  bedEntryMonth,
+  estimatedYieldKgAdjusted,
+  harvestMonthForCrop,
+  latestBedEntryMonth,
+  seedBoqBatchesForPlan,
+  taskMonthsFromNow,
+} from '@/lib/crop-plan';
 
 export const MONTH_NAMES = [
   'January', 'February', 'March', 'April', 'May', 'June',
   'July', 'August', 'September', 'October', 'November', 'December',
 ] as const;
+
+/** KZN DARD Plant Establishment: most vegetable transplants are ready in
+ * 4–6 weeks under warm conditions, while cold conditions can double that
+ * period. The calendar remains month-sized, so readiness—not the column edge—
+ * decides the real planting-out day. */
+export const TRANSPLANT_NURSERY_GUIDANCE = 'Usually 4–6 weeks in warm conditions; cold conditions can take about twice as long (8–12 weeks). Start checking from the first field month and transplant when seedlings and the bed are ready. The plan reserves the possible 1–3 month nursery range so it does not free the bed early.';
+
+/** The source describes maturity under optimum conditions. A reserved month is
+ * therefore a planning slot, never evidence that the previous crop has left
+ * the ground. Keep this wording shared by screen and print exports. */
+export const SUCCESSION_TIMING_GUIDANCE = 'Published optimum-condition maturity endpoints are planning slots, not promises. Before any successor is sown or transplanted, confirm the previous crop is finished and the bed is actually clear; crops may mature later.';
 
 /** 1-12, wrapping — the same rule lib/crop-plan.ts uses internally. */
 export function wrapMonth(m: number): number {
@@ -75,8 +93,9 @@ export function monthYearLabel(month: number, now: Date): string {
 
 /**
  * Farmer-facing "how to sow" line. BOTH axes, always, and both resolved by
- * plantSpacingCm — the same helper seedBoqForPlan counts seed with, so the
- * spacing on the page and the quantity on the page cannot disagree.
+ * plantSpacingCm — the same helper the material BOQ uses for its approximate
+ * final stand, so the spacing on the page and the field-position estimate
+ * cannot disagree.
  *
  * They did disagree until 2026-08-04: the printed plan read "Dry beans ~11362
  * seeds · 15cm apart in the row" while 11362 was counted on a 10cm square.
@@ -84,23 +103,51 @@ export function monthYearLabel(month: number, now: Date): string {
  * can plant from. Never fabricates: every number here is on the crop record.
  */
 export function sowingInstruction(crop: CropDef): string {
+  if (crop.fieldSpacingInstruction) return crop.fieldSpacingInstruction;
   const parts: string[] = [];
   const { rowCm, inRowCm } = plantSpacingCm(crop);
-  if (rowCm === inRowCm) parts.push(`plant spacing ~${rowCm}cm each way`);
-  else parts.push(`rows ${rowCm}cm apart`, `${inRowCm}cm apart in the row`);
-  if (crop.sowDepthCm) parts.push(`sow ${crop.sowDepthCm}cm deep`);
+  const ranges = plantSpacingRangeCm(crop);
+  const row = formatCmRange(ranges.rowCm);
+  const inRow = formatCmRange(ranges.inRowCm);
+  const bothAreExact = ranges.rowCm[0] === ranges.rowCm[1]
+    && ranges.inRowCm[0] === ranges.inRowCm[1];
+  if (bothAreExact && rowCm === inRowCm) parts.push(`plant spacing ${row}cm each way`);
+  else parts.push(`rows ${row}cm apart`, `${inRow}cm apart in the row`);
+  const depth = sowDepthRange(crop);
+  if (depth) parts.push(`sow ${formatCmRange(depth)}cm deep`);
   return parts.join(' · ');
 }
 
+function formatCmRange(range: readonly [number, number]): string {
+  return range[0] === range[1] ? String(range[0]) : `${range[0]}–${range[1]}`;
+}
+
+function sowDepthRange(crop: CropDef): readonly [number, number] | null {
+  return crop.sowDepthRangeCm
+    ?? (crop.sowDepthCm ? [crop.sowDepthCm, crop.sowDepthCm] as const : null);
+}
+
+function fieldSpacingInstruction(crop: CropDef): string {
+  if (crop.fieldSpacingInstruction) return crop.fieldSpacingInstruction;
+  const { rowCm, inRowCm } = plantSpacingCm(crop);
+  const ranges = plantSpacingRangeCm(crop);
+  const bothAreExact = ranges.rowCm[0] === ranges.rowCm[1]
+    && ranges.inRowCm[0] === ranges.inRowCm[1];
+  return bothAreExact && rowCm === inRowCm
+    ? `plant spacing ${formatCmRange(ranges.rowCm)}cm each way`
+    : `rows ${formatCmRange(ranges.rowCm)}cm apart · ${formatCmRange(ranges.inRowCm)}cm apart in the row`;
+}
+
 // Verb phrase per task action — 'prep'/'mulch' need a bit more than a single
-// word to say what's actually involved (compost/kraal manure, water-in), the
+// word to say what's actually involved (soil assessment, water-in), the
 // others read fine as plain verbs.
 export const TASK_VERB: Record<CropTask['action'], string> = {
-  prep: 'prep bed (compost + kraal manure, then let it rest) for',
+  prep: 'assess soil and drainage before preparing ground for',
   sow: 'sow',
-  transplant: 'transplant',
+  transplant: 'check seedlings; transplant when ready',
   mulch: 'water in & mulch',
   harvest: 'harvest',
+  'terminate-cover': 'cut or roll down',
   'weed-early': 'weed around',
   'weed-mid': 'weed & check for pests around',
 };
@@ -109,23 +156,30 @@ export const TASK_VERB: Record<CropTask['action'], string> = {
 export const TASK_TITLE: Record<CropTask['action'], string> = {
   prep: 'Prep ground',
   sow: 'Sow',
-  transplant: 'Transplant',
+  transplant: 'Check / transplant',
   mulch: 'Water in & mulch',
   harvest: 'Harvest',
+  'terminate-cover': 'Cut or roll down',
   'weed-early': 'Weed',
   'weed-mid': 'Weed & check for pests',
 };
 
 /** One task as a sentence fragment: "sow maize (mielies) — rows 90cm apart (Plot 1)". */
 export function taskPhrase(t: CropTask): string {
-  // Spacing only matters at sowing time — by transplant/mulch/weed/harvest
-  // the bed is already laid out, so repeating it there would just be noise.
-  const crop = t.action === 'sow' ? cropByKey(t.cropKey) : undefined;
-  const spacing = crop ? ` — ${sowingInstruction(crop)}` : '';
+  const crop = (t.action === 'sow' || t.action === 'transplant') ? cropByKey(t.cropKey) : undefined;
+  let instruction = '';
+  if (crop && t.action === 'sow') {
+    const trayDepth = sowDepthRange(crop);
+    instruction = crop.transplant
+      ? ` — start in a tray${trayDepth ? `, ${formatCmRange(trayDepth)}cm deep` : ''}`
+      : ` — ${sowingInstruction(crop)}`;
+  } else if (crop?.transplant && t.action === 'transplant') {
+    instruction = ` — ${fieldSpacingInstruction(crop)}`;
+  }
   // Prep wording is per-ground: tasksForPlan says plough/rip for a staple PLOT and
-  // compost-and-rest for a bed (CropTask.prepText); the static verb is the fallback.
+  // soil-assessment wording for a bed (CropTask.prepText); the static verb is the fallback.
   const verb = (t.action === 'prep' && t.prepText) ? `${t.prepText} for` : TASK_VERB[t.action];
-  return `${verb} ${t.cropName.toLowerCase()}${spacing} (${t.bedLabel})`;
+  return `${verb} ${t.cropName.toLowerCase()}${instruction} (${t.bedLabel})`;
 }
 
 export function taskSentence(tasks: CropTask[]): string {
@@ -157,11 +211,14 @@ export interface BedPlanCrop {
   icon: string;
   /** Month the seed goes in — into TRAYS for a transplant crop, straight into the ground otherwise. */
   sowMonth: number;
-  /** Month the crop actually occupies the bed (= sowMonth + 1 for a transplant crop). */
+  /** Earliest month a tray crop may occupy the bed. */
   bedMonth: number;
-  harvestMonth: number;
+  /** Conservative latest field-entry month for a tray crop. */
+  bedMonthLatest: number;
+  /** Null when the crop's duration is not source-verified. */
+  harvestMonth: number | null;
   /** Last month of the fresh-picking window (= harvestMonth for a one-shot harvest). */
-  harvestEndMonth: number;
+  harvestEndMonth: number | null;
   transplant: boolean;
   existing: boolean;
   /** '' for a whole bed, else 'half', 'a third', 'a quarter', '40% of the bed'. */
@@ -200,23 +257,23 @@ export function buildBedPlanRows(plantings: Planting[], beds: PlanBed[]): BedPla
       const crop = cropByKey(p.cropKey);
       if (!crop) continue;
       const fraction = p.areaFraction ?? 1;
-      const h = harvestMonth(p.sowMonth, crop.daysToHarvest);
+      const h = crop.timingVerified === false ? null : harvestMonthForCrop(p.sowMonth, crop);
       crops.push({
         cropKey: crop.key,
         cropName: crop.name,
         icon: crop.icon,
         sowMonth: p.sowMonth,
-        bedMonth: crop.transplant ? wrapMonth(p.sowMonth + 1) : p.sowMonth,
+        bedMonth: bedEntryMonth(p.sowMonth, crop),
+        bedMonthLatest: latestBedEntryMonth(p.sowMonth, crop),
         harvestMonth: h,
-        harvestEndMonth: wrapMonth(h + (crop.harvestWindowMonths ?? 0)),
+        harvestEndMonth: h === null ? null : wrapMonth(h + (crop.harvestWindowMonths ?? 0)),
         transplant: !!crop.transplant,
         existing: !!p.existing,
         shareLabel: bedShareLabel(fraction),
-        // A FOURTH copy of the yield formula used to live here — and unlike the
-        // others it skipped the intercropping discount, so every shared bed row
-        // printed ~10% more than the same planting contributed to the year
-        // total on the page above it (866kg of bed rows under an 840kg
-        // headline). Ask the one function that owns the discount.
+        // A FOURTH copy of the yield formula used to live here, so bed rows and
+        // the annual total could disagree. Ask the one area-scaled benchmark
+        // function instead; it deliberately applies no generic intercropping
+        // multiplier without evidence for the named crop pair and layout.
         estimatedKg: estimatedYieldKgAdjusted(p, bed.areaM2, plantings),
       });
     }
@@ -237,13 +294,23 @@ export interface BuyingItem {
   cropKey: string;
   cropName: string;
   icon: string;
-  /** 'seeds' | 'seedlings' | 'slips' | 'seed potatoes' — straight from seedBoqForPlan. */
+  /** 'seeds' | 'seedlings' | 'slips' | 'seed potatoes' | 'cloves' | 'corms'. */
   unit: string;
-  count: number;
-  /** Month to have it in hand (1-12). */
+  /** Piece count for living material; null for packet seed or unverified spacing. */
+  count: number | null;
+  countRange: readonly [number, number] | null;
+  quantityStatus: SeedBoqRow['quantityStatus'];
+  /** Representative internal midpoint; display the range below to farmers. */
+  finalPlantPositions: number;
+  finalPlantPositionsRange: readonly [number, number];
+  /**
+   * Shopping-calendar marker (1-12). For botanical seed this is the named
+   * sow/tray month, because the catalogue has no sourced procurement lead.
+   */
   buyMonth: number;
   sowMonth: number;
   bedMonth: number;
+  bedMonthLatest: number;
   harvestMonth: number;
   transplant: boolean;
   bedLabels: string[];
@@ -257,33 +324,14 @@ export interface BuyingMonth {
 }
 
 /**
- * HOW MANY MONTHS AHEAD OF SOWING TO BUY.
- *
- * One. The plan's own ground-prep task already sits at sowMonth - 1 (see
- * tasksForPlan), so "buy the seed on the trip to town in the month you prep
- * the ground" needs no new trip and no new concept — the seed is in the house
- * before the ground is ready, never the other way round.
- *
- * For a `transplant: true` crop this lands the purchase TWO months before the
- * bed date, not one, and that is the whole point: the crop-plan model treats
- * `Planting.sowMonth` as the month seed goes into TRAYS and puts the
- * transplant a month later (tasksForPlan), so buying at sowMonth - 1 gives the
- * farmer seed in hand, trays sown on time, and seedlings ready when the bed
- * is. The catalog says the same thing in its own words — onions: "sow into
- * trays in autumn, transplant seedlings about six weeks later".
- */
-const BUY_LEAD_MONTHS = 1;
-
-/**
  * When to buy what, grouped by month so it reads as a shopping calendar
  * rather than a bill of materials.
  *
- * Quantities come from seedBoqForPlan — called ONE PLANTING AT A TIME rather
- * than re-deriving the spacing/germination-buffer maths here. That is
- * deliberate: seedBoqForPlan aggregates by summing a per-planting rounded
- * count, so slicing it this way makes the per-crop totals in this schedule add
- * up to exactly what the on-screen "Seeds & seedlings" card shows, by
- * construction, with no second copy of the maths to drift.
+ * Quantities come from seedBoqBatchesForPlan, the same cohort-level authority
+ * the on-screen total uses. Splits of one crop in one sowing month are summed
+ * before rounding; separate succession months remain separate shopping trips.
+ * Botanical seed intentionally has no inferred buy count: field spacing proves
+ * an approximate final stand, not the packet quantity needed to establish it.
  *
  * `existing` (already-growing) plantings are skipped — seedBoqForPlan skips
  * them too, because there is nothing left to buy for a crop already in the
@@ -294,45 +342,54 @@ export function buildBuyingSchedule(
   beds: PlanBed[],
   nowMonth: number,
 ): BuyingMonth[] {
-  const merged = new Map<string, BuyingItem>();
+  const items: BuyingItem[] = [];
 
-  for (const p of plantings) {
-    if (p.existing) continue;
-    const crop = cropByKey(p.cropKey);
-    const bed = beds.find((b) => b.id === p.bedId);
-    if (!crop || !bed) continue;
-    const boq = seedBoqForPlan([p], beds)[0];
-    if (!boq) continue;
-
-    const sowMonth = wrapMonth(p.sowMonth);
-    const bedMonth = crop.transplant ? wrapMonth(sowMonth + 1) : sowMonth;
-    const buyMonth = wrapMonth(sowMonth - BUY_LEAD_MONTHS);
-    const key = `${crop.key}::${buyMonth}`;
-
-    const existing = merged.get(key);
-    if (existing) {
-      existing.count += boq.count;
-      if (!existing.bedLabels.includes(bed.label)) existing.bedLabels.push(bed.label);
-      continue;
-    }
-    merged.set(key, {
+  for (const boq of seedBoqBatchesForPlan(plantings, beds)) {
+    const crop = cropByKey(boq.cropKey);
+    if (!crop) continue;
+    const sowMonth = boq.sowMonth;
+    const bedMonth = bedEntryMonth(sowMonth, crop);
+    const bedMonthLatest = latestBedEntryMonth(sowMonth, crop);
+    // Ready-grown seedlings belong close to field planting. All other lines
+    // use the sow/plant month as their calendar marker. In particular, packet
+    // seed has no invented one-month procurement lead: its note says to source
+    // it before the named sow month without pretending the source gives an
+    // exact earlier month.
+    const buyMonth = crop.transplant ? bedMonth : sowMonth;
+    const bedLabels = boq.bedIds
+      .map((bedId) => beds.find((bed) => bed.id === bedId)?.label)
+      .filter((label): label is string => label !== undefined);
+    items.push({
       cropKey: crop.key,
       cropName: crop.name,
       icon: crop.icon,
       unit: boq.unit,
       count: boq.count,
+      countRange: boq.countRange,
+      quantityStatus: boq.quantityStatus,
+      finalPlantPositions: boq.finalPlantPositions,
+      finalPlantPositionsRange: boq.finalPlantPositionsRange,
       buyMonth,
       sowMonth,
       bedMonth,
-      harvestMonth: harvestMonth(sowMonth, crop.daysToHarvest),
+      bedMonthLatest,
+      harvestMonth: harvestMonthForCrop(sowMonth, crop),
       transplant: !!crop.transplant,
-      bedLabels: [bed.label],
-      note: buyingNote(boq.unit, !!crop.transplant, sowMonth, bedMonth),
+      bedLabels,
+      note: buyingNote(
+        boq.unit,
+        !!crop.transplant,
+        sowMonth,
+        bedMonth,
+        bedMonthLatest,
+        boq.finalPlantPositionsRange,
+        boq.quantityStatus,
+      ),
     });
   }
 
   const byMonth = new Map<number, BuyingItem[]>();
-  for (const item of merged.values()) {
+  for (const item of items) {
     const list = byMonth.get(item.buyMonth) ?? [];
     list.push(item);
     byMonth.set(item.buyMonth, list);
@@ -341,38 +398,67 @@ export function buildBuyingSchedule(
   return rollingMonths(nowMonth)
     .map((month) => ({
       month,
-      items: (byMonth.get(month) ?? []).sort((a, b) => b.count - a.count || a.cropName.localeCompare(b.cropName)),
+      items: (byMonth.get(month) ?? []).sort((a, b) =>
+        b.finalPlantPositions - a.finalPlantPositions || a.cropName.localeCompare(b.cropName)),
     }))
     .filter((m) => m.items.length > 0);
 }
 
 /**
  * The "why this month" sentence. Three genuinely different stories:
- *  - seed for trays: buy it, sow trays next month, plant out the month after;
- *  - living propagation material (slips, seed potatoes): it is a piece of
+ *  - seed for trays: source it before tray sowing, then plant out when ready
+ *    within the supported nursery-duration range;
+ *  - living propagation material (slips, corms, seed potatoes): it is a piece of
  *    plant, not a packet — it does not sit in a drawer for a season;
- *  - plain seed: it keeps, so buying a month early is pure insurance against
- *    the shop being out of stock on the week you need it.
+ *  - plain seed: the final stand is shown, but the packet's crop-specific
+ *    direct-sowing rate decides how much seed to buy.
  */
-function buyingNote(unit: string, transplant: boolean, sowMonth: number, bedMonth: number): string {
+function buyingNote(
+  unit: string,
+  transplant: boolean,
+  sowMonth: number,
+  bedMonth: number,
+  bedMonthLatest: number,
+  finalPlantPositionsRange: readonly [number, number],
+  quantityStatus: SeedBoqRow['quantityStatus'],
+): string {
   if (transplant) {
-    return `Sow into trays in ${monthLong(sowMonth)}, plant the seedlings out in ${monthLong(bedMonth)} `
-      + `(about six weeks in the tray). Buying ready-grown seedlings instead? Get those in ${monthLong(bedMonth)}.`;
+    const quantity = quantityStatus === 'spacing-confirmation-required'
+      ? 'Confirm the local row layout before deciding how many are needed. '
+      : `The mapped area has about ${positionRangeLabel(finalPlantPositionsRange)} field positions across the published spacing range. This is not a guaranteed seedling order or an allowance for establishment losses; crop- and supplier-specific guidance may change what to purchase. `;
+    const fieldWindow = bedMonth === bedMonthLatest
+      ? monthLong(bedMonth)
+      : `${monthLong(bedMonth)}–${monthLong(bedMonthLatest)}`;
+    return `Buying ready-grown seedlings? Source them only when the bed and seedlings are ready; the planning window is ${fieldWindow}. ${quantity}`
+      + `Raising your own instead? Source packet seed before the ${monthLong(sowMonth)} tray-sowing month, use its tray-sowing rate, and sow trays in ${monthLong(sowMonth)}. `
+      + TRANSPLANT_NURSERY_GUIDANCE;
   }
-  if (unit === 'slips' || unit === 'seed potatoes') {
-    return `Living planting material — buy it close to planting in ${monthLong(sowMonth)}, not months early, `
-      + `and keep it cool and dry until it goes in.`;
+  if (quantityStatus === 'spacing-confirmation-required') {
+    return `Confirm a locally appropriate row layout before buying planting material; the catalog does not have both verified spacing axes needed for an exact quantity. Plan to establish it in ${monthLong(sowMonth)}.`;
   }
-  return `Sow straight into the ground in ${monthLong(sowMonth)}. Seed keeps, so having it in hand a month `
-    + `early costs nothing and covers the shop being out of stock.`;
+  if (unit !== 'seeds') {
+    return `Living planting material — the mapped area has about ${positionRangeLabel(finalPlantPositionsRange)} ${unit} field positions across the published spacing range. This is not a guaranteed buy quantity or a loss allowance; ask the supplier what crop-specific allowance changes the purchase. Source it close to planting in ${monthLong(sowMonth)}, then follow crop-specific supplier or local handling guidance. No generic storage condition is assumed.`;
+  }
+  return `Source packet seed before the ${monthLong(sowMonth)} sowing month. Sow straight into the ground in ${monthLong(sowMonth)} for about ${positionRangeLabel(finalPlantPositionsRange)} final plant positions across the published spacing range. `
+    + `Use the packet's crop-specific direct-sowing rate and germination guidance; field spacing alone cannot tell you how much seed to buy.`;
+}
+
+export function positionRangeLabel(range: readonly [number, number]): string {
+  const minimum = range[0].toLocaleString('en-ZA');
+  const maximum = range[1].toLocaleString('en-ZA');
+  return range[0] === range[1] ? minimum : `${minimum}–${maximum}`;
 }
 
 /** Per-crop totals across the whole schedule — the cross-check against the on-screen BOQ. */
-export function buyingScheduleTotals(schedule: BuyingMonth[]): Map<string, number> {
-  const totals = new Map<string, number>();
+export function buyingScheduleTotals(schedule: BuyingMonth[]): Map<string, number | null> {
+  const totals = new Map<string, number | null>();
   for (const month of schedule) {
     for (const item of month.items) {
-      totals.set(item.cropKey, (totals.get(item.cropKey) ?? 0) + item.count);
+      const prior = totals.get(item.cropKey);
+      totals.set(
+        item.cropKey,
+        item.count === null || prior === null ? null : (prior ?? 0) + item.count,
+      );
     }
   }
   return totals;
@@ -382,12 +468,29 @@ export function buyingScheduleTotals(schedule: BuyingMonth[]): Map<string, numbe
 
 export interface TaskMonth {
   month: number;
+  /** Concrete offset from the current month. Two entries may name November,
+   * but offset 0 and offset 12 are different years and must not be merged. */
+  monthsAway: number;
   tasks: CropTask[];
 }
 
-/** The plan's tasks, in rolling reading order from the current month. Empty months are dropped. */
+/** The plan's tasks in real cohort order from the current month. Empty months
+ * are dropped, and a harvest after a next-year sowing remains after that
+ * sowing even when both cross a second November. */
 export function buildTaskMonths(tasks: CropTask[], nowMonth: number): TaskMonth[] {
-  return rollingMonths(nowMonth)
-    .map((month) => ({ month, tasks: tasks.filter((t) => t.month === month) }))
-    .filter((m) => m.tasks.length > 0);
+  const byOffset = new Map<number, CropTask[]>();
+  for (const task of tasks) {
+    const monthsAway = taskMonthsFromNow(task, nowMonth);
+    if (monthsAway < 0) continue;
+    const rows = byOffset.get(monthsAway) ?? [];
+    rows.push(task);
+    byOffset.set(monthsAway, rows);
+  }
+  return [...byOffset.entries()]
+    .sort(([a], [b]) => a - b)
+    .map(([monthsAway, rows]) => ({
+      month: wrapMonth(nowMonth + monthsAway),
+      monthsAway,
+      tasks: rows.sort((a, b) => a.bedLabel.localeCompare(b.bedLabel) || a.id.localeCompare(b.id)),
+    }));
 }

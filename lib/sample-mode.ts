@@ -62,7 +62,7 @@ function freshSandbox(): SampleSandbox {
     cropPlan: buildDemoCropPlan(),
     favouriteCropKeys: new Set(),
     allowBedSharing: true,
-    cashflowSettings: { sellPercent: 100, lossPercent: 0 },
+    cashflowSettings: { sellPercent: 100, lossPercent: 0, confirmed: false },
     facilitatorDesign: buildDemoFacilitatorState(),
     sales: finance.sales,
     expenses: finance.expenses,

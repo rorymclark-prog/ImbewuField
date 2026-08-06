@@ -8,9 +8,14 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-import { CROPS, cropByKey } from '@/lib/crop-catalog';
-import { foodGroupOf } from '@/lib/crop-groups';
-import type { PlanBed } from '@/lib/crop-plan';
+import {
+  CROPS,
+  cropByKey,
+  hasAutomaticPlanningBasis,
+  hasPlanningYield,
+  hasVerifiedFieldPlan,
+} from '@/lib/crop-catalog';
+import { occupiedMonthsForPlanting, type PlanBed } from '@/lib/crop-plan';
 import { autoSuggestPlan } from '@/lib/crop-autosuggest';
 import type { AutoSuggestAnswers } from '@/lib/crop-autosuggest';
 import {
@@ -18,7 +23,9 @@ import {
   STAPLE_COURSE_SEQUENCE,
   STAPLE_CROP_KEYS,
   PLOT_WINTER_COVER_KEYS,
+  isPlotWinterCover,
   isStapleCrop,
+  plotPool,
   plotWinterCovers,
   stapleCourseOf,
 } from '@/lib/staple-crops';
@@ -39,6 +46,7 @@ const BASE: AutoSuggestAnswers = {
   rhythm: 'steady',
   rotateCrops: true,
   allowVinesInBeds: false,
+  reliableIrrigation: true,
 };
 
 const isPlot = (bedId: string): boolean => bedId.startsWith('plot-');
@@ -108,65 +116,88 @@ test('a plot takes one crop at full area — never a half or a third of a field'
   }
 });
 
-test('maize goes in the field, not in a 1.2m raised bed', () => {
-  // Wind-pollinated: one row in a narrow bed shakes its pollen onto the path. The
-  // catalog note has always said "block-plant several rows together"; now the engine
-  // acts on it. A wide bed is still allowed — the rule is about width, not about beds.
-  const beds = ubhejaneFixture();
-  for (let nowMonth = 1; nowMonth <= 12; nowMonth++) {
-    const res = autoSuggestPlan(BASE, 'mild-frost', beds, [], nowMonth);
-    for (const p of res.plantings.filter((x) => x.cropKey === 'maize')) {
-      assert.ok(isPlot(p.bedId), `maize was planted in ${p.bedId}, which is 1.2m wide`);
-    }
-  }
+test('legacy grain maize cannot enter a staple schedule until its timing and field geometry are verified', () => {
+  // Mapping a plot proves area, not a grain-maize duration or a defensible
+  // wind-pollinated row layout. The catalog identity stays for old records,
+  // but neither a wide bed nor an explicit staple plot may unlock auto-plan.
+  const maize = cropByKey('maize');
+  assert.ok(maize);
+  assert.equal(maize.timingVerified, false);
+  assert.equal(maize.fieldSpacingVerified, false);
+  assert.equal(hasVerifiedFieldPlan(maize), false);
+  assert.equal(plotPool(CROPS).some((crop) => crop.key === maize.key), false);
 
-  const wideBed: PlanBed[] = [{ id: 'wide', label: 'Wide bed', areaM2: 40, minDimM: 4 }];
-  const wide = autoSuggestPlan({ ...BASE, groups: ['staple_grain'] }, 'mild-frost', wideBed, [], 10);
-  assert.ok(
-    wide.plantings.some((p) => p.cropKey === 'maize'),
-    'a 4m-wide bed can hold a maize block and should be allowed to',
-  );
+  const grounds: PlanBed[] = [
+    { id: 'wide', label: 'Wide bed', areaM2: 40, minDimM: 4 },
+    { id: 'plot', label: 'Staple plot', areaM2: 400, minDimM: 10, kind: 'plot' },
+  ];
+  const result = autoSuggestPlan({ ...BASE, cropKeys: ['maize'], groups: [] }, 'mild-frost', grounds, [], 10);
+  assert.deepEqual(result.plantings, []);
+  assert.match(result.notes.join(' '), /crop duration and field-spacing basis/i);
 });
 
-test('no single crop is allowed to become the whole garden', () => {
-  // "why do we plant swiss chard in so many beds" — it is the joint-highest scoring
-  // crop AND the only top scorer sowable all twelve months, so every coverage pass
-  // reached for it. The cap is a third of the veg beds, applied as a strong
-  // preference: a crop may still exceed it when nothing else fits, because an empty
-  // bed is a worse answer than a second planting of a good crop.
+test('no single crop occupies the whole garden at the same time', () => {
+  // "why do we plant swiss chard in so many beds" is a simultaneous land-use
+  // question, not a ban on using the same crop in each bed at different points in a
+  // twelve-month rotation. Counting every bed a crop ever touches mislabels healthy
+  // succession as monoculture and fights the owner's separate request to use the
+  // available space. The invariant that can actually protect the farmer is that,
+  // whenever several selected crops fit, no one crop owns every veg bed at once.
   const beds = ubhejaneFixture();
   const vegBedCount = beds.filter((b) => b.kind !== 'plot').length;
   for (let nowMonth = 1; nowMonth <= 12; nowMonth++) {
     const res = autoSuggestPlan(BASE, 'mild-frost', beds, [], nowMonth);
-    const bedsPerCrop = new Map<string, Set<string>>();
-    for (const p of res.plantings) {
-      if (isPlot(p.bedId)) continue;
-      if (!bedsPerCrop.has(p.cropKey)) bedsPerCrop.set(p.cropKey, new Set());
-      bedsPerCrop.get(p.cropKey)!.add(p.bedId);
-    }
-    for (const [cropKey, bedSet] of bedsPerCrop) {
-      assert.ok(
-        bedSet.size < vegBedCount,
-        `now=${nowMonth}: ${cropKey} took ${bedSet.size} of ${vegBedCount} veg beds`,
-      );
+    for (let calendarMonth = 1; calendarMonth <= 12; calendarMonth++) {
+      const bedsPerCrop = new Map<string, Set<string>>();
+      for (const p of res.plantings) {
+        if (isPlot(p.bedId) || !occupiedMonthsForPlanting(p).includes(calendarMonth)) continue;
+        if (!bedsPerCrop.has(p.cropKey)) bedsPerCrop.set(p.cropKey, new Set());
+        bedsPerCrop.get(p.cropKey)!.add(p.bedId);
+      }
+      for (const [cropKey, bedSet] of bedsPerCrop) {
+        assert.ok(
+          bedSet.size < vegBedCount,
+          `now=${nowMonth}, month=${calendarMonth}: ${cropKey} occupied ${bedSet.size} of ${vegBedCount} veg beds at once`,
+        );
+      }
     }
   }
 });
 
-test('the plan reaches well beyond the handful of top-scoring crops', () => {
-  // Eleven of twenty-five catalog crops appeared in no plan at any setting before this
-  // — the per-group queues are ranked by yield and only the top few are ever offered.
-  // A catalog entry no plan can ever use is a defect, not a spare.
+test('the plan uses verified-yield food crops, with only the declared zero-food plot cover exception', () => {
+  // The old diversity gate rewarded using 15+ crops in one plan, which is how
+  // an unsourced coriander figure could enter merely to make the catalog look
+  // well represented. A plan should use crops this household chose, not spend
+  // bed space proving every catalog entry is reachable.
   const beds = ubhejaneFixture();
   for (const nowMonth of [2, 8, 11]) {
     const res = autoSuggestPlan(BASE, 'mild-frost', beds, [], nowMonth);
-    const used = new Set(res.plantings.map((p) => p.cropKey));
-    assert.ok(used.size >= 15, `now=${nowMonth}: only ${used.size} of ${CROPS.length} crops used`);
+    const unsupported = res.plantings.filter((planting) => {
+      const crop = cropByKey(planting.cropKey)!;
+      const bed = beds.find((candidate) => candidate.id === planting.bedId);
+      return !hasPlanningYield(crop)
+        && !(crop.yieldKgPerM2 === 0 && bed?.kind === 'plot' && isPlotWinterCover(crop));
+    });
+    assert.deepEqual(unsupported, [], `now=${nowMonth}: an unverified food crop entered auto-suggest`);
+  }
+
+  const chosen = ['cabbage', 'carrots', 'green-beans'];
+  const restricted = autoSuggestPlan({
+    ...BASE,
+    // Exact choices are the authority even if a stale UI category filter no
+    // longer contains them; the engine must neither erase nor substitute them.
+    groups: ['fruiting_veg'],
+    cropKeys: chosen,
+  }, 'mild-frost', beds, [], 8);
+  assert.ok(restricted.plantings.length > 0);
+  for (const planting of restricted.plantings) {
+    assert.ok(chosen.includes(planting.cropKey), `${planting.cropKey} was substituted outside the household's list`);
   }
 });
 
-test('four plots take four different staple courses', () => {
-  // The classic grain / pulse / tuber / cucurbit layout, which is what four plots are for.
+test('four plots use every supported staple course before one course repeats', () => {
+  // The catalog names four conceptual courses, but unsupported grain maize
+  // must not be revived merely to make four plot labels different.
   //
   // Measured on each plot's MAIN course, not on whatever it happens to sow first. A plot's
   // year is one staple crop in its season plus, optionally, a legume cover over winter —
@@ -184,49 +215,45 @@ test('four plots take four different staple courses', () => {
   }
   assert.equal(courseByPlot.size, 4, 'not every plot got a staple course');
   const courses = [...courseByPlot.values()];
-  assert.equal(new Set(courses).size, 4, `plots took ${courses.join(', ')} — expected four different courses`);
+  const supportedCourses = new Set(
+    STAPLE_CROP_KEYS
+      .map((key) => cropByKey(key)!)
+      .filter(hasAutomaticPlanningBasis)
+      .map((crop) => stapleCourseOf(crop)!),
+  );
+  assert.deepEqual(
+    new Set(courses),
+    supportedCourses,
+    `plots took ${courses.join(', ')} instead of exhausting the supported courses`,
+  );
 });
 
-test('no staple course can strand its plot without a legal winter cover', () => {
-  // THE BUG THIS PINS. PLOT_WINTER_COVER_KEYS held exactly one crop, broad
-  // beans, and broad beans is a legume. So a plot whose staple course was ALSO
-  // a legume (dry beans, groundnuts) had its entire cover list disqualified by
-  // BedRotation.repeats — a HARD filter, unlike the soft conflicts — and could
-  // never be planted again that season, at any fraction, in any gap month.
-  // Measured on Ubhejane's own generated plan: Plot 1, 98.8 m², bare 7 of 12
-  // months = 692 m²-months, 56% of every idle square metre on that farm.
-  //
-  // Structural rather than behavioural on purpose: it fails the moment the
-  // cover list and the staple list share a food group with nothing left over,
-  // which is the actual precondition, instead of waiting for one fixture's
-  // occupancy to drift.
+test('an unsupported cover is excluded even when the honest result is a resting plot', () => {
+  // Oats was added solely to prevent a post-legume plot from resting, but its
+  // exact 6cm/100-day schedule had no relevant primary source. Agronomic
+  // evidence is the precondition: the optimiser may show bare ground, but it
+  // must not fill that visual gap by inventing instructions.
   const covers = plotWinterCovers(CROPS);
   assert.ok(covers.length, 'no winter cover crops are declared at all');
-  for (const key of STAPLE_CROP_KEYS) {
-    const staple = cropByKey(key)!;
-    const legal = covers.filter((c) => foodGroupOf(c) !== foodGroupOf(staple));
-    assert.ok(
-      legal.length > 0,
-      `a plot growing ${key} (${foodGroupOf(staple)}) has no winter cover in a different food group — `
-      + `every cover would be a hard rotation repeat, so that plot sits bare all winter`,
-    );
-  }
+  const oats = cropByKey('oats')!;
+  assert.equal(oats.timingVerified, false);
+  assert.equal(PLOT_WINTER_COVER_KEYS.includes(oats.key), false);
+  assert.equal(isPlotWinterCover(oats), false);
+  assert.equal(covers.some((crop) => crop.key === oats.key), false);
+
+  const onePlot: PlanBed[] = [{ id: 'plot-1', label: 'Plot 1', areaM2: 21, minDimM: 3.5, kind: 'plot' }];
+  const result = autoSuggestPlan(BASE, 'mild-frost', onePlot, [
+    { id: 'existing-beans', bedId: 'plot-1', cropKey: 'dry-beans', sowMonth: 11, existing: true },
+  ], 8);
+  assert.equal(result.plantings.some((planting) => planting.cropKey === 'oats'), false);
+  assert.match(result.notes.join(' '), /rest/i, 'an unfilled plot must be explained as rest, not fail silently');
 });
 
-test('the household-food cover crop is offered before the green manure', () => {
-  // Order in PLOT_WINTER_COVER_KEYS is a RANKING, not a set. Broad beans feeds
-  // the household; oats is cut or rolled down and feeds only the soil, so it
-  // must never be reached while the legume is legal. Nothing downstream would
-  // enforce this on its own — fillRemainingGaps sorts spread-first and a
-  // never-used crop wins that sort outright, which measurably cost Plot 4 two
-  // extra bare months when both covers were offered as an unranked pool.
+test('every automatic winter cover has verified timing and household-food yield', () => {
   const covers = plotWinterCovers(CROPS);
-  assert.ok(covers[0].yieldKgPerM2 > 0, 'the first-choice winter cover must be one the household can eat');
-  const manures = covers.filter((c) => c.yieldKgPerM2 === 0);
-  for (const m of manures) {
-    assert.ok(
-      covers.indexOf(m) > 0,
-      `${m.key} yields no food and must rank below an edible cover, not above it`,
-    );
+  assert.ok(covers[0] && hasPlanningYield(covers[0]), 'the first-choice winter cover must have a verified household-food yield');
+  for (const cover of covers) {
+    assert.equal(hasVerifiedFieldPlan(cover), true, `${cover.key} has unresolved timing or field geometry but is automatically scheduled`);
+    assert.ok(hasPlanningYield(cover), `${cover.key} uses scarce plot space without a verified household-food yield`);
   }
 });
