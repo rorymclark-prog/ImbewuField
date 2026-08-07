@@ -182,11 +182,14 @@ test('local swaps un-place a greedy first choice when two later crops fit instea
   // The exact case the rebuild spec says a transitional search must survive:
   // one crop that looks better on a LATER tier is taken first and blocks two
   // that win on an EARLIER one. beamWidth 1 makes the beam a pure greedy pass,
-  // so only the drop-one-add-two swap can recover the right answer.
+  // so only a swap that removes the placed crop can recover the right answer.
+  //
+  // All three claim two resources, so neither of the solver's decision orders
+  // can dodge the trap by happening to consider the two later crops first.
   const problem = syntheticProblem([
     syntheticCandidate('greedy', ['section:bed-1:week-34', 'section:bed-1:week-35']),
-    syntheticCandidate('later-1', ['section:bed-1:week-34']),
-    syntheticCandidate('later-2', ['section:bed-1:week-35']),
+    syntheticCandidate('later-1', ['section:bed-1:week-34', 'tools:transplanter']),
+    syntheticCandidate('later-2', ['section:bed-1:week-35', 'tools:dibber']),
   ]);
 
   const greedyOnly = solveSelection(problem, { beamWidth: 1, improvementRounds: 0 });

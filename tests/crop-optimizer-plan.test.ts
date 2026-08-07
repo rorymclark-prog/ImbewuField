@@ -382,6 +382,126 @@ test('KNOWN LIMIT: with no crops requested, the placement tier favours short-cyc
 });
 
 // ---------------------------------------------------------------------------
+// Interrogating a whole farm's output, not just a fixture's
+// ---------------------------------------------------------------------------
+
+/**
+ * The small fixtures are checked against a proven optimum; a nine-bed farm
+ * cannot be. So this one checks the plan a farmer would actually be handed,
+ * against the physical facts it claims: no two crops on the same ground in the
+ * same week, no sowing outside the catalog window, no nursery over its stated
+ * capacity, no immediate botanical repeat on one section.
+ *
+ * It earns its place. Written against an earlier version of the search it
+ * found a plan of 31 cohorts that put one year-long crop in every section,
+ * because the beam decided placements in alphabetical order.
+ */
+test('a nine-bed farm plan holds every physical fact it claims', () => {
+  const beds = Array.from({ length: 9 }, (_, index) => ({
+    bedId: `bed-${index + 1}`,
+    layoutRevision: 'rev-1',
+    division: ((index % 4) + 1) as 1 | 2 | 3 | 4,
+    areaSqm: 10,
+    irrigationConfirmed: index < 6,
+  }));
+  const input = farm({
+    siteKey: 'site-nine-beds',
+    horizonWeeks: 52,
+    beds,
+    requestedCropKeys: undefined,
+    nursery: { nurseryId: 'nursery-1', concurrentCohorts: 3 },
+  });
+  const outcome = solveRaisedBedPlan(input);
+  assert.equal(outcome.plannerResult.status, 'best-found');
+
+  const chosen = outcome.selectedCandidateIds.map(
+    (id) => outcome.candidates.find((candidate) => candidate.id === id)!,
+  );
+  assert.ok(chosen.length > 40, `a nine-bed farm should carry a real plan (was ${chosen.length} cohorts)`);
+
+  const heldBy = new Map<string, string>();
+  const traysInWeek = new Map<number, number>();
+  const bySection = new Map<string, { family: string; from: number; until: number }[]>();
+  for (const candidate of chosen) {
+    for (let week = candidate.fieldStartWeek; week < candidate.fieldReleaseWeek; week++) {
+      for (const sectionId of candidate.sectionIds) {
+        const key = `${sectionId}#${week}`;
+        assert.equal(heldBy.get(key), undefined, `${key} is claimed by two crops at once`);
+        heldBy.set(key, candidate.id);
+      }
+    }
+    for (const sectionId of candidate.sectionIds) {
+      const runs = bySection.get(sectionId) ?? [];
+      runs.push({
+        family: candidate.rotationFamily,
+        from: candidate.fieldStartWeek,
+        until: candidate.fieldReleaseWeek,
+      });
+      bySection.set(sectionId, runs);
+    }
+    if (candidate.nurseryStartWeek !== undefined) {
+      for (let week = candidate.nurseryStartWeek; week < candidate.fieldStartWeek; week++) {
+        traysInWeek.set(week, (traysInWeek.get(week) ?? 0) + 1);
+      }
+    }
+    assert.ok(
+      cropByKey(candidate.cropKey)!.sowMonths['mild-frost'].includes(candidate.cohort.sowing.startsOn.month),
+      `${candidate.id} sows outside its own catalog window`,
+    );
+    assert.ok(candidate.fieldReleaseWeek <= 52, `${candidate.id} runs past the end of the plan`);
+  }
+
+  for (const [week, trays] of traysInWeek) {
+    assert.ok(trays <= 3, `week ${week} needs ${trays} nursery trays but only 3 were recorded`);
+  }
+  for (const [sectionId, runs] of bySection) {
+    runs.sort((a, b) => a.from - b.from);
+    for (let index = 1; index < runs.length; index++) {
+      const previous = runs[index - 1];
+      const next = runs[index];
+      assert.ok(
+        next.family !== previous.family || next.from >= previous.until + 1,
+        `${sectionId} follows ${previous.family} straight with ${next.family}`,
+      );
+    }
+  }
+
+  // The candidate cap is a real limit on a farm this size. It must be stated.
+  assert.ok(outcome.candidates.length <= 3000);
+  assert.ok(outcome.plannerResult.explanations.some((entry) => entry.code === 'candidate-cap-reached'));
+});
+
+test('a bed the farmer plants whole gets one cohort across all of its sections', () => {
+  const outcome = solveRaisedBedPlan(farm({
+    beds: [{
+      bedId: 'bed-1',
+      layoutRevision: 'rev-1',
+      division: 3,
+      areaSqm: 12,
+      irrigationConfirmed: true,
+      plantWholeBed: true,
+    }],
+    requestedCropKeys: ['beetroot'],
+  }));
+
+  assert.ok(outcome.plannerResult.cohorts.length > 0);
+  for (const cohort of outcome.plannerResult.cohorts) {
+    assert.equal(cohort.location.sectionIds.length, 3, 'a whole-bed placement occupies every section of the bed');
+  }
+  // Yield follows the whole bed's area, not a section's.
+  assert.deepEqual(outcome.candidates[0].expectedKgRange, [12 * 1.4, 12 * 1.8]);
+});
+
+test('a search that runs out of budget says so instead of presenting a full result', () => {
+  const outcome = solveRaisedBedPlan(farm({ horizonWeeks: 52, requestedCropKeys: undefined }), {
+    maxScoreEvaluations: 40,
+  });
+  assert.equal(outcome.plannerResult.status, 'best-found');
+  assert.equal(outcome.diagnostics?.hitEvaluationBudget, true);
+  assert.ok(outcome.plannerResult.explanations.some((entry) => entry.code === 'evaluation-budget-reached'));
+});
+
+// ---------------------------------------------------------------------------
 // Contract surface
 // ---------------------------------------------------------------------------
 

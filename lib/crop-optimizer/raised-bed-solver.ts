@@ -54,7 +54,13 @@ interface SolverState {
   /** Candidate indices, ascending — the canonical order the oracle sorts to. */
   indices: number[];
   key: string;
-  used: Map<string, number>;
+  /**
+   * Units claimed per resource, indexed densely rather than by name. A beam
+   * copies this for every state it grows, and a keyed map of a whole farm's
+   * section-weeks made that copy the dominant cost of the whole search; a
+   * typed array copies as one memcpy.
+   */
+  used: Uint16Array;
   shortfall: number;
   objective: ObjectiveVector;
 }
@@ -114,8 +120,20 @@ export function solveSelection(
     candidateIds: new Set(requirement.candidateIds),
     minSelected: requirement.minSelected,
   }));
-  const capacityOf = new Map(problem.capacities.map((capacity) => [capacity.resource, capacity.capacity]));
-  const baseUse = new Map(problem.capacities.map((capacity) => [capacity.resource, capacity.fixedUse ?? 0]));
+  // Resources are indexed densely once, so every later feasibility test is an
+  // array read rather than a string hash.
+  const resourceIndexOf = new Map<string, number>();
+  const capacityOf = new Uint16Array(problem.capacities.length);
+  const baseUse = new Uint16Array(problem.capacities.length);
+  problem.capacities.forEach((capacity, index) => {
+    resourceIndexOf.set(capacity.resource, index);
+    capacityOf[index] = capacity.capacity;
+    baseUse[index] = capacity.fixedUse ?? 0;
+  });
+  const claimResources = candidates.map((candidate) => (
+    Int32Array.from(candidate.claims, (claim) => resourceIndexOf.get(claim.resource) ?? -1)
+  ));
+  const claimUnits = candidates.map((candidate) => Int32Array.from(candidate.claims, (claim) => claim.units));
 
   const beamWidth = Math.max(1, Math.floor(options.beamWidth ?? DEFAULT_BEAM_WIDTH));
   const maxScoreEvaluations = Math.max(1, Math.floor(options.maxScoreEvaluations ?? DEFAULT_MAX_SCORE_EVALUATIONS));
@@ -192,45 +210,89 @@ export function solveSelection(
     return shortfall;
   };
 
+  const usageFor = (indices: readonly number[]): Uint16Array => {
+    const used = new Uint16Array(baseUse);
+    for (const index of indices) {
+      const resources = claimResources[index];
+      const units = claimUnits[index];
+      for (let claim = 0; claim < resources.length; claim++) used[resources[claim]] += units[claim];
+    }
+    return used;
+  };
+
+  const canAdd = (used: Uint16Array, index: number): boolean => {
+    const resources = claimResources[index];
+    const units = claimUnits[index];
+    for (let claim = 0; claim < resources.length; claim++) {
+      const resource = resources[claim];
+      if (resource < 0) return false;
+      if (used[resource] + units[claim] > capacityOf[resource]) return false;
+    }
+    return true;
+  };
+
+  const withCandidate = (used: Uint16Array, index: number): Uint16Array => {
+    const next = new Uint16Array(used);
+    const resources = claimResources[index];
+    const units = claimUnits[index];
+    for (let claim = 0; claim < resources.length; claim++) next[resources[claim]] += units[claim];
+    return next;
+  };
+
   const makeState = (indices: number[]): SolverState | null => {
     const key = keyFor(indices);
     const objective = objectiveFor(indices, key);
     if (!objective) return null;
     diagnostics.statesExamined++;
-    return {
-      indices,
-      key,
-      used: usageFor(indices),
-      shortfall: shortfallFor(indices),
-      objective,
-    };
+    return { indices, key, used: usageFor(indices), shortfall: shortfallFor(indices), objective };
   };
 
-  function usageFor(indices: readonly number[]): Map<string, number> {
-    const used = new Map(baseUse);
-    for (const index of indices) {
-      for (const claim of candidates[index].claims) {
-        used.set(claim.resource, (used.get(claim.resource) ?? 0) + claim.units);
-      }
-    }
-    return used;
-  }
+  /**
+   * Decision orders. A plan's `indices` stay ascending — so the canonical id
+   * order, and therefore the tie-break, is unaffected — but the order the beam
+   * DECIDES in changes which plans it ever builds, and neither order wins
+   * everywhere. Both are run and the better whole plan is kept.
+   *
+   *  - least-room-first: fewest capacity claims, then id. Deciding purely in
+   *    id order filled a real nine-bed farm with whatever crop sorted first
+   *    alphabetically — a year-long crop in every section, 31 placements where
+   *    short successions give three times as many. Fewest-claims-first is the
+   *    standard greedy order for packing the most items in, and the top
+   *    lexicographic tier here is exactly "how many placements".
+   *  - canonical id order: on a single small bed this reaches tighter plans
+   *    (fewer bare section-weeks) than least-room-first does.
+   */
+  const byIdOrder = candidates.map((_, index) => index);
+  const byRoomOrder = [...byIdOrder].sort((a, b) => (
+    candidates[a].claims.length - candidates[b].claims.length || a - b
+  ));
+  const decisionOrders = [byRoomOrder, byIdOrder];
 
-  const canAdd = (used: ReadonlyMap<string, number>, index: number): boolean => {
-    for (const claim of candidates[index].claims) {
-      const capacity = capacityOf.get(claim.resource);
-      if (capacity === undefined) return false;
-      if ((used.get(claim.resource) ?? 0) + claim.units > capacity) return false;
-    }
-    return true;
-  };
-
-  const withCandidate = (used: ReadonlyMap<string, number>, index: number): Map<string, number> => {
-    const next = new Map(used);
-    for (const claim of candidates[index].claims) {
-      next.set(claim.resource, (next.get(claim.resource) ?? 0) + claim.units);
-    }
+  const insertSorted = (indices: readonly number[], value: number): number[] => {
+    const next = [...indices];
+    let position = next.length;
+    while (position > 0 && next[position - 1] > value) position--;
+    next.splice(position, 0, value);
     return next;
+  };
+
+  /**
+   * Add every placement that still fits, cheapest first. One move, one score.
+   * This is what lets the swap pass trade a single long cohort for the several
+   * short ones it was blocking — a 1-for-2 swap cannot cross that distance.
+   */
+  const greedyFill = (base: readonly number[]): number[] => {
+    const used = usageFor(base);
+    const inPlan = new Set(base);
+    let filled = [...base];
+    for (const index of byRoomOrder) {
+      if (inPlan.has(index) || !canAdd(used, index)) continue;
+      const resources = claimResources[index];
+      const units = claimUnits[index];
+      for (let claim = 0; claim < resources.length; claim++) used[resources[claim]] += units[claim];
+      filled = insertSorted(filled, index);
+    }
+    return filled;
   };
 
   // ---- 1. beam over include/exclude, whole-plan scored at every step -------
@@ -239,39 +301,54 @@ export function solveSelection(
     diagnostics.elapsedMs = Date.now() - startedAt;
     return notRun(candidates.length, scoreFailure ?? 'The plan score could not be computed.', startedAt);
   }
-  let beam: SolverState[] = [empty];
+  // The swap pass is not an afterthought, so it does not get the leftovers of
+  // an exhausted budget: the beams together may spend at most this much of it.
+  const beamBudget = Math.max(1, Math.floor(maxScoreEvaluations * 0.6));
 
-  for (let index = 0; index < candidates.length; index++) {
-    const grown: SolverState[] = [];
-    for (const state of beam) {
-      if (!canAdd(state.used, index)) continue;
-      const indices = [...state.indices, index];
-      const key = keyFor(indices);
-      const objective = objectiveFor(indices, key);
-      if (!objective) continue;
-      diagnostics.statesExamined++;
-      grown.push({
-        indices,
-        key,
-        used: withCandidate(state.used, index),
-        shortfall: shortfallFor(indices),
-        objective,
-      });
+  const runBeam = (order: readonly number[], budget: number): SolverState[] => {
+    let beam: SolverState[] = [empty];
+    for (const index of order) {
+      if (diagnostics.scoreEvaluations >= budget) {
+        diagnostics.hitEvaluationBudget = true;
+        break;
+      }
+      const grown: SolverState[] = [];
+      for (const state of beam) {
+        if (!canAdd(state.used, index)) continue;
+        const indices = insertSorted(state.indices, index);
+        const key = keyFor(indices);
+        const objective = objectiveFor(indices, key);
+        if (!objective) continue;
+        diagnostics.statesExamined++;
+        grown.push({
+          indices,
+          key,
+          used: withCandidate(state.used, index),
+          shortfall: shortfallFor(indices),
+          objective,
+        });
+      }
+      if (scoreFailure) return beam;
+      if (grown.length === 0) continue;
+      const merged = new Map<string, SolverState>();
+      for (const state of [...beam, ...grown]) merged.set(state.key, state);
+      beam = [...merged.values()].sort(compareStates).slice(0, beamWidth);
     }
+    return beam;
+  };
+
+  const beams: SolverState[][] = [];
+  for (let pass = 0; pass < decisionOrders.length; pass++) {
+    beams.push(runBeam(decisionOrders[pass], Math.floor((beamBudget * (pass + 1)) / decisionOrders.length)));
     if (scoreFailure) return notRun(candidates.length, scoreFailure, startedAt);
-    if (grown.length === 0) continue;
-    const merged = new Map<string, SolverState>();
-    for (const state of [...beam, ...grown]) merged.set(state.key, state);
-    beam = [...merged.values()].sort(compareStates).slice(0, beamWidth);
   }
+  const beam = [...new Map(beams.flat().map((state) => [state.key, state])).values()].sort(compareStates);
 
   // ---- 2. local swaps: drop, 1-for-1, and the 1-for-2 replace --------------
-  const resourceIndex = new Map<string, number[]>();
+  const claimantsOfResource: number[][] = problem.capacities.map(() => []);
   for (let index = 0; index < candidates.length; index++) {
-    for (const claim of candidates[index].claims) {
-      const bucket = resourceIndex.get(claim.resource);
-      if (bucket) bucket.push(index);
-      else resourceIndex.set(claim.resource, [index]);
+    for (const resource of claimResources[index]) {
+      if (resource >= 0) claimantsOfResource[resource].push(index);
     }
   }
 
@@ -279,6 +356,10 @@ export function solveSelection(
     let current = start;
     for (let round = 0; round < improvementRounds; round++) {
       let best = current;
+      let bestIndices: number[] | null = null;
+      // A move is judged on its objective alone; the resource usage of the
+      // winner is rebuilt once at the end of the round rather than for every
+      // move considered, which is what makes a whole-farm sweep affordable.
       const consider = (indices: number[]) => {
         const sorted = [...indices].sort((a, b) => a - b);
         const key = keyFor(sorted);
@@ -286,31 +367,33 @@ export function solveSelection(
         const objective = objectiveFor(sorted, key);
         if (!objective) return;
         diagnostics.statesExamined++;
-        const state: SolverState = {
-          indices: sorted,
-          key,
-          used: usageFor(sorted),
-          shortfall: shortfallFor(sorted),
-          objective,
-        };
-        if (compareStates(state, best) < 0) best = state;
+        const shortfall = shortfallFor(sorted);
+        if (shortfall !== best.shortfall
+          ? shortfall > best.shortfall
+          : compareObjectiveVectors(objective, best.objective) >= 0) return;
+        best = { indices: sorted, key, used: best.used, shortfall, objective };
+        bestIndices = sorted;
       };
 
-      // Add anything that still fits.
-      for (let index = 0; index < candidates.length; index++) {
-        if (current.indices.includes(index)) continue;
+      const selected = new Set(current.indices);
+      // Add anything that still fits, one at a time and then all at once.
+      for (const index of byRoomOrder) {
+        if (selected.has(index)) continue;
         if (!canAdd(current.used, index)) continue;
-        consider([...current.indices, index]);
+        consider(insertSorted(current.indices, index));
       }
+      consider(greedyFill(current.indices));
       // Drop, then re-place what the drop unblocked. This is the backtracking.
       for (const dropped of current.indices) {
         const rest = current.indices.filter((index) => index !== dropped);
         consider(rest);
+        consider(greedyFill(rest));
         const restUsed = usageFor(rest);
         const blocked = new Set<number>();
-        for (const claim of candidates[dropped].claims) {
-          for (const index of resourceIndex.get(claim.resource) ?? []) {
-            if (index === dropped || rest.includes(index)) continue;
+        for (const resource of claimResources[dropped]) {
+          if (resource < 0) continue;
+          for (const index of claimantsOfResource[resource]) {
+            if (index === dropped || selected.has(index) || blocked.has(index)) continue;
             if (canAdd(restUsed, index)) blocked.add(index);
           }
         }
@@ -326,9 +409,9 @@ export function solveSelection(
         }
       }
       if (scoreFailure) return current;
-      if (compareStates(best, current) >= 0) break;
+      if (bestIndices === null) break;
       diagnostics.improvementMoves++;
-      current = best;
+      current = { ...best, used: usageFor(bestIndices) };
     }
     return current;
   };
