@@ -109,7 +109,8 @@ export interface PlannerResult {
   /** `best-found` is deliberately distinct from a proven optimum. */
   status: 'optimal' | 'best-found' | 'infeasible' | 'not-run';
   cohorts: PlannedCohort[];
-  objective: ObjectiveVector;
+  /** A plan that did not run or could not be made has no honest score. */
+  objective: ObjectiveVector | null;
   explanations: PlacementExplanation[];
   diagnostics: PlannerDiagnostics;
 }
@@ -117,6 +118,24 @@ export interface PlannerResult {
 export interface CropPlannerEngine<Input> {
   readonly id: string;
   suggest(input: Input): PlannerResult;
+}
+
+/** Negative means `a` is preferred. This is an ordered objective, never a weighted score. */
+export function compareObjectiveVectors(a: ObjectiveVector, b: ObjectiveVector): number {
+  const numericTiers: Array<[number, number, 'ascending' | 'descending']> = [
+    [a.hardViolations, b.hardViolations, 'ascending'],
+    [a.selectedCropPlacements, b.selectedCropPlacements, 'descending'],
+    [a.longestFreshFoodGapWeeks, b.longestFreshFoodGapWeeks, 'ascending'],
+    [a.idleSectionWeeks, b.idleSectionWeeks, 'ascending'],
+    [a.cropDiversity, b.cropDiversity, 'descending'],
+    [a.operationalTransitions, b.operationalTransitions, 'ascending'],
+  ];
+  for (const [left, right, direction] of numericTiers) {
+    if (left === right) continue;
+    return direction === 'ascending' ? left - right : right - left;
+  }
+  if (a.deterministicTieBreak === b.deterministicTieBreak) return 0;
+  return a.deterministicTieBreak < b.deterministicTieBreak ? -1 : 1;
 }
 
 export type TimingBasis = 'from-direct-sow' | 'from-transplant' | 'from-nursery-sow';
