@@ -41,6 +41,17 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   },
   {
     when: '6 August',
+    sha: 'f28f34b',
+    changes: [
+      'Crop suggestions use only crops you choose; coriander is never assumed',
+      'One crop no longer takes every bed while another chosen crop is available',
+      'A one-bed plan starts a full crop now instead of reserving a tiny strip',
+      'Sowing and harvest dates stay in order when a crop crosses New Year',
+      'Unknown yield, spacing and storage figures are now shown as unknown',
+    ],
+  },
+  {
+    when: '6 August',
     sha: '78df299',
     changes: [
       'Your survey can now record food, livestock and sales you report yourself',

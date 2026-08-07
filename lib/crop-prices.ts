@@ -41,7 +41,10 @@ export interface CropPrice {
 
 export const DEFAULT_CROP_PRICES: Record<string, CropPrice> = {
   // Direct retail source; wholesale derived via the root/fruiting ratio (~38%).
-  'dry-beans': { retailPerKg: 65, wholesalePerKg: 25, confidence: 'sourced' },
+  // Retail is the dated observed figure; wholesale was derived from a broad
+  // market ratio rather than observed for this crop, so the pair cannot be
+  // labelled as a fully sourced snapshot.
+  'dry-beans': { retailPerKg: 65, wholesalePerKg: 25, confidence: 'estimated' },
   'green-beans': { retailPerKg: 35, wholesalePerKg: 13, confidence: 'sourced' },
   butternut: { retailPerKg: 15, wholesalePerKg: 5, confidence: 'sourced' },
   cabbage: { retailPerKg: 15, wholesalePerKg: 2, confidence: 'sourced' }, // cabbage's OWN real ratio (~13%), not the general one — cheap/bulky/high-shrinkage genuinely sits lower

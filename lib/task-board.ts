@@ -4,7 +4,7 @@
 // restructuring the board — crop tasks are just the first, real data source.
 
 import type { PlanBed, Planting, CropTask } from './crop-plan';
-import { CROP_PLAN_CHANGED_EVENT, loadCropPlan, tasksForPlan } from './crop-plan';
+import { CROP_PLAN_CHANGED_EVENT, loadCropPlan, taskMonthsFromNow, tasksForPlan } from './crop-plan';
 import type { FacilitatorDesignState } from './facilitator-design';
 import { loadFacilitatorState } from './facilitator-design';
 import { DESIGN_CANVAS_CHANGED_EVENT, loadCanvasState, type DesignCanvasState } from './design-canvas';
@@ -22,20 +22,11 @@ function wrapMonth(m: number): number {
   return ((m - 1) % 12 + 12) % 12 + 1;
 }
 
-// Month-offset resolution, copied from app/facilitator/crops/page.tsx (the
-// source of truth for this math). A month value alone is ambiguous without a
-// year: for a NOT-yet-growing planting it always means "the next time this
-// month comes around" (forward-only, 0-11), but a farmer-confirmed `existing`
-// planting really can have been sown in the recent past, so it resolves to
-// whichever direction is nearer (ties favour forward), exactly as
-// crops/page.tsx resolves an existing planting's sowMonth.
+// Generic BoardTask calendar arithmetic only. Crop cohort offsets come from
+// taskMonthsFromNow above; this helper merely resolves an already-derived
+// dueMonth when exporting a BoardTask to a concrete date.
 function forwardOnlyOffset(m: number, originMonth: number): number {
   return ((m - originMonth) % 12 + 12) % 12;
-}
-
-function nearestSignedOffset(m: number, originMonth: number): number {
-  const fwd = forwardOnlyOffset(m, originMonth);
-  return fwd > 6 ? fwd - 12 : fwd;
 }
 
 // Beds = design items of type 'bed'/'hugel', in placement (array) order.
@@ -92,8 +83,9 @@ export const TASK_BOARD_CHANGED_EVENTS = [
 export type BoardTaskKind = 'crop' | 'survey' | 'lesson';
 
 export interface BoardTask {
-  /** Namespaced per producer (crop ids are `${planting.id}:${action}`) so ids
-   *  never collide across kinds even though completion is tracked in one set. */
+  /** Namespaced per producer (crop ids start `${planting.id}:${action}` and a
+   *  later picking month appends its offset) so ids never collide across kinds
+   *  even though completion is tracked in one set. */
   id: string;
   kind: BoardTaskKind;
   title: string;
@@ -109,7 +101,7 @@ export interface BoardTask {
 
 // Concise verb per action for a board TITLE — deliberately shorter than
 // app/facilitator/crops/page.tsx's own TASK_VERB (built for a full sentence,
-// e.g. "prep bed (compost + kraal manure, then let it rest) for"), since a
+// e.g. the source-aware soil-assessment preparation phrase), since a
 // board row only has room for a short title. Plain hardcoded English, same
 // as TASK_VERB itself (confirmed not routed through t() there either).
 const BOARD_VERB: Record<CropTask['action'], string> = {
@@ -118,6 +110,7 @@ const BOARD_VERB: Record<CropTask['action'], string> = {
   transplant: 'Transplant',
   mulch: 'Water in & mulch',
   harvest: 'Harvest',
+  'terminate-cover': 'Cut or roll down',
   'weed-early': 'Weed around',
   'weed-mid': 'Weed & check on',
 };
@@ -126,28 +119,6 @@ function dueLabel(monthsAway: number): string {
   if (monthsAway === 0) return 'Due this month';
   if (monthsAway === 1) return 'Due next month';
   return `Due in ${monthsAway} months`;
-}
-
-// A planting's tasks resolve as a coherent GROUP anchored to the planting's
-// own resolved sow offset, not month-by-month: independent forward-only
-// resolution flips any task month sitting just behind the anchor to ~11
-// months ahead — a prep task (sowMonth - 1) for a crop being sown THIS
-// month, or an existing crop's already-passed harvest. Existing plantings
-// anchor with nearest-direction (matching how crops/page.tsx resolves their
-// sowMonth); planned ones anchor forward-only. Returns null for a task that
-// has genuinely already happened.
-function resolveTaskOffset(t: CropTask, p: Planting | undefined, currentMonth: number): number | null {
-  if (!p) return forwardOnlyOffset(t.month, currentMonth);
-  const sowOffset = p.existing
-    ? nearestSignedOffset(p.sowMonth, currentMonth)
-    : forwardOnlyOffset(p.sowMonth, currentMonth);
-  const rel = t.action === 'prep' ? -1 : forwardOnlyOffset(t.month, p.sowMonth);
-  const offset = sowOffset + rel;
-  // A planned planting's only negative case is prep for a sow happening this
-  // month — that prep is due NOW, not gone. An existing planting's negative
-  // offset is a genuinely past task and drops off the board.
-  if (offset < 0) return p.existing ? null : 0;
-  return offset;
 }
 
 export function buildCropBoardTasks(
@@ -170,15 +141,13 @@ export function buildCropBoardTasks(
     seenPlantingIds.add(planting.id);
     return true;
   });
-  const plantingById = new Map(validPlantings.map((p) => [p.id, p]));
   const out: BoardTask[] = [];
-  for (const t of tasksForPlan(validPlantings, beds)) {
-    // CropTask ids are `${planting.id}:${action}` (lib/crop-plan.ts) — strip
-    // the known action suffix rather than splitting on ':' so a planting id
-    // containing ':' can't break the lookup.
-    const planting = plantingById.get(t.id.slice(0, t.id.length - t.action.length - 1));
-    const monthsAway = resolveTaskOffset(t, planting, currentMonth);
-    if (monthsAway === null) continue;
+  for (const t of tasksForPlan(validPlantings, beds, currentMonth)) {
+    // Crop-plan owns cohort chronology. Re-deriving it here from the action
+    // name made every future transplant crop's prep one month early because
+    // direct sowing uses a prior-month prep marker while tray crops do not.
+    const monthsAway = taskMonthsFromNow(t, currentMonth);
+    if (monthsAway < 0) continue;
     out.push({
       id: t.id,
       kind: 'crop',
