@@ -78,22 +78,22 @@ function LastSiteCard({ site }: { site: LastSite }) {
     <Link href="/farmer" style={{ textDecoration: 'none' }}>
       <div
         className="rounded-2xl p-4"
-        style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}
+        style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}
       >
         <div className="flex items-center justify-between mb-3">
           <div>
-            <div className="text-xs font-mono uppercase tracking-widest" style={{ color: '#8C7A62', letterSpacing: '0.1em' }}>{t('homeLastSite')}</div>
-            <div className="font-display font-semibold text-base mt-0.5" style={{ color: '#20190F' }}>{d.biome.name}</div>
+            <div className="text-xs font-mono uppercase tracking-widest" style={{ color: 'var(--color-muted)', letterSpacing: '0.1em' }}>{t('homeLastSite')}</div>
+            <div className="font-display font-semibold text-base mt-0.5" style={{ color: 'var(--color-ink)' }}>{d.biome.name}</div>
           </div>
-          <div className="flex items-center gap-1 text-xs font-display" style={{ color: '#1F4D2B' }}>
+          <div className="flex items-center gap-1 text-xs font-display" style={{ color: 'var(--color-forest-800)' }}>
             {t('homeReopenMap')}<ChevronRight size={13} />
           </div>
         </div>
         <div className="grid grid-cols-4 gap-2">
           {stats.map((s) => (
             <div key={s.label} className="rounded-xl px-2.5 py-2 text-center" style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.08)' }}>
-              <div className="font-display font-semibold text-sm" style={{ color: '#20190F' }}>{s.value}</div>
-              <div className="font-mono mt-0.5" style={{ color: '#8C7A62', fontSize: 10 }}>{s.label}</div>
+              <div className="font-display font-semibold text-sm" style={{ color: 'var(--color-ink)' }}>{s.value}</div>
+              <div className="font-mono mt-0.5" style={{ color: 'var(--color-muted)', fontSize: 10 }}>{s.label}</div>
             </div>
           ))}
         </div>
@@ -108,11 +108,11 @@ function MainSiteWeatherCard({ site, places, onSetMain }: { site: SavedPlace; pl
   const { t } = useLanguage();
   const showPicker = places.length > 1;
   return (
-    <div className="rounded-2xl p-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
+    <div className="rounded-2xl p-4" style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
       <div className="flex items-center justify-between mb-3">
         <div>
-          <div className="text-xs font-mono uppercase tracking-widest" style={{ color: '#8C7A62', letterSpacing: '0.1em' }}>{t('homeMainSite')}</div>
-          <div className="font-display font-semibold text-base mt-0.5" style={{ color: '#20190F' }}>{site.name}</div>
+          <div className="text-xs font-mono uppercase tracking-widest" style={{ color: 'var(--color-muted)', letterSpacing: '0.1em' }}>{t('homeMainSite')}</div>
+          <div className="font-display font-semibold text-base mt-0.5" style={{ color: 'var(--color-ink)' }}>{site.name}</div>
         </div>
         {showPicker && (
           <select
@@ -120,7 +120,7 @@ function MainSiteWeatherCard({ site, places, onSetMain }: { site: SavedPlace; pl
             onChange={(e) => onSetMain(e.target.value)}
             aria-label={t('homeSetAsMain')}
             className="font-sans"
-            style={{ fontSize: 11, border: '1px solid #E2D8C4', borderRadius: 8, background: '#FFFEFA', color: '#5C5040', padding: '4px 6px', maxWidth: 120 }}
+            style={{ fontSize: 11, border: '1px solid var(--color-border)', borderRadius: 8, background: 'var(--color-surface)', color: 'var(--color-muted-strong)', padding: '4px 6px', maxWidth: 120 }}
           >
             {places.map((p) => (
               <option key={p.id} value={p.id}>{p.name}</option>
@@ -147,23 +147,23 @@ function TaskBoardCard({ tasks, onToggle }: { tasks: BoardTask[]; onToggle: (id:
   return (
     <section>
       <div className="flex items-center justify-between" style={{ padding: '2px 2px' }}>
-        <span className="uppercase tracking-widest font-sans" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.12em' }}>
+        <span className="uppercase tracking-widest font-sans" style={{ fontSize: 10, color: 'var(--color-muted)', letterSpacing: '0.12em' }}>
           {t('homeUpcomingTasks')}
         </span>
-        <Link href="/facilitator/crops" className="flex items-center gap-1 font-display" style={{ fontSize: 12, color: '#1F4D2B', textDecoration: 'none' }}>
+        <Link href="/facilitator/crops" className="flex items-center gap-1 font-display" style={{ fontSize: 12, color: 'var(--color-forest-800)', textDecoration: 'none' }}>
           {t('homeTaskBoardViewPlan')}<ChevronRight size={13} />
         </Link>
       </div>
-      <div className="mt-2.5" style={{ background: '#FFFEFA', borderRadius: 16, border: '1px solid #E2D8C4', overflow: 'hidden', boxShadow: '0 1px 3px rgba(32,25,15,0.06)' }}>
+      <div className="mt-2.5" style={{ background: 'var(--color-surface)', borderRadius: 16, border: '1px solid var(--color-border)', overflow: 'hidden', boxShadow: '0 1px 3px rgba(32,25,15,0.06)' }}>
         {visible.map((task, i) => (
           <div
             key={task.id}
-            style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '13px 16px', borderBottom: i < visible.length - 1 ? '1px solid #E2D8C4' : 'none' }}
+            style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '13px 16px', borderBottom: i < visible.length - 1 ? '1px solid var(--color-border)' : 'none' }}
           >
             <button
               onClick={() => onToggle(task.id)}
               aria-label={task.completed ? 'Mark not done' : 'Mark done'}
-              style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', display: 'flex', color: '#1F4D2B', flexShrink: 0 }}
+              style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', display: 'flex', color: 'var(--color-forest-800)', flexShrink: 0 }}
             >
               {task.completed ? <CheckCircle2 size={20} strokeWidth={1.8} /> : <Circle size={20} strokeWidth={1.8} />}
             </button>
@@ -173,16 +173,16 @@ function TaskBoardCard({ tasks, onToggle }: { tasks: BoardTask[]; onToggle: (id:
             <div className="flex-1 min-w-0">
               <div
                 className="font-display"
-                style={{ fontSize: 16, fontWeight: 600, color: '#20190F', letterSpacing: '-0.01em', lineHeight: 1.2, textDecoration: task.completed ? 'line-through' : 'none', opacity: task.completed ? 0.5 : 1 }}
+                style={{ fontSize: 16, fontWeight: 600, color: 'var(--color-ink)', letterSpacing: '-0.01em', lineHeight: 1.2, textDecoration: task.completed ? 'line-through' : 'none', opacity: task.completed ? 0.5 : 1 }}
               >
                 {task.title}
               </div>
-              <div className="font-sans truncate" style={{ fontSize: 12.5, color: '#5C5040', marginTop: 1, lineHeight: 1.4 }}>{task.subtitle}</div>
+              <div className="font-sans truncate" style={{ fontSize: 12.5, color: 'var(--color-muted-strong)', marginTop: 1, lineHeight: 1.4 }}>{task.subtitle}</div>
             </div>
             <button
               onClick={() => downloadTaskIcs(task)}
               aria-label="Add to calendar"
-              style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', display: 'flex', color: '#8C7A62', flexShrink: 0 }}
+              style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', display: 'flex', color: 'var(--color-muted)', flexShrink: 0 }}
             >
               <CalendarPlus size={18} strokeWidth={1.6} />
             </button>
@@ -228,17 +228,17 @@ function FarmPlanCard({ places, mainSite }: { places: SavedPlace[] | null; mainS
   const designHref = coords ? `/design?lat=${coords.lat.toFixed(5)}&lon=${coords.lon.toFixed(5)}` : '/design';
 
   return (
-    <div style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', borderRadius: 20, padding: '16px 18px' }}>
-      <div className="font-display font-semibold" style={{ fontSize: 15, color: '#20190F', marginBottom: 10 }}>
+    <div style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 20, padding: '16px 18px' }}>
+      <div className="font-display font-semibold" style={{ fontSize: 15, color: 'var(--color-ink)', marginBottom: 10 }}>
         Your farm plan
       </div>
 
       <div style={{ height: 8, borderRadius: 4, background: '#EDE7DB', overflow: 'hidden' }}>
         <div
-          style={{ height: '100%', width: `${pct}%`, background: '#1F4D2B', borderRadius: 4, transition: 'width 0.4s ease' }}
+          style={{ height: '100%', width: `${pct}%`, background: 'var(--color-forest-800)', borderRadius: 4, transition: 'width 0.4s ease' }}
         />
       </div>
-      <div className="font-sans" style={{ fontSize: 12, color: '#8C7A62', marginTop: 6 }}>
+      <div className="font-sans" style={{ fontSize: 12, color: 'var(--color-muted)', marginTop: 6 }}>
         {pct}% complete
       </div>
 
@@ -246,7 +246,7 @@ function FarmPlanCard({ places, mainSite }: { places: SavedPlace[] | null; mainS
         <Link
           href={STEP_ACTIONS[nextStep].href(coords)}
           className="flex items-center justify-between font-sans font-semibold"
-          style={{ marginTop: 12, fontSize: 14, color: '#1F4D2B', textDecoration: 'none' }}
+          style={{ marginTop: 12, fontSize: 14, color: 'var(--color-forest-800)', textDecoration: 'none' }}
         >
           {STEP_ACTIONS[nextStep].label}
           <ChevronRight size={16} strokeWidth={1.8} />
@@ -255,7 +255,7 @@ function FarmPlanCard({ places, mainSite }: { places: SavedPlace[] | null; mainS
         <Link
           href={designHref}
           className="flex items-center font-sans font-semibold"
-          style={{ marginTop: 12, fontSize: 14, color: '#1F4D2B', textDecoration: 'none' }}
+          style={{ marginTop: 12, fontSize: 14, color: 'var(--color-forest-800)', textDecoration: 'none' }}
         >
           Plan complete — print your plan set →
         </Link>
@@ -314,38 +314,38 @@ function HomeLandingInner() {
   ];
 
   const QUICK_ACTIONS = [
-    { href: '/finances',          Icon: DollarSign,    label: t('homeQuickFinance'),     desc: t('homeQuickFinanceDesc'),     color: '#C07A1E', bg: 'rgba(192,122,30,0.10)' },
-    { href: '/student',           Icon: GraduationCap, label: t('homeQuickStudy'),       desc: t('homeQuickStudyDesc'),       color: '#235E86', bg: 'rgba(35,94,134,0.10)' },
+    { href: '/finances',          Icon: DollarSign,    label: t('homeQuickFinance'),     desc: t('homeQuickFinanceDesc'),     color: 'var(--color-harvest)', bg: 'rgba(192,122,30,0.10)' },
+    { href: '/student',           Icon: GraduationCap, label: t('homeQuickStudy'),       desc: t('homeQuickStudyDesc'),       color: 'var(--color-water)', bg: 'rgba(35,94,134,0.10)' },
     { href: '/contact',           Icon: MessageCircle, label: t('homeQuickContact'),     desc: t('homeQuickContactDesc'),     color: '#5A7A3A', bg: 'rgba(90,122,58,0.10)' },
-    { href: '/journal',           Icon: Leaf,          label: t('homeQuickJournal'),     desc: t('homeQuickJournalDesc'),     color: '#1F4D2B', bg: 'rgba(31,77,43,0.08)' },
-    { href: '/facilitator/crops', Icon: CalendarDays,  label: t('homeQuickCropPlanner'), desc: t('homeQuickCropPlannerDesc'), color: '#1F4D2B', bg: 'rgba(31,77,43,0.08)' },
-    { href: '/records',           Icon: Wheat,         label: t('homeQuickMyRecords'),   desc: t('homeQuickMyRecordsDesc'),   color: '#1F4D2B', bg: 'rgba(31,77,43,0.08)' },
+    { href: '/journal',           Icon: Leaf,          label: t('homeQuickJournal'),     desc: t('homeQuickJournalDesc'),     color: 'var(--color-forest-800)', bg: 'rgba(31,77,43,0.08)' },
+    { href: '/facilitator/crops', Icon: CalendarDays,  label: t('homeQuickCropPlanner'), desc: t('homeQuickCropPlannerDesc'), color: 'var(--color-forest-800)', bg: 'rgba(31,77,43,0.08)' },
+    { href: '/records',           Icon: Wheat,         label: t('homeQuickMyRecords'),   desc: t('homeQuickMyRecordsDesc'),   color: 'var(--color-forest-800)', bg: 'rgba(31,77,43,0.08)' },
   ];
 
   return (
     <div
       className="h-[100dvh] flex flex-col font-sans overflow-hidden"
-      style={{ background: '#E4DCC6', color: '#20190F' }}
+      style={{ background: 'var(--color-canvas)', color: 'var(--color-ink)' }}
     >
       {/* ── Header ── */}
       <header
         className="flex-shrink-0 flex items-center gap-3 px-4"
-        style={{ height: 56, borderBottom: '1px solid #E2D8C4' }}
+        style={{ height: 56, borderBottom: '1px solid var(--color-border)' }}
       >
         <button
           onClick={() => setNavOpen(true)}
           aria-label="Open navigation"
           className="flex items-center justify-center rounded-xl flex-shrink-0"
-          style={{ width: 36, height: 36, background: 'rgba(32,25,15,0.06)', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}
+          style={{ width: 36, height: 36, background: 'rgba(32,25,15,0.06)', border: '1px solid var(--color-border)', color: 'var(--color-muted-strong)', cursor: 'pointer' }}
         >
           <Menu size={18} strokeWidth={1.7} />
         </button>
 
         <div className="flex flex-col justify-center flex-1">
-          <span className="uppercase tracking-widest font-sans" style={{ fontSize: 9.5, color: '#C07A1E', letterSpacing: '0.12em', lineHeight: 1 }}>
+          <span className="uppercase tracking-widest font-sans" style={{ fontSize: 9.5, color: 'var(--color-harvest)', letterSpacing: '0.12em', lineHeight: 1 }}>
             {getDayDate(lang)}
           </span>
-          <span className="font-display font-bold" style={{ fontSize: 20, letterSpacing: '-0.02em', color: '#20190F', lineHeight: 1.15, marginTop: 2 }}>
+          <span className="font-display font-bold" style={{ fontSize: 20, letterSpacing: '-0.02em', color: 'var(--color-ink)', lineHeight: 1.15, marginTop: 2 }}>
             {firstName ? t('homeGreeting').replace('{name}', firstName) : 'ImbewuField'}
           </span>
         </div>
@@ -355,7 +355,7 @@ function HomeLandingInner() {
           onClick={() => setSettingsOpen(true)}
           aria-label="Settings"
           className="flex items-center justify-center rounded-xl flex-shrink-0"
-          style={{ width: 36, height: 36, background: 'rgba(32,25,15,0.06)', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}
+          style={{ width: 36, height: 36, background: 'rgba(32,25,15,0.06)', border: '1px solid var(--color-border)', color: 'var(--color-muted-strong)', cursor: 'pointer' }}
         >
           <Settings size={16} strokeWidth={1.6} />
         </button>
@@ -391,12 +391,12 @@ function HomeLandingInner() {
           }}
         >
           <div className="flex items-center gap-2 mb-1.5">
-            <Sparkles size={16} style={{ color: '#C07A1E', flexShrink: 0 }} />
-            <span className="font-display font-semibold" style={{ fontSize: 15, color: '#20190F' }}>
+            <Sparkles size={16} style={{ color: 'var(--color-harvest)', flexShrink: 0 }} />
+            <span className="font-display font-semibold" style={{ fontSize: 15, color: 'var(--color-ink)' }}>
               Explore the sample farm — Ubhejane Crèche
             </span>
           </div>
-          <p className="font-sans" style={{ fontSize: 12.5, color: '#5C5040', lineHeight: 1.4 }}>
+          <p className="font-sans" style={{ fontSize: 12.5, color: 'var(--color-muted-strong)', lineHeight: 1.4 }}>
             A real crèche food garden, fully set up: design maps, crop plan, sales &amp;
             expenses, invoices. Look around, change anything — it never touches your own farm.
           </p>
@@ -413,14 +413,14 @@ function HomeLandingInner() {
               key={q.href}
               href={q.href}
               className="flex flex-col items-center gap-2 p-3 rounded-2xl text-center transition-all hover:opacity-90"
-              style={{ textDecoration: 'none', background: '#FFFEFA', border: '1px solid #E2D8C4' }}
+              style={{ textDecoration: 'none', background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}
             >
               <div className="flex items-center justify-center rounded-xl" style={{ width: 44, height: 44, background: q.bg, color: q.color }}>
                 <q.Icon size={20} strokeWidth={1.6} />
               </div>
               <div>
-                <div className="font-display font-semibold" style={{ fontSize: 12.5, color: '#20190F', lineHeight: 1.2 }}>{q.label}</div>
-                <div className="font-sans" style={{ fontSize: 10.5, color: '#8C7A62', marginTop: 1 }}>{q.desc}</div>
+                <div className="font-display font-semibold" style={{ fontSize: 12.5, color: 'var(--color-ink)', lineHeight: 1.2 }}>{q.label}</div>
+                <div className="font-sans" style={{ fontSize: 10.5, color: 'var(--color-muted)', marginTop: 1 }}>{q.desc}</div>
               </div>
             </Link>
           ))}
@@ -436,69 +436,69 @@ function HomeLandingInner() {
             aria-expanded={rolesOpen}
             style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '2px 2px' }}
           >
-            <span className="uppercase tracking-widest font-sans" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.12em' }}>
+            <span className="uppercase tracking-widest font-sans" style={{ fontSize: 10, color: 'var(--color-muted)', letterSpacing: '0.12em' }}>
               {t('homeDashboards')}
             </span>
-            <span className="flex items-center gap-1 font-sans" style={{ fontSize: 12, color: '#8C7A62' }}>
+            <span className="flex items-center gap-1 font-sans" style={{ fontSize: 12, color: 'var(--color-muted)' }}>
               {rolesOpen ? t('homeDashboardsHide') : t('homeDashboardsSummary')}
               <ChevronDown size={14} strokeWidth={1.7} style={{ transform: rolesOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }} />
             </span>
           </button>
 
           {rolesOpen && (
-            <div className="mt-2.5" style={{ background: '#FFFEFA', borderRadius: 16, border: '1px solid #E2D8C4', overflow: 'hidden', boxShadow: '0 1px 3px rgba(32,25,15,0.06)' }}>
+            <div className="mt-2.5" style={{ background: 'var(--color-surface)', borderRadius: 16, border: '1px solid var(--color-border)', overflow: 'hidden', boxShadow: '0 1px 3px rgba(32,25,15,0.06)' }}>
               {ROLES.map((r, i) => (
                 <Link
                   key={r.href}
                   href={r.href}
-                  style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '13px 16px', textDecoration: 'none', borderBottom: i < ROLES.length - 1 ? '1px solid #E2D8C4' : 'none', transition: 'background 0.12s' }}
+                  style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '13px 16px', textDecoration: 'none', borderBottom: i < ROLES.length - 1 ? '1px solid var(--color-border)' : 'none', transition: 'background 0.12s' }}
                   className="hover:bg-[rgba(32,25,15,0.03)]"
                 >
-                  <div style={{ width: 36, height: 36, borderRadius: 10, background: 'rgba(31,77,43,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: '#1F4D2B' }}>
+                  <div style={{ width: 36, height: 36, borderRadius: 10, background: 'rgba(31,77,43,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: 'var(--color-forest-800)' }}>
                     <r.Icon size={17} strokeWidth={1.6} />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="font-display" style={{ fontSize: 16, fontWeight: 600, color: '#20190F', letterSpacing: '-0.01em', lineHeight: 1.2 }}>{r.label}</div>
-                    <div className="font-sans truncate" style={{ fontSize: 12.5, color: '#5C5040', marginTop: 1, lineHeight: 1.4 }}>{r.desc}</div>
+                    <div className="font-display" style={{ fontSize: 16, fontWeight: 600, color: 'var(--color-ink)', letterSpacing: '-0.01em', lineHeight: 1.2 }}>{r.label}</div>
+                    <div className="font-sans truncate" style={{ fontSize: 12.5, color: 'var(--color-muted-strong)', marginTop: 1, lineHeight: 1.4 }}>{r.desc}</div>
                   </div>
-                  <ChevronRight size={16} strokeWidth={1.6} style={{ color: '#8C7A62', flexShrink: 0 }} />
+                  <ChevronRight size={16} strokeWidth={1.6} style={{ color: 'var(--color-muted)', flexShrink: 0 }} />
                 </Link>
               ))}
 
               <Link
                 href="/surveys"
-                style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '13px 16px', textDecoration: 'none', borderTop: '1px solid #E2D8C4', transition: 'background 0.12s' }}
+                style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '13px 16px', textDecoration: 'none', borderTop: '1px solid var(--color-border)', transition: 'background 0.12s' }}
                 className="hover:bg-[rgba(32,25,15,0.03)]"
               >
-                <div style={{ width: 36, height: 36, borderRadius: 10, background: 'rgba(192,122,30,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: '#C07A1E' }}>
+                <div style={{ width: 36, height: 36, borderRadius: 10, background: 'rgba(192,122,30,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: 'var(--color-harvest)' }}>
                   <ClipboardList size={17} strokeWidth={1.6} />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="font-display" style={{ fontSize: 16, fontWeight: 600, color: '#20190F', letterSpacing: '-0.01em', lineHeight: 1.2 }}>{t('homeSurveysLabel')}</div>
-                  <div className="font-sans truncate" style={{ fontSize: 12.5, color: '#5C5040', marginTop: 1, lineHeight: 1.4 }}>{t('homeSurveysDesc')}</div>
+                  <div className="font-display" style={{ fontSize: 16, fontWeight: 600, color: 'var(--color-ink)', letterSpacing: '-0.01em', lineHeight: 1.2 }}>{t('homeSurveysLabel')}</div>
+                  <div className="font-sans truncate" style={{ fontSize: 12.5, color: 'var(--color-muted-strong)', marginTop: 1, lineHeight: 1.4 }}>{t('homeSurveysDesc')}</div>
                 </div>
-                <ChevronRight size={16} strokeWidth={1.6} style={{ color: '#8C7A62', flexShrink: 0 }} />
+                <ChevronRight size={16} strokeWidth={1.6} style={{ color: 'var(--color-muted)', flexShrink: 0 }} />
               </Link>
 
               <Link
                 href="/vision"
-                style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '13px 16px', textDecoration: 'none', borderTop: '1px solid #E2D8C4', transition: 'background 0.12s' }}
+                style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '13px 16px', textDecoration: 'none', borderTop: '1px solid var(--color-border)', transition: 'background 0.12s' }}
                 className="hover:bg-[rgba(32,25,15,0.03)]"
               >
-                <div style={{ width: 36, height: 36, borderRadius: 10, background: 'rgba(31,77,43,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: '#1F4D2B' }}>
+                <div style={{ width: 36, height: 36, borderRadius: 10, background: 'rgba(31,77,43,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, color: 'var(--color-forest-800)' }}>
                   <Camera size={17} strokeWidth={1.6} />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <div className="font-display" style={{ fontSize: 16, fontWeight: 600, color: '#20190F', letterSpacing: '-0.01em', lineHeight: 1.2 }}>{t('homeLimaVisionLabel')}</div>
-                  <div className="font-sans truncate" style={{ fontSize: 12.5, color: '#5C5040', marginTop: 1, lineHeight: 1.4 }}>{t('homeLimaVisionDesc')}</div>
+                  <div className="font-display" style={{ fontSize: 16, fontWeight: 600, color: 'var(--color-ink)', letterSpacing: '-0.01em', lineHeight: 1.2 }}>{t('homeLimaVisionLabel')}</div>
+                  <div className="font-sans truncate" style={{ fontSize: 12.5, color: 'var(--color-muted-strong)', marginTop: 1, lineHeight: 1.4 }}>{t('homeLimaVisionDesc')}</div>
                 </div>
-                <ChevronRight size={16} strokeWidth={1.6} style={{ color: '#8C7A62', flexShrink: 0 }} />
+                <ChevronRight size={16} strokeWidth={1.6} style={{ color: 'var(--color-muted)', flexShrink: 0 }} />
               </Link>
             </div>
           )}
         </section>
 
-        <footer className="text-center font-sans" style={{ fontSize: 11, color: '#8C7A62', opacity: 0.7, paddingBottom: 8 }}>
+        <footer className="text-center font-sans" style={{ fontSize: 11, color: 'var(--color-muted)', opacity: 0.7, paddingBottom: 8 }}>
           {t('homeFooter')}
         </footer>
       </main>
