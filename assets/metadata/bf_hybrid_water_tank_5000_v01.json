@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "bf_hybrid_water_tank_5000_v01",
+  "assetPath": "assets/hybrid/water/bf_hybrid_water_tank_5000_v01.svg",
+  "batch": 1,
+  "category": "water",
+  "view": "isometric",
+  "anchor": "tank-centre",
+  "defaultDisplayPx": 96,
+  "realWorldScaleSource": "configured in app, not baked into artwork",
+  "states": ["existing", "proposed", "to-verify"],
+  "stateStyling": "app-code-only",
+  "tags": ["water", "tank", "rainwater", "5000-litre", "jojo-style", "picker-icon"],
+  "generationPrompt": "Recreate this exact water tank as a single fully isolated object on a transparent background — remove the white card, rounded border and drop shadow completely, extending the tank's own silhouette naturally where the card cropped it. Keep the same teal-green colour, smooth domed top with the small off-centre circular hatch and loop handle, and the subtle fine horizontal rotational-moulding ring texture. Same soft realistic icon-style shading and gradient. Slight three-quarter overhead angle so the circular top and the tank height both stay legible for a top-down map icon. No text, no logo, no branding, no card, no background scenery, no other objects. (Generated from an image reference crop of the app's own canonical JoJo Tank 5000L Design Studio picker icon.)",
+  "delivery": {
+    "svg": "bf_hybrid_water_tank_5000_v01.svg",
+    "png": ["bf_hybrid_water_tank_5000_v01_1024.png", "bf_hybrid_water_tank_5000_v01_512.png", "bf_hybrid_water_tank_5000_v01_256.png", "bf_hybrid_water_tank_5000_v01_128.png"]
+  },
+  "assetStatus": "awaiting-review"
+}
