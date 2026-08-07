@@ -143,14 +143,16 @@ test('the demo farm\'s four traced staple blocks emerge as four plots', () => {
   }
 });
 
-test('tasksForPlan wording: a plot prep task says plough/rip, a bed prep task still says compost', () => {
+test('tasksForPlan wording: bed and plot prep assess soil before prescribing inputs', () => {
   const beds = [
     { id: 'bed-1', label: 'Bed 1', areaM2: 8, minDimM: 2 },
     { id: 'plot-1', label: 'Plot 1', areaM2: 21, minDimM: 3.5, kind: 'plot' as const },
   ];
   const plantings: Planting[] = [
     { id: 'p-bed', bedId: 'bed-1', cropKey: 'cabbage', sowMonth: 3 },
-    { id: 'p-plot', bedId: 'plot-1', cropKey: 'maize', sowMonth: 10 },
+    // Grain maize is retained only as an unverified legacy record; use a
+    // source-backed staple-plot crop because this test is about prep wording.
+    { id: 'p-plot', bedId: 'plot-1', cropKey: 'pumpkin', sowMonth: 10 },
   ];
 
   const tasks = tasksForPlan(plantings, beds);
@@ -159,15 +161,15 @@ test('tasksForPlan wording: a plot prep task says plough/rip, a bed prep task st
 
   assert.ok(bedPrep);
   assert.ok(plotPrep);
-  assert.equal(bedPrep!.prepText, 'prep bed (compost + kraal manure, then let it rest)');
-  assert.equal(plotPrep!.prepText, 'plough or rip the plot, work in kraal manure');
-  assert.match(bedPrep!.prepText!, /compost/);
-  assert.match(plotPrep!.prepText!, /plough|rip/);
+  assert.match(bedPrep!.prepText!, /assess soil and drainage/);
+  assert.match(plotPrep!.prepText!, /assess soil and drainage/);
+  assert.match(`${bedPrep!.prepText} ${plotPrep!.prepText}`, /soil test or local advice/);
+  assert.doesNotMatch(`${bedPrep!.prepText} ${plotPrep!.prepText}`, /compost|manure|plough|rip/i);
 });
 
 test('tasksForPlan wording: a bed with no kind field (every plan built before PlanBed.kind existed) still reads as a bed', () => {
   const beds = [{ id: 'bed-1', label: 'Bed 1', areaM2: 8, minDimM: 2 }];
   const plantings: Planting[] = [{ id: 'p-1', bedId: 'bed-1', cropKey: 'cabbage', sowMonth: 3 }];
   const [prep] = tasksForPlan(plantings, beds).filter((t) => t.action === 'prep');
-  assert.equal(prep.prepText, 'prep bed (compost + kraal manure, then let it rest)');
+  assert.match(prep.prepText!, /assess soil and drainage/);
 });

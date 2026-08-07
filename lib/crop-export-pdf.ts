@@ -17,8 +17,8 @@
 // job all had to read the same undifferentiated text and pull out their own
 // view. It now follows the reviewed benchmark layout, in five parts:
 //
-//   1. PLAN DASHBOARD  — scale, yield, peak harvest, peak workload, decisions
-//   2. YEAR IN NUMBERS — harvest by month, workload by month, biggest crops
+//   1. PLAN DASHBOARD  — scale, crop-cycle yield benchmark, workload, decisions
+//   2. YEAR IN NUMBERS — workload by month, biggest benchmarked crops
 //   3. LAND OCCUPANCY  — every bed and plot across twelve months, on one sheet
 //   4. FULL PLAN       — every planting as columns, nursery split from field
 //   5. WORKING DOCS    — a tickable field sheet per month, and a harvest record
@@ -35,12 +35,13 @@
 import type { CropTask, PlanBed, Planting } from '@/lib/crop-plan';
 import type { FoodGroup } from '@/lib/crop-groups';
 import {
-  buildBuyingSchedule, monthShort, monthYearLabel, rollingMonths,
+  buildBuyingSchedule, monthShort, monthYearLabel, positionRangeLabel, rollingMonths,
+  SUCCESSION_TIMING_GUIDANCE,
 } from '@/lib/crop-export-schedule';
 import {
-  buildFieldSheet, buildHarvestSeries, buildOccupancyCalendar, buildPlanDashboard,
+  buildFieldSheet, buildOccupancyCalendar, buildPlanDashboard,
   buildPlanTableRows, buildTopCrops, buildWorkloadSeries, cropAbbreviations,
-  type CalendarRow, type MonthCount, type MonthValue,
+  type CalendarRow, type MonthCount,
 } from '@/lib/crop-export-benchmark';
 import { cropByKey } from '@/lib/crop-catalog';
 import { ASSURANCE_TITLE, ASSURANCE_PARAGRAPHS, ASSURANCE_ONE_LINE } from '@/lib/plan-assurance';
@@ -75,8 +76,12 @@ export interface CropPlanPdfMeta {
   bedsSummary: string;
   /** Already-localised date string for the cover line. */
   dateLabel: string;
-  estimatedKgPerYear: number;
+  /** Legacy metadata slot; null when overlapping bed shares make any total
+   * indefensible. Dashboard totals are rebuilt from the plan itself. */
+  estimatedKgPerYear: number | null;
   lossPercent: number;
+  /** Defaults and migrated 0% values are not confirmation. */
+  lossAllowanceConfirmed?: boolean;
 }
 
 export interface CropPlanPdfInput {
@@ -127,6 +132,15 @@ export function pdfSafe(text: string): string {
   // Dropping an icon leaves the space that followed it, so "🌽 Maize" would
   // print as " Maize" and every bullet would look mis-indented.
   return kept.replace(/[ \t]{2,}/g, ' ').replace(/^[ \t]+|[ \t]+$/g, '');
+}
+
+/** Keep an unavailable crop benchmark visible as unavailable. Formatting a
+ * nullable value through arithmetic turned kale and coriander into a false
+ * "0.0 kg" claim in the printed bed table. */
+export function benchmarkYieldLabel(yieldKg: number | null): string {
+  if (yieldKg === null) return 'Not verified';
+  if (yieldKg === 0) return 'No food yield';
+  return `${yieldKg.toFixed(1)} kg`;
 }
 
 // ── Palette ─────────────────────────────────────────────────────────────────
@@ -394,6 +408,7 @@ function drawDashboard(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: n
 
   const dash = buildPlanDashboard(input.plantings, input.beds, input.tasks, {
     lossPercent: meta.lossPercent,
+    lossAllowanceConfirmed: meta.lossAllowanceConfirmed,
     nowMonth,
   });
 
@@ -431,16 +446,33 @@ function drawDashboard(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: n
   });
   s.y += Math.max(signalsH, decisionsH) + 14;
 
+  const totalExplanation = dash.areaConflictBedLabels.length
+    ? [
+      `No kilogram or value total is shown because ${dash.areaConflictBedLabels.join(', ')} ${dash.areaConflictBedLabels.length === 1 ? 'has' : 'have'} overlapping or invalid planting shares.`,
+      'Resolve the bed layout instead of guessing which crop loses growing area.',
+    ]
+    : dash.hasKnownYield
+    ? [
+      `Only crops with a verified kg/m² entry are added to the conservative commercial benchmark comparison. `
+      + `Known total ${dash.grossKg!.toFixed(1)} kg`
+      + (meta.lossAllowanceConfirmed
+        ? `; ${dash.netKg!.toFixed(1)} kg after the ${meta.lossPercent}% loss allowance you confirmed.`
+        : '; no loss-adjusted total is calculated until an allowance is confirmed.'),
+      'This is a benchmark comparison, not a household or farm-yield guarantee. Record actual harvests and losses on the monthly record sheet.',
+    ]
+    : [
+      'No kilogram total is shown because this plan has no crop with a verified kg/m² food-yield benchmark.',
+      'An unavailable benchmark is not a 0kg harvest. Record actual harvests on the monthly record sheet.',
+    ];
+  if (dash.unknownYieldCrops.length) {
+    totalExplanation.push(`${dash.unknownYieldCrops.join(', ')} ${dash.unknownYieldCrops.length === 1 ? 'is' : 'are'} excluded from every kilogram total, not counted as 0kg.`);
+  }
+
   const h = panel(s, {
     title: 'How the totals are calculated',
     accent: INK.gold,
     bg: INK.panelCream,
-    body: [
-      `Every crop line in this plan is added up first; the summary is written from that total, never separately. `
-      + `Gross ${dash.grossKg.toFixed(1)} kg`
-      + (meta.lossPercent > 0 ? `, ${dash.netKg.toFixed(1)} kg after the ${meta.lossPercent}% loss allowance you set.` : '.'),
-      'Yields are planning estimates for good conditions. Record what you actually harvest on the monthly record sheet and the next plan gets better.',
-    ],
+    body: totalExplanation,
   });
   s.y += h + 12;
 
@@ -456,17 +488,15 @@ function drawDashboard(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: n
     title: ASSURANCE_TITLE.toUpperCase(),
     accent: INK.gold,
     bg: INK.panelCream,
-    body: ASSURANCE_PARAGRAPHS.map(pdfSafe),
+    body: [...ASSURANCE_PARAGRAPHS.map(pdfSafe), pdfSafe(SUCCESSION_TIMING_GUIDANCE)],
   });
   s.y += assuranceH + 12;
 
-  // "Say a rule once." The year-report prose opens with the annual total, the
-  // peak month and the biggest crop — all three are already tiles or signals
-  // directly above, and printing them again is how one page ends up quoting two
-  // slightly different figures for the same quantity. Only the paragraphs that
-  // say something the tiles cannot survive.
+  // "Say a rule once." The year-report prose opens with the crop-cycle total
+  // and biggest crop — both are already tiles or signals directly above. Only
+  // paragraphs that say something those summaries cannot are repeated here.
   const extra = (input.yearReport ?? []).filter(
-    (p) => !/^This plan should bring in/.test(p) && !/^Your biggest crop by volume/.test(p),
+    (p) => !/^For crops with a verified kg\/m² benchmark/.test(p) && !/^Within the benchmark comparison/.test(p),
   );
   if (extra.length) {
     s.paragraph('Also worth knowing', { size: 10, bold: true, ink: INK.green, gap: 6 });
@@ -535,20 +565,29 @@ function barChart(
 
 function drawYearInNumbers(
   s: Sheet, input: CropPlanPdfInput,
-  harvest: MonthValue[], workload: MonthCount[],
+  nowMonth: number, workload: MonthCount[],
 ): void {
   masthead(s, 'Manager view');
   pageTitle(s, 'Manager view', 'The year in numbers',
-    'Use this page to plan labour, kitchen demand, storage and mentoring visits before the work reaches the field.');
+    'Use this page to compare benchmark timing with labour, kitchen demand, storage and mentoring visits before the work reaches the field.');
 
-  const peak = Math.max(...harvest.map((v) => v.kg));
-  barChart(s, {
-    title: 'Estimated harvest by month',
-    labels: harvest.map((v) => monthShort(v.month)),
-    values: harvest.map((v) => v.kg),
-    inks: harvest.map((v) => (v.kg === peak ? INK.gold : INK.green)),
-    axis: 'planned kg',
+  const coverage = buildPlanDashboard(input.plantings, input.beds, input.tasks, {
+    lossPercent: input.meta.lossPercent,
+    lossAllowanceConfirmed: input.meta.lossAllowanceConfirmed,
+    nowMonth,
   });
+  const yieldNote = coverage.areaConflictBedLabels.length
+    ? `No kilogram figure is shown because ${coverage.areaConflictBedLabels.join(', ')} ${coverage.areaConflictBedLabels.length === 1 ? 'has' : 'have'} overlapping or invalid planting shares. Resolve the layout before using a benchmark.`
+    : coverage.hasKnownYield
+    ? `The ${coverage.grossKg!.toFixed(1)} kg figure is a sum of crop-cycle benchmarks. It is not divided into months because the source does not provide a within-window picking curve.`
+    : 'No kilogram comparison is available because none of this plan\'s food crops has a verified kg/m² benchmark. An unavailable benchmark is not a 0kg harvest.';
+  const yieldH = panel(s, {
+    title: 'CROP-CYCLE BENCHMARK ONLY',
+    accent: INK.gold,
+    bg: INK.panelCream,
+    body: [yieldNote, `${coverage.freshPickingMonths} of 12 months have at least one verified fresh-picking window; that is timing, not monthly kilograms.`],
+  });
+  s.y += yieldH + 18;
 
   const busiest = Math.max(...workload.map((v) => v.count));
   barChart(s, {
@@ -561,32 +600,39 @@ function drawYearInNumbers(
 
   // Biggest crops — horizontal, because crop names do not fit under a column.
   const top = buildTopCrops(input.plantings, input.beds, 7);
-  s.need(top.length * 16 + 40);
-  s.font(11, true);
-  s.ink(INK.text);
-  s.doc.text(pdfSafe('Largest crops by planned volume'), s.margin, s.y);
-  s.y += 14;
-  const labelW = 96;
-  const trackX = s.margin + labelW;
-  const trackW = s.contentWidth - labelW - 46;
-  const maxKg = Math.max(1, ...top.map((c) => c.kg));
-  for (const crop of top) {
-    s.font(8);
+  if (top.length) {
+    s.need(top.length * 16 + 40);
+    s.font(11, true);
     s.ink(INK.text);
-    s.doc.text(pdfSafe(crop.name), s.margin + labelW - 6, s.y + 7, { align: 'right' });
-    const bw = (crop.kg / maxKg) * trackW;
-    s.fill(GROUP_INK[crop.group]);
-    s.doc.roundedRect(trackX, s.y, Math.max(1, bw), 9, 2, 2, 'F');
-    s.font(7.5, true);
-    s.ink(INK.muted);
-    s.doc.text(pdfSafe(`${crop.kg.toFixed(1)} kg`), trackX + bw + 5, s.y + 7);
-    s.y += 15;
+    s.doc.text(pdfSafe('Largest crops by known benchmark volume'), s.margin, s.y);
+    s.y += 14;
+    const labelW = 96;
+    const trackX = s.margin + labelW;
+    const trackW = s.contentWidth - labelW - 46;
+    const maxKg = Math.max(1, ...top.map((c) => c.kg));
+    for (const crop of top) {
+      s.font(8);
+      s.ink(INK.text);
+      s.doc.text(pdfSafe(crop.name), s.margin + labelW - 6, s.y + 7, { align: 'right' });
+      const bw = (crop.kg / maxKg) * trackW;
+      s.fill(GROUP_INK[crop.group]);
+      s.doc.roundedRect(trackX, s.y, Math.max(1, bw), 9, 2, 2, 'F');
+      s.font(7.5, true);
+      s.ink(INK.muted);
+      s.doc.text(pdfSafe(`${crop.kg.toFixed(1)} kg`), trackX + bw + 5, s.y + 7);
+      s.y += 15;
+    }
+    s.y += 6;
   }
-  s.y += 6;
   panel(s, {
     bg: INK.panelGrey,
-    body: ['Chart note: a crop harvested over several months has its yield spread evenly across those months. '
-      + 'The workload chart counts planned jobs, not hours - a plot of maize and a bed of lettuce each count as one.'],
+    body: [
+      'Chart note: the workload chart counts planned jobs, not hours - a plot of maize and a bed of lettuce each count as one. '
+        + 'Crop-cycle benchmark weights are shown by crop only; no monthly kg or Rand is inferred.',
+      ...(coverage.unknownYieldCrops.length
+        ? [`Excluded from the kg total and crop-volume bars because no verified kg/m² benchmark is available: ${coverage.unknownYieldCrops.join(', ')}.`]
+        : []),
+    ],
   });
 }
 
@@ -780,7 +826,7 @@ function table(
 function drawFullPlan(s: Sheet, input: CropPlanPdfInput): void {
   masthead(s, 'Full plan');
   pageTitle(s, 'Full plan', 'Bed-by-bed plan',
-    'Each line is one planting. A direct-sown crop goes straight into the bed; a tray crop shows its nursery month and the month it moves out.');
+    'Each line is one planting. Yield is a conservative benchmark comparison where a verified kg/m² entry exists; "Not verified" is never treated as 0kg.');
 
   const rows = buildPlanTableRows(input.plantings, input.beds).map((r) => ({
     area: r.area,
@@ -789,7 +835,7 @@ function drawFullPlan(s: Sheet, input: CropPlanPdfInput): void {
     establish: r.establish,
     field: r.intoField,
     harvest: r.harvest,
-    yield: `${r.yieldKg.toFixed(1)} kg`,
+    yield: benchmarkYieldLabel(r.yieldKg),
     group: r.area,
   }));
 
@@ -800,24 +846,23 @@ function drawFullPlan(s: Sheet, input: CropPlanPdfInput): void {
     { key: 'establish', header: 'Establish', width: 90 },
     { key: 'field', header: 'Into field', width: 90 },
     { key: 'harvest', header: 'Harvest', width: 76 },
-    { key: 'yield', header: 'Yield', width: 58, align: 'right' },
+    { key: 'yield', header: 'Benchmark', width: 58, align: 'right' },
   ], rows, { band: 'Full plan', title: 'Bed-by-bed plan', groupKey: 'group' });
 }
 
 function drawBuying(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: number): void {
   masthead(s, 'Inputs');
   pageTitle(s, 'Inputs', 'Seed and seedling buying schedule',
-    'One line per purchase. The buying rule is stated once below instead of after every item.');
+    'One line per sourcing marker. The buying rule is stated once below instead of after every item.');
 
   const h = panel(s, {
     title: 'The buying rule',
     accent: INK.gold,
     bg: INK.panelCream,
     body: [
-      'Buy direct-sown seed one month before sowing, so it is in the house before the ground is ready. '
-      + 'For a tray crop the quantity shown is the number of PLANTS needed - buy seed now, or buy ready-grown seedlings in the month it goes into the bed.',
-      'Quantities come from each bed\'s area and the crop spacing printed in the field sheets, plus a small allowance for seed that does not come up. '
-      + 'They are counts, not packet sizes: check the pack weight at the shop.',
+      'Source direct-sown or tray seed before the named sowing month; the source does not provide a universal procurement lead time. Ready-grown seedlings are listed at the start of the field-readiness window; buy them only when the bed and seedlings are ready. Living corms, slips, cloves and seed potatoes are listed close to planting. For a tray crop, choose either packet seed for the nursery or ready-grown seedlings - not both.',
+      'For direct-sown crops, field spacing supports only an approximate FINAL stand. It does not prove a seed-buying quantity: '
+      + 'use the packet\'s crop-specific sowing rate and germination guidance. Living-material ranges are approximate field positions from mapped area and published spacing, not guaranteed order quantities or loss allowances; supplier and crop-specific guidance may change what to purchase.',
     ],
   });
   s.y += h + 14;
@@ -829,13 +874,23 @@ function drawBuying(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: numb
       rows.push({
         buy: monthYearLabel(month.month, now),
         crop: item.cropName,
-        qty: `${item.count.toLocaleString('en-ZA')} ${item.unit}`,
-        method: item.unit === 'seed potatoes' || item.unit === 'slips'
-          ? 'Living planting material'
-          : item.transplant ? 'Raise in trays' : 'Direct sow',
+        qty: item.quantityStatus === 'spacing-confirmation-required'
+          ? 'Confirm spacing first'
+          : item.quantityStatus === 'packet-rate-required'
+            ? 'Packet rate needed'
+            : item.quantityStatus === 'counted-piece-range' && item.countRange
+              ? `~${positionRangeLabel(item.countRange)} ${item.unit} positions`
+              : item.count === null
+                ? 'Confirm quantity'
+                : `~${item.count.toLocaleString('en-ZA')} ${item.unit} positions`,
+        method: item.quantityStatus === 'spacing-confirmation-required'
+          ? 'Local row layout needed'
+          : !item.transplant && item.unit !== 'seeds'
+          ? 'Living pieces; confirm loss allowance'
+          : item.transplant ? `Ready seedlings; own seed before ${monthShort(item.sowMonth)} nursery` : `Direct sow; ~${positionRangeLabel(item.finalPlantPositionsRange)} final positions`,
         forWhat: item.bedLabels.join(', '),
         when: item.transplant
-          ? `Nursery ${monthShort(item.sowMonth)} -> field ${monthShort(item.bedMonth)}`
+          ? `Source own seed before ${monthShort(item.sowMonth)}; nursery ${monthShort(item.sowMonth)}; check/transplant ${monthShort(item.bedMonth)}-${monthShort(item.bedMonthLatest)}`
           : `Sow ${monthShort(item.sowMonth)}`,
         group: String(month.month),
       });
@@ -843,7 +898,7 @@ function drawBuying(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: numb
   }
 
   table(s, [
-    { key: 'buy', header: 'Buy by', width: 74 },
+    { key: 'buy', header: 'Source/check', width: 74 },
     { key: 'crop', header: 'Crop', width: 122 },
     { key: 'qty', header: 'Quantity', width: 92 },
     { key: 'method', header: 'Method', width: 88 },
@@ -895,7 +950,12 @@ function drawFieldSheets(
     s.font(8, true);
     s.ink(INK.muted);
     s.doc.text(pdfSafe('Nursery sowing and planting into the bed are shown as separate jobs.'), s.margin, s.y);
-    s.y += 14;
+    s.y += 12;
+    s.font(7.5, true);
+    s.ink(INK.gold);
+    const timingLines = s.doc.splitTextToSize(pdfSafe(SUCCESSION_TIMING_GUIDANCE), s.contentWidth) as string[];
+    s.doc.text(timingLines, s.margin, s.y);
+    s.y += timingLines.length * 9 + 10;
 
     // Column geometry: tick | place | work | date-and-note. The tick column has
     // to clear the word DONE in the header, not just the checkbox under it.
@@ -1026,7 +1086,7 @@ function drawHarvestRecord(s: Sheet, input: CropPlanPdfInput): void {
   s.doc.text(pdfSafe('Harvest record'), s.margin, s.y); s.y += 10;
   blankRows([
     { key: 'a', header: 'Crop / bed', width: 120 },
-    { key: 'b', header: 'Planned kg', width: 62 },
+    { key: 'b', header: 'Benchmark kg', width: 62 },
     { key: 'c', header: 'Actual kg', width: 62 },
     { key: 'd', header: 'Used in kitchen', width: 74 },
     { key: 'e', header: 'Stored', width: 54 },
@@ -1068,7 +1128,6 @@ export async function buildCropPlanPdf(input: CropPlanPdfInput): Promise<Blob> {
   const want = new Set(input.sections ?? ALL_SECTIONS);
   const s = new Sheet(doc, input.meta.planTitle);
 
-  const harvest = buildHarvestSeries(input.plantings, input.beds, nowMonth);
   const workload = buildWorkloadSeries(input.tasks, nowMonth);
   const calendar = buildOccupancyCalendar(input.plantings, input.beds, nowMonth);
 
@@ -1087,7 +1146,7 @@ export async function buildCropPlanPdf(input: CropPlanPdfInput): Promise<Blob> {
   };
 
   if (want.has('dashboard')) { startPage('portrait'); drawDashboard(s, input, now, nowMonth); }
-  if (want.has('numbers')) { startPage('portrait'); drawYearInNumbers(s, input, harvest, workload); }
+  if (want.has('numbers')) { startPage('portrait'); drawYearInNumbers(s, input, nowMonth, workload); }
   if (want.has('calendar')) { startPage('landscape'); drawCalendar(s, input, nowMonth, calendar); }
   if (want.has('plan')) { startPage('landscape'); drawFullPlan(s, input); }
   if (want.has('buying')) { startPage('landscape'); drawBuying(s, input, now, nowMonth); }
