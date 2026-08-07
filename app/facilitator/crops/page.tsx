@@ -24,7 +24,7 @@ import type { Design } from '@/lib/db/types';
 import { myDesigns } from '@/lib/db/queries';
 import { nearestRainfall } from '@/lib/water-calc';
 import type { CropDef, RainPattern } from '@/lib/crop-catalog';
-import { CROPS, cropByKey, hasAutomaticPlanningBasis, hasPlanningYield, hasVerifiedFieldPlan, MONTHS_SHORT } from '@/lib/crop-catalog';
+import { CROPS, cropByKey, hasAutomaticPlanningBasis, hasPlanningYield, hasVerifiedSchedule, MONTHS_SHORT } from '@/lib/crop-catalog';
 import type { PlanBed, Planting, CropPlanState, FoodAvailabilityItem, PlanYieldBenchmark, CashflowSettings } from '@/lib/crop-plan';
 import {
   loadCropPlan, saveCropPlan, bedEntryMonth, latestBedEntryMonth, plannedBedEntryMonth, harvestEndMonthForCrop, harvestMonthForCrop, tasksForPlan, taskMonthsFromNow, estimatedYieldKgAdjusted, nextValidSowMonth,
@@ -1403,7 +1403,8 @@ function FacilitatorCropsPageInner() {
                 source says these times are approximate and assume optimum conditions; actual crops may mature later.
                 Every later sowing or transplant is conditional on observing that the previous crop is finished and the bed is clear. The
                 app does not split a crop-cycle total into invented monthly kilograms. Auto-suggest only ranks crops
-                with verified yield, duration and field-spacing support, only uses crops you select, and requires irrigation because intensive
+                with verified yield, duration and field-spacing support. A family plan starts from a supported diverse
+                mix; an exact crop list becomes a strict whitelist. It requires irrigation because intensive
                 succession without a farm water plan is not defensible. Its packing is a transparent
                 heuristic, not proof of a global maximum or of a physical row layout. Commercial ranking is fresh
                 weight per crop cycle; it is not profit, nutrition or evidence of buyer demand.
@@ -2536,7 +2537,6 @@ function AutoSuggestModal({
   const cropChoices = CROPS
     .filter((crop) => groups.length === 0 || groups.includes(foodGroupOf(crop)))
     .filter((crop) => crop.name.toLowerCase().includes(cropSearch.trim().toLowerCase()));
-  const schedulableShown = cropChoices.filter(hasVerifiedFieldPlan);
 
   return (
     <div style={{ position: 'fixed', inset: 0, zIndex: 70, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 16 }}>
@@ -2581,6 +2581,11 @@ function AutoSuggestModal({
               </div>
             )}
 
+            <details className="rounded-xl px-3 py-2.5" style={{ border: '1px solid #E2D8C4', background: '#FFFEFA' }}>
+              <summary className="font-display font-semibold" style={{ fontSize: 12.5, color: '#1F4D2B', cursor: 'pointer' }}>
+                Optional: change the recommended crop mix
+              </summary>
+              <div className="mt-3 space-y-3">
             <div>
               <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.08em' }}>
                 Filter crop types (optional)
@@ -2597,14 +2602,14 @@ function AutoSuggestModal({
               </div>
               <p className="font-mono mt-1.5" style={{ fontSize: 10.5, color: '#9A8268' }}>
                 {groups.length === 0
-                  ? 'No type filter: the crop list below shows every crop with supported yield, duration and field spacing.'
+                  ? 'No type filter: the crop list below shows every crop. Crops without enough local evidence stay selectable for manual review but are not auto-scheduled.'
                   : `${groups.length} of ${ALL_GROUPS.length} selected.`}
               </p>
             </div>
 
             <div>
               <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.08em' }}>
-                Which crops do your household or buyers actually want?
+                Only use these exact crops (optional)
               </div>
               <input
                 value={cropSearch}
@@ -2614,25 +2619,25 @@ function AutoSuggestModal({
                 style={{ fontSize: 12.5, color: '#5C5040', background: '#FFFFFF', border: '1px solid #E2D8C4' }}
               />
               <div className="flex gap-2 my-2">
-                <button type="button" onClick={() => onSetCrops([...new Set([...cropKeys, ...schedulableShown.map((crop) => crop.key)])])} className="font-sans rounded-lg px-2 py-1" style={{ fontSize: 11, border: '1px solid #B9C9B9', color: '#1F4D2B', background: '#F5F8F3' }}>Select all shown</button>
+                <button type="button" onClick={() => onSetCrops([...new Set([...cropKeys, ...cropChoices.map((crop) => crop.key)])])} className="font-sans rounded-lg px-2 py-1" style={{ fontSize: 11, border: '1px solid #B9C9B9', color: '#1F4D2B', background: '#F5F8F3' }}>Select all shown</button>
                 <button type="button" onClick={() => onSetCrops([])} className="font-sans rounded-lg px-2 py-1" style={{ fontSize: 11, border: '1px solid #E2D8C4', color: '#5C5040', background: '#FFFFFF' }}>Clear</button>
               </div>
               <div className="rounded-lg" style={{ maxHeight: 220, overflowY: 'auto', border: '1px solid #E2D8C4', background: '#FFFFFF' }}>
                 {cropChoices.map((crop) => {
-                  const schedulable = hasVerifiedFieldPlan(crop);
+                  const schedulable = hasVerifiedSchedule(crop);
                   const hasYieldBenchmark = hasAutomaticPlanningBasis(crop);
                   return (
-                    <label key={crop.key} className="flex items-center gap-2 px-2.5 py-2 font-sans" style={{ fontSize: 12, borderBottom: '1px solid #F0E9DC', cursor: schedulable ? 'pointer' : 'not-allowed', opacity: schedulable ? 1 : 0.62 }}>
-                      <input type="checkbox" checked={cropKeys.includes(crop.key)} disabled={!schedulable} onChange={() => onToggleCrop(crop.key)} />
+                    <label key={crop.key} className="flex items-center gap-2 px-2.5 py-2 font-sans" style={{ fontSize: 12, borderBottom: '1px solid #F0E9DC', cursor: 'pointer' }}>
+                      <input type="checkbox" checked={cropKeys.includes(crop.key)} onChange={() => onToggleCrop(crop.key)} />
                       <span style={{ flex: 1 }}>{crop.icon} {crop.name}</span>
                       {schedulable && !hasYieldBenchmark && <span style={{ fontSize: 9.5, color: '#9A6018' }}>no yield estimate</span>}
-                      {!schedulable && <span style={{ fontSize: 9.5, color: '#9A6018' }}>manual — confirm locally</span>}
+                      {!schedulable && <span style={{ fontSize: 9.5, color: '#9A6018' }}>selected for manual review</span>}
                     </label>
                   );
                 })}
               </div>
               <p className="font-mono mt-1.5" style={{ fontSize: 10.5, color: '#9A6018', lineHeight: 1.4 }}>
-                Crops with verified field timing and spacing can be scheduled. “No yield estimate” means the crop can go on the calendar, but kilograms and value stay blank rather than being guessed. Disabled crops still need local timing or field-spacing confirmation.
+                Every crop can be ticked. Crops with verified field timing and establishment can be scheduled; a crop still missing those facts remains selected for manual review and is not silently replaced. “No yield estimate” leaves kilograms and value blank rather than guessing.
               </p>
               {cropKeys.length > 0 && (
                 <div className="flex flex-wrap gap-1.5 mt-2">
@@ -2652,9 +2657,11 @@ function AutoSuggestModal({
                   ? (goal === 'commercial'
                     ? 'Only these crops will be used. Commercial mode compares conservative fresh-weight kg/m² per crop cycle where a supported sowing slot fits; it is not profit, nutrition, buyer demand or proof of a global annual maximum.'
                     : 'Only these crops will be used. The planner balances supported sowing slots, variety and your harvest rhythm; it will not substitute an unchosen crop or claim a guaranteed maximum.')
-                  : 'Choose at least one crop. Auto-suggest will use only crops you name.'}
+                  : 'No exact list selected: the family plan will use a diverse supported mix, including the mapped staple plots. Open this section only when you want to exclude crops or name exact household choices.'}
               </p>
-            </div>
+              </div>
+              </div>
+            </details>
 
             <div>
               <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.08em' }}>How do you want your harvests spread out?</div>
@@ -2749,14 +2756,14 @@ function AutoSuggestModal({
 
             <button
               onClick={onGenerate}
-              disabled={cropKeys.length === 0 || !reliableIrrigation}
+              disabled={(goal !== 'family' && cropKeys.length === 0) || !reliableIrrigation}
               className="w-full font-display font-semibold rounded-xl py-2.5"
               style={{
                 fontSize: 14,
-                background: cropKeys.length > 0 && reliableIrrigation ? '#1F4D2B' : '#D8D3C9',
-                color: cropKeys.length > 0 && reliableIrrigation ? '#F7F2E9' : '#81796D',
+                background: (goal === 'family' || cropKeys.length > 0) && reliableIrrigation ? '#1F4D2B' : '#D8D3C9',
+                color: (goal === 'family' || cropKeys.length > 0) && reliableIrrigation ? '#F7F2E9' : '#81796D',
                 border: 'none',
-                cursor: cropKeys.length > 0 && reliableIrrigation ? 'pointer' : 'not-allowed',
+                cursor: (goal === 'family' || cropKeys.length > 0) && reliableIrrigation ? 'pointer' : 'not-allowed',
               }}
             >
               ✨ Suggest a plan
