@@ -32,7 +32,7 @@ export default function SampleModeBanner() {
 
   return (
     <div
-      className="fixed left-0 right-0 flex items-center justify-center gap-3 px-4 py-2 flex-wrap text-center"
+      className="no-print fixed left-0 right-0 flex items-center justify-center gap-3 px-4 py-2 flex-wrap text-center"
       style={{
         bottom: 'calc(60px + env(safe-area-inset-bottom, 0px))',
         zIndex: 9999,

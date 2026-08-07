@@ -200,6 +200,7 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
     // corner, out of the centre column where every confirm panel in this app lives.
     return (
       <div
+        className="no-print"
         role="status"
         style={{
           position: 'fixed', bottom: 'calc(env(safe-area-inset-bottom, 0px) + 0.5rem)', left: '0.5rem',
@@ -239,6 +240,7 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
 
   return (
     <div
+      className="no-print"
       role="status"
       style={{
         position: 'fixed',

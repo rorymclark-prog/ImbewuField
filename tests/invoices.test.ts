@@ -98,12 +98,67 @@ test('customers are trimmed, deduplicated without case, and malformed storage is
   local.setItem('imbewu_invoice_customers', JSON.stringify([
     ' Alice ', 'alice', '', null, 42, 'Bob',
   ]));
-  assert.deepEqual(loadCustomers(), ['Alice', 'Bob']);
+  assert.deepEqual(loadCustomers(), [{ name: 'Alice' }, { name: 'Bob' }]);
 
   addCustomer(' ALICE ');
-  assert.deepEqual(loadCustomers(), ['ALICE', 'Bob']);
+  assert.deepEqual(loadCustomers(), [{ name: 'ALICE' }, { name: 'Bob' }]);
   addCustomer('   ');
-  assert.deepEqual(loadCustomers(), ['ALICE', 'Bob']);
+  assert.deepEqual(loadCustomers(), [{ name: 'ALICE' }, { name: 'Bob' }]);
+});
+
+test('a customer list written before buyers had addresses still loads', () => {
+  // Rows used to be bare strings. Reading them as { name } upgrades a farmer's existing customer
+  // list in place; the alternative — dropping anything that is not an object — would silently
+  // empty the customer list of every farmer already using the app.
+  const { local } = installBrowser();
+  local.setItem('imbewu_invoice_customers', JSON.stringify([
+    'Legacy buyer',
+    { name: 'New buyer', address: 'Shop 3, Main Road', phone: '034 271 0000' },
+  ]));
+  assert.deepEqual(loadCustomers(), [
+    { name: 'Legacy buyer' },
+    { name: 'New buyer', address: 'Shop 3, Main Road', phone: '034 271 0000' },
+  ]);
+});
+
+test('issuing a quick invoice does not wipe details captured earlier', () => {
+  installBrowser();
+  addCustomer('Spar Nquthu', { address: 'Shop 3, Main Road', phone: '034 271 0000' });
+  // A later invoice to the same buyer, typed in a hurry with no address.
+  addCustomer('Spar Nquthu');
+  assert.deepEqual(loadCustomers(), [
+    { name: 'Spar Nquthu', address: 'Shop 3, Main Road', phone: '034 271 0000' },
+  ]);
+  // A supplied value does replace the old one.
+  addCustomer('Spar Nquthu', { phone: '034 271 1111' });
+  assert.equal(loadCustomers()[0].phone, '034 271 1111');
+});
+
+test('an invoice keeps the date it was issued, however often it is edited', () => {
+  // Every save stamped new Date(), so opening #0044 to fix a typo — or marking it paid a month
+  // later — moved its date to today. The buyer's printed copy and the farmer's ledger then
+  // disagreed about when the debt arose.
+  installBrowser();
+  const issued = '2026-06-24T08:00:00.000Z';
+  const base = invoice({ id: 'inv-date', no: 44, dateISO: issued });
+  saveInvoice(base);
+  saveInvoice({ ...base, dateISO: '2026-08-07T08:00:00.000Z', billTo: 'Corrected buyer' });
+  const [stored] = loadInvoices();
+  assert.equal(stored.dateISO, issued, 'a later edit moved the issue date');
+  assert.equal(stored.billTo, 'Corrected buyer', 'the edit itself was not applied');
+});
+
+test('a due date before the issue date is refused, not printed as already overdue', () => {
+  installBrowser();
+  const issued = '2026-06-24T08:00:00.000Z';
+  saveInvoice(invoice({
+    id: 'inv-due', no: 45, dateISO: issued, dueDateISO: '2026-06-01T08:00:00.000Z',
+  }));
+  assert.equal(loadInvoices()[0].dueDateISO, undefined);
+  saveInvoice(invoice({
+    id: 'inv-due-ok', no: 46, dateISO: issued, dueDateISO: '2026-07-24T08:00:00.000Z',
+  }));
+  assert.equal(loadInvoices()[0].dueDateISO, '2026-07-24T08:00:00.000Z');
 });
 
 test('products keep legitimate zero prices but reject unknown or impossible money', () => {
@@ -371,7 +426,7 @@ test("one shared device keeps each farmer's invoice ledger and sequence separate
   assert.equal(saveNextInvoiceNumber(8), true);
 
   accountHarness.currentUid = 'farmer-a';
-  assert.deepEqual(loadCustomers(), ['Farmer A customer']);
+  assert.deepEqual(loadCustomers(), [{ name: 'Farmer A customer' }]);
   assert.deepEqual(loadProducts().map((product) => product.desc), ['Farmer A spinach']);
   assert.deepEqual(loadInvoices().map((row) => row.id), ['farmer-a-invoice']);
   assert.equal(loadNextInvoiceNumber(), 45);

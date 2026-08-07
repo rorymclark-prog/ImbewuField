@@ -23,7 +23,8 @@ import { DEFAULT_CROP_PRICES } from './crop-prices';
 import type { JournalEntry } from './field-journal';
 import type { FacilitatorDesignState, FacItem, FacLine, FacSector, LayerId } from './facilitator-design';
 import type { SalesLog, ExpenseLog, ProductionLog, Profile } from './db/types';
-import type { SavedInvoice, Product } from './invoices';
+import type { SavedInvoice, Product, Customer } from './invoices';
+import type { SellerLetterhead } from './invoice-seller';
 import type { SavedPlace } from './saved-places';
 import type { WaterPoint } from './water-points';
 import type { DesignCanvasState, PlacedItem, ZoneShape, LineShape } from './design-canvas';
@@ -41,11 +42,36 @@ export const DEMO_SITE = Object.freeze({ lat: -27.726231, lon: 31.963044, name: 
 export function buildDemoProfile(): Profile {
   return {
     id: 'demo', full_name: 'Sample Farmer', role: 'farmer', org_id: 'demo-org-ubhejane',
-    language: 'en', id_number: null, phone: null, photo_url: null,
+    language: 'en', id_number: null, phone: '072 000 0100', photo_url: null,
+    // The invoice prints the farm name under the seller's name. Without one the sample
+    // invoice showed a bare placeholder, which reads as an unfinished feature rather than
+    // as an unset field.
+    farm_name: 'Sample — Ubhejane Crèche garden',
     created_at: new Date().toISOString(),
     bio: 'Caretaker of the Ubhejane Creche food garden.',
     skills: ['soil health', 'water harvesting'],
     showOnMap: false, mapLat: null, mapLon: null,
+  };
+}
+
+/**
+ * The sample farm's invoice letterhead.
+ *
+ * Every value is inside the 'Sample —' namespace or an obvious placeholder, so nothing here can
+ * be mistaken for a real bank account. It exists because the demo is how this app gets evaluated:
+ * an invoice with no "How to pay" block reads as a missing feature rather than an empty field.
+ */
+export function buildDemoLetterhead(): SellerLetterhead {
+  return {
+    address: 'Sample — Ubhejane Crèche\nSample — Nquthu, KwaZulu-Natal',
+    email: 'sample@example.invalid',
+    taxNumber: '',
+    bankName: 'Sample — Demo Bank',
+    bankAccountName: 'Sample — Ubhejane Crèche garden',
+    bankAccountNumber: '0000 0000 0000',
+    bankBranchCode: '000000',
+    paymentTermsDays: 14,
+    notes: 'Sample — crates returned with the next order.',
   };
 }
 
@@ -189,7 +215,7 @@ export interface DemoFinance {
   expenses: ExpenseLog[];
   production: ProductionLog[];
   invoices: SavedInvoice[];
-  customers: string[];
+  customers: Customer[];
   products: Product[];
 }
 
@@ -454,6 +480,10 @@ export function buildDemoFinance(): DemoFinance {
       id: `demo-invoice-${i + 1}`,
       no: DEMO_LAST_INVOICE_NO - monthsBefore,
       billTo: 'Sample — Ubhejane parents fund',
+      billToDetails: {
+        address: 'Sample — Ubhejane Crèche\nSample — Nquthu, KwaZulu-Natal',
+        phone: '072 000 0101',
+      },
       items: [{ desc: 'Sample — mixed vegetable box', qty: DEMO_BOX_KG, unit: 'kg', price: DEMO_BOX_PRICE_PER_KG }],
       total: DEMO_BOX_KG * DEMO_BOX_PRICE_PER_KG,
       dateISO: at(monthsBefore, 25),
@@ -462,10 +492,23 @@ export function buildDemoFinance(): DemoFinance {
     };
   });
 
-  const customers = [
-    'Sample — Ubhejane parents fund',
-    'Sample — Nquthu co-op',
-    'Sample — Local spaza shop',
+  // Contact details are carried so the sample invoice shows a complete "Bill to" block; an
+  // address-less demo would make the buyer fields look unimplemented. Everything stays inside
+  // the 'Sample —' namespace the rest of this file uses, so none of it can be mistaken for a
+  // real business, and the numbers sit in the 072 000 xxxx range reserved for testing.
+  const customers: Customer[] = [
+    {
+      name: 'Sample — Ubhejane parents fund',
+      address: 'Sample — Ubhejane Crèche\nSample — Nquthu, KwaZulu-Natal',
+      phone: '072 000 0101',
+    },
+    {
+      name: 'Sample — Nquthu co-op',
+      address: 'Sample — Co-op depot, Nquthu',
+      phone: '072 000 0102',
+      email: 'sample@example.invalid',
+    },
+    { name: 'Sample — Local spaza shop', phone: '072 000 0103' },
   ];
   // Invoice presets, priced at the retail figures in lib/crop-prices.ts — the
   // same table every sale above is priced from.

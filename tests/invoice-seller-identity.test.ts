@@ -42,22 +42,39 @@ test('no real place name is hardcoded into the invoice', () => {
 test('the seller block on screen and in the PDF read the same profile field', () => {
   // Two render paths. The bug lived in both, and a fix that repaired only the screen would leave
   // the wrong farm on the document the buyer actually keeps.
-  const uses = INVOICE.match(/sellerFarm/g) ?? [];
-  assert.ok(uses.length >= 3, `expected sellerFarm to be defined and used in both render paths, found ${uses.length} references`);
+  //
+  // The original version of this test counted `sellerFarm` references, because at the time the
+  // screen and the PDF each drew the letterhead themselves. They no longer do: both now render
+  // one `InvoiceDocument`, and the guarantee is stronger for it — there is a single place where
+  // the farm name enters the document, so the two paths cannot disagree. What is checked here is
+  // that this remains true, and `tests/invoice-document.test.ts` checks that both renderers
+  // actually read every field of that document.
   assert.ok(
     /const sellerFarm = profile\?\.farm_name/.test(INVOICE),
     'sellerFarm must come from the signed-in profile, not from a constant',
   );
+  assert.ok(
+    /farm: sellerFarm/.test(INVOICE),
+    'the farm name must reach the document through buildInvoiceDocument, not a per-renderer line',
+  );
+  assert.ok(
+    !/sellerFarm/.test(src('../lib/invoice-pdf.ts')),
+    'the PDF writer has gone back to reading the profile itself instead of the shared document',
+  );
 });
 
 test('an unset farm name prints nothing, rather than a stand-in', () => {
-  // Both paths must be guarded. `{sellerFarm && ...}` on the screen, `if (sellerFarm)` in the PDF.
-  assert.ok(/\{sellerFarm && </.test(INVOICE), 'the screen line is not conditional on the farm name being set');
-  assert.ok(/if \(sellerFarm\) \{/.test(INVOICE), 'the PDF line is not conditional on the farm name being set');
-  // And no `??`/`||` fallback string sneaking a default back in.
+  // Executed, not pattern-matched: `buildInvoiceDocument` with no farm produces no farm line, and
+  // tests/invoice-document.test.ts asserts exactly that against both an empty and a blank value.
+  // What is left to guard here is the source of the value — no `??`/`||` default string sneaking
+  // a borrowed farm back in, on the profile read or anywhere downstream of it.
   assert.ok(
     !/farm_name\s*\?\?\s*['"][^'"]+['"]/.test(INVOICE),
     'a default farm name has been reintroduced — an unset farm must print nothing',
+  );
+  assert.ok(
+    /profile\?\.farm_name\?\.trim\(\) \?\? ''/.test(INVOICE),
+    'an unset farm must resolve to the empty string, which the document model drops',
   );
 });
 
