@@ -120,7 +120,7 @@ test('sowMonth is read one-based, the way every other reader in the codebase rea
   // silently drops December.
   const facts = demoFacts();
   assert.ok(facts.crop);
-  assert.equal(facts.crop.plantingCount, 16);
+  assert.equal(facts.crop.plantingCount, buildDemoCropPlan().plantings.length);
   const butternut = facts.crop.crops.find((crop) => /butternut/i.test(crop.name));
   assert.ok(butternut, 'the December sowing must not be dropped');
   assert.deepEqual(butternut.sowMonths, ['Dec']);
@@ -211,8 +211,8 @@ test('zone design describes the rings drawn, and names the ones that are not', (
 
 test('the crop-plan block names the farmer\'s crops and refuses to print a yield', () => {
   const block = cropPlanPromptBlock(demoFacts());
-  assert.match(block, /16 plantings/);
-  assert.match(block, /Butternut — sown Dec in Bed 6/);
+  assert.match(block, new RegExp(`${buildDemoCropPlan().plantings.length} plantings`));
+  assert.match(block, /Butternut — sown Dec in Bed \d+/);
   assert.match(block, /Do NOT print a yield or an income figure/);
   assert.equal(cropPlanPromptBlock({}), '');
 });

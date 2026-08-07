@@ -93,16 +93,38 @@ function facilitator(items: FacilitatorDesignState['items']): FacilitatorDesignS
   };
 }
 
-test('planned January work viewed in December stays one coherent forward group', () => {
+test('planned January tray work viewed in December stays one coherent forward group', () => {
   const tasks = buildCropBoardTasks([planting()], beds, 12, new Set());
   assert.ok(tasks.length > 1);
   assert.equal(tasks[0].id, 'planting-1:prep');
-  assert.equal(tasks[0].monthsAway, 0);
-  assert.equal(tasks[0].dueMonth, 12);
+  assert.equal(tasks[0].monthsAway, 1, 'lettuce is a tray crop, so its assessment and nursery sowing both belong in January');
+  assert.equal(tasks[0].dueMonth, 1);
   assert.ok(tasks.every((task) => Number.isSafeInteger(task.monthsAway) && task.monthsAway >= 0));
   assert.ok(tasks.every((task) => task.dueMonth >= 1 && task.dueMonth <= 12));
   assert.deepEqual(tasks, [...tasks].sort((a, b) =>
     a.monthsAway - b.monthsAway || a.dueMonth - b.dueMonth || a.id.localeCompare(b.id)));
+});
+
+test('later harvest-window tasks stay anchored after their own future sowing', () => {
+  // Viewed in September, this August sowing belongs to NEXT year. Its supported
+  // planned nursery entry plus upper tomato picking window runs January
+  // through March, 16–18 months away. Reverse-parsing
+  // `tomato:west:harvest:1` as if it ended in `:harvest` used to lose the
+  // planting and pull the January task forward to four months away — before
+  // the seed itself was due.
+  const tasks = buildCropBoardTasks([
+    planting({ id: 'tomato:west', cropKey: 'tomatoes', sowMonth: 8 }),
+  ], beds, 9, new Set());
+  const harvests = tasks.filter((task) => task.id.includes(':harvest'));
+
+  assert.deepEqual(harvests.map((task) => [task.id, task.monthsAway, task.dueMonth]), [
+    ['tomato:west:harvest', 16, 1],
+    ['tomato:west:harvest:1', 17, 2],
+    ['tomato:west:harvest:2', 18, 3],
+  ]);
+  const sow = tasks.find((task) => task.id === 'tomato:west:sow');
+  assert.ok(sow);
+  assert.ok(harvests.every((task) => task.monthsAway > sow.monthsAway));
 });
 
 test('prep for a planting sown this month is due now, not silently moved eleven months away', () => {
@@ -114,9 +136,25 @@ test('prep for a planting sown this month is due now, not silently moved eleven 
   assert.match(prep.subtitle, /Due this month/);
 });
 
+test('future transplant prep uses the cohort authority instead of a direct-sow minus-one rule', () => {
+  const tasks = buildCropBoardTasks([
+    planting({ id: 'future-onions', cropKey: 'onions', sowMonth: 9 }),
+  ], beds, 11, new Set());
+  const prep = tasks.find((task) => task.id === 'future-onions:prep');
+  const nurserySow = tasks.find((task) => task.id === 'future-onions:sow');
+
+  assert.ok(prep);
+  assert.ok(nurserySow);
+  assert.equal(prep.monthsAway, 10, 'tray-crop assessment belongs with next September, not August');
+  assert.equal(prep.dueMonth, 9);
+  assert.equal(prep.monthsAway, nurserySow.monthsAway);
+});
+
 test('already-growing work that genuinely passed drops off instead of returning next year', () => {
   const tasks = buildCropBoardTasks([
-    planting({ sowMonth: 1, existing: true }),
+    // A lettuce tray recorded the previous November reaches the conservative
+    // upper harvest month in May, so there is no honest task left in June.
+    planting({ sowMonth: 11, existing: true }),
   ], beds, 6, new Set());
   assert.deepEqual(tasks, []);
 });

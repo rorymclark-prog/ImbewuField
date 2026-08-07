@@ -19,15 +19,22 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-import { CROPS, cropByKey, plantsPerM2 } from '@/lib/crop-catalog';
+import {
+  CROPS,
+  cropByKey,
+  hasPlanningYield,
+  plantSpacingRangeCm,
+  plantsPerM2Range,
+} from '@/lib/crop-catalog';
 import type { RainPattern } from '@/lib/crop-catalog';
-import { buildBedPlanRows, sowingInstruction } from '@/lib/crop-export-schedule';
+import { buildBedPlanRows, positionRangeLabel, sowingInstruction } from '@/lib/crop-export-schedule';
 import { buildFieldSheet } from '@/lib/crop-export-benchmark';
-import { autoSuggestPlan } from '@/lib/crop-autosuggest';
+import { autoSuggestPlan, planningWeightBenchmarkScore } from '@/lib/crop-autosuggest';
 import type { AutoSuggestAnswers, GardenGoal, HouseholdSize, HarvestRhythm } from '@/lib/crop-autosuggest';
 import {
   buildFieldUtilizationByMonth,
-  buildFoodValueByMonth,
+  buildFoodAvailability,
+  buildPlanYieldBenchmark,
   buildYearReport,
   occupiedMonthsForPlanting,
   seedBoqForPlan,
@@ -86,6 +93,7 @@ function sweep(nowMonths: number[] = [1, 4, 8, 11]): Run[] {
               rhythm: RHYTHMS[nowMonth % RHYTHMS.length],
               rotateCrops,
               allowVinesInBeds: false,
+              reliableIrrigation: true,
             };
             const { plantings } = autoSuggestPlan(answers, pattern, geo.beds, [], nowMonth);
             runs.push({
@@ -160,42 +168,159 @@ test('the utilisation chart draws the true occupancy — its clamp is a no-op', 
   assert.deepEqual(mismatches.slice(0, 8), [], `${mismatches.length} months where the chart hid the real figure`);
 });
 
+test('automatic plans never use a crop missing yield, timing, or field-spacing evidence', () => {
+  const offenders: string[] = [];
+  for (const run of sweep([8])) {
+    for (const planting of run.plantings) {
+      const crop = cropByKey(planting.cropKey);
+      if (!crop || !hasPlanningYield(crop)
+        || crop.timingVerified === false || crop.fieldSpacingVerified === false) {
+        offenders.push(`${run.label} — ${planting.cropKey}`);
+      }
+    }
+  }
+  // Coriander and amadumbe have no defensible kg/m² planning benchmark;
+  // maize and kale have unresolved schedule/field facts. All remain readable
+  // in old records, but none may acquire a new automatic field instruction or
+  // shopping line by entering the generated plan.
+  assert.deepEqual(offenders.slice(0, 8), [], `${offenders.length} unsupported crops entered auto-suggest`);
+});
+
+test('different crops never overlap in one bed unless mixed-crop sharing was explicitly enabled', () => {
+  const beds = geometries()[0].beds;
+  const answers: AutoSuggestAnswers = {
+    goal: 'family', householdSize: 'medium', groups: [], rhythm: 'steady',
+    rotateCrops: true, allowVinesInBeds: false, reliableIrrigation: true,
+    // Deliberately omit allowMixedCropsInBed: false is the safety default.
+  };
+  const { plantings } = autoSuggestPlan(answers, 'mild-frost', beds, [], 8);
+  const conflicts: string[] = [];
+  for (const bed of beds.filter((candidate) => candidate.kind !== 'plot')) {
+    const rows = plantings.filter((planting) => planting.bedId === bed.id);
+    for (let i = 0; i < rows.length; i++) {
+      const months = new Set(occupiedMonthsForPlanting(rows[i]));
+      for (const other of rows.slice(i + 1)) {
+        if (rows[i].cropKey === other.cropKey) continue;
+        if (occupiedMonthsForPlanting(other).some((month) => months.has(month))) {
+          conflicts.push(`${bed.label}: ${rows[i].cropKey} overlaps ${other.cropKey}`);
+        }
+      }
+    }
+  }
+  assert.deepEqual(conflicts, []);
+});
+
+test('commercial focus chooses the highest sourced conservative kg per m² per crop cycle from viable household choices', () => {
+  const cabbage = cropByKey('cabbage')!;
+  const lettuce = cropByKey('lettuce')!;
+  assert.ok(planningWeightBenchmarkScore(cabbage) > planningWeightBenchmarkScore(lettuce));
+  const bed: PlanBed = { id: 'focus', label: 'Focus bed', areaM2: 9, minDimM: 3 };
+  const result = autoSuggestPlan({
+    goal: 'commercial', focusCropCount: 1, cropKeys: ['lettuce', 'cabbage'], groups: [],
+    rhythm: 'few-big', rotateCrops: false, allowVinesInBeds: false, reliableIrrigation: true,
+  }, 'mild-frost', [bed], [], 8);
+  assert.ok(result.plantings.length > 0);
+  assert.ok(result.plantings.every((planting) => planting.cropKey === 'cabbage'));
+});
+
+test('the regular-harvest choice gives more fresh-picking windows without inventing a monthly yield curve', () => {
+  const beds = geometries()[0].beds;
+  const vegBeds = beds.filter((bed) => bed.kind !== 'plot');
+  const vegIds = new Set(vegBeds.map((bed) => bed.id));
+  const planFor = (rhythm: HarvestRhythm) => autoSuggestPlan({
+    goal: 'family', householdSize: 'medium', groups: [], rhythm,
+    rotateCrops: true, allowVinesInBeds: false,
+    reliableIrrigation: true, allowMixedCropsInBed: false,
+  }, 'mild-frost', beds, [], 8);
+  // Staple plots are intentionally seasonal field crops; the steady-supply
+  // promise applies to the succession vegetable beds.
+  const freshMonthsFor = (rhythm: HarvestRhythm) => buildFoodAvailability(
+    planFor(rhythm).plantings.filter((planting) => vegIds.has(planting.bedId)),
+    vegBeds,
+  ).slice(1).filter((month) => month.some((item) => item.status === 'fresh')).length;
+
+  const steadyMonths = freshMonthsFor('steady');
+  const fewBigMonths = freshMonthsFor('few-big');
+  // A fresh harvest in all twelve named months is not a defensible invariant:
+  // source-backed maturity and picking windows can leave a real gap, and the
+  // planner must not move harvests or invent storage to paint that gap green.
+  // The choice we actually offer is comparative — regular opportunities versus
+  // deliberately fewer, larger flushes — so pin that rule instead.
+  assert.ok(steadyMonths > fewBigMonths, `regular mode covered ${steadyMonths} fresh months versus ${fewBigMonths} in few-big mode`);
+});
+
 // ── 3. The quantity on the page matches the spacing on the page ─────────────
 
-test('every printed seed quantity is reproducible from the spacing printed beside it', () => {
+function cmRangeLabel(range: readonly [number, number]): string {
+  return range[0] === range[1] ? String(range[0]) : `${range[0]}–${range[1]}`;
+}
+
+test('every farmer-facing spacing line prints the published bounds that define its density range', () => {
   const broken: string[] = [];
-  for (const crop of CROPS) {
+  for (const crop of CROPS.filter((candidate) => candidate.fieldSpacingVerified !== false)) {
     const printed = sowingInstruction(crop);
-    const square = printed.match(/plant spacing ~([\d.]+)cm each way/);
-    const row = printed.match(/rows ([\d.]+)cm apart/);
-    const inRow = printed.match(/([\d.]+)cm apart in the row/);
-    const implied = square
-      ? 1 / ((Number(square[1]) / 100) ** 2)
-      : row && inRow
-        ? 1 / ((Number(row[1]) / 100) * (Number(inRow[1]) / 100))
-        : NaN;
-    if (!Number.isFinite(implied) || Math.abs(implied - plantsPerM2(crop)) > 0.01) {
-      broken.push(`${crop.key}: printed "${printed}" implies ${implied.toFixed(1)}/m², counted ${plantsPerM2(crop).toFixed(1)}/m²`);
+    const spacing = plantSpacingRangeCm(crop);
+    const expectedRow = `rows ${cmRangeLabel(spacing.rowCm)}cm apart`;
+    const expectedInRow = `${cmRangeLabel(spacing.inRowCm)}cm apart in the row`;
+    const bothExactAndSquare = spacing.rowCm[0] === spacing.rowCm[1]
+      && spacing.inRowCm[0] === spacing.inRowCm[1]
+      && spacing.rowCm[0] === spacing.inRowCm[0];
+    const showsPublishedBounds = bothExactAndSquare
+      ? printed.includes(`plant spacing ${cmRangeLabel(spacing.rowCm)}cm each way`)
+      : printed.includes(expectedRow) && printed.includes(expectedInRow);
+    if (!showsPublishedBounds) {
+      broken.push(`${crop.key}: printed "${printed}" instead of ${expectedRow} / ${expectedInRow}`);
+      continue;
+    }
+
+    const independentlyDerived = [
+      1 / ((spacing.rowCm[1] / 100) * (spacing.inRowCm[1] / 100)),
+      1 / ((spacing.rowCm[0] / 100) * (spacing.inRowCm[0] / 100)),
+    ] as const;
+    const catalogRange = plantsPerM2Range(crop);
+    if (Math.abs(independentlyDerived[0] - catalogRange[0]) > 1e-9
+      || Math.abs(independentlyDerived[1] - catalogRange[1]) > 1e-9) {
+      broken.push(`${crop.key}: printed bounds and density range disagree`);
     }
   }
   // The printed plan read "Dry beans ~11362 seeds · 15cm apart in the row" —
   // 11362 came from a 10cm square. Both halves of that line were on the page.
   assert.deepEqual(broken, []);
+
+  // Internal geometry estimates may remain for reading legacy records, but
+  // the farmer-facing line must suppress the exact values the source audit
+  // rejected rather than laundering them through the generic formatter.
+  assert.equal(
+    sowingInstruction(cropByKey('tomatoes')!),
+    'rows 90–120cm apart · 30–60cm apart in the row · sow 1cm deep',
+  );
+  assert.doesNotMatch(sowingInstruction(cropByKey('garlic')!), /(?:^|· )10cm apart in the row/i);
+  assert.doesNotMatch(sowingInstruction(cropByKey('oats')!), /6cm|100 days?/i);
 });
 
-test('no catalog crop declares a spacing the seed count then ignores', () => {
-  const ignored = CROPS.filter((c) => {
-    const printed = sowingInstruction(c);
-    if (c.rowSpacingCm !== undefined && !printed.includes(`rows ${c.rowSpacingCm}cm`)) return true;
-    if (c.inRowSpacingCm !== undefined
-      && !printed.includes(`${c.inRowSpacingCm}cm apart in the row`)
-      && !printed.includes(`~${c.inRowSpacingCm}cm each way`)) return true;
-    return false;
-  }).map((c) => c.key);
-  assert.deepEqual(ignored, []);
+test('primary-source spacing regressions stay ranges instead of becoming midpoint prescriptions', () => {
+  // KZN DARD Plant Establishment Table 5. These two examples make this check
+  // capable of catching a catalog edit that changes the evidence itself; the
+  // broad sweep above catches formatter drift for every other crop without
+  // pinning the whole agronomy catalog in a test.
+  assert.deepEqual(plantSpacingRangeCm(cropByKey('cabbage')!), {
+    rowCm: [50, 60], inRowCm: [35, 45],
+  });
+  assert.equal(
+    sowingInstruction(cropByKey('cabbage')!),
+    'rows 50–60cm apart · 35–45cm apart in the row · sow 1.5–2cm deep',
+  );
+
+  assert.deepEqual(plantSpacingRangeCm(cropByKey('coriander')!), {
+    rowCm: [30, 35], inRowCm: [8, 10],
+  });
+  assert.equal(
+    sowingInstruction(cropByKey('coriander')!),
+    'rows 30–35cm apart · 8–10cm apart in the row · sow 1–1.5cm deep',
+  );
 });
 
-test('the seed bill counts every crop at exactly the shared density, not its own copy of it', () => {
+test('the material bill reconciles to spacing ranges without inventing packet seed or midpoint pieces', () => {
   // The original defect was three separate copies of one formula (crop-plan.ts,
   // app/plan/page.tsx, and the instruction builder), which drifted. Checking the
   // printed line against plantsPerM2 does not catch a BOQ that quietly uses a
@@ -205,137 +330,89 @@ test('the seed bill counts every crop at exactly the shared density, not its own
   for (const crop of CROPS) {
     const planting: Planting = { id: `p:${crop.key}`, bedId: 'b1', cropKey: crop.key, sowMonth: 3 };
     const row = seedBoqForPlan([planting], [bed])[0];
+    if (crop.timingVerified === false) {
+      if (row) wrong.push(`${crop.key}: an unverified legacy schedule created a new purchase line`);
+      continue;
+    }
     if (!row) { wrong.push(`${crop.key}: no bill line at all`); continue; }
-    const raw = bed.areaM2 * plantsPerM2(crop);
-    const buffered = row.unit === 'seeds' ? raw * 1.15 : raw; // SEED_GERMINATION_BUFFER
-    if (Math.abs(row.count - Math.max(1, Math.round(buffered))) > 1) {
-      wrong.push(`${crop.key}: bill says ${row.count} ${row.unit}, shared density gives ${Math.round(buffered)}`);
+    const density = plantsPerM2Range(crop);
+    const expectedRange = [
+      Math.max(1, Math.floor(bed.areaM2 * density[0])),
+      Math.max(1, Math.ceil(bed.areaM2 * density[1])),
+    ] as const;
+    if (row.finalPlantPositionsRange[0] !== expectedRange[0]
+      || row.finalPlantPositionsRange[1] !== expectedRange[1]) {
+      wrong.push(`${crop.key}: bill range ${positionRangeLabel(row.finalPlantPositionsRange)}, spacing implies ${positionRangeLabel(expectedRange)}`);
+    }
+    if (crop.fieldSpacingVerified === false) {
+      if (row.quantityStatus !== 'spacing-confirmation-required'
+        || row.count !== null || row.countRange !== null) {
+        wrong.push(`${crop.key}: unverified spacing still produced an order quantity`);
+      }
+    } else if (row.unit === 'seeds') {
+      if (row.quantityStatus !== 'packet-rate-required'
+        || row.count !== null || row.countRange !== null) {
+        wrong.push(`${crop.key}: mature positions became a botanical seed-buy quantity`);
+      }
+    } else if (expectedRange[0] !== expectedRange[1]) {
+      if (row.quantityStatus !== 'counted-piece-range' || row.count !== null
+        || row.countRange?.[0] !== expectedRange[0] || row.countRange?.[1] !== expectedRange[1]) {
+        wrong.push(`${crop.key}: living material used a midpoint instead of ${positionRangeLabel(expectedRange)} ${row.unit}`);
+      }
+    } else if (row.quantityStatus !== 'counted-pieces'
+      || row.count !== expectedRange[0] || row.countRange !== null) {
+      wrong.push(`${crop.key}: exact living-piece count does not match its exact spacing`);
     }
   }
   assert.deepEqual(wrong, []);
 });
 
-test('no crop is counted at an impossible planting density', () => {
-  // 200/m² is 7cm each way — denser than any HAND-SPACED crop in this catalog
-  // is grown, and a deliberately loose bound: it is a trap for a formula that
-  // has gone wrong by an order of magnitude, not an agronomic opinion.
-  //
-  // A broadcast cereal cover crop is genuinely denser than that — it is sown by
-  // the handful, not spaced plant by plant — so it gets its own, still-loose
-  // ceiling rather than being waved through. The order-of-magnitude trap is
-  // what matters and both bounds keep it: 200 catches a vegetable off by 10x,
-  // 500 catches a cover crop off by 10x.
-  const ceiling = (c: (typeof CROPS)[number]) => (c.yieldKgPerM2 === 0 ? 500 : 200);
-  const absurd = CROPS.filter((c) => plantsPerM2(c) > ceiling(c) || plantsPerM2(c) <= 0)
-    .map((c) => `${c.key} at ${plantsPerM2(c).toFixed(0)}/m²`);
-  assert.deepEqual(absurd, []);
+test('every published spacing pair resolves to a finite ordered density range', () => {
+  const invalid = CROPS.filter((crop) => crop.fieldSpacingVerified !== false)
+    .flatMap((crop) => {
+      const [minimum, maximum] = plantsPerM2Range(crop);
+      return Number.isFinite(minimum) && Number.isFinite(maximum)
+        && minimum > 0 && maximum >= minimum
+        ? [] : [`${crop.key}: ${minimum}–${maximum}/m²`];
+    });
+  assert.deepEqual(invalid, []);
 });
 
 // ── 4. One quantity, one number ─────────────────────────────────────────────
 
-// THIS GUARD USED TO REBUILD THE CHART WITH THE PROSE'S OWN `!p.existing` FILTER, so it compared
-// the prose against a chart nobody draws and could not fail. app/facilitator/crops/page.tsx:702
-// passes ALL plantings. Measured with two crops already growing, the real chart drew 80kg peaking
-// in July while the prose said 20kg peaking in April — four times the total, a different month,
-// and this test green throughout.
-//
-// The two scopes are deliberate: the prose is "what's new from this plan", the charts are "what
-// will be on the table". So equality is only required where the scopes coincide — no existing
-// plantings — and where they do not, what is required is that the prose SAYS so. Both halves can
-// fail, which is the point.
-test('the year-ahead prose quotes the same monthly kg the chart draws', () => {
+test('the year-ahead prose gives only the crop-cycle total and never invents a monthly peak', () => {
   const disagreements: string[] = [];
   for (const run of sweep([8])) {
-    if (run.plantings.some((p) => p.existing)) continue; // scopes differ on purpose — covered below
     const prose = buildYearReport(run.plantings, run.beds);
-    const peak = prose[0]?.match(/peaking around (\w+) \(~([\d.]+)kg that month\)/);
-    if (!peak) continue;
-    const chart = buildFoodValueByMonth(run.plantings, run.beds, {});
-    const monthIdx = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'].indexOf(peak[1]) + 1;
-    const drawn = chart[monthIdx].kg;
-    // Both sides round to whole kg for display; a whole-kg tolerance is display
-    // rounding, anything beyond it is a second model.
-    if (Math.abs(drawn - Number(peak[2])) > 1) {
-      disagreements.push(`${run.label} — prose says ${peak[2]}kg in ${peak[1]}, chart draws ${drawn.toFixed(1)}kg`);
+    const first = prose[0] ?? '';
+    const quoted = Number(/total about (\d+)kg/.exec(first)?.[1] ?? Number.NaN);
+    const benchmark = buildPlanYieldBenchmark(run.plantings.filter((p) => !p.existing), run.beds);
+    if (benchmark.knownKg === null) {
+      disagreements.push(`${run.label} — auto-suggest created conflicting bed shares`);
+    } else if (benchmark.knownKg > 0 && (!Number.isFinite(quoted) || Math.abs(quoted - benchmark.knownKg) > 1)) {
+      disagreements.push(`${run.label} — prose ${quoted}kg, crop-cycle benchmark ${benchmark.knownKg.toFixed(1)}kg`);
     }
-    // And the peak the prose names must actually BE the chart's peak month.
-    const chartPeak = Array.from({ length: 12 }, (_, i) => i + 1)
-      .reduce((best, m) => (chart[m].kg > chart[best].kg ? m : best), 1);
-    if (chartPeak !== monthIdx) {
-      disagreements.push(`${run.label} — prose peaks in month ${monthIdx}, chart peaks in month ${chartPeak}`);
+    if (/peaking around|\b\d+(?:\.\d+)?\s*kg\s+(?:in|that)\s+month|\bR\s*\d+(?:\.\d+)?\s+(?:in|that)\s+month/i.test(prose.join(' '))) {
+      disagreements.push(`${run.label} — prose still assigns a crop-cycle benchmark to a month`);
     }
   }
-  assert.deepEqual(disagreements.slice(0, 6), [], `${disagreements.length} screens showing two numbers for one quantity`);
+  assert.deepEqual(disagreements.slice(0, 6), [], `${disagreements.length} unsupported monthly claims`);
 });
 
-test('when crops are already growing, the prose says what it is not counting', () => {
-  // The other half of the same defect. Where the prose counts less than the chart beside it, a
-  // farmer is owed a sentence explaining why — otherwise the smaller number reads as the plan
-  // failing, or the larger one as the prose being wrong.
-  // Built here rather than taken from sweep(): the sweep's generated plans never mark a planting
-  // `existing`, so a version of this test that read from it passed without exercising anything.
-  // That failure is why the `checked > 0` assertion below exists and stays.
-  const runs = [1, 2].map((existingCount) => {
-    const beds = [
-      { id: 'b1', label: 'Bed 1', areaM2: 10 },
-      { id: 'b2', label: 'Bed 2', areaM2: 10 },
-      { id: 'b3', label: 'Bed 3', areaM2: 10 },
-    ];
-    const growing = [
-      { id: 'e1', cropKey: 'swiss-chard', bedId: 'b1', sowMonth: 3, existing: true },
-      { id: 'e2', cropKey: 'cabbage', bedId: 'b2', sowMonth: 4, existing: true },
-    ].slice(0, existingCount);
-    return {
-      label: `${existingCount} already growing`,
-      beds,
-      plantings: [
-        ...growing,
-        { id: 'n1', cropKey: 'lettuce', bedId: 'b3', sowMonth: 2 },
-        { id: 'n2', cropKey: 'carrot', bedId: 'b3', sowMonth: 8 },
-      ],
-    };
-  }) as unknown as { label: string; beds: PlanBed[]; plantings: Planting[] }[];
-
-  const silent: string[] = [];
-  let checked = 0;
-  for (const run of runs) {
-    const existing = run.plantings.filter((p) => p.existing);
-    if (!existing.length) continue;
-    const prose = buildYearReport(run.plantings, run.beds);
-    if (!prose.length) continue;
-    checked += 1;
-
-    const chartKg = buildFoodValueByMonth(run.plantings, run.beds, {});
-    const chartTotal = Array.from({ length: 12 }, (_, i) => chartKg[i + 1].kg).reduce((a, b) => a + b, 0);
-    const quoted = Number(prose[0].match(/roughly ([\d.]+)kg/)?.[1] ?? NaN);
-    if (!Number.isFinite(quoted)) continue;
-
-    // Only demand the disclosure where the numbers actually diverge enough to read as a conflict.
-    if (Math.abs(chartTotal - quoted) <= 1) continue;
-    if (!/not counted here/.test(prose[0])) {
-      silent.push(`${run.label} — prose says ${quoted}kg, charts total ${chartTotal.toFixed(0)}kg, no explanation`);
-    }
-  }
-  assert.ok(checked > 0, 'no swept plan had an already-growing crop, so this proves nothing — fix the sweep');
-  assert.deepEqual(silent.slice(0, 6), [], `${silent.length} screens where two totals sit together unexplained`);
-});
-
-test('the prose never calls a month quiet while the chart shows food coming in', () => {
+test('a reported fresh-picking gap agrees with the timing-only availability windows', () => {
   const lies: string[] = [];
   for (const run of sweep([8])) {
     const prose = buildYearReport(run.plantings, run.beds);
-    const quiet = prose.find((p) => p.startsWith('Quietest stretch is around'));
+    const quiet = prose.find((p) => p.startsWith('No verified fresh-picking window is scheduled around'));
     if (!quiet) continue;
-    const label = quiet.match(/around ([\w-]+) —/)?.[1];
+    const label = quiet.match(/around ([\w-]+)\./)?.[1];
     if (!label) continue;
     const SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     const named = label.split('-').map((s) => SHORT.indexOf(s) + 1).filter((m) => m > 0);
     if (!named.length) continue;
-    const chart = buildFoodValueByMonth(run.plantings.filter((p) => !p.existing), run.beds, {});
-    // "nothing due to harvest then" is a claim of zero. Any real weight in a
-    // month the sentence names makes the sentence false.
+    const availability = buildFoodAvailability(run.plantings.filter((p) => !p.existing), run.beds);
     for (const m of named) {
-      if (chart[m].kg > 0.05) lies.push(`${run.label} — "${label}" claims nothing due, chart draws ${chart[m].kg.toFixed(1)}kg in month ${m}`);
+      if (availability[m].some((item) => item.status === 'fresh')) lies.push(`${run.label} — "${label}" claims a timing gap but month ${m} has a fresh window`);
     }
   }
   assert.deepEqual(lies.slice(0, 6), [], `${lies.length} false quiet-stretch claims`);
@@ -343,13 +420,32 @@ test('the prose never calls a month quiet while the chart shows food coming in',
 
 // ── 5. Nothing on the seed bill a farmer cannot act on ──────────────────────
 
-test('every seed line names a real crop, a real unit and a buyable quantity', () => {
+test('every material line names a real crop and never disguises final positions as seed to buy', () => {
   const bad: string[] = [];
   for (const run of sweep([8])) {
     for (const row of seedBoqForPlan(run.plantings, run.beds)) {
       if (!cropByKey(row.cropKey)) bad.push(`${run.label} — unknown crop ${row.cropKey}`);
-      if (!Number.isFinite(row.count) || row.count < 1) bad.push(`${run.label} — ${row.cropKey} count ${row.count}`);
-      if (!['seeds', 'seedlings', 'slips', 'seed potatoes'].includes(row.unit)) bad.push(`${run.label} — ${row.cropKey} unit "${row.unit}"`);
+      if (!Number.isFinite(row.finalPlantPositionsRange[0])
+        || !Number.isFinite(row.finalPlantPositionsRange[1])
+        || row.finalPlantPositionsRange[0] < 1
+        || row.finalPlantPositionsRange[1] < row.finalPlantPositionsRange[0]) {
+        bad.push(`${run.label} — ${row.cropKey} final-position range ${positionRangeLabel(row.finalPlantPositionsRange)}`);
+      }
+      if (row.unit === 'seeds' && (row.count !== null || row.countRange !== null)) {
+        bad.push(`${run.label} — ${row.cropKey} invented botanical seed quantity`);
+      }
+      if (row.quantityStatus === 'counted-piece-range'
+        && (row.count !== null || row.countRange === null
+          || row.countRange[0] < 1 || row.countRange[1] < row.countRange[0])) {
+        bad.push(`${run.label} — ${row.cropKey} unusable living-piece range`);
+      }
+      if (row.quantityStatus === 'counted-pieces'
+        && (row.count === null || !Number.isFinite(row.count) || row.count < 1 || row.countRange !== null)) {
+        bad.push(`${run.label} — ${row.cropKey} unusable exact piece count ${row.count}`);
+      }
+      // KZN DARD identifies garlic as vegetatively propagated from separated
+      // cloves, just as potatoes use seed tubers and sweet potatoes use slips.
+      if (!['seeds', 'seedlings', 'slips', 'seed potatoes', 'cloves', 'corms'].includes(row.unit)) bad.push(`${run.label} — ${row.cropKey} unit "${row.unit}"`);
     }
   }
   assert.deepEqual(bad.slice(0, 6), []);
@@ -368,16 +464,16 @@ test('the seed bill never asks for seed of a crop the plan does not sow', () => 
 
 // ── 6. The totals close ─────────────────────────────────────────────────────
 
-test('the twelve monthly kg figures sum to the plan total, every time', () => {
+test('the crop-cycle total equals its crop breakdown without passing through monthly buckets', () => {
   const drift: string[] = [];
   for (const run of sweep()) {
-    const chart = buildFoodValueByMonth(run.plantings, run.beds, {});
-    const summed = chart.slice(1, 13).reduce((s, v) => s + v.kg, 0);
-    const perCrop = chart.slice(1, 13).reduce((s, v) => s + Object.values(v.byCrop).reduce((a, b) => a + b, 0), 0);
-    // byCrop is what the hover breakdown shows; if it drifts from the plotted
-    // total the tooltip and the point disagree.
-    if (Math.abs(summed - perCrop) > 0.01) {
-      drift.push(`${run.label} — plotted ${summed.toFixed(2)}kg, breakdown ${perCrop.toFixed(2)}kg`);
+    const benchmark = buildPlanYieldBenchmark(run.plantings, run.beds);
+    const summed = benchmark.knownKg;
+    const perCrop = benchmark.byCrop.reduce((sum, crop) => sum + crop.kg, 0);
+    if (summed === null) {
+      drift.push(`${run.label} — auto-suggest created conflicting bed shares`);
+    } else if (Math.abs(summed - perCrop) > 0.01) {
+      drift.push(`${run.label} — total ${summed.toFixed(2)}kg, crop breakdown ${perCrop.toFixed(2)}kg`);
     }
   }
   assert.deepEqual(drift.slice(0, 6), []);
@@ -398,9 +494,10 @@ test('every kg printed beside a bed is a kg the year total counted', () => {
   for (const run of sweep([8])) {
     const rows = buildBedPlanRows(run.plantings, run.beds);
     const printed = rows.reduce((s, r) => s + r.crops.reduce((a, c) => a + c.estimatedKg, 0), 0);
-    const counted = buildFoodValueByMonth(run.plantings, run.beds, {})
-      .slice(1, 13).reduce((s, v) => s + v.kg, 0);
-    if (Math.abs(printed - counted) > 0.01) {
+    const counted = buildPlanYieldBenchmark(run.plantings, run.beds).knownKg;
+    if (counted === null) {
+      gaps.push(`${run.label} — auto-suggest created conflicting bed shares`);
+    } else if (Math.abs(printed - counted) > 0.01) {
       gaps.push(`${run.label} — beds print ${printed.toFixed(1)}kg, headline counts ${counted.toFixed(1)}kg`);
     }
   }
@@ -415,21 +512,29 @@ test('every kg printed beside a bed is a kg the year total counted', () => {
  * bed+crop pairings, not beds, so one bed staggering three crops counted three
  * times. A farmer can disprove this one by looking out of the window.
  */
-test('the staggering sentence counts beds that exist, and counts them right', () => {
+test('the multi-month cohort sentence counts real beds without promising continuous harvest', () => {
   const wrong: string[] = [];
+  let checked = 0;
   for (const run of sweep([8])) {
     const line = buildYearReport(run.plantings, run.beds)
-      .find((l) => l.includes('staggered the same way'));
+      .find((l) => l.includes('crops in multiple sowing months'));
     if (!line) continue;
-    const claimed = Number(/and (\d+) other bed/.exec(line)?.[1] ?? 0);
+    checked++;
+    const claimed = Number(/; (\d+) other bed/.exec(line)?.[1] ?? 0);
+    if (/few weeks|harvests keep coming|continuous harvest/i.test(line)
+      && !/not a guarantee of uninterrupted harvest/i.test(line)) {
+      wrong.push(`${run.label} — month-level rows overclaim cadence: ${line}`);
+    }
 
-    const perPair = new Map<string, number>();
+    const perPair = new Map<string, Set<number>>();
     for (const p of run.plantings) {
       const k = `${p.bedId}::${p.cropKey}`;
-      perPair.set(k, (perPair.get(k) ?? 0) + 1);
+      const months = perPair.get(k) ?? new Set<number>();
+      months.add(p.sowMonth);
+      perPair.set(k, months);
     }
     const staggeredBeds = new Set(
-      [...perPair.entries()].filter(([, c]) => c >= 2).map(([k]) => k.split('::')[0]),
+      [...perPair.entries()].filter(([, months]) => months.size >= 2).map(([k]) => k.split('::')[0]),
     );
     if (claimed + 1 > run.beds.length) {
       wrong.push(`${run.label} — claims ${claimed + 1} staggered beds, farm has ${run.beds.length}`);
@@ -437,50 +542,42 @@ test('the staggering sentence counts beds that exist, and counts them right', ()
       wrong.push(`${run.label} — claims ${claimed + 1} staggered beds, actually ${staggeredBeds.size}`);
     }
   }
+  assert.ok(checked > 0, 'the sweep never exercised a multi-month cohort sentence');
   assert.deepEqual(wrong.slice(0, 6), []);
 });
 
-// ── 9. No share of a bed is too small to plant ──────────────────────────────
+// ── 9. Area-arithmetic remainder check ───────────────────────────────────────
 
 /**
  * "Why does bed one still show so little planting towards the end of the year -
  * I feel like I have been trying to correct this for weeks?"
  *
- * He was right, and the two causes I proposed first were both wrong. Tracing
- * the fill loop showed February offering eleven candidates that fitted at a
- * HALF, a third and a quarter of the bed. The planner always took the largest,
- * which left 0.17 of the bed - below the 0.25 minimum any pass will ever plant.
- * Every later pass then read "free = 0.17, fits: 0 at every fraction" and gave
- * up, five months running, and the bed looked half empty because it WAS.
- *
- * The rule now is: prefer the largest share that leaves either nothing or a
- * plantable remainder. This measures the outcome rather than the rule - dead
- * slivers across the whole parameter sweep were 16.8% of all bed-months before
- * the change and 7.3% after, so anything approaching the old figure is a
- * regression even if every other test still passes.
+ * Tracing the fill loop showed February leaving 0.17 of a bed. The earlier
+ * gate declared any share below 0.25 "unplantable" regardless of bed area —
+ * but 17% of a 16m² bed is 2.7m² and can hold many plants. Percentage alone is
+ * not an agronomic rule. This limited oracle asks whether the remaining area
+ * can hold one planting position at the densest benchmarked food-crop spacing.
+ * It does not prove that the bed geometry, access or crop pairing works.
  */
-test('a bed is never left with a share too small for any crop', () => {
-  let slivers = 0;
-  let total = 0;
+test('a bed never leaves less than one eligible food-crop position by catalog area arithmetic', () => {
+  const maxDensity = Math.max(...CROPS
+    .filter((crop) => hasPlanningYield(crop)
+      && crop.timingVerified !== false && crop.fieldSpacingVerified !== false)
+    .map((crop) => plantsPerM2Range(crop)[1]));
+  const slivers: string[] = [];
   for (const run of sweep()) {
     for (const [bedId, months] of occupancyByBed(run)) {
-      if (run.beds.find((b) => b.id === bedId)?.kind === 'plot') continue;
+      const bed = run.beds.find((candidate) => candidate.id === bedId);
+      if (!bed || bed.kind === 'plot') continue;
       for (let m = 1; m <= 12; m++) {
-        total++;
         const free = 1 - months[m];
-        // Free, but less than the smallest share the planner will ever use.
-        if (free > 0.01 && free < 0.24) slivers++;
+        if (free > 0.001 && free * bed.areaM2 * maxDensity < 1) {
+          slivers.push(`${run.label} — ${bed.label} month ${m}, ${(free * bed.areaM2).toFixed(3)}m² free`);
+        }
       }
     }
   }
-  const ratio = slivers / total;
-  // 16.8% before the fraction fix, 7.3% after it, and ~1% once the wrap-tail
-  // reservation seeded every family bed with a one-third anchor the rest of
-  // the ladder tiles against. Ratcheted to where the code IS.
-  assert.ok(
-    ratio <= 0.03,
-    `${slivers} of ${total} bed-months (${(ratio * 100).toFixed(1)}%) are left with a share too small to plant - was 16.8% pre-fraction-fix, 7.3% pre-reservation, ~1% now`,
-  );
+  assert.deepEqual(slivers.slice(0, 8), [], `${slivers.length} sub-position bed-month remainders`);
 });
 
 // ── 10. The same guarantee at every farm size ───────────────────────────────
@@ -488,30 +585,19 @@ test('a bed is never left with a share too small for any crop', () => {
 /**
  * "It must be for any site no matter the number of beds."
  *
- * The sliver rule is not allowed to be a fix for a nine-bed farm. This sweeps
- * one bed up to twenty-four, with and without staple plots, and holds EVERY
- * bed count to the limit rather than letting a good average hide a bad size —
- * before the fix the failure got worse as sites got bigger (5.7% at one bed,
- * 22.2% at twenty-four), so an aggregate check alone would have passed sizes
- * that were plainly broken.
- *
- * THIS IS A RATCHET, NOT A CLEAN BILL OF HEALTH. Across 2,304 generated sites
- * 19.04% of bed-months carried an unplantable strip before the fraction rules;
- * it is ~7% now, and still ~14% on the biggest farms, because the share ladder
- * (1, 1/2, 1/3, 1/4) does not tile: a third plus a third plus a quarter fills
- * 92% of a bed and strands 8%, and at least one placement path still reaches
- * that state. The thresholds below lock in what has been won and fail loudly if
- * it slips; they are set where the code IS, not where it should be. See the
- * open task for the residual.
+ * The area-arithmetic rule is not allowed to be a nine-bed special case. Sweep
+ * one to forty beds, with and without staple plots, and require zero remainder
+ * smaller than one benchmarked food-crop position at every size.
  */
-test('no farm size is left with unplantable strips, from one bed to forty', () => {
+test('no farm size leaves a sub-position area remainder, from one bed to forty', () => {
   const worst: string[] = [];
-  let slivers = 0;
-  let cells = 0;
+  const maxDensity = Math.max(...CROPS
+    .filter((crop) => hasPlanningYield(crop)
+      && crop.timingVerified !== false && crop.fieldSpacingVerified !== false)
+    .map((crop) => plantsPerM2Range(crop)[1]));
 
   for (const bedCount of [1, 2, 3, 5, 9, 16, 24, 40]) {
     let sizeSlivers = 0;
-    let sizeCells = 0;
     for (const pattern of ['summer', 'mild-frost'] as RainPattern[]) {
       for (const plotCount of [0, 2]) {
         for (const rotateCrops of [true, false]) {
@@ -521,38 +607,26 @@ test('no farm size is left with unplantable strips, from one bed to forty', () =
 
           const answers: AutoSuggestAnswers = {
             goal: 'family', householdSize: 'large', focusCropCount: 2, groups: [],
-            rhythm: 'steady', rotateCrops, allowVinesInBeds: false,
+            rhythm: 'steady', rotateCrops, allowVinesInBeds: false, reliableIrrigation: true,
           };
           const { plantings } = autoSuggestPlan(answers, pattern, beds, [], 8);
           const run: Run = { label: `${bedCount} beds + ${plotCount} plots · ${pattern}`, beds, plantings };
 
           for (const [bedId, months] of occupancyByBed(run)) {
-            if (beds.find((b) => b.id === bedId)?.kind === 'plot') continue;
+            const bed = beds.find((candidate) => candidate.id === bedId);
+            if (!bed || bed.kind === 'plot') continue;
             for (let m = 1; m <= 12; m++) {
-              sizeCells++;
               const free = 1 - months[m];
-              if (free > 0.01 && free < 0.24) sizeSlivers++;
+              if (free > 0.001 && free * bed.areaM2 * maxDensity < 1) sizeSlivers++;
             }
           }
         }
       }
     }
-    slivers += sizeSlivers;
-    cells += sizeCells;
-    // A bed that never appears in occupancyByBed contributes no cells — only
-    // judge sizes that actually produced a plan.
-    if (sizeCells > 0 && sizeSlivers / sizeCells > 0.06) {
-      worst.push(`${bedCount} beds: ${(sizeSlivers / sizeCells * 100).toFixed(1)}% of bed-months unplantable`);
-    }
+    if (sizeSlivers > 0) worst.push(`${bedCount} beds: ${sizeSlivers} sub-position bed-months`);
   }
 
   assert.deepEqual(worst, []);
-  // 19.0% before the fraction rules, ~10.5% after them, 1.26% once the
-  // wrap-tail reservation gave every family bed a third-of-a-bed anchor —
-  // the share ladder tiles against it, so the "structural floor" this file
-  // used to document is gone on family farms. Ratchet set just above the
-  // measured level; if it fails, the anchors stopped tiling.
-  assert.ok(slivers / cells <= 0.025, `${(slivers / cells * 100).toFixed(1)}% overall — was 19.0% pre-fraction-rules, 1.26% at the reservation ratchet`);
 });
 
 // ── 11. The field sheet scales with the catalog, not the farm ───────────────
@@ -573,7 +647,7 @@ test('a month\'s field sheet stays printable at any farm size', () => {
     for (let i = 1; i <= bedCount; i++) beds.push({ id: `b${i}`, label: `Bed ${i}`, areaM2: 9, minDimM: 1.2 });
     const answers: AutoSuggestAnswers = {
       goal: 'family', householdSize: 'large', focusCropCount: 2, groups: [],
-      rhythm: 'steady', rotateCrops: true, allowVinesInBeds: false,
+      rhythm: 'steady', rotateCrops: true, allowVinesInBeds: false, reliableIrrigation: true,
     };
     const { plantings } = autoSuggestPlan(answers, 'summer', beds, [], 8);
     const tasks = tasksForPlan(plantings, beds);
@@ -599,10 +673,11 @@ test('a month\'s field sheet stays printable at any farm size', () => {
  * and yield gate stayed green because a fully-bare month is not a strip and
  * the kg change was noise. His next message was the Gantt again: "It's worse".
  *
- * So pin the artefact itself: on the reference family farm every VEGETABLE bed
- * has something growing in every month. Plots are exempt — their catalog is
- * genuinely seasonal (see the staple-crops pool); a 9 m² bed with the full
- * 25-crop catalog behind it has no such excuse under mild frost.
+ * So pin the artefact itself when the farmer has explicitly confirmed both
+ * reliable irrigation AND mixed-crop bed sharing: on the reference family
+ * farm every VEGETABLE bed has something growing in every month. Without
+ * those answers, a dry-season or between-crop rest is honest and the optimizer
+ * must not assume water or an intercrop merely to satisfy this gate.
  */
 test('no vegetable bed on the reference family farm is completely bare in any month', () => {
   const beds: PlanBed[] = [];
@@ -611,6 +686,7 @@ test('no vegetable bed on the reference family farm is completely bare in any mo
   const answers: AutoSuggestAnswers = {
     goal: 'family', householdSize: 'large', groups: [],
     rhythm: 'steady', rotateCrops: true, allowVinesInBeds: false,
+    reliableIrrigation: true, allowMixedCropsInBed: true,
   };
   const { plantings } = autoSuggestPlan(answers, 'mild-frost', beds, [], 8);
 

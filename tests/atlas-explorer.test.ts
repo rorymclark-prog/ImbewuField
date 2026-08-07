@@ -117,12 +117,21 @@ test('sowableInMonth returns crops whose window includes the month, for that pat
   assert.deepEqual(sowableInMonth('summer', 10, crops).map((c) => c.key), ['in-window']);
 });
 
-test('crops without a stated yield are excluded — a placeholder is not a plantable crop', () => {
+test('the descriptive crop readout keeps yield-null food crops but excludes zero-food and timing-unverified entries', () => {
   const crops = [
     makeCrop({ key: 'yielding', yieldKgPerM2: 1.5, sowMonths: { 'summer': [10], 'winter': [], 'all-year': [], 'mild-frost': [] } }),
+    makeCrop({ key: 'unverified-yield', yieldKgPerM2: null, sowMonths: { 'summer': [10], 'winter': [], 'all-year': [], 'mild-frost': [] } }),
     makeCrop({ key: 'zero-yield', yieldKgPerM2: 0, sowMonths: { 'summer': [10], 'winter': [], 'all-year': [], 'mild-frost': [] } }),
+    makeCrop({ key: 'legacy-timing', yieldKgPerM2: null, timingVerified: false, sowMonths: { 'summer': [10], 'winter': [], 'all-year': [], 'mild-frost': [] } }),
   ];
-  assert.deepEqual(sowableInMonth('summer', 10, crops).map((c) => c.key), ['yielding']);
+  assert.deepEqual(sowableInMonth('summer', 10, crops).map((c) => c.key), ['yielding', 'unverified-yield']);
+});
+
+test('coriander remains visible where its sourced window opens while legacy kale timing does not', () => {
+  const open = sowableInMonth('mild-frost', 6);
+  assert.ok(open.some((crop) => crop.key === 'coriander' && crop.yieldKgPerM2 === null));
+  assert.equal(open.some((crop) => crop.key === 'kale'), false);
+  assert.ok(open.every((crop) => crop.timingVerified !== false));
 });
 
 test('against the real catalog: every returned crop honestly lists the month, and some month is never empty', () => {
@@ -133,7 +142,8 @@ test('against the real catalog: every returned crop honestly lists the month, an
       if (out.length > 0) anyMonthNonEmpty = true;
       for (const c of out) {
         assert.ok(c.sowMonths[pattern].includes(m), `${c.key} returned for ${pattern}/${m} without listing it`);
-        assert.ok(c.yieldKgPerM2 > 0, `${c.key} has no stated yield but was returned`);
+        assert.notEqual(c.yieldKgPerM2, 0, `${c.key} is a zero-food entry but was returned`);
+        assert.notEqual(c.timingVerified, false, `${c.key} has an unverified legacy timing window but was returned`);
       }
     }
     assert.ok(anyMonthNonEmpty, `pattern ${pattern} never yields a single sowable crop in any month — filter is broken`);

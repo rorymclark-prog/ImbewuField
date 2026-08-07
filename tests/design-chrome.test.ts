@@ -151,8 +151,13 @@ test('every dismissible band is a band the ladder also knows about', () => {
 test('wide-screen Layers opens into the usable palette space, not above the viewport', () => {
   const palette = readFileSync(new URL('../components/design/DesignPalette.tsx', import.meta.url), 'utf8');
 
-  assert.match(palette, /top: desktopAside \? 'calc\(100% \+ 6px\)' : undefined/);
-  assert.match(palette, /bottom: desktopAside \? undefined : 'calc\(100% \+ 6px\)'/);
-  assert.match(palette, /maxHeight: '60dvh'/);
+  // Written against the absolute-positioned popover this branch was cut from. main has since
+  // replaced that with a measured anchor (`layersAnchor`): it opens the popover below when there
+  // is room and above when there is not, and caps its height to the space actually available —
+  // the same guarantee, held more tightly. The assertions follow the implementation that ships;
+  // keeping the old strings would only lock this branch to a version main deleted.
+  assert.match(palette, /top: layersAnchor\.openBelow \? layersAnchor\.bottom \+ 6 : undefined/);
+  assert.match(palette, /bottom: layersAnchor\.openBelow \? undefined : window\.innerHeight - layersAnchor\.top \+ 6/);
+  assert.match(palette, /maxHeight: layersAnchor\.maxHeight/);
   assert.match(palette, /overflowY: 'auto'/);
 });

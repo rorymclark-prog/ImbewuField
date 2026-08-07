@@ -624,44 +624,28 @@ export function FarmerPanel({
               )}
             </div>
 
-            {/* ← NetworkFarmerMetrics.harvestedVsPlannedPct (buildReconciliation).
-                Null means there is no crop plan to reconcile against — which is
-                "no plan yet", NOT "0% of plan delivered". */}
+            {/* Crop-cycle benchmarks have no sowing year or completion marker.
+                Show them as context, never as a performance percentage. */}
             <div style={{ borderTop: `1px solid ${BORDER}`, marginTop: 11, paddingTop: 10 }}>
               <div className="flex items-baseline justify-between gap-2" style={{ marginBottom: 4 }}>
                 <span className="font-sans" style={{ fontSize: 10, color: MUTED }}>
-                  Harvest against the crop plan
+                  Crop-plan context
                 </span>
-                {m.harvestedVsPlannedPct !== null && (
+                {m.plannedKg !== null && (
                   <span
                     className="font-display font-semibold"
-                    data-selector="NetworkFarmerMetrics.harvestedVsPlannedPct"
-                    style={{ fontSize: 12, color: m.harvestedVsPlannedPct < 60 ? RUST : FOREST }}
+                    data-selector="NetworkFarmerMetrics.plannedKg"
+                    style={{ fontSize: 12, color: FOREST }}
                   >
-                    {formatPct(m.harvestedVsPlannedPct)}
+                    {formatKg(m.plannedKg)}
                   </span>
                 )}
               </div>
-              {m.harvestedVsPlannedPct !== null ? (
-                <>
-                  <ProportionBar
-                    pct={Math.min(100, m.harvestedVsPlannedPct)}
-                    color={m.harvestedVsPlannedPct < 60 ? RUST : FOREST}
-                  />
-                  <div className="font-sans" style={{ fontSize: 9.5, color: FAINT, marginTop: 5, lineHeight: 1.35 }}>
-                    {m.harvestedKg !== null && m.plannedKg !== null
-                      ? `${formatKg(m.harvestedKg)} harvested against ${formatKg(m.plannedKg)} planned.`
-                      : 'Planned and harvested totals from the reconciliation.'}
-                  </div>
-                </>
+              {m.coverage.plan && m.plannedKg !== null ? (
+                <div className="font-sans" data-selector="NetworkFarmerMetrics.harvestedVsPlannedPct" data-state="not_comparable" style={{ fontSize: 10.5, color: FAINT, lineHeight: 1.4 }}>
+                  Benchmark for one complete crop-plan cycle. It is not compared with calendar harvest logs because the saved plan has no sowing year or completed-cycle marker.
+                </div>
               ) : (
-                /* Three genuinely different reasons this can be blank, and they
-                   must not share a sentence:
-                     · coverage.plan true  → a plan exists with no target quantities
-                     · siteProgress true, plan false → the site data IS readable and
-                       there simply is no crop plan — a missing plan, not a missed target
-                     · siteProgress false  → the crop plan lives in the same owner-only
-                       store as the site survey, so this is a denied read, not an absence */
                 <div
                   className="font-sans"
                   data-selector="NetworkFarmerMetrics.harvestedVsPlannedPct"
@@ -671,10 +655,10 @@ export function FarmerPanel({
                   style={{ fontSize: 11, color: FAINT, fontStyle: 'italic', lineHeight: 1.4 }}
                 >
                   {m.coverage.plan
-                    ? 'A plan exists but has no target quantities yet — nothing to measure against.'
+                    ? 'A plan is visible, but it has no verified crop-cycle kilogram benchmark. Missing evidence is not a 0 kg target.'
                     : m.coverage.siteProgress
-                      ? 'No crop plan recorded yet, so there is nothing to measure the harvest against. This is a missing plan, not a missed target.'
-                      : 'The crop plan is stored on the farmer’s own account and is not readable here, so no plan-versus-harvest figure can be shown. Not readable is not the same as no plan.'}
+                      ? 'No crop plan is recorded yet. This is a missing plan, not missed production.'
+                      : 'The farmer’s crop plan is not readable here. Not visible is not the same as no plan.'}
                 </div>
               )}
             </div>

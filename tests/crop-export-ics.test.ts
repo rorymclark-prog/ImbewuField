@@ -8,6 +8,7 @@ import {
   foldIcsLine,
   icsUid,
   icsUtcTimestamp,
+  resolveCropTaskDate,
   resolveTaskDate,
   resolveTaskYear,
 } from '@/lib/crop-calendar-ics';
@@ -77,7 +78,9 @@ const BEDS: PlanBed[] = [
 const PLANTINGS: Planting[] = [
   { id: 'pl-a', bedId: 'bed-1', cropKey: 'carrots', sowMonth: 3 },
   { id: 'pl-b', bedId: 'bed-2', cropKey: 'onions', sowMonth: 4 },   // transplant: true
-  { id: 'pl-c', bedId: 'plot-1', cropKey: 'maize', sowMonth: 11 },
+  // Groundnuts has verified duration and full field geometry. Grain maize is
+  // deliberately legacy-only until those two facts are sourced for that crop.
+  { id: 'pl-c', bedId: 'plot-1', cropKey: 'groundnuts', sowMonth: 10 },
   { id: 'pl-d', bedId: 'bed-1', cropKey: 'swiss-chard', sowMonth: 2, existing: true },
 ];
 
@@ -187,6 +190,30 @@ test('resolveTaskDate puts the task on the FIRST of its month', () => {
   assert.deepEqual(resolveTaskDate(3, NOW), { year: 2027, month: 3, day: 1 });
 });
 
+test('a cohort harvest crossing a second year is dated after its own sowing', () => {
+  const november = new Date('2026-11-06T09:00:00Z');
+  const tasks = tasksForPlan([{
+    id: 'next-september-beans',
+    bedId: 'bed-1',
+    cropKey: 'green-beans',
+    sowMonth: 9,
+  }], BEDS);
+  const sow = tasks.find((task) => task.action === 'sow')!;
+  const harvest = tasks.find((task) => task.action === 'harvest')!;
+
+  assert.deepEqual(resolveCropTaskDate(sow, november), { year: 2027, month: 9, day: 1 });
+  assert.deepEqual(resolveCropTaskDate(harvest, november), { year: 2027, month: 11, day: 1 });
+
+  const { events } = parseIcs(buildCropPlanIcs(tasks, { now: november, stamp: STAMP }));
+  const sowDate = events.find((event) => event.props.get('UID')!.includes('next-september-beans-sow'))!
+    .props.get('DTSTART;VALUE=DATE');
+  const harvestDate = events.find((event) => event.props.get('UID')!.includes('next-september-beans-harvest'))!
+    .props.get('DTSTART;VALUE=DATE');
+  assert.equal(sowDate, '20270901');
+  assert.equal(harvestDate, '20271101');
+  assert.ok(harvestDate! > sowDate!, 'the exported harvest must not predate its sowing');
+});
+
 test('a month-precision task becomes an all-day DATE event, never a DATETIME', () => {
   const { events } = parseIcs(build());
   for (const event of events) {
@@ -198,7 +225,13 @@ test('a month-precision task becomes an all-day DATE event, never a DATETIME', (
 });
 
 test('DTEND is the exclusive next day, so the event is exactly one day long', () => {
-  const { events } = parseIcs(build());
+  // Date arithmetic is the rule under test; an audited crop duration should
+  // not make this fixture lose its October event.
+  const octoberTask: CropTask[] = [{
+    id: 'pl-oct:sow', plantingId: 'pl-oct', month: 10, bedLabel: 'Bed 1',
+    cropName: 'Carrots', cropKey: 'carrots', icon: '🥕', action: 'sow',
+  }];
+  const { events } = parseIcs(buildCropPlanIcs(octoberTask, { now: NOW, stamp: STAMP }));
   const october = events.find((e) => e.props.get('DTSTART;VALUE=DATE') === '20261001');
   assert.ok(october, 'expected a task in October 2026');
   assert.equal(october.props.get('DTEND;VALUE=DATE'), '20261002');
@@ -206,7 +239,7 @@ test('DTEND is the exclusive next day, so the event is exactly one day long', ()
 
 test('DTEND rolls the month and the year over, not 20261232', () => {
   const decemberTask: CropTask[] = [{
-    id: 'pl-x:sow', month: 12, bedLabel: 'Bed 1', cropName: 'Carrots', cropKey: 'carrots', icon: '🥕', action: 'sow',
+    id: 'pl-x:sow', plantingId: 'pl-x', month: 12, bedLabel: 'Bed 1', cropName: 'Carrots', cropKey: 'carrots', icon: '🥕', action: 'sow',
   }];
   const { events } = parseIcs(buildCropPlanIcs(decemberTask, { now: NOW, stamp: STAMP }));
   assert.equal(events[0].props.get('DTSTART;VALUE=DATE'), '20261201');
@@ -307,27 +340,30 @@ test('events are written in chronological order', () => {
 
 test('the event text stands alone: action, crop and bed are all in the summary', () => {
   const { events } = parseIcs(build());
-  const sowMaize = events.find((e) => unescapeIcsText(e.props.get('SUMMARY')!).includes('Maize'));
-  assert.ok(sowMaize, 'expected a maize event');
-  const summary = unescapeIcsText(sowMaize.props.get('SUMMARY')!);
-  assert.match(summary, /Maize/);
+  const sowGroundnuts = events.find((e) => unescapeIcsText(e.props.get('SUMMARY')!).includes('Groundnuts'));
+  assert.ok(sowGroundnuts, 'expected a supported groundnuts event');
+  const summary = unescapeIcsText(sowGroundnuts.props.get('SUMMARY')!);
+  assert.match(summary, /Groundnuts/);
   assert.match(summary, /Plot 1/, 'the bed/plot must be in the title — a calendar has no app beside it');
-  assert.equal(unescapeIcsText(sowMaize.props.get('LOCATION')!), 'Plot 1');
+  assert.equal(unescapeIcsText(sowGroundnuts.props.get('LOCATION')!), 'Plot 1');
 });
 
-test('a prep task on a staple plot keeps its plough-and-manure wording', () => {
+test('a prep task on a staple plot does not prescribe cultivation or manure without evidence', () => {
   const { events } = parseIcs(build());
   const prep = events.find((e) => e.props.get('UID')!.includes('pl-c-prep'))!;
   // Sentence-cased for standalone reading; the wording itself is tasksForPlan's.
-  assert.match(unescapeIcsText(prep.props.get('DESCRIPTION')!), /^Plough or rip the plot, work in kraal manure for maize/);
+  const description = unescapeIcsText(prep.props.get('DESCRIPTION')!);
+  assert.match(description, /^Assess soil and drainage; use a soil test or local advice/i);
+  assert.doesNotMatch(description, /plough|rip|manure|compost/i);
 });
 
 test('a sow event carries the spacing the farmer needs in the field', () => {
   const { events } = parseIcs(build());
   const sow = events.find((e) => e.props.get('UID')!.includes('pl-c-sow'))!;
   const description = unescapeIcsText(sow.props.get('DESCRIPTION')!);
-  assert.match(description, /rows 90cm apart/);
-  assert.match(description, /20cm apart in the row/);
+  assert.match(description, /rows 30–45cm apart/);
+  assert.match(description, /5–7\.5cm apart in the row/);
+  assert.match(description, /sow 5–7\.5cm deep/);
 });
 
 test('every description says the date is a month marker, not an exact day', () => {
