@@ -5,11 +5,12 @@
 // harvestable at the end of the year." The app asks every farmer for a
 // HarvestRhythm and one of the two answers is 'steady' — so an empty tail is
 // a broken promise, not a taste issue. This prints, for the standard sweep,
-// the kg actually harvestable in each cyclic month so the gap has a number.
+// verified fresh-picking presence. Crop-cycle benchmark kg is not assigned to
+// months because the source does not provide a picking curve.
 
 import { autoSuggestPlan } from '@/lib/crop-autosuggest';
 import type { AutoSuggestAnswers, GardenGoal } from '@/lib/crop-autosuggest';
-import { buildFoodValueByMonth, occupiedMonthsForPlanting, type PlanBed } from '@/lib/crop-plan';
+import { buildFoodAvailability, occupiedMonthsForPlanting, planningMaturityMonths, type PlanBed } from '@/lib/crop-plan';
 import { cropByKey } from '@/lib/crop-catalog';
 import type { RainPattern } from '@/lib/crop-catalog';
 
@@ -22,15 +23,10 @@ function ownerBeds(): PlanBed[] {
   return beds;
 }
 
-function bar(v: number, max: number): string {
-  const n = max > 0 ? Math.round((v / max) * 30) : 0;
-  return '█'.repeat(n) + (v > 0 && n === 0 ? '·' : '');
-}
-
 const PATTERNS: RainPattern[] = ['summer', 'winter', 'all-year', 'mild-frost'];
 const GOALS: GardenGoal[] = ['family', 'commercial', 'hybrid'];
 
-interface RowSummary { label: string; zero: number[]; starved: number[]; minKg: number; meanKg: number }
+interface RowSummary { label: string; gaps: number[]; covered: number }
 const summaries: RowSummary[] = [];
 
 for (const pattern of PATTERNS) {
@@ -38,31 +34,24 @@ for (const pattern of PATTERNS) {
     for (const nowMonth of [1, 4, 8, 11]) {
       const answers: AutoSuggestAnswers = {
         goal, householdSize: 'medium', focusCropCount: 2, groups: [],
-        rhythm: 'steady', rotateCrops: true, allowVinesInBeds: false,
+        rhythm: 'steady', rotateCrops: true, allowVinesInBeds: false, reliableIrrigation: true,
       };
       const beds = ownerBeds();
       const { plantings } = autoSuggestPlan(answers, pattern, beds, [], nowMonth);
       // No nowMonth passed: the plan is CYCLIC (it repeats every year), so every
-      // month's harvest counts — "already past" months come around again.
-      const byMonth = buildFoodValueByMonth(plantings, beds, {});
-      const kg = byMonth.map((m) => m.kg);
+      // fresh-picking window comes around again.
+      const byMonth = buildFoodAvailability(plantings, beds);
       const months = Array.from({ length: 12 }, (_, i) => i + 1);
-      const meanKg = months.reduce((s, m) => s + kg[m], 0) / 12;
-      const zero = months.filter((m) => kg[m] < 0.5);
-      const starved = months.filter((m) => kg[m] >= 0.5 && kg[m] < meanKg * 0.15);
-      const minKg = Math.min(...months.map((m) => kg[m]));
+      const gaps = months.filter((month) => !byMonth[month].some((item) => item.status === 'fresh'));
       const label = `${pattern} · ${goal} · now=${MONTHS[nowMonth]}`;
-      summaries.push({ label, zero, starved, minKg, meanKg });
+      summaries.push({ label, gaps, covered: 12 - gaps.length });
 
       // Full detail for the owner's own case only.
       if (pattern === 'summer' && goal === 'family' && nowMonth === 8) {
         console.log(`\n=== DETAIL ${label} (the owner's case) ===`);
-        const max = Math.max(...months.map((m) => kg[m]));
         for (const m of months) {
-          const crops = Object.entries(byMonth[m].byCrop)
-            .sort((a, b) => b[1] - a[1]).slice(0, 4)
-            .map(([k, v]) => `${cropByKey(k)?.name ?? k} ${v.toFixed(0)}kg`).join(', ');
-          console.log(`${MONTHS[m].padEnd(4)} ${kg[m].toFixed(0).padStart(5)}kg ${bar(kg[m], max).padEnd(31)} ${crops}`);
+          const crops = byMonth[m].filter((item) => item.status === 'fresh').map((item) => item.name).join(', ');
+          console.log(`${MONTHS[m].padEnd(4)} ${crops || '— no verified fresh-picking window'}`);
         }
         // Per-bed: how many cyclic months each bed has ZERO harvestable share.
         console.log('\nPer-bed months with nothing harvestable (fresh window):');
@@ -71,9 +60,9 @@ for (const pattern of PATTERNS) {
           for (const p of plantings.filter((x) => x.bedId === bed.id)) {
             const crop = cropByKey(p.cropKey);
             if (!crop) continue;
-            const maturity = Math.max(1, Math.round(crop.daysToHarvest / 30));
+            const maturity = planningMaturityMonths(crop.daysToHarvest);
             for (let off = 0; off <= (crop.harvestWindowMonths ?? 0); off++) {
-              harvestable.add(((p.sowMonth - 1 + maturity + off) % 12) + 1);
+              harvestable.add(((p.sowMonth - 1 + maturity + (crop.transplant ? 1 : 0) + off) % 12) + 1);
             }
           }
           const empty = months.filter((m) => !harvestable.has(m));
@@ -85,11 +74,11 @@ for (const pattern of PATTERNS) {
   }
 }
 
-console.log('\n=== SWEEP: harvest continuity per scenario (cyclic year) ===');
+console.log('\n=== SWEEP: verified fresh-picking continuity per scenario (cyclic year) ===');
 for (const s of summaries) {
-  const flag = s.zero.length ? ' ← ZERO-HARVEST MONTHS' : s.starved.length ? ' ← starved months' : '';
+  const flag = s.gaps.length ? ' ← FRESH-PICKING GAPS' : '';
   console.log(
-    `${s.label.padEnd(34)} min ${s.minKg.toFixed(0).padStart(4)}kg / mean ${s.meanKg.toFixed(0).padStart(4)}kg` +
-    ` · zero: [${s.zero.map((m) => MONTHS[m]).join(' ')}] starved: [${s.starved.map((m) => MONTHS[m]).join(' ')}]${flag}`,
+    `${s.label.padEnd(34)} ${String(s.covered).padStart(2)}/12 months covered` +
+    ` · gaps: [${s.gaps.map((m) => MONTHS[m]).join(' ')}]${flag}`,
   );
 }

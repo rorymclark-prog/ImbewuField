@@ -703,11 +703,13 @@ function buildRecord(seed: DemoSiteSeed, now: Date): DemoFarmerRecord {
       cropKey,
       cropName,
       icon,
-      intendedKg,
+      // The latent demo model keeps the generated ledgers coherent, but it is
+      // not a dated crop plan and must not surface as an intended target.
+      intendedKg: null,
       harvestedKg,
       soldKg,
       keptKg,
-      yieldGap: soldExceedsHarvested ? false : harvestedKg < intendedKg * 0.8,
+      yieldGap: false,
       keptGap: keptKg !== null && keptKg > harvestedKg * 0.5,
       soldExceedsHarvested,
     });
