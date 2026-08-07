@@ -14,13 +14,43 @@ export interface InvoiceItem { desc: string; qty: number; unit: string; price: n
 export interface Product { desc: string; unit: string; price: number }
 export type InvoiceStatus = 'unpaid' | 'paid';
 export type PaymentMethod = 'cash' | 'eft' | 'card' | 'mobile' | 'other';
+/**
+ * A remembered buyer.
+ *
+ * Was a bare `string[]` of names, which is why "Bill to" printed a name and nothing else — the
+ * app had nowhere to put an address even if the farmer typed one. Legacy string rows are
+ * upconverted on read (see cleanCustomers), so an existing customer list survives the change.
+ */
+export interface Customer {
+  name: string;
+  address?: string;
+  phone?: string;
+  email?: string;
+}
+
+export type CustomerDetails = Pick<Customer, 'address' | 'phone' | 'email'>;
+
 export interface SavedInvoice {
   id: string;
   no: number;
   billTo: string;
+  /**
+   * The buyer's contact details AS THEY WERE WHEN THIS INVOICE WAS ISSUED.
+   *
+   * Snapshotted, not looked up. A customer who moves must not silently rewrite the address on an
+   * invoice they were sent last year — the buyer is holding a paper copy, and the two have to
+   * agree.
+   */
+  billToDetails?: CustomerDetails;
   items: InvoiceItem[];
   total: number;
+  /** The date the invoice was ISSUED. Set once; never moved by a later edit or a reprint. */
   dateISO: string;
+  dueDateISO?: string;
+  /** The buyer's own order number, so they can match this against their books. */
+  reference?: string;
+  /** Note printed under the total on this invoice. */
+  notes?: string;
   status: InvoiceStatus;
   paidAt?: string;
   paymentMethod?: PaymentMethod;
@@ -68,16 +98,43 @@ function notify() {
 
 // Sample-mode-aware read/write per key — the only thing that changes vs the
 // real read<T>/write<T> above is where the data actually lives.
-function cleanCustomers(rows: unknown[]): string[] {
+function optionalText(value: unknown): string | undefined {
+  if (typeof value !== 'string') return undefined;
+  const text = value.trim();
+  return text ? text : undefined;
+}
+
+/** Drops the key entirely when every field is blank, so an empty object never reaches storage. */
+export function cleanCustomerDetails(row: unknown): CustomerDetails | undefined {
+  if (!row || typeof row !== 'object') return undefined;
+  const raw = row as Partial<Customer>;
+  const details: CustomerDetails = {};
+  const address = optionalText(raw.address);
+  const phone = optionalText(raw.phone);
+  const email = optionalText(raw.email);
+  if (address) details.address = address;
+  if (phone) details.phone = phone;
+  if (email) details.email = email;
+  return address || phone || email ? details : undefined;
+}
+
+/**
+ * Accepts both shapes. Rows written before buyers had contact details are bare strings; reading
+ * them as `{ name }` upgrades a farmer's existing customer list in place, rather than silently
+ * discarding every customer they have ever invoiced the first time they open the new build.
+ */
+function cleanCustomers(rows: unknown[]): Customer[] {
   const seen = new Set<string>();
-  const clean: string[] = [];
+  const clean: Customer[] = [];
   for (const row of rows) {
-    if (typeof row !== 'string') continue;
-    const name = row.trim();
-    const key = name.toLowerCase();
-    if (!name || seen.has(key)) continue;
+    const source = typeof row === 'string' ? { name: row } : row;
+    if (!source || typeof source !== 'object') continue;
+    const name = optionalText((source as Partial<Customer>).name);
+    if (!name) continue;
+    const key = name.toLocaleLowerCase('en-ZA');
+    if (seen.has(key)) continue;
     seen.add(key);
-    clean.push(name);
+    clean.push({ name, ...cleanCustomerDetails(source) });
   }
   return clean;
 }
@@ -159,13 +216,24 @@ function cleanInvoice(row: unknown): SavedInvoice | null {
   // it while period rows fall back to invoice date. Treat unverifiable payment as unpaid.
   const status: InvoiceStatus = invoice.status === 'paid' && paidAt ? 'paid' : 'unpaid';
   const paymentMethod = cleanPaymentMethod(invoice.paymentMethod);
+  // A due date that lands before the issue date is not a term any buyer agreed to; it is a bad
+  // record. Drop it rather than print "due 3 days ago" on a freshly issued invoice.
+  const dueDateISO = typeof invoice.dueDateISO === 'string'
+    && Number.isFinite(Date.parse(invoice.dueDateISO))
+    && Date.parse(invoice.dueDateISO) >= Date.parse(invoice.dateISO)
+    ? invoice.dueDateISO
+    : undefined;
   return {
     id: invoice.id.trim(),
     no: invoice.no!,
     billTo: invoice.billTo.trim(),
+    billToDetails: cleanCustomerDetails(invoice.billToDetails),
     items: validItems,
     total,
     dateISO: invoice.dateISO,
+    dueDateISO,
+    reference: optionalText(invoice.reference),
+    notes: optionalText(invoice.notes),
     status,
     paidAt: status === 'paid' ? paidAt : undefined,
     paymentMethod: status === 'paid' ? paymentMethod : undefined,
@@ -184,10 +252,10 @@ function cleanInvoices(rows: unknown[]): SavedInvoice[] {
   return clean;
 }
 
-function readCustomers(): string[] {
+function readCustomers(): Customer[] {
   return cleanCustomers(isSampleMode() ? getSandboxCustomers() : read<unknown>(C_KEY));
 }
-function writeCustomers(v: string[]): boolean {
+function writeCustomers(v: Customer[]): boolean {
   if (isSampleMode()) {
     setSandboxCustomers(v);
     return true;
@@ -216,12 +284,32 @@ function writeInvoices(v: SavedInvoice[]): boolean {
 }
 
 /* ── Customers ──────────────────────────────── */
-export function loadCustomers(): string[] { return readCustomers(); }
-export function addCustomer(name: string) {
+export function loadCustomers(): Customer[] { return readCustomers(); }
+
+/**
+ * Remember a buyer, merging rather than replacing.
+ *
+ * `details` is what the farmer typed on THIS invoice. Fields they left blank keep whatever the
+ * customer record already had — issuing a quick invoice with only a name must not wipe the
+ * address captured last month.
+ */
+export function addCustomer(name: string, details?: CustomerDetails) {
   const n = name.trim();
   if (!n) return;
-  const list = loadCustomers().filter((c) => c.toLowerCase() !== n.toLowerCase());
-  if (writeCustomers([n, ...list].slice(0, 100))) notify();
+  const key = n.toLocaleLowerCase('en-ZA');
+  const list = loadCustomers();
+  const existing = list.find((c) => c.name.toLocaleLowerCase('en-ZA') === key);
+  const merged: Customer = {
+    name: n,
+    ...cleanCustomerDetails({ ...existing, ...cleanCustomerDetails(details) }),
+  };
+  const rest = list.filter((c) => c.name.toLocaleLowerCase('en-ZA') !== key);
+  if (writeCustomers([merged, ...rest].slice(0, 100))) notify();
+}
+
+export function findCustomer(list: readonly Customer[], name: string): Customer | undefined {
+  const key = name.trim().toLocaleLowerCase('en-ZA');
+  return key ? list.find((c) => c.name.toLocaleLowerCase('en-ZA') === key) : undefined;
 }
 
 /* ── Item / product presets ─────────────────── */
@@ -243,13 +331,20 @@ export function saveInvoice(inv: SavedInvoice): SavedInvoice[] {
   const previous = before.find((row) => row.id === candidateId);
   // Editing invoice lines is not a payment action. Forms that do not expose payment fields may
   // omit them, but must not erase evidence already attached to a paid invoice.
-  const candidate = previous?.status === 'paid' && inv.status === 'paid'
+  const withPayment = previous?.status === 'paid' && inv.status === 'paid'
     ? {
       ...inv,
       paidAt: inv.paidAt ?? previous.paidAt,
       paymentMethod: cleanPaymentMethod(inv.paymentMethod) ?? previous.paymentMethod,
     }
     : inv;
+  // An invoice is dated the day it was ISSUED. Every save used to stamp `new Date()`, so simply
+  // opening #0044 to fix a typo — or marking it paid — moved its date to today, and the buyer's
+  // printed copy and the farmer's ledger stopped agreeing about when the debt arose. The issue
+  // date is written once, by the save that created the record.
+  const candidate = previous
+    ? { ...withPayment, dateISO: previous.dateISO }
+    : withPayment;
   const clean = cleanInvoice(candidate);
   if (!clean) return before;
   const list = before.filter((x) => x.id !== clean.id);

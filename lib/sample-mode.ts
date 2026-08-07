@@ -28,9 +28,10 @@
 import type { CropPlanState, CashflowSettings } from './crop-plan';
 import type { FacilitatorDesignState } from './facilitator-design';
 import type { SalesLog, ExpenseLog, ProductionLog, Profile } from './db/types';
-import type { SavedInvoice, Product } from './invoices';
+import type { SavedInvoice, Product, Customer } from './invoices';
+import type { SellerLetterhead } from './invoice-seller';
 import type { SavedPlace } from './saved-places';
-import { buildDemoCropPlan, buildDemoFacilitatorState, buildDemoFinance, buildDemoProfile, buildDemoSavedPlace, buildDemoStorageSeeds } from './demo-farm';
+import { buildDemoCropPlan, buildDemoFacilitatorState, buildDemoFinance, buildDemoLetterhead, buildDemoProfile, buildDemoSavedPlace, buildDemoStorageSeeds } from './demo-farm';
 
 const FLAG_KEY = 'imbewu_sample_mode';
 export const SAMPLE_MODE_EVENT = 'imbewu-sample-mode-changed';
@@ -45,7 +46,8 @@ interface SampleSandbox {
   expenses: ExpenseLog[];
   production: ProductionLog[];
   invoices: SavedInvoice[];
-  customers: string[];
+  customers: Customer[];
+  letterhead: SellerLetterhead;
   products: Product[];
   profile: Profile;
   places: SavedPlace[];
@@ -69,6 +71,7 @@ function freshSandbox(): SampleSandbox {
     production: finance.production,
     invoices: finance.invoices,
     customers: finance.customers,
+    letterhead: buildDemoLetterhead(),
     products: finance.products,
     profile: buildDemoProfile(),
     // The crèche arrives pre-saved so the saved-places list, the farmer map and the Design
@@ -278,8 +281,10 @@ export function deleteSandboxProduction(id: string): void {
 /* ── Invoices ─────────────────────────────────────────────────────────── */
 export function getSandboxInvoices(): SavedInvoice[] { return ensure().invoices; }
 export function setSandboxInvoices(list: SavedInvoice[]): void { ensure().invoices = list; }
-export function getSandboxCustomers(): string[] { return ensure().customers; }
-export function setSandboxCustomers(list: string[]): void { ensure().customers = list; }
+export function getSandboxLetterhead(): SellerLetterhead { return ensure().letterhead; }
+export function setSandboxLetterhead(value: SellerLetterhead): void { ensure().letterhead = value; }
+export function getSandboxCustomers(): Customer[] { return ensure().customers; }
+export function setSandboxCustomers(list: Customer[]): void { ensure().customers = list; }
 export function getSandboxProducts(): Product[] { return ensure().products; }
 export function setSandboxProducts(list: Product[]): void { ensure().products = list; }
 
