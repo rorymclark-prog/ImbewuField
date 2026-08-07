@@ -396,7 +396,7 @@ One coherent timeline. The demo data is a claim about a real farm; it should sur
 
 
 `app/invoice/page.tsx` says **"Tugela Valley smallholding"** at lines 144 and 257 regardless of whose
-invoice it is, and its footer carries the **retired domain** `fieldproof.vercel.app` at lines 172 and
+invoice it is, and its footer carries the **retired domain** `imbewufield.vercel.app` at lines 172 and
 303. The live URL is `imbewufield.vercel.app` and nothing else.
 
 ### Q11. Finances needs one chart, and the planned side is free — `codex/finance-chart`
