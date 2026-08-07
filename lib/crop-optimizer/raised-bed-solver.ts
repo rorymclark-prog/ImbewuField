@@ -13,11 +13,17 @@
  *    lexicographic objective the exact oracle uses, never by an "is this crop
  *    good" heuristic;
  *  - after the beam, a local-swap pass repeatedly REMOVES already-placed
- *    cohorts to make room for better combinations (drop, 1-for-1 swap and the
- *    1-for-2 replace that is the whole reason a greedy pass fails). With
+ *    cohorts to make room for better combinations: drop, 1-for-1 swap, the
+ *    1-for-2 replace that is the whole reason a greedy pass fails, and a
+ *    drop-then-greedy-refill for the cases a pair cannot reach. With
  *    `beamWidth: 1` the beam is a pure greedy pass and the swap pass alone
  *    still has to recover the optimum — `tests/crop-optimizer-solver.test.ts`
  *    asserts exactly that, so the backtracking cannot rot into decoration.
+ *
+ * The beam is run once per decision order (see `decisionOrders` below) and the
+ * better whole plan is kept, because the order a beam decides in changes which
+ * plans it can ever build and no single order was best on both a one-bed and a
+ * nine-bed farm.
  *
  * WHAT IT NEVER CLAIMS
  * The status is `best-found`, never `optimal`. This search cannot prove it saw
@@ -344,7 +350,7 @@ export function solveSelection(
   }
   const beam = [...new Map(beams.flat().map((state) => [state.key, state])).values()].sort(compareStates);
 
-  // ---- 2. local swaps: drop, 1-for-1, and the 1-for-2 replace --------------
+  // ---- 2. local swaps: add, drop, 1-for-1, 1-for-2, drop-and-refill --------
   const claimantsOfResource: number[][] = problem.capacities.map(() => []);
   for (let index = 0; index < candidates.length; index++) {
     for (const resource of claimResources[index]) {
@@ -360,6 +366,8 @@ export function solveSelection(
       // A move is judged on its objective alone; the resource usage of the
       // winner is rebuilt once at the end of the round rather than for every
       // move considered, which is what makes a whole-farm sweep affordable.
+      // Until then a candidate best carries the CURRENT state's usage, which
+      // nothing reads — feasibility is always tested against `current.used`.
       const consider = (indices: number[]) => {
         const sorted = [...indices].sort((a, b) => a - b);
         const key = keyFor(sorted);
@@ -371,7 +379,7 @@ export function solveSelection(
         if (shortfall !== best.shortfall
           ? shortfall > best.shortfall
           : compareObjectiveVectors(objective, best.objective) >= 0) return;
-        best = { indices: sorted, key, used: best.used, shortfall, objective };
+        best = { indices: sorted, key, used: current.used, shortfall, objective };
         bestIndices = sorted;
       };
 
