@@ -23,6 +23,7 @@ import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
+import EmptyState from '@/components/EmptyState';
 import { cashLedgerSales } from '@/lib/invoice-sales';
 
 /* ── Format helpers ──────────────────────────────────────────────────────── */
@@ -247,17 +248,7 @@ function SalesLedger({ sales, expenses, invoices, loading, onEditSale, onEditExp
           ))}
         </div>
       ) : rows.length === 0 ? (
-        <div className="flex flex-col items-center justify-center gap-3 py-10 px-4">
-          <div
-            className="w-12 h-12 rounded-2xl flex items-center justify-center"
-            style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.12)' }}
-          >
-            <Sprout size={20} style={{ color: '#1F4D2B' }} />
-          </div>
-          <p className="text-sm font-display text-center" style={{ color: '#5C5040' }}>
-            No sales logged yet
-          </p>
-        </div>
+        <EmptyState message="No sales logged yet" />
       ) : (
         <div className="divide-y" style={{ borderColor: '#E2D8C4' }}>
           {rows.map((item) => (
