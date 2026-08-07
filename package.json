@@ -14,6 +14,7 @@
     "course:status": "node --import ./tests/register-alias.mjs scripts/course-status.mjs",
     "course:script-prompt": "node --import ./tests/register-alias.mjs scripts/course-script-prompt.mjs",
     "assets:sizes": "node scripts/gen-asset-sizes.mjs",
+    "assets:validate": "node scripts/validate-visual-assets.mjs",
     "course:import-audio": "node --import ./tests/register-alias.mjs scripts/import-course-audio.mjs",
     "course:record-sheet": "node --import ./tests/register-alias.mjs scripts/course-narration-export.mjs",
     "worker:status": "node scripts/worker-status.mjs",

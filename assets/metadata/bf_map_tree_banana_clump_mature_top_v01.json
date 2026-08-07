@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "bf_map_tree_banana_clump_mature_top_v01",
+  "assetPath": "assets/map/trees/bf_map_tree_banana_clump_mature_top_v01.svg",
+  "batch": 1,
+  "category": "tree",
+  "speciesKey": "banana",
+  "view": "top",
+  "anchor": "clump-centre",
+  "defaultDisplayPx": 80,
+  "realWorldScaleSource": "configured in app, not baked into artwork",
+  "states": ["existing", "proposed", "to-verify"],
+  "stateStyling": "app-code-only",
+  "tags": ["banana", "tree", "perennial", "clump", "mature"],
+  "generationPrompt": "Single isolated mature banana clump seen directly from above, several clearly separate pseudostems emerging from one compact clump, broad radial banana leaves with naturally torn irregular edges, layered healthy forest, mid-leaf and sage greens, visible central stem bases for map anchoring. Strict top-down orthographic plan view. Clean hand-drawn vector illustration, contemporary ecological field-guide style, slightly organic dark-olive outlines, flat layered shapes, muted natural earth colours, realistic local proportions, simple strong silhouette, subtle paper-like vector texture, readable at 48–80 pixels. Transparent background, centred with 12 percent clear padding. No text, no labels, no logo, no frame, no people, no soil patch, no scenery, no horizon, no cast shadow, no photorealism, no glossy 3D, no fantasy, no extra objects.",
+  "delivery": {
+    "svg": "bf_map_tree_banana_clump_mature_top_v01.svg",
+    "png": ["bf_map_tree_banana_clump_mature_top_v01_1024.png", "bf_map_tree_banana_clump_mature_top_v01_512.png", "bf_map_tree_banana_clump_mature_top_v01_256.png", "bf_map_tree_banana_clump_mature_top_v01_128.png"]
+  },
+  "assetStatus": "awaiting-art"
+}

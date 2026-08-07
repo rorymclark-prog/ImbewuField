@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "bf_map_support_vetiver_clump_top_v01",
+  "assetPath": "assets/map/earthworks/bf_map_support_vetiver_clump_top_v01.svg",
+  "batch": 1,
+  "category": "support-planting",
+  "speciesKey": "vetiver",
+  "view": "top",
+  "anchor": "basal-crown",
+  "defaultDisplayPx": 48,
+  "realWorldScaleSource": "configured in app, not baked into artwork",
+  "states": ["existing", "proposed", "to-verify"],
+  "stateStyling": "app-code-only",
+  "tags": ["vetiver", "erosion-control", "support-plant", "grass"],
+  "generationPrompt": "Single isolated mature vetiver grass clump, dense upright fountain of long narrow stiff leaves, strong basal crown, olive and sage green with a few dry ochre blades, realistic erosion-control grass rather than soft lawn grass. Strict top-down plan view, clean vector field-guide style, transparent background, no flowers, no soil patch, no text.",
+  "delivery": {
+    "svg": "bf_map_support_vetiver_clump_top_v01.svg",
+    "png": ["bf_map_support_vetiver_clump_top_v01_1024.png", "bf_map_support_vetiver_clump_top_v01_512.png", "bf_map_support_vetiver_clump_top_v01_256.png", "bf_map_support_vetiver_clump_top_v01_128.png"]
+  },
+  "assetStatus": "awaiting-art"
+}
