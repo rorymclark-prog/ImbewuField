@@ -23,6 +23,7 @@ import {
   CROPS,
   cropByKey,
   hasPlanningYield,
+  hasVerifiedSchedule,
   plantSpacingRangeCm,
   plantsPerM2Range,
 } from '@/lib/crop-catalog';
@@ -42,6 +43,7 @@ import {
   type PlanBed,
   type Planting,
 } from '@/lib/crop-plan';
+import { isPlotWinterCover } from '@/lib/staple-crops';
 
 // ── The sweep ───────────────────────────────────────────────────────────────
 
@@ -168,21 +170,23 @@ test('the utilisation chart draws the true occupancy — its clamp is a no-op', 
   assert.deepEqual(mismatches.slice(0, 8), [], `${mismatches.length} months where the chart hid the real figure`);
 });
 
-test('automatic plans never use a crop missing yield, timing, or field-spacing evidence', () => {
+test('automatic plans use food crops with full evidence or declared covers with a sourced field rate', () => {
   const offenders: string[] = [];
   for (const run of sweep([8])) {
     for (const planting of run.plantings) {
       const crop = cropByKey(planting.cropKey);
-      if (!crop || !hasPlanningYield(crop)
-        || crop.timingVerified === false || crop.fieldSpacingVerified === false) {
+      const supportedFood = crop && hasPlanningYield(crop)
+        && crop.timingVerified !== false && crop.fieldSpacingVerified !== false;
+      const supportedCover = crop && isPlotWinterCover(crop)
+        && crop.yieldKgPerM2 === 0 && hasVerifiedSchedule(crop)
+        && crop.seedRateKgPerHaRange !== undefined;
+      if (!supportedFood && !supportedCover) {
         offenders.push(`${run.label} — ${planting.cropKey}`);
       }
     }
   }
-  // Coriander and amadumbe have no defensible kg/m² planning benchmark;
-  // maize and kale have unresolved schedule/field facts. All remain readable
-  // in old records, but none may acquire a new automatic field instruction or
-  // shopping line by entering the generated plan.
+  // A cover is allowed only through the explicit plot-cover route and never
+  // becomes food kg. Missing evidence on an ordinary crop still excludes it.
   assert.deepEqual(offenders.slice(0, 8), [], `${offenders.length} unsupported crops entered auto-suggest`);
 });
 
@@ -332,6 +336,13 @@ test('the material bill reconciles to spacing ranges without inventing packet se
     const row = seedBoqForPlan([planting], [bed])[0];
     if (crop.timingVerified === false) {
       if (row) wrong.push(`${crop.key}: an unverified legacy schedule created a new purchase line`);
+      continue;
+    }
+    if (crop.seedRateKgPerHaRange !== undefined) {
+      // This BOQ is a piece/packet model. A field cover's sourced kg/ha rate
+      // belongs in its sowing task; the legacy plant-grid placeholder must not
+      // be converted into a fake shopping count merely to force a bill row.
+      if (row) wrong.push(`${crop.key}: a kg/ha field rate became a final-position purchase line`);
       continue;
     }
     if (!row) { wrong.push(`${crop.key}: no bill line at all`); continue; }

@@ -113,17 +113,40 @@ test('removing a crop cannot silently recommend an unchosen replacement', () => 
   );
 });
 
-test('accepting auto-suggest keeps the climate answer the farmer confirmed', () => {
+test('auto-suggest derives climate from the mapped site instead of asking the farmer to guess', () => {
+  // Rory's field test caught the broken assumption: farmers may not know
+  // whether a label such as "summer rain · light frost" describes them, while
+  // the app already has their mapped location and rainfall-region data.
   assert.match(
     CROP_PLAN_SCREEN,
-    /rainPattern:\s*aPattern/,
-    'accepting suggestions must save the questionnaire climate with the plan',
+    /const pattern:\s*RainPattern\s*=\s*mapPattern/,
+    'the mapped climate must be the planning authority',
   );
   assert.match(
     CROP_PLAN_SCREEN,
-    /plan\?\.rainPattern\s*\?\?\s*mapPattern/,
-    'screen tasks and exports must prefer the accepted climate over the map estimate',
+    /rainPattern:\s*pattern/,
+    'accepting suggestions must save the automatically derived climate with the plan',
   );
+  assert.doesNotMatch(
+    CROP_PLAN_SCREEN,
+    /Confirm this garden's climate|onPattern\(|CLIMATE_OPTIONS/,
+    'the farmer is still being asked to classify rainfall or frost themselves',
+  );
+  assert.match(
+    CROP_PLAN_SCREEN,
+    /Climate used automatically/,
+    'the hidden decision must still be visible and explainable',
+  );
+});
+
+test('auto-suggest exposes the requested standard bed sections instead of forcing whole beds', () => {
+  assert.match(
+    CROP_PLAN_SCREEN,
+    /aAllowMixedCropsInBed[^\n]*useState\(true\)/,
+    'section packing is not default-on despite the farmer asking for full, half, third and quarter beds',
+  );
+  assert.match(CROP_PLAN_SCREEN, /Divide beds into crop sections/);
+  assert.match(CROP_PLAN_SCREEN, /allowMixedCropsInBed:\s*aAllowMixedCropsInBed/);
 });
 
 test('the on-screen task list keeps next-year work in its real cohort', () => {

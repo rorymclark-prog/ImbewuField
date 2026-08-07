@@ -7,7 +7,7 @@
 // proportional gain for a first version.
 
 import type { CropDef, RainPattern } from './crop-catalog';
-import { CROPS, hasAutomaticPlanningBasis, hasVerifiedFieldPlan, MONTHS_SHORT, plantsPerM2 } from './crop-catalog';
+import { CROPS, hasAutomaticPlanningBasis, hasVerifiedSchedule, MONTHS_SHORT, plantsPerM2 } from './crop-catalog';
 import type { PlanBed, Planting } from './crop-plan';
 import {
   existingSowOffset,
@@ -24,11 +24,12 @@ import { plotPool, plotWinterCovers, stapleCourseOf, STAPLE_COURSE_SEQUENCE, isP
 // even when its exact schedule is not source-backed. Such a record must never
 // become a new automatic suggestion or make a rest-period explanation claim
 // that a schedulable crop exists when it does not.
-const SCHEDULABLE_CROPS = CROPS.filter(hasVerifiedFieldPlan);
-// Rest-period explanations are about crops this engine could really add, not
-// every readable catalog row. A duration and spacing can locate a crop on the
-// timeline, but without a supported planning-yield benchmark it still lacks
-// the full basis required by auto-suggest.
+const SCHEDULABLE_CROPS = CROPS.filter(hasVerifiedSchedule);
+// Yield-backed crops can be compared by kg/m². A farmer's exact crop choice
+// needs a different threshold: verified timing and field spacing are enough
+// to put amadumbe on a bed calendar, while its kilograms and value remain
+// deliberately unknown. Conflating those questions greyed out a culturally
+// important crop even though the catalog can defend when and how to plant it.
 const AUTOMATIC_PLANNING_CROPS = CROPS.filter(hasAutomaticPlanningBasis);
 
 export type GardenGoal = 'family' | 'commercial' | 'hybrid';
@@ -522,6 +523,75 @@ function tallySowings(plantings: readonly Planting[]): SowCounts {
 const sowCountAt = (counts: SowCounts, month: number): number => counts.get(month) ?? 0;
 const bumpSow = (counts: SowCounts, month: number): void => { counts.set(month, (counts.get(month) ?? 0) + 1); };
 
+/** Cohort counts stop one long-window crop winning repeatedly on the same bed.
+ * CropSpread only counts distinct beds, so garlic twice on one bed previously
+ * looked no more concentrated than garlic once. */
+type CropCohortCounts = Map<string, number>;
+function tallyCropCohorts(plantings: readonly Planting[]): CropCohortCounts {
+  const counts: CropCohortCounts = new Map();
+  for (const planting of plantings) {
+    counts.set(planting.cropKey, (counts.get(planting.cropKey) ?? 0) + 1);
+  }
+  return counts;
+}
+const cohortCountAt = (counts: CropCohortCounts, cropKey: string): number => counts.get(cropKey) ?? 0;
+const bumpCohort = (counts: CropCohortCounts, cropKey: string): void => {
+  counts.set(cropKey, (counts.get(cropKey) ?? 0) + 1);
+};
+
+/** Fraction of a bed with a fresh-picking opportunity in each calendar month.
+ * This is not a kg curve: it only lets the placement tie-breaker prefer a crop
+ * that closes a real harvest gap over one that adds a fourth crop to an
+ * already-busy harvest month. */
+type FreshCoverage = Map<string, Map<number, number>>;
+function freshHarvestMonths(sowMonth: number, crop: CropDef): number[] {
+  if (crop.timingVerified === false || crop.yieldKgPerM2 === 0) return [];
+  const first = wrapMonth(
+    sowMonth
+      + planningMaturityMonths(crop.daysToHarvest)
+      + (crop.transplant ? TRANSPLANT_ENTRY_PLANNED_MONTHS : 0),
+  );
+  return Array.from(
+    { length: 1 + (crop.harvestWindowMonths ?? 0) },
+    (_, offset) => wrapMonth(first + offset),
+  );
+}
+function tallyFreshCoverage(plantings: readonly Planting[]): FreshCoverage {
+  const coverage: FreshCoverage = new Map();
+  for (const planting of plantings) {
+    const crop = CROPS.find((candidate) => candidate.key === planting.cropKey);
+    if (!crop) continue;
+    let bed = coverage.get(planting.bedId);
+    if (!bed) { bed = new Map(); coverage.set(planting.bedId, bed); }
+    for (const month of freshHarvestMonths(planting.sowMonth, crop)) {
+      bed.set(month, Math.min(1, (bed.get(month) ?? 0) + (planting.areaFraction ?? 1)));
+    }
+  }
+  return coverage;
+}
+function freshGapGain(
+  coverage: FreshCoverage,
+  bedId: string,
+  crop: CropDef,
+  sowMonth: number,
+): number {
+  const bed = coverage.get(bedId);
+  return freshHarvestMonths(sowMonth, crop)
+    .reduce((gain, month) => gain + (1 - (bed?.get(month) ?? 0)), 0);
+}
+function noteFreshCoverage(
+  coverage: FreshCoverage,
+  planting: Pick<Planting, 'bedId' | 'cropKey' | 'sowMonth' | 'areaFraction'>,
+): void {
+  const crop = CROPS.find((candidate) => candidate.key === planting.cropKey);
+  if (!crop) return;
+  let bed = coverage.get(planting.bedId);
+  if (!bed) { bed = new Map(); coverage.set(planting.bedId, bed); }
+  for (const month of freshHarvestMonths(planting.sowMonth, crop)) {
+    bed.set(month, Math.min(1, (bed.get(month) ?? 0) + (planting.areaFraction ?? 1)));
+  }
+}
+
 /**
  * How many DIFFERENT beds each crop has claimed — the monoculture brake.
  *
@@ -693,9 +763,10 @@ function poolForBed(
       // because a cover crop is soil management, not an answer to that
       // questionnaire. With exact crop choices, however, even this route is
       // filtered by strictCropKeys: an unchosen cover must never appear.
-      // Only covers with verified timing remain in SCHEDULABLE_CROPS. If none
-      // passes the exact-choice and rotation checks, the plot rests; an
-      // unsupported legacy oats duration must never be revived just to fill it.
+      // Only covers with a verified schedule remain in SCHEDULABLE_CROPS. A
+      // cover may use sourced kg/ha establishment instead of fake plant-grid
+      // geometry. If none passes the exact-choice and rotation checks, the
+      // plot rests rather than receiving an invented filler crop.
       const covers = plotWinterCovers(SCHEDULABLE_CROPS)
         .filter((crop) => !strictCropKeys || strictCropKeys.has(crop.key));
       // Rotation depends on the cover's actual sow month, so it is evaluated
@@ -1303,7 +1374,12 @@ function backfillWinterGaps(
       continue;
     }
 
-    const nonRepeating = candidates.filter((c) => !rotation.repeats(bed.id, c.crop, c.sowMonth));
+    const nonRepeating = candidates.filter((c) =>
+      !rotation.repeats(bed.id, c.crop, c.sowMonth)
+      // KZN DARD explicitly documents oats as a winter cover in maize lands.
+      // The generic family-repeat brake must not overrule that named local
+      // practice; this exception is plot-only and cover-only.
+      || (bed.kind === 'plot' && c.crop.key === 'oats' && isPlotWinterCover(c.crop)));
     if (!nonRepeating.length) continue;
     const chosen = nonRepeating[0];
     const gap = monthsForward(nowMonth, chosen.sowMonth);
@@ -1614,6 +1690,8 @@ function fillRemainingGaps(
   allowVinesInBeds: boolean,
   sowCounts: SowCounts,
   spread: CropSpread,
+  cropCohorts: CropCohortCounts,
+  freshCoverage: FreshCoverage,
   plotsWithCourse: ReadonlySet<string>,
   supportedMonths: ReadonlySet<number>,
   strictCropKeys?: ReadonlySet<string>,
@@ -1714,7 +1792,10 @@ function fillRemainingGaps(
       // taking `reaching` in raw order picked a short-span crop and left Bed 1's
       // July bare all over again.
       const preferenceRank = (a: (typeof reaching)[number], b: (typeof reaching)[number]) =>
-        (spreadRank(spread, a.crop.key, bed.id) - spreadRank(spread, b.crop.key, bed.id))
+        (freshGapGain(freshCoverage, bed.id, b.crop, b.sowMonth)
+          - freshGapGain(freshCoverage, bed.id, a.crop, a.sowMonth))
+        || (cohortCountAt(cropCohorts, a.crop.key) - cohortCountAt(cropCohorts, b.crop.key))
+        || (spreadRank(spread, a.crop.key, bed.id) - spreadRank(spread, b.crop.key, bed.id))
         || (emptyCover(b) - emptyCover(a))
         || (sowCountAt(sowCounts, a.sowMonth) - sowCountAt(sowCounts, b.sowMonth))
         || (commercialScore(b.crop) - commercialScore(a.crop))
@@ -1727,7 +1808,9 @@ function fillRemainingGaps(
             .sort(preferenceRank);
           if (!fitting.length) continue; // this fraction can't fit anything — try a smaller share
 
-          const nonRepeating = fitting.filter((c) => !rotation.repeats(bed.id, c.crop, c.sowMonth));
+          const nonRepeating = fitting.filter((c) =>
+            !rotation.repeats(bed.id, c.crop, c.sowMonth)
+            || (bed.kind === 'plot' && c.crop.key === 'oats' && isPlotWinterCover(c.crop)));
           if (!nonRepeating.length) continue;
           const pool2 = nonRepeating;
           const nonRepeat = pool2.filter((c) => c.crop.key !== lastCropByBed.get(bed.id));
@@ -1762,7 +1845,8 @@ function fillRemainingGaps(
               let companion: { crop: CropDef; sowMonth: number; fraction: number } | undefined;
               for (const c of [...reaching].sort(preferenceRank)) {
                 if (c.crop.key === pick.crop.key) continue;
-                if (rotation.repeats(bed.id, c.crop, c.sowMonth)) continue;
+                if (rotation.repeats(bed.id, c.crop, c.sowMonth)
+                  && !(bed.kind === 'plot' && c.crop.key === 'oats' && isPlotWinterCover(c.crop))) continue;
                 const f = fractionPresetsFor(bed)
                   .filter((fr) => fr >= leftover - 0.001
                     && occupancy.fits(bed.id, c.sowMonth, c.crop, fr)
@@ -1800,15 +1884,18 @@ function fillRemainingGaps(
         rotation.recordUse(bed.id, placement.crop, placement.sowMonth);
         bumpSow(sowCounts, placement.sowMonth);
         noteCropBed(spread, placement.crop.key, bed.id);
+        bumpCohort(cropCohorts, placement.crop.key);
         lastCropByBed.set(bed.id, placement.crop.key);
         const areaFraction = placement.fraction < 1 ? placement.fraction : undefined;
-        plantings.push({
+        const planting: Planting = {
           id: plantingId(bed.id, placement.crop.key, placement.sowMonth, areaFraction),
           bedId: bed.id,
           cropKey: placement.crop.key,
           sowMonth: placement.sowMonth,
           areaFraction,
-        });
+        };
+        plantings.push(planting);
+        noteFreshCoverage(freshCoverage, planting);
       }
     }
   }
@@ -1847,7 +1934,9 @@ function reportStillRestingBeds(
   strictCropKeys?: ReadonlySet<string>,
 ): string[] {
   const notes: string[] = [];
-  const automaticPool = pool.filter(hasAutomaticPlanningBasis);
+  const automaticPool = strictCropKeys
+    ? pool.filter(hasVerifiedSchedule)
+    : pool.filter(hasAutomaticPlanningBasis);
   const canFill = (crops: CropDef[], bed: PlanBed, month: number): boolean =>
     reachingCandidates(crops, pattern, nowMonth, month, GAP_FILL_HORIZON_MONTHS, supportedMonths)
       .filter((candidate) => supportsAutomaticPlacement(candidate.crop, bed))
@@ -1878,8 +1967,8 @@ function reportStillRestingBeds(
     const catalogCanFillSome = emptyMonths.some((m) => canFill(AUTOMATIC_PLANNING_CROPS, bed, m));
     if (!poolCanFillSome && catalogCanFillSome) {
       notes.push(exactChoice
-        ? `${bed.label} still rests in ${label} — none of ${exactChoice} can fill that stretch in this plan. Another crop with a supported yield benchmark, duration and field-spacing basis could; add one only if the household actually wants it.`
-        : `${bed.label} still rests in ${label} — a crop outside your selected groups, with a supported yield benchmark, duration and field-spacing basis, could cover it; widen your crop groups only if that crop suits the household.`);
+        ? `${bed.label} still rests in ${label} — none of ${exactChoice} can fill that stretch in this plan. Another crop with a verified schedule could; add one only if the household actually wants it.`
+        : `${bed.label} still rests in ${label} — a crop outside your selected groups with a verified schedule could cover it; widen your crop groups only if that crop suits the household.`);
     } else if (!catalogCanFillSome
       && emptyMonths.some((m) => canReach(AUTOMATIC_PLANNING_CROPS, bed, m))) {
       notes.push(`${bed.label} still rests in ${label} — ${exactChoice ? `${exactChoice} and other fully supported crops have` : 'fully supported crops have'} a window for that stretch, but this bed's surrounding months are already fully planted, so nothing long enough can fit. Freeing space nearby (or resting the bed) are both fine choices.`);
@@ -1970,22 +2059,35 @@ export function autoSuggestPlan(
   // the food-group map and the space-hungry pre-pass among them — so a guard
   // further downstream would leave those routes open. Plots get the cover crop
   // back from the verified schedulable catalog in poolForBed, where it belongs.
-  const edible = SCHEDULABLE_CROPS.filter(hasAutomaticPlanningBasis);
+  const yieldBackedFood = SCHEDULABLE_CROPS.filter(hasAutomaticPlanningBasis);
   const explicitCropKeys = new Set((answers.cropKeys ?? []).filter(Boolean));
+  const selectedWithoutSchedule = CROPS.filter((crop) =>
+    explicitCropKeys.has(crop.key) && !hasVerifiedSchedule(crop));
+  if (selectedWithoutSchedule.length) {
+    notes.push(`${selectedWithoutSchedule.map((crop) => crop.name).join(', ')} ${selectedWithoutSchedule.length === 1 ? 'is' : 'are'} selected, but the catalog still lacks a verified local duration or field-establishment basis. ${selectedWithoutSchedule.length === 1 ? 'It stays' : 'They stay'} selected for review but ${selectedWithoutSchedule.length === 1 ? 'is' : 'are'} not placed automatically.`);
+  }
   // Exact household/buyer choices outrank the broader UI category filter. A
   // farmer may select a crop and then collapse its category while reviewing;
   // that must not silently erase the explicit choice or introduce substitutes.
   let pool = explicitCropKeys.size
-    ? edible.filter((c) => explicitCropKeys.has(c.key))
-    : edible.filter((c) => !selectedGroups || selectedGroups.has(foodGroupOf(c)));
+    ? SCHEDULABLE_CROPS.filter((c) => explicitCropKeys.has(c.key))
+    : yieldBackedFood.filter((c) => !selectedGroups || selectedGroups.has(foodGroupOf(c)));
   if (!pool.length) {
     if (explicitCropKeys.size) {
-      notes.push('None of the crops this household chose has all three facts needed for automatic planning: a supported yield benchmark, crop duration and field-spacing basis. Review those crops manually or choose a fully supported crop; the planner will not guess a substitute.');
+      notes.push('None of the crops this household chose has a verified schedule for automatic planning. Review those crops manually or choose a schedulable crop; the planner will not guess a substitute.');
       return { plantings: [], notes, laterThisYear: [] };
     }
-    pool = edible; // "not sure" fallback — consider every source-backed crop
+    pool = yieldBackedFood; // "not sure" fallback — compare only crops with sourced yield benchmarks
   }
-  notes.push('Automatic choices use only crops with a verified planning-yield benchmark, duration and field-spacing basis. A crop with any of those facts unresolved stays available for records or manual review, but cannot drive the automatic plan.');
+  const chosenWithoutYield = explicitCropKeys.size
+    ? pool.filter((crop) => !hasAutomaticPlanningBasis(crop))
+    : [];
+  if (chosenWithoutYield.length) {
+    notes.push(`${chosenWithoutYield.map((crop) => crop.name).join(', ')} ${chosenWithoutYield.length === 1 ? 'has' : 'have'} verified timing and field establishment, so ${chosenWithoutYield.length === 1 ? 'it can' : 'they can'} be scheduled. No supported food-yield benchmark is available, so kilograms and value remain blank rather than being guessed.`);
+  }
+  notes.push(explicitCropKeys.size
+    ? 'Exact crop choices need verified duration and field establishment for scheduling. Yield benchmarks are used only where the catalog has them; missing kilograms are never invented.'
+    : 'Broad automatic choices use crops with verified yield, duration and field spacing so their productivity comparison has a common evidence basis.');
   notes.push('Household headcount is not used to guess planting quantity. Auto-suggest tries the exact crops chosen; mapped space, sow windows and rotation determine what fits.');
 
   const exactFamilies = explicitCropKeys.size
@@ -2290,6 +2392,8 @@ export function autoSuggestPlan(
       answers.allowVinesInBeds,
       sowCounts,
       spread,
+      tallyCropCohorts([...usableExistingPlantings, ...added]),
+      tallyFreshCoverage([...usableExistingPlantings, ...added]),
       plotsWithCourse,
       supportedMonths,
       strictCropKeys,

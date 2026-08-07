@@ -20,8 +20,8 @@ import {
   planningWeightBenchmarkScore,
   type AutoSuggestAnswers,
 } from '../lib/crop-autosuggest.ts';
-import { buildFieldUtilizationByMonth, occupiedMonthsForPlanting, type PlanBed } from '../lib/crop-plan.ts';
-import { cropByKey, CROPS, hasAutomaticPlanningBasis, hasVerifiedFieldPlan } from '../lib/crop-catalog.ts';
+import { buildFieldUtilizationByMonth, buildFoodAvailability, occupiedMonthsForPlanting, type PlanBed } from '../lib/crop-plan.ts';
+import { cropByKey, CROPS, hasAutomaticPlanningBasis, hasVerifiedFieldPlan, hasVerifiedSchedule } from '../lib/crop-catalog.ts';
 import { foodGroupOf, rotationFamilyOf } from '../lib/crop-groups.ts';
 import { isStapleCrop } from '../lib/staple-crops.ts';
 
@@ -60,10 +60,10 @@ test('auto-suggest refuses to invent a production plan until reliable irrigation
   }
 });
 
-test('a crop with unresolved timing or field geometry stays readable but cannot enter auto-suggest', () => {
-  // These legacy catalog rows still decode saved records. None has the full
-  // duration + field-layout basis needed to generate a new planting schedule.
-  for (const key of ['maize', 'dry-beans', 'kale', 'oats']) {
+test('a crop with unresolved timing or field geometry stays selectable for review but cannot enter auto-suggest', () => {
+  // Kale remains selectable so the UI never dead-ends a farmer, but a checkbox
+  // is not permission to invent its missing local calendar and field geometry.
+  for (const key of ['kale']) {
     const crop = cropByKey(key);
     assert.ok(crop, `${key} disappeared from historical crop lookup`);
     assert.ok(crop.name.trim() && crop.note.trim(), `${key} is no longer readable as a named record`);
@@ -77,7 +77,7 @@ test('a crop with unresolved timing or field geometry stays readable but cannot 
     }, 'mild-frost', [NINE_BEDS[0], FOUR_PLOTS[0]], [], 8);
     assert.deepEqual(result.plantings, [], `${key} entered a new automatic schedule`);
     assert.deepEqual(result.laterThisYear, [], `${key} was offered as a later automatic schedule`);
-    assert.match(result.notes.join(' '), /crop duration and field-spacing basis/i);
+    assert.match(result.notes.join(' '), /duration or field-establishment basis/i);
     assert.doesNotMatch(result.notes.join(' '), /widen.*(?:group|selection)/i);
   }
 });
@@ -89,6 +89,81 @@ test('tomatoes have a verified household-garden basis and can be selected explic
   const result = autoSuggestPlan({ ...FAMILY, cropKeys: ['tomatoes'], groups: [] }, 'mild-frost', NINE_BEDS, [], 8);
   assert.ok(result.plantings.some((planting) => planting.cropKey === 'tomatoes'));
   assert.ok(result.plantings.every((planting) => planting.cropKey === 'tomatoes'));
+});
+
+test('amadumbe can be scheduled from verified timing and spacing without inventing a yield', () => {
+  // A missing kg benchmark is a reason to leave the yield/value charts blank,
+  // not a reason to grey out a culturally important crop whose field calendar
+  // and spacing are sourced. The previous UI conflated ranking evidence with
+  // scheduling evidence and made Amadumbe impossible to choose.
+  const amadumbe = cropByKey('amadumbe');
+  assert.ok(amadumbe);
+  assert.equal(hasVerifiedFieldPlan(amadumbe), true);
+  assert.equal(hasAutomaticPlanningBasis(amadumbe), false);
+  const result = autoSuggestPlan({
+    ...FAMILY,
+    cropKeys: ['amadumbe'],
+    groups: [],
+    allowMixedCropsInBed: true,
+  }, 'mild-frost', NINE_BEDS, [], 8);
+  assert.ok(result.plantings.length > 0, 'Amadumbe remained impossible to schedule');
+  assert.ok(result.plantings.every((planting) => planting.cropKey === 'amadumbe'));
+  assert.match(result.notes.join(' '), /No supported food-yield benchmark.*kilograms and value remain blank/i);
+});
+
+test('maize and dry beans now use source-backed staple schedules, while oats is a timed cover without fake plant spacing', () => {
+  for (const key of ['maize', 'dry-beans']) {
+    const crop = cropByKey(key)!;
+    assert.equal(hasVerifiedFieldPlan(crop), true);
+    assert.equal(hasAutomaticPlanningBasis(crop), true);
+  }
+  const oats = cropByKey('oats')!;
+  assert.equal(hasVerifiedFieldPlan(oats), false, 'broadcast oats must not acquire a fake row grid');
+  assert.equal(hasVerifiedSchedule(oats), true, 'the KZN autumn-to-soft-dough cover schedule should be usable');
+
+  const result = autoSuggestPlan({ ...FAMILY, cropKeys: ['maize'], groups: [] }, 'mild-frost', [NINE_BEDS[0], FOUR_PLOTS[0]], [], 8);
+  assert.ok(result.plantings.some((planting) => planting.cropKey === 'maize' && planting.bedId === FOUR_PLOTS[0].id));
+  assert.ok(result.plantings.every((planting) => planting.cropKey === 'maize'));
+});
+
+test('the recommended family plan limits long per-bed harvest gaps and does not let garlic dominate', () => {
+  const beds = [...NINE_BEDS, ...FOUR_PLOTS];
+  const result = autoSuggestPlan({
+    ...FAMILY,
+    cropKeys: undefined,
+    allowMixedCropsInBed: true,
+  }, 'mild-frost', beds, [], 8);
+
+  const wholeFarm = buildFoodAvailability(result.plantings, beds);
+  for (let month = 1; month <= 12; month++) {
+    assert.ok(wholeFarm[month].some((item) => item.status === 'fresh'), `the whole farm has no fresh crop in month ${month}`);
+  }
+
+  for (const bed of NINE_BEDS) {
+    const own = result.plantings.filter((planting) => planting.bedId === bed.id);
+    const fresh = buildFoodAvailability(own, [bed]);
+    let longest = 0;
+    let run = 0;
+    let freshMonths = 0;
+    for (let offset = 0; offset < 12; offset++) {
+      const month = ((8 - 1 + offset) % 12) + 1;
+      if (fresh[month].some((item) => item.status === 'fresh')) {
+        freshMonths++;
+        run = 0;
+      } else {
+        longest = Math.max(longest, ++run);
+      }
+    }
+    assert.ok(freshMonths >= 7, `${bed.label} has fresh picking in only ${freshMonths}/12 months`);
+    assert.ok(longest <= 4, `${bed.label} has a ${longest}-month harvest gap`);
+  }
+
+  const counts = result.plantings.reduce((acc, planting) => {
+    acc.set(planting.cropKey, (acc.get(planting.cropKey) ?? 0) + 1);
+    return acc;
+  }, new Map<string, number>());
+  assert.ok((counts.get('garlic') ?? 0) <= 2, `garlic still dominates with ${counts.get('garlic')} cohorts`);
+  assert.ok(result.plantings.some((planting) => planting.cropKey === 'maize' && planting.bedId.startsWith('zone-staple-')));
 });
 
 test('automatic vegetable plantings use only full, half, third or quarter beds', () => {
@@ -163,7 +238,7 @@ test('an exact crop rest explanation names the whitelist instead of promising gr
   const restNote = result.notes.find((note) => note.includes('still rests')) ?? '';
 
   assert.match(restNote, /chosen crops \(Green beans\)/);
-  assert.match(restNote, /supported yield benchmark, duration and field-spacing basis/i);
+  assert.match(restNote, /verified schedule/i);
   assert.doesNotMatch(restNote, /outside your selected groups|widen your selection/i);
 });
 
@@ -309,9 +384,9 @@ test('staple plots use every supported field-crop group before repeating one at 
     const firstCrop = CROPS.find((c) => c.key === onPlot[0].cropKey)!;
     firstGroupByPlot.push(foodGroupOf(firstCrop));
   }
-  // Grain maize and dry beans currently lack a complete schedule basis. The
-  // optimiser must exhaust the supported staple groups before repeating one;
-  // it must not revive an unsupported crop just to manufacture four labels.
+  // The optimiser must exhaust the source-backed staple groups before
+  // repeating one; it must not manufacture a fifth field course merely to
+  // fill four labels.
   const supportedGroups = new Set(
     CROPS.filter((crop) => isStapleCrop(crop) && hasAutomaticPlanningBasis(crop)).map(foodGroupOf),
   );
