@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "library": "ImbewuField Recraft visual assets",
+  "batch": 1,
+  "status": "awaiting-art",
+  "assets": [
+    "bf_map_water_tank_5000_top_v01.json",
+    "bf_map_water_standpipe_top_v01.json",
+    "bf_map_water_banana_circle_top_v01.json",
+    "bf_hybrid_earthworks_swale_berm_iso_v01.json",
+    "bf_map_support_vetiver_clump_top_v01.json",
+    "bf_pattern_vetiver_row_top_v01.json",
+    "bf_map_tree_mango_mature_top_v01.json",
+    "bf_map_tree_moringa_mature_top_v01.json",
+    "bf_map_tree_banana_clump_mature_top_v01.json",
+    "bf_map_bed_raised_drip_top_v01.json",
+    "bf_hybrid_structure_shade_house_iso_v01.json",
+    "bf_hybrid_structure_compost_station_three_bay_iso_v01.json"
+  ]
+}

@@ -113,7 +113,7 @@ function SummaryCards({ sales, production, expenses, invoices, loading }: Summar
       icon: <Scale size={16} />,
       label: 'Kg harvested',
       value: `${totalKg.toFixed(1)} kg`,
-      color: '#235E86',
+      color: 'var(--color-water)',
       bg: 'rgba(35,94,134,0.08)',
       border: 'rgba(35,94,134,0.18)',
     },
@@ -140,11 +140,11 @@ function SummaryCards({ sales, production, expenses, invoices, loading }: Summar
             <>
               <p
                 className="font-display font-bold text-sm leading-tight"
-                style={{ color: '#20190F' }}
+                style={{ color: 'var(--color-ink)' }}
               >
                 {card.value}
               </p>
-              <p className="font-mono text-xs leading-tight" style={{ color: '#5C5040' }}>
+              <p className="font-mono text-xs leading-tight" style={{ color: 'var(--color-muted-strong)' }}>
                 {card.label}
               </p>
             </>
@@ -222,14 +222,14 @@ function SalesLedger({ sales, expenses, invoices, loading, onEditSale, onEditExp
   return (
     <div
       className="rounded-2xl overflow-hidden"
-      style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}
+      style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}
     >
       <div
         className="px-4 py-3 flex items-center gap-2"
-        style={{ borderBottom: '1px solid #E2D8C4' }}
+        style={{ borderBottom: '1px solid var(--color-border)' }}
       >
-        <Receipt size={14} style={{ color: '#5C5040' }} />
-        <span className="text-xs font-mono uppercase tracking-wider" style={{ color: '#5C5040' }}>
+        <Receipt size={14} style={{ color: 'var(--color-muted-strong)' }} />
+        <span className="text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--color-muted-strong)' }}>
           Recent activity
         </span>
       </div>
@@ -252,25 +252,25 @@ function SalesLedger({ sales, expenses, invoices, loading, onEditSale, onEditExp
             className="w-12 h-12 rounded-2xl flex items-center justify-center"
             style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.12)' }}
           >
-            <Sprout size={20} style={{ color: '#1F4D2B' }} />
+            <Sprout size={20} style={{ color: 'var(--color-forest-800)' }} />
           </div>
-          <p className="text-sm font-display text-center" style={{ color: '#5C5040' }}>
+          <p className="text-sm font-display text-center" style={{ color: 'var(--color-muted-strong)' }}>
             No sales logged yet
           </p>
         </div>
       ) : (
-        <div className="divide-y" style={{ borderColor: '#E2D8C4' }}>
+        <div className="divide-y" style={{ borderColor: 'var(--color-border)' }}>
           {rows.map((item) => (
             <div key={`${item.kind}-${item.id}`} className="flex items-start justify-between gap-3 px-4 py-3">
               <div className="flex-1 min-w-0">
                 <p
                   className="text-sm font-display font-medium leading-snug truncate"
-                  style={{ color: '#20190F' }}
+                  style={{ color: 'var(--color-ink)' }}
                 >
                   {item.title}
                 </p>
                 {item.subtitle && (
-                  <p className="text-xs font-mono mt-0.5" style={{ color: '#8C7A62' }}>
+                  <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--color-muted)' }}>
                     {item.subtitle}
                   </p>
                 )}
@@ -282,7 +282,7 @@ function SalesLedger({ sales, expenses, invoices, loading, onEditSale, onEditExp
                 >
                   {item.positive ? '+' : '-'}{fmtZAR(item.amount)}
                 </p>
-                <p className="text-xs font-mono mt-0.5" style={{ color: '#8C7A62' }}>
+                <p className="text-xs font-mono mt-0.5" style={{ color: 'var(--color-muted)' }}>
                   {fmtDate(item.iso)}
                 </p>
               </div>
@@ -296,7 +296,7 @@ function SalesLedger({ sales, expenses, invoices, loading, onEditSale, onEditExp
                       if (!src) return;
                       if (item.kind === 'sale') onEditSale(src as SalesLog); else onEditExpense(src as ExpenseLog);
                     }}
-                    style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: '#5C5040', opacity: 0.55 }}
+                    style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: 'var(--color-muted-strong)', opacity: 0.55 }}
                   >
                     <Pencil size={14} />
                   </button>
@@ -306,7 +306,7 @@ function SalesLedger({ sales, expenses, invoices, loading, onEditSale, onEditExp
                     onClick={() => requestDelete(item)}
                     style={pendingDelete === item.id
                       ? { background: 'rgba(196,58,58,0.12)', border: '1px solid rgba(196,58,58,0.35)', borderRadius: 8, cursor: 'pointer', padding: '3px 6px', color: '#B23A3A', fontSize: 11, fontFamily: 'inherit', fontWeight: 600 }
-                      : { background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: '#5C5040', opacity: 0.55 }}
+                      : { background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: 'var(--color-muted-strong)', opacity: 0.55 }}
                   >
                     {pendingDelete === item.id ? 'Sure?' : <Trash2 size={14} />}
                   </button>
@@ -467,7 +467,7 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
         type="button"
         onClick={() => setOpen(true)}
         className="w-full flex items-center justify-center gap-2 py-3 rounded-2xl text-sm font-display font-semibold transition-all"
-        style={{ background: '#1F4D2B', border: '1px solid rgba(31,77,43,0.22)', color: '#F7F2E9' }}
+        style={{ background: 'var(--color-forest-800)', border: '1px solid rgba(31,77,43,0.22)', color: 'var(--color-canvas)' }}
       >
         <Plus size={16} />
         New entry
@@ -478,21 +478,21 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
   const accent = isIn ? '#2E6B3A' : '#C07A1E';
 
   return (
-    <div className="rounded-2xl overflow-hidden" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
+    <div className="rounded-2xl overflow-hidden" style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
       <div className="px-4 pt-3 pb-2">
         {editing ? (
-          <p className="text-xs font-sans font-semibold uppercase tracking-wider" style={{ color: '#5C5040' }}>
+          <p className="text-xs font-sans font-semibold uppercase tracking-wider" style={{ color: 'var(--color-muted-strong)' }}>
             Editing {editing.type === 'sale' ? 'sale' : 'cost'}
           </p>
         ) : (
           /* Money in / out toggle */
-          <div className="flex rounded-xl p-0.5 gap-0.5" style={{ background: 'rgba(226,216,196,0.5)', border: '1px solid #E2D8C4' }}>
+          <div className="flex rounded-xl p-0.5 gap-0.5" style={{ background: 'rgba(226,216,196,0.5)', border: '1px solid var(--color-border)' }}>
             {([['in', 'Money in'], ['out', 'Money out']] as const).map(([k, label]) => (
               <button key={k} type="button" onClick={() => { setKind(k); setForm((f) => ({ ...f, error: '' })); }}
                 className="flex-1 py-1.5 rounded-lg font-sans font-semibold transition-all"
                 style={kind === k
                   ? { background: k === 'in' ? '#2E6B3A' : '#C07A1E', color: '#fff', fontSize: 13 }
-                  : { color: '#5C5040', fontSize: 13, background: 'transparent', border: 'none', cursor: 'pointer' }}>
+                  : { color: 'var(--color-muted-strong)', fontSize: 13, background: 'transparent', border: 'none', cursor: 'pointer' }}>
                 {label}
               </button>
             ))}
@@ -511,8 +511,8 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
             </button>
             <input ref={slipInputRef} type="file" accept="image/*" capture="environment" className="hidden" onChange={handleScan} />
             {scanNote && (
-              <p className="text-xs font-sans mt-2 flex items-start gap-1.5" style={{ color: '#5C5040' }}>
-                <Sprout size={13} style={{ color: '#1F4D2B', flexShrink: 0, marginTop: 1 }} />
+              <p className="text-xs font-sans mt-2 flex items-start gap-1.5" style={{ color: 'var(--color-muted-strong)' }}>
+                <Sprout size={13} style={{ color: 'var(--color-forest-800)', flexShrink: 0, marginTop: 1 }} />
                 <span><span style={{ fontStyle: 'italic' }}>Lima:</span> {scanNote}</span>
               </p>
             )}
@@ -520,50 +520,50 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
         )}
 
         <div>
-          <label className="block text-xs font-sans uppercase tracking-wider mb-1" style={{ color: '#5C5040' }}>
+          <label className="block text-xs font-sans uppercase tracking-wider mb-1" style={{ color: 'var(--color-muted-strong)' }}>
             {isIn ? 'Crop' : 'What for'}
           </label>
           <input type="text" placeholder={isIn ? 'e.g. Spinach' : 'e.g. Seedlings'}
             value={form.crop} onChange={(e) => setForm((f) => ({ ...f, crop: e.target.value }))}
             className="w-full rounded-lg px-3 py-2 text-sm font-display outline-none"
-            style={{ background: '#E4DCC6', border: '1px solid #E2D8C4', color: '#20190F' }} />
+            style={{ background: 'var(--color-canvas)', border: '1px solid var(--color-border)', color: 'var(--color-ink)' }} />
         </div>
 
         <div className="grid grid-cols-2 gap-3">
           {isIn && (
             <div>
-              <label className="block text-xs font-sans uppercase tracking-wider mb-1" style={{ color: '#5C5040' }}>Kg sold</label>
+              <label className="block text-xs font-sans uppercase tracking-wider mb-1" style={{ color: 'var(--color-muted-strong)' }}>Kg sold</label>
               <input type="number" placeholder="0.0" step="0.1" min="0"
                 value={form.kg} onChange={(e) => setForm((f) => ({ ...f, kg: e.target.value }))}
                 className="w-full rounded-lg px-3 py-2 text-sm font-display outline-none"
-                style={{ background: '#E4DCC6', border: '1px solid #E2D8C4', color: '#20190F' }} />
+                style={{ background: 'var(--color-canvas)', border: '1px solid var(--color-border)', color: 'var(--color-ink)' }} />
             </div>
           )}
           <div className={isIn ? '' : 'col-span-2'}>
-            <label className="block text-xs font-sans uppercase tracking-wider mb-1" style={{ color: '#5C5040' }}>Amount (R)</label>
+            <label className="block text-xs font-sans uppercase tracking-wider mb-1" style={{ color: 'var(--color-muted-strong)' }}>Amount (R)</label>
             <input type="number" placeholder="0.00" step="0.01" min="0"
               value={form.price} onChange={(e) => setForm((f) => ({ ...f, price: e.target.value }))}
               className="w-full rounded-lg px-3 py-2 text-sm font-display outline-none"
-              style={{ background: '#E4DCC6', border: '1px solid #E2D8C4', color: '#20190F' }} />
+              style={{ background: 'var(--color-canvas)', border: '1px solid var(--color-border)', color: 'var(--color-ink)' }} />
           </div>
         </div>
 
         <div>
-          <label className="block text-xs font-sans uppercase tracking-wider mb-1" style={{ color: '#5C5040' }}>
+          <label className="block text-xs font-sans uppercase tracking-wider mb-1" style={{ color: 'var(--color-muted-strong)' }}>
             {isIn ? 'Buyer' : 'Supplier'}
-            <span className="ml-1 normal-case" style={{ color: '#8C7A62' }}>(optional)</span>
+            <span className="ml-1 normal-case" style={{ color: 'var(--color-muted)' }}>(optional)</span>
           </label>
           <input type="text" placeholder={isIn ? 'e.g. Local market' : 'e.g. Agri Co-op'}
             value={form.buyer} onChange={(e) => setForm((f) => ({ ...f, buyer: e.target.value }))}
             className="w-full rounded-lg px-3 py-2 text-sm font-display outline-none"
-            style={{ background: '#E4DCC6', border: '1px solid #E2D8C4', color: '#20190F' }} />
+            style={{ background: 'var(--color-canvas)', border: '1px solid var(--color-border)', color: 'var(--color-ink)' }} />
         </div>
 
         {/* Expense category — preset chips (Money out only) */}
         {!isIn && (
           <div>
-            <label className="block text-xs font-sans uppercase tracking-wider mb-1" style={{ color: '#5C5040' }}>
-              Category <span className="normal-case" style={{ color: '#8C7A62' }}>(optional)</span>
+            <label className="block text-xs font-sans uppercase tracking-wider mb-1" style={{ color: 'var(--color-muted-strong)' }}>
+              Category <span className="normal-case" style={{ color: 'var(--color-muted)' }}>(optional)</span>
             </label>
             <div className="flex flex-wrap gap-1.5">
               {EXPENSE_CATEGORIES.map((c) => (
@@ -572,7 +572,7 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
                   className="px-2.5 py-1 rounded-full text-xs font-sans font-semibold capitalize transition-all"
                   style={form.category === c
                     ? { background: '#C07A1E', color: '#fff', border: '1px solid #C07A1E', cursor: 'pointer' }
-                    : { background: '#E4DCC6', color: '#5C5040', border: '1px solid #E2D8C4', cursor: 'pointer' }}>
+                    : { background: 'var(--color-canvas)', color: 'var(--color-muted-strong)', border: '1px solid var(--color-border)', cursor: 'pointer' }}>
                   {c}
                 </button>
               ))}
@@ -585,12 +585,12 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
         <div className="flex gap-2 pt-1">
           <button type="button" onClick={closeForm}
             className="flex-1 py-2.5 rounded-xl text-sm font-display transition-all"
-            style={{ background: 'transparent', border: '1px solid #E2D8C4', color: '#5C5040' }}>
+            style={{ background: 'transparent', border: '1px solid var(--color-border)', color: 'var(--color-muted-strong)' }}>
             Cancel
           </button>
           <button type="submit" disabled={form.loading}
             className="flex-1 py-2.5 rounded-xl text-sm font-display font-semibold flex items-center justify-center gap-2 transition-all"
-            style={{ background: form.loading ? 'rgba(31,77,43,0.06)' : accent, border: 'none', color: form.loading ? '#5C5040' : '#fff', cursor: form.loading ? 'not-allowed' : 'pointer' }}>
+            style={{ background: form.loading ? 'rgba(31,77,43,0.06)' : accent, border: 'none', color: form.loading ? 'var(--color-muted-strong)' : '#fff', cursor: form.loading ? 'not-allowed' : 'pointer' }}>
             {form.loading ? (
               <>
                 <span className="inline-block w-3 h-3 rounded-full border-2 animate-spin" style={{ borderColor: '#fff transparent transparent transparent' }} />
@@ -613,13 +613,13 @@ function SignInPrompt() {
         className="w-14 h-14 rounded-2xl flex items-center justify-center"
         style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.12)' }}
       >
-        <TrendingUp size={22} style={{ color: '#1F4D2B' }} />
+        <TrendingUp size={22} style={{ color: 'var(--color-forest-800)' }} />
       </div>
       <div>
-        <p className="font-display font-semibold text-base mb-1" style={{ color: '#20190F' }}>
+        <p className="font-display font-semibold text-base mb-1" style={{ color: 'var(--color-ink)' }}>
           Sign in to track your income
         </p>
-        <p className="font-display text-xs leading-relaxed" style={{ color: '#5C5040' }}>
+        <p className="font-display text-xs leading-relaxed" style={{ color: 'var(--color-muted-strong)' }}>
           Log crop sales and see your earnings over time.
         </p>
       </div>
@@ -627,9 +627,9 @@ function SignInPrompt() {
         href="/login"
         className="px-5 py-2 rounded-xl text-sm font-display font-semibold transition-all"
         style={{
-          background: '#1F4D2B',
+          background: 'var(--color-forest-800)',
           border: '1px solid rgba(31,77,43,0.22)',
-          color: '#F7F2E9',
+          color: 'var(--color-canvas)',
         }}
       >
         Go to sign in
@@ -721,8 +721,8 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
   const stats = [
     { label: 'Income', value: fmtZAR(income), color: '#2E6B3A' },
     { label: 'Expenses', value: expenseTotal ? fmtZAR(expenseTotal) : '—', color: '#C07A1E' },
-    { label: 'Net profit', value: fmtZAR(net), color: '#1F4D2B' },
-    { label: 'Yield logged', value: yieldLabel, color: '#235E86' },
+    { label: 'Net profit', value: fmtZAR(net), color: 'var(--color-forest-800)' },
+    { label: 'Yield logged', value: yieldLabel, color: 'var(--color-water)' },
   ];
 
   return (
@@ -730,22 +730,22 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
       {/* Title bar */}
       <div className="flex items-end justify-between gap-4 mb-5 flex-wrap">
         <div>
-          <div className="font-sans uppercase tracking-widest" style={{ fontSize: 11, color: '#94876F', letterSpacing: '0.14em' }}>{name}</div>
-          <h1 className="font-display font-semibold" style={{ fontSize: 30, color: '#20190F', letterSpacing: '-0.02em', lineHeight: 1.1 }}>Financial sheet</h1>
+          <div className="font-sans uppercase tracking-widest" style={{ fontSize: 11, color: 'var(--color-muted)', letterSpacing: '0.14em' }}>{name}</div>
+          <h1 className="font-display font-semibold" style={{ fontSize: 30, color: 'var(--color-ink)', letterSpacing: '-0.02em', lineHeight: 1.1 }}>Financial sheet</h1>
         </div>
         <div className="flex items-center gap-2">
-          <div className="flex rounded-lg p-0.5 gap-0.5" style={{ background: 'rgba(226,216,196,0.5)', border: '1px solid #E2D8C4' }}>
+          <div className="flex rounded-lg p-0.5 gap-0.5" style={{ background: 'rgba(226,216,196,0.5)', border: '1px solid var(--color-border)' }}>
             {(['month', 'season', 'year'] as Period[]).map((p) => (
               <button key={p} onClick={() => setPeriod(p)}
                 className="px-3 py-1.5 rounded-md font-sans font-semibold capitalize transition-all"
-                style={period === p ? { background: '#1F4D2B', color: '#F7F2E9', fontSize: 13 } : { color: '#5C5040', fontSize: 13, background: 'transparent', border: 'none', cursor: 'pointer' }}>
+                style={period === p ? { background: 'var(--color-forest-800)', color: 'var(--color-canvas)', fontSize: 13 } : { color: 'var(--color-muted-strong)', fontSize: 13, background: 'transparent', border: 'none', cursor: 'pointer' }}>
                 {p}
               </button>
             ))}
           </div>
           <button onClick={exportCsv} disabled={rows.length === 0}
             className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg font-sans font-semibold transition-all"
-            style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: rows.length ? '#20190F' : '#94876F', fontSize: 14, cursor: rows.length ? 'pointer' : 'not-allowed' }}>
+            style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', color: rows.length ? 'var(--color-ink)' : 'var(--color-muted)', fontSize: 14, cursor: rows.length ? 'pointer' : 'not-allowed' }}>
             <Download size={15} />Export
           </button>
           <Link href="/invoice" className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg font-sans font-semibold" style={{ background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.3)', color: '#C07A1E', fontSize: 14, textDecoration: 'none' }}>
@@ -753,12 +753,12 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
           </Link>
           <Link href="/records"
             className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg font-sans font-semibold"
-            style={{ background: 'rgba(35,94,134,0.10)', border: '1px solid rgba(35,94,134,0.25)', color: '#235E86', fontSize: 14, textDecoration: 'none' }}>
+            style={{ background: 'rgba(35,94,134,0.10)', border: '1px solid rgba(35,94,134,0.25)', color: 'var(--color-water)', fontSize: 14, textDecoration: 'none' }}>
             <Sprout size={15} />Log harvest
           </Link>
           <button onClick={onAddEntry}
             className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg font-sans font-semibold transition-all"
-            style={{ background: '#1F4D2B', border: '1px solid rgba(31,77,43,0.22)', color: '#F7F2E9', fontSize: 14, cursor: 'pointer' }}>
+            style={{ background: 'var(--color-forest-800)', border: '1px solid rgba(31,77,43,0.22)', color: 'var(--color-canvas)', fontSize: 14, cursor: 'pointer' }}>
             <Plus size={15} />Add entry
           </button>
         </div>
@@ -767,34 +767,34 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
       {/* Stat row */}
       <div className="grid grid-cols-4 gap-4 mb-5">
         {stats.map((s) => (
-          <div key={s.label} className="rounded-2xl px-5 py-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 11, color: '#94876F', letterSpacing: '0.1em' }}>{s.label}</div>
+          <div key={s.label} className="rounded-2xl px-5 py-4" style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
+            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 11, color: 'var(--color-muted)', letterSpacing: '0.1em' }}>{s.label}</div>
             <div className="font-display font-bold mt-1" style={{ fontSize: 28, color: s.color, letterSpacing: '-0.02em' }}>{loading ? '…' : s.value}</div>
           </div>
         ))}
       </div>
 
       {/* Ledger table */}
-      <div className="rounded-2xl overflow-hidden" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
+      <div className="rounded-2xl overflow-hidden" style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
         <table className="w-full" style={{ borderCollapse: 'collapse' }}>
           <thead>
-            <tr style={{ borderBottom: '1px solid #E2D8C4' }}>
+            <tr style={{ borderBottom: '1px solid var(--color-border)' }}>
               {['Date', 'Description', 'Qty', 'In', 'Source', 'Out'].map((h, i) => (
                 <th key={h} className="font-sans uppercase tracking-wider px-5 py-3"
-                  style={{ fontSize: 11, color: '#94876F', textAlign: i >= 3 && (h === 'In' || h === 'Out') ? 'right' : 'left', letterSpacing: '0.08em', fontWeight: 700 }}>{h}</th>
+                  style={{ fontSize: 11, color: 'var(--color-muted)', textAlign: i >= 3 && (h === 'In' || h === 'Out') ? 'right' : 'left', letterSpacing: '0.08em', fontWeight: 700 }}>{h}</th>
               ))}
               <th style={{ width: 40 }} />
             </tr>
           </thead>
           <tbody>
             {rows.length === 0 ? (
-              <tr><td colSpan={7} className="px-5 py-10 text-center font-sans" style={{ fontSize: 14, color: '#8C7A62' }}>
+              <tr><td colSpan={7} className="px-5 py-10 text-center font-sans" style={{ fontSize: 14, color: 'var(--color-muted)' }}>
                 No entries for this {period}. Use the Add-entry button, the Invoice tool, or your phone — everything shows here. {DUPLICATE_LEDGER_FOOTER}
               </td></tr>
             ) : rows.map((r, i) => (
-              <tr key={`${r.kind}-${r.id}`} style={{ borderBottom: i < rows.length - 1 ? '1px solid #E2D8C4' : 'none' }}>
-                <td className="px-5 py-3 font-sans" style={{ fontSize: 14, color: '#5C5040', whiteSpace: 'nowrap' }}>{r.date}</td>
-                <td className="px-5 py-3 font-display font-medium" style={{ fontSize: 14, color: '#20190F' }}>
+              <tr key={`${r.kind}-${r.id}`} style={{ borderBottom: i < rows.length - 1 ? '1px solid var(--color-border)' : 'none' }}>
+                <td className="px-5 py-3 font-sans" style={{ fontSize: 14, color: 'var(--color-muted-strong)', whiteSpace: 'nowrap' }}>{r.date}</td>
+                <td className="px-5 py-3 font-display font-medium" style={{ fontSize: 14, color: 'var(--color-ink)' }}>
                   {r.desc}
                   {r.duplicateSuspect && (
                     <span className="block font-sans" style={{ fontSize: 11.5, color: '#B07A1E', marginTop: 2 }}>
@@ -802,9 +802,9 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
                     </span>
                   )}
                 </td>
-                <td className="px-5 py-3 font-sans" style={{ fontSize: 14, color: '#5C5040', whiteSpace: 'nowrap' }}>{r.qty}</td>
+                <td className="px-5 py-3 font-sans" style={{ fontSize: 14, color: 'var(--color-muted-strong)', whiteSpace: 'nowrap' }}>{r.qty}</td>
                 <td className="px-5 py-3 font-display font-semibold tabular-nums" style={{ fontSize: 14, color: '#2E6B3A', textAlign: 'right', whiteSpace: 'nowrap' }}>{r.inAmt != null ? fmtZAR(r.inAmt) : '—'}</td>
-                <td className="px-5 py-3 font-sans" style={{ fontSize: 14, color: '#8C7A62' }}>{r.source}</td>
+                <td className="px-5 py-3 font-sans" style={{ fontSize: 14, color: 'var(--color-muted)' }}>{r.source}</td>
                 <td className="px-5 py-3 font-display font-semibold tabular-nums" style={{ fontSize: 14, color: '#C07A1E', textAlign: 'right', whiteSpace: 'nowrap' }}>{r.outAmt != null ? fmtZAR(r.outAmt) : '—'}</td>
                 <td className="pr-4 py-3">
                   {(r.kind === 'sale' || r.kind === 'expense') && (
@@ -818,7 +818,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
                           if (src) onEditExpense(src);
                         }
                       }}
-                      style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: '#5C5040', opacity: 0.55 }}>
+                      style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: 'var(--color-muted-strong)', opacity: 0.55 }}>
                       <Pencil size={14} />
                     </button>
                   )}
@@ -828,7 +828,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
           </tbody>
         </table>
       </div>
-      <p className="font-sans mt-3" style={{ fontSize: 12, color: '#94876F' }}>
+      <p className="font-sans mt-3" style={{ fontSize: 12, color: 'var(--color-muted)' }}>
         Synced with your phone · {rows.length} {rows.length === 1 ? 'entry' : 'entries'} this {period}. Add or edit sales and costs here, or with the New-entry button on your phone.
       </p>
     </div>
@@ -1011,16 +1011,16 @@ export default function FinancesPage() {
   return (
     <div
       className="flex flex-col overflow-hidden"
-      style={{ height: '100dvh', background: '#E4DCC6' }}
+      style={{ height: '100dvh', background: 'var(--color-canvas)' }}
     >
       {/* Header */}
       <header
         className="flex-shrink-0 flex items-center px-4 gap-3"
-        style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}
+        style={{ height: 52, background: 'var(--color-surface)', borderBottom: '1px solid var(--color-border)' }}
       >
         <BrandLogo />
-        <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
-        <span className="text-xs font-display" style={{ color: '#5C5040' }}>Finances</span>
+        <div className="w-px h-5" style={{ background: 'var(--color-border)' }} />
+        <span className="text-xs font-display" style={{ color: 'var(--color-muted-strong)' }}>Finances</span>
         <div className="flex-1" />
         <LessonLink id="finances:overview" label="Learn" />
         <Link href="/invoice"
@@ -1098,7 +1098,7 @@ export default function FinancesPage() {
               <Link
                 href="/records"
                 className="w-full flex items-center justify-center gap-2 py-3 rounded-2xl text-sm font-display font-semibold transition-all"
-                style={{ background: 'rgba(35,94,134,0.10)', border: '1px solid rgba(35,94,134,0.25)', color: '#235E86', textDecoration: 'none' }}
+                style={{ background: 'rgba(35,94,134,0.10)', border: '1px solid rgba(35,94,134,0.25)', color: 'var(--color-water)', textDecoration: 'none' }}
               >
                 <Sprout size={16} />Log harvest
               </Link>
@@ -1120,7 +1120,7 @@ export default function FinancesPage() {
                   onClick={handleLoadSampleData}
                   disabled={seeding}
                   className="w-full flex flex-col items-center justify-center gap-2 py-6 rounded-2xl text-sm font-display font-semibold transition-all"
-                  style={{ background: 'transparent', border: '1px dashed rgba(31,77,43,0.35)', color: '#1F4D2B', cursor: seeding ? 'wait' : 'pointer' }}
+                  style={{ background: 'transparent', border: '1px dashed rgba(31,77,43,0.35)', color: 'var(--color-forest-800)', cursor: seeding ? 'wait' : 'pointer' }}
                 >
                   {seeding ? <Loader2 size={18} className="animate-spin" /> : <Sparkles size={18} />}
                   {seeding ? 'Loading sample data...' : 'Load sample data — see how Finance works'}
@@ -1131,7 +1131,7 @@ export default function FinancesPage() {
                 onClick={() => exportLedgerCsv(buildLedgerRows(sales, expenses, production, invoices, 'month', new Date()), 'month')}
                 disabled={!hasAnyData}
                 className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-display font-semibold transition-all"
-                style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: hasAnyData ? '#20190F' : '#94876F', cursor: hasAnyData ? 'pointer' : 'not-allowed' }}
+                style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', color: hasAnyData ? 'var(--color-ink)' : 'var(--color-muted)', cursor: hasAnyData ? 'pointer' : 'not-allowed' }}
               >
                 <Download size={15} />Export CSV
               </button>
