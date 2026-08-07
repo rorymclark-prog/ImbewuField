@@ -38,6 +38,8 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     changes: [
       'Choose Satellite, your drone photo, or Blank to see the same plan on paper',
       'Blank keeps the same measurements as the base you just left',
+      'Finance now shows yield, turnover and price per planted square metre',
+      'Crop costs stay unassigned until you choose the crop they were for',
     ],
   },
   {
