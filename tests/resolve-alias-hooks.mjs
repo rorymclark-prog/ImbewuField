@@ -11,36 +11,48 @@
 //
 // Everything else (bare package specifiers like 'firebase/firestore') passes straight through
 // to the default resolver. Registered via tests/register-alias.mjs (see package.json's "test" script).
-import { existsSync } from 'node:fs';
+// A folder specifier ('@/lib/crop-optimizer') resolves to that folder's index file, again
+// matching webpack. Node's own resolver throws ERR_UNSUPPORTED_DIR_IMPORT for these, so this
+// is purely additive: no import that resolves today changes, and a module folder can now be
+// imported by the same path the app uses rather than by an '/index' spelling only tests need.
+import { existsSync, statSync } from 'node:fs';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 const ROOT = new URL('../', import.meta.url); // repo root (this file lives in tests/)
 const EXTENSIONS = ['.ts', '.tsx', '.mts', '.mjs', '.js'];
 
+function isDirectory(path) {
+  try {
+    return statSync(path).isDirectory();
+  } catch {
+    return false;
+  }
+}
+
+function resolveFileOrIndex(base) {
+  if (existsSync(base) && !isDirectory(base)) return base;
+  for (const ext of EXTENSIONS) {
+    if (existsSync(base + ext)) return base + ext;
+  }
+  if (isDirectory(base)) {
+    for (const ext of EXTENSIONS) {
+      if (existsSync(`${base}/index${ext}`)) return `${base}/index${ext}`;
+    }
+  }
+  return undefined;
+}
+
 export async function resolve(specifier, context, nextResolve) {
   if (specifier.startsWith('@/')) {
-    const base = fileURLToPath(new URL(specifier.slice(2), ROOT));
-    let resolvedPath = existsSync(base) ? base : undefined;
-    if (!resolvedPath) {
-      for (const ext of EXTENSIONS) {
-        if (existsSync(base + ext)) {
-          resolvedPath = base + ext;
-          break;
-        }
-      }
-    }
+    const resolvedPath = resolveFileOrIndex(fileURLToPath(new URL(specifier.slice(2), ROOT)));
     if (resolvedPath) return nextResolve(pathToFileURL(resolvedPath).href, context);
   }
   if ((specifier.startsWith('./') || specifier.startsWith('../')) && context.parentURL) {
     try {
       return await nextResolve(specifier, context);
     } catch (err) {
-      const base = fileURLToPath(new URL(specifier, context.parentURL));
-      for (const ext of EXTENSIONS) {
-        if (existsSync(base + ext)) {
-          return nextResolve(pathToFileURL(base + ext).href, context);
-        }
-      }
+      const resolvedPath = resolveFileOrIndex(fileURLToPath(new URL(specifier, context.parentURL)));
+      if (resolvedPath) return nextResolve(pathToFileURL(resolvedPath).href, context);
       throw err;
     }
   }
