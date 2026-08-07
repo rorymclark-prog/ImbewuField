@@ -442,6 +442,18 @@ html, body {
   border-radius: 4px;
 }
 
+/* Sample mode: push the Mapbox controls up so they clear the banner */
+body.is-sample-mode .mapboxgl-ctrl-bottom-left,
+body.is-sample-mode .mapboxgl-ctrl-bottom-right {
+  margin-bottom: calc(110px + env(safe-area-inset-bottom, 0px)) !important;
+}
+@media (min-width: 1024px) {
+  body.is-sample-mode .mapboxgl-ctrl-bottom-left,
+  body.is-sample-mode .mapboxgl-ctrl-bottom-right {
+    margin-bottom: 50px !important;
+  }
+}
+
 /* Global print safety: anything marked .no-print never reaches paper.
    Covers the global Lima chat FAB / nav so they don't spill onto a 2nd page. */
 @media print {
