@@ -10,11 +10,11 @@
   "realWorldScaleSource": "configured in app, not baked into artwork",
   "states": ["existing", "proposed", "to-verify"],
   "stateStyling": "app-code-only",
-  "tags": ["water", "tank", "rainwater", "5000-litre"],
-  "generationPrompt": "Single isolated South African vertical rotational-moulded rainwater tank, 5,000-litre class, dark forest-green polyethylene, cylindrical ribbed body, domed shoulder, round top lid and small lower outlet valve, no branding. Very slight 80-degree overhead orthographic view so the circular footprint and height are both legible. Clean hand-drawn vector, dark-olive outline, muted natural palette, transparent background, no pipes or surrounding scenery, no text, no logo, no long shadow.",
+  "tags": ["water", "tank", "rainwater", "5000-litre", "jojo-style"],
+  "generationPrompt": "Using the app's own canonical JoJo Tank 5000L picker icon as an image reference: strict top-down orthographic map-icon version, viewed from directly above (approx. 80°) so mainly the circular domed top, the off-centre hatch and loop handle are visible, with only a slight hint of the ribbed side wall at the edge of the circle so it still reads as a cylinder. Same teal-green colour and soft realistic icon shading as the reference. Fully isolated, transparent background, no card, no border, no drop shadow, no text, no logo, no scenery, no other objects.",
   "delivery": {
     "svg": "bf_map_water_tank_5000_top_v01.svg",
     "png": ["bf_map_water_tank_5000_top_v01_1024.png", "bf_map_water_tank_5000_top_v01_512.png", "bf_map_water_tank_5000_top_v01_256.png", "bf_map_water_tank_5000_top_v01_128.png"]
   },
-  "assetStatus": "awaiting-art"
+  "assetStatus": "awaiting-review"
 }
