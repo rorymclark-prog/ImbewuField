@@ -30,11 +30,9 @@
 // dvh units) independent of what the flex column above it does, so it can never be pushed off
 // the bottom edge by unrelated content overflowing above it — see renderPhoneSheet below.
 //
-// The Layers popover (inside renderToolRow) opens upward with position:absolute and is
-// documented there as needing NO overflow ancestor. That guarantee must hold in BOTH layouts:
-// neither the desktop docked wrapper nor the phone sheet's own root may ever gain
-// overflow:hidden/auto — only the scrollable BODY region (a sibling of the tool row, never an
-// ancestor of it) is allowed to clip/scroll.
+// The Layers popover (inside renderToolRow) must not have an overflow ancestor. It opens down
+// into a desktop aside (there is room below) and upward from the phone sheet (there is not), with
+// its own scroll cap in either case. Only the BODY region, a sibling of the tool row, may clip.
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
@@ -48,7 +46,7 @@ import {
   MIN_AREA_FILL_OPACITY, MAX_AREA_FILL_OPACITY, type AreaFillStyle,
 } from '@/lib/design-canvas';
 import { MIN_BED_COUNT, MAX_BED_COUNT } from '@/lib/bed-block';
-import { CATEGORY_META, CATEGORY_STEP, ELEMENT_CATALOG, ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_DEFS, biomeClimates, elementSuitsClimate, elementVisibleInPalette, type DesignElementDef } from '@/lib/design-elements';
+import { CATEGORY_META, CATEGORY_STEP, ELEMENT_CATALOG, ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_DEFS, biomeClimates, elementSuitsClimate, elementVisibleInPalette, type DesignElementDef, type DesignLayerState } from '@/lib/design-elements';
 import { SPECIES } from '@/lib/species-catalog';
 import { biomeKeyForName } from '@/lib/biome';
 import { COMPASS16_ORDER, isCompassDirection16, type LocalWindObservation } from '@/lib/local-wind';
@@ -63,22 +61,7 @@ import LessonLink from './LessonLink';
 
 type ToolKind = 'select' | 'place' | 'zone' | 'line';
 
-interface ActiveLayers {
-  water: boolean;
-  earthworks: boolean;
-  zones: boolean;
-  planting: boolean;
-  structures: boolean;
-  access: boolean;
-  animals: boolean;
-  ground: boolean;
-  baseMap: boolean;
-  boundary: boolean;
-  labels: boolean;
-  symbols: boolean;
-  contours: boolean;
-  sector: boolean;
-}
+type ActiveLayers = DesignLayerState;
 
 export type WaterInfrastructureLayer = 'storage' | 'tapPoints' | 'pipes' | 'drip' | 'swales';
 export type WaterInfrastructureVisibility = Record<WaterInfrastructureLayer, boolean>;
@@ -261,15 +244,14 @@ const GROUND_FEATURE_KINDS: GroundFeatureKind[] = ['boundary', 'house', 'patio',
 // Ordered by the Scale of Permanence (water → earthworks → access → structures → planting),
 // with the reference/overlay layers bracketing it.
 const LAYER_TOGGLES: Array<{ key: keyof ActiveLayers; labelKey: string; icon: string }> = [
-  { key: 'baseMap', labelKey: 'designPaletteLayerBase', icon: '🛰️' },
-  // The property fence, sitting next to Base map because it is the other reference layer the
+  { key: 'references', labelKey: 'designPaletteLayerBase', icon: '🛰️' },
+  // The property fence, sitting next to Site references because it is the other reference layer the
   // farmer did not draw in the Studio. Before this it had no switch of its own: a boundary
-  // inherited from a ring traced on the main map could only be removed by hiding the satellite
-  // photo along with it.
+  // inherited from a ring traced on the main map could only be removed by hiding all site context.
   { key: 'boundary', labelKey: 'designPaletteLayerBoundary', icon: '🚧' },
   // "Existing", not "Ground": this layer is the farmer's EXISTING site reality (house/patio/lawn/
   // veg garden the app draws), i.e. the "Draw what's already here" chips — distinct from the
-  // proposed Structures layer and from the satellite Base map. (Fable Q1; internal key stays.)
+  // proposed Structures layer and from site-reference context. (Fable Q1; internal key stays.)
   { key: 'ground', labelKey: 'designPaletteLayerExisting', icon: '🏠' },
   { key: 'water', labelKey: 'designPaletteLayerWater', icon: '💧' },
   { key: 'earthworks', labelKey: 'designPaletteLayerEarthworks', icon: '⛏️' },
@@ -1294,10 +1276,9 @@ export default function DesignPalette({
             </div>
           )}
 
-          {/* Layers — pinned right of the tool row, always on screen. Popover opens upward over
-              the map (its wrapper isn't an overflow container, so it's never clipped) — true in
-              BOTH the desktop docked layout and the phone sheet; neither root ever sets
-              overflow:hidden/auto (see the module comment at the top of this file). */}
+          {/* Layers — pinned right of the tool row, always on screen. A desktop aside has room
+              below the button, so its panel opens down; the phone sheet opens up over the map.
+              Its own cap is scrollable, rather than allowing either edge to leave the viewport. */}
           <div style={{ position: 'relative', flexShrink: 0 }}>
             <button
               ref={layersButtonRef}
@@ -2299,9 +2280,8 @@ export default function DesignPalette({
           background: PAPER,
           borderRadius: '16px 16px 0 0',
           boxShadow: '0 -6px 20px rgba(0,0,0,0.18)',
-          // NEVER overflow:hidden/auto on this root — the Layers popover (inside renderToolRow)
-          // opens upward with position:absolute and needs no clipping ancestor. Only the body
-          // region below (a sibling of the tool row, not an ancestor) is allowed to scroll.
+          // NEVER overflow:hidden/auto on this root — the Layers popover needs no clipping
+          // ancestor. Only the body region below (a sibling of the tool row) may scroll.
           overflow: 'visible',
           maxHeight: sheetOpen ? PHONE_SHEET_EXPANDED_MAX : undefined,
           fontFamily: 'inherit',
@@ -2391,9 +2371,8 @@ export default function DesignPalette({
           the fixed bottom sheet above instead) there is normally enough room for this region's
           own content to fit inside its 30dvh cap with no internal scrolling ever engaging; the
           cap plus overflow-y:auto stays here as a safety net for an unusually short desktop
-          window. Scoped to start AFTER the tool row on purpose: the Layers popover lives inside
-          the tool row and opens upward with no overflow ancestor of its own ("never clipped" —
-          see its comment above); wrapping the tool row in this too would clip it. */}
+          window. Scoped to start AFTER the tool row on purpose: the Layers popover owns its own
+          scroll cap and must not inherit this clipping region. */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: guided ? 10 : 6, overflowY: 'auto', WebkitOverflowScrolling: 'touch', minHeight: 0, flex: desktopAside ? 1 : undefined, maxHeight: desktopAside ? undefined : '30dvh' }}>
         {renderBodyRows()}
       </div>
