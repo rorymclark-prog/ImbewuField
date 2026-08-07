@@ -975,6 +975,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
              panel is showing. A printed page must still contain the report. */
           .report-column {
             display: block !important;
+            background: #ffffff !important;
           }
 
           /* Page geometry */
@@ -1022,6 +1023,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             height: auto !important;
             width: auto !important;
             inset: unset !important;
+            background: #ffffff !important;
           }
 
           /* Make the flex layout collapse sensibly */
@@ -1037,6 +1039,8 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             max-width: 100% !important;
             padding: 0 !important;
             margin: 0 !important;
+            border: none !important;
+            background: #ffffff !important;
           }
 
           /* ── Colour corrections for white paper ───────────────────────── */

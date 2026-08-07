@@ -512,10 +512,18 @@ function SurveyInner() {
         .print-only { display: none; }
         @media print {
           @page { size: A4 portrait; margin: 18mm 16mm; }
+          html, body { background: #ffffff !important; }
           *, *::before, *::after { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; box-shadow: none !important; }
-          html, body { background: #fff !important; }
           .no-print { display: none !important; }
           .print-only { display: block !important; }
+          .min-h-\\[100dvh\\] { background: #ffffff !important; }
+          .max-w-2xl {
+            max-width: 100% !important;
+            padding: 0 !important;
+            margin: 0 !important;
+            border: none !important;
+            background: #ffffff !important;
+          }
           .fixed, [style*="position: fixed"], [style*="position:fixed"] { position: static !important; height: auto !important; overflow: visible !important; }
         }
       `}</style>
