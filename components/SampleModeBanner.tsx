@@ -14,10 +14,21 @@ export default function SampleModeBanner() {
   const [active, setActive] = useState(false);
 
   useEffect(() => {
-    setActive(isSampleMode());
-    const onChange = () => setActive(isSampleMode());
-    window.addEventListener(SAMPLE_MODE_EVENT, onChange);
-    return () => window.removeEventListener(SAMPLE_MODE_EVENT, onChange);
+    const applyState = () => {
+      const mode = isSampleMode();
+      setActive(mode);
+      if (mode) {
+        document.body.classList.add('is-sample-mode');
+      } else {
+        document.body.classList.remove('is-sample-mode');
+      }
+    };
+    applyState();
+    window.addEventListener(SAMPLE_MODE_EVENT, applyState);
+    return () => {
+      window.removeEventListener(SAMPLE_MODE_EVENT, applyState);
+      document.body.classList.remove('is-sample-mode');
+    };
   }, []);
 
   if (!active) return null;
@@ -32,9 +43,8 @@ export default function SampleModeBanner() {
 
   return (
     <div
-      className="no-print fixed left-0 right-0 flex items-center justify-center gap-3 px-4 py-2 flex-wrap text-center"
+      className="no-print fixed bottom-[calc(60px+env(safe-area-inset-bottom,0px))] lg:bottom-0 left-0 right-0 flex items-center justify-center gap-3 px-4 py-2 flex-wrap text-center"
       style={{
-        bottom: 'calc(60px + env(safe-area-inset-bottom, 0px))',
         zIndex: 9999,
         background: '#C07A1E',
         borderTop: '1px solid rgba(32,25,15,0.15)',

@@ -2,7 +2,7 @@
 
 Permaculture planning for South African farmers. Next.js app deployed on Vercel.
 
-- **Live:** https://fieldproof.vercel.app (also https://permamap-sa.vercel.app)
+- **Live:** https://imbewufield.vercel.app (also https://permamap-sa.vercel.app)
 
 ## Environment variables
 
@@ -37,7 +37,7 @@ The map is drawn by Mapbox and needs a valid key. A blank map almost always mean
    `NEXT_PUBLIC_MAPBOX_TOKEN` exists for **Production**. After adding/changing it,
    **redeploy** — env changes don't apply to existing deployments.
 2. **Is the domain allowed?** In Mapbox → your token → **URL restrictions**, make sure
-   `fieldproof.vercel.app` and `permamap-sa.vercel.app` are listed (or remove the restriction).
+   `imbewufield.vercel.app` and `permamap-sa.vercel.app` are listed (or remove the restriction).
 3. **Is the token still valid?** Confirm it hasn't been rotated/deleted and the Mapbox
    account is in good standing (free tier has a monthly map-load limit).
 

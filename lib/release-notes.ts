@@ -38,6 +38,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     changes: [
       'Choose Satellite, your drone photo, or Blank to see the same plan on paper',
       'Blank keeps the same measurements as the base you just left',
+      'Moved the chat button and Add buttons so they do not cover the map logo',
     ],
   },
   {

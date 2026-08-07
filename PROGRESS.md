@@ -14,7 +14,7 @@ build brief is `design/BUILD-INSTRUCTIONS.md` + `design/MAP-TOOLS-CORRECTIONS.md
 the Build Log, and move anything finished out of "What's left".
 
 - **Repo:** `rorymclark-prog/ImbewuField` (its own repo — NOT the `~/Claude` monorepo)
-- **Live:** `imbewufield.vercel.app` (also `permamap-sa.vercel.app`, `fieldproof.vercel.app`)
+- **Live:** `imbewufield.vercel.app` (also `permamap-sa.vercel.app`, `imbewufield.vercel.app`)
 - **Deploy:** push to `main` → GitHub Actions (`.github/workflows/deploy.yml`) auto-deploys to Vercel (~2 min).
 - **Stack:** Next.js 14 App Router · TypeScript · Tailwind · Firebase/Firestore · Mapbox GL · Anthropic (`claude-sonnet-4-6`).
 
