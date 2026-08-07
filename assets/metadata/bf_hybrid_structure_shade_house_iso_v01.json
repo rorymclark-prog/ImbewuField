@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "bf_hybrid_structure_shade_house_iso_v01",
+  "assetPath": "assets/hybrid/structures/bf_hybrid_structure_shade_house_iso_v01.svg",
+  "batch": 1,
+  "category": "structure",
+  "view": "isometric",
+  "anchor": "building-footprint-centre",
+  "defaultDisplayPx": 120,
+  "realWorldScaleSource": "configured in app, not baked into artwork",
+  "states": ["existing", "proposed", "to-verify"],
+  "stateStyling": "app-code-only",
+  "tags": ["structure", "shade-house", "nursery", "seedlings"],
+  "generationPrompt": "Isolated small rural seedling shade house, simple galvanised or timber frame, dark charcoal shade-net roof and sides, airy open doorway, two neat seedling benches visible inside, practical South African smallholder construction, three-quarter isometric view. Clean vector, warm natural palette, transparent background, no people, no greenhouse glass, no text.",
+  "delivery": {
+    "svg": "bf_hybrid_structure_shade_house_iso_v01.svg",
+    "png": ["bf_hybrid_structure_shade_house_iso_v01_1536.png", "bf_hybrid_structure_shade_house_iso_v01_1024.png"]
+  },
+  "assetStatus": "awaiting-art"
+}

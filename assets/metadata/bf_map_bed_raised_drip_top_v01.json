@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "bf_map_bed_raised_drip_top_v01",
+  "assetPath": "assets/map/beds/bf_map_bed_raised_drip_top_v01.svg",
+  "batch": 1,
+  "category": "bed",
+  "view": "top",
+  "anchor": "bed-centre",
+  "defaultDisplayPx": 80,
+  "realWorldScaleSource": "configured in app, not baked into artwork",
+  "states": ["existing", "proposed", "to-verify"],
+  "stateStyling": "app-code-only",
+  "tags": ["bed", "vegetables", "drip-irrigation", "raised-bed"],
+  "generationPrompt": "Isolated rectangular raised vegetable bed in top-down view, dark mulched soil, two straight drip laterals, neat rows of small healthy mixed seedlings with enough bare space to read the bed structure, low soil edge rather than timber sides. Clean vector field-guide style, transparent background, no path, no tools, no labels.",
+  "delivery": {
+    "svg": "bf_map_bed_raised_drip_top_v01.svg",
+    "png": ["bf_map_bed_raised_drip_top_v01_1024.png", "bf_map_bed_raised_drip_top_v01_512.png", "bf_map_bed_raised_drip_top_v01_256.png", "bf_map_bed_raised_drip_top_v01_128.png"]
+  },
+  "assetStatus": "awaiting-art"
+}

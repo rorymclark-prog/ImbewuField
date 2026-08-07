@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "bf_pattern_vetiver_row_top_v01",
+  "assetPath": "assets/patterns/vetiver/bf_pattern_vetiver_row_top_v01.svg",
+  "batch": 1,
+  "category": "earthworks-pattern",
+  "speciesKey": "vetiver",
+  "view": "top",
+  "anchor": "tile-centre",
+  "defaultDisplayPx": 48,
+  "realWorldScaleSource": "configured in app, not baked into artwork",
+  "states": ["existing", "proposed", "to-verify"],
+  "stateStyling": "app-code-only",
+  "tags": ["vetiver", "erosion-control", "single-row", "seamless-tile"],
+  "generationPrompt": "Seamless horizontal repeating vector tile of a single upright row of mature vetiver grass clumps for a South African permaculture and smallholder-farm design app. Strict top-down orthographic plan view. Individual clumps form one continuous erosion-control row with natural, even spacing; do not make a double row, dense bank, or broad planted area. Dense stiff narrow leaves and clear basal crowns, olive and sage green with a few dry ochre blade tips. Clean hand-drawn vector illustration, contemporary ecological field-guide style, slightly organic dark-olive outlines, flat layered shapes, muted natural earth colours, subtle paper-like vector texture, readable at 48–80 pixels. Transparent background, no visible start or end, no text, labels, logo, frame, soil patch, flowers, other plants, scenery, shadows, photorealism, glossy 3D, or extra objects.",
+  "delivery": {
+    "svg": "bf_pattern_vetiver_row_top_v01.svg",
+    "png": ["bf_pattern_vetiver_row_top_v01_1024.png", "bf_pattern_vetiver_row_top_v01_512.png", "bf_pattern_vetiver_row_top_v01_256.png", "bf_pattern_vetiver_row_top_v01_128.png"]
+  },
+  "assetStatus": "awaiting-art"
+}

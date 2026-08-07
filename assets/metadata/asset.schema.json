@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ImbewuField visual asset metadata",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "id",
+    "assetPath",
+    "batch",
+    "category",
+    "view",
+    "anchor",
+    "defaultDisplayPx",
+    "realWorldScaleSource",
+    "states",
+    "stateStyling",
+    "tags",
+    "generationPrompt",
+    "delivery",
+    "assetStatus"
+  ],
+  "properties": {
+    "schemaVersion": { "const": 1 },
+    "id": { "type": "string", "pattern": "^bf_(map|hybrid|ui|pattern|scene)_[a-z0-9_]+_v[0-9]{2}$" },
+    "assetPath": { "type": "string", "pattern": "^assets/(map|hybrid|ui|patterns)/.+\\.svg$" },
+    "batch": { "type": "integer", "minimum": 1 },
+    "category": { "type": "string", "minLength": 1 },
+    "speciesKey": { "type": "string", "minLength": 1 },
+    "view": { "enum": ["top", "overhead", "isometric"] },
+    "anchor": { "type": "string", "minLength": 1 },
+    "defaultDisplayPx": { "type": "integer", "minimum": 24 },
+    "realWorldScaleSource": { "const": "configured in app, not baked into artwork" },
+    "states": {
+      "type": "array",
+      "items": { "enum": ["existing", "proposed", "to-verify"] },
+      "minItems": 3,
+      "uniqueItems": true
+    },
+    "stateStyling": { "const": "app-code-only" },
+    "tags": { "type": "array", "items": { "type": "string" }, "minItems": 1, "uniqueItems": true },
+    "generationPrompt": { "type": "string", "minLength": 1 },
+    "delivery": {
+      "type": "object",
+      "required": ["svg", "png"],
+      "properties": {
+        "svg": { "type": "string", "pattern": "^bf_[a-z0-9_]+_v[0-9]{2}\\.svg$" },
+        "png": { "type": "array", "items": { "type": "string", "pattern": "^bf_[a-z0-9_]+_v[0-9]{2}_[0-9]+\\.png$" }, "minItems": 1 }
+      },
+      "additionalProperties": false
+    },
+    "assetStatus": { "enum": ["awaiting-art", "awaiting-review", "approved", "rejected"] }
+  },
+  "additionalProperties": false
+}
