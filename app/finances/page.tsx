@@ -25,6 +25,13 @@ import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
 import EmptyState from '@/components/EmptyState';
 import { cashLedgerSales } from '@/lib/invoice-sales';
+import { loadCropPlan, CROP_PLAN_CHANGED_EVENT, type PlanBed, type Planting } from '@/lib/crop-plan';
+import { bedsFromDesignCanvas } from '@/lib/design-beds-bridge';
+import { DESIGN_CANVAS_CHANGED_EVENT, loadCanvasState } from '@/lib/design-canvas';
+import { designSiteIdFromLocation } from '@/lib/design-studio';
+import { loadPlaces, resolveMainSite } from '@/lib/saved-places';
+import { buildFarmMetrics, type FinancePeriod } from '@/lib/farm-metrics';
+import type { LocationData } from '@/lib/types';
 
 /* ── Format helpers ──────────────────────────────────────────────────────── */
 
@@ -315,6 +322,7 @@ function SalesLedger({ sales, expenses, invoices, loading, onEditSale, onEditExp
 
 interface SaleFormState {
   crop: string;
+  expenseCrop: string;
   kg: string;
   price: string;
   buyer: string;
@@ -326,7 +334,7 @@ interface SaleFormState {
 // Editing target: either an existing sale or expense being edited, or null for a fresh entry.
 export type EditTarget = { type: 'sale'; row: SalesLog } | { type: 'expense'; row: ExpenseLog } | null;
 
-const emptyForm = (): SaleFormState => ({ crop: '', kg: '', price: '', buyer: '', category: null, loading: false, error: '' });
+const emptyForm = (): SaleFormState => ({ crop: '', expenseCrop: '', kg: '', price: '', buyer: '', category: null, loading: false, error: '' });
 
 // `alwaysOpen` skips the collapsed "New entry" button state (the desktop modal
 // provides its own open/close chrome); `onDone` fires on cancel or successful
@@ -357,10 +365,10 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
     setScanNote('');
     if (editing.type === 'sale') {
       setKind('in');
-      setForm({ crop: editing.row.crop, kg: String(editing.row.kg ?? ''), price: String(editing.row.amount ?? ''), buyer: editing.row.buyer ?? '', category: null, loading: false, error: '' });
+      setForm({ crop: editing.row.crop, expenseCrop: '', kg: String(editing.row.kg ?? ''), price: String(editing.row.amount ?? ''), buyer: editing.row.buyer ?? '', category: null, loading: false, error: '' });
     } else {
       setKind('out');
-      setForm({ crop: editing.row.item, kg: '', price: String(editing.row.amount ?? ''), buyer: editing.row.supplier ?? '', category: editing.row.category ?? null, loading: false, error: '' });
+      setForm({ crop: editing.row.item, expenseCrop: editing.row.crop ?? '', kg: '', price: String(editing.row.amount ?? ''), buyer: editing.row.supplier ?? '', category: editing.row.category ?? null, loading: false, error: '' });
     }
   }, [editing]);
 
@@ -428,10 +436,10 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
         }
       } else {
         if (editing?.type === 'expense') {
-          const patch = { item: what, amount, supplier: form.buyer.trim() || null, category: form.category };
+          const patch = { item: what, amount, supplier: form.buyer.trim() || null, category: form.category, crop: form.expenseCrop.trim() || null };
           if (sampling) updateSandboxExpense(editing.row.id, patch); else await updateExpense(editing.row.id, patch);
         } else {
-          const row = { item: what, amount, supplier: form.buyer.trim() || null, category: form.category, spent_at: new Date().toISOString() };
+          const row = { item: what, amount, supplier: form.buyer.trim() || null, category: form.category, crop: form.expenseCrop.trim() || null, spent_at: new Date().toISOString() };
           if (sampling) addSandboxExpense(row); else await addExpense(row);
         }
       }
@@ -507,6 +515,19 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
                 <span><span style={{ fontStyle: 'italic' }}>Lima:</span> {scanNote}</span>
               </p>
             )}
+          </div>
+        )}
+
+        {!isIn && (
+          <div>
+            <label className="block text-xs font-sans uppercase tracking-wider mb-1" style={{ color: '#5C5040' }}>
+              Crop this cost was for <span className="normal-case" style={{ color: '#8C7A62' }}>(optional)</span>
+            </label>
+            <input type="text" placeholder="Leave blank if it served the whole garden"
+              value={form.expenseCrop} onChange={(e) => setForm((f) => ({ ...f, expenseCrop: e.target.value }))}
+              className="w-full rounded-lg px-3 py-2 text-sm font-display outline-none"
+              style={{ background: '#E4DCC6', border: '1px solid #E2D8C4', color: '#20190F' }} />
+            <p className="text-xs font-sans mt-1" style={{ color: '#8C7A62' }}>Only tag a crop when this cost was just for that crop.</p>
           </div>
         )}
 
@@ -826,6 +847,94 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
   );
 }
 
+/* ── Measured farm metrics ──────────────────────────────────────────────── */
+
+function metricNumber(value: number | null, unit: string): string {
+  return value === null || !Number.isFinite(value) ? 'Unknown' : `${value.toFixed(1)} ${unit}`;
+}
+
+function FarmMetrics({ sales, production, expenses, invoices, period, now, loading }: { sales: SalesLog[]; production: ProductionLog[]; expenses: ExpenseLog[]; invoices: SavedInvoice[]; period: FinancePeriod; now: Date; loading: boolean }) {
+  const [plantings, setPlantings] = useState<Planting[]>([]);
+  const [beds, setBeds] = useState<PlanBed[]>([]);
+  const [planLoaded, setPlanLoaded] = useState(false);
+
+  useEffect(() => {
+    const refresh = () => {
+      const mainSite = resolveMainSite(loadPlaces());
+      const canvas = mainSite
+        ? loadCanvasState(designSiteIdFromLocation({ lat: mainSite.lat, lon: mainSite.lon } as LocationData))
+        : null;
+      // Design-beds-bridge is the sole Design Studio → crop-plan area authority.
+      // If this crop plan has no matching placed bed, the metric stays unknown.
+      setBeds(bedsFromDesignCanvas(canvas));
+      setPlantings(loadCropPlan().plantings);
+      setPlanLoaded(true);
+    };
+    refresh();
+    window.addEventListener(CROP_PLAN_CHANGED_EVENT, refresh);
+    window.addEventListener(DESIGN_CANVAS_CHANGED_EVENT, refresh);
+    return () => {
+      window.removeEventListener(CROP_PLAN_CHANGED_EVENT, refresh);
+      window.removeEventListener(DESIGN_CANVAS_CHANGED_EVENT, refresh);
+    };
+  }, []);
+
+  const metrics = useMemo(
+    () => buildFarmMetrics(plantings, beds, production, sales, expenses, period, now, invoices),
+    [plantings, beds, production, sales, expenses, period, now, invoices],
+  );
+  const waiting = loading || !planLoaded;
+
+  return (
+    <section className="rounded-2xl overflow-hidden" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
+      <div className="px-4 py-3" style={{ borderBottom: '1px solid #E2D8C4' }}>
+        <p className="text-xs font-mono uppercase tracking-wider" style={{ color: '#5C5040' }}>Crop performance</p>
+        <p className="text-xs font-sans mt-1" style={{ color: '#8C7A62' }}>Yield leads: it compares growing work even when prices change.</p>
+      </div>
+      {waiting ? (
+        <p className="px-4 py-6 text-xs font-sans" style={{ color: '#8C7A62' }}>Loading crop areas…</p>
+      ) : metrics.crops.length === 0 ? (
+        <p className="px-4 py-6 text-sm font-display" style={{ color: '#5C5040' }}>No crop activity or crop plan for this {period}.</p>
+      ) : (
+        <div className="divide-y" style={{ borderColor: '#E2D8C4' }}>
+          {metrics.crops.map((crop) => (
+            <div key={crop.cropKey ?? crop.cropName} className="px-4 py-3">
+              <div className="flex items-baseline justify-between gap-3 mb-2">
+                <p className="text-sm font-display font-semibold" style={{ color: '#20190F' }}>{crop.cropName}</p>
+                <p className="text-xs font-sans text-right" style={{ color: crop.areaM2 === null ? '#C07A1E' : '#8C7A62' }}>
+                  {crop.areaM2 === null ? 'Planted area not recorded' : `${crop.areaM2.toFixed(1)} m² planned`}
+                </p>
+              </div>
+              <div className="grid grid-cols-3 gap-2">
+                <div><p className="text-xs font-mono uppercase" style={{ color: '#8C7A62' }}>Yield</p><p className="text-sm font-display font-semibold" style={{ color: '#1F4D2B' }}>{crop.hasHarvest ? metricNumber(crop.yieldKgPerM2, 'kg/m²') : 'No harvest logged'}</p></div>
+                <div><p className="text-xs font-mono uppercase" style={{ color: '#8C7A62' }}>Turnover</p><p className="text-sm font-display font-semibold" style={{ color: '#235E86' }}>{crop.hasSale ? metricNumber(crop.turnoverZarPerM2, 'R/m²') : 'No sales logged'}</p></div>
+                <div><p className="text-xs font-mono uppercase" style={{ color: '#8C7A62' }}>Price</p><p className="text-sm font-display font-semibold" style={{ color: '#9E5C08' }}>{crop.hasSale ? metricNumber(crop.priceZarPerKg, 'R/kg') : 'No sales logged'}</p></div>
+              </div>
+              <p className="text-xs font-sans mt-2" style={{ color: '#5C5040' }}>
+                {crop.hasTaggedCost
+                  ? `Cost from tagged entries: ${metricNumber(crop.taggedCostZarPerM2, 'R/m²')}${metrics.hasUnattributedExpenses ? ' · Other costs not attributed' : ''}`
+                  : metrics.hasUnattributedExpenses ? 'Cost per m²: not attributed' : 'No crop cost logged'}
+              </p>
+            </div>
+          ))}
+        </div>
+      )}
+      <div className="px-4 py-3" style={{ background: '#F7F2E9', borderTop: '1px solid #E2D8C4' }}>
+        <p className="text-xs font-mono uppercase tracking-wider" style={{ color: '#5C5040' }}>Garden gross margin</p>
+        {metrics.gardenMargins.length === 0 ? (
+          <p className="text-xs font-sans mt-1" style={{ color: '#8C7A62' }}>No sales or costs logged for this {period}.</p>
+        ) : metrics.gardenMargins.map((margin) => (
+          <div key={margin.gardenId ?? 'this-farm'} className="flex items-baseline justify-between gap-3 mt-2">
+            <p className="text-sm font-display" style={{ color: '#20190F' }}>{margin.gardenId ? `Garden ${margin.gardenId}` : 'This farm'}</p>
+            <p className="text-sm font-display font-semibold" style={{ color: '#1F4D2B' }}>{fmtZAR(margin.grossMarginZar)}</p>
+          </div>
+        ))}
+        <p className="text-xs font-sans mt-1" style={{ color: '#8C7A62' }}>Sales logged minus expenses logged. Shared costs are never guessed into crop profit.</p>
+      </div>
+    </section>
+  );
+}
+
 /* ── Main page ───────────────────────────────────────────────────────────── */
 
 // Generates ~6 sample sales, ~5 sample expenses and 2 sample invoices (one paid, one
@@ -1056,6 +1165,7 @@ export default function FinancesPage() {
                 onEditSale={(row) => { setEditing({ type: 'sale', row }); setDesktopEntryOpen(true); }}
                 onEditExpense={(row) => { setEditing({ type: 'expense', row }); setDesktopEntryOpen(true); }}
               />
+              <FarmMetrics sales={sales} production={production} expenses={expenses} invoices={invoices} period={period} now={now} loading={dataLoading} />
               <HarvestReconciliation production={production} sales={sales} period={period} now={now} loading={dataLoading} />
               {/* Same LogSaleForm as the phone branch, hosted in a modal. Mounted
                   only while open so every dismissal starts the next entry fresh. */}
@@ -1094,6 +1204,7 @@ export default function FinancesPage() {
                 <Sprout size={16} />Log harvest
               </Link>
               <HarvestReconciliation production={production} sales={sales} period="month" now={now} loading={dataLoading} />
+              <FarmMetrics sales={sales} production={production} expenses={expenses} invoices={invoices} period="month" now={now} loading={dataLoading} />
               {/* Never offered while offline: "no data" may only mean "not reachable", and this
                   button writes real rows into the farmer's real ledger. */}
               {!online && (

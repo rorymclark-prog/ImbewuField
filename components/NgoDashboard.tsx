@@ -354,8 +354,12 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
     const produced = gardener.production.reduce((s, p) => s + p.kg, 0);
     const soldKg = gardener.sales.reduce((s, p) => s + p.kg, 0);
     const soldR = gardener.sales.reduce((s, p) => s + p.rand, 0);
-    const kept = Math.max(0, produced - soldKg);
-    return { produced, soldKg, soldR, kept, value: soldR + kept * 15 };
+    // A negative difference means some picking was not logged (or a sale was
+    // from an earlier harvest), so zero would be a made-up kept amount.
+    const kept = soldKg <= produced ? produced - soldKg : null;
+    // Sales are measured money. Kept food is measured weight, not a rand value:
+    // one blanket price hid an assumption inside what looked like earnings.
+    return { produced, soldKg, soldR, kept };
   })();
 
   const photoCrops = gardener ? Array.from(new Map(gardener.production.map((p) => [p.crop.n, { crop: p.crop, photoUrl: p.photoUrl }])).values()).slice(0, 5) : [];
@@ -528,8 +532,13 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                     <div className="grid grid-cols-3 gap-2">
                       <div className="p-2 rounded-lg" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4' }}><div className="text-xs font-mono" style={{ color: '#9A8268' }}>Produced</div><div className="text-base font-display font-semibold" style={{ color: '#1F4D2B' }}>{totals.produced}<span className="text-xs"> kg</span></div></div>
                       <div className="p-2 rounded-lg" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4' }}><div className="text-xs font-mono" style={{ color: '#9A8268' }}>Sold</div><div className="text-base font-display font-semibold" style={{ color: '#20190F' }}>{totals.soldKg}<span className="text-xs"> kg</span></div></div>
-                      <div className="p-2 rounded-lg" style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.25)' }}><div className="text-xs font-mono" style={{ color: '#9A8268' }}>Value</div><div className="text-base font-display font-semibold" style={{ color: '#9E5C08' }}>R{totals.value.toLocaleString()}</div></div>
+                      <div className="p-2 rounded-lg" style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.25)' }}><div className="text-xs font-mono" style={{ color: '#9A8268' }}>Sales received</div><div className="text-base font-display font-semibold" style={{ color: '#9E5C08' }}>R{totals.soldR.toLocaleString()}</div></div>
                     </div>
+                    <p className="text-xs font-sans mt-2" style={{ color: '#5C5040' }}>
+                      {totals.kept === null
+                        ? 'Food kept: not known — more was sold than harvested was logged'
+                        : `Food kept: ${totals.kept} kg`}
+                    </p>
 
                     {/* Courses */}
                     <div>
