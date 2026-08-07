@@ -30,8 +30,10 @@ Object.defineProperty(globalThis, 'window', { configurable: true, value: browser
 
 const store = await import('../lib/crop-plan-v2-store.ts');
 const { CROP_PLAN_V2_VERSION } = await import('../lib/crop-plan-v2.ts');
+const { buildBedSections } = await import('../lib/crop-bed-sections.ts');
 
 function plan(siteKey: string, id = `plan-${siteKey}`) {
+  const sections = buildBedSections({ bedId: 'bed-1', layoutRevision: 'layout-1', division: 1 })!;
   return {
     version: CROP_PLAN_V2_VERSION,
     id,
@@ -42,11 +44,11 @@ function plan(siteKey: string, id = `plan-${siteKey}`) {
     layoutFingerprint: 'layout-1',
     rainPattern: 'mild-frost' as const,
     status: 'draft' as const,
-    sections: [{ id: 'bed-1:whole:layout-1', bedId: 'bed-1', layoutRevision: 'layout-1', label: 'Bed 1' }],
+    sections,
     cohorts: [{
       id: 'cohort-1',
       cropKey: 'cabbage',
-      location: { bedId: 'bed-1', sectionId: 'bed-1:whole:layout-1', layoutRevision: 'layout-1' },
+      location: { bedId: 'bed-1', sectionIds: [sections[0].id], layoutRevision: 'layout-1' },
       sowing: {
         method: 'nursery-transplant' as const,
         startsOn: { year: 2026, month: 8, day: 1 },

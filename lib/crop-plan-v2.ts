@@ -1,4 +1,7 @@
 import type { RainPattern } from './crop-catalog';
+import { normaliseBedSections, type BedSection } from './crop-bed-sections';
+
+export type { BedDivision, BedSection, BedSectionLabel } from './crop-bed-sections';
 
 /**
  * V2 stays beside the month-template plan until farmers have reviewed a
@@ -29,16 +32,10 @@ export type SowingMethod = 'direct-sow' | 'nursery-transplant';
  * A section belongs to one explicit layout revision. A fraction from V1 has
  * no side or axis, so it is intentionally not accepted as a section here.
  */
-export interface BedSection {
-  id: string;
-  bedId: string;
-  layoutRevision: string;
-  label: string;
-}
-
 export interface CohortLocation {
   bedId: string;
-  sectionId: string;
+  /** A full crop may occupy several named sections of one physical bed. */
+  sectionIds: string[];
   layoutRevision: string;
 }
 
@@ -238,20 +235,6 @@ function isTimingPrecision(value: unknown): value is TimingPrecision {
     || value === 'legacy-unconfirmed';
 }
 
-function normaliseSection(value: unknown): BedSection | null {
-  if (!isRecord(value)) return null;
-  if (!isNonEmptyString(value.id)
-    || !isNonEmptyString(value.bedId)
-    || !isNonEmptyString(value.layoutRevision)
-    || !isNonEmptyString(value.label)) return null;
-  return {
-    id: value.id,
-    bedId: value.bedId,
-    layoutRevision: value.layoutRevision,
-    label: value.label,
-  };
-}
-
 function normaliseCohort(value: unknown): PlannedCohort | null {
   if (!isRecord(value) || !isNonEmptyString(value.id) || !isNonEmptyString(value.cropKey)) return null;
   if (!isRecord(value.location) || !isRecord(value.sowing)) return null;
@@ -260,8 +243,11 @@ function normaliseCohort(value: unknown): PlannedCohort | null {
   const startsOn = sowing.startsOn;
   const transplantOn = sowing.transplantOn;
   if (!isNonEmptyString(location.bedId)
-    || !isNonEmptyString(location.sectionId)
     || !isNonEmptyString(location.layoutRevision)
+    || !Array.isArray(location.sectionIds)
+    || location.sectionIds.length === 0
+    || location.sectionIds.some((sectionId) => !isNonEmptyString(sectionId))
+    || new Set(location.sectionIds).size !== location.sectionIds.length
     || !isCalendarDate(startsOn)
     || !isTimingPrecision(sowing.precision)
     || !isCohortState(value.state)
@@ -274,7 +260,7 @@ function normaliseCohort(value: unknown): PlannedCohort | null {
     cropKey: value.cropKey,
     location: {
       bedId: location.bedId,
-      sectionId: location.sectionId,
+      sectionIds: [...location.sectionIds],
       layoutRevision: location.layoutRevision,
     },
     sowing: {
@@ -329,20 +315,20 @@ export function normaliseCropPlanV2(value: unknown): CropPlanV2 | null {
     || !isFiniteNumber(value.createdAt)
     || !isFiniteNumber(value.updatedAt)) return null;
 
-  const sections = value.sections.map(normaliseSection);
+  const validSections = normaliseBedSections(value.sections);
   const cohorts = value.cohorts.map(normaliseCohort);
-  if (sections.some((section) => !section) || cohorts.some((cohort) => !cohort)) return null;
-  const validSections = sections as BedSection[];
+  if (!validSections || cohorts.some((cohort) => !cohort)) return null;
   const validCohorts = cohorts as PlannedCohort[];
-  if (new Set(validSections.map((section) => section.id)).size !== validSections.length
-    || new Set(validCohorts.map((cohort) => cohort.id)).size !== validCohorts.length) return null;
+  if (new Set(validCohorts.map((cohort) => cohort.id)).size !== validCohorts.length) return null;
 
   const sectionsById = new Map(validSections.map((section) => [section.id, section]));
   if (validCohorts.some((cohort) => {
-    const section = sectionsById.get(cohort.location.sectionId);
-    return !section
-      || section.bedId !== cohort.location.bedId
-      || section.layoutRevision !== cohort.location.layoutRevision;
+    return cohort.location.sectionIds.some((sectionId) => {
+      const section = sectionsById.get(sectionId);
+      return !section
+        || section.bedId !== cohort.location.bedId
+        || section.layoutRevision !== cohort.location.layoutRevision;
+    });
   })) return null;
 
   const generation = value.generation;

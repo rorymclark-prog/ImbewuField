@@ -8,14 +8,16 @@ import {
   type ExactOracleInput,
 } from '@/lib/crop-plan-v2-oracle';
 import { compareObjectiveVectors, type ObjectiveVector } from '@/lib/crop-plan-v2';
+import { buildBedSections } from '@/lib/crop-bed-sections';
 
 function candidate(id: string, resources: string[]): ExactCandidate {
+  const sections = buildBedSections({ bedId: 'bed-1', layoutRevision: 'layout-1', division: 1 })!;
   return {
     id,
     cohort: {
       id: `cohort-${id}`,
       cropKey: id,
-      location: { bedId: 'bed-1', sectionId: 'bed-1:whole:layout-1', layoutRevision: 'layout-1' },
+      location: { bedId: 'bed-1', sectionIds: [sections[0].id], layoutRevision: 'layout-1' },
       sowing: { method: 'direct-sow', startsOn: { year: 2026, month: 8, day: 1 }, precision: 'exact-day' },
       state: 'proposed',
     },
