@@ -301,7 +301,7 @@ Two reachable triggers: (a) a described line with `qty <= 0` (see Q6) makes `cle
 
 **HOW TO VERIFY.** Source-level assertion — add to an existing test file that already greps sources, e.g. `tests/sensitive-tsx-account-storage.test.ts` is the wrong home; instead create `tests/invoice-seller-identity.test.ts` and **add it to `package.json`'s test list**. Assert: `app/invoice/page.tsx` contains no occurrence of `Tugela`, and `lib/db/types.ts` contains `farm_location`. Additionally assert that the PDF and screen render paths both reference `farm_location`.
 
-**Do NOT change while in this file.** The footer URL (`fieldproof.vercel.app` — it is app-wide branding, out of scope and appears in 15+ files), `sellerName`'s `'Your name'` fallback, or any invoice figure.
+**Do NOT change while in this file.** The footer URL (`imbewufield.vercel.app` — it is app-wide branding, out of scope and appears in 15+ files), `sellerName`'s `'Your name'` fallback, or any invoice figure.
 
 ---
 
