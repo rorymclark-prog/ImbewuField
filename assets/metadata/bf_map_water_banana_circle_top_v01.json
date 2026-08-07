@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "bf_map_water_banana_circle_top_v01",
+  "assetPath": "assets/map/water/bf_map_water_banana_circle_top_v01.svg",
+  "batch": 1,
+  "category": "water",
+  "view": "top",
+  "anchor": "basin-centre",
+  "defaultDisplayPx": 80,
+  "realWorldScaleSource": "configured in app, not baked into artwork",
+  "states": ["existing", "proposed", "to-verify"],
+  "stateStyling": "app-code-only",
+  "tags": ["water", "greywater", "banana-circle", "earthworks"],
+  "generationPrompt": "Isolated circular banana-circle greywater system in strict top-down plan view: four healthy banana clumps arranged around a mulched depressed circular centre, a simple stone or mulch inlet channel entering one side, a small safe overflow notch on the opposite side, no standing dirty water. Clean vector field-guide style, realistic proportions, warm brown mulch and natural greens, transparent background, no people, no text, no surrounding garden.",
+  "delivery": {
+    "svg": "bf_map_water_banana_circle_top_v01.svg",
+    "png": ["bf_map_water_banana_circle_top_v01_1024.png", "bf_map_water_banana_circle_top_v01_512.png", "bf_map_water_banana_circle_top_v01_256.png", "bf_map_water_banana_circle_top_v01_128.png"]
+  },
+  "assetStatus": "awaiting-art"
+}

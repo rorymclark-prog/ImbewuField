@@ -14,6 +14,7 @@ import {
   hasAutomaticPlanningBasis,
   hasPlanningYield,
   hasVerifiedFieldPlan,
+  hasVerifiedSchedule,
 } from '@/lib/crop-catalog';
 import { occupiedMonthsForPlanting, type PlanBed } from '@/lib/crop-plan';
 import { autoSuggestPlan } from '@/lib/crop-autosuggest';
@@ -116,24 +117,25 @@ test('a plot takes one crop at full area — never a half or a third of a field'
   }
 });
 
-test('legacy grain maize cannot enter a staple schedule until its timing and field geometry are verified', () => {
-  // Mapping a plot proves area, not a grain-maize duration or a defensible
-  // wind-pollinated row layout. The catalog identity stays for old records,
-  // but neither a wide bed nor an explicit staple plot may unlock auto-plan.
+test('source-backed grain maize enters a staple plot but never a vegetable bed', () => {
+  // DALRRD now supplies the 120-140 day warm period and the paired 0.91m x
+  // 25cm irrigated stand. That resolves scheduling, while the map still cannot
+  // prove a wind-pollinating block in an ordinary vegetable bed.
   const maize = cropByKey('maize');
   assert.ok(maize);
-  assert.equal(maize.timingVerified, false);
-  assert.equal(maize.fieldSpacingVerified, false);
-  assert.equal(hasVerifiedFieldPlan(maize), false);
-  assert.equal(plotPool(CROPS).some((crop) => crop.key === maize.key), false);
+  assert.deepEqual(maize.daysToHarvestRange, [120, 140]);
+  assert.equal(maize.rowSpacingCm, 91);
+  assert.equal(maize.inRowSpacingCm, 25);
+  assert.equal(hasVerifiedFieldPlan(maize), true);
+  assert.equal(plotPool(CROPS).some((crop) => crop.key === maize.key), true);
 
   const grounds: PlanBed[] = [
     { id: 'wide', label: 'Wide bed', areaM2: 40, minDimM: 4 },
     { id: 'plot', label: 'Staple plot', areaM2: 400, minDimM: 10, kind: 'plot' },
   ];
   const result = autoSuggestPlan({ ...BASE, cropKeys: ['maize'], groups: [] }, 'mild-frost', grounds, [], 10);
-  assert.deepEqual(result.plantings, []);
-  assert.match(result.notes.join(' '), /crop duration and field-spacing basis/i);
+  assert.ok(result.plantings.some((planting) => planting.cropKey === 'maize' && planting.bedId === 'plot'));
+  assert.ok(result.plantings.every((planting) => planting.bedId !== 'wide'));
 });
 
 test('no single crop occupies the whole garden at the same time', () => {
@@ -228,32 +230,39 @@ test('four plots use every supported staple course before one course repeats', (
   );
 });
 
-test('an unsupported cover is excluded even when the honest result is a resting plot', () => {
-  // Oats was added solely to prevent a post-legume plot from resting, but its
-  // exact 6cm/100-day schedule had no relevant primary source. Agronomic
-  // evidence is the precondition: the optimiser may show bare ground, but it
-  // must not fill that visual gap by inventing instructions.
+test('a post-legume staple plot receives the sourced KZN oats winter cover', () => {
+  // KZN DARD names oats as a winter cover in maize lands, its Cedara trial
+  // supplies the autumn-to-soft-dough duration, and the pasture guide supplies
+  // a kg/ha field rate. It is cover, not a fabricated kitchen harvest.
   const covers = plotWinterCovers(CROPS);
   assert.ok(covers.length, 'no winter cover crops are declared at all');
   const oats = cropByKey('oats')!;
-  assert.equal(oats.timingVerified, false);
-  assert.equal(PLOT_WINTER_COVER_KEYS.includes(oats.key), false);
-  assert.equal(isPlotWinterCover(oats), false);
-  assert.equal(covers.some((crop) => crop.key === oats.key), false);
+  assert.equal(oats.daysToHarvest, 166);
+  assert.deepEqual(oats.seedRateKgPerHaRange, [70, 140]);
+  assert.equal(PLOT_WINTER_COVER_KEYS.includes(oats.key), true);
+  assert.equal(isPlotWinterCover(oats), true);
+  assert.equal(hasVerifiedSchedule(oats), true);
+  assert.equal(covers.some((crop) => crop.key === oats.key), true);
 
-  const onePlot: PlanBed[] = [{ id: 'plot-1', label: 'Plot 1', areaM2: 21, minDimM: 3.5, kind: 'plot' }];
-  const result = autoSuggestPlan(BASE, 'mild-frost', onePlot, [
-    { id: 'existing-beans', bedId: 'plot-1', cropKey: 'dry-beans', sowMonth: 11, existing: true },
-  ], 8);
-  assert.equal(result.plantings.some((planting) => planting.cropKey === 'oats'), false);
-  assert.match(result.notes.join(' '), /rest/i, 'an unfilled plot must be explained as rest, not fail silently');
+  const result = autoSuggestPlan(BASE, 'mild-frost', ubhejaneFixture(), [], 8);
+  const dryBeanPlot = result.plantings.find((planting) => planting.cropKey === 'dry-beans')?.bedId;
+  assert.ok(dryBeanPlot, 'the four-course fixture did not allocate its pulse course');
+  assert.equal(
+    result.plantings.some((planting) => planting.cropKey === 'oats' && planting.bedId === dryBeanPlot),
+    true,
+    'a legume plot should receive the non-legume KZN winter cover rather than another bean',
+  );
 });
 
-test('every automatic winter cover has verified timing and household-food yield', () => {
+test('every automatic winter cover has verified timing and either food geometry or a field seed rate', () => {
   const covers = plotWinterCovers(CROPS);
   assert.ok(covers[0] && hasPlanningYield(covers[0]), 'the first-choice winter cover must have a verified household-food yield');
   for (const cover of covers) {
-    assert.equal(hasVerifiedFieldPlan(cover), true, `${cover.key} has unresolved timing or field geometry but is automatically scheduled`);
-    assert.ok(hasPlanningYield(cover), `${cover.key} uses scarce plot space without a verified household-food yield`);
+    assert.equal(hasVerifiedSchedule(cover), true, `${cover.key} has no defensible automatic schedule`);
+    assert.ok(
+      (hasPlanningYield(cover) && hasVerifiedFieldPlan(cover))
+        || (cover.yieldKgPerM2 === 0 && cover.seedRateKgPerHaRange !== undefined),
+      `${cover.key} has neither food-crop geometry nor a sourced cover-crop seed rate`,
+    );
   }
 });

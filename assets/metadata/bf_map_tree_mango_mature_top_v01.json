@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "bf_map_tree_mango_mature_top_v01",
+  "assetPath": "assets/map/trees/bf_map_tree_mango_mature_top_v01.svg",
+  "batch": 1,
+  "category": "tree",
+  "speciesKey": "mango",
+  "view": "top",
+  "anchor": "trunk-centre",
+  "defaultDisplayPx": 80,
+  "realWorldScaleSource": "configured in app, not baked into artwork",
+  "states": ["existing", "proposed", "to-verify"],
+  "stateStyling": "app-code-only",
+  "tags": ["fruit", "perennial", "canopy", "mature"],
+  "generationPrompt": "Single isolated mature mango tree seen directly from above, broad dense rounded canopy with an irregular scalloped edge, layered deep olive and forest-green leaves, subtle warm-green new growth, only a few very small muted mango fruit accents, trunk centre clearly marked for map anchoring. Clean hand-drawn vector, transparent background, no ground circle, no cast shadow, no text.",
+  "delivery": {
+    "svg": "bf_map_tree_mango_mature_top_v01.svg",
+    "png": ["bf_map_tree_mango_mature_top_v01_1024.png", "bf_map_tree_mango_mature_top_v01_512.png", "bf_map_tree_mango_mature_top_v01_256.png", "bf_map_tree_mango_mature_top_v01_128.png"]
+  },
+  "assetStatus": "awaiting-art"
+}

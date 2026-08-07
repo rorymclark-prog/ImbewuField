@@ -329,7 +329,7 @@ test('audited duration ranges reserve beds through their conservative upper endp
 });
 
 test('legacy crop records remain named while unresolved timing or spacing blocks auto-scheduling', () => {
-  for (const key of ['maize', 'dry-beans', 'kale', 'oats']) {
+  for (const key of ['kale']) {
     const crop = cropByKey(key);
     assert.ok(crop, `${key} can no longer be read from a saved record`);
     assert.ok(crop.name.trim() && crop.icon.trim() && crop.note.trim());
@@ -461,13 +461,15 @@ test('every sourced row/in-row spacing pair keeps in-row spacing no wider than r
   }
 });
 
-test('every rain-pattern window is a non-empty, unique calendar subset that clusters losslessly', () => {
+test('every recorded rain-pattern window is a unique calendar subset that clusters losslessly', () => {
   const patterns: RainPattern[] = ['summer', 'winter', 'all-year', 'mild-frost'];
 
   for (const crop of CROPS) {
     for (const pattern of patterns) {
       const months = crop.sowMonths[pattern];
-      assert.ok(months.length > 0, `${crop.key} has no ${pattern} sowing window`);
+      // Empty is an honest state: a nationally known crop can lack a verified
+      // automatic window for one rainfall pattern. Guessing a month to satisfy
+      // this structural test would turn missing evidence into farm advice.
       assert.equal(new Set(months).size, months.length, `${crop.key} repeats a ${pattern} month`);
       assert.ok(months.every((month) =>
         Number.isInteger(month) && month >= 1 && month <= MONTHS_SHORT.length));
@@ -530,6 +532,10 @@ test('harvest and next-sowing month arithmetic stays inside the calendar and wra
     for (const pattern of ['summer', 'winter', 'all-year', 'mild-frost'] as RainPattern[]) {
       for (let fromMonth = 1; fromMonth <= 12; fromMonth++) {
         const month = nextValidSowMonth(crop, pattern, fromMonth);
+        if (crop.sowMonths[pattern].length === 0) {
+          assert.equal(month, fromMonth, 'an unknown regional window should not invent a different month');
+          continue;
+        }
         assert.ok(crop.sowMonths[pattern].includes(month));
         const sameYear = crop.sowMonths[pattern].filter((candidate) => candidate >= fromMonth);
         assert.equal(month, sameYear.length ? Math.min(...sameYear) : Math.min(...crop.sowMonths[pattern]));
@@ -701,10 +707,10 @@ test('bed overlap is wrap-safe, additive by occupied fraction, and excludes the 
   );
   assert.equal(bedOverlapFraction('bed-1', 9, 10, plantings), 0);
 
-  const withLegacy: Planting[] = [...plantings, { id: 'legacy-oats', bedId: 'bed-1', cropKey: 'oats', sowMonth: 4 }];
+  const withLegacy: Planting[] = [...plantings, { id: 'legacy-kale', bedId: 'bed-1', cropKey: 'kale', sowMonth: 4 }];
   assert.equal(bedHasUnverifiedTiming('bed-1', withLegacy), true);
-  assert.equal(bedHasUnverifiedTiming('bed-1', withLegacy, 'legacy-oats'), false);
-  assert.equal(bedOverlapFraction('bed-1', 4, 8, [withLegacy.at(-1)!]), 0, 'unverified timing must not be converted into the old 100-day overlap');
+  assert.equal(bedHasUnverifiedTiming('bed-1', withLegacy, 'legacy-kale'), false);
+  assert.equal(bedOverlapFraction('bed-1', 4, 8, [withLegacy.at(-1)!]), 0, 'unverified timing must not be converted into a legacy overlap');
 });
 
 test('crop totals reconcile exactly with adjusted per-planting yields, including existing crops', () => {

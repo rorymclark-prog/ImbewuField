@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "bf_map_tree_moringa_mature_top_v01",
+  "assetPath": "assets/map/trees/bf_map_tree_moringa_mature_top_v01.svg",
+  "batch": 1,
+  "category": "tree",
+  "speciesKey": "moringa",
+  "view": "top",
+  "anchor": "trunk-centre",
+  "defaultDisplayPx": 80,
+  "realWorldScaleSource": "configured in app, not baked into artwork",
+  "states": ["existing", "proposed", "to-verify"],
+  "stateStyling": "app-code-only",
+  "tags": ["tree", "moringa", "perennial", "feathery-canopy", "mature"],
+  "generationPrompt": "Single isolated mature moringa tree seen from above, airy open feathery canopy, many small compound-leaf clusters, thin branching structure and visible central trunk, light fresh green rather than a dense round fruit-tree canopy. Clean vector ecological field-guide style, transparent background, no text, no ground patch.",
+  "delivery": {
+    "svg": "bf_map_tree_moringa_mature_top_v01.svg",
+    "png": ["bf_map_tree_moringa_mature_top_v01_1024.png", "bf_map_tree_moringa_mature_top_v01_512.png", "bf_map_tree_moringa_mature_top_v01_256.png", "bf_map_tree_moringa_mature_top_v01_128.png"]
+  },
+  "assetStatus": "awaiting-art"
+}

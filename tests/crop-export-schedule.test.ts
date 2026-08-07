@@ -90,26 +90,31 @@ test('a crop with a multi-month picking window creates work in every picking mon
   });
 });
 
-test('an unverified legacy cover never becomes an exact field instruction', () => {
-  const legacy: Planting[] = [{ id: 'winter-cover', bedId: 'plot-1', cropKey: 'oats', sowMonth: 4 }];
-  const tasks = tasksForPlan(legacy, BEDS);
-  assert.deepEqual(tasks, [], 'the old 100-day estimate must not create dated work');
+test('a sourced field-rate cover creates management work without becoming food or fake plant positions', () => {
+  const cover: Planting[] = [{ id: 'winter-cover', bedId: 'plot-1', cropKey: 'oats', sowMonth: 4 }];
+  const tasks = tasksForPlan(cover, BEDS);
+  assert.deepEqual(
+    tasks.map((task) => [task.action, task.month]),
+    [['prep', 3], ['sow', 4], ['terminate-cover', 10]],
+    'the cover needs preparation, sowing and termination rather than a harvest task',
+  );
 
   const oats = cropByKey('oats')!;
   const instruction = sowingInstruction(oats);
   assert.doesNotMatch(instruction, /6\s*cm|100\s*days?/i);
-  assert.match(instruction, /locally verified|not verified/i);
+  assert.match(instruction, /70kg seed\/ha.*105–140kg\/ha/i);
+  assert.match(instruction, /terminate before the next summer staple/i);
 
-  const row = buildPlanTableRows(legacy, BEDS)[0];
-  assert.equal(row.harvest, 'Confirm locally');
-  const bedRow = buildBedPlanRows(legacy, BEDS).find((candidate) => candidate.bedId === 'plot-1')!.crops[0];
-  assert.equal(bedRow.harvestMonth, null);
-  assert.equal(bedRow.harvestEndMonth, null);
-  assert.deepEqual(seedBoqForPlan(legacy, BEDS), [], 'an undated legacy record must not create a new purchase');
-  assert.deepEqual(buildBuyingSchedule(legacy, BEDS, NOW_MONTH), [], 'an undated legacy record must not create buy timing');
-  assert.equal(buildFoodAvailability(legacy, BEDS).flat().some((item) => item.cropKey === 'oats'), false);
-  assert.ok(buildFieldUtilizationByMonth(legacy, BEDS).every((value) => value === 0), 'unknown duration must not become numeric occupancy');
-  assert.equal(buildOccupancyCalendar(legacy, BEDS, NOW_MONTH).flatMap((calendarRow) => calendarRow.cells).flat().some((entry) => entry.cropKey === 'oats'), false);
+  const row = buildPlanTableRows(cover, BEDS)[0];
+  assert.equal(row.harvest, 'Oct');
+  const bedRow = buildBedPlanRows(cover, BEDS).find((candidate) => candidate.bedId === 'plot-1')!.crops[0];
+  assert.equal(bedRow.harvestMonth, 10);
+  assert.equal(bedRow.harvestEndMonth, 10);
+  assert.deepEqual(seedBoqForPlan(cover, BEDS), [], 'a kg/ha cover rate must not become a final-position seed count');
+  assert.deepEqual(buildBuyingSchedule(cover, BEDS, NOW_MONTH), [], 'the piece/packet buying model must not fake a kg/ha shopping quantity');
+  assert.equal(buildFoodAvailability(cover, BEDS).flat().some((item) => item.cropKey === 'oats'), false);
+  assert.ok(buildFieldUtilizationByMonth(cover, BEDS).some((value) => value > 0), 'a sourced cover must count as field occupancy');
+  assert.equal(buildOccupancyCalendar(cover, BEDS, NOW_MONTH).flatMap((calendarRow) => calendarRow.cells).flat().some((entry) => entry.cropKey === 'oats'), true);
 });
 
 test('the rolling printed schedule cannot bring an already-finished planting back next year', () => {
@@ -174,7 +179,7 @@ test('sowingInstruction prints published bounds and suppresses unverified legacy
   ]);
   assert.deepEqual(cabbageBoq.countRange, cabbageBoq.finalPlantPositionsRange);
 
-  assert.match(sowingInstruction(cropByKey('maize')!), /confirm a locally appropriate grain-maize/i);
+  assert.match(sowingInstruction(cropByKey('maize')!), /rows 91cm apart.*25cm apart.*5–10cm deep/i);
   assert.doesNotMatch(sowingInstruction(cropByKey('maize')!), /rows 90cm|20cm apart|4cm deep/i);
   assert.match(sowingInstruction(cropByKey('kale')!), /confirm a locally appropriate kale transplant spacing/i);
   assert.doesNotMatch(sowingInstruction(cropByKey('kale')!), /45cm/i);

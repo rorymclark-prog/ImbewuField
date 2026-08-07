@@ -64,6 +64,11 @@ export interface CropDef {
    * needed; it is not permission to invent a replacement number.
    */
   fieldSpacingInstruction?: string;
+  /** A sourced field-seeding rate can establish a non-food cover without
+   * pretending that broadcast seed has a row/in-row plant count. This is
+   * deliberately separate from plant spacing: the buying-list model does not
+   * yet convert kg/ha, so farmer-facing copy must keep the rate visible. */
+  seedRateKgPerHaRange?: readonly [number, number];
   /** False when the catalog lacks both verified axes needed to turn mapped
    * area into a defensible planting-material count. */
   fieldSpacingVerified?: boolean;
@@ -119,51 +124,56 @@ export const CROPS: CropDef[] = [
     icon: '🌽',
     sowMonths: {
       summer: [10, 11, 12],
-      winter: [9, 10, 11],
-      'all-year': [2, 3, 8, 9, 10, 11],
+      winter: [],
+      'all-year': [10, 11, 12],
       'mild-frost': [10, 11, 12],
     },
-    daysToHarvest: 120,
-    // The catalog has no primary source tying this grain-maize duration and
-    // field geometry to the household-staple crop represented here. Keep the
-    // legacy values readable, but do not turn them into a new schedule/order.
-    timingVerified: false,
-    spacingCm: 30,
-    // This entry means dried grain maize for mielie meal, not sweetcorn; the
-    // available sweetcorn guide cannot verify its inherited field numbers.
-    rowSpacingCm: 90,
-    inRowSpacingCm: 20,
-    sowDepthCm: 4, // 3-5cm — Starke Ayres Sweetcorn Guideline sec 3.3 / planting-depth article (depth is not cultivar-specific)
-    fieldSpacingVerified: false,
-    fieldSpacingInstruction: 'confirm a locally appropriate grain-maize row, plant and depth specification before ordering or planting; this catalog only has legacy estimates',
+    // DALRRD's grain-maize guide requires a 120-140 day frost-free warm period.
+    // Use its upper endpoint for bed occupancy; this is a conservative planning
+    // hold, not a cultivar-specific promise that dry grain is ready on day 140.
+    daysToHarvest: 140,
+    daysToHarvestRange: [120, 140],
+    spacingCm: 25,
+    // The same official guide's irrigated/medium-potential table pairs a
+    // 0.91m row with 25cm in-row spacing (about 45,000 plants/ha). Maize stays
+    // plot-only in crop-autosuggest because mapped bed width does not prove a
+    // wind-pollinating block.
+    rowSpacingCm: 91,
+    inRowSpacingCm: 25,
+    sowDepthCm: 7.5,
+    rowSpacingRangeCm: [91, 91],
+    inRowSpacingRangeCm: [25, 25],
+    sowDepthRangeCm: [5, 10],
+    fieldSpacingVerified: true,
     yieldKgPerM2: 0.3, // NDF South Africa Maize Factsheet + Scielo Eastern Cape smallholder study (2-4 t/ha smallholder dryland, grain maize)
-    note: 'Direct-sow once frost risk has passed; block-plant several rows together for good pollination.',
+    note: 'Grain maize for mielie meal. Direct-sow in a mapped staple plot once frost risk has passed; use several adjacent rows for wind pollination. The 140-day calendar hold is conservative — confirm cultivar maturity before harvest.',
   },
   {
     key: 'dry-beans',
     name: 'Dry beans (sugar beans)',
     icon: '🫘',
     sowMonths: {
-      summer: [11, 12],
-      winter: [9, 10],
-      'all-year': [2, 3, 8, 9, 10],
-      'mild-frost': [11, 12],
+      summer: [11, 12, 1],
+      winter: [],
+      'all-year': [3, 4],
+      'mild-frost': [11, 12, 1],
     },
-    daysToHarvest: 121, // upper end of 109–121 days — N2Africa 'Better sugar beans' Southern Africa production booklet
-    daysToHarvestRange: [109, 121],
-    spacingCm: 10,
-    // KZN bush-bean rows/depth and SADC sugar-bean in-row spacing agree on a
-    // plausible stand, but mixing authorities is not enough for an exact order.
-    rowSpacingCm: 52.5,
-    inRowSpacingCm: 15,
-    sowDepthCm: 3,
-    rowSpacingRangeCm: [45, 60],
-    inRowSpacingRangeCm: [10, 20],
-    sowDepthRangeCm: [2, 4],
-    fieldSpacingVerified: false,
-    fieldSpacingInstruction: 'rows 45–60cm apart · plants 10–20cm apart in the row · sow 2–4cm deep; confirm the complete sugar-bean geometry locally before ordering',
+    // DALRRD gives 85-94, 95-104 and 105-115 day maturity classes. Reserve
+    // the upper endpoint so a normal long-season type is not double-booked.
+    daysToHarvest: 115,
+    daysToHarvestRange: [85, 115],
+    spacingCm: 25,
+    // DFFE's national agroforestry guideline gives this complete dry-bean
+    // field pair; DALRRD supplies the matching 2.5-7cm depth range.
+    rowSpacingCm: 45,
+    inRowSpacingCm: 25,
+    sowDepthCm: 4.75,
+    rowSpacingRangeCm: [45, 45],
+    inRowSpacingRangeCm: [25, 25],
+    sowDepthRangeCm: [2.5, 7],
+    fieldSpacingVerified: true,
     yieldKgPerM2: 0.2, // ~0.2 (1.8-2.2 t/ha) — Grain SA 'Know the value of DRY BEANS'
-    note: 'Leave pods to dry and rattle on the plant before shelling and storing.',
+    note: 'Plant after frost danger: November to mid-January in frost areas, or March-April in frost-free areas. Leave pods to yellow and dry before shelling and storing.',
   },
   {
     key: 'green-beans',
@@ -839,31 +849,36 @@ export const CROPS: CropDef[] = [
     note: 'Mild/subtropical leaf-crop guidance only. Coriander stays manual because suitability depends on household preference; it bolts fast in heat and long days.',
   },
   {
-    // Oats remains in the catalog so old farm records keep their crop name, but
-    // no KZN/ARC primary source found in the 2026-08-06 audit supported the old
-    // exact 6cm / 100-day smallholder cover schedule. It must not be generated
-    // or offered as a new scheduled crop until that evidence exists.
+    // KZN DARD names oats as a winter cover commonly used in maize lands. Its
+    // forage-cereal bulletin gives mid-February to early May as the species/
+    // cultivar-dependent establishment range; whole-month planning uses the
+    // conservative March-May interior. A Cedara trial measured short-duration
+    // Overberg at soft dough after 166 days. Establish by field seed rate,
+    // never by the legacy 6cm square-grid fiction.
     key: 'oats',
     name: 'Oats (winter cover crop)',
     icon: '🌾',
     sowMonths: {
       // The autumn cover window: into the ground as the summer staple comes
       // off, grown through the cold, terminated before the spring course.
-      summer: [2, 3, 4, 5],
-      winter: [3, 4, 5],
-      'all-year': [2, 3, 4, 5],
-      'mild-frost': [2, 3, 4, 5],
+      summer: [3, 4, 5],
+      winter: [],
+      'all-year': [3, 4, 5],
+      'mild-frost': [3, 4, 5],
     },
-    daysToHarvest: 100, // legacy occupancy estimate only; never farmer-facing
-    timingVerified: false,
+    daysToHarvest: 166,
+    daysToHarvestRange: [166, 166],
     // Legacy density placeholder retained only so old saved geometry can be
     // read. It is not a sourced sowing rate and is blocked from instructions,
     // purchase quantities, occupancy and new scheduling by the flags below.
     spacingCm: 6,
     fieldSpacingVerified: false,
-    fieldSpacingInstruction: 'broadcast or drill using a locally verified cover-crop seeding rate; exact spacing is not verified',
+    // KZN DARD pasture establishment: 70kg/ha drilled; broadcast uses 1.5-2x.
+    // The screen keeps this as a rate, not a fabricated number of oat plants.
+    seedRateKgPerHaRange: [70, 140],
+    fieldSpacingInstruction: 'drill at 70kg seed/ha, or broadcast at 105–140kg/ha; terminate before the next summer staple crop',
     yieldKgPerM2: 0,
-    note: 'A cover crop, not a food crop — it holds the soil over winter and is cut or rolled down before the next staple goes in. Nothing to harvest for the kitchen.',
+    note: 'A KZN winter cover for maize land, not a food harvest in this plan. Sow March-May while late-summer soil moisture remains, then cut or roll it before the next summer staple crop. Nothing is added to kitchen harvest totals.',
   },
 ];
 
@@ -879,6 +894,15 @@ export function hasPlanningYield(crop: CropDef): crop is CropDef & { yieldKgPerM
 /** One authority for whether this catalog can generate a new timed field plan. */
 export function hasVerifiedFieldPlan(crop: CropDef): boolean {
   return crop.timingVerified !== false && crop.fieldSpacingVerified !== false;
+}
+
+/** A crop can occupy the calendar when its duration is verified and either
+ * its plant geometry is verified or it is a non-food cover with a sourced
+ * field seeding rate. The latter must never create a fake plant count. */
+export function hasVerifiedSchedule(crop: CropDef): boolean {
+  return crop.timingVerified !== false
+    && (crop.fieldSpacingVerified !== false
+      || (crop.yieldKgPerM2 === 0 && crop.seedRateKgPerHaRange !== undefined));
 }
 
 /** True only when timing, field geometry and a planning yield are all sourced. */
