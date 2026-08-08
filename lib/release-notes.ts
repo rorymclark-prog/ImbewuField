@@ -34,6 +34,28 @@ export interface ReleaseNote {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '8 August',
+    sha: '2179fd7',
+    changes: [
+      'Try Finance with sample data before you sign in',
+      'Home and Finance have a lighter, cleaner background',
+      'Avocado trees now have their own drawing on the planting sheet',
+      'Your crop plan reads rain and frost from your mapped site instead of asking you',
+      'Beds can be planted in full, half, third or quarter sections again',
+    ],
+  },
+  {
+    when: '7 August',
+    changes: [
+      'Invoices print on a full A4 page instead of a narrow tinted strip',
+      'An invoice keeps the date it was issued, even if you reopen it later',
+      'Cents print correctly — R37.50 no longer prints as R37,5',
+      'A long invoice no longer loses items off the bottom of the page',
+      'A family food plan is ready without choosing crops first',
+      'Fewer long gaps between harvests, and less repeated garlic',
+    ],
+  },
+  {
     when: '6 August',
     changes: [
       'Choose Satellite, your drone photo, or Blank to see the same plan on paper',
