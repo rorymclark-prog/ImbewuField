@@ -13,7 +13,7 @@ import {
 import type { SalesLog, ProductionLog, ExpenseLog, ExpenseCategory } from '@/lib/db/types';
 import { loadInvoices, saveInvoice, addCustomer, addProduct, invoiceId, paymentMethodLabel, type SavedInvoice } from '@/lib/invoices';
 import {
-  isSampleMode,
+  isSampleMode, enterSampleMode,
   getSandboxSales, addSandboxSale, updateSandboxSale, deleteSandboxSale,
   getSandboxExpenses, addSandboxExpense, updateSandboxExpense, deleteSandboxExpense,
   getSandboxProduction,
@@ -619,6 +619,15 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
 /* ── Sign-in prompt ──────────────────────────────────────────────────────── */
 
 function SignInPrompt() {
+  // Drops into the same sandbox every other sample-mode entry point uses (home, onboarding) —
+  // enterSampleMode() resets the in-memory sandbox and the localStorage shim itself; setting the
+  // sessionStorage flag alone is not enough (learned that the hard way earlier tonight). A hard
+  // reload, not client-side state, matches SampleModeBanner's own exit handler and guarantees every
+  // hook on this page re-reads through isSampleMode() from a clean mount.
+  function handlePreview() {
+    if (enterSampleMode()) window.location.reload();
+  }
+
   return (
     <div className="flex flex-col items-center justify-center gap-4 py-16 px-6 text-center">
       <div
@@ -646,6 +655,14 @@ function SignInPrompt() {
       >
         Go to sign in
       </a>
+      <button
+        type="button"
+        onClick={handlePreview}
+        className="text-xs font-display font-medium underline underline-offset-2"
+        style={{ color: 'var(--color-muted-strong)' }}
+      >
+        Preview with sample data
+      </button>
     </div>
   );
 }
