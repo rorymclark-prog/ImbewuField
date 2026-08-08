@@ -586,7 +586,7 @@ function HomeInner() {
                 container, bottom-left (mirrors the mobile pill). Hidden while drawing. */}
             <button
               onClick={() => setAddOpen(true)}
-              className="hidden lg:flex absolute left-4 bottom-4 z-20 items-center gap-2 px-4 py-2.5 rounded-full font-display font-semibold transition-all active:scale-95"
+              className="hidden lg:flex absolute left-4 bottom-14 z-20 items-center gap-2 px-4 py-2.5 rounded-full font-display font-semibold transition-all active:scale-95"
               style={{
                 background: 'linear-gradient(135deg, #1F4D2B, #2D6B3C)',
                 border: '1px solid rgba(31,77,43,0.6)',
@@ -651,7 +651,7 @@ function HomeInner() {
           <button
             className="lg:hidden fixed left-4 z-30 flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-display font-semibold shadow-lg transition-all"
             style={{
-              bottom: 'calc(60px + env(safe-area-inset-bottom, 0px) + 16px)',
+              bottom: 'calc(60px + env(safe-area-inset-bottom, 0px) + 36px)',
               background: 'linear-gradient(135deg, #1F4D2B, #2D6B3C)',
               border: '1px solid rgba(31,77,43,0.6)',
               color: '#fff',
@@ -672,7 +672,7 @@ function HomeInner() {
           <button
             className="lg:hidden fixed right-4 z-30 flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-display font-semibold shadow-lg transition-all"
             style={{
-              bottom: 'calc(60px + env(safe-area-inset-bottom, 0px) + 16px)',
+              bottom: 'calc(60px + env(safe-area-inset-bottom, 0px) + 36px)',
               background: sheetOpen
                 ? 'rgba(31,77,43,0.9)'
                 : 'linear-gradient(135deg, #1F4D2B, #2D6B3C)',

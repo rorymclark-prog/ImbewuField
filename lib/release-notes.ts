@@ -40,6 +40,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       'Blank keeps the same measurements as the base you just left',
       'Finance now shows yield, turnover and price per planted square metre',
       'Crop costs stay unassigned until you choose the crop they were for',
+      'Moved the chat button and Add buttons so they do not cover the map logo',
     ],
   },
   {

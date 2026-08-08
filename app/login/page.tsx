@@ -7,6 +7,8 @@ import { useAuth, isEmbeddedBrowser } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import type { UserRole } from '@/lib/db/types';
 
+import Illustration from '@/components/Illustration';
+
 type Mode = 'signin' | 'create' | 'reset';
 
 /**
@@ -150,6 +152,7 @@ function LoginPageInner() {
           'var(--bg)',
       }}>
       <div className="u-card w-full max-w-sm p-6 my-auto">
+        <Illustration name="login-hero" className="w-full h-32 mb-6" />
 
         {/* Logo */}
         <div className="text-center mb-5">

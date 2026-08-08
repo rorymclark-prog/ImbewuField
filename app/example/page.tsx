@@ -16,6 +16,8 @@ import { LanguageProvider, useLanguage } from '@/lib/i18n';
 import CompletionScore from '@/components/report/CompletionScore';
 import { DEMO_LOCATION, DEMO_SITE_DATA, DEMO_WATER_DATA, DEMO_COMPLETION } from '@/lib/demo-site';
 
+import Illustration from '@/components/Illustration';
+
 function Card({ children }: { children: React.ReactNode }) {
   return (
     <div
@@ -118,6 +120,8 @@ function ExampleInner() {
           gap: 16,
         }}
       >
+        <Illustration name="example-hero" className="w-full h-40" />
+        
         <CompletionScore inputs={DEMO_COMPLETION} />
 
         {/* Your land / Harvesting areas — mirrors DataPanel Overview cards */}

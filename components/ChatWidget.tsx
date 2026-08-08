@@ -85,7 +85,7 @@ export default function ChatWidget() {
           onPointerUp={onFabPointerUp}
           aria-label="Open Lima, your field guide — drag to move"
           title="Tap to ask Lima · drag to move"
-          className={`no-print fixed z-[60] flex items-center justify-center rounded-full w-14 h-14 ${fabPos ? '' : 'bottom-[72px] left-4'}`}
+          className={`no-print fixed z-[60] flex items-center justify-center rounded-full w-14 h-14 ${fabPos ? '' : 'bottom-[130px] left-4 lg:bottom-[100px] lg:left-4'}`}
           style={{
             background: 'linear-gradient(135deg, var(--brand-light), var(--brand-strong))',
             // Soft glow ring — Lima's "2026 AI presence" (spec §6, adapted to green).
