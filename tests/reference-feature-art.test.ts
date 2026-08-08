@@ -53,10 +53,18 @@ test('legacy feature IDs select the same exact artwork without rewriting saved d
 
 test('artwork URLs are stable public paths', () => {
   assert.equal(
-    referenceFeatureArtworkUrl('tree_avocado'),
+    referenceFeatureArtworkUrl('tree_mango'),
     '/render-assets/reference-blueprint/orchard-canopy-v1.png',
   );
   assert.equal(referenceFeatureArtworkUrl('other_water'), null);
+});
+
+test('avocado has its own dedicated canopy art, no longer the shared orchard generic', () => {
+  assert.equal(referenceFeatureArtworkFor('tree_avocado'), 'avocado-tree-v1.png');
+  assert.equal(
+    referenceFeatureArtworkUrl('tree_avocado'),
+    '/render-assets/reference-blueprint/avocado-tree-v1.png',
+  );
 });
 
 test('every mapped catalogue artwork is a real, dimensioned PNG in the public asset root', () => {
