@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "bf_map_water_standpipe_top_v01",
+  "assetPath": "assets/map/water/bf_map_water_standpipe_top_v01.svg",
+  "batch": 1,
+  "category": "water",
+  "view": "overhead",
+  "anchor": "standpipe-base-centre",
+  "defaultDisplayPx": 48,
+  "realWorldScaleSource": "configured in app, not baked into artwork",
+  "states": ["existing", "proposed", "to-verify"],
+  "stateStyling": "app-code-only",
+  "tags": ["water", "standpipe", "tap", "irrigation"],
+  "generationPrompt": "Single isolated practical South African garden standpipe with a simple upright galvanised or dark-painted pipe, short horizontal outlet and robust manual brass tap, a small handle and compact ground-level base; no hose, bucket, basin or branding. Very slight 80-degree overhead orthographic view so the footprint and tap form are legible. Clean hand-drawn vector illustration, contemporary ecological field-guide style, slightly organic dark-olive outlines, flat layered shapes, muted natural earth colours, realistic local proportions, simple strong silhouette, subtle paper-like vector texture, readable at 48–80 pixels. Transparent background, centred with 12 percent clear padding. No text, no labels, no logo, no frame, no people, no scenery, no horizon, no long shadow, no photorealism, no glossy 3D, no fantasy, no extra objects.",
+  "delivery": {
+    "svg": "bf_map_water_standpipe_top_v01.svg",
+    "png": ["bf_map_water_standpipe_top_v01_1024.png", "bf_map_water_standpipe_top_v01_512.png", "bf_map_water_standpipe_top_v01_256.png", "bf_map_water_standpipe_top_v01_128.png"]
+  },
+  "assetStatus": "awaiting-art"
+}

@@ -1,15 +1,30 @@
 /* ImbewuField Almanac Design System */
 :root {
+  /* Vision 2 palette — Earth light is defined here once. The named Earth
+     selector inherits these values; the three non-Earth columns override them
+     at their own theme selectors below. Nothing uses these tokens yet: this
+     is the reversible foundation before the screen-by-screen migration. */
+  --color-forest-800: #1E4D33;
+  --color-forest-700: #2E6548;
+  --color-leaf-500: #5FA66A;
+  --color-border: #DDE3DC;
+  --color-muted-strong: #4B554D;
+  --color-muted: #667168;
+  --color-surface: #FFFFFF;
+  --color-harvest: #D18A1F;
+  --color-canvas: #F7F5EF;
+  --color-sage-100: #EEF3EA;
   --color-forest: #1F4D2B;
   --color-forest-light: #2D6B3C;
   --color-forest-dark: #163820;
   --color-ochre: #C07A1E;
   --color-ochre-light: #D4922A;
   --color-ochre-dark: #9A6018;
-  --color-water: #235E86;
+  --color-water: #2E64B5;
+  --color-sun: #F2C94C;
   --color-paper: #E4DCC6;
   --color-card: #FFFEFA;
-  --color-ink: #20190F;
+  --color-ink: #1F2420;
   --color-ink-muted: #5C5040;
   --color-ink-faint: #8C7A62;
   --color-hairline: #ECE3C9;
@@ -198,6 +213,22 @@ html[data-theme="earth"] {
    EARTH DARK
    ═══════════════════════════════════════════════════════ */
 html[data-theme="earth"].dark {
+  /* Vision 2 dark values retain this column's established contrast ladder:
+     text steps stay light on the dark ground and accents stay distinct fills. */
+  --color-forest-800: #82C844;
+  --color-forest-700: #A8E860;
+  --color-leaf-500: #B6F078;
+  --color-border: #2C2114;
+  --color-muted-strong: #A8906C;
+  --color-muted: #685040;
+  --color-surface: #181208;
+  --color-harvest: #D8A840;
+  --color-canvas: #0D0A06;
+  --color-sage-100: #2A3D2C;
+  --color-water: #58A0DC;
+  --color-sun: #F2C94C;
+  --color-ink: #EEE4D0;
+
   --bg-0: #0D0A06;
   --bg-1: #181208;
   --bg-2: #22190E;
@@ -236,6 +267,22 @@ html[data-theme="earth"].dark {
    SLATE LIGHT
    ═══════════════════════════════════════════════════════ */
 html[data-theme="slate"] {
+  /* Slate keeps its cool neutral ladder and green/blue/gold semantic families;
+     these are not inversions of Earth light. */
+  --color-forest-800: #0D6B52;
+  --color-forest-700: #199870;
+  --color-leaf-500: #35A879;
+  --color-border: #E2E8F2;
+  --color-muted-strong: #445266;
+  --color-muted: #8898AA;
+  --color-surface: #F8FAFC;
+  --color-harvest: #AA5C08;
+  --color-canvas: #FFFFFF;
+  --color-sage-100: #E8F3EC;
+  --color-water: #1555AA;
+  --color-sun: #F2C94C;
+  --color-ink: #0C1526;
+
   --bg-0: #FFFFFF;
   --bg-1: #F8FAFC;
   --bg-2: #F1F5F9;
@@ -274,6 +321,22 @@ html[data-theme="slate"] {
    SLATE DARK
    ═══════════════════════════════════════════════════════ */
 html[data-theme="slate"].dark {
+  /* The dark slate column keeps the same role ordering as slate light, but
+     lifts readable text and active accents above its blue-black grounds. */
+  --color-forest-800: #18A878;
+  --color-forest-700: #50CCA0;
+  --color-leaf-500: #60D0A2;
+  --color-border: #1A2540;
+  --color-muted-strong: #8898AA;
+  --color-muted: #4A5A6E;
+  --color-surface: #0C1526;
+  --color-harvest: #E8A030;
+  --color-canvas: #060A12;
+  --color-sage-100: #173B31;
+  --color-water: #4890DC;
+  --color-sun: #F2C94C;
+  --color-ink: #DCE4F0;
+
   --bg-0: #060A12;
   --bg-1: #0C1526;
   --bg-2: #1A2540;

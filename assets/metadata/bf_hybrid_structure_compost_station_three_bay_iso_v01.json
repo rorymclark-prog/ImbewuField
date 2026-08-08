@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "bf_hybrid_structure_compost_station_three_bay_iso_v01",
+  "assetPath": "assets/hybrid/structures/bf_hybrid_structure_compost_station_three_bay_iso_v01.svg",
+  "batch": 1,
+  "category": "soil-fertility",
+  "view": "isometric",
+  "anchor": "structure-base-centre",
+  "defaultDisplayPx": 120,
+  "realWorldScaleSource": "configured in app, not baked into artwork",
+  "states": ["existing", "proposed", "to-verify"],
+  "stateStyling": "app-code-only",
+  "tags": ["compost", "soil", "fertility", "three-bay"],
+  "generationPrompt": "Isolated three-bay compost station made from simple timber pallets or slatted boards, one bay with fresh green and brown material, one active mixed pile, one dark finished compost pile, practical and tidy but not decorative, three-quarter view, clean vector ecological field-guide style, transparent background, no person, no labels.",
+  "delivery": {
+    "svg": "bf_hybrid_structure_compost_station_three_bay_iso_v01.svg",
+    "png": ["bf_hybrid_structure_compost_station_three_bay_iso_v01_1536.png", "bf_hybrid_structure_compost_station_three_bay_iso_v01_1024.png"]
+  },
+  "assetStatus": "awaiting-art"
+}

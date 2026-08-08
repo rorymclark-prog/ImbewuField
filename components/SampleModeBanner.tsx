@@ -43,7 +43,7 @@ export default function SampleModeBanner() {
 
   return (
     <div
-      className="fixed bottom-[calc(60px+env(safe-area-inset-bottom,0px))] lg:bottom-0 left-0 right-0 flex items-center justify-center gap-3 px-4 py-2 flex-wrap text-center"
+      className="no-print fixed bottom-[calc(60px+env(safe-area-inset-bottom,0px))] lg:bottom-0 left-0 right-0 flex items-center justify-center gap-3 px-4 py-2 flex-wrap text-center"
       style={{
         zIndex: 9999,
         background: '#C07A1E',

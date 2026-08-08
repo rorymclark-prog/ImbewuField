@@ -124,6 +124,22 @@ test('the Firestore payload remains one JSON string and nested coordinate arrays
   assert.equal(stringifyDesignCanvasStore(decoded), merged.designCanvasJson);
 });
 
+test('a blank base syncs its inherited scale instead of reverting on another device', () => {
+  const blank = {
+    ...state('farm', { rev: 3, zones: 1 }),
+    baseMode: 'blank' as const,
+    blankMPerPx: 0.137,
+    useCustomBase: false,
+    customBase: { url: 'https://example/drone.jpg', mPerPx: 0.137, uploadedAt: '2026-08-06T00:00:00.000Z' },
+  };
+  const merged = mergeDesignCanvasStore('{}', 'farm', blank);
+  const fromAnotherDevice = JSON.parse(merged.designCanvasJson).farm;
+
+  assert.equal(merged.winner?.baseMode, 'blank');
+  assert.equal(fromAnotherDevice.blankMPerPx, 0.137);
+  assert.equal(fromAnotherDevice.useCustomBase, false);
+});
+
 test('merging one site preserves every other site slot byte-for-byte in value', () => {
   const other = state('other', { rev: 7, items: 2 });
   const malformedButUnrelated = { futureSchema: [['keep', 'me']] };

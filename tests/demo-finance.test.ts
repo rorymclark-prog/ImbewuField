@@ -126,7 +126,10 @@ test('sample invoices are a real numbered sequence that the invoice tool continu
   assert.ok(invoices.length >= 5, 'a standing order should have a run of invoices behind it');
   for (const invoice of invoices) {
     assert.equal(invoice.total, invoice.items.reduce((sum, i) => sum + i.qty * i.price, 0));
-    assert.ok(customers.includes(invoice.billTo), `${invoice.id} bills a customer the invoice tool does not know`);
+    assert.ok(
+      customers.some((customer) => customer.name === invoice.billTo),
+      `${invoice.id} bills a customer the invoice tool does not know`,
+    );
     // lib/invoices.ts cleanInvoice() downgrades a paid invoice with no usable
     // payment date to unpaid, which would silently delete income from the demo.
     if (invoice.status === 'paid') {

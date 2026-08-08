@@ -65,11 +65,17 @@ export interface DesignElementDef {
   alsoLayers?: DesignLayerKey[];
 }
 
-/** The layer toggles in the Layers panel. Kept here so element defs can name one without
- *  importing a component. */
-export type DesignLayerKey =
-  | 'water' | 'earthworks' | 'zones' | 'planting' | 'structures' | 'access' | 'animals'
-  | 'ground' | 'baseMap' | 'boundary' | 'labels' | 'symbols' | 'contours' | 'sector';
+/**
+ * The canonical layer-state contract. Element definitions name additional memberships here,
+ * while the page, canvas, and palette all use the derived state type. Keeping those questions in
+ * one type means a future layer cannot be saved under one name and silently read under another.
+ */
+export const DESIGN_LAYER_KEYS = [
+  'water', 'earthworks', 'zones', 'planting', 'structures', 'access', 'animals',
+  'ground', 'references', 'boundary', 'labels', 'symbols', 'contours', 'sector',
+] as const;
+export type DesignLayerKey = (typeof DESIGN_LAYER_KEYS)[number];
+export type DesignLayerState = Record<DesignLayerKey, boolean>;
 
 // A HEAT MAP, READ FROM THE CENTRE OUT (Rory: "zone colours are messed up — 0 should be red?
 // then orange and so on"). Permaculture literature fixes no exact hexes, but every zone diagram

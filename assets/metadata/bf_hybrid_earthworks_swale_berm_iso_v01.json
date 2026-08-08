@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "id": "bf_hybrid_earthworks_swale_berm_iso_v01",
+  "assetPath": "assets/hybrid/earthworks/bf_hybrid_earthworks_swale_berm_iso_v01.svg",
+  "batch": 1,
+  "category": "earthworks",
+  "view": "isometric",
+  "anchor": "feature-centre",
+  "defaultDisplayPx": 160,
+  "realWorldScaleSource": "configured in app, not baked into artwork",
+  "states": ["existing", "proposed", "to-verify"],
+  "stateStyling": "app-code-only",
+  "tags": ["earthworks", "swale", "berm", "overflow"],
+  "generationPrompt": "Isolated short curved section of a contour swale for a permaculture field report, three-quarter view. Clearly show the shallow level trench on the upslope side and the compacted planted berm on the downslope side, with a smooth stone-lined overflow notch at one end. Warm brown soil, sparse stabilising grass, clean educational vector illustration, no labels, no arrows, transparent background, no dramatic landscape.",
+  "delivery": {
+    "svg": "bf_hybrid_earthworks_swale_berm_iso_v01.svg",
+    "png": ["bf_hybrid_earthworks_swale_berm_iso_v01_1536.png", "bf_hybrid_earthworks_swale_berm_iso_v01_1024.png"]
+  },
+  "assetStatus": "awaiting-art"
+}

@@ -548,9 +548,8 @@ export function tasksForPlan(plantings: Planting[], beds: PlanBed[], nowMonth?: 
     const crop = cropByKey(p.cropKey);
     if (!crop) continue;
     // Preserve legacy crop records, but never turn an unverified duration into
-    // exact prep/weed/termination dates. Oats currently has no primary-source
-    // 6cm/100-day smallholder schedule, so a safe task calendar cannot be
-    // derived until local guidance is supplied.
+    // exact prep/weed/termination dates. A verified zero-food cover is allowed:
+    // it receives a termination task instead of a fabricated food harvest.
     if (crop.timingVerified === false) continue;
     const label = bedLabel(p.bedId);
     const cohortBase = {
@@ -1032,6 +1031,11 @@ export function seedBoqBatchesForPlan(plantings: Planting[], beds: PlanBed[]): S
     // A planting-material list is a new purchase instruction. Do not turn a
     // legacy crop with unverified timing into a fresh order.
     if (crop.timingVerified === false) continue;
+    // Field-rate covers are established in kg/ha, not by a grid of final plant
+    // positions. The current BOQ model only knows pieces or packet guidance;
+    // keep the sourced kg/ha rate in the sowing task rather than converting the
+    // legacy 6cm placeholder into a fictitious seed count or shopping line.
+    if (crop.seedRateKgPerHaRange !== undefined) continue;
     const areaM2 = bed.areaM2 * (p.areaFraction ?? 1);
     // plantsPerM2 is the ONLY place a final-stand density is decided — the same
     // helper sowingInstruction prints from, so the position estimate and the

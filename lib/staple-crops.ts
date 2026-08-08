@@ -18,7 +18,7 @@
 // module is only the physical eligibility boundary after that choice.
 
 import type { CropDef } from './crop-catalog';
-import { hasVerifiedFieldPlan } from './crop-catalog';
+import { hasVerifiedFieldPlan, hasVerifiedSchedule } from './crop-catalog';
 
 /**
  * The four courses of a staple rotation. Deliberately NOT the same axis as
@@ -106,18 +106,15 @@ export function nextStapleCourse(course: StapleCourse): StapleCourse {
  * unrelated small-bed crop selected merely to fill the chart. It may be an
  * honestly displayed rest period or a verified in-window field crop.
  *
- * Broad beans are the catalog's verified overwintering field pulse, so they
- * are the only automatic winter candidate here. They are scheduled as a food
- * crop, not credited with a quantified soil benefit.
+ * Broad beans are the verified overwintering field pulse and remain a food
+ * crop. KZN DARD also documents oats as an autumn-sown winter cover in maize
+ * land and supplies both a 166-day short-cultivar duration and field seed
+ * rates. Oats protects soil but is never counted as a kitchen harvest.
  *
- * A prior fallback used oats to avoid leaving a post-legume plot bare. The
- * 2026-08-06 source audit could verify oats as a cover-crop species, but could
- * not verify the exact 6cm / 100-day smallholder schedule the app generated.
- * Filling that gap with invented precision is worse than showing an honest
- * rest period. Oats therefore stays in the catalog for legacy records but is
- * excluded here until a relevant primary authority supplies the schedule.
+ * If neither fits between two sourced staple windows, the planner shows an
+ * honest rest period. It must not invent a third crop merely to fill a chart.
  */
-export const PLOT_WINTER_COVER_KEYS: string[] = ['broad-beans'];
+export const PLOT_WINTER_COVER_KEYS: string[] = ['broad-beans', 'oats'];
 
 export function isPlotWinterCover(crop: CropDef): boolean {
   return PLOT_WINTER_COVER_KEYS.includes(crop.key);
@@ -130,7 +127,7 @@ export function isPlotWinterCover(crop: CropDef): boolean {
 export function plotWinterCovers(crops: readonly CropDef[]): CropDef[] {
   return PLOT_WINTER_COVER_KEYS
     .map((k) => crops.find((c) => c.key === k))
-    .filter((c): c is CropDef => c !== undefined && hasVerifiedFieldPlan(c));
+    .filter((c): c is CropDef => c !== undefined && hasVerifiedSchedule(c));
 }
 
 /**
