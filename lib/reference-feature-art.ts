@@ -24,6 +24,7 @@ export type ReferenceFeatureArtwork =
   | 'banana-clump-v1.png'
   | 'pawpaw-tree-v1.png'
   | 'moringa-tree-v1.png'
+  | 'avocado-tree-v1.png'
   | 'keyhole-bed-v1.png'
   | 'herb-spiral-v1.png'
   | 'spekboom-hedge-v1.png';
@@ -32,7 +33,6 @@ const JOJO_TANKS = new Set(['jojo_1000', 'jojo_2500', 'jojo_5000', 'jojo_10000']
 const ORCHARD_TREES = new Set([
   'tree_citrus',
   'tree_mango',
-  'tree_avocado',
   'tree_macadamia',
   'tree_guava',
   'tree_litchi',
@@ -74,6 +74,7 @@ const PLANTING_DETAIL_ART: Readonly<Record<string, ReferenceFeatureArtwork>> = {
   banana_clump: 'banana-clump-v1.png',
   tree_pawpaw: 'pawpaw-tree-v1.png',
   tree_moringa: 'moringa-tree-v1.png',
+  tree_avocado: 'avocado-tree-v1.png',
   keyhole_bed: 'keyhole-bed-v1.png',
   herb_spiral: 'herb-spiral-v1.png',
   spekboom_hedge: 'spekboom-hedge-v1.png',
