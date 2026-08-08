@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
+import { PNG } from 'pngjs';
 
 import {
   REFERENCE_FEATURE_ART_ROOT,
@@ -86,6 +87,47 @@ test('every mapped catalogue artwork is a real, dimensioned PNG in the public as
     assert.ok(bytes.length >= 24, `${asset} has no complete PNG header`);
     assert.ok(bytes.readUInt32BE(16) > 0, `${asset} has no drawable width`);
     assert.ok(bytes.readUInt32BE(20) > 0, `${asset} has no drawable height`);
+  }
+});
+
+// Reference Blueprint artwork is composited onto the plan with ctx.drawImage, straight over
+// the map. Nothing clips it to the canopy silhouette, so the PNG's own transparency IS the
+// silhouette. A flattened export — white matte, or a "transparency" checkerboard baked into
+// the pixels — therefore paints an opaque SQUARE across the farm instead of a canopy.
+//
+// A PNG header check cannot catch this: the broken avocado asset was colour type 6 (RGBA) and
+// declared an alpha channel, it was just filled 255 everywhere. Only decoding the pixels tells
+// the truth, so this test decodes them.
+test('every mapped artwork carries real transparency, so it composites as a silhouette not a square', () => {
+  const mapped = new Set(
+    ELEMENT_CATALOG
+      .map((element) => referenceFeatureArtworkFor(element.id))
+      .filter((asset): asset is NonNullable<typeof asset> => asset !== null),
+  );
+  const publicRoot = join(process.cwd(), 'public', REFERENCE_FEATURE_ART_ROOT.replace(/^\//, ''));
+
+  for (const asset of mapped) {
+    const { width, height, data } = PNG.sync.read(readFileSync(join(publicRoot, asset)));
+    const alphaAt = (x: number, y: number) => data[(y * width + x) * 4 + 3];
+
+    // Every one of these is a top-down feature drawn inside its own bounding box, so all four
+    // corners sit outside the artwork proper. An opaque corner means a baked-in background.
+    for (const [x, y] of [[0, 0], [width - 1, 0], [0, height - 1], [width - 1, height - 1]]) {
+      assert.equal(
+        alphaAt(x, y),
+        0,
+        `${asset} has an opaque pixel at corner (${x},${y}) — it would paint a background square onto the plan`,
+      );
+    }
+
+    let transparent = 0;
+    for (let i = 3; i < data.length; i += 4) if (data[i] === 0) transparent += 1;
+    // Round artwork in a square frame leaves ~21% of the box empty at minimum; anything far
+    // below that is a matte that happens to have transparent corners.
+    assert.ok(
+      transparent / (width * height) > 0.05,
+      `${asset} is ${(100 - (transparent / (width * height)) * 100).toFixed(1)}% opaque — that is a flattened background, not a cut-out feature`,
+    );
   }
 });
 
