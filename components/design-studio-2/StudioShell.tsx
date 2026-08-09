@@ -25,7 +25,7 @@ import ElementPalette from './ElementPalette';
 import CanvasStage from './CanvasStage';
 import {
   SHEET_CONFIG, SHEET_META, SHEET_ORDER, DEFAULT_LAYER_STATE, applyForceLayers, nextSheetId,
-  waterInfraForLine, subLayerForWaterElement, ELEMENT_CATALOG_BY_ID,
+  waterInfraForLine, forceLayersFor, primaryLayerForSheet, ELEMENT_CATALOG_BY_ID,
   type SheetId, type LayerKeyId, type LayerStateMap, type QuickActionDef, type DemoItem, type DemoLine,
 } from '@/lib/design-studio-shell';
 import { getElementArt, CATEGORY_ICON } from '@/lib/design-studio-shell-icons';
@@ -142,13 +142,13 @@ export default function StudioShell() {
     // Same guard as Quick Actions, applied the moment the tool is armed — mirrors
     // app/design/page.tsx's useEffect keyed on placeDefId, which forces the layer on before
     // the farmer has even tapped the canvas.
-    setLayerState((s) => applyForceLayers(s, ['water', subLayerForWaterElement(defId)]));
-  }, []);
+    setLayerState((s) => applyForceLayers(s, forceLayersFor(activeSheet, defId)));
+  }, [activeSheet]);
 
   const handlePlaceOnStage = useCallback((xM: number, yM: number) => {
     if (!armedDefId) return;
-    placeItem(armedDefId, xM, yM, ['water', subLayerForWaterElement(armedDefId)]);
-  }, [armedDefId, placeItem]);
+    placeItem(armedDefId, xM, yM, forceLayersFor(activeSheet, armedDefId));
+  }, [activeSheet, armedDefId, placeItem]);
 
   const handleDragItem = useCallback((id: string, xM: number, yM: number) => {
     setDesign((prev) => ({ ...prev, items: prev.items.map((it) => (it.id === id ? { ...it, xM, yM } : it)) }));
@@ -161,12 +161,13 @@ export default function StudioShell() {
   const handleFinishLine = useCallback(() => {
     setInProgressLine((pts) => {
       if (pts.length >= 2) {
-        const sub = waterInfraForLine(drawKind);
-        placeLine(drawKind, pts, sub ? ['water', sub] : ['water']);
+        const sub = activeSheet === 'water' ? waterInfraForLine(drawKind) : null;
+        const base = primaryLayerForSheet(activeSheet);
+        placeLine(drawKind, pts, sub ? [base, sub] : [base]);
       }
       return [];
     });
-  }, [drawKind, placeLine]);
+  }, [activeSheet, drawKind, placeLine]);
   const handleCancelLine = useCallback(() => setInProgressLine([]), []);
 
   // ── Measure tool ───────────────────────────────────────────────────────────────────────

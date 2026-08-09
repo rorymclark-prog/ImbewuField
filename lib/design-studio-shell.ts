@@ -14,7 +14,11 @@
 // Per lib/sector.ts's own rule ("lib/ never imports components/"), this file stays pure data
 // — no React, no JSX. StudioShell.tsx owns the state; this file only describes its shape.
 
-import { ELEMENT_CATALOG, ELEMENTS_BY_ID, type DesignElementDef, type DesignLayerKey } from '@/lib/design-elements';
+import {
+  ELEMENT_CATALOG, ELEMENTS_BY_ID, CATEGORY_STEP,
+  PLANTING_GROUP_LABEL, PLANTING_GROUP_ORDER, plantingGroupFor,
+  type DesignElementDef, type DesignLayerKey,
+} from '@/lib/design-elements';
 import type { LineShape } from '@/lib/design-canvas';
 
 // ── Sheets ─────────────────────────────────────────────────────────────────────────────────
@@ -303,7 +307,56 @@ function stubLayerTree(primary: DesignLayerKey, primaryLabel: string): LayerTree
   ];
 }
 
+// ── Palettes derived from the real catalog, never hand-listed ──────────────────────────────
+//
+// Water above is an explicit list because its tabs are a shell-only split of one ElementCategory.
+// Every other sheet can be DERIVED, and is, because a hand-kept second list of what belongs on
+// the Planting step is precisely the drift this repo has been bitten by five times (see the
+// adversarial-review comments in lib/glossy-filters.ts). CATEGORY_STEP + alsoSteps is the same
+// pair components/design/DesignPalette.tsx's categoriesForStep uses, so the two studios cannot
+// disagree about what a step offers.
+function defsForStep(step: 'water' | 'planting' | 'structures'): DesignElementDef[] {
+  return ELEMENT_CATALOG.filter((d) =>
+    !d.deprecated && (CATEGORY_STEP[d.category] === step || d.alsoSteps?.includes(step)));
+}
+
+/** Planting tabs come from plantingGroupFor — the SAME grouping the current studio's chip strip
+ *  prints as section headings. Indigenous fruit is a tab here for the same reason it is a
+ *  section there: it is the group a farmer is least likely to know by name and most likely to
+ *  want. Two studios, one definition of what a section is. */
+function plantingTabs(defs: DesignElementDef[]): Record<string, string[]> {
+  const out: Record<string, string[]> = {};
+  for (const group of PLANTING_GROUP_ORDER) {
+    const ids = defs.filter((d) => plantingGroupFor(d) === group).map((d) => d.id);
+    if (ids.length) out[PLANTING_GROUP_LABEL[group]] = ids;
+  }
+  return out;
+}
+
+const PLANTING_DEFS = defsForStep('planting');
+const STRUCTURE_DEFS = defsForStep('structures');
+
+const STRUCTURE_TABS: Record<string, string[]> = {
+  Structures: STRUCTURE_DEFS.filter((d) => d.category === 'structure').map((d) => d.id),
+  Animals: STRUCTURE_DEFS.filter((d) => d.category === 'animal').map((d) => d.id),
+  Access: STRUCTURE_DEFS.filter((d) => d.category === 'access').map((d) => d.id),
+};
+
+// Earthworks is the ground you move with a spade before anything is planted. Its own category,
+// minus the two basins that read as the end of a water run and live on Water (the same split
+// SHEET_OVERRIDE makes in lib/glossy-filters.ts).
+const EARTHWORKS_DEFS = ELEMENT_CATALOG.filter(
+  (d) => !d.deprecated && d.category === 'earthworks'
+    && d.id !== 'greywater_basin' && d.id !== 'infiltration_basin');
+
+const EARTHWORKS_TABS: Record<string, string[]> = {
+  Beds: EARTHWORKS_DEFS.filter((d) => /bed|spiral/.test(d.id)).map((d) => d.id),
+  Basins: EARTHWORKS_DEFS.filter((d) => /basin|circle|half_moon/.test(d.id)).map((d) => d.id),
+  Banks: EARTHWORKS_DEFS.filter((d) => /berm|terrace|mulch/.test(d.id)).map((d) => d.id),
+};
+
 export interface SheetConfig extends SheetMeta {
+
   layerTree: LayerTreeNode[];
   quickActions: QuickActionDef[];
   paletteDefIds: string[];
@@ -323,12 +376,61 @@ export const SHEET_CONFIG: Record<SheetId, SheetConfig> = {
     paletteTabs: WATER_PALETTE_TABS,
     stub: false,
   },
-  earthworks: { ...SHEET_META.earthworks, layerTree: stubLayerTree('earthworks', 'Earthworks'), quickActions: [], paletteDefIds: [], stub: true },
-  planting: { ...SHEET_META.planting, layerTree: stubLayerTree('planting', 'Planting'), quickActions: [], paletteDefIds: [], stub: true },
-  structures: { ...SHEET_META.structures, layerTree: stubLayerTree('structures', 'Structures'), quickActions: [], paletteDefIds: [], stub: true },
+  earthworks: {
+    ...SHEET_META.earthworks,
+    layerTree: stubLayerTree('earthworks', 'Earthworks'),
+    quickActions: [],
+    paletteDefIds: EARTHWORKS_DEFS.map((d) => d.id),
+    paletteTabs: EARTHWORKS_TABS,
+    stub: false,
+  },
+  planting: {
+    ...SHEET_META.planting,
+    layerTree: stubLayerTree('planting', 'Planting'),
+    quickActions: [],
+    paletteDefIds: PLANTING_DEFS.map((d) => d.id),
+    paletteTabs: plantingTabs(PLANTING_DEFS),
+    stub: false,
+  },
+  structures: {
+    ...SHEET_META.structures,
+    layerTree: stubLayerTree('structures', 'Structures'),
+    quickActions: [],
+    paletteDefIds: STRUCTURE_DEFS.map((d) => d.id),
+    paletteTabs: STRUCTURE_TABS,
+    stub: false,
+  },
   whole: { ...SHEET_META.whole, layerTree: stubLayerTree('planting', 'Everything'), quickActions: [], paletteDefIds: [], stub: true },
   phasing: { ...SHEET_META.phasing, layerTree: stubLayerTree('structures', 'Build sequence'), quickActions: [], paletteDefIds: [], stub: true },
 };
+
+/** The layer a freshly-placed element belongs on, for the sheet it was placed from.
+ *
+ *  Placement must force its layer visible — the bug class where "a step creates a shape on a
+ *  layer it switches off" means the farmer places something, sees nothing, and places it again.
+ *  That guard was written for Water and hardcoded to the water layer, so arming a tree on the
+ *  Planting sheet switched on WATER instead of planting: the guard was firing, just at the wrong
+ *  target. Derived from the same map the sheet's own layer tree is built from. */
+export function primaryLayerForSheet(sheet: SheetId): DesignLayerKey {
+  switch (sheet) {
+    case 'site': return 'ground';
+    case 'sector': return 'sector';
+    case 'zones': return 'zones';
+    case 'water': return 'water';
+    case 'earthworks': return 'earthworks';
+    case 'structures': case 'phasing': return 'structures';
+    case 'planting': case 'whole': return 'planting';
+  }
+}
+
+/** Every layer a placement on this sheet must switch on: the sheet's own layer, plus — on Water
+ *  only — the specific named sub-layer, because a tank hidden inside a collapsed "JoJo Tanks"
+ *  child is just as invisible as one on a hidden parent. */
+export function forceLayersFor(sheet: SheetId, defId: string): LayerKeyId[] {
+  const primary = primaryLayerForSheet(sheet);
+  if (sheet !== 'water') return [primary];
+  return [primary, subLayerForWaterElement(defId)];
+}
 
 export function nextSheetId(current: SheetId): SheetId | null {
   const i = SHEET_ORDER.indexOf(current);
