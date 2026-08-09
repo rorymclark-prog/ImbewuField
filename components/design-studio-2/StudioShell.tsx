@@ -70,7 +70,15 @@ export default function StudioShell() {
   // would fork that behaviour into a second implementation, which is the drift trap
   // lib/design-studio-shell.ts's own applyForceLayers note warns about.
   const [mode, setMode] = useState<'guided' | 'pro'>('guided');
+  // The right panel is a COLUMN on desktop and an OVERLAY DRAWER below lg. Rendered inline at a
+  // fixed 300px on a 390px phone it left the canvas about 30px wide — the panel was not beside
+  // the map, it was instead of it. Layout is CSS (see the wrapper below) so it cannot desync
+  // from what the user sees on resize; only the DEFAULT open state needs to know the width, and
+  // that is read in an effect rather than during render so the server and client agree.
   const [rightPanelOpen, setRightPanelOpen] = useState(true);
+  useEffect(() => {
+    if (window.matchMedia('(max-width: 1023px)').matches) setRightPanelOpen(false);
+  }, []);
   const [previewMode, setPreviewMode] = useState(false);
   const [armedDefId, setArmedDefId] = useState<string | null>(null);
   const [drawKind, setDrawKind] = useState<LineShape['kind']>('pipe');
@@ -304,8 +312,18 @@ export default function StudioShell() {
           )}
         </div>
 
+        {/* Below lg the panel is a drawer over the map with a dismiss backdrop; at lg and up it
+            is a plain column in the flex row and the backdrop never renders. */}
         {rightPanelOpen && !previewMode && (
-          <div className="w-[300px] shrink-0">
+          <button
+            type="button"
+            aria-label="Close the layers panel"
+            onClick={() => setRightPanelOpen(false)}
+            className="fixed inset-0 z-30 bg-black/25 lg:hidden"
+          />
+        )}
+        {rightPanelOpen && !previewMode && (
+          <div className="fixed inset-y-0 right-0 z-40 w-[88%] max-w-[340px] shadow-2xl lg:static lg:z-auto lg:w-[300px] lg:shrink-0 lg:shadow-none">
             <RightPanel
               sheet={sheet}
               layerState={layerState}

@@ -56,8 +56,11 @@ export default function LeftToolbar({ tool, viewOn, layersOn, onSelect }: LeftTo
   const isToggle = (id: ToolMode) => id === 'view' || id === 'layers';
 
   return (
+    // 76px of a 390px phone is a fifth of the screen spent on a tool rail. Below sm the rail
+    // drops its labels and narrows to 56 — still over the 44px touch floor, and the labels are
+    // only a learning aid, which is what a returning phone user needs least.
     <div
-      className="flex h-full w-[76px] shrink-0 flex-col items-center gap-0.5 border-r py-2"
+      className="flex h-full w-14 shrink-0 flex-col items-center gap-0.5 overflow-y-auto border-r py-2 sm:w-[76px]"
       style={{ borderColor: 'var(--border)', background: 'var(--surface)' }}
       aria-label="Design tools"
       role="toolbar"
@@ -72,15 +75,15 @@ export default function LeftToolbar({ tool, viewOn, layersOn, onSelect }: LeftTo
             onClick={() => onSelect(id)}
             title={isToggle(id) ? `${label} — ${active ? 'on' : 'off'}` : label}
             aria-pressed={isToggle(id) ? active : undefined}
-            className="flex w-[68px] flex-col items-center justify-center gap-1 rounded-xl py-2 transition-colors hover:bg-[var(--surface-2)]"
+            className="flex w-11 flex-col items-center justify-center gap-1 rounded-xl py-2 transition-colors hover:bg-[var(--surface-2)] sm:w-[68px]"
             style={{
-              minHeight: 56,
+              minHeight: 48,
               background: active ? 'var(--brand-soft)' : 'transparent',
               color: active ? 'var(--brand)' : 'var(--text-2)',
             }}
           >
             <Icon size={19} />
-            <span className="text-[10.5px] font-semibold leading-none">{label}</span>
+            <span className="hidden text-[10.5px] font-semibold leading-none sm:block">{label}</span>
           </button>
         );
       })}

@@ -62,13 +62,13 @@ export default function IdentityBar({
 
       <div className="flex min-w-0 items-baseline gap-2">
         <span
-          className="shrink-0 text-[19px] font-bold leading-none"
+          className="min-w-0 truncate text-[17px] font-bold leading-none sm:shrink-0 sm:text-[19px]"
           style={{ fontFamily: 'var(--font-display)', color: 'var(--brand-strong)', letterSpacing: '-0.02em' }}
         >
           ImbewuField
         </span>
         <span
-          className="shrink-0 rounded-full px-1.5 py-0.5 text-[10px] font-bold leading-none"
+          className="hidden shrink-0 rounded-full px-1.5 py-0.5 text-[10px] font-bold leading-none sm:block"
           style={{ background: 'var(--brand-soft)', color: 'var(--brand)' }}
         >
           2.0
@@ -133,8 +133,13 @@ export default function IdentityBar({
       </div>
 
       {/* Status, not an action. `.u-status` supplies the dot and the soft tint. */}
+      {/* Wrapped rather than given `hidden` directly: `.u-status` sets display:inline-flex as a
+          plain class, so it ties with Tailwind's `.hidden` on specificity and wins or loses on
+          source order — which is how this pill kept rendering on a 390px phone and pushing the
+          bar into overflow. The wrapper has no competing display rule, so it always wins. */}
+      <span className="hidden shrink-0 md:block">
       <span
-        className={`u-status hidden shrink-0 md:inline-flex ${dirty ? 'u-status-warn' : ''}`}
+        className={`u-status ${dirty ? 'u-status-warn' : ''}`}
         style={dirty ? undefined : { background: 'var(--surface-2)', color: 'var(--text-3)' }}
         role="status"
         aria-live="polite"
@@ -144,6 +149,7 @@ export default function IdentityBar({
             would be the app's most expensive kind of lie — confident, reassuring and false.
             "Nothing placed yet" is true, and the warning state is true the moment it is not. */}
         {dirty ? 'Not saved yet' : 'Nothing placed yet'}
+      </span>
       </span>
     </header>
   );
