@@ -142,6 +142,7 @@ import {
   styleSheetLegendWidth,
 } from '@/lib/reference-presentation';
 import { loadSheets, saveSheet, deleteSheet, clearSheets, type SheetProvider, type SheetResultKind } from '@/lib/sheet-store';
+import { backfillThumbnails } from '@/lib/gallery-thumbnails';
 import { basemapAttribution } from '@/lib/basemap-imagery';
 import { formatDesignTranslation } from '@/lib/design-studio-i18n';
 import { useLanguage } from '@/lib/i18n';
@@ -11114,15 +11115,28 @@ export default function DesignGlossy({
       // Backfill thumbnails for sheets saved before makeGalleryThumbnail existed — otherwise a
       // farmer's EXISTING gallery (the case most likely to actually have the memory problem this
       // fixes, having had the longest time to accumulate full-resolution entries) never benefits.
-      // One at a time, best-effort, never blocking the already-shown grid.
-      for (const r of rows) {
-        if (r.thumb) continue;
-        void makeGalleryThumbnail(r.image).then((thumb) => {
-          if (cancelled || !thumb) return;
+      // ONE AT A TIME, AND THIS TIME ACTUALLY. The previous version said "one at a time" in this
+      // comment and then fired every makeGalleryThumbnail from a plain for-loop with no await, so
+      // a gallery of N legacy sheets began N CONCURRENT decodes on mount — each a full-resolution
+      // PNG (1-3 MB encoded, ~10 MB decoded at sheet size) with its own canvas alongside it. That
+      // is precisely the memory spike the thumbnail work was introduced to prevent, moved out of
+      // the grid and into the backfill. Rory: "whenever I expand a map that I have created in the
+      // glossy section it crashes the app" — this runs on that same screen, moments earlier.
+      //
+      // Sequential means peak cost is ONE decode whatever the gallery's size, and each is released
+      // before the next starts. Best-effort and non-blocking as before: the grid is already up.
+      // The walk itself lives in lib/gallery-thumbnails.ts so its SCHEDULE is testable. Both
+      // versions of this code produce identical thumbnails and identical saved records — they
+      // differ only in how many decodes are alive at once, which no assertion about the result
+      // could ever catch. tests/gallery-thumbnails.test.ts asserts peak concurrency is 1.
+      void backfillThumbnails(rows, {
+        make: (r) => makeGalleryThumbnail(r.image),
+        onThumb: (r, thumb) => {
           setGallery((prev) => prev.map((g) => (g.id === r.id ? { ...g, thumb } : g)));
           void saveSheet({ ...r, thumb });
-        });
-      }
+        },
+        isCancelled: () => cancelled,
+      });
     });
     return () => {
       cancelled = true;
@@ -14433,7 +14447,17 @@ export default function DesignGlossy({
                     style={{ padding: 0, border: 'none', borderRadius: 12, background: 'transparent', cursor: 'zoom-in' }}
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={galleryViewItem.image} alt={galleryViewItem.label} style={{ width: '100%', borderRadius: 12, border: '1px solid #E2D8C4', display: 'block' }} />
+                    {/* While the full-screen overlay is up, this image is behind a 94%-opaque
+                        backdrop and cannot be seen — but it is still mounted, so the browser holds
+                        a SECOND decode of the same full-resolution sheet. Showing the thumbnail
+                        here for that moment halves the peak cost of the expand, and nothing on
+                        screen changes; the overlay is what the farmer is looking at. Falls back to
+                        the full image when a legacy sheet has no thumbnail yet. */}
+                    <img
+                      src={galleryZoomOpen ? (galleryViewItem.thumb ?? galleryViewItem.image) : galleryViewItem.image}
+                      alt={galleryViewItem.label}
+                      style={{ width: '100%', borderRadius: 12, border: '1px solid #E2D8C4', display: 'block' }}
+                    />
                   </button>
                   <span style={{ marginTop: -7, color: '#8A8172', fontSize: 11, fontWeight: 700 }}>{t('designGlossyInspectFullScreen')}</span>
                   <p style={{ fontSize: 13, color: '#5C5040', margin: 0 }}>{galleryViewItem.label}</p>
@@ -14540,8 +14564,31 @@ export default function DesignGlossy({
                           aria-pressed={exportMode ? exportSel.has(g.id) : undefined}
                           style={{ position: 'absolute', inset: 0, padding: 0, border: 'none', background: 'transparent', cursor: 'pointer' }}
                         >
-                          {/* eslint-disable-next-line @next/next/no-img-element */}
-                          <img src={g.thumb ?? g.image} alt={g.label} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                          {/* NO FULL-RESOLUTION FALLBACK IN THE GRID. `g.thumb ?? g.image` looks
+                              harmless — one tile, one image — but it is per-tile: a farmer whose
+                              sheets predate thumbnails had EVERY tile pointing at a 1-3 MB PNG
+                              data URL, decoding ~10 MB apiece, three-across on a phone. That is
+                              the whole reason makeGalleryThumbnail was written, still reachable
+                              through its own fallback.
+                              The backfill above fills these in one at a time, so the placeholder
+                              is what a legacy sheet shows for a second or two on first open. A
+                              tile that says what it is beats a tile that costs 10 MB to draw. */}
+                          {g.thumb ? (
+                            // eslint-disable-next-line @next/next/no-img-element
+                            <img src={g.thumb} alt={g.label} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                          ) : (
+                            <span
+                              aria-hidden
+                              style={{
+                                display: 'flex', width: '100%', height: '100%', alignItems: 'center',
+                                justifyContent: 'center', padding: 6, textAlign: 'center',
+                                background: '#EDE7DB', color: '#9A8268', fontSize: 10, fontWeight: 700,
+                                lineHeight: 1.25,
+                              }}
+                            >
+                              {g.label}
+                            </span>
+                          )}
                           {(() => {
                             const chip = galleryTileChip(g.resultKind);
                             if (!chip) return null;
