@@ -204,17 +204,34 @@ export interface QuickActionDef {
 export const WATER_ELEMENT_IDS = [
   'jojo_1000', 'jojo_2500', 'jojo_5000', 'jojo_10000',
   'rain_barrel', 'pond_small', 'dam', 'borehole', 'tap_point', 'water_trough',
+  // FILTERS AND THE GREYWATER CHAIN — six catalogue entries that were reachable from NOWHERE.
+  //
+  // They are not in the Earthworks palette either: EARTHWORKS_DEFS explicitly excludes
+  // greywater_basin and infiltration_basin, and it is right to — SHEET_OVERRIDE prints both on
+  // the WATER sheet. But nothing added them back here, so between the two exclusions a farmer
+  // could not place a greywater diverter, outlet or basin anywhere in this studio.
+  //
+  // Rory: "we need a section on grey water". There wasn't one, and the elements to fill it were
+  // already written and already print on this sheet.
+  'first_flush', 'pump_filter',
+  'greywater_diverter', 'greywater_outlet', 'greywater_basin', 'infiltration_basin',
 ] as const;
 
 // Sub-grouping for the palette's category tabs. This is a SHELL-ONLY presentational split
-// (all ten of these already share ElementCategory === 'water' — see CATEGORY_STEP in
-// lib/design-elements.ts — so the real ElementCategory union has nothing finer to filter by).
-// Deliberately a plain id->tab map rather than a new field on DesignElementDef, so it cannot
-// be mistaken for real catalog data.
+// (these already share ElementCategory === 'water' — or in the basins' case are SHEET_OVERRIDE'd
+// onto the Water sheet — see CATEGORY_STEP in lib/design-elements.ts, so the real ElementCategory
+// union has nothing finer to filter by). Deliberately a plain id->tab map rather than a new field
+// on DesignElementDef, so it cannot be mistaken for real catalog data.
 export const WATER_PALETTE_TABS: Record<string, string[]> = {
   Tanks: ['jojo_1000', 'jojo_2500', 'jojo_5000', 'jojo_10000', 'rain_barrel'],
+  Filters: ['first_flush', 'pump_filter'],
   Sources: ['pond_small', 'dam', 'borehole'],
   Access: ['tap_point', 'water_trough'],
+  // ORDERED AS THE WATER RUNS, not alphabetically: it leaves the house at the diverter, arrives
+  // at the outlet, and soaks away in a basin. A farmer reading this tab is being shown a chain,
+  // and the chain only makes sense in that order — a greywater outlet with nothing to soak into
+  // is a wet patch by the back door.
+  Greywater: ['greywater_diverter', 'greywater_outlet', 'greywater_basin', 'infiltration_basin'],
 };
 
 export function waterElementDefs(): DesignElementDef[] {

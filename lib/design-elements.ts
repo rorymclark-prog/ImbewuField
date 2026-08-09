@@ -40,6 +40,18 @@ export interface DesignElementDef {
   // knowing which species is meant); leave it off generic/deliberately-unspecified entries like
   // 'Other Tree'.
   botanical?: string;
+  // A TYPICAL capacity, for display on a palette card only — NEVER a number the app computes
+  // with. Rory: "the rain barrel (also add litres size)".
+  //
+  // Deliberately kept OUT of `name`, because statedTankCapacityLitres parses litres from the
+  // name, and that figure is summed into the storage-vs-harvest lines on the Water sheet and
+  // into the report's site facts. That function's own comment states the rule this field exists
+  // to respect: "'Rain Barrel' covers many real sizes, and pretending otherwise could make
+  // inadequate storage look sufficient." Renaming the barrel to "Rain Barrel 200L" would have
+  // told a farmer with a 100 L drum that their storage was adequate.
+  //
+  // So the string carries its own hedge and reaches nothing but the card.
+  capacityNote?: string;
   // Extra wizard steps this element is offered on, beyond the ones its category implies. Some
   // elements are honestly two things at once — a banana circle is a planted crop AND a greywater
   // sink — and forcing them into one category hid them from the step where the farmer looks.
@@ -271,6 +283,11 @@ export const ELEMENT_CATALOG: DesignElementDef[] = [
     name: 'Rain Barrel',
     icon: '🪣',
     art: '/element-art/rain_barrel.png',
+    // The standard repurposed HDPE/steel drum is 200 L at Ø0.572 m — which is what the Ø0.6 m
+    // footprint above already describes. Approximate on the card because the barrel a farmer
+    // actually has may be a 100 L offcut or a 250 L chemical drum, and see capacityNote's own
+    // note for why this must never reach the storage arithmetic.
+    capacityNote: '≈200 L',
     shape: 'circle',
     wM: 0.6,
     hM: 0.6,
