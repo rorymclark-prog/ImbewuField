@@ -25,6 +25,105 @@ export interface FlowArrow {
   from: [number, number];
   /** Head, in normalised canvas coordinates. */
   to: [number, number];
+  /** True when the arrow was cut short by a water-harvesting feature: it ends AT the feature and
+   *  the renderer draws a spread bar there instead of an arrowhead — water arriving and being
+   *  taken in, not passing through. */
+  spread?: boolean;
+}
+
+/** What can intercept overland flow, all in the arrows' own normalised space.
+ *  Every entry is something whose JOB is stopping runoff — swales, berms, beds, staple plots. */
+export interface FlowInterceptors {
+  /** Polylines: swale and contour-berm centre lines. */
+  polylines: Array<Array<[number, number]>>;
+  /** Rotated rectangles: bed footprints. rotDeg matches the item's saved rotation. */
+  rects: Array<{ cx: number; cy: number; w: number; h: number; rotDeg: number }>;
+  /** Rings: traced plots (staple gardens). */
+  rings: Array<Array<[number, number]>>;
+}
+
+function segIntersectT(
+  a: [number, number], b: [number, number],
+  c: [number, number], d: [number, number],
+): number | null {
+  const rX = b[0] - a[0]; const rY = b[1] - a[1];
+  const sX = d[0] - c[0]; const sY = d[1] - c[1];
+  const denom = rX * sY - rY * sX;
+  if (Math.abs(denom) < 1e-12) return null;
+  const t = ((c[0] - a[0]) * sY - (c[1] - a[1]) * sX) / denom;
+  const u = ((c[0] - a[0]) * rY - (c[1] - a[1]) * rX) / denom;
+  return t >= 0 && t <= 1 && u >= 0 && u <= 1 ? t : null;
+}
+
+function toRectLocal(p: [number, number], r: FlowInterceptors['rects'][number]): [number, number] {
+  const rad = (-r.rotDeg * Math.PI) / 180;
+  const dx = p[0] - r.cx; const dy = p[1] - r.cy;
+  return [dx * Math.cos(rad) - dy * Math.sin(rad), dx * Math.sin(rad) + dy * Math.cos(rad)];
+}
+
+function insideRect(p: [number, number], r: FlowInterceptors['rects'][number]): boolean {
+  const [x, y] = toRectLocal(p, r);
+  return Math.abs(x) <= r.w / 2 && Math.abs(y) <= r.h / 2;
+}
+
+function rectCorners(r: FlowInterceptors['rects'][number]): Array<[number, number]> {
+  const rad = (r.rotDeg * Math.PI) / 180;
+  const cos = Math.cos(rad); const sin = Math.sin(rad);
+  return ([[-1, -1], [1, -1], [1, 1], [-1, 1]] as const).map(([sx, sy]) => [
+    r.cx + (sx * r.w / 2) * cos - (sy * r.h / 2) * sin,
+    r.cy + (sx * r.w / 2) * sin + (sy * r.h / 2) * cos,
+  ] as [number, number]);
+}
+
+/**
+ * Cut every arrow at the first water-harvesting feature its path meets.
+ *
+ * Rory, on sheet 04: "drainage water arrows must show spreading by veg beds and swales, not
+ * going through them." An arrow running straight through a swale is the map claiming the swale
+ * does nothing — the exact opposite of why the farmer dug it. The rules, all pure geometry:
+ *
+ *  - an arrow whose TAIL starts inside an interceptor is dropped: the water there is already
+ *    captured, and an arrow leaving a bed claims runoff the bed exists to prevent;
+ *  - an arrow whose path crosses one is truncated to the FIRST crossing and marked `spread` —
+ *    the renderer ends it in a bar along the feature instead of an arrowhead;
+ *  - an arrow that touches nothing passes through unchanged.
+ *
+ * A truncated stub shorter than a third of the original is dropped rather than drawn: a 2px
+ * arrow against a bed edge reads as dirt on the print.
+ */
+export function interceptFlowArrows(arrows: FlowArrow[], features: FlowInterceptors): FlowArrow[] {
+  const out: FlowArrow[] = [];
+  for (const arrow of arrows) {
+    const { from, to } = arrow;
+    const startsCaptured =
+      features.rects.some((r) => insideRect(from, r))
+      || features.rings.some((ring) => pointInRing(from, ring));
+    if (startsCaptured) continue;
+
+    let firstT: number | null = null;
+    const consider = (t: number | null) => {
+      if (t !== null && t > 1e-9 && (firstT === null || t < firstT)) firstT = t;
+    };
+    for (const line of features.polylines) {
+      for (let i = 0; i + 1 < line.length; i++) consider(segIntersectT(from, to, line[i], line[i + 1]));
+    }
+    for (const r of features.rects) {
+      const c = rectCorners(r);
+      for (let i = 0; i < 4; i++) consider(segIntersectT(from, to, c[i], c[(i + 1) % 4]));
+    }
+    for (const ring of features.rings) {
+      for (let i = 0; i < ring.length; i++) consider(segIntersectT(from, to, ring[i], ring[(i + 1) % ring.length]));
+    }
+
+    if (firstT === null) { out.push(arrow); continue; }
+    if (firstT < 1 / 3) continue; // stub too short to read
+    out.push({
+      from,
+      to: [from[0] + (to[0] - from[0]) * firstT, from[1] + (to[1] - from[1]) * firstT],
+      spread: true,
+    });
+  }
+  return out;
 }
 
 export interface OverlandFlowInput {

@@ -50,6 +50,8 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       'Sharper maps are now the default on computers; phones can switch in Quality',
       'Roofs lose their outline and gain real corrugated ribs',
       'The dashed circle around big trees is gone — plants still show on top',
+      'Water arrows now stop and spread at swales and beds instead of crossing them',
+      'Bed rows are painted vegetables now — cabbages, tomatoes, beans and more',
     ],
   },
   {

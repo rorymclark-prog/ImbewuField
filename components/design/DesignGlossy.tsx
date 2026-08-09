@@ -89,7 +89,7 @@ import { EARTHWORKS_ROUTE_STYLE, WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, 
 import { PLANTING_CANOPY_PAINT, PLANTING_LEGEND_SECTION_ORDER, PLANTING_ROUTE_STYLE, overstoryCanopyIds, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
 import { STRUCTURES_LEGEND_SECTION_ORDER, structuresFeaturePresentationDimensions, structuresLegendSectionForFeature, structuresRouteVisualFor, type StructuresLegendSection } from '@/lib/structures-cartography';
 import { presentSectorCartography, seasonalSunArcRadii, sectorEvidenceSummary, SECTOR_STYLES, sectorFillColor, sectorStrokeWidth, type SectorLegendIcon, type SectorVisualKind } from '@/lib/sector-cartography';
-import { referenceFeatureArtworkUrl, stapleTileUrl, vegSpriteUrl } from '@/lib/reference-feature-art';
+import { referenceFeatureArtworkUrl, stapleTileUrl, vegSpriteUrl, VEG_SPRITES } from '@/lib/reference-feature-art';
 import {
   DEFAULT_SHEET_LABEL_MODE,
   codedLegendText,
@@ -110,7 +110,8 @@ import {
 } from '@/lib/sheet-legend-layout';
 import { PLAIN_HARD_SURFACE_PAINT, SHEET_BASE_MUTE_STYLE, SHEET_STRUCTURE_MUTE_STYLE, type SheetBaseMute } from '@/lib/sheet-base-mute';
 import { frameForUnderlay, sheetUnderlayOptions, underlayCacheSuffix, type SheetUnderlay } from '@/lib/sheet-underlay';
-import { overlandFlowArrows, overlandFlowLegendText, type FlowArrow } from '@/lib/overland-flow';
+import { overlandFlowArrows, overlandFlowLegendText, interceptFlowArrows, type FlowArrow } from '@/lib/overland-flow';
+import { BED_DEF_IDS } from '@/lib/design-beds-bridge';
 import {
   bedCropRows,
   cropGlyphFor,
@@ -1461,6 +1462,14 @@ async function preloadReferenceFeatureArtwork(
     if (!def) continue;
     const url = referenceFeatureArtworkUrl(def.id);
     if (url && !referenceFeatureArtworkCache.has(url)) urls.add(url);
+  }
+  // Veg sprites are keyed off the row engine's CropGlyph, not off an element id — preloaded
+  // whenever the design has any bed, since one bed can rotate through several glyphs.
+  if (state.items.some((it) => (BED_DEF_IDS as readonly string[]).includes(it.defId))) {
+    for (const glyph of Object.keys(VEG_SPRITES)) {
+      const url = vegSpriteUrl(glyph);
+      if (url && !referenceFeatureArtworkCache.has(url)) urls.add(url);
+    }
   }
   // Staple-plot field tiles are keyed off ZONES, not items — the loop above can never find them.
   // Preloaded by each plot's own ordinal so a two-plot farm loads two tiles, not four.
@@ -2941,6 +2950,26 @@ function drawOverlandFlowArrows(
       const angle = Math.atan2(ty - fy, tx - fx);
       ctx.moveTo(fx, fy);
       ctx.lineTo(tx, ty);
+      if (arrow.spread) {
+        // INTERCEPTED: the arrow ends AT a swale, bed or plot, and the head becomes a bar lying
+        // ALONG that feature with two short wings — water arriving and spreading sideways, the
+        // thing the farmer dug the feature to do. An arrowhead here would say "and onward",
+        // which is exactly the claim Rory flagged: "must show spreading by veg beds and swales,
+        // not going through them".
+        const across = angle + Math.PI / 2;
+        const bar = head * 1.4;
+        ctx.moveTo(tx - Math.cos(across) * bar, ty - Math.sin(across) * bar);
+        ctx.lineTo(tx + Math.cos(across) * bar, ty + Math.sin(across) * bar);
+        const wing = head * 0.55;
+        for (const side of [-1, 1] as const) {
+          const wx = tx + Math.cos(across) * bar * side;
+          const wy = ty + Math.sin(across) * bar * side;
+          ctx.moveTo(wx, wy);
+          ctx.lineTo(wx + Math.cos(across) * wing * side - Math.cos(angle) * wing * 0.4,
+                     wy + Math.sin(across) * wing * side - Math.sin(angle) * wing * 0.4);
+        }
+        continue;
+      }
       // Open V head, not a filled triangle: at this weight a solid head reads as a blob and the
       // arrow stops looking like a direction.
       ctx.moveTo(tx - Math.cos(angle - 0.42) * head, ty - Math.sin(angle - 0.42) * head);
@@ -6918,12 +6947,37 @@ async function buildReferenceBlueprintMap(
   // call. A roof's fall is NOT known — a traced outline says nothing about ridge, pitch or which
   // wall the gutter is on — so no arrow is drawn off a roof. See lib/overland-flow.ts.
   const flowArrows = filter === 'water'
-    ? overlandFlowArrows({
-      boundary: renderRefLayers.boundary,
-      aspectDeg: site?.elevation?.aspectDeg ?? Number.NaN,
-      slopeDeg: site?.elevation?.slopeDeg ?? Number.NaN,
-      directionConfidence: site?.elevation?.directionConfidence,
-    })
+    ? interceptFlowArrows(
+      overlandFlowArrows({
+        boundary: renderRefLayers.boundary,
+        aspectDeg: site?.elevation?.aspectDeg ?? Number.NaN,
+        slopeDeg: site?.elevation?.slopeDeg ?? Number.NaN,
+        directionConfidence: site?.elevation?.directionConfidence,
+      }),
+      // Everything whose JOB is stopping runoff, in the arrows' own normalised space. Bed
+      // footprints convert metres to normalised through the frame; a rotated bed keeps its
+      // rotation so the arrow is cut at the bed's true edge, not its bounding box.
+      {
+        polylines: renderState.lines
+          .filter((line) => line.kind === 'swale' && line.points.length >= 2)
+          .map((line) => line.points),
+        rects: renderState.items
+          .filter((it) => (BED_DEF_IDS as readonly string[]).includes(it.defId))
+          .map((it) => {
+            const def = ELEMENTS_BY_ID[it.defId];
+            return {
+              cx: it.x,
+              cy: it.y,
+              w: (it.wM ?? def?.wM ?? 1) / (renderFrame.imgW * renderFrame.mPerPx),
+              h: (it.hM ?? def?.hM ?? 1) / (renderFrame.imgH * renderFrame.mPerPx),
+              rotDeg: it.rot ?? 0,
+            };
+          }),
+        rings: renderState.zones
+          .filter((z) => z.feature === 'staple_garden' && z.points.length >= 3)
+          .map((z) => z.points),
+      },
+    )
     : [];
   drawOverlandFlowArrows(ctx, flowArrows, W, H);
 

@@ -90,3 +90,63 @@ test('the legend row says where the direction came from', () => {
   assert.match(text, /slope/i);
   assert.equal(overlandFlowLegendText(Number.NaN, 'north'), 'Overland flow — downhill to the north (—° site slope)');
 });
+
+// ─── Interception: arrows stop AT water-harvesting features ─────────────────────────────────
+// Rory: "drainage water arrows must show spreading by veg beds and swales, not going through
+// them." An arrow through a swale is the map claiming the swale does nothing.
+
+import { interceptFlowArrows, type FlowInterceptors } from '../lib/overland-flow.ts';
+
+const NO_FEATURES: FlowInterceptors = { polylines: [], rects: [], rings: [] };
+
+test('an arrow crossing a swale is cut at the swale and marked spread', () => {
+  const arrows = [{ from: [0.5, 0.2] as [number, number], to: [0.5, 0.8] as [number, number] }];
+  const out = interceptFlowArrows(arrows, {
+    ...NO_FEATURES,
+    polylines: [[[0.2, 0.5], [0.8, 0.5]]],
+  });
+  assert.equal(out.length, 1);
+  assert.equal(out[0].spread, true);
+  assert.ok(Math.abs(out[0].to[1] - 0.5) < 1e-9, `must end ON the swale, ended at ${out[0].to[1]}`);
+  assert.deepEqual(out[0].from, [0.5, 0.2], 'the tail must not move');
+});
+
+test('an arrow starting inside a bed is dropped — that water is already captured', () => {
+  const arrows = [{ from: [0.5, 0.5] as [number, number], to: [0.5, 0.9] as [number, number] }];
+  const out = interceptFlowArrows(arrows, {
+    ...NO_FEATURES,
+    rects: [{ cx: 0.5, cy: 0.5, w: 0.2, h: 0.1, rotDeg: 0 }],
+  });
+  assert.deepEqual(out, []);
+});
+
+test('a ROTATED bed cuts the arrow at its true edge, not its bounding box', () => {
+  // Bed at 45°: its true edge along the arrow's path sits closer than the axis-aligned box edge
+  // would. If the cut used the bounding box, `to.y` would be smaller (cut earlier) than the
+  // rotated-edge intersection this asserts.
+  const arrows = [{ from: [0.5, 0.1] as [number, number], to: [0.5, 0.5] as [number, number] }];
+  const out = interceptFlowArrows(arrows, {
+    ...NO_FEATURES,
+    rects: [{ cx: 0.5, cy: 0.5, w: 0.2, h: 0.05, rotDeg: 45 }],
+  });
+  assert.equal(out.length, 1);
+  assert.equal(out[0].spread, true);
+  const cornerReach = Math.hypot(0.1, 0.025); // rotated rect's furthest reach up the arrow's line
+  assert.ok(out[0].to[1] > 0.5 - cornerReach - 1e-6, 'cut earlier than the rotated bed can reach');
+});
+
+test('an arrow ending just short of a plot ring passes through unchanged', () => {
+  const ring: Array<[number, number]> = [[0.6, 0.6], [0.9, 0.6], [0.9, 0.9], [0.6, 0.9]];
+  const arrows = [{ from: [0.1, 0.1] as [number, number], to: [0.3, 0.3] as [number, number] }];
+  const out = interceptFlowArrows(arrows, { ...NO_FEATURES, rings: [ring] });
+  assert.deepEqual(out, arrows);
+});
+
+test('a stub shorter than a third of the arrow is dropped rather than drawn', () => {
+  const arrows = [{ from: [0.5, 0.45] as [number, number], to: [0.5, 0.75] as [number, number] }];
+  const out = interceptFlowArrows(arrows, {
+    ...NO_FEATURES,
+    polylines: [[[0.2, 0.5], [0.8, 0.5]]], // cuts at t = 1/6
+  });
+  assert.deepEqual(out, [], 'a 2px stub against a feature edge reads as dirt on the print');
+});
