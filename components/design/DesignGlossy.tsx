@@ -141,7 +141,7 @@ import {
   paperSheetCanvas,
   styleSheetLegendWidth,
 } from '@/lib/reference-presentation';
-import { loadSheets, saveSheet, deleteSheet, clearSheets, type SheetProvider, type SheetResultKind } from '@/lib/sheet-store';
+import { loadSheetMetas, loadSheetImage, patchSheetThumb, saveSheet, deleteSheet, clearSheets, type SheetProvider, type SheetResultKind } from '@/lib/sheet-store';
 import { backfillThumbnails } from '@/lib/gallery-thumbnails';
 import { basemapAttribution } from '@/lib/basemap-imagery';
 import { formatDesignTranslation } from '@/lib/design-studio-i18n';
@@ -10601,7 +10601,15 @@ const PROVIDER_LABEL: Record<'gemini' | 'falgpt' | 'exact', string> = {
 interface GalleryItem {
   id: string;
   label: string;
-  image: string;
+  /** ABSENT ON RESTORED ITEMS, BY DESIGN — the other half of the crash fix #84 started. The
+   *  gallery used to hold every saved sheet's full 1-3 MB data URL in React state from the
+   *  moment this section mounted; 30 sheets is 60-90 MB of strings before a pixel draws, which
+   *  is most of an in-app iOS webview's budget, and expanding one sheet then tipped it over
+   *  ("still crashes", with #84 live). Restored items carry metadata + thumb only; the full
+   *  image is fetched for ONE sheet at a time when the farmer opens it (loadSheetImage) and
+   *  released when they close it. Present only on items rendered THIS session, whose data URL
+   *  already exists in memory anyway. */
+  image?: string;
   /** Small JPEG for grid display — see makeGalleryThumbnail. Absent on sheets saved before this
    *  existed; the grid falls back to `image` for those rather than force-migrating old records. */
   thumb?: string;
@@ -11083,6 +11091,26 @@ export default function DesignGlossy({
   const underlaySuffixRef = useRef(underlaySuffix);
   underlaySuffixRef.current = underlaySuffix;
   const galleryViewItem = gallery.find((g) => g.id === galleryViewId) ?? null;
+  // The opened sheet's full image — ONE at a time, fetched when the farmer opens it and dropped
+  // when they close it or open another. Fresh renders already carry item.image and skip the
+  // fetch. Falls back to the thumbnail while loading (and permanently, if the row is gone),
+  // which is the honest degradation: a soft picture now beats a spinner over a crash later.
+  const [galleryViewImage, setGalleryViewImage] = useState<string | null>(null);
+  useEffect(() => {
+    if (!galleryViewId) { setGalleryViewImage(null); return; }
+    const item = gallery.find((g) => g.id === galleryViewId);
+    if (!item) { setGalleryViewImage(null); return; }
+    if (item.image) { setGalleryViewImage(item.image); return; }
+    let stale = false;
+    setGalleryViewImage(null); // show the thumb, not the PREVIOUS sheet's full image
+    void loadSheetImage(item.id).then((image) => {
+      if (!stale) setGalleryViewImage(image);
+    });
+    return () => { stale = true; };
+    // gallery identity churns on thumb backfill; keying on the id is what stops this effect
+    // refetching a multi-MB image every time a thumbnail lands elsewhere in the grid.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [galleryViewId]);
 
   useEffect(() => {
     if (!galleryZoomOpen) return;
@@ -11097,7 +11125,10 @@ export default function DesignGlossy({
   // unavailable IndexedDB must still leave a working session-only gallery.
   useEffect(() => {
     let cancelled = false;
-    void loadSheets(state.siteId).then((rows) => {
+    // METAS ONLY — no image payloads. This is what keeps the heap flat however many sheets a
+    // farmer has saved; see GalleryItem.image's own note. The full image is fetched per sheet
+    // when opened, and the backfill below fetches one at a time.
+    void loadSheetMetas(state.siteId).then((rows) => {
       if (cancelled) return;
       // Sheets from an earlier generation of the render rules stay in the gallery — they are the
       // farmer's, and some are downloaded already — but they are labelled, so two sheets with the
@@ -11105,7 +11136,6 @@ export default function DesignGlossy({
       setGallery(rows.map((r) => ({
         id: r.id,
         label: r.planVersion === PLAN_VERSION ? r.label : `${r.label} · older version`,
-        image: r.image,
         thumb: r.thumb,
         resultKind: r.resultKind ?? 'legacy',
         provider: r.provider ?? 'unknown',
@@ -11130,10 +11160,19 @@ export default function DesignGlossy({
       // differ only in how many decodes are alive at once, which no assertion about the result
       // could ever catch. tests/gallery-thumbnails.test.ts asserts peak concurrency is 1.
       void backfillThumbnails(rows, {
-        make: (r) => makeGalleryThumbnail(r.image),
+        // Each make() now also FETCHES its row's image — still exactly one full sheet in memory
+        // at a time, and it becomes garbage as soon as the thumbnail is drawn from it.
+        make: async (r) => {
+          const image = await loadSheetImage(r.id);
+          return image ? makeGalleryThumbnail(image) : undefined;
+        },
         onThumb: (r, thumb) => {
           setGallery((prev) => prev.map((g) => (g.id === r.id ? { ...g, thumb } : g)));
-          void saveSheet({ ...r, thumb });
+          // patchSheetThumb, NOT saveSheet({...r, thumb}): r is a meta with no image, and a
+          // saveSheet from it would write a row whose image field is GONE — the thumbnail
+          // backfill quietly destroying every sheet it touched. The patch helper reads the
+          // stored row and refuses to write one that has no image.
+          void patchSheetThumb(r.id, thumb);
         },
         isCancelled: () => cancelled,
       });
@@ -11149,7 +11188,10 @@ export default function DesignGlossy({
       image: string,
       provenance: Partial<Pick<GalleryItem, 'resultKind' | 'provider' | 'geometryLock' | 'showcase'>> = {},
     ) => {
-      const item: GalleryItem = {
+      // GalleryItem & {image: string}: fresh renders are the one case that always carries the
+      // full image (it is already in memory — it was just drawn), and the type says so, which is
+      // what lets the two saveSheet calls below stay whole-row writes.
+      const item: GalleryItem & { image: string } = {
         id: `map-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
         label,
         image,
@@ -11217,15 +11259,28 @@ export default function DesignGlossy({
     [],
   );
 
+  /** The full image for one gallery item — from memory when this session rendered it, from
+   *  IndexedDB otherwise. Export paths call this INSIDE their per-sheet loops, so a six-sheet
+   *  export holds one original at a time rather than six; the same discipline as the thumbnail
+   *  backfill, for the same reason. */
+  const resolveGalleryImage = useCallback(async (item: GalleryItem): Promise<string | null> => {
+    if (item.image) return item.image;
+    return loadSheetImage(item.id);
+  }, []);
+
   /** One PDF carrying every chosen sheet, a page each, at its own aspect. */
   const buildGalleryPdf = useCallback(
     async (picked: GalleryItem[], level: SheetExportQuality) => {
       let doc: jsPDF | null = null;
       for (const item of picked) {
+        const src = await resolveGalleryImage(item);
+        // A missing row is skipped rather than aborting the set: five sheets a farmer can send
+        // beat zero because a sixth had been deleted underneath the selection.
+        if (!src) continue;
         // PDF pages carry JPEG regardless of the format chips: those choose the FILE the farmer
         // gets, and inside a PDF a lossless page would multiply the size of a document whose whole
         // job is to be small enough to send.
-        const { dataUrl, w, h } = await encodeSheet(item.image, 'jpeg', level);
+        const { dataUrl, w, h } = await encodeSheet(src, 'jpeg', level);
         const orientation = w >= h ? 'landscape' : 'portrait';
         if (!doc) doc = new jsPDF({ unit: 'px', format: [w, h], orientation, hotfixes: ['px_scaling'] });
         else doc.addPage([w, h], orientation);
@@ -11233,7 +11288,7 @@ export default function DesignGlossy({
       }
       return doc;
     },
-    [encodeSheet],
+    [encodeSheet, resolveGalleryImage],
   );
 
   const exportSelection = useCallback(
@@ -11260,7 +11315,9 @@ export default function DesignGlossy({
 
         const files: File[] = [];
         for (let i = 0; i < picked.length; i++) {
-          const { dataUrl } = await encodeSheet(picked[i].image, exportFormat, exportQuality);
+          const src = await resolveGalleryImage(picked[i]);
+          if (!src) continue;
+          const { dataUrl } = await encodeSheet(src, exportFormat, exportQuality);
           const name = sheetExportFileName(
             placeName,
             picked[i].label,
@@ -11293,7 +11350,7 @@ export default function DesignGlossy({
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [gallery, exportSel, exportFormat, exportQuality, exportBusy, placeName, encodeSheet, buildGalleryPdf],
+    [gallery, exportSel, exportFormat, exportQuality, exportBusy, placeName, encodeSheet, buildGalleryPdf, resolveGalleryImage],
   );
 
   const removeGallery = useCallback((id: string) => {
@@ -13463,7 +13520,13 @@ export default function DesignGlossy({
                   setGallery((prev) => prev.map((g) => {
                     if (g.id !== revertedId || g.label.includes('Full Treatment was tried')) return g;
                     const amended = { ...g, label: `${g.label}${note}` };
-                    void saveSheet({ ...amended, siteId: state.siteId, at: new Date().toISOString(), planVersion: PLAN_VERSION });
+                    // Whole-row write ONLY while the full image is in memory (it is — the hybrid
+                    // was rendered this session). If this ever runs against a restored meta, a
+                    // spread-save would write the row WITHOUT its image and destroy the sheet;
+                    // skipping the persist loses only a caption amendment, never a picture.
+                    if (amended.image) {
+                      void saveSheet({ ...amended, image: amended.image, siteId: state.siteId, at: new Date().toISOString(), planVersion: PLAN_VERSION });
+                    }
                     return amended;
                   }));
                   hybridGalleryIdRef.current = null;
@@ -14454,7 +14517,9 @@ export default function DesignGlossy({
                         screen changes; the overlay is what the farmer is looking at. Falls back to
                         the full image when a legacy sheet has no thumbnail yet. */}
                     <img
-                      src={galleryZoomOpen ? (galleryViewItem.thumb ?? galleryViewItem.image) : galleryViewItem.image}
+                      src={galleryZoomOpen
+                        ? (galleryViewItem.thumb ?? galleryViewImage ?? galleryViewItem.image ?? '')
+                        : (galleryViewImage ?? galleryViewItem.thumb ?? galleryViewItem.image ?? '')}
                       alt={galleryViewItem.label}
                       style={{ width: '100%', borderRadius: 12, border: '1px solid #E2D8C4', display: 'block' }}
                     />
@@ -14478,7 +14543,7 @@ export default function DesignGlossy({
                   </div>
                   <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
                     <a
-                      href={galleryViewItem.image}
+                      href={galleryViewImage ?? galleryViewItem.image ?? galleryViewItem.thumb ?? '#'}
                       download={`imbewu-${galleryViewItem.label.toLowerCase().replace(/[^a-z0-9.\-]+/g, '_')}.png`}
                       style={{ display: 'inline-flex', alignItems: 'center', gap: 6, padding: '8px 14px', borderRadius: 12, background: GREEN, color: PAPER, fontWeight: 700, fontSize: 13, textDecoration: 'none' }}
                     >
@@ -14491,7 +14556,9 @@ export default function DesignGlossy({
                       <button
                         onClick={async () => {
                           try {
-                            const blob = await (await fetch(galleryViewItem.image)).blob();
+                            const shareSrc = galleryViewImage ?? galleryViewItem.image ?? galleryViewItem.thumb;
+                            if (!shareSrc) return;
+                            const blob = await (await fetch(shareSrc)).blob();
                             const file = new File([blob], `imbewu-${galleryViewItem.label.toLowerCase().replace(/[^a-z0-9.\-]+/g, '_')}.png`, { type: blob.type || 'image/png' });
                             if (navigator.canShare?.({ files: [file] })) {
                               await navigator.share({ files: [file], title: galleryViewItem.label, text: `${galleryViewItem.label} — my farm plan, made with ImbewuField` });
@@ -14758,7 +14825,7 @@ export default function DesignGlossy({
           </button>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={galleryViewItem.image}
+            src={galleryViewImage ?? galleryViewItem.thumb ?? galleryViewItem.image ?? ''}
             alt={galleryViewItem.label}
             onClick={(event) => event.stopPropagation()}
             style={{
