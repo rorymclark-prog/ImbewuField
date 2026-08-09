@@ -1373,6 +1373,34 @@ export default function DesignPalette({
                 </div>
                 {LAYER_TOGGLES.map((lt) => {
                   const on = activeLayers[lt.key];
+                  // CHROME SWAP 3 (cards): the pill-cloud becomes the 2.0 LAYER TREE — one full-
+                  // width row per layer, an eye toggle at a fixed column, the label beside it.
+                  // A wrapping cloud of pills makes a farmer SEARCH for a layer; rows in a fixed
+                  // order let the finger learn where each one lives. Same activeLayers state,
+                  // same handler, and the same ◉/○ glyphs the water sub-rows below already use,
+                  // so the tree and its children read as one control. Presentation only, per
+                  // lib/ui-version.ts's boundary.
+                  if (cardsUi) {
+                    return (
+                      <button
+                        key={lt.key}
+                        type="button"
+                        aria-pressed={on}
+                        onClick={() => setActiveLayers({ ...activeLayers, [lt.key]: !on })}
+                        style={{
+                          flexBasis: '100%', minHeight: 34, padding: '3px 6px', borderRadius: 9,
+                          border: 'none', background: 'transparent', color: DARK,
+                          display: 'grid', gridTemplateColumns: '30px 22px minmax(0,1fr)',
+                          alignItems: 'center', gap: 4, cursor: 'pointer', textAlign: 'left',
+                          fontSize: 12.5, fontWeight: 600, opacity: on ? 1 : 0.45,
+                        }}
+                      >
+                        <span aria-hidden style={{ fontSize: 14, textAlign: 'center', color: on ? GREEN : '#9A8268' }}>{on ? '◉' : '○'}</span>
+                        <span aria-hidden style={{ textAlign: 'center' }}>{lt.icon}</span>
+                        <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{t(lt.labelKey)}</span>
+                      </button>
+                    );
+                  }
                   return (
                     <button
                       key={lt.key}
