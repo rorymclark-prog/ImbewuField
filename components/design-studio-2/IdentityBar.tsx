@@ -26,6 +26,7 @@
 
 import { Redo2, Undo2 } from 'lucide-react';
 import BackButton from '@/components/BackButton';
+import type { SaveState } from './StudioShell';
 
 interface IdentityBarProps {
   siteName: string;
@@ -33,13 +34,14 @@ interface IdentityBarProps {
   onRedo: () => void;
   canUndo: boolean;
   canRedo: boolean;
-  /** Nothing persists in this shell yet (see StudioShell's PERSISTENCE note), so this reports
-   *  whether there is unsaved WORK, not a real write. Wording stays honest either way. */
-  dirty: boolean;
+  /** A REAL write state now, not a stand-in for one. The shell persists to its own store (see
+   *  StudioShell's PERSISTENCE note), so 'saved' means a successful localStorage write actually
+   *  happened, and 'error' means one actually failed. */
+  saveState: SaveState;
 }
 
 export default function IdentityBar({
-  siteName, onUndo, onRedo, canUndo, canRedo, dirty,
+  siteName, onUndo, onRedo, canUndo, canRedo, saveState,
 }: IdentityBarProps) {
   return (
     <header
@@ -121,16 +123,24 @@ export default function IdentityBar({
           bar into overflow. The wrapper has no competing display rule, so it always wins. */}
       <span className="hidden shrink-0 md:block">
       <span
-        className={`u-status ${dirty ? 'u-status-warn' : ''}`}
-        style={dirty ? undefined : { background: 'var(--surface-2)', color: 'var(--text-3)' }}
+        className={`u-status ${saveState === 'error' ? 'u-status-warn' : ''}`}
+        style={saveState === 'saved' || saveState === 'error'
+          ? undefined
+          : { background: 'var(--surface-2)', color: 'var(--text-3)' }}
         role="status"
         aria-live="polite"
       >
-        {/* NOT "All changes saved" on an empty design. This shell persists nothing yet (see
-            StudioShell's PERSISTENCE note), so a green tick claiming the farmer's work is safe
-            would be the app's most expensive kind of lie — confident, reassuring and false.
-            "Nothing placed yet" is true, and the warning state is true the moment it is not. */}
-        {dirty ? 'Not saved yet' : 'Nothing placed yet'}
+        {/* EVERY ONE OF THESE IS TRUE AT THE MOMENT IT SHOWS.
+            This pill read "Nothing placed yet" / "Not saved yet" because the shell genuinely
+            persisted nothing, and a green tick would have been the app's most expensive kind of
+            lie — confident, reassuring and false. It saves now, so "Saved" is finally earned.
+            "Couldn't save" is what a full or unavailable localStorage actually produces, and it
+            stays on screen rather than resolving to a tick: the only thing worse than a failed
+            save is a failed save wearing the face of a good one. */}
+        {saveState === 'saved' ? 'Saved'
+          : saveState === 'saving' ? 'Saving…'
+          : saveState === 'error' ? "Couldn't save"
+          : 'Nothing placed yet'}
       </span>
       </span>
     </header>
