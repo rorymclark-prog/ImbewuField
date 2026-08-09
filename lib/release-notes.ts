@@ -45,6 +45,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       'Ten identical beds now share one label with a count, instead of ten',
       'New Quality setting: High redraws sheets at 1.5x resolution for printing',
       'Buildings on plain-paper sheets now show a corrugated iron roof',
+      'Staple plots are now painted fields — maize, beans and pumpkin in rows',
     ],
   },
   {

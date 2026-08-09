@@ -40,7 +40,14 @@ export type ReferenceFeatureArtwork =
   | 'guava-v1.png'
   | 'olive-v1.png'
   | 'waterberry-v1.png'
-  | 'natal-plum-v1.png';
+  | 'natal-plum-v1.png'
+  // Staple-plot field tiles — OPAQUE and SEAMLESS-TILEABLE, unlike everything above. They are
+  // clip-filled across a traced staple_garden polygon as a repeating pattern, not composited on
+  // an item footprint. See stapleTileFor.
+  | 'staple-maize-v1.png'
+  | 'staple-beans-v1.png'
+  | 'staple-pumpkin-v1.png'
+  | 'staple-mixed-v1.png';
 
 const JOJO_TANKS = new Set(['jojo_1000', 'jojo_2500', 'jojo_5000', 'jojo_10000']);
 // THIRTEEN SPECIES USED TO SHARE ONE DRAWING, and that — not hue — is why a Planting sheet read
@@ -127,6 +134,31 @@ export function referenceFeatureArtworkFor(defId: string): ReferenceFeatureArtwo
   if (WATER_HARDWARE_ART[key]) return WATER_HARDWARE_ART[key];
   if (PLANTING_DETAIL_ART[key]) return PLANTING_DETAIL_ART[key];
   return null;
+}
+
+/** The four staple-plot field tiles, in the SAME rotation staplePlotGlyph uses — one crop per
+ *  plot, neighbouring plots different, and a given plot keeps its crop on every sheet because
+ *  both are driven by the plot's saved-creation ordinal (staplePlotOrdinalById). The tile
+ *  answers "what does this plot LOOK like"; the glyph engine remains the fallback wherever the
+ *  tile has not loaded, so a plot is never blank.
+ *
+ *  The order below must match STAPLE_PLOT_CROPS in lib/crop-row-cartography.ts — grain(maize),
+
+ *  legume(beans), vine(pumpkin), generic(mixed) — or a plot's drawn rows and its tile would disagree about its crop. */
+export const STAPLE_TILES: readonly ReferenceFeatureArtwork[] = [
+  'staple-maize-v1.png',
+  'staple-beans-v1.png',
+  'staple-pumpkin-v1.png',
+  'staple-mixed-v1.png',
+];
+
+export function stapleTileFor(ordinal: number): ReferenceFeatureArtwork {
+  const i = Number.isFinite(ordinal) && ordinal >= 0 ? Math.floor(ordinal) : 0;
+  return STAPLE_TILES[i % STAPLE_TILES.length];
+}
+
+export function stapleTileUrl(ordinal: number): string {
+  return `${REFERENCE_FEATURE_ART_ROOT}/${stapleTileFor(ordinal)}`;
 }
 
 export function referenceFeatureArtworkUrl(defId: string): string | null {

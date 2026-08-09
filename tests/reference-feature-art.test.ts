@@ -8,6 +8,8 @@ import {
   REFERENCE_FEATURE_ART_ROOT,
   referenceFeatureArtworkFor,
   referenceFeatureArtworkUrl,
+  STAPLE_TILES,
+  stapleTileFor,
 } from '@/lib/reference-feature-art';
 import { ELEMENT_CATALOG } from '@/lib/design-elements';
 
@@ -147,6 +149,11 @@ test('every shipped reference artwork is reachable from a real catalogue element
       .map((element) => referenceFeatureArtworkFor(element.id))
       .filter((asset): asset is NonNullable<typeof asset> => asset !== null),
   );
+  // The staple field tiles are reachable from a traced staple_garden ZONE, not from a placed
+  // element — every ordinal resolves to one of them through stapleTileFor, which is asserted to
+  // cover the whole set in its own test below. They join the reachable set here rather than
+  // weakening the readdir sweep, so a genuinely orphaned PNG still fails this test.
+  for (const tile of STAPLE_TILES) mapped.add(tile);
   const publicRoot = join(process.cwd(), 'public', REFERENCE_FEATURE_ART_ROOT.replace(/^\//, ''));
   const shipped = readdirSync(publicRoot).filter((name) => name.endsWith('.png'));
 
@@ -155,4 +162,21 @@ test('every shipped reference artwork is reachable from a real catalogue element
     shipped.sort(),
     'a shipped-but-unreachable asset costs app weight without ever improving a rendered feature',
   );
+});
+
+
+test('every staple tile is reachable through the ordinal rotation, and the rotation matches the glyph engine', () => {
+  // stapleTileFor and staplePlotGlyph must agree plot-by-plot forever: both are driven by the
+  // plot's saved-creation ordinal, and the tile saying maize while the fallback rows said beans
+  // would make a plot change crop depending on whether its artwork happened to load.
+  const seen = new Set<string>();
+  for (let i = 0; i < 8; i++) seen.add(stapleTileFor(i));
+  assert.equal(seen.size, STAPLE_TILES.length, 'the rotation must reach every tile');
+  assert.deepEqual(
+    [0, 1, 2, 3].map((i) => stapleTileFor(i)),
+    ['staple-maize-v1.png', 'staple-beans-v1.png', 'staple-pumpkin-v1.png', 'staple-mixed-v1.png'],
+    'order must track STAPLE_PLOT_CROPS: grain, legume, vine, generic',
+  );
+  assert.equal(stapleTileFor(-3), STAPLE_TILES[0], 'a corrupt ordinal falls back to the first tile, never throws');
+  assert.equal(stapleTileFor(Number.NaN), STAPLE_TILES[0]);
 });

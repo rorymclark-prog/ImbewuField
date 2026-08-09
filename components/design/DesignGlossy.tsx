@@ -89,7 +89,7 @@ import { EARTHWORKS_ROUTE_STYLE, WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, 
 import { PLANTING_CANOPY_PAINT, PLANTING_LEGEND_SECTION_ORDER, PLANTING_ROUTE_STYLE, overstoryCanopyIds, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
 import { STRUCTURES_LEGEND_SECTION_ORDER, structuresFeaturePresentationDimensions, structuresLegendSectionForFeature, structuresRouteVisualFor, type StructuresLegendSection } from '@/lib/structures-cartography';
 import { presentSectorCartography, seasonalSunArcRadii, sectorEvidenceSummary, SECTOR_STYLES, sectorFillColor, sectorStrokeWidth, type SectorLegendIcon, type SectorVisualKind } from '@/lib/sector-cartography';
-import { referenceFeatureArtworkUrl } from '@/lib/reference-feature-art';
+import { referenceFeatureArtworkUrl, stapleTileUrl } from '@/lib/reference-feature-art';
 import {
   DEFAULT_SHEET_LABEL_MODE,
   codedLegendText,
@@ -1461,6 +1461,16 @@ async function preloadReferenceFeatureArtwork(
     if (!def) continue;
     const url = referenceFeatureArtworkUrl(def.id);
     if (url && !referenceFeatureArtworkCache.has(url)) urls.add(url);
+  }
+  // Staple-plot field tiles are keyed off ZONES, not items — the loop above can never find them.
+  // Preloaded by each plot's own ordinal so a two-plot farm loads two tiles, not four.
+  {
+    const ordinals = staplePlotOrdinalById(state.zones);
+    for (const z of state.zones) {
+      if (z.feature !== 'staple_garden') continue;
+      const url = stapleTileUrl(ordinals.get(z.id) ?? 0);
+      if (!referenceFeatureArtworkCache.has(url)) urls.add(url);
+    }
   }
   void filter;
   await Promise.all([...urls].map(async (url) => {
@@ -3168,6 +3178,9 @@ function drawBlueprintGround(
    *  sheets' question and deliberately drops hard standing and the staple garden; on the site
    *  record those are exactly the facts being recorded, so it must not be consulted here. */
   siteRecord = false,
+  /** Canvas px per real-world metre — anchors the staple field tiles to the ground. Optional:
+   *  a caller without it gets the glyph-row fallback, never a mis-scaled pattern. */
+  pxPerM?: number,
 ): void {
   // Skip only what a dedicated draw will genuinely cover. refLayers comes from the MAIN MAP, so an
   // empty one means the farmer traced this in the Studio and nothing else will draw it. The
@@ -3290,17 +3303,52 @@ function drawBlueprintGround(
     // honest polygon. Nothing here is agronomic: the rhythm is a drawing rhythm, and no spacing,
     // yield or variety is implied. See lib/crop-row-cartography.ts.
     if (z.feature === 'staple_garden' && isContent) {
-      const ring = z.points.map(([x, y]) => [px(x), py(y)] as [number, number]);
-      const rowGap = Math.max(11, W * 0.011);
-      // One crop per plot, so four staple plots read as four crops rather than one texture
-      // repeated — see staplePlotGlyph for why mixing inside each plot never survived plan scale.
-      const layout = polygonCropRows(ring, staplePlotGlyphs(staplePlotOrdinal.get(z.id) ?? 0), z.id, rowGap);
-      if (layout.plants.length) {
-        ctx.save();
-        blueprintRing(ctx, z.points, px, py);
-        ctx.clip();
-        drawCropRowLayout(ctx, layout, meta.color);
-        ctx.restore();
+      // THE ILLUSTRATED FIELD, when its tile has loaded. Rory: "the staple plots now to be
+      // rendered like the trees" — the same painterly standard as the canopies, as a seamless
+      // repeating tile clipped to the traced plot. One tile per plot in the SAME rotation the
+      // glyph engine uses (stapleTileFor ↔ STAPLE_PLOT_CROPS, both driven by the plot's saved-
+      // creation ordinal), so a plot's crop identity is one fact however it is drawn.
+      //
+      // TILE_METRES anchors the pattern to the GROUND, not the sheet: 9 m of field per repeat
+      // keeps the drawn plants plausibly plant-sized at every zoom the plan set uses, and two
+      // plots at different sizes show the same crop at the same scale. pxPerM may be absent on
+      // older call paths — those fall through to the glyph rows below, never to a blank plot.
+      const ordinal = staplePlotOrdinal.get(z.id) ?? 0;
+      const tile = referenceFeatureArtworkCache.get(stapleTileUrl(ordinal));
+      const TILE_METRES = 9;
+      let tiled = false;
+      if (tile && pxPerM && pxPerM > 0) {
+        const pattern = ctx.createPattern(tile, 'repeat');
+        if (pattern) {
+          const scale = (TILE_METRES * pxPerM) / tile.width;
+          pattern.setTransform(new DOMMatrix().scale(scale, scale));
+          ctx.save();
+          blueprintRing(ctx, z.points, px, py);
+          ctx.clip();
+          ctx.fillStyle = pattern;
+          // The wash above already registered the plot; the tile paints at a strength between
+          // content and artwork so the boundary line and neighbouring labels stay legible.
+          ctx.globalAlpha = ctx.globalAlpha * 0.92;
+          const xs = z.points.map(([x]) => px(x));
+          const ys = z.points.map(([, y]) => py(y));
+          ctx.fillRect(Math.min(...xs), Math.min(...ys), Math.max(...xs) - Math.min(...xs), Math.max(...ys) - Math.min(...ys));
+          ctx.restore();
+          tiled = true;
+        }
+      }
+      if (!tiled) {
+        const ring = z.points.map(([x, y]) => [px(x), py(y)] as [number, number]);
+        const rowGap = Math.max(11, W * 0.011);
+        // One crop per plot, so four staple plots read as four crops rather than one texture
+        // repeated — see staplePlotGlyph for why mixing inside each plot never survived plan scale.
+        const layout = polygonCropRows(ring, staplePlotGlyphs(ordinal), z.id, rowGap);
+        if (layout.plants.length) {
+          ctx.save();
+          blueprintRing(ctx, z.points, px, py);
+          ctx.clip();
+          drawCropRowLayout(ctx, layout, meta.color);
+          ctx.restore();
+        }
       }
     }
     ctx.restore();
@@ -6292,7 +6340,7 @@ async function buildExactLayerOverlay(
   const pxPerM = W / (frame.imgW * frame.mPerPx);
 
   if (phase === 'ground') {
-    drawBlueprintGround(ctx, state, px, py, W, refLayers, filter, groundPresentation, siteRecord);
+    drawBlueprintGround(ctx, state, px, py, W, refLayers, filter, groundPresentation, siteRecord, pxPerM);
     return canvas.toDataURL('image/png');
   }
 
