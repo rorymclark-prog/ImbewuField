@@ -6,6 +6,9 @@ import {
   dataUrlBytes,
   deleteSheet,
   loadSheets,
+  loadSheetImage,
+  loadSheetMetas,
+  patchSheetThumb,
   saveSheet,
   type StoredSheet,
 } from '../lib/sheet-store.ts';
@@ -111,6 +114,16 @@ class FakeStore {
         this.transaction.end(true);
       }
     }, 5);
+    return req;
+  }
+
+  get(id: IDBValidKey) {
+    const req = request<unknown>(undefined);
+    setTimeout(() => {
+      const row = this.factory.rows.get(String(id));
+      req.result = row === undefined ? undefined : structuredClone(row);
+      req.onsuccess?.();
+    }, 0);
     return req;
   }
 
@@ -392,4 +405,51 @@ test('base64 data URL size accounts for padding and rejects non-data text', () =
   assert.equal(dataUrlBytes('data:image/png;base64,%%%='), 0);
   assert.equal(dataUrlBytes('not-a-data-url'), 0);
   assert.equal(dataUrlBytes(''), 0);
+});
+
+// ─── The memory contract: metas carry no images; images load one at a time ──────────────────
+
+test('loadSheetMetas returns every row WITHOUT its image payload', async () => {
+  const db = new FakeIndexedDb();
+  install(db);
+  await saveSheet(sheet('m1', 'site-m', '2026-01-01'));
+  await saveSheet(sheet('m2', 'site-m', '2026-01-02', { thumb: 'data:image/jpeg;base64,BBBB' }));
+  const metas = await loadSheetMetas('site-m');
+  assert.equal(metas.length, 2);
+  for (const meta of metas) {
+    // The whole point: opening the gallery must not pull print-resolution originals into the
+    // heap. 30 sheets at 1-3 MB each is 60-90 MB of strings before a pixel draws — most of an
+    // in-app iOS webview's budget, which is where the "still crashes" report came from.
+    assert.ok(!('image' in meta), `${meta.id} still carries its image`);
+  }
+  assert.equal(metas[1].thumb, 'data:image/jpeg;base64,BBBB', 'thumbs DO ride along — the grid draws them');
+});
+
+test('loadSheetImage fetches exactly one row, and reports null for a missing one', async () => {
+  const db = new FakeIndexedDb();
+  install(db);
+  await saveSheet(sheet('one', 'site-i', '2026-01-01', { image: 'data:image/png;base64,TWE=' }));
+  assert.equal(await loadSheetImage('one'), 'data:image/png;base64,TWE=');
+  assert.equal(await loadSheetImage('never-existed'), null);
+});
+
+test('patchSheetThumb adds the thumbnail WITHOUT touching the image', async () => {
+  const db = new FakeIndexedDb();
+  install(db);
+  await saveSheet(sheet('p1', 'site-p', '2026-01-01', { image: 'data:image/png;base64,TQ==' }));
+  assert.equal(await patchSheetThumb('p1', 'data:image/jpeg;base64,CCCC'), true);
+  const rows = await loadSheets('site-p');
+  assert.equal(rows[0].thumb, 'data:image/jpeg;base64,CCCC');
+  assert.equal(rows[0].image, 'data:image/png;base64,TQ==', 'the image must survive the patch');
+});
+
+test('patchSheetThumb REFUSES to create a row and refuses one with no image', async () => {
+  // The failure this API exists to make impossible: the old backfill did saveSheet({...row,
+  // thumb}), which from a caller holding metas would write rows whose image field is GONE — a
+  // thumbnail pass quietly destroying every sheet it touched.
+  const db = new FakeIndexedDb();
+  install(db);
+  assert.equal(await patchSheetThumb('ghost', 'data:image/jpeg;base64,DDDD'), false);
+  db.rows.set('corrupt', { id: 'corrupt', siteId: 'site-p', label: 'x', at: '2026-01-01' });
+  assert.equal(await patchSheetThumb('corrupt', 'data:image/jpeg;base64,DDDD'), false);
 });

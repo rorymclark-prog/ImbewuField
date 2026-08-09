@@ -255,6 +255,95 @@ export async function loadSheets(
 
 /** Persist one sheet. Resolves false when storage was unavailable or full, so the caller can tell
  *  the farmer their sheet is session-only rather than silently implying it is safe. */
+/** A gallery row WITHOUT its image — everything the grid needs and nothing it must not hold.
+ *
+ *  THE MEMORY CONTRACT, and the second half of the crash fix that #84 started. loadSheets()
+ *  returns every row's full `image` data URL, so merely OPENING the glossy section pulled every
+ *  saved sheet into the JS heap as strings — 30 sheets at 1-3 MB each is 60-90 MB held in React
+ *  state before a single pixel is drawn. On an in-app iOS webview (the tightest memory ceiling
+ *  the app runs under, and the one Rory's crash screenshot came from) that baseline is most of
+ *  the budget; expanding one sheet then tips it over. The grid shows thumbnails; it has no
+ *  business holding the print-resolution originals. */
+export type StoredSheetMeta = Omit<StoredSheet, 'image'>;
+
+/** Load every sheet for a site WITHOUT the image payloads. Pair with loadSheetImage. */
+export async function loadSheetMetas(
+  siteId: string,
+  ownerUid?: string | null,
+): Promise<StoredSheetMeta[]> {
+  const rows = await loadSheets(siteId, ownerUid);
+  // Strings are only freed when nothing references them: the map below drops the `image` field
+  // from every row so the getAll() payload becomes garbage the moment this function returns.
+  return rows.map(({ image: _image, ...meta }) => meta);
+}
+
+/** Fetch ONE sheet's full image, on demand — when the farmer opens it, not when the grid mounts.
+ *  Returns null when the row is gone or unreadable; callers show the thumbnail rather than throw. */
+export async function loadSheetImage(
+  id: string,
+  ownerUid?: string | null,
+): Promise<string | null> {
+  if (!nonEmptyString(id)) return null;
+  const physicalId = ownedKey(id, ownerUid);
+  const db = await openDb();
+  if (!db) return null;
+  try {
+    return await new Promise((resolve) => {
+      try {
+        const req = tx(db, 'readonly').get(physicalId);
+        req.onsuccess = () => {
+          const row = req.result as { image?: unknown } | undefined;
+          resolve(typeof row?.image === 'string' && row.image ? row.image : null);
+        };
+        req.onerror = () => resolve(null);
+      } catch {
+        resolve(null);
+      }
+    });
+  } finally {
+    db.close();
+  }
+}
+
+/** Patch ONE field onto a stored row without the caller holding the rest of it.
+ *
+ *  The thumbnail backfill used to do `saveSheet({ ...row, thumb })`, which was fine while the
+ *  caller held full rows — but a caller that only holds metas would silently WRITE a row with no
+ *  image, destroying the saved sheet while adding its thumbnail. Read-modify-write inside one
+ *  place, so that mistake cannot be made at a call site. */
+export async function patchSheetThumb(
+  id: string,
+  thumb: string,
+  ownerUid?: string | null,
+): Promise<boolean> {
+  if (!nonEmptyString(id) || !nonEmptyString(thumb)) return false;
+  const physicalId = ownedKey(id, ownerUid);
+  const db = await openDb();
+  if (!db) return false;
+  try {
+    return await new Promise((resolve) => {
+      try {
+        const transaction = db.transaction(STORE, 'readwrite');
+        const store = transaction.objectStore(STORE);
+        const req = store.get(physicalId);
+        req.onsuccess = () => {
+          const row = req.result as Record<string, unknown> | undefined;
+          if (!row || typeof row.image !== 'string') { resolve(false); return; }
+          store.put({ ...row, thumb });
+        };
+        req.onerror = () => resolve(false);
+        transaction.oncomplete = () => resolve(true);
+        transaction.onabort = () => resolve(false);
+        transaction.onerror = () => resolve(false);
+      } catch {
+        resolve(false);
+      }
+    });
+  } finally {
+    db.close();
+  }
+}
+
 export async function saveSheet(
   sheet: StoredSheet,
   ownerUid?: string | null,
