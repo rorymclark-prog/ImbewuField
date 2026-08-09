@@ -91,6 +91,7 @@ const TREE_IDS = [
   'tree_citrus', 'tree_mango', 'tree_avocado', 'tree_macadamia', 'tree_litchi',
   'tree_guava',
   'tree_pawpaw', 'tree_moringa', 'tree_natal_plum', 'tree_wild_plum', 'tree_waterberry',
+  'tree_marula', 'tree_kei_apple',
   'banana_clump', 'tree_indigenous', 'tree_other', 'banana_circle',
   'tree_apple', 'tree_pear', 'tree_plum', 'tree_peach', 'tree_fig', 'tree_pomegranate', 'tree_olive',
 ];

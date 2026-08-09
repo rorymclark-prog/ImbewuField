@@ -863,6 +863,42 @@ export const ELEMENT_CATALOG: DesignElementDef[] = [
     tip: 'Indigenous fruiting shade tree for moister edges and wildlife-friendly food forest zones.',
   },
   {
+    id: 'tree_marula',
+    category: 'growing',
+    name: 'Marula',
+    // A plain yellow fruit disc, not a lookalike glyph. Marula fruit is a small round yellow
+    // drupe, and every fruit emoji close enough to it (🥭 🍑 🍋) is already another species in
+    // this catalog. The colour-disc convention is established here — 🟣 is the plum, 🔵 and 🟢
+    // the berries — and it says "yellow round fruit" without claiming to be a mango.
+    icon: '🟡',
+    shape: 'circle',
+    wM: 12,
+    hM: 12,
+    color: '#4E8B3B',
+    zoneRec: [3, 4],
+    castsShade: true,
+    botanical: 'Sclerocarya birrea',
+    tip: 'Big savanna shade tree — give it 12 m and keep it well back from buildings. Only female trees fruit, so plant several seedlings if you want a crop.',
+  },
+  {
+    id: 'tree_kei_apple',
+    category: 'growing',
+    name: 'Kei Apple',
+    icon: '🟠',
+    shape: 'circle',
+    wM: 4,
+    hM: 4,
+    color: '#4E8B3B',
+    zoneRec: [2, 3],
+    castsShade: true,
+    botanical: 'Dovyalis caffra',
+    // The one indigenous fruit in this catalog that crops in EVERY South African climate bucket
+    // (see TREE_CLIMATES). That matters to the palette's Indigenous fruit section: without it a
+    // fynbos, grassland or Karoo site filters the whole section down to nothing, because marula,
+    // waterberry, wild plum and natal plum are all subtropical-only.
+    tip: 'Thorny and very hardy — takes frost, drought and wind. Grown as a stock-proof edible hedge as often as a single tree. Only female plants fruit.',
+  },
+  {
     id: 'tree_other',
     category: 'growing',
     name: 'Other Tree',
@@ -1273,6 +1309,12 @@ export const TREE_CLIMATES: Record<string, ClimateZone[]> = {
   tree_natal_plum: ['subtropical'],
   tree_wild_plum: ['subtropical'],
   tree_waterberry: ['subtropical'],
+  tree_marula: ['subtropical', 'arid'],
+  // Every bucket, and not as a shrug — kei apple is the standard hardy hedge fruit right across
+  // South Africa: frost-hardy on the highveld, drought-hardy in the Karoo, salt- and wind-tolerant
+  // on the coast. It is also what keeps the palette's Indigenous fruit section from emptying out
+  // on a non-subtropical site.
+  tree_kei_apple: ['subtropical', 'temperate', 'mediterranean', 'arid'],
   banana_clump: ['subtropical'],
   banana_circle: ['subtropical'],
   tree_apple: ['temperate'],
@@ -1319,4 +1361,59 @@ export function elementSuitsClimate(defId: string, siteClimates: ClimateZone[] |
 export function elementVisibleInPalette(def: DesignElementDef, siteClimates: ClimateZone[] | null): boolean {
   if (def.deprecated) return false;
   return elementSuitsClimate(def.id, siteClimates);
+}
+
+// ── Planting-palette sections ───────────────────────────────────────────────────
+// The Planting step's chip strip had grown to one undivided run of ~24 chips, and the species a
+// farmer is LEAST likely to already know by name — the indigenous fruit — were scattered through
+// it between the citrus and the apples, indistinguishable from the exotics you scroll past
+// (Rory: "I want indig fruit to have their own section"). Sections give them a heading of their
+// own and, because they sort second, a position near the head of the strip rather than
+// somewhere past the mangoes.
+//
+// Deliberately a SEPARATE id→group map rather than a `group:` field on each def, exactly like
+// TREE_CLIMATES above: this is how the Planting palette reads the catalog, not something the
+// catalog itself asserts, and it must never be able to touch saved data.
+export type PlantingGroup = 'beds' | 'indigenous_fruit' | 'fruit_nut' | 'other_trees';
+
+export const PLANTING_GROUP_ORDER: PlantingGroup[] = ['beds', 'indigenous_fruit', 'fruit_nut', 'other_trees'];
+
+export const PLANTING_GROUP_LABEL: Record<PlantingGroup, string> = {
+  beds: 'Beds & strips',
+  indigenous_fruit: 'Indigenous fruit',
+  fruit_nut: 'Fruit & nut trees',
+  // Moringa (leaf, not fruit), the generic indigenous shade tree and the "Other Tree" catch-all.
+  // None of the three belongs under a heading that promises fruit.
+  other_trees: 'Shade & other trees',
+};
+
+// SA indigenous species grown for their FRUIT. The indigenous shade tree is deliberately absent:
+// it is a placeholder for any broad-crowned indigenous tree, not a fruiting species, and putting
+// it here would make the heading lie.
+export const INDIGENOUS_FRUIT_IDS: readonly string[] = [
+  'tree_marula',
+  'tree_kei_apple',
+  'tree_natal_plum',
+  'tree_wild_plum',
+  'tree_waterberry',
+];
+
+const OTHER_TREE_IDS: readonly string[] = ['tree_moringa', 'tree_indigenous', 'tree_other'];
+
+/** Which section of the Planting palette this element sits in.
+ *
+ *  The CATEGORY test comes first, and it is doing real work: `tree_basin` and `banana_circle` are
+ *  category 'earthworks' and reach this step via `alsoSteps` — they are pits you dig, and a basin
+ *  in particular is not a tree at all. An id-prefix test alone (which is what the sort this
+ *  replaced used) files `tree_basin` under fruit trees and `banana_circle` under beds, i.e. gets
+ *  both of them exactly backwards.
+ *
+ *  Within 'growing', `tree_` is the same discriminator producer-labels.ts uses for its TREES label
+ *  family; banana_clump is a tree-sized perennial by every measure that matters here except its id. */
+export function plantingGroupFor(def: DesignElementDef): PlantingGroup {
+  if (def.category !== 'growing') return 'beds';
+  if (INDIGENOUS_FRUIT_IDS.includes(def.id)) return 'indigenous_fruit';
+  if (OTHER_TREE_IDS.includes(def.id)) return 'other_trees';
+  if (def.id.startsWith('tree_') || def.id === 'banana_clump') return 'fruit_nut';
+  return 'beds';
 }

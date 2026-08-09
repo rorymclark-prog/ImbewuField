@@ -38,6 +38,8 @@ const PERENNIAL_GUILDS = new Set([
   'tree_natal_plum',
   'tree_wild_plum',
   'tree_waterberry',
+  'tree_marula',
+  'tree_kei_apple',
   'tree_indigenous',
   'tree_other',
   'tree_apple',

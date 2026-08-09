@@ -343,7 +343,8 @@ test('LEGEND section grouping: water, planting and structures each section every
 // output — the model is handed the bare name with no drawing instruction for it.
 const SHOWCASE_VOCAB_GAP_IDS = [
   'water_trough', 'first_flush', 'pump_filter', 'herb_spiral',
-  'tree_natal_plum', 'tree_wild_plum', 'tree_waterberry', 'banana_clump', 'tree_pomegranate',
+  'tree_natal_plum', 'tree_wild_plum', 'tree_waterberry', 'tree_marula', 'tree_kei_apple',
+  'banana_clump', 'tree_pomegranate',
   'other_water', 'other_planting', 'other_structure',
   'pollinator_strip', 'vetiver_row',
   'shade_sail', 'gate', 'bench', 'sign', 'solar_panel_ground', 'washline',
@@ -365,7 +366,8 @@ test('AI PROMPT VOCABULARY (Showcase family): exactly the documented ids have no
 // that already drifted from each other, not just from the catalog.
 const OVERLAY_VOCAB_GAP_IDS = [
   'rain_barrel', 'herb_spiral',
-  'tree_natal_plum', 'tree_wild_plum', 'tree_waterberry', 'tree_pomegranate',
+  'tree_natal_plum', 'tree_wild_plum', 'tree_waterberry', 'tree_marula', 'tree_kei_apple',
+  'tree_pomegranate',
   'other_water', 'other_planting', 'other_structure',
   'shade_sail', 'gate', 'bench', 'sign', 'solar_panel_ground', 'washline',
 ].sort();
@@ -380,14 +382,21 @@ test('AI PROMPT VOCABULARY (Satellite Overlay): exactly the documented ids have 
   assert.deepEqual(gaps.sort(), OVERLAY_VOCAB_GAP_IDS);
 });
 
+// NOTE (2026-08-09, adding marula + kei apple): every single INDIGENOUS FRUIT species in the
+// catalog now sits in this severe subset — natal plum, wild plum, waterberry, marula, kei
+// apple. Neither illustrated AI path has ever had a drawing instruction for one of them. The
+// two new ids were not added to lib/producer-prompt.ts to fix that because that file is
+// Codex's (docs/COORDINATION.md); the deterministic Design maps DO draw marula and kei apple
+// from their own canopy art, so this gap is confined to the decorative AI Styles.
+//
 // The severe subset: elements with NO drawing instruction in EITHER illustrated AI path. A
-// farmer can place any of these 14, see it printed, labelled and legended correctly (Systems 1,
+// farmer can place any of these 16, see it printed, labelled and legended correctly (Systems 1,
 // 2, 3, 5, 6 all pass), and still have an AI-styled render invent whatever it likes for it.
-test('AI PROMPT VOCABULARY: 14 catalog elements have zero vocabulary in BOTH illustrated AI paths', () => {
+test('AI PROMPT VOCABULARY: 16 catalog elements have zero vocabulary in BOTH illustrated AI paths', () => {
   const both = SHOWCASE_VOCAB_GAP_IDS.filter((id) => OVERLAY_VOCAB_GAP_IDS.includes(id)).sort();
   assert.deepEqual(both, [
     'bench', 'gate', 'herb_spiral', 'other_planting', 'other_structure', 'other_water',
     'shade_sail', 'sign', 'solar_panel_ground', 'tree_natal_plum', 'tree_pomegranate',
-    'tree_waterberry', 'tree_wild_plum', 'washline',
+    'tree_waterberry', 'tree_wild_plum', 'tree_marula', 'tree_kei_apple', 'washline',
   ].sort());
 });
