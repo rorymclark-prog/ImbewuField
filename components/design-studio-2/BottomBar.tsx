@@ -62,8 +62,18 @@ export default function BottomBar({ nextLabel, onContinue, doneCount, totalCount
       style={{ borderColor: 'var(--border)', background: 'var(--surface)' }}
     >
       <div className="flex min-w-0 items-center gap-3">
-        <span className="u-status u-status-ok shrink-0">
-          {doneCount} of {totalCount} sheets started
+        {/* Hidden below sm, and hidden via a PLAIN WRAPPER rather than by putting `hidden` on the
+            pill itself. `.u-status` sets display:inline-flex as a plain class, so it ties with
+            Tailwind's `.hidden` on specificity and the winner is stylesheet order — the exact
+            trap that kept IdentityBar's save pill rendering on a 390px phone. Wrapped, there is
+            no competing display rule.
+            It hides at all because at 375px the pill, the Print/Export button and Continue do
+            not fit on one 16px-padded row: the pill is `shrink-0`, so it overlapped Export
+            instead of yielding. Progress is context; Continue is the action. */}
+        <span className="hidden shrink-0 sm:block">
+          <span className="u-status u-status-ok shrink-0">
+            {doneCount} of {totalCount} sheets started
+          </span>
         </span>
         {/* A bar, because a fraction is easier to feel than to read. Hidden on small widths,
             where the words above already carry it. */}

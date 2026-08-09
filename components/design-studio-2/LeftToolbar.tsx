@@ -59,8 +59,14 @@ export default function LeftToolbar({ tool, viewOn, layersOn, onSelect }: LeftTo
     // 76px of a 390px phone is a fifth of the screen spent on a tool rail. Below sm the rail
     // drops its labels and narrows to 56 — still over the 44px touch floor, and the labels are
     // only a learning aid, which is what a returning phone user needs least.
+    //
+    // 76 -> 62 on desktop. Rory, on the mock: "the button narrower". The rail is chrome that
+    // never changes; the element cards are the content a farmer is actually choosing between,
+    // and they just went from 104px to 140px. Both directions serve the same ratio — the widest
+    // thing on the screen should be the thing being chosen, not the thing framing it.
+    // 62px still clears the 44px touch floor with room for the label underneath.
     <div
-      className="flex h-full w-14 shrink-0 flex-col items-center gap-0.5 overflow-y-auto border-r py-2 sm:w-[76px]"
+      className="flex h-full w-14 shrink-0 flex-col items-center gap-0.5 overflow-y-auto border-r py-2 sm:w-[62px]"
       style={{ borderColor: 'var(--border)', background: 'var(--surface)' }}
       aria-label="Design tools"
       role="toolbar"
@@ -75,7 +81,7 @@ export default function LeftToolbar({ tool, viewOn, layersOn, onSelect }: LeftTo
             onClick={() => onSelect(id)}
             title={isToggle(id) ? `${label} — ${active ? 'on' : 'off'}` : label}
             aria-pressed={isToggle(id) ? active : undefined}
-            className="flex w-11 flex-col items-center justify-center gap-1 rounded-xl py-2 transition-colors hover:bg-[var(--surface-2)] sm:w-[68px]"
+            className="flex w-11 flex-col items-center justify-center gap-1 rounded-xl px-0.5 py-2 transition-colors hover:bg-[var(--surface-2)] sm:w-[56px]"
             style={{
               minHeight: 48,
               background: active ? 'var(--brand-soft)' : 'transparent',
@@ -83,7 +89,10 @@ export default function LeftToolbar({ tool, viewOn, layersOn, onSelect }: LeftTo
             }}
           >
             <Icon size={19} />
-            <span className="hidden text-[10.5px] font-semibold leading-none sm:block">{label}</span>
+            {/* Wraps rather than truncates: at 62px "Sun & Wind" is the one label that will not
+                fit on one line, and a rail whose longest tool reads "Sun & W…" is worse than a
+                two-line label. leading-tight keeps the two lines inside the 48px min height. */}
+            <span className="hidden text-center text-[10.5px] font-semibold leading-tight sm:block">{label}</span>
           </button>
         );
       })}
