@@ -99,6 +99,8 @@ export const PLANT_CODES: Readonly<Record<string, string>> = {
   tree_natal_plum: 'NP',
   tree_wild_plum: 'WP',
   tree_waterberry: 'WB',
+  tree_marula: 'MR',
+  tree_kei_apple: 'KA',
   tree_indigenous: 'IT',
   tree_other: 'TR',
   // Bananas

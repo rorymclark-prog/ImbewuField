@@ -126,6 +126,10 @@ const ITEM_RATE_BY_DEF_ID: Record<string, string> = {
   tree_natal_plum: 'shrub',
   tree_wild_plum: 'generic_fruit_tree',
   tree_waterberry: 'generic_fruit_tree',
+  tree_marula: 'generic_fruit_tree',
+  // Priced as a shrub alongside natal plum, not as a fruit tree: kei apple is bought as a
+  // small hedging plant and is most often planted in a run, which is the shrub rate's shape.
+  tree_kei_apple: 'shrub',
   tree_indigenous: 'generic_fruit_tree',
   // Structures & animals
   compost_bay: 'compost_bay',

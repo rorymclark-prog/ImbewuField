@@ -34,6 +34,15 @@ export interface ReleaseNote {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '9 August',
+    sha: '540c025',
+    changes: [
+      'Indigenous fruit trees now have their own section in the planting palette',
+      'Marula and kei apple added — both with their own drawing on the planting sheet',
+      'The planting palette is split into sections instead of one long row',
+    ],
+  },
+  {
     when: '8 August',
     sha: '2179fd7',
     changes: [

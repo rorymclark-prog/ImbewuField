@@ -34,7 +34,7 @@
 // into a desktop aside (there is room below) and upward from the phone sheet (there is not), with
 // its own scroll cap in either case. Only the BODY region, a sibling of the tool row, may clip.
 
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 // How long a tip stays before closing itself. See the state that drives it for why this is not
@@ -46,7 +46,7 @@ import {
   MIN_AREA_FILL_OPACITY, MAX_AREA_FILL_OPACITY, type AreaFillStyle,
 } from '@/lib/design-canvas';
 import { MIN_BED_COUNT, MAX_BED_COUNT } from '@/lib/bed-block';
-import { CATEGORY_META, CATEGORY_STEP, ELEMENT_CATALOG, ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_DEFS, biomeClimates, elementSuitsClimate, elementVisibleInPalette, type DesignElementDef, type DesignLayerState } from '@/lib/design-elements';
+import { CATEGORY_META, CATEGORY_STEP, ELEMENT_CATALOG, ELEMENTS_BY_ID, GROUND_FEATURES, PLANTING_GROUP_LABEL, PLANTING_GROUP_ORDER, ZONE_DEFS, biomeClimates, elementSuitsClimate, elementVisibleInPalette, plantingGroupFor, type DesignElementDef, type DesignLayerState } from '@/lib/design-elements';
 import { SPECIES } from '@/lib/species-catalog';
 import { biomeKeyForName } from '@/lib/biome';
 import { COMPASS16_ORDER, isCompassDirection16, type LocalWindObservation } from '@/lib/local-wind';
@@ -680,18 +680,22 @@ export default function DesignPalette({
   // Climate-appropriate trees: on the planting step, hide trees that do not crop in this site's
   // climate. Unknown site climate still shows all non-deprecated trees.
   const climateFilterActive = step === 'planting' && !!siteClimates;
-  // NON-TREES FIRST on the planting step. This strip is a single horizontal scroller, and the
-  // catalog's own order buried Pollinator Strip, Spekboom Hedge and Vetiver Row at positions
-  // 20–22 of 22 — behind seven fruit trees, off the right edge, effectively unreachable (Rory:
-  // "why is it not picking up the pollinator strips?"). They are not trees, so the climate sort
-  // never lifted them: elementSuitsClimate returns true for everything it has no data on, which
-  // means "don't demote", not "promote".
-  // Beds, strips, hedges and banks are also what you lay out FIRST, and there are only a handful
-  // of them, so putting them ahead of nineteen tree species is the right reading order anyway.
-  // `tree_` prefix is the same discriminator producer-labels.ts uses for its TREES label family.
-  const isTree = (def: DesignElementDef) => def.id.startsWith('tree_');
+  // SECTIONS on the planting step. This strip is a single horizontal scroller, and the catalog's
+  // own order buried Pollinator Strip, Spekboom Hedge and Vetiver Row at positions 20–22 of 22 —
+  // behind seven fruit trees, off the right edge, effectively unreachable (Rory: "why is it not
+  // picking up the pollinator strips?"). They are not trees, so the climate sort never lifted
+  // them: elementSuitsClimate returns true for everything it has no data on, which means "don't
+  // demote", not "promote".
+  //
+  // That was first fixed with a plain non-trees-first sort. It has since become a real section
+  // order (PLANTING_GROUP_ORDER, lib/design-elements.ts) because a flat run of ~24 chips also
+  // hid the indigenous fruit species among the exotics (Rory: "I want indig fruit to have their
+  // own section"). Beds and strips still lead — they are what you lay out first, and there are
+  // only a handful of them — and indigenous fruit now sorts second rather than somewhere past
+  // the mangoes.
+  const groupRank = (def: DesignElementDef) => PLANTING_GROUP_ORDER.indexOf(plantingGroupFor(def));
   const plantingOrder = (a: DesignElementDef, b: DesignElementDef) =>
-    Number(isTree(a)) - Number(isTree(b)) ||
+    groupRank(a) - groupRank(b) ||
     Number(elementSuitsClimate(b.id, siteClimates)) - Number(elementSuitsClimate(a.id, siteClimates));
   const orderedCatalog = step === 'planting' ? [...catalog].sort(plantingOrder) : catalog;
 
@@ -1605,13 +1609,32 @@ export default function DesignPalette({
   /** The element + line chips, as an array both palette shells render. Extracted so the docked
    *  strip and the floating panel are literally the same chips, never two drifting copies. */
   function elementChipNodes(): React.ReactNode {
+    // Section headings, on the Planting step only — the one step whose strip is long enough and
+    // sorted into groups (see plantingOrder above). Emitted INLINE, ahead of the first chip of
+    // each run, rather than as a full-width header row: this same array is rendered by a
+    // horizontal single-line scroller AND by two wrapping panels, and a heading that forces a
+    // line break cannot exist in the scroller. A rule plus a small uppercase label reads as a
+    // section divider in all three.
+    //
+    // Derived from what is actually being rendered, not from PLANTING_GROUP_ORDER, so a section
+    // the climate filter has emptied out never prints a heading over nothing — on a fynbos site
+    // the only indigenous fruit that crops is the kei apple, and on a Karoo site it is the only
+    // one at all.
+    let lastGroup: string | null = null;
+    // Which of the three shells is on screen. desktopAside and the floating panel both wrap; the
+    // docked strip is a single scrolling line. They are mutually exclusive in practice — the
+    // docked strip is display:none whenever the floating panel is up — so one flag covers both.
+    const chipsWrap = desktopAside || chipsFloating;
     return (
       <>
       {orderedCatalog.map((def) => {
         // …or it IS the thing you have selected on the map (selectedIdentity).
         const active = (placeDefId === def.id && tool === 'place') || selectedIdentity?.defId === def.id;
         const suited = !climateFilterActive || elementSuitsClimate(def.id, siteClimates);
-        return (
+        const group = step === 'planting' ? plantingGroupFor(def) : null;
+        const heading = group && group !== lastGroup ? group : null;
+        if (group) lastGroup = group;
+        const chip = (
           <button
             key={def.id}
             type="button"
@@ -1653,6 +1676,36 @@ export default function DesignPalette({
               </span>
             </span>
           </button>
+        );
+        if (!heading) return chip;
+        return (
+          <Fragment key={`section-${heading}`}>
+            <span
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: 6,
+                color: '#6B6355', fontSize: guided ? 9.5 : 9, fontWeight: 700,
+                letterSpacing: '0.07em', textTransform: 'uppercase', whiteSpace: 'nowrap',
+                // Two shapes, one node, because both shells render this same array (see the
+                // comment on elementChipNodes). Where the chips WRAP, the heading takes a line of
+                // its own and rules across it, which is what a section header should look like.
+                // In the single-line scroller flexBasis:100% would produce one chip-strip-wide
+                // heading and push everything off-screen, so there it is a rule plus a label the
+                // row reads past.
+                ...(chipsWrap
+                  ? { flexBasis: '100%', width: '100%', paddingTop: 4 }
+                  : { flexShrink: 0, paddingLeft: 2, paddingRight: 2 }),
+              }}
+            >
+              {!chipsWrap && (
+                <span aria-hidden style={{ width: 1, height: guided ? 24 : 20, background: 'rgba(0,0,0,0.14)' }} />
+              )}
+              {PLANTING_GROUP_LABEL[heading]}
+              {chipsWrap && (
+                <span aria-hidden style={{ flex: '1 1 auto', height: 1, background: 'rgba(0,0,0,0.14)' }} />
+              )}
+            </span>
+            {chip}
+          </Fragment>
         );
       })}
       {/* The staple garden rides in this SAME strip, not a separate area-chip block (Rory: "this

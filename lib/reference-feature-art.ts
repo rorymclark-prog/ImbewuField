@@ -27,7 +27,9 @@ export type ReferenceFeatureArtwork =
   | 'avocado-tree-v1.png'
   | 'keyhole-bed-v1.png'
   | 'herb-spiral-v1.png'
-  | 'spekboom-hedge-v1.png';
+  | 'spekboom-hedge-v1.png'
+  | 'marula-tree-v1.png'
+  | 'kei-apple-tree-v1.png';
 
 const JOJO_TANKS = new Set(['jojo_1000', 'jojo_2500', 'jojo_5000', 'jojo_10000']);
 const ORCHARD_TREES = new Set([
@@ -78,6 +80,12 @@ const PLANTING_DETAIL_ART: Readonly<Record<string, ReferenceFeatureArtwork>> = {
   keyhole_bed: 'keyhole-bed-v1.png',
   herb_spiral: 'herb-spiral-v1.png',
   spekboom_hedge: 'spekboom-hedge-v1.png',
+  // Marula and kei apple are the two indigenous fruit species with dedicated canopy art, so
+  // they belong HERE and not in ORCHARD_TREES above. Order of checks matters: ORCHARD_TREES is
+  // tested first in referenceFeatureArtworkFor, so an id listed in both would silently keep the
+  // generic canopy and this entry would never fire.
+  tree_marula: 'marula-tree-v1.png',
+  tree_kei_apple: 'kei-apple-tree-v1.png',
 };
 
 /**
