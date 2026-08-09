@@ -47,7 +47,17 @@ export type ReferenceFeatureArtwork =
   | 'staple-maize-v1.png'
   | 'staple-beans-v1.png'
   | 'staple-pumpkin-v1.png'
-  | 'staple-mixed-v1.png';
+  | 'staple-mixed-v1.png'
+  // Vegetable plant sprites, one per CropGlyph kind — stamped along bed rows by
+  // drawCropRowLayout in place of its vector glyphs. Sprites, not tiles: transparent field,
+  // centred subject, drawn many-per-bed at ~20px.
+  | 'veg-rosette-v1.png'
+  | 'veg-staked-v1.png'
+  | 'veg-grain-v1.png'
+  | 'veg-legume-v1.png'
+  | 'veg-root-v1.png'
+  | 'veg-vine-v1.png'
+  | 'veg-generic-v1.png';
 
 const JOJO_TANKS = new Set(['jojo_1000', 'jojo_2500', 'jojo_5000', 'jojo_10000']);
 // THIRTEEN SPECIES USED TO SHARE ONE DRAWING, and that — not hue — is why a Planting sheet read
@@ -159,6 +169,23 @@ export function stapleTileFor(ordinal: number): ReferenceFeatureArtwork {
 
 export function stapleTileUrl(ordinal: number): string {
   return `${REFERENCE_FEATURE_ART_ROOT}/${stapleTileFor(ordinal)}`;
+}
+
+/** One sprite per CropGlyph kind. Keyed by the same union the row engine plants with, so a
+ *  glyph can never stamp a sprite of a different crop. */
+export const VEG_SPRITES: Readonly<Record<string, ReferenceFeatureArtwork>> = {
+  rosette: 'veg-rosette-v1.png',
+  staked: 'veg-staked-v1.png',
+  grain: 'veg-grain-v1.png',
+  legume: 'veg-legume-v1.png',
+  root: 'veg-root-v1.png',
+  vine: 'veg-vine-v1.png',
+  generic: 'veg-generic-v1.png',
+};
+
+export function vegSpriteUrl(glyph: string): string | null {
+  const file = VEG_SPRITES[glyph];
+  return file ? `${REFERENCE_FEATURE_ART_ROOT}/${file}` : null;
 }
 
 export function referenceFeatureArtworkUrl(defId: string): string | null {
