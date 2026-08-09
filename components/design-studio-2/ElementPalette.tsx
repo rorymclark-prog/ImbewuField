@@ -28,8 +28,13 @@ import type { DesignElementDef } from '@/lib/design-elements';
 import { getElementArt } from '@/lib/design-studio-shell-icons';
 
 function dimensionLabel(def: DesignElementDef): string {
-  if (def.shape === 'circle') return `Ø${def.wM % 1 === 0 ? def.wM : def.wM.toFixed(2)} m`;
-  return `${def.wM} × ${def.hM} m`;
+  const size = def.shape === 'circle'
+    ? `Ø${def.wM % 1 === 0 ? def.wM : def.wM.toFixed(2)} m`
+    : `${def.wM} × ${def.hM} m`;
+  // The JoJo tanks carry their capacity in the NAME because a "JoJo Tank 5000L" is definitionally
+  // 5000 L. A rain barrel is not, so its typical capacity rides here instead, hedged and
+  // display-only — see capacityNote in lib/design-elements.ts.
+  return def.capacityNote ? `${size} · ${def.capacityNote}` : size;
 }
 
 interface ElementPaletteProps {
