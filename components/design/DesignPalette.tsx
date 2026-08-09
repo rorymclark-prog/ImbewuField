@@ -57,6 +57,7 @@ import { BOTTOM_STOPS, bottomVisibility, type BottomStop } from '@/lib/design-ch
 import { BED_DEF_IDS } from '@/lib/design-beds-bridge';
 import { formatDesignTranslation } from '@/lib/design-studio-i18n';
 import { useLanguage } from '@/lib/i18n';
+import { uiVersion, setUiVersion, UI_VERSION_EVENT } from '@/lib/ui-version';
 import LessonLink from './LessonLink';
 
 type ToolKind = 'select' | 'place' | 'zone' | 'line';
@@ -547,6 +548,16 @@ export default function DesignPalette({
   // Both modes render the SAME chip nodes — built once in renderElementCatalog and handed to
   // whichever shell is active — so a chip can never behave differently depending on where it sits.
   const [chipsFloating, setChipsFloating] = useState(false);
+  // THE UI VERSION, read reactively. 'cards' renders the same catalogue, same handlers and same
+  // selection state as big illustrated cards instead of 44px chips — presentation only, which is
+  // the boundary lib/ui-version.ts exists to hold. Nothing below writes differently because of it.
+  const [cardsUi, setCardsUi] = useState(false);
+  useEffect(() => {
+    const sync = () => setCardsUi(uiVersion() === 'cards');
+    sync();
+    window.addEventListener(UI_VERSION_EVENT, sync);
+    return () => window.removeEventListener(UI_VERSION_EVENT, sync);
+  }, []);
   const [floatPos, setFloatPos] = useState<{ x: number; y: number }>({ x: 16, y: 96 });
   const floatDragRef = useRef<{ dx: number; dy: number } | null>(null);
   // Mode and position persist: a farmer who parks the panel bottom-right expects it there on the
@@ -1643,7 +1654,32 @@ export default function DesignPalette({
             // The photograph seam stays optional. Until an illustrator supplies a real asset the
             // farmer sees the exact emoji she saw before; fake generated symbols would make a
             // tool look more finished while saying less clearly what it places.
-            style={{
+            // CARD MODE is the 2.0 palette rendered by THIS component — same catalogue, same
+            // pickElement, same active ring, same climate dimming. Only the geometry changes:
+            // the drawing becomes the card instead of a 30px thumbnail beside a label. This is
+            // the first chrome swap of the migration plan, and doing it here rather than by
+            // mounting the 2.0 component means every behaviour this strip has learned (float,
+            // staple chip, line chips, climate filter) is kept for free.
+            style={cardsUi ? {
+              position: 'relative',
+              minHeight: 128,
+              width: desktopAside ? 'calc(50% - 3px)' : 104,
+              padding: '8px 6px 7px',
+              borderRadius: 12,
+              ...selectionRing(active),
+              background: active ? GREEN : PAPER,
+              color: active ? PAPER : DARK,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'flex-start',
+              textAlign: 'center',
+              gap: 4,
+              boxSizing: 'border-box',
+              flexShrink: 0,
+              cursor: 'pointer',
+              opacity: suited ? 1 : 0.45,
+            } : {
               position: 'relative',
               minHeight: guided ? 44 : 34,
               padding: guided ? '4px 10px' : '3px 8px',
@@ -1670,13 +1706,17 @@ export default function DesignPalette({
                 recognises the thing without reading the label. 30px is the most a 44px chip can
                 give it without growing the strip. */}
             {def.art ? (
-              <img src={def.art} alt="" aria-hidden style={{ width: guided ? 30 : 24, height: guided ? 30 : 24, objectFit: 'contain' }} />
+              <img src={def.art} alt="" aria-hidden style={cardsUi
+                ? { width: 64, height: 64, objectFit: 'contain' }
+                : { width: guided ? 30 : 24, height: guided ? 30 : 24, objectFit: 'contain' }} />
             ) : (
-              <span style={{ fontSize: guided ? 16 : 13, lineHeight: 1 }}>{def.icon}</span>
+              <span style={{ fontSize: cardsUi ? 34 : guided ? 16 : 13, lineHeight: 1 }}>{def.icon}</span>
             )}
-            <span style={{ display: 'flex', flexDirection: 'column', alignItems: desktopAside ? 'center' : 'flex-start', minWidth: 0 }}>
-              <span style={{ fontSize: guided ? 11.5 : 10, fontWeight: 600, whiteSpace: 'nowrap' }}>{def.name}</span>
-              <span style={{ fontSize: guided ? 9.5 : 8.5, opacity: 0.6, whiteSpace: 'nowrap' }}>
+            <span style={{ display: 'flex', flexDirection: 'column', alignItems: cardsUi || desktopAside ? 'center' : 'flex-start', minWidth: 0 }}>
+              {/* Cards get room for two lines, so 'Indigenous Shade Tree' stops truncating —
+                  whiteSpace stays nowrap only in chip mode, where a wrap would grow the strip. */}
+              <span style={{ fontSize: cardsUi ? 11.5 : guided ? 11.5 : 10, fontWeight: cardsUi ? 700 : 600, whiteSpace: cardsUi ? 'normal' : 'nowrap', lineHeight: 1.2 }}>{def.name}</span>
+              <span style={{ fontSize: cardsUi ? 10 : guided ? 9.5 : 8.5, opacity: 0.6, whiteSpace: 'nowrap' }}>
                 {def.shape === 'circle' ? `Ø ${def.wM} m` : `${def.wM}×${def.hM} m`}
               </span>
             </span>
@@ -1820,10 +1860,34 @@ export default function DesignPalette({
               minHeight: guided ? 44 : 34, padding: '0 9px', borderRadius: 9,
               border: '1px solid rgba(0,0,0,0.12)', background: PAPER, color: '#6B6355',
               fontSize: guided ? 12 : 11, fontWeight: 600, cursor: 'pointer',
+              // In card mode the strip's rows are ~130px tall; a control stretched to that
+              // height reads as a card with no picture. Centre the two head controls instead.
+              alignSelf: cardsUi ? 'center' : undefined,
             }}
           >
             <span aria-hidden>⧉</span>
             <span style={{ whiteSpace: 'nowrap' }}>Float</span>
+          </button>
+          {/* THE UI VERSION TOGGLE — reversible per person, and the whole upgrade mechanism.
+              It lives where the change happens, so trying the new look and going back are the
+              same gesture in the same place. Flipping it changes NOTHING about the design,
+              the sheets or the renders — lib/ui-version.ts states the boundary. */}
+          <button
+            type="button"
+            onClick={() => setUiVersion(cardsUi ? 'classic' : 'cards')}
+            title={cardsUi ? 'Back to the compact chip palette' : 'Try the new card palette — bigger drawings, same elements'}
+            aria-pressed={cardsUi}
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: 4, flexShrink: 0,
+              minHeight: guided ? 44 : 34, padding: '0 9px', borderRadius: 9,
+              border: cardsUi ? `1px solid ${GREEN}` : '1px solid rgba(0,0,0,0.12)',
+              background: cardsUi ? GREEN : PAPER, color: cardsUi ? PAPER : '#6B6355',
+              fontSize: guided ? 12 : 11, fontWeight: 600, cursor: 'pointer',
+              alignSelf: cardsUi ? 'center' : undefined,
+            }}
+          >
+            <span aria-hidden>✦</span>
+            <span style={{ whiteSpace: 'nowrap' }}>{cardsUi ? 'New look' : 'New look'}</span>
           </button>
           {climateFilterActive && (
             <span
