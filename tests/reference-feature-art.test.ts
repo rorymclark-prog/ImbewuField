@@ -10,6 +10,7 @@ import {
   referenceFeatureArtworkUrl,
   STAPLE_TILES,
   stapleTileFor,
+  VEG_SPRITES,
 } from '@/lib/reference-feature-art';
 import { ELEMENT_CATALOG } from '@/lib/design-elements';
 
@@ -154,6 +155,9 @@ test('every shipped reference artwork is reachable from a real catalogue element
   // cover the whole set in its own test below. They join the reachable set here rather than
   // weakening the readdir sweep, so a genuinely orphaned PNG still fails this test.
   for (const tile of STAPLE_TILES) mapped.add(tile);
+  // Veg sprites are reachable from the ROW ENGINE's glyph kinds (drawCropRowLayout), not from an
+  // element id. Same rationale as the tiles above.
+  for (const sprite of Object.values(VEG_SPRITES)) mapped.add(sprite);
   const publicRoot = join(process.cwd(), 'public', REFERENCE_FEATURE_ART_ROOT.replace(/^\//, ''));
   const shipped = readdirSync(publicRoot).filter((name) => name.endsWith('.png'));
 
