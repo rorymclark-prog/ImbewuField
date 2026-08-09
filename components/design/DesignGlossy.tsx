@@ -3321,17 +3321,39 @@ function drawBlueprintGround(
         const pattern = ctx.createPattern(tile, 'repeat');
         if (pattern) {
           const scale = (TILE_METRES * pxPerM) / tile.width;
-          pattern.setTransform(new DOMMatrix().scale(scale, scale));
+          // ROWS RUN WITH THE PLOT, WHICH RUNS WITH THE CONTOUR. Rory: "staple crops must be top
+          // view and with the contour!" polygonCropRows' own note says a row bearing is drawn
+          // only when the caller can defend one — and the defensible bearing is the plot's own
+          // longest edge: a farmer laying out an on-contour plot traces it ALONG the contour, so
+          // the ring the farmer drew already records the direction. Same longest-edge rule the
+          // paper roofs use for their ridge. The tile's rows are horizontal in tile space;
+          // rotating pattern space lays them down the plot's long axis.
+          const ptsPx = z.points.map(([zx, zy]) => [px(zx), py(zy)] as [number, number]);
+          let rowAngle = 0;
+          let longestEdge = -1;
+          for (let i = 0; i < ptsPx.length; i++) {
+            const [x0, y0] = ptsPx[i];
+            const [x1, y1] = ptsPx[(i + 1) % ptsPx.length];
+            const len = Math.hypot(x1 - x0, y1 - y0);
+            if (len > longestEdge) { longestEdge = len; rowAngle = Math.atan2(y1 - y0, x1 - x0); }
+          }
+          pattern.setTransform(new DOMMatrix().rotate((rowAngle * 180) / Math.PI).scale(scale, scale));
           ctx.save();
           blueprintRing(ctx, z.points, px, py);
           ctx.clip();
+          // FULL STRENGTH, OVER NOTHING. The first version drew the tile at 0.92 over the plot's
+          // pale registration wash, and 8% of cream paper bleeding through dark painted crops is
+          // exactly the washed-out field Rory saw: "staples dont look good". The tile is OPAQUE
+          // artwork — it is the ground here, the way a canopy is the tree — so it owns its pixels
+          // the way the wash owned them before. The wash still draws first (these lines run after
+          // it), which keeps the plot registered on sheets where the tile has not loaded.
           ctx.fillStyle = pattern;
-          // The wash above already registered the plot; the tile paints at a strength between
-          // content and artwork so the boundary line and neighbouring labels stay legible.
-          ctx.globalAlpha = ctx.globalAlpha * 0.92;
+          const priorAlpha = ctx.globalAlpha;
+          ctx.globalAlpha = 1;
           const xs = z.points.map(([x]) => px(x));
           const ys = z.points.map(([, y]) => py(y));
           ctx.fillRect(Math.min(...xs), Math.min(...ys), Math.max(...xs) - Math.min(...xs), Math.max(...ys) - Math.min(...ys));
+          ctx.globalAlpha = priorAlpha;
           ctx.restore();
           tiled = true;
         }
@@ -3379,8 +3401,15 @@ function drawCropRowLayout(
   ctx: CanvasRenderingContext2D,
   layout: CropRowLayout,
   accent: string,
+  /** Multiplies the plant glyph only — never the row pitch — so a caller can grow the plants
+   *  without re-spacing the drills. Beds pass >1: Rory, on the bed rows: "make the veg look
+   *  more real, perhaps make the veg a little oversized". At true scale a lettuce is a 25 cm
+   *  dot the eye reads as texture; oversizing the SYMBOL (not the bed) is standard plan-drawing
+   *  practice — the same license the minimum-symbol-size rule in planting-cartography already
+   *  claims for tiny infrastructure. */
+  glyphScale = 1,
 ): void {
-  const unit = Math.max(3.4, layout.rowGapPx * 0.42);
+  const unit = Math.max(3.4, layout.rowGapPx * 0.42) * glyphScale;
   ctx.save();
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
@@ -4797,7 +4826,14 @@ function drawPaintedReferenceFeature(
   // it was found. Below full strength, the artwork alone is what reads as a tree.
   const isContextDraw = inheritedAlpha < EXACT_FULL_STRENGTH_ALPHA;
 
-  const artworkEdge = isMatureCanopy && CANOPY_EDGE_MODE === 'artwork';
+  // The banana circle joins the alpha-following treatment WITHOUT being a canopy. It is category
+  // 'earthworks' (a dug basin first), so isMatureCanopy never matched it — and once its v2 art
+  // arrived with jagged leaf edges and a transparent field, the old non-canopy path did to it
+  // exactly what 'footprint' mode did to every tree: clipped the leaf tips at the footprint
+  // circle and stroked a solid ring over the plants. Rory, cropped in on one: "look how blurry
+  // the banana circle is, plus a circle border, plus the leaf edges are cropped." The dark void
+  // at its centre is painted into the art, so it needs no basin backing either.
+  const artworkEdge = (isMatureCanopy || def.id === 'banana_circle') && CANOPY_EDGE_MODE === 'artwork';
 
   if (isMatureCanopy && !isContextDraw && !artworkEdge) {
     // CASING FIRST, then an opaque backing — the route-line convention this file already uses for
@@ -4860,8 +4896,19 @@ function drawPaintedReferenceFeature(
   }
 
   ctx.save();
-  traceFootprint();
-  ctx.clip();
+  if (artworkEdge) {
+    // In artwork mode the clip is the artwork's own SQUARE bounds, not the inscribed circle.
+    // The art is drawn edge-to-edge in a square frame, and clipping that square to its inscribed
+    // circle slices every leaf that reaches toward a corner — Rory, on the banana circle: "the
+    // leaf edges are cropped". The square is the same saved footprint (wM x hM), so the
+    // occupies-exactly-its-ground guarantee is unchanged; only the corner-cutting stops.
+    ctx.beginPath();
+    ctx.rect(-wPx / 2, -hPx / 2, wPx, hPx);
+    ctx.clip();
+  } else {
+    traceFootprint();
+    ctx.clip();
+  }
   if (isMatureCanopy) ctx.globalAlpha *= PLANTING_CANOPY_PAINT.artworkAlpha;
   // THE BORDER MUST SNUG THE LEAVES, NOT FLOAT OFF THEM.
   //
@@ -5244,6 +5291,9 @@ function drawProductionBedCrop(
   // this varies the DRAWING and never the legend, the callouts or the BOQ.
   const named = cropGlyphFor(it.speciesId ?? it.label);
   const glyph = named === 'generic' ? unnamedBedGlyph(it.id) : named;
+  // Row pitch stays honest; the PLANTS in a bed draw half again their true footprint (the
+  // glyphScale below) so a bed reads as vegetables rather than dotted paper. See
+  // drawCropRowLayout's own note for why symbol size and ground truth may differ here.
   const layout = bedCropRows(wPx, hPx, glyph, it.id, Math.max(10, ctx.canvas.width * 0.0085));
   if (layout.plants.length < 3) return false;
 
@@ -5268,7 +5318,7 @@ function drawProductionBedCrop(
   ctx.save();
   roundRectPath(ctx, -wPx / 2, -hPx / 2, wPx, hPx, radius);
   ctx.clip();
-  drawCropRowLayout(ctx, layout, '#6B8F4E');
+  drawCropRowLayout(ctx, layout, '#6B8F4E', 1.5);
   ctx.restore();
 
   roundRectPath(ctx, -wPx / 2, -hPx / 2, wPx, hPx, radius);
@@ -6278,19 +6328,22 @@ function drawPaperRoofs(
     ctx.save();
     trace();
     ctx.clip();
-    // The sheeting. Warm light grey, not white — white reads as unbuilt paper.
-    ctx.fillStyle = '#D7D2C6';
+    // The sheeting. Weathered zinc, cool and clearly DARKER than the paper — the first pass used
+    // near-paper grey with 10-16% marks and at masterplan scale the roof read as a blank box
+    // again (Rory, round two: "improve the roof too"). A roof must be the most definite object
+    // on the sheet, the same rule the photo-underlay mute logic states.
+    ctx.fillStyle = '#B9B4A8';
     ctx.fillRect(cx - span, cy - span, span * 2, span * 2);
     ctx.translate(cx, cy);
     ctx.rotate(angle);
-    // One slope a step darker, so the ridge reads as a fold rather than a stripe.
-    ctx.fillStyle = 'rgba(63,58,48,0.10)';
+    // One slope clearly darker — the fold is what says "pitched roof" rather than "grey slab".
+    ctx.fillStyle = 'rgba(50,45,38,0.22)';
     ctx.fillRect(-span, 0, span * 2, span);
     // Corrugation: sheet lines PERPENDICULAR to the ridge at real sheet width. Floored at 3px so
     // a small shed on a big site still reads as sheeting rather than dithering into grey.
     const gap = Math.max(3, 0.76 * pxPerM);
-    ctx.strokeStyle = 'rgba(63,58,48,0.16)';
-    ctx.lineWidth = Math.max(0.6, pxPerM * 0.03);
+    ctx.strokeStyle = 'rgba(50,45,38,0.34)';
+    ctx.lineWidth = Math.max(0.8, pxPerM * 0.04);
     ctx.beginPath();
     for (let d = -span; d <= span; d += gap) {
       ctx.moveTo(d, -span);
@@ -6298,8 +6351,8 @@ function drawPaperRoofs(
     }
     ctx.stroke();
     // The ridge itself, along the long axis.
-    ctx.strokeStyle = 'rgba(63,58,48,0.45)';
-    ctx.lineWidth = Math.max(1, pxPerM * 0.08);
+    ctx.strokeStyle = 'rgba(50,45,38,0.7)';
+    ctx.lineWidth = Math.max(1.4, pxPerM * 0.1);
     ctx.beginPath();
     ctx.moveTo(-span, 0);
     ctx.lineTo(span, 0);

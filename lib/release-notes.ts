@@ -46,6 +46,8 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       'New Quality setting: High redraws sheets at 1.5x resolution for printing',
       'Buildings on plain-paper sheets now show a corrugated iron roof',
       'Staple plots are now painted fields — maize, beans and pumpkin in rows',
+      'Staple rows now run with each plot, roofs are bolder, bed veg drawn bigger',
+      'Sharper maps are now the default on computers; phones can switch in Quality',
     ],
   },
   {

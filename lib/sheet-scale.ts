@@ -38,7 +38,19 @@ export const SHEET_SCALE_KEY = 'imbewu_sheet_scale';
 function readStoredScale(): SheetScale {
   if (typeof window === 'undefined') return 2; // SSR renders nothing; hydration re-reads
   try {
-    return window.localStorage.getItem(SHEET_SCALE_KEY) === '3' ? 3 : 2;
+    const stored = window.localStorage.getItem(SHEET_SCALE_KEY);
+    if (stored === '3') return 3;
+    if (stored === '2') return 2;
+    // NO STORED CHOICE: default by device, not to Standard everywhere. Rory, pinch-zoomed into a
+    // Standard sheet after the setting shipped: "the quality still the same, very bad and
+    // blurry" — a farmer should not have to FIND a toggle to get a sharp map. Desktop-class
+    // viewports default to High. Phones stay Standard deliberately: a High masterplan is a
+    // ~50 MB bitmap per sheet during compose, and the in-app iOS webview that produced the
+    // "crashes the app" reports is exactly where that budget does not exist (#84/#90). The
+    // farmer can still choose either, on either device — this only picks the STARTING point.
+    const desktop = typeof window.matchMedia === 'function'
+      && window.matchMedia('(min-width: 1024px)').matches;
+    return desktop ? 3 : 2;
   } catch {
     return 2;
   }

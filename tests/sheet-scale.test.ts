@@ -25,8 +25,29 @@ const storage = new MemoryStorage();
 
 const { SCALE, setSheetScale, AI_INPUT_WIDTH, SHEET_SCALE_KEY } = await import('../lib/sheet-scale.ts');
 
-test('the default scale is 2 — exactly what every sheet has always rendered at', () => {
+test('with no stored choice and no desktop viewport, the scale is 2 — the phone-safe floor', () => {
+  // The test window has no matchMedia, which is exactly the conservative branch: unknown
+  // devices render at the historical size. See readStoredScale for why phones stay at 2
+  // (a High masterplan is a ~50MB bitmap during compose — the OOM budget #84/#90 fought for).
   assert.equal(SCALE, 2);
+});
+
+test('a desktop-class viewport defaults to High without being asked', async () => {
+  // Rory, pinch-zoomed into a Standard sheet: "quality still the same, very bad and blurry" —
+  // sharpness a farmer has to find a toggle for is not sharpness. Fresh module instance with a
+  // desktop matchMedia and NO stored key must come up at 3; a stored '2' must still win, because
+  // an explicit choice outranks any default.
+  (globalThis as { window?: unknown }).window = {
+    localStorage: storage,
+    matchMedia: (q: string) => ({ matches: q.includes('min-width: 1024px') }),
+  };
+  storage.raw().clear();
+  const fresh = await import(`../lib/sheet-scale.ts?desktop=${Date.now()}`);
+  assert.equal(fresh.SCALE, 3, 'desktop with no stored choice must start at High');
+  storage.setItem(SHEET_SCALE_KEY, '2');
+  const pinned = await import(`../lib/sheet-scale.ts?pinned=${Date.now()}`);
+  assert.equal(pinned.SCALE, 2, 'an explicit Standard choice outranks the desktop default');
+  (globalThis as { window?: unknown }).window = { localStorage: storage };
 });
 
 test('AI_INPUT_WIDTH pins the historical master width', () => {
