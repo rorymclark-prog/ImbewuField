@@ -102,7 +102,7 @@ export function compassWord(x: number, y: number, box: ReturnType<typeof plotBox
   return 'CENTRAL';
 }
 
-type LabelPt = { id?: string; x: number; y: number; name: string; icon: string };
+type LabelPt = { id?: string; x: number; y: number; name: string; icon: string; defId?: string };
 
 /** Total, shared ordering for margin-label rows.
  *
@@ -210,7 +210,7 @@ export function producerLabels(
     ) continue;
     const key = labelFamily(def);
     const arr = families.get(key) ?? [];
-    arr.push({ id: it.id, x: it.x, y: it.y, name: it.label ?? def.name, icon: def.icon });
+    arr.push({ id: it.id, x: it.x, y: it.y, name: it.label ?? def.name, icon: def.icon, defId: it.defId });
     families.set(key, arr);
   }
 
@@ -237,6 +237,33 @@ export function producerLabels(
         // apart from EACH OTHER. Species labels must therefore re-cluster their own specimens,
         // otherwise one counted leader lands at the empty centroid between distant trees.
         for (const [name, g] of names) {
+          // "INDIVIDUAL" IS FOR PERENNIALS, NOT FOR FURNITURE. The re-cluster below labels every
+          // specimen — right for trees ("perhaps better label every plant"), and exactly wrong
+          // for ten identical beds, which came back as a column of ten "Vegetable Bed" pills
+          // burying the map (Rory: "please only put one raised bed label"). The gutter engine
+          // already draws this line with labelsEverySpecimen — beds, rows and strips take ONE
+          // row with a count — and the on-map engine now answers to the same authority rather
+          // than keeping a private, laxer definition. Anchored on the specimen nearest the
+          // centroid, so the leader lands on a real bed and never the gap between two.
+          const defId = g.points[0]?.defId;
+          if (defId && !labelsEverySpecimen(defId, g.points.length)) {
+            const n = g.xs.length;
+            const cx = g.xs.reduce((a, b) => a + b, 0) / n;
+            const cy = g.ys.reduce((a, b) => a + b, 0) / n;
+            const anchor = g.points.reduce((best, pt) => (
+              Math.hypot(pt.x - cx, pt.y - cy) < Math.hypot(best.x - cx, best.y - cy) ? pt : best
+            ), g.points[0]);
+            blocks.push({
+              id: [...g.ids].sort().join('\u0000'),
+              cx: anchor.x * W,
+              cy: anchor.y * H,
+              head: null,
+              members: [itemRow(g.icon, name, n)],
+              hidden: 0,
+              lone: { icon: g.icon, name, n },
+            });
+            continue;
+          }
           for (const specimens of clusterByProximity(g.points, aspect, proximity)) {
             const n = specimens.length;
             blocks.push({

@@ -77,6 +77,7 @@ import {
 } from '@/lib/glossy-filters';
 import { compareLabelRows, gutterCalloutRows, producerLabels, producerLabelsWithinBudget, plotBox } from '@/lib/producer-labels';
 import {
+  labelsEverySpecimen,
   layoutGutterRows,
   sheetGutterWidth,
   type GutterLayout,
@@ -576,7 +577,11 @@ export interface DesignGlossyProps {
  * it as a ground-feature zone. Render safety must protect and restore both forms.
  */
 
-export const SCALE = 2;
+// SCALE moved to lib/sheet-scale.ts — a farmer-facing quality setting now, not a constant.
+// Re-exported so existing importers keep working. See that module for the cost boundary
+// (AI_INPUT_WIDTH) that makes the setting safe to raise.
+export { SCALE, setSheetScale, AI_INPUT_WIDTH } from '@/lib/sheet-scale';
+import { SCALE, AI_INPUT_WIDTH, setSheetScale } from '@/lib/sheet-scale';
 
 /** Farmer-facing names for the underlay control. Short enough to sit on a pill on a phone. */
 const UNDERLAY_LABEL: Readonly<Record<SheetUnderlay, string>> = {
@@ -1732,6 +1737,45 @@ export function buildDesignBrief(
 // The route is engine-agnostic; we always use the gemini engine here (its bare-base64
 // {image} path). The openai engine's async fal-queue {pending} branch is handled too,
 // exactly like FacilitatorCanvas.requestProducer, in case it is ever switched on.
+/** Cap an AI-bound bitmap back to the historical master width (AI_INPUT_WIDTH), whatever SCALE
+ *  the sheet was drawn at. A UNIFORM downscale of the FINISHED composite: the whole picture
+ *  shrinks together, so line weights, glyphs and the protect mask stay mutually consistent —
+ *  unlike pinning the canvas size, which would have drawn 3x-scale line widths into a 2x-size
+ *  frame on the paid path. At SCALE 2 the image is already at the cap and passes through
+ *  untouched, byte-for-byte. */
+/** enqueueRenderJob, with every sheet's composite AND protect mask capped to AI_INPUT_WIDTH.
+ *  One wrapper so all four call sites share the boundary; the mask is capped with the same
+ *  helper so it stays pixel-aligned with the picture it protects. */
+async function enqueueRenderJobCapped(opts: Parameters<typeof enqueueRenderJob>[0]): ReturnType<typeof enqueueRenderJob> {
+  const sheets = await Promise.all(opts.sheets.map(async (sheet) => ({
+    ...sheet,
+    compositeDataUrl: await capForAiInput(sheet.compositeDataUrl),
+    ...(sheet.protectMaskDataUrl ? { protectMaskDataUrl: await capForAiInput(sheet.protectMaskDataUrl) } : {}),
+  })));
+  return enqueueRenderJob({ ...opts, sheets });
+}
+
+async function capForAiInput(dataUrl: string): Promise<string> {
+  try {
+    const img = await loadImage(dataUrl);
+    if (img.naturalWidth <= AI_INPUT_WIDTH) return dataUrl;
+    const scale = AI_INPUT_WIDTH / img.naturalWidth;
+    const canvas = document.createElement('canvas');
+    canvas.width = AI_INPUT_WIDTH;
+    canvas.height = Math.max(1, Math.round(img.naturalHeight * scale));
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return dataUrl;
+    ctx.imageSmoothingEnabled = true;
+    ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    // PNG, matching what buildAccurateComposite produces — the render keys on thin geometry
+    // lines and JPEG ringing softens them (that function's own note).
+    return canvas.toDataURL('image/png');
+  } catch {
+    return dataUrl; // an uncapped upload is a cost bug, not a correctness bug — never block a render on it
+  }
+}
+
 async function requestProducer(
   imageBase64: string,
   layerLabel: string,
@@ -1744,11 +1788,13 @@ async function requestProducer(
   designBrief = '',
   promptVariant: 'rewrite' | 'legacy' = 'rewrite',
 ): Promise<string> {
+  // The cap applies at the boundary itself so no future call site can forget it.
+  const capped = stripDataUrl(await capForAiInput(`data:image/png;base64,${imageBase64}`));
   const res = await fetch('/api/image-producer', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
-      imageBase64,
+      imageBase64: capped,
       layerLabel,
       elementsText,
       designBrief,
@@ -5956,6 +6002,44 @@ function drawPlantMarks(
   const drawable = byCartographicStack(state, filter).filter((it) => codes.has(it.defId));
   if (!drawable.length) return;
 
+  // ONE NAME FOR TEN IDENTICAL BEDS — in 'onplant' mode only, where the chip carries a NAME.
+  // Every drawable used to get its own chip, and for beds that was the fix to "vegetable beds
+  // not named" (twice); the over-correction was a column of ten "Vegetable Bed" chips burying
+  // the bed block (Rory: "please only put one raised bed label"). labelsEverySpecimen is the
+  // same authority the gutter and the callout engines already answer to: perennials keep a name
+  // per plant, beds/rows/strips take ONE chip with the count, anchored on the specimen nearest
+  // the group's centre so it sits on a real bed. Codes mode is untouched — a code IS per-plant
+  // identity and the legend keys it.
+  let marks: Array<{ it: (typeof drawable)[number]; text?: string }> = drawable.map((it) => ({ it }));
+  if (mode === 'onplant') {
+    const byIdentity = new Map<string, typeof drawable>();
+    for (const it of drawable) {
+      const def = ELEMENTS_BY_ID[it.defId];
+      const key = `${it.defId}\u0000${it.label ?? def.name}`;
+      const arr = byIdentity.get(key) ?? [];
+      arr.push(it);
+      byIdentity.set(key, arr);
+    }
+    marks = [];
+    for (const group of byIdentity.values()) {
+      const def = ELEMENTS_BY_ID[group[0].defId];
+      if (group.length === 1 || labelsEverySpecimen(group[0].defId, group.length)) {
+        for (const it of group) marks.push({ it });
+        continue;
+      }
+      const cx = group.reduce((sum, it) => sum + it.x, 0) / group.length;
+      const cy = group.reduce((sum, it) => sum + it.y, 0) / group.length;
+      const anchor = group.reduce((best, it) => (
+        Math.hypot(it.x - cx, it.y - cy) < Math.hypot(best.x - cx, best.y - cy) ? it : best
+      ), group[0]);
+      marks.push({ it: anchor, text: `${group[0].label ?? def.name} ×${group.length}` });
+    }
+    // Drawing order must stay the cartographic stack's, not the grouping map's — chips refuse
+    // to land on one another, and which chip wins a clash should not depend on Map iteration.
+    const order = new Map(drawable.map((it, i) => [it.id, i]));
+    marks.sort((a, b) => (order.get(a.it.id) ?? 0) - (order.get(b.it.id) ?? 0));
+  }
+
   ctx.save();
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
@@ -5968,9 +6052,9 @@ function drawPlantMarks(
   const clashes = (x0: number, y0: number, x1: number, y1: number) =>
     placed.some((r) => x0 < r.x1 && x1 > r.x0 && y0 < r.y1 && y1 > r.y0);
 
-  for (const it of drawable) {
+  for (const { it, text: groupedText } of marks) {
     const def = ELEMENTS_BY_ID[it.defId];
-    const text = mode === 'onplant' ? (it.label ?? def.name) : codes.get(def.id);
+    const text = mode === 'onplant' ? (groupedText ?? it.label ?? def.name) : codes.get(def.id);
     if (!text) continue;
     const naturalW = Math.max(1, (it.wM ?? def.wM) * pxPerM);
     const naturalH = Math.max(1, (it.hM ?? def.hM) * pxPerM);
@@ -11064,7 +11148,13 @@ export default function DesignGlossy({
   // grouping + gutter architecture on paid sheets (2026-08-03).
   const underlaySuffix = underlayCacheSuffix(underlay)
     + (sheetHasPlantCodes ? labelModeCacheSuffix(labelMode) : '')
-    + ':r1';
+    + ':r1'
+    // A sheet drawn at SCALE 3 is a different picture from the same sheet at 2 — re-serving a
+    // 1920px cache under a High setting would look like the setting did nothing (the exact
+    // "code change looks like it did nothing" trap the r-token note above describes). EMPTY at
+    // the default so every existing scale-2 cache key stays byte-identical; only High keys
+    // diverge, and switching back re-serves the old caches untouched.
+    + (SCALE !== 2 ? `:s${SCALE}` : '');
   const mapKey = (exactSheet === 'base'
     ? 'base-exact'
     : exactSheet === 'sector'
@@ -11415,8 +11505,8 @@ export default function DesignGlossy({
         if (useProvider === 'falgpt') {
           const mask = await buildProtectMask(state, frame, refLayers, filter);
           image = await requestRender({
-            imageBase64: stripDataUrl(composite),
-            maskBase64: stripDataUrl(mask),
+            imageBase64: stripDataUrl(await capForAiInput(composite)),
+            maskBase64: stripDataUrl(await capForAiInput(mask)),
             provider: 'falgpt',
             context: {
               strictMap: true,
@@ -11460,8 +11550,8 @@ export default function DesignGlossy({
           };
           const layer = analysisStyle ?? FILTER_TO_LAYER[filter];
           image = await requestRender({
-            imageBase64: stripDataUrl(composite),
-            satBase64: frame.satDataUrl ? stripDataUrl(frame.satDataUrl) : undefined,
+            imageBase64: stripDataUrl(await capForAiInput(composite)),
+            satBase64: frame.satDataUrl ? stripDataUrl(await capForAiInput(frame.satDataUrl)) : undefined,
             provider: 'gemini',
             geminiModel: 'pro-preview',
             context: {
@@ -12418,7 +12508,7 @@ export default function DesignGlossy({
         setLoading(null);
         return;
       }
-      const jobId = await enqueueRenderJob({ siteId: state.siteId, style: styleKey, engine: queueEngine, quality, sheets });
+      const jobId = await enqueueRenderJobCapped({ siteId: state.siteId, style: styleKey, engine: queueEngine, quality, sheets });
       persistJobId(state.siteId, jobId);
       setQueueJobId(jobId);
       setNotice(formatDesignTranslation(t('designGlossyBackgroundCount'), {
@@ -12559,7 +12649,7 @@ export default function DesignGlossy({
           : (promptRewrite
             ? buildProducerPrompt(layerLabel, styleKey, elementsText, 'full', false, designBrief, renderState.items)
             : buildProducerPromptLegacy(layerLabel, styleKey, elementsText, 'full', false, designBrief, renderState.items));
-      const jobId = await enqueueRenderJob({
+      const jobId = await enqueueRenderJobCapped({
         siteId: state.siteId,
         style: styleKey,
         engine: queueEngine, quality,
@@ -12796,7 +12886,7 @@ export default function DesignGlossy({
           ? buildSectorSheetPolishPrompt(styleKey, placeName)
           : buildFinishedSheetPolishPrompt('Existing Site', styleKey, placeName, structureRegisterText(presentation.state, presentation.refLayers))
         : buildSectorRestylePrompt(styleKey, placeName);
-      const jobId = await enqueueRenderJob({
+      const jobId = await enqueueRenderJobCapped({
         siteId: state.siteId,
         style: styleKey,
         engine: queueEngine, quality,
@@ -12897,7 +12987,7 @@ export default function DesignGlossy({
         ? buildFinishedSheetPolishPrompt('Implementation & Phasing', styleKey, placeName, structureRegisterText(state, refLayers))
         : buildPhasingRestylePrompt(styleKey, placeName);
 
-      const jobId = await enqueueRenderJob({
+      const jobId = await enqueueRenderJobCapped({
         siteId: state.siteId,
         style: styleKey,
         engine: queueEngine, quality,
@@ -13777,6 +13867,35 @@ export default function DesignGlossy({
             );
           })}
           <span style={{ fontSize: 10.5, opacity: 0.6 }}>{UNDERLAY_HINT[underlay]}</span>
+        </div>
+        {/* SHEET QUALITY — the option Rory asked for ("imagine when this is printed on even A3").
+            Standard is the 1920px master everything has always used; High renders the same
+            drawing at 2880px (~90 dpi on A2, ~128 on A3). It reloads on change: SCALE is read at
+            module load and a half-drawn sheet must never span two scales. AI render costs do NOT
+            change with this setting — every AI-bound bitmap is capped back to the standard width
+            at the upload boundary (lib/sheet-scale.ts). */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', marginTop: 8 }}>
+          <span style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55 }}>
+            Quality
+          </span>
+          {([[2, 'Standard'], [3, 'High — sharper print']] as const).map(([value, label]) => {
+            const active = SCALE === value;
+            return (
+              <button
+                key={value}
+                type="button"
+                onClick={() => { if (setSheetScale(value)) window.location.reload(); }}
+                disabled={loading !== null}
+                aria-pressed={active}
+                style={{ padding: '6px 12px', borderRadius: 999, border: `1px solid ${active ? DARK : '#E2D8C4'}`, background: active ? DARK : PAPER, color: active ? PAPER : '#5C5040', fontWeight: 700, fontSize: 12, cursor: loading !== null ? 'default' : 'pointer' }}
+              >
+                {label}
+              </button>
+            );
+          })}
+          <span style={{ fontSize: 10.5, opacity: 0.6 }}>
+            {SCALE === 3 ? 'Exact sheets redraw sharper; AI render cost is unchanged' : 'High redraws exact sheets at 1.5× resolution for printing'}
+          </span>
         </div>
         {/* HOW THIS SHEET NAMES ITS PLANTS — one or the other, never both. Shown only where the
             selected sheet actually has coded plants, so it appears on Planting and disappears on
