@@ -35,6 +35,14 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '9 August',
+    sha: 'a4611f7',
+    changes: [
+      'Apple, pear, plum, fig and pomegranate now have their own drawing in the palette',
+      'Taps, filters, kraals and terraces are drawn instead of shown as symbols',
+    ],
+  },
+  {
+    when: '9 August',
     sha: '9c7243d',
     changes: [
       'Every element in the palette now has its own drawing instead of an emoji',
