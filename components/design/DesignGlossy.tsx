@@ -3817,6 +3817,32 @@ const LEADER_MAX_RUN_RATIO = 0.22;
 const ARTWORK_EDGE_BLEED = 1.14;
 
 /**
+ * WHICH SHAPE A CANOPY'S MARKS FOLLOW — the footprint circle, or the artwork's own alpha.
+ *
+ * Rory: *"the canopy must not be a circle edge but a jagged leaf canopy."* That is not achievable
+ * in artwork alone, and a probe proved it: a crown drawn with lobes at 98% of the radius and
+ * transparent notches at 78% comes out of this function as a **perfect disc**, because the code
+ * draws a circle five separate times around every canopy — a cream casing ring, a radial soil
+ * gradient, a mulch stipple, a footprint clip that the 1.14 bleed pushes the notches outside of,
+ * and a dark outline stroke over the top.
+ *
+ * 'artwork' mode replaces the four silhouette-defining marks with ones that follow the PNG's own
+ * alpha channel (canvas shadows do this natively, which is what makes a leaf-hugging casing
+ * possible without a traced path), and drops the bleed to 1.0 so the notches survive the clip.
+ * The footprint circle stays as a clip — a safety net that must never bite, because the crown is
+ * drawn to sit inside it, so the tree still occupies exactly the ground the farmer allocated.
+ *
+ * IT MUST NOT BE SWITCHED ON BEFORE THE NEW ARTWORK LANDS. The current canopies carry a painted
+ * mulch band — the outer 75-100% of orchard-canopy-v1, avocado-tree-v1 and marula-tree-v1 is
+ * 56-70% brown pixels — and today the cream casing and the soil fill are what hide it. Remove
+ * them from the old art and that brown band is what a farmer sees. New art under 'footprint' is
+ * a disc; old art under 'artwork' is a brown ring. Neither half is worth shipping alone.
+ *
+ * See docs/CANOPY-ART-BRIEF-V2.md, which is the artwork half of this change.
+ */
+const CANOPY_EDGE_MODE: 'footprint' | 'artwork' = 'footprint';
+
+/**
  * Turn on the browser's best resampling for a canvas that is about to scale an image.
  *
  * Canvas defaults to a fast, low-quality filter. Exactly ONE place in this file had ever set
@@ -4676,7 +4702,9 @@ function drawPaintedReferenceFeature(
   // it was found. Below full strength, the artwork alone is what reads as a tree.
   const isContextDraw = inheritedAlpha < EXACT_FULL_STRENGTH_ALPHA;
 
-  if (isMatureCanopy && !isContextDraw) {
+  const artworkEdge = isMatureCanopy && CANOPY_EDGE_MODE === 'artwork';
+
+  if (isMatureCanopy && !isContextDraw && !artworkEdge) {
     // CASING FIRST, then an opaque backing — the route-line convention this file already uses for
     // sector arrows and water pipes, applied to a canopy. The cream ring is what separates one
     // placed tree from the next where they overlap, and separates all of them from the existing
@@ -4752,15 +4780,52 @@ function drawPaintedReferenceFeature(
   // clip above is what makes this safe — nothing escapes the saved footprint, so the tree still
   // occupies exactly the ground the farmer allocated and no spacing claim changes. Only canopies
   // and beds get it; a tank or a gate is drawn to its own outline and has no margin to close.
-  const bleed = isMatureCanopy ? ARTWORK_EDGE_BLEED : 1;
+  //
+  // ...and in 'artwork' mode the bleed is exactly what must NOT happen. Scaling a lobed crown up
+  // 14% and letting the clip crop the excess trims the notches off and hands back a disc — the
+  // bleed exists to close a margin that jagged art does not have.
+  const bleed = isMatureCanopy && !artworkEdge ? ARTWORK_EDGE_BLEED : 1;
   ctx.imageSmoothingEnabled = true;
   ctx.imageSmoothingQuality = 'high';
+  if (artworkEdge && !isContextDraw) {
+    // THE CASING, FOLLOWING THE LEAVES. A canvas shadow is cast from the source's alpha channel,
+    // so drawing the image once with a coloured shadow and no offset paints a rim that hugs the
+    // crown's real silhouette. Dark first and tight — that is what stops one crown dissolving
+    // into the next where two overlap — then cream over it, wider, which is what carries the
+    // tree clear of dark photographic foliage (the reason the circular casing existed at all).
+    //
+    // ONE PASS EACH, and deliberately narrow. Doubling the draws at twice this blur read as a
+    // cut-out sticker rim in the probe, which is the same complaint the circular casing already
+    // collected once: "it just looks like its a bit wrong or off". A separator, not a halo.
+    const span = Math.min(wPx, hPx);
+    ctx.save();
+    ctx.shadowColor = 'rgba(31,42,29,0.85)';
+    ctx.shadowBlur = Math.max(1.5, span * 0.007);
+    ctx.drawImage(image, -wPx / 2, -hPx / 2, wPx, hPx);
+    ctx.restore();
+    ctx.save();
+    ctx.shadowColor = 'rgba(252,248,236,0.95)';
+    ctx.shadowBlur = Math.max(2, span * 0.011);
+    ctx.drawImage(image, -wPx / 2, -hPx / 2, wPx, hPx);
+    ctx.restore();
+  }
   ctx.drawImage(image, (-wPx / 2) * bleed, (-hPx / 2) * bleed, wPx * bleed, hPx * bleed);
   ctx.restore();
 
   // A mature canopy is spacing evidence, not an opaque sticker: its illustrated fill lets the
   // neighbouring tree and ground remain readable while the stronger edge keeps both saved
   // footprints explicit through an overlap. Non-canopy assets retain their previous treatment.
+  // In 'artwork' mode the solid circular outline is the fifth and last circle to go: the crown's
+  // edge is now carried by the alpha-following rim above, and stroking the footprint over it puts
+  // the disc straight back.
+  //
+  // THE DASHED OVERSTORY LINE STAYS, and is the one circle that was never wrong. It does not
+  // claim to be the tree's edge — it is the roof-overhang mark, saying "this canopy is above what
+  // you can see inside it", and against a jagged crown it reads MORE clearly as an annotation
+  // about allocated ground rather than less. Dropping it would lose the only thing on the sheet
+  // that answers "how do we show the plants underneath".
+  const skipSolidEdge = artworkEdge && !(isOverstory && isMatureCanopy);
+  if (!skipSolidEdge) {
   traceFootprint();
   ctx.strokeStyle = isMatureCanopy ? PLANTING_CANOPY_PAINT.edgeColor : 'rgba(31,42,29,0.58)';
   if (isMatureCanopy) ctx.globalAlpha *= PLANTING_CANOPY_PAINT.edgeAlpha;
@@ -4777,6 +4842,9 @@ function drawPaintedReferenceFeature(
   }
   ctx.stroke();
   ctx.setLineDash([]);
+  }
+  // Outside the branch: this restore pairs with the save() that opened the whole element draw,
+  // so it must run whether or not the solid edge was stroked.
   ctx.restore();
   return true;
 }
