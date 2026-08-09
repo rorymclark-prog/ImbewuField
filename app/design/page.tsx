@@ -107,6 +107,8 @@ import DesignPalette, {
   type WaterInfrastructureVisibility,
 } from '@/components/design/DesignPalette';
 import DesignWizard, { STEP_ORDER, STEP_LABELS } from '@/components/design/DesignWizard';
+import CardsStepper from '@/components/design/CardsStepper';
+import { uiVersion, UI_VERSION_EVENT } from '@/lib/ui-version';
 import { STUDIO_AREA_FOR, type AddActionId } from '@/lib/add-actions';
 import type { GlossyLayerFilter } from '@/components/design/DesignGlossy';
 import StepGuide from '@/components/design/StepGuide';
@@ -927,6 +929,17 @@ function DesignStudioInner() {
   };
   // Kept so the existing phone auto-collapse effect and every other read still work unchanged.
   const chromeCollapsed = !topShow.wizard;
+  // THE UI VERSION, read reactively — presentation only, per lib/ui-version.ts's boundary. In
+  // 'cards' the slim chrome bar carries the 2.0 numbered stepper (every step visible and
+  // tappable) instead of the prev/next mini-nav; nothing about step semantics changes, it is
+  // the same setStep the arrows call.
+  const [cardsUi, setCardsUi] = useState(false);
+  useEffect(() => {
+    const sync = () => setCardsUi(uiVersion() === 'cards');
+    sync();
+    window.addEventListener(UI_VERSION_EVENT, sync);
+    return () => window.removeEventListener(UI_VERSION_EVENT, sync);
+  }, []);
   const setChromeCollapsed = useCallback((v: boolean | ((p: boolean) => boolean)) => {
     setTopStop((prev) => {
       const want = typeof v === 'function' ? v(prev !== 'full') : v;
@@ -2952,7 +2965,15 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           quiet "More space" that folds the auto-design bar + wizard away. */}
       {canvasState && (
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '3px 14px', minHeight: 34, borderBottom: chromeCollapsed ? '1px solid #E2D8C4' : 'none' }}>
-          {chromeCollapsed && (() => {
+          {cardsUi && (
+            // The StepGuide bubble floats over the top-left of the map, and this bar sits level
+            // with its first ~50px — so while the guide is up, the strip starts to its right
+            // rather than running underneath it. Same condition as the guide's own mount below.
+            <div style={{ display: 'flex', minWidth: 0, flex: '1 1 auto', paddingLeft: bottomShow.stepBar && canvasState.step !== 'glossy' && canvasState.step !== 'review' ? 252 : 0 }}>
+              <CardsStepper step={canvasState.step} onStep={setStep} />
+            </div>
+          )}
+          {!cardsUi && chromeCollapsed && (() => {
             const idx = STEP_ORDER.indexOf(canvasState.step);
             const navBtn = (disabled: boolean): React.CSSProperties => ({
               width: 30, height: 30, display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
