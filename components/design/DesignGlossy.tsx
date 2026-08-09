@@ -6174,6 +6174,100 @@ function drawExactFeaturesWithPresentation(
  * areas, items, routes, counts and the site boundary. House and driveway are stacked separately so
  * they can use the clean source photograph rather than a flat vector fill.
  */
+/** Corrugated-iron roofs for buildings on PAPER sheets — where there is no photograph to show
+ *  the real one.
+ *
+ *  Rory, on a plain-paper Planting sheet: "where is the roof for the buildings" — pointing at
+ *  blank grey rectangles. The blankness is deliberate on the PHOTO underlay: the satellite
+ *  already shows the actual roof with its true ridges and shadow, and painting over it replaces
+ *  information with a rectangle (see drawBlueprintGround's A ROOF IS NOT GROUND note, and the
+ *  sourceStructures restore). On paper that logic inverts — there is nothing underneath, so the
+ *  outline-only treatment leaves the most recognisable object on the farm as an empty box.
+ *
+ *  The drawing is the standard SA farm roof: corrugated sheeting. A ridge along the building's
+ *  long axis, sheet lines perpendicular to it at real sheet width (~0.76 m), and one slope a
+ *  step darker — the minimum that reads as "roofed building" at plan scale without inventing
+ *  ridge layouts for L-shaped buildings this function cannot know. Deterministic: no randomness,
+ *  same building, same roof, every render. */
+function drawPaperRoofs(
+  ctx: CanvasRenderingContext2D,
+  state: DesignCanvasState,
+  refLayers: DesignGlossyProps['refLayers'],
+  px: (n: number) => number,
+  py: (n: number) => number,
+  pxPerM: number,
+): void {
+  const rings: Array<Array<[number, number]>> = [];
+  if (refLayers.house.length >= 3) rings.push(refLayers.house);
+  for (const z of state.zones) {
+    if (z.feature === 'house' && z.points.length >= 3) rings.push(z.points);
+  }
+  if (!rings.length) return;
+
+  for (const ring of rings) {
+    const pts = ring.map(([x, y]) => [px(x), py(y)] as [number, number]);
+    // Ridge direction = the polygon's longest edge. For the rectangles farmers trace this is the
+    // long wall, which is where a real ridge runs; for an L-shape it follows the longest wing,
+    // which is the honest simple answer rather than a guessed hip layout.
+    let angle = 0;
+    let longest = -1;
+    for (let i = 0; i < pts.length; i++) {
+      const [x0, y0] = pts[i];
+      const [x1, y1] = pts[(i + 1) % pts.length];
+      const len = Math.hypot(x1 - x0, y1 - y0);
+      if (len > longest) { longest = len; angle = Math.atan2(y1 - y0, x1 - x0); }
+    }
+    const cx = pts.reduce((sum, p) => sum + p[0], 0) / pts.length;
+    const cy = pts.reduce((sum, p) => sum + p[1], 0) / pts.length;
+    const span = Math.max(...pts.map(([x, y]) => Math.hypot(x - cx, y - cy))) * 2 + 4;
+
+    const trace = () => {
+      ctx.beginPath();
+      pts.forEach(([x, y], i) => (i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y)));
+      ctx.closePath();
+    };
+
+    ctx.save();
+    trace();
+    ctx.clip();
+    // The sheeting. Warm light grey, not white — white reads as unbuilt paper.
+    ctx.fillStyle = '#D7D2C6';
+    ctx.fillRect(cx - span, cy - span, span * 2, span * 2);
+    ctx.translate(cx, cy);
+    ctx.rotate(angle);
+    // One slope a step darker, so the ridge reads as a fold rather than a stripe.
+    ctx.fillStyle = 'rgba(63,58,48,0.10)';
+    ctx.fillRect(-span, 0, span * 2, span);
+    // Corrugation: sheet lines PERPENDICULAR to the ridge at real sheet width. Floored at 3px so
+    // a small shed on a big site still reads as sheeting rather than dithering into grey.
+    const gap = Math.max(3, 0.76 * pxPerM);
+    ctx.strokeStyle = 'rgba(63,58,48,0.16)';
+    ctx.lineWidth = Math.max(0.6, pxPerM * 0.03);
+    ctx.beginPath();
+    for (let d = -span; d <= span; d += gap) {
+      ctx.moveTo(d, -span);
+      ctx.lineTo(d, span);
+    }
+    ctx.stroke();
+    // The ridge itself, along the long axis.
+    ctx.strokeStyle = 'rgba(63,58,48,0.45)';
+    ctx.lineWidth = Math.max(1, pxPerM * 0.08);
+    ctx.beginPath();
+    ctx.moveTo(-span, 0);
+    ctx.lineTo(span, 0);
+    ctx.stroke();
+    ctx.restore();
+
+    // The building edge, over the sheeting — same weight family as the roofless outline it
+    // replaces, so paper and photo sheets keep the same line vocabulary.
+    trace();
+    ctx.strokeStyle = 'rgba(32,25,15,0.78)';
+    ctx.lineWidth = Math.max(1.2, pxPerM * 0.1);
+    ctx.lineJoin = 'round';
+    ctx.stroke();
+  }
+}
+
 async function buildExactLayerOverlay(
   state: DesignCanvasState,
   frame: CanvasFrame,
@@ -6201,6 +6295,12 @@ async function buildExactLayerOverlay(
     drawBlueprintGround(ctx, state, px, py, W, refLayers, filter, groundPresentation, siteRecord);
     return canvas.toDataURL('image/png');
   }
+
+  // PAPER SHEETS GET DRAWN ROOFS; photo sheets keep the photograph's real one. frame.satDataUrl
+  // is the same signal the composers use to decide whether sourceStructures can restore the roof
+  // from the photo — absent here means nothing else will ever draw one. First in the features
+  // phase, so a tank or tap placed on the roof still draws on top of it.
+  if (!frame.satDataUrl) drawPaperRoofs(ctx, state, refLayers, px, py, pxPerM);
 
   // THE PROPERTY LINE IS A SITE FACT, NOT THE TOP OF THE DRAWING.
   //
