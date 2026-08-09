@@ -89,7 +89,7 @@ import { EARTHWORKS_ROUTE_STYLE, WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, 
 import { PLANTING_CANOPY_PAINT, PLANTING_LEGEND_SECTION_ORDER, PLANTING_ROUTE_STYLE, overstoryCanopyIds, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
 import { STRUCTURES_LEGEND_SECTION_ORDER, structuresFeaturePresentationDimensions, structuresLegendSectionForFeature, structuresRouteVisualFor, type StructuresLegendSection } from '@/lib/structures-cartography';
 import { presentSectorCartography, seasonalSunArcRadii, sectorEvidenceSummary, SECTOR_STYLES, sectorFillColor, sectorStrokeWidth, type SectorLegendIcon, type SectorVisualKind } from '@/lib/sector-cartography';
-import { referenceFeatureArtworkUrl, stapleTileUrl } from '@/lib/reference-feature-art';
+import { referenceFeatureArtworkUrl, stapleTileUrl, vegSpriteUrl } from '@/lib/reference-feature-art';
 import {
   DEFAULT_SHEET_LABEL_MODE,
   codedLegendText,
@@ -3428,6 +3428,24 @@ function drawCropRowLayout(
     const s = unit * (0.82 + plant.jitter * 0.36);
     ctx.save();
     ctx.translate(plant.x, plant.y);
+    // REAL VEGETABLES WHERE THE SPRITE HAS LOADED. Rory: "the veg garden next with oversize real
+    // looking veg" — the painterly sprites replace the vector glyphs plant-for-plant on the same
+    // rows, same jitter, same pitch. A touch of per-plant rotation keeps a row from stamping as
+    // a rubber-stamp repeat; the vector glyph below remains the fallback for any kind whose
+    // sprite is missing, so a bed can never go blank.
+    {
+      const spriteUrl = vegSpriteUrl(plant.glyph);
+      const sprite = spriteUrl ? referenceFeatureArtworkCache.get(spriteUrl) : undefined;
+      if (sprite) {
+        const d = s * 2.6;
+        ctx.rotate((plant.jitter - 0.5) * 0.6);
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
+        ctx.drawImage(sprite, -d / 2, -d / 2, d, d);
+        ctx.restore();
+        continue;
+      }
+    }
     // Casing first, then the plant — see the note above.
     for (const pass of ['casing', 'body'] as const) {
       const casing = pass === 'casing';
@@ -4962,11 +4980,14 @@ function drawPaintedReferenceFeature(
   // the disc straight back.
   //
   // THE DASHED OVERSTORY LINE STAYS, and is the one circle that was never wrong. It does not
-  // claim to be the tree's edge — it is the roof-overhang mark, saying "this canopy is above what
-  // you can see inside it", and against a jagged crown it reads MORE clearly as an annotation
-  // about allocated ground rather than less. Dropping it would lose the only thing on the sheet
-  // that answers "how do we show the plants underneath".
-  const skipSolidEdge = artworkEdge && !(isOverstory && isMatureCanopy);
+  // claim to be the tree's edge — it was the roof-overhang mark. IT NO LONGER DRAWS IN ARTWORK
+  // MODE: defended twice on paper, it lost on a real sheet — Rory, pointing at the one ringed
+  // litchi among unringed neighbours: "that weird circle around the one tree". A mark only some
+  // trees wear reads as an error on those trees, not as a convention; and the understory already
+  // draws solid ON TOP of the big crown, which is what actually answers "how do we show the
+  // plants underneath". The legend line goes with it. Classic footprint mode keeps the dash —
+  // there the flat washes genuinely need it.
+  const skipSolidEdge = artworkEdge;
   if (!skipSolidEdge) {
   traceFootprint();
   ctx.strokeStyle = isMatureCanopy ? PLANTING_CANOPY_PAINT.edgeColor : 'rgba(31,42,29,0.58)';
@@ -6339,17 +6360,18 @@ function drawPaperRoofs(
     // One slope clearly darker — the fold is what says "pitched roof" rather than "grey slab".
     ctx.fillStyle = 'rgba(50,45,38,0.22)';
     ctx.fillRect(-span, 0, span * 2, span);
-    // Corrugation: sheet lines PERPENDICULAR to the ridge at real sheet width. Floored at 3px so
-    // a small shed on a big site still reads as sheeting rather than dithering into grey.
-    const gap = Math.max(3, 0.76 * pxPerM);
-    ctx.strokeStyle = 'rgba(50,45,38,0.34)';
-    ctx.lineWidth = Math.max(0.8, pxPerM * 0.04);
-    ctx.beginPath();
+    // CORRUGATION AS RIBS, NOT RULED LINES. Rory, round three: "more of a corrugated iron look".
+    // A lone dark line per sheet reads as ruled paper; real corrugation is alternating light and
+    // shadow as each rib catches the sun. Each 0.76 m sheet gets a highlight stripe beside a
+    // shadow stripe — the pairing is what reads as metal at plan scale.
+    const gap = Math.max(4, 0.76 * pxPerM);
+    const rib = Math.max(1.2, gap * 0.22);
     for (let d = -span; d <= span; d += gap) {
-      ctx.moveTo(d, -span);
-      ctx.lineTo(d, span);
+      ctx.fillStyle = 'rgba(255,255,255,0.28)';
+      ctx.fillRect(d, -span, rib, span * 2);
+      ctx.fillStyle = 'rgba(50,45,38,0.30)';
+      ctx.fillRect(d + rib, -span, rib, span * 2);
     }
-    ctx.stroke();
     // The ridge itself, along the long axis.
     ctx.strokeStyle = 'rgba(50,45,38,0.7)';
     ctx.lineWidth = Math.max(1.4, pxPerM * 0.1);
@@ -6359,13 +6381,10 @@ function drawPaperRoofs(
     ctx.stroke();
     ctx.restore();
 
-    // The building edge, over the sheeting — same weight family as the roofless outline it
-    // replaces, so paper and photo sheets keep the same line vocabulary.
-    trace();
-    ctx.strokeStyle = 'rgba(32,25,15,0.78)';
-    ctx.lineWidth = Math.max(1.2, pxPerM * 0.1);
-    ctx.lineJoin = 'round';
-    ctx.stroke();
+    // NO BUILDING BORDER. Rory: "the roofs with no border". The sheeting, its ribs and the
+    // darker slope carry the building's edge on pale paper by contrast alone — a dark outline
+    // around a metal roof read as a sticker. The eave line is the place the ribs simply stop.
+    // (The ground-phase house treatment still owns whatever outline the SITE record needs.)
   }
 }
 
@@ -6942,7 +6961,11 @@ async function buildReferenceBlueprintMap(
   // NOTHING IS DRAWN WITHOUT A ROW. A dashed canopy edge is meaningless to a reader who has not
   // been told what it means, so the row appears only when at least one canopy has actually earned
   // the dash — recomputed here from the same printed geometry drawFilteredItems uses.
-  const canopiesAbove = (filter === 'planting' || filter === 'all')
+  // The dashed-canopy mark no longer draws in artwork mode (see skipSolidEdge's note — "that
+  // weird circle around the one tree"), so its legend row must not print either: a key to a mark
+  // that never appears is the legend lying about the map. Kept for 'footprint' mode, where the
+  // dash still draws.
+  const canopiesAbove = CANOPY_EDGE_MODE === 'footprint' && (filter === 'planting' || filter === 'all')
     ? overstoryCanopyIds(byCartographicStack(renderState, filter).map((it) => {
       const def = ELEMENTS_BY_ID[it.defId];
       if (!def) return { id: it.id, cx: px(it.x), cy: py(it.y), rPx: 0 };

@@ -48,6 +48,8 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       'Staple plots are now painted fields — maize, beans and pumpkin in rows',
       'Staple rows now run with each plot, roofs are bolder, bed veg drawn bigger',
       'Sharper maps are now the default on computers; phones can switch in Quality',
+      'Roofs lose their outline and gain real corrugated ribs',
+      'The dashed circle around big trees is gone — plants still show on top',
     ],
   },
   {
