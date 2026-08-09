@@ -338,16 +338,9 @@ test('LEGEND section grouping: water, planting and structures each section every
 // Two independent illustrated AI paths, two independent private vocabularies. Both are tested
 // through their PUBLIC exported prompt builders only (see the file-ownership header comment).
 //
-// KNOWN GAP (Showcase family — M / SHOWCASE_MARKER_MATCH): these catalog elements, placed alone
-// on their own primary sheet, get NO tailored marker-glossary sentence in buildShowcasePrompt's
-// output — the model is handed the bare name with no drawing instruction for it.
-const SHOWCASE_VOCAB_GAP_IDS = [
-  'water_trough', 'first_flush', 'pump_filter', 'herb_spiral',
-  'tree_natal_plum', 'tree_wild_plum', 'tree_waterberry', 'banana_clump', 'tree_pomegranate',
-  'other_water', 'other_planting', 'other_structure',
-  'pollinator_strip', 'vetiver_row',
-  'shade_sail', 'gate', 'bench', 'sign', 'solar_panel_ground', 'washline',
-].sort();
+// This used to pin the documented gaps. It now pins the stronger rule the list was measuring:
+// every farmer-reachable catalog element must emit tailored vocabulary on its own primary sheet.
+const SHOWCASE_VOCAB_GAP_IDS: string[] = [];
 
 test('AI PROMPT VOCABULARY (Showcase family): exactly the documented ids have no marker glossary entry', () => {
   const gaps: string[] = [];
@@ -359,16 +352,8 @@ test('AI PROMPT VOCABULARY (Showcase family): exactly the documented ids have no
   assert.deepEqual(gaps.sort(), SHOWCASE_VOCAB_GAP_IDS);
 });
 
-// KNOWN GAP (Satellite Overlay — OVERLAY_ICONS / ICON_MATCH): same test, the other vocabulary.
-// Mostly a DIFFERENT set of ids than the Showcase gap above — each AI path independently forgot
-// different elements, which is itself evidence the two vocabularies are hand-maintained copies
-// that already drifted from each other, not just from the catalog.
-const OVERLAY_VOCAB_GAP_IDS = [
-  'rain_barrel', 'herb_spiral',
-  'tree_natal_plum', 'tree_wild_plum', 'tree_waterberry', 'tree_pomegranate',
-  'other_water', 'other_planting', 'other_structure',
-  'shade_sail', 'gate', 'bench', 'sign', 'solar_panel_ground', 'washline',
-].sort();
+// Same complete-coverage rule for the independently maintained Satellite Overlay vocabulary.
+const OVERLAY_VOCAB_GAP_IDS: string[] = [];
 
 test('AI PROMPT VOCABULARY (Satellite Overlay): exactly the documented ids have no icon-language entry', () => {
   const gaps: string[] = [];
@@ -380,14 +365,9 @@ test('AI PROMPT VOCABULARY (Satellite Overlay): exactly the documented ids have 
   assert.deepEqual(gaps.sort(), OVERLAY_VOCAB_GAP_IDS);
 });
 
-// The severe subset: elements with NO drawing instruction in EITHER illustrated AI path. A
-// farmer can place any of these 14, see it printed, labelled and legended correctly (Systems 1,
-// 2, 3, 5, 6 all pass), and still have an AI-styled render invent whatever it likes for it.
-test('AI PROMPT VOCABULARY: 14 catalog elements have zero vocabulary in BOTH illustrated AI paths', () => {
+// The severe subset remains explicit so a later drift in both tables cannot hide behind two
+// independently updated gap arrays.
+test('AI PROMPT VOCABULARY: no catalog element has zero vocabulary in both illustrated AI paths', () => {
   const both = SHOWCASE_VOCAB_GAP_IDS.filter((id) => OVERLAY_VOCAB_GAP_IDS.includes(id)).sort();
-  assert.deepEqual(both, [
-    'bench', 'gate', 'herb_spiral', 'other_planting', 'other_structure', 'other_water',
-    'shade_sail', 'sign', 'solar_panel_ground', 'tree_natal_plum', 'tree_pomegranate',
-    'tree_waterberry', 'tree_wild_plum', 'washline',
-  ].sort());
+  assert.deepEqual(both, []);
 });

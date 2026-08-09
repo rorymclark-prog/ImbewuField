@@ -491,9 +491,30 @@ const M = {
   // southern Africa; these three are named because the farmer chose this specific tool, so they
   // are what the tool means, not a species recommendation the prompt invented.
   staple_garden: 'the olive-gold area is the staple garden — a standing field crop filling that whole outline: regular rows of tall maize seen from directly above as a mass of star-shaped leaf whorls, with bean plants climbing the stems between them and broad pumpkin leaves running across the ground along the rows. It is a cropped field, never mown lawn, never bare soil, never a block of trees or shrubs',
-  tank: 'a small drum marker is a green cylindrical JoJo water tank',
+  tank: 'a small drum marker is a ribbed green #2E6B4F vertical JoJo water tank with a dark lid disc, kept within that marker and never merged with another tank',
+  rain_barrel: 'a small circular marker is a short blue-black rain barrel with a fitted lid and a small tap at the rim, never a tall green tank or an open pond',
+  water_trough: 'a narrow rectangular marker is a low open-topped galvanised-steel water trough with a visible water surface, never a roofed structure or a solid slab',
+  first_flush: 'a tiny circular marker beside a tank is a short first-flush diverter pipe with a small ball-valve cap at its base, attached to the downpipe and never painted as another tank',
+  pump_filter: 'a small square marker is a compact grey pump housing beside one cylindrical inline filter canister on a small pad, contained within its marker and never enlarged into a shed',
   hive: 'a hive marker is a striped beehive',
-  tree: 'a tree marker is a fruit tree with a full canopy',
+  tree: 'a tree marker is one separate generic rounded mid-green fruit-tree canopy seen directly overhead, never merged with neighbouring crowns or turned into a hedge',
+  tree_citrus: 'a tree marker is one separate low dense rounded canopy seen directly overhead, glossy mid-green #4B843C and dotted with clear orange fruit, never merged with neighbouring crowns',
+  tree_mango: 'a tree marker is one separate big heavy domed canopy seen directly overhead, dark green #30663B with bronze-red new growth at the tips, never merged with neighbouring crowns',
+  tree_avocado: 'a tree marker is one separate tall broad domed canopy seen directly overhead, deep blue-green #2B5639 with dense broad foliage, never merged with neighbouring crowns',
+  tree_macadamia: 'a tree marker is one separate upright dense slightly conical canopy seen directly overhead, mid-dark green #417543 with clustered round green husks, never merged with neighbouring crowns',
+  tree_litchi: 'a tree marker is one separate wide low domed canopy seen directly overhead, near-black green #264435 with clear red fruit clusters, never merged with neighbouring crowns',
+  tree_pawpaw: 'a tree marker is one separate radial crown of large lobed leaves seen directly overhead, vivid yellow-green #85A83F around a bare central stem with fruit at the collar, never a generic round tree',
+  tree_moringa: 'a tree marker is one separate sparse airy feathery canopy seen directly overhead, pale silvery grey-green #A2BC8B with slender hanging pods, never a dense dark crown',
+  banana_clump: 'a tree marker is one separate clump of broad paddle leaves radiating from several central pseudostems, strong yellow-green #709E35 with one visible fruit bunch, never a sunken banana-circle pit',
+  tree_marula: 'a tree marker is one separate broad open spreading canopy seen directly overhead, matte grey-green #85A86F with small yellow fruit, never merged with neighbouring crowns',
+  tree_kei_apple: 'a tree marker is one separate dense thorny shrub canopy reaching the ground, bright pale yellow-green #8DB255 with small apricot-orange fruit, never a tall clear-trunked tree',
+  tree_natal_plum: 'a tree marker is one separate low dense shrub canopy seen directly overhead, very dark glossy green #275139 with white flowers and red fruit, never merged into a hedge',
+  tree_wild_plum: 'a tree marker is one separate tall rounded canopy seen directly overhead, deep green #3A7041 with glossy drooping foliage, never merged with neighbouring crowns',
+  tree_waterberry: 'a tree marker is one separate dense rounded canopy seen directly overhead, dark green #346040 with reddish new growth and purple fruit, never merged with neighbouring crowns',
+  tree_indigenous: 'a tree marker is one separate broad flat-topped canopy of fine muted grey-green #77996B foliage seen directly overhead, wider than it is tall and never conical or pine-like',
+  tree_other: 'a tree marker is one separate deliberately generic rounded canopy seen directly overhead, neutral green #5C8A45 with no fruit and no distinctive species cue, never merged with neighbouring crowns',
+  tree_olive: 'a tree marker is one separate irregular open canopy seen directly overhead, grey-sage #7F9373 with narrow silvery foliage around a gnarled centre, never a dense bright-green dome',
+  tree_pomegranate: 'a tree marker is one separate compact open rounded canopy seen directly overhead, narrow glossy mid-green leaves around a twiggy centre with clear round red fruit, never merged with neighbouring crowns',
   building: 'a hut or shed marker is that building',
   dam: 'a blue area is a dam or pond of open water, exactly that shape',
   patio: 'a warm-tan area is a paved outdoor patio, exactly that shape',
@@ -524,6 +545,12 @@ const M = {
   banana_circle: 'a larger brown circular marker about 3.5 m across is a banana circle — a sunken mulch-filled pit about 2 m across, ringed by a raised earth bund, four or five broad paddle-shaped banana leaves fanning out over the rim. Opposite silhouette to a tree basin: this is a SUNKEN pit, a tree basin is a RAISED mound',
   mulch_bank: 'a hatched rectangular Vetiver Bank marker is a compact block of upright blue-green vetiver tussocks filling exactly that rectangle and no larger, never a band running along the boundary or another line',
   greywater_basin: 'a small brown circular marker about 1.5 m across is a greywater or infiltration basin — a gravel-filled sump with a visible inlet pipe entering one side and low reeds around the rim only, no plant of its own',
+  herb_spiral: 'a circular marker is a planted stone herb spiral seen directly overhead, one clearly legible spiral wall curling into the centre with low mixed planting between its turns, never a plain mound or an unplanted stone circle',
+  other_water: 'an other-water marker is a small neutral blue-grey water feature contained exactly within its marker, visibly wet or water-carrying but with no invented tank, pond or fitting beyond that footprint',
+  other_planting: 'an other-planting marker is a neutral planted patch filled with mixed green leaves and no distinctive species cue, kept exactly within its own footprint and never merged with nearby beds or hedges',
+  other_structure: 'an other-structure marker is a small neutral utilitarian structure of weathered timber and cool zinc, contained exactly within its footprint with no invented use or extension beyond the marker',
+  pollinator_strip: 'a narrow rectangular marker is a low mixed flowering strip, yellow, white and mauve flower dots over grey-green foliage filling exactly that rectangle, never extended along a fence or merged with another strip',
+  vetiver_row: 'a long narrow marker is a single-file row of separate upright blue-green grass tussocks with visible gaps between clumps, never a continuous hedge or a band along the boundary',
   greywater_line: 'a solid violet line is a greywater line — redraw it along exactly its traced route, feeding only the basin(s) it actually reaches; add no branch, fitting or basin that is not already marked. Discharges below mulch, never onto edible leaves',
   zones: 'the large coloured bands are the permaculture zones (Zone 0–5) — paint each as a soft translucent tinted wash laid over the illustrated land, keeping the land, buildings and lighting beneath them in the style’s own palette and neutral daylight, never tinted warm by the band colours',
   // ADDED (audit finding, 2026-07-25): this table had NO entry at all for tap, borehole, or any
@@ -550,27 +577,65 @@ const M = {
   biodigester: 'a small circular marker is a biodigester — a sealed dome-topped tank at ground level with one visible inlet pipe',
   market_stall: 'a square marker is a market stall — a simple open-sided timber stall with a pitched roof and a waist-high counter, empty of produce',
   playground: 'a square marker is a children\'s play area — level open ground with a small climbing frame and swing, soft mulch or grass underfoot, no planting inside it and no vehicle track crossing it',
+  shade_sail: 'a triangular marker is a taut dark-forest shade-cloth sail stretched between three slim posts, its triangular outline unmistakable and never turned into a roofed building',
+  gate: 'a short marker across an access line is one simple farm gate of warm timber or galvanised rails, with hinge and latch sides clear, never extended into a second fence line',
+  bench: 'a narrow marker is one simple warm-pine slatted bench with two legs and a clear seat-back silhouette, never a table, bed or platform',
+  sign: 'a small marker is one plain rectangular signboard on a single sturdy post, with no lettering invented on its face and no second sign added',
+  solar_panel_ground: 'a rectangular marker is one tilted ground-mounted solar panel on a slim metal frame, blue cell grid visible from overhead and never painted as a roof or water surface',
+  washline: 'a long narrow marker is one washing line between two upright posts with two taut parallel cords and a few small fabric rectangles, never a fence, hedge or roofed structure',
 } as const;
 
 type ShowcaseMarkerKey = keyof typeof M;
 
+// Species-specific keys must travel together in both prompt families. The values remain in the
+// two required vocabularies below, but this one key list prevents a new crown from being reachable
+// on one sheet family and silently absent on the other.
+const TREE_MARKER_KEYS = [
+  'tree_citrus', 'tree_mango', 'tree_avocado', 'tree_macadamia', 'tree_litchi',
+  'tree_pawpaw', 'tree_moringa', 'banana_clump', 'tree_marula', 'tree_kei_apple',
+  'tree_natal_plum', 'tree_wild_plum', 'tree_waterberry', 'tree_indigenous',
+  'tree_other', 'tree_olive', 'tree_pomegranate', 'tree',
+] as const satisfies readonly ShowcaseMarkerKey[];
+
 const SHOWCASE_MARKERS_BY_SHEET: Record<ShowcaseSheetKind, ShowcaseMarkerKey[]> = {
-  all: ['bed', 'staple_garden', 'tree', 'windbreak', 'tank', 'tap', 'dam', 'borehole', 'swale', 'pipe', 'drip', 'building', 'hive', 'patio', 'fence', 'path', 'driveway', 'tree_basin', 'banana_circle', 'mulch_bank', 'greywater_basin', 'greywater_line', 'greywater_fitting', 'half_moon', 'berm', 'terrace', 'coop', 'chicken_tractor', 'nursery', 'compost', 'worm_farm', 'goat_pen', 'pig_pen', 'kraal', 'rabbit_hutch', 'duck_pond', 'livestock_trough', 'biodigester', 'market_stall', 'playground', 'zones'],
+  all: ['bed', 'staple_garden', ...TREE_MARKER_KEYS, 'windbreak', 'tank', 'rain_barrel', 'tap', 'dam', 'borehole', 'water_trough', 'first_flush', 'pump_filter', 'other_water', 'swale', 'pipe', 'drip', 'building', 'other_structure', 'shade_sail', 'gate', 'bench', 'sign', 'solar_panel_ground', 'washline', 'hive', 'patio', 'fence', 'path', 'driveway', 'tree_basin', 'banana_circle', 'mulch_bank', 'greywater_basin', 'herb_spiral', 'other_planting', 'pollinator_strip', 'vetiver_row', 'greywater_line', 'greywater_fitting', 'half_moon', 'berm', 'terrace', 'coop', 'chicken_tractor', 'nursery', 'compost', 'worm_farm', 'goat_pen', 'pig_pen', 'kraal', 'rabbit_hutch', 'duck_pond', 'livestock_trough', 'biodigester', 'market_stall', 'playground', 'zones'],
   zones: ['zones', 'driveway'],
-  water: ['tank', 'tap', 'dam', 'borehole', 'pipe', 'drip', 'driveway', 'tree_basin', 'banana_circle', 'greywater_basin', 'greywater_line', 'greywater_fitting'],
+  water: ['tank', 'rain_barrel', 'tap', 'dam', 'borehole', 'water_trough', 'first_flush', 'pump_filter', 'other_water', 'pipe', 'drip', 'driveway', 'tree_basin', 'banana_circle', 'greywater_basin', 'greywater_line', 'greywater_fitting'],
   // Sheet 05. Swale, berm, terrace and half-moon moved off Water when earthworks became its own
   // setting-out drawing; the driveway stays as the orientation mark every sheet carries.
   earthworks: ['swale', 'berm', 'terrace', 'half_moon', 'driveway'],
-  planting: ['bed', 'staple_garden', 'tree', 'windbreak', 'driveway', 'tree_basin', 'banana_circle', 'mulch_bank'],
-  structures: ['building', 'hive', 'patio', 'fence', 'path', 'driveway', 'coop', 'chicken_tractor', 'nursery', 'compost', 'worm_farm', 'goat_pen', 'pig_pen', 'kraal', 'rabbit_hutch', 'duck_pond', 'livestock_trough', 'biodigester', 'market_stall', 'playground'],
+  planting: ['bed', 'staple_garden', ...TREE_MARKER_KEYS, 'windbreak', 'driveway', 'tree_basin', 'banana_circle', 'mulch_bank', 'herb_spiral', 'other_planting', 'pollinator_strip', 'vetiver_row'],
+  structures: ['building', 'other_structure', 'shade_sail', 'gate', 'bench', 'sign', 'solar_panel_ground', 'washline', 'hive', 'patio', 'fence', 'path', 'driveway', 'coop', 'chicken_tractor', 'nursery', 'compost', 'worm_farm', 'goat_pen', 'pig_pen', 'kraal', 'rabbit_hutch', 'duck_pond', 'livestock_trough', 'biodigester', 'market_stall', 'playground'],
 };
 
 const SHOWCASE_MARKER_MATCH: Record<ShowcaseMarkerKey, RegExp> = {
   bed: /bed|vegetable garden|veg garden/i,
   staple_garden: /staple garden/i,
-  tree: /\btree\b|orchard|fruit/i,
+  tree_citrus: /citrus tree/i,
+  tree_mango: /mango tree/i,
+  tree_avocado: /avocado tree/i,
+  tree_macadamia: /macadamia tree/i,
+  tree_litchi: /litchi tree/i,
+  tree_pawpaw: /pawpaw tree/i,
+  tree_moringa: /moringa tree/i,
+  banana_clump: /banana clump/i,
+  tree_marula: /\bmarula\b/i,
+  tree_kei_apple: /kei apple/i,
+  tree_natal_plum: /natal plum/i,
+  tree_wild_plum: /wild plum/i,
+  tree_waterberry: /waterberry/i,
+  tree_indigenous: /indigenous shade tree/i,
+  tree_other: /other tree/i,
+  tree_olive: /olive tree/i,
+  tree_pomegranate: /pomegranate/i,
+  tree: /orchard|fruit tree|guava tree|apple tree|pear tree|plum tree|peach tree|fig tree/i,
   windbreak: /windbreak|hedge/i,
-  tank: /tank|jojo|rain barrel/i,
+  tank: /tank|jojo/i,
+  rain_barrel: /rain barrel/i,
+  water_trough: /water trough/i,
+  first_flush: /first-flush|first flush/i,
+  pump_filter: /pump\s*&?\s*filter/i,
+  other_water: /other water/i,
   dam: /\bdam\b|\bpond\b/i,
   swale: /swale/i,
   pipe: /\bpipe\b/i,
@@ -585,6 +650,10 @@ const SHOWCASE_MARKER_MATCH: Record<ShowcaseMarkerKey, RegExp> = {
   banana_circle: /banana circle/i,
   mulch_bank: /mulch bank|vetiver bank/i,
   greywater_basin: /greywater basin|infiltration basin/i,
+  herb_spiral: /herb spiral/i,
+  other_planting: /other planting/i,
+  pollinator_strip: /pollinator strip/i,
+  vetiver_row: /vetiver row/i,
   greywater_line: /greywater line/i,
   zones: /\bzone\s*[0-5]\b|permaculture zone/i,
   tap: /\btap\b|standpipe|faucet/i,
@@ -606,6 +675,13 @@ const SHOWCASE_MARKER_MATCH: Record<ShowcaseMarkerKey, RegExp> = {
   livestock_trough: /livestock trough/i,
   biodigester: /biodigester/i,
   market_stall: /market stall/i, playground: /playground|play area/i,
+  other_structure: /other structure/i,
+  shade_sail: /shade sail/i,
+  gate: /\bgate\b/i,
+  bench: /\bbench\b/i,
+  sign: /\bsign\b/i,
+  solar_panel_ground: /ground solar panel/i,
+  washline: /washing line|washline/i,
 };
 
 /**
@@ -707,7 +783,8 @@ export const SHEET_NO: Record<ShowcaseSheetKind, string> = {
 // shapes; each line says what finished graphic replaces that shape. Written as "marker → icon" so
 // the mapping is unambiguous.
 const OVERLAY_ICONS: Record<string, string> = {
-  tank:      'a small drum/cylinder marker → a blue cylindrical JoJo water tank seen from a high top-down angle, ribbed body, darker lid disc, soft shadow to the lower-right',
+  tank:      'a small drum/cylinder marker → a ribbed green #2E6B4F vertical poly water tank seen directly overhead, darker lid disc, kept within that marker and never merged with another tank',
+  rain_barrel: 'a small circular marker → a short blue-black rain barrel seen directly overhead, fitted lid and a small tap at the rim, never a tall green tank or an open pond',
   tap:       'a small tap/valve marker → a plain garden tap on its own, drawn small and low-key: just the spout and handle, no post, no plinth and no concrete base pad',
   dam:       'a blue area marker → a pond of exactly that shape and size: deep-blue water, a ring of grey stone edging, two or three small lily pads',
   // Narrowed to actual BASINS only (audit finding, 2026-07-25): the old /greywater|grey water/i
@@ -722,7 +799,8 @@ const OVERLAY_ICONS: Record<string, string> = {
   half_moon: 'a circular earthwork marker → a half-moon water-harvesting basin: a shallow crescent-shaped depression open on its downhill side, backed by a low curved earth bund on the uphill side',
   berm: 'a narrow long rectangular marker → an on-contour earth berm: a low grassed ridge of compacted soil running exactly along that line, no taller than knee height',
   terrace: 'a narrow long rectangular marker → a terrace retaining bank: a hatched, textured retained riser face holding back the level change, visibly distinct from the flat ground on either side of it',
-  banana:    'a banana-circle marker → a sunken pit about 2 m across filled with dark mulch and ringed by a raised earth bund, with four or five broad paddle-shaped banana leaves fanning out over the rim',
+  banana:    'a banana-circle marker → a sunken pit about 2 m across filled with dark mulch and ringed by a raised earth bund, with four or five broad paddle-shaped leaves fanning out over the rim',
+  banana_clump: 'a tree marker → one separate clump of broad paddle leaves radiating from several central pseudostems, strong yellow-green #709E35 with one visible fruit bunch, never a sunken banana-circle pit',
   // "along exactly that line" was the ghost-hedge bug. Vetiver Bank (mulch_bank) is shape 'rect',
   // 2x2 m by default — it has NO line. So this clause ordered a continuous band along a line that
   // does not exist in the image, while rule 5 simultaneously demanded the icon stay the size of its
@@ -765,6 +843,10 @@ const OVERLAY_ICONS: Record<string, string> = {
   // "following exactly that line" sent the strips off along the boundary too — which is why the
   // pollinator labels came out sitting just off the fence.
   pollinator: 'a narrow rectangular marker → a strip of low mixed wildflowers, yellow, white and mauve dots over grey-green foliage, filling exactly that rectangle and no larger, never extended along the fence or any other line',
+  herb_spiral: 'a circular marker → a planted stone spiral seen directly overhead, one clearly legible spiral wall curling into the centre with low mixed planting between its turns, never a plain mound or unplanted stone circle',
+  other_water: 'an other-water marker → a small neutral blue-grey water feature contained exactly within its marker, visibly wet or water-carrying but with no invented tank, pond or fitting beyond that footprint',
+  other_planting: 'an other-planting marker → a neutral planted patch filled with mixed green leaves and no distinctive species cue, kept exactly within its footprint and never merged with nearby beds or hedges',
+  other_structure: 'an other-structure marker → a small neutral utilitarian structure of weathered timber and cool zinc, contained exactly within its footprint with no invented use or extension beyond the marker',
   borehole:  'a borehole marker → a small blue concentric-circle target with a grey collar ring',
   // A PLANTED bed, not a prepared one (Rory: "veg beds must show up with veg in them in the ai
   // polish"). The old wording led with the soil and mentioned plants last, and a model reading
@@ -783,7 +865,23 @@ const OVERLAY_ICONS: Record<string, string> = {
   // replace. The indigenous shade trees a farmer plants here are broad and flat- or dome-topped
   // with fine foliage. Described by FORM, never by species: naming a species in a prompt is a
   // propagation recommendation, and which species may be propagated is regulated (NEMBA).
-  tree:      'a tree marker → a canopy seen from above with a soft shadow to the lower-right, drawn to its species where the label names one: moringa feathery and pale, avocado dark glossy and dense, macadamia dense mid-green, citrus small round bright green flecked with orange fruit, mango broad and dark, pawpaw a crown of big lobed leaves on a bare stem, indigenous shade tree a broad flat-topped or dome-shaped crown of fine grey-green foliage spreading wider than it is tall — never conical, never a conifer, never a pine',
+  tree_citrus: 'a tree marker → one separate low dense rounded canopy seen directly overhead, glossy mid-green #4B843C and dotted with clear orange fruit, never merged with neighbouring crowns',
+  tree_mango: 'a tree marker → one separate big heavy domed canopy seen directly overhead, dark green #30663B with bronze-red new growth at the tips, never merged with neighbouring crowns',
+  tree_avocado: 'a tree marker → one separate tall broad domed canopy seen directly overhead, deep blue-green #2B5639 with dense broad foliage, never merged with neighbouring crowns',
+  tree_macadamia: 'a tree marker → one separate upright dense slightly conical canopy seen directly overhead, mid-dark green #417543 with clustered round green husks, never merged with neighbouring crowns',
+  tree_litchi: 'a tree marker → one separate wide low domed canopy seen directly overhead, near-black green #264435 with clear red fruit clusters, never merged with neighbouring crowns',
+  tree_pawpaw: 'a tree marker → one separate radial crown of large lobed leaves seen directly overhead, vivid yellow-green #85A83F around a bare central stem with fruit at the collar, never a generic round tree',
+  tree_moringa: 'a tree marker → one separate sparse airy feathery canopy seen directly overhead, pale silvery grey-green #A2BC8B with slender hanging pods, never a dense dark crown',
+  tree_marula: 'a tree marker → one separate broad open spreading canopy seen directly overhead, matte grey-green #85A86F with small yellow fruit, never merged with neighbouring crowns',
+  tree_kei_apple: 'a tree marker → one separate dense thorny shrub canopy reaching the ground, bright pale yellow-green #8DB255 with small apricot-orange fruit, never a tall clear-trunked tree',
+  tree_natal_plum: 'a tree marker → one separate low dense shrub canopy seen directly overhead, very dark glossy green #275139 with white flowers and red fruit, never merged into a hedge',
+  tree_wild_plum: 'a tree marker → one separate tall rounded canopy seen directly overhead, deep green #3A7041 with glossy drooping foliage, never merged with neighbouring crowns',
+  tree_waterberry: 'a tree marker → one separate dense rounded canopy seen directly overhead, dark green #346040 with reddish new growth and purple fruit, never merged with neighbouring crowns',
+  tree_indigenous: 'a tree marker → one separate broad flat-topped canopy of fine muted grey-green #77996B foliage seen directly overhead, wider than it is tall and never conical or pine-like',
+  tree_other: 'a tree marker → one separate deliberately generic rounded canopy seen directly overhead, neutral green #5C8A45 with no fruit and no distinctive species cue, never merged with neighbouring crowns',
+  tree_olive: 'a tree marker → one separate irregular open canopy seen directly overhead, grey-sage #7F9373 with narrow silvery foliage around a gnarled centre, never a dense bright-green dome',
+  tree_pomegranate: 'a tree marker → one separate compact open rounded canopy seen directly overhead, narrow glossy mid-green leaves around a twiggy centre with clear round red fruit, never merged with neighbouring crowns',
+  tree:      'a tree marker → one separate generic rounded mid-green fruit-tree canopy seen directly overhead, never merged with neighbouring crowns or turned into a hedge',
   hive:      'a hive marker → a small stacked striped beehive box',
   building:  'a hut or shed marker → leave the real roof from the photograph exactly as it is and outline it only',
   patio:     'a warm-tan area marker → a paved patio of exactly that shape, laid in a regular slab pattern',
@@ -793,18 +891,24 @@ const OVERLAY_ICONS: Record<string, string> = {
   pipe:      'a dark-blue line → a buried pipe: a thin solid navy line',
   drip:      'a bright-blue solid line with sparse dots → a drip-irrigation run: a crisp #238ACB tube with small pale-blue emitters along it',
   windbreak: 'a deep-green line → a windbreak: a dense row of small green canopy discs',
+  shade_sail: 'a triangular marker → a taut dark-forest shade-cloth sail stretched between three slim posts, its triangular outline unmistakable and never turned into a roofed building',
+  gate: 'a short marker across an access line → one simple farm gate of warm timber or galvanised rails, with hinge and latch sides clear, never extended into a second fence line',
+  bench: 'a narrow marker → one simple warm-pine slatted bench with two legs and a clear seat-back silhouette, never a table, bed or platform',
+  sign: 'a small marker → one plain rectangular signboard on a single sturdy post, with no lettering invented on its face and no second sign added',
+  solar_panel_ground: 'a rectangular marker → one tilted ground-mounted solar panel on a slim metal frame, blue cell grid visible from overhead and never painted as a roof or water surface',
+  washline: 'a long narrow marker → one washing line between two upright posts with two taut parallel cords and a few small fabric rectangles, never a fence, hedge or roofed structure',
 };
 
 const ICON_KEYS_BY_SHEET: Record<ShowcaseSheetKind, string[]> = {
-  all:        ['bed', 'staple_garden', 'tree', 'windbreak', 'tank', 'tap', 'dam', 'basin', 'greywater_fitting', 'tree_basin', 'banana', 'mulch', 'vetiver_row', 'borehole', 'water_trough', 'first_flush', 'pump_filter', 'half_moon', 'berm', 'terrace', 'swale', 'pipe', 'drip', 'building', 'hive', 'coop', 'chicken_tractor', 'nursery', 'compost', 'worm_farm', 'goat_pen', 'pig_pen', 'kraal', 'rabbit_hutch', 'duck_pond', 'livestock_trough', 'biodigester', 'market_stall', 'playground', 'pollinator', 'patio', 'fence', 'path'],
+  all:        ['bed', 'staple_garden', ...TREE_MARKER_KEYS, 'windbreak', 'tank', 'rain_barrel', 'tap', 'dam', 'basin', 'greywater_fitting', 'tree_basin', 'banana', 'mulch', 'vetiver_row', 'borehole', 'water_trough', 'first_flush', 'pump_filter', 'other_water', 'half_moon', 'berm', 'terrace', 'swale', 'pipe', 'drip', 'building', 'other_structure', 'shade_sail', 'gate', 'bench', 'sign', 'solar_panel_ground', 'washline', 'hive', 'coop', 'chicken_tractor', 'nursery', 'compost', 'worm_farm', 'goat_pen', 'pig_pen', 'kraal', 'rabbit_hutch', 'duck_pond', 'livestock_trough', 'biodigester', 'market_stall', 'playground', 'pollinator', 'herb_spiral', 'other_planting', 'patio', 'fence', 'path'],
   zones:      ['building', 'path', 'fence'],
   // half_moon/berm/terrace/swale are 'earthworks' category, which sheetForElement now routes to
   // its own 'earthworks' sheet — same authority DesignGlossy.tsx uses, so this list cannot drift
   // from which sheet an element actually prints on. The two basins stay on Water by SHEET_OVERRIDE.
-  water:      ['tank', 'tap', 'dam', 'basin', 'greywater_fitting', 'tree_basin', 'banana', 'mulch', 'borehole', 'water_trough', 'first_flush', 'pump_filter', 'pipe', 'drip'],
+  water:      ['tank', 'rain_barrel', 'tap', 'dam', 'basin', 'greywater_fitting', 'tree_basin', 'banana', 'mulch', 'borehole', 'water_trough', 'first_flush', 'pump_filter', 'other_water', 'pipe', 'drip'],
   earthworks: ['swale', 'half_moon', 'berm', 'terrace'],
-  planting:   ['bed', 'staple_garden', 'tree', 'windbreak', 'mulch', 'vetiver_row', 'banana', 'tree_basin', 'pollinator'],
-  structures: ['building', 'hive', 'coop', 'chicken_tractor', 'nursery', 'compost', 'worm_farm', 'goat_pen', 'pig_pen', 'kraal', 'rabbit_hutch', 'duck_pond', 'livestock_trough', 'biodigester', 'market_stall', 'playground', 'patio', 'fence', 'path'],
+  planting:   ['bed', 'staple_garden', ...TREE_MARKER_KEYS, 'windbreak', 'mulch', 'vetiver_row', 'banana', 'tree_basin', 'pollinator', 'herb_spiral', 'other_planting'],
+  structures: ['building', 'other_structure', 'shade_sail', 'gate', 'bench', 'sign', 'solar_panel_ground', 'washline', 'hive', 'coop', 'chicken_tractor', 'nursery', 'compost', 'worm_farm', 'goat_pen', 'pig_pen', 'kraal', 'rabbit_hutch', 'duck_pond', 'livestock_trough', 'biodigester', 'market_stall', 'playground', 'patio', 'fence', 'path'],
 };
 
 // Only describe icons this sheet can actually contain. Describing an icon the sheet has no marker
@@ -813,13 +917,21 @@ const ICON_MATCH: Record<string, RegExp> = {
   tank: /tank|jojo/i, tap: /tap|standpipe|faucet/i, dam: /\bdam\b|\bpond\b/i, // anchored: unanchored, this fired on "Maca-dam-ia Tree"
   // Narrowed to actual basins (audit finding 2026-07-25) — see the OVERLAY_ICONS.basin comment.
   basin: /greywater basin|infiltration basin/i, greywater_fitting: /greywater outlet|greywater diverter/i,
-  tree_basin: /tree basin/i, banana: /banana/i, mulch: /mulch bank|vetiver bank/i,
+  tree_basin: /tree basin/i, banana: /banana circle/i, banana_clump: /banana clump/i, mulch: /mulch bank|vetiver bank/i,
   borehole: /borehole|well/i, water_trough: /water trough/i, first_flush: /first-flush|first flush/i,
-  pump_filter: /pump\s*&?\s*filter/i, half_moon: /half-moon|half moon/i, berm: /\bberm\b/i, terrace: /terrace|retaining bank/i,
+  pump_filter: /pump\s*&?\s*filter/i, rain_barrel: /rain barrel/i, other_water: /other water/i,
+  half_moon: /half-moon|half moon/i, berm: /\bberm\b/i, terrace: /terrace|retaining bank/i,
   // Narrowed from /bed|garden|veg/i: the bare "garden" alternative also fired on "Staple garden",
   // handing a maize field the planted-vegetable-bed description as well as its own. Aligned with
   // SHOWCASE_MARKER_MATCH.bed so the two tables answer "is there a bed on this sheet" identically.
-  bed: /bed|vegetable garden|veg garden/i, staple_garden: /staple garden/i, tree: /tree|orchard|fruit/i,
+  bed: /bed|vegetable garden|veg garden/i, staple_garden: /staple garden/i,
+  tree_citrus: /citrus tree/i, tree_mango: /mango tree/i, tree_avocado: /avocado tree/i,
+  tree_macadamia: /macadamia tree/i, tree_litchi: /litchi tree/i, tree_pawpaw: /pawpaw tree/i,
+  tree_moringa: /moringa tree/i, tree_marula: /\bmarula\b/i, tree_kei_apple: /kei apple/i,
+  tree_natal_plum: /natal plum/i, tree_wild_plum: /wild plum/i, tree_waterberry: /waterberry/i,
+  tree_indigenous: /indigenous shade tree/i, tree_other: /other tree/i, tree_olive: /olive tree/i,
+  tree_pomegranate: /pomegranate/i,
+  tree: /orchard|fruit tree|guava tree|apple tree|pear tree|plum tree|peach tree|fig tree/i,
   hive: /hive/i,
   // Split so a fixed Chicken Coop and a wheeled Chicken Tractor get their own, different, correct
   // descriptions instead of one regex routing both to whichever came first (audit finding 2026-07-25).
@@ -827,7 +939,11 @@ const ICON_MATCH: Record<string, RegExp> = {
   nursery: /nursery/i, compost: /\bcompost\b/i, worm_farm: /worm farm/i,
   goat_pen: /goat pen/i, pig_pen: /pig pen/i, kraal: /\bkraal\b/i, rabbit_hutch: /rabbit hutch/i,
   duck_pond: /duck pond/i, livestock_trough: /livestock trough/i, biodigester: /biodigester/i, market_stall: /market stall/i, playground: /playground|play area/i,
-  pollinator: /pollinator/i, vetiver_row: /vetiver row/i, building: /\bshed\b|\bhut\b|\bbarn\b|shade house|greenhouse/i,
+  pollinator: /pollinator/i, vetiver_row: /vetiver row/i, herb_spiral: /herb spiral/i,
+  other_planting: /other planting/i, building: /\bshed\b|\bhut\b|\bbarn\b|shade house|greenhouse/i,
+  other_structure: /other structure/i, shade_sail: /shade sail/i, gate: /\bgate\b/i,
+  bench: /\bbench\b/i, sign: /\bsign\b/i, solar_panel_ground: /ground solar panel/i,
+  washline: /washing line|washline/i,
   patio: /patio|paving|courtyard/i, fence: /fence/i, path: /path|walkway/i,
   swale: /swale/i, pipe: /pipe/i, drip: /drip|irrigation/i, windbreak: /windbreak|hedge/i,
 };
