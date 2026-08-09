@@ -1044,6 +1044,7 @@ export const ELEMENT_CATALOG: DesignElementDef[] = [
     category: 'growing',
     name: 'Peach Tree',
     icon: '🍑',
+    art: '/element-art/tree_peach.png',
     shape: 'circle',
     wM: 4,
     hM: 4,
