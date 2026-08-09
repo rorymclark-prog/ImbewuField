@@ -8,13 +8,19 @@
 // components/design/DesignCanvas.tsx already uses) — so wiring a real backing canvas in later
 // is a matter of swapping what feeds these props, not restructuring the layout.
 //
-// PERSISTENCE: deliberately none. This shell has no real siteId/CanvasFrame to anchor a
-// DesignCanvasState to, and inventing one would be a second, competing schema — exactly the
-// "two catalogs drift" trap lib/design-canvas.ts's own ElementStatus comment warns about.
-// State resets on reload; a later integration phase is expected to swap this local state for
-// loadCanvasState/saveCanvasState (lib/design-canvas.ts) against the farmer's real siteId.
+// PERSISTENCE: its own store, and deliberately NOT the farmer's real design.
+//
+// This used to persist nothing at all, which is what made 2.0 read as a mock — place a morning's
+// work, reload, gone. It now saves through lib/design-studio-2-storage.ts.
+//
+// It does NOT call loadCanvasState/saveCanvasState, and that restraint is the point: this canvas
+// is a blank true-scale grid measured in metres from a stage origin, with no CanvasFrame and no
+// GPS anchor, while the real store is georeferenced and is what the current studio reads. Writing
+// stage metres into it would not be a partial integration — it would overwrite a farmer's actual
+// plan with coordinates that mean something else. A separate key costs nothing and cannot do that.
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { loadStudio2Design, saveStudio2Design } from '@/lib/design-studio-2-storage';
 import { isSampleMode, SAMPLE_MODE_EVENT } from '@/lib/sample-mode';
 import LeftToolbar from './LeftToolbar';
 import IdentityBar from './IdentityBar';
@@ -37,6 +43,13 @@ export type ToolMode = 'add' | 'view' | 'layers' | 'draw' | 'measure' | 'sunwind
 
 interface DesignState { items: DemoItem[]; lines: DemoLine[]; }
 const EMPTY_DESIGN: DesignState = { items: [], lines: [] };
+
+export type SaveState = 'idle' | 'saving' | 'saved' | 'error';
+
+/** The shell's storage scope. A literal because 2.0 has no real siteId yet — see the persistence
+ *  note at the top of this file. It is named rather than inlined so that the day this shell IS
+ *  handed a farmer's site, there is exactly one place to change. */
+const STUDIO2_SITE_ID = 'studio2';
 
 /** Matches app/design/page.tsx's own MAX_UNDO — no reason for this shell's stack to behave
  *  differently from the app it is standing in for. */
@@ -89,6 +102,44 @@ export default function StudioShell() {
   const [design, setDesign] = useState<DesignState>(EMPTY_DESIGN);
   const [past, setPast] = useState<DesignState[]>([]);
   const [future, setFuture] = useState<DesignState[]>([]);
+
+  const [restored, setRestored] = useState(false);
+  const [saveState, setSaveState] = useState<SaveState>('idle');
+  const saveStateRef = useRef<SaveState>('idle');
+  saveStateRef.current = saveState;
+
+  // `restored` gates the save effect below. Without it the very first render fires a save of
+  // EMPTY_DESIGN and wipes the stored record before the load has read it — the load-after-
+  // save-on-mount bug, and the whole reason this is a flag rather than a bare effect.
+  useEffect(() => {
+    const saved = loadStudio2Design(STUDIO2_SITE_ID);
+    if (saved) {
+      setDesign(saved);
+      setSaveState('saved');
+    }
+    setRestored(true);
+  }, []);
+
+  useEffect(() => {
+    if (!restored) return;
+    const empty = design.items.length === 0 && design.lines.length === 0;
+    // Nothing placed and nothing ever saved is not a save, and must not be reported as one.
+    if (empty && saveStateRef.current === 'idle') return;
+    setSaveState('saving');
+    // Debounced: dragging an element fires a setDesign per pointer move, and a write per frame
+    // would thrash localStorage and make the status pill strobe.
+    const timer = window.setTimeout(() => {
+      try {
+        saveStudio2Design(STUDIO2_SITE_ID, design);
+        setSaveState('saved');
+      } catch {
+        // NEVER "saved" when it wasn't. A quota failure reported as success is precisely how a
+        // farmer's zones vanished while the header read "Saved" — see Studio2SaveError's note.
+        setSaveState('error');
+      }
+    }, 400);
+    return () => window.clearTimeout(timer);
+  }, [design, restored]);
 
   const sheet = SHEET_CONFIG[activeSheet];
   const markSheetTouched = useCallback((id: SheetId) => {
@@ -273,7 +324,7 @@ export default function StudioShell() {
         onRedo={handleRedo}
         canUndo={past.length > 0}
         canRedo={future.length > 0}
-        dirty={design.items.length > 0 || design.lines.length > 0}
+        saveState={saveState}
       />
       <TopStepper active={activeSheet} completed={completed} onSelect={setActiveSheet} />
 
