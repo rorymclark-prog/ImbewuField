@@ -29,8 +29,6 @@ import BackButton from '@/components/BackButton';
 
 interface IdentityBarProps {
   siteName: string;
-  mode: 'guided' | 'pro';
-  onModeChange: (mode: 'guided' | 'pro') => void;
   onUndo: () => void;
   onRedo: () => void;
   canUndo: boolean;
@@ -41,7 +39,7 @@ interface IdentityBarProps {
 }
 
 export default function IdentityBar({
-  siteName, mode, onModeChange, onUndo, onRedo, canUndo, canRedo, dirty,
+  siteName, onUndo, onRedo, canUndo, canRedo, dirty,
 }: IdentityBarProps) {
   return (
     <header
@@ -81,31 +79,15 @@ export default function IdentityBar({
 
       <div className="flex-1" />
 
-      {/* Guided / Pro — a segmented control, so the filled half is a SELECTED state and not a
-          second primary action competing with Continue. See BottomBar's note on the one-primary
-          rule the utility layer states. */}
-      <div
-        className="flex shrink-0 items-center rounded-full p-0.5"
-        style={{ background: 'var(--surface-2)' }}
-        role="group"
-        aria-label="Editing mode"
-      >
-        {(['guided', 'pro'] as const).map((m) => (
-          <button
-            key={m}
-            type="button"
-            onClick={() => onModeChange(m)}
-            aria-pressed={mode === m}
-            className="rounded-full px-3 py-1.5 text-xs font-bold capitalize transition-colors"
-            style={{
-              background: mode === m ? 'var(--brand)' : 'transparent',
-              color: mode === m ? 'var(--surface)' : 'var(--text-2)',
-            }}
-          >
-            {m}
-          </button>
-        ))}
-      </div>
+      {/* GUIDED / PRO IS GONE, and it is worth writing down why so it does not come back.
+          In the current studio (app/design/page.tsx + DesignPalette.tsx) the mode does exactly
+          one thing: `allowedCategories = mode === 'pro' ? 'all' : categoriesForStep(step)`.
+          That is the whole feature — "show me every element instead of this step's elements".
+          This palette already answers that question, better, with the "All" tab and its inline
+          group headings. So Pro was a persistent, global, up-front preference standing in for a
+          per-moment question the palette now answers where the question is actually asked.
+          A mode toggle is never free: it splits the product into two states to design, test and
+          support, and it makes a farmer choose an identity before placing a single tree. */}
 
       <div className="flex shrink-0 items-center">
         <button

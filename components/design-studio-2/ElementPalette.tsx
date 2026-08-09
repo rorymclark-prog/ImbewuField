@@ -114,7 +114,7 @@ export default function ElementPalette({ items, tabs, armedDefId, onArm }: Eleme
             <div key={group.label ?? `g${gi}`} className="flex shrink-0 items-stretch gap-2">
               {group.label && (
                 <span className="flex shrink-0 items-center gap-2 pl-1 pr-1">
-                  <span className="h-10 w-px shrink-0" style={{ background: 'var(--border)' }} aria-hidden />
+                  <span className="h-24 w-px shrink-0" style={{ background: 'var(--border)' }} aria-hidden />
                   <span className="u-label" style={{ writingMode: 'vertical-rl', transform: 'rotate(180deg)', lineHeight: 1 }}>
                     {group.label}
                   </span>
@@ -130,9 +130,12 @@ export default function ElementPalette({ items, tabs, armedDefId, onArm }: Eleme
                     onClick={() => onArm(def.id)}
                     title={def.tip}
                     aria-pressed={isArmed}
-                    className="flex w-[104px] shrink-0 flex-col items-center gap-1.5 rounded-xl border px-2 pb-2.5 pt-3 text-center transition-colors"
+                    // 116 on a phone, 140 from sm up. At 140 a 375px screen shows 1.6 cards, so
+                    // the farmer is scrolling a strip to see what is even in it; 116 shows two
+                    // and a hint of the third, which is what makes a horizontal strip legible as
+                    // a strip. Both are still well above the 104 this started at.
+                    className="flex min-h-[142px] w-[116px] shrink-0 flex-col items-center gap-1.5 rounded-xl border px-2.5 pb-3 pt-3 text-center transition-colors sm:min-h-[164px] sm:w-[140px]"
                     style={{
-                      minHeight: 118,
                       borderColor: isArmed ? 'var(--brand)' : 'var(--border)',
                       background: isArmed ? 'var(--brand-soft)' : 'var(--surface)',
                       boxShadow: isArmed ? '0 0 0 1px var(--brand)' : undefined,
@@ -140,24 +143,29 @@ export default function ElementPalette({ items, tabs, armedDefId, onArm }: Eleme
                   >
                     {/* ART GETS THE CARD. A card exists to answer "what is this thing", and the
                         picture answers it — so the picture is the biggest element on it, not a
-                        thumbnail inside a decorative disc. Real art is drawn plain at 56px; the
-                        tinted disc is kept ONLY for the lucide line glyphs, which are drawn for a
-                        small optical size and go weak and stringy blown up on bare card. */}
+                        thumbnail inside a decorative disc. The tinted disc is kept ONLY for the
+                        lucide line glyphs, which are drawn for a small optical size and go weak
+                        and stringy blown up on bare card.
+                        The art is 88px, up from 56. The library is drawn at 192px, so this is
+                        still inside the asset's real resolution — and 56px was the last size
+                        inherited from the era when this slot held an emoji. A picker card is the
+                        only place a farmer sees the drawing at all; making it the card is the
+                        whole point of having commissioned 76 of them. */}
                     {art.kind === 'image' ? (
                       // eslint-disable-next-line @next/next/no-img-element
-                      <img src={art.src} alt="" className="h-14 w-14 shrink-0 object-contain" />
+                      <img src={art.src} alt="" className="h-[72px] w-[72px] shrink-0 sm:h-[88px] sm:w-[88px] object-contain" />
                     ) : (
                       <span
-                        className="flex h-14 w-14 shrink-0 items-center justify-center rounded-full"
+                        className="flex h-[72px] w-[72px] shrink-0 sm:h-[88px] sm:w-[88px] items-center justify-center rounded-full"
                         style={{ background: `${def.color}1F`, color: def.color }}
                       >
-                        <art.Icon size={26} />
+                        <art.Icon size={38} />
                       </span>
                     )}
-                    <span className="line-clamp-2 text-[11.5px] font-bold leading-tight" style={{ color: 'var(--text)' }}>
+                    <span className="line-clamp-2 text-[12.5px] font-bold leading-tight" style={{ color: 'var(--text)' }}>
                       {def.name}
                     </span>
-                    <span className="text-[10.5px] tabular-nums" style={{ color: 'var(--text-3)' }}>
+                    <span className="text-[11px] tabular-nums" style={{ color: 'var(--text-3)' }}>
                       {dimensionLabel(def)}
                     </span>
                   </button>

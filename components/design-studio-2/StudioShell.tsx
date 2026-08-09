@@ -64,12 +64,6 @@ export default function StudioShell() {
   }, []);
 
   const [tool, setTool] = useState<ToolMode>('add');
-  // Guided/Pro is a real segmented control in the header rather than decoration, so it holds
-  // real state — but it deliberately does NOT gate anything yet. The current studio's guided
-  // mode filters the palette by step; wiring that here before this shell owns a real canvas
-  // would fork that behaviour into a second implementation, which is the drift trap
-  // lib/design-studio-shell.ts's own applyForceLayers note warns about.
-  const [mode, setMode] = useState<'guided' | 'pro'>('guided');
   // The right panel is a COLUMN on desktop and an OVERLAY DRAWER below lg. Rendered inline at a
   // fixed 300px on a 390px phone it left the canvas about 30px wide — the panel was not beside
   // the map, it was instead of it. Layout is CSS (see the wrapper below) so it cannot desync
@@ -259,15 +253,22 @@ export default function StudioShell() {
         /* Matches the banner's own breakpoint exactly (SampleModeBanner.tsx: "bottom-
            [calc(60px+safe-area)] lg:bottom-0") so the reserve appears and disappears at the
            same width the banner itself moves at, rather than guessing a breakpoint. */
-        .reserve-sample-banner { padding-bottom: calc(60px + env(safe-area-inset-bottom, 0px)); }
+        /* 96, not 60: at 375px the banner's sentence wraps to two lines and its "Exit sample"
+           button sits below that, so it stands about 95px tall — and a 60px reserve left the
+           Continue button measurably inside the viewport (top 699 of 812) but underneath the
+           banner. The one control that advances the nine-sheet plan set was unreachable on a
+           phone in sample mode. Reserving for the tallest form the banner actually takes is
+           cheaper than trying to measure it. */
+        .reserve-sample-banner { padding-bottom: calc(156px + env(safe-area-inset-bottom, 0px)); }
+        @media (min-width: 640px) {
+          .reserve-sample-banner { padding-bottom: calc(60px + env(safe-area-inset-bottom, 0px)); }
+        }
         @media (min-width: 1024px) {
           .reserve-sample-banner { padding-bottom: 44px; }
         }
       `}</style>
       <IdentityBar
         siteName="Ubhejane Crèche"
-        mode={mode}
-        onModeChange={setMode}
         onUndo={handleUndo}
         onRedo={handleRedo}
         canUndo={past.length > 0}
