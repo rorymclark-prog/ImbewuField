@@ -33,23 +33,32 @@ export type ReferenceFeatureArtwork =
   | 'herb-spiral-v1.png'
   | 'spekboom-hedge-v1.png'
   | 'marula-tree-v1.png'
-  | 'kei-apple-tree-v1.png';
+  | 'kei-apple-tree-v1.png'
+  // Six crowns drawn to break up the generic canopy — see the ORCHARD_TREES note below.
+  | 'indigenous-shade-v1.png'
+  | 'wild-plum-v1.png'
+  | 'guava-v1.png'
+  | 'olive-v1.png'
+  | 'waterberry-v1.png'
+  | 'natal-plum-v1.png';
 
 const JOJO_TANKS = new Set(['jojo_1000', 'jojo_2500', 'jojo_5000', 'jojo_10000']);
+// THIRTEEN SPECIES USED TO SHARE ONE DRAWING, and that — not hue — is why a Planting sheet read
+// as "all the trees look like variants of themselves". On a real sheet, "Wild plum" and two
+// "Indigenous Shade Tree" labels were the same image drawn three times.
+//
+// Six of the thirteen now have their own crown (see PLANTING_DETAIL_ART). What is left here is
+// the genuinely deciduous, pruned-goblet group — apple, pear, plum, peach, fig, pomegranate and
+// the deliberately-unspecified 'Other Tree' — which orchard-canopy-v1 was redrawn to serve, and
+// which really do share a habit at plan scale.
 const ORCHARD_TREES = new Set([
-  'tree_guava',
-  'tree_natal_plum',
-  'tree_wild_plum',
-  'tree_waterberry',
   'tree_other',
-  'tree_indigenous',
   'tree_apple',
   'tree_pear',
   'tree_plum',
   'tree_peach',
   'tree_fig',
   'tree_pomegranate',
-  'tree_olive',
 ]);
 const PRODUCTION_BEDS = new Set(['veg_bed', 'raised_bed']);
 const VETIVER_BANKS = new Set(['vetiver_row', 'mulch_bank']);
@@ -90,6 +99,14 @@ const PLANTING_DETAIL_ART: Readonly<Record<string, ReferenceFeatureArtwork>> = {
   // generic canopy and this entry would never fire.
   tree_marula: 'marula-tree-v1.png',
   tree_kei_apple: 'kei-apple-tree-v1.png',
+  // The six lifted out of ORCHARD_TREES. Same ordering rule as marula and kei apple above:
+  // ORCHARD_TREES is checked FIRST, so an id left in that set would never reach this table.
+  tree_indigenous: 'indigenous-shade-v1.png',
+  tree_wild_plum: 'wild-plum-v1.png',
+  tree_guava: 'guava-v1.png',
+  tree_olive: 'olive-v1.png',
+  tree_waterberry: 'waterberry-v1.png',
+  tree_natal_plum: 'natal-plum-v1.png',
 };
 
 /**
