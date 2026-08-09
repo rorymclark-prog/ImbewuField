@@ -1664,8 +1664,13 @@ export default function DesignPalette({
               opacity: suited ? 1 : 0.45,
             }}
           >
+            {/* Real art gets more room than the emoji it replaces. 22px was sized for a GLYPH,
+                which is drawn to read at a small optical size; an illustrated pawpaw or chicken
+                coop at 22px is a smudge, and the whole point of the art is that the farmer
+                recognises the thing without reading the label. 30px is the most a 44px chip can
+                give it without growing the strip. */}
             {def.art ? (
-              <img src={def.art} alt="" aria-hidden style={{ width: guided ? 22 : 18, height: guided ? 22 : 18, objectFit: 'contain' }} />
+              <img src={def.art} alt="" aria-hidden style={{ width: guided ? 30 : 24, height: guided ? 30 : 24, objectFit: 'contain' }} />
             ) : (
               <span style={{ fontSize: guided ? 16 : 13, lineHeight: 1 }}>{def.icon}</span>
             )}

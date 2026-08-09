@@ -35,6 +35,14 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '9 August',
+    sha: '9c7243d',
+    changes: [
+      'Every element in the palette now has its own drawing instead of an emoji',
+      'Water tanks are drawn at their real sizes, so you can tell 1000L from 10000L',
+    ],
+  },
+  {
+    when: '9 August',
     sha: '540c025',
     changes: [
       'Indigenous fruit trees now have their own section in the planting palette',
