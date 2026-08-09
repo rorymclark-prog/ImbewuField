@@ -503,6 +503,7 @@ export const ELEMENT_CATALOG: DesignElementDef[] = [
     category: 'water',
     name: 'Greywater Outlet',
     icon: '🚿',
+    art: '/element-art/greywater_outlet.png',
     shape: 'circle',
     wM: 0.8,
     hM: 0.8,

@@ -35,6 +35,16 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '9 August',
+    // sha stamped at merge; see the notes gate's own rule.
+    changes: [
+      'Water tanks are now colour-coded like the real thing — black 1000L, green 2500L, teal 5000L, sandstone 10000L',
+      'The rain barrel card shows its typical size (about 200 litres)',
+      'A Greywater section on the Water step: diverter, outlet, basin and soakaway in the order the water runs',
+      'Try the new card palette with the "New look" button — bigger drawings, same elements, switch back any time',
+    ],
+  },
+  {
+    when: '9 August',
     sha: 'a4611f7',
     changes: [
       'Every tree in the palette now has its own drawing instead of an emoji',

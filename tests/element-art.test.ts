@@ -98,4 +98,31 @@ test('the JoJo tank family reads as four different SIZES, not four labels', () =
       `${heights[i].drawn.toFixed(2)} vs ${heights[i - 1].drawn.toFixed(2)} of the frame`,
     );
   }
+
+  // WIDTH TOO — the dimension the first version of this test did not guard, and where the bug
+  // came straight back: the 2026-08 library drew the 2500 L at 79px wide against the 1000 L's
+  // 88px, while every drawn HEIGHT stayed monotonic (112/115/152/183) and this test stayed green.
+  // Width IS the diameter, and the diameter is the whole difference between these four products.
+  // Tolerance ±12%: art is hand-drawn, but the drawn-width RATIO must track the real-diameter
+  // ratio, not merely increase.
+  const widths = family.map((id) => {
+    const { width, height, data } = PNG.sync.read(readFileSync(join(ROOT, `${id}.png`)));
+    let left = width, right = -1;
+    for (let y = 0; y < height; y += 1) {
+      for (let x = 0; x < width; x += 1) {
+        if (data[(y * width + x) * 4 + 3] > 8) { left = Math.min(left, x); right = Math.max(right, x); }
+      }
+    }
+    const def = ELEMENT_CATALOG.find((d) => d.id === id)!;
+    return { id, drawn: (right - left + 1) / width, real: def.wM };
+  });
+  for (let i = 1; i < widths.length; i += 1) {
+    const drawnRatio = widths[i].drawn / widths[0].drawn;
+    const realRatio = widths[i].real / widths[0].real;
+    assert.ok(
+      Math.abs(drawnRatio - realRatio) / realRatio <= 0.12,
+      `${widths[i].id}: drawn width is ${drawnRatio.toFixed(2)}x the 1000 L's, real diameter is ${realRatio.toFixed(2)}x — ` +
+      'the size on the card must track the size on the ground',
+    );
+  }
 });
