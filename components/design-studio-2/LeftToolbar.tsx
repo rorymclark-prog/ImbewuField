@@ -4,7 +4,16 @@
 // rule for element art, extended to the whole toolbar): Add focuses the palette, View swaps to
 // a clean read-only preview, Layers collapses/expands the right panel, Draw arms the freehand
 // line tool, Measure arms a two-tap ruler, Sun & Wind jumps to the Sector sheet (that analysis
-// genuinely lives there, not on Water), Undo/Redo walk the real placement history.
+// genuinely lives there, not on Water).
+//
+// UNDO/REDO ARE NOT HERE ANY MORE — they are in IdentityBar. At the foot of this rail they sat
+// at the furthest point in the window from both the map and the header, which is the wrong home
+// for the control you reach for fastest after a mistake. This rail is now only MODES: things
+// that change what a tap on the map does.
+//
+// Every button carries a visible LABEL. Six unlabelled glyphs in a column is a memory test, and
+// this rail is the primary way into every tool on the sheet — the two that are toggles (View,
+// Layers) especially, since an icon alone cannot say whether it is currently on.
 
 import type { LucideIcon } from 'lucide-react';
 import { TOOLBAR_ICON } from '@/lib/design-studio-shell-icons';
@@ -33,24 +42,26 @@ interface LeftToolbarProps {
   viewOn: boolean;
   layersOn: boolean;
   onSelect: (id: ToolMode) => void;
-  onUndo: () => void;
-  onRedo: () => void;
-  canUndo: boolean;
-  canRedo: boolean;
 }
 
-export default function LeftToolbar({ tool, viewOn, layersOn, onSelect, onUndo, onRedo, canUndo, canRedo }: LeftToolbarProps) {
+export default function LeftToolbar({ tool, viewOn, layersOn, onSelect }: LeftToolbarProps) {
   const isActive = (id: ToolMode) => {
     if (id === 'view') return viewOn;
     if (id === 'layers') return layersOn;
     if (id === 'sunwind') return false; // a jump-to-Sector action, not a persistent mode
     return tool === id;
   };
+  // View and Layers are toggles; the rest are modes. A toggle has to say ON, which a tinted
+  // pill alone does not — so those two also get an explicit pressed state in the label.
+  const isToggle = (id: ToolMode) => id === 'view' || id === 'layers';
+
   return (
     <div
-      className="flex h-full w-14 shrink-0 flex-col items-center gap-1 border-r py-3"
+      className="flex h-full w-[76px] shrink-0 flex-col items-center gap-0.5 border-r py-2"
       style={{ borderColor: 'var(--border)', background: 'var(--surface)' }}
       aria-label="Design tools"
+      role="toolbar"
+      aria-orientation="vertical"
     >
       {TOOLS.map(({ id, label, Icon }) => {
         const active = isActive(id);
@@ -59,42 +70,20 @@ export default function LeftToolbar({ tool, viewOn, layersOn, onSelect, onUndo, 
             key={id}
             type="button"
             onClick={() => onSelect(id)}
-            title={label}
-            aria-label={label}
-            aria-pressed={active}
-            className="flex h-11 w-11 flex-col items-center justify-center gap-0.5 rounded-lg transition-colors"
+            title={isToggle(id) ? `${label} — ${active ? 'on' : 'off'}` : label}
+            aria-pressed={isToggle(id) ? active : undefined}
+            className="flex w-[68px] flex-col items-center justify-center gap-1 rounded-xl py-2 transition-colors hover:bg-[var(--surface-2)]"
             style={{
+              minHeight: 56,
               background: active ? 'var(--brand-soft)' : 'transparent',
               color: active ? 'var(--brand)' : 'var(--text-2)',
             }}
           >
-            <Icon size={18} />
+            <Icon size={19} />
+            <span className="text-[10.5px] font-semibold leading-none">{label}</span>
           </button>
         );
       })}
-
-      <div className="my-1 h-px w-8" style={{ background: 'var(--border)' }} />
-
-      <button
-        type="button"
-        onClick={onUndo}
-        disabled={!canUndo}
-        title="Undo"
-        aria-label="Undo"
-        className="flex h-11 w-11 items-center justify-center rounded-lg text-[var(--text-2)] disabled:opacity-30"
-      >
-        <TOOLBAR_ICON.undo size={18} />
-      </button>
-      <button
-        type="button"
-        onClick={onRedo}
-        disabled={!canRedo}
-        title="Redo"
-        aria-label="Redo"
-        className="flex h-11 w-11 items-center justify-center rounded-lg text-[var(--text-2)] disabled:opacity-30"
-      >
-        <TOOLBAR_ICON.redo size={18} />
-      </button>
     </div>
   );
 }

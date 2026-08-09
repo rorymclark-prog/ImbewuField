@@ -17,13 +17,14 @@
 import { useCallback, useEffect, useState } from 'react';
 import { isSampleMode, SAMPLE_MODE_EVENT } from '@/lib/sample-mode';
 import LeftToolbar from './LeftToolbar';
+import IdentityBar from './IdentityBar';
 import TopStepper from './TopStepper';
 import RightPanel from './RightPanel';
 import BottomBar from './BottomBar';
 import ElementPalette from './ElementPalette';
 import CanvasStage from './CanvasStage';
 import {
-  SHEET_CONFIG, SHEET_META, DEFAULT_LAYER_STATE, applyForceLayers, nextSheetId,
+  SHEET_CONFIG, SHEET_META, SHEET_ORDER, DEFAULT_LAYER_STATE, applyForceLayers, nextSheetId,
   waterInfraForLine, subLayerForWaterElement, ELEMENT_CATALOG_BY_ID,
   type SheetId, type LayerKeyId, type LayerStateMap, type QuickActionDef, type DemoItem, type DemoLine,
 } from '@/lib/design-studio-shell';
@@ -63,6 +64,12 @@ export default function StudioShell() {
   }, []);
 
   const [tool, setTool] = useState<ToolMode>('add');
+  // Guided/Pro is a real segmented control in the header rather than decoration, so it holds
+  // real state — but it deliberately does NOT gate anything yet. The current studio's guided
+  // mode filters the palette by step; wiring that here before this shell owns a real canvas
+  // would fork that behaviour into a second implementation, which is the drift trap
+  // lib/design-studio-shell.ts's own applyForceLayers note warns about.
+  const [mode, setMode] = useState<'guided' | 'pro'>('guided');
   const [rightPanelOpen, setRightPanelOpen] = useState(true);
   const [previewMode, setPreviewMode] = useState(false);
   const [armedDefId, setArmedDefId] = useState<string | null>(null);
@@ -248,6 +255,16 @@ export default function StudioShell() {
           .reserve-sample-banner { padding-bottom: 44px; }
         }
       `}</style>
+      <IdentityBar
+        siteName="Ubhejane Crèche"
+        mode={mode}
+        onModeChange={setMode}
+        onUndo={handleUndo}
+        onRedo={handleRedo}
+        canUndo={past.length > 0}
+        canRedo={future.length > 0}
+        dirty={design.items.length > 0 || design.lines.length > 0}
+      />
       <TopStepper active={activeSheet} completed={completed} onSelect={setActiveSheet} />
 
       <div className="flex min-h-0 flex-1">
@@ -256,10 +273,6 @@ export default function StudioShell() {
           viewOn={previewMode}
           layersOn={rightPanelOpen}
           onSelect={handleToolSelect}
-          onUndo={handleUndo}
-          onRedo={handleRedo}
-          canUndo={past.length > 0}
-          canRedo={future.length > 0}
         />
 
         <div className="flex min-w-0 flex-1 flex-col">
@@ -308,7 +321,12 @@ export default function StudioShell() {
         )}
       </div>
 
-      <BottomBar nextLabel={next ? SHEET_META[next].label : null} onContinue={handleContinue} />
+      <BottomBar
+        nextLabel={next ? SHEET_META[next].label : null}
+        onContinue={handleContinue}
+        doneCount={completed.size}
+        totalCount={SHEET_ORDER.length}
+      />
     </div>
   );
 }
