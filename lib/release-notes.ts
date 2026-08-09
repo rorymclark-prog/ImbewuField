@@ -52,6 +52,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       'The dashed circle around big trees is gone — plants still show on top',
       'Water arrows now stop and spread at swales and beds instead of crossing them',
       'Bed rows are painted vegetables now — cabbages, tomatoes, beans and more',
+      'Tanks on the water map now wear their capacity colours from above',
     ],
   },
   {

@@ -3,7 +3,6 @@ import { normaliseLookupKey } from '@/lib/key-normalisation';
 export const REFERENCE_FEATURE_ART_ROOT = '/render-assets/reference-blueprint';
 
 export type ReferenceFeatureArtwork =
-  | 'jojo-tank-v1.png'
   | 'banana-basin-v1.png'
   | 'orchard-canopy-v1.png'
   | 'production-bed-v1.png'
@@ -57,9 +56,26 @@ export type ReferenceFeatureArtwork =
   | 'veg-legume-v1.png'
   | 'veg-root-v1.png'
   | 'veg-vine-v1.png'
-  | 'veg-generic-v1.png';
+  | 'veg-generic-v1.png'
+  // Top-down tank sprites — the water sheet's plan-view identity, lids in the same capacity
+  // colours the side-view picker family wears (#89): charcoal, green, teal, sandstone, blue.
+  | 'jojo-1000-top-v1.png'
+  | 'jojo-2500-top-v1.png'
+  | 'jojo-5000-top-v1.png'
+  | 'jojo-10000-top-v1.png'
+  | 'rain-barrel-top-v1.png';
 
-const JOJO_TANKS = new Set(['jojo_1000', 'jojo_2500', 'jojo_5000', 'jojo_10000']);
+// PER-CAPACITY, not one shared drawing — the whole point of the tank family's colour code is
+// that a farmer can tell 2500 from 5000 at a glance, and a single 'jojo-tank-v1' threw that
+// away on the one sheet where tanks matter most. Rory, on the old blue dartboard symbol:
+// "new graphic for jojo tank (this is the old one?)".
+const TANK_TOP_ART: Readonly<Record<string, ReferenceFeatureArtwork>> = {
+  jojo_1000: 'jojo-1000-top-v1.png',
+  jojo_2500: 'jojo-2500-top-v1.png',
+  jojo_5000: 'jojo-5000-top-v1.png',
+  jojo_10000: 'jojo-10000-top-v1.png',
+  rain_barrel: 'rain-barrel-top-v1.png',
+};
 // THIRTEEN SPECIES USED TO SHARE ONE DRAWING, and that — not hue — is why a Planting sheet read
 // as "all the trees look like variants of themselves". On a real sheet, "Wild plum" and two
 // "Indigenous Shade Tree" labels were the same image drawn three times.
@@ -134,7 +150,7 @@ const PLANTING_DETAIL_ART: Readonly<Record<string, ReferenceFeatureArtwork>> = {
  */
 export function referenceFeatureArtworkFor(defId: string): ReferenceFeatureArtwork | null {
   const key = normaliseLookupKey(defId, '_');
-  if (JOJO_TANKS.has(key)) return 'jojo-tank-v1.png';
+  if (TANK_TOP_ART[key]) return TANK_TOP_ART[key];
   if (key === 'banana_circle') return 'banana-basin-v1.png';
   if (ORCHARD_TREES.has(key)) return 'orchard-canopy-v1.png';
   if (PRODUCTION_BEDS.has(key)) return 'production-bed-v1.png';

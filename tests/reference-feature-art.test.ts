@@ -15,7 +15,7 @@ import {
 import { ELEMENT_CATALOG } from '@/lib/design-elements';
 
 test('Reference Blueprint maps high-impact Water and Planting features to reusable artwork', () => {
-  assert.equal(referenceFeatureArtworkFor('jojo_5000'), 'jojo-tank-v1.png');
+  assert.equal(referenceFeatureArtworkFor('jojo_5000'), 'jojo-5000-top-v1.png');
   assert.equal(referenceFeatureArtworkFor('banana_circle'), 'banana-basin-v1.png');
   // Guava has its OWN crown now — it was one of the thirteen ids that shared
   // orchard-canopy-v1.png. It stays the example here because what this line tests is that a
@@ -53,7 +53,7 @@ test('artwork mapping never invents a visual identity for generic or unrelated f
 });
 
 test('legacy feature IDs select the same exact artwork without rewriting saved data', () => {
-  assert.equal(referenceFeatureArtworkFor('  JOJO---5000  '), 'jojo-tank-v1.png');
+  assert.equal(referenceFeatureArtworkFor('  JOJO---5000  '), 'jojo-5000-top-v1.png');
   assert.equal(referenceFeatureArtworkFor('tree guava'), 'guava-v1.png');
   assert.equal(referenceFeatureArtworkFor('GREYWATER---BASIN'), 'greywater-basin-v1.png');
 });
