@@ -332,3 +332,42 @@ test('a coarser radius merges scattered specimens instead of dropping any of the
   assert.equal(total(tight), pts.length);
   assert.equal(total(coarse), pts.length);
 });
+
+// TEN IDENTICAL BEDS GET ONE PILL, EVEN IN INDIVIDUAL-NAMING MODE. Rory, on a Planting sheet
+// with a column of ten "Vegetable Bed" callouts burying the bed block: "please only put one
+// raised bed label." Individual naming exists for PERENNIALS ("perhaps better label every
+// plant"); beds, rows and strips take one counted pill — the same line the gutter engine
+// already draws with labelsEverySpecimen, now answered by the on-map engine too.
+test('individual naming still groups beds into one counted pill', () => {
+  const beds = Array.from({ length: 10 }, (_, i) => ({
+    id: `bed-${i}`,
+    defId: 'veg_bed',
+    x: 0.2,
+    y: 0.1 + i * 0.06,
+    w: 0.08,
+    h: 0.02,
+  }));
+  const state: DesignCanvasState = {
+    siteId: 'site-beds',
+    frame: { centerLng: 30, centerLat: -29, zoom: 18, imgW: 960, imgH: 640, mPerPx: 0.4 },
+    step: 'planting',
+    items: beds as DesignCanvasState['items'],
+    zones: [],
+    lines: [],
+    rev: 1,
+    updatedAt: '2026-08-09T00:00:00.000Z',
+  };
+  const labels = producerLabels(state, waterSheetRefLayers(), 1920, 1280, 'planting', false);
+  const bedPills = labels.filter((l) => l.text.toUpperCase().includes('VEGETABLE BED'));
+  assert.equal(bedPills.length, 1, `expected ONE bed pill, got ${bedPills.length}: ${bedPills.map((p) => p.text).join(' | ')}`);
+  assert.ok(/×10|X10|x10/i.test(bedPills[0].text.replace(/\s/g, '')), `the one pill must carry the count: "${bedPills[0].text}"`);
+  // ...while a perennial guild species keeps its per-specimen labels — the behaviour Rory asked
+  // for by name, which this fix must not undo.
+  const trees = Array.from({ length: 3 }, (_, i) => ({
+    id: `t-${i}`, defId: 'tree_mango', x: 0.3 + i * 0.25, y: 0.7, w: 0.05, h: 0.05,
+  }));
+  const treeState = { ...state, items: trees as DesignCanvasState['items'] };
+  const treeLabels = producerLabels(treeState, waterSheetRefLayers(), 1920, 1280, 'planting', false);
+  const mangoPills = treeLabels.filter((l) => l.text.toUpperCase().includes('MANGO'));
+  assert.ok(mangoPills.length >= 3, `perennials must stay individually labelled, got ${mangoPills.length}`);
+});

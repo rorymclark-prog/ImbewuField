@@ -42,6 +42,8 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       'New Greywater section on the Water step — diverter, outlet, basin and soakaway',
       'Try the new card palette with the "New look" button — switch back any time',
       'Saved maps open faster and no longer crash the app on phones',
+      'Ten identical beds now share one label with a count, instead of ten',
+      'New Quality setting: High redraws sheets at 1.5x resolution for printing',
     ],
   },
   {
