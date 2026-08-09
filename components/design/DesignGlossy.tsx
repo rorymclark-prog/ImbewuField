@@ -3840,7 +3840,7 @@ const ARTWORK_EDGE_BLEED = 1.14;
  *
  * See docs/CANOPY-ART-BRIEF-V2.md, which is the artwork half of this change.
  */
-const CANOPY_EDGE_MODE: 'footprint' | 'artwork' = 'footprint';
+const CANOPY_EDGE_MODE: 'footprint' | 'artwork' = 'artwork';
 
 /**
  * Turn on the browser's best resampling for a canvas that is about to scale an image.

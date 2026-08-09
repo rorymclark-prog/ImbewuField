@@ -28,6 +28,9 @@ const CANOPIES = [
   'orchard-canopy-v1.png', 'pawpaw-tree-v1.png', 'moringa-tree-v1.png', 'avocado-tree-v1.png',
   'mango-tree-v1.png', 'litchi-tree-v1.png', 'macadamia-tree-v1.png', 'citrus-tree-v1.png',
   'marula-tree-v1.png', 'kei-apple-tree-v1.png',
+  // The six that broke the generic canopy apart — thirteen ids used to share one drawing.
+  'indigenous-shade-v1.png', 'wild-plum-v1.png', 'guava-v1.png', 'olive-v1.png',
+  'waterberry-v1.png', 'natal-plum-v1.png',
 ];
 
 function readMode(): 'footprint' | 'artwork' {

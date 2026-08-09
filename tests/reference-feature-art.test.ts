@@ -14,7 +14,10 @@ import { ELEMENT_CATALOG } from '@/lib/design-elements';
 test('Reference Blueprint maps high-impact Water and Planting features to reusable artwork', () => {
   assert.equal(referenceFeatureArtworkFor('jojo_5000'), 'jojo-tank-v1.png');
   assert.equal(referenceFeatureArtworkFor('banana_circle'), 'banana-basin-v1.png');
-  assert.equal(referenceFeatureArtworkFor('tree_guava'), 'orchard-canopy-v1.png');
+  // Guava has its OWN crown now — it was one of the thirteen ids that shared
+  // orchard-canopy-v1.png. It stays the example here because what this line tests is that a
+  // planting feature resolves to artwork at all, not which file it happens to be.
+  assert.equal(referenceFeatureArtworkFor('tree_guava'), 'guava-v1.png');
   assert.equal(referenceFeatureArtworkFor('veg_bed'), 'production-bed-v1.png');
   assert.equal(referenceFeatureArtworkFor('pollinator_strip'), 'pollinator-strip-v1.png');
   assert.equal(referenceFeatureArtworkFor('vetiver_row'), 'vetiver-bank-v1.png');
@@ -48,14 +51,14 @@ test('artwork mapping never invents a visual identity for generic or unrelated f
 
 test('legacy feature IDs select the same exact artwork without rewriting saved data', () => {
   assert.equal(referenceFeatureArtworkFor('  JOJO---5000  '), 'jojo-tank-v1.png');
-  assert.equal(referenceFeatureArtworkFor('tree guava'), 'orchard-canopy-v1.png');
+  assert.equal(referenceFeatureArtworkFor('tree guava'), 'guava-v1.png');
   assert.equal(referenceFeatureArtworkFor('GREYWATER---BASIN'), 'greywater-basin-v1.png');
 });
 
 test('artwork URLs are stable public paths', () => {
   assert.equal(
     referenceFeatureArtworkUrl('tree_guava'),
-    '/render-assets/reference-blueprint/orchard-canopy-v1.png',
+    '/render-assets/reference-blueprint/guava-v1.png',
   );
   assert.equal(referenceFeatureArtworkUrl('other_water'), null);
 });
