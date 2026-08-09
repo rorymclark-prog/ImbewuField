@@ -2266,6 +2266,24 @@ function drawWaterFeature(
   ctx.lineJoin = 'round';
   ctx.lineCap = 'round';
 
+  // THE PAINTED TANK WINS OVER THE VECTOR SYMBOL, when its sprite has loaded. Rory, on the blue
+  // dartboard: "new graphic for jojo tank (this is the old one?)" — the top-down sprites carry
+  // the family's capacity colour code (charcoal/green/teal/sandstone/blue lids) so the plan says
+  // WHICH tank the way the picker already does. The vector symbol below remains the fallback,
+  // and small tanks stay legible because the sprite is drawn to the same footprint the symbol
+  // would have owned.
+  if (isTank) {
+    const url = referenceFeatureArtworkUrl(id);
+    const sprite = url ? referenceFeatureArtworkCache.get(url) : undefined;
+    if (sprite) {
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
+      ctx.drawImage(sprite, -w / 2, -h / 2, w, h);
+      ctx.restore();
+      return;
+    }
+  }
+
   // The illustrated library is shared by map marks and legend keys. It accepts the catalog's
   // real IDs, clips to this exact footprint and returns false for anything it does not own, so the
   // legacy symbol branches below remain an immediate visual rollback instead of being deleted.
