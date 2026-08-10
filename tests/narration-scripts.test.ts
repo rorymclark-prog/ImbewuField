@@ -188,3 +188,69 @@ test('no isiZulu cover carries the placeholder except the one awaiting its revie
       'be removed from KNOWN_PLACEHOLDER_COVERS',
   );
 });
+
+// ─── The caption a farmer actually reads comes from the MANIFEST, not the markdown ────────────
+//
+// This is the correction to the test above it, and the reason both now exist.
+//
+// #146 fixed `**Slide 1 — Title**` in the markdown and guarded it — and changed nothing a farmer
+// sees. render-course-deck.mjs takes every slide's caption from COURSE_NARRATION:
+//
+//     const title = track.titleByLang?.[lang] ?? track.title;
+//
+// with its own comment explaining why ("the picture and the player can never caption the same
+// slide two different ways"). The manifest still said 'Title', so the rendered cover still said
+// Title, and a guard reading the markdown passed while the real caption stayed wrong.
+//
+// Two sources, one of them authoritative, and a test pointed at the other. So: compare them.
+// Of 209 slide titles, exactly the two placeholders disagreed — everything else already matched,
+// which is what makes agreement a fair thing to require rather than an aspiration.
+
+function titleWords(t: string): string {
+  return t.toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, ' ').trim();
+}
+
+const SLIDE_HEADING = /^\*\*(?:Slide|Ikhasi)\s*(\d+)\s*[—-]\s*([^*\n]+?)\s*\*\*\s*$/gm;
+
+test('every manifest slide title matches the markdown heading for that slide', () => {
+  for (const [moduleId, narration] of Object.entries(COURSE_NARRATION)) {
+    const script = PARSED.find((p) => p.moduleId === moduleId && p.lang === 'en');
+    if (!script) continue;
+
+    const headings = new Map<number, string>();
+    for (const m of script.text.matchAll(SLIDE_HEADING)) headings.set(Number(m[1]), m[2]);
+
+    for (const track of narration.tracks ?? []) {
+      const heading = headings.get(track.slide);
+      if (heading === undefined) continue;
+      assert.equal(
+        titleWords(track.title),
+        titleWords(heading),
+        `${moduleId} slide ${track.slide}: the manifest captions it "${track.title}" and the ` +
+          `script heads it "${heading}". The manifest is what the deck and the player both show, ` +
+          'so fixing only the script changes nothing a farmer reads.',
+      );
+    }
+  }
+});
+
+test('no module is captioned with the placeholder in the manifest, in either language', () => {
+  for (const [moduleId, narration] of Object.entries(COURSE_NARRATION)) {
+    for (const track of narration.tracks ?? []) {
+      assert.notEqual(
+        titleWords(track.title),
+        'title',
+        `${moduleId} slide ${track.slide}: still captioned "Title" in the manifest`,
+      );
+      for (const [lang, translated] of Object.entries(track.titleByLang ?? {})) {
+        // 'Isihloko' IS the isiZulu word for "title" — the translator faithfully rendered the
+        // placeholder, so checking the English spelling alone would have missed it.
+        assert.ok(
+          !['title', 'isihloko'].includes(titleWords(translated)),
+          `${moduleId} slide ${track.slide}: the ${lang} caption is still the placeholder ` +
+            `("${translated}")`,
+        );
+      }
+    }
+  }
+});
