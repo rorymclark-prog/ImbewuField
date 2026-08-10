@@ -30,6 +30,23 @@ export type ReportBlock =
   | { kind: 'table'; headers: string[]; rows: string[][] }
   | { kind: 'paragraph'; text: string };
 
+/**
+ * Does this document already open with its own cover?
+ *
+ * Tested on the FIRST heading rather than on a title string, because the cover's title carries the
+ * farm's name and the report can be generated in eleven languages — matching the words would go
+ * stale the first time either changed. A document whose first content is an `# ` heading has a
+ * title of its own, and drawing a second one above it is what produced two covers in one PDF.
+ */
+export function hasOwnCover(markdown: string): boolean {
+  for (const line of markdown.split('\n')) {
+    const trimmed = line.trim();
+    if (!trimmed) continue;
+    return /^#\s+\S/.test(trimmed);
+  }
+  return false;
+}
+
 /** Strip the inline markdown the report generator emits (bold/italic/code). */
 export function stripInlineMarkdown(text: string): string {
   return text
@@ -193,26 +210,41 @@ export async function buildReportPdf(markdown: string, meta: ReportPdfMeta): Pro
   const need = (h: number) => { if (y + h > BOTTOM) newPage(); };
 
   // ── Cover block ────────────────────────────────────────────────────────────
-  y = M + 18;
-  doc.setFont('helvetica', 'bold'); doc.setFontSize(22); setInk(INK.text);
-  doc.text('ImbewuField', M, y);
-  y += 20;
-  doc.setFont('helvetica', 'normal'); doc.setFontSize(12); setInk(INK.green);
-  doc.text('Permaculture Site Analysis Report', M, y);
-  y += 18;
-  doc.setFontSize(9); setInk(INK.muted);
-  doc.text(
-    `${meta.biome} · ${Math.abs(meta.lat).toFixed(4)}°S ${meta.lon.toFixed(4)}°E · ${meta.dateLabel}`,
-    M, y,
-  );
-  y += 13;
-  doc.text(
-    `Rainfall ${meta.rainfallMm} mm/yr · Soil pH ${meta.soilPh} · Mean temp ${meta.meanTempC}°C`,
-    M, y,
-  );
-  y += 12;
-  doc.setDrawColor(198, 186, 160); doc.line(M, y, PW - M, y);
-  y += 22;
+  //
+  // ONLY when the document has not brought its own. Reports now open with a code-authored cover —
+  // title, reference, issue date, revision, provenance, status — and that whole block was being
+  // passed in as body markdown UNDERNEATH this one. The exported PDF carried two covers with two
+  // different titles ("Permaculture Site Analysis Report", then "Permaculture Site Report — <farm>")
+  // where the report the farmer read on screen has exactly one.
+  //
+  // The markdown cover wins when present: it is the document the farmer reviewed, and it is the
+  // one carrying the reference a funder quotes. This block stays for reports saved before that
+  // cover existed, which would otherwise export with no cover at all — hence a conditional rather
+  // than a deletion, even though deleting would leave `meta` unused and look tidier.
+  if (!hasOwnCover(markdown)) {
+    y = M + 18;
+    doc.setFont('helvetica', 'bold'); doc.setFontSize(22); setInk(INK.text);
+    doc.text('ImbewuField', M, y);
+    y += 20;
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(12); setInk(INK.green);
+    doc.text('Permaculture Site Analysis Report', M, y);
+    y += 18;
+    doc.setFontSize(9); setInk(INK.muted);
+    doc.text(
+      `${meta.biome} · ${Math.abs(meta.lat).toFixed(4)}°S ${meta.lon.toFixed(4)}°E · ${meta.dateLabel}`,
+      M, y,
+    );
+    y += 13;
+    doc.text(
+      `Rainfall ${meta.rainfallMm} mm/yr · Soil pH ${meta.soilPh} · Mean temp ${meta.meanTempC}°C`,
+      M, y,
+    );
+    y += 12;
+    doc.setDrawColor(198, 186, 160); doc.line(M, y, PW - M, y);
+    y += 22;
+  } else {
+    y = M + 18;
+  }
 
   // ── Body ───────────────────────────────────────────────────────────────────
   for (const block of parseReportMarkdown(markdown)) {
