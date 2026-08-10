@@ -26,6 +26,8 @@
 // setSheetScale()'s caller reloads, which is the only way to be certain no half-drawn sheet
 // spans two scales.
 
+import { peekSafeMode } from '@/lib/crash-loop';
+
 export type SheetScale = 2 | 3;
 
 /** What the AI ALWAYS receives, whatever the farmer's display/print setting. Matches the
@@ -37,6 +39,12 @@ export const SHEET_SCALE_KEY = 'imbewu_sheet_scale';
 
 function readStoredScale(): SheetScale {
   if (typeof window === 'undefined') return 2; // SSR renders nothing; hydration re-reads
+  // A LOAD THAT IS ALREADY RUNNING LIGHT NEVER RENDERS AT 1.5x. Safe mode exists because this
+  // phone could not survive opening the design at all (lib/crash-loop.ts); handing it the
+  // print-resolution sheet master — a ~50 MB bitmap per sheet during compose — would undo the
+  // one thing safe mode is for. Rory, with the free no-AI sheet: "It's crashing even on the
+  // exact button." The farmer's stored preference is untouched and returns with their photo.
+  if (peekSafeMode().active) return 2;
   try {
     const stored = window.localStorage.getItem(SHEET_SCALE_KEY);
     if (stored === '3') return 3;
