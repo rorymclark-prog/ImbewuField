@@ -6494,11 +6494,18 @@ function drawPaperRoofs(
   py: (n: number) => number,
   pxPerM: number,
 ): void {
-  const rings: Array<Array<[number, number]>> = [];
-  if (refLayers.house.length >= 3) rings.push(refLayers.house);
-  for (const z of state.zones) {
-    if (z.feature === 'house' && z.points.length >= 3) rings.push(z.points);
-  }
+  // ASK THE ONE AUTHORITY, DO NOT RE-DERIVE IT. This used to inline its own union — refLayers.house
+  // plus every feature:'house' zone — which is the exact pre-dedupe rule that
+  // authoritativeHouseFootprints exists to replace, and lib/house-footprints.ts spells out why it
+  // is wrong: resolveBaseLayers PROMOTES the largest Studio house zone into refLayers.house and
+  // hands back that zone's own points array, so the loop then finds the same ring a second time.
+  //
+  // A duplicate is invisible to a caller that builds a MASK, and every caller did until this one.
+  // THIS caller fills: weathered zinc, then a 22% shade over one slope, then a highlight and a
+  // shadow rib per 0.76 m sheet. Painting all of that twice compounds it, so the farmer's main
+  // building came out materially darker and denser than the store room beside it — two buildings
+  // on one sheet appearing to be made of different metal, for no reason in the design.
+  const rings = authoritativeHouseFootprints(state, refLayers);
   if (!rings.length) return;
 
   for (const ring of rings) {

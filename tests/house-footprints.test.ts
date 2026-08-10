@@ -98,3 +98,23 @@ test('the plain-paper vector pass draws EVERY building, not the largest one', ()
   assert.match(window, /for \(const footprint of authoritativeHouseFootprints\(/);
   assert.doesNotMatch(window, /drawBlueprintHouse\(\s*ctx,\s*renderRefLayers\.house,/);
 });
+
+test('the corrugated paper roof asks the authority instead of unioning both routes', () => {
+  // drawPaperRoofs inlined the pre-dedupe union — refLayers.house plus every feature:'house' zone —
+  // long after authoritativeHouseFootprints replaced exactly that rule everywhere else. Six other
+  // passes in the same file already called the authority; this one did not.
+  //
+  // It matters HERE more than anywhere the rule was fixed before, because every earlier caller
+  // builds a MASK and painting a shape into a mask twice is the same mask. This caller FILLS:
+  // weathered zinc, a 22% shade over one slope, then a highlight and a shadow rib per 0.76 m
+  // sheet. Drawn twice, all of that compounds, so a promoted Studio house came out darker and
+  // denser than the store room beside it — one sheet, two buildings, apparently different metal.
+  const source = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
+  const start = source.indexOf('function drawPaperRoofs(');
+  assert.ok(start > 0, 'drawPaperRoofs moved — this guard needs updating, not deleting');
+  const body = source.slice(start, source.indexOf('\n}\n', start));
+  assert.match(body, /const rings = authoritativeHouseFootprints\(state, refLayers\);/);
+  // The union it must never grow back.
+  assert.doesNotMatch(body, /rings\.push\(refLayers\.house\)/);
+  assert.doesNotMatch(body, /z\.feature === 'house'/);
+});
