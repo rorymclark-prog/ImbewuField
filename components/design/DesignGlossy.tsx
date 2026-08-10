@@ -13098,7 +13098,11 @@ export default function DesignGlossy({
               items: renderState.items,
             })
           : lockActive
-          ? buildLockedIllustrationPrompt(layerLabel, styleKey, elementsText, designBrief)
+          // THE GROUND IS A FACT ABOUT THE SOURCE, NOT A STYLE. renderFrame.satDataUrl is null only on
+          // the plain underlay, and there the prompt must be told there is no photograph — see
+          // groundContractFor. Sending 'photo' there asked the model to preserve pixels that do not
+          // exist, and it filled the void with an invented khaki ground.
+          ? buildLockedIllustrationPrompt(layerLabel, styleKey, elementsText, designBrief, renderFrame.satDataUrl ? 'photo' : 'paper')
           : effectiveModelChrome
             ? (promptRewrite
               ? buildShowcasePrompt(layerLabel, styleKey, elementsText, placeName ?? '', f, renderState.items)
@@ -13262,7 +13266,11 @@ export default function DesignGlossy({
         : isModelChromeStyle(styleKey)
         ? buildSatelliteOverlayPrompt({ layerLabel, stylePreset: styleKey, elementsText, fabric, served, systems: waterSystemsPresent(renderState), placeName, sheetKind: filter, hasDriveway: renderRefLayers.driveway.length >= 2, items: renderState.items })
         : lockActive
-        ? buildLockedIllustrationPrompt(layerLabel, styleKey, elementsText, designBrief)
+        // THE GROUND IS A FACT ABOUT THE SOURCE, NOT A STYLE. renderFrame.satDataUrl is null only on
+        // the plain underlay, and there the prompt must be told there is no photograph — see
+        // groundContractFor. Sending 'photo' there asked the model to preserve pixels that do not
+        // exist, and it filled the void with an invented khaki ground.
+        ? buildLockedIllustrationPrompt(layerLabel, styleKey, elementsText, designBrief, renderFrame.satDataUrl ? 'photo' : 'paper')
         : useShowcase
           ? (promptRewrite
             ? buildShowcasePrompt(layerLabel, styleKey, elementsText, placeName ?? '', filter, renderState.items)
