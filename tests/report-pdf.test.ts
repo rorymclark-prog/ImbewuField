@@ -154,3 +154,21 @@ test('a hash that is not a heading is not a cover', () => {
   assert.equal(hasOwnCover('#hashtag not a heading'), false);
   assert.equal(hasOwnCover('## Section'), false);
 });
+
+test('_italic_ emphasis is stripped, not printed as underscores', () => {
+  // The two sentences that stop a reader treating the priced subtotal as the full build cost were
+  // the ones wearing literal underscores: the unpriced-BOQ warning on every such line, and the
+  // cost disclaimer. stripInlineMarkdown's doc comment claimed italic all along; the code handled
+  // only bold and code. Found by Codex's report-document audit.
+  assert.equal(
+    stripInlineMarkdown('_no researched rate — get a local quote_'),
+    'no researched rate — get a local quote',
+  );
+  assert.equal(stripInlineMarkdown('Costs are _indicative only_.'), 'Costs are indicative only.');
+});
+
+test('an underscore inside a word is not emphasis', () => {
+  // The guard that keeps the fix from eating identifiers and file names that appear in report text.
+  assert.equal(stripInlineMarkdown('see report_site_facts.ts'), 'see report_site_facts.ts');
+  assert.equal(stripInlineMarkdown('rain_barrel and jojo_5000'), 'rain_barrel and jojo_5000');
+});

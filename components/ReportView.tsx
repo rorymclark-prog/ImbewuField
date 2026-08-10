@@ -7,7 +7,7 @@ import { loadReports, saveReport, deleteReport, reportId, MAX_REPORTS, type Save
 import { isSampleMode } from '@/lib/sample-mode';
 import { PLACE_LABELS, placeColor, type SavedPlace } from '@/lib/saved-places';
 import { Loader2, Check, Circle, ChevronRight, Share2, MapPin, SlidersHorizontal, FileText } from 'lucide-react';
-import { buildReportPdf, deliverPdf, reportPdfFilename } from '@/lib/report-pdf';
+import { buildReportPdf, deliverPdf, reportPdfFilename, stripInlineMarkdown } from '@/lib/report-pdf';
 import { loadSurvey } from '@/lib/site-survey';
 import { getSiteEvidence } from '@/lib/site-evidence';
 import { designSiteIdFromLocation } from '@/lib/design-studio';
@@ -138,13 +138,13 @@ function renderReport(text: string) {
       // a reader sees, so it renders as a title.
       elements.push(
         <h1 key={i} className="font-display font-bold text-2xl mt-1 mb-1" style={{ color: '#20190F' }}>
-          {line.slice(2).replace(/\*\*/g, '')}
+          {stripInlineMarkdown(line.slice(2))}
         </h1>
       );
     } else if (line.startsWith('**') && line.endsWith('**')) {
       elements.push(
         <p key={i} className="font-display font-semibold text-sm mt-3 mb-1" style={{ color: '#20190F' }}>
-          {line.replace(/\*\*/g, '')}
+          {stripInlineMarkdown(line)}
         </p>
       );
     } else if (line.startsWith('| ')) {
@@ -186,7 +186,7 @@ function renderReport(text: string) {
                 <tr key={ri} style={{ borderBottom: '1px solid #E2D8C4', background: ri % 2 === 0 ? 'transparent' : 'rgba(31,77,43,0.04)' }}>
                   {row.map((cell, ci) => (
                     <td key={ci} className="py-2 px-3 leading-relaxed font-sans" style={{ color: '#20190F' }}>
-                      {cell.trim().replace(/\*\*/g, '')}
+                      {stripInlineMarkdown(cell)}
                     </td>
                   ))}
                 </tr>
@@ -216,7 +216,7 @@ function renderReport(text: string) {
             {line.match(/^\d+/)?.[0]}.
           </span>
           <p className="font-display text-sm leading-relaxed" style={{ color: '#20190F' }}>
-            {line.replace(/^\d+\.\s*/, '').replace(/\*\*/g, '')}
+            {stripInlineMarkdown(line.replace(/^\d+\.\s*/, ''))}
           </p>
         </div>
       );
@@ -225,14 +225,14 @@ function renderReport(text: string) {
         <div key={i} className="flex gap-2 my-1">
           <span className="flex-shrink-0 mt-0.5" style={{ color: '#1F4D2B' }}><ChevronRight size={12} /></span>
           <p className="font-display text-sm leading-relaxed" style={{ color: '#20190F' }}>
-            {line.replace(/^[-•]\s*/, '').replace(/\*\*/g, '')}
+            {stripInlineMarkdown(line.replace(/^[-•]\s*/, ''))}
           </p>
         </div>
       );
     } else {
       elements.push(
         <p key={i} className="font-display text-sm leading-relaxed my-1.5" style={{ color: '#20190F' }}>
-          {line.replace(/\*\*/g, '')}
+          {stripInlineMarkdown(line)}
         </p>
       );
     }
