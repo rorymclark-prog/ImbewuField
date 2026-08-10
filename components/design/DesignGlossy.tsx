@@ -2308,18 +2308,14 @@ function drawWaterFeature(
   // and small tanks stay legible because the sprite is drawn to the same footprint the symbol
   // would have owned.
   //
-  // THE BANANA CIRCLE BELONGS IN THIS BRANCH TOO, and the reason it was not is worth recording.
-  // drawCartographicWaterSymbol owns 'banana-circle' and returns true for it, so it claimed the
-  // feature before the painted artwork was ever consulted — the Water sheet drew nine small leaf
-  // ellipses around a brown pit while the LEGEND beside it, which reads the painted library
-  // directly, showed the real ring of banana clumps. Same feature, two different pictures, on one
-  // sheet. (Rory, looking at exactly that: "put the new banana circle".)
-  //
-  // Kept as an explicit list rather than "anything with artwork wins": every other id the painted
-  // library answers for on this sheet is a deliberate, reviewed vector symbol, and flipping them
-  // all at once would restyle the Water sheet wholesale without anyone having looked at it.
-  const paintedArtWins = isTank || id === 'banana_circle';
-  if (paintedArtWins) {
+  // THE BANANA CIRCLE IS A KNOWN GAP HERE, deliberately left alone for now. drawCartographicWaterSymbol
+  // owns 'banana-circle' and returns true for it, so it claims the feature before the painted
+  // library is ever consulted: the Water sheet draws nine small leaf ellipses around a brown pit
+  // while the LEGEND beside it shows painted artwork. Same feature, two pictures, one sheet.
+  // Moving it into this branch is a one-line change — but the artwork it would then draw
+  // (banana-basin-v1.png) was reviewed and rejected: "yeah but its not a banana circle". Wiring a
+  // picture nobody wants is worse than the mismatch, so this waits for the right asset.
+  if (isTank) {
     const url = referenceFeatureArtworkUrl(id);
     const sprite = url ? referenceFeatureArtworkCache.get(url) : undefined;
     if (sprite) {
@@ -11720,9 +11716,9 @@ export default function DesignGlossy({
   // the AI pass on every paid path, so a Full Treatment sheet carries the app's legend, labels and
   // title again instead of whatever the model left of them (2026-08-10). A cached r1 Full
   // Treatment is exactly the picture this change exists to stop re-serving. r3 = plain paper turned
-  // WHITE and lost its veil, and the banana circle became the painted ring instead of the vector
-  // pit (2026-08-10) — both change what a plain sheet looks like, and a cached r2 plain sheet is
-  // the cream one Rory asked to move away from.
+  // WHITE and lost its veil (2026-08-10). Without this bump the farmer opens the sheet and sees the
+  // cached CREAM one without rendering anything — which reads as "the change did nothing", and is
+  // exactly what the r-token exists to prevent.
   const underlaySuffix = underlayCacheSuffix(underlay, frameProp)
     + (sheetHasPlantCodes ? labelModeCacheSuffix(labelMode) : '')
     + ':r3'
