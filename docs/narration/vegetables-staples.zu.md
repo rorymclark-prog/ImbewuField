@@ -26,7 +26,7 @@ same 18 blocks, same teaching, same order. Facts, figures and crop names come fr
 
 ---
 
-**Ikhasi 1 — Isihloko (Slide 1 — Title)**
+**Ikhasi 1 — Imifino neZitshalo Eziyisisekelo (Slide 1 — Vegetables and Staple Crops)**
 
 Siyakwamukela. Le ngxenye ikhuluma ngeMifino nezinye iZitshalo Eziyisisekelo. Ingenye
 yezifundo ezilishumi eziyingxenye yaMabhuku e-ImbewuField.
