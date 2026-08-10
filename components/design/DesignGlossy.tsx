@@ -4952,20 +4952,49 @@ export async function buildBlueprintBaseMap(
   drawBlueprintBoundary(ctx, renderRefLayers.boundary, px, py, W, renderState, renderFrame);
   drawBlueprintLabelPills(ctx, groundLabelsForSheet(renderState, renderRefLayers, W, H));
 
-  const legendRows: StyleLegendRow[] = groundRows(renderState, renderRefLayers, 'all').map((row) => ({
-    swatch: row.color,
-    text: row.label,
-    kind: 'ground',
-  }));
-  if (renderRefLayers.house.length >= 3) {
-    legendRows.unshift({ swatch: '#3E4648', text: 'House / building', kind: 'surface' });
+  // Benchmark sheet 01 splits its panel into EXISTING BUILT (structures, hard surfaces,
+  // site edge) and GROUND & LEVELS (soft ground and terrace levels). Rows come straight
+  // from the farmer's traced rings — same predicate as groundRows/drawBlueprintGround so
+  // legend and map cannot drift — but keep the feature kind so each row lands in its
+  // section, and carry the saved terrace name + level where the farmer recorded them.
+  const BUILT_KINDS = new Set<GroundFeatureKind>(['house', 'patio', 'driveway']);
+  const houseCovered = renderRefLayers.house.length >= 3;
+  const drivewayCovered = renderRefLayers.driveway.length >= 2;
+  const builtRows: StyleLegendRow[] = [];
+  const groundLevelRows: StyleLegendRow[] = [];
+  if (houseCovered) {
+    builtRows.push({ swatch: '#3E4648', text: 'House / building', kind: 'surface', section: 'EXISTING BUILT' });
   }
-  if (renderRefLayers.driveway.length >= 2) {
-    legendRows.push({ swatch: '#5A5D57', text: 'Existing tarred driveway', kind: 'surface' });
+  if (drivewayCovered) {
+    builtRows.push({ swatch: '#5A5D57', text: 'Existing tarred driveway', kind: 'surface', section: 'EXISTING BUILT' });
+  }
+  let hasLevels = false;
+  const groundZones = renderState.zones
+    .filter((z) => {
+      if (!z.feature || z.points.length < 3) return false;
+      if (z.feature === 'house' && houseCovered) return false;
+      if (z.feature === 'driveway' && drivewayCovered) return false;
+      return groundRegister(z.feature, 'all') === 'content';
+    })
+    .sort((a, b) => ringArea(b.points) - ringArea(a.points));
+  for (const z of groundZones) {
+    const kind = z.feature!;
+    const baseLabel = z.name ?? GROUND_FEATURES[kind].label;
+    const level = z.levelM;
+    const withLevel = level != null && !BUILT_KINDS.has(kind)
+      ? `${baseLabel} — ${level > 0 ? '+' : ''}${level.toFixed(1)} m`
+      : baseLabel;
+    if (level != null && !BUILT_KINDS.has(kind)) hasLevels = true;
+    const target = BUILT_KINDS.has(kind) ? builtRows : groundLevelRows;
+    const section = BUILT_KINDS.has(kind) ? 'EXISTING BUILT' as const : 'GROUND & LEVELS' as const;
+    if (!target.some((row) => row.text === withLevel)) {
+      target.push({ swatch: GROUND_FEATURES[kind].color, text: withLevel, kind: 'ground', section });
+    }
   }
   if (renderRefLayers.boundary.length >= 3) {
-    legendRows.push({ swatch: BOUNDARY_BONE, text: 'Property boundary', lineKind: 'fence' });
+    builtRows.push({ swatch: BOUNDARY_BONE, text: 'Property boundary', lineKind: 'fence', section: 'EXISTING BUILT' });
   }
+  const legendRows: StyleLegendRow[] = [...builtRows, ...groundLevelRows];
 
   return composeStyleSheet(
     canvas.toDataURL('image/png'),
@@ -4978,7 +5007,14 @@ export async function buildBlueprintBaseMap(
     'Site base map & terrace levels',
     false,
     true,
-    { sheetNumber: '01', legendRows },
+    {
+      sheetNumber: '01',
+      legendRows,
+      footerHeading: 'NOTES',
+      footerText: hasLevels
+        ? 'Everything on this sheet is traced or recorded by the farmer — names and levels are the saved records, not read off the photo.'
+        : 'Everything on this sheet is traced by the farmer — nothing is inferred from the photograph.',
+    },
   );
 }
 
@@ -6885,7 +6921,8 @@ interface StyleLegendRow {
   lineKind?: string;
   kind?: 'zone' | 'ground' | 'surface';
   section?: WaterLegendSection | PlantingLegendSection | StructuresLegendSection
-    | 'SITE EDGE' | 'WATER' | 'PLANTING' | 'INFRASTRUCTURE';
+    | 'SITE EDGE' | 'WATER' | 'PLANTING' | 'INFRASTRUCTURE'
+    | 'EXISTING BUILT' | 'GROUND & LEVELS';
   sectorIcon?: SectorLegendIcon;
 }
 
