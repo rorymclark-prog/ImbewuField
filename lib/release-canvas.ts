@@ -31,3 +31,15 @@ export function drainCanvasToDataUrl(canvas: DrainableCanvas, type?: string, qua
   canvas.height = 0;
   return url;
 }
+
+/**
+ * Release a finished canvas whose pixels left through getImageData rather than toDataURL.
+ *
+ * The pixel-comparison paths (measureRenderDifference, restoreProtectedPixels) extract raw RGBA
+ * bytes and never need a data URL, so drainCanvasToDataUrl would pay for a PNG encode nobody
+ * reads. Same contract as the drain: the canvas is DONE — any later draw or read is a bug.
+ */
+export function releaseCanvas(canvas: Pick<DrainableCanvas, 'width' | 'height'>): void {
+  canvas.width = 0;
+  canvas.height = 0;
+}

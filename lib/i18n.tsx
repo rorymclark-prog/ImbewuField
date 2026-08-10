@@ -425,6 +425,10 @@ const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   designGlossyAssembleError: 'The sheet rendered but could not be assembled on this device{detail} — tap Refresh to try again.',
   designGlossyRenderIncomplete: 'The render did not complete — please try again.',
   designGlossyReconnecting: 'Reconnecting to your background render…',
+  // Shown when the resume budget is spent (lib/render-jobs.ts): reopening this job crashed the
+  // app repeatedly, so the app stopped retrying rather than stay stuck in a crash loop. Honest
+  // about the state — the render happened server-side; this phone could not open it.
+  designGlossyResumeGaveUp: 'Your AI render finished, but opening it kept crashing the app, so the app has stopped reopening it automatically. You can keep designing. To collect it, set Render quality to Standard and generate again, or open this design on a computer.',
 };
 
 const T: Record<string, Dict> = {

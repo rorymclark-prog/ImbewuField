@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
 
-import { drainCanvasToDataUrl } from '@/lib/release-canvas';
+import { drainCanvasToDataUrl, releaseCanvas } from '@/lib/release-canvas';
 
 // iOS SAFARI KILLS THE PAGE, NOT THE RENDER. The sheet pipeline builds a parade of full-resolution
 // canvases — exact page, label layer, AI composite, protect mask, capped upload copies — each used
@@ -54,4 +54,13 @@ test('every one-shot canvas on the sheet pipeline is drained, not leaked', () =>
   const designCanvas = readFileSync(new URL('../lib/design-canvas.ts', import.meta.url), 'utf8');
   assert.match(designCanvas, /drainCanvasToDataUrl\(canvas, 'image\/jpeg', 0\.92\)/,
     'the photo bake must release its supersampled canvas');
+});
+
+test('releaseCanvas frees a getImageData-style scratch canvas without an encode', () => {
+  // The pixel-comparison paths extract raw RGBA bytes and never need a data URL —
+  // drainCanvasToDataUrl there would pay for a PNG encode nobody reads.
+  const fake = { width: 1024, height: 724 };
+  releaseCanvas(fake);
+  assert.equal(fake.width, 0);
+  assert.equal(fake.height, 0);
 });
