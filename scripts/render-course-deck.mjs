@@ -197,28 +197,6 @@ function parseScript(path) {
   });
 }
 
-/**
- * One supporting line, taken from one paragraph of the script.
- *
- * A SHORT PARAGRAPH IS KEPT WHOLE, and that is not a stylistic preference — taking only the
- * opening sentence changed what two slides in this very module were saying. Slide 9's paragraph is
- * "Observe and interact. Catch and store energy. Use edges and value the marginal.", and the
- * first-sentence rule put ONE of the three principles on the slide while the voice named all
- * three. Slide 7's is "You could keep it closed. You could open it to everyone and watch the level
- * drop." — first-sentence turned a pair of options being weighed into a single recommendation.
- *
- * So: keep the paragraph if it is short enough to set, and fall back to its first sentence only
- * when it is genuinely too long for a slide. Never a truncation — a farmer cannot recover the
- * missing half of a sentence, and the fitter drops whole lines rather than cutting them.
- */
-const WHOLE_PARAGRAPH_LIMIT = 140;
-
-function signpost(p) {
-  if (p.length <= WHOLE_PARAGRAPH_LIMIT) return p;
-  const cut = p.split(/(?<=[.!?])\s+/)[0];
-  return (cut && cut.length >= 12 ? cut : p).trim();
-}
-
 // ---------------------------------------------------------------------------------------------
 // Layout.
 //
@@ -313,6 +291,8 @@ function renderSlide(ctx) {
   const rule = dark ? 'rgba(247,242,233,0.22)' : C.line;
   const out = [];
   let dropped = 0; // supporting lines the script has that would not fit — reported, never hidden
+  let shown = 0;
+  let questionShown = false;
 
   out.push(`<rect width="${W}" height="${H}" fill="${bg}"/>`);
 
@@ -346,6 +326,8 @@ function renderSlide(ctx) {
     const f = fit(title, lead, points, question);
     const s = f.scale;
     dropped = points.length - f.p.length;
+    shown = f.shown;
+    questionShown = Boolean(f.question);
     let y = f.top + (f.available - f.h) / 2 + SZ.title * s * 0.82;
 
     out.push(`<text class="title" font-size="${round(SZ.title * s)}" fill="${titleColor}">${tspans(f.t, M, y, LH.title, SZ.title * s)}</text>`);
@@ -401,7 +383,7 @@ function renderSlide(ctx) {
     + `<title>${esc(title)}</title><style>${style}</style>`
     + out.join('')
     + '</svg>\n';
-  return { svg, dropped };
+  return { svg, dropped, shown, questionShown };
 }
 
 // Generic families only. An <img>-embedded SVG loads no external font, so naming a webfont here
@@ -435,16 +417,8 @@ export function renderDeck(moduleId, lang) {
     // different ways. titleByLang is used verbatim where it exists and never machine-translated.
     const title = track.titleByLang?.[lang] ?? track.title;
 
-    // Full text first. signpost() is a FALLBACK, applied only when the whole paragraph
-    // genuinely cannot be set — which is what the rule five lines above its definition says it
-    // is for, and what the first implementation did not do: it replaced every paragraph over
-    // 140 characters with its first sentence BEFORE anything measured whether the full one
-    // would fit. Twenty-three paragraphs were cut that way and about nineteen of them fitted
-    // fine, on cards with a quarter of the space left blank. What went missing was not padding:
-    // plant-guilds slide 6 told a KZN farmer to plant Sesbania sesban and dropped "Do not
-    // confuse it with Sesbania punicea, the red-flowered invasive relative"; vegetables-staples
-    // slide 16 dropped "If you use a neem product, follow the label. Don't improvise a stronger
-    // mixture." A farmer cannot recover the half of a sentence they were never shown.
+    // Keep paragraphs whole. A continuation frame now creates room when it is needed, so there is
+    // no honest reason to trade an author's second sentence for a little more space on the first.
     const fullLead = block.before[0] ?? '';
     const fullPoints = block.before.slice(1).filter((p) => p.length >= 12);
     const question = block.after[0] ?? '';
@@ -459,20 +433,52 @@ export function renderDeck(moduleId, lang) {
       ? 'IMBEWUFIELD · HOME-STUDY MODULE'
       : (n ? `LESSON ${n}` : mod.title.toUpperCase());
 
-    // Render the full text, and only if that costs supporting lines try the signposted version
-    // and keep whichever loses less. Shortening the lead frees vertical space, so it can rescue
-    // a point that would otherwise be dropped — but on most slides it rescues nothing and simply
-    // deletes a sentence, which is the case the blanket rule got wrong.
     const draw = (lead, points) => renderSlide({
       slide: track.slide, total, title, eyebrow, lead, points, question: hero ? '' : question,
       dark, hero,
     });
-    let render = draw(fullLead, fullPoints);
+    const render = draw(fullLead, fullPoints);
+    out.push({
+      slide: track.slide,
+      title,
+      file: `slide-${String(track.slide).padStart(2, '0')}.svg`,
+      svg: render.svg,
+      dropped: 0,
+      continuation: false,
+    });
+
     if (render.dropped > 0) {
-      const short = draw(signpost(fullLead), fullPoints.map(signpost));
-      if (short.dropped < render.dropped) render = short;
+      // A recording is one authored block, not one visual frame. Splitting the markdown here
+      // would make a recorded module gain an unrecorded slide (and put its translated script out
+      // of step); dropping the final point is worse. Keep the first frame under its normal name
+      // and put the remaining script on a second, explicitly named frame. The player/video route
+      // can therefore keep the block/audio count unchanged while showing both frames during the
+      // one clip.
+      const continuation = renderSlide({
+        slide: track.slide,
+        total,
+        title,
+        eyebrow: `${eyebrow} · CONTINUED`,
+        lead: '',
+        points: fullPoints.slice(render.shown),
+        // The fitter gives teaching points priority over the reflection. If it had to hide the
+        // reflection on the first frame, it belongs at the end of the continuation, not nowhere.
+        question: render.questionShown ? '' : question,
+        dark,
+        hero: false,
+      });
+      if (continuation.dropped > 0) {
+        throw new Error(`${moduleId}/${lang} slide ${track.slide} still overflows its continuation`);
+      }
+      out.push({
+        slide: track.slide,
+        title,
+        file: `slide-${String(track.slide).padStart(2, '0')}-continuation.svg`,
+        svg: continuation.svg,
+        dropped: 0,
+        continuation: true,
+      });
     }
-    out.push({ slide: track.slide, title, svg: render.svg, dropped: render.dropped });
   }
   return out;
 }
@@ -496,7 +502,7 @@ function main() {
   if (check) {
     const wrong = [];
     for (const s of slides) {
-      const path = join(dir, `slide-${String(s.slide).padStart(2, '0')}.svg`);
+      const path = join(dir, s.file);
       if (!existsSync(path)) { wrong.push(`missing: ${path}`); continue; }
       if (readFileSync(path, 'utf8') !== s.svg) wrong.push(`differs: ${path}`);
     }
@@ -511,27 +517,26 @@ function main() {
   mkdirSync(dir, { recursive: true });
   // Sweep slides the manifest no longer has, so shortening a deck cannot leave an orphan file that
   // the size manifest keeps advertising and no page ever shows.
-  const keep = new Set(slides.map((s) => `slide-${String(s.slide).padStart(2, '0')}.svg`));
+  const keep = new Set(slides.map((s) => s.file));
   for (const name of readdirSync(dir)) if (name.endsWith('.svg') && !keep.has(name)) unlinkSync(join(dir, name));
 
   let bytes = 0;
   for (const s of slides) {
-    const path = join(dir, `slide-${String(s.slide).padStart(2, '0')}.svg`);
+    const path = join(dir, s.file);
     writeFileSync(path, s.svg);
     bytes += Buffer.byteLength(s.svg);
   }
-  console.log(`  ${slides.length} slides -> ${dir}`);
+  const continuations = slides.filter((s) => s.continuation).length;
+  console.log(`  ${slides.length - continuations} narration blocks -> ${slides.length} frames in ${dir}`);
   console.log(`  ${(bytes / 1024).toFixed(1)} KB total, ${(bytes / slides.length / 1024).toFixed(1)} KB average`);
 
-  // Said out loud rather than swallowed. A slide that could not carry every supporting line the
-  // script wrote is not a failure — the narration still speaks all of it — but it IS the place a
-  // human should look if a slide reads thin, and a renderer that quietly drops content is how a
-  // deck ends up saying less than anyone realises.
+  // Said out loud rather than swallowed. A continuation is the normal answer when a card is full,
+  // so a non-zero value now means the renderer has broken its no-silent-loss promise.
   const thin = slides.filter((s) => s.dropped > 0);
   if (thin.length) {
     console.log(`\n  ${thin.length} slide(s) carry fewer supporting lines than the script has:`);
     for (const s of thin) console.log(`      slide ${String(s.slide).padStart(2, '0')} — ${s.title} (${s.dropped} not shown)`);
-  }
+  } else console.log('\n  0 supporting lines dropped.');
   console.log('\n  next: register the deck in lib/course-deck.ts, then npm run assets:sizes');
 }
 

@@ -16,6 +16,23 @@ import { COURSE_MODULES } from '@/lib/course-modules';
 const PUBLIC = new URL('../public/', import.meta.url);
 const onDisk = (url: string) => existsSync(new URL(url.replace(/^\//, ''), PUBLIC));
 
+const normalizeText = (s: string) => s
+  .replace(/<[^>]*>/g, ' ')
+  .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"')
+  .replace(/\s+/g, ' ').trim();
+
+function englishNarrationBlocks(moduleId: string) {
+  const source = readFileSync(new URL(`../docs/narration/${moduleId}.en.md`, import.meta.url), 'utf8');
+  const headings = [...source.matchAll(/^\*\*Slide\s+(\d+)\s+[—-][^\n]*\*\*\s*$/gm)];
+  return new Map(headings.map((heading, index) => {
+    const body = source.slice(heading.index! + heading[0].length, headings[index + 1]?.index).split(/^#{1,6}\s/m)[0];
+    const [before, after = ''] = body.split(/\[pause\]/i);
+    const paragraphs = (text: string) => text.replace(/^---\s*$/gm, '').split(/\n\s*\n/)
+      .map((p) => p.replace(/\s+/g, ' ').trim()).filter(Boolean);
+    return [Number(heading[1]), { before: paragraphs(before), after: paragraphs(after) }];
+  }));
+}
+
 test('the deck is derived from the narration manifest, never typed out twice', () => {
   // Two hand-maintained lists of the same 24 rows is this codebase's most repeated defect, and here
   // the drift would be a slide showing one thing while the voice says another. Deriving means the
@@ -95,14 +112,37 @@ test('a generated deck still matches the content it was generated from', () => {
   for (const [moduleId, deck] of Object.entries(COURSE_DECKS)) {
     if (deck.imageExt !== 'svg') continue; // a painted deck has no generator to re-run
     for (const lang of deck.slideLanguages) {
-      const rendered = renderDeck(moduleId, lang) as { slide: number; svg: string }[];
-      assert.equal(rendered.length, deck.slides.length, `${moduleId}/${lang}: renderer and manifest disagree on slide count`);
+      const rendered = renderDeck(moduleId, lang) as { slide: number; file: string; svg: string; dropped: number; continuation: boolean }[];
+      const cards = rendered.filter((r) => !r.continuation);
+      assert.equal(cards.length, deck.slides.length, `${moduleId}/${lang}: renderer and manifest disagree on narration-block count`);
+      assert.ok(rendered.every((r) => r.dropped === 0), `${moduleId}/${lang}: a supporting line was dropped instead of continuing the card`);
       for (const r of rendered) {
-        const url = slideImageUrl(moduleId, lang, r.slide)!;
+        const url = `/course-decks/${moduleId}/${lang}/${r.file}`;
         assert.equal(
           readFileSync(new URL(url.replace(/^\//, ''), PUBLIC), 'utf8'), r.svg,
-          `${moduleId}/${lang} slide ${r.slide} is stale — re-run: npm run course:render-deck -- ${moduleId} ${lang}`,
+          `${moduleId}/${lang} ${r.file} is stale — re-run: npm run course:render-deck -- ${moduleId} ${lang}`,
         );
+      }
+
+      // A continuation is not allowed to be a cosmetically correct empty card. Compare its SVG
+      // text to the independently parsed script: the point that did not fit and the reflection
+      // (when the first card gave points priority) must be in one of the two actual SVG files.
+      // This would have caught the old first-sentence fallback even if the renderer reported zero
+      // dropped lines, because its missing words were absent from both rendered byte strings.
+      if (lang === 'en') {
+        const blocks = englishNarrationBlocks(moduleId);
+        for (const continuation of rendered.filter((r) => r.continuation)) {
+          assert.match(continuation.svg, /CONTINUED/, `${moduleId}/${lang} ${continuation.file} does not identify itself as a continuation`);
+          const block = blocks.get(continuation.slide);
+          assert.ok(block, `${moduleId}/${lang} slide ${continuation.slide} has no source block`);
+          const frameText = normalizeText(rendered.filter((r) => r.slide === continuation.slide).map((r) => r.svg).join(' '));
+          for (const paragraph of [...block!.before, ...block!.after.slice(0, 1)]) {
+            assert.ok(
+              frameText.includes(normalizeText(paragraph)),
+              `${moduleId}/${lang} slide ${continuation.slide} lost authored text: ${paragraph}`,
+            );
+          }
+        }
       }
     }
   }

@@ -3,7 +3,7 @@
 // Every course asset in public/, with its exact size. The offline download states a total before
 // it starts, and tests/offline-pack.test.ts fails if any entry here disagrees with disk.
 //
-// 557 files, 92.8 MB total.
+// 567 files, 92.8 MB total.
 
 export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freeze({
   '/course-animations/seeds-sovereignty/hi/imbewu_isiZulu_video_01.mp4': 640574,
@@ -330,8 +330,10 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/market-community/en/slide-12.svg': 2127,
   '/course-decks/market-community/en/slide-13.svg': 2242,
   '/course-decks/market-community/en/slide-14.svg': 1919,
+  '/course-decks/market-community/en/slide-15-continuation.svg': 1531,
   '/course-decks/market-community/en/slide-15.svg': 2075,
   '/course-decks/market-community/en/slide-16.svg': 1954,
+  '/course-decks/market-community/en/slide-17-continuation.svg': 1552,
   '/course-decks/market-community/en/slide-17.svg': 2089,
   '/course-decks/market-community/en/slide-18.svg': 2223,
   '/course-decks/market-community/en/slide-19.svg': 2265,
@@ -460,12 +462,15 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/small-livestock/en/slide-10.svg': 2156,
   '/course-decks/small-livestock/en/slide-11.svg': 2130,
   '/course-decks/small-livestock/en/slide-12.svg': 1685,
+  '/course-decks/small-livestock/en/slide-13-continuation.svg': 1598,
   '/course-decks/small-livestock/en/slide-13.svg': 2032,
   '/course-decks/small-livestock/en/slide-14.svg': 1605,
   '/course-decks/small-livestock/en/slide-15.svg': 2084,
   '/course-decks/small-livestock/en/slide-16.svg': 2101,
   '/course-decks/small-livestock/en/slide-17.svg': 2183,
+  '/course-decks/small-livestock/en/slide-18-continuation.svg': 1596,
   '/course-decks/small-livestock/en/slide-18.svg': 2056,
+  '/course-decks/small-livestock/en/slide-19-continuation.svg': 1617,
   '/course-decks/small-livestock/en/slide-19.svg': 2116,
   '/course-decks/small-livestock/en/slide-20.svg': 2265,
   '/course-decks/soil-health/en/slide-01.svg': 1546,
@@ -491,7 +496,9 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/vegetables-staples/en/slide-01.svg': 1562,
   '/course-decks/vegetables-staples/en/slide-02.svg': 2276,
   '/course-decks/vegetables-staples/en/slide-03.svg': 2413,
-  '/course-decks/vegetables-staples/en/slide-04.svg': 2073,
+  '/course-decks/vegetables-staples/en/slide-04-continuation.svg': 2047,
+  '/course-decks/vegetables-staples/en/slide-04.svg': 1886,
+  '/course-decks/vegetables-staples/en/slide-05-continuation.svg': 2126,
   '/course-decks/vegetables-staples/en/slide-05.svg': 2230,
   '/course-decks/vegetables-staples/en/slide-06.svg': 1868,
   '/course-decks/vegetables-staples/en/slide-07.svg': 2158,
@@ -500,9 +507,11 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/vegetables-staples/en/slide-10.svg': 2313,
   '/course-decks/vegetables-staples/en/slide-11.svg': 1914,
   '/course-decks/vegetables-staples/en/slide-12.svg': 2036,
+  '/course-decks/vegetables-staples/en/slide-13-continuation.svg': 1830,
   '/course-decks/vegetables-staples/en/slide-13.svg': 2243,
   '/course-decks/vegetables-staples/en/slide-14.svg': 1808,
   '/course-decks/vegetables-staples/en/slide-15.svg': 2005,
+  '/course-decks/vegetables-staples/en/slide-16-continuation.svg': 2029,
   '/course-decks/vegetables-staples/en/slide-16.svg': 2217,
   '/course-decks/vegetables-staples/en/slide-17.svg': 2207,
   '/course-decks/vegetables-staples/en/slide-18.svg': 2146,
@@ -518,6 +527,7 @@ export const COURSE_ASSET_SIZES: Readonly<Record<string, number>> = Object.freez
   '/course-decks/water-harvesting/en/slide-10.svg': 1985,
   '/course-decks/water-harvesting/en/slide-11.svg': 2188,
   '/course-decks/water-harvesting/en/slide-12.svg': 1663,
+  '/course-decks/water-harvesting/en/slide-13-continuation.svg': 1595,
   '/course-decks/water-harvesting/en/slide-13.svg': 2129,
   '/course-decks/water-harvesting/en/slide-14.svg': 2088,
   '/course-decks/water-harvesting/en/slide-15.svg': 2114,
