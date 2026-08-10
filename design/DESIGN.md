@@ -6,6 +6,16 @@ and a mockup disagree, the mockup wins unless a newer decision is recorded here.
 
 ## Newer decisions (newest first)
 
+- **2026-08-10 — Preview & Export v2 is specced, not traced.** Rory sent three mockups
+  ("also i want the preview maps to be like this"): an all-sheets preview grid, a Saved
+  Maps & Versions page, and an export summary. The spec — what is new, what to build
+  first, and the four places the mockups contradict decisions he made the same day — is
+  `design/PREVIEW-EXPORT-V2.md`. Read it before building from those images. The standing
+  contradictions in short: **two finishes only** (Full Treatment stays shelved), the paid
+  one is called **AI Polished** (never "AI Hybrid" to a farmer), phone layout first, and a
+  saved-maps grid holds **metas and thumbnails only** — full sheet images in a grid are
+  what crashed the app on 9–10 August.
+
 - **2026-07-15 — Farmer map = the report dashboard; the report is STAGE-GATED.**
   The `/farmer` map + `DataPanel` is the site's living report, not a one-off document.
   A site has a **stage** — `scout → saved → traced → designed → planned`
