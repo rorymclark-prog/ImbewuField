@@ -12,6 +12,7 @@ import {
   type ElementCategory,
 } from '@/lib/design-elements';
 import type { MapRefLayers } from '@/lib/base-layers';
+import { sameFootprint } from '@/lib/house-footprints';
 import { PLANTING_ROUTE_STYLE } from '@/lib/planting-cartography';
 import { EARTHWORKS_ROUTE_STYLE, WATER_ROUTE_STYLE } from '@/lib/water-cartography';
 
@@ -677,11 +678,31 @@ export function groundContentRingsForSheet(
   refLayers: Pick<MapRefLayers, 'house' | 'driveway'> | undefined,
   filter: GlossyLayerFilter,
 ): DesignCanvasState['zones'] {
-  const houseCovered = (refLayers?.house.length ?? 0) >= 3;
+  // ONE RING IS COVERED, NOT EVERY BUILDING ON THE FARM.
+  //
+  // This used to drop EVERY feature:'house' zone the moment refLayers.house held anything at all.
+  // The reasoning was sound for a farm with one building — resolveBaseLayers promotes the largest
+  // Studio house zone into refLayers.house, which then draws and names it, so labelling the zone
+  // too would print the name twice.
+  //
+  // It promotes ONE. A farm with a house, a store room and a shade tunnel has three house rings and
+  // only the largest is promoted; the other two were painted by drawPaperRoofs and then dropped
+  // from both the label pass and the legend by this line. That is how a real, deliberately drawn
+  // building arrives on a sheet as an anonymous grey rectangle with no name, no legend row and no
+  // way to tell what it is — Rory, twice: "shade tunnel in the middle of no where", "there stilll
+  // that shade tunnel in the middle of the veg garden".
+  //
+  // So suppress the ring the map is ALREADY drawing, by identity, and name the rest. sameFootprint
+  // is the same duplicate test authoritativeHouseFootprints uses, so the two passes agree on which
+  // ring is the promoted one instead of each deciding for itself.
+  const mapHouse = refLayers?.house ?? [];
+  const houseCovered = mapHouse.length >= 3;
   const drivewayCovered = (refLayers?.driveway.length ?? 0) >= 2;
   return state.zones.filter((zone) => {
     if (!zone.feature || zone.points.length < 3) return false;
-    if (zone.feature === 'house' && houseCovered) return false;
+    if (zone.feature === 'house' && houseCovered && sameFootprint(mapHouse, zone.points)) return false;
+    // The driveway keeps the blanket rule: refLayers.driveway is a single traced route and the
+    // Studio offers no way to draw a second one, so there is no "other driveway" to strand.
     if (zone.feature === 'driveway' && drivewayCovered) return false;
     return groundRegister(zone.feature, filter) === 'content';
   });

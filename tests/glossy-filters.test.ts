@@ -501,13 +501,21 @@ test('ground labels and legends share one content-only selector across every she
 test('dedicated house and driveway geometry prevents duplicate ground captions and legend rows', () => {
   const house = fixtureState('house');
   const driveway = fixtureState('driveway');
-  const coveredHouse = { ...EMPTY_REF, house: [[0, 0], [1, 0], [1, 1]] as Array<[number, number]> };
+  // COVERED MEANS THE SAME RING, not merely "a house exists". This fixture used to hand in an
+  // unrelated triangle and still expect the zone to vanish, which passed only because the rule was
+  // blanket — and that blanket is what stripped a farm's SECOND and THIRD buildings of their names
+  // (see tests/house-footprints.test.ts). resolveBaseLayers promotes the zone's own points array,
+  // so the real duplicate this test is named for is the identical ring, which is what it now uses.
+  const coveredHouse = { ...EMPTY_REF, house: house.zones[0].points };
   const coveredDriveway = { ...EMPTY_REF, driveway: [[0, 0], [1, 1]] as Array<[number, number]> };
 
   assert.deepEqual(groundContentRingsForSheet(house, coveredHouse, 'all'), []);
   assert.deepEqual(groundContentRingsForSheet(driveway, coveredDriveway, 'all'), []);
   assert.equal(groundContentRingsForSheet(house, EMPTY_REF, 'all').length, 1);
   assert.equal(groundContentRingsForSheet(driveway, EMPTY_REF, 'all').length, 1);
+  // And a DIFFERENT building, on a farm whose map already covers one, keeps its caption.
+  const otherBuilding = { ...EMPTY_REF, house: [[0, 0], [1, 0], [1, 1]] as Array<[number, number]> };
+  assert.equal(groundContentRingsForSheet(house, otherBuilding, 'all').length, 1);
 });
 
 // ── layerContentCount: the CRITICAL visible consequence of the register — a design that is only

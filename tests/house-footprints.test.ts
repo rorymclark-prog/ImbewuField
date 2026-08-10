@@ -6,6 +6,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
 import { authoritativeHouseFootprints, sameFootprint } from '../lib/house-footprints.ts';
+import { groundContentRingsForSheet } from '../lib/glossy-filters.ts';
 import type { ZoneShape } from '../lib/design-canvas.ts';
 
 const square = (x: number, y: number, w: number): Array<[number, number]> => [
@@ -117,4 +118,51 @@ test('the corrugated paper roof asks the authority instead of unioning both rout
   // The union it must never grow back.
   assert.doesNotMatch(body, /rings\.push\(refLayers\.house\)/);
   assert.doesNotMatch(body, /z\.feature === 'house'/);
+});
+
+test('a second building keeps its name when the map already covers the first', () => {
+  // THE ANONYMOUS GREY RECTANGLE. groundContentRingsForSheet dropped EVERY feature:'house' zone as
+  // soon as refLayers.house held anything, on the reasoning that the promoted ring already draws
+  // and names it. resolveBaseLayers promotes ONE. A farm with a house, a store room and a shade
+  // tunnel has three house rings, and the two that were not promoted got painted by drawPaperRoofs
+  // and then stripped of their label AND their legend row — a real building arriving on a plan with
+  // no name and no way to identify it.
+  const promoted = square(0.2, 0.2, 0.12);
+  const tunnel = square(0.62, 0.55, 0.09);
+  const rings = groundContentRingsForSheet(
+    {
+      zones: [
+        zone({ id: 'main', points: promoted, feature: 'house', name: 'House' }),
+        zone({ id: 'tunnel', points: tunnel, feature: 'house', name: 'Shade tunnel' }),
+      ],
+    },
+    { house: promoted, driveway: [] },
+    'all',
+  );
+  assert.deepEqual(rings.map((r) => r.id), ['tunnel'],
+    'the promoted ring is named by the map pass; every OTHER building must keep its own label');
+});
+
+test('the promoted ring is still suppressed, so no building is named twice', () => {
+  const promoted = square(0.3, 0.3, 0.15);
+  const rings = groundContentRingsForSheet(
+    { zones: [zone({ id: 'main', points: promoted, feature: 'house', name: 'House' })] },
+    { house: promoted, driveway: [] },
+    'all',
+  );
+  assert.deepEqual(rings, [], 'the ring the map draws must not also be labelled by the ground pass');
+});
+
+test('with no map house, every drawn building is named', () => {
+  const rings = groundContentRingsForSheet(
+    {
+      zones: [
+        zone({ id: 'a', points: square(0.2, 0.2, 0.1), feature: 'house', name: 'House' }),
+        zone({ id: 'b', points: square(0.6, 0.6, 0.08), feature: 'house', name: 'Shade tunnel' }),
+      ],
+    },
+    { house: [], driveway: [] },
+    'all',
+  );
+  assert.deepEqual(rings.map((r) => r.id), ['a', 'b']);
 });
