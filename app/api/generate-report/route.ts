@@ -806,6 +806,13 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
     isoDate: now.toISOString(),
     sectionCount: safeSections.length,
     lengthLabel: reportLength === 'one-pager' ? 'One page' : reportLength === 'comprehensive' ? 'Comprehensive' : 'Standard',
+    // Only what actually arrived. `facts` is null when the farmer drew nothing, and `surveyData`
+    // is absent when they skipped the questionnaire — so neither may be named by default.
+    sources: {
+      map: Boolean(facts?.design || facts?.boundary || facts?.measurements),
+      survey: Boolean(surveyData),
+      cropPlan: Boolean(facts?.crop),
+    },
   });
 
   const boq = buildBillOfQuantities(facts);
