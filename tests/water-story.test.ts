@@ -184,3 +184,22 @@ test('roof arrows are drawn on paper sheets only', () => {
     'roof runoff arrows must be gated on the same no-photo condition drawPaperRoofs uses',
   );
 });
+
+test('roof runoff is painted AFTER the feature overlay, on top of the roof', () => {
+  // THE BUG THIS PINS SHIPPED. drawPaperRoofs runs inside buildExactLayerOverlay's features phase
+  // and fills the roof with OPAQUE sheeting. The roof arrows were drawn before that composite, so
+  // they were painted correctly and then buried under the very roof they describe: six arrows
+  // produced for the demo creche's 16x12 m roof, zero pixels on the sheet. Every unit test on the
+  // arrow maths passed throughout — only rendering the sheet and looking at it found this.
+  //
+  // The ground legs (gutter, overflow) stay BEFORE the composite on purpose, so an arrow slides
+  // under the tank it feeds rather than across its face.
+  const composite = GLOSSY.indexOf("buildExactLayerOverlay(renderState, renderFrame, renderRefLayers, filter, W, H, 'features')");
+  const roofDraw = GLOSSY.indexOf('drawOverlandFlowArrows(ctx, roofArrows');
+  assert.ok(composite > 0, 'the feature-overlay composite moved — re-check the arrow ordering');
+  assert.ok(roofDraw > 0, 'roof arrows are no longer drawn as their own pass');
+  assert.ok(
+    roofDraw > composite,
+    'roof runoff arrows are drawn BEFORE the feature overlay again — the roof will cover them',
+  );
+});
