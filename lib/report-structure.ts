@@ -34,9 +34,23 @@ function headingText(line: string): string {
   return line.replace(/^#{1,6}\s+/, '').trim();
 }
 
-/** Anything already numbered ("## 3. Water") is left alone rather than numbered twice. */
-function alreadyNumbered(text: string): boolean {
-  return /^(\d+(\.\d+)*|[A-Z])\.\s/.test(text);
+/**
+ * Drop a leading "3. ", "1.2. " or "A. " that a model put on a heading.
+ *
+ * This used to be `alreadyNumbered`, a predicate that caused such a heading to be passed through
+ * untouched — which was how a section ended up out of sequence and missing from Contents. Removing
+ * the number instead lets the normal pass below assign the right one, so the printed numbering and
+ * the Contents page are always built from the same count.
+ */
+function stripLeadingNumber(text: string): string {
+  // A trailing dot is optional ONLY for a multi-part number, because this file's own subsection
+  // format is "3.1 Title" with no dot after it — so a model imitating the house style writes
+  // "9.9 Deep Detail" and the stricter pattern left it to be printed as "3.1 9.9 Deep Detail".
+  //
+  // A bare "5 " is deliberately NOT stripped. "5 Year Vision" and "2026 Planting Plan" are titles,
+  // not numbering, and quietly eating their first word would be a worse defect than the one this
+  // is fixing.
+  return text.replace(/^(?:\d+(?:\.\d+)+\.?|\d+\.|[A-Z]\.)\s+/, '').trim();
 }
 
 function isAppendix(text: string): boolean {
@@ -87,9 +101,18 @@ export function numberSections(markdown: string): NumberingResult {
       continue;
     }
 
-    const title = headingText(line);
-    if (isUnnumbered(title) || alreadyNumbered(title)) {
-      out.push(line);
+    // Model-supplied numbering is DISCARDED, not honoured. Leaving it in place emitted the
+    // heading verbatim, pushed no NumberedHeading, and skipped the counter — so a response
+    // containing "## 3. Water Harvesting Design" produced a document whose sections ran 1, 3, 2,
+    // with the middle one absent from Contents entirely. A reader following a cross-reference to
+    // section 2 found it printed below section 3.
+    //
+    // The model cannot know a section's final position: batches are generated in parallel, any of
+    // them can fail and ship a placeholder instead of a heading, and the requested set varies by
+    // report length. Only this pass knows the order, so only this pass numbers.
+    const title = stripLeadingNumber(headingText(line));
+    if (isUnnumbered(title)) {
+      out.push(`${'#'.repeat(level)} ${title}`);
       continue;
     }
 
