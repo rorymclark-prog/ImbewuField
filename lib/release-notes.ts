@@ -34,8 +34,26 @@ export interface ReleaseNote {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '10 August',
+    // STAMPED. An unstamped top entry does not mean "not yet released" to the gate — it means the
+    // gate falls through to the NEXT entry's sha and reports every commit since as unnoted. That
+    // is how main sat red for 27 commits while every PR went green: the notes were written, the
+    // stamp was not. Stamp at merge, always.
+    sha: 'fbecef9',
+    changes: [
+      'Beds sit under tree canopies, and their vegetables are finally big enough to see',
+      'Big canopies sit over small trees, and every plant carries a label',
+      'Vetiver looks ragged and real, and berms have grassy edges',
+      'Underlay always offers all three: your photo, satellite, or plain paper',
+      'Your design now shows on the farmer map, read-only',
+      'AI sheet finishes are shelved for now — the exact sheets do the work',
+      'Sheet labels and legend are never handed to the AI, so they stay sharp',
+      'The labels and underlay buttons fit properly on a phone now',
+    ],
+  },
+  {
     when: '9 August',
-    // sha stamped at merge; see the notes gate's own rule.
+    sha: 'fbecef9',
     changes: [
       'Water tanks now wear their real colours — black, green, teal and sandstone by size',
       'The rain barrel card shows its typical size (about 200 litres)',
