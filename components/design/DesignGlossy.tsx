@@ -109,7 +109,7 @@ import {
   legendRowFontSize,
 } from '@/lib/sheet-legend-layout';
 import { PLAIN_HARD_SURFACE_PAINT, SHEET_BASE_MUTE_STYLE, SHEET_STRUCTURE_MUTE_STYLE, type SheetBaseMute } from '@/lib/sheet-base-mute';
-import { frameForUnderlay, sheetUnderlayOptions, underlayCacheSuffix, type SheetUnderlay } from '@/lib/sheet-underlay';
+import { frameForUnderlay, photoUnderlayIsSatellite, sheetUnderlayOptions, underlayCacheSuffix, type SheetUnderlay } from '@/lib/sheet-underlay';
 import { overlandFlowArrows, overlandFlowLegendText, interceptFlowArrows, type FlowArrow } from '@/lib/overland-flow';
 import { BED_DEF_IDS } from '@/lib/design-beds-bridge';
 import {
@@ -14149,6 +14149,9 @@ export default function DesignGlossy({
           </span>
           {underlayOptions.map((key) => {
             const active = underlay === key;
+            // Without a farmer-supplied aerial, the base image IS the satellite — calling it
+            // "Your photo" made Satellite look like a missing option (lib/sheet-underlay.ts).
+            const satelliteAsPhoto = key === 'photo' && photoUnderlayIsSatellite(frameProp);
             return (
               <button
                 key={key}
@@ -14158,11 +14161,13 @@ export default function DesignGlossy({
                 aria-pressed={active}
                 style={{ padding: '6px 12px', borderRadius: 999, border: `1px solid ${active ? DARK : '#E2D8C4'}`, background: active ? DARK : PAPER, color: active ? PAPER : '#5C5040', fontWeight: 700, fontSize: 12, cursor: loading !== null ? 'default' : 'pointer' }}
               >
-                {UNDERLAY_LABEL[key]}
+                {satelliteAsPhoto ? UNDERLAY_LABEL.satellite : UNDERLAY_LABEL[key]}
               </button>
             );
           })}
-          <span style={{ fontSize: 10.5, opacity: 0.6 }}>{UNDERLAY_HINT[underlay]}</span>
+          <span style={{ fontSize: 10.5, opacity: 0.6 }}>
+            {underlay === 'photo' && photoUnderlayIsSatellite(frameProp) ? UNDERLAY_HINT.satellite : UNDERLAY_HINT[underlay]}
+          </span>
         </div>
         {/* SHEET QUALITY — the option Rory asked for ("imagine when this is printed on even A3").
             Standard is the 1920px master everything has always used; High renders the same

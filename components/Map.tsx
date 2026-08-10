@@ -3639,7 +3639,10 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       {/* ── Labels pill — visible when panel is minimised (section headers carry toggles when panel is open) ── */}
       {toolbarMin && !pinDraw && !editPin && (siteFeatures.length > 0 || waterFeatures.length > 0 || savedPins.length > 0) && (
         <div className="absolute flex items-center gap-1 font-sans transition-all"
-          style={{ top: 14, right: 14, zIndex: 10, background: 'rgba(16,22,14,0.88)', backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)', borderRadius: 999, padding: '5px 8px 5px 11px', boxShadow: '0 4px 16px rgba(0,0,0,0.4)' }}>
+          style={{ top: 14, right: 14, zIndex: 10, background: 'rgba(16,22,14,0.88)', backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)', borderRadius: 999, padding: '5px 8px 5px 11px', boxShadow: '0 4px 16px rgba(0,0,0,0.4)',
+            // On a phone the pill is wider than the screen and its left end clips off-screen.
+            // Cap it to the viewport (14px margins) and let its CONTENT scroll sideways instead.
+            maxWidth: 'calc(100vw - 28px)', overflowX: 'auto', overflowY: 'hidden', whiteSpace: 'nowrap', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none' }}>
           <span style={{ fontSize: 10, fontWeight: 700, color: 'rgba(234,243,226,0.35)', letterSpacing: '0.1em', textTransform: 'uppercase', marginRight: 2 }}>{t('labelsPillHeader')}</span>
           {(siteFeatures.length > 0 || waterFeatures.length > 0) && (<>
             {/* Shapes — show/hide all drawn polygon boundaries + hatching */}

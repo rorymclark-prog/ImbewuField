@@ -4,6 +4,7 @@ import test from 'node:test';
 import {
   canChooseUnderlay,
   frameForUnderlay,
+  photoUnderlayIsSatellite,
   sheetUnderlayOptions,
   underlayCacheSuffix,
 } from '@/lib/sheet-underlay';
@@ -108,4 +109,12 @@ test('a plain sheet is its own picture, so it cannot be served from a photo cach
     underlayCacheSuffix('plain'),
   ]);
   assert.equal(keys.size, 3, 'two underlays sharing a cache key re-serves the wrong picture');
+});
+
+test("without a farmer aerial the 'photo' pill is the satellite and must say so", () => {
+  // Only underlayDataUrl marks a farmer-supplied base; without it, satDataUrl IS the tile.
+  assert.equal(photoUnderlayIsSatellite({ underlayDataUrl: null }), true);
+  assert.equal(photoUnderlayIsSatellite({}), true);
+  // With a farmer aerial in play, 'photo' really is their photo — Satellite is its own pill.
+  assert.equal(photoUnderlayIsSatellite({ underlayDataUrl: 'data:sat' }), false);
 });
