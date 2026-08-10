@@ -39,7 +39,14 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     // gate falls through to the NEXT entry's sha and reports every commit since as unnoted. That
     // is how main sat red for 27 commits while every PR went green: the notes were written, the
     // stamp was not. Stamp at merge, always.
-    sha: 'fbecef9',
+    //
+    // AND THE STAMP CAN ONLY BE APPLIED AFTER THE MERGE, because the sha it names does not exist
+    // until then — so a green PR is never evidence that this line is current. Main went red again
+    // on 10 August with all 2247 tests passing and all three notes already written, purely
+    // because this read fbecef9 while main had moved to 81d424c. A commit touching ONLY this file
+    // is ignored by the gate (IGNORE in scripts/release-notes-pending.mjs), which is what makes a
+    // follow-up restamp commit both safe and, after every merge, necessary.
+    sha: '81d424c',
     changes: [
       'Your bill no longer charges you for tanks and trees you already have',
       'Water runs off the roof, into your tank, and spreads out in the swale',
