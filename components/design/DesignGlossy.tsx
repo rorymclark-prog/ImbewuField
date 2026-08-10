@@ -2301,13 +2301,25 @@ function drawWaterFeature(
   ctx.lineJoin = 'round';
   ctx.lineCap = 'round';
 
-  // THE PAINTED TANK WINS OVER THE VECTOR SYMBOL, when its sprite has loaded. Rory, on the blue
+  // THE PAINTED ARTWORK WINS OVER THE VECTOR SYMBOL, when its sprite has loaded. Rory, on the blue
   // dartboard: "new graphic for jojo tank (this is the old one?)" — the top-down sprites carry
   // the family's capacity colour code (charcoal/green/teal/sandstone/blue lids) so the plan says
   // WHICH tank the way the picker already does. The vector symbol below remains the fallback,
   // and small tanks stay legible because the sprite is drawn to the same footprint the symbol
   // would have owned.
-  if (isTank) {
+  //
+  // THE BANANA CIRCLE BELONGS IN THIS BRANCH TOO, and the reason it was not is worth recording.
+  // drawCartographicWaterSymbol owns 'banana-circle' and returns true for it, so it claimed the
+  // feature before the painted artwork was ever consulted — the Water sheet drew nine small leaf
+  // ellipses around a brown pit while the LEGEND beside it, which reads the painted library
+  // directly, showed the real ring of banana clumps. Same feature, two different pictures, on one
+  // sheet. (Rory, looking at exactly that: "put the new banana circle".)
+  //
+  // Kept as an explicit list rather than "anything with artwork wins": every other id the painted
+  // library answers for on this sheet is a deliberate, reviewed vector symbol, and flipping them
+  // all at once would restyle the Water sheet wholesale without anyone having looked at it.
+  const paintedArtWins = isTank || id === 'banana_circle';
+  if (paintedArtWins) {
     const url = referenceFeatureArtworkUrl(id);
     const sprite = url ? referenceFeatureArtworkCache.get(url) : undefined;
     if (sprite) {
@@ -3058,14 +3070,21 @@ async function drawBlueprintBase(
     if ('filter' in ctx) ctx.filter = style.filter;
     ctx.drawImage(img, 0, 0, W, H);
     ctx.restore();
-  } else {
-    // No photo: a warm paper ground, not the old near-black slate. Every mark on these sheets is
-    // drawn for paper — cream casings, dark keylines, coloured hatch — so a dark fallback was
-    // inverting the whole sheet's contrast the moment imagery was unavailable.
-    ctx.fillStyle = '#EDE7D6';
+    ctx.fillStyle = style.veil;
     ctx.fillRect(0, 0, W, H);
+    return;
   }
-  ctx.fillStyle = style.veil;
+  // NO PHOTO: WHITE PAPER, AND NO VEIL ON TOP OF IT. Rory: "can we try it with a white paper
+  // bacground". It used to fill a warm cream (#EDE7D6) and then lay the same paper veil the
+  // photograph gets — which is the bug hiding inside the old code. That veil exists to push an
+  // aerial BACK so the drawing reads in front of it; over a ground with nothing behind it there is
+  // nothing to mute, and all it did was tint the paper a second time.
+  //
+  // White is also the honest choice for this option. Plain is the underlay a farmer picks to PRINT
+  // from — it is the only one whose crispness we control, because every mark on it is vector drawn
+  // at full sheet resolution with no photograph underneath. Printing happens on white paper, so a
+  // cream ground was a tint the farmer's printer would never reproduce and their ink had to fight.
+  ctx.fillStyle = '#FFFFFF';
   ctx.fillRect(0, 0, W, H);
 }
 
@@ -3095,11 +3114,15 @@ async function drawAnalysisBase(
     if ('filter' in ctx) ctx.filter = 'saturate(0.42) brightness(0.96) contrast(0.9)';
     ctx.drawImage(img, 0, 0, W, H);
     ctx.restore();
-  } else {
-    ctx.fillStyle = '#727466';
-    ctx.fillRect(0, 0, W, H);
+    drawPaperWash(ctx, W, H);
+    return;
   }
-  drawPaperWash(ctx, W, H);
+  // Plain paper on an analysis sheet, same rule as drawBlueprintBase: white ground, and no wash
+  // over it. #727466 was a mid grey-green — a dark slate left over from when this branch only ever
+  // ran because imagery had FAILED. It is now a deliberate farmer choice, and the Sector sheet's
+  // thin coloured arrows and dotted arcs are the content least able to survive a dark ground.
+  ctx.fillStyle = '#FFFFFF';
+  ctx.fillRect(0, 0, W, H);
 }
 
 /** The warm paper tint shared by both sector bases — the real satellite (drawAnalysisBase) and the
@@ -11696,10 +11719,13 @@ export default function DesignGlossy({
   // grouping + gutter architecture on paid sheets (2026-08-03); r2 = the chrome pass moved after
   // the AI pass on every paid path, so a Full Treatment sheet carries the app's legend, labels and
   // title again instead of whatever the model left of them (2026-08-10). A cached r1 Full
-  // Treatment is exactly the picture this change exists to stop re-serving.
+  // Treatment is exactly the picture this change exists to stop re-serving. r3 = plain paper turned
+  // WHITE and lost its veil, and the banana circle became the painted ring instead of the vector
+  // pit (2026-08-10) — both change what a plain sheet looks like, and a cached r2 plain sheet is
+  // the cream one Rory asked to move away from.
   const underlaySuffix = underlayCacheSuffix(underlay, frameProp)
     + (sheetHasPlantCodes ? labelModeCacheSuffix(labelMode) : '')
-    + ':r2'
+    + ':r3'
     // A sheet drawn at SCALE 3 is a different picture from the same sheet at 2 — re-serving a
     // 1920px cache under a High setting would look like the setting did nothing (the exact
     // "code change looks like it did nothing" trap the r-token note above describes). EMPTY at
