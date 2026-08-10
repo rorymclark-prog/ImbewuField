@@ -303,8 +303,8 @@ test('a change to what a paid sheet looks like bumps the recipe token', () => {
   // The last-render display effect re-serves whatever localStorage holds for this key on mount, so
   // without a bump the farmer (and Rory, checking the fix) sees the PRE-fix picture — the chrome-
   // less Full Treatment this whole change exists to stop re-serving — without rendering anything.
-  assert.match(DESIGN_GLOSSY_SOURCE, /\+ ':r2'/, 'the r-token must move when the sheet changes');
-  assert.doesNotMatch(DESIGN_GLOSSY_SOURCE, /\+ ':r1'/);
+  assert.match(DESIGN_GLOSSY_SOURCE, /\+ ':r3'/, 'the r-token must move when the sheet changes');
+  assert.doesNotMatch(DESIGN_GLOSSY_SOURCE, /\+ ':r[12]'/);
   // PLAN_VERSION must NOT move with it: bumping that re-keys the gallery and takes paid renders
   // away from farmers who already have them.
   assert.match(
