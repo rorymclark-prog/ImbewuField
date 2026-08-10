@@ -154,9 +154,9 @@ test('the roof calculation never substitutes a roof the farm does not have', () 
   assert.doesNotMatch(withoutRoof, /L usable\/year/, 'no yield may be computed from a roof that is not there');
 
   const withRoof = roofCalcLine({ roof: { areaM2: 144, source: 'Traced on the map' } }, 800);
-  // 144 m² × 800 mm × 0.8 = 92,160 L.
+  // 144 m² × 800 mm × 0.8 = 92 160 L.
   assert.match(withRoof, /144 m²/);
-  assert.match(withRoof, /92,160 L usable\/year/);
+  assert.match(withRoof, /92 160 L usable\/year/);
 });
 
 test('water absence is stated, and a recorded water body is never denied', () => {
@@ -181,7 +181,7 @@ test('water absence is stated, and a recorded water body is never denied', () =>
 test('the water block reports the drawn tank the report used to deny', () => {
   const block = waterPromptBlock(demoFacts(), false);
   assert.match(block, /Rainwater tank \(2500 L\) x1/);
-  assert.match(block, /2,500 L stated capacity/);
+  assert.match(block, /2 500 L stated capacity/);
   assert.match(block, /Municipal tap/);
   // A tank on the plan and a tank on the map are very likely one tank, counted once.
   assert.match(block, /most likely the SAME tank\. Count the storage once/);
@@ -223,7 +223,7 @@ test('the Site at a Glance table names the farm and sources every figure', () =>
   assert.match(header, /^# Site Report — Ubhejane Creche/);
   assert.match(header, /\| Measure \| Value \| Where it comes from \|/);
   assert.match(header, /\| Growing area drawn \| 128 m² — 7 beds 44 m² \+ 4 staple plots 84 m² \|/);
-  assert.match(header, /\| Property boundary \| 1,037 m²/);
+  assert.match(header, /\| Property boundary \| 1 037 m²/);
   assert.match(header, /\| Roof catchment traced \| 144 m²/);
   assert.match(header, /\| Not on this site \| No dam, no pond/);
   // Every row must declare where it came from — the third column is never blank.

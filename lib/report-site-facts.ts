@@ -153,9 +153,26 @@ export interface ReportSiteFacts {
 // and it is also drawn into a jsPDF document whose default font is WinAnsi-only. Commas and plain
 // ASCII spaces survive both; Intl's narrow no-break space does not.
 
+/**
+ * Group digits with a PLAIN ASCII SPACE — the one grouping the whole report uses.
+ *
+ * THE ONE FUNCTION, imported by lib/report-boq.ts rather than reimplemented there. It WAS
+ * reimplemented there, with a space, while this one used a comma — so one document printed
+ * "Property boundary | 1,037 m²" in Site at a Glance and "1 037 m²" in the BOQ for the same kind
+ * of measurement. The BOQ's copy even carried a comment saying this file "carries the same rule
+ * and the same reason", which it did not. Two places, a claim of agreement, no agreement: this
+ * repo's most repeated defect, and the remedy is always one source imported by both.
+ *
+ * Space rather than comma because en-ZA groups with a space, and these documents are read in South
+ * Africa. NOT `toLocaleString('en-ZA')`, which groups with U+00A0 — invisible in a diff, and
+ * dropped by jsPDF's WinAnsi default font, so "6 000 L" on screen prints as "6000 L" in the PDF.
+ */
+export function groupDigits(n: number): string {
+  return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+}
+
 function group(n: number): string {
-  const rounded = Math.round(n);
-  return rounded.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return groupDigits(n);
 }
 
 function m2(n: number): string {

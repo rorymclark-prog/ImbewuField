@@ -38,7 +38,7 @@ import {
   formatZar,
   type PriceEntry,
 } from '@/lib/price-book';
-import type { ReportSiteFacts, FactStatus } from '@/lib/report-site-facts';
+import { groupDigits, type ReportSiteFacts, type FactStatus } from '@/lib/report-site-facts';
 import { BED_DEF_IDS } from '@/lib/design-beds-bridge';
 
 /**
@@ -169,18 +169,9 @@ const ROUTE_RATE_BY_KIND: Record<string, string> = {
   windbreak: 'windbreak_per_m',
 };
 
-/**
- * Group digits with a PLAIN ASCII SPACE.
- *
- * Not `toLocaleString('en-ZA')`, which groups with U+00A0. That character is invisible in a diff,
- * survives every unit test written with a normal space in the expectation only by accident, and
- * is dropped by jsPDF's WinAnsi default font — so the figure that reads "6 000 L" in the app
- * prints as "6000 L" or worse in the exported PDF. lib/report-site-facts.ts carries the same rule
- * and the same reason.
- */
-function groupDigits(n: number): string {
-  return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-}
+// Digit grouping is imported, not redefined. This file used to carry its own copy whose comment
+// asserted that lib/report-site-facts.ts "carries the same rule and the same reason" — it did not,
+// it grouped with a comma, and the same document printed both conventions.
 
 const UNPRICED_TEXT: Record<UnpricedReason, string> = {
   'no-rate': 'no researched rate — get a local quote',

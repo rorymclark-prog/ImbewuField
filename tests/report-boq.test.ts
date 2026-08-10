@@ -1,11 +1,12 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 
 import { buildBillOfQuantities, billOfQuantitiesMarkdown } from '../lib/report-boq';
 import { buildRiskRegister } from '../lib/report-risk';
 import { buildMonitoringPlan } from '../lib/report-monitoring';
 import { documentReference } from '../lib/report-cover';
-import type { ReportSiteFacts } from '../lib/report-site-facts';
+import { groupDigits, type ReportSiteFacts } from '../lib/report-site-facts';
 
 const FACTS: ReportSiteFacts = {
   farmName: 'Ubhejane Creche',
@@ -188,4 +189,25 @@ test('document reference is stable and derived from the site name and date', () 
     'IF-SR-20260805-UC',
   );
   assert.equal(documentReference({ farmName: null, isoDate: '2026-08-05' }), 'IF-SR-20260805-SITE');
+});
+
+test('the BOQ and Site at a Glance group thousands the same way', () => {
+  // Codex's report-document audit, finding 4. One document printed "1,037 m²" in Site at a Glance
+  // and "1 037 m²" in the BOQ, from two implementations of the same rule — and the BOQ's copy
+  // carried a comment asserting that report-site-facts "carries the same rule and the same
+  // reason", which it did not. The remedy is one function, so the assertion here is not on a
+  // separator character but on the fact that there is only one place left to change.
+  const boqSrc = readFileSync(new URL('../lib/report-boq.ts', import.meta.url), 'utf8');
+  assert.ok(
+    !/function groupDigits/.test(boqSrc),
+    'report-boq defines its own digit grouping again — import it instead',
+  );
+  assert.ok(/groupDigits/.test(boqSrc) && /from '@\/lib\/report-site-facts'/.test(boqSrc));
+
+  // And the shared one never emits a comma or a no-break space: commas were the other convention,
+  // and U+00A0 is dropped by jsPDF's WinAnsi font so "6 000 L" would print as "6000 L".
+  const grouped = groupDigits(1234567);
+  assert.equal(grouped, '1 234 567');
+  assert.ok(!grouped.includes(','), 'comma grouping is back');
+  assert.ok(!/ /.test(grouped), 'a no-break space would be dropped by the PDF font');
 });

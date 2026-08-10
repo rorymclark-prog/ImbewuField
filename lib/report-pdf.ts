@@ -47,11 +47,26 @@ export function hasOwnCover(markdown: string): boolean {
   return false;
 }
 
-/** Strip the inline markdown the report generator emits (bold/italic/code). */
+/**
+ * Strip the inline markdown the report generator emits (bold/italic/code).
+ *
+ * The doc comment claimed italic all along; the code only handled bold and code. So the two places
+ * that use `_emphasis_` printed their underscores literally:
+ *
+ *     _no researched rate — get a local quote_
+ *
+ * on every unpriced BOQ line, and again around the cost disclaimer. Those are precisely the two
+ * sentences that stop a reader treating the priced subtotal as the full build cost, and they were
+ * the ones wearing punctuation that made them look like a formatting fault.
+ *
+ * The italic rule will not match when a word character sits against an underscore, so snake_case
+ * identifiers and file names inside the text survive intact.
+ */
 export function stripInlineMarkdown(text: string): string {
   return text
     .replace(/\*\*(.+?)\*\*/g, '$1')
     .replace(/`([^`]+)`/g, '$1')
+    .replace(/(?<![A-Za-z0-9])_([^_\n]+)_(?![A-Za-z0-9])/g, '$1')
     .replace(/\*\*/g, '')
     .trim();
 }
