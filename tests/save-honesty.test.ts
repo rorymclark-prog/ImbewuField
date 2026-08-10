@@ -18,8 +18,11 @@ const read = (...p: string[]) => readFileSync(join(process.cwd(), ...p), 'utf8')
 
 test('the report Save button branches on whether the write actually succeeded', () => {
   const src = read('components', 'ReportView.tsx');
+  // Match the PROPERTY, not the punctuation. The first version pinned `{ saved }` exactly and
+  // then failed the moment the destructuring legitimately grew to `{ saved, reason }` — a guard
+  // that breaks on a correct extension trains people to weaken it.
   assert.ok(
-    /const \{ saved \} = saveReport\(/.test(src),
+    /const \{ saved[^}]*\} = saveReport\(/.test(src),
     'ReportView ignores saveReport\'s result again — it returns { saved } for a reason',
   );
   assert.ok(src.includes('if (!saved && !isSampleMode())'), 'the failure branch is gone');

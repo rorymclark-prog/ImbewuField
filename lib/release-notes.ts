@@ -48,6 +48,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     // follow-up restamp commit both safe and, after every merge, necessary.
     sha: '280045d',
     changes: [
+      'With 50 reports saved, the app asks you to delete one instead of dropping the oldest',
       'Round beds are measured as circles, so their size and cost are honest',
       'Your crop planner warns you the moment it can no longer keep your changes',
       'If your phone is too full to save, the app now says so instead of Saved',

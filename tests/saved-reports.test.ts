@@ -140,7 +140,7 @@ test('a failed write leaves save and delete results at persisted truth', () => {
   browser.addEventListener('imbewu-reports-changed', listener);
   local.throwOnWrite = true;
 
-  assert.deepEqual(saveReport(report('new')), { reports: [existing], saved: false });
+  assert.deepEqual(saveReport(report('new')), { reports: [existing], saved: false, reason: 'storage-error' });
   assert.deepEqual(deleteReport('existing'), [existing]);
   assert.equal(changes, 0);
   assert.deepEqual(loadReports(), [existing]);
@@ -193,4 +193,62 @@ test("one shared device never exposes farmer A's saved reports to farmer B", () 
   assert.ok(local.getItem(accountLocalStorageKey(KEY, 'farmer-a')));
   assert.ok(local.getItem(accountLocalStorageKey(KEY, 'farmer-b')));
   assert.ok(local.getItem(KEY), 'unowned legacy reports remain quarantined');
+});
+
+test('saving a NEW report at 50 stored fails with store-full reason and leaves storage byte-identical', () => {
+  reset();
+  const reports50 = Array.from({ length: 50 }, (_, i) => report(`r-${i}`));
+  local.setItem(KEY, JSON.stringify(reports50));
+  const beforeBytes = local.getItem(KEY);
+
+  const result = saveReport(report('r-50'));
+
+  assert.equal(result.saved, false);
+  assert.equal(result.reason, 'store-full');
+  assert.equal(local.getItem(KEY), beforeBytes);
+  const loaded = loadReports();
+  assert.equal(loaded.length, 50);
+  assert.equal(loaded[49].id, 'r-49', 'oldest report (r-49) must still be present');
+});
+
+test('updating an EXISTING report at 50 stored succeeds and keeps stored count at 50', () => {
+  reset();
+  const reports50 = Array.from({ length: 50 }, (_, i) => report(`r-${i}`));
+  local.setItem(KEY, JSON.stringify(reports50));
+
+  const updatedReport = report('r-49', { name: 'Updated Oldest Report' });
+  const result = saveReport(updatedReport);
+
+  assert.equal(result.saved, true);
+  assert.equal(result.reason, undefined);
+  assert.equal(result.reports.length, 50);
+  assert.equal(result.reports[0].id, 'r-49');
+  assert.equal(result.reports[0].name, 'Updated Oldest Report');
+  assert.equal(loadReports().length, 50);
+});
+
+test('normal save below cap succeeds without reason', () => {
+  reset();
+  const result = saveReport(report('r-1'));
+
+  assert.equal(result.saved, true);
+  assert.equal(result.reason, undefined);
+  assert.equal(result.reports.length, 1);
+});
+
+test('returned reason distinguishes full-store from storage write failure', () => {
+  reset();
+  const reports50 = Array.from({ length: 50 }, (_, i) => report(`r-${i}`));
+  local.setItem(KEY, JSON.stringify(reports50));
+  const fullStoreResult = saveReport(report('r-new'));
+  assert.equal(fullStoreResult.saved, false);
+  assert.equal(fullStoreResult.reason, 'store-full');
+
+  reset();
+  local.setItem(KEY, JSON.stringify([report('r-1')]));
+  local.throwOnWrite = true;
+  const storageErrorResult = saveReport(report('r-2'));
+  assert.equal(storageErrorResult.saved, false);
+  assert.equal(storageErrorResult.reason, 'storage-error');
+  local.throwOnWrite = false;
 });
