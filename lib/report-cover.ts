@@ -23,6 +23,51 @@ export interface ReportCoverInput {
   sectionCount: number;
   /** 'One page' | 'Standard' | 'Comprehensive' — the requested depth. */
   lengthLabel: string;
+  /**
+   * Which of the farmer's own inputs actually reached this report.
+   *
+   * The "Prepared by" line used to name all three unconditionally, while the route makes both the
+   * survey and the map/crop facts optional and normalises missing ones to null. A report generated
+   * with no survey and nothing drawn still told a funder it was prepared "from the farmer's own
+   * map, survey and crop plan" — provenance the document does not have, on the page most likely to
+   * be quoted back.
+   *
+   * It also contradicted the paragraph two lines below it, which promises that "where the app had
+   * no data, the report says so rather than filling the gap". That promise is the whole reason
+   * this file is code and not prose, so the cover has to keep it first.
+   *
+   * Required, not optional, so a new call site has to say what it has rather than inheriting a
+   * claim by default.
+   */
+  sources: {
+    /** The farmer drew something: a design, a boundary, measured geometry. */
+    map: boolean;
+    /** The farmer completed the site survey. */
+    survey: boolean;
+    /** The farmer entered a crop plan. */
+    cropPlan: boolean;
+  };
+}
+
+/** "a", "a and b", "a, b and c" — the list as it would be read aloud. */
+function readAsList(items: string[]): string {
+  if (items.length <= 1) return items[0] ?? '';
+  return `${items.slice(0, -1).join(', ')} and ${items[items.length - 1]}`;
+}
+
+/** The provenance line, naming only what was actually supplied. */
+export function preparedFromLabel(sources: ReportCoverInput['sources']): string {
+  const named = [
+    sources.map ? 'map' : null,
+    sources.survey ? 'survey' : null,
+    sources.cropPlan ? 'crop plan' : null,
+  ].filter((s): s is string => s !== null);
+
+  // Nothing of the farmer's own reached this report — it was built from the site's location and
+  // the public environmental data alone. Saying so is the honest version, and it is also the more
+  // useful one: a reader who sees this knows what to go and collect.
+  if (named.length === 0) return 'ImbewuField, from this site\'s location and public environmental data';
+  return `ImbewuField, from the farmer's own ${readAsList(named)}`;
 }
 
 /** A stable, human-checkable reference: IF-SR-<yyyymmdd>-<initials of the site>. */
@@ -71,7 +116,7 @@ export function buildCoverMarkdown(input: ReportCoverInput): string {
   out.push(`| Issued | ${input.dateLabel} |`);
   out.push(`| Revision | 1 — first issue |`);
   out.push(`| Basis of issue | ${input.lengthLabel} report, ${input.sectionCount} section${input.sectionCount === 1 ? '' : 's'} requested |`);
-  out.push('| Prepared by | ImbewuField, from the farmer\'s own map, survey and crop plan |');
+  out.push(`| Prepared by | ${preparedFromLabel(input.sources)} |`);
   out.push('| Status | For the farmer\'s use and discussion. Not a professional engineering, agronomic or financial certification. |');
   out.push('');
   out.push('This report describes one site on one date. Where a figure was measured, the table beside it names what measured it; where the app had no data, the report says so rather than filling the gap.');

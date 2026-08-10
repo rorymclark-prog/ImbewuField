@@ -70,6 +70,8 @@ const doc = assembleReportDocument({
     isoDate: '2026-08-05',
     sectionCount: 14,
     lengthLabel: 'Comprehensive',
+    // The probe's fixture farm has all three, which is what makes it a useful worked example.
+    sources: { map: true, survey: true, cropPlan: true },
   }),
   glance: '## Site at a Glance\n\n(built elsewhere — see buildReportHeaderMarkdown)',
   body: ['## Executive Summary\n\n(generated)', '## Water Harvesting Design\n\n(generated)'],
