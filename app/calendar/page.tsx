@@ -46,20 +46,41 @@ const CROPS: CropRow[] = [
 // Monthly planting / harvest / maintain data
 // ---------------------------------------------------------------------------
 
-interface MonthData {
-  plant: string[];
-  harvest: string[];
+/** What a human wrote about a month: the weather, the chores, the encouragement. Nothing here
+ *  names a crop, because a crop claim has to come from the catalog. */
+interface MonthAdvice {
   maintain: string[];
   season: 'summer' | 'autumn' | 'winter' | 'spring';
   limaAdvice: string;
 }
 
-const MONTHLY_DATA: MonthData[] = [
+interface MonthData extends MonthAdvice {
+  plant: string[];
+  harvest: string[];
+}
+
+// THE MONTH CARDS' CROP LISTS ARE DERIVED, NOT TYPED.
+//
+// This page used to carry two answers to "when does maize happen" and they disagreed with each
+// other IN THE SAME FILE. The grid above builds its sow marks from the catalog
+// (sowMarksForPattern) and its harvest months are the catalog's own arithmetic — maize sows
+// Oct-Dec and needs 140 days, so it ripens Feb-Apr. The month cards below were hand-typed, and
+// January's read "Harvest ready: Maize" with "Plant now: Sweet potato slips" — the first inviting
+// a farmer to cut cobs two to four months before the catalog says grain exists, the second
+// spending a bed and 25-45 slips outside the sowing window entirely. A farmer loses a season to
+// either one, and the app disagreeing with itself is how they would find out.
+//
+// So the cards now read from CROPS, the same array the grid draws. The editorial qualifiers that
+// used to decorate these pills ("succession sow", "finish", "early") are gone deliberately: they
+// were unsourced, and several were the false claims themselves ("Maize (early)" in September sits
+// outside the catalog window, as does "Maize" harvested in December).
+//
+// A month with nothing in it renders "No planting recommended this month" — that path already
+// existed and is the honest answer, not a gap to be filled with something plausible.
+const MONTHLY_ADVICE: MonthAdvice[] = [
   // Jan (0) — midsummer
   {
     season: 'summer',
-    plant: ['Maize (succession sow)', 'Beans', 'Sweet potato slips', 'Pumpkin'],
-    harvest: ['Tomatoes', 'Beans', 'Maize', 'Pumpkin', 'Sweet potato'],
     maintain: [
       'Water deeply early morning — evaporation peaks this month',
       'Mulch thickly to retain soil moisture',
@@ -72,8 +93,6 @@ const MONTHLY_DATA: MonthData[] = [
   // Feb (1) — late summer
   {
     season: 'summer',
-    plant: ['Beans (last sow)', 'Sweet potato (transition)'],
-    harvest: ['Maize', 'Beans', 'Sweet potato', 'Pumpkin', 'Tomatoes'],
     maintain: [
       'Continue deep watering — soil dries fast',
       'Side-dress maize with compost if growth is slow',
@@ -86,8 +105,6 @@ const MONTHLY_DATA: MonthData[] = [
   // Mar (2) — early autumn
   {
     season: 'autumn',
-    plant: ['Spinach (possible)', 'Carrots (possible)', 'Garlic (possible)'],
-    harvest: ['Maize (finish)', 'Sweet potato (finish)', 'Pumpkin (finish)', 'Garlic (late)'],
     maintain: [
       'Clear summer beds and add compost before cooler season',
       'Prep soil for winter crops — loosen compacted rows',
@@ -100,8 +117,6 @@ const MONTHLY_DATA: MonthData[] = [
   // Apr (3) — autumn
   {
     season: 'autumn',
-    plant: ['Spinach', 'Carrots', 'Garlic'],
-    harvest: ['Spinach (early)', 'Carrots (early)'],
     maintain: [
       'Plant garlic cloves pointed-end up, 10 cm deep',
       'Sow spinach and carrots in well-composted beds',
@@ -114,8 +129,6 @@ const MONTHLY_DATA: MonthData[] = [
   // May (4) — mid-autumn
   {
     season: 'autumn',
-    plant: ['Spinach', 'Carrots', 'Garlic (succession)'],
-    harvest: ['Spinach', 'Carrots (early)'],
     maintain: [
       'Weed regularly — winter weeds compete aggressively',
       'Apply liquid seaweed fertiliser to new plantings',
@@ -128,8 +141,6 @@ const MONTHLY_DATA: MonthData[] = [
   // Jun (5) — winter
   {
     season: 'winter',
-    plant: ['Spinach', 'Garlic (last sow)'],
-    harvest: ['Spinach', 'Carrots', 'Garlic (early greens)'],
     maintain: [
       'Protect tender seedlings from frost with shade cloth or row cover',
       'Water only when soil is dry — overwatering in winter causes root rot',
@@ -142,8 +153,6 @@ const MONTHLY_DATA: MonthData[] = [
   // Jul (6) — winter
   {
     season: 'winter',
-    plant: ['Spinach', 'Carrots (last sow)'],
-    harvest: ['Spinach', 'Carrots', 'Garlic greens'],
     maintain: [
       'Keep beds weed-free — fewer weeds mean more soil nutrients for your crops',
       'Check stored pumpkins and sweet potatoes for rot',
@@ -156,8 +165,6 @@ const MONTHLY_DATA: MonthData[] = [
   // Aug (7) — late winter / early spring
   {
     season: 'winter',
-    plant: ['Tomatoes (trays indoors)', 'Beans (transitional)', 'Spinach (last sow)'],
-    harvest: ['Spinach', 'Carrots', 'Garlic greens'],
     maintain: [
       'Start tomato and pepper seeds in warm trays indoors',
       'Prepare spring beds — dig in compost before the heat arrives',
@@ -170,8 +177,6 @@ const MONTHLY_DATA: MonthData[] = [
   // Sep (8) — spring
   {
     season: 'spring',
-    plant: ['Tomatoes (transplant)', 'Beans', 'Maize (early)', 'Pumpkin (early)', 'Sweet potato'],
-    harvest: ['Spinach (last)', 'Carrots (finish)', 'Garlic'],
     maintain: [
       'Harden off tomato seedlings — move outside for a few hours each day',
       'Prepare trellises and cages for climbing beans and tomatoes',
@@ -184,8 +189,6 @@ const MONTHLY_DATA: MonthData[] = [
   // Oct (9) — spring
   {
     season: 'spring',
-    plant: ['Tomatoes', 'Beans', 'Maize', 'Sweet potato', 'Pumpkin', 'Spinach (last call)'],
-    harvest: ['Garlic', 'Carrots (finish)'],
     maintain: [
       'Increase watering as heat builds',
       'Pinch out tomato suckers for stronger central growth',
@@ -198,8 +201,6 @@ const MONTHLY_DATA: MonthData[] = [
   // Nov (10) — late spring
   {
     season: 'spring',
-    plant: ['Tomatoes (final sow)', 'Beans', 'Maize (succession)', 'Pumpkin'],
-    harvest: ['Garlic (finish)', 'Spinach (bolt watch)'],
     maintain: [
       'Watch for tomato flower drop in afternoon heat — mulch and consistent water helps',
       'Tie bean and pumpkin vines as they sprawl',
@@ -212,8 +213,6 @@ const MONTHLY_DATA: MonthData[] = [
   // Dec (11) — early summer
   {
     season: 'summer',
-    plant: ['Beans (late)', 'Maize (last succession)'],
-    harvest: ['Tomatoes (first)', 'Beans', 'Maize (early)', 'Pumpkin'],
     maintain: [
       'Harvest tomatoes before they overripen in the heat',
       'Water daily in the morning — evening watering invites fungal disease',
@@ -224,6 +223,14 @@ const MONTHLY_DATA: MonthData[] = [
       'The first tomatoes of the season are a milestone. Pick them at first blush and let them ripen indoors — they develop more flavour off the vine in the heat of December. This is also the month to take stock: what germinated well, what failed, what variety performed. That knowledge is your most valuable harvest.',
   },
 ];
+
+const MONTHLY_DATA: MonthData[] = MONTHLY_ADVICE.map((advice, monthIndex) => ({
+  ...advice,
+  // 'B' marks a month inside the catalog's sowing window for the summer-rainfall pattern this
+  // page states it is showing (CALENDAR_RAIN_PATTERN).
+  plant: CROPS.filter((crop) => crop.marks[monthIndex] === 'B').map((crop) => crop.name),
+  harvest: CROPS.filter((crop) => crop.harvestMonths.includes(monthIndex)).map((crop) => crop.name),
+}));
 
 // ---------------------------------------------------------------------------
 // Season icon helper
