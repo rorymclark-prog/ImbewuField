@@ -394,7 +394,7 @@ test('the queue result is filed under the JOB\'s quality, never the live dial', 
   assert.ok(at > 0, 'the queue-completion save no longer computes a quality suffix');
   const call = GLOSSY_SRC.slice(at, at + 120);
   assert.ok(call.includes('job.quality'), 'the save key stopped using the job\'s own quality');
-  assert.ok(!/qualityCacheSuffix\(quality\)[^;]*saveKey/s.test(GLOSSY_SRC.slice(at, at + 400)));
+  assert.ok(!/qualityCacheSuffix\(quality\)[^;]*saveKey/.test(GLOSSY_SRC.slice(at, at + 400)));
 });
 
 test('deterministic exact sheets never carry a quality suffix', () => {
@@ -402,6 +402,6 @@ test('deterministic exact sheets never carry a quality suffix', () => {
   // appending it there would split those caches for no reason and strand sheets already stored.
   assert.ok(GLOSSY_SRC.includes('isPaidMapKey ? qualityCacheSuffix(quality) : \'\''),
     'the read-path quality suffix is gone or is no longer gated to paid keys');
-  assert.ok(/const isPaidMapKey = [^;]*Boolean\(producerStyle\)/s.test(GLOSSY_SRC),
+  assert.ok(/const isPaidMapKey = [^;]*Boolean\(producerStyle\)/.test(GLOSSY_SRC),
     'isPaidMapKey stopped requiring a producer style — exact sheets would start splitting caches');
 });
