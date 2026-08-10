@@ -85,3 +85,18 @@ test('the internal stage name is untouched, so paid sheets keep their provenance
   const jobs = readFileSync(new URL('../lib/render-jobs.ts', import.meta.url), 'utf8');
   assert.match(jobs, /'hybrid' \| 'ai-polished' \| 'legacy-ai'/, 'stored provenance must not be renamed');
 });
+
+test('a finished sheet is badged with the button the farmer pressed', () => {
+  // Rory, on his first AI Polished render, seeing it come back stamped "GEOMETRY-LOCKED HYBRID":
+  // "Still doing the hybrid?" It was not — one paid pass, exactly as the button promised — but
+  // every badge still carried the internal stage name, so the app looked like it had quietly run
+  // something the picker no longer offers.
+  //
+  // The stored resultKind stays 'hybrid' (see the provenance test above); only the words change.
+  assert.doesNotMatch(glossy, /Geometry-locked hybrid/, 'no badge may name the internal stage');
+  assert.doesNotMatch(glossy, /'AI hybrid'/, 'no label may name the internal stage');
+  assert.match(glossy, /AI Polished · geometry locked/, 'the single paid pass is badged as AI Polished');
+  // The shelved second pass keeps a distinct name, so a sheet already paid for still says which of
+  // the two produced it.
+  assert.match(glossy, /AI Polished \+ 2nd pass/);
+});

@@ -11262,13 +11262,20 @@ interface GalleryItem {
   showcase: boolean;
 }
 
+// THE BADGE MUST NAME THE BUTTON THE FARMER PRESSED. `resultKind: 'hybrid'` is the stored stage
+// name and deliberately never changes — every saved sheet on every device is keyed by it — but the
+// finish is called AI Polished on the button, so a result that came back stamped "hybrid" read as
+// the app having quietly run something else. Rory, on his first AI Polished render: "Still doing
+// the hybrid?" It was not; only this text was.
 function galleryResultBadge(item: GalleryItem): string {
   if (item.resultKind === 'exact') return 'Exact master · no AI';
   if (item.resultKind === 'hybrid') {
-    return `Geometry-locked hybrid · ${item.provider === 'gemini' ? 'Gemini' : 'gpt-image-2'}`;
+    return `AI Polished · geometry locked · ${item.provider === 'gemini' ? 'Gemini' : 'gpt-image-2'}`;
   }
   if (item.resultKind === 'ai-polished') {
-    return `Paid AI-polished result · ${item.provider === 'gemini' ? 'Gemini' : 'gpt-image-2'}`;
+    // The SHELVED second pass. Named for what it is so a sheet already in a gallery still says
+    // honestly which of the two it came from.
+    return `AI Polished + 2nd pass · ${item.provider === 'gemini' ? 'Gemini' : 'gpt-image-2'}`;
   }
   if (item.resultKind === 'ai-illustrated') {
     return `AI illustrated · ${item.provider === 'gemini' ? 'Gemini' : item.provider === 'openai' ? 'gpt-image-2' : 'provider unknown'}`;
@@ -12328,7 +12335,7 @@ export default function DesignGlossy({
       const record: SavedGlossy = { image: sheet, provider: producerEngine === 'openai' ? 'falgpt' : 'gemini', at: new Date().toISOString() };
       saveGlossy(state.siteId, mapKey, record);
       setSaved(record);
-      pushGallery(`${layerLabel} · ${styleDef.label} · Geometry-locked hybrid`, sheet, {
+      pushGallery(`${layerLabel} · ${styleDef.label} · AI Polished · geometry locked`, sheet, {
         resultKind: 'hybrid',
         provider: producerEngine === 'openai' ? 'openai' : 'gemini',
         geometryLock,
@@ -12670,7 +12677,7 @@ export default function DesignGlossy({
             at: new Date().toISOString(),
           });
         } catch { /* cache full — gallery still holds it */ }
-        pushGallery(`${layerLabel} · ${styleDef.label} · Geometry-locked hybrid`, sheet, {
+        pushGallery(`${layerLabel} · ${styleDef.label} · AI Polished · geometry locked`, sheet, {
           resultKind: 'hybrid',
           provider: producerEngine === 'openai' && !fellBack ? 'openai' : 'gemini',
           geometryLock,
@@ -14321,7 +14328,7 @@ export default function DesignGlossy({
               const finishLabel = styleDef?.label ? ` · ${styleDef.label}` : '';
               // Label text must track resultKind, not always say "AI polished" — a Hybrid-only save
               // (mode 2, stops there) is genuinely AI-touched but is not a paid polish pass (mode 3).
-              const finishKindLabel = isPolishedResult ? 'AI polished' : isHybridResult ? 'AI hybrid' : 'AI (legacy)';
+              const finishKindLabel = isPolishedResult ? 'AI Polished + 2nd pass' : isHybridResult ? 'AI Polished' : 'AI (legacy)';
               lastAssembledGalleryId = pushGallery(
                 `${sheet.label}${finishLabel} · ${finishKindLabel}${finalGeometryLocked ? ' · Geometry locked' : ''}`,
                 finalSheet,
