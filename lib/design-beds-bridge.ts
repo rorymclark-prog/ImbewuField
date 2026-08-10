@@ -67,8 +67,15 @@ function ringMetrics(
  * (array) placement order. Each bed's real-world area comes from the item's own
  * size override (wM/hM in metres) when present, else the catalog default for
  * that def — matching how the old facilitator computeDesignBeds derives area.
- * For circle-footprint defs (keyhole bed, herb spiral) wM === hM === diameter,
- * so wM*hM is the bounding-box area, consistent with the legacy bed maths.
+ *
+ * CIRCLE-FOOTPRINT DEFS ARE MEASURED AS CIRCLES. For a keyhole bed or herb
+ * spiral, wM === hM === the DIAMETER, so wM*hM was the area of the bounding
+ * SQUARE — 4.0 m² for a 2 m keyhole bed whose real footprint is 3.1 m². This
+ * number is not cosmetic: report-boq prices it at the per-m² bed rate (that one
+ * bed was quoted 27% high), and the crop planner sizes plantings from it, so a
+ * farmer was also being told a circular bed holds more than it does. The old
+ * behaviour was documented as "consistent with the legacy bed maths", which was
+ * true and is not a reason to keep reporting a square as a circle.
  *
  * Staple plots (ZoneShape rings with feature === 'staple_garden' — the field of
  * maize/beans/pumpkin, see GroundFeatureKind) come AFTER the item beds, as
@@ -93,10 +100,14 @@ export function bedsFromDesignCanvas(state: DesignCanvasState | null): PlanBed[]
     n += 1;
     const wM = item.wM ?? def.wM;
     const hM = item.hM ?? def.hM;
+    // An ellipse of the same bounding box, which is a true circle in the wM === hM case every
+    // circular catalog def actually uses. minDimM stays the bounding width: it answers "can a
+    // farmer reach the middle", and reach is across the shape, not derived from its area.
+    const areaM2 = def.shape === 'circle' ? (Math.PI / 4) * wM * hM : wM * hM;
     beds.push({
       id: item.id,
       label: item.label ?? `Bed ${n}`,
-      areaM2: round1(wM * hM),
+      areaM2: round1(areaM2),
       minDimM: Math.min(wM, hM),
     });
   }
