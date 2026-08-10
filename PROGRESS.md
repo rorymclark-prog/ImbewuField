@@ -52,6 +52,33 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 2026-08-10 (one-surface Phase 3: design flows back to the map, read-only)
+Phase 3 of `docs/ONE-SURFACE-PLAN.md` — the farmer's Design Studio work now appears on the
+live farmer map as a read-only "My design" layer, completing the loop the plan calls
+"builds trust in the one model before the weld".
+- **New pure converter `lib/design-map-layer.ts`** — `designStateToGeoJSON(state, frame)`:
+  normalised canvas coords → real-world [lng,lat] GeoJSON via the Studio's own inverse-Mercator
+  (`makeMercatorUnprojector`). Zones → Polygons (kind/zone/label/color), lines → LineStrings
+  (lineKind/color/width/dashed), placed items → Points (name/category/icon/color). Deterministic,
+  no side effects; designs whose frame lacks geo-registration — drawn over a custom PHOTO or
+  BLANK paper, whose geometry is anchored to the photo's pixels rather than the earth (see
+  `migrateStateToFrame`) — yield an EMPTY collection instead of painting confidently in the
+  wrong place. `lib/design-overlay.ts` is now a thin impure wrapper (loadCanvasState + the
+  Marker/GeoJSON split) over this one implementation.
+- **Map.tsx (strictly additive, design-overlay sections only)** — the overlay gains small
+  centroid labels (`design-label` symbol layer reading each polygon's `label` prop), and the
+  map now OWNS visibility: a "My design" chip in the labels pill (Lucide `PenTool`, exact
+  pattern of the Shapes/Hatching/Places chips, same session-scoped persistence), ON by default
+  whenever a saved geo-registered design exists. The parent-owned `showDesign` prop and the
+  farmer page's separate floating "Show design" button (default-off, emoji icon) are gone.
+  Sync unchanged and verified: the overlay refreshes on `DESIGN_CANVAS_CHANGED_EVENT` +
+  `storage`, so an edit in /design shows on the map on return without a reload.
+- Tests: new `tests/design-map-layer.test.ts` (lng/lat round-trip < 1e-6°, empty state → empty
+  collection, photo/blank/corrupt frames → empty, style-property contract, determinism +
+  input-mutation guard, invalid-shape quarantine) and a photo/blank skip test in
+  `tests/design-overlay.test.ts`. Full suite green except the pre-existing
+  `tests/auth-account-transition.test.ts` ESM-loader failure (also fails on clean main).
+
 ### 2026-08-10 (plan-sheet art: real vetiver, grassed berms, actual cabbages)
 Three pieces of Rory's phone review of a live Reference Blueprint sheet, all seeded-deterministic
 (same design → identical paint, byte for byte):
