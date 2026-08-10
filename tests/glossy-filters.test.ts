@@ -1,8 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 
 import {
   cartographicItemPaintRank,
+  compareCartographicPaint,
   itemInFilter,
   lineInFilter,
   exactSheetLineRegister,
@@ -110,6 +113,48 @@ test('cartographic stacking paints tree basins below every circular tree canopy'
       `${basin.name} must paint below ${tree.name}`,
     );
   }
+});
+
+// THE PAINT-ORDER INVERSION FOR CANOPIES — Rory, after the dashed-edge signal alone failed to
+// carry it: "small trees still above big trees." Overlapping crowns must paint smallest first and
+// largest last, so the taller canopy occludes the smaller plants under its edge, exactly as an
+// aerial photograph reads. Everything that is not a canopy keeps largest-first, so a small feature
+// nested on a big one (a tap on a pad, a bed inside a plot) stays visible — and basins stay in
+// their lower rank, below every crown, whatever their size.
+test('overlapping canopies paint small-first so the larger crown is drawn on top', () => {
+  const mango = ELEMENTS_BY_ID['tree_mango'];
+  const pawpaw = ELEMENTS_BY_ID['tree_pawpaw'];
+  assert.ok(mango.shape === 'circle' && pawpaw.shape === 'circle', 'guard: both are canopies');
+  const big = { def: mango, area: 36, id: 'big-mango' };
+  const small = { def: pawpaw, area: 9, id: 'small-pawpaw' };
+  // Painted in ascending sort order: the SMALL crown first, the LARGE crown after (on top).
+  assert.ok(compareCartographicPaint(small, big) < 0, 'small canopy must paint before the large one');
+  assert.ok(compareCartographicPaint(big, small) > 0, 'large canopy must paint after the small one');
+
+  // A basin never rises above a canopy, however large the basin or small the crown.
+  const basin = { def: ELEMENTS_BY_ID['tree_basin'], area: 100, id: 'basin' };
+  assert.ok(compareCartographicPaint(basin, small) < 0, 'tree basin must stay below every canopy');
+
+  // Non-canopy registers keep their largest-first order.
+  const bigBed = { def: ELEMENTS_BY_ID['veg_bed'], area: 24, id: 'big-bed' };
+  const smallBed = { def: ELEMENTS_BY_ID['veg_bed'], area: 6, id: 'small-bed' };
+  assert.ok(compareCartographicPaint(bigBed, smallBed) < 0, 'beds still paint largest-first');
+
+  // Ties break on id, so the same saved design always produces the same sheet.
+  const twinA = { def: mango, area: 16, id: 'a' };
+  const twinB = { def: mango, area: 16, id: 'b' };
+  assert.ok(compareCartographicPaint(twinA, twinB) < 0);
+});
+
+test('every sheet paint loop sorts through the one shared comparator', () => {
+  // The previous ordering "fix" did not hold because the direction lived in per-call-site inline
+  // comparators — each sorted rank-then-largest-first on its own, so no single place could carry
+  // the canopy inversion. This guard keeps the comparator the single authority: the moment a paint
+  // loop grows its own `areaB - areaA` again, the inversion silently unfixes itself.
+  const src = readFileSync(join(process.cwd(), 'components', 'design', 'DesignGlossy.tsx'), 'utf8');
+  const calls = src.match(/compareCartographicPaint\(/g) ?? [];
+  assert.ok(calls.length >= 3, `expected the three item sorts to call compareCartographicPaint, found ${calls.length}`);
+  assert.ok(!/cartographicItemPaintRank/.test(src), 'an inline rank comparator crept back into DesignGlossy');
 });
 
 test('cartographic stacking keeps all ground earthworks below planting', () => {

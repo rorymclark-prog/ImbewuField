@@ -269,20 +269,20 @@ export function plantingRouteStyleFor(kind: string): PlantingRouteStyle | undefi
 /**
  * WHICH TREES HAVE SOMETHING PLANTED UNDERNEATH THEM.
  *
- * Rory: "bigger trees should always be above smaller? how do we show them underneath?"
+ * Rory: "bigger trees should always be above smaller? how do we show them underneath?" — and,
+ * after a release where only the dashed-edge signal answered it: "small trees still above big
+ * trees."
  *
- * Half of that is already right and must stay right. The sheets draw the LARGEST canopy first and
- * the smallest last, so a pawpaw planted under a mango is visible on top of it. That is the correct
- * choice for a plan even though it inverts the physics: the job of a planting sheet is to say what
- * is planted where, and a drawing that hides plants under a canopy fails at its only job. Guild
- * planting is the whole point of the sheet — an understory you cannot see is an understory nobody
- * plants.
+ * The sheets once drew the LARGEST canopy first and the smallest last, on the argument that a
+ * plan's job is to show what is planted where, with the dashed edge below carrying the "this one
+ * is overhead" signal. On a real render that lost: the small crown's near-opaque artwork sat ON
+ * the big canopy's leaves and read as floating above it, not planted beneath. Paint order now
+ * follows overhead physics — smallest crown first, largest last, so the taller canopy occludes
+ * the smaller plants under its edge (compareCartographicPaint in lib/glossy-filters.ts).
  *
- * What was missing is the SIGNAL. Drawn solid, the small tree reads as sitting ON the big one's
- * leaves rather than beneath them. The drafting convention for anything overhead is a DASHED line —
- * the same mark a floor plan uses for a roof overhang — so a canopy with planting under it draws
- * its edge dashed and the understory stays solid on top of it. The reader gets both facts: the
- * small plant is there, and the big one is above it.
+ * The dashed edge remains the drafting convention for anything overhead — the mark a floor plan
+ * uses for a roof overhang — and in footprint mode a canopy with planting under it still draws
+ * its edge dashed, which is now the reader's cue that an understory exists beneath the crown.
  *
  * Only canopies that ACTUALLY have something under them are dashed. Dashing every tree would make
  * the mark meaningless, and a lone tree with nothing beneath it has nothing to disambiguate.

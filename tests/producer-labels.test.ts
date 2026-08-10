@@ -1,8 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 
-import { clusterByProximity, compareLabelRows, plotBox, producerLabels } from '../lib/producer-labels.ts';
-import type { LabelRefLayers } from '../lib/producer-labels.ts';
+import { clusterByProximity, compareLabelRows, planPlantNameChips, plotBox, producerLabels } from '../lib/producer-labels.ts';
+import type { LabelRefLayers, PlantChipSpecimen } from '../lib/producer-labels.ts';
 import type { DesignCanvasState, PlacedItem } from '../lib/design-canvas.ts';
 import { fitMeasuredPillX, type ProducerLabel } from '../lib/image-producer.ts';
 
@@ -370,4 +372,126 @@ test('individual naming still groups beds into one counted pill', () => {
   const treeLabels = producerLabels(treeState, waterSheetRefLayers(), 1920, 1280, 'planting', false);
   const mangoPills = treeLabels.filter((l) => l.text.toUpperCase().includes('MANGO'));
   assert.ok(mangoPills.length >= 3, `perennials must stay individually labelled, got ${mangoPills.length}`);
+});
+
+// ── planPlantNameChips: the coverage contract for on-plant name chips ─────────
+//
+// Rory, off a live Planting sheet: several small crowns with no caption at all, and a cluster of
+// three banana clumps of which only ONE carried "Banana Clump". The old drawPlantMarks had three
+// silent drop paths (a 22 px size gate, a width budget, and a clash check that deleted the losing
+// chip) — and the gutter had already withheld these plants on the promise of a chip drawn on the
+// map, so a dropped chip was a plant with no label anywhere. The planner's contract: every
+// specimen is covered by exactly one chip, its own or a counted group's.
+
+/** Deterministic stand-in for canvas measureText: ~6 px per character plus padding. */
+const chipMeasure = (text: string) => ({ fs: 10, w: text.length * 6 + 8, h: 15 });
+
+const FRAME = { W: 1920, H: 1280 };
+
+function coverage(chips: ReturnType<typeof planPlantNameChips>): Map<string, number> {
+  const seen = new Map<string, number>();
+  for (const chip of chips) {
+    for (const id of chip.memberIds) seen.set(id, (seen.get(id) ?? 0) + 1);
+  }
+  return seen;
+}
+
+test('every planted item of a mixed design is covered by exactly one chip, own or counted group', () => {
+  const specimens: PlantChipSpecimen[] = [
+    // Three banana clumps so close their chips must collide — the screenshot cluster.
+    { id: 'ban-1', defId: 'banana_clump', name: 'Banana Clump', cx: 400, cy: 400, w: 40, h: 40 },
+    { id: 'ban-2', defId: 'banana_clump', name: 'Banana Clump', cx: 440, cy: 405, w: 40, h: 40 },
+    { id: 'ban-3', defId: 'banana_clump', name: 'Banana Clump', cx: 420, cy: 440, w: 40, h: 40 },
+    // Two mangoes far apart — each keeps its own chip.
+    { id: 'mg-1', defId: 'tree_mango', name: 'Mango Tree', cx: 1200, cy: 300, w: 60, h: 60 },
+    { id: 'mg-2', defId: 'tree_mango', name: 'Mango Tree', cx: 1500, cy: 900, w: 60, h: 60 },
+    // Five beds — a unit of a system, one counted chip for the lot.
+    ...Array.from({ length: 5 }, (_, i) => ({
+      id: `bed-${i}`, defId: 'veg_bed', name: 'Vegetable Bed',
+      cx: 900, cy: 200 + i * 80, w: 160, h: 30,
+    })),
+    // A crown printed well under the old 22 px gate — the "small crowns with no caption" case.
+    { id: 'tiny', defId: 'tree_moringa', name: 'Moringa Tree', cx: 800, cy: 1000, w: 12, h: 12 },
+  ];
+  const chips = planPlantNameChips(specimens, chipMeasure, FRAME);
+
+  const seen = coverage(chips);
+  for (const s of specimens) {
+    assert.equal(seen.get(s.id), 1, `${s.id} must be covered by exactly one chip, got ${seen.get(s.id) ?? 0}`);
+  }
+  assert.equal([...seen.keys()].length, specimens.length, 'a chip covers an id that was never supplied');
+
+  // The colliding cluster merged into ONE counted chip anchored on a real clump.
+  const banana = chips.filter((c) => c.text.startsWith('Banana Clump'));
+  assert.equal(banana.length, 1, `expected one banana chip, got: ${banana.map((c) => c.text).join(' | ')}`);
+  assert.equal(banana[0].text, 'Banana Clump ×3');
+  assert.ok(['ban-1', 'ban-2', 'ban-3'].includes(banana[0].anchorId), 'the group chip must anchor on a member');
+
+  // Far-apart specimens of one species are NOT merged — each keeps its own uncounted chip.
+  const mango = chips.filter((c) => c.text.startsWith('Mango Tree'));
+  assert.equal(mango.length, 2);
+  assert.deepEqual(mango.map((c) => c.text), ['Mango Tree', 'Mango Tree']);
+
+  // Beds stay one counted chip — the grouping Rory asked for is not undone by the coverage fix.
+  const beds = chips.filter((c) => c.text.startsWith('Vegetable Bed'));
+  assert.equal(beds.length, 1);
+  assert.equal(beds[0].text, 'Vegetable Bed ×5');
+  assert.ok(beds[0].memberIds.length === 5);
+
+  // The tiny crown is no longer silently unlabelled.
+  assert.ok(chips.some((c) => c.memberIds.includes('tiny')), 'a small crown lost its only label');
+
+  // And no two chips overlap — clashes were resolved by merge or relocation, never deletion.
+  const rects = chips.map((c) => ({
+    x0: c.cx - c.w / 2, x1: c.cx + c.w / 2, y0: c.cy - c.h / 2, y1: c.cy + c.h / 2,
+  }));
+  for (let i = 0; i < rects.length; i++) {
+    for (let j = i + 1; j < rects.length; j++) {
+      const a = rects[i], b = rects[j];
+      const overlap = a.x0 < b.x1 && b.x0 < a.x1 && a.y0 < b.y1 && b.y0 < a.y1;
+      assert.ok(!overlap, `chips ${chips[i].text} and ${chips[j].text} overlap`);
+    }
+  }
+});
+
+test('neighbouring separate clusters each keep their own counted label', () => {
+  // Two banana clusters at opposite ends of the plot: merging them into one "×6" would aim a
+  // label at the empty ground between two real groups — each cluster earns its own "×3".
+  const cluster = (prefix: string, cx: number, cy: number): PlantChipSpecimen[] => [
+    { id: `${prefix}-1`, defId: 'banana_clump', name: 'Banana Clump', cx, cy, w: 40, h: 40 },
+    { id: `${prefix}-2`, defId: 'banana_clump', name: 'Banana Clump', cx: cx + 40, cy: cy + 5, w: 40, h: 40 },
+    { id: `${prefix}-3`, defId: 'banana_clump', name: 'Banana Clump', cx: cx + 20, cy: cy + 40, w: 40, h: 40 },
+  ];
+  const chips = planPlantNameChips([...cluster('west', 300, 400), ...cluster('east', 1500, 900)], chipMeasure, FRAME);
+  const banana = chips.filter((c) => c.text.startsWith('Banana Clump')).sort((a, b) => a.cx - b.cx);
+  assert.equal(banana.length, 2, `two separate clusters need two labels, got ${banana.length}`);
+  assert.deepEqual(banana.map((c) => c.text), ['Banana Clump ×3', 'Banana Clump ×3']);
+  assert.deepEqual(banana[0].memberIds.sort(), ['west-1', 'west-2', 'west-3']);
+  assert.deepEqual(banana[1].memberIds.sort(), ['east-1', 'east-2', 'east-3']);
+  const seen = coverage(chips);
+  assert.equal([...seen.values()].every((n) => n === 1), true);
+  assert.equal(seen.size, 6);
+});
+
+test('the sheet renderer draws its on-plant chips from the coverage planner', () => {
+  // The planner's guarantee is only worth anything while drawPlantMarks actually consumes it.
+  // The old inline layout is exactly what regrew silent drop paths twice; this guard fails the
+  // moment a clash check or size gate is reintroduced beside the planner instead of inside it.
+  const src = readFileSync(join(process.cwd(), 'components', 'design', 'DesignGlossy.tsx'), 'utf8');
+  assert.match(src, /planPlantNameChips\(/, 'drawPlantMarks no longer plans chips through planPlantNameChips');
+  assert.ok(!src.includes('gateSide < 22'), 'the silent size gate is back in DesignGlossy');
+});
+
+test('a renamed specimen never merges into the generic group chip', () => {
+  const chips = planPlantNameChips([
+    { id: 'g-1', defId: 'banana_clump', name: 'Banana Clump', cx: 400, cy: 400, w: 40, h: 40 },
+    { id: 'g-2', defId: 'banana_clump', name: 'Banana Clump', cx: 430, cy: 402, w: 40, h: 40 },
+    // The farmer's own name is a decision — it keeps its own chip even amid the clump cluster.
+    { id: 'mine', defId: 'banana_clump', name: "Gogo's bananas", cx: 415, cy: 430, w: 40, h: 40 },
+  ], chipMeasure, FRAME);
+  const texts = chips.map((c) => c.text).sort();
+  assert.deepEqual(texts, ['Banana Clump ×2', "Gogo's bananas"]);
+  const seen = coverage(chips);
+  assert.equal(seen.size, 3);
+  assert.ok([...seen.values()].every((n) => n === 1));
 });
