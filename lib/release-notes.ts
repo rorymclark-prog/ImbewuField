@@ -46,8 +46,9 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     // because this read fbecef9 while main had moved to 81d424c. A commit touching ONLY this file
     // is ignored by the gate (IGNORE in scripts/release-notes-pending.mjs), which is what makes a
     // follow-up restamp commit both safe and, after every merge, necessary.
-    sha: '8bd5770',
+    sha: '3a34347',
     changes: [
+      'The Seeds and Vegetables modules show their names instead of the word Title',
       'Making a sheet no longer throws you back to the start of the studio on phones',
       'Course module covers now show their real titles instead of "Title"',
       'The picture the AI is given is now white paper too, not a tan field',

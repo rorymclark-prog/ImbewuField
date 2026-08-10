@@ -55,7 +55,12 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
     // or four for — and the TIGHTNESS, not the rate, is what proves no clip was cut from the
     // wrong block.
     tracks: [
-      { slide: 1,   lesson: null,                        title: 'Title',                                       titleByLang: { zu: 'Isihloko' } },
+      // The isiZulu here is REUSED VERBATIM from slide 6's reviewer-signed title for "Seed
+      // Sovereignty". It is not a new translation of the fuller English cover title: nothing in
+      // this reviewed script renders "Seeds and Seed Sovereignty" as a phrase, and composing one
+      // would be coining a term inside the only file a first-language speaker has signed off.
+      // The reviewer may want the longer form; this is the safe stand-in until they say so.
+      { slide: 1,   lesson: null,                        title: 'Seeds and Seed Sovereignty',                  titleByLang: { zu: 'Ubukhosi Bembewu' } },
       { slide: 2,   lesson: 'seeds-sovereignty-l1',      title: 'Why Saving Seed Matters',                     titleByLang: { zu: 'Kungani Ukulondoloza Imbewu Kubalulekile' } },
       { slide: 3,   lesson: null,                        title: 'Learning Outcomes',                           titleByLang: { zu: 'Imiphumela Yokufunda' } },
       { slide: 4,   lesson: 'seeds-sovereignty-l1',      title: 'Open-Pollinated Seed and F1 Seed',            titleByLang: { zu: 'Imbewu Evulekele Impova Ne-F1' } },
@@ -208,7 +213,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
     // 18 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural and verified by
     // import-course-audio: every clip matched its script block.
     tracks: [
-      { slide: 1,  lesson: null,                    title: 'Title' },
+      { slide: 1,  lesson: null,                    title: 'Vegetables and Staple Crops' },
       { slide: 2,  lesson: null,                    title: 'Why This Matters' },
       { slide: 3,  lesson: null,                    title: 'Learning Outcomes' },
       { slide: 4,  lesson: 'vegetables-staples-l1', title: 'Roots Need Loose Soil, Paths Need Your Feet' },
