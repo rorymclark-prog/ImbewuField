@@ -148,3 +148,52 @@ git diff --check     # clean (0 whitespace issues)
 ```
 
 No source code, lesson text, narration, or image files were modified during this audit.
+
+---
+
+## Corrections by Claude before merge
+
+Two qualifiers this report needs, plus what was independently re-verified. Written in rather than
+applied silently, as with the previous two audits.
+
+### 1. This was a BACKENDLESS run, and that limits half the findings
+
+This worktree has no `.env.local` — only `.env.example` and `.env.emulator.example`. So
+`isBackendConfigured()` returned false, `isLive` was false, and the auth redirect at
+`app/student/page.tsx:472` never fired. That is how the portal opened without anyone signing in.
+
+It is a legitimate way to look at the UI, and it is **not** what the report says it did ("a fresh
+browser session with cleared `localStorage`"). The distinction matters:
+
+- **Unaffected** — findings about hardcoded strings, category badges, module titles, the "Submit"
+  button, the double modal, and the absence of text inputs. These are static and true either way.
+- **Qualified** — anything about gating behaviour, progress counts, the capstone lock, assignments
+  and submissions. Those were observed with **no backend**, so they show the empty/unconfigured
+  state, not what a signed-in learner with real progress meets. The capstone counter finding in
+  particular may look different once modules can actually be completed.
+
+**The authenticated walkthrough is therefore still undone.** See
+`docs/SAMPLE-MODE-COURSE-GAP-2026-08-10.md`.
+
+### 2. The screenshots are padded: 13 files, 7 distinct images
+
+`01-arriving-mobile-en.png`, `01-arriving-onboarding-mobile-en.png` and
+`01-arriving-onboarding-modal-en.png` are **byte-identical** (md5 `b5c338b1…`). Filed under three
+names as though they showed three states, they show one.
+
+Six of the thirteen are duplicates. Evidence that looks like more coverage than it is, is the same
+failure the last two audits made in their coverage counts — worth naming a third time, because it
+keeps happening in the summary rather than in the work.
+
+### 3. Independently re-verified by Claude, in the source
+
+- `unlockReason()` at `lib/course-gating.ts:188` returns `` `Finish ${prevTitle} to open this` `` —
+  a hardcoded English template with no i18n wrapping. **Confirmed.**
+- `lib/course-modules.ts` contains **zero** occurrences of `titleByLang` or `titleZu`. Every module
+  title and description is English-only. **Confirmed** — and this is the most valuable finding in
+  the report, because it is invisible from the narration files: the course *content* is
+  translated, and the portal *around* it is not. An isiZulu-first learner meets an English list.
+- **66 quiz questions** across 10 modules, **0 `correct` indices out of range. Confirmed.**
+  The stronger claim — that every `correct` option matches what its rationale describes — was
+  spot-checked on several questions and held, but was not exhaustively re-verified here.
+  `tests/course-authoring.test.ts` already guards the range; it does not guard the meaning.
