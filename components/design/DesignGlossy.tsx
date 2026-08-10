@@ -171,25 +171,33 @@ function clearPersistedJobId(siteId: string) {
   try { localStorage.removeItem(queueJobKey(siteId)); } catch { /* ignore */ }
 }
 /**
- * THE AI FINISHES ARE SHELVED, NOT DELETED. Rory, 2026-08-10: "Yeah shelve it but don't delete it
- * I may decide to look at it again later."
+ * TWO FINISHES, AND ONLY TWO. Rory, 2026-08-10: "I just want an exact version for now and a ai
+ * render polished version also those 2 because you haven't been able to fix the hybrid properly and
+ * messes the ai polished version too."
  *
- * Why: a paid Full Treatment sheet came back with no labels and no legend at all, and a boundary
- * that read as stamped on rather than drawn. That is structural, not a tuning miss — the second
- * paid pass is handed the ALREADY-COMPOSED sheet (legend panel, every label, title block, north
- * arrow, scale bar) and fullTreatmentProtectPolicy() byte-locks only the boundary, so an image
- * model that cannot render small text is asked to repaint a page covered in it, and erases it.
- * Meanwhile the deterministic Exact path has absorbed all of the sheet-quality work — painted
- * canopies, roofs, staple fields, vetiver, beds, labels, legends — instantly, free and identically
- * every time. lib/render-difference.ts exists because the paid pass repeatedly returned a picture
- * indistinguishable from its input.
+ * So the picker offers Exact Canvas and ONE paid AI render, and what is shelved is the SECOND paid
+ * pass — the tier this file calls Full Treatment.
  *
- * What shelving means, precisely: the paid finishes are not OFFERED, so no farmer spends a render
- * on them. Every line of the hybrid/polish pipeline stays exactly where it is, and every paid sheet
- * already in a gallery still opens, downloads and shares — shelving must never orphan work that has
- * been paid for. Flip this to false (or open the studio with ?aifinish=1) to bring them back.
+ * WHY THAT IS THE RIGHT CUT, AND NOT AN ARBITRARY ONE. The two paid tiers fail in completely
+ * different places. The single pass paints the MAP ARTWORK ONLY and hands it straight back, and the
+ * app then locks its own boundary, plant labels, legend panel, title block, north arrow and scale
+ * bar on top of it — the app draws every word on the sheet, and the model never sees any of them.
+ * The second pass is the one that is handed a FINISHED PICTURE and asked to improve it, and an image
+ * model that cannot reproduce 9px type repaints a page covered in it and erases it. That is exactly
+ * the sheet Rory reviewed — "Planting · Photo Plan · AI polished · Geometry locked", delivered with
+ * no plant labels, no legend and a boundary that read as stamped on. It is structural, not a tuning
+ * miss, and lib/render-difference.ts exists because that same pass also kept returning a picture
+ * indistinguishable from the one it was given. Two paid renders, and the second one is the one that
+ * takes the sheet apart.
+ *
+ * WHAT SHELVING MEANS, PRECISELY, AND WHAT IT MUST NEVER MEAN. Rory, on this same tier: "shelve it
+ * but don't delete it I may decide to look at it again later." Full Treatment is not OFFERED, so
+ * nobody spends a second render on it. Every line of the polish pipeline stays exactly where it is,
+ * and every paid sheet already sitting in a gallery — hybrid and ai-polished alike — still opens,
+ * downloads and shares. Shelving must never orphan work that has been paid for. Flip this to false
+ * (or open the studio with ?aifinish=1) to put the second pass back in the picker.
  */
-const AI_FINISHES_SHELVED = true;
+const SECOND_POLISH_PASS_SHELVED = true;
 
 const GOLD = '#F7C97E';
 const GREEN = '#1F4D2B';
@@ -11314,10 +11322,11 @@ export default function DesignGlossy({
     if (underlay === 'photo' && !hasFarmerPhoto(frameProp)) setUnderlay('satellite');
   }, [underlay, frameProp]);
   const underlayOptions = useMemo(() => sheetUnderlayOptions(frameProp), [frameProp]);
-  // Escape hatch so the shelved finishes can be looked at again without a redeploy — the whole
-  // pipeline is still here, it is only unadvertised. See AI_FINISHES_SHELVED.
-  const aiFinishesVisible = useMemo(() => {
-    if (!AI_FINISHES_SHELVED) return true;
+  // Escape hatch so the shelved SECOND paid pass can be looked at again without a redeploy — the
+  // whole polish pipeline is still here, it is only unadvertised. See SECOND_POLISH_PASS_SHELVED.
+  // This gates Full Treatment ALONE: the single AI render is a standing finish and never consults it.
+  const fullTreatmentVisible = useMemo(() => {
+    if (!SECOND_POLISH_PASS_SHELVED) return true;
     if (typeof window === 'undefined') return false;
     return new URLSearchParams(window.location.search).get('aifinish') === '1';
   }, []);
@@ -14691,7 +14700,8 @@ export default function DesignGlossy({
 
       {selectedSheet && (
         <div style={{ padding: '10px 12px', borderRadius: 12, border: '1px solid rgba(31,77,43,0.24)', background: 'rgba(31,77,43,0.06)', fontSize: 12.5, lineHeight: 1.45 }}>
-          <strong>{t('designGlossyChooseFinish')}</strong> {aiFinishesVisible ? t('designGlossyFinishHelp') : t('designGlossyFinishHelpExactOnly')}
+          <strong>{t('designGlossyChooseFinish')}</strong> {t('designGlossyFinishHelp')}
+          {fullTreatmentVisible ? ` ${t('designGlossyFinishHelpFullTreatment')}` : ''}
         </div>
       )}
 
@@ -14717,18 +14727,19 @@ export default function DesignGlossy({
           <Gem size={30} color={GOLD} />
           <strong style={{ fontSize: 19 }}>
             {(() => {
+              // 2 steps on the offered finish, 3 only when the shelved second pass is in play.
               const total = polishAfterHybridRef.current || lockedPolishStage === 'polish' ? 3 : 2;
               if (lockedPolishStage === 'exact') return `Step 1 of ${total} · locking the exact map`;
-              if (lockedPolishStage === 'hybrid') return `Step 2 of ${total} · painting the AI hybrid underlayer`;
-              return `Step 3 of 3 · polishing the AI hybrid in ${lockedPolishStyleLabel}`;
+              if (lockedPolishStage === 'hybrid') return `Step 2 of ${total} · painting the AI ${lockedPolishStyleLabel} artwork`;
+              return `Step 3 of 3 · second AI polish pass in ${lockedPolishStyleLabel}`;
             })()}
           </strong>
           <span style={{ maxWidth: 620, fontSize: 13.5, lineHeight: 1.55, opacity: 0.86 }}>
             {lockedPolishStage === 'exact'
               ? 'The accurate master is being saved to Saved maps. It will not replace your chosen style.'
               : lockedPolishStage === 'hybrid'
-              ? `Your exact master is safe. gpt-image-2 is painting the ${lockedPolishStyleLabel} underlayer, then your exact elements lock back on top.`
-              : `Your exact master and AI hybrid are both safe. gpt-image-2 is now polishing the complete hybrid sheet; only that finished AI image will replace this progress screen.`}
+              ? `Your exact master is safe. gpt-image-2 is painting the ${lockedPolishStyleLabel} map artwork — then your boundary, labels, legend, north arrow and scale bar are drawn back on top by the app, not by the model.`
+              : `Your exact master and your AI-polished sheet are both safe. gpt-image-2 is running a second pass over the finished artwork; only that finished AI image will replace this progress screen.`}
           </span>
         </div>
       )}
@@ -14834,16 +14845,17 @@ export default function DesignGlossy({
             </div>
           )}
           {/* Flip the SAME sheet between its AI and exact renders. From an exact result this is a
-              true one-tap polish: switch modes and immediately start the geometry-locked queue —
-              which is a PAID render, so while the finishes are shelved this direction is closed.
-              Flipping BACK to exact from an older AI result stays available: that spends nothing,
-              and a farmer looking at a sheet they already paid for must still be able to leave it. */}
-          {selectedSheet && (aiFinishesVisible || mode !== 'exact') && (
+              true one-tap polish: switch modes and immediately start the geometry-locked queue.
+              It spends ONE render, matching both the offered finish and the label on this button —
+              it used to start a Full Treatment while saying "1 AI render", which is two.
+              Flipping BACK to exact from an older AI result spends nothing, and a farmer looking at
+              a sheet they already paid for must always be able to leave it. */}
+          {selectedSheet && (
             <button
               type="button"
               onClick={() => {
                 if (mode === 'exact') {
-                  runLockedPolishFlow('full');
+                  runLockedPolishFlow('hybrid');
                   return;
                 }
                 setMode('exact');
@@ -15006,9 +15018,12 @@ export default function DesignGlossy({
             </div>
           )}
           {selectedSheet ? (
-          // The three modes every sheet supports: Exact Canvas (free), AI Hybrid (one paid render,
-          // stops there), Full Treatment (Hybrid, then a second paid render polishes it). Full
-          // Treatment always runs through Hybrid first — see runLockedPolishFlow/generateOneViaQueue.
+          // TWO finishes, always: Exact Canvas (free, instant) and AI Polished (one paid render —
+          // the model paints the map artwork, the app locks your labels, legend, boundary, title,
+          // north arrow and scale back on top). Full Treatment — the SECOND paid pass over that
+          // finished sheet — is shelved; see SECOND_POLISH_PASS_SHELVED for what it broke and why
+          // it is still here rather than deleted. Both offered buttons run the same guided flow, so
+          // the exact master is saved before a single cent is spent.
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 200px), 1fr))', gap: 10 }}>
             <button
               type="button"
@@ -15037,7 +15052,6 @@ export default function DesignGlossy({
                 {t('designGlossyExactCanvasHint')}
               </span>
             </button>
-            {aiFinishesVisible && (
             <button
               type="button"
               onClick={() => runLockedPolishFlow('hybrid')}
@@ -15049,15 +15063,18 @@ export default function DesignGlossy({
                 justifyContent: 'center',
                 gap: 3,
                 minHeight: 72,
-                padding: '11px 14px',
+                padding: '12px 14px',
                 borderRadius: 12,
-                border: `2px solid ${DARK}`,
-                background: 'rgba(31,77,43,0.06)',
+                // The paid finish carries the gold, because it is now one of exactly two choices and
+                // the only one that spends money — it must read as the deliberate, premium action
+                // rather than as an afterthought beside the free button.
+                border: 'none',
+                background: GOLD,
                 color: DARK,
                 fontWeight: 800,
                 fontSize: 14,
                 cursor: loading !== null ? 'default' : 'pointer',
-                opacity: loading !== null ? 0.55 : 1,
+                opacity: loading !== null ? 0.7 : 1,
               }}
             >
               <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>{resultImage ? <RefreshCw size={16} /> : <Gem size={16} />} {t('designGlossyAiHybrid')}</span>
@@ -15065,8 +15082,7 @@ export default function DesignGlossy({
                 {t('designGlossyAiHybridHint')}
               </span>
             </button>
-            )}
-            {aiFinishesVisible && (
+            {fullTreatmentVisible && (
             <button
               type="button"
               onClick={() => runLockedPolishFlow('full')}
@@ -15078,15 +15094,17 @@ export default function DesignGlossy({
                 justifyContent: 'center',
                 gap: 3,
                 minHeight: 72,
-                padding: '12px 14px',
+                padding: '11px 14px',
                 borderRadius: 12,
-                border: 'none',
-                background: GOLD,
+                // Deliberately the quieter button: it is only reachable behind ?aifinish=1, for
+                // reviewing the shelved second pass, and must not out-shout the offered finish.
+                border: `2px solid ${DARK}`,
+                background: 'rgba(31,77,43,0.06)',
                 color: DARK,
                 fontWeight: 800,
                 fontSize: 14,
                 cursor: loading !== null ? 'default' : 'pointer',
-                opacity: loading !== null ? 0.7 : 1,
+                opacity: loading !== null ? 0.55 : 1,
               }}
             >
               <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>{resultImage ? <RefreshCw size={16} /> : <Gem size={16} />} {t('designGlossyFullTreatment')}</span>

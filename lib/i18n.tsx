@@ -333,9 +333,12 @@ const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   designGlossyStyle: 'Style',
   designGlossyRecommended: 'Recommended',
   designGlossyChooseFinish: 'Choose your finish below.',
-  designGlossyFinishHelp: 'Exact Canvas is free and instant. AI Hybrid saves the exact geometry-locked master, then spends one paid AI render on a painted underlayer with your exact elements locked back on top. Full Treatment does that, then spends a second paid AI render polishing the finished hybrid. None of these choices ever change your canvas design.',
-  // Shown while the AI finishes are shelved (AI_FINISHES_SHELVED in DesignGlossy).
-  designGlossyFinishHelpExactOnly: 'Exact Canvas is free and instant, and it draws every label, legend and line at full sheet resolution. It never changes your canvas design.',
+  // Two finishes are offered. Say what each one costs and who draws the words on the sheet — that
+  // second point is the whole reason the paid finish is trustworthy: the model never touches type.
+  designGlossyFinishHelp: 'Exact Canvas is free and instant, and draws every label, legend and line at full sheet resolution. AI Polished saves that exact master first, then spends one paid AI render painting the map artwork — your boundary, labels, legend, title block, north arrow and scale bar are drawn back on top by the app afterwards, never by the model. Neither choice ever changes your canvas design.',
+  // Appended only when the shelved second pass is revealed with ?aifinish=1 — see
+  // SECOND_POLISH_PASS_SHELVED in DesignGlossy for why it is not offered.
+  designGlossyFinishHelpFullTreatment: 'Full Treatment is shelved and shown here for review only: it runs AI Polished, then spends a second paid render over the finished artwork.',
   designGlossyExactAlt: 'Exact plan sheet of the design',
   designGlossyAiAlt: 'AI artist’s impression of the design',
   designGlossyBeta: 'Beta — may need a re-try',
@@ -356,10 +359,14 @@ const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   designGlossyFinishHeading: 'Choose your finish',
   designGlossyExactCanvas: 'Exact Canvas',
   designGlossyExactCanvasHint: 'Straight canvas render · instant · no AI cost',
-  designGlossyAiHybrid: 'AI Hybrid',
-  designGlossyAiHybridHint: 'AI underlayer + your exact elements on top · 1 paid render',
-  designGlossyFullTreatment: 'Full Treatment',
-  designGlossyFullTreatmentHint: 'Hybrid, then a 2nd AI polish pass · 2 paid renders',
+  // The KEY still says Hybrid because 'hybrid' is the internal stage name everywhere — in the render
+  // queue, in stored provenance and in every gallery entry already saved. Only the words a farmer
+  // reads changed: "AI Hybrid" described the plumbing, not the result. Renaming the key would
+  // relabel sheets that have already been paid for.
+  designGlossyAiHybrid: 'AI Polished',
+  designGlossyAiHybridHint: 'AI-painted artwork · your labels & legend on top · 1 paid render',
+  designGlossyFullTreatment: 'Full Treatment (shelved)',
+  designGlossyFullTreatmentHint: 'A 2nd AI pass over the finished sheet · 2 paid renders',
   designGlossyGotIt: 'Got it',
   designGlossyCloseSaved: 'Close saved maps',
   designGlossyInspectFullScreen: 'Tap the map to inspect it full screen',

@@ -59,7 +59,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       'Vetiver looks ragged and real, and berms have grassy edges',
       'Underlay always offers all three: your photo, satellite, or plain paper',
       'Your design now shows on the farmer map, read-only',
-      'AI sheet finishes are shelved for now — the exact sheets do the work',
+      'Two finishes on every sheet — Exact Canvas, free and instant, or AI Polished for one paid render',
       'Sheet labels and legend are never handed to the AI, so they stay sharp',
       'The labels and underlay buttons fit properly on a phone now',
     ],
