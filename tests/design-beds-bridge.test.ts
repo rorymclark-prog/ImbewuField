@@ -173,3 +173,27 @@ test('tasksForPlan wording: a bed with no kind field (every plan built before Pl
   const [prep] = tasksForPlan(plantings, beds).filter((t) => t.action === 'prep');
   assert.match(prep.prepText!, /assess soil and drainage/);
 });
+
+test('a circular bed is measured as a circle, not as its bounding square', () => {
+  // A 2 m keyhole bed's footprint is π × 1² = 3.14 m², not 4.0. The old bounding-square figure
+  // was priced at the per-m² bed rate (R480 against R377 — 27% high) AND used by the crop planner
+  // to size plantings, so the farmer was told the bed both costs more and holds more than it does.
+  const beds = bedsFromDesignCanvas({
+    siteId: 'site',
+    frame: { imgW: 100, imgH: 100, mPerPx: 1 } as DesignCanvasState['frame'],
+    items: [
+      { id: 'k', defId: 'keyhole_bed', x: 0.5, y: 0.5 },
+      { id: 'v', defId: 'veg_bed', x: 0.2, y: 0.2, wM: 2, hM: 2 },
+    ] as DesignCanvasState['items'],
+    zones: [],
+    lines: [],
+    step: 'base' as DesignCanvasState['step'],
+    updatedAt: '2026-08-10T00:00:00.000Z',
+  });
+  const keyhole = beds.find((bed) => bed.id === 'k');
+  const rect = beds.find((bed) => bed.id === 'v');
+  assert.equal(keyhole?.areaM2, 3.1, 'circular defs use π r², not the bounding square');
+  assert.equal(rect?.areaM2, 4, 'a rectangular bed of the same extent is unchanged');
+  // Reach is measured ACROSS the bed, so the circle's min dimension stays its diameter.
+  assert.equal(keyhole?.minDimM, 2);
+});
