@@ -405,3 +405,88 @@ test('deterministic exact sheets never carry a quality suffix', () => {
   assert.ok(/const isPaidMapKey = [^;]*Boolean\(producerStyle\)/.test(GLOSSY_SRC),
     'isPaidMapKey stopped requiring a producer style — exact sheets would start splitting caches');
 });
+
+// ── Resume-attempt budget ─────────────────────────────────────────────────────
+//
+// Re-attaching to a FINISHED job runs the heaviest client path in the app, and when iOS kills the
+// page for memory mid-finish, the reload finds the same persisted job id and re-runs it — a crash
+// LOOP that ends in Safari's "A problem repeatedly occurred", the design URL bricked (Rory's
+// 10 August screenshot). The budget below is what turns that into "that render didn't open".
+
+import {
+  RENDER_RESUME_ATTEMPT_LIMIT,
+  clearResumeAttempts,
+  recordResumeAttempt,
+  resumeAttemptsExhausted,
+  type ResumeAttemptStore,
+} from '../lib/render-jobs.ts';
+
+function memoryStore(seed: Record<string, string> = {}): ResumeAttemptStore & { map: Map<string, string> } {
+  const map = new Map(Object.entries(seed));
+  return {
+    map,
+    getItem: (k) => map.get(k) ?? null,
+    setItem: (k, v) => { map.set(k, v); },
+    removeItem: (k) => { map.delete(k); },
+  };
+}
+
+test('resume attempts count up per site and clear back to a fresh budget', () => {
+  const store = memoryStore();
+  assert.equal(recordResumeAttempt(store, 'site:a'), 1);
+  assert.equal(recordResumeAttempt(store, 'site:a'), 2);
+  assert.equal(recordResumeAttempt(store, 'site:b'), 1, 'sites must not share a crash budget');
+  clearResumeAttempts(store, 'site:a');
+  assert.equal(recordResumeAttempt(store, 'site:a'), 1, 'clearing must restore the full budget');
+  assert.equal(recordResumeAttempt(store, 'site:b'), 2, 'clearing one site must not touch another');
+});
+
+test('the budget allows its limit of automatic resumes and then refuses', () => {
+  // The walk a crashing phone actually takes: each reload records an attempt BEFORE re-attaching
+  // (a killed page records nothing after), so the pointer survives exactly LIMIT resumes.
+  const store = memoryStore();
+  for (let reload = 1; reload <= RENDER_RESUME_ATTEMPT_LIMIT; reload++) {
+    assert.equal(resumeAttemptsExhausted(recordResumeAttempt(store, 'site:x')), false,
+      `reload ${reload} is within budget and must re-attach`);
+  }
+  assert.equal(resumeAttemptsExhausted(recordResumeAttempt(store, 'site:x')), true,
+    'the reload after the budget must NOT re-attach — this is the crash-loop breaker');
+});
+
+test('garbage or unavailable storage behaves like a first attempt, never like exhaustion', () => {
+  // Refusing to resume is the drastic branch; nothing unproven may route into it.
+  for (const junk of ['junk', '-3', 'NaN', '']) {
+    const store = memoryStore({ 'imbewu_render_job_attempts_site:x': junk });
+    assert.equal(recordResumeAttempt(store, 'site:x'), 1, `stored ${JSON.stringify(junk)} must reset, not brick`);
+  }
+  const broken: ResumeAttemptStore = {
+    getItem: () => { throw new Error('storage unavailable'); },
+    setItem: () => { throw new Error('storage unavailable'); },
+    removeItem: () => { throw new Error('storage unavailable'); },
+  };
+  assert.equal(recordResumeAttempt(broken, 'site:x'), 1);
+  assert.doesNotThrow(() => clearResumeAttempts(broken, 'site:x'));
+});
+
+test('the Studio charges the budget before re-attaching and retires it on every terminal path', () => {
+  // The order is the point: recordResumeAttempt must run BEFORE setQueueJobId arms the
+  // subscription, because a page killed mid-finish never reaches the code after.
+  const effect = GLOSSY_SRC.slice(
+    GLOSSY_SRC.indexOf('const stored = readPersistedJobId(state.siteId)'),
+  );
+  const charge = effect.indexOf('recordResumeAttempt(');
+  const attach = effect.indexOf('setQueueJobId(stored)');
+  assert.ok(charge > 0, 'the mount-resume no longer records an attempt — the crash loop is back');
+  assert.ok(attach > charge, 'the attempt must be recorded BEFORE re-attaching, not after');
+  // Refusal must clear the pointer AND explain — a silent refusal looks like a lost render.
+  const refusal = effect.slice(0, attach);
+  assert.ok(refusal.includes('resumeAttemptsExhausted('), 'the budget check is gone');
+  assert.ok(refusal.includes('clearPersistedJobId(state.siteId)'),
+    'an exhausted job must clear its pointer or every visit re-hits the budget message');
+  assert.ok(refusal.includes("designGlossyResumeGaveUp"), 'the farmer must be told, not left guessing');
+  // Both pointer helpers retire the count: a finished job and a fresh job each reset the budget.
+  const persistFn = GLOSSY_SRC.slice(GLOSSY_SRC.indexOf('function persistJobId('), GLOSSY_SRC.indexOf('function readPersistedJobId('));
+  const clearFn = GLOSSY_SRC.slice(GLOSSY_SRC.indexOf('function clearPersistedJobId('), GLOSSY_SRC.indexOf('const resumeAttemptChargedThisPageLoad'));
+  assert.ok(persistFn.includes('clearResumeAttempts('), 'a new job must start with a full budget');
+  assert.ok(clearFn.includes('clearResumeAttempts('), 'terminal paths must retire the count');
+});

@@ -127,6 +127,59 @@ export interface RenderJobDoc {
 
 export class RenderJobError extends Error {}
 
+// ── Resume-attempt budget ─────────────────────────────────────────────────────
+//
+// DesignGlossy persists the active job id so a reload can re-attach to a render that takes
+// minutes. But re-attaching to a FINISHED job runs the heaviest client path in the app — download
+// the output, the input and the mask, pixel-diff them, reassemble the sheet — and on 10 August
+// that path is exactly what iOS was killing for memory. The kill reloads the page, the reload
+// finds the same persisted job id, re-runs the same path, and dies the same way, until Safari
+// gives up with "A problem repeatedly occurred" — the app bricked on that URL with no way out
+// but clearing site data.
+//
+// So automatic re-attachment is BUDGETED. Every resume attempt is recorded BEFORE it runs (a
+// killed page cannot record anything after); completing or abandoning the job clears the count.
+// A job that has already burned the budget is not resumed — the pointer is cleared and the
+// farmer is told plainly, which turns "my app is broken" into "that render didn't open".
+// The limit is 2: one legitimate reconnect after an innocent reload, one retry for luck.
+
+export const RENDER_RESUME_ATTEMPT_LIMIT = 2;
+
+/** The one slice of Storage these helpers touch — injectable so the policy is testable. */
+export interface ResumeAttemptStore {
+  getItem(key: string): string | null;
+  setItem(key: string, value: string): void;
+  removeItem(key: string): void;
+}
+
+const resumeAttemptsKey = (siteId: string) => `imbewu_render_job_attempts_${siteId}`;
+
+/** Record one resume attempt and return the new total. Call BEFORE re-attaching. */
+export function recordResumeAttempt(store: ResumeAttemptStore, siteId: string): number {
+  try {
+    const raw = Number(store.getItem(resumeAttemptsKey(siteId)));
+    const next = (Number.isFinite(raw) && raw > 0 ? Math.floor(raw) : 0) + 1;
+    store.setItem(resumeAttemptsKey(siteId), String(next));
+    return next;
+  } catch {
+    return 1; // storage unavailable: behave like a first attempt rather than refusing to resume
+  }
+}
+
+/** Forget the count — the job completed, failed cleanly, or its pointer was cleared. */
+export function clearResumeAttempts(store: ResumeAttemptStore, siteId: string): void {
+  try {
+    store.removeItem(resumeAttemptsKey(siteId));
+  } catch {
+    /* ignore */
+  }
+}
+
+/** True once the budget is spent: this attempt (and every later one) must not auto-resume. */
+export function resumeAttemptsExhausted(attempts: number): boolean {
+  return attempts > RENDER_RESUME_ATTEMPT_LIMIT;
+}
+
 const IMAGE_DATA_URL = /^data:image\/(?:png|jpeg);base64,([A-Za-z0-9+/]+={0,2})$/;
 const SHEET_STATUSES = new Set<RenderSheetStatus>(['queued', 'running', 'done', 'error']);
 const JOB_STATUSES = new Set<RenderJobStatus>(['queued', 'running', 'complete', 'failed', 'error']);

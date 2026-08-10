@@ -1557,3 +1557,40 @@ test('oversized paid API bodies are rejected before parsing', () => {
   });
   assert.equal(oversizedApiBodyResponse(req, '/api/paid')?.status, 413);
 });
+
+// ── Difference measurement runs small ─────────────────────────────────────────
+//
+// measureRenderDifference used to rasterise three full-sheet images into three canvases plus
+// three RGBA buffers (~60 MB alive at once) inside the render-completion path — the same path iOS
+// was killing for memory. The report is fractions and means, resolution-independent statistics,
+// and every image gets the IDENTICAL downscale, so a model that returned its input still scores
+// as an exact copy. These tests pin the size the comparison actually runs at.
+
+test('the difference measurement caps its raster at MEASURE_MAX_DIMENSION', async () => {
+  const { MEASURE_MAX_DIMENSION, measureCompareSize } = await import('../lib/image-producer.ts');
+  // Under the cap: compared at native size — no needless resampling of small images.
+  assert.deepEqual(measureCompareSize(800, 600), { width: 800, height: 600 });
+  // The real case: a High-quality sheet master. Proportional, longest side at the cap.
+  const sheet = measureCompareSize(2730, 1930);
+  assert.equal(Math.max(sheet.width, sheet.height), MEASURE_MAX_DIMENSION);
+  assert.ok(Math.abs(sheet.width / sheet.height - 2730 / 1930) < 0.01, 'aspect must survive the cap');
+  // Degenerate inputs never produce a 0-sized canvas (getImageData throws on those).
+  assert.deepEqual(measureCompareSize(0, 0), { width: 1, height: 1 });
+  // The cap itself: small enough to matter on a phone, big enough that a visible redraw
+  // cannot vanish into resampling.
+  assert.ok(MEASURE_MAX_DIMENSION >= 512 && MEASURE_MAX_DIMENSION <= 1920);
+});
+
+test('every pixel-extraction canvas in the producer is released, not leaked', () => {
+  const src = readFileSync(new URL('../lib/image-producer.ts', import.meta.url), 'utf8');
+  // No one-shot canvas may hand back its data URL while keeping its buffer alive until GC.
+  assert.doesNotMatch(src, /return canvas\.toDataURL\(/,
+    'a one-shot canvas is leaking its backing store — use drainCanvasToDataUrl');
+  assert.doesNotMatch(src, /return outCanvas\.toDataURL\(/,
+    'the restore output canvas is leaking its backing store — use drainCanvasToDataUrl');
+  // Each getImageData extraction is followed by a synchronous release: the RGBA copy is what the
+  // caller keeps; the canvas that produced it is scratch and must not wait for GC on a phone.
+  const extractions = src.match(/getImageData\(0, 0, [^)]*\)\.data;\n\s*releaseCanvas\(/g) ?? [];
+  assert.ok(extractions.length >= 3,
+    `expected the measure/restore/blank-detector scratch canvases to be released; found ${extractions.length}`);
+});

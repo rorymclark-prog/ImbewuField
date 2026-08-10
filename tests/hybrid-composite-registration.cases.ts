@@ -40,7 +40,15 @@ class RasterCanvas {
     return kind === '2d' ? this.context : null;
   }
 
+  /** The pixels as they stood when toDataURL ran. A real canvas encodes AT CALL TIME, and the
+   *  production code drains (zeroes) each canvas right after extracting its picture — so the
+   *  canvas object itself is empty by the time a test can look. Asserting on this snapshot is
+   *  asserting on what actually left the canvas, and it fails if anything releases before it
+   *  reads. */
+  encoded: { width: number; height: number; data: Uint8ClampedArray } | null = null;
+
   toDataURL(): string {
+    this.encoded = { width: this.width, height: this.height, data: this.data.slice() };
     return 'data:image/png;base64,synthetic-registration';
   }
 
@@ -228,8 +236,8 @@ for (const sheet of ['masterplan', 'water layer'] as const) {
         height: 16,
       });
 
-      const output = canvases.at(-1);
-      assert.ok(output);
+      const output = canvases.at(-1)?.encoded;
+      assert.ok(output, 'the composite never encoded a picture — drained before toDataURL?');
       for (const [x, y] of HYBRID_EXPECTED_CORNERS) {
         assertColorWithinOnePixel(output, x, y, EXACT);
       }
@@ -260,8 +268,8 @@ for (const sheet of ['masterplan', 'water layer'] as const) {
         asImageInput(protectMask),
       );
 
-      const output = canvases.at(-1);
-      assert.ok(output);
+      const output = canvases.at(-1)?.encoded;
+      assert.ok(output, 'the restore never encoded a picture — drained before toDataURL?');
       // Scaling 24×16 source/mask to the square 20×20 response maps those same normalised ground
       // corners to these pixels. Exact and AI layers take the identical transform.
       for (const [x, y] of [[5, 5], [15, 5], [15, 15], [5, 15]] as const) {

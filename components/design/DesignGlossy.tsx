@@ -43,7 +43,7 @@ import {
 import { structureRegisterText } from '@/lib/structure-register';
 import { buildFinishedSheetPolishPrompt, buildLockedIllustrationPrompt, buildPhasingRestylePrompt, buildSatelliteOverlayPrompt, buildSectorRestylePrompt, buildSectorSheetPolishPrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, SHEET_NO, type StylePreset } from '@/lib/producer-prompt';
 import { zoneBadgePositions } from '@/lib/canvas-labels';
-import { enqueueRenderJob, subscribeRenderJob, fetchRenderOutput, qualityCacheSuffix, type RenderQuality } from '@/lib/render-jobs';
+import { enqueueRenderJob, subscribeRenderJob, fetchRenderOutput, qualityCacheSuffix, recordResumeAttempt, clearResumeAttempts, resumeAttemptsExhausted, type RenderQuality } from '@/lib/render-jobs';
 import type { RenderEngine } from '@/lib/render-job-contract';
 import { authoritativeHouseFootprints } from '@/lib/house-footprints';
 // Extracted (behaviour-preserving) — see lib/glossy-filters.ts and lib/producer-labels.ts.
@@ -164,12 +164,37 @@ const PAPER = '#FFFEFA';
 const queueJobKey = (siteId: string) => `imbewu_render_job_${siteId}`;
 function persistJobId(siteId: string, jobId: string) {
   try { localStorage.setItem(queueJobKey(siteId), jobId); } catch { /* ignore */ }
+  // A fresh job starts with a fresh resume budget — attempts burned by an earlier job must not
+  // count against this one. (Even reading `localStorage` can throw with cookies blocked.)
+  try { clearResumeAttempts(localStorage, siteId); } catch { /* ignore */ }
 }
 function readPersistedJobId(siteId: string): string | null {
   try { return localStorage.getItem(queueJobKey(siteId)); } catch { return null; }
 }
 function clearPersistedJobId(siteId: string) {
   try { localStorage.removeItem(queueJobKey(siteId)); } catch { /* ignore */ }
+  // Every terminal path funnels through here (success, failure, lost connection, TTL-deleted),
+  // which is what makes this the one right place to retire the resume-attempt count with it.
+  try { clearResumeAttempts(localStorage, siteId); } catch { /* ignore */ }
+}
+// The resume budget meters PAGE LOADS, not component mounts: hopping between Studio steps
+// re-mounts this component while a legitimate render is still running, and charging each hop
+// would spend the crash budget on innocent navigation. A memory-kill reload starts a fresh JS
+// context, so this module-level set is empty exactly when a new attempt should be charged.
+const resumeAttemptChargedThisPageLoad = new Set<string>();
+// The refusal itself happens ONCE (it clears the job pointer), but the component that showed its
+// message unmounts on every Studio step change — verified live: the banner state was gone by the
+// time the farmer reached the Glossy step. sessionStorage keeps the message standing across
+// remounts AND across the crash-reload that caused all this, until a new render replaces it.
+const resumeGaveUpKey = (siteId: string) => `imbewu_render_job_gave_up_${siteId}`;
+function markResumeGaveUp(siteId: string) {
+  try { sessionStorage.setItem(resumeGaveUpKey(siteId), '1'); } catch { /* ignore */ }
+}
+function readResumeGaveUp(siteId: string): boolean {
+  try { return sessionStorage.getItem(resumeGaveUpKey(siteId)) === '1'; } catch { return false; }
+}
+function clearResumeGaveUp(siteId: string) {
+  try { sessionStorage.removeItem(resumeGaveUpKey(siteId)); } catch { /* ignore */ }
 }
 /**
  * TWO FINISHES, AND ONLY TWO. Rory, 2026-08-10: "I just want an exact version for now and a ai
@@ -11373,6 +11398,11 @@ export default function DesignGlossy({
   // Non-alarming status line (green) — e.g. "used Gemini instead" after a gpt-image-2 fallback, or
   // "N sheets done" during Generate-all. Distinct from `error` so a SUCCESSFUL render never shows red.
   const [notice, setNotice] = useState<string | null>(null);
+  // The crash-loop breaker's message (see the budgeted resume effect below). Its OWN state, not
+  // `error`: the mount-settling effect keyed on [siteId, mapKey] wipes error/notice as the sheet
+  // and underlay defaults land, which erased this message before the farmer ever saw it. It stays
+  // up until a new render starts — the one action that makes it out of date.
+  const [resumeGaveUp, setResumeGaveUp] = useState<string | null>(null);
   // The active BACKGROUND render job (gpt-image-2 via the Cloud Function queue). null = none in flight.
   const [queueJobId, setQueueJobId] = useState<string | null>(null);
   // Kept for old persisted sessions and synchronous rollback code. New queue jobs derive authority
@@ -12101,6 +12131,8 @@ export default function DesignGlossy({
       const drawDesign = !(analysisStyle === 'sector' || analysisStyle === 'base');
       setLoading(useProvider);
       setError(null);
+      setResumeGaveUp(null); // a new render is starting; the give-up banner is out of date
+      clearResumeGaveUp(state.siteId);
       try {
         const composite = await buildComposite(state, frame, refLayers, compositeFilter, drawDesign);
         let image: string;
@@ -13982,6 +14014,9 @@ export default function DesignGlossy({
   // Stream the active job; finish each sheet as it completes; clear on a terminal status.
   useEffect(() => {
     if (!queueJobId) return;
+    // A render is genuinely under way (fresh or resumed) — the give-up banner is out of date.
+    setResumeGaveUp(null);
+    clearResumeGaveUp(state.siteId);
     const siteId = state.siteId;
     const finished = new Set<string>();
     // A sheet only counts as delivered once the BROWSER has assembled and stored it. The worker
@@ -14418,14 +14453,32 @@ export default function DesignGlossy({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queueJobId, state.siteId, pushGallery]);
 
-  // Re-attach to an in-flight job after a reload / tab reopen (renders take minutes).
+  // Re-attach to an in-flight job after a reload / tab reopen (renders take minutes) — but on a
+  // BUDGET. Finishing a job is the heaviest client path in the app, and when iOS kills the page
+  // for memory mid-finish, the reload lands right back here and re-runs it. Unbudgeted, that is a
+  // crash LOOP: kill → reload → same job → kill, until Safari's "A problem repeatedly occurred"
+  // bricks the design URL entirely (Rory's 10 August screenshot). The attempt is recorded BEFORE
+  // re-attaching, because a killed page gets no chance to record anything after.
   useEffect(() => {
+    // A refusal recorded by ANY earlier mount (or the page load before the crash-reload) keeps
+    // its banner standing — the component showing it remounts on every Studio step change.
+    if (readResumeGaveUp(state.siteId)) setResumeGaveUp(t('designGlossyResumeGaveUp'));
     const stored = readPersistedJobId(state.siteId);
-    if (stored) {
-      setLoading('falgpt');
-      setNotice(t('designGlossyReconnecting'));
-      setQueueJobId(stored);
+    if (!stored) return;
+    if (!resumeAttemptChargedThisPageLoad.has(state.siteId)) {
+      resumeAttemptChargedThisPageLoad.add(state.siteId);
+      let attempts = 1;
+      try { attempts = recordResumeAttempt(localStorage, state.siteId); } catch { /* ignore */ }
+      if (resumeAttemptsExhausted(attempts)) {
+        clearPersistedJobId(state.siteId);
+        markResumeGaveUp(state.siteId);
+        setResumeGaveUp(t('designGlossyResumeGaveUp'));
+        return;
+      }
     }
+    setLoading('falgpt');
+    setNotice(t('designGlossyReconnecting'));
+    setQueueJobId(stored);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.siteId]);
 
@@ -15253,6 +15306,17 @@ export default function DesignGlossy({
           </button>
         )}
         {error && <p style={{ color: '#B53A3A', fontSize: 13 }}>{error}</p>}
+        {/* Crash-loop breaker: this design's last render kept killing the page while being opened,
+            so automatic re-attachment stopped. Amber, not red — the app is healthy and nothing the
+            farmer did was wrong; they need the way forward, not an alarm. */}
+        {resumeGaveUp && (
+          <div
+            role="status"
+            style={{ display: 'flex', gap: 8, alignItems: 'flex-start', padding: '10px 12px', borderRadius: 10, background: '#FDF4E3', border: '1px solid #E8D5A8', color: DARK, fontSize: 13 }}
+          >
+            {resumeGaveUp}
+          </div>
+        )}
         {/* A paid pass that came back with nothing new. Amber, not red — nothing is broken and no
             work was lost; the farmer simply needs to know the second render did not earn its place,
             rather than being handed a copy of the map they already had and told it was polished. */}

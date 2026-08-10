@@ -18,6 +18,7 @@
 // over-painted out of existence. Accuracy is guaranteed by construction.
 
 import { compareRenders, type DifferenceReport } from '@/lib/render-difference';
+import { drainCanvasToDataUrl, releaseCanvas } from '@/lib/release-canvas';
 
 /** Either an image source (data URL / base64) or an already-decoded element. */
 export type ImageInput = string | HTMLImageElement;
@@ -376,6 +377,26 @@ export function countProtectedPixelMismatches(
   return mismatches;
 }
 
+/** Longest side the difference measurement rasterises at. The report is fractions and means —
+ *  resolution-independent statistics — and every image involved gets the IDENTICAL downscale, so
+ *  a model that returned its input still scores as an exact copy after resampling. What the cap
+ *  buys is memory: at full sheet size this comparison held three canvases plus three RGBA buffers
+ *  (~60 MB) alive at once, inside the render-completion path that iOS was already killing. */
+export const MEASURE_MAX_DIMENSION = 1024;
+
+/** The size the comparison actually runs at: proportional, capped, never below 1px. */
+export function measureCompareSize(
+  width: number,
+  height: number,
+  max = MEASURE_MAX_DIMENSION,
+): { width: number; height: number } {
+  const scale = Math.min(1, max / Math.max(1, width, height));
+  return {
+    width: Math.max(1, Math.round(width * scale)),
+    height: Math.max(1, Math.round(height * scale)),
+  };
+}
+
 /**
  * Did the paid pass actually redraw anything?
  *
@@ -383,9 +404,10 @@ export function countProtectedPixelMismatches(
  * against constructed images; this wrapper exists only because getting pixels out of a data URL
  * needs a canvas, and every other pixel comparison in this file already does it this way.
  *
- * Both images are rasterised at the OUTPUT's dimensions. A model that returns a different size is
- * self-evidently not returning its input, and rescaling to compare would invent differences that
- * are really just resampling.
+ * All images are rasterised at the SAME dimensions — the output's aspect at MEASURE_MAX_DIMENSION.
+ * A shared downscale cannot invent differences (identical images resample identically), while
+ * comparing at unequal sizes would. Full-resolution fidelity belongs to restoreProtectedPixels;
+ * this function only has to answer "did anything a human can see change".
  */
 export async function measureRenderDifference(
   inputImage: ImageInput,
@@ -398,8 +420,10 @@ export async function measureRenderDifference(
     protectMaskImage ? loadImage(protectMaskImage) : Promise.resolve(null),
   ]);
 
-  const width = output.naturalWidth || output.width;
-  const height = output.naturalHeight || output.height;
+  const { width, height } = measureCompareSize(
+    output.naturalWidth || output.width,
+    output.naturalHeight || output.height,
+  );
   const pixels = (img: HTMLImageElement) => {
     const canvas = document.createElement('canvas');
     canvas.width = width;
@@ -407,7 +431,9 @@ export async function measureRenderDifference(
     const ctx = canvas.getContext('2d');
     if (!ctx) throw new Error('measureRenderDifference: 2D context unavailable');
     ctx.drawImage(img, 0, 0, width, height);
-    return ctx.getImageData(0, 0, width, height).data;
+    const data = ctx.getImageData(0, 0, width, height).data;
+    releaseCanvas(canvas); // the RGBA copy is extracted; free the backing store now, not at GC
+    return data;
   };
 
   return compareRenders(pixels(input), pixels(output), mask ? { protectMask: pixels(mask) } : {});
@@ -434,7 +460,9 @@ export async function restoreProtectedPixels(
     const ctx = canvas.getContext('2d');
     if (!ctx) throw new Error('restore: 2D context unavailable');
     ctx.drawImage(img, 0, 0, width, height);
-    return ctx.getImageData(0, 0, width, height).data;
+    const data = ctx.getImageData(0, 0, width, height).data;
+    releaseCanvas(canvas); // the RGBA copy is extracted; free the backing store now, not at GC
+    return data;
   };
 
   const sourcePixels = drawToCanvas(source);
@@ -464,7 +492,7 @@ export async function restoreProtectedPixels(
   const imageData = outCtx.createImageData(width, height);
   imageData.data.set(blended);
   outCtx.putImageData(imageData, 0, 0);
-  return outCanvas.toDataURL('image/png');
+  return drainCanvasToDataUrl(outCanvas, 'image/png');
 }
 
 /**
@@ -491,6 +519,7 @@ export async function estimateBlankFraction(
     if (!cx) return 0;
     cx.drawImage(img, 0, 0, w, h);
     const d = cx.getImageData(0, 0, w, h).data;
+    releaseCanvas(c);
     // Boundary scaled into the small canvas' coordinate space.
     const pts = boundaryPx && boundaryPx.length >= 6
       ? boundaryPx.map((v, i) => (i % 2 === 0 ? (v / frameW) * w : (v / frameH) * h))
@@ -638,7 +667,7 @@ export async function compositeAccurateMap(inp: CompositeInputs): Promise<string
   // 4. True labels burned in-frame — hybrid-c identity + position guarantee.
   if (inp.labels && inp.labels.length) burnLabels(ctx, inp.labels, inp.labelStyle ?? 'clean');
 
-  return canvas.toDataURL('image/png');
+  return drainCanvasToDataUrl(canvas, 'image/png');
 }
 
 /**
