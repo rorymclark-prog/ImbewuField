@@ -7,6 +7,7 @@ import {
   parseReportMarkdown,
   reportPdfFilename,
   stripInlineMarkdown,
+  hasOwnCover,
   type ReportBlock,
 } from '../lib/report-pdf.ts';
 
@@ -127,4 +128,29 @@ test('the report header lets every action wrap instead of running off a phone sc
   const toolbar = src.slice(src.indexOf('{/* ── Toolbar'), src.indexOf('{/* ── Section controls'));
   assert.ok(/flex-wrap/.test(toolbar), 'the toolbar row must wrap so no action lands off-screen at 375px');
   assert.ok(!/\boverflow-x-auto\b/.test(toolbar), 'the fix must not be a horizontally scrolling toolbar');
+});
+
+test('a document with its own cover does not get a second one drawn above it', () => {
+  // The exported PDF carried two covers with two different titles: a hardcoded "Permaculture Site
+  // Analysis Report" block, then the report's own code-authored cover rendered as body markdown
+  // below it. The report on screen has exactly one. Found by Codex's report-document audit.
+  assert.equal(hasOwnCover(SAMPLE), true);
+  assert.equal(hasOwnCover('# Permaculture Site Report — Ubhejane Creche\n\n| Field | Detail |'), true);
+
+  // Leading blank lines and a stray BOM must not hide the heading — a false negative here brings
+  // the double cover straight back.
+  assert.equal(hasOwnCover('\n\n\n# Title\n'), true);
+});
+
+test('a report saved before the cover existed still gets one', () => {
+  // The reason this is a conditional and not a deletion. These documents open straight into a
+  // section heading; without the built-in block they would export with no cover at all.
+  assert.equal(hasOwnCover('## Executive Summary\n\nThe site is...'), false);
+  assert.equal(hasOwnCover('Some preamble paragraph.\n\n# Later Heading'), false);
+  assert.equal(hasOwnCover(''), false);
+});
+
+test('a hash that is not a heading is not a cover', () => {
+  assert.equal(hasOwnCover('#hashtag not a heading'), false);
+  assert.equal(hasOwnCover('## Section'), false);
 });
