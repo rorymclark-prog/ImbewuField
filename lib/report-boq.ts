@@ -209,7 +209,16 @@ function areaQty(n: number): string {
   return `${groupDigits(n)} m²`;
 }
 
-/** Existing items are recorded, not billed. 'mixed' is billed — part of it is still to build. */
+/**
+ * Existing items are recorded, not billed. 'mixed' is billed — part of it is still to build.
+ *
+ * Right in principle, and it used to be wrong in amount: a mixed group arrived carrying only a
+ * COMBINED count, so billing it charged for the existing units too — one tank already standing
+ * and one to buy quoted R14,000 against a R7,000 build. Fresh reports no longer produce 'mixed'
+ * at all, because summariseDesignStudio now groups by status, so counts arrive already separated.
+ * This branch stays for saved reports written before that split, where the information needed to
+ * bill only the proposed share was never recorded and cannot be recovered here.
+ */
 function isExisting(status: FactStatus): boolean {
   return status === 'existing';
 }

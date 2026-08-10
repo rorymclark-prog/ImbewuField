@@ -21,12 +21,16 @@ import { GROUND_FEATURES, ELEMENTS_BY_ID } from '@/lib/design-elements';
 
 export interface StudioElementGroup {
   /** Display name — the farmer's own label when they renamed the item, else the catalog name.
-   *  Same grouping rule the sheet legends use, so the report and the plan sheets agree. */
+   *  A group is one catalog id, one status and one display name; see the grouping note below for
+   *  why all three, and what a farmer was billed when it was the name alone. */
   name: string;
   defId: string;
   category: string;
   count: number;
-  /** 'existing' | 'proposed' | 'mixed' — mixed when one name covers both. */
+  /** 'existing' or 'proposed'. NO LONGER 'mixed': status is part of the grouping key, so a name
+   *  covering both now yields two groups with honest counts instead of one lump the BOQ had to
+   *  bill whole. 'mixed' stays in the type because report-site-facts validates saved reports
+   *  written before this split, and report-boq must keep handling them. */
   status: 'existing' | 'proposed' | 'mixed';
 }
 
@@ -95,22 +99,44 @@ export function summariseDesignStudio(state: DesignCanvasState): StudioReportSum
   const wMetres = state.frame.imgW * mPerPx;
   const hMetres = state.frame.imgH * mPerPx;
 
-  // ── Elements, grouped by display name (label ?? catalog name — the legend's own rule) ──
-  const byName = new Map<string, StudioElementGroup>();
+  // ── Elements, grouped by CATALOG ID + STATUS + display name ──
+  //
+  // THIS GROUPING IS THE BILL OF QUANTITIES' INPUT — report-site-facts-collect builds both
+  // facts.design.elements and facts.water.tanks from it — so whatever it merges, a farmer pays
+  // for. It used to key on the display name alone, which lost two things the BOQ cannot recover:
+  //
+  //  1. THE STATUS SPLIT. One name covering an existing tank and a proposed one collapsed into a
+  //     single group of 2 marked 'mixed'. report-boq bills 'mixed' deliberately — "part of it is
+  //     still to build" — but given only a combined count it billed BOTH. A farmer with one tank
+  //     already standing and one to buy read R14,000 where the build cost was R7,000, and could
+  //     go looking for finance for a tank they already own.
+  //  2. THE CATALOG IDENTITY. The first item's defId was kept for the whole group, so renaming a
+  //     citrus and an avocado both to "Fruit tree" priced both at whichever happened to be placed
+  //     first — placement order changing the quoted money. report-site-facts-collect passes that
+  //     defId along specifically "so the BOQ prices off a stable key rather than a display name
+  //     the farmer is free to change"; grouping by name defeated the very protection it describes.
+  //
+  // The display name stays IN the key, so a farmer who names two citrus trees separately still
+  // gets two rows — splitting by id and status must never silently merge names they chose apart.
+  // JSON.stringify over the triple rather than a joined string: it escapes quotes, so no
+  // farmer label can be crafted to collide with another group’s key. (A control-character
+  // separator also works and was the first attempt — but a NUL byte makes git treat this
+  // source file as BINARY, which silently costs every future reviewer the diff.)
+  const byIdentity = new Map<string, StudioElementGroup>();
   for (const it of state.items) {
     const def = ELEMENTS_BY_ID[it.defId];
     if (!def) continue; // an unknown defId must vanish here exactly as it does on the sheets
     const name = it.label?.trim() || def.name;
     const status: 'existing' | 'proposed' = it.status === 'existing' ? 'existing' : 'proposed';
-    const group = byName.get(name);
+    const key = JSON.stringify([def.id, status, name]);
+    const group = byIdentity.get(key);
     if (!group) {
-      byName.set(name, { name, defId: def.id, category: def.category, count: 1, status });
+      byIdentity.set(key, { name, defId: def.id, category: def.category, count: 1, status });
     } else {
       group.count += 1;
-      if (group.status !== status) group.status = 'mixed';
     }
   }
-  const elements = [...byName.values()].sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
+  const elements = [...byIdentity.values()].sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
   const planted = elements.filter((group) => group.category === 'growing');
 
   // ── Routes, grouped by kind ──
