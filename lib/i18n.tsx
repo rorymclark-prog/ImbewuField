@@ -334,6 +334,8 @@ const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   designGlossyRecommended: 'Recommended',
   designGlossyChooseFinish: 'Choose your finish below.',
   designGlossyFinishHelp: 'Exact Canvas is free and instant. AI Hybrid saves the exact geometry-locked master, then spends one paid AI render on a painted underlayer with your exact elements locked back on top. Full Treatment does that, then spends a second paid AI render polishing the finished hybrid. None of these choices ever change your canvas design.',
+  // Shown while the AI finishes are shelved (AI_FINISHES_SHELVED in DesignGlossy).
+  designGlossyFinishHelpExactOnly: 'Exact Canvas is free and instant, and it draws every label, legend and line at full sheet resolution. It never changes your canvas design.',
   designGlossyExactAlt: 'Exact plan sheet of the design',
   designGlossyAiAlt: 'AI artist’s impression of the design',
   designGlossyBeta: 'Beta — may need a re-try',
