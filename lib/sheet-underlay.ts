@@ -65,6 +65,18 @@ export function sheetUnderlayOptions(
 }
 
 /**
+ * Whether the 'photo' option is, in fact, the satellite tile.
+ *
+ * `underlayDataUrl` only exists while a farmer-supplied aerial occupies `satDataUrl`; without it,
+ * the base image IS the satellite. Rory's phone showed "Your photo | Plain paper" on such a site
+ * and read it as satellite being missing — the option was there, wearing the wrong name. The
+ * picker uses this to label that pill "Satellite" instead of "Your photo".
+ */
+export function photoUnderlayIsSatellite(frame: Pick<CanvasFrame, 'underlayDataUrl'>): boolean {
+  return !frame.underlayDataUrl;
+}
+
+/**
  * The frame a sheet should be rendered from.
  *
  * Returns the SAME OBJECT for the default so that referential equality holds and nothing downstream
