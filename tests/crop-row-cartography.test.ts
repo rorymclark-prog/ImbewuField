@@ -1,8 +1,16 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 
 import {
   CABBAGE_HEAD_REACH,
+  MIN_DRAWN_VEG_MARK_SHEET_FRACTION,
+  MIN_VEG_MARK_SHEET_FRACTION,
+  VEG_MARK_DIAMETER_UNITS,
+  bedCropMarkPitchPx,
+  bedCropMarkUnitPx,
+  bedCropRows,
   cabbageHeadLeaves,
   cropGlyphFor,
   polygonCropRows,
@@ -11,6 +19,13 @@ import {
   unnamedBedGlyph,
   type CropGlyph,
 } from '@/lib/crop-row-cartography';
+
+/** The sheet master every Reference Blueprint is drawn on: frame.imgW 960 x SCALE 2. */
+const SHEET_WIDTH = 1920;
+
+/** A typical saved vegetable bed — the catalog default 1.2 m x 3 m — printed at the scale a
+ *  smallholder plot actually renders at (~27 px per ground metre on the 1920 px master). */
+const TYPICAL_BED = { shortPx: 1.2 * 27, longPx: 3 * 27 };
 
 /** A square plot, big enough on a real sheet to draw many rows. */
 const squarePlot = (size: number): Array<[number, number]> => [
@@ -111,6 +126,95 @@ test('no cabbage leaf can sprawl past the head reach the renderer sizes from', (
       assert.ok(Number.isFinite(leaf.angle) && leaf.rx > 0 && leaf.ry > 0, 'leaf feeds canvas draw calls');
     }
   }
+});
+
+test('a typical vegetable bed carries a vegetable big enough to see', () => {
+  // Rory, off a live sheet and AFTER the oversized cabbage head shipped: "veg beds still don't
+  // have large veg." The head was never the problem — every mark was sized from the ROW PITCH, and
+  // a bed's row pitch is its own 1.2 m width divided by its rows: about 11 px at sheet scale, so
+  // the mark came out ~17 px on a 1920 px master. That is under 1% of the page, three pixels on a
+  // phone, and no amount of leaf geometry rescues it. The size question is answered by the PAGE.
+  const unit = bedCropMarkUnitPx(TYPICAL_BED.shortPx, TYPICAL_BED.longPx, SHEET_WIDTH);
+  const markDiameter = unit * VEG_MARK_DIAMETER_UNITS;
+  assert.ok(
+    markDiameter >= SHEET_WIDTH * MIN_VEG_MARK_SHEET_FRACTION * 0.999,
+    `a bed's vegetable drew ${markDiameter.toFixed(1)} px on a ${SHEET_WIDTH} px sheet`,
+  );
+  // The pitch-derived size this replaced, computed the way the renderer used to: it must be a
+  // clear step up, or the fix is cosmetic.
+  const oldLayout = bedCropRows(TYPICAL_BED.shortPx, TYPICAL_BED.longPx, 'rosette', 'bed-1', SHEET_WIDTH * 0.0085);
+  const oldDiameter = Math.max(3.4, oldLayout.rowGapPx * 0.42) * 1.5 * VEG_MARK_DIAMETER_UNITS;
+  assert.ok(
+    markDiameter > oldDiameter * 1.5,
+    `mark is ${markDiameter.toFixed(1)} px against the old ${oldDiameter.toFixed(1)} px — not a visible change`,
+  );
+  // ...and it still belongs to the bed. An oversized head may overhang the edge a little, the way
+  // a mature cabbage does; it may not swallow the bed whole.
+  assert.ok(markDiameter <= TYPICAL_BED.shortPx * 1.15 + 1e-9, 'the mark swamped its own bed');
+});
+
+test('a bed lays out fewer, larger plants rather than packing dots in', () => {
+  // The mark and the layout have to agree, or big heads simply pile up on the old dot pitch. The
+  // bed keeps its rows and its long-axis direction — only the count follows the mark size.
+  const unit = bedCropMarkUnitPx(TYPICAL_BED.shortPx, TYPICAL_BED.longPx, SHEET_WIDTH);
+  const pitch = bedCropMarkPitchPx(unit);
+  const layout = bedCropRows(
+    TYPICAL_BED.longPx,
+    TYPICAL_BED.shortPx,
+    'rosette',
+    'bed-1',
+    SHEET_WIDTH * 0.0085,
+    pitch,
+  );
+  assert.ok(layout.plants.length > 0, 'a typical bed drew no plants at all');
+  assert.ok(layout.rows.length >= 1, 'a bed must still draw its drill rows');
+  // Every plant is the bed's own crop — the rotation picks the silhouette per BED, never per plant.
+  assert.deepEqual(new Set(layout.plants.map((plant) => plant.glyph)), new Set(['rosette']));
+  // Rows run the LONG way, which is how a bed is worked.
+  for (const row of layout.rows) {
+    assert.ok(Math.abs(row.x1 - row.x0) >= Math.abs(row.y1 - row.y0), 'rows must run along the bed');
+  }
+  // Neighbouring plants are at least the stated pitch apart, so the heads lap rather than stack.
+  const alongPositions = layout.plants.map((plant) => plant.x).sort((a, b) => a - b);
+  for (let i = 1; i < alongPositions.length; i++) {
+    const gap = alongPositions[i] - alongPositions[i - 1];
+    assert.ok(gap === 0 || gap >= pitch - 1e-9, `plants ${gap.toFixed(1)} px apart, pitch is ${pitch.toFixed(1)}`);
+  }
+  const packed = bedCropRows(TYPICAL_BED.longPx, TYPICAL_BED.shortPx, 'rosette', 'bed-1', SHEET_WIDTH * 0.0085);
+  assert.ok(
+    layout.plants.length < packed.plants.length,
+    'big marks must mean fewer plants, not the same dot count drawn larger',
+  );
+});
+
+test('a leafy bed draws cabbages, and a bed too small to read draws none', () => {
+  // Cabbage heads are for the leafy kinds, by name and by the unnamed-bed rotation — the path the
+  // vector head is drawn on. Staples keep their own field treatment (staplePlotGlyphs above).
+  for (const name of ['cabbage', 'Cabbages', 'spinach', 'kale', 'imifino', 'morogo']) {
+    assert.equal(cropGlyphFor(name), 'rosette', `${name} should draw as a leafy head`);
+  }
+  const rotation = new Set(['bed-a', 'bed-b', 'bed-c', 'bed-d', 'bed-e', 'bed-f', 'bed-g', 'bed-h']
+    .map((id) => unnamedBedGlyph(id)));
+  assert.ok(rotation.has('rosette'), 'the unnamed-bed rotation must be able to reach the cabbage');
+
+  // Below the readable floor the module says so rather than drawing a smudge, and the renderer
+  // falls back to the shared bed artwork — an honest rectangle beats an illegible vegetable.
+  assert.equal(bedCropMarkUnitPx(1.2 * 6, 3 * 6, SHEET_WIDTH), 0, 'a 7 px bed must not draw crops');
+  assert.equal(bedCropMarkUnitPx(0, 100, SHEET_WIDTH), 0);
+  assert.equal(bedCropMarkUnitPx(Number.NaN, 100, SHEET_WIDTH), 0);
+  assert.equal(bedCropMarkPitchPx(0), 0);
+  assert.ok(MIN_DRAWN_VEG_MARK_SHEET_FRACTION < MIN_VEG_MARK_SHEET_FRACTION, 'the bail floor sits under the target');
+});
+
+test('the bed painter uses the page-sized veg mark, not the row pitch', () => {
+  // The same guard shape the paint-order comparator carries: the size decision only holds while
+  // the renderer actually asks for it. drawProductionBedCrop derived its glyph size from
+  // layout.rowGapPx for two releases, which is why an "oversized" cabbage kept printing tiny.
+  const src = readFileSync(join(process.cwd(), 'components', 'design', 'DesignGlossy.tsx'), 'utf8');
+  const painter = /function drawProductionBedCrop\(([\s\S]*?)\n}/.exec(src)?.[1] ?? '';
+  assert.ok(painter.length > 0, 'guard: drawProductionBedCrop should still exist');
+  assert.ok(/bedCropMarkUnitPx\(/.test(painter), 'the bed painter must size its veg from the sheet');
+  assert.ok(/bedCropMarkPitchPx\(/.test(painter), 'the bed layout must follow the mark size');
 });
 
 test('a plot too small to read as rows draws nothing rather than a smudge', () => {

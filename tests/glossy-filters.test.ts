@@ -146,6 +146,56 @@ test('overlapping canopies paint small-first so the larger crown is drawn on top
   assert.ok(compareCartographicPaint(twinA, twinB) < 0);
 });
 
+// A TREE IS ABOVE A BED, AND THE SHEET MUST SAY SO. Rory, off a live Reference Blueprint planting
+// sheet: "veg beds sit above trees, put them under." A citrus crown that overhangs a vegetable bed
+// is physically over it, so the crown must be painted AFTER the bed and occlude its crop rows —
+// never the other way round, whatever the two footprints measure.
+test('a tree canopy paints over the bed it overhangs, never under it', () => {
+  const citrus = ELEMENTS_BY_ID['tree_citrus'];
+  const vegBed = ELEMENTS_BY_ID['veg_bed'];
+  const raisedBed = ELEMENTS_BY_ID['raised_bed'];
+  assert.ok(citrus.category === 'growing' && citrus.shape === 'circle', 'guard: citrus is a canopy');
+
+  // The overlap that produced the report: a 4 m citrus crown reaching across a 1.2 x 3 m bed, so
+  // the BED has the larger saved footprint. Size must not be able to lift it over the crown.
+  const crown = { def: citrus, area: 4 * 4, id: 'citrus-1' };
+  const bed = { def: vegBed, area: 1.2 * 3, id: 'bed-1' };
+  const bigBed = { def: vegBed, area: 40, id: 'bed-huge' };
+  const raised = { def: raisedBed, area: 1.2 * 2.4, id: 'raised-1' };
+  for (const under of [bed, bigBed, raised]) {
+    assert.ok(
+      compareCartographicPaint(under, crown) < 0,
+      `${under.def.name} must paint BEFORE the citrus canopy`,
+    );
+    assert.ok(
+      compareCartographicPaint(crown, under) > 0,
+      `the citrus canopy must paint AFTER ${under.def.name} (i.e. over it)`,
+    );
+  }
+
+  // Every bed and crop row in the catalog, against every canopy in it — the rule is total, not a
+  // pair of ids that happened to be reported.
+  const beds = ELEMENT_CATALOG.filter((def) => def.category === 'growing' && def.shape === 'rect');
+  const canopies = ELEMENT_CATALOG.filter((def) => def.category === 'growing' && def.shape === 'circle');
+  assert.ok(beds.length > 0 && canopies.length > 0, 'guard: the catalog holds beds and canopies');
+  for (const bedDef of beds) {
+    for (const canopy of canopies) {
+      assert.ok(
+        cartographicItemPaintRank(bedDef) < cartographicItemPaintRank(canopy),
+        `${bedDef.name} must paint below ${canopy.name}`,
+      );
+    }
+    // ...and still ABOVE the ground washes and basins it is built on, or a raised bed disappears
+    // under its own earthwork.
+    for (const ground of ELEMENT_CATALOG.filter((def) => def.category === 'earthworks')) {
+      assert.ok(
+        cartographicItemPaintRank(ground) < cartographicItemPaintRank(bedDef),
+        `${ground.name} must paint below ${bedDef.name}`,
+      );
+    }
+  }
+});
+
 test('every sheet paint loop sorts through the one shared comparator', () => {
   // The previous ordering "fix" did not hold because the direction lived in per-call-site inline
   // comparators — each sorted rank-then-largest-first on its own, so no single place could carry
@@ -153,8 +203,18 @@ test('every sheet paint loop sorts through the one shared comparator', () => {
   // loop grows its own `areaB - areaA` again, the inversion silently unfixes itself.
   const src = readFileSync(join(process.cwd(), 'components', 'design', 'DesignGlossy.tsx'), 'utf8');
   const calls = src.match(/compareCartographicPaint\(/g) ?? [];
-  assert.ok(calls.length >= 3, `expected the three item sorts to call compareCartographicPaint, found ${calls.length}`);
+  // FOUR, not three. drawExistingSiteItems was the loop nobody counted: it drew the farmer's
+  // recorded items in SAVED ARRAY ORDER, so a bed recorded after a tree painted its crop rows over
+  // the crown on the Site and Site-Hybrid sheets — the same inversion this comparator settles
+  // everywhere else, in the one place that never asked it.
+  assert.ok(calls.length >= 4, `expected every item sort to call compareCartographicPaint, found ${calls.length}`);
   assert.ok(!/cartographicItemPaintRank/.test(src), 'an inline rank comparator crept back into DesignGlossy');
+  const existing = /function drawExistingSiteItems\(([\s\S]*?)\n}/.exec(src)?.[1] ?? '';
+  assert.ok(existing.length > 0, 'guard: drawExistingSiteItems should still exist');
+  assert.ok(
+    /compareCartographicPaint\(/.test(existing),
+    'drawExistingSiteItems must order its items through the shared comparator',
+  );
 });
 
 test('cartographic stacking keeps all ground earthworks below planting', () => {
