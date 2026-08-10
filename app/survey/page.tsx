@@ -95,6 +95,9 @@ function SurveyInner() {
   const [beds, setBeds] = useState(4);
   const [week, setWeek] = useState(1);
   const [saved, setSaved] = useState(false);
+  // A storage refusal must be visible and STICKY — see save() for why 'ignore' cost the farmer
+  // their whole questionnaire.
+  const [saveFailed, setSaveFailed] = useState(false);
 
   // Known from the map analysis (fall back to sample if no site analysed yet).
   const known = useMemo(() => {
@@ -141,7 +144,16 @@ function SurveyInner() {
         activeAccountLocalStorageKey(BASE_SURVEY_KEY),
         serialized,
       );
-    } catch { /* ignore */ }
+      setSaveFailed(false);
+    } catch {
+      // NOT "ignore". If the first write throws, NOTHING was stored, and the farmer's whole
+      // questionnaire — sun, slope, resources, tanks, goal, bed count, crop assignment — exists
+      // only in this page's state. Telling them it saved is exactly how they lose it: they trust
+      // the confirmation, leave, and it is gone. The warning stays up until a write succeeds,
+      // because a two-second toast is the same lie told more briefly.
+      setSaveFailed(true);
+      return;
+    }
     setSaved(true);
     setTimeout(() => setSaved(false), 2200);
   }
@@ -456,9 +468,19 @@ function SurveyInner() {
               <div className="no-print space-y-2.5">
                 <button onClick={save}
                   className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-display font-semibold"
-                  style={{ background: '#1F4D2B', color: '#F7F2E9', border: 'none', cursor: 'pointer' }}>
-                  <Check size={15} />{saved ? 'Saved!' : 'Save this plan'}
+                  style={saveFailed
+                    ? { background: '#9A3412', color: '#FDF3EC', border: 'none', cursor: 'pointer' }
+                    : { background: '#1F4D2B', color: '#F7F2E9', border: 'none', cursor: 'pointer' }}>
+                  <Check size={15} />{saveFailed ? 'Not saved — no space on this phone' : saved ? 'Saved!' : 'Save this plan'}
                 </button>
+                {saveFailed && (
+                  // Sticky, and it names the recovery a farmer can actually act on. The answers are
+                  // still on screen, so printing is a real rescue — closing the page is not.
+                  <p style={{ fontSize: 12, color: '#9A3412', margin: 0 }}>
+                    Your answers are still on this screen. Free up space and tap Save again, or
+                    print this page before you leave it.
+                  </p>
+                )}
                 <Link href="/plan"
                   className="w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-display font-semibold"
                   style={{ background: '#FFFEFA', color: '#1F4D2B', border: '1px solid #E2D8C4', textDecoration: 'none' }}>

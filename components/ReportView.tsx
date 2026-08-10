@@ -263,6 +263,11 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   // Saved reports (for the in-screen list) + save-button feedback
   const [savedList, setSavedList] = useState<SavedReport[]>([]);
   const [justSaved, setJustSaved] = useState(false);
+  // saveReport ALREADY returns whether the write succeeded, and this component ALREADY ignored it.
+  // A farmer who reads "Saved" and closes the tab has lost the report — it is not recoverable and
+  // nothing warned them. The button has to be able to say so. Sample mode is a separate,
+  // deliberate no-op that returns saved:false on purpose; the label already tells that truth.
+  const [saveFailed, setSaveFailed] = useState(false);
   const [copied, setCopied] = useState(false);
   const [pdfState, setPdfState] = useState<'idle' | 'working' | 'done' | 'error'>('idle');
   useEffect(() => {
@@ -295,7 +300,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
 
   const handleSaveReport = useCallback(() => {
     if (!report) return;
-    saveReport({
+    const { saved } = saveReport({
       id: activeSaved?.id ?? reportId(),
       name: `${d.biome.name} · ${new Date().toLocaleDateString()}`,
       savedAt: new Date().toISOString(),
@@ -305,6 +310,14 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       siteData: siteData ?? undefined,
       waterData: waterData ?? undefined,
     });
+    // A storage refusal (full disk, private mode) is the case that costs the farmer the report.
+    // It STAYS on screen until the next attempt succeeds — a message that clears itself after two
+    // seconds is the same lie more slowly, because the farmer may not be looking.
+    if (!saved && !isSampleMode()) {
+      setSaveFailed(true);
+      return;
+    }
+    setSaveFailed(false);
     setJustSaved(true);
     setTimeout(() => setJustSaved(false), 2500);
   }, [report, activeSaved, d, siteData, waterData, language]);
@@ -503,11 +516,15 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             <button
               onClick={handleSaveReport}
               className="flex items-center gap-1.5 px-3 md:px-4 py-1.5 rounded-lg text-xs font-display font-medium transition-all"
-              style={justSaved
+              style={saveFailed
+                ? { background: 'rgba(154,52,18,0.12)', border: '1px solid rgba(154,52,18,0.45)', color: '#9A3412' }
+                : justSaved
                 ? { background: 'rgba(31,77,43,0.15)', border: '1px solid rgba(31,77,43,0.4)', color: '#1F4D2B' }
                 : { background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.3)', color: '#1F4D2B' }}
             >
-              {justSaved ? (isSampleMode() ? 'Demo — not saved' : 'Saved') : 'Save'}
+              {saveFailed
+                ? 'Not saved — no space'
+                : justSaved ? (isSampleMode() ? 'Demo — not saved' : 'Saved') : 'Save'}
             </button>
           )}
 
