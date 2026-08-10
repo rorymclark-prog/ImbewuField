@@ -10,6 +10,7 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import type { Position } from 'geojson';
 import { ArrowLeft, Compass, MapPin, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Lightbulb, Image as ImageIcon, Sprout, X, Printer, Lock } from 'lucide-react';
+import { CRASH_LOOP_SETTLE_MS, designSafeMode, exitSafeMode, markPageSettled } from '@/lib/crash-loop';
 import { loadPlaces, resolveColor, type SavedPlace } from '@/lib/saved-places';
 
 import type { LocationData } from '@/lib/types';
@@ -627,6 +628,27 @@ function DesignStudioInner() {
       return next;
     });
   }, []);
+
+  // SAFE MODE — see lib/crash-loop.ts. Resolved once per page load, and BEFORE the base-image
+  // effect below runs, because that effect is the heavy one: on a design with an imported photo it
+  // downloads the drone image and the satellite underlay as data URLs and supersamples both into a
+  // bake canvas, every single load. When iOS kills the page for that, the reload does it again —
+  // the loop behind Rory's "A problem repeatedly occurred" screen. After three loads that never
+  // settled, this load skips the photo pixels and keeps everything else.
+  const safeMode = useMemo(() => designSafeMode(), []);
+  // Rendered only after mount: the server has no storage to read, so painting the banner during
+  // the first render would be a hydration mismatch.
+  const [safeModeVisible, setSafeModeVisible] = useState(false);
+  useEffect(() => {
+    setSafeModeVisible(safeMode.active);
+    // THE PAGE SURVIVED. A load that reaches this timer without being killed is not part of a
+    // crash loop, so the streak is retired — which is also what lets safe mode switch itself off
+    // again once the farmer's phone can cope.
+    // The SAME per-farm key the decision was read from — clearing the shared one would leave this
+    // farm's streak climbing forever, and safe mode would latch on and never let go.
+    const settled = window.setTimeout(() => markPageSettled(window.localStorage, safeMode.key), CRASH_LOOP_SETTLE_MS);
+    return () => window.clearTimeout(settled);
+  }, [safeMode.active, safeMode.key]);
 
   const [buildInfo, setBuildInfo] = useState<{ branch?: string | null; sha?: string | null; repoRoot?: string | null; source?: string } | null>(null);
   useEffect(() => {
@@ -1295,7 +1317,25 @@ function DesignStudioInner() {
         lastFetchedFrame.centerLat !== frameNoImg.centerLat ||
         lastFetchedFrame.zoom !== frameNoImg.zoom;
 
-      if (frameMoved) {
+      // SAFE MODE: THE DESIGN WITHOUT THE PIXELS (lib/crash-loop.ts). Skips the drone-photo
+      // download, the satellite underlay and the supersampled bake — the three allocations that
+      // make opening this page expensive — while every point the farmer drew loads normally.
+      //
+      // The metres come from activeBaseMPerPx, NOT from the blank branch below. Blank derives its
+      // scale from the satellite projection, and handing a photo-based farm the satellite's metres
+      // would silently rescale every area, spacing, tank size and price on the canvas and on all
+      // nine sheets — the exact failure the base-request guard above exists to prevent. Safe mode
+      // must cost the farmer their photograph for one load and nothing else.
+      //
+      // AN `else if` CHAIN, NOT AN EARLY RETURN. Everything below this block — the frame
+      // migration and the setCanvasState that loads the farmer's zones, items and lines — must
+      // still run. Returning here would open safe mode on an EMPTY design, which reads as "the
+      // app lost my farm" and would be a far worse bug than the crash it is trying to survive.
+      if (safeMode.active) {
+        lastFetchedFrame = { centerLng: frameNoImg.centerLng, centerLat: frameNoImg.centerLat, zoom: frameNoImg.zoom };
+        const metres = activeBaseMPerPx(savedForBase, withScale(frameNoImg).mPerPx);
+        setFrame({ ...frameNoImg, mPerPx: metres, satDataUrl: null, underlayDataUrl: null });
+      } else if (frameMoved) {
         lastFetchedFrame = { centerLng: frameNoImg.centerLng, centerLat: frameNoImg.centerLat, zoom: frameNoImg.zoom };
         if (savedBaseMode === 'blank') {
           // Blank is the printed-plan ground: no satellite or drone pixels, but the exact m/px
@@ -2893,6 +2933,49 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           {saveError ? '⚠ NOT saved — storage full' : saved ? 'Saved' : 'Saving…'}
         </div>
       </header>
+
+      {/* SAFE MODE (lib/crash-loop.ts). Amber, not red: nothing is broken and nothing is lost —
+          the farmer's whole design is on screen and every measurement is its real value. Only the
+          background photograph is missing, and only for this load. The button puts it back. */}
+      {safeModeVisible && (
+        <div
+          role="status"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            gap: 10,
+            flexWrap: 'wrap',
+            padding: '8px 14px',
+            background: '#FDF4E3',
+            borderBottom: '1px solid #E8D5A8',
+            color: DARK,
+            fontSize: 12.5,
+          }}
+        >
+          <span style={{ fontWeight: 600 }}>
+            {safeMode.reason === 'requested'
+              ? 'Light mode — your design is here, without the background photo.'
+              : 'The app kept closing on this design, so it opened without the background photo. Everything you drew is here, and your measurements are unchanged.'}
+          </span>
+          <button
+            type="button"
+            onClick={exitSafeMode}
+            style={{
+              minHeight: 36,
+              padding: '0 12px',
+              borderRadius: 9,
+              border: '1px solid #C79A3C',
+              background: '#FFFFFF',
+              color: DARK,
+              fontWeight: 700,
+              fontSize: 12.5,
+              cursor: 'pointer',
+            }}
+          >
+            Try the photo again
+          </button>
+        </div>
+      )}
 
       {saveError && (
         <div
