@@ -34,6 +34,16 @@
 export interface ScriptBlock {
   slide: number;
   words: number;
+  /**
+   * The block's spoken body, appendix already trimmed, but with [pause] cues and `---` separators
+   * still in place so a caller can see paragraph structure.
+   *
+   * Carried here so the review packet does not have to re-split the file. The appendix cut below
+   * is the subtle part of this parser — the part that once counted a 22-row glossary as narration —
+   * and a second splitter that got it wrong would be this repo's most repeated defect all over
+   * again: two readers of one file, disagreeing.
+   */
+  text: string;
 }
 
 export interface ClipTiming {
@@ -66,11 +76,17 @@ export interface PacingReport {
  */
 export function parseScriptBlocks(text: string): ScriptBlock[] {
   const HEADING = /^\*\*(?:Slide|Ikhasi)\s*(\d+)[^\n]*\*\*\s*$/gm;
-  const marks: Array<{ slide: number; start: number; end: number }> = [];
+  const marks: Array<{ slide: number; at: number; start: number; end: number }> = [];
   for (let m = HEADING.exec(text); m; m = HEADING.exec(text)) {
-    marks.push({ slide: Number(m[1]), start: m.index + m[0].length, end: text.length });
+    marks.push({ slide: Number(m[1]), at: m.index, start: m.index + m[0].length, end: text.length });
   }
-  for (let i = 0; i < marks.length - 1; i++) marks[i].end = marks[i + 1].start;
+  // A block ends where the next HEADING BEGINS, not where it ends. Ending it at the next block's
+  // start swept that heading line into this block: every block but the last carried the next
+  // slide's title as if it were spoken narration — five or so phantom words each, and one phantom
+  // paragraph. The pacing check never noticed because it derives clip lengths from these same
+  // counts, so the inflation cancelled out; it surfaced only when the review packet compared
+  // paragraph counts between two languages and found every single slide off by exactly one.
+  for (let i = 0; i < marks.length - 1; i++) marks[i].end = marks[i + 1].at;
 
   return marks.map(({ slide, start, end }) => {
     let body = text.slice(start, end);
@@ -81,10 +97,14 @@ export function parseScriptBlocks(text: string): ScriptBlock[] {
     // 81, which would make a nine-minute clip look perfectly paced.
     const appendix = body.search(/^#{1,6}\s/m);
     if (appendix !== -1) body = body.slice(0, appendix);
-    body = body
+    const spoken = body
       .replace(/\[pause\]/gi, ' ')  // a stage cue, not spoken
       .replace(/^---\s*$/gm, ' ');  // block separators
-    return { slide, words: (body.match(/[\p{L}\p{M}][\p{L}\p{M}'’-]*/gu) ?? []).length };
+    return {
+      slide,
+      words: (spoken.match(/[\p{L}\p{M}][\p{L}\p{M}'’-]*/gu) ?? []).length,
+      text: body.trim(),
+    };
   });
 }
 
@@ -103,7 +123,9 @@ function median(values: number[]): number {
  * enough to catch a clip holding the wrong block's text.
  */
 export function checkPacing(
-  blocks: ScriptBlock[],
+  // Only what pacing actually reads. Widening ScriptBlock with the block's text should not force
+  // every caller and fixture to carry a body this function never looks at.
+  blocks: Array<Pick<ScriptBlock, 'slide' | 'words'>>,
   clips: ClipTiming[],
   tolerance = 1.6,
 ): PacingReport {
