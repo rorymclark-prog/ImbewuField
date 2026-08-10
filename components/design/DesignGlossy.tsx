@@ -12924,19 +12924,10 @@ export default function DesignGlossy({
       const exactGroundOverlay = locked
         ? await buildExactLayerOverlay(renderState, renderFrame, renderRefLayers, f, W, H, 'ground', f === 'water' ? 'illustrated' : 'standard')
         : undefined;
-      const exactFeatureOverlay = locked
-        ? await buildExactLayerOverlay(
-            renderState,
-            renderFrame,
-            renderRefLayers,
-            f,
-            W,
-            H,
-            'features',
-            'standard',
-            protectMask ? 'hybrid' : 'solid',
-          )
-        : undefined;
+      // (The exact FEATURE overlay used to be built here and stacked over the model's work. It is
+      // gone with the over-paint that made the paid render pointless — see the overlayImage note
+      // below. Building it was also a full-resolution canvas per sheet that nothing consumed,
+      // on the very path iOS has been killing for memory.)
       // The "AI legend" showcase tier ONLY — the farmer explicitly asked the model to author the
       // whole page: title, map, pictorial legend and labels. Step 1 has already saved the exact
       // app-owned master separately, so compositing app chrome back over this paid result would
@@ -12965,8 +12956,25 @@ export default function DesignGlossy({
         : locked
           ? referenceBlueprintLabels(renderState, renderRefLayers, W, H, f)
           : producerLabels(renderState, renderRefLayers, W, H, f, true);
+      // AI POLISHED MUST BE ALLOWED TO SHOW. Rory, with a photo sheet and a paper sheet side by
+      // side, both badged "AI Polished": "its just giveing us exact theres no ai polished" —
+      // "i have asked and asked for you to correct this".
+      //
+      // He was right, and this line was the reason. The locked path painted exactFeatureOverlay —
+      // the app's OWN tree, bed and basin artwork — on top of the finished composite, after the
+      // model had returned. So the one region the protect mask deliberately leaves editable, the
+      // elements themselves, was covered again by the exact sprites a moment later. The paid
+      // render could not change the picture no matter what the model painted: restore put back
+      // everything outside the elements, and this put back the elements. Exact, wearing a paid
+      // badge.
+      //
+      // Locked now means what the farmer was promised it means: the ground, the roofs, the
+      // driveway, the boundary and everything outside the plot stay byte-exact (they are still
+      // stacked below), the labels and legend are still drawn by the app afterwards from saved
+      // data, and the PLANTING is the model's illustration of the elements it was given — in the
+      // positions it was given them. That is the whole product of the paid pass.
       const overlayImage = locked
-        ? exactFeatureOverlay
+        ? undefined
         : f === 'zones' ? buildZoneOverlay(renderState, renderRefLayers, W, H)
           : f === 'water' ? buildWaterOverlay(renderState, renderFrame, renderRefLayers, W, H, true, false)
             : undefined;

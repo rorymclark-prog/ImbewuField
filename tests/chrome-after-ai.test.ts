@@ -313,3 +313,31 @@ test('a change to what a paid sheet looks like bumps the recipe token', () => {
     'the r-token contract must keep saying why it is not a PLAN_VERSION bump',
   );
 });
+
+test('the locked paid render is never over-painted with the app\'s own element artwork', () => {
+  // Rory, holding a Photo Plan and a plain-paper plan both badged "AI Polished": "its just
+  // giveing us exact theres no ai polished" … "i have asked and asked for you to correct this".
+  //
+  // He was right. The locked path restored every protected pixel from the source AND THEN stacked
+  // exactFeatureOverlay — the app's own tree, bed and basin sprites — over the finished map. The
+  // one region the protect mask deliberately leaves editable, the elements themselves, was covered
+  // again a moment later, so the paid pass could not change the picture whatever the model did.
+  // Exact, wearing a paid badge, charged for.
+  //
+  // What locked still guarantees, and what the stack below must keep: ground, structures, and
+  // everything outside the plot stay exact, and labels/legend are drawn by the app from saved data.
+  const src = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
+  const at = src.indexOf('const overlayImage = locked');
+  assert.ok(at > 0, 'the locked overlay decision moved — re-pin it, do not delete this guard');
+  const decision = src.slice(at, at + 220);
+  assert.match(decision, /const overlayImage = locked\s*\n?\s*\? undefined/,
+    'the locked path is stacking a feature overlay over the model again — AI Polished is exact');
+  // And the builder itself is gone: a full-resolution canvas per sheet that nothing consumes, on
+  // the path iOS has been killing for memory.
+  assert.ok(!/const exactFeatureOverlay =/.test(src),
+    'the unused exact feature overlay is being built again');
+  // The exact GROUND and STRUCTURE overlays must survive — they are the geometry half of the
+  // promise, and dropping them would let the model repaint roofs and driveways.
+  assert.ok(/stackOverlayImages\(exactGroundOverlay, structureOverlay/.test(src),
+    'ground + structures are no longer composited exactly — geometry lock is now a lie');
+});
