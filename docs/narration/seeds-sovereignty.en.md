@@ -1,4 +1,4 @@
-**Slide 1 — Title**
+**Slide 1 — Seeds and Seed Sovereignty**
 
 Seed is where the next season begins.
 

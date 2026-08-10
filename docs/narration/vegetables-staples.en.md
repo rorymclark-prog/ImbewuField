@@ -1,4 +1,4 @@
-**Slide 1 — Title**
+**Slide 1 — Vegetables and Staple Crops**
 
 Welcome. This is Vegetables and Staple Crops. It's one of the ten modules in the ImbewuField training.
 

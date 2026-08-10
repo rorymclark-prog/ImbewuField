@@ -4,6 +4,7 @@ import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 import { COURSE_NARRATION } from '@/lib/course-audio';
+import { COURSE_MODULES } from '@/lib/course-modules';
 import { NARRATION_BLOCKER_MARKERS } from '@/lib/narration-blockers';
 
 // A NARRATION SCRIPT IS READ ALOUD TO A FARMER AS INSTRUCTION. Whatever is in the file is what
@@ -128,5 +129,62 @@ test('the vegetables isiZulu script is still recognised as blocked', () => {
   assert.ok(
     hasBlocker(zu!),
     'vegetables-staples.zu.md no longer declares itself a draft. If an isiZulu-speaking agronomist has reviewed its 22 coined terms, say so in the commit and delete this test. If not, restore the appendix.',
+  );
+});
+
+// ─── Slide 1 is the cover card ────────────────────────────────────────────────────────────────
+//
+// The narration script IS the deck (scripts/make-lesson-slides.mjs renders one slide per
+// `**Slide N — Title**` heading), so slide 1's heading is the words printed across a module's
+// cover. Two modules shipped with the heading left as the literal word "Title" — including
+// seeds-sovereignty, the one module fully produced in both languages. Nothing rendered it to a
+// farmer yet only because the decks are still parked on a branch, which is luck, not a guard.
+
+test('slide 1 is titled with the module, never left as the word "Title"', () => {
+  for (const s of PARSED.filter((p) => p.lang === 'en')) {
+    const heading = /^\*\*Slide 1 — (.+?)\*\*/m.exec(s.text);
+    assert.ok(heading, `${s.file}: no "**Slide 1 — …**" heading`);
+    const title = heading![1].trim();
+    assert.notEqual(
+      title.toLowerCase(),
+      'title',
+      `${s.file}: slide 1 is still the placeholder — that word is what prints across the cover`,
+    );
+
+    const mod = COURSE_MODULES.find((m) => m.id === s.moduleId);
+    if (mod) {
+      // Compared on words, not characters. "Plant Selection & Guilds" and "Plant Selection and
+      // Guilds" are one name written two ways — failing on that would be a false positive, and a
+      // checker that cries about an ampersand gets ignored when it finds a real second name.
+      const words = (t: string) =>
+        t.toLowerCase().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, ' ').trim();
+      assert.equal(
+        words(title),
+        words(mod.title),
+        `${s.file}: the cover says "${title}" but the module is called "${mod.title}" — a learner ` +
+          'meets two names for the same module',
+      );
+    }
+  }
+});
+
+// The isiZulu side of the same defect is NOT fixed here, deliberately. seeds-sovereignty.zu.md is
+// the one script a first-language speaker has reviewed and signed off, and "Seed Sovereignty" has
+// no settled isiZulu rendering in it — writing one would be coining a term inside the one file
+// whose whole value is that nothing in it was coined. It goes to the reviewer with the packet.
+// The allowlist is one entry long ON PURPOSE: a new placeholder cannot be added without deleting
+// this comment, and fixing this one makes the test demand its removal.
+const KNOWN_PLACEHOLDER_COVERS = ['seeds-sovereignty.zu.md'];
+
+test('no isiZulu cover carries the placeholder except the one awaiting its reviewer', () => {
+  const found = PARSED.filter(
+    (p) => p.lang === 'zu' && /^\*\*Ikhasi 1 — Isihloko\b/m.test(p.text),
+  ).map((p) => p.file);
+
+  assert.deepEqual(
+    found.sort(),
+    [...KNOWN_PLACEHOLDER_COVERS].sort(),
+    'either a new isiZulu cover was left as a placeholder, or the known one was fixed and should ' +
+      'be removed from KNOWN_PLACEHOLDER_COVERS',
   );
 });
