@@ -103,6 +103,38 @@ Two more defects off Rory's phone review of a live Reference Blueprint planting 
   bed-over-basin), plus the comparator count for the fourth paint loop;
   `tests/crop-row-cartography.test.ts` pins the mark's readable floor, the fewer-larger layout and
   that the renderer actually asks for it.
+### 2026-08-10 (paid sheets: the app draws the chrome, always, and never sends it to the model)
+Rory's live Full Treatment render — "Planting · Photo Plan · AI polished · Geometry locked" — came
+back with **no plant labels, no legend panel, no title block, no north arrow, no scale bar**, and
+the property boundary sitting on it as a hard vector line stamped over completely repainted ground.
+Two failures, one picture, both now structural rather than conditional (`lib/sheet-chrome-pass.ts`):
+- **The model was handed the composed sheet.** An image model cannot reproduce 9px type, so it
+  erased every label and repainted the legend. Every paid path now uploads MAP-AREA ARTWORK only:
+  design layers already did; **Sector / Existing Site** crop the finished Hybrid back to its map
+  column (`cropStyleSheetToMap`) and **Phasing** uploads its map column via a new `cropSheetRegion`
+  (which also fixes the model's page-shaped return being squeezed into the narrower map column).
+- **The app's re-draw of that chrome was conditional, and the condition could not hold.** It
+  compared the uploaded input's PIXEL SIZE with the map size — but `capForAiInput` uniformly
+  downscales every AI-bound bitmap to `AI_INPUT_WIDTH` (1920), so at the High render scale (2880px
+  maps, the desktop default) the "legacy composed-page input" escape hatch fired on *every* polish
+  and skipped the chrome pass entirely. The decision now comes from the committed workflow stage
+  (`paidPolishNeedsChromePass`, off the job doc's `resultKind`), never from a protect mask, an
+  image size or a style; `modelInputCarriesChrome` compares ASPECT (which the downscale preserves)
+  and only chooses whether a legacy page's map column needs cutting out first.
+- **One chrome pass, one place** (`composeSheetChromeOverMapArt`) — boundary stroke, plant labels +
+  leaders, label gutters, legend panel, title block, north arrow, scale bar — drawn from the saved
+  design over whatever comes back. Both of its exits, including the error path, return a composed
+  sheet; the old catch returned the bare source map. Sector's "ship the model's page raw" exit is
+  gone for the same reason.
+- **Boundary reads as part of the sheet again.** Nothing is byte-restored on the polish tier; the
+  property line is drawn in the same pass as the labels and the legend, from the same geometry.
+  `fullTreatmentProtectPolicy` is unchanged (boundary only) but re-documented: its mask now marks
+  *app-owned* pixels for the difference gate rather than *byte-restored* ones. Phasing's and
+  Sector-polish's masks are gone — a mask promises a restore neither of them performs, and both
+  would have hidden real map area from the gate. Geometry, counts and positions untouched.
+- Cache: r-token `:r1` → `:r2` (a cached r1 Full Treatment is exactly the picture this stops
+  re-serving); `PLAN_VERSION` deliberately untouched. Dead helpers removed
+  (`extendProtectMaskToStyleSheet`, `buildPhasingProtectMask`). New `tests/chrome-after-ai.test.ts`.
 
 ### 2026-08-10 (plan-sheet art: real vetiver, grassed berms, actual cabbages)
 Three pieces of Rory's phone review of a live Reference Blueprint sheet, all seeded-deterministic

@@ -8,11 +8,25 @@ import type { StylePreset } from '@/lib/producer-prompt';
 export type SheetOutputMode = 'exact' | 'hybrid' | 'full';
 
 /**
- * Full Treatment starts from the completed Hybrid sheet. Its second paid pass must be free to
- * improve the complete artwork and page design. Real production A/Bs showed that copying the
+ * Full Treatment starts from the completed Hybrid sheet's MAP ARTWORK — never its page. Its second
+ * paid pass must be free to improve that artwork. Real production A/Bs showed that copying the
  * Hybrid's satellite exterior, house or driveway back afterwards creates the ragged photographic
- * keyholes the paid pass had already removed. Only the narrow boundary ring remains byte-locked;
- * the saved Hybrid is still the rollback if the polish pass fails its difference gate.
+ * keyholes the paid pass had already removed. The saved Hybrid is still the rollback if the polish
+ * pass fails its difference gate.
+ *
+ * WHAT `protectBoundary` MEANS ON THIS TIER, WHICH IS NOT WHAT IT MEANS ON THE HYBRID TIER.
+ *
+ * Nothing is byte-restored after a polish pass. The boundary corridor was, once, and it was the
+ * single app-owned element put back on ground the model had completely repainted — so it read as a
+ * hard vector line stamped over the artwork rather than a fence sitting on the land. The app now
+ * draws the property line as part of the chrome pass (lib/sheet-chrome-pass.ts), in the same pass
+ * as the labels, the legend and the title, from the same saved geometry.
+ *
+ * The mask still ships with the job, and this flag still marks the same corridor, because the
+ * paid-difference gate needs it: those pixels are app-owned in the finished sheet either way, so
+ * whatever the model painted underneath them is invisible and must not be scored as its work.
+ * Marking MORE than the corridor here would weaken the gate — every protected pixel is a pixel the
+ * model is no longer asked to have changed.
  */
 export interface FullTreatmentProtectPolicy {
   protectOutside: boolean;

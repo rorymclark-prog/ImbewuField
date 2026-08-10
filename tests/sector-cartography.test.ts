@@ -425,23 +425,47 @@ test('wires Sector jobs through authoritative houses and protected-pixel restora
   assert.match(queue, /sectorProtectMaskOptions\(\)/);
   assert.match(queue, /protectMaskDataUrl, useProtectMaskForEdit: false/);
 
-  // THE TWO STAGES MUST STAY DIFFERENT — this block used to assert the opposite (restore, then
-  // crop the polished page back to the map panel) and that contract WAS the "no third render"
-  // bug: the paid polish pass was cropped and recomposed into something visually identical to the
-  // Hybrid, every time, for two weeks of paid renders. Now: the Hybrid stage restores protected
-  // pixels and finishes deterministically; the polish stage (sectorPolishOwnsPage) ships the
-  // model's complete page raw — no restore, no crop, no recompose — and honestly drops the
-  // geometry-locked provenance flag.
-  const ownsPageAt = completion.indexOf("const sectorPolishOwnsPage = showcase && sheet.key === 'sector'");
-  const restoreAt = completion.indexOf("sheet.key === 'sector' && sourceImage && protectMask && !sectorPolishOwnsPage");
-  assert.ok(ownsPageAt >= 0, 'the polish stage must own the page — cropping+recomposing it back into a Hybrid was the two-week "no third render" bug');
-  assert.ok(restoreAt > ownsPageAt, 'the HYBRID stage (and only it) must still restore protected source pixels');
-  assert.match(completion, /: sectorPolishOwnsPage\s*\n\s*\? raw/, 'the polish result is the model page itself, never a recomposed sheet');
-  assert.match(completion, /!sectorPolishOwnsPage && \(locked/, 'a model-owned page must not claim geometry-locked provenance');
+  // THE TWO STAGES MUST STAY DIFFERENT, AND BOTH MUST KEEP THEIR CHROME.
+  //
+  // Two contracts have failed here already, in opposite directions:
+  //
+  //   1. Restore, then crop the polished PAGE back to the map panel and rebuild the whole overlay
+  //      deterministically — so the paid second pass could never look different from the Hybrid.
+  //      That was the two-week "no third render" report.
+  //   2. Ship the polished page raw, on the reasoning that the model owned it. It did not own it
+  //      honestly: it had been handed a page of 9px type it cannot draw, and an image model
+  //      answers that by erasing it. That reasoning also produced the paid Planting sheet with no
+  //      labels and no legend at all.
+  //
+  // The contract that resolves both: the model is handed the MAP COLUMN alone, so what comes back
+  // is artwork rather than a page, and composeSectorSheet draws every app-owned mark — bearings,
+  // legend rows, notes, title — back over it at BOTH stages. The stages still genuinely differ,
+  // because the polish pass repaints the ground the whole page is built on. See
+  // lib/sheet-chrome-pass.ts.
+  assert.match(
+    queue,
+    /cropStyleSheetToMap\(hybridInput, mapWidth, mapHeight\)/,
+    'the polish stage must send the map column, never the composed Hybrid page',
+  );
+  assert.match(
+    queue,
+    /const protectMaskDataUrl = kind === 'sector' && !polishStage/,
+    'a protect mask promises a byte-restore; the polish stage restores nothing, so it must not send one',
+  );
+  assert.match(
+    completion,
+    /sheet\.key === 'sector' && sourceImage && protectMask && !isPolishedResult/,
+    'the HYBRID stage (and only it) restores protected source pixels',
+  );
+  assert.match(
+    completion,
+    /: sheet\.key === 'sector'\s*\n\s*\? await finishSectorRef\.current\(factualModelImage\)/,
+    'both Sector stages must recompose the app-owned analysis — a raw model return has no legend on it',
+  );
   assert.doesNotMatch(
-    completion.slice(0, completion.indexOf('const finalSheet')),
-    /showcase && \(sheet\.key === 'sector' \|\| sheet\.key === 'base'\)/,
-    'the polished Sector page must never be cropped back to the map panel — that erases the paid pass',
+    completion,
+    /sectorPolishOwnsPage/,
+    'no stage may ship a paid page the app never composed chrome onto',
   );
 });
 
