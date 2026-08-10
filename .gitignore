@@ -19,3 +19,6 @@ ui-debug.log
 # Dev-only plan-sheet captures (app/api/dev-capture) — evidence images, never source.
 .sheet-captures/
 .playwright-mcp/
+
+# Claude Code agent worktrees (in-progress agent workspaces — never commit)
+.claude/worktrees/
