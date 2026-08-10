@@ -41,6 +41,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     // stamp was not. Stamp at merge, always.
     sha: 'fbecef9',
     changes: [
+      'Your bill no longer charges you for tanks and trees you already have',
       'Water runs off the roof, into your tank, and spreads out in the swale',
       'Every drawing on your plans is now the new artwork — sheds, hives, basins and beds',
       'Beds sit under tree canopies, and their vegetables are finally big enough to see',
