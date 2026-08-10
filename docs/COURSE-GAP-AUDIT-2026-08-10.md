@@ -209,3 +209,83 @@ require new teaching — the crops are already described in the lessons.
   agronomic it names the gap and stops.
 - It has not checked the isiZulu narration for gaps of its own. The English is the source; a
   missing topic is missing in both.
+
+---
+
+# Addendum — what the quizzes name only as a falsehood
+
+Added 2026-08-10, same session.
+
+A quiz distractor is a statement the course asserts is **false**. So a real, useful concept that
+appears in the course *only* inside a distractor has been shown to the learner exactly once, in
+the position reserved for wrong answers. Newcastle disease (Tier 1, item 1) was found that way,
+which raised the question of whether it was one instance or a pattern.
+
+## The automated pass over-fired, and is not shippable
+
+Extracting every word present in a wrong answer and absent from all taught text (module bodies,
+key points, correct answers, rationales, question stems) across 198 distractors produced **139
+terms**. Almost all are ordinary English — "accept", "changes", "future", "whichever". Roughly
+eight were worth a second look and four survived one.
+
+**That ratio is why this is a one-off audit and not a test.** A guard that fires 139 times to be
+right 4 is the same failure the narration checker was calibrated out of: one loud false positive
+makes every true one look like noise. It is recorded here so nobody rebuilds it as a gate.
+
+## First, the quizzes themselves are good
+
+Reading the eight candidate questions in full: every distractor examined is **plausible and
+correctly wrong**, and the rationales explain the reasoning rather than restating the answer. The
+gypsum option is wrong because the jar test showed a *sand*-dominant sample. The pyrethrum option
+is wrong because pyrethrum is not a tick control. This addendum reports curriculum gaps the
+quizzes happen to expose — not defects in the quizzes.
+
+## The four that survived
+
+### 1. Newcastle disease — see Tier 1, item 1
+
+The only one serious enough to rank in Tier 1. Restated here for completeness.
+
+### 2. Colony management is never taught, though the course asks farmers to keep bees
+
+Distractor: *"The queen is too old and being replaced"* (`small-livestock`, on a hive that has
+swarmed three times).
+
+The correct answer — overcrowding, needs a super or a split — is right, and the option is a good
+distractor. But `small-livestock-l2` teaches hive **placement**, subspecies and DALRRD
+registration, and nothing about running a colony through a year. Requeening, supersedure,
+inspection and splitting appear nowhere. "Queen" occurs in the whole course only in this wrong
+answer.
+
+### 3. Rodents in the seed store
+
+Distractor: *"Soil contact, pests, and rodents"* (`seeds-sovereignty`, on the three main enemies
+of stored-seed **viability**).
+
+Heat, light and moisture is the correct answer and the question is about viability specifically,
+so the option is correctly wrong. But rodents are the main practical threat to a smallholder's
+seed store, and the module's own assignment has the farmer put paper envelopes in a container.
+Paper is exactly what a rat gets through. A learner who meets "rodents" once, as a wrong answer,
+has been given the opposite of the impression they need.
+
+This is the clearest case in the set: the statement is false *as an answer to that question* and
+the topic is real and untaught.
+
+### 4. Heavy clay is never addressed
+
+Distractor: *"High clay content means it will crack and needs gypsum"* (`soil-health`, on a jar
+test showing thick sand).
+
+Correctly wrong for a sandy sample. But `soil-health-l1` teaches the jar test and then only ever
+prescribes compost and mulch — *"Compost and mulch improve every South African soil type"*. What
+to do when the jar test comes back **clay-dominant**, which it will across large parts of KZN and
+the Highveld, is not taught. Gypsum appears in the course only as a wrong answer.
+
+## Two more that are borderline, recorded without a recommendation
+
+- **Allelopathy** appears twice, both times in distractors (*"Khakibos, via allelopathic root
+  exudates"*, *"It's allelopathic to the mango's roots"*). Both correctly wrong. It is a real
+  mechanism in guild design and is never taught — but whether a 20-minute module should carry it
+  is a genuine question, not an obvious gap.
+- **Termites** appear once, in a distractor about a compost heap. A real smallholder issue,
+  though not obviously this module's job.
