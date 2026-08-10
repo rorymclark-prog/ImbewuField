@@ -856,7 +856,25 @@ All 6 `Watch:` slides in `seeds-sovereignty` have verified MP4 animation files p
 
 ## 4. Grouping & Production Optimization (Shared Clip Clusters)
 
-The 28 missing clips can be produced from **18 distinct clip animation assets** by clustering slides that share identical mechanics, terrain models, or visual templates:
+> **CORRECTED BY CLAUDE BEFORE MERGE — the clip count is 28, not 18.**
+>
+> The clusters below are real and useful, but they identify shared **production assets** (a soil
+> cutaway, a terrain model, a node-network template), not shared **clips**. Those are not the same
+> thing here, for a structural reason: every `Watch:` slide is its own narration block with its own
+> recorded audio, and `build-lesson-video.mjs` pairs each block with exactly one slide asset. Two
+> slides play at different moments under different narration, so neither can be served by one clip.
+>
+> Checked against the narration: `intro-permaculture` 19 places a windbreak on a north-west farm
+> boundary; `reading-landscape` 13 traces wind over ridges and cold air draining into low ground.
+> Same arrows, different lesson. `soil-health` 10 builds a compost heap; `small-livestock` 14 moves
+> nutrients from plants through animals back to a bed. Different clips.
+>
+> **So: 28 clips to commission, of which roughly 14 can be built from about 8 shared scene models.**
+> That is a real saving in production effort and none at all in deliverable count — and those are
+> very different things to take to a budget.
+
+The 28 missing clips cluster into shared production assets as follows. Read each "1 shared clip
+ asset" below as "1 shared model, still 2 clips":
 
 ### Cluster 1: Wind & Boundary Protection (2 slides -> 1 shared clip asset)
 - `intro-permaculture` Slide 19: "A Windbreak Belongs On The Wind Side"
@@ -920,6 +938,7 @@ The 28 missing clips can be produced from **18 distinct clip animation assets** 
 - **Raw `Watch:` Slide Count**: **34 slides**
 - **Existing Working Clips**: **6 clips** (`seeds-sovereignty`)
 - **Missing Clips Needed**: **28 slides**
-- **Distinct Animation Productions Required (with clustering)**: **18 distinct clips**
+- **Clips to commission**: **28** — one per Watch slide, because each has its own narration block and its own audio.
+- **Shared scene models available**: about **8**, covering roughly 14 of those clips. A saving in production effort, not in clip count.
 
-This costed inventory establishes the exact specification required for each missing slide, demonstrating that fulfilling all 28 missing `Watch:` slides requires producing **18 distinct core animations**.
+This inventory establishes the specification for each missing slide. Fulfilling all 28 missing `Watch:` slides requires **28 clips**; about 8 shared scene models cut the work of building them, but not their number.
