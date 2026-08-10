@@ -138,6 +138,7 @@ import {
   useLockedPolishHandoff,
   type SheetOutputMode,
 } from '@/lib/locked-polish-flow';
+import { modelInputCarriesChrome, paidPolishNeedsChromePass } from '@/lib/sheet-chrome-pass';
 import { sheetRenderRoute, DEFAULT_PRODUCER_STYLE, type SheetSpec, type SheetRoutePath } from '@/lib/sheet-render-route';
 import {
   calculateBoundaryPresentationLayout,
@@ -9127,32 +9128,13 @@ async function blankPhasingPanel(
   return canvas.toDataURL('image/png');
 }
 
-// Build the protect mask for the Phasing Hybrid stage. Uploaded alongside the job but — like every
-// other sheet's mask in this file — NOT sent to the OpenAI edit call itself (useProtectMaskForEdit
-// is false; see lib/render-jobs.ts's own comment: "a deterministic restoration contract, not an
-// OpenAI edit mask"). The actual, structural guarantee that schedule content never ships
-// AI-authored is composePhasingSheet's full redraw of exact content on top afterward (both stages)
-// plus this mask's real purpose: letting the worker/browser restoration pipeline (shared with every
-// other geometry-locked sheet) recognise this as a protected region for its own bookkeeping. Do not
-// read the opaque fill below as "the model literally cannot touch these pixels" — it can; the
-// guarantee comes from never showing it real content (blankPhasingPanel) and never trusting its
-// output for that region (composePhasingSheet's redraw).
-function buildPhasingProtectMask(frame: CanvasFrame, refLayers: DesignGlossyProps['refLayers']): string {
-  const size = phasingSheetSize(frame, refLayers);
-  const { W, H } = size;
-  const canvas = document.createElement('canvas');
-  canvas.width = W;
-  canvas.height = H;
-  const ctx = canvas.getContext('2d');
-  if (!ctx) throw new Error('Canvas unavailable');
-  ctx.clearRect(0, 0, W, H);
-
-  const { lgW, lgX, lgY, lgBottom } = phasingPanelRect(size);
-  ctx.fillStyle = '#FFFFFF';
-  ctx.fillRect(lgX, lgY, lgW, lgBottom - lgY);
-
-  return canvas.toDataURL('image/png');
-}
+// buildPhasingProtectMask lived here. It marked the schedule panel as protected on a sheet-shaped
+// model input, and it is gone because the panel is no longer part of that input at all:
+// generatePhasingViaQueue uploads the MAP COLUMN, so there is no panel region on the image to
+// protect, and a sheet-shaped mask stretched over a map-shaped input would have frozen the
+// right-hand quarter of the map instead. The guarantee it was standing in for is unchanged and
+// stronger: the model is never shown real schedule text (the crop, plus blankPhasingPanel), and
+// composePhasingSheet redraws every exact fact on top of whatever comes back, at either stage.
 
 // Deterministic "Blueprint" IMPLEMENTATION & PHASING sheet — sheet 09 in docs/PLAN-SET-SPEC.md,
 // the product differentiator. This is the EXACT / reliable counterpart to the Gemini
@@ -10678,33 +10660,12 @@ async function composeStyleSheet(
   return padToPaperSheet(canvas);
 }
 
-/**
- * Full Treatment receives a complete Hybrid sheet, while buildProtectMask works in map
- * coordinates. Hybrid keeps deterministic chrome exact; Full Treatment deliberately leaves the
- * chrome editable so the second paid pass can produce the richer typography, pictorial legend and
- * notes layout that distinguish it from Hybrid.
- */
-async function extendProtectMaskToStyleSheet(
-  mapMaskDataUrl: string,
-  mapWidth: number,
-  mapHeight: number,
-  protectChrome = true,
-): Promise<string> {
-  const mask = await loadImage(mapMaskDataUrl);
-  const canvas = document.createElement('canvas');
-  canvas.width = mapWidth + styleSheetLegendWidth(mapWidth);
-  canvas.height = mapHeight;
-  const ctx = canvas.getContext('2d');
-  if (!ctx) return mapMaskDataUrl;
-
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  if (protectChrome) {
-    ctx.fillStyle = '#FFFFFF';
-    ctx.fillRect(mapWidth, 0, canvas.width - mapWidth, mapHeight);
-  }
-  ctx.drawImage(mask, 0, 0, mapWidth, mapHeight);
-  return canvas.toDataURL('image/png');
-}
+// extendProtectMaskToStyleSheet lived here. It widened a map-space protect mask onto a composed
+// page, for the days when Full Treatment was handed a composed page to improve. No paid pass is
+// handed a page any more — every one of them receives map-area artwork and gets its chrome drawn
+// back afterwards — so there is no page-shaped mask left to build. Its geometry was wrong for the
+// real sheet in any case: it placed the map at x=0 with no gutters, a layout composeStyleSheet has
+// never produced, so every restore it guided landed displaced by one gutter width.
 
 /** Extract the map panel from a deterministic sheet before an AI background-only polish pass. */
 async function cropStyleSheetToMap(
@@ -10724,6 +10685,124 @@ async function cropStyleSheetToMap(
   const sourceMapWidth = Math.min(sheet.width, sheet.height * (mapWidth / mapHeight));
   ctx.drawImage(sheet, 0, 0, sourceMapWidth, sheet.height, 0, 0, mapWidth, mapHeight);
   return canvas.toDataURL('image/png');
+}
+
+/** Copy one rectangle out of an already-composed sheet, in the sheet's own coordinates.
+ *  Used to take the MAP COLUMN off a finished page before that page's next paid pass, so the
+ *  model is handed artwork instead of a page full of type it cannot reproduce. The incoming image
+ *  is normalised to (sheetW x sheetH) first, so a cached or re-encoded sheet at a different pixel
+ *  size still yields the same region. */
+async function cropSheetRegion(
+  sheetDataUrl: string,
+  sheetW: number,
+  sheetH: number,
+  region: { x: number; y: number; w: number; h: number },
+): Promise<string> {
+  const sheet = await loadImage(sheetDataUrl);
+  const scaleX = sheet.width / sheetW;
+  const scaleY = sheet.height / sheetH;
+  const canvas = document.createElement('canvas');
+  canvas.width = Math.max(1, Math.round(region.w));
+  canvas.height = Math.max(1, Math.round(region.h));
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return sheetDataUrl;
+  useHighQualityScaling(ctx);
+  ctx.drawImage(
+    sheet,
+    region.x * scaleX,
+    region.y * scaleY,
+    region.w * scaleX,
+    region.h * scaleY,
+    0,
+    0,
+    canvas.width,
+    canvas.height,
+  );
+  return canvas.toDataURL('image/png');
+}
+
+/**
+ * THE CHROME PASS. Every mark the app owns on a design-layer sheet, drawn AFTER the paid model
+ * pass, from the saved design, over whatever the model returned:
+ *
+ *   boundary stroke · plant labels + leaders · label gutters · legend panel · title block ·
+ *   north arrow · scale bar
+ *
+ * NONE of it is ever sent to the model, and NONE of it is conditional. That combination is the
+ * whole fix (see lib/sheet-chrome-pass.ts for the sheet that made it necessary): handed a composed
+ * page, an image model erases every label and repaints the legend, because it cannot draw 9px
+ * type; and when the app's re-draw is guarded by anything the model or the upload pipeline can
+ * change, the guard eventually fires and the farmer pays for a page with no labels on it at all.
+ *
+ * The boundary belongs HERE rather than in a byte-restore for the same reason. Restoring the
+ * boundary corridor from the source was the one and only element put back on repainted ground, so
+ * it read as a hard vector line stamped over the artwork instead of a fence sitting on the land.
+ * Drawn in the same pass as the legend and the labels, it is simply another app-drawn mark.
+ *
+ * Returns the composed sheet AND the map artwork it was built from. The paid-difference gate must
+ * score map against map: comparing the composed PAGE with the map the model was given would count
+ * this function's own gutters, legend and title as the model's work.
+ */
+async function composeSheetChromeOverMapArt(opts: {
+  /** What the model returned. Map-area artwork under the current contract. */
+  modelArt: string;
+  /** Pixel size of the image the job actually uploaded, when it is known — used ONLY to recognise
+   *  a legacy in-flight job whose input was a composed page, never to decide whether to run. */
+  modelInputSize?: { width: number; height: number };
+  state: DesignCanvasState;
+  frame: CanvasFrame;
+  refLayers: DesignGlossyProps['refLayers'];
+  filter: GlossyLayerFilter;
+  W: number;
+  H: number;
+  placeName: string | undefined;
+  styleLabel: string;
+  labelMode: SheetLabelMode;
+  site: SectorSite | null;
+}): Promise<{ sheet: string; mapArt: string }> {
+  const { state, frame, refLayers, filter, W, H, labelMode } = opts;
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) throw new Error('chrome pass: 2D context unavailable');
+  useHighQualityScaling(ctx);
+  const art = await loadImage(opts.modelArt);
+  // A job enqueued before the map-only contract carries a composed PAGE as its input, so its
+  // output is a page too and its map panel is the left-hand column. Decided from the INPUT's
+  // aspect ratio — the upload is uniformly downscaled to AI_INPUT_WIDTH, so its pixel size says
+  // nothing while its ratio is exact. (Comparing sizes here is the bug this rewrite removes.)
+  const legacyPageInput = opts.modelInputSize
+    ? modelInputCarriesChrome(opts.modelInputSize.width, opts.modelInputSize.height, W, H)
+    : false;
+  const srcW = legacyPageInput ? Math.min(art.width, art.height * (W / H)) : art.width;
+  ctx.drawImage(art, 0, 0, srcW, art.height, 0, 0, W, H);
+  drawBlueprintBoundary(ctx, refLayers.boundary, (n) => n * W, (n) => n * H, W, state, frame);
+  const mapArt = canvas.toDataURL('image/png');
+  const labelled = await burnExactLabelLayer(mapArt, state, frame, refLayers, filter, W, H, labelMode);
+  const sheet = await composeStyleSheet(
+    labelled.map,
+    state,
+    frame,
+    refLayers,
+    filter,
+    opts.placeName,
+    opts.styleLabel,
+    REFERENCE_SHEET_LABEL[filter],
+    false,
+    true,
+    {
+      labelMode,
+      gutterLayout: labelled.gutterLayout,
+      ...(filter === 'water'
+        ? {
+            footerHeading: 'NOTES',
+            footerText: waterReferenceFooterText(state, frame, refLayers, opts.site),
+          }
+        : {}),
+    },
+  );
+  return { sheet, mapArt };
 }
 
 // ── Persistence — cache the last render per site so a page refresh doesn't lose it.
@@ -11557,10 +11636,13 @@ export default function DesignGlossy({
   // the gallery keeps every paid sheet addressable). PLAN_VERSION stays untouched — bumping THAT
   // re-keys the gallery and takes paid renders away from farmers. Bump the token whenever a change
   // alters what a sheet LOOKS like: r1 = bedpath registration + zone-ring removal + legend
-  // grouping + gutter architecture on paid sheets (2026-08-03).
+  // grouping + gutter architecture on paid sheets (2026-08-03); r2 = the chrome pass moved after
+  // the AI pass on every paid path, so a Full Treatment sheet carries the app's legend, labels and
+  // title again instead of whatever the model left of them (2026-08-10). A cached r1 Full
+  // Treatment is exactly the picture this change exists to stop re-serving.
   const underlaySuffix = underlayCacheSuffix(underlay, frameProp)
     + (sheetHasPlantCodes ? labelModeCacheSuffix(labelMode) : '')
-    + ':r1'
+    + ':r2'
     // A sheet drawn at SCALE 3 is a different picture from the same sheet at 2 — re-serving a
     // 1920px cache under a High setting would look like the setting did nothing (the exact
     // "code change looks like it did nothing" trap the r-token note above describes). EMPTY at
@@ -12529,10 +12611,17 @@ export default function DesignGlossy({
   // exact-map logic stays here), hands them to the queue, then finishes each returned sheet with the
   // same deterministic composite-back the synchronous path uses.
 
-  // Composite-back for one sheet. STRICT (default): clip the model output to the boundary, put the
-  // real satellite outside, burn our exact labels + the cream sheet chrome — accuracy by
-  // construction. SHOWCASE: the model drew its own legend + labels, so keep its whole output (no
-  // clip, no burned labels, no chrome), with only the transparency backstop.
+  // Composite-back for one sheet. Three shapes, and the middle one is the fix:
+  //
+  //   HYBRID (locked)   clip the model output to the boundary, put the real satellite outside,
+  //                     restore protected pixels, then burn our exact labels + the cream chrome.
+  //   FULL (polishStage) no clip and no restore — the model repainted the map and the app draws
+  //                     every chrome element back over it (composeSheetChromeOverMapArt).
+  //   SHOWCASE          "AI legend" only: the model was commissioned to draw its own legend and
+  //                     labels, so its whole output ships with just the transparency backstop.
+  //
+  // The tier is decided by the flags the JOB was enqueued with, never by what happens to be
+  // fetchable at finish time. Chrome is app-owned in the first two and is not optional in either.
   const finishStyledSheet = useCallback(
     async (
       modelImage: string,
@@ -12542,19 +12631,22 @@ export default function DesignGlossy({
       sourceImage?: string,
       protectMask?: string,
       locked = false,
+      /**
+       * The COMMITTED workflow stage, taken from the job doc's resultKind — never inferred from a
+       * protect mask, an image size or a visual style. Those were the old discriminators for "is
+       * this the Full Treatment polish", and each of them can be absent for reasons that have
+       * nothing to do with who owns the page; when one was, the chrome pass silently did not run.
+       */
+      polishStage = false,
     ): Promise<string> => {
       // Model-authored pages and geometry-locked pages must use the same boundary-focused frame
       // as the image sent to GPT. Otherwise exact overlays are rebuilt in the original satellite
       // coordinates and land as a tiny or displaced design on the returned page.
       //
       // The polish stage arrives with locked=false (its provenance is honest: the model owns the
-      // artwork) but its INPUT was the Hybrid's map, built in this same boundary-focused frame.
-      // Finishing it in the raw frame made W/H disagree with the input by design, so the legacy
-      // page-size guard below swallowed every polish: the very first production run of the
-      // map-only polish contract (job …_1wvtpj) shipped with no labels, no legend and no title
-      // because of this line. A showcase job that carries a protect mask is that polish.
-      const useBoundaryPresentation = locked || isModelChromeStyle(styleDef.key)
-        || (showcase && Boolean(protectMask));
+      // map ARTWORK) but its INPUT was the Hybrid's map, built in this same boundary-focused
+      // frame, and the chrome the app draws back over it must land in that same frame too.
+      const useBoundaryPresentation = locked || isModelChromeStyle(styleDef.key) || polishStage;
       const presentation = useBoundaryPresentation
         ? await boundaryPresentationContext(state, frame, refLayers)
         : { state, frame, refLayers };
@@ -12599,70 +12691,78 @@ export default function DesignGlossy({
         return sheetImage;
       }
 
-      // Full Treatment's second paid pass now receives the Hybrid's MAP PANEL, text-free — the
-      // same contract the Hybrid pass itself has always had. It used to receive the complete
-      // finished page, whose prompt then had to demand "WRITE NOTHING" and "keep the supplied
-      // labels with their exact spellings" IN THE SAME BREATH: the flagship render resolved that
-      // contradiction by erasing every map label and repainting the legend. The model polishes
-      // artwork; every glyph of text is drawn HERE, afterwards, from the saved design — the same
-      // burnExactLabelLayer + composeStyleSheet tail the Hybrid uses, so the two paid tiers differ
-      // only in their map pixels. (The sector precedent that made recompose-after-polish look
-      // dangerous re-burned exact OVERLAYS over the model's art; nothing here touches the map.)
-      if (showcase && !locked && protectMask && sourceImage) {
+      // ── FULL TREATMENT: THE CHROME PASS, UNCONDITIONALLY ───────────────────────────────────
+      //
+      // The second paid pass receives the Hybrid's MAP PANEL, text-free — the same contract the
+      // Hybrid pass itself has always had. It used to receive the complete finished page, whose
+      // prompt then had to demand "WRITE NOTHING" and "keep the supplied labels with their exact
+      // spellings" IN THE SAME BREATH: the flagship render resolved that contradiction by erasing
+      // every map label and repainting the legend. The model polishes artwork; every glyph of text
+      // is drawn afterwards, from the saved design, by composeSheetChromeOverMapArt.
+      //
+      // WHAT CHANGED HERE, AND WHY IT IS THE WHOLE FIX: this branch used to be guarded on
+      // `protectMask && sourceImage` and then on `|src| == |map|`, and any of those three could
+      // fail for reasons unrelated to the sheet. The size comparison failed ALWAYS once the render
+      // scale went above 2, because every AI-bound bitmap is uniformly downscaled to
+      // AI_INPUT_WIDTH before upload (capForAiInput) — so the "legacy page input" escape hatch
+      // fired on every polish, and what shipped was the model's repainted page with the boundary
+      // corridor byte-restored over it: no labels, no legend, and one hard vector line stamped
+      // across repainted ground. Nothing gates the chrome pass now. The committed stage decides
+      // that it runs; the input's ASPECT (never its size) decides only whether a legacy page's map
+      // column has to be taken out of the returned image first.
+      //
+      // NO byte-restore on the polish tier either. The mask's boundary corridor used to stamp the
+      // Hybrid's PHOTO ground (plus the drawn line and its vertex dots) back through the model's
+      // fully repainted artwork. The property line is a site FACT, so the app draws it as a vector
+      // at the exact saved position — inside the same pass as the labels and the legend, which is
+      // what makes it read as part of the sheet rather than as a mark laid on top of it.
+      if (paidPolishNeedsChromePass({
+        resultKind: polishStage ? 'ai-polished' : 'hybrid',
+        geometryLock: locked,
+        modelChromeStyle: isModelChromeStyle(styleDef.key),
+      })) {
+        const chromeInput = {
+          state: renderState,
+          frame: renderFrame,
+          refLayers: renderRefLayers,
+          filter: f,
+          W,
+          H,
+          placeName,
+          styleLabel: styleDef.label,
+          labelMode,
+          site,
+        };
+        // Only ever used to recognise a legacy page-shaped input; a missing source never stops the
+        // chrome pass, it just means the current map-only contract is assumed.
+        let modelInputSize: { width: number; height: number } | undefined;
+        if (sourceImage) {
+          try {
+            const src = await loadImage(sourceImage);
+            modelInputSize = { width: src.width, height: src.height };
+          } catch { /* unmeasurable input — assume the map-only contract */ }
+        }
         try {
-          const src = await loadImage(sourceImage);
-          // An in-flight job enqueued before this change carries the full PAGE as its input;
-          // recomposing chrome around a page would nest a sheet inside a sheet. Ship it the old
-          // way and let the next render pick up the new contract.
-          if (Math.abs(src.width - W) > 2 || Math.abs(src.height - H) > 2) {
-            return await restoreProtectedPixels(sourceImage, modelImage, protectMask);
-          }
-          // NO byte-restore on the polish tier. The mask's boundary corridor used to stamp the
-          // Hybrid's PHOTO ground (plus the drawn line and its vertex dots) back through the
-          // model's fully repainted artwork — a 15-to-23-pixel photographic ribbon around the
-          // whole site. That ribbon IS the "ghost zone worms" on job …_1wvtpj: the model had
-          // kept the fence perfectly (thin, crisp, posts); the restore then defaced its own
-          // render. The property line is a site FACT, so the app draws it here, as a vector, at
-          // the exact saved position — same authority model as labels and the legend. The mask
-          // still ships with the job: the difference gate uses it to exclude the line corridor
-          // from its moved-pixels score.
-          const model = await loadImage(modelImage);
-          const mapCanvas = document.createElement('canvas');
-          mapCanvas.width = W;
-          mapCanvas.height = H;
-          const mapCtx = mapCanvas.getContext('2d');
-          if (!mapCtx) throw new Error('polish finish: 2D context unavailable');
-          useHighQualityScaling(mapCtx);
-          mapCtx.drawImage(model, 0, 0, W, H);
-          drawBlueprintBoundary(mapCtx, renderRefLayers.boundary, (n) => n * W, (n) => n * H, W, renderState, renderFrame);
-          const polished = mapCanvas.toDataURL('image/png');
-          polishedMapRef.current = polished;
-          const labelled = await burnExactLabelLayer(polished, renderState, renderFrame, renderRefLayers, f, W, H, labelMode);
-          return await composeStyleSheet(
-            labelled.map,
-            renderState,
-            renderFrame,
-            renderRefLayers,
-            f,
-            placeName,
-            styleDef.label,
-            REFERENCE_SHEET_LABEL[f],
-            false,
-            true,
-            {
-              labelMode,
-              gutterLayout: labelled.gutterLayout,
-              ...(f === 'water'
-                ? {
-                    footerHeading: 'NOTES',
-                    footerText: waterReferenceFooterText(renderState, renderFrame, renderRefLayers, site),
-                  }
-                : {}),
-            },
-          );
+          const composed = await composeSheetChromeOverMapArt({
+            ...chromeInput,
+            modelArt: modelImage,
+            modelInputSize,
+          });
+          polishedMapRef.current = composed.mapArt;
+          return composed.sheet;
         } catch (err) {
-          console.error('[glossy] Full Treatment restore failed; keeping the exact Hybrid', err);
-          return sourceImage;
+          // A paid sheet WITHOUT its legend and labels is not an acceptable degraded result — that
+          // is the exact failure this branch exists to prevent — so the fallback re-runs the same
+          // chrome pass over the map the model was given rather than shipping a bare image.
+          console.error('[glossy] Full Treatment chrome pass failed over the model art', err);
+          if (!sourceImage) throw err;
+          const fallback = await composeSheetChromeOverMapArt({
+            ...chromeInput,
+            modelArt: sourceImage,
+            modelInputSize,
+          });
+          polishedMapRef.current = fallback.mapArt;
+          return fallback.sheet;
         }
       }
 
@@ -12697,10 +12797,15 @@ export default function DesignGlossy({
             protectMask ? 'hybrid' : 'solid',
           )
         : undefined;
-      // A showcase job owns the complete page: title, map, pictorial legend and labels. Step 1 has
-      // already saved the exact app-owned master separately, so compositing app chrome back over
-      // this paid result would only turn it into the same hybrid again.
-      if (showcase && !locked) return restoredImage;
+      // The "AI legend" showcase tier ONLY — the farmer explicitly asked the model to author the
+      // whole page: title, map, pictorial legend and labels. Step 1 has already saved the exact
+      // app-owned master separately, so compositing app chrome back over this paid result would
+      // only turn it into the same hybrid again.
+      //
+      // Full Treatment does NOT reach this line: it returns from the chrome pass above, decided by
+      // its committed stage. It used to fall through to here whenever its protect mask or its
+      // uploaded input could not be fetched, which shipped a paid sheet with no chrome at all.
+      if (showcase && !locked && !polishStage) return restoredImage;
       // Locked sheets are painted edge to edge, so they must NOT be clipped to the plot: clipping
       // is what produced a small illustrated patch dropped into an untouched satellite photo.
       // Unlocked sheets keep the clip, which is what holds their art inside the boundary.
@@ -13263,16 +13368,20 @@ export default function DesignGlossy({
       // polished", and charged for. It was wired into generateOneViaQueue only, so the three
       // analysis sheets — Site, Sector and Phasing — kept paying for an unverified pass on exactly
       // the sheets where the app redraws the most on top and a near-copy is hardest to spot.
-      if (polishStage) polishInputRef.current = hybridInput;
+      // (The baseline itself is captured below, once the map column has been cut out.)
       const presentation = await boundaryPresentationContext(state, frame, refLayers);
       const renderFrame = presentation.frame;
       const mapWidth = renderFrame.imgW * SCALE;
       const mapHeight = renderFrame.imgH * SCALE;
-      // Hybrid starts with map-only imagery. Feeding composeSectorSheet's complete page into a
-      // map-space finisher made the model's legend and title shrink into the map panel. Full
-      // Treatment may receive the finished Hybrid page, but its returned page is cropped back to
-      // the map panel before the same deterministic finisher restores every factual layer.
-      const composite = hybridInput
+      // BOTH stages send MAP-AREA ARTWORK, never a composed page. The Hybrid stage always did;
+      // the polish stage used to upload the finished Hybrid PAGE — bearings, legend rows, notes,
+      // title and all — and an image model cannot redraw a page of 9px type, so it erased it. The
+      // finished page is still what the polish stage improves; only its map column is sent, and
+      // composeSectorSheet draws every app-owned mark back over what comes home.
+      const hybridMapInput = hybridInput
+        ? await cropStyleSheetToMap(hybridInput, mapWidth, mapHeight)
+        : null;
+      const composite = hybridMapInput
         ?? renderFrame.satDataUrl
         ?? await buildComposite(
           presentation.state,
@@ -13281,7 +13390,18 @@ export default function DesignGlossy({
           'all',
           false,
         );
-      const sectorMapMask = kind === 'sector'
+      // Score the paid pass against the artwork it was actually handed, not against the page that
+      // artwork was cut from — a page baseline would count the app's own legend and notes columns
+      // as pixels the model failed to change.
+      if (polishStage) polishInputRef.current = composite;
+      // HYBRID STAGE ONLY. A protect mask is a promise that those pixels come back byte-for-byte,
+      // and the polish stage restores nothing — pushing photo fabric into repainted artwork is
+      // what made the restored element read as a mark stamped on the picture. Sending the mask
+      // anyway would also have excluded the whole exterior from the difference gate's score, on a
+      // stage where the model is free to (and does) repaint it. Scoring the whole map is stricter.
+      // (extendProtectMaskToStyleSheet is gone from this path with it: it built a sheet-shaped
+      // mask — map at x=0, no gutters — that no composed page ever matched.)
+      const protectMaskDataUrl = kind === 'sector' && !polishStage
         ? await buildProtectMask(
           presentation.state,
           renderFrame,
@@ -13290,9 +13410,6 @@ export default function DesignGlossy({
           sectorProtectMaskOptions(),
         )
         : undefined;
-      const protectMaskDataUrl = sectorMapMask && polishStage
-        ? await extendProtectMaskToStyleSheet(sectorMapMask, mapWidth, mapHeight, false)
-        : sectorMapMask;
       const prompt = polishStage
         ? kind === 'sector'
           ? buildSectorSheetPolishPrompt(styleKey, placeName)
@@ -13308,10 +13425,11 @@ export default function DesignGlossy({
           prompt,
           compositeDataUrl: composite,
           ...(protectMaskDataUrl ? { protectMaskDataUrl, useProtectMaskForEdit: false } : {}),
-          // showcase:true on the polish stage means the model owns the already-complete polished
-          // page — the finisher must not redraw the hybrid analysis over it. The hybrid stage is
-          // now genuinely geometry-locked (composeSectorSheet(modelImage,...) composites our own
-          // bearings/legend/labels back on top), so it earns resultKind:'hybrid', not 'legacy'.
+          // showcase:true on the polish stage records that the model, not the app, painted the
+          // GROUND on this pass — it no longer means "the model owns the page". It cannot: the
+          // model is handed the map column alone and never sees the bearings, legend or notes, so
+          // composeSectorSheet draws all of them back over its artwork at BOTH stages. (These two
+          // flags may never both be true — hasConflictingRenderAuthority rejects the job.)
           showcase: polishStage,
           geometryLock: !polishStage,
           resultKind: lockedPolishResultKind(lockedPolishStage),
@@ -13335,30 +13453,34 @@ export default function DesignGlossy({
 
   // Phasing (08) AI Hybrid + Full Treatment — mirrors generateSectorViaQueue's two-stage pattern.
   //
-  // Hybrid stage:  build a redacted input (schedule panel BLANKED), build a protect mask covering
-  //                the ENTIRE panel, send to gpt-image-2. The model paints the map area only.
+  // Hybrid stage:  build the exact sheet, blank nothing, and upload its MAP COLUMN — the schedule
+  //                panel, the critical-order list and the site rules are simply not in the image.
   //                On completion, composePhasingSheet (via finishPhasingRef) draws the REAL
   //                schedule panel back on top. showcase:false, geometryLock:true.
   //
   // Polish stage:  takes hybridResultRef.current (the finished hybrid, WITH the real schedule
-  //                already composited on top by the Hybrid stage) and re-blanks the same panel
-  //                region via blankPhasingPanel BEFORE sending it to buildFinishedSheetPolishPrompt.
-  //                showcase:true (model owns the complete polished page) but geometryLock:false,
-  //                exactly like every other sheet's polish stage — those two flags can never both be
-  //                true (enqueueRenderJob's hasConflictingRenderAuthority rejects the job outright;
-  //                an earlier version of this code set geometryLock:true here and broke Full
-  //                Treatment entirely — adversarial review, 2026-07-25). Unlike every other sheet,
-  //                the real schedule is NEVER visible to the model at this stage either — this is a
-  //                deliberate departure from "the polish step receives the complete finished sheet",
-  //                because a build calendar must never be AI-authored even under a well-worded
-  //                prompt-only instruction not to touch it.
+  //                already composited on top by the Hybrid stage), re-blanks the panel region via
+  //                blankPhasingPanel and then cuts the same map column out of it before sending it
+  //                to buildFinishedSheetPolishPrompt. showcase:true (the model painted the ground
+  //                on this pass) but geometryLock:false, exactly like every other sheet's polish
+  //                stage — those two flags can never both be true (enqueueRenderJob's
+  //                hasConflictingRenderAuthority rejects the job outright; an earlier version of
+  //                this code set geometryLock:true here and broke Full Treatment entirely —
+  //                adversarial review, 2026-07-25).
   //
-  // SAFETY NOTE: neither stage's protect mask is actually enforced by the OpenAI edit call itself
-  // (useProtectMaskForEdit is false here, same as every other sheet's mask — see
-  // buildPhasingProtectMask's own comment). The real, load-bearing guarantee is two-fold: the model
-  // is never shown real schedule text in the first place (blankPhasingPanel, both stages), and
-  // finishPhasingRef's composePhasingSheet redraws every exact fact back on top of whatever the
-  // model returns, regardless of stage. The saved exact master is the authority in every case.
+  // Phasing was the first sheet to send map-area artwork instead of a composed page, because a
+  // build calendar must never be AI-authored even under a well-worded prompt-only instruction not
+  // to touch it. Every paid path now works this way, for the same reason generalised: an image
+  // model cannot reproduce small text, so a page of it comes back erased (see
+  // lib/sheet-chrome-pass.ts).
+  //
+  // SAFETY NOTE: no protect mask is sent on either stage, and none is needed. A mask was never
+  // enforced by the OpenAI edit call anyway (useProtectMaskForEdit is false on every sheet in this
+  // file — lib/render-jobs.ts: "a deterministic restoration contract, not an OpenAI edit mask").
+  // The load-bearing guarantee is two-fold and structural: the model is never shown real schedule
+  // text (the map-column crop, plus blankPhasingPanel on the polish stage), and finishPhasingRef's
+  // composePhasingSheet redraws every exact fact back on top of whatever the model returns,
+  // regardless of stage. The saved exact master is the authority in every case.
   const generatePhasingViaQueue = useCallback(async () => {
     const styleKey = lockedPolishStyle(producerStyle, DEFAULT_PRODUCER_STYLE);
     const styleDef = PRODUCER_STYLES.find((s) => s.key === styleKey);
@@ -13374,26 +13496,54 @@ export default function DesignGlossy({
       }
       let hybridInput = polishStage ? hybridResultRef.current : null;
       if (polishStage) hybridResultRef.current = null; // consume-once
-      // Baseline for the paid-difference gate — captured BEFORE blankPhasingPanel below. Comparing
-      // against the blanked image would score the app's own redraw of the schedule panel as the
-      // model's work, so a verbatim copy would pass as "redrawn" and the gate would be worse than
-      // absent: it would actively certify the failure it was built to catch.
-      if (polishStage) polishInputRef.current = hybridInput;
-
       // Full Treatment's polish stage must NEVER see the real schedule text either — not just the
       // Hybrid stage. hybridInput here is the Hybrid stage's own FINISHED sheet (composePhasingSheet
       // already composited the real panel back onto it), so re-blank the same panel region before
       // sending it on. Without this, the model saw dates/tasks/hold-points with only
       // buildFinishedSheetPolishPrompt's generic wording asking it not to touch them — exactly the
       // prompt-only protection this sheet was built to avoid (adversarial review, 2026-07-25).
+      //
+      // The map-column crop below now removes the panel from the upload entirely, which makes this
+      // blanking redundant on its own terms. It stays: two independent steps have to be wrong
+      // before a date reaches a model, and this one is the cheaper of the two to reason about.
       if (polishStage && hybridInput) {
         // The hybrid sheet was rendered at the boundary-framed size, so blank at that size — the
         // raw frame would clear a rectangle that is no longer where the panel sits.
         hybridInput = await blankPhasingPanel(hybridInput, phasingSheetSize(frame, refLayers));
       }
 
-      const compositeDataUrl = hybridInput ?? await buildPhasingHybridInput(state, frame, refLayers, site, placeName);
-      const protectMaskDataUrl = polishStage ? undefined : buildPhasingProtectMask(frame, refLayers);
+      // BOTH STAGES SEND THE MAP COLUMN ALONE. Everything to the right of it is app-owned chrome —
+      // the schedule panel, the critical-order list, the site rules — and everything around it is
+      // gutter. The Hybrid stage used to upload the whole page with the panel merely blanked, so
+      // the model was still asked to reproduce sheet furniture it cannot draw, and its page-shaped
+      // return was then squeezed into the narrower map column by composePhasingSheet: the model's
+      // ground landed horizontally compressed against exact content redrawn at full map width.
+      // Sending the column means what comes back is the column.
+      const phasingSize = phasingSheetSize(frame, refLayers);
+      const phasingMapColumn = {
+        x: phasingPanelRect(phasingSize).mapX,
+        y: 0,
+        w: phasingSize.mapW,
+        h: phasingSize.H,
+      };
+      const phasingPage = hybridInput ?? await buildPhasingHybridInput(state, frame, refLayers, site, placeName);
+      const compositeDataUrl = await cropSheetRegion(
+        phasingPage,
+        phasingSize.W,
+        phasingSize.H,
+        phasingMapColumn,
+      );
+      // Baseline for the paid-difference gate — the map artwork the model was actually handed, so
+      // the app's own redraw of the schedule panel can never be scored as the model's work. (A
+      // baseline that included the panel would let a verbatim copy pass as "redrawn", making the
+      // gate worse than absent: it would certify the exact failure it was built to catch.)
+      if (polishStage) polishInputRef.current = compositeDataUrl;
+      // NO PROTECT MASK. buildPhasingProtectMask only ever covered the schedule panel, and the
+      // panel is no longer inside the uploaded image — a sheet-shaped mask stretched onto a
+      // map-shaped input would instead have frozen the right-hand quarter of the MAP and excluded
+      // it from the difference gate's score. Removing the panel from the upload is the stronger
+      // version of what the mask was for.
+      const protectMaskDataUrl: string | undefined = undefined;
 
       const prompt = polishStage
         ? buildFinishedSheetPolishPrompt('Implementation & Phasing', styleKey, placeName, structureRegisterText(state, refLayers))
@@ -13856,32 +14006,28 @@ export default function DesignGlossy({
               // becomes a lie the moment 'sector' can reach this code (RENDER-INVESTIGATION.md
               // 'sector-ai' finding 3), so route it to the dedicated finisher instead of casting.
               //
-              // SECTOR'S TWO STAGES NOW GENUINELY DIFFER — this is the "no third render" fix.
-              // Hybrid stage: finish deterministically (crop the model's ground, recompose every
-              // app-drawn fact on top). Polish stage (showcase:true): the model's returned page IS
-              // the result. For two weeks this branch cropped the polished page back to the map
-              // panel and rebuilt the whole overlay deterministically — so the paid second pass
-              // could never look different from the Hybrid no matter what it painted, which is
-              // exactly what Rory kept reporting ("it's as if all that's happening is the hybrid
-              // stage... no third AI polish render at all"). It also contradicted both
-              // extendProtectMaskToStyleSheet's docblock (chrome left editable so the polish "can
-              // produce the richer typography, pictorial legend and notes layout that distinguish
-              // it from Hybrid") and the enqueue site's own showcase comment. Factual safety does
-              // not regress to trust: the exact master is saved separately BEFORE this runs, the
-              // difference gate still rejects a lazy copy, the caption marks it as the AI-authored
-              // edition, and the prompt pins wording and geometry to the supplied blueprint.
-              // Skipping restoreProtectedPixels here is deliberate too: byte-restoring photo
-              // fabric into a fully repainted page would punch photographic patches through the
-              // model's artwork — the Hybrid stage remains the geometry-restored tier.
-              // 'implementation' (Phasing 08): BOTH stages route to finishPhasingRef, unlike every
-              // other sheet's showcase:true branch. The polish stage never earns a "ship raw" exit
-              // here — a build calendar's dates/tasks/hold-points must never be AI-authored, so
-              // finishPhasingRef's composePhasingSheet always redraws the real schedule panel and
-              // every exact fact (ground, structures, boundary, phase pins) back on top, regardless
-              // of which stage produced the model's decorative background underneath it.
-              const sectorPolishOwnsPage = showcase && sheet.key === 'sector';
+              // EVERY ANALYSIS SHEET RECOMPOSES ITS OWN CHROME, AT BOTH STAGES. Sector's polish
+              // used to ship the model's returned page verbatim (`showcase && key === 'sector'`),
+              // on the reasoning that the polish tier had to be allowed to author "richer
+              // typography, a pictorial legend and notes layout" — but that reasoning only ever
+              // made sense while the model was HANDED a composed page to improve. It no longer is:
+              // its input is the map column alone (see generateSectorViaQueue), so the returned
+              // image is artwork, and shipping it raw would deliver a Sector sheet with no
+              // bearings, no legend rows, no notes and no title. The two stages still genuinely
+              // differ — the polish stage repaints the ground the Hybrid stage merely restyled,
+              // and that ground is the whole base of the page — but the analysis on top of it is
+              // the app's, at both stages, as it always was for Phasing.
+              //
+              // 'implementation' (Phasing 08) already worked this way: composePhasingSheet redraws
+              // the real schedule panel and every exact fact (ground, structures, boundary, phase
+              // pins) back on top of whatever the model returns, at either stage.
+              //
+              // No byte-restore on either polish tier: pushing photo fabric back into fully
+              // repainted artwork punches photographic patches through it, and the restored
+              // element then reads as a mark stamped on the picture rather than part of it. The
+              // Hybrid stage remains the geometry-restored tier.
               let factualModelImage = raw;
-              if (sheet.key === 'sector' && sourceImage && protectMask && !sectorPolishOwnsPage) {
+              if (sheet.key === 'sector' && sourceImage && protectMask && !isPolishedResult) {
                 try {
                   factualModelImage = await restoreProtectedPixels(sourceImage, raw, protectMask);
                 } catch (restoreError) {
@@ -13897,24 +14043,29 @@ export default function DesignGlossy({
                   presentation.frame.imgH * SCALE,
                 );
               }
+              // Map against map for the paid-difference gate below. finishStyledSheet publishes a
+              // more precise value (the model art normalised into the map frame) for design-layer
+              // sheets; the analysis finishers do not, and scoring their composed PAGE against the
+              // map they were given would count the app's own legend and notes as the model's work.
+              if (isPolishedResult) polishedMapRef.current = factualModelImage;
               const finalSheet = sheet.key === 'implementation'
                 ? await finishPhasingRef.current(raw)
-                : sectorPolishOwnsPage
-                ? raw
                 : sheet.key === 'sector'
                 ? await finishSectorRef.current(factualModelImage)
                 : sheet.key === 'base'
                 ? await finishSiteRef.current(factualModelImage, styleKey)
                 : styleDef
-                  ? await finishRef.current(raw, sheet.key as GlossyLayerFilter, styleDef, showcase, sourceImage, protectMask, locked)
+                  ? await finishRef.current(raw, sheet.key as GlossyLayerFilter, styleDef, showcase, sourceImage, protectMask, locked, isPolishedResult)
                   : raw;
-              // A model-owned page is honestly NOT geometry-locked — that is the whole point of
-              // the tier, and the provenance flag must say so rather than borrow Hybrid's claim.
-              const finalGeometryLocked = !sectorPolishOwnsPage && (locked
+              // Geometry is app-drawn on every sheet that reaches a finisher — the chrome pass and
+              // the analysis composers redraw the boundary, labels and legend from saved data over
+              // whatever the model returned, so the badge is honest at both stages. Only the
+              // model-authored "AI legend" showcase tier (no protect mask, no app chrome) is not.
+              const finalGeometryLocked = locked
                 || sheet.key === 'implementation'
                 || sheet.key === 'sector'
                 || sheet.key === 'base'
-                || (showcase && Boolean(protectMask)));
+                || (showcase && Boolean(protectMask));
               // THE HANDOFF KEY MUST BE BUILT THE SAME WAY THE CACHE KEY IS. This compared
               // `producer:<style>:<sheet>` against mapKeyRef, but mapKey for a producer sheet is
               // `producer:<style>:<filter>:<mode>` — it grew a fourth `:<mode>` segment when Exact,

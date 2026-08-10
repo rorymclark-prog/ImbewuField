@@ -63,16 +63,25 @@ test('a polish stage is never enqueued from a flow this test does not know about
   );
 });
 
-test('the phasing baseline is captured BEFORE the schedule panel is blanked', () => {
-  // Phasing blanks its own schedule panel out of the image before sending it, so the model never
-  // sees real dates. If the baseline were taken after that, the app's own redraw of the panel would
-  // be scored as the model's work and a verbatim copy would pass as "redrawn" — a gate that
-  // certifies the exact failure it exists to catch is worse than no gate at all.
+test('the phasing baseline is the map artwork the model was actually handed', () => {
+  // The schedule panel must be in NEITHER side of the comparison. It is app-owned: the app blanks
+  // it out of the input and redraws it on the output, so scoring it either way is scoring the
+  // app's own work as the model's — and a verbatim copy would then pass as "redrawn", making the
+  // gate worse than absent by certifying the exact failure it exists to catch.
+  //
+  // This used to be enforced as "capture the baseline BEFORE blankPhasingPanel", i.e. compare
+  // against the un-blanked page. The panel is no longer part of the upload at all now (the job
+  // sends the MAP COLUMN), so the honest baseline is the uploaded image itself — the same bytes
+  // the model saw, panel-free by construction rather than by ordering.
   const body = callbackBody('generatePhasingViaQueue');
-  const baseline = body.indexOf('polishInputRef.current =');
-  const blank = body.indexOf('blankPhasingPanel(');
-  assert.ok(baseline !== -1 && blank !== -1, 'expected both the baseline and the blanking step');
-  assert.ok(baseline < blank, 'the baseline must be captured before blankPhasingPanel');
+  const crop = body.indexOf('const compositeDataUrl = await cropSheetRegion(');
+  const baseline = body.indexOf('polishInputRef.current = compositeDataUrl');
+  assert.ok(crop !== -1, 'phasing must upload a cropped map column, not a composed page');
+  assert.ok(baseline !== -1, 'phasing must score against the image it uploaded');
+  assert.ok(baseline > crop, 'the baseline must be the cropped upload, not the page it came from');
+  // The panel is still blanked before the crop: two independent steps have to be wrong before a
+  // real date reaches a model.
+  assert.match(body, /blankPhasingPanel\(/);
 });
 
 test('the gate compares against the baseline and refuses to save an unchanged pass', () => {

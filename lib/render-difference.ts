@@ -17,12 +17,18 @@
 
 export interface DifferenceOptions {
   /**
-   * Pixels the app restores byte-for-byte after the model returns — the boundary ring, the
-   * driveway, outside the plot, the house halo. Including them would guarantee a large identical
-   * region and drag every score toward "unchanged", punishing a pass that did redraw everything
-   * it was allowed to touch. Alpha 255 is fully protected; intermediate alpha
-   * is scored after the same proportional blend the compositor applies. Omit
-   * to compare the whole frame.
+   * APP-OWNED PIXELS — the ones the farmer sees the app's version of, whatever the model painted
+   * underneath them. Two things put a pixel in this set: the Hybrid tier restores it byte-for-byte
+   * after the model returns (the boundary ring, the driveway, outside the plot, the house halo),
+   * and the Full Treatment tier redraws it as vector chrome in the same pass as the labels and the
+   * legend (the boundary ring — see fullTreatmentProtectPolicy). Either way the model's work there
+   * is invisible, so including it would guarantee a large unchanged-looking region and drag every
+   * score toward "unchanged", punishing a pass that did redraw everything it was allowed to touch.
+   *
+   * Every pixel marked here is a pixel the model is no longer asked to have changed, so a mask
+   * that covers more than the app genuinely owns weakens this gate. Alpha 255 is fully protected;
+   * intermediate alpha is scored after the same proportional blend the compositor applies. Omit to
+   * compare the whole frame — which is what the paths that restore and redraw nothing now do.
    */
   protectMask?: Uint8ClampedArray;
 }
