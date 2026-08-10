@@ -66,3 +66,35 @@ test('both failure states are sticky, not a toast that clears itself', () => {
     );
   }
 });
+
+// ── The crop planner: an AUTOSAVE, so silence is the only failure mode ──────────────────────
+
+test('saveCropPlan reports whether the plan actually reached storage', async () => {
+  // It used to return void with the comment "fail silently, plan just won't persist". That is the
+  // worst available behaviour for an autosave: nothing ever claims success, so nothing can be
+  // disbelieved, and the farmer discovers the loss only after a reload.
+  const src = readFileSync(join(process.cwd(), 'lib', 'crop-plan.ts'), 'utf8');
+  // Assert the SIGNATURE and the RUNTIME answer, not the wording. A first version of this test
+  // grepped for the old "fail silently" phrase and failed on the comment that quotes it while
+  // explaining the fix — a guard that fires on its own documentation guards nothing.
+  assert.ok(/export function saveCropPlan\([^)]*\): boolean/.test(src), 'saveCropPlan returns void again');
+  assert.ok(/return false;/.test(src), 'the failure path stopped returning false');
+
+  const mod = await import('../lib/crop-plan.ts');
+  // No window in this environment: not a save, and it must not claim to be one.
+  assert.equal(mod.saveCropPlan({ plantings: [], pattern: 'summer' } as never), false);
+});
+
+test('the planner surfaces an autosave failure instead of swallowing it', () => {
+  const src = readFileSync(join(process.cwd(), 'app', 'facilitator', 'crops', 'page.tsx'), 'utf8');
+  assert.ok(
+    src.includes('setPlanSaveFailed(!saveCropPlan(plan))'),
+    'the debounced autosave discards saveCropPlan\'s result again',
+  );
+  assert.ok(src.includes('planSaveFailed && ('), 'nothing renders the autosave failure');
+  assert.ok(src.includes("role=\"alert\""), 'the failure banner is not announced to assistive tech');
+  assert.ok(
+    !/setTimeout\(\(\) => setPlanSaveFailed\(false\)/.test(src),
+    'the autosave warning clears itself on a timer — it must persist until a save succeeds',
+  );
+});

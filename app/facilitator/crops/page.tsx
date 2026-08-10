@@ -555,11 +555,16 @@ function FacilitatorCropsPageInner() {
   }
 
   // Debounced persistence — saves ~400ms after the last edit.
+  //
+  // THIS IS AN AUTOSAVE, so there is no button and no confirmation — which is precisely why a
+  // failure has to announce itself. A farmer whose phone is full otherwise keeps planning into
+  // nothing and only finds out after a reload, by which point the session cannot be recovered.
+  const [planSaveFailed, setPlanSaveFailed] = useState(false);
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => {
     if (!plan) return;
     if (saveTimer.current) clearTimeout(saveTimer.current);
-    saveTimer.current = setTimeout(() => saveCropPlan(plan), 400);
+    saveTimer.current = setTimeout(() => setPlanSaveFailed(!saveCropPlan(plan)), 400);
     return () => { if (saveTimer.current) clearTimeout(saveTimer.current); };
   }, [plan]);
 
@@ -848,6 +853,19 @@ function FacilitatorCropsPageInner() {
 
   return (
     <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
+      {/* AUTOSAVE FAILED — above the header, because everything below it is now unsaved work.
+          It stays until a later autosave succeeds; there is no dismiss, since dismissing it would
+          not save anything and the farmer would be back to believing the plan is stored. */}
+      {planSaveFailed && (
+        <div
+          role="alert"
+          className="flex-shrink-0 px-3 md:px-5 py-2"
+          style={{ background: '#9A3412', color: '#FDF3EC', fontSize: 12.5, lineHeight: 1.35 }}
+        >
+          <strong>Not saving.</strong> This phone has no space left, so changes to your crop plan
+          are not being kept. Free up space — your plan is still on screen until you close it.
+        </div>
+      )}
       {/* Header */}
       <header className="flex-shrink-0 flex items-center px-3 md:px-5 gap-2 md:gap-3 overflow-x-auto" style={{ height: 56, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
         <button
