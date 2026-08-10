@@ -107,3 +107,42 @@ test('the document has exactly one h1', () => {
   });
   assert.equal(out.markdown.split('\n').filter((l) => /^# /.test(l)).length, 1);
 });
+
+test('a heading the model numbered itself is renumbered, not left in place', () => {
+  // Found by Codex's report-document audit, and worse than "missing from Contents". A pre-numbered
+  // heading was emitted verbatim, contributed no NumberedHeading, and did not advance the counter,
+  // so a response containing "## 3. Water Harvesting Design" produced sections running 1, 3, 2 —
+  // with the middle one absent from Contents. A reader following a cross-reference to section 2
+  // found it printed BELOW section 3.
+  const md = ['## Executive Summary', 't', '## 3. Water Harvesting Design', 't', '## Soil Strategy', 't'].join('\n\n');
+  const { markdown, headings } = numberSections(md);
+  const h2 = markdown.split('\n').filter((l) => l.startsWith('## '));
+  assert.deepEqual(h2, ['## 1. Executive Summary', '## 2. Water Harvesting Design', '## 3. Soil Strategy']);
+  assert.deepEqual(headings.map((h) => h.number), ['1', '2', '3'], 'every printed section must reach Contents');
+});
+
+test('the model imitating the house subsection style is also renumbered', () => {
+  // This file emits subsections as "3.1 Title" with NO dot after the number, so a model copying
+  // the style writes "9.9 Deep Detail". A pattern that required the trailing dot printed that as
+  // "### 3.1 9.9 Deep Detail".
+  const md = ['## Soil Strategy', 't', '### 9.9 Deep Detail', 't'].join('\n\n');
+  const { markdown } = numberSections(md);
+  assert.ok(markdown.includes('### 1.1 Deep Detail'), markdown);
+  assert.ok(!markdown.includes('9.9'), 'the model\'s own subsection number survived');
+});
+
+test('a title that merely begins with a number keeps its first word', () => {
+  // The line this fix must not cross. "5 Year Vision" is a title, not numbering, and eating its
+  // first word would be a worse defect than the one being fixed.
+  const { markdown } = numberSections('## 5 Year Vision\n\ntext\n');
+  assert.ok(markdown.includes('## 1. 5 Year Vision'), markdown);
+});
+
+test('Contents lists every numbered section in the document', () => {
+  // The invariant behind all of the above: the printed numbering and the Contents page are built
+  // from one count, so they cannot disagree.
+  const md = ['## A', 't', '## 7. B', 't', '### 2.4 C', 't', '## Appendix: Sources', 't'].join('\n\n');
+  const { markdown, headings } = numberSections(md);
+  const printed = markdown.split('\n').filter((l) => /^#{2,3}\s/.test(l)).length;
+  assert.equal(headings.length, printed, 'a heading was printed that Contents will not list');
+});
