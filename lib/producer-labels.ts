@@ -627,3 +627,180 @@ export function producerLabelsWithinBudget(
   // and every callout here is real — none has been dropped.
   return best;
 }
+
+// ── On-plant name chips: every plant covered, by its own chip or a counted one ────────────────
+//
+// The 'onplant' marking mode writes each plant's name just under its footprint. Its first
+// implementation had three ways to silently not write one: a size gate that skipped any plant
+// printed under 22 px, a width budget that skipped any name that would not fit beside a small
+// plant, and a collision check that DELETED a chip rather than resolving the clash. Each looked
+// defensible alone ("an unreadable label is worse than none — the legend still carries it"), and
+// together they broke the sheet's contract. Rory, off a live render: several small crowns with no
+// caption at all, and a cluster of three banana clumps where only ONE carried "Banana Clump".
+//
+// The contract this planner enforces: EVERY planted item is covered by exactly one chip — its own,
+// or a counted group chip ("Banana Clump ×3") anchored on a real specimen of the group. Clashes
+// between same-named neighbours MERGE into the counted chip; clashes across names RELOCATE the
+// later chip downward (the gutter's own de-collision move); nothing is ever dropped.
+
+export interface PlantChipSpecimen {
+  id: string;
+  defId: string;
+  /** The name the chip carries — the farmer's own label or the catalog name. */
+  name: string;
+  /** Printed centre and footprint, map px. Presentation dimensions — never saved geometry. */
+  cx: number;
+  cy: number;
+  w: number;
+  h: number;
+}
+
+export interface PlantChipBox {
+  /** Chip plaque size, map px, and the font size that produced it. */
+  w: number;
+  h: number;
+  fs: number;
+}
+
+export interface PlannedPlantChip extends PlantChipBox {
+  /** Every specimen this chip speaks for. The union across all chips is exactly the input set —
+   *  each id appears in exactly one chip, which is the whole point of the planner. */
+  memberIds: string[];
+  anchorId: string;
+  text: string;
+  count: number;
+  cx: number;
+  cy: number;
+}
+
+/** Daylight kept between two placed chips, map px. */
+const CHIP_CLEARANCE = 2;
+
+export function planPlantNameChips(
+  specimens: PlantChipSpecimen[],
+  /** Measures a chip for a text at its anchor — the caller owns fonts; the planner owns geometry.
+   *  Must always return a box: a name that fits badly is drawn small, never withheld. */
+  measure: (text: string, anchor: PlantChipSpecimen) => PlantChipBox,
+  frame: { W: number; H: number },
+): PlannedPlantChip[] {
+  const usable = specimens.filter((s) => [s.cx, s.cy, s.w, s.h].every(Number.isFinite));
+  if (!usable.length) return [];
+
+  type Chip = {
+    identity: string;
+    name: string;
+    members: PlantChipSpecimen[];
+    anchor: PlantChipSpecimen;
+    text: string;
+    box: PlantChipBox;
+  };
+
+  const anchorNearestCentroid = (members: PlantChipSpecimen[]): PlantChipSpecimen => {
+    const cx = members.reduce((sum, m) => sum + m.cx, 0) / members.length;
+    const cy = members.reduce((sum, m) => sum + m.cy, 0) / members.length;
+    return members.reduce((best, m) => (
+      Math.hypot(m.cx - cx, m.cy - cy) < Math.hypot(best.cx - cx, best.cy - cy) ? m : best
+    ), members[0]);
+  };
+  const build = (identity: string, name: string, members: PlantChipSpecimen[]): Chip => {
+    const anchor = anchorNearestCentroid(members);
+    const text = members.length > 1 ? `${name} ×${members.length}` : name;
+    return { identity, name, members, anchor, text, box: measure(text, anchor) };
+  };
+  // The chip's natural spot: just under its anchor's footprint, clear of the artwork it names.
+  const naturalY = (chip: Chip) => chip.anchor.cy + chip.anchor.h / 2 + chip.box.h * 0.62;
+  const rect = (chip: Chip, y: number) => ({
+    x0: chip.anchor.cx - chip.box.w / 2,
+    x1: chip.anchor.cx + chip.box.w / 2,
+    y0: y - chip.box.h / 2,
+    y1: y + chip.box.h / 2,
+  });
+  type Rect = ReturnType<typeof rect>;
+  const touches = (a: Rect, b: Rect) =>
+    a.x0 < b.x1 + CHIP_CLEARANCE && b.x0 < a.x1 + CHIP_CLEARANCE
+    && a.y0 < b.y1 + CHIP_CLEARANCE && b.y0 < a.y1 + CHIP_CLEARANCE;
+
+  // Identity is defId + displayed name, the same key drawPlantMarks always grouped on: a renamed
+  // specimen never merges into the generic group. Units of a system (beds, rows, strips) take one
+  // counted chip for the whole identity, exactly as before; perennials start one chip each.
+  const byIdentity = new Map<string, PlantChipSpecimen[]>();
+  for (const s of usable) {
+    const key = `${s.defId}\u0000${s.name}`;
+    const arr = byIdentity.get(key) ?? [];
+    arr.push(s);
+    byIdentity.set(key, arr);
+  }
+  let chips: Chip[] = [];
+  for (const [identity, members] of byIdentity) {
+    if (members.length === 1 || labelsEverySpecimen(members[0].defId, members.length)) {
+      for (const m of members) chips.push(build(identity, m.name, [m]));
+    } else {
+      chips.push(build(identity, members[0].name, members));
+    }
+  }
+  const sortChips = () => chips.sort((a, b) =>
+    naturalY(a) - naturalY(b) || a.anchor.cx - b.anchor.cx || a.anchor.id.localeCompare(b.anchor.id));
+
+  // Two specimens are NEIGHBOURS when their printed footprints touch (with 10% grace) — the
+  // "cluster of three banana clumps" reading. Chip collision alone is not enough: in a tight
+  // triangle the third clump's chip hangs below the first row's and never collides with it, yet
+  // the three are unmistakably one cluster to a reader.
+  const footprintsTouch = (a: PlantChipSpecimen, b: PlantChipSpecimen) =>
+    Math.abs(a.cx - b.cx) < (a.w + b.w) * 0.55 && Math.abs(a.cy - b.cy) < (a.h + b.h) * 0.55;
+  const areNeighbours = (a: Chip, b: Chip) =>
+    touches(rect(a, naturalY(a)), rect(b, naturalY(b)))
+    || a.members.some((ma) => b.members.some((mb) => footprintsTouch(ma, mb)));
+
+  // MERGE PASS. Two same-identity chips that are neighbours — plaques colliding, or member plants
+  // adjacent on the ground — become one counted chip, re-anchored on the member nearest the joint
+  // centroid: three adjacent banana clumps read "Banana Clump ×3" on a real clump instead of one
+  // labelled clump and two silent ones, while two separate banana clusters far apart keep a chip
+  // each. Each merge removes a chip, so the pass terminates in at most one merge per specimen.
+  for (let guard = 0; guard < usable.length; guard++) {
+    sortChips();
+    let merged: Chip | null = null;
+    let absorbed: Chip | null = null;
+    outer: for (let i = 0; i < chips.length; i++) {
+      for (let j = i + 1; j < chips.length; j++) {
+        if (chips[i].identity !== chips[j].identity) continue;
+        if (!areNeighbours(chips[i], chips[j])) continue;
+        merged = chips[i];
+        absorbed = chips[j];
+        break outer;
+      }
+    }
+    if (!merged || !absorbed) break;
+    const union = build(merged.identity, merged.name, [...merged.members, ...absorbed.members]);
+    chips = chips.filter((c) => c !== merged && c !== absorbed);
+    chips.push(union);
+  }
+
+  // PLACEMENT PASS. Cross-identity clashes relocate instead of deleting: sweep top to bottom and
+  // push the later chip down past whatever is already placed — vertical-only, so a chip stays on
+  // its plant's x and the association survives. y only ever increases, so the sweep terminates.
+  sortChips();
+  const placed: Rect[] = [];
+  const out: PlannedPlantChip[] = [];
+  for (const chip of chips) {
+    let y = naturalY(chip);
+    for (let pushes = 0; pushes <= placed.length; pushes++) {
+      const hit = placed.find((r) => touches(rect(chip, y), r));
+      if (!hit) break;
+      y = hit.y1 + CHIP_CLEARANCE + chip.box.h / 2;
+    }
+    // The frame edge never deletes a chip either — clamp, and accept the rare touch at the very
+    // bottom over losing a plant's only label.
+    y = Math.min(y, frame.H - chip.box.h / 2);
+    placed.push(rect(chip, y));
+    out.push({
+      memberIds: chip.members.map((m) => m.id),
+      anchorId: chip.anchor.id,
+      text: chip.text,
+      count: chip.members.length,
+      cx: chip.anchor.cx,
+      cy: y,
+      ...chip.box,
+    });
+  }
+  return out;
+}

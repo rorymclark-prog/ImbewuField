@@ -50,7 +50,7 @@ import { authoritativeHouseFootprints } from '@/lib/house-footprints';
 // Re-exported below so existing consumers (lib/producer-prompt.ts comments, app/design/page.tsx,
 // components/design/DesignPrint.tsx) keep importing them from this module unchanged.
 import {
-  cartographicItemPaintRank,
+  compareCartographicPaint,
   itemInFilter,
   lineInFilter,
   zonesInFilter,
@@ -75,9 +75,8 @@ import {
   REFERENCE_SHEET_LABEL,
   type GlossyLayerFilter,
 } from '@/lib/glossy-filters';
-import { compareLabelRows, gutterCalloutRows, producerLabels, producerLabelsWithinBudget, plotBox } from '@/lib/producer-labels';
+import { compareLabelRows, gutterCalloutRows, planPlantNameChips, producerLabels, producerLabelsWithinBudget, plotBox, type PlantChipSpecimen } from '@/lib/producer-labels';
 import {
-  labelsEverySpecimen,
   layoutGutterRows,
   sheetGutterWidth,
   type GutterLayout,
@@ -2061,11 +2060,10 @@ function waterItemsFor(state: DesignCanvasState): PlacedItem[] {
     })
     .sort((a, b) => {
       const da = ELEMENTS_BY_ID[a.defId], db = ELEMENTS_BY_ID[b.defId];
-      const layerA = cartographicItemPaintRank(da);
-      const layerB = cartographicItemPaintRank(db);
-      const areaA = (a.wM ?? da.wM) * (a.hM ?? da.hM);
-      const areaB = (b.wM ?? db.wM) * (b.hM ?? db.hM);
-      return layerA - layerB || areaB - areaA || a.id.localeCompare(b.id);
+      return compareCartographicPaint(
+        { def: da, area: (a.wM ?? da.wM) * (a.hM ?? da.hM), id: a.id },
+        { def: db, area: (b.wM ?? db.wM) * (b.hM ?? db.hM), id: b.id },
+      );
     });
 }
 
@@ -5030,10 +5028,10 @@ function drawPaintedReferenceFeature(
   // claim to be the tree's edge — it was the roof-overhang mark. IT NO LONGER DRAWS IN ARTWORK
   // MODE: defended twice on paper, it lost on a real sheet — Rory, pointing at the one ringed
   // litchi among unringed neighbours: "that weird circle around the one tree". A mark only some
-  // trees wear reads as an error on those trees, not as a convention; and the understory already
-  // draws solid ON TOP of the big crown, which is what actually answers "how do we show the
-  // plants underneath". The legend line goes with it. Classic footprint mode keeps the dash —
-  // there the flat washes genuinely need it.
+  // trees wear reads as an error on those trees, not as a convention; and the crowns now paint
+  // smallest-first (compareCartographicPaint), so the big canopy honestly occludes what stands
+  // under its edge instead of needing a ring to say so. The legend line goes with it. Classic
+  // footprint mode keeps the dash — there the flat washes genuinely need it.
   const skipSolidEdge = artworkEdge;
   if (!skipSolidEdge) {
   traceFootprint();
@@ -5043,9 +5041,9 @@ function drawPaintedReferenceFeature(
     ? Math.max(1, outline * PLANTING_CANOPY_PAINT.edgeWidthScale)
     : Math.max(0.7, outline * 0.5);
   // A DASHED EDGE MEANS "THIS IS ABOVE WHAT YOU CAN SEE INSIDE IT" — the same mark a floor plan
-  // uses for a roof overhang, and the answer to "how do we show them underneath?". The understory
-  // still draws solid and on top, because a plan that hides plants under a canopy fails at its only
-  // job; the dash is what stops the small tree reading as sitting ON the big one's leaves.
+  // uses for a roof overhang. Crowns paint smallest-first now, so the big canopy genuinely covers
+  // its understory; the dash is what tells the reader there IS planting beneath this crown, since
+  // occlusion alone cannot say so.
   if (isOverstory && isMatureCanopy) {
     const dash = Math.max(4, Math.min(wPx, hPx) * 0.055);
     ctx.setLineDash([dash, dash * 0.72]);
@@ -5976,10 +5974,11 @@ function drawFilteredLines(
   ctx.restore();
 }
 
-/** Semantic ground-to-canopy stack, then biggest footprint first within each register.
- *  A tree basin must sit UNDER its tree even though it has the smaller footprint; size-only
- *  ordering painted those brown basin symbols over the foliage on the integrated masterplan.
- *  Ties break on id so the same saved design always produces the same sheet. */
+/** Semantic ground-to-canopy stack, then footprint size within each register — largest first for
+ *  ground systems (a tree basin must sit UNDER its tree even though it has the smaller footprint;
+ *  size-only ordering painted those brown basin symbols over the foliage on the integrated
+ *  masterplan), SMALLEST first for canopies so a big crown occludes the smaller plants under its
+ *  edge. The direction lives in compareCartographicPaint — one authority for every paint loop. */
 function byCartographicStack(state: DesignCanvasState, filter: GlossyLayerFilter): PlacedItem[] {
   return state.items
     .filter((it) => {
@@ -5988,11 +5987,10 @@ function byCartographicStack(state: DesignCanvasState, filter: GlossyLayerFilter
     })
     .sort((a, b) => {
       const da = ELEMENTS_BY_ID[a.defId], db = ELEMENTS_BY_ID[b.defId];
-      const layerA = cartographicItemPaintRank(da);
-      const layerB = cartographicItemPaintRank(db);
-      const areaA = (a.wM ?? da.wM) * (a.hM ?? da.hM);
-      const areaB = (b.wM ?? db.wM) * (b.hM ?? db.hM);
-      return layerA - layerB || areaB - areaA || a.id.localeCompare(b.id);
+      return compareCartographicPaint(
+        { def: da, area: (a.wM ?? da.wM) * (a.hM ?? da.hM), id: a.id },
+        { def: db, area: (b.wM ?? db.wM) * (b.hM ?? db.hM), id: b.id },
+      );
     });
 }
 
@@ -6013,11 +6011,10 @@ function drawContextItems(
     })
     .sort((a, b) => {
       const da = ELEMENTS_BY_ID[a.defId], db = ELEMENTS_BY_ID[b.defId];
-      const layerA = cartographicItemPaintRank(da);
-      const layerB = cartographicItemPaintRank(db);
-      const areaA = (a.wM ?? da.wM) * (a.hM ?? da.hM);
-      const areaB = (b.wM ?? db.wM) * (b.hM ?? db.hM);
-      return layerA - layerB || areaB - areaA || a.id.localeCompare(b.id);
+      return compareCartographicPaint(
+        { def: da, area: (a.wM ?? da.wM) * (a.hM ?? da.hM), id: a.id },
+        { def: db, area: (b.wM ?? db.wM) * (b.hM ?? db.hM), id: b.id },
+      );
     });
   for (const it of contextItems) {
     const def = ELEMENTS_BY_ID[it.defId];
@@ -6168,125 +6165,21 @@ function drawPlantMarks(
   const drawable = byCartographicStack(state, filter).filter((it) => codes.has(it.defId));
   if (!drawable.length) return;
 
-  // ONE NAME FOR TEN IDENTICAL BEDS — in 'onplant' mode only, where the chip carries a NAME.
-  // Every drawable used to get its own chip, and for beds that was the fix to "vegetable beds
-  // not named" (twice); the over-correction was a column of ten "Vegetable Bed" chips burying
-  // the bed block (Rory: "please only put one raised bed label"). labelsEverySpecimen is the
-  // same authority the gutter and the callout engines already answer to: perennials keep a name
-  // per plant, beds/rows/strips take ONE chip with the count, anchored on the specimen nearest
-  // the group's centre so it sits on a real bed. Codes mode is untouched — a code IS per-plant
-  // identity and the legend keys it.
-  let marks: Array<{ it: (typeof drawable)[number]; text?: string }> = drawable.map((it) => ({ it }));
-  if (mode === 'onplant') {
-    const byIdentity = new Map<string, typeof drawable>();
-    for (const it of drawable) {
-      const def = ELEMENTS_BY_ID[it.defId];
-      const key = `${it.defId}\u0000${it.label ?? def.name}`;
-      const arr = byIdentity.get(key) ?? [];
-      arr.push(it);
-      byIdentity.set(key, arr);
-    }
-    marks = [];
-    for (const group of byIdentity.values()) {
-      const def = ELEMENTS_BY_ID[group[0].defId];
-      if (group.length === 1 || labelsEverySpecimen(group[0].defId, group.length)) {
-        for (const it of group) marks.push({ it });
-        continue;
-      }
-      const cx = group.reduce((sum, it) => sum + it.x, 0) / group.length;
-      const cy = group.reduce((sum, it) => sum + it.y, 0) / group.length;
-      const anchor = group.reduce((best, it) => (
-        Math.hypot(it.x - cx, it.y - cy) < Math.hypot(best.x - cx, best.y - cy) ? it : best
-      ), group[0]);
-      marks.push({ it: anchor, text: `${group[0].label ?? def.name} ×${group.length}` });
-    }
-    // Drawing order must stay the cartographic stack's, not the grouping map's — chips refuse
-    // to land on one another, and which chip wins a clash should not depend on Map iteration.
-    const order = new Map(drawable.map((it, i) => [it.id, i]));
-    marks.sort((a, b) => (order.get(a.it.id) ?? 0) - (order.get(b.it.id) ?? 0));
-  }
-
   ctx.save();
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.lineJoin = 'round';
-  // Placed chips, so a name can refuse to land on one already written. Names are long and plants
-  // are close together; without this the dense corner of a sheet becomes a pile of overlapping
-  // words, which is less readable than the honest absence of a few. Nothing is lost — the legend is
-  // the inventory, and a dropped name is a name the legend still carries.
-  const placed: Array<{ x0: number; y0: number; x1: number; y1: number }> = [];
-  const clashes = (x0: number, y0: number, x1: number, y1: number) =>
-    placed.some((r) => x0 < r.x1 && x1 > r.x0 && y0 < r.y1 && y1 > r.y0);
 
-  for (const { it, text: groupedText } of marks) {
-    const def = ELEMENTS_BY_ID[it.defId];
-    const text = mode === 'onplant' ? (groupedText ?? it.label ?? def.name) : codes.get(def.id);
-    if (!text) continue;
+  const printedFor = (it: (typeof drawable)[number], def: DesignElementDef) => {
     const naturalW = Math.max(1, (it.wM ?? def.wM) * pxPerM);
     const naturalH = Math.max(1, (it.hM ?? def.hM) * pxPerM);
-    const printed = plantingFeaturePresentationDimensions(def.id, naturalW, naturalH, ctx.canvas.width);
-    const shortSide = Math.min(printed.width, printed.height);
-    // A mark wider than the plant it belongs to stops being a mark ON that plant and becomes a mark
-    // NEAR several of them. Below the floor the plant keeps its legend row and no mark — an
-    // unreadable label is a worse answer than the honest absence of one.
-    //
-    // GATED ON THE LONG SIDE, for a code as much as for a name. Gating on the short side reads as
-    // the careful choice — a mark should fit on the thing it marks — and it silently deletes every
-    // vegetable bed: a bed is long and narrow, so on a real farm its short side falls under the
-    // floor while the bed itself is one of the largest objects on the sheet. Rory has now reported
-    // it twice, once per mode: "no label for veg beds?", then "vegetable beds not named".
-    //
-    // A chip lying across a narrow bed overhangs it slightly and still reads as belonging to it —
-    // there is nothing else it could belong to. An unmarked bed reads as an unidentified rectangle.
-    const gateSide = Math.max(printed.width, printed.height);
-    if (gateSide < 22) continue;
-
-    // TWO SIZES, AND ONLY TWO. Rory: "you can have 2 size fonts again to accommodate name length."
-    // A free shrink-to-fit is what produced three different callout sizes on one sheet and it is
-    // still the wrong answer; one deliberate smaller step for the long names is not. The chip is
-    // measured at each size in turn and takes the first that fits.
-    const baseFs = mode === 'onplant'
-      ? Math.max(11, Math.min(gateSide * 0.34, ctx.canvas.width * 0.0125))
-      // Sized off the SHORT side so a code stays proportionate to the plant, floored so it stays
-      // readable — a long bed does not want a code as tall as it is wide.
-      : Math.max(9, Math.min(Math.max(shortSide, 22) * 0.3, ctx.canvas.width * 0.0115));
-    // A name may run wider than its own plant — it sits below the footprint, not on it — but not so
-    // far that it reaches the next one. A code must stay within its plant.
-    // Measured against the LONG side for the same reason the gate is: a code lies across a bed, and
-    // "does it fit within the bed's WIDTH" is a question about the wrong axis.
-    const widthBudget = mode === 'onplant'
-      ? gateSide * 1.9
-      : Math.max(printed.width, gateSide * 0.55);
-    const sizes = mode === 'onplant' ? [baseFs, baseFs * 0.76] : [baseFs];
-
-    let fs = 0;
-    let chipW = 0;
-    for (const candidate of sizes) {
-      ctx.font = `800 ${candidate}px ${REFERENCE_LABEL_FONT}`;
-      const w = ctx.measureText(text).width + candidate * 0.84;
-      if (w <= widthBudget || candidate === sizes[sizes.length - 1]) {
-        fs = candidate;
-        chipW = w;
-        if (w <= widthBudget) break;
-      }
-    }
-    if (!fs || chipW > widthBudget) continue;
-
+    return plantingFeaturePresentationDimensions(def.id, naturalW, naturalH, ctx.canvas.width);
+  };
+  // The same dark plaque the map callouts and sector marks wear. A mark has to survive landing on
+  // dark foliage, on cream mulch and on plain paper, and only an opaque plate does all three.
+  const paintChip = (text: string, fs: number, cx: number, cy: number, chipW: number, chipH: number) => {
     ctx.font = `800 ${fs}px ${REFERENCE_LABEL_FONT}`;
-    const chipH = fs * 1.5;
-    const cx = px(it.x);
-    // 'codes' lifts slightly off centre so the leader's own terminus dot stays visible under it.
-    // 'onplant' clears the footprint entirely, so the name never covers the plant it names.
-    const cy = mode === 'onplant'
-      ? py(it.y) + printed.height * 0.5 + chipH * 0.62
-      : py(it.y) - printed.height * 0.18;
-    const box = { x0: cx - chipW / 2, y0: cy - chipH / 2, x1: cx + chipW / 2, y1: cy + chipH / 2 };
-    if (mode === 'onplant' && clashes(box.x0, box.y0, box.x1, box.y1)) continue;
-    placed.push(box);
-
-    // The same dark plaque the map callouts and sector marks wear. A mark has to survive landing on
-    // dark foliage, on cream mulch and on plain paper, and only an opaque plate does all three.
-    roundRectPath(ctx, box.x0, box.y0, chipW, chipH, chipH * 0.34);
+    roundRectPath(ctx, cx - chipW / 2, cy - chipH / 2, chipW, chipH, chipH * 0.34);
     ctx.fillStyle = 'rgba(24,32,26,0.9)';
     ctx.fill();
     ctx.strokeStyle = 'rgba(243,238,219,0.72)';
@@ -6294,6 +6187,86 @@ function drawPlantMarks(
     ctx.stroke();
     ctx.fillStyle = '#F6F1E2';
     ctx.fillText(text, cx, cy + fs * 0.04);
+  };
+
+  if (mode === 'onplant') {
+    // EVERY PLANT IS COVERED — its own chip, or a counted group chip. This mode used to keep three
+    // quiet ways of writing nothing: a <22 px size gate, a width budget that rejected long names on
+    // small plants, and a clash check that DELETED the losing chip. The gutter had already withheld
+    // these plants on the promise of a mark drawn here, so a dropped chip was a plant with no label
+    // anywhere on the sheet — Rory, off a live render: small crowns with no caption, and three
+    // banana clumps of which one said "Banana Clump". planPlantNameChips owns the layout now:
+    // same-name neighbours whose chips would collide MERGE into "Banana Clump ×3" anchored on a
+    // real clump, cross-name clashes push downward, and nothing is dropped. Grouping stays under
+    // labelsEverySpecimen's authority — perennials a chip each, beds/rows/strips one counted chip
+    // (Rory: "please only put one raised bed label").
+    const specimens = drawable.map((it) => {
+      const def = ELEMENTS_BY_ID[it.defId];
+      const printed = printedFor(it, def);
+      return {
+        id: it.id,
+        defId: it.defId,
+        name: it.label ?? def.name,
+        cx: px(it.x),
+        cy: py(it.y),
+        w: printed.width,
+        h: printed.height,
+      };
+    });
+    const measure = (text: string, anchor: PlantChipSpecimen) => {
+      // TWO SIZES, AND ONLY TWO. Rory: "you can have 2 size fonts again to accommodate name
+      // length." A free shrink-to-fit is what produced three different callout sizes on one sheet
+      // and it is still the wrong answer; one deliberate smaller step for the long names is not.
+      // The chip takes the first size that fits its plant, or the smaller size regardless — a name
+      // slightly wide of a small plant still marks it; a missing name marks nothing.
+      //
+      // Floored at the old 22 px gate value so a tiny crown takes a normal small chip rather than
+      // a microscopic one — the name sits BELOW the footprint, so plant size never made it
+      // unreadable, only the old gate's refusal did.
+      const gateSide = Math.max(anchor.w, anchor.h, 22);
+      const baseFs = Math.max(11, Math.min(gateSide * 0.34, ctx.canvas.width * 0.0125));
+      const widthBudget = gateSide * 1.9;
+      let fs = baseFs * 0.76;
+      let w = 0;
+      for (const candidate of [baseFs, baseFs * 0.76]) {
+        ctx.font = `800 ${candidate}px ${REFERENCE_LABEL_FONT}`;
+        w = ctx.measureText(text).width + candidate * 0.84;
+        fs = candidate;
+        if (w <= widthBudget) break;
+      }
+      return { fs, w, h: fs * 1.5 };
+    };
+    for (const chip of planPlantNameChips(specimens, measure, { W: ctx.canvas.width, H: ctx.canvas.height })) {
+      paintChip(chip.text, chip.fs, chip.cx, chip.cy, chip.w, chip.h);
+    }
+    ctx.restore();
+    return;
+  }
+
+  // 'codes': a two-letter chip on every plant — a code IS per-plant identity and the legend keys
+  // it, so unlike names there is nothing to group or count.
+  for (const it of drawable) {
+    const def = ELEMENTS_BY_ID[it.defId];
+    const text = codes.get(def.id);
+    if (!text) continue;
+    const printed = printedFor(it, def);
+    const shortSide = Math.min(printed.width, printed.height);
+    // There used to be a 22 px long-side gate here ("an unreadable label is a worse answer than
+    // the honest absence of one") and a width budget that dropped any code wider than its plant.
+    // Both deleted the plant's only identity: the gutter withholds every coded defId on the
+    // promise of a code drawn here, so a skipped chip left the plant unlabelled everywhere —
+    // exactly the audit failure Rory reported ("not all plants have labels"). A floor-size code
+    // slightly overhanging a tiny crown is the lesser wrong: it is still centred on the one plant
+    // it names.
+    //
+    // Sized off the SHORT side so a code stays proportionate to the plant, floored so it stays
+    // readable — a long bed does not want a code as tall as it is wide.
+    const fs = Math.max(9, Math.min(Math.max(shortSide, 22) * 0.3, ctx.canvas.width * 0.0115));
+    ctx.font = `800 ${fs}px ${REFERENCE_LABEL_FONT}`;
+    const chipW = ctx.measureText(text).width + fs * 0.84;
+    const chipH = fs * 1.5;
+    // Lifted slightly off centre so the leader's own terminus dot stays visible under it.
+    paintChip(text, fs, px(it.x), py(it.y) - printed.height * 0.18, chipW, chipH);
   }
   ctx.restore();
 }

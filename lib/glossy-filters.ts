@@ -513,8 +513,8 @@ export function itemInFilter(category: string, filter: GlossyLayerFilter, defId?
  * The returned number is deliberately independent of sheet membership and item coordinates, so
  * Water, Planting and the integrated masterplan cannot silently disagree about the same overlap.
  *
- * Within each rank callers still sort largest-first for deterministic visibility of nested
- * features. Routes are painted separately beneath this item stack.
+ * Within each rank callers order by footprint size via compareCartographicPaint below. Routes are
+ * painted separately beneath this item stack.
  */
 export function cartographicItemPaintRank(def: DesignElementDef): number {
   if (def.category === 'earthworks') return 0; // basins, beds and other ground treatments
@@ -523,6 +523,38 @@ export function cartographicItemPaintRank(def: DesignElementDef): number {
   if (def.category === 'growing' && def.shape === 'rect') return 3; // beds, strips and living banks
   if (def.category === 'growing' && def.shape === 'circle') return 4; // tree canopy is physically highest
   return 2;
+}
+
+export interface CartographicPaintEntry {
+  def: DesignElementDef;
+  /** Footprint area in any one consistent unit — only ever compared within a rank. */
+  area: number;
+  id: string;
+}
+
+/**
+ * THE single paint-order comparator for placed items — rank first, then size, and the size
+ * direction depends on WHICH rank.
+ *
+ * Every ground register keeps largest-first, so a small feature nested on a big one stays visible
+ * (a tap on a pad, a barrel beside a tank). Canopies are the one register where largest-first is
+ * upside down: painting the big crown first put every smaller crown ON TOP of it, and with the
+ * near-opaque canopy art a pawpaw read as sitting on a mango's leaves rather than under them.
+ * Rory, twice: "bigger trees should always be above smaller" and then, after the dashed-edge
+ * signal alone failed to carry it, "small trees still above big trees". Overhead physics wins:
+ * within the canopy rank the SMALLEST crown paints first and the largest last, so the taller
+ * canopy occludes what stands under its edge — exactly what an aerial photograph shows. Basins
+ * and ground systems keep their lower rank, so nothing on the ground rises above a canopy.
+ *
+ * Ties break on id so the same saved design always produces the same sheet.
+ */
+export function compareCartographicPaint(a: CartographicPaintEntry, b: CartographicPaintEntry): number {
+  const rankA = cartographicItemPaintRank(a.def);
+  const rankB = cartographicItemPaintRank(b.def);
+  if (rankA !== rankB) return rankA - rankB;
+  const canopyRank = a.def.category === 'growing' && a.def.shape === 'circle';
+  const bySize = canopyRank ? a.area - b.area : b.area - a.area;
+  return bySize || a.id.localeCompare(b.id);
 }
 
 export function lineInFilter(kind: string, filter: GlossyLayerFilter): boolean {
