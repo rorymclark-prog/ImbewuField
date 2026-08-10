@@ -513,16 +513,29 @@ export function itemInFilter(category: string, filter: GlossyLayerFilter, defId?
  * The returned number is deliberately independent of sheet membership and item coordinates, so
  * Water, Planting and the integrated masterplan cannot silently disagree about the same overlap.
  *
+ * THE ORDER IS HEIGHT ABOVE THE GROUND, and beds belong at the bottom of it. A vegetable bed is
+ * worked soil with plants a few hand-spans high; a tank, a coop and a tree crown all stand over
+ * it. Rory, off a live Reference Blueprint planting sheet: "veg beds sit above trees, put them
+ * under." Beds used to sit at rank 3 — above the paths that run between them and above every
+ * tank, shed and hive on the farm — purely because the categories were listed in palette order
+ * rather than in physical order. Only the canopy rank was above them, so the moment a bed's crop
+ * rows met anything that was not a tree they painted over it.
+ *
+ * They are still ABOVE the ground washes and basins at rank 0: a raised bed is built ON the
+ * earthwork that shapes it, and a bed drawn under its own basin would be a bed you cannot see.
+ *
  * Within each rank callers order by footprint size via compareCartographicPaint below. Routes are
  * painted separately beneath this item stack.
  */
 export function cartographicItemPaintRank(def: DesignElementDef): number {
-  if (def.category === 'earthworks') return 0; // basins, beds and other ground treatments
-  if (def.category === 'access') return 1;
-  if (def.category === 'water' || def.category === 'structure' || def.category === 'animal') return 2;
-  if (def.category === 'growing' && def.shape === 'rect') return 3; // beds, strips and living banks
+  if (def.category === 'earthworks') return 0; // basins, berms and other ground treatments
+  // Beds, crop rows, strips and living banks — planting that lies ON the ground, so everything
+  // that stands above the ground is painted after it. See the height note above.
+  if (def.category === 'growing' && def.shape === 'rect') return 1;
+  if (def.category === 'access') return 2;
+  if (def.category === 'water' || def.category === 'structure' || def.category === 'animal') return 3;
   if (def.category === 'growing' && def.shape === 'circle') return 4; // tree canopy is physically highest
-  return 2;
+  return 3;
 }
 
 export interface CartographicPaintEntry {
@@ -543,8 +556,9 @@ export interface CartographicPaintEntry {
  * Rory, twice: "bigger trees should always be above smaller" and then, after the dashed-edge
  * signal alone failed to carry it, "small trees still above big trees". Overhead physics wins:
  * within the canopy rank the SMALLEST crown paints first and the largest last, so the taller
- * canopy occludes what stands under its edge — exactly what an aerial photograph shows. Basins
- * and ground systems keep their lower rank, so nothing on the ground rises above a canopy.
+ * canopy occludes what stands under its edge — exactly what an aerial photograph shows. Basins,
+ * beds and ground systems keep their lower ranks, so nothing on the ground rises above a canopy —
+ * a citrus crown that overhangs a vegetable bed is drawn over the bed's crop rows, not under them.
  *
  * Ties break on id so the same saved design always produces the same sheet.
  */

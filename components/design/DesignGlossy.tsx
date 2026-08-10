@@ -112,6 +112,8 @@ import { frameForUnderlay, hasFarmerPhoto, sheetUnderlayOptions, underlayCacheSu
 import { overlandFlowArrows, overlandFlowLegendText, interceptFlowArrows, type FlowArrow } from '@/lib/overland-flow';
 import { BED_DEF_IDS } from '@/lib/design-beds-bridge';
 import {
+  bedCropMarkPitchPx,
+  bedCropMarkUnitPx,
   bedCropRows,
   cabbageHeadLeaves,
   cropGlyphFor,
@@ -3457,8 +3459,15 @@ function drawCropRowLayout(
    *  practice — the same license the minimum-symbol-size rule in planting-cartography already
    *  claims for tiny infrastructure. */
   glyphScale = 1,
+  /** Overrides the pitch-derived size entirely. Beds pass the sheet-legible mark size from
+   *  lib/crop-row-cartography's bedCropMarkUnitPx: a bed's row pitch is its own 1.2 m width
+   *  divided by its rows, which at sheet scale is ~11 px and can never answer "is this readable
+   *  on a phone". The staple-plot path passes nothing and keeps its field rhythm. */
+  unitPx?: number,
 ): void {
-  const unit = Math.max(3.4, layout.rowGapPx * 0.42) * glyphScale;
+  const unit = Number.isFinite(unitPx) && (unitPx as number) > 0
+    ? (unitPx as number)
+    : Math.max(3.4, layout.rowGapPx * 0.42) * glyphScale;
   ctx.save();
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
@@ -4715,7 +4724,13 @@ function speciesColor(defId: string): string {
 
 /** Existing placed items are discrete site facts, not another ground ring. Keep their marks in
  * the same exact footprint renderer as the design sheets, then name them through the Base sheet's
- * existing extraRows label path so exact and paid Site sheets cannot invent separate callouts. */
+ * existing extraRows label path so exact and paid Site sheets cannot invent separate callouts.
+ *
+ * SORTED LIKE EVERY OTHER ITEM STACK. This was the one paint loop that drew items in SAVED ARRAY
+ * ORDER, so on the Site and Site-Hybrid sheets a bed the farmer recorded after their citrus
+ * painted its crop rows straight over the crown — the same ground-above-canopy inversion
+ * compareCartographicPaint exists to settle everywhere else. Nothing about which items are drawn
+ * changes; only the order they are laid down in. */
 function drawExistingSiteItems(
   ctx: CanvasRenderingContext2D,
   state: DesignCanvasState,
@@ -4723,10 +4738,17 @@ function drawExistingSiteItems(
   py: (n: number) => number,
   pxPerM: number,
 ): void {
-  for (const item of existingSiteItems(state)) {
-    const def = ELEMENTS_BY_ID[item.defId];
-    if (!def) continue;
-    drawTrueFootprint(ctx, item, def, px, py, pxPerM);
+  const items = existingSiteItems(state)
+    .filter((item) => !!ELEMENTS_BY_ID[item.defId])
+    .sort((a, b) => {
+      const da = ELEMENTS_BY_ID[a.defId], db = ELEMENTS_BY_ID[b.defId];
+      return compareCartographicPaint(
+        { def: da, area: (a.wM ?? da.wM) * (a.hM ?? da.hM), id: a.id },
+        { def: db, area: (b.wM ?? db.wM) * (b.hM ?? db.hM), id: b.id },
+      );
+    });
+  for (const item of items) {
+    drawTrueFootprint(ctx, item, ELEMENTS_BY_ID[item.defId], px, py, pxPerM);
   }
 }
 
@@ -5422,11 +5444,32 @@ function drawProductionBedCrop(
   // this varies the DRAWING and never the legend, the callouts or the BOQ.
   const named = cropGlyphFor(it.speciesId ?? it.label);
   const glyph = named === 'generic' ? unnamedBedGlyph(it.id) : named;
-  // Row pitch stays honest; the PLANTS in a bed draw half again their true footprint (the
-  // glyphScale below) so a bed reads as vegetables rather than dotted paper. See
-  // drawCropRowLayout's own note for why symbol size and ground truth may differ here.
-  const layout = bedCropRows(wPx, hPx, glyph, it.id, Math.max(10, ctx.canvas.width * 0.0085));
-  if (layout.plants.length < 3) return false;
+  // THE MARK IS SIZED FROM THE PAGE, NOT FROM THE ROW PITCH. Rory, off a live sheet and AFTER the
+  // oversized cabbage head shipped: "veg beds still don't have large veg." The head was fine; it
+  // was drawn at 0.42 of a row pitch that is itself the bed's 1.2 m width divided by its rows, so
+  // every mark in every bed came out around 15 px on a 1920 px master — a speck. bedCropMarkUnitPx
+  // asks the page how big a vegetable has to be to be a vegetable, then the layout is given that
+  // pitch so the bed carries a few large heads instead of a dusting of dots. The bed's own
+  // footprint, rotation, legend row and count are untouched: this is symbol size only.
+  const markUnitPx = bedCropMarkUnitPx(Math.min(wPx, hPx), Math.max(wPx, hPx), ctx.canvas.width);
+  // Zero means this bed is too small on THIS sheet for any vegetable to read — the shared bed
+  // artwork is the honest answer there. See MIN_DRAWN_VEG_MARK_SHEET_FRACTION.
+  if (markUnitPx <= 0) return false;
+  const layout = bedCropRows(
+    wPx,
+    hPx,
+    glyph,
+    it.id,
+    Math.max(10, ctx.canvas.width * 0.0085),
+    bedCropMarkPitchPx(markUnitPx),
+  );
+  // ONE REAL VEGETABLE BEATS THE SHARED STICKER. This used to demand three plants before it would
+  // draw, and at sheet scale a 1.2 m bed rarely reached three — so the bed fell through to
+  // production-bed-v1.png, the one green rectangle every bed on the farm shared, and the crop
+  // drawing below was never reached at all. That is the "beds are still small generic marks"
+  // report, one layer under the mark size. With the marks now page-sized, a bed carrying a single
+  // recognisable cabbage says more than the sticker ever did.
+  if (!layout.plants.length) return false;
 
   const cx = px(it.x);
   const cy = py(it.y);
@@ -5449,7 +5492,7 @@ function drawProductionBedCrop(
   ctx.save();
   roundRectPath(ctx, -wPx / 2, -hPx / 2, wPx, hPx, radius);
   ctx.clip();
-  drawCropRowLayout(ctx, layout, '#6B8F4E', 1.5);
+  drawCropRowLayout(ctx, layout, '#6B8F4E', 1, markUnitPx);
   ctx.restore();
 
   roundRectPath(ctx, -wPx / 2, -hPx / 2, wPx, hPx, radius);

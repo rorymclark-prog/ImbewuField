@@ -184,6 +184,87 @@ export function staplePlotOrdinalById(
 }
 
 /**
+ * How wide one drawn plant mark is, expressed as a multiple of the renderer's glyph unit `s`.
+ *
+ * The veg sprites are stamped at `d = 2.6 s` and the vector cabbage head reaches
+ * `2 × CABBAGE_HEAD_REACH × 1.3 ≈ 2.65 s`, so one constant describes both and a caller can turn a
+ * wanted mark DIAMETER into the glyph unit the renderer draws with.
+ */
+export const VEG_MARK_DIAMETER_UNITS = 2.6;
+
+/**
+ * The smallest a vegetable mark may be drawn, as a fraction of the finished sheet's width.
+ *
+ * WHY A SHEET-RELATIVE FLOOR AND NOT A PIXEL ONE. Rory, off a live Reference Blueprint: "veg beds
+ * still don't have large veg" — said AFTER the oversized vector cabbage head landed. The head was
+ * never the problem: every mark in a bed was sized from the ROW PITCH, and the row pitch is the
+ * bed's own 1.2 m width divided by its rows. At the scale these sheets actually print, that is
+ * ~11 px of pitch, so the "oversized" head came out about 15 px across on a 1920 px sheet — a
+ * little over half a percent of the page, which is three pixels on a phone. A drawing rhythm
+ * derived from ground truth cannot answer a legibility question; only the page can.
+ *
+ * 0.017 puts a head at ~33 px on the 1920 px master, roughly the width of the bed it sits in —
+ * which is what a bed of mature cabbages looks like from above, and is the same "symbol size, not
+ * ground truth" license the minimum-symbol-size rule in planting-cartography already claims.
+ * Nothing about the bed's own footprint, the row count or the legend changes with it.
+ */
+export const MIN_VEG_MARK_SHEET_FRACTION = 0.017;
+
+/**
+ * And the size below which a bed should not draw a crop at all.
+ *
+ * A bed can be too small on the sheet for the caps below to leave anything readable — a 1.2 m bed
+ * on a whole-farm sheet at low zoom is seven pixels wide, and a vegetable drawn inside it is a
+ * smudge whatever this module does about it. There the caller is right to fall back to the shared
+ * bed artwork: an honest rectangle beats an illegible one. This is the same judgement the old
+ * "fewer than three plants" bail was reaching for, made about the thing that actually matters
+ * (can you see a vegetable) rather than about how many of them there are.
+ */
+export const MIN_DRAWN_VEG_MARK_SHEET_FRACTION = 0.006;
+
+/**
+ * The glyph unit one vegetable mark is drawn at, for a bed of this printed size on a sheet of
+ * this width — or 0 when the bed is too small on this sheet to carry a readable vegetable, which
+ * the caller reads as "draw the shared bed artwork instead". Pure, so the legibility floor is
+ * testable without a canvas.
+ *
+ * Three numbers meet here, in this order:
+ *  - a mark should read as a share of the bed it is in (0.62 of the short side — cabbages down a
+ *    bed, not a dusting of dots);
+ *  - it may never fall below MIN_VEG_MARK_SHEET_FRACTION of the page, whatever the bed measures;
+ *  - and it is capped so an oversized mark still belongs to its bed rather than swamping it —
+ *    1.15 of the short side (a mature head does overhang the edge a little) and half the long
+ *    side, so a bed always shows at least two plants rather than one giant sticker.
+ */
+export function bedCropMarkUnitPx(
+  bedShortSidePx: number,
+  bedLongSidePx: number,
+  sheetWidthPx: number,
+): number {
+  const across = Number.isFinite(bedShortSidePx) ? Math.max(0, bedShortSidePx) : 0;
+  const along = Number.isFinite(bedLongSidePx) ? Math.max(0, bedLongSidePx) : 0;
+  if (across <= 0 || along <= 0) return 0;
+  const sheet = Number.isFinite(sheetWidthPx) && sheetWidthPx > 0 ? sheetWidthPx : 0;
+  const wanted = Math.max(across * 0.62, sheet * MIN_VEG_MARK_SHEET_FRACTION);
+  const diameter = Math.min(wanted, across * 1.15, along * 0.5);
+  if (diameter < Math.max(6, sheet * MIN_DRAWN_VEG_MARK_SHEET_FRACTION)) return 0;
+  return diameter / VEG_MARK_DIAMETER_UNITS;
+}
+
+/**
+ * Centre-to-centre spacing a row of marks this size must honour.
+ *
+ * Deliberately TIGHTER than the mark, at 0.62 of its diameter: a planted bed is a closed mass of
+ * leaves, not a line of well-behaved discs, and heads that overlap by a third are what makes the
+ * bed read as full at a glance. The renderer paints them in row order, so a later head laps the
+ * one before it exactly as it would in the ground.
+ */
+export function bedCropMarkPitchPx(markUnitPx: number): number {
+  if (!Number.isFinite(markUnitPx) || markUnitPx <= 0) return 0;
+  return markUnitPx * VEG_MARK_DIAMETER_UNITS * 0.62;
+}
+
+/**
  * Lay out rows of plants inside an axis-aligned rectangle, in the rectangle's own local space
  * (origin at its centre, +x right, +y down). The caller applies the bed's rotation.
  *
@@ -191,6 +272,11 @@ export function staplePlotOrdinalById(
  * bed, not across it. `targetRows` is clamped so a small bed on a zoomed-out sheet does not try to
  * draw twelve rows into six pixels; below the floor the caller should fall back to a plain fill,
  * because a row of illegible dots is worse than an honest rectangle.
+ *
+ * `minPitchPx` is how a caller drawing OVERSIZED marks keeps the layout honest: pass the pitch the
+ * marks need (bedCropMarkPitchPx) and the bed lays out fewer, larger plants instead of packing the
+ * old dot count in and letting the marks pile up on each other. Left at 0 the layout is exactly
+ * what it was, which is what the staple-plot path relies on.
  */
 export function bedCropRows(
   widthPx: number,
@@ -198,6 +284,7 @@ export function bedCropRows(
   glyph: CropGlyph,
   seed: string,
   targetRowGapPx = 13,
+  minPitchPx = 0,
 ): CropRowLayout {
   const w = Math.max(0, widthPx);
   const h = Math.max(0, heightPx);
@@ -205,11 +292,18 @@ export function bedCropRows(
   const alongX = w >= h;
   const across = alongX ? h : w;
   const along = alongX ? w : h;
-  const rowCount = Math.max(1, Math.min(9, Math.round(across / Math.max(6, targetRowGapPx))));
+  const pitch = Number.isFinite(minPitchPx) && minPitchPx > 0 ? minPitchPx : 0;
+  const rowPitch = Math.max(6, targetRowGapPx, pitch);
+  // With a mark pitch stated, rows are FLOORED rather than rounded: rounding up would set the rows
+  // closer together than the marks drawn on them, which is the pile-up this parameter exists to
+  // prevent. Without one the historical rounding is untouched.
+  const rowCount = Math.max(1, Math.min(9, pitch > 0
+    ? Math.floor(across / rowPitch)
+    : Math.round(across / rowPitch)));
   const rowGapPx = across / (rowCount + 1);
   // In-row spacing is a touch tighter than row spacing, which is what a bed actually looks like
   // from above: rows are set by the width of a hoe, plants by the crop.
-  const stepAlong = Math.max(7, rowGapPx * 0.82);
+  const stepAlong = Math.max(7, pitch, rowGapPx * 0.82);
   const perRow = Math.max(1, Math.floor((along - stepAlong) / stepAlong));
 
   const rows: CropRowLayout['rows'] = [];

@@ -78,6 +78,31 @@ live farmer map as a read-only "My design" layer, completing the loop the plan c
   input-mutation guard, invalid-shape quarantine) and a photo/blank skip test in
   `tests/design-overlay.test.ts`. Full suite green except the pre-existing
   `tests/auth-account-transition.test.ts` ESM-loader failure (also fails on clean main).
+### 2026-08-10 (beds under the trees; veg you can actually see)
+Two more defects off Rory's phone review of a live Reference Blueprint planting sheet.
+- **Beds sit under the trees now** (`lib/glossy-filters.ts`, `components/design/DesignGlossy.tsx`) —
+  `cartographicItemPaintRank` was ordered by palette category rather than by height above the
+  ground, so a bed sat at rank 3: above every path, tank, shed and hive on the farm, with only the
+  canopy rank over it. Beds and crop rows drop to rank 1 — still above the basins and berms they
+  are built on, below everything that stands up. And `drawExistingSiteItems` (Site + Site-Hybrid)
+  was the one item loop that painted in SAVED ARRAY ORDER, so a bed recorded after a citrus painted
+  its crop rows straight over the crown; it sorts through `compareCartographicPaint` like every
+  other stack. The canopy small-crown-first inversion is untouched.
+- **A bed carries real, large vegetables** (`lib/crop-row-cartography.ts`, `DesignGlossy.tsx`) —
+  the oversized cabbage head shipped last night never showed, because the mark size came from the
+  ROW PITCH, and a bed's row pitch is its own 1.2 m width divided by its rows: ~11 px at sheet
+  scale, so every mark drew ~17 px on the 1920 px master (three pixels on a phone). Worse, at that
+  scale a bed rarely reached the painter's "three plants or don't bother" floor, so it fell through
+  to `production-bed-v1.png` — the one green rectangle every bed shared — and the cabbage code was
+  never reached at all. New `bedCropMarkUnitPx` sizes the mark from the PAGE (≥1.7% of sheet width,
+  capped to the bed so an oversized head still belongs to it), `bedCropRows` takes the matching
+  pitch and lays out fewer, larger plants, and the bail is now "can a vegetable be read here at
+  all". A typical bed prints ~33 px heads instead of ~17 px dots. Footprints, rotations, legend
+  rows and counts are untouched — symbol size only; staple plots keep their own field treatment.
+- Guards: `tests/glossy-filters.test.ts` pins canopy-over-bed for every bed × canopy pair (and
+  bed-over-basin), plus the comparator count for the fourth paint loop;
+  `tests/crop-row-cartography.test.ts` pins the mark's readable floor, the fewer-larger layout and
+  that the renderer actually asks for it.
 
 ### 2026-08-10 (plan-sheet art: real vetiver, grassed berms, actual cabbages)
 Three pieces of Rory's phone review of a live Reference Blueprint sheet, all seeded-deterministic
