@@ -76,6 +76,16 @@ const TANK_TOP_ART: Readonly<Record<string, ReferenceFeatureArtwork>> = {
   jojo_10000: 'jojo-10000-top-v1.png',
   rain_barrel: 'rain-barrel-top-v1.png',
 };
+
+/** WHICH ELEMENTS ARE TANKS, derived from the art table above rather than typed out again.
+ *  The Water sheet needs this twice — once to DRAW the tank, once to draw the water story
+ *  arriving in it and overflowing out of it — and a hand-copied second list is exactly how a new
+ *  tank capacity ends up drawn but not plumbed. Note that `nearRoofM` alone will NOT serve as the
+ *  test: the pump & filter carries one too, and it is not a tank. */
+export function isTankDefId(defId: string): boolean {
+  return Boolean(TANK_TOP_ART[normaliseLookupKey(defId, '_')]);
+}
+
 // THIRTEEN SPECIES USED TO SHARE ONE DRAWING, and that — not hue — is why a Planting sheet read
 // as "all the trees look like variants of themselves". On a real sheet, "Wild plum" and two
 // "Indigenous Shade Tree" labels were the same image drawn three times.

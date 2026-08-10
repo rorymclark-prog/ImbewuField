@@ -88,7 +88,7 @@ import { EARTHWORKS_ROUTE_STYLE, WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, 
 import { PLANTING_CANOPY_PAINT, PLANTING_LEGEND_SECTION_ORDER, PLANTING_ROUTE_STYLE, overstoryCanopyIds, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
 import { STRUCTURES_LEGEND_SECTION_ORDER, structuresFeaturePresentationDimensions, structuresLegendSectionForFeature, structuresRouteVisualFor, type StructuresLegendSection } from '@/lib/structures-cartography';
 import { presentSectorCartography, seasonalSunArcRadii, sectorEvidenceSummary, SECTOR_STYLES, sectorFillColor, sectorStrokeWidth, type SectorLegendIcon, type SectorVisualKind } from '@/lib/sector-cartography';
-import { referenceFeatureArtworkUrl, stapleTileUrl, vegSpriteUrl, VEG_SPRITES } from '@/lib/reference-feature-art';
+import { referenceFeatureArtworkUrl, stapleTileUrl, vegSpriteUrl, VEG_SPRITES, isTankDefId } from '@/lib/reference-feature-art';
 import {
   DEFAULT_SHEET_LABEL_MODE,
   codedLegendText,
@@ -110,6 +110,7 @@ import {
 import { PLAIN_HARD_SURFACE_PAINT, SHEET_BASE_MUTE_STYLE, SHEET_STRUCTURE_MUTE_STYLE, type SheetBaseMute } from '@/lib/sheet-base-mute';
 import { frameForUnderlay, hasFarmerPhoto, sheetUnderlayOptions, underlayCacheSuffix, type SheetUnderlay } from '@/lib/sheet-underlay';
 import { overlandFlowArrows, overlandFlowLegendText, interceptFlowArrows, type FlowArrow } from '@/lib/overland-flow';
+import { ridgeAngleOf, roofRunoffArrows, gutterToTankArrows, tankOverflowArrows } from '@/lib/water-story';
 import { BED_DEF_IDS } from '@/lib/design-beds-bridge';
 import {
   bedCropMarkPitchPx,
@@ -6475,17 +6476,11 @@ function drawPaperRoofs(
 
   for (const ring of rings) {
     const pts = ring.map(([x, y]) => [px(x), py(y)] as [number, number]);
-    // Ridge direction = the polygon's longest edge. For the rectangles farmers trace this is the
-    // long wall, which is where a real ridge runs; for an L-shape it follows the longest wing,
-    // which is the honest simple answer rather than a guessed hip layout.
-    let angle = 0;
-    let longest = -1;
-    for (let i = 0; i < pts.length; i++) {
-      const [x0, y0] = pts[i];
-      const [x1, y1] = pts[(i + 1) % pts.length];
-      const len = Math.hypot(x1 - x0, y1 - y0);
-      if (len > longest) { longest = len; angle = Math.atan2(y1 - y0, x1 - x0); }
-    }
+    // Ridge direction = the polygon's longest edge — the rule now lives in lib/water-story.ts and
+    // is shared, because the Water sheet draws runoff arrows PERPENDICULAR to this ridge. Two
+    // copies of "which way does this roof fall" is how a sheet ends up with water running across
+    // the fold. ridgeAngleOf is scale-invariant, so pixels here and metres there agree.
+    const angle = ridgeAngleOf(pts);
     const cx = pts.reduce((sum, p) => sum + p[0], 0) / pts.length;
     const cy = pts.reduce((sum, p) => sum + p[1], 0) / pts.length;
     const span = Math.max(...pts.map(([x, y]) => Math.hypot(x - cx, y - cy))) * 2 + 4;
@@ -7101,6 +7096,46 @@ async function buildReferenceBlueprintMap(
     )
     : [];
   drawOverlandFlowArrows(ctx, flowArrows, W, H);
+
+  // THE WATER STORY — roof → gutter → tank → swale. Rory: "arrows of water running down roof, and
+  // gutter, running and spreading in swale." The ground field above says where rain goes once it
+  // has landed; this says how it got there and where the plumbing sends it. Same weight, same
+  // cream casing, same spread bar — one visual language for moving water on one sheet.
+  //
+  // The ROOF leg is drawn only when there is no satellite photo, which is the exact condition
+  // drawPaperRoofs draws under. Our arrows restate the ridge THAT function drew; on a photo sheet
+  // the farmer sees their real roof instead, whose real ridge is whatever the photograph shows,
+  // and an arrow across it would contradict a visible fact. The gutter and overflow legs join
+  // things the farmer actually placed, so they hold on either underlay.
+  if (filter === 'water') {
+    const storyScale = {
+      mPerUnitX: renderFrame.imgW * renderFrame.mPerPx,
+      mPerUnitY: renderFrame.imgH * renderFrame.mPerPx,
+    };
+    const roofRings = authoritativeHouseFootprints(renderState, renderRefLayers);
+    const tanks = renderState.items
+      .filter((it) => isTankDefId(it.defId))
+      .map((it) => ({ x: it.x, y: it.y, nearRoofM: ELEMENTS_BY_ID[it.defId]?.nearRoofM ?? Number.NaN }));
+    const swaleLines = renderState.lines
+      .filter((line) => line.kind === 'swale' && line.points.length >= 2)
+      .map((line) => line.points);
+
+    const storyArrows = [
+      ...(!renderFrame.satDataUrl ? roofRunoffArrows({ rings: roofRings, scale: storyScale }) : []),
+      ...gutterToTankArrows({ rings: roofRings, tanks, scale: storyScale }),
+      ...tankOverflowArrows({
+        tanks,
+        swales: swaleLines,
+        scale: storyScale,
+        // Same confidence gate the ground field uses: an 'unconfirmed' bearing is noise off ground
+        // too flat to call, and filtering an overflow on noise is worse than not filtering at all.
+        aspectDeg: site?.elevation?.directionConfidence === 'unconfirmed'
+          ? Number.NaN
+          : site?.elevation?.aspectDeg ?? Number.NaN,
+      }),
+    ];
+    drawOverlandFlowArrows(ctx, storyArrows, W, H);
+  }
 
   const featureOverlay = await buildExactLayerOverlay(renderState, renderFrame, renderRefLayers, filter, W, H, 'features');
   if (featureOverlay) ctx.drawImage(await loadImage(featureOverlay), 0, 0, W, H);
