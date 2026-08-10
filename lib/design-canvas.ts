@@ -12,6 +12,7 @@ import { isCompassDirection16, type LocalWindObservation } from '@/lib/local-win
 import { resolveBaseAlign } from '@/lib/base-photo-align';
 // Value import one way, type-only import back (CanvasFrame) — no runtime cycle.
 import { paintPlainPaperGround } from '@/lib/sheet-underlay';
+import { drainCanvasToDataUrl } from '@/lib/release-canvas';
 import {
   accountLocalStorageKey,
   activeAccountLocalStorageKey,
@@ -892,8 +893,10 @@ export async function bakeBaseAlignment(
   ctx.restore();
   // JPEG, not PNG. The backdrop above makes this canvas fully opaque, so there is no alpha to
   // preserve — and a supersampled photographic PNG is several megabytes of base64 held in React
-  // state and rebuilt on every nudge, which is how the last memory crash happened.
-  return canvas.toDataURL('image/jpeg', 0.92);
+  // state and rebuilt on every nudge, which is how the last memory crash happened. Drained rather
+  // than plain toDataURL because this is the largest single canvas in the app (supersampled photo)
+  // and iOS holds the pixel buffer until GC — see lib/release-canvas.ts.
+  return drainCanvasToDataUrl(canvas, 'image/jpeg', 0.92);
 }
 
 export async function fetchImageAsDataUrl(url: string): Promise<string> {

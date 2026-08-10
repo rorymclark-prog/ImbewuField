@@ -109,6 +109,7 @@ import {
 } from '@/lib/sheet-legend-layout';
 import { PLAIN_HARD_SURFACE_PAINT, SHEET_BASE_MUTE_STYLE, SHEET_STRUCTURE_MUTE_STYLE, type SheetBaseMute } from '@/lib/sheet-base-mute';
 import { frameForUnderlay, hasFarmerPhoto, paintPlainPaperGround, sheetUnderlayOptions, underlayCacheSuffix, type SheetUnderlay } from '@/lib/sheet-underlay';
+import { drainCanvasToDataUrl } from '@/lib/release-canvas';
 import { overlandFlowArrows, overlandFlowLegendText, interceptFlowArrows, type FlowArrow } from '@/lib/overland-flow';
 import { ridgeAngleOf, roofRunoffArrows, gutterToTankArrows, tankOverflowArrows, type StoryArrow } from '@/lib/water-story';
 import { BED_DEF_IDS } from '@/lib/design-beds-bridge';
@@ -1165,7 +1166,7 @@ export async function buildComposite(
 
   // PNG (not JPEG): the render must key on the thin drawn geometry lines, and JPEG ringing
   // softens them. The route wraps this as image/png — keep the formats in lockstep.
-  return canvas.toDataURL('image/png');
+  return drainCanvasToDataUrl(canvas, 'image/png');
 }
 
 async function buildProtectMask(
@@ -1399,7 +1400,7 @@ async function buildProtectMask(
     }
   }
 
-  return canvas.toDataURL('image/png');
+  return drainCanvasToDataUrl(canvas, 'image/png');
 }
 
 // Rough compass bucket for a normalised [0..1] point relative to the property centre,
@@ -1465,7 +1466,7 @@ async function makeGalleryThumbnail(dataUrl: string, maxSize = 240): Promise<str
     const ctx = canvas.getContext('2d');
     if (!ctx) return undefined;
     ctx.drawImage(img, 0, 0, w, h);
-    return canvas.toDataURL('image/jpeg', 0.72);
+    return drainCanvasToDataUrl(canvas, 'image/jpeg', 0.72);
   } catch {
     return undefined; // the grid falls back to the full image — never block a save on a thumbnail
   }
@@ -1563,7 +1564,7 @@ async function burnOverlayOnSheetMap(sheetDataUrl: string, overlayDataUrl: strin
   const overlayHeight = overlay.naturalHeight || overlay.height;
   const mapW = Math.min(canvas.width, canvas.height * (overlayWidth / overlayHeight));
   ctx.drawImage(overlay, 0, 0, mapW, canvas.height);
-  return canvas.toDataURL('image/png');
+  return drainCanvasToDataUrl(canvas, 'image/png');
 }
 
 async function extendWithLegendPanel(
@@ -1585,7 +1586,7 @@ async function extendWithLegendPanel(
   ctx.drawImage(img, 0, 0, W, H);
   ctx.fillStyle = '#F6F1E4'; // blank cream panel, for the model to letter
   ctx.fillRect(W, 0, panelW, H);
-  return { dataUrl: canvas.toDataURL('image/png'), width: outW, height: H };
+  return { dataUrl: drainCanvasToDataUrl(canvas, 'image/png'), width: outW, height: H };
 }
 
 /**
@@ -1605,7 +1606,7 @@ async function extendMaskWithPanel(maskDataUrl: string, W: number, H: number): P
   const img = await loadImage(maskDataUrl);
   ctx.clearRect(0, 0, outW, H); // transparent = editable everywhere by default
   ctx.drawImage(img, 0, 0, W, H);
-  return canvas.toDataURL('image/png');
+  return drainCanvasToDataUrl(canvas, 'image/png');
 }
 
 // ── MASTER DESIGN BRIEF ───────────────────────────────────────────────────────
@@ -1828,7 +1829,7 @@ async function capForAiInput(dataUrl: string): Promise<string> {
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
     // PNG, matching what buildAccurateComposite produces — the render keys on thin geometry
     // lines and JPEG ringing softens them (that function's own note).
-    return canvas.toDataURL('image/png');
+    return drainCanvasToDataUrl(canvas, 'image/png');
   } catch {
     return dataUrl; // an uncapped upload is a cost bug, not a correctness bug — never block a render on it
   }
@@ -2089,7 +2090,7 @@ function buildZoneOverlay(
     ctx.textBaseline = 'middle';
     ctx.fillText(String(z.zone), cx, cy);
   }
-  return canvas.toDataURL('image/png');
+  return drainCanvasToDataUrl(canvas, 'image/png');
 }
 
 function waterItemsFor(state: DesignCanvasState): PlacedItem[] {
@@ -2753,7 +2754,7 @@ function buildWaterOverlay(
   const ctx = canvas.getContext('2d');
   if (!ctx) return undefined;
   drawWaterInfrastructure(ctx, state, frame, refLayers, W, H, includeToolGlyphs, includeLeaderLabels);
-  return canvas.toDataURL('image/png');
+  return drainCanvasToDataUrl(canvas, 'image/png');
 }
 
 type LockedStructureTreatment = 'source' | 'precision_atlas';
@@ -2816,7 +2817,7 @@ async function buildHouseOverlay(
     ctx.lineWidth = Math.max(2, W * 0.0012);
     ctx.stroke();
   }
-  return canvas.toDataURL('image/png');
+  return drainCanvasToDataUrl(canvas, 'image/png');
 }
 
 // Draw the traced driveway after generation. This preserves the exact path/area while avoiding
@@ -2886,7 +2887,7 @@ async function buildDrivewayOverlay(
     ctx.lineWidth = roadW;
     ctx.stroke();
   }
-  return canvas.toDataURL('image/png');
+  return drainCanvasToDataUrl(canvas, 'image/png');
 }
 
 async function buildLockedStructureOverlay(
@@ -2917,7 +2918,7 @@ async function stackOverlayImages(bottom: string | undefined, top: string | unde
   if (!ctx) return bottom;
   ctx.drawImage(await loadImage(bottom), 0, 0, W, H);
   ctx.drawImage(await loadImage(top), 0, 0, W, H);
-  return canvas.toDataURL('image/png');
+  return drainCanvasToDataUrl(canvas, 'image/png');
 }
 
 function roundRectPath(ctx: CanvasRenderingContext2D, x: number, y: number, w: number, h: number, r: number) {
@@ -4536,7 +4537,7 @@ async function burnExactLabelLayer(
   const py = (n: number) => n * H;
   if (filter === 'planting') drawGroundAreaNames(ctx, state, refLayers, W, H, filter);
   drawPlantMarks(ctx, state, filter, px, py, W / (frame.imgW * frame.mPerPx), labelMode);
-  return { map: canvas.toDataURL('image/png'), gutterLayout };
+  return { map: drainCanvasToDataUrl(canvas, 'image/png'), gutterLayout };
 }
 
 /**
@@ -6595,7 +6596,7 @@ async function buildExactLayerOverlay(
 
   if (phase === 'ground') {
     drawBlueprintGround(ctx, state, px, py, W, refLayers, filter, groundPresentation, siteRecord, pxPerM);
-    return canvas.toDataURL('image/png');
+    return drainCanvasToDataUrl(canvas, 'image/png');
   }
 
   // PAPER SHEETS GET DRAWN ROOFS; photo sheets keep the photograph's real one. frame.satDataUrl
@@ -6697,7 +6698,7 @@ async function buildExactLayerOverlay(
     });
   }
 
-  return canvas.toDataURL('image/png');
+  return drainCanvasToDataUrl(canvas, 'image/png');
 }
 
 /** Sheet 01 uses the same measured editorial composition as the design layers but contains only
@@ -9161,7 +9162,7 @@ async function composePhasingSheet(
   // The whole right-hand column, full height, is app-owned schedule content.
   ctx.drawImage(exactImg, lgX, 0, W - lgX, H, lgX, 0, W - lgX, H);
 
-  return canvas.toDataURL('image/png');
+  return drainCanvasToDataUrl(canvas, 'image/png');
 }
 
 // Build the input image sent to the model for the Phasing Hybrid stage — the complete exact sheet
@@ -9210,7 +9211,7 @@ async function blankPhasingPanel(
   ctx.lineTo(lgX, lgBottom);
   ctx.stroke();
 
-  return canvas.toDataURL('image/png');
+  return drainCanvasToDataUrl(canvas, 'image/png');
 }
 
 // buildPhasingProtectMask lived here. It marked the schedule panel as protected on a sheet-shaped
@@ -10079,7 +10080,7 @@ function padToPaperSheet(sheet: HTMLCanvasElement): string {
     Math.round((paper.width - sheet.width) / 2),
     Math.round((paper.height - sheet.height) / 2),
   );
-  return canvas.toDataURL('image/png');
+  return drainCanvasToDataUrl(canvas, 'image/png');
 }
 
 async function composeStyleSheet(
@@ -10769,7 +10770,7 @@ async function cropStyleSheetToMap(
   // When the model returned map-only imagery this naturally selects the full image.
   const sourceMapWidth = Math.min(sheet.width, sheet.height * (mapWidth / mapHeight));
   ctx.drawImage(sheet, 0, 0, sourceMapWidth, sheet.height, 0, 0, mapWidth, mapHeight);
-  return canvas.toDataURL('image/png');
+  return drainCanvasToDataUrl(canvas, 'image/png');
 }
 
 /** Copy one rectangle out of an already-composed sheet, in the sheet's own coordinates.
@@ -10803,7 +10804,7 @@ async function cropSheetRegion(
     canvas.width,
     canvas.height,
   );
-  return canvas.toDataURL('image/png');
+  return drainCanvasToDataUrl(canvas, 'image/png');
 }
 
 /**
@@ -10863,7 +10864,7 @@ async function composeSheetChromeOverMapArt(opts: {
   const srcW = legacyPageInput ? Math.min(art.width, art.height * (W / H)) : art.width;
   ctx.drawImage(art, 0, 0, srcW, art.height, 0, 0, W, H);
   drawBlueprintBoundary(ctx, refLayers.boundary, (n) => n * W, (n) => n * H, W, state, frame);
-  const mapArt = canvas.toDataURL('image/png');
+  const mapArt = drainCanvasToDataUrl(canvas, 'image/png');
   const labelled = await burnExactLabelLayer(mapArt, state, frame, refLayers, filter, W, H, labelMode);
   const sheet = await composeStyleSheet(
     labelled.map,
