@@ -168,6 +168,27 @@ function readPersistedJobId(siteId: string): string | null {
 function clearPersistedJobId(siteId: string) {
   try { localStorage.removeItem(queueJobKey(siteId)); } catch { /* ignore */ }
 }
+/**
+ * THE AI FINISHES ARE SHELVED, NOT DELETED. Rory, 2026-08-10: "Yeah shelve it but don't delete it
+ * I may decide to look at it again later."
+ *
+ * Why: a paid Full Treatment sheet came back with no labels and no legend at all, and a boundary
+ * that read as stamped on rather than drawn. That is structural, not a tuning miss — the second
+ * paid pass is handed the ALREADY-COMPOSED sheet (legend panel, every label, title block, north
+ * arrow, scale bar) and fullTreatmentProtectPolicy() byte-locks only the boundary, so an image
+ * model that cannot render small text is asked to repaint a page covered in it, and erases it.
+ * Meanwhile the deterministic Exact path has absorbed all of the sheet-quality work — painted
+ * canopies, roofs, staple fields, vetiver, beds, labels, legends — instantly, free and identically
+ * every time. lib/render-difference.ts exists because the paid pass repeatedly returned a picture
+ * indistinguishable from its input.
+ *
+ * What shelving means, precisely: the paid finishes are not OFFERED, so no farmer spends a render
+ * on them. Every line of the hybrid/polish pipeline stays exactly where it is, and every paid sheet
+ * already in a gallery still opens, downloads and shares — shelving must never orphan work that has
+ * been paid for. Flip this to false (or open the studio with ?aifinish=1) to bring them back.
+ */
+const AI_FINISHES_SHELVED = true;
+
 const GOLD = '#F7C97E';
 const GREEN = '#1F4D2B';
 const OCHRE = '#C07A1E';
@@ -11166,6 +11187,13 @@ export default function DesignGlossy({
     if (underlay === 'photo' && !hasFarmerPhoto(frameProp)) setUnderlay('satellite');
   }, [underlay, frameProp]);
   const underlayOptions = useMemo(() => sheetUnderlayOptions(frameProp), [frameProp]);
+  // Escape hatch so the shelved finishes can be looked at again without a redeploy — the whole
+  // pipeline is still here, it is only unadvertised. See AI_FINISHES_SHELVED.
+  const aiFinishesVisible = useMemo(() => {
+    if (!AI_FINISHES_SHELVED) return true;
+    if (typeof window === 'undefined') return false;
+    return new URLSearchParams(window.location.search).get('aifinish') === '1';
+  }, []);
   const frame = useMemo(() => frameForUnderlay(frameProp, underlay), [frameProp, underlay]);
   const [loading, setLoading] = useState<'gemini' | 'falgpt' | 'exact' | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -14446,7 +14474,7 @@ export default function DesignGlossy({
 
       {selectedSheet && (
         <div style={{ padding: '10px 12px', borderRadius: 12, border: '1px solid rgba(31,77,43,0.24)', background: 'rgba(31,77,43,0.06)', fontSize: 12.5, lineHeight: 1.45 }}>
-          <strong>{t('designGlossyChooseFinish')}</strong> {t('designGlossyFinishHelp')}
+          <strong>{t('designGlossyChooseFinish')}</strong> {aiFinishesVisible ? t('designGlossyFinishHelp') : t('designGlossyFinishHelpExactOnly')}
         </div>
       )}
 
@@ -14589,8 +14617,11 @@ export default function DesignGlossy({
             </div>
           )}
           {/* Flip the SAME sheet between its AI and exact renders. From an exact result this is a
-              true one-tap polish: switch modes and immediately start the geometry-locked queue. */}
-          {selectedSheet && (
+              true one-tap polish: switch modes and immediately start the geometry-locked queue —
+              which is a PAID render, so while the finishes are shelved this direction is closed.
+              Flipping BACK to exact from an older AI result stays available: that spends nothing,
+              and a farmer looking at a sheet they already paid for must still be able to leave it. */}
+          {selectedSheet && (aiFinishesVisible || mode !== 'exact') && (
             <button
               type="button"
               onClick={() => {
@@ -14789,6 +14820,7 @@ export default function DesignGlossy({
                 {t('designGlossyExactCanvasHint')}
               </span>
             </button>
+            {aiFinishesVisible && (
             <button
               type="button"
               onClick={() => runLockedPolishFlow('hybrid')}
@@ -14816,6 +14848,8 @@ export default function DesignGlossy({
                 {t('designGlossyAiHybridHint')}
               </span>
             </button>
+            )}
+            {aiFinishesVisible && (
             <button
               type="button"
               onClick={() => runLockedPolishFlow('full')}
@@ -14843,6 +14877,7 @@ export default function DesignGlossy({
                 {t('designGlossyFullTreatmentHint')}
               </span>
             </button>
+            )}
           </div>
           ) : (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 260px), 1fr))', gap: 10 }}>
