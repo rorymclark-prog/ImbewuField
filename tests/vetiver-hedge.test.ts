@@ -4,6 +4,7 @@ import test from 'node:test';
 
 import { ELEMENTS_BY_ID } from '@/lib/design-elements';
 import {
+  paintTopDownVetiverHedge,
   VETIVER_BLADE_LENGTH_FACTOR,
   VETIVER_BLADE_REACH,
   VETIVER_HEDGE_IDS,
@@ -166,4 +167,96 @@ test('a very long bank stays bounded rather than drawing thousands of tufts', ()
   assert.ok(geometry);
   assert.ok(geometry.perLine <= 180, `perLine ${geometry.perLine} is unbounded`);
   assert.ok(geometry.lines <= 6, `lines ${geometry.lines} is unbounded`);
+});
+
+test('tufts are irregular — sizes vary and spacing drifts, so the hedge is not a picket fence', () => {
+  // Rory, on the live sheet: "the vetiver is still looking too artificial." What made it
+  // artificial was regularity: identical crowns marching at an identical pitch, dead on their
+  // line. A real nursery row establishes unevenly, so the drawing must too — while every jitter
+  // stays seeded (see the determinism tests) and every crown stays inside the saved band (see the
+  // width test above).
+  const geometry = geometryFor(0.3, 5);
+  assert.ok(geometry);
+  const radii = new Set(geometry.crowns.map((crown) => crown.r.toFixed(4)));
+  assert.ok(radii.size > geometry.crowns.length * 0.5, 'tuft sizes are uniform');
+
+  // Along-the-run gaps between neighbouring crowns must not be one repeated figure.
+  const along = geometry.crowns.map((crown) => (geometry.alongY ? crown.y : crown.x)).sort((a, b) => a - b);
+  const gaps = along.slice(1).map((value, index) => value - along[index]);
+  const spread = Math.max(...gaps) - Math.min(...gaps);
+  assert.ok(spread > geometry.clumpR * 0.2, `spacing is ruler-even (spread ${spread.toFixed(3)}px)`);
+
+  // And crowns wander off their slip line rather than sitting exactly on it.
+  const offLine = geometry.crowns.map((crown) => (geometry.alongY ? crown.x : crown.y));
+  assert.ok(new Set(offLine.map((value) => value.toFixed(4))).size > 1, 'every crown sits dead on the line');
+});
+
+type RecordedCall = { name: string; args: unknown[] };
+
+/** The same recording-canvas trick tests/cartographic-symbols.test.ts uses: every method call and
+ *  style assignment is transcribed, so two paints can be compared call-for-call. */
+function recordingContext(): { ctx: CanvasRenderingContext2D; calls: RecordedCall[] } {
+  const calls: RecordedCall[] = [];
+  const target: Record<PropertyKey, unknown> = {};
+  const ctx = new Proxy(target, {
+    get(object, property) {
+      if (property in object) return object[property];
+      return (...args: unknown[]) => calls.push({ name: String(property), args });
+    },
+    set(object, property, value) {
+      object[property] = value;
+      calls.push({ name: `set:${String(property)}`, args: [value] });
+      return true;
+    },
+  }) as unknown as CanvasRenderingContext2D;
+  return { ctx, calls };
+}
+
+test('the full paint pass is deterministic: one seed, one hedge, on every render', () => {
+  // The geometry test above already pins crown positions; this pins the DRAWING — blob radii,
+  // blade counts, tone buckets — because plan sheets are re-rendered constantly and compared, and
+  // any unseeded jitter in the paint pass would make every export look like a change.
+  const transcript = (seedId: string) => {
+    const { ctx, calls } = recordingContext();
+    assert.equal(paintTopDownVetiverHedge(ctx, {
+      widthPx: 0.3 * SHEET_PX_PER_M,
+      heightPx: 5 * SHEET_PX_PER_M,
+      widthM: 0.3,
+      heightM: 5,
+      pxPerM: SHEET_PX_PER_M,
+      minClumpPx: MIN_CLUMP_PX,
+      seedId,
+      casingWidth: 2,
+    }), true);
+    return calls;
+  };
+  assert.deepEqual(transcript('row-a'), transcript('row-a'));
+  assert.notDeepEqual(transcript('row-a'), transcript('row-b'), 'two hedges must not be identical stamps');
+});
+
+test('the painted band edge is built from the tussocks, not from a hard-sided plate', () => {
+  // The ruler-straight pale-green strips in Rory's screenshot were the footprint rectangle being
+  // cased and filled as-is. The band silhouette must now come from per-crown arcs (one blob per
+  // tussock, radii varied), and the blades must still be bowed curves rather than straight ticks.
+  const { ctx, calls } = recordingContext();
+  assert.equal(paintTopDownVetiverHedge(ctx, {
+    widthPx: 0.3 * SHEET_PX_PER_M,
+    heightPx: 5 * SHEET_PX_PER_M,
+    widthM: 0.3,
+    heightM: 5,
+    pxPerM: SHEET_PX_PER_M,
+    minClumpPx: MIN_CLUMP_PX,
+    seedId: 'row-a',
+    casingWidth: 2,
+  }), true);
+  const geometry = geometryFor(0.3, 5, SHEET_PX_PER_M, 'row-a');
+  assert.ok(geometry);
+  const arcs = calls.filter((call) => call.name === 'arc');
+  // Two band traces (casing + fill) — one blob arc per crown in each.
+  assert.equal(arcs.length, geometry.crowns.length * 2, 'the band is not one blob per tussock');
+  const blobRadii = new Set(arcs.map((call) => (call.args[2] as number).toFixed(4)));
+  assert.ok(blobRadii.size > geometry.crowns.length * 0.5, 'blob radii are uniform — the edge would be even again');
+  assert.ok(calls.some((call) => call.name === 'quadraticCurveTo'), 'blades must stay bowed grass, not ticks');
+  assert.ok(!calls.some((call) => call.name === 'rect' || call.name === 'fillRect'),
+    'no rectangle may reintroduce the hard parallel sides');
 });

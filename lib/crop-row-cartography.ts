@@ -284,6 +284,75 @@ export function polygonCropRows(
   return { plants, rows, rowGapPx };
 }
 
+/**
+ * One leaf of a cabbage head seen from directly above, in glyph units: every length is a multiple
+ * of the renderer's glyph size `s`, so the same geometry serves any sheet scale.
+ */
+export interface CabbageLeaf {
+  /** Radians around the head centre. */
+  angle: number;
+  /** Distance of the leaf lobe's centre from the head centre. */
+  dist: number;
+  /** Lobe half-width, tangential to the head. */
+  rx: number;
+  /** Lobe half-depth, radial to the head. */
+  ry: number;
+  /** 0 = outer wrapper leaf, 1 = inner whorl — the renderer shades the whorls apart. */
+  whorl: 0 | 1;
+}
+
+/**
+ * The furthest any cabbage leaf can reach from the head centre, in glyph units. Held by
+ * construction in cabbageHeadLeaves (max dist 0.62 + max lobe radius 0.4), so the renderer can
+ * size a casing from it and a row's heads can never sprawl past their drawn pitch unannounced.
+ */
+export const CABBAGE_HEAD_REACH = 1.02;
+
+/**
+ * Where every leaf of one cabbage head sits — layered rounded wrapper leaves around a tight
+ * centre, which is what a cabbage IS from above and what a filled circle never managed to say.
+ *
+ * WHY: Rory, on the live sheet: "the veg beds — make actual cabbages, even oversized". The
+ * rosette silhouette drew as a plain disc, i.e. the same generic dot every other mark uses, so a
+ * bed of brassicas read as texture rather than vegetables. The head is drawn deliberately
+ * oversized by the renderer — symbol size, never row pitch, the same license drawCropRowLayout's
+ * glyphScale already claims — so it survives phone-size reduction.
+ *
+ * PURE GEOMETRY, like everything in this file: positions and radii only, deterministic from the
+ * plant's own stable jitter, so one bed paints the identical heads on every render while two
+ * plants in a row are never the same stamp. The canvas work lives in the renderer.
+ */
+export function cabbageHeadLeaves(jitter: number): CabbageLeaf[] {
+  const seed = Number.isFinite(jitter) ? Math.abs(jitter) % 1 : 0;
+  const unit = (index: number) => stableUnit(`cabbage:${seed.toFixed(6)}`, index);
+  const leaves: CabbageLeaf[] = [];
+  const phase = unit(1) * Math.PI * 2;
+  // 6..8 wrapper leaves: enough overlap to read as layered, few enough to stay separate lobes at
+  // a phone-screen 20 px.
+  const outer = 6 + Math.floor(unit(0) * 2.99);
+  for (let k = 0; k < outer; k += 1) {
+    leaves.push({
+      angle: (k / outer) * Math.PI * 2 + phase + (unit(10 + k) - 0.5) * 0.35,
+      dist: 0.5 + unit(20 + k) * 0.12,
+      rx: 0.3 + unit(30 + k) * 0.1,
+      ry: 0.2 + unit(40 + k) * 0.08,
+      whorl: 0,
+    });
+  }
+  // An inner whorl of 5, offset half a step so its leaves sit in the outer ring's gaps the way a
+  // real head packs.
+  for (let k = 0; k < 5; k += 1) {
+    leaves.push({
+      angle: ((k + 0.5) / 5) * Math.PI * 2 + phase + (unit(50 + k) - 0.5) * 0.3,
+      dist: 0.26 + unit(60 + k) * 0.08,
+      rx: 0.22 + unit(70 + k) * 0.08,
+      ry: 0.16 + unit(80 + k) * 0.05,
+      whorl: 1,
+    });
+  }
+  return leaves;
+}
+
 /** Even-odd point-in-polygon. Rings here are screen-space and small; no spatial index is warranted. */
 export function pointInRing(ring: Array<[number, number]>, x: number, y: number): boolean {
   let inside = false;

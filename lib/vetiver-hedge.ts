@@ -31,21 +31,21 @@ export const VETIVER_CLUMP_RADIUS_M = 0.15;
 /** A bank deeper than one slip line holds parallel contour lines, not one impossibly fat hedge. */
 export const VETIVER_LINE_SPACING_M = 0.6;
 
-/** Longest blade, as a multiple of its own crown's radius (traceTufts: 0.95 + 0.75 jitter). */
+/** Longest blade, as a multiple of its own crown's radius (traceTufts: 0.8 + 0.9 jitter). */
 export const VETIVER_BLADE_LENGTH_FACTOR = 1.7;
 
 /**
  * How far the outermost blade tip can land from a tuft's NOMINAL position, in clump radii.
  *
  * Derived from the crown builder and traceTufts rather than guessed, so it cannot drift out of
- * agreement with the drawing: a crown's own radius runs to clumpR x 1.22 (0.8 + 0.42 jitter), its
- * blades to that x VETIVER_BLADE_LENGTH_FACTOR, and the crown's own wobble adds a further 0.175
- * (0.35 / 2). 1.22 x 1.7 + 0.175 = 2.249. Rounded up.
+ * agreement with the drawing: a crown's own radius runs to clumpR x 1.22 (0.6 + 0.62 jitter), its
+ * blades to that x VETIVER_BLADE_LENGTH_FACTOR, and the crown's own wobble off its slip line adds
+ * a further 0.3 (0.6 / 2). 1.22 x 1.7 + 0.3 = 2.374. Rounded up.
  *
  * It exists because a hedge's drawn width is NOT its clump radius — it is this multiple of it, and
  * that difference is the whole reason a 0.52 m row was coming out at about twice its stated width.
  */
-export const VETIVER_BLADE_REACH = 2.3;
+export const VETIVER_BLADE_REACH = 2.4;
 
 /** Below this the band cannot carry a drawing of any kind, however the floor is tuned. */
 const MIN_BAND_PX = 2;
@@ -72,7 +72,6 @@ export interface TopDownVetiverHedgePaintOptions {
   minClumpPx: number;
   seedId: string;
   casingWidth: number;
-  tracePlate: () => void;
 }
 
 /** Deterministic 0..1 from a seed string — same crown positions on every render of a design. */
@@ -155,11 +154,25 @@ export function vetiverHedgeGeometry(
     for (let slip = 0; slip < perLine; slip++) {
       const along = -(runPx / 2) + clumpR * 0.8 + slip * alongGap;
       const seed = `${seedId}:${line}:${slip}`;
-      const wob = stableUnit(seed, 0);
+      // A NURSERY ROW, NOT A PICKET FENCE. Rory, on the rendered sheet: "the vetiver is still
+      // looking too artificial" — and what made it artificial was regularity, not the tufts
+      // themselves: every slip the same size, every gap identical, every crown dead on its line.
+      // Real slips establish unevenly, so each crown drifts a bounded way ALONG the run (never
+      // past its neighbour's nominal spot, never off the end of the band), wanders a little OFF
+      // the slip line, and grows to its own size. All three jitters are seeded per crown, so a
+      // saved design paints the identical hedge on every render — see the determinism test.
+      //
+      // High stableUnit indices (90+) are reserved for geometry, low ones (2..13) for the blades
+      // in traceTufts and 60+ for the paint pass, so no two draws share a jitter by accident.
+      const alongDrift = (stableUnit(seed, 90) - 0.5) * Math.min(alongGap * 0.9, clumpR * 1.2);
+      // Off-line wobble is what VETIVER_BLADE_REACH budgets 0.6/2 = 0.3 clump radii for.
+      const acrossDrift = (stableUnit(seed, 91) - 0.5) * clumpR * 0.6;
       crowns.push({
-        x: (alongY ? across : along) + (wob - 0.5) * clumpR * 0.35,
-        y: (alongY ? along : across) + (stableUnit(seed, 1) - 0.5) * clumpR * 0.35,
-        r: clumpR * (0.8 + wob * 0.42),
+        x: alongY ? across + acrossDrift : along + alongDrift,
+        y: alongY ? along + alongDrift : across + acrossDrift,
+        // 0.6..1.22 of the clump radius — wide enough that big established tussocks sit beside
+        // young ones, capped at the 1.22 the reach constant is derived from.
+        r: clumpR * (0.6 + stableUnit(seed, 92) * 0.62),
         seed,
       });
     }
@@ -169,7 +182,7 @@ export function vetiverHedgeGeometry(
 
 /**
  * The one render authority for vetiver on plan sheets and symbol keys. Callers own their local
- * footprint path and presentation dimensions; this function owns the top-down tuft treatment so
+ * presentation dimensions; this function owns the top-down tuft treatment so
  * an old sheet cannot quietly regress to a different plant drawing.
  */
 export function paintTopDownVetiverHedge(
@@ -186,30 +199,66 @@ export function paintTopDownVetiverHedge(
     options.seedId,
   );
   if (!geometry) return false;
-  drawVetiverHedge(ctx, geometry, options.tracePlate, options.casingWidth);
+  drawVetiverHedge(ctx, geometry, options.casingWidth);
   return true;
 }
 
-/** Blades per crown. Enough to read as a clump-forming grass, few enough to stay fine at print. */
-const BLADES_PER_CROWN = 9;
+/**
+ * The blades' top-pass greens. Three near-neighbours from the sheet's soft earth family, not
+ * three different plants: hue drifts gently along the run the way sun and establishment age vary
+ * along a real hedge, which is one of the three regularities Rory read as "artificial" (the other
+ * two — even spacing and ruler-straight sides — are handled in the geometry and the band).
+ */
+const BLADE_TONES = ['#8FC25C', '#9CC768', '#7CAF4E'] as const;
+
+/** Which of the three blade tones one crown wears. Seeded, so it never changes between renders. */
+function crownTone(seed: string): number {
+  return Math.min(BLADE_TONES.length - 1, Math.floor(stableUnit(seed, 62) * BLADE_TONES.length));
+}
 
 /**
- * Trace every blade of every tuft into ONE path, so a long bank costs two strokes rather than
- * several hundred — the same batching the crop rows use.
+ * Trace every tussock's ground blob into ONE path. Filled, the overlapping discs merge into a
+ * continuous knitted band whose edge is set by the individual clumps — softly ragged — instead of
+ * by the footprint rectangle, whose two ruler-straight sides were exactly what made the hedge
+ * read as a painted stripe. Stroke-then-fill gives the union a cream casing the same way the old
+ * plate got one: the stroke's inner half and every interior arc are buried by the fill that
+ * follows, so only the outer, ragged half of the casing survives.
  */
-function traceTufts(ctx: CanvasRenderingContext2D, geometry: VetiverHedgeGeometry): void {
+function traceTussockBand(ctx: CanvasRenderingContext2D, geometry: VetiverHedgeGeometry): void {
   ctx.beginPath();
   for (const crown of geometry.crowns) {
+    // 1.05..1.4 of the crown's own (already varied) radius — the blob has to overlap its
+    // neighbours (slips sit 0.62 clump radii apart) or the band would fall apart into polka dots.
+    // Max extent 1.22 x 1.4 = 1.71 clump radii, safely inside the VETIVER_BLADE_REACH = 2.4 the
+    // width-honesty inset already budgets for, so the ragged edge can never widen the saved band.
+    const r = crown.r * (1.05 + stableUnit(crown.seed, 60) * 0.35);
+    ctx.moveTo(crown.x + r, crown.y);
+    ctx.arc(crown.x, crown.y, r, 0, Math.PI * 2);
+  }
+}
+
+/**
+ * Trace the blades of every tuft in one tone bucket into ONE path, so a long bank costs a handful
+ * of strokes rather than several hundred — the same batching the crop rows use. Pass -1 to trace
+ * every crown regardless of tone (the dark under-pass wants them all).
+ */
+function traceTufts(ctx: CanvasRenderingContext2D, geometry: VetiverHedgeGeometry, tone = -1): void {
+  ctx.beginPath();
+  for (const crown of geometry.crowns) {
+    if (tone >= 0 && crownTone(crown.seed) !== tone) continue;
     // A rosette: fine blades springing from one crown and arcing outward. This is what a
     // clump-forming grass looks like from directly overhead, and what separates vetiver from the
-    // shrubs and tree canopies sharing the sheet.
-    for (let b = 0; b < BLADES_PER_CROWN; b++) {
+    // shrubs and tree canopies sharing the sheet. Blade COUNT is per-crown (7..11): a hedge where
+    // every tussock carries exactly nine blades is a pattern, not a plant.
+    const blades = 7 + Math.floor(stableUnit(crown.seed, 61) * 4.99);
+    for (let b = 0; b < blades; b++) {
       const jitter = stableUnit(crown.seed, b + 2);
-      const angle = (b / BLADES_PER_CROWN) * Math.PI * 2 + jitter * 0.42;
-      // Blades deliberately overshoot their own crown and the plate edge. That bristling silhouette
+      const angle = (b / blades) * Math.PI * 2 + jitter * 0.42;
+      // Blades deliberately overshoot their own crown and the band edge. That bristling silhouette
       // is most of what identifies vetiver from above — a band with a clean edge reads as a painted
-      // stripe, which is what the first attempt at this looked like on a rendered sheet.
-      const len = crown.r * (0.95 + jitter * 0.75);
+      // stripe, which is what the first attempt at this looked like on a rendered sheet. Length
+      // runs 0.8..1.7 of the crown radius (VETIVER_BLADE_LENGTH_FACTOR is derived from the 1.7).
+      const len = crown.r * (0.8 + jitter * 0.9);
       const dx = Math.cos(angle) * len;
       const dy = Math.sin(angle) * len;
       ctx.moveTo(crown.x, crown.y);
@@ -228,13 +277,15 @@ function traceTufts(ctx: CanvasRenderingContext2D, geometry: VetiverHedgeGeometr
 /**
  * Paint the hedge into the item's own centred, already-rotated local space.
  *
- * `tracePlate` traces the footprint so the caller keeps ownership of corner radius and shape.
- * Returns false when the footprint is too small to read, leaving the canvas untouched.
+ * The band's silhouette is the union of the tussocks themselves, never the footprint rectangle:
+ * the caller's saved geometry still decides exactly where every crown may sit (via
+ * vetiverHedgeGeometry's inset and band cap), but the painted edge follows the plants. That is
+ * the difference between a grass hedge and the "perfectly even pale-green strips" Rory
+ * photographed — realism comes from texture and edge treatment while the saved line stays exact.
  */
 export function drawVetiverHedge(
   ctx: CanvasRenderingContext2D,
   geometry: VetiverHedgeGeometry,
-  tracePlate: () => void,
   casingWidth: number,
 ): void {
   ctx.save();
@@ -242,29 +293,32 @@ export function drawVetiverHedge(
   ctx.lineCap = 'round';
 
   // Cream casing, then a dense base, then the tufts — the body-inside-a-casing order every other
-  // mark on these sheets uses to stay readable over an aerial photograph.
-  tracePlate();
+  // mark on these sheets uses to stay readable over an aerial photograph. The casing now hugs the
+  // ragged tussock union rather than the rectangle, so the halo bristles with the hedge.
+  traceTussockBand(ctx, geometry);
   ctx.strokeStyle = 'rgba(252,248,236,0.92)';
   ctx.lineWidth = casingWidth;
   ctx.stroke();
-  tracePlate();
+  traceTussockBand(ctx, geometry);
   ctx.fillStyle = 'rgba(48,80,41,0.88)';
   ctx.fill();
 
-  // THE BLADES CARRY NO CREAM. The plate below already has the cream casing that lifts the hedge
+  // THE BLADES CARRY NO CREAM. The band below already has the cream casing that lifts the hedge
   // off an aerial photograph; putting a second cream casing on every blade as well was what turned
   // the first version into a pale grey-green bar with a fuzzy edge — the texture disappeared into
-  // its own halo. Here the blades get a dark under-pass for depth and a bright top pass, which is
-  // the same shadow-then-body order the crop glyphs use, and the contrast is what makes a clump of
-  // grass legible at 6 px.
+  // its own halo. Here the blades get a dark under-pass for depth and then a bright top pass per
+  // tone bucket, which is the same shadow-then-body order the crop glyphs use, and the contrast is
+  // what makes a clump of grass legible at 6 px.
   traceTufts(ctx, geometry);
   ctx.strokeStyle = 'rgba(20,36,18,0.55)';
   ctx.lineWidth = Math.max(1.1, geometry.clumpR * 0.24);
   ctx.stroke();
-  traceTufts(ctx, geometry);
-  ctx.strokeStyle = '#8FC25C';
-  ctx.lineWidth = Math.max(0.7, geometry.clumpR * 0.13);
-  ctx.stroke();
+  for (let tone = 0; tone < BLADE_TONES.length; tone++) {
+    traceTufts(ctx, geometry, tone);
+    ctx.strokeStyle = BLADE_TONES[tone];
+    ctx.lineWidth = Math.max(0.7, geometry.clumpR * 0.13);
+    ctx.stroke();
+  }
 
   ctx.restore();
 }
