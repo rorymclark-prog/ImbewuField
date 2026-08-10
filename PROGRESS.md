@@ -52,6 +52,42 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 2026-08-10 (two finishes: Exact Canvas and AI Polished — the second paid pass is shelved)
+Rory: *"I just want an exact version for now and a ai render polished version also those 2
+because you haven't been able to fix the hybrid properly and messes the ai polished version too."*
+
+The Design Studio's finish picker now offers **exactly two** choices, and the shelf moved off
+the AI render and onto the **second** paid pass.
+
+- **Exact Canvas** — free, instant, deterministic; every label, legend and line at full sheet
+  resolution.
+- **AI Polished** — one paid render. The model paints the **map artwork only**; the app then
+  locks the boundary, plant labels, legend panel, title block, north arrow and scale bar back
+  on top. The model never sees a word of type, which is why this tier keeps its chrome.
+- **Full Treatment** (the second pass over the finished sheet) — shelved behind `?aifinish=1`,
+  **not deleted**. It is the tier that returned "Planting · Photo Plan · AI polished · Geometry
+  locked" with no labels, no legend and a stamped-on boundary: an image model cannot reproduce
+  9px type, and that pass is handed a page covered in it.
+
+Why the previous shelve was wrong: it gated **both** paid tiers on one flag, which left the
+Studio with no AI finish at all — Rory: *"i wanted the hybrid shelved not the ai!!!! i didnt say
+remoe the ai"*. `SECOND_POLISH_PASS_SHELVED` now gates Full Treatment alone.
+
+Also fixed in the same pass: the one-tap **"AI-polish this exact map · 1 AI render"** button was
+dispatching a Full Treatment, which is *two* renders. It now runs the single-render flow it
+advertises. The paid button takes the gold, since it is one of two choices and the only one that
+spends money.
+
+Naming: the farmer-facing label changed from "AI Hybrid" to **AI Polished** — the old name
+described the plumbing, not the result. The internal stage stays `hybrid` everywhere (render
+queue, stored `resultKind`, every gallery entry already on a farmer's device); renaming it would
+relabel sheets that have already been paid for.
+
+`tests/ai-finishes-shelved.test.ts` → `tests/sheet-finishes.test.ts`, rewritten for the new
+contract: the offered AI finish must be reachable with **no** flag and no query string, every
+Full Treatment entry point must be gated, the one-tap flip must spend what its label says, the
+gallery must never consult the shelf, and the pipeline must still be importable.
+
 ### 2026-08-10 (one-surface Phase 3: design flows back to the map, read-only)
 Phase 3 of `docs/ONE-SURFACE-PLAN.md` — the farmer's Design Studio work now appears on the
 live farmer map as a read-only "My design" layer, completing the loop the plan calls
