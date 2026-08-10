@@ -22,3 +22,8 @@ ui-debug.log
 
 # Claude Code agent worktrees (in-progress agent workspaces — never commit)
 .claude/worktrees/
+
+# Generated isiZulu review packets. Derived from docs/narration/<module>.{en,zu}.md by
+# `npm run course:review-packet` — a committed copy would drift from the scripts it summarises,
+# and the reviewer's answers belong in the .zu.md source, not in a generated file.
+docs/narration/review/

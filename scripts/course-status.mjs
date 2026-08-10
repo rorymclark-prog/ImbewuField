@@ -157,5 +157,16 @@ console.log(`  TO PRODUCE — ${todo.length} item(s)\n`);
 for (const t of todo) console.log(`   · ${t}`);
 console.log();
 
+// The isiZulu drafts have been the same eight lines on this board for weeks. Naming the blocker
+// without naming the way through it is how it stayed there: "needs a human isiZulu speaker" is
+// true, but nobody hands a reviewer twenty markdown files and two windows to scroll in step.
+const draftCount = rows.filter((r) => r.script.zu?.draft).length;
+if (draftCount > 0) {
+  console.log(`  ${draftCount} module(s) are waiting on one thing: a first-language isiZulu reader.`);
+  console.log('  `npm run course:review-packet` writes each one as a single document — English and');
+  console.log('  isiZulu together, the translator\'s own uncertain terms collected at the top, and');
+  console.log('  the dropped lines and moved numbers already marked.\n');
+}
+
 const done = rows.filter((r) => r.withImage === r.lessons && r.audio.en && r.audio.zu).length;
 console.log(`  ${done}/${rows.length} modules fully produced (illustrated + narrated in both languages)\n`);
