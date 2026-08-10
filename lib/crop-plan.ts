@@ -88,18 +88,34 @@ function isRainPattern(value: unknown): value is RainPattern {
     || value === 'mild-frost';
 }
 
-export function saveCropPlan(s: CropPlanState): void {
+/**
+ * Persist the crop plan. Returns whether it actually reached storage.
+ *
+ * IT USED TO RETURN void AND SWALLOW THE FAILURE — "fail silently, plan just won't persist". The
+ * planner AUTOSAVES through this on a 400 ms debounce, so a farmer never taps a button and so
+ * never gets a confirmation to disbelieve: on a full phone they simply keep working, reload, and
+ * every planting, removal and timing change since the last successful write is gone. Silence is
+ * the worst available answer here precisely because nothing ever claimed success.
+ *
+ * SSR and a missing localStorage return false as well. Those are not failures a farmer can act on,
+ * but they are equally not a save, and a function that answers "did this persist" must not say yes
+ * about a write it never attempted.
+ */
+export function saveCropPlan(s: CropPlanState): boolean {
   if (isSampleMode()) {
     setSandboxCropPlan(s);
     if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent(CROP_PLAN_CHANGED_EVENT));
-    return;
+    return true; // the sandbox IS the demo's real store, so this genuinely did persist
   }
-  if (typeof window === 'undefined' || !window.localStorage) return;
+  if (typeof window === 'undefined' || !window.localStorage) return false;
   try {
     window.localStorage.setItem(activeAccountLocalStorageKey(STORAGE_KEY), JSON.stringify(s));
     window.dispatchEvent(new CustomEvent(CROP_PLAN_CHANGED_EVENT));
+    return true;
   } catch {
-    // Quota exceeded or storage unavailable — fail silently, plan just won't persist.
+    // Quota exceeded or storage unavailable. The CALLER must surface this — returning false is
+    // the entire point of this signature. See the planner's saveFailed banner.
+    return false;
   }
 }
 

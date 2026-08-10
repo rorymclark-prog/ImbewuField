@@ -48,6 +48,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     // follow-up restamp commit both safe and, after every merge, necessary.
     sha: '441c85b',
     changes: [
+      'Your crop planner warns you the moment it can no longer keep your changes',
       'If your phone is too full to save, the app now says so instead of Saved',
       'Rain arrows now show on the roof itself, running down to each gutter',
       'The month calendar now matches the crop guide, so nothing is listed too early',
