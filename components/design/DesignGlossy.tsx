@@ -43,7 +43,7 @@ import {
 import { structureRegisterText } from '@/lib/structure-register';
 import { buildFinishedSheetPolishPrompt, buildLockedIllustrationPrompt, buildPhasingRestylePrompt, buildSatelliteOverlayPrompt, buildSectorRestylePrompt, buildSectorSheetPolishPrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, SHEET_NO, type StylePreset } from '@/lib/producer-prompt';
 import { zoneBadgePositions } from '@/lib/canvas-labels';
-import { enqueueRenderJob, subscribeRenderJob, fetchRenderOutput, type RenderQuality } from '@/lib/render-jobs';
+import { enqueueRenderJob, subscribeRenderJob, fetchRenderOutput, qualityCacheSuffix, type RenderQuality } from '@/lib/render-jobs';
 import type { RenderEngine } from '@/lib/render-job-contract';
 import { authoritativeHouseFootprints } from '@/lib/house-footprints';
 // Extracted (behaviour-preserving) — see lib/glossy-filters.ts and lib/producer-labels.ts.
@@ -11684,6 +11684,11 @@ export default function DesignGlossy({
     // the default so every existing scale-2 cache key stays byte-identical; only High keys
     // diverge, and switching back re-serves the old caches untouched.
     + (SCALE !== 2 ? `:s${SCALE}` : '');
+  // Whether mapKey below lands on one of the AI/producer branches — the only ones a paid render
+  // ever writes to. Derived from the same conditions the expression uses rather than re-tested
+  // inside it, so a new exact sheet cannot quietly start carrying a quality suffix.
+  const isPaidMapKey = exactSheet !== 'base' && exactSheet !== 'sector'
+    && exactSheet !== 'implementation' && Boolean(producerStyle);
   const mapKey = (exactSheet === 'base'
     ? 'base-exact'
     : exactSheet === 'sector'
@@ -11702,7 +11707,13 @@ export default function DesignGlossy({
         // …:<mode> so Exact, Hybrid and Full Treatment can never share a slot. Without it the
         // three treatments overwrote and re-served each other's pictures — see requestedMode.
         ? `producer:${producerStyle}:${filter}:${requestedMode}`
-        : (analysisStyle ?? filter)) + underlaySuffix;
+        : (analysisStyle ?? filter)) + underlaySuffix
+    // PAID QUALITY, on paid keys only. The dial is offered so the same sheet can be rendered all
+    // three ways and COMPARED; sharing one slot meant switching it re-served the last picture and
+    // the setting looked inert — on a control that costs roughly 4x at medium and 35x at high
+    // versus low. Deterministic exact sheets are excluded because quality is an instruction to the
+    // model and changes nothing about their pixels. Empty at 'high', so no existing key moves.
+    + (isPaidMapKey ? qualityCacheSuffix(quality) : '');
   const mapKeyRef = useRef(mapKey);
   mapKeyRef.current = mapKey;
   // The queue-completion handler needs the CURRENT suffix when it builds a save key — it runs in
@@ -14232,9 +14243,16 @@ export default function DesignGlossy({
               // quota. Sector/Phasing/restyle keys genuinely have no mode segment, so only
               // design-layer sheets append one.
               const savedMode: SheetOutputMode = isPolishedResult ? 'full' : 'hybrid';
+              // THE JOB'S OWN QUALITY, never the dial's current value. A render takes minutes and
+              // the farmer is free to move the dial while it runs; keying the result off live state
+              // would file a medium picture under the high key — the same read/write divergence the
+              // comment above records, arriving by a different route. job.quality is absent on jobs
+              // queued before the dial existed, which qualityCacheSuffix reads as 'high' exactly as
+              // the worker does.
+              const qualitySuffix = qualityCacheSuffix(job.quality);
               const saveKey = GLOSSY_FILTERS.some((x) => x.key === sheet.key)
-                ? `producer:${styleKey}:${sheet.key}:${savedMode}${underlaySuffixRef.current}`
-                : `producer:${styleKey}:${sheet.key}${underlaySuffixRef.current}`;
+                ? `producer:${styleKey}:${sheet.key}:${savedMode}${underlaySuffixRef.current}${qualitySuffix}`
+                : `producer:${styleKey}:${sheet.key}${underlaySuffixRef.current}${qualitySuffix}`;
               try { saveGlossy(siteId, saveKey, record); } catch { /* cache full */ }
               // A one-sheet refresh must update the actual preview, not only append a gallery
               // thumbnail, but only while its original target remains open. Batch jobs still

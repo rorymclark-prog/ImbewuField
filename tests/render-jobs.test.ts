@@ -11,6 +11,8 @@ import {
   maskHasProtectedAndEditablePixels,
   normaliseRenderJobDoc,
   renderJobRequestError,
+  qualityCacheSuffix,
+  RENDER_QUALITIES,
   type RenderSheetSpec,
 } from '../lib/render-jobs.ts';
 import {
@@ -355,4 +357,51 @@ test('subscription snapshots reject impossible status, authority and identity co
     ...job,
     sheets: [{ ...baseSheet, outputPath: `renders/farmer-1/${jobId}/output-water.png` }],
   }), null);
+});
+
+// ── THE PAID QUALITY DIAL AND ITS CACHE SLOT ────────────────────────────────────────────────
+//
+// RENDER_QUALITY_CHOICES says the dial exists "so the SAME sheet can be rendered all three ways
+// and compared before anyone commits to one". It could not: all three shared one cache key, so
+// switching the dial re-served whichever picture rendered last and the control looked inert — on
+// a setting that costs roughly 4x at medium and 35x at high versus low. These tests hold the two
+// halves of the fix together, because the failure mode is silent: nothing throws, a farmer just
+// pays for a render and is shown an older one.
+
+test('the quality suffix is empty at the default, so no paid sheet is orphaned', () => {
+  // The whole reason this can ship without a PLAN_VERSION bump. 'high' was the only value that
+  // existed before the dial, and an older job doc carries no quality at all — both must key
+  // byte-identically to the sheets already sitting in farmers' galleries.
+  assert.equal(qualityCacheSuffix('high'), '');
+  assert.equal(qualityCacheSuffix(undefined), '');
+  assert.equal(qualityCacheSuffix('medium'), ':qmedium');
+  assert.equal(qualityCacheSuffix('low'), ':qlow');
+});
+
+test('every render quality gets a distinct cache slot', () => {
+  // The dial's stated purpose is comparison, which needs three slots and not one.
+  const suffixes = RENDER_QUALITIES.map(qualityCacheSuffix);
+  assert.equal(new Set(suffixes).size, RENDER_QUALITIES.length, 'two qualities share a cache slot');
+});
+
+const GLOSSY_SRC = readFileSync('components/design/DesignGlossy.tsx', 'utf8');
+
+test('the queue result is filed under the JOB\'s quality, never the live dial', () => {
+  // A render takes minutes and the farmer may move the dial while it runs. Keying the saved
+  // result off current state would file a medium picture under the high key — the same read/write
+  // divergence that once wrote every queued Hybrid to a slot nothing read, arriving by a new route.
+  const at = GLOSSY_SRC.indexOf('const qualitySuffix = qualityCacheSuffix(');
+  assert.ok(at > 0, 'the queue-completion save no longer computes a quality suffix');
+  const call = GLOSSY_SRC.slice(at, at + 120);
+  assert.ok(call.includes('job.quality'), 'the save key stopped using the job\'s own quality');
+  assert.ok(!/qualityCacheSuffix\(quality\)[^;]*saveKey/.test(GLOSSY_SRC.slice(at, at + 400)));
+});
+
+test('deterministic exact sheets never carry a quality suffix', () => {
+  // Quality is an instruction to the MODEL. It changes nothing about an exact sheet's pixels, so
+  // appending it there would split those caches for no reason and strand sheets already stored.
+  assert.ok(GLOSSY_SRC.includes('isPaidMapKey ? qualityCacheSuffix(quality) : \'\''),
+    'the read-path quality suffix is gone or is no longer gated to paid keys');
+  assert.ok(/const isPaidMapKey = [^;]*Boolean\(producerStyle\)/.test(GLOSSY_SRC),
+    'isPaidMapKey stopped requiring a producer style — exact sheets would start splitting caches');
 });

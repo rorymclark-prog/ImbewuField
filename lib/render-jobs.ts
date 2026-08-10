@@ -89,6 +89,28 @@ export type RenderQuality = 'high' | 'medium' | 'low';
 
 export const RENDER_QUALITIES: readonly RenderQuality[] = ['high', 'medium', 'low'] as const;
 
+/**
+ * What a paid render's quality adds to that sheet's cache key.
+ *
+ * The quality dial exists "so the SAME sheet can be rendered all three ways and compared before
+ * anyone commits to one" (RENDER_QUALITY_CHOICES in DesignGlossy). It could not do that: all three
+ * shared one cache slot, so switching the dial re-served whichever picture was rendered last, and
+ * the setting looked like it did nothing. At roughly 4x medium and 35x low, that is a control a
+ * farmer pays real money to exercise and could not see the result of.
+ *
+ * EMPTY ON 'high' — the default, and the only value that existed before the dial did — and empty
+ * on a job doc with no quality at all, which older jobs must read as 'high' for the same reason the
+ * worker does. Every sheet already in a farmer's gallery therefore stays addressable under the key
+ * it was stored with. This is the same discipline underlayCacheSuffix documents, and it is the
+ * reason this can ship without a PLAN_VERSION bump: nothing already paid for is orphaned.
+ *
+ * ONLY PAID KEYS. Quality is an instruction to the model, so it changes nothing about a
+ * deterministic exact sheet's pixels; appending it there would split those caches for no reason.
+ */
+export function qualityCacheSuffix(quality: RenderQuality | undefined): string {
+  return !quality || quality === 'high' ? '' : `:q${quality}`;
+}
+
 export interface RenderJobDoc {
   uid: string;
   siteId: string;
