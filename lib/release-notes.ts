@@ -46,8 +46,10 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     // because this read fbecef9 while main had moved to 81d424c. A commit touching ONLY this file
     // is ignored by the gate (IGNORE in scripts/release-notes-pending.mjs), which is what makes a
     // follow-up restamp commit both safe and, after every merge, necessary.
-    sha: '280045d',
+    sha: 'fdeb72a',
     changes: [
+      'Plain paper plans now print on white, so your drawing is no longer tinted twice',
+      'The Sector sheet draws its arrows and arcs on white instead of dark grey',
       'With 50 reports saved, the app asks you to delete one instead of dropping the oldest',
       'Round beds are measured as circles, so their size and cost are honest',
       'Your crop planner warns you the moment it can no longer keep your changes',
