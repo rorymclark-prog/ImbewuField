@@ -3055,6 +3055,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             placeName={siteName}
             geometryLock={geometryLock}
             onGeometryLockChange={setGeometryLock}
+            onImportPhoto={() => setShowPhotoImport(true)}
           />
         ) : canvasState && frame ? (
           <>
@@ -3719,6 +3720,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               geometryLock={geometryLock}
               onGeometryLockChange={setGeometryLock}
               initialFilter={previewFilter}
+              onImportPhoto={() => setShowPhotoImport(true)}
             />
           </div>
         </div>
@@ -4028,6 +4030,7 @@ function DesignGlossyLazy(props: {
   geometryLock?: boolean;
   onGeometryLockChange?: Dispatch<SetStateAction<boolean>>;
   initialFilter?: GlossyLayerFilter;
+  onImportPhoto?: () => void;
 }) {
   const [Comp, setComp] = useState<React.ComponentType<typeof props> | null>(null);
   useEffect(() => {

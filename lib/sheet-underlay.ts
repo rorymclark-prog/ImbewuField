@@ -59,21 +59,25 @@ export function canChooseUnderlay(frame: Pick<CanvasFrame, 'satDataUrl' | 'under
  * on a site with only one photograph, where the old two-position switch was correctly hidden.
  */
 export function sheetUnderlayOptions(
-  frame: Pick<CanvasFrame, 'satDataUrl' | 'underlayDataUrl'>,
+  _frame?: Pick<CanvasFrame, 'satDataUrl' | 'underlayDataUrl'>,
 ): readonly SheetUnderlay[] {
-  return canChooseUnderlay(frame) ? ['photo', 'satellite', 'plain'] : ['photo', 'plain'];
+  return ['photo', 'satellite', 'plain'];
 }
 
 /**
- * Whether the 'photo' option is, in fact, the satellite tile.
+ * Whether this frame actually holds a farmer-supplied aerial.
  *
- * `underlayDataUrl` only exists while a farmer-supplied aerial occupies `satDataUrl`; without it,
- * the base image IS the satellite. Rory's phone showed "Your photo | Plain paper" on such a site
- * and read it as satellite being missing — the option was there, wearing the wrong name. The
- * picker uses this to label that pill "Satellite" instead of "Your photo".
+ * `underlayDataUrl` exists ONLY while a custom base occupies `satDataUrl`, so its presence is
+ * exactly "this farmer imported their own photo, and we still hold the satellite beside it".
+ *
+ * The picker shows all three underlays either way. When this is false, the drone-photo pill is an
+ * INVITATION — it opens the importer — rather than a selection, because choosing it would quietly
+ * render the satellite under a pill that says "Your photo". Rory: "Underlay must have 3 options
+ * you now removed drone photo!" — the third option must be visible and reachable on every site,
+ * and it must not lie about which picture it is.
  */
-export function photoUnderlayIsSatellite(frame: Pick<CanvasFrame, 'underlayDataUrl'>): boolean {
-  return !frame.underlayDataUrl;
+export function hasFarmerPhoto(frame: Pick<CanvasFrame, 'underlayDataUrl'>): boolean {
+  return Boolean(frame.underlayDataUrl);
 }
 
 /**
@@ -103,8 +107,15 @@ export function frameForUnderlay(frame: CanvasFrame, choice: SheetUnderlay): Can
  * gallery stays addressable under the key it was stored with, so this change cannot orphan work
  * they have already paid for.
  */
-export function underlayCacheSuffix(choice: SheetUnderlay): string {
-  if (choice === 'satellite') return ':satellite';
+export function underlayCacheSuffix(
+  choice: SheetUnderlay,
+  frame?: Pick<CanvasFrame, 'underlayDataUrl'>,
+): string {
+  // On a site with no imported aerial, 'satellite' IS the base picture — the same one the old
+  // default rendered under an empty suffix. Keying it ':satellite' there would strand every sheet
+  // already in that farmer's gallery behind a key nothing looks up, which reads as paid renders
+  // vanishing. Same picture, same key.
+  if (choice === 'satellite') return frame && !hasFarmerPhoto(frame) ? '' : ':satellite';
   if (choice === 'plain') return ':plain';
   return '';
 }

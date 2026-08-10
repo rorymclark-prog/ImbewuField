@@ -108,7 +108,7 @@ import {
   legendRowFontSize,
 } from '@/lib/sheet-legend-layout';
 import { PLAIN_HARD_SURFACE_PAINT, SHEET_BASE_MUTE_STYLE, SHEET_STRUCTURE_MUTE_STYLE, type SheetBaseMute } from '@/lib/sheet-base-mute';
-import { frameForUnderlay, photoUnderlayIsSatellite, sheetUnderlayOptions, underlayCacheSuffix, type SheetUnderlay } from '@/lib/sheet-underlay';
+import { frameForUnderlay, hasFarmerPhoto, sheetUnderlayOptions, underlayCacheSuffix, type SheetUnderlay } from '@/lib/sheet-underlay';
 import { overlandFlowArrows, overlandFlowLegendText, interceptFlowArrows, type FlowArrow } from '@/lib/overland-flow';
 import { BED_DEF_IDS } from '@/lib/design-beds-bridge';
 import {
@@ -570,6 +570,9 @@ export interface DesignGlossyProps {
   onGeometryLockChange?: Dispatch<SetStateAction<boolean>>;
   // Seed the layer selector (e.g. a per-step "Preview this map" opener). Defaults to 'all'.
   initialFilter?: GlossyLayerFilter;
+  // Opens the base-photo importer. The Underlay control offers the farmer's own aerial on every
+  // site; where none has been imported yet, that pill calls this instead of selecting.
+  onImportPhoto?: () => void;
 }
 
 /**
@@ -11089,6 +11092,7 @@ export default function DesignGlossy({
   geometryLock: geometryLockProp,
   onGeometryLockChange,
   initialFilter,
+  onImportPhoto,
 }: DesignGlossyProps) {
   const { t } = useLanguage();
   /**
@@ -11111,7 +11115,13 @@ export default function DesignGlossy({
    * the drawing on its own, at full sheet resolution with nothing soft behind it. None is correct
    * in general, which is why it is a control and not a constant.
    */
-  const [underlay, setUnderlay] = useState<SheetUnderlay>('photo');
+  // Defaults to whichever picture the frame actually carries: the farmer's aerial when one has
+  // been imported, otherwise the satellite. 'photo' must never be the selection on a site with no
+  // photo — the sheet would render the satellite under a pill claiming otherwise.
+  const [underlay, setUnderlay] = useState<SheetUnderlay>(() => (hasFarmerPhoto(frameProp) ? 'photo' : 'satellite'));
+  useEffect(() => {
+    if (underlay === 'photo' && !hasFarmerPhoto(frameProp)) setUnderlay('satellite');
+  }, [underlay, frameProp]);
   const underlayOptions = useMemo(() => sheetUnderlayOptions(frameProp), [frameProp]);
   const frame = useMemo(() => frameForUnderlay(frameProp, underlay), [frameProp, underlay]);
   const [loading, setLoading] = useState<'gemini' | 'falgpt' | 'exact' | null>(null);
@@ -11477,7 +11487,7 @@ export default function DesignGlossy({
   // re-keys the gallery and takes paid renders away from farmers. Bump the token whenever a change
   // alters what a sheet LOOKS like: r1 = bedpath registration + zone-ring removal + legend
   // grouping + gutter architecture on paid sheets (2026-08-03).
-  const underlaySuffix = underlayCacheSuffix(underlay)
+  const underlaySuffix = underlayCacheSuffix(underlay, frameProp)
     + (sheetHasPlantCodes ? labelModeCacheSuffix(labelMode) : '')
     + ':r1'
     // A sheet drawn at SCALE 3 is a different picture from the same sheet at 2 — re-serving a
@@ -14173,35 +14183,44 @@ export default function DesignGlossy({
             );
           })}
         </div>
-        {/* WHICH PICTURE THE SHEETS SIT ON. This used to hide itself unless the farmer had supplied
-            their own aerial, because with one photograph it was a switch with one position. It is
-            always shown now: 'Plain paper' needs no imagery, so every site has a real choice — and
-            on a site whose aerial is poor, dropping the photograph is the one thing that actually
-            makes the sheet crisper. See lib/sheet-underlay.ts. */}
+        {/* WHICH PICTURE THE SHEETS SIT ON — always all three: the farmer's own drone/phone aerial,
+            the satellite, and plain paper. The drone pill used to disappear on a site with no
+            imported photo, which read as the option having been removed. It is always present now;
+            without a photo it OPENS THE IMPORTER instead of selecting, because selecting it would
+            render the satellite under a pill that says "Your photo". See lib/sheet-underlay.ts. */}
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', marginTop: 10 }}>
           <span style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55 }}>
             Underlay
           </span>
           {underlayOptions.map((key) => {
-            const active = underlay === key;
-            // Without a farmer-supplied aerial, the base image IS the satellite — calling it
-            // "Your photo" made Satellite look like a missing option (lib/sheet-underlay.ts).
-            const satelliteAsPhoto = key === 'photo' && photoUnderlayIsSatellite(frameProp);
+            const needsImport = key === 'photo' && !hasFarmerPhoto(frameProp);
+            const active = underlay === key && !needsImport;
             return (
               <button
                 key={key}
                 type="button"
-                onClick={() => setUnderlay(key)}
-                disabled={loading !== null}
+                onClick={() => (needsImport ? onImportPhoto?.() : setUnderlay(key))}
+                disabled={loading !== null || (needsImport && !onImportPhoto)}
                 aria-pressed={active}
-                style={{ padding: '6px 12px', borderRadius: 999, border: `1px solid ${active ? DARK : '#E2D8C4'}`, background: active ? DARK : PAPER, color: active ? PAPER : '#5C5040', fontWeight: 700, fontSize: 12, cursor: loading !== null ? 'default' : 'pointer' }}
+                title={needsImport ? 'Import a drone or phone aerial to draw your sheets on it' : undefined}
+                style={{
+                  padding: '6px 12px', borderRadius: 999,
+                  border: `1px ${needsImport ? 'dashed' : 'solid'} ${active ? DARK : '#E2D8C4'}`,
+                  background: active ? DARK : PAPER,
+                  color: active ? PAPER : '#5C5040',
+                  fontWeight: 700, fontSize: 12,
+                  opacity: needsImport ? 0.75 : 1,
+                  cursor: loading !== null || (needsImport && !onImportPhoto) ? 'default' : 'pointer',
+                }}
               >
-                {satelliteAsPhoto ? UNDERLAY_LABEL.satellite : UNDERLAY_LABEL[key]}
+                {needsImport ? `+ ${UNDERLAY_LABEL.photo}` : UNDERLAY_LABEL[key]}
               </button>
             );
           })}
           <span style={{ fontSize: 10.5, opacity: 0.6 }}>
-            {underlay === 'photo' && photoUnderlayIsSatellite(frameProp) ? UNDERLAY_HINT.satellite : UNDERLAY_HINT[underlay]}
+            {underlay === 'photo' && !hasFarmerPhoto(frameProp)
+              ? 'tap “+ Your photo” to import a drone or phone aerial'
+              : UNDERLAY_HINT[underlay]}
           </span>
         </div>
         {/* SHEET QUALITY — the option Rory asked for ("imagine when this is printed on even A3").

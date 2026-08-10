@@ -4,7 +4,7 @@ import test from 'node:test';
 import {
   canChooseUnderlay,
   frameForUnderlay,
-  photoUnderlayIsSatellite,
+  hasFarmerPhoto,
   sheetUnderlayOptions,
   underlayCacheSuffix,
 } from '@/lib/sheet-underlay';
@@ -77,9 +77,12 @@ test('plain paper is offered on every site, because it needs no imagery', () => 
   // option that requires nothing, every site has a real choice — and on a site whose aerial is
   // poor (which is most of rural South Africa) dropping the photograph is the only thing that
   // actually makes the sheet crisper.
+  // ALL THREE on every site. Hiding the drone pill on a site with no imported photo read as the
+  // option having been taken away (Rory: "Underlay must have 3 options you now removed drone
+  // photo!"). It is always offered; without a photo the picker turns it into an importer.
   assert.deepEqual(sheetUnderlayOptions(frame('data:photo', 'data:satellite')), ['photo', 'satellite', 'plain']);
-  assert.deepEqual(sheetUnderlayOptions(frame('data:satellite')), ['photo', 'plain']);
-  assert.deepEqual(sheetUnderlayOptions(frame(null)), ['photo', 'plain']);
+  assert.deepEqual(sheetUnderlayOptions(frame('data:satellite')), ['photo', 'satellite', 'plain']);
+  assert.deepEqual(sheetUnderlayOptions(frame(null)), ['photo', 'satellite', 'plain']);
   // But it is NOT a second photograph, and must never be counted as one.
   assert.equal(canChooseUnderlay(frame('data:satellite')), false);
 });
@@ -111,10 +114,23 @@ test('a plain sheet is its own picture, so it cannot be served from a photo cach
   assert.equal(keys.size, 3, 'two underlays sharing a cache key re-serves the wrong picture');
 });
 
-test("without a farmer aerial the 'photo' pill is the satellite and must say so", () => {
-  // Only underlayDataUrl marks a farmer-supplied base; without it, satDataUrl IS the tile.
-  assert.equal(photoUnderlayIsSatellite({ underlayDataUrl: null }), true);
-  assert.equal(photoUnderlayIsSatellite({}), true);
-  // With a farmer aerial in play, 'photo' really is their photo — Satellite is its own pill.
-  assert.equal(photoUnderlayIsSatellite({ underlayDataUrl: 'data:sat' }), false);
+test('a farmer photo is only real when one was actually imported', () => {
+  // Only underlayDataUrl marks a farmer-supplied base; without it, satDataUrl IS the satellite.
+  assert.equal(hasFarmerPhoto({ underlayDataUrl: null }), false);
+  assert.equal(hasFarmerPhoto({}), false);
+  assert.equal(hasFarmerPhoto({ underlayDataUrl: 'data:sat' }), true);
+});
+
+test('satellite keeps the default cache key on a site that has no imported photo', () => {
+  // There, satellite IS the base picture the old default rendered under an empty suffix. Keying it
+  // ':satellite' would strand every sheet already in that gallery — paid renders appearing to
+  // vanish. With a farmer photo in play the two are genuinely different pictures, so they differ.
+  const noPhoto = { underlayDataUrl: null };
+  const withPhoto = { underlayDataUrl: 'data:sat' };
+  assert.equal(underlayCacheSuffix('satellite', noPhoto), '');
+  assert.equal(underlayCacheSuffix('satellite', withPhoto), ':satellite');
+  assert.equal(underlayCacheSuffix('photo', noPhoto), '');
+  assert.equal(underlayCacheSuffix('plain', noPhoto), ':plain');
+  // Called without a frame it keeps its original, frame-blind answers.
+  assert.equal(underlayCacheSuffix('satellite'), ':satellite');
 });
