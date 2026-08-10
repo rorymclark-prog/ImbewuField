@@ -509,6 +509,10 @@ const T: Record<string, Dict> = {
     labelsHatchToggle: 'Hatching',
     labelsPlacesToggle: 'Places',
     labelsPeopleToggle: 'People',
+    // "My design" chip — the read-only Design Studio overlay on the live map (one-surface
+    // Phase 3). English-only for now: t() falls back to the English slot per key, so the
+    // other language slots pick this up until real translations land.
+    labelsDesignToggle: 'My design',
     pinDrawHintStart: 'Mark each corner of your land — tap the map, or centre the crosshair and tap Add corner',
     pinDrawHintStartWater: 'Mark each corner of your harvesting area — tap the map, or centre the crosshair and tap Add corner',
     pinDrawHintOneCorner: 'corner marked — add 2 more, then tap Finish',

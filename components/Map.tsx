@@ -276,6 +276,20 @@ const designLineDashedLayer: LayerProps = {
   layout: { 'line-join': 'round', 'line-cap': 'round' },
   paint: { 'line-color': ['get', 'stroke'], 'line-width': ['get', 'width'], 'line-opacity': 0.95, 'line-dasharray': [2, 2] },
 };
+// Small centroid labels for the design's zones/ground features (each polygon feature carries
+// its `label` prop — see lib/design-map-layer.ts). Same font stack as the contour labels so
+// nothing new is fetched from the style.
+const designLabelLayer: LayerProps = {
+  id: 'design-label', type: 'symbol',
+  filter: ['==', ['geometry-type'], 'Polygon'],
+  layout: {
+    'text-field': ['get', 'label'],
+    'text-font': ['DIN Offc Pro Regular', 'Arial Unicode MS Regular'],
+    'text-size': 10.5,
+    'text-letter-spacing': 0.02,
+  },
+  paint: { 'text-color': '#FFFFFF', 'text-halo-color': 'rgba(6,16,10,0.85)', 'text-halo-width': 1.2 },
+};
 
 interface Props {
   onLocationSelect: (lat: number, lon: number) => void;
@@ -299,10 +313,11 @@ interface Props {
   people?: PeopleMarker[];
   showPeople?: boolean;
   onTogglePeople?: () => void;
-  // Design-on-map overlay (read-only): when true, the current site's saved Design Studio
-  // design is drawn over the satellite. onDesignPresenceChange reports whether a design
-  // exists for this site so the parent can enable/disable its "Design" toggle.
-  showDesign?: boolean;
+  // Design-on-map overlay (read-only): the current site's saved Design Studio design drawn
+  // over the satellite. Visibility is owned by the map itself — a "My design" chip in the
+  // labels pill, ON by default whenever a design exists (Phase 3 of the one-surface plan;
+  // the old parent-owned `showDesign` prop is gone with the parent's separate button).
+  // onDesignPresenceChange still reports whether a design exists for this site.
   onDesignPresenceChange?: (present: boolean) => void;
   // Guided pin mode (onboarding): show a single instruction bar telling a novice to search
   // their town or tap their home, in place of the "Find your land" pill. Self-retires the
@@ -318,7 +333,7 @@ interface Props {
 const TANK_SIZE_OPTIONS_L = [750, 1000, 2500, 5000, 10000];
 const TREE_SPECIES_OPTIONS = ['Mango', 'Avocado', 'Lemon', 'Orange', 'Banana (single plant)', 'Mulberry', 'Pawpaw', 'Natal plum', 'Wild plum', 'Waterberry', 'Other tree'];
 
-export default function PermaMap({ onLocationSelect, selectedLocation, loading, onMapCapture, onSiteDrawn, onWaterDrawn, onCaptureClick, jumpTo, onJumpComplete, onDrawingChange, locationData, onPlaceSelect, activePlaceId, people, showPeople, onTogglePeople, showDesign, onDesignPresenceChange, guided }: Props) {
+export default function PermaMap({ onLocationSelect, selectedLocation, loading, onMapCapture, onSiteDrawn, onWaterDrawn, onCaptureClick, jumpTo, onJumpComplete, onDrawingChange, locationData, onPlaceSelect, activePlaceId, people, showPeople, onTogglePeople, onDesignPresenceChange, guided }: Props) {
   const { t } = useLanguage();
   const { user } = useAuth();
   const mapRef = useRef<MapRef>(null);
@@ -530,6 +545,13 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
 
   const designPresent = !!designOverlay;
   useEffect(() => { onDesignPresenceChange?.(designPresent); }, [designPresent, onDesignPresenceChange]);
+
+  // "My design" visibility — toggled from the labels pill below, exactly like its
+  // Shapes/Hatching/Places neighbours (session-scoped React state, same persistence as they
+  // have). Defaults ON: when a design exists it should greet the farmer without a hunt for a
+  // switch; when none exists the chip and the layer are absent regardless of this flag.
+  const [showDesignLayer, setShowDesignLayer] = useState(true);
+  const designLayerVisible = showDesignLayer && designPresent;
 
   // Save the currently selected point as a place (right from the map tools).
   // Save place = drop a pin at the spot, then name it + pick a label (sets colour).
@@ -2177,18 +2199,19 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             drawn over the satellite. Non-interactive: not in interactiveLayerIds, so it
             never intercepts a location-select tap. react-map-gl removes the source/layers
             automatically when hidden or on unmount. ── */}
-        {showDesign && designOverlay && (
+        {designLayerVisible && designOverlay && (
           <Source id="design-overlay" type="geojson" data={designOverlay.collection}>
             <Layer {...designFillLayer} />
             <Layer {...designOutlineLayer} />
             <Layer {...designLineSolidLayer} />
             <Layer {...designLineDashedLayer} />
+            <Layer {...designLabelLayer} />
           </Source>
         )}
 
         {/* Design element markers (read-only) — emoji footprints from the saved design.
             pointer-events off so a tap falls through to the map (location select). */}
-        {showDesign && designOverlay && designOverlay.items.map((it) => (
+        {designLayerVisible && designOverlay && designOverlay.items.map((it) => (
           <Marker key={`design-${it.id}`} longitude={it.lng} latitude={it.lat} anchor="center">
             <div
               title={it.label}
@@ -3637,7 +3660,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       )}
 
       {/* ── Labels pill — visible when panel is minimised (section headers carry toggles when panel is open) ── */}
-      {toolbarMin && !pinDraw && !editPin && (siteFeatures.length > 0 || waterFeatures.length > 0 || savedPins.length > 0) && (
+      {toolbarMin && !pinDraw && !editPin && (siteFeatures.length > 0 || waterFeatures.length > 0 || savedPins.length > 0 || designPresent) && (
         <div className="absolute flex items-center gap-1 font-sans transition-all"
           style={{ top: 14, right: 14, zIndex: 10, background: 'rgba(16,22,14,0.88)', backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)', borderRadius: 999, padding: '5px 8px 5px 11px', boxShadow: '0 4px 16px rgba(0,0,0,0.4)',
             // On a phone the pill is wider than the screen and its left end clips off-screen.
@@ -3694,6 +3717,23 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 <span className="flex items-center rounded-full flex-shrink-0"
                   style={{ width: 26, height: 15, padding: 2, background: showPlaceLabels ? '#1F4D2B' : 'rgba(234,243,226,0.12)', justifyContent: showPlaceLabels ? 'flex-end' : 'flex-start', transition: 'all 0.2s' }}>
                   <span style={{ width: 11, height: 11, borderRadius: '50%', background: showPlaceLabels ? MAP_COLOR_BOUNDARY_STROKE : 'rgba(234,243,226,0.5)', display: 'block', transition: 'all 0.2s' }} />
+                </span>
+              </button>
+            </>
+          )}
+          {/* My design — the read-only Design Studio overlay (Phase 3, one-surface plan).
+              Only offered when this site actually has a saved, geo-registered design. */}
+          {designPresent && (
+            <>
+              {(siteFeatures.length > 0 || waterFeatures.length > 0 || savedPins.length > 0) && <div style={{ width: 1, height: 18, background: 'rgba(234,243,226,0.1)' }} />}
+              <button onClick={() => setShowDesignLayer((v) => !v)}
+                className="flex items-center gap-1 active:scale-95 transition-all"
+                style={{ background: 'transparent', border: 'none', cursor: 'pointer', padding: '2px 5px' }}>
+                <PenTool size={11} style={{ color: showDesignLayer ? MAP_COLOR_BOUNDARY_STROKE : 'rgba(234,243,226,0.35)' }} />
+                <span style={{ fontSize: 12, fontWeight: 700, color: showDesignLayer ? '#EAF3E2' : 'rgba(234,243,226,0.35)' }}>{t('labelsDesignToggle')}</span>
+                <span className="flex items-center rounded-full flex-shrink-0"
+                  style={{ width: 26, height: 15, padding: 2, background: showDesignLayer ? '#1F4D2B' : 'rgba(234,243,226,0.12)', justifyContent: showDesignLayer ? 'flex-end' : 'flex-start', transition: 'all 0.2s' }}>
+                  <span style={{ width: 11, height: 11, borderRadius: '50%', background: showDesignLayer ? MAP_COLOR_BOUNDARY_STROKE : 'rgba(234,243,226,0.5)', display: 'block', transition: 'all 0.2s' }} />
                 </span>
               </button>
             </>

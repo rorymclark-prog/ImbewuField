@@ -126,11 +126,9 @@ function HomeInner() {
   const [profileSheetOpen, setProfileSheetOpen] = useState(false);
   const [myProfile, setMyProfile] = useState<Profile | null>(null);
   const [buildInfo, setBuildInfo] = useState<{ branch?: string | null; sha?: string | null; repoRoot?: string | null; source?: string } | null>(null);
-  // Design-on-map overlay: show the saved Design Studio design over the satellite as a
-  // read-only layer, turning the map into the report dashboard. designPresent is reported
-  // by the map (true only when the current site actually has a saved design).
-  const [showDesign, setShowDesign] = useState(false);
-  const [designPresent, setDesignPresent] = useState(false);
+  // Design-on-map overlay: the map now owns its own "My design" toggle (a labels-pill chip
+  // inside components/Map.tsx, ON by default when a design exists), so the old page-level
+  // showDesign/designPresent pair and the floating "Show design" button are gone.
   // Deep-link flag for ?openSurvey=1 — threaded to DataPanel to open the real site survey.
   const [openSurvey, setOpenSurvey] = useState(false);
 
@@ -540,46 +538,7 @@ function HomeInner() {
               people={peopleMarkers}
               showPeople={showPeople}
               onTogglePeople={() => setShowPeople(v => !v)}
-              showDesign={showDesign}
-              onDesignPresenceChange={setDesignPresent}
             />
-
-            {/* ── Design overlay toggle ── */}
-            {/* Only shown when the current site has a saved Design Studio design; hidden
-                while drawing a boundary so it can't overlap the draw action bar. Turns the
-                map into the report dashboard: the design is visible without opening the Studio. */}
-            {designPresent && !drawing && (
-              <button
-                onClick={() => setShowDesign(v => !v)}
-                aria-pressed={showDesign}
-                className="absolute z-20 flex items-center gap-1.5 rounded-full font-sans font-semibold transition-all active:scale-95"
-                style={{
-                  // STACKED UNDER THE LAYERS PILL, NOT CENTRED ACROSS IT. Centred, this sat at the
-                  // same height as Map.tsx's right-anchored layers pill (top:14) with a higher
-                  // z-index, so as soon as that pill grew — Labels + Shapes + Hatching + Parcels &
-                  // water + Places — the two overlapped and this button painted over the pill's
-                  // left end, hiding the "LABELS" header behind it. Right-anchored and one row
-                  // down, the two can never collide however wide either becomes, and it also
-                  // clears the left-hand tool panel. It reads as what it is: another map-layer
-                  // control, beside the rest of them.
-                  top: 62,
-                  right: 14,
-                  height: 40,
-                  padding: '0 16px',
-                  fontSize: 13.5,
-                  background: showDesign ? '#1F4D2B' : 'rgba(22,30,18,0.86)',
-                  border: `1px solid ${showDesign ? 'rgba(168,216,138,0.5)' : 'rgba(234,243,226,0.16)'}`,
-                  color: showDesign ? '#EAF3E2' : 'rgba(234,243,226,0.9)',
-                  backdropFilter: 'blur(16px)',
-                  WebkitBackdropFilter: 'blur(16px)',
-                  boxShadow: '0 8px 24px -10px rgba(0,0,0,0.5)',
-                  cursor: 'pointer',
-                }}
-              >
-                <span aria-hidden>🎨</span>
-                {showDesign ? 'Hide design' : 'Show design'}
-              </button>
-            )}
 
             {/* ── Desktop "+ Add" pill ── */}
             {/* On lg+ there is no TabBar overlap, so anchor the Add door to the map

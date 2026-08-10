@@ -243,6 +243,30 @@ test('malformed collection fields and frames degrade to no overlay', () => {
   assert.equal(buildDesignOverlay('site:test'), null);
 });
 
+test('designs drawn over a photo or blank paper never reach the live map', () => {
+  // On those grounds the geometry is anchored to the photo's pixels, not the earth (see
+  // migrateStateToFrame in lib/design-canvas.ts) — unprojecting it through the satellite
+  // frame would paint the design confidently in the wrong place.
+  const zones: DesignCanvasState['zones'] = [
+    { id: 'z', zone: 2, points: [[0.1, 0.1], [0.8, 0.1], [0.5, 0.8]] },
+  ];
+  const photoBase = {
+    url: 'https://example.test/p.jpg',
+    mPerPx: 0.2,
+    uploadedAt: '2026-01-01T00:00:00.000Z',
+  };
+  install(canvas({ zones, baseMode: 'photo', customBase: photoBase }));
+  assert.equal(buildDesignOverlay('site:test'), null);
+  install(canvas({ zones, baseMode: 'blank', blankMPerPx: 0.4 }));
+  assert.equal(buildDesignOverlay('site:test'), null);
+  // Legacy rows that predate baseMode use the boolean flag pair — same verdict.
+  install(canvas({ zones, useCustomBase: true, customBase: photoBase }));
+  assert.equal(buildDesignOverlay('site:test'), null);
+  // The same design on the satellite ground renders.
+  install(canvas({ zones, baseMode: 'satellite' }));
+  assert.ok(buildDesignOverlay('site:test'));
+});
+
 test('unknown features fall back to zones, and duplicate marker ids appear once', () => {
   install({
     ...canvas(),
