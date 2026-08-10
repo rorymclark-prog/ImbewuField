@@ -46,7 +46,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     // because this read fbecef9 while main had moved to 81d424c. A commit touching ONLY this file
     // is ignored by the gate (IGNORE in scripts/release-notes-pending.mjs), which is what makes a
     // follow-up restamp commit both safe and, after every merge, necessary.
-    sha: '627fe7b',
+    sha: '441c85b',
     changes: [
       'If your phone is too full to save, the app now says so instead of Saved',
       'Rain arrows now show on the roof itself, running down to each gutter',
