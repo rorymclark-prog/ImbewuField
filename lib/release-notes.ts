@@ -46,8 +46,10 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     // because this read fbecef9 while main had moved to 81d424c. A commit touching ONLY this file
     // is ignored by the gate (IGNORE in scripts/release-notes-pending.mjs), which is what makes a
     // follow-up restamp commit both safe and, after every merge, necessary.
-    sha: '5cff279',
+    sha: '3f7b6af',
     changes: [
+      'If opening an AI render keeps crashing the app, it now stops retrying and tells you',
+      'Finishing an AI render uses far less phone memory, so it should now survive',
       'The Seeds and Vegetables modules show their names instead of the word Title',
       'Making a sheet no longer throws you back to the start of the studio on phones',
       'Course module covers now show their real titles instead of "Title"',
