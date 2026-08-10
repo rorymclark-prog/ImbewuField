@@ -3,7 +3,7 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import RainfallChart from './RainfallChart';
-import { loadReports, saveReport, deleteReport, reportId, type SavedReport } from '@/lib/saved-reports';
+import { loadReports, saveReport, deleteReport, reportId, MAX_REPORTS, type SavedReport, type SaveReportReason } from '@/lib/saved-reports';
 import { isSampleMode } from '@/lib/sample-mode';
 import { PLACE_LABELS, placeColor, type SavedPlace } from '@/lib/saved-places';
 import { Loader2, Check, Circle, ChevronRight, Share2, MapPin, SlidersHorizontal, FileText } from 'lucide-react';
@@ -268,6 +268,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   // nothing warned them. The button has to be able to say so. Sample mode is a separate,
   // deliberate no-op that returns saved:false on purpose; the label already tells that truth.
   const [saveFailed, setSaveFailed] = useState(false);
+  const [saveFailedReason, setSaveFailedReason] = useState<SaveReportReason | null>(null);
   const [copied, setCopied] = useState(false);
   const [pdfState, setPdfState] = useState<'idle' | 'working' | 'done' | 'error'>('idle');
   useEffect(() => {
@@ -300,7 +301,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
 
   const handleSaveReport = useCallback(() => {
     if (!report) return;
-    const { saved } = saveReport({
+    const { saved, reason } = saveReport({
       id: activeSaved?.id ?? reportId(),
       name: `${d.biome.name} · ${new Date().toLocaleDateString()}`,
       savedAt: new Date().toISOString(),
@@ -315,9 +316,11 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     // seconds is the same lie more slowly, because the farmer may not be looking.
     if (!saved && !isSampleMode()) {
       setSaveFailed(true);
+      setSaveFailedReason(reason ?? 'storage-error');
       return;
     }
     setSaveFailed(false);
+    setSaveFailedReason(null);
     setJustSaved(true);
     setTimeout(() => setJustSaved(false), 2500);
   }, [report, activeSaved, d, siteData, waterData, language]);
@@ -523,7 +526,9 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                 : { background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.3)', color: '#1F4D2B' }}
             >
               {saveFailed
-                ? 'Not saved — no space'
+                ? (saveFailedReason === 'store-full'
+                    ? `You have ${MAX_REPORTS} saved reports — delete one to save this`
+                    : 'Not saved — no space')
                 : justSaved ? (isSampleMode() ? 'Demo — not saved' : 'Saved') : 'Save'}
             </button>
           )}

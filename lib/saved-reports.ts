@@ -18,7 +18,9 @@ export interface SavedReport {
 }
 
 const KEY = 'imbewu_saved_reports';
-const MAX_REPORTS = 50;
+/** The store cap. EXPORTED so the message a farmer reads names the real number: a hard-coded
+ *  "50" in the UI silently becomes a lie the day this changes. */
+export const MAX_REPORTS = 50;
 
 type UnknownRecord = Record<string, unknown>;
 
@@ -72,17 +74,29 @@ function notify() {
   if (typeof window !== 'undefined') window.dispatchEvent(new CustomEvent('imbewu-reports-changed'));
 }
 
-export function saveReport(r: SavedReport): { reports: SavedReport[]; saved: boolean } {
+export type SaveReportReason = 'store-full' | 'storage-error';
+
+export interface SaveReportResult {
+  reports: SavedReport[];
+  saved: boolean;
+  reason?: SaveReportReason;
+}
+
+export function saveReport(r: SavedReport): SaveReportResult {
   if (isSampleMode()) return { reports: [], saved: false }; // demo "save" no-ops — never writes real storage
   const current = loadReports();
   const safe = normaliseReport(r);
   if (!safe || typeof window === 'undefined') return { reports: current, saved: false };
+  const isExisting = current.some((x) => x.id === safe.id);
+  if (!isExisting && current.length >= MAX_REPORTS) {
+    return { reports: current, saved: false, reason: 'store-full' };
+  }
   const others = current.filter((x) => x.id !== safe.id);
   const updated = [safe, ...others].slice(0, MAX_REPORTS);
   try {
     window.localStorage.setItem(activeAccountLocalStorageKey(KEY), JSON.stringify(updated));
   } catch {
-    return { reports: current, saved: false };
+    return { reports: current, saved: false, reason: 'storage-error' };
   }
   notify();
   return { reports: updated, saved: true };
