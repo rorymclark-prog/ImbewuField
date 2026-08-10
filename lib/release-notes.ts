@@ -46,8 +46,11 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     // because this read fbecef9 while main had moved to 81d424c. A commit touching ONLY this file
     // is ignored by the gate (IGNORE in scripts/release-notes-pending.mjs), which is what makes a
     // follow-up restamp commit both safe and, after every merge, necessary.
-    sha: 'd5fa068',
+    sha: 'b0e1dfd',
     changes: [
+      'On plain paper the AI now leaves the paper white instead of inventing a field',
+      'Every building on your plan keeps its name and its legend row',
+      'Pressing AI Polished now says AI Polished on the result, not hybrid',
       'Big numbers read the same way all through your report',
       'The "get a local quote" warning no longer prints stray underscores',
       'Your report sections are numbered in order, and every one of them is in the Contents',
