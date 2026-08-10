@@ -46,8 +46,9 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     // because this read fbecef9 while main had moved to 81d424c. A commit touching ONLY this file
     // is ignored by the gate (IGNORE in scripts/release-notes-pending.mjs), which is what makes a
     // follow-up restamp commit both safe and, after every merge, necessary.
-    sha: 'f044c2a',
+    sha: '627fe7b',
     changes: [
+      'Rain arrows now show on the roof itself, running down to each gutter',
       'The month calendar now matches the crop guide, so nothing is listed too early',
       'Your bill no longer charges you for tanks and trees you already have',
       'Water runs off the roof, into your tank, and spreads out in the swale',
