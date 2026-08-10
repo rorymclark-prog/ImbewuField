@@ -81,6 +81,33 @@ export function hasFarmerPhoto(frame: Pick<CanvasFrame, 'underlayDataUrl'>): boo
 }
 
 /**
+ * THE GROUND THE AI IS SHOWN WHEN THERE IS NO PHOTOGRAPH — and it must be the white the words
+ * promise, because a model believes the picture over the prompt.
+ *
+ * How this was found: buildLockedIllustrationPrompt gained a 'paper' contract ("every part of the
+ * sheet the source leaves blank is drawing paper and must come back the same white") and Rory's
+ * very next plain-paper render STILL came back as a khaki field — "What ever you doing it's not
+ * working!". The prompt was fine. The INPUT was not: buildComposite's no-photo branch filled the
+ * model's source image with #CBB98A, a khaki, before drawing the marks. So every earlier "the AI
+ * invented a ground" diagnosis was wrong too — Photo Plan's contract is "keep every pixel of the
+ * supplied image", and the model was keeping the khaki we supplied. The locked pipeline then
+ * RESTORES unmarked pixels from that same source, so even a model that disobeyed and painted white
+ * would have had the khaki put back by our own code.
+ *
+ * Painted through this one function (and the colour through this one constant, which
+ * lib/design-canvas.ts's photo-bake backdrop shares) so the fact can be pixel-tested from node:
+ * a rule that lives only inside DesignGlossy.tsx can never be more than source-grepped.
+ */
+export const PLAIN_PAPER_GROUND = '#FFFFFF';
+
+type GroundPaintContext = Pick<CanvasRenderingContext2D, 'fillStyle' | 'fillRect'>;
+
+export function paintPlainPaperGround(ctx: GroundPaintContext, width: number, height: number): void {
+  ctx.fillStyle = PLAIN_PAPER_GROUND;
+  ctx.fillRect(0, 0, width, height);
+}
+
+/**
  * The frame a sheet should be rendered from.
  *
  * Returns the SAME OBJECT for the default so that referential equality holds and nothing downstream

@@ -87,3 +87,56 @@ test('the renderer tells the prompt which ground it actually has', () => {
       `a locked render is still asking for a photographed ground unconditionally: ${call[0]}`);
   }
 });
+
+// ── The INPUT, not just the prompt ────────────────────────────────────────────────────────────
+//
+// The prompt fix above shipped, Rory rendered again, and the sheet came back khaki AGAIN: "What
+// ever you doing it's not working!" The prompt was fine — buildComposite, the function that builds
+// the very picture the model is handed, filled its no-photo ground with #CBB98A (khaki) before
+// drawing the marks. Photo Plan's contract is "keep every pixel of the supplied image", so the
+// model was OBEYING: every "the AI invented a field" diagnosis had the direction wrong. And the
+// locked pipeline restores unmarked pixels from that same source afterwards, so our own restore
+// pass would re-khaki a render even if the model had painted white. Words versus picture: the
+// picture always wins, so the picture must be white too.
+
+import { PLAIN_PAPER_GROUND, paintPlainPaperGround } from '@/lib/sheet-underlay';
+
+test('the ground painter paints the whole frame, in actual white pixels', () => {
+  // A tiny raster ctx rather than a spy: the claim is about PIXELS a model will look at, so the
+  // test rasterises. Parses #RRGGBB itself to stay honest about what fillStyle was set to.
+  const W = 8, H = 5;
+  const data = new Uint8ClampedArray(W * H * 4);
+  const ctx = {
+    fillStyle: '#000000' as string,
+    fillRect(x: number, y: number, w: number, h: number) {
+      const m = /^#([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})$/i.exec(String(this.fillStyle));
+      assert.ok(m, `fillStyle must be a plain hex colour, got ${String(this.fillStyle)}`);
+      const [r, g, b] = [parseInt(m![1], 16), parseInt(m![2], 16), parseInt(m![3], 16)];
+      for (let py = y; py < y + h; py++) for (let px = x; px < x + w; px++) {
+        const i = (py * W + px) * 4;
+        data[i] = r; data[i + 1] = g; data[i + 2] = b; data[i + 3] = 255;
+      }
+    },
+  };
+  paintPlainPaperGround(ctx as unknown as CanvasRenderingContext2D, W, H);
+  for (let i = 0; i < data.length; i += 4) {
+    assert.deepEqual([data[i], data[i + 1], data[i + 2], data[i + 3]], [255, 255, 255, 255],
+      `pixel ${i / 4} is not white paper`);
+  }
+  assert.equal(PLAIN_PAPER_GROUND.toUpperCase(), '#FFFFFF', 'paper means white, not another tint');
+});
+
+test('the model input builder uses the painter, and the khaki exists nowhere', () => {
+  const glossySource = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
+  const designCanvasSource = readFileSync(new URL('../lib/design-canvas.ts', import.meta.url), 'utf8');
+  // buildComposite's no-photo branch must go through the tested painter.
+  const start = glossySource.indexOf('export async function buildComposite(');
+  assert.ok(start > 0, 'buildComposite moved — update this guard, do not delete it');
+  const body = glossySource.slice(start, glossySource.indexOf('\n}', start));
+  assert.match(body, /paintPlainPaperGround\(ctx, imgW, imgH\)/,
+    'the AI input ground must be painted by the tested painter');
+  // The khaki must be gone from BOTH files — the photo-bake backdrop becomes satDataUrl, so its
+  // margins ride into downstream sheets and AI inputs exactly like buildComposite's own fill.
+  assert.doesNotMatch(glossySource, /CBB98A/i, 'khaki ground in the model input builder');
+  assert.doesNotMatch(designCanvasSource, /CBB98A/i, 'khaki backdrop in the photo bake');
+});
