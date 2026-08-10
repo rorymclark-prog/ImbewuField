@@ -297,14 +297,10 @@ function vetiverBank(ctx: CanvasRenderingContext2D, w: number, h: number, stroke
     minClumpPx: Math.max(1.2, Math.min(w, h) * 0.05),
     seedId: `water-symbol:${seed}`,
     casingWidth: Math.min(Math.max(0.8, stroke), Math.min(w, h) * 0.3),
-    tracePlate: () => {
-      ctx.beginPath();
-      ctx.rect(-w / 2, -h / 2, w, h);
-    },
   });
 }
 
-function earthwork(ctx: CanvasRenderingContext2D, w: number, h: number, stroke: number, kind: 'half-moon' | 'berm' | 'terrace'): void {
+function earthwork(ctx: CanvasRenderingContext2D, w: number, h: number, stroke: number, kind: 'half-moon' | 'berm' | 'terrace', seed: number): void {
   const dark = '#4E4937';
   const pale = '#D7C79B';
   if (kind === 'half-moon') {
@@ -335,16 +331,23 @@ function earthwork(ctx: CanvasRenderingContext2D, w: number, h: number, stroke: 
   ctx.strokeRect(-w / 2, -h / 2, w, h);
   const alongX = w >= h;
   const cross = Math.min(w, h);
+  const along = Math.max(w, h);
   const count = Math.max(2, Math.min(9, Math.floor(cross / Math.max(3, stroke * 1.8))));
   for (let i = 1; i <= count; i += 1) {
     const offset = -cross / 2 + (i / (count + 1)) * cross;
+    // Hand-set contour lines, not ruled ones: ends pulled in by an uneven amount and a slight
+    // seeded bow through the middle. Part of the same "break the even lines" feedback the fringe
+    // below answers — a berm whose every internal line is dead straight still reads as a diagram.
+    const inA = 2 + hash(seed, i * 31) * along * 0.06;
+    const inB = 2 + hash(seed, i * 31 + 1) * along * 0.06;
+    const bow = (hash(seed, i * 31 + 2) - 0.5) * cross * 0.18;
     ctx.beginPath();
     if (alongX) {
-      ctx.moveTo(-w / 2 + 2, offset);
-      ctx.lineTo(w / 2 - 2, offset);
+      ctx.moveTo(-w / 2 + inA, offset);
+      ctx.quadraticCurveTo(0, offset + bow, w / 2 - inB, offset);
     } else {
-      ctx.moveTo(offset, -h / 2 + 2);
-      ctx.lineTo(offset, h / 2 - 2);
+      ctx.moveTo(offset, -h / 2 + inA);
+      ctx.quadraticCurveTo(offset + bow, 0, offset, h / 2 - inB);
     }
     ctx.strokeStyle = kind === 'berm' ? 'rgba(77,73,55,0.55)' : 'rgba(225,215,184,0.52)';
     ctx.lineWidth = Math.max(0.55, stroke * 0.38);
@@ -362,6 +365,75 @@ function earthwork(ctx: CanvasRenderingContext2D, w: number, h: number, stroke: 
     ctx.strokeStyle = dark;
     ctx.lineWidth = Math.max(1, stroke * 0.75);
     ctx.stroke();
+  }
+
+  // The scrappy grass fringe, painted LAST so its blades break both the pale outline and the
+  // soil wash. Shadow pass then body pass over the identical seeded path — see
+  // traceEarthworkFringe for why and for the determinism guarantee.
+  traceEarthworkFringe(ctx, w, h, seed);
+  ctx.strokeStyle = 'rgba(58,66,38,0.6)';
+  ctx.lineWidth = Math.max(0.7, stroke * 0.5);
+  ctx.stroke();
+  traceEarthworkFringe(ctx, w, h, seed);
+  ctx.strokeStyle = kind === 'berm' ? '#7D965A' : '#8CA061';
+  ctx.lineWidth = Math.max(0.5, stroke * 0.34);
+  ctx.stroke();
+}
+
+/**
+ * Trace one deterministic set of scrappy grass blades along both LONG edges of a berm/terrace
+ * band. Called twice — a darker, slightly fatter under-pass and a lighter body pass over it, the
+ * same shadow-then-body order the vetiver blades and crop glyphs use — so the fringe stays
+ * legible over the warm soil wash without a cream halo of its own.
+ *
+ * WHY IT EXISTS: Rory, on the live sheet: "the berm — scrappy grassy fringes to break the even
+ * lines". A built berm is grassed within a season, and its edges are exactly where the grass
+ * shows from above; a clean-ruled rectangle is a diagram of the earthwork, not a drawing of it.
+ * Every blade position, lean and length comes from hash(seed, …), so the same saved berm paints
+ * the identical fringe on every render, and the caller's clip keeps every blade inside the saved
+ * footprint — the outline is broken visually, never geometrically.
+ */
+function traceEarthworkFringe(ctx: CanvasRenderingContext2D, w: number, h: number, seed: number): void {
+  const alongX = w >= h;
+  const run = alongX ? w : h;
+  const cross = alongX ? h : w;
+  const tuftGap = Math.max(4, cross * 0.3);
+  const count = Math.max(4, Math.min(48, Math.floor(run / tuftGap)));
+  const reach = Math.max(2, cross * 0.34);
+  ctx.beginPath();
+  for (let side = 0; side < 2; side += 1) {
+    const edge = (side === 0 ? -1 : 1) * (cross / 2);
+    for (let i = 0; i < count; i += 1) {
+      const key = side * 9973 + i * 23;
+      // Ragged spacing, and roughly one tuft in five skipped entirely — an unbroken picket of
+      // tufts would just be a second even line.
+      if (hash(seed, key) < 0.2) continue;
+      const along = -run / 2 + (i + 0.2 + hash(seed, key + 1) * 0.6) * (run / count);
+      const blades = 2 + Math.floor(hash(seed, key + 2) * 2.99);
+      for (let b = 0; b < blades; b += 1) {
+        // Rooted just inside the edge, leaning across it: outward-leaning blades break the
+        // outline, inward-leaning ones scruff the wash, and the mix is what reads as growth.
+        const root = edge - Math.sign(edge) * cross * (0.04 + hash(seed, key + 3 + b) * 0.1);
+        const lean = (hash(seed, key + 7 + b) - 0.5) * 1.3;
+        const out = Math.sign(edge) * (hash(seed, key + 11 + b) > 0.35 ? 1 : -1);
+        const len = reach * (0.55 + hash(seed, key + 15 + b) * 0.65);
+        const dAcross = out * Math.cos(lean) * len;
+        const dAlong = Math.sin(lean) * len;
+        const x0 = alongX ? along : root;
+        const y0 = alongX ? root : along;
+        const x1 = alongX ? along + dAlong : root + dAcross;
+        const y1 = alongX ? root + dAcross : along + dAlong;
+        ctx.moveTo(x0, y0);
+        // Bowed, not straight — the same rule the vetiver blades follow: a straight tick reads as
+        // hatching, a bowed one reads as a blade of grass.
+        ctx.quadraticCurveTo(
+          x0 + (x1 - x0) * 0.4 - (y1 - y0) * 0.24,
+          y0 + (y1 - y0) * 0.4 + (x1 - x0) * 0.24,
+          x1,
+          y1,
+        );
+      }
+    }
   }
 }
 
@@ -513,7 +585,7 @@ export function drawCartographicWaterSymbol(options: CartographicWaterSymbolOpti
   else if (key === 'banana-circle') bananaCircle(ctx, width, height, outlineWidth, seed);
   else if (key === 'trough') trough(ctx, width, height, outlineWidth);
   else if (key === 'vetiver-bank') vetiverBank(ctx, width, height, outlineWidth, seed);
-  else if (key === 'half-moon' || key === 'berm' || key === 'terrace') earthwork(ctx, width, height, outlineWidth, key);
+  else if (key === 'half-moon' || key === 'berm' || key === 'terrace') earthwork(ctx, width, height, outlineWidth, key, seed);
   else if (key === 'unknown-water') unknownWater(ctx, width, height, outlineWidth);
   else if (key === 'tap' || key === 'borehole' || key === 'first-flush' || key === 'pump' || key === 'filter' || key === 'greywater-outlet' || key === 'diverter') {
     smallHardware(ctx, width, height, outlineWidth, key);

@@ -52,6 +52,28 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 2026-08-10 (plan-sheet art: real vetiver, grassed berms, actual cabbages)
+Three pieces of Rory's phone review of a live Reference Blueprint sheet, all seeded-deterministic
+(same design → identical paint, byte for byte):
+- **Vetiver reads as a grass hedge, not a strip** (`lib/vetiver-hedge.ts`) — tuft sizes, spacing
+  and off-line drift now vary per seeded crown; blade count and tone vary per tussock (three
+  near-neighbour greens); and the band's cream casing + fill follow the UNION of the tussock
+  blobs instead of the footprint rectangle, so the edges are softly ragged. Saved geometry is
+  untouched — the width-honesty inset (`VETIVER_BLADE_REACH`, now 2.4) still caps every blob and
+  blade inside the saved band.
+- **Berms/terraces get scrappy grass fringes** (`lib/cartographic-water-symbols.ts`) — seeded
+  bowed blades rooted along both long edges lean across the outline and break it visually
+  (clipped to the exact footprint), and the internal contour lines are hand-wavered instead of
+  ruled. Half-moons unchanged.
+- **Rosette beds paint actual cabbages** (`lib/crop-row-cartography.ts` `cabbageHeadLeaves` +
+  `DesignGlossy` renderer) — layered wrapper leaves around a tight pale heart, deliberately
+  oversized to the same 2.6·s footprint the veg sprites use, always vector (the rosette sprite
+  read as a blob at phone size). Rows, pitch and glyph choice contracts untouched; 'generic'
+  stays a plain plant so no crop is invented.
+Tests extended in `tests/vetiver-hedge.test.ts` (paint-pass determinism via recording canvas,
+irregularity, band-from-tussocks), `tests/cartographic-symbols.test.ts` (berm/terrace fringe
+determinism) and `tests/crop-row-cartography.test.ts` (cabbage geometry + reach bound).
+
 ### 2026-07-26 (live emulator walkthrough — found and fixed two pre-existing bugs)
 Ran the whole flow against the Firebase emulator with a seeded mentor + learner in one org
 (`scripts/seed-course-demo.mjs`), driven end to end in a real browser. Static checks had all

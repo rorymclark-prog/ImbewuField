@@ -218,6 +218,34 @@ test('seeded natural texture is reproducible while a different seed changes it',
   assert.deepEqual(transcript(Number.NaN), transcript(0), 'invalid seeds did not use the deterministic fallback');
 });
 
+test('berms and terraces wear a seeded grass fringe that breaks their even lines', () => {
+  // Rory, on the live sheet: "the berm — scrappy grassy fringes to break the even lines." The
+  // band was a clean gradient rectangle with ruled internal lines — a diagram of the earthwork,
+  // not a drawing of a grassed bank. The fringe (and the hand-wavered contour lines) must be
+  // seeded like every other natural texture here: identical on every render of a design, and
+  // different between two different saved features.
+  const transcript = (id: string, seed: number) => {
+    const { ctx, calls } = recordingContext();
+    assert.equal(drawCartographicWaterSymbol({
+      ctx,
+      id,
+      width: 96,
+      height: 30,
+      outlineWidth: 2,
+      seed,
+    }), true);
+    return calls;
+  };
+
+  for (const id of ['berm', 'terrace']) {
+    assert.deepEqual(transcript(id, 17), transcript(id, 17), `${id} repaints differently for one seed`);
+    assert.notDeepEqual(transcript(id, 17), transcript(id, 18), `two ${id}s must not be identical stamps`);
+    // The blades are bowed curves, in quantity: an even band with two straight sides has none.
+    const blades = transcript(id, 17).filter((call) => call.name === 'quadraticCurveTo');
+    assert.ok(blades.length > 12, `${id} drew only ${blades.length} curved marks — no scrappy fringe`);
+  }
+});
+
 test('every catalog water feature can execute its advertised symbol path', () => {
   for (const def of Object.values(ELEMENTS_BY_ID).filter((entry) => entry.category === 'water')) {
     const { ctx, calls } = recordingContext();

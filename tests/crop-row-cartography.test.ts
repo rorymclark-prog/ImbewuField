@@ -2,6 +2,8 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 
 import {
+  CABBAGE_HEAD_REACH,
+  cabbageHeadLeaves,
   cropGlyphFor,
   polygonCropRows,
   staplePlotGlyph,
@@ -77,6 +79,38 @@ test('an unnamed vegetable bed still varies, so a garden is not wallpaper', () =
   assert.ok(drawn.size > 1, 'seven unnamed beds all drew the same silhouette');
   // Stable across renders, or every export looks like a change.
   assert.equal(unnamedBedGlyph('bed-a'), unnamedBedGlyph('bed-a'));
+});
+
+test('a cabbage head is layered leaves around a tight centre, deterministic per plant', () => {
+  // Rory, on the live sheet: "the veg beds — make actual cabbages, even oversized." The rosette
+  // glyph was a filled disc; the head is now real leaf geometry, seeded from the plant's own
+  // stable jitter so a bed paints identically on every render while no two heads are one stamp.
+  const head = cabbageHeadLeaves(0.37);
+  assert.deepEqual(head, cabbageHeadLeaves(0.37), 'one plant must grow the same head every render');
+  assert.notDeepEqual(head, cabbageHeadLeaves(0.62), 'two plants must not be identical stamps');
+
+  // Layered: a ring of wrapper leaves AND an inner whorl, or the head reads as a green flower.
+  const outer = head.filter((leaf) => leaf.whorl === 0);
+  const inner = head.filter((leaf) => leaf.whorl === 1);
+  assert.ok(outer.length >= 6, `only ${outer.length} wrapper leaves`);
+  assert.ok(inner.length >= 4, `only ${inner.length} inner leaves`);
+  for (const leaf of inner) {
+    assert.ok(leaf.dist < Math.min(...outer.map((wrap) => wrap.dist)), 'the inner whorl must sit inside the wrappers');
+  }
+});
+
+test('no cabbage leaf can sprawl past the head reach the renderer sizes from', () => {
+  // The renderer draws the head oversized on purpose (symbol size, never row pitch — the same
+  // license drawCropRowLayout's glyphScale claims), so the geometry must guarantee its own
+  // bound: with the reach honoured, an oversized head can crowd its neighbour but never wander
+  // out of its row.
+  for (const jitter of [0, 0.11, 0.37, 0.62, 0.99, Number.NaN]) {
+    for (const leaf of cabbageHeadLeaves(jitter)) {
+      const extent = leaf.dist + Math.max(leaf.rx, leaf.ry);
+      assert.ok(extent <= CABBAGE_HEAD_REACH + 1e-9, `jitter ${jitter}: a leaf reached ${extent.toFixed(3)}`);
+      assert.ok(Number.isFinite(leaf.angle) && leaf.rx > 0 && leaf.ry > 0, 'leaf feeds canvas draw calls');
+    }
+  }
 });
 
 test('a plot too small to read as rows draws nothing rather than a smudge', () => {

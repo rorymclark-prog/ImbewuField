@@ -114,6 +114,7 @@ import { overlandFlowArrows, overlandFlowLegendText, interceptFlowArrows, type F
 import { BED_DEF_IDS } from '@/lib/design-beds-bridge';
 import {
   bedCropRows,
+  cabbageHeadLeaves,
   cropGlyphFor,
   polygonCropRows,
   stableUnit,
@@ -3480,7 +3481,13 @@ function drawCropRowLayout(
     // rows, same jitter, same pitch. A touch of per-plant rotation keeps a row from stamping as
     // a rubber-stamp repeat; the vector glyph below remains the fallback for any kind whose
     // sprite is missing, so a bed can never go blank.
-    {
+    //
+    // EXCEPT THE ROSETTE. Rory, reviewing the live sheet on his phone: "the veg beds — make
+    // actual cabbages, even oversized." The rosette sprite still read as a generic green blob at
+    // phone size, so the leafy kind now always paints the deterministic layered cabbage head
+    // below (see cabbageHeadLeaves) — same rows, same pitch, drawn from the plant's own stable
+    // jitter so every render of a design is identical.
+    if (plant.glyph !== 'rosette') {
       const spriteUrl = vegSpriteUrl(plant.glyph);
       const sprite = spriteUrl ? referenceFeatureArtworkCache.get(spriteUrl) : undefined;
       if (sprite) {
@@ -3499,7 +3506,7 @@ function drawCropRowLayout(
       ctx.strokeStyle = casing ? 'rgba(252,248,236,0.9)' : CROP_GLYPH_COLOR[plant.glyph] ?? accent;
       ctx.fillStyle = casing ? 'rgba(252,248,236,0.9)' : CROP_GLYPH_COLOR[plant.glyph] ?? accent;
       ctx.lineWidth = casing ? Math.max(2, s * 0.5) : Math.max(1, s * 0.22);
-      drawCropGlyphPath(ctx, plant.glyph, s, casing);
+      drawCropGlyphPath(ctx, plant.glyph, s, casing, plant.jitter);
     }
     ctx.restore();
   }
@@ -3518,13 +3525,22 @@ const CROP_GLYPH_COLOR: Record<CropGlyph, string> = {
   generic: '#5E8C43',
 };
 
+/** The cabbage head's leaf greens, outer wrapper then inner whorl then heart — the muted
+ *  blue-greens a brassica actually is, sitting inside the sheet's soft earth palette. */
+const CABBAGE_LEAF_TONES = ['#4C8140', '#578F4A'] as const;
+const CABBAGE_INNER_TONE = '#6CA355';
+const CABBAGE_HEART_TONE = '#8FBE6B';
+
 /** Draw one plant silhouette at the current origin. `casingOnly` strokes the same path fatter so
- *  the body that follows sits inside a light halo. */
+ *  the body that follows sits inside a light halo. `jitter` is the plant's stable 0..1 — it seeds
+ *  the cabbage head's leaf arrangement so no two heads in a row are the same stamp while every
+ *  render of a design stays identical. */
 function drawCropGlyphPath(
   ctx: CanvasRenderingContext2D,
   glyph: CropGlyph,
   s: number,
   casingOnly: boolean,
+  jitter = 0.5,
 ): void {
   switch (glyph) {
     case 'grain': {
@@ -3580,9 +3596,57 @@ function drawCropGlyphPath(
       casingOnly ? ctx.stroke() : ctx.fill();
       return;
     }
-    case 'rosette':
+    case 'rosette': {
+      // AN ACTUAL CABBAGE, NOT A DISC. Rory: "the veg beds — make actual cabbages, even
+      // oversized." Layered rounded wrapper leaves around a tight pale heart is the one
+      // silhouette that says brassica from above, and the head is drawn a third larger than the
+      // other glyphs (symbol size only — the rows and pitch this glyph sits on are untouched, the
+      // same license drawCropRowLayout's glyphScale note claims) so it stays a cabbage on a
+      // phone. Leaf positions come from lib/crop-row-cartography's cabbageHeadLeaves — pure
+      // seeded geometry, so a bed paints identically on every render.
+      const cs = s * 1.3;
+      if (casingOnly) {
+        // No cream halo, deliberately: the head is drawn at the same oversized footprint the veg
+        // SPRITES use (d = 2.6 s), and at that size neighbouring halos merged into a pale band
+        // behind the row. Rosettes only ever sit on a bed's own worked-soil fill, where the deep
+        // leaf greens carry their own contrast — the casing pass the other glyphs need against an
+        // aerial photograph has nothing to rescue here.
+        return;
+      }
+      const leaves = cabbageHeadLeaves(jitter);
+      for (const [index, leaf] of leaves.entries()) {
+        ctx.beginPath();
+        ctx.ellipse(
+          Math.cos(leaf.angle) * leaf.dist * cs,
+          Math.sin(leaf.angle) * leaf.dist * cs,
+          leaf.rx * cs,
+          leaf.ry * cs,
+          leaf.angle + Math.PI / 2,
+          0,
+          Math.PI * 2,
+        );
+        ctx.fillStyle = leaf.whorl === 1
+          ? CABBAGE_INNER_TONE
+          : CABBAGE_LEAF_TONES[index % CABBAGE_LEAF_TONES.length];
+        ctx.fill();
+      }
+      // The tight heart, and a fine pale ring where the youngest leaves wrap it — the centre
+      // detail is what stops the head reading as a green flower.
+      ctx.beginPath();
+      ctx.arc(0, 0, cs * 0.24, 0, Math.PI * 2);
+      ctx.fillStyle = CABBAGE_HEART_TONE;
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(0, 0, cs * 0.13, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(252,248,236,0.75)';
+      ctx.lineWidth = Math.max(0.7, cs * 0.09);
+      ctx.stroke();
+      return;
+    }
     default: {
-      // A leafy head seen from above — cabbage, spinach, chard: concentric, tight, ground-hugging.
+      // A plain leafy plant seen from above. 'generic' means the farmer told us nothing this
+      // module recognises, so the mark stays deliberately non-committal — drawing a recognisable
+      // cabbage here would assert a crop nobody named (see cropGlyphFor's doctrine).
       ctx.beginPath();
       ctx.arc(0, 0, s * 0.62, 0, Math.PI * 2);
       casingOnly ? ctx.stroke() : ctx.fill();
@@ -5319,11 +5383,10 @@ function paintVetiverHedge(
   ctx.save();
   ctx.translate(px(it.x), py(it.y));
   if (it.rot) ctx.rotate((it.rot * Math.PI) / 180);
-  const radius = Math.min(wPx, hPx) * 0.34;
-  // THE CASING IS A HAIRLINE, NOT A SECOND HEDGE. It is stroked ON the plate edge, so half of it
-  // lies outside the saved footprint — on a 0.52 m row that was another ~55% of width added to a
-  // band already drawn too wide. Capped against the band for the same reason the clump radius is:
-  // a legibility device may not enlarge a stated measurement. See VETIVER_BLADE_REACH.
+  // THE CASING IS A HAIRLINE, NOT A SECOND HEDGE. It is stroked ON the tussock band's edge, so
+  // half of it lies outside the drawn clumps — on a 0.52 m row that was another ~55% of width
+  // added to a band already drawn too wide. Capped against the band for the same reason the clump
+  // radius is: a legibility device may not enlarge a stated measurement. See VETIVER_BLADE_REACH.
   const casing = Math.min(Math.max(2, ctx.canvas.width * 0.0018), Math.min(wPx, hPx) * 0.3);
   const painted = paintTopDownVetiverHedge(
     ctx,
@@ -5336,7 +5399,6 @@ function paintVetiverHedge(
       minClumpPx,
       seedId: it.id,
       casingWidth: casing,
-      tracePlate: () => roundRectPath(ctx, -wPx / 2, -hPx / 2, wPx, hPx, radius),
     },
   );
   ctx.restore();
