@@ -46,8 +46,10 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     // because this read fbecef9 while main had moved to 81d424c. A commit touching ONLY this file
     // is ignored by the gate (IGNORE in scripts/release-notes-pending.mjs), which is what makes a
     // follow-up restamp commit both safe and, after every merge, necessary.
-    sha: '98d10ed',
+    sha: 'd5fa068',
     changes: [
+      'Big numbers read the same way all through your report',
+      'The "get a local quote" warning no longer prints stray underscores',
       'Your report sections are numbered in order, and every one of them is in the Contents',
       'The exported PDF starts with one cover page instead of two',
       'The report cover names only the map, survey and crop plan you actually gave it',
