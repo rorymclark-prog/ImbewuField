@@ -108,7 +108,7 @@ import {
   legendRowFontSize,
 } from '@/lib/sheet-legend-layout';
 import { PLAIN_HARD_SURFACE_PAINT, SHEET_BASE_MUTE_STYLE, SHEET_STRUCTURE_MUTE_STYLE, type SheetBaseMute } from '@/lib/sheet-base-mute';
-import { frameForUnderlay, hasFarmerPhoto, sheetUnderlayOptions, underlayCacheSuffix, type SheetUnderlay } from '@/lib/sheet-underlay';
+import { frameForUnderlay, hasFarmerPhoto, paintPlainPaperGround, sheetUnderlayOptions, underlayCacheSuffix, type SheetUnderlay } from '@/lib/sheet-underlay';
 import { overlandFlowArrows, overlandFlowLegendText, interceptFlowArrows, type FlowArrow } from '@/lib/overland-flow';
 import { ridgeAngleOf, roofRunoffArrows, gutterToTankArrows, tankOverflowArrows, type StoryArrow } from '@/lib/water-story';
 import { BED_DEF_IDS } from '@/lib/design-beds-bridge';
@@ -1154,8 +1154,11 @@ export async function buildComposite(
     const img = await loadImage(frame.satDataUrl);
     ctx.drawImage(img, 0, 0, imgW, imgH);
   } else {
-    ctx.fillStyle = '#CBB98A';
-    ctx.fillRect(0, 0, imgW, imgH);
+    // WHITE, because this canvas is the picture the AI is handed and the pixels it is restored
+    // from. It was a flat khaki, which is why every plain-paper paid render came back as a tan
+    // field regardless of prompt: Photo Plan preserved it faithfully, and the locked restore
+    // pass put it back even where the model had not. See PLAIN_PAPER_GROUND for the full story.
+    paintPlainPaperGround(ctx, imgW, imgH);
   }
 
   drawMarks(ctx, state, frame, refLayers, imgW, imgH, filter, drawDesign, options);

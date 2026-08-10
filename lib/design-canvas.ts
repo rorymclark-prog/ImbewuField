@@ -10,6 +10,8 @@ import type { Geometry, Position } from 'geojson';
 import type { DesignLayer } from '@/lib/design-studio';
 import { isCompassDirection16, type LocalWindObservation } from '@/lib/local-wind';
 import { resolveBaseAlign } from '@/lib/base-photo-align';
+// Value import one way, type-only import back (CanvasFrame) — no runtime cycle.
+import { paintPlainPaperGround } from '@/lib/sheet-underlay';
 import {
   accountLocalStorageKey,
   activeAccountLocalStorageKey,
@@ -863,17 +865,17 @@ export async function bakeBaseAlignment(
 
   // Backdrop first, untransformed. The satellite is what is genuinely under the photo, so it is
   // the honest thing to show where the photo no longer reaches; the flat tone is only for the
-  // case where no underlay has loaded, and matches buildComposite's own no-imagery colour.
+  // case where no underlay has loaded, and matches buildComposite's own no-imagery colour —
+  // literally now, through the shared constant. It was khaki, and because this bake becomes
+  // satDataUrl, its margins rode into every downstream sheet and AI input as fake tan ground.
   if (underlayDataUrl) {
     try {
       ctx.drawImage(await loadImageEl(underlayDataUrl), 0, 0, frameW, frameH);
     } catch {
-      ctx.fillStyle = '#CBB98A';
-      ctx.fillRect(0, 0, frameW, frameH);
+      paintPlainPaperGround(ctx, frameW, frameH);
     }
   } else {
-    ctx.fillStyle = '#CBB98A';
-    ctx.fillRect(0, 0, frameW, frameH);
+    paintPlainPaperGround(ctx, frameW, frameH);
   }
 
   ctx.save();
