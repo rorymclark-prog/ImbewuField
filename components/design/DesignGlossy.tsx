@@ -110,7 +110,7 @@ import {
 import { PLAIN_HARD_SURFACE_PAINT, SHEET_BASE_MUTE_STYLE, SHEET_STRUCTURE_MUTE_STYLE, type SheetBaseMute } from '@/lib/sheet-base-mute';
 import { frameForUnderlay, hasFarmerPhoto, sheetUnderlayOptions, underlayCacheSuffix, type SheetUnderlay } from '@/lib/sheet-underlay';
 import { overlandFlowArrows, overlandFlowLegendText, interceptFlowArrows, type FlowArrow } from '@/lib/overland-flow';
-import { ridgeAngleOf, roofRunoffArrows, gutterToTankArrows, tankOverflowArrows } from '@/lib/water-story';
+import { ridgeAngleOf, roofRunoffArrows, gutterToTankArrows, tankOverflowArrows, type StoryArrow } from '@/lib/water-story';
 import { BED_DEF_IDS } from '@/lib/design-beds-bridge';
 import {
   bedCropMarkPitchPx,
@@ -7107,6 +7107,7 @@ async function buildReferenceBlueprintMap(
   // the farmer sees their real roof instead, whose real ridge is whatever the photograph shows,
   // and an arrow across it would contradict a visible fact. The gutter and overflow legs join
   // things the farmer actually placed, so they hold on either underlay.
+  let roofArrows: StoryArrow[] = [];
   if (filter === 'water') {
     const storyScale = {
       mPerUnitX: renderFrame.imgW * renderFrame.mPerPx,
@@ -7120,8 +7121,9 @@ async function buildReferenceBlueprintMap(
       .filter((line) => line.kind === 'swale' && line.points.length >= 2)
       .map((line) => line.points);
 
-    const storyArrows = [
-      ...(!renderFrame.satDataUrl ? roofRunoffArrows({ rings: roofRings, scale: storyScale }) : []),
+    // GROUND LEGS ONLY, here. These end at a tank or a swale, and belong UNDER the feature
+    // overlay so an arrow slides beneath the thing it feeds instead of drawing across its face.
+    drawOverlandFlowArrows(ctx, [
       ...gutterToTankArrows({ rings: roofRings, tanks, scale: storyScale }),
       ...tankOverflowArrows({
         tanks,
@@ -7133,12 +7135,23 @@ async function buildReferenceBlueprintMap(
           ? Number.NaN
           : site?.elevation?.aspectDeg ?? Number.NaN,
       }),
-    ];
-    drawOverlandFlowArrows(ctx, storyArrows, W, H);
+    ], W, H);
+    roofArrows = !renderFrame.satDataUrl
+      ? roofRunoffArrows({ rings: roofRings, scale: storyScale })
+      : [];
   }
 
   const featureOverlay = await buildExactLayerOverlay(renderState, renderFrame, renderRefLayers, filter, W, H, 'features');
   if (featureOverlay) ctx.drawImage(await loadImage(featureOverlay), 0, 0, W, H);
+
+  // ROOF RUNOFF GOES ON TOP OF THE ROOF, and this ordering is the whole point.
+  //
+  // drawPaperRoofs runs inside buildExactLayerOverlay's FEATURES phase, and it fills the roof
+  // with opaque sheeting. Drawing these arrows before that composite painted them correctly and
+  // then buried them under the very roof they describe — the geometry was right, six arrows were
+  // produced for the demo crèche's 16x12 m roof, and not one pixel survived to the sheet. Found by
+  // rendering the sheet and LOOKING at it; no unit test on the arrow maths could have seen it.
+  if (roofArrows.length) drawOverlandFlowArrows(ctx, roofArrows, W, H);
 
   const px = (n: number) => n * W;
   const py = (n: number) => n * H;
