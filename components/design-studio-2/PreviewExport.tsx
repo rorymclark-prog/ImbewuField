@@ -30,11 +30,11 @@
 // image is ever in state — the sheet on the easel — and it is released when another is chosen.
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import Link from 'next/link';
 import {
-  ArrowLeft, Check, Image as ImageIcon, Layers, Map as MapIcon, Maximize2, MoreVertical,
+  Check, Image as ImageIcon, Layers, Map as MapIcon, Maximize2, MoreVertical,
   Move, Share2, Sparkles, Sun, Upload, Wind, ZoomIn, ZoomOut, RotateCcw, FileText,
 } from 'lucide-react';
+import BackButton from '@/components/BackButton';
 import { getLastSite } from '@/lib/last-site';
 import { designSiteIdFromLocation } from '@/lib/design-studio';
 import { loadSheetMetas, loadSheetImage, dataUrlBytes, type StoredSheetMeta } from '@/lib/sheet-store';
@@ -181,14 +181,12 @@ export default function PreviewExport() {
         style={{ borderColor: 'var(--border)', background: 'var(--surface)' }}
       >
         <div className="mx-auto flex max-w-[1600px] flex-wrap items-center gap-3">
-          <Link
-            href="/design-studio-2"
-            aria-label="Back to the studio"
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border transition-colors hover:bg-[var(--surface-2)]"
-            style={{ borderColor: 'var(--border)', color: 'var(--text-2)' }}
-          >
-            <ArrowLeft size={17} />
-          </Link>
+          {/* The SHARED back control, not one of our own. Rendering it registers this page as
+              having an in-flow way back (BackButton -> useRegisterBackControl), which is what
+              makes the global floating fallback stand down. Skipping that registration is a named,
+              already-fixed bug class in this app — a fixed pill dropped on top of a Design Studio
+              screen's own header. It landed on this page's title the first time it was built. */}
+          <BackButton fallback="/design-studio-2" />
           <div className="min-w-0 flex-1">
             <h1
               className="text-[20px] font-bold leading-tight md:text-[24px]"
@@ -201,8 +199,10 @@ export default function PreviewExport() {
             </p>
           </div>
 
-          {/* Context chips. Below lg they wrap under the title rather than squeezing it. */}
-          <div className="order-last flex w-full flex-wrap gap-2 lg:order-none lg:w-auto">
+          {/* Context chips take their own row below lg. On a phone the header is Back + title,
+              then chips, then the action buttons — sharing one row squeezed the title into a
+              five-word-wide column with the subtitle broken across six lines. */}
+          <div className="order-2 flex w-full flex-wrap gap-2 lg:order-none lg:w-auto">
             {[
               { k: 'Plan set', v: 'Design plan set' },
               { k: 'Sheet', v: `${SHEET_META[sheet].no} — ${SHEET_META[sheet].label}` },
@@ -219,7 +219,7 @@ export default function PreviewExport() {
             ))}
           </div>
 
-          <div className="flex shrink-0 items-center gap-2">
+          <div className="order-3 flex w-full shrink-0 items-center justify-end gap-2 lg:order-none lg:w-auto">
             <button
               type="button"
               aria-label="Share a link to this sheet"

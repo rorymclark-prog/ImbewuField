@@ -160,3 +160,19 @@ test('the style cards do not pass a swatch off as a render', () => {
   assert.match(block, /background: s\.swatch/);
   for (const s of STYLES) assert.ok(s.swatch.startsWith('linear-gradient('), `${s.id} has no swatch`);
 });
+
+test('the page registers its own back control, so the floating one stands down', () => {
+  // A REAL BUG, CAUGHT BY LOOKING AT IT. The first build rolled its own back link, which does not
+  // register — so BackControlProvider's fixed fallback pill dropped itself on top of the page
+  // title and "Preview & Export" rendered as "review & Export". That is a named, already-fixed
+  // overlap class in this app (see IdentityBar's note about the pill landing on the map's left
+  // tool panel), and rendering the shared BackButton is what avoids it.
+  const page = shipped(PAGE);
+  assert.match(page, /<BackButton fallback="\/design-studio-2" \/>/, 'the shared back control is gone again');
+  assert.match(page, /import BackButton from '@\/components\/BackButton'/);
+  // The shared one is the only one that calls useRegisterBackControl.
+  const back = source('../components/BackButton.tsx');
+  assert.match(back, /useRegisterBackControl\(\)/, 'BackButton stopped registering — the pill will return everywhere');
+  // And no hand-rolled replacement crept back alongside it.
+  assert.doesNotMatch(page, /aria-label="Back/, 'a second back control would put two on one screen');
+});
