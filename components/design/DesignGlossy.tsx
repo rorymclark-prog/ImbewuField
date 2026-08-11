@@ -43,7 +43,7 @@ import {
 import { structureRegisterText } from '@/lib/structure-register';
 import { buildFinishedSheetPolishPrompt, buildLockedIllustrationPrompt, buildPhasingRestylePrompt, buildSatelliteOverlayPrompt, buildSectorRestylePrompt, buildSectorSheetPolishPrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, SHEET_NO, type StylePreset } from '@/lib/producer-prompt';
 import { zoneBadgePositions } from '@/lib/canvas-labels';
-import { enqueueRenderJob, subscribeRenderJob, fetchRenderOutput, qualityCacheSuffix, recordResumeAttempt, clearResumeAttempts, resumeAttemptsExhausted, type RenderQuality } from '@/lib/render-jobs';
+import { enqueueRenderJob, mapSerially, subscribeRenderJob, fetchRenderOutput, qualityCacheSuffix, recordResumeAttempt, clearResumeAttempts, resumeAttemptsExhausted, type RenderQuality } from '@/lib/render-jobs';
 import type { RenderEngine } from '@/lib/render-job-contract';
 import { authoritativeHouseFootprints } from '@/lib/house-footprints';
 // Extracted (behaviour-preserving) — see lib/glossy-filters.ts and lib/producer-labels.ts.
@@ -109,7 +109,7 @@ import {
 } from '@/lib/sheet-legend-layout';
 import { PLAIN_HARD_SURFACE_PAINT, SHEET_BASE_MUTE_STYLE, SHEET_STRUCTURE_MUTE_STYLE, type SheetBaseMute } from '@/lib/sheet-base-mute';
 import { frameForUnderlay, hasFarmerPhoto, paintPlainPaperGround, sheetUnderlayOptions, underlayCacheSuffix, type SheetUnderlay } from '@/lib/sheet-underlay';
-import { drainCanvasToDataUrl } from '@/lib/release-canvas';
+import { drainCanvasToDataUrl, releaseCanvas, releaseImageSource } from '@/lib/release-canvas';
 import { overlandFlowArrows, overlandFlowLegendText, interceptFlowArrows, type FlowArrow } from '@/lib/overland-flow';
 import { ridgeAngleOf, roofRunoffArrows, gutterToTankArrows, tankOverflowArrows, type StoryArrow } from '@/lib/water-story';
 import { BED_DEF_IDS } from '@/lib/design-beds-bridge';
@@ -1182,11 +1182,18 @@ export async function buildComposite(
   canvas.width = imgW;
   canvas.height = imgH;
   const ctx = canvas.getContext('2d');
-  if (!ctx) throw new Error('Canvas unavailable');
+  if (!ctx) {
+    releaseCanvas(canvas);
+    throw new Error('Canvas unavailable');
+  }
 
   if (frame.satDataUrl) {
     const img = await loadImage(frame.satDataUrl);
-    ctx.drawImage(img, 0, 0, imgW, imgH);
+    try {
+      ctx.drawImage(img, 0, 0, imgW, imgH);
+    } finally {
+      releaseImageSource(img);
+    }
   } else {
     // WHITE, because this canvas is the picture the AI is handed and the pixels it is restored
     // from. It was a flat khaki, which is why every plain-paper paid render came back as a tan
@@ -1215,7 +1222,10 @@ async function buildProtectMask(
   canvas.width = imgW;
   canvas.height = imgH;
   const ctx = canvas.getContext('2d');
-  if (!ctx) throw new Error('Canvas unavailable');
+  if (!ctx) {
+    releaseCanvas(canvas);
+    throw new Error('Canvas unavailable');
+  }
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
 
@@ -1839,30 +1849,40 @@ export function buildDesignBrief(
  *  One wrapper so all four call sites share the boundary; the mask is capped with the same
  *  helper so it stays pixel-aligned with the picture it protects. */
 async function enqueueRenderJobCapped(opts: Parameters<typeof enqueueRenderJob>[0]): ReturnType<typeof enqueueRenderJob> {
-  const sheets = await Promise.all(opts.sheets.map(async (sheet) => ({
+  // iOS counts decoded images and canvas backing stores against one strict page budget. At High,
+  // capping four sheets together briefly held four 2880px decodes beside four 1920px canvases.
+  // The pixels sent to the worker are unchanged; only the preparation schedule is serial now.
+  const sheets = await mapSerially(opts.sheets, async (sheet) => ({
     ...sheet,
     compositeDataUrl: await capForAiInput(sheet.compositeDataUrl),
     ...(sheet.protectMaskDataUrl ? { protectMaskDataUrl: await capForAiInput(sheet.protectMaskDataUrl) } : {}),
-  })));
+  }));
   return enqueueRenderJob({ ...opts, sheets });
 }
 
 async function capForAiInput(dataUrl: string): Promise<string> {
   try {
     const img = await loadImage(dataUrl);
-    if (img.naturalWidth <= AI_INPUT_WIDTH) return dataUrl;
-    const scale = AI_INPUT_WIDTH / img.naturalWidth;
-    const canvas = document.createElement('canvas');
-    canvas.width = AI_INPUT_WIDTH;
-    canvas.height = Math.max(1, Math.round(img.naturalHeight * scale));
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return dataUrl;
-    ctx.imageSmoothingEnabled = true;
-    ctx.imageSmoothingQuality = 'high';
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-    // PNG, matching what buildAccurateComposite produces — the render keys on thin geometry
-    // lines and JPEG ringing softens them (that function's own note).
-    return drainCanvasToDataUrl(canvas, 'image/png');
+    try {
+      if (img.naturalWidth <= AI_INPUT_WIDTH) return dataUrl;
+      const scale = AI_INPUT_WIDTH / img.naturalWidth;
+      const canvas = document.createElement('canvas');
+      canvas.width = AI_INPUT_WIDTH;
+      canvas.height = Math.max(1, Math.round(img.naturalHeight * scale));
+      const ctx = canvas.getContext('2d');
+      if (!ctx) {
+        releaseCanvas(canvas);
+        return dataUrl;
+      }
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
+      ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      // PNG, matching what buildAccurateComposite produces — the render keys on thin geometry
+      // lines and JPEG ringing softens them (that function's own note).
+      return drainCanvasToDataUrl(canvas, 'image/png');
+    } finally {
+      releaseImageSource(img);
+    }
   } catch {
     return dataUrl; // an uncapped upload is a cost bug, not a correctness bug — never block a render on it
   }
@@ -2021,7 +2041,10 @@ function buildZoneOverlay(
   canvas.width = W;
   canvas.height = H;
   const ctx = canvas.getContext('2d');
-  if (!ctx) return undefined;
+  if (!ctx) {
+    releaseCanvas(canvas);
+    return undefined;
+  }
   // Region fills + bold outline (white halo so it reads on busy illustration). Each zone is cut
   // back by any lower zone + the house (zoneFillPolys) so a Zone-1 ring around the house reads as
   // a donut instead of painting over the roof.
@@ -2785,7 +2808,10 @@ function buildWaterOverlay(
   canvas.width = W;
   canvas.height = H;
   const ctx = canvas.getContext('2d');
-  if (!ctx) return undefined;
+  if (!ctx) {
+    releaseCanvas(canvas);
+    return undefined;
+  }
   drawWaterInfrastructure(ctx, state, frame, refLayers, W, H, includeToolGlyphs, includeLeaderLabels);
   return drainCanvasToDataUrl(canvas, 'image/png');
 }
@@ -2822,7 +2848,11 @@ async function buildHouseOverlay(
   canvas.width = W;
   canvas.height = H;
   const ctx = canvas.getContext('2d');
-  if (!ctx) return undefined;
+  if (!ctx) {
+    releaseCanvas(canvas);
+    releaseImageSource(img);
+    return undefined;
+  }
   ctx.save();
   ctx.beginPath();
   for (const footprint of footprints) {
@@ -2835,7 +2865,11 @@ async function buildHouseOverlay(
   if (treatment === 'precision_atlas') {
     ctx.filter = 'saturate(0.48) contrast(1.08) brightness(1.05)';
   }
-  ctx.drawImage(img, 0, 0, W, H);
+  try {
+    ctx.drawImage(img, 0, 0, W, H);
+  } finally {
+    releaseImageSource(img);
+  }
   ctx.filter = 'none';
   if (treatment === 'precision_atlas') {
     ctx.fillStyle = 'rgba(42,55,53,0.16)';
@@ -2868,7 +2902,10 @@ async function buildDrivewayOverlay(
   canvas.width = W;
   canvas.height = H;
   const ctx = canvas.getContext('2d');
-  if (!ctx) return undefined;
+  if (!ctx) {
+    releaseCanvas(canvas);
+    return undefined;
+  }
   ctx.lineCap = 'round';
   ctx.lineJoin = 'round';
   const precision = treatment === 'precision_atlas';
@@ -2884,7 +2921,11 @@ async function buildDrivewayOverlay(
         ? 'saturate(0.16) contrast(0.78) brightness(0.76)'
         : 'saturate(0.32) contrast(0.82) brightness(0.98)';
       ctx.globalAlpha = precision ? 0.76 : 1;
-      ctx.drawImage(img, 0, 0, W, H);
+      try {
+        ctx.drawImage(img, 0, 0, W, H);
+      } finally {
+        releaseImageSource(img);
+      }
       ctx.globalAlpha = 1;
       ctx.filter = 'none';
       ctx.fillStyle = precision ? 'rgba(31,38,33,0.28)' : 'rgba(122,122,112,0.12)';
@@ -2948,9 +2989,22 @@ async function stackOverlayImages(bottom: string | undefined, top: string | unde
   canvas.width = W;
   canvas.height = H;
   const ctx = canvas.getContext('2d');
-  if (!ctx) return bottom;
-  ctx.drawImage(await loadImage(bottom), 0, 0, W, H);
-  ctx.drawImage(await loadImage(top), 0, 0, W, H);
+  if (!ctx) {
+    releaseCanvas(canvas);
+    return bottom;
+  }
+  const bottomImage = await loadImage(bottom);
+  try {
+    ctx.drawImage(bottomImage, 0, 0, W, H);
+  } finally {
+    releaseImageSource(bottomImage);
+  }
+  const topImage = await loadImage(top);
+  try {
+    ctx.drawImage(topImage, 0, 0, W, H);
+  } finally {
+    releaseImageSource(topImage);
+  }
   return drainCanvasToDataUrl(canvas, 'image/png');
 }
 
@@ -3101,7 +3155,11 @@ async function drawBlueprintBase(
     // Guarded: Canvas filter support is not universal. Without it the paper veil below still
     // lightens the photo, just with the greens left in — degraded, not broken.
     if ('filter' in ctx) ctx.filter = style.filter;
-    ctx.drawImage(img, 0, 0, W, H);
+    try {
+      ctx.drawImage(img, 0, 0, W, H);
+    } finally {
+      releaseImageSource(img);
+    }
     ctx.restore();
     ctx.fillStyle = style.veil;
     ctx.fillRect(0, 0, W, H);
@@ -3145,7 +3203,11 @@ async function drawAnalysisBase(
     // invert like that. Guarded because Canvas filter support is not universal; without it the
     // paper wash below still lightens, just with the greens left in.
     if ('filter' in ctx) ctx.filter = 'saturate(0.42) brightness(0.96) contrast(0.9)';
-    ctx.drawImage(img, 0, 0, W, H);
+    try {
+      ctx.drawImage(img, 0, 0, W, H);
+    } finally {
+      releaseImageSource(img);
+    }
     ctx.restore();
     drawPaperWash(ctx, W, H);
     return;
@@ -6499,14 +6561,22 @@ function drawExactFeaturesWithPresentation(
   layer.height = H;
   const layerCtx = layer.getContext('2d');
   if (!layerCtx) {
+    releaseCanvas(layer);
     draw(ctx);
     return;
   }
-  draw(layerCtx);
-  ctx.save();
-  ctx.globalAlpha = 1;
-  ctx.drawImage(layer, 0, 0);
-  ctx.restore();
+  try {
+    draw(layerCtx);
+    ctx.save();
+    try {
+      ctx.globalAlpha = 1;
+      ctx.drawImage(layer, 0, 0);
+    } finally {
+      ctx.restore();
+    }
+  } finally {
+    releaseCanvas(layer);
+  }
 }
 
 /**
@@ -6864,8 +6934,11 @@ export async function buildBlueprintBaseMap(
     legendRows.push({ swatch: BOUNDARY_LINE_GREEN, text: 'Property boundary', lineKind: 'fence' });
   }
 
+  // The compositor decodes this image into its own full-size surface. Release the map canvas
+  // before that allocation: on the failing High-quality phone this canvas alone is ~21 MiB.
+  const mapDataUrl = drainCanvasToDataUrl(canvas, 'image/png');
   return composeStyleSheet(
-    canvas.toDataURL('image/png'),
+    mapDataUrl,
     renderState,
     renderFrame,
     renderRefLayers,
@@ -6964,27 +7037,33 @@ async function boundaryPresentationContext(
   let satDataUrl = frame.satDataUrl;
   if (frame.satDataUrl) {
     const source = await loadImage(frame.satDataUrl);
-    const sourceWidth = source.naturalWidth || source.width;
-    const sourceHeight = source.naturalHeight || source.height;
-    const sourcePixelScale = Math.min(sourceWidth / frame.imgW, sourceHeight / frame.imgH);
-    const cropCanvas = document.createElement('canvas');
-    cropCanvas.width = Math.max(1, Math.round(imgW * sourcePixelScale));
-    cropCanvas.height = Math.max(1, Math.round(imgH * sourcePixelScale));
-    const cropCtx = cropCanvas.getContext('2d');
-    if (cropCtx) {
-      useHighQualityScaling(cropCtx);
-      cropCtx.drawImage(
-        source,
-        cropX * sourceWidth,
-        cropY * sourceHeight,
-        cropWidth * sourceWidth,
-        cropHeight * sourceHeight,
-        0,
-        0,
-        cropCanvas.width,
-        cropCanvas.height,
-      );
-      satDataUrl = cropCanvas.toDataURL('image/png');
+    try {
+      const sourceWidth = source.naturalWidth || source.width;
+      const sourceHeight = source.naturalHeight || source.height;
+      const sourcePixelScale = Math.min(sourceWidth / frame.imgW, sourceHeight / frame.imgH);
+      const cropCanvas = document.createElement('canvas');
+      cropCanvas.width = Math.max(1, Math.round(imgW * sourcePixelScale));
+      cropCanvas.height = Math.max(1, Math.round(imgH * sourcePixelScale));
+      const cropCtx = cropCanvas.getContext('2d');
+      if (cropCtx) {
+        useHighQualityScaling(cropCtx);
+        cropCtx.drawImage(
+          source,
+          cropX * sourceWidth,
+          cropY * sourceHeight,
+          cropWidth * sourceWidth,
+          cropHeight * sourceHeight,
+          0,
+          0,
+          cropCanvas.width,
+          cropCanvas.height,
+        );
+        satDataUrl = drainCanvasToDataUrl(cropCanvas, 'image/png');
+      } else {
+        releaseCanvas(cropCanvas);
+      }
+    } finally {
+      releaseImageSource(source);
     }
   }
 
@@ -7066,7 +7145,14 @@ async function buildReferenceBlueprintMap(
 
   await drawBlueprintBase(ctx, renderFrame, W, H);
   const groundOverlay = await buildExactLayerOverlay(renderState, renderFrame, renderRefLayers, filter, W, H, 'ground');
-  if (groundOverlay) ctx.drawImage(await loadImage(groundOverlay), 0, 0, W, H);
+  if (groundOverlay) {
+    const groundImage = await loadImage(groundOverlay);
+    try {
+      ctx.drawImage(groundImage, 0, 0, W, H);
+    } finally {
+      releaseImageSource(groundImage);
+    }
+  }
 
   // Restore the traced source roof and access after the ground treatment. Factual map features are
   // stacked next, so a pipe, tank or other saved item on the roof remains visible without giving the
@@ -7091,15 +7177,20 @@ async function buildReferenceBlueprintMap(
     // SHEET_STRUCTURE_MUTE_STYLE. It is composited offscreen because the veil must land on the
     // building's own pixels and nothing else: painting it straight onto `ctx` would wash the ground,
     // the boundary and every mark already drawn underneath.
+    const structureImage = await loadImage(sourceStructures);
+    let mutedStructure: HTMLCanvasElement;
+    try {
+      mutedStructure = await muteStructureCutout(structureImage, W, H);
+    } finally {
+      releaseImageSource(structureImage);
+    }
     ctx.save();
-    ctx.drawImage(
-      await muteStructureCutout(await loadImage(sourceStructures), W, H),
-      0,
-      0,
-      W,
-      H,
-    );
-    ctx.restore();
+    try {
+      ctx.drawImage(mutedStructure, 0, 0, W, H);
+    } finally {
+      ctx.restore();
+      releaseCanvas(mutedStructure);
+    }
   } else {
     const px = (n: number) => n * W;
     const py = (n: number) => n * H;
@@ -7220,7 +7311,14 @@ async function buildReferenceBlueprintMap(
   }
 
   const featureOverlay = await buildExactLayerOverlay(renderState, renderFrame, renderRefLayers, filter, W, H, 'features');
-  if (featureOverlay) ctx.drawImage(await loadImage(featureOverlay), 0, 0, W, H);
+  if (featureOverlay) {
+    const featureImage = await loadImage(featureOverlay);
+    try {
+      ctx.drawImage(featureImage, 0, 0, W, H);
+    } finally {
+      releaseImageSource(featureImage);
+    }
+  }
 
   // ROOF RUNOFF GOES ON TOP OF THE ROOF, and this ordering is the whole point.
   //
@@ -7286,8 +7384,11 @@ async function buildReferenceBlueprintMap(
     })).size
     : 0;
 
+  // The compositor decodes this image into its own full-size surface. Release the map canvas
+  // before that allocation: on the failing High-quality phone this canvas alone is ~21 MiB.
+  const mapDataUrl = drainCanvasToDataUrl(canvas, 'image/png');
   return composeStyleSheet(
-    canvas.toDataURL('image/png'),
+    mapDataUrl,
     renderState,
     renderFrame,
     renderRefLayers,
@@ -8951,8 +9052,9 @@ async function composeSectorSheet(
     sectorIcon: row.sectorIcon,
   }));
 
+  const mapDataUrl = drainCanvasToDataUrl(canvas, 'image/png');
   return composeStyleSheet(
-    canvas.toDataURL('image/png'),
+    mapDataUrl,
     renderState,
     renderFrame,
     renderRefLayers,
@@ -10105,12 +10207,17 @@ function drawStyleLegendSymbol(
  */
 function padToPaperSheet(sheet: HTMLCanvasElement): string {
   const paper = paperSheetCanvas(sheet.width, sheet.height);
-  if (paper.width === sheet.width && paper.height === sheet.height) return sheet.toDataURL('image/png');
+  if (paper.width === sheet.width && paper.height === sheet.height) {
+    return drainCanvasToDataUrl(sheet, 'image/png');
+  }
   const canvas = document.createElement('canvas');
   canvas.width = paper.width;
   canvas.height = paper.height;
   const ctx = canvas.getContext('2d');
-  if (!ctx) return sheet.toDataURL('image/png');
+  if (!ctx) {
+    releaseCanvas(canvas);
+    return drainCanvasToDataUrl(sheet, 'image/png');
+  }
   // The legend panel's own cream, so the margin reads as the sheet's paper rather than as a border
   // someone forgot to fill.
   ctx.fillStyle = '#FBF6EC';
@@ -10120,6 +10227,9 @@ function padToPaperSheet(sheet: HTMLCanvasElement): string {
     Math.round((paper.width - sheet.width) / 2),
     Math.round((paper.height - sheet.height) / 2),
   );
+  // drawImage is synchronous: the unpadded sheet is finished once copied. Keeping both backing
+  // stores until Safari's next GC doubled the largest exact-sheet allocation on every render.
+  releaseCanvas(sheet);
   return drainCanvasToDataUrl(canvas, 'image/png');
 }
 
@@ -10166,11 +10276,19 @@ async function composeStyleSheet(
   canvas.width = outW;
   canvas.height = H;
   const ctx = canvas.getContext('2d');
-  if (!ctx) return mapDataUrl;
+  if (!ctx) {
+    releaseCanvas(canvas);
+    releaseImageSource(map);
+    return mapDataUrl;
+  }
   // Paper under the bands first: the map is inset, and whatever is not map must read as sheet.
   ctx.fillStyle = '#FBF6EC';
   ctx.fillRect(0, 0, W, H);
-  ctx.drawImage(map, gutter, 0);
+  try {
+    ctx.drawImage(map, gutter, 0);
+  } finally {
+    releaseImageSource(map);
+  }
   if (options.gutterLayout) drawLabelGutter(ctx, options.gutterLayout, gutter, mapW, H);
 
   // ── Legend panel ──
@@ -11984,14 +12102,22 @@ export default function DesignGlossy({
       canvas.width = w;
       canvas.height = h;
       const ctx = canvas.getContext('2d');
-      if (!ctx) throw new Error('Canvas unavailable');
+      if (!ctx) {
+        releaseCanvas(canvas);
+        releaseImageSource(img);
+        throw new Error('Canvas unavailable');
+      }
       if (format === 'jpeg') {
         ctx.fillStyle = '#FBF6EC';
         ctx.fillRect(0, 0, w, h);
       }
       ctx.imageSmoothingQuality = 'high';
-      ctx.drawImage(img, 0, 0, w, h);
-      return { dataUrl: canvas.toDataURL(imageMimeType(format), profile.jpegQuality), w, h };
+      try {
+        ctx.drawImage(img, 0, 0, w, h);
+      } finally {
+        releaseImageSource(img);
+      }
+      return { dataUrl: drainCanvasToDataUrl(canvas, imageMimeType(format), profile.jpegQuality), w, h };
     },
     [],
   );
@@ -13496,8 +13622,9 @@ export default function DesignGlossy({
       }
       const styleLabel = PRODUCER_STYLES.find((s) => s.key === styleKey)?.label ?? 'AI Hybrid';
 
+      const mapDataUrl = drainCanvasToDataUrl(canvas, 'image/png');
       return composeStyleSheet(
-        canvas.toDataURL('image/png'),
+        mapDataUrl,
         renderState,
         renderFrame,
         renderRefLayers,
