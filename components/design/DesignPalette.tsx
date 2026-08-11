@@ -1720,9 +1720,17 @@ export default function DesignPalette({
             // staple chip, line chips, climate filter) is kept for free.
             style={cardsUi ? {
               position: 'relative',
-              minHeight: 128,
-              width: desktopAside ? 'calc(50% - 3px)' : 104,
-              padding: '8px 6px 7px',
+              // THREE UP, NOT TWO. Rory, on the card palette: "i like this new look a lot is it
+              // worth trimming the width of the pickers tho? theres alot of space wasted."
+              // He is right, and the waste was horizontal: a 64 px drawing and a two-word label
+              // sat in a half-width card, so a catalogue of dozens of elements showed six at a
+              // time and everything else was scrolling. A third of the width still gives the art
+              // more room than the 30 px chip it replaced — the point of the card view — while
+              // showing half again as many elements per screen. The height comes down with it,
+              // because a shorter card wastes less of the vertical too.
+              minHeight: 112,
+              width: desktopAside ? 'calc(33.333% - 4px)' : 96,
+              padding: '7px 5px 6px',
               borderRadius: 12,
               ...selectionRing(active),
               background: active ? GREEN : PAPER,
@@ -1765,10 +1773,10 @@ export default function DesignPalette({
                 give it without growing the strip. */}
             {def.art ? (
               <img src={def.art} alt="" aria-hidden style={cardsUi
-                ? { width: 64, height: 64, objectFit: 'contain' }
+                ? { width: 56, height: 56, objectFit: 'contain' }
                 : { width: guided ? 30 : 24, height: guided ? 30 : 24, objectFit: 'contain' }} />
             ) : (
-              <span style={{ fontSize: cardsUi ? 34 : guided ? 16 : 13, lineHeight: 1 }}>{def.icon}</span>
+              <span style={{ fontSize: cardsUi ? 30 : guided ? 16 : 13, lineHeight: 1 }}>{def.icon}</span>
             )}
             <span style={{ display: 'flex', flexDirection: 'column', alignItems: cardsUi || desktopAside ? 'center' : 'flex-start', minWidth: 0 }}>
               {/* Cards get room for two lines, so 'Indigenous Shade Tree' stops truncating —
