@@ -172,3 +172,119 @@ test('an underscore inside a word is not emphasis', () => {
   assert.equal(stripInlineMarkdown('see report_site_facts.ts'), 'see report_site_facts.ts');
   assert.equal(stripInlineMarkdown('rain_barrel and jojo_5000'), 'rain_barrel and jojo_5000');
 });
+
+// ── The design maps ──────────────────────────────────────────────────────────
+//
+// Rory: "Our report still doesn't have the images the design maps we create". It could not — this
+// module had no image capability at all: the exported file contained zero image objects.
+
+test('the report carries the design sheets as plates, one image in memory at a time', () => {
+  const src = readFileSync(new URL('../lib/report-pdf.ts', import.meta.url), 'utf8');
+  // The sheets arrive IDENTIFIED, not supplied. An array of data URLs would put every saved sheet
+  // (1–3 MB each, dozens of them) in memory at once — the exact shape that has been killing the
+  // page on iOS.
+  assert.match(src, /sheets\?: ReportPdfSheet\[\]/, 'sheets are being passed as images again');
+  assert.match(src, /loadSheetImage\?: \(id: string\) => Promise<string \| null>/,
+    'the per-sheet loader is gone, so the caller must hold every image');
+  const draw = src.slice(src.indexOf('const plates = meta.sheets'));
+  assert.ok(draw.indexOf('await meta.loadSheetImage(sheet.id)') > 0, 'plates no longer fetch per sheet');
+  // The full-resolution original must be dropped before the next iteration.
+  assert.match(draw, /source = null;/, 'the full-resolution sheet is held across the draw');
+  // And the scratch canvas is drained, matching the discipline the sheet pipeline itself follows.
+  assert.match(src, /drainCanvasToDataUrl\(canvas, 'image\/jpeg'/,
+    'the plate canvas is no longer released the moment its bytes are out');
+});
+
+test('a plate that cannot be drawn costs its page, never the report', () => {
+  const src = readFileSync(new URL('../lib/report-pdf.ts', import.meta.url), 'utf8');
+  const draw = src.slice(src.indexOf('const plates = meta.sheets'));
+  assert.match(draw, /if \(!source\) continue;/, 'a missing sheet now aborts the whole export');
+  assert.match(draw, /if \(!plate\) continue;/, 'an unreadable sheet now aborts the whole export');
+  // sheetPlate itself swallows rather than throws, for the same reason.
+  const plate = src.slice(src.indexOf('async function sheetPlate'));
+  assert.match(plate.slice(0, plate.indexOf('\n}\n')), /catch \{\s*return null;/,
+    'sheetPlate throws again — one bad image would cost the farmer the document');
+});
+
+test('plates are downscaled for print rather than embedded at sheet resolution', () => {
+  const src = readFileSync(new URL('../lib/report-pdf.ts', import.meta.url), 'utf8');
+  const m = /const SHEET_PLATE_MAX_PX = (\d+);/.exec(src);
+  assert.ok(m, 'the plate size cap is gone — a 2730 px master would be embedded whole');
+  const cap = Number(m![1]);
+  // Big enough to beat A4 at 150 dpi (~1240 px across the column), small enough that a farmer can
+  // still send the file over WhatsApp.
+  assert.ok(cap >= 1240 && cap <= 2000, `plate cap ${cap} is outside the useful print range`);
+  // Never enlarged: a plan printed above its own resolution is a blurry plan.
+  assert.match(src, /Math\.min\(1, SHEET_PLATE_MAX_PX/, 'plates can now be scaled UP');
+  assert.match(src, /Math\.min\(availW \/ plate\.width, availH \/ plate\.height\)/,
+    'the plate no longer fits itself to the page');
+});
+
+test('sheetPlate downscales, paints paper white, and releases its canvas', async () => {
+  // The behaviour, not the shape. sheetPlate runs on the phone that has been dying of canvas
+  // memory, so what matters is that a 2730 px master comes back small and the scratch canvas is
+  // zeroed before the next plate starts.
+  const calls: string[] = [];
+  let released = false;
+  const fakeCanvas = {
+    width: 0,
+    height: 0,
+    getContext: () => ({
+      fillStyle: '',
+      imageSmoothingQuality: '',
+      fillRect: (x: number, y: number, w: number, h: number) => calls.push(`fillRect:${w}x${h}`),
+      drawImage: (_img: unknown, _x: number, _y: number, w: number, h: number) => calls.push(`draw:${w}x${h}`),
+    }),
+    toDataURL: (type?: string, q?: number) => {
+      calls.push(`toDataURL:${type}:${q}:at ${fakeCanvas.width}x${fakeCanvas.height}`);
+      return 'data:image/jpeg;base64,PLATE';
+    },
+  };
+  class FakeImage {
+    naturalWidth = 2730; naturalHeight = 1930;
+    set src(_v: string) { setTimeout(() => this.onload?.(), 0); }
+    onload: (() => void) | null = null;
+    onerror: (() => void) | null = null;
+  }
+  const g = globalThis as unknown as Record<string, unknown>;
+  const prevDoc = g.document; const prevImg = g.Image;
+  g.document = { createElement: () => fakeCanvas };
+  g.Image = FakeImage;
+  try {
+    const { sheetPlate } = await import('../lib/report-pdf.ts');
+    const plate = await sheetPlate('data:image/png;base64,SOURCE');
+    assert.ok(plate, 'a readable sheet produced no plate');
+    // 2730x1930 capped to 1600 on the long edge, aspect kept.
+    assert.equal(plate!.width, 1600);
+    assert.equal(plate!.height, Math.round(1930 * (1600 / 2730)));
+    assert.equal(plate!.dataUrl, 'data:image/jpeg;base64,PLATE');
+    // White paper is painted BEFORE the sheet, so transparent margins print as paper not black.
+    assert.ok(calls.indexOf('fillRect:1600x1131') < calls.indexOf('draw:1600x1131'),
+      'the white ground is painted after the image, or not at all');
+    // Read happened at full size, and the buffer was released after.
+    assert.match(calls.find((c) => c.startsWith('toDataURL')) ?? '', /at 1600x1131/);
+    released = fakeCanvas.width === 0 && fakeCanvas.height === 0;
+    assert.ok(released, 'the plate canvas keeps its backing store — this is the iOS killer');
+  } finally {
+    g.document = prevDoc; g.Image = prevImg;
+  }
+});
+
+test('sheetPlate returns null instead of throwing when an image will not load', async () => {
+  class BrokenImage {
+    naturalWidth = 0; naturalHeight = 0;
+    set src(_v: string) { setTimeout(() => this.onerror?.(), 0); }
+    onload: (() => void) | null = null;
+    onerror: (() => void) | null = null;
+  }
+  const g = globalThis as unknown as Record<string, unknown>;
+  const prevDoc = g.document; const prevImg = g.Image;
+  g.document = { createElement: () => ({ getContext: () => null, toDataURL: () => '' }) };
+  g.Image = BrokenImage;
+  try {
+    const { sheetPlate } = await import('../lib/report-pdf.ts');
+    assert.equal(await sheetPlate('data:image/png;base64,BROKEN'), null);
+  } finally {
+    g.document = prevDoc; g.Image = prevImg;
+  }
+});

@@ -8,6 +8,8 @@ import { isSampleMode } from '@/lib/sample-mode';
 import { PLACE_LABELS, placeColor, type SavedPlace } from '@/lib/saved-places';
 import { Loader2, Check, Circle, ChevronRight, Share2, MapPin, SlidersHorizontal, FileText } from 'lucide-react';
 import { buildReportPdf, deliverPdf, reportPdfFilename, stripInlineMarkdown } from '@/lib/report-pdf';
+import { resolveSiteEcology } from '@/lib/site-ecology';
+import { loadSheetMetas, loadSheetImage } from '@/lib/sheet-store';
 import { loadSurvey } from '@/lib/site-survey';
 import { getSiteEvidence } from '@/lib/site-evidence';
 import { designSiteIdFromLocation } from '@/lib/design-studio';
@@ -303,7 +305,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     if (!report) return;
     const { saved, reason } = saveReport({
       id: activeSaved?.id ?? reportId(),
-      name: `${d.biome.name} · ${new Date().toLocaleDateString()}`,
+      name: `${ecology.placeName} · ${new Date().toLocaleDateString()}`,
       savedAt: new Date().toISOString(),
       lang: language,
       report,
@@ -342,7 +344,19 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     collapsePanelOnNarrow();
   }, [collapsePanelOnNarrow]);
 
-  const bColor = BIOME_COLORS[d.biome.code] ?? '#6BA84F';
+  // ONE ANSWER TO "WHAT GROWS HERE" — see lib/site-ecology.ts. The coarse biome polygon and
+
+  // the SANBI vegetation map disagree near boundaries, and this screen used to spend the coarse
+
+  // one on the title, the saved name, the share text and the PDF filename while the report body
+
+  // itself named the precise unit — so a Zululand savanna site downloaded as "Indian Ocean
+
+  // Coastal Belt". The precise map wins here too.
+
+  const ecology = resolveSiteEcology(d.biome, d.vegetation);
+
+  const bColor = BIOME_COLORS[ecology.biome.code] ?? '#6BA84F';
 
   const generate = useCallback(async () => {
     abortRef.current?.abort();
@@ -374,7 +388,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         ? buildPhasePlan(
           canvas,
           resolveBaseLayers(canvas, { boundary: [], house: [], driveway: [] }),
-          { biome: d.biome.name, rainfallMm: d.rainfall.annual },
+          { biome: ecology.placeName, rainfallMm: d.rainfall.annual },
         )
         : null;
 
@@ -437,16 +451,25 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     if (!report) return;
     setPdfState('working');
     try {
+      // THE DESIGN MAPS GO IN THE REPORT. Rory: "Our report still doesn't have the images the
+      // design maps we create". Metas only here — ids and labels, no pixels. The PDF pulls each
+      // sheet's image immediately before it draws that plate and never holds two at once, because
+      // a farmer can have dozens of sheets at 1–3 MB each and this export runs on the same phone
+      // that has been dying of exactly that (lib/sheet-store.ts's memory contract).
+      const sheetMetas = await loadSheetMetas(designSiteIdFromLocation(d)).catch(() => []);
       const blob = await buildReportPdf(report, {
-        biome: d.biome.name,
+        biome: ecology.placeName,
         lat: d.lat,
         lon: d.lon,
         rainfallMm: d.rainfall.annual,
         soilPh: d.soil.ph,
         meanTempC: d.climate.meanTemp,
         dateLabel: new Date().toLocaleDateString('en-ZA', { year: 'numeric', month: 'long', day: 'numeric' }),
+        // Oldest first, so the plates read in the order the farmer built them.
+        sheets: sheetMetas.map((row) => ({ id: row.id, label: row.label })),
+        loadSheetImage,
       });
-      await deliverPdf(blob, reportPdfFilename(d.biome.name));
+      await deliverPdf(blob, reportPdfFilename(ecology.placeName));
       setPdfState('done');
       setTimeout(() => setPdfState('idle'), 2500);
     } catch (err) {
@@ -460,7 +483,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   async function shareReport() {
     if (!d || !report) return;
     const firstPara = report.split('\n').find((l) => l.trim() && !l.startsWith('#'))?.slice(0, 200) ?? '';
-    const text = `ImbewuField Site Analysis\n${d.biome.name} | ${Math.abs(d.lat).toFixed(3)}°S ${d.lon.toFixed(3)}°E\nRainfall: ${d.rainfall.annual}mm/yr | Soil pH: ${d.soil.ph} | Mean temp: ${d.climate.meanTemp}°C\n\n${firstPara}...\n\nSee the full report on ImbewuField (imbewufield.vercel.app)`;
+    const text = `ImbewuField Site Analysis\n${ecology.label} | ${Math.abs(d.lat).toFixed(3)}°S ${d.lon.toFixed(3)}°E\nRainfall: ${d.rainfall.annual}mm/yr | Soil pH: ${d.soil.ph} | Mean temp: ${d.climate.meanTemp}°C\n\n${firstPara}...\n\nSee the full report on ImbewuField (imbewufield.vercel.app)`;
     if (typeof navigator !== 'undefined' && navigator.share) {
       try { await navigator.share({ title: 'ImbewuField Site Analysis', text }); return; } catch { /* user cancelled */ }
     }
@@ -491,7 +514,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             Site Analysis Report
           </div>
           <div className="text-xs font-mono truncate" style={{ color: '#5C5040' }}>
-            {d.biome.name} · {Math.abs(d.lat).toFixed(3)}°S {d.lon.toFixed(3)}°E
+            {ecology.label} · {Math.abs(d.lat).toFixed(3)}°S {d.lon.toFixed(3)}°E
           </div>
         </div>
 
@@ -849,7 +872,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                   onto its own line and read as noise. Desktop keeps one row. */}
               <div className={`mt-5 grid gap-3 grid-cols-2 ${['', '', 'md:grid-cols-2', 'md:grid-cols-3', 'md:grid-cols-4', 'md:grid-cols-5', 'md:grid-cols-6', 'md:grid-cols-7', 'md:grid-cols-8'][4 + (siteData ? 1 : 0) + (waterData ? 1 : 0) + (d.vegetation ? 1 : 0) + (d.bru ? 1 : 0)]}`}>
                 {[
-                  { label: 'Biome', value: d.biome.name, color: bColor },
+                  { label: 'Biome', value: ecology.label, color: bColor },
                   { label: 'Rainfall', value: `${d.rainfall.annual}mm/yr`, color: '#235E86' },
                   { label: 'Elevation', value: `${d.elevation.elevation}m · ${d.elevation.slopeDeg}°`, color: undefined },
                   { label: 'Soil pH', value: `pH ${d.soil.ph} · OC ${d.soil.organicCarbon}%`, color: d.soil.ph < 5.5 || d.soil.ph > 7.5 ? '#D4922A' : '#2D6B3C' },

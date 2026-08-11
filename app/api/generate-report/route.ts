@@ -24,6 +24,7 @@ import {
   type ReportSiteFacts,
 } from '@/lib/report-site-facts';
 import { buildBillOfQuantities, billOfQuantitiesMarkdown } from '@/lib/report-boq';
+import { resolveSiteEcology } from '@/lib/site-ecology';
 import { buildCoverMarkdown } from '@/lib/report-cover';
 import { buildMonitoringPlan, monitoringMarkdown } from '@/lib/report-monitoring';
 import { buildRiskRegister, riskRegisterMarkdown } from '@/lib/report-risk';
@@ -216,6 +217,13 @@ export async function POST(req: NextRequest) {
       : `\n\n📏 LENGTH — STANDARD: A focused, practical report. Cover each section usefully but stay concise — keep tables small and explanations tight.`;
 
   const d = locationData;
+  // ONE ANSWER TO "WHAT GROWS HERE" — see lib/site-ecology.ts. Before this, sections took the
+  // site's name from whichever lookup was nearest: the coarse biome polygon (d.biome.name) or the
+  // precise SANBI vegetation unit (d.vegetation). They disagree near boundaries, and one exported
+  // report named BOTH "Zululand Lowveld Savanna" and "Indian Ocean Coastal Belt" for the same
+  // inland site — with the fruit-tree, indigenous-tree and windbreak sections, the ones a farmer
+  // plants from, using the coastal one.
+  const ecology = resolveSiteEcology(d.biome, d.vegetation);
   // Real administrative area for this point (municipality / district / province)
   const admin = await reverseGeocode(d.lat, d.lon);
   const rainStr = d.rainfall.monthly.map((v, i) => `${MONTHS[i]}:${Math.round(v)}mm`).join(' · ');
@@ -289,7 +297,7 @@ Treat this as an upper bound on the property, not a measured boundary — shapes
 
 ---
 SITE DATA
-Biome: ${d.biome.name} (${d.biome.code}) — ${d.biome.description}${d.vegetation ? `\nExact vegetation type (SANBI 2018 National Vegetation Map): ${d.vegetation.vegUnit} — biome ${d.vegetation.biome}. Use this precise vegetation unit to name truly local indigenous species and the natural plant community.` : ''}${d.bru ? `\nKZN Bioresource Unit (KZN DARD): zone ${d.bru.brucode} (parent ${d.bru.bruParent}), closest matching Bioresource Group: ${d.bru.nearestBrg} — this is a BEST-EFFORT climate-similarity match, NOT a verified BRU→BRG crosswalk, so name it as approximate, never as confirmed fact. Zone temperature range ${d.bru.tmin}–${d.bru.tmax}°C (mean ${d.bru.tmean}°C). Use this as extra agro-ecological zone context (e.g. frost/mistbelt character, local grassveld type) alongside the vegetation unit above. Do NOT quote the BRU's own zone-average rainfall as a rainfall figure — Annual rainfall below is the ONLY rainfall number to use; never present two conflicting rainfall figures.` : ''}
+Biome: ${ecology.biome.name} (${ecology.biome.code}) — ${ecology.biome.description}${d.vegetation ? `\nExact vegetation type (SANBI 2018 National Vegetation Map): ${d.vegetation.vegUnit} — biome ${d.vegetation.biome}. This vegetation unit and its biome are AUTHORITATIVE for this site: name the natural plant community, every indigenous species and every tree recommendation from it. Do not describe this site as belonging to any other biome.${ecology.biomeName.toLowerCase() !== d.biome.name.toLowerCase() ? ` (A coarser biome layer guesses "${d.biome.name}" for this point; it is lower resolution and WRONG here — ignore it entirely.)` : ''}` : ''}${d.bru ? `\nKZN Bioresource Unit (KZN DARD): zone ${d.bru.brucode} (parent ${d.bru.bruParent}), closest matching Bioresource Group: ${d.bru.nearestBrg} — this is a BEST-EFFORT climate-similarity match, NOT a verified BRU→BRG crosswalk, so name it as approximate, never as confirmed fact. Zone temperature range ${d.bru.tmin}–${d.bru.tmax}°C (mean ${d.bru.tmean}°C). Use this as extra agro-ecological zone context (e.g. frost/mistbelt character, local grassveld type) alongside the vegetation unit above. Do NOT quote the BRU's own zone-average rainfall as a rainfall figure — Annual rainfall below is the ONLY rainfall number to use; never present two conflicting rainfall figures.` : ''}
 Coordinates: ${Math.abs(d.lat).toFixed(4)}°S, ${d.lon.toFixed(4)}°E
 ${admin ? `Administrative area (reverse-geocoded — use these REAL names, do not invent): ${admin.label}${admin.municipality ? `\n  · Local municipality: ${admin.municipality}` : ''}${admin.district ? `\n  · District municipality: ${admin.district}` : ''}${admin.province ? `\n  · Province: ${admin.province}` : ''}` : 'Administrative area: identify the local & district municipality and province from the coordinates.'}
 Elevation: ${d.elevation.elevation}m ASL · Slope: ${d.elevation.slopeDeg}° (${d.elevation.slopePct}%) · Aspect: ${d.elevation.aspectLabel} (${facingNote})
@@ -307,8 +315,8 @@ SOIL (ISRIC 0–30cm)
 Texture: ${d.soil.textureClass} · pH: ${d.soil.ph} · Organic carbon: ${d.soil.organicCarbon}%
 Clay: ${d.soil.clay}% · Sand: ${d.soil.sand}% · Silt: ${d.soil.silt}% · Bulk density: ${d.soil.bulkDensity} g/cm³
 
-BIOME KEY SPECIES: ${d.biome.keySpecies.join(', ')}
-BIOME CHALLENGES: ${d.biome.challenges.join(' · ')}
+BIOME KEY SPECIES: ${ecology.biome.keySpecies.join(', ')}
+BIOME CHALLENGES: ${ecology.biome.challenges.join(' · ')}
 ${boundaryBlock}
 ${waterData ? `\nWATER STORAGE POLYGONS (user-drawn on map)
 ${waterData.count} water storage feature(s) drawn — total surface area ${waterData.areaM2.toLocaleString()} m².
@@ -367,15 +375,15 @@ ${sections.includes('Executive Summary') ? `## Executive Summary
 
 ${d.vegetation
   ? `The SANBI 2018 National Vegetation Map places this site in the **${d.vegetation.vegUnit}** vegetation unit (biome: ${d.vegetation.biome}${d.vegetation.bioregion ? `, bioregion: ${d.vegetation.bioregion}` : ''}).`
-  : `The biome at this location is **${d.biome.name}** (${d.biome.code}).`}
+  : `The biome at this location is **${ecology.biome.name}** (${ecology.biome.code}).`}
 ${d.bru ? `\nThis site also falls in KZN Bioresource Unit zone ${d.bru.brucode} (parent ${d.bru.bruParent}), closest to the **${d.bru.nearestBrg}** Bioresource Group — a best-effort climate-similarity match, so refer to it as approximate ("similar to...", "in the ${d.bru.nearestBrg} zone character") rather than a confirmed classification. Zone temperatures run ${d.bru.tmin}–${d.bru.tmax}°C. Use this to sharpen frost risk and local vegetation character (e.g. mistbelt, grassveld type) — do not restate its rainfall figure, only the Annual rainfall given elsewhere in this brief.\n` : ''}
 Using the site data above, write this section:
 
-1. **Natural plant community:** Name the exact natural vegetation type at this spot. Use the SANBI vegetation unit and biome name (${d.vegetation ? `${d.vegetation.vegUnit}, ${d.vegetation.biome}` : d.biome.name}). Describe what this plant community looks like — its structure, dominant plants, and natural cycles.
+1. **Natural plant community:** Name the exact natural vegetation type at this spot. Use the SANBI vegetation unit and biome name (${ecology.label}). Describe what this plant community looks like — its structure, dominant plants, and natural cycles.
 
 2. **What it tells you about soil, water and climate:** Explain concretely what the natural vegetation reveals about this site's soil fertility, water availability, drainage, fire regime, frost exposure, and growing conditions. Be specific — these are free clues from nature.
 
-3. **Truly local indigenous species:** List the indigenous plants that genuinely belong to this exact vegetation unit. Draw on the key species (${d.biome.keySpecies.join(', ')}) but go deeper — name species typical of the ${d.vegetation ? d.vegetation.vegUnit : d.biome.name} specifically, including understorey, grasses, geophytes, and shrubs where relevant. Give common name + botanical name.
+3. **Truly local indigenous species:** List the indigenous plants that genuinely belong to this exact vegetation unit. Draw on the key species (${ecology.biome.keySpecies.join(', ')}) but go deeper — name species typical of the ${ecology.placeName} specifically, including understorey, grasses, geophytes, and shrubs where relevant. Give common name + botanical name.
 
 4. **Designing WITH this vegetation — the permaculture angle:** Explain how to design a permaculture system that works WITH rather than against this natural plant community:
    - Which indigenous plants to keep, protect and propagate on-site
@@ -426,7 +434,7 @@ When to build each earthwork relative to the ${d.rainfall.wetSeason} wet season.
 
 ` : ''}${sections.includes('Planting Calendar') ? `## Year-Round Planting Calendar
 
-A month-by-month guide of WHAT TO PLANT at this site, based on ${d.rainfall.pattern} rainfall (wet: ${d.rainfall.wetSeason}, dry: ${d.rainfall.drySeason}), ${d.climate.minTemp}–${d.climate.maxTemp}°C temperatures, and ${d.rainfall.annual}mm/year. Focus on vegetables and food crops that feed a family all year and suit ${d.biome.name}.${facts?.crop ? `\n\nThis farmer has ALREADY entered ${facts.crop.plantingCount} plantings (listed in the site data above). In the "Plant now" column, put THEIR crop in that month first and mark it (already planned), then add what is missing. Do not silently replace their plan with a different one.` : ''}
+A month-by-month guide of WHAT TO PLANT at this site, based on ${d.rainfall.pattern} rainfall (wet: ${d.rainfall.wetSeason}, dry: ${d.rainfall.drySeason}), ${d.climate.minTemp}–${d.climate.maxTemp}°C temperatures, and ${d.rainfall.annual}mm/year. Focus on vegetables and food crops that feed a family all year and suit ${ecology.placeName}.${facts?.crop ? `\n\nThis farmer has ALREADY entered ${facts.crop.plantingCount} plantings (listed in the site data above). In the "Plant now" column, put THEIR crop in that month first and mark it (already planned), then add what is missing. Do not silently replace their plan with a different one.` : ''}
 
 | Month | Plant now | Ready to harvest | Tip |
 |-------|-----------|------------------|-----|
@@ -447,7 +455,7 @@ Mark the frost-risk months (winter min ${d.climate.minTemp}°C) and the best mon
 
 ` : ''}${sections.includes('Fruit, Nut & Berry Trees') ? `## Fruit, Nut & Berry Trees
 
-Fruit, nut and berry crops that suit ${d.biome.name}, ${d.rainfall.annual}mm rainfall, and ${d.climate.minTemp}–${d.climate.maxTemp}°C (note chill needs — winter low is ${d.climate.minTemp}°C). Mix quick wins with long-term trees.
+Fruit, nut and berry crops that suit ${ecology.placeName}, ${d.rainfall.annual}mm rainfall, and ${d.climate.minTemp}–${d.climate.maxTemp}°C (note chill needs — winter low is ${d.climate.minTemp}°C). Mix quick wins with long-term trees.
 
 | Crop | Type | Plant when | First harvest | Why it suits this site |
 |------|------|-----------|---------------|------------------------|
@@ -459,7 +467,7 @@ Include at least: 3 fruit trees, 1–2 nut trees, 1 berry. Prioritise hardy, low
 
 ` : ''}${sections.includes('Indigenous Trees') ? `## Indigenous Trees for This Site
 
-Indigenous South African trees suited to ${d.biome.name} — these survive local conditions far better than exotics, need little water once established, and give food, shade, fodder, nitrogen or medicine.
+Indigenous South African trees suited to ${ecology.placeName} — these survive local conditions far better than exotics, need little water once established, and give food, shade, fodder, nitrogen or medicine.
 
 | Tree (common / botanical) | Main uses | Water need | Notes |
 |---------------------------|-----------|-----------|-------|
@@ -467,11 +475,11 @@ Indigenous South African trees suited to ${d.biome.name} — these survive local
 | [indigenous species] | [uses] | [need] | [tip] |
 | [indigenous species] | [uses] | [need] | [tip] |
 
-Prioritise indigenous FRUIT and multi-purpose trees that grow naturally in or near the ${d.biome.name} biome. Name real species only.
+Prioritise indigenous FRUIT and multi-purpose trees that grow naturally in or near the ${ecology.biomeName} biome. Name real species only.
 
 ` : ''}${sections.includes('Agroecosystem Planting Guide') ? `## Agroecosystem Planting Guide
 
-A species reference and design framework for building a productive, biodiverse agroecosystem rooted in the natural plant communities of ${d.vegetation ? d.vegetation.vegUnit : d.biome.name}. All species must be genuinely suited to this location: ${Math.abs(d.lat).toFixed(1)}°S, ${d.elevation.elevation}m elevation, ${d.rainfall.annual}mm ${d.rainfall.pattern} rainfall, ${d.climate.minTemp}–${d.climate.maxTemp}°C.
+A species reference and design framework for building a productive, biodiverse agroecosystem rooted in the natural plant communities of ${ecology.placeName}. All species must be genuinely suited to this location: ${Math.abs(d.lat).toFixed(1)}°S, ${d.elevation.elevation}m elevation, ${d.rainfall.annual}mm ${d.rainfall.pattern} rainfall, ${d.climate.minTemp}–${d.climate.maxTemp}°C.
 
 ### Top 5 Indigenous Canopy Trees
 Trees that anchor the system: deep roots, long-lived, wildlife habitat, soil function. Indigenous only — no exotics.
@@ -505,14 +513,14 @@ Productive food-forest canopy and sub-canopy. Include indigenous fruiting specie
 
 ### Agroecosystem Design — Layering for Balance
 
-**Food forest structure for ${d.vegetation ? d.vegetation.vegUnit : d.biome.name}:**
+**Food forest structure for ${ecology.placeName}:**
 Describe the natural layering strategy for this specific vegetation unit — which canopy trees go where, how to set back the food forest from existing indigenous vegetation, and the succession sequence from pioneer to climax.
 
 **Windbreak & buffer composition:**
 Name 3–5 specific species for a multi-row windbreak on the ${d.climate.windFromSummer}/${d.climate.windFromWinter} side. Give the row order: tallest natives at back, fruiting sub-canopy in middle, dense shrubs at front. Include at least one nitrogen-fixer and one insect-attracting species.
 
 **Guild associations — what grows together naturally here:**
-Give 2 specific plant guilds based on what actually co-occurs in ${d.vegetation ? d.vegetation.vegUnit : d.biome.name}: a canopy tree, its natural understorey companions, a ground cover or geophyte that belongs. Explain the ecological relationship (shade tolerance, soil chemistry, mycorrhizal networks).
+Give 2 specific plant guilds based on what actually co-occurs in ${ecology.placeName}: a canopy tree, its natural understorey companions, a ground cover or geophyte that belongs. Explain the ecological relationship (shade tolerance, soil chemistry, mycorrhizal networks).
 
 **Habitat corridors for birds and beneficial insects:**
 Which plantings most effectively attract:
@@ -526,7 +534,7 @@ Give practical placement: where to put nectar strips, nest boxes, dense shrub pa
 ### Appendix — Extended Species Reference
 
 #### Nitrogen Fixers & Soil Builders
-List 6–8 indigenous or well-adapted nitrogen-fixing species for ${d.biome.name}. Include legume trees, shrubs, and ground-cover legumes. Note whether they are indigenous to this vegetation unit or introduced. Give 1-line practical use for each.
+List 6–8 indigenous or well-adapted nitrogen-fixing species for ${ecology.placeName}. Include legume trees, shrubs, and ground-cover legumes. Note whether they are indigenous to this vegetation unit or introduced. Give 1-line practical use for each.
 
 #### Nectar & Pollinator Plants (Indigenous)
 List 8–10 indigenous plants that reliably attract pollinators at this location. For each: common name, flowering month(s), main pollinator attracted. Prioritise species with different bloom windows to cover the whole year.
@@ -540,7 +548,7 @@ List 4–5 indigenous climbers for trellises, fences, and forest edges. Note fru
 #### Medicinal & Ethnobotanical Plants for This Area
 List 6–8 plants with documented traditional use in this biome — common name, use, and whether indigenous. These are excellent zone 1–2 additions: useful, low-maintenance, and culturally relevant.
 
-All species in this appendix must be genuinely appropriate to ${Math.abs(d.lat).toFixed(1)}°S at ${d.elevation.elevation}m in the ${d.vegetation ? d.vegetation.vegUnit : d.biome.name}. Do not include species from different biomes or elevation bands.
+All species in this appendix must be genuinely appropriate to ${Math.abs(d.lat).toFixed(1)}°S at ${d.elevation.elevation}m in the ${ecology.placeName}. Do not include species from different biomes or elevation bands.
 
 ` : ''}${sections.includes('Crop Rotation') ? `## Crop Rotation Plan
 
@@ -607,14 +615,14 @@ ${sunData}
 Prevailing wind is FROM the ${d.climate.windFromSummer} in summer and FROM the ${d.climate.windFromWinter} in winter, averaging ${d.climate.windSpeed} m/s.
 - **Need one?** ${d.climate.windSpeed > 4 ? 'Yes — winds here are strong enough to dry out and damage crops.' : 'Winds are moderate, but a windbreak still protects young plants and cuts water loss.'}
 - **Where:** plant on the ${d.climate.windFromSummer} and ${d.climate.windFromWinter} sides to block the main winds, without shading crops from the northern sun.
-- **What:** a permeable multi-row windbreak (slows wind, not a solid wall) — name 3–4 real species suited to ${d.biome.name}, mixing fast shelter with useful/indigenous trees.
+- **What:** a permeable multi-row windbreak (slows wind, not a solid wall) — name 3–4 real species suited to ${ecology.placeName}, mixing fast shelter with useful/indigenous trees.
 - **Benefits:** less water loss, protected crops, fewer broken branches, habitat for pest-eating birds.
 
 ` : ''}${sections.includes('Fire & Hazards') ? `## Fire Risk & Other Hazards
 
-- **Fire risk:** ${d.biome.name} ${/Fynbos|Grassland|Savanna|Karoo/.test(d.biome.name) ? 'is fire-prone in the dry season' : 'has a lower but real dry-season fire risk'}. Rate it and say which side fire is most likely to come from (usually the dry, windward side).
+- **Fire risk:** ${ecology.label} ${ecology.fireProne ? 'is fire-prone in the dry season' : 'has a lower but real dry-season fire risk'}. Rate it and say which side fire is most likely to come from (usually the dry, windward side).
 - **Firebreaks:** keep a cleared or green strip and fire-resistant plants (aloes, spekboom, vygies) between wild land and the home/crops.
-- **Other hazards:** frost (winter min ${d.climate.minTemp}°C${d.climate.minTemp < 2 ? ' — frost likely, protect tender crops' : ''}), hail, and flood/erosion in heavy rain. Biome challenges: ${d.biome.challenges.slice(0, 2).join(', ')}.
+- **Other hazards:** frost (winter min ${d.climate.minTemp}°C${d.climate.minTemp < 2 ? ' — frost likely, protect tender crops' : ''}), hail, and flood/erosion in heavy rain. Biome challenges: ${ecology.biome.challenges.slice(0, 2).join(', ')}.
 - Give 2–3 practical, low-cost protections for the biggest risks.
 
 ` : ''}${sections.includes('Economic Opportunities') ? `## Economic Opportunities
@@ -634,7 +642,7 @@ Keep it realistic for a grower with limited capital.
 
 ` : ''}${sections.includes('Plant Guilds') ? `## Plant Guilds
 
-Design 3 guilds specifically for ${d.biome.name} biome, ${d.climate.koppen} climate, ${d.rainfall.annual}mm ${d.rainfall.pattern} rainfall. Name REAL species, indigenous first.
+Design 3 guilds specifically for ${ecology.biomeName} biome, ${d.climate.koppen} climate, ${d.rainfall.annual}mm ${d.rainfall.pattern} rainfall. Name REAL species, indigenous first.
 
 ### Guild 1: [Descriptive Name]
 *Purpose: [what this guild does — food, nitrogen, water, habitat]*
@@ -676,7 +684,7 @@ ${zonePromptBlock(facts)}
 
 ` : ''}${sections.includes('5-Year Vision') ? `## 5-Year Vision
 
-[2–3 paragraphs describing what this site will look, feel, and produce like in 5 years if the design is implemented. Be vivid and specific to the ${d.biome.name} biome. What trees are established, how the water system functions, what food is being harvested.]
+[2–3 paragraphs describing what this site will look, feel, and produce like in 5 years if the design is implemented. Be vivid and specific to the ${ecology.placeName}. What trees are established, how the water system functions, what food is being harvested.]
 
 ` : ''}${sections.includes('Year 1 Priorities') ? `## Year 1 Priorities
 
@@ -767,7 +775,7 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
     facts,
     // The cover page owns the document's single `# ` heading from here on.
     omitTitle: true,
-    biomeName: d.biome.name,
+    biomeName: ecology.biomeName,
     vegUnit: d.vegetation?.vegUnit ?? null,
     bruLabel: d.bru?.nearestBrg ?? null,
     adminLabel: admin?.label ?? null,
@@ -798,7 +806,7 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
   // indistinguishable on the page from a measured one.
   const cover = buildCoverMarkdown({
     farmName: facts?.farmName ?? null,
-    bioregion: d.vegetation?.vegUnit ? `${d.vegetation.vegUnit} (${d.biome.name})` : d.biome.name,
+    bioregion: ecology.label,
     adminLabel: admin?.label ?? null,
     lat: d.lat,
     lon: d.lon,

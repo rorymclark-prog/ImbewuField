@@ -15,6 +15,7 @@ import {
   roofHarvestLitres,
 } from '@/lib/roof-runoff';
 import { studioSummaryHasContent, type StudioReportSummary } from '@/lib/design-studio-report';
+import { resolveSiteEcology } from '@/lib/site-ecology';
 
 // Which map each report section links to ("View [X] map").
 export type MapRef = 'base' | 'water' | 'sector' | 'zone' | 'design' | 'implementation';
@@ -264,7 +265,11 @@ export function buildSkeletonReportDoc(args: {
   const { id, siteId, location, survey, layers, plan, phasePlan, studio, createdAt } = args;
   const lang = args.lang ?? 'en';
   const wc = plan?.waterCalc;
-  const biome = location.biome?.name ?? 'this region';
+  // The SANBI vegetation unit when it is known, not the coarse biome polygon — see
+  // lib/site-ecology.ts for why the two disagree and which one a farmer should be planting from.
+  const biome = location.biome
+    ? resolveSiteEcology(location.biome, location.vegetation).placeName
+    : 'this region';
   // KZN sites get a finer zone note appended (BRU code + best-effort named
   // Bioresource Group). Non-KZN sites are unaffected — location.bru is null.
   const bruNote = location.bru
