@@ -465,14 +465,39 @@ export default function DesignPalette({
   // and none of that mattered because its container's box was two pixels tall. A portal sidesteps
   // the question of which ancestor is at fault by not having one.
   const speciesButtonRef = useRef<HTMLButtonElement | null>(null);
-  const [speciesAnchor, setSpeciesAnchor] = useState<{ top: number; right: number } | null>(null);
+  // OPEN TOWARDS THE SPACE THAT EXISTS, not always upwards.
+  //
+  // Rory, with the picker list clipped off the top of the screen over the step tabs: "this is
+  // stuck at the top". The panel only ever opened UPWARDS — right against the button's top edge —
+  // which is correct when the palette is a bottom sheet on a phone, and wrong the moment the
+  // palette is a side column whose button sits near the top of the viewport: the list is then
+  // pushed off the top and only its last rows remain on screen.
+  //
+  // So the side is measured, not assumed, and the panel is capped to the room it actually has on
+  // that side. `top`/`right` stay viewport-edge offsets (the values CSS `bottom`/`right` want).
+  const [speciesAnchor, setSpeciesAnchor] = useState<
+    { top: number; right: number; openDown: boolean; downTop: number; maxHeight: number } | null
+  >(null);
   useEffect(() => {
     if (!speciesPickerOpen) return undefined;
     const measure = () => {
       const el = speciesButtonRef.current;
       if (!el) return;
       const rect = el.getBoundingClientRect();
-      setSpeciesAnchor({ top: window.innerHeight - rect.top, right: window.innerWidth - rect.right });
+      const gap = 8;
+      const spaceAbove = rect.top - gap;
+      const spaceBelow = window.innerHeight - rect.bottom - gap;
+      // Prefer up (the established behaviour, and the one that keeps a phone's list off the
+      // thumb) unless below genuinely has more room to show the list in.
+      const openDown = spaceBelow > spaceAbove;
+      setSpeciesAnchor({
+        top: window.innerHeight - rect.top,
+        right: window.innerWidth - rect.right,
+        openDown,
+        downTop: rect.bottom + gap,
+        // Never taller than the side it opens into — an unclamped panel is what ran off the top.
+        maxHeight: Math.max(160, Math.min(window.innerHeight * 0.45, openDown ? spaceBelow : spaceAbove) - gap),
+      });
     };
     measure();
     window.addEventListener('resize', measure);
@@ -1233,15 +1258,20 @@ export default function DesignPalette({
                 <div
                   style={{
                     position: 'fixed',
-                    bottom: speciesAnchor.top + 8,
+                    ...(speciesAnchor.openDown
+                      ? { top: speciesAnchor.downTop }
+                      : { bottom: speciesAnchor.top + 8 }),
                     right: speciesAnchor.right,
                     width: 360,
                     maxWidth: '90vw',
-                    maxHeight: '45dvh',
+                    maxHeight: speciesAnchor.maxHeight,
                     background: '#FFFEFA',
                     border: '1px solid rgba(0,0,0,0.1)',
                     borderRadius: 12,
-                    boxShadow: '0 -4px 16px rgba(0,0,0,0.15)',
+                    // The shadow falls away from the button, so it reads as attached to it.
+                    boxShadow: speciesAnchor.openDown
+                      ? '0 4px 16px rgba(0,0,0,0.15)'
+                      : '0 -4px 16px rgba(0,0,0,0.15)',
                     display: 'flex',
                     flexDirection: 'column',
                     zIndex: 1000,

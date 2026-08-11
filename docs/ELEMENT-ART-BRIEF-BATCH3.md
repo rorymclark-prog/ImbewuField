@@ -87,3 +87,29 @@ redraw the silhouette. That test is the brief.
 
 When these sixteen land the catalogue is complete: every non-deprecated element a farmer can
 place will have its own drawing in the picker.
+
+---
+
+## Correction batch — pickers that break the FRONT-elevation rule
+
+Rory, looking at the two side by side in the palette: *"natal plum and wilplum are the same
+thing? also if not both need to be front view"*.
+
+They are not the same plant, and the catalogue already says so — **Natal Plum** is
+`Carissa macrocarpa`, a 3 m thorny coastal shrub with white flowers and red fruit; **Wild Plum**
+is `Harpephyllum caffrum` (umgwenya), a 7 m+ evergreen tree. Two entries, two sizes, correct.
+
+The picker ART is what is wrong, and he named the rule this brief already sets: *"PICKER view is
+chosen per element… **FRONT elevation** — living things. You recognise a banana by its side
+silhouette, never from above. All trees, shrubs, hedges, grasses."*
+
+| id | What ships today | What batch 2 specified | Fix |
+|---|---|---|---|
+| `tree_natal_plum` | a **sphere of foliage** — a clipped topiary ball, no trunk, no ground line, reads as a top view sitting beside its own neighbours' elevations | "low dense shrub, white flowers + red fruit" (`#275139`) | Re-render as a FRONT elevation: a low, dense, rounded shrub **standing on the ground** — foliage to the base, no visible clear trunk (it is a shrub, not a tree), glossy very dark green leaves, scattered white five-petalled flowers and red plum-shaped fruit, and thorns readable at the silhouette edge. It must be distinguishable at 24 px from `tree_kei_apple`, the other dense thorny fruiting shrub: Kei apple is looser and apricot-orange fruited, Natal plum is darker, glossier and red-fruited. |
+
+Nothing else changes: `tree_wild_plum.png` is already a correct front elevation and stays.
+
+**Why this matters beyond neatness.** The palette is a row of silhouettes the farmer scans, and a
+sphere among elevations reads as a different KIND of thing — as if the app were showing that one
+from above on purpose. The rule exists so a farmer can tell plants apart by shape alone at
+thumbnail size, which is exactly the comparison Rory was making when he spotted it.
