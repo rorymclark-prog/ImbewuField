@@ -10,6 +10,8 @@ import { Loader2, Check, Circle, ChevronRight, Share2, MapPin, SlidersHorizontal
 import { buildReportPdf, deliverPdf, reportPdfFilename, stripInlineMarkdown } from '@/lib/report-pdf';
 import { resolveSiteEcology } from '@/lib/site-ecology';
 import { loadSheetMetas, loadSheetImage } from '@/lib/sheet-store';
+import { selectReportPlates } from '@/lib/report-plates';
+import { PLAN_VERSION } from '@/lib/plan-version';
 import { loadSurvey } from '@/lib/site-survey';
 import { getSiteEvidence } from '@/lib/site-evidence';
 import { designSiteIdFromLocation } from '@/lib/design-studio';
@@ -456,7 +458,13 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       // sheet's image immediately before it draws that plate and never holds two at once, because
       // a farmer can have dozens of sheets at 1–3 MB each and this export runs on the same phone
       // that has been dying of exactly that (lib/sheet-store.ts's memory contract).
+      // ONE PLATE PER SHEET, NOT THE WHOLE GALLERY. The gallery is a working record — every render
+      // ever made, exact and paid, across every revision of the plan rules — and a farmer can hold
+      // a hundred of them. As a report appendix that is a hundred near-duplicate pages. The
+      // selection takes the latest sheet of each kind from the current plan generation, in sheet
+      // order. See lib/report-plates.ts.
       const sheetMetas = await loadSheetMetas(designSiteIdFromLocation(d)).catch(() => []);
+      const plates = selectReportPlates(sheetMetas, PLAN_VERSION);
       const blob = await buildReportPdf(report, {
         biome: ecology.placeName,
         lat: d.lat,
@@ -465,8 +473,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         soilPh: d.soil.ph,
         meanTempC: d.climate.meanTemp,
         dateLabel: new Date().toLocaleDateString('en-ZA', { year: 'numeric', month: 'long', day: 'numeric' }),
-        // Oldest first, so the plates read in the order the farmer built them.
-        sheets: sheetMetas.map((row) => ({ id: row.id, label: row.label })),
+        sheets: plates,
         loadSheetImage,
       });
       await deliverPdf(blob, reportPdfFilename(ecology.placeName));
