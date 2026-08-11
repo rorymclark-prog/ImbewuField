@@ -34,6 +34,15 @@ export interface ReleaseNote {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '11 August',
+    sha: '6fd362a',
+    changes: [
+      'Your design maps now show inside the report itself, not only in the download',
+      'Tap any map in the report to see it full size',
+      'The advice now reads those maps — where things sit, not just how big they are',
+    ],
+  },
+  {
     when: '10 August',
     // STAMPED. An unstamped top entry does not mean "not yet released" to the gate — it means the
     // gate falls through to the NEXT entry's sha and reports every commit since as unnoted. That
