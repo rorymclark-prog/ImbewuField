@@ -46,8 +46,10 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     // because this read fbecef9 while main had moved to 81d424c. A commit touching ONLY this file
     // is ignored by the gate (IGNORE in scripts/release-notes-pending.mjs), which is what makes a
     // follow-up restamp commit both safe and, after every merge, necessary.
-    sha: '797f9e6',
+    sha: '5ef508b',
     changes: [
+      'The planting palette shows three drawings a row, so you scroll less to find one',
+      'The species list now opens where there is room instead of off the top of the screen',
       'AI Polished now really is polished — the app no longer paints over what you paid for',
       'Your plants are the AI\u2019s artwork; ground, roofs and boundary stay exact as before',
       'A design that keeps closing the app now opens without its background photo',
