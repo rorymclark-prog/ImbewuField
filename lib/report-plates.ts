@@ -52,7 +52,7 @@ export function plateSheetKey(label: string): string {
 }
 
 /** Sheets are titled "06 — Planting & Agroforestry"; a report reads 01…09, not alphabetically. */
-function sheetOrdinal(label: string): number {
+export function plateSheetOrdinal(label: string): number {
   const m = /^\s*(\d{1,2})\b/.exec(label ?? '');
   return m ? Number(m[1]) : Number.POSITIVE_INFINITY;
 }
@@ -96,8 +96,8 @@ export function selectReportPlates(
 
   return [...newestPerSheet.values()]
     .sort((a, b) => {
-      const oa = sheetOrdinal(a.label);
-      const ob = sheetOrdinal(b.label);
+      const oa = plateSheetOrdinal(a.label);
+      const ob = plateSheetOrdinal(b.label);
       if (oa !== ob) return oa - ob;
       return a.label.localeCompare(b.label);
     })

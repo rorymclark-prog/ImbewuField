@@ -7,10 +7,11 @@ import { loadReports, saveReport, deleteReport, reportId, MAX_REPORTS, type Save
 import { isSampleMode } from '@/lib/sample-mode';
 import { PLACE_LABELS, placeColor, type SavedPlace } from '@/lib/saved-places';
 import { Loader2, Check, Circle, ChevronRight, Share2, MapPin, SlidersHorizontal, FileText } from 'lucide-react';
-import { buildReportPdf, deliverPdf, reportPdfFilename, stripInlineMarkdown } from '@/lib/report-pdf';
+import { buildReportPdf, deliverPdf, reportPdfFilename, sheetPlate, stripInlineMarkdown } from '@/lib/report-pdf';
 import { resolveSiteEcology } from '@/lib/site-ecology';
 import { loadSheetMetas, loadSheetImage } from '@/lib/sheet-store';
-import { selectReportPlates } from '@/lib/report-plates';
+import { selectReportPlates, type ReportPlate } from '@/lib/report-plates';
+import { prepareSiteAnalysisImages } from '@/lib/report-site-images';
 import { PLAN_VERSION } from '@/lib/plan-version';
 import { loadSurvey } from '@/lib/site-survey';
 import { getSiteEvidence } from '@/lib/site-evidence';
@@ -275,6 +276,36 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   const [saveFailedReason, setSaveFailedReason] = useState<SaveReportReason | null>(null);
   const [copied, setCopied] = useState(false);
   const [pdfState, setPdfState] = useState<'idle' | 'working' | 'done' | 'error'>('idle');
+
+  // ── The farm's own maps, in the report a farmer READS ──────────────────────
+  //
+  // The design sheets have been going into the exported PDF as an appendix since #174, and the
+  // report on screen still had none — which is what "i generated a report there is still no images"
+  // is describing. A farmer who never presses Export never sees their plan in their report.
+  //
+  // Thumbnails only, held in state; the print-resolution master (1–3 MB per sheet) is fetched on
+  // demand when a sheet is opened and dropped when it closes. That is lib/sheet-store's memory
+  // contract, and this screen runs on the same phone the gallery had to be rewritten for.
+  const [plates, setPlates] = useState<Array<ReportPlate & { thumb?: string }>>([]);
+  const [openPlate, setOpenPlate] = useState<{ label: string; image: string } | null>(null);
+  const siteKey = designSiteIdFromLocation(d);
+  useEffect(() => {
+    let cancelled = false;
+    void loadSheetMetas(siteKey)
+      .catch(() => [])
+      .then((metas) => {
+        if (cancelled) return;
+        const chosen = selectReportPlates(metas, PLAN_VERSION);
+        const thumbById = new Map(metas.map((m) => [m.id, m.thumb]));
+        setPlates(chosen.map((p) => ({ ...p, thumb: thumbById.get(p.id) })));
+      });
+    return () => { cancelled = true; };
+  }, [siteKey]);
+
+  const openSheet = useCallback(async (plate: ReportPlate) => {
+    const image = await loadSheetImage(plate.id).catch(() => null);
+    if (image) setOpenPlate({ label: plate.label, image });
+  }, []);
   useEffect(() => {
     const refresh = () => setSavedList(loadReports());
     refresh();
@@ -407,6 +438,14 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           ?? savedPlaces?.[0]?.name,
       });
 
+      // THE MODEL LOOKS AT THE PLAN, NOT ONLY AT NUMBERS ABOUT IT. siteFacts above carries the
+      // geometry as figures; these are the drawings those figures came off, downsized for a vision
+      // model. Rory, on the audit: the report "needs to also draw analyses from these images, not
+      // generic zone information". Prepared one sheet at a time and skipped entirely on failure —
+      // a report the model could not look at is still a report. See lib/report-site-images.ts.
+      const siteImages = await prepareSiteAnalysisImages(plates, loadSheetImage, sheetPlate)
+        .catch(() => []);
+
       const res = await fetch('/api/generate-report', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', ...await paidApiHeaders() },
@@ -416,6 +455,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           siteData: siteData || undefined,
           waterData: waterData || undefined,
           siteFacts,
+          siteImages: siteImages.length ? siteImages : undefined,
           phasePlan: phasePlan ?? undefined,
           surveyData: loadSurvey(designSiteIdFromLocation(d)) ?? undefined,
           evidenceData: Object.keys(evidenceData).length > 0 ? evidenceData : undefined,
@@ -443,7 +483,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     } finally {
       setLoading(false);
     }
-  }, [d, photoAnalysis, siteData, waterData, savedPlaces, activePlaceId, selected, language, bilingual, tone, length, collapsePanelOnNarrow]);
+  }, [d, photoAnalysis, siteData, waterData, savedPlaces, activePlaceId, selected, language, bilingual, tone, length, plates, collapsePanelOnNarrow]);
 
   // "Export PDF". This used to be window.print(), which is a silent no-op in an
   // installed iOS PWA (manifest display: standalone) — the button looked dead on
@@ -955,6 +995,66 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
               </div>
             )}
 
+            {/* ── The farm's own design sheets ──────────────────────────────
+                Present whether or not a report has been generated: they are the
+                farmer's own work and the strongest evidence in the document.
+                Thumbnails here, full sheet on tap — see the memory note above. */}
+            {plates.length > 0 && (
+              <div className="mb-6 p-4 rounded-xl" style={{ background: 'rgba(226,216,196,0.5)', border: '1px solid #E2D8C4' }}>
+                <div className="text-xs font-sans uppercase tracking-wider mb-3" style={{ color: '#5C5040' }}>
+                  Your design maps · {plates.length} sheet{plates.length === 1 ? '' : 's'}
+                </div>
+                <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))' }}>
+                  {plates.map((plate, i) => (
+                    <button
+                      key={plate.id}
+                      onClick={() => { void openSheet(plate); }}
+                      className="text-left"
+                      style={{
+                        background: '#FBF6EC', border: '1px solid #E2D8C4', borderRadius: 10,
+                        padding: 6, cursor: 'pointer', display: 'flex', flexDirection: 'column', gap: 6,
+                      }}
+                    >
+                      {plate.thumb ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={plate.thumb}
+                          alt={plate.label}
+                          style={{ width: '100%', borderRadius: 6, display: 'block' }}
+                        />
+                      ) : (
+                        <div
+                          className="font-sans"
+                          style={{
+                            display: 'flex', alignItems: 'center', justifyContent: 'center',
+                            aspectRatio: '4 / 3', borderRadius: 6, background: 'rgba(31,77,43,0.06)',
+                            color: '#5C5040', fontSize: 11,
+                          }}
+                        >
+                          Tap to open
+                        </div>
+                      )}
+                      <span className="font-sans" style={{ fontSize: 11, color: '#20190F', lineHeight: 1.3 }}>
+                        Figure {i + 1} — {stripInlineMarkdown(plate.label)}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+                <div className="font-sans mt-3" style={{ fontSize: 10.5, color: '#5C5040', opacity: 0.8 }}>
+                  These sheets are read by the report and appended to the exported PDF.
+                </div>
+              </div>
+            )}
+
+            {/* No sheets for this site: say so, rather than silently producing a report with no
+                maps and an appendix the farmer expected. */}
+            {plates.length === 0 && (
+              <div className="mb-6 p-4 rounded-xl font-sans" style={{ background: 'rgba(226,216,196,0.35)', border: '1px dashed #E2D8C4', fontSize: 12, color: '#5C5040' }}>
+                No design maps are saved for this site yet, so the report has none to show or to read
+                from. Render your plan sheets in the Design Map for this place and generate again.
+              </div>
+            )}
+
             {/* Rainfall chart in report */}
             <div className="mb-6 p-4 rounded-xl" style={{ background: 'rgba(226,216,196,0.5)', border: '1px solid #E2D8C4' }}>
               <div className="text-xs font-mono uppercase tracking-wider mb-3" style={{ color: '#5C5040' }}>
@@ -1006,6 +1106,31 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           </div>
         </div>
       </div>
+
+      {/* One sheet at full resolution, held only while it is open. Closing drops the reference —
+          the print master is the largest single string this screen ever holds. */}
+      {openPlate && (
+        <div
+          onClick={() => setOpenPlate(null)}
+          role="dialog"
+          aria-label={openPlate.label}
+          style={{
+            position: 'fixed', inset: 0, zIndex: 70, background: 'rgba(32,25,15,0.88)',
+            display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+            padding: 16, gap: 10, cursor: 'zoom-out',
+          }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={openPlate.image}
+            alt={openPlate.label}
+            style={{ maxWidth: '100%', maxHeight: '86%', objectFit: 'contain', borderRadius: 8 }}
+          />
+          <div className="font-sans" style={{ color: '#F7F2E9', fontSize: 12, textAlign: 'center' }}>
+            {stripInlineMarkdown(openPlate.label)} · tap anywhere to close
+          </div>
+        </div>
+      )}
 
       {/* Print stylesheet */}
       <style jsx global>{`

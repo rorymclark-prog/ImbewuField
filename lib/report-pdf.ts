@@ -226,7 +226,11 @@ const SHEET_PLATE_MAX_PX = 1600;
  *
  *  Returns null rather than throwing: a plate that cannot be drawn must never cost the farmer the
  *  whole report, which is the document that actually matters. */
-export async function sheetPlate(dataUrl: string): Promise<{ dataUrl: string; width: number; height: number } | null> {
+export async function sheetPlate(
+  dataUrl: string,
+  maxPx: number = SHEET_PLATE_MAX_PX,
+  quality = 0.82,
+): Promise<{ dataUrl: string; width: number; height: number } | null> {
   try {
     const img = await new Promise<HTMLImageElement>((resolve, reject) => {
       const el = new Image();
@@ -237,7 +241,7 @@ export async function sheetPlate(dataUrl: string): Promise<{ dataUrl: string; wi
     const w0 = img.naturalWidth || img.width;
     const h0 = img.naturalHeight || img.height;
     if (!w0 || !h0) return null;
-    const scale = Math.min(1, SHEET_PLATE_MAX_PX / Math.max(w0, h0));
+    const scale = Math.min(1, maxPx / Math.max(w0, h0));
     const w = Math.max(1, Math.round(w0 * scale));
     const h = Math.max(1, Math.round(h0 * scale));
     const canvas = document.createElement('canvas');
@@ -254,7 +258,7 @@ export async function sheetPlate(dataUrl: string): Promise<{ dataUrl: string; wi
     // JPEG, not PNG: these are photographic/painted plans, and PNG would multiply the file size a
     // farmer has to send. drainCanvasToDataUrl frees the backing store the moment the bytes are
     // out — the same discipline the sheet pipeline itself now follows.
-    return { dataUrl: drainCanvasToDataUrl(canvas, 'image/jpeg', 0.82), width: w, height: h };
+    return { dataUrl: drainCanvasToDataUrl(canvas, 'image/jpeg', quality), width: w, height: h };
   } catch {
     return null;
   }
