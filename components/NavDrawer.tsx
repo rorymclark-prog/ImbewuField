@@ -23,6 +23,10 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
   const mainItems = [
     { href: '/home',    Icon: Home,          label: t('tabHome') },
     { href: '/farmer',  Icon: Map,           label: t('navDesignMap') },
+    // The report had no way in of its own: it lived behind the map, three taps down a panel
+    // most farmers never scrolled to. It is the thing they came for, so it gets a door.
+    // `panel=Reports` lands on the list — generate one, or re-open any of the saved ones.
+    { href: '/farmer?panel=Reports', Icon: FileText, label: t('siteReportOverline') },
     { href: '/atlas',   Icon: Earth,         label: 'Atlas' },
     { href: '/finances', Icon: DollarSign,   label: t('tabFinance') },
     { href: '/student', Icon: GraduationCap, label: t('homeQuickStudy') },
@@ -161,6 +165,9 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
               </div>
 
               {section.items.map(({ href, Icon, label }) => {
+                // Pathname only, deliberately. Telling the two /farmer entries apart would mean
+                // useSearchParams here, and this drawer renders on every screen — that opts the
+                // lot of them out of static rendering to move one highlight bar.
                 const exactActive = pathname === href;
                 return (
                   <Link

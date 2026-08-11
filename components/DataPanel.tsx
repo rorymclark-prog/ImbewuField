@@ -1728,7 +1728,29 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               </button>
             )}
 
-            {/* Saved reports */}
+            {/* Saved reports — or, when there are none, how to get one.
+                These five strings have been translated into all eleven languages since the
+                library was built and rendered in none of them: arriving here with nothing saved
+                showed a bare panel that looked broken. Now the drawer has a Site report entry
+                pointing straight at this tab, an empty list is the FIRST thing a farmer sees. */}
+            {savedReports.length === 0 && (
+              <div
+                className="rounded-xl p-3.5 font-sans"
+                style={{ background: '#FFFEFA', border: '1px dashed #E2D8C4', fontSize: 12.5, lineHeight: 1.55, color: '#5C5040' }}
+              >
+                {t('noSavedReportsMessage')}{' '}
+                <button
+                  onClick={() => onOpenReport?.()}
+                  className="font-semibold"
+                  style={{ background: 'none', border: 'none', padding: 0, font: 'inherit', fontWeight: 600, color: '#1F4D2B', textDecoration: 'underline', cursor: 'pointer' }}
+                >
+                  {t('noSavedReportsGenerateLink')}
+                </button>
+                {t('noSavedReportsSaveTip')}{' '}
+                <span className="font-semibold" style={{ color: '#20190F' }}>{t('noSavedReportsSaveLink')}</span>{' '}
+                {t('noSavedReportsSuffix')}
+              </div>
+            )}
             {savedReports.length > 0 && (
               <>
                 <div style={{ font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#8A7C62' }}>
