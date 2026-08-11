@@ -215,7 +215,11 @@ test('plates are downscaled for print rather than embedded at sheet resolution',
   // still send the file over WhatsApp.
   assert.ok(cap >= 1240 && cap <= 2000, `plate cap ${cap} is outside the useful print range`);
   // Never enlarged: a plan printed above its own resolution is a blurry plan.
-  assert.match(src, /Math\.min\(1, SHEET_PLATE_MAX_PX/, 'plates can now be scaled UP');
+  // The cap is now a defaulted parameter rather than a constant read inside the function — the
+  // analysis path reuses this same downscaler at a smaller size to hand sheets to a vision model
+  // (lib/report-site-images.ts). The print default and the no-upscale rule both still hold.
+  assert.match(src, /maxPx: number = SHEET_PLATE_MAX_PX/, 'the print default is no longer the cap');
+  assert.match(src, /Math\.min\(1, maxPx/, 'plates can now be scaled UP');
   assert.match(src, /Math\.min\(availW \/ plate\.width, availH \/ plate\.height\)/,
     'the plate no longer fits itself to the page');
 });

@@ -29,6 +29,10 @@ import { buildCoverMarkdown } from '@/lib/report-cover';
 import { buildMonitoringPlan, monitoringMarkdown } from '@/lib/report-monitoring';
 import { buildRiskRegister, riskRegisterMarkdown } from '@/lib/report-risk';
 import { assembleReportDocument } from '@/lib/report-assemble';
+import {
+  normaliseSiteAnalysisImages,
+  siteImagesPromptBlock,
+} from '@/lib/report-site-images';
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
 
@@ -132,6 +136,10 @@ export async function POST(req: NextRequest) {
     /** What the farmer actually drew and recorded — see lib/report-site-facts.ts. Untyped here on
      *  purpose: it crosses the wire from a client we do not control and is validated, not trusted. */
     siteFacts?: unknown;
+    /** The farmer's own plan sheets, downsized for a vision model. Untyped for the same reason as
+     *  siteFacts, and with more at stake: these are forwarded into a paid upstream call, so they
+     *  are counted, size-capped and shape-checked before anything is sent. */
+    siteImages?: unknown;
     phasePlan?: PhasePlan;
     surveyData?: SiteSurvey;
     evidenceData?: Record<string, { count: number; notes: string[] }>;
@@ -155,6 +163,12 @@ export async function POST(req: NextRequest) {
   // deliberately no longer read: nothing in the app ever sets `approved: true`, so the branch that
   // consumed it could never run and every report printed "no design exists" over a finished plan.
   const facts: ReportSiteFacts | null = normaliseReportSiteFacts(body.siteFacts);
+
+  // THE SHEETS THE MODEL ACTUALLY LOOKS AT. The geometry has always crossed as numbers; this is the
+  // picture those numbers describe. Rory: "the audit said the report needs to also draw analyses
+  // from these images, not generic zone information". See lib/report-site-images.ts — including for
+  // why every number in the document still comes from the facts and never from a drawing.
+  const siteImages = normaliseSiteAnalysisImages(body.siteImages);
 
   // DoS hardening: drop any section name not in the canonical allow-list so an
   // attacker cannot drive unbounded parallel Anthropic calls via a crafted request.
@@ -720,6 +734,24 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
   // parallel calls is well inside Anthropic rate limits.
   const batchResults: string[] = new Array(batches.length);
 
+  // The sheets ride along with EVERY batch, not just the first. Batches are independent calls that
+  // cannot see each other (that is the whole reason the anti-invention rule is a system prompt), so
+  // a picture shown once would inform one or two sections and leave the rest writing blind. The
+  // cost is images × batches; MAX_ANALYSIS_IMAGES is set at three with exactly that multiplication
+  // in mind. Images lead the message: reading order matters to a vision model, and the prompt block
+  // that names them is what turns three unlabelled pictures into "Figure 2 is the water plan".
+  const messageContent = (promptText: string): Anthropic.MessageParam['content'] => {
+    if (!siteImages.length) return promptText;
+    return [
+      { type: 'text' as const, text: siteImagesPromptBlock(siteImages) },
+      ...siteImages.map((img) => ({
+        type: 'image' as const,
+        source: { type: 'base64' as const, media_type: img.mediaType, data: img.data },
+      })),
+      { type: 'text' as const, text: promptText },
+    ];
+  };
+
   const runBatch = async (batchSections: string[], idx: number): Promise<void> => {
     try {
       const msg = await client.messages.create({
@@ -742,7 +774,7 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
           'Where the facts are silent, the honest reading is that the thing is absent. Write recommendations as something to BUILD or BUY, not as something to monitor or draw down.',
           'Prefer saying a figure is unknown over supplying a plausible one. An invented number in this report is worse than a missing one, because the farmer cannot tell them apart.',
         ].join(' '),
-        messages: [{ role: 'user', content: buildPrompt(batchSections, idx === 0) }],
+        messages: [{ role: 'user', content: messageContent(buildPrompt(batchSections, idx === 0)) }],
       }, {
         // One hung upstream call must not eat the whole maxDuration window — the catch below
         // ships an honest per-section placeholder instead.
