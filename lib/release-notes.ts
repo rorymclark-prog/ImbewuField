@@ -46,8 +46,12 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     // because this read fbecef9 while main had moved to 81d424c. A commit touching ONLY this file
     // is ignored by the gate (IGNORE in scripts/release-notes-pending.mjs), which is what makes a
     // follow-up restamp commit both safe and, after every merge, necessary.
-    sha: '5ef508b',
+    sha: '55e8d1b',
     changes: [
+      'Your design maps are now printed in the report, one to a page at the back',
+      'Reports you download now have a contents page and numbered sections',
+      'Tree and crop advice now matches the vegetation the map finds at your spot',
+      'Fire risk is judged on that same vegetation, so fire-prone veld is told so',
       'The planting palette shows three drawings a row, so you scroll less to find one',
       'The species list now opens where there is room instead of off the top of the screen',
       'AI Polished now really is polished — the app no longer paints over what you paid for',
