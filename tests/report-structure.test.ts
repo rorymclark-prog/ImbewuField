@@ -1,4 +1,5 @@
 import { test } from 'node:test';
+import { readFileSync } from 'node:fs';
 import assert from 'node:assert/strict';
 
 import {
@@ -6,6 +7,7 @@ import {
   buildContents,
   numberFigures,
   buildListOfFigures,
+  ensureDocumentArchitecture,
 } from '../lib/report-structure';
 import { assembleReportDocument } from '../lib/report-assemble';
 
@@ -145,4 +147,72 @@ test('Contents lists every numbered section in the document', () => {
   const { markdown, headings } = numberSections(md);
   const printed = markdown.split('\n').filter((l) => /^#{2,3}\s/.test(l)).length;
   assert.equal(headings.length, printed, 'a heading was printed that Contents will not list');
+});
+
+// ── Old saved reports get the architecture at export time ────────────────────
+//
+// Rory, of a PDF exported on 11 August: "does it have the new layout yet?" It did not — 28 pages,
+// no contents page, no section numbers. Nothing was broken in the assembler; his report markdown
+// had simply been generated before the assembler existed, and a saved report keeps its original
+// text forever. So the export applies the architecture too.
+
+test('a flat saved report gains contents and numbering when exported', () => {
+  const flat = [
+    '# Permaculture Site Report',
+    'Zululand Lowveld · Nongoma',
+    '',
+    '## Executive Summary',
+    'This 0.39 ha site sits on a south-facing slope.',
+    '',
+    '## Water Harvesting',
+    'Install gutters on the 67 m² roof.',
+    '',
+    '### Calculations',
+    'Roof catchment yield: 67 m² x 768 mm.',
+  ].join('\n');
+  const out = ensureDocumentArchitecture(flat);
+  assert.match(out, /^##\s+Contents$/m, 'no contents page was built');
+  assert.match(out, /##\s+1\.\s+Executive Summary/, 'sections are still unnumbered');
+  assert.match(out, /##\s+2\.\s+Water Harvesting/);
+  assert.match(out, /###\s+2\.1\s+Calculations/, 'subsections are still unnumbered');
+  // Contents lists what the body actually carries, in order.
+  const contents = out.slice(out.indexOf('## Contents'), out.indexOf('## 1.'));
+  assert.ok(contents.includes('Executive Summary') && contents.includes('Water Harvesting'));
+  // Front matter sits AFTER the title block — a contents page above the title reads as a contents
+  // page for nothing.
+  assert.ok(out.indexOf('# Permaculture Site Report') < out.indexOf('## Contents'));
+  assert.ok(out.indexOf('Zululand Lowveld · Nongoma') < out.indexOf('## Contents'),
+    'the title\'s own subtitle line was separated from it');
+});
+
+test('a report that already has the architecture is returned untouched', () => {
+  // Running the numberer twice would renumber already-numbered headings — the exact defect
+  // stripLeadingNumber exists to undo. Byte-for-byte, not merely "looks similar".
+  const structured = [
+    '# Permaculture Site Report',
+    '',
+    '## Contents',
+    '',
+    '**1. Executive Summary**  ',
+    '',
+    '## 1. Executive Summary',
+    'Body.',
+  ].join('\n');
+  assert.equal(ensureDocumentArchitecture(structured), structured);
+});
+
+test('the architecture is applied by the PDF export itself, not only at generation', () => {
+  const pdf = readFileSync(new URL('../lib/report-pdf.ts', import.meta.url), 'utf8');
+  assert.match(pdf, /ensureDocumentArchitecture\(rawMarkdown\)/,
+    'the PDF exports whatever markdown it is handed again — old saved reports lose the layout');
+  // It must run BEFORE parsing, or the blocks are built from the unstructured text.
+  assert.ok(pdf.indexOf('ensureDocumentArchitecture(rawMarkdown)') < pdf.indexOf('parseReportMarkdown(markdown)'),
+    'the architecture is applied after the markdown has already been parsed');
+});
+
+test('empty and heading-less reports are left alone rather than half-built', () => {
+  assert.equal(ensureDocumentArchitecture(''), '');
+  assert.equal(ensureDocumentArchitecture('   '), '   ');
+  const prose = 'Just a paragraph with no headings at all.';
+  assert.equal(ensureDocumentArchitecture(prose), prose, 'a contents page of nothing is worse than none');
 });

@@ -18,6 +18,8 @@
 // tested without a DOM, a browser, or jsPDF.
 
 import { deliverFile, type FileDelivery } from '@/lib/file-delivery';
+import { ensureDocumentArchitecture } from '@/lib/report-structure';
+import { drainCanvasToDataUrl } from '@/lib/release-canvas';
 import { ASSURANCE_ONE_LINE } from '@/lib/plan-assurance';
 
 export type ReportBlock =
@@ -168,6 +170,12 @@ export function layoutTableColumns(
   return widths;
 }
 
+/** One saved design sheet, named but NOT loaded. See ReportPdfMeta.loadSheetImage. */
+export interface ReportPdfSheet {
+  id: string;
+  label: string;
+}
+
 export interface ReportPdfMeta {
   biome: string;
   lat: number;
@@ -177,6 +185,18 @@ export interface ReportPdfMeta {
   meanTempC: number;
   /** Already-localised date string for the cover line. */
   dateLabel: string;
+  /**
+   * The farmer's design sheets to append as plates — IDENTIFIED, not supplied.
+   *
+   * Rory: "Our report still doesn't have the images the design maps we create" — and it never
+   * could, because this module had no image capability at all. It does now, and the sheets arrive
+   * as ids because a saved sheet is a 1–3 MB data URL and a farmer can have dozens: handing this
+   * function an array of them would put every sheet in memory at once, which is precisely the
+   * shape that has been killing the page on iOS all week (lib/sheet-store.ts's memory contract).
+   */
+  sheets?: ReportPdfSheet[];
+  /** Fetches ONE sheet's full image, called immediately before it is drawn and never held after. */
+  loadSheetImage?: (id: string) => Promise<string | null>;
 }
 
 /** File-system-safe name for the exported document. */
@@ -194,7 +214,61 @@ export function reportPdfFilename(biome: string, date = new Date()): string {
 const INK = { text: [32, 25, 15], muted: [110, 96, 74], green: [31, 77, 43], gold: [154, 96, 30] } as const;
 
 /** Build the report as a PDF blob. Throws if jsPDF cannot be loaded. */
-export async function buildReportPdf(markdown: string, meta: ReportPdfMeta): Promise<Blob> {
+
+/** Longest edge a sheet is drawn at inside the PDF.
+ *
+ *  A saved sheet master is up to 2730 px wide. Embedding that costs ~10 MB decoded per plate and
+ *  buys nothing: an A4 page at 150 dpi is about 1240 px across the text column, so anything beyond
+ *  ~1600 px is invisible on paper and pure weight in a file a farmer sends over WhatsApp. */
+const SHEET_PLATE_MAX_PX = 1600;
+
+/** Downscale one sheet for print and release the scratch canvas immediately.
+ *
+ *  Returns null rather than throwing: a plate that cannot be drawn must never cost the farmer the
+ *  whole report, which is the document that actually matters. */
+export async function sheetPlate(dataUrl: string): Promise<{ dataUrl: string; width: number; height: number } | null> {
+  try {
+    const img = await new Promise<HTMLImageElement>((resolve, reject) => {
+      const el = new Image();
+      el.onload = () => resolve(el);
+      el.onerror = () => reject(new Error('sheet image unreadable'));
+      el.src = dataUrl;
+    });
+    const w0 = img.naturalWidth || img.width;
+    const h0 = img.naturalHeight || img.height;
+    if (!w0 || !h0) return null;
+    const scale = Math.min(1, SHEET_PLATE_MAX_PX / Math.max(w0, h0));
+    const w = Math.max(1, Math.round(w0 * scale));
+    const h = Math.max(1, Math.round(h0 * scale));
+    const canvas = document.createElement('canvas');
+    canvas.width = w;
+    canvas.height = h;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return null;
+    // A sheet has a paper ground and JPEG has no alpha; paint white first so any transparent
+    // margin prints as paper rather than black.
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillRect(0, 0, w, h);
+    ctx.imageSmoothingQuality = 'high';
+    ctx.drawImage(img, 0, 0, w, h);
+    // JPEG, not PNG: these are photographic/painted plans, and PNG would multiply the file size a
+    // farmer has to send. drainCanvasToDataUrl frees the backing store the moment the bytes are
+    // out — the same discipline the sheet pipeline itself now follows.
+    return { dataUrl: drainCanvasToDataUrl(canvas, 'image/jpeg', 0.82), width: w, height: h };
+  } catch {
+    return null;
+  }
+}
+
+export async function buildReportPdf(rawMarkdown: string, meta: ReportPdfMeta): Promise<Blob> {
+  // A SAVED REPORT IS AN ARTEFACT, AND ARTEFACTS OUTLIVE THE CODE THAT MADE THEM. The API
+  // assembles cover, contents and section numbers for every report it generates — but a report
+  // saved before that existed keeps its original flat markdown for good, and exported with no
+  // contents page and no numbering (Rory, of an 11 August export: "does it have the new layout
+  // yet?"). Applying the architecture here means the FILE is right whatever the age of the text
+  // inside it. Idempotent: a document that already has a Contents page is passed through
+  // untouched — see ensureDocumentArchitecture.
+  const markdown = ensureDocumentArchitecture(rawMarkdown);
   const { jsPDF } = await import('jspdf');
   const doc = new jsPDF({ unit: 'pt', format: 'a4' });
 
@@ -344,6 +418,52 @@ export async function buildReportPdf(markdown: string, meta: ReportPdfMeta): Pro
         need(lines.length * 13 + 6);
         doc.text(lines, M, y); y += lines.length * 13 + 5;
       }
+    }
+  }
+
+  // ── The design maps ──────────────────────────────────────────────────────────
+  //
+  // Appended as plates rather than woven between sections: they are drawn at a different scale to
+  // everything else, a reader flips to them, and a section boundary is the wrong place to break a
+  // full-page map. One page each, one image in memory at a time.
+  const plates = meta.sheets ?? [];
+  if (plates.length && meta.loadSheetImage) {
+    let plateNumber = 0;
+    for (const sheet of plates) {
+      let source: string | null = null;
+      try {
+        source = await meta.loadSheetImage(sheet.id);
+      } catch {
+        source = null;
+      }
+      if (!source) continue; // a missing sheet costs its plate, never the report
+      const plate = await sheetPlate(source);
+      source = null; // the full-resolution original is done with; do not hold it across the draw
+      if (!plate) continue;
+
+      doc.addPage();
+      y = M + 12;
+      plateNumber += 1;
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(12);
+      setInk(INK.green);
+      doc.text(`Figure ${plateNumber} — ${stripInlineMarkdown(sheet.label)}`, M, y);
+      y += 16;
+
+      // Fit inside the margins without ever enlarging: a plan printed larger than its own
+      // resolution is a blurry plan, and these are documents people measure off.
+      const captionRoom = 18;
+      const availW = CW;
+      const availH = BOTTOM - y - captionRoom;
+      const fit = Math.min(availW / plate.width, availH / plate.height);
+      const drawW = plate.width * fit;
+      const drawH = plate.height * fit;
+      doc.addImage(plate.dataUrl, 'JPEG', M + (availW - drawW) / 2, y, drawW, drawH, undefined, 'FAST');
+      y += drawH + 12;
+      doc.setFont('helvetica', 'normal');
+      doc.setFontSize(8.5);
+      setInk(INK.muted);
+      doc.text('Geometry and counts come from your saved design.', M, y);
     }
   }
 

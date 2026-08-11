@@ -218,3 +218,49 @@ export function buildListOfFigures(figures: string[]): string {
   if (!figures.length) return '';
   return ['## Figures', '', ...figures.map((f) => `${f}  `), ''].join('\n');
 }
+
+/**
+ * Give a flat report the document architecture it is missing, without disturbing one that has it.
+ *
+ * assembleReportDocument builds the cover, contents and numbering for every report the API
+ * generates — but a report is a SAVED ARTEFACT. Rory exported a report on 11 August whose markdown
+ * had been generated before that assembler existed, and the PDF came out with no contents page and
+ * no section numbers: "does it have the new layout yet?" It did not, and never would have, because
+ * the architecture was applied once at generation and the saved text kept its original shape
+ * forever.
+ *
+ * So the export applies it too, idempotently. A document that already has a Contents page is
+ * returned byte-for-byte — running the numberer twice would renumber already-numbered headings,
+ * which is the exact defect stripLeadingNumber exists to undo.
+ *
+ * The cover is NOT synthesised here. A cover carries claims (farm name, coordinates, date, who
+ * checked it) that must come from data, never from re-reading prose — inventing one at export time
+ * is how a document ends up asserting something nobody entered.
+ */
+export function ensureDocumentArchitecture(markdown: string): string {
+  const text = markdown ?? '';
+  if (!text.trim()) return text;
+  // Already a structured document — leave it exactly as generated.
+  if (/^##\s+Contents\s*$/im.test(text)) return text;
+
+  const figured = numberFigures(text);
+  const numbered = numberSections(figured.markdown);
+  if (!numbered.headings.length) return text; // nothing to build a contents page out of
+
+  const contents = buildContents(numbered.headings);
+  const figuresList = buildListOfFigures(figured.figures);
+  const frontMatter = [contents, figuresList].filter((block) => block.length > 0).join('\n\n');
+  if (!frontMatter) return numbered.markdown;
+
+  // The front matter goes AFTER the document's title block, not above it: a contents page that
+  // precedes the report's own `# ` heading reads as a contents page for nothing.
+  const lines = numbered.markdown.split('\n');
+  const titleIndex = lines.findIndex((line) => /^#\s+\S/.test(line));
+  if (titleIndex === -1) return `${frontMatter}\n\n${numbered.markdown}`;
+  // Keep any lead paragraph that belongs to the title (subtitle, place, date) with the title.
+  let insertAt = titleIndex + 1;
+  while (insertAt < lines.length && !/^##\s+\S/.test(lines[insertAt])) insertAt += 1;
+  const head = lines.slice(0, insertAt).join('\n').trimEnd();
+  const rest = lines.slice(insertAt).join('\n');
+  return `${head}\n\n${frontMatter}\n\n${rest}`;
+}
