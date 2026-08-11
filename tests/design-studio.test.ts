@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import { readFileSync } from 'node:fs';
 
 import type { Feature, FeatureCollection, Polygon } from 'geojson';
 import {
@@ -263,4 +264,26 @@ test('damaged numeric evidence never becomes farmer-facing NaN or Infinity', () 
   assert.equal(plan.waterCalc?.rainfallMmUsed, null);
   assert.equal(plan.waterCalc?.roofAreaM2Used, 0);
   assert.equal(plan.waterCalc?.cultivationAreaM2, 0);
+});
+
+test('the species picker opens towards the space that exists, not always upwards', () => {
+  // Rory, with the list clipped off the top of the screen over the step tabs: "this is stuck at
+  // the top". The panel only ever opened UPWARDS from the button — right for a phone's bottom
+  // sheet, wrong the moment the palette is a side column whose button sits near the top, where
+  // "upwards" means off-screen. It was also uncapped, so it could not shrink to fit either.
+  const src = readFileSync(new URL('../components/design/DesignPalette.tsx', import.meta.url), 'utf8');
+  const at = src.indexOf('const [speciesAnchor');
+  assert.ok(at > 0, 'the species anchor moved — re-pin this, do not delete it');
+  const measure = src.slice(at, src.indexOf('measure();', at));
+  assert.ok(measure.includes('spaceAbove') && measure.includes('spaceBelow'),
+    'the picker no longer measures the room on each side');
+  assert.ok(/openDown/.test(measure), 'the open direction is fixed again instead of chosen');
+  assert.ok(/maxHeight:/.test(measure),
+    'the panel is no longer capped to the side it opens into — it can run off the screen again');
+  // And the panel must actually USE the chosen side, not just compute it.
+  const panel = src.slice(src.indexOf('speciesPickerOpen && speciesAnchor'));
+  assert.ok(/speciesAnchor\.openDown[\s\S]{0,120}top: speciesAnchor\.downTop/.test(panel),
+    'the panel ignores the downward placement it just computed');
+  assert.ok(/maxHeight: speciesAnchor\.maxHeight/.test(panel),
+    'the panel ignores its computed cap and is back on a fixed 45dvh');
 });
