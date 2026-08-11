@@ -6,7 +6,9 @@ import {
   buildLockedIllustrationPrompt,
   groundContractFor,
   isPhotoPreservingStyle,
+  STYLE_LINES,
 } from '@/lib/producer-prompt';
+import { styleSupportsGroundSource } from '@/lib/render-policy';
 
 // THE PLAIN UNDERLAY HAD NO CONTRACT OF ITS OWN, AND IT COST A PAID RENDER.
 //
@@ -49,6 +51,18 @@ test('on paper the model is told to invent no ground at all', () => {
   // And it must not promise to preserve a photograph that does not exist.
   assert.doesNotMatch(prompt, /KEEP THE PHOTOGRAPH/);
   assert.doesNotMatch(prompt, /real photographed pixels/);
+  assert.doesNotMatch(prompt, /real aerial photograph IS the map|supplied satellite image|photo shows/i,
+    'the style preamble must not contradict the paper contract before it reaches it');
+});
+
+test('every selected style applies only to features when the source is paper', () => {
+  for (const style of Object.keys(STYLE_LINES) as Array<keyof typeof STYLE_LINES>) {
+    if (!styleSupportsGroundSource(style, 'paper')) continue;
+    const prompt = buildLockedIllustrationPrompt('Planting', style, 'Vegetable Bed ×2', '', 'paper');
+    assert.match(prompt, /^STYLE — .*plain white drawing paper/i, style);
+    assert.doesNotMatch(prompt, /real aerial photograph IS the map|supplied satellite image|photo shows|paint edge to edge/i, style);
+    assert.match(prompt, /KEEP THE PAPER WHITE/, style);
+  }
 });
 
 test('a water sheet on paper also loses the ground-painting art direction', () => {
@@ -62,8 +76,9 @@ test('a water sheet on paper also loses the ground-painting art direction', () =
   assert.match(prompt, /WATER FEATURE ROLE/, 'the water direction itself must survive');
 });
 
-test('the photo and painted contracts are byte-for-byte what they were', () => {
-  // This change must be invisible to every render that has a photograph under it.
+test('omitting the ground-source argument still means a photograph', () => {
+  // Default and explicit-photo callers must resolve to the same contract. This is the API rule;
+  // pinning the historical prompt bytes would prevent legitimate improvements to that contract.
   for (const style of ['photo_plan', 'satellite_overlay', 'homestead_storybook'] as const) {
     assert.equal(
       buildLockedIllustrationPrompt('Planting', style, 'Mango Tree x4', 'brief'),

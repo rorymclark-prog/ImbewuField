@@ -8,7 +8,9 @@ import { buildFinishedSheetPolishPrompt, buildLockedBackgroundPrompt, buildLocke
 import { ELEMENT_CATALOG } from '../lib/design-elements.ts';
 import { isDifferentBuild } from '../lib/pwa-update.ts';
 import { preserveCanvasNavigation, type DesignCanvasState } from '../lib/design-canvas.ts';
-import { exactModelInputMarks, hasConflictingRenderAuthority, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '../lib/render-policy.ts';
+import { exactModelInputMarks, hasConflictingRenderAuthority, lockedProtectMaskOptionsForStyle, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle, styleSupportsGroundSource } from '../lib/render-policy.ts';
+import { buildItemMaskFeatherLayers } from '../lib/protect-mask-feather.ts';
+import { contextElementNames } from '../lib/overlay-elements.ts';
 import { lineInFilter, REFERENCE_SHEET_LABEL } from '../lib/glossy-filters.ts';
 import { EARTHWORKS_ROUTE_STYLE, WATER_LEGEND_SECTION_ORDER, pairedWaterDestinationCanopyIds, waterFeaturePresentationDimensions, waterFeaturePresentationScale, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRouteLegendEntries, waterRoutesWithVisualBridges, waterRouteStyleFor, earthworksRouteStyleFor } from '../lib/water-cartography.ts';
 import { authenticateApiRequest, MAX_API_BODY_BYTES, oversizedApiBodyResponse } from '../lib/api-auth.ts';
@@ -154,6 +156,19 @@ test('style-derived queue flags have exactly one render authority', () => {
   assert.equal(hasConflictingRenderAuthority({ showcase: true, geometryLock: true }), true);
 });
 
+test('Satellite Overlay cannot spend a render on paper that contradicts its photo contract', () => {
+  assert.equal(styleSupportsGroundSource('satellite_overlay', 'paper'), false);
+  assert.equal(styleSupportsGroundSource('satellite_overlay', 'photo'), true);
+  assert.equal(styleSupportsGroundSource('photo_plan', 'paper'), true,
+    'Photo Plan has a real paper feature-treatment route; only Satellite Overlay requires the photo');
+
+  const glossy = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
+  assert.ok((glossy.match(/if \(!styleSupportsGroundSource\(/g) ?? []).length >= 4,
+    'every synchronous and queued paid entry point must refuse the impossible paper route');
+  assert.match(glossy, /disabled=\{loading !== null \|\| unavailableForUnderlay\}/,
+    'the impossible choice must be disabled before the farmer reaches the paid button');
+});
+
 test('exact style inputs contain no editor glyphs or model-interpreted design marks', () => {
   for (const filter of ['all', 'zones', 'water', 'planting', 'structures'] as const) {
     assert.deepEqual(exactModelInputMarks(filter), {
@@ -167,16 +182,67 @@ test('exact style inputs contain no editor glyphs or model-interpreted design ma
   }
 });
 
-test('paid Geometry-Lock polish inputs show saved design context without a driveway edge', () => {
+test('every app-owned AI style sends bounded guides without losing per-feature identity', () => {
   for (const filter of ['all', 'zones', 'water', 'planting', 'structures'] as const) {
-    assert.deepEqual(polishModelInputMarks(filter), {
+    assert.deepEqual(polishModelInputMarks('photo_plan', filter, 'photo'), {
       showToolGlyphs: true,
       showDrivewayEdge: false,
       showDesignLines: true,
       showDesignItems: true,
-      showHouseMark: true,
-      showDrivewayMark: true,
+      showHouseMark: false,
+      showDrivewayMark: false,
+      itemGuideStyle: 'registration',
     });
+  }
+  assert.deepEqual(polishModelInputMarks('precision_atlas', 'planting', 'paper'), {
+    showToolGlyphs: true,
+    showDrivewayEdge: false,
+    showDesignLines: true,
+    showDesignItems: true,
+    showHouseMark: true,
+    showDrivewayMark: true,
+    itemGuideStyle: 'registration',
+  }, 'plain paper keeps the factual structure marks that have no photograph beneath them');
+  assert.deepEqual(polishModelInputMarks('precision_atlas', 'planting', 'photo'), {
+    showToolGlyphs: true,
+    showDrivewayEdge: false,
+    showDesignLines: true,
+    showDesignItems: true,
+    showHouseMark: true,
+    showDrivewayMark: true,
+    itemGuideStyle: 'registration',
+  }, 'a painted map keeps the identity cue for same-colour features and repaints structures');
+});
+
+test('the source contract decides whether Geometry Lock restores ground or paints one continuous map', () => {
+  const photo = lockedProtectMaskOptionsForStyle('photo_plan', 'planting', 'photo');
+  assert.equal(photo.protectUnmarkedGround, true);
+  assert.equal(photo.protectOutside, true);
+  const aerialPixel = px(118, 92, 61, 255);
+  const paintedPixel = px(48, 77, 55, 255);
+  assert.deepEqual(
+    blendProtectedPixels(aerialPixel, paintedPixel, px(0, 0, 0, photo.protectUnmarkedGround ? 255 : 0)),
+    aerialPixel,
+    'ordinary Photo Plan ground remains the real aerial pixel',
+  );
+
+  const paper = lockedProtectMaskOptionsForStyle('precision_atlas', 'planting', 'paper');
+  assert.equal(paper.protectUnmarkedGround, true, 'plain white paper stays untouched between features');
+  assert.equal(paper.protectOutside, true);
+
+  for (const style of ['precision_atlas', 'field_ledger', 'homestead_storybook', 'extension_blueprint', 'chatgpt_atlas', 'karoo_folk', 'master_atlas'] as const) {
+    const paint = lockedProtectMaskOptionsForStyle(style, 'planting', 'photo');
+    assert.equal(paint.protectUnmarkedGround, false, `${style} must not paste AI islands into raw aerial ground`);
+    assert.equal(paint.protectOutside, false, `${style} promises one edge-to-edge painted map`);
+    assert.equal(paint.protectBoundary, false,
+      'painted ground must not gain a raw-aerial boundary seam; the app redraws the saved fence');
+    assert.equal(paint.protectHouse, true, 'the saved building footprint remains app-owned');
+    assert.equal(paint.protectDriveway, true, 'the saved access geometry remains app-owned');
+    assert.deepEqual(
+      blendProtectedPixels(aerialPixel, paintedPixel, px(0, 0, 0, paint.protectUnmarkedGround ? 255 : 0)),
+      paintedPixel,
+      `${style} must retain model artwork on ordinary unmarked ground`,
+    );
   }
 });
 
@@ -193,6 +259,56 @@ test('polish input marks do not change the exact input policy', () => {
 
 test('rendered driveways have no decorative border on any sheet', () => {
   assert.equal(RENDERED_DRIVEWAY_EDGE, false);
+});
+
+test('source-preserving Geometry Lock item holes blend inside the existing edit bound', () => {
+  const layers = buildItemMaskFeatherLayers(170, 85);
+  assert.ok(layers.length >= 8, 'a single opaque cut leaves the circular pasted-on seams seen in Photo Plan');
+  assert.deepEqual(layers[0], { width: 170, height: 85, eraseAlpha: 1 / layers.length });
+  assert.equal(layers.at(-1)?.eraseAlpha, 1, 'the item centre remains fully editable');
+  assert.ok((layers.at(-1)?.width ?? 0) >= 129 && (layers.at(-1)?.width ?? 0) <= 131,
+    'the fully editable core stays at the existing 1.3× footprint allowance');
+
+  const protectionAtX = (xFromCentre: number) => layers.reduce((alpha, layer) => {
+    if (Math.abs(xFromCentre) > layer.width / 2) return alpha;
+    return alpha * (1 - layer.eraseAlpha);
+  }, 1);
+  assert.equal(protectionAtX(86), 1, 'far ground remains byte-protected');
+  assert.equal(protectionAtX(0), 0, 'the saved feature centre remains fully editable');
+  const transition = [66, 70, 74, 78, 82].map(protectionAtX);
+  assert.ok(transition.every((alpha) => alpha > 0 && alpha < 1));
+  assert.ok(transition.every((alpha, i) => i === 0 || alpha > transition[i - 1]),
+    'protection increases monotonically from the feature to the real photograph');
+  assert.ok(new Set(transition.map((alpha) => alpha.toFixed(4))).size >= 4);
+
+  assert.throws(() => buildItemMaskFeatherLayers(0, 10), /finite and positive/);
+  assert.throws(() => buildItemMaskFeatherLayers(10, Number.NaN), /finite and positive/);
+
+  const glossy = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
+  assert.match(glossy, /for \(const layer of buildItemMaskFeatherLayers\(w, h\)\)/,
+    'the production mask must consume the feather layers; testing an unused helper protects nothing');
+});
+
+test('every editable Water context guide is named to the model without becoming Water content', () => {
+  const state = canvasState('water', 1);
+  state.items = [
+    { id: 'bed-a', defId: 'raised_bed', x: 0.2, y: 0.3 },
+    { id: 'bed-b', defId: 'raised_bed', x: 0.4, y: 0.3 },
+  ];
+  assert.deepEqual(contextElementNames(state, 'water'), ['Raised Bed ×2']);
+  assert.deepEqual(contextElementNames(state, 'planting'), []);
+
+  const glossy = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
+  assert.match(glossy, /const context = contextElementNames\(state, filter\);[\s\S]*CONTEXT ONLY/,
+    'drawn Water context must reach the locked prompt register instead of becoming an unnamed editable mark');
+});
+
+test('the locked feature register maps each visible identity glyph to its saved feature name', () => {
+  const glossy = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
+  assert.match(glossy, /`\$\{g\.icon\} \$\{name\}\$\{g\.n > 1/,
+    'same-colour footprints need the catalog glyph-to-name mapping in the authoritative register');
+  assert.doesNotMatch(glossy, /producerElementsText\([^\n]*!(?:geometryLock|lockActive)/,
+    'a locked caller must not silently strip the identity mapping while still drawing its glyph');
 });
 
 test('render-only Water cleanup bridges only tiny aligned gaps of the same route type', () => {
@@ -1464,20 +1580,40 @@ test('the Geometry Lock hybrid never tells a photo-preserving style to repaint t
   }
   assert.match(photoPlan, /stays the real photographed pixels/i);
   assert.match(photoPlan, /Do not repaint, illustrate, stylise/i);
-  // The one thing it IS allowed to add.
-  assert.match(photoPlan, /PLANTED vegetable bed in full growth/);
+  // The one thing it IS allowed to add. Growth stage is deliberately not pinned here: Photo Plan
+  // now asks for a restrained photomontage, while the painted styles keep their lush/full brief.
+  assert.match(photoPlan, /PLANTED vegetable bed/);
 
   const satOverlay = buildLockedIllustrationPrompt('Planting', 'satellite_overlay', '🥬 Vegetable Bed ×9');
   assert.doesNotMatch(satOverlay, /paint edge to edge/i);
   assert.match(satOverlay, /stays the real photographed pixels/i);
 });
 
-test('a painted style keeps the full edge-to-edge illustration instruction unchanged', () => {
-  // The photo-preserving fix must be scoped to photo_plan/satellite_overlay only — every other
-  // style painted the ground correctly before this change and must still be asked to.
+test('Photo Plan asks for a restrained photomontage, not a mature-canopy sprite collage', () => {
+  const prompt = buildLockedIllustrationPrompt(
+    'Planting',
+    'photo_plan',
+    'Vegetable Bed ×9, Mango Tree ×4, Banana Clump ×5',
+  );
+
+  assert.match(prompt, /photorealistic top-down landscape visualisation/i);
+  assert.match(prompt, /remove every guide footprint/i);
+  assert.match(prompt, /clear photographed ground between neighbouring features/i);
+  assert.doesNotMatch(prompt, /full painted canopies|in full growth/i);
+
+  const paper = buildLockedIllustrationPrompt('Planting', 'photo_plan', 'Vegetable Bed ×9', '', 'paper');
+  assert.doesNotMatch(paper, /photorealistic top-down landscape visualisation/i,
+    'plain paper keeps its botanical-drawing contract');
+  assert.match(paper, /remove every guide footprint/i,
+    'temporary registration marks must disappear on paper too');
+});
+
+test('a painted style gets one edge-to-edge illustration and removes the shared temporary guides', () => {
   const p = buildLockedIllustrationPrompt('Planting', 'precision_atlas', '🥬 Vegetable Bed ×9');
   assert.match(p, /paint edge to edge/i);
   assert.match(p, /PAINT WHAT IS THERE/);
+  assert.match(p, /remove every guide footprint, registration mark and identity glyph/i);
+  assert.match(p, /one continuous edge-to-edge illustration/i);
   assert.doesNotMatch(p, /stays the real photographed pixels/i);
 });
 

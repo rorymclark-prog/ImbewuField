@@ -74,6 +74,28 @@ export function groundContractFor(style: StylePreset, groundSource: 'photo' | 'p
   return isPhotoPreservingStyle(style) ? 'photo' : 'paint';
 }
 
+/**
+ * Feature treatment for a source that is literally white drawing paper.
+ *
+ * STYLE_LINES answers how each style treats photographed LAND. Prefixing one of those lines to a
+ * paper prompt created two authorities in one request: Photo Plan demanded a supplied aerial while
+ * the next paragraph said no photograph existed; painted styles demanded a textured ground while
+ * the next paragraph said keep the paper white. On paper the style therefore applies only to the
+ * saved features. This one anchor deliberately contains no land, photograph or background rule —
+ * groundContractFor remains the sole authority for that question.
+ */
+const PAPER_FEATURE_STYLE: Record<StylePreset, string> = {
+  precision_atlas: 'STYLE — Precision Atlas on plain white drawing paper: render only the saved features with layered transparent watercolor, controlled gouache detail, disciplined ink edges and a restrained sage, olive, blue-green, buff and charcoal palette.',
+  photo_plan: 'STYLE — Photo Plan on plain white drawing paper: render only the saved features as restrained, natural top-down botanical and built-feature illustrations with credible scale, material and shadow.',
+  satellite_overlay: 'STYLE — Satellite Overlay on plain white drawing paper: render only the saved features as crisp, vector-clean top-down pictorial symbols with disciplined chartreuse, blue, foliage-green and charcoal accents.',
+  field_ledger: 'STYLE — Field Ledger on plain white drawing paper: render only the saved features in fine dark-sepia pen linework with rich but controlled watercolor and a credible surveyor character.',
+  homestead_storybook: 'STYLE — Homestead Storybook on plain white drawing paper: render only the saved features with saturated gouache, rounded botanical forms and charming but legible handmade brushwork.',
+  extension_blueprint: 'STYLE — Extension Blueprint on plain white drawing paper: render only the saved features with disciplined technical ink, subtle hand-painted material detail and strong small-print legibility.',
+  karoo_folk: 'STYLE — Karoo Folk Map on plain white drawing paper: render only the saved features with bold flattened forms, South African folk-pattern accents and handmade brushwork.',
+  chatgpt_atlas: 'STYLE — ChatGPT Atlas on plain white drawing paper: render only the saved features as polished editorial cartography with soft watercolor, crisp ink and a restrained olive, ochre and charcoal palette.',
+  master_atlas: 'STYLE — Master Atlas on plain white drawing paper: render only the saved features with formal engraved crosshatch, stipple shading, precise graphite-charcoal linework and restrained brass accents.',
+};
+
 // STYLE_LINES lives further down (with the showcase-prompt rewrite) since both the strict
 // buildProducerPrompt below and the showcase prompts share the one definition.
 
@@ -139,13 +161,18 @@ export function buildLockedIllustrationPrompt(
   // the fourth documented instance in this one file of a fix reaching some prompt paths and not
   // others; reusing showcaseMarkerGlossary rather than writing a fourth table is the point, so the
   // next bed/basin/vetiver correction cannot miss the app's most-used renderer again.
-  const markerGlossary = showcaseMarkerGlossary(showcaseSheetKindForLabel(layerLabel), elementsText);
   const ground = groundContractFor(stylePreset, groundSource);
   const onPaper = ground === 'paper';
   const paintGround = ground === 'paint';
   // Kept as its own name because several clauses below mean "do not invent ground" rather than
   // "keep the photograph" — and on paper there is no photograph to keep.
   const photoPreserving = ground === 'photo';
+  const photoPlanPhotomontage = stylePreset === 'photo_plan' && photoPreserving;
+  const markerGlossary = showcaseMarkerGlossary(
+    showcaseSheetKindForLabel(layerLabel),
+    elementsText,
+    photoPlanPhotomontage,
+  );
   const waterArtDirection = /water/i.test(layerLabel)
     ? [
         `WATER FEATURE ROLE: polish every already-marked tank, tap, basin, pond and fitting into a recognisable realistic top-down farm feature at its exact saved centre, count, orientation and footprint. Keep buried water pipe blue, filtered-greywater routes purple, and drip irrigation blue with sparse emitters. The app reinforces the measured routes, leaders, labels and legend afterwards.`,
@@ -186,6 +213,8 @@ export function buildLockedIllustrationPrompt(
   // unchanged, so this fix cannot touch the eight styles it was never wrong for.
   const task = onPaper
     ? `TASK: this sheet is a plan DRAWING ON PLAIN WHITE PAPER. There is no photograph and no land beneath it — the white is paper, not ground. Redraw ONLY the marked design elements from the register below as beautiful hand-illustrated botanical plan artwork sitting on that paper, in the manner of a published permaculture planting drawing. Everything you do not illustrate stays exactly the white it already is.`
+    : photoPlanPhotomontage
+    ? `TASK: the real aerial photograph beneath this composite is the map and survives intact — see the style line above. Add ONLY the marked design elements from the register below as a restrained photorealistic top-down landscape visualisation composited into the untouched photograph. Match its real grain, colour, sharpness, light direction and shadows; never turn the planned features into flat sprites, painted symbols or a continuous carpet of foliage.`
     : photoPreserving
     ? `TASK: the real aerial photograph beneath this composite is the map and survives intact — see the style line above. Add ONLY the marked design elements from the register below as real illustrated objects sitting on top of the untouched photograph, each with a soft realistic drop shadow so it reads as built or planted on the land, not floating above it.`
     : `TASK: turn this exact saved design composite into one visibly polished hand-illustrated ${layer} map. Paint edge to edge — every corner becomes artwork, including the land beyond the property boundary.`;
@@ -200,21 +229,21 @@ export function buildLockedIllustrationPrompt(
     // the highest-impact of the three to have missed.
     : `PAINT WHAT IS THERE: illustrate the real landscape the photo already shows — existing trees and shrubs as drawn canopies, hedges and treelines, mown lawn, rough veld, bare and tilled soil, tracks and driveways, paved ground (patios, concrete slabs, hard standing) as flat light-grey paving — never roofed, never the driveway's tar-black — and every building as its full roof seen from directly above. Neighbouring plots are painted in the same hand as the rest of the sheet, never left as raw photograph.`;
   return [
-    STYLE_LINES[stylePreset],
+    onPaper ? PAPER_FEATURE_STYLE[stylePreset] : STYLE_LINES[stylePreset],
     task,
     exactFeatures,
     markerGlossary ? `WHAT THE MARKERS ARE: ${markerGlossary}.` : '',
     designBrief.trim() ? `WHOLE-SITE CONSISTENCY BRIEF: ${designBrief.trim()}` : '',
-    `PLACED-FEATURE CONTRACT: every coloured footprint, route and editor marker already visible in the source is a saved feature, not a suggestion. Replace each marker with a realistic orthographic illustration of that named feature at the same centre, count, rotation and footprint. Keep the illustration confined to its saved footprint. Do not duplicate it, omit it, move it or leave an emoji/tool marker in the finished artwork.`,
+    `PLACED-FEATURE CONTRACT: every thin coloured registration tick, footprint bracket, small identity glyph and route guide in the source marks one saved feature; it is temporary instruction chrome, not part of the farm and not finished artwork. Use the glyph only to identify which named feature belongs at that saved footprint. Replace each guide with one ${photoPlanPhotomontage ? 'natural photorealistic top-down feature' : 'style-appropriate orthographic illustration of the named feature'} at the same centre, count, rotation and footprint. Remove every guide footprint, registration mark and identity glyph completely — no coloured disc, rectangle, ring, bracket, outline, halo, leader, emoji or editor mark may survive. Keep neighbouring features visually separate${photoPlanPhotomontage ? ' and keep clear photographed ground between neighbouring features wherever their saved footprints do not touch' : ''}. Do not duplicate, omit, move, enlarge or merge anything.`,
     onPaper
       ? `PAPER FINISH: the app draws exact feature outlines, technical routes, labels, legend and title over your artwork afterwards. Make each illustrated element clean, well-separated and confident enough to read beneath that precise linework — and leave the white between elements genuinely empty, because that white is where the app's labels and leaders land.`
       : photoPreserving
       ? ''
-      : `HYBRID FINISH: the app restores protected roof, driveway, boundary and context pixels, then reinforces exact feature outlines, technical routes, labels and legend over your artwork. Make the painted trees, beds, tanks, basins, structures and ground visually rich enough to remain visible beneath that precise cartographic linework.`,
+      : `HYBRID FINISH: the app restores the protected roof, driveway and boundary facts, then reinforces technical routes, labels and legend over your artwork. The remaining ground stays your one continuous edge-to-edge illustration — do not break it into isolated feature patches. Make the painted trees, beds, tanks, basins, structures and ground visually rich enough to remain visible beneath that precise cartographic linework.`,
     waterArtDirection,
     groundClause,
     `INVENT NOTHING: add no tree, bed, tank, pond, path, fence, hedge or building that is not already visible or marked in the source. Where the ground is open it stays open — ${onPaper ? 'blank white paper, with nothing painted on it at all' : photoPreserving ? 'the real photographed ground' : 'illustrated, but empty'}. Do not decorate, fill space or redesign the site.`,
-    `KEEP THE GEOMETRY: every roof outline, driveway edge, boundary and treeline keeps exactly the shape, size and position the photo shows. Never crop, shrink, rotate, straighten, cover or plant over any part of a roof.`,
+    `KEEP THE GEOMETRY: every roof outline, driveway edge, boundary and treeline keeps exactly the shape, size and position the ${onPaper ? 'source guide' : 'photo'} shows. Never crop, shrink, rotate, straighten, cover or plant over any part of a roof.`,
     `VIEW AND FRAMING: flat orthographic top-down, north-up plan only. Keep exactly the source crop, scale, aspect ratio and camera position. No oblique view, perspective tilt, 3D camera, horizon, isometric view, rotation, zoom, recentering or reframing.`,
     `NO SHEET FURNITURE: no writing, numbers, title, legend, key, panel, border, compass, north arrow, scale bar, pin, icon or emoji anywhere in the image. The app draws all of those afterwards.`,
     onPaper
@@ -482,7 +511,7 @@ export const STYLE_LINES: Record<StylePreset, string> = {
   // NOT model-chrome (see isModelChromeStyle), so our deterministic labels, counts and legend are
   // burned on afterwards from the farmer's saved design. The model illustrates; it never writes.
   photo_plan:
-    'STYLE — Photo Plan: the real aerial photograph IS the map and must survive intact. Every pixel that is not a design element stays the supplied satellite image — native grain, native colour, real roofs, real tree canopies, real shadows, real ground texture, neighbouring buildings and roads all photographic and sharp. Do not stylise, filter, wash, engrave, hatch, blur, relight or re-colour the ground under any circumstances; do not extend or invent terrain beyond what the photograph shows. The ONLY new artwork is the design itself, illustrated over the photo with soft realistic drop shadows so it sits ON the land rather than floating above it: vegetable beds as tidy planted rows, fruit trees as full painted canopies with visible trunk shadows, water tanks as solid cylinders, compost bays and structures as small semi-3D objects, paths and swales as real surfaces following exactly the routes given. Match the photograph\'s own light direction and time of day so the drawn shadows agree with the real ones. ' +
+    'STYLE — Photo Plan: the real aerial photograph IS the map and must survive intact. Every pixel that is not a design element stays the supplied satellite image — native grain, native colour, real roofs, real tree canopies, real shadows, real ground texture, neighbouring buildings and roads all photographic and sharp. Do not stylise, filter, wash, engrave, hatch, blur, relight or re-colour the ground under any circumstances; do not extend or invent terrain beyond what the photograph shows. The ONLY new artwork is the saved design itself, composited into the source as restrained natural top-down landscape artwork: vegetable beds as natural tidy planted rows, fruit trees as separate natural crowns without graphic canopy circles, water tanks as solid cylinders, compost bays and structures as small real objects, paths and swales as real surfaces following exactly the routes given. Match the source\'s own grain, sharpness, light direction and time of day so every new object belongs to the same scene. ' +
     'WRITE NOTHING. No labels, no numbers, no legend, no title, no scale bar, no north arrow, no lettering of any kind anywhere on the image — those are drawn afterwards from the farmer\'s saved design and any text you add will collide with them and be wrong. Leave the margins clean. The result should read as a real photograph of a real farm with the planned design already built on it.' + PLAN_SET_ANCHOR_PHOTO,
 
   // The other style that KEEPS the aerial photograph — but with the model in charge of the lettering
@@ -597,6 +626,16 @@ const M = {
 
 type ShowcaseMarkerKey = keyof typeof M;
 
+// The generic painted styles deliberately show lush, fully-grown vegetation. Photo Plan is a
+// different product: a restrained photomontage over the farmer's real aerial. Reusing the lush
+// glossary there is what turned a small, densely planned site into a carpet of mature canopies and
+// repeated crop sprites. These overrides change presentation only; the same saved features,
+// counts, centres and footprints remain authoritative.
+const PHOTO_PLAN_MARKERS: Partial<Record<ShowcaseMarkerKey, string>> = {
+  bed: 'each green rectangle is one PLANTED vegetable bed: natural, tidy crop rows contained inside the saved rectangle, with believable variation and photographed soil visible between rows. Beds standing side by side remain distinct beds with their photographed paths visible — never one solid green carpet, hedge, shrub row or repeated sprite texture',
+  tree: 'a tree marker is one planned fruit tree shown as a natural top-down crown centred inside its saved footprint. The guide circle is a placement bound, not a green disc or canopy outline: remove it completely, keep neighbouring crowns distinct, and preserve photographed ground wherever their saved footprints do not touch',
+};
+
 const SHOWCASE_MARKERS_BY_SHEET: Record<ShowcaseSheetKind, ShowcaseMarkerKey[]> = {
   all: ['bed', 'staple_garden', 'tree', 'windbreak', 'tank', 'tap', 'dam', 'borehole', 'swale', 'pipe', 'drip', 'building', 'hive', 'patio', 'fence', 'path', 'driveway', 'tree_basin', 'banana_circle', 'mulch_bank', 'greywater_basin', 'greywater_line', 'greywater_fitting', 'half_moon', 'berm', 'terrace', 'coop', 'chicken_tractor', 'nursery', 'compost', 'worm_farm', 'goat_pen', 'pig_pen', 'kraal', 'rabbit_hutch', 'duck_pond', 'livestock_trough', 'biodigester', 'market_stall', 'playground', 'zones'],
   zones: ['zones', 'driveway'],
@@ -670,10 +709,14 @@ export function showcaseSheetKindForLabel(layerLabel: string): ShowcaseSheetKind
   return 'all';
 }
 
-function showcaseMarkerGlossary(sheetKind: ShowcaseSheetKind, elementsText: string): string {
+function showcaseMarkerGlossary(
+  sheetKind: ShowcaseSheetKind,
+  elementsText: string,
+  photoPlan = false,
+): string {
   return SHOWCASE_MARKERS_BY_SHEET[sheetKind]
     .filter((key) => SHOWCASE_MARKER_MATCH[key].test(elementsText))
-    .map((key) => M[key])
+    .map((key) => photoPlan ? PHOTO_PLAN_MARKERS[key] ?? M[key] : M[key])
     .join('; ');
 }
 

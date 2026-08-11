@@ -303,7 +303,9 @@ test('a change to what a paid sheet looks like bumps the recipe token', () => {
   // The last-render display effect re-serves whatever localStorage holds for this key on mount, so
   // without a bump the farmer (and Rory, checking the fix) sees the PRE-fix picture — the chrome-
   // less Full Treatment this whole change exists to stop re-serving — without rendering anything.
-  assert.match(DESIGN_GLOSSY_SOURCE, /\+ ':r3'/, 'the r-token must move when the sheet changes');
+  const recipe = DESIGN_GLOSSY_SOURCE.match(/\+ ':(r\d+)'/)?.[1];
+  assert.ok(recipe, 'the paid-sheet display cache must carry a renderer recipe token');
+  assert.notEqual(recipe, 'r3', 'the raw-aerial-islands recipe must never be re-served after this visual repair');
   assert.doesNotMatch(DESIGN_GLOSSY_SOURCE, /\+ ':r[12]'/);
   // PLAN_VERSION must NOT move with it: bumping that re-keys the gallery and takes paid renders
   // away from farmers who already have them.
@@ -324,8 +326,9 @@ test('the locked paid render is never over-painted with the app\'s own element a
   // again a moment later, so the paid pass could not change the picture whatever the model did.
   // Exact, wearing a paid badge, charged for.
   //
-  // What locked still guarantees, and what the stack below must keep: ground, structures, and
-  // everything outside the plot stay exact, and labels/legend are drawn by the app from saved data.
+  // What locked still guarantees, and what the stack below must keep: Photo Plan/paper preserve
+  // their source ground, painted styles keep their continuous illustration, and both redraw the
+  // factual structures, boundary, labels and legend from saved data.
   const src = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
   const at = src.indexOf('const overlayImage = locked');
   assert.ok(at > 0, 'the locked overlay decision moved — re-pin it, do not delete this guard');
@@ -340,4 +343,18 @@ test('the locked paid render is never over-painted with the app\'s own element a
   // promise, and dropping them would let the model repaint roofs and driveways.
   assert.ok(/stackOverlayImages\(exactGroundOverlay, structureOverlay/.test(src),
     'ground + structures are no longer composited exactly — geometry lock is now a lie');
+});
+
+test('the live Hybrid finisher redraws the saved boundary instead of restoring a photo seam', () => {
+  const src = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
+  assert.match(
+    src,
+    /const final = locked\s*\? await burnExactBoundaryLayer\(/,
+    'Geometry locked can otherwise ship without a visible saved property line',
+  );
+  assert.match(
+    src,
+    /drawBlueprintBoundary\(ctx, refLayers\.boundary,[\s\S]*state, frame\);/,
+    'the Hybrid boundary must come from the deterministic saved-geometry painter',
+  );
 });

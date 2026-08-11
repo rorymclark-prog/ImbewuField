@@ -83,7 +83,7 @@ import {
   type GutterRow,
 } from '@/lib/plan-label-gutter';
 import { leaderLabelFontSize, placeLeaderLabel, stackLeaderRows, leaderPath } from '@/lib/leader-labels';
-import { exactModelInputMarks, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '@/lib/render-policy';
+import { lockedProtectMaskOptionsForStyle, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle, styleSupportsGroundSource } from '@/lib/render-policy';
 import { EARTHWORKS_ROUTE_STYLE, WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, nearestWaterNeighbourPx, offsetPolyline, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRoutesWithVisualBridges, waterRouteStyleFor, type EarthworksRouteStyle, type WaterLegendSection } from '@/lib/water-cartography';
 import { PLANTING_CANOPY_PAINT, PLANTING_LEGEND_SECTION_ORDER, PLANTING_ROUTE_STYLE, overstoryCanopyIds, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
 import { STRUCTURES_LEGEND_SECTION_ORDER, structuresFeaturePresentationDimensions, structuresLegendSectionForFeature, structuresRouteVisualFor, type StructuresLegendSection } from '@/lib/structures-cartography';
@@ -110,6 +110,7 @@ import {
 import { PLAIN_HARD_SURFACE_PAINT, SHEET_BASE_MUTE_STYLE, SHEET_STRUCTURE_MUTE_STYLE, type SheetBaseMute } from '@/lib/sheet-base-mute';
 import { frameForUnderlay, hasFarmerPhoto, paintPlainPaperGround, sheetUnderlayOptions, underlayCacheSuffix, type SheetUnderlay } from '@/lib/sheet-underlay';
 import { drainCanvasToDataUrl } from '@/lib/release-canvas';
+import { buildItemMaskFeatherLayers } from '@/lib/protect-mask-feather';
 import { overlandFlowArrows, overlandFlowLegendText, interceptFlowArrows, type FlowArrow } from '@/lib/overland-flow';
 import { ridgeAngleOf, roofRunoffArrows, gutterToTankArrows, tankOverflowArrows, type StoryArrow } from '@/lib/water-story';
 import { BED_DEF_IDS } from '@/lib/design-beds-bridge';
@@ -127,7 +128,7 @@ import {
   type CropGlyph,
   type CropRowLayout,
 } from '@/lib/crop-row-cartography';
-import { overlayElementsText } from '@/lib/overlay-elements';
+import { contextElementNames, overlayElementsText } from '@/lib/overlay-elements';
 import { annualRoofHarvestLitres, deriveWaterSystem, ringAreaM2, statedTankCapacityLitres } from '@/lib/water-system';
 import { WATER_SHEET_ROOF_RUNOFF_COEFFICIENT } from '@/lib/roof-runoff';
 import { drawCartographicWaterSymbol } from '@/lib/cartographic-water-symbols';
@@ -555,6 +556,8 @@ const PRODUCER_STYLES: Array<{ key: StylePreset; label: string; blurb: string; l
   { key: 'master_atlas',        label: 'Master Atlas',        blurb: 'engraved masterplan for boards & funders', labelStyle: 'blueprint', swatch: 'linear-gradient(135deg, #2B2E33 0%, #3E4A5C 55%, #B08D3E 100%)' },
 ];
 
+const SATELLITE_OVERLAY_NEEDS_PHOTO = 'Satellite Overlay needs a photo underlay. Choose Satellite or Aerial photo instead of Plain paper.';
+
 // Sector's paid polish starts from a complete exact sheet. Satellite Overlay is omitted because
 // its prompt expects editor markers on a photograph, not a finished analytical page. Every style
 // shown here supports the same full-sheet AI polish route.
@@ -681,6 +684,7 @@ export interface CompositeMarkOptions {
   showDesignItems?: boolean;
   showHouseMark?: boolean;
   showDrivewayMark?: boolean;
+  itemGuideStyle?: 'filled' | 'outline' | 'registration';
 }
 
 // Satellite Overlay keeps the real photograph, so the driveway needs no painted stand-in: drawing
@@ -699,10 +703,6 @@ const OVERLAY_COMPOSITE_MARKS: CompositeMarkOptions = {
   showDrivewayEdge: false,
 };
 
-function lockedCompositeMarks(filter: GlossyLayerFilter): CompositeMarkOptions {
-  return exactModelInputMarks(filter);
-}
-
 interface ProtectMaskOptions {
   protectOutside?: boolean;
   protectLines?: boolean;
@@ -714,20 +714,6 @@ interface ProtectMaskOptions {
   editableItemScale?: number;
   houseHaloRatio?: number;
   houseFeatherRatio?: number;
-}
-
-function lockedProtectMaskOptions(filter: GlossyLayerFilter): ProtectMaskOptions {
-  const structural = {
-    protectOutside: true,
-    protectLines: false,
-    protectItems: false,
-    protectUnmarkedGround: true,
-    houseHaloRatio: 0.003,
-    houseFeatherRatio: 0.0012,
-  };
-  return filter === 'water'
-    ? { ...structural, protectBoundary: true, protectDriveway: true }
-    : structural;
 }
 
 /**
@@ -784,8 +770,63 @@ export function drawMarks(
   const showDesignItems = options.showDesignItems !== false;
   const showHouseMark = options.showHouseMark !== false;
   const showDrivewayMark = options.showDrivewayMark !== false;
+  const itemGuideStyle = options.itemGuideStyle ?? 'filled';
   // Canvas px per real-world metre (this canvas may be SCALE× the logical frame).
   const pxPerM = imgW / (frame.imgW * frame.mPerPx);
+
+  /**
+   * Temporary registration marks, not candidate artwork.
+   *
+   * A complete green circle is easy for an image model to preserve as a canopy ring; a filled
+   * circle is even easier to turn into a pasted sprite. Four short ticks or rectangle corners still
+   * encode the saved centre, footprint and rotation, but cannot plausibly be mistaken for a tree,
+   * bed or tank. The prompt requires these marks to disappear from the finished illustration.
+   */
+  const drawItemGuide = (
+    shape: 'circle' | 'rect',
+    cx: number,
+    cy: number,
+    width: number,
+    height: number,
+    rotation = 0,
+  ) => {
+    ctx.save();
+    ctx.translate(cx, cy);
+    if (rotation) ctx.rotate((rotation * Math.PI) / 180);
+    if (itemGuideStyle === 'registration') {
+      const halfW = width / 2;
+      const halfH = height / 2;
+      const tick = Math.max(2 * SCALE, Math.min(9 * SCALE, Math.min(width, height) * 0.24));
+      ctx.beginPath();
+      if (shape === 'circle') {
+        const radius = halfW;
+        const inner = Math.max(0, radius - tick);
+        const outer = radius + Math.min(2 * SCALE, tick * 0.3);
+        for (const angle of [0, Math.PI / 2, Math.PI, (Math.PI * 3) / 2]) {
+          ctx.moveTo(Math.cos(angle) * inner, Math.sin(angle) * inner);
+          ctx.lineTo(Math.cos(angle) * outer, Math.sin(angle) * outer);
+        }
+      } else {
+        const tickX = Math.min(tick, halfW);
+        const tickY = Math.min(tick, halfH);
+        for (const sx of [-1, 1] as const) for (const sy of [-1, 1] as const) {
+          ctx.moveTo(sx * halfW, sy * (halfH - tickY));
+          ctx.lineTo(sx * halfW, sy * halfH);
+          ctx.lineTo(sx * (halfW - tickX), sy * halfH);
+        }
+      }
+      ctx.stroke();
+    } else if (shape === 'circle') {
+      ctx.beginPath();
+      ctx.arc(0, 0, width / 2, 0, Math.PI * 2);
+      if (itemGuideStyle === 'filled') ctx.fill();
+      ctx.stroke();
+    } else {
+      if (itemGuideStyle === 'filled') ctx.fillRect(-width / 2, -height / 2, width, height);
+      ctx.strokeRect(-width / 2, -height / 2, width, height);
+    }
+    ctx.restore();
+  };
 
   // Boundary ring
   if (refLayers.boundary.length >= 3) {
@@ -1055,7 +1096,7 @@ export function drawMarks(
   });
   if (contextItems.length) {
     ctx.save();
-    ctx.globalAlpha = 0.45;
+    ctx.globalAlpha = itemGuideStyle === 'filled' ? 0.45 : 0.72;
     for (const item of contextItems) {
       const def = ELEMENTS_BY_ID[item.defId]!;
       const wLogical = (item.wM ?? def.wM) * pxPerM;
@@ -1065,19 +1106,7 @@ export function drawMarks(
       ctx.fillStyle = def.color;
       ctx.strokeStyle = 'rgba(255,255,255,0.7)';
       ctx.lineWidth = 1.5;
-      if (def.shape === 'circle') {
-        ctx.beginPath();
-        ctx.arc(cx, cy, wLogical / 2, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.stroke();
-      } else {
-        ctx.save();
-        ctx.translate(cx, cy);
-        if (item.rot) ctx.rotate((item.rot * Math.PI) / 180);
-        ctx.fillRect(-wLogical / 2, -hLogical / 2, wLogical, hLogical);
-        ctx.strokeRect(-wLogical / 2, -hLogical / 2, wLogical, hLogical);
-        ctx.restore();
-      }
+      drawItemGuide(def.shape, cx, cy, wLogical, hLogical, item.rot ?? 0);
     }
     ctx.restore();
   }
@@ -1099,25 +1128,12 @@ export function drawMarks(
     const cy = py(item.y);
     ctx.fillStyle = `${def.color}55`;
     ctx.strokeStyle = def.color;
-    ctx.lineWidth = 2 * SCALE;
-    if (def.shape === 'circle') {
-      ctx.beginPath();
-      ctx.arc(cx, cy, wLogical / 2, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.stroke();
-    } else {
-      // Rect strips/beds/rows can be rotated in the studio — mirror that here about the
-      // footprint centre so the glossy matches exactly. Icon is drawn upright afterwards.
-      const rot = def.shape === 'rect' ? item.rot ?? 0 : 0;
-      ctx.save();
-      ctx.translate(cx, cy);
-      if (rot) ctx.rotate((rot * Math.PI) / 180);
-      ctx.beginPath();
-      ctx.rect(-wLogical / 2, -hLogical / 2, wLogical, hLogical);
-      ctx.fill();
-      ctx.stroke();
-      ctx.restore();
-    }
+    ctx.lineWidth = itemGuideStyle === 'filled' ? 2 * SCALE : Math.max(1, SCALE);
+    // Rect strips/beds/rows can be rotated in the studio — mirror that here about the footprint
+    // centre so the model sees the saved orientation. Registration marks replace the full outline
+    // on locked inputs; unlocked/Satellite paths retain their existing filled markers.
+    const rot = def.shape === 'rect' ? item.rot ?? 0 : 0;
+    drawItemGuide(def.shape, cx, cy, wLogical, hLogical, rot);
     // A tap's footprint is ~6 px while its glyph is 14 px: the emoji is bigger than the element it
     // marks and hides the footprint that encodes its true size. Small elements get their glyph
     // OUTSIDE the footprint on a hairline leader, so both the position and the size stay readable.
@@ -1220,9 +1236,11 @@ async function buildProtectMask(
   ctx.fillStyle = '#FFFFFF';
   ctx.strokeStyle = '#FFFFFF';
 
-  // A locked Hybrid is not permission to reinterpret the whole property. Start protected and
-  // punch out only narrow regions around saved design content. The model may add texture there;
-  // untouched lawn, neighbouring land and every unmarked patch are restored from the source.
+  // A source-preserving Hybrid is not permission to reinterpret the whole property. Photo Plan
+  // and plain paper start protected and punch out only bounded regions around saved design
+  // content. Painted styles deliberately skip this block: their prompt promises one continuous
+  // edge-to-edge illustration, and restoring aerial pixels between item holes created the collage
+  // this policy exists to prevent.
   if (options.protectUnmarkedGround) {
     ctx.fillRect(0, 0, imgW, imgH);
     ctx.save();
@@ -1271,13 +1289,16 @@ async function buildProtectMask(
       ctx.save();
       ctx.translate(cx, cy);
       if (item.rot) ctx.rotate((item.rot * Math.PI) / 180);
-      ctx.beginPath();
-      if (def.shape === 'circle') {
-        ctx.arc(0, 0, Math.max(w, h) / 2, 0, Math.PI * 2);
-      } else {
-        ctx.rect(-w / 2, -h / 2, w, h);
+      for (const layer of buildItemMaskFeatherLayers(w, h)) {
+        ctx.globalAlpha = layer.eraseAlpha;
+        ctx.beginPath();
+        if (def.shape === 'circle') {
+          ctx.arc(0, 0, Math.max(layer.width, layer.height) / 2, 0, Math.PI * 2);
+        } else {
+          ctx.rect(-layer.width / 2, -layer.height / 2, layer.width, layer.height);
+        }
+        ctx.fill();
       }
-      ctx.fill();
       ctx.restore();
     }
     ctx.restore();
@@ -1899,8 +1920,9 @@ async function requestProducer(
   return data.image as string; // bare base64 (compositeAccurateMap's asDataUrl normalises it)
 }
 
-// Short comma list of placed element names + counts, e.g. "Vegetable Bed x6, JoJo Tank".
-// Locked prompts omit editor glyphs so the image model cannot mistake them for final map art.
+// Short comma list of placed element identities + counts, e.g. "[glyph] Vegetable Bed x6".
+// The composite uses that same catalog glyph to distinguish otherwise identical guides; the
+// locked prompt explicitly orders the temporary glyph removed from the finished artwork.
 /** Things a sheet must SHOW to be readable but must not COUNT as its own content.
  *
  *  Only the Water sheet needs this today, and for a specific reason: irrigation is a set of lines
@@ -1935,7 +1957,6 @@ function producerElementsText(
   state: DesignCanvasState,
   refLayers: DesignGlossyProps['refLayers'],
   filter: GlossyLayerFilter = 'all',
-  includeToolGlyphs = true,
 ): string {
   const counts = new Map<string, { icon: string; n: number }>();
   for (const it of state.items) {
@@ -1947,7 +1968,7 @@ function producerElementsText(
     counts.set(name, g);
   }
   const parts = [...counts.entries()].map(([name, g]) =>
-    `${includeToolGlyphs ? `${g.icon} ` : ''}${name}${g.n > 1 ? ` ×${g.n}` : ''}`,
+    `${g.icon} ${name}${g.n > 1 ? ` ×${g.n}` : ''}`,
   );
   // On the zones layer, describe the effort-zone areas instead of individual elements.
   if (zonesInFilter(filter)) {
@@ -1986,6 +2007,13 @@ function producerElementsText(
     pipe: 'Buried water pipe', drip: 'Drip irrigation line', greywater: 'Greywater line', windbreak: 'Windbreak hedge',
   };
   for (const [kind, n] of lineCounts) parts.push(`${LINE_NAME[kind] ?? kind}${n > 1 ? ` ×${n}` : ''}`);
+  // Context guides are editable and visible to the model too. Leaving them out of the register
+  // told a Water render that every marker was named while silently presenting unnamed beds and
+  // basins; the model could then erase or reinterpret the very fixtures the routes serve. Reuse
+  // overlay-elements' context authority, but keep the CONTEXT qualifier so they never become this
+  // sheet's counted content or deterministic legend rows.
+  const context = contextElementNames(state, filter);
+  if (context.length) parts.push(`CONTEXT ONLY — ${context.join(', ')}`);
   // Name the driveway so the model keeps the vehicle track visible (it's a traced reference,
   // not a placed item — Rory: "it's not picking up driveway").
   // Only the whole-design sheet lists the driveway. On a layer sheet it is context, and listing
@@ -4563,6 +4591,26 @@ async function burnExactLabelLayer(
   if (filter === 'planting') drawGroundAreaNames(ctx, state, refLayers, W, H, filter);
   drawPlantMarks(ctx, state, filter, px, py, W / (frame.imgW * frame.mPerPx), labelMode);
   return { map: drainCanvasToDataUrl(canvas, 'image/png'), gutterLayout };
+}
+
+/** Draw the saved property fence once, after model paint/restoration and before labels/chrome. */
+async function burnExactBoundaryLayer(
+  mapDataUrl: string,
+  state: DesignCanvasState,
+  frame: CanvasFrame,
+  refLayers: DesignGlossyProps['refLayers'],
+  W: number,
+  H: number,
+): Promise<string> {
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return mapDataUrl;
+  useHighQualityScaling(ctx);
+  ctx.drawImage(await loadImage(mapDataUrl), 0, 0, W, H);
+  drawBlueprintBoundary(ctx, refLayers.boundary, (n) => n * W, (n) => n * H, W, state, frame);
+  return drainCanvasToDataUrl(canvas, 'image/png');
 }
 
 /**
@@ -11764,12 +11812,14 @@ export default function DesignGlossy({
   // the AI pass on every paid path, so a Full Treatment sheet carries the app's legend, labels and
   // title again instead of whatever the model left of them (2026-08-10). A cached r1 Full
   // Treatment is exactly the picture this change exists to stop re-serving. r3 = plain paper turned
-  // WHITE and lost its veil (2026-08-10). Without this bump the farmer opens the sheet and sees the
-  // cached CREAM one without rendering anything — which reads as "the change did nothing", and is
-  // exactly what the r-token exists to prevent.
+  // WHITE and lost its veil (2026-08-10). r4 = app-owned AI styles stopped receiving filled editor
+  // marks, and painted styles stopped restoring raw aerial ground between model-painted islands
+  // (2026-08-11). Without this bump the farmer opens the sheet and sees the cached broken composite
+  // without rendering anything — which reads as "the change did nothing", and is exactly what the
+  // r-token exists to prevent.
   const underlaySuffix = underlayCacheSuffix(underlay, frameProp)
     + (sheetHasPlantCodes ? labelModeCacheSuffix(labelMode) : '')
-    + ':r3'
+    + ':r4'
     // A sheet drawn at SCALE 3 is a different picture from the same sheet at 2 — re-serving a
     // 1920px cache under a High setting would look like the setting did nothing (the exact
     // "code change looks like it did nothing" trap the r-token note above describes). EMPTY at
@@ -12234,6 +12284,10 @@ export default function DesignGlossy({
     if (!producerStyle) return;
     const styleDef = PRODUCER_STYLES.find((s) => s.key === producerStyle);
     if (!styleDef) return;
+    if (!styleSupportsGroundSource(producerStyle, frame.satDataUrl ? 'photo' : 'paper')) {
+      setError(SATELLITE_OVERLAY_NEEDS_PHOTO);
+      return;
+    }
     // The engine picker applies to styles too: gpt-image-2 (the "used to be very good" one, via
     // the image-producer's 'openai' path) or Gemini Pro.
     const producerEngine: 'gemini' | 'openai' = engine === 'gemini' ? 'gemini' : 'openai';
@@ -12257,15 +12311,21 @@ export default function DesignGlossy({
         refLayers,
         filter,
         true,
-        geometryLock ? lockedCompositeMarks(filter) : undefined,
+        geometryLock ? polishModelInputMarks(producerStyle, filter, frame.satDataUrl ? 'photo' : 'paper') : undefined,
       );
       // b. Short comma list of placed elements + counts (this layer only).
-      const elementsText = producerElementsText(state, refLayers, filter, !geometryLock);
+      const elementsText = producerElementsText(state, refLayers, filter);
       // b2. The WHOLE design as text — deliberately NOT filtered by `filter`, so every layer's
       //     render is handed the identical brief and the sheets agree with each other.
       const designBrief = buildDesignBrief(state, refLayers, placeName, site);
       const protectMaskDataUrl = geometryLock
-        ? await buildProtectMask(state, frame, refLayers, filter, lockedProtectMaskOptions(filter))
+        ? await buildProtectMask(
+            state,
+            frame,
+            refLayers,
+            filter,
+            lockedProtectMaskOptionsForStyle(producerStyle, filter, frame.satDataUrl ? 'photo' : 'paper'),
+          )
         : undefined;
       // c. Beautify via the image-producer route (gemini engine; async path handled inside).
       //    ZONES runs the model too now. The old rule ("AI mustn't invent under my zones —
@@ -12617,6 +12677,10 @@ export default function DesignGlossy({
     const styleKey = producerStyle ?? DEFAULT_PRODUCER_STYLE;
     const styleDef = PRODUCER_STYLES.find((s) => s.key === styleKey);
     if (!styleDef) return;
+    if (!styleSupportsGroundSource(styleKey, frame.satDataUrl ? 'photo' : 'paper')) {
+      setError(SATELLITE_OVERLAY_NEEDS_PHOTO);
+      return;
+    }
     const producerEngine: 'gemini' | 'openai' = engine === 'gemini' ? 'gemini' : 'openai';
     setLoading(engine);
     setError(null);
@@ -12636,9 +12700,9 @@ export default function DesignGlossy({
           refLayers,
           f,
           true,
-          geometryLock ? lockedCompositeMarks(f) : undefined,
+          geometryLock ? polishModelInputMarks(styleKey, f, frame.satDataUrl ? 'photo' : 'paper') : undefined,
         );
-        const elementsText = producerElementsText(state, refLayers, f, !geometryLock);
+        const elementsText = producerElementsText(state, refLayers, f);
         const designBrief = buildDesignBrief(state, refLayers, placeName, site);
         let modelImage: string;
         {
@@ -12670,7 +12734,13 @@ export default function DesignGlossy({
           ? await stackOverlayImages(structureOverlay, overlayImage, W, H)
           : await stackOverlayImages(overlayImage, structureOverlay, W, H);
         const protectMaskDataUrl = geometryLock
-          ? await buildProtectMask(state, frame, refLayers, f, lockedProtectMaskOptions(f))
+          ? await buildProtectMask(
+              state,
+              frame,
+              refLayers,
+              f,
+              lockedProtectMaskOptionsForStyle(styleKey, f, frame.satDataUrl ? 'photo' : 'paper'),
+            )
           : undefined;
         const final = await compositeAccurateMap({
           modelImage: protectMaskDataUrl
@@ -12753,8 +12823,9 @@ export default function DesignGlossy({
 
   // Composite-back for one sheet. Three shapes, and the middle one is the fix:
   //
-  //   HYBRID (locked)   clip the model output to the boundary, put the real satellite outside,
-  //                     restore protected pixels, then burn our exact labels + the cream chrome.
+  //   HYBRID (locked)   apply the selected style's ground contract (Photo Plan/paper restore their
+  //                     source; painted styles keep one continuous model-painted ground), retain
+  //                     the factual structure/boundary safeguards, then burn exact app chrome.
   //   FULL (polishStage) no clip and no restore — the model repainted the map and the app draws
   //                     every chrome element back over it (composeSheetChromeOverMapArt).
   //   SHOWCASE          "AI legend" only: the model was commissioned to draw its own legend and
@@ -12968,11 +13039,11 @@ export default function DesignGlossy({
       // everything outside the elements, and this put back the elements. Exact, wearing a paid
       // badge.
       //
-      // Locked now means what the farmer was promised it means: the ground, the roofs, the
-      // driveway, the boundary and everything outside the plot stay byte-exact (they are still
-      // stacked below), the labels and legend are still drawn by the app afterwards from saved
-      // data, and the PLANTING is the model's illustration of the elements it was given — in the
-      // positions it was given them. That is the whole product of the paid pass.
+      // Locked now means what the farmer was promised it means: Photo Plan and paper keep their
+      // source outside bounded feature edits; painted styles keep one continuous model-painted
+      // ground instead of raw-photo islands. In both cases the roof, driveway and boundary facts
+      // stay app-owned, the labels and legend are redrawn afterwards from saved data, and the
+      // PLANTING is the model's illustration at the saved positions.
       const overlayImage = locked
         ? undefined
         : f === 'zones' ? buildZoneOverlay(renderState, renderRefLayers, W, H)
@@ -12984,7 +13055,7 @@ export default function DesignGlossy({
         ? await stackOverlayImages(exactGroundOverlay, structureOverlay, W, H)
         : structureOverlay;
       const mergedOverlay = await stackOverlayImages(groundedStructures, overlayImage, W, H);
-      const final = await compositeAccurateMap({
+      const composited = await compositeAccurateMap({
         modelImage: restoredImage,
         satelliteImage: renderFrame.satDataUrl ?? sourceImage ?? modelImage,
         boundaryPx,
@@ -12998,6 +13069,20 @@ export default function DesignGlossy({
         width: W,
         height: H,
       });
+      // A protected mask can preserve pixels, not draw the property fence. The queued Hybrid path
+      // used to set boundaryPx undefined and then never add the line back, so a sheet could carry a
+      // "Geometry locked" badge with no visible boundary at all. Draw it once from saved geometry;
+      // painted styles no longer need a raw-aerial corridor around it.
+      const final = locked
+        ? await burnExactBoundaryLayer(
+            composited,
+            renderState,
+            renderFrame,
+            renderRefLayers,
+            W,
+            H,
+          )
+        : composited;
       // Full Treatment polishes THIS image — the finished map with exact content burned back and
       // not one glyph of text on it. Stashed pre-labels, so what the model receives has nothing
       // writable to mangle; the label layer is re-drawn from the design over its output.
@@ -13042,6 +13127,10 @@ export default function DesignGlossy({
     const styleKey = producerStyle ?? DEFAULT_PRODUCER_STYLE;
     const styleDef = PRODUCER_STYLES.find((s) => s.key === styleKey);
     if (!styleDef) return;
+    if (!styleSupportsGroundSource(styleKey, frame.satDataUrl ? 'photo' : 'paper')) {
+      setError(SATELLITE_OVERLAY_NEEDS_PHOTO);
+      return;
+    }
     // No selection side-effects here — the batch passes styleKey explicitly; leaking it into the
     // chips used to flip a user parked on an Exact sheet into AI mode (audit find).
     setError(null);
@@ -13103,29 +13192,33 @@ export default function DesignGlossy({
           isModelChromeStyle(styleKey)
             ? OVERLAY_COMPOSITE_MARKS
             : lockActive
-              ? polishModelInputMarks(f)
+              ? polishModelInputMarks(styleKey, f, renderFrame.satDataUrl ? 'photo' : 'paper')
               : undefined,
         );
         const { elements: elementsText, fabric, served } = isModelChromeStyle(styleKey)
           ? overlayElementsText(renderState, renderRefLayers, f)
-          : { elements: producerElementsText(renderState, renderRefLayers, f, !lockActive), fabric: '' };
+          : { elements: producerElementsText(renderState, renderRefLayers, f), fabric: '' };
         const layerLabel = f === 'all' ? 'Full design' : GLOSSY_FILTERS.find((x) => x.key === f)?.label ?? 'Full design';
         // Satellite Overlay is handed a sheet-shaped canvas (map + blank cream panel) so the photo
         // never has to be moved to make room for the legend. See extendWithLegendPanel.
         const sheetInput = isModelChromeStyle(styleKey)
           ? (await extendWithLegendPanel(composite, mapW, mapH)).dataUrl
           : composite;
-        // Carry the structural mask through the queue for deterministic post-generation restore.
-        // It is deliberately NOT sent to the edits endpoint: GPT Image keeps the Precision Atlas
-        // style reference, then the browser restores house/driveway/boundary/outside pixels and
-        // verifies the opaque mask pixels byte-for-byte.
+        // Carry the ground-contract mask through the queue for deterministic post-generation
+        // restore. It is deliberately NOT sent to the edits endpoint: the browser restores every
+        // opaque factual pixel afterwards. Photo Plan/paper also restore unmarked source ground;
+        // painted styles leave that ground transparent so their edge-to-edge artwork stays whole.
         const protectMaskDataUrl = lockActive
           ? await buildProtectMask(
               renderState,
               renderFrame,
               renderRefLayers,
               f,
-              lockedProtectMaskOptions(f),
+              lockedProtectMaskOptionsForStyle(
+                styleKey,
+                f,
+                renderFrame.satDataUrl ? 'photo' : 'paper',
+              ),
             )
           : undefined;
         const prompt = isModelChromeStyle(styleKey)
@@ -13202,6 +13295,10 @@ export default function DesignGlossy({
     const styleKey = producerStyle ?? DEFAULT_PRODUCER_STYLE;
     const styleDef = PRODUCER_STYLES.find((s) => s.key === styleKey);
     if (!styleDef) return;
+    if (!styleSupportsGroundSource(styleKey, frame.satDataUrl ? 'photo' : 'paper')) {
+      setError(SATELLITE_OVERLAY_NEEDS_PHOTO);
+      return;
+    }
     if (layerContentCount(state, refLayers, filter) === 0) {
       setError(emptyLayerMessage(filter, t));
       return;
@@ -13251,12 +13348,12 @@ export default function DesignGlossy({
         isModelChromeStyle(styleKey)
           ? OVERLAY_COMPOSITE_MARKS
           : lockActive
-            ? polishModelInputMarks(filter)
+            ? polishModelInputMarks(styleKey, filter, renderFrame.satDataUrl ? 'photo' : 'paper')
             : undefined,
       );
       const { elements: elementsText, fabric, served } = isModelChromeStyle(styleKey)
         ? overlayElementsText(renderState, renderRefLayers, filter)
-        : { elements: producerElementsText(renderState, renderRefLayers, filter, !lockActive), fabric: '' };
+        : { elements: producerElementsText(renderState, renderRefLayers, filter), fabric: '' };
       const sheetInput = fullSheetPolish
         ? composite
         : isModelChromeStyle(styleKey)
@@ -13301,7 +13398,11 @@ export default function DesignGlossy({
           renderFrame,
           renderRefLayers,
           filter,
-          lockedProtectMaskOptions(filter),
+          lockedProtectMaskOptionsForStyle(
+            styleKey,
+            filter,
+            renderFrame.satDataUrl ? 'photo' : 'paper',
+          ),
         );
       }
       showcaseKeysRef.current = new Set(authorityFlags.showcase ? [filter] : []);
@@ -14732,6 +14833,10 @@ export default function DesignGlossy({
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(132px, 1fr))', gap: 8 }}>
           {(sectorAiMode ? SECTOR_STYLE_CHOICES : PRODUCER_STYLES).map((s) => {
             const active = producerStyle === s.key;
+            const unavailableForUnderlay = !styleSupportsGroundSource(
+              s.key,
+              frame.satDataUrl ? 'photo' : 'paper',
+            );
             return (
               <button
                 key={s.key}
@@ -14756,9 +14861,11 @@ export default function DesignGlossy({
                   }
                   setResultImage(null);
                 }}
-                disabled={loading !== null}
+                disabled={loading !== null || unavailableForUnderlay}
                 aria-pressed={active}
-                title={`${s.blurb}${s.recommended ? t('designGlossyRecommendedSuffix') : ''}`}
+                title={unavailableForUnderlay
+                  ? SATELLITE_OVERLAY_NEEDS_PHOTO
+                  : `${s.blurb}${s.recommended ? t('designGlossyRecommendedSuffix') : ''}`}
                 style={{
                   display: 'flex',
                   flexDirection: 'column',
@@ -14771,8 +14878,8 @@ export default function DesignGlossy({
                   color: DARK,
                   fontWeight: 700,
                   fontSize: 11.5,
-                  cursor: loading !== null ? 'default' : 'pointer',
-                  opacity: loading !== null && !active ? 0.5 : 1,
+                  cursor: loading !== null || unavailableForUnderlay ? 'default' : 'pointer',
+                  opacity: unavailableForUnderlay || (loading !== null && !active) ? 0.5 : 1,
                   position: 'relative',
                 }}
               >

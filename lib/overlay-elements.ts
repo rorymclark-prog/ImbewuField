@@ -88,7 +88,7 @@ function groundNames(
     .filter(Boolean);
 }
 
-function contextElementNames(state: DesignCanvasState, filter: GlossyLayerFilter): string[] {
+export function contextElementNames(state: DesignCanvasState, filter: GlossyLayerFilter): string[] {
   if (filter !== 'water') return [];
   const counts = new Map<string, number>();
   for (const item of state.items) {
