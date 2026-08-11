@@ -35,11 +35,13 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '11 August',
-    sha: '6fd362a',
+    sha: 'f6e81b1',
     changes: [
       'Your design maps now show inside the report itself, not only in the download',
       'Tap any map in the report to see it full size',
       'The advice now reads those maps — where things sit, not just how big they are',
+      'Site report is now in the menu, so you no longer have to find it on the map',
+      'An empty report list now tells you how to make your first one',
     ],
   },
   {
