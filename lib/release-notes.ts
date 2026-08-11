@@ -46,8 +46,9 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     // because this read fbecef9 while main had moved to 81d424c. A commit touching ONLY this file
     // is ignored by the gate (IGNORE in scripts/release-notes-pending.mjs), which is what makes a
     // follow-up restamp commit both safe and, after every merge, necessary.
-    sha: '8f6d8a0',
+    sha: 'a602888',
     changes: [
+      'The report prints your latest version of each sheet, not every map you ever saved',
       'Shade tunnels and shade houses are see-through, so the beds under them still show',
       'Your design maps are now printed in the report, one to a page at the back',
       'Reports you download now have a contents page and numbered sections',
