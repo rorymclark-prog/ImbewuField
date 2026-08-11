@@ -222,3 +222,36 @@ export function structuresRouteVisualFor(kind: string): StructuresRouteVisual | 
 export function structuresFeatureSymbolFor(id: string): StructuresFeatureSymbol | null {
   return FEATURE_VISUALS[normaliseLookupKey(id, '_')]?.symbol ?? null;
 }
+
+/**
+ * SHADE STRUCTURES ARE CLOTH, NOT ROOF.
+ *
+ * Rory, of a shade tunnel standing over his veg garden: "It's tunnel thing we need to either show
+ * half a real shade tunnel to show the veg garden underneath or what?" — and a day later, still
+ * looking at it: "did you not sort the shade tunnel issue?"
+ *
+ * A shade house, a tunnel and a sail are all the same thing in plan: a permeable cloth stretched
+ * on a frame, with a working garden UNDERNEATH it. Drawn like a shed — opaque, and painted before
+ * the beds because the draw order runs largest footprint first — it reads either as a solid slab
+ * with nothing under it, or as a thing the beds are sitting on top of. Neither is what is there.
+ *
+ * The fix is the one a draughtsman would use: draw the cloth LAST and SEE-THROUGH, so the beds,
+ * paths and plants beneath it stay legible and the structure reads as a cover over them. That is
+ * the plan convention for shade cloth, and it is also simply true — you can see through 40% shade
+ * netting, which is the whole reason it is netting and not a roof.
+ */
+const SHADE_CLOTH_IDS = new Set(['shade_house', 'greenhouse_tunnel', 'shade_sail']);
+
+export function isShadeClothStructure(defId: string): boolean {
+  return SHADE_CLOTH_IDS.has(defId);
+}
+
+/**
+ * How much of what is underneath shows through the cloth.
+ *
+ * Chosen to match real netting rather than to look pretty: 40–50% shade cloth is what the app's
+ * own Shade House tip recommends for South African summer sun, so the structure should obscure
+ * about that much and no more. Higher and the garden disappears again — the exact complaint.
+ * Lower and the frame stops reading as a structure at all.
+ */
+export const SHADE_CLOTH_ALPHA = 0.5;

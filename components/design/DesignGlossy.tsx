@@ -86,7 +86,7 @@ import { leaderLabelFontSize, placeLeaderLabel, stackLeaderRows, leaderPath } fr
 import { exactModelInputMarks, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '@/lib/render-policy';
 import { EARTHWORKS_ROUTE_STYLE, WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, nearestWaterNeighbourPx, offsetPolyline, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRoutesWithVisualBridges, waterRouteStyleFor, type EarthworksRouteStyle, type WaterLegendSection } from '@/lib/water-cartography';
 import { PLANTING_CANOPY_PAINT, PLANTING_LEGEND_SECTION_ORDER, PLANTING_ROUTE_STYLE, overstoryCanopyIds, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
-import { STRUCTURES_LEGEND_SECTION_ORDER, structuresFeaturePresentationDimensions, structuresLegendSectionForFeature, structuresRouteVisualFor, type StructuresLegendSection } from '@/lib/structures-cartography';
+import { SHADE_CLOTH_ALPHA, STRUCTURES_LEGEND_SECTION_ORDER, isShadeClothStructure, structuresFeaturePresentationDimensions, structuresLegendSectionForFeature, structuresRouteVisualFor, type StructuresLegendSection } from '@/lib/structures-cartography';
 import { presentSectorCartography, seasonalSunArcRadii, sectorEvidenceSummary, SECTOR_STYLES, sectorFillColor, sectorStrokeWidth, type SectorLegendIcon, type SectorVisualKind } from '@/lib/sector-cartography';
 import { referenceFeatureArtworkUrl, stapleTileUrl, vegSpriteUrl, VEG_SPRITES, isTankDefId } from '@/lib/reference-feature-art';
 import {
@@ -1085,7 +1085,15 @@ export function drawMarks(
     const def = ELEMENTS_BY_ID[it.defId];
     return (it.wM ?? def.wM) * (it.hM ?? def.hM);
   };
-  const ordered = [...visible].sort((a, b) => footM2(b) - footM2(a));
+  // Largest footprint first, so a small thing is never buried under a big one — EXCEPT shade
+  // cloth, which is drawn last because it is a cover and the garden under it must be painted
+  // first to show through. See isShadeClothStructure.
+  const ordered = [...visible].sort((a, b) => {
+    const shadeA = isShadeClothStructure(a.defId) ? 1 : 0;
+    const shadeB = isShadeClothStructure(b.defId) ? 1 : 0;
+    if (shadeA !== shadeB) return shadeA - shadeB;
+    return footM2(b) - footM2(a);
+  });
 
   const glyphJobs: Array<{ cx: number; cy: number; size: number; icon: string; small: boolean }> = [];
 
@@ -5141,6 +5149,10 @@ function drawPaintedReferenceFeature(
     ctx.clip();
   }
   if (isMatureCanopy) ctx.globalAlpha *= PLANTING_CANOPY_PAINT.artworkAlpha;
+  // Shade cloth is permeable, and the beds under it are the point of it being there. Drawn last
+  // (see the ordering above) and at cloth strength, so the garden reads through the structure
+  // instead of vanishing beneath it.
+  if (isShadeClothStructure(def.id)) ctx.globalAlpha *= SHADE_CLOTH_ALPHA;
   // THE BORDER MUST SNUG THE LEAVES, NOT FLOAT OFF THEM.
   //
   // Every one of these PNGs is painted with clear space around the subject, so drawing it at
@@ -5683,6 +5695,9 @@ function drawTrueFootprint(
   if (def.shape === 'rect' && it.rot) ctx.rotate((it.rot * Math.PI) / 180);
   ctx.lineJoin = 'round';
   ctx.lineCap = 'round';
+  // Shade cloth stays see-through on the vector fallback too. Without this a farm whose artwork
+  // has not loaded gets the opaque slab back — the same complaint, arriving by the other route.
+  if (isShadeClothStructure(def.id)) ctx.globalAlpha *= SHADE_CLOTH_ALPHA;
 
   if (
     (def.category === 'structure' || def.category === 'animal' || def.category === 'access') &&
