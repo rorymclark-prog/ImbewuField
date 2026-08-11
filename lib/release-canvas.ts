@@ -26,10 +26,13 @@ interface DrainableCanvas {
 }
 
 export function drainCanvasToDataUrl(canvas: DrainableCanvas, type?: string, quality?: number): string {
-  const url = canvas.toDataURL(type, quality);
-  canvas.width = 0;
-  canvas.height = 0;
-  return url;
+  try {
+    return canvas.toDataURL(type, quality);
+  } finally {
+    // Encoding can itself fail under memory pressure. That is exactly when retaining the backing
+    // store would make the next attempt less likely to survive.
+    releaseCanvas(canvas);
+  }
 }
 
 /**
@@ -42,4 +45,16 @@ export function drainCanvasToDataUrl(canvas: DrainableCanvas, type?: string, qua
 export function releaseCanvas(canvas: Pick<DrainableCanvas, 'width' | 'height'>): void {
   canvas.width = 0;
   canvas.height = 0;
+}
+
+/** Detach a decoded, one-shot image after its final synchronous drawImage call.
+ * removeAttribute('src') avoids the current-document request some engines make for `src = ''`. */
+export function releaseImageSource(image: {
+  onload: unknown;
+  onerror: unknown;
+  removeAttribute(name: string): void;
+}): void {
+  image.onload = null;
+  image.onerror = null;
+  image.removeAttribute('src');
 }

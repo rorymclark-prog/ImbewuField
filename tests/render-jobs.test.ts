@@ -8,6 +8,7 @@ import {
   RenderJobError,
   dataUrlBytes,
   enqueueRenderJob,
+  mapSerially,
   maskHasProtectedAndEditablePixels,
   normaliseRenderJobDoc,
   renderJobRequestError,
@@ -169,13 +170,19 @@ test('the worker derives every privileged Storage path from owner, job and sheet
   assert.doesNotMatch(source, /bucket\.file\(sheet\.protectMaskPath\)/);
 });
 
-test('a failed parallel upload waits for slower siblings before taking the rollback list', () => {
+test('a failed serial upload rolls back every completed artifact before job creation', () => {
+  // This used to require Promise.allSettled because rejected Promise.all siblings could finish
+  // after rollback had snapshotted the list. Uploads are now serial to cap phone memory, so there
+  // are no live siblings: every path in `uploaded` is complete when the catch begins.
   const source = readFileSync(new URL('../lib/render-jobs.ts', import.meta.url), 'utf8');
-  const settle = source.indexOf('await Promise.allSettled(uploadTasks)');
-  const rollback = source.indexOf('uploaded.map((p) => deleteObject', settle);
-  assert.ok(settle >= 0);
-  assert.ok(rollback > settle);
-  assert.doesNotMatch(source, /sheets\s*=\s*await Promise\.all\(\s*opts\.sheets\.map/);
+  const serial = source.indexOf('sheets = await mapSerially(opts.sheets');
+  const rollback = source.indexOf('uploaded.map((p) => deleteObject', serial);
+  const createJob = source.indexOf("await setDoc(doc(fb.db, 'render_jobs', jobId)", serial);
+  assert.ok(serial >= 0, 'uploads are no longer inside the serial memory boundary');
+  assert.ok(rollback > serial, 'a failed upload no longer cleans up its completed predecessors');
+  assert.ok(createJob > rollback, 'the paid job doc can be created before upload rollback completes');
+  assert.doesNotMatch(source, /Promise\.allSettled\(uploadTasks\)/,
+    'full-resolution uploads and mask validations are concurrent again');
 });
 
 test('decoded data URL size handles base64 padding exactly and enforces the upload cap', () => {
@@ -404,6 +411,53 @@ test('deterministic exact sheets never carry a quality suffix', () => {
     'the read-path quality suffix is gone or is no longer gated to paid keys');
   assert.ok(/const isPaidMapKey = [^;]*Boolean\(producerStyle\)/.test(GLOSSY_SRC),
     'isPaidMapKey stopped requiring a producer style — exact sheets would start splitting caches');
+});
+
+test('full-resolution render preparation runs one sheet at a time on a phone', async () => {
+  // Four 1920×1280 masks checked together are roughly 75 MiB of canvas + ImageData before the
+  // composites, photographs or upload buffers exist. That is enough to kill iOS Safari. The
+  // serial helper is behavioural coverage: putting Promise.all back makes peak concurrency 4.
+  let active = 0;
+  let peak = 0;
+  const started: number[] = [];
+  const finished: number[] = [];
+  const result = await mapSerially([1, 2, 3, 4], async (value) => {
+    active += 1;
+    peak = Math.max(peak, active);
+    started.push(value);
+    await new Promise<void>((resolve) => setTimeout(resolve, 2));
+    finished.push(value);
+    active -= 1;
+    return value * 10;
+  });
+
+  assert.equal(peak, 1, 'more than one full-resolution sheet was live at once');
+  assert.deepEqual(started, [1, 2, 3, 4]);
+  assert.deepEqual(finished, [1, 2, 3, 4]);
+  assert.deepEqual(result, [10, 20, 30, 40]);
+
+  const attempted: number[] = [];
+  await assert.rejects(
+    mapSerially([1, 2, 3], async (value) => {
+      attempted.push(value);
+      if (value === 2) throw new Error('upload failed');
+      return value;
+    }),
+    /upload failed/,
+  );
+  assert.deepEqual(attempted, [1, 2],
+    'a failed serial upload must stop before another full-resolution sheet starts');
+
+  const renderJobs = readFileSync(new URL('../lib/render-jobs.ts', import.meta.url), 'utf8');
+  const uploadStart = renderJobs.indexOf('export async function enqueueRenderJob(');
+  const uploadBody = renderJobs.slice(uploadStart, renderJobs.indexOf('\nfunction nonEmptyString', uploadStart));
+  assert.match(uploadBody, /mapSerially\(opts\.sheets/,
+    'the uploader bypassed the serial memory boundary');
+
+  const capStart = GLOSSY_SRC.indexOf('async function enqueueRenderJobCapped(');
+  const capBody = GLOSSY_SRC.slice(capStart, GLOSSY_SRC.indexOf('\n}', capStart) + 2);
+  assert.match(capBody, /mapSerially\(opts\.sheets/,
+    'AI input capping bypassed the serial memory boundary');
 });
 
 // ── Resume-attempt budget ─────────────────────────────────────────────────────

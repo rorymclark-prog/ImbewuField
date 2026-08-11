@@ -15,6 +15,7 @@ import { isSampleMode } from '@/lib/sample-mode';
 import { doc, onSnapshot, serverTimestamp, setDoc, Timestamp, type FirestoreError } from 'firebase/firestore';
 import { deleteObject, getDownloadURL, ref, uploadString } from 'firebase/storage';
 import { hasConflictingRenderAuthority } from '@/lib/render-policy';
+import { releaseCanvas, releaseImageSource } from '@/lib/release-canvas';
 import {
   MAX_RENDER_SHEETS_PER_JOB,
   RENDER_SHEET_KEYS,
@@ -31,6 +32,19 @@ export const MAX_SHEETS_PER_JOB = MAX_RENDER_SHEETS_PER_JOB;
 export const MAX_COMPOSITE_BYTES = 12 * 1024 * 1024;
 /** How long a job doc + its Storage artifacts live (also enforced by GCS lifecycle + Firestore TTL). */
 const JOB_TTL_MS = 30 * 24 * 60 * 60 * 1000;
+
+/** Run memory-heavy sheet work in order. The output order matches the input order, but unlike
+ * Promise.all only one worker may actively decode or allocate a full-resolution raster at a time. */
+export async function mapSerially<T, R>(
+  values: readonly T[],
+  worker: (value: T, index: number) => Promise<R>,
+): Promise<R[]> {
+  const results: R[] = [];
+  for (let index = 0; index < values.length; index += 1) {
+    results.push(await worker(values[index], index));
+  }
+  return results;
+}
 
 /** What the caller hands enqueueRenderJob per sheet — the built composite + the full model prompt. */
 export interface RenderSheetSpec {
@@ -259,14 +273,16 @@ export function maskHasProtectedAndEditablePixels(maskPixels: Uint8ClampedArray)
 }
 
 async function maskIsUsable(maskDataUrl: string): Promise<boolean> {
+  let canvas: HTMLCanvasElement | null = null;
+  let img: HTMLImageElement | null = null;
   try {
-    const img = await new Promise<HTMLImageElement>((resolve, reject) => {
+    img = await new Promise<HTMLImageElement>((resolve, reject) => {
       const el = new Image();
       el.onload = () => resolve(el);
       el.onerror = () => reject(new Error('mask load failed'));
       el.src = maskDataUrl;
     });
-    const canvas = document.createElement('canvas');
+    canvas = document.createElement('canvas');
     canvas.width = img.naturalWidth || img.width;
     canvas.height = img.naturalHeight || img.height;
     const ctx = canvas.getContext('2d');
@@ -276,11 +292,14 @@ async function maskIsUsable(maskDataUrl: string): Promise<boolean> {
     return maskHasProtectedAndEditablePixels(data);
   } catch {
     return false; // cannot verify both mask roles -> do not send it
+  } finally {
+    if (img) releaseImageSource(img);
+    if (canvas) releaseCanvas(canvas);
   }
 }
 
 /** Uploads each composite to Storage and writes the job doc; the Cloud Function takes it from there.
- * Uploads run in parallel; on ANY failure every already-uploaded object is rolled back so no
+ * Full-resolution sheet uploads run serially; on ANY failure every already-uploaded object is rolled back so no
  * orphans are left, and the caller sees one clean error. Returns the jobId to subscribe to. */
 export async function enqueueRenderJob(opts: {
   siteId: string;
@@ -307,11 +326,13 @@ export async function enqueueRenderJob(opts: {
 
   const jobId = `${uid}_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
 
-  // Upload all composites concurrently; track successes so we can roll them back on any failure.
+  // Track successes so a later failure can roll them back. Serial work is intentional: validating
+  // four masks together retained four canvases plus four ImageData arrays (~75 MiB at Standard)
+  // before the photographs and composite data URLs were counted.
   const uploaded: string[] = [];
   let sheets: RenderSheetState[];
   try {
-    const uploadTasks = opts.sheets.map(async (s): Promise<RenderSheetState> => {
+    sheets = await mapSerially(opts.sheets, async (s): Promise<RenderSheetState> => {
       const inputPath = `renders/${uid}/${jobId}/input-${s.key}.jpg`;
       await uploadString(ref(fb.storage, inputPath), s.compositeDataUrl, 'data_url');
       uploaded.push(inputPath);
@@ -342,16 +363,6 @@ export async function enqueueRenderJob(opts: {
         ...(typeof s.geometryLock === 'boolean' ? { geometryLock: s.geometryLock } : {}),
         ...(s.resultKind ? { resultKind: s.resultKind } : {}),
       };
-    });
-    // Promise.all rejects as soon as ONE upload fails. Its slower siblings keep running and can
-    // succeed after cleanup has already snapshotted `uploaded`, leaving paid-input artifacts
-    // behind. Settle every sibling first; only then is the rollback list complete.
-    const settledUploads = await Promise.allSettled(uploadTasks);
-    const failedUpload = settledUploads.find((result) => result.status === 'rejected');
-    if (failedUpload?.status === 'rejected') throw failedUpload.reason;
-    sheets = settledUploads.map((result) => {
-      if (result.status !== 'fulfilled') throw new Error('render upload did not settle');
-      return result.value;
     });
   } catch (err) {
     await Promise.allSettled(uploaded.map((p) => deleteObject(ref(fb.storage, p))));
