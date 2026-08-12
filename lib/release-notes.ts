@@ -35,7 +35,7 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '12 August',
-    sha: '432c986',
+    sha: '3e413c5',
     changes: [
       'Preview & Export now puts settings, your map and saved maps together',
       'The map preview now uses the full screen on computers and tablets',
