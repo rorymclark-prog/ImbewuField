@@ -267,14 +267,22 @@ test('the single-sheet chrome does not float over the grid', () => {
   }
 });
 
-test('the page reads ground, well, cards — lightest layer last', () => {
-  // Rory, looking at it beside the mockup: "do you think we should have the brown background?"
-  // The first build had the page on --bg (#E4DCC6) and the easel — a recessed WELL — on
-  // --surface-2 (#EDE7DB), so the hole cut in the page was PALER than the page. Three beiges,
-  // no depth.
+test('nothing on this page is brown', () => {
+  // Rory: "do you think we should have the brown background?" — and then, after my first answer:
+  // "only the centre modal seems changed and it's browner."
+  //
+  // He was right and the first fix was wrong. It moved the page one step lighter and put the EASEL
+  // on --bg, on the principle that a recessed well sits darker than its page. That principle holds
+  // on a neutral palette; here every token is a beige, so "darker" only ever reads as "browner",
+  // and a browner centre was the single visible result. --bg (#E4DCC6) is the brownest token in
+  // the set, and this page paints nothing with it.
   const page = source(PAGE);
   const shell = page.slice(page.indexOf('flex min-h-dvh flex-col'), page.indexOf('Page header'));
   assert.match(shell, /background: 'var\(--surface-2\)'/, 'the page ground went dark again');
-  const stage = page.slice(page.indexOf('relative flex min-h-\[420px\]'.replace(/\\/g, '')), page.indexOf('SINGLE / ALL SHEETS'));
-  assert.match(stage, /background: 'var\(--bg\)'/, 'the easel must be the recessed layer, not the raised one');
+
+  const stage = page.slice(page.indexOf('relative flex min-h-'), page.indexOf('SINGLE / ALL SHEETS'));
+  assert.match(stage, /background: 'var\(--surface\)'/,
+    'the easel is a blank sheet of paper — defined by its border, not by a darker tone');
+
+  assert.doesNotMatch(shipped(PAGE), /var\(--bg\)/, '--bg (#E4DCC6) is back on the page');
 });

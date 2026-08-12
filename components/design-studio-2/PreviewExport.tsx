@@ -181,14 +181,17 @@ export default function PreviewExport() {
   const progress = useMemo(() => galleryProgress(gallery), [gallery]);
 
   return (
-    /* GROUND, WELL, CARDS — in that order of lightness.
-       The first build had this inverted: the page ground was --bg (#E4DCC6, the darkest of the
-       three) while the easel, which is a recessed WELL, was --surface-2 (#EDE7DB, lighter). A hole
-       cut in a page cannot be paler than the page, so the whole screen read as one muddy beige
-       instead of as layers. Rory, looking at it beside the mockup: "do you think we should have
-       the brown background?" — no. The mockup's ground is near-paper and its well is filled
-       edge-to-edge with a dark aerial photo, which is where all its contrast comes from.
-       So: page on --surface-2, well on --bg, cards on --surface. Same three tokens, right order. */
+    /* NOTHING ON THIS PAGE IS BROWN.
+       Rory: "do you think we should have the brown background?" — no. My first answer moved the
+       page one step lighter (--bg -> --surface-2) and put the EASEL on --bg, reasoning that a
+       recessed well should sit darker than its page. That principle is fine on a neutral palette
+       and wrong on this one: every token here is a beige, so "darker" only ever means "browner",
+       and the single visible result was a browner centre. His words: "only the centre modal seems
+       changed and it's browner."
+       So the easel is a BLANK SHEET OF PAPER — which is what it actually is, a page of the plan
+       set waiting for its map — on --surface, defined by a border rather than by a tone. Page on
+       --surface-2, everything raised on --surface. The mockup gets its contrast from a dark aerial
+       photograph filling the easel edge to edge, not from the furniture around it. */
     <div className="flex min-h-dvh flex-col" style={{ background: 'var(--surface-2)' }}>
       {/* ── Page header ───────────────────────────────────────────────────────────────────── */}
       <header
@@ -432,7 +435,7 @@ export default function PreviewExport() {
         {/* ── The easel ──────────────────────────────────────────────────────────────────── */}
         <div
           className="relative flex min-h-[420px] items-center justify-center overflow-hidden rounded-[20px] border lg:min-h-[calc(100dvh-108px)]"
-          style={{ borderColor: 'var(--border-strong)', background: 'var(--bg)' }}
+          style={{ borderColor: 'var(--border-strong)', background: 'var(--surface)' }}
         >
           {view === 'all' ? (
             /* EVERY SHEET AT ONCE — the headline of the ask.
