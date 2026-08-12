@@ -35,8 +35,9 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '12 August',
-    sha: '1101468',
+    sha: '18cc075',
     changes: [
+      'The report list in the menu now opens even before you have picked your farm',
       'All nine sheets can now be seen at once in Preview & Export',
       'Preview & Export now puts settings, your map and saved maps together',
       'The map preview now uses the full screen on computers and tablets',
