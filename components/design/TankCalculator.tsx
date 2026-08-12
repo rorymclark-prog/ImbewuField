@@ -6,7 +6,7 @@
 //
 // Rainfall source: it prefers a `monthlyRainfallMm` prop when a caller has LocationData in scope,
 // and otherwise self-resolves from the SAME localStorage cache the /design page fills
-// (imbewu_loc_v3_{lat}_{lon}, keyed off the ?lat/?lon URL params) — so the card works standalone
+// (imbewu_loc_v4_{lat}_{lon}, keyed off the ?lat/?lon URL params) — so the card works standalone
 // without threading a prop through the page. If nothing is cached, it degrades honestly.
 
 import { useEffect, useMemo, useState } from 'react';
@@ -34,7 +34,7 @@ function resolveCachedRainfall(): number[] | null {
     const lon = lonRaw === null || lonRaw === '' ? NaN : Number(lonRaw);
     if (!Number.isFinite(lat) || !Number.isFinite(lon)) return null;
     // Key + version must match app/design/page.tsx's readCachedLocationData.
-    const raw = localStorage.getItem(`imbewu_loc_v3_${lat.toFixed(5)}_${lon.toFixed(5)}`);
+    const raw = localStorage.getItem(`imbewu_loc_v4_${lat.toFixed(5)}_${lon.toFixed(5)}`);
     if (!raw) return null;
     const parsed = JSON.parse(raw) as LocationData;
     const monthly = parsed?.rainfall?.monthly;

@@ -450,7 +450,7 @@ function freshState(siteId: string, frame: Omit<CanvasFrame, 'satDataUrl'>): Des
 }
 
 function locationDataCacheKey(lat: number, lon: number): string {
-  return `imbewu_loc_v3_${lat.toFixed(5)}_${lon.toFixed(5)}`;
+  return `imbewu_loc_v4_${lat.toFixed(5)}_${lon.toFixed(5)}`;
 }
 
 function readCachedLocationData(lat: number, lon: number): LocationData | null {

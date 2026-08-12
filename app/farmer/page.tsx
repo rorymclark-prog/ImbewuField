@@ -189,7 +189,14 @@ function HomeInner() {
     // site loaded the first site's cached data (incl. its lat/lon) → satellite of the WRONG place.
     // v2: bump when the location-data shape gains a field (e.g. BRU zones) so already-analysed
     // sites refetch instead of serving a stale pre-field cache. Keep in sync with app/design/page.tsx.
-    const cacheKey = `imbewu_loc_v3_${lat.toFixed(5)}_${lon.toFixed(5)}`;
+    //
+    // v4 (12 Aug): the biome now comes from SANBI's national vegetation map rather than a lat/lon
+    // heuristic, and the response carries `biomeSource`. Shipping that without bumping this did
+    // nothing at all for anyone who had already analysed their site: Ubhejane kept reading "Indian
+    // Ocean Coastal Belt" off a cache written before the fix. Rory: "On the main app it still says
+    // this." The rule above is the rule; a changed ANSWER counts as much as a new field, because a
+    // farmer cannot tell the two apart and neither can this cache.
+    const cacheKey = `imbewu_loc_v4_${lat.toFixed(5)}_${lon.toFixed(5)}`;
     try {
       const cached = localStorage.getItem(cacheKey);
       if (cached) {
