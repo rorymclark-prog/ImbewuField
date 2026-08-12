@@ -34,6 +34,15 @@ export interface ReleaseNote {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '12 August',
+    sha: '432c986',
+    changes: [
+      'Preview & Export now puts settings, your map and saved maps together',
+      'The map preview now uses the full screen on computers and tablets',
+      'Preview & Export now stacks cleanly on phones without a crowded header',
+    ],
+  },
+  {
     when: '11 August',
     sha: 'f6e81b1',
     changes: [
