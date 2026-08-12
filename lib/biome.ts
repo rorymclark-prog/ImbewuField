@@ -1,4 +1,4 @@
-import type { SABiome } from './types';
+import type { BiomeSource, SABiome } from './types';
 import { SOUTH_AFRICA_POLYGONS } from './south-africa-boundary';
 
 export const BIOMES: Record<string, SABiome> = {
@@ -186,11 +186,108 @@ function pointInRing(lon: number, lat: number, ring: readonly LonLat[]): boolean
   return inside;
 }
 
+/** Kilometres per degree, at South African latitudes. Longitude degrees shorten with latitude. */
+const KM_PER_DEG_LAT = 110.9;
+const kmPerDegLon = (lat: number) => 111.32 * Math.cos((lat * Math.PI) / 180);
+
+/** Shortest distance in km from a point to a closed ring, measured on a local flat projection. */
+function kmToRing(lat: number, lon: number, ring: readonly LonLat[]): number {
+  const kx = kmPerDegLon(lat);
+  const px = lon * kx;
+  const py = lat * KM_PER_DEG_LAT;
+  let best = Infinity;
+  for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+    const ax = ring[j][0] * kx;
+    const ay = ring[j][1] * KM_PER_DEG_LAT;
+    const bx = ring[i][0] * kx;
+    const by = ring[i][1] * KM_PER_DEG_LAT;
+    const dx = bx - ax;
+    const dy = by - ay;
+    const lenSq = dx * dx + dy * dy;
+    const t = lenSq === 0 ? 0 : Math.max(0, Math.min(1, ((px - ax) * dx + (py - ay) * dy) / lenSq));
+    best = Math.min(best, Math.hypot(px - (ax + t * dx), py - (ay + t * dy)));
+  }
+  return best;
+}
+
+/**
+ * How far outside the national outline a point may sit and still count as South African.
+ *
+ * SOUTH_AFRICA_POLYGONS is 442 points for the whole country, so the coast is a chain of straight
+ * lines up to ~40 km long and the real shoreline wanders either side of them. Port Edward
+ * (31.05°S, 30.23°E) — a town, on the KZN south coast — falls 800 m outside it and was being told
+ * "Location is outside South African borders", which is not a wrong biome but NO analysis at all:
+ * no rainfall, no soil, no species, nothing. Every coastal farm sits somewhere in that error bar.
+ *
+ * The asymmetry is the point. Admitting a boat 3 km offshore costs a farmer nothing; refusing a
+ * farm on the beach costs them the entire app.
+ */
+const BORDER_TOLERANCE_KM = 3;
+
 export function isWithinSouthAfrica(lat: number, lon: number): boolean {
   if (!Number.isFinite(lat) || !Number.isFinite(lon)) return false;
-  return SOUTH_AFRICA_POLYGONS.some(([outer, ...enclaves]) =>
-    pointInRing(lon, lat, outer)
-    && !enclaves.some((ring) => pointInRing(lon, lat, ring)));
+  return SOUTH_AFRICA_POLYGONS.some(([outer, ...enclaves]) => {
+    // Enclaves (Lesotho, Eswatini) are checked STRICTLY — the tolerance only ever grows the
+    // national outline outwards, never shrinks a neighbour's country to hand us its farms.
+    if (enclaves.some((ring) => pointInRing(lon, lat, ring))) return false;
+    return pointInRing(lon, lat, outer) || kmToRing(lat, lon, outer) <= BORDER_TOLERANCE_KM;
+  });
+}
+
+/**
+ * The east and south coastline, Kosi Bay to Cape Agulhas, as a coarse polyline.
+ *
+ * Coarse ON PURPOSE. This exists to answer "how far from the sea is this farm" to within a few
+ * kilometres so a 45 km belt can be drawn; it is not a shoreline for mapping and must never be
+ * used as one. Points are ~40–90 km apart along a coast with no deep inlets at this scale.
+ *
+ * A polyline rather than SOUTH_AFRICA_POLYGONS' outer ring, which also contains the Namibian,
+ * Botswanan, Zimbabwean and Mozambican land borders — distance to that ring would call a farm on
+ * the Limpopo border "coastal".
+ */
+const EAST_COAST: readonly LonLat[] = [
+  [32.89, -26.85], // Kosi Bay
+  [32.55, -27.60],
+  [32.42, -28.37], // St Lucia
+  [32.09, -28.80], // Richards Bay
+  [31.75, -29.20], // Mtunzini
+  [31.40, -29.52], // Ballito
+  [31.05, -29.87], // Durban
+  [30.72, -30.30], // Scottburgh
+  [30.45, -30.62], // Port Shepstone
+  [30.23, -31.05], // Port Edward
+  [29.54, -31.63], // Port St Johns
+  [29.15, -31.99], // Coffee Bay
+  [28.35, -32.60], // Mbashe
+  [27.91, -33.02], // East London
+  [26.89, -33.60], // Port Alfred
+  [25.60, -33.96], // Gqeberha
+  [24.00, -34.10], // Tsitsikamma
+  [22.14, -34.18], // Mossel Bay
+  [20.02, -34.83], // Cape Agulhas
+];
+
+/** Shortest distance in km from (lat, lon) to the coastline polyline above. */
+export function kmFromEastCoast(lat: number, lon: number): number {
+  const kx = kmPerDegLon(lat);
+  const px = lon * kx;
+  const py = lat * KM_PER_DEG_LAT;
+  let best = Infinity;
+  for (let i = 1; i < EAST_COAST.length; i++) {
+    const ax = EAST_COAST[i - 1][0] * kx;
+    const ay = EAST_COAST[i - 1][1] * KM_PER_DEG_LAT;
+    const bx = EAST_COAST[i][0] * kx;
+    const by = EAST_COAST[i][1] * KM_PER_DEG_LAT;
+    const dx = bx - ax;
+    const dy = by - ay;
+    const lenSq = dx * dx + dy * dy;
+    // Clamp to the segment so the nearest point is on the coast, not on its infinite extension.
+    const t = lenSq === 0 ? 0 : Math.max(0, Math.min(1, ((px - ax) * dx + (py - ay) * dy) / lenSq));
+    const cx = ax + t * dx;
+    const cy = ay + t * dy;
+    best = Math.min(best, Math.hypot(px - cx, py - cy));
+  }
+  return best;
 }
 
 export function classifyBiome(
@@ -227,26 +324,52 @@ export function classifyBiome(
   // Fynbos (SW Cape, winter rainfall, mild)
   if (isWinterRainfall && lat < -32) return BIOMES.FYNBOS;
 
-  // Nama-Karoo (central plateau, low summer rainfall)
-  if (lon > 20 && lon < 27 && lat > -32 && lat < -27 && annualRainfall < 400) return BIOMES.NAMA_KAROO;
+  // Nama-Karoo (central plateau, low summer rainfall).
+  //
+  // The southern bound was -32, which cut the Great Karoo in half: Beaufort West sits at -32.36,
+  // failed this rule by a third of a degree, matched nothing after it and came out as SAVANNA —
+  // a farm in 230 mm of Karoo being handed lowveld advice.
+  if (lon > 20 && lon < 27 && lat > -33.5 && lat < -26 && annualRainfall < 400) return BIOMES.NAMA_KAROO;
 
   // Albany Thicket (E Cape interior)
   if (lat > -34 && lat < -31 && lon > 24.5 && lon < 28 && annualRainfall > 200 && annualRainfall < 700 && !isWinterRainfall) {
     return BIOMES.ALBANY_THICKET;
   }
 
-  // Indian Ocean Coastal Belt (KZN coast)
-  if (lon > 30 && lat > -32 && lat < -26 && annualRainfall > 700) return BIOMES.IOCB;
+  // Indian Ocean Coastal Belt — a BELT, measured from the sea.
+  //
+  // This was `lon > 30 && lat > -32 && lat < -26 && annualRainfall > 700`, which is not a coastal
+  // belt: it is the eastern third of the country with no distance to the sea in it. It put
+  // Ubhejane (27.73°S, 31.96°E, ~70 km inland, Zululand lowveld → Savanna) on the coast, and it
+  // caught the whole KZN midlands too — Howick is 30.2°E with ~900 mm, which is Grassland.
+  //
+  // The real belt is a narrow low strip that runs from the Mozambique border to about the Great
+  // Kei, widening to ~50 km around the Zululand plain and pinching to a few km on the Pondoland
+  // scarp. So: near the coastline, low, wet, and north of the Eastern Cape thicket.
+  if (
+    lat < -26.5 && lat > -33.2
+    && kmFromEastCoast(lat, lon) < 45
+    && annualRainfall > 700
+  ) {
+    return BIOMES.IOCB;
+  }
 
   // Afromontane forest (high rainfall patches)
   if (annualRainfall > 1200 && coldestMonthTemp > 5) return BIOMES.FOREST;
 
-  // Grassland (Highveld, summer rainfall, cool winters)
-  if (lat > -32 && lat < -25 && lon > 26 && lon < 32 && annualRainfall > 450 && coldestMonthTemp < 10) {
-    return BIOMES.GRASSLAND;
-  }
-  // Eastern Cape / E Free State grassland
-  if (lat > -34 && lat < -28 && lon > 27 && annualRainfall > 400 && coldestMonthTemp < 8) {
+  // Grassland — the high interior plateau, the KZN midlands and the Eastern Cape highlands.
+  //
+  // Two rules used to do this and both were too cold to fire. The Highveld one wanted a coldest
+  // month under 10°C and the Eastern Cape one under 8°C, so Johannesburg (11°C), Pietermaritzburg
+  // (13°C), Howick (12°C) and Mthatha (10°C) all fell past them to the SAVANNA default. Four of
+  // the biggest grassland centres in the country, called lowveld.
+  //
+  // What actually separates grassland from savanna here is ALTITUDE, which this function is not
+  // given. The usable proxies are latitude — savanna proper is the low north, above about 25.5°S —
+  // and a coldest month cool enough to frost, which the lowveld's 16–17°C never is. Polokwane
+  // (11°C, but at 23.9°S) stays Savanna on the latitude term; Mkuze (31.96°E and wet, but 16°C)
+  // stays Savanna on the temperature one.
+  if (lat < -25.5 && lon > 25.5 && annualRainfall > 400 && coldestMonthTemp < 14) {
     return BIOMES.GRASSLAND;
   }
 
@@ -302,4 +425,91 @@ export function koppenClassify(
   if (hotMonthTemp > 10) return { code: 'Dwb', description: 'Cold continental highland' };
 
   return { code: 'BSk', description: 'Cold semi-arid' };
+}
+
+// ── SANBI IS THE AUTHORITY. THE HEURISTIC IS THE FALLBACK. ─────────────────────────────────────
+//
+// Rory, 12 August, looking at a site report for Ubhejane at 27.73°S 31.96°E: "Is Indian Ocean
+// coastal belt correct here" — no. That point is ~70 km inland in the Zululand lowveld, which is
+// Savanna. The report said IOCB while its own next two lines said "Zululand Lowveld" and "Valley
+// Bushveld", both Savanna. Then: "how do I know once it's sent out".
+//
+// THE ANSWER WAS ALREADY IN THE RESPONSE. app/api/location-data fetches SANBI's official 2018
+// National Vegetation Map (lib/sanbi.ts) on every request, and that returns the biome for the
+// exact coordinate — the national authority, polygon-accurate. classifyBiome ignored it and ran a
+// hand-drawn lat/lon rectangle instead, which for IOCB was `lon > 30 && lat > -32 && lat < -26 &&
+// rain > 700`: not a coastal belt but the whole eastern third of the country, with no distance to
+// the sea in it anywhere.
+//
+// So the order is now: SANBI first, heuristic only when SANBI is unreachable or has no polygon —
+// and when the heuristic is used, the caller is TOLD, so an estimate can be labelled as one
+// instead of sitting on the page looking like a survey.
+
+/**
+ * SANBI's 2018 biome names -> our registry keys.
+ *
+ * Matched on a normalised prefix rather than equality: the layer spells some of them with
+ * qualifiers ("Indian Ocean Coastal Belt", "Forests", "Azonal Vegetation" variants), and a
+ * near-miss must fall through to the heuristic rather than silently become Savanna.
+ */
+const SANBI_BIOME_TO_KEY: ReadonlyArray<readonly [match: RegExp, key: string]> = [
+  [/^indian ocean coastal belt/, 'IOCB'],
+  [/^succulent karoo/, 'SUCCULENT_KAROO'],
+  [/^nama[- ]karoo/, 'NAMA_KAROO'],
+  [/^albany thicket/, 'ALBANY_THICKET'],
+  [/^grassland/, 'GRASSLAND'],
+  [/^savanna/, 'SAVANNA'],
+  [/^fynbos/, 'FYNBOS'],
+  [/^desert/, 'DESERT'],
+  [/^forest/, 'FOREST'],
+];
+
+/**
+ * The biome SANBI reports for this point, or undefined if it said nothing we recognise.
+ *
+ * Azonal vegetation (rivers, wetlands, coastal dunes) is deliberately NOT mapped: it is a
+ * cross-cutting class that sits inside every biome, so translating it into one would be an
+ * invention. Those points fall through to the heuristic, which is what it is for.
+ */
+export function biomeFromSanbi(sanbiBiome?: string | null): SABiome | undefined {
+  if (typeof sanbiBiome !== 'string') return undefined;
+  const name = sanbiBiome.trim().toLowerCase();
+  if (!name) return undefined;
+  const hit = SANBI_BIOME_TO_KEY.find(([match]) => match.test(name));
+  return hit ? BIOMES[hit[1]] : undefined;
+}
+
+export interface ResolvedBiome {
+  biome: SABiome;
+  /**
+   * Where the answer came from. A farmer being told their farm is Savanna deserves to know
+   * whether that is the national vegetation map or our climate guess — the two are not the same
+   * claim, and until now they were printed identically.
+   */
+  source: BiomeSource;
+}
+
+/**
+ * The one function callers should use.
+ *
+ * SANBI wins whenever it answers. The climate heuristic runs only when it does not, and says so.
+ */
+export function resolveBiome(opts: {
+  lat: number;
+  lon: number;
+  annualRainfall: number;
+  coldestMonthTemp: number;
+  monthlyRain: number[];
+  sanbiBiome?: string | null;
+}): ResolvedBiome {
+  if (!isWithinSouthAfrica(opts.lat, opts.lon)) return { biome: BIOMES.OUTSIDE, source: 'outside' };
+
+  const fromSanbi = biomeFromSanbi(opts.sanbiBiome);
+  if (fromSanbi) return { biome: fromSanbi, source: 'sanbi' };
+
+  const guess = classifyBiome(
+    opts.lat, opts.lon, opts.annualRainfall, opts.coldestMonthTemp, opts.monthlyRain,
+  );
+  if (guess === BIOMES.UNCLASSIFIED) return { biome: guess, source: 'unavailable' };
+  return { biome: guess, source: 'estimated' };
 }

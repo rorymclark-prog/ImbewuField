@@ -3,7 +3,7 @@ import { fetchNasaPower } from '@/lib/nasa-power';
 import { fetchSoilData } from '@/lib/isric-soil';
 import { fetchElevation } from '@/lib/elevation';
 import { fetchVegetation } from '@/lib/sanbi';
-import { classifyBiome } from '@/lib/biome';
+import { resolveBiome } from '@/lib/biome';
 import { lookupBRU } from '@/lib/bru';
 
 export async function GET(req: NextRequest) {
@@ -50,14 +50,27 @@ export async function GET(req: NextRequest) {
     const elevData =
       elevation.status === 'fulfilled' ? elevation.value : defaultElevation();
 
-    const biome = classifyBiome(
-      lat, lon,
-      rainfall.annual,
-      climate.minTemp,
-      rainfall.monthly
-    );
-
     const veg = vegetation.status === 'fulfilled' ? vegetation.value : null;
+
+    // SANBI'S 2018 NATIONAL VEGETATION MAP DECIDES THE BIOME, not our climate heuristic.
+    //
+    // It was already being fetched, on this very request, and thrown away as far as the biome was
+    // concerned: classifyBiome ran a hand-drawn lat/lon rectangle instead. On 12 Aug that told
+    // Ubhejane (27.73°S, 31.96°E — Zululand lowveld, 70 km inland) it was Indian Ocean Coastal
+    // Belt, on the same page where its bioresource unit read "Valley Bushveld".
+    //
+    // `source` travels with the answer so the UI can say which it is holding. A polygon lookup on
+    // the national vegetation map and a guess from rainfall are not the same claim, and until now
+    // they were printed in the same type.
+    const resolved = resolveBiome({
+      lat, lon,
+      annualRainfall: rainfall.annual,
+      coldestMonthTemp: climate.minTemp,
+      monthlyRain: rainfall.monthly,
+      sanbiBiome: veg?.biome,
+    });
+    const biome = resolved.biome;
+    const biomeSource = resolved.source;
 
     // KZN-only finer zone (bundled BRU data — see lib/bru.ts). Never throws;
     // returns null outside KZN or if no polygon match, so classifyBiome's
@@ -69,7 +82,7 @@ export async function GET(req: NextRequest) {
       console.error('BRU lookup error:', err);
     }
 
-    return NextResponse.json({ lat, lon, biome, rainfall, climate, soil: soilData, elevation: elevData, vegetation: veg, bru });
+    return NextResponse.json({ lat, lon, biome, biomeSource, rainfall, climate, soil: soilData, elevation: elevData, vegetation: veg, bru });
   } catch (err) {
     console.error('location-data error:', err);
     return NextResponse.json({ error: 'Failed to fetch location data' }, { status: 500 });
