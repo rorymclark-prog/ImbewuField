@@ -17,7 +17,8 @@
 // set — was an outline button. That is the primary on the wrong control, so it is inverted here.
 
 import { useEffect, useRef, useState } from 'react';
-import { ArrowRight, Download, FileImage, FileText, Printer } from 'lucide-react';
+import Link from 'next/link';
+import { ArrowRight, Download, Eye, FileImage, FileText, Printer } from 'lucide-react';
 
 interface BottomBarProps {
   nextLabel: string | null; // null on the last sheet
@@ -107,6 +108,23 @@ export default function BottomBar({ nextLabel, onContinue, doneCount, totalCount
               className="u-card absolute bottom-[calc(100%+8px)] right-0 z-30 w-[268px] overflow-hidden p-1"
               style={{ background: 'var(--surface)' }}
             >
+              {/* The one item here that goes somewhere real, so it leads. Everything below it is
+                  still a stub, and a menu whose only working entry is buried under three that are
+                  not is a menu that reads as broken. */}
+              <Link
+                href="/design-studio-2/preview"
+                role="menuitem"
+                onClick={() => setExportOpen(false)}
+                className="flex w-full items-start gap-2.5 rounded-lg px-2.5 py-2.5 text-left no-underline transition-colors hover:bg-[var(--surface-2)]"
+              >
+                <Eye size={16} className="mt-0.5 shrink-0" style={{ color: 'var(--brand)' }} />
+                <span className="min-w-0">
+                  <span className="block text-[13px] font-semibold" style={{ color: 'var(--text)' }}>Preview &amp; Export</span>
+                  <span className="block text-[11.5px]" style={{ color: 'var(--text-3)' }}>Check the sheet, then choose a format</span>
+                </span>
+              </Link>
+              <span className="mx-2.5 my-1 block h-px" style={{ background: 'var(--border)' }} aria-hidden />
+
               {EXPORT_ACTIONS.map(({ id, label, hint, Icon }) => (
                 <button
                   key={id}
