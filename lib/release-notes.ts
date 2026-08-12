@@ -40,6 +40,10 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       'Preview & Export now puts settings, your map and saved maps together',
       'The map preview now uses the full screen on computers and tablets',
       'Preview & Export now stacks cleanly on phones without a crowded header',
+      'Your biome now comes from the national vegetation map, not a guess',
+      'Inland farms are no longer called coastal',
+      'So the trees, crops and water advice that follow from it are right too',
+      'Farms on the coast are no longer told they are outside South Africa',
     ],
   },
   {

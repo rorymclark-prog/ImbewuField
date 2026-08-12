@@ -1,5 +1,9 @@
 export interface LatLon { lat: number; lon: number }
 
+/** Where a site's biome came from. A surveyed polygon on SANBI's national vegetation map and a
+ *  guess from rainfall are not the same claim — see lib/biome.ts's resolveBiome. */
+export type BiomeSource = 'sanbi' | 'estimated' | 'outside' | 'unavailable';
+
 export interface SABiome {
   name: string;
   code: string;
@@ -122,6 +126,9 @@ export interface LocationData {
   lat: number;
   lon: number;
   biome: SABiome;
+  /** Where `biome` came from — SANBI's national vegetation map, or our climate estimate. A
+   *  surveyed polygon and a guess from rainfall are not the same claim; see lib/biome.ts. */
+  biomeSource?: BiomeSource;
   rainfall: MonthlyRainfall;
   climate: ClimateData;
   soil: SoilData;
