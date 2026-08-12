@@ -9,7 +9,7 @@
 //
 // Location source: mirrors TankCalculator — prefers `lat`/`site` props when a caller has them in
 // scope, and otherwise self-resolves from the SAME localStorage cache the /design page fills
-// (imbewu_loc_v3_{lat}_{lon}, keyed off the ?lat/?lon URL params). If nothing is cached it degrades
+// (imbewu_loc_v4_{lat}_{lon}, keyed off the ?lat/?lon URL params). If nothing is cached it degrades
 // honestly (shows model.dataNotes[0]) and still lets the farmer move on — it must NEVER block.
 
 import { useEffect, useMemo, useState } from 'react';
@@ -68,7 +68,7 @@ function resolveSectorContext(): { lat: number; lon: number; site: SectorSite | 
     const lon = Number(params.get('lon'));
     if (!Number.isFinite(lat) || !Number.isFinite(lon)) return null;
     // Key + version must match app/design/page.tsx's readCachedLocationData / TankCalculator.
-    const raw = localStorage.getItem(`imbewu_loc_v3_${lat.toFixed(5)}_${lon.toFixed(5)}`);
+    const raw = localStorage.getItem(`imbewu_loc_v4_${lat.toFixed(5)}_${lon.toFixed(5)}`);
     const parsed = raw ? (JSON.parse(raw) as LocationData) : null;
     // Same shape app/design/page.tsx builds for glossySite (a superset of {biome, rainfallMm}).
     const site: SectorSite | null = parsed
