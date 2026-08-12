@@ -44,8 +44,12 @@ test('the panel deep link the entry uses is a real one', () => {
 });
 
 test('an empty report list explains itself instead of looking broken', () => {
-  const panel = read('../components/DataPanel.tsx');
-  assert.match(panel, /savedReports\.length === 0 && \(/, 'there is no empty state again');
+  // The list MOVED on 12 August, out of DataPanel and into its own component, so that the drawer
+  // entry could open it with no site selected — see tests/report-picker.test.ts. This test follows
+  // it rather than being deleted: what it protects is that the five translated strings reach a
+  // farmer's screen, and that is true wherever the markup lives.
+  const list = read('../components/report/SavedReportsList.tsx');
+  assert.match(list, /reports\.length === 0 && \(/, 'there is no empty state again');
   for (const key of [
     'noSavedReportsMessage',
     'noSavedReportsGenerateLink',
@@ -53,12 +57,14 @@ test('an empty report list explains itself instead of looking broken', () => {
     'noSavedReportsSaveLink',
     'noSavedReportsSuffix',
   ]) {
-    assert.match(panel, new RegExp(`t\\('${key}'\\)`), `${key} is translated in eleven languages and shown in none`);
+    assert.match(list, new RegExp(`t\\('${key}'\\)`), `${key} is translated in eleven languages and shown in none`);
   }
   // The one actionable phrase has to actually generate a report, not just describe one.
-  const start = panel.indexOf('savedReports.length === 0 && (');
-  const block = panel.slice(start, panel.indexOf('savedReports.length > 0 && (', start));
+  const start = list.indexOf('reports.length === 0');
+  const block = list.slice(start, list.indexOf('reports.length > 0', start));
   assert.match(block, /onClick=\{\(\) => onOpenReport\?\.\(\)\}/, 'the "Generate" phrase does nothing');
   // And the saved list still renders when there IS one — the two states are exclusive.
-  assert.match(panel, /savedReports\.length > 0 && \(/);
+  assert.match(list, /reports\.length > 0 && \(/);
+  // DataPanel must still be the thing that mounts it, in both of its places.
+  assert.match(read('../components/DataPanel.tsx'), /<SavedReportsList/);
 });

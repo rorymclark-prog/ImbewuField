@@ -19,6 +19,7 @@ import LifeGuide from './LifeGuide';
 import WaterBalance from './WaterBalance';
 import WeatherWidget from './WeatherWidget';
 import CompletionScore from './report/CompletionScore';
+import SavedReportsList from './report/SavedReportsList';
 import NextStepCoach from './NextStepCoach';
 import SpeakButton from './SpeakButton';
 import SiteManageMenu from './SiteManageMenu';
@@ -70,6 +71,9 @@ interface Props {
 const TABS = ['Overview', 'Ask', 'Reports', 'People', 'Water', 'Soil', 'Climate', 'Nature', 'Area', 'Photos', 'Design', 'AI', 'Places', 'Farm'] as const;
 type Tab = typeof TABS[number];
 const wantsFarmRecords = (tab: Tab, forcedTab?: string | null): boolean => tab === 'Farm' || forcedTab === 'Farm';
+/** Saved reports live in the farmer's own storage, not on a map pin, so the Reports tab has to
+ *  survive `data` being null exactly as Farm does — see components/report/SavedReportsList.tsx. */
+const wantsSavedReports = (tab: Tab, forcedTab?: string | null): boolean => tab === 'Reports' || forcedTab === 'Reports';
 // Farm and Reports live on the home screen quick actions and are reached via
 // deep link (/farmer?panel=Farm). Keep them in TABS so the panel still renders,
 // but hide them from the scrollable tab strip to reduce clutter.
@@ -640,6 +644,43 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
   // Finance can therefore arrive before any site is analysed; returning the map empty state
   // here used to make its "Log harvest" action a dead end for exactly those farmers.
   if (wantsFarmRecords(tab, forcedTab)) return <MyRecords />;
+  // THE REPORT PICKER IN THE MENU. Same shape as the Farm hatch directly above, and the same bug
+  // it was written for: without this, the drawer's Site report entry lands on the map's "pick a
+  // spot" empty state for any farmer who has not analysed a site yet — which is the farmer it
+  // exists for. Their saved reports are right there in storage; there is just no pin.
+  if (!data && !loading && wantsSavedReports(tab, forcedTab)) {
+    return (
+      <div className="flex-1 overflow-y-auto p-4 flex flex-col gap-3" style={{ background: '#F7F2E9' }}>
+        <div>
+          <div style={{ font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#C07A1E' }}>
+            {t('siteReportOverline')}
+          </div>
+          <h2 className="font-display font-bold" style={{ fontSize: 19, color: '#20190F', marginTop: 2 }}>
+            {t('savedReportsHeader')}
+          </h2>
+        </div>
+        <SavedReportsList
+          reports={savedReports}
+          canGenerate={false}
+          onViewReport={onViewReport}
+          onDeleted={setSavedReports}
+        />
+        {/* A REAL key, not a new one. `t('reportsNeedSiteHint')` compiled fine and would have
+            rendered the literal string "reportsNeedSiteHint" on screen — t() takes any string, so
+            TypeScript cannot catch it. heroSub already says exactly this, in all eleven
+            languages: "Tap anywhere in South Africa to get a full permaculture plan for your
+            land." Inventing an English-only key while fixing an English-only-key bug would have
+            been quite something. */}
+        {/* Only when there IS a list. With none, SavedReportsList already says this in its own
+            empty box, and printing it twice under each other is how the first build looked. */}
+        {savedReports.length > 0 && (
+          <p className="font-sans" style={{ fontSize: 12, lineHeight: 1.5, color: '#8C7A62' }}>
+            {t('heroSub')}
+          </p>
+        )}
+      </div>
+    );
+  }
   if (!data && !loading) return <EmptyState />;
   if (loading && !data) return <Skeleton />;
   if (!data) return null;
@@ -1716,63 +1757,13 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               );
             })()}
 
-            {/* Generate report button */}
-            {data && (
-              <button
-                onClick={() => onOpenReport?.()}
-                className="w-full flex items-center justify-center gap-2 rounded-xl font-display font-semibold"
-                style={{ background: '#274D2C', color: '#EAF3E2', padding: '14px 16px', fontSize: 14.5, border: 'none', cursor: 'pointer' }}
-              >
-                <FileText size={16} color="#CDEBB6" />
-                {t('generateFullReport')}
-              </button>
-            )}
-
-            {/* Saved reports — or, when there are none, how to get one.
-                These five strings have been translated into all eleven languages since the
-                library was built and rendered in none of them: arriving here with nothing saved
-                showed a bare panel that looked broken. Now the drawer has a Site report entry
-                pointing straight at this tab, an empty list is the FIRST thing a farmer sees. */}
-            {savedReports.length === 0 && (
-              <div
-                className="rounded-xl p-3.5 font-sans"
-                style={{ background: '#FFFEFA', border: '1px dashed #E2D8C4', fontSize: 12.5, lineHeight: 1.55, color: '#5C5040' }}
-              >
-                {t('noSavedReportsMessage')}{' '}
-                <button
-                  onClick={() => onOpenReport?.()}
-                  className="font-semibold"
-                  style={{ background: 'none', border: 'none', padding: 0, font: 'inherit', fontWeight: 600, color: '#1F4D2B', textDecoration: 'underline', cursor: 'pointer' }}
-                >
-                  {t('noSavedReportsGenerateLink')}
-                </button>
-                {t('noSavedReportsSaveTip')}{' '}
-                <span className="font-semibold" style={{ color: '#20190F' }}>{t('noSavedReportsSaveLink')}</span>{' '}
-                {t('noSavedReportsSuffix')}
-              </div>
-            )}
-            {savedReports.length > 0 && (
-              <>
-                <div style={{ font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#8A7C62' }}>
-                  {t('savedReportsHeader')}
-                </div>
-                {savedReports.map((r) => (
-                  <div key={r.id} className="rounded-xl p-3 flex items-center gap-2" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-                    <button onClick={() => onViewReport?.(r)} className="flex-1 min-w-0 text-left">
-                      <div className="text-sm font-display font-semibold truncate" style={{ color: '#20190F' }}>{r.name}</div>
-                      <div className="text-xs font-mono" style={{ color: '#5C5040' }}>
-                        {new Date(r.savedAt).toLocaleDateString()} · {Math.abs(r.location.lat).toFixed(3)}°S {r.location.lon.toFixed(3)}°E
-                      </div>
-                    </button>
-                    <button onClick={() => onViewReport?.(r)} className="px-3 py-1.5 rounded-lg text-xs font-display font-semibold flex-shrink-0"
-                      style={{ background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.3)', color: '#1F4D2B' }}>
-                      {t('reportOpenButton')}
-                    </button>
-                    <button onClick={() => deleteReport(r.id)} title="Delete" className="px-2 py-1.5 flex-shrink-0 flex items-center" style={{ color: '#5C5040' }}><Trash2 size={14} /></button>
-                  </div>
-                ))}
-              </>
-            )}
+            <SavedReportsList
+              reports={savedReports}
+              canGenerate={!!data}
+              onOpenReport={() => onOpenReport?.()}
+              onViewReport={onViewReport}
+              onDeleted={setSavedReports}
+            />
           </div>
         )}
 
