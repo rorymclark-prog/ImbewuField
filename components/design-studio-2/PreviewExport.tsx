@@ -33,6 +33,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   Check, Image as ImageIcon, Layers, Map as MapIcon, Maximize2, MoreVertical,
   Move, Share2, Sparkles, Sun, Upload, Wind, ZoomIn, ZoomOut, RotateCcw, FileText,
+  LayoutGrid, Square,
 } from 'lucide-react';
 import BackButton from '@/components/BackButton';
 import { getLastSite } from '@/lib/last-site';
@@ -42,7 +43,7 @@ import { plateSheetOrdinal } from '@/lib/report-plates';
 import { SHEET_META, SHEET_ORDER, type SheetId } from '@/lib/design-studio-shell';
 import {
   QUALITIES, ENGINES, UNDERLAYS, LABEL_MODES, STYLES, FINISHES,
-  exportSummary, savedMapBadge, formatSavedAt,
+  exportSummary, savedMapBadge, formatSavedAt, sheetGallery, galleryProgress,
   type Quality, type UnderlayId, type LabelMode, type StyleId, type FinishId,
 } from '@/lib/preview-export';
 
@@ -132,6 +133,10 @@ export default function PreviewExport() {
   const [metas, setMetas] = useState<StoredSheetMeta[]>([]);
   const [preview, setPreview] = useState<{ id: string; image: string } | null>(null);
   const [previewBusy, setPreviewBusy] = useState(false);
+  // THE HEADLINE ASK (PREVIEW-EXPORT-V2.md §2.1): the studio previews one sheet at a time, and
+  // what Rory wants is the whole plan set at once. Single stays the default — it is the view that
+  // can show a sheet at a size you can actually read.
+  const [view, setView] = useState<'single' | 'all'>('single');
 
   useEffect(() => {
     let alive = true;
@@ -172,9 +177,22 @@ export default function PreviewExport() {
   );
 
   const activeMeta = preview ? savedMaps.find((m) => m.id === preview.id) ?? null : null;
+  const gallery = useMemo(() => sheetGallery(metas), [metas]);
+  const progress = useMemo(() => galleryProgress(gallery), [gallery]);
 
   return (
-    <div className="flex min-h-dvh flex-col" style={{ background: 'var(--bg)' }}>
+    /* NOTHING ON THIS PAGE IS BROWN.
+       Rory: "do you think we should have the brown background?" — no. My first answer moved the
+       page one step lighter (--bg -> --surface-2) and put the EASEL on --bg, reasoning that a
+       recessed well should sit darker than its page. That principle is fine on a neutral palette
+       and wrong on this one: every token here is a beige, so "darker" only ever means "browner",
+       and the single visible result was a browner centre. His words: "only the centre modal seems
+       changed and it's browner."
+       So the easel is a BLANK SHEET OF PAPER — which is what it actually is, a page of the plan
+       set waiting for its map — on --surface, defined by a border rather than by a tone. Page on
+       --surface-2, everything raised on --surface. The mockup gets its contrast from a dark aerial
+       photograph filling the easel edge to edge, not from the furniture around it. */
+    <div className="flex min-h-dvh flex-col" style={{ background: 'var(--surface-2)' }}>
       {/* ── Page header ───────────────────────────────────────────────────────────────────── */}
       <header
         className="sticky top-0 z-20 border-b px-4 py-3"
@@ -417,9 +435,86 @@ export default function PreviewExport() {
         {/* ── The easel ──────────────────────────────────────────────────────────────────── */}
         <div
           className="relative flex min-h-[420px] items-center justify-center overflow-hidden rounded-[20px] border lg:min-h-[calc(100dvh-108px)]"
-          style={{ borderColor: 'var(--border)', background: 'var(--surface-2)' }}
+          style={{ borderColor: 'var(--border-strong)', background: 'var(--surface)' }}
         >
-          {preview ? (
+          {view === 'all' ? (
+            /* EVERY SHEET AT ONCE — the headline of the ask.
+               Thumbnails only. Nine full sheets at 1–3 MB each is the crash this grid was
+               warned about in PREVIEW-EXPORT-V2.md §3, so a row that predates thumbnails shows
+               as un-previewed rather than being promoted to its full image to fill the hole.
+               Always nine cells: the plan set's question is "what is still missing", and only
+               the empty slots can answer it. */
+            <div className="h-full w-full overflow-y-auto p-3">
+              {/* Both on the LEFT. The view toggle is pinned to the stage's top-right corner, so a
+                  justify-between header slid this count underneath it. */}
+              <div className="mb-3 flex items-baseline gap-2 px-0.5">
+                <span className="u-label" style={{ fontSize: 10 }}>Plan set</span>
+                <span className="text-[11.5px] font-semibold" style={{ color: 'var(--text-3)' }}>
+                  · {progress.done} of {progress.total} rendered
+                </span>
+              </div>
+              <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-3">
+                {gallery.map((cell) => (
+                  <button
+                    key={cell.id}
+                    type="button"
+                    onClick={() => {
+                      setSheet(cell.id);
+                      setView('single');
+                      if (cell.savedId) void openSheet(cell.savedId);
+                    }}
+                    className="overflow-hidden rounded-xl border text-left transition-colors hover:border-[var(--brand)]"
+                    style={{
+                      borderColor: cell.id === sheet ? 'var(--brand)' : 'var(--border)',
+                      background: 'var(--surface)',
+                    }}
+                  >
+                    <span className="relative block aspect-[4/3] w-full" style={{ background: 'var(--surface-2)' }}>
+                      {cell.thumb ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={cell.thumb} alt="" className="h-full w-full object-cover" />
+                      ) : (
+                        <span className="flex h-full w-full items-center justify-center">
+                          <ImageIcon size={18} style={{ color: 'var(--text-3)' }} />
+                        </span>
+                      )}
+                      {/* SOLID backing, unlike the rail's. The rail's badges sit on a white row, so
+                          a translucent brand tint is legible there; here they sit on an aerial
+                          photograph, where the same tint disappears into whatever is underneath. */}
+                      {cell.badge && (
+                        <span
+                          className="absolute left-1.5 top-1.5 rounded border px-1.5 py-0.5 text-[9px] font-bold uppercase tracking-wider"
+                          style={{ background: 'var(--surface)', color: cell.badge.fg, borderColor: 'var(--border)' }}
+                        >
+                          {cell.badge.label}
+                        </span>
+                      )}
+                      {/* Say there is more than one without holding more than one. */}
+                      {cell.count > 1 && (
+                        <span
+                          className="absolute right-1.5 top-1.5 rounded px-1.5 py-0.5 text-[9px] font-bold"
+                          style={{ background: 'var(--surface)', color: 'var(--text-2)', border: '1px solid var(--border)' }}
+                        >
+                          {cell.count} saved
+                        </span>
+                      )}
+                    </span>
+                    <span className="block px-2.5 py-2">
+                      <span
+                        className="block text-[12.5px] font-bold leading-tight"
+                        style={{ fontFamily: 'var(--font-display)', color: 'var(--text)' }}
+                      >
+                        {cell.no} — {cell.label}
+                      </span>
+                      <span className="mt-0.5 block text-[10.5px]" style={{ color: 'var(--text-3)' }}>
+                        {cell.savedAt ? formatSavedAt(cell.savedAt) : 'Not rendered yet'}
+                      </span>
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          ) : preview ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={preview.image}
@@ -441,7 +536,36 @@ export default function PreviewExport() {
             </div>
           )}
 
+          {/* SINGLE / ALL SHEETS. Always visible, because it is the control that answers "where is
+              the rest of my plan set" — the question the one-sheet-at-a-time studio could not. */}
+          <div
+            className="absolute right-3 top-3 z-10 flex items-center gap-0.5 rounded-lg border p-0.5"
+            style={{ borderColor: 'var(--border)', background: 'var(--surface)' }}
+          >
+            {([
+              { id: 'single' as const, Icon: Square, label: 'This sheet' },
+              { id: 'all' as const, Icon: LayoutGrid, label: 'All sheets' },
+            ]).map(({ id, Icon, label }) => {
+              const on = view === id;
+              return (
+                <button
+                  key={id}
+                  type="button"
+                  onClick={() => setView(id)}
+                  aria-pressed={on}
+                  title={label}
+                  className="flex h-8 items-center gap-1.5 rounded-md px-2 text-[11.5px] font-semibold transition-colors"
+                  style={{ background: on ? 'var(--brand)' : 'transparent', color: on ? '#FFFEFA' : 'var(--text-2)' }}
+                >
+                  <Icon size={14} />
+                  <span className="hidden sm:inline">{label}</span>
+                </button>
+              );
+            })}
+          </div>
+
           {/* Sector chips — read off the sheet's own conditions, top-left as in the mockup. */}
+          {view === 'single' && (
           <div className="pointer-events-none absolute left-3 top-3 flex gap-2">
             <span
               className="flex items-center gap-1.5 rounded-lg border px-2.5 py-1.5 text-[11.5px] font-semibold"
@@ -456,20 +580,24 @@ export default function PreviewExport() {
               <Sun size={13} style={{ color: 'var(--warn)' }} /> Winter sun
             </span>
           </div>
+          )}
 
           {/* North arrow. Every plan sheet already carries its own drawn north point and scale
               bar (the renderer puts them there) — this is the VIEWER's chrome, so it sits on the
               stage frame rather than over the drawing. */}
-          <div
-            className="pointer-events-none absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-lg border text-[11px] font-bold"
-            style={{ borderColor: 'var(--border)', background: 'var(--surface)', color: 'var(--text-2)', fontFamily: 'var(--font-display)' }}
-            aria-hidden
-          >
-            N
-          </div>
+          {view === 'single' && (
+            <div
+              className="pointer-events-none absolute left-3 bottom-3 flex h-9 w-9 items-center justify-center rounded-lg border text-[11px] font-bold"
+              style={{ borderColor: 'var(--border)', background: 'var(--surface)', color: 'var(--text-2)', fontFamily: 'var(--font-display)' }}
+              aria-hidden
+            >
+              N
+            </div>
+          )}
 
           {/* Viewer toolbar. Disabled with nothing on the easel rather than hidden — the mockup's
               silhouette should not change shape depending on whether a sheet has loaded. */}
+          {view === 'single' && (
           <div
             className="absolute bottom-3 left-1/2 flex -translate-x-1/2 items-center gap-0.5 rounded-full border p-1"
             style={{ borderColor: 'var(--border)', background: 'var(--surface)' }}
@@ -494,6 +622,7 @@ export default function PreviewExport() {
               </button>
             ))}
           </div>
+          )}
         </div>
 
         {/* ── Saved maps + export summary ────────────────────────────────────────────────── */}

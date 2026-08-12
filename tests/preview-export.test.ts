@@ -4,7 +4,7 @@ import test from 'node:test';
 
 import {
   ENGINES, FINISHES, QUALITIES, STYLES,
-  exportSummary, formatBytes, formatSavedAt, savedMapBadge,
+  exportSummary, formatBytes, formatSavedAt, savedMapBadge, sheetGallery, galleryProgress,
 } from '../lib/preview-export.ts';
 import { RENDER_ENGINES } from '../lib/render-job-contract.ts';
 
@@ -175,4 +175,114 @@ test('the page registers its own back control, so the floating one stands down',
   assert.match(back, /useRegisterBackControl\(\)/, 'BackButton stopped registering — the pill will return everywhere');
   // And no hand-rolled replacement crept back alongside it.
   assert.doesNotMatch(page, /aria-label="Back/, 'a second back control would put two on one screen');
+});
+
+// ── Every sheet at once ───────────────────────────────────────────────────────────────────────
+//
+// PREVIEW-EXPORT-V2.md §2.1 calls this "the headline of the ask and the biggest single change":
+// the studio previews one sheet at a time, and what Rory wants is the whole plan set on screen.
+
+const meta = (label: string, at: string, extra: Record<string, unknown> = {}) => ({
+  id: `${label}-${at}`, siteId: 's', label, at, thumb: `thumb:${label}`, ...extra,
+} as never);
+
+test('the grid is always nine cells, rendered or not', () => {
+  const cells = sheetGallery([meta('04 — Water & Irrigation · Exact master', '2026-08-10T09:00:00Z')]);
+  assert.equal(cells.length, 9, 'the plan set is nine sheets whether or not they exist yet');
+  assert.deepEqual(cells.map((c) => c.no), ['01', '02', '03', '04', '05', '06', '07', '08', '09']);
+  // The empty slots are the point: "what is still missing" is the question only they can answer.
+  assert.deepEqual(galleryProgress(cells), { done: 1, total: 9 });
+  const water = cells.find((c) => c.no === '04')!;
+  assert.equal(water.count, 1);
+  assert.ok(water.savedId);
+  const zones = cells.find((c) => c.no === '03')!;
+  assert.equal(zones.savedId, null);
+  assert.equal(zones.thumb, null);
+  assert.equal(zones.badge, null);
+  assert.equal(zones.savedAt, null);
+});
+
+test('a sheet with several saves shows its newest, and says how many there are', () => {
+  const cells = sheetGallery([
+    meta('06 — Planting · Exact master', '2026-08-09T08:00:00Z', { resultKind: 'exact' }),
+    meta('06 — Planting · AI Polished', '2026-08-11T17:00:00Z', { resultKind: 'hybrid' }),
+    meta('06 — Planting · older', '2026-08-01T08:00:00Z', { resultKind: 'exact' }),
+  ]);
+  const planting = cells.find((c) => c.no === '06')!;
+  assert.equal(planting.count, 3, 'the grid must say there is more than one without holding them');
+  assert.equal(planting.savedAt, '2026-08-11T17:00:00Z', 'the newest save should be the one shown');
+  assert.equal(planting.badge?.label, 'AI Polished');
+  assert.equal(galleryProgress(cells).done, 1, 'three saves of one sheet is still one sheet rendered');
+});
+
+test('a row that is not one of the canonical nine is counted nowhere', () => {
+  // Forcing an old era's label or a hand-named export into a neighbouring sheet would put a
+  // picture under a heading it does not belong to.
+  const cells = sheetGallery([
+    meta('Some hand-named export', '2026-08-10T09:00:00Z'),
+    meta('12 — A sheet that does not exist', '2026-08-10T09:00:00Z'),
+    meta('', '2026-08-10T09:00:00Z'),
+  ]);
+  assert.deepEqual(galleryProgress(cells), { done: 0, total: 9 });
+  assert.ok(cells.every((c) => c.savedId === null));
+  // And an empty store is nine empty cells, not a crash.
+  assert.equal(sheetGallery([]).length, 9);
+});
+
+test('the grid renders thumbnails and never promotes a sheet to its full image', () => {
+  // THE CRASH THIS VIEW IS CLOSEST TO. Nine sheets at 1–3 MB each is exactly what
+  // PREVIEW-EXPORT-V2.md §3 warns a grid must never hold. A row saved before thumbnails existed
+  // shows as un-previewed rather than falling back to `image` to fill the hole.
+  const withoutThumb = sheetGallery([
+    { id: 'x', siteId: 's', label: '01 — Existing Site', at: '2026-08-10T09:00:00Z', image: 'data:image/png;base64,AAAA' } as never,
+  ]);
+  const site = withoutThumb.find((c) => c.no === '01')!;
+  assert.ok(site.savedId, 'the row still counts as rendered');
+  assert.equal(site.thumb, null, 'a missing thumb must not fall back to the full image');
+
+  const page = source(PAGE);
+  const grid = page.slice(page.indexOf("{view === 'all' ?"), page.indexOf("</div>\n          ) : preview ?"));
+  assert.match(grid, /src=\{cell\.thumb\}/);
+  assert.doesNotMatch(grid, /loadSheetImage|preview\.image/, 'the grid is reaching for full images');
+});
+
+test('choosing a sheet from the grid opens exactly that sheet, one at a time', () => {
+  const page = source(PAGE);
+  const grid = page.slice(page.indexOf("{view === 'all' ?"), page.indexOf("</div>\n          ) : preview ?"));
+  assert.match(grid, /setSheet\(cell\.id\)/, 'the settings rail must follow the card that was tapped');
+  assert.match(grid, /setView\('single'\)/, 'tapping a card should show it at a readable size');
+  assert.match(grid, /if \(cell\.savedId\) void openSheet\(cell\.savedId\)/,
+    'an un-rendered sheet has nothing to open and must not request one');
+});
+
+test('the single-sheet chrome does not float over the grid', () => {
+  // The sector chips, north point and zoom toolbar belong to ONE sheet on an easel. Left over the
+  // nine-up they would sit on top of unrelated thumbnails and mean nothing.
+  const page = source(PAGE);
+  for (const marker of ['Sector chips', 'North arrow', 'Viewer toolbar']) {
+    const at = page.indexOf(marker);
+    assert.ok(at > 0, `${marker} block is gone`);
+    const before = page.slice(Math.max(0, at - 400), at + 400);
+    assert.match(before, /view === 'single'/, `${marker} is not gated to the single view`);
+  }
+});
+
+test('nothing on this page is brown', () => {
+  // Rory: "do you think we should have the brown background?" — and then, after my first answer:
+  // "only the centre modal seems changed and it's browner."
+  //
+  // He was right and the first fix was wrong. It moved the page one step lighter and put the EASEL
+  // on --bg, on the principle that a recessed well sits darker than its page. That principle holds
+  // on a neutral palette; here every token is a beige, so "darker" only ever reads as "browner",
+  // and a browner centre was the single visible result. --bg (#E4DCC6) is the brownest token in
+  // the set, and this page paints nothing with it.
+  const page = source(PAGE);
+  const shell = page.slice(page.indexOf('flex min-h-dvh flex-col'), page.indexOf('Page header'));
+  assert.match(shell, /background: 'var\(--surface-2\)'/, 'the page ground went dark again');
+
+  const stage = page.slice(page.indexOf('relative flex min-h-'), page.indexOf('SINGLE / ALL SHEETS'));
+  assert.match(stage, /background: 'var\(--surface\)'/,
+    'the easel is a blank sheet of paper — defined by its border, not by a darker tone');
+
+  assert.doesNotMatch(shipped(PAGE), /var\(--bg\)/, '--bg (#E4DCC6) is back on the page');
 });
