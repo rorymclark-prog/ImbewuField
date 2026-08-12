@@ -9,6 +9,8 @@
 
 import { RENDER_ENGINES } from './render-job-contract';
 import type { StoredSheetMeta } from './sheet-store';
+import { plateSheetOrdinal } from './report-plates';
+import { SHEET_ORDER, SHEET_META, type SheetId } from './design-studio-shell';
 
 export type Quality = 'high' | 'medium' | 'low';
 export type UnderlayId = 'photo' | 'satellite' | 'paper';
@@ -166,4 +168,73 @@ export function exportSummary(opts: {
       ? 'Open a saved sheet to see its size. Totals appear once an export runs.'
       : 'Measured from the sheet on screen. The full export is sized once it runs — nothing here estimates it for you.',
   };
+}
+
+// ── Every sheet at once ───────────────────────────────────────────────────────────────────────
+//
+// PREVIEW-EXPORT-V2.md §2.1: "Preview every sheet at once. Today the studio previews one sheet at
+// a time. This is the headline of the ask and the biggest single change."
+//
+// It needs no new data model — the nine sheets are already the canonical set and the saved rows
+// already name which one they are. What it needs is DISCIPLINE ABOUT MEMORY: the same file's §3
+// says a grid holding full images "is exactly what crashed the app". So this returns the small
+// `thumb` and nothing else. A sheet whose saved row predates thumbnails has no picture in the
+// grid; it does NOT get promoted to its full image to fill the hole, because nine of those is the
+// crash. It shows as un-previewed and opens fine on the easel, one at a time, like everything else.
+
+export interface SheetGalleryCell {
+  id: SheetId;
+  /** '01'..'09' — the ordinal is what makes the grid read as a plan SET rather than nine pictures. */
+  no: string;
+  label: string;
+  /** The newest saved row for this sheet, or null when nothing has been rendered for it yet. */
+  savedId: string | null;
+  /** Small JPEG. Null when the row predates thumbnails — never the full image. */
+  thumb: string | null;
+  badge: SavedMapBadge | null;
+  savedAt: string | null;
+  /** How many saved rows exist for this sheet, so the grid can say "3 versions" without holding them. */
+  count: number;
+}
+
+/**
+ * The nine cells of the all-sheets grid, in plan-set order.
+ *
+ * ALWAYS NINE. A grid that only shows what has been rendered answers "what do I have"; the plan
+ * set's own question is "what is still missing", and that one can only be answered by drawing the
+ * empty slots too. Rows outside the canonical nine (an old era's label, a hand-named export) are
+ * counted nowhere rather than being forced into a neighbouring sheet.
+ */
+export function sheetGallery(metas: readonly StoredSheetMeta[]): SheetGalleryCell[] {
+  const byOrdinal = new Map<number, StoredSheetMeta[]>();
+  for (const m of metas ?? []) {
+    const ord = plateSheetOrdinal(m?.label ?? '');
+    if (!Number.isFinite(ord) || ord < 1 || ord > SHEET_ORDER.length) continue;
+    const bucket = byOrdinal.get(ord);
+    if (bucket) bucket.push(m);
+    else byOrdinal.set(ord, [m]);
+  }
+
+  return SHEET_ORDER.map((id) => {
+    const meta = SHEET_META[id];
+    const rows = byOrdinal.get(Number(meta.no)) ?? [];
+    // Newest first. `at` is the render timestamp; ties keep store order, which is render order.
+    const sorted = [...rows].sort((a, b) => Date.parse(b.at) - Date.parse(a.at));
+    const newest = sorted[0] ?? null;
+    return {
+      id,
+      no: meta.no,
+      label: meta.label,
+      savedId: newest?.id ?? null,
+      thumb: newest?.thumb ?? null,
+      badge: newest ? savedMapBadge(newest) : null,
+      savedAt: newest?.at ?? null,
+      count: rows.length,
+    };
+  });
+}
+
+/** "3 of 9 sheets rendered" — progress across the plan set, which is the grid's real payload. */
+export function galleryProgress(cells: readonly SheetGalleryCell[]): { done: number; total: number } {
+  return { done: cells.filter((c) => c.savedId).length, total: cells.length };
 }
