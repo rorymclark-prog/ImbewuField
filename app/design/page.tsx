@@ -2826,7 +2826,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           <span style={{ fontWeight: 700, fontSize: 15 }}>Design Studio</span>
           <span style={{ fontSize: 12, opacity: 0.65, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{siteName}</span>
         </div>
-        <span style={{ flexShrink: 0 }}>
+        <span style={{ flexShrink: 0, display: isPhone ? 'none' : undefined }}>
           <LessonLink id="design:overview" label="Learn" />
         </span>
         <button
@@ -2837,7 +2837,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           title={designMode === 'pro' ? 'Pro — full designer: every tool, jump any step' : 'Guided — simple step-by-step, one focus at a time'}
           style={{
             marginLeft: 'auto',
-            display: 'flex',
+            display: isPhone ? 'none' : 'flex',
             alignItems: 'center',
             minHeight: 32,
             padding: '0 4px',
@@ -2898,7 +2898,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             <Printer size={15} /> Print
           </button>
         )}
-        {buildInfo?.sha && (
+        {buildInfo?.sha && !isPhone && (
           <div
             title={`Build source: ${buildInfo.source ?? 'unknown'}${buildInfo.branch ? ` · branch ${buildInfo.branch}` : ''}${buildInfo.repoRoot ? ` · ${buildInfo.repoRoot}` : ''}`}
             style={{
@@ -2922,6 +2922,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
         <div
           title={saveError ?? undefined}
           style={{
+            display: isPhone ? 'none' : undefined,
             fontSize: 12,
             opacity: saveError ? 1 : 0.6,
             fontWeight: saveError ? 800 : 400,
@@ -3012,7 +3013,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           is the first-class path now. */}
 
       {/* Wizard (top) */}
-      {canvasState && (
+      {canvasState && canvasState.step !== 'glossy' && (
         <div style={isPhone ? undefined : { position: 'fixed', top: 76, left: 12, width: 208, maxHeight: 'calc(100dvh - 88px)', overflowY: 'auto', zIndex: 15 }}>
           <DesignWizard
             step={canvasState.step}
@@ -3128,7 +3129,16 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
       {/* Canvas (middle). minHeight floor (not 0) so the map can never be squeezed to a sliver
           on a phone by the tool chrome below it — it always keeps ~45% of the screen.
           canvasWrapRef feeds the phone-only auto-collapse-top-chrome-on-drag effect above. */}
-      <div ref={canvasWrapRef} style={{ flex: 1, position: 'relative', minHeight: '45dvh', marginLeft: isPhone ? 0 : 232, marginRight: isPhone ? 0 : 328 }}>
+      <div
+        ref={canvasWrapRef}
+        style={{
+          flex: 1,
+          position: 'relative',
+          minHeight: canvasState?.step === 'glossy' ? 'calc(100dvh - 132px)' : '45dvh',
+          marginLeft: isPhone || canvasState?.step === 'glossy' ? 0 : 232,
+          marginRight: isPhone || canvasState?.step === 'glossy' ? 0 : 328,
+        }}
+      >
         {canvasState && frame && canvasState.step === 'glossy' ? (
           <DesignGlossyLazy
             state={canvasState}

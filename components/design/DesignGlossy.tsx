@@ -5,7 +5,7 @@
 // Overlay remains the explicit model-authored comparison/rollback style.
 
 import { useCallback, useEffect, useMemo, useRef, useState, type Dispatch, type SetStateAction } from 'react';
-import { Download, RefreshCw, Gem, FlaskConical, Images, X, Trash2, Share2, Check } from 'lucide-react';
+import { Download, RefreshCw, Gem, FlaskConical, Images, X, Trash2, Share2, Check, Sun, Upload, Wind } from 'lucide-react';
 import { jsPDF } from 'jspdf';
 import {
   SHEET_EXPORT_PROFILES,
@@ -154,6 +154,7 @@ import { backfillThumbnails } from '@/lib/gallery-thumbnails';
 import { basemapAttribution } from '@/lib/basemap-imagery';
 import { formatDesignTranslation } from '@/lib/design-studio-i18n';
 import { useLanguage } from '@/lib/i18n';
+import styles from './DesignGlossy.module.css';
 export { itemInFilter, lineInFilter, zonesInFilter, layerContentCount } from '@/lib/glossy-filters';
 export type { GlossyLayerFilter } from '@/lib/glossy-filters';
 
@@ -12577,6 +12578,11 @@ export default function DesignGlossy({
       if (refreshPendingRef.current) {
         refreshPendingRef.current = false;
         setNotice(t('designGlossyRefreshed'));
+      } else if (!hybridAfterExactRef.current) {
+        // Direct Exact Canvas finishes here. The guided paid flow deliberately keeps its
+        // step-one notice until it advances to Hybrid, but a free exact render has no next step:
+        // leaving "Building…" under the completed sheet made a successful map look stuck.
+        setNotice(null);
       }
     } catch (err) {
       refreshPendingRef.current = false;
@@ -14660,10 +14666,45 @@ export default function DesignGlossy({
   const visibleResultImage = lockedPolishStage === null ? resultImage : null;
   const lockedPolishStyleLabel =
     PRODUCER_STYLES.find((style) => style.key === polishStyleRef.current)?.label ?? 'selected style';
+  const selectedStyleLabel = PRODUCER_STYLES.find((style) => style.key === producerStyle)?.label
+    ?? (isExactRender ? 'Exact Canvas' : 'AI Polished');
+  // Selecting a saved row previews exactly ONE durable full image in the centre. The gallery
+  // effect above already enforces that memory boundary; the rail never points its thumbnails at
+  // full-size fallbacks, which is what previously killed iPhone Safari on this screen.
+  const railPreviewImage = galleryViewItem
+    ? (galleryViewImage ?? galleryViewItem.image ?? galleryViewItem.thumb ?? null)
+    : null;
+  const stageResultImage = railPreviewImage ?? visibleResultImage;
+  const stageIsExact = galleryViewItem ? galleryViewItem.resultKind === 'exact' : isExactRender;
+  const stageStyleLabel = galleryViewItem
+    ? (galleryViewItem.resultKind === 'exact'
+      ? t('designGlossyExactCanvas')
+      : PRODUCER_STYLES.find((style) => galleryViewItem.label.includes(style.label))?.label
+        ?? t('designGlossyAiHybrid'))
+    : selectedStyleLabel;
+  const handleStageDownload = useCallback(() => {
+    if (!stageResultImage) return;
+    if (!galleryViewItem) {
+      handleDownload();
+      return;
+    }
+    const link = document.createElement('a');
+    link.download = `imbewu-${galleryViewItem.label.toLowerCase().replace(/[^a-z0-9.\-]+/g, '_')}.png`;
+    link.href = stageResultImage;
+    link.click();
+  }, [galleryViewItem, handleDownload, stageResultImage]);
+
+  // A saved-map selection is a preview of the current controls, not a second source of truth.
+  // As soon as the farmer changes the sheet, underlay or style, return the centre stage to the
+  // live render choice so an older durable image cannot visually impersonate the new settings.
+  useEffect(() => {
+    setGalleryViewId(null);
+  }, [producerStyle, selectedNo, underlay]);
 
   return (
     <div
-      style={{
+      className={compact ? undefined : styles.workspace}
+      style={compact ? {
         position: 'absolute',
         inset: 0,
         overflowY: 'auto',
@@ -14678,14 +14719,61 @@ export default function DesignGlossy({
         display: 'flex',
         flexDirection: 'column',
         gap: 16,
-      }}
+      } : undefined}
     >
       <canvas ref={canvasRef} style={{ display: 'none' }} />
+
+      {!compact && (
+        <header className={styles.workspaceHeader}>
+          <div className={styles.workspaceTitle}>
+            <h1>{t('designGlossyPreviewTitle')}</h1>
+            <p>{t('designGlossyPreviewHelp')}</p>
+          </div>
+          <div className={styles.contextStrip} aria-label={t('designGlossyCurrentSettings')}>
+            <div className={styles.contextCell}>
+              <span className={styles.contextLabel}>{t('designGlossyPlanSetShort')}</span>
+              <span className={styles.contextValue}>{t('designGlossyPlanSetValue')}</span>
+            </div>
+            <div className={styles.contextCell}>
+              <span className={styles.contextLabel}>{t('designGlossySheet')}</span>
+              <span className={styles.contextValue}>{selectedSheet ? `${selectedSheet.no} — ${selectedSheet.label}` : t('designGlossyChooseSheet')}</span>
+            </div>
+            <div className={styles.contextCell}>
+              <span className={styles.contextLabel}>{t('designGlossyStyle')}</span>
+              <span className={styles.contextValue}>{selectedStyleLabel}</span>
+            </div>
+          </div>
+          <div className={styles.headerActions}>
+            <button
+              type="button"
+              className={styles.iconButton}
+              onClick={() => { setGalleryViewId(null); setGalleryOpen(true); }}
+              aria-label={t('designGlossyOpenSaved')}
+              title={t('designGlossySavedMaps').replace(' ({count})', '')}
+            >
+              <Images size={17} />
+            </button>
+            <button
+              type="button"
+              className={styles.primaryButton}
+              disabled={gallery.length === 0}
+              onClick={() => {
+                setGalleryViewId(null);
+                setExportMode(true);
+                setExportSel(new Set());
+                setGalleryOpen(true);
+              }}
+            >
+              <Upload size={16} /> {t('designGlossyExportShare')}
+            </button>
+          </div>
+        </header>
+      )}
 
       {/* Which map? — Rory's mockup layout: SHEET grid → quiet exact-all link → STYLE cards →
           one primary CTA → collapsed More options. The old top banner + big Output switch are
           gone: beta lives as a pill ON the AI preview, exact is reached via the links. */}
-      <div>
+      <div className={compact ? undefined : styles.settingsRail}>
         {/* SHEET — the plan set as a compact 4-up grid (Rory's mockup), canonical 01–09 order.
             Tapping a chip selects it in the CURRENT mode (AI by default); the "View non-AI exact
             version" link under the preview flips the same sheet to its exact render and back. */}
@@ -14700,6 +14788,21 @@ export default function DesignGlossy({
         <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55, marginBottom: 6 }}>
           {t('designGlossyPlanSet')}
         </div>
+        {!compact ? (
+          <select
+            aria-label="Plan sheet"
+            value={selectedNo}
+            disabled={loading !== null}
+            onChange={(event) => {
+              const next = DESIGN_SHEETS.find((sheet) => sheet.no === event.target.value);
+              if (next) applySheet(next, mode);
+            }}
+          >
+            {DESIGN_SHEETS.map((sheet) => (
+              <option key={sheet.no} value={sheet.no}>{sheet.no} — {sheet.label}</option>
+            ))}
+          </select>
+        ) : (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 8 }}>
           {DESIGN_SHEETS.map((sheet) => {
             const active = selectedNo === sheet.no;
@@ -14735,6 +14838,7 @@ export default function DesignGlossy({
             );
           })}
         </div>
+        )}
         {/* WHICH PICTURE THE SHEETS SIT ON — always all three: the farmer's own drone/phone aerial,
             the satellite, and plain paper. The drone pill used to disappear on a site with no
             imported photo, which read as the option having been removed. It is always present now;
@@ -14954,12 +15058,29 @@ export default function DesignGlossy({
       </div>
 
       {selectedSheet && (
-        <div style={{ padding: '10px 12px', borderRadius: 12, border: '1px solid rgba(31,77,43,0.24)', background: 'rgba(31,77,43,0.06)', fontSize: 12.5, lineHeight: 1.45 }}>
+        <div className={compact ? undefined : styles.finishIntro} style={{ padding: '10px 12px', borderRadius: 12, border: '1px solid rgba(31,77,43,0.24)', background: 'rgba(31,77,43,0.06)', fontSize: 12.5, lineHeight: 1.45 }}>
           <strong>{t('designGlossyChooseFinish')}</strong> {t('designGlossyFinishHelp')}
           {fullTreatmentVisible ? ` ${t('designGlossyFinishHelpFullTreatment')}` : ''}
         </div>
       )}
 
+      <section className={compact ? undefined : styles.mapStage} aria-label={t('designGlossyMapPreview')}>
+      {!compact && (
+        <div className={styles.stageToolbar}>
+          <span className={styles.stageChip}><Wind size={14} /> Wind</span>
+          <span className={styles.stageChip}><Sun size={14} /> {t('designGlossySeasonalSun')}</span>
+          <div className={styles.stageTabs} role="group" aria-label={t('designGlossyPreviewScope')}>
+            <button type="button" className={`${styles.stageTab} ${styles.stageTabActive}`}>{t('designGlossyThisSheet')}</button>
+            <button
+              type="button"
+              className={styles.stageTab}
+              onClick={() => { setGalleryViewId(null); setGalleryOpen(true); }}
+            >
+              {t('designGlossyAllSheets')}
+            </button>
+          </div>
+        </div>
+      )}
       {lockedPolishStage && (
         <div
           role="status"
@@ -14999,7 +15120,8 @@ export default function DesignGlossy({
         </div>
       )}
 
-      {!visibleResultImage && !lockedPolishStage && (
+      {!stageResultImage && !lockedPolishStage && (
+        <div className={compact ? undefined : styles.stageEmpty}>
         <p style={{ fontSize: 14, lineHeight: 1.5, opacity: 0.85 }}>
           {exactSheet === 'base'
             ? 'Draw your Existing Site sheet (plan-set 01) — just your real satellite with the boundary marked and nothing designed yet. The honest "before" that the whole plan builds on. Exact, no AI.'
@@ -15019,11 +15141,13 @@ export default function DesignGlossy({
                 ? `Draw your whole design map — your real satellite with every zone, element, line and label placed exactly where you put them. Drawn straight from your plan, so it’s always accurate. Instant, no AI.${aiLayerMode ? ' Want an artist’s impression? Pick a Style above.' : ''}`
                 : `Draw your ${GLOSSY_FILTERS.find((f) => f.key === filter)?.label.toLowerCase()} map — your real satellite with just that layer drawn exactly as you placed it. Instant and accurate, no AI guessing.${aiLayerMode ? ' For an illustrated version, pick a Style above.' : ''}`}
         </p>
+        </div>
       )}
 
-      {visibleResultImage && (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 12, width: '100%', maxWidth: '100%', minWidth: 0 }}>
+      {stageResultImage && (
+        <div className={compact ? undefined : styles.resultWrap} style={{ display: 'flex', flexDirection: 'column', gap: 12, width: '100%', maxWidth: '100%', minWidth: 0 }}>
           <div
+            className={compact ? undefined : styles.resultCard}
             style={{
               border: `4px solid ${GOLD}`,
               borderRadius: 16,
@@ -15042,17 +15166,19 @@ export default function DesignGlossy({
                   marginRight: 10,
                   padding: '3px 8px',
                   borderRadius: 999,
-                  background: isExactRender ? 'rgba(255,255,255,0.12)' : GOLD,
-                  color: isExactRender ? PAPER : DARK,
+                  background: stageIsExact ? 'rgba(255,255,255,0.12)' : GOLD,
+                  color: stageIsExact ? PAPER : DARK,
                   fontSize: 10,
                   fontWeight: 900,
                   letterSpacing: '0.04em',
                   textTransform: 'uppercase',
                 }}
               >
-                {isExactRender ? 'Exact master · no AI' : 'AI-polished · gpt-image-2'}
+                {stageIsExact ? 'Exact master · no AI' : 'AI-polished'}
               </span>
-              {placeName ?? 'Your design'}
+              {galleryViewItem?.label ?? placeName ?? 'Your design'}
+              {!galleryViewItem && (
+              <>
               {exactSheet === 'base'
                 ? ' · Existing site (sheet 01)'
                 : exactSheet === 'sector'
@@ -15070,28 +15196,30 @@ export default function DesignGlossy({
                   : filter !== 'all'
                     ? ` · ${GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map`
                     : ''}
+              </>
+              )}
             </div>
-            <div style={{ position: 'relative' }}>
+            <div className={compact ? undefined : styles.resultImageFrame} style={{ position: 'relative' }}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src={visibleResultImage}
-                alt={t(isExactRender ? 'designGlossyExactAlt' : 'designGlossyAiAlt')}
+                src={stageResultImage}
+                alt={galleryViewItem?.label ?? t(stageIsExact ? 'designGlossyExactAlt' : 'designGlossyAiAlt')}
                 style={{ width: '100%', maxWidth: '100%', height: 'auto', display: 'block' }}
               />
               {/* Beta pill ON the AI preview (mockup) — honesty without a screen-wide banner. */}
-              {!isExactRender && (
+              {!stageIsExact && (
                 <span style={{ position: 'absolute', left: 10, bottom: 10, display: 'inline-flex', alignItems: 'center', gap: 6, padding: '5px 12px', borderRadius: 999, background: 'rgba(20,16,10,0.72)', color: '#F5E9CE', fontSize: 11.5, fontWeight: 700 }}>
                   <FlaskConical size={12} /> {t('designGlossyBeta')}
                 </span>
               )}
             </div>
             <div style={{ padding: '10px 14px', background: DARK, color: PAPER, fontSize: 12, opacity: 0.75 }}>
-              {isExactRender
+              {stageIsExact
                 ? 'Exact sheet — drawn straight from your design + site data, no AI.'
                 : 'AI artist’s impression of YOUR design — the canvas is the exact version.'}
             </div>
           </div>
-          {saved && visibleResultImage === saved.image && (
+          {saved && !galleryViewItem && visibleResultImage === saved.image && (
             <div style={{ fontSize: 12, opacity: 0.65 }}>
               {formatDesignTranslation(t('designGlossySavedRender'), {
                 date: relativeDate(saved.at),
@@ -15105,7 +15233,7 @@ export default function DesignGlossy({
               it used to start a Full Treatment while saying "1 AI render", which is two.
               Flipping BACK to exact from an older AI result spends nothing, and a farmer looking at
               a sheet they already paid for must always be able to leave it. */}
-          {selectedSheet && (
+          {selectedSheet && !galleryViewItem && (
             <button
               type="button"
               onClick={() => {
@@ -15139,7 +15267,7 @@ export default function DesignGlossy({
           )}
           <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
             <button
-              onClick={handleDownload}
+              onClick={handleStageDownload}
               style={{
                 display: 'flex',
                 alignItems: 'center',
@@ -15156,7 +15284,7 @@ export default function DesignGlossy({
               <Download size={18} />
               {t('designGlossyDownload')}
             </button>
-            {gallery.length > 0 && (
+            {compact && gallery.length > 0 && (
               <button
                 onClick={() => { setGalleryViewId(null); setGalleryOpen(true); }}
                 style={{
@@ -15179,8 +15307,9 @@ export default function DesignGlossy({
           </div>
         </div>
       )}
+      </section>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+      <div className={compact ? undefined : styles.actionsRail} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
         {/* Gemini note for the analytical sheets (01/02/09 in AI mode) — no Style, no engine. */}
         {!producerStyle && analysisStyle && (
           <div style={{ fontSize: 11.5, opacity: 0.7 }}>
@@ -15493,6 +15622,85 @@ export default function DesignGlossy({
         )}
         {notice && !error && <p style={{ color: GREEN, fontSize: 12.5, fontWeight: 600 }}>{notice}</p>}
       </div>
+
+      {!compact && (
+        <aside className={styles.savedRail} aria-label={`${t('designGlossySavedMaps').replace(' ({count})', '')} · ${t('designGlossyExportSummary')}`}>
+          <section className={styles.railSection}>
+            <div className={styles.railHeader}>
+              <h2>{formatDesignTranslation(t('designGlossySavedMaps'), { count: gallery.length })}</h2>
+              <button
+                type="button"
+                className={styles.quietButton}
+                onClick={() => { setGalleryViewId(null); setGalleryOpen(true); }}
+              >
+                {t('designGlossyManage')}
+              </button>
+            </div>
+            {gallery.length === 0 ? (
+              <p className={styles.emptySaved}>
+                {t('designGlossyNoSavedRail')}
+              </p>
+            ) : (
+              <div className={styles.savedList}>
+                {[...gallery].reverse().slice(0, 5).map((item) => {
+                  const chip = galleryTileChip(item.resultKind);
+                  const active = item.id === galleryViewId;
+                  return (
+                    <button
+                      key={item.id}
+                      type="button"
+                      className={`${styles.savedRow} ${active ? styles.savedRowActive : ''}`}
+                      aria-pressed={active}
+                      onClick={() => setGalleryViewId(active ? null : item.id)}
+                    >
+                      <span className={styles.savedThumb}>
+                        {item.thumb ? (
+                          // eslint-disable-next-line @next/next/no-img-element
+                          <img src={item.thumb} alt="" aria-hidden />
+                        ) : 'MAP'}
+                      </span>
+                      <span className={styles.savedMeta}>
+                        {chip && (
+                          <span className={styles.savedBadge} style={{ background: chip.bg, color: chip.fg }}>
+                            {chip.text}
+                          </span>
+                        )}
+                        <span className={styles.savedLabel}>{item.label}</span>
+                        <span className={styles.savedProvider}>{galleryResultBadge(item)}</span>
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+          </section>
+          <section className={styles.railSection}>
+            <div className={styles.railHeader}>
+              <h2>{t('designGlossyExportSummary')}</h2>
+              <button
+                type="button"
+                className={styles.quietButton}
+                disabled={gallery.length === 0}
+                onClick={() => {
+                  setGalleryViewId(null);
+                  setExportMode(true);
+                  setExportSel(new Set());
+                  setGalleryOpen(true);
+                }}
+              >
+                {t('designGlossyEdit')}
+              </button>
+            </div>
+            <div className={styles.summaryRows}>
+              <div className={styles.summaryRow}><span>{t('designGlossyFormat')}</span><strong>{exportFormat === 'pdf' ? 'PDF' : exportFormat.toUpperCase()}</strong></div>
+              <div className={styles.summaryRow}><span>{t('designGlossyQuality')}</span><strong>{SHEET_EXPORT_PROFILES[exportQuality].label}</strong></div>
+              <div className={styles.summaryRow}><span>{t('designGlossyStyle')}</span><strong>{stageStyleLabel}</strong></div>
+              <div className={styles.summaryRow}><span>{t('designGlossyInclude')}</span><strong>{t('designGlossyExportIncludes')}</strong></div>
+              <div className={styles.summaryRow}><span>{t('designGlossyThisSheet')}</span><strong>{galleryViewItem?.label ?? (stageResultImage ? selectedSheet?.label : '—')}</strong></div>
+            </div>
+          </section>
+        </aside>
+      )}
 
       {/* ── Saved-maps gallery (session-only) ── */}
       {galleryOpen && (
