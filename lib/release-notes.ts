@@ -35,8 +35,10 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '12 August',
-    sha: '21e7fe1',
+    sha: 'd8aa77a',
     changes: [
+      'Pull the bar at the top of any sheet downwards to close it',
+      'Lima\u2019s button now steps aside while a sheet is open',
       'Find your land is no longer hidden behind the map\u2019s label switches',
       'Lima\u2019s button no longer sits on top of Add on the map',
       'Sites you had already analysed now pick up the corrected biome',
