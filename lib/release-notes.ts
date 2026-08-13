@@ -35,8 +35,9 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '13 August',
-    sha: 'c560325',
+    sha: '9a79c3e',
     changes: [
+      'Place names and pins on the map are far easier to hit with a finger',
       'Tapping a place name on the map opens that place again on phones',
       'Buttons across the app now respond to the first tap, not the second',
       'Plan previews open straight onto the sheet instead of showing a large black area',

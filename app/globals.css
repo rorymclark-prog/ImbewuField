@@ -413,6 +413,41 @@ input[type="radio"] {
   touch-action: manipulation;
 }
 
+/* ── A finger is not a mouse pointer ───────────────────── */
+/* "It works but on the third tap. Can you make it more sensitive still?" — Rory, 13 August,
+   after the double-tap fix above landed.
+
+   Two different problems wearing the same clothes. That one dispatched the click; this one is
+   about whether the finger lands on the thing at all. The map's place labels are 13px and
+   11px type in a couple of px of padding — about 26px and 22px tall. Apple's minimum touch
+   target is 44px and Google's is 48dp, and the reason is not politeness: a fingertip contact
+   patch is roughly 10mm across, and the point the browser reports is the CENTROID of that
+   patch, which is not where anyone thinks they are pressing. Miss by 6px and the tap goes to
+   the map instead, which does nothing — so you tap again. Three taps is a hit rate, not a bug.
+
+   Growing the padding would grow the visible pill: these labels are drawn over satellite
+   imagery and getting bigger would cost the farmer the view they are labelling. So the hit
+   area grows and the paint does not — an invisible pseudo-element, sized per element by
+   --tap-inset, because the marker's label and its pin sit 4px apart and two greedy targets
+   fighting over the same band is how you turn one miss into a different one.
+
+   Each site sets --tap-inset itself and tests/tap-targets.test.ts does the arithmetic on the
+   marker pair, in the manner of tests/map-control-overlap.test.ts. Measured for real with
+   elementFromPoint rather than reasoned about. */
+/* :where() so this carries ZERO specificity. The pseudo-element needs a positioned ancestor and
+   most callers are static, but the overlay place label is already `absolute` — and this rule sits
+   after @tailwind utilities, so a plain `.u-tap-target` would have out-ordered `.absolute` and
+   dropped that label back into the document flow, sending it to the top-left of the map. */
+:where(.u-tap-target) {
+  position: relative;
+}
+.u-tap-target::before {
+  content: '';
+  position: absolute;
+  inset: var(--tap-inset, -10px);
+  /* No background, no border: this is hit area, not decoration. */
+}
+
 /* ── Scrollbar ─────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 3px; height: 3px; }
 ::-webkit-scrollbar-track { background: transparent; }
