@@ -34,6 +34,14 @@ export interface ReleaseNote {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '13 August',
+    sha: '2a37d45',
+    changes: [
+      'Tapping a place name on the map opens that place again on phones',
+      'Buttons across the app now respond to the first tap, not the second',
+    ],
+  },
+  {
     when: '12 August',
     sha: 'd8aa77a',
     changes: [

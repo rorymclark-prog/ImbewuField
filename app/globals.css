@@ -382,6 +382,37 @@ html, body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* ── Taps must not be mistaken for double-tap zoom ─────── */
+/* "Still if I click on ubhejane label it doesn't do anything… nothing it just zooms in
+   slightly, this is just for the phone, the laptop works." — Rory, 13 August.
+
+   That last sentence is the whole diagnosis. The handler was never wrong; the click event
+   never arrived. Our viewport (app/layout.tsx) declares width=device-width, initial-scale=1
+   and deliberately leaves the page zoomable — no user-scalable=no, because pinching to read
+   is not something to take away from a farmer squinting at a map in the sun. The cost is that
+   iOS Safari must then wait ~350ms after every tap to see whether a second one is coming, and
+   if one does, it zooms the page instead of dispatching a click. Tap a small label, see
+   nothing happen, tap again — and you get exactly what he saw: a slight zoom and no panel.
+   Desktop has no double-tap gesture at all, so the same code works there.
+
+   `touch-action: manipulation` says: keep panning and pinching, drop double-tap zoom. Safari
+   then dispatches the click immediately. Applied to controls rather than to the whole page,
+   so double-tap zoom still works on text and imagery where a farmer may actually want it.
+
+   Inline `touch-action` wins over this rule, which is what the sheet grabbers rely on — they
+   set `none` to claim the vertical drag (see lib/sheet-dismiss.ts). Verified in the browser
+   by tests/tap-targets.test.ts rather than assumed from specificity rules. */
+button,
+[role="button"],
+a[href],
+label,
+select,
+summary,
+input[type="checkbox"],
+input[type="radio"] {
+  touch-action: manipulation;
+}
+
 /* ── Scrollbar ─────────────────────────────────────────── */
 ::-webkit-scrollbar { width: 3px; height: 3px; }
 ::-webkit-scrollbar-track { background: transparent; }
