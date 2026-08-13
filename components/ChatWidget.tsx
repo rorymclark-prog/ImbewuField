@@ -73,6 +73,22 @@ export default function ChatWidget() {
     pathname.startsWith('/home') || pathname.startsWith('/design')
   ) return null;
 
+  // WHERE THE FAB PARKS WHEN NOBODY HAS MOVED IT.
+  //
+  // /home and /design opt out of this widget entirely, above, because something else owns the
+  // bottom-left corner there. /farmer cannot opt out — the map is exactly where a farmer needs
+  // Lima — but it DOES put a "+ Add" pill in that corner, added under the comment "LimaBar is not
+  // mounted on /farmer, so bottom-left is free". True of LimaBar, false of this FAB, which has
+  // been sitting on top of Add ever since. Rory, 12 Aug: "look at all the buttons that are
+  // covering each other sort those out".
+  //
+  // That pill sits at calc(60px + safe-area + 36px) — 96px up — and stands about 41px tall, so it
+  // reaches ~137px. 188px clears it with a thumb's width to spare. Only below lg, because the
+  // pill is lg:hidden and the desktop corner really is free.
+  const FAB_DEFAULT_POS = pathname.startsWith('/farmer')
+    ? 'bottom-[188px] left-4 lg:bottom-[100px] lg:left-4'
+    : 'bottom-[130px] left-4 lg:bottom-[100px] lg:left-4';
+
   const lang = typeof window !== 'undefined' ? localStorage.getItem('permamap_lang') ?? undefined : undefined;
 
   return (
@@ -85,7 +101,7 @@ export default function ChatWidget() {
           onPointerUp={onFabPointerUp}
           aria-label="Open Lima, your field guide — drag to move"
           title="Tap to ask Lima · drag to move"
-          className={`no-print fixed z-[60] flex items-center justify-center rounded-full w-14 h-14 ${fabPos ? '' : 'bottom-[130px] left-4 lg:bottom-[100px] lg:left-4'}`}
+          className={`no-print fixed z-[60] flex items-center justify-center rounded-full w-14 h-14 ${fabPos ? '' : FAB_DEFAULT_POS}`}
           style={{
             background: 'linear-gradient(135deg, var(--brand-light), var(--brand-strong))',
             // Soft glow ring — Lima's "2026 AI presence" (spec §6, adapted to green).

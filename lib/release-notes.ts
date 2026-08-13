@@ -35,8 +35,9 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '12 August',
-    sha: 'd619dbf',
+    sha: '2341d63',
     changes: [
+      'Lima\u2019s button no longer sits on top of Add on the map',
       'Sites you had already analysed now pick up the corrected biome',
       'The report list in the menu now opens even before you have picked your farm',
       'All nine sheets can now be seen at once in Preview & Export',
