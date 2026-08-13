@@ -2309,13 +2309,20 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                   onLocationSelect(p.lat, p.lon);
                   onPlaceSelect?.({ name: p.name, id: p.id });
                 }}
-                className={`px-2 py-1 rounded-lg text-xs font-display font-bold whitespace-nowrap mb-1 transition-opacity ${(showPlaceLabels && !(showFeatures && pinsWithFeatures.has(p.id))) || activePin === p.id || movingPin === p.id ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
-                style={{ background: 'rgba(6,16,10,0.92)', border: `1.5px solid ${resolveColor(p)}`, color: '#fff', boxShadow: '0 2px 8px rgba(0,0,0,0.5)', cursor: 'pointer' }}>
+                // A label faded to opacity-0 is still a live tap target sitting directly over the
+                // pin, so it is taken out of the hit test until it is actually on screen — hover
+                // hands it back on desktop, where the fade is a reveal rather than a hide.
+                className={`u-tap-target px-2 py-1 rounded-lg text-xs font-display font-bold whitespace-nowrap mb-1 transition-opacity ${(showPlaceLabels && !(showFeatures && pinsWithFeatures.has(p.id))) || activePin === p.id || movingPin === p.id ? 'opacity-100' : 'opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto'}`}
+                // Grows UPWARDS only (~22px tall → 44px of hit area). The pin sits 4px below and
+                // does a different job; the two must not fight over the same band.
+                style={{ '--tap-inset': '-22px -14px 0px -14px', background: 'rgba(6,16,10,0.92)', border: `1.5px solid ${resolveColor(p)}`, color: '#fff', boxShadow: '0 2px 8px rgba(0,0,0,0.5)', cursor: 'pointer' } as React.CSSProperties}>
                 {p.name}
               </button>
               <button
                 onClick={(e) => { e.stopPropagation(); if (movingPin) return; setActivePin(prev => prev === p.id ? null : p.id); }}
-                style={{ cursor: 'pointer', background: 'none', border: 'none', padding: 0, display: 'flex' }}>
+                className="u-tap-target"
+                // …and the pin grows DOWNWARDS only, into the empty map below it (anchor="bottom").
+                style={{ '--tap-inset': '0px -16px -24px -16px', cursor: 'pointer', background: 'none', border: 'none', padding: 0, display: 'flex' } as React.CSSProperties}>
                 <MapPin size={activePin === p.id ? 26 : 22}
                   style={{
                     color: resolveColor(p), fill: resolveColor(p),
@@ -3882,11 +3889,16 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                       onLocationSelect(p.lat, p.lon);
                       onPlaceSelect?.({ name: p.name, id: p.id });
                     }}
-                    className="absolute select-none font-display font-bold whitespace-nowrap"
+                    className="u-tap-target absolute select-none font-display font-bold whitespace-nowrap"
                     style={{
                       left: pnX,
                       top: pnY,
                       transform: 'translate(-50%, -50%)',
+                      // Standing alone over open imagery, so it can grow on every side: ~26px of
+                      // pill becomes ~54px of hit area, comfortably past the 44px floor. Nothing
+                      // else is placed within 10px of it — the shape chips are pointer-events-none
+                      // and the marker pair is elsewhere on screen.
+                      '--tap-inset': '-14px',
                       background: 'rgba(6,16,10,0.90)',
                       border: `1.5px solid ${resolveColor(p)}`,
                       borderRadius: 10,
@@ -3896,7 +3908,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                       boxShadow: '0 2px 10px rgba(0,0,0,0.5)',
                       zIndex: 8,
                       cursor: 'pointer',
-                    }}>
+                    } as React.CSSProperties}>
                     {p.name}
                   </button>
                 );
