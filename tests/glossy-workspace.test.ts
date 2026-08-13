@@ -61,3 +61,17 @@ test('desktop, tablet and phone each have an explicit responsive layout', () => 
   assert.match(phoneCss, /\.workspace \{[\s\S]*?display: flex;[\s\S]*?flex-direction: column;/,
     'phone layout must become a scrollable single column rather than crush three rails together');
 });
+
+test('a long settings rail cannot stretch the sheet preview into a black screen', () => {
+  const stageStart = css.indexOf('.mapStage {');
+  const stageEnd = css.indexOf('\n}', stageStart);
+  assert.ok(stageStart >= 0 && stageEnd > stageStart, 'map stage rule moved');
+  assert.match(css.slice(stageStart, stageEnd), /align-self:\s*start;/,
+    'the centre stage must size to its sheet instead of stretching to the taller settings rail');
+
+  const frameStart = css.indexOf('.resultImageFrame {');
+  const frameEnd = css.indexOf('\n}', frameStart);
+  assert.ok(frameStart >= 0 && frameEnd > frameStart, 'result image frame rule moved');
+  assert.match(css.slice(frameStart, frameEnd), /background:\s*#fbf6ec;/i,
+    'any contain-fit remainder should read as sheet paper, never a black panel');
+});
