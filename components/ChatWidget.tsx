@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
+import { listenForOverlay } from '@/lib/overlay-signal';
 import { Sprout, X } from 'lucide-react';
 import ChatPanel from './ChatPanel';
 
@@ -21,6 +22,13 @@ export default function ChatWidget() {
     window.addEventListener('imbewu-drawing', h);
     return () => window.removeEventListener('imbewu-drawing', h);
   }, []);
+
+  // And while any sheet or modal is covering the screen. This FAB is at z-60 and every bottom
+  // sheet sits below it, so without this it floats on top of them — on 13 Aug it was sitting on
+  // the "Tree" row of the Add catalogue. Moving it (as the /farmer default position does) only
+  // ever relocates the collision; a sheet covers the whole screen, so the answer is to go away.
+  const [overlay, setOverlay] = useState(false);
+  useEffect(() => listenForOverlay(setOverlay), []);
 
   // Draggable launcher: no single fixed corner is free on every page (map
   // controls own bottom-right, palettes/nav own the others), so let the user
@@ -94,7 +102,7 @@ export default function ChatWidget() {
   return (
     <>
       {/* Launcher FAB — draggable; defaults bottom-left, remembers where you park it */}
-      {!open && !drawing && (
+      {!open && !drawing && !overlay && (
         <button
           onPointerDown={onFabPointerDown}
           onPointerMove={onFabPointerMove}

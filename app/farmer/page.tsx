@@ -32,6 +32,8 @@ import type { PeopleMarker } from '@/components/Map';
 
 const VALID_PANELS = ['Overview','Ask','Water','Soil','Climate','Area','Photos','Design','AI','Places','Reports','Farm','People','Nature'];
 import { setLastSite } from '@/lib/last-site';
+import { announceOverlay } from '@/lib/overlay-signal';
+import { useSheetDismiss } from '@/lib/sheet-dismiss';
 
 const PermaMap = dynamic(() => import('@/components/Map'), { ssr: false });
 
@@ -94,6 +96,10 @@ function HomeInner() {
     return !!(panel || chat);
   });
   const [settingsOpen, setSettingsOpen] = useState(false);
+  // The bar at the top of the details sheet closed on TAP only. On a phone that bar promises
+  // "pull me down", so it now does — see lib/sheet-dismiss.ts. Rory: "I want to be able to drag
+  // any of those top closing buttons in the modals and it closes."
+  const sheetDrag = useSheetDismiss(() => setSheetOpen(false), sheetOpen);
   const [navOpen, setNavOpen] = useState(false);
   // Draggable width of the desktop side panel — persisted, clamped 320–760px.
   const [panelWidth, setPanelWidth] = useState(390);
@@ -349,6 +355,15 @@ function HomeInner() {
   }, []);
 
   // Close sheet on Escape key
+
+  // Tell the global chrome (Lima's launcher, mounted in the root layout at z-60) that a sheet is
+  // covering the screen, so it stops floating on top of the rows a farmer is trying to press.
+  // See lib/overlay-signal.ts — same idea as the map's existing `imbewu-drawing` broadcast.
+  useEffect(() => {
+    announceOverlay(sheetOpen || addOpen);
+    return () => announceOverlay(false);
+  }, [sheetOpen, addOpen]);
+
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setSheetOpen(false); };
     window.addEventListener('keydown', handleKey);
@@ -680,16 +695,25 @@ function HomeInner() {
               borderTop: '1px solid #E2D8C4',
               borderRadius: '20px 20px 0 0',
               boxShadow: '0 -4px 24px rgba(32,25,15,0.12)',
-              transition: 'height 0.32s cubic-bezier(0.32, 0.72, 0, 1)',
-              willChange: 'height',
+              // While a finger is on the grabber the sheet tracks it with no transition, so it
+              // feels attached rather than laggy; on release the transition comes back and it
+              // either springs home or finishes closing.
+              transform: sheetDrag.dragY ? `translateY(${sheetDrag.dragY}px)` : undefined,
+              transition: sheetDrag.dragging
+                ? 'none'
+                : 'height 0.32s cubic-bezier(0.32, 0.72, 0, 1), transform 0.22s cubic-bezier(0.32, 0.72, 0, 1)',
+              willChange: 'height, transform',
             }}
           >
             {/* Drag handle / close bar */}
             <button
+              {...sheetDrag.handlers}
               className="flex-shrink-0 flex flex-col items-center justify-center gap-1 py-3 w-full"
-              style={{ cursor: 'pointer', background: 'transparent', border: 'none' }}
-              onClick={() => setSheetOpen(false)}
-              aria-label="Close details panel"
+              // touch-action:none so the browser hands us the vertical gesture instead of
+              // treating it as a page scroll — without it the drag never reaches React.
+              style={{ cursor: 'grab', background: 'transparent', border: 'none', touchAction: 'none' }}
+              data-sheet-grabber=""
+              aria-label="Close details panel — drag down or tap"
             >
               <div
                 className="rounded-full"

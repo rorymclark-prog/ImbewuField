@@ -7,6 +7,7 @@
 // go-arrow — a low-literacy farmer must never tap "Lawn" and silently context-switch.
 
 import { useEffect, useState } from 'react';
+import { useSheetDismiss } from '@/lib/sheet-dismiss';
 import { ArrowRight, X } from 'lucide-react';
 import SpeakButton from '@/components/SpeakButton';
 import { useLanguage, translate } from '@/lib/i18n';
@@ -41,9 +42,19 @@ export default function AddSheet({ open, surface, onClose, onPick }: AddSheetPro
   }, [open, onClose]);
 
   // Hydration-safe: paint nothing new on the server / before mount.
+  // ABOVE THE EARLY RETURN. Hooks cannot be called conditionally — placing this after the
+  // `return null` below made React throw "rendered more hooks than during the previous render"
+  // the instant the sheet opened, so it never appeared at all. Caught by opening it.
+  //
+  // The grabber was aria-hidden decoration: it looked like the handle every phone user knows and
+  // did nothing. It now drags the sheet closed. Rory: "I want to be able to drag any of those top
+  // closing buttons in the modals and it closes."
+  const drag = useSheetDismiss(onClose, open);
+
   if (!mounted || !open) return null;
 
   const otherChipKey = surface === 'map' ? 'addOpensStudioChip' : 'addOpensMapChip';
+
 
   return (
     <div className="fixed inset-0 z-[60] flex flex-col justify-end" aria-modal="true" role="dialog">
@@ -66,9 +77,23 @@ export default function AddSheet({ open, surface, onClose, onPick }: AddSheetPro
           boxShadow: '0 -6px 30px rgba(32,25,15,0.22)',
           maxHeight: '86dvh',
           paddingBottom: 'env(safe-area-inset-bottom, 0px)',
+          transform: drag.dragY ? `translateY(${drag.dragY}px)` : undefined,
+          transition: drag.dragging ? 'none' : 'transform 0.22s cubic-bezier(0.32, 0.72, 0, 1)',
         }}
       >
-        <div className="u-sheet-grabber flex-shrink-0" aria-hidden="true" />
+        {/* A real control now, not decoration: 44px of vertical target around the 4px bar, so it
+            can be grabbed by a thumb rather than only by a mouse. touchAction none hands us the
+            vertical gesture instead of letting the browser scroll the sheet. */}
+        <button
+          {...drag.handlers}
+          type="button"
+          data-sheet-grabber=""
+          aria-label={`${t('addSheetClose')} — drag down or tap`}
+          className="flex-shrink-0 w-full flex items-center justify-center"
+          style={{ height: 22, background: 'transparent', border: 'none', cursor: 'grab', touchAction: 'none' }}
+        >
+          <span className="u-sheet-grabber" style={{ margin: 0 }} aria-hidden="true" />
+        </button>
 
         {/* Header */}
         <div className="flex-shrink-0 flex items-center gap-2 px-5 pt-4 pb-3" style={{ borderBottom: '1px solid rgba(226,216,196,0.7)' }}>

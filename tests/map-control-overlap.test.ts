@@ -64,7 +64,9 @@ test('the FAB still gets out of the way while a boundary is being drawn', () => 
   // already worked; it is here so a positioning change cannot quietly cost it.
   const widget = source('../components/ChatWidget.tsx');
   assert.match(widget, /window\.addEventListener\('imbewu-drawing'/);
-  assert.match(widget, /\{!open && !drawing && \(/, 'the FAB no longer hides during a draw');
+  // Matches the drawing term specifically, not the whole condition — `!overlay` was added on
+  // 13 Aug so the FAB also hides behind sheets, and this test is about the draw bar.
+  assert.match(widget, /\{!open && !drawing &&/, 'the FAB no longer hides during a draw');
 });
 
 test('the LABELS strip does not sit on top of "Find your land"', () => {
