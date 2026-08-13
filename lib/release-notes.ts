@@ -35,8 +35,9 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '12 August',
-    sha: '2341d63',
+    sha: '21e7fe1',
     changes: [
+      'Find your land is no longer hidden behind the map\u2019s label switches',
       'Lima\u2019s button no longer sits on top of Add on the map',
       'Sites you had already analysed now pick up the corrected biome',
       'The report list in the menu now opens even before you have picked your farm',

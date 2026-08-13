@@ -3660,9 +3660,27 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
       )}
 
       {/* ── Labels pill — visible when panel is minimised (section headers carry toggles when panel is open) ── */}
-      {toolbarMin && !pinDraw && !editPin && (siteFeatures.length > 0 || waterFeatures.length > 0 || savedPins.length > 0 || designPresent) && (
+      {/* `toolsPillShowing` mirrors the "Find your land" button's own render condition above
+          (!pinDraw && !editPin && !activeDraw && toolbarMin && !guided). Derived rather than
+          guessed, so the two cannot drift apart and start overlapping again. */}
+      {toolbarMin && !pinDraw && !editPin && (siteFeatures.length > 0 || waterFeatures.length > 0 || savedPins.length > 0 || designPresent) && (() => {
+        const toolsPillShowing = !activeDraw && !guided;
+        return (
         <div className="absolute flex items-center gap-1 font-sans transition-all"
-          style={{ top: 14, right: 14, zIndex: 10, background: 'rgba(16,22,14,0.88)', backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)', borderRadius: 999, padding: '5px 8px 5px 11px', boxShadow: '0 4px 16px rgba(0,0,0,0.4)',
+          style={{
+            // ITS OWN ROW, UNDER THE TOOLS PILL.
+            //
+            // The maxWidth below was added to stop this bar clipping off the right of a phone,
+            // and it worked — by letting the bar span the whole width, which then ran it straight
+            // over the "Find your land" button at top-left. Rory, with a zoomed screenshot:
+            // "Find your land is still covered". Two fixes for the same strip, each undoing the
+            // other, because both were reasoning about one edge of the screen at a time.
+            //
+            // So when that button is on screen, this drops below it: the button is 48px tall at
+            // top-3, so it ends at 60 and 68 clears it. When it is not (drawing, guided mode),
+            // the top row is free and the bar sits back up at 14.
+            top: toolsPillShowing ? 68 : 14,
+            right: 14, zIndex: 10, background: 'rgba(16,22,14,0.88)', backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)', borderRadius: 999, padding: '5px 8px 5px 11px', boxShadow: '0 4px 16px rgba(0,0,0,0.4)',
             // On a phone the pill is wider than the screen and its left end clips off-screen.
             // Cap it to the viewport (14px margins) and let its CONTENT scroll sideways instead.
             maxWidth: 'calc(100vw - 28px)', overflowX: 'auto', overflowY: 'hidden', whiteSpace: 'nowrap', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none' }}>
@@ -3754,7 +3772,8 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             </>
           )}
         </div>
-      )}
+        );
+      })()}
 
       {/* ── Floating shape chips — placed outside the GLOBAL site bbox, plus optional place-name bubble ── */}
       {showFeatures && !pinDraw && !editPin && map && (() => {

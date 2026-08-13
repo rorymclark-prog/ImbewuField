@@ -66,3 +66,31 @@ test('the FAB still gets out of the way while a boundary is being drawn', () => 
   assert.match(widget, /window\.addEventListener\('imbewu-drawing'/);
   assert.match(widget, /\{!open && !drawing && \(/, 'the FAB no longer hides during a draw');
 });
+
+test('the LABELS strip does not sit on top of "Find your land"', () => {
+  // TWO FIXES FOR ONE STRIP, EACH UNDOING THE OTHER.
+  //
+  // The strip used to clip off the right of a phone, so it was given
+  // `maxWidth: calc(100vw - 28px)` and told to scroll its contents. That fixed the clipping by
+  // letting the strip span the whole width — which ran it straight over the "Find your land"
+  // button at top-left. Rory, with a zoomed screenshot: "Find your land is still covered".
+  //
+  // Both changes were right about the edge they were looking at. This test looks at both edges.
+  const map = source('../components/Map.tsx');
+
+  // The strip still may not clip off-screen — the earlier fix must survive this one.
+  assert.match(map, /maxWidth: 'calc\(100vw - 28px\)'/, 'the strip can clip off a phone again');
+  assert.match(map, /overflowX: 'auto'/);
+
+  // And it drops to its own row whenever the tools button is on screen.
+  assert.match(map, /top: toolsPillShowing \? 68 : 14/, 'the strip is back on the top row');
+
+  // 68 must actually clear the button: top-3 (12px) + its 48px height = 60.
+  const btn = map.slice(map.indexOf('aria-label="Show map tools"'), map.indexOf('aria-label="Show map tools"') + 400);
+  assert.match(btn, /top-3 left-3/, 'the tools button moved; the 68px clearance needs rechecking');
+  assert.match(btn, /height: 48/, 'the tools button changed height; 68px may no longer clear it');
+
+  // The flag is DERIVED from that button's own render condition rather than restated, so the two
+  // cannot drift apart and start overlapping again.
+  assert.match(map, /const toolsPillShowing = !activeDraw && !guided;/);
+});
