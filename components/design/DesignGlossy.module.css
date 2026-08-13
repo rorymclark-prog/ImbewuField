@@ -182,6 +182,11 @@
   grid-column: 2;
   grid-row: 2 / span 3;
   display: flex;
+  /* The settings rail is much taller than one sheet. Grid's default stretch made this stage copy
+     that height, then the dark image frame expanded around a correctly sized A-series page. The
+     result looked like a black screen with the actual plan stranded far below it. The stage owns
+     its content height; the long rails keep scrolling independently. */
+  align-self: start;
   min-height: min(720px, calc(100dvh - 185px));
   flex-direction: column;
   gap: 12px;
@@ -286,7 +291,8 @@
   align-items: center;
   justify-content: center;
   overflow: auto;
-  background: #20241e;
+  /* Any small contain-fit remainder is still part of the paper easel, not a cinema letterbox. */
+  background: #fbf6ec;
 }
 
 .resultImageFrame img {
