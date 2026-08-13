@@ -5,7 +5,8 @@
 // Overlay remains the explicit model-authored comparison/rollback style.
 
 import { useCallback, useEffect, useMemo, useRef, useState, type Dispatch, type SetStateAction } from 'react';
-import { Download, RefreshCw, Gem, FlaskConical, Images, X, Trash2, Share2, Check, Sun, Upload, Wind } from 'lucide-react';
+import { createPortal } from 'react-dom';
+import { Download, RefreshCw, Gem, FlaskConical, Images, Maximize2, X, Trash2, Share2, Check, Sun, Upload, Wind } from 'lucide-react';
 import { jsPDF } from 'jspdf';
 import {
   SHEET_EXPORT_PROFILES,
@@ -11977,8 +11978,13 @@ export default function DesignGlossy({
     const closeOnEscape = (event: KeyboardEvent) => {
       if (event.key === 'Escape') setGalleryZoomOpen(false);
     };
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
     window.addEventListener('keydown', closeOnEscape);
-    return () => window.removeEventListener('keydown', closeOnEscape);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener('keydown', closeOnEscape);
+    };
   }, [galleryZoomOpen]);
 
   // Restore this site's saved sheets on mount / site change. Failure is silent by design: an
@@ -15200,12 +15206,26 @@ export default function DesignGlossy({
               )}
             </div>
             <div className={compact ? undefined : styles.resultImageFrame} style={{ position: 'relative' }}>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={stageResultImage}
-                alt={galleryViewItem?.label ?? t(stageIsExact ? 'designGlossyExactAlt' : 'designGlossyAiAlt')}
-                style={{ width: '100%', maxWidth: '100%', height: 'auto', display: 'block' }}
-              />
+              <button
+                type="button"
+                className={styles.stagePreviewButton}
+                onClick={() => setGalleryZoomOpen(true)}
+                aria-label={formatDesignTranslation(t('designGlossyOpenFullScreen'), {
+                  label: galleryViewItem?.label ?? placeName ?? t(stageIsExact ? 'designGlossyExactAlt' : 'designGlossyAiAlt'),
+                })}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={stageResultImage}
+                  alt={galleryViewItem?.label ?? t(stageIsExact ? 'designGlossyExactAlt' : 'designGlossyAiAlt')}
+                  style={{ width: '100%', maxWidth: '100%', height: 'auto', display: 'block' }}
+                />
+                {!compact && (
+                  <span className={styles.stagePreviewHint} aria-hidden="true">
+                    <Maximize2 size={14} /> {t('designGlossyInspectFullScreen')}
+                  </span>
+                )}
+              </button>
               {/* Beta pill ON the AI preview (mockup) — honesty without a screen-wide banner. */}
               {!stageIsExact && (
                 <span style={{ position: 'absolute', left: 10, bottom: 10, display: 'inline-flex', alignItems: 'center', gap: 6, padding: '5px 12px', borderRadius: 999, background: 'rgba(20,16,10,0.72)', color: '#F5E9CE', fontSize: 11.5, fontWeight: 700 }}>
@@ -16041,11 +16061,13 @@ export default function DesignGlossy({
           </div>
         </div>
       )}
-      {galleryZoomOpen && galleryViewItem && (
+      {galleryZoomOpen && stageResultImage && typeof document !== 'undefined' && createPortal((
         <div
           role="dialog"
           aria-modal="true"
-          aria-label={formatDesignTranslation(t('designGlossyFullScreenNamed'), { label: galleryViewItem.label })}
+          aria-label={formatDesignTranslation(t('designGlossyFullScreenNamed'), {
+            label: galleryViewItem?.label ?? placeName ?? t(stageIsExact ? 'designGlossyExactAlt' : 'designGlossyAiAlt'),
+          })}
           onClick={() => setGalleryZoomOpen(false)}
           style={{
             position: 'fixed',
@@ -16063,6 +16085,7 @@ export default function DesignGlossy({
         >
           <button
             type="button"
+            autoFocus
             onClick={() => setGalleryZoomOpen(false)}
             aria-label={t('designGlossyCloseFullScreen')}
             style={{
@@ -16086,8 +16109,8 @@ export default function DesignGlossy({
           </button>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={galleryViewImage ?? galleryViewItem.thumb ?? galleryViewItem.image ?? ''}
-            alt={galleryViewItem.label}
+            src={stageResultImage}
+            alt={galleryViewItem?.label ?? t(stageIsExact ? 'designGlossyExactAlt' : 'designGlossyAiAlt')}
             onClick={(event) => event.stopPropagation()}
             style={{
               maxWidth: '97vw',
@@ -16101,10 +16124,10 @@ export default function DesignGlossy({
             }}
           />
           <span style={{ maxWidth: '90vw', color: '#FBF6EC', fontSize: 13, fontWeight: 700, textAlign: 'center' }}>
-            {galleryViewItem.label}
+            {galleryViewItem?.label ?? placeName ?? t(stageIsExact ? 'designGlossyExactAlt' : 'designGlossyAiAlt')}
           </span>
         </div>
-      )}
+      ), document.body)}
     </div>
   );
 }
