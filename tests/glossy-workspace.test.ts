@@ -75,3 +75,18 @@ test('a long settings rail cannot stretch the sheet preview into a black screen'
   assert.match(css.slice(frameStart, frameEnd), /background:\s*#fbf6ec;/i,
     'any contain-fit remainder should read as sheet paper, never a black panel');
 });
+
+test('the centre sheet opens full screen and has three simple ways back', () => {
+  const previewStart = glossy.indexOf('className={styles.stagePreviewButton}');
+  assert.ok(previewStart > 0, 'the centre sheet should be an obvious full-screen trigger');
+  assert.match(glossy.slice(previewStart, previewStart + 700), /onClick=\{\(\) => setGalleryZoomOpen\(true\)\}/);
+  assert.match(glossy, /galleryZoomOpen && stageResultImage/,
+    'both newly rendered and saved centre sheets should use the full-screen viewer');
+  assert.match(glossy, /createPortal\(\([\s\S]*?document\.body\)/,
+    'phone layouts must mount the viewer at the page root so a sheet container cannot clip it');
+  assert.match(glossy, /aria-modal="true"/);
+  assert.match(glossy, /if \(event\.key === 'Escape'\) setGalleryZoomOpen\(false\)/,
+    'Escape should close the full-screen sheet');
+  assert.match(glossy, /onClick=\{\(\) => setGalleryZoomOpen\(false\)\}[\s\S]*?designGlossyCloseFullScreen/,
+    'the backdrop and visible close button should both leave full screen');
+});
