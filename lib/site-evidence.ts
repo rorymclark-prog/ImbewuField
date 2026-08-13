@@ -164,6 +164,22 @@ function evictUntilWithinLimits(store: SiteEvidenceStore): void {
   }
 }
 
+/**
+ * THE ONE PLACE THAT DECIDES WHICH SITE A PHOTO BELONGS TO.
+ *
+ * DataPanel wrote evidence under `activePlaceId ?? 'default'` and ReportView read it back under
+ * `activePlaceId` alone. Both are defensible on their own; together they mean a farmer who has not
+ * tapped a saved place files every photo under `default` and then generates a report that reads an
+ * empty object and never mentions one of them. Nothing errors, nothing is logged, and the report
+ * simply comes out generic — which is exactly the complaint that started this work.
+ *
+ * The same shape as the biome cache bug: two keyspaces, one subject. So there is now one function,
+ * and both ends call it.
+ */
+export function evidenceSiteId(activePlaceId: string | null | undefined): string {
+  return activePlaceId ?? 'default';
+}
+
 export function getSiteEvidence(siteId: string): { [itemKey: string]: EvidenceItem[] } {
   return load()[siteId]?.items ?? {};
 }

@@ -36,7 +36,7 @@ import PeoplePanel from './PeoplePanel';
 import EvidenceSheet from './EvidenceSheet';
 import EvidenceCatalogue from './EvidenceCatalogue';
 import { EVIDENCE_CATALOGUE, type EvidenceCatalogueGroup, type EvidenceCatalogueItem } from '@/lib/evidence-catalogue';
-import { getSiteEvidence, getReportCompleteness, getGroupCount, type EvidenceItem } from '@/lib/site-evidence';
+import { evidenceSiteId, getSiteEvidence, getReportCompleteness, getGroupCount, type EvidenceItem } from '@/lib/site-evidence';
 import type { Profile } from '@/lib/db/types';
 
 interface Props {
@@ -346,8 +346,9 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
     setPhotoAnalysis(undefined);
   }, [coords?.lat, coords?.lon]);
 
-  // Evidence state
-  const siteId = activePlaceId ?? 'default';
+  // Evidence state — resolved through the shared helper so the report reads photos back from the
+  // same key they were written to. These two ends disagreed until 13 August (see evidenceSiteId).
+  const siteId = evidenceSiteId(activePlaceId);
   const [evidenceSheet, setEvidenceSheet] = useState<{ group: EvidenceCatalogueGroup; item?: EvidenceCatalogueItem } | null>(null);
   const [evidenceCatalogueOpen, setEvidenceCatalogueOpen] = useState(false);
   const [evidenceTick, setEvidenceTick] = useState(0);

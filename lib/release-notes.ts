@@ -84,8 +84,11 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   },
   {
     when: '13 August',
-    sha: 'f78fe33',
+    sha: '558f733',
     changes: [
+      'Your report now looks at the photos you took of your land, not just their number',
+      'So the soil, water and tree advice describes what is actually on the ground',
+      'Photos saved before you picked a farm now reach the report instead of being lost',
       'Tap any plan preview to open it full screen, then use the top-right close button to return',
       'Place names and pins on the map are far easier to hit with a finger',
       'Tapping a place name on the map opens that place again on phones',

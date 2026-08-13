@@ -33,6 +33,11 @@ import {
   normaliseSiteAnalysisImages,
   siteImagesPromptBlock,
 } from '@/lib/report-site-images';
+import {
+  groundPhotosPromptBlock,
+  normaliseGroundPhotos,
+} from '@/lib/report-ground-photos';
+import { evidenceKeyLabel } from '@/lib/evidence-catalogue';
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
 
@@ -140,6 +145,7 @@ export async function POST(req: NextRequest) {
      *  siteFacts, and with more at stake: these are forwarded into a paid upstream call, so they
      *  are counted, size-capped and shape-checked before anything is sent. */
     siteImages?: unknown;
+    groundPhotos?: unknown;
     phasePlan?: PhasePlan;
     surveyData?: SiteSurvey;
     evidenceData?: Record<string, { count: number; notes: string[] }>;
@@ -169,6 +175,7 @@ export async function POST(req: NextRequest) {
   // from these images, not generic zone information". See lib/report-site-images.ts — including for
   // why every number in the document still comes from the facts and never from a drawing.
   const siteImages = normaliseSiteAnalysisImages(body.siteImages);
+  const groundPhotos = normaliseGroundPhotos(body.groundPhotos);
 
   // DoS hardening: drop any section name not in the canonical allow-list so an
   // attacker cannot drive unbounded parallel Anthropic calls via a crafted request.
@@ -353,7 +360,14 @@ ${photoAnalysis ? `\nSITE PHOTO ANALYSIS:\n${photoAnalysis}` : ''}
 ${surveyData ? `\nSITE SURVEY (farmer-completed — treat this as authoritative ground truth about the site):\n${surveyToPrompt(surveyData, d.rainfall.annual)}` : ''}
 ${evidenceData && Object.keys(evidenceData).length > 0 ? `\nFARMER'S EVIDENCE (items the farmer has photographed, measured or noted on this site — treat as ACTUAL observed conditions, not estimates):\n${
   Object.entries(evidenceData)
-    .map(([key, { count, notes }]) => `  · ${key.replace(/_/g, ' ')}: ${count} item${count !== 1 ? 's' : ''}${notes.length > 0 ? ' — notes: ' + notes.map(n => `"${n}"`).join(', ') : ''}`)
+    .map(([key, { count, notes }]) => {
+      // The raw storage key used to be printed with its underscores swapped for spaces, which
+      // hands the model "water dam pond" and "trees windbreak" and asks it to work out the rest.
+      // The catalogue knows the real names; unknown keys fall back rather than being dropped.
+      const named = evidenceKeyLabel(key);
+      const label = named ? `${named.group} — ${named.item}` : key.replace(/_/g, ' ');
+      return `  · ${label}: ${count} item${count !== 1 ? 's' : ''}${notes.length > 0 ? ' — notes: ' + notes.map(n => `"${n}"`).join(', ') : ''}`;
+    })
     .join('\n')
 }\nReference this evidence where relevant — if water items exist, mention them in the Water Harvesting section; soil items in Soil Strategy; etc. This is real ground-truth data.` : ''}
 ---
@@ -740,14 +754,32 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
   // cost is images × batches; MAX_ANALYSIS_IMAGES is set at three with exactly that multiplication
   // in mind. Images lead the message: reading order matters to a vision model, and the prompt block
   // that names them is what turns three unlabelled pictures into "Figure 2 is the water plan".
+  //
+  // The GROUND PHOTOS ride along on the same terms, and they come SECOND — after the plans, before
+  // the prompt. The order is the argument: the sheets establish what is where, and the photographs
+  // then say what state each of those things is in. Reversed, the model meets a close-up of bare
+  // soil with no idea which bed it belongs to. Each set keeps its own prompt block because they are
+  // different kinds of evidence and being told so is what stops a model reading a photo for layout
+  // (see lib/report-ground-photos.ts).
   const messageContent = (promptText: string): Anthropic.MessageParam['content'] => {
-    if (!siteImages.length) return promptText;
+    if (!siteImages.length && !groundPhotos.length) return promptText;
+    const asImage = (img: { mediaType: 'image/jpeg'; data: string }) => ({
+      type: 'image' as const,
+      source: { type: 'base64' as const, media_type: img.mediaType, data: img.data },
+    });
     return [
-      { type: 'text' as const, text: siteImagesPromptBlock(siteImages) },
-      ...siteImages.map((img) => ({
-        type: 'image' as const,
-        source: { type: 'base64' as const, media_type: img.mediaType, data: img.data },
-      })),
+      ...(siteImages.length
+        ? [
+            { type: 'text' as const, text: siteImagesPromptBlock(siteImages) },
+            ...siteImages.map(asImage),
+          ]
+        : []),
+      ...(groundPhotos.length
+        ? [
+            { type: 'text' as const, text: groundPhotosPromptBlock(groundPhotos) },
+            ...groundPhotos.map(asImage),
+          ]
+        : []),
       { type: 'text' as const, text: promptText },
     ];
   };

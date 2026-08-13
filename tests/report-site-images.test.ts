@@ -167,13 +167,22 @@ test('every batch is shown the sheets, images before text', () => {
     'the batch call no longer carries the sheets');
   const start = route.indexOf('const messageContent =');
   const body = route.slice(start, route.indexOf('const runBatch =', start));
+  // Reading order matters to a vision model: name the figures, show them, then ask for the
+  // sections. Probed through the attachment itself rather than through `type: 'image'`, which
+  // moved into a shared `asImage` helper when ground photos joined the message and now appears
+  // ABOVE the prompt block without anything having gone wrong.
   const promptAt = body.indexOf('siteImagesPromptBlock(siteImages)');
-  const imageAt = body.indexOf("type: 'image' as const");
+  const imageAt = body.indexOf('siteImages.map(asImage)');
   const textAt = body.lastIndexOf('text: promptText');
-  assert.ok(promptAt > 0 && imageAt > promptAt && textAt > imageAt,
-    'reading order matters: name the figures, show them, then ask for the sections');
-  assert.match(body, /if \(!siteImages\.length\) return promptText/,
-    'a site with no sheets must still send a plain string prompt');
+  assert.ok(promptAt > 0, 'the sheets are no longer named for the model');
+  assert.ok(imageAt > promptAt, 'the sheets are shown before they are named');
+  assert.ok(textAt > imageAt, 'the sections are asked for before the sheets are shown');
+  // A site with NOTHING to look at still sends a plain string prompt. This used to read
+  // `!siteImages.length` alone; ground photos (lib/report-ground-photos.ts) joined the message on
+  // 13 August, so a site with no sheets but with photographs must now build the array too — the
+  // shortcut is for a message with no pictures in it at all, not for a message with no sheets.
+  assert.match(body, /if \(!siteImages\.length && !groundPhotos\.length\) return promptText/,
+    'a site with nothing to look at must still send a plain string prompt');
 });
 
 test('the report screen shows the maps and sends them to be read', () => {

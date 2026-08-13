@@ -14,7 +14,8 @@ import { selectReportPlates, type ReportPlate } from '@/lib/report-plates';
 import { prepareSiteAnalysisImages } from '@/lib/report-site-images';
 import { PLAN_VERSION } from '@/lib/plan-version';
 import { loadSurvey } from '@/lib/site-survey';
-import { getSiteEvidence } from '@/lib/site-evidence';
+import { evidenceSiteId, getSiteEvidence } from '@/lib/site-evidence';
+import { prepareGroundPhotos } from '@/lib/report-ground-photos';
 import { designSiteIdFromLocation } from '@/lib/design-studio';
 import { loadCanvasState } from '@/lib/design-canvas';
 import { resolveBaseLayers } from '@/lib/base-layers';
@@ -403,8 +404,20 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     collapsePanelOnNarrow();
 
     try {
-      // Build evidence summary (strip base64 thumbnails — send counts + notes only)
-      const rawEvidence = activePlaceId ? getSiteEvidence(activePlaceId) : {};
+      // THE PHOTOS GO WITH IT NOW.
+      //
+      // This block used to open "strip base64 thumbnails — send counts + notes only", and that
+      // one line was the whole of Rory's "there is still no images … the report needs to draw
+      // analyses from these images". The model was handed `soil_compaction: 2 items` and asked to
+      // write about the soil. The counts and notes are still sent — they cover all 52 tiles and
+      // every note, which four photographs cannot — but the photographs now go too.
+      //
+      // And the site id is resolved through evidenceSiteId at BOTH ends. It used to be read here
+      // as `activePlaceId` and written in DataPanel as `activePlaceId ?? 'default'`, so a farmer
+      // who had not tapped a saved place filed every photo under `default` and then generated a
+      // report that read an empty object — silently, with no error and no missing-photo notice.
+      const rawEvidence = getSiteEvidence(evidenceSiteId(activePlaceId));
+      const groundPhotos = prepareGroundPhotos(rawEvidence);
       const evidenceData: Record<string, { count: number; notes: string[] }> = {};
       for (const [key, items] of Object.entries(rawEvidence)) {
         if (items.length > 0) {
@@ -456,6 +469,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           waterData: waterData || undefined,
           siteFacts,
           siteImages: siteImages.length ? siteImages : undefined,
+          groundPhotos: groundPhotos.length ? groundPhotos : undefined,
           phasePlan: phasePlan ?? undefined,
           surveyData: loadSurvey(designSiteIdFromLocation(d)) ?? undefined,
           evidenceData: Object.keys(evidenceData).length > 0 ? evidenceData : undefined,
