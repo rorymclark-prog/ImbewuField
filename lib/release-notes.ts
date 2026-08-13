@@ -87,6 +87,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     sha: '558f733',
     changes: [
       'Your report now looks at the photos you took of your land, not just their number',
+      'And it shows them, on screen and in the downloaded PDF, with your own notes',
       'So the soil, water and tree advice describes what is actually on the ground',
       'Photos saved before you picked a farm now reach the report instead of being lost',
       'Tap any plan preview to open it full screen, then use the top-right close button to return',

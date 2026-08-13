@@ -5,6 +5,7 @@ import test from 'node:test';
 import {
   GROUND_PHOTO_BUDGET_BYTES,
   MAX_GROUND_PHOTOS,
+  groundPhotoGallery,
   groundPhotosPromptBlock,
   normaliseGroundPhotos,
   prepareGroundPhotos,
@@ -196,4 +197,64 @@ test('a photo is filed and read back under the same site id', () => {
   }
   assert.doesNotMatch(panel, /activePlaceId \?\? 'default'/, 'the fallback was retyped instead of imported');
   assert.doesNotMatch(view, /getSiteEvidence\(activePlaceId\)/, 'ReportView reads the unresolved id again');
+});
+
+// ── The other half of "there is still no images": being SHOWN them ────────────────────────────
+
+test('the report shows exactly the photos it read, and says how many more there are', () => {
+  const evidence = {
+    water_rain_tanks: [photo(), photo(), photo(), photo()],
+    soil_erosion: [photo({ note: 'gully after the storm' })],
+    trees_windbreaks: [photo()],
+    structures_sheds: [photo()],
+  };
+  const gallery = groundPhotoGallery(evidence);
+  assert.equal(gallery.shown.length, MAX_GROUND_PHOTOS, 'the strip should show what the model read');
+  assert.equal(gallery.total, 7, 'the count must be of every photo on file, not of the ones sent');
+
+  // THE STRIP AND THE UPLOAD MUST BE THE SAME FOUR. Two selections that drift apart would put a
+  // photo on the page that no advice was drawn from, or draw advice from one the farmer cannot
+  // see — either way the strip stops being an account of what was read. Same evidence in, same
+  // keys out, asserted against the selector itself rather than against a hand-copied list.
+  assert.deepEqual(
+    gallery.shown.map((p) => p.key),
+    selectGroundPhotos(evidence).map((p) => p.key),
+    'the strip and the upload are no longer the same selection',
+  );
+
+  // Unlike the wire format, the display keeps the data: URL — an <img> needs it.
+  assert.ok(gallery.shown.every((p) => p.dataUrl.startsWith('data:image/jpeg;base64,')));
+  assert.equal(gallery.shown.find((p) => p.key === 'soil_erosion')!.note, 'gully after the storm');
+});
+
+test('no photos means no strip at all, not an empty one', () => {
+  const gallery = groundPhotoGallery({ soil_lab_result: [photo({ type: 'pdf', dataUrl: undefined })] });
+  assert.deepEqual(gallery.shown, []);
+  assert.equal(gallery.total, 0);
+});
+
+test('the strip and the PDF both carry the photographs', () => {
+  const view = source('../components/ReportView.tsx');
+  const pdf = source('../lib/report-pdf.ts');
+
+  // On screen, below the plan sheets — the order the model reads them in and the order they make
+  // sense in: the plans say what is where, the photographs say what state it is in.
+  assert.match(view, /Your photos of this land/, 'the report on screen shows no photographs again');
+  assert.ok(
+    view.indexOf('Your design maps') < view.indexOf('Your photos of this land'),
+    'the photographs must come after the plans',
+  );
+  assert.match(view, /groundPhotoGallery\(getSiteEvidence\(evidenceSiteId\(activePlaceId\)\)\)/);
+  // Tapping one opens it full size, the same as a design sheet.
+  assert.match(view, /setOpenPlate\(\{ label: p\.label, image: p\.dataUrl \}\)/);
+
+  // And into the exported PDF, which is the copy that gets handed to a funder.
+  assert.match(view, /photos: photoGallery\.shown\.map/, 'the PDF export drops the photographs');
+  assert.match(pdf, /photos\?: ReportPdfPhoto\[\]/);
+  assert.match(pdf, /const photos = meta\.photos \?\? \[\]/);
+  // Two to a page: a 400px phone snap printed a full page wide is a blurry phone snap.
+  assert.match(pdf, /i \+= 2/, 'the photographs are printed one to a page again');
+  // A photo that will not draw costs its slot, never the report — the same rule the sheets follow.
+  const block = pdf.slice(pdf.indexOf('const photos = meta.photos'), pdf.indexOf('footer();', pdf.indexOf('const photos = meta.photos')));
+  assert.match(block, /catch \{\s*\n\s*continue;/, 'an unreadable photo must not lose the report');
 });

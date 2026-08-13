@@ -171,6 +171,50 @@ export function prepareGroundPhotos(
   return out;
 }
 
+// ── Showing them ──────────────────────────────────────────────────────────────────────────────
+
+/** One photo as the report displays it — the data URL intact, unlike the wire format above. */
+export interface GroundPhotoView {
+  key: string;
+  label: string;
+  note?: string;
+  dataUrl: string;
+}
+
+/**
+ * The photos to SHOW in the report, and how many the farmer actually has.
+ *
+ * Deliberately the same selection the model was given rather than everything on file. A strip of
+ * every photo would look more generous and be less true: the farmer would read advice about their
+ * soil beside twelve pictures, four of which informed it, with nothing marking which four. Showing
+ * exactly what was read — and saying plainly how many more exist — is the honest version, and it
+ * is also the one that lets someone work out why a photo they care about was not mentioned.
+ *
+ * These are the ≤400px thumbnails from lib/site-evidence.ts, so there is no memory contract to
+ * observe here as there is for the plan sheets: the whole set is a few hundred KB.
+ */
+export function groundPhotoGallery(
+  evidence: Readonly<Record<string, readonly EvidenceItem[]>>,
+  max: number = MAX_GROUND_PHOTOS,
+): { shown: GroundPhotoView[]; total: number } {
+  let total = 0;
+  for (const items of Object.values(evidence ?? {})) {
+    total += (items ?? []).filter((i) => i && i.type === 'photo' && i.dataUrl).length;
+  }
+  const shown: GroundPhotoView[] = [];
+  for (const { key, item } of selectGroundPhotos(evidence, max)) {
+    const named = evidenceKeyLabel(key);
+    if (!named || !item.dataUrl) continue;
+    shown.push({
+      key,
+      label: `${named.group} · ${named.item}`,
+      note: item.note?.trim() || undefined,
+      dataUrl: item.dataUrl,
+    });
+  }
+  return { shown, total };
+}
+
 // ── The server side ───────────────────────────────────────────────────────────────────────────
 
 /**
