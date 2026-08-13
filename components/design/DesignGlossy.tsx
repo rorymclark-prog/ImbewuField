@@ -6,7 +6,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState, type Dispatch, type SetStateAction } from 'react';
 import { createPortal } from 'react-dom';
-import { Download, RefreshCw, Gem, FlaskConical, Images, Maximize2, X, Trash2, Share2, Check, Sun, Upload, Wind } from 'lucide-react';
+import { Download, RefreshCw, Gem, FlaskConical, Images, Maximize2, X, Trash2, Share2, Check, Upload } from 'lucide-react';
 import { jsPDF } from 'jspdf';
 import {
   SHEET_EXPORT_PROFILES,
@@ -15063,18 +15063,9 @@ export default function DesignGlossy({
         )}
       </div>
 
-      {selectedSheet && (
-        <div className={compact ? undefined : styles.finishIntro} style={{ padding: '10px 12px', borderRadius: 12, border: '1px solid rgba(31,77,43,0.24)', background: 'rgba(31,77,43,0.06)', fontSize: 12.5, lineHeight: 1.45 }}>
-          <strong>{t('designGlossyChooseFinish')}</strong> {t('designGlossyFinishHelp')}
-          {fullTreatmentVisible ? ` ${t('designGlossyFinishHelpFullTreatment')}` : ''}
-        </div>
-      )}
-
       <section className={compact ? undefined : styles.mapStage} aria-label={t('designGlossyMapPreview')}>
       {!compact && (
         <div className={styles.stageToolbar}>
-          <span className={styles.stageChip}><Wind size={14} /> Wind</span>
-          <span className={styles.stageChip}><Sun size={14} /> {t('designGlossySeasonalSun')}</span>
           <div className={styles.stageTabs} role="group" aria-label={t('designGlossyPreviewScope')}>
             <button type="button" className={`${styles.stageTab} ${styles.stageTabActive}`}>{t('designGlossyThisSheet')}</button>
             <button
@@ -15337,11 +15328,10 @@ export default function DesignGlossy({
           </div>
         )}
 
-        {/* More options (mockup) — everything power-user lives in one collapse: engine, the
-            AI-legend experiment, the bonus Gemini analysis maps (incl. Opportunities, which has
-            no sheet of its own), and the style-ALL batch. Hidden on the compact Preview mount. */}
+        {/* More options comes after the finish controls: settings that change cost or the batch
+            must never make the farmer scroll past the two primary ways to make this sheet. */}
         {!compact && (
-        <div style={{ borderRadius: 14, border: '1px solid rgba(0,0,0,0.14)' }}>
+        <div style={{ order: 3, borderRadius: 14, border: '1px solid rgba(0,0,0,0.14)' }}>
           <button
             type="button"
             onClick={() => setMoreOpen((v) => !v)}
@@ -15353,8 +15343,6 @@ export default function DesignGlossy({
           </button>
           {moreOpen && (
             <div style={{ padding: '0 12px 12px', display: 'flex', flexDirection: 'column', gap: 12 }}>
-              {enginePicker}
-
               {qualityPicker}
 
               {/* RETIRED — the Prompt-rewrite, Geometry Lock and AI-legend toggles used to live
@@ -15408,13 +15396,10 @@ export default function DesignGlossy({
         </div>
         )}
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8, width: '100%' }}>
-          {/* On the compact Preview mount this is the ONLY place the money dials appear, because
-              More options is hidden there — and the two buttons directly below them are the ones
-              that spend real money. Engine decides WHICH account is charged and quality decides how
-              much, so neither belongs a screen away from the button. Both also appear under More
-              options on the full mount. */}
-          {compact && selectedSheet && enginePicker}
+        <div style={{ order: 1, display: 'flex', flexDirection: 'column', gap: 8, width: '100%' }}>
+          {/* The engine determines which account is charged, so it sits beside the finish that
+              spends money. Render quality remains an advanced option below. */}
+          {selectedSheet && enginePicker}
           {compact && selectedSheet && qualityPicker}
           {selectedSheet && (
             <div style={{ color: DARK, fontWeight: 850, fontSize: 13, letterSpacing: '0.03em', textTransform: 'uppercase' }}>
@@ -15568,7 +15553,19 @@ export default function DesignGlossy({
           )}
         </div>
 
-        <div style={{ fontSize: 11, opacity: 0.6 }}>
+        {selectedSheet && (
+          <details style={{ order: 2, border: '1px solid rgba(31,77,43,0.24)', borderRadius: 12, background: 'rgba(31,77,43,0.06)', padding: '0 12px' }}>
+            <summary style={{ padding: '10px 0', color: DARK, fontSize: 12.5, fontWeight: 800, cursor: 'pointer' }}>
+              {t('designGlossyHowFinishesWork')}
+            </summary>
+            <p style={{ margin: '0 0 10px', fontSize: 12.5, lineHeight: 1.45 }}>
+              <strong>{t('designGlossyChooseFinish')}</strong> {t('designGlossyFinishHelp')}
+              {fullTreatmentVisible ? ` ${t('designGlossyFinishHelpFullTreatment')}` : ''}
+            </p>
+          </details>
+        )}
+
+        <div style={{ order: 4, fontSize: 11, opacity: 0.6 }}>
           {!producerStyle && !analysisStyle ? (
             <>
               {t('designGlossyExactFootnote')}
@@ -16111,7 +16108,7 @@ export default function DesignGlossy({
           <img
             src={stageResultImage}
             alt={galleryViewItem?.label ?? t(stageIsExact ? 'designGlossyExactAlt' : 'designGlossyAiAlt')}
-            onClick={(event) => event.stopPropagation()}
+            onClick={() => setGalleryZoomOpen(false)}
             style={{
               maxWidth: '97vw',
               maxHeight: '88vh',
@@ -16120,9 +16117,27 @@ export default function DesignGlossy({
               objectFit: 'contain',
               borderRadius: 10,
               boxShadow: '0 18px 70px rgba(0,0,0,0.55)',
-              cursor: 'default',
+              cursor: 'zoom-out',
             }}
           />
+          <span
+            aria-hidden="true"
+            style={{
+              position: 'fixed',
+              bottom: 18,
+              left: '50%',
+              transform: 'translateX(-50%)',
+              padding: '6px 10px',
+              borderRadius: 999,
+              color: '#FBF6EC',
+              background: 'rgba(8,12,8,0.72)',
+              fontSize: 11,
+              fontWeight: 800,
+              pointerEvents: 'none',
+            }}
+          >
+            {t('designGlossyClickMapToMinimise')}
+          </span>
           <span style={{ maxWidth: '90vw', color: '#FBF6EC', fontSize: 13, fontWeight: 700, textAlign: 'center' }}>
             {galleryViewItem?.label ?? placeName ?? t(stageIsExact ? 'designGlossyExactAlt' : 'designGlossyAiAlt')}
           </span>

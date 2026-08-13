@@ -3691,7 +3691,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             // On a phone the pill is wider than the screen and its left end clips off-screen.
             // Cap it to the viewport (14px margins) and let its CONTENT scroll sideways instead.
             maxWidth: 'calc(100vw - 28px)', overflowX: 'auto', overflowY: 'hidden', whiteSpace: 'nowrap', WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none' }}>
-          <span style={{ fontSize: 10, fontWeight: 700, color: 'rgba(234,243,226,0.35)', letterSpacing: '0.1em', textTransform: 'uppercase', marginRight: 2 }}>{t('labelsPillHeader')}</span>
+          <span className="hidden sm:inline" style={{ fontSize: 10, fontWeight: 700, color: 'rgba(234,243,226,0.35)', letterSpacing: '0.1em', textTransform: 'uppercase', marginRight: 2 }}>{t('labelsPillHeader')}</span>
           {(siteFeatures.length > 0 || waterFeatures.length > 0) && (<>
             {/* Shapes — show/hide all drawn polygon boundaries + hatching */}
             <button onClick={() => setShowFeatures((v) => !v)}

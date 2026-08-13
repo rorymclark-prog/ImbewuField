@@ -368,6 +368,12 @@ test('update notifier detects a newly deployed build without false first-load pr
   assert.equal(isDifferentBuild('5b9982b', null), false);
 });
 
+test('the collapsed update button names the build waiting to be installed', () => {
+  const source = readFileSync(new URL('../components/PWAUpdateNotifier.tsx', import.meta.url), 'utf8');
+  assert.match(source, /Update ready\$\{nextBuildSha \? ` · \$\{nextBuildSha\}` : ''\}/,
+    'the small update control must keep the fetched build number visible after the notice collapses');
+});
+
 test('buildProducerPrompt keeps the style anchor first and the geometry lock last', () => {
   const prompt = buildProducerPrompt(
     'Zones',

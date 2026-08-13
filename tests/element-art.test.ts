@@ -31,8 +31,14 @@ test('every declared art path points at a file that exists', () => {
 test('art is named for the catalogue id it belongs to', () => {
   // The filename IS the wiring. A file called `jojo5000.png` on a def whose id is `jojo_5000`
   // works today and silently orphans the moment anyone regenerates the mapping from ids.
+  // A `-vN` suffix is allowed when a generated replacement needs to coexist safely until the
+  // catalogue points at it; its base name remains the catalogue id, not a free-form concept.
   for (const def of declared) {
-    assert.equal(def.art, `${PREFIX}${def.id}.png`, `${def.id}: art filename must match the id exactly`);
+    assert.match(
+      def.art!,
+      new RegExp(`^${PREFIX}${def.id}(?:-v\\d+)?\\.png$`),
+      `${def.id}: art filename must match the id, with only an optional version suffix`,
+    );
   }
 });
 

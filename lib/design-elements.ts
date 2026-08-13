@@ -282,7 +282,7 @@ export const ELEMENT_CATALOG: DesignElementDef[] = [
     category: 'water',
     name: 'Rain Barrel',
     icon: '🪣',
-    art: '/element-art/rain_barrel.png',
+    art: '/element-art/rain_barrel-v2.png',
     // The standard repurposed HDPE/steel drum is 200 L at Ø0.572 m — which is what the Ø0.6 m
     // footprint above already describes. Approximate on the card because the barrel a farmer
     // actually has may be a 100 L offcut or a 250 L chemical drum, and see capacityNote's own

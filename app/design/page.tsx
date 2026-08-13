@@ -120,6 +120,12 @@ import { zoneAdviceFromSuggestions, type ZoneAdvicePin } from '@/components/desi
 import SpeakButton from '@/components/SpeakButton';
 import LessonLink from '@/components/design/LessonLink';
 import { usePhoneViewport } from '@/lib/use-phone-viewport';
+import {
+  DEFAULT_DESKTOP_PANEL_LAYOUT,
+  DESIGN_PANEL_LAYOUT_KEY,
+  restoreDesktopPanelLayout,
+  type DesktopPanelLayout,
+} from '@/lib/design-panel-layout';
 
 // One nudge step, as a fraction of the frame. Small on purpose: this is for closing a
 // few-metre georeferencing gap, and a farmer who wants to move the photo further should
@@ -192,18 +198,7 @@ const STEP_BTN: CSSProperties = {
   userSelect: 'none',
 };
 
-const DESIGN_MODE_KEY = 'imbewu_design_mode';
 const GEOMETRY_LOCK_KEY = 'imbewu_geometry_lock';
-
-function readStoredDesignMode(): DesignMode {
-  if (typeof window === 'undefined') return 'guided';
-  try {
-    const raw = window.localStorage.getItem(DESIGN_MODE_KEY);
-    return raw === 'pro' ? 'pro' : 'guided';
-  } catch {
-    return 'guided';
-  }
-}
 
 function readStoredGeometryLock(): boolean {
   if (typeof window === 'undefined') return false;
@@ -594,23 +589,10 @@ function DesignStudioInner() {
     }
   }, [hasSite, lat, lon]);
 
-  // GUIDED/PRO mode — read from localStorage in an effect (SSR has no localStorage, so a
-  // render-time read would hydration-mismatch), defaulting to 'guided'.
-  const [designMode, setDesignMode] = useState<DesignMode>('guided');
-  useEffect(() => {
-    setDesignMode(readStoredDesignMode());
-  }, []);
-  const toggleDesignMode = useCallback(() => {
-    setDesignMode((prev) => {
-      const next: DesignMode = prev === 'pro' ? 'guided' : 'pro';
-      try {
-        window.localStorage.setItem(DESIGN_MODE_KEY, next);
-      } catch {
-        /* localStorage unavailable */
-      }
-      return next;
-    });
-  }, []);
+  // The Studio now always exposes its tools. Guidance is an additional bottom-panel aid, not a
+  // mode that can hide working controls, so an old saved Pro/Guided preference cannot change
+  // what a farmer can reach on their next visit.
+  const designMode: DesignMode = 'guided';
 
   // Geometry Lock — off by default, but persisted when the farmer turns it on for testing.
   const [geometryLock, setGeometryLock] = useState(false);
@@ -977,6 +959,18 @@ function DesignStudioInner() {
   // when the gesture ends would flicker the chrome mid-drawing, which is the one thing the spec
   // for this explicitly rules out.
   const isPhone = usePhoneViewport();
+  const [desktopPanelLayout, setDesktopPanelLayout] = useState<DesktopPanelLayout>(DEFAULT_DESKTOP_PANEL_LAYOUT);
+  useEffect(() => {
+    try { setDesktopPanelLayout(restoreDesktopPanelLayout(window.localStorage.getItem(DESIGN_PANEL_LAYOUT_KEY))); }
+    catch { /* default panel widths keep the canvas useful when storage is unavailable */ }
+  }, []);
+  const setDesktopPanelWidth = useCallback((panel: keyof DesktopPanelLayout, width: number) => {
+    setDesktopPanelLayout((previous) => {
+      const next = { ...previous, [panel]: width };
+      try { window.localStorage.setItem(DESIGN_PANEL_LAYOUT_KEY, JSON.stringify(next)); } catch { /* view preference only */ }
+      return next;
+    });
+  }, []);
   const canvasWrapRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
     if (!isPhone) return;
@@ -2718,7 +2712,6 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
     if (simpleHandled.current || !canvasState) return;
     if (params.get('simple') !== '1') return;
     simpleHandled.current = true;
-    setDesignMode('guided');
     setStep('planting');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [canvasState]);
@@ -2829,48 +2822,29 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
         <span style={{ flexShrink: 0, display: isPhone ? 'none' : undefined }}>
           <LessonLink id="design:overview" label="Learn" />
         </span>
-        <button
-          type="button"
-          onClick={toggleDesignMode}
-          aria-label={`Switch to ${designMode === 'pro' ? 'Guided' : 'Pro'} mode`}
-          aria-pressed={designMode === 'pro'}
-          title={designMode === 'pro' ? 'Pro — full designer: every tool, jump any step' : 'Guided — simple step-by-step, one focus at a time'}
-          style={{
-            marginLeft: 'auto',
-            display: isPhone ? 'none' : 'flex',
-            alignItems: 'center',
-            minHeight: 32,
-            padding: '0 4px',
-            borderRadius: 999,
-            border: `1px solid ${GREEN}`,
-            background: 'transparent',
-            cursor: 'pointer',
-            fontSize: 11.5,
-            fontWeight: 700,
-            overflow: 'hidden',
-          }}
-        >
-          <span
+        <span style={{ marginLeft: 'auto' }} />
+        {canvasState && canvasState.step !== 'glossy' && (
+          <button
+            type="button"
+            onClick={() => setPreviewFilter(
+              canvasState.step === 'water' ? 'water'
+                : canvasState.step === 'earthworks' ? 'earthworks'
+                : canvasState.step === 'zones' ? 'zones'
+                : canvasState.step === 'planting' ? 'planting'
+                : canvasState.step === 'structures' ? 'structures'
+                : 'all',
+            )}
+            aria-label="Preview map and choose a plan sheet"
             style={{
-              padding: '5px 10px',
-              borderRadius: 999,
-              background: designMode === 'guided' ? GREEN : 'transparent',
-              color: designMode === 'guided' ? PAPER : GREEN,
+              display: isPhone ? 'none' : 'inline-flex', alignItems: 'center', gap: 6,
+              minHeight: 32, padding: '5px 12px', borderRadius: 10,
+              border: '1px solid rgba(31,77,43,0.20)', background: PAPER, color: GREEN,
+              cursor: 'pointer', fontSize: 12, fontWeight: 800, whiteSpace: 'nowrap',
             }}
           >
-            Guided
-          </span>
-          <span
-            style={{
-              padding: '5px 10px',
-              borderRadius: 999,
-              background: designMode === 'pro' ? GREEN : 'transparent',
-              color: designMode === 'pro' ? PAPER : GREEN,
-            }}
-          >
-            Pro
-          </span>
-        </button>
+            <ImageIcon size={15} /> Preview map
+          </button>
+        )}
         {/* RETIRED — the Geometry Lock chip. It is jargon, it confused its own author, and the
             recommended Satellite Overlay style ignores it entirely (see isModelChromeStyle). Render
             behaviour belongs to the chosen STYLE, not to a header switch. */}
@@ -2895,7 +2869,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               fontWeight: 800,
             }}
           >
-            <Printer size={15} /> Print
+            <Printer size={15} /> Print / Export
           </button>
         )}
         {buildInfo?.sha && !isPhone && (
@@ -3012,9 +2986,10 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           reached from the slim chrome row below. Guidance (wizard + advisor + zone advice)
           is the first-class path now. */}
 
-      {/* Wizard (top) */}
+      {/* The complete, clickable step rail below replaces the old desktop wizard card. On a
+          phone the familiar compact wizard remains available above the sheet. */}
       {canvasState && canvasState.step !== 'glossy' && (
-        <div style={isPhone ? undefined : { position: 'fixed', top: 76, left: 12, width: 208, maxHeight: 'calc(100dvh - 88px)', overflowY: 'auto', zIndex: 15 }}>
+        <div style={isPhone ? undefined : { display: 'none' }}>
           <DesignWizard
             step={canvasState.step}
             setStep={setStep}
@@ -3049,11 +3024,8 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           quiet "More space" that folds the auto-design bar + wizard away. */}
       {canvasState && (
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, padding: '3px 14px', minHeight: 34, borderBottom: chromeCollapsed ? '1px solid #E2D8C4' : 'none' }}>
-          {cardsUi && (
-            // The StepGuide bubble floats over the top-left of the map, and this bar sits level
-            // with its first ~50px — so while the guide is up, the strip starts to its right
-            // rather than running underneath it. Same condition as the guide's own mount below.
-            <div style={{ display: 'flex', minWidth: 0, flex: '1 1 auto', paddingLeft: bottomShow.stepBar && canvasState.step !== 'glossy' && canvasState.step !== 'review' ? 252 : 0 }}>
+          {!isPhone && (
+            <div style={{ display: 'flex', minWidth: 0, flex: '1 1 auto' }}>
               <CardsStepper step={canvasState.step} onStep={setStep} />
             </div>
           )}
@@ -3135,8 +3107,8 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           flex: 1,
           position: 'relative',
           minHeight: canvasState?.step === 'glossy' ? 'calc(100dvh - 132px)' : '45dvh',
-          marginLeft: isPhone || canvasState?.step === 'glossy' ? 0 : 232,
-          marginRight: isPhone || canvasState?.step === 'glossy' ? 0 : 328,
+          marginLeft: isPhone || canvasState?.step === 'glossy' ? 0 : desktopPanelLayout.elements + 24,
+          marginRight: isPhone || canvasState?.step === 'glossy' ? 0 : desktopPanelLayout.layers + 24,
         }}
       >
         {canvasState && frame && canvasState.step === 'glossy' ? (
@@ -3517,11 +3489,11 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
 
       {/* "Just beds & trees" quick path — for the farmer who doesn't want the full permaculture
           plan. Offered on the first (Base) step; jumps straight to Planting. */}
-      {bottomShow.shortcuts && canvasState && canvasState.step === 'base' && designMode === 'guided' && (
+      {bottomShow.shortcuts && canvasState && canvasState.step === 'base' && (
         <div style={{ padding: '6px 12px 0', display: 'flex', alignItems: 'center', gap: 4 }}>
           <button
             type="button"
-            onClick={() => { setDesignMode('guided'); setStep('planting'); }}
+            onClick={() => setStep('planting')}
             style={{ flex: 1, minWidth: 0, display: 'flex', alignItems: 'center', gap: 8, minHeight: 40, padding: '6px 12px', borderRadius: 12, border: '1px dashed rgba(31,77,43,0.4)', background: 'transparent', color: GREEN, cursor: 'pointer', textAlign: 'left', fontSize: 12.5 }}
           >
             <Sprout size={15} style={{ flexShrink: 0 }} />
@@ -3558,33 +3530,43 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
       {/* bottomShow.stepBar was computed and then never read — the guide was the one band the
           ladder promised to fold and didn't. It is on the ladder now, and carries its own ×. */}
       {bottomShow.stepBar && canvasState && canvasState.step !== 'glossy' && canvasState.step !== 'review' && (
-        <StepGuide
-          onHide={() => hideSection('stepGuide')}
-          step={canvasState.step}
-          state={canvasState}
-          ctx={{ hasBoundary: refLayers.boundary.length >= 3, hasHouse: refLayers.house.length >= 3 }}
-          mode={designMode}
-          onArm={armSubStep}
-          monthlyRainfallMm={locationData?.rainfall?.monthly}
-          onDailyWaterUseLChange={(dailyWaterUseL) => {
-            handleChange((prev) => ({
-              ...prev,
-              dailyWaterUseL,
-              updatedAt: new Date().toISOString(),
-            }));
-          }}
-          onNextStep={() => {
-            const i = STEP_ORDER.indexOf(canvasState.step);
-            if (i >= 0 && i < STEP_ORDER.length - 1) setStep(STEP_ORDER[i + 1]);
-          }}
-          planCropsHref={`/facilitator/crops?canvasSite=${encodeURIComponent(canvasState.siteId)}&auto=1`}
-        />
+        <div style={isPhone ? undefined : {
+          position: 'fixed',
+          left: desktopPanelLayout.elements + 32,
+          right: desktopPanelLayout.layers + 32,
+          bottom: 10,
+          zIndex: 16,
+          maxWidth: 560,
+          margin: '0 auto',
+        }}>
+          <StepGuide
+            onHide={() => hideSection('stepGuide')}
+            step={canvasState.step}
+            state={canvasState}
+            ctx={{ hasBoundary: refLayers.boundary.length >= 3, hasHouse: refLayers.house.length >= 3 }}
+            mode={designMode}
+            onArm={armSubStep}
+            monthlyRainfallMm={locationData?.rainfall?.monthly}
+            onDailyWaterUseLChange={(dailyWaterUseL) => {
+              handleChange((prev) => ({
+                ...prev,
+                dailyWaterUseL,
+                updatedAt: new Date().toISOString(),
+              }));
+            }}
+            onNextStep={() => {
+              const i = STEP_ORDER.indexOf(canvasState.step);
+              if (i >= 0 && i < STEP_ORDER.length - 1) setStep(STEP_ORDER[i + 1]);
+            }}
+            planCropsHref={`/facilitator/crops?canvasSite=${encodeURIComponent(canvasState.siteId)}&auto=1`}
+          />
+        </div>
       )}
 
       {/* Zone ADVICE (guided mode, zones step) — the guidance half of the hybrid. Lima's
           spatial suggestions as short text advice; tap a row to ARM that zone chip and draw
           it yourself. Nothing is committed to the canvas. */}
-      {canvasState && canvasState.step === 'zones' && designMode === 'guided' && (
+      {canvasState && canvasState.step === 'zones' && (
         <div style={{ padding: '8px 14px 0' }}>
           {zoneAdvice.length === 0 ? (
             <button
@@ -3762,6 +3744,8 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             onOpacityChange: setWaterInfrastructureOpacity,
           }}
           desktopAside={!isPhone}
+          desktopPanelLayout={desktopPanelLayout}
+          onDesktopPanelWidthChange={setDesktopPanelWidth}
           textScaleControl={{ value: mapTextScale, onChange: setMapTextScale }}
           selectedIdentity={selectedIdentity}
           areaFillControl={{ value: areaFill, onChange: changeAreaFill }}

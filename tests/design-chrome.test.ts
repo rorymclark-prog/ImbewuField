@@ -17,6 +17,11 @@ import {
   restoreDismissed,
   persistableChrome,
 } from '../lib/design-chrome';
+import {
+  DEFAULT_DESKTOP_PANEL_LAYOUT,
+  clampDesktopPanelWidth,
+  restoreDesktopPanelLayout,
+} from '../lib/design-panel-layout';
 
 // ── The shed order ────────────────────────────────────────────────────────────────────────────
 //
@@ -148,16 +153,27 @@ test('every dismissible band is a band the ladder also knows about', () => {
   }
 });
 
-test('wide-screen Layers opens into the usable palette space, not above the viewport', () => {
+test('Layers stays usable on both the fixed desktop dock and measured phone popover', () => {
   const palette = readFileSync(new URL('../components/design/DesignPalette.tsx', import.meta.url), 'utf8');
 
-  // Written against the absolute-positioned popover this branch was cut from. main has since
-  // replaced that with a measured anchor (`layersAnchor`): it opens the popover below when there
-  // is room and above when there is not, and caps its height to the space actually available —
-  // the same guarantee, held more tightly. The assertions follow the implementation that ships;
-  // keeping the old strings would only lock this branch to a version main deleted.
-  assert.match(palette, /top: layersAnchor\.openBelow \? layersAnchor\.bottom \+ 6 : undefined/);
-  assert.match(palette, /bottom: layersAnchor\.openBelow \? undefined : window\.innerHeight - layersAnchor\.top \+ 6/);
-  assert.match(palette, /maxHeight: layersAnchor\.maxHeight/);
+  // Desktop now owns a full-height Layers dock (rather than a menu that can disappear), while
+  // phone still measures the popover against the viewport before choosing a side.
+  assert.match(palette, /top: desktopAside && !isPhone \? \(layersFloating \? layersFloatPos\.y : 116\)/);
+  assert.match(palette, /bottom: desktopAside && !isPhone \? \(layersFloating \? undefined : 12\)/);
+  assert.match(palette, /layersAnchor\?\.openBelow \? layersAnchor\.bottom \+ 6 : undefined/);
+  assert.match(palette, /maxHeight: desktopAside && !isPhone \? \(layersFloating \? '60dvh' : undefined\) : layersAnchor\?\.maxHeight/);
   assert.match(palette, /overflowY: 'auto'/);
+});
+
+test('desktop panel widths stay within map-safe bounds', () => {
+  assert.equal(clampDesktopPanelWidth('elements', 1), 240);
+  assert.equal(clampDesktopPanelWidth('elements', 999), 440);
+  assert.equal(clampDesktopPanelWidth('layers', 1), 248);
+  assert.equal(clampDesktopPanelWidth('layers', 999), 420);
+});
+
+test('desktop panel layout restores only valid persisted widths', () => {
+  assert.deepEqual(restoreDesktopPanelLayout(JSON.stringify({ elements: 280, layers: 360 })), { elements: 280, layers: 360 });
+  assert.deepEqual(restoreDesktopPanelLayout('bad json'), DEFAULT_DESKTOP_PANEL_LAYOUT);
+  assert.deepEqual(restoreDesktopPanelLayout(JSON.stringify({ elements: 'wide', layers: 300 })), { elements: 304, layers: 300 });
 });
