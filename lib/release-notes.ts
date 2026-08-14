@@ -35,7 +35,7 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '14 August',
-    sha: '0e3a04c',
+    sha: '3ac34d5',
     changes: [
       'Fruit and nut trees now have larger, easier-to-see fruit and leaves on every map',
       'Avocados are olive-green instead of aubergine-purple, with fruit visible at map scale',
