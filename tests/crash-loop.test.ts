@@ -12,7 +12,14 @@ import {
   recordPageLoad,
   resolveSafeMode,
   type CrashLoopStore,
+  lastCrashPhase,
+  noteCrashPhase,
 } from '../lib/crash-loop.ts';
+import {
+  recordReportAttempt,
+  reportAttemptSurvived,
+  reportShouldGoLight,
+} from '../lib/report-attempts.ts';
 
 // A PAGE THAT KEEPS DYING MUST COME BACK SIMPLER. Rory's design URL reached iOS Safari's terminal
 // screen — "A problem repeatedly occurred on …/design?lat=…" — because every load did the same
@@ -236,4 +243,58 @@ test('the farmer page can stop digging too', () => {
   // And the signal is real: Map.tsx must actually fire it from mapbox's own onLoad.
   const map = readFileSync(new URL('../components/Map.tsx', import.meta.url), 'utf8');
   assert.match(map, /onMapReady\?\.\(\);/, 'PermaMap no longer announces that the map initialised');
+});
+
+test('a dead load leaves behind the step it died in, and a healthy one wipes it', () => {
+  // Every crash so far was diagnosed by reasoning backwards from screenshots, because a killed
+  // page leaves nothing. Now each dangerous step notes itself before running; the note survives
+  // a death, the settle wipes it, and the safe-mode banner reads it back — so the farmer's next
+  // screenshot carries the diagnosis with it.
+  const store = memoryStore();
+  const key = 'k';
+  noteCrashPhase(store, key, 'merging your photo with the map');
+  assert.equal(lastCrashPhase(store, key), 'merging your photo with the map');
+  markPageSettled(store, key);
+  assert.equal(lastCrashPhase(store, key), null, 'a settled page must not carry a stale accusation');
+
+  // Every dangerous step in the design pipeline names itself, and the banner reads the note.
+  const page = PAGE_SRC;
+  for (const phase of [
+    'downloading your photo',
+    'downloading the satellite backdrop',
+    'downloading the satellite image',
+    'merging your photo with the map',
+  ]) {
+    assert.ok(page.includes(`'${phase}'`), `the "${phase}" step no longer notes itself`);
+  }
+  assert.match(page, /lastCrashPhase\(window\.localStorage, safeMode\.key\)/,
+    'the banner no longer reads the phase note — screenshots go back to being guesswork');
+});
+
+test('a generate that keeps killing the page goes light, and only a death counts', () => {
+  // "Even if I try and generate a report it crashes." The page guards cannot see this: a
+  // generate crash lands minutes after the page settled, on a clean record. The generate flow
+  // keeps its own streak — recorded before the heavy work, cleared on ANY outcome the page
+  // survives — so it grows only when the page died mid-generate.
+  const store = memoryStore();
+  assert.equal(reportShouldGoLight(recordReportAttempt(store)), false, 'a first attempt must send the sheets');
+  assert.equal(reportShouldGoLight(recordReportAttempt(store)), false, 'one death can be bad luck');
+  assert.equal(reportShouldGoLight(recordReportAttempt(store)), true, 'two deaths over one button is a pattern');
+  reportAttemptSurvived(store);
+  assert.equal(reportShouldGoLight(recordReportAttempt(store)), false, 'a survived attempt must reset the streak');
+
+  const view = readFileSync(new URL('../components/ReportView.tsx', import.meta.url), 'utf8');
+  // Recorded BEFORE the heavy work — after is too late for the attempt that dies.
+  const record = view.indexOf('recordReportAttempt(window.localStorage)');
+  const heavy = view.indexOf('prepareSiteAnalysisImages(plates, loadSheetImage, sheetPlate)');
+  assert.ok(record > 0 && heavy > record, 'the attempt must be recorded before the sheet decode that kills');
+  // Light skips exactly the megapixel step; the 400px ground photos still go.
+  assert.match(view, /const siteImages = light\s*\n\s*\? \[\]/, 'light mode no longer skips the sheet decode');
+  assert.doesNotMatch(view.slice(0, record), /light \? \[\] : prepareGroundPhotos/,
+    'the ground photos are 400px thumbnails and must never be dropped');
+  // Cleared in finally — the page being alive to run that line is the entire test.
+  assert.match(view, /finally \{\s*\n[^}]*reportAttemptSurvived\(window\.localStorage\)/,
+    'the streak must clear on every survived outcome, or network errors escalate into light mode');
+  // And the farmer is told, in one line, why this report went light.
+  assert.match(view, /\{wentLight && \(/, 'a light report must say so, or the missing analysis reads as a bug');
 });

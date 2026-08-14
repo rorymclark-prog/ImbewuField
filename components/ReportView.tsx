@@ -22,6 +22,7 @@ import { resolveBaseLayers } from '@/lib/base-layers';
 import { buildPhasePlan } from '@/lib/phasing';
 import { collectReportSiteFacts } from '@/lib/report-site-facts-collect';
 import { paidApiHeaders } from '@/lib/api-client-auth';
+import { recordReportAttempt, reportAttemptSurvived, reportShouldGoLight } from '@/lib/report-attempts';
 
 const ALL_SECTIONS = [
   'Executive Summary',
@@ -403,6 +404,10 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
 
   const bColor = BIOME_COLORS[ecology.biome.code] ?? '#6BA84F';
 
+  // True when THIS generate skipped the plan-sheet images because the last attempts killed the
+  // page — see lib/report-attempts.ts. Drives one honest line of UI, nothing else.
+  const [wentLight, setWentLight] = useState(false);
+
   const generate = useCallback(async () => {
     abortRef.current?.abort();
     abortRef.current = new AbortController();
@@ -415,6 +420,16 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     collapsePanelOnNarrow();
 
     try {
+      // "EVEN IF I TRY AND GENERATE A REPORT IT CRASHES." The page-level crash guards cannot see
+      // this — a generate crash lands minutes after the page settled, on a clean record. So the
+      // generate flow keeps its own streak: recorded here BEFORE the heavy work, cleared in the
+      // finally below on any outcome the page survives. Only a death mid-generate lets it grow,
+      // and past the threshold this attempt skips the plan-sheet images — the one step that
+      // decodes megapixel bitmaps — while the 400px ground photos still go.
+      const attempt = recordReportAttempt(window.localStorage);
+      const light = reportShouldGoLight(attempt);
+      setWentLight(light);
+
       // THE PHOTOS GO WITH IT NOW.
       //
       // This block used to open "strip base64 thumbnails — send counts + notes only", and that
@@ -467,8 +482,9 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       // model. Rory, on the audit: the report "needs to also draw analyses from these images, not
       // generic zone information". Prepared one sheet at a time and skipped entirely on failure —
       // a report the model could not look at is still a report. See lib/report-site-images.ts.
-      const siteImages = await prepareSiteAnalysisImages(plates, loadSheetImage, sheetPlate)
-        .catch(() => []);
+      const siteImages = light
+        ? []
+        : await prepareSiteAnalysisImages(plates, loadSheetImage, sheetPlate).catch(() => []);
 
       const res = await fetch('/api/generate-report', {
         method: 'POST',
@@ -506,6 +522,10 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     } catch (err: unknown) {
       if (err instanceof Error && err.name !== 'AbortError') setError(err.message);
     } finally {
+      // The page is alive to run this line, which is the entire test. Success, an HTTP error and
+      // a cancel all clear the streak — they are disappointments, not deaths, and escalating a
+      // network error into "your phone cannot generate reports" would be its own bug.
+      reportAttemptSurvived(window.localStorage);
       setLoading(false);
     }
   }, [d, photoAnalysis, siteData, waterData, savedPlaces, activePlaceId, selected, language, bilingual, tone, length, plates, collapsePanelOnNarrow]);
@@ -1020,6 +1040,16 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                 <div className="text-xs font-mono mt-2" style={{ color: '#5C5040', opacity: 0.7 }}>
                   Maxar satellite imagery · {Math.abs(d.lat).toFixed(4)}°S {d.lon.toFixed(4)}°E
                 </div>
+              </div>
+            )}
+
+            {/* One honest line when generation went light — the farmer should never wonder why
+                this report's advice stopped quoting the masterplan. */}
+            {wentLight && (
+              <div className="mb-4 px-4 py-3 rounded-xl font-sans" style={{ background: '#FDF4E3', border: '1px solid #E8D5A8', fontSize: 12.5, color: '#20190F' }}>
+                The last attempt closed the app, so this report was made without sending your design
+                maps to be read — everything else is complete, and your maps still show below and in
+                the PDF. Generate again any time to retry with them.
               </div>
             )}
 

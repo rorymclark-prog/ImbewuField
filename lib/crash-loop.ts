@@ -102,12 +102,41 @@ export function recordPageLoad(store: CrashLoopStore, key: string = CRASH_LOOP_K
   }
 }
 
-/** This page stayed up. Forget the streak. */
+/** This page stayed up. Forget the streak — and the phase note that goes with it. */
 export function markPageSettled(store: CrashLoopStore, key: string = CRASH_LOOP_KEY): void {
   try {
     store.removeItem(key);
+    store.removeItem(`${key}:phase`);
   } catch {
     /* ignore */
+  }
+}
+
+// ── What was the page DOING when it died? ─────────────────────────────────────────────────────
+//
+// 14 August, the fourth screenshot of the same grey screen: every crash so far has been diagnosed
+// by reasoning backwards from symptoms, because a killed page leaves nothing behind. So the heavy
+// pipeline now writes a one-word note BEFORE each dangerous step, to the same localStorage that
+// carries the streak. A page that survives clears it (markPageSettled above); a page that dies
+// leaves the note standing, and the safe-mode banner can then say "it closed while merging your
+// photo" — to the farmer, and through the farmer's screenshot, to whoever is debugging. The
+// farmer's phone becomes the profiler nobody can attach to it.
+
+/** Note the step about to run. One word, farmer-readable — it may end up on a banner. */
+export function noteCrashPhase(store: CrashLoopStore, key: string, phase: string): void {
+  try {
+    store.setItem(`${key}:phase`, phase);
+  } catch {
+    /* ignore */
+  }
+}
+
+/** The step the last dead load was in, or null after a healthy one. */
+export function lastCrashPhase(store: CrashLoopStore, key: string): string | null {
+  try {
+    return store.getItem(`${key}:phase`);
+  } catch {
+    return null;
   }
 }
 
