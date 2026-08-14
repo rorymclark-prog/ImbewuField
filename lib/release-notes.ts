@@ -34,6 +34,14 @@ export interface ReleaseNote {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '15 August',
+    sha: 'efdaed2',
+    changes: [
+      'After a single crash, the page now comes straight back light instead of dying again',
+      'This works even when the app is opened from a link inside another app',
+    ],
+  },
+  {
     when: '14 August',
     sha: '5d3c231',
     changes: [
