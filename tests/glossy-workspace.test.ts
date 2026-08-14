@@ -24,6 +24,21 @@ test('the live Glossy component, not the prototype route, owns all three preview
     'new farmer-facing workspace text must remain attached to the active app language');
 });
 
+test('Preview map chooses a starting sheet without reviving the retired compact workspace', () => {
+  assert.match(glossy, /const compact = false;/);
+  assert.doesNotMatch(glossy, /const compact = initialFilter != null/,
+    'a starting filter is navigation state, not permission to swap the entire Glossy UI');
+});
+
+test('the left rail reads as one numbered Preview & Export workflow', () => {
+  assert.match(glossy, /className=\{styles\.controlsBackdrop\}/);
+  for (let number = 1; number <= 6; number += 1) {
+    assert.match(glossy, new RegExp(`WorkflowHeading number=\\{${number}\\}`));
+  }
+  assert.match(css, /\.controlsBackdrop \{[\s\S]*?grid-row: 2 \/ span 2;/,
+    'settings and finish controls should sit on one visual panel rather than swapped cards');
+});
+
 test('saved-map rail stays thumbnail-only and the centre loads at most one full image', () => {
   const railStart = glossy.indexOf('<aside className={styles.savedRail}');
   const modalStart = glossy.indexOf('{/* ── Saved-maps gallery', railStart);
@@ -128,10 +143,10 @@ test('finish choices appear before advanced options and their longer explanation
 
   assert.ok(finish >= 0 && explanation > finish && more >= 0,
     'finish controls and their collapsed explanation must remain in the primary action rail');
-  assert.match(actions, /\{selectedSheet && enginePicker\}[\s\S]*?designGlossyFinishHeading/,
-    'the account-changing engine picker belongs beside the paid finish');
-  assert.match(actions, /order: 1,[\s\S]*?designGlossyFinishHeading[\s\S]*?order: 2,[\s\S]*?designGlossyHowFinishesWork/,
-    'the finish choice and its disclosure must lead the action rail');
+  assert.match(actions, /WorkflowHeading number=\{5\}[\s\S]*?enginePicker[\s\S]*?qualityPicker[\s\S]*?WorkflowHeading number=\{6\}[\s\S]*?designGlossyFinishHeading/,
+    'engine and quality are step 5; the paid/free finish decision follows as step 6');
+  assert.match(actions, /order: 1,[\s\S]*?WorkflowHeading number=\{6\}[\s\S]*?order: 2,[\s\S]*?designGlossyHowFinishesWork/,
+    'the numbered finish choice and its disclosure must lead the action rail');
   assert.match(actions, /order: 3,[\s\S]*?designGlossyMoreOptions/,
     'advanced controls must visually follow the primary finish controls');
   assert.doesNotMatch(actions.slice(0, finish), /designGlossyFinishHelp/,

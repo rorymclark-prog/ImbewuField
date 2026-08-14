@@ -24,18 +24,7 @@ test('Reference Blueprint maps high-impact Water and Planting features to reusab
   assert.equal(referenceFeatureArtworkFor('veg_bed'), 'production-bed-v1.png');
   assert.equal(referenceFeatureArtworkFor('pollinator_strip'), 'pollinator-strip-v1.png');
   assert.equal(referenceFeatureArtworkFor('vetiver_row'), 'vetiver-bank-v1.png');
-  assert.equal(referenceFeatureArtworkFor('compost_bay'), 'compost-bay-v1.png');
-  assert.equal(referenceFeatureArtworkFor('beehive'), 'beehive-v1.png');
-  assert.equal(referenceFeatureArtworkFor('chicken_tractor'), 'chicken-tractor-v1.png');
-  assert.equal(referenceFeatureArtworkFor('nursery_table'), 'nursery-table-v1.png');
   assert.equal(referenceFeatureArtworkFor('shade_house'), 'shade-house-v2.png');
-  assert.equal(referenceFeatureArtworkFor('gate'), 'driveway-gate-v1.png');
-  assert.equal(referenceFeatureArtworkFor('pond_small'), 'pond-small-v1.png');
-  assert.equal(referenceFeatureArtworkFor('greywater_basin'), 'greywater-basin-v1.png');
-  assert.equal(referenceFeatureArtworkFor('tree_basin'), 'tree-basin-v1.png');
-  assert.equal(referenceFeatureArtworkFor('tap_point'), 'tap-point-v1.png');
-  assert.equal(referenceFeatureArtworkFor('pump_filter'), 'pump-filter-v1.png');
-  assert.equal(referenceFeatureArtworkFor('greywater_diverter'), 'greywater-diverter-v1.png');
   assert.equal(referenceFeatureArtworkFor('banana_clump'), 'banana-clump-v1.png');
   assert.equal(referenceFeatureArtworkFor('tree_pawpaw'), 'pawpaw-tree-v1.png');
   assert.equal(referenceFeatureArtworkFor('tree_moringa'), 'moringa-tree-v1.png');
@@ -52,10 +41,20 @@ test('artwork mapping never invents a visual identity for generic or unrelated f
   assert.equal(referenceFeatureArtworkFor('made_up_feature'), null);
 });
 
+test('exact plans leave perspective illustrations on the palette and use overhead symbols', () => {
+  for (const id of [
+    'compost_bay', 'beehive', 'chicken_tractor', 'nursery_table', 'gate',
+    'pond_small', 'greywater_basin', 'tree_basin', 'tap_point', 'pump_filter',
+    'greywater_diverter',
+  ]) {
+    assert.equal(referenceFeatureArtworkFor(id), null, `${id} must fall through to plan-view cartography`);
+  }
+});
+
 test('legacy feature IDs select the same exact artwork without rewriting saved data', () => {
   assert.equal(referenceFeatureArtworkFor('  JOJO---5000  '), 'jojo-5000-top-v1.png');
   assert.equal(referenceFeatureArtworkFor('tree guava'), 'guava-v1.png');
-  assert.equal(referenceFeatureArtworkFor('GREYWATER---BASIN'), 'greywater-basin-v1.png');
+  assert.equal(referenceFeatureArtworkFor('RAIN---BARREL'), 'rain-barrel-top-v1.png');
 });
 
 test('artwork URLs are stable public paths', () => {
@@ -70,7 +69,7 @@ test('mango, litchi, macadamia and citrus have their own canopy art, not the sha
   assert.equal(referenceFeatureArtworkFor('tree_mango'), 'mango-tree-v1.png');
   assert.equal(referenceFeatureArtworkFor('tree_litchi'), 'litchi-tree-v1.png');
   assert.equal(referenceFeatureArtworkFor('tree_macadamia'), 'macadamia-tree-v1.png');
-  assert.equal(referenceFeatureArtworkFor('tree_citrus'), 'citrus-tree-v2.png');
+  assert.equal(referenceFeatureArtworkFor('tree_citrus'), 'citrus-tree-v3.png');
 });
 
 test('avocado has its own dedicated canopy art, no longer the shared orchard generic', () => {

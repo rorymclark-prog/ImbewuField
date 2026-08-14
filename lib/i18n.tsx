@@ -331,6 +331,7 @@ const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   designGlossyDrawing: 'Drawing…',
   designGlossyAllExact: 'All sheets — exact, no AI →',
   designGlossyStyle: 'Style',
+  designGlossyMoreStyles: 'More style packs →',
   designGlossyRecommended: 'Recommended',
   designGlossyChooseFinish: 'Choose your finish below.',
   designGlossyHowFinishesWork: 'How finishes work',

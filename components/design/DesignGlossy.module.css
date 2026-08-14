@@ -142,10 +142,26 @@
   box-shadow: 0 8px 24px rgba(45, 38, 25, 0.06);
 }
 
+.controlsBackdrop {
+  grid-column: 1;
+  grid-row: 2 / span 2;
+  z-index: 0;
+  min-width: 0;
+  border: 1px solid #e2d8c4;
+  border-radius: 16px;
+  background: #fffefa;
+  box-shadow: 0 8px 24px rgba(45, 38, 25, 0.06);
+}
+
 .settingsRail {
   grid-column: 1;
-  grid-row: 3;
+  grid-row: 2;
+  z-index: 1;
   padding: 14px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .settingsRail > :first-child {
@@ -165,14 +181,65 @@
   font-weight: 750;
 }
 
+.workflowHeading {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 13px 0 8px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(31, 77, 43, 0.13);
+  color: #2f2a21;
+}
+
+.workflowHeading:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.workflowHeading > span:last-child {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.workflowHeading strong {
+  font-size: 12.5px;
+  line-height: 1.25;
+}
+
+.workflowHeading small {
+  color: #8a7b64;
+  font-size: 10.5px;
+  line-height: 1.35;
+}
+
+.workflowNumber {
+  display: inline-flex;
+  width: 22px;
+  height: 22px;
+  flex: 0 0 22px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(31, 77, 43, 0.3);
+  border-radius: 999px;
+  color: #315b3a;
+  background: #f4f6ef;
+  font-size: 10.5px;
+  font-weight: 900;
+}
+
 .actionsRail {
   grid-column: 1;
-  /* The finish and engine are the decision that brought the farmer here. Keep them beside the
-     first map viewport; the longer sheet settings can continue underneath without becoming a
-     toll gate before the paid-render controls. */
-  grid-row: 2;
+  grid-row: 3;
+  z-index: 1;
   align-self: start;
   padding: 14px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .mapStage {
@@ -567,10 +634,22 @@
 
   .settingsRail {
     order: 1;
+    border: 1px solid #e2d8c4;
+    border-radius: 16px;
+    background: #fffefa;
+    box-shadow: 0 8px 24px rgba(45, 38, 25, 0.06);
   }
 
   .actionsRail {
     order: 3;
+    border: 1px solid #e2d8c4;
+    border-radius: 16px;
+    background: #fffefa;
+    box-shadow: 0 8px 24px rgba(45, 38, 25, 0.06);
+  }
+
+  .controlsBackdrop {
+    display: none;
   }
 
   .savedRail {

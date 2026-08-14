@@ -2371,14 +2371,10 @@ function drawWaterFeature(
   // and small tanks stay legible because the sprite is drawn to the same footprint the symbol
   // would have owned.
   //
-  // THE BANANA CIRCLE IS A KNOWN GAP HERE, deliberately left alone for now. drawCartographicWaterSymbol
-  // owns 'banana-circle' and returns true for it, so it claims the feature before the painted
-  // library is ever consulted: the Water sheet draws nine small leaf ellipses around a brown pit
-  // while the LEGEND beside it shows painted artwork. Same feature, two pictures, one sheet.
-  // Moving it into this branch is a one-line change — but the artwork it would then draw
-  // (banana-basin-v1.png) was reviewed and rejected: "yeah but its not a banana circle". Wiring a
-  // picture nobody wants is worse than the mismatch, so this waits for the right asset.
-  if (isTank) {
+  // Banana circles use the same five-plant overhead artwork in the picker, legend and plan. The
+  // old vector fallback read as one radial banana plant, which hid the defining open centre and
+  // made the three surfaces disagree about what the farmer had placed.
+  if (isTank || id === 'banana_circle') {
     const url = referenceFeatureArtworkUrl(id);
     const sprite = url ? referenceFeatureArtworkCache.get(url) : undefined;
     if (sprite) {
@@ -11483,6 +11479,18 @@ function galleryTileChip(kind: SheetResultKind): { text: string; bg: string; fg:
   }
 }
 
+function WorkflowHeading({ number, title, help }: { number: number; title: string; help?: string }) {
+  return (
+    <div className={styles.workflowHeading}>
+      <span className={styles.workflowNumber}>{number}</span>
+      <span>
+        <strong>{title}</strong>
+        {help && <small>{help}</small>}
+      </span>
+    </div>
+  );
+}
+
 export default function DesignGlossy({
   state,
   frame: frameProp,
@@ -11736,10 +11744,10 @@ export default function DesignGlossy({
   // falling through to generateOneViaQueue's GlossyLayerFilter path. See generatePhasingViaQueue.
   const phasingAiMode = mode === 'ai' && !!selectedSheet && 'exact' in selectedSheet && selectedSheet.exact === 'implementation';
   const aiLayerMode = mode === 'ai' && !!selectedSheet && (!('exact' in selectedSheet) || sectorAiMode || phasingAiMode);
-  // Preview-map mount (initialFilter set): a focused single-sheet view — hide the full studio
-  // (sheet grid, exact-all link, More options) so the overlay isn't a second copy of everything
-  // (audit find). The main Glossy step passes no initialFilter and shows it all.
-  const compact = initialFilter != null;
+  // `initialFilter` chooses which sheet Preview map opens on; it must not choose a second, retired
+  // layout. That coupling is what made the modal fall back to the old full-width control dump while
+  // the Glossy step showed the current three-column Preview & Export workspace.
+  const compact = false;
   // The deterministic Implementation & Phasing sheet (plan-set 08). It is the EXACT counterpart to
   // the Gemini 'implementation' ANALYSIS style — a rules-engine render (lib/phasing), always
   // reliable — so it belongs with the exact Design maps, not the illustrated ones. When true it
@@ -14779,6 +14787,7 @@ export default function DesignGlossy({
       {/* Which map? — Rory's mockup layout: SHEET grid → quiet exact-all link → STYLE cards →
           one primary CTA → collapsed More options. The old top banner + big Output switch are
           gone: beta lives as a pill ON the AI preview, exact is reached via the links. */}
+      {!compact && <div className={styles.controlsBackdrop} aria-hidden="true" />}
       <div className={compact ? undefined : styles.settingsRail}>
         {/* SHEET — the plan set as a compact 4-up grid (Rory's mockup), canonical 01–09 order.
             Tapping a chip selects it in the CURRENT mode (AI by default); the "View non-AI exact
@@ -14791,9 +14800,7 @@ export default function DesignGlossy({
             reachable even though some earth-shaped elements are still offered from Water.
             What stays studio-only below is the money — the 5-sheet AI batch and the exact-all run
             are plan-set actions, not "look at this layer" actions. */}
-        <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55, marginBottom: 6 }}>
-          {t('designGlossyPlanSet')}
-        </div>
+        <WorkflowHeading number={1} title={t('designGlossyPlanSet')} />
         {!compact ? (
           <select
             aria-label="Plan sheet"
@@ -14850,10 +14857,8 @@ export default function DesignGlossy({
             imported photo, which read as the option having been removed. It is always present now;
             without a photo it OPENS THE IMPORTER instead of selecting, because selecting it would
             render the satellite under a pill that says "Your photo". See lib/sheet-underlay.ts. */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', marginTop: 10 }}>
-          <span style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55 }}>
-            Underlay
-          </span>
+        <WorkflowHeading number={2} title="Underlay" />
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
           {underlayOptions.map((key) => {
             const needsImport = key === 'photo' && !hasFarmerPhoto(frameProp);
             const active = underlay === key && !needsImport;
@@ -14918,10 +14923,9 @@ export default function DesignGlossy({
             selected sheet actually has coded plants, so it appears on Planting and disappears on
             Site or Sector rather than sitting there doing nothing. See lib/plant-codes.ts. */}
         {sheetHasPlantCodes && (
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', marginTop: 8 }}>
-            <span style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55 }}>
-              Plant labels
-            </span>
+          <>
+          <WorkflowHeading number={3} title="Plant labels" />
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
             {(['codes', 'names', 'onplant'] as const).map((key) => {
               const active = labelMode === key;
               return (
@@ -14939,41 +14943,7 @@ export default function DesignGlossy({
             })}
             <span style={{ fontSize: 10.5, opacity: 0.6 }}>{LABEL_MODE_HINT[labelMode]}</span>
           </div>
-        )}
-        {!compact && (
-        <>
-        {/* THE one-tap plan set: AI all-sheets, hard-wired to the gpt-image-2 background queue
-            (never Gemini — Rory: "must only go to chat gpt"). With the AI-legend default ON this
-            is the showcase pipeline for all 5 model sheets. */}
-        <button
-          type="button"
-          onClick={generateAllViaQueue}
-          disabled={loading !== null}
-          style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8, width: '100%', minHeight: 50, marginTop: 10, padding: '12px 20px', borderRadius: 12, border: 'none', background: GREEN, color: PAPER, fontWeight: 800, fontSize: 15, cursor: loading !== null ? 'default' : 'pointer', opacity: loading !== null ? 0.7 : 1 }}
-        >
-          <Gem size={18} />
-          {loading === 'falgpt' ? t('designGlossyRenderingBackground') : t('designGlossyGenerateFive')}
-        </button>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, marginTop: 6 }}>
-          {/* Honest about what this button does NOT cover. Site (build-schedule facts) and Phasing
-              stay exact-only by design; inventing those via image-gen would be actively wrong, not
-              just lower quality. Sector DOES have an AI option now (composeSectorSheet composites
-              our own bearings/legend over the model's ground either way) — it's just not in this
-              5-sheet batch (MAX_SHEETS_PER_JOB caps it at 5 and the batch is already full); reach it
-              from the Sector chip's own AI toggle. Was silently omitted before — Rory: "it produced
-              5 not 8 sheets?" */}
-          <span style={{ fontSize: 11, opacity: 0.65 }}>{t('designGlossyBatchNote')}</span>
-          {/* Quiet exact-all link (mockup) — the non-AI option. */}
-          <button
-            type="button"
-            onClick={generateAllSheets}
-            disabled={loading !== null}
-            style={{ flexShrink: 0, padding: '4px 2px', background: 'transparent', border: 'none', color: GREEN, fontWeight: 700, fontSize: 12.5, cursor: loading !== null ? 'default' : 'pointer', textDecoration: 'underline', textUnderlineOffset: 3 }}
-          >
-            {loading === 'exact' ? t('designGlossyDrawing') : t('designGlossyAllExact')}
-          </button>
-        </div>
-        </>
+          </>
         )}
 
         {/* Illustrated styles — the boundary-locked image-producer pipeline (beautiful AND
@@ -14982,10 +14952,11 @@ export default function DesignGlossy({
             Phasing (08) render exact-only, so neither needs a Style. */}
         {aiLayerMode && (
         <>
-        <div style={{ fontSize: 11, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.4, opacity: 0.55, margin: '12px 0 6px' }}>
+        <WorkflowHeading number={4} title={t('designGlossyStyle')} />
+        <div style={{ fontSize: 10.5, opacity: 0.6, margin: '-5px 0 7px 34px' }}>
           {t('designGlossyStyle')} {`(on your ${restyleAiKind === 'base' ? 'Existing Site' : restyleAiKind === 'sector' ? 'Sector' : filter === 'all' ? 'whole design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map)`}
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(132px, 1fr))', gap: 8 }}>
+        <div style={{ display: 'grid', gridAutoFlow: 'column', gridAutoColumns: 'calc((100% - 16px) / 3)', gap: 8, overflowX: 'auto', padding: '2px 1px 7px', scrollSnapType: 'x proximity', scrollbarWidth: 'thin' }}>
           {(sectorAiMode ? SECTOR_STYLE_CHOICES : PRODUCER_STYLES).map((s) => {
             const active = producerStyle === s.key;
             return (
@@ -15030,6 +15001,7 @@ export default function DesignGlossy({
                   cursor: loading !== null ? 'default' : 'pointer',
                   opacity: loading !== null && !active ? 0.5 : 1,
                   position: 'relative',
+                  scrollSnapAlign: 'start',
                 }}
               >
                 {s.recommended && (
@@ -15058,6 +15030,9 @@ export default function DesignGlossy({
               </button>
             );
           })}
+        </div>
+        <div style={{ color: GREEN, fontSize: 10.5, fontWeight: 750, textAlign: 'right' }}>
+          {t('designGlossyMoreStyles')}
         </div>
         </>
         )}
@@ -15343,8 +15318,6 @@ export default function DesignGlossy({
           </button>
           {moreOpen && (
             <div style={{ padding: '0 12px 12px', display: 'flex', flexDirection: 'column', gap: 12 }}>
-              {qualityPicker}
-
               {/* RETIRED — the Prompt-rewrite, Geometry Lock and AI-legend toggles used to live
                   here. Rory: "I even get confused every time; it's a layer of complexity I don't
                   want." They were also dishonest: Satellite Overlay overrides all three in code, so
@@ -15391,6 +15364,14 @@ export default function DesignGlossy({
                     : 'gpt-image-2 renders in the background — sharpest result, a few minutes; the sheets drop into your gallery when ready and you can keep working. (Print / Export always builds the exact plan set.)'}
                 </div>
               </div>
+              <button
+                type="button"
+                onClick={generateAllSheets}
+                disabled={loading !== null}
+                style={{ width: '100%', minHeight: 42, padding: '9px 12px', borderRadius: 11, border: `1px solid ${GREEN}`, background: PAPER, color: GREEN, fontWeight: 800, cursor: loading !== null ? 'default' : 'pointer' }}
+              >
+                {loading === 'exact' ? t('designGlossyDrawing') : t('designGlossyAllExact')}
+              </button>
             </div>
           )}
         </div>
@@ -15398,14 +15379,11 @@ export default function DesignGlossy({
 
         <div style={{ order: 1, display: 'flex', flexDirection: 'column', gap: 8, width: '100%' }}>
           {/* The engine determines which account is charged, so it sits beside the finish that
-              spends money. Render quality remains an advanced option below. */}
+              spends money. Quality belongs here too: it changes that same paid render. */}
+          {selectedSheet && <WorkflowHeading number={5} title={`${t('designGlossyEngine')} & ${t('designGlossyQuality')}`} />}
           {selectedSheet && enginePicker}
-          {compact && selectedSheet && qualityPicker}
-          {selectedSheet && (
-            <div style={{ color: DARK, fontWeight: 850, fontSize: 13, letterSpacing: '0.03em', textTransform: 'uppercase' }}>
-              {t('designGlossyFinishHeading')}
-            </div>
-          )}
+          {selectedSheet && qualityPicker}
+          {selectedSheet && <WorkflowHeading number={6} title={t('designGlossyFinishHeading')} />}
           {selectedSheet ? (
           // TWO finishes, always: Exact Canvas (free, instant) and AI Polished (one paid render —
           // the model paints the map artwork, the app locks your labels, legend, boundary, title,

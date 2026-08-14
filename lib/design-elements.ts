@@ -453,7 +453,7 @@ export const ELEMENT_CATALOG: DesignElementDef[] = [
     alsoSteps: ['planting'], // it is a crop as much as a pit
     name: 'Banana Circle',
     icon: '🍌',
-    art: '/element-art/banana_circle.png',
+    art: '/element-art/banana_circle-v2.png',
     shape: 'circle',
     wM: 3.5,
     hM: 3.5,

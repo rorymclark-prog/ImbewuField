@@ -60,10 +60,6 @@ import { useLanguage } from '@/lib/i18n';
 import { uiVersion, setUiVersion, UI_VERSION_EVENT } from '@/lib/ui-version';
 import LessonLink from './LessonLink';
 import {
-  DESKTOP_ELEMENTS_PANEL_MAX,
-  DESKTOP_ELEMENTS_PANEL_MIN,
-  DESKTOP_LAYERS_PANEL_MAX,
-  DESKTOP_LAYERS_PANEL_MIN,
   clampDesktopPanelWidth,
   type DesktopPanelLayout,
 } from '@/lib/design-panel-layout';
@@ -359,19 +355,19 @@ function selectionRing(active: boolean): React.CSSProperties {
 }
 
 function toolButtonStyle(active: boolean, guided: boolean): React.CSSProperties {
-  // Pro trims to a 36px target — a returning farmer on a laptop scanning a dense drafting view
-  // gets the screen back. Guided stays at the 44px comfortable-touch minimum, which is not a
-  // number to shave for layout.
+  // These are compact drafting shortcuts, not the primary guided actions. Their full names remain
+  // in accessible labels/tooltips, while the smaller squares return a complete catalog column to
+  // the map instead of turning four glyphs into a second toolbar-sized panel.
   return {
-    minHeight: guided ? 48 : 36,
-    minWidth: guided ? 48 : 36,
-    padding: guided ? '0 14px' : '0 10px',
-    borderRadius: 10,
+    minHeight: guided ? 40 : 34,
+    minWidth: guided ? 40 : 34,
+    padding: guided ? '0 8px' : '0 6px',
+    borderRadius: 9,
     ...selectionRing(active),
     background: active ? GREEN : PAPER,
     color: active ? PAPER : DARK,
     fontWeight: 600,
-    fontSize: guided ? 14.5 : 13,
+    fontSize: guided ? 13 : 12,
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -1453,18 +1449,6 @@ export default function DesignPalette({
                     >
                       {layersFloating ? 'Dock' : 'Float'}
                     </button>
-                  )}
-                  {desktopAside && !isPhone && onDesktopPanelWidthChange && (
-                    <input
-                      type="range"
-                      min={DESKTOP_LAYERS_PANEL_MIN}
-                      max={DESKTOP_LAYERS_PANEL_MAX}
-                      value={desktopLayersWidth}
-                      onChange={(event) => onDesktopPanelWidthChange('layers', Number(event.target.value))}
-                      aria-label="Layers panel width"
-                      title="Layers panel width"
-                      style={{ width: 64, accentColor: GREEN, cursor: 'ew-resize' }}
-                    />
                   )}
                   {([[t('designPaletteAllOn'), true], [t('designPaletteAllOff'), false]] as const).map(([label, val]) => (
                     <button
@@ -2657,18 +2641,6 @@ export default function DesignPalette({
       {desktopAside && (
         <div style={{ display: 'flex', alignItems: 'center', gap: 8, paddingBottom: 2, borderBottom: '1px solid rgba(11,18,11,0.10)' }}>
           <span style={{ fontWeight: 800, fontSize: 13, color: DARK, marginRight: 'auto' }}>⠿ Elements</span>
-          {onDesktopPanelWidthChange && (
-            <input
-              type="range"
-              min={DESKTOP_ELEMENTS_PANEL_MIN}
-              max={DESKTOP_ELEMENTS_PANEL_MAX}
-              value={desktopElementsWidth}
-              onChange={(event) => onDesktopPanelWidthChange('elements', Number(event.target.value))}
-              aria-label="Elements panel width"
-              title="Elements panel width"
-              style={{ width: 64, accentColor: GREEN, cursor: 'ew-resize' }}
-            />
-          )}
         </div>
       )}
       {/* THE SAME LADDER ON DESKTOP. This handle used to exist only in the phone branch above, so
