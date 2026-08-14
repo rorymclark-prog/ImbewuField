@@ -197,6 +197,22 @@ export interface ReportPdfMeta {
   sheets?: ReportPdfSheet[];
   /** Fetches ONE sheet's full image, called immediately before it is drawn and never held after. */
   loadSheetImage?: (id: string) => Promise<string | null>;
+  /**
+   * The farmer's photographs of the ground, SUPPLIED rather than identified.
+   *
+   * The opposite of `sheets` above, and for the opposite reason: these are the ≤400px thumbnails
+   * lib/site-evidence.ts keeps in localStorage, a few tens of KB each, so the indirection that
+   * keeps a 1–3 MB plan sheet out of memory would be ceremony with no purpose here.
+   */
+  photos?: ReportPdfPhoto[];
+}
+
+/** One ground photograph, ready to draw. */
+export interface ReportPdfPhoto {
+  label: string;
+  note?: string;
+  /** A `data:image/jpeg;base64,…` URL — jsPDF draws these directly. */
+  dataUrl: string;
 }
 
 /** File-system-safe name for the exported document. */
@@ -468,6 +484,55 @@ export async function buildReportPdf(rawMarkdown: string, meta: ReportPdfMeta): 
       doc.setFontSize(8.5);
       setInk(INK.muted);
       doc.text('Geometry and counts come from your saved design.', M, y);
+    }
+  }
+
+  // ── The farmer's own photographs ─────────────────────────────────────────────
+  //
+  // After the plans, for the same reason the model is shown them in that order: the drawings say
+  // what is where, the photographs say what state it is in. Supplied here as data URLs rather than
+  // fetched by id, unlike the sheets above — these are the ≤400px thumbnails site-evidence keeps
+  // in localStorage, so the whole set is a few hundred KB and the memory contract that forces the
+  // sheets to arrive as ids does not apply. Two of them to a page: a photograph printed a full page
+  // wide from a 400px original is a blurry photograph.
+  const photos = meta.photos ?? [];
+  if (photos.length) {
+    const HALF = (CW - 14) / 2;
+    for (let i = 0; i < photos.length; i += 2) {
+      doc.addPage();
+      y = M + 12;
+      doc.setFont('helvetica', 'bold');
+      doc.setFontSize(12);
+      setInk(INK.green);
+      doc.text('Your photographs of this land', M, y);
+      y += 16;
+
+      for (const [col, photo] of [photos[i], photos[i + 1]].entries()) {
+        if (!photo) continue;
+        const x = M + col * (HALF + 14);
+        let ty = y;
+        try {
+          // 4:3 box, cover-cropped by jsPDF's own aspect handling is not available, so the box is
+          // sized to the width and a fixed 3:4 height — the photos are phone snaps and this keeps
+          // the two columns level regardless of orientation.
+          doc.addImage(photo.dataUrl, 'JPEG', x, ty, HALF, HALF * 0.75, undefined, 'FAST');
+        } catch {
+          continue; // an unreadable photo costs its slot, never the report
+        }
+        ty += HALF * 0.75 + 10;
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(8.5);
+        setInk(INK.green);
+        const head = doc.splitTextToSize(`Photo ${i + col + 1} — ${photo.label}`, HALF);
+        doc.text(head, x, ty);
+        ty += head.length * 10;
+        if (photo.note) {
+          doc.setFont('helvetica', 'italic');
+          setInk(INK.muted);
+          const note = doc.splitTextToSize(`“${photo.note}”`, HALF);
+          doc.text(note, x, ty);
+        }
+      }
     }
   }
 

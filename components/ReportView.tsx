@@ -14,7 +14,8 @@ import { selectReportPlates, type ReportPlate } from '@/lib/report-plates';
 import { prepareSiteAnalysisImages } from '@/lib/report-site-images';
 import { PLAN_VERSION } from '@/lib/plan-version';
 import { loadSurvey } from '@/lib/site-survey';
-import { getSiteEvidence } from '@/lib/site-evidence';
+import { evidenceSiteId, getSiteEvidence } from '@/lib/site-evidence';
+import { groundPhotoGallery, prepareGroundPhotos, type GroundPhotoView } from '@/lib/report-ground-photos';
 import { designSiteIdFromLocation } from '@/lib/design-studio';
 import { loadCanvasState } from '@/lib/design-canvas';
 import { resolveBaseLayers } from '@/lib/base-layers';
@@ -288,6 +289,17 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   // contract, and this screen runs on the same phone the gallery had to be rewritten for.
   const [plates, setPlates] = useState<Array<ReportPlate & { thumb?: string }>>([]);
   const [openPlate, setOpenPlate] = useState<{ label: string; image: string } | null>(null);
+
+  // The farmer's own photographs of the ground, and how many they have in total. Read on mount
+  // rather than memoised on a value, because localStorage is where they live and nothing in this
+  // component's props changes when one is added. No memory contract to observe: these are the
+  // ≤400px thumbnails site-evidence stores, so the whole strip is a few hundred KB, unlike a
+  // print-resolution plan sheet.
+  const [photoGallery, setPhotoGallery] = useState<{ shown: GroundPhotoView[]; total: number }>({ shown: [], total: 0 });
+  useEffect(() => {
+    setPhotoGallery(groundPhotoGallery(getSiteEvidence(evidenceSiteId(activePlaceId))));
+  }, [activePlaceId]);
+
   const siteKey = designSiteIdFromLocation(d);
   useEffect(() => {
     let cancelled = false;
@@ -403,8 +415,20 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     collapsePanelOnNarrow();
 
     try {
-      // Build evidence summary (strip base64 thumbnails — send counts + notes only)
-      const rawEvidence = activePlaceId ? getSiteEvidence(activePlaceId) : {};
+      // THE PHOTOS GO WITH IT NOW.
+      //
+      // This block used to open "strip base64 thumbnails — send counts + notes only", and that
+      // one line was the whole of Rory's "there is still no images … the report needs to draw
+      // analyses from these images". The model was handed `soil_compaction: 2 items` and asked to
+      // write about the soil. The counts and notes are still sent — they cover all 52 tiles and
+      // every note, which four photographs cannot — but the photographs now go too.
+      //
+      // And the site id is resolved through evidenceSiteId at BOTH ends. It used to be read here
+      // as `activePlaceId` and written in DataPanel as `activePlaceId ?? 'default'`, so a farmer
+      // who had not tapped a saved place filed every photo under `default` and then generated a
+      // report that read an empty object — silently, with no error and no missing-photo notice.
+      const rawEvidence = getSiteEvidence(evidenceSiteId(activePlaceId));
+      const groundPhotos = prepareGroundPhotos(rawEvidence);
       const evidenceData: Record<string, { count: number; notes: string[] }> = {};
       for (const [key, items] of Object.entries(rawEvidence)) {
         if (items.length > 0) {
@@ -456,6 +480,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           waterData: waterData || undefined,
           siteFacts,
           siteImages: siteImages.length ? siteImages : undefined,
+          groundPhotos: groundPhotos.length ? groundPhotos : undefined,
           phasePlan: phasePlan ?? undefined,
           surveyData: loadSurvey(designSiteIdFromLocation(d)) ?? undefined,
           evidenceData: Object.keys(evidenceData).length > 0 ? evidenceData : undefined,
@@ -515,6 +540,9 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         dateLabel: new Date().toLocaleDateString('en-ZA', { year: 'numeric', month: 'long', day: 'numeric' }),
         sheets: plates,
         loadSheetImage,
+        // The same photographs the model read and the screen shows — so the printed report a
+        // farmer hands to a funder carries the evidence the advice was drawn from.
+        photos: photoGallery.shown.map((p) => ({ label: p.label, note: p.note, dataUrl: p.dataUrl })),
       });
       await deliverPdf(blob, reportPdfFilename(ecology.placeName));
       setPdfState('done');
@@ -1042,6 +1070,57 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                 </div>
                 <div className="font-sans mt-3" style={{ fontSize: 10.5, color: '#5C5040', opacity: 0.8 }}>
                   These sheets are read by the report and appended to the exported PDF.
+                </div>
+              </div>
+            )}
+
+            {/* ── The farmer's own photographs of the ground ────────────────
+                Shown BELOW the plan sheets, because that is the order the model reads them in and
+                the order they make sense in: the plans say what is where, the photographs say what
+                state each thing is in.
+
+                Only the photographs the model actually read are shown, and the count says how many
+                more exist. A strip of everything on file would look more generous and be less true
+                — advice about the soil beside twelve pictures, four of which informed it, with
+                nothing marking which four. */}
+            {photoGallery.shown.length > 0 && (
+              <div className="mb-6 p-4 rounded-xl" style={{ background: 'rgba(226,216,196,0.5)', border: '1px solid #E2D8C4' }}>
+                <div className="text-xs font-sans uppercase tracking-wider mb-3" style={{ color: '#5C5040' }}>
+                  Your photos of this land · {photoGallery.shown.length} read
+                  {photoGallery.total > photoGallery.shown.length ? ` of ${photoGallery.total}` : ''}
+                </div>
+                <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))' }}>
+                  {photoGallery.shown.map((p, i) => (
+                    <button
+                      key={`${p.key}-${i}`}
+                      onClick={() => setOpenPlate({ label: p.label, image: p.dataUrl })}
+                      className="u-tap-target text-left"
+                      style={{
+                        background: '#FBF6EC', border: '1px solid #E2D8C4', borderRadius: 10,
+                        padding: 6, cursor: 'pointer', display: 'flex', flexDirection: 'column', gap: 6,
+                      }}
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={p.dataUrl}
+                        alt={p.label}
+                        style={{ width: '100%', aspectRatio: '4 / 3', objectFit: 'cover', borderRadius: 6, display: 'block' }}
+                      />
+                      <span className="font-sans" style={{ fontSize: 11, color: '#20190F', lineHeight: 1.3 }}>
+                        Photo {i + 1} — {p.label}
+                      </span>
+                      {p.note && (
+                        <span className="font-sans" style={{ fontSize: 10, color: '#5C5040', opacity: 0.85, lineHeight: 1.3 }}>
+                          “{p.note}”
+                        </span>
+                      )}
+                    </button>
+                  ))}
+                </div>
+                <div className="font-sans mt-3" style={{ fontSize: 10.5, color: '#5C5040', opacity: 0.8 }}>
+                  {photoGallery.total > photoGallery.shown.length
+                    ? `These photos are read by the report and printed in the exported PDF. You have ${photoGallery.total} saved for this site; the report reads a spread across water, soil, trees and structures rather than several of one thing.`
+                    : 'These photos are read by the report and printed in the exported PDF.'}
                 </div>
               </div>
             )}

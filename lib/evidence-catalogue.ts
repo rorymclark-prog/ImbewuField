@@ -159,6 +159,27 @@ export function evidenceStorageKeyBelongsToGroup(storageKey: string, groupKey: s
     );
 }
 
+/**
+ * Turn a storage key back into something a person — or a model — can read.
+ *
+ * Storage keys are `<group>_<item>` (`soil_compaction`) plus a per-group `<group>_site_photos`
+ * catch-all. The report used to send the raw key with the underscores swapped for spaces, which
+ * turns `trees_windbreak` into "trees windbreak" and `water_dam_pond` into "water dam pond" — a
+ * model can guess at those, and guessing is the one thing this report may not do. Returns null for
+ * a key the catalogue does not know, so a caller can drop it rather than print it.
+ */
+export function evidenceKeyLabel(storageKey: string): { group: string; item: string } | null {
+  if (!isEvidenceStorageKey(storageKey)) return null;
+  for (const group of EVIDENCE_CATALOGUE) {
+    if (storageKey === `${group.key}_site_photos`) {
+      return { group: group.label, item: 'General site photos' };
+    }
+    const item = group.items.find((i) => storageKey === `${group.key}_${i.key}`);
+    if (item) return { group: group.label, item: item.label };
+  }
+  return null;
+}
+
 /** True only for a quick-number field shown for the specified catalogue group. */
 export function isQuickNumberField(groupKey: string, fieldKey: string): boolean {
   return quickNumberFields.get(groupKey)?.has(fieldKey) ?? false;
