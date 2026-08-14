@@ -296,6 +296,8 @@ interface Props {
   selectedLocation: { lat: number; lon: number } | null;
   loading: boolean;
   onMapCapture?: (base64: string) => void;
+  /** Fired once when mapbox-gl finishes initialising — the farmer page's crash guard settles on it. */
+  onMapReady?: () => void;
   onSiteDrawn?: (site: SiteData | null) => void;
   onWaterDrawn?: (water: WaterData | null) => void;
   onCaptureClick?: () => void;
@@ -333,7 +335,7 @@ interface Props {
 const TANK_SIZE_OPTIONS_L = [750, 1000, 2500, 5000, 10000];
 const TREE_SPECIES_OPTIONS = ['Mango', 'Avocado', 'Lemon', 'Orange', 'Banana (single plant)', 'Mulberry', 'Pawpaw', 'Natal plum', 'Wild plum', 'Waterberry', 'Other tree'];
 
-export default function PermaMap({ onLocationSelect, selectedLocation, loading, onMapCapture, onSiteDrawn, onWaterDrawn, onCaptureClick, jumpTo, onJumpComplete, onDrawingChange, locationData, onPlaceSelect, activePlaceId, people, showPeople, onTogglePeople, onDesignPresenceChange, guided }: Props) {
+export default function PermaMap({ onLocationSelect, selectedLocation, loading, onMapCapture, onMapReady, onSiteDrawn, onWaterDrawn, onCaptureClick, jumpTo, onJumpComplete, onDrawingChange, locationData, onPlaceSelect, activePlaceId, people, showPeople, onTogglePeople, onDesignPresenceChange, guided }: Props) {
   const { t } = useLanguage();
   const { user } = useAuth();
   const mapRef = useRef<MapRef>(null);
@@ -2110,6 +2112,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         dragRotate={false}
         touchPitch={false}
         onLoad={(e) => {
+          onMapReady?.();
           try { e.target.touchZoomRotate.disableRotation(); } catch {}
           // iOS "Add to Home Screen" launches the map before the container has its
           // final size, leaving a blank canvas — force a couple of resizes to repaint.

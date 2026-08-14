@@ -175,3 +175,65 @@ test('a window without a usable location never throws — a throw here is a blan
     'an unguarded window.location read is back — it will throw at module scope and blank the app');
   assert.ok(/window\.location\?\.search/.test(src), 'the defensive location read is gone');
 });
+
+test('the settle clock starts when the heavy work ends, never on a fixed schedule', () => {
+  // HOW THE SHIPPED GUARD WAS BEATEN. 13 August, Ubhejane, on 4G: "A problem repeatedly occurred"
+  // — with this guard already deployed. The settle timer ran from MOUNT, so on a slow connection
+  // it fired while the photo and underlay were still downloading, wiped the streak with a clean
+  // record, and the bake then killed the page at second twelve. Every load repeated exactly that:
+  // the counter could never reach the threshold, and the escape hatch built for this exact screen
+  // never opened. A fixed timer measures the network, not survival.
+  const settleAt = PAGE_SRC.indexOf('markPageSettled(window.localStorage');
+  assert.ok(settleAt > 0, 'the settle timer is gone');
+  const effect = PAGE_SRC.slice(PAGE_SRC.lastIndexOf('useEffect', settleAt), settleAt);
+  assert.match(effect, /if \(!baseHeavyDone\) return;/,
+    'the settle timer runs from mount again — a slow network will wipe the streak mid-download');
+
+  // And every branch of the base pipeline must report in, or a farm on that branch settles never
+  // (safe mode latches) or too early (the loop returns). One marker per branch:
+  const markers = PAGE_SRC.match(/setBaseHeavyDone\(true\)/g) ?? [];
+  assert.equal(markers.length, 6,
+    `expected 6 pipeline branches to mark the heavy work done (safe, blank, satellite settled, `
+    + `no imagery, photo fetch failed, bake finished) — found ${markers.length}; a missing branch `
+    + 'latches safe mode on, an extra one may settle before the danger has run');
+
+  // The photo farm's marker must hang off the BAKE, which is the peak allocation — not the fetch,
+  // which merely precedes it.
+  const bakeAt = PAGE_SRC.indexOf('bakeBaseAlignment(source.dataUrl');
+  assert.ok(bakeAt > 0, 'the bake call moved; recheck where the photo farm reports settle');
+  assert.match(PAGE_SRC.slice(bakeAt, bakeAt + 2200), /\.finally\(\(\) => setBaseHeavyDone\(true\)\)/,
+    'surviving the downloads is not surviving the bake — the marker must follow the bake');
+});
+
+test('the farmer page can stop digging too', () => {
+  // "IT'S HAPPENING EVERYWHERE!" — 13 August, minutes after Ubhejane's design page hit the
+  // terminal screen, with /farmer?panel=Reports in the screenshot. Nothing merged that day
+  // touches this page's memory profile; what the screen exposed is that /design was the only
+  // page that knew how to stop. This page mounts Mapbox GL with satellite tiles on every load,
+  // and on a phone short of memory it died identically on every retry — locking a farmer out of
+  // their REPORTS because the MAP behind them is expensive.
+  //
+  // Exercised in a real browser (Chromium, iPhone viewport): three loads abandoned before
+  // settling, and the fourth opened with the placeholder shown, the Reports panel alive, the
+  // mapbox canvas genuinely unmounted, and the streak at 4; tapping "Load the map" cleared the
+  // streak and remounted. These assertions keep that wiring from drifting.
+  const farmer = readFileSync(new URL('../app/farmer/page.tsx', import.meta.url), 'utf8');
+
+  // The guard is resolved once per load and the MAP is what it withholds — never the panels.
+  assert.match(farmer, /pageCrashGuard\(FARMER_LOAD_KEY\)/, 'the farmer page no longer counts its own loads');
+  assert.match(farmer, /\{mapHeld \? \(/, 'the guard no longer holds the map back');
+  // The escape hatch must clear the SAME key the streak lives under.
+  assert.match(farmer, /exitPageCrashGuard\(mapGuard\.key\)/, 'the "Load the map" button is gone or clears the wrong key');
+
+  // Settle is gated on the map actually coming up — a fixed timer from mount is how the design
+  // page's guard was beaten on 4G. A held load settles on the timer alone, because nothing heavy
+  // mounts at all.
+  assert.match(farmer, /if \(!mapReady && !mapGuard\.active\) return;/,
+    'the settle timer runs from mount again — a slow network will wipe the streak mid-load');
+  assert.match(farmer, /onMapReady=\{\(\) => setMapReady\(true\)\}/,
+    'nothing reports the map came up, so a healthy load can never settle');
+
+  // And the signal is real: Map.tsx must actually fire it from mapbox's own onLoad.
+  const map = readFileSync(new URL('../components/Map.tsx', import.meta.url), 'utf8');
+  assert.match(map, /onMapReady\?\.\(\);/, 'PermaMap no longer announces that the map initialised');
+});

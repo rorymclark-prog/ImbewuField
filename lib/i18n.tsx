@@ -464,6 +464,10 @@ const T: Record<string, Dict> = {
     pickLangSub: 'You can change it any time from the top bar.',
     start: 'Start',
     heroSub: 'Tap anywhere in South Africa to get a full permaculture plan for your land.',
+    // Farmer-page crash guard (lib/crash-loop.ts) — English-only for now; t() falls back.
+    mapHeldTitle: 'The map is taking a break',
+    mapHeldBody: 'This page closed unexpectedly a few times in a row, so the map is paused to get you back in. Your reports, photos and places all still work below.',
+    mapHeldLoad: 'Load the map',
     clickAnalyse: 'Tap the map to analyse',
     dataSources: 'Data sources',
     language: 'Language',

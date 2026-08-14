@@ -621,16 +621,32 @@ function DesignStudioInner() {
   // Rendered only after mount: the server has no storage to read, so painting the banner during
   // the first render would be a hydration mismatch.
   const [safeModeVisible, setSafeModeVisible] = useState(false);
+  useEffect(() => { setSafeModeVisible(safeMode.active); }, [safeMode.active]);
+
+  // THE DANGEROUS ALLOCATIONS FOR THIS LOAD ARE BEHIND US. Set by whichever branch of the base
+  // pipeline runs: immediately when nothing heavy will run (safe mode, blank base, no imagery),
+  // when the satellite fetch resolves either way, and on a photo farm only when the first BAKE
+  // resolves — the bake is the peak allocation and it only starts after both downloads land.
+  const [baseHeavyDone, setBaseHeavyDone] = useState(false);
   useEffect(() => {
-    setSafeModeVisible(safeMode.active);
-    // THE PAGE SURVIVED. A load that reaches this timer without being killed is not part of a
-    // crash loop, so the streak is retired — which is also what lets safe mode switch itself off
-    // again once the farmer's phone can cope.
+    // THE PAGE SURVIVED. The streak is retired — which is also what lets safe mode switch itself
+    // off again once the farmer's phone can cope.
+    //
+    // GATED ON baseHeavyDone, NOT ON TIME ALONE. This used to be a bare 8-second timer from mount,
+    // and on 13 August Rory hit "A problem repeatedly occurred" on Ubhejane AGAIN, on 4G — with
+    // this guard already shipped. On a slow connection the photo and underlay are still
+    // downloading when a fixed timer fires, so the streak was wiped while the killer bake was
+    // still ahead; the page then died at second twelve with a clean record, every single load.
+    // The guard's own comment claimed the timer was "long enough to cover the photo fetch +
+    // bake" — a slow network falsifies any fixed number, so survival now starts counting only
+    // once the work being survived has actually happened.
+    //
     // The SAME per-farm key the decision was read from — clearing the shared one would leave this
     // farm's streak climbing forever, and safe mode would latch on and never let go.
+    if (!baseHeavyDone) return;
     const settled = window.setTimeout(() => markPageSettled(window.localStorage, safeMode.key), CRASH_LOOP_SETTLE_MS);
     return () => window.clearTimeout(settled);
-  }, [safeMode.active, safeMode.key]);
+  }, [baseHeavyDone, safeMode.key]);
 
   const [buildInfo, setBuildInfo] = useState<{ branch?: string | null; sha?: string | null; repoRoot?: string | null; source?: string } | null>(null);
   useEffect(() => {
@@ -1270,6 +1286,9 @@ function DesignStudioInner() {
           .catch(() => {
             if (baseRequestRef.current !== token) return;
             setFrame((prev) => (prev ? { ...prev, satDataUrl: null } : prev));
+            // The photo never arrived, so the bake that would normally mark the heavy work done
+            // will never run. Nothing dangerous was allocated; the settle clock may start.
+            setBaseHeavyDone(true);
           });
       };
       // The satellite is fetched EVEN WHEN the farmer is on their own photo, and kept beside it as
@@ -1329,6 +1348,7 @@ function DesignStudioInner() {
         lastFetchedFrame = { centerLng: frameNoImg.centerLng, centerLat: frameNoImg.centerLat, zoom: frameNoImg.zoom };
         const metres = activeBaseMPerPx(savedForBase, withScale(frameNoImg).mPerPx);
         setFrame({ ...frameNoImg, mPerPx: metres, satDataUrl: null, underlayDataUrl: null });
+        setBaseHeavyDone(true); // nothing heavy runs on a safe load — start the settle clock now
       } else if (frameMoved) {
         lastFetchedFrame = { centerLng: frameNoImg.centerLng, centerLat: frameNoImg.centerLat, zoom: frameNoImg.zoom };
         if (savedBaseMode === 'blank') {
@@ -1336,6 +1356,7 @@ function DesignStudioInner() {
           // the farmer was using stays with the drawing. Never let this branch fall through to a
           // newly computed satellite frame — that would make the same visible beds measure anew.
           setFrame({ ...frameNoImg, mPerPx: baseMPerPx(frameNoImg), satDataUrl: null, underlayDataUrl: null });
+          setBaseHeavyDone(true); // no pixels on a blank base either
         } else if (customBase) {
           setFrame((prev) => ({
             ...frameNoImg,
@@ -1353,7 +1374,11 @@ function DesignStudioInner() {
             // it is a provider branch that does nothing.
             fetchBasemapForFrame(frameNoImg, url, fetchImageAsDataUrl)
               .then((dataUrl) => setFrame(withScale({ ...frameNoImg, satDataUrl: dataUrl })))
-              .catch(() => setFrame(withScale({ ...frameNoImg, satDataUrl: null })));
+              .catch(() => setFrame(withScale({ ...frameNoImg, satDataUrl: null })))
+              // Either way the satellite's big allocation is behind us (or was never made).
+              .finally(() => setBaseHeavyDone(true));
+          } else {
+            setBaseHeavyDone(true); // no imagery source at all — nothing heavy to survive
           }
         }
       } else {
@@ -1650,7 +1675,13 @@ function DesignStudioInner() {
       })
       // A failed bake leaves the previous image on screen, which is the last state the farmer
       // approved — strictly better than blanking their base over a redraw.
-      .catch(() => {});
+      .catch(() => {})
+      // ON A PHOTO FARM, THIS IS THE MOMENT THE HEAVY WORK IS OVER. The bake is the peak
+      // allocation of the whole page — it decodes the drone photo AND the underlay and encodes a
+      // full-frame PNG — and it only starts once both downloads have landed. Surviving it is what
+      // the crash-loop settle timer is allowed to measure from; a fixed timer from mount was
+      // firing mid-download on 4G and wiping the streak before the killer ran (Ubhejane, 13 Aug).
+      .finally(() => setBaseHeavyDone(true));
     // DEPEND ON THE FIELDS THIS BAKE READS, NEVER ON `frame` ITSELF. The effect writes to frame,
     // so depending on the whole object makes it its own trigger — the second half of the loop
     // above. Every field the bake actually uses is listed individually.
