@@ -12,6 +12,7 @@
     "seed:emulator": "node scripts/seed-emulator.mjs",
     "dev:emulator": "NEXT_PUBLIC_USE_FIREBASE_EMULATOR=1 next dev -p 4243",
     "course:calendar": "node --import ./tests/register-alias.mjs scripts/course-calendar.mjs",
+    "course:i18n-status": "node --import ./tests/register-alias.mjs scripts/course-i18n-status.mjs",
     "course:status": "node --import ./tests/register-alias.mjs scripts/course-status.mjs",
     "course:script-prompt": "node --import ./tests/register-alias.mjs scripts/course-script-prompt.mjs",
     "assets:sizes": "node scripts/gen-asset-sizes.mjs",
