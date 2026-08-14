@@ -9,26 +9,32 @@ export type ReferenceFeatureArtwork =
   | 'pollinator-strip-v1.png'
   | 'vetiver-bank-v1.png'
   | 'shade-house-v2.png'
-  | 'banana-clump-v1.png'
-  | 'pawpaw-tree-v1.png'
+  | 'banana-clump-v2.png'
+  | 'pawpaw-tree-v2.png'
   | 'moringa-tree-v1.png'
-  | 'avocado-tree-v1.png'
-  | 'mango-tree-v1.png'
-  | 'litchi-tree-v1.png'
-  | 'macadamia-tree-v1.png'
+  | 'avocado-tree-v2.png'
+  | 'mango-tree-v2.png'
+  | 'litchi-tree-v2.png'
+  | 'macadamia-tree-v2.png'
   | 'citrus-tree-v3.png'
+  | 'apple-tree-v1.png'
+  | 'pear-tree-v1.png'
+  | 'plum-tree-v1.png'
+  | 'peach-tree-v1.png'
+  | 'fig-tree-v1.png'
+  | 'pomegranate-tree-v1.png'
   | 'keyhole-bed-v1.png'
   | 'herb-spiral-v1.png'
   | 'spekboom-hedge-v1.png'
-  | 'marula-tree-v1.png'
-  | 'kei-apple-tree-v1.png'
+  | 'marula-tree-v2.png'
+  | 'kei-apple-tree-v2.png'
   // Six crowns drawn to break up the generic canopy — see the ORCHARD_TREES note below.
   | 'indigenous-shade-v1.png'
-  | 'wild-plum-v1.png'
-  | 'guava-v1.png'
-  | 'olive-v1.png'
-  | 'waterberry-v1.png'
-  | 'natal-plum-v1.png'
+  | 'wild-plum-v2.png'
+  | 'guava-v2.png'
+  | 'olive-v2.png'
+  | 'waterberry-v2.png'
+  | 'natal-plum-v2.png'
   // Staple-plot field tiles — OPAQUE and SEAMLESS-TILEABLE, unlike everything above. They are
   // clip-filled across a traced staple_garden polygon as a repeating pattern, not composited on
   // an item footprint. See stapleTileFor.
@@ -79,19 +85,9 @@ export function isTankDefId(defId: string): boolean {
 // as "all the trees look like variants of themselves". On a real sheet, "Wild plum" and two
 // "Indigenous Shade Tree" labels were the same image drawn three times.
 //
-// Six of the thirteen now have their own crown (see PLANTING_DETAIL_ART). What is left here is
-// the genuinely deciduous, pruned-goblet group — apple, pear, plum, peach, fig, pomegranate and
-// the deliberately-unspecified 'Other Tree' — which orchard-canopy-v1 was redrawn to serve, and
-// which really do share a habit at plan scale.
-const ORCHARD_TREES = new Set([
-  'tree_other',
-  'tree_apple',
-  'tree_pear',
-  'tree_plum',
-  'tree_peach',
-  'tree_fig',
-  'tree_pomegranate',
-]);
+// Every named fruit and nut tree now carries its own map-scale identity fruit and foliage. The
+// deliberately-unspecified Other Tree is the only honest user of the neutral orchard crown.
+const ORCHARD_TREES = new Set(['tree_other']);
 const PRODUCTION_BEDS = new Set(['veg_bed', 'raised_bed']);
 const VETIVER_BANKS = new Set(['vetiver_row', 'mulch_bank']);
 
@@ -100,14 +96,20 @@ const STRUCTURE_ART: Readonly<Record<string, ReferenceFeatureArtwork>> = {
 };
 
 const PLANTING_DETAIL_ART: Readonly<Record<string, ReferenceFeatureArtwork>> = {
-  banana_clump: 'banana-clump-v1.png',
-  tree_pawpaw: 'pawpaw-tree-v1.png',
+  banana_clump: 'banana-clump-v2.png',
+  tree_pawpaw: 'pawpaw-tree-v2.png',
   tree_moringa: 'moringa-tree-v1.png',
-  tree_avocado: 'avocado-tree-v1.png',
-  tree_mango: 'mango-tree-v1.png',
-  tree_litchi: 'litchi-tree-v1.png',
-  tree_macadamia: 'macadamia-tree-v1.png',
+  tree_avocado: 'avocado-tree-v2.png',
+  tree_mango: 'mango-tree-v2.png',
+  tree_litchi: 'litchi-tree-v2.png',
+  tree_macadamia: 'macadamia-tree-v2.png',
   tree_citrus: 'citrus-tree-v3.png',
+  tree_apple: 'apple-tree-v1.png',
+  tree_pear: 'pear-tree-v1.png',
+  tree_plum: 'plum-tree-v1.png',
+  tree_peach: 'peach-tree-v1.png',
+  tree_fig: 'fig-tree-v1.png',
+  tree_pomegranate: 'pomegranate-tree-v1.png',
   keyhole_bed: 'keyhole-bed-v1.png',
   herb_spiral: 'herb-spiral-v1.png',
   spekboom_hedge: 'spekboom-hedge-v1.png',
@@ -115,16 +117,16 @@ const PLANTING_DETAIL_ART: Readonly<Record<string, ReferenceFeatureArtwork>> = {
   // they belong HERE and not in ORCHARD_TREES above. Order of checks matters: ORCHARD_TREES is
   // tested first in referenceFeatureArtworkFor, so an id listed in both would silently keep the
   // generic canopy and this entry would never fire.
-  tree_marula: 'marula-tree-v1.png',
-  tree_kei_apple: 'kei-apple-tree-v1.png',
-  // The six lifted out of ORCHARD_TREES. Same ordering rule as marula and kei apple above:
-  // ORCHARD_TREES is checked FIRST, so an id left in that set would never reach this table.
+  tree_marula: 'marula-tree-v2.png',
+  tree_kei_apple: 'kei-apple-tree-v2.png',
+  // Named fruit and shade crowns stay here; only the deliberately generic Other Tree may use the
+  // neutral orchard image. ORCHARD_TREES is checked first, so membership there remains exclusive.
   tree_indigenous: 'indigenous-shade-v1.png',
-  tree_wild_plum: 'wild-plum-v1.png',
-  tree_guava: 'guava-v1.png',
-  tree_olive: 'olive-v1.png',
-  tree_waterberry: 'waterberry-v1.png',
-  tree_natal_plum: 'natal-plum-v1.png',
+  tree_wild_plum: 'wild-plum-v2.png',
+  tree_guava: 'guava-v2.png',
+  tree_olive: 'olive-v2.png',
+  tree_waterberry: 'waterberry-v2.png',
+  tree_natal_plum: 'natal-plum-v2.png',
 };
 
 /**

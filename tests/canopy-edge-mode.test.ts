@@ -25,12 +25,14 @@ const ART_DIR = join(process.cwd(), 'public', 'render-assets', 'reference-bluepr
 // rather than imported so that a canopy quietly dropping out of that module cannot also quietly
 // drop out of this guard.
 const CANOPIES = [
-  'orchard-canopy-v1.png', 'pawpaw-tree-v1.png', 'moringa-tree-v1.png', 'avocado-tree-v1.png',
-  'mango-tree-v1.png', 'litchi-tree-v1.png', 'macadamia-tree-v1.png', 'citrus-tree-v3.png',
-  'marula-tree-v1.png', 'kei-apple-tree-v1.png',
-  // The six that broke the generic canopy apart — thirteen ids used to share one drawing.
-  'indigenous-shade-v1.png', 'wild-plum-v1.png', 'guava-v1.png', 'olive-v1.png',
-  'waterberry-v1.png', 'natal-plum-v1.png',
+  'orchard-canopy-v1.png', 'banana-clump-v2.png', 'pawpaw-tree-v2.png', 'moringa-tree-v1.png',
+  'avocado-tree-v2.png', 'mango-tree-v2.png', 'litchi-tree-v2.png', 'macadamia-tree-v2.png',
+  'citrus-tree-v3.png', 'apple-tree-v1.png', 'pear-tree-v1.png', 'plum-tree-v1.png',
+  'peach-tree-v1.png', 'fig-tree-v1.png', 'pomegranate-tree-v1.png',
+  'marula-tree-v2.png', 'kei-apple-tree-v2.png',
+  // The crowns that broke the generic canopy apart — named fruit keeps its own identity at scale.
+  'indigenous-shade-v1.png', 'wild-plum-v2.png', 'guava-v2.png', 'olive-v2.png',
+  'waterberry-v2.png', 'natal-plum-v2.png',
 ];
 
 function readMode(): 'footprint' | 'artwork' {
@@ -48,6 +50,7 @@ function profile(file: string) {
   const cx = w / 2, cy = h / 2, R = Math.min(w, h) / 2;
   const bands = new Map<number, { sum: number; n: number }>();
   let outer = 0, brown = 0;
+  const brownBySector = Array.from({ length: 36 }, () => ({ brown: 0, opaque: 0 }));
   for (let y = 0; y < h; y++) {
     for (let x = 0; x < w; x++) {
       const i = (y * w + x) * 4;
@@ -60,9 +63,15 @@ function profile(file: string) {
       }
       if (r >= 0.75 && data[i + 3] > 128) {
         outer += 1;
+        const angle = Math.atan2(y - cy, x - cx);
+        const sector = Math.min(35, Math.floor(((angle + Math.PI) / (2 * Math.PI)) * 36));
+        brownBySector[sector].opaque += 1;
         const [red, g, bl] = [data[i], data[i + 1], data[i + 2]];
         // Brown/soil: red leads green leads blue, and it is not a green pixel.
-        if (red > g && g > bl && !(g > red && g > bl)) brown += 1;
+        if (red > g && g > bl && !(g > red && g > bl)) {
+          brown += 1;
+          brownBySector[sector].brown += 1;
+        }
       }
     }
   }
@@ -70,7 +79,9 @@ function profile(file: string) {
     const b = bands.get(band);
     return b && b.n ? b.sum / b.n : 0;
   };
-  return { mean, brownFraction: outer ? brown / outer : 0 };
+  const brownRingContinuity = brownBySector.filter((sector) =>
+    sector.opaque > 0 && sector.brown / sector.opaque > 0.3).length / brownBySector.length;
+  return { mean, brownFraction: outer ? brown / outer : 0, brownRingContinuity };
 }
 
 test('CANOPY_EDGE_MODE is one of the two declared values', () => {
@@ -82,7 +93,7 @@ test("'artwork' mode is only legal once the crowns are actually jagged and basin
 
   const failures: string[] = [];
   for (const file of CANOPIES) {
-    const { mean, brownFraction } = profile(file);
+    const { mean, brownFraction, brownRingContinuity } = profile(file);
     // A jagged crown's outermost band is mostly notch. A disc's is solid.
     if (mean(95) > 0.45) {
       failures.push(`${file}: 95-100% band is ${(mean(95) * 100).toFixed(0)}% opaque — still a disc`);
@@ -91,9 +102,12 @@ test("'artwork' mode is only legal once the crowns are actually jagged and basin
     if (mean(80) - mean(95) < 0.2) {
       failures.push(`${file}: alpha barely falls from 80% to 100% radius — edge is not lobed`);
     }
-    // The painted mulch band is what the casing currently hides. In 'artwork' mode nothing hides it.
-    if (brownFraction > 0.12) {
-      failures.push(`${file}: outer band is ${(brownFraction * 100).toFixed(0)}% brown — basin still painted in`);
+    // A basin is a CONTINUOUS annulus. A raw brown-pixel count also catches macadamia shells,
+    // pomegranate skin, marula shading and real branches — exactly the identity cues this guard
+    // must allow. Require both a large brown fraction and brown dominance around most angles, so
+    // a painted soil ring fails while isolated fruit and branch colour does not.
+    if (brownFraction > 0.12 && brownRingContinuity > 0.5) {
+      failures.push(`${file}: brown covers ${(brownRingContinuity * 100).toFixed(0)}% of outer sectors — basin still painted in`);
     }
   }
   assert.deepEqual(failures, [], `\n${failures.join('\n')}\n`);

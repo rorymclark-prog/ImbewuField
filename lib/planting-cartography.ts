@@ -137,8 +137,9 @@ export const PLANTING_CANOPY_PAINT: Readonly<PlantingCanopyPaintStyle> = {
   //
   // The cream backing above was measured against the wrong artwork. orchard-canopy-v1 is 85%
   // opaque across its disc, so almost none of the cream ever showed and the treatment looked
-  // settled. pawpaw-tree-v1 is 48% and moringa-tree-v1 59% — these are airy, open-crowned trees,
-  // deliberately painted with gaps you can see the ground through — so on those the cream is the
+  // settled. The original pawpaw crown was 48% and moringa-tree-v1 59% — these are airy,
+  // open-crowned trees, deliberately painted with gaps you can see the ground through — so on
+  // those the cream is the
   // majority of the symbol, and a pawpaw came out as leaves floating on a white coin. Rory: "slight
   // white on the trees still ... either these get the plant basin underneath or the leaves get
   // bordered with black but not against a white background."
