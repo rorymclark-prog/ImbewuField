@@ -12,7 +12,7 @@ export type ReferenceFeatureArtwork =
   | 'beehive-v1.png'
   | 'chicken-tractor-v1.png'
   | 'nursery-table-v1.png'
-  | 'shade-house-v1.png'
+  | 'shade-house-v2.png'
   | 'driveway-gate-v1.png'
   | 'pond-small-v1.png'
   | 'greywater-basin-v1.png'
@@ -27,7 +27,7 @@ export type ReferenceFeatureArtwork =
   | 'mango-tree-v1.png'
   | 'litchi-tree-v1.png'
   | 'macadamia-tree-v1.png'
-  | 'citrus-tree-v1.png'
+  | 'citrus-tree-v2.png'
   | 'keyhole-bed-v1.png'
   | 'herb-spiral-v1.png'
   | 'spekboom-hedge-v1.png'
@@ -111,7 +111,7 @@ const STRUCTURE_ART: Readonly<Record<string, ReferenceFeatureArtwork>> = {
   beehive: 'beehive-v1.png',
   chicken_tractor: 'chicken-tractor-v1.png',
   nursery_table: 'nursery-table-v1.png',
-  shade_house: 'shade-house-v1.png',
+  shade_house: 'shade-house-v2.png',
   gate: 'driveway-gate-v1.png',
 };
 
@@ -132,7 +132,7 @@ const PLANTING_DETAIL_ART: Readonly<Record<string, ReferenceFeatureArtwork>> = {
   tree_mango: 'mango-tree-v1.png',
   tree_litchi: 'litchi-tree-v1.png',
   tree_macadamia: 'macadamia-tree-v1.png',
-  tree_citrus: 'citrus-tree-v1.png',
+  tree_citrus: 'citrus-tree-v2.png',
   keyhole_bed: 'keyhole-bed-v1.png',
   herb_spiral: 'herb-spiral-v1.png',
   spekboom_hedge: 'spekboom-hedge-v1.png',

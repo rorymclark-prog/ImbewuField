@@ -9,8 +9,10 @@ const page = readFileSync(new URL('../app/design/page.tsx', import.meta.url), 'u
 test('Glossy owns the whole studio width instead of inheriting the drawing rails', () => {
   assert.match(page, /canvasState && canvasState\.step !== 'glossy'/,
     'the drawing wizard must not stay mounted beside Preview & Export');
-  assert.match(page, /marginLeft: isPhone \|\| canvasState\?\.step === 'glossy' \? 0 : 232/);
-  assert.match(page, /marginRight: isPhone \|\| canvasState\?\.step === 'glossy' \? 0 : 328/);
+  assert.match(page, /marginLeft: isPhone \|\| canvasState\?\.step === 'glossy' \? 0 : desktopPanelLayout\.elements \+ 24/,
+    'the drawing map must keep a gutter matching the farmer-adjusted Elements dock');
+  assert.match(page, /marginRight: isPhone \|\| canvasState\?\.step === 'glossy' \? 0 : desktopPanelLayout\.layers \+ 24/,
+    'the drawing map must keep a gutter matching the farmer-adjusted Layers dock');
 });
 
 test('the live Glossy component, not the prototype route, owns all three preview rails', () => {
@@ -60,6 +62,20 @@ test('desktop, tablet and phone each have an explicit responsive layout', () => 
   assert.ok(phoneCss.length > 0, 'the phone breakpoint is missing');
   assert.match(phoneCss, /\.workspace \{[\s\S]*?display: flex;[\s\S]*?flex-direction: column;/,
     'phone layout must become a scrollable single column rather than crush three rails together');
+  assert.match(phoneCss, /\.workspace \{[\s\S]*?position: absolute;[\s\S]*?height: 100%;[\s\S]*?overflow-y: auto;/,
+    'the phone column must own a bounded scrollport because the global page body cannot scroll');
+  assert.doesNotMatch(phoneCss, /\.workspace \{[\s\S]*?overflow: visible;/,
+    'visible overflow puts the map and export actions below the locked page viewport');
+});
+
+test('map-toolbar chrome only shows controls that explain or change the preview', () => {
+  const toolbarStart = glossy.indexOf('<div className={styles.stageToolbar}>');
+  const toolbarEnd = glossy.indexOf('</div>', toolbarStart);
+  assert.ok(toolbarStart > 0 && toolbarEnd > toolbarStart, 'preview toolbar boundaries moved');
+  const toolbar = glossy.slice(toolbarStart, toolbarEnd);
+  assert.match(toolbar, /designGlossyPreviewScope/);
+  assert.doesNotMatch(toolbar, /stageChip|SeasonalSun|<Wind|<Sun/,
+    'static weather pills look like site analysis controls but carry no site data or action');
 });
 
 test('a long settings rail cannot stretch the sheet preview into a black screen', () => {
@@ -89,4 +105,35 @@ test('the centre sheet opens full screen and has three simple ways back', () => 
     'Escape should close the full-screen sheet');
   assert.match(glossy, /onClick=\{\(\) => setGalleryZoomOpen\(false\)\}[\s\S]*?designGlossyCloseFullScreen/,
     'the backdrop and visible close button should both leave full screen');
+});
+
+test('the full-screen sheet itself minimises, with a visible non-blocking cue', () => {
+  const viewerStart = glossy.indexOf('{galleryZoomOpen && stageResultImage');
+  const viewer = glossy.slice(viewerStart);
+  assert.ok(viewerStart > 0, 'full-screen viewer boundaries moved');
+  assert.match(viewer, /<img[\s\S]*?onClick=\{\(\) => setGalleryZoomOpen\(false\)\}[\s\S]*?cursor: 'zoom-out'/,
+    'the map image must minimise the viewer instead of swallowing the backdrop click');
+  assert.match(viewer, /designGlossyClickMapToMinimise/,
+    'the full-screen viewer should explain the direct map action without blocking the image');
+});
+
+test('finish choices appear before advanced options and their longer explanation', () => {
+  const actionsStart = glossy.indexOf('className={compact ? undefined : styles.actionsRail}');
+  const savedRailStart = glossy.indexOf('<aside className={styles.savedRail}', actionsStart);
+  assert.ok(actionsStart > 0 && savedRailStart > actionsStart, 'action rail boundaries moved');
+  const actions = glossy.slice(actionsStart, savedRailStart);
+  const finish = actions.indexOf("t('designGlossyFinishHeading')");
+  const explanation = actions.indexOf("t('designGlossyHowFinishesWork')");
+  const more = actions.indexOf("t('designGlossyMoreOptions')");
+
+  assert.ok(finish >= 0 && explanation > finish && more >= 0,
+    'finish controls and their collapsed explanation must remain in the primary action rail');
+  assert.match(actions, /\{selectedSheet && enginePicker\}[\s\S]*?designGlossyFinishHeading/,
+    'the account-changing engine picker belongs beside the paid finish');
+  assert.match(actions, /order: 1,[\s\S]*?designGlossyFinishHeading[\s\S]*?order: 2,[\s\S]*?designGlossyHowFinishesWork/,
+    'the finish choice and its disclosure must lead the action rail');
+  assert.match(actions, /order: 3,[\s\S]*?designGlossyMoreOptions/,
+    'advanced controls must visually follow the primary finish controls');
+  assert.doesNotMatch(actions.slice(0, finish), /designGlossyFinishHelp/,
+    'the long finish explanation must stay collapsed until after the finish choice');
 });

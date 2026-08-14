@@ -441,7 +441,7 @@ function HomeInner() {
         {/* Heights/sizes scale down on wide screens — phone px must not be reused
             on desktop (handoff §0). Mobile keeps the comfortable 60px bar. */}
         <header
-          className="flex-shrink-0 flex items-center px-3 md:px-5 gap-2 md:gap-3 overflow-x-auto overflow-y-hidden"
+          className="flex-shrink-0 flex items-center px-3 md:px-5 gap-2 md:gap-3 overflow-hidden"
           style={{
             height: 60,
             background: '#FFFEFA',
@@ -486,7 +486,7 @@ function HomeInner() {
           {buildInfo?.sha && (
             <div
               title={`Build source: ${buildInfo.source ?? 'unknown'}${buildInfo.branch ? ` · branch ${buildInfo.branch}` : ''}${buildInfo.repoRoot ? ` · ${buildInfo.repoRoot}` : ''}`}
-              className="flex items-center flex-shrink-0 rounded-full border px-2.5 py-1 font-sans"
+              className="hidden md:flex items-center flex-shrink-0 rounded-full border px-2.5 py-1 font-sans"
               style={{
                 minHeight: 30,
                 borderColor: 'rgba(31,77,43,0.2)',
@@ -502,8 +502,8 @@ function HomeInner() {
             </div>
           )}
           <div className="hidden md:flex"><RoleSwitcher current="farmer" /></div>
-          <LangSwitcher />
-          <AccountButton />
+          <div className="hidden md:block"><LangSwitcher /></div>
+          <div className="hidden md:block"><AccountButton /></div>
 
           {error && (
             <span className="text-xs px-3 py-1 rounded-full font-sans flex-shrink-0 flex items-center"
@@ -516,7 +516,7 @@ function HomeInner() {
             onClick={() => setSettingsOpen(true)}
             aria-label="Appearance settings"
             title="Appearance"
-            className="flex-shrink-0 flex items-center justify-center rounded-lg transition-all"
+            className="hidden md:flex flex-shrink-0 items-center justify-center rounded-lg transition-all"
             style={{
               width: 40, height: 40,
               background: 'rgba(226,216,196,0.35)',

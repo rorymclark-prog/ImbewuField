@@ -216,7 +216,7 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
           disabled={refreshing}
           style={{ background: 'transparent', border: 'none', color: '#fff', font: 'inherit', fontWeight: 700, cursor: refreshing ? 'wait' : 'pointer', padding: '4px 2px' }}
         >
-          {refreshing ? 'Refreshing…' : 'Update ready'}
+          {refreshing ? 'Refreshing…' : `Update ready${nextBuildSha ? ` · ${nextBuildSha}` : ''}`}
         </button>
         <button
           type="button"

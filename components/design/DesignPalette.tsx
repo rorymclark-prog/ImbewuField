@@ -59,6 +59,14 @@ import { formatDesignTranslation } from '@/lib/design-studio-i18n';
 import { useLanguage } from '@/lib/i18n';
 import { uiVersion, setUiVersion, UI_VERSION_EVENT } from '@/lib/ui-version';
 import LessonLink from './LessonLink';
+import {
+  DESKTOP_ELEMENTS_PANEL_MAX,
+  DESKTOP_ELEMENTS_PANEL_MIN,
+  DESKTOP_LAYERS_PANEL_MAX,
+  DESKTOP_LAYERS_PANEL_MIN,
+  clampDesktopPanelWidth,
+  type DesktopPanelLayout,
+} from '@/lib/design-panel-layout';
 
 type ToolKind = 'select' | 'place' | 'zone' | 'line';
 
@@ -120,6 +128,10 @@ export interface DesignPaletteProps {
   } | null;
   /** Wide screens have a fixed right-side quick-actions pane. Phones retain the bottom sheet. */
   desktopAside?: boolean;
+  /** Desktop-only panel widths are owned by the Studio shell so the canvas can reserve the same
+   * space. The palette only provides the direct manipulation controls. */
+  desktopPanelLayout?: DesktopPanelLayout;
+  onDesktopPanelWidthChange?: (panel: keyof DesktopPanelLayout, width: number) => void;
   /** Icon/label size slider, shown inside the Layers panel beside Labels and Icons. null hides
    *  it entirely, same "nothing to act on" convention the other optional controls use. */
   textScaleControl: { value: number; onChange: (v: number) => void } | null;
@@ -417,6 +429,8 @@ export default function DesignPalette({
   setActiveLayers,
   waterInfrastructure = null,
   desktopAside = false,
+  desktopPanelLayout,
+  onDesktopPanelWidthChange,
   textScaleControl,
   areaFillControl,
   bedBlockControl,
@@ -687,31 +701,81 @@ export default function DesignPalette({
   }, [sheetOpen, onBottomStopChange]);
   const sheetDragRef = useRef<{ startY: number; pointerId: number } | null>(null);
   const isPhone = usePhoneViewport();
+  const desktopElementsWidth = desktopPanelLayout?.elements ?? 304;
+  const desktopLayersWidth = desktopPanelLayout?.layers ?? 304;
+  const [desktopResize, setDesktopResize] = useState<{
+    panel: keyof DesktopPanelLayout;
+    startX: number;
+    startWidth: number;
+  } | null>(null);
+  useEffect(() => {
+    if (!desktopResize || !onDesktopPanelWidthChange) return undefined;
+    const move = (event: PointerEvent) => {
+      const delta = event.clientX - desktopResize.startX;
+      // The Elements panel grows towards the map; Layers grows towards the map from the right.
+      const candidate = desktopResize.panel === 'elements'
+        ? desktopResize.startWidth + delta
+        : desktopResize.startWidth - delta;
+      onDesktopPanelWidthChange(desktopResize.panel, clampDesktopPanelWidth(desktopResize.panel, candidate));
+    };
+    const finish = () => setDesktopResize(null);
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', finish);
+    window.addEventListener('pointercancel', finish);
+    return () => {
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', finish);
+      window.removeEventListener('pointercancel', finish);
+    };
+  }, [desktopResize, onDesktopPanelWidthChange]);
+  const beginDesktopResize = (panel: keyof DesktopPanelLayout, event: React.PointerEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    setDesktopResize({ panel, startX: event.clientX, startWidth: panel === 'elements' ? desktopElementsWidth : desktopLayersWidth });
+  };
+  const [layersFloating, setLayersFloating] = useState(false);
+  const [layersFloatPos, setLayersFloatPos] = useState({ x: 560, y: 132 });
+  const layersFloatDrag = useRef<{ dx: number; dy: number } | null>(null);
+  useEffect(() => {
+    if (!layersFloatDrag.current) return undefined;
+    const move = (event: PointerEvent) => {
+      const drag = layersFloatDrag.current;
+      if (!drag) return;
+      setLayersFloatPos({
+        x: Math.max(8, Math.min(window.innerWidth - 96, event.clientX - drag.dx)),
+        y: Math.max(72, Math.min(window.innerHeight - 96, event.clientY - drag.dy)),
+      });
+    };
+    const finish = () => { layersFloatDrag.current = null; setLayersFloatPos((position) => ({ ...position })); };
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', finish);
+    window.addEventListener('pointercancel', finish);
+    return () => {
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', finish);
+      window.removeEventListener('pointercancel', finish);
+    };
+  }, [layersFloating, layersFloatPos]);
 
   const guided = mode === 'guided';
   const hiddenLayerCount = LAYER_TOGGLES.filter((lt) => !activeLayers[lt.key]).length;
 
-  // PRO reuses the existing 'all' path unconditionally — same catalog GUIDED already shows
-  // on base/review/glossy, just no longer gated by step.
-  const allowedCategories = mode === 'pro' ? 'all' : categoriesForStep(step);
+  // Tools are no longer gated behind a separate Pro switch. The current step still provides the
+  // guidance context, while this catalogue remains a complete toolbox whenever someone needs to
+  // move ahead or correct an earlier part of their plan.
   const isReadOnlyStep = step === 'base' || step === 'review' || step === 'glossy';
   // In guided mode the element catalog only belongs on the placing steps (water/planting/
   // structures). Base traces ground features, zones paints zones — showing the whole element
   // catalog there is pure clutter that buried the map. Pro keeps everything.
-  const showElementCatalog = mode === 'pro' || allowedCategories !== 'all';
-  const showFullCatalogNote = mode === 'pro';
+  const showElementCatalog = true;
+  const showFullCatalogNote = false;
   const siteClimates = biomeClimates(siteBiome);
-  const stepCatalog =
-    allowedCategories === 'all'
-      ? ELEMENT_CATALOG
-      : ELEMENT_CATALOG.filter((def) => allowedCategories.includes(def.category) || def.alsoSteps?.includes(step as 'water' | 'planting' | 'structures'));
+  const stepCatalog = ELEMENT_CATALOG;
   const visibleStepCatalog = stepCatalog.filter((def) => (step === 'planting' ? elementVisibleInPalette(def, siteClimates) : !def.deprecated));
 
   // In PRO the full catalog is overwhelming — honour the layer toggles so only elements whose
   // layer is switched ON appear (Rory: "only elements for the layers that are switched on should
   // show"). Category → layer mapping lives in CATEGORY_LAYER above.
-  const catalog =
-    mode === 'pro' ? visibleStepCatalog.filter((def) => activeLayers[CATEGORY_LAYER[def.category]]) : visibleStepCatalog;
+  const catalog = visibleStepCatalog.filter((def) => activeLayers[CATEGORY_LAYER[def.category]]);
 
   // Climate-appropriate trees: on the planting step, hide trees that do not crop in this site's
   // climate. Unknown site climate still shows all non-deprecated trees.
@@ -982,7 +1046,6 @@ export default function DesignPalette({
             <div
               style={{
                 minHeight: guided ? 52 : 44,
-                display: 'inline-flex',
                 alignItems: 'center',
                 gap: 5,
                 flexShrink: 0,
@@ -1324,20 +1387,20 @@ export default function DesignPalette({
           {/* Layers — pinned right of the tool row, always on screen. A desktop aside has room
               below the button, so its panel opens down; the phone sheet opens up over the map.
               Its own cap is scrollable, rather than allowing either edge to leave the viewport. */}
-          <div style={{ position: 'relative', flexShrink: 0 }}>
+          <div style={{ position: 'relative', flexShrink: 0, display: desktopAside && !isPhone ? 'contents' : undefined }}>
             <button
               ref={layersButtonRef}
               type="button"
               onClick={() => setLayersOpen((v) => !v)}
               aria-expanded={layersOpen}
               style={{
+                display: desktopAside && !isPhone ? 'none' : 'inline-flex',
                 minHeight: guided ? 40 : 32,
                 padding: '4px 12px',
                 borderRadius: 16,
                 border: '1px solid rgba(0,0,0,0.15)',
                 background: layersOpen ? GREEN : hiddenLayerCount ? 'rgba(31,77,43,0.10)' : PAPER,
                 color: layersOpen ? PAPER : DARK,
-                display: 'inline-flex',
                 alignItems: 'center',
                 gap: 5,
                 cursor: 'pointer',
@@ -1352,20 +1415,21 @@ export default function DesignPalette({
                 <span style={{ fontSize: 10, fontWeight: 800, color: layersOpen ? GOLD : GREEN }}>{hiddenLayerCount} {t('designPaletteOff')}</span>
               )}
             </button>
-            {layersOpen && layersAnchor && (
+            {((desktopAside && !isPhone) || (layersOpen && layersAnchor)) && (
               <div
                 style={{
                   position: 'fixed',
-                  top: layersAnchor.openBelow ? layersAnchor.bottom + 6 : undefined,
-                  bottom: layersAnchor.openBelow ? undefined : window.innerHeight - layersAnchor.top + 6,
-                  right: layersAnchor.right,
-                  zIndex: 1000,
+                  top: desktopAside && !isPhone ? (layersFloating ? layersFloatPos.y : 116) : layersAnchor?.openBelow ? layersAnchor.bottom + 6 : undefined,
+                  bottom: desktopAside && !isPhone ? (layersFloating ? undefined : 12) : layersAnchor?.openBelow ? undefined : layersAnchor ? window.innerHeight - layersAnchor.top + 6 : undefined,
+                  left: desktopAside && !isPhone && layersFloating ? layersFloatPos.x : undefined,
+                  right: desktopAside && !isPhone ? (layersFloating ? undefined : 12) : layersAnchor?.right,
+                  zIndex: desktopAside && !isPhone ? 15 : 1000,
                   display: 'flex',
                   flexWrap: 'wrap',
                   gap: 6,
-                  width: 300,
+                  width: desktopAside && !isPhone ? desktopLayersWidth : 300,
                   maxWidth: 'calc(100vw - 16px)',
-                  maxHeight: layersAnchor.maxHeight,
+                  maxHeight: desktopAside && !isPhone ? (layersFloating ? '60dvh' : undefined) : layersAnchor?.maxHeight,
                   overflowY: 'auto',
                   overscrollBehavior: 'contain',
                   padding: 10,
@@ -1373,6 +1437,7 @@ export default function DesignPalette({
                   background: PAPER,
                   border: '1px solid rgba(0,0,0,0.15)',
                   boxShadow: '0 4px 16px rgba(0,0,0,0.2)',
+                  boxSizing: 'border-box',
                 }}
               >
                 {/* Master switch — flip every layer at once instead of tapping nine chips. */}
@@ -1380,6 +1445,27 @@ export default function DesignPalette({
                   <span style={{ fontSize: 10, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.5, opacity: 0.5, marginRight: 'auto' }}>
                     {t('designPaletteLayers')}
                   </span>
+                  {desktopAside && !isPhone && (
+                    <button
+                      type="button"
+                      onClick={() => setLayersFloating((floating) => !floating)}
+                      style={{ border: '1px solid rgba(31,77,43,0.25)', background: PAPER, color: GREEN, borderRadius: 7, padding: '3px 7px', fontSize: 10.5, fontWeight: 700, cursor: 'pointer' }}
+                    >
+                      {layersFloating ? 'Dock' : 'Float'}
+                    </button>
+                  )}
+                  {desktopAside && !isPhone && onDesktopPanelWidthChange && (
+                    <input
+                      type="range"
+                      min={DESKTOP_LAYERS_PANEL_MIN}
+                      max={DESKTOP_LAYERS_PANEL_MAX}
+                      value={desktopLayersWidth}
+                      onChange={(event) => onDesktopPanelWidthChange('layers', Number(event.target.value))}
+                      aria-label="Layers panel width"
+                      title="Layers panel width"
+                      style={{ width: 64, accentColor: GREEN, cursor: 'ew-resize' }}
+                    />
+                  )}
                   {([[t('designPaletteAllOn'), true], [t('designPaletteAllOff'), false]] as const).map(([label, val]) => (
                     <button
                       key={label}
@@ -1597,6 +1683,30 @@ export default function DesignPalette({
                       {Math.round(areaFillControl.value.plantOpacity * 100)}%
                     </span>
                   </div>
+                )}
+                {desktopAside && !isPhone && layersFloating && (
+                  <div
+                    onPointerDown={(event) => {
+                      layersFloatDrag.current = { dx: event.clientX - layersFloatPos.x, dy: event.clientY - layersFloatPos.y };
+                      setLayersFloatPos((position) => ({ ...position }));
+                    }}
+                    title="Drag Layers panel"
+                    style={{ flexBasis: '100%', marginTop: -2, padding: '3px 0', textAlign: 'center', color: '#7C725E', cursor: 'grab', touchAction: 'none', fontSize: 13, lineHeight: 1 }}
+                  >
+                    ⠿
+                  </div>
+                )}
+                {desktopAside && !isPhone && !layersFloating && (
+                  <div
+                    role="separator"
+                    aria-label="Drag to resize the Layers panel"
+                    onPointerDown={(event) => beginDesktopResize('layers', event)}
+                    style={{
+                      position: 'fixed', top: 116, bottom: 12, right: desktopLayersWidth + 8,
+                      width: 8, cursor: 'ew-resize', zIndex: 16, touchAction: 'none',
+                      background: 'linear-gradient(90deg, transparent 3px, rgba(31,77,43,0.38) 3px, rgba(31,77,43,0.38) 5px, transparent 5px)',
+                    }}
+                  />
                 )}
               </div>
             )}
@@ -2524,16 +2634,17 @@ export default function DesignPalette({
         ...(desktopAside
           ? {
               position: 'fixed' as const,
-              top: 76,
-              right: 12,
+              top: 116,
+              left: 12,
               bottom: 12,
-              width: 304,
+              width: desktopElementsWidth,
               zIndex: 15,
               padding: 10,
               background: PAPER,
               border: '1px solid rgba(11,18,11,0.16)',
               borderRadius: 16,
               boxShadow: '0 8px 28px rgba(11,18,11,0.14)',
+              boxSizing: 'border-box' as const,
             }
           : {
               // Docked bar: gutter so chips don't touch the screen edges, and safe-area padding so the
@@ -2543,6 +2654,23 @@ export default function DesignPalette({
             }),
       }}
     >
+      {desktopAside && (
+        <div style={{ display: 'flex', alignItems: 'center', gap: 8, paddingBottom: 2, borderBottom: '1px solid rgba(11,18,11,0.10)' }}>
+          <span style={{ fontWeight: 800, fontSize: 13, color: DARK, marginRight: 'auto' }}>⠿ Elements</span>
+          {onDesktopPanelWidthChange && (
+            <input
+              type="range"
+              min={DESKTOP_ELEMENTS_PANEL_MIN}
+              max={DESKTOP_ELEMENTS_PANEL_MAX}
+              value={desktopElementsWidth}
+              onChange={(event) => onDesktopPanelWidthChange('elements', Number(event.target.value))}
+              aria-label="Elements panel width"
+              title="Elements panel width"
+              style={{ width: 64, accentColor: GREEN, cursor: 'ew-resize' }}
+            />
+          )}
+        </div>
+      )}
       {/* THE SAME LADDER ON DESKTOP. This handle used to exist only in the phone branch above, so
           on a wide screen there was no way to collapse the bottom stack at all — which is exactly
           where the owner was looking for it. One component, one behaviour, both layouts. */}
@@ -2564,6 +2692,18 @@ export default function DesignPalette({
       <div style={{ display: 'flex', flexDirection: 'column', gap: guided ? 10 : 6, overflowY: 'auto', WebkitOverflowScrolling: 'touch', minHeight: 0, flex: desktopAside ? 1 : undefined, maxHeight: desktopAside ? undefined : '30dvh' }}>
         {renderBodyRows()}
       </div>
+      {desktopAside && (
+        <div
+          role="separator"
+          aria-label="Drag to resize the Elements panel"
+          onPointerDown={(event) => beginDesktopResize('elements', event)}
+          style={{
+            position: 'fixed', top: 116, bottom: 12, left: desktopElementsWidth + 8,
+            width: 8, cursor: 'ew-resize', zIndex: 16, touchAction: 'none',
+            background: 'linear-gradient(90deg, transparent 3px, rgba(31,77,43,0.38) 3px, rgba(31,77,43,0.38) 5px, transparent 5px)',
+          }}
+        />
+      )}
     </div>
   );
 }

@@ -35,6 +35,21 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '13 August',
+    sha: '558f733',
+    changes: [
+      'The small update button now shows which build is waiting',
+      'Elements and Layers stay beside the map, and both panels can resize or float',
+      'Guidance stays at the bottom without hiding tools behind Guided or Pro modes',
+      'AI finish choices appear sooner, with the longer explanation folded away',
+      'Rain barrels, citrus fruit and shade structures are easier to recognise on the plan',
+      'Click the full-screen map itself to minimise it',
+      'Preview & Export now scrolls to every map and finish option on phones',
+      'The mobile map header fits without hiding controls off the side',
+      'The empty Wind and Seasonal sun badges no longer cover the map preview',
+    ],
+  },
+  {
+    when: '13 August',
     sha: 'f78fe33',
     changes: [
       'Tap any plan preview to open it full screen, then use the top-right close button to return',

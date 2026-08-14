@@ -333,6 +333,7 @@ const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   designGlossyStyle: 'Style',
   designGlossyRecommended: 'Recommended',
   designGlossyChooseFinish: 'Choose your finish below.',
+  designGlossyHowFinishesWork: 'How finishes work',
   // Two finishes are offered. Say what each one costs and who draws the words on the sheet — that
   // second point is the whole reason the paid finish is trustworthy: the model never touches type.
   designGlossyFinishHelp: 'Exact Canvas is free and instant, and draws every label, legend and line at full sheet resolution. AI Polished saves that exact master first, then spends one paid AI render painting the map artwork — your boundary, labels, legend, title block, north arrow and scale bar are drawn back on top by the app afterwards, never by the model. Neither choice ever changes your canvas design.',
@@ -390,6 +391,7 @@ const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   designGlossyGotIt: 'Got it',
   designGlossyCloseSaved: 'Close saved maps',
   designGlossyInspectFullScreen: 'Tap the map to inspect it full screen',
+  designGlossyClickMapToMinimise: 'Click map to minimise',
   designGlossyNoSaved: 'No saved maps yet this session.',
   designGlossyCloseFullScreen: 'Close full-screen map',
   designGlossySavedOnDevice: 'Saved on this device — these stay here after you close the app.',

@@ -28,7 +28,7 @@ test('Reference Blueprint maps high-impact Water and Planting features to reusab
   assert.equal(referenceFeatureArtworkFor('beehive'), 'beehive-v1.png');
   assert.equal(referenceFeatureArtworkFor('chicken_tractor'), 'chicken-tractor-v1.png');
   assert.equal(referenceFeatureArtworkFor('nursery_table'), 'nursery-table-v1.png');
-  assert.equal(referenceFeatureArtworkFor('shade_house'), 'shade-house-v1.png');
+  assert.equal(referenceFeatureArtworkFor('shade_house'), 'shade-house-v2.png');
   assert.equal(referenceFeatureArtworkFor('gate'), 'driveway-gate-v1.png');
   assert.equal(referenceFeatureArtworkFor('pond_small'), 'pond-small-v1.png');
   assert.equal(referenceFeatureArtworkFor('greywater_basin'), 'greywater-basin-v1.png');
@@ -70,7 +70,7 @@ test('mango, litchi, macadamia and citrus have their own canopy art, not the sha
   assert.equal(referenceFeatureArtworkFor('tree_mango'), 'mango-tree-v1.png');
   assert.equal(referenceFeatureArtworkFor('tree_litchi'), 'litchi-tree-v1.png');
   assert.equal(referenceFeatureArtworkFor('tree_macadamia'), 'macadamia-tree-v1.png');
-  assert.equal(referenceFeatureArtworkFor('tree_citrus'), 'citrus-tree-v1.png');
+  assert.equal(referenceFeatureArtworkFor('tree_citrus'), 'citrus-tree-v2.png');
 });
 
 test('avocado has its own dedicated canopy art, no longer the shared orchard generic', () => {
