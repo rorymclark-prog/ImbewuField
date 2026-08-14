@@ -298,3 +298,14 @@ test('a generate that keeps killing the page goes light, and only a death counts
   // And the farmer is told, in one line, why this report went light.
   assert.match(view, /\{wentLight && \(/, 'a light report must say so, or the missing analysis reads as a bug');
 });
+
+test('the threshold fits inside what iOS Safari actually allows', () => {
+  // Safari reloads a crashed page exactly ONCE by itself; the second death is the terminal
+  // "A problem repeatedly occurred" screen, after which nothing runs. A threshold above 2 can
+  // therefore only be reached across separate openings — and Rory's crashes came through an
+  // in-app browser whose storage need not survive between openings, which is how the guard
+  // shipped, was verified in a persistent browser, and still produced four screenshots of the
+  // same grey screen in one day. At 2, the automatic reload IS the safe load. Raising this
+  // needs an answer to: how does load three ever happen on the screen above?
+  assert.equal(CRASH_LOOP_THRESHOLD, 2);
+});

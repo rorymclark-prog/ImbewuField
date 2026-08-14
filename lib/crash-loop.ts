@@ -51,10 +51,22 @@ export function pageLoadKey(search: string): string {
   return CRASH_LOOP_KEY;
 }
 
-/** Consecutive unsettled loads before safe mode engages. Two crashes can be bad luck (a huge
- *  photo, a busy phone); three in a row is the loop, and the farmer has by then watched the app
- *  die three times. */
-export const CRASH_LOOP_THRESHOLD = 3;
+/** Consecutive unsettled loads before safe mode engages.
+ *
+ *  TWO, BECAUSE OF HOW iOS SAFARI COUNTS. It reloads a crashed page exactly once by itself, and
+ *  the second death is the terminal "A problem repeatedly occurred" screen — after which nothing
+ *  runs at all. At the old threshold of three, that automatic reload (load two) still ran the
+ *  heavy path and died, so the third chance never arrived: the guard was beaten by the very
+ *  screen it exists to prevent. Worse, Rory reproduced this from an in-app browser (a link
+ *  opened inside another app), whose storage need not survive between presentations — so counts
+ *  could not accumulate ACROSS openings either, and 14 August ended with the fourth screenshot
+ *  of the same grey screen, guard shipped and useless. At two, the automatic reload IS the safe
+ *  load: one crash, and the page comes back light inside the same presentation.
+ *
+ *  The price is that a single unlucky kill (a busy phone, nothing wrong with the design) opens
+ *  the next load without its photo once — with the amber banner and its one-tap way back. That
+ *  is a mild cost on a page where light mode keeps every drawing and every measurement. */
+export const CRASH_LOOP_THRESHOLD = 2;
 
 /** How long the page must stay alive AFTER THE HEAVY WORK FINISHES before the load counts as
  *  settled.
