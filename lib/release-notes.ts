@@ -35,7 +35,7 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '14 August',
-    sha: 'acba19e',
+    sha: 'fd722d3',
     changes: [
       'Your report now looks at the photos you took of your land, not just their number',
       'And it shows them, on screen and in the downloaded PDF, with your own notes',
