@@ -25,7 +25,7 @@ test('Reference Blueprint maps high-impact Water and Planting features to reusab
   assert.equal(referenceFeatureArtworkFor('pollinator_strip'), 'pollinator-strip-v1.png');
   assert.equal(referenceFeatureArtworkFor('vetiver_row'), 'vetiver-bank-v1.png');
   assert.equal(referenceFeatureArtworkFor('shade_house'), 'shade-house-v2.png');
-  assert.equal(referenceFeatureArtworkFor('banana_clump'), 'banana-clump-v2.png');
+  assert.equal(referenceFeatureArtworkFor('banana_clump'), 'banana-clump-v5.png');
   assert.equal(referenceFeatureArtworkFor('tree_pawpaw'), 'pawpaw-tree-v2.png');
   assert.equal(referenceFeatureArtworkFor('tree_moringa'), 'moringa-tree-v1.png');
   assert.equal(referenceFeatureArtworkFor('keyhole_bed'), 'keyhole-bed-v1.png');
@@ -79,31 +79,64 @@ test('every named fruit and nut entry has dedicated identity art, including indi
 });
 
 test('avocado has its own dedicated canopy art, no longer the shared orchard generic', () => {
-  assert.equal(referenceFeatureArtworkFor('tree_avocado'), 'avocado-tree-v2.png');
+  assert.equal(referenceFeatureArtworkFor('tree_avocado'), 'avocado-tree-v5.png');
   assert.equal(
     referenceFeatureArtworkUrl('tree_avocado'),
-    '/render-assets/reference-blueprint/avocado-tree-v2.png',
+    '/render-assets/reference-blueprint/avocado-tree-v5.png',
   );
 });
 
-test('avocado fruit stays blue-black and cannot disappear into green leaves at map scale', () => {
-  const file = join(process.cwd(), 'public', 'render-assets', 'reference-blueprint', 'avocado-tree-v2.png');
+test('avocado fruit reads olive-brown rather than purple aubergine at map scale', () => {
+  const file = join(process.cwd(), 'public', 'render-assets', 'reference-blueprint', 'avocado-tree-v5.png');
   const { data } = PNG.sync.read(readFileSync(file));
   let opaque = 0;
   let greenLeaf = 0;
-  let blueBlackFruit = 0;
+  let oliveFruit = 0;
+  let purpleBlack = 0;
   for (let i = 0; i < data.length; i += 4) {
     const [red, green, blue, alpha] = [data[i], data[i + 1], data[i + 2], data[i + 3]];
     if (alpha <= 128) continue;
     opaque += 1;
     if (green > red * 1.15 && green > blue * 1.15) greenLeaf += 1;
-    if (Math.max(red, green, blue) < 100 && blue > green * 1.05 && blue > red * 1.05) {
-      blueBlackFruit += 1;
+    if (
+      red >= 30 && red <= 125
+      && green >= 30 && green <= 135
+      && blue < Math.min(red, green) * 0.72
+      && Math.abs(red - green) < 55
+    ) oliveFruit += 1;
+    if (Math.max(red, green, blue) < 120 && blue > green * 1.05 && blue > red * 1.05) {
+      purpleBlack += 1;
     }
   }
   assert.ok(greenLeaf / opaque > 0.45, 'avocado crown no longer reads as green foliage');
-  assert.ok(blueBlackFruit / opaque > 0.04,
-    'avocado fruit is too small or too leaf-green to remain visible on the plan');
+  assert.ok(oliveFruit / opaque > 0.04,
+    'avocado fruit has lost its olive-brown identity cue');
+  assert.ok(purpleBlack / opaque < 0.01,
+    'avocado fruit has drifted back toward an aubergine-like purple-black');
+});
+
+test('litchi and banana keep their fruit-family colour cues at map scale', () => {
+  const fruitFraction = (asset: string, matches: (red: number, green: number, blue: number) => boolean) => {
+    const file = join(process.cwd(), 'public', 'render-assets', 'reference-blueprint', asset);
+    const { data } = PNG.sync.read(readFileSync(file));
+    let opaque = 0;
+    let fruit = 0;
+    for (let i = 0; i < data.length; i += 4) {
+      if (data[i + 3] <= 128) continue;
+      opaque += 1;
+      if (matches(data[i], data[i + 1], data[i + 2])) fruit += 1;
+    }
+    return fruit / opaque;
+  };
+
+  assert.ok(
+    fruitFraction('litchi-tree-v5.png', (red, green, blue) => red > green * 1.45 && red > blue * 1.25) > 0.025,
+    'litchi has lost its visible coral-red fruit clusters',
+  );
+  assert.ok(
+    fruitFraction('banana-clump-v5.png', (red, green, blue) => red > 150 && green > 110 && blue < 100) > 0.02,
+    'banana clump has lost its visible yellow curved hands',
+  );
 });
 
 test('every mapped catalogue artwork is a real, dimensioned PNG in the public asset root', () => {
