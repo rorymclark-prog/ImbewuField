@@ -14,6 +14,9 @@ import {
   type CrashLoopStore,
   lastCrashPhase,
   noteCrashPhase,
+  markCleanExit,
+  markResumed,
+  startDeathWatch,
 } from '../lib/crash-loop.ts';
 import {
   recordReportAttempt,
@@ -308,4 +311,96 @@ test('the threshold fits inside what iOS Safari actually allows', () => {
   // same grey screen in one day. At 2, the automatic reload IS the safe load. Raising this
   // needs an answer to: how does load three ever happen on the screen above?
   assert.equal(CRASH_LOOP_THRESHOLD, 2);
+});
+
+test('a session that dies AFTER settling still counts, and the auto-reload opens light', () => {
+  // "That was in the design generate a map page but I am sure it just crashes everywhere." The
+  // load counter only sees loads that die before settling; a generate crash lands minutes after
+  // settle, on a clean record. The death watch closes that hole: ALIVE without CLEAN-EXIT means
+  // the last session was killed in the farmer's hands, whichever button did it.
+  const store = memoryStore();
+  const key = 'k';
+
+  // Load 1: healthy start, settles, then dies mid-generate (no clean exit ever recorded).
+  startDeathWatch(store, key);
+  recordPageLoad(store, key);
+  markPageSettled(store, key); // the load survived its startup — streak cleared
+  // ...the page is killed while generating. Nothing runs. Then the automatic reload:
+  const second = startDeathWatch(store, key);
+  assert.equal(second.previousSessionDied, true, 'a foreground death after settle went unnoticed');
+  const decision = resolveSafeMode(recordPageLoad(store, key), false, key);
+  assert.equal(decision.active, true, 'the reload after a mid-session crash must open light');
+});
+
+test('a startup death is never counted twice', () => {
+  // The load counter already carries a load that died before settling; the death watch adding
+  // one more would make a single startup crash read as a loop on its own.
+  const store = memoryStore();
+  const key = 'k';
+  startDeathWatch(store, key);
+  recordPageLoad(store, key); // dies before settling — counter stands at 1
+  const second = startDeathWatch(store, key);
+  assert.equal(second.previousSessionDied, false, 'the unsettled load was double-counted');
+  assert.equal(resolveSafeMode(recordPageLoad(store, key), false, key).active, true,
+    'two dead loads must still engage safe mode through the load counter alone');
+});
+
+test('backgrounding is housekeeping, not a crash', () => {
+  // iOS routinely evicts BACKGROUND tabs to reclaim memory. A farmer who switched apps and came
+  // back tomorrow must not lose their photo over it — only a foreground death counts.
+  const store = memoryStore();
+  const key = 'k';
+  startDeathWatch(store, key);
+  recordPageLoad(store, key);
+  markPageSettled(store, key);
+  markCleanExit(store, key); // home button / app switcher
+  // iOS evicts the tab overnight; the next open must read as clean:
+  assert.equal(startDeathWatch(store, key).previousSessionDied, false,
+    'a background eviction was counted as a crash');
+
+  // But coming BACK to the foreground re-arms the watch — a death after resuming counts.
+  markResumed(store, key);
+  // (this session now dies in the foreground)
+  assert.equal(startDeathWatch(store, key).previousSessionDied, true,
+    'a death after resuming from the background went unnoticed');
+});
+
+test('both guards run the death watch before counting their own load', () => {
+  // Order is the contract: startDeathWatch reads the counter as the LAST session left it to tell
+  // a startup death (already counted) from a mid-session one (invisible until now). Counting the
+  // new load first would make every death look like a startup death.
+  const lib = readFileSync(new URL('../lib/crash-loop.ts', import.meta.url), 'utf8');
+  for (const fn of ['designSafeMode', 'pageCrashGuard']) {
+    const at = lib.indexOf(`export function ${fn}(`);
+    const body = lib.slice(at, lib.indexOf('\n}', at));
+    const watch = body.indexOf('startDeathWatch(');
+    const count = body.indexOf('recordPageLoad(');
+    assert.ok(watch > 0, `${fn} no longer watches for mid-session deaths`);
+    assert.ok(count > watch, `${fn} counts its load before checking how the last session ended`);
+    assert.ok(body.indexOf('watchSessionExit(') > 0, `${fn} never wires the exit markers`);
+  }
+});
+
+test('bouncing off the page on purpose is not a crash streak', () => {
+  // Open the page, tap away before the settle timer, twice. At a threshold of two, counting
+  // those as dead loads would hold the map on the third visit for no reason — so a clean exit
+  // settles the load as well as flagging the exit (the page was alive when they left; that is
+  // the whole meaning of settled). This models what watchSessionExit's leave() does.
+  const store = memoryStore();
+  const key = 'k';
+  for (let visit = 0; visit < 2; visit++) {
+    startDeathWatch(store, key);
+    recordPageLoad(store, key);
+    markPageSettled(store, key); // leave() half one
+    markCleanExit(store, key);   // leave() half two
+  }
+  startDeathWatch(store, key);
+  assert.equal(resolveSafeMode(recordPageLoad(store, key), false, key).active, false,
+    'two deliberate bounces held the map');
+
+  // And the handlers really do both halves — asserted at the source, where they are wired.
+  const lib = readFileSync(new URL('../lib/crash-loop.ts', import.meta.url), 'utf8');
+  const leave = lib.slice(lib.indexOf('const leave = () => {'), lib.indexOf('const onHide'));
+  assert.match(leave, /markPageSettled/, 'a clean exit no longer settles the load');
+  assert.match(leave, /markCleanExit/, 'a clean exit no longer flags itself');
 });
