@@ -2,11 +2,12 @@
 
 import dynamic from 'next/dynamic';
 import Link from 'next/link';
-import { useState, useCallback, useEffect, useRef, Suspense } from 'react';
+import { useState, useCallback, useEffect, useMemo, useRef, Suspense } from 'react';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import { Settings, AlertTriangle, ChevronUp, Menu, Plus } from 'lucide-react';
 import AddSheet from '@/components/AddSheet';
 import { MAP_ELEMENT_FOR, type AddAction } from '@/lib/add-actions';
+import { CRASH_LOOP_SETTLE_MS, FARMER_LOAD_KEY, exitPageCrashGuard, markPageSettled, pageCrashGuard } from '@/lib/crash-loop';
 import DataPanel from '@/components/DataPanel';
 import TabBar from '@/components/TabBar';
 import ReportView from '@/components/ReportView';
@@ -88,6 +89,26 @@ function HomeInner() {
     setSavedReportView(r);
     setShowReport(true);
   }, []);
+
+  // CRASH GUARD — the same escape hatch the design page has (lib/crash-loop.ts), because on
+  // 13 August this page earned it: "It's happening everywhere!", with /farmer?panel=Reports on
+  // iOS Safari's "A problem repeatedly occurred" screen. This page mounts Mapbox GL with
+  // satellite tiles on every load; on a phone short of memory that dies, and with no counter it
+  // died identically on every retry. When the streak hits the threshold the MAP stays unmounted —
+  // a placeholder offers it back on tap — while every panel keeps working, which is exactly what
+  // a farmer locked out of their reports by the map behind them needs.
+  const mapGuard = useMemo(() => pageCrashGuard(FARMER_LOAD_KEY), []);
+  const [mapHeld, setMapHeld] = useState(false);
+  useEffect(() => { setMapHeld(mapGuard.active); }, [mapGuard.active]);
+  const [mapReady, setMapReady] = useState(false);
+  useEffect(() => {
+    // Settle only once the heavy thing has actually happened — the map came up — or when this is
+    // a light load and no map will mount at all. A fixed timer from mount is how the design
+    // page's guard was beaten on 4G; see CRASH_LOOP_SETTLE_MS.
+    if (!mapReady && !mapGuard.active) return;
+    const settled = window.setTimeout(() => markPageSettled(window.localStorage, mapGuard.key), CRASH_LOOP_SETTLE_MS);
+    return () => window.clearTimeout(settled);
+  }, [mapReady, mapGuard.active, mapGuard.key]);
 
   // Mobile bottom-sheet state — open/closed; auto-open if deep-linked to a panel
   const [sheetOpen, setSheetOpen] = useState(() => {
@@ -540,10 +561,33 @@ function HomeInner() {
         */}
         <div className="flex-1 flex overflow-hidden relative">
 
-          {/* Map — always full height; on desktop it shares width with panel */}
+          {/* Map — always full height; on desktop it shares width with panel.
+              Behind the crash guard: after repeated memory kills the map is the thing this page
+              can do without, so a looping load holds it back behind a tap instead of mounting it
+              into the same death. Rendered only after mount (mapHeld starts false), so the server
+              and the first client paint agree. */}
           <div className="flex-1 relative min-w-0">
+            {mapHeld ? (
+              <div className="w-full h-full flex flex-col items-center justify-center gap-3 px-8 text-center"
+                style={{ background: '#E9E4D3' }}>
+                <AlertTriangle size={22} style={{ color: '#C07A1E' }} />
+                <div className="font-display font-semibold" style={{ fontSize: 16, color: '#20190F' }}>
+                  {t('mapHeldTitle')}
+                </div>
+                <div className="font-sans" style={{ fontSize: 13, color: '#5C5040', maxWidth: 420 }}>
+                  {t('mapHeldBody')}
+                </div>
+                <button
+                  onClick={() => exitPageCrashGuard(mapGuard.key)}
+                  className="mt-1 px-4 py-2.5 rounded-full font-display font-semibold active:scale-95 transition-all"
+                  style={{ background: 'linear-gradient(135deg, #1F4D2B, #2D6B3C)', color: '#fff', fontSize: 14, border: 'none', cursor: 'pointer' }}>
+                  {t('mapHeldLoad')}
+                </button>
+              </div>
+            ) : (
             <PermaMap
               onLocationSelect={handleLocationSelect}
+              onMapReady={() => setMapReady(true)}
               selectedLocation={selected}
               guided={guidedMode && !selected}
               loading={loading}
@@ -561,6 +605,7 @@ function HomeInner() {
               showPeople={showPeople}
               onTogglePeople={() => setShowPeople(v => !v)}
             />
+            )}
 
             {/* ── Desktop "+ Add" pill ── */}
             {/* On lg+ there is no TabBar overlap, so anchor the Add door to the map

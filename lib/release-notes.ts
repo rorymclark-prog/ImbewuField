@@ -35,6 +35,16 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '14 August',
+    sha: '9809304',
+    changes: [
+      'A design that kept crashing on a slow connection now opens light on its own',
+      'The farmer map does the same — after repeated crashes it pauses and offers itself back',
+      'Your reports, photos and places all keep working while the map waits',
+      'Nothing is lost either way — drawings and measurements stay exact, only the pictures wait',
+    ],
+  },
+  {
+    when: '14 August',
     sha: '3ac34d5',
     changes: [
       'Fruit and nut trees now have larger, easier-to-see fruit and leaves on every map',

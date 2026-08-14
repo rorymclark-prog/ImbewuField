@@ -56,9 +56,18 @@ export function pageLoadKey(search: string): string {
  *  die three times. */
 export const CRASH_LOOP_THRESHOLD = 3;
 
-/** How long a page must stay alive before it counts as a successful load. Long enough to cover
- *  the photo fetch + bake that does the killing, short enough that a farmer who reads the screen
- *  for a moment and reloads by hand is not mistaken for a crash. */
+/** How long the page must stay alive AFTER THE HEAVY WORK FINISHES before the load counts as
+ *  settled.
+ *
+ *  After, not after mount. This began as a fixed timer from page load, described here as "long
+ *  enough to cover the photo fetch + bake" — and on 13 August Ubhejane crash-looped straight
+ *  through the shipped guard, on 4G, because a slow network falsifies any fixed number: the
+ *  downloads were still in flight when the timer fired, the streak was wiped with a clean
+ *  record, and the bake then killed the page at second twelve. Every load repeated exactly that,
+ *  so the counter could never reach the threshold and safe mode never engaged. The design page
+ *  now starts this clock only once its base pipeline reports the dangerous allocations are done
+ *  (or that none will run), so "settled" means what it claims: the work happened and the page
+ *  survived it. */
 export const CRASH_LOOP_SETTLE_MS = 8000;
 
 /** The one slice of Storage this needs — injectable so the policy is testable without a browser. */
@@ -164,6 +173,53 @@ export function designSafeMode(): SafeModeDecision {
   }
   resolvedForThisLoad = resolveSafeMode(recordPageLoad(window.localStorage, key), requested, key);
   return resolvedForThisLoad;
+}
+
+/**
+ * The same guard for any OTHER page — the farmer map first.
+ *
+ * 13 August, minutes after Ubhejane's design page hit the terminal screen: "It's happening
+ * everywhere!" — with /farmer?panel=Reports in the screenshot. Nothing merged that day touches
+ * that page's memory profile; what it exposed is that /design was the only page that knew how to
+ * stop digging. The farmer page mounts Mapbox GL with satellite tiles on every load, so when a
+ * phone is short of memory — many tabs, a long day, 4G — it dies the same way and, with no
+ * counter, retries the same way forever. A farmer locked out of their REPORTS because the MAP
+ * behind them is expensive is the exact shape safe mode exists for.
+ *
+ * Keyed per page (one farmer map, unlike the per-farm design keys), cached per page load for the
+ * same reason designSafeMode is: the counter must advance once per load, not once per render.
+ */
+export const FARMER_LOAD_KEY = 'imbewu_farmer_page_loads';
+
+const resolvedByKey = new Map<string, SafeModeDecision>();
+
+export function pageCrashGuard(storageKey: string): SafeModeDecision {
+  const cached = resolvedByKey.get(storageKey);
+  if (cached) return cached;
+  if (typeof window === 'undefined') return { active: false, reason: null, loads: 0, key: storageKey };
+  let requested = false;
+  try {
+    requested = new URLSearchParams(currentSearch()).get('safe') === '1';
+  } catch {
+    /* not a request */
+  }
+  const decision = resolveSafeMode(recordPageLoad(window.localStorage, storageKey), requested, storageKey);
+  resolvedByKey.set(storageKey, decision);
+  return decision;
+}
+
+/** Leave a pageCrashGuard's light mode: forget the streak and reload heavy. */
+export function exitPageCrashGuard(storageKey: string): void {
+  if (typeof window === 'undefined') return;
+  markPageSettled(window.localStorage, storageKey);
+  resolvedByKey.delete(storageKey);
+  try {
+    const url = new URL(window.location.href);
+    url.searchParams.delete('safe');
+    window.location.replace(url.toString());
+  } catch {
+    window.location.reload();
+  }
 }
 
 /** Read the decision WITHOUT counting a load.
