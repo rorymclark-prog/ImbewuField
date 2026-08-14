@@ -25,8 +25,8 @@ const ART_DIR = join(process.cwd(), 'public', 'render-assets', 'reference-bluepr
 // rather than imported so that a canopy quietly dropping out of that module cannot also quietly
 // drop out of this guard.
 const CANOPIES = [
-  'orchard-canopy-v1.png', 'banana-clump-v2.png', 'pawpaw-tree-v2.png', 'moringa-tree-v1.png',
-  'avocado-tree-v2.png', 'mango-tree-v2.png', 'litchi-tree-v2.png', 'macadamia-tree-v2.png',
+  'orchard-canopy-v1.png', 'banana-clump-v5.png', 'pawpaw-tree-v2.png', 'moringa-tree-v1.png',
+  'avocado-tree-v5.png', 'mango-tree-v2.png', 'litchi-tree-v5.png', 'macadamia-tree-v2.png',
   'citrus-tree-v3.png', 'apple-tree-v1.png', 'pear-tree-v1.png', 'plum-tree-v1.png',
   'peach-tree-v1.png', 'fig-tree-v1.png', 'pomegranate-tree-v1.png',
   'marula-tree-v2.png', 'kei-apple-tree-v2.png',

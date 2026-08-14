@@ -38,10 +38,10 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     sha: '0e3a04c',
     changes: [
       'Fruit and nut trees now have larger, easier-to-see fruit and leaves on every map',
-      'Avocado fruit is blue-black, so it stands apart from the green leaves',
+      'Avocados are olive-green instead of aubergine-purple, with fruit visible at map scale',
       'All five indigenous fruit trees now have their own recognisable fruit and foliage',
       'Apple, pear, plum, peach, fig, pomegranate and olive no longer share one tree picture',
-      'Banana clumps now show clear yellow bunches from above',
+      'Litchis show coral-red clusters, and banana clumps show curved yellow hands from above',
     ],
   },
   {

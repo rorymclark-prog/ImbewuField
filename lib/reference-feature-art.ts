@@ -9,12 +9,12 @@ export type ReferenceFeatureArtwork =
   | 'pollinator-strip-v1.png'
   | 'vetiver-bank-v1.png'
   | 'shade-house-v2.png'
-  | 'banana-clump-v2.png'
+  | 'banana-clump-v5.png'
   | 'pawpaw-tree-v2.png'
   | 'moringa-tree-v1.png'
-  | 'avocado-tree-v2.png'
+  | 'avocado-tree-v5.png'
   | 'mango-tree-v2.png'
-  | 'litchi-tree-v2.png'
+  | 'litchi-tree-v5.png'
   | 'macadamia-tree-v2.png'
   | 'citrus-tree-v3.png'
   | 'apple-tree-v1.png'
@@ -96,12 +96,12 @@ const STRUCTURE_ART: Readonly<Record<string, ReferenceFeatureArtwork>> = {
 };
 
 const PLANTING_DETAIL_ART: Readonly<Record<string, ReferenceFeatureArtwork>> = {
-  banana_clump: 'banana-clump-v2.png',
+  banana_clump: 'banana-clump-v5.png',
   tree_pawpaw: 'pawpaw-tree-v2.png',
   tree_moringa: 'moringa-tree-v1.png',
-  tree_avocado: 'avocado-tree-v2.png',
+  tree_avocado: 'avocado-tree-v5.png',
   tree_mango: 'mango-tree-v2.png',
-  tree_litchi: 'litchi-tree-v2.png',
+  tree_litchi: 'litchi-tree-v5.png',
   tree_macadamia: 'macadamia-tree-v2.png',
   tree_citrus: 'citrus-tree-v3.png',
   tree_apple: 'apple-tree-v1.png',
