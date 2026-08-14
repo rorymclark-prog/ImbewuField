@@ -10,7 +10,7 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import type { Position } from 'geojson';
 import { ArrowLeft, Compass, MapPin, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Lightbulb, Image as ImageIcon, Sprout, X, Printer, Lock } from 'lucide-react';
-import { CRASH_LOOP_SETTLE_MS, designSafeMode, exitSafeMode, markPageSettled } from '@/lib/crash-loop';
+import { CRASH_LOOP_SETTLE_MS, designSafeMode, exitSafeMode, lastCrashPhase, markPageSettled, noteCrashPhase } from '@/lib/crash-loop';
 import { loadPlaces, resolveColor, type SavedPlace } from '@/lib/saved-places';
 
 import type { LocationData } from '@/lib/types';
@@ -1267,6 +1267,7 @@ function DesignStudioInner() {
         if (!customBase) return;
         if (loadedCustomBaseUrlRef.current === customBase.url) return;
         const token = baseRequestRef.current;
+        noteCrashPhase(window.localStorage, safeMode.key, 'downloading your photo');
         fetchImageAsDataUrl(customBase.url)
           .then((dataUrl) => {
             // The farmer switched base while this was in flight. Writing now would put these
@@ -1301,6 +1302,7 @@ function DesignStudioInner() {
         if (!customBase || !url) return;
         const key = `${targetFrame.centerLng},${targetFrame.centerLat},${targetFrame.zoom}`;
         if (loadedUnderlayKeyRef.current === key) return;
+        noteCrashPhase(window.localStorage, safeMode.key, 'downloading the satellite backdrop');
         fetchBasemapForFrame(targetFrame, url, fetchImageAsDataUrl)
           .then((dataUrl) => {
             loadedUnderlayKeyRef.current = key;
@@ -1372,6 +1374,7 @@ function DesignStudioInner() {
             // Through fetchBasemapForFrame, not fetchImageAsDataUrl directly — see that function
             // for why. This is the surface the farmer actually uses; a provider branch that skips
             // it is a provider branch that does nothing.
+            noteCrashPhase(window.localStorage, safeMode.key, 'downloading the satellite image');
             fetchBasemapForFrame(frameNoImg, url, fetchImageAsDataUrl)
               .then((dataUrl) => setFrame(withScale({ ...frameNoImg, satDataUrl: dataUrl })))
               .catch(() => setFrame(withScale({ ...frameNoImg, satDataUrl: null })))
@@ -1660,6 +1663,9 @@ function DesignStudioInner() {
     // farmer already corrected.
     const token = bakeTokenRef.current + 1;
     bakeTokenRef.current = token;
+    // The peak allocation of the whole page. If the next load's banner names this step, the
+    // phone could download everything and died merging it — a different fix from a download kill.
+    noteCrashPhase(window.localStorage, safeMode.key, 'merging your photo with the map');
     // While a button is held, the transient value is the one the farmer is watching — it has not
     // been persisted yet (see holdAlign), but it must still be what they SEE.
     const align = holdAlign ?? photo;
@@ -2961,7 +2967,13 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           <span style={{ fontWeight: 600 }}>
             {safeMode.reason === 'requested'
               ? 'Light mode — your design is here, without the background photo.'
-              : 'The app kept closing on this design, so it opened without the background photo. Everything you drew is here, and your measurements are unchanged.'}
+              : `The app kept closing on this design${(() => {
+                  // The one-word note the dead load left behind (lib/crash-loop.ts). To the
+                  // farmer it reads as plain honesty; in a screenshot it tells whoever is
+                  // debugging WHICH step was in flight when iOS killed the page.
+                  const phase = lastCrashPhase(window.localStorage, safeMode.key);
+                  return phase ? ` — last time while ${phase}` : '';
+                })()}, so it opened without the background photo. Everything you drew is here, and your measurements are unchanged.`}
           </span>
           <button
             type="button"

@@ -35,8 +35,11 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '14 August',
-    sha: 'fd722d3',
+    sha: '5d3c231',
     changes: [
+      'If generating a report keeps closing the app, the next try goes lighter and finishes',
+      'When it does, the report says so — your maps still show on screen and in the PDF',
+      'A design that keeps closing now says which step it closed on, so it can be fixed faster',
       'Your report now looks at the photos you took of your land, not just their number',
       'And it shows them, on screen and in the downloaded PDF, with your own notes',
       'So the soil, water and tree advice describes what is actually on the ground',
