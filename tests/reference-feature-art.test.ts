@@ -12,7 +12,7 @@ import {
   stapleTileFor,
   VEG_SPRITES,
 } from '@/lib/reference-feature-art';
-import { ELEMENT_CATALOG } from '@/lib/design-elements';
+import { ELEMENT_CATALOG, plantingGroupFor } from '@/lib/design-elements';
 
 test('Reference Blueprint maps high-impact Water and Planting features to reusable artwork', () => {
   assert.equal(referenceFeatureArtworkFor('jojo_5000'), 'jojo-5000-top-v1.png');
@@ -20,13 +20,13 @@ test('Reference Blueprint maps high-impact Water and Planting features to reusab
   // Guava has its OWN crown now — it was one of the thirteen ids that shared
   // orchard-canopy-v1.png. It stays the example here because what this line tests is that a
   // planting feature resolves to artwork at all, not which file it happens to be.
-  assert.equal(referenceFeatureArtworkFor('tree_guava'), 'guava-v1.png');
+  assert.equal(referenceFeatureArtworkFor('tree_guava'), 'guava-v2.png');
   assert.equal(referenceFeatureArtworkFor('veg_bed'), 'production-bed-v1.png');
   assert.equal(referenceFeatureArtworkFor('pollinator_strip'), 'pollinator-strip-v1.png');
   assert.equal(referenceFeatureArtworkFor('vetiver_row'), 'vetiver-bank-v1.png');
   assert.equal(referenceFeatureArtworkFor('shade_house'), 'shade-house-v2.png');
-  assert.equal(referenceFeatureArtworkFor('banana_clump'), 'banana-clump-v1.png');
-  assert.equal(referenceFeatureArtworkFor('tree_pawpaw'), 'pawpaw-tree-v1.png');
+  assert.equal(referenceFeatureArtworkFor('banana_clump'), 'banana-clump-v2.png');
+  assert.equal(referenceFeatureArtworkFor('tree_pawpaw'), 'pawpaw-tree-v2.png');
   assert.equal(referenceFeatureArtworkFor('tree_moringa'), 'moringa-tree-v1.png');
   assert.equal(referenceFeatureArtworkFor('keyhole_bed'), 'keyhole-bed-v1.png');
   assert.equal(referenceFeatureArtworkFor('herb_spiral'), 'herb-spiral-v1.png');
@@ -53,31 +53,57 @@ test('exact plans leave perspective illustrations on the palette and use overhea
 
 test('legacy feature IDs select the same exact artwork without rewriting saved data', () => {
   assert.equal(referenceFeatureArtworkFor('  JOJO---5000  '), 'jojo-5000-top-v1.png');
-  assert.equal(referenceFeatureArtworkFor('tree guava'), 'guava-v1.png');
+  assert.equal(referenceFeatureArtworkFor('tree guava'), 'guava-v2.png');
   assert.equal(referenceFeatureArtworkFor('RAIN---BARREL'), 'rain-barrel-top-v1.png');
 });
 
 test('artwork URLs are stable public paths', () => {
   assert.equal(
     referenceFeatureArtworkUrl('tree_guava'),
-    '/render-assets/reference-blueprint/guava-v1.png',
+    '/render-assets/reference-blueprint/guava-v2.png',
   );
   assert.equal(referenceFeatureArtworkUrl('other_water'), null);
 });
 
-test('mango, litchi, macadamia and citrus have their own canopy art, not the shared generic', () => {
-  assert.equal(referenceFeatureArtworkFor('tree_mango'), 'mango-tree-v1.png');
-  assert.equal(referenceFeatureArtworkFor('tree_litchi'), 'litchi-tree-v1.png');
-  assert.equal(referenceFeatureArtworkFor('tree_macadamia'), 'macadamia-tree-v1.png');
-  assert.equal(referenceFeatureArtworkFor('tree_citrus'), 'citrus-tree-v3.png');
+test('every named fruit and nut entry has dedicated identity art, including indigenous fruit', () => {
+  const fruitAndNut = ELEMENT_CATALOG.filter((def) => {
+    const group = plantingGroupFor(def);
+    return group === 'fruit_nut' || group === 'indigenous_fruit';
+  });
+  assert.ok(fruitAndNut.length >= 20, 'the guard must cover the complete orchard and indigenous sections');
+  for (const def of fruitAndNut) {
+    const art = referenceFeatureArtworkFor(def.id);
+    assert.ok(art, `${def.id} has no exact-plan artwork`);
+    assert.notEqual(art, 'orchard-canopy-v1.png', `${def.id} still uses the neutral Other Tree crown`);
+  }
 });
 
 test('avocado has its own dedicated canopy art, no longer the shared orchard generic', () => {
-  assert.equal(referenceFeatureArtworkFor('tree_avocado'), 'avocado-tree-v1.png');
+  assert.equal(referenceFeatureArtworkFor('tree_avocado'), 'avocado-tree-v2.png');
   assert.equal(
     referenceFeatureArtworkUrl('tree_avocado'),
-    '/render-assets/reference-blueprint/avocado-tree-v1.png',
+    '/render-assets/reference-blueprint/avocado-tree-v2.png',
   );
+});
+
+test('avocado fruit stays blue-black and cannot disappear into green leaves at map scale', () => {
+  const file = join(process.cwd(), 'public', 'render-assets', 'reference-blueprint', 'avocado-tree-v2.png');
+  const { data } = PNG.sync.read(readFileSync(file));
+  let opaque = 0;
+  let greenLeaf = 0;
+  let blueBlackFruit = 0;
+  for (let i = 0; i < data.length; i += 4) {
+    const [red, green, blue, alpha] = [data[i], data[i + 1], data[i + 2], data[i + 3]];
+    if (alpha <= 128) continue;
+    opaque += 1;
+    if (green > red * 1.15 && green > blue * 1.15) greenLeaf += 1;
+    if (Math.max(red, green, blue) < 100 && blue > green * 1.05 && blue > red * 1.05) {
+      blueBlackFruit += 1;
+    }
+  }
+  assert.ok(greenLeaf / opaque > 0.45, 'avocado crown no longer reads as green foliage');
+  assert.ok(blueBlackFruit / opaque > 0.04,
+    'avocado fruit is too small or too leaf-green to remain visible on the plan');
 });
 
 test('every mapped catalogue artwork is a real, dimensioned PNG in the public asset root', () => {

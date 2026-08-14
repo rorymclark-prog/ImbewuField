@@ -4244,7 +4244,7 @@ const ARTWORK_EDGE_BLEED = 1.14;
  * drawn to sit inside it, so the tree still occupies exactly the ground the farmer allocated.
  *
  * IT MUST NOT BE SWITCHED ON BEFORE THE NEW ARTWORK LANDS. The current canopies carry a painted
- * mulch band — the outer 75-100% of orchard-canopy-v1, avocado-tree-v1 and marula-tree-v1 is
+ * mulch band — the outer 75-100% of the original orchard, avocado and marula crowns was
  * 56-70% brown pixels — and today the cream casing and the soil fill are what hide it. Remove
  * them from the old art and that brown band is what a farmer sees. New art under 'footprint' is
  * a disc; old art under 'artwork' is a brown ring. Neither half is worth shipping alone.
