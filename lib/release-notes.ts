@@ -34,6 +34,19 @@ export interface ReleaseNote {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '14 August',
+    sha: 'e805e1c',
+    changes: [
+      'Preview & Export now keeps the same numbered layout whether you open Glossy or Preview map',
+      'Sheet, underlay, labels, style, quality and finish now follow one numbered workflow',
+      'The tiny Elements and Layers width sliders are gone — drag a panel edge to resize it',
+      'The design steps now fill the top bar, and editing shortcuts leave more room for the map',
+      'Citrus trees have larger leaves and oranges, with some fruit tucked behind the leaves',
+      'Banana circles now show several banana plants around the open centre',
+      'Taps, gates, nursery tables and other plan features now use an overhead view',
+    ],
+  },
+  {
     when: '13 August',
     sha: '558f733',
     changes: [
