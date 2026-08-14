@@ -45,7 +45,8 @@ export default function CardsStepper({ step, onStep }: CardsStepperProps) {
       role="tablist"
       aria-label="Design steps"
       style={{
-        display: 'flex', alignItems: 'center', gap: 2, minWidth: 0, flex: '1 1 auto',
+        display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 4,
+        width: '100%', minWidth: 0, flex: '1 1 auto',
         overflowX: 'auto', scrollbarWidth: 'none', WebkitOverflowScrolling: 'touch',
       }}
     >
@@ -61,8 +62,9 @@ export default function CardsStepper({ step, onStep }: CardsStepperProps) {
             aria-label={`Step ${String(i + 1).padStart(2, '0')} — ${STEP_LABELS[s]}`}
             onClick={() => onStep(s)}
             style={{
-              display: 'inline-flex', alignItems: 'center', gap: 6, flexShrink: 0,
-              minHeight: 30, padding: active ? '3px 12px' : '3px 9px',
+              display: 'inline-flex', alignItems: 'center', justifyContent: 'center', gap: 6,
+              flex: '1 0 108px', maxWidth: 150,
+              minHeight: 34, padding: active ? '3px 12px' : '3px 9px',
               borderRadius: 999, border: 'none', cursor: active ? 'default' : 'pointer',
               background: active ? GREEN : 'transparent',
               color: active ? PAPER : '#6B6355',

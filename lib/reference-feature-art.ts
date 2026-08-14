@@ -8,18 +8,7 @@ export type ReferenceFeatureArtwork =
   | 'production-bed-v1.png'
   | 'pollinator-strip-v1.png'
   | 'vetiver-bank-v1.png'
-  | 'compost-bay-v1.png'
-  | 'beehive-v1.png'
-  | 'chicken-tractor-v1.png'
-  | 'nursery-table-v1.png'
   | 'shade-house-v2.png'
-  | 'driveway-gate-v1.png'
-  | 'pond-small-v1.png'
-  | 'greywater-basin-v1.png'
-  | 'tree-basin-v1.png'
-  | 'tap-point-v1.png'
-  | 'pump-filter-v1.png'
-  | 'greywater-diverter-v1.png'
   | 'banana-clump-v1.png'
   | 'pawpaw-tree-v1.png'
   | 'moringa-tree-v1.png'
@@ -27,7 +16,7 @@ export type ReferenceFeatureArtwork =
   | 'mango-tree-v1.png'
   | 'litchi-tree-v1.png'
   | 'macadamia-tree-v1.png'
-  | 'citrus-tree-v2.png'
+  | 'citrus-tree-v3.png'
   | 'keyhole-bed-v1.png'
   | 'herb-spiral-v1.png'
   | 'spekboom-hedge-v1.png'
@@ -107,21 +96,7 @@ const PRODUCTION_BEDS = new Set(['veg_bed', 'raised_bed']);
 const VETIVER_BANKS = new Set(['vetiver_row', 'mulch_bank']);
 
 const STRUCTURE_ART: Readonly<Record<string, ReferenceFeatureArtwork>> = {
-  compost_bay: 'compost-bay-v1.png',
-  beehive: 'beehive-v1.png',
-  chicken_tractor: 'chicken-tractor-v1.png',
-  nursery_table: 'nursery-table-v1.png',
   shade_house: 'shade-house-v2.png',
-  gate: 'driveway-gate-v1.png',
-};
-
-const WATER_HARDWARE_ART: Readonly<Record<string, ReferenceFeatureArtwork>> = {
-  pond_small: 'pond-small-v1.png',
-  greywater_basin: 'greywater-basin-v1.png',
-  tree_basin: 'tree-basin-v1.png',
-  tap_point: 'tap-point-v1.png',
-  pump_filter: 'pump-filter-v1.png',
-  greywater_diverter: 'greywater-diverter-v1.png',
 };
 
 const PLANTING_DETAIL_ART: Readonly<Record<string, ReferenceFeatureArtwork>> = {
@@ -132,7 +107,7 @@ const PLANTING_DETAIL_ART: Readonly<Record<string, ReferenceFeatureArtwork>> = {
   tree_mango: 'mango-tree-v1.png',
   tree_litchi: 'litchi-tree-v1.png',
   tree_macadamia: 'macadamia-tree-v1.png',
-  tree_citrus: 'citrus-tree-v2.png',
+  tree_citrus: 'citrus-tree-v3.png',
   keyhole_bed: 'keyhole-bed-v1.png',
   herb_spiral: 'herb-spiral-v1.png',
   spekboom_hedge: 'spekboom-hedge-v1.png',
@@ -167,7 +142,6 @@ export function referenceFeatureArtworkFor(defId: string): ReferenceFeatureArtwo
   if (key === 'pollinator_strip') return 'pollinator-strip-v1.png';
   if (VETIVER_BANKS.has(key)) return 'vetiver-bank-v1.png';
   if (STRUCTURE_ART[key]) return STRUCTURE_ART[key];
-  if (WATER_HARDWARE_ART[key]) return WATER_HARDWARE_ART[key];
   if (PLANTING_DETAIL_ART[key]) return PLANTING_DETAIL_ART[key];
   return null;
 }
