@@ -35,6 +35,28 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '15 August',
+    // Swarm round 2 — 15 branches, squash-merged into main this session.
+    sha: '789d8dfadfa8a350f5de9c8f077f9ed232401994',
+    changes: [
+      'Dark mode no longer flashes bright white menus and buttons when the app opens',
+      'Print buttons no longer go silent, and multi-page reports keep their footer and header on every page',
+      'No more raw error codes on the sale, insights and life-guide screens',
+      'A failed load now shows a Retry button instead of looking empty or zero — on Contact, Design, My Records and the facilitator dashboard',
+      'My Records no longer double-counts a paid invoice, and December sales no longer disappear from the season view',
+      'A message, post or report that fails on a bad connection now tells you, instead of pretending to send',
+      'Reports, farm records and the site survey panel now open faster',
+      '"Trace your boundary" on Home now actually starts tracing, and Crop Planner is no longer listed twice in the menu',
+      'Crop Plan no longer crashes for a one-bed farm, maize moves to its real October sowing month, and the Planting Calendar has a menu entry',
+      'Prices, weights and kg entries now accept a comma decimal, and the site survey warns before discarding your answers',
+      'Traced ground features no longer vanish after switching a map layer off, and Undo/Redo no longer says Saved when a save actually failed',
+      "Funders no longer see farmers' ID numbers, and a missing profile can no longer slip anyone into a staff dashboard",
+      'Muted text, the Home date and the Back button are easier to read and tap in bright sun',
+      'The wind compass arrow now matches its own text, and the Tank Calculator caption shows the right runoff number',
+      'Evidence, profile and survey sheets now close with Escape and read properly with a screen reader',
+    ],
+  },
+  {
+    when: '15 August',
     sha: '7aa368b09cdab2ead8d96b4397b19de5519c5bc8',
     changes: [
       'A design with years of saved sheets and its own photo now opens without crashing',
