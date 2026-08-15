@@ -513,6 +513,10 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
   // This used to be only a console.warn — "skip silently" — which read as a dead button: no
   // preview appeared AND the Analyse button (which only renders once previews exist) never came.
   const [promptSkipped, setPromptSkipped] = useState(0);
+  // Same bug, one step later: a failed /api/analyse-photos call used to close this sheet and open
+  // the report anyway, with nothing analysed and nothing said — a farmer who tapped "Analyse &
+  // generate" would land on a report that looked finished but never looked at her photos.
+  const [promptError, setPromptError] = useState(false);
   const promptInputRef = useRef<HTMLInputElement>(null);
 
   async function resizeForPrompt(file: File): Promise<{ data: string; mediaType: string } | null> {
@@ -564,6 +568,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
 
   async function handlePromptFiles(files: FileList | null) {
     if (!files?.length) return;
+    setPromptError(false);
     const candidates = (await Promise.all(
       Array.from(files).slice(0, 6).map(convertIfHeic),
     )).filter(f => f.type.startsWith('image/'));
@@ -577,6 +582,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
   async function analyseAndGenerate() {
     if (!promptImageData.length || !data) return;
     setPromptLoading(true);
+    setPromptError(false);
     try {
       const res = await fetch('/api/analyse-photos', {
         method: 'POST',
@@ -596,9 +602,11 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
       if (analysis) setPhotoAnalysis(analysis);
       setPhotoPromptOpen(false);
       onOpenReport(analysis ?? photoAnalysis);
-    } catch {
-      setPhotoPromptOpen(false);
-      onOpenReport(photoAnalysis);
+    } catch (err) {
+      // Stay on the sheet and say so — the report is not opened, because opening it here reads as
+      // "your photos were analysed and this is the result" when nothing was analysed at all.
+      console.error('[data-panel] photo analysis failed:', err);
+      setPromptError(true);
     } finally {
       setPromptLoading(false);
     }
@@ -606,6 +614,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
 
   function openPhotoOrReport() {
     if (!photoAnalysis) {
+      setPromptError(false);
       setPhotoPromptOpen(true);
     } else {
       onOpenReport(photoAnalysis);
@@ -1912,6 +1921,12 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             {promptSkipped > 0 && (
               <div className="font-sans" style={{ marginTop: 10, padding: '9px 12px', borderRadius: 10, background: 'rgba(178,109,17,0.10)', border: '1px solid rgba(178,109,17,0.3)', fontSize: 12.5, color: '#7A4E0E', lineHeight: 1.5 }}>
                 {t('photoSkippedNote')}
+              </div>
+            )}
+
+            {promptError && (
+              <div className="font-sans" style={{ marginTop: 10, padding: '9px 12px', borderRadius: 10, background: 'rgba(139,32,32,0.08)', border: '1px solid rgba(139,32,32,0.25)', fontSize: 12.5, color: '#8B2020', lineHeight: 1.5 }}>
+                {t('photoAnalyseError')}
               </div>
             )}
 
