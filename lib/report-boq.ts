@@ -297,13 +297,21 @@ export function buildBillOfQuantities(facts: ReportSiteFacts | null | undefined)
     );
   }
   if (design && design.plotAreaM2 > 0) {
-    const entry = PRICE_BOOK.veg_bed_per_m2;
-    priced(
+    // Staple plots are field-scale — design-canvas.ts's own reason for the tool is "a farmer
+    // whose main food production is a quarter-hectare of mielies". veg_bed_per_m2 is the ONLY
+    // per-m² growing-area rate in the price book, but it prices an intensive hand-tended bed
+    // ("soil amendment/compost and seed/seedlings" — see price-book.ts). Applying it to a
+    // 2 500 m² maize/beans/pumpkin field used to print R300 000 for ground that needs tillage
+    // and seed, not per-square-metre compost — an invented number wearing the costume of a
+    // measurement. There is no researched field-crop rate in the price book, so this stays
+    // unpriced rather than borrowing the wrong one, exactly as this file's own header requires:
+    // a measured quantity with no rate that actually fits it is listed, never costed at one that
+    // doesn't.
+    unpriced(
       'Growing area',
       `Staple plots established (${design.plotCount} plot${design.plotCount === 1 ? '' : 's'})`,
       areaQty(design.plotAreaM2),
-      entry,
-      Math.round(design.plotAreaM2 * entry.zar),
+      'no-rate',
       'Measured off the farmer\'s plan',
     );
   }
