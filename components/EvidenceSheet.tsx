@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import { X, Camera, Upload, Trash2, FileText } from 'lucide-react';
 import type { EvidenceCatalogueGroup, EvidenceCatalogueItem } from '@/lib/evidence-catalogue';
-import { QUICK_NUMBERS, LIMA_TIPS } from '@/lib/evidence-catalogue';
+import { EVIDENCE_GROUP_ICON, QUICK_NUMBERS, LIMA_TIPS } from '@/lib/evidence-catalogue';
 import {
   getEvidenceItems,
   addEvidenceItem,
@@ -119,7 +119,7 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
               width: 36, height: 36, borderRadius: 9,
               background: group.iconBg, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
             }}>
-              <span style={{ fontSize: 18 }}>{GROUP_ICON[group.key]}</span>
+              <span style={{ fontSize: 18 }}>{EVIDENCE_GROUP_ICON[group.key] ?? '📄'}</span>
             </div>
             <div style={{ flex: 1 }}>
               <div style={{ font: '600 17px Newsreader, Georgia, serif', color: '#2D2519' }}>{groupLabel}</div>
@@ -315,12 +315,3 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
     </div>
   );
 }
-
-const GROUP_ICON: Record<string, string> = {
-  water: '💧',
-  structures: '🏠',
-  soil: '🌱',
-  trees: '🌿',
-  animals: '🐓',
-  energy: '⚡',
-};
