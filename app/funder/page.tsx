@@ -10,6 +10,8 @@ import BrandLogo from '@/components/BrandLogo';
 import LessonLink from '@/components/design/LessonLink';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
+import { canAccessRolePage } from '@/lib/role-access';
+import type { UserRole } from '@/lib/db/types';
 
 const NgoDashboard = dynamic(() => import('@/components/NgoDashboard'), {
   ssr: false,
@@ -20,7 +22,7 @@ const NgoDashboard = dynamic(() => import('@/components/NgoDashboard'), {
   ),
 });
 
-const FUNDER_ALLOWED_ROLES = new Set(['funder', 'admin']);
+const FUNDER_ALLOWED_ROLES = new Set<UserRole>(['funder', 'admin']);
 
 export default function FunderPage() {
   const { user, role, loading } = useAuth();
@@ -31,7 +33,7 @@ export default function FunderPage() {
     if (!loading && !user && isLive) router.replace('/login');
   }, [user, loading, router, isLive]);
 
-  if (!loading && user && isLive && role && !FUNDER_ALLOWED_ROLES.has(role)) {
+  if (!loading && user && isLive && !canAccessRolePage(role, FUNDER_ALLOWED_ROLES)) {
     return (
       <div className="flex h-screen items-center justify-center px-4" style={{ background: '#E4DCC6' }}>
         <div className="rounded-2xl px-6 py-8 text-center max-w-xs" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
