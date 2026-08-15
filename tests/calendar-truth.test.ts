@@ -78,6 +78,22 @@ test('January no longer invites a maize harvest or a sweet-potato planting', () 
   );
 });
 
+// A farmer whose planted crops are entirely outside this page's fixed 8-crop CROPS array (Kale,
+// Cucumber, a custom name — anything not in the list at the top of this file) used to see the
+// "Showing your N planned crops" notice read "Showing your 0 planned crops" and then a table with
+// a header row and nothing under it: no explanation, just blank, which reads as broken rather than
+// "none of your crops are covered here yet".
+test('the grid explains itself when none of the farmer\'s planned crops are tracked here', () => {
+  assert.match(
+    PAGE, /isFiltered && visibleCrops\.length === 0/,
+    'the empty-filter case must be handled explicitly, not left to render a header-only table',
+  );
+  assert.match(
+    PAGE, /This grid tracks \{CROPS\.map/,
+    'the empty state must name what this calendar DOES cover, derived from CROPS — not a second, hand-typed crop list that can drift from it',
+  );
+});
+
 test('a crop is never shown ripening before its own days-to-harvest allow', () => {
   // The arithmetic the grid's harvest months are supposed to encode: earliest sow + maturity.
   // Maize sows Oct at 140 days, so nothing before February — which is exactly what January got

@@ -16,6 +16,7 @@ import {
   type ListingUnit,
   type PriceBasis,
 } from '@/lib/exchange';
+import { parseDecimalInput } from '@/lib/decimal-input';
 import { saveLocalListing } from './listing-store';
 import ShareListingButton from './ShareListingButton';
 import { CATEGORY_LABEL, EX, KIND_COLOR, KIND_LABEL, MONTH_LABEL } from './theme';
@@ -131,8 +132,8 @@ export default function NewListingForm({
     if (next === 'labour' && !priceDirty) setPriceBasis('days');
   }
 
-  const numericQty = qty.trim() === '' ? null : Number(qty);
-  const numericPrice = priceAmount.trim() === '' ? null : Number(priceAmount);
+  const numericQty = qty.trim() === '' ? null : parseDecimalInput(qty);
+  const numericPrice = priceAmount.trim() === '' ? null : parseDecimalInput(priceAmount);
 
   const qtyValid = numericQty === null || (Number.isFinite(numericQty) && numericQty > 0);
   const priceValid =
@@ -363,9 +364,8 @@ export default function NewListingForm({
         <div className="font-sans uppercase" style={labelStyle}>How much? (optional)</div>
         <div className="flex gap-2">
           <input
-            type="number"
+            type="text"
             inputMode="decimal"
-            min={0}
             value={qty}
             onChange={(e) => setQty(e.target.value)}
             placeholder="12"
@@ -417,10 +417,8 @@ export default function NewListingForm({
             <div className="flex gap-2 items-center">
               <span className="font-display font-semibold" style={{ fontSize: 15, color: EX.muted }}>R</span>
               <input
-                type="number"
+                type="text"
                 inputMode="decimal"
-                min={0}
-                step="0.1"
                 value={priceAmount}
                 onChange={(e) => { setPriceAmount(e.target.value); setPriceDirty(true); }}
                 placeholder="6"

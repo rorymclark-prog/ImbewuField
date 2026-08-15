@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
   X, Map, DollarSign, GraduationCap, Wheat, FileText,
-  MessageCircle, Leaf, CalendarDays, Calendar, LayoutGrid, ClipboardList,
+  MessageCircle, Leaf, Calendar, LayoutGrid, ClipboardList,
   Camera, Home, User, Users, BarChart3, Building2, Palette, Handshake, Sparkles, Earth, Sprout,
 } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
@@ -49,7 +49,10 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
       label: t('navSectionFarmTools'),
       items: [
         { href: '/journal',  Icon: Leaf,        label: t('navFieldJournal') },
-        { href: '/plan',     Icon: CalendarDays, label: t('homeQuickCropPlanner') },
+        // '/plan' used to be its own page; it now only redirects here (see app/plan/page.tsx —
+        // "one crop-planning authority"). A separate menu row for a redirect just duplicated
+        // this one under a different label, so it's gone rather than sending a farmer to the
+        // same screen twice wondering which one they meant.
         { href: '/facilitator/crops', Icon: FileText, label: 'Bed-by-Bed Crop Plan' },
         { href: '/cropplan', Icon: Wheat,        label: t('navTaskPlanner') },
         // Repointed from /survey: that wizard writes imbewu_garden_survey, but
@@ -61,6 +64,9 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
         // from the menu — it may still be bookmarked; merging the two survey stores
         // is a product decision, not made here.
         { href: '/farmer?openSurvey=1', Icon: LayoutGrid, label: t('navGardenSurvey') },
+        // Otherwise unreachable: no tab, no card on /home, no link from /plan
+        // or /cropplan pointed here — the 12-month SA planting grid existed
+        // but no farmer could ever tap their way to it.
         { href: '/calendar', Icon: Calendar,     label: t('navPlantingCalendar') },
         { href: '/vision',   Icon: Camera,       label: t('homeLimaVisionLabel') },
       ],
