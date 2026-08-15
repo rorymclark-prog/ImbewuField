@@ -1,5 +1,6 @@
 'use client';
 
+import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Home, Map, DollarSign, User } from 'lucide-react';
@@ -15,6 +16,62 @@ const TABS = [
 export default function TabBar() {
   const pathname = usePathname();
   const { t } = useLanguage();
+  const barRef = useRef<HTMLDivElement>(null);
+
+  // Publishes this bar's own rendered height as --bottom-nav-height, so anything that needs to
+  // clear it (PWAUpdateNotifier's pill) reads a measured number instead of a guessed constant.
+  // TabBar is NOT position: fixed — it's the last child of the `h-[100dvh] flex flex-col
+  // overflow-hidden` column each page renders (see app/home/page.tsx), so it sits in normal flow
+  // and nothing else declares its height; it comes out of py-2 plus the icon plus the label.
+  //
+  // TWO observers, not one. A ResizeObserver alone looked like the robust choice — the Appearance
+  // text-size setting (lib/theme.tsx's `document.documentElement.style.zoom`) rescales this bar at
+  // runtime, so a one-shot mount measurement would go stale the moment someone picks "Larger" — but
+  // measured live in the browser, ResizeObserver never actually fires for a `zoom`-only change:
+  // getBoundingClientRect() on this element reports the zoomed size correctly, yet no resize
+  // notification follows it, so the published variable sat at the old height while the real bar
+  // had grown. A MutationObserver watching <html>'s style attribute catches exactly that case,
+  // because it is watching the thing that changes (the zoom assignment) rather than trusting a
+  // layout signal that does not fire for it. The ResizeObserver stays for the changes zoom-toggling
+  // cannot explain — a locale swap making a tab label wrap, a safe-area inset changing on rotate.
+  useEffect(() => {
+    const el = barRef.current;
+    if (!el) return;
+    const root = document.documentElement;
+    // getBoundingClientRect(), not offsetHeight — offsetHeight rounds to the nearest integer
+    // (66.5px reads back as 67), which drifted the published variable from the bar's real size.
+    //
+    // Writing this value is itself a style mutation on `root`, the exact element the
+    // MutationObserver below watches — so a no-op check isn't just tidy, it is what keeps that
+    // observer from re-triggering itself every time the height is unchanged.
+    const publish = () => {
+      const next = `${el.getBoundingClientRect().height}px`;
+      if (root.style.getPropertyValue('--bottom-nav-height') !== next) {
+        root.style.setProperty('--bottom-nav-height', next);
+      }
+    };
+    publish();
+
+    let resizeObserver: ResizeObserver | undefined;
+    if (typeof ResizeObserver !== 'undefined') {
+      resizeObserver = new ResizeObserver(publish);
+      resizeObserver.observe(el);
+    }
+
+    let styleObserver: MutationObserver | undefined;
+    if (typeof MutationObserver !== 'undefined') {
+      styleObserver = new MutationObserver(publish);
+      styleObserver.observe(root, { attributes: true, attributeFilter: ['style'] });
+    }
+
+    return () => {
+      resizeObserver?.disconnect();
+      styleObserver?.disconnect();
+      // A route that mounts no TabBar (e.g. /login) must not inherit a stale height from
+      // whichever page rendered one last — fall back to globals.css's pre-hydration value.
+      root.style.removeProperty('--bottom-nav-height');
+    };
+  }, []);
 
   function isActive(href: string) {
     const base = href.split('?')[0];
@@ -23,6 +80,7 @@ export default function TabBar() {
 
   return (
     <div
+      ref={barRef}
       className="flex"
       style={{
         background: '#FFFEFA',

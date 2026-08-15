@@ -60,7 +60,15 @@ export function buildRiskRegister(input: RiskInput): RiskRow[] {
       mitigation: 'Build storage before expanding planted area. Size the tanks against the roof catchment figure in the water section, and plant the dry months from stored water only.',
     });
   }
-  if (storage === 0 && facts?.roof && facts.roof.areaM2 > 0) {
+  // "Nothing to store it in" must mean genuinely NOTHING. `storage` is the sum of STATED tank
+  // capacities only (FactWater.statedStorageLitres never guesses an unknown one into the total),
+  // so a farm with one tank of unrecorded size also has storage === 0 — but it does have
+  // something to gutter the roof into, and the very next check below already raises "tank sizes
+  // are not recorded" for exactly that case. Firing both told a farmer in one row that they had
+  // nothing to store water in and, in the next, that their tank's size just was not recorded —
+  // two rows of the same register disagreeing about whether a tank exists.
+  const hasAnyTank = (facts?.water?.tanks.length ?? 0) > 0;
+  if (storage === 0 && !hasAnyTank && facts?.roof && facts.roof.areaM2 > 0) {
     add({
       risk: 'Roof runoff is lost — catchment traced but nothing to store it in',
       trigger: `${Math.round(facts.roof.areaM2)} m² of roof traced and 0 L of tank capacity on the plan`,

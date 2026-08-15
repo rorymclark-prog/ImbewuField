@@ -43,6 +43,58 @@ const uid = () => fb()?.auth.currentUser?.uid ?? null;
 const rows = <T,>(snap: { docs: { id: string; data: () => unknown }[] }) =>
   snap.docs.map((d) => ({ id: d.id, ...(d.data() as object) })) as unknown as T[];
 
+// ---- bounded writes (patchy rural connectivity) ----
+// addDoc/setDoc/updateDoc/deleteDoc do NOT resolve until the backend acks the write — that is
+// documented Firestore SDK behaviour, not a bug we introduced: the JSDoc on addDoc() itself says
+// that if the client can't reach the backend "the returned Promise will not resolve for a
+// potentially-long time (for example, until the client has gone back online)". A farmer whose
+// signal drops mid-write was left staring at a spinner with no way out.
+//
+// The SAME doc comment is also why it's safe to stop waiting: it says the write "will be
+// immediately created in the local cache" — durably, because getFirebase() (lib/firebase/init.ts)
+// configures persistentLocalCache, which backs that cache with IndexedDB. So by the time our
+// timeout below could possibly fire, the record already exists on this device and Firestore's own
+// offline queue is still trying to send it in the background; nothing here cancels that. Giving up
+// on the wait is not the same as giving up on the write.
+export const WRITE_TIMEOUT_MS = 8000;
+
+export class WriteTimeoutError extends Error {
+  constructor() {
+    super('Firestore write did not confirm within the timeout — it is still queued locally.');
+    this.name = 'WriteTimeoutError';
+  }
+}
+
+// Races `work` against `timeoutMs`. Deliberately NOT a bare `Promise.race([work, timer])`: that
+// leaves the loser's eventual settlement dangling, and if `work` rejects (not just resolves) after
+// the timer already won, a bare race turns that into an unhandled promise rejection. Here the
+// loser is swallowed once either side has settled — the caller has already moved on, and the write
+// itself keeps running (or Firestore keeps retrying it) whether or not anything is still listening.
+export function withWriteTimeout<T>(work: Promise<T>, timeoutMs: number = WRITE_TIMEOUT_MS): Promise<T> {
+  return new Promise<T>((resolve, reject) => {
+    let settled = false;
+    const timer = setTimeout(() => {
+      if (settled) return;
+      settled = true;
+      reject(new WriteTimeoutError());
+    }, timeoutMs);
+    work.then(
+      (value) => {
+        if (settled) return;
+        settled = true;
+        clearTimeout(timer);
+        resolve(value);
+      },
+      (err) => {
+        if (settled) return;
+        settled = true;
+        clearTimeout(timer);
+        reject(err);
+      },
+    );
+  });
+}
+
 // ---- profile / auth ----
 export async function getMyProfile(): Promise<Profile | null> {
   if (isSampleMode()) return getSandboxProfile();
@@ -131,14 +183,18 @@ export async function getGardenerProfile(profileId: string): Promise<GardenerPro
 export async function addProduction(row: Partial<ProductionLog>): Promise<void> {
   if (isSampleMode()) { addSandboxProduction(row); return; }
   const f = fb(); const u = uid(); if (!f || !u) return;
-  const me = await getMyProfile();
-  await addDoc(collection(f.db, 'production_logs'), { ...row, profile_id: u, org_id: me?.org_id ?? null, created_at: serverTimestamp() });
+  await withWriteTimeout((async () => {
+    const me = await getMyProfile();
+    await addDoc(collection(f.db, 'production_logs'), { ...row, profile_id: u, org_id: me?.org_id ?? null, created_at: serverTimestamp() });
+  })());
 }
 export async function addSale(row: Partial<SalesLog>): Promise<void> {
   if (isSampleMode()) { addSandboxSale(row); return; }
   const f = fb(); const u = uid(); if (!f || !u) return;
-  const me = await getMyProfile();
-  await addDoc(collection(f.db, 'sales_logs'), { ...row, profile_id: u, org_id: me?.org_id ?? null, created_at: serverTimestamp() });
+  await withWriteTimeout((async () => {
+    const me = await getMyProfile();
+    await addDoc(collection(f.db, 'sales_logs'), { ...row, profile_id: u, org_id: me?.org_id ?? null, created_at: serverTimestamp() });
+  })());
 }
 
 /** Keep the crop-sale book in lockstep with one invoice's paid state. */
@@ -282,8 +338,10 @@ export async function mySales(): Promise<SalesLog[]> {
 export async function addExpense(row: Partial<ExpenseLog>): Promise<void> {
   if (isSampleMode()) { addSandboxExpense(row); return; }
   const f = fb(); const u = uid(); if (!f || !u) return;
-  const me = await getMyProfile();
-  await addDoc(collection(f.db, 'expense_logs'), { ...row, profile_id: u, org_id: me?.org_id ?? null, created_at: serverTimestamp() });
+  await withWriteTimeout((async () => {
+    const me = await getMyProfile();
+    await addDoc(collection(f.db, 'expense_logs'), { ...row, profile_id: u, org_id: me?.org_id ?? null, created_at: serverTimestamp() });
+  })());
 }
 export async function updateExpense(id: string, patch: Partial<ExpenseLog>): Promise<void> {
   if (isSampleMode()) { updateSandboxExpense(id, patch); return; }
