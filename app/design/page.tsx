@@ -40,6 +40,7 @@ import {
   migrateStateToFrame,
   newId,
   normaliseRotation,
+  groundFeatureLayer,
   DESIGN_CANVAS_CHANGED_EVENT,
   type CanvasFrame,
   type DesignCanvasState,
@@ -861,6 +862,20 @@ function DesignStudioInner() {
     setActiveLayers((layers) => (layers.water ? layers : { ...layers, water: true }));
     setWaterInfrastructureVisibility((layers) => (layers[key] ? layers : { ...layers, [key]: true }));
   }, [lineKind, tool]);
+  // SAME PLACE-THEN-VANISH GUARD, for ground features. The Base step chips (house/patio/lawn/…)
+  // arm areaFeature and never touch a layer — so a farmer who had turned "Existing" off to
+  // declutter a later step, then comes back to Base and traces one more feature, gets a shape
+  // that saves and ticks the step-guide off, but never appears: groundFeatureLayer() gates its
+  // render on activeLayers.ground (or .planting for the staple garden), same as every other zone
+  // (DesignCanvas.tsx, the `z.feature ? !activeLayers[groundFeatureLayer(z.feature)] : …` guard).
+  // Every OTHER armable tool in this file force-shows its own layer the moment it's armed
+  // (the two effects above, and the alsoSteps guard the CATEGORY_TO_LAYER comment describes) —
+  // this is the one gap in that pattern, not a new idea.
+  useEffect(() => {
+    if (!areaFeature) return;
+    const key = groundFeatureLayer(areaFeature);
+    setActiveLayers((layers) => (layers[key] ? layers : { ...layers, [key]: true }));
+  }, [areaFeature]);
   // Icon + label size, as a multiplier. Presentation only: it changes how large symbols are
   // DRAWN and never touches a stored coordinate, so sliding it cannot move anyone's design.
   const [mapTextScale, setMapTextScale] = useState(1);
@@ -2002,7 +2017,13 @@ function DesignStudioInner() {
       // listener would apply the cloud copy straight back over it — an undo that visibly undoes
       // itself. Restoring content is never a reason to move the counter backwards.
       const stamped = persistCanvasState({ ...popped, rev: prev.rev });
-      setSaved(true);
+      // Same rule handleChange follows: only claim "Saved" when the write actually landed, and
+      // tell the farmer when it didn't. This used to say setSaved(true) unconditionally, so an
+      // undo made while storage was full showed a calm "Saved" over a design that had just
+      // silently stopped persisting — exactly the lie the CanvasSaveError/saveError plumbing
+      // exists to prevent everywhere else.
+      setSaved(!!stamped);
+      setSaveError(stamped ? null : 'Storage full — your design is NOT being saved. Free up space, then re-open.');
       return stamped ?? popped;
     });
   }, []);
@@ -2023,7 +2044,10 @@ function DesignStudioInner() {
       // with — otherwise consecutive redos emit descending revs, the cloud copy out-ranks
       // them, and the live listener silently reverts the redo the farmer just asked for.
       const stamped = persistCanvasState({ ...popped, rev: prev.rev });
-      setSaved(true);
+      // Mirror of handleUndo's fix above — a redo is a save like any other and must not claim
+      // "Saved" when persistCanvasState just reported it couldn't write.
+      setSaved(!!stamped);
+      setSaveError(stamped ? null : 'Storage full — your design is NOT being saved. Free up space, then re-open.');
       return stamped ?? popped;
     });
   }, []);
