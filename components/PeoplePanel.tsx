@@ -144,19 +144,29 @@ function PersonCard({
 }) {
   const bio = person.bio?.trim();
 
+  // Only the current user's own card opens anything — render it as a real
+  // button so it's reachable by keyboard and announced by screen readers.
+  // Everyone else's card stays a plain, non-interactive div.
+  const Wrapper = isCurrentUser ? 'button' : 'div';
+
   return (
-    <div
+    <Wrapper
+      type={isCurrentUser ? 'button' : undefined}
       onClick={isCurrentUser ? onOpenProfile : undefined}
+      aria-label={isCurrentUser ? 'Open your profile' : undefined}
       style={{
         display: 'flex',
         alignItems: 'center',
         gap: 12,
+        width: '100%',
         padding: '12px 14px',
         borderRadius: 12,
         background: '#FFFEFA',
         border: `1px solid ${isCurrentUser ? 'rgba(31,77,43,0.3)' : '#E2D8C4'}`,
         cursor: isCurrentUser ? 'pointer' : 'default',
         transition: 'border-color 0.15s',
+        textAlign: 'left',
+        font: 'inherit',
       }}
     >
       <Avatar person={person} />
@@ -222,7 +232,7 @@ function PersonCard({
           </p>
         )}
       </div>
-    </div>
+    </Wrapper>
   );
 }
 
