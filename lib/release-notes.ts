@@ -35,7 +35,7 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '15 August',
-    sha: '383e9e6',
+    sha: '2475744',
     changes: [
       'A phone that cannot open the designer at all now gets a simple page, never a grey error',
       'That page keeps your design safe and offers light and full ways back in',
