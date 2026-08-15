@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
   X, Map, DollarSign, GraduationCap, Wheat, FileText,
-  MessageCircle, Leaf, CalendarDays, LayoutGrid, ClipboardList,
+  MessageCircle, Leaf, CalendarDays, Calendar, LayoutGrid, ClipboardList,
   Camera, Home, User, Users, BarChart3, Building2, Palette, Handshake, Sparkles, Earth, Sprout,
 } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
@@ -52,7 +52,16 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
         { href: '/plan',     Icon: CalendarDays, label: t('homeQuickCropPlanner') },
         { href: '/facilitator/crops', Icon: FileText, label: 'Bed-by-Bed Crop Plan' },
         { href: '/cropplan', Icon: Wheat,        label: t('navTaskPlanner') },
-        { href: '/survey',   Icon: LayoutGrid,   label: t('navGardenSurvey') },
+        // Repointed from /survey: that wizard writes imbewu_garden_survey, but
+        // lib/site-progress.ts (the Home progress bar and its next-step nudge) reads
+        // the DataPanel survey via lib/site-survey.ts — the two stores never meet.
+        // /farmer?openSurvey=1 is the same deep link app/home/page.tsx already uses
+        // for its "Do the site survey" nudge, so the menu now lands where the score
+        // actually reads. /survey (app/survey/page.tsx) is untouched and now orphaned
+        // from the menu — it may still be bookmarked; merging the two survey stores
+        // is a product decision, not made here.
+        { href: '/farmer?openSurvey=1', Icon: LayoutGrid, label: t('navGardenSurvey') },
+        { href: '/calendar', Icon: Calendar,     label: t('navPlantingCalendar') },
         { href: '/vision',   Icon: Camera,       label: t('homeLimaVisionLabel') },
       ],
     },

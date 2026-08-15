@@ -36,6 +36,7 @@
 
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
+import dynamic from 'next/dynamic';
 
 // How long a tip stays before closing itself. See the state that drives it for why this is not
 // the four seconds first suggested: four is under the reading time of the tips themselves.
@@ -47,10 +48,17 @@ import {
 } from '@/lib/design-canvas';
 import { MIN_BED_COUNT, MAX_BED_COUNT } from '@/lib/bed-block';
 import { CATEGORY_META, CATEGORY_STEP, ELEMENT_CATALOG, ELEMENTS_BY_ID, GROUND_FEATURES, PLANTING_GROUP_LABEL, PLANTING_GROUP_ORDER, ZONE_DEFS, biomeClimates, elementSuitsClimate, elementVisibleInPalette, plantingGroupFor, type DesignElementDef, type DesignLayerState } from '@/lib/design-elements';
-import { SPECIES } from '@/lib/species-catalog';
+// SPECIES is NOT imported at module scope — lib/species-catalog.ts is 197 species / ~224KB, and
+// every farmer who opens /design paid for it whether or not they ever opened the species picker.
+// The one read below (in the picker's onSelect, already only running on a tap) loads it via a
+// dynamic import instead. SpeciesPicker is loaded the same lazy way just below, for the same
+// reason: it carries its own top-level `import { SPECIES } from '@/lib/species-catalog'`, so a
+// plain static import of the component here would drag the whole catalogue back into this bundle
+// regardless of what this file's own SPECIES reference does. See DesignCanvas.tsx for the
+// matching fix on the placement side.
 import { biomeKeyForName } from '@/lib/biome';
 import { COMPASS16_ORDER, isCompassDirection16, type LocalWindObservation } from '@/lib/local-wind';
-import SpeciesPicker from './SpeciesPicker';
+const SpeciesPicker = dynamic(() => import('./SpeciesPicker'), { ssr: false });
 import { usePhoneViewport } from '@/lib/use-phone-viewport';
 import ChromeHandle from '@/components/design/ChromeHandle';
 import { BOTTOM_STOPS, bottomVisibility, type BottomStop } from '@/lib/design-chrome';
@@ -1345,7 +1353,7 @@ export default function DesignPalette({
                     // silently disabled the climate filter for the whole palette.
                     siteBiome={biomeKeyForName(siteBiome)}
                     selectedSpeciesId={placeSpeciesId}
-                    onSelect={(id) => {
+                    onSelect={async (id) => {
                       setPlaceSpeciesId(id);
                       // A TREE IS A CANOPY, NOT A BOX. Rory, on a placed Wild date palm and a
                       // Num-num: "square?" — both had come out as translucent green RECTANGLES.
@@ -1366,6 +1374,7 @@ export default function DesignPalette({
                       // Citrus Tree or Mango Tree and then picked a cultivar keeps their own choice.
                       // The item's wM/hM are still overwritten with the species' true mature width
                       // downstream, so this changes the SHAPE, never the size.
+                      const { SPECIES } = await import('@/lib/species-catalog');
                       const sp = SPECIES.find((s) => s.id === id);
                       const woody = sp?.stratum === 'canopy' || sp?.stratum === 'sub-canopy' || sp?.stratum === 'shrub';
                       const armed = placeDefId ? ELEMENTS_BY_ID[placeDefId] : null;

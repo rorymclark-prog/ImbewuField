@@ -290,6 +290,29 @@ export function quantityLabel(listing: Pick<Listing, 'qty' | 'unit'>): string {
 }
 
 /**
+ * A plain-text message one listing can be pasted into WhatsApp as — the whole
+ * point being that a listing here is device-local (see the module banner) and
+ * reaches nobody unless the farmer sends it themselves. One fact per line, no
+ * markdown, a unit on every number, a currency symbol on every price, and
+ * built only from fields {@link Listing} already carries — nothing here is
+ * invented. Pure and side-effect free so it can be tested without a DOM or
+ * `navigator.share`.
+ */
+export function listingShareText(
+  listing: Pick<Listing, 'kind' | 'title' | 'cropKey' | 'qty' | 'unit' | 'price' | 'areaText' | 'farmerName'>,
+): string {
+  const crop = listingCrop(listing);
+  const qty = quantityLabel(listing);
+  const lines = [`${listing.kind === 'want' ? 'Looking for' : 'Offering'}: ${listing.title}`];
+  if (crop) lines.push(`Crop: ${crop.name}`);
+  if (qty) lines.push(`Quantity: ${qty}`);
+  lines.push(`Price: ${priceLabel(listing)}`);
+  lines.push(`Pickup area: ${listing.areaText.trim() || 'Not given'}`);
+  lines.push(`From: ${listing.farmerName.trim() || 'A farmer on ImbewuField'}`);
+  return lines.join('\n');
+}
+
+/**
  * Comparable unit price in Rand, for sorting. `'lot'` prices are divided by the
  * quantity so a lot and a per-kg price sort against each other sensibly.
  * Returns null for swap / free / ask — those sort last, never as "cheapest".
