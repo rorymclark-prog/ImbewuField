@@ -12,6 +12,7 @@ import {
   addSale,
   designsSharedWithMe,
   uploadPhoto,
+  WriteTimeoutError,
 } from '@/lib/db/queries';
 import {
   Sprout,
@@ -27,6 +28,22 @@ import {
 import type { ProductionLog, SalesLog, Design } from '@/lib/db/types';
 import CropSelect from '@/components/CropSelect';
 import { loadCropPriceOverrides, priceFor, type CropPrice } from '@/lib/crop-prices';
+
+// Shown when addProduction/addSale (lib/db/queries.ts) time out waiting for the server — see the
+// WriteTimeoutError comment there. Deliberately NOT run through t(): this repo never invents
+// isiZulu (or any other) translation, and translate()'s fallback would silently show the same
+// English everywhere anyway, so a hardcoded string is the honest version of the same outcome
+// (this file already hardcodes other English-only copy, e.g. the guide-price note below).
+// Worded from the SAME navigator.onLine signal app/finances/page.tsx's offline banner reads —
+// not a second offline mechanism, just read at submit time instead of kept in state.
+const SAVE_QUEUED_OFFLINE =
+  "You're offline. This is saved on your phone and will reach the cloud the moment you have signal again.";
+const SAVE_QUEUED_TIMEOUT =
+  'Your connection dropped mid-save. Nothing is lost — this is saved on your phone and will finish sending on its own.';
+function saveQueuedMessage(): string {
+  const offline = typeof navigator !== 'undefined' && navigator.onLine === false;
+  return offline ? SAVE_QUEUED_OFFLINE : SAVE_QUEUED_TIMEOUT;
+}
 
 /* ── Tiny shared primitives (match DataPanel style) ──────────────────────── */
 
@@ -251,7 +268,29 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
       });
       if (fileRef.current) fileRef.current.value = '';
       onSaved();
-    } catch {
+    } catch (err) {
+      if (err instanceof WriteTimeoutError) {
+        // addProduction gave up waiting for the server to confirm, but persistentLocalCache
+        // (lib/firebase/init.ts) means the harvest is already durably saved on this phone and
+        // Firestore is still trying to send it in the background — it is NOT lost. Clear the
+        // fields (not just the spinner) so re-reading this message and tapping Save again can't
+        // log the same harvest twice.
+        setForm((f) => {
+          if (f.photoPreview) URL.revokeObjectURL(f.photoPreview);
+          return {
+            crop: '',
+            cropKey: null,
+            kg: '',
+            photoFile: null,
+            photoPreview: '',
+            loading: false,
+            error: saveQueuedMessage(),
+          };
+        });
+        if (fileRef.current) fileRef.current.value = '';
+        onSaved();
+        return;
+      }
       setForm((f) => ({ ...f, loading: false, error: t('myRecordsSaveError') }));
     }
   }
@@ -391,7 +430,21 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
       });
       setForm({ crop: '', cropKey: null, kg: '', amount: '', buyer: '', loading: false, error: '' });
       onSaved();
-    } catch {
+    } catch (err) {
+      if (err instanceof WriteTimeoutError) {
+        // addSale gave up waiting for the server to confirm, but persistentLocalCache
+        // (lib/firebase/init.ts) means the sale is already durably saved on this phone and
+        // Firestore is still trying to send it in the background — it is NOT lost. Clear the
+        // fields (not just the spinner) so re-reading this message and tapping Save again can't
+        // log the same sale twice.
+        setForm({
+          crop: '', cropKey: null, kg: '', amount: '', buyer: '',
+          loading: false,
+          error: saveQueuedMessage(),
+        });
+        onSaved();
+        return;
+      }
       setForm((f) => ({ ...f, loading: false, error: t('myRecordsSaveError') }));
     }
   }
