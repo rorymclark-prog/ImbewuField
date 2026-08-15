@@ -8,7 +8,7 @@ export type ReferenceFeatureArtwork =
   | 'production-bed-v1.png'
   | 'pollinator-strip-v1.png'
   | 'vetiver-bank-v1.png'
-  | 'shade-house-v2.png'
+  | 'shade-house-v3.png'
   | 'banana-clump-v5.png'
   | 'pawpaw-tree-v2.png'
   | 'moringa-tree-v1.png'
@@ -54,10 +54,10 @@ export type ReferenceFeatureArtwork =
   | 'veg-generic-v1.png'
   // Top-down tank sprites — the water sheet's plan-view identity, lids in the same capacity
   // colours the side-view picker family wears (#89): charcoal, green, teal, sandstone, blue.
-  | 'jojo-1000-top-v1.png'
-  | 'jojo-2500-top-v1.png'
-  | 'jojo-5000-top-v1.png'
-  | 'jojo-10000-top-v1.png'
+  | 'jojo-1000-top-v2.png'
+  | 'jojo-2500-top-v2.png'
+  | 'jojo-5000-top-v2.png'
+  | 'jojo-10000-top-v2.png'
   | 'rain-barrel-top-v1.png';
 
 // PER-CAPACITY, not one shared drawing — the whole point of the tank family's colour code is
@@ -65,10 +65,10 @@ export type ReferenceFeatureArtwork =
 // away on the one sheet where tanks matter most. Rory, on the old blue dartboard symbol:
 // "new graphic for jojo tank (this is the old one?)".
 const TANK_TOP_ART: Readonly<Record<string, ReferenceFeatureArtwork>> = {
-  jojo_1000: 'jojo-1000-top-v1.png',
-  jojo_2500: 'jojo-2500-top-v1.png',
-  jojo_5000: 'jojo-5000-top-v1.png',
-  jojo_10000: 'jojo-10000-top-v1.png',
+  jojo_1000: 'jojo-1000-top-v2.png',
+  jojo_2500: 'jojo-2500-top-v2.png',
+  jojo_5000: 'jojo-5000-top-v2.png',
+  jojo_10000: 'jojo-10000-top-v2.png',
   rain_barrel: 'rain-barrel-top-v1.png',
 };
 
@@ -92,7 +92,7 @@ const PRODUCTION_BEDS = new Set(['veg_bed', 'raised_bed']);
 const VETIVER_BANKS = new Set(['vetiver_row', 'mulch_bank']);
 
 const STRUCTURE_ART: Readonly<Record<string, ReferenceFeatureArtwork>> = {
-  shade_house: 'shade-house-v2.png',
+  shade_house: 'shade-house-v3.png',
 };
 
 const PLANTING_DETAIL_ART: Readonly<Record<string, ReferenceFeatureArtwork>> = {
