@@ -10,6 +10,7 @@ import {
 } from '@/lib/exchange';
 import ShareListingButton from './ShareListingButton';
 import { CATEGORY_LABEL, EX, KIND_COLOR, KIND_LABEL, MONTH_LABEL } from './theme';
+import { getCropArt } from '@/lib/crop-art';
 
 /**
  * Distance is coloured by bucket so a scan down the board reads as a map:
@@ -101,8 +102,13 @@ export default function ListingCard({
           {CATEGORY_LABEL[listing.category]}
         </span>
         {crop && (
-          <span className="font-sans" style={{ fontSize: 11.5, color: EX.muted }}>
-            {crop.icon} {crop.name}
+          <span className="font-sans" style={{ fontSize: 11.5, color: EX.muted, display: 'inline-flex', alignItems: 'center', gap: 3 }}>
+            {getCropArt(listing.cropKey ?? '') ? (
+              <img src={getCropArt(listing.cropKey ?? '')} alt="" aria-hidden style={{ width: 12, height: 12, objectFit: 'contain' }} />
+            ) : (
+              <span>{crop.icon}</span>
+            )}{' '}
+            {crop.name}
           </span>
         )}
         <div style={{ flex: 1, minWidth: 8 }} />

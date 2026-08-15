@@ -56,6 +56,7 @@ import {
   setLocalListingStatus,
 } from './listing-store';
 import { CATEGORY_LABEL, EX } from './theme';
+import { getCropArt } from '@/lib/crop-art';
 
 const SORT_LABEL: Record<ListingSort, string> = {
   newest: 'Newest first',
@@ -314,7 +315,12 @@ export default function ExchangeBoard() {
               on={cropKeys.includes(c.cropKey)}
               onClick={() => setCropKeys((v) => toggle(v, c.cropKey))}
             >
-              {c.icon} {c.name} <span style={{ opacity: 0.65 }}>{c.count}</span>
+              {getCropArt(c.cropKey) ? (
+                <img src={getCropArt(c.cropKey)} alt="" aria-hidden style={{ width: 13, height: 13, objectFit: 'contain', verticalAlign: '-2px' }} />
+              ) : (
+                c.icon
+              )}{' '}
+              {c.name} <span style={{ opacity: 0.65 }}>{c.count}</span>
             </Chip>
           ))}
         </ChipRow>

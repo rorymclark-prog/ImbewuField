@@ -8,6 +8,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { listGardens, listGardeners, getGardenerProfile } from '@/lib/db/queries';
 import { getFirebase } from '@/lib/firebase/init';
 import { COURSE_MODULES } from '@/lib/course-modules';
+import { getCropArt } from '@/lib/crop-art';
 import type { Garden as DbGarden, GardenMember, Profile, GardenerProfile as DbGardenerProfile, ProductionLog, SalesLog, CourseProgress } from '@/lib/db/types';
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
@@ -39,11 +40,25 @@ const SAMPLE_GARDENS: Garden[] = [
 const TOTALS = { gardens: 142, farmers: 3012, produceT: 38.6, training: 78, deployed: 'R48.6m' };
 
 const NAMES = ['Thabo Mahlangu', 'Nosipho Khumalo', 'Jabu Dlamini', 'Maria Sithole', 'Andile Ngubane', 'Grace Mokoena', 'Sibusiso Ndlovu', 'Lerato Phiri', 'Bongani Zulu', 'Precious Mbeki'];
+// `k` maps each demo crop name to its lib/crop-catalog.ts key so it can pick up
+// real art from lib/crop-art.ts — this list is synthetic seeded demo data, not
+// read from the catalog, so the mapping is by closest match (e.g. "Spinach"
+// here means the same thing the catalog calls "Swiss chard (spinach)").
 const CROPS = [
-  { n: 'Spinach', e: '🥬', c: '#3F7A3C' }, { n: 'Tomatoes', e: '🍅', c: '#B83C2E' }, { n: 'Cabbage', e: '🥬', c: '#6BA84F' },
-  { n: 'Carrots', e: '🥕', c: '#C97A2C' }, { n: 'Onions', e: '🧅', c: '#C2A05A' }, { n: 'Maize', e: '🌽', c: '#D9B23A' },
-  { n: 'Beans', e: '🫘', c: '#7A5230' }, { n: 'Pumpkin', e: '🎃', c: '#CC7A28' }, { n: 'Sweet potato', e: '🍠', c: '#A85E3C' }, { n: 'Green pepper', e: '🫑', c: '#3F8B3C' },
+  { n: 'Spinach', e: '🥬', c: '#3F7A3C', k: 'swiss-chard' }, { n: 'Tomatoes', e: '🍅', c: '#B83C2E', k: 'tomatoes' }, { n: 'Cabbage', e: '🥬', c: '#6BA84F', k: 'cabbage' },
+  { n: 'Carrots', e: '🥕', c: '#C97A2C', k: 'carrots' }, { n: 'Onions', e: '🧅', c: '#C2A05A', k: 'onions' }, { n: 'Maize', e: '🌽', c: '#D9B23A', k: 'maize' },
+  { n: 'Beans', e: '🫘', c: '#7A5230', k: 'dry-beans' }, { n: 'Pumpkin', e: '🎃', c: '#CC7A28', k: 'pumpkin' }, { n: 'Sweet potato', e: '🍠', c: '#A85E3C', k: 'sweet-potato' }, { n: 'Green pepper', e: '🫑', c: '#3F8B3C', k: 'peppers' },
 ];
+
+/** Renders a demo crop's real art when lib/crop-art.ts has it, its emoji otherwise. */
+function CropIcon({ crop, size }: { crop: typeof CROPS[number]; size: number }) {
+  const art = getCropArt(crop.k);
+  return art ? (
+    <img src={art} alt="" aria-hidden style={{ width: size, height: size, objectFit: 'contain' }} />
+  ) : (
+    <span style={{ fontSize: size }}>{crop.e}</span>
+  );
+}
 const MONTHS = ['Feb', 'Mar', 'Apr', 'May', 'Jun'];
 const BUYERS = ['Local market', 'Spaza shop', 'School feeding', 'Bakkie trader', 'Neighbours'];
 function seeded(seed: string) {
@@ -604,7 +619,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                               <img src={photoUrl} alt={c.n} className="w-full h-full object-cover" />
                             </div>
                           ) : (
-                            <div key={i} className="rounded-lg flex flex-col items-center justify-center" style={{ width: 54, height: 54, background: `${c.c}33`, border: `1px solid ${c.c}` }}><span style={{ fontSize: 20 }}>{c.e}</span><span className="font-mono" style={{ fontSize: 8, color: '#9A8268' }}>{c.n}</span></div>
+                            <div key={i} className="rounded-lg flex flex-col items-center justify-center" style={{ width: 54, height: 54, background: `${c.c}33`, border: `1px solid ${c.c}` }}><CropIcon crop={c} size={20} /><span className="font-mono" style={{ fontSize: 8, color: '#9A8268' }}>{c.n}</span></div>
                           )
                         ))}
                       </div>
@@ -615,7 +630,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                       <div className="text-xs font-mono uppercase tracking-wider mb-1.5 flex items-center gap-1.5" style={{ color: '#9A8268' }}><BookOpen size={13} /> Books — production</div>
                       <div className="space-y-1">
                         {gardener.production.map((p, i) => (
-                          <div key={i} className="flex items-center gap-2 text-xs font-display px-2 py-1 rounded-lg" style={{ background: '#F5F0E8' }}><span style={{ fontSize: 13 }}>{p.crop.e}</span><span className="flex-1" style={{ color: '#5C5040' }}>{p.crop.n}</span><span className="font-mono" style={{ color: '#9A8268' }}>{p.date}</span><span className="font-mono font-semibold" style={{ color: '#1F4D2B' }}>{p.kg}kg</span></div>
+                          <div key={i} className="flex items-center gap-2 text-xs font-display px-2 py-1 rounded-lg" style={{ background: '#F5F0E8' }}><CropIcon crop={p.crop} size={13} /><span className="flex-1" style={{ color: '#5C5040' }}>{p.crop.n}</span><span className="font-mono" style={{ color: '#9A8268' }}>{p.date}</span><span className="font-mono font-semibold" style={{ color: '#1F4D2B' }}>{p.kg}kg</span></div>
                         ))}
                       </div>
                     </div>
@@ -625,7 +640,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                       <div className="text-xs font-mono uppercase tracking-wider mb-1.5 flex items-center gap-1.5" style={{ color: '#9A8268' }}><BookOpen size={13} /> Books — sales</div>
                       <div className="space-y-1">
                         {gardener.sales.map((p, i) => (
-                          <div key={i} className="flex items-center gap-2 text-xs font-display px-2 py-1 rounded-lg" style={{ background: '#F5F0E8' }}><span style={{ fontSize: 13 }}>{p.crop.e}</span><span className="flex-1 truncate" style={{ color: '#5C5040' }}>{p.kg}kg → {p.buyer}</span><span className="font-mono font-semibold" style={{ color: '#2F6F9E' }}>R{p.rand}</span></div>
+                          <div key={i} className="flex items-center gap-2 text-xs font-display px-2 py-1 rounded-lg" style={{ background: '#F5F0E8' }}><CropIcon crop={p.crop} size={13} /><span className="flex-1 truncate" style={{ color: '#5C5040' }}>{p.kg}kg → {p.buyer}</span><span className="font-mono font-semibold" style={{ color: '#2F6F9E' }}>R{p.rand}</span></div>
                         ))}
                       </div>
                     </div>
