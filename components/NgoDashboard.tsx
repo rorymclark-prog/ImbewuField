@@ -227,6 +227,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
 
   // Per-gardener full profile (live)
   const [gardenerLoading, setGardenerLoading] = useState(false);
+  const [gardenerError, setGardenerError] = useState(false);
 
   // Wait for Firebase auth to rehydrate before querying — otherwise the first
   // fetch races ahead of currentUser and the rules deny it (→ false demo mode).
@@ -329,6 +330,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
 
     const profileId = gardenersProfileIds.get(gr.id) ?? gr.profileId;
     setGardenerLoading(true);
+    setGardenerError(false);
     setGardener(gr); // show skeleton immediately
 
     try {
@@ -338,7 +340,10 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
         setGardener(full);
       }
     } catch {
-      // keep the partial gardener shape already set
+      // The skeleton shape already set (from mapDbGardener) reads as a real, verified zero —
+      // "Produced 0kg", "0% training" — for a real farmer a facilitator may be about to make a
+      // support decision on. gardenerError stops that render and asks instead of asserting it.
+      setGardenerError(true);
     } finally {
       setGardenerLoading(false);
     }
@@ -531,6 +536,17 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
 
                 {gardenerLoading ? (
                   <Spinner />
+                ) : gardenerError ? (
+                  <div className="rounded-lg px-3 py-4 text-xs font-sans leading-relaxed" style={{ background: '#FFFEFA', border: '1px solid #D8B7A8', color: '#8C4938' }}>
+                    We could not load {gardener.name}&apos;s production, sales and training data. Check your account access and try again.
+                    <button
+                      onClick={() => { void openGardener(gardener); }}
+                      className="block mt-2 text-xs font-display font-semibold underline"
+                      style={{ color: '#1F4D2B', background: 'transparent', border: 'none', cursor: 'pointer', padding: 0 }}
+                    >
+                      Retry
+                    </button>
+                  </div>
                 ) : (
                   <>
                     {/* Value summary */}

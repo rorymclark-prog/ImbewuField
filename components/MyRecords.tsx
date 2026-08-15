@@ -836,6 +836,14 @@ export default function MyRecords() {
   const [invoices, setInvoices] = useState<SavedInvoice[]>([]);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [dataLoading, setDataLoading] = useState(false);
+  /**
+   * Same bug app/finances/page.tsx already found and fixed: an empty ledger and an unreachable
+   * one used to render identically — "No harvests logged yet" whether she had genuinely never
+   * logged one, or the read had just failed offline. Promise.all made it worse here than there,
+   * since one rejected read (e.g. production_logs offline) threw before any of setProduction/
+   * setSales/setDesigns ran, silently keeping ALL THREE lists at their empty initial state.
+   */
+  const [loadError, setLoadError] = useState(false);
 
   // Paid invoices are localStorage-only (see lib/invoice-seller.ts) and never come back from
   // myProduction/mySales/designsSharedWithMe, so they get their own load + change listener —
@@ -863,7 +871,12 @@ export default function MyRecords() {
   const loadData = useCallback(async (isCancelled?: () => boolean) => {
     setDataLoading(true);
     try {
-      const [prod, saleRows, expenseRows, des, myProfile] = await Promise.all([
+      // allSettled, NOT all: one failing read must not blank every list — a farmer whose sales
+      // read fine should still see them even if production_logs failed. Each stream degrades to
+      // its previous value alone; loadError drives the honest banner below. Profile is excluded
+      // from that banner (and from this comment's "ledger" reasoning) — it only prefills the
+      // Credit Pack PDF's seller fields, which already tolerate a null profile.
+      const [prodResult, saleResult, expenseResult, designResult, profileResult] = await Promise.allSettled([
         myProduction(),
         mySales(),
         myExpenses(),
@@ -871,15 +884,30 @@ export default function MyRecords() {
         getMyProfile(),
       ]);
       if (isCancelled?.()) return;
-      // Sort production newest-first (logged_at field is ISO string or Firestore timestamp)
-      const sortedProd = [...prod].sort((a, b) => {
-        return (b.logged_at ?? '').localeCompare(a.logged_at ?? '');
-      });
-      setProduction(sortedProd);
-      setSales([...saleRows].sort((a, b) => (b.sold_at ?? '').localeCompare(a.sold_at ?? '')));
-      setExpenses(expenseRows);
-      setDesigns(des);
-      setProfile(myProfile);
+      if (prodResult.status === 'rejected') console.error('[myrecords] production read failed:', prodResult.reason);
+      if (saleResult.status === 'rejected') console.error('[myrecords] sales read failed:', saleResult.reason);
+      if (expenseResult.status === 'rejected') console.error('[myrecords] expenses read failed:', expenseResult.reason);
+      if (designResult.status === 'rejected') console.error('[myrecords] designs read failed:', designResult.reason);
+      if (profileResult.status === 'rejected') console.error('[myrecords] profile read failed:', profileResult.reason);
+      setLoadError(
+        prodResult.status === 'rejected' ||
+          saleResult.status === 'rejected' ||
+          expenseResult.status === 'rejected' ||
+          designResult.status === 'rejected',
+      );
+      if (prodResult.status === 'fulfilled') {
+        // Sort production newest-first (logged_at field is ISO string or Firestore timestamp)
+        const sortedProd = [...prodResult.value].sort((a, b) => {
+          return (b.logged_at ?? '').localeCompare(a.logged_at ?? '');
+        });
+        setProduction(sortedProd);
+      }
+      if (saleResult.status === 'fulfilled') {
+        setSales([...saleResult.value].sort((a, b) => (b.sold_at ?? '').localeCompare(a.sold_at ?? '')));
+      }
+      if (expenseResult.status === 'fulfilled') setExpenses(expenseResult.value);
+      if (designResult.status === 'fulfilled') setDesigns(designResult.value);
+      if (profileResult.status === 'fulfilled') setProfile(profileResult.value);
     } finally {
       if (!isCancelled?.()) setDataLoading(false);
     }
@@ -945,6 +973,26 @@ export default function MyRecords() {
           <Loader2 size={16} className="animate-spin" style={{ color: '#1F4D2B' }} />
         )}
       </div>
+
+      {/* ── Load error banner ───────────────────────── */}
+      {loadError && !dataLoading && (
+        <div
+          className="flex items-center justify-between gap-3 rounded-xl px-3.5 py-2.5"
+          style={{ background: 'rgba(139,32,32,0.08)', border: '1px solid rgba(139,32,32,0.25)' }}
+        >
+          <span className="font-sans" style={{ fontSize: 12.5, color: '#8B2020' }}>
+            {t('myRecordsLoadError')}
+          </span>
+          <button
+            type="button"
+            onClick={() => { void loadData(); }}
+            className="font-sans font-semibold flex-shrink-0"
+            style={{ fontSize: 12, color: '#1F4D2B', background: 'transparent', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}
+          >
+            {t('myRecordsRetry')}
+          </button>
+        </div>
+      )}
 
       {/* ── Log production ──────────────────────────── */}
       <LogProductionForm onSaved={loadData} />
