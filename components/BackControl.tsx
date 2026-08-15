@@ -85,9 +85,12 @@ export default function BackControlProvider({ children }: { children: React.Reac
             justifyContent: 'center',
             padding: '0 12px',
             borderRadius: 999,
-            background: '#FFFEFA',
-            border: '1px solid #E2D8C4',
-            color: '#20190F',
+            // Tokens, not the '#FFFEFA'/'#E2D8C4'/'#20190F' this used to carry: this pill floats
+            // on every page that has no in-flow back button, so it froze bright-white in dark
+            // mode over an otherwise dark screen.
+            background: 'var(--bg-1)',
+            border: '1px solid var(--border)',
+            color: 'var(--text-primary)',
             fontSize: 13,
             fontWeight: 600,
             boxShadow: '0 4px 14px -6px rgba(0,0,0,0.35)',

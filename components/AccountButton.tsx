@@ -19,21 +19,24 @@ export default function AccountButton() {
       <div
         className="flex items-center gap-2 px-3.5 rounded-full flex-shrink-0"
         style={{
-          background: '#FFFEFA',
-          border: '1px solid #E2D8C4',
+          // Tokens, not the '#FFFEFA'/'#E2D8C4' this used to carry: this sits in the header of
+          // the farm map, the app's most-visited screen, so it stayed a bright white pill glued
+          // to the top of an otherwise-dark screen in dark mode.
+          background: 'var(--bg-1)',
+          border: '1px solid var(--border)',
           minHeight: 56,
         }}
       >
         <span
           className="font-display"
-          style={{ color: '#20190F', fontSize: 20 }}
+          style={{ color: 'var(--text-primary)', fontSize: 20 }}
         >
           {label}
         </span>
         <button
           onClick={signOutUser}
           className="font-mono transition-opacity hover:opacity-80"
-          style={{ color: '#5C5040', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: 17 }}
+          style={{ color: 'var(--text-secondary)', background: 'none', border: 'none', cursor: 'pointer', padding: 0, fontSize: 17 }}
           aria-label="Sign out"
         >
           Sign out
@@ -47,8 +50,12 @@ export default function AccountButton() {
       href="/login"
       className="flex items-center px-3.5 rounded-full font-display transition-opacity hover:opacity-80 flex-shrink-0"
       style={{
-        background: '#FFFEFA',
-        border: '1px solid #E2D8C4',
+        background: 'var(--bg-1)',
+        border: '1px solid var(--border)',
+        // '#2D6B3C', not var(--emerald): the earth theme's --emerald (#3A7518, an "ok"-status
+        // olive-green) is a different hue from the brand forest green every other screen still
+        // hardcodes — this chip is the app's most-visited header, not the place to fork the
+        // brand accent in two.
         color: '#2D6B3C',
         textDecoration: 'none',
         minHeight: 56,

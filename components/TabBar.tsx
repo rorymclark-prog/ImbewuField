@@ -83,7 +83,10 @@ export default function TabBar() {
       ref={barRef}
       className="flex"
       style={{
-        background: '#FFFEFA',
+        // var(--bg-1), not the '#FFFEFA' this used to carry: that hex matches earth LIGHT
+        // exactly but never changes, so this bar — present on almost every screen — stayed a
+        // bright white strip glued to the bottom of an otherwise-dark screen in dark mode.
+        background: 'var(--bg-1)',
         boxShadow: '0 -2px 12px rgba(22,56,32,0.08)',
         flexShrink: 0,
         paddingBottom: 'env(safe-area-inset-bottom, 0px)',
@@ -111,7 +114,12 @@ export default function TabBar() {
                 size={22}
                 strokeWidth={active ? 2.2 : 1.7}
                 style={{
-                  color: active ? '#1F4D2B' : '#94876F',
+                  // '#1F4D2B', not var(--emerald): the earth theme's --emerald (#3A7518, an
+                  // "ok"-status olive-green, see globals.css) is a different hue from the brand
+                  // forest green every other screen still hardcodes — swapping just this one
+                  // would put two visibly different "brand greens" in the app at once. Matches
+                  // the --brand-soft tint already used for the pill background above.
+                  color: active ? '#1F4D2B' : 'var(--text-muted)',
                   transition: 'color var(--dur-fast) var(--ease-out)',
                 }}
               />
@@ -120,7 +128,7 @@ export default function TabBar() {
                 style={{
                   fontSize: 11,
                   fontWeight: active ? 700 : 600,
-                  color: active ? '#1F4D2B' : '#94876F',
+                  color: active ? '#1F4D2B' : 'var(--text-muted)',
                   letterSpacing: '0.01em',
                   transition: 'color var(--dur-fast) var(--ease-out)',
                 }}

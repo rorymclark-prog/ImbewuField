@@ -74,10 +74,43 @@ const loadedBuildSha = (
   ''
 ).slice(0, 7) || null;
 
+// lib/theme.tsx only sets data-theme/.dark on <html> from inside a useEffect, which cannot run
+// until after React hydrates. Until then the server-rendered <html> carries neither attribute, so
+// every load paints bare :root first — which is always earth-light, regardless of what the farmer
+// picked. On a fast desktop that gap is invisible; on the cheap, often-3G Android phones this app
+// targets, hydration can lag long enough for a farmer who chose dark mode to see the light theme
+// flash on-screen on every single page load. This blocking inline script mirrors ThemeProvider's
+// own mount logic (same localStorage keys, same defaults) and runs before first paint, so the
+// stored theme is already applied by the time anything is visible; the later useEffect then just
+// re-confirms the same values. suppressHydrationWarning on <html> is required because this script
+// mutates the DOM (the "dark" class) before React hydrates, which React would otherwise flag as a
+// mismatch against the server-rendered markup.
+const THEME_INIT_SCRIPT = `(function(){try{
+  var t=localStorage.getItem('fp-theme');
+  var m=localStorage.getItem('fp-mode');
+  var theme=(t==='earth'||t==='slate')?t:'earth';
+  var mode=(m==='light'||m==='dark'||m==='system')?m:'system';
+  var prefersDark=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches;
+  var isDark=mode==='dark'||(mode==='system'&&prefersDark);
+  var root=document.documentElement;
+  root.setAttribute('data-theme',theme);
+  if(isDark)root.classList.add('dark');
+}catch(e){}})();`;
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={newsreader.variable + ' ' + publicSans.variable}>
-      <body className="h-screen overflow-hidden bg-paper text-ink font-sans">
+    <html lang="en" className={newsreader.variable + ' ' + publicSans.variable} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+      </head>
+      {/* No bg-paper/text-ink here: those Tailwind classes are a class selector, which beats
+          the plain-element `html, body { background: var(--bg-0); color: var(--text-primary) }`
+          rule in globals.css on specificity alone regardless of source order — exactly the
+          footgun documented at that rule's --border sibling. That silently froze the whole
+          app's root paint to the earth-light hexes in every theme/mode, so a farmer in dark
+          mode could see a light flash through any uncovered edge (iOS rubber-band overscroll,
+          a sheet that doesn't fill the viewport). Let the token rule apply instead. */}
+      <body className="h-screen overflow-hidden font-sans">
         <ThemeProvider>
           <AuthProvider>
             <LanguageProvider>

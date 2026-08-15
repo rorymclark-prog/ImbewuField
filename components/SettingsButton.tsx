@@ -19,9 +19,12 @@ export default function SettingsButton() {
         title="Settings"
         className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-display transition-all"
         style={{
-          background: '#FFFEFA',
-          border: '1px solid #E2D8C4',
-          color: '#20190F',
+          // Tokens, not the '#FFFEFA'/'#E2D8C4'/'#20190F' this used to carry: dropped into a
+          // dozen-plus page headers, so it stayed a bright light pill in dark mode — the button
+          // that opens the dark-mode toggle was itself the one control ignoring it.
+          background: 'var(--bg-1)',
+          border: '1px solid var(--border)',
+          color: 'var(--text-primary)',
           cursor: 'pointer',
         }}
       >
