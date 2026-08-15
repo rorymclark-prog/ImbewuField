@@ -1,12 +1,14 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import { Info, X } from 'lucide-react';
+import { CheckCircle2, Info, X } from 'lucide-react';
 import { CROPS } from '@/lib/crop-catalog';
 import { loadCropPriceOverrides, priceFor } from '@/lib/crop-prices';
 import {
   LISTING_CATEGORIES,
   LISTING_UNITS,
+  priceLabel,
+  quantityLabel,
   type Listing,
   type ListingCategory,
   type ListingKind,
@@ -16,6 +18,7 @@ import {
 } from '@/lib/exchange';
 import { parseDecimalInput } from '@/lib/decimal-input';
 import { saveLocalListing } from './listing-store';
+import ShareListingButton from './ShareListingButton';
 import { CATEGORY_LABEL, EX, KIND_COLOR, KIND_LABEL, MONTH_LABEL } from './theme';
 
 /** The bases a farmer actually quotes against. `PriceBasis` allows every unit; this is the useful subset. */
@@ -83,6 +86,13 @@ export default function NewListingForm({
   const [farmerName, setFarmerName] = useState('');
   const [areaText, setAreaText] = useState('');
   const [shareArea, setShareArea] = useState(mySite !== null);
+
+  // Set once handlePost() has actually saved the listing. Rendering the
+  // confirmation off this — rather than calling onPosted() immediately — is
+  // what gives the farmer a Share action on the listing they just made,
+  // which for a device-local listing (see listing-store.ts) is the only way
+  // it reaches anyone at all.
+  const [justPosted, setJustPosted] = useState<{ listing: Listing; all: Listing[] } | null>(null);
 
   // Sorted by name so a farmer can find a crop by scanning, not by remembering
   // the catalog's planting order.
@@ -164,7 +174,65 @@ export default function NewListingForm({
       lon: useCoords && mySite ? mySite.lon : null,
       availableMonth: month === '' ? null : Number(month),
     });
-    onPosted(listings);
+    // saveLocalListing() prepends the new record, so it is always listings[0].
+    setJustPosted({ listing: listings[0], all: listings });
+  }
+
+  // ── Confirmation ─────────────────────────────────────────────────────────
+  // This listing is saved on this phone only (see listing-store.ts) — it is
+  // not sent to anyone. Sharing it themselves, right here, is the only way a
+  // farmer's listing reaches another farmer at all, so it is the headline
+  // action the moment a listing exists rather than something to go find.
+  if (justPosted) {
+    const { listing } = justPosted;
+    const qty = quantityLabel(listing);
+    return (
+      <div
+        className="rounded-2xl"
+        style={{
+          background: EX.card,
+          border: `1px solid ${EX.border}`,
+          padding: 18,
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 14,
+        }}
+      >
+        <div className="flex items-center gap-2.5">
+          <CheckCircle2 size={20} strokeWidth={1.8} style={{ color: EX.green, flexShrink: 0 }} />
+          <h2 className="font-display font-bold" style={{ fontSize: 16, color: EX.ink, margin: 0 }}>
+            Listing saved
+          </h2>
+        </div>
+        <p className="font-sans" style={{ fontSize: 13, color: EX.muted, lineHeight: 1.55, margin: 0 }}>
+          It is saved on this phone only — nobody else can see it until you send it to them yourself.
+          Share it now, or find it on the board any time and share it later.
+        </p>
+        <div className="rounded-xl" style={{ background: 'rgba(226,216,196,0.4)', padding: 12 }}>
+          <div className="font-display font-semibold" style={{ fontSize: 14, color: EX.ink, marginBottom: 4 }}>
+            {listing.title}
+          </div>
+          <div className="font-sans" style={{ fontSize: 12.5, color: EX.muted }}>
+            {[qty, priceLabel(listing)].filter(Boolean).join(' · ')}
+          </div>
+        </div>
+        <ShareListingButton listing={listing} label="Share to WhatsApp" />
+        <button
+          onClick={() => onPosted(justPosted.all)}
+          className="font-display font-semibold rounded-xl"
+          style={{
+            padding: 11,
+            fontSize: 14,
+            background: 'transparent',
+            border: `1px solid ${EX.inputBorder}`,
+            color: EX.muted,
+            cursor: 'pointer',
+          }}
+        >
+          Back to the board
+        </button>
+      </div>
+    );
   }
 
   return (
