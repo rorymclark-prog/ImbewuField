@@ -36,10 +36,13 @@ export default function MessageThreadPage() {
   const [messages, setMessages] = useState<ThreadMessage[]>([]);
   const [body, setBody] = useState('');
   const [sending, setSending] = useState(false);
+  const [sendError, setSendError] = useState(false);
   const [busy, setBusy] = useState(true);
   const [reportOpen, setReportOpen] = useState(false);
   const [reportReason, setReportReason] = useState('');
   const [reportSent, setReportSent] = useState(false);
+  const [reportBusy, setReportBusy] = useState(false);
+  const [reportError, setReportError] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -56,21 +59,47 @@ export default function MessageThreadPage() {
 
   useEffect(() => { bottomRef.current?.scrollIntoView({ block: 'end' }); }, [messages.length]);
 
+  // A weak-signal Firestore write can reject (offline, timeout, denied). Before
+  // this caught the failure, the text was already cleared from the box on
+  // line below, sendMessage() threw, and the farmer's typed message simply
+  // vanished — no error, nothing sent, nothing left to retry from. Now a
+  // failure hands the text back to the box and says so, instead of eating it.
   const handleSend = useCallback(async () => {
     if (!body.trim() || sending) return;
     setSending(true);
+    setSendError(false);
     const text = body.trim();
     setBody('');
-    try { await sendMessage(threadId, text); } finally { setSending(false); }
+    try {
+      await sendMessage(threadId, text);
+    } catch (err) {
+      console.error('sendMessage failed', err);
+      setBody(text);
+      setSendError(true);
+    } finally {
+      setSending(false);
+    }
   }, [body, sending, threadId]);
 
+  // Same silent-failure shape as handleSend: an uncaught rejection here left a
+  // farmer who reported abuse with a form that just sits there — no "sent",
+  // no error, no way to tell whether it went anywhere.
   async function handleReport() {
-    if (!reportReason.trim() || !thread) return;
+    if (!reportReason.trim() || !thread || reportBusy) return;
+    setReportBusy(true);
+    setReportError(false);
     const otherUid = thread.participants.find((p) => p !== user?.uid) ?? '';
-    await reportContent('message', threadId, otherUid, reportReason.trim());
-    setReportSent(true);
-    setReportReason('');
-    setTimeout(() => { setReportSent(false); setReportOpen(false); }, 2000);
+    try {
+      await reportContent('message', threadId, otherUid, reportReason.trim());
+      setReportSent(true);
+      setReportReason('');
+      setTimeout(() => { setReportSent(false); setReportOpen(false); }, 2000);
+    } catch (err) {
+      console.error('reportContent failed', err);
+      setReportError(true);
+    } finally {
+      setReportBusy(false);
+    }
   }
 
   if (busy || loading || !communityEnabled() || !user) {
@@ -117,12 +146,17 @@ export default function MessageThreadPage() {
           />
           <button
             onClick={handleReport}
-            disabled={!reportReason.trim()}
+            disabled={!reportReason.trim() || reportBusy}
             className="font-sans font-semibold rounded-xl"
-            style={{ padding: '8px 14px', fontSize: 12.5, background: reportReason.trim() ? '#8B2020' : 'rgba(32,25,15,0.1)', color: reportReason.trim() ? '#fff' : '#94876F', border: 'none', cursor: reportReason.trim() ? 'pointer' : 'default' }}
+            style={{ padding: '8px 14px', fontSize: 12.5, background: reportReason.trim() ? '#8B2020' : 'rgba(32,25,15,0.1)', color: reportReason.trim() ? '#fff' : '#94876F', border: 'none', cursor: reportReason.trim() && !reportBusy ? 'pointer' : 'default' }}
           >
             {reportSent ? t('communityReportSent') : t('communityReportSubmit')}
           </button>
+          {reportError && (
+            <p className="font-sans" style={{ fontSize: 12, color: '#8B2020', margin: '8px 0 0' }}>
+              {t('communityReportError')}
+            </p>
+          )}
         </div>
       )}
 
@@ -156,11 +190,16 @@ export default function MessageThreadPage() {
         <div ref={bottomRef} />
       </main>
 
+      {sendError && (
+        <p className="font-sans" style={{ fontSize: 12, color: '#8B2020', margin: '0 16px 6px', textAlign: 'center' }}>
+          {t('communitySendError')}
+        </p>
+      )}
       <div className="flex-shrink-0 flex items-center gap-2 px-3 py-3" style={{ borderTop: '1px solid #E2D8C4', background: '#FFFEFA', paddingBottom: 'calc(12px + env(safe-area-inset-bottom, 0px))' }}>
         <input
           type="text"
           value={body}
-          onChange={(e) => setBody(e.target.value)}
+          onChange={(e) => { setBody(e.target.value); if (sendError) setSendError(false); }}
           onKeyDown={(e) => { if (e.key === 'Enter') handleSend(); }}
           placeholder={t('communityMessageInputPlaceholder')}
           className="flex-1 rounded-full px-4 py-2.5 font-sans"
