@@ -232,7 +232,9 @@ test('the farmer page can stop digging too', () => {
   const farmer = readFileSync(new URL('../app/farmer/page.tsx', import.meta.url), 'utf8');
 
   // The guard is resolved once per load and the MAP is what it withholds — never the panels.
-  assert.match(farmer, /pageCrashGuard\(FARMER_LOAD_KEY\)/, 'the farmer page no longer counts its own loads');
+  // The pulse cookie rides along so leaving on purpose also clears the SERVER's counter — see
+  // lib/server-rescue.ts and tests/server-rescue.test.ts.
+  assert.match(farmer, /pageCrashGuard\(FARMER_LOAD_KEY, FARMER_PULSE_COOKIE\)/, 'the farmer page no longer counts its own loads');
   assert.match(farmer, /\{mapHeld \? \(/, 'the guard no longer holds the map back');
   // The escape hatch must clear the SAME key the streak lives under.
   assert.match(farmer, /exitPageCrashGuard\(mapGuard\.key\)/, 'the "Load the map" button is gone or clears the wrong key');

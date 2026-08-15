@@ -23,6 +23,10 @@
 // The farmer's stored base-mode choice is never written by this. Safe mode overrides what is
 // LOADED for one page load; the next healthy load brings their photo back on its own.
 
+// The .ts extension is load-bearing: tests/crash-loop.test.ts runs this file under Node's own
+// test runner, which resolves TS imports only with their extension (allowImportingTsExtensions).
+import { RESCUE_COOKIE, clearPulseCookie } from './server-rescue.ts';
+
 /** Where the load counter lives. localStorage, not sessionStorage: an iOS memory kill can start a
  *  fresh session, and a counter that resets on the very event it exists to count is no counter. */
 export const CRASH_LOOP_KEY = 'imbewu_design_page_loads';
@@ -198,15 +202,17 @@ export function startDeathWatch(store: CrashLoopStore, key: string): { previousS
 }
 
 /** Wire the exit/resume markers to the events iOS actually fires. Returns an unsubscribe. */
-export function watchSessionExit(key: string): () => void {
+export function watchSessionExit(key: string, pulseCookie?: string): () => void {
   if (typeof window === 'undefined') return () => {};
   // Leaving ON PURPOSE also settles the load. Without this, a farmer who opens the page and taps
-  // away before the settle timer — twice — reads as two dead loads, and at a threshold of two
-  // their next visit opens light for no reason. The page was alive when they left; that is the
-  // whole meaning of settled.
+  // away before the settle timer reads as a dead load, and their next visit opens light — or,
+  // for the server-side cookie, lands on the lite page — for no reason. The page was alive when
+  // they left; that is the whole meaning of settled. The server's pulse cookie follows the same
+  // rule, which is why it is cleared here and not only by the settle timer.
   const leave = () => {
     markPageSettled(window.localStorage, key);
     markCleanExit(window.localStorage, key);
+    if (pulseCookie) clearPulseCookie(pulseCookie);
   };
   const onHide = leave;
   const onVisibility = () => {
@@ -315,7 +321,7 @@ export function designSafeMode(): SafeModeDecision {
   // BEFORE the load is counted: did the last session die in the foreground after settling?
   // That is the generate-a-map / generate-a-report crash the load counter cannot see.
   startDeathWatch(window.localStorage, key);
-  watchSessionExit(key);
+  watchSessionExit(key, RESCUE_COOKIE);
   resolvedForThisLoad = resolveSafeMode(recordPageLoad(window.localStorage, key), requested, key);
   return resolvedForThisLoad;
 }
@@ -338,7 +344,7 @@ export const FARMER_LOAD_KEY = 'imbewu_farmer_page_loads';
 
 const resolvedByKey = new Map<string, SafeModeDecision>();
 
-export function pageCrashGuard(storageKey: string): SafeModeDecision {
+export function pageCrashGuard(storageKey: string, pulseCookie?: string): SafeModeDecision {
   const cached = resolvedByKey.get(storageKey);
   if (cached) return cached;
   if (typeof window === 'undefined') return { active: false, reason: null, loads: 0, key: storageKey };
@@ -351,7 +357,7 @@ export function pageCrashGuard(storageKey: string): SafeModeDecision {
   // Same order as designSafeMode: detect a foreground death from the LAST session before this
   // load adds its own count — see startDeathWatch.
   startDeathWatch(window.localStorage, storageKey);
-  watchSessionExit(storageKey);
+  watchSessionExit(storageKey, pulseCookie);
   const decision = resolveSafeMode(recordPageLoad(window.localStorage, storageKey), requested, storageKey);
   resolvedByKey.set(storageKey, decision);
   return decision;
