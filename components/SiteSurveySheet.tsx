@@ -297,6 +297,16 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
 
   const Icon = STEP_ICONS[step];
 
+  // Nothing is saved to storage until the final "Save & generate report" tap — this whole
+  // 7-step questionnaire lives in component state only. Reaching step > 0 means the farmer
+  // has already cleared step 0's required fields and answered "Next" at least once, so an
+  // X tap past that point is real, unsaved work — confirm before throwing it away, the same
+  // way app/design/page.tsx and app/facilitator/crops/page.tsx guard their own data loss.
+  const closeWithConfirm = useCallback(() => {
+    if (step > 0 && !window.confirm('Discard your answers so far? This questionnaire has not been saved yet.')) return;
+    onClose();
+  }, [step, onClose]);
+
   return (
     // Full-screen step wizard (fixed inset-0, no viewport margin) rather than a partial-height
     // bottom sheet — u-anim-sheet still gives it a settle-in entrance; deliberately no grabber
@@ -305,7 +315,7 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
     <div className="fixed inset-0 z-50 flex flex-col u-anim-sheet" style={{ background: '#E4DCC6' }}>
       {/* Header */}
       <div className="flex items-center gap-3 px-4 flex-shrink-0" style={{ height: 60, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
-        <button onClick={onClose}
+        <button onClick={closeWithConfirm}
           style={{ width: 44, height: 44, borderRadius: 12, background: 'rgba(32,25,15,0.06)', border: '1px solid #E2D8C4', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#5C5040', flexShrink: 0 }}>
           <X size={18} />
         </button>

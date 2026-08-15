@@ -53,9 +53,13 @@ export async function fetchSoilData(lat: number, lon: number): Promise<SoilData>
   for (const d of DEPTHS) params.append('depth', d.label);
   params.set('value', 'mean');
 
+  // Timeout matches lib/nasa-power.ts and lib/elevation.ts's sibling upstream calls in the same
+  // /api/location-data request. Without it, a hung ISRIC response hung this request forever: it is
+  // one of four calls awaited with Promise.allSettled, which does not settle until every one of
+  // them does — so a farmer tapping the map got a spinner with no way to fail and no way to finish.
   const res = await fetch(
     `https://rest.isric.org/soilgrids/v2.0/properties/query?${params}`,
-    { next: { revalidate: 86400 } }
+    { signal: AbortSignal.timeout(8000), next: { revalidate: 86400 } } as RequestInit
   );
 
   if (!res.ok) {
