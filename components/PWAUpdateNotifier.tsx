@@ -39,7 +39,9 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
   // A notice must never outrank the work. It now shrinks to a small pill after a few seconds and
   // can be dismissed outright — the update itself is not urgent (nothing breaks if you refresh in
   // ten minutes), so the full card is a courtesy, not a claim on the screen.
-  const [expanded, setExpanded] = useState(true);
+  // Default to compact pill so it never obstructs primary actions on mount.
+  const [expanded, setExpanded] = useState(false);
+  const [showAllNotes, setShowAllNotes] = useState(false);
   const [dismissed, setDismissed] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const registrationRef = useRef<ServiceWorkerRegistration | null>(null);
@@ -183,31 +185,58 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
     return () => window.clearTimeout(t);
   }, [updateAvailable, expanded]);
 
-  // A new build re-expands: this is a different announcement, not the one already read past.
+  // Allow forcing the update notice on any screen during testing (?force-update=1 or ?show-update=1).
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const params = new URLSearchParams(window.location.search);
+    if (params.has('force-update') || params.has('show-update')) {
+      setUpdateAvailable(true);
+      if (params.get('force-update') === 'expand' || params.get('expand') === '1') {
+        setExpanded(true);
+      }
+    }
+  }, []);
+
+  // A new build un-dismisses so the update is visible, keeping compact pill mode.
   useEffect(() => {
     if (!nextBuildSha) return;
     setDismissed(false);
-    setExpanded(true);
   }, [nextBuildSha]);
 
   if (!updateAvailable || dismissed) return null;
   // The NEW build's notes when the server could supply them; ours only as a fallback (a
   // service-worker-triggered update never hits /api/build-info, and an offline tab cannot ask).
   const notes = nextBuildNotes ?? visibleNotes();
+  const VISIBLE_NOTES_CAP = 2;
+  const displayedNotes = showAllNotes ? notes : notes.slice(0, VISIBLE_NOTES_CAP);
+  const remainingNotesCount = notes.length - VISIBLE_NOTES_CAP;
+
+  // Spaced clear of the fixed bottom navigation (calc(var(--bottom-nav-height, 60px) + env(safe-area-inset-bottom, 0px) + 0.5rem))
+  // and horizontally centered to avoid colliding with the Lima floating button at bottom-left.
+  const containerBottomStyle = 'calc(var(--bottom-nav-height, 60px) + env(safe-area-inset-bottom, 0px) + 0.5rem)';
 
   if (!expanded) {
-    // The whole notice, reduced to something that cannot cover a button: a small pill in the
-    // corner, out of the centre column where every confirm panel in this app lives.
+    // The whole notice, reduced to something that cannot cover a button: a small pill clear of bottom nav.
     return (
       <div
-        className="no-print"
+        className="no-print pwa-update-notifier"
         role="status"
         style={{
-          position: 'fixed', bottom: 'calc(env(safe-area-inset-bottom, 0px) + 0.5rem)', left: '0.5rem',
-          zIndex: 9999, display: 'flex', alignItems: 'center', gap: 6,
-          background: '#1f2937', color: '#fff', borderRadius: 999,
-          padding: '2px 4px 2px 10px', fontSize: '0.75rem',
+          position: 'fixed',
+          bottom: containerBottomStyle,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          zIndex: 10000,
+          display: 'flex',
+          alignItems: 'center',
+          gap: 6,
+          background: '#1f2937',
+          color: '#fff',
+          borderRadius: 999,
+          padding: '4px 6px 4px 12px',
+          fontSize: '0.75rem',
           boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+          maxWidth: 'min(92vw, 24rem)',
         }}
       >
         <button
@@ -240,11 +269,11 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
 
   return (
     <div
-      className="no-print"
+      className="no-print pwa-update-notifier"
       role="status"
       style={{
         position: 'fixed',
-        bottom: '1rem',
+        bottom: containerBottomStyle,
         left: '50%',
         transform: 'translateX(-50%)',
         background: '#1f2937',
@@ -256,13 +285,21 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
         alignItems: 'flex-start',
         gap: '0.5rem',
         maxWidth: 'min(92vw, 27rem)',
-        zIndex: 9999,
+        zIndex: 10000,
         boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
         fontSize: '0.875rem',
       }}
     >
       <span style={{ display: 'flex', alignItems: 'center', gap: 8, alignSelf: 'stretch' }}>
         <span style={{ flex: 1 }}>New version{nextBuildSha ? ` ${nextBuildSha}` : ''} available.</span>
+        <button
+          type="button"
+          onClick={() => setExpanded(false)}
+          aria-label="Collapse update notice"
+          style={{ background: 'transparent', border: 'none', color: '#fff', opacity: 0.7, cursor: 'pointer', padding: '2px 4px', font: 'inherit', lineHeight: 1 }}
+        >
+          ⌃
+        </button>
         <button
           type="button"
           onClick={() => setDismissed(true)}
@@ -288,31 +325,49 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
       >
         {refreshing ? 'Refreshing…' : 'Refresh update'}
       </button>
-      {/* WHAT you are refreshing into. "New version available" alone tells the farmer a number
-          changed, not whether it is worth interrupting their work for, nor what to go and look at
-          afterwards. See lib/release-notes.ts for the house style: one short line per change, in
-          what-you-will-see terms. */}
+      {/* WHAT you are refreshing into. Show at most 2 notes capped by default, with an honest "and X more" expansion. */}
       {notes.length > 0 && (
-        <ul
-          style={{
-            listStyle: 'none',
-            margin: 0,
-            padding: 0,
-            display: 'flex',
-            flexDirection: 'column',
-            gap: '0.2rem',
-            fontSize: '0.78rem',
-            lineHeight: 1.35,
-            opacity: 0.85,
-          }}
-        >
-          {notes.map((n) => (
-            <li key={n} style={{ display: 'flex', gap: '0.4rem' }}>
-              <span aria-hidden style={{ opacity: 0.6 }}>·</span>
-              <span>{n}</span>
-            </li>
-          ))}
-        </ul>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', width: '100%' }}>
+          <ul
+            style={{
+              listStyle: 'none',
+              margin: 0,
+              padding: 0,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '0.2rem',
+              fontSize: '0.78rem',
+              lineHeight: 1.35,
+              opacity: 0.85,
+            }}
+          >
+            {displayedNotes.map((n) => (
+              <li key={n} style={{ display: 'flex', gap: '0.4rem' }}>
+                <span aria-hidden style={{ opacity: 0.6 }}>·</span>
+                <span>{n}</span>
+              </li>
+            ))}
+          </ul>
+          {remainingNotesCount > 0 && (
+            <button
+              type="button"
+              onClick={() => setShowAllNotes((prev) => !prev)}
+              style={{
+                background: 'transparent',
+                border: 'none',
+                color: '#9ca3af',
+                fontSize: '0.75rem',
+                cursor: 'pointer',
+                padding: '2px 0 0 0',
+                textAlign: 'left',
+                font: 'inherit',
+                textDecoration: 'underline',
+              }}
+            >
+              {showAllNotes ? 'show less' : `and ${remainingNotesCount} more`}
+            </button>
+          )}
+        </div>
       )}
     </div>
   );

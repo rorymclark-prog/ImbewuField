@@ -53,6 +53,7 @@
    See design/MODERN-2026-PLAN.md.
    ═══════════════════════════════════════════════════════ */
 :root {
+  --bottom-nav-height: 60px;
   --brand: #1F4D2B;          /* forest — sole interactive accent */
   --brand-strong: #163820;
   --brand-light: #2D6B3C;
@@ -582,6 +583,12 @@ body.is-sample-mode .mapboxgl-ctrl-bottom-right {
     margin-bottom: 50px !important;
   }
 }
+
+/* Sample mode: push the update notifier above the sample banner */
+body.is-sample-mode .pwa-update-notifier {
+  bottom: calc(var(--bottom-nav-height, 60px) + 44px + env(safe-area-inset-bottom, 0px) + 0.5rem) !important;
+}
+
 
 /* Global print safety: anything marked .no-print never reaches paper.
    Covers the global Lima chat FAB / nav so they don't spill onto a 2nd page. */
