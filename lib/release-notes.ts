@@ -35,6 +35,14 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '15 August',
+    sha: '258b644',
+    changes: [
+      'The automatic switch to the simple page is off — every page opens normally again',
+      'It was catching healthy computers too, not only crashing phones',
+    ],
+  },
+  {
+    when: '15 August',
     sha: '74c67d7',
     changes: [
       'The crash rescue now steps in one reload sooner, before the grey error can appear',

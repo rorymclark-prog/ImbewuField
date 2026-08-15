@@ -72,30 +72,20 @@ test('the thresholds and windows match how iOS actually behaves', () => {
   assert.equal(RESCUE_THRESHOLD, 1);
 });
 
-test('the middleware wires the whole contract, for BOTH heavy pages and only them', () => {
-  const mw = source('../middleware.ts');
-  assert.match(mw, /'\/design': \{ pulse: RESCUE_COOKIE, grant: GRANT_COOKIE \}/,
-    'the design page lost its rescue');
-  assert.match(mw, /'\/farmer': \{ pulse: FARMER_PULSE_COOKIE, grant: FARMER_GRANT_COOKIE \}/,
-    '"it crashes in multiple places" — the farmer map needs the same net');
-  assert.match(mw, /if \(!names\) return NextResponse\.next\(\);/,
-    'the rescue must not tax every route in the app');
-  // Prefetches are the router warming links nobody tapped — counting them charges crashes to
-  // pages nobody opened.
-  assert.match(mw, /prefetch/i, 'prefetch requests are being counted as opens');
-  assert.match(mw, /decideDesignRescue\(\s*req\.cookies\.get\(names\.pulse\)/,
-    'the decision must read the pulse for THIS page');
-  assert.match(mw, /req\.cookies\.get\(names\.grant\)/,
-    'the decision must know whether a full=1 retry was already granted');
-  // The redirect keeps the coordinates, so the lite page can offer the same farm back.
-  assert.match(mw, /\/design\/lite\$\{search\}/, 'the redirect drops the farm coordinates');
-  assert.match(mw, /searchParams\.set\('from', 'farmer'\)/,
-    'the lite page cannot adapt its words without knowing which page died');
-  // The cookies must be readable by document.cookie — the SETTLED page deleting the pulse is the
-  // whole contract, and httpOnly would make that impossible.
-  assert.match(mw, /httpOnly: false/, 'an httpOnly cookie can never be cleared by the healthy page');
-  assert.match(mw, /maxAge: RESCUE_WINDOW_S/);
-  assert.match(mw, /maxAge: GRANT_WINDOW_S/, 'the grant must expire on its own');
+test('the middleware stands down: no request is counted or redirected', () => {
+  // 15 August, an hour after the rescue shipped, from Rory's LAPTOP: "disable this now its
+  // interfering with my laptop use too". At threshold one, any open not followed by a settled
+  // page — a quick refresh, a navigation mid-load, a healthy machine doing normal things — sent
+  // the next open to the lite page. The rescue is OFF; the comprehensive fix is the design page
+  // not crashing in the first place. The decision logic above stays tested so a deliberate,
+  // narrower restore (e.g. phone-only) stays cheap; this test pins that the middleware itself
+  // touches nothing until that decision is made ON PURPOSE.
+  // Comments stripped first — the file is allowed to EXPLAIN what was disabled and how to
+  // restore it; it is the CODE that must do nothing.
+  const mw = source('../middleware.ts').replace(/\/\/[^\n]*/g, '').replace(/\/\*[\s\S]*?\*\//g, '');
+  assert.doesNotMatch(mw, /decideDesignRescue\(/, 'the rescue is wired back in — was that deliberate? See this test.');
+  assert.doesNotMatch(mw, /cookies\.set/, 'the middleware must not stamp cookies while stood down');
+  assert.doesNotMatch(mw, /redirect/i, 'the middleware must not redirect anything while stood down');
 });
 
 test('both settled pages tell the server they survived', () => {
