@@ -124,7 +124,9 @@ test('safe mode still loads the design, and still charges the load before the he
     'safe mode is no longer resolved once per page load during render');
   assert.ok(/markPageSettled\(window\.localStorage/.test(PAGE_SRC),
     'nothing clears the streak — safe mode would latch on forever once it engaged');
-  assert.ok(/window\.setTimeout\(\(\) => markPageSettled/.test(PAGE_SRC),
+  // Accepts both the arrow form and the block form (the callback grew a second job on 15 Aug:
+  // deleting the server-rescue cookie). The invariant is the TIMER, not the callback's shape.
+  assert.ok(/window\.setTimeout\(\(\) => \{?\s*\n?\s*markPageSettled/.test(PAGE_SRC),
     'the streak must be cleared on a TIMER: clearing it during render would mark a page settled '
     + 'the instant it opened, which is precisely the moment before it dies');
 });

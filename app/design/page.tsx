@@ -11,6 +11,7 @@ import { useSearchParams } from 'next/navigation';
 import type { Position } from 'geojson';
 import { ArrowLeft, Compass, MapPin, ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Lightbulb, Image as ImageIcon, Sprout, X, Printer, Lock } from 'lucide-react';
 import { CRASH_LOOP_SETTLE_MS, designSafeMode, exitSafeMode, lastCrashPhase, markPageSettled, noteCrashPhase } from '@/lib/crash-loop';
+import { clearPulseCookie } from '@/lib/server-rescue';
 import { loadPlaces, resolveColor, type SavedPlace } from '@/lib/saved-places';
 
 import type { LocationData } from '@/lib/types';
@@ -644,7 +645,13 @@ function DesignStudioInner() {
     // The SAME per-farm key the decision was read from — clearing the shared one would leave this
     // farm's streak climbing forever, and safe mode would latch on and never let go.
     if (!baseHeavyDone) return;
-    const settled = window.setTimeout(() => markPageSettled(window.localStorage, safeMode.key), CRASH_LOOP_SETTLE_MS);
+    const settled = window.setTimeout(() => {
+      markPageSettled(window.localStorage, safeMode.key);
+      // The server keeps its own crash count in a cookie (lib/server-rescue.ts) precisely
+      // because this code may never run on a dying phone. On a healthy one it does — and this
+      // deletion is what tells the server so.
+      clearPulseCookie();
+    }, CRASH_LOOP_SETTLE_MS);
     return () => window.clearTimeout(settled);
   }, [baseHeavyDone, safeMode.key]);
 
