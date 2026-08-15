@@ -6,8 +6,9 @@ import { pathToFileURL } from 'node:url';
 import test from 'node:test';
 
 import { cropByKey } from '../lib/crop-catalog.ts';
+import { DEFAULT_BEDS } from '../app/cropplan/load-beds.ts';
 
-// THREE DEFECTS, ONE SCREEN: app/cropplan/page.tsx (and the /calendar page it points a farmer at).
+// TWO DEFECTS, ONE SCREEN: app/cropplan/page.tsx.
 //
 // 1. A farmer with a single bed configured — the normal state straight out of a fresh garden
 //    survey, or after adding one crop in the planner — crashed the whole Crop Plan screen.
@@ -17,9 +18,12 @@ import { cropByKey } from '../lib/crop-catalog.ts';
 //    puts every rainfall pattern's sowing window at Oct-Dec — the same "false-early" defect
 //    tests/calendar-truth.test.ts already exists to catch on the neighbouring /calendar page, just
 //    typed by hand into this one instead.
-// 3. /calendar itself had no door: no tab, no drawer entry, no card anywhere in the app pointed a
-//    farmer at it, so the accurate 12-month grid that calendar-truth.test.ts protects was
-//    unreachable regardless of how correct it was.
+//
+// A third defect this file used to guard — /calendar having no door anywhere in the app — landed
+// independently via #215 (the seasonal calendar's own Farm Tools entry) and is covered there by
+// tests/nav-menu-links.test.ts, which asserts the actual shipped icon (Calendar, not CalendarRange).
+// That coverage is more thorough than what stood here, so the duplicate test was dropped rather
+// than kept pointing at a losing implementation detail.
 
 const read = (rel: string) => readFileSync(new URL(rel, import.meta.url), 'utf8');
 const PAGE = read('../app/cropplan/page.tsx');
@@ -48,8 +52,6 @@ function extractFunction(source: string, name: string): string {
 }
 
 test('a one-bed farm does not crash the crop-plan day/week views', async () => {
-  const defaultBedsMatch = PAGE.match(/const DEFAULT_BEDS: Bed\[\] = \[[\s\S]*?\];/);
-  assert.ok(defaultBedsMatch, 'DEFAULT_BEDS moved or was renamed in app/cropplan/page.tsx');
   const jobsForDateSrc = extractFunction(PAGE, 'jobsForDate')
     .replace('function jobsForDate', 'export function jobsForDate');
 
@@ -57,7 +59,10 @@ test('a one-bed farm does not crash the crop-plan day/week views', async () => {
   // just type-stripping) — the codebase's existing tests read such files as text instead. This
   // one goes a step further and actually executes the extracted logic, because a regression here
   // is a crash, and a string match on the source can't prove the function still runs.
-  const moduleSource = `${defaultBedsMatch[0]}\n${jobsForDateSrc}\n`;
+  // DEFAULT_BEDS itself is imported live from load-beds.ts (see top of file) rather than
+  // regex-extracted from page.tsx text — it moved there in #215's account-isolation split, and an
+  // import that breaks if it moves again is a stronger guard than a source-text pattern would be.
+  const moduleSource = `const DEFAULT_BEDS = ${JSON.stringify(DEFAULT_BEDS)};\n${jobsForDateSrc}\n`;
   const tmpFile = join(tmpdir(), `cropplan-jobsfordate-${process.pid}-${Date.now()}.ts`);
   writeFileSync(tmpFile, moduleSource, 'utf8');
   try {
@@ -111,23 +116,4 @@ test('MONTH_FOCUS never names maize in a month outside its catalog sowing window
   // everywhere (which would make the loop above vacuous) still gets caught.
   const september = entries.find(([i]) => i === 8)?.[1] ?? '';
   assert.ok(!/\bmaize\b/i.test(september), `September still names maize: "${september}"`);
-});
-
-// ---------------------------------------------------------------------------
-// 3. The Planting Calendar has a door
-// ---------------------------------------------------------------------------
-
-test('the drawer has a way into the Planting Calendar', () => {
-  const nav = read('../components/NavDrawer.tsx');
-  assert.match(nav, /href: '\/calendar'/, 'no drawer entry points at /calendar');
-  assert.match(nav, /label: t\('navPlantingCalendar'\)/, 'the label must come from translations');
-  assert.match(nav, /import \{[\s\S]*?\bCalendarRange\b[\s\S]*?\} from 'lucide-react'/,
-    'Lucide only — no emoji as UI icons');
-
-  const i18n = read('../lib/i18n.tsx');
-  // Guardrail: a NEW key belongs in the en block only until a first-language reviewer supplies
-  // the rest — the missing-key fallback (T[lang]?.[key] ?? T.en[key]) serves English everywhere
-  // else in the meantime, which is why this asserts the key exists at all rather than counting
-  // occurrences the way tests/nav-site-report.test.ts does for a reused, already-translated key.
-  assert.match(i18n, /navPlantingCalendar: 'Planting Calendar'/);
 });
