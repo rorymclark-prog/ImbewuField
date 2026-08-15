@@ -35,6 +35,15 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '15 August',
+    // Restamp with the merge sha after this lands — see the file header.
+    sha: 'pending',
+    changes: [
+      'A design with years of saved sheets and its own photo now opens without crashing',
+      'Your saved sheets open with one tap instead of loading themselves and slowing things down',
+    ],
+  },
+  {
+    when: '15 August',
     sha: '93d6b91',
     changes: [
       'Share a listing straight to WhatsApp, so what you have to sell can reach a buyer',
