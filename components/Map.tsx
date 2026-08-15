@@ -3170,7 +3170,12 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
               <div className="w-full flex flex-col gap-1 mt-1.5">
                 {savedPins.length === 0 ? (
                   <div className="px-3 py-2 rounded-lg font-sans"
-                    style={{ background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(58,104,48,0.3)', color: 'var(--text-muted)', fontSize: 13 }}>
+                    // Fixed light colour, not var(--text-muted): this panel is a dark glass overlay
+                    // on the map in every theme (its siblings below use rgba(234,243,226,...) for
+                    // the same reason), but --text-muted resolves to a dark earth/slate tone —
+                    // dark-on-dark, worst in dark mode (~2.5:1). rgba(234,243,226,0.65) matches the
+                    // sibling rows' colour family and clears 4.5:1 against this panel's background.
+                    style={{ background: 'rgba(22,37,20,0.5)', border: '1px solid rgba(58,104,48,0.3)', color: 'rgba(234,243,226,0.65)', fontSize: 13 }}>
                     {t('noSavedPlacesMessage')}
                   </div>
                 ) : savedPins.map((p) => (

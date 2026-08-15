@@ -11,7 +11,16 @@
   --color-muted-strong: #4B554D;
   --color-muted: #667168;
   --color-surface: #FFFFFF;
-  --color-harvest: #D18A1F;
+  /* #7A4408, not the paler #D18A1F this used to carry: at #D18A1F this token read 2.82:1 against
+     the card and 2.08:1 against the page — both well under the 4.5:1 body-text floor. It renders
+     on the /home header date label, which sits directly on the page background (no card behind
+     it), so the page ratio is the one that has to hold. Earth light's own --gold (#9E5C08, set
+     below) still only reaches 3.85:1 there; --gold-dim (#7A4408, also already declared below)
+     clears both surfaces at 7.83:1 card / 5.78:1 page, so this token now carries that already-
+     established value rather than a new one. Fixed here, in the single earth-light :root
+     authority, rather than with an earth-light override — so the Vision 2 token-collision test's
+     declaration count (one authority, zero override) still holds. */
+  --color-harvest: #7A4408;
   --color-canvas: #F7F5EF;
   --color-sage-100: #EEF3EA;
   --color-forest: #1F4D2B;
@@ -188,7 +197,12 @@ html[data-theme="earth"] {
 
   --text-primary: #261B10;
   --text-secondary: #6A5040;
-  --text-muted: #9A8268;
+  /* #755942, not the previous #9A8268: that value read 3.61:1 against the card and 2.66:1 against
+     the page, both under the 4.5:1 body-text floor — and this token is not decorative, it's the
+     Appearance panel's own toggle descriptions and section labels (components/ThemePanel.tsx).
+     #755942 clears 4.5:1 against both surfaces it actually sits on (6.38:1 card / 4.70:1 page)
+     while staying visibly lighter than --text-secondary. */
+  --text-muted: #755942;
 
   --emerald: #3A7518;
   --emerald-bright: #5CA030;
@@ -242,7 +256,10 @@ html[data-theme="earth"].dark {
 
   --text-primary: #EEE4D0;
   --text-secondary: #A8906C;
-  --text-muted: #685040;
+  /* #957A58, not the previous #685040: that value read 2.49:1 against the card, under the 4.5:1
+     floor for the same ThemePanel copy the light-mode fix above addresses. #957A58 clears 4.5:1
+     against both the card (4.61:1) and the page (4.89:1). */
+  --text-muted: #957A58;
 
   --emerald: #82C844;
   --emerald-bright: #A8E860;
@@ -296,7 +313,10 @@ html[data-theme="slate"] {
 
   --text-primary: #0C1526;
   --text-secondary: #445266;
-  --text-muted: #8898AA;
+  /* #5C6B7D, not the previous #8898AA: that value read 2.82:1 against the card, under the 4.5:1
+     floor for the same ThemePanel copy the earth-theme fixes above address. #5C6B7D clears 4.5:1
+     against both the card (5.21:1) and the page (5.45:1). */
+  --text-muted: #5C6B7D;
 
   --emerald: #0D6B52;
   --emerald-bright: #199870;
@@ -350,7 +370,10 @@ html[data-theme="slate"].dark {
 
   --text-primary: #DCE4F0;
   --text-secondary: #8898AA;
-  --text-muted: #4A5A6E;
+  /* #7284A0, not the previous #4A5A6E: that value read 2.59:1 against the card, under the 4.5:1
+     floor for the same ThemePanel copy the earth-theme fixes above address. #7284A0 clears 4.5:1
+     against both the card (4.80:1) and the page (5.21:1). */
+  --text-muted: #7284A0;
 
   --emerald: #18A878;
   --emerald-bright: #50CCA0;
