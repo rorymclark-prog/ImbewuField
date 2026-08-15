@@ -324,6 +324,20 @@ type PageKey = 'full' | LayerId;
 export default function FacilitatorPrintPage() {
   const [state, setState] = useState<FacilitatorDesignState | null | undefined>(undefined);
   const [enabledPages, setEnabledPages] = useState<Partial<Record<PageKey, boolean>>>({});
+  // This route survives specifically for old bookmarks (see app/facilitator/page.tsx) — and a
+  // page whose whole purpose is "reopen this to print" is exactly the kind a facilitator adds to
+  // their home screen. window.print() is a silent no-op there (manifest display: "standalone"; the
+  // same bug already fixed for the Site Analysis Report, the crop plan and the garden survey — see
+  // lib/report-pdf.ts, lib/crop-export-pdf.ts, lib/survey-pdf.ts). This page is live HTML/CSS, not
+  // a generated file, so the fix here is not "build a PDF" — it is "say so" instead of doing
+  // nothing, and point at the one route that does work: this same URL, opened in a real browser.
+  const [standalone, setStandalone] = useState(false);
+  const [showPrintHint, setShowPrintHint] = useState(false);
+  useEffect(() => {
+    // After mount only — matchMedia and navigator.standalone do not exist during SSR.
+    const iosStandalone = (navigator as Navigator & { standalone?: boolean }).standalone === true;
+    setStandalone(iosStandalone || window.matchMedia('(display-mode: standalone)').matches);
+  }, []);
 
   useEffect(() => {
     setState(loadFacilitatorState());
@@ -646,7 +660,17 @@ export default function FacilitatorPrintPage() {
           ✎ Back to Design map
         </a>
         <button
-          onClick={() => window.print()}
+          onClick={() => {
+            if (standalone) {
+              // Never a silent no-op again. The link itself still works — it is the printing
+              // that fails in this shell — so hand the facilitator the one route that does:
+              // this same page, opened in a real browser tab.
+              setShowPrintHint(true);
+              try { navigator.clipboard.writeText(window.location.href); } catch { /* clipboard denied — the hint still tells them where they are */ }
+              return;
+            }
+            window.print();
+          }}
           style={{ padding: '6px 14px', borderRadius: 6, border: 'none', background: '#fff', color: '#1F4D2B', cursor: 'pointer', fontSize: 13, fontWeight: 600 }}
         >
           🖨 Print / Save as PDF
@@ -654,6 +678,11 @@ export default function FacilitatorPrintPage() {
         <span style={{ fontSize: 12, opacity: 0.85, marginLeft: 8 }}>
           A4 landscape plan pack{nothingToPrint ? ' — select at least one page below' : ''}
         </span>
+        {showPrintHint && (
+          <span style={{ fontSize: 12, color: '#FFE9B3', marginLeft: 8 }}>
+            Printing isn&apos;t available in the installed app. This page&apos;s link is copied — open it in Safari or Chrome to print.
+          </span>
+        )}
 
         <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap', marginLeft: 'auto' }}>
           <label style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 12, cursor: 'pointer' }}>
