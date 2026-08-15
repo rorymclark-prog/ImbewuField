@@ -167,7 +167,12 @@ function TraineeCard({
               </span>
             )}
           </div>
-          <ProgressBar value={doneIds.size} max={TOTAL_MODULES} />
+          {/* Counted against the current curriculum, not the raw rows: a learner with a stale
+              course_progress row for a module since removed or renamed must not show a mentor
+              "11/10" — the exact drift enrollmentProgress in lib/course-enrollment.ts already
+              guards against for the status badge above; this bar was reading doneIds.size
+              directly and skipping that guard. */}
+          <ProgressBar value={COURSE_MODULES.filter((m) => doneIds.has(m.id)).length} max={TOTAL_MODULES} />
         </div>
         {open ? <ChevronUp size={15} style={{ color: '#8C7A62' }} /> : <ChevronDown size={15} style={{ color: '#8C7A62' }} />}
       </button>

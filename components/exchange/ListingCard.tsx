@@ -8,6 +8,7 @@ import {
   quantityLabel,
   type ListingWithDistance,
 } from '@/lib/exchange';
+import ShareListingButton from './ShareListingButton';
 import { CATEGORY_LABEL, EX, KIND_COLOR, KIND_LABEL, MONTH_LABEL } from './theme';
 
 /**
@@ -205,7 +206,8 @@ export default function ListingCard({
       </div>
 
       {mine ? (
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
+          <ShareListingButton listing={listing} />
           {!closed && (
             <button
               onClick={() => onClose(listing.id)}
@@ -238,18 +240,23 @@ export default function ListingCard({
           </button>
         </div>
       ) : (
-        /* NO CONTACT BUTTON, DELIBERATELY. There is no messaging in this
-           preview, so a "Message" or "Contact" control would be a dead button
-           promising a feature that does not exist. State the position instead. */
-        <div
-          className="flex items-start gap-2 rounded-lg"
-          style={{ background: 'rgba(226,216,196,0.4)', padding: '8px 10px' }}
-        >
-          <Info size={12} strokeWidth={1.9} style={{ color: EX.faint, marginTop: 1.5, flexShrink: 0 }} />
-          <span className="font-sans" style={{ fontSize: 11.5, color: EX.faint, lineHeight: 1.45 }}>
-            No way to contact this farmer from the app yet. For now, note the name and area and
-            arrange it through your facilitator or group.
-          </span>
+        <div className="flex flex-col gap-2 items-start">
+          <ShareListingButton listing={listing} />
+          {/* NO CONTACT BUTTON, DELIBERATELY. There is no messaging in this
+              preview, so a "Message" or "Contact" control would be a dead
+              button promising a feature that does not exist. State the
+              position instead — Share above is a real, working alternative:
+              it hands this listing on to whoever the farmer forwards it to. */}
+          <div
+            className="flex items-start gap-2 rounded-lg"
+            style={{ background: 'rgba(226,216,196,0.4)', padding: '8px 10px' }}
+          >
+            <Info size={12} strokeWidth={1.9} style={{ color: EX.faint, marginTop: 1.5, flexShrink: 0 }} />
+            <span className="font-sans" style={{ fontSize: 11.5, color: EX.faint, lineHeight: 1.45 }}>
+              No way to contact this farmer from the app yet. For now, note the name and area and
+              arrange it through your facilitator or group.
+            </span>
+          </div>
         </div>
       )}
     </article>
