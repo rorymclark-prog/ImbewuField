@@ -1,5 +1,5 @@
 'use client';
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { X, ChevronRight, ChevronLeft, Check, Users, Droplets, Home, Leaf, AlertTriangle, FileText, Sparkles } from 'lucide-react';
 import {
   saveSurvey,
@@ -98,7 +98,7 @@ function Toggle({ label, sub, on, onChange }: { label: string; sub?: string; on:
         <div className="font-sans font-semibold" style={{ fontSize: 13.5, color: '#20190F' }}>{label}</div>
         {sub && <div className="font-sans" style={{ fontSize: 12, color: '#8C7A62' }}>{sub}</div>}
       </div>
-      <button onClick={() => onChange(!on)} className="flex items-center rounded-full transition-all flex-shrink-0"
+      <button onClick={() => onChange(!on)} role="switch" aria-checked={on} aria-label={label} className="flex items-center rounded-full transition-all flex-shrink-0"
         style={{ width: 44, height: 26, padding: 3, background: on ? '#1F4D2B' : 'rgba(32,25,15,0.15)',
           justifyContent: on ? 'flex-end' : 'flex-start', border: 'none', cursor: 'pointer' }}>
         <span style={{ width: 20, height: 20, borderRadius: '50%', background: '#fff', display: 'block', boxShadow: '0 1px 3px rgba(0,0,0,0.2)' }} />
@@ -295,6 +295,13 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
     if (saved) onSaved(saved);
   }, [siteId, placeId, siteType, adults, memberCount, goals, waterSource, waterDelivery, waterStorage, roofMain, roofSecondary, roofSource, hasGutters, landPrep, soilCondition, soilAmendments, fencing, crops, existingGrowingArea, growingAreaSource, livestock, otherInfra, practice, challenges, isCommercial, marketType, reportedProduction, notes, onSaved]);
 
+  // Close on Escape — matches every other full-screen sheet in the app (AddSheet, ThemePanel, etc).
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [onClose]);
+
   const Icon = STEP_ICONS[step];
 
   return (
@@ -302,10 +309,10 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
     // bottom sheet — u-anim-sheet still gives it a settle-in entrance; deliberately no grabber
     // or rounded top corners here, since this view has no drag-to-dismiss gesture and rounding
     // edge-to-edge corners wouldn't render as anything visible. Close stays the explicit X below.
-    <div className="fixed inset-0 z-50 flex flex-col u-anim-sheet" style={{ background: '#E4DCC6' }}>
+    <div role="dialog" aria-modal="true" aria-label="Site questionnaire" className="fixed inset-0 z-50 flex flex-col u-anim-sheet" style={{ background: '#E4DCC6' }}>
       {/* Header */}
       <div className="flex items-center gap-3 px-4 flex-shrink-0" style={{ height: 60, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
-        <button onClick={onClose}
+        <button onClick={onClose} aria-label="Close"
           style={{ width: 44, height: 44, borderRadius: 12, background: 'rgba(32,25,15,0.06)', border: '1px solid #E2D8C4', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#5C5040', flexShrink: 0 }}>
           <X size={18} />
         </button>

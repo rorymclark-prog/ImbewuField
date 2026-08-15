@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { X } from 'lucide-react';
 import { EVIDENCE_CATALOGUE, INDIGENOUS_EDIBLES } from '@/lib/evidence-catalogue';
 import { getGroupCount, type EvidenceItem } from '@/lib/site-evidence';
@@ -22,6 +22,13 @@ export default function EvidenceCatalogue({ siteId, onClose, onChanged }: Props)
     onChanged();
   }
 
+  // Close on Escape — matches every other bottom sheet in the app (AddSheet, ThemePanel, etc).
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [onClose]);
+
   return (
     <>
       <div
@@ -30,6 +37,9 @@ export default function EvidenceCatalogue({ siteId, onClose, onChanged }: Props)
         onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
       >
         <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Evidence library"
           className="w-full max-w-2xl font-sans overflow-y-auto"
           style={{
             background: '#FBF8F1', borderRadius: '22px 22px 0 0',
@@ -50,7 +60,7 @@ export default function EvidenceCatalogue({ siteId, onClose, onChanged }: Props)
                   A good site report works down the <em>scale of permanence</em> — water first, then structures & access, soil, living things, and animal systems.
                 </div>
               </div>
-              <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: '#8A7C62', flexShrink: 0 }}>
+              <button onClick={onClose} aria-label="Close" style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: '#8A7C62', flexShrink: 0 }}>
                 <X size={22} />
               </button>
             </div>
