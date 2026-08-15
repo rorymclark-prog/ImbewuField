@@ -15,7 +15,7 @@ import {
 import { ELEMENT_CATALOG, plantingGroupFor } from '@/lib/design-elements';
 
 test('Reference Blueprint maps high-impact Water and Planting features to reusable artwork', () => {
-  assert.equal(referenceFeatureArtworkFor('jojo_5000'), 'jojo-5000-top-v1.png');
+  assert.equal(referenceFeatureArtworkFor('jojo_5000'), 'jojo-5000-top-v2.png');
   assert.equal(referenceFeatureArtworkFor('banana_circle'), 'banana-basin-v1.png');
   // Guava has its OWN crown now — it was one of the thirteen ids that shared
   // orchard-canopy-v1.png. It stays the example here because what this line tests is that a
@@ -24,13 +24,72 @@ test('Reference Blueprint maps high-impact Water and Planting features to reusab
   assert.equal(referenceFeatureArtworkFor('veg_bed'), 'production-bed-v1.png');
   assert.equal(referenceFeatureArtworkFor('pollinator_strip'), 'pollinator-strip-v1.png');
   assert.equal(referenceFeatureArtworkFor('vetiver_row'), 'vetiver-bank-v1.png');
-  assert.equal(referenceFeatureArtworkFor('shade_house'), 'shade-house-v2.png');
+  assert.equal(referenceFeatureArtworkFor('shade_house'), 'shade-house-v3.png');
   assert.equal(referenceFeatureArtworkFor('banana_clump'), 'banana-clump-v5.png');
   assert.equal(referenceFeatureArtworkFor('tree_pawpaw'), 'pawpaw-tree-v2.png');
   assert.equal(referenceFeatureArtworkFor('tree_moringa'), 'moringa-tree-v1.png');
   assert.equal(referenceFeatureArtworkFor('keyhole_bed'), 'keyhole-bed-v1.png');
   assert.equal(referenceFeatureArtworkFor('herb_spiral'), 'herb-spiral-v1.png');
   assert.equal(referenceFeatureArtworkFor('spekboom_hedge'), 'spekboom-hedge-v1.png');
+});
+
+test('JoJo tanks show an upright cylinder at map scale, not a dark lid-only disc', () => {
+  // Rory's real plan reduced the old exact-plan sprites to two black rings. Concentric lid ribs
+  // survive a source-file review but collapse at the size the farmer actually sees. The visible
+  // side wall is the identity cue that still reads after reduction, so every capacity needs a
+  // materially taller painted silhouette than its round lid is wide.
+  const publicRoot = join(process.cwd(), 'public', REFERENCE_FEATURE_ART_ROOT.replace(/^\//, ''));
+  for (const id of ['jojo_1000', 'jojo_2500', 'jojo_5000', 'jojo_10000']) {
+    const asset = referenceFeatureArtworkFor(id);
+    assert.ok(asset, `${id} lost its exact-plan artwork`);
+    const { width, height, data } = PNG.sync.read(readFileSync(join(publicRoot, asset)));
+    let left = width;
+    let right = -1;
+    let top = height;
+    let bottom = -1;
+    let luminance = 0;
+    let painted = 0;
+    for (let y = 0; y < height; y += 1) {
+      for (let x = 0; x < width; x += 1) {
+        const offset = (y * width + x) * 4;
+        if (data[offset + 3] <= 24) continue;
+        left = Math.min(left, x);
+        right = Math.max(right, x);
+        top = Math.min(top, y);
+        bottom = Math.max(bottom, y);
+        luminance += (data[offset] + data[offset + 1] + data[offset + 2]) / 3;
+        painted += 1;
+      }
+    }
+    assert.ok(painted > 0, `${asset} contains no tank pixels`);
+    const silhouetteRatio = (bottom - top + 1) / (right - left + 1);
+    assert.ok(silhouetteRatio >= 1.12,
+      `${asset} is still a lid-only disc (${silhouetteRatio.toFixed(2)} height/width)`);
+    assert.ok(luminance / painted >= 65,
+      `${asset} is too dark to survive the satellite background at map scale`);
+  }
+});
+
+test('the shade tunnel is an open translucent cover, not an opaque timber grid', () => {
+  // The old half-covered square frame stacked over the bed rows and read as more beds. A tunnel
+  // needs both genuine open space and a broad field of partially transparent mesh so the garden
+  // under it remains visible while the cover still reads as one arched structure.
+  const asset = referenceFeatureArtworkFor('shade_house');
+  assert.ok(asset, 'shade_house lost its exact-plan artwork');
+  const publicRoot = join(process.cwd(), 'public', REFERENCE_FEATURE_ART_ROOT.replace(/^\//, ''));
+  const { width, height, data } = PNG.sync.read(readFileSync(join(publicRoot, asset)));
+  let clear = 0;
+  let partial = 0;
+  let opaque = 0;
+  for (let offset = 3; offset < data.length; offset += 4) {
+    if (data[offset] === 0) clear += 1;
+    else if (data[offset] === 255) opaque += 1;
+    else partial += 1;
+  }
+  const pixels = width * height;
+  assert.ok(clear / pixels > 0.55, 'the tunnel no longer leaves the garden visibly open');
+  assert.ok(partial / pixels > 0.2, 'the shade-net canopy is no longer visibly translucent');
+  assert.ok(opaque / pixels < 0.1, 'an opaque grid has taken over the shade tunnel again');
 });
 
 test('artwork mapping never invents a visual identity for generic or unrelated features', () => {
@@ -52,7 +111,7 @@ test('exact plans leave perspective illustrations on the palette and use overhea
 });
 
 test('legacy feature IDs select the same exact artwork without rewriting saved data', () => {
-  assert.equal(referenceFeatureArtworkFor('  JOJO---5000  '), 'jojo-5000-top-v1.png');
+  assert.equal(referenceFeatureArtworkFor('  JOJO---5000  '), 'jojo-5000-top-v2.png');
   assert.equal(referenceFeatureArtworkFor('tree guava'), 'guava-v2.png');
   assert.equal(referenceFeatureArtworkFor('RAIN---BARREL'), 'rain-barrel-top-v1.png');
 });

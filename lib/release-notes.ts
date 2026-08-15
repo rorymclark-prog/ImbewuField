@@ -76,6 +76,14 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   },
   {
     when: '15 August',
+    sha: 'efc9884',
+    changes: [
+      'JoJo tanks now look like upright ribbed tanks instead of dark rings on the map',
+      'The shade house now reads as an arched tunnel while crops stay visible underneath',
+    ],
+  },
+  {
+    when: '15 August',
     sha: '93d6b91',
     changes: [
       'Share a listing straight to WhatsApp, so what you have to sell can reach a buyer',
