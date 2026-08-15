@@ -22,6 +22,8 @@
 // ATTRIBUTION IS NOT OPTIONAL. Esri's imagery must be credited wherever it is shown. The credit
 // string travels with the image so a caller cannot forget it.
 
+import { deviceImageryRatio } from '@/lib/device-grade';
+
 /** Mapbox stops holding real detail well below the zoom the design frame asks for. */
 export const MAPBOX_PROVIDER = 'mapbox' as const;
 /** Esri World Imagery — real detail to ~z18 over rural South Africa. */
@@ -256,7 +258,12 @@ export async function fetchBasemapForFrame(
   fetchMapbox: (url: string) => Promise<string>,
 ): Promise<string> {
   if (satelliteProvider() === ESRI_PROVIDER) {
-    return fetchEsriBasemapDataUrl(frame.centerLng, frame.centerLat, frame.zoom, frame.imgW, frame.imgH);
+    // Phone-grade devices stitch at @1x (lib/device-grade.ts): the tile canvas and the decoded
+    // result are startup allocations on the page that keeps dying, and half the pixels is half
+    // the bill. Laptops keep the retina stitch.
+    return fetchEsriBasemapDataUrl(
+      frame.centerLng, frame.centerLat, frame.zoom, frame.imgW, frame.imgH, deviceImageryRatio(),
+    );
   }
   return fetchMapbox(mapboxUrl);
 }

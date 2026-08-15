@@ -113,10 +113,12 @@ import CardsStepper from '@/components/design/CardsStepper';
 import { uiVersion, UI_VERSION_EVENT } from '@/lib/ui-version';
 import { STUDIO_AREA_FOR, type AddActionId } from '@/lib/add-actions';
 import type { GlossyLayerFilter } from '@/components/design/DesignGlossy';
-import StepGuide from '@/components/design/StepGuide';
+// StepGuide, DesignAdvisor and BasePhotoImport are lazy — see the studioPart wrappers at the
+// bottom of this file. They are the bundle-diet counterpart of DesignGlossyLazy/DesignPrintLazy:
+// none of the three is needed to SHOW the farmer their design, and BasePhotoImport alone drags
+// firebase/storage into what used to be the startup chunk.
 import type { SubStepArm } from '@/lib/design-substeps';
-import DesignAdvisor from '@/components/design/DesignAdvisor';
-import BasePhotoImport, { type BasePhotoApplyResult } from '@/components/design/BasePhotoImport';
+import { type BasePhotoApplyResult } from '@/components/design/BasePhotoImport';
 import { zoneAdviceFromSuggestions, type ZoneAdvicePin } from '@/components/design/zone-advice';
 import SpeakButton from '@/components/SpeakButton';
 import LessonLink from '@/components/design/LessonLink';
@@ -3286,7 +3288,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             bottom-left, which sits directly above the status bar + element palette. It can never
             overlap those bottom bars, and taps outside it dismiss it. */}
         {bottomShow.advisor && canvasState && canvasState.step !== 'glossy' && (
-          <DesignAdvisor
+          <DesignAdvisorLazy
             state={canvasState}
             site={site}
             houseXY={houseXY}
@@ -3511,7 +3513,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
       )}
 
       {showPhotoImport && (
-        <BasePhotoImport
+        <BasePhotoImportLazy
           onApply={applyCustomBase}
           onClose={() => setShowPhotoImport(false)}
           // The TRUE satellite as the backdrop. On a custom base frame.satDataUrl IS the farmer's
@@ -3589,7 +3591,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           maxWidth: 560,
           margin: '0 auto',
         }}>
-          <StepGuide
+          <StepGuideLazy
             onHide={() => hideSection('stepGuide')}
             step={canvasState.step}
             state={canvasState}
@@ -4145,6 +4147,40 @@ function ItemEditSheet({
     </div>
   );
 }
+
+// THE STUDIO ARRIVES IN PARTS — the bundle half of the crash fix.
+//
+// /design shipped 698 kB of gzipped JS in one piece (measured 15 August), and a phone that
+// cannot afford to parse it dies before any of our code runs — the whole crash saga in
+// lib/crash-loop.ts happens inside that window. Anything not needed to SHOW the farmer their
+// design loads after it is shown instead. Same hand-rolled shape as DesignGlossyLazy below,
+// generalised: the props type is inferred from the dynamic import, so these wrappers cannot
+// drift out of sync with the components they stand in for.
+function studioPart<P extends object>(
+  load: () => Promise<{ default: React.ComponentType<P> }>,
+): React.ComponentType<P> {
+  return function StudioPart(props: P) {
+    const [Comp, setComp] = useState<React.ComponentType<P> | null>(null);
+    useEffect(() => {
+      let cancelled = false;
+      load().then((mod) => {
+        if (!cancelled) setComp(() => mod.default);
+      });
+      return () => {
+        cancelled = true;
+      };
+    }, []);
+    // Nothing while loading, deliberately: all three users (advisor rung, step guide band,
+    // photo-import modal) are additions around the canvas, and a spinner where guidance is
+    // about to appear reads worse than the guidance arriving a beat late.
+    if (!Comp) return null;
+    return <Comp {...props} />;
+  };
+}
+
+const DesignAdvisorLazy = studioPart(() => import('@/components/design/DesignAdvisor'));
+const BasePhotoImportLazy = studioPart(() => import('@/components/design/BasePhotoImport'));
+const StepGuideLazy = studioPart(() => import('@/components/design/StepGuide'));
 
 // DesignGlossy is heavy (canvas compositing + AI client) — lazy-load it only when the
 // farmer reaches the glossy step.
