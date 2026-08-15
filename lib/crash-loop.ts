@@ -124,6 +124,106 @@ export function markPageSettled(store: CrashLoopStore, key: string = CRASH_LOOP_
   }
 }
 
+// ── Deaths AFTER the page settled ─────────────────────────────────────────────────────────────
+//
+// "That was in the design generate a map page but I am sure it just crashes everywhere."
+//
+// The load counter above is structurally blind to half the crashes. It counts loads that die
+// BEFORE settling; a crash while generating a map or a report lands minutes after settle, on a
+// clean record, so the page reloads heavy and offers the same button again. Per-button attempt
+// streaks (lib/report-attempts.ts) patch one button at a time — whack-a-mole.
+//
+// The general answer is to detect that the previous SESSION died, whenever and however:
+//  · every load writes an ALIVE marker that nothing ever removes during the session;
+//  · leaving normally — pagehide, or the tab going to the background — writes a CLEAN-EXIT
+//    marker; coming back to the foreground removes it again;
+//  · a new load that finds ALIVE without CLEAN-EXIT knows the last session was killed while the
+//    farmer was looking at it. That is a crash, whichever button caused it.
+//
+// The background rule is load-bearing: iOS routinely evicts BACKGROUND tabs to reclaim memory,
+// and that is housekeeping, not a crash — a farmer who switched apps and came back tomorrow
+// must not lose their photo over it. Only a death in the foreground counts.
+//
+// A post-settle death adds ONE to the same streak the load counter uses, and the arriving load
+// adds its own one — so at CRASH_LOOP_THRESHOLD = 2, the automatic reload after a mid-session
+// crash is already the safe load, exactly as it is for a startup crash. A death during an
+// UNSETTLED load is not added: the load counter already carries that one, and counting it twice
+// would make a single startup crash read as a loop.
+//
+// False positives — a battery dying, a force-quit mid-use — cost one light load, with the amber
+// banner and its one-tap way back. That is the deliberate trade throughout this module.
+
+/** The farmer left this page the normal way (or iOS put it in the background). Not a crash. */
+export function markCleanExit(store: CrashLoopStore, key: string): void {
+  try {
+    store.setItem(`${key}:clean`, '1');
+  } catch {
+    /* ignore */
+  }
+}
+
+/** The page is in front of the farmer again — a later death counts again. */
+export function markResumed(store: CrashLoopStore, key: string): void {
+  try {
+    store.removeItem(`${key}:clean`);
+  } catch {
+    /* ignore */
+  }
+}
+
+/**
+ * Start the watch for THIS session and report on the previous one.
+ * Call BEFORE recordPageLoad — the unsettled check reads the counter as the last session left it.
+ */
+export function startDeathWatch(store: CrashLoopStore, key: string): { previousSessionDied: boolean } {
+  let previousSessionDied = false;
+  try {
+    const alive = store.getItem(`${key}:alive`);
+    const clean = store.getItem(`${key}:clean`);
+    const parsed = Number(store.getItem(key));
+    const unsettled = Number.isFinite(parsed) && parsed > 0;
+    // ALIVE and no CLEAN-EXIT: the last session was killed in the foreground. If its LOAD never
+    // settled the load counter already carries it; otherwise this is the invisible kind — a
+    // generate crash — and it joins the same streak here.
+    if (alive && !clean && !unsettled) {
+      previousSessionDied = true;
+      recordPageLoad(store, key);
+    }
+    store.setItem(`${key}:alive`, '1');
+    store.removeItem(`${key}:clean`);
+  } catch {
+    /* storage unavailable: watch nothing, break nothing */
+  }
+  return { previousSessionDied };
+}
+
+/** Wire the exit/resume markers to the events iOS actually fires. Returns an unsubscribe. */
+export function watchSessionExit(key: string): () => void {
+  if (typeof window === 'undefined') return () => {};
+  // Leaving ON PURPOSE also settles the load. Without this, a farmer who opens the page and taps
+  // away before the settle timer — twice — reads as two dead loads, and at a threshold of two
+  // their next visit opens light for no reason. The page was alive when they left; that is the
+  // whole meaning of settled.
+  const leave = () => {
+    markPageSettled(window.localStorage, key);
+    markCleanExit(window.localStorage, key);
+  };
+  const onHide = leave;
+  const onVisibility = () => {
+    if (document.visibilityState === 'hidden') leave();
+    else markResumed(window.localStorage, key);
+  };
+  // BOTH events, deliberately. pagehide covers navigation and tab close; visibilitychange covers
+  // the home button, the app switcher and iOS backgrounding — where pagehide is unreliable and
+  // where the memory eviction that must NOT count as a crash actually happens.
+  window.addEventListener('pagehide', onHide);
+  document.addEventListener('visibilitychange', onVisibility);
+  return () => {
+    window.removeEventListener('pagehide', onHide);
+    document.removeEventListener('visibilitychange', onVisibility);
+  };
+}
+
 // ── What was the page DOING when it died? ─────────────────────────────────────────────────────
 //
 // 14 August, the fourth screenshot of the same grey screen: every crash so far has been diagnosed
@@ -212,6 +312,10 @@ export function designSafeMode(): SafeModeDecision {
   } catch {
     /* a URL we cannot parse is not a request for safe mode */
   }
+  // BEFORE the load is counted: did the last session die in the foreground after settling?
+  // That is the generate-a-map / generate-a-report crash the load counter cannot see.
+  startDeathWatch(window.localStorage, key);
+  watchSessionExit(key);
   resolvedForThisLoad = resolveSafeMode(recordPageLoad(window.localStorage, key), requested, key);
   return resolvedForThisLoad;
 }
@@ -244,6 +348,10 @@ export function pageCrashGuard(storageKey: string): SafeModeDecision {
   } catch {
     /* not a request */
   }
+  // Same order as designSafeMode: detect a foreground death from the LAST session before this
+  // load adds its own count — see startDeathWatch.
+  startDeathWatch(window.localStorage, storageKey);
+  watchSessionExit(storageKey);
   const decision = resolveSafeMode(recordPageLoad(window.localStorage, storageKey), requested, storageKey);
   resolvedByKey.set(storageKey, decision);
   return decision;

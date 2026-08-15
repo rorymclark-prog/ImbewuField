@@ -35,9 +35,11 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '15 August',
-    sha: 'efdaed2',
+    sha: '4cbc3a1',
     changes: [
       'After a single crash, the page now comes straight back light instead of dying again',
+      'This now covers crashes at any moment — generating a map or a report included',
+      'Switching apps or closing normally never counts as a crash',
       'This works even when the app is opened from a link inside another app',
     ],
   },
