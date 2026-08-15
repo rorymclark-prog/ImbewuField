@@ -35,6 +35,34 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '15 August',
+    sha: '93d6b91',
+    changes: [
+      'Share a listing straight to WhatsApp, so what you have to sell can reach a buyer',
+      'A new Prices screen — tap a crop and see the wholesale and retail price per kg',
+      'It says when a price is only an estimate, so you know what you are standing on',
+      'The papers a funder asks for — PTO, ID, water licence — now have a place to live',
+      'My Records can export a summary of your own harvests and sales to show a lender',
+    ],
+  },
+  {
+    when: '15 August',
+    // Eight branches from the audit swarm. The language-plumbing commit (ba57337) is deliberately
+    // NOT listed: it routes three farmer-facing strings through the dictionary but only adds the
+    // ENGLISH keys, so nobody's screen changes until a first-language reviewer supplies the words.
+    // Saying "now follows your language" would be a promise the build does not keep.
+    sha: '92dd6a6',
+    changes: [
+      'The sign-in screen now follows your light or dark setting, like the rest of the app',
+      'Signing up keeps the journal and crop plan you wrote before you had an account',
+      'Logging a sale on a weak signal finishes instead of spinning forever',
+      'The Task Planner says when it is showing an example, not your own beds',
+      'Garden Survey now opens the survey that actually moves your progress bar',
+      'The Planting Calendar finally has its own place in the menu',
+      'The design page opens lighter, and pinch-zoom stops stuttering on a small phone',
+    ],
+  },
+  {
+    when: '15 August',
     sha: 'f65e6fa',
     changes: [
       'The sign-in screen now opens with a picture of a smallholding, not an empty box',
