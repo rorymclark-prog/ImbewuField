@@ -54,6 +54,8 @@ export default function CommunityHubPage() {
   const [busy, setBusy] = useState(true);
   const [loadError, setLoadError] = useState(false);
   const [showNewPost, setShowNewPost] = useState(false);
+  const [openingThread, setOpeningThread] = useState(false);
+  const [threadError, setThreadError] = useState(false);
 
   useEffect(() => {
     if (!communityEnabled()) { router.replace('/home'); return; }
@@ -82,9 +84,23 @@ export default function CommunityHubPage() {
 
   useEffect(() => { if (user && communityEnabled()) refresh(); }, [user, refresh]);
 
+  // getOrCreateThread() is a Firestore round trip. On a weak signal it can
+  // reject, and an uncaught rejection here used to mean tapping "Message" on
+  // a board post simply did nothing — no navigation, no error, a dead button.
   async function handleOpenThread(otherUid: string, otherName: string) {
-    const id = await getOrCreateThread(otherUid, otherName);
-    if (id) router.push(`/community/messages/${id}`);
+    if (openingThread) return;
+    setOpeningThread(true);
+    setThreadError(false);
+    try {
+      const id = await getOrCreateThread(otherUid, otherName);
+      if (id) { router.push(`/community/messages/${id}`); return; }
+      setThreadError(true);
+    } catch (err) {
+      console.error('getOrCreateThread failed', err);
+      setThreadError(true);
+    } finally {
+      setOpeningThread(false);
+    }
   }
 
   if (!communityEnabled() || loading || !user) {
@@ -142,6 +158,11 @@ export default function CommunityHubPage() {
             </button>
           </div>
         )}
+        {threadError && (
+          <div className="rounded-xl" style={{ padding: '10px 14px', marginBottom: 14, background: 'rgba(139,32,32,0.08)', border: '1px solid rgba(139,32,32,0.25)' }}>
+            <span className="font-sans" style={{ fontSize: 12.5, color: '#8B2020' }}>{t('communityContactError')}</span>
+          </div>
+        )}
         {busy ? (
           <div className="flex justify-center py-16"><Loader2 size={22} className="animate-spin" style={{ color: '#1F4D2B' }} /></div>
         ) : tab === 'nearby' ? (
@@ -157,6 +178,7 @@ export default function CommunityHubPage() {
             onClose={async (id) => { await closeBoardPost(id); await refresh(); }}
             onDelete={async (id) => { await deleteBoardPost(id); await refresh(); }}
             onMessage={handleOpenThread}
+            messagingBusy={openingThread}
           />
         ) : (
           <MessagesTab threads={threads} myUid={user.uid} onOpen={(id) => router.push(`/community/messages/${id}`)} />
@@ -213,11 +235,11 @@ function NearbyTab({ nearby, onOpenProfile }: { nearby: CommunityProfile[]; onOp
 }
 
 function BoardTab({
-  posts, myUid, showNewPost, onToggleNewPost, myAreaText, onPosted, onClose, onDelete, onMessage,
+  posts, myUid, showNewPost, onToggleNewPost, myAreaText, onPosted, onClose, onDelete, onMessage, messagingBusy,
 }: {
   posts: BoardPost[]; myUid: string; showNewPost: boolean; onToggleNewPost: () => void; myAreaText: string;
   onPosted: () => void; onClose: (id: string) => void; onDelete: (id: string) => void;
-  onMessage: (uid: string, name: string) => void;
+  onMessage: (uid: string, name: string) => void; messagingBusy: boolean;
 }) {
   const { t } = useLanguage();
   return (
@@ -272,10 +294,12 @@ function BoardTab({
                 ) : (
                   <button
                     onClick={() => onMessage(p.owner_id, p.owner_name)}
+                    disabled={messagingBusy}
                     className="flex items-center gap-1.5 font-sans font-semibold rounded-lg"
-                    style={{ fontSize: 12, padding: '6px 12px', background: '#1F4D2B', color: '#F7F2E9', border: 'none', cursor: 'pointer' }}
+                    style={{ fontSize: 12, padding: '6px 12px', background: '#1F4D2B', color: '#F7F2E9', border: 'none', cursor: messagingBusy ? 'default' : 'pointer', opacity: messagingBusy ? 0.7 : 1 }}
                   >
-                    <MessageCircle size={12} /> {t('communityMessageButton')}
+                    {messagingBusy ? <Loader2 size={12} className="animate-spin" /> : <MessageCircle size={12} />}
+                    {t('communityMessageButton')}
                   </button>
                 )}
               </div>
@@ -297,6 +321,7 @@ function NewBoardPostForm({ myAreaText, onPosted, onCancel }: { myAreaText: stri
   const [photoUrl, setPhotoUrl] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
   const [posting, setPosting] = useState(false);
+  const [postError, setPostError] = useState(false);
 
   async function handlePhoto(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -308,13 +333,23 @@ function NewBoardPostForm({ myAreaText, onPosted, onCancel }: { myAreaText: stri
     } finally { setUploading(false); }
   }
 
+  // createBoardPost() is a Firestore write and can reject on a weak signal.
+  // Before this caught it, tapping Post on a bad connection just closed the
+  // spinner and sat there — no confirmation, no error, nothing to tell a
+  // farmer whether the listing they just typed actually went anywhere.
   async function handlePost() {
     if (!description.trim()) return;
     setPosting(true);
+    setPostError(false);
     try {
       await createBoardPost({ category, kind, description: description.trim(), photo_url: photoUrl, area_text: areaText.trim() });
       onPosted();
-    } finally { setPosting(false); }
+    } catch (err) {
+      console.error('createBoardPost failed', err);
+      setPostError(true);
+    } finally {
+      setPosting(false);
+    }
   }
 
   return (
@@ -377,6 +412,11 @@ function NewBoardPostForm({ myAreaText, onPosted, onCancel }: { myAreaText: stri
         )}
         <input ref={fileRef} type="file" accept="image/*" onChange={handlePhoto} style={{ display: 'none' }} />
       </div>
+      {postError && (
+        <p className="font-sans" style={{ fontSize: 12, color: '#8B2020', margin: 0 }}>
+          {t('communityPostError')}
+        </p>
+      )}
       <div className="flex gap-2">
         <button onClick={onCancel} className="font-sans font-semibold rounded-xl" style={{ flex: 1, padding: '10px', fontSize: 13.5, background: 'transparent', border: '1px solid #D8CBB2', color: '#5C5040', cursor: 'pointer' }}>
           Cancel
