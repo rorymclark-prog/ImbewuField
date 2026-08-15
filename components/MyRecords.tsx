@@ -32,6 +32,7 @@ import {
 import type { ProductionLog, SalesLog, ExpenseLog, Design, Profile } from '@/lib/db/types';
 import CropSelect from '@/components/CropSelect';
 import { loadCropPriceOverrides, priceFor, type CropPrice } from '@/lib/crop-prices';
+import { parseDecimalInput } from '@/lib/decimal-input';
 import { loadInvoices, type SavedInvoice } from '@/lib/invoices';
 import { cashIncomeTotal } from '@/lib/invoice-sales';
 import { creditPackHasAnyRecords } from '@/lib/credit-pack';
@@ -250,7 +251,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     const crop = form.crop.trim();
-    const kg = parseFloat(form.kg);
+    const kg = parseDecimalInput(form.kg);
     if (!crop || isNaN(kg) || kg <= 0) {
       setForm((f) => ({ ...f, error: t('myRecordsProdValidationError') }));
       return;
@@ -323,10 +324,9 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
         <div>
           <FieldLabel>{t('myRecordsKgHarvestedLabel')}</FieldLabel>
           <Input
-            type="number"
+            type="text"
+            inputMode="decimal"
             placeholder="0.0"
-            step="0.1"
-            min="0"
             value={form.kg}
             onChange={(e) => setForm((f) => ({ ...f, kg: e.target.value }))}
           />
@@ -416,15 +416,15 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
   useEffect(() => setPriceOverrides(loadCropPriceOverrides()), []);
 
   const guide = form.cropKey ? priceFor(form.cropKey, priceOverrides) : null;
-  const saleKg = parseFloat(form.kg);
+  const saleKg = parseDecimalInput(form.kg);
   const guideLow = guide ? Math.min(guide.wholesalePerKg, guide.retailPerKg) : null;
   const guideHigh = guide ? Math.max(guide.wholesalePerKg, guide.retailPerKg) : null;
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     const crop = form.crop.trim();
-    const kg = parseFloat(form.kg);
-    const amount = parseFloat(form.amount);
+    const kg = parseDecimalInput(form.kg);
+    const amount = parseDecimalInput(form.amount);
     if (!crop || isNaN(kg) || kg <= 0 || isNaN(amount) || amount < 0) {
       setForm((f) => ({
         ...f,
@@ -478,10 +478,9 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
           <div>
             <FieldLabel>{t('myRecordsKgSoldLabel')}</FieldLabel>
             <Input
-              type="number"
+              type="text"
+              inputMode="decimal"
               placeholder="0.0"
-              step="0.1"
-              min="0"
               value={form.kg}
               onChange={(e) => setForm((f) => ({ ...f, kg: e.target.value }))}
             />
@@ -512,10 +511,9 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
           <div>
             <FieldLabel>{t('myRecordsAmountLabel')}</FieldLabel>
             <Input
-              type="number"
+              type="text"
+              inputMode="decimal"
               placeholder="0.00"
-              step="0.01"
-              min="0"
               value={form.amount}
               onChange={(e) => setForm((f) => ({ ...f, amount: e.target.value }))}
             />
