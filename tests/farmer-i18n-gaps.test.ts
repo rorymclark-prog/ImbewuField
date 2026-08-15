@@ -26,17 +26,30 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
 
+// lib/i18n.tsx used to hold all eleven language dictionaries inline as one ~420KB module,
+// shipped in full on every page load. It's since been split for bundle size: English (the
+// only locale ever loaded eagerly) stays inline as T_en in lib/i18n.tsx, and the other ten
+// locales live one-per-file under lib/locales/, lazy-loaded on demand. localeBlocks() below
+// reassembles the same { locale, block } shape the original single-file regex produced, so
+// the assertions after it read the same either way.
 const i18nSource = readFileSync(new URL('../lib/i18n.tsx', import.meta.url), 'utf8');
 const farmerPageSource = readFileSync(new URL('../app/farmer/page.tsx', import.meta.url), 'utf8');
 const dataPanelSource = readFileSync(new URL('../components/DataPanel.tsx', import.meta.url), 'utf8');
 
-function localeBlocks(source: string): Array<{ locale: string; block: string }> {
-  const starts = [...source.matchAll(/^  ([a-z]+): \{/gm)];
-  return starts.map((match, index) => {
-    const start = match.index ?? 0;
-    const end = starts[index + 1]?.index ?? source.length;
-    return { locale: match[1], block: source.slice(start, end) };
-  });
+const OTHER_LOCALES = ['af', 'zu', 'xh', 'nso', 'tn', 'st', 'ts', 've', 'ss', 'nr'] as const;
+
+// All eleven locale blocks — the same set the original single-file version of this test
+// iterated when it walked every `^  ([a-z]+): {` match in one lib/i18n.tsx.
+function localeBlocks(): Array<{ locale: string; block: string }> {
+  const enStart = i18nSource.indexOf('const T_en: Dict = {');
+  const enEnd = i18nSource.indexOf('\n};', enStart);
+  return [
+    { locale: 'en', block: i18nSource.slice(enStart, enEnd) },
+    ...OTHER_LOCALES.map((locale) => ({
+      locale,
+      block: readFileSync(new URL(`../lib/locales/${locale}.ts`, import.meta.url), 'utf8'),
+    })),
+  ];
 }
 
 // Brand new — did not exist anywhere in the dictionary before this change.
@@ -61,13 +74,13 @@ const REWIRED_EXISTING_KEYS = [
 ] as const;
 
 test('the new farmer-facing keys exist in English only, and no other locale was touched', () => {
-  const blocks = localeBlocks(i18nSource);
+  const blocks = localeBlocks();
   assert.ok(blocks.length >= 11, 'expected all eleven ImbewuField locales to be present');
 
   const en = blocks.find((b) => b.locale === 'en');
   assert.ok(en, 'no `en` locale block found in lib/i18n.tsx');
   for (const key of NEW_ENGLISH_ONLY_KEYS) {
-    assert.match(en!.block, new RegExp(`^    ${key}: ['"]`, 'm'), `${key} has no English source text in the en block`);
+    assert.match(en!.block, new RegExp(`^  ${key}: ['"]`, 'm'), `${key} has no English source text in the en block`);
   }
 
   for (const { locale, block } of blocks) {
@@ -75,7 +88,7 @@ test('the new farmer-facing keys exist in English only, and no other locale was 
     for (const key of NEW_ENGLISH_ONLY_KEYS) {
       assert.doesNotMatch(
         block,
-        new RegExp(`^    ${key}:`, 'm'),
+        new RegExp(`^  ${key}:`, 'm'),
         `${locale} must stay untouched — ${key} is English-only until a first-language reviewer supplies real words`,
       );
     }
@@ -83,10 +96,10 @@ test('the new farmer-facing keys exist in English only, and no other locale was 
 });
 
 test('the rewired keys (Details/Results, tap to close, panel aria-labels) were already fully translated', () => {
-  const blocks = localeBlocks(i18nSource);
+  const blocks = localeBlocks();
   for (const { locale, block } of blocks) {
     for (const key of REWIRED_EXISTING_KEYS) {
-      assert.match(block, new RegExp(`^    ${key}: ['"]`, 'm'), `${locale} is missing ${key} — it should predate this change`);
+      assert.match(block, new RegExp(`^  ${key}: ['"]`, 'm'), `${locale} is missing ${key} — it should predate this change`);
     }
   }
 });
@@ -122,7 +135,7 @@ test('soil "Priority improvements" advice is built from translated fixed phrases
 
   // Each translated phrase carries a {placeholder} that DataPanel fills with .replace(), the same
   // interpolation pattern already used by insightSemiArid / insightLowSoilCarbon etc.
-  const en = localeBlocks(i18nSource).find((b) => b.locale === 'en')!.block;
+  const en = localeBlocks().find((b) => b.locale === 'en')!.block;
   assert.match(en, /soilImprovementPhAcidic: '[^']*\{ph\}[^']*'/);
   assert.match(en, /soilImprovementLowCarbon: '[^']*\{oc\}[^']*'/);
   assert.match(en, /soilImprovementCompacted: '[^']*\{bd\}[^']*'/);

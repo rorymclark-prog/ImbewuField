@@ -224,8 +224,10 @@ test('the Tank Calculator caption states the SAME runoff coefficient the sizing 
   // the sizing result, while computeTankSizing had already moved to the shared 0.80 value — the
   // number on screen and the number under it silently disagreed. Guard the coefficient actually
   // appears, spelled the way a two-decimal-place value is written, so a future re-decision that
-  // forgets this caption fails loudly instead of drifting again.
-  const source = readFileSync(new URL('../lib/i18n.tsx', import.meta.url), 'utf8');
+  // forgets this caption fails loudly instead of drifting again. designTankMethod is one of the
+  // keys shared across every locale via DESIGN_STUDIO_ENGLISH_PENDING, so it now lives in
+  // lib/i18n-pending.ts rather than inline in lib/i18n.tsx.
+  const source = readFileSync(new URL('../lib/i18n-pending.ts', import.meta.url), 'utf8');
   const match = source.match(/designTankMethod: '[^']*?(\d\.\d{2}) roof runoff/);
   assert.ok(match, 'designTankMethod caption no longer states a X.XX roof runoff figure');
   assert.equal(Number(match![1]), TANK_CALCULATOR_ROOF_RUNOFF_COEFFICIENT);

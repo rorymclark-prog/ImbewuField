@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 import './design-studio.test';
 
 import {
@@ -15,17 +15,18 @@ import {
 import { announceLanguageChange, listenForLanguageChanges } from '@/lib/i18n-sync';
 
 test('every Design Studio chrome key exists in every language slot instead of silently falling back', () => {
-  const source = readFileSync(new URL('../lib/i18n.tsx', import.meta.url), 'utf8');
+  // The pending English source text for every unreviewed Design Studio key now lives in one
+  // place — lib/i18n-pending.ts — imported by lib/i18n.tsx (English) and by every
+  // lib/locales/<code>.ts (the other ten, loaded on demand). See lib/i18n.tsx's loadLocale.
+  const pending = readFileSync(new URL('../lib/i18n-pending.ts', import.meta.url), 'utf8');
   const translationNeeds = readFileSync(
     new URL('../docs/i18n-needs-translation.md', import.meta.url),
     'utf8',
   );
-  const localeStarts = [...source.matchAll(/^  ([a-z]+): \{/gm)];
-  assert.ok(localeStarts.length > 1, 'the translation dictionary did not expose its language slots');
 
   for (const key of DESIGN_STUDIO_I18N_KEYS) {
     assert.match(
-      source,
+      pending,
       new RegExp(`^  ${key}: [\"']`, 'm'),
       `${key} has no explicit pending English source text`,
     );
@@ -35,16 +36,29 @@ test('every Design Studio chrome key exists in every language slot instead of si
       `${key} is wired but missing from the fluent-review handoff`,
     );
   }
-  for (const [index, match] of localeStarts.entries()) {
-    const start = match.index ?? 0;
-    const end = localeStarts[index + 1]?.index ?? source.indexOf('\\n};', start);
-    const localeBlock = source.slice(start, end);
+
+  // English spreads the pending block inline in lib/i18n.tsx; each other locale must spread it
+  // the same way inside its own module, or that locale silently falls back per-key instead of
+  // explicitly carrying the pending English text.
+  const i18n = readFileSync(new URL('../lib/i18n.tsx', import.meta.url), 'utf8');
+  assert.match(
+    i18n,
+    /\.\.\.DESIGN_STUDIO_ENGLISH_PENDING,/,
+    'en does not explicitly receive the pending English Design Studio keys',
+  );
+
+  const localeDir = new URL('../lib/locales/', import.meta.url);
+  const localeFiles = readdirSync(localeDir).filter((f) => f.endsWith('.ts'));
+  assert.ok(localeFiles.length >= 10, 'expected the ten non-English locale modules to exist');
+  for (const file of localeFiles) {
+    const localeSource = readFileSync(new URL(file, localeDir), 'utf8');
     assert.match(
-      localeBlock,
+      localeSource,
       /\.\.\.DESIGN_STUDIO_ENGLISH_PENDING,/,
-      `${match[1]} does not explicitly receive the pending English Design Studio keys`,
+      `lib/locales/${file} does not explicitly receive the pending English Design Studio keys`,
     );
   }
+
   assert.equal(new Set(DESIGN_STUDIO_I18N_KEYS).size, DESIGN_STUDIO_I18N_KEYS.length);
 });
 
