@@ -1227,11 +1227,11 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               const scoreColor = total >= 8 ? '#1F4D2B' : total >= 5 ? '#C07A1E' : '#C03C1E';
               const scoreLabel = total >= 8 ? t('soilHealthScoreHealthy') : total >= 5 ? t('soilHealthScoreModerate') : t('soilHealthScoreDegraded');
               const improvements: string[] = [];
-              if (pHScore < 2) improvements.push(ph < 6 ? `pH ${ph} is acidic — add agricultural lime (1–2 t/ha)` : `pH ${ph} is alkaline — add elemental sulphur or pine-needle mulch`);
-              if (ocScore < 2) improvements.push(`Organic carbon ${oc}% is low — layer compost 5 cm deep, add kraal manure or biochar`);
-              if (bdScore < 2) improvements.push(`Bulk density ${bd} g/cm³ suggests compaction — deep-rooted cover crops and broadfork open the profile`);
-              if (texScore < 2 && clay > 40) improvements.push(`High clay (${clay}%) — gypsum + organic matter improve drainage and workability`);
-              else if (texScore < 2 && sand > 70) improvements.push(`Sandy soil (${sand}%) — mulch heavily and boost CEC with compost and biochar`);
+              if (pHScore < 2) improvements.push(ph < 6 ? t('soilImprovementPhAcidic').replace('{ph}', String(ph)) : t('soilImprovementPhAlkaline').replace('{ph}', String(ph)));
+              if (ocScore < 2) improvements.push(t('soilImprovementLowCarbon').replace('{oc}', String(oc)));
+              if (bdScore < 2) improvements.push(t('soilImprovementCompacted').replace('{bd}', String(bd)));
+              if (texScore < 2 && clay > 40) improvements.push(t('soilImprovementHighClay').replace('{clay}', String(clay)));
+              else if (texScore < 2 && sand > 70) improvements.push(t('soilImprovementSandy').replace('{sand}', String(sand)));
               return (
                 <div className="rounded-xl p-3" style={{ background: '#F4EFE4', border: '1px solid #E2D8C4' }}>
                   <div className="flex items-center justify-between mb-2">
@@ -1955,5 +1955,6 @@ const EVIDENCE_GROUP_ICON: Record<string, string> = {
   trees: '🌿',
   animals: '🐓',
   energy: '⚡',
+  land_legal: '📄',
   site_photos: '📸',
 };
