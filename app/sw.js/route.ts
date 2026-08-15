@@ -31,7 +31,7 @@ const RUNTIME_CACHE = 'imbewufield-runtime-' + CACHE_VERSION;
 // These are the routes a farmer opens on a phone with no signal.
 const PRECACHE_URLS = [
   '/manifest.json', '/icon-192.png', '/icon-512.png',
-  '/', '/home', '/farmer', '/student',
+  '/', '/home', '/farmer', '/student', '/prices',
 ];
 
 // COURSE DOWNLOADS — deliberately NOT versioned by CACHE_VERSION, and deliberately spared by the

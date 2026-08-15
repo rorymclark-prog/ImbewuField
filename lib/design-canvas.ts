@@ -12,7 +12,7 @@ import { isCompassDirection16, type LocalWindObservation } from '@/lib/local-win
 import { resolveBaseAlign } from '@/lib/base-photo-align';
 // Value import one way, type-only import back (CanvasFrame) — no runtime cycle.
 import { paintPlainPaperGround } from '@/lib/sheet-underlay';
-import { drainCanvasToDataUrl } from '@/lib/release-canvas';
+import { drainCanvasToDataUrl, releaseImageSource } from '@/lib/release-canvas';
 import { deviceBakeScale, deviceImageryRatio } from '@/lib/device-grade';
 import {
   accountLocalStorageKey,
@@ -842,29 +842,45 @@ export async function bakeBaseAlignment(
     return sourceDataUrl;
   }
 
-  const loadImageEl = (src: string) => new Promise<HTMLImageElement>((resolve, reject) => {
-    const el = new Image();
-    el.onload = () => resolve(el);
-    el.onerror = () => reject(new Error('Could not read your photo.'));
-    el.src = src;
-  });
+  // DECODE STRAIGHT INTO A BOUNDED SIZE, never the source's native resolution. A plain `new
+  // Image()` decode allocates a full bitmap for whatever the file actually is — a farmer's
+  // uncapped drone photo, or (Ubhejane, saved before today's phone caps existed) a bake already
+  // exported at print-grade 3×. A 2880×1920 photo alone is a ~21 MB bitmap before a single pixel
+  // reaches this canvas, regardless of how small the canvas itself ends up. createImageBitmap's
+  // resize option lets the browser sub-sample the decode itself instead of decoding at full size
+  // and throwing pixels away afterwards, so the peak this function can ever allocate is bounded
+  // by the size it actually draws — not by what the farmer (or an old build) happened to upload.
+  const loadCapped = async (src: string, maxW: number, maxH: number): Promise<{
+    image: CanvasImageSource;
+    release: () => void;
+  }> => {
+    const w = Math.max(1, Math.round(maxW));
+    const h = Math.max(1, Math.round(maxH));
+    if (typeof createImageBitmap === 'function') {
+      try {
+        const blob = await (await fetch(src)).blob();
+        const bitmap = await createImageBitmap(blob, { resizeWidth: w, resizeHeight: h, resizeQuality: 'high' });
+        return { image: bitmap, release: () => bitmap.close() };
+      } catch {
+        // Fall through to the plain <img> decode below — a WebKit without resize support, or a
+        // data: URL fetch() this engine refuses for some reason. Slower and uncapped, but never
+        // worse than what this function always did before today.
+      }
+    }
+    const image = await new Promise<HTMLImageElement>((resolve, reject) => {
+      const el = new Image();
+      el.onload = () => resolve(el);
+      el.onerror = () => reject(new Error('Could not read your photo.'));
+      el.src = src;
+    });
+    return { image, release: () => releaseImageSource(image) };
+  };
 
-  const img = await loadImageEl(sourceDataUrl);
-
-  // BAKE AT THE SOURCE'S OWN RESOLUTION, not at the logical frame size. Baking a 2880-wide photo
-  // into a 960-wide canvas would throw away exactly the detail BASE_PHOTO_EXPORT_SCALE exists to
-  // keep — and it would do it on every nudge and every turn, so the farmer's photo would get
-  // softer the more they adjusted it. All the drawing below stays in LOGICAL frame coordinates;
-  // the context is scaled once, so this is a pure supersample and no geometry changes.
-  //
-  // …EXCEPT on phone-grade devices, where the ceiling drops to 2× (lib/device-grade.ts). This
-  // canvas is the app's single largest allocation and it is live together with both decoded
-  // source images; at 3× that stack is what iOS kills the page over. A phone still bakes at
-  // twice its frame resolution — sharper than its own screen — and laptops keep print-grade 3×.
-  const superSample = Math.min(
-    deviceBakeScale(BASE_PHOTO_EXPORT_SCALE),
-    Math.max(1, Math.round((img.naturalWidth || frameW) / frameW)),
-  );
+  // …ON PHONE-GRADE DEVICES, THE CEILING DROPS TO 2× (lib/device-grade.ts). This canvas is the
+  // app's single largest allocation and it is live together with both decoded source images; at
+  // 3× that stack is what iOS kills the page over. A phone still bakes at twice its frame
+  // resolution — sharper than its own screen — and laptops keep print-grade 3×.
+  const superSample = deviceBakeScale(BASE_PHOTO_EXPORT_SCALE);
   const canvas = document.createElement('canvas');
   canvas.width = frameW * superSample;
   canvas.height = frameH * superSample;
@@ -878,9 +894,13 @@ export async function bakeBaseAlignment(
   // case where no underlay has loaded, and matches buildComposite's own no-imagery colour —
   // literally now, through the shared constant. It was khaki, and because this bake becomes
   // satDataUrl, its margins rode into every downstream sheet and AI input as fake tan ground.
+  // Decoded at plain frame size — it is only ever drawn untransformed at frameW×frameH, so
+  // there is nothing to gain by decoding it any larger.
   if (underlayDataUrl) {
     try {
-      ctx.drawImage(await loadImageEl(underlayDataUrl), 0, 0, frameW, frameH);
+      const underlay = await loadCapped(underlayDataUrl, frameW, frameH);
+      ctx.drawImage(underlay.image, 0, 0, frameW, frameH);
+      underlay.release();
     } catch {
       paintPlainPaperGround(ctx, frameW, frameH);
     }
@@ -888,6 +908,9 @@ export async function bakeBaseAlignment(
     paintPlainPaperGround(ctx, frameW, frameH);
   }
 
+  // Decoded at the SUPERSAMPLED size this bake actually draws it at, not the source file's own
+  // resolution — the whole point of the cap above.
+  const source = await loadCapped(sourceDataUrl, frameW * superSample, frameH * superSample);
   ctx.save();
   const { tx, ty, rad, cx, cy, scale: s } = resolveBaseAlign({ dx, dy, rotationDeg, scale }, frameW, frameH);
   ctx.translate(cx + tx, cy + ty);
@@ -898,8 +921,9 @@ export async function bakeBaseAlignment(
   ctx.scale(s, s);
   // Drawn at frame size from the rotation centre — the same "slice" fit the untransformed image
   // element uses, so a zero alignment and a baked alignment agree pixel-for-pixel.
-  ctx.drawImage(img, -cx, -cy, frameW, frameH);
+  ctx.drawImage(source.image, -cx, -cy, frameW, frameH);
   ctx.restore();
+  source.release();
   // JPEG, not PNG. The backdrop above makes this canvas fully opaque, so there is no alpha to
   // preserve — and a supersampled photographic PNG is several megabytes of base64 held in React
   // state and rebuilt on every nudge, which is how the last memory crash happened. Drained rather

@@ -458,6 +458,8 @@ const T: Record<string, Dict> = {
   en: {
     ...DESIGN_STUDIO_ENGLISH_PENDING,
     tagline: 'Permaculture Intelligence',
+    // Main map header nav pill (app/farmer/page.tsx) — English-only for now; t() falls back.
+    designStudioLabel: 'Design Studio',
     welcomeTitle: 'Welcome to ImbewuField',
     welcomeSub: 'Smart permaculture planning for South African land.',
     pickLang: 'Choose your language',
@@ -700,6 +702,16 @@ const T: Record<string, Dict> = {
     soilHealthScoreModerate: 'Moderate',
     soilHealthScoreDegraded: 'Degraded',
     priorityImprovementsHeader: 'Priority improvements',
+    // Soil "Priority improvements" body (components/DataPanel.tsx) — these sentences are
+    // assembled at runtime from live soil values, so each fixed phrase gets its own key with a
+    // {placeholder} filled in via .replace(), same pattern as insightSemiArid etc. above.
+    // English-only for now; t() falls back.
+    soilImprovementPhAcidic: 'pH {ph} is acidic — add agricultural lime (1–2 t/ha)',
+    soilImprovementPhAlkaline: 'pH {ph} is alkaline — add elemental sulphur or pine-needle mulch',
+    soilImprovementLowCarbon: 'Organic carbon {oc}% is low — layer compost 5 cm deep, add kraal manure or biochar',
+    soilImprovementCompacted: 'Bulk density {bd} g/cm³ suggests compaction — deep-rooted cover crops and broadfork open the profile',
+    soilImprovementHighClay: 'High clay ({clay}%) — gypsum + organic matter improve drainage and workability',
+    soilImprovementSandy: 'Sandy soil ({sand}%) — mulch heavily and boost CEC with compost and biochar',
     statKoppen: 'Köppen',
     statSolarClimate: 'Solar',
     statSolarClimateUnit: 'kWh/m²/day',
@@ -728,6 +740,13 @@ const T: Record<string, Dict> = {
     noSavedReportsSaveLink: 'Save report',
     noSavedReportsSuffix: 'to keep it here.',
     reportOpenButton: 'Open',
+    // English only — missing-key fallback serves English until a first-language reviewer
+    // supplies these. Do not add these keys under any other language block.
+    savedSitesHeader: 'Your Sites',
+    savedSitesBackLink: 'All sites',
+    unsavedSiteGroupLabel: 'Not saved as a site',
+    savedReportCountSingular: 'saved report',
+    savedReportCountPlural: 'saved reports',
     surveyPromptTitle: 'Want a sharper report?',
     surveyPromptBody: "The site questionnaire takes 2 minutes and gives Lima things the map can't: how many people work here, irrigation, goals, and challenges. The report becomes far more specific.",
     surveyFillButton: 'Fill in the questionnaire (2 min)',
@@ -1128,6 +1147,7 @@ const T: Record<string, Dict> = {
     navFieldJournal: 'Field Journal',
     navTaskPlanner: 'Task Planner',
     navGardenSurvey: 'Garden Survey',
+    navPlantingCalendar: 'Planting Calendar',
     navNGODashboard: 'NGO Dashboard',
     navFacilitator: 'Design canvas',
     navMyAccount: 'My Account',
