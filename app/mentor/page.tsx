@@ -5,13 +5,14 @@ import { useRouter } from 'next/navigation';
 import { Search, Users, CheckCircle, ChevronDown, ChevronUp, BookOpen, Send, Loader2, GraduationCap, Inbox, Home, UserPlus, X, CalendarClock, AlertTriangle, PauseCircle, PlayCircle } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
+import { canAccessRolePage } from '@/lib/role-access';
 import {
   listTrainees, getCourseProgress, logMentorVisit,
   listOrgEnrollments, enrolLearner, setEnrollmentStatus,
   getAssignments, assignModule, unassignModule,
 } from '@/lib/db/queries';
 import { COURSE_MODULES, TOTAL_MODULES, CATEGORY_COLORS } from '@/lib/course-modules';
-import type { Profile, CourseProgress } from '@/lib/db/types';
+import type { Profile, CourseProgress, UserRole } from '@/lib/db/types';
 import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
@@ -321,7 +322,7 @@ function TraineeCard({
 
 // ─── Page ────────────────────────────────────────────────────────────────────
 
-const MENTOR_ALLOWED_ROLES = new Set(['mentor', 'ngo', 'funder', 'admin']);
+const MENTOR_ALLOWED_ROLES = new Set<UserRole>(['mentor', 'ngo', 'funder', 'admin']);
 
 export default function MentorPage() {
   const { user, role, loading } = useAuth();
@@ -460,7 +461,7 @@ export default function MentorPage() {
     setBusyId(null);
   }, [isLive, afterWrite]);
 
-  if (!loading && user && isLive && role && !MENTOR_ALLOWED_ROLES.has(role)) {
+  if (!loading && user && isLive && !canAccessRolePage(role, MENTOR_ALLOWED_ROLES)) {
     return (
       <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
         <header className="flex-shrink-0 flex items-center px-4 gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
