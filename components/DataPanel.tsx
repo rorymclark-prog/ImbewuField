@@ -1943,5 +1943,6 @@ const EVIDENCE_GROUP_ICON: Record<string, string> = {
   trees: '🌿',
   animals: '🐓',
   energy: '⚡',
+  land_legal: '📄',
   site_photos: '📸',
 };
