@@ -35,6 +35,17 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '15 August',
+    sha: '93d6b91',
+    changes: [
+      'Share a listing straight to WhatsApp, so what you have to sell can reach a buyer',
+      'A new Prices screen — tap a crop and see the wholesale and retail price per kg',
+      'It says when a price is only an estimate, so you know what you are standing on',
+      'The papers a funder asks for — PTO, ID, water licence — now have a place to live',
+      'My Records can export a summary of your own harvests and sales to show a lender',
+    ],
+  },
+  {
+    when: '15 August',
     sha: '74c67d7',
     changes: [
       'The crash rescue now steps in one reload sooner, before the grey error can appear',
