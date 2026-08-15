@@ -30,17 +30,28 @@ const JOB_META: Record<JobType, { Icon: typeof Droplets; color: string; short: s
 };
 
 // Deterministic weekly job rota, parameterised by the farmer's beds.
+//
+// A farmer with a single bed configured (a common first-week state, straight
+// out of the garden survey) used to crash this whole screen: B and D fell
+// through `beds[1]` / `beds[3] ?? beds[1]` to plain `undefined`, and five of
+// the seven days read `.letter` off it. Every fallback below now resolves to
+// a real bed, and `pair()` collapses "beds A & A" down to "bed A" so a
+// one-bed farm reads like it was written for one bed, not like a typo.
 function jobsForDate(d: Date, beds: Bed[]): Job[] {
-  const A = beds[0], B = beds[1], C = beds[2] ?? beds[0], D = beds[3] ?? beds[1];
+  const A = beds[0] ?? DEFAULT_BEDS[0];
+  const B = beds[1] ?? A;
+  const C = beds[2] ?? A;
+  const D = beds[3] ?? B;
   const leafy = beds.find((b) => /spinach|chard|lettuce|kale|cabbage|beans/i.test(b.crop)) ?? A;
   const lc = (s: string) => s.toLowerCase();
   const j = (type: JobType, title: string, sub: string): Job => ({ type, title, sub });
+  const pair = (x: Bed, y: Bed) => (x.letter === y.letter ? `bed ${x.letter}` : `beds ${x.letter} & ${y.letter}`);
   switch (d.getDay()) {
-    case 1: return [j('water', `Water beds ${A.letter} & ${B.letter}`, 'Morning · deep')];
-    case 2: return [j('water', `Water beds ${A.letter} & ${B.letter}`, 'Morning · deep'), j('mulch', `Mulch ${lc(leafy.crop)}`, 'Straw, 5cm'), j('photo', `Photo bed ${C.letter}`, 'Pest check')];
-    case 3: return [j('feed', 'Feed all beds', 'Compost tea'), j('water', `Water beds ${C.letter} & ${D.letter}`, 'Morning')];
-    case 4: return [j('weed', 'Weed all beds', 'Pull before they seed'), j('water', `Water beds ${A.letter} & ${B.letter}`, 'Morning')];
-    case 5: return [j('water', `Water beds ${C.letter} & ${D.letter}`, 'Morning · deep'), j('harvest', `Harvest ${lc(leafy.crop)}`, 'Pick outer leaves')];
+    case 1: return [j('water', `Water ${pair(A, B)}`, 'Morning · deep')];
+    case 2: return [j('water', `Water ${pair(A, B)}`, 'Morning · deep'), j('mulch', `Mulch ${lc(leafy.crop)}`, 'Straw, 5cm'), j('photo', `Photo bed ${C.letter}`, 'Pest check')];
+    case 3: return [j('feed', 'Feed all beds', 'Compost tea'), j('water', `Water ${pair(C, D)}`, 'Morning')];
+    case 4: return [j('weed', 'Weed all beds', 'Pull before they seed'), j('water', `Water ${pair(A, B)}`, 'Morning')];
+    case 5: return [j('water', `Water ${pair(C, D)}`, 'Morning · deep'), j('harvest', `Harvest ${lc(leafy.crop)}`, 'Pick outer leaves')];
     case 6: return [j('harvest', `Harvest ${lc(A.crop)}`, 'Early, before the heat'), j('photo', 'Photo all beds', 'Lima checks growth')];
     default: return [j('plan', 'Review the week', 'Log harvests in the journal'), j('plan', 'Plan next week', 'With Lima')];
   }
@@ -78,8 +89,12 @@ const MONTH_FOCUS: Record<number, string> = {
   5: 'Winter — protect seedlings from frost; harvest greens & roots.',
   6: 'Deep winter — source spring seed; start tomatoes indoors.',
   7: 'Late winter — start warm-season seedlings; prep spring beds.',
-  8: 'Spring — transplant tomatoes, sow beans & maize; harvest garlic.',
-  9: 'Spring planting peak — get everything in before the heat.',
+  // Maize's own catalog entry (lib/crop-catalog.ts) puts every rainfall
+  // pattern's sowing window at Oct-Dec, none of them September — the same
+  // false-early claim the calendar page's history warns about. It moved to
+  // October below, where the catalog actually agrees.
+  8: 'Spring — transplant tomatoes, sow beans; harvest garlic.',
+  9: 'Spring planting peak — sow maize; get everything in before the heat.',
   10: 'Late spring — final tomato sowings; mulch for summer.',
   11: 'Early summer — first tomatoes; water daily, tie up trusses.',
 };
