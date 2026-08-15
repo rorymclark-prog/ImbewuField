@@ -181,24 +181,26 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
                       display: 'flex', alignItems: 'center', gap: 12,
                       padding: '10px 20px',
                       textDecoration: 'none',
-                      // var(--badge-bg)/var(--emerald), not the '#1F4D2B'-derived hardcodes this
-                      // used to carry: those are the accent tokens already used for this same
-                      // "active" treatment elsewhere (see TabBar), and they move with the theme.
-                      background: exactActive ? 'var(--badge-bg)' : 'transparent',
-                      borderRight: exactActive ? '3px solid var(--emerald)' : '3px solid transparent',
+                      // '#1F4D2B'-derived hardcodes, not var(--badge-bg)/var(--emerald): the earth
+                      // theme's --emerald (#3A7518, an "ok"-status olive-green, see globals.css)
+                      // is a different hue from the brand forest green every other screen still
+                      // hardcodes — swapping just this one would put two visibly different
+                      // "brand greens" in the app at once. Stays literal until that migrates.
+                      background: exactActive ? 'rgba(31,77,43,0.09)' : 'transparent',
+                      borderRight: exactActive ? '3px solid #1F4D2B' : '3px solid transparent',
                       transition: 'background 0.12s',
                     }}
                   >
                     <Icon
                       size={16}
                       strokeWidth={exactActive ? 2 : 1.6}
-                      style={{ color: exactActive ? 'var(--emerald)' : 'var(--text-secondary)', flexShrink: 0 }}
+                      style={{ color: exactActive ? '#1F4D2B' : 'var(--text-secondary)', flexShrink: 0 }}
                     />
                     <span
                       className="font-sans"
                       style={{
                         fontSize: 14,
-                        color: exactActive ? 'var(--emerald)' : 'var(--text-primary)',
+                        color: exactActive ? '#1F4D2B' : 'var(--text-primary)',
                         fontWeight: exactActive ? 600 : 400,
                       }}
                     >

@@ -52,7 +52,11 @@ export default function AccountButton() {
       style={{
         background: 'var(--bg-1)',
         border: '1px solid var(--border)',
-        color: 'var(--emerald)',
+        // '#2D6B3C', not var(--emerald): the earth theme's --emerald (#3A7518, an "ok"-status
+        // olive-green) is a different hue from the brand forest green every other screen still
+        // hardcodes — this chip is the app's most-visited header, not the place to fork the
+        // brand accent in two.
+        color: '#2D6B3C',
         textDecoration: 'none',
         minHeight: 56,
         fontSize: 20,

@@ -56,7 +56,12 @@ export default function TabBar() {
                 size={22}
                 strokeWidth={active ? 2.2 : 1.7}
                 style={{
-                  color: active ? 'var(--emerald)' : 'var(--text-muted)',
+                  // '#1F4D2B', not var(--emerald): the earth theme's --emerald (#3A7518, an
+                  // "ok"-status olive-green, see globals.css) is a different hue from the brand
+                  // forest green every other screen still hardcodes — swapping just this one
+                  // would put two visibly different "brand greens" in the app at once. Matches
+                  // the --brand-soft tint already used for the pill background above.
+                  color: active ? '#1F4D2B' : 'var(--text-muted)',
                   transition: 'color var(--dur-fast) var(--ease-out)',
                 }}
               />
@@ -65,7 +70,7 @@ export default function TabBar() {
                 style={{
                   fontSize: 11,
                   fontWeight: active ? 700 : 600,
-                  color: active ? 'var(--emerald)' : 'var(--text-muted)',
+                  color: active ? '#1F4D2B' : 'var(--text-muted)',
                   letterSpacing: '0.01em',
                   transition: 'color var(--dur-fast) var(--ease-out)',
                 }}
