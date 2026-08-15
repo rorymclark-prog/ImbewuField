@@ -28,6 +28,11 @@ export default function BackButton({ fallback = '/' }: { fallback?: string }) {
         border: '1px solid #E2D8C4',
         color: '#20190F',
         cursor: 'pointer',
+        // 44px is the touch-target floor this app holds itself to elsewhere (see the floating
+        // fallback in BackControl.tsx) — this in-flow button rendered on 15+ page headers was
+        // ~27px tall, and icon-only on mobile (the "Back" label is `hidden` below `sm`).
+        minHeight: 44,
+        minWidth: 44,
       }}
     >
       <ChevronLeft size={14} strokeWidth={2} />
