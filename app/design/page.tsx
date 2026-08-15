@@ -4065,7 +4065,11 @@ function ItemEditSheet({
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <span style={{ fontSize: 20 }}>{def?.icon}</span>
+          {def?.art ? (
+            <img src={def.art} alt="" aria-hidden style={{ width: 24, height: 24, objectFit: 'contain' }} />
+          ) : (
+            <span style={{ fontSize: 20 }}>{def?.icon}</span>
+          )}
           <span style={{ fontWeight: 700, fontSize: 16, color: DARK }}>{def?.name ?? 'Item'}</span>
         </div>
 
