@@ -52,6 +52,26 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   },
   {
     when: '15 August',
+    sha: 'f65e6fa',
+    changes: [
+      'The sign-in screen now opens with a picture of a smallholding, not an empty box',
+      'The example farm page does the same',
+    ],
+  },
+  {
+    when: '15 August',
+    sha: '43f9692',
+    changes: [
+      'The designer now loads in parts, so it starts faster and fits weaker phones',
+      'Photo import, the advisor and the step guide arrive when needed, not up front',
+      'On phones, photo and satellite work now uses phone-sized memory, not print-sized',
+      'Plans made on a laptop keep full print quality',
+      'The automatic switch to the simple page is off — every page opens normally again',
+      'It was catching healthy computers too, not only crashing phones',
+    ],
+  },
+  {
+    when: '15 August',
     sha: '74c67d7',
     changes: [
       'The crash rescue now steps in one reload sooner, before the grey error can appear',
