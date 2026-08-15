@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
   X, Map, DollarSign, GraduationCap, Wheat, FileText,
-  MessageCircle, Leaf, CalendarDays, LayoutGrid, ClipboardList,
+  MessageCircle, Leaf, CalendarDays, CalendarRange, LayoutGrid, ClipboardList,
   Camera, Home, User, Users, BarChart3, Building2, Palette, Handshake, Sparkles, Earth, Sprout,
 } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
@@ -52,6 +52,10 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
         { href: '/plan',     Icon: CalendarDays, label: t('homeQuickCropPlanner') },
         { href: '/facilitator/crops', Icon: FileText, label: 'Bed-by-Bed Crop Plan' },
         { href: '/cropplan', Icon: Wheat,        label: t('navTaskPlanner') },
+        // Otherwise unreachable: no tab, no card on /home, no link from /plan
+        // or /cropplan pointed here — the 12-month SA planting grid existed
+        // but no farmer could ever tap their way to it.
+        { href: '/calendar', Icon: CalendarRange, label: t('navPlantingCalendar') },
         { href: '/survey',   Icon: LayoutGrid,   label: t('navGardenSurvey') },
         { href: '/vision',   Icon: Camera,       label: t('homeLimaVisionLabel') },
       ],

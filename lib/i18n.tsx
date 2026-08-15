@@ -1124,6 +1124,7 @@ const T: Record<string, Dict> = {
     navDesignMap: 'Map',
     navFieldJournal: 'Field Journal',
     navTaskPlanner: 'Task Planner',
+    navPlantingCalendar: 'Planting Calendar',
     navGardenSurvey: 'Garden Survey',
     navNGODashboard: 'NGO Dashboard',
     navFacilitator: 'Design canvas',
