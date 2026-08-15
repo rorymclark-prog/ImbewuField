@@ -116,8 +116,11 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
         style={{
           position: 'fixed', top: 0, left: 0, bottom: 0, zIndex: 61,
           width: 'min(310px, 85vw)',
-          background: '#FFFEFA',
-          borderRight: '1px solid #E2D8C4',
+          // Tokens, not the '#FFFEFA'/'#E2D8C4' this used to carry: this is the app's main nav
+          // drawer, present on the home and farm-map screens, so it used to slide a bright white
+          // panel over an otherwise-dark screen in dark mode.
+          background: 'var(--bg-1)',
+          borderRight: '1px solid var(--border)',
           boxShadow: '4px 0 32px rgba(32,25,15,0.16)',
           display: 'flex', flexDirection: 'column',
           transform: open ? 'translateX(0)' : 'translateX(-100%)',
@@ -130,13 +133,13 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
         {/* Header */}
         <div
           className="flex items-center justify-between px-5 flex-shrink-0"
-          style={{ height: 60, borderBottom: '1px solid #E2D8C4' }}
+          style={{ height: 60, borderBottom: '1px solid var(--border)' }}
         >
           <div>
-            <div className="font-display font-bold" style={{ fontSize: 17, color: '#20190F', letterSpacing: '-0.01em' }}>
+            <div className="font-display font-bold" style={{ fontSize: 17, color: 'var(--text-primary)', letterSpacing: '-0.01em' }}>
               ImbewuField
             </div>
-            <div className="font-sans" style={{ fontSize: 10.5, color: '#8C7A62', marginTop: 1 }}>
+            <div className="font-sans" style={{ fontSize: 10.5, color: 'var(--text-muted)', marginTop: 1 }}>
               {t('tagline')}
             </div>
           </div>
@@ -144,8 +147,8 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
             onClick={onClose}
             aria-label={t('navCloseMenu')}
             style={{
-              background: 'rgba(32,25,15,0.06)', border: '1px solid #E2D8C4',
-              borderRadius: 8, padding: 7, cursor: 'pointer', color: '#5C5040',
+              background: 'var(--bg-2)', border: '1px solid var(--border)',
+              borderRadius: 8, padding: 7, cursor: 'pointer', color: 'var(--text-secondary)',
               display: 'flex', alignItems: 'center',
             }}
           >
@@ -159,7 +162,7 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
             <div key={section.label} style={{ marginBottom: 4 }}>
               <div
                 className="font-sans uppercase tracking-widest"
-                style={{ fontSize: 9.5, color: '#94876F', letterSpacing: '0.13em', padding: '8px 20px 4px' }}
+                style={{ fontSize: 9.5, color: 'var(--text-muted)', letterSpacing: '0.13em', padding: '8px 20px 4px' }}
               >
                 {section.label}
               </div>
@@ -178,21 +181,24 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
                       display: 'flex', alignItems: 'center', gap: 12,
                       padding: '10px 20px',
                       textDecoration: 'none',
-                      background: exactActive ? 'rgba(31,77,43,0.09)' : 'transparent',
-                      borderRight: exactActive ? '3px solid #1F4D2B' : '3px solid transparent',
+                      // var(--badge-bg)/var(--emerald), not the '#1F4D2B'-derived hardcodes this
+                      // used to carry: those are the accent tokens already used for this same
+                      // "active" treatment elsewhere (see TabBar), and they move with the theme.
+                      background: exactActive ? 'var(--badge-bg)' : 'transparent',
+                      borderRight: exactActive ? '3px solid var(--emerald)' : '3px solid transparent',
                       transition: 'background 0.12s',
                     }}
                   >
                     <Icon
                       size={16}
                       strokeWidth={exactActive ? 2 : 1.6}
-                      style={{ color: exactActive ? '#1F4D2B' : '#5C5040', flexShrink: 0 }}
+                      style={{ color: exactActive ? 'var(--emerald)' : 'var(--text-secondary)', flexShrink: 0 }}
                     />
                     <span
                       className="font-sans"
                       style={{
                         fontSize: 14,
-                        color: exactActive ? '#1F4D2B' : '#20190F',
+                        color: exactActive ? 'var(--emerald)' : 'var(--text-primary)',
                         fontWeight: exactActive ? 600 : 400,
                       }}
                     >
@@ -202,7 +208,7 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
                 );
               })}
 
-              <div style={{ height: 1, background: '#E2D8C4', margin: '4px 20px 4px' }} />
+              <div style={{ height: 1, background: 'var(--border)', margin: '4px 20px 4px' }} />
             </div>
           ))}
         </div>
@@ -210,7 +216,7 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
         {/* Footer */}
         <div
           className="font-sans flex-shrink-0"
-          style={{ fontSize: 10.5, color: '#94876F', padding: '12px 20px', borderTop: '1px solid #E2D8C4' }}
+          style={{ fontSize: 10.5, color: 'var(--text-muted)', padding: '12px 20px', borderTop: '1px solid var(--border)' }}
         >
           {t('homeFooter')}
         </div>

@@ -25,7 +25,10 @@ export default function TabBar() {
     <div
       className="flex"
       style={{
-        background: '#FFFEFA',
+        // var(--bg-1), not the '#FFFEFA' this used to carry: that hex matches earth LIGHT
+        // exactly but never changes, so this bar — present on almost every screen — stayed a
+        // bright white strip glued to the bottom of an otherwise-dark screen in dark mode.
+        background: 'var(--bg-1)',
         boxShadow: '0 -2px 12px rgba(22,56,32,0.08)',
         flexShrink: 0,
         paddingBottom: 'env(safe-area-inset-bottom, 0px)',
@@ -53,7 +56,7 @@ export default function TabBar() {
                 size={22}
                 strokeWidth={active ? 2.2 : 1.7}
                 style={{
-                  color: active ? '#1F4D2B' : '#94876F',
+                  color: active ? 'var(--emerald)' : 'var(--text-muted)',
                   transition: 'color var(--dur-fast) var(--ease-out)',
                 }}
               />
@@ -62,7 +65,7 @@ export default function TabBar() {
                 style={{
                   fontSize: 11,
                   fontWeight: active ? 700 : 600,
-                  color: active ? '#1F4D2B' : '#94876F',
+                  color: active ? 'var(--emerald)' : 'var(--text-muted)',
                   letterSpacing: '0.01em',
                   transition: 'color var(--dur-fast) var(--ease-out)',
                 }}
