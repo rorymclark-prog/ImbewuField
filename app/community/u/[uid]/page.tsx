@@ -25,6 +25,10 @@ export default function PublicCommunityProfilePage() {
   const [reportOpen, setReportOpen] = useState(false);
   const [reportReason, setReportReason] = useState('');
   const [reportSent, setReportSent] = useState(false);
+  const [reportBusy, setReportBusy] = useState(false);
+  const [reportError, setReportError] = useState(false);
+  const [messaging, setMessaging] = useState(false);
+  const [messageError, setMessageError] = useState(false);
 
   useEffect(() => {
     if (!communityEnabled()) { router.replace('/home'); return; }
@@ -34,18 +38,41 @@ export default function PublicCommunityProfilePage() {
     }
   }, [user, loading, router, targetUid]);
 
+  // getOrCreateThread() is a Firestore round trip (a query, sometimes a write).
+  // On a weak signal it can reject, and an uncaught rejection here used to mean
+  // tapping "Message" simply did nothing — no navigation, no error, no way to
+  // tell the tap even registered.
   async function handleMessage() {
-    if (!profile) return;
-    const id = await getOrCreateThread(profile.uid, profile.display_name);
-    if (id) router.push(`/community/messages/${id}`);
+    if (!profile || messaging) return;
+    setMessaging(true);
+    setMessageError(false);
+    try {
+      const id = await getOrCreateThread(profile.uid, profile.display_name);
+      if (id) { router.push(`/community/messages/${id}`); return; }
+      setMessageError(true);
+    } catch (err) {
+      console.error('getOrCreateThread failed', err);
+      setMessageError(true);
+    } finally {
+      setMessaging(false);
+    }
   }
 
   async function handleReport() {
-    if (!profile || !reportReason.trim()) return;
-    await reportContent('profile', profile.uid, profile.uid, reportReason.trim());
-    setReportSent(true);
-    setReportReason('');
-    setTimeout(() => { setReportSent(false); setReportOpen(false); }, 2000);
+    if (!profile || !reportReason.trim() || reportBusy) return;
+    setReportBusy(true);
+    setReportError(false);
+    try {
+      await reportContent('profile', profile.uid, profile.uid, reportReason.trim());
+      setReportSent(true);
+      setReportReason('');
+      setTimeout(() => { setReportSent(false); setReportOpen(false); }, 2000);
+    } catch (err) {
+      console.error('reportContent failed', err);
+      setReportError(true);
+    } finally {
+      setReportBusy(false);
+    }
   }
 
   if (busy || loading || !communityEnabled()) {
@@ -115,10 +142,12 @@ export default function PublicCommunityProfilePage() {
               <div className="flex gap-2">
                 <button
                   onClick={handleMessage}
+                  disabled={messaging}
                   className="flex items-center justify-center gap-2 font-display font-semibold rounded-xl"
-                  style={{ flex: 1, background: '#1F4D2B', color: '#F7F2E9', border: 'none', cursor: 'pointer', padding: '12px 16px', fontSize: 14 }}
+                  style={{ flex: 1, background: '#1F4D2B', color: '#F7F2E9', border: 'none', cursor: messaging ? 'default' : 'pointer', padding: '12px 16px', fontSize: 14, opacity: messaging ? 0.7 : 1 }}
                 >
-                  <MessageCircle size={16} /> {t('communityMessageButton')}
+                  {messaging ? <Loader2 size={16} className="animate-spin" /> : <MessageCircle size={16} />}
+                  {t('communityMessageButton')}
                 </button>
                 <button
                   onClick={() => setReportOpen((s) => !s)}
@@ -128,6 +157,12 @@ export default function PublicCommunityProfilePage() {
                   <Flag size={14} /> {t('communityReportButton')}
                 </button>
               </div>
+            )}
+
+            {messageError && (
+              <p className="font-sans" style={{ fontSize: 12, color: '#8B2020', margin: '8px 0 0' }}>
+                {t('communityContactError')}
+              </p>
             )}
 
             {reportOpen && (
@@ -142,12 +177,17 @@ export default function PublicCommunityProfilePage() {
                 />
                 <button
                   onClick={handleReport}
-                  disabled={!reportReason.trim()}
+                  disabled={!reportReason.trim() || reportBusy}
                   className="font-sans font-semibold rounded-xl"
-                  style={{ padding: '9px 16px', fontSize: 13, background: reportReason.trim() ? '#8B2020' : 'rgba(32,25,15,0.1)', color: reportReason.trim() ? '#fff' : '#94876F', border: 'none', cursor: reportReason.trim() ? 'pointer' : 'default' }}
+                  style={{ padding: '9px 16px', fontSize: 13, background: reportReason.trim() ? '#8B2020' : 'rgba(32,25,15,0.1)', color: reportReason.trim() ? '#fff' : '#94876F', border: 'none', cursor: reportReason.trim() && !reportBusy ? 'pointer' : 'default' }}
                 >
                   {reportSent ? t('communityReportSent') : t('communityReportSubmit')}
                 </button>
+                {reportError && (
+                  <p className="font-sans" style={{ fontSize: 12, color: '#8B2020', margin: '8px 0 0' }}>
+                    {t('communityReportError')}
+                  </p>
+                )}
               </div>
             )}
           </>
