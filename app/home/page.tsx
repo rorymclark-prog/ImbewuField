@@ -22,6 +22,7 @@ import {
   CheckCircle2,
   CalendarPlus,
   Sparkles,
+  Tag,
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
@@ -330,6 +331,11 @@ function HomeLandingInner() {
     { href: '/journal',           Icon: Leaf,          label: t('homeQuickJournal'),     desc: t('homeQuickJournalDesc'),     color: 'var(--color-forest-800)', bg: 'rgba(31,77,43,0.08)' },
     { href: '/facilitator/crops', Icon: CalendarDays,  label: t('homeQuickCropPlanner'), desc: t('homeQuickCropPlannerDesc'), color: 'var(--color-forest-800)', bg: 'rgba(31,77,43,0.08)' },
     { href: '/records',           Icon: Wheat,         label: t('homeQuickMyRecords'),   desc: t('homeQuickMyRecordsDesc'),   color: 'var(--color-forest-800)', bg: 'rgba(31,77,43,0.08)' },
+    // Not translated via t() like the rest of this grid — deliberately, to avoid adding keys to
+    // every locale block in lib/i18n.tsx (a large shared file well outside this change's scope) for
+    // a single new tile. Falls back to plain English, same as this file's other hardcoded
+    // farmer-facing strings (e.g. the "Your farm plan" and sample-farm copy above).
+    { href: '/prices',            Icon: Tag,           label: 'Prices',                  desc: 'Wholesale & retail',          color: 'var(--color-forest-800)', bg: 'rgba(31,77,43,0.08)' },
   ];
 
   return (
