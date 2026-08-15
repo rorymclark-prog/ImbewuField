@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { X } from 'lucide-react';
-import { EVIDENCE_CATALOGUE, INDIGENOUS_EDIBLES } from '@/lib/evidence-catalogue';
+import { EVIDENCE_CATALOGUE, EVIDENCE_GROUP_ICON, INDIGENOUS_EDIBLES } from '@/lib/evidence-catalogue';
 import { getGroupCount, type EvidenceItem } from '@/lib/site-evidence';
 import EvidenceSheet from './EvidenceSheet';
 import type { EvidenceCatalogueGroup, EvidenceCatalogueItem } from '@/lib/evidence-catalogue';
@@ -64,7 +64,7 @@ export default function EvidenceCatalogue({ siteId, onClose, onChanged }: Props)
                 <div key={group.key} style={{ background: '#fff', border: '1px solid #EBE3D2', borderRadius: 14, padding: '16px 17px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 9, marginBottom: 13 }}>
                     <div style={{ width: 34, height: 34, borderRadius: 9, background: group.iconBg, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 18 }}>
-                      {GROUP_ICON[group.key]}
+                      {EVIDENCE_GROUP_ICON[group.key]}
                     </div>
                     <div style={{ flex: 1 }}>
                       <span style={{ font: '600 15px/1 system-ui, sans-serif', color: '#2D2519' }}>{group.label}</span>
@@ -163,13 +163,3 @@ export default function EvidenceCatalogue({ siteId, onClose, onChanged }: Props)
     </>
   );
 }
-
-const GROUP_ICON: Record<string, string> = {
-  water: '💧',
-  structures: '🏠',
-  soil: '🌱',
-  trees: '🌿',
-  animals: '🐓',
-  energy: '⚡',
-  land_legal: '📄',
-};
