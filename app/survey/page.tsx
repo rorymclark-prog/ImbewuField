@@ -16,6 +16,8 @@ import { getLastSite } from '@/lib/last-site';
 import { loadPlaces, type SavedPlace } from '@/lib/saved-places';
 import LessonLink from '@/components/design/LessonLink';
 import { activeAccountLocalStorageKey } from '@/lib/account-local-storage';
+import { buildSurveyPdf, surveyPdfFilename } from '@/lib/survey-pdf';
+import { deliverFile } from '@/lib/file-delivery';
 
 const BASE_SURVEY_KEY = 'imbewu_garden_survey';
 function surveyKey(placeId: string | null) {
@@ -98,6 +100,10 @@ function SurveyInner() {
   // A storage refusal must be visible and STICKY — see save() for why 'ignore' cost the farmer
   // their whole questionnaire.
   const [saveFailed, setSaveFailed] = useState(false);
+  const [pdfBusy, setPdfBusy] = useState(false);
+  // See printPlan() — a PDF that fails to build must say so, not sit there looking like the tap
+  // did nothing, which is the exact bug this button replaced.
+  const [pdfFailed, setPdfFailed] = useState(false);
 
   // Known from the map analysis (fall back to sample if no site analysed yet).
   const known = useMemo(() => {
@@ -158,6 +164,32 @@ function SurveyInner() {
     setTimeout(() => setSaved(false), 2200);
   }
 
+  // See lib/survey-pdf.ts — window.print() silently does nothing in an installed (standalone)
+  // PWA, which is exactly the device most of our farmers carry. Same discipline as save() above:
+  // a failure that never surfaces reads to the farmer as a dead button, which is the bug this
+  // replaces.
+  async function printPlan() {
+    if (pdfBusy) return;
+    setPdfBusy(true);
+    setPdfFailed(false);
+    try {
+      const blob = await buildSurveyPdf({
+        beds: bedCrops.map((crop, i) => ({ letter: bedLetter(i), crop })),
+        bedAreaM2: BED_M2,
+        ha: known.ha,
+        sunLabel,
+        tanksPhrase,
+        goalLabel: goal ? GOALS.find((g) => g.v === goal)?.label ?? null : null,
+        weeks: WEEK_PLAN,
+      });
+      await deliverFile(blob, surveyPdfFilename(), 'ImbewuField Garden Survey');
+    } catch {
+      setPdfFailed(true);
+    } finally {
+      setPdfBusy(false);
+    }
+  }
+
   const TOTAL = 5;
   const canNext =
     step === 0 ? true :
@@ -180,10 +212,10 @@ function SurveyInner() {
         <div className="flex-1" />
         <LessonLink id="survey:garden" label="Learn" />
         {step === 5 && (
-          <button onClick={() => window.print()}
+          <button onClick={printPlan} disabled={pdfBusy}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-display font-semibold"
-            style={{ background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.3)', color: '#C07A1E', cursor: 'pointer' }}>
-            <Printer size={13} />Print
+            style={{ background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.3)', color: '#C07A1E', cursor: pdfBusy ? 'default' : 'pointer', opacity: pdfBusy ? 0.6 : 1 }}>
+            <Printer size={13} />{pdfBusy ? 'Building…' : 'Print'}
           </button>
         )}
         <SettingsButton />
@@ -479,6 +511,12 @@ function SurveyInner() {
                   <p style={{ fontSize: 12, color: '#9A3412', margin: 0 }}>
                     Your answers are still on this screen. Free up space and tap Save again, or
                     print this page before you leave it.
+                  </p>
+                )}
+                {pdfFailed && (
+                  <p style={{ fontSize: 12, color: '#9A3412', margin: 0 }}>
+                    Could not build the PDF. Your answers are still on this screen — try Print
+                    again, or Save this plan instead.
                   </p>
                 )}
                 <Link href="/plan"
