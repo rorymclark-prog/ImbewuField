@@ -18,7 +18,11 @@ import { layoutCanvasLabels, estimatePillWidth, groupSameLabelPills, isUsableCan
 import { ownedByCurrentStep } from '@/lib/glossy-filters';
 import { rectFromCorners, anyVertexInRect, itemCenterInRect, clampGroupDelta, type Rect } from '@/lib/marquee';
 import { ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_DEFS, type DesignLayerState, type ElementCategory } from '@/lib/design-elements';
-import { SPECIES } from '@/lib/species-catalog';
+// SPECIES is NOT imported at module scope — lib/species-catalog.ts is 197 species / ~224KB, and
+// every farmer who opens /design paid for it whether or not they ever placed a species-specific
+// planting. The one place that reads it (below, inside runTapAction) already only runs on the tap
+// that places an item, so it's loaded there via a dynamic import instead of shipping in the
+// initial bundle. See DesignPalette.tsx for the matching fix on the picker side.
 import type { DesignLayerType } from '@/lib/design-studio';
 import { computeContourLines } from '@/lib/contours';
 import { CONTOUR_CASING, CONTOUR_CASING_EXTRA, CONTOUR_CORE, CONTOUR_CORE_MAJOR } from '@/lib/contour-cartography';
@@ -1108,7 +1112,7 @@ export default function DesignCanvas({
     };
   }
 
-  function runTapAction(e: React.PointerEvent<Element>) {
+  async function runTapAction(e: React.PointerEvent<Element>) {
     if (tool === 'select') {
       onSelect(null);
       setActiveTracedId(null); // tapping empty canvas also dismisses a stray "Use in design" popup
@@ -1143,6 +1147,7 @@ export default function DesignCanvas({
       const item: PlacedItem = { id: newId(), defId: placeDefId, x: pt[0], y: pt[1], status: 'proposed' };
       if (placeSpeciesId) {
         item.speciesId = placeSpeciesId;
+        const { SPECIES } = await import('@/lib/species-catalog');
         const sp = SPECIES.find(s => s.id === placeSpeciesId);
         if (sp) {
           item.speciesBotanical = sp.botanicalName;
