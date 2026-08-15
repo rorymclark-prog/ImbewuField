@@ -458,6 +458,8 @@ const T: Record<string, Dict> = {
   en: {
     ...DESIGN_STUDIO_ENGLISH_PENDING,
     tagline: 'Permaculture Intelligence',
+    // Main map header nav pill (app/farmer/page.tsx) — English-only for now; t() falls back.
+    designStudioLabel: 'Design Studio',
     welcomeTitle: 'Welcome to ImbewuField',
     welcomeSub: 'Smart permaculture planning for South African land.',
     pickLang: 'Choose your language',
@@ -700,6 +702,16 @@ const T: Record<string, Dict> = {
     soilHealthScoreModerate: 'Moderate',
     soilHealthScoreDegraded: 'Degraded',
     priorityImprovementsHeader: 'Priority improvements',
+    // Soil "Priority improvements" body (components/DataPanel.tsx) — these sentences are
+    // assembled at runtime from live soil values, so each fixed phrase gets its own key with a
+    // {placeholder} filled in via .replace(), same pattern as insightSemiArid etc. above.
+    // English-only for now; t() falls back.
+    soilImprovementPhAcidic: 'pH {ph} is acidic — add agricultural lime (1–2 t/ha)',
+    soilImprovementPhAlkaline: 'pH {ph} is alkaline — add elemental sulphur or pine-needle mulch',
+    soilImprovementLowCarbon: 'Organic carbon {oc}% is low — layer compost 5 cm deep, add kraal manure or biochar',
+    soilImprovementCompacted: 'Bulk density {bd} g/cm³ suggests compaction — deep-rooted cover crops and broadfork open the profile',
+    soilImprovementHighClay: 'High clay ({clay}%) — gypsum + organic matter improve drainage and workability',
+    soilImprovementSandy: 'Sandy soil ({sand}%) — mulch heavily and boost CEC with compost and biochar',
     statKoppen: 'Köppen',
     statSolarClimate: 'Solar',
     statSolarClimateUnit: 'kWh/m²/day',
@@ -1125,6 +1137,7 @@ const T: Record<string, Dict> = {
     navFieldJournal: 'Field Journal',
     navTaskPlanner: 'Task Planner',
     navGardenSurvey: 'Garden Survey',
+    navPlantingCalendar: 'Planting Calendar',
     navNGODashboard: 'NGO Dashboard',
     navFacilitator: 'Design canvas',
     navMyAccount: 'My Account',

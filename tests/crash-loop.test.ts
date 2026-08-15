@@ -124,7 +124,9 @@ test('safe mode still loads the design, and still charges the load before the he
     'safe mode is no longer resolved once per page load during render');
   assert.ok(/markPageSettled\(window\.localStorage/.test(PAGE_SRC),
     'nothing clears the streak — safe mode would latch on forever once it engaged');
-  assert.ok(/window\.setTimeout\(\(\) => markPageSettled/.test(PAGE_SRC),
+  // Accepts both the arrow form and the block form (the callback grew a second job on 15 Aug:
+  // deleting the server-rescue cookie). The invariant is the TIMER, not the callback's shape.
+  assert.ok(/window\.setTimeout\(\(\) => \{?\s*\n?\s*markPageSettled/.test(PAGE_SRC),
     'the streak must be cleared on a TIMER: clearing it during render would mark a page settled '
     + 'the instant it opened, which is precisely the moment before it dies');
 });
@@ -230,7 +232,9 @@ test('the farmer page can stop digging too', () => {
   const farmer = readFileSync(new URL('../app/farmer/page.tsx', import.meta.url), 'utf8');
 
   // The guard is resolved once per load and the MAP is what it withholds — never the panels.
-  assert.match(farmer, /pageCrashGuard\(FARMER_LOAD_KEY\)/, 'the farmer page no longer counts its own loads');
+  // The pulse cookie rides along so leaving on purpose also clears the SERVER's counter — see
+  // lib/server-rescue.ts and tests/server-rescue.test.ts.
+  assert.match(farmer, /pageCrashGuard\(FARMER_LOAD_KEY, FARMER_PULSE_COOKIE\)/, 'the farmer page no longer counts its own loads');
   assert.match(farmer, /\{mapHeld \? \(/, 'the guard no longer holds the map back');
   // The escape hatch must clear the SAME key the streak lives under.
   assert.match(farmer, /exitPageCrashGuard\(mapGuard\.key\)/, 'the "Load the map" button is gone or clears the wrong key');

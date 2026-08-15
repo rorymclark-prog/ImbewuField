@@ -35,8 +35,57 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '15 August',
-    sha: '4cbc3a1',
+    // Eight branches from the audit swarm. The language-plumbing commit (ba57337) is deliberately
+    // NOT listed: it routes three farmer-facing strings through the dictionary but only adds the
+    // ENGLISH keys, so nobody's screen changes until a first-language reviewer supplies the words.
+    // Saying "now follows your language" would be a promise the build does not keep.
+    sha: '92dd6a6',
     changes: [
+      'The sign-in screen now follows your light or dark setting, like the rest of the app',
+      'Signing up keeps the journal and crop plan you wrote before you had an account',
+      'Logging a sale on a weak signal finishes instead of spinning forever',
+      'The Task Planner says when it is showing an example, not your own beds',
+      'Garden Survey now opens the survey that actually moves your progress bar',
+      'The Planting Calendar finally has its own place in the menu',
+      'The design page opens lighter, and pinch-zoom stops stuttering on a small phone',
+    ],
+  },
+  {
+    when: '15 August',
+    sha: 'f65e6fa',
+    changes: [
+      'The sign-in screen now opens with a picture of a smallholding, not an empty box',
+      'The example farm page does the same',
+    ],
+  },
+  {
+    when: '15 August',
+    sha: '43f9692',
+    changes: [
+      'The designer now loads in parts, so it starts faster and fits weaker phones',
+      'Photo import, the advisor and the step guide arrive when needed, not up front',
+      'On phones, photo and satellite work now uses phone-sized memory, not print-sized',
+      'Plans made on a laptop keep full print quality',
+      'The automatic switch to the simple page is off — every page opens normally again',
+      'It was catching healthy computers too, not only crashing phones',
+    ],
+  },
+  {
+    when: '15 August',
+    sha: '74c67d7',
+    changes: [
+      'The crash rescue now steps in one reload sooner, before the grey error can appear',
+      'The farm map page now has the same rescue as the designer',
+      'Trying again from the simple page can never end on the grey error either',
+      'When even the light designer cannot open, the simple page says so honestly',
+    ],
+  },
+  {
+    when: '15 August',
+    sha: '2475744',
+    changes: [
+      'A phone that cannot open the designer at all now gets a simple page, never a grey error',
+      'That page keeps your design safe and offers light and full ways back in',
       'After a single crash, the page now comes straight back light instead of dying again',
       'This now covers crashes at any moment — generating a map or a report included',
       'Switching apps or closing normally never counts as a crash',

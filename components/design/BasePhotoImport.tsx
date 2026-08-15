@@ -18,6 +18,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Camera, Loader2, RotateCcw, RotateCw, X } from 'lucide-react';
 import { DEFAULT_IMG_W, DEFAULT_IMG_H, BASE_PHOTO_EXPORT_SCALE } from '@/lib/design-canvas';
+import { deviceBakeScale, phoneGradeDevice } from '@/lib/device-grade';
+import { drainCanvasToDataUrl } from '@/lib/release-canvas';
 import { calibratedMPerPx, canvasToPhoto, carriedMPerPx, photoToCanvas, type PhotoPoint, type PhotoTransform } from '@/lib/base-photo-align';
 import { uploadPhoto } from '@/lib/db/queries';
 import { formatDesignTranslation } from '@/lib/design-studio-i18n';
@@ -236,6 +238,34 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
     draw();
   }, [draw]);
 
+  // A modern phone camera hands over 48 megapixels; decoded, that is ~180 MB of pixels held for
+  // the whole aligning session — on exactly the device with the least room. Nothing downstream
+  // can use that detail: the export below is at most 2880 logical px wide, so a working copy
+  // capped at 4096 (2560 on phone-grade hardware, lib/device-grade.ts) is visually identical in
+  // every product and lets the original be garbage-collected the moment it is resized.
+  const sourceSideCap = phoneGradeDevice() ? 2560 : 4096;
+
+  function withCappedSource(image: HTMLImageElement, onReady: (img: HTMLImageElement) => void) {
+    const side = Math.max(image.naturalWidth, image.naturalHeight);
+    if (!Number.isFinite(side) || side <= sourceSideCap) { onReady(image); return; }
+    try {
+      const f = sourceSideCap / side;
+      const canvas = document.createElement('canvas');
+      canvas.width = Math.max(1, Math.round(image.naturalWidth * f));
+      canvas.height = Math.max(1, Math.round(image.naturalHeight * f));
+      const ctx = canvas.getContext('2d');
+      if (!ctx) { onReady(image); return; }
+      ctx.imageSmoothingQuality = 'high';
+      ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+      const small = new Image();
+      small.onload = () => onReady(small);
+      small.onerror = () => onReady(image); // the oversized original still beats no photo
+      small.src = drainCanvasToDataUrl(canvas, 'image/jpeg', 0.92);
+    } catch {
+      onReady(image);
+    }
+  }
+
   function onPickFile(file: File) {
     setError('');
     if (!file.type.startsWith('image/')) {
@@ -247,8 +277,8 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
     reader.onload = (e) => {
       const image = new Image();
       image.onerror = () => setError(t('designPhotoOpenError'));
-      image.onload = () => {
-        setImg(image);
+      image.onload = () => withCappedSource(image, (working) => {
+        setImg(working);
         setRotationDeg(0);
         setPoints([]);
         setMetres('');
@@ -256,7 +286,7 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
         setFreshImport(true);
         setZoom(1);
         setPan({ x: 0, y: 0 });
-      };
+      });
       image.src = e.target!.result as string;
     };
     reader.readAsDataURL(file);
@@ -319,13 +349,18 @@ export default function BasePhotoImport({ onApply, onClose, satDataUrl = null, i
       // The export is a pure SUPERSAMPLE of the very same framing — identical transform, identical
       // crop, just more pixels — so nothing about the calibration changes: mPerPx stays metres per
       // FRAME pixel, and the frame is still 960 wide by definition.
+      // Phone-grade devices export at 2× (lib/device-grade.ts): this canvas plus the decoded
+      // source photo are live together at the tap of one button, and 3× (2880×1920) of both is
+      // the allocation profile the crash diary keeps pointing at. 2× is still double the frame
+      // resolution; laptops keep the full 3×.
+      const exportScale = deviceBakeScale(BASE_PHOTO_EXPORT_SCALE);
       const exportCanvas = document.createElement('canvas');
-      exportCanvas.width = DEFAULT_IMG_W * BASE_PHOTO_EXPORT_SCALE;
-      exportCanvas.height = DEFAULT_IMG_H * BASE_PHOTO_EXPORT_SCALE;
+      exportCanvas.width = DEFAULT_IMG_W * exportScale;
+      exportCanvas.height = DEFAULT_IMG_H * exportScale;
       const exportCtx = exportCanvas.getContext('2d');
       if (!exportCtx) throw new Error(t('designPhotoPrepareError'));
       exportCtx.imageSmoothingQuality = 'high';
-      exportCtx.scale(BASE_PHOTO_EXPORT_SCALE, BASE_PHOTO_EXPORT_SCALE);
+      exportCtx.scale(exportScale, exportScale);
       drawPhotoInto(exportCtx);
       // 0.92 rather than 0.88: at this resolution the extra bytes are worth it, and a base photo
       // is re-encoded again downstream by the alignment bake, so early loss compounds.
