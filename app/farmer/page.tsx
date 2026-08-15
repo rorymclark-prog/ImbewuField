@@ -11,7 +11,6 @@ import { CRASH_LOOP_SETTLE_MS, FARMER_LOAD_KEY, exitPageCrashGuard, markPageSett
 import { FARMER_PULSE_COOKIE, clearPulseCookie } from '@/lib/server-rescue';
 import DataPanel from '@/components/DataPanel';
 import TabBar from '@/components/TabBar';
-import ReportView from '@/components/ReportView';
 import LangSwitcher from '@/components/LangSwitcher';
 import RoleSwitcher from '@/components/RoleSwitcher';
 import AccountButton from '@/components/AccountButton';
@@ -38,6 +37,11 @@ import { announceOverlay } from '@/lib/overlay-signal';
 import { useSheetDismiss } from '@/lib/sheet-dismiss';
 
 const PermaMap = dynamic(() => import('@/components/Map'), { ssr: false });
+// The report is a big, PDF-generating view most farmers never open in a given
+// visit (they came to check the weather, log a sale, water the garden). Loading
+// it eagerly cost every one of them its JS on every page load; loading it only
+// when "Reports" is actually tapped, same as the map above, gives that back.
+const ReportView = dynamic(() => import('@/components/ReportView'), { ssr: false });
 
 export default function Home() {
   return (

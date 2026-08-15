@@ -1,8 +1,8 @@
 'use client';
 
 import { useState, useEffect, useRef, useMemo } from 'react';
+import dynamic from 'next/dynamic';
 import { loadSurvey, type SiteSurvey } from '@/lib/site-survey';
-import SiteSurveySheet from './SiteSurveySheet';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import RainfallChart from './RainfallChart';
 import { savePlace, generateId, loadPlaces, promptNearbyUpdate, type SavedPlace } from '@/lib/saved-places';
@@ -13,7 +13,6 @@ import AreaPanel from './AreaPanel';
 import PhotoUpload from './PhotoUpload';
 import SiteDesign from './SiteDesign';
 import SavedPlaces from './SavedPlaces';
-import MyRecords from './MyRecords';
 import ChatPanel from './ChatPanel';
 import LifeGuide from './LifeGuide';
 import WaterBalance from './WaterBalance';
@@ -39,6 +38,13 @@ import EvidenceCatalogue from './EvidenceCatalogue';
 import { EVIDENCE_CATALOGUE, EVIDENCE_GROUP_ICON, type EvidenceCatalogueGroup, type EvidenceCatalogueItem } from '@/lib/evidence-catalogue';
 import { evidenceSiteId, getSiteEvidence, getReportCompleteness, getGroupCount, type EvidenceItem } from '@/lib/site-evidence';
 import type { Profile } from '@/lib/db/types';
+
+// These two are the biggest sub-panels in this file (the farm-records ledger and the full site
+// survey) and each is reachable from only one tab. Statically importing them meant every farmer —
+// including the ones who only ever look at Water or Climate — paid to load both on page open.
+// Loaded on demand instead, same as the map and the report view elsewhere in this app.
+const MyRecords = dynamic(() => import('./MyRecords'), { ssr: false });
+const SiteSurveySheet = dynamic(() => import('./SiteSurveySheet'), { ssr: false });
 
 interface Props {
   data: LocationData | null;
