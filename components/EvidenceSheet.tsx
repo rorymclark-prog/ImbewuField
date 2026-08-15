@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { X, Camera, Upload, Trash2, FileText } from 'lucide-react';
+import { X, Camera, Upload, Trash2, FileText, AlertTriangle } from 'lucide-react';
 import type { EvidenceCatalogueGroup, EvidenceCatalogueItem } from '@/lib/evidence-catalogue';
 import { EVIDENCE_GROUP_ICON, QUICK_NUMBERS, LIMA_TIPS } from '@/lib/evidence-catalogue';
 import {
@@ -35,7 +35,9 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
   const quickFields = QUICK_NUMBERS[group.key] ?? [];
   const limaTip = LIMA_TIPS[group.key];
   const groupLabel = item?.label ?? group.label;
-  const groupDesc = item?.docOnly
+  const groupDesc = group.key === 'land_legal'
+    ? 'Documents that prove your right to farm this land'
+    : item?.docOnly
     ? 'PDFs, scans and test reports'
     : group.key === 'water'
     ? 'Borehole tests, usage & municipal bills'
@@ -130,6 +132,28 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
             </button>
           </div>
         </div>
+
+        {/* Land & legal storage warning — THE THING THAT MATTERS MOST for this group.
+            A scanned photo is shrunk down for this phone (resizeForStorage, lib/site-evidence.ts);
+            an uploaded PDF keeps only its file name, never the file itself (see the "store filename
+            only (no binary)" branch in handleFiles below); and either way it lives in this browser's
+            localStorage alone, which can silently evict the oldest item once the site's own byte
+            budget fills. For a PTO this is often the ONLY proof a farmer has — they must not read
+            "saved here" as "backed up here". Keep this ahead of the capture buttons, not below them. */}
+        {group.key === 'land_legal' && (
+          <div style={{
+            margin: '14px 20px 0', background: '#FFF6E5', border: '1.5px solid #EFC378',
+            borderRadius: 12, padding: '12px 14px', display: 'flex', gap: 10, alignItems: 'flex-start',
+          }}>
+            <AlertTriangle size={18} color="#8A5A0A" style={{ flexShrink: 0, marginTop: 1 }} />
+            <div style={{ font: '500 12.5px/1.5 system-ui, sans-serif', color: '#6B4A0E' }}>
+              <strong>This app is not a backup.</strong> A photo you scan here is shrunk small; a PDF
+              you upload keeps only its file name, not the document. Both live on this phone alone,
+              and old items can be deleted automatically to make room for new ones. Keep the real
+              papers safe too — with your mentor, at home, or wherever they were issued.
+            </div>
+          </div>
+        )}
 
         {/* Action buttons */}
         <div style={{ display: 'flex', gap: 9, padding: '15px 20px 0' }}>
