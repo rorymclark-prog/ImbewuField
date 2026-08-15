@@ -35,7 +35,7 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '15 August',
-    sha: '258b644',
+    sha: '43f9692',
     changes: [
       'The designer now loads in parts, so it starts faster and fits weaker phones',
       'Photo import, the advisor and the step guide arrive when needed, not up front',
