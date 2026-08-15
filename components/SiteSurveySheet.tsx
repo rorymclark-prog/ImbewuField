@@ -1,6 +1,7 @@
 'use client';
 import { useState, useCallback, useEffect } from 'react';
 import { X, ChevronRight, ChevronLeft, Check, Users, Droplets, Home, Leaf, AlertTriangle, FileText, Sparkles } from 'lucide-react';
+import { useLanguage } from '@/lib/i18n';
 import {
   saveSurvey,
   loadSurvey,
@@ -26,28 +27,61 @@ interface Props {
   onClose: () => void;
 }
 
-const STEPS = ['Household Info', 'Land & Location', 'Current Production', 'Livestock & Poultry', 'Income & Sales', 'Resources & Inputs', 'Challenges'];
+// Step tab labels. 'Challenges' reuses the already-fully-translated `stepChallenges` key from
+// the report-generation section of lib/i18n.tsx; the other six describe a step grouping unique
+// to this questionnaire and have no existing equivalent, so they are genuinely new (English-only
+// per this app's convention — t() falls back to English until a first-language reviewer supplies
+// the other ten locales).
+function surveySteps(t: (key: string) => string): string[] {
+  return [
+    t('surveyStepHouseholdInfo'),
+    t('surveyStepLandLocation'),
+    t('surveyStepCurrentProduction'),
+    t('surveyStepLivestockPoultry'),
+    t('surveyStepIncomeSales'),
+    t('surveyStepResourcesInputs'),
+    t('stepChallenges'),
+  ];
+}
 const STEP_ICONS = [Users, Leaf, Leaf, Users, FileText, Droplets, AlertTriangle];
 
-const PRODUCTION_ROWS: Array<{ category: ProductionCategory; label: string; hint: string }> = [
-  { category: 'leafy_greens', label: 'Leafy greens', hint: 'e.g. spinach, kale, cabbage leaves' },
-  { category: 'other_vegetables', label: 'Other vegetables', hint: 'e.g. tomatoes, onions, pumpkins' },
-  { category: 'staple_crops', label: 'Staple crops', hint: 'e.g. maize, beans, potatoes' },
-  { category: 'fruit', label: 'Fruit', hint: 'e.g. citrus, bananas, mangoes' },
-  { category: 'nuts_berries', label: 'Nuts and berries', hint: 'Report what you harvest; no food group is guessed' },
-  { category: 'eggs', label: 'Eggs', hint: '' },
-  { category: 'poultry', label: 'Poultry', hint: '' },
-  { category: 'rabbits', label: 'Rabbits', hint: '' },
-  { category: 'honey', label: 'Honey', hint: '' },
-  { category: 'other', label: 'Something else', hint: 'Name it and choose its food group if you know it' },
-];
+// English-only for now (genuinely new — the "Current Production" reporting grid has no prior
+// translated equivalent anywhere in lib/i18n.tsx); t() falls back to English per key.
+function productionRows(t: (key: string) => string): Array<{ category: ProductionCategory; label: string; hint: string }> {
+  return [
+    { category: 'leafy_greens', label: t('surveyProdLeafyGreensLabel'), hint: t('surveyProdLeafyGreensHint') },
+    { category: 'other_vegetables', label: t('surveyProdOtherVegLabel'), hint: t('surveyProdOtherVegHint') },
+    { category: 'staple_crops', label: t('surveyProdStapleCropsLabel'), hint: t('surveyProdStapleCropsHint') },
+    { category: 'fruit', label: t('surveyProdFruitLabel'), hint: t('surveyProdFruitHint') },
+    { category: 'nuts_berries', label: t('surveyProdNutsBerriesLabel'), hint: t('surveyProdNutsBerriesHint') },
+    { category: 'eggs', label: t('surveyProdEggsLabel'), hint: '' },
+    { category: 'poultry', label: t('surveyProdPoultryLabel'), hint: '' },
+    { category: 'rabbits', label: t('surveyProdRabbitsLabel'), hint: '' },
+    { category: 'honey', label: t('surveyProdHoneyLabel'), hint: '' },
+    { category: 'other', label: t('surveyProdOtherLabel'), hint: t('surveyProdOtherHint') },
+  ];
+}
 
-const HDDS_LABELS: Record<HddsFoodGroup, string> = {
-  cereals: 'Cereals', roots_tubers: 'Roots and tubers', vegetables: 'Vegetables', fruit: 'Fruit',
-  meat_poultry: 'Meat and poultry', eggs: 'Eggs', fish: 'Fish', pulses_nuts_seeds: 'Pulses, nuts and seeds',
-  milk: 'Milk products', oils_fats: 'Oils and fats', sugars_honey: 'Sugars and honey', spices_beverages: 'Spices and beverages',
-};
-const MONTH_LABELS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+// English-only for now — the FAO HDDS food-group names are a distinct vocabulary from the
+// similarly-worded crop/production categories above, so they get their own keys rather than
+// reusing e.g. cropVegetables for "vegetables" the food group.
+function hddsLabels(t: (key: string) => string): Record<HddsFoodGroup, string> {
+  return {
+    cereals: t('surveyHddsCereals'), roots_tubers: t('surveyHddsRootsTubers'), vegetables: t('surveyHddsVegetables'), fruit: t('surveyHddsFruit'),
+    meat_poultry: t('surveyHddsMeatPoultry'), eggs: t('surveyHddsEggs'), fish: t('surveyHddsFish'), pulses_nuts_seeds: t('surveyHddsPulsesNutsSeeds'),
+    milk: t('surveyHddsMilk'), oils_fats: t('surveyHddsOilsFats'), sugars_honey: t('surveyHddsSugarsHoney'), spices_beverages: t('surveyHddsSpicesBeverages'),
+  };
+}
+
+// English-only for now — three-letter month abbreviations, genuinely new keys.
+function monthLabels(t: (key: string) => string): string[] {
+  return [
+    t('surveyMonthJan'), t('surveyMonthFeb'), t('surveyMonthMar'), t('surveyMonthApr'),
+    t('surveyMonthMay'), t('surveyMonthJun'), t('surveyMonthJul'), t('surveyMonthAug'),
+    t('surveyMonthSep'), t('surveyMonthOct'), t('surveyMonthNov'), t('surveyMonthDec'),
+  ];
+}
+
 const AMBIGUOUS_FOOD_GROUP_CATEGORIES = new Set<ProductionCategory>(['staple_crops', 'nuts_berries', 'other']);
 
 function toggle(arr: string[], v: string): string[] {
@@ -108,9 +142,10 @@ function Toggle({ label, sub, on, onChange }: { label: string; sub?: string; on:
 }
 
 function NumInput({ value, onChange, placeholder, hint }: { value: string; onChange: (v: string) => void; placeholder?: string; hint?: string }) {
+  const { t } = useLanguage();
   return (
     <>
-      <input type="number" value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder ?? 'e.g. 120'}
+      <input type="number" value={value} onChange={e => onChange(e.target.value)} placeholder={placeholder ?? t('surveyNumInputDefaultPlaceholder')}
         className="w-full font-sans"
         style={{ padding: '10px 14px', borderRadius: 11, background: '#FFFEFA', border: '1px solid #E2D8C4', fontSize: 14, color: '#20190F', outline: 'none' }} />
       {hint && <div className="font-sans mt-1" style={{ fontSize: 12, color: '#94876F' }}>{hint}</div>}
@@ -119,15 +154,22 @@ function NumInput({ value, onChange, placeholder, hint }: { value: string; onCha
 }
 
 function AutoFillNote({ areaM2 }: { areaM2: number }) {
+  const { t } = useLanguage();
   return (
     <div className="font-sans flex items-center gap-1.5 mt-1.5" style={{ fontSize: 12, color: '#1F4D2B' }}>
       <Sparkles size={12} />
-      Auto-filled from your traced shapes ({Math.round(areaM2)} m²) — tap to adjust
+      {t('surveyAutoFillNote').replace('{area}', String(Math.round(areaM2)))}
     </div>
   );
 }
 
 export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: Props) {
+  const { t } = useLanguage();
+  const STEPS = surveySteps(t);
+  const PRODUCTION_ROWS = productionRows(t);
+  const HDDS_LABELS = hddsLabels(t);
+  const MONTH_LABELS = monthLabels(t);
+
   const place = loadPlaces().find(p => p.id === placeId);
   // Prefer the live pin's coords (per-site canonical key); fall back to the place lookup.
   const siteLoc = coords ?? (place ? { lat: place.lat, lon: place.lon } : null);
@@ -310,27 +352,27 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
   // X tap past that point is real, unsaved work — confirm before throwing it away, the same
   // way app/design/page.tsx and app/facilitator/crops/page.tsx guard their own data loss.
   const closeWithConfirm = useCallback(() => {
-    if (step > 0 && !window.confirm('Discard your answers so far? This questionnaire has not been saved yet.')) return;
+    if (step > 0 && !window.confirm(t('surveyDiscardConfirm'))) return;
     onClose();
-  }, [step, onClose]);
+  }, [step, onClose, t]);
 
   return (
     // Full-screen step wizard (fixed inset-0, no viewport margin) rather than a partial-height
     // bottom sheet — u-anim-sheet still gives it a settle-in entrance; deliberately no grabber
     // or rounded top corners here, since this view has no drag-to-dismiss gesture and rounding
     // edge-to-edge corners wouldn't render as anything visible. Close stays the explicit X below.
-    <div role="dialog" aria-modal="true" aria-label="Site questionnaire" className="fixed inset-0 z-50 flex flex-col u-anim-sheet" style={{ background: '#E4DCC6' }}>
+    <div role="dialog" aria-modal="true" aria-label={t('siteQuestionnaireTitle')} className="fixed inset-0 z-50 flex flex-col u-anim-sheet" style={{ background: '#E4DCC6' }}>
       {/* Header */}
       <div className="flex items-center gap-3 px-4 flex-shrink-0" style={{ height: 60, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
-        <button onClick={closeWithConfirm} aria-label="Close"
+        <button onClick={closeWithConfirm} aria-label={t('surveyCloseAriaLabel')}
           style={{ width: 44, height: 44, borderRadius: 12, background: 'rgba(32,25,15,0.06)', border: '1px solid #E2D8C4', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#5C5040', flexShrink: 0 }}>
           <X size={18} />
         </button>
         <div className="flex-1 min-w-0">
-          <div className="font-display font-semibold" style={{ fontSize: 16, color: '#20190F' }}>Site questionnaire</div>
+          <div className="font-display font-semibold" style={{ fontSize: 16, color: '#20190F' }}>{t('siteQuestionnaireTitle')}</div>
           {place && <div className="font-sans" style={{ fontSize: 12, color: '#94876F' }}>{place.name}</div>}
         </div>
-        <div className="font-sans" style={{ fontSize: 12, color: '#94876F', flexShrink: 0 }}>Step {step + 1} of {STEPS.length}</div>
+        <div className="font-sans" style={{ fontSize: 12, color: '#94876F', flexShrink: 0 }}>{t('stepOfSteps').replace('{n}', String(step + 1)).replace('{total}', String(STEPS.length))}</div>
       </div>
 
       {/* Progress bar */}
@@ -351,41 +393,50 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
         {step === 0 && (
           <div className="space-y-5">
             <div>
-              <SectionLabel>Who is this site for?</SectionLabel>
+              <SectionLabel>{t('sectionWhoIsThisSiteFor')}</SectionLabel>
               <div className="space-y-2">
-                <Radio label="Me / my family" desc="Household homestead or smallholding" on={siteType === 'homestead'} onClick={() => setSiteType('homestead')} />
-                <Radio label="Community group / cooperative" desc="Shared garden, coop, or NGO site" on={siteType === 'community'} onClick={() => setSiteType('community')} />
+                <Radio label={t('radioMeMyFamily')} desc={t('radioMeMyFamilyDesc')} on={siteType === 'homestead'} onClick={() => setSiteType('homestead')} />
+                <Radio label={t('radioCommunityGroup')} desc={t('radioCommunityGroupDesc')} on={siteType === 'community'} onClick={() => setSiteType('community')} />
               </div>
             </div>
 
             {siteType === 'homestead' ? (
               <div>
-                <SectionLabel>Adults who work this land</SectionLabel>
+                <SectionLabel>{t('sectionAdultsWhoWorkThisLand')}</SectionLabel>
                 <div className="flex flex-wrap gap-2">
-                  {['1', '2–5', '6–10', '10+'].map(v => (
-                    <Chip key={v} label={v} on={adults === v} onClick={() => setAdults(v)} />
+                  {[
+                    { v: '1', label: t('surveyAdultsChip1') },
+                    { v: '2–5', label: t('surveyAdultsChipRange2to5') },
+                    { v: '6–10', label: t('surveyAdultsChipRange6to10') },
+                    { v: '10+', label: t('surveyAdultsChipRange10Plus') },
+                  ].map(o => (
+                    <Chip key={o.v} label={o.label} on={adults === o.v} onClick={() => setAdults(o.v)} />
                   ))}
                 </div>
               </div>
             ) : (
               <div>
-                <SectionLabel>Approximate number of members</SectionLabel>
+                <SectionLabel>{t('sectionApproximateNumberOfMembers')}</SectionLabel>
                 <div className="flex flex-wrap gap-2">
-                  {['Under 20', '20–50', '50+'].map(v => (
-                    <Chip key={v} label={v} on={memberCount === v} onClick={() => setMemberCount(v)} />
+                  {[
+                    { v: 'Under 20', label: t('chipUnder20') },
+                    { v: '20–50', label: t('chipMemberRange20To50') },
+                    { v: '50+', label: t('chipMemberRange50Plus') },
+                  ].map(o => (
+                    <Chip key={o.v} label={o.label} on={memberCount === o.v} onClick={() => setMemberCount(o.v)} />
                   ))}
                 </div>
               </div>
             )}
 
             <div>
-              <SectionLabel>Goals for this site (select all that apply)</SectionLabel>
+              <SectionLabel>{t('sectionGoalsSelectAll')}</SectionLabel>
               <div className="space-y-2">
                 {[
-                  { v: 'food',      label: 'Food security',       desc: 'Feed the household or members year-round' },
-                  { v: 'income',    label: 'Generate income',      desc: 'Sell surplus produce or value-added products' },
-                  { v: 'soil',      label: 'Restore the land',     desc: 'Cover crops, composting, rehabilitation' },
-                  { v: 'education', label: 'Demonstrate / teach',  desc: 'Training ground for others' },
+                  { v: 'food',      label: t('goalFoodSecurityLabel'),   desc: t('goalFoodSecurityDesc') },
+                  { v: 'income',    label: t('goalGenerateIncomeLabel'), desc: t('goalGenerateIncomeDesc') },
+                  { v: 'soil',      label: t('goalRestoreTheLandLabel'), desc: t('goalRestoreTheLandDesc') },
+                  { v: 'education', label: t('goalDemonstrateTeachLabel'), desc: t('goalDemonstrateTeachDesc') },
                 ].map(o => (
                   <button key={o.v} onClick={() => setGoals(toggle(goals, o.v))}
                     className="w-full flex items-start gap-3 text-left transition-all"
@@ -412,15 +463,15 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
         {step === 5 && (
           <div className="space-y-5">
             <div>
-              <SectionLabel>Water sources available on this site (select all)</SectionLabel>
+              <SectionLabel>{t('sectionWaterSources')}</SectionLabel>
               <div className="flex flex-wrap gap-2">
                 {[
-                  { v: 'municipal',  label: 'Municipal tap' },
-                  { v: 'borehole',   label: 'Borehole' },
-                  { v: 'river',      label: 'River / stream' },
-                  { v: 'rainwater',  label: 'Rainwater' },
-                  { v: 'grey',       label: 'Grey water' },
-                  { v: 'none',       label: 'No water yet' },
+                  { v: 'municipal',  label: t('waterSourceMunicipalTap') },
+                  { v: 'borehole',   label: t('waterSourceBorehole') },
+                  { v: 'river',      label: t('waterSourceRiverStream') },
+                  { v: 'rainwater',  label: t('waterSourceRainwater') },
+                  { v: 'grey',       label: t('waterSourceGreyWater') },
+                  { v: 'none',       label: t('waterSourceNoneYet') },
                 ].map(o => (
                   <Chip key={o.v} label={o.label} on={waterSource.includes(o.v)} onClick={() => setWaterSource(toggle(waterSource, o.v))} color="#235E86" />
                 ))}
@@ -428,16 +479,16 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
             </div>
 
             <div>
-              <SectionLabel>How does water reach the plants? (select all that apply)</SectionLabel>
+              <SectionLabel>{t('sectionHowDoesWaterReachPlants')}</SectionLabel>
               <div className="space-y-2">
                 {[
-                  { v: 'drip',       label: 'Drip irrigation',    desc: 'Lines / emitters direct to roots' },
-                  { v: 'sprinkler',  label: 'Sprinkler',          desc: 'Overhead spray system' },
-                  { v: 'piped',      label: 'Piped to tap / hose',desc: 'Garden hose or standpipe' },
-                  { v: 'gravity',    label: 'Gravity-fed',         desc: 'Header tank or elevated source' },
-                  { v: 'bucket',     label: 'Hand-watered',        desc: 'Bucket / watering can' },
-                  { v: 'flood',      label: 'Flood / furrow',      desc: 'Water runs along channels' },
-                  { v: 'none',       label: 'Rain-fed only',       desc: 'No supplemental watering' },
+                  { v: 'drip',       label: t('waterDeliveryDripLabel'),      desc: t('waterDeliveryDripDesc') },
+                  { v: 'sprinkler',  label: t('waterDeliverySprinklerLabel'), desc: t('waterDeliverySprinklerDesc') },
+                  { v: 'piped',      label: t('waterDeliveryPipedLabel'),     desc: t('waterDeliveryPipedDesc') },
+                  { v: 'gravity',    label: t('waterDeliveryGravityLabel'),   desc: t('waterDeliveryGravityDesc') },
+                  { v: 'bucket',     label: t('waterDeliveryBucketLabel'),    desc: t('waterDeliveryBucketDesc') },
+                  { v: 'flood',      label: t('waterDeliveryFloodLabel'),     desc: t('waterDeliveryFloodDesc') },
+                  { v: 'none',       label: t('waterDeliveryNoneLabel'),      desc: t('waterDeliveryNoneDesc') },
                 ].map(o => (
                   <Radio key={o.v} label={o.label} desc={o.desc}
                     on={waterDelivery.includes(o.v)}
@@ -449,14 +500,14 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
             </div>
 
             <div>
-              <SectionLabel>Water storage on site (select all)</SectionLabel>
+              <SectionLabel>{t('sectionWaterStorage')}</SectionLabel>
               <div className="flex flex-wrap gap-2">
                 {[
-                  { v: 'jojo',    label: 'Jojo / plastic tanks' },
-                  { v: 'dam',     label: 'Earth dam' },
-                  { v: 'pond',    label: 'Pond / retention pit' },
-                  { v: 'cistern', label: 'Underground cistern' },
-                  { v: 'none',    label: 'No storage' },
+                  { v: 'jojo',    label: t('waterStorageJojoTanks') },
+                  { v: 'dam',     label: t('waterStorageEarthDam') },
+                  { v: 'pond',    label: t('waterStoragePond') },
+                  { v: 'cistern', label: t('waterStorageCistern') },
+                  { v: 'none',    label: t('waterStorageNone') },
                 ].map(o => (
                   <Chip key={o.v} label={o.label} on={waterStorage.includes(o.v)} onClick={() => setWaterStorage(toggle(waterStorage, o.v))} color="#235E86" />
                 ))}
@@ -470,33 +521,33 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
           <div className="space-y-5">
             <div style={{ background: 'rgba(35,94,134,0.06)', borderRadius: 14, padding: '12px 14px', border: '1px solid rgba(35,94,134,0.18)' }}>
               <p className="font-sans" style={{ fontSize: 12.5, color: '#4A3F2E', lineHeight: 1.5 }}>
-                <span className="font-semibold" style={{ color: '#235E86' }}>Why this matters: </span>
-                Lima uses roof area to calculate how much rainwater you can harvest each year — it directly sizes your tank recommendations, swale design, and irrigation planning.
+                <span className="font-semibold" style={{ color: '#235E86' }}>{t('roofCatchmentWhyMattersLabel')}</span>
+                {t('roofCatchmentWhyMattersText')}
               </p>
             </div>
 
             <div>
-              <SectionLabel>Main building roof area (m²)</SectionLabel>
-              <div className="font-sans mb-2" style={{ fontSize: 12, color: '#8C7A62' }}>Rough guide: 2-bedroom house ≈ 60 m², 3-bedroom ≈ 100 m², large farmhouse ≈ 150+ m²</div>
-              <NumInput value={roofMain} onChange={v => { setRoofMain(v); setRoofSource('manual'); }} placeholder="e.g. 100" hint="Floor area of the building, not the footprint of the roof pitch" />
+              <SectionLabel>{t('sectionMainBuildingRoofArea')}</SectionLabel>
+              <div className="font-sans mb-2" style={{ fontSize: 12, color: '#8C7A62' }}>{t('roofMainBuildingGuide')}</div>
+              <NumInput value={roofMain} onChange={v => { setRoofMain(v); setRoofSource('manual'); }} placeholder={t('roofMainPlaceholder')} hint={t('roofMainHint')} />
               {roofSource === 'auto' && <AutoFillNote areaM2={roofAreaM2} />}
             </div>
 
             <div>
-              <SectionLabel>Secondary roofs — barn, shed, workshop (m²) — optional</SectionLabel>
-              <NumInput value={roofSecondary} onChange={v => { setRoofSecondary(v); setRoofSecondarySource('manual'); }} placeholder="e.g. 60" hint="Add areas of all other harvestable roofs" />
+              <SectionLabel>{t('sectionSecondaryRoofs')}</SectionLabel>
+              <NumInput value={roofSecondary} onChange={v => { setRoofSecondary(v); setRoofSecondarySource('manual'); }} placeholder={t('roofSecondaryPlaceholder')} hint={t('roofSecondaryHint')} />
               {roofSecondarySource === 'auto' && <AutoFillNote areaM2={secondaryRoofM2} />}
             </div>
 
-            <Toggle label="Gutters & downpipes in place" sub="Directs rain to tanks or storage area" on={hasGutters} onChange={setHasGutters} />
+            <Toggle label={t('toggleGuttersLabel')} sub={t('toggleGuttersSub')} on={hasGutters} onChange={setHasGutters} />
 
             {totalRoof > 0 && (
               <div style={{ background: 'rgba(31,77,43,0.06)', borderRadius: 14, padding: '14px 16px', border: '1px solid rgba(31,77,43,0.2)' }}>
-                <div className="font-sans font-semibold mb-1" style={{ fontSize: 13, color: '#1F4D2B' }}>Live estimate</div>
+                <div className="font-sans font-semibold mb-1" style={{ fontSize: 13, color: '#1F4D2B' }}>{t('liveEstimateTitle')}</div>
                 <div className="font-sans" style={{ fontSize: 13, color: '#4A3F2E', lineHeight: 1.6 }}>
-                  Total roof area: <strong>{totalRoof} m²</strong><br />
-                  At 600 mm rain → <strong>~{roofHarvest600} kL/year</strong> ({hasGutters ? '80%' : '60%'} efficiency)<br />
-                  <span style={{ fontSize: 11.5, color: '#8C7A62' }}>Lima will recalculate using your site&apos;s actual rainfall</span>
+                  {t('liveEstimateTotalRoofArea')} <strong>{totalRoof} m²</strong><br />
+                  {t('liveEstimateAt600mmRain')} <strong>~{roofHarvest600} {t('liveEstimatePerYear')}</strong> ({hasGutters ? '80%' : '60%'} {t('surveyEfficiencySuffix')})<br />
+                  <span style={{ fontSize: 11.5, color: '#8C7A62' }}>{t('liveEstimateActualRainfallNote')}</span>
                 </div>
               </div>
             )}
@@ -507,13 +558,13 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
         {step === 1 && (
           <div className="space-y-5">
             <div>
-              <SectionLabel>How is the land prepared?</SectionLabel>
+              <SectionLabel>{t('sectionHowIsLandPrepared')}</SectionLabel>
               <div className="space-y-2">
                 {[
-                  { v: 'hand',    label: 'Hand tools (spade, fork, hoe)',   desc: 'Manual soil work — limits depth and area' },
-                  { v: 'tractor', label: 'Tractor / mechanised',             desc: 'Deep tillage possible, larger areas' },
-                  { v: 'animal',  label: 'Animal draft (ox, donkey)',         desc: 'Traditional plough or cultivator' },
-                  { v: 'none',    label: 'Not yet prepared / no-till',        desc: 'Starting from scratch or using no-dig method' },
+                  { v: 'hand',    label: t('landPrepHandToolsLabel'), desc: t('landPrepHandToolsDesc') },
+                  { v: 'tractor', label: t('landPrepTractorLabel'),   desc: t('landPrepTractorDesc') },
+                  { v: 'animal',  label: t('landPrepAnimalLabel'),    desc: t('landPrepAnimalDesc') },
+                  { v: 'none',    label: t('landPrepNoneLabel'),      desc: t('landPrepNoneDesc') },
                 ].map(o => (
                   <Radio key={o.v} label={o.label} desc={o.desc} on={landPrep === o.v} onClick={() => setLandPrep(o.v)} />
                 ))}
@@ -521,14 +572,14 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
             </div>
 
             <div>
-              <SectionLabel>Soil condition (as you observe it)</SectionLabel>
+              <SectionLabel>{t('sectionSoilCondition')}</SectionLabel>
               <div className="grid grid-cols-2 gap-2">
                 {[
-                  { v: 'healthy',   label: 'Healthy & loose' },
-                  { v: 'compacted', label: 'Compacted / hard' },
-                  { v: 'sandy',     label: 'Sandy / drains fast' },
-                  { v: 'clay',      label: 'Clay / waterlogged' },
-                  { v: 'unknown',   label: 'Not sure' },
+                  { v: 'healthy',   label: t('soilConditionHealthy') },
+                  { v: 'compacted', label: t('soilConditionCompacted') },
+                  { v: 'sandy',     label: t('soilConditionSandy') },
+                  { v: 'clay',      label: t('soilConditionClay') },
+                  { v: 'unknown',   label: t('soilConditionUnknown') },
                 ].map(o => (
                   <button key={o.v} onClick={() => setSoilCondition(o.v)}
                     className="font-sans font-semibold transition-all"
@@ -543,14 +594,14 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
             </div>
 
             <div>
-              <SectionLabel>Soil inputs already applied (select all)</SectionLabel>
+              <SectionLabel>{t('sectionSoilInputs')}</SectionLabel>
               <div className="flex flex-wrap gap-2">
                 {[
-                  { v: 'compost',         label: 'Compost' },
-                  { v: 'kraal-manure',    label: 'Kraal manure' },
-                  { v: 'mulch',           label: 'Mulch / woodchip' },
-                  { v: 'commercial-fert', label: 'Commercial fertiliser' },
-                  { v: 'none',            label: 'None yet' },
+                  { v: 'compost',         label: t('soilAmendmentCompost') },
+                  { v: 'kraal-manure',    label: t('soilAmendmentKraalManure') },
+                  { v: 'mulch',           label: t('soilAmendmentMulch') },
+                  { v: 'commercial-fert', label: t('soilAmendmentCommercialFert') },
+                  { v: 'none',            label: t('soilAmendmentNone') },
                 ].map(o => (
                   <Chip key={o.v} label={o.label} on={soilAmendments.includes(o.v)} onClick={() => setSoilAmendments(toggle(soilAmendments, o.v))} />
                 ))}
@@ -558,12 +609,12 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
             </div>
 
             <div>
-              <SectionLabel>Fencing</SectionLabel>
+              <SectionLabel>{t('sectionFencing')}</SectionLabel>
               <div className="flex flex-wrap gap-2">
                 {[
-                  { v: 'full',    label: 'Fully fenced' },
-                  { v: 'partial', label: 'Partly fenced' },
-                  { v: 'none',    label: 'No fencing' },
+                  { v: 'full',    label: t('fencingFull') },
+                  { v: 'partial', label: t('fencingPartial') },
+                  { v: 'none',    label: t('fencingNone') },
                 ].map(o => (
                   <Chip key={o.v} label={o.label} on={fencing === o.v} onClick={() => setFencing(o.v)} />
                 ))}
@@ -576,16 +627,16 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
         {step === 2 && (
           <div className="space-y-5">
             <div>
-              <SectionLabel>Crops already growing (select all)</SectionLabel>
+              <SectionLabel>{t('sectionCropsGrowing')}</SectionLabel>
               <div className="flex flex-wrap gap-2">
                 {[
-                  { v: 'vegetables',   label: 'Vegetables' },
-                  { v: 'fruit-trees',  label: 'Fruit trees' },
-                  { v: 'herbs',        label: 'Herbs / medicinal' },
-                  { v: 'indigenous',   label: 'Indigenous plants' },
-                  { v: 'fodder',       label: 'Fodder / pasture' },
-                  { v: 'grain',        label: 'Grain / maize' },
-                  { v: 'nothing',      label: 'Nothing yet' },
+                  { v: 'vegetables',   label: t('cropVegetables') },
+                  { v: 'fruit-trees',  label: t('cropFruitTrees') },
+                  { v: 'herbs',        label: t('cropHerbsMedicinal') },
+                  { v: 'indigenous',   label: t('cropIndigenousPlants') },
+                  { v: 'fodder',       label: t('cropFodder') },
+                  { v: 'grain',        label: t('cropGrainMaize') },
+                  { v: 'nothing',      label: t('cropNothing') },
                 ].map(o => (
                   <Chip key={o.v} label={o.label} on={crops.includes(o.v)} onClick={() => setCrops(toggle(crops, o.v))} />
                 ))}
@@ -593,15 +644,15 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
             </div>
 
             <div>
-              <SectionLabel>Existing growing area (m²)</SectionLabel>
-              <NumInput value={existingGrowingArea} onChange={v => { setExistingGrowingArea(v); setGrowingAreaSource('manual'); }} placeholder="e.g. 80" hint="Total area of beds, fields or gardens already under cultivation" />
+              <SectionLabel>{t('surveyExistingGrowingAreaLabel')}</SectionLabel>
+              <NumInput value={existingGrowingArea} onChange={v => { setExistingGrowingArea(v); setGrowingAreaSource('manual'); }} placeholder={t('surveyExistingGrowingAreaPlaceholder')} hint={t('surveyExistingGrowingAreaHint')} />
               {growingAreaSource === 'auto' && <AutoFillNote areaM2={tracedAreas.cultivationAreaM2} />}
             </div>
 
             <div>
-              <SectionLabel>Current production survey</SectionLabel>
+              <SectionLabel>{t('surveyCurrentProductionSurveyLabel')}</SectionLabel>
               <div className="font-sans mb-3" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.45 }}>
-                Report what you know. Blank means not reported, not zero. All quantities use the unit you write for that row.
+                {t('surveyReportWhatYouKnow')}
               </div>
               <div className="space-y-3">
                 {PRODUCTION_ROWS.map(({ category, label, hint }) => {
@@ -612,28 +663,28 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
                       <div className="font-sans font-semibold" style={{ fontSize: 13.5, color: '#20190F' }}>{label}</div>
                       {hint && <div className="font-sans mt-0.5" style={{ fontSize: 11.5, color: '#8C7A62' }}>{hint}</div>}
                       {category === 'other' && (
-                        <input value={row.name ?? ''} onChange={(e) => patchProduction(category, { name: e.target.value })} placeholder="What do you produce?"
+                        <input value={row.name ?? ''} onChange={(e) => patchProduction(category, { name: e.target.value })} placeholder={t('surveyWhatDoYouProducePlaceholder')}
                           className="w-full font-sans mt-2" style={{ minHeight: 44, padding: '8px 10px', borderRadius: 9, background: '#FFFEFA', border: '1px solid #E2D8C4', fontSize: 13, color: '#20190F' }} />
                       )}
                       <div className="grid grid-cols-2 gap-2 mt-2">
-                        <label className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>Qty / year
+                        <label className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>{t('surveyQtyPerYearLabel')}
                           <input type="number" min="0" value={number(row.quantityPerYear)} onChange={(e) => patchProduction(category, { quantityPerYear: e.target.value === '' ? null : Number(e.target.value) })} className="w-full mt-1" style={{ minHeight: 40, padding: '6px 8px', borderRadius: 8, border: '1px solid #E2D8C4', background: '#FFFEFA' }} />
                         </label>
-                        <label className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>Unit
-                          <input value={row.unit} onChange={(e) => patchProduction(category, { unit: e.target.value })} placeholder="e.g. kg, eggs" className="w-full mt-1" style={{ minHeight: 40, padding: '6px 8px', borderRadius: 8, border: '1px solid #E2D8C4', background: '#FFFEFA' }} />
+                        <label className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>{t('surveyUnitLabel')}
+                          <input value={row.unit} onChange={(e) => patchProduction(category, { unit: e.target.value })} placeholder={t('surveyUnitPlaceholder')} className="w-full mt-1" style={{ minHeight: 40, padding: '6px 8px', borderRadius: 8, border: '1px solid #E2D8C4', background: '#FFFEFA' }} />
                         </label>
-                        <label className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>Used by household
+                        <label className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>{t('surveyUsedByHouseholdLabel')}
                           <input type="number" min="0" value={number(row.usedByHousehold)} onChange={(e) => patchProduction(category, { usedByHousehold: e.target.value === '' ? null : Number(e.target.value) })} className="w-full mt-1" style={{ minHeight: 40, padding: '6px 8px', borderRadius: 8, border: '1px solid #E2D8C4', background: '#FFFEFA' }} />
                         </label>
-                        <label className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>Sold
+                        <label className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>{t('surveySoldLabel')}
                           <input type="number" min="0" value={number(row.sold)} onChange={(e) => patchProduction(category, { sold: e.target.value === '' ? null : Number(e.target.value) })} className="w-full mt-1" style={{ minHeight: 40, padding: '6px 8px', borderRadius: 8, border: '1px solid #E2D8C4', background: '#FFFEFA' }} />
                         </label>
                       </div>
-                      <label className="font-sans block mt-2" style={{ fontSize: 11.5, color: '#5C5040' }}>Income earned (R)
+                      <label className="font-sans block mt-2" style={{ fontSize: 11.5, color: '#5C5040' }}>{t('surveyIncomeEarnedLabel')}
                         <input type="number" min="0" value={number(row.incomeZar)} onChange={(e) => patchProduction(category, { incomeZar: e.target.value === '' ? null : Number(e.target.value) })} className="w-full mt-1" style={{ minHeight: 40, padding: '6px 8px', borderRadius: 8, border: '1px solid #E2D8C4', background: '#FFFEFA' }} />
                       </label>
                       <div className="mt-3">
-                        <div className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>Harvest months (if known)</div>
+                        <div className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>{t('surveyHarvestMonthsLabel')}</div>
                         <div className="grid grid-cols-4 gap-1 mt-1">
                           {MONTH_LABELS.map((month, index) => {
                             const monthNumber = index + 1;
@@ -647,9 +698,9 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
                         </div>
                       </div>
                       {AMBIGUOUS_FOOD_GROUP_CATEGORIES.has(category) && (
-                        <label className="font-sans block mt-2" style={{ fontSize: 11.5, color: '#5C5040' }}>FAO food group (optional)
+                        <label className="font-sans block mt-2" style={{ fontSize: 11.5, color: '#5C5040' }}>{t('surveyFaoFoodGroupLabel')}
                           <select value={row.foodGroup ?? ''} onChange={(e) => patchProduction(category, { foodGroup: (e.target.value || undefined) as HddsFoodGroup | undefined })} className="w-full mt-1" style={{ minHeight: 40, padding: '6px 8px', borderRadius: 8, border: '1px solid #E2D8C4', background: '#FFFEFA' }}>
-                            <option value="">Not sure</option>
+                            <option value="">{t('surveyFoodGroupNotSure')}</option>
                             {Object.entries(HDDS_LABELS).map(([value, group]) => <option key={value} value={value}>{group}</option>)}
                           </select>
                         </label>
@@ -659,8 +710,10 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
                 })}
               </div>
               <div className="font-sans mt-3" style={{ padding: '10px 12px', borderRadius: 10, background: 'rgba(31,77,43,0.06)', color: '#1F4D2B', fontSize: 12.5, lineHeight: 1.45 }}>
-                {reportedGroups.length > 0 ? <><strong>Food groups reported: {reportedGroups.length} of 12.</strong> </> : <><strong>Food groups: not reported yet.</strong> </>}
-                FAO Household Dietary Diversity Score food groups · reported by the farmer, not a nutrition score.
+                {reportedGroups.length > 0
+                  ? <><strong>{t('surveyFoodGroupsReportedCount').replace('{n}', String(reportedGroups.length))}</strong> </>
+                  : <><strong>{t('surveyFoodGroupsNotReported')}</strong> </>}
+                {t('surveyFaoHddsFooter')}
               </div>
             </div>
 
@@ -671,29 +724,29 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
         {step === 3 && (
           <div className="space-y-5">
             <div>
-              <SectionLabel>Livestock on site (select all)</SectionLabel>
+              <SectionLabel>{t('sectionLivestock')}</SectionLabel>
               <div className="flex flex-wrap gap-2">
                 {[
-                  { v: 'chickens', label: 'Chickens / poultry' },
-                  { v: 'goats',    label: 'Goats' },
-                  { v: 'cattle',   label: 'Cattle' },
-                  { v: 'pigs',     label: 'Pigs' },
-                  { v: 'bees',     label: 'Bees' },
-                  { v: 'none',     label: 'No livestock' },
+                  { v: 'chickens', label: t('livestockChickens') },
+                  { v: 'goats',    label: t('livestockGoats') },
+                  { v: 'cattle',   label: t('livestockCattle') },
+                  { v: 'pigs',     label: t('livestockPigs') },
+                  { v: 'bees',     label: t('livestockBees') },
+                  { v: 'none',     label: t('livestockNone') },
                 ].map(o => (
                   <Chip key={o.v} label={o.label} on={livestock.includes(o.v)} onClick={() => setLivestock(toggle(livestock, o.v))} color="#C07A1E" />
                 ))}
               </div>
             </div>
             <div>
-              <SectionLabel>Other infrastructure (select all)</SectionLabel>
+              <SectionLabel>{t('sectionOtherInfrastructure')}</SectionLabel>
               <div className="flex flex-wrap gap-2">
                 {[
-                  { v: 'shade-tunnel', label: 'Shade tunnel' },
-                  { v: 'greenhouse',   label: 'Greenhouse / polytunnel' },
-                  { v: 'compost-bay',  label: 'Compost bay' },
-                  { v: 'shed',         label: 'Storage shed' },
-                  { v: 'kraal',        label: 'Livestock kraal' },
+                  { v: 'shade-tunnel', label: t('infraShadeTunnel') },
+                  { v: 'greenhouse',   label: t('infraGreenhouse') },
+                  { v: 'compost-bay',  label: t('infraCompostBay') },
+                  { v: 'shed',         label: t('infraStorageShed') },
+                  { v: 'kraal',        label: t('infraLivestockKraal') },
                 ].map(o => (
                   <Chip key={o.v} label={o.label} on={otherInfra.includes(o.v)} onClick={() => setOtherInfra(toggle(otherInfra, o.v))} />
                 ))}
@@ -705,16 +758,16 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
         {/* ── Step 4: Income & Sales ── */}
         {step === 4 && (
           <div className="space-y-5">
-            <Toggle label="We sell or plan to sell produce" sub="Your production rows can record what was sold and income earned" on={isCommercial} onChange={setIsCommercial} />
+            <Toggle label={t('toggleSellProduceLabel')} sub={t('surveyToggleSellProduceSub')} on={isCommercial} onChange={setIsCommercial} />
             {isCommercial && (
               <div>
-                <SectionLabel>Current or target market</SectionLabel>
+                <SectionLabel>{t('sectionCurrentOrTargetMarket')}</SectionLabel>
                 <div className="space-y-2">
                   {[
-                    { v: 'farm-stall',    label: 'On-site farm stall' },
-                    { v: 'local-market',  label: 'Local community / informal market' },
-                    { v: 'wholesale',     label: 'Wholesale / bulk buyers' },
-                    { v: 'not-sure',      label: 'Not sure yet' },
+                    { v: 'farm-stall',    label: t('marketFarmStall') },
+                    { v: 'local-market',  label: t('marketLocalCommunity') },
+                    { v: 'wholesale',     label: t('marketWholesale') },
+                    { v: 'not-sure',      label: t('marketNotSure') },
                   ].map(o => (
                     <Radio key={o.v} label={o.label} on={marketType === o.v} onClick={() => setMarketType(o.v)} />
                   ))}
@@ -722,7 +775,7 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
               </div>
             )}
             <div className="font-sans" style={{ padding: '12px 14px', borderRadius: 12, background: 'rgba(31,77,43,0.06)', color: '#4A3F2E', fontSize: 12.5, lineHeight: 1.5 }}>
-              Sales and income are reported by you in Current Production. A blank is shown as not reported, not zero.
+              {t('surveyIncomeSalesNote')}
             </div>
           </div>
         )}
@@ -731,13 +784,13 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
         {step === 6 && (
           <div className="space-y-5">
             <div>
-              <SectionLabel>Farming approach</SectionLabel>
+              <SectionLabel>{t('sectionFarmingApproach')}</SectionLabel>
               <div className="space-y-2">
                 {[
-                  { v: 'organic',        label: 'Fully organic',         desc: 'No synthetic inputs, composting-based' },
-                  { v: 'mostly-organic', label: 'Mostly organic',         desc: 'Organic where possible, occasional exceptions' },
-                  { v: 'conventional',   label: 'Conventional',           desc: 'Synthetic fertilisers and pesticides used' },
-                  { v: 'experimenting',  label: 'Experimenting / mixed',  desc: 'Trying different methods, not set yet' },
+                  { v: 'organic',        label: t('practiceFullyOrganicLabel'),        desc: t('practiceFullyOrganicDesc') },
+                  { v: 'mostly-organic', label: t('practiceMostlyOrganicLabel'),        desc: t('practiceMostlyOrganicDesc') },
+                  { v: 'conventional',   label: t('practiceConventionalLabel'),         desc: t('practiceConventionalDesc') },
+                  { v: 'experimenting',  label: t('practiceExperimentingLabel'),        desc: t('practiceExperimentingDesc') },
                 ].map(o => (
                   <Radio key={o.v} label={o.label} desc={o.desc} on={practice === o.v} onClick={() => setPractice(o.v)} />
                 ))}
@@ -745,18 +798,18 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
             </div>
 
             <div>
-              <SectionLabel>Main challenges on this site (select at least one)</SectionLabel>
+              <SectionLabel>{t('sectionMainChallenges')}</SectionLabel>
               <div className="flex flex-wrap gap-2">
                 {[
-                  { v: 'drought',    label: 'Drought / dry spells' },
-                  { v: 'pests',      label: 'Pests & disease' },
-                  { v: 'soil',       label: 'Poor / degraded soil' },
-                  { v: 'water',      label: 'Limited water access' },
-                  { v: 'funding',    label: 'Funding / costs' },
-                  { v: 'labour',     label: 'Not enough labour' },
-                  { v: 'flooding',   label: 'Flooding / erosion' },
-                  { v: 'market',     label: 'Market access' },
-                  { v: 'none',       label: 'No major challenges' },
+                  { v: 'drought',    label: t('challengeDrought') },
+                  { v: 'pests',      label: t('challengePests') },
+                  { v: 'soil',       label: t('challengePoorSoil') },
+                  { v: 'water',      label: t('challengeLimitedWater') },
+                  { v: 'funding',    label: t('challengeFunding') },
+                  { v: 'labour',     label: t('challengeLabour') },
+                  { v: 'flooding',   label: t('challengeFlooding') },
+                  { v: 'market',     label: t('challengeMarket') },
+                  { v: 'none',       label: t('challengeNone') },
                 ].map(o => (
                   <Chip key={o.v} label={o.label} on={challenges.includes(o.v)} onClick={() => setChallenges(toggle(challenges, o.v))} color="#C07A1E" />
                 ))}
@@ -764,17 +817,17 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
             </div>
 
             <div>
-              <SectionLabel>Anything else Lima should know?</SectionLabel>
+              <SectionLabel>{t('sectionAnythingElseLimaShouldKnow')}</SectionLabel>
               <div className="font-sans mb-2" style={{ fontSize: 12, color: '#8C7A62' }}>
-                Unique site features, history, things you&apos;ve tried, specific concerns…
+                {t('notesPlaceholderHint')}
               </div>
               <div style={{ background: 'rgba(31,77,43,0.05)', borderRadius: 11, padding: '4px', border: '1px solid rgba(31,77,43,0.15)', marginBottom: 8 }}>
                 <div className="font-sans" style={{ fontSize: 11.5, color: '#1F4D2B', padding: '6px 10px' }}>
-                  📷 Tip: photos of soil, slope, problem areas, and existing crops help Lima give far more specific advice — add them via the camera button on the map.
+                  📷 {t('photoTip')}
                 </div>
               </div>
               <textarea value={notes} onChange={e => setNotes(e.target.value)}
-                placeholder="e.g. North slope gets afternoon shade from the ridge. We had a tree removed and the soil there is very hard…"
+                placeholder={t('notesPlaceholder')}
                 rows={4} className="w-full font-sans"
                 style={{ padding: '10px 14px', borderRadius: 11, background: '#FFFEFA', border: '1px solid #E2D8C4', fontSize: 14, color: '#20190F', outline: 'none', resize: 'none', lineHeight: 1.5 }} />
             </div>
@@ -789,7 +842,7 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
           <button onClick={() => setStep(s => s - 1)}
             className="flex items-center gap-1.5 font-sans font-semibold transition-all"
             style={{ padding: '0 18px', height: 46, borderRadius: 13, background: 'rgba(226,216,196,0.4)', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer', flexShrink: 0 }}>
-            <ChevronLeft size={16} /> Back
+            <ChevronLeft size={16} /> {t('buttonBack')}
           </button>
         )}
         <button
@@ -800,8 +853,8 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
             color: canNext ? '#F7F2E9' : 'rgba(32,25,15,0.3)', border: 'none', fontSize: 15,
             cursor: canNext ? 'pointer' : 'default' }}>
           {step < STEPS.length - 1
-            ? <><span>Next</span><ChevronRight size={16} /></>
-            : <><Check size={16} /><span>Save &amp; generate report</span></>}
+            ? <><span>{t('buttonNext')}</span><ChevronRight size={16} /></>
+            : <><Check size={16} /><span>{t('buttonSaveAndGenerateReport')}</span></>}
         </button>
       </div>
     </div>
