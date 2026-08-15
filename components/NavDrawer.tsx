@@ -64,6 +64,9 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
         // from the menu — it may still be bookmarked; merging the two survey stores
         // is a product decision, not made here.
         { href: '/farmer?openSurvey=1', Icon: LayoutGrid, label: t('navGardenSurvey') },
+        // Otherwise unreachable: no tab, no card on /home, no link from /plan
+        // or /cropplan pointed here — the 12-month SA planting grid existed
+        // but no farmer could ever tap their way to it.
         { href: '/calendar', Icon: Calendar,     label: t('navPlantingCalendar') },
         { href: '/vision',   Icon: Camera,       label: t('homeLimaVisionLabel') },
       ],
