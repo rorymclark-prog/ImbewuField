@@ -316,7 +316,9 @@ export async function buildReportPdf(rawMarkdown: string, meta: ReportPdfMeta): 
   };
 
   const newPage = () => { footer(); doc.addPage(); y = M + 8; };
-  const need = (h: number) => { if (y + h > BOTTOM) newPage(); };
+  // Reports whether it broke the page, so the table below can repeat its header on the new one —
+  // every other call site just ignores the return value, exactly as before this was added.
+  const need = (h: number): boolean => { if (y + h <= BOTTOM) return false; newPage(); return true; };
 
   // ── Cover block ────────────────────────────────────────────────────────────
   //
@@ -419,7 +421,12 @@ export async function buildReportPdf(rawMarkdown: string, meta: ReportPdfMeta): 
             doc.splitTextToSize(cells[c] ?? '', Math.max(10, widths[c] - 8)) as string[],
           );
           const tallest = Math.max(1, ...wrapped.map((w) => w.length));
-          need(tallest * 11 + 8);
+          // A data row that would spill past the bottom margin starts a fresh page — and repeats
+          // the header there, the same discipline lib/crop-export-pdf.ts's table() uses. Without
+          // this a long table (a species list, a full BOQ) continued on page two as bare numbers
+          // with no column names above them. The header's own call never re-enters this: it always
+          // follows a fresh newPage() (or starts the table), so it always fits.
+          if (need(tallest * 11 + 8) && !bold) drawRow(block.headers, true);
           let x = M;
           setInk(bold ? INK.muted : INK.text);
           wrapped.forEach((w, c) => { doc.text(w, x + 2, y); x += widths[c]; });
@@ -461,6 +468,13 @@ export async function buildReportPdf(rawMarkdown: string, meta: ReportPdfMeta): 
       source = null; // the full-resolution original is done with; do not hold it across the draw
       if (!plate) continue;
 
+      // footer() stamps the page being LEFT — the same thing newPage() does for the body above.
+      // A raw doc.addPage() here was skipping it, so every page up to the second-last in the whole
+      // document (the last body page, and every plate but the final one) left the reader's screen
+      // with no page number and no trust line, and only the very last page in the file ever got
+      // one — exactly backwards for a document whose own comment above says a page without its
+      // caveats is worse than a page that never had them.
+      footer();
       doc.addPage();
       y = M + 12;
       plateNumber += 1;
@@ -499,6 +513,8 @@ export async function buildReportPdf(rawMarkdown: string, meta: ReportPdfMeta): 
   if (photos.length) {
     const HALF = (CW - 14) / 2;
     for (let i = 0; i < photos.length; i += 2) {
+      // Same footer-before-addPage discipline as the plates loop above.
+      footer();
       doc.addPage();
       y = M + 12;
       doc.setFont('helvetica', 'bold');

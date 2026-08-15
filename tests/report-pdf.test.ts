@@ -274,6 +274,58 @@ test('sheetPlate downscales, paints paper white, and releases its canvas', async
   }
 });
 
+// ── Every page carries its footer ────────────────────────────────────────────
+//
+// footer() stamps the page number, attribution and trust line onto the page being LEFT, exactly
+// like newPage() does for the body loop. The plates loop and the photos loop each called
+// doc.addPage() directly instead of going through newPage() or footer()+addPage(), so every page
+// up to the second-last in the whole document silently lost its page number and its trust line —
+// only the true last page (stamped once at the very end) ever got one. A report with plates or
+// photos is the normal export, not an edge case.
+test('a new plate page and a new photo page both stamp the footer of the page they leave', () => {
+  const src = readFileSync(new URL('../lib/report-pdf.ts', import.meta.url), 'utf8');
+
+  const plateLoop = src.slice(src.indexOf('const plates = meta.sheets'), src.indexOf('const photos = meta.photos'));
+  const plateAddPage = plateLoop.indexOf('doc.addPage();');
+  assert.ok(plateAddPage > 0, 'the plates loop no longer calls doc.addPage()');
+  assert.match(
+    plateLoop.slice(0, plateAddPage),
+    /footer\(\);\s*$/,
+    'a new plate page must call footer() on the page being left before doc.addPage(), the same discipline newPage() uses for the body',
+  );
+
+  const photoLoop = src.slice(src.indexOf('const photos = meta.photos'));
+  const photoAddPage = photoLoop.indexOf('doc.addPage();');
+  assert.ok(photoAddPage > 0, 'the photos loop no longer calls doc.addPage()');
+  assert.match(
+    photoLoop.slice(0, photoAddPage),
+    /footer\(\);\s*$/,
+    'a new photo page must call footer() on the page being left before doc.addPage(), the same discipline newPage() uses for the body',
+  );
+
+  // And the true last page — stamped once, after both loops — must still get exactly one call.
+  const afterPhotoLoop = src.slice(src.lastIndexOf('}', src.indexOf("return doc.output('blob')")));
+  assert.match(afterPhotoLoop, /footer\(\);\s*\n\s*return doc\.output\('blob'\);/,
+    'the final page must still be stamped once, after the last loop runs');
+});
+
+// A table that runs past the bottom margin breaks to a new page (need() already did that), but
+// the column headers were drawn once at the top and never again — a species list or a full BOQ
+// long enough to split continued on page two as bare numbers with nothing above them to say
+// which column was which. lib/crop-export-pdf.ts's table() already repeats its header on every
+// continuation page; this file's table case did not.
+test('a report table repeats its header when it breaks across a page', () => {
+  const src = readFileSync(new URL('../lib/report-pdf.ts', import.meta.url), 'utf8');
+  const tableCase = src.slice(src.indexOf("case 'table': {"), src.indexOf("default: {"));
+  assert.match(
+    tableCase,
+    /if \(need\([^)]*\)\s*&&\s*!bold\)\s*drawRow\(block\.headers,\s*true\)/,
+    'a data row that breaks the page must redraw the header row before continuing',
+  );
+  // need() must report whether it broke the page at all, or the table has nothing to act on.
+  assert.match(src, /const need = \(h: number\): boolean =>/, 'need() no longer reports whether it broke the page');
+});
+
 test('sheetPlate returns null instead of throwing when an image will not load', async () => {
   class BrokenImage {
     naturalWidth = 0; naturalHeight = 0;
