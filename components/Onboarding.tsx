@@ -1,12 +1,29 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
-import { APP_LANGS, useLanguage, translate } from '@/lib/i18n';
+import { APP_LANGS, useLanguage, translate, loadLocale } from '@/lib/i18n';
 
 export default function Onboarding() {
   const { onboarded, completeOnboarding } = useLanguage();
   const [picked, setPicked] = useState('en');
+  // This is the language-pick screen, so prefetching every locale's small chunk here (rather
+  // than waiting for a farmer to pick one) is the point — whichever they land on previews
+  // correctly right away instead of showing English for a beat while its chunk loads. Bumping
+  // loadTick on each arrival re-renders the preview below as translations land, one by one.
+  const [, setLoadTick] = useState(0);
+
+  useEffect(() => {
+    let cancelled = false;
+    for (const l of APP_LANGS) {
+      loadLocale(l.code).then(() => {
+        if (!cancelled) setLoadTick((n) => n + 1);
+      });
+    }
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   if (onboarded) return null;
   const tp = (key: string) => translate(picked, key); // preview in the picked language

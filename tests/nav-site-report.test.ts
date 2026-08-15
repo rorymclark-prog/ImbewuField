@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, readdirSync } from 'node:fs';
 import test from 'node:test';
 
 // THE REPORT HAD NO DOOR.
@@ -21,9 +21,17 @@ test('the drawer has a way into the site report', () => {
   assert.match(nav, /label: t\('siteReportOverline'\)/,
     'the label must come from the translations — this drawer is read in eleven languages');
   // Reusing an existing key rather than minting one is the whole reason this ships translated:
-  // `siteReportOverline` already reads "Site report" in every block of lib/i18n.tsx.
+  // `siteReportOverline` already reads "Site report" in every language slot. English lives
+  // inline in lib/i18n.tsx; the other ten locales each live in their own lib/locales/<code>.ts
+  // module (see lib/i18n.tsx's loadLocale), so the count spans both.
   const i18n = read('../lib/i18n.tsx');
-  const translated = i18n.match(/^\s*siteReportOverline:/gm) ?? [];
+  const localeDir = new URL('../lib/locales/', import.meta.url);
+  const localeSources = readdirSync(localeDir)
+    .filter((f) => f.endsWith('.ts'))
+    .map((f) => readFileSync(new URL(f, localeDir), 'utf8'));
+  const translated = [i18n, ...localeSources].flatMap(
+    (source) => source.match(/^\s*siteReportOverline:/gm) ?? [],
+  );
   assert.ok(translated.length >= 11, `siteReportOverline is missing from a language block (${translated.length})`);
   // Icon has to be one that is already imported, or the drawer does not compile.
   assert.match(nav, /Icon: FileText, label: t\('siteReportOverline'\)/);

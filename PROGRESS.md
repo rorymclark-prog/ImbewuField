@@ -52,6 +52,33 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 2026-08-15 (the real /design crash fix: `lib/i18n.tsx` bundle diet, not another band-aid)
+Rory: *"It still crashes"* (iOS Safari's native "A problem repeatedly occurred" crash-loop on
+`/design`), after "i want a comprehensive fix... i dont want any light page fix" and "disable
+this now its interfering with my laptop use too" — this is that comprehensive fix.
+
+Root cause was **not** mapbox-gl (a red herring — a substring match on the translation key
+`editEngineMapboxTool`, present in every language). It was `lib/i18n.tsx`: all eleven South
+African language dictionaries lived inline in one ~8,590-line module (~420 KB raw / 144 KB
+gzip), imported eagerly by `DesignCanvas.tsx` and 326 files app-wide — so `/design` shipped
+every farmer's full string table in every one of the eleven languages on every load, regardless
+of which one was active.
+
+**Fix:** split `lib/i18n.tsx` into English (`T_en`, stays inline — the default locale and the
+synchronous fallback for missing keys) plus ten `lib/locales/<code>.ts` files, each lazy-loaded
+on demand via a new `loadLocale()` dynamic `import()`. `translate()`/`t()` stay fully
+synchronous (`LOADED[lang]?.[key] ?? LOADED.en[key] ?? key}`) so none of the 326 consuming files
+needed to change. `lib/i18n-pending.ts` holds the block of keys shared verbatim across every
+locale. `Onboarding.tsx` prefetches all ten locale chunks up front (it's the language-pick
+screen, so the point is previewing correctly the instant a farmer picks one).
+
+**Result:** `/design` First Load JS **633 kB → 512 kB**; the i18n chunk itself **144 kB → 22.8
+kB gzip** (other ten locales now live in separate chunks not part of `/design`'s initial load
+at all). Full test suite green (2647/2649, the 2 remaining failures pre-exist on `main`,
+confirmed by running them against a clean checkout — an ESM loader issue in
+`auth-account-transition`/`auth-guest-migration.test.ts` unrelated to i18n). `tsc --noEmit`
+clean.
+
 ### 2026-08-10 (two finishes: Exact Canvas and AI Polished — the second paid pass is shelved)
 Rory: *"I just want an exact version for now and a ai render polished version also those 2
 because you haven't been able to fix the hybrid properly and messes the ai polished version too."*

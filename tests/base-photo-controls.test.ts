@@ -57,7 +57,12 @@ test('the flag alone never shows a photo that does not exist', () => {
 
 test('paper mode, not the site-reference layer, is the one authority for base imagery', () => {
   const canvas = readFileSync(new URL('../components/design/DesignCanvas.tsx', import.meta.url), 'utf8');
-  const i18n = readFileSync(new URL('../lib/i18n.tsx', import.meta.url), 'utf8');
+  // designCanvasHideBase / designPaletteLayerBase live in the pending-English block, which now
+  // sits in lib/i18n-pending.ts rather than inline in lib/i18n.tsx — see lib/i18n.tsx's
+  // loadLocale split. Concatenate both so this guard still sees the English text it is checking.
+  const i18n =
+    readFileSync(new URL('../lib/i18n.tsx', import.meta.url), 'utf8') +
+    readFileSync(new URL('../lib/i18n-pending.ts', import.meta.url), 'utf8');
 
   assert.match(canvas, /const onPaper = basePhoto\?\.mode === 'blank';/);
   assert.match(canvas, /\{satDataUrl \? \(/, 'satellite pixels must not be gated by the reference-layer switch');

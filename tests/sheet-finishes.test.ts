@@ -16,7 +16,12 @@ import test from 'node:test';
 // exactly the kind of thing a later edit undoes without noticing.
 
 const glossy = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
-const i18n = readFileSync(new URL('../lib/i18n.tsx', import.meta.url), 'utf8');
+// Design Studio chrome keys (like designGlossyAiHybrid below) live in the pending-English block,
+// which now sits in lib/i18n-pending.ts rather than inline in lib/i18n.tsx — see lib/i18n.tsx's
+// loadLocale split. Concatenate both so this guard still sees the English text it is checking.
+const i18n =
+  readFileSync(new URL('../lib/i18n.tsx', import.meta.url), 'utf8') +
+  readFileSync(new URL('../lib/i18n-pending.ts', import.meta.url), 'utf8');
 
 test('the second paid pass is shelved, and the shelf has an escape hatch', () => {
   assert.match(glossy, /const SECOND_POLISH_PASS_SHELVED = true;/,

@@ -48,18 +48,25 @@ test('the Planting Calendar has a door in Farm Tools', () => {
     'Lucide only — no emoji as UI icons');
 
   // English-only key: this repo never invents non-English strings. Every other
-  // language block falls back to T.en at lookup time (see translate()/t() in
-  // lib/i18n.tsx), so a single en entry is enough for the label to render everywhere.
+  // locale falls back to T_en at lookup time (see translate()/loadLocale() in
+  // lib/i18n.tsx), so a single English entry is enough for the label to render
+  // everywhere. English now lives inline in lib/i18n.tsx's T_en block; the other
+  // ten locales are lazy-loaded from lib/locales/<code>.ts.
   const i18n = read('../lib/i18n.tsx');
-  const enBlockStart = i18n.indexOf('\n  en: {');
-  const afBlockStart = i18n.indexOf('\n  af: {');
-  const enBlock = i18n.slice(enBlockStart, afBlockStart);
+  const enBlockStart = i18n.indexOf('const T_en: Dict = {');
+  const enBlockEnd = i18n.indexOf('\n};', enBlockStart);
+  const enBlock = i18n.slice(enBlockStart, enBlockEnd);
   assert.match(enBlock, /navPlantingCalendar: 'Planting Calendar'/,
     'navPlantingCalendar must exist in the en block for the fallback to have something to fall back to');
 
   // Guard against someone "helpfully" adding translated copies later without review —
   // that would violate the no-invented-language rule this fix was built under.
-  const allOccurrences = i18n.match(/^\s*navPlantingCalendar:/gm) ?? [];
+  const localeFiles = [
+    i18n,
+    ...['af', 'zu', 'xh', 'nso', 'tn', 'st', 'ts', 've', 'ss', 'nr']
+      .map((code) => read(`../lib/locales/${code}.ts`)),
+  ];
+  const allOccurrences = localeFiles.flatMap((src) => src.match(/^\s*navPlantingCalendar:/gm) ?? []);
   assert.equal(allOccurrences.length, 1, 'navPlantingCalendar should exist only in the en block');
 });
 
