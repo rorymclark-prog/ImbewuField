@@ -35,8 +35,10 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '15 August',
-    sha: '4cbc3a1',
+    sha: '383e9e6',
     changes: [
+      'A phone that cannot open the designer at all now gets a simple page, never a grey error',
+      'That page keeps your design safe and offers light and full ways back in',
       'After a single crash, the page now comes straight back light instead of dying again',
       'This now covers crashes at any moment — generating a map or a report included',
       'Switching apps or closing normally never counts as a crash',
