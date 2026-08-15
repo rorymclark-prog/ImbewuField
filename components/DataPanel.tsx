@@ -23,6 +23,7 @@ import NextStepCoach from './NextStepCoach';
 import SpeakButton from './SpeakButton';
 import SiteManageMenu from './SiteManageMenu';
 import { readLocalFarmShapes } from '@/lib/map-sync';
+import { COMPASS16_BEARING } from '@/lib/local-wind';
 import { loadCanvasState } from '@/lib/design-canvas';
 import { studioBoundaryMetrics } from '@/lib/studio-traced-areas';
 import { computeCompletionScore, type CompletionScoreInputs } from '@/lib/completion-score';
@@ -1364,9 +1365,15 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             .filter((v): v is string => v !== null);
 
           // Compass rose: direction → SVG rotation degrees
-          const DIR_DEG: Record<string, number> = { N:0, NE:45, E:90, SE:135, S:180, SW:225, W:270, NW:315 };
-          const primRot = DIR_DEG[data.climate.windFromSummer] ?? 45;
-          const secRot  = DIR_DEG[data.climate.windFromWinter]  ?? 225;
+          // Full 16-point lookup — climate.windFromSummer/windFromWinter come from nasa-power's
+          // aspectLabel(), which returns all 16 compass labels (NNE, ENE, ESE, SSE, SSW, WSW, WNW,
+          // NNW included), not just the 8 cardinal/intercardinal ones. An 8-point-only table used
+          // to leave those 8 labels unmatched, so the compass-rose arrow silently fell back to a
+          // fixed NE/SW default while the text underneath kept printing the real (different)
+          // direction — the arrow and the label disagreed on roughly half of all real sites.
+          const dirDeg = COMPASS16_BEARING as Record<string, number>;
+          const primRot = dirDeg[data.climate.windFromSummer] ?? 45;
+          const secRot  = dirDeg[data.climate.windFromWinter]  ?? 225;
 
           // Colour helpers
           function tempColor(t: number) {
