@@ -35,6 +35,16 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '15 August',
+    // Also covers 383e9e6 (#207), whose only farmer-visible effect — crashes counting at any
+    // moment, not just at startup — is already the second line of the entry below.
+    sha: '6905859',
+    changes: [
+      'The sign-in screen now opens with a picture of a smallholding, not an empty box',
+      'The example farm page does the same',
+    ],
+  },
+  {
+    when: '15 August',
     sha: '4cbc3a1',
     changes: [
       'After a single crash, the page now comes straight back light instead of dying again',
