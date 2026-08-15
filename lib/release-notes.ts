@@ -35,6 +35,17 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '15 August',
+    sha: '93d6b91',
+    changes: [
+      'Share a listing straight to WhatsApp, so what you have to sell can reach a buyer',
+      'A new Prices screen — tap a crop and see the wholesale and retail price per kg',
+      'It says when a price is only an estimate, so you know what you are standing on',
+      'The papers a funder asks for — PTO, ID, water licence — now have a place to live',
+      'My Records can export a summary of your own harvests and sales to show a lender',
+    ],
+  },
+  {
+    when: '15 August',
     // Eight branches from the audit swarm. The language-plumbing commit (ba57337) is deliberately
     // NOT listed: it routes three farmer-facing strings through the dictionary but only adds the
     // ENGLISH keys, so nobody's screen changes until a first-language reviewer supplies the words.
