@@ -740,6 +740,13 @@ const T: Record<string, Dict> = {
     noSavedReportsSaveLink: 'Save report',
     noSavedReportsSuffix: 'to keep it here.',
     reportOpenButton: 'Open',
+    // English only — missing-key fallback serves English until a first-language reviewer
+    // supplies these. Do not add these keys under any other language block.
+    savedSitesHeader: 'Your Sites',
+    savedSitesBackLink: 'All sites',
+    unsavedSiteGroupLabel: 'Not saved as a site',
+    savedReportCountSingular: 'saved report',
+    savedReportCountPlural: 'saved reports',
     surveyPromptTitle: 'Want a sharper report?',
     surveyPromptBody: "The site questionnaire takes 2 minutes and gives Lima things the map can't: how many people work here, irrigation, goals, and challenges. The report becomes far more specific.",
     surveyFillButton: 'Fill in the questionnaire (2 min)',
