@@ -32,6 +32,9 @@ import {
 import type { ProductionLog, SalesLog, ExpenseLog, Design, Profile } from '@/lib/db/types';
 import CropSelect from '@/components/CropSelect';
 import { loadCropPriceOverrides, priceFor, type CropPrice } from '@/lib/crop-prices';
+import { parseDecimalInput } from '@/lib/decimal-input';
+import { loadInvoices, type SavedInvoice } from '@/lib/invoices';
+import { cashIncomeTotal } from '@/lib/invoice-sales';
 import { creditPackHasAnyRecords } from '@/lib/credit-pack';
 import {
   buildCreditPackPdf,
@@ -248,7 +251,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     const crop = form.crop.trim();
-    const kg = parseFloat(form.kg);
+    const kg = parseDecimalInput(form.kg);
     if (!crop || isNaN(kg) || kg <= 0) {
       setForm((f) => ({ ...f, error: t('myRecordsProdValidationError') }));
       return;
@@ -321,10 +324,9 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
         <div>
           <FieldLabel>{t('myRecordsKgHarvestedLabel')}</FieldLabel>
           <Input
-            type="number"
+            type="text"
+            inputMode="decimal"
             placeholder="0.0"
-            step="0.1"
-            min="0"
             value={form.kg}
             onChange={(e) => setForm((f) => ({ ...f, kg: e.target.value }))}
           />
@@ -414,15 +416,15 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
   useEffect(() => setPriceOverrides(loadCropPriceOverrides()), []);
 
   const guide = form.cropKey ? priceFor(form.cropKey, priceOverrides) : null;
-  const saleKg = parseFloat(form.kg);
+  const saleKg = parseDecimalInput(form.kg);
   const guideLow = guide ? Math.min(guide.wholesalePerKg, guide.retailPerKg) : null;
   const guideHigh = guide ? Math.max(guide.wholesalePerKg, guide.retailPerKg) : null;
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     const crop = form.crop.trim();
-    const kg = parseFloat(form.kg);
-    const amount = parseFloat(form.amount);
+    const kg = parseDecimalInput(form.kg);
+    const amount = parseDecimalInput(form.amount);
     if (!crop || isNaN(kg) || kg <= 0 || isNaN(amount) || amount < 0) {
       setForm((f) => ({
         ...f,
@@ -476,10 +478,9 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
           <div>
             <FieldLabel>{t('myRecordsKgSoldLabel')}</FieldLabel>
             <Input
-              type="number"
+              type="text"
+              inputMode="decimal"
               placeholder="0.0"
-              step="0.1"
-              min="0"
               value={form.kg}
               onChange={(e) => setForm((f) => ({ ...f, kg: e.target.value }))}
             />
@@ -510,10 +511,9 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
           <div>
             <FieldLabel>{t('myRecordsAmountLabel')}</FieldLabel>
             <Input
-              type="number"
+              type="text"
+              inputMode="decimal"
               placeholder="0.00"
-              step="0.01"
-              min="0"
               value={form.amount}
               onChange={(e) => setForm((f) => ({ ...f, amount: e.target.value }))}
             />
@@ -833,8 +833,19 @@ export default function MyRecords() {
   const [sales, setSales] = useState<SalesLog[]>([]);
   const [expenses, setExpenses] = useState<ExpenseLog[]>([]);
   const [designs, setDesigns] = useState<Design[]>([]);
+  const [invoices, setInvoices] = useState<SavedInvoice[]>([]);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [dataLoading, setDataLoading] = useState(false);
+
+  // Paid invoices are localStorage-only (see lib/invoice-seller.ts) and never come back from
+  // myProduction/mySales/designsSharedWithMe, so they get their own load + change listener —
+  // same pattern as app/finances/page.tsx — instead of waiting on auth or the Firestore round trip.
+  useEffect(() => {
+    const refresh = () => setInvoices(loadInvoices());
+    refresh();
+    window.addEventListener('imbewu-invoices-changed', refresh);
+    return () => window.removeEventListener('imbewu-invoices-changed', refresh);
+  }, []);
 
   // Subscribe to auth state without importing lib/auth
   useEffect(() => {
@@ -990,8 +1001,12 @@ export default function MyRecords() {
       />
 
       {/* ── Sales summary ────────────────────────────── */}
-      {sales.length > 0 && (() => {
-        const totalRev = sales.reduce((s, p) => s + (p.amount ?? 0), 0);
+      {(sales.length > 0 || invoices.some((i) => i.status === 'paid')) && (() => {
+        // Summing `sales` alone double-counted a paid invoice's kg lines (also synced into
+        // `sales` by syncInvoiceSales) while missing its bags/crates/other non-kg lines entirely
+        // (they never create a sales row — their weight is unknown). cashIncomeTotal is the one
+        // place that combines sales and invoices correctly; see lib/invoice-sales.ts.
+        const totalRev = cashIncomeTotal(sales, invoices);
         const totalKgSold = sales.reduce((s, p) => s + (p.kg ?? 0), 0);
         const recent = sales.slice(0, 12);
         const maxAmt = Math.max(...recent.map((p) => p.amount ?? 0), 1);
