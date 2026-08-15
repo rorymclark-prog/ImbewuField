@@ -112,6 +112,23 @@ export const EVIDENCE_CATALOGUE: EvidenceCatalogueGroup[] = [
       { key: 'electricity_bills', label: 'Electricity bills', docOnly: true },
     ],
   },
+  {
+    key: 'land_legal',
+    label: 'Land & legal',
+    color: '#4A5578',
+    bg: '#EAECF3',
+    iconBg: '#DFE2EE',
+    items: [
+      // CASP and comparable SA smallholder funding programmes ask for these by name. Every tile
+      // here is docOnly — the same capture flow as water_bills / lab_result / electricity_bills
+      // above, not a new one — because these are papers to photograph or upload, not garden shots.
+      { key: 'pto_lease_title', label: 'PTO / lease / title deed', docOnly: true },
+      { key: 'certified_id', label: 'Certified ID copy', docOnly: true },
+      { key: 'bank_confirmation', label: 'Bank confirmation letter', docOnly: true },
+      { key: 'water_use_licence', label: 'Water-use licence', docOnly: true },
+      { key: 'dam_registration', label: 'Dam registration certificate', docOnly: true },
+    ],
+  },
 ];
 
 // Quick-number fields per group for the evidence sheet
@@ -193,6 +210,7 @@ export const LIMA_TIPS: Record<string, string> = {
   structures: '"Stand back to record the whole roof, add a note about its condition, and trace it on the map for a measured catchment area."',
   animals: '"Record even empty kraals and coops, and add a note naming the animals they serve so the report has useful context."',
   energy: '"Keep a clear photo of the electricity bill, then enter the monthly kWh in the quick numbers so the report can use it."',
+  land_legal: '"Photograph or scan every page flat and in good light, including stamps, signatures and dates — a funder has to be able to read every word, and keep the real paper safe too, this app is not where it is kept."',
 };
 
 export const INDIGENOUS_EDIBLES = [
