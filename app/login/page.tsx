@@ -135,9 +135,9 @@ function LoginPageInner() {
   }
 
   const inputStyle = (hasError = false): React.CSSProperties => ({
-    background: '#fff',
-    border: `1px solid ${hasError ? '#D4922A' : '#E2D8C4'}`,
-    color: '#20190F',
+    background: 'var(--color-surface)',
+    border: `1px solid ${hasError ? 'var(--color-ochre-light)' : 'var(--border)'}`,
+    color: 'var(--color-ink)',
     fontSize: 16,
     opacity: backendReady ? 1 : 0.4,
   });
@@ -149,29 +149,29 @@ function LoginPageInner() {
         background:
           'radial-gradient(ellipse 620px 420px at 6% -8%, rgba(31,77,43,0.10), transparent 60%), ' +
           'radial-gradient(ellipse 520px 360px at 100% 0%, rgba(247,201,126,0.16), transparent 55%), ' +
-          'var(--bg)',
+          'var(--bg-0)',
       }}>
-      <div className="u-card w-full max-w-sm p-6 my-auto">
+      <div className="w-full max-w-sm p-6 my-auto" style={{ background: 'var(--color-surface)', border: '1px solid var(--border)', borderRadius: 20, boxShadow: 'var(--shadow-panel)' }}>
         <Illustration name="login-hero" className="w-full h-32 mb-6" />
 
         {/* Logo */}
         <div className="text-center mb-5">
           <div className="flex items-center justify-center mb-3">
-            <div style={{ width: 44, height: 44, background: '#1F4D2B', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#EAF3E2" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+            <div style={{ width: 44, height: 44, background: 'var(--color-forest-800)', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-canvas)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M12 21V11"/><path d="M12 11c0-3.5-2.5-6-6.5-6 0 4 2.5 6 6.5 6Z"/>
                 <path d="M12 13c0-3 2.2-5.2 6-5.2 0 3.6-2.2 5.2-6 5.2Z"/>
               </svg>
             </div>
           </div>
-          <div className="u-display-md" style={{ color: '#20190F', marginBottom: 6 }}>ImbewuField</div>
-          <div className="font-sans text-sm" style={{ color: '#5C5040' }}>
+          <div className="u-display-md" style={{ color: 'var(--color-ink)', marginBottom: 6 }}>ImbewuField</div>
+          <div className="font-sans text-sm" style={{ color: 'var(--color-muted-strong)' }}>
             {mode === 'signin' && 'Sign in to your account.'}
             {mode === 'create' && 'Create a new account.'}
             {mode === 'reset' && 'Reset your password.'}
           </div>
           {from && (
-            <div className="font-sans text-xs mt-1" style={{ color: '#8C7A62' }}>
+            <div className="font-sans text-xs mt-1" style={{ color: 'var(--color-ink-faint)' }}>
               Sign in to continue to your map
             </div>
           )}
@@ -179,20 +179,20 @@ function LoginPageInner() {
 
         {/* Backend not configured notice */}
         {!backendReady && (
-          <div className="rounded-xl px-3 py-2.5 mb-4 font-sans" style={{ fontSize: 13, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: '#C07A1E' }}>
+          <div className="rounded-xl px-3 py-2.5 mb-4 font-sans" style={{ fontSize: 13, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: 'var(--color-ochre)' }}>
             Backend not connected yet — auth is unavailable. The app runs in sample mode.
           </div>
         )}
 
         {/* Mode toggle — signin / create (not shown for reset) */}
         {mode !== 'reset' && (
-          <div className="flex rounded-xl p-0.5 mb-4 gap-0.5" style={{ background: 'rgba(226,216,196,0.5)', border: '1px solid #E2D8C4' }}>
+          <div className="flex rounded-xl p-0.5 mb-4 gap-0.5" style={{ background: 'var(--bg-2)', border: '1px solid var(--border)' }}>
             {(['signin', 'create'] as Mode[]).map((m) => (
               <button key={m} type="button" onClick={() => switchMode(m)}
                 className="flex-1 py-1.5 rounded-lg font-sans font-semibold transition-all"
                 style={mode === m
-                  ? { background: '#1F4D2B', color: '#F7F2E9', fontSize: 13 }
-                  : { color: '#5C5040', fontSize: 13, border: '1px solid transparent' }}>
+                  ? { background: 'var(--color-forest-800)', color: 'var(--color-canvas)', fontSize: 13 }
+                  : { color: 'var(--color-muted-strong)', fontSize: 13, border: '1px solid transparent' }}>
                 {m === 'signin' ? 'Sign in' : 'Create account'}
               </button>
             ))}
@@ -204,14 +204,14 @@ function LoginPageInner() {
           <div className="rounded-xl px-4 py-5 text-center space-y-3" style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.15)' }}>
             <div className="flex items-center justify-center">
               <div className="flex items-center justify-center w-10 h-10 rounded-full" style={{ background: 'rgba(31,77,43,0.12)' }}>
-                <Check size={20} style={{ color: '#1F4D2B' }} />
+                <Check size={20} style={{ color: 'var(--color-forest-800)' }} />
               </div>
             </div>
-            <p className="font-display text-sm" style={{ color: '#20190F' }}>Reset email sent to <strong>{email}</strong>.</p>
-            <p className="font-sans text-xs" style={{ color: '#5C5040' }}>Check your inbox and follow the link to set a new password.</p>
+            <p className="font-display text-sm" style={{ color: 'var(--color-ink)' }}>Reset email sent to <strong>{email}</strong>.</p>
+            <p className="font-sans text-xs" style={{ color: 'var(--color-muted-strong)' }}>Check your inbox and follow the link to set a new password.</p>
             <button type="button" onClick={() => switchMode('signin')}
               className="font-sans text-sm font-semibold"
-              style={{ color: '#1F4D2B', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>
+              style={{ color: 'var(--color-forest-800)', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>
               Back to sign in
             </button>
           </div>
@@ -220,56 +220,56 @@ function LoginPageInner() {
           <form onSubmit={handleSubmit} className="flex flex-col gap-2">
             {mode === 'create' && (
               <>
-                <label className="font-sans text-xs font-semibold" style={{ color: '#5C5040' }} htmlFor="full-name">
+                <label className="font-sans text-xs font-semibold" style={{ color: 'var(--color-muted-strong)' }} htmlFor="full-name">
                   Full name
                 </label>
                 <input id="full-name" ref={fullNameRef} type="text" value={fullName}
                   onChange={(e) => { setFullName(e.target.value); setError(null); }}
                   placeholder="Full name" autoComplete="name" required disabled={!backendReady}
-                  className="w-full font-sans rounded-lg px-3 py-2.5 outline-none focus-visible:ring-2 focus-visible:ring-[#1F4D2B] focus-visible:ring-offset-2 focus-visible:ring-offset-[#FFFEFA]"
+                  className="w-full font-sans rounded-lg px-3 py-2.5 outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
                   style={inputStyle()} />
               </>
             )}
 
-            <label className="font-sans text-xs font-semibold" style={{ color: '#5C5040' }} htmlFor="email">
+            <label className="font-sans text-xs font-semibold" style={{ color: 'var(--color-muted-strong)' }} htmlFor="email">
               Email address
             </label>
             <input id="email" ref={emailRef} type="email" value={email}
               onChange={(e) => { setEmail(e.target.value); setError(null); }}
               placeholder="Email address" required disabled={!backendReady}
               autoComplete="email" inputMode="email"
-              className="w-full font-sans rounded-lg px-3 py-2.5 outline-none focus-visible:ring-2 focus-visible:ring-[#1F4D2B] focus-visible:ring-offset-2 focus-visible:ring-offset-[#FFFEFA]"
+              className="w-full font-sans rounded-lg px-3 py-2.5 outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
               style={inputStyle(!!error && mode !== 'create')} />
 
             {mode !== 'reset' && (
               <>
-                <label className="font-sans text-xs font-semibold" style={{ color: '#5C5040' }} htmlFor="password">
+                <label className="font-sans text-xs font-semibold" style={{ color: 'var(--color-muted-strong)' }} htmlFor="password">
                   Password
                 </label>
                 <input id="password" type="password" value={password}
                 onChange={(e) => { setPassword(e.target.value); setError(null); }}
                 placeholder="Password" required disabled={!backendReady}
                 autoComplete={mode === 'signin' ? 'current-password' : 'new-password'}
-                className="w-full font-sans rounded-lg px-3 py-2.5 outline-none focus-visible:ring-2 focus-visible:ring-[#1F4D2B] focus-visible:ring-offset-2 focus-visible:ring-offset-[#FFFEFA]"
+                className="w-full font-sans rounded-lg px-3 py-2.5 outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
                 style={inputStyle(!!error)} />
               </>
             )}
 
             {mode === 'create' && (
               <>
-                <label className="font-sans text-xs font-semibold" style={{ color: '#5C5040' }} htmlFor="role">
+                <label className="font-sans text-xs font-semibold" style={{ color: 'var(--color-muted-strong)' }} htmlFor="role">
                   Role
                 </label>
                 <select id="role" value={role} onChange={(e) => setRole(e.target.value as UserRole)}
                 disabled={!backendReady}
-                className="w-full font-sans rounded-lg px-3 py-2.5 outline-none appearance-none focus-visible:ring-2 focus-visible:ring-[#1F4D2B] focus-visible:ring-offset-2 focus-visible:ring-offset-[#FFFEFA]"
+                className="w-full font-sans rounded-lg px-3 py-2.5 outline-none appearance-none focus-visible:ring-2 focus-visible:ring-[var(--color-forest-800)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--color-surface)]"
                 style={inputStyle()}>
                 {SIGNUP_ROLES.map((r) => <option key={r.value} value={r.value}>{r.label}</option>)}
                 </select>
               </>
             )}
 
-            {error && <p ref={errorRef} tabIndex={-1} role="alert" className="font-sans outline-none" style={{ fontSize: 13, color: '#D4922A' }}>{error}</p>}
+            {error && <p ref={errorRef} tabIndex={-1} role="alert" className="font-sans outline-none" style={{ fontSize: 13, color: 'var(--color-ochre-light)' }}>{error}</p>}
 
             <button type="submit"
               disabled={loading || !backendReady || !email || (mode !== 'reset' && !password) || (mode === 'create' && !fullName.trim())}
@@ -277,7 +277,7 @@ function LoginPageInner() {
                 loading || !backendReady ? 'py-2.5 rounded-xl' : 'u-btn-primary'
               }`}
               style={loading || !backendReady
-                ? { minHeight: 44, background: 'rgba(226,216,196,0.6)', border: '1px solid #E2D8C4', color: '#8C7A62', cursor: 'not-allowed', fontSize: 15 }
+                ? { minHeight: 44, background: 'var(--bg-3)', border: '1px solid var(--border)', color: 'var(--color-ink-faint)', cursor: 'not-allowed', fontSize: 15 }
                 : undefined}>
               {loading ? (
                 mode === 'signin' ? 'Signing in...' :
@@ -295,7 +295,7 @@ function LoginPageInner() {
             {mode === 'signin' && (
               <button type="button" onClick={() => switchMode('reset')}
                 className="font-sans text-center transition-opacity hover:opacity-80"
-                style={{ fontSize: 13, color: '#5C5040', background: 'none', border: 'none', cursor: 'pointer', marginTop: 2 }}>
+                style={{ fontSize: 13, color: 'var(--color-muted-strong)', background: 'none', border: 'none', cursor: 'pointer', marginTop: 2 }}>
                 Forgot your password?
               </button>
             )}
@@ -303,7 +303,7 @@ function LoginPageInner() {
             {mode === 'reset' && (
               <button type="button" onClick={() => switchMode('signin')}
                 className="font-sans text-center transition-opacity hover:opacity-80"
-                style={{ fontSize: 13, color: '#5C5040', background: 'none', border: 'none', cursor: 'pointer', marginTop: 2 }}>
+                style={{ fontSize: 13, color: 'var(--color-muted-strong)', background: 'none', border: 'none', cursor: 'pointer', marginTop: 2 }}>
                 <span className="flex items-center justify-center gap-1"><ChevronLeft size={12} />Back to sign in</span>
               </button>
             )}
@@ -314,17 +314,17 @@ function LoginPageInner() {
         {mode !== 'reset' && !resetSent && backendReady && (
           <>
             <div className="flex items-center gap-3 my-4">
-              <div className="flex-1 h-px" style={{ background: '#E2D8C4' }} />
-              <span className="font-sans text-xs" style={{ color: '#8C7A62' }}>or</span>
-              <div className="flex-1 h-px" style={{ background: '#E2D8C4' }} />
+              <div className="flex-1 h-px" style={{ background: 'var(--border)' }} />
+              <span className="font-sans text-xs" style={{ color: 'var(--color-ink-faint)' }}>or</span>
+              <div className="flex-1 h-px" style={{ background: 'var(--border)' }} />
             </div>
             <button type="button" onClick={handleGoogle} disabled={googleLoading || embedded}
               className="w-full flex items-center justify-center gap-2.5 py-2.5 rounded-xl font-sans font-semibold transition-all"
               style={{
                 minHeight: 44,
-                background: '#fff',
-                border: '1px solid #E2D8C4',
-                color: '#20190F',
+                background: 'var(--color-surface)',
+                border: '1px solid var(--border)',
+                color: 'var(--color-ink)',
                 fontSize: 15,
                 cursor: googleLoading ? 'wait' : embedded ? 'not-allowed' : 'pointer',
                 opacity: googleLoading || embedded ? 0.55 : 1,
@@ -339,7 +339,7 @@ function LoginPageInner() {
                 Google sign-in doesn&apos;t open inside this in-app browser. Sign in with email above, or open the app in Chrome / Safari:
                 <button type="button" onClick={copyAppLink}
                   className="mt-2 w-full flex items-center justify-center gap-1.5 py-1.5 rounded-lg font-semibold"
-                  style={{ background: '#fff', border: '1px solid #E2D8C4', color: '#20190F', fontSize: 12.5, cursor: 'pointer' }}>
+                  style={{ background: 'var(--color-surface)', border: '1px solid var(--border)', color: 'var(--color-ink)', fontSize: 12.5, cursor: 'pointer' }}>
                   {copied ? <><Check size={13} /> Link copied</> : <><Copy size={13} /> Copy app link</>}
                 </button>
               </div>
@@ -349,14 +349,14 @@ function LoginPageInner() {
 
         {/* Back link */}
         <div className="text-center mt-4">
-          <a href="/home" className="font-sans transition-opacity hover:opacity-80" style={{ fontSize: 13, color: '#5C5040' }}>
+          <a href="/home" className="font-sans transition-opacity hover:opacity-80" style={{ fontSize: 13, color: 'var(--color-muted-strong)' }}>
             <span className="flex items-center justify-center gap-1"><ChevronLeft size={12} />Back to app</span>
           </a>
         </div>
 
         {/* Trust footer */}
         <div className="text-center mt-3">
-          <p className="font-sans" style={{ fontSize: 11.5, color: '#8C7A62', letterSpacing: '0.01em' }}>
+          <p className="font-sans" style={{ fontSize: 11.5, color: 'var(--color-ink-faint)', letterSpacing: '0.01em' }}>
             Built for South African smallholder farmers
           </p>
         </div>

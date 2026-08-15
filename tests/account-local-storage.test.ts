@@ -82,6 +82,7 @@ const {
   accountLocalStorageKeyMatchesPrefix,
   activeAccountLocalStorageKey,
   activeAccountUid,
+  migrateGuestLocalStorageRows,
   removeSignedInLegacyLocalStorageKey,
 } = await import('../lib/account-local-storage.ts');
 hooks.deregister();
@@ -147,6 +148,75 @@ test('only a mounted signed-in account may retire an unowned legacy row', () => 
   harness.configured = false;
   removeSignedInLegacyLocalStorageKey('legacy-gate');
   assert.equal(localStorage.getItem('legacy-gate'), 'guest-local');
+});
+
+// A minimal, array-shaped isEmpty predicate — the same convention lib/auth.tsx
+// uses for the Field Journal's row (an empty JSON array reads as no entries).
+const arrayIsEmpty = (raw: string | null): boolean => {
+  if (!raw) return true;
+  try {
+    const parsed = JSON.parse(raw);
+    return !Array.isArray(parsed) || parsed.length === 0;
+  } catch {
+    return false;
+  }
+};
+
+test('migrateGuestLocalStorageRows copies a guest row into an empty uid row, then clears the guest row', () => {
+  localStorage.clear();
+  const guestKey = 'imbewu_field_journal_v1::imbewu-owner::guest';
+  const uidKey = accountLocalStorageKey('imbewu_field_journal_v1', 'farmer-a');
+  localStorage.setItem(guestKey, '[{"id":"je_1"}]');
+
+  migrateGuestLocalStorageRows(
+    [{ baseKey: 'imbewu_field_journal_v1', isEmpty: arrayIsEmpty }],
+    'farmer-a',
+  );
+
+  assert.equal(localStorage.getItem(uidKey), '[{"id":"je_1"}]');
+  assert.equal(localStorage.getItem(guestKey), null, 'the guest row must not survive the copy — a shared phone must not replay it to the next guest');
+});
+
+test('migrateGuestLocalStorageRows never overwrites a non-empty uid row with a stale guest draft', () => {
+  localStorage.clear();
+  const guestKey = 'imbewu_field_journal_v1::imbewu-owner::guest';
+  const uidKey = accountLocalStorageKey('imbewu_field_journal_v1', 'farmer-a');
+  localStorage.setItem(guestKey, '[{"id":"stale-guest-draft"}]');
+  localStorage.setItem(uidKey, '[{"id":"real-cloud-entry"}]');
+
+  migrateGuestLocalStorageRows(
+    [{ baseKey: 'imbewu_field_journal_v1', isEmpty: arrayIsEmpty }],
+    'farmer-a',
+  );
+
+  assert.equal(localStorage.getItem(uidKey), '[{"id":"real-cloud-entry"}]', 'real account data must survive signing in on a second device');
+  assert.equal(localStorage.getItem(guestKey), '[{"id":"stale-guest-draft"}]', 'nothing was copied, so the guest row is left alone rather than silently dropped');
+});
+
+test('migrateGuestLocalStorageRows never throws, and one bad row does not block another', () => {
+  localStorage.clear();
+  const throwingGuestKey = 'imbewu_crop_plan_v1::imbewu-owner::guest';
+  const okGuestKey = 'imbewu_field_journal_v1::imbewu-owner::guest';
+  const okUidKey = accountLocalStorageKey('imbewu_field_journal_v1', 'farmer-a');
+  localStorage.setItem(throwingGuestKey, 'irrelevant');
+  localStorage.setItem(okGuestKey, '[{"id":"je_1"}]');
+
+  assert.doesNotThrow(() => {
+    migrateGuestLocalStorageRows(
+      [
+        {
+          baseKey: 'imbewu_crop_plan_v1',
+          isEmpty: () => {
+            throw new Error('corrupt guest JSON');
+          },
+        },
+        { baseKey: 'imbewu_field_journal_v1', isEmpty: arrayIsEmpty },
+      ],
+      'farmer-a',
+    );
+  }, 'a farmer must be able to sign in even when one row\'s migration throws');
+
+  assert.equal(localStorage.getItem(okUidKey), '[{"id":"je_1"}]', 'a later, healthy row still migrates despite an earlier row throwing');
 });
 
 test('prefix enumeration rejects bare legacy rows and every other signed-in owner', () => {
