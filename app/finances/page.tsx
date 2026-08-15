@@ -25,13 +25,13 @@ import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
 import EmptyState from '@/components/EmptyState';
-import { cashLedgerSales } from '@/lib/invoice-sales';
+import { cashLedgerSales, cashIncomeTotal } from '@/lib/invoice-sales';
 import { loadCropPlan, CROP_PLAN_CHANGED_EVENT, type PlanBed, type Planting } from '@/lib/crop-plan';
 import { bedsFromDesignCanvas } from '@/lib/design-beds-bridge';
 import { DESIGN_CANVAS_CHANGED_EVENT, loadCanvasState } from '@/lib/design-canvas';
 import { designSiteIdFromLocation } from '@/lib/design-studio';
 import { loadPlaces, resolveMainSite } from '@/lib/saved-places';
-import { buildFarmMetrics, type FinancePeriod } from '@/lib/farm-metrics';
+import { buildFarmMetrics, isInFinancePeriod, type FinancePeriod } from '@/lib/farm-metrics';
 import type { LocationData } from '@/lib/types';
 
 /* ── Format helpers ──────────────────────────────────────────────────────── */
@@ -89,11 +89,9 @@ interface SummaryProps {
 }
 
 function SummaryCards({ sales, production, expenses, invoices, loading }: SummaryProps) {
-  const thisMonthSales = cashLedgerSales(sales, invoices.map((invoice) => invoice.id))
-    .filter((s) => isThisMonth(s.sold_at));
+  const thisMonthSales = sales.filter((s) => isThisMonth(s.sold_at));
   const thisMonthPaidInvoices = invoices.filter((i) => i.status === 'paid' && isThisMonth(i.paidAt));
-  const totalRevenue = thisMonthSales.reduce((acc, s) => acc + (s.amount ?? 0), 0)
-    + thisMonthPaidInvoices.reduce((acc, i) => acc + (i.total ?? 0), 0);
+  const totalRevenue = cashIncomeTotal(thisMonthSales, thisMonthPaidInvoices);
   const totalSpent = expenses
     .filter((x) => isThisMonth(x.spent_at))
     .reduce((acc, x) => acc + (x.amount ?? 0), 0);
@@ -689,23 +687,16 @@ function SignInPrompt() {
 
 /* ── Desktop financial sheet (lg+) — the laptop ledger workspace (handoff frame 15) ── */
 
-type Period = 'month' | 'season' | 'year';
-
-function saSeasonMonths(m: number): number[] {
-  if (m >= 8 && m <= 10) return [8, 9, 10];
-  if (m === 11 || m <= 1) return [11, 0, 1];
-  if (m >= 2 && m <= 4) return [2, 3, 4];
-  return [5, 6, 7];
-}
-function inPeriod(iso: string | null | undefined, period: Period, now: Date): boolean {
-  if (!iso) return false;
-  const d = new Date(iso);
-  if (isNaN(d.getTime())) return false;
-  if (period === 'year') return d.getFullYear() === now.getFullYear();
-  if (d.getFullYear() !== now.getFullYear()) return false;
-  if (period === 'month') return d.getMonth() === now.getMonth();
-  return saSeasonMonths(now.getMonth()).includes(d.getMonth());
-}
+// 'season' follows the SA growing calendar (Sep-Nov spring, Dec-Feb summer, Mar-May
+// autumn, Jun-Aug winter), not the calendar year — so Dec/Jan/Feb is ONE season that
+// crosses a year boundary. This page used to filter with its own copy of that rule,
+// a naive "same calendar year, then same season-month-set" check that silently
+// dropped every December row (sales, costs, harvests, paid invoices) the moment the
+// clock ticked into January — exactly the weeks after peak December selling. The
+// crossing case is genuinely easy to get wrong twice, so this page now takes the one
+// already-correct implementation from lib/farm-metrics.ts (used by FarmMetrics below)
+// instead of keeping its own second copy of the same rule.
+type Period = FinancePeriod;
 
 interface LedgerRow { kind: 'sale' | 'expense' | 'harvest' | 'invoice'; id: string; iso: string; date: string; desc: string; qty: string; inAmt: number | null; source: string; outAmt: number | null; duplicateSuspect?: boolean }
 
@@ -713,16 +704,16 @@ interface LedgerRow { kind: 'sale' | 'expense' | 'harvest' | 'invoice'; id: stri
 // Shared by the desktop sheet and the phone CSV export so both stay in sync.
 function buildLedgerRows(sales: SalesLog[], expenses: ExpenseLog[], production: ProductionLog[], invoices: SavedInvoice[], period: Period, now: Date): LedgerRow[] {
   const saleRows: LedgerRow[] = cashLedgerSales(sales, invoices.map((invoice) => invoice.id))
-    .filter((s) => inPeriod(s.sold_at, period, now))
+    .filter((s) => isInFinancePeriod(s.sold_at, period, now))
     .map((s) => ({ kind: 'sale' as const, id: s.id, iso: s.sold_at ?? '', date: fmtDate(s.sold_at), desc: `${s.crop} sale`, qty: `${s.kg} kg`, inAmt: s.amount ?? 0, source: s.buyer || 'Direct sale', outAmt: null }));
   const expenseRows: LedgerRow[] = expenses
-    .filter((x) => inPeriod(x.spent_at, period, now))
+    .filter((x) => isInFinancePeriod(x.spent_at, period, now))
     .map((x) => ({ kind: 'expense' as const, id: x.id, iso: x.spent_at ?? '', date: fmtDate(x.spent_at), desc: x.item, qty: categoryLabel(x.category) || '—', inAmt: null, source: x.supplier || 'Cost', outAmt: x.amount ?? 0 }));
   const harvestRows: LedgerRow[] = production
-    .filter((p) => inPeriod(p.logged_at, period, now))
+    .filter((p) => isInFinancePeriod(p.logged_at, period, now))
     .map((p) => ({ kind: 'harvest' as const, id: p.id, iso: p.logged_at ?? '', date: fmtDate(p.logged_at), desc: `${p.crop} harvested`, qty: `${p.kg} kg`, inAmt: null, source: 'Yield log', outAmt: null }));
   const invoiceRows: LedgerRow[] = invoices
-    .filter((i) => i.status === 'paid' && inPeriod(i.paidAt, period, now))
+    .filter((i) => i.status === 'paid' && isInFinancePeriod(i.paidAt, period, now))
     .map((i) => ({ kind: 'invoice' as const, id: i.id, iso: i.paidAt ?? i.dateISO, date: fmtDate(i.paidAt ?? i.dateISO), desc: `Invoice #${i.no} — ${i.billTo || 'No buyer'}`, qty: '—', inAmt: i.total ?? 0, source: i.paymentMethod ? `Invoice · ${paymentMethodLabel(i.paymentMethod)}` : 'Invoice', outAmt: null }));
   // Invoice-generated crop rows carry invoice_id and are deliberately absent from saleRows above:
   // the invoice is the money entry while its linked sale rows supply crop/kg evidence to harvest
@@ -762,7 +753,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
   const income = rows.reduce((a, r) => a + (r.inAmt ?? 0), 0);
   const expenseTotal = rows.reduce((a, r) => a + (r.outAmt ?? 0), 0);
   const net = income - expenseTotal;
-  const yieldKg = production.filter((p) => inPeriod(p.logged_at, period, now)).reduce((a, p) => a + (p.kg ?? 0), 0);
+  const yieldKg = production.filter((p) => isInFinancePeriod(p.logged_at, period, now)).reduce((a, p) => a + (p.kg ?? 0), 0);
   const yieldLabel = yieldKg >= 1000 ? `${(yieldKg / 1000).toFixed(1)} t` : `${yieldKg.toFixed(0)} kg`;
 
   function exportCsv() { exportLedgerCsv(rows, period); }

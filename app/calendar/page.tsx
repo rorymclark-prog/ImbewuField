@@ -676,14 +676,27 @@ export default function CalendarPage() {
             {/* Crop planner filter notice */}
             {isFiltered && (
               <div style={{ marginBottom: 12, padding: '8px 12px', background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.15)', borderRadius: 10, fontSize: 12, fontFamily: 'var(--font-sans)', color: '#1F4D2B', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                <span>Showing your {visibleCrops.length} planned crops</span>
+                <span>
+                  {visibleCrops.length > 0
+                    ? `Showing your ${visibleCrops.length} planned crop${visibleCrops.length === 1 ? '' : 's'}`
+                    : 'None of your planned crops are in this calendar yet'}
+                </span>
                 <button onClick={() => setMyPlannerCrops([])} style={{ fontSize: 11, color: '#5C5040', background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>
                   Show all
                 </button>
               </div>
             )}
 
-            {/* Scrollable table */}
+            {/* This calendar only ever tracks the 8 crops in CROPS above — a farmer
+                whose plan is entirely Kale, Cucumber, custom names, etc. would
+                otherwise see a table with a header row and nothing under it, with
+                no clue why. Name what this grid covers instead of just going blank. */}
+            {isFiltered && visibleCrops.length === 0 ? (
+              <div style={{ padding: '4px 14px 18px', fontSize: 13, fontFamily: 'var(--font-sans)', color: '#8C7A62', lineHeight: 1.5 }}>
+                This grid tracks {CROPS.map((c) => c.name).join(', ')}. Tap &ldquo;Show all&rdquo; above to see the full 12-month calendar.
+              </div>
+            ) : (
+            /* Scrollable table */
             <div
               style={{
                 overflowX: 'auto',
@@ -801,6 +814,7 @@ export default function CalendarPage() {
                 </tbody>
               </table>
             </div>
+            )}
           </div>
 
           {/* Bottom breathing room */}

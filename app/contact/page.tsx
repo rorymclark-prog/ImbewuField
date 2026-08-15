@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { MessageCircle, Phone, Mail, Users, Building2, Send, CheckCircle, ChevronLeft, MailOpen, ChevronDown, ChevronUp } from 'lucide-react';
 import Link from 'next/link';
@@ -51,6 +51,7 @@ export default function ContactPage() {
   const [sent, setSent] = useState(false);
   const [error, setError] = useState('');
   const [replies, setReplies] = useState<ContactReply[]>([]);
+  const [repliesError, setRepliesError] = useState(false);
   const [expandedReply, setExpandedReply] = useState<string | null>(null);
 
   useEffect(() => {
@@ -58,24 +59,37 @@ export default function ContactPage() {
     if (!loading && !user && isLive && !isSampleMode()) router.replace('/login');
   }, [user, loading, router, isLive]);
 
+  // Extracted so a failed read can be retried from the banner below, not just silently dropped —
+  // components/ContactInbox.tsx (the mentor/org side of this same conversation) already tells a
+  // rules-denial or a dropped connection apart from a genuinely empty inbox; this side of it read
+  // the identical query and swallowed any failure with .catch(() => {}), so a farmer with real
+  // unread replies waiting could see nothing and have no reason to suspect a message was lost.
+  const loadReplies = useCallback(() => {
+    if (loading || !user || !isLive || isSampleMode()) return;
+    const fb = getFirebase();
+    if (!fb) return;
+    setRepliesError(false);
+    getDocs(query(
+      collection(fb.db, 'contact_replies'),
+      where('for_uid', '==', user.uid),
+      orderBy('replied_at', 'desc'),
+    )).then((snap) => {
+      setReplies(snap.docs.map((d) => ({ id: d.id, ...d.data() } as ContactReply)));
+    }).catch((err) => {
+      console.error('[contact] replies read failed:', err);
+      setRepliesError(true);
+    });
+  }, [user, loading, isLive]);
+
   useEffect(() => {
     // Sample mode reads no real Firestore: the demo shows no real replies and no real profile
     // (getMyProfile already sandboxes; the direct contact_replies query would NOT be intercepted
     // by the sample gates, so guard it here).
     if (!loading && user && isLive && !isSampleMode()) {
       getMyProfile().then(setProfile).catch(() => {});
-      const fb = getFirebase();
-      if (fb) {
-        getDocs(query(
-          collection(fb.db, 'contact_replies'),
-          where('for_uid', '==', user.uid),
-          orderBy('replied_at', 'desc'),
-        )).then((snap) => {
-          setReplies(snap.docs.map((d) => ({ id: d.id, ...d.data() } as ContactReply)));
-        }).catch(() => {});
-      }
+      loadReplies();
     }
-  }, [user, loading, isLive]);
+  }, [user, loading, isLive, loadReplies]);
 
   async function handleSend(e: React.FormEvent) {
     e.preventDefault();
@@ -166,6 +180,23 @@ export default function ContactPage() {
         ) : (
           <>
             {/* Replies from mentor/org */}
+            {repliesError && (
+              <div
+                className="flex items-center justify-between gap-3 rounded-2xl px-4 py-3"
+                style={{ marginBottom: 28, background: '#FFFEFA', border: '1px solid #D8B7A8' }}
+              >
+                <span className="font-sans" style={{ fontSize: 12.5, color: '#8C4938' }}>
+                  Couldn&apos;t check for replies from your team. Check your connection and try again.
+                </span>
+                <button
+                  onClick={loadReplies}
+                  className="font-sans font-semibold flex-shrink-0"
+                  style={{ fontSize: 12, color: '#1F4D2B', background: 'transparent', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}
+                >
+                  Retry
+                </button>
+              </div>
+            )}
             {replies.length > 0 && (
               <div style={{ marginBottom: 28 }}>
                 <div className="flex items-center gap-2" style={{ marginBottom: 10 }}>
