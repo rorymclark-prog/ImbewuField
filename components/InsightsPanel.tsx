@@ -79,7 +79,7 @@ export default function InsightsPanel({ locationData }: Props) {
         body: JSON.stringify(locationData),
         signal: abortRef.current.signal,
       });
-      if (!res.ok) throw new Error(`API error ${res.status}`);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const reader = res.body!.getReader();
       const decoder = new TextDecoder();
       let text = '';
@@ -90,7 +90,10 @@ export default function InsightsPanel({ locationData }: Props) {
         setInsights(text);
       }
     } catch (err: unknown) {
-      if (err instanceof Error && err.name !== 'AbortError') setError(err.message);
+      // Farmer sees a plain, actionable line, never the raw HTTP status or fetch
+      // error text (e.g. "API error 500", "Failed to fetch") — those tell a
+      // farmer nothing they can act on.
+      if (err instanceof Error && err.name !== 'AbortError') setError(t('insightsGenerateError'));
     } finally {
       setLoading(false);
     }
