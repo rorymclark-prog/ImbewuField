@@ -5,7 +5,7 @@ import { loadSurvey, type SiteSurvey } from '@/lib/site-survey';
 import SiteSurveySheet from './SiteSurveySheet';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import RainfallChart from './RainfallChart';
-import { savePlace, generateId, loadPlaces, promptNearbyUpdate } from '@/lib/saved-places';
+import { savePlace, generateId, loadPlaces, promptNearbyUpdate, type SavedPlace } from '@/lib/saved-places';
 import { designSiteIdFromLocation } from '@/lib/design-studio';
 import { loadReports, deleteReport, type SavedReport } from '@/lib/saved-reports';
 import InsightsPanel from './InsightsPanel';
@@ -32,11 +32,11 @@ import { gatherSiteInputs } from '@/lib/site-progress';
 import turfArea from '@turf/area';
 import turfLength from '@turf/length';
 import { useLanguage } from '@/lib/i18n';
-import { MapPin, MessageCircle, Droplets, Layers, Sun, Ruler, Camera, Compass, Sparkles, Bookmark, FileText, Wheat, Sprout, Leaf, TreeDeciduous, AlertTriangle, Trash2, Snowflake, Mountain, Loader2 } from 'lucide-react';
+import { MapPin, MessageCircle, Droplets, Layers, Sun, Ruler, Camera, Compass, Sparkles, Bookmark, FileText, Wheat, Sprout, Leaf, TreeDeciduous, AlertTriangle, Trash2, Snowflake, Mountain, Loader2, Users } from 'lucide-react';
 import PeoplePanel from './PeoplePanel';
 import EvidenceSheet from './EvidenceSheet';
 import EvidenceCatalogue from './EvidenceCatalogue';
-import { EVIDENCE_CATALOGUE, type EvidenceCatalogueGroup, type EvidenceCatalogueItem } from '@/lib/evidence-catalogue';
+import { EVIDENCE_CATALOGUE, EVIDENCE_GROUP_ICON, type EvidenceCatalogueGroup, type EvidenceCatalogueItem } from '@/lib/evidence-catalogue';
 import { evidenceSiteId, getSiteEvidence, getReportCompleteness, getGroupCount, type EvidenceItem } from '@/lib/site-evidence';
 import type { Profile } from '@/lib/db/types';
 
@@ -146,6 +146,7 @@ const PERMA_CONTEXT: Record<string, { type: string; principles: string[]; water:
 const TAB_ICONS: Record<string, JSX.Element> = {
   Overview: <MapPin size={16} />,
   Ask: <MessageCircle size={16} />,
+  People: <Users size={16} />,
   Water: <Droplets size={16} />,
   Soil: <Layers size={16} />,
   Climate: <Sun size={16} />,
@@ -308,6 +309,16 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
     refresh();
     window.addEventListener('imbewu-reports-changed', refresh);
     return () => window.removeEventListener('imbewu-reports-changed', refresh);
+  }, []);
+  // Saved places, kept live for SavedReportsList's site grouping — same event the Places tab and
+  // SavedPlaces.tsx already listen for, so a place saved/renamed/deleted elsewhere in the app is
+  // reflected in the report picker without a reload.
+  const [savedPlacesList, setSavedPlacesList] = useState<SavedPlace[]>([]);
+  useEffect(() => {
+    const refresh = () => setSavedPlacesList(loadPlaces());
+    refresh();
+    window.addEventListener('permamap-places-changed', refresh);
+    return () => window.removeEventListener('permamap-places-changed', refresh);
   }, []);
   const [tab, setTab] = useState<Tab>('Overview');
   // Survey is keyed by the lat/lon-derived siteId (designSiteIdFromLocation), not the
@@ -663,6 +674,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
         </div>
         <SavedReportsList
           reports={savedReports}
+          places={savedPlacesList}
           canGenerate={false}
           onViewReport={onViewReport}
           onDeleted={setSavedReports}
@@ -1217,11 +1229,11 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
               const scoreColor = total >= 8 ? '#1F4D2B' : total >= 5 ? '#C07A1E' : '#C03C1E';
               const scoreLabel = total >= 8 ? t('soilHealthScoreHealthy') : total >= 5 ? t('soilHealthScoreModerate') : t('soilHealthScoreDegraded');
               const improvements: string[] = [];
-              if (pHScore < 2) improvements.push(ph < 6 ? `pH ${ph} is acidic — add agricultural lime (1–2 t/ha)` : `pH ${ph} is alkaline — add elemental sulphur or pine-needle mulch`);
-              if (ocScore < 2) improvements.push(`Organic carbon ${oc}% is low — layer compost 5 cm deep, add kraal manure or biochar`);
-              if (bdScore < 2) improvements.push(`Bulk density ${bd} g/cm³ suggests compaction — deep-rooted cover crops and broadfork open the profile`);
-              if (texScore < 2 && clay > 40) improvements.push(`High clay (${clay}%) — gypsum + organic matter improve drainage and workability`);
-              else if (texScore < 2 && sand > 70) improvements.push(`Sandy soil (${sand}%) — mulch heavily and boost CEC with compost and biochar`);
+              if (pHScore < 2) improvements.push(ph < 6 ? t('soilImprovementPhAcidic').replace('{ph}', String(ph)) : t('soilImprovementPhAlkaline').replace('{ph}', String(ph)));
+              if (ocScore < 2) improvements.push(t('soilImprovementLowCarbon').replace('{oc}', String(oc)));
+              if (bdScore < 2) improvements.push(t('soilImprovementCompacted').replace('{bd}', String(bd)));
+              if (texScore < 2 && clay > 40) improvements.push(t('soilImprovementHighClay').replace('{clay}', String(clay)));
+              else if (texScore < 2 && sand > 70) improvements.push(t('soilImprovementSandy').replace('{sand}', String(sand)));
               return (
                 <div className="rounded-xl p-3" style={{ background: '#F4EFE4', border: '1px solid #E2D8C4' }}>
                   <div className="flex items-center justify-between mb-2">
@@ -1274,7 +1286,13 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             ET: t('zoneAlpineMontane'),
           };
           const kp = data.climate.koppen;
-          const zoneLabel = ZONE_LABELS[kp] ?? kp;
+          // ZONE_LABELS only names the codes this tab was built around — but the classifier that
+          // actually produced `kp` (lib/koppen-global.ts) covers the real Köppen alphabet, and its
+          // own comments record live NASA POWER data returning 'Aw' for Durban, not the 'Cwa' this
+          // list expects, because of the grid's warm coastal bias. Falling back to the bare two or
+          // three letters told a Durban-area farmer nothing; koppenDesc is the SAME classifier's own
+          // name for whatever code came back, so the fallback is still a real answer.
+          const zoneLabel = ZONE_LABELS[kp] ?? data.climate.koppenDesc ?? kp;
 
           const zoneSummary =
             kp.startsWith('Cw') ? t('summaryWarmWetSummer')
@@ -1298,7 +1316,14 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             BWk: [{ pre: 'Cold arid — water harvesting essential. Short growing window: ', bold: 'cold-hardy grains, root vegetables & wind-tolerant perennials', post: '.' }],
             ET:  [{ pre: 'Short alpine season — ', bold: 'potatoes, kale, oats & alpine herbs', post: ' on warm north-facing aspects. Protect all crops from frost and strong wind.' }],
           };
-          const cropSegs = CROPS[kp] ?? [{ pre: 'Locally adapted varieties suited to your rainfall and temperature range.', bold: '', post: '' }];
+          // Same gap as zoneLabel above: CROPS only covers the hand-picked codes, but koppenNote
+          // is the classifier's own one-sentence, grower-actionable read on whatever code it
+          // actually returned — a real answer instead of the generic line for every code this
+          // list doesn't happen to name (Durban's 'Aw' among them).
+          const cropSegs = CROPS[kp] ?? [{
+            pre: data.climate.koppenNote || 'Locally adapted varieties suited to your rainfall and temperature range.',
+            bold: '', post: '',
+          }];
 
           const patternChip = data.rainfall.pattern === 'winter' ? t('climatePatternWinter') : data.rainfall.pattern === 'summer' ? t('climatePatternSummer') : t('climatePatternYearRound');
           const frostChipGreen = tMin >= 5;
@@ -1746,7 +1771,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 >
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 11 }}>
                     <div style={{ width: 30, height: 30, borderRadius: 8, background: '#EAE0EE', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 16 }}>
-                      📸
+                      {EVIDENCE_GROUP_ICON.site_photos}
                     </div>
                     <span style={{ font: '600 13px/1.2 system-ui, sans-serif', color: '#2D2519', flex: 1 }}>{t('reportGroupSitePhotos')}</span>
                     {allPhotos.length > 0 && <span style={{ font: '400 11px/1 system-ui, sans-serif', color: '#9A8B6E' }}>{t('reportPhotosCount').replace('{n}', String(allPhotos.length))}</span>}
@@ -1767,6 +1792,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
 
             <SavedReportsList
               reports={savedReports}
+              places={savedPlacesList}
               canGenerate={!!data}
               onOpenReport={() => onOpenReport?.()}
               onViewReport={onViewReport}
@@ -1941,14 +1967,3 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
     </div>
   );
 }
-
-// Group icons used in the Reports tab evidence grid
-const EVIDENCE_GROUP_ICON: Record<string, string> = {
-  water: '💧',
-  structures: '🏠',
-  soil: '🌱',
-  trees: '🌿',
-  animals: '🐓',
-  energy: '⚡',
-  site_photos: '📸',
-};
