@@ -35,9 +35,7 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '15 August',
-    // Also covers 383e9e6 (#207), whose only farmer-visible effect — crashes counting at any
-    // moment, not just at startup — is already the second line of the entry below.
-    sha: '6905859',
+    sha: 'PENDING-MERGE',
     changes: [
       'The sign-in screen now opens with a picture of a smallholding, not an empty box',
       'The example farm page does the same',
@@ -45,8 +43,32 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   },
   {
     when: '15 August',
-    sha: '4cbc3a1',
+    sha: '43f9692',
     changes: [
+      'The designer now loads in parts, so it starts faster and fits weaker phones',
+      'Photo import, the advisor and the step guide arrive when needed, not up front',
+      'On phones, photo and satellite work now uses phone-sized memory, not print-sized',
+      'Plans made on a laptop keep full print quality',
+      'The automatic switch to the simple page is off — every page opens normally again',
+      'It was catching healthy computers too, not only crashing phones',
+    ],
+  },
+  {
+    when: '15 August',
+    sha: '74c67d7',
+    changes: [
+      'The crash rescue now steps in one reload sooner, before the grey error can appear',
+      'The farm map page now has the same rescue as the designer',
+      'Trying again from the simple page can never end on the grey error either',
+      'When even the light designer cannot open, the simple page says so honestly',
+    ],
+  },
+  {
+    when: '15 August',
+    sha: '2475744',
+    changes: [
+      'A phone that cannot open the designer at all now gets a simple page, never a grey error',
+      'That page keeps your design safe and offers light and full ways back in',
       'After a single crash, the page now comes straight back light instead of dying again',
       'This now covers crashes at any moment — generating a map or a report included',
       'Switching apps or closing normally never counts as a crash',

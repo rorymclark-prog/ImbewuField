@@ -8,6 +8,7 @@ import { Settings, AlertTriangle, ChevronUp, Menu, Plus } from 'lucide-react';
 import AddSheet from '@/components/AddSheet';
 import { MAP_ELEMENT_FOR, type AddAction } from '@/lib/add-actions';
 import { CRASH_LOOP_SETTLE_MS, FARMER_LOAD_KEY, exitPageCrashGuard, markPageSettled, pageCrashGuard } from '@/lib/crash-loop';
+import { FARMER_PULSE_COOKIE, clearPulseCookie } from '@/lib/server-rescue';
 import DataPanel from '@/components/DataPanel';
 import TabBar from '@/components/TabBar';
 import ReportView from '@/components/ReportView';
@@ -97,7 +98,7 @@ function HomeInner() {
   // died identically on every retry. When the streak hits the threshold the MAP stays unmounted —
   // a placeholder offers it back on tap — while every panel keeps working, which is exactly what
   // a farmer locked out of their reports by the map behind them needs.
-  const mapGuard = useMemo(() => pageCrashGuard(FARMER_LOAD_KEY), []);
+  const mapGuard = useMemo(() => pageCrashGuard(FARMER_LOAD_KEY, FARMER_PULSE_COOKIE), []);
   const [mapHeld, setMapHeld] = useState(false);
   useEffect(() => { setMapHeld(mapGuard.active); }, [mapGuard.active]);
   const [mapReady, setMapReady] = useState(false);
@@ -106,7 +107,10 @@ function HomeInner() {
     // a light load and no map will mount at all. A fixed timer from mount is how the design
     // page's guard was beaten on 4G; see CRASH_LOOP_SETTLE_MS.
     if (!mapReady && !mapGuard.active) return;
-    const settled = window.setTimeout(() => markPageSettled(window.localStorage, mapGuard.key), CRASH_LOOP_SETTLE_MS);
+    const settled = window.setTimeout(() => {
+      markPageSettled(window.localStorage, mapGuard.key);
+      clearPulseCookie(FARMER_PULSE_COOKIE); // tell the server too — see lib/server-rescue.ts
+    }, CRASH_LOOP_SETTLE_MS);
     return () => window.clearTimeout(settled);
   }, [mapReady, mapGuard.active, mapGuard.key]);
 
