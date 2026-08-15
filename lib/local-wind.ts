@@ -35,7 +35,13 @@ export const COMPASS16_ORDER: readonly CompassDirection16[] = [
   'S', 'SSW', 'SW', 'WSW', 'W', 'WNW', 'NW', 'NNW',
 ];
 
-const COMPASS16_BEARING: Record<CompassDirection16, number> = {
+// Exported: this is the single canonical 16-point label -> bearing map (the exact inverse of
+// lib/biome.ts's aspectLabel, which buckets a bearing into these same 16 labels at 22.5° each).
+// Any consumer that turns one of aspectLabel's outputs back into a degree — e.g. a compass-rose
+// SVG rotation — must read it from here rather than hand-rolling a second table that only covers
+// the 8 cardinal/intercardinal points: aspectLabel routinely returns the other 8 (NNE, ENE, ESE,
+// SSE, SSW, WSW, WNW, NNW), and a lookup that doesn't know them silently mis-rotates the arrow.
+export const COMPASS16_BEARING: Record<CompassDirection16, number> = {
   N: 0, NNE: 22.5, NE: 45, ENE: 67.5, E: 90, ESE: 112.5, SE: 135, SSE: 157.5,
   S: 180, SSW: 202.5, SW: 225, WSW: 247.5, W: 270, WNW: 292.5, NW: 315, NNW: 337.5,
 };

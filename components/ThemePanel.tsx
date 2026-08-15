@@ -156,13 +156,15 @@ export default function ThemePanel({ open, onClose }: Props) {
             onClick={onClose}
             aria-label="Close settings"
             style={{
-              width: 28, height: 28, borderRadius: 6,
+              /* 44x44: the touch-target floor a fingertip needs. Was 28x28 — small enough to
+                 mistap on the panel that exists to help someone with exactly that problem. */
+              width: 44, height: 44, borderRadius: 10,
               border: '1px solid var(--border)', background: 'var(--bg-2)',
               color: 'var(--text-muted)', cursor: 'pointer',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
             }}
           >
-            <X size={14} />
+            <X size={16} />
           </button>
         </div>
 

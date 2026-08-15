@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 
 import {
   computeTankSizing,
@@ -183,6 +184,51 @@ test('bad individual month values are losses, never NaN in farmer-facing output'
     assert.ok(value >= 0);
   }
   assert.doesNotMatch(`${result.summary} ${result.jojoSuggestion}`, /NaN|Infinity/);
+});
+
+test('hand-verified against the default seasonal fixture: 100 m² roof, 100 L/day, 0.80 runoff', () => {
+  // Worked by hand against seasonalRain = [150,150,100,60,20,10,10,20,50,80,80,70] (mm),
+  // DAYS_IN_MONTH = [31,28,31,30,31,30,31,31,30,31,30,31], roofAreaM2=100, dailyUseL=100.
+  //
+  // This pins the coefficient this file's whole docblock promises (0.80) to a real number a
+  // farmer would see — a silent coefficient change (e.g. back to the old 0.85, or the drift
+  // that once left the Tank Calculator's own caption still quoting 0.85 in lib/i18n.tsx after
+  // the shared value moved to 0.80) would move every litre figure below and fail this test.
+  assert.equal(TANK_CALCULATOR_ROOF_RUNOFF_COEFFICIENT, 0.8);
+
+  // Monthly harvest = 100 m² x mm x 0.80: [12000,12000,8000,4800,1600,800,800,1600,4000,6400,6400,5600]
+  // Monthly use = days x 100 L: [3100,2800,3100,3000,3100,3000,3100,3100,3000,3100,3000,3100]
+  // May–Aug is the only run where harvest < use (the dry run); every other month is a surplus,
+  // so the cumulative deficit clears fully by November and never straddles the Dec→Jan wrap.
+  const result = sizing();
+
+  assert.equal(result.ok, true);
+  assert.equal(result.annualHarvestL, 64_000);
+  assert.equal(result.annualUseL, 36_500);
+  assert.equal(result.wetSeasonHarvestL, 59_200);
+  assert.equal(result.dryMonths, 4);
+  // Shortfall = (3100-1600)+(3000-800)+(3100-800)+(3100-1600) = 1500+2200+2300+1500 = 7500
+  assert.equal(result.dryRunShortfallL, 7_500);
+  assert.equal(result.waterNegative, false);
+  assert.equal(result.recommendedStorageL, 7_500);
+  assert.equal(result.jojoSuggestion, '1× 5 000 ℓ + 1× 2 500 ℓ JoJo');
+  assert.equal(
+    result.summary,
+    'Your 100 m² roof banks ~59 200 ℓ in the wet season — store ~7 500 ℓ '
+    + '(1× 5 000 ℓ + 1× 2 500 ℓ JoJo) to water 100 ℓ/day through the ~4 dry months.',
+  );
+});
+
+test('the Tank Calculator caption states the SAME runoff coefficient the sizing math actually uses', () => {
+  // lib/i18n.tsx once told the farmer "0.85 roof runoff" in the caption printed directly under
+  // the sizing result, while computeTankSizing had already moved to the shared 0.80 value — the
+  // number on screen and the number under it silently disagreed. Guard the coefficient actually
+  // appears, spelled the way a two-decimal-place value is written, so a future re-decision that
+  // forgets this caption fails loudly instead of drifting again.
+  const source = readFileSync(new URL('../lib/i18n.tsx', import.meta.url), 'utf8');
+  const match = source.match(/designTankMethod: '[^']*?(\d\.\d{2}) roof runoff/);
+  assert.ok(match, 'designTankMethod caption no longer states a X.XX roof runoff figure');
+  assert.equal(Number(match![1]), TANK_CALCULATOR_ROOF_RUNOFF_COEFFICIENT);
 });
 
 test('recommended storage never exceeds annual use', () => {
