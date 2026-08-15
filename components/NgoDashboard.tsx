@@ -515,7 +515,12 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                   </div>
                   <div className="min-w-0">
                     <div className="font-display font-bold text-base truncate" style={{ color: '#20190F' }}>{gardener.name}</div>
-                    <div className="text-xs font-mono" style={{ color: '#9A8268' }}>ID {gardener.idNumber}</div>
+                    {/* A funder is not the farmer's employer or their NGO — a South African ID
+                        number is not theirs to see. NGO programme staff (who register farmers
+                        for grants) keep it; funders get everything else on this card. */}
+                    {mode !== 'funder' && (
+                      <div className="text-xs font-mono" style={{ color: '#9A8268' }}>ID {gardener.idNumber}</div>
+                    )}
                     <div className="text-xs font-mono" style={{ color: '#9A8268' }}>{gardener.plot} · {gardener.sizeM2} m² · {garden.town}</div>
                   </div>
                 </div>
@@ -556,15 +561,19 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                       </div>
                     </div>
 
-                    {/* Garden design + report */}
+                    {/* Garden design + report — neither is wired to a real screen yet (the
+                        design and the report are the farmer's own docs; there is no staff-facing
+                        viewer for them today). These used to say "view" like a live link and did
+                        nothing when tapped. Say what's actually true instead of inviting a tap
+                        that goes nowhere. */}
                     <div className="grid grid-cols-2 gap-2">
                       <div className="rounded-lg overflow-hidden" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4' }}>
                         <div className="flex items-center justify-center" style={{ height: 54, background: 'rgba(47,111,158,0.12)' }}><MapIcon size={22} style={{ color: '#2F6F9E' }} /></div>
-                        <div className="px-2 py-1.5"><div className="text-xs font-display font-medium" style={{ color: '#20190F' }}>Garden design</div><div className="text-xs font-mono" style={{ color: '#2F6F9E' }}>view</div></div>
+                        <div className="px-2 py-1.5"><div className="text-xs font-display font-medium" style={{ color: '#20190F' }}>Garden design</div><div className="text-xs font-mono" style={{ color: '#9A8268' }}>not shown here yet</div></div>
                       </div>
                       <div className="rounded-lg overflow-hidden" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4' }}>
                         <div className="flex items-center justify-center" style={{ height: 54, background: 'rgba(158,92,8,0.12)' }}><FileText size={22} style={{ color: '#9E5C08' }} /></div>
-                        <div className="px-2 py-1.5"><div className="text-xs font-display font-medium" style={{ color: '#20190F' }}>Garden report</div><div className="text-xs font-mono" style={{ color: '#9E5C08' }}>view</div></div>
+                        <div className="px-2 py-1.5"><div className="text-xs font-display font-medium" style={{ color: '#20190F' }}>Garden report</div><div className="text-xs font-mono" style={{ color: '#9A8268' }}>not shown here yet</div></div>
                       </div>
                     </div>
 

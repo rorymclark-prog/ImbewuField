@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic';
 import { LayoutDashboard, Inbox } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
+import { canAccessRolePage } from '@/lib/role-access';
 import RoleSwitcher from '@/components/RoleSwitcher';
 import BackButton from '@/components/BackButton';
 import SettingsButton from '@/components/SettingsButton';
@@ -13,6 +14,7 @@ import BrandLogo from '@/components/BrandLogo';
 import TabBar from '@/components/TabBar';
 import ContactInbox from '@/components/ContactInbox';
 import LessonLink from '@/components/design/LessonLink';
+import type { UserRole } from '@/lib/db/types';
 
 const NgoDashboard = dynamic(() => import('@/components/NgoDashboard'), {
   ssr: false,
@@ -23,7 +25,7 @@ const NgoDashboard = dynamic(() => import('@/components/NgoDashboard'), {
   ),
 });
 
-const NGO_ALLOWED_ROLES = new Set(['ngo', 'admin']);
+const NGO_ALLOWED_ROLES = new Set<UserRole>(['ngo', 'admin']);
 
 export default function NgoPage() {
   const { user, role, loading } = useAuth();
@@ -36,7 +38,7 @@ export default function NgoPage() {
     if (!loading && !user && isLive) router.replace('/login');
   }, [user, loading, router, isLive]);
 
-  if (!loading && user && isLive && role && !NGO_ALLOWED_ROLES.has(role)) {
+  if (!loading && user && isLive && !canAccessRolePage(role, NGO_ALLOWED_ROLES)) {
     return (
       <div className="flex h-screen items-center justify-center px-4" style={{ background: 'var(--bg-0)' }}>
         <div className="rounded-2xl px-6 py-8 text-center max-w-xs" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
