@@ -2,6 +2,8 @@ import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import { activeAccountLocalStorageKey } from './account-local-storage';
 import { isSampleMode } from './sample-mode';
 import { isValidLocationData, isValidSiteData, isValidWaterData } from './last-site';
+import type { SavedPlace } from './saved-places';
+import { designSiteIdFromLocation } from './design-studio';
 
 // A permaculture report saved locally so the farmer can re-read it without
 // regenerating (each generation is an AI call). We store the markdown plus a
@@ -118,4 +120,69 @@ export function deleteReport(id: string): SavedReport[] {
 
 export function reportId(): string {
   return `${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
+}
+
+// ── Grouping saved reports by site ──────────────────────────────────────────
+//
+// A SavedReport's `name` is a biome plus a date (see the comment on the interface above) — it
+// carries no link to the farmer's own place. Two farms in the same biome produce rows a farmer
+// cannot tell apart, and the report picker had no way to say "these three are Ubhejane Crèche,
+// this one is the river field." That's the bug behind Rory's "should we see what sites first"
+// ask.
+//
+// One function answers "which site does this report belong to" — every screen that groups saved
+// reports by site (components/report/SavedReportsList.tsx today; the sole caller) must use THIS
+// one, not re-derive its own grouping. This repo's most repeated defect is exactly one truth
+// living in several places and drifting apart (see components/report/SavedReportsList.tsx's own
+// header comment for the last time that happened to this exact screen).
+//
+// DERIVED FROM COORDINATES AT READ TIME, deliberately, not stamped onto SavedReport at save time:
+// a place renamed after the report was saved shows its CURRENT name (no stale copy to migrate),
+// and every report ever saved — including ones saved long before this feature existed — groups
+// correctly with zero migration. The coordinate key is the SAME 5dp-rounded designSiteIdFromLocation
+// the survey/design/crop stores already key off (lib/design-studio.ts), so this grouping can never
+// disagree with the rest of the app about what counts as "the same site".
+
+/** Sentinel siteId for the "not saved as a site" bucket — every report whose coordinates match no
+ *  SavedPlace lands in ONE such group (not one bucket per orphan coordinate), so an untidy list of
+ *  unnamed taps doesn't multiply into an untidy list of unnamed *groups*. Exported so callers can
+ *  tell the two kinds of group apart without re-deriving the sentinel. */
+export const UNSAVED_SITE_KEY = 'site:unsaved';
+
+export interface SiteReportGroup {
+  /** designSiteIdFromLocation() of the group's coordinates for a matched site, or UNSAVED_SITE_KEY
+   *  for the catch-all. Stable across reloads, so a drill-down selection survives a re-render. */
+  siteId: string;
+  /** The matching saved place, or null for the "not saved as a site" catch-all. */
+  place: SavedPlace | null;
+  /** This group's reports, newest saved first. */
+  reports: SavedReport[];
+}
+
+/**
+ * Group a farmer's saved reports by the saved place their coordinates match, newest report first
+ * within each group and newest-group-first overall. Reports matching no saved place are NOT
+ * dropped — they collect under one UNSAVED_SITE_KEY group so a report can never go silently
+ * missing just because the farmer never bookmarked that spot as a named place.
+ */
+export function groupReportsBySite(reports: SavedReport[], places: SavedPlace[]): SiteReportGroup[] {
+  const placeBySiteId = new Map<string, SavedPlace>();
+  for (const p of places) {
+    placeBySiteId.set(designSiteIdFromLocation({ lat: p.lat, lon: p.lon } as LocationData), p);
+  }
+
+  const groups = new Map<string, SiteReportGroup>();
+  for (const r of reports) {
+    const matchedSiteId = designSiteIdFromLocation(r.location);
+    const place = placeBySiteId.get(matchedSiteId) ?? null;
+    const key = place ? matchedSiteId : UNSAVED_SITE_KEY;
+    const existing = groups.get(key);
+    if (existing) existing.reports.push(r);
+    else groups.set(key, { siteId: key, place, reports: [r] });
+  }
+
+  const result = [...groups.values()];
+  for (const g of result) g.reports.sort((a, b) => Date.parse(b.savedAt) - Date.parse(a.savedAt));
+  result.sort((a, b) => Date.parse(b.reports[0].savedAt) - Date.parse(a.reports[0].savedAt));
+  return result;
 }

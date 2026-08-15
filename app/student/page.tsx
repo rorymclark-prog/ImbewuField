@@ -636,7 +636,11 @@ export default function StudentPage() {
     );
   }
 
-  const doneCount = doneIds.size;
+  // Counted against the current curriculum, not the raw rows: a stale course_progress row for
+  // a module that has since been removed or renamed must not push this past 100% and show the
+  // learner a "127% done" ring. Mirrors enrollmentProgress in lib/course-enrollment.ts, which
+  // guards the same drift on the mentor's cohort view (see the ProgressBar fix in app/mentor).
+  const doneCount = COURSE_MODULES.filter((m) => doneIds.has(m.id)).length;
   const pct = TOTAL_MODULES === 0 ? 0 : Math.round((doneCount / TOTAL_MODULES) * 100);
   const totalMins = COURSE_MODULES.reduce((s, m) => s + (doneIds.has(m.id) ? 0 : m.durationMins), 0);
 
@@ -1054,7 +1058,7 @@ export default function StudentPage() {
           <p className="font-sans text-xs leading-relaxed mb-3" style={{ color: capstoneUnlocked ? '#3A3020' : '#8C7A62' }}>
             {capstoneUnlocked
               ? 'You have finished every module. Build your final design plan-set in the Design Studio — that is your completion artifact for the course.'
-              : 'Finish and submit all 10 modules to unlock your capstone design.'}
+              : `Finish and submit all ${TOTAL_MODULES} modules to unlock your capstone design.`}
           </p>
           {capstoneUnlocked && (
             <Link href="/design"
@@ -1074,7 +1078,12 @@ export default function StudentPage() {
               Course complete!
             </div>
             <p className="font-sans text-sm" style={{ color: '#5C5040' }}>
-              You have completed the full ImbewuField permaculture curriculum. Your trainer will be notified.
+              {/* No push/SMS/email notification exists anywhere in this app — the mentor
+                  dashboard only shows progress when a mentor opens it and looks. The old
+                  wording ("Your trainer will be notified") promised an alert the code never
+                  sends, which a farmer has no way to check up on. */}
+              You have completed the full ImbewuField permaculture curriculum. If you have a
+              mentor, they will see this progress next time they check in.
             </p>
           </div>
         )}

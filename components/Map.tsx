@@ -391,6 +391,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
   const [draftPoints, setDraftPoints] = useState<[number, number][]>([]);  // committed [lng,lat] corners
   const [mapCenter, setMapCenter] = useState<[number, number]>([25, -29]); // live centre = reticle position (drives reprojection)
   const movePending = useRef(false); // coalesce reticle reprojection to one update per animation frame
+  const zoomPending = useRef(false); // coalesce zoom state (below) to one update per animation frame
   const [siteStats, setSiteStats] = useState<SiteData | null>(null);
   const [waterStats, setWaterStats] = useState<WaterData | null>(null);
   const [locating, setLocating] = useState(false);
@@ -2125,7 +2126,17 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
         onClick={handleClick}
         onMouseMove={handleMouseMove}
         onMouseLeave={() => setHoverElevation(null)}
-        onZoom={(e) => setZoom(e.viewState.zoom)}
+        onZoom={(e) => {
+          if (zoomPending.current) return;
+          // Same coalescing as onMove below: a pinch or scroll zoom fires this on every
+          // animation frame, and pushing React state that often stutters the map on cheap
+          // Android phones. `zoom` itself must stay in React state — it drives the fine-contour
+          // Source swap and the +/- zoom buttons below — so coalesce the updates to 1/frame
+          // instead of turning it into an imperative ref read.
+          const z = e.viewState.zoom;
+          zoomPending.current = true;
+          requestAnimationFrame(() => { zoomPending.current = false; setZoom(z); });
+        }}
         onMove={(e) => {
           if ((!pinDraw && !editPin) || movePending.current) return;
           // Defer out of render phase (react-map-gl can fire onMove mid-render) + coalesce to 1/frame.
