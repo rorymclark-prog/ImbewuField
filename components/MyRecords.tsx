@@ -493,17 +493,25 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
           >
             {guide && guideLow !== null && guideHigh !== null ? (
               <>
-                <strong style={{ color: '#20190F' }}>Guide price, July 2026:</strong>{' '}
-                shops about R{guide.wholesalePerKg}/kg · direct/farm gate about R{guide.retailPerKg}/kg.
+                <strong style={{ color: '#20190F' }}>{t('myRecordsGuidePriceLabel')}</strong>{' '}
+                {t('myRecordsGuidePriceRange')
+                  .replace('{wholesale}', String(guide.wholesalePerKg))
+                  .replace('{retail}', String(guide.retailPerKg))}
                 {Number.isFinite(saleKg) && saleKg > 0 && (
-                  <> For {saleKg} kg, that is roughly R{(guideLow * saleKg).toFixed(2)}–R{(guideHigh * saleKg).toFixed(2)}.</>
+                  <>
+                    {' '}
+                    {t('myRecordsGuidePriceForKg')
+                      .replace('{kg}', String(saleKg))
+                      .replace('{low}', (guideLow * saleKg).toFixed(2))
+                      .replace('{high}', (guideHigh * saleKg).toFixed(2))}
+                  </>
                 )}{' '}
                 {guide.confidence === 'estimated'
-                  ? 'Estimated guide — confirm the local price.'
-                  : 'Sourced guide — enter the price you actually agreed.'}
+                  ? t('myRecordsGuideEstimated')
+                  : t('myRecordsGuideSourced')}
               </>
             ) : (
-              <>No trustworthy guide price is stored for this crop. Enter the price you actually agreed.</>
+              <>{t('myRecordsGuideMissing')}</>
             )}
           </div>
         )}

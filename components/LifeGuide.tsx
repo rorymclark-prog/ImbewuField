@@ -128,11 +128,12 @@ export default function LifeGuide({ locationData }: { locationData: LocationData
     })
       .then(async (r) => { if (!r.ok) throw new Error(String(r.status)); const d = await r.json(); if (!d || typeof d.ecosystem !== 'string') throw new Error('bad-shape'); return d; })
       .then((d: LifeGuideData) => { writeCache(cacheKey, d); setData(d); setLoading(false); })
-      .catch(() => { setError('Could not load — check connection'); setLoading(false); });
+      .catch(() => { setError(t('lifeGuideLoadError')); setLoading(false); });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [locationData]);
 
   if (!locationData) {
-    return <p className="text-xs font-display text-center py-8" style={{ color: '#8C7A62' }}>Select a location on the map first</p>;
+    return <p className="text-xs font-display text-center py-8" style={{ color: '#8C7A62' }}>{t('lifeGuideSelectLocation')}</p>;
   }
 
   if (loading) {
@@ -140,7 +141,7 @@ export default function LifeGuide({ locationData }: { locationData: LocationData
       <div className="space-y-3 py-2">
         <div className="flex items-center gap-2 mb-3">
           <Loader2 size={14} className="animate-spin" style={{ color: '#C07A1E' }} />
-          <span className="text-xs font-mono" style={{ color: '#8C7A62' }}>Building your living systems guide...</span>
+          <span className="text-xs font-mono" style={{ color: '#8C7A62' }}>{t('lifeGuideBuilding')}</span>
         </div>
         {[80, 60, 90, 50, 70].map((w, i) => <SkeletonLine key={i} w={`${w}%`} />)}
       </div>
