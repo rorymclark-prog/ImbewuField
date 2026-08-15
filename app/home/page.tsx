@@ -199,10 +199,20 @@ function TaskBoardCard({ tasks, onToggle }: { tasks: BoardTask[]; onToggle: (id:
 // the single next action, deep-linked. Deliberately mirrors the same source
 // of truth as DataPanel/NextStepCoach/HomeHeroCard (lib/site-progress.ts) so
 // this can never drift into a second scoring path.
-interface StepAction { label: string; href: (coords: Coords | null) => string }
+interface StepAction { label: string; href: (coords: Coords | null, siteId?: string) => string }
 const STEP_ACTIONS: Record<CompletionStepKey, StepAction> = {
   located: { label: 'Tap your land on the map', href: () => '/farmer' },
-  boundary: { label: 'Trace your boundary', href: () => '/farmer' },
+  // Land on THIS site, reticle already armed to trace — the same imbewu-arm-draw handoff
+  // the "+Add → Boundary" row fires on the map itself (components/Map.tsx), reached here
+  // via the farmer page's ?arm= one-shot deep link (app/farmer/page.tsx). Used to be a bare
+  // '/farmer': tapping "Trace your boundary" dropped the farmer on the default map with no
+  // site loaded and nothing armed, so the coaching told them to do a thing this link never
+  // actually started — same fix the NextStepCoach in-panel card already gets for free by
+  // dispatching the event directly (it's already sitting on the right site).
+  boundary: {
+    label: 'Trace your boundary',
+    href: (_c, siteId) => (siteId ? `/farmer?site=${siteId}&arm=site` : '/farmer?arm=site'),
+  },
   // The real survey sheet that feeds this score lives inside DataPanel; /farmer?openSurvey=1
   // loads the main site and auto-opens it (the older /survey wizard used a different store
   // and never moved this score).
@@ -245,7 +255,7 @@ function FarmPlanCard({ places, mainSite }: { places: SavedPlace[] | null; mainS
 
       {nextStep ? (
         <Link
-          href={STEP_ACTIONS[nextStep].href(coords)}
+          href={STEP_ACTIONS[nextStep].href(coords, mainSite?.id)}
           className="flex items-center justify-between font-sans font-semibold"
           style={{ marginTop: 12, fontSize: 14, color: 'var(--color-forest-800)', textDecoration: 'none' }}
         >
