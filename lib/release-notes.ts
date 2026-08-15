@@ -35,6 +35,14 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '15 August',
+    sha: 'f65e6fa',
+    changes: [
+      'The sign-in screen now opens with a picture of a smallholding, not an empty box',
+      'The example farm page does the same',
+    ],
+  },
+  {
+    when: '15 August',
     sha: '43f9692',
     changes: [
       'The designer now loads in parts, so it starts faster and fits weaker phones',
