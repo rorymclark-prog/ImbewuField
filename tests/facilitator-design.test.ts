@@ -285,3 +285,28 @@ test('well-formed storage state survives normalisation as a detached copy', () =
   assert.notEqual(normalised?.items, state.items);
   assert.notEqual(normalised?.lines[0].points, state.lines[0].points);
 });
+
+// ── The print button must never go silent in the installed app ─────────────
+//
+// app/facilitator/page.tsx keeps /facilitator/print alive specifically for old bookmarks — and a
+// page whose whole job is "reopen this to print" is exactly the kind a facilitator adds to their
+// home screen. window.print() is a silent no-op there (manifest display: "standalone"), the same
+// bug already fixed for the Site Analysis Report, the crop plan and the garden survey. This page's
+// content is live HTML/CSS, not a generated file, so the fix is not a new PDF builder — it is
+// detecting the dead end and telling the facilitator where printing does work.
+test('the facilitator print button detects the installed-app dead end and says so, instead of calling window.print() blind', () => {
+  const source = readFileSync(new URL('../app/facilitator/print/page.tsx', import.meta.url), 'utf8');
+  assert.match(source, /display-mode:\s*standalone/, 'must detect the installed-app shell window.print() cannot use');
+  assert.match(source, /navigator as Navigator & \{ standalone\?: boolean \}/, 'must also catch iOS Safari\'s older standalone flag');
+
+  const buttonStart = source.indexOf("<button\n          onClick");
+  const button = source.slice(buttonStart, source.indexOf('🖨 Print / Save as PDF', buttonStart));
+  assert.match(button, /if \(standalone\)/, 'the click handler must branch on the detected shell before ever reaching window.print()');
+  assert.match(button, /setShowPrintHint\(true\)/, 'a standalone tap must surface a message, not do nothing');
+  // window.print() must be reached only past a `return;` inside the standalone branch, i.e. it is
+  // the ELSE, not the unconditional call it used to be.
+  const standaloneBranch = button.slice(button.indexOf('if (standalone)'), button.indexOf('window.print()'));
+  assert.match(standaloneBranch, /return;/, 'window.print() must be gated behind the standalone check, not unconditional');
+
+  assert.match(source, /showPrintHint &&/, 'the hint state must actually render something');
+});

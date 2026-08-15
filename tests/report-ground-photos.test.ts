@@ -255,6 +255,9 @@ test('the strip and the PDF both carry the photographs', () => {
   // Two to a page: a 400px phone snap printed a full page wide is a blurry phone snap.
   assert.match(pdf, /i \+= 2/, 'the photographs are printed one to a page again');
   // A photo that will not draw costs its slot, never the report — the same rule the sheets follow.
-  const block = pdf.slice(pdf.indexOf('const photos = meta.photos'), pdf.indexOf('footer();', pdf.indexOf('const photos = meta.photos')));
+  // Bounded to the return at the end of the function, not the next footer() — the photos loop now
+  // calls footer() itself before each new page (see report-pdf.test.ts's footer-on-every-page
+  // case), so "the next footer()" no longer marks the end of the photos section.
+  const block = pdf.slice(pdf.indexOf('const photos = meta.photos'), pdf.indexOf("return doc.output('blob')"));
   assert.match(block, /catch \{\s*\n\s*continue;/, 'an unreadable photo must not lose the report');
 });

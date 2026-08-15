@@ -312,7 +312,7 @@ const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   designTankNeedRain: 'Open this place on the map to fetch its rainfall first — then this sizes your tanks from the site’s real rain.',
   designTankRoofArea: 'Roof area (m²)',
   designTankDailyUse: 'Daily use (ℓ)',
-  designTankMethod: 'From this site’s 30-yr rainfall, 0.85 roof runoff. A typical year — size up for drought.',
+  designTankMethod: 'From this site’s 30-yr rainfall, 0.80 roof runoff. A typical year — size up for drought.',
   designTankEnterValues: 'Enter a roof area and daily use to size your tanks.',
   // 9 sheets now (was 8): Earthworks (05) split out of Water as its own sheet, renumbering
   // Planting/Structures/Whole/Phasing up one each — see lib/glossy-filters.ts.
