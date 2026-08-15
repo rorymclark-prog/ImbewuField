@@ -40,7 +40,9 @@ test('every icon-only close/dismiss/remove button in these sheets has an accessi
     const s = source(rel);
     // Every bare `<X size=...` icon close glyph must sit behind a button carrying aria-label —
     // a lone "X" is unreadable to a screen reader either way.
-    const closeButtons = s.match(/<button[^>]*onClick=\{[^}]*(onClose|setStorageFull|handleRemove)[^}]*\}[^>]*>/g) ?? [];
+    // closeWithConfirm landed later (a data-loss guard wrapping the site questionnaire's own X in
+    // a confirm() before it calls onClose underneath) — still the same close-shaped button.
+    const closeButtons = s.match(/<button[^>]*onClick=\{[^}]*(onClose|closeWithConfirm|setStorageFull|handleRemove)[^}]*\}[^>]*>/g) ?? [];
     assert.ok(closeButtons.length > 0, `${rel} has no close-shaped button to check — did the markup change?`);
     for (const btn of closeButtons) {
       assert.match(btn, /aria-label/, `${rel} has an icon button with no aria-label: ${btn}`);
