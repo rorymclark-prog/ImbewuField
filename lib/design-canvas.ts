@@ -13,6 +13,7 @@ import { resolveBaseAlign } from '@/lib/base-photo-align';
 // Value import one way, type-only import back (CanvasFrame) — no runtime cycle.
 import { paintPlainPaperGround } from '@/lib/sheet-underlay';
 import { drainCanvasToDataUrl } from '@/lib/release-canvas';
+import { deviceBakeScale, deviceImageryRatio } from '@/lib/device-grade';
 import {
   accountLocalStorageKey,
   activeAccountLocalStorageKey,
@@ -659,7 +660,9 @@ export function fitZoom(
   return { zoom, centerLng, centerLat };
 }
 
-// Static Images API URL (center+zoom, satellite, no labels), logical px (<=1280), @2x.
+// Static Images API URL (center+zoom, satellite, no labels), logical px (<=1280). @2x on
+// laptops; @1x on phones (lib/device-grade.ts) — half the decode, and a 960-wide still is
+// already denser than a phone screen can show.
 export function buildSatelliteUrl(
   centerLng: number,
   centerLat: number,
@@ -670,10 +673,11 @@ export function buildSatelliteUrl(
 ): string {
   const w = Math.min(Math.round(imgW), 1280);
   const h = Math.min(Math.round(imgH), 1280);
+  const ratio = deviceImageryRatio() === 1 ? '' : '@2x';
   return (
     `https://api.mapbox.com/styles/v1/mapbox/satellite-v9/static/` +
     `${centerLng.toFixed(6)},${centerLat.toFixed(6)},${zoom.toFixed(4)},0,0/` +
-    `${w}x${h}@2x?access_token=${encodeURIComponent(token)}&attribution=false&logo=false`
+    `${w}x${h}${ratio}?access_token=${encodeURIComponent(token)}&attribution=false&logo=false`
   );
 }
 
@@ -852,8 +856,13 @@ export async function bakeBaseAlignment(
   // keep — and it would do it on every nudge and every turn, so the farmer's photo would get
   // softer the more they adjusted it. All the drawing below stays in LOGICAL frame coordinates;
   // the context is scaled once, so this is a pure supersample and no geometry changes.
+  //
+  // …EXCEPT on phone-grade devices, where the ceiling drops to 2× (lib/device-grade.ts). This
+  // canvas is the app's single largest allocation and it is live together with both decoded
+  // source images; at 3× that stack is what iOS kills the page over. A phone still bakes at
+  // twice its frame resolution — sharper than its own screen — and laptops keep print-grade 3×.
   const superSample = Math.min(
-    BASE_PHOTO_EXPORT_SCALE,
+    deviceBakeScale(BASE_PHOTO_EXPORT_SCALE),
     Math.max(1, Math.round((img.naturalWidth || frameW) / frameW)),
   );
   const canvas = document.createElement('canvas');

@@ -37,6 +37,10 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     when: '15 August',
     sha: '258b644',
     changes: [
+      'The designer now loads in parts, so it starts faster and fits weaker phones',
+      'Photo import, the advisor and the step guide arrive when needed, not up front',
+      'On phones, photo and satellite work now uses phone-sized memory, not print-sized',
+      'Plans made on a laptop keep full print quality',
       'The automatic switch to the simple page is off — every page opens normally again',
       'It was catching healthy computers too, not only crashing phones',
     ],
