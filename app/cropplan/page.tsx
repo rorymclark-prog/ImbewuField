@@ -4,21 +4,20 @@ import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import {
   Droplets, Layers, Sprout, Scissors, Leaf, Camera, ClipboardList,
-  ChevronLeft, ChevronRight, Sun, CloudRain, Snowflake,
+  ChevronLeft, ChevronRight, Sun, CloudRain, Snowflake, Sparkles,
 } from 'lucide-react';
 import BackButton from '@/components/BackButton';
 import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
-import { activeAccountLocalStorageKey } from '@/lib/account-local-storage';
+import { DEFAULT_BEDS, loadBeds, type Bed } from './load-beds';
 
 // ─── Types & data ────────────────────────────────────────────────────────────
 
 type View = 'day' | 'week' | 'month' | 'season';
 type JobType = 'water' | 'mulch' | 'feed' | 'weed' | 'harvest' | 'photo' | 'plan';
 interface Job { type: JobType; title: string; sub: string }
-interface Bed { letter: string; crop: string }
 
 const JOB_META: Record<JobType, { Icon: typeof Droplets; color: string; short: string }> = {
   water:   { Icon: Droplets,      color: '#235E86', short: 'Water' },
@@ -29,38 +28,6 @@ const JOB_META: Record<JobType, { Icon: typeof Droplets; color: string; short: s
   photo:   { Icon: Camera,        color: '#C07A1E', short: 'Photo' },
   plan:    { Icon: ClipboardList, color: '#1F4D2B', short: 'Plan' },
 };
-
-const DEFAULT_BEDS: Bed[] = [
-  { letter: 'A', crop: 'Spinach' }, { letter: 'B', crop: 'Tomatoes' },
-  { letter: 'C', crop: 'Maize' },   { letter: 'D', crop: 'Beans' },
-];
-const LATEST_SURVEY_KEY = 'imbewu_garden_survey';
-const DEFAULT_SURVEY_KEY = 'imbewu_garden_survey_default';
-const PLANNER_CROPS_KEY = 'imbewu_planner_crops';
-
-function loadBeds(): Bed[] {
-  if (typeof window === 'undefined') return DEFAULT_BEDS;
-  for (const baseKey of [LATEST_SURVEY_KEY, DEFAULT_SURVEY_KEY]) {
-    try {
-      const s = JSON.parse(
-        localStorage.getItem(activeAccountLocalStorageKey(baseKey)) || 'null',
-      );
-      if (s?.bedCrops?.length) {
-        return s.bedCrops.map((c: string, i: number) => ({
-          letter: String.fromCharCode(65 + i),
-          crop: c,
-        }));
-      }
-    } catch { /* try the next account-local source */ }
-  }
-  try {
-    const p = JSON.parse(
-      localStorage.getItem(activeAccountLocalStorageKey(PLANNER_CROPS_KEY)) || 'null',
-    );
-    if (Array.isArray(p) && p.length) return p.slice(0, 6).map((c: string, i: number) => ({ letter: String.fromCharCode(65 + i), crop: c }));
-  } catch { /* ignore */ }
-  return DEFAULT_BEDS;
-}
 
 // Deterministic weekly job rota, parameterised by the farmer's beds.
 function jobsForDate(d: Date, beds: Bed[]): Job[] {
@@ -124,9 +91,15 @@ export default function CropPlanPage() {
   const [cursor, setCursor] = useState<Date | null>(null);
   const [today, setToday] = useState<Date | null>(null);
   const [beds, setBeds] = useState<Bed[]>(DEFAULT_BEDS);
+  const [isDemoBeds, setIsDemoBeds] = useState(false);
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => { setBeds(loadBeds()); const now = new Date(); setCursor(now); setToday(now); setMounted(true); }, []);
+  useEffect(() => {
+    const loaded = loadBeds();
+    setBeds(loaded.beds);
+    setIsDemoBeds(loaded.isDemo);
+    const now = new Date(); setCursor(now); setToday(now); setMounted(true);
+  }, []);
 
   const safeCursor = cursor ?? new Date(0);
   const safeToday = today ?? new Date(0);
@@ -176,6 +149,28 @@ export default function CropPlanPage() {
         <LessonLink id="crops:planner" label="Learn" />
         <SettingsButton />
       </header>
+
+      {/* Demo-fallback notice — pinned outside the scroll area so it can't be scrolled
+          past. Only DEFAULT_BEDS (an invented example, not anything the farmer saved)
+          triggers this; see load-beds.ts. */}
+      {mounted && isDemoBeds && (
+        <div
+          className="flex-shrink-0 flex items-center justify-center gap-3 px-4 py-2 flex-wrap text-center"
+          style={{ background: '#C07A1E', borderBottom: '1px solid rgba(32,25,15,0.15)' }}
+        >
+          <span className="flex items-center gap-1.5 font-display font-semibold" style={{ fontSize: 13, color: '#fff' }}>
+            <Sparkles size={14} />
+            Example schedule — these are not your beds yet.
+          </span>
+          <Link
+            href="/facilitator/crops"
+            className="flex items-center gap-1 px-3 py-1 rounded-full font-sans font-semibold"
+            style={{ fontSize: 12, background: '#fff', color: '#C07A1E', textDecoration: 'none' }}
+          >
+            Set up my beds
+          </Link>
+        </div>
+      )}
 
       <div className="flex-1 overflow-y-auto">
         <div className="mx-auto w-full px-4 py-5" style={{ maxWidth: view === 'week' || view === 'month' ? 880 : 560 }}>

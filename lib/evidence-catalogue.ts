@@ -112,6 +112,23 @@ export const EVIDENCE_CATALOGUE: EvidenceCatalogueGroup[] = [
       { key: 'electricity_bills', label: 'Electricity bills', docOnly: true },
     ],
   },
+  {
+    key: 'land_legal',
+    label: 'Land & legal',
+    color: '#4A5578',
+    bg: '#EAECF3',
+    iconBg: '#DFE2EE',
+    items: [
+      // CASP and comparable SA smallholder funding programmes ask for these by name. Every tile
+      // here is docOnly — the same capture flow as water_bills / lab_result / electricity_bills
+      // above, not a new one — because these are papers to photograph or upload, not garden shots.
+      { key: 'pto_lease_title', label: 'PTO / lease / title deed', docOnly: true },
+      { key: 'certified_id', label: 'Certified ID copy', docOnly: true },
+      { key: 'bank_confirmation', label: 'Bank confirmation letter', docOnly: true },
+      { key: 'water_use_licence', label: 'Water-use licence', docOnly: true },
+      { key: 'dam_registration', label: 'Dam registration certificate', docOnly: true },
+    ],
+  },
 ];
 
 // Quick-number fields per group for the evidence sheet
@@ -125,6 +142,27 @@ export const QUICK_NUMBERS: Record<string, { key: string; label: string; unit: s
     { key: 'monthly_kwh', label: 'Monthly electricity', unit: 'kWh' },
     { key: 'solar_kw', label: 'Solar capacity', unit: 'kW' },
   ],
+};
+
+/**
+ * Emoji badge per catalogue group, PLUS the ad hoc 'site_photos' bucket the Reports tab and
+ * evidence sheets use for the farm's general/all-groups photo roll — it is not a catalogue
+ * group (no items[] of its own), but it opens the same EvidenceSheet and needs the same badge.
+ *
+ * Three call sites used to keep their own copy of this map. The Reports tab's "Site photos"
+ * tile (DataPanel.tsx) had the 'site_photos' entry; the sheet that tile opens (EvidenceSheet.tsx)
+ * did not, so its header badge sat blank — a catalogue entry known in one file and missing from
+ * the file that renders it. One map now, so a new group can only ever be un-iconed everywhere
+ * or nowhere.
+ */
+export const EVIDENCE_GROUP_ICON: Record<string, string> = {
+  water: '💧',
+  structures: '🏠',
+  soil: '🌱',
+  trees: '🌿',
+  animals: '🐓',
+  energy: '⚡',
+  site_photos: '📸',
 };
 
 const evidenceGroupsByKey = new Map(EVIDENCE_CATALOGUE.map((group) => [group.key, group]));
@@ -193,6 +231,7 @@ export const LIMA_TIPS: Record<string, string> = {
   structures: '"Stand back to record the whole roof, add a note about its condition, and trace it on the map for a measured catchment area."',
   animals: '"Record even empty kraals and coops, and add a note naming the animals they serve so the report has useful context."',
   energy: '"Keep a clear photo of the electricity bill, then enter the monthly kWh in the quick numbers so the report can use it."',
+  land_legal: '"Photograph or scan every page flat and in good light, including stamps, signatures and dates — a funder has to be able to read every word, and keep the real paper safe too, this app is not where it is kept."',
 };
 
 export const INDIGENOUS_EDIBLES = [

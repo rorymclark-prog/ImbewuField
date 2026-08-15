@@ -97,4 +97,62 @@ export function accountLocalStorageKeyMatchesPrefix(
   );
 }
 
+/**
+ * One localStorage row to carry over from the guest namespace into a freshly
+ * signed-in account's namespace, plus the predicate that decides whether that
+ * account's row already holds real content worth protecting.
+ */
+export interface GuestLocalStorageMigration {
+  /** The store's bare/unscoped key, e.g. lib/field-journal.ts's STORAGE_KEY. */
+  baseKey: string;
+  /** True when `raw` (the uid-scoped row, or null if it doesn't exist yet) has no
+   *  farmer-entered content — i.e. it is safe to overwrite with the guest draft. */
+  isEmpty: (raw: string | null) => boolean;
+}
+
+/**
+ * Copy guest-namespaced rows into a newly signed-in account's namespace, but only
+ * into rows that don't already hold real data. Call this once, synchronously,
+ * right after a successful signUp / signIn / signInWithGoogle / getRedirectResult
+ * — see lib/auth.tsx.
+ *
+ * Some pages (the Field Journal, the Crop Planner) are reachable while signed out.
+ * A farmer who writes there before ever creating an account is working under the
+ * `guest` owner suffix; the moment they sign up, activeAccountLocalStorageKey()
+ * starts reading an entirely different physical row for the same base key, and
+ * without this call that guest work would simply vanish. Signing IN (not just up)
+ * goes through the same path deliberately, so a farmer who drafted a journal entry
+ * as a guest on a shared phone before logging into their existing account still
+ * gets it — but ONLY when their real account's row is empty, so signing in on a
+ * second device can never let a stale guest draft clobber real cloud-era data.
+ *
+ * Deliberately synchronous (plain localStorage calls, no I/O) and swallow-all: this
+ * runs inline in the sign-in path, and a farmer must be able to log in even if one
+ * row's migration throws (corrupt guest JSON, a full origin, anything). Each row is
+ * handled independently so one bad row can't block another.
+ *
+ * The guest row is deleted after a successful copy. Leaving it behind would mean
+ * the next guest session on a shared family phone opens straight into the previous
+ * person's journal — worse than the data loss this function exists to fix.
+ */
+export function migrateGuestLocalStorageRows(
+  migrations: readonly GuestLocalStorageMigration[],
+  uid: string,
+): void {
+  if (typeof window === 'undefined' || !window.localStorage) return;
+  for (const { baseKey, isEmpty } of migrations) {
+    try {
+      const guestKey = `${baseKey}${OWNER_SEPARATOR}${SIGNED_OUT_OWNER}`;
+      const guestRaw = window.localStorage.getItem(guestKey);
+      if (guestRaw === null || isEmpty(guestRaw)) continue; // nothing worth copying
+      const uidKey = accountLocalStorageKey(baseKey, uid);
+      if (!isEmpty(window.localStorage.getItem(uidKey))) continue; // never clobber real data
+      window.localStorage.setItem(uidKey, guestRaw);
+      window.localStorage.removeItem(guestKey);
+    } catch {
+      // One row's migration must never break sign-in. See the function-level note.
+    }
+  }
+}
+
 export const ACCOUNT_LOCAL_STORAGE_OWNER_SEPARATOR = OWNER_SEPARATOR;
