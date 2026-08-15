@@ -33,6 +33,8 @@ import type { ProductionLog, SalesLog, ExpenseLog, Design, Profile } from '@/lib
 import CropSelect from '@/components/CropSelect';
 import { loadCropPriceOverrides, priceFor, type CropPrice } from '@/lib/crop-prices';
 import { parseDecimalInput } from '@/lib/decimal-input';
+import { loadInvoices, type SavedInvoice } from '@/lib/invoices';
+import { cashIncomeTotal } from '@/lib/invoice-sales';
 import { creditPackHasAnyRecords } from '@/lib/credit-pack';
 import {
   buildCreditPackPdf,
@@ -831,8 +833,19 @@ export default function MyRecords() {
   const [sales, setSales] = useState<SalesLog[]>([]);
   const [expenses, setExpenses] = useState<ExpenseLog[]>([]);
   const [designs, setDesigns] = useState<Design[]>([]);
+  const [invoices, setInvoices] = useState<SavedInvoice[]>([]);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [dataLoading, setDataLoading] = useState(false);
+
+  // Paid invoices are localStorage-only (see lib/invoice-seller.ts) and never come back from
+  // myProduction/mySales/designsSharedWithMe, so they get their own load + change listener —
+  // same pattern as app/finances/page.tsx — instead of waiting on auth or the Firestore round trip.
+  useEffect(() => {
+    const refresh = () => setInvoices(loadInvoices());
+    refresh();
+    window.addEventListener('imbewu-invoices-changed', refresh);
+    return () => window.removeEventListener('imbewu-invoices-changed', refresh);
+  }, []);
 
   // Subscribe to auth state without importing lib/auth
   useEffect(() => {
@@ -988,8 +1001,12 @@ export default function MyRecords() {
       />
 
       {/* ── Sales summary ────────────────────────────── */}
-      {sales.length > 0 && (() => {
-        const totalRev = sales.reduce((s, p) => s + (p.amount ?? 0), 0);
+      {(sales.length > 0 || invoices.some((i) => i.status === 'paid')) && (() => {
+        // Summing `sales` alone double-counted a paid invoice's kg lines (also synced into
+        // `sales` by syncInvoiceSales) while missing its bags/crates/other non-kg lines entirely
+        // (they never create a sales row — their weight is unknown). cashIncomeTotal is the one
+        // place that combines sales and invoices correctly; see lib/invoice-sales.ts.
+        const totalRev = cashIncomeTotal(sales, invoices);
         const totalKgSold = sales.reduce((s, p) => s + (p.kg ?? 0), 0);
         const recent = sales.slice(0, 12);
         const maxAmt = Math.max(...recent.map((p) => p.amount ?? 0), 1);
