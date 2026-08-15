@@ -1,5 +1,5 @@
 'use client';
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { X, Camera, Check, Loader2, User } from 'lucide-react';
 import { uploadProfilePhoto, updateMyProfile } from '@/lib/db/queries';
 import type { Profile } from '@/lib/db/types';
@@ -115,6 +115,9 @@ function Toggle({
       <button
         type="button"
         onClick={() => onChange(!on)}
+        role="switch"
+        aria-checked={on}
+        aria-label={label}
         className="flex items-center rounded-full transition-all flex-shrink-0"
         style={{
           width: 44,
@@ -250,6 +253,14 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
     }
   }, [profile, fullName, bio, skills, showOnMap, photoUrl, mapCenter, onSaved, onClose]);
 
+  // Close on Escape — matches every other full-screen sheet in the app (AddSheet, ThemePanel, etc).
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [open, onClose]);
+
   if (!open) return null;
 
   const roleColor = ROLE_COLOR[profile?.role ?? 'farmer'] ?? '#5C5040';
@@ -262,6 +273,9 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
 
   return (
     <div
+      role="dialog"
+      aria-modal="true"
+      aria-label="Your profile"
       className="fixed inset-0 z-50 flex flex-col"
       style={{ background: '#E4DCC6' }}
     >
@@ -273,6 +287,7 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
         <button
           type="button"
           onClick={onClose}
+          aria-label="Close"
           style={{
             width: 38,
             height: 38,
