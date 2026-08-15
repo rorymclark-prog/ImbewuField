@@ -8,12 +8,15 @@ import { useLanguage } from '@/lib/i18n';
 import {
   myProduction,
   mySales,
+  myExpenses,
   addProduction,
   addSale,
   designsSharedWithMe,
   uploadPhoto,
+  getMyProfile,
   WriteTimeoutError,
 } from '@/lib/db/queries';
+import { isSampleMode } from '@/lib/sample-mode';
 import {
   Sprout,
   ArrowRight,
@@ -24,10 +27,18 @@ import {
   Leaf,
   Banknote,
   Ruler,
+  Landmark,
 } from 'lucide-react';
-import type { ProductionLog, SalesLog, Design } from '@/lib/db/types';
+import type { ProductionLog, SalesLog, ExpenseLog, Design, Profile } from '@/lib/db/types';
 import CropSelect from '@/components/CropSelect';
 import { loadCropPriceOverrides, priceFor, type CropPrice } from '@/lib/crop-prices';
+import { creditPackHasAnyRecords } from '@/lib/credit-pack';
+import {
+  buildCreditPackPdf,
+  deliverCreditPackPdf,
+  creditPackPdfFilename,
+  CreditPackSampleModeError,
+} from '@/lib/credit-pack-pdf';
 
 // Shown when addProduction/addSale (lib/db/queries.ts) time out waiting for the server — see the
 // WriteTimeoutError comment there. Deliberately NOT run through t(): this repo never invents
@@ -703,6 +714,116 @@ function SharedDesignsList({ items }: { items: Design[] }) {
   );
 }
 
+/* ── Records for a lender ─────────────────────────────────────────────────── */
+//
+// Text here is deliberately NOT run through t() — same rule the exported PDF follows and the one
+// tests/design-studio-i18n.test.ts enforces for anything painted onto an exported document: a file
+// a farmer hands to someone else must not change wording with whatever language the app happened
+// to be set to. See lib/credit-pack-pdf.ts for the document itself.
+
+function CreditPackCard({
+  production,
+  sales,
+  expenses,
+  profile,
+}: {
+  production: ProductionLog[];
+  sales: SalesLog[];
+  expenses: ExpenseLog[];
+  profile: Profile | null;
+}) {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const sampling = isSampleMode();
+  const ready = creditPackHasAnyRecords(production, sales, expenses);
+
+  async function handleExport() {
+    setError('');
+    setLoading(true);
+    try {
+      const farmer = {
+        name: profile?.full_name?.trim() || null,
+        farmName: profile?.farm_name?.trim() || null,
+        phone: profile?.phone?.trim() || null,
+      };
+      const blob = await buildCreditPackPdf({ farmer, production, sales, expenses });
+      await deliverCreditPackPdf(blob, creditPackPdfFilename(farmer.farmName ?? farmer.name));
+    } catch (err) {
+      setError(
+        err instanceof CreditPackSampleModeError
+          ? err.message
+          : 'Could not build the document. Please try again.',
+      );
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <Card accent="#2E6B3A">
+      <div className="flex items-start gap-3 mb-2">
+        <div
+          className="w-9 h-9 rounded-lg flex-shrink-0 flex items-center justify-center"
+          style={{ background: 'rgba(46,107,58,0.10)', border: '1px solid rgba(46,107,58,0.18)' }}
+        >
+          <Landmark size={18} style={{ color: '#2E6B3A' }} />
+        </div>
+        <div>
+          <p className="text-sm font-display font-semibold" style={{ color: '#20190F' }}>
+            Records for a lender
+          </p>
+          <p className="text-xs font-sans mt-0.5 leading-relaxed" style={{ color: '#8C7A62' }}>
+            A summary of your logged harvests, sales and costs — income consistency, cash flow and
+            a track record, built only from what you have entered. Material for a conversation with
+            a lender, not a credit score or a loan approval.
+          </p>
+        </div>
+      </div>
+
+      {sampling ? (
+        <p className="text-xs font-sans rounded-lg px-3 py-2" style={{ background: '#F7F2E9', color: '#9A8268', border: '1px solid #E2D8C4' }}>
+          This export is turned off while you are viewing the sample farm. Sign in and turn off the
+          sample to export your own records.
+        </p>
+      ) : !ready ? (
+        <p className="text-xs font-sans rounded-lg px-3 py-2" style={{ background: '#F7F2E9', color: '#9A8268', border: '1px solid #E2D8C4' }}>
+          Log at least one harvest, sale or cost first — there is nothing to summarise yet.
+        </p>
+      ) : (
+        <button
+          type="button"
+          onClick={() => { void handleExport(); }}
+          disabled={loading}
+          className="w-full py-2 rounded-xl text-xs font-display font-semibold flex items-center justify-center gap-2 transition-all"
+          style={{
+            background: loading ? 'rgba(46,107,58,0.06)' : 'rgba(46,107,58,0.14)',
+            border: '1px solid rgba(46,107,58,0.32)',
+            color: loading ? '#9A8268' : '#2E6B3A',
+            cursor: loading ? 'not-allowed' : 'pointer',
+          }}
+        >
+          {loading ? (
+            <>
+              <Loader2 size={14} className="animate-spin" style={{ color: '#2E6B3A' }} />
+              Building document…
+            </>
+          ) : (
+            <>
+              <Landmark size={14} /> Export records for a lender
+            </>
+          )}
+        </button>
+      )}
+
+      {error && (
+        <p className="text-xs font-mono mt-2" style={{ color: '#C0531E' }}>
+          {error}
+        </p>
+      )}
+    </Card>
+  );
+}
+
 /* ── Main MyRecords component ────────────────────────────────────────────── */
 
 export default function MyRecords() {
@@ -710,7 +831,9 @@ export default function MyRecords() {
   const [user, setUser] = useState<User | null | 'loading'>('loading');
   const [production, setProduction] = useState<ProductionLog[]>([]);
   const [sales, setSales] = useState<SalesLog[]>([]);
+  const [expenses, setExpenses] = useState<ExpenseLog[]>([]);
   const [designs, setDesigns] = useState<Design[]>([]);
+  const [profile, setProfile] = useState<Profile | null>(null);
   const [dataLoading, setDataLoading] = useState(false);
 
   // Subscribe to auth state without importing lib/auth
@@ -729,10 +852,12 @@ export default function MyRecords() {
   const loadData = useCallback(async (isCancelled?: () => boolean) => {
     setDataLoading(true);
     try {
-      const [prod, saleRows, des] = await Promise.all([
+      const [prod, saleRows, expenseRows, des, myProfile] = await Promise.all([
         myProduction(),
         mySales(),
+        myExpenses(),
         designsSharedWithMe(),
+        getMyProfile(),
       ]);
       if (isCancelled?.()) return;
       // Sort production newest-first (logged_at field is ISO string or Firestore timestamp)
@@ -741,7 +866,9 @@ export default function MyRecords() {
       });
       setProduction(sortedProd);
       setSales([...saleRows].sort((a, b) => (b.sold_at ?? '').localeCompare(a.sold_at ?? '')));
+      setExpenses(expenseRows);
       setDesigns(des);
+      setProfile(myProfile);
     } finally {
       if (!isCancelled?.()) setDataLoading(false);
     }
@@ -755,7 +882,9 @@ export default function MyRecords() {
     } else if (user === null) {
       setProduction([]);
       setSales([]);
+      setExpenses([]);
       setDesigns([]);
+      setProfile(null);
     }
     return () => { cancelled = true; };
   }, [user, loadData]);
@@ -902,6 +1031,11 @@ export default function MyRecords() {
         <SectionLabel>{t('myRecordsSalesHeader')}</SectionLabel>
         <SalesList items={sales.slice(0, 10)} />
       </Card>
+
+      <Divider />
+
+      {/* ── Records for a lender ─────────────────────── */}
+      <CreditPackCard production={production} sales={sales} expenses={expenses} profile={profile} />
 
       <Divider />
 
