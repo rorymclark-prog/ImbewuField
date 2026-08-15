@@ -289,6 +289,8 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
                       <span style={{ font: '400 13px/1 system-ui, sans-serif', color: '#6B5D44', flex: 1 }}>{f.label}</span>
                       <input
                         autoFocus
+                        type="text"
+                        inputMode="decimal"
                         value={editValue}
                         onChange={(e) => setEditValue(e.target.value)}
                         onKeyDown={(e) => { if (e.key === 'Enter') saveField(f.key); if (e.key === 'Escape') setEditingField(null); }}
