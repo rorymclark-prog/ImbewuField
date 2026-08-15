@@ -185,9 +185,12 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
     return () => window.clearTimeout(t);
   }, [updateAvailable, expanded]);
 
-  // Allow forcing the update notice on any screen during testing (?force-update=1 or ?show-update=1).
+  // Lets a developer force the update notice on any screen for testing (?force-update=1 or
+  // ?show-update=1). Dev-only: without this gate any visitor could conjure a fake "New version
+  // available" panel on a farmer's phone just by adding a query param.
   useEffect(() => {
     if (typeof window === 'undefined') return;
+    if (process.env.NODE_ENV === 'production') return;
     const params = new URLSearchParams(window.location.search);
     if (params.has('force-update') || params.has('show-update')) {
       setUpdateAvailable(true);
@@ -211,9 +214,13 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
   const displayedNotes = showAllNotes ? notes : notes.slice(0, VISIBLE_NOTES_CAP);
   const remainingNotesCount = notes.length - VISIBLE_NOTES_CAP;
 
-  // Spaced clear of the fixed bottom navigation (calc(var(--bottom-nav-height, 60px) + env(safe-area-inset-bottom, 0px) + 0.5rem))
-  // and horizontally centered to avoid colliding with the Lima floating button at bottom-left.
-  const containerBottomStyle = 'calc(var(--bottom-nav-height, 60px) + env(safe-area-inset-bottom, 0px) + 0.5rem)';
+  // Spaced clear of the bottom navigation. --bottom-nav-height is published by TabBar.tsx from
+  // its own measured height (it is in normal flow, not fixed — see the comment there), so this
+  // tracks the real bar instead of a guessed constant. No fallback number here: app/globals.css's
+  // :root rule already guarantees the variable is defined pre-hydration, and a second copy of
+  // that literal here is exactly the two-places-drift this app keeps tripping on.
+  // Horizontally centered to avoid colliding with the Lima floating button at bottom-left.
+  const containerBottomStyle = 'calc(var(--bottom-nav-height) + env(safe-area-inset-bottom, 0px) + 0.5rem)';
 
   if (!expanded) {
     // The whole notice, reduced to something that cannot cover a button: a small pill clear of bottom nav.
@@ -325,7 +332,12 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
       >
         {refreshing ? 'Refreshing…' : 'Refresh update'}
       </button>
-      {/* WHAT you are refreshing into. Show at most 2 notes capped by default, with an honest "and X more" expansion. */}
+      {/* WHAT you are refreshing into. "New version available" alone tells the farmer a number
+          changed, not whether it is worth interrupting their work for, nor what to go and look at
+          afterwards. See lib/release-notes.ts for the house style: one short line per change, in
+          what-you-will-see terms. Capped to VISIBLE_NOTES_CAP lines by default, with an honest
+          "and X more" expansion — this whole card is already a step past the collapsed pill
+          someone tapped open on purpose, so it earns a couple of lines but not a wall of text. */}
       {notes.length > 0 && (
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.25rem', width: '100%' }}>
           <ul
