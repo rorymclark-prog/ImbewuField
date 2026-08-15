@@ -506,7 +506,7 @@ function HomeInner() {
             className="flex items-center gap-1.5 px-2.5 md:px-3 py-1.5 rounded-full font-sans font-bold transition-all flex-shrink-0"
             style={{ fontSize: 15, background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.3)', color: '#1F4D2B' }}
           >
-            <span aria-hidden>🎨</span> <span>Design Studio</span>
+            <span aria-hidden>🎨</span> <span>{t('designStudioLabel')}</span>
           </Link>
           {buildInfo?.sha && (
             <div
@@ -716,10 +716,10 @@ function HomeInner() {
               transform: sheetOpen ? 'translateY(8px)' : 'translateY(0)',
             }}
             onClick={() => setSheetOpen(true)}
-            aria-label="Open details panel"
+            aria-label={t('openDetailsPanelAriaLabel')}
           >
             <ChevronUp size={16} />
-            {(data || loading) ? 'Results' : 'Details'}
+            {(data || loading) ? t('resultsButton') : t('detailsButton')}
             {loading && <span className="animate-spin inline-block text-xs">...</span>}
           </button>
 
@@ -762,14 +762,14 @@ function HomeInner() {
               // treating it as a page scroll — without it the drag never reaches React.
               style={{ cursor: 'grab', background: 'transparent', border: 'none', touchAction: 'none' }}
               data-sheet-grabber=""
-              aria-label="Close details panel — drag down or tap"
+              aria-label={t('closeDetailsPanelAriaLabel')}
             >
               <div
                 className="rounded-full"
                 style={{ width: 40, height: 4, background: '#E2D8C4', opacity: 0.7 }}
               />
               <span className="text-xs font-mono" style={{ color: '#8C7A62', opacity: 0.6, letterSpacing: '0.05em' }}>
-                tap to close
+                {t('tapToClose')}
               </span>
             </button>
 

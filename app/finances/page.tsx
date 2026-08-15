@@ -9,6 +9,7 @@ import { getFirebase } from '@/lib/firebase/init';
 import {
   addSale, addExpense, myProduction, mySales, myExpenses,
   updateSale, updateExpense, deleteSale, deleteExpense,
+  WriteTimeoutError,
 } from '@/lib/db/queries';
 import type { SalesLog, ProductionLog, ExpenseLog, ExpenseCategory } from '@/lib/db/types';
 import { loadInvoices, saveInvoice, addCustomer, addProduct, invoiceId, paymentMethodLabel, type SavedInvoice } from '@/lib/invoices';
@@ -338,8 +339,10 @@ const emptyForm = (): SaleFormState => ({ crop: '', expenseCrop: '', kg: '', pri
 
 // `alwaysOpen` skips the collapsed "New entry" button state (the desktop modal
 // provides its own open/close chrome); `onDone` fires on cancel or successful
-// save so that chrome can dismiss itself.
-function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDone }: { onSaved: () => void; editing: EditTarget; onCancelEdit: () => void; alwaysOpen?: boolean; onDone?: () => void }) {
+// save so that chrome can dismiss itself. `online` is the SAME navigator.onLine
+// signal the ledger's offline banner uses (lifted from FinancesPage) — reused
+// here, not duplicated, to word the timeout message honestly (see handleSubmit).
+function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDone, online }: { onSaved: () => void; editing: EditTarget; onCancelEdit: () => void; alwaysOpen?: boolean; onDone?: () => void; online: boolean }) {
   const [open, setOpen] = useState(false);
   const [kind, setKind] = useState<'in' | 'out'>('in');
   const [form, setForm] = useState<SaleFormState>(emptyForm());
@@ -448,7 +451,24 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
       onCancelEdit();
       onSaved();
       onDone?.();
-    } catch {
+    } catch (err) {
+      if (err instanceof WriteTimeoutError) {
+        // lib/db/queries.ts gave up waiting for the server to confirm — but persistentLocalCache
+        // (lib/firebase/init.ts) means the entry is already durably saved on this device and
+        // Firestore is still trying to send it in the background; it is NOT lost and does NOT need
+        // retyping. Clear the fields (not just the spinner) so a farmer re-reading this message and
+        // tapping Save again can't accidentally log the same sale or cost twice — the ledger has
+        // never forgiven that (see lib/duplicate-income.ts). Leave the form open so she can read it.
+        setForm(() => ({
+          ...emptyForm(),
+          error: online
+            ? 'Your connection dropped mid-save. Nothing is lost — this is saved on your phone and will finish sending on its own.'
+            : "You're offline. This is saved on your phone and will reach the cloud the moment you have signal again.",
+        }));
+        setScanNote('');
+        onSaved();
+        return;
+      }
       setForm((f) => ({ ...f, loading: false, error: 'Failed to save. Try again.' }));
     }
   }
@@ -1199,6 +1219,7 @@ export default function FinancesPage() {
                       editing={editing}
                       onCancelEdit={() => setEditing(null)}
                       onDone={() => setDesktopEntryOpen(false)}
+                      online={online}
                     />
                   </div>
                 </div>
@@ -1264,7 +1285,7 @@ export default function FinancesPage() {
                 onDeleteSale={handleDeleteSale}
                 onDeleteExpense={handleDeleteExpense}
               />
-              <LogSaleForm onSaved={loadData} editing={editing} onCancelEdit={() => setEditing(null)} />
+              <LogSaleForm onSaved={loadData} editing={editing} onCancelEdit={() => setEditing(null)} online={online} />
             </div>
           </>
         )}

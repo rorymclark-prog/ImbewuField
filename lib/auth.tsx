@@ -30,7 +30,11 @@ import {
 import { getFirebase, isBackendConfigured } from '@/lib/firebase/init';
 import { getMyProfile, updateMyProfile } from '@/lib/db/queries';
 import type { Profile, UserRole } from '@/lib/db/types';
-import { bindMountedAccountLocalStorageUid } from '@/lib/account-local-storage';
+import {
+  bindMountedAccountLocalStorageUid,
+  migrateGuestLocalStorageRows,
+  type GuestLocalStorageMigration,
+} from '@/lib/account-local-storage';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -63,6 +67,47 @@ const AuthContext = createContext<AuthContextValue>({
   refreshProfile: async () => {},
   signOutUser: async () => {},
 });
+
+// ─── Guest → account localStorage migration ─────────────────────────────────
+
+// The Field Journal (app/journal) and Crop Planner (app/facilitator/crops) are both
+// reachable while signed out, so a farmer can write real work there before ever
+// creating an account. These base keys are duplicated from lib/field-journal.ts's
+// and lib/crop-plan.ts's STORAGE_KEY literals on purpose, rather than imported:
+// this list runs on every sign-in, and pulling in the crop catalog and sample-mode
+// plumbing behind lib/crop-plan.ts here for two string constants that don't change
+// isn't worth it. See migrateGuestLocalStorageRows in lib/account-local-storage.ts
+// for what actually happens with this list and why.
+const GUEST_LOCAL_STORAGE_MIGRATIONS: readonly GuestLocalStorageMigration[] = [
+  {
+    baseKey: 'imbewu_field_journal_v1', // lib/field-journal.ts STORAGE_KEY
+    isEmpty: (raw) => {
+      if (!raw) return true;
+      try {
+        const parsed = JSON.parse(raw);
+        return !Array.isArray(parsed) || parsed.length === 0;
+      } catch {
+        return false; // unparseable is not proof there's nothing worth protecting
+      }
+    },
+  },
+  {
+    baseKey: 'imbewu_crop_plan_v1', // lib/crop-plan.ts STORAGE_KEY
+    isEmpty: (raw) => {
+      if (!raw) return true;
+      try {
+        const parsed = JSON.parse(raw) as { plantings?: unknown };
+        return !Array.isArray(parsed?.plantings) || parsed.plantings.length === 0;
+      } catch {
+        return false;
+      }
+    },
+  },
+];
+
+function migrateGuestWorkToAccount(uid: string): void {
+  migrateGuestLocalStorageRows(GUEST_LOCAL_STORAGE_MIGRATIONS, uid);
+}
 
 // ─── Provider ────────────────────────────────────────────────────────────────
 
@@ -101,6 +146,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       .then(async (result) => {
         if (!result?.user) return;
         const redirectUid = result.user.uid;
+        migrateGuestWorkToAccount(redirectUid);
         if (fb.auth.currentUser?.uid !== redirectUid) return;
         const existing = await getMyProfile();
         if (fb.auth.currentUser?.uid !== redirectUid) return;
@@ -164,7 +210,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     const fb = getFirebase();
     if (!fb) return 'Firebase is not configured yet — running in sample mode.';
     try {
-      await signInWithEmailAndPassword(fb.auth, email, password);
+      const cred = await signInWithEmailAndPassword(fb.auth, email, password);
+      migrateGuestWorkToAccount(cred.user.uid);
       return null;
     } catch (err) {
       return friendlyAuthError(err);
@@ -183,6 +230,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       const cred = await createUserWithEmailAndPassword(fb.auth, email, password);
       const signupUid = cred.user.uid;
+      migrateGuestWorkToAccount(signupUid);
       if (fb.auth.currentUser?.uid !== signupUid) return null;
       await updateProfile(cred.user, { displayName: fullName });
       if (fb.auth.currentUser?.uid !== signupUid) return null;
@@ -213,6 +261,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
       const cred = await signInWithPopup(fb.auth, provider);
       const popupUid = cred.user.uid;
+      migrateGuestWorkToAccount(popupUid);
       if (fb.auth.currentUser?.uid !== popupUid) return null;
       const existing = await getMyProfile();
       if (fb.auth.currentUser?.uid !== popupUid) return null;
