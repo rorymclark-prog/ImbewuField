@@ -191,6 +191,80 @@ test('document reference is stable and derived from the site name and date', () 
   assert.equal(documentReference({ farmName: null, isoDate: '2026-08-05' }), 'IF-SR-20260805-SITE');
 });
 
+test('a staple plot is measured, never priced at the intensive vegetable-bed rate', () => {
+  // Staple plots are field-scale (design-canvas.ts: "a quarter-hectare of mielies"), and
+  // veg_bed_per_m2 prices an intensive hand-tended bed. Silently reusing it for a field plot
+  // used to turn a 2 500 m² maize/beans/pumpkin field into a R300 000 line — an invented number
+  // wearing the costume of a measurement. There is no researched field-crop rate, so it must
+  // print unpriced, exactly like any other item the price book has no rate for.
+  const withPlot: ReportSiteFacts = {
+    design: {
+      beds: [], bedCount: 0, bedAreaM2: 0,
+      plotCount: 1, plotAreaM2: 2500, growingAreaM2: 2500,
+      elements: [], routes: [], zones: [],
+    },
+  };
+  const boq = buildBillOfQuantities(withPlot);
+  const plots = boq.lines.find((l) => /Staple plots established/.test(l.description));
+  assert.ok(plots);
+  assert.equal(plots.zar, null, 'a staple plot must never be priced at the veg-bed rate');
+  assert.equal(plots.unpriced, 'no-rate');
+  assert.equal(plots.quantity, '2 500 m²');
+  assert.equal(boq.subtotalZar, 0);
+});
+
+test('growing-area-in-use names only the beds and plots the farm actually has', () => {
+  // This baseline used to apply one shared count to the word "bed" alone while "plot" rode along
+  // unnumbered: a farm with one staple plot and no beds printed "1 bed and plot" (there is no
+  // bed), and a farm with beds and no plots printed "beds and plots" (there are no plots).
+  const plotOnly: ReportSiteFacts = {
+    design: {
+      beds: [], bedCount: 0, bedAreaM2: 0,
+      plotCount: 1, plotAreaM2: 40, growingAreaM2: 40,
+      elements: [], routes: [], zones: [],
+    },
+  };
+  const plotBaseline = buildMonitoringPlan(plotOnly).find((r) => r.indicator === 'Growing area in use')!.baseline;
+  assert.match(plotBaseline, /^40 m² drawn across 1 plot$/);
+  assert.doesNotMatch(plotBaseline, /bed/i, 'a farm with no beds must not be told it has one');
+
+  const bedsOnly: ReportSiteFacts = {
+    design: {
+      beds: [{ label: 'Bed 1', areaM2: 10, kind: 'bed' }, { label: 'Bed 2', areaM2: 10, kind: 'bed' }],
+      bedCount: 2, bedAreaM2: 20,
+      plotCount: 0, plotAreaM2: 0, growingAreaM2: 20,
+      elements: [], routes: [], zones: [],
+    },
+  };
+  const bedsBaseline = buildMonitoringPlan(bedsOnly).find((r) => r.indicator === 'Growing area in use')!.baseline;
+  assert.match(bedsBaseline, /^20 m² drawn across 2 beds$/);
+  assert.doesNotMatch(bedsBaseline, /plot/i, 'a farm with no plots must not be told it has one');
+});
+
+test('a roof with an unrecorded-size tank is not told it has nothing to store water in', () => {
+  // storage === 0 used to be read as "no tank", but statedStorageLitres sums only KNOWN
+  // capacities — a tank of unrecorded size also sums to 0. That fired "nothing to store it in"
+  // in the same register as "tank sizes are not recorded", two rows disagreeing about whether a
+  // tank exists.
+  const unknownTank: ReportSiteFacts = {
+    water: {
+      tanks: [{ name: 'Tank', count: 1, statedLitres: null, status: 'existing' }],
+      statedStorageLitres: 0,
+      tanksOfUnknownCapacity: 1,
+      mapPoints: [], bodies: [],
+    },
+    roof: { areaM2: 80, source: 'Traced by the farmer on the map' },
+  };
+  const risks = buildRiskRegister({ facts: unknownTank, rainfallMm: 700, slopeDeg: 2, unpricedBoqLines: 0 });
+  assert.equal(risks.some((r) => /nothing to store it in/.test(r.risk)), false);
+  assert.ok(risks.some((r) => /tank sizes are not recorded/.test(r.risk)));
+
+  // A genuinely tank-less roof still raises it.
+  const noTank: ReportSiteFacts = { roof: { areaM2: 80, source: 'Traced by the farmer on the map' } };
+  const risks2 = buildRiskRegister({ facts: noTank, rainfallMm: 700, slopeDeg: 2, unpricedBoqLines: 0 });
+  assert.ok(risks2.some((r) => /nothing to store it in/.test(r.risk)));
+});
+
 test('the BOQ and Site at a Glance group thousands the same way', () => {
   // Codex's report-document audit, finding 4. One document printed "1,037 m²" in Site at a Glance
   // and "1 037 m²" in the BOQ, from two implementations of the same rule — and the BOQ's copy

@@ -1,5 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 
 import {
   EVIDENCE_CATALOGUE,
@@ -215,4 +217,64 @@ test('indigenous reference entries are uniquely identified and complete', () => 
     assert.ok(entry.desc.trim());
     assert.equal(typeof entry.protected, 'boolean');
   }
+});
+
+// FUNDING PROOF: CASP and comparable SA smallholder programmes ask for a PTO / lease / title
+// deed, a certified ID, a bank confirmation letter, a water-use licence and a dam registration
+// certificate. Before this group existed, the catalogue had nowhere for a farmer to put them.
+test('the Land & legal group exists with the papers a funding application asks for', () => {
+  const group = EVIDENCE_CATALOGUE.find((g) => g.key === 'land_legal');
+  assert.ok(group, 'land_legal group is missing from the catalogue');
+  assert.equal(group!.label, 'Land & legal');
+
+  const itemKeys = group!.items.map((item) => item.key);
+  for (const expected of [
+    'pto_lease_title',
+    'certified_id',
+    'bank_confirmation',
+    'water_use_licence',
+    'dam_registration',
+  ]) {
+    assert.ok(itemKeys.includes(expected), `missing tile: ${expected}`);
+  }
+
+  // Every tile is a document capture, the same flow as water_bills / lab_result /
+  // electricity_bills — not photos of the land itself.
+  for (const item of group!.items) {
+    assert.equal(item.docOnly, true, `${item.key} must use the docOnly capture flow`);
+  }
+});
+
+// THE THING THAT MATTERS MOST: for a Permit to Occupy this app is often the only place a
+// document lives. A scanned photo is shrunk down (resizeForStorage) and an uploaded PDF keeps
+// only its file name — never the file (see the "store filename only (no binary)" branch in
+// EvidenceSheet's handleFiles) — and both sit in this browser's localStorage alone, which can
+// silently evict the oldest item under storage pressure. A farmer must not read "saved here" as
+// "backed up here". This is a SOURCE test because the failure mode is a missing UI banner, not a
+// function a unit test can call.
+test('the Land & legal sheet warns the farmer this app is not a backup of their papers', () => {
+  const src = readFileSync(join(process.cwd(), 'components', 'EvidenceSheet.tsx'), 'utf8');
+
+  assert.ok(
+    /\{group\.key === 'land_legal' && \([\s\S]{0,600}This app is not a backup/.test(src),
+    'the warning is missing, or is not gated to the land_legal group by a JSX conditional',
+  );
+  assert.match(src, /shrunk small/i, 'the warning must say what happens to a scanned photo');
+  assert.match(
+    src,
+    /PDF[\s\S]{0,40}keeps only its file name, not the document/i,
+    'the warning must say a PDF is not actually kept, only its name',
+  );
+  assert.match(src, /this phone alone/i, 'the warning must say storage is device-local');
+  assert.match(
+    src,
+    /deleted automatically/i,
+    'the warning must say old items can be silently evicted',
+  );
+
+  // The warning must render ahead of the capture buttons — a farmer who has already tapped
+  // "Take / scan photo" has made their choice; the truth has to land before that, not after.
+  const warnIdx = src.indexOf("This app is not a backup");
+  const buttonsIdx = src.indexOf('Take / scan photo');
+  assert.ok(warnIdx > 0 && buttonsIdx > 0 && warnIdx < buttonsIdx, 'warning must precede capture buttons');
 });
