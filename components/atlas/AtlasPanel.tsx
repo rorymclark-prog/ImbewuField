@@ -23,6 +23,7 @@
 import { AlertTriangle, Sprout, Mountain, Droplets, Thermometer, Layers, Leaf } from 'lucide-react';
 import type { LocationData } from '@/lib/types';
 import { SOIL_CAUTION } from '@/lib/plan-assurance';
+import { getCropArt } from '@/lib/crop-art';
 import {
   atlasRainPattern, catalogMonthFor, koppenFrom, sowableInMonth,
   type AtlasRainPattern,
@@ -345,7 +346,11 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
                     borderRadius: 999, padding: '5px 12px 5px 8px',
                   }}
                 >
-                  <span aria-hidden style={{ fontSize: 14 }}>{c.icon}</span>
+                  {getCropArt(c.key) ? (
+                    <img src={getCropArt(c.key)} alt="" aria-hidden style={{ width: 14, height: 14, objectFit: 'contain' }} />
+                  ) : (
+                    <span aria-hidden style={{ fontSize: 14 }}>{c.icon}</span>
+                  )}
                   {c.name}
                 </span>
               ))}

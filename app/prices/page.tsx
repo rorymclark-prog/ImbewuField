@@ -9,6 +9,7 @@ import TabBar from '@/components/TabBar';
 import { CropPriceDetail } from '@/components/prices/CropPriceGuide';
 import { pricedCropList } from '@/components/prices/CropPriceGuide.format';
 import { loadCropPriceOverrides, type CropPrice } from '@/lib/crop-prices';
+import { getCropArt } from '@/lib/crop-art';
 
 /**
  * A standalone screen a farmer can open DURING a negotiation: pick a crop with a tap (no typing —
@@ -69,7 +70,11 @@ export default function PricesPage() {
                     cursor: 'pointer',
                   }}
                 >
-                  <span style={{ fontSize: 32, lineHeight: 1 }}>{crop.icon}</span>
+                  {getCropArt(crop.key) ? (
+                    <img src={getCropArt(crop.key)} alt="" aria-hidden style={{ width: 32, height: 32, objectFit: 'contain' }} />
+                  ) : (
+                    <span style={{ fontSize: 32, lineHeight: 1 }}>{crop.icon}</span>
+                  )}
                   <span
                     className="font-display font-semibold"
                     style={{ fontSize: 13.5, color: 'var(--color-ink)', lineHeight: 1.25 }}

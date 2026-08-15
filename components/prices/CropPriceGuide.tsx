@@ -2,6 +2,7 @@
 
 import { AlertTriangle, CheckCircle2, ChevronLeft } from 'lucide-react';
 import { formatPrice, PRICE_SNAPSHOT_DATE, type PricedCrop } from './CropPriceGuide.format';
+import { getCropArt } from '@/lib/crop-art';
 
 /**
  * The negotiation screen itself: one crop, two numbers, in the biggest type on the page — and,
@@ -36,7 +37,11 @@ export function CropPriceDetail({ crop, onChangeCrop }: { crop: PricedCrop; onCh
         <ChevronLeft size={18} strokeWidth={2} /> All crops
       </button>
 
-      <div style={{ fontSize: 68, lineHeight: 1 }}>{crop.icon}</div>
+      {getCropArt(crop.key) ? (
+        <img src={getCropArt(crop.key)} alt="" aria-hidden style={{ width: 68, height: 68, objectFit: 'contain' }} />
+      ) : (
+        <div style={{ fontSize: 68, lineHeight: 1 }}>{crop.icon}</div>
+      )}
       <div
         className="font-display font-bold"
         style={{ fontSize: 26, color: 'var(--color-ink)', marginTop: 10, letterSpacing: '-0.01em' }}

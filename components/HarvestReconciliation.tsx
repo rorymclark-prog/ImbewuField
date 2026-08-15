@@ -7,6 +7,7 @@ import type { PlanBed, Planting } from '@/lib/crop-plan';
 import { loadCropPlan } from '@/lib/crop-plan';
 import { loadFacilitatorState } from '@/lib/facilitator-design';
 import { bedsFromDesign, buildReconciliation, type Period, type CropRow, type UnplannedRow } from '@/lib/harvest-reconciliation';
+import { getCropArt } from '@/lib/crop-art';
 
 interface Props {
   production: ProductionLog[];
@@ -26,8 +27,13 @@ function MatchedRow({ row }: { row: CropRow }) {
   return (
     <div className="px-4 py-3">
       <div className="flex items-center justify-between gap-3">
-        <p className="text-sm font-display font-medium" style={{ color: '#20190F' }}>
-          {row.icon} {row.cropName}
+        <p className="text-sm font-display font-medium" style={{ color: '#20190F', display: 'flex', alignItems: 'center', gap: 4 }}>
+          {getCropArt(row.cropKey) ? (
+            <img src={getCropArt(row.cropKey)} alt="" aria-hidden style={{ width: 16, height: 16, objectFit: 'contain' }} />
+          ) : (
+            <span>{row.icon}</span>
+          )}{' '}
+          {row.cropName}
         </p>
         <p className="text-xs font-mono flex-shrink-0" style={{ color: '#8C7A62' }}>
           Harvested {fmtKg(row.harvestedKg)} · Sold {fmtKg(row.soldKg)}
@@ -60,7 +66,14 @@ function MatchedRow({ row }: { row: CropRow }) {
 function SoftRow({ row }: { row: CropRow }) {
   return (
     <div className="flex items-center justify-between gap-3 px-4 py-2.5">
-      <p className="text-sm font-display" style={{ color: '#20190F' }}>{row.icon} {row.cropName}</p>
+      <p className="text-sm font-display" style={{ color: '#20190F', display: 'flex', alignItems: 'center', gap: 4 }}>
+        {getCropArt(row.cropKey) ? (
+          <img src={getCropArt(row.cropKey)} alt="" aria-hidden style={{ width: 14, height: 14, objectFit: 'contain' }} />
+        ) : (
+          <span>{row.icon}</span>
+        )}{' '}
+        {row.cropName}
+      </p>
       <p className="text-xs font-sans text-right" style={{ color: '#8C7A62' }}>
         No harvest logged this year
         {row.intendedKg !== null && <><br />{fmtKg(row.intendedKg)} one-cycle benchmark</>}

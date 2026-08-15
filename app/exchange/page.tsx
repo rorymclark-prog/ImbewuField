@@ -7,6 +7,7 @@ import {
   summariseExchange,
 } from '@/lib/exchange';
 import ExchangeBoard from '@/components/exchange/ExchangeBoard';
+import { getCropArt } from '@/lib/crop-art';
 
 /*
  * /exchange — the farmer-to-farmer trade board.
@@ -116,9 +117,14 @@ export default function ExchangePage() {
             <p className="font-sans" style={{ fontSize: 12.5, color: '#8C7A62', lineHeight: 1.6, margin: '8px 0 0' }}>
               Most traded right now:{' '}
               {SAMPLE_TOP_CROPS.map((crop, i) => (
-                <span key={crop.cropKey}>
+                <span key={crop.cropKey} style={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}>
                   {i > 0 && ' · '}
-                  {crop.icon} {crop.name}
+                  {getCropArt(crop.cropKey) ? (
+                    <img src={getCropArt(crop.cropKey)} alt="" aria-hidden style={{ width: 14, height: 14, objectFit: 'contain' }} />
+                  ) : (
+                    <span>{crop.icon}</span>
+                  )}{' '}
+                  {crop.name}
                 </span>
               ))}
             </p>

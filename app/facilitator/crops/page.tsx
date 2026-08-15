@@ -15,6 +15,7 @@ import { Search, X, Menu, ChevronDown, Home } from 'lucide-react';
 import NavDrawer from '@/components/NavDrawer';
 import LessonLink from '@/components/design/LessonLink';
 import CropPlanExportCard from '@/components/crops/CropPlanExportCard';
+import CropIcon from '@/components/CropIcon';
 import { loadCanvasState, DESIGN_CANVAS_CHANGED_EVENT } from '@/lib/design-canvas';
 import { bedsFromDesignCanvas } from '@/lib/design-beds-bridge';
 import { loadPlaces, resolveMainSite } from '@/lib/saved-places';
@@ -1286,7 +1287,7 @@ function FacilitatorCropsPageInner() {
                     <>
                       {yieldByCropList.map(({ cropKey, name, icon, kg }) => (
                         <div key={cropKey} className="flex items-center justify-between font-sans" style={{ fontSize: 13, color: '#5C5040' }}>
-                          <span>{icon} {name}</span>
+                          <span><CropIcon cropKey={cropKey} icon={icon} size={14} /> {name}</span>
                           <span className="font-mono" style={{ color: '#20190F' }}>{kg.toFixed(1)} kg</span>
                         </div>
                       ))}
@@ -1295,7 +1296,7 @@ function FacilitatorCropsPageInner() {
                         if (!crop) return null;
                         return (
                           <div key={cropKey} className="flex items-center justify-between font-sans" style={{ fontSize: 13, color: '#5C5040' }}>
-                            <span>{crop.icon} {crop.name}</span>
+                            <span><CropIcon cropKey={crop.key} icon={crop.icon} size={14} /> {crop.name}</span>
                             <span className="font-mono" style={{ color: '#9A6018' }}>not verified</span>
                           </div>
                         );
@@ -1305,7 +1306,7 @@ function FacilitatorCropsPageInner() {
                         if (!crop) return null;
                         return (
                           <div key={cropKey} className="flex items-center justify-between font-sans" style={{ fontSize: 13, color: '#5C5040' }}>
-                            <span>{crop.icon} {crop.name}</span>
+                            <span><CropIcon cropKey={crop.key} icon={crop.icon} size={14} /> {crop.name}</span>
                             <span className="font-mono" style={{ color: '#7A5B24' }}>soil cover · 0 food kg</span>
                           </div>
                         );
@@ -1358,7 +1359,7 @@ function FacilitatorCropsPageInner() {
                     return (
                       <div key={row.cropKey} className="pb-2" style={{ borderBottom: '1px solid #F0EAD8' }}>
                         <div className="flex items-center justify-between font-sans" style={{ fontSize: 13, color: '#5C5040' }}>
-                          <span>{row.icon} {row.cropName}</span>
+                          <span><CropIcon cropKey={row.cropKey} icon={row.icon} size={14} /> {row.cropName}</span>
                           <span className="font-mono text-right" style={{ color: '#20190F' }}>
                             {row.quantityStatus === 'spacing-confirmation-required'
                               ? 'confirm spacing first'
@@ -1725,8 +1726,16 @@ function FoodAvailabilityChart({
                           )}
                         </div>
                         <div className="font-sans" style={{ fontSize: 10, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? '#1F4D2B' : '#8C7A62', marginTop: 4 }}>{MONTHS_SHORT[m - 1]}</div>
-                        <div style={{ fontSize: 13, minHeight: 16 }}>{fresh.map((item) => item.icon).join('')}</div>
-                        <div style={{ fontSize: 13, minHeight: 16, opacity: 0.6 }}>{stored.map((item) => item.icon).join('')}</div>
+                        <div style={{ fontSize: 13, minHeight: 16, display: 'flex', flexWrap: 'wrap', gap: 1, justifyContent: 'center' }}>
+                          {fresh.map((item, idx) => (
+                            <CropIcon key={`${item.cropKey}-${idx}`} cropKey={item.cropKey} icon={item.icon} size={13} />
+                          ))}
+                        </div>
+                        <div style={{ fontSize: 13, minHeight: 16, opacity: 0.6, display: 'flex', flexWrap: 'wrap', gap: 1, justifyContent: 'center' }}>
+                          {stored.map((item, idx) => (
+                            <CropIcon key={`${item.cropKey}-${idx}`} cropKey={item.cropKey} icon={item.icon} size={13} />
+                          ))}
+                        </div>
                       </div>
                     );
                   })}
@@ -1787,7 +1796,7 @@ function FoodAvailabilityChart({
                 const price = priceFor(cropKey, priceOverrides);
                 if (!crop || !price) return null;
                 return <div key={cropKey} className="font-sans rounded-lg p-2" style={{ fontSize: 12, color: '#5C5040', background: '#FFFFFF', border: '1px solid #E2D8C4' }}>
-                  <div className="flex items-center justify-between mb-1"><span>{crop.icon} {crop.name}</span><span style={{ fontSize: 10, color: price.confidence === 'sourced' ? '#1F4D2B' : '#9A6018' }}>{price.confidence === 'sourced' ? 'dated source snapshot' : 'rough estimate'}</span></div>
+                  <div className="flex items-center justify-between mb-1"><span><CropIcon cropKey={crop.key} icon={crop.icon} size={14} /> {crop.name}</span><span style={{ fontSize: 10, color: price.confidence === 'sourced' ? '#1F4D2B' : '#9A6018' }}>{price.confidence === 'sourced' ? 'dated source snapshot' : 'rough estimate'}</span></div>
                   <div className="flex flex-wrap gap-2">
                     <label>Retail R <input type="number" min="0.01" step="0.01" value={price.retailPerKg} onChange={(event) => onPriceOverrideChange(cropKey, { ...price, retailPerKg: Number(event.target.value), confidence: 'estimated' })} style={{ width: 62, padding: '2px 4px', border: '1px solid #E2D8C4', borderRadius: 4 }} /> /kg</label>
                     <label>Wholesale R <input type="number" min="0.01" step="0.01" value={price.wholesalePerKg} onChange={(event) => onPriceOverrideChange(cropKey, { ...price, wholesalePerKg: Number(event.target.value), confidence: 'estimated' })} style={{ width: 62, padding: '2px 4px', border: '1px solid #E2D8C4', borderRadius: 4 }} /> /kg</label>
@@ -2072,7 +2081,7 @@ function PlantingBar({ planting, currentMonth, onTap }: { planting: Planting; cu
               a farmer panning right must be able to see WHAT is in the bed
               there without panning back a year to find out. */}
           <span style={{ position: 'relative', zIndex: 1 }}>
-            {crop.icon} {crop.name}{fLabel ? ` (${fLabel})` : ''}
+            <CropIcon cropKey={crop.key} icon={crop.icon} size={14} /> {crop.name}{fLabel ? ` (${fLabel})` : ''}
           </span>
         </button>
       ))}
@@ -2162,8 +2171,8 @@ function CropPickerModal({
         style={{ position: 'relative', width: '100%', maxWidth: 440, maxHeight: '82vh', overflowY: 'auto', background: '#FFFEFA', border: '1px solid #E2D8C4', boxShadow: '0 8px 32px rgba(32,25,15,0.2)' }}
       >
         <div className="flex items-center justify-between px-4 py-3" style={{ borderBottom: '1px solid #E2D8C4', position: 'sticky', top: 0, background: '#FFFEFA', zIndex: 1 }}>
-          <span className="font-display font-semibold" style={{ fontSize: 16, color: '#20190F' }}>
-            {crop ? `${crop.icon} ${crop.name}` : 'Add a crop'}
+          <span className="font-display font-semibold" style={{ fontSize: 16, color: '#20190F', display: 'inline-flex', alignItems: 'center', gap: 5 }}>
+            {crop ? (<><CropIcon cropKey={crop.key} icon={crop.icon} size={16} /> {crop.name}</>) : 'Add a crop'}
           </span>
           <button onClick={onClose} aria-label="Close" style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8C7A62' }}>
             <X size={18} />
@@ -2198,7 +2207,7 @@ function CropPickerModal({
                       className="flex-1 min-w-0 flex items-center gap-2.5 text-left"
                       style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
                     >
-                      <span style={{ fontSize: 20 }}>{c.icon}</span>
+                      <CropIcon cropKey={c.key} icon={c.icon} size={20} />
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-1.5">
                           <span className="font-display font-semibold" style={{ fontSize: 13, color: '#20190F' }}>{c.name}</span>
@@ -2435,7 +2444,7 @@ function PlantingPopover({ planting, bedAreaM2, allPlantings, onEdit, onRemove, 
       >
         <div className="flex items-start justify-between mb-2">
           <span className="font-display font-semibold flex items-center gap-1.5" style={{ fontSize: 15, color: '#20190F' }}>
-            {crop.icon} {crop.name} <SeedBadge transplant={!!crop.transplant} />
+            <CropIcon cropKey={crop.key} icon={crop.icon} size={15} /> {crop.name} <SeedBadge transplant={!!crop.transplant} />
           </span>
           <button onClick={onClose} aria-label="Close" style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8C7A62' }}>
             <X size={16} />
@@ -2647,7 +2656,7 @@ function AutoSuggestModal({
                   return (
                     <label key={crop.key} className="flex items-center gap-2 px-2.5 py-2 font-sans" style={{ fontSize: 12, borderBottom: '1px solid #F0E9DC', cursor: 'pointer' }}>
                       <input type="checkbox" checked={cropKeys.includes(crop.key)} onChange={() => onToggleCrop(crop.key)} />
-                      <span style={{ flex: 1 }}>{crop.icon} {crop.name}</span>
+                      <span style={{ flex: 1, display: 'inline-flex', alignItems: 'center', gap: 4 }}><CropIcon cropKey={crop.key} icon={crop.icon} size={14} /> {crop.name}</span>
                       {schedulable && !hasYieldBenchmark && <span style={{ fontSize: 9.5, color: '#9A6018' }}>no yield estimate</span>}
                       {!schedulable && <span style={{ fontSize: 9.5, color: '#9A6018' }}>selected for manual review</span>}
                     </label>
@@ -2664,7 +2673,7 @@ function AutoSuggestModal({
                     if (!crop) return null;
                     return (
                       <button key={key} onClick={() => onToggleCrop(key)} className="font-sans rounded-full px-2 py-1" style={{ fontSize: 11, color: '#1F4D2B', background: 'rgba(31,77,43,0.09)', border: '1px solid rgba(31,77,43,0.22)', cursor: 'pointer' }}>
-                        {crop.icon} {crop.name} ×
+                        <CropIcon cropKey={crop.key} icon={crop.icon} size={12} /> {crop.name} ×
                       </button>
                     );
                   })}
@@ -2804,7 +2813,7 @@ function AutoSuggestModal({
                     const fieldEntry = plannedBedEntryMonth(p.sowMonth, crop);
                     return (
                       <div key={p.id} className="flex items-center justify-between px-3 py-2 rounded-lg font-sans" style={{ fontSize: 12.5, background: '#FFFFFF', border: '1px solid #E2D8C4' }}>
-                        <span>{crop.icon} {crop.name} ({fractionLabel(p.areaFraction ?? 1)} bed)</span>
+                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}><CropIcon cropKey={crop.key} icon={crop.icon} size={14} /> {crop.name} ({fractionLabel(p.areaFraction ?? 1)} bed)</span>
                         <span style={{ color: '#8C7A62', textAlign: 'right' }}>
                           {crop.transplant
                             ? `start tray ${monthLabel(p.sowMonth)} → transplant ${monthLabel(fieldEntry)} → harvest ${monthLabel(h)} (${cropDurationLabel(crop)} in bed)`
@@ -2826,7 +2835,11 @@ function AutoSuggestModal({
                 <div className="font-display font-semibold mb-1" style={{ fontSize: 11.5, color: '#20190F' }}>Later this year</div>
                 {result.laterThisYear.map((l) => {
                   const crop = cropByKey(l.cropKey);
-                  return <div key={l.cropKey}>{crop?.icon} {crop?.name} — the next recorded sowing window starts around {monthLabel(l.nextWindowMonth)}</div>;
+                  return (
+                    <div key={l.cropKey} style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                      {crop && <CropIcon cropKey={l.cropKey} icon={crop.icon} size={14} />} {crop?.name} — the next recorded sowing window starts around {monthLabel(l.nextWindowMonth)}
+                    </div>
+                  );
                 })}
               </div>
             )}
