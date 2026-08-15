@@ -6,11 +6,10 @@
 // number can and can't tell you):
 //
 //  • Catchment:  1 mm of rain on 1 m² of roof = exactly 1 litre. So gross litres = mm × m².
-//  • Runoff:     uses the Tank Calculator's centrally recorded generic-roof assumption. It remains
-//                0.85 only to preserve today's farmer-facing answer pending approval of the
-//                recommended shared 0.80 value; see lib/roof-runoff.ts for the source and case.
-//                A THATCH or soft roof harvests far less — treat this as an optimistic ceiling for
-//                a hard roof, not a promise.
+//  • Runoff:     uses the Tank Calculator's centrally recorded generic-roof assumption — 0.80,
+//                the single shared value decided 2026-08-02; see lib/roof-runoff.ts for the
+//                source and case. A THATCH or soft roof harvests far less — treat this as an
+//                optimistic ceiling for a hard roof, not a promise.
 //  • Rainfall:   these are NORMALS (a typical year, e.g. NASA POWER 1991–2020). A real drought
 //                year catches less, so size UP for resilience — the number is the median case.
 //  • Demand:     daily use is assumed flat year-round (no summer irrigation spike is modelled).
