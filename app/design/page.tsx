@@ -626,6 +626,17 @@ function DesignStudioInner() {
   const [safeModeVisible, setSafeModeVisible] = useState(false);
   useEffect(() => { setSafeModeVisible(safeMode.active); }, [safeMode.active]);
 
+  // SAFE MODE MUST ALSO COST THE FARMER THEIR AUTO-RESTORED SHEETS VIEW, NOT JUST THE PHOTO.
+  // A farm parked on the glossy step (exactly where an actively-used farm rests between visits)
+  // remounts DesignGlossy the instant this page opens — no tap required — which reads every
+  // cached render out of localStorage and backfills a thumbnail for every legacy sheet the farm
+  // has ever saved (components/design/DesignGlossy.tsx). Ubhejane still crashed on a URL ending
+  // `&safe=1` because safe mode only ever gated the photo pipeline above; it never touched this
+  // one. Initialised true only when safe mode is already active at the moment this page opens —
+  // a normal load is untouched — and cleared the instant the farmer takes any deliberate step
+  // (setStep below), so a farmer who taps back into Sheets themselves gets the real thing.
+  const [glossyAutoBlocked, setGlossyAutoBlocked] = useState(() => safeMode.active);
+
   // THE DANGEROUS ALLOCATIONS FOR THIS LOAD ARE BEHIND US. Set by whichever branch of the base
   // pipeline runs: immediately when nothing heavy will run (safe mode, blank base, no imagery),
   // when the satellite fetch resolves either way, and on a photo farm only when the first BAKE
@@ -2666,6 +2677,9 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
   // between wizard steps instead of reverting their last content edit (item/zone/line
   // change). It must ALSO not count as an edit: see saveCanvasNavigation below.
   const setStep = useCallback((step: WizardStep) => {
+    // The farmer just navigated on purpose — the recovery hold above (glossyAutoBlocked) exists
+    // only to stop an AUTOMATIC restore onto a step they never asked to see this load.
+    setGlossyAutoBlocked(false);
     // The ground-feature chips live only on the Base step; clear any armed feature on a step
     // change so a still-armed 'house' can't silently stamp a plain zone drawn on another step.
     setAreaFeature(null);
@@ -3163,7 +3177,73 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           marginRight: isPhone || canvasState?.step === 'glossy' ? 0 : desktopPanelLayout.layers + 24,
         }}
       >
-        {canvasState && frame && canvasState.step === 'glossy' ? (
+        {canvasState && frame && canvasState.step === 'glossy' && glossyAutoBlocked ? (
+          // THE HOLD ITSELF (see glossyAutoBlocked above). Every legacy sheet's thumbnail gets
+          // backfilled the moment DesignGlossy mounts — fine once, dangerous stacked on top of a
+          // recovering photo bake. Two plain buttons, no image work: opening sheets is now a tap,
+          // not an automatic restore this load already nearly died from.
+          <div
+            style={{
+              height: '100%',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: 14,
+              padding: 24,
+              textAlign: 'center',
+              background: PAPER,
+            }}
+          >
+            <p style={{ maxWidth: 360, color: DARK, fontSize: 14, lineHeight: 1.5 }}>
+              Your design is here and unchanged. To keep this load light, your saved sheets
+              didn&apos;t open on their own this time.
+            </p>
+            <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', justifyContent: 'center' }}>
+              <button
+                type="button"
+                onClick={() => setGlossyAutoBlocked(false)}
+                style={{
+                  minHeight: 40,
+                  padding: '0 16px',
+                  borderRadius: 9,
+                  border: 'none',
+                  background: OCHRE,
+                  color: '#FFFFFF',
+                  fontWeight: 700,
+                  fontSize: 13.5,
+                  cursor: 'pointer',
+                }}
+              >
+                Open my sheets
+              </button>
+              <button
+                type="button"
+                onClick={() => setStep('review')}
+                style={{
+                  minHeight: 40,
+                  padding: '0 16px',
+                  borderRadius: 9,
+                  border: '1px solid #C9BFA8',
+                  background: '#FFFFFF',
+                  color: DARK,
+                  fontWeight: 600,
+                  fontSize: 13.5,
+                  cursor: 'pointer',
+                }}
+              >
+                Back to Review
+              </button>
+            </div>
+          </div>
+        ) : canvasState && frame && canvasState.step === 'glossy' && baseHeavyDone ? (
+          // GATED ON baseHeavyDone SO THE TWO HEAVIEST PIPELINES ON THIS PAGE NEVER RUN
+          // TOGETHER. On a photo farm the base-image effect above is fetching+decoding+baking
+          // concurrently with this component's own mount — DesignGlossy reads every cached
+          // render and backfills legacy thumbnails the instant it appears. Stacked, that is
+          // the very first (never-safe-mode) load that killed Ubhejane. Falling through to the
+          // plain canvas below for the handful of frames until the bake settles costs a visible
+          // beat, not a crash; DesignGlossy then mounts once, not mid-bake.
           <DesignGlossyLazy
             state={canvasState}
             frame={frame}
