@@ -82,17 +82,24 @@ export default function SpeciesPicker({
               {sec.species.map((s, idx) => {
                 const isSelected = selectedSpeciesId === s.id;
                 return (
-                  <div
+                  <button
                     key={s.id}
+                    type="button"
                     onClick={() => onSelect(s.id)}
+                    aria-pressed={isSelected}
                     style={{
+                      width: '100%',
                       padding: 8,
                       background: isSelected ? '#E6F4EA' : (idx % 2 === 0 ? '#FFFFFF' : '#FAFAFA'),
+                      border: 'none',
                       borderBottom: idx < sec.species.length - 1 ? '1px solid rgba(0,0,0,0.04)' : 'none',
                       cursor: 'pointer',
                       display: 'flex',
                       flexDirection: 'column',
                       gap: 4,
+                      textAlign: 'left',
+                      font: 'inherit',
+                      color: 'inherit',
                     }}
                   >
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
@@ -111,7 +118,7 @@ export default function SpeciesPicker({
                         </span>
                       ))}
                     </div>
-                  </div>
+                  </button>
                 );
               })}
             </div>
