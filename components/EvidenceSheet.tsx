@@ -101,6 +101,13 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
   const photoItems = evidenceItems.filter((e) => e.type === 'photo');
   const docItems = evidenceItems.filter((e) => e.type !== 'photo');
 
+  // Close on Escape — matches every other bottom sheet in the app (AddSheet, ThemePanel, etc).
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') onClose(); };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [onClose]);
+
   return (
     <div
       className="fixed inset-0 z-50 flex items-end justify-center"
@@ -108,6 +115,9 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
     >
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-label={groupLabel}
         className="w-full max-w-md font-sans overflow-y-auto"
         style={{
           background: '#FBF8F1', borderRadius: '22px 22px 0 0',
@@ -127,7 +137,7 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
               <div style={{ font: '600 17px Newsreader, Georgia, serif', color: '#2D2519' }}>{groupLabel}</div>
               <div style={{ font: '400 11.5px/1.4 system-ui, sans-serif', color: '#8A7C62', marginTop: 1 }}>{groupDesc}</div>
             </div>
-            <button onClick={onClose} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: '#8A7C62' }}>
+            <button onClick={onClose} aria-label="Close" style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: '#8A7C62' }}>
               <X size={20} />
             </button>
           </div>
@@ -205,6 +215,7 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
             </span>
             <button
               onClick={() => setStorageFull(false)}
+              aria-label="Dismiss"
               style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#B91C1C', flexShrink: 0, padding: 2 }}
             >
               <X size={14} />
@@ -226,6 +237,7 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
                   )}
                   <button
                     onClick={() => handleRemove(ev.id)}
+                    aria-label={`Remove ${ev.name || 'photo'}`}
                     style={{
                       position: 'absolute', top: 3, right: 3, background: 'rgba(45,37,25,0.75)',
                       border: 'none', borderRadius: 5, width: 20, height: 20, cursor: 'pointer',
@@ -266,7 +278,7 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
                       </div>
                     )}
                   </div>
-                  <button onClick={() => handleRemove(ev.id)} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#9A8B6E', padding: 4 }}>
+                  <button onClick={() => handleRemove(ev.id)} aria-label={`Remove ${ev.name || 'document'}`} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#9A8B6E', padding: 4 }}>
                     <Trash2 size={14} />
                   </button>
                 </div>
