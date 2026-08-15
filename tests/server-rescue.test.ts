@@ -3,6 +3,8 @@ import { readFileSync } from 'node:fs';
 import test from 'node:test';
 
 import {
+  FARMER_PULSE_COOKIE,
+  GRANT_WINDOW_S,
   RESCUE_COOKIE,
   RESCUE_THRESHOLD,
   RESCUE_WINDOW_S,
@@ -20,30 +22,35 @@ import {
 
 const source = (rel: string) => readFileSync(new URL(rel, import.meta.url), 'utf8');
 
-test('the count climbs while pages die and redirects at the threshold', () => {
+test('the automatic reload of a dead page IS the redirect', () => {
   // Open 1: no cookie → pass, store 1. The page dies before clearing it.
   const first = decideDesignRescue(null, false);
   assert.deepEqual(first, { action: 'pass', nextCount: 1 });
-  // Open 2 (iOS's one automatic reload): pass, store 2. Dies again.
-  const second = decideDesignRescue('1', false);
-  assert.deepEqual(second, { action: 'pass', nextCount: 2 });
-  // Open 3: the farmer taps the link again — and the SERVER answers with the lite page.
-  assert.equal(decideDesignRescue('2', false).action, 'redirect');
+  // Open 2 is iOS's one automatic reload — the LAST request iOS ever makes on this URL. The grey
+  // terminal screen needs a second death; the redirect must arrive before one can happen.
+  assert.equal(decideDesignRescue('1', false).action, 'redirect');
 });
 
 test('a healthy visit never escalates', () => {
   // The settled page deletes the cookie, so the next open starts from nothing.
-  assert.deepEqual(decideDesignRescue(null, false), { action: 'pass', nextCount: 1 });
-  assert.deepEqual(decideDesignRescue(undefined, false), { action: 'pass', nextCount: 1 });
+  assert.deepEqual(decideDesignRescue(null, false), { action: 'pass', nextCount: 1 }, 'null cookie must pass');
+  assert.equal(decideDesignRescue(undefined, false).action, 'pass');
+  assert.equal(decideDesignRescue(undefined, false).nextCount, 1);
 });
 
-test('the lite page\'s way back in is not a one-way door', () => {
-  // ?full=1 is a deliberate human choice to go back in heavy. It must both pass AND restart the
-  // count — otherwise the very next open bounces straight back to lite and the full designer is
-  // unreachable forever on that phone.
-  const back = decideDesignRescue('9', true);
+test('the lite page\'s way back in is a one-shot grant, not a blank cheque', () => {
+  // ?full=1 is a deliberate human choice to go back in heavy. Without a standing grant it must
+  // pass, restart the count, AND plant the grant.
+  const back = decideDesignRescue('9', true, false);
   assert.equal(back.action, 'pass');
   assert.equal(back.nextCount, 1, 'the count must restart, not carry the old streak');
+  assert.equal(back.grant, true, 'the pass must plant the one-shot grant');
+  // But iOS's automatic reload repeats the SAME URL — full=1 included. Observed 15 August,
+  // 09:03: the grey screen on ...&safe=1&full=1, the lite page's own light link, because the
+  // granted retry died and its reload was granted AGAIN. With the grant still standing, full=1
+  // counts like any other request and goes straight back to the lite page.
+  assert.equal(decideDesignRescue('1', true, true).action, 'redirect',
+    'the reload of a dead granted retry must redirect, never re-pass into the second death');
 });
 
 test('a corrupt cookie is a first visit, never a verdict', () => {
@@ -53,36 +60,69 @@ test('a corrupt cookie is a first visit, never a verdict', () => {
   }
 });
 
-test('the window is short and the threshold matches the client\'s reasoning', () => {
+test('the thresholds and windows match how iOS actually behaves', () => {
   // The cookie expires on its own so a bad morning does not brand the phone for life…
   assert.ok(RESCUE_WINDOW_S <= 3600, 'a day-long window would lock a phone out over one bad hour');
-  // …and the threshold mirrors the client guard: iOS grants one automatic reload; two requests
-  // with no survival between them is the loop.
-  assert.equal(RESCUE_THRESHOLD, 2);
+  // …the grant exists only to outlive one crash-and-reload cycle…
+  assert.ok(GRANT_WINDOW_S <= 120, 'a long grant re-passes reloads of retries that died long ago');
+  // …and the threshold is ONE. iOS kills the page, auto-reloads it once, kills it again and
+  // shows the terminal screen — there is no third request. A threshold of two was deployed on
+  // 15 August and produced the same grey screenshot three minutes later, because it redirected
+  // a request iOS never makes. The automatic reload must BE the redirect.
+  assert.equal(RESCUE_THRESHOLD, 1);
 });
 
-test('the middleware wires the whole contract, and only for the design page', () => {
+test('the middleware wires the whole contract, for BOTH heavy pages and only them', () => {
   const mw = source('../middleware.ts');
-  assert.match(mw, /if \(pathname !== '\/design'\) return NextResponse\.next\(\);/,
+  assert.match(mw, /'\/design': \{ pulse: RESCUE_COOKIE, grant: GRANT_COOKIE \}/,
+    'the design page lost its rescue');
+  assert.match(mw, /'\/farmer': \{ pulse: FARMER_PULSE_COOKIE, grant: FARMER_GRANT_COOKIE \}/,
+    '"it crashes in multiple places" — the farmer map needs the same net');
+  assert.match(mw, /if \(!names\) return NextResponse\.next\(\);/,
     'the rescue must not tax every route in the app');
   // Prefetches are the router warming links nobody tapped — counting them charges crashes to
   // pages nobody opened.
   assert.match(mw, /prefetch/i, 'prefetch requests are being counted as opens');
-  assert.match(mw, /decideDesignRescue\(req\.cookies\.get\(RESCUE_COOKIE\)/);
+  assert.match(mw, /decideDesignRescue\(\s*req\.cookies\.get\(names\.pulse\)/,
+    'the decision must read the pulse for THIS page');
+  assert.match(mw, /req\.cookies\.get\(names\.grant\)/,
+    'the decision must know whether a full=1 retry was already granted');
   // The redirect keeps the coordinates, so the lite page can offer the same farm back.
   assert.match(mw, /\/design\/lite\$\{search\}/, 'the redirect drops the farm coordinates');
-  // The cookie must be readable by document.cookie — the SETTLED page deleting it is the whole
-  // contract, and httpOnly would make that impossible.
+  assert.match(mw, /searchParams\.set\('from', 'farmer'\)/,
+    'the lite page cannot adapt its words without knowing which page died');
+  // The cookies must be readable by document.cookie — the SETTLED page deleting the pulse is the
+  // whole contract, and httpOnly would make that impossible.
   assert.match(mw, /httpOnly: false/, 'an httpOnly cookie can never be cleared by the healthy page');
   assert.match(mw, /maxAge: RESCUE_WINDOW_S/);
+  assert.match(mw, /maxAge: GRANT_WINDOW_S/, 'the grant must expire on its own');
 });
 
-test('the settled design page tells the server it survived', () => {
-  const page = source('../app/design/page.tsx');
-  const settleAt = page.indexOf('markPageSettled(window.localStorage, safeMode.key)');
-  assert.ok(settleAt > 0, 'the settle callback is gone');
-  assert.match(page.slice(settleAt, settleAt + 500), /clearPulseCookie\(\)/,
-    'nothing deletes the pulse cookie, so every phone ends up on the lite page eventually');
+test('both settled pages tell the server they survived', () => {
+  const design = source('../app/design/page.tsx');
+  const settleAt = design.indexOf('markPageSettled(window.localStorage, safeMode.key)');
+  assert.ok(settleAt > 0, 'the design settle callback is gone');
+  assert.match(design.slice(settleAt, settleAt + 500), /clearPulseCookie\(\)/,
+    'nothing deletes the design pulse, so every phone ends up on the lite page eventually');
+
+  const farmer = source('../app/farmer/page.tsx');
+  const farmerSettleAt = farmer.indexOf('markPageSettled(window.localStorage, mapGuard.key)');
+  assert.ok(farmerSettleAt > 0, 'the farmer settle callback is gone');
+  assert.match(farmer.slice(farmerSettleAt, farmerSettleAt + 500), /clearPulseCookie\(FARMER_PULSE_COOKIE\)/,
+    'nothing deletes the farmer pulse, so every phone ends up on the lite page eventually');
+  assert.match(farmer, /pageCrashGuard\(FARMER_LOAD_KEY, FARMER_PULSE_COOKIE\)/,
+    'leaving the farmer page on purpose must also clear its pulse — see watchSessionExit');
+});
+
+test('leaving on purpose clears the pulse too, not only the settle timer', () => {
+  // A farmer who opens the page and taps away before the settle timer was ALIVE — without this,
+  // a healthy quick visit counts as a death and the next open lands on the lite page for no
+  // reason. watchSessionExit's leave() carries the cookie name for exactly this.
+  const crashLoop = source('../lib/crash-loop.ts');
+  assert.match(crashLoop, /if \(pulseCookie\) clearPulseCookie\(pulseCookie\);/,
+    'the leave() path no longer clears the server cookie');
+  assert.match(crashLoop, /watchSessionExit\(key, RESCUE_COOKIE\)/,
+    'the design guard must name its pulse cookie when wiring the exit watch');
 });
 
 test('the lite page must have nothing left to kill', () => {
@@ -99,7 +139,12 @@ test('the lite page must have nothing left to kill', () => {
   // Comments stripped first — the page is allowed to EXPLAIN the rule it follows.
   const code = lite.replace(/\/\/[^\n]*/g, '').replace(/\/\*[\s\S]*?\*\//g, '');
   assert.doesNotMatch(code, /localStorage|indexedDB/, 'the lite page went data-hungry');
-  // The way back in resets the server count and asks the client to go light too.
+  // The ways back in all carry the one-shot grant, the light one asks the client to go light
+  // too, and the farmer links carry it as well — without full=1 a farmer-map streak would
+  // bounce "Back to the map" straight back here forever.
   assert.match(lite, /safe=1&full=1/, 'the light way back in is gone');
-  assert.match(lite, /full=1/, 'nothing resets the server count — lite became a one-way door');
+  assert.match(lite, /\/farmer\$\{coords\}\$\{amp\}full=1/, 'the map link lost its grant');
+  assert.match(lite, /panel=Reports&full=1/, 'the reports link lost its grant');
+  // The middleware marks farmer-map redirects so the page can put the map first and say so.
+  assert.match(lite, /from'\) === 'farmer'/, 'the farmer wording is gone');
 });

@@ -1,5 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { RESCUE_COOKIE, RESCUE_WINDOW_S, decideDesignRescue } from '@/lib/server-rescue';
+import {
+  FARMER_GRANT_COOKIE,
+  FARMER_PULSE_COOKIE,
+  GRANT_COOKIE,
+  GRANT_WINDOW_S,
+  RESCUE_COOKIE,
+  RESCUE_WINDOW_S,
+  decideDesignRescue,
+} from '@/lib/server-rescue';
 
 // ── Site gate: DISABLED ──────────────────────────────────────────────────────
 // The shared-password wall is off — every request passes straight through.
@@ -17,9 +25,18 @@ import { RESCUE_COOKIE, RESCUE_WINDOW_S, decideDesignRescue } from '@/lib/server
 // live to report: requests for /design that are never followed by a settled page clearing the
 // cookie. At the threshold the answer is a redirect to /design/lite — a few kilobytes with
 // nothing left to kill — instead of another copy of the page that is doing the killing.
+// Each rescued page keeps its own pair of cookies, so the design page dying never holds the
+// farmer map hostage or vice versa. "It crashes in multiple places on the app" — both heavy
+// pages get the same net.
+const RESCUED: Record<string, { pulse: string; grant: string }> = {
+  '/design': { pulse: RESCUE_COOKIE, grant: GRANT_COOKIE },
+  '/farmer': { pulse: FARMER_PULSE_COOKIE, grant: FARMER_GRANT_COOKIE },
+};
+
 export function middleware(req: NextRequest) {
   const { pathname, search, searchParams } = req.nextUrl;
-  if (pathname !== '/design') return NextResponse.next();
+  const names = RESCUED[pathname];
+  if (!names) return NextResponse.next();
 
   // Prefetches are the router warming a link the farmer has not tapped. Counting them would
   // charge crashes to pages nobody opened.
@@ -29,21 +46,32 @@ export function middleware(req: NextRequest) {
     (req.headers.get('sec-purpose') ?? '').includes('prefetch');
   if (isPrefetch) return NextResponse.next();
 
-  const decision = decideDesignRescue(req.cookies.get(RESCUE_COOKIE)?.value, searchParams.get('full') === '1');
+  const decision = decideDesignRescue(
+    req.cookies.get(names.pulse)?.value,
+    searchParams.get('full') === '1',
+    req.cookies.get(names.grant)?.value === '1',
+  );
 
   if (decision.action === 'redirect') {
     // Keep the coordinates: the lite page's way-back-in links need to name the same farm.
     const lite = new URL(`/design/lite${search}`, req.url);
+    // The lite page adapts its words and its first offer to which page kept dying.
+    if (pathname === '/farmer') lite.searchParams.set('from', 'farmer');
     return NextResponse.redirect(lite);
   }
 
   const res = NextResponse.next();
-  res.cookies.set(RESCUE_COOKIE, String(decision.nextCount), {
-    maxAge: RESCUE_WINDOW_S, // a rolling window — two bad opens this morning do not brand the phone for life
+  res.cookies.set(names.pulse, String(decision.nextCount), {
+    maxAge: RESCUE_WINDOW_S, // a rolling window — a bad open this morning does not brand the phone for life
     path: '/',
     sameSite: 'lax',
     httpOnly: false, // the SETTLED page deletes it from document.cookie — that is the whole contract
   });
+  if (decision.grant) {
+    // A fresh full=1 retry: plant the one-shot grant so the AUTO-RELOAD of this same URL, if the
+    // retry dies, counts instead of passing again — see GRANT_COOKIE in lib/server-rescue.ts.
+    res.cookies.set(names.grant, '1', { maxAge: GRANT_WINDOW_S, path: '/', sameSite: 'lax', httpOnly: false });
+  }
   return res;
 }
 

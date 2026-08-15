@@ -35,6 +35,16 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '15 August',
+    sha: '74c67d7',
+    changes: [
+      'The crash rescue now steps in one reload sooner, before the grey error can appear',
+      'The farm map page now has the same rescue as the designer',
+      'Trying again from the simple page can never end on the grey error either',
+      'When even the light designer cannot open, the simple page says so honestly',
+    ],
+  },
+  {
+    when: '15 August',
     sha: '2475744',
     changes: [
       'A phone that cannot open the designer at all now gets a simple page, never a grey error',
