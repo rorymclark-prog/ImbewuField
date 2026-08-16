@@ -116,17 +116,22 @@ export async function fetchWeatherForecast(lat: number, lon: number): Promise<We
  * WMO weather-interpretation codes (the set Open-Meteo uses) collapsed to a
  * plain-English label + emoji glyph. Deliberately coarse — farmers need
  * "rain" not "slight intermittent drizzle at moderate intensity".
+ *
+ * `key` is the lib/element-art-2.ts ELEMENT_ART_2 lookup key for this condition's real artwork
+ * (weather_* prefixed — see that file's header comment). Showers/Snow showers share Rain's/Snow's
+ * icon and key — there are only 9 unique conditions across these 11 branches, matching the 9
+ * weather_* art files that shipped in PR #248.
  */
-export function describeWeatherCode(code: number): { label: string; icon: string } {
-  if (code === 0) return { label: 'Clear', icon: '☀️' };
-  if (code <= 2) return { label: 'Partly cloudy', icon: '🌤️' };
-  if (code === 3) return { label: 'Overcast', icon: '☁️' };
-  if (code === 45 || code === 48) return { label: 'Fog', icon: '🌫️' };
-  if (code >= 51 && code <= 57) return { label: 'Drizzle', icon: '🌦️' };
-  if (code >= 61 && code <= 67) return { label: 'Rain', icon: '🌧️' };
-  if (code >= 71 && code <= 77) return { label: 'Snow', icon: '🌨️' };
-  if (code >= 80 && code <= 82) return { label: 'Showers', icon: '🌧️' };
-  if (code >= 85 && code <= 86) return { label: 'Snow showers', icon: '🌨️' };
-  if (code >= 95) return { label: 'Thunderstorm', icon: '⛈️' };
-  return { label: 'Unsettled', icon: '🌥️' };
+export function describeWeatherCode(code: number): { label: string; icon: string; key: string } {
+  if (code === 0) return { label: 'Clear', icon: '☀️', key: 'weather_clear' };
+  if (code <= 2) return { label: 'Partly cloudy', icon: '🌤️', key: 'weather_partly_cloudy' };
+  if (code === 3) return { label: 'Overcast', icon: '☁️', key: 'weather_overcast' };
+  if (code === 45 || code === 48) return { label: 'Fog', icon: '🌫️', key: 'weather_fog' };
+  if (code >= 51 && code <= 57) return { label: 'Drizzle', icon: '🌦️', key: 'weather_drizzle' };
+  if (code >= 61 && code <= 67) return { label: 'Rain', icon: '🌧️', key: 'weather_rain' };
+  if (code >= 71 && code <= 77) return { label: 'Snow', icon: '🌨️', key: 'weather_snow' };
+  if (code >= 80 && code <= 82) return { label: 'Showers', icon: '🌧️', key: 'weather_rain' };
+  if (code >= 85 && code <= 86) return { label: 'Snow showers', icon: '🌨️', key: 'weather_snow' };
+  if (code >= 95) return { label: 'Thunderstorm', icon: '⛈️', key: 'weather_thunderstorm' };
+  return { label: 'Unsettled', icon: '🌥️', key: 'weather_unsettled' };
 }

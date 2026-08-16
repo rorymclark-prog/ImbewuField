@@ -7,6 +7,7 @@ import { loadCanvasState } from '@/lib/design-canvas';
 import { loadPlaces, resolveMainSite } from '@/lib/saved-places';
 import { loadCropPlan } from '@/lib/crop-plan';
 import { cropByKey } from '@/lib/crop-catalog';
+import { getElementArt2 } from '@/lib/element-art-2';
 import {
   JOURNAL_CATEGORIES,
   JOURNAL_CHANGED_EVENT,
@@ -186,7 +187,12 @@ export default function FieldJournal() {
           <Chip on={filter === 'all'} onClick={() => setFilter('all')}>All · {entries.length}</Chip>
           {usedCategories.map((c) => (
             <Chip key={c.key} on={filter === c.key} onClick={() => setFilter(c.key)} tint={c.tint} ink={c.ink}>
-              {c.icon} {c.label}
+              {getElementArt2(`journal_${c.key}`) ? (
+                <img src={getElementArt2(`journal_${c.key}`)} alt="" aria-hidden style={{ width: 12, height: 12, objectFit: 'contain', display: 'inline-block', verticalAlign: '-2px' }} />
+              ) : (
+                c.icon
+              )}{' '}
+              {c.label}
             </Chip>
           ))}
         </div>
@@ -249,7 +255,12 @@ export default function FieldJournal() {
                           padding: '3px 7px', borderRadius: 7, background: cat.tint, color: cat.ink,
                           font: '700 10px/1 system-ui, sans-serif',
                         }}>
-                          {cat.icon} {cat.label}
+                          {getElementArt2(`journal_${entry.category}`) ? (
+                            <img src={getElementArt2(`journal_${entry.category}`)} alt="" aria-hidden style={{ width: 11, height: 11, objectFit: 'contain', display: 'inline-block', verticalAlign: '-1px' }} />
+                          ) : (
+                            cat.icon
+                          )}{' '}
+                          {cat.label}
                         </span>
                       </div>
 

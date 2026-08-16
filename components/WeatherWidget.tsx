@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Wind, Snowflake, Flame, CloudRain, Droplets } from 'lucide-react';
 import { fetchWeatherForecast, describeWeatherCode, type WeatherForecast } from '@/lib/weather';
+import { getElementArt2 } from '@/lib/element-art-2';
 
 interface Props {
   lat: number;
@@ -104,7 +105,16 @@ export default function WeatherWidget({ lat, lon, compact = false }: Props) {
       {/* Current conditions + today's irrigation hint */}
       <div className="rounded-2xl overflow-hidden" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
         <div className="flex items-center gap-3 px-3.5 py-2.5" style={{ borderBottom: '1px solid #E2D8C4' }}>
-          <span style={{ fontSize: compact ? 22 : 26, lineHeight: 1 }}>{currentDesc.icon}</span>
+          {getElementArt2(currentDesc.key) ? (
+            <img
+              src={getElementArt2(currentDesc.key)}
+              alt=""
+              aria-hidden
+              style={{ width: compact ? 22 : 26, height: compact ? 22 : 26, objectFit: 'contain' }}
+            />
+          ) : (
+            <span style={{ fontSize: compact ? 22 : 26, lineHeight: 1 }}>{currentDesc.icon}</span>
+          )}
           <div className="flex-1 min-w-0">
             <div className="font-display font-bold" style={{ fontSize: compact ? 16 : 18, color: '#20190F', lineHeight: 1.1 }}>
               {Math.round(current.tempC)}°C
@@ -137,7 +147,11 @@ export default function WeatherWidget({ lat, lon, compact = false }: Props) {
                 style={{ minWidth: 62, borderRight: i < stripDays.length - 1 ? '1px solid #F0E9D8' : 'none' }}
               >
                 <div className="font-sans font-medium" style={{ fontSize: 10.5, color: '#94876F' }}>{dayLabel(d.date, i)}</div>
-                <div style={{ fontSize: 18, lineHeight: 1.4 }}>{desc.icon}</div>
+                {getElementArt2(desc.key) ? (
+                  <img src={getElementArt2(desc.key)} alt="" aria-hidden style={{ width: 18, height: 18, margin: '2px 0' }} />
+                ) : (
+                  <div style={{ fontSize: 18, lineHeight: 1.4 }}>{desc.icon}</div>
+                )}
                 <div className="font-display" style={{ fontSize: 12.5, color: '#20190F' }}>
                   <span className="font-semibold">{Math.round(d.tMaxC)}°</span>
                   <span style={{ color: '#94876F' }}> {Math.round(d.tMinC)}°</span>

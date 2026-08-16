@@ -13,6 +13,7 @@ import {
   type JournalEntry,
   type JournalEntryInput,
 } from '@/lib/field-journal';
+import { getElementArt2 } from '@/lib/element-art-2';
 
 export interface BedOption {
   id: string;
@@ -157,7 +158,11 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
                       font: `${on ? 700 : 500} 13px/1 system-ui, sans-serif`,
                     }}
                   >
-                    <span style={{ fontSize: 15 }}>{c.icon}</span>
+                    {getElementArt2(`journal_${c.key}`) ? (
+                      <img src={getElementArt2(`journal_${c.key}`)} alt="" aria-hidden style={{ width: 15, height: 15, objectFit: 'contain' }} />
+                    ) : (
+                      <span style={{ fontSize: 15 }}>{c.icon}</span>
+                    )}
                     {c.label}
                   </button>
                 );
