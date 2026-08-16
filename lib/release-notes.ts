@@ -35,6 +35,15 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '16 August',
+    sha: '0c7d842',
+    changes: [
+      'JoJo tanks now look like upright ribbed tanks instead of dark rings on the map',
+      'Shade tunnels and polytunnels now show the crops growing underneath',
+      'Both tunnels keep the exact width and length you set in the Design Studio',
+    ],
+  },
+  {
+    when: '16 August',
     sha: 'dc08fd2464738dc6e260ae6030243d0011d08aef',
     changes: [
       'Weather now shows a real picture for the sky, not an emoji',
@@ -99,14 +108,6 @@ export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '15 August',
     sha: 'efc9884',
-    changes: [
-      'JoJo tanks now look like upright ribbed tanks instead of dark rings on the map',
-      'The shade house now reads as an arched tunnel while crops stay visible underneath',
-    ],
-  },
-  {
-    when: '15 August',
-    sha: '93d6b91',
     changes: [
       'Share a listing straight to WhatsApp, so what you have to sell can reach a buyer',
       'A new Prices screen — tap a crop and see the wholesale and retail price per kg',

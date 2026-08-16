@@ -615,7 +615,7 @@ export const ELEMENT_CATALOG: DesignElementDef[] = [
   {
     id: 'greenhouse_tunnel',
     category: 'structure',
-    name: 'Greenhouse Tunnel',
+    name: 'Polytunnel',
     icon: '🏡',
     art: '/element-art/greenhouse_tunnel.png',
     shape: 'rect',
@@ -628,7 +628,7 @@ export const ELEMENT_CATALOG: DesignElementDef[] = [
   {
     id: 'shade_house',
     category: 'structure',
-    name: 'Shade House',
+    name: 'Shade Tunnel',
     icon: '🕶️',
     art: '/element-art/shade_house.png',
     shape: 'rect',
