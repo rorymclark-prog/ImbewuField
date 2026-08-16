@@ -726,6 +726,7 @@ export const ELEMENT_CATALOG: DesignElementDef[] = [
     category: 'structure',
     name: 'Playground',
     icon: '🛝',
+    art: '/element-art/playground.png',
     shape: 'rect',
     wM: 8,
     hM: 8,

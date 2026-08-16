@@ -35,6 +35,13 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '16 August',
+    sha: '6ee6919f5a7e925ac7885dc1dae6a91e6f8e67e2',
+    changes: [
+      'Playground now has a real picture in the Design Palette instead of an emoji',
+    ],
+  },
+  {
+    when: '16 August',
     sha: '2bdaa93b20e0b4ff62787a1fdc079a0f0a8748ad',
     changes: [
       'The banana circle now shows real banana bunches, not just leaves',
