@@ -303,8 +303,8 @@ test('a change to what a paid sheet looks like bumps the recipe token', () => {
   // The last-render display effect re-serves whatever localStorage holds for this key on mount, so
   // without a bump the farmer (and Rory, checking the fix) sees the PRE-fix picture — the chrome-
   // less Full Treatment this whole change exists to stop re-serving — without rendering anything.
-  assert.match(DESIGN_GLOSSY_SOURCE, /\+ ':r4'/, 'the r-token must move when the sheet changes');
-  assert.doesNotMatch(DESIGN_GLOSSY_SOURCE, /\+ ':r[123]'/);
+  assert.match(DESIGN_GLOSSY_SOURCE, /\+ ':r5'/, 'the r-token must move when the sheet changes');
+  assert.doesNotMatch(DESIGN_GLOSSY_SOURCE, /\+ ':r[1234]'/);
   // PLAN_VERSION must NOT move with it: bumping that re-keys the gallery and takes paid renders
   // away from farmers who already have them.
   assert.match(
@@ -345,4 +345,29 @@ test('the locked paid render keeps model element artwork while exact Zones remai
   // promise, and dropping them would let the model repaint roofs and driveways.
   assert.ok(/stackOverlayImages\(exactGroundOverlay, structureOverlay/.test(src),
     'ground + structures are no longer composited exactly — geometry lock is now a lie');
+});
+
+test('Reference Blueprint zone edges stay map lines, never wide coloured berms', () => {
+  const start = DESIGN_GLOSSY_SOURCE.indexOf('function buildZoneOverlay(');
+  const end = DESIGN_GLOSSY_SOURCE.indexOf('\nfunction waterItemsFor(', start);
+  const zonePainter = DESIGN_GLOSSY_SOURCE.slice(start, end);
+  const widthRatios = [...zonePainter.matchAll(/lineWidth = Math\.max\([^,]+, W \* ([0-9.]+)\)/g)]
+    .map((match) => Number(match[1]));
+  assert.ok(widthRatios.length >= 2, 'zone keyline widths are no longer scale-aware');
+  assert.ok(widthRatios.every((ratio) => ratio <= 0.01),
+    'a Zone boundary exceeds 1% of map width and will read as a coloured berm');
+  assert.doesNotMatch(zonePainter, /ctx\.clip\('evenodd'\)[\s\S]*?ctx\.stroke\(\)/,
+    'the broad clipped inner-band painter has returned');
+});
+
+test('Reference Blueprint gives a soft aerial roof a definite traced plan silhouette', () => {
+  const start = DESIGN_GLOSSY_SOURCE.indexOf('async function buildHouseOverlay(');
+  const end = DESIGN_GLOSSY_SOURCE.indexOf('\n// Draw the traced driveway', start);
+  const housePainter = DESIGN_GLOSSY_SOURCE.slice(start, end);
+  const tone = housePainter.match(/benchmark without asking[\s\S]*?rgba\(42,55,53,([0-9.]+)\)/);
+  assert.ok(tone, 'the benchmark roof treatment is no longer explicit');
+  assert.ok(Number(tone[1]) >= 0.5,
+    'the Reference Blueprint roof is too transparent to resolve a blurred aerial tile');
+  assert.ok(Number(tone[1]) < 1,
+    'the Reference Blueprint roof must retain some real source texture');
 });

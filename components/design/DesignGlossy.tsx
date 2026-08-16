@@ -2085,32 +2085,11 @@ function buildZoneOverlay(
     ctx.fillStyle = def.color;
     ctx.fill('evenodd'); // outer + hole rings in one path → real holes
     ctx.restore();
-    // IDENTITY LIVES AT THE EDGE, so the middle can stay see-through.
-    //
-    // A flat tint strong enough to name its colour across a whole paddock is also strong enough to
-    // hide the ground under it, and the ground is the thing Rory asked to see. Planning-designation
-    // maps solve exactly this with a graduated edge: a saturated band just inside the boundary,
-    // falling away to a light wash in the middle. The band is where zones meet, which is where a
-    // reader compares them, so the colour is at its strongest precisely where the comparison is
-    // made — and the centre of a zone, where nothing needs comparing, is the clearest ground on
-    // the sheet.
-    //
-    // Drawn by stroking the zone's own outline inside a clip of itself: half the stroke falls
-    // outside the shape and is discarded, so a 2-pass stroke becomes a band that follows every
-    // corner and hole without any offset geometry to get wrong.
-    ctx.save();
-    ctx.clip('evenodd');
-    ctx.lineJoin = 'round';
-    ctx.strokeStyle = def.color;
-    for (const [alpha, width] of [
-      [0.3, Math.max(14, W * 0.028)] as const,
-      [0.42, Math.max(7, W * 0.013)] as const,
-    ]) {
-      ctx.globalAlpha = alpha;
-      ctx.lineWidth = width;
-      ctx.stroke();
-    }
-    ctx.restore();
+    // Identity still lives at the edge, but as a cartographic LINE rather than a coloured berm.
+    // The previous 2.8%-of-map inner band became nearly 100 px wide on a High sheet: six nested
+    // zones turned into neon tubes and hid the photograph, nothing like the supplied benchmark.
+    // The flat fill already carries the ordered colour; the restrained keyline below is enough to
+    // separate neighbours while leaving the ground visible.
     // Re-declare the path: clip() left it intact but the fill rings must be re-walked for the
     // outline strokes below to describe the same donut the fill did.
     ctx.beginPath();
@@ -2120,11 +2099,12 @@ function buildZoneOverlay(
         ctx.closePath();
       }
     }
-    ctx.strokeStyle = 'rgba(32,25,15,0.42)';
-    ctx.lineWidth = 7;
+    ctx.lineJoin = 'round';
+    ctx.strokeStyle = 'rgba(32,25,15,0.48)';
+    ctx.lineWidth = Math.max(3, W * 0.0018);
     ctx.stroke();
     ctx.strokeStyle = def.color;
-    ctx.lineWidth = 4;
+    ctx.lineWidth = Math.max(1.5, W * 0.0009);
     ctx.stroke();
   }
   // Number badge per zone — at the centroid, PLUS whatever the farmer dragged it to on the canvas,
@@ -2874,7 +2854,12 @@ async function buildHouseOverlay(
   }
   ctx.filter = 'none';
   if (treatment === 'precision_atlas') {
-    ctx.fillStyle = 'rgba(42,55,53,0.16)';
+    // Reference Blueprint needs a definite plan anchor even when the available aerial tile is
+    // soft. A light veil preserved every blurred source pixel and the house read as an indistinct
+    // stain beside crisp zones. This opaque-enough charcoal tone keeps the exact traced silhouette,
+    // retains a hint of the real roof texture, and matches the dark-roof hierarchy in the supplied
+    // benchmark without asking the model to redraw or move the building.
+    ctx.fillStyle = 'rgba(42,55,53,0.62)';
     ctx.fillRect(0, 0, W, H);
   }
   ctx.restore();
@@ -11968,7 +11953,7 @@ export default function DesignGlossy({
   // exactly what the r-token exists to prevent.
   const underlaySuffix = underlayCacheSuffix(underlay, frameProp)
     + (sheetHasPlantCodes ? labelModeCacheSuffix(labelMode) : '')
-    + ':r4'
+    + ':r5'
     // A sheet drawn at SCALE 3 is a different picture from the same sheet at 2 — re-serving a
     // 1920px cache under a High setting would look like the setting did nothing (the exact
     // "code change looks like it did nothing" trap the r-token note above describes). EMPTY at
