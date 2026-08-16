@@ -418,8 +418,12 @@ export function exitSafeMode(): void {
   resolvedForThisLoad = null;
   try {
     const url = new URL(window.location.href);
+    const hadSafeParam = url.searchParams.has('safe');
     url.searchParams.delete('safe');
-    window.location.replace(url.toString());
+    // Replacing a URL with itself is not a reliable reload in embedded browsers. When the page
+    // entered light mode from the crash counter (rather than ?safe=1), force a real reload.
+    if (hadSafeParam) window.location.replace(url.toString());
+    else window.location.reload();
   } catch {
     window.location.reload();
   }
