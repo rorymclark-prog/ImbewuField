@@ -409,7 +409,12 @@ export function peekSafeMode(): SafeModeDecision {
  *  once per load — the same reload contract the sheet-scale setting uses. */
 export function exitSafeMode(): void {
   if (typeof window === 'undefined') return;
-  markPageSettled(window.localStorage, pageLoadKey(currentSearch()));
+  const key = pageLoadKey(currentSearch());
+  markPageSettled(window.localStorage, key);
+  // This reload is deliberate. Without the clean-exit marker, the death watch on the arriving
+  // page sees the old ALIVE marker and calls the retry itself a foreground crash. The farmer then
+  // taps "Try the photo again" and lands straight back in light mode forever.
+  markCleanExit(window.localStorage, key);
   resolvedForThisLoad = null;
   try {
     const url = new URL(window.location.href);

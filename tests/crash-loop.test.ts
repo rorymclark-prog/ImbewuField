@@ -408,3 +408,18 @@ test('bouncing off the page on purpose is not a crash streak', () => {
   assert.match(leave, /markPageSettled/, 'a clean exit no longer settles the load');
   assert.match(leave, /markCleanExit/, 'a clean exit no longer flags itself');
 });
+
+test('trying the photo again is a clean reload, not another apparent crash', () => {
+  // Rory could reach safe mode after a heavy sheet render, but its recovery button reloaded into
+  // safe mode again: exitSafeMode cleared the load count while leaving ALIVE set, so the next
+  // death watch classified the intentional retry as a foreground death.
+  const lib = readFileSync(new URL('../lib/crash-loop.ts', import.meta.url), 'utf8');
+  const at = lib.indexOf('export function exitSafeMode()');
+  const body = lib.slice(at, lib.indexOf('\n}', at));
+  const settle = body.indexOf('markPageSettled(');
+  const clean = body.indexOf('markCleanExit(');
+  const reload = Math.max(body.indexOf('window.location.replace('), body.indexOf('window.location.reload('));
+  assert.ok(settle > 0, 'the photo retry no longer clears the crash streak');
+  assert.ok(clean > settle, 'the photo retry leaves the old session looking dead');
+  assert.ok(reload > clean, 'the page reloads before recording the deliberate exit');
+});
