@@ -325,17 +325,21 @@ function HomeLandingInner() {
   ];
 
   const QUICK_ACTIONS = [
-    { href: '/finances',          Icon: DollarSign,    label: t('homeQuickFinance'),     desc: t('homeQuickFinanceDesc'),     color: 'var(--color-harvest)', bg: 'rgba(192,122,30,0.10)' },
-    { href: '/student',           Icon: GraduationCap, label: t('homeQuickStudy'),       desc: t('homeQuickStudyDesc'),       color: 'var(--color-water)', bg: 'rgba(35,94,134,0.10)' },
-    { href: '/contact',           Icon: MessageCircle, label: t('homeQuickContact'),     desc: t('homeQuickContactDesc'),     color: '#5A7A3A', bg: 'rgba(90,122,58,0.10)' },
-    { href: '/journal',           Icon: Leaf,          label: t('homeQuickJournal'),     desc: t('homeQuickJournalDesc'),     color: 'var(--color-forest-800)', bg: 'rgba(31,77,43,0.08)' },
-    { href: '/facilitator/crops', Icon: CalendarDays,  label: t('homeQuickCropPlanner'), desc: t('homeQuickCropPlannerDesc'), color: 'var(--color-forest-800)', bg: 'rgba(31,77,43,0.08)' },
-    { href: '/records',           Icon: Wheat,         label: t('homeQuickMyRecords'),   desc: t('homeQuickMyRecordsDesc'),   color: 'var(--color-forest-800)', bg: 'rgba(31,77,43,0.08)' },
+    { href: '/finances',          Icon: DollarSign,    art: undefined as string | undefined, label: t('homeQuickFinance'),     desc: t('homeQuickFinanceDesc'),     color: 'var(--color-harvest)', bg: 'rgba(192,122,30,0.10)' },
+    { href: '/student',           Icon: GraduationCap, art: undefined as string | undefined, label: t('homeQuickStudy'),       desc: t('homeQuickStudyDesc'),       color: 'var(--color-water)', bg: 'rgba(35,94,134,0.10)' },
+    { href: '/contact',           Icon: MessageCircle, art: undefined as string | undefined, label: t('homeQuickContact'),     desc: t('homeQuickContactDesc'),     color: '#5A7A3A', bg: 'rgba(90,122,58,0.10)' },
+    // These four carry real illustrated art (public/home-icons/) instead of a Lucide glyph —
+    // same "art field with an Icon fallback" pattern as def.art in DesignPalette.tsx and
+    // getCropArt() on the Prices/Exchange pages. Icon stays wired as the fallback if the art
+    // path is ever wrong, never dead-code.
+    { href: '/journal',           Icon: Leaf,          art: '/home-icons/journal.png',      label: t('homeQuickJournal'),     desc: t('homeQuickJournalDesc'),     color: 'var(--color-forest-800)', bg: 'rgba(31,77,43,0.08)' },
+    { href: '/facilitator/crops', Icon: CalendarDays,  art: '/home-icons/crop-planner.png', label: t('homeQuickCropPlanner'), desc: t('homeQuickCropPlannerDesc'), color: 'var(--color-forest-800)', bg: 'rgba(31,77,43,0.08)' },
+    { href: '/records',           Icon: Wheat,         art: '/home-icons/my-records.png',   label: t('homeQuickMyRecords'),   desc: t('homeQuickMyRecordsDesc'),   color: 'var(--color-forest-800)', bg: 'rgba(31,77,43,0.08)' },
     // Not translated via t() like the rest of this grid — deliberately, to avoid adding keys to
     // every locale block in lib/i18n.tsx (a large shared file well outside this change's scope) for
     // a single new tile. Falls back to plain English, same as this file's other hardcoded
     // farmer-facing strings (e.g. the "Your farm plan" and sample-farm copy above).
-    { href: '/prices',            Icon: Tag,           label: 'Prices',                  desc: 'Wholesale & retail',          color: 'var(--color-forest-800)', bg: 'rgba(31,77,43,0.08)' },
+    { href: '/prices',            Icon: Tag,           art: '/home-icons/prices.png',       label: 'Prices',                  desc: 'Wholesale & retail',          color: 'var(--color-forest-800)', bg: 'rgba(31,77,43,0.08)' },
   ];
 
   return (
@@ -432,7 +436,11 @@ function HomeLandingInner() {
               style={{ textDecoration: 'none', background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}
             >
               <div className="flex items-center justify-center rounded-xl" style={{ width: 44, height: 44, background: q.bg, color: q.color }}>
-                <q.Icon size={20} strokeWidth={1.6} />
+                {q.art ? (
+                  <img src={q.art} alt="" aria-hidden style={{ width: 38, height: 38, objectFit: 'contain' }} />
+                ) : (
+                  <q.Icon size={20} strokeWidth={1.6} />
+                )}
               </div>
               <div>
                 <div className="font-display font-semibold" style={{ fontSize: 12.5, color: 'var(--color-ink)', lineHeight: 1.2 }}>{q.label}</div>
