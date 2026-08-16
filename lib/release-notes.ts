@@ -35,6 +35,15 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '16 August',
+    sha: '91712fb',
+    changes: [
+      'Gemini Zone maps now show exact colours and badges without leader lines crossing the farm',
+      'Reference Blueprint Zone borders are thinner and roofs stay clear on soft satellite images',
+      'Saved Gemini maps now say Gemini instead of gpt-image-2',
+    ],
+  },
+  {
+    when: '16 August',
     sha: 'feb3304',
     changes: [
       'Shade tunnels now fit their saved footprint and JoJo tanks have no dark halo',
