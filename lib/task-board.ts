@@ -90,8 +90,15 @@ export interface BoardTask {
   kind: BoardTaskKind;
   title: string;
   subtitle: string;
-  /** Emoji, e.g. crop.icon — rendered as text, not a lucide component. */
+  /** Emoji, e.g. crop.icon — the fallback the renderer shows when no real art
+   *  exists for this task yet (see cropKey below). */
   icon: string;
+  /** CropDef.key (lib/crop-catalog.ts), set only for kind 'crop' tasks. Lets
+   *  the renderer resolve real illustrated art via lib/crop-art.ts's
+   *  CROP_ART — the same lookup the veg-bed row renderer and design canvas's
+   *  ItemEditSheet use — instead of rendering `icon` as raw emoji text.
+   *  Undefined for non-crop kinds (survey/lesson), which have no art system. */
+  cropKey?: string;
   /** Real calendar month, 1-12, consistent with monthsAway — needed to emit a concrete .ics date. */
   dueMonth: number;
   /** Months until due; can exceed 11 for the harvest of a crop planned nearly a year out. */
@@ -154,6 +161,7 @@ export function buildCropBoardTasks(
       title: `${BOARD_VERB[t.action]} ${t.cropName}`,
       subtitle: `${t.bedLabel} · ${dueLabel(monthsAway)}`,
       icon: t.icon,
+      cropKey: t.cropKey,
       // Derived from the resolved offset (not t.month) so a clamped-to-now
       // prep task carries the month it's actually due.
       dueMonth: wrapMonth(currentMonth + monthsAway),
