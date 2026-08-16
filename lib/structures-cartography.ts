@@ -50,6 +50,14 @@ const PROTECTED_GROWING_FEATURES = new Set([
   'shade_house', 'greenhouse_tunnel',
 ]);
 
+// A tunnel is an AREA the farmer measured, not a point symbol. Rory's rule is literal: whatever
+// width and length were entered in the Studio must be the width and length on the finished plan.
+// Keep this independent of FEATURE_VISUALS: shade_house still has a dedicated legend glyph, but
+// that must never buy it the small-feature enlargement used for hives, taps and gates.
+const EXACT_FOOTPRINT_FEATURES = new Set([
+  'shade_house', 'greenhouse_tunnel',
+]);
+
 const COMPOST_AND_NURSERY_FEATURES = new Set([
   'compost_bay', 'nursery_table', 'worm_farm',
 ]);
@@ -178,6 +186,9 @@ export function structuresFeaturePresentationDimensions(
     || naturalHeight <= 0
   ) {
     return { width: 0, height: 0, scale: 1 };
+  }
+  if (EXACT_FOOTPRINT_FEATURES.has(key)) {
+    return { width: naturalWidth, height: naturalHeight, scale: 1 };
   }
   if (!FEATURE_VISUALS[key] || !Number.isFinite(canvasWidth) || canvasWidth <= 0) {
     return { width: naturalWidth, height: naturalHeight, scale: 1 };

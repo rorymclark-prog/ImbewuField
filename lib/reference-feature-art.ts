@@ -9,6 +9,7 @@ export type ReferenceFeatureArtwork =
   | 'pollinator-strip-v1.png'
   | 'vetiver-bank-v1.png'
   | 'shade-house-v3.png'
+  | 'polytunnel-v1.png'
   | 'banana-clump-v5.png'
   | 'pawpaw-tree-v2.png'
   | 'moringa-tree-v1.png'
@@ -93,6 +94,7 @@ const VETIVER_BANKS = new Set(['vetiver_row', 'mulch_bank']);
 
 const STRUCTURE_ART: Readonly<Record<string, ReferenceFeatureArtwork>> = {
   shade_house: 'shade-house-v3.png',
+  greenhouse_tunnel: 'polytunnel-v1.png',
 };
 
 const PLANTING_DETAIL_ART: Readonly<Record<string, ReferenceFeatureArtwork>> = {

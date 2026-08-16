@@ -34,11 +34,12 @@ export interface ReleaseNote {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
-    when: '15 August',
-    sha: 'efc9884',
+    when: '16 August',
+    sha: 'c99d79b',
     changes: [
       'JoJo tanks now look like upright ribbed tanks instead of dark rings on the map',
-      'The shade house now reads as an arched tunnel while crops stay visible underneath',
+      'Shade tunnels and polytunnels now show the crops growing underneath',
+      'Both tunnels keep the exact width and length you set in the Design Studio',
     ],
   },
   {

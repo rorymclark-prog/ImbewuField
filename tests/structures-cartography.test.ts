@@ -133,6 +133,29 @@ test('tiny painted structures remain readable without changing centre or aspect 
   );
 });
 
+test('protected-growing artwork uses every saved width and length literally', () => {
+  // The examples are deliberately varied rather than special-cased. A square must stay square,
+  // a long tunnel must stay long on either axis, and an arbitrary decimal measurement must pass
+  // through untouched. The canvas width changes print legibility only for point-like features.
+  const sizes = [
+    [6, 6],
+    [10, 3],
+    [3, 10],
+    [4.7, 8.3],
+  ] as const;
+  for (const id of ['shade_house', 'greenhouse_tunnel']) {
+    for (const [width, height] of sizes) {
+      for (const canvasWidth of [320, 1595, 5000]) {
+        assert.deepEqual(
+          structuresFeaturePresentationDimensions(id, width, height, canvasWidth),
+          { width, height, scale: 1 },
+          `${id} ${width}×${height} m was enlarged or reshaped on a ${canvasWidth}px plan`,
+        );
+      }
+    }
+  }
+});
+
 test('structure dimensions stay finite, preserve aspect, and never shrink valid footprints', () => {
   for (const id of ['beehive', 'gate', 'shade_house', 'unknown']) {
     for (const naturalWidth of [0.01, 1, 17, 1000]) {

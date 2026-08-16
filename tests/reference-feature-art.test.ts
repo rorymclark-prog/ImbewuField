@@ -25,6 +25,7 @@ test('Reference Blueprint maps high-impact Water and Planting features to reusab
   assert.equal(referenceFeatureArtworkFor('pollinator_strip'), 'pollinator-strip-v1.png');
   assert.equal(referenceFeatureArtworkFor('vetiver_row'), 'vetiver-bank-v1.png');
   assert.equal(referenceFeatureArtworkFor('shade_house'), 'shade-house-v3.png');
+  assert.equal(referenceFeatureArtworkFor('greenhouse_tunnel'), 'polytunnel-v1.png');
   assert.equal(referenceFeatureArtworkFor('banana_clump'), 'banana-clump-v5.png');
   assert.equal(referenceFeatureArtworkFor('tree_pawpaw'), 'pawpaw-tree-v2.png');
   assert.equal(referenceFeatureArtworkFor('tree_moringa'), 'moringa-tree-v1.png');
@@ -92,10 +93,28 @@ test('the shade tunnel is an open translucent cover, not an opaque timber grid',
   assert.ok(opaque / pixels < 0.1, 'an opaque grid has taken over the shade tunnel again');
 });
 
+test('the polytunnel is a transparent half-open plan sprite, so crops remain visible', () => {
+  const asset = referenceFeatureArtworkFor('greenhouse_tunnel');
+  assert.equal(asset, 'polytunnel-v1.png');
+  const publicRoot = join(process.cwd(), 'public', REFERENCE_FEATURE_ART_ROOT.replace(/^\//, ''));
+  const { width, height, data } = PNG.sync.read(readFileSync(join(publicRoot, asset)));
+  let clear = 0;
+  let partial = 0;
+  let opaque = 0;
+  for (let offset = 3; offset < data.length; offset += 4) {
+    if (data[offset] === 0) clear += 1;
+    else if (data[offset] === 255) opaque += 1;
+    else partial += 1;
+  }
+  const pixels = width * height;
+  assert.ok(clear / pixels > 0.25, 'the polytunnel has acquired a background slab');
+  assert.ok(partial / pixels > 0.25, 'the polytunnel no longer carries translucent cover detail');
+  assert.ok(opaque / pixels < 0.1, 'opaque pixels have hidden the crop rows again');
+});
+
 test('artwork mapping never invents a visual identity for generic or unrelated features', () => {
   assert.equal(referenceFeatureArtworkFor('infiltration_basin'), null);
   assert.equal(referenceFeatureArtworkFor('chicken_coop'), null);
-  assert.equal(referenceFeatureArtworkFor('greenhouse_tunnel'), null);
   assert.equal(referenceFeatureArtworkFor('other_planting'), null);
   assert.equal(referenceFeatureArtworkFor('made_up_feature'), null);
 });
