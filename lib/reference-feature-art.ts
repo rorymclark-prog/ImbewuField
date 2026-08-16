@@ -11,7 +11,7 @@ export type ReferenceFeatureArtwork =
   | 'production-bed-v1.png'
   | 'pollinator-strip-v1.png'
   | 'vetiver-bank-v1.png'
-  | 'shade-house-v3.png'
+  | 'shade-house-v4.png'
   | 'polytunnel-v1.png'
   | 'banana-clump-v5.png'
   | 'pawpaw-tree-v2.png'
@@ -96,7 +96,10 @@ const PRODUCTION_BEDS = new Set(['veg_bed', 'raised_bed']);
 const VETIVER_BANKS = new Set(['vetiver_row', 'mulch_bank']);
 
 const STRUCTURE_ART: Readonly<Record<string, ReferenceFeatureArtwork>> = {
-  shade_house: 'shade-house-v3.png',
+  // v3 was photographed from the entrance, so stretching it to the farmer's saved rectangle
+  // made a 6 x 6 m tunnel converge toward the far end. v4 is a square-on overhead footprint:
+  // half net, half open frame, and its subject reaches every edge that encodes the saved size.
+  shade_house: 'shade-house-v4.png',
   greenhouse_tunnel: 'polytunnel-v1.png',
 };
 
