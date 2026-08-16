@@ -139,6 +139,21 @@ export interface RenderJobDoc {
   expireAt?: Timestamp;
 }
 
+/**
+ * The durable job doc is the authority for which vendor produced a paid result. A render can
+ * finish after the farmer changes the engine picker or reloads the page, so attribution must never
+ * come from live React state (and must never be hard-coded to OpenAI in the queue finisher).
+ */
+export function renderJobAttribution(engine: string): {
+  saved: 'gemini' | 'falgpt';
+  gallery: 'gemini' | 'openai';
+  label: 'Gemini' | 'gpt-image-2';
+} {
+  return engine === 'gemini'
+    ? { saved: 'gemini', gallery: 'gemini', label: 'Gemini' }
+    : { saved: 'falgpt', gallery: 'openai', label: 'gpt-image-2' };
+}
+
 export class RenderJobError extends Error {}
 
 // ── Resume-attempt budget ─────────────────────────────────────────────────────

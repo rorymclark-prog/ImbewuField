@@ -44,7 +44,7 @@ import {
 import { structureRegisterText } from '@/lib/structure-register';
 import { buildFinishedSheetPolishPrompt, buildLockedIllustrationPrompt, buildPhasingRestylePrompt, buildSatelliteOverlayPrompt, buildSectorRestylePrompt, buildSectorSheetPolishPrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, SHEET_NO, type StylePreset } from '@/lib/producer-prompt';
 import { zoneBadgePositions } from '@/lib/canvas-labels';
-import { enqueueRenderJob, mapSerially, subscribeRenderJob, fetchRenderOutput, qualityCacheSuffix, recordResumeAttempt, clearResumeAttempts, resumeAttemptsExhausted, type RenderQuality } from '@/lib/render-jobs';
+import { enqueueRenderJob, mapSerially, subscribeRenderJob, fetchRenderOutput, qualityCacheSuffix, recordResumeAttempt, clearResumeAttempts, resumeAttemptsExhausted, renderJobAttribution, type RenderQuality } from '@/lib/render-jobs';
 import type { RenderEngine } from '@/lib/render-job-contract';
 import { authoritativeHouseFootprints } from '@/lib/house-footprints';
 // Extracted (behaviour-preserving) — see lib/glossy-filters.ts and lib/producer-labels.ts.
@@ -11968,7 +11968,7 @@ export default function DesignGlossy({
   // exactly what the r-token exists to prevent.
   const underlaySuffix = underlayCacheSuffix(underlay, frameProp)
     + (sheetHasPlantCodes ? labelModeCacheSuffix(labelMode) : '')
-    + ':r3'
+    + ':r4'
     // A sheet drawn at SCALE 3 is a different picture from the same sheet at 2 — re-serving a
     // 1920px cache under a High setting would look like the setting did nothing (the exact
     // "code change looks like it did nothing" trap the r-token note above describes). EMPTY at
@@ -13179,6 +13179,12 @@ export default function DesignGlossy({
       const gutterOwnsLabels = locked && (f === 'planting' || f === 'structures' || f === 'all');
       const labels = (f === 'water' && locked) || gutterOwnsLabels
         ? []
+        // The exact zone overlay already carries a numbered badge at every saved zone and the
+        // legend expands each number into its full name. Margin leaders added the same facts a
+        // third time and crossed the whole map (the paid Carl & Sandy Zones render made this
+        // visible). Keep the map readable: badges identify regions; the legend owns the names.
+        : f === 'zones'
+          ? []
         : locked
           ? referenceBlueprintLabels(renderState, renderRefLayers, W, H, f)
           : producerLabels(renderState, renderRefLayers, W, H, f, true);
@@ -13199,9 +13205,13 @@ export default function DesignGlossy({
       // stacked below), the labels and legend are still drawn by the app afterwards from saved
       // data, and the PLANTING is the model's illustration of the elements it was given — in the
       // positions it was given them. That is the whole product of the paid pass.
-      const overlayImage = locked
-        ? undefined
-        : f === 'zones' ? buildZoneOverlay(renderState, renderRefLayers, W, H)
+      const overlayImage = f === 'zones'
+        // Zones are saved polygons, not model artwork. The general locked-sheet rule below must
+        // not suppress them: that shipped a paid Zones sheet with only Gemini's faint impression
+        // of the bands and no exact badges. Burn the real regions after every model pass.
+        ? buildZoneOverlay(renderState, renderRefLayers, W, H)
+        : locked
+          ? undefined
           : f === 'water' ? buildWaterOverlay(renderState, renderFrame, renderRefLayers, W, H, true, false)
             : undefined;
       // Ground first, then the exact source-derived roof and driveway, then factual marks. This keeps
@@ -14310,6 +14320,8 @@ export default function DesignGlossy({
         // showcaseKeysRef stays as fallback for jobs enqueued before the field existed.
         const styleKey = ((job.style || styleRef.current) ?? 'extension_blueprint') as StylePreset;
         const styleDef = PRODUCER_STYLES.find((s) => s.key === styleKey);
+        const attribution = renderJobAttribution(job.engine);
+        setLoading(attribution.saved);
         for (const sheet of job.sheets) {
           if (sheet.status === 'done' && sheet.outputPath && !finished.has(sheet.key)) {
             finished.add(sheet.key); // BEFORE the await, so a re-fired snapshot can't double-finish
@@ -14575,7 +14587,7 @@ export default function DesignGlossy({
                 rejected.add(sheet.key);
                 continue;
               }
-              const record: SavedGlossy = { image: finalSheet, provider: 'falgpt', at: new Date().toISOString() };
+              const record: SavedGlossy = { image: finalSheet, provider: attribution.saved, at: new Date().toISOString() };
               // The display effect reads `producer:<style>:<filter>:<mode>` plus the underlay/
               // label-mode suffixes; this save used a three-segment key, so every queue-rendered
               // Hybrid and Full Treatment was written to a slot NOTHING reads — the farmer came
@@ -14619,7 +14631,7 @@ export default function DesignGlossy({
                   // the comment on showcaseKeysRef above) — under the 3-mode contract that
                   // combination is never a genuine paid polish, so it must not claim to be one.
                   resultKind: isPolishedResult ? 'ai-polished' : isHybridResult ? 'hybrid' : 'legacy',
-                  provider: 'openai',
+                  provider: attribution.gallery,
                   geometryLock: finalGeometryLocked,
                   showcase,
                 },
@@ -14651,8 +14663,8 @@ export default function DesignGlossy({
           const firstErr = failedSheets[0]?.error;
           if (done > 0) {
             setNotice(refreshPendingRef.current
-              ? `AI POLISH COMPLETE — the new gpt-image-2 result is open now${lockedDone ? ' with Geometry Lock applied' : ''}. The exact no-AI master remains separately saved.`
-              : `AI POLISH COMPLETE — ${done} paid gpt-image-2 result${done === 1 ? '' : 's'} finished${lockedDone ? ` with Geometry Lock applied on ${lockedDone}` : ''}${failedSheets.length ? ` · ${failedSheets.length} failed${firstErr ? ` (${firstErr})` : ''} — try again` : ''}. The new AI result is open now; the exact no-AI master is saved separately.`);
+              ? `AI POLISH COMPLETE — the new ${attribution.label} result is open now${lockedDone ? ' with Geometry Lock applied' : ''}. The exact no-AI master remains separately saved.`
+              : `AI POLISH COMPLETE — ${done} paid ${attribution.label} result${done === 1 ? '' : 's'} finished${lockedDone ? ` with Geometry Lock applied on ${lockedDone}` : ''}${failedSheets.length ? ` · ${failedSheets.length} failed${firstErr ? ` (${firstErr})` : ''} — try again` : ''}. The new AI result is open now; the exact no-AI master is saved separately.`);
             refreshPendingRef.current = false;
             setGalleryViewId(lastAssembledGalleryId);
             setGalleryOpen(true);
@@ -15147,8 +15159,8 @@ export default function DesignGlossy({
             {lockedPolishStage === 'exact'
               ? 'The accurate master is being saved to Saved maps. It will not replace your chosen style.'
               : lockedPolishStage === 'hybrid'
-              ? `Your exact master is safe. gpt-image-2 is painting the ${lockedPolishStyleLabel} map artwork — then your boundary, labels, legend, north arrow and scale bar are drawn back on top by the app, not by the model.`
-              : `Your exact master and your AI-polished sheet are both safe. gpt-image-2 is running a second pass over the finished artwork; only that finished AI image will replace this progress screen.`}
+              ? `Your exact master is safe. ${engine === 'gemini' ? 'Gemini' : 'gpt-image-2'} is painting the ${lockedPolishStyleLabel} map artwork — then your boundary, labels, legend, north arrow and scale bar are drawn back on top by the app, not by the model.`
+              : `Your exact master and your AI-polished sheet are both safe. ${engine === 'gemini' ? 'Gemini' : 'gpt-image-2'} is running a second pass over the finished artwork; only that finished AI image will replace this progress screen.`}
           </span>
         </div>
       )}
