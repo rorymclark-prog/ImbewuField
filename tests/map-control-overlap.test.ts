@@ -84,8 +84,12 @@ test('the LABELS strip does not sit on top of "Find your land"', () => {
   assert.match(map, /maxWidth: 'calc\(100vw - 28px\)'/, 'the strip can clip off a phone again');
   assert.match(map, /overflowX: 'auto'/);
 
-  // And it drops to its own row whenever the tools button is on screen.
-  assert.match(map, /top: toolsPillShowing \? 68 : 14/, 'the strip is back on the top row');
+  // And on a phone it drops to its own row whenever the tools button is on screen. (16 Aug: this
+  // gained a desktop-only branch — desktop's map pane is its own column with hundreds of px of
+  // horizontal clearance beside the compact "Find your land" island, so desktop sits flush at 14
+  // unconditionally. isPhone gates the branch that still needs the 68px drop; assert both halves
+  // so a future edit can't collapse the phone case back to always-14 without this test noticing.)
+  assert.match(map, /top: isPhone \? \(toolsPillShowing \? 68 : 14\) : 14/, 'the strip is back on the top row on phone');
 
   // 68 must actually clear the button: top-3 (12px) + its 48px height = 60.
   const btn = map.slice(map.indexOf('aria-label="Show map tools"'), map.indexOf('aria-label="Show map tools"') + 400);

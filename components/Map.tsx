@@ -43,6 +43,7 @@ import { useAuth } from '@/lib/auth';
 import { getFirebase } from '@/lib/firebase/init';
 import { subscribeUserMapData, pushShapes } from '@/lib/user-sync';
 import { activeAccountLocalStorageKey } from '@/lib/account-local-storage';
+import { usePhoneViewport } from '@/lib/use-phone-viewport';
 
 
 
@@ -338,6 +339,7 @@ const TREE_SPECIES_OPTIONS = ['Mango', 'Avocado', 'Lemon', 'Orange', 'Banana (si
 export default function PermaMap({ onLocationSelect, selectedLocation, loading, onMapCapture, onMapReady, onSiteDrawn, onWaterDrawn, onCaptureClick, jumpTo, onJumpComplete, onDrawingChange, locationData, onPlaceSelect, activePlaceId, people, showPeople, onTogglePeople, onDesignPresenceChange, guided }: Props) {
   const { t } = useLanguage();
   const { user } = useAuth();
+  const isPhone = usePhoneViewport();
   const mapRef = useRef<MapRef>(null);
   const drawRef = useRef<MapboxDraw | null>(null);
   const [style, setStyle] = useState<'satellite-streets-v12' | 'outdoors-v12'>('satellite-streets-v12');
@@ -3705,7 +3707,19 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
             // So when that button is on screen, this drops below it: the button is 48px tall at
             // top-3, so it ends at 60 and 68 clears it. When it is not (drawing, guided mode),
             // the top row is free and the bar sits back up at 14.
-            top: toolsPillShowing ? 68 : 14,
+            //
+            // Desktop-only: Rory, 16 Aug — "this label section must go up but not for the phone
+            // where it would compete with the other modal" (the guided "Find your land" banner,
+            // which is full-width on phone and already sits flush against this pill at top:14 in
+            // the guided+has-saved-data state — moving phone up further would only worsen that
+            // pre-existing overlap, so phone keeps the exact 68/14 split above, untouched).
+            // On desktop the map pane is its own column (not full viewport width) and the
+            // "Find your land" button is a fixed ~166px-wide island at top-left, so even this
+            // pill's widest realistic content (all 6 toggle groups) leaves hundreds of px of
+            // horizontal clearance — there's no phone-style edge-to-edge collision to guard
+            // against, so it can sit flush with the button's own row (14) permanently instead of
+            // conditionally dropping to 68.
+            top: isPhone ? (toolsPillShowing ? 68 : 14) : 14,
             right: 14, zIndex: 10, background: 'rgba(16,22,14,0.88)', backdropFilter: 'blur(14px)', WebkitBackdropFilter: 'blur(14px)', borderRadius: 999, padding: '5px 8px 5px 11px', boxShadow: '0 4px 16px rgba(0,0,0,0.4)',
             // On a phone the pill is wider than the screen and its left end clips off-screen.
             // Cap it to the viewport (14px margins) and let its CONTENT scroll sideways instead.
