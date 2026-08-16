@@ -35,7 +35,7 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '16 August',
-    sha: '0f73916',
+    sha: '694d8a2',
     changes: [
       'Try the photo again now restores the design photo after the app opens in light mode',
     ],

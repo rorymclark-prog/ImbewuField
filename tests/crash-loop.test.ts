@@ -422,4 +422,6 @@ test('trying the photo again is a clean reload, not another apparent crash', () 
   assert.ok(settle > 0, 'the photo retry no longer clears the crash streak');
   assert.ok(clean > settle, 'the photo retry leaves the old session looking dead');
   assert.ok(reload > clean, 'the page reloads before recording the deliberate exit');
+  assert.match(body, /hadSafeParam[\s\S]*?if \(hadSafeParam\)[\s\S]*?else window\.location\.reload\(\)/,
+    'a counter-triggered light load replaces its URL with itself instead of really reloading');
 });
