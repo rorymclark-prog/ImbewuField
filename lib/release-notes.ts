@@ -35,10 +35,13 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '16 August',
-    sha: '7c37f4f',
+    sha: 'feb3304',
     changes: [
       'Shade tunnels now fit their saved footprint and JoJo tanks have no dark halo',
       'Field Journal and My Records show examples when you have no entries yet',
+      'Home quick actions now use clear illustrated pictures',
+      'Upcoming farm tasks now show crop pictures instead of emoji',
+      'The desktop LABELS control no longer covers the Elements panel',
     ],
   },
   {
