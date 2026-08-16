@@ -1431,7 +1431,7 @@ export default function DesignPalette({
                   zIndex: desktopAside && !isPhone ? 15 : 1000,
                   display: 'flex',
                   flexWrap: 'wrap',
-                  gap: 6,
+                  gap: 3,
                   width: desktopAside && !isPhone ? desktopLayersWidth : 300,
                   maxWidth: 'calc(100vw - 16px)',
                   maxHeight: desktopAside && !isPhone ? (layersFloating ? '60dvh' : undefined) : layersAnchor?.maxHeight,
@@ -1497,15 +1497,15 @@ export default function DesignPalette({
                         aria-pressed={on}
                         onClick={() => setActiveLayers({ ...activeLayers, [lt.key]: !on })}
                         style={{
-                          flexBasis: '100%', minHeight: 34, padding: '3px 6px', borderRadius: 9,
+                          flexBasis: '100%', minHeight: 30, padding: '2px 6px', borderRadius: 9,
                           border: 'none', background: 'transparent', color: DARK,
-                          display: 'grid', gridTemplateColumns: '30px 22px minmax(0,1fr)',
+                          display: 'grid', gridTemplateColumns: '30px 24px minmax(0,1fr)',
                           alignItems: 'center', gap: 4, cursor: 'pointer', textAlign: 'left',
-                          fontSize: 12.5, fontWeight: 600, opacity: on ? 1 : 0.45,
+                          fontSize: 13.5, fontWeight: 600, opacity: on ? 1 : 0.45,
                         }}
                       >
-                        <span aria-hidden style={{ fontSize: 14, textAlign: 'center', color: on ? GREEN : '#9A8268' }}>{on ? '◉' : '○'}</span>
-                        <span aria-hidden style={{ textAlign: 'center' }}>{lt.icon}</span>
+                        <span aria-hidden style={{ fontSize: 15, textAlign: 'center', color: on ? GREEN : '#9A8268' }}>{on ? '◉' : '○'}</span>
+                        <span aria-hidden style={{ fontSize: 19, textAlign: 'center', lineHeight: 1 }}>{lt.icon}</span>
                         <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{t(lt.labelKey)}</span>
                       </button>
                     );
