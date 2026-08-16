@@ -2,6 +2,31 @@ import { normaliseLookupKey } from '@/lib/key-normalisation';
 
 export const REFERENCE_FEATURE_ART_ROOT = '/render-assets/reference-blueprint';
 
+/** Optional painted assets improve a sheet but never outrank finishing it. A same-origin image
+ *  decode that neither loads nor errors used to leave the paid flow permanently on "locking the
+ *  exact map". After this deadline the renderer uses its deterministic vector fallback. */
+export const REFERENCE_FEATURE_ART_WAIT_MS = 8_000;
+
+export async function settleOptionalReferenceArtLoad<T>(
+  load: Promise<T>,
+  maxWaitMs: number = REFERENCE_FEATURE_ART_WAIT_MS,
+): Promise<T | null> {
+  if (!Number.isFinite(maxWaitMs) || maxWaitMs <= 0) return null;
+  const timedOut = Symbol('reference-art-timeout');
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  try {
+    const result = await Promise.race([
+      load,
+      new Promise<typeof timedOut>((resolve) => {
+        timer = setTimeout(() => resolve(timedOut), maxWaitMs);
+      }),
+    ]);
+    return result === timedOut ? null : result;
+  } finally {
+    if (timer !== undefined) clearTimeout(timer);
+  }
+}
+
 export type ReferenceFeatureArtwork =
   | 'banana-basin-v1.png'
   // v1 was leaves-only, no visible fruit (Rory: "banana circle needs to have bananas in it just

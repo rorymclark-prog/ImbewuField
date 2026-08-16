@@ -34,6 +34,13 @@ export interface ReleaseNote {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '17 August',
+    sha: 'dc5dd03',
+    changes: [
+      'Phone renders no longer get stuck while locking a High-quality exact map',
+    ],
+  },
+  {
     when: '16 August',
     sha: '0d2f282',
     changes: [

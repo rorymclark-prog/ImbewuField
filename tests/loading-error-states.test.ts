@@ -11,6 +11,22 @@ import test from 'node:test';
 
 const source = (rel: string) => readFileSync(new URL(rel, import.meta.url), 'utf8');
 
+test('a stalled sheet image decode exits with an error instead of freezing exact lock forever', () => {
+  const glossy = source('../components/design/DesignGlossy.tsx');
+  const start = glossy.indexOf('function loadImage(src: string)');
+  const end = glossy.indexOf('\n}\n', start);
+  const loader = glossy.slice(start, end);
+  assert.ok(start > 0, 'the shared sheet image loader disappeared');
+  assert.match(glossy, /const RENDER_IMAGE_WAIT_MS = 20_000;/,
+    'sheet image decoding is unbounded again');
+  assert.match(loader, /window\.setTimeout\(/,
+    'the loader has no deadline, so Safari can leave Step 1 open forever');
+  assert.match(loader, /finish\('timeout'\)/,
+    'the deadline does not reject the same Promise the exact renderer awaits');
+  assert.match(loader, /img\.onload = null;[\s\S]*img\.onerror = null;/,
+    'a timed-out decode keeps its handlers and can settle the render twice');
+});
+
 test('a failed replies read on the contact screen says so and offers Retry, instead of looking like no replies', () => {
   const page = source('../app/contact/page.tsx');
   assert.match(page, /const \[repliesError, setRepliesError\] = useState/,

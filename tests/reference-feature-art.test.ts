@@ -6,13 +6,32 @@ import { PNG } from 'pngjs';
 
 import {
   REFERENCE_FEATURE_ART_ROOT,
+  REFERENCE_FEATURE_ART_WAIT_MS,
   referenceFeatureArtworkFor,
   referenceFeatureArtworkUrl,
+  settleOptionalReferenceArtLoad,
   STAPLE_TILES,
   stapleTileFor,
   VEG_SPRITES,
 } from '@/lib/reference-feature-art';
 import { ELEMENT_CATALOG, plantingGroupFor } from '@/lib/design-elements';
+
+test('an optional painted asset can never hold the exact-lock stage open forever', async () => {
+  assert.ok(REFERENCE_FEATURE_ART_WAIT_MS > 0);
+  assert.equal(await settleOptionalReferenceArtLoad(Promise.resolve('art'), 20), 'art');
+  assert.equal(
+    await settleOptionalReferenceArtLoad(new Promise<string>(() => undefined), 5),
+    null,
+    'a stalled image decode did not fall back to deterministic artwork',
+  );
+
+  const glossy = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
+  assert.match(
+    glossy,
+    /settleOptionalReferenceArtLoad\(loadImage\(url\)\)/,
+    'the bounded loader exists but the exact renderer bypasses it',
+  );
+});
 
 test('Reference Blueprint maps high-impact Water and Planting features to reusable artwork', () => {
   assert.equal(referenceFeatureArtworkFor('jojo_5000'), 'jojo-5000-top-v2.png');

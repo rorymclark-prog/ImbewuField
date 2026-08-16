@@ -91,7 +91,7 @@ import { PLAN_VERSION } from '@/lib/plan-version';
 import { SHEET_RENDER_RECIPE, savedSheetFreshness, type SavedSheetFreshness } from '@/lib/sheet-render-recipe';
 import { SHADE_CLOTH_ALPHA, STRUCTURES_LEGEND_SECTION_ORDER, isShadeClothStructure, structuresFeaturePresentationDimensions, structuresLegendSectionForFeature, structuresRouteVisualFor, type StructuresLegendSection } from '@/lib/structures-cartography';
 import { presentSectorCartography, seasonalSunArcRadii, sectorEvidenceSummary, SECTOR_STYLES, sectorFillColor, sectorStrokeWidth, type SectorLegendIcon, type SectorVisualKind } from '@/lib/sector-cartography';
-import { referenceFeatureArtworkUrl, stapleTileUrl, vegSpriteUrl, VEG_SPRITES, isTankDefId } from '@/lib/reference-feature-art';
+import { referenceFeatureArtworkUrl, settleOptionalReferenceArtLoad, stapleTileUrl, vegSpriteUrl, VEG_SPRITES, isTankDefId } from '@/lib/reference-feature-art';
 import {
   DEFAULT_SHEET_LABEL_MODE,
   codedLegendText,
@@ -651,7 +651,7 @@ export interface DesignGlossyProps {
 // Re-exported so existing importers keep working. See that module for the cost boundary
 // (AI_INPUT_WIDTH) that makes the setting safe to raise.
 export { SCALE, setSheetScale, AI_INPUT_WIDTH } from '@/lib/sheet-scale';
-import { SCALE, AI_INPUT_WIDTH, setSheetScale } from '@/lib/sheet-scale';
+import { SCALE, AI_INPUT_WIDTH, deviceSheetScale, setSheetScale } from '@/lib/sheet-scale';
 
 /** Farmer-facing names for the underlay control. Short enough to sit on a pill on a phone. */
 const UNDERLAY_LABEL: Readonly<Record<SheetUnderlay, string>> = {
@@ -1486,11 +1486,32 @@ async function shareSheetFiles(files: File[], labels: string[]): Promise<void> {
   await navigator.share({ files, title, text });
 }
 
+// Every exact and paid-sheet path decodes images through this gate. Safari can leave an Image in
+// limbo under memory pressure — neither onload nor onerror fires — which used to leave the UI on
+// "locking the exact map" forever. A bounded failure is recoverable and clears the guided flow;
+// an unresolved Promise is not.
+const RENDER_IMAGE_WAIT_MS = 20_000;
+
 function loadImage(src: string): Promise<HTMLImageElement> {
   return new Promise((resolve, reject) => {
     const img = new Image();
-    img.onload = () => resolve(img);
-    img.onerror = () => reject(new Error('Could not load image'));
+    let settled = false;
+    const finish = (result: 'load' | 'error' | 'timeout') => {
+      if (settled) return;
+      settled = true;
+      window.clearTimeout(timer);
+      img.onload = null;
+      img.onerror = null;
+      if (result === 'load') resolve(img);
+      else reject(new Error(result === 'timeout' ? 'Image loading timed out — try Standard quality.' : 'Could not load image'));
+    };
+    const timer = window.setTimeout(() => {
+      finish('timeout');
+      // Stop a late decode retaining its source after the render has already fallen back/failed.
+      try { img.src = ''; } catch { /* best effort */ }
+    }, RENDER_IMAGE_WAIT_MS);
+    img.onload = () => finish('load');
+    img.onerror = () => finish('error');
     img.src = src;
   });
 }
@@ -1574,7 +1595,9 @@ async function preloadReferenceFeatureArtwork(
   void filter;
   await Promise.all([...urls].map(async (url) => {
     try {
-      referenceFeatureArtworkCache.set(url, await loadImage(url));
+      const artwork = await settleOptionalReferenceArtLoad(loadImage(url));
+      if (artwork) referenceFeatureArtworkCache.set(url, artwork);
+      else console.warn('[glossy] painted feature asset timed out; using exact fallback', url);
     } catch (error) {
       console.warn('[glossy] painted feature asset unavailable; using exact fallback', url, error);
     }
@@ -14973,21 +14996,27 @@ export default function DesignGlossy({
           </span>
           {([[2, 'Standard'], [3, 'High — sharper print']] as const).map(([value, label]) => {
             const active = SCALE === value;
+            const phoneCapped = value === 3 && deviceSheetScale(value) !== value;
             return (
               <button
                 key={value}
                 type="button"
                 onClick={() => { if (setSheetScale(value)) window.location.reload(); }}
-                disabled={loading !== null}
+                disabled={loading !== null || phoneCapped}
                 aria-pressed={active}
-                style={{ padding: '6px 12px', borderRadius: 999, border: `1px solid ${active ? DARK : '#E2D8C4'}`, background: active ? DARK : PAPER, color: active ? PAPER : '#5C5040', fontWeight: 700, fontSize: 12, cursor: loading !== null ? 'default' : 'pointer' }}
+                title={phoneCapped ? 'High print quality is available on a computer; Standard prevents phone render stalls.' : undefined}
+                style={{ padding: '6px 12px', borderRadius: 999, border: `1px solid ${active ? DARK : '#E2D8C4'}`, background: active ? DARK : PAPER, color: active ? PAPER : '#5C5040', fontWeight: 700, fontSize: 12, cursor: loading !== null || phoneCapped ? 'default' : 'pointer', opacity: phoneCapped ? 0.55 : 1 }}
               >
                 {label}
               </button>
             );
           })}
           <span style={{ fontSize: 10.5, opacity: 0.6 }}>
-            {SCALE === 3 ? 'Exact sheets redraw sharper; AI render cost is unchanged' : 'High redraws exact sheets at 1.5× resolution for printing'}
+            {deviceSheetScale(3) === 2
+              ? 'Standard keeps exact and AI layers reliable on this phone; use a computer for High print'
+              : SCALE === 3
+                ? 'Exact sheets redraw sharper; AI render cost is unchanged'
+                : 'High redraws exact sheets at 1.5× resolution for printing'}
           </span>
         </div>
         {/* HOW THIS SHEET NAMES ITS PLANTS — one or the other, never both. Shown only where the
