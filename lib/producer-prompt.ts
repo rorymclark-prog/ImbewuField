@@ -618,7 +618,7 @@ const SHOWCASE_MARKER_MATCH: Record<ShowcaseMarkerKey, RegExp> = {
   swale: /swale/i,
   pipe: /\bpipe\b/i,
   drip: /drip|irrigation line/i,
-  building: /\bbuilding\b|\bhouse\b|\bshed\b|\bhut\b|\bbarn\b|shade house|greenhouse/i,
+  building: /\bbuilding\b|\bhouse\b|\bshed\b|\bhut\b|\bbarn\b|shade (?:house|tunnel)|greenhouse|polytunnel/i,
   hive: /hive/i,
   patio: /patio|paving|courtyard/i,
   fence: /fence/i,
@@ -870,7 +870,7 @@ const ICON_MATCH: Record<string, RegExp> = {
   nursery: /nursery/i, compost: /\bcompost\b/i, worm_farm: /worm farm/i,
   goat_pen: /goat pen/i, pig_pen: /pig pen/i, kraal: /\bkraal\b/i, rabbit_hutch: /rabbit hutch/i,
   duck_pond: /duck pond/i, livestock_trough: /livestock trough/i, biodigester: /biodigester/i, market_stall: /market stall/i, playground: /playground|play area/i,
-  pollinator: /pollinator/i, vetiver_row: /vetiver row/i, building: /\bshed\b|\bhut\b|\bbarn\b|shade house|greenhouse/i,
+  pollinator: /pollinator/i, vetiver_row: /vetiver row/i, building: /\bshed\b|\bhut\b|\bbarn\b|shade (?:house|tunnel)|greenhouse|polytunnel/i,
   patio: /patio|paving|courtyard/i, fence: /fence/i, path: /path|walkway/i,
   swale: /swale/i, pipe: /pipe/i, drip: /drip|irrigation/i, windbreak: /windbreak|hedge/i,
 };
