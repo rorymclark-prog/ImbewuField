@@ -28,6 +28,7 @@ import {
   Banknote,
   Ruler,
   Landmark,
+  Sparkles,
 } from 'lucide-react';
 import type { ProductionLog, SalesLog, ExpenseLog, Design, Profile } from '@/lib/db/types';
 import CropSelect from '@/components/CropSelect';
@@ -547,15 +548,79 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
   );
 }
 
+/* ── Example rows for empty lists ─────────────────────────────────────────
+   Shown only when a real (non-sample-mode) account's own Production/Sales
+   list is genuinely empty. Sample mode never hits this branch: myProduction()
+   and mySales() (lib/db/queries.ts) both short-circuit to the populated
+   Ubhejane Crèche sandbox (getSandboxProduction/getSandboxSales) whenever
+   isSampleMode() is true, so `items` is never empty there — the isSampleMode()
+   check below is defence in depth for the one case where it could be (a real
+   signed-in account that has ALSO toggled sample mode on).
+   Fixture-only display data — never passed to addProduction/addSale — so it
+   can never be mistaken for, or accidentally saved as, a real record. */
+const EXAMPLE_PRODUCTION = { crop: 'Spinach', dateLabel: '3 days ago', kg: 4 };
+const EXAMPLE_SALE = { crop: 'Spinach', buyer: 'Local market', dateLabel: '3 days ago', kg: 4, amount: 120 };
+
+function ExampleRowsHeading({ label }: { label: string }) {
+  return (
+    <div
+      className="flex items-center gap-1.5 mb-2 px-0.5"
+      style={{ font: '700 10px/1 system-ui, sans-serif', letterSpacing: '0.08em', textTransform: 'uppercase', color: '#A66A16' }}
+    >
+      <Sparkles size={11} />
+      {label}
+    </div>
+  );
+}
+
+function ExampleBadge({ label }: { label: string }) {
+  return (
+    <span
+      className="flex-shrink-0"
+      style={{ padding: '3px 7px', borderRadius: 6, background: '#C07A1E', color: '#fff', font: '700 9px/1 system-ui, sans-serif', letterSpacing: '0.04em', textTransform: 'uppercase' }}
+    >
+      {label}
+    </span>
+  );
+}
+
 /* ── Production list ─────────────────────────────────────────────────────── */
 
 function ProductionList({ items }: { items: ProductionLog[] }) {
   const { t } = useLanguage();
   if (items.length === 0) {
+    if (isSampleMode()) {
+      return (
+        <p className="text-xs font-mono text-center py-4" style={{ color: '#9A8268' }}>
+          {t('myRecordsNoHarvests')}
+        </p>
+      );
+    }
     return (
-      <p className="text-xs font-mono text-center py-4" style={{ color: '#9A8268' }}>
-        {t('myRecordsNoHarvests')}
-      </p>
+      <div>
+        <ExampleRowsHeading label={t('myRecordsExampleHeading')} />
+        <div
+          className="flex items-center gap-3 rounded-xl px-3 py-2.5 opacity-80"
+          style={{ background: '#FFFEFA', border: '1.5px dashed #D9CDB4' }}
+        >
+          <div
+            className="w-10 h-10 rounded-lg flex-shrink-0 flex items-center justify-center"
+            style={{ background: 'rgba(31,77,43,0.08)', border: '1px dashed rgba(31,77,43,0.25)' }}
+          >
+            <Leaf size={18} style={{ color: '#1F4D2B' }} />
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-display font-medium leading-tight truncate" style={{ color: '#20190F' }}>
+              {EXAMPLE_PRODUCTION.crop}
+            </p>
+            <p className="text-xs font-mono mt-0.5" style={{ color: '#9A8268' }}>{EXAMPLE_PRODUCTION.dateLabel}</p>
+          </div>
+          <div className="text-sm font-display font-semibold flex-shrink-0" style={{ color: '#1F4D2B' }}>
+            {EXAMPLE_PRODUCTION.kg} kg
+          </div>
+          <ExampleBadge label={t('myRecordsExampleBadge')} />
+        </div>
+      </div>
     );
   }
   return (
@@ -614,10 +679,41 @@ function ProductionList({ items }: { items: ProductionLog[] }) {
 function SalesList({ items }: { items: SalesLog[] }) {
   const { t } = useLanguage();
   if (items.length === 0) {
+    if (isSampleMode()) {
+      return (
+        <p className="text-xs font-mono text-center py-4" style={{ color: '#9A8268' }}>
+          {t('myRecordsNoSales')}
+        </p>
+      );
+    }
     return (
-      <p className="text-xs font-mono text-center py-4" style={{ color: '#9A8268' }}>
-        {t('myRecordsNoSales')}
-      </p>
+      <div>
+        <ExampleRowsHeading label={t('myRecordsExampleHeading')} />
+        <div
+          className="flex items-center gap-3 rounded-xl px-3 py-2.5 opacity-80"
+          style={{ background: '#FFFEFA', border: '1.5px dashed #D9CDB4' }}
+        >
+          <div
+            className="w-10 h-10 rounded-lg flex-shrink-0 flex items-center justify-center"
+            style={{ background: 'rgba(158,92,8,0.08)', border: '1px dashed rgba(158,92,8,0.25)' }}
+          >
+            <Banknote size={18} style={{ color: '#9E5C08' }} />
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-display font-medium leading-tight truncate" style={{ color: '#20190F' }}>
+              {EXAMPLE_SALE.crop}
+              <span className="font-normal" style={{ color: '#9A8268' }}> → {EXAMPLE_SALE.buyer}</span>
+            </p>
+            <p className="text-xs font-mono mt-0.5" style={{ color: '#9A8268' }}>
+              {EXAMPLE_SALE.kg} kg &nbsp;·&nbsp; {EXAMPLE_SALE.dateLabel}
+            </p>
+          </div>
+          <div className="text-sm font-display font-semibold flex-shrink-0" style={{ color: '#9E5C08' }}>
+            R {EXAMPLE_SALE.amount.toFixed(2)}
+          </div>
+          <ExampleBadge label={t('myRecordsExampleBadge')} />
+        </div>
+      </div>
     );
   }
   return (

@@ -816,6 +816,10 @@ const T_en: Dict = {
   myRecordsNoHarvests: 'No harvests logged yet.',
   myRecordsTotalHarvested: 'total harvested',
   myRecordsTopsLabel: 'tops',
+  // Example-row heading/badge shown above ProductionList/SalesList only when that list is
+  // genuinely empty (never in sample mode) — English-only for now; t() falls back.
+  myRecordsExampleHeading: 'Example — what a logged entry looks like',
+  myRecordsExampleBadge: 'Example',
   myRecordsNoSales: 'No sales logged yet.',
   myRecordsTotalRevenue: 'total revenue',
   myRecordsKgSoldSuffix: 'kg sold',

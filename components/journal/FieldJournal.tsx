@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { Plus, Pencil, NotebookPen } from 'lucide-react';
+import { Plus, Pencil, NotebookPen, Sparkles } from 'lucide-react';
 import { bedsFromDesignCanvas } from '@/lib/design-beds-bridge';
 import { loadCanvasState } from '@/lib/design-canvas';
 import { loadPlaces, resolveMainSite } from '@/lib/saved-places';
@@ -29,6 +29,56 @@ import {
 import JournalEntrySheet, { type BedOption } from './JournalEntrySheet';
 
 type Filter = 'all' | JournalCategory;
+
+/**
+ * Shown only in the zero-entries empty state, and only for a real (non-sample-mode)
+ * account — sample mode's own journal is already fully populated with 20 dated notes
+ * from the Ubhejane Crèche season (lib/demo-farm.ts's buildDemoJournal), so a farmer
+ * exploring the sample never sees this. A genuinely empty real account used to land on
+ * a bare "Nothing recorded yet" line with no sense of what a logged entry looks like —
+ * these three give a concrete, specific example (a crop, a quantity, a date) instead of
+ * an abstract instruction. Deliberately NOT wired to createJournalEntry/JournalEntry: this
+ * is display-only fixture data, never something that could accidentally get upserted into
+ * a real journal. English-only, matching lib/field-journal.ts's own header comment on why
+ * this feature stays outside lib/i18n.tsx's t() system for now.
+ */
+const EXAMPLE_JOURNAL_ENTRIES: ReadonlyArray<{
+  id: string;
+  category: JournalCategory;
+  dateLabel: string;
+  title: string;
+  notes: string;
+  bedLabel: string;
+  cropName: string;
+}> = [
+  {
+    id: 'example-harvest',
+    category: 'harvest',
+    dateLabel: 'Tue 14 Jul',
+    title: 'Cabbage harvested — 6 heads',
+    notes: 'Cut the heads that had firmed up from Bed 2 and weighed 9 kg before it went to the stall.',
+    bedLabel: 'Bed 2',
+    cropName: 'Cabbage',
+  },
+  {
+    id: 'example-planting',
+    category: 'planting',
+    dateLabel: 'Thu 23 Jul',
+    title: 'Carrots sown in Bed 4',
+    notes: 'Cleared the old bed, worked in compost and sowed two rows of carrots.',
+    bedLabel: 'Bed 4',
+    cropName: 'Carrots',
+  },
+  {
+    id: 'example-pest',
+    category: 'pest',
+    dateLabel: 'Mon 3 Aug',
+    title: 'Aphids on the young spinach',
+    notes: 'Small cluster under the top leaves near the path end. Rubbed off by hand — checking again in a few days.',
+    bedLabel: 'Bed 1',
+    cropName: 'Spinach',
+  },
+];
 
 export default function FieldJournal() {
   const [entries, setEntries] = useState<JournalEntry[]>([]);
@@ -200,17 +250,101 @@ export default function FieldJournal() {
 
       {/* Timeline */}
       {ready && entries.length === 0 && (
-        <div style={{
-          textAlign: 'center', padding: '38px 22px', borderRadius: 16,
-          background: '#FFFEFA', border: '1px dashed #D9CDB4',
-        }}>
-          <NotebookPen size={26} style={{ color: '#9A8268', margin: '0 auto 10px' }} />
-          <div style={{ font: '600 16px Newsreader, Georgia, serif', color: '#2D2519', marginBottom: 6 }}>
-            Nothing recorded yet
+        <div>
+          <div style={{
+            textAlign: 'center', padding: '30px 22px 26px', borderRadius: 16,
+            background: '#FFFEFA', border: '1px dashed #D9CDB4', marginBottom: 20,
+          }}>
+            <NotebookPen size={26} style={{ color: '#9A8268', margin: '0 auto 10px' }} />
+            <div style={{ font: '600 16px Newsreader, Georgia, serif', color: '#2D2519', marginBottom: 6 }}>
+              Nothing recorded yet
+            </div>
+            <div style={{ font: '400 13px/1.5 system-ui, sans-serif', color: '#8A7C62', maxWidth: 320, margin: '0 auto' }}>
+              Write down the date, what you did and what happened. One season of notes is
+              what makes next season&apos;s decisions better — here&apos;s what that looks like.
+            </div>
           </div>
-          <div style={{ font: '400 13px/1.5 system-ui, sans-serif', color: '#8A7C62', maxWidth: 300, margin: '0 auto' }}>
-            Write down the date, the weather, what you did and what happened. One season of
-            notes is what makes next season&apos;s decisions better.
+
+          {/* Example entries — fixture data only, see EXAMPLE_JOURNAL_ENTRIES above.
+              Dashed borders + reduced opacity + a per-card "Example" badge (all in the
+              app's existing amber "this is a demo" colour, the same #C07A1E app/cropplan/
+              page.tsx uses for its own DEFAULT_BEDS fallback banner) so these can never
+              read as the farmer's own history — no edit button, no delete, not clickable. */}
+          <div style={{ marginBottom: 4 }}>
+            <div style={{
+              display: 'flex', alignItems: 'center', gap: 6, marginBottom: 10, padding: '0 2px',
+              font: '700 10.5px/1 system-ui, sans-serif', letterSpacing: '0.1em',
+              textTransform: 'uppercase', color: '#A66A16',
+            }}>
+              <Sparkles size={12} />
+              Example — what an entry looks like
+            </div>
+
+            <div style={{ position: 'relative', paddingLeft: 16 }}>
+              <div style={{ position: 'absolute', left: 5, top: 6, bottom: 6, width: 2, background: '#DCD0B6', borderRadius: 1, opacity: 0.6 }} />
+              {EXAMPLE_JOURNAL_ENTRIES.map((ex) => {
+                const cat = journalCategory(ex.category);
+                return (
+                  <article
+                    key={ex.id}
+                    aria-label={`Example entry (not a real record): ${ex.title}`}
+                    style={{
+                      position: 'relative', marginBottom: 10, borderRadius: 14, opacity: 0.82,
+                      background: '#FFFEFA', border: '1.5px dashed #D9CDB4',
+                      borderLeft: `3px dashed ${cat.ink}`, padding: '12px 40px 12px 13px',
+                    }}
+                  >
+                    <div style={{ position: 'absolute', left: -15, top: 18, width: 10, height: 10, borderRadius: 5, background: '#D9CDB4', border: '2px solid #E4DCC6' }} />
+                    <span style={{
+                      position: 'absolute', top: 10, right: 10,
+                      padding: '3px 7px', borderRadius: 6, background: '#C07A1E', color: '#fff',
+                      font: '700 9px/1 system-ui, sans-serif', letterSpacing: '0.04em', textTransform: 'uppercase',
+                    }}>
+                      Example
+                    </span>
+
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 7, flexWrap: 'wrap', marginBottom: 4 }}>
+                      <span style={{ font: '600 11.5px/1 system-ui, sans-serif', color: '#8A7C62' }}>
+                        {ex.dateLabel}
+                      </span>
+                      <span style={{
+                        display: 'inline-flex', alignItems: 'center', gap: 4,
+                        padding: '3px 7px', borderRadius: 7, background: cat.tint, color: cat.ink,
+                        font: '700 10px/1 system-ui, sans-serif',
+                      }}>
+                        {cat.icon} {cat.label}
+                      </span>
+                    </div>
+
+                    <div style={{ font: '600 15.5px/1.3 Newsreader, Georgia, serif', color: '#20190F', marginBottom: 4 }}>
+                      {ex.title}
+                    </div>
+                    <div style={{ font: '400 13.5px/1.55 system-ui, sans-serif', color: '#4A4034' }}>
+                      {ex.notes}
+                    </div>
+
+                    <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', marginTop: 8 }}>
+                      <Pill>📍 {ex.bedLabel}</Pill>
+                      <Pill>🌿 {ex.cropName}</Pill>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+
+            <button
+              type="button"
+              onClick={() => setSheet({ open: true, entry: null })}
+              style={{
+                width: '100%', minHeight: 46, borderRadius: 13, cursor: 'pointer', marginTop: 4,
+                background: '#FFFEFA', border: '1.5px dashed #274D2C', color: '#274D2C',
+                font: '700 13.5px/1 system-ui, sans-serif',
+                display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7,
+              }}
+            >
+              <Plus size={16} />
+              Log your first real entry
+            </button>
           </div>
         </div>
       )}
