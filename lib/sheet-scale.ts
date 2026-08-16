@@ -27,6 +27,7 @@
 // spans two scales.
 
 import { peekSafeMode } from '@/lib/crash-loop';
+import { phoneGradeDevice } from '@/lib/device-grade';
 
 export type SheetScale = 2 | 3;
 
@@ -36,6 +37,13 @@ export type SheetScale = 2 | 3;
 export const AI_INPUT_WIDTH = 1920;
 
 export const SHEET_SCALE_KEY = 'imbewu_sheet_scale';
+
+/** A print preference may never ask phone-grade hardware for the allocation that is known to
+ *  kill or strand its design page. The same device authority already caps photo bakes and
+ *  satellite imagery; sheet masters must obey it too. */
+export function deviceSheetScale(requested: SheetScale): SheetScale {
+  return phoneGradeDevice() ? 2 : requested;
+}
 
 function readStoredScale(): SheetScale {
   if (typeof window === 'undefined') return 2; // SSR renders nothing; hydration re-reads
@@ -47,18 +55,18 @@ function readStoredScale(): SheetScale {
   if (peekSafeMode().active) return 2;
   try {
     const stored = window.localStorage.getItem(SHEET_SCALE_KEY);
-    if (stored === '3') return 3;
-    if (stored === '2') return 2;
+    if (stored === '3') return deviceSheetScale(3);
+    if (stored === '2') return deviceSheetScale(2);
     // NO STORED CHOICE: default by device, not to Standard everywhere. Rory, pinch-zoomed into a
     // Standard sheet after the setting shipped: "the quality still the same, very bad and
     // blurry" — a farmer should not have to FIND a toggle to get a sharp map. Desktop-class
     // viewports default to High. Phones stay Standard deliberately: a High masterplan is a
     // ~50 MB bitmap per sheet during compose, and the in-app iOS webview that produced the
-    // "crashes the app" reports is exactly where that budget does not exist (#84/#90). The
-    // farmer can still choose either, on either device — this only picks the STARTING point.
+    // "crashes the app" reports is exactly where that budget does not exist (#84/#90). High is a
+    // computer option; deviceSheetScale also enforces that ceiling for stored and tapped choices.
     const desktop = typeof window.matchMedia === 'function'
       && window.matchMedia('(min-width: 1024px)').matches;
-    return desktop ? 3 : 2;
+    return deviceSheetScale(desktop ? 3 : 2);
   } catch {
     return 2;
   }
@@ -68,12 +76,13 @@ export let SCALE: SheetScale = readStoredScale();
 
 /** Persist the choice. Returns true when it changed — the caller is expected to reload. */
 export function setSheetScale(next: SheetScale): boolean {
-  if (next === SCALE) return false;
+  const safeNext = deviceSheetScale(next);
+  if (safeNext === SCALE) return false;
   try {
-    window.localStorage.setItem(SHEET_SCALE_KEY, String(next));
+    window.localStorage.setItem(SHEET_SCALE_KEY, String(safeNext));
   } catch {
     /* private mode: the live-binding update below still applies for this session */
   }
-  SCALE = next;
+  SCALE = safeNext;
   return true;
 }

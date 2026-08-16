@@ -50,6 +50,21 @@ test('a desktop-class viewport defaults to High without being asked', async () =
   (globalThis as { window?: unknown }).window = { localStorage: storage };
 });
 
+test('a stored High preference cannot strand a phone in the exact-lock stage', async () => {
+  (globalThis as { window?: unknown }).window = {
+    localStorage: storage,
+    matchMedia: (q: string) => ({ matches: q === '(pointer: coarse)' }),
+    screen: { width: 390, height: 844 },
+  };
+  storage.setItem(SHEET_SCALE_KEY, '3');
+  const phone = await import(`../lib/sheet-scale.ts?phone=${Date.now()}`);
+  assert.equal(phone.SCALE, 2, 'the stored 2880px print master escaped onto phone-grade hardware');
+  assert.equal(phone.deviceSheetScale(3), 2, 'the High button must obey the same cap after mount');
+  assert.equal(phone.setSheetScale(3), false, 'a phone must not switch the live renderer back to High');
+  (globalThis as { window?: unknown }).window = { localStorage: storage };
+  storage.raw().clear();
+});
+
 test('AI_INPUT_WIDTH pins the historical master width', () => {
   // 1920 = frame.imgW (960) x the historical SCALE (2). If this constant moves, every AI render
   // input changes size — and cost — for every farmer at once. Moving it must be a deliberate,
