@@ -35,6 +35,13 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '16 August',
+    sha: '3d2e513',
+    changes: [
+      'Shade tunnels now fit their saved footprint and JoJo tanks have no dark halo',
+    ],
+  },
+  {
+    when: '16 August',
     sha: 'e2d0314',
     changes: [
       'Saved maps now lets you switch sites without leaving Preview & Export',

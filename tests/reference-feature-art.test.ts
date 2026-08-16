@@ -24,7 +24,7 @@ test('Reference Blueprint maps high-impact Water and Planting features to reusab
   assert.equal(referenceFeatureArtworkFor('veg_bed'), 'production-bed-v1.png');
   assert.equal(referenceFeatureArtworkFor('pollinator_strip'), 'pollinator-strip-v1.png');
   assert.equal(referenceFeatureArtworkFor('vetiver_row'), 'vetiver-bank-v1.png');
-  assert.equal(referenceFeatureArtworkFor('shade_house'), 'shade-house-v3.png');
+  assert.equal(referenceFeatureArtworkFor('shade_house'), 'shade-house-v4.png');
   assert.equal(referenceFeatureArtworkFor('greenhouse_tunnel'), 'polytunnel-v1.png');
   assert.equal(referenceFeatureArtworkFor('banana_clump'), 'banana-clump-v5.png');
   assert.equal(referenceFeatureArtworkFor('tree_pawpaw'), 'pawpaw-tree-v2.png');
@@ -72,25 +72,67 @@ test('JoJo tanks show an upright cylinder at map scale, not a dark lid-only disc
 });
 
 test('the shade tunnel is an open translucent cover, not an opaque timber grid', () => {
-  // The old half-covered square frame stacked over the bed rows and read as more beds. A tunnel
-  // needs both genuine open space and a broad field of partially transparent mesh so the garden
-  // under it remains visible while the cover still reads as one arched structure.
+  // The old test counted transparency over the whole square. That claim stopped matching the
+  // actual convention once the frame reached all four saved edges: a correct LEFT half of net
+  // necessarily occupies half the pixels. Measure each half instead — translucent cloth on the
+  // left and genuinely open space on the right — so a solid slab or a fully stripped frame fails.
   const asset = referenceFeatureArtworkFor('shade_house');
   assert.ok(asset, 'shade_house lost its exact-plan artwork');
   const publicRoot = join(process.cwd(), 'public', REFERENCE_FEATURE_ART_ROOT.replace(/^\//, ''));
   const { width, height, data } = PNG.sync.read(readFileSync(join(publicRoot, asset)));
-  let clear = 0;
-  let partial = 0;
-  let opaque = 0;
-  for (let offset = 3; offset < data.length; offset += 4) {
-    if (data[offset] === 0) clear += 1;
-    else if (data[offset] === 255) opaque += 1;
-    else partial += 1;
+  const halves = [
+    { clear: 0, partial: 0, opaque: 0, pixels: 0 },
+    { clear: 0, partial: 0, opaque: 0, pixels: 0 },
+  ];
+  for (let y = 0; y < height; y += 1) {
+    for (let x = 0; x < width; x += 1) {
+      const half = halves[x < width / 2 ? 0 : 1];
+      const alpha = data[(y * width + x) * 4 + 3];
+      half.pixels += 1;
+      if (alpha === 0) half.clear += 1;
+      else if (alpha === 255) half.opaque += 1;
+      else half.partial += 1;
+    }
   }
-  const pixels = width * height;
-  assert.ok(clear / pixels > 0.55, 'the tunnel no longer leaves the garden visibly open');
-  assert.ok(partial / pixels > 0.2, 'the shade-net canopy is no longer visibly translucent');
-  assert.ok(opaque / pixels < 0.1, 'an opaque grid has taken over the shade tunnel again');
+  assert.ok(halves[0].partial / halves[0].pixels > 0.8,
+    'the covered half no longer carries translucent shade net');
+  assert.ok(halves[1].clear / halves[1].pixels > 0.6,
+    'the open half no longer leaves the garden visibly open');
+  assert.ok((halves[0].opaque + halves[1].opaque) / (width * height) < 0.01,
+    'an opaque slab has taken over the shade tunnel again');
+});
+
+test('the shade tunnel is an overhead footprint that reaches the saved rectangle', () => {
+  // The perspective v3 subject occupied only the middle 72% of its source canvas. Canvas then
+  // stretched that inset trapezoid to the saved dimensions, so the graphic visibly did not fit
+  // the rectangle the farmer had entered. This checks the source artwork itself, not a filename.
+  const asset = referenceFeatureArtworkFor('shade_house');
+  assert.ok(asset, 'shade_house lost its exact-plan artwork');
+  const publicRoot = join(process.cwd(), 'public', REFERENCE_FEATURE_ART_ROOT.replace(/^\//, ''));
+  const { width, height, data } = PNG.sync.read(readFileSync(join(publicRoot, asset)));
+  let left = width;
+  let right = -1;
+  let top = height;
+  let bottom = -1;
+  for (let y = 0; y < height; y += 1) {
+    for (let x = 0; x < width; x += 1) {
+      if (data[(y * width + x) * 4 + 3] <= 8) continue;
+      left = Math.min(left, x);
+      right = Math.max(right, x);
+      top = Math.min(top, y);
+      bottom = Math.max(bottom, y);
+    }
+  }
+  assert.ok(left / width < 0.02 && (width - 1 - right) / width < 0.02,
+    'shade tunnel no longer spans the saved width');
+  assert.ok(top / height < 0.02 && (height - 1 - bottom) / height < 0.02,
+    'shade tunnel no longer spans the saved length');
+});
+
+test('painted JoJo artwork owns its edge instead of receiving a second dark ring', () => {
+  const glossy = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
+  assert.match(glossy, /const skipSolidEdge = artworkEdge \|\| isTankDefId\(def\.id\);/,
+    'JoJo artwork is receiving the generic footprint outline again');
 });
 
 test('the polytunnel is a transparent half-open plan sprite, so crops remain visible', () => {

@@ -5276,7 +5276,10 @@ function drawPaintedReferenceFeature(
   // smallest-first (compareCartographicPaint), so the big canopy honestly occludes what stands
   // under its edge instead of needing a ring to say so. The legend line goes with it. Classic
   // footprint mode keeps the dash — there the flat washes genuinely need it.
-  const skipSolidEdge = artworkEdge;
+  // Tank artwork already carries its own ribbed silhouette. The generic footprint stroke sat
+  // outside the transparent margin in the PNG and became the unexplained dark ring Rory saw
+  // around an otherwise-correct JoJo. Let the tank's alpha edge be its edge, as we do for crowns.
+  const skipSolidEdge = artworkEdge || isTankDefId(def.id);
   if (!skipSolidEdge) {
   traceFootprint();
   ctx.strokeStyle = isMatureCanopy ? PLANTING_CANOPY_PAINT.edgeColor : 'rgba(31,42,29,0.58)';
