@@ -175,6 +175,33 @@ export function markResumed(store: CrashLoopStore, key: string): void {
   }
 }
 
+// ONE DELIBERATE HEAVY RETRY, EVEN WHEN ANOTHER TAB IS OPEN.
+//
+// The death watch deliberately shares one per-farm ALIVE marker across loads, because it must
+// survive an iOS memory kill. That also means another open tab can look like a dead prior session.
+// A clean marker alone cannot make "Try the photo again" reliable in that situation, so the tap
+// plants a token that the arriving page consumes exactly once. If the heavy retry really dies,
+// its automatic reload has no token and safe mode protects the farmer again.
+const PHOTO_RETRY_SUFFIX = ':photo-retry';
+
+export function requestPhotoRetry(store: CrashLoopStore, key: string): void {
+  try {
+    store.setItem(`${key}${PHOTO_RETRY_SUFFIX}`, '1');
+  } catch {
+    /* storage unavailable: the clean reload below is still the best available attempt */
+  }
+}
+
+export function consumePhotoRetry(store: CrashLoopStore, key: string): boolean {
+  try {
+    const granted = store.getItem(`${key}${PHOTO_RETRY_SUFFIX}`) === '1';
+    store.removeItem(`${key}${PHOTO_RETRY_SUFFIX}`);
+    return granted;
+  } catch {
+    return false;
+  }
+}
+
 /**
  * Start the watch for THIS session and report on the previous one.
  * Call BEFORE recordPageLoad — the unsettled check reads the counter as the last session left it.
@@ -312,6 +339,7 @@ export function designSafeMode(): SafeModeDecision {
   if (typeof window === 'undefined') return { active: false, reason: null, loads: 0, key: CRASH_LOOP_KEY };
   const search = currentSearch();
   const key = pageLoadKey(search);
+  const photoRetry = consumePhotoRetry(window.localStorage, key);
   let requested = false;
   try {
     requested = new URLSearchParams(search).get('safe') === '1';
@@ -322,7 +350,10 @@ export function designSafeMode(): SafeModeDecision {
   // That is the generate-a-map / generate-a-report crash the load counter cannot see.
   startDeathWatch(window.localStorage, key);
   watchSessionExit(key, RESCUE_COOKIE);
-  resolvedForThisLoad = resolveSafeMode(recordPageLoad(window.localStorage, key), requested, key);
+  const loads = recordPageLoad(window.localStorage, key);
+  resolvedForThisLoad = photoRetry
+    ? { active: false, reason: null, loads, key }
+    : resolveSafeMode(loads, requested, key);
   return resolvedForThisLoad;
 }
 
@@ -415,15 +446,15 @@ export function exitSafeMode(): void {
   // page sees the old ALIVE marker and calls the retry itself a foreground crash. The farmer then
   // taps "Try the photo again" and lands straight back in light mode forever.
   markCleanExit(window.localStorage, key);
+  requestPhotoRetry(window.localStorage, key);
   resolvedForThisLoad = null;
   try {
     const url = new URL(window.location.href);
-    const hadSafeParam = url.searchParams.has('safe');
     url.searchParams.delete('safe');
-    // Replacing a URL with itself is not a reliable reload in embedded browsers. When the page
-    // entered light mode from the crash counter (rather than ?safe=1), force a real reload.
-    if (hadSafeParam) window.location.replace(url.toString());
-    else window.location.reload();
+    // A changed URL guarantees a new load in embedded browsers. `full=1` also matches the
+    // server-rescue page's established meaning: this is the farmer's deliberate heavy retry.
+    url.searchParams.set('full', '1');
+    window.location.replace(url.toString());
   } catch {
     window.location.reload();
   }

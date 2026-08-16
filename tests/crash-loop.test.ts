@@ -17,6 +17,8 @@ import {
   markCleanExit,
   markResumed,
   startDeathWatch,
+  requestPhotoRetry,
+  consumePhotoRetry,
 } from '../lib/crash-loop.ts';
 import {
   recordReportAttempt,
@@ -422,6 +424,18 @@ test('trying the photo again is a clean reload, not another apparent crash', () 
   assert.ok(settle > 0, 'the photo retry no longer clears the crash streak');
   assert.ok(clean > settle, 'the photo retry leaves the old session looking dead');
   assert.ok(reload > clean, 'the page reloads before recording the deliberate exit');
-  assert.match(body, /hadSafeParam[\s\S]*?if \(hadSafeParam\)[\s\S]*?else window\.location\.reload\(\)/,
-    'a counter-triggered light load replaces its URL with itself instead of really reloading');
+  assert.match(body, /requestPhotoRetry/, 'the retry does not grant the arriving page one heavy load');
+  assert.match(body, /searchParams\.set\('full', '1'\)/,
+    'the retry keeps the same URL, which embedded browsers may not reload');
+});
+
+test('a photo retry grant is consumed once, then crash protection takes over again', () => {
+  // Multiple design tabs share the per-farm ALIVE marker. A deliberate retry must outrank that
+  // false-positive exactly once, but an automatic reload after a real memory kill must not keep
+  // forcing the heavy photo path forever.
+  const store = memoryStore();
+  const key = 'farm';
+  requestPhotoRetry(store, key);
+  assert.equal(consumePhotoRetry(store, key), true, 'the farmer\'s retry was not granted');
+  assert.equal(consumePhotoRetry(store, key), false, 'the heavy retry grant survived consumption');
 });
