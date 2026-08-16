@@ -35,6 +35,14 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '16 August',
+    sha: 'dc08fd2464738dc6e260ae6030243d0011d08aef',
+    changes: [
+      'Weather now shows a real picture for the sky, not an emoji',
+      'Field Journal entry types (planting, harvest, pest, etc.) now show a real picture instead of an emoji',
+    ],
+  },
+  {
+    when: '16 August',
     sha: '6ee6919f5a7e925ac7885dc1dae6a91e6f8e67e2',
     changes: [
       'Playground now has a real picture in the Design Palette instead of an emoji',
