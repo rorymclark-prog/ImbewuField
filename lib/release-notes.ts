@@ -38,7 +38,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     sha: 'dc08fd2464738dc6e260ae6030243d0011d08aef',
     changes: [
       'Weather now shows a real picture for the sky, not an emoji',
-      'Field Journal entry types (planting, harvest, pest, etc.) now show a real picture instead of an emoji',
+      'Field Journal entry types now show a real picture instead of an emoji',
     ],
   },
   {
