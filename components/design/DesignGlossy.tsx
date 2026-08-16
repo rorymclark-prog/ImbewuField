@@ -88,6 +88,7 @@ import { exactModelInputMarks, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, re
 import { EARTHWORKS_ROUTE_STYLE, WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, nearestWaterNeighbourPx, offsetPolyline, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRoutesWithVisualBridges, waterRouteStyleFor, type EarthworksRouteStyle, type WaterLegendSection } from '@/lib/water-cartography';
 import { PLANTING_CANOPY_PAINT, PLANTING_LEGEND_SECTION_ORDER, PLANTING_ROUTE_STYLE, overstoryCanopyIds, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
 import { PLAN_VERSION } from '@/lib/plan-version';
+import { SHEET_RENDER_RECIPE, savedSheetFreshness, type SavedSheetFreshness } from '@/lib/sheet-render-recipe';
 import { SHADE_CLOTH_ALPHA, STRUCTURES_LEGEND_SECTION_ORDER, isShadeClothStructure, structuresFeaturePresentationDimensions, structuresLegendSectionForFeature, structuresRouteVisualFor, type StructuresLegendSection } from '@/lib/structures-cartography';
 import { presentSectorCartography, seasonalSunArcRadii, sectorEvidenceSummary, SECTOR_STYLES, sectorFillColor, sectorStrokeWidth, type SectorLegendIcon, type SectorVisualKind } from '@/lib/sector-cartography';
 import { referenceFeatureArtworkUrl, stapleTileUrl, vegSpriteUrl, VEG_SPRITES, isTankDefId } from '@/lib/reference-feature-art';
@@ -11415,6 +11416,7 @@ interface GalleryItem {
   provider: SheetProvider;
   geometryLock: boolean;
   showcase: boolean;
+  freshness: SavedSheetFreshness;
 }
 
 // THE BADGE MUST NAME THE BUTTON THE FARMER PRESSED. `resultKind: 'hybrid'` is the stored stage
@@ -11423,6 +11425,7 @@ interface GalleryItem {
 // the app having quietly run something else. Rory, on his first AI Polished render: "Still doing
 // the hybrid?" It was not; only this text was.
 function galleryResultBadge(item: GalleryItem): string {
+  if (item.freshness !== 'current') return 'Older render · generate again for the current layout';
   if (item.resultKind === 'exact') return 'Exact master · no AI';
   if (item.resultKind === 'hybrid') {
     return `AI Polished · geometry locked · ${item.provider === 'gemini' ? 'Gemini' : 'gpt-image-2'}`;
@@ -11953,7 +11956,7 @@ export default function DesignGlossy({
   // exactly what the r-token exists to prevent.
   const underlaySuffix = underlayCacheSuffix(underlay, frameProp)
     + (sheetHasPlantCodes ? labelModeCacheSuffix(labelMode) : '')
-    + ':r5'
+    + `:${SHEET_RENDER_RECIPE}`
     // A sheet drawn at SCALE 3 is a different picture from the same sheet at 2 — re-serving a
     // 1920px cache under a High setting would look like the setting did nothing (the exact
     // "code change looks like it did nothing" trap the r-token note above describes). EMPTY at
@@ -12051,15 +12054,24 @@ export default function DesignGlossy({
       // Sheets from an earlier generation of the render rules stay in the gallery — they are the
       // farmer's, and some are downloaded already — but they are labelled, so two sheets with the
       // same title from different eras are never confusable.
-      setGallery(rows.map((r) => ({
-        id: r.id,
-        label: r.planVersion === PLAN_VERSION ? r.label : `${r.label} · older version`,
-        thumb: r.thumb,
-        resultKind: r.resultKind ?? 'legacy',
-        provider: r.provider ?? 'unknown',
-        geometryLock: r.geometryLock ?? false,
-        showcase: r.showcase ?? false,
-      })));
+      setGallery(rows.map((r) => {
+        const freshness = savedSheetFreshness(r, PLAN_VERSION);
+        const suffix = freshness === 'older-plan'
+          ? ' · older plan version'
+          : freshness === 'older-render'
+            ? ' · older render'
+            : '';
+        return {
+          id: r.id,
+          label: `${r.label}${suffix}`,
+          thumb: r.thumb,
+          resultKind: r.resultKind ?? 'legacy',
+          provider: r.provider ?? 'unknown',
+          geometryLock: r.geometryLock ?? false,
+          showcase: r.showcase ?? false,
+          freshness,
+        };
+      }));
       // Backfill thumbnails for sheets saved before makeGalleryThumbnail existed — otherwise a
       // farmer's EXISTING gallery (the case most likely to actually have the memory problem this
       // fixes, having had the longest time to accumulate full-resolution entries) never benefits.
@@ -12117,11 +12129,12 @@ export default function DesignGlossy({
         provider: provenance.provider ?? 'unknown',
         geometryLock: provenance.geometryLock ?? false,
         showcase: provenance.showcase ?? false,
+        freshness: 'current',
       };
       setGallery((prev) => (gallerySiteIdRef.current === state.siteId ? [...prev, item] : prev));
       // Persist alongside the state update, never instead of it — a sheet that fails to save must
       // still be on screen and downloadable.
-      void saveSheet({ ...item, siteId: state.siteId, at: new Date().toISOString(), planVersion: PLAN_VERSION }).then((ok) => {
+      void saveSheet({ ...item, siteId: state.siteId, at: new Date().toISOString(), planVersion: PLAN_VERSION, renderRecipe: SHEET_RENDER_RECIPE }).then((ok) => {
         setStorageWarning(
           ok
             ? null
@@ -12136,7 +12149,7 @@ export default function DesignGlossy({
         setGallery((prev) => (gallerySiteIdRef.current === state.siteId
           ? prev.map((g) => (g.id === item.id ? { ...g, thumb } : g))
           : prev));
-        void saveSheet({ ...item, thumb, siteId: state.siteId, at: new Date().toISOString(), planVersion: PLAN_VERSION });
+        void saveSheet({ ...item, thumb, siteId: state.siteId, at: new Date().toISOString(), planVersion: PLAN_VERSION, renderRecipe: SHEET_RENDER_RECIPE });
       });
       return item.id;
     },
@@ -14561,7 +14574,7 @@ export default function DesignGlossy({
                     // spread-save would write the row WITHOUT its image and destroy the sheet;
                     // skipping the persist loses only a caption amendment, never a picture.
                     if (amended.image) {
-                      void saveSheet({ ...amended, image: amended.image, siteId: state.siteId, at: new Date().toISOString(), planVersion: PLAN_VERSION });
+                      void saveSheet({ ...amended, image: amended.image, siteId: state.siteId, at: new Date().toISOString(), planVersion: PLAN_VERSION, renderRecipe: SHEET_RENDER_RECIPE });
                     }
                     return amended;
                   }));

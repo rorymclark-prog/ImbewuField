@@ -13,6 +13,7 @@ import { loadSheetMetas, loadSheetImage } from '@/lib/sheet-store';
 import { selectReportPlates, type ReportPlate } from '@/lib/report-plates';
 import { prepareSiteAnalysisImages } from '@/lib/report-site-images';
 import { PLAN_VERSION } from '@/lib/plan-version';
+import { SHEET_RENDER_RECIPE } from '@/lib/sheet-render-recipe';
 import { loadSurvey } from '@/lib/site-survey';
 import { evidenceSiteId, getSiteEvidence } from '@/lib/site-evidence';
 import { groundPhotoGallery, prepareGroundPhotos, type GroundPhotoView } from '@/lib/report-ground-photos';
@@ -308,7 +309,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       .catch(() => [])
       .then((metas) => {
         if (cancelled) return;
-        const chosen = selectReportPlates(metas, PLAN_VERSION);
+        const chosen = selectReportPlates(metas, PLAN_VERSION, SHEET_RENDER_RECIPE);
         const thumbById = new Map(metas.map((m) => [m.id, m.thumb]));
         setPlates(chosen.map((p) => ({ ...p, thumb: thumbById.get(p.id) })));
       });
@@ -549,7 +550,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       // selection takes the latest sheet of each kind from the current plan generation, in sheet
       // order. See lib/report-plates.ts.
       const sheetMetas = await loadSheetMetas(designSiteIdFromLocation(d)).catch(() => []);
-      const plates = selectReportPlates(sheetMetas, PLAN_VERSION);
+      const plates = selectReportPlates(sheetMetas, PLAN_VERSION, SHEET_RENDER_RECIPE);
       const blob = await buildReportPdf(report, {
         biome: ecology.placeName,
         lat: d.lat,

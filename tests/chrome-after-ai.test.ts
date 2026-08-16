@@ -11,6 +11,7 @@ import {
 import { AI_INPUT_WIDTH } from '@/lib/sheet-scale';
 import { calculateStyleSheetSize } from '@/lib/reference-presentation';
 import { fullTreatmentProtectPolicy } from '@/lib/locked-polish-flow';
+import { SHEET_RENDER_RECIPE } from '@/lib/sheet-render-recipe';
 
 // CHROME IS DRAWN AFTER THE AI PASS, ALWAYS.
 //
@@ -303,8 +304,11 @@ test('a change to what a paid sheet looks like bumps the recipe token', () => {
   // The last-render display effect re-serves whatever localStorage holds for this key on mount, so
   // without a bump the farmer (and Rory, checking the fix) sees the PRE-fix picture — the chrome-
   // less Full Treatment this whole change exists to stop re-serving — without rendering anything.
-  assert.match(DESIGN_GLOSSY_SOURCE, /\+ ':r5'/, 'the r-token must move when the sheet changes');
-  assert.doesNotMatch(DESIGN_GLOSSY_SOURCE, /\+ ':r[1234]'/);
+  assert.ok(
+    DESIGN_GLOSSY_SOURCE.includes('+ `:${SHEET_RENDER_RECIPE}`'),
+    'the last-render cache must use the same recipe authority as durable saved sheets',
+  );
+  assert.equal(SHEET_RENDER_RECIPE, 'r5', 'the r-token must move when the sheet changes');
   // PLAN_VERSION must NOT move with it: bumping that re-keys the gallery and takes paid renders
   // away from farmers who already have them.
   assert.match(

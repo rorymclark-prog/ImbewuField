@@ -49,6 +49,9 @@ export interface StoredSheet {
    *  downloadable. Absent on anything saved before versioning existed, which is itself the signal
    *  that it is old. */
   planVersion?: string;
+  /** The visual renderer recipe. Unlike planVersion, this can change without orphaning a paid
+   *  sheet; the gallery keeps the old bitmap and marks it as needing a new render. */
+  renderRecipe?: string;
   /** Durable provenance. Labels are presentation copy and must never be used to infer whether a
    * paid model actually produced the saved pixels. Older rows omit these fields and read as legacy. */
   resultKind?: SheetResultKind;
@@ -94,6 +97,7 @@ function normaliseStoredSheet(value: unknown): StoredSheet | null {
   ) return null;
   if (row.thumb !== undefined && !isImageDataUrl(row.thumb)) return null;
   if (row.planVersion !== undefined && !nonEmptyString(row.planVersion)) return null;
+  if (row.renderRecipe !== undefined && !nonEmptyString(row.renderRecipe)) return null;
   if (row.resultKind !== undefined && (
     typeof row.resultKind !== 'string'
     || !RESULT_KINDS.has(row.resultKind as SheetResultKind)
@@ -113,6 +117,7 @@ function normaliseStoredSheet(value: unknown): StoredSheet | null {
     at: row.at,
     ...(row.thumb === undefined ? {} : { thumb: row.thumb }),
     ...(row.planVersion === undefined ? {} : { planVersion: row.planVersion }),
+    ...(row.renderRecipe === undefined ? {} : { renderRecipe: row.renderRecipe }),
     ...(row.resultKind === undefined ? {} : { resultKind: row.resultKind as SheetResultKind }),
     ...(row.provider === undefined ? {} : { provider: row.provider as SheetProvider }),
     ...(row.geometryLock === undefined ? {} : { geometryLock: row.geometryLock }),
