@@ -35,6 +35,13 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '16 August',
+    sha: '0f73916',
+    changes: [
+      'Try the photo again now restores the design photo after the app opens in light mode',
+    ],
+  },
+  {
+    when: '16 August',
     sha: '91712fb',
     changes: [
       'Gemini Zone maps now show exact colours and badges without leader lines crossing the farm',
