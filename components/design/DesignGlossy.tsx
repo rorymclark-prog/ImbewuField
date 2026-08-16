@@ -6,7 +6,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState, type Dispatch, type SetStateAction } from 'react';
 import { createPortal } from 'react-dom';
-import { Download, RefreshCw, Gem, FlaskConical, Images, Maximize2, X, Trash2, Share2, Check, Upload } from 'lucide-react';
+import { Download, RefreshCw, Gem, FlaskConical, Images, MapPin, Maximize2, X, Trash2, Share2, Check, Upload } from 'lucide-react';
 import { jsPDF } from 'jspdf';
 import {
   SHEET_EXPORT_PROFILES,
@@ -154,6 +154,9 @@ import { loadSheetMetas, loadSheetImage, patchSheetThumb, saveSheet, deleteSheet
 import { backfillThumbnails } from '@/lib/gallery-thumbnails';
 import { basemapAttribution } from '@/lib/basemap-imagery';
 import { formatDesignTranslation } from '@/lib/design-studio-i18n';
+import { designSiteIdFromLocation } from '@/lib/design-studio';
+import { loadPlaces, type SavedPlace } from '@/lib/saved-places';
+import type { LocationData } from '@/lib/types';
 import { useLanguage } from '@/lib/i18n';
 import styles from './DesignGlossy.module.css';
 export { itemInFilter, lineInFilter, zonesInFilter, layerContentCount } from '@/lib/glossy-filters';
@@ -11864,6 +11867,52 @@ export default function DesignGlossy({
   // render. `storageWarning` is set when a sheet could not be persisted, so we say so rather than
   // let the word "Saved" imply a durability we do not have.
   const [gallery, setGallery] = useState<GalleryItem[]>([]);
+  /** WHICH SITE'S DURABLE MAPS THE RIGHT RAIL IS BROWSING.
+   *
+   * This is deliberately separate from `state.siteId`. The canvas, render buttons and paid job
+   * queue stay attached to the design the farmer actually opened; this control only changes the
+   * saved-map library. Otherwise selecting another farm merely to download one of its sheets
+   * could make the next paid render land against the wrong design state.
+   */
+  const [gallerySiteId, setGallerySiteId] = useState(state.siteId);
+  const gallerySiteIdRef = useRef(gallerySiteId);
+  gallerySiteIdRef.current = gallerySiteId;
+  const [savedMapPlaces, setSavedMapPlaces] = useState<SavedPlace[]>([]);
+  useEffect(() => {
+    const refresh = () => setSavedMapPlaces(loadPlaces());
+    refresh();
+    window.addEventListener('permamap-places-changed', refresh);
+    return () => window.removeEventListener('permamap-places-changed', refresh);
+  }, []);
+
+  const gallerySiteOptions = useMemo(() => {
+    const names = new Map<string, string>();
+    for (const place of savedMapPlaces) {
+      const id = designSiteIdFromLocation({ lat: place.lat, lon: place.lon } as LocationData);
+      if (!names.has(id)) names.set(id, place.name.trim() || t('designGlossyUnnamedSite'));
+    }
+    if (!names.has(state.siteId)) {
+      names.set(state.siteId, placeName?.trim() || t('designGlossyCurrentSite'));
+    }
+    const current = { id: state.siteId, name: names.get(state.siteId)! };
+    const others = [...names]
+      .filter(([id]) => id !== state.siteId)
+      .map(([id, name]) => ({ id, name }))
+      .sort((a, b) => a.name.localeCompare(b.name));
+    return [current, ...others];
+  }, [placeName, savedMapPlaces, state.siteId, t]);
+  const gallerySiteName = gallerySiteOptions.find((option) => option.id === gallerySiteId)?.name
+    ?? placeName?.trim()
+    ?? t('designGlossyCurrentSite');
+
+  // Opening a different design returns the rail to that design. Renaming/deleting a saved place
+  // updates the options live; if the browsed place was deleted, fall back to the open design.
+  useEffect(() => setGallerySiteId(state.siteId), [state.siteId]);
+  useEffect(() => {
+    if (!gallerySiteOptions.some((option) => option.id === gallerySiteId)) {
+      setGallerySiteId(state.siteId);
+    }
+  }, [gallerySiteId, gallerySiteOptions, state.siteId]);
   const [storageWarning, setStorageWarning] = useState<string | null>(null);
   const [galleryOpen, setGalleryOpen] = useState(false);
   const [galleryViewId, setGalleryViewId] = useState<string | null>(null);
@@ -11995,14 +12044,21 @@ export default function DesignGlossy({
     };
   }, [galleryZoomOpen]);
 
-  // Restore this site's saved sheets on mount / site change. Failure is silent by design: an
-  // unavailable IndexedDB must still leave a working session-only gallery.
+  // Restore the rail's chosen site's saved sheets. Failure is silent by design: an unavailable
+  // IndexedDB must still leave a working session-only gallery.
   useEffect(() => {
     let cancelled = false;
+    // Never leave the previous farm's count, thumbnails or selected full image on screen while
+    // the next farm loads. A stale farm name beside another farm's maps is worse than a brief
+    // empty rail because it makes an export look correctly filed when it is not.
+    setGallery([]);
+    setGalleryViewId(null);
+    setGalleryZoomOpen(false);
+    setExportSel(new Set());
     // METAS ONLY — no image payloads. This is what keeps the heap flat however many sheets a
     // farmer has saved; see GalleryItem.image's own note. The full image is fetched per sheet
     // when opened, and the backfill below fetches one at a time.
-    void loadSheetMetas(state.siteId).then((rows) => {
+    void loadSheetMetas(gallerySiteId).then((rows) => {
       if (cancelled) return;
       // Sheets from an earlier generation of the render rules stay in the gallery — they are the
       // farmer's, and some are downloaded already — but they are labelled, so two sheets with the
@@ -12054,7 +12110,7 @@ export default function DesignGlossy({
     return () => {
       cancelled = true;
     };
-  }, [state.siteId]);
+  }, [gallerySiteId]);
 
   const pushGallery = useCallback(
     (
@@ -12074,7 +12130,7 @@ export default function DesignGlossy({
         geometryLock: provenance.geometryLock ?? false,
         showcase: provenance.showcase ?? false,
       };
-      setGallery((prev) => [...prev, item]);
+      setGallery((prev) => (gallerySiteIdRef.current === state.siteId ? [...prev, item] : prev));
       // Persist alongside the state update, never instead of it — a sheet that fails to save must
       // still be on screen and downloadable.
       void saveSheet({ ...item, siteId: state.siteId, at: new Date().toISOString(), planVersion: PLAN_VERSION }).then((ok) => {
@@ -12089,7 +12145,9 @@ export default function DesignGlossy({
       // onto both the visible gallery item and the persisted record.
       void makeGalleryThumbnail(image).then((thumb) => {
         if (!thumb) return;
-        setGallery((prev) => prev.map((g) => (g.id === item.id ? { ...g, thumb } : g)));
+        setGallery((prev) => (gallerySiteIdRef.current === state.siteId
+          ? prev.map((g) => (g.id === item.id ? { ...g, thumb } : g))
+          : prev));
         void saveSheet({ ...item, thumb, siteId: state.siteId, at: new Date().toISOString(), planVersion: PLAN_VERSION });
       });
       return item.id;
@@ -12184,8 +12242,8 @@ export default function DesignGlossy({
           const doc = await buildGalleryPdf(picked, exportQuality);
           if (!doc) return;
           const name = picked.length === 1
-            ? sheetExportFileName(placeName, picked[0].label, 'pdf')
-            : sheetSetFileName(placeName, picked.length);
+            ? sheetExportFileName(gallerySiteName, picked[0].label, 'pdf')
+            : sheetSetFileName(gallerySiteName, picked.length);
           if (mode === 'download') {
             doc.save(name);
           } else {
@@ -12201,7 +12259,7 @@ export default function DesignGlossy({
           if (!src) continue;
           const { dataUrl } = await encodeSheet(src, exportFormat, exportQuality);
           const name = sheetExportFileName(
-            placeName,
+            gallerySiteName,
             picked[i].label,
             exportFormat,
             picked.length > 1 ? i : undefined,
@@ -12232,7 +12290,7 @@ export default function DesignGlossy({
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [gallery, exportSel, exportFormat, exportQuality, exportBusy, placeName, encodeSheet, buildGalleryPdf, resolveGalleryImage],
+    [gallery, exportSel, exportFormat, exportQuality, exportBusy, gallerySiteName, encodeSheet, buildGalleryPdf, resolveGalleryImage],
   );
 
   const removeGallery = useCallback((id: string) => {
@@ -12250,15 +12308,15 @@ export default function DesignGlossy({
   const clearGallery = useCallback(() => {
     setGallery([]);
     setGalleryViewId(null);
-    clearGlossyCacheForSite(state.siteId);
-    void clearSheets(state.siteId).then((ok) => {
+    clearGlossyCacheForSite(gallerySiteId);
+    void clearSheets(gallerySiteId).then((ok) => {
       if (!ok) {
         setStorageWarning(
           "The gallery was cleared from this tab, but couldn't be cleared from device storage. Saved maps may reappear when you reopen this design.",
         );
       }
     });
-  }, [state.siteId]);
+  }, [gallerySiteId]);
 
   // Load the cached render for this site + chosen map. Runs on mount and whenever the map
   // changes, so each map keeps its own last render.
@@ -15631,6 +15689,20 @@ export default function DesignGlossy({
                 {t('designGlossyManage')}
               </button>
             </div>
+            <label className={styles.sitePicker}>
+              <span className={styles.sitePickerLabel}>
+                <MapPin size={14} aria-hidden /> {t('designGlossySavedMapsSite')}
+              </span>
+              <select
+                value={gallerySiteId}
+                onChange={(event) => setGallerySiteId(event.target.value)}
+                aria-label={t('designGlossyChooseSavedMapsSite')}
+              >
+                {gallerySiteOptions.map((option) => (
+                  <option key={option.id} value={option.id}>{option.name}</option>
+                ))}
+              </select>
+            </label>
             {gallery.length === 0 ? (
               <p className={styles.emptySaved}>
                 {t('designGlossyNoSavedRail')}
@@ -15733,8 +15805,8 @@ export default function DesignGlossy({
             <div style={{ padding: '12px 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8, borderBottom: '1px solid #E2D8C4' }}>
               <span style={{ fontSize: 14, fontWeight: 700, color: '#9E5C08' }}>
                 {exportMode
-                  ? `${exportSel.size} selected`
-                  : `🖼 ${formatDesignTranslation(t('designGlossySavedMaps'), { count: gallery.length })}`}
+                  ? `${exportSel.size} selected · ${gallerySiteName}`
+                  : `🖼 ${formatDesignTranslation(t('designGlossySavedMaps'), { count: gallery.length })} · ${gallerySiteName}`}
               </span>
               {!galleryViewItem && gallery.length > 0 && (
                 <button

@@ -53,6 +53,25 @@ test('saved-map rail stays thumbnail-only and the centre loads at most one full 
     'the selected row should be the only saved sheet promoted to the centre preview');
 });
 
+test('saved maps can switch sites without retargeting the open design or a paid render', () => {
+  const railStart = glossy.indexOf('<aside className={styles.savedRail}');
+  const modalStart = glossy.indexOf('{/* ── Saved-maps gallery', railStart);
+  const rail = glossy.slice(railStart, modalStart);
+
+  assert.match(rail, /<select[\s\S]*?value=\{gallerySiteId\}[\s\S]*?gallerySiteOptions\.map/,
+    'the live Saved maps rail needs a direct site selector');
+  assert.match(glossy, /loadSheetMetas\(gallerySiteId\)/,
+    'changing the selector must load the chosen site, not keep showing the open design');
+  assert.match(glossy, /clearSheets\(gallerySiteId\)/,
+    'Manage → Clear must apply to the site named by the gallery selector');
+  assert.match(glossy, /sheetExportFileName\(\s*gallerySiteName,/,
+    'downloads from another site must carry that site name, not the open design name');
+  assert.match(glossy, /saveSheet\(\{ \.\.\.item, siteId: state\.siteId/,
+    'rendered sheets must remain attached to the open design, never the browsed gallery site');
+  assert.doesNotMatch(glossy, /saveSheet\(\{ \.\.\.item, siteId: gallerySiteId/,
+    'browsing another site must not retarget a paid render');
+});
+
 test('saved-map preview downloads the selected durable image and clears when settings change', () => {
   assert.match(glossy, /link\.href = stageResultImage/);
   assert.match(glossy, /onClick=\{handleStageDownload\}/);
