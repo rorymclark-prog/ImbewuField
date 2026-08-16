@@ -16,7 +16,7 @@ import { ELEMENT_CATALOG, plantingGroupFor } from '@/lib/design-elements';
 
 test('Reference Blueprint maps high-impact Water and Planting features to reusable artwork', () => {
   assert.equal(referenceFeatureArtworkFor('jojo_5000'), 'jojo-5000-top-v2.png');
-  assert.equal(referenceFeatureArtworkFor('banana_circle'), 'banana-basin-v1.png');
+  assert.equal(referenceFeatureArtworkFor('banana_circle'), 'banana-basin-v2.png');
   // Guava has its OWN crown now — it was one of the thirteen ids that shared
   // orchard-canopy-v1.png. It stays the example here because what this line tests is that a
   // planting feature resolves to artwork at all, not which file it happens to be.

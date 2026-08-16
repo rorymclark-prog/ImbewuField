@@ -34,6 +34,13 @@ export interface ReleaseNote {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '16 August',
+    sha: '2bdaa93b20e0b4ff62787a1fdc079a0f0a8748ad',
+    changes: [
+      'The banana circle now shows real banana bunches, not just leaves',
+    ],
+  },
+  {
     when: '15 August',
     // Swarm round 2 — 15 branches, squash-merged into main this session.
     sha: '789d8dfadfa8a350f5de9c8f077f9ed232401994',

@@ -4,6 +4,9 @@ export const REFERENCE_FEATURE_ART_ROOT = '/render-assets/reference-blueprint';
 
 export type ReferenceFeatureArtwork =
   | 'banana-basin-v1.png'
+  // v1 was leaves-only, no visible fruit (Rory: "banana circle needs to have bananas in it just
+  // like banana clumps"). v2 adds three fruit bunches in the same ring composition.
+  | 'banana-basin-v2.png'
   | 'orchard-canopy-v1.png'
   | 'production-bed-v1.png'
   | 'pollinator-strip-v1.png'
@@ -138,7 +141,7 @@ const PLANTING_DETAIL_ART: Readonly<Record<string, ReferenceFeatureArtwork>> = {
 export function referenceFeatureArtworkFor(defId: string): ReferenceFeatureArtwork | null {
   const key = normaliseLookupKey(defId, '_');
   if (TANK_TOP_ART[key]) return TANK_TOP_ART[key];
-  if (key === 'banana_circle') return 'banana-basin-v1.png';
+  if (key === 'banana_circle') return 'banana-basin-v2.png';
   if (ORCHARD_TREES.has(key)) return 'orchard-canopy-v1.png';
   if (PRODUCTION_BEDS.has(key)) return 'production-bed-v1.png';
   if (key === 'pollinator_strip') return 'pollinator-strip-v1.png';
