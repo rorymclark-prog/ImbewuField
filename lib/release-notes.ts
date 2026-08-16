@@ -35,6 +35,13 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '16 August',
+    sha: '0d2f282',
+    changes: [
+      'Saved maps now marks older layouts clearly instead of presenting them as current',
+    ],
+  },
+  {
+    when: '16 August',
     sha: 'b731a32',
     changes: [
       'Try the photo again now restores the design photo after the app opens in light mode',

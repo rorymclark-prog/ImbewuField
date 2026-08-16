@@ -22,6 +22,8 @@ export interface ReportPlateCandidate {
   at: string;
   /** Which generation of the plan set produced it; absent on pre-versioning sheets. */
   planVersion?: string;
+  /** Visual recipe that produced the pixels; absent rows predate recipe tracking. */
+  renderRecipe?: string;
 }
 
 export interface ReportPlate {
@@ -74,6 +76,7 @@ function newerThan(a: ReportPlateCandidate, b: ReportPlateCandidate): boolean {
 export function selectReportPlates(
   candidates: readonly ReportPlateCandidate[],
   currentPlanVersion: string,
+  currentRenderRecipe?: string,
   max: number = MAX_REPORT_PLATES,
 ): ReportPlate[] {
   const usable = (candidates ?? []).filter((c) => c && c.id && (c.label ?? '').trim());
@@ -84,7 +87,10 @@ export function selectReportPlates(
   // gallery for that reason; putting one in a report presents it as current. A farmer who has ONLY
   // old sheets still gets their maps, because a report with no maps is worse than a report with
   // the maps they actually have.
-  const current = usable.filter((c) => c.planVersion === currentPlanVersion);
+  const current = usable.filter((c) => (
+    c.planVersion === currentPlanVersion
+    && (currentRenderRecipe === undefined || c.renderRecipe === currentRenderRecipe)
+  ));
   const pool = current.length ? current : usable;
 
   const newestPerSheet = new Map<string, ReportPlateCandidate>();

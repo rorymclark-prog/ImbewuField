@@ -4,6 +4,7 @@ import test from 'node:test';
 
 import { MAX_REPORT_PLATES, plateSheetKey, selectReportPlates } from '../lib/report-plates.ts';
 import { PLAN_VERSION } from '../lib/plan-version.ts';
+import { SHEET_RENDER_RECIPE } from '../lib/sheet-render-recipe.ts';
 
 // A REPORT APPENDIX IS NOT A GALLERY.
 //
@@ -58,6 +59,23 @@ test('sheets from an older plan generation are left out — unless they are all 
   assert.equal(onlyOld.length, 1, 'a farmer with only older sheets got an empty appendix');
 });
 
+test('a pre-fix bitmap cannot beat a current renderer result from the same plan generation', () => {
+  const planting = '06 — Planting & Agroforestry';
+  const plates = selectReportPlates([
+    {
+      ...polished(planting, '2026-08-16T12:00:00Z'),
+      renderRecipe: 'r4',
+    },
+    {
+      ...exact(planting, '2026-08-16T11:00:00Z'),
+      renderRecipe: SHEET_RENDER_RECIPE,
+    },
+  ], V, SHEET_RENDER_RECIPE);
+
+  assert.equal(plates.length, 1);
+  assert.match(plates[0].id, /exact/, 'the newer but visibly obsolete bitmap entered the report');
+});
+
 test('a hundred-map gallery cannot produce a hundred-page appendix', () => {
   const gallery = [];
   for (let i = 0; i < 104; i++) {
@@ -92,7 +110,7 @@ test('junk rows are dropped rather than printed as blank pages', () => {
 
 test('the report export uses the selection, not the raw gallery', () => {
   const view = readFileSync(new URL('../components/ReportView.tsx', import.meta.url), 'utf8');
-  assert.match(view, /selectReportPlates\(sheetMetas, PLAN_VERSION\)/,
+  assert.match(view, /selectReportPlates\(sheetMetas, PLAN_VERSION, SHEET_RENDER_RECIPE\)/,
     'the export is back to handing every saved sheet to the PDF');
   assert.match(view, /sheets: plates,/, 'the PDF is not being given the selected plates');
   assert.ok(!/sheets: sheetMetas\.map/.test(view), 'the raw gallery mapping is back');

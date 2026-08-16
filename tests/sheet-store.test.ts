@@ -12,6 +12,8 @@ import {
   saveSheet,
   type StoredSheet,
 } from '../lib/sheet-store.ts';
+import { PLAN_VERSION } from '../lib/plan-version.ts';
+import { SHEET_RENDER_RECIPE, savedSheetFreshness } from '../lib/sheet-render-recipe.ts';
 
 type Request<T> = {
   result: T;
@@ -348,6 +350,7 @@ test('invalid records are rejected on write before they can replace a durable sh
     sheet('one', 'site-a', '2026-02-01', { thumb: 'data:text/plain;base64,AAAA' }),
     sheet('one', 'site-a', '2026-02-01', { resultKind: 'invented' as StoredSheet['resultKind'] }),
     sheet('one', 'site-a', '2026-02-01', { provider: 'invented' as StoredSheet['provider'] }),
+    sheet('one', 'site-a', '2026-02-01', { renderRecipe: '' }),
   ];
   for (const row of invalid) assert.equal(await saveSheet(row), false);
   assert.deepEqual(await loadSheets('site-a'), [original]);
@@ -452,4 +455,23 @@ test('patchSheetThumb REFUSES to create a row and refuses one with no image', as
   assert.equal(await patchSheetThumb('ghost', 'data:image/jpeg;base64,DDDD'), false);
   db.rows.set('corrupt', { id: 'corrupt', siteId: 'site-p', label: 'x', at: '2026-01-01' });
   assert.equal(await patchSheetThumb('corrupt', 'data:image/jpeg;base64,DDDD'), false);
+});
+
+test('a saved bitmap is current only when both its plan and drawing recipe are current', () => {
+  assert.equal(savedSheetFreshness({
+    planVersion: PLAN_VERSION,
+    renderRecipe: SHEET_RENDER_RECIPE,
+  }, PLAN_VERSION), 'current');
+
+  assert.equal(savedSheetFreshness({
+    planVersion: PLAN_VERSION,
+    renderRecipe: 'r4',
+  }, PLAN_VERSION), 'older-render');
+
+  // Rows saved before recipe tracking are the exact case that exposed the old Ubhejane framing.
+  assert.equal(savedSheetFreshness({ planVersion: PLAN_VERSION }, PLAN_VERSION), 'older-render');
+  assert.equal(savedSheetFreshness({
+    planVersion: 'v40',
+    renderRecipe: SHEET_RENDER_RECIPE,
+  }, PLAN_VERSION), 'older-plan');
 });
