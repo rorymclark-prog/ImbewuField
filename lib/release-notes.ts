@@ -35,7 +35,7 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '16 August',
-    sha: '0c7d842',
+    sha: '6e97f17',
     changes: [
       'JoJo tanks now look like upright ribbed tanks instead of dark rings on the map',
       'Shade tunnels and polytunnels now show the crops growing underneath',
