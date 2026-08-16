@@ -303,8 +303,8 @@ test('a change to what a paid sheet looks like bumps the recipe token', () => {
   // The last-render display effect re-serves whatever localStorage holds for this key on mount, so
   // without a bump the farmer (and Rory, checking the fix) sees the PRE-fix picture — the chrome-
   // less Full Treatment this whole change exists to stop re-serving — without rendering anything.
-  assert.match(DESIGN_GLOSSY_SOURCE, /\+ ':r3'/, 'the r-token must move when the sheet changes');
-  assert.doesNotMatch(DESIGN_GLOSSY_SOURCE, /\+ ':r[12]'/);
+  assert.match(DESIGN_GLOSSY_SOURCE, /\+ ':r4'/, 'the r-token must move when the sheet changes');
+  assert.doesNotMatch(DESIGN_GLOSSY_SOURCE, /\+ ':r[123]'/);
   // PLAN_VERSION must NOT move with it: bumping that re-keys the gallery and takes paid renders
   // away from farmers who already have them.
   assert.match(
@@ -314,7 +314,7 @@ test('a change to what a paid sheet looks like bumps the recipe token', () => {
   );
 });
 
-test('the locked paid render is never over-painted with the app\'s own element artwork', () => {
+test('the locked paid render keeps model element artwork while exact Zones remain factual', () => {
   // Rory, holding a Photo Plan and a plain-paper plan both badged "AI Polished": "its just
   // giveing us exact theres no ai polished" … "i have asked and asked for you to correct this".
   //
@@ -327,10 +327,15 @@ test('the locked paid render is never over-painted with the app\'s own element a
   // What locked still guarantees, and what the stack below must keep: ground, structures, and
   // everything outside the plot stay exact, and labels/legend are drawn by the app from saved data.
   const src = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
-  const at = src.indexOf('const overlayImage = locked');
+  // Zones are the one deliberate exception: their translucent polygons and numbered badges are
+  // saved geometry, not element artwork. A paid Carl & Sandy render exposed that putting `locked`
+  // first suppressed those facts as well, leaving only the model's faint approximation. The zone
+  // branch must therefore come first; every other locked sheet must still take `undefined` so its
+  // plants and structures are not over-painted with exact sprites.
+  const at = src.indexOf("const overlayImage = f === 'zones'");
   assert.ok(at > 0, 'the locked overlay decision moved — re-pin it, do not delete this guard');
-  const decision = src.slice(at, at + 220);
-  assert.match(decision, /const overlayImage = locked\s*\n?\s*\? undefined/,
+  const decision = src.slice(at, at + 520);
+  assert.match(decision, /const overlayImage = f === 'zones'[\s\S]*?\? buildZoneOverlay\([\s\S]*?: locked\s*\n?\s*\? undefined/,
     'the locked path is stacking a feature overlay over the model again — AI Polished is exact');
   // And the builder itself is gone: a full-resolution canvas per sheet that nothing consumes, on
   // the path iOS has been killing for memory.

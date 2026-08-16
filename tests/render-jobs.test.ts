@@ -12,6 +12,7 @@ import {
   maskHasProtectedAndEditablePixels,
   normaliseRenderJobDoc,
   renderJobRequestError,
+  renderJobAttribution,
   qualityCacheSuffix,
   RENDER_QUALITIES,
   type RenderSheetSpec,
@@ -152,6 +153,45 @@ test('the worker chooses its vendor from the same field the client writes, and n
     .join('\n');
   assert.doesNotMatch(code(worker), /job\.provider/);
   assert.doesNotMatch(code(client), /provider:/);
+});
+
+test('completed queue results keep the durable job vendor in every user-visible attribution', () => {
+  assert.deepEqual(renderJobAttribution('gemini'), {
+    saved: 'gemini',
+    gallery: 'gemini',
+    label: 'Gemini',
+  });
+  assert.deepEqual(renderJobAttribution('openai'), {
+    saved: 'falgpt',
+    gallery: 'openai',
+    label: 'gpt-image-2',
+  });
+
+  const glossy = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
+  const finish = glossy.slice(glossy.indexOf('async function handleSnapshot('));
+  assert.match(finish, /const attribution = renderJobAttribution\(job\.engine\)/,
+    'the queue finisher no longer reads the vendor from the durable job');
+  assert.match(finish, /provider: attribution\.saved/);
+  assert.match(finish, /provider: attribution\.gallery/);
+  assert.match(finish, /paid \$\{attribution\.label\} result/);
+  assert.doesNotMatch(finish, /paid gpt-image-2 result/,
+    'a Gemini completion can still be announced as an OpenAI result');
+});
+
+test('a locked Gemini Zones sheet burns exact saved regions and does not draw crossing leaders', () => {
+  const glossy = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
+  const labelsAt = glossy.indexOf('const gutterOwnsLabels = locked');
+  const finishSlice = glossy.slice(labelsAt, glossy.indexOf('// Ground first', labelsAt));
+  assert.ok(labelsAt >= 0, 'the locked-sheet finisher was not found');
+  assert.match(finishSlice, /: f === 'zones'\s*\? \[\]/,
+    'Zones can still feed its badges and names into the margin leader engine');
+
+  const zoneFirst = finishSlice.indexOf("const overlayImage = f === 'zones'");
+  const lockedFallback = finishSlice.indexOf(': locked', zoneFirst);
+  assert.ok(zoneFirst >= 0 && lockedFallback > zoneFirst,
+    'the general locked-sheet branch can still suppress the exact zone overlay');
+  assert.match(finishSlice, /\? buildZoneOverlay\(renderState, renderRefLayers, W, H\)/,
+    'the finisher no longer burns the saved zone polygons over model artwork');
 });
 
 test('a Gemini job with no server secret fails by name before any sheet is attempted', () => {
