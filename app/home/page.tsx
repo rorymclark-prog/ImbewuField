@@ -32,6 +32,7 @@ import LimaBar from '@/components/LimaBar';
 import TabBar from '@/components/TabBar';
 import NavDrawer from '@/components/NavDrawer';
 import HomeHeroCard from '@/components/home/HomeHeroCard';
+import CropIcon from '@/components/CropIcon';
 import { useLanguage } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
 import { getLastSite, type LastSite } from '@/lib/last-site';
@@ -169,7 +170,7 @@ function TaskBoardCard({ tasks, onToggle }: { tasks: BoardTask[]; onToggle: (id:
               {task.completed ? <CheckCircle2 size={20} strokeWidth={1.8} /> : <Circle size={20} strokeWidth={1.8} />}
             </button>
             <div style={{ width: 36, height: 36, borderRadius: 10, background: 'rgba(31,77,43,0.08)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: 17 }}>
-              {task.icon}
+              {task.cropKey ? <CropIcon cropKey={task.cropKey} icon={task.icon} size={24} /> : task.icon}
             </div>
             <div className="flex-1 min-w-0">
               <div
