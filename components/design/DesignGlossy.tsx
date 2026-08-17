@@ -89,6 +89,7 @@ import { EARTHWORKS_ROUTE_STYLE, WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, 
 import { PLANTING_CANOPY_PAINT, PLANTING_LEGEND_SECTION_ORDER, PLANTING_ROUTE_STYLE, overstoryCanopyIds, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
 import { PLAN_VERSION } from '@/lib/plan-version';
 import { SHEET_RENDER_RECIPE, savedSheetFreshness, type SavedSheetFreshness } from '@/lib/sheet-render-recipe';
+import { newestSavedMapForSheet } from '@/lib/saved-map-preview';
 import { SHADE_CLOTH_ALPHA, STRUCTURES_LEGEND_SECTION_ORDER, isShadeClothStructure, structuresFeaturePresentationDimensions, structuresLegendSectionForFeature, structuresRouteVisualFor, type StructuresLegendSection } from '@/lib/structures-cartography';
 import { presentSectorCartography, seasonalSunArcRadii, sectorEvidenceSummary, SECTOR_STYLES, sectorFillColor, sectorStrokeWidth, type SectorLegendIcon, type SectorVisualKind } from '@/lib/sector-cartography';
 import { referenceFeatureArtworkUrl, settleOptionalReferenceArtLoad, stapleTileUrl, vegSpriteUrl, VEG_SPRITES, isTankDefId } from '@/lib/reference-feature-art';
@@ -11931,6 +11932,11 @@ export default function DesignGlossy({
   const [storageWarning, setStorageWarning] = useState<string | null>(null);
   const [galleryOpen, setGalleryOpen] = useState(false);
   const [galleryViewId, setGalleryViewId] = useState<string | null>(null);
+  // A gallery choice is automatic once per site+sheet. Keeping the handled key separate means a
+  // farmer can press the highlighted row to return to the generate view without it springing open
+  // again on the next render.
+  const autoPreviewHandledKeyRef = useRef<string | null>(null);
+  const [galleryLoadedSiteId, setGalleryLoadedSiteId] = useState<string | null>(null);
   const [galleryZoomOpen, setGalleryZoomOpen] = useState(false);
   /**
    * TAKING SEVERAL SHEETS OFF THE PHONE AT ONCE. Rory: "let's be able to select and download
@@ -12024,6 +12030,14 @@ export default function DesignGlossy({
   const underlaySuffixRef = useRef(underlaySuffix);
   underlaySuffixRef.current = underlaySuffix;
   const galleryViewItem = gallery.find((g) => g.id === galleryViewId) ?? null;
+  const savedRailItems = useMemo(() => {
+    const newest = [...gallery].reverse();
+    const visible = newest.slice(0, 5);
+    if (!galleryViewItem || visible.some((item) => item.id === galleryViewItem.id)) return visible;
+    // The automatically opened sheet may be older than the five latest maps across every layer.
+    // Keep it in the rail so the highlighted selection never becomes an invisible mystery state.
+    return [galleryViewItem, ...visible.slice(0, 4)];
+  }, [gallery, galleryViewItem]);
   // The opened sheet's full image — ONE at a time, fetched when the farmer opens it and dropped
   // when they close it or open another. Fresh renders already carry item.image and skip the
   // fetch. Falls back to the thumbnail while loading (and permanently, if the row is gone),
@@ -12067,6 +12081,7 @@ export default function DesignGlossy({
     // the next farm loads. A stale farm name beside another farm's maps is worse than a brief
     // empty rail because it makes an export look correctly filed when it is not.
     setGallery([]);
+    setGalleryLoadedSiteId(null);
     setGalleryViewId(null);
     setGalleryZoomOpen(false);
     setExportSel(new Set());
@@ -12096,6 +12111,7 @@ export default function DesignGlossy({
           freshness,
         };
       }));
+      setGalleryLoadedSiteId(gallerySiteId);
       // Backfill thumbnails for sheets saved before makeGalleryThumbnail existed — otherwise a
       // farmer's EXISTING gallery (the case most likely to actually have the memory problem this
       // fixes, having had the longest time to accumulate full-resolution entries) never benefits.
@@ -14791,6 +14807,10 @@ export default function DesignGlossy({
     : null;
   const stageResultImage = railPreviewImage ?? visibleResultImage;
   const stageIsExact = galleryViewItem ? galleryViewItem.resultKind === 'exact' : isExactRender;
+  const galleryViewChip = galleryViewItem ? galleryTileChip(galleryViewItem.resultKind) : null;
+  const stageResultBadge = galleryViewItem
+    ? `${galleryViewChip?.text ?? 'SAVED'}${galleryViewItem.freshness === 'current' ? '' : ' · OLDER'}`
+    : stageIsExact ? 'Exact master · no AI' : 'AI-polished';
   const stageStyleLabel = galleryViewItem
     ? (galleryViewItem.resultKind === 'exact'
       ? t('designGlossyExactCanvas')
@@ -14809,12 +14829,33 @@ export default function DesignGlossy({
     link.click();
   }, [galleryViewItem, handleDownload, stageResultImage]);
 
-  // A saved-map selection is a preview of the current controls, not a second source of truth.
-  // As soon as the farmer changes the sheet, underlay or style, return the centre stage to the
-  // live render choice so an older durable image cannot visually impersonate the new settings.
+  // The large centre panel is useful screen space, not an instruction card. Once the chosen site's
+  // metadata has REALLY loaded, open the newest durable map for the selected sheet. Waiting for
+  // galleryLoadedSiteId prevents a site switch from choosing a stale row from the previous farm.
   useEffect(() => {
-    setGalleryViewId(null);
-  }, [producerStyle, selectedNo, underlay]);
+    if (galleryLoadedSiteId !== gallerySiteId) return;
+    const key = `${gallerySiteId}:${selectedNo}`;
+    if (autoPreviewHandledKeyRef.current === key) return;
+    autoPreviewHandledKeyRef.current = key;
+    const matching = newestSavedMapForSheet(gallery, selectedNo);
+    setGalleryViewId(matching?.id ?? null);
+  }, [gallery, galleryLoadedSiteId, gallerySiteId, selectedNo]);
+
+  // Changing sheets should open that sheet's latest saved map. Changing only its underlay or style
+  // is different: those controls describe a map not yet generated, so clear the durable preview
+  // and mark this site+sheet handled until the farmer deliberately chooses a saved row again.
+  const previewControlsRef = useRef({ selectedNo, producerStyle, underlay });
+  useEffect(() => {
+    const previous = previewControlsRef.current;
+    if (
+      previous.selectedNo === selectedNo
+      && (previous.producerStyle !== producerStyle || previous.underlay !== underlay)
+    ) {
+      autoPreviewHandledKeyRef.current = `${gallerySiteId}:${selectedNo}`;
+      setGalleryViewId(null);
+    }
+    previewControlsRef.current = { selectedNo, producerStyle, underlay };
+  }, [gallerySiteId, producerStyle, selectedNo, underlay]);
 
   return (
     <div
@@ -15253,7 +15294,7 @@ export default function DesignGlossy({
                   textTransform: 'uppercase',
                 }}
               >
-                {stageIsExact ? 'Exact master · no AI' : 'AI-polished'}
+                {stageResultBadge}
               </span>
               {galleryViewItem?.label ?? placeName ?? 'Your design'}
               {!galleryViewItem && (
@@ -15758,7 +15799,7 @@ export default function DesignGlossy({
               </p>
             ) : (
               <div className={styles.savedList}>
-                {[...gallery].reverse().slice(0, 5).map((item) => {
+                {savedRailItems.map((item) => {
                   const chip = galleryTileChip(item.resultKind);
                   const active = item.id === galleryViewId;
                   return (
@@ -15767,7 +15808,10 @@ export default function DesignGlossy({
                       type="button"
                       className={`${styles.savedRow} ${active ? styles.savedRowActive : ''}`}
                       aria-pressed={active}
-                      onClick={() => setGalleryViewId(active ? null : item.id)}
+                      onClick={() => {
+                        if (active) autoPreviewHandledKeyRef.current = `${gallerySiteId}:${selectedNo}`;
+                        setGalleryViewId(active ? null : item.id);
+                      }}
                     >
                       <span className={styles.savedThumb}>
                         {item.thumb ? (

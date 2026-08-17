@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { newestSavedMapForSheet, savedMapSheetNo } from '../lib/saved-map-preview.ts';
 
 const glossy = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
 const css = readFileSync(new URL('../components/design/DesignGlossy.module.css', import.meta.url), 'utf8');
@@ -81,13 +82,43 @@ test('saved maps can switch sites without retargeting the open design or a paid 
     'browsing another site must not retarget a paid render');
 });
 
-test('saved-map preview downloads the selected durable image and clears when settings change', () => {
+test('saved-map preview downloads the selected durable image and follows sheet-aware controls', () => {
   assert.match(glossy, /link\.href = stageResultImage/);
   assert.match(glossy, /onClick=\{handleStageDownload\}/);
   assert.match(glossy, /galleryViewItem\.resultKind === 'exact'[\s\S]*?t\('designGlossyExactCanvas'\)/,
     'the export summary must describe the saved sheet being previewed, not stale style controls');
-  assert.match(glossy, /\[producerStyle, selectedNo, underlay\]/,
-    'an old saved image must not impersonate newly selected controls');
+  assert.match(glossy, /newestSavedMapForSheet\(gallery, selectedNo\)/,
+    'the empty centre should open the newest saved map for the chosen plan-set sheet');
+  assert.match(glossy, /galleryLoadedSiteId !== gallerySiteId/,
+    'site switching must wait for the selected site rather than preview a stale farm');
+  assert.match(glossy, /previous\.selectedNo === selectedNo[\s\S]*?previous\.producerStyle !== producerStyle[\s\S]*?setGalleryViewId\(null\)/,
+    'changing only the underlay or style must return to the not-yet-generated state');
+});
+
+test('saved-map labels from every plan-set layer select the right sheet', () => {
+  const examples: Array<[string, string]> = [
+    ['Existing site & base · Exact master', '01'],
+    ['Sun & Wind (sector) map · AI illustrated', '02'],
+    ['Zones map · Reference Blueprint · Exact styled', '03'],
+    ['Water map · Exact master', '04'],
+    ['Earthworks map · Exact master', '05'],
+    ['Planting map · older render', '06'],
+    ['Structures map · Exact master', '07'],
+    ['Full design · Photo Plan · AI Polished · geometry locked', '08'],
+    ['Implementation & phasing · Exact master', '09'],
+  ];
+  for (const [label, sheetNo] of examples) assert.equal(savedMapSheetNo(label), sheetNo);
+  assert.equal(savedMapSheetNo('Unclassified legacy drawing'), null);
+});
+
+test('the newest saved map for a sheet wins without crossing into another layer', () => {
+  const items = [
+    { id: 'old-water', label: 'Water map · Exact master' },
+    { id: 'whole', label: 'Whole design · Exact master' },
+    { id: 'new-water', label: 'Water map · Photo Plan · AI Polished · geometry locked' },
+  ];
+  assert.equal(newestSavedMapForSheet(items, '04')?.id, 'new-water');
+  assert.equal(newestSavedMapForSheet(items, '03'), null);
 });
 
 test('a completed free Exact map no longer keeps saying it is building', () => {
