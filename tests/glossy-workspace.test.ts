@@ -53,6 +53,15 @@ test('saved-map rail stays thumbnail-only and the centre loads at most one full 
     'the selected row should be the only saved sheet promoted to the centre preview');
 });
 
+test('a phone never repairs legacy thumbnails beside an exact render', () => {
+  const loadStart = glossy.indexOf('void loadSheetMetas(gallerySiteId)');
+  const pushStart = glossy.indexOf('const pushGallery = useCallback', loadStart);
+  assert.ok(loadStart > 0 && pushStart > loadStart, 'saved-gallery loading effect moved');
+  const loadEffect = glossy.slice(loadStart, pushStart);
+  assert.match(loadEffect, /if \(phoneGradeDevice\(\)\) return;[\s\S]*?backfillThumbnails/,
+    'mobile must stop before legacy full-image decodes can compete with sheet composition');
+});
+
 test('saved maps can switch sites without retargeting the open design or a paid render', () => {
   const railStart = glossy.indexOf('<aside className={styles.savedRail}');
   const modalStart = glossy.indexOf('{/* ── Saved-maps gallery', railStart);

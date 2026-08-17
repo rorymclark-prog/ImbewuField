@@ -35,6 +35,13 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '17 August',
+    sha: 'da4ca5f',
+    changes: [
+      'Large saved-map galleries no longer crash phones before a sheet can render',
+    ],
+  },
+  {
+    when: '17 August',
     sha: 'dc5dd03',
     changes: [
       'Phone renders no longer get stuck while locking a High-quality exact map',

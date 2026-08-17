@@ -271,15 +271,50 @@ export async function loadSheets(
  *  business holding the print-resolution originals. */
 export type StoredSheetMeta = Omit<StoredSheet, 'image'>;
 
-/** Load every sheet for a site WITHOUT the image payloads. Pair with loadSheetImage. */
+/** Load every sheet for a site WITHOUT retaining the image payloads. Pair with loadSheetImage.
+ *
+ * This must NOT be implemented as `loadSheets(...).map(({ image, ...meta }) => meta)`. IndexedDB's
+ * `getAll()` structured-clones every full-resolution bitmap into the JS heap before that map gets
+ * a chance to discard it. Ubhejane had 120 saved maps: opening Preview therefore materialised the
+ * entire print gallery at once on an iPhone, then the exact-sheet compositor arrived on top of it
+ * and Safari killed the tab. A cursor still validates the complete durable row, but exposes only
+ * one row to JavaScript at a time; after its small metadata copy is made, that row's image can be
+ * collected before the next one arrives. */
 export async function loadSheetMetas(
   siteId: string,
   ownerUid?: string | null,
 ): Promise<StoredSheetMeta[]> {
-  const rows = await loadSheets(siteId, ownerUid);
-  // Strings are only freed when nothing references them: the map below drops the `image` field
-  // from every row so the getAll() payload becomes garbage the moment this function returns.
-  return rows.map(({ image: _image, ...meta }) => meta);
+  if (!nonEmptyString(siteId)) return [];
+  const physicalSiteId = ownedKey(siteId, ownerUid);
+  const db = await openDb();
+  if (!db) return [];
+  try {
+    return await new Promise((resolve) => {
+      const rows: StoredSheetMeta[] = [];
+      try {
+        const req = tx(db, 'readonly').index('siteId').openCursor(physicalSiteId);
+        req.onsuccess = () => {
+          const cursor = req.result;
+          if (!cursor) {
+            rows.sort((a, b) => Date.parse(a.at) - Date.parse(b.at));
+            resolve(rows);
+            return;
+          }
+          const logical = logicalSheet(cursor.value, siteId);
+          if (logical) {
+            const { image: _image, ...meta } = logical;
+            rows.push(meta);
+          }
+          cursor.continue();
+        };
+        req.onerror = () => resolve([]);
+      } catch {
+        resolve([]);
+      }
+    });
+  } finally {
+    db.close();
+  }
 }
 
 /** Fetch ONE sheet's full image, on demand — when the farmer opens it, not when the grid mounts.

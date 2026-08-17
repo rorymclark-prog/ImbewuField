@@ -29,6 +29,8 @@ function request<T>(result: T): Request<T> {
 
 class FakeIndexedDb {
   rows = new Map<string, unknown>();
+  getAllCalls = 0;
+  cursorCalls = 0;
   blocked = false;
   failOpen = false;
   failWrites = false;
@@ -148,6 +150,7 @@ class FakeStore {
   index() {
     return {
       getAll: (siteId: string) => {
+        this.factory.getAllCalls += 1;
         const req = request<unknown[]>([]);
         setTimeout(() => {
           req.result = [...this.factory.rows.values()]
@@ -160,6 +163,35 @@ class FakeStore {
             .map((row) => structuredClone(row));
           req.onsuccess?.();
         }, 0);
+        return req;
+      },
+      openCursor: (siteId: string) => {
+        this.factory.cursorCalls += 1;
+        const req = request<IDBCursorWithValue | null>(null);
+        const matches = [...this.factory.rows.values()].filter((row): row is Record<'siteId', unknown> => (
+          typeof row === 'object'
+          && row !== null
+          && 'siteId' in row
+          && row.siteId === siteId
+        ));
+        let index = 0;
+        const advance = () => {
+          setTimeout(() => {
+            if (index >= matches.length) {
+              req.result = null;
+              req.onsuccess?.();
+              return;
+            }
+            const value = structuredClone(matches[index]);
+            index += 1;
+            req.result = {
+              value,
+              continue: advance,
+            } as unknown as IDBCursorWithValue;
+            req.onsuccess?.();
+          }, 0);
+        };
+        advance();
         return req;
       },
       getAllKeys: (siteId: string) => {
@@ -426,6 +458,8 @@ test('loadSheetMetas returns every row WITHOUT its image payload', async () => {
     assert.ok(!('image' in meta), `${meta.id} still carries its image`);
   }
   assert.equal(metas[1].thumb, 'data:image/jpeg;base64,BBBB', 'thumbs DO ride along — the grid draws them');
+  assert.equal(db.getAllCalls, 0, 'metadata loading must never clone the entire full-image gallery');
+  assert.equal(db.cursorCalls, 1, 'metadata loading must stream durable rows one at a time');
 });
 
 test('loadSheetImage fetches exactly one row, and reports null for a missing one', async () => {

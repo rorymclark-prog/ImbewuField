@@ -652,6 +652,7 @@ export interface DesignGlossyProps {
 // (AI_INPUT_WIDTH) that makes the setting safe to raise.
 export { SCALE, setSheetScale, AI_INPUT_WIDTH } from '@/lib/sheet-scale';
 import { SCALE, AI_INPUT_WIDTH, deviceSheetScale, setSheetScale } from '@/lib/sheet-scale';
+import { phoneGradeDevice } from '@/lib/device-grade';
 
 /** Farmer-facing names for the underlay control. Short enough to sit on a pill on a phone. */
 const UNDERLAY_LABEL: Readonly<Record<SheetUnderlay, string>> = {
@@ -12112,6 +12113,12 @@ export default function DesignGlossy({
       // versions of this code produce identical thumbnails and identical saved records — they
       // differ only in how many decodes are alive at once, which no assertion about the result
       // could ever catch. tests/gallery-thumbnails.test.ts asserts peak concurrency is 1.
+      // Legacy thumbnail backfill is maintenance work, not part of showing or rendering a sheet.
+      // Even one full-resolution decode beside the exact compositor is enough to push a memory-
+      // tight iPhone over its tab limit. Computers can repair old rows in the background; phones
+      // leave a missing legacy thumbnail as a placeholder and load its one full image only when
+      // the farmer deliberately opens it.
+      if (phoneGradeDevice()) return;
       void backfillThumbnails(rows, {
         // Each make() now also FETCHES its row's image — still exactly one full sheet in memory
         // at a time, and it becomes garbage as soon as the thumbnail is drawn from it.
