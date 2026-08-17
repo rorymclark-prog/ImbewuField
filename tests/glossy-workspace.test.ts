@@ -9,9 +9,9 @@ const page = readFileSync(new URL('../app/design/page.tsx', import.meta.url), 'u
 test('Glossy owns the whole studio width instead of inheriting the drawing rails', () => {
   assert.match(page, /canvasState && canvasState\.step !== 'glossy'/,
     'the drawing wizard must not stay mounted beside Preview & Export');
-  assert.match(page, /marginLeft: isPhone \|\| canvasState\?\.step === 'glossy' \? 0 : desktopPanelLayout\.elements \+ 24/,
+  assert.match(page, /marginLeft: isPhone \|\| canvasState\?\.step === 'glossy' \? 0 : reservedDesktopPanelSpace\(workspaceMode, desktopPanelLayout\.elements\)/,
     'the drawing map must keep a gutter matching the farmer-adjusted Elements dock');
-  assert.match(page, /marginRight: isPhone \|\| canvasState\?\.step === 'glossy' \? 0 : desktopPanelLayout\.layers \+ 24/,
+  assert.match(page, /marginRight: isPhone \|\| canvasState\?\.step === 'glossy' \? 0 : reservedDesktopPanelSpace\(workspaceMode, desktopPanelLayout\.layers\)/,
     'the drawing map must keep a gutter matching the farmer-adjusted Layers dock');
 });
 

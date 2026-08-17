@@ -92,6 +92,8 @@ import { uiVersion, setUiVersion, UI_VERSION_EVENT } from '@/lib/ui-version';
 import LessonLink from './LessonLink';
 import {
   clampDesktopPanelWidth,
+  elementPanelColumns,
+  type DesignWorkspaceMode,
   type DesktopPanelLayout,
 } from '@/lib/design-panel-layout';
 
@@ -166,6 +168,8 @@ export interface DesignPaletteProps {
    * space. The palette only provides the direct manipulation controls. */
   desktopPanelLayout?: DesktopPanelLayout;
   onDesktopPanelWidthChange?: (panel: keyof DesktopPanelLayout, width: number) => void;
+  /** Desktop view chrome only: balanced docks, movable overlays, or a bottom asset tray. */
+  workspaceMode?: DesignWorkspaceMode;
   /** Icon/label size slider, shown inside the Layers panel beside Labels and Icons. null hides
    *  it entirely, same "nothing to act on" convention the other optional controls use. */
   textScaleControl: { value: number; onChange: (v: number) => void } | null;
@@ -466,6 +470,7 @@ export default function DesignPalette({
   desktopAside = false,
   desktopPanelLayout,
   onDesktopPanelWidthChange,
+  workspaceMode = 'docked',
   textScaleControl,
   areaFillControl,
   bedBlockControl,
@@ -738,6 +743,7 @@ export default function DesignPalette({
   const isPhone = usePhoneViewport();
   const desktopElementsWidth = desktopPanelLayout?.elements ?? 304;
   const desktopLayersWidth = desktopPanelLayout?.layers ?? 304;
+  const desktopElementColumns = elementPanelColumns(desktopElementsWidth);
   const [desktopResize, setDesktopResize] = useState<{
     panel: keyof DesktopPanelLayout;
     startX: number;
@@ -769,6 +775,8 @@ export default function DesignPalette({
   };
   const [layersFloating, setLayersFloating] = useState(false);
   const [layersFloatPos, setLayersFloatPos] = useState({ x: 560, y: 132 });
+  const [layersFloatMoved, setLayersFloatMoved] = useState(false);
+  const effectiveLayersFloating = workspaceMode !== 'docked' || layersFloating;
   const layersFloatDrag = useRef<{ dx: number; dy: number } | null>(null);
   useEffect(() => {
     if (!layersFloatDrag.current) return undefined;
@@ -789,7 +797,29 @@ export default function DesignPalette({
       window.removeEventListener('pointerup', finish);
       window.removeEventListener('pointercancel', finish);
     };
-  }, [layersFloating, layersFloatPos]);
+  }, [effectiveLayersFloating, layersFloatPos]);
+  const [elementsFloatPos, setElementsFloatPos] = useState({ x: 16, y: 132 });
+  const elementsFloatDrag = useRef<{ dx: number; dy: number } | null>(null);
+  useEffect(() => {
+    if (!elementsFloatDrag.current) return undefined;
+    const move = (event: PointerEvent) => {
+      const drag = elementsFloatDrag.current;
+      if (!drag) return;
+      setElementsFloatPos({
+        x: Math.max(8, Math.min(window.innerWidth - 96, event.clientX - drag.dx)),
+        y: Math.max(72, Math.min(window.innerHeight - 96, event.clientY - drag.dy)),
+      });
+    };
+    const finish = () => { elementsFloatDrag.current = null; };
+    window.addEventListener('pointermove', move);
+    window.addEventListener('pointerup', finish);
+    window.addEventListener('pointercancel', finish);
+    return () => {
+      window.removeEventListener('pointermove', move);
+      window.removeEventListener('pointerup', finish);
+      window.removeEventListener('pointercancel', finish);
+    };
+  }, [elementsFloatPos]);
 
   const guided = mode === 'guided';
   const hiddenLayerCount = LAYER_TOGGLES.filter((lt) => !activeLayers[lt.key]).length;
@@ -1455,17 +1485,17 @@ export default function DesignPalette({
               <div
                 style={{
                   position: 'fixed',
-                  top: desktopAside && !isPhone ? (layersFloating ? layersFloatPos.y : 116) : layersAnchor?.openBelow ? layersAnchor.bottom + 6 : undefined,
-                  bottom: desktopAside && !isPhone ? (layersFloating ? undefined : 12) : layersAnchor?.openBelow ? undefined : layersAnchor ? window.innerHeight - layersAnchor.top + 6 : undefined,
-                  left: desktopAside && !isPhone && layersFloating ? layersFloatPos.x : undefined,
-                  right: desktopAside && !isPhone ? (layersFloating ? undefined : 12) : layersAnchor?.right,
+                  top: desktopAside && !isPhone ? (effectiveLayersFloating ? layersFloatPos.y : 116) : layersAnchor?.openBelow ? layersAnchor.bottom + 6 : undefined,
+                  bottom: desktopAside && !isPhone ? (effectiveLayersFloating ? undefined : 12) : layersAnchor?.openBelow ? undefined : layersAnchor ? window.innerHeight - layersAnchor.top + 6 : undefined,
+                  left: desktopAside && !isPhone && effectiveLayersFloating && (workspaceMode === 'docked' || layersFloatMoved) ? layersFloatPos.x : undefined,
+                  right: desktopAside && !isPhone ? (effectiveLayersFloating && (workspaceMode === 'docked' || layersFloatMoved) ? undefined : 12) : layersAnchor?.right,
                   zIndex: desktopAside && !isPhone ? 15 : 1000,
                   display: 'flex',
                   flexWrap: 'wrap',
                   gap: 3,
                   width: desktopAside && !isPhone ? desktopLayersWidth : 300,
                   maxWidth: 'calc(100vw - 16px)',
-                  maxHeight: desktopAside && !isPhone ? (layersFloating ? '60dvh' : undefined) : layersAnchor?.maxHeight,
+                  maxHeight: desktopAside && !isPhone ? (effectiveLayersFloating ? '65dvh' : undefined) : layersAnchor?.maxHeight,
                   overflowY: 'auto',
                   overscrollBehavior: 'contain',
                   padding: 10,
@@ -1481,7 +1511,7 @@ export default function DesignPalette({
                   <span style={{ fontSize: 10, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.5, opacity: 0.5, marginRight: 'auto' }}>
                     {t('designPaletteLayers')}
                   </span>
-                  {desktopAside && !isPhone && (
+                  {desktopAside && !isPhone && workspaceMode === 'docked' && (
                     <button
                       type="button"
                       onClick={() => setLayersFloating((floating) => !floating)}
@@ -1745,11 +1775,16 @@ export default function DesignPalette({
                     </span>
                   </div>
                 )}
-                {desktopAside && !isPhone && layersFloating && (
+                {desktopAside && !isPhone && effectiveLayersFloating && (
                   <div
                     onPointerDown={(event) => {
-                      layersFloatDrag.current = { dx: event.clientX - layersFloatPos.x, dy: event.clientY - layersFloatPos.y };
-                      setLayersFloatPos((position) => ({ ...position }));
+                      const panel = event.currentTarget.parentElement;
+                      const rect = panel?.getBoundingClientRect();
+                      const x = rect?.left ?? layersFloatPos.x;
+                      const y = rect?.top ?? layersFloatPos.y;
+                      setLayersFloatMoved(true);
+                      layersFloatDrag.current = { dx: event.clientX - x, dy: event.clientY - y };
+                      setLayersFloatPos({ x, y });
                     }}
                     title="Drag Layers panel"
                     style={{ flexBasis: '100%', marginTop: -2, padding: '3px 0', textAlign: 'center', color: '#7C725E', cursor: 'grab', touchAction: 'none', fontSize: 13, lineHeight: 1 }}
@@ -1757,14 +1792,14 @@ export default function DesignPalette({
                     ⠿
                   </div>
                 )}
-                {desktopAside && !isPhone && !layersFloating && (
+                {desktopAside && !isPhone && workspaceMode !== 'tray' && (
                   <div
                     role="separator"
                     aria-label="Drag to resize the Layers panel"
                     onPointerDown={(event) => beginDesktopResize('layers', event)}
                     style={{
-                      position: 'fixed', top: 116, bottom: 12, right: desktopLayersWidth + 8,
-                      width: 8, cursor: 'ew-resize', zIndex: 16, touchAction: 'none',
+                      position: 'absolute', top: 0, bottom: 0, left: -9,
+                      width: 9, cursor: 'ew-resize', zIndex: 16, touchAction: 'none',
                       background: 'linear-gradient(90deg, transparent 3px, rgba(31,77,43,0.38) 3px, rgba(31,77,43,0.38) 5px, transparent 5px)',
                     }}
                   />
@@ -1864,7 +1899,10 @@ export default function DesignPalette({
     // Which of the three shells is on screen. desktopAside and the floating panel both wrap; the
     // docked strip is a single scrolling line. They are mutually exclusive in practice — the
     // docked strip is display:none whenever the floating panel is up — so one flag covers both.
-    const chipsWrap = desktopAside || chipsFloating;
+    const chipsWrap = (desktopAside && workspaceMode !== 'tray') || chipsFloating;
+    const desktopCardWidth = desktopElementColumns === 1
+      ? '100%'
+      : `calc(${100 / desktopElementColumns}% - ${desktopElementColumns === 3 ? 4 : 3}px)`;
     return (
       <>
       {orderedCatalog.map((def) => {
@@ -1900,7 +1938,7 @@ export default function DesignPalette({
               // showing half again as many elements per screen. The height comes down with it,
               // because a shorter card wastes less of the vertical too.
               minHeight: 112,
-              width: desktopAside ? 'calc(33.333% - 4px)' : 96,
+              width: desktopAside && workspaceMode !== 'tray' ? desktopCardWidth : 96,
               padding: '7px 5px 6px',
               borderRadius: 12,
               ...selectionRing(active),
@@ -1927,10 +1965,10 @@ export default function DesignPalette({
               display: 'flex',
               alignItems: 'center',
               gap: 5,
-              flexDirection: desktopAside ? 'column' : 'row',
-              justifyContent: desktopAside ? 'center' : undefined,
-              textAlign: desktopAside ? 'center' : 'left',
-              width: desktopAside ? 'calc(50% - 3px)' : undefined,
+              flexDirection: desktopAside && workspaceMode !== 'tray' ? 'column' : 'row',
+              justifyContent: desktopAside && workspaceMode !== 'tray' ? 'center' : undefined,
+              textAlign: desktopAside && workspaceMode !== 'tray' ? 'center' : 'left',
+              width: desktopAside && workspaceMode !== 'tray' ? desktopCardWidth : undefined,
               boxSizing: 'border-box',
               flexShrink: 0,
               cursor: 'pointer',
@@ -1949,7 +1987,7 @@ export default function DesignPalette({
             ) : (
               <span style={{ fontSize: cardsUi ? 30 : guided ? 16 : 13, lineHeight: 1 }}>{def.icon}</span>
             )}
-            <span style={{ display: 'flex', flexDirection: 'column', alignItems: cardsUi || desktopAside ? 'center' : 'flex-start', minWidth: 0 }}>
+            <span style={{ display: 'flex', flexDirection: 'column', alignItems: cardsUi || (desktopAside && workspaceMode !== 'tray') ? 'center' : 'flex-start', minWidth: 0 }}>
               {/* Cards get room for two lines, so 'Indigenous Shade Tree' stops truncating —
                   whiteSpace stays nowrap only in chip mode, where a wrap would grow the strip. */}
               <span style={{ fontSize: cardsUi ? 11.5 : guided ? 11.5 : 10, fontWeight: cardsUi ? 700 : 600, whiteSpace: cardsUi ? 'normal' : 'nowrap', lineHeight: 1.2 }}>{def.name}</span>
@@ -2080,7 +2118,7 @@ export default function DesignPalette({
         <div
           ref={stripRef}
           onScroll={syncStripEnd}
-          style={desktopAside
+          style={desktopAside && workspaceMode !== 'tray'
             ? { display: 'flex', flexWrap: 'wrap', alignContent: 'flex-start', gap: 6 }
             : scrollStripStyle(guided ? 10 : 6)}
         >
@@ -2693,7 +2731,37 @@ export default function DesignPalette({
         gap: guided ? 10 : 6,
         fontFamily: 'inherit',
         ...(desktopAside
-          ? {
+          ? workspaceMode === 'tray'
+            ? {
+              position: 'fixed' as const,
+              left: 12,
+              right: 12,
+              bottom: 12,
+              height: 250,
+              zIndex: 15,
+              padding: 10,
+              background: PAPER,
+              border: '1px solid rgba(11,18,11,0.16)',
+              borderRadius: 16,
+              boxShadow: '0 8px 28px rgba(11,18,11,0.16)',
+              boxSizing: 'border-box' as const,
+            }
+            : workspaceMode === 'floating'
+              ? {
+              position: 'fixed' as const,
+              top: elementsFloatPos.y,
+              left: elementsFloatPos.x,
+              width: desktopElementsWidth,
+              maxHeight: '70dvh',
+              zIndex: 15,
+              padding: 10,
+              background: PAPER,
+              border: '1px solid rgba(11,18,11,0.16)',
+              borderRadius: 16,
+              boxShadow: '0 10px 30px rgba(11,18,11,0.20)',
+              boxSizing: 'border-box' as const,
+            }
+            : {
               position: 'fixed' as const,
               top: 116,
               left: 12,
@@ -2716,7 +2784,22 @@ export default function DesignPalette({
       }}
     >
       {desktopAside && (
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8, paddingBottom: 2, borderBottom: '1px solid rgba(11,18,11,0.10)' }}>
+        <div
+          onPointerDown={workspaceMode === 'floating' ? (event) => {
+            elementsFloatDrag.current = {
+              dx: event.clientX - elementsFloatPos.x,
+              dy: event.clientY - elementsFloatPos.y,
+            };
+            setElementsFloatPos((position) => ({ ...position }));
+          } : undefined}
+          title={workspaceMode === 'floating' ? 'Drag Elements panel' : undefined}
+          style={{
+            display: 'flex', alignItems: 'center', gap: 8, paddingBottom: 2,
+            borderBottom: '1px solid rgba(11,18,11,0.10)',
+            cursor: workspaceMode === 'floating' ? 'grab' : undefined,
+            touchAction: workspaceMode === 'floating' ? 'none' : undefined,
+          }}
+        >
           <span style={{ fontWeight: 800, fontSize: 13, color: DARK, marginRight: 'auto' }}>⠿ Elements</span>
         </div>
       )}
@@ -2741,14 +2824,14 @@ export default function DesignPalette({
       <div style={{ display: 'flex', flexDirection: 'column', gap: guided ? 10 : 6, overflowY: 'auto', WebkitOverflowScrolling: 'touch', minHeight: 0, flex: desktopAside ? 1 : undefined, maxHeight: desktopAside ? undefined : '30dvh' }}>
         {renderBodyRows()}
       </div>
-      {desktopAside && (
+      {desktopAside && workspaceMode !== 'tray' && (
         <div
           role="separator"
           aria-label="Drag to resize the Elements panel"
           onPointerDown={(event) => beginDesktopResize('elements', event)}
           style={{
-            position: 'fixed', top: 116, bottom: 12, left: desktopElementsWidth + 8,
-            width: 8, cursor: 'ew-resize', zIndex: 16, touchAction: 'none',
+            position: 'absolute', top: 0, bottom: 0, right: -9,
+            width: 9, cursor: 'ew-resize', zIndex: 16, touchAction: 'none',
             background: 'linear-gradient(90deg, transparent 3px, rgba(31,77,43,0.38) 3px, rgba(31,77,43,0.38) 5px, transparent 5px)',
           }}
         />
