@@ -23,6 +23,12 @@ import {
   type DesignCanvasState,
 } from '../lib/design-canvas.ts';
 import { computeContourLines } from '../lib/contours.ts';
+import {
+  itemLayerKeys,
+  lineLayerKeys,
+  selectableIdsForLayer,
+  zoneLayerKey,
+} from '../lib/design-layer-membership.ts';
 
 function stateFixture(): DesignCanvasState {
   return {
@@ -542,4 +548,62 @@ test('an exact-sheet swale never applies its pixel legibility floor to a stated 
   assert.match(painter, /const unstatedHalf = pxPerM && pxPerM > 0/);
   assert.match(painter, /const half = statedHalf \?\? Math\.max\(style\.width \* 0\.9, unstatedHalf\)/);
   assert.doesNotMatch(painter, /Math\.max\(style\.width \* 0\.9, groundHalf\)/);
+});
+
+test('layer visibility and bulk selection share one primary-and-secondary membership answer', () => {
+  assert.deepEqual(itemLayerKeys('jojo_5000'), ['water']);
+  assert.deepEqual(lineLayerKeys('swale'), ['water', 'earthworks']);
+  assert.equal(zoneLayerKey({}), 'zones');
+  assert.equal(zoneLayerKey({ feature: 'house' }), 'ground');
+  assert.equal(zoneLayerKey({ feature: 'staple_garden' }), 'planting');
+});
+
+test('a layer tick selects only objects editable on the current wizard step', () => {
+  const design: DesignCanvasState = {
+    siteId: 'layer-test',
+    frame: { centerLng: 31, centerLat: -28, zoom: 18, imgW: 960, imgH: 640, mPerPx: 0.2 },
+    items: [
+      { id: 'tank', defId: 'jojo_5000', x: 0.2, y: 0.2 },
+      { id: 'coop', defId: 'chicken_coop', x: 0.5, y: 0.5 },
+    ],
+    zones: [
+      { id: 'house', feature: 'house', zone: 0, points: [[0.1, 0.1], [0.3, 0.1], [0.2, 0.3]] },
+      { id: 'zone', zone: 1, points: [[0.2, 0.2], [0.4, 0.2], [0.3, 0.4]] },
+    ],
+    lines: [
+      { id: 'swale', kind: 'swale', points: [[0.1, 0.6], [0.8, 0.6]] },
+      { id: 'path', kind: 'path', points: [[0.1, 0.7], [0.8, 0.7]] },
+    ],
+    step: 'water',
+    updatedAt: '2026-08-17T00:00:00.000Z',
+  };
+
+  // A swale is visible in Water as hydrological context, but its geometry is owned by the
+  // Earthworks step. The layer shortcut must not turn that visible, locked context editable.
+  assert.deepEqual(selectableIdsForLayer(design, 'water'), ['tank']);
+  assert.deepEqual(selectableIdsForLayer(design, 'earthworks'), []);
+  assert.deepEqual(selectableIdsForLayer(design, 'structures'), []);
+  assert.deepEqual(selectableIdsForLayer(design, 'zones'), []);
+
+  const earthworksDesign: DesignCanvasState = { ...design, step: 'earthworks' };
+  assert.deepEqual(selectableIdsForLayer(earthworksDesign, 'earthworks'), ['swale']);
+});
+
+test('display-only layers never pretend their paint can be object-selected', () => {
+  const design: DesignCanvasState = {
+    siteId: 'display-layer-test',
+    frame: { centerLng: 31, centerLat: -28, zoom: 18, imgW: 960, imgH: 640, mPerPx: 0.2 },
+    items: [],
+    zones: [
+      { id: 'house', feature: 'house', zone: 0, points: [[0.1, 0.1], [0.3, 0.1], [0.2, 0.3]] },
+    ],
+    lines: [],
+    step: 'base',
+    updatedAt: '2026-08-17T00:00:00.000Z',
+  };
+
+  assert.deepEqual(selectableIdsForLayer(design, 'ground'), ['house']);
+  for (const layer of ['references', 'boundary', 'labels', 'symbols', 'contours', 'sector'] as const) {
+    assert.deepEqual(selectableIdsForLayer(design, layer), []);
+  }
 });

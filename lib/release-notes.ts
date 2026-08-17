@@ -35,6 +35,13 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '17 August',
+    sha: 'd416b12',
+    changes: [
+      'Layers now have clear map icons, visibility eyes and select-all ticks',
+    ],
+  },
+  {
+    when: '17 August',
     sha: 'da4ca5f',
     changes: [
       'Large saved-map galleries no longer crash phones before a sheet can render',
