@@ -35,6 +35,13 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '17 August',
+    sha: '01e05fb',
+    changes: [
+      'Preview & Export now opens your latest saved map for the selected sheet',
+    ],
+  },
+  {
+    when: '17 August',
     sha: 'fcdae3d',
     changes: [
       'Studio panels now switch layouts and resize from three element cards down to one',
