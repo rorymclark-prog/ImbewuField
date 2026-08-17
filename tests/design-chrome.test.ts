@@ -18,8 +18,12 @@ import {
   persistableChrome,
 } from '../lib/design-chrome';
 import {
+  DEFAULT_DESIGN_WORKSPACE_MODE,
   DEFAULT_DESKTOP_PANEL_LAYOUT,
   clampDesktopPanelWidth,
+  elementPanelColumns,
+  reservedDesktopPanelSpace,
+  restoreDesignWorkspaceMode,
   restoreDesktopPanelLayout,
 } from '../lib/design-panel-layout';
 
@@ -158,10 +162,10 @@ test('Layers stays usable on both the fixed desktop dock and measured phone popo
 
   // Desktop now owns a full-height Layers dock (rather than a menu that can disappear), while
   // phone still measures the popover against the viewport before choosing a side.
-  assert.match(palette, /top: desktopAside && !isPhone \? \(layersFloating \? layersFloatPos\.y : 116\)/);
-  assert.match(palette, /bottom: desktopAside && !isPhone \? \(layersFloating \? undefined : 12\)/);
+  assert.match(palette, /top: desktopAside && !isPhone \? \(effectiveLayersFloating \? layersFloatPos\.y : 116\)/);
+  assert.match(palette, /bottom: desktopAside && !isPhone \? \(effectiveLayersFloating \? undefined : 12\)/);
   assert.match(palette, /layersAnchor\?\.openBelow \? layersAnchor\.bottom \+ 6 : undefined/);
-  assert.match(palette, /maxHeight: desktopAside && !isPhone \? \(layersFloating \? '60dvh' : undefined\) : layersAnchor\?\.maxHeight/);
+  assert.match(palette, /maxHeight: desktopAside && !isPhone \? \(effectiveLayersFloating \? '65dvh' : undefined\) : layersAnchor\?\.maxHeight/);
   assert.match(palette, /overflowY: 'auto'/);
 });
 
@@ -183,10 +187,26 @@ test('the nine-step rail fills and centres the available desktop width', () => {
 });
 
 test('desktop panel widths stay within map-safe bounds', () => {
-  assert.equal(clampDesktopPanelWidth('elements', 1), 240);
+  assert.equal(clampDesktopPanelWidth('elements', 1), 124);
   assert.equal(clampDesktopPanelWidth('elements', 999), 440);
   assert.equal(clampDesktopPanelWidth('layers', 1), 248);
   assert.equal(clampDesktopPanelWidth('layers', 999), 420);
+});
+
+test('the Elements dock naturally reflows from three cards to one as its handle narrows', () => {
+  assert.equal(elementPanelColumns(304), 3);
+  assert.equal(elementPanelColumns(240), 2);
+  assert.equal(elementPanelColumns(124), 1);
+});
+
+test('the balanced dock is the safe default and only docks reserve map gutters', () => {
+  assert.equal(restoreDesignWorkspaceMode(null), DEFAULT_DESIGN_WORKSPACE_MODE);
+  assert.equal(restoreDesignWorkspaceMode('floating'), 'floating');
+  assert.equal(restoreDesignWorkspaceMode('tray'), 'tray');
+  assert.equal(restoreDesignWorkspaceMode('unknown'), 'docked');
+  assert.equal(reservedDesktopPanelSpace('docked', 304), 328);
+  assert.equal(reservedDesktopPanelSpace('floating', 304), 0);
+  assert.equal(reservedDesktopPanelSpace('tray', 304), 0);
 });
 
 test('desktop panel layout restores only valid persisted widths', () => {

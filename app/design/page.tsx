@@ -126,9 +126,15 @@ import SpeakButton from '@/components/SpeakButton';
 import LessonLink from '@/components/design/LessonLink';
 import { usePhoneViewport } from '@/lib/use-phone-viewport';
 import {
+  DEFAULT_DESIGN_WORKSPACE_MODE,
   DEFAULT_DESKTOP_PANEL_LAYOUT,
   DESIGN_PANEL_LAYOUT_KEY,
+  DESIGN_WORKSPACE_MODE_KEY,
+  DESIGN_WORKSPACE_MODES,
+  reservedDesktopPanelSpace,
+  restoreDesignWorkspaceMode,
   restoreDesktopPanelLayout,
+  type DesignWorkspaceMode,
   type DesktopPanelLayout,
 } from '@/lib/design-panel-layout';
 
@@ -1037,9 +1043,12 @@ function DesignStudioInner() {
   // for this explicitly rules out.
   const isPhone = usePhoneViewport();
   const [desktopPanelLayout, setDesktopPanelLayout] = useState<DesktopPanelLayout>(DEFAULT_DESKTOP_PANEL_LAYOUT);
+  const [workspaceMode, setWorkspaceMode] = useState<DesignWorkspaceMode>(DEFAULT_DESIGN_WORKSPACE_MODE);
   useEffect(() => {
     try { setDesktopPanelLayout(restoreDesktopPanelLayout(window.localStorage.getItem(DESIGN_PANEL_LAYOUT_KEY))); }
     catch { /* default panel widths keep the canvas useful when storage is unavailable */ }
+    try { setWorkspaceMode(restoreDesignWorkspaceMode(window.localStorage.getItem(DESIGN_WORKSPACE_MODE_KEY))); }
+    catch { /* the balanced docked layout is always a safe fallback */ }
   }, []);
   const setDesktopPanelWidth = useCallback((panel: keyof DesktopPanelLayout, width: number) => {
     setDesktopPanelLayout((previous) => {
@@ -1047,6 +1056,10 @@ function DesignStudioInner() {
       try { window.localStorage.setItem(DESIGN_PANEL_LAYOUT_KEY, JSON.stringify(next)); } catch { /* view preference only */ }
       return next;
     });
+  }, []);
+  const changeWorkspaceMode = useCallback((next: DesignWorkspaceMode) => {
+    setWorkspaceMode(next);
+    try { window.localStorage.setItem(DESIGN_WORKSPACE_MODE_KEY, next); } catch { /* view preference only */ }
   }, []);
   const canvasWrapRef = useRef<HTMLDivElement | null>(null);
   useEffect(() => {
@@ -3223,10 +3236,40 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           flex: 1,
           position: 'relative',
           minHeight: canvasState?.step === 'glossy' ? 'calc(100dvh - 132px)' : '45dvh',
-          marginLeft: isPhone || canvasState?.step === 'glossy' ? 0 : desktopPanelLayout.elements + 24,
-          marginRight: isPhone || canvasState?.step === 'glossy' ? 0 : desktopPanelLayout.layers + 24,
+          marginLeft: isPhone || canvasState?.step === 'glossy' ? 0 : reservedDesktopPanelSpace(workspaceMode, desktopPanelLayout.elements),
+          marginRight: isPhone || canvasState?.step === 'glossy' ? 0 : reservedDesktopPanelSpace(workspaceMode, desktopPanelLayout.layers),
         }}
       >
+        {!isPhone && canvasState?.step !== 'glossy' && (
+          <div
+            role="group"
+            aria-label="Workspace layout"
+            style={{
+              position: 'absolute', top: 10, left: '50%', transform: 'translateX(-50%)', zIndex: 24,
+              display: 'inline-flex', alignItems: 'center', gap: 3, padding: 4, borderRadius: 12,
+              background: 'rgba(255,253,248,0.94)', border: '1px solid rgba(11,18,11,0.16)',
+              boxShadow: '0 5px 18px rgba(11,18,11,0.14)', backdropFilter: 'blur(8px)',
+            }}
+          >
+            {DESIGN_WORKSPACE_MODES.map((layout) => (
+              <button
+                key={layout}
+                type="button"
+                aria-pressed={workspaceMode === layout}
+                title={`${layout[0].toUpperCase()}${layout.slice(1)} workspace`}
+                onClick={() => changeWorkspaceMode(layout)}
+                style={{
+                  minWidth: 54, minHeight: 34, padding: '4px 9px', borderRadius: 8,
+                  border: 'none', background: workspaceMode === layout ? GREEN : 'transparent',
+                  color: workspaceMode === layout ? PAPER : GREEN, cursor: 'pointer',
+                  fontSize: 11, fontWeight: 800, textTransform: 'capitalize',
+                }}
+              >
+                {layout === 'docked' ? 'Dock' : layout === 'floating' ? 'Float' : 'Tray'}
+              </button>
+            ))}
+          </div>
+        )}
         {canvasState && frame && canvasState.step === 'glossy' && glossyAutoBlocked ? (
           // THE HOLD ITSELF (see glossyAutoBlocked above). Every legacy sheet's thumbnail gets
           // backfilled the moment DesignGlossy mounts — fine once, dangerous stacked on top of a
@@ -3714,8 +3757,8 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
       {bottomShow.stepBar && canvasState && canvasState.step !== 'glossy' && canvasState.step !== 'review' && (
         <div style={isPhone ? undefined : {
           position: 'fixed',
-          left: desktopPanelLayout.elements + 32,
-          right: desktopPanelLayout.layers + 32,
+          left: reservedDesktopPanelSpace(workspaceMode, desktopPanelLayout.elements) + 8,
+          right: reservedDesktopPanelSpace(workspaceMode, desktopPanelLayout.layers) + 8,
           bottom: 10,
           zIndex: 16,
           maxWidth: 560,
@@ -3929,6 +3972,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           desktopAside={!isPhone}
           desktopPanelLayout={desktopPanelLayout}
           onDesktopPanelWidthChange={setDesktopPanelWidth}
+          workspaceMode={workspaceMode}
           textScaleControl={{ value: mapTextScale, onChange: setMapTextScale }}
           selectedIdentity={selectedIdentity}
           areaFillControl={{ value: areaFill, onChange: changeAreaFill }}

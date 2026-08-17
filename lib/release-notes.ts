@@ -35,6 +35,13 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '17 August',
+    sha: 'fcdae3d',
+    changes: [
+      'Studio panels now switch layouts and resize from three element cards down to one',
+    ],
+  },
+  {
+    when: '17 August',
     sha: 'd416b12',
     changes: [
       'Layers now have clear map icons, visibility eyes and select-all ticks',
