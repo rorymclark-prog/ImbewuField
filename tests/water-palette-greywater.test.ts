@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 
 import { ELEMENT_CATALOG } from '../lib/design-elements.ts';
 import { WATER_ELEMENT_IDS, WATER_PALETTE_TABS, waterElementDefs } from '../lib/design-studio-shell.ts';
@@ -7,6 +8,15 @@ import { statedTankCapacityLitres } from '../lib/water-system.ts';
 import { sheetForElement } from '../lib/glossy-filters.ts';
 
 const BY_ID = new Map(ELEMENT_CATALOG.map((d) => [d.id, d]));
+const PALETTE_SOURCE = readFileSync(
+  new URL('../components/design/DesignPalette.tsx', import.meta.url),
+  'utf8',
+);
+const PAGE_SOURCE = readFileSync(new URL('../app/design/page.tsx', import.meta.url), 'utf8');
+const CANVAS_SOURCE = readFileSync(
+  new URL('../components/design/DesignCanvas.tsx', import.meta.url),
+  'utf8',
+);
 
 test('every greywater element a farmer can plan with is reachable from the Water palette', () => {
   // The chain a farmer actually builds: it leaves the house, it arrives, it soaks away. All four
@@ -69,4 +79,28 @@ test('no element carries a capacityNote that its name would also encode', () => 
       `${def.id} states a capacity in BOTH its name and capacityNote — the name wins and is counted`,
     );
   }
+});
+
+test('water infrastructure stays full-strength while polygon fills keep their opacity controls', () => {
+  const waterPanel = PALETTE_SOURCE.slice(
+    PALETTE_SOURCE.indexOf('{waterInfrastructure && ('),
+    PALETTE_SOURCE.indexOf('{/* Icon + label size.'),
+  );
+
+  assert.ok(waterPanel.length > 0, 'the Water infrastructure panel disappeared');
+  assert.doesNotMatch(waterPanel, /type="range"/);
+  assert.doesNotMatch(waterPanel, /onOpacityChange|waterInfrastructure\.opacity/);
+  assert.match(PALETTE_SOURCE, /areaFillControl\.value\.opacity/);
+  assert.doesNotMatch(PAGE_SOURCE, /waterInfrastructureOpacity|WaterInfrastructureOpacity/);
+  assert.match(CANVAS_SOURCE, /visible: waterInfrastructure\.visibility\[key\],[\s\S]*?opacity: 1,/);
+});
+
+test('the desktop Water controls use the panel width instead of adding five tall slider rows', () => {
+  const waterPanel = PALETTE_SOURCE.slice(
+    PALETTE_SOURCE.indexOf('{waterInfrastructure && ('),
+    PALETTE_SOURCE.indexOf('{/* Icon + label size.'),
+  );
+
+  assert.match(waterPanel, /repeat\(2, minmax\(0, 1fr\)\)/);
+  assert.match(PALETTE_SOURCE, /minHeight: compactDesktopLayerPanel \? 32 : 44/);
 });

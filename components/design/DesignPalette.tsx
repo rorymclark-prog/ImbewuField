@@ -103,7 +103,6 @@ type ActiveLayers = DesignLayerState;
 
 export type WaterInfrastructureLayer = 'storage' | 'tapPoints' | 'pipes' | 'drip' | 'swales';
 export type WaterInfrastructureVisibility = Record<WaterInfrastructureLayer, boolean>;
-export type WaterInfrastructureOpacity = Record<WaterInfrastructureLayer, number>;
 
 function waterInfrastructureForElement(defId: string | null): WaterInfrastructureLayer | null {
   if (!defId) return null;
@@ -158,9 +157,7 @@ export interface DesignPaletteProps {
    * geometry; the canvas decides which existing marks to paint. */
   waterInfrastructure?: {
     visibility: WaterInfrastructureVisibility;
-    opacity: WaterInfrastructureOpacity;
     onVisibilityChange: (next: WaterInfrastructureVisibility) => void;
-    onOpacityChange: (next: WaterInfrastructureOpacity) => void;
   } | null;
   /** Wide screens have a fixed right-side quick-actions pane. Phones retain the bottom sheet. */
   desktopAside?: boolean;
@@ -743,6 +740,7 @@ export default function DesignPalette({
   const isPhone = usePhoneViewport();
   const desktopElementsWidth = desktopPanelLayout?.elements ?? 304;
   const desktopLayersWidth = desktopPanelLayout?.layers ?? 304;
+  const compactDesktopLayerPanel = desktopAside && !isPhone;
   const desktopElementColumns = elementPanelColumns(desktopElementsWidth);
   const [desktopResize, setDesktopResize] = useState<{
     panel: keyof DesktopPanelLayout;
@@ -1544,7 +1542,10 @@ export default function DesignPalette({
                 <div
                   aria-hidden
                   style={{
-                    flexBasis: '100%', display: 'grid', gridTemplateColumns: '40px 40px 34px minmax(0,1fr)',
+                    flexBasis: '100%', display: 'grid',
+                    gridTemplateColumns: compactDesktopLayerPanel
+                      ? '32px 32px 28px minmax(0,1fr)'
+                      : '40px 40px 34px minmax(0,1fr)',
                     alignItems: 'center', gap: 3, minHeight: 18, padding: '0 5px', color: '#776F63',
                     fontSize: 8.5, fontWeight: 800, letterSpacing: 0.45, textTransform: 'uppercase',
                   }}
@@ -1571,10 +1572,14 @@ export default function DesignPalette({
                       key={lt.key}
                       data-layer-row={lt.key}
                       style={{
-                        flexBasis: '100%', minHeight: 44, padding: '2px 5px', borderRadius: 10,
+                        flexBasis: '100%', minHeight: compactDesktopLayerPanel ? 32 : 44,
+                        padding: compactDesktopLayerPanel ? '0 3px' : '2px 5px', borderRadius: 10,
                         border: someSelected || allSelected ? '1px solid rgba(31,77,43,0.18)' : '1px solid transparent',
                         background: someSelected || allSelected ? 'rgba(31,77,43,0.055)' : 'transparent',
-                        color: DARK, display: 'grid', gridTemplateColumns: '40px 40px 34px minmax(0,1fr) auto',
+                        color: DARK, display: 'grid',
+                        gridTemplateColumns: compactDesktopLayerPanel
+                          ? '32px 32px 28px minmax(0,1fr) auto'
+                          : '40px 40px 34px minmax(0,1fr) auto',
                         alignItems: 'center', gap: 3, opacity: on ? 1 : 0.52,
                       }}
                     >
@@ -1585,7 +1590,9 @@ export default function DesignPalette({
                         title={`${on ? 'Hide' : 'Show'} ${t(lt.labelKey)}`}
                         onClick={() => setActiveLayers({ ...activeLayers, [lt.key]: !on })}
                         style={{
-                          width: 40, height: 40, padding: 0, border: 'none', borderRadius: 9,
+                          width: compactDesktopLayerPanel ? 32 : 40,
+                          height: compactDesktopLayerPanel ? 32 : 40,
+                          padding: 0, border: 'none', borderRadius: 9,
                           display: 'grid', placeItems: 'center', background: on ? 'rgba(31,77,43,0.10)' : 'transparent',
                           color: on ? GREEN : '#877D6E', cursor: 'pointer',
                         }}
@@ -1600,7 +1607,9 @@ export default function DesignPalette({
                         disabled={selection.total === 0}
                         onClick={() => layerSelection.onToggle(lt.key)}
                         style={{
-                          width: 40, height: 40, padding: 0, border: 'none', borderRadius: 9,
+                          width: compactDesktopLayerPanel ? 32 : 40,
+                          height: compactDesktopLayerPanel ? 32 : 40,
+                          padding: 0, border: 'none', borderRadius: 9,
                           display: 'grid', placeItems: 'center', background: selection.selected > 0 ? 'rgba(247,201,126,0.26)' : 'transparent',
                           color: selection.total === 0 ? '#C9C1B4' : selection.selected > 0 ? GREEN : '#776F63',
                           cursor: selection.total === 0 ? 'not-allowed' : 'pointer',
@@ -1611,7 +1620,9 @@ export default function DesignPalette({
                       <span
                         aria-hidden
                         style={{
-                          width: 30, height: 30, borderRadius: 8, display: 'grid', placeItems: 'center',
+                          width: compactDesktopLayerPanel ? 26 : 30,
+                          height: compactDesktopLayerPanel ? 26 : 30,
+                          borderRadius: 8, display: 'grid', placeItems: 'center',
                           color: lt.accent, background: `${lt.accent}18`, border: `1px solid ${lt.accent}2F`,
                         }}
                       >
@@ -1639,17 +1650,27 @@ export default function DesignPalette({
                     <span style={{ fontSize: 10, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.5, opacity: 0.6 }}>
                       Water infrastructure
                     </span>
-                    {([
-                      ['storage', 'JoJo tanks & rain barrels'],
-                      ['tapPoints', 'Tap points'],
-                      ['pipes', 'Pipes & lines'],
-                      ['drip', 'Drip irrigation'],
-                      ['swales', 'Swales'],
-                    ] as const).map(([key, label]) => {
-                      const on = waterInfrastructure.visibility[key];
-                      const opacity = waterInfrastructure.opacity[key];
-                      return (
-                        <div key={key} style={{ display: 'grid', gridTemplateColumns: '32px minmax(0, 1fr) 68px 34px', alignItems: 'center', gap: 5 }}>
+                    {/* Tanks, taps and routes are discrete marks, not filled land. Fading them
+                        makes quantities and connections harder to read without answering a real
+                        design question. Opacity stays with the polygon fill controls below;
+                        these rows only answer whether each infrastructure group is shown. */}
+                    <div
+                      style={{
+                        display: 'grid',
+                        gridTemplateColumns: compactDesktopLayerPanel ? 'repeat(2, minmax(0, 1fr))' : '1fr',
+                        gap: 5,
+                      }}
+                    >
+                      {([
+                        ['storage', 'JoJo tanks & rain barrels'],
+                        ['tapPoints', 'Tap points'],
+                        ['pipes', 'Pipes & lines'],
+                        ['drip', 'Drip irrigation'],
+                        ['swales', 'Swales'],
+                      ] as const).map(([key, label]) => {
+                        const on = waterInfrastructure.visibility[key];
+                        return (
+                          <div key={key} style={{ display: 'grid', gridTemplateColumns: '30px minmax(0, 1fr)', alignItems: 'center', gap: 5, minHeight: 30 }}>
                           <button
                             type="button"
                             aria-label={`${on ? 'Hide' : 'Show'} ${label}`}
@@ -1664,26 +1685,15 @@ export default function DesignPalette({
                               )) setTool('select');
                               waterInfrastructure.onVisibilityChange({ ...waterInfrastructure.visibility, [key]: !on });
                             }}
-                            style={{ minWidth: 32, minHeight: 32, padding: 0, borderRadius: 8, border: '1px solid rgba(11,18,11,0.16)', background: on ? 'rgba(31,77,43,0.12)' : 'transparent', color: DARK, cursor: 'pointer', fontSize: 14 }}
+                            style={{ minWidth: 30, minHeight: 30, padding: 0, borderRadius: 8, border: '1px solid rgba(11,18,11,0.16)', background: on ? 'rgba(31,77,43,0.12)' : 'transparent', color: DARK, cursor: 'pointer', fontSize: 14 }}
                           >
                             {on ? '◉' : '○'}
                           </button>
                           <span style={{ minWidth: 0, fontSize: 11.5, opacity: on ? 1 : 0.5 }}>{label}</span>
-                          <input
-                            type="range"
-                            min={0.2}
-                            max={1}
-                            step={0.1}
-                            value={opacity}
-                            disabled={!on}
-                            aria-label={`${label} opacity`}
-                            onChange={(e) => waterInfrastructure.onOpacityChange({ ...waterInfrastructure.opacity, [key]: Number(e.target.value) })}
-                            style={{ width: '100%', accentColor: GREEN, cursor: on ? 'pointer' : 'default' }}
-                          />
-                          <span style={{ fontSize: 10.5, fontWeight: 700, textAlign: 'right', fontVariantNumeric: 'tabular-nums', opacity: on ? 1 : 0.5 }}>{Math.round(opacity * 100)}%</span>
-                        </div>
-                      );
-                    })}
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
                 )}
                 {/* Icon + label size. Lives with Labels and Icons because it is the same
