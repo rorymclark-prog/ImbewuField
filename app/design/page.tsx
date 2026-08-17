@@ -96,7 +96,8 @@ import {
   type AlignInputItem,
   type AlignItemsResult,
 } from '@/lib/align-items';
-import { ELEMENT_CATALOG, ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_DEFS, type DesignLayerState, type ElementCategory } from '@/lib/design-elements';
+import { DESIGN_LAYER_KEYS, ELEMENT_CATALOG, ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_DEFS, type DesignLayerKey, type DesignLayerState, type ElementCategory } from '@/lib/design-elements';
+import { selectableIdsForLayer } from '@/lib/design-layer-membership';
 import { biomeKeyForName } from '@/lib/biome';
 import { loadSiteElements, type SiteElementType } from '@/lib/site-elements';
 import type { LineShape } from '@/lib/design-canvas';
@@ -843,6 +844,31 @@ function DesignStudioInner() {
     contours: false, // opt-in overlay (approximate, from slope + aspect)
     sector: false, // opt-in overlay (deterministic sun/wind/fire/water/frost energies, from lib/sector)
   });
+  // CAD/GIS convention: visibility and object selection are independent columns. The helper uses
+  // the SAME membership authority as the canvas, and only returns shapes editable on this wizard
+  // step, so this batch shortcut can never bypass the foreign-step geometry lock.
+  const layerSelectionCounts = useMemo<Record<DesignLayerKey, { selected: number; total: number }>>(() => {
+    const selected = new Set(selectedIds);
+    return Object.fromEntries(DESIGN_LAYER_KEYS.map((layer) => {
+      const ids = canvasState ? selectableIdsForLayer(canvasState, layer) : [];
+      return [layer, { selected: ids.filter((id) => selected.has(id)).length, total: ids.length }];
+    })) as Record<DesignLayerKey, { selected: number; total: number }>;
+  }, [canvasState, selectedIds]);
+  const toggleLayerSelection = useCallback((layer: DesignLayerKey) => {
+    if (!canvasState) return;
+    const ids = selectableIdsForLayer(canvasState, layer);
+    if (ids.length === 0) return;
+    handleSetTool('select');
+    setSelectedIds((previous) => {
+      const next = new Set(previous);
+      const allSelected = ids.every((id) => next.has(id));
+      for (const id of ids) {
+        if (allSelected) next.delete(id);
+        else next.add(id);
+      }
+      return [...next];
+    });
+  }, [canvasState, handleSetTool]);
   const [waterInfrastructureVisibility, setWaterInfrastructureVisibility] = useState<WaterInfrastructureVisibility>(
     DEFAULT_WATER_INFRASTRUCTURE_VISIBILITY,
   );
@@ -3893,6 +3919,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           lineKind={lineKind}
           setLineKind={setLineKind}
           activeLayers={activeLayers}
+          layerSelection={{ counts: layerSelectionCounts, onToggle: toggleLayerSelection }}
           waterInfrastructure={{
             visibility: waterInfrastructureVisibility,
             opacity: waterInfrastructureOpacity,

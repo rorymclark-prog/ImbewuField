@@ -37,6 +37,29 @@
 import { Fragment, useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import dynamic from 'next/dynamic';
+import {
+  Bird,
+  Droplets,
+  Eye,
+  EyeOff,
+  Fence,
+  House,
+  Layers3,
+  Map,
+  Mountain,
+  Pickaxe,
+  Route,
+  Satellite,
+  Shapes,
+  Sprout,
+  Square,
+  SquareCheckBig,
+  SquareMinus,
+  Sun,
+  Tag,
+  Warehouse,
+  type LucideIcon,
+} from 'lucide-react';
 
 // How long a tip stays before closing itself. See the state that drives it for why this is not
 // the four seconds first suggested: four is under the reading time of the tips themselves.
@@ -47,7 +70,7 @@ import {
   MIN_AREA_FILL_OPACITY, MAX_AREA_FILL_OPACITY, type AreaFillStyle,
 } from '@/lib/design-canvas';
 import { MIN_BED_COUNT, MAX_BED_COUNT } from '@/lib/bed-block';
-import { CATEGORY_META, CATEGORY_STEP, ELEMENT_CATALOG, ELEMENTS_BY_ID, GROUND_FEATURES, PLANTING_GROUP_LABEL, PLANTING_GROUP_ORDER, ZONE_DEFS, biomeClimates, elementSuitsClimate, elementVisibleInPalette, plantingGroupFor, type DesignElementDef, type DesignLayerState } from '@/lib/design-elements';
+import { CATEGORY_META, CATEGORY_STEP, ELEMENT_CATALOG, ELEMENTS_BY_ID, GROUND_FEATURES, PLANTING_GROUP_LABEL, PLANTING_GROUP_ORDER, ZONE_DEFS, biomeClimates, elementSuitsClimate, elementVisibleInPalette, plantingGroupFor, type DesignElementDef, type DesignLayerKey, type DesignLayerState } from '@/lib/design-elements';
 // SPECIES is NOT imported at module scope — lib/species-catalog.ts is 197 species / ~224KB, and
 // every farmer who opens /design paid for it whether or not they ever opened the species picker.
 // The one read below (in the picker's onSelect, already only running on a tap) loads it via a
@@ -122,6 +145,13 @@ export interface DesignPaletteProps {
   setLineKind: (k: LineShape['kind']) => void;
   activeLayers: ActiveLayers;
   setActiveLayers: (layers: ActiveLayers) => void;
+  /** CAD/GIS-style object selection, deliberately separate from visibility. Counts include only
+   * objects editable on the current wizard step; display-only layers report zero and show no fake
+   * selection affordance. */
+  layerSelection: {
+    counts: Record<DesignLayerKey, { selected: number; total: number }>;
+    onToggle: (layer: DesignLayerKey) => void;
+  };
   /** Water's working sublayers are presentation controls only. They never alter the saved
    * geometry; the canvas decides which existing marks to paint. */
   waterInfrastructure?: {
@@ -260,27 +290,27 @@ const GROUND_FEATURE_KINDS: GroundFeatureKind[] = ['boundary', 'house', 'patio',
 
 // Ordered by the Scale of Permanence (water → earthworks → access → structures → planting),
 // with the reference/overlay layers bracketing it.
-const LAYER_TOGGLES: Array<{ key: keyof ActiveLayers; labelKey: string; icon: string }> = [
-  { key: 'references', labelKey: 'designPaletteLayerBase', icon: '🛰️' },
+const LAYER_TOGGLES: Array<{ key: DesignLayerKey; labelKey: string; Icon: LucideIcon; accent: string }> = [
+  { key: 'references', labelKey: 'designPaletteLayerBase', Icon: Satellite, accent: '#466985' },
   // The property fence, sitting next to Site references because it is the other reference layer the
   // farmer did not draw in the Studio. Before this it had no switch of its own: a boundary
   // inherited from a ring traced on the main map could only be removed by hiding all site context.
-  { key: 'boundary', labelKey: 'designPaletteLayerBoundary', icon: '🚧' },
+  { key: 'boundary', labelKey: 'designPaletteLayerBoundary', Icon: Fence, accent: '#85683C' },
   // "Existing", not "Ground": this layer is the farmer's EXISTING site reality (house/patio/lawn/
   // veg garden the app draws), i.e. the "Draw what's already here" chips — distinct from the
   // proposed Structures layer and from site-reference context. (Fable Q1; internal key stays.)
-  { key: 'ground', labelKey: 'designPaletteLayerExisting', icon: '🏠' },
-  { key: 'water', labelKey: 'designPaletteLayerWater', icon: '💧' },
-  { key: 'earthworks', labelKey: 'designPaletteLayerEarthworks', icon: '⛏️' },
-  { key: 'zones', labelKey: 'designPaletteLayerZones', icon: '🗺️' },
-  { key: 'planting', labelKey: 'designPaletteLayerPlanting', icon: '🌱' },
-  { key: 'structures', labelKey: 'designPaletteLayerStructures', icon: '🏚️' },
-  { key: 'access', labelKey: 'designPaletteLayerAccess', icon: '🚪' },
-  { key: 'animals', labelKey: 'designPaletteLayerAnimals', icon: '🐔' },
-  { key: 'labels', labelKey: 'designPaletteLayerLabels', icon: '🏷️' },
-  { key: 'symbols', labelKey: 'designPaletteLayerIcons', icon: '🔘' },
-  { key: 'contours', labelKey: 'designPaletteLayerContours', icon: '⛰️' },
-  { key: 'sector', labelKey: 'designPaletteLayerSector', icon: '☀️' },
+  { key: 'ground', labelKey: 'designPaletteLayerExisting', Icon: House, accent: '#6F665B' },
+  { key: 'water', labelKey: 'designPaletteLayerWater', Icon: Droplets, accent: '#2676A5' },
+  { key: 'earthworks', labelKey: 'designPaletteLayerEarthworks', Icon: Pickaxe, accent: '#98633D' },
+  { key: 'zones', labelKey: 'designPaletteLayerZones', Icon: Map, accent: '#B77B2D' },
+  { key: 'planting', labelKey: 'designPaletteLayerPlanting', Icon: Sprout, accent: '#4D7D42' },
+  { key: 'structures', labelKey: 'designPaletteLayerStructures', Icon: Warehouse, accent: '#76564A' },
+  { key: 'access', labelKey: 'designPaletteLayerAccess', Icon: Route, accent: '#9B7332' },
+  { key: 'animals', labelKey: 'designPaletteLayerAnimals', Icon: Bird, accent: '#A05B39' },
+  { key: 'labels', labelKey: 'designPaletteLayerLabels', Icon: Tag, accent: '#755A85' },
+  { key: 'symbols', labelKey: 'designPaletteLayerIcons', Icon: Shapes, accent: '#506A78' },
+  { key: 'contours', labelKey: 'designPaletteLayerContours', Icon: Mountain, accent: '#697C52' },
+  { key: 'sector', labelKey: 'designPaletteLayerSector', Icon: Sun, accent: '#C38B22' },
 ];
 
 // Element category → the layer toggle that shows/hides it. A Record (not a ternary chain) so
@@ -431,6 +461,7 @@ export default function DesignPalette({
   setLineKind,
   activeLayers,
   setActiveLayers,
+  layerSelection,
   waterInfrastructure = null,
   desktopAside = false,
   desktopPanelLayout,
@@ -1414,7 +1445,7 @@ export default function DesignPalette({
                 whiteSpace: 'nowrap',
               }}
             >
-              <span aria-hidden>🛰️</span>
+              <Layers3 size={15} aria-hidden />
               <span>{t('designPaletteLayers')}</span>
               {hiddenLayerCount > 0 && (
                 <span style={{ fontSize: 10, fontWeight: 800, color: layersOpen ? GOLD : GREEN }}>{hiddenLayerCount} {t('designPaletteOff')}</span>
@@ -1480,60 +1511,97 @@ export default function DesignPalette({
                     </button>
                   ))}
                 </div>
+                <div
+                  aria-hidden
+                  style={{
+                    flexBasis: '100%', display: 'grid', gridTemplateColumns: '40px 40px 34px minmax(0,1fr)',
+                    alignItems: 'center', gap: 3, minHeight: 18, padding: '0 5px', color: '#776F63',
+                    fontSize: 8.5, fontWeight: 800, letterSpacing: 0.45, textTransform: 'uppercase',
+                  }}
+                >
+                  <span style={{ textAlign: 'center' }}>Show</span>
+                  <span style={{ textAlign: 'center' }}>Select</span>
+                  <span />
+                  <span>Layer</span>
+                </div>
                 {LAYER_TOGGLES.map((lt) => {
                   const on = activeLayers[lt.key];
-                  // CHROME SWAP 3 (cards): the pill-cloud becomes the 2.0 LAYER TREE — one full-
-                  // width row per layer, an eye toggle at a fixed column, the label beside it.
-                  // A wrapping cloud of pills makes a farmer SEARCH for a layer; rows in a fixed
-                  // order let the finger learn where each one lives. Same activeLayers state,
-                  // same handler, and the same ◉/○ glyphs the water sub-rows below already use,
-                  // so the tree and its children read as one control. Presentation only, per
-                  // lib/ui-version.ts's boundary.
-                  if (cardsUi) {
-                    return (
-                      <button
-                        key={lt.key}
-                        type="button"
-                        aria-pressed={on}
-                        onClick={() => setActiveLayers({ ...activeLayers, [lt.key]: !on })}
-                        style={{
-                          flexBasis: '100%', minHeight: 30, padding: '2px 6px', borderRadius: 9,
-                          border: 'none', background: 'transparent', color: DARK,
-                          display: 'grid', gridTemplateColumns: '30px 24px minmax(0,1fr)',
-                          alignItems: 'center', gap: 4, cursor: 'pointer', textAlign: 'left',
-                          fontSize: 13.5, fontWeight: 600, opacity: on ? 1 : 0.45,
-                        }}
-                      >
-                        <span aria-hidden style={{ fontSize: 15, textAlign: 'center', color: on ? GREEN : '#9A8268' }}>{on ? '◉' : '○'}</span>
-                        <span aria-hidden style={{ fontSize: 19, textAlign: 'center', lineHeight: 1 }}>{lt.icon}</span>
-                        <span style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{t(lt.labelKey)}</span>
-                      </button>
-                    );
-                  }
+                  const selection = layerSelection.counts[lt.key];
+                  const allSelected = selection.total > 0 && selection.selected === selection.total;
+                  const someSelected = selection.selected > 0 && !allSelected;
+                  const selectionLabel = selection.total === 0
+                    ? `${t(lt.labelKey)} has no editable objects on this step`
+                    : allSelected
+                      ? `Deselect all ${selection.total} objects on ${t(lt.labelKey)}`
+                      : `Select all ${selection.total} objects on ${t(lt.labelKey)}`;
+                  const LayerIcon = lt.Icon;
+                  const SelectionIcon = allSelected ? SquareCheckBig : someSelected ? SquareMinus : Square;
                   return (
-                    <button
+                    <div
                       key={lt.key}
-                      type="button"
-                      aria-pressed={on}
-                      onClick={() => setActiveLayers({ ...activeLayers, [lt.key]: !on })}
+                      data-layer-row={lt.key}
                       style={{
-                        minHeight: 36,
-                        padding: '5px 11px',
-                        borderRadius: 16,
-                        border: on ? `1.5px solid ${GREEN}` : '1px solid rgba(0,0,0,0.15)',
-                        background: on ? 'rgba(31,77,43,0.12)' : 'transparent',
-                        color: DARK,
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: 4,
-                        cursor: 'pointer',
-                        fontSize: 11.5,
-                        opacity: on ? 1 : 0.5,
+                        flexBasis: '100%', minHeight: 44, padding: '2px 5px', borderRadius: 10,
+                        border: someSelected || allSelected ? '1px solid rgba(31,77,43,0.18)' : '1px solid transparent',
+                        background: someSelected || allSelected ? 'rgba(31,77,43,0.055)' : 'transparent',
+                        color: DARK, display: 'grid', gridTemplateColumns: '40px 40px 34px minmax(0,1fr) auto',
+                        alignItems: 'center', gap: 3, opacity: on ? 1 : 0.52,
                       }}
                     >
-                      <span>{lt.icon}</span>
-                      <span>{t(lt.labelKey)}</span>
-                    </button>
+                      <button
+                        type="button"
+                        aria-label={`${on ? 'Hide' : 'Show'} ${t(lt.labelKey)}`}
+                        aria-pressed={on}
+                        title={`${on ? 'Hide' : 'Show'} ${t(lt.labelKey)}`}
+                        onClick={() => setActiveLayers({ ...activeLayers, [lt.key]: !on })}
+                        style={{
+                          width: 40, height: 40, padding: 0, border: 'none', borderRadius: 9,
+                          display: 'grid', placeItems: 'center', background: on ? 'rgba(31,77,43,0.10)' : 'transparent',
+                          color: on ? GREEN : '#877D6E', cursor: 'pointer',
+                        }}
+                      >
+                        {on ? <Eye size={20} strokeWidth={2.1} aria-hidden /> : <EyeOff size={20} strokeWidth={1.9} aria-hidden />}
+                      </button>
+                      <button
+                        type="button"
+                        aria-label={selectionLabel}
+                        aria-pressed={allSelected}
+                        title={selectionLabel}
+                        disabled={selection.total === 0}
+                        onClick={() => layerSelection.onToggle(lt.key)}
+                        style={{
+                          width: 40, height: 40, padding: 0, border: 'none', borderRadius: 9,
+                          display: 'grid', placeItems: 'center', background: selection.selected > 0 ? 'rgba(247,201,126,0.26)' : 'transparent',
+                          color: selection.total === 0 ? '#C9C1B4' : selection.selected > 0 ? GREEN : '#776F63',
+                          cursor: selection.total === 0 ? 'not-allowed' : 'pointer',
+                        }}
+                      >
+                        <SelectionIcon size={20} strokeWidth={selection.selected > 0 ? 2.35 : 1.8} aria-hidden />
+                      </button>
+                      <span
+                        aria-hidden
+                        style={{
+                          width: 30, height: 30, borderRadius: 8, display: 'grid', placeItems: 'center',
+                          color: lt.accent, background: `${lt.accent}18`, border: `1px solid ${lt.accent}2F`,
+                        }}
+                      >
+                        <LayerIcon size={18} strokeWidth={2} />
+                      </span>
+                      <span style={{ minWidth: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontSize: cardsUi ? 13.5 : 12, fontWeight: 650 }}>
+                        {t(lt.labelKey)}
+                      </span>
+                      {selection.selected > 0 && (
+                        <span
+                          aria-label={`${selection.selected} of ${selection.total} selected`}
+                          style={{
+                            minWidth: 28, padding: '2px 6px', borderRadius: 999, background: GREEN,
+                            color: PAPER, fontSize: 9.5, fontWeight: 800, textAlign: 'center', fontVariantNumeric: 'tabular-nums',
+                          }}
+                        >
+                          {selection.selected}/{selection.total}
+                        </span>
+                      )}
+                    </div>
                   );
                 })}
                 {waterInfrastructure && (

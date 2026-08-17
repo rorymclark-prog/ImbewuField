@@ -17,7 +17,8 @@ import { layoutBedBlock, bedBlockPaths, bedBlockFootprintM, type BedBlockPlaceme
 import { layoutCanvasLabels, estimatePillWidth, groupSameLabelPills, isUsableCanvasLabelInput } from '@/lib/canvas-labels';
 import { ownedByCurrentStep } from '@/lib/glossy-filters';
 import { rectFromCorners, anyVertexInRect, itemCenterInRect, clampGroupDelta, type Rect } from '@/lib/marquee';
-import { ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_DEFS, type DesignLayerState, type ElementCategory } from '@/lib/design-elements';
+import { ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_DEFS, type DesignLayerState } from '@/lib/design-elements';
+import { itemLayerKeys, lineLayerKeys } from '@/lib/design-layer-membership';
 // SPECIES is NOT imported at module scope — lib/species-catalog.ts is 197 species / ~224KB, and
 // every farmer who opens /design paid for it whether or not they ever placed a species-specific
 // planting. The one place that reads it (below, inside runTapAction) already only runs on the tap
@@ -270,55 +271,10 @@ function clamp01(v: number): number {
 // default case on purpose: a new category must be a compile error here. The old `string` +
 // `default: return null` form meant an unmapped category silently returned null, and a null key
 // skips the gate at the call site — the element would render even with its layer switched off.
-/**
- * EXTRA LAYERS a LINE KIND belongs to, beyond LINE_LAYER's primary.
- *
- * A swale is a water feature and a cut-and-fill earthwork at the same time; so is a berm. The
- * Earthworks view showed an empty farm on a site full of them, because a line could only ever be
- * on one layer. See DesignElementDef.alsoLayers in lib/design-elements.ts for the same idea on
- * placed items and for why this is membership only — what Earthworks DRAWS is cartography.
- */
-const LINE_ALSO_LAYERS: Partial<Record<LineShape['kind'], Array<keyof ActiveLayers>>> = {
-  swale: ['earthworks'],
-};
-
 /** Shown when ANY layer it belongs to is on — never only its primary. */
 function anyLayerOn(active: ActiveLayers, keys: Array<keyof ActiveLayers>): boolean {
   return keys.some((k) => !!active[k]);
 }
-
-function categoryLayerKey(category: ElementCategory): keyof ActiveLayers {
-  switch (category) {
-    case 'water':
-      return 'water';
-    case 'earthworks':
-      return 'earthworks';
-    case 'growing':
-      return 'planting';
-    case 'structure':
-      return 'structures';
-    case 'animal':
-      return 'animals';
-    case 'access':
-      return 'access';
-  }
-}
-
-// Each line kind shows/hides with its FUNCTIONAL layer — so a drip line drawn on the Water step is
-// visible when Water is on, instead of vanishing behind a separate generic "Lines" toggle (Rory:
-// "I added drip lines but Lines is a separate layer, not connected to Water"). A Record so adding
-// a line kind is a compile error here, not a silent fall-through.
-const LINE_LAYER: Record<LineShape['kind'], keyof ActiveLayers> = {
-  swale: 'water',
-  pipe: 'water',
-  drip: 'water',
-  greywater: 'water',
-  fence: 'structures',
-  path: 'access',
-  // Follows the BEDS, not the driveway — see LineShape.kind in lib/design-canvas.ts.
-  bedpath: 'planting',
-  windbreak: 'planting',
-};
 
 // Default on-canvas label per line kind (LineShape.name overrides). No LineShape kind had ANY
 // on-canvas name label before — ground-feature rings got a draggable pill (see the zones render
@@ -2051,7 +2007,7 @@ export default function DesignCanvas({
     type Cand = { id: string; ax: number; ay: number; moved: boolean };
     const groups = new Map<string, Cand[]>();
     for (const l of state.lines) {
-      if (!anyLayerOn(activeLayers, [LINE_LAYER[l.kind], ...(LINE_ALSO_LAYERS[l.kind] ?? [])])) continue;
+      if (!anyLayerOn(activeLayers, lineLayerKeys(l.kind))) continue;
       if (selectedId === l.id || selectedIds.includes(l.id)) continue;
       if (editingLabelId === l.id && editingLabelKind === 'line') continue;
       const mid = l.points[Math.floor(l.points.length / 2)] ?? l.points[0];
@@ -2246,7 +2202,7 @@ export default function DesignCanvas({
     const l = state.lines.find((s2) => s2.id === id);
     if (l) {
       return waterPresentation(waterInfrastructureForLine(l.kind)).visible
-        && anyLayerOn(activeLayers, [LINE_LAYER[l.kind], ...(LINE_ALSO_LAYERS[l.kind] ?? [])])
+        && anyLayerOn(activeLayers, lineLayerKeys(l.kind))
         && ownedByCurrentStep(state.step, { kind: 'line', lineKind: l.kind }) ? id : null;
     }
     const it = state.items.find((s2) => s2.id === id);
@@ -2254,7 +2210,7 @@ export default function DesignCanvas({
       const def = ELEMENTS_BY_ID[it.defId];
       if (!def) return null;
       return waterPresentation(waterInfrastructureForElement(it.defId)).visible
-        && anyLayerOn(activeLayers, [categoryLayerKey(def.category), ...(def.alsoLayers ?? [])])
+        && anyLayerOn(activeLayers, itemLayerKeys(it.defId))
         && ownedByCurrentStep(state.step, { kind: 'item', category: def.category, defId: it.defId })
         ? id : null;
     }
@@ -3027,7 +2983,7 @@ export default function DesignCanvas({
             );
           })}
 
-        {/* Lines — each kind follows its functional layer (LINE_LAYER), not one generic toggle.
+        {/* Lines — each kind follows its functional layer membership, not one generic toggle.
             Selected renders last, as in the zones loop above. Lines are the worse case: they paint
             after EVERY zone unconditionally, so a fence or a path laid over a bed put its whole
             cased stroke on top of that bed's editing chrome. */}
@@ -3036,7 +2992,7 @@ export default function DesignCanvas({
           .map((line) => {
             const water = waterPresentation(waterInfrastructureForLine(line.kind));
             if (!water.visible) return null;
-            if (!anyLayerOn(activeLayers, [LINE_LAYER[line.kind], ...(LINE_ALSO_LAYERS[line.kind] ?? [])])) return null;
+            if (!anyLayerOn(activeLayers, lineLayerKeys(line.kind))) return null;
             const style = lineStroke(line.kind, earthworksOnly, line.widthM, mPerPx > 0 ? 1 / mPerPx : undefined);
             // See the zones loop above — same step-ownership lock (Rory's boundary-grab bug).
             const owned = ownedByCurrentStep(state.step, { kind: 'line', lineKind: line.kind });
@@ -3567,7 +3523,7 @@ export default function DesignCanvas({
           if (!def) return null;
           const water = waterPresentation(waterInfrastructureForElement(item.defId));
           if (!water.visible) return null;
-          if (!anyLayerOn(activeLayers, [categoryLayerKey(def.category), ...(def.alsoLayers ?? [])])) return null;
+          if (!anyLayerOn(activeLayers, itemLayerKeys(item.defId))) return null;
 
           const isResizingThis = item.id === dragResizeId.current && resizePreview;
           const wM = isResizingThis ? resizePreview!.wM : item.wM ?? def.wM;
@@ -3820,7 +3776,7 @@ export default function DesignCanvas({
               if (!def) return null;
               const water = waterPresentation(waterInfrastructureForElement(item.defId));
               if (!water.visible) return null;
-              if (!anyLayerOn(activeLayers, [categoryLayerKey(def.category), ...(def.alsoLayers ?? [])])) return null;
+              if (!anyLayerOn(activeLayers, itemLayerKeys(item.defId))) return null;
               const [nx, ny] = effectiveItemPos(item);
               const isResizingThis = item.id === dragResizeId.current && resizePreview;
               const wM = isResizingThis ? resizePreview!.wM : item.wM ?? def.wM;
