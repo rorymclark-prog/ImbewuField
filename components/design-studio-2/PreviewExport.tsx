@@ -31,14 +31,16 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
-  Check, Image as ImageIcon, Layers, Map as MapIcon, Maximize2, MoreVertical,
+  Check, Image as ImageIcon, Layers, LoaderCircle, Map as MapIcon, Maximize2,
   Move, Share2, Sparkles, Sun, Upload, Wind, ZoomIn, ZoomOut, RotateCcw, FileText,
-  LayoutGrid, Square,
+  LayoutGrid, Square, Trash2,
 } from 'lucide-react';
 import BackButton from '@/components/BackButton';
 import { getLastSite } from '@/lib/last-site';
 import { designSiteIdFromLocation } from '@/lib/design-studio';
-import { loadSheetMetas, loadSheetImage, dataUrlBytes, type StoredSheetMeta } from '@/lib/sheet-store';
+import {
+  loadSheetMetas, loadSheetImage, deleteSheet, dataUrlBytes, type StoredSheetMeta,
+} from '@/lib/sheet-store';
 import { plateSheetOrdinal } from '@/lib/report-plates';
 import { SHEET_META, SHEET_ORDER, type SheetId } from '@/lib/design-studio-shell';
 import {
@@ -133,6 +135,8 @@ export default function PreviewExport() {
   const [metas, setMetas] = useState<StoredSheetMeta[]>([]);
   const [preview, setPreview] = useState<{ id: string; image: string } | null>(null);
   const [previewBusy, setPreviewBusy] = useState(false);
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [deleteError, setDeleteError] = useState<string | null>(null);
   // THE HEADLINE ASK (PREVIEW-EXPORT-V2.md §2.1): the studio previews one sheet at a time, and
   // what Rory wants is the whole plan set at once. Single stays the default — it is the view that
   // can show a sheet at a size you can actually read.
@@ -159,6 +163,41 @@ export default function PreviewExport() {
     setPreview(image ? { id, image } : null);
     setPreviewBusy(false);
   }, []);
+
+  /** Delete ONE saved bitmap, never the design geometry that produced it. Each row owns its own
+   *  button so there is no ambiguity about which of several same-named older renders will go. */
+  const deleteSavedMap = useCallback(async (meta: StoredSheetMeta) => {
+    if (!window.confirm(`Delete this saved map?\n\n${meta.label}\n\nYour design will stay unchanged.`)) return;
+    setDeleteError(null);
+    setDeletingId(meta.id);
+    const removed = await deleteSheet(meta.id);
+    setDeletingId(null);
+    if (!removed) {
+      setDeleteError('This saved map could not be deleted. Please try again.');
+      return;
+    }
+
+    const remaining = savedMaps.filter((row) => row.id !== meta.id);
+    setMetas((rows) => rows.filter((row) => row.id !== meta.id));
+    if (preview?.id !== meta.id) return;
+
+    setPreview(null);
+    const deletedSheetNo = String(plateSheetOrdinal(meta.label)).padStart(2, '0');
+    const next = remaining.find(
+      (row) => String(plateSheetOrdinal(row.label)).padStart(2, '0') === deletedSheetNo,
+    ) ?? remaining[0] ?? null;
+    if (!next) {
+      firstForSheet.current = null;
+      return;
+    }
+
+    const nextSheet = SHEET_ORDER.find(
+      (id) => SHEET_META[id].no === String(plateSheetOrdinal(next.label)).padStart(2, '0'),
+    );
+    if (nextSheet) setSheet(nextSheet);
+    firstForSheet.current = next.id;
+    void openSheet(next.id);
+  }, [openSheet, preview?.id, savedMaps]);
 
   // Open the newest sheet for whichever plan sheet is selected, so choosing "06 — Planting" in
   // step 1 actually changes what is on the easel rather than only relabelling the header.
@@ -647,17 +686,28 @@ export default function PreviewExport() {
                 so you can come back to it without paying for the render again.
               </p>
             ) : (
-              <ul className="max-h-[46vh] overflow-y-auto lg:max-h-none">
-                {savedMaps.map((m) => {
-                  const badge = savedMapBadge(m);
-                  const on = preview?.id === m.id;
-                  return (
-                    <li key={m.id} className="border-b last:border-b-0" style={{ borderColor: 'var(--border)' }}>
+              <>
+                {deleteError && (
+                  <p
+                    role="alert"
+                    className="border-b px-4 py-2 text-[11.5px] font-semibold"
+                    style={{ borderColor: 'var(--border)', color: 'var(--danger, #9B2C2C)' }}
+                  >
+                    {deleteError}
+                  </p>
+                )}
+                <ul className="max-h-[46vh] overflow-y-auto lg:max-h-none">
+                  {savedMaps.map((m) => {
+                    const badge = savedMapBadge(m);
+                    const on = preview?.id === m.id;
+                    const deleting = deletingId === m.id;
+                    return (
+                      <li key={m.id} className="flex border-b last:border-b-0" style={{ borderColor: 'var(--border)' }}>
                       <button
                         type="button"
                         onClick={() => void openSheet(m.id)}
                         aria-pressed={on}
-                        className="flex w-full items-start gap-2.5 px-3 py-2.5 text-left transition-colors hover:bg-[var(--surface-2)]"
+                        className="flex min-w-0 flex-1 items-start gap-2.5 px-3 py-2.5 text-left transition-colors hover:bg-[var(--surface-2)]"
                         style={{ background: on ? 'var(--brand-soft)' : undefined }}
                       >
                         {/* THUMB ONLY. `thumb` is a small JPEG; the full sheet is 1–3 MB and is
@@ -692,12 +742,27 @@ export default function PreviewExport() {
                             {formatSavedAt(m.at)}
                           </span>
                         </span>
-                        <MoreVertical size={14} style={{ color: 'var(--text-3)', flexShrink: 0, marginTop: 2 }} aria-hidden />
                       </button>
-                    </li>
-                  );
-                })}
-              </ul>
+                      <button
+                        type="button"
+                        onClick={() => void deleteSavedMap(m)}
+                        disabled={deletingId !== null}
+                        aria-label={`Delete saved map: ${m.label}`}
+                        title="Delete this saved map"
+                        className="mr-2 mt-2 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg transition-colors hover:bg-red-50 disabled:opacity-40"
+                        style={{ color: 'var(--danger, #9B2C2C)' }}
+                      >
+                        {deleting ? (
+                          <LoaderCircle size={14} className="animate-spin" aria-hidden />
+                        ) : (
+                          <Trash2 size={14} aria-hidden />
+                        )}
+                      </button>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </>
             )}
           </div>
 

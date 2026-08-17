@@ -34,6 +34,15 @@ export interface ReleaseNote {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '18 August',
+    sha: '0269a15',
+    changes: [
+      'Water infrastructure stays clear: show or hide it without opacity sliders',
+      'The full Layers panel now fits on desktop without scrolling',
+      'Each saved map now has its own delete button',
+    ],
+  },
+  {
     when: '17 August',
     sha: '01e05fb',
     changes: [

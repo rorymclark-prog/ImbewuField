@@ -107,7 +107,6 @@ import { fetchBasemapForFrame } from '@/lib/basemap-imagery';
 import DesignCanvas, { type TracedLayer } from '@/components/design/DesignCanvas';
 import DesignPalette, {
   type DesignMode,
-  type WaterInfrastructureOpacity,
   type WaterInfrastructureVisibility,
 } from '@/components/design/DesignPalette';
 import DesignWizard, { STEP_ORDER, STEP_LABELS } from '@/components/design/DesignWizard';
@@ -152,8 +151,9 @@ const BASE_ROTATE_STEP = 0.5;
 // change whether the photo is currently large or small.
 const BASE_SCALE_STEP = 1.01;
 
-// These are view controls, not plan data. A facilitator can fade a busy water system while
-// explaining it without moving, changing, or hiding the farmer's saved geometry on return.
+// These are view controls, not plan data. They hide groups without moving or changing the
+// farmer's saved geometry. Water infrastructure stays full-strength: unlike filled polygons,
+// fading a tank, tap or route only makes a count or connection harder to read.
 const DEFAULT_WATER_INFRASTRUCTURE_VISIBILITY: WaterInfrastructureVisibility = {
   storage: true,
   tapPoints: true,
@@ -161,14 +161,6 @@ const DEFAULT_WATER_INFRASTRUCTURE_VISIBILITY: WaterInfrastructureVisibility = {
   drip: true,
   swales: true,
 };
-const DEFAULT_WATER_INFRASTRUCTURE_OPACITY: WaterInfrastructureOpacity = {
-  storage: 1,
-  tapPoints: 1,
-  pipes: 1,
-  drip: 1,
-  swales: 1,
-};
-
 function waterInfrastructureForElement(defId: string | null): keyof WaterInfrastructureVisibility | null {
   if (!defId) return null;
   if (defId === 'tap_point') return 'tapPoints';
@@ -877,9 +869,6 @@ function DesignStudioInner() {
   }, [canvasState, handleSetTool]);
   const [waterInfrastructureVisibility, setWaterInfrastructureVisibility] = useState<WaterInfrastructureVisibility>(
     DEFAULT_WATER_INFRASTRUCTURE_VISIBILITY,
-  );
-  const [waterInfrastructureOpacity, setWaterInfrastructureOpacity] = useState<WaterInfrastructureOpacity>(
-    DEFAULT_WATER_INFRASTRUCTURE_OPACITY,
   );
   useEffect(() => {
     const key = waterInfrastructureForElement(placeDefId);
@@ -3360,7 +3349,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               areaFeature={areaFeature}
               lineKind={lineKind}
               activeLayers={activeLayers}
-              waterInfrastructure={{ visibility: waterInfrastructureVisibility, opacity: waterInfrastructureOpacity }}
+              waterInfrastructure={{ visibility: waterInfrastructureVisibility }}
               mapTextScale={mapTextScale}
               areaFill={areaFill}
               baseAlign={designBaseMode(canvasState) === 'photo' ? (canvasState?.customBase ?? null) : null}
@@ -3965,9 +3954,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           layerSelection={{ counts: layerSelectionCounts, onToggle: toggleLayerSelection }}
           waterInfrastructure={{
             visibility: waterInfrastructureVisibility,
-            opacity: waterInfrastructureOpacity,
             onVisibilityChange: setWaterInfrastructureVisibility,
-            onOpacityChange: setWaterInfrastructureOpacity,
           }}
           desktopAside={!isPhone}
           desktopPanelLayout={desktopPanelLayout}

@@ -135,6 +135,19 @@ test('the saved-maps rail holds thumbnails, never a wall of full sheets', () => 
     'the previous full sheet must be released before the next is fetched');
 });
 
+test('each saved map can be deleted without touching the design', () => {
+  const page = source(PAGE);
+  assert.match(page, /deleteSheet\(meta\.id\)/, 'the row does not delete its stored sheet');
+  assert.match(page, /aria-label=\{`Delete saved map: \$\{m\.label\}`\}/,
+    'the delete target is not attached to a specific saved map');
+  assert.match(page, /window\.confirm\(`Delete this saved map\?[\s\S]*Your design will stay unchanged\.`\)/,
+    'a destructive tap must confirm both what goes and what stays');
+  assert.match(page, /setMetas\(\(rows\) => rows\.filter\(\(row\) => row\.id !== meta\.id\)\)/,
+    'the deleted row would remain visible until a reload');
+  assert.doesNotMatch(page, /clearSheets\(/,
+    'a per-row delete must never clear every saved map for the site');
+});
+
 test('the page is phone-first, with the mockup\'s columns arriving at lg', () => {
   // DESIGN.md §0: never reuse phone px on desktop, or a desktop layout on a phone. The mockup is
   // a tablet three-column; a farmer opens this on a handset.

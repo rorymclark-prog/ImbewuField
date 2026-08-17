@@ -99,7 +99,6 @@ type ActiveLayers = DesignLayerState;
 type WaterInfrastructureLayer = 'storage' | 'tapPoints' | 'pipes' | 'drip' | 'swales';
 type WaterInfrastructurePresentation = {
   visibility: Record<WaterInfrastructureLayer, boolean>;
-  opacity: Record<WaterInfrastructureLayer, number>;
 };
 
 function waterInfrastructureForElement(defId: string): WaterInfrastructureLayer | null {
@@ -617,7 +616,7 @@ export default function DesignCanvas({
     if (!key || !waterInfrastructure) return { visible: true, opacity: 1 };
     return {
       visible: waterInfrastructure.visibility[key],
-      opacity: waterInfrastructure.opacity[key],
+      opacity: 1,
     };
   };
 
