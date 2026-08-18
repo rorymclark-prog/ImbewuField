@@ -72,10 +72,16 @@ export function exactModelInputMarks(_filter: GlossyLayerFilter): ModelInputMark
   };
 }
 
-/** Paid Geometry-Lock polish shows the saved design context while keeping structure exact. */
+/**
+ * Paid Geometry-Lock polish shows only the saved placement context while keeping structure exact.
+ *
+ * Tool glyphs are editor furniture, not field evidence. Gemini copied their sticker-like visual
+ * language into otherwise coherent aerial plans; coloured footprints and the feature register are
+ * sufficient to preserve every saved position, count and footprint.
+ */
 export function polishModelInputMarks(_filter: GlossyLayerFilter): ModelInputMarks {
   return {
-    showToolGlyphs: true,
+    showToolGlyphs: false,
     showDrivewayEdge: false,
     showDesignLines: true,
     showDesignItems: true,

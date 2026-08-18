@@ -167,10 +167,12 @@ test('exact style inputs contain no editor glyphs or model-interpreted design ma
   }
 });
 
-test('paid Geometry-Lock polish inputs show saved design context without a driveway edge', () => {
+test('paid Geometry-Lock polish inputs show saved placement context without editor glyphs or a driveway edge', () => {
   for (const filter of ['all', 'zones', 'water', 'planting', 'structures'] as const) {
     assert.deepEqual(polishModelInputMarks(filter), {
-      showToolGlyphs: true,
+      // Editor emojis made Gemini imitate a collage of stickers. The coloured footprints and
+      // feature register retain the factual position, count and size without that visual baggage.
+      showToolGlyphs: false,
       showDrivewayEdge: false,
       showDesignLines: true,
       showDesignItems: true,
@@ -417,6 +419,8 @@ test('locked illustration prompt paints the whole sheet without inventing featur
   assert.match(p, /JoJo Tank 5000L ×2, Greywater line ×3/);
   assert.match(p, /WHOLE-SITE CONSISTENCY BRIEF: One fixed whole-site brief/);
   assert.match(p, /same centre, count, rotation and footprint/);
+  assert.match(p, /ONE COHERENT DRAWING/);
+  assert.match(p, /Do not use stickers, clip-art, cut-out collages, cartoon icons/);
   assert.match(p, /Keep buried water pipe blue, filtered-greywater routes purple/);
   assert.match(p, /app reinforces the measured routes, leaders, labels and legend afterwards/i);
   assert.match(p, /no bright border, kerb, raised edge, hatch, shadow or roof-like treatment/);
