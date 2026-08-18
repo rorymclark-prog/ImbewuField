@@ -6,6 +6,12 @@ import { ELEMENT_CATALOG } from '../lib/design-elements.ts';
 import { WATER_ELEMENT_IDS, WATER_PALETTE_TABS, waterElementDefs } from '../lib/design-studio-shell.ts';
 import { statedTankCapacityLitres } from '../lib/water-system.ts';
 import { sheetForElement } from '../lib/glossy-filters.ts';
+import {
+  PLANTING_SUBLAYER_ORDER,
+  plantingSublayerForElement,
+  plantingSublayerForLine,
+  plantingSublayerForZone,
+} from '../lib/design-layer-membership.ts';
 
 const BY_ID = new Map(ELEMENT_CATALOG.map((d) => [d.id, d]));
 const PALETTE_SOURCE = readFileSync(
@@ -102,7 +108,7 @@ test('Water owns an expandable child matrix instead of a separate panel below ev
 
   assert.ok(rowsStart >= 0 && children > rowsStart && children < rowsEnd,
     'Water controls are no longer nested inside the main layer rows');
-  assert.match(PALETTE_SOURCE, /const hasChildren = lt\.key === 'water' && !!waterInfrastructure/);
+  assert.match(PALETTE_SOURCE, /lt\.key === 'water' && !!waterInfrastructure/);
   assert.match(PALETTE_SOURCE, /aria-controls=\{`\$\{lt\.key\}-layer-children`\}/);
   assert.match(PALETTE_SOURCE, /expanded && waterInfrastructure/);
   assert.match(PALETTE_SOURCE.slice(children, rowsEnd), /repeat\(2, minmax\(0, 1fr\)\)/);
@@ -111,4 +117,28 @@ test('Water owns an expandable child matrix instead of a separate panel below ev
   assert.match(PALETTE_SOURCE, /if \(!childOn && !activeLayers\.water\)/,
     'turning on a Water child while its parent is off would appear to do nothing');
   assert.match(PALETTE_SOURCE, /minHeight: compactDesktopLayerPanel \? 32 : 44/);
+});
+
+test('Planting owns the same expandable child matrix, grouped by what a farmer needs to read', () => {
+  const rowsStart = PALETTE_SOURCE.indexOf('{LAYER_TOGGLES.map');
+  const children = PALETTE_SOURCE.indexOf('data-layer-children="planting"');
+  const rowsEnd = PALETTE_SOURCE.indexOf('{/* Icon + label size.');
+
+  assert.ok(rowsStart >= 0 && children > rowsStart && children < rowsEnd,
+    'Planting controls are no longer nested inside the main layer rows');
+  assert.match(PALETTE_SOURCE, /lt\.key === 'planting' && !!plantingSublayers/);
+  assert.match(PALETTE_SOURCE.slice(children, rowsEnd), /PLANTING_SUBLAYER_ORDER\.map/);
+  assert.match(PALETTE_SOURCE, /if \(!childOn && !activeLayers\.planting\)/,
+    'turning on a Planting child while its parent is off would appear to do nothing');
+  assert.match(CANVAS_SOURCE, /plantingSublayerForElement\(item\.defId\)/,
+    'Planting child toggles must gate the actual painted elements');
+
+  assert.deepEqual(PLANTING_SUBLAYER_ORDER, [
+    'beds', 'indigenous_fruit', 'fruit_nut', 'other_trees', 'windbreaks', 'staple_garden',
+  ]);
+  assert.equal(plantingSublayerForElement('veg_bed'), 'beds');
+  assert.equal(plantingSublayerForElement('tree_citrus'), 'fruit_nut');
+  assert.equal(plantingSublayerForElement('tree_marula'), 'indigenous_fruit');
+  assert.equal(plantingSublayerForLine('windbreak'), 'windbreaks');
+  assert.equal(plantingSublayerForZone({ feature: 'staple_garden' }), 'staple_garden');
 });

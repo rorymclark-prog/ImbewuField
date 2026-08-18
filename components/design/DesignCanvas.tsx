@@ -18,7 +18,14 @@ import { layoutCanvasLabels, estimatePillWidth, groupSameLabelPills, isUsableCan
 import { ownedByCurrentStep } from '@/lib/glossy-filters';
 import { rectFromCorners, anyVertexInRect, itemCenterInRect, clampGroupDelta, type Rect } from '@/lib/marquee';
 import { ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_DEFS, type DesignLayerState } from '@/lib/design-elements';
-import { itemLayerKeys, lineLayerKeys } from '@/lib/design-layer-membership';
+import {
+  itemLayerKeys,
+  lineLayerKeys,
+  plantingSublayerForElement,
+  plantingSublayerForLine,
+  plantingSublayerForZone,
+  type PlantingSublayer,
+} from '@/lib/design-layer-membership';
 // SPECIES is NOT imported at module scope — lib/species-catalog.ts is 197 species / ~224KB, and
 // every farmer who opens /design paid for it whether or not they ever placed a species-specific
 // planting. The one place that reads it (below, inside runTapAction) already only runs on the tap
@@ -100,6 +107,9 @@ type WaterInfrastructureLayer = 'storage' | 'tapPoints' | 'pipes' | 'drip' | 'sw
 type WaterInfrastructurePresentation = {
   visibility: Record<WaterInfrastructureLayer, boolean>;
 };
+type PlantingSublayerPresentation = {
+  visibility: Record<PlantingSublayer, boolean>;
+};
 
 function waterInfrastructureForElement(defId: string): WaterInfrastructureLayer | null {
   if (defId === 'tap_point') return 'tapPoints';
@@ -136,6 +146,8 @@ export interface DesignCanvasProps {
   /** Visibility and opacity for Water's named sublayers. Paint-time only: no saved geometry
    * or plan state is altered by a facilitator fading a route to explain it. */
   waterInfrastructure?: WaterInfrastructurePresentation;
+  /** Planting's named sublayers use the same paint-only contract as Water's child matrix. */
+  plantingSublayers?: PlantingSublayerPresentation;
   /** Icon/label size multiplier from the Layers panel's Size slider. Clamped on read. */
   mapTextScale?: number;
   /** How traced surfaces are filled — hatch or flat tint, and how strongly. Paint only, never
@@ -562,6 +574,7 @@ export default function DesignCanvas({
   lineKind,
   activeLayers,
   waterInfrastructure,
+  plantingSublayers,
   mapTextScale: mapTextScaleRaw = 1,
   areaFill: areaFillRaw,
   baseAlign = null,
@@ -618,6 +631,10 @@ export default function DesignCanvas({
       visible: waterInfrastructure.visibility[key],
       opacity: 1,
     };
+  };
+  const plantingPresentation = (key: PlantingSublayer | null) => {
+    if (!key || !plantingSublayers) return { visible: true };
+    return { visible: plantingSublayers.visibility[key] };
   };
 
   // Which traced layer is currently tapped (shows its "Use in design" affordance).
@@ -2196,11 +2213,14 @@ export default function DesignCanvas({
     const z = state.zones.find((s2) => s2.id === id);
     if (z) {
       const layerOn = z.feature ? activeLayers[groundFeatureLayer(z.feature)] : activeLayers.zones;
-      return layerOn && ownedByCurrentStep(state.step, { kind: 'zone', feature: z.feature }) ? id : null;
+      return layerOn
+        && plantingPresentation(plantingSublayerForZone(z)).visible
+        && ownedByCurrentStep(state.step, { kind: 'zone', feature: z.feature }) ? id : null;
     }
     const l = state.lines.find((s2) => s2.id === id);
     if (l) {
       return waterPresentation(waterInfrastructureForLine(l.kind)).visible
+        && plantingPresentation(plantingSublayerForLine(l.kind)).visible
         && anyLayerOn(activeLayers, lineLayerKeys(l.kind))
         && ownedByCurrentStep(state.step, { kind: 'line', lineKind: l.kind }) ? id : null;
     }
@@ -2209,6 +2229,7 @@ export default function DesignCanvas({
       const def = ELEMENTS_BY_ID[it.defId];
       if (!def) return null;
       return waterPresentation(waterInfrastructureForElement(it.defId)).visible
+        && plantingPresentation(plantingSublayerForElement(it.defId)).visible
         && anyLayerOn(activeLayers, itemLayerKeys(it.defId))
         && ownedByCurrentStep(state.step, { kind: 'item', category: def.category, defId: it.defId })
         ? id : null;
@@ -2628,6 +2649,7 @@ export default function DesignCanvas({
             // their labelDx/labelDy is applied on top of the auto position.
             const auto = groundLabelOffsets.get(z.id) ?? 0;
             if (z.feature ? !activeLayers[groundFeatureLayer(z.feature)] : !activeLayers.zones) return null;
+            if (!plantingPresentation(plantingSublayerForZone(z)).visible) return null;
             // Not owned by the current wizard step (e.g. the boundary while on Zones) — still
             // rendered for context, but locked: dimmed, and its own hit-targets inert (see
             // ownedByCurrentStep + the startDrag* guards above). `interactive` additionally
@@ -2991,6 +3013,7 @@ export default function DesignCanvas({
           .map((line) => {
             const water = waterPresentation(waterInfrastructureForLine(line.kind));
             if (!water.visible) return null;
+            if (!plantingPresentation(plantingSublayerForLine(line.kind)).visible) return null;
             if (!anyLayerOn(activeLayers, lineLayerKeys(line.kind))) return null;
             const style = lineStroke(line.kind, earthworksOnly, line.widthM, mPerPx > 0 ? 1 / mPerPx : undefined);
             // See the zones loop above — same step-ownership lock (Rory's boundary-grab bug).
@@ -3522,6 +3545,7 @@ export default function DesignCanvas({
           if (!def) return null;
           const water = waterPresentation(waterInfrastructureForElement(item.defId));
           if (!water.visible) return null;
+          if (!plantingPresentation(plantingSublayerForElement(item.defId)).visible) return null;
           if (!anyLayerOn(activeLayers, itemLayerKeys(item.defId))) return null;
 
           const isResizingThis = item.id === dragResizeId.current && resizePreview;
@@ -3775,6 +3799,7 @@ export default function DesignCanvas({
               if (!def) return null;
               const water = waterPresentation(waterInfrastructureForElement(item.defId));
               if (!water.visible) return null;
+              if (!plantingPresentation(plantingSublayerForElement(item.defId)).visible) return null;
               if (!anyLayerOn(activeLayers, itemLayerKeys(item.defId))) return null;
               const [nx, ny] = effectiveItemPos(item);
               const isResizingThis = item.id === dragResizeId.current && resizePreview;

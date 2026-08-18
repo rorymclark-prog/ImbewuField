@@ -97,7 +97,12 @@ import {
   type AlignItemsResult,
 } from '@/lib/align-items';
 import { DESIGN_LAYER_KEYS, ELEMENT_CATALOG, ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_DEFS, type DesignLayerKey, type DesignLayerState, type ElementCategory } from '@/lib/design-elements';
-import { selectableIdsForLayer } from '@/lib/design-layer-membership';
+import {
+  plantingSublayerForElement,
+  plantingSublayerForLine,
+  plantingSublayerForZone,
+  selectableIdsForLayer,
+} from '@/lib/design-layer-membership';
 import { biomeKeyForName } from '@/lib/biome';
 import { loadSiteElements, type SiteElementType } from '@/lib/site-elements';
 import type { LineShape } from '@/lib/design-canvas';
@@ -107,6 +112,7 @@ import { fetchBasemapForFrame } from '@/lib/basemap-imagery';
 import DesignCanvas, { type TracedLayer } from '@/components/design/DesignCanvas';
 import DesignPalette, {
   type DesignMode,
+  type PlantingSublayerVisibility,
   type WaterInfrastructureVisibility,
 } from '@/components/design/DesignPalette';
 import DesignWizard, { STEP_ORDER, STEP_LABELS } from '@/components/design/DesignWizard';
@@ -160,6 +166,14 @@ const DEFAULT_WATER_INFRASTRUCTURE_VISIBILITY: WaterInfrastructureVisibility = {
   pipes: true,
   drip: true,
   swales: true,
+};
+const DEFAULT_PLANTING_SUBLAYER_VISIBILITY: PlantingSublayerVisibility = {
+  beds: true,
+  indigenous_fruit: true,
+  fruit_nut: true,
+  other_trees: true,
+  windbreaks: true,
+  staple_garden: true,
 };
 function waterInfrastructureForElement(defId: string | null): keyof WaterInfrastructureVisibility | null {
   if (!defId) return null;
@@ -870,18 +884,35 @@ function DesignStudioInner() {
   const [waterInfrastructureVisibility, setWaterInfrastructureVisibility] = useState<WaterInfrastructureVisibility>(
     DEFAULT_WATER_INFRASTRUCTURE_VISIBILITY,
   );
+  const [plantingSublayerVisibility, setPlantingSublayerVisibility] = useState<PlantingSublayerVisibility>(
+    DEFAULT_PLANTING_SUBLAYER_VISIBILITY,
+  );
   useEffect(() => {
-    const key = waterInfrastructureForElement(placeDefId);
-    if (!key) return;
-    setActiveLayers((layers) => (layers.water ? layers : { ...layers, water: true }));
-    setWaterInfrastructureVisibility((layers) => (layers[key] ? layers : { ...layers, [key]: true }));
+    const waterKey = waterInfrastructureForElement(placeDefId);
+    const plantingKey = placeDefId ? plantingSublayerForElement(placeDefId) : null;
+    if (!waterKey && !plantingKey) return;
+    if (waterKey) {
+      setActiveLayers((layers) => (layers.water ? layers : { ...layers, water: true }));
+      setWaterInfrastructureVisibility((layers) => (layers[waterKey] ? layers : { ...layers, [waterKey]: true }));
+    }
+    if (plantingKey) {
+      setActiveLayers((layers) => (layers.planting ? layers : { ...layers, planting: true }));
+      setPlantingSublayerVisibility((layers) => (layers[plantingKey] ? layers : { ...layers, [plantingKey]: true }));
+    }
   }, [placeDefId]);
   useEffect(() => {
     if (tool !== 'line') return;
-    const key = waterInfrastructureForLine(lineKind);
-    if (!key) return;
-    setActiveLayers((layers) => (layers.water ? layers : { ...layers, water: true }));
-    setWaterInfrastructureVisibility((layers) => (layers[key] ? layers : { ...layers, [key]: true }));
+    const waterKey = waterInfrastructureForLine(lineKind);
+    const plantingKey = plantingSublayerForLine(lineKind);
+    if (!waterKey && !plantingKey) return;
+    if (waterKey) {
+      setActiveLayers((layers) => (layers.water ? layers : { ...layers, water: true }));
+      setWaterInfrastructureVisibility((layers) => (layers[waterKey] ? layers : { ...layers, [waterKey]: true }));
+    }
+    if (plantingKey) {
+      setActiveLayers((layers) => (layers.planting ? layers : { ...layers, planting: true }));
+      setPlantingSublayerVisibility((layers) => (layers[plantingKey] ? layers : { ...layers, [plantingKey]: true }));
+    }
   }, [lineKind, tool]);
   // SAME PLACE-THEN-VANISH GUARD, for ground features. The Base step chips (house/patio/lawn/…)
   // arm areaFeature and never touch a layer — so a farmer who had turned "Existing" off to
@@ -896,6 +927,10 @@ function DesignStudioInner() {
     if (!areaFeature) return;
     const key = groundFeatureLayer(areaFeature);
     setActiveLayers((layers) => (layers[key] ? layers : { ...layers, [key]: true }));
+    const plantingKey = plantingSublayerForZone({ feature: areaFeature });
+    if (plantingKey) {
+      setPlantingSublayerVisibility((layers) => (layers[plantingKey] ? layers : { ...layers, [plantingKey]: true }));
+    }
   }, [areaFeature]);
   // Icon + label size, as a multiplier. Presentation only: it changes how large symbols are
   // DRAWN and never touches a stored coordinate, so sliding it cannot move anyone's design.
@@ -3350,6 +3385,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               lineKind={lineKind}
               activeLayers={activeLayers}
               waterInfrastructure={{ visibility: waterInfrastructureVisibility }}
+              plantingSublayers={{ visibility: plantingSublayerVisibility }}
               mapTextScale={mapTextScale}
               areaFill={areaFill}
               baseAlign={designBaseMode(canvasState) === 'photo' ? (canvasState?.customBase ?? null) : null}
@@ -3955,6 +3991,10 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           waterInfrastructure={{
             visibility: waterInfrastructureVisibility,
             onVisibilityChange: setWaterInfrastructureVisibility,
+          }}
+          plantingSublayers={{
+            visibility: plantingSublayerVisibility,
+            onVisibilityChange: setPlantingSublayerVisibility,
           }}
           desktopAside={!isPhone}
           desktopPanelLayout={desktopPanelLayout}

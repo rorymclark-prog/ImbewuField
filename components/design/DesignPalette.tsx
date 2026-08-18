@@ -88,6 +88,14 @@ import { usePhoneViewport } from '@/lib/use-phone-viewport';
 import ChromeHandle from '@/components/design/ChromeHandle';
 import { BOTTOM_STOPS, bottomVisibility, type BottomStop } from '@/lib/design-chrome';
 import { BED_DEF_IDS } from '@/lib/design-beds-bridge';
+import {
+  PLANTING_SUBLAYER_LABEL,
+  PLANTING_SUBLAYER_ORDER,
+  plantingSublayerForElement,
+  plantingSublayerForLine,
+  plantingSublayerForZone,
+  type PlantingSublayer,
+} from '@/lib/design-layer-membership';
 import { formatDesignTranslation } from '@/lib/design-studio-i18n';
 import { useLanguage } from '@/lib/i18n';
 import { uiVersion, setUiVersion, UI_VERSION_EVENT } from '@/lib/ui-version';
@@ -106,6 +114,7 @@ type ActiveLayers = DesignLayerState;
 
 export type WaterInfrastructureLayer = 'storage' | 'tapPoints' | 'pipes' | 'drip' | 'swales';
 export type WaterInfrastructureVisibility = Record<WaterInfrastructureLayer, boolean>;
+export type PlantingSublayerVisibility = Record<PlantingSublayer, boolean>;
 
 function waterInfrastructureForElement(defId: string | null): WaterInfrastructureLayer | null {
   if (!defId) return null;
@@ -161,6 +170,11 @@ export interface DesignPaletteProps {
   waterInfrastructure?: {
     visibility: WaterInfrastructureVisibility;
     onVisibilityChange: (next: WaterInfrastructureVisibility) => void;
+  } | null;
+  /** Planting's child matrix groups a busy plan without changing any saved geometry. */
+  plantingSublayers?: {
+    visibility: PlantingSublayerVisibility;
+    onVisibilityChange: (next: PlantingSublayerVisibility) => void;
   } | null;
   /** Wide screens have a fixed right-side quick-actions pane. Phones retain the bottom sheet. */
   desktopAside?: boolean;
@@ -467,6 +481,7 @@ export default function DesignPalette({
   setActiveLayers,
   layerSelection,
   waterInfrastructure = null,
+  plantingSublayers = null,
   desktopAside = false,
   desktopPanelLayout,
   onDesktopPanelWidthChange,
@@ -1577,7 +1592,8 @@ export default function DesignPalette({
                   const selection = layerSelection.counts[lt.key];
                   const allSelected = selection.total > 0 && selection.selected === selection.total;
                   const someSelected = selection.selected > 0 && !allSelected;
-                  const hasChildren = lt.key === 'water' && !!waterInfrastructure;
+                  const hasChildren = (lt.key === 'water' && !!waterInfrastructure)
+                    || (lt.key === 'planting' && !!plantingSublayers);
                   const expanded = hasChildren && expandedLayers.has(lt.key);
                   const selectionLabel = selection.total === 0
                     ? `${t(lt.labelKey)} has no editable objects on this step`
@@ -1687,7 +1703,7 @@ export default function DesignPalette({
                         )}
                       </div>
 
-                      {expanded && waterInfrastructure && (
+                      {expanded && waterInfrastructure && lt.key === 'water' && (
                         <div
                           id="water-layer-children"
                           data-layer-children="water"
@@ -1728,6 +1744,64 @@ export default function DesignPalette({
                                     || (tool === 'line' && waterInfrastructureForLine(lineKind) === key)
                                   )) setTool('select');
                                   waterInfrastructure.onVisibilityChange({ ...waterInfrastructure.visibility, [key]: !childOn });
+                                }}
+                                style={{
+                                  minWidth: 0, minHeight: compactDesktopLayerPanel ? 34 : 44,
+                                  padding: '3px 5px', borderRadius: 8,
+                                  border: '1px solid rgba(11,18,11,0.13)',
+                                  background: childOn ? 'rgba(255,255,255,0.72)' : 'transparent',
+                                  color: childOn ? DARK : '#877D6E', cursor: 'pointer',
+                                  display: 'grid', gridTemplateColumns: '24px minmax(0,1fr)',
+                                  alignItems: 'center', gap: 4, textAlign: 'left',
+                                }}
+                              >
+                                {childOn
+                                  ? <Eye size={16} strokeWidth={2.1} aria-hidden />
+                                  : <EyeOff size={16} strokeWidth={1.9} aria-hidden />}
+                                <span style={{ minWidth: 0, fontSize: 10.5, lineHeight: 1.2, fontWeight: 600 }}>
+                                  {label}
+                                </span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      )}
+
+                      {expanded && plantingSublayers && lt.key === 'planting' && (
+                        <div
+                          id="planting-layer-children"
+                          data-layer-children="planting"
+                          style={{
+                            flexBasis: '100%', display: 'grid',
+                            gridTemplateColumns: compactDesktopLayerPanel ? 'repeat(2, minmax(0, 1fr))' : '1fr',
+                            gap: 4, margin: '1px 3px 4px', padding: compactDesktopLayerPanel ? '5px 5px 6px 37px' : '5px 5px 7px 48px',
+                            borderLeft: `2px solid ${lt.accent}55`, borderRadius: '0 0 10px 10px',
+                            background: `${lt.accent}0D`, boxSizing: 'border-box',
+                          }}
+                        >
+                          {PLANTING_SUBLAYER_ORDER.map((key) => {
+                            const childOn = plantingSublayers.visibility[key];
+                            const label = PLANTING_SUBLAYER_LABEL[key];
+                            return (
+                              <button
+                                key={key}
+                                type="button"
+                                aria-label={`${childOn ? 'Hide' : 'Show'} ${label}`}
+                                aria-pressed={childOn}
+                                onClick={() => {
+                                  // Reveal the parent with a child. Otherwise the button reports
+                                  // "on" while the canvas still has no way to paint that group.
+                                  if (!childOn && !activeLayers.planting) {
+                                    setActiveLayers({ ...activeLayers, planting: true });
+                                  }
+                                  // Do not leave a hidden mark armed: placement would succeed,
+                                  // save, and look as if it vanished until the child is restored.
+                                  if (childOn && (
+                                    plantingSublayerForElement(placeDefId ?? '') === key
+                                    || (tool === 'line' && plantingSublayerForLine(lineKind) === key)
+                                    || (areaFeature !== null && plantingSublayerForZone({ feature: areaFeature }) === key)
+                                  )) setTool('select');
+                                  plantingSublayers.onVisibilityChange({ ...plantingSublayers.visibility, [key]: !childOn });
                                 }}
                                 style={{
                                   minWidth: 0, minHeight: compactDesktopLayerPanel ? 34 : 44,
