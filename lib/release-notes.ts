@@ -35,6 +35,15 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '18 August',
+    sha: 'e4efffe',
+    changes: [
+      'Every Layers row now opens so you can see the controls beneath it',
+      'Planting controls are now a neater, single-column list',
+      'The Moringa tree card now shows its long seed pods',
+    ],
+  },
+  {
+    when: '18 August',
     sha: 'e2a7bf7',
     changes: [
       'Tree cards show recognisable front views again while plan maps keep measured top views',
