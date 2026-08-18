@@ -35,10 +35,11 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '18 August',
-    sha: '922859b',
+    sha: 'e2a7bf7',
     changes: [
+      'Tree cards show recognisable front views again while plan maps keep measured top views',
+      'Water controls now open inside the Water layer instead of sitting in a separate section',
       'Whole-design AI maps no longer keep a result that erases the site into blank paper',
-      'Water infrastructure stays clear: show or hide it without opacity sliders',
       'The full Layers panel now fits on desktop without scrolling',
       'Each saved map now has its own delete button',
     ],

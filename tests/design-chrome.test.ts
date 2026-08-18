@@ -21,6 +21,7 @@ import {
   DEFAULT_DESIGN_WORKSPACE_MODE,
   DEFAULT_DESKTOP_PANEL_LAYOUT,
   clampDesktopPanelWidth,
+  elementCardMetrics,
   elementPanelColumns,
   reservedDesktopPanelSpace,
   restoreDesignWorkspaceMode,
@@ -197,6 +198,12 @@ test('the Elements dock naturally reflows from three cards to one as its handle 
   assert.equal(elementPanelColumns(304), 3);
   assert.equal(elementPanelColumns(240), 2);
   assert.equal(elementPanelColumns(124), 1);
+});
+
+test('fewer card columns spend their recovered space on larger recognisable drawings', () => {
+  assert.deepEqual(elementCardMetrics(3), { artSize: 62, minHeight: 116 });
+  assert.deepEqual(elementCardMetrics(2), { artSize: 70, minHeight: 126 });
+  assert.deepEqual(elementCardMetrics(1), { artSize: 92, minHeight: 148 });
 });
 
 test('the balanced dock is the safe default and only docks reserve map gutters', () => {

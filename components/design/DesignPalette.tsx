@@ -39,6 +39,8 @@ import { createPortal } from 'react-dom';
 import dynamic from 'next/dynamic';
 import {
   Bird,
+  ChevronDown,
+  ChevronRight,
   Droplets,
   Eye,
   EyeOff,
@@ -92,6 +94,7 @@ import { uiVersion, setUiVersion, UI_VERSION_EVENT } from '@/lib/ui-version';
 import LessonLink from './LessonLink';
 import {
   clampDesktopPanelWidth,
+  elementCardMetrics,
   elementPanelColumns,
   type DesignWorkspaceMode,
   type DesktopPanelLayout,
@@ -559,6 +562,20 @@ export default function DesignPalette({
     };
   }, [speciesPickerOpen]);
   const [layersOpen, setLayersOpen] = useState(false);
+  // Expanded rows belong to the Layers UI, not the saved design. A parent eye still answers the
+  // broad question (show Water at all); opening the row reveals the finer presentation switches
+  // without spending permanent panel height on them. Water is the first real child matrix. The
+  // same structure can take another layer's children when that layer gains honest sub-layer
+  // state — never render catalogue-shaped switches that do not control the canvas.
+  const [expandedLayers, setExpandedLayers] = useState<Set<DesignLayerKey>>(() => new Set());
+  const toggleExpandedLayer = useCallback((layer: DesignLayerKey) => {
+    setExpandedLayers((current) => {
+      const next = new Set(current);
+      if (next.has(layer)) next.delete(layer);
+      else next.add(layer);
+      return next;
+    });
+  }, []);
   const layersButtonRef = useRef<HTMLButtonElement | null>(null);
   const [layersAnchor, setLayersAnchor] = useState<{
     top: number;
@@ -1560,6 +1577,8 @@ export default function DesignPalette({
                   const selection = layerSelection.counts[lt.key];
                   const allSelected = selection.total > 0 && selection.selected === selection.total;
                   const someSelected = selection.selected > 0 && !allSelected;
+                  const hasChildren = lt.key === 'water' && !!waterInfrastructure;
+                  const expanded = hasChildren && expandedLayers.has(lt.key);
                   const selectionLabel = selection.total === 0
                     ? `${t(lt.labelKey)} has no editable objects on this step`
                     : allSelected
@@ -1568,134 +1587,172 @@ export default function DesignPalette({
                   const LayerIcon = lt.Icon;
                   const SelectionIcon = allSelected ? SquareCheckBig : someSelected ? SquareMinus : Square;
                   return (
-                    <div
-                      key={lt.key}
-                      data-layer-row={lt.key}
-                      style={{
-                        flexBasis: '100%', minHeight: compactDesktopLayerPanel ? 32 : 44,
-                        padding: compactDesktopLayerPanel ? '0 3px' : '2px 5px', borderRadius: 10,
-                        border: someSelected || allSelected ? '1px solid rgba(31,77,43,0.18)' : '1px solid transparent',
-                        background: someSelected || allSelected ? 'rgba(31,77,43,0.055)' : 'transparent',
-                        color: DARK, display: 'grid',
-                        gridTemplateColumns: compactDesktopLayerPanel
-                          ? '32px 32px 28px minmax(0,1fr) auto'
-                          : '40px 40px 34px minmax(0,1fr) auto',
-                        alignItems: 'center', gap: 3, opacity: on ? 1 : 0.52,
-                      }}
-                    >
-                      <button
-                        type="button"
-                        aria-label={`${on ? 'Hide' : 'Show'} ${t(lt.labelKey)}`}
-                        aria-pressed={on}
-                        title={`${on ? 'Hide' : 'Show'} ${t(lt.labelKey)}`}
-                        onClick={() => setActiveLayers({ ...activeLayers, [lt.key]: !on })}
+                    <Fragment key={lt.key}>
+                      <div
+                        data-layer-row={lt.key}
                         style={{
-                          width: compactDesktopLayerPanel ? 32 : 40,
-                          height: compactDesktopLayerPanel ? 32 : 40,
-                          padding: 0, border: 'none', borderRadius: 9,
-                          display: 'grid', placeItems: 'center', background: on ? 'rgba(31,77,43,0.10)' : 'transparent',
-                          color: on ? GREEN : '#877D6E', cursor: 'pointer',
+                          flexBasis: '100%', minHeight: compactDesktopLayerPanel ? 32 : 44,
+                          padding: compactDesktopLayerPanel ? '0 3px' : '2px 5px', borderRadius: 10,
+                          border: someSelected || allSelected ? '1px solid rgba(31,77,43,0.18)' : '1px solid transparent',
+                          background: expanded
+                            ? 'rgba(38,118,165,0.075)'
+                            : someSelected || allSelected ? 'rgba(31,77,43,0.055)' : 'transparent',
+                          color: DARK, display: 'grid',
+                          gridTemplateColumns: compactDesktopLayerPanel
+                            ? '32px 32px 28px minmax(0,1fr) auto'
+                            : '40px 40px 34px minmax(0,1fr) auto',
+                          alignItems: 'center', gap: 3, opacity: on ? 1 : 0.52,
                         }}
                       >
-                        {on ? <Eye size={20} strokeWidth={2.1} aria-hidden /> : <EyeOff size={20} strokeWidth={1.9} aria-hidden />}
-                      </button>
-                      <button
-                        type="button"
-                        aria-label={selectionLabel}
-                        aria-pressed={allSelected}
-                        title={selectionLabel}
-                        disabled={selection.total === 0}
-                        onClick={() => layerSelection.onToggle(lt.key)}
-                        style={{
-                          width: compactDesktopLayerPanel ? 32 : 40,
-                          height: compactDesktopLayerPanel ? 32 : 40,
-                          padding: 0, border: 'none', borderRadius: 9,
-                          display: 'grid', placeItems: 'center', background: selection.selected > 0 ? 'rgba(247,201,126,0.26)' : 'transparent',
-                          color: selection.total === 0 ? '#C9C1B4' : selection.selected > 0 ? GREEN : '#776F63',
-                          cursor: selection.total === 0 ? 'not-allowed' : 'pointer',
-                        }}
-                      >
-                        <SelectionIcon size={20} strokeWidth={selection.selected > 0 ? 2.35 : 1.8} aria-hidden />
-                      </button>
-                      <span
-                        aria-hidden
-                        style={{
-                          width: compactDesktopLayerPanel ? 26 : 30,
-                          height: compactDesktopLayerPanel ? 26 : 30,
-                          borderRadius: 8, display: 'grid', placeItems: 'center',
-                          color: lt.accent, background: `${lt.accent}18`, border: `1px solid ${lt.accent}2F`,
-                        }}
-                      >
-                        <LayerIcon size={18} strokeWidth={2} />
-                      </span>
-                      <span style={{ minWidth: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontSize: cardsUi ? 13.5 : 12, fontWeight: 650 }}>
-                        {t(lt.labelKey)}
-                      </span>
-                      {selection.selected > 0 && (
-                        <span
-                          aria-label={`${selection.selected} of ${selection.total} selected`}
+                        <button
+                          type="button"
+                          aria-label={`${on ? 'Hide' : 'Show'} ${t(lt.labelKey)}`}
+                          aria-pressed={on}
+                          title={`${on ? 'Hide' : 'Show'} ${t(lt.labelKey)}`}
+                          onClick={() => setActiveLayers({ ...activeLayers, [lt.key]: !on })}
                           style={{
-                            minWidth: 28, padding: '2px 6px', borderRadius: 999, background: GREEN,
-                            color: PAPER, fontSize: 9.5, fontWeight: 800, textAlign: 'center', fontVariantNumeric: 'tabular-nums',
+                            width: compactDesktopLayerPanel ? 32 : 40,
+                            height: compactDesktopLayerPanel ? 32 : 40,
+                            padding: 0, border: 'none', borderRadius: 9,
+                            display: 'grid', placeItems: 'center', background: on ? 'rgba(31,77,43,0.10)' : 'transparent',
+                            color: on ? GREEN : '#877D6E', cursor: 'pointer',
                           }}
                         >
-                          {selection.selected}/{selection.total}
-                        </span>
-                      )}
-                    </div>
-                  );
-                })}
-                {waterInfrastructure && (
-                  <div style={{ flexBasis: '100%', display: 'flex', flexDirection: 'column', gap: 5, padding: '8px 2px 0', borderTop: '1px solid rgba(11,18,11,0.12)' }}>
-                    <span style={{ fontSize: 10, fontWeight: 800, textTransform: 'uppercase', letterSpacing: 0.5, opacity: 0.6 }}>
-                      Water infrastructure
-                    </span>
-                    {/* Tanks, taps and routes are discrete marks, not filled land. Fading them
-                        makes quantities and connections harder to read without answering a real
-                        design question. Opacity stays with the polygon fill controls below;
-                        these rows only answer whether each infrastructure group is shown. */}
-                    <div
-                      style={{
-                        display: 'grid',
-                        gridTemplateColumns: compactDesktopLayerPanel ? 'repeat(2, minmax(0, 1fr))' : '1fr',
-                        gap: 5,
-                      }}
-                    >
-                      {([
-                        ['storage', 'JoJo tanks & rain barrels'],
-                        ['tapPoints', 'Tap points'],
-                        ['pipes', 'Pipes & lines'],
-                        ['drip', 'Drip irrigation'],
-                        ['swales', 'Swales'],
-                      ] as const).map(([key, label]) => {
-                        const on = waterInfrastructure.visibility[key];
-                        return (
-                          <div key={key} style={{ display: 'grid', gridTemplateColumns: '30px minmax(0, 1fr)', alignItems: 'center', gap: 5, minHeight: 30 }}>
+                          {on ? <Eye size={20} strokeWidth={2.1} aria-hidden /> : <EyeOff size={20} strokeWidth={1.9} aria-hidden />}
+                        </button>
+                        <button
+                          type="button"
+                          aria-label={selectionLabel}
+                          aria-pressed={allSelected}
+                          title={selectionLabel}
+                          disabled={selection.total === 0}
+                          onClick={() => layerSelection.onToggle(lt.key)}
+                          style={{
+                            width: compactDesktopLayerPanel ? 32 : 40,
+                            height: compactDesktopLayerPanel ? 32 : 40,
+                            padding: 0, border: 'none', borderRadius: 9,
+                            display: 'grid', placeItems: 'center', background: selection.selected > 0 ? 'rgba(247,201,126,0.26)' : 'transparent',
+                            color: selection.total === 0 ? '#C9C1B4' : selection.selected > 0 ? GREEN : '#776F63',
+                            cursor: selection.total === 0 ? 'not-allowed' : 'pointer',
+                          }}
+                        >
+                          <SelectionIcon size={20} strokeWidth={selection.selected > 0 ? 2.35 : 1.8} aria-hidden />
+                        </button>
+                        <div
+                          aria-hidden
+                          style={{
+                            width: compactDesktopLayerPanel ? 26 : 30,
+                            height: compactDesktopLayerPanel ? 26 : 30,
+                            borderRadius: 8, display: 'grid', placeItems: 'center',
+                            color: lt.accent, background: `${lt.accent}18`, border: `1px solid ${lt.accent}2F`,
+                          }}
+                        >
+                          <LayerIcon size={18} strokeWidth={2} />
+                        </div>
+                        {hasChildren ? (
                           <button
                             type="button"
-                            aria-label={`${on ? 'Hide' : 'Show'} ${label}`}
-                            aria-pressed={on}
-                            onClick={() => {
-                              // Do not leave a placement tool armed for a mark we just hid. It
-                              // would save correctly but render nothing, the exact "my work
-                              // disappeared" failure this panel is meant to prevent.
-                              if (on && (
-                                waterInfrastructureForElement(placeDefId) === key
-                                || (tool === 'line' && waterInfrastructureForLine(lineKind) === key)
-                              )) setTool('select');
-                              waterInfrastructure.onVisibilityChange({ ...waterInfrastructure.visibility, [key]: !on });
+                            onClick={() => toggleExpandedLayer(lt.key)}
+                            aria-expanded={expanded}
+                            aria-controls={`${lt.key}-layer-children`}
+                            aria-label={`${expanded ? 'Collapse' : 'Expand'} ${t(lt.labelKey)} controls`}
+                            title={`${expanded ? 'Collapse' : 'Expand'} ${t(lt.labelKey)} controls`}
+                            style={{
+                              minWidth: 0, minHeight: compactDesktopLayerPanel ? 32 : 40,
+                              padding: 0, border: 'none', background: 'transparent', color: DARK,
+                              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                              gap: 4, cursor: 'pointer', textAlign: 'left',
                             }}
-                            style={{ minWidth: 30, minHeight: 30, padding: 0, borderRadius: 8, border: '1px solid rgba(11,18,11,0.16)', background: on ? 'rgba(31,77,43,0.12)' : 'transparent', color: DARK, cursor: 'pointer', fontSize: 14 }}
                           >
-                            {on ? '◉' : '○'}
+                            <span style={{ minWidth: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontSize: cardsUi ? 13.5 : 12, fontWeight: 650 }}>
+                              {t(lt.labelKey)}
+                            </span>
+                            {expanded ? <ChevronDown size={16} aria-hidden /> : <ChevronRight size={16} aria-hidden />}
                           </button>
-                          <span style={{ minWidth: 0, fontSize: 11.5, opacity: on ? 1 : 0.5 }}>{label}</span>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                )}
+                        ) : (
+                          <span style={{ minWidth: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontSize: cardsUi ? 13.5 : 12, fontWeight: 650 }}>
+                            {t(lt.labelKey)}
+                          </span>
+                        )}
+                        {selection.selected > 0 && (
+                          <span
+                            aria-label={`${selection.selected} of ${selection.total} selected`}
+                            style={{
+                              minWidth: 28, padding: '2px 6px', borderRadius: 999, background: GREEN,
+                              color: PAPER, fontSize: 9.5, fontWeight: 800, textAlign: 'center', fontVariantNumeric: 'tabular-nums',
+                            }}
+                          >
+                            {selection.selected}/{selection.total}
+                          </span>
+                        )}
+                      </div>
+
+                      {expanded && waterInfrastructure && (
+                        <div
+                          id="water-layer-children"
+                          data-layer-children="water"
+                          style={{
+                            flexBasis: '100%', display: 'grid',
+                            gridTemplateColumns: compactDesktopLayerPanel ? 'repeat(2, minmax(0, 1fr))' : '1fr',
+                            gap: 4, margin: '1px 3px 4px', padding: compactDesktopLayerPanel ? '5px 5px 6px 37px' : '5px 5px 7px 48px',
+                            borderLeft: `2px solid ${lt.accent}55`, borderRadius: '0 0 10px 10px',
+                            background: `${lt.accent}0D`, boxSizing: 'border-box',
+                          }}
+                        >
+                          {([
+                            ['storage', 'JoJo tanks & rain barrels'],
+                            ['tapPoints', 'Tap points'],
+                            ['pipes', 'Pipes & lines'],
+                            ['drip', 'Drip irrigation'],
+                            ['swales', 'Swales'],
+                          ] as const).map(([key, label]) => {
+                            const childOn = waterInfrastructure.visibility[key];
+                            return (
+                              <button
+                                key={key}
+                                type="button"
+                                aria-label={`${childOn ? 'Hide' : 'Show'} ${label}`}
+                                aria-pressed={childOn}
+                                onClick={() => {
+                                  // A child cannot be visibly on while its parent is off. Turning
+                                  // one on therefore restores Water in the same action; turning the
+                                  // parent off still remembers every child choice for later.
+                                  if (!childOn && !activeLayers.water) {
+                                    setActiveLayers({ ...activeLayers, water: true });
+                                  }
+                                  // Do not leave a placement tool armed for a mark we just hid. It
+                                  // would save correctly but render nothing, the exact "my work
+                                  // disappeared" failure this panel is meant to prevent.
+                                  if (childOn && (
+                                    waterInfrastructureForElement(placeDefId) === key
+                                    || (tool === 'line' && waterInfrastructureForLine(lineKind) === key)
+                                  )) setTool('select');
+                                  waterInfrastructure.onVisibilityChange({ ...waterInfrastructure.visibility, [key]: !childOn });
+                                }}
+                                style={{
+                                  minWidth: 0, minHeight: compactDesktopLayerPanel ? 34 : 44,
+                                  padding: '3px 5px', borderRadius: 8,
+                                  border: '1px solid rgba(11,18,11,0.13)',
+                                  background: childOn ? 'rgba(255,255,255,0.72)' : 'transparent',
+                                  color: childOn ? DARK : '#877D6E', cursor: 'pointer',
+                                  display: 'grid', gridTemplateColumns: '24px minmax(0,1fr)',
+                                  alignItems: 'center', gap: 4, textAlign: 'left',
+                                }}
+                              >
+                                {childOn
+                                  ? <Eye size={16} strokeWidth={2.1} aria-hidden />
+                                  : <EyeOff size={16} strokeWidth={1.9} aria-hidden />}
+                                <span style={{ minWidth: 0, fontSize: 10.5, lineHeight: 1.2, fontWeight: 600 }}>
+                                  {label}
+                                </span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </Fragment>
+                  );
+                })}
                 {/* Icon + label size. Lives with Labels and Icons because it is the same
                     question — how loud should the annotation be — and a farmer who has just
                     turned Labels on to read them wants the size control in the same place.
@@ -1913,6 +1970,7 @@ export default function DesignPalette({
     const desktopCardWidth = desktopElementColumns === 1
       ? '100%'
       : `calc(${100 / desktopElementColumns}% - ${desktopElementColumns === 3 ? 4 : 3}px)`;
+    const cardMetrics = elementCardMetrics(desktopElementColumns);
     return (
       <>
       {orderedCatalog.map((def) => {
@@ -1947,7 +2005,10 @@ export default function DesignPalette({
               // more room than the 30 px chip it replaced — the point of the card view — while
               // showing half again as many elements per screen. The height comes down with it,
               // because a shorter card wastes less of the vertical too.
-              minHeight: 112,
+              // When the dock narrows to one column, the drawing should become the benefit of
+              // that layout. Rory spotted that the front-view fruit was correct but too small to
+              // identify. Grow the art with the available card width; keep three-up cards compact.
+              minHeight: cardMetrics.minHeight,
               width: desktopAside && workspaceMode !== 'tray' ? desktopCardWidth : 96,
               padding: '7px 5px 6px',
               borderRadius: 12,
@@ -1992,7 +2053,7 @@ export default function DesignPalette({
                 give it without growing the strip. */}
             {def.art ? (
               <img src={def.art} alt="" aria-hidden style={cardsUi
-                ? { width: 56, height: 56, objectFit: 'contain' }
+                ? { width: cardMetrics.artSize, height: cardMetrics.artSize, objectFit: 'contain' }
                 : { width: guided ? 30 : 24, height: guided ? 30 : 24, objectFit: 'contain' }} />
             ) : (
               <span style={{ fontSize: cardsUi ? 30 : guided ? 16 : 13, lineHeight: 1 }}>{def.icon}</span>
