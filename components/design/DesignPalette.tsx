@@ -1607,9 +1607,14 @@ export default function DesignPalette({
                   const allSelected = selection.total > 0 && selection.selected === selection.total;
                   const someSelected = selection.selected > 0 && !allSelected;
                   const elementChildren = layerElements?.childrenByLayer[lt.key] ?? [];
+                  // Every layer gets the same disclosure affordance. Some are presentation-only
+                  // (Labels, Contours, Site references), so their opened state honestly says there
+                  // is nothing more to control instead of making the row look unlike the others.
+                  const universalDisclosure = true;
                   const hasChildren = (lt.key === 'water' && !!waterInfrastructure)
                     || (lt.key === 'planting' && !!plantingSublayers)
-                    || elementChildren.length > 0;
+                    || elementChildren.length > 0
+                    || universalDisclosure;
                   const expanded = hasChildren && expandedLayers.has(lt.key);
                   const selectionLabel = selection.total === 0
                     ? `${t(lt.labelKey)} has no editable objects on this step`
@@ -1841,7 +1846,7 @@ export default function DesignPalette({
                         </div>
                       )}
 
-                      {expanded && layerElements && lt.key !== 'water' && lt.key !== 'planting' && elementChildren.length > 0 && (
+                      {expanded && layerElements && lt.key !== 'water' && lt.key !== 'planting' && (
                         <div
                           id={`${lt.key}-layer-children`}
                           data-layer-children={lt.key}
@@ -1853,6 +1858,11 @@ export default function DesignPalette({
                             background: `${lt.accent}0D`, boxSizing: 'border-box',
                           }}
                         >
+                          {elementChildren.length === 0 && (
+                            <p style={{ margin: 0, padding: '7px 4px 6px', color: '#776F63', fontSize: 10.5, lineHeight: 1.3 }}>
+                              No individual elements to show here yet.
+                            </p>
+                          )}
                           {elementChildren.map((child) => {
                             const childOn = layerElements.visibility[child.key] !== false;
                             const label = child.count > 1 ? `${child.label} · ${child.count}` : child.label;
