@@ -44,6 +44,7 @@ export interface RenderAuditEntry {
   verdict?: DifferenceReport['verdict'];
   redrawnFraction?: number;
   touchedFraction?: number;
+  blankedFraction?: number;
   meanDelta?: number;
   comparedPixels?: number;
   /** Free text for the `blocked`/`unscored` cases — why, in words a human can act on. */
@@ -77,6 +78,7 @@ export function auditFromReport(
     verdict: report.verdict,
     redrawnFraction: report.redrawnFraction,
     touchedFraction: report.touchedFraction,
+    blankedFraction: report.blankedFraction,
     meanDelta: report.meanDelta,
     comparedPixels: report.comparedPixels,
   };
@@ -119,6 +121,9 @@ export function explainSheet(log: readonly RenderAuditEntry[], sheetKey: string)
     return 'You asked for the Full Treatment, but no Hybrid was ever recorded — so the second layer never ran, and the third could not start.';
   }
   if (hybrid.outcome === 'rejected') {
+    if (hybrid.verdict === 'content-erased') {
+      return 'You asked for the Full Treatment. The Hybrid erased a large part of the map into blank paper, so it was rejected — and the polish pass was not started. Your exact map still stands.';
+    }
     return 'You asked for the Full Treatment. The Hybrid came back as the same map it was given, so it was rejected — and the polish pass was not started, because there was nothing new to polish.';
   }
   if (!polish) {
@@ -128,6 +133,9 @@ export function explainSheet(log: readonly RenderAuditEntry[], sheetKey: string)
     return `You asked for the Full Treatment. The Hybrid succeeded but the polish pass never ran${polish.note ? `: ${polish.note}` : '.'}`;
   }
   if (polish.outcome === 'rejected') {
+    if (polish.verdict === 'content-erased') {
+      return 'You asked for the Full Treatment. The polish pass erased a large part of the map into blank paper, so it was rejected — you are looking at the intact Hybrid instead.';
+    }
     return 'You asked for the Full Treatment. The polish pass ran and returned the Hybrid it was given, so it was rejected — you are looking at layer 2, and layer 3 added nothing.';
   }
   if (polish.outcome === 'unscored') {

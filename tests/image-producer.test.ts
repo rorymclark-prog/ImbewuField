@@ -1478,12 +1478,15 @@ test('the Geometry Lock hybrid never tells a photo-preserving style to repaint t
   assert.match(satOverlay, /stays the real photographed pixels/i);
 });
 
-test('a painted style keeps the full edge-to-edge illustration instruction unchanged', () => {
-  // The photo-preserving fix must be scoped to photo_plan/satellite_overlay only — every other
-  // style painted the ground correctly before this change and must still be asked to.
+test('a painted style requires complete edge-to-edge land rather than blank open ground', () => {
+  // Photo Plan and Satellite Overlay preserve pixels; every painted style instead has to represent
+  // the complete photographed land as artwork. "Open" means no invented object, never white paper.
   const p = buildLockedIllustrationPrompt('Planting', 'precision_atlas', '🥬 Vegetable Bed ×9');
   assert.match(p, /paint edge to edge/i);
   assert.match(p, /PAINT WHAT IS THERE/);
+  assert.match(p, /every part of that land must still be represented as finished map artwork/i);
+  assert.match(p, /No new objects.+does not mean.+erase the ground/i);
+  assert.doesNotMatch(p, /illustrated, but empty/i);
   assert.doesNotMatch(p, /stays the real photographed pixels/i);
 });
 

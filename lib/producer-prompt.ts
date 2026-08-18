@@ -199,6 +199,9 @@ export function buildLockedIllustrationPrompt(
     // prompts in this file that each independently describe ground texture — so the gap here is
     // the highest-impact of the three to have missed.
     : `PAINT WHAT IS THERE: illustrate the real landscape the photo already shows — existing trees and shrubs as drawn canopies, hedges and treelines, mown lawn, rough veld, bare and tilled soil, tracks and driveways, paved ground (patios, concrete slabs, hard standing) as flat light-grey paving — never roofed, never the driveway's tar-black — and every building as its full roof seen from directly above. Neighbouring plots are painted in the same hand as the rest of the sheet, never left as raw photograph.`;
+  const paintedPhotoCompleteness = paintGround
+    ? `EDGE-TO-EDGE COMPLETENESS: the source contains a real aerial photograph, so every part of that land must still be represented as finished map artwork. Never replace photographed land with white or cream paper, transparency, empty canvas, an unpainted void or a large flat colour. Open ground still shows its real material — lawn, veld, soil, track or paving — with visible illustrated texture. “No new objects” does not mean “erase the ground”.`
+    : '';
   return [
     STYLE_LINES[stylePreset],
     task,
@@ -213,7 +216,8 @@ export function buildLockedIllustrationPrompt(
       : `HYBRID FINISH: the app restores protected roof, driveway, boundary and context pixels, then reinforces exact feature outlines, technical routes, labels and legend over your artwork. Make the painted trees, beds, tanks, basins, structures and ground visually rich enough to remain visible beneath that precise cartographic linework.`,
     waterArtDirection,
     groundClause,
-    `INVENT NOTHING: add no tree, bed, tank, pond, path, fence, hedge or building that is not already visible or marked in the source. Where the ground is open it stays open — ${onPaper ? 'blank white paper, with nothing painted on it at all' : photoPreserving ? 'the real photographed ground' : 'illustrated, but empty'}. Do not decorate, fill space or redesign the site.`,
+    paintedPhotoCompleteness,
+    `INVENT NOTHING: add no tree, bed, tank, pond, path, fence, hedge or building that is not already visible or marked in the source. Where the ground is open it stays open — ${onPaper ? 'blank white paper, with nothing painted on it at all' : photoPreserving ? 'the real photographed ground' : 'fully painted as the same open lawn, veld, soil, track or paving already visible in the source, with no new object added'}. Do not decorate, fill space or redesign the site.`,
     `KEEP THE GEOMETRY: every roof outline, driveway edge, boundary and treeline keeps exactly the shape, size and position the photo shows. Never crop, shrink, rotate, straighten, cover or plant over any part of a roof.`,
     `VIEW AND FRAMING: flat orthographic top-down, north-up plan only. Keep exactly the source crop, scale, aspect ratio and camera position. No oblique view, perspective tilt, 3D camera, horizon, isometric view, rotation, zoom, recentering or reframing.`,
     `NO SHEET FURNITURE: no writing, numbers, title, legend, key, panel, border, compass, north arrow, scale bar, pin, icon or emoji anywhere in the image. The app draws all of those afterwards.`,

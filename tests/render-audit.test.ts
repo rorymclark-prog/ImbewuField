@@ -34,6 +34,7 @@ const report = (over: Partial<DifferenceReport> = {}): DifferenceReport => ({
   meanDelta: 51,
   comparedPixels: 1_500_000,
   protectedMismatches: 0,
+  blankedFraction: 0,
   verdict: 'redrawn',
   ...over,
 });
@@ -57,6 +58,7 @@ test('an entry built from a difference report carries the numbers the verdict wa
   assert.equal(entry.outcome, 'kept');
   assert.equal(entry.verdict, 'redrawn');
   assert.equal(entry.redrawnFraction, 0.31);
+  assert.equal(entry.blankedFraction, 0);
   // comparedPixels matters: a gate that compared almost nothing is not evidence of anything, and
   // without this field a 'rejected' verdict cannot be told apart from a degenerate mask.
   assert.equal(entry.comparedPixels, 1_500_000);
@@ -101,6 +103,21 @@ test('a rejected Hybrid explains why the polish never started, instead of lookin
   const answer = explainSheet(log, 'planting');
   assert.match(answer, /rejected/);
   assert.match(answer, /nothing new to polish/);
+});
+
+test('an erased-content rejection is described as destructive output, not as an unchanged copy', () => {
+  const hybrid = explainSheet([
+    base({ stage: 'hybrid', outcome: 'rejected', verdict: 'content-erased' }),
+  ], 'planting');
+  assert.match(hybrid, /erased a large part of the map into blank paper/);
+  assert.match(hybrid, /exact map still stands/);
+
+  const polish = explainSheet([
+    base({ stage: 'hybrid', outcome: 'kept' }),
+    base({ stage: 'polish', outcome: 'rejected', verdict: 'content-erased' }),
+  ], 'planting');
+  assert.match(polish, /erased a large part of the map into blank paper/);
+  assert.match(polish, /intact Hybrid/);
 });
 
 test('both layers redrawn is reported as the success it is', () => {

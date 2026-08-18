@@ -39,6 +39,16 @@ function repainted(src: Uint8ClampedArray, fraction: number): Uint8ClampedArray 
   return out;
 }
 
+/** Reproduce the failed Whole-design shape: most photograph pixels disappear into white paper. */
+function erasedToPaper(src: Uint8ClampedArray, fraction: number): Uint8ClampedArray {
+  const out = new Uint8ClampedArray(src);
+  const upTo = Math.floor(PIXELS * fraction) * 4;
+  for (let i = 0; i < upTo; i += 4) {
+    out[i] = 255; out[i + 1] = 255; out[i + 2] = 255;
+  }
+  return out;
+}
+
 test('a verbatim copy is called out as unchanged — the exact bug Rory paid for', () => {
   const hybrid = solid(120, 130, 110);
   const r = compareRenders(hybrid, new Uint8ClampedArray(hybrid));
@@ -79,6 +89,45 @@ test('a genuine second pass passes, and says nothing to the farmer', () => {
   assert.equal(r.verdict, 'redrawn');
   assert.ok(r.redrawnFraction > 0.5);
   assert.equal(differenceMessage(r), null, 'a good result is not worth interrupting anyone about');
+});
+
+test('a photograph erased into blank paper is rejected even though almost every erased pixel changed', () => {
+  // The reported Whole-design result was 69% blank while its exact satellite map was effectively
+  // 0% blank. The former difference-only gate celebrated that deletion as a strong redraw because
+  // turning textured land white moves RGB by far more than 32 points.
+  const satellite = solid(80, 105, 65);
+  const r = compareRenders(satellite, erasedToPaper(satellite, 0.69));
+
+  assert.ok(r.redrawnFraction > 0.65, 'the old gate would have accepted this as a large redraw');
+  assert.ok(r.blankedFraction > 0.65, 'the new score records the missing source content directly');
+  assert.equal(r.verdict, 'content-erased');
+  assert.equal(paidRenderDecision(r, 'hybrid').keep, false);
+  assert.match(differenceMessage(r, 'hybrid') ?? '', /erased a large part of the map into blank paper/);
+  assert.match(differenceMessage(r, 'hybrid') ?? '', /exact map is unchanged/);
+});
+
+test('plain-paper source is not mistaken for erased photo content', () => {
+  // A farmer may deliberately choose the paper underlay. White that was already present is not
+  // missing content; the pass is judged by whether it illustrated the marked features.
+  const paper = solid(255, 255, 255);
+  const illustrated = repainted(paper, 0.55);
+  const r = compareRenders(paper, illustrated);
+
+  assert.equal(r.blankedFraction, 0);
+  assert.equal(r.verdict, 'redrawn');
+});
+
+test('erasing sparse marks from a paper plan is content loss, not a successful redraw', () => {
+  const paperPlan = solid(255, 255, 255);
+  // Twenty per cent of the sheet contains the farmer's actual plan; the rest is intentional paper.
+  for (let i = 0; i < PIXELS * 0.2 * 4; i += 4) {
+    paperPlan[i] = 70; paperPlan[i + 1] = 110; paperPlan[i + 2] = 55;
+  }
+  const erased = solid(255, 255, 255);
+  const r = compareRenders(paperPlan, erased);
+
+  assert.equal(r.blankedFraction, 1, 'all source content was erased even though most pixels began white');
+  assert.equal(r.verdict, 'content-erased');
 });
 
 test('the threshold sits between a token change and a real one', () => {
