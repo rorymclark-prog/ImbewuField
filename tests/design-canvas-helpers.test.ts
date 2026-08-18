@@ -27,6 +27,7 @@ import {
   itemLayerKeys,
   lineLayerKeys,
   selectableIdsForLayer,
+  selectableIdsForLayerChild,
   zoneLayerKey,
 } from '../lib/design-layer-membership.ts';
 
@@ -587,6 +588,45 @@ test('a layer tick selects only objects editable on the current wizard step', ()
 
   const earthworksDesign: DesignCanvasState = { ...design, step: 'earthworks' };
   assert.deepEqual(selectableIdsForLayer(earthworksDesign, 'earthworks'), ['swale']);
+});
+
+test('a child selector targets only its own editable sublayer', () => {
+  const design: DesignCanvasState = {
+    siteId: 'child-layer-test',
+    frame: { centerLng: 31, centerLat: -28, zoom: 18, imgW: 960, imgH: 640, mPerPx: 0.2 },
+    items: [
+      { id: 'tank', defId: 'jojo_5000', x: 0.2, y: 0.2 },
+      { id: 'tap', defId: 'tap_point', x: 0.4, y: 0.2 },
+      { id: 'citrus', defId: 'tree_citrus', x: 0.6, y: 0.2 },
+    ],
+    zones: [{ id: 'staple', feature: 'staple_garden', zone: 0, points: [[0.1, 0.4], [0.3, 0.4], [0.2, 0.6]] }],
+    lines: [
+      { id: 'pipe', kind: 'pipe', points: [[0.1, 0.7], [0.8, 0.7]] },
+      { id: 'windbreak', kind: 'windbreak', points: [[0.1, 0.8], [0.8, 0.8]] },
+    ],
+    step: 'water',
+    updatedAt: '2026-08-18T00:00:00.000Z',
+  };
+
+  assert.deepEqual(selectableIdsForLayerChild(design, 'water', 'storage'), ['tank']);
+  assert.deepEqual(selectableIdsForLayerChild(design, 'water', 'tapPoints'), ['tap']);
+  assert.deepEqual(selectableIdsForLayerChild(design, 'water', 'pipes'), ['pipe']);
+  assert.deepEqual(selectableIdsForLayerChild(design, 'water', 'swales'), [],
+    'a visible swale from another step must stay locked');
+
+  const planting = { ...design, step: 'planting' as const };
+  assert.deepEqual(selectableIdsForLayerChild(planting, 'planting', 'fruit_nut'), ['citrus']);
+  assert.deepEqual(selectableIdsForLayerChild(planting, 'planting', 'staple_garden'), ['staple']);
+  assert.deepEqual(selectableIdsForLayerChild(planting, 'planting', 'windbreaks'), ['windbreak']);
+});
+
+test('a locked layer remains visible but cannot begin a geometry edit', () => {
+  const canvas = readFileSync(new URL('../components/design/DesignCanvas.tsx', import.meta.url), 'utf8');
+  assert.match(canvas, /const canMoveItem = \(item: PlacedItem\) => canMoveLayers\(itemLayerKeys\(item\.defId\)\)/);
+  assert.match(canvas, /const canMoveZone = \(zone: ZoneShape\) => canMoveLayers\(\[zoneLayerKey\(zone\)\]\)/);
+  assert.match(canvas, /const canMoveLine = \(line: LineShape\) => canMoveLayers\(lineLayerKeys\(line\.kind\)\)/);
+  assert.match(canvas, /ownedByCurrentStep\([^\n]+\) \|\| !canMoveItem\(item\)/,
+    'the item drag guard must honour the layer lock');
 });
 
 test('display-only layers never pretend their paint can be object-selected', () => {

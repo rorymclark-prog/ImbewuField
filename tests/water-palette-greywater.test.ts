@@ -116,6 +116,10 @@ test('Water owns an expandable child matrix instead of a separate panel below ev
     'the old separate Water infrastructure heading came back');
   assert.match(PALETTE_SOURCE, /if \(!childOn && !activeLayers\.water\)/,
     'turning on a Water child while its parent is off would appear to do nothing');
+  assert.match(PALETTE_SOURCE.slice(children, rowsEnd), /layerSelection\.childCount\('water', key\)/,
+    'each Water child needs its own Select box, not only a visibility eye');
+  assert.match(PALETTE_SOURCE.slice(children, rowsEnd), /layerSelection\.onToggleChild\('water', key\)/,
+    'a Water child selector must select its own objects');
   assert.match(PALETTE_SOURCE, /minHeight: compactDesktopLayerPanel \? 32 : 44/);
 });
 
@@ -130,6 +134,8 @@ test('Planting owns the same expandable child matrix, grouped by what a farmer n
   assert.match(PALETTE_SOURCE.slice(children, rowsEnd), /PLANTING_SUBLAYER_ORDER\.map/);
   assert.match(PALETTE_SOURCE, /if \(!childOn && !activeLayers\.planting\)/,
     'turning on a Planting child while its parent is off would appear to do nothing');
+  assert.match(PALETTE_SOURCE.slice(children, rowsEnd), /layerSelection\.childCount\('planting', key\)/,
+    'each Planting child needs its own Select box');
   assert.match(CANVAS_SOURCE, /plantingSublayerForElement\(item\.defId\)/,
     'Planting child toggles must gate the actual painted elements');
 

@@ -50,6 +50,23 @@ const LINE_ALSO_LAYERS: Partial<Record<LineShape['kind'], DesignLayerKey[]>> = {
 // as the canvas so a child tick cannot silently target a different set from its parent layer.
 export type PlantingSublayer = PlantingGroup | 'windbreaks' | 'staple_garden';
 
+/** Water's map-control groups. One shared mapping keeps the canvas, its child eyes and child
+ * selectors talking about exactly the same saved marks. */
+export type WaterInfrastructureLayer = 'storage' | 'tapPoints' | 'pipes' | 'drip' | 'swales';
+
+export function waterInfrastructureForElement(defId: string): WaterInfrastructureLayer | null {
+  if (defId === 'tap_point') return 'tapPoints';
+  if (defId === 'rain_barrel' || defId.startsWith('jojo_')) return 'storage';
+  return null;
+}
+
+export function waterInfrastructureForLine(kind: LineShape['kind']): WaterInfrastructureLayer | null {
+  if (kind === 'pipe' || kind === 'greywater') return 'pipes';
+  if (kind === 'drip') return 'drip';
+  if (kind === 'swale') return 'swales';
+  return null;
+}
+
 export const PLANTING_SUBLAYER_LABEL: Record<PlantingSublayer, string> = {
   beds: 'Beds & strips',
   indigenous_fruit: 'Indigenous fruit',
@@ -208,5 +225,47 @@ export function selectableIdsForLayer(
     if (ownedByCurrentStep(state.step, { kind: 'line', lineKind: line.kind })) ids.push(line.id);
   }
 
+  return ids;
+}
+
+/**
+ * IDs a child selector may select on the current wizard step.
+ *
+ * This starts with selectableIdsForLayer, rather than scanning the state independently, so a
+ * sublayer tick cannot select context from a different step just because its parent can paint it.
+ */
+export function selectableIdsForLayerChild(
+  state: DesignCanvasState,
+  layer: DesignLayerKey,
+  child: WaterInfrastructureLayer | PlantingSublayer | LayerElementVisibilityKey,
+): string[] {
+  const selectable = new Set(selectableIdsForLayer(state, layer));
+  const ids: string[] = [];
+  const add = (id: string, belongs: boolean) => {
+    if (belongs && selectable.has(id)) ids.push(id);
+  };
+
+  for (const item of state.items) {
+    const key = layer === 'water'
+      ? waterInfrastructureForElement(item.defId)
+      : layer === 'planting'
+        ? plantingSublayerForElement(item.defId)
+        : layerElementKeyForItem(item.defId);
+    add(item.id, key === child);
+  }
+  for (const line of state.lines) {
+    const key = layer === 'water'
+      ? waterInfrastructureForLine(line.kind)
+      : layer === 'planting'
+        ? plantingSublayerForLine(line.kind)
+        : layerElementKeyForLine(line.kind);
+    add(line.id, key === child);
+  }
+  for (const zone of state.zones) {
+    const key = layer === 'planting'
+      ? plantingSublayerForZone(zone)
+      : layerElementKeyForZone(zone);
+    add(zone.id, key === child);
+  }
   return ids;
 }

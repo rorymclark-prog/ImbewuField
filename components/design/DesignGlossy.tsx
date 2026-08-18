@@ -11932,6 +11932,10 @@ export default function DesignGlossy({
   const [storageWarning, setStorageWarning] = useState<string | null>(null);
   const [galleryOpen, setGalleryOpen] = useState(false);
   const [galleryViewId, setGalleryViewId] = useState<string | null>(null);
+  // The centre stage is the only part of this workspace wide enough to judge a plan. The right
+  // rail remains useful for a quick pick and export facts, but All sheets belongs here rather
+  // than in a small modal grid where every map is reduced to a postage stamp.
+  const [stageScope, setStageScope] = useState<'sheet' | 'saved'>('sheet');
   // A gallery choice is automatic once per site+sheet. Keeping the handled key separate means a
   // farmer can press the highlighted row to return to the generate view without it springing open
   // again on the next render.
@@ -15190,17 +15194,80 @@ export default function DesignGlossy({
       {!compact && (
         <div className={styles.stageToolbar}>
           <div className={styles.stageTabs} role="group" aria-label={t('designGlossyPreviewScope')}>
-            <button type="button" className={`${styles.stageTab} ${styles.stageTabActive}`}>{t('designGlossyThisSheet')}</button>
             <button
               type="button"
-              className={styles.stageTab}
-              onClick={() => { setGalleryViewId(null); setGalleryOpen(true); }}
+              className={`${styles.stageTab} ${stageScope === 'sheet' ? styles.stageTabActive : ''}`}
+              aria-pressed={stageScope === 'sheet'}
+              onClick={() => setStageScope('sheet')}
+            >
+              {t('designGlossyThisSheet')}
+            </button>
+            <button
+              type="button"
+              className={`${styles.stageTab} ${stageScope === 'saved' ? styles.stageTabActive : ''}`}
+              aria-pressed={stageScope === 'saved'}
+              onClick={() => setStageScope('saved')}
             >
               {t('designGlossyAllSheets')}
             </button>
           </div>
         </div>
       )}
+      {stageScope === 'saved' && !compact ? (
+        <div className={styles.savedGalleryStage}>
+          <div className={styles.savedGalleryHeader}>
+            <div>
+              <strong>{formatDesignTranslation(t('designGlossySavedMaps'), { count: gallery.length })}</strong>
+              <span>{gallerySiteName}</span>
+            </div>
+            <button
+              type="button"
+              className={styles.quietButton}
+              onClick={() => { setGalleryViewId(null); setGalleryOpen(true); }}
+            >
+              {t('designGlossyManage')}
+            </button>
+          </div>
+          {gallery.length === 0 ? (
+            <div className={styles.stageEmpty}>
+              <p>{t('designGlossyNoSaved')}</p>
+            </div>
+          ) : (
+            <div className={styles.savedGalleryGrid}>
+              {[...gallery].reverse().map((item) => {
+                const chip = galleryTileChip(item.resultKind);
+                return (
+                  <button
+                    key={item.id}
+                    type="button"
+                    className={styles.savedGalleryTile}
+                    onClick={() => {
+                      setGalleryViewId(item.id);
+                      setStageScope('sheet');
+                    }}
+                    aria-label={formatDesignTranslation(t('designGlossyOpenResult'), {
+                      label: item.label,
+                      result: galleryResultBadge(item),
+                    })}
+                  >
+                    <span className={styles.savedGalleryImage}>
+                      {item.thumb ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img src={item.thumb} alt="" loading="lazy" />
+                      ) : (
+                        <span>{item.label}</span>
+                      )}
+                      {chip && <span className={styles.savedGalleryBadge} style={{ background: chip.bg, color: chip.fg }}>{chip.text}</span>}
+                    </span>
+                    <span className={styles.savedGalleryLabel}>{item.label}</span>
+                    <span className={styles.savedGalleryMeta}>{galleryResultBadge(item)}</span>
+                  </button>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      ) : <>
       {lockedPolishStage && (
         <div
           role="status"
@@ -15441,6 +15508,7 @@ export default function DesignGlossy({
           </div>
         </div>
       )}
+      </>}
       </section>
 
       <div className={compact ? undefined : styles.actionsRail} style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>

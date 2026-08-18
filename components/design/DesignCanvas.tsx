@@ -27,8 +27,12 @@ import {
   plantingSublayerForElement,
   plantingSublayerForLine,
   plantingSublayerForZone,
+  waterInfrastructureForElement,
+  waterInfrastructureForLine,
+  zoneLayerKey,
   type PlantingSublayer,
   type LayerElementVisibilityKey,
+  type WaterInfrastructureLayer,
 } from '@/lib/design-layer-membership';
 // SPECIES is NOT imported at module scope — lib/species-catalog.ts is 197 species / ~224KB, and
 // every farmer who opens /design paid for it whether or not they ever placed a species-specific
@@ -107,7 +111,6 @@ function readSourceFeatureId(shape: unknown): string | undefined {
 
 type ActiveLayers = DesignLayerState;
 
-type WaterInfrastructureLayer = 'storage' | 'tapPoints' | 'pipes' | 'drip' | 'swales';
 type WaterInfrastructurePresentation = {
   visibility: Record<WaterInfrastructureLayer, boolean>;
 };
@@ -118,18 +121,6 @@ type LayerElementPresentation = {
   visibility: Partial<Record<LayerElementVisibilityKey, boolean>>;
 };
 
-function waterInfrastructureForElement(defId: string): WaterInfrastructureLayer | null {
-  if (defId === 'tap_point') return 'tapPoints';
-  if (defId === 'rain_barrel' || defId.startsWith('jojo_')) return 'storage';
-  return null;
-}
-
-function waterInfrastructureForLine(kind: LineShape['kind']): WaterInfrastructureLayer | null {
-  if (kind === 'pipe' || kind === 'greywater') return 'pipes';
-  if (kind === 'drip') return 'drip';
-  if (kind === 'swale') return 'swales';
-  return null;
-}
 
 interface RefLayers {
   boundary: Array<[number, number]>;
@@ -150,6 +141,8 @@ export interface DesignCanvasProps {
   areaFeature?: GroundFeatureKind | null;
   lineKind: LineShape['kind'];
   activeLayers: ActiveLayers;
+  /** The Layers panel can keep a layer visible but lock its geometry against map edits. */
+  movableLayers?: DesignLayerState;
   /** Visibility and opacity for Water's named sublayers. Paint-time only: no saved geometry
    * or plan state is altered by a facilitator fading a route to explain it. */
   waterInfrastructure?: WaterInfrastructurePresentation;
@@ -583,6 +576,7 @@ export default function DesignCanvas({
   areaFeature,
   lineKind,
   activeLayers,
+  movableLayers,
   waterInfrastructure,
   plantingSublayers,
   layerElements,
@@ -650,6 +644,10 @@ export default function DesignCanvas({
   const layerElementPresentation = (key: LayerElementVisibilityKey | null) => ({
     visible: !key || layerElements?.visibility[key] !== false,
   });
+  const canMoveLayers = (keys: Array<keyof ActiveLayers>) => keys.every((key) => movableLayers?.[key] !== false);
+  const canMoveItem = (item: PlacedItem) => canMoveLayers(itemLayerKeys(item.defId));
+  const canMoveZone = (zone: ZoneShape) => canMoveLayers([zoneLayerKey(zone)]);
+  const canMoveLine = (line: LineShape) => canMoveLayers(lineLayerKeys(line.kind));
 
   // Which traced layer is currently tapped (shows its "Use in design" affordance).
   const [activeTracedId, setActiveTracedId] = useState<string | null>(null);
@@ -1313,7 +1311,7 @@ export default function DesignCanvas({
     // Not owned by the step we're currently on (e.g. a Water-step tank while drawing Zones) —
     // inert. Bail BEFORE stopPropagation/onSelect so the tap falls through to whatever the
     // current step's own background/draw handler would have done with it.
-    if (!item || !def || !ownedByCurrentStep(state.step, { kind: 'item', category: def.category, defId: item.defId })) return;
+    if (!item || !def || !ownedByCurrentStep(state.step, { kind: 'item', category: def.category, defId: item.defId }) || !canMoveItem(item)) return;
     e.stopPropagation();
     const additive = additiveSelect || e.shiftKey || e.metaKey || e.ctrlKey;
     // A press-drag starting on a shape that's ALREADY part of a multi-selection moves the WHOLE
@@ -1359,10 +1357,10 @@ export default function DesignCanvas({
     // traced on Base, while the farmer is on Zones) must not grab; the exact bug this guards.
     if (kind === 'zone') {
       const z = state.zones.find((zz) => zz.id === shapeId);
-      if (!z || !ownedByCurrentStep(state.step, { kind: 'zone', feature: z.feature })) return;
+      if (!z || !ownedByCurrentStep(state.step, { kind: 'zone', feature: z.feature }) || !canMoveZone(z)) return;
     } else {
       const l = state.lines.find((ll) => ll.id === shapeId);
-      if (!l || !ownedByCurrentStep(state.step, { kind: 'line', lineKind: l.kind })) return;
+      if (!l || !ownedByCurrentStep(state.step, { kind: 'line', lineKind: l.kind }) || !canMoveLine(l)) return;
     }
     e.stopPropagation();
     (e.target as Element).setPointerCapture?.(e.pointerId);
@@ -1444,7 +1442,7 @@ export default function DesignCanvas({
       kind === 'zone'
         ? ownedByCurrentStep(state.step, { kind: 'zone', feature: (shape as ZoneShape).feature })
         : ownedByCurrentStep(state.step, { kind: 'line', lineKind: (shape as LineShape).kind });
-    if (!owned) return;
+    if (!owned || (kind === 'zone' ? !canMoveZone(shape as ZoneShape) : !canMoveLine(shape as LineShape))) return;
     e.stopPropagation();
     const additive = additiveSelect || e.shiftKey || e.metaKey || e.ctrlKey;
     // See startDragItem — same group-move branch, generalised to zones/lines.
@@ -1473,17 +1471,17 @@ export default function DesignCanvas({
     for (const it of state.items) {
       if (!idSet.has(it.id)) continue;
       const def = ELEMENTS_BY_ID[it.defId];
-      if (def && ownedByCurrentStep(state.step, { kind: 'item', category: def.category, defId: it.defId })) {
+      if (def && ownedByCurrentStep(state.step, { kind: 'item', category: def.category, defId: it.defId }) && canMoveItem(it)) {
         itemOrigins.set(it.id, [it.x, it.y]);
       }
     }
     for (const z of state.zones) {
-      if (idSet.has(z.id) && ownedByCurrentStep(state.step, { kind: 'zone', feature: z.feature })) {
+      if (idSet.has(z.id) && ownedByCurrentStep(state.step, { kind: 'zone', feature: z.feature }) && canMoveZone(z)) {
         zoneOrigins.set(z.id, z.points);
       }
     }
     for (const l of state.lines) {
-      if (idSet.has(l.id) && ownedByCurrentStep(state.step, { kind: 'line', lineKind: l.kind })) {
+      if (idSet.has(l.id) && ownedByCurrentStep(state.step, { kind: 'line', lineKind: l.kind }) && canMoveLine(l)) {
         lineOrigins.set(l.id, l.points);
       }
     }
@@ -1579,7 +1577,7 @@ export default function DesignCanvas({
       kind === 'zone'
         ? ownedByCurrentStep(state.step, { kind: 'zone', feature: (shape as ZoneShape).feature })
         : ownedByCurrentStep(state.step, { kind: 'line', lineKind: (shape as LineShape).kind });
-    if (!owned) return;
+    if (!owned || (kind === 'zone' ? !canMoveZone(shape as ZoneShape) : !canMoveLine(shape as LineShape))) return;
     e.stopPropagation();
     onSelect(id, additiveSelect || e.shiftKey || e.metaKey || e.ctrlKey);
     const w = worldFromClient(e.clientX, e.clientY);
@@ -1734,7 +1732,7 @@ export default function DesignCanvas({
     if (tool !== 'select') return;
     const item = state.items.find((it) => it.id === id);
     const def = item && ELEMENTS_BY_ID[item.defId];
-    if (!item || !def || !ownedByCurrentStep(state.step, { kind: 'item', category: def.category, defId: item.defId })) return;
+    if (!item || !def || !ownedByCurrentStep(state.step, { kind: 'item', category: def.category, defId: item.defId }) || !canMoveItem(item)) return;
     e.stopPropagation();
     (e.target as Element).setPointerCapture?.(e.pointerId);
     dragResizeId.current = id;
@@ -1798,7 +1796,7 @@ export default function DesignCanvas({
     if (tool !== 'select') return;
     const item = state.items.find((it) => it.id === id);
     const def = item && ELEMENTS_BY_ID[item.defId];
-    if (!item || !def || !ownedByCurrentStep(state.step, { kind: 'item', category: def.category, defId: item.defId })) return;
+    if (!item || !def || !ownedByCurrentStep(state.step, { kind: 'item', category: def.category, defId: item.defId }) || !canMoveItem(item)) return;
     e.stopPropagation();
     (e.target as Element).setPointerCapture?.(e.pointerId);
     dragRotateId.current = id;
@@ -2676,7 +2674,7 @@ export default function DesignCanvas({
             // ownedByCurrentStep + the startDrag* guards above). `interactive` additionally
             // requires the select tool, matching every existing tool==='select' gate here.
             const owned = ownedByCurrentStep(state.step, { kind: 'zone', feature: z.feature });
-            const interactive = tool === 'select' && owned && !lockedOut(z.id);
+            const interactive = tool === 'select' && owned && canMoveZone(z) && !lockedOut(z.id);
             const def = ZONE_DEFS[z.zone];
             // Ground features (house/patio/…) render as filled, labelled SOLID polygons —
             // "what is there"; plain zones keep their dashed effort-zone ring + number badge.
@@ -3040,7 +3038,7 @@ export default function DesignCanvas({
             const style = lineStroke(line.kind, earthworksOnly, line.widthM, mPerPx > 0 ? 1 / mPerPx : undefined);
             // See the zones loop above — same step-ownership lock (Rory's boundary-grab bug).
             const owned = ownedByCurrentStep(state.step, { kind: 'line', lineKind: line.kind });
-            const interactive = tool === 'select' && owned && !lockedOut(line.id);
+            const interactive = tool === 'select' && owned && canMoveLine(line) && !lockedOut(line.id);
             const isSelected = selectedId === line.id;
             const isHighlighted = selectedIds.includes(line.id);
             const isDraggingVertexOfThisShape = dragVertex.current?.shapeId === line.id && dragVertex.current.kind === 'line' && vertexPos;
@@ -3606,7 +3604,7 @@ export default function DesignCanvas({
           const isHighlighted = selectedIds.includes(item.id);
           // See the zones loop above — same step-ownership lock (Rory's boundary-grab bug).
           const owned = ownedByCurrentStep(state.step, { kind: 'item', category: def.category, defId: item.defId });
-          const interactive = tool === 'select' && owned && !lockedOut(item.id);
+          const interactive = tool === 'select' && owned && canMoveItem(item) && !lockedOut(item.id);
           // The icon disc is a map SYMBOL, not geometry: chrome() holds it at one screen size at
           // every zoom (identical at k=1). Zoomed in it used to balloon with the footprint until
           // seven bed icons drowned the beds themselves (Rory: "maybe icons too?").
@@ -3690,7 +3688,7 @@ export default function DesignCanvas({
               {/* Label pills are NOT drawn here. They are laid out together in a second pass below
                   (see "Item label pills"), because de-collision needs to see every pill at once —
                   which a per-item render, by construction, cannot. */}
-              {isSelected && owned && onEditItem && (
+              {isSelected && interactive && onEditItem && (
                 <g
                   transform={`translate(${actionX}, ${-hPx / 2 - itemActionR * 2.15})`}
                   onPointerDown={(e) => {
@@ -3707,7 +3705,7 @@ export default function DesignCanvas({
                   </text>
                 </g>
               )}
-              {isSelected && owned && (
+              {isSelected && interactive && (
                 <g
                   transform={`translate(${actionX}, ${-hPx / 2 + itemActionR * 0.55})`}
                   {...tapOnly(() => deleteItem(item.id))}
