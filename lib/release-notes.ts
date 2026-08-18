@@ -35,6 +35,16 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '18 August',
+    sha: '032c90d',
+    changes: [
+      'Every expanded layer group now has its own Select box',
+      'Saved maps now fill the centre so you can judge them at a useful size',
+      'You can lock a map layer from moving while keeping it visible',
+      'The Moringa card now has a larger, clearer tree picture',
+    ],
+  },
+  {
+    when: '18 August',
     sha: 'e95c732',
     changes: [
       'Gemini maps now start from cleaner placement marks for a less sticker-like aerial plan',
