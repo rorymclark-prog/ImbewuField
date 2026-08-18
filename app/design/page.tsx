@@ -107,7 +107,10 @@ import {
   plantingSublayerForElement,
   plantingSublayerForLine,
   plantingSublayerForZone,
+  waterInfrastructureForElement,
+  waterInfrastructureForLine,
   selectableIdsForLayer,
+  selectableIdsForLayerChild,
   type LayerElementVisibilityKey,
 } from '@/lib/design-layer-membership';
 import { biomeKeyForName } from '@/lib/biome';
@@ -127,6 +130,8 @@ import CardsStepper from '@/components/design/CardsStepper';
 import { uiVersion, UI_VERSION_EVENT } from '@/lib/ui-version';
 import { STUDIO_AREA_FOR, type AddActionId } from '@/lib/add-actions';
 import type { GlossyLayerFilter } from '@/components/design/DesignGlossy';
+
+type LayerChildSelectionKey = Parameters<typeof selectableIdsForLayerChild>[2];
 // StepGuide, DesignAdvisor and BasePhotoImport are lazy — see the studioPart wrappers at the
 // bottom of this file. They are the bundle-diet counterpart of DesignGlossyLazy/DesignPrintLazy:
 // none of the three is needed to SHOW the farmer their design, and BasePhotoImport alone drags
@@ -182,20 +187,6 @@ const DEFAULT_PLANTING_SUBLAYER_VISIBILITY: PlantingSublayerVisibility = {
   windbreaks: true,
   staple_garden: true,
 };
-function waterInfrastructureForElement(defId: string | null): keyof WaterInfrastructureVisibility | null {
-  if (!defId) return null;
-  if (defId === 'tap_point') return 'tapPoints';
-  if (defId === 'rain_barrel' || defId.startsWith('jojo_')) return 'storage';
-  return null;
-}
-
-function waterInfrastructureForLine(kind: LineShape['kind']): keyof WaterInfrastructureVisibility | null {
-  if (kind === 'pipe' || kind === 'greywater') return 'pipes';
-  if (kind === 'drip') return 'drip';
-  if (kind === 'swale') return 'swales';
-  return null;
-}
-
 // PRESS AND HOLD on any of these controls to keep adjusting, accelerating as you go (Rory: "when
 // i hold down with the mouse on these arrows it must go without having to click repeatedly for
 // rapid adjustment also quicker than normal"). Tuned so a single held press can cross the whole
@@ -863,6 +854,11 @@ function DesignStudioInner() {
     contours: false, // opt-in overlay (approximate, from slope + aspect)
     sector: false, // opt-in overlay (deterministic sun/wind/fire/water/frost energies, from lib/sector)
   });
+  // Separate from show/select. A visible layer can remain useful context while its geometry is
+  // locked against an accidental drag; the checked state is deliberately the safe default.
+  const [movableLayers, setMovableLayers] = useState<DesignLayerState>(() =>
+    Object.fromEntries(DESIGN_LAYER_KEYS.map((layer) => [layer, true])) as DesignLayerState,
+  );
   // CAD/GIS convention: visibility and object selection are independent columns. The helper uses
   // the SAME membership authority as the canvas, and only returns shapes editable on this wizard
   // step, so this batch shortcut can never bypass the foreign-step geometry lock.
@@ -876,6 +872,26 @@ function DesignStudioInner() {
   const toggleLayerSelection = useCallback((layer: DesignLayerKey) => {
     if (!canvasState) return;
     const ids = selectableIdsForLayer(canvasState, layer);
+    if (ids.length === 0) return;
+    handleSetTool('select');
+    setSelectedIds((previous) => {
+      const next = new Set(previous);
+      const allSelected = ids.every((id) => next.has(id));
+      for (const id of ids) {
+        if (allSelected) next.delete(id);
+        else next.add(id);
+      }
+      return [...next];
+    });
+  }, [canvasState, handleSetTool]);
+  const childSelectionCount = useCallback((layer: DesignLayerKey, child: string) => {
+    const ids = canvasState ? selectableIdsForLayerChild(canvasState, layer, child as LayerChildSelectionKey) : [];
+    const selected = new Set(selectedIds);
+    return { selected: ids.filter((id) => selected.has(id)).length, total: ids.length };
+  }, [canvasState, selectedIds]);
+  const toggleChildSelection = useCallback((layer: DesignLayerKey, child: string) => {
+    if (!canvasState) return;
+    const ids = selectableIdsForLayerChild(canvasState, layer, child as LayerChildSelectionKey);
     if (ids.length === 0) return;
     handleSetTool('select');
     setSelectedIds((previous) => {
@@ -905,7 +921,7 @@ function DesignStudioInner() {
     >;
   }, [canvasState]);
   useEffect(() => {
-    const waterKey = waterInfrastructureForElement(placeDefId);
+    const waterKey = waterInfrastructureForElement(placeDefId ?? '');
     const plantingKey = placeDefId ? plantingSublayerForElement(placeDefId) : null;
     const elementKey = placeDefId ? layerElementKeyForItem(placeDefId) : null;
     if (!waterKey && !plantingKey && !elementKey) return;
@@ -3415,6 +3431,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               areaFeature={areaFeature}
               lineKind={lineKind}
               activeLayers={activeLayers}
+              movableLayers={movableLayers}
               waterInfrastructure={{ visibility: waterInfrastructureVisibility }}
               plantingSublayers={{ visibility: plantingSublayerVisibility }}
               layerElements={{ visibility: layerElementVisibility }}
@@ -4019,7 +4036,13 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           lineKind={lineKind}
           setLineKind={setLineKind}
           activeLayers={activeLayers}
-          layerSelection={{ counts: layerSelectionCounts, onToggle: toggleLayerSelection }}
+          layerSelection={{
+            counts: layerSelectionCounts,
+            onToggle: toggleLayerSelection,
+            childCount: childSelectionCount,
+            onToggleChild: toggleChildSelection,
+          }}
+          layerMovement={{ movable: movableLayers, onMovableChange: setMovableLayers }}
           waterInfrastructure={{
             visibility: waterInfrastructureVisibility,
             onVisibilityChange: setWaterInfrastructureVisibility,

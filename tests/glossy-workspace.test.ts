@@ -54,6 +54,22 @@ test('saved-map rail stays thumbnail-only and the centre loads at most one full 
     'the selected row should be the only saved sheet promoted to the centre preview');
 });
 
+test('All sheets uses the large centre stage instead of reducing maps to a modal grid', () => {
+  const toolbar = glossy.indexOf('<div className={styles.stageToolbar}');
+  const savedStage = glossy.indexOf('className={styles.savedGalleryStage}', toolbar);
+  const mapStageEnd = glossy.indexOf('<div className={compact ? undefined : styles.actionsRail}', savedStage);
+  const stage = glossy.slice(toolbar, mapStageEnd);
+
+  assert.ok(toolbar >= 0 && savedStage > toolbar && mapStageEnd > savedStage,
+    'the centre stage must own the All sheets view');
+  assert.match(stage, /setStageScope\('saved'\)/);
+  assert.match(stage, /stageScope === 'saved'/);
+  assert.match(stage, /setGalleryViewId\(item\.id\);[\s\S]*?setStageScope\('sheet'\)/,
+    'opening a large saved-map tile should return to that map’s full preview');
+  assert.match(css, /\.savedGalleryGrid \{[\s\S]*?minmax\(210px, 1fr\)/,
+    'saved maps need a card size useful for judging a whole plan');
+});
+
 test('a phone never repairs legacy thumbnails beside an exact render', () => {
   const loadStart = glossy.indexOf('void loadSheetMetas(gallerySiteId)');
   const pushStart = glossy.indexOf('const pushGallery = useCallback', loadStart);

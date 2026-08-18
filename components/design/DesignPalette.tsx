@@ -99,7 +99,10 @@ import {
   plantingSublayerForElement,
   plantingSublayerForLine,
   plantingSublayerForZone,
+  waterInfrastructureForElement,
+  waterInfrastructureForLine,
   type PlantingSublayer,
+  type WaterInfrastructureLayer,
 } from '@/lib/design-layer-membership';
 import { formatDesignTranslation } from '@/lib/design-studio-i18n';
 import { useLanguage } from '@/lib/i18n';
@@ -117,23 +120,9 @@ type ToolKind = 'select' | 'place' | 'zone' | 'line';
 
 type ActiveLayers = DesignLayerState;
 
-export type WaterInfrastructureLayer = 'storage' | 'tapPoints' | 'pipes' | 'drip' | 'swales';
+export type { WaterInfrastructureLayer } from '@/lib/design-layer-membership';
 export type WaterInfrastructureVisibility = Record<WaterInfrastructureLayer, boolean>;
 export type PlantingSublayerVisibility = Record<PlantingSublayer, boolean>;
-
-function waterInfrastructureForElement(defId: string | null): WaterInfrastructureLayer | null {
-  if (!defId) return null;
-  if (defId === 'tap_point') return 'tapPoints';
-  if (defId === 'rain_barrel' || defId.startsWith('jojo_')) return 'storage';
-  return null;
-}
-
-function waterInfrastructureForLine(kind: LineShape['kind']): WaterInfrastructureLayer | null {
-  if (kind === 'pipe' || kind === 'greywater') return 'pipes';
-  if (kind === 'drip') return 'drip';
-  if (kind === 'swale') return 'swales';
-  return null;
-}
 
 export type DesignMode = 'guided' | 'pro';
 
@@ -169,6 +158,15 @@ export interface DesignPaletteProps {
   layerSelection: {
     counts: Record<DesignLayerKey, { selected: number; total: number }>;
     onToggle: (layer: DesignLayerKey) => void;
+    /** Child selectors share the parent selection authority, but target just their own group. */
+    childCount: (layer: DesignLayerKey, child: string) => { selected: number; total: number };
+    onToggleChild: (layer: DesignLayerKey, child: string) => void;
+  };
+  /** Checked means this layer's objects may be edited on the map. It is deliberately separate
+   * from visibility and batch selection so a farmer can keep a layer visible as context. */
+  layerMovement: {
+    movable: DesignLayerState;
+    onMovableChange: (next: DesignLayerState) => void;
   };
   /** Water's working sublayers are presentation controls only. They never alter the saved
    * geometry; the canvas decides which existing marks to paint. */
@@ -493,6 +491,7 @@ export default function DesignPalette({
   activeLayers,
   setActiveLayers,
   layerSelection,
+  layerMovement,
   waterInfrastructure = null,
   plantingSublayers = null,
   layerElements = null,
@@ -1590,14 +1589,15 @@ export default function DesignPalette({
                   style={{
                     flexBasis: '100%', display: 'grid',
                     gridTemplateColumns: compactDesktopLayerPanel
-                      ? '32px 32px 28px minmax(0,1fr)'
-                      : '40px 40px 34px minmax(0,1fr)',
+                      ? '32px 32px 32px 28px minmax(0,1fr)'
+                      : '40px 40px 40px 34px minmax(0,1fr)',
                     alignItems: 'center', gap: 3, minHeight: 18, padding: '0 5px', color: '#776F63',
                     fontSize: 8.5, fontWeight: 800, letterSpacing: 0.45, textTransform: 'uppercase',
                   }}
                 >
                   <span style={{ textAlign: 'center' }}>Show</span>
                   <span style={{ textAlign: 'center' }}>Select</span>
+                  <span style={{ textAlign: 'center' }}>Move</span>
                   <span />
                   <span>Layer</span>
                 </div>
@@ -1606,6 +1606,7 @@ export default function DesignPalette({
                   const selection = layerSelection.counts[lt.key];
                   const allSelected = selection.total > 0 && selection.selected === selection.total;
                   const someSelected = selection.selected > 0 && !allSelected;
+                  const movable = layerMovement.movable[lt.key];
                   const elementChildren = layerElements?.childrenByLayer[lt.key] ?? [];
                   // Every layer gets the same disclosure affordance. Some are presentation-only
                   // (Labels, Contours, Site references), so their opened state honestly says there
@@ -1636,8 +1637,8 @@ export default function DesignPalette({
                             : someSelected || allSelected ? 'rgba(31,77,43,0.055)' : 'transparent',
                           color: DARK, display: 'grid',
                           gridTemplateColumns: compactDesktopLayerPanel
-                            ? '32px 32px 28px minmax(0,1fr) auto'
-                            : '40px 40px 34px minmax(0,1fr) auto',
+                            ? '32px 32px 32px 28px minmax(0,1fr) auto'
+                            : '40px 40px 40px 34px minmax(0,1fr) auto',
                           alignItems: 'center', gap: 3, opacity: on ? 1 : 0.52,
                         }}
                       >
@@ -1674,6 +1675,26 @@ export default function DesignPalette({
                           }}
                         >
                           <SelectionIcon size={20} strokeWidth={selection.selected > 0 ? 2.35 : 1.8} aria-hidden />
+                        </button>
+                        <button
+                          type="button"
+                          role="checkbox"
+                          aria-checked={movable}
+                          aria-label={`${movable ? 'Lock' : 'Allow moving'} ${t(lt.labelKey)} on the map`}
+                          title={movable ? `Lock ${t(lt.labelKey)} on the map` : `Allow moving ${t(lt.labelKey)} on the map`}
+                          disabled={selection.total === 0}
+                          onClick={() => layerMovement.onMovableChange({ ...layerMovement.movable, [lt.key]: !movable })}
+                          style={{
+                            width: compactDesktopLayerPanel ? 32 : 40,
+                            height: compactDesktopLayerPanel ? 32 : 40,
+                            padding: 0, border: 'none', borderRadius: 9,
+                            display: 'grid', placeItems: 'center',
+                            background: movable ? 'rgba(31,77,43,0.10)' : 'transparent',
+                            color: selection.total === 0 ? '#C9C1B4' : movable ? GREEN : '#776F63',
+                            cursor: selection.total === 0 ? 'not-allowed' : 'pointer',
+                          }}
+                        >
+                          {movable ? <SquareCheckBig size={20} strokeWidth={2.35} aria-hidden /> : <Square size={20} strokeWidth={1.8} aria-hidden />}
                         </button>
                         <div
                           aria-hidden
@@ -1744,45 +1765,52 @@ export default function DesignPalette({
                             ['swales', 'Swales'],
                           ] as const).map(([key, label]) => {
                             const childOn = waterInfrastructure.visibility[key];
+                            const childSelection = layerSelection.childCount('water', key);
+                            const childAllSelected = childSelection.total > 0 && childSelection.selected === childSelection.total;
+                            const childSomeSelected = childSelection.selected > 0 && !childAllSelected;
+                            const ChildSelectionIcon = childAllSelected ? SquareCheckBig : childSomeSelected ? SquareMinus : Square;
+                            const childSelectionLabel = childSelection.total === 0
+                              ? `${label} has no editable objects on this step`
+                              : childAllSelected
+                                ? `Deselect all ${childSelection.total} ${label} objects`
+                                : `Select all ${childSelection.total} ${label} objects`;
                             return (
-                              <button
+                              <div
                                 key={key}
-                                type="button"
-                                aria-label={`${childOn ? 'Hide' : 'Show'} ${label}`}
-                                aria-pressed={childOn}
-                                onClick={() => {
-                                  // A child cannot be visibly on while its parent is off. Turning
-                                  // one on therefore restores Water in the same action; turning the
-                                  // parent off still remembers every child choice for later.
-                                  if (!childOn && !activeLayers.water) {
-                                    setActiveLayers({ ...activeLayers, water: true });
-                                  }
-                                  // Do not leave a placement tool armed for a mark we just hid. It
-                                  // would save correctly but render nothing, the exact "my work
-                                  // disappeared" failure this panel is meant to prevent.
-                                  if (childOn && (
-                                    waterInfrastructureForElement(placeDefId) === key
-                                    || (tool === 'line' && waterInfrastructureForLine(lineKind) === key)
-                                  )) setTool('select');
-                                  waterInfrastructure.onVisibilityChange({ ...waterInfrastructure.visibility, [key]: !childOn });
-                                }}
                                 style={{
                                   minWidth: 0, minHeight: compactDesktopLayerPanel ? 34 : 40,
                                   padding: '3px 4px', borderRadius: 0,
-                                  border: 'none', borderBottom: '1px solid rgba(11,18,11,0.12)',
+                                  borderBottom: '1px solid rgba(11,18,11,0.12)',
                                   background: childOn ? 'rgba(255,255,255,0.48)' : 'transparent',
-                                  color: childOn ? DARK : '#877D6E', cursor: 'pointer',
-                                  display: 'grid', gridTemplateColumns: '24px minmax(0,1fr)',
+                                  color: childOn ? DARK : '#877D6E',
+                                  display: 'grid', gridTemplateColumns: '24px 24px minmax(0,1fr)',
                                   alignItems: 'center', gap: 4, textAlign: 'left',
                                 }}
                               >
-                                {childOn
-                                  ? <Eye size={16} strokeWidth={2.1} aria-hidden />
-                                  : <EyeOff size={16} strokeWidth={1.9} aria-hidden />}
-                                <span style={{ minWidth: 0, fontSize: 11.5, lineHeight: 1.18, fontWeight: 650 }}>
-                                  {label}
-                                </span>
-                              </button>
+                                <button type="button" aria-label={`${childOn ? 'Hide' : 'Show'} ${label}`} aria-pressed={childOn}
+                                  onClick={() => {
+                                    if (!childOn && !activeLayers.water) setActiveLayers({ ...activeLayers, water: true });
+                                    if (childOn && (waterInfrastructureForElement(placeDefId ?? '') === key || (tool === 'line' && waterInfrastructureForLine(lineKind) === key))) setTool('select');
+                                    waterInfrastructure.onVisibilityChange({ ...waterInfrastructure.visibility, [key]: !childOn });
+                                  }}
+                                  style={{ width: 24, height: 24, padding: 0, border: 'none', background: 'transparent', color: 'inherit', display: 'grid', placeItems: 'center', cursor: 'pointer' }}>
+                                  {childOn ? <Eye size={16} strokeWidth={2.1} aria-hidden /> : <EyeOff size={16} strokeWidth={1.9} aria-hidden />}
+                                </button>
+                                <button type="button" aria-label={childSelectionLabel} aria-pressed={childAllSelected} title={childSelectionLabel}
+                                  disabled={childSelection.total === 0} onClick={() => layerSelection.onToggleChild('water', key)}
+                                  style={{ width: 24, height: 24, padding: 0, border: 'none', background: childSelection.selected > 0 ? 'rgba(247,201,126,0.26)' : 'transparent', color: childSelection.total === 0 ? '#C9C1B4' : childSelection.selected > 0 ? GREEN : '#776F63', display: 'grid', placeItems: 'center', cursor: childSelection.total === 0 ? 'not-allowed' : 'pointer' }}>
+                                  <ChildSelectionIcon size={16} strokeWidth={childSelection.selected > 0 ? 2.35 : 1.8} aria-hidden />
+                                </button>
+                                <button type="button" aria-label={`${childOn ? 'Hide' : 'Show'} ${label}`} aria-pressed={childOn}
+                                  onClick={() => {
+                                    if (!childOn && !activeLayers.water) setActiveLayers({ ...activeLayers, water: true });
+                                    if (childOn && (waterInfrastructureForElement(placeDefId ?? '') === key || (tool === 'line' && waterInfrastructureForLine(lineKind) === key))) setTool('select');
+                                    waterInfrastructure.onVisibilityChange({ ...waterInfrastructure.visibility, [key]: !childOn });
+                                  }}
+                                  style={{ minWidth: 0, minHeight: 24, padding: 0, border: 'none', background: 'transparent', color: 'inherit', cursor: 'pointer', textAlign: 'left' }}>
+                                  <span style={{ minWidth: 0, fontSize: 11.5, lineHeight: 1.18, fontWeight: 650 }}>{label}</span>
+                                </button>
+                              </div>
                             );
                           })}
                         </div>
@@ -1803,44 +1831,52 @@ export default function DesignPalette({
                           {PLANTING_SUBLAYER_ORDER.map((key) => {
                             const childOn = plantingSublayers.visibility[key];
                             const label = PLANTING_SUBLAYER_LABEL[key];
+                            const childSelection = layerSelection.childCount('planting', key);
+                            const childAllSelected = childSelection.total > 0 && childSelection.selected === childSelection.total;
+                            const childSomeSelected = childSelection.selected > 0 && !childAllSelected;
+                            const ChildSelectionIcon = childAllSelected ? SquareCheckBig : childSomeSelected ? SquareMinus : Square;
+                            const childSelectionLabel = childSelection.total === 0
+                              ? `${label} has no editable objects on this step`
+                              : childAllSelected
+                                ? `Deselect all ${childSelection.total} ${label} objects`
+                                : `Select all ${childSelection.total} ${label} objects`;
                             return (
-                              <button
+                              <div
                                 key={key}
-                                type="button"
-                                aria-label={`${childOn ? 'Hide' : 'Show'} ${label}`}
-                                aria-pressed={childOn}
-                                onClick={() => {
-                                  // Reveal the parent with a child. Otherwise the button reports
-                                  // "on" while the canvas still has no way to paint that group.
-                                  if (!childOn && !activeLayers.planting) {
-                                    setActiveLayers({ ...activeLayers, planting: true });
-                                  }
-                                  // Do not leave a hidden mark armed: placement would succeed,
-                                  // save, and look as if it vanished until the child is restored.
-                                  if (childOn && (
-                                    plantingSublayerForElement(placeDefId ?? '') === key
-                                    || (tool === 'line' && plantingSublayerForLine(lineKind) === key)
-                                    || (areaFeature !== null && plantingSublayerForZone({ feature: areaFeature }) === key)
-                                  )) setTool('select');
-                                  plantingSublayers.onVisibilityChange({ ...plantingSublayers.visibility, [key]: !childOn });
-                                }}
                                 style={{
                                   minWidth: 0, minHeight: compactDesktopLayerPanel ? 34 : 40,
                                   padding: '3px 4px', borderRadius: 0,
-                                  border: 'none', borderBottom: '1px solid rgba(11,18,11,0.12)',
+                                  borderBottom: '1px solid rgba(11,18,11,0.12)',
                                   background: childOn ? 'rgba(255,255,255,0.48)' : 'transparent',
-                                  color: childOn ? DARK : '#877D6E', cursor: 'pointer',
-                                  display: 'grid', gridTemplateColumns: '24px minmax(0,1fr)',
+                                  color: childOn ? DARK : '#877D6E',
+                                  display: 'grid', gridTemplateColumns: '24px 24px minmax(0,1fr)',
                                   alignItems: 'center', gap: 4, textAlign: 'left',
                                 }}
                               >
-                                {childOn
-                                  ? <Eye size={16} strokeWidth={2.1} aria-hidden />
-                                  : <EyeOff size={16} strokeWidth={1.9} aria-hidden />}
-                                <span style={{ minWidth: 0, fontSize: 11.5, lineHeight: 1.18, fontWeight: 650 }}>
-                                  {label}
-                                </span>
-                              </button>
+                                <button type="button" aria-label={`${childOn ? 'Hide' : 'Show'} ${label}`} aria-pressed={childOn}
+                                  onClick={() => {
+                                    if (!childOn && !activeLayers.planting) setActiveLayers({ ...activeLayers, planting: true });
+                                    if (childOn && (plantingSublayerForElement(placeDefId ?? '') === key || (tool === 'line' && plantingSublayerForLine(lineKind) === key) || (areaFeature !== null && plantingSublayerForZone({ feature: areaFeature }) === key))) setTool('select');
+                                    plantingSublayers.onVisibilityChange({ ...plantingSublayers.visibility, [key]: !childOn });
+                                  }}
+                                  style={{ width: 24, height: 24, padding: 0, border: 'none', background: 'transparent', color: 'inherit', display: 'grid', placeItems: 'center', cursor: 'pointer' }}>
+                                  {childOn ? <Eye size={16} strokeWidth={2.1} aria-hidden /> : <EyeOff size={16} strokeWidth={1.9} aria-hidden />}
+                                </button>
+                                <button type="button" aria-label={childSelectionLabel} aria-pressed={childAllSelected} title={childSelectionLabel}
+                                  disabled={childSelection.total === 0} onClick={() => layerSelection.onToggleChild('planting', key)}
+                                  style={{ width: 24, height: 24, padding: 0, border: 'none', background: childSelection.selected > 0 ? 'rgba(247,201,126,0.26)' : 'transparent', color: childSelection.total === 0 ? '#C9C1B4' : childSelection.selected > 0 ? GREEN : '#776F63', display: 'grid', placeItems: 'center', cursor: childSelection.total === 0 ? 'not-allowed' : 'pointer' }}>
+                                  <ChildSelectionIcon size={16} strokeWidth={childSelection.selected > 0 ? 2.35 : 1.8} aria-hidden />
+                                </button>
+                                <button type="button" aria-label={`${childOn ? 'Hide' : 'Show'} ${label}`} aria-pressed={childOn}
+                                  onClick={() => {
+                                    if (!childOn && !activeLayers.planting) setActiveLayers({ ...activeLayers, planting: true });
+                                    if (childOn && (plantingSublayerForElement(placeDefId ?? '') === key || (tool === 'line' && plantingSublayerForLine(lineKind) === key) || (areaFeature !== null && plantingSublayerForZone({ feature: areaFeature }) === key))) setTool('select');
+                                    plantingSublayers.onVisibilityChange({ ...plantingSublayers.visibility, [key]: !childOn });
+                                  }}
+                                  style={{ minWidth: 0, minHeight: 24, padding: 0, border: 'none', background: 'transparent', color: 'inherit', cursor: 'pointer', textAlign: 'left' }}>
+                                  <span style={{ minWidth: 0, fontSize: 11.5, lineHeight: 1.18, fontWeight: 650 }}>{label}</span>
+                                </button>
+                              </div>
                             );
                           })}
                         </div>
@@ -1866,46 +1902,54 @@ export default function DesignPalette({
                           {elementChildren.map((child) => {
                             const childOn = layerElements.visibility[child.key] !== false;
                             const label = child.count > 1 ? `${child.label} · ${child.count}` : child.label;
+                            const childSelection = layerSelection.childCount(lt.key, child.key);
+                            const childAllSelected = childSelection.total > 0 && childSelection.selected === childSelection.total;
+                            const childSomeSelected = childSelection.selected > 0 && !childAllSelected;
+                            const ChildSelectionIcon = childAllSelected ? SquareCheckBig : childSomeSelected ? SquareMinus : Square;
+                            const childSelectionLabel = childSelection.total === 0
+                              ? `${label} has no editable objects on this step`
+                              : childAllSelected
+                                ? `Deselect all ${childSelection.total} ${label} objects`
+                                : `Select all ${childSelection.total} ${label} objects`;
                             return (
-                              <button
+                              <div
                                 key={child.key}
-                                type="button"
-                                aria-label={`${childOn ? 'Hide' : 'Show'} ${label}`}
-                                aria-pressed={childOn}
-                                onClick={() => {
-                                  // A visible child needs a visible parent. Conversely, clear an
-                                  // armed matching tool before hiding it so a placement cannot
-                                  // appear to vanish while still being correctly saved.
-                                  if (!childOn && !activeLayers[lt.key]) {
-                                    setActiveLayers({ ...activeLayers, [lt.key]: true });
-                                  }
-                                  const armedKey = tool === 'place'
-                                    ? layerElementKeyForItem(placeDefId ?? '')
-                                    : tool === 'line'
-                                      ? layerElementKeyForLine(lineKind)
-                                      : areaFeature !== null
-                                        ? layerElementKeyForZone({ zone: zoneDraw, feature: areaFeature })
-                                        : null;
-                                  if (childOn && armedKey === child.key) setTool('select');
-                                  layerElements.onVisibilityChange({ ...layerElements.visibility, [child.key]: !childOn });
-                                }}
                                 style={{
                                   minWidth: 0, minHeight: compactDesktopLayerPanel ? 34 : 40,
                                   padding: '3px 4px', borderRadius: 0,
-                                  border: 'none', borderBottom: '1px solid rgba(11,18,11,0.12)',
+                                  borderBottom: '1px solid rgba(11,18,11,0.12)',
                                   background: childOn ? 'rgba(255,255,255,0.48)' : 'transparent',
-                                  color: childOn ? DARK : '#877D6E', cursor: 'pointer',
-                                  display: 'grid', gridTemplateColumns: '24px minmax(0,1fr)',
+                                  color: childOn ? DARK : '#877D6E',
+                                  display: 'grid', gridTemplateColumns: '24px 24px minmax(0,1fr)',
                                   alignItems: 'center', gap: 4, textAlign: 'left',
                                 }}
                               >
-                                {childOn
-                                  ? <Eye size={16} strokeWidth={2.1} aria-hidden />
-                                  : <EyeOff size={16} strokeWidth={1.9} aria-hidden />}
-                                <span style={{ minWidth: 0, fontSize: 11.5, lineHeight: 1.18, fontWeight: 650 }}>
-                                  {label}
-                                </span>
-                              </button>
+                                <button type="button" aria-label={`${childOn ? 'Hide' : 'Show'} ${label}`} aria-pressed={childOn}
+                                  onClick={() => {
+                                    if (!childOn && !activeLayers[lt.key]) setActiveLayers({ ...activeLayers, [lt.key]: true });
+                                    const armedKey = tool === 'place' ? layerElementKeyForItem(placeDefId ?? '') : tool === 'line' ? layerElementKeyForLine(lineKind) : areaFeature !== null ? layerElementKeyForZone({ zone: zoneDraw, feature: areaFeature }) : null;
+                                    if (childOn && armedKey === child.key) setTool('select');
+                                    layerElements.onVisibilityChange({ ...layerElements.visibility, [child.key]: !childOn });
+                                  }}
+                                  style={{ width: 24, height: 24, padding: 0, border: 'none', background: 'transparent', color: 'inherit', display: 'grid', placeItems: 'center', cursor: 'pointer' }}>
+                                  {childOn ? <Eye size={16} strokeWidth={2.1} aria-hidden /> : <EyeOff size={16} strokeWidth={1.9} aria-hidden />}
+                                </button>
+                                <button type="button" aria-label={childSelectionLabel} aria-pressed={childAllSelected} title={childSelectionLabel}
+                                  disabled={childSelection.total === 0} onClick={() => layerSelection.onToggleChild(lt.key, child.key)}
+                                  style={{ width: 24, height: 24, padding: 0, border: 'none', background: childSelection.selected > 0 ? 'rgba(247,201,126,0.26)' : 'transparent', color: childSelection.total === 0 ? '#C9C1B4' : childSelection.selected > 0 ? GREEN : '#776F63', display: 'grid', placeItems: 'center', cursor: childSelection.total === 0 ? 'not-allowed' : 'pointer' }}>
+                                  <ChildSelectionIcon size={16} strokeWidth={childSelection.selected > 0 ? 2.35 : 1.8} aria-hidden />
+                                </button>
+                                <button type="button" aria-label={`${childOn ? 'Hide' : 'Show'} ${label}`} aria-pressed={childOn}
+                                  onClick={() => {
+                                    if (!childOn && !activeLayers[lt.key]) setActiveLayers({ ...activeLayers, [lt.key]: true });
+                                    const armedKey = tool === 'place' ? layerElementKeyForItem(placeDefId ?? '') : tool === 'line' ? layerElementKeyForLine(lineKind) : areaFeature !== null ? layerElementKeyForZone({ zone: zoneDraw, feature: areaFeature }) : null;
+                                    if (childOn && armedKey === child.key) setTool('select');
+                                    layerElements.onVisibilityChange({ ...layerElements.visibility, [child.key]: !childOn });
+                                  }}
+                                  style={{ minWidth: 0, minHeight: 24, padding: 0, border: 'none', background: 'transparent', color: 'inherit', cursor: 'pointer', textAlign: 'left' }}>
+                                  <span style={{ minWidth: 0, fontSize: 11.5, lineHeight: 1.18, fontWeight: 650 }}>{label}</span>
+                                </button>
+                              </div>
                             );
                           })}
                         </div>
@@ -2140,6 +2184,12 @@ export default function DesignPalette({
         const group = step === 'planting' ? plantingGroupFor(def) : null;
         const heading = group && group !== lastGroup ? group : null;
         if (group) lastGroup = group;
+        // The moringa artwork is deliberately slender, but at the shared card size it reads as
+        // a faint twig beside broad-canopy trees. Enlarge only the illustration — its 4 m map
+        // footprint and every saved placement remain unchanged.
+        const artSize = cardsUi && def.id === 'tree_moringa'
+          ? Math.min(cardMetrics.artSize * 1.42, cardMetrics.minHeight - 42)
+          : cardMetrics.artSize;
         const chip = (
           <button
             key={def.id}
@@ -2213,7 +2263,7 @@ export default function DesignPalette({
                 give it without growing the strip. */}
             {def.art ? (
               <img src={def.art} alt="" aria-hidden style={cardsUi
-                ? { width: cardMetrics.artSize, height: cardMetrics.artSize, objectFit: 'contain' }
+                ? { width: artSize, height: artSize, objectFit: 'contain' }
                 : { width: guided ? 30 : 24, height: guided ? 30 : 24, objectFit: 'contain' }} />
             ) : (
               <span style={{ fontSize: cardsUi ? 30 : guided ? 16 : 13, lineHeight: 1 }}>{def.icon}</span>

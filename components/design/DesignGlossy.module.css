@@ -329,6 +329,137 @@
   line-height: 1.55;
 }
 
+/* Saved maps earn the centre stage: the right rail stays a quick picker, while this grid gives
+   each sheet enough room to judge the planting, labels and overall layout before opening it. */
+.savedGalleryStage {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 12px;
+  overflow: auto;
+  padding: 2px;
+}
+
+.savedGalleryHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.savedGalleryHeader > div {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.savedGalleryHeader strong {
+  color: #2f2a21;
+  font-family: var(--font-display), Georgia, serif;
+  font-size: 18px;
+}
+
+.savedGalleryHeader span {
+  overflow: hidden;
+  color: #8a7b64;
+  font-size: 11px;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.savedGalleryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 12px;
+  padding-bottom: 2px;
+}
+
+.savedGalleryTile {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 7px;
+  padding: 8px;
+  border: 1px solid #e2d8c4;
+  border-radius: 13px;
+  color: #2f2a21;
+  background: #fffefa;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 140ms ease, box-shadow 140ms ease, transform 140ms ease;
+}
+
+.savedGalleryTile:hover {
+  border-color: #1f4d2b;
+  box-shadow: 0 6px 16px rgba(31, 77, 43, 0.14);
+  transform: translateY(-1px);
+}
+
+.savedGalleryTile:focus-visible {
+  outline: 3px solid rgba(31, 77, 43, 0.42);
+  outline-offset: 2px;
+}
+
+.savedGalleryImage {
+  position: relative;
+  display: flex;
+  aspect-ratio: 4 / 3;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid #e2d8c4;
+  border-radius: 9px;
+  color: #8a7b64;
+  background: #f4eee1;
+  font-size: 12px;
+  font-weight: 800;
+  text-align: center;
+}
+
+.savedGalleryImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: #fbf6ec;
+}
+
+.savedGalleryBadge {
+  position: absolute;
+  top: 7px;
+  left: 7px;
+  padding: 3px 6px;
+  border-radius: 5px;
+  box-shadow: 0 1px 3px rgba(20, 16, 10, 0.4);
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  line-height: 1;
+}
+
+.savedGalleryLabel {
+  overflow: hidden;
+  color: #2f2a21;
+  font-size: 13px;
+  font-weight: 850;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.savedGalleryMeta {
+  display: -webkit-box;
+  min-height: 28px;
+  overflow: hidden;
+  color: #8a7b64;
+  font-size: 10.5px;
+  font-weight: 650;
+  line-height: 1.3;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
 .resultWrap {
   display: flex;
   min-height: 0;
