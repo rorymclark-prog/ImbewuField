@@ -20,11 +20,15 @@ import { rectFromCorners, anyVertexInRect, itemCenterInRect, clampGroupDelta, ty
 import { ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_DEFS, type DesignLayerState } from '@/lib/design-elements';
 import {
   itemLayerKeys,
+  layerElementKeyForItem,
+  layerElementKeyForLine,
+  layerElementKeyForZone,
   lineLayerKeys,
   plantingSublayerForElement,
   plantingSublayerForLine,
   plantingSublayerForZone,
   type PlantingSublayer,
+  type LayerElementVisibilityKey,
 } from '@/lib/design-layer-membership';
 // SPECIES is NOT imported at module scope — lib/species-catalog.ts is 197 species / ~224KB, and
 // every farmer who opens /design paid for it whether or not they ever placed a species-specific
@@ -110,6 +114,9 @@ type WaterInfrastructurePresentation = {
 type PlantingSublayerPresentation = {
   visibility: Record<PlantingSublayer, boolean>;
 };
+type LayerElementPresentation = {
+  visibility: Partial<Record<LayerElementVisibilityKey, boolean>>;
+};
 
 function waterInfrastructureForElement(defId: string): WaterInfrastructureLayer | null {
   if (defId === 'tap_point') return 'tapPoints';
@@ -148,6 +155,9 @@ export interface DesignCanvasProps {
   waterInfrastructure?: WaterInfrastructurePresentation;
   /** Planting's named sublayers use the same paint-only contract as Water's child matrix. */
   plantingSublayers?: PlantingSublayerPresentation;
+  /** The placed element-type eyes for other functional Layers. Like the specialised matrices,
+   * these only affect painting and must never modify the farmer's saved geometry. */
+  layerElements?: LayerElementPresentation;
   /** Icon/label size multiplier from the Layers panel's Size slider. Clamped on read. */
   mapTextScale?: number;
   /** How traced surfaces are filled — hatch or flat tint, and how strongly. Paint only, never
@@ -575,6 +585,7 @@ export default function DesignCanvas({
   activeLayers,
   waterInfrastructure,
   plantingSublayers,
+  layerElements,
   mapTextScale: mapTextScaleRaw = 1,
   areaFill: areaFillRaw,
   baseAlign = null,
@@ -636,6 +647,9 @@ export default function DesignCanvas({
     if (!key || !plantingSublayers) return { visible: true };
     return { visible: plantingSublayers.visibility[key] };
   };
+  const layerElementPresentation = (key: LayerElementVisibilityKey | null) => ({
+    visible: !key || layerElements?.visibility[key] !== false,
+  });
 
   // Which traced layer is currently tapped (shows its "Use in design" affordance).
   const [activeTracedId, setActiveTracedId] = useState<string | null>(null);
@@ -1218,14 +1232,17 @@ export default function DesignCanvas({
     for (const it of state.items) {
       const def = ELEMENTS_BY_ID[it.defId];
       if (!def || !ownedByCurrentStep(state.step, { kind: 'item', category: def.category, defId: it.defId })) continue;
+      if (!layerElementPresentation(layerElementKeyForItem(it.defId)).visible) continue;
       if (itemCenterInRect(it.x, it.y, rect)) ids.push(it.id);
     }
     for (const z of state.zones) {
       if (!ownedByCurrentStep(state.step, { kind: 'zone', feature: z.feature })) continue;
+      if (!layerElementPresentation(layerElementKeyForZone(z)).visible) continue;
       if (anyVertexInRect(z.points, rect)) ids.push(z.id);
     }
     for (const l of state.lines) {
       if (!ownedByCurrentStep(state.step, { kind: 'line', lineKind: l.kind })) continue;
+      if (!layerElementPresentation(layerElementKeyForLine(l.kind)).visible) continue;
       if (anyVertexInRect(l.points, rect)) ids.push(l.id);
     }
     return ids;
@@ -2215,12 +2232,14 @@ export default function DesignCanvas({
       const layerOn = z.feature ? activeLayers[groundFeatureLayer(z.feature)] : activeLayers.zones;
       return layerOn
         && plantingPresentation(plantingSublayerForZone(z)).visible
+        && layerElementPresentation(layerElementKeyForZone(z)).visible
         && ownedByCurrentStep(state.step, { kind: 'zone', feature: z.feature }) ? id : null;
     }
     const l = state.lines.find((s2) => s2.id === id);
     if (l) {
       return waterPresentation(waterInfrastructureForLine(l.kind)).visible
         && plantingPresentation(plantingSublayerForLine(l.kind)).visible
+        && layerElementPresentation(layerElementKeyForLine(l.kind)).visible
         && anyLayerOn(activeLayers, lineLayerKeys(l.kind))
         && ownedByCurrentStep(state.step, { kind: 'line', lineKind: l.kind }) ? id : null;
     }
@@ -2230,6 +2249,7 @@ export default function DesignCanvas({
       if (!def) return null;
       return waterPresentation(waterInfrastructureForElement(it.defId)).visible
         && plantingPresentation(plantingSublayerForElement(it.defId)).visible
+        && layerElementPresentation(layerElementKeyForItem(it.defId)).visible
         && anyLayerOn(activeLayers, itemLayerKeys(it.defId))
         && ownedByCurrentStep(state.step, { kind: 'item', category: def.category, defId: it.defId })
         ? id : null;
@@ -2650,6 +2670,7 @@ export default function DesignCanvas({
             const auto = groundLabelOffsets.get(z.id) ?? 0;
             if (z.feature ? !activeLayers[groundFeatureLayer(z.feature)] : !activeLayers.zones) return null;
             if (!plantingPresentation(plantingSublayerForZone(z)).visible) return null;
+            if (!layerElementPresentation(layerElementKeyForZone(z)).visible) return null;
             // Not owned by the current wizard step (e.g. the boundary while on Zones) — still
             // rendered for context, but locked: dimmed, and its own hit-targets inert (see
             // ownedByCurrentStep + the startDrag* guards above). `interactive` additionally
@@ -3014,6 +3035,7 @@ export default function DesignCanvas({
             const water = waterPresentation(waterInfrastructureForLine(line.kind));
             if (!water.visible) return null;
             if (!plantingPresentation(plantingSublayerForLine(line.kind)).visible) return null;
+            if (!layerElementPresentation(layerElementKeyForLine(line.kind)).visible) return null;
             if (!anyLayerOn(activeLayers, lineLayerKeys(line.kind))) return null;
             const style = lineStroke(line.kind, earthworksOnly, line.widthM, mPerPx > 0 ? 1 / mPerPx : undefined);
             // See the zones loop above — same step-ownership lock (Rory's boundary-grab bug).
@@ -3546,6 +3568,7 @@ export default function DesignCanvas({
           const water = waterPresentation(waterInfrastructureForElement(item.defId));
           if (!water.visible) return null;
           if (!plantingPresentation(plantingSublayerForElement(item.defId)).visible) return null;
+          if (!layerElementPresentation(layerElementKeyForItem(item.defId)).visible) return null;
           if (!anyLayerOn(activeLayers, itemLayerKeys(item.defId))) return null;
 
           const isResizingThis = item.id === dragResizeId.current && resizePreview;
@@ -3800,6 +3823,7 @@ export default function DesignCanvas({
               const water = waterPresentation(waterInfrastructureForElement(item.defId));
               if (!water.visible) return null;
               if (!plantingPresentation(plantingSublayerForElement(item.defId)).visible) return null;
+              if (!layerElementPresentation(layerElementKeyForItem(item.defId)).visible) return null;
               if (!anyLayerOn(activeLayers, itemLayerKeys(item.defId))) return null;
               const [nx, ny] = effectiveItemPos(item);
               const isResizingThis = item.id === dragResizeId.current && resizePreview;

@@ -91,6 +91,11 @@ import { BED_DEF_IDS } from '@/lib/design-beds-bridge';
 import {
   PLANTING_SUBLAYER_LABEL,
   PLANTING_SUBLAYER_ORDER,
+  layerElementKeyForItem,
+  layerElementKeyForLine,
+  layerElementKeyForZone,
+  type LayerElementChild,
+  type LayerElementVisibilityKey,
   plantingSublayerForElement,
   plantingSublayerForLine,
   plantingSublayerForZone,
@@ -175,6 +180,14 @@ export interface DesignPaletteProps {
   plantingSublayers?: {
     visibility: PlantingSublayerVisibility;
     onVisibilityChange: (next: PlantingSublayerVisibility) => void;
+  } | null;
+  /** Every other functional layer expands into the element types already placed in this plan.
+   * Like Water and Planting, these are paint-only eyes: a farmer can declutter a drawing without
+   * moving, deleting, or otherwise changing its saved geometry. */
+  layerElements?: {
+    childrenByLayer: Partial<Record<DesignLayerKey, readonly LayerElementChild[]>>;
+    visibility: Partial<Record<LayerElementVisibilityKey, boolean>>;
+    onVisibilityChange: (next: Partial<Record<LayerElementVisibilityKey, boolean>>) => void;
   } | null;
   /** Wide screens have a fixed right-side quick-actions pane. Phones retain the bottom sheet. */
   desktopAside?: boolean;
@@ -482,6 +495,7 @@ export default function DesignPalette({
   layerSelection,
   waterInfrastructure = null,
   plantingSublayers = null,
+  layerElements = null,
   desktopAside = false,
   desktopPanelLayout,
   onDesktopPanelWidthChange,
@@ -1592,8 +1606,10 @@ export default function DesignPalette({
                   const selection = layerSelection.counts[lt.key];
                   const allSelected = selection.total > 0 && selection.selected === selection.total;
                   const someSelected = selection.selected > 0 && !allSelected;
+                  const elementChildren = layerElements?.childrenByLayer[lt.key] ?? [];
                   const hasChildren = (lt.key === 'water' && !!waterInfrastructure)
-                    || (lt.key === 'planting' && !!plantingSublayers);
+                    || (lt.key === 'planting' && !!plantingSublayers)
+                    || elementChildren.length > 0;
                   const expanded = hasChildren && expandedLayers.has(lt.key);
                   const selectionLabel = selection.total === 0
                     ? `${t(lt.labelKey)} has no editable objects on this step`
@@ -1746,10 +1762,10 @@ export default function DesignPalette({
                                   waterInfrastructure.onVisibilityChange({ ...waterInfrastructure.visibility, [key]: !childOn });
                                 }}
                                 style={{
-                                  minWidth: 0, minHeight: compactDesktopLayerPanel ? 34 : 44,
-                                  padding: '3px 5px', borderRadius: 8,
-                                  border: '1px solid rgba(11,18,11,0.13)',
-                                  background: childOn ? 'rgba(255,255,255,0.72)' : 'transparent',
+                                  minWidth: 0, minHeight: compactDesktopLayerPanel ? 34 : 40,
+                                  padding: '3px 4px', borderRadius: 0,
+                                  border: 'none', borderBottom: '1px solid rgba(11,18,11,0.12)',
+                                  background: childOn ? 'rgba(255,255,255,0.48)' : 'transparent',
                                   color: childOn ? DARK : '#877D6E', cursor: 'pointer',
                                   display: 'grid', gridTemplateColumns: '24px minmax(0,1fr)',
                                   alignItems: 'center', gap: 4, textAlign: 'left',
@@ -1758,7 +1774,7 @@ export default function DesignPalette({
                                 {childOn
                                   ? <Eye size={16} strokeWidth={2.1} aria-hidden />
                                   : <EyeOff size={16} strokeWidth={1.9} aria-hidden />}
-                                <span style={{ minWidth: 0, fontSize: 10.5, lineHeight: 1.2, fontWeight: 600 }}>
+                                <span style={{ minWidth: 0, fontSize: 11.5, lineHeight: 1.18, fontWeight: 650 }}>
                                   {label}
                                 </span>
                               </button>
@@ -1773,8 +1789,8 @@ export default function DesignPalette({
                           data-layer-children="planting"
                           style={{
                             flexBasis: '100%', display: 'grid',
-                            gridTemplateColumns: compactDesktopLayerPanel ? 'repeat(2, minmax(0, 1fr))' : '1fr',
-                            gap: 4, margin: '1px 3px 4px', padding: compactDesktopLayerPanel ? '5px 5px 6px 37px' : '5px 5px 7px 48px',
+                            gridTemplateColumns: '1fr',
+                            gap: 0, margin: '1px 3px 4px', padding: compactDesktopLayerPanel ? '4px 5px 5px 37px' : '4px 5px 6px 48px',
                             borderLeft: `2px solid ${lt.accent}55`, borderRadius: '0 0 10px 10px',
                             background: `${lt.accent}0D`, boxSizing: 'border-box',
                           }}
@@ -1804,10 +1820,10 @@ export default function DesignPalette({
                                   plantingSublayers.onVisibilityChange({ ...plantingSublayers.visibility, [key]: !childOn });
                                 }}
                                 style={{
-                                  minWidth: 0, minHeight: compactDesktopLayerPanel ? 34 : 44,
-                                  padding: '3px 5px', borderRadius: 8,
-                                  border: '1px solid rgba(11,18,11,0.13)',
-                                  background: childOn ? 'rgba(255,255,255,0.72)' : 'transparent',
+                                  minWidth: 0, minHeight: compactDesktopLayerPanel ? 34 : 40,
+                                  padding: '3px 4px', borderRadius: 0,
+                                  border: 'none', borderBottom: '1px solid rgba(11,18,11,0.12)',
+                                  background: childOn ? 'rgba(255,255,255,0.48)' : 'transparent',
                                   color: childOn ? DARK : '#877D6E', cursor: 'pointer',
                                   display: 'grid', gridTemplateColumns: '24px minmax(0,1fr)',
                                   alignItems: 'center', gap: 4, textAlign: 'left',
@@ -1816,7 +1832,67 @@ export default function DesignPalette({
                                 {childOn
                                   ? <Eye size={16} strokeWidth={2.1} aria-hidden />
                                   : <EyeOff size={16} strokeWidth={1.9} aria-hidden />}
-                                <span style={{ minWidth: 0, fontSize: 10.5, lineHeight: 1.2, fontWeight: 600 }}>
+                                <span style={{ minWidth: 0, fontSize: 11.5, lineHeight: 1.18, fontWeight: 650 }}>
+                                  {label}
+                                </span>
+                              </button>
+                            );
+                          })}
+                        </div>
+                      )}
+
+                      {expanded && layerElements && lt.key !== 'water' && lt.key !== 'planting' && elementChildren.length > 0 && (
+                        <div
+                          id={`${lt.key}-layer-children`}
+                          data-layer-children={lt.key}
+                          style={{
+                            flexBasis: '100%', display: 'grid',
+                            gridTemplateColumns: '1fr',
+                            gap: 0, margin: '1px 3px 4px', padding: compactDesktopLayerPanel ? '4px 5px 5px 37px' : '4px 5px 6px 48px',
+                            borderLeft: `2px solid ${lt.accent}55`, borderRadius: '0 0 10px 10px',
+                            background: `${lt.accent}0D`, boxSizing: 'border-box',
+                          }}
+                        >
+                          {elementChildren.map((child) => {
+                            const childOn = layerElements.visibility[child.key] !== false;
+                            const label = child.count > 1 ? `${child.label} · ${child.count}` : child.label;
+                            return (
+                              <button
+                                key={child.key}
+                                type="button"
+                                aria-label={`${childOn ? 'Hide' : 'Show'} ${label}`}
+                                aria-pressed={childOn}
+                                onClick={() => {
+                                  // A visible child needs a visible parent. Conversely, clear an
+                                  // armed matching tool before hiding it so a placement cannot
+                                  // appear to vanish while still being correctly saved.
+                                  if (!childOn && !activeLayers[lt.key]) {
+                                    setActiveLayers({ ...activeLayers, [lt.key]: true });
+                                  }
+                                  const armedKey = tool === 'place'
+                                    ? layerElementKeyForItem(placeDefId ?? '')
+                                    : tool === 'line'
+                                      ? layerElementKeyForLine(lineKind)
+                                      : areaFeature !== null
+                                        ? layerElementKeyForZone({ zone: zoneDraw, feature: areaFeature })
+                                        : null;
+                                  if (childOn && armedKey === child.key) setTool('select');
+                                  layerElements.onVisibilityChange({ ...layerElements.visibility, [child.key]: !childOn });
+                                }}
+                                style={{
+                                  minWidth: 0, minHeight: compactDesktopLayerPanel ? 34 : 40,
+                                  padding: '3px 4px', borderRadius: 0,
+                                  border: 'none', borderBottom: '1px solid rgba(11,18,11,0.12)',
+                                  background: childOn ? 'rgba(255,255,255,0.48)' : 'transparent',
+                                  color: childOn ? DARK : '#877D6E', cursor: 'pointer',
+                                  display: 'grid', gridTemplateColumns: '24px minmax(0,1fr)',
+                                  alignItems: 'center', gap: 4, textAlign: 'left',
+                                }}
+                              >
+                                {childOn
+                                  ? <Eye size={16} strokeWidth={2.1} aria-hidden />
+                                  : <EyeOff size={16} strokeWidth={1.9} aria-hidden />}
+                                <span style={{ minWidth: 0, fontSize: 11.5, lineHeight: 1.18, fontWeight: 650 }}>
                                   {label}
                                 </span>
                               </button>

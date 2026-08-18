@@ -98,10 +98,17 @@ import {
 } from '@/lib/align-items';
 import { DESIGN_LAYER_KEYS, ELEMENT_CATALOG, ELEMENTS_BY_ID, GROUND_FEATURES, ZONE_DEFS, type DesignLayerKey, type DesignLayerState, type ElementCategory } from '@/lib/design-elements';
 import {
+  layerElementChildren,
+  layerElementKeyForItem,
+  layerElementKeyForLine,
+  layerElementKeyForZone,
+  itemLayerKeys,
+  lineLayerKeys,
   plantingSublayerForElement,
   plantingSublayerForLine,
   plantingSublayerForZone,
   selectableIdsForLayer,
+  type LayerElementVisibilityKey,
 } from '@/lib/design-layer-membership';
 import { biomeKeyForName } from '@/lib/biome';
 import { loadSiteElements, type SiteElementType } from '@/lib/site-elements';
@@ -887,10 +894,21 @@ function DesignStudioInner() {
   const [plantingSublayerVisibility, setPlantingSublayerVisibility] = useState<PlantingSublayerVisibility>(
     DEFAULT_PLANTING_SUBLAYER_VISIBILITY,
   );
+  // The general layer matrix deliberately starts sparse: a missing key means visible, and only
+  // element types already in this farmer's plan get a child eye. This is presentation state, not
+  // plan geometry, just like the specialised Water and Planting controls above.
+  const [layerElementVisibility, setLayerElementVisibility] = useState<Partial<Record<LayerElementVisibilityKey, boolean>>>({});
+  const layerElementChildrenByLayer = useMemo(() => {
+    if (!canvasState) return {};
+    return Object.fromEntries(DESIGN_LAYER_KEYS.map((layer) => [layer, layerElementChildren(canvasState, layer)])) as Partial<
+      Record<DesignLayerKey, ReturnType<typeof layerElementChildren>>
+    >;
+  }, [canvasState]);
   useEffect(() => {
     const waterKey = waterInfrastructureForElement(placeDefId);
     const plantingKey = placeDefId ? plantingSublayerForElement(placeDefId) : null;
-    if (!waterKey && !plantingKey) return;
+    const elementKey = placeDefId ? layerElementKeyForItem(placeDefId) : null;
+    if (!waterKey && !plantingKey && !elementKey) return;
     if (waterKey) {
       setActiveLayers((layers) => (layers.water ? layers : { ...layers, water: true }));
       setWaterInfrastructureVisibility((layers) => (layers[waterKey] ? layers : { ...layers, [waterKey]: true }));
@@ -898,13 +916,19 @@ function DesignStudioInner() {
     if (plantingKey) {
       setActiveLayers((layers) => (layers.planting ? layers : { ...layers, planting: true }));
       setPlantingSublayerVisibility((layers) => (layers[plantingKey] ? layers : { ...layers, [plantingKey]: true }));
+    }
+    if (elementKey) {
+      const layer = itemLayerKeys(placeDefId!)[0];
+      if (layer) setActiveLayers((layers) => (layers[layer] ? layers : { ...layers, [layer]: true }));
+      setLayerElementVisibility((layers) => (layers[elementKey] === false ? { ...layers, [elementKey]: true } : layers));
     }
   }, [placeDefId]);
   useEffect(() => {
     if (tool !== 'line') return;
     const waterKey = waterInfrastructureForLine(lineKind);
     const plantingKey = plantingSublayerForLine(lineKind);
-    if (!waterKey && !plantingKey) return;
+    const elementKey = layerElementKeyForLine(lineKind);
+    if (!waterKey && !plantingKey && !elementKey) return;
     if (waterKey) {
       setActiveLayers((layers) => (layers.water ? layers : { ...layers, water: true }));
       setWaterInfrastructureVisibility((layers) => (layers[waterKey] ? layers : { ...layers, [waterKey]: true }));
@@ -912,6 +936,11 @@ function DesignStudioInner() {
     if (plantingKey) {
       setActiveLayers((layers) => (layers.planting ? layers : { ...layers, planting: true }));
       setPlantingSublayerVisibility((layers) => (layers[plantingKey] ? layers : { ...layers, [plantingKey]: true }));
+    }
+    if (elementKey) {
+      const layer = lineLayerKeys(lineKind)[0];
+      if (layer) setActiveLayers((layers) => (layers[layer] ? layers : { ...layers, [layer]: true }));
+      setLayerElementVisibility((layers) => (layers[elementKey] === false ? { ...layers, [elementKey]: true } : layers));
     }
   }, [lineKind, tool]);
   // SAME PLACE-THEN-VANISH GUARD, for ground features. The Base step chips (house/patio/lawn/…)
@@ -931,6 +960,8 @@ function DesignStudioInner() {
     if (plantingKey) {
       setPlantingSublayerVisibility((layers) => (layers[plantingKey] ? layers : { ...layers, [plantingKey]: true }));
     }
+    const elementKey = layerElementKeyForZone({ zone: zoneDraw, feature: areaFeature });
+    if (elementKey) setLayerElementVisibility((layers) => (layers[elementKey] === false ? { ...layers, [elementKey]: true } : layers));
   }, [areaFeature]);
   // Icon + label size, as a multiplier. Presentation only: it changes how large symbols are
   // DRAWN and never touches a stored coordinate, so sliding it cannot move anyone's design.
@@ -3386,6 +3417,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               activeLayers={activeLayers}
               waterInfrastructure={{ visibility: waterInfrastructureVisibility }}
               plantingSublayers={{ visibility: plantingSublayerVisibility }}
+              layerElements={{ visibility: layerElementVisibility }}
               mapTextScale={mapTextScale}
               areaFill={areaFill}
               baseAlign={designBaseMode(canvasState) === 'photo' ? (canvasState?.customBase ?? null) : null}
@@ -3995,6 +4027,11 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           plantingSublayers={{
             visibility: plantingSublayerVisibility,
             onVisibilityChange: setPlantingSublayerVisibility,
+          }}
+          layerElements={{
+            childrenByLayer: layerElementChildrenByLayer,
+            visibility: layerElementVisibility,
+            onVisibilityChange: setLayerElementVisibility,
           }}
           desktopAside={!isPhone}
           desktopPanelLayout={desktopPanelLayout}

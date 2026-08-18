@@ -12,7 +12,9 @@ import {
 } from '@/lib/design-canvas';
 import {
   ELEMENTS_BY_ID,
+  GROUND_FEATURES,
   plantingGroupFor,
+  ZONE_DEFS,
   type DesignLayerKey,
   type ElementCategory,
   type PlantingGroup,
@@ -97,6 +99,81 @@ export function plantingSublayerForLine(kind: LineShape['kind']): PlantingSublay
 /** The staple garden is the one farmer-drawn ground area that belongs to Planting. */
 export function plantingSublayerForZone(zone: Pick<ZoneShape, 'feature'>): PlantingSublayer | null {
   return zone.feature === 'staple_garden' ? 'staple_garden' : null;
+}
+
+// Water and Planting each already have a useful farmer-facing grouping above. Every other
+// functional layer needs the same child-eye affordance, but should only expose marks that are
+// actually in this plan. This keeps a small plan legible without pretending a never-placed shed
+// or access path is something the farmer can hide.
+export type LayerElementVisibilityKey = `item:${string}` | `line:${LineShape['kind']}` | `zone:${string}`;
+
+export type LayerElementChild = {
+  key: LayerElementVisibilityKey;
+  label: string;
+  count: number;
+};
+
+function isSpecialChildLayer(layer: DesignLayerKey): boolean {
+  return layer === 'water' || layer === 'planting';
+}
+
+/** The element-type eye that owns a normal placed item, excluding Water and Planting's groups. */
+export function layerElementKeyForItem(defId: string): LayerElementVisibilityKey | null {
+  const layer = itemLayerKeys(defId)[0];
+  return layer && !isSpecialChildLayer(layer) ? `item:${defId}` : null;
+}
+
+/** The element-type eye that owns a normal drawn line, excluding Water and Planting's groups. */
+export function layerElementKeyForLine(kind: LineShape['kind']): LayerElementVisibilityKey | null {
+  const layer = lineLayerKeys(kind)[0];
+  return layer && !isSpecialChildLayer(layer) ? `line:${kind}` : null;
+}
+
+/** The element-type eye that owns an effort zone or an existing ground feature. */
+export function layerElementKeyForZone(zone: Pick<ZoneShape, 'zone' | 'feature'>): LayerElementVisibilityKey | null {
+  const layer = zoneLayerKey(zone);
+  if (isSpecialChildLayer(layer)) return null;
+  return `zone:${zone.feature ?? String(zone.zone)}`;
+}
+
+function lineLabel(kind: LineShape['kind']): string {
+  const labels: Record<LineShape['kind'], string> = {
+    swale: 'Swale', pipe: 'Pipe', drip: 'Drip irrigation', greywater: 'Greywater route',
+    fence: 'Fence', path: 'Path', bedpath: 'Bed path', windbreak: 'Windbreak',
+  };
+  return labels[kind];
+}
+
+/**
+ * The expandable child matrix for all functional layers other than the specialised Water and
+ * Planting matrices. It groups identical saved marks and returns their current count; its keys
+ * are also used by the canvas, so a child eye can never refer to a different set of marks.
+ */
+export function layerElementChildren(
+  state: DesignCanvasState,
+  layer: DesignLayerKey,
+): LayerElementChild[] {
+  if (isSpecialChildLayer(layer)) return [];
+  const children = new Map<LayerElementVisibilityKey, LayerElementChild>();
+  const add = (key: LayerElementVisibilityKey | null, label: string, belongs: boolean) => {
+    if (!key || !belongs) return;
+    const existing = children.get(key);
+    children.set(key, existing ? { ...existing, count: existing.count + 1 } : { key, label, count: 1 });
+  };
+
+  for (const item of state.items) {
+    const def = ELEMENTS_BY_ID[item.defId];
+    add(layerElementKeyForItem(item.defId), def?.name ?? 'Unknown item', itemLayerKeys(item.defId)[0] === layer);
+  }
+  for (const line of state.lines) {
+    add(layerElementKeyForLine(line.kind), lineLabel(line.kind), lineLayerKeys(line.kind)[0] === layer);
+  }
+  for (const zone of state.zones) {
+    const label = zone.feature ? GROUND_FEATURES[zone.feature].label : ZONE_DEFS[zone.zone].label;
+    add(layerElementKeyForZone(zone), label, zoneLayerKey(zone) === layer);
+  }
+
+  return [...children.values()].sort((a, b) => a.label.localeCompare(b.label));
 }
 
 /**
