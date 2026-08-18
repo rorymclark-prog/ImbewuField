@@ -209,6 +209,7 @@ export function buildLockedIllustrationPrompt(
     markerGlossary ? `WHAT THE MARKERS ARE: ${markerGlossary}.` : '',
     designBrief.trim() ? `WHOLE-SITE CONSISTENCY BRIEF: ${designBrief.trim()}` : '',
     `PLACED-FEATURE CONTRACT: every coloured footprint, route and editor marker already visible in the source is a saved feature, not a suggestion. Replace each marker with a realistic orthographic illustration of that named feature at the same centre, count, rotation and footprint. Keep the illustration confined to its saved footprint. Do not duplicate it, omit it, move it or leave an emoji/tool marker in the finished artwork.`,
+    `ONE COHERENT DRAWING: coloured source marks are placement guides only, never finished artwork to copy. Repaint every marked feature in one restrained, consistent top-down botanical map style. Do not use stickers, clip-art, cut-out collages, cartoon icons, outlined placeholders or repeated code badges.`,
     onPaper
       ? `PAPER FINISH: the app draws exact feature outlines, technical routes, labels, legend and title over your artwork afterwards. Make each illustrated element clean, well-separated and confident enough to read beneath that precise linework — and leave the white between elements genuinely empty, because that white is where the app's labels and leaders land.`
       : photoPreserving
