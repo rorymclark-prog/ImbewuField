@@ -35,6 +35,13 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '18 August',
+    sha: 'e95c732',
+    changes: [
+      'Gemini maps now start from cleaner placement marks for a less sticker-like aerial plan',
+    ],
+  },
+  {
+    when: '18 August',
     sha: 'e4efffe',
     changes: [
       'Every Layers row now opens so you can see the controls beneath it',
