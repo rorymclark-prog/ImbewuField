@@ -65,15 +65,69 @@ test('every asset is a real cut-out, not a flattened export', () => {
   }
 });
 
+test('tree picker silhouettes stay front elevations instead of becoming plan canopies', () => {
+  // MAP art is top-down because its pixels occupy measured ground. PICKER art answers a different
+  // question: "what is this thing?" The 2026-08-14 canopy redraw copied circular aerial crowns
+  // into the picker and erased the trunk/silhouette cue Rory had explicitly approved. For a real
+  // front elevation, the lower fifth is mostly trunk and is far narrower than the middle crown;
+  // the mistaken top views measured 0.34-0.44 here, while these elevations measure 0.02-0.28.
+  const clearTrunkTrees = [
+    'tree_citrus', 'tree_mango', 'tree_avocado', 'tree_macadamia', 'tree_litchi',
+    'tree_pawpaw', 'tree_moringa', 'tree_wild_plum', 'tree_waterberry', 'tree_marula',
+    'tree_indigenous', 'tree_other', 'tree_apple', 'tree_pear', 'tree_plum', 'tree_peach',
+    'tree_fig', 'tree_olive',
+  ];
+
+  for (const id of clearTrunkTrees) {
+    const def = ELEMENT_CATALOG.find((candidate) => candidate.id === id)!;
+    assert.ok(def.art, `${id}: missing picker art`);
+    const image = PNG.sync.read(readFileSync(join(ROOT, def.art!.slice(PREFIX.length))));
+    const paintedPerRow = Array.from({ length: image.height }, (_, y) => {
+      let painted = 0;
+      for (let x = 0; x < image.width; x += 1) {
+        if (image.data[(y * image.width + x) * 4 + 3] > 8) painted += 1;
+      }
+      return painted;
+    });
+    const average = (from: number, to: number) => {
+      const rows = paintedPerRow.slice(from, to);
+      return rows.reduce((sum, n) => sum + n, 0) / rows.length;
+    };
+    const middle = average(Math.floor(image.height * 0.35), Math.floor(image.height * 0.65));
+    const lower = average(Math.floor(image.height * 0.78), image.height);
+    assert.ok(lower / middle < 0.31,
+      `${id}: the lower silhouette is ${Math.round(100 * lower / middle)}% as wide as its crown — ` +
+      'this reads as another top-down canopy instead of a front-elevation tree');
+  }
+});
+
+test('Natal Plum reads as a low front-facing shrub, not a circular aerial crown', () => {
+  // Natal Plum grows foliage to the ground, so the trunk-width check above is wrong for it. Its
+  // front cue is the broad, low silhouette: the rejected aerial asset was nearly round, while the
+  // corrected elevation is materially wider than it is tall.
+  const def = ELEMENT_CATALOG.find((candidate) => candidate.id === 'tree_natal_plum')!;
+  const image = PNG.sync.read(readFileSync(join(ROOT, def.art!.slice(PREFIX.length))));
+  let left = image.width, right = -1, top = image.height, bottom = -1;
+  for (let y = 0; y < image.height; y += 1) {
+    for (let x = 0; x < image.width; x += 1) {
+      if (image.data[(y * image.width + x) * 4 + 3] <= 8) continue;
+      left = Math.min(left, x); right = Math.max(right, x);
+      top = Math.min(top, y); bottom = Math.max(bottom, y);
+    }
+  }
+  assert.ok((right - left + 1) / (bottom - top + 1) > 1.15,
+    'Natal Plum is round again — the picker lost its low shrub elevation');
+});
+
 test('the library stays small enough to ship over a rural connection', () => {
-  // As delivered these were 1024x1024 at ~1.3 MB each — 78 MB for a set the app draws at 24-56px.
+  // As delivered these were 1024x1024 at ~1.3 MB each — 78 MB for a set the app draws at 24-92px.
   // Downsized to 192px the whole library is under 4 MB. This budget is the guard: it is generous
   // enough that no reasonable asset trips it, and tight enough that a raw 1024px drop cannot land
   // again without someone deciding to raise the number on purpose.
   const sizes = onDisk.map((f) => ({ f, bytes: statSync(join(ROOT, f)).size }));
   const total = sizes.reduce((n, s) => n + s.bytes, 0);
   const worst = sizes.sort((a, b) => b.bytes - a.bytes)[0];
-  assert.ok(worst.bytes < 250_000, `${worst.f} is ${(worst.bytes / 1024).toFixed(0)} KB — picker art is drawn at 24-56px and should not exceed 250 KB`);
+  assert.ok(worst.bytes < 250_000, `${worst.f} is ${(worst.bytes / 1024).toFixed(0)} KB — picker art is drawn at 24-92px and should not exceed 250 KB`);
   assert.ok(total < 8_000_000, `element-art totals ${(total / 1e6).toFixed(1)} MB — over the 8 MB budget for the picker library`);
 });
 

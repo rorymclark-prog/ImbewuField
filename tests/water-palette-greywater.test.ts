@@ -83,11 +83,11 @@ test('no element carries a capacityNote that its name would also encode', () => 
 
 test('water infrastructure stays full-strength while polygon fills keep their opacity controls', () => {
   const waterPanel = PALETTE_SOURCE.slice(
-    PALETTE_SOURCE.indexOf('{waterInfrastructure && ('),
+    PALETTE_SOURCE.indexOf('data-layer-children="water"'),
     PALETTE_SOURCE.indexOf('{/* Icon + label size.'),
   );
 
-  assert.ok(waterPanel.length > 0, 'the Water infrastructure panel disappeared');
+  assert.ok(waterPanel.length > 0, 'the Water child controls disappeared');
   assert.doesNotMatch(waterPanel, /type="range"/);
   assert.doesNotMatch(waterPanel, /onOpacityChange|waterInfrastructure\.opacity/);
   assert.match(PALETTE_SOURCE, /areaFillControl\.value\.opacity/);
@@ -95,12 +95,20 @@ test('water infrastructure stays full-strength while polygon fills keep their op
   assert.match(CANVAS_SOURCE, /visible: waterInfrastructure\.visibility\[key\],[\s\S]*?opacity: 1,/);
 });
 
-test('the desktop Water controls use the panel width instead of adding five tall slider rows', () => {
-  const waterPanel = PALETTE_SOURCE.slice(
-    PALETTE_SOURCE.indexOf('{waterInfrastructure && ('),
-    PALETTE_SOURCE.indexOf('{/* Icon + label size.'),
-  );
+test('Water owns an expandable child matrix instead of a separate panel below every layer', () => {
+  const rowsStart = PALETTE_SOURCE.indexOf('{LAYER_TOGGLES.map');
+  const children = PALETTE_SOURCE.indexOf('data-layer-children="water"');
+  const rowsEnd = PALETTE_SOURCE.indexOf('{/* Icon + label size.');
 
-  assert.match(waterPanel, /repeat\(2, minmax\(0, 1fr\)\)/);
+  assert.ok(rowsStart >= 0 && children > rowsStart && children < rowsEnd,
+    'Water controls are no longer nested inside the main layer rows');
+  assert.match(PALETTE_SOURCE, /const hasChildren = lt\.key === 'water' && !!waterInfrastructure/);
+  assert.match(PALETTE_SOURCE, /aria-controls=\{`\$\{lt\.key\}-layer-children`\}/);
+  assert.match(PALETTE_SOURCE, /expanded && waterInfrastructure/);
+  assert.match(PALETTE_SOURCE.slice(children, rowsEnd), /repeat\(2, minmax\(0, 1fr\)\)/);
+  assert.doesNotMatch(PALETTE_SOURCE, />\s*Water infrastructure\s*</,
+    'the old separate Water infrastructure heading came back');
+  assert.match(PALETTE_SOURCE, /if \(!childOn && !activeLayers\.water\)/,
+    'turning on a Water child while its parent is off would appear to do nothing');
   assert.match(PALETTE_SOURCE, /minHeight: compactDesktopLayerPanel \? 32 : 44/);
 });

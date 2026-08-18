@@ -58,6 +58,13 @@ export function elementPanelColumns(width: number): 1 | 2 | 3 {
   return 1;
 }
 
+/** Narrow docks show fewer cards, so spend the recovered width on recognition rather than air. */
+export function elementCardMetrics(columns: 1 | 2 | 3): { artSize: number; minHeight: number } {
+  if (columns === 1) return { artSize: 92, minHeight: 148 };
+  if (columns === 2) return { artSize: 70, minHeight: 126 };
+  return { artSize: 62, minHeight: 116 };
+}
+
 /** Floating panels and the bottom tray overlay the map; only docked panels reserve gutters. */
 export function reservedDesktopPanelSpace(mode: DesignWorkspaceMode, width: number): number {
   return mode === 'docked' ? width + 24 : 0;
