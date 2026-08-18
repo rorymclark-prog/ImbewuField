@@ -12,8 +12,10 @@ import {
 } from '@/lib/design-canvas';
 import {
   ELEMENTS_BY_ID,
+  plantingGroupFor,
   type DesignLayerKey,
   type ElementCategory,
+  type PlantingGroup,
 } from '@/lib/design-elements';
 import { ownedByCurrentStep } from '@/lib/glossy-filters';
 
@@ -41,6 +43,29 @@ const LINE_ALSO_LAYERS: Partial<Record<LineShape['kind'], DesignLayerKey[]>> = {
   swale: ['earthworks'],
 };
 
+// Planting has enough different marks that its parent eye is not enough once a plan is underway.
+// These are display-only groups: they never alter geometry, and use the same membership answers
+// as the canvas so a child tick cannot silently target a different set from its parent layer.
+export type PlantingSublayer = PlantingGroup | 'windbreaks' | 'staple_garden';
+
+export const PLANTING_SUBLAYER_LABEL: Record<PlantingSublayer, string> = {
+  beds: 'Beds & strips',
+  indigenous_fruit: 'Indigenous fruit',
+  fruit_nut: 'Fruit & nut trees',
+  other_trees: 'Shade & other trees',
+  windbreaks: 'Windbreaks',
+  staple_garden: 'Staple garden',
+};
+
+export const PLANTING_SUBLAYER_ORDER: readonly PlantingSublayer[] = [
+  'beds',
+  'indigenous_fruit',
+  'fruit_nut',
+  'other_trees',
+  'windbreaks',
+  'staple_garden',
+];
+
 export function itemLayerKeys(defId: string): DesignLayerKey[] {
   const def = ELEMENTS_BY_ID[defId];
   if (!def) return [];
@@ -53,6 +78,25 @@ export function lineLayerKeys(kind: LineShape['kind']): DesignLayerKey[] {
 
 export function zoneLayerKey(zone: Pick<ZoneShape, 'feature'>): DesignLayerKey {
   return zone.feature ? groundFeatureLayer(zone.feature) : 'zones';
+}
+
+/** The fine-grained Planting switch that owns a placed element, if it has one. */
+export function plantingSublayerForElement(defId: string): PlantingSublayer | null {
+  const def = ELEMENTS_BY_ID[defId];
+  if (!def || !itemLayerKeys(defId).includes('planting')) return null;
+  return plantingGroupFor(def);
+}
+
+/** Bed paths stay with beds; a drawn shelterbelt is its own readable group. */
+export function plantingSublayerForLine(kind: LineShape['kind']): PlantingSublayer | null {
+  if (kind === 'bedpath') return 'beds';
+  if (kind === 'windbreak') return 'windbreaks';
+  return null;
+}
+
+/** The staple garden is the one farmer-drawn ground area that belongs to Planting. */
+export function plantingSublayerForZone(zone: Pick<ZoneShape, 'feature'>): PlantingSublayer | null {
+  return zone.feature === 'staple_garden' ? 'staple_garden' : null;
 }
 
 /**
