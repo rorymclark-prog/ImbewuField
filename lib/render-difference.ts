@@ -47,7 +47,13 @@ export interface DifferenceReport {
   comparedPixels: number;
   /** How many fully protected pixels were changed. */
   protectedMismatches: number;
-  verdict: 'redrawn' | 'filtered-only' | 'unchanged';
+  /**
+   * Fraction of comparable, non-paper SOURCE content that came back as near-white paper. This
+   * catches a destructive redraw that the ordinary difference score calls a success precisely
+   * because erasing a photograph — or the sparse marks on a paper plan — changes so many pixels.
+   */
+  blankedFraction: number;
+  verdict: 'redrawn' | 'content-erased' | 'filtered-only' | 'unchanged';
 }
 
 export type PaidRenderStage = 'hybrid' | 'polish';
@@ -65,6 +71,18 @@ const VISIBLE_DELTA = 32;
 const REDRAWN_FRACTION_FLOOR = 0.1;
 /** A global filter moves almost every pixel a little. That is the signature to catch separately. */
 const FILTER_TOUCHED_FLOOR = 0.6;
+/**
+ * A painted map may be light, but it may not turn a substantial part of a supplied photograph
+ * into empty paper. The broken Whole-design Gemini result measured 69% blank in the map panel;
+ * its exact satellite source measured effectively 0%. Losing 30% of the source's actual content is
+ * already a visibly missing region, while leaving ample room for white roofs, paths and highlights.
+ */
+const CONTENT_ERASED_FRACTION_CEILING = 0.3;
+
+/** Near-white and neutral enough to read as untouched paper rather than a painted material. */
+function isBlankPaper(r: number, g: number, b: number): boolean {
+  return Math.min(r, g, b) >= 240 && Math.max(r, g, b) - Math.min(r, g, b) <= 12;
+}
 
 /**
  * Compare a paid render against the image it was given.
@@ -95,6 +113,8 @@ export function compareRenders(
   let redrawn = 0;
   let deltaSum = 0;
   let protectedMismatches = 0;
+  let blanked = 0;
+  let sourceContent = 0;
 
   for (let i = 0; i < before.length; i += 4) {
     const protection = protectMask ? protectMask[i + 3] / 255 : 0;
@@ -116,35 +136,63 @@ export function compareRenders(
     // alpha of 1 is almost entirely editable, not equivalent to alpha 255.
     const visible = (channel: number): number =>
       Math.round(before[i + channel] * protection + after[i + channel] * (1 - protection));
-    const dr = Math.abs(before[i] - visible(0));
-    const dg = Math.abs(before[i + 1] - visible(1));
-    const db = Math.abs(before[i + 2] - visible(2));
+    const visibleR = visible(0);
+    const visibleG = visible(1);
+    const visibleB = visible(2);
+    const dr = Math.abs(before[i] - visibleR);
+    const dg = Math.abs(before[i + 1] - visibleG);
+    const db = Math.abs(before[i + 2] - visibleB);
     const delta = Math.max(dr, dg, db);
 
     deltaSum += (dr + dg + db) / 3;
     if (delta > TRIVIAL_DELTA) touched++;
     if (delta >= VISIBLE_DELTA) redrawn++;
+    if (!isBlankPaper(before[i], before[i + 1], before[i + 2])) {
+      sourceContent++;
+      if (isBlankPaper(visibleR, visibleG, visibleB)) blanked++;
+    }
   }
 
   if (compared === 0) {
     // everything was protected, so the model was never allowed to change anything. That is a
     // configuration mistake rather than a bad render, and calling it "unchanged" would send
     // someone to re-prompt a model that was given no canvas to work on.
-    return { touchedFraction: 0, redrawnFraction: 0, meanDelta: 0, comparedPixels: 0, protectedMismatches, verdict: 'unchanged' };
+    return {
+      touchedFraction: 0,
+      redrawnFraction: 0,
+      blankedFraction: 0,
+      meanDelta: 0,
+      comparedPixels: 0,
+      protectedMismatches,
+      verdict: 'unchanged',
+    };
   }
 
   const touchedFraction = touched / compared;
   const redrawnFraction = redrawn / compared;
+  const blankedFraction = sourceContent > 0 ? blanked / sourceContent : 0;
   const meanDelta = deltaSum / compared;
 
   let verdict: DifferenceReport['verdict'] = 'redrawn';
-  if (redrawnFraction < REDRAWN_FRACTION_FLOOR) {
+  if (blankedFraction >= CONTENT_ERASED_FRACTION_CEILING) {
+    // This must outrank the ordinary redraw score: deleting a satellite image into white paper
+    // moves nearly every channel and otherwise looks like an exceptionally strong redraw.
+    verdict = 'content-erased';
+  } else if (redrawnFraction < REDRAWN_FRACTION_FLOOR) {
     // Almost nothing was genuinely redrawn. If nearly every pixel still shifted slightly, the model
     // applied a global treatment; if not, it handed back the input.
     verdict = touchedFraction >= FILTER_TOUCHED_FLOOR ? 'filtered-only' : 'unchanged';
   }
 
-  return { touchedFraction, redrawnFraction, meanDelta, comparedPixels: compared, protectedMismatches, verdict };
+  return {
+    touchedFraction,
+    redrawnFraction,
+    blankedFraction,
+    meanDelta,
+    comparedPixels: compared,
+    protectedMismatches,
+    verdict,
+  };
 }
 
 /**
@@ -160,6 +208,9 @@ export function differenceMessage(
   const fallback = stage === 'hybrid' ? 'exact map' : 'hybrid map';
   if (report.comparedPixels === 0) {
     return `The ${pass} had nothing it was allowed to change on this sheet. Your ${fallback} is unchanged.`;
+  }
+  if (report.verdict === 'content-erased') {
+    return `The ${pass} erased a large part of the map into blank paper instead of illustrating it, so it was not kept. Your ${fallback} is unchanged.`;
   }
   if (report.verdict === 'filtered-only') {
     return `The ${pass} only tinted the map instead of redrawing it, so it is not worth keeping. Your ${fallback} is unchanged.`;
