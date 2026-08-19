@@ -112,7 +112,7 @@ import {
   legendRowFontSize,
 } from '@/lib/sheet-legend-layout';
 import { PLAIN_HARD_SURFACE_PAINT, SHEET_BASE_MUTE_STYLE, SHEET_STRUCTURE_MUTE_STYLE, type SheetBaseMute } from '@/lib/sheet-base-mute';
-import { frameForUnderlay, hasFarmerPhoto, paintPlainPaperGround, sheetUnderlayOptions, underlayCacheSuffix, type SheetUnderlay } from '@/lib/sheet-underlay';
+import { frameForUnderlay, hasFarmerPhoto, paintPlainPaperGround, savedSheetUnderlayNote, SHEET_UNDERLAY_LABEL, sheetUnderlayOptions, underlayCacheSuffix, type SheetUnderlay } from '@/lib/sheet-underlay';
 import { drainCanvasToDataUrl, releaseCanvas, releaseImageSource } from '@/lib/release-canvas';
 import { overlandFlowArrows, overlandFlowLegendText, interceptFlowArrows, type FlowArrow } from '@/lib/overland-flow';
 import { ridgeAngleOf, roofRunoffArrows, gutterToTankArrows, tankOverflowArrows, type StoryArrow } from '@/lib/water-story';
@@ -657,9 +657,7 @@ import { phoneGradeDevice } from '@/lib/device-grade';
 
 /** Farmer-facing names for the underlay control. Short enough to sit on a pill on a phone. */
 const UNDERLAY_LABEL: Readonly<Record<SheetUnderlay, string>> = {
-  photo: 'Your photo',
-  satellite: 'Satellite',
-  plain: 'Plain paper',
+  ...SHEET_UNDERLAY_LABEL,
 };
 
 /** One line saying what each underlay is FOR — the reason to pick it, not what it looks like. */
@@ -11522,6 +11520,8 @@ interface GalleryItem {
   geometryLock: boolean;
   showcase: boolean;
   freshness: SavedSheetFreshness;
+  /** The base baked into this saved bitmap; independent of the picker for the next render. */
+  underlay?: SheetUnderlay;
 }
 
 // THE BADGE MUST NAME THE BUTTON THE FARMER PRESSED. `resultKind: 'hybrid'` is the stored stage
@@ -12192,6 +12192,7 @@ export default function DesignGlossy({
           provider: r.provider ?? 'unknown',
           geometryLock: r.geometryLock ?? false,
           showcase: r.showcase ?? false,
+          underlay: r.underlay,
           freshness,
         };
       }));
@@ -12259,6 +12260,7 @@ export default function DesignGlossy({
         provider: provenance.provider ?? 'unknown',
         geometryLock: provenance.geometryLock ?? false,
         showcase: provenance.showcase ?? false,
+        underlay,
         freshness: 'current',
       };
       setGallery((prev) => (gallerySiteIdRef.current === state.siteId ? [...prev, item] : prev));
@@ -12283,7 +12285,7 @@ export default function DesignGlossy({
       });
       return item.id;
     },
-    [state.siteId],
+    [state.siteId, underlay],
   );
 
   // Remove one saved map, from the screen AND from storage. If the deleted item is the one open in
@@ -15557,6 +15559,7 @@ export default function DesignGlossy({
               {stageIsExact
                 ? 'Exact sheet — drawn straight from your design + site data, no AI.'
                 : 'AI artist’s impression of YOUR design — the canvas is the exact version.'}
+              {galleryViewItem && ` ${savedSheetUnderlayNote(galleryViewItem.underlay, underlay)}`}
             </div>
           </div>
           {saved && !galleryViewItem && visibleResultImage === saved.image && (

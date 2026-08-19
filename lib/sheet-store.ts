@@ -21,6 +21,7 @@ import {
   accountLocalStorageKey,
   activeAccountLocalStorageKey,
 } from './account-local-storage';
+import type { SheetUnderlay } from './sheet-underlay';
 
 const DB_NAME = 'imbewu-sheets';
 const DB_VERSION = 1;
@@ -58,6 +59,8 @@ export interface StoredSheet {
   provider?: SheetProvider;
   geometryLock?: boolean;
   showcase?: boolean;
+  /** The base actually baked into this immutable bitmap. The picker may since have changed. */
+  underlay?: SheetUnderlay;
 }
 
 const RESULT_KINDS = new Set<SheetResultKind>([
@@ -68,6 +71,7 @@ const RESULT_KINDS = new Set<SheetResultKind>([
   'legacy',
 ]);
 const PROVIDERS = new Set<SheetProvider>(['exact', 'openai', 'gemini', 'unknown']);
+const UNDERLAYS = new Set<SheetUnderlay>(['photo', 'satellite', 'plain']);
 const IMAGE_DATA_URL = /^data:image\/(?:png|jpeg|webp);base64,([A-Za-z0-9+/]*={0,2})$/i;
 
 function nonEmptyString(value: unknown): value is string {
@@ -108,6 +112,10 @@ function normaliseStoredSheet(value: unknown): StoredSheet | null {
   )) return null;
   if (row.geometryLock !== undefined && typeof row.geometryLock !== 'boolean') return null;
   if (row.showcase !== undefined && typeof row.showcase !== 'boolean') return null;
+  if (row.underlay !== undefined && (
+    typeof row.underlay !== 'string'
+    || !UNDERLAYS.has(row.underlay as SheetUnderlay)
+  )) return null;
 
   return {
     id: row.id,
@@ -122,6 +130,7 @@ function normaliseStoredSheet(value: unknown): StoredSheet | null {
     ...(row.provider === undefined ? {} : { provider: row.provider as SheetProvider }),
     ...(row.geometryLock === undefined ? {} : { geometryLock: row.geometryLock }),
     ...(row.showcase === undefined ? {} : { showcase: row.showcase }),
+    ...(row.underlay === undefined ? {} : { underlay: row.underlay as SheetUnderlay }),
   };
 }
 

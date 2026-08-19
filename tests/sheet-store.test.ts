@@ -258,6 +258,7 @@ test('saved sheets round-trip with provenance and load oldest first', async () =
     provider: 'openai',
     geometryLock: true,
     showcase: true,
+    underlay: 'satellite',
   });
   const earlier = sheet('earlier', 'site-a', '2026-01-01');
   assert.equal(await saveSheet(later), true);
@@ -382,6 +383,7 @@ test('invalid records are rejected on write before they can replace a durable sh
     sheet('one', 'site-a', '2026-02-01', { thumb: 'data:text/plain;base64,AAAA' }),
     sheet('one', 'site-a', '2026-02-01', { resultKind: 'invented' as StoredSheet['resultKind'] }),
     sheet('one', 'site-a', '2026-02-01', { provider: 'invented' as StoredSheet['provider'] }),
+    sheet('one', 'site-a', '2026-02-01', { underlay: 'invented' as StoredSheet['underlay'] }),
     sheet('one', 'site-a', '2026-02-01', { renderRecipe: '' }),
   ];
   for (const row of invalid) assert.equal(await saveSheet(row), false);
