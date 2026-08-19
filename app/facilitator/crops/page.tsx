@@ -32,7 +32,7 @@ import {
   loadCropPlan, saveCropPlan, bedEntryMonth, latestBedEntryMonth, plannedBedEntryMonth, harvestEndMonthForCrop, harvestMonthForCrop, tasksForPlan, taskMonthsFromNow, estimatedYieldKgAdjusted, nextValidSowMonth,
   isSpaceHungry, bedOverlapFraction, bedHasUnverifiedTiming, seedBoqForPlan, buildYearReport, buildFoodAvailability, buildPlanYieldBenchmark,
   buildFieldUtilizationByMonth, loadFavouriteCropKeys, saveFavouriteCropKeys, isGenuinelyIntercropped, plantingBedEntryOffsets, plantingIsActiveOrPlanned, recurringPlanPlantings,
-  loadAllowBedSharing, saveAllowBedSharing, loadCashflowSettings, saveCashflowSettings,
+  loadAllowBedSharing, saveAllowBedSharing, loadCashflowSettings, saveCashflowSettings, DEFAULT_CASHFLOW_SETTINGS,
 } from '@/lib/crop-plan';
 import type { FoodGroup } from '@/lib/crop-groups';
 import { FOOD_GROUP_META, foodGroupOf, ROTATION_FAMILY_META, rotationFamilyOf } from '@/lib/crop-groups';
@@ -517,10 +517,11 @@ function FacilitatorCropsPageInner() {
 
   // Cashflow view settings — % of harvestable value actually sold (the rest
   // feeds the household) and % assumed lost to disease/failure/underperformance
-  // before it ever becomes harvestable. No default loss (0%) — inventing a
-  // "typical" loss rate isn't something to guess at; it's the farmer's own
-  // estimate to set.
-  const [cashflowSettings, setCashflowSettings] = useState<CashflowSettings>({ sellPercent: 100, lossPercent: 0, confirmed: false });
+  // before it ever becomes harvestable. The loss slider OPENS at the sourced
+  // 25% SA-smallholder figure (see DEFAULT_CASHFLOW_SETTINGS in lib/crop-plan.ts
+  // for the citations) but stays behind confirmed:false — the farmer still
+  // reviews both sliders before any Rand figure is shown.
+  const [cashflowSettings, setCashflowSettings] = useState<CashflowSettings>({ ...DEFAULT_CASHFLOW_SETTINGS });
   function updateCashflowSettings(next: CashflowSettings) {
     setCashflowSettings(next);
     saveCashflowSettings(next);
@@ -1700,6 +1701,12 @@ function FoodAvailabilityChart({
   const [mode, setMode] = useState<FoodValueMode>('availability');
   const [valuePriceMode, setValuePriceMode] = useState<'retail' | 'wholesale'>('retail');
   const [editingPrices, setEditingPrices] = useState(false);
+  // DISPLAY-ONLY household guideline (docs/CROP-PLAN-TRUTH-AUDIT-2026-08-06.md
+  // bans headcount as a planting input). This state exists purely to render a
+  // consumption-guideline sentence; it is never persisted and must never be
+  // passed to autoSuggestPlan, bed sizing, repetitions or any lib/ function.
+  // The household-guideline-guardrail test enforces both properties.
+  const [householdSizeGuideline, setHouseholdSizeGuideline] = useState('');
   const cols = monthOrder.map((m) => {
     const items = availability[m] ?? [];
     return { m, fresh: items.filter((it) => it.status === 'fresh'), stored: items.filter((it) => it.status === 'stored') };
@@ -1833,9 +1840,45 @@ function FoodAvailabilityChart({
               <input aria-label="Percent sold" type="range" min={0} max={100} value={cashflowSettings.sellPercent} onChange={(event) => onCashflowSettingsChange({ ...cashflowSettings, sellPercent: Number(event.target.value), confirmed: false })} style={{ width: '100%', accentColor: '#1F4D2B' }} />
               <div className="flex items-center justify-between mb-1 mt-2"><span className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>% loss or underperformance</span><span className="font-mono font-semibold" style={{ fontSize: 12 }}>{cashflowSettings.lossPercent}%</span></div>
               <input aria-label="Percent loss" type="range" min={0} max={100} value={cashflowSettings.lossPercent} onChange={(event) => onCashflowSettingsChange({ ...cashflowSettings, lossPercent: Number(event.target.value), confirmed: false })} style={{ width: '100%', accentColor: '#B33A3A' }} />
+              {/* The 25% starting position and this 10-50% context come from CSIR (2021)
+                  9% production + 18.3% post-harvest ≈ 25.6% cumulative, FAO Food Loss Index
+                  fruit & veg 25.4%, and Molelekoa et al. (2025) 25.15% measured on 3,115
+                  tomatoes across 8 SA smallholder farms — triangulation with shared data
+                  ancestry, not three independent lines. */}
+              <div className="font-sans mt-1" style={{ fontSize: 11, color: '#8C7A62', lineHeight: 1.45 }}>
+                Typical South African smallholder losses run 10–50%. A home garden eaten within the week is often around 15%; far from a market, or in a first season, 35–50% is common.
+              </div>
+              <div className="mt-3 pt-3" style={{ borderTop: '1px dashed #E2D8C4' }}>
+                <label className="font-sans flex items-center gap-2" style={{ fontSize: 11.5, color: '#5C5040' }}>
+                  <span>Household size (optional, context only)</span>
+                  <input
+                    aria-label="Household size for the eating guideline"
+                    type="number" min={1} max={30} inputMode="numeric" placeholder="e.g. 4"
+                    value={householdSizeGuideline}
+                    onChange={(event) => setHouseholdSizeGuideline(event.target.value)}
+                    className="font-mono rounded-lg px-2 py-1"
+                    style={{ width: 64, fontSize: 12, border: '1px solid #E2D8C4', background: '#FFFFFF', color: '#20190F' }}
+                  />
+                </label>
+                {(() => {
+                  // Display-only guideline: SA food-based dietary guidelines' 240 g of
+                  // vegetables per person per day ≈ 88 kg per person per year. It describes
+                  // what a household eats from ALL sources (garden, shops, neighbours); it
+                  // is not a planting target and never reaches the planner.
+                  const n = Math.floor(Number(householdSizeGuideline));
+                  const valid = Number.isFinite(n) && n >= 1 && n <= 30;
+                  return (
+                    <div className="font-sans mt-1" style={{ fontSize: 11, color: '#8C7A62', lineHeight: 1.45 }}>
+                      {valid
+                        ? `A household of ${n} typically eats about ${n} × 88 ≈ ${Math.round((n * 88) / 10) * 10} kg of vegetables a year (South African dietary guidelines: 240 g per person per day). A household of 4 ≈ 350 kg. This is an eating guideline covering all food sources — garden and shops together — not a planting target; it does not change your plan.`
+                        : 'A household of N typically eats about N × 88 kg of vegetables a year (South African dietary guidelines: 240 g per person per day). A household of 4 ≈ 350 kg. This is an eating guideline covering all food sources, not a planting target — it does not change your plan.'}
+                    </div>
+                  );
+                })()}
+              </div>
               {!assumptionsConfirmed ? (
                 <div className="mt-3 pt-3" style={{ borderTop: '1px solid #E2D8C4' }}>
-                  <div className="font-sans mb-2" style={{ fontSize: 12, color: '#9A6018' }}>Not calculated yet: 100% sold and 0% loss are placeholders, not an estimate. Review both assumptions first.</div>
+                  <div className="font-sans mb-2" style={{ fontSize: 12, color: '#9A6018' }}>Not calculated yet: the sliders start at typical placeholders (100% sold, 25% loss), not an estimate for your farm. Review both assumptions first.</div>
                   <button onClick={() => onCashflowSettingsChange({ ...cashflowSettings, confirmed: true })} className="font-display font-semibold rounded-lg px-3 py-2" style={{ fontSize: 12.5, color: '#F7F2E9', background: '#1F4D2B', border: 'none', cursor: 'pointer' }}>Use these assumptions</button>
                 </div>
               ) : (

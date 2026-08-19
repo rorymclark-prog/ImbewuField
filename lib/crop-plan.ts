@@ -1403,7 +1403,32 @@ export interface CashflowSettings {
 }
 
 const CASHFLOW_SETTINGS_KEY = 'imbewu_cashflow_settings_v1';
-const DEFAULT_CASHFLOW_SETTINGS: CashflowSettings = { sellPercent: 100, lossPercent: 0, confirmed: false };
+
+/**
+ * Fresh-start defaults for an account that has never saved cashflow settings.
+ *
+ * lossPercent opens at 25 because a 0% starting position understates real SA
+ * smallholder losses. Sources (triangulation — these share some data ancestry,
+ * they are not three independent lines):
+ * - CSIR (2021) SA food-loss study: 9% production + 18.3% post-harvest
+ *   ≈ 25.6% cumulative for fruit & vegetables.
+ * - FAO Food Loss Index, fruit & vegetables: 25.4%.
+ * - Molelekoa et al. (2025): 25.15% measured on 3,115 tomatoes across
+ *   8 SA smallholder farms.
+ * The default stays behind confirmed:false — no Rand figure is shown until the
+ * farmer reviews both sliders — and it is applied ONLY when nothing is stored:
+ * loadCashflowSettings never migrates a persisted value onto this default.
+ */
+export const DEFAULT_CASHFLOW_SETTINGS: CashflowSettings = { sellPercent: 100, lossPercent: 25, confirmed: false };
+
+/**
+ * Field fallbacks for a PERSISTED blob that is missing a field (a save that
+ * predates the field, or a hand-edited store). These stay at the values the
+ * old code would have shown, so a farm that has already saved settings never
+ * silently changes when a fresh default moves. Do not point these at
+ * DEFAULT_CASHFLOW_SETTINGS.
+ */
+const STORED_FIELD_FALLBACKS = { sellPercent: 100, lossPercent: 0 } as const;
 
 export function loadCashflowSettings(): CashflowSettings {
   if (isSampleMode()) return getSandboxCashflowSettings();
@@ -1413,8 +1438,8 @@ export function loadCashflowSettings(): CashflowSettings {
     if (!raw) return DEFAULT_CASHFLOW_SETTINGS;
     const parsed = JSON.parse(raw);
     return {
-      sellPercent: typeof parsed.sellPercent === 'number' ? parsed.sellPercent : DEFAULT_CASHFLOW_SETTINGS.sellPercent,
-      lossPercent: typeof parsed.lossPercent === 'number' ? parsed.lossPercent : DEFAULT_CASHFLOW_SETTINGS.lossPercent,
+      sellPercent: typeof parsed.sellPercent === 'number' ? parsed.sellPercent : STORED_FIELD_FALLBACKS.sellPercent,
+      lossPercent: typeof parsed.lossPercent === 'number' ? parsed.lossPercent : STORED_FIELD_FALLBACKS.lossPercent,
       confirmed: parsed.confirmed === true,
     };
   } catch {
