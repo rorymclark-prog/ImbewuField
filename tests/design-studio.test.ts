@@ -287,3 +287,14 @@ test('the species picker opens towards the space that exists, not always upwards
   assert.ok(/maxHeight: speciesAnchor\.maxHeight/.test(panel),
     'the panel ignores its computed cap and is back on a fixed 45dvh');
 });
+
+test('named tree cards place directly and only Other opens the full species catalogue', () => {
+  // A named Citrus/Mango/Avocado card already answers "what am I placing?" Requiring a second
+  // picker after every tap made the quick palette slower than the generic Other card it replaced.
+  const src = readFileSync(new URL('../components/design/DesignPalette.tsx', import.meta.url), 'utf8');
+  assert.match(
+    src,
+    /const canShowSpecies = tool === 'place' && armedDef\?\.id === 'tree_other';/,
+    'only the broad Other tree card may open the species catalogue',
+  );
+});

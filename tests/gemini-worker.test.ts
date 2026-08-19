@@ -1,7 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert';
 import { readFileSync } from 'node:fs';
-import { geminiEdit, GEMINI_IMAGE_MODELS } from '../functions/src/gemini.ts';
+import { geminiEdit, GEMINI_IMAGE_MODELS, geminiModelForQuality } from '../functions/src/gemini.ts';
+
+test('the high-quality Studio setting uses Gemini Pro rather than the draft model', () => {
+  assert.equal(geminiModelForQuality('high'), 'pro-preview');
+  assert.equal(geminiModelForQuality('medium'), 'flash');
+  assert.equal(geminiModelForQuality('low'), 'flash');
+});
 
 test('geminiEdit sends the correct shape and strict prompt', async (t) => {
   let fetchCall: any;

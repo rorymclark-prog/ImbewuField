@@ -1025,7 +1025,10 @@ export default function DesignPalette({
 
   // ---- Tools --------------------------------------------------------------------------------
 
-  const canShowSpecies = tool === 'place' && armedDef?.category === 'growing' && armedDef?.id !== 'veg_bed';
+  // Standard cards already name the thing the farmer chose, so reopening the full catalogue for
+  // each of them turns one placement into two decisions. The broad "Other" card is the one honest
+  // exception: it has no species of its own, so that is where the catalogue belongs.
+  const canShowSpecies = tool === 'place' && armedDef?.id === 'tree_other';
 
   useEffect(() => {
     if (canShowSpecies) {
