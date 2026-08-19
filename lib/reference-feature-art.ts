@@ -137,6 +137,10 @@ const PLANTING_DETAIL_ART: Readonly<Record<string, ReferenceFeatureArtwork>> = {
   tree_litchi: 'litchi-tree-v5.png',
   tree_macadamia: 'macadamia-tree-v2.png',
   tree_citrus: 'citrus-tree-v3.png',
+  // No dedicated art yet for these — share the citrus illustration until each gets its own.
+  tree_orange: 'citrus-tree-v3.png',
+  tree_lemon: 'citrus-tree-v3.png',
+  tree_grapefruit: 'citrus-tree-v3.png',
   tree_apple: 'apple-tree-v1.png',
   tree_pear: 'pear-tree-v1.png',
   tree_plum: 'plum-tree-v1.png',

@@ -776,6 +776,62 @@ export const ELEMENT_CATALOG: DesignElementDef[] = [
     castsShade: true,
     tip: 'Full sun, frost-protected spot; keep 4 m from structures for mature canopy.',
   },
+  // ORANGE, LEMON, GRAPEFRUIT — standalone cards, not sub-options behind the generic Citrus Tree
+  // chip above. Rory: "I literally want to see orange lemon and grapefruit now as options instead
+  // of just citrus we treat them as full trees in thier own right." So they are: same tier as
+  // Mango and Avocado below, placed directly with no picker in the way. #282 already made every
+  // named tree card place directly (canShowSpecies now keys on tree_other only), so these three
+  // automatically get that behaviour — no DesignPalette.tsx change needed here.
+  //
+  // Picker-card art (public/element-art) is copied from tree_citrus's illustration under each
+  // tree's own filename — element-art.test.ts requires the filename to match the catalogue id. The
+  // map-scale report art (reference-feature-art.ts) also points all three at the shared
+  // citrus-tree-v3.png for now; dedicated artwork for each can follow later.
+  {
+    id: 'tree_orange',
+    category: 'growing',
+    name: 'Orange Tree',
+    icon: '🟧',
+    art: '/element-art/tree_orange.png',
+    shape: 'circle',
+    wM: 4,
+    hM: 4,
+    color: '#4E8B3B',
+    zoneRec: [2, 3],
+    castsShade: true,
+    botanical: 'Citrus sinensis',
+    tip: 'Full sun, frost-protected spot; keep 4 m from structures for mature canopy.',
+  },
+  {
+    id: 'tree_lemon',
+    category: 'growing',
+    name: 'Lemon Tree',
+    icon: '🍋',
+    art: '/element-art/tree_lemon.png',
+    shape: 'circle',
+    wM: 4,
+    hM: 4,
+    color: '#4E8B3B',
+    zoneRec: [2, 3],
+    castsShade: true,
+    botanical: 'Citrus limon',
+    tip: 'The most frost-hardy of the citrus — still wants full sun and 4 m clearance at maturity.',
+  },
+  {
+    id: 'tree_grapefruit',
+    category: 'growing',
+    name: 'Grapefruit Tree',
+    icon: '🟨',
+    art: '/element-art/tree_grapefruit.png',
+    shape: 'circle',
+    wM: 5,
+    hM: 5,
+    color: '#4E8B3B',
+    zoneRec: [2, 3],
+    castsShade: true,
+    botanical: 'Citrus × paradisi',
+    tip: 'Needs more heat than other citrus and a longer frost-free spell; full sun, 5 m clearance at maturity.',
+  },
   {
     id: 'tree_mango',
     category: 'growing',
@@ -1395,6 +1451,9 @@ export type ClimateZone = 'subtropical' | 'temperate' | 'mediterranean' | 'arid'
 // tree, or non-tree growing items) is treated as climate-agnostic and always shown.
 export const TREE_CLIMATES: Record<string, ClimateZone[]> = {
   tree_citrus: ['subtropical', 'mediterranean'],
+  tree_orange: ['subtropical', 'mediterranean'],
+  tree_lemon: ['subtropical', 'mediterranean'],
+  tree_grapefruit: ['subtropical', 'mediterranean'],
   tree_mango: ['subtropical'],
   tree_avocado: ['subtropical'],
   tree_macadamia: ['subtropical'],

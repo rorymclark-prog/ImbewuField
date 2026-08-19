@@ -108,6 +108,9 @@ const ITEM_RATE_BY_DEF_ID: Record<string, string> = {
   // different rates, and the second line would look like a separate structure.
   banana_circle: 'banana_circle',
   tree_citrus: 'citrus_tree',
+  tree_orange: 'citrus_tree',
+  tree_lemon: 'citrus_tree',
+  tree_grapefruit: 'citrus_tree',
   tree_avocado: 'avo_tree',
   tree_mango: 'generic_fruit_tree',
   tree_macadamia: 'generic_fruit_tree',

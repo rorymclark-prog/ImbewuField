@@ -28,6 +28,9 @@ const GREYWATER_READY_BASINS = new Set(['banana_circle', 'tree_basin']);
 const PERENNIAL_GUILDS = new Set([
   'banana_clump',
   'tree_citrus',
+  'tree_orange',
+  'tree_lemon',
+  'tree_grapefruit',
   'tree_mango',
   'tree_avocado',
   'tree_macadamia',
