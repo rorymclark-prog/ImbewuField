@@ -84,7 +84,7 @@ import {
   type GutterRow,
 } from '@/lib/plan-label-gutter';
 import { leaderLabelFontSize, placeLeaderLabel, stackLeaderRows, leaderPath } from '@/lib/leader-labels';
-import { exactModelInputMarks, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '@/lib/render-policy';
+import { geometryLockCompositionPolicy, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '@/lib/render-policy';
 import { EARTHWORKS_ROUTE_STYLE, WATER_LEGEND_SECTION_ORDER, WATER_ROUTE_STYLE, nearestWaterNeighbourPx, offsetPolyline, waterFeaturePresentationDimensions, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRoutesWithVisualBridges, waterRouteStyleFor, type EarthworksRouteStyle, type WaterLegendSection } from '@/lib/water-cartography';
 import { PLANTING_CANOPY_PAINT, PLANTING_LEGEND_SECTION_ORDER, PLANTING_ROUTE_STYLE, overstoryCanopyIds, plantingFeaturePresentationDimensions, plantingLegendSectionForFeature, plantingRouteStyleFor, type PlantingLegendSection } from '@/lib/planting-cartography';
 import { PLAN_VERSION } from '@/lib/plan-version';
@@ -709,7 +709,11 @@ const OVERLAY_COMPOSITE_MARKS: CompositeMarkOptions = {
 };
 
 function lockedCompositeMarks(filter: GlossyLayerFilter): CompositeMarkOptions {
-  return exactModelInputMarks(filter);
+  // A continuous painted interior only works if the model can see where the saved design belongs.
+  // The old exact-input marks hid every line, item and structure, then the compositor tried to put
+  // them back as isolated source tiles. That made accurate placement impossible without recreating
+  // the very collage Geometry Lock is meant to prevent.
+  return polishModelInputMarks(filter);
 }
 
 interface ProtectMaskOptions {
@@ -725,17 +729,24 @@ interface ProtectMaskOptions {
   houseFeatherRatio?: number;
 }
 
-function lockedProtectMaskOptions(filter: GlossyLayerFilter): ProtectMaskOptions {
+function lockedProtectMaskOptions(
+  filter: GlossyLayerFilter,
+  style: StylePreset,
+  hasPhoto: boolean,
+): ProtectMaskOptions {
+  const composition = geometryLockCompositionPolicy(style, hasPhoto ? 'photo' : 'paper');
   const structural = {
     protectOutside: true,
     protectLines: false,
     protectItems: false,
-    protectUnmarkedGround: true,
+    protectHouse: composition.protectHousePixels,
+    protectDriveway: composition.protectDrivewayPixels,
+    protectUnmarkedGround: composition.protectUnmarkedGround,
     houseHaloRatio: 0.003,
     houseFeatherRatio: 0.0012,
   };
   return filter === 'water'
-    ? { ...structural, protectBoundary: true, protectDriveway: true }
+    ? { ...structural, protectBoundary: true }
     : structural;
 }
 
@@ -2992,6 +3003,69 @@ async function buildLockedStructureOverlay(
     ? await buildHouseOverlay(sourceImage, state, refLayers, W, H, treatment)
     : undefined;
   return stackOverlayImages(driveway, house, W, H);
+}
+
+/**
+ * Exact structures for a painted map, without punching photographic holes through the artwork.
+ *
+ * The old Reference Blueprint finisher clipped the satellite roof and driveway back over Gemini's
+ * illustration. Those isolated source patches were impossible to colour-match and read as pasted
+ * rectangles. Painted styles instead get the same deterministic corrugated-roof drawing used by
+ * the exact paper plan, plus an exact quiet driveway surface. Geometry stays authoritative while
+ * the material language belongs to the drawing.
+ */
+async function buildPaintedStructureOverlay(
+  state: DesignCanvasState,
+  frame: CanvasFrame,
+  refLayers: DesignGlossyProps['refLayers'],
+  W: number,
+  H: number,
+  styleKey: StylePreset,
+): Promise<string | undefined> {
+  const treatment: LockedStructureTreatment = styleKey === 'precision_atlas' ? 'precision_atlas' : 'source';
+  const driveway = await buildDrivewayOverlay(undefined, frame, refLayers, W, H, treatment);
+  const hasHouse = authoritativeHouseFootprints(state, refLayers).length > 0;
+  if (!driveway && !hasHouse) return undefined;
+
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = H;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) {
+    releaseCanvas(canvas);
+    return driveway;
+  }
+  if (driveway) {
+    const drivewayImage = await loadImage(driveway);
+    ctx.save();
+    // Keep Gemini's continuous surface visible. This quiet exact-shape wash is a geometry cue,
+    // not another opaque tile laid over the paid artwork.
+    ctx.globalAlpha = 0.24;
+    try {
+      ctx.drawImage(drivewayImage, 0, 0, W, H);
+    } finally {
+      releaseImageSource(drivewayImage);
+      ctx.restore();
+    }
+  }
+  const pxPerM = W / (frame.imgW * frame.mPerPx);
+  if (hasHouse) drawPaperRoofs(ctx, state, refLayers, (n) => n * W, (n) => n * H, pxPerM);
+  return drainCanvasToDataUrl(canvas, 'image/png');
+}
+
+async function buildGeometryLockStructureOverlay(
+  sourceImage: string | undefined,
+  state: DesignCanvasState,
+  frame: CanvasFrame,
+  refLayers: DesignGlossyProps['refLayers'],
+  W: number,
+  H: number,
+  styleKey: StylePreset,
+  useSourcePixels: boolean,
+): Promise<string | undefined> {
+  return useSourcePixels
+    ? buildLockedStructureOverlay(sourceImage, state, frame, refLayers, W, H, styleKey)
+    : buildPaintedStructureOverlay(state, frame, refLayers, W, H, styleKey);
 }
 
 async function stackOverlayImages(bottom: string | undefined, top: string | undefined, W: number, H: number): Promise<string | undefined> {
@@ -12540,7 +12614,13 @@ export default function DesignGlossy({
       //     render is handed the identical brief and the sheets agree with each other.
       const designBrief = buildDesignBrief(state, refLayers, placeName, site);
       const protectMaskDataUrl = geometryLock
-        ? await buildProtectMask(state, frame, refLayers, filter, lockedProtectMaskOptions(filter))
+        ? await buildProtectMask(
+            state,
+            frame,
+            refLayers,
+            filter,
+            lockedProtectMaskOptions(filter, styleDef.key, Boolean(frame.satDataUrl)),
+          )
         : undefined;
       // c. Beautify via the image-producer route (gemini engine; async path handled inside).
       //    ZONES runs the model too now. The old rule ("AI mustn't invent under my zones —
@@ -12597,7 +12677,19 @@ export default function DesignGlossy({
         : filter === 'water' ? buildWaterOverlay(state, frame, refLayers, W, H, !geometryLock, geometryLock)
         : undefined;
       const structureOverlay = geometryLock
-        ? await buildLockedStructureOverlay(frame.satDataUrl ?? composite, state, frame, refLayers, W, H, styleDef.key)
+        ? await buildGeometryLockStructureOverlay(
+            frame.satDataUrl ?? composite,
+            state,
+            frame,
+            refLayers,
+            W,
+            H,
+            styleDef.key,
+            geometryLockCompositionPolicy(
+              styleDef.key,
+              frame.satDataUrl ? 'photo' : 'paper',
+            ).useSourceStructurePixels,
+          )
         : undefined;
       const mergedOverlay = filter === 'water' && geometryLock
         ? await stackOverlayImages(structureOverlay, overlayImage, W, H)
@@ -12949,13 +13041,31 @@ export default function DesignGlossy({
           : f === 'water' ? buildWaterOverlay(state, frame, refLayers, W, H, !geometryLock, geometryLock)
           : undefined;
         const structureOverlay = geometryLock
-          ? await buildLockedStructureOverlay(frame.satDataUrl ?? composite, state, frame, refLayers, W, H, styleDef.key)
+          ? await buildGeometryLockStructureOverlay(
+              frame.satDataUrl ?? composite,
+              state,
+              frame,
+              refLayers,
+              W,
+              H,
+              styleDef.key,
+              geometryLockCompositionPolicy(
+                styleDef.key,
+                frame.satDataUrl ? 'photo' : 'paper',
+              ).useSourceStructurePixels,
+            )
           : undefined;
         const mergedOverlay = f === 'water' && geometryLock
           ? await stackOverlayImages(structureOverlay, overlayImage, W, H)
           : await stackOverlayImages(overlayImage, structureOverlay, W, H);
         const protectMaskDataUrl = geometryLock
-          ? await buildProtectMask(state, frame, refLayers, f, lockedProtectMaskOptions(f))
+          ? await buildProtectMask(
+              state,
+              frame,
+              refLayers,
+              f,
+              lockedProtectMaskOptions(f, styleDef.key, Boolean(frame.satDataUrl)),
+            )
           : undefined;
         const final = await compositeAccurateMap({
           modelImage: protectMaskDataUrl
@@ -13205,13 +13315,26 @@ export default function DesignGlossy({
       // Geometry Lock therefore wins here, after generation: every opaque mask pixel is copied
       // back from the uploaded source before any labels or sheet chrome are drawn.
       const cleanSource = renderFrame.satDataUrl ?? sourceImage;
+      const compositionPolicy = geometryLockCompositionPolicy(
+        styleDef.key,
+        renderFrame.satDataUrl ? 'photo' : 'paper',
+      );
       const restoredImage = locked && protectMask && cleanSource
         ? await restoreProtectedPixels(cleanSource, modelImage, protectMask)
         : modelImage;
       const structureOverlay = locked
-        ? await buildLockedStructureOverlay(cleanSource, renderState, renderFrame, renderRefLayers, W, H, styleDef.key)
+        ? await buildGeometryLockStructureOverlay(
+            cleanSource,
+            renderState,
+            renderFrame,
+            renderRefLayers,
+            W,
+            H,
+            styleDef.key,
+            compositionPolicy.useSourceStructurePixels,
+          )
         : undefined;
-      const exactGroundOverlay = locked
+      const exactGroundOverlay = locked && compositionPolicy.useExactGroundOverlay
         ? await buildExactLayerOverlay(renderState, renderFrame, renderRefLayers, f, W, H, 'ground', f === 'water' ? 'illustrated' : 'standard')
         : undefined;
       // (The exact FEATURE overlay used to be built here and stacked over the model's work. It is
@@ -13265,11 +13388,9 @@ export default function DesignGlossy({
       // everything outside the elements, and this put back the elements. Exact, wearing a paid
       // badge.
       //
-      // Locked now means what the farmer was promised it means: the ground, the roofs, the
-      // driveway, the boundary and everything outside the plot stay byte-exact (they are still
-      // stacked below), the labels and legend are still drawn by the app afterwards from saved
-      // data, and the PLANTING is the model's illustration of the elements it was given — in the
-      // positions it was given them. That is the whole product of the paid pass.
+      // Locked now means what the farmer was promised it means: saved geometry, labels and legend
+      // stay exact. Photo Plan keeps the factual photo; painted styles keep Gemini's continuous
+      // property artwork and receive exact illustrated roofs/driveway instead of satellite holes.
       const overlayImage = f === 'zones'
         // Zones are saved polygons, not model artwork. The general locked-sheet rule below must
         // not suppress them: that shipped a paid Zones sheet with only Gemini's faint impression
@@ -13279,8 +13400,8 @@ export default function DesignGlossy({
           ? undefined
           : f === 'water' ? buildWaterOverlay(renderState, renderFrame, renderRefLayers, W, H, true, false)
             : undefined;
-      // Ground first, then the exact source-derived roof and driveway, then factual marks. This keeps
-      // the structure exact without hiding a saved pipe, tank, bed or leader that crosses it.
+      // Photo-preserving styles retain their exact ground/source structures. Painted styles skip
+      // the ground stamp and use illustrated exact structures, so the map remains one visual field.
       const groundedStructures = locked
         ? await stackOverlayImages(exactGroundOverlay, structureOverlay, W, H)
         : structureOverlay;
@@ -13427,7 +13548,7 @@ export default function DesignGlossy({
               renderFrame,
               renderRefLayers,
               f,
-              lockedProtectMaskOptions(f),
+              lockedProtectMaskOptions(f, styleKey, Boolean(renderFrame.satDataUrl)),
             )
           : undefined;
         const prompt = isModelChromeStyle(styleKey)
@@ -13603,7 +13724,7 @@ export default function DesignGlossy({
           renderFrame,
           renderRefLayers,
           filter,
-          lockedProtectMaskOptions(filter),
+          lockedProtectMaskOptions(filter, styleKey, Boolean(renderFrame.satDataUrl)),
         );
       }
       showcaseKeysRef.current = new Set(authorityFlags.showcase ? [filter] : []);
