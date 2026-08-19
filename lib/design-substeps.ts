@@ -88,7 +88,8 @@ function hasFeature(s: DesignCanvasState, feats: GroundFeatureKind[]): boolean {
 
 const TANK_IDS = ['jojo_1000', 'jojo_2500', 'jojo_5000', 'jojo_10000', 'rain_barrel'];
 const TREE_IDS = [
-  'tree_citrus', 'tree_mango', 'tree_avocado', 'tree_macadamia', 'tree_litchi',
+  'tree_citrus', 'tree_orange', 'tree_lemon', 'tree_grapefruit',
+  'tree_mango', 'tree_avocado', 'tree_macadamia', 'tree_litchi',
   'tree_guava',
   'tree_pawpaw', 'tree_moringa', 'tree_natal_plum', 'tree_wild_plum', 'tree_waterberry',
   'tree_marula', 'tree_kei_apple',
