@@ -117,6 +117,57 @@ test('describeHarvest reconciles its figures through the exported calculators', 
   assert.equal(description.recommendedTank, recommendedTankLitres(description.annualLitres, region.pattern));
   assert.equal(description.roofM2, Math.round(roofM2));
   assert.doesNotMatch(description.sentence, /NaN|Infinity/);
+  // Without a per-site reading the description must SAY it fell back to the reference table.
+  assert.equal(description.rainfallBasis, 'reference');
+  assert.match(description.sentence, /nearest reference: .*\(fallback\)/);
+});
+
+test('a per-site rainfall reading overrides the reference table, and says so', () => {
+  const roofM2 = 80;
+  // The demo farm's live NASA POWER reading (2026-08-19): 768 mm at frost-free Mkuze —
+  // where the reference table would have used Durban's 915 mm from 255 km away.
+  const site = { annualMm: 768, pattern: 'summer' as const };
+  const description = describeHarvest(roofM2, -27.726231, 31.963044, site);
+
+  assert.ok(description);
+  assert.equal(description.rainfallBasis, 'site');
+  assert.equal(description.annualMm, 768);
+  assert.equal(description.annualLitres, annualHarvestLitres(roofM2, 768));
+  assert.equal(description.recommendedTank, recommendedTankLitres(description.annualLitres, 'summer'));
+  assert.equal(description.regionName, 'This site (satellite climate records)');
+  assert.match(description.sentence, /satellite climate records for this site/);
+  assert.doesNotMatch(description.sentence, /fallback/);
+
+  // The same call WITHOUT the reading keeps the old nearest-reference behaviour intact
+  // — and lands on a different rainfall figure, which is the whole point.
+  const fallback = describeHarvest(roofM2, -27.726231, 31.963044, null);
+  assert.ok(fallback);
+  assert.equal(fallback.rainfallBasis, 'reference');
+  assert.equal(fallback.annualMm, nearestRainfall(-27.726231, 31.963044)!.annualMm);
+  assert.notEqual(fallback.annualMm, description.annualMm);
+});
+
+test('mild-frost is a summer-rainfall subtype for storage sizing', () => {
+  // The planner's fourth pattern marks light frost, which is irrelevant to when rain
+  // arrives — storage share must follow the summer curve, never crash on the extra value.
+  const site = { annualMm: 900, pattern: 'mild-frost' as const };
+  const description = describeHarvest(100, -29.7, 30.8, site);
+  assert.ok(description);
+  assert.equal(description.pattern, 'summer');
+  assert.equal(description.recommendedTank, recommendedTankLitres(description.annualLitres, 'summer'));
+});
+
+test('an unusable per-site override falls back to the reference table rather than nonsense', () => {
+  for (const bad of [
+    { annualMm: 0, pattern: 'summer' as const },
+    { annualMm: -5, pattern: 'summer' as const },
+    { annualMm: Number.NaN, pattern: 'summer' as const },
+  ]) {
+    const description = describeHarvest(100, -29.86, 31.02, bad);
+    assert.ok(description);
+    assert.equal(description.rainfallBasis, 'reference');
+    assert.equal(description.annualMm, nearestRainfall(-29.86, 31.02)!.annualMm);
+  }
 });
 
 test('zero, negative, missing-scale, NaN and Infinity inputs never create farmer-facing nonsense', () => {
