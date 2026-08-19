@@ -831,6 +831,29 @@ function supportsAutomaticPlacement(crop: CropDef, bed: PlanBed): boolean {
   return bed.kind === 'plot' || crop.key !== 'maize';
 }
 
+/**
+ * Why the shared-bed passes were handed nothing to work with.
+ *
+ * The old copy blamed space-hungry vines unconditionally, because "no shared
+ * beds" and "the vine pre-pass took them all" look identical from the call
+ * site. They are not: on a farm whose only mapped growing areas are staple
+ * plots, `sharedBeds` is empty before any vine has even been considered, and
+ * the farmer was told vines had eaten beds that never existed (2026-08-19
+ * audit). Note the converse holds by construction — if at least one non-plot
+ * bed IS mapped and `sharedBeds` still came out empty, every one of those beds
+ * must be in the dedicated set, so the vine wording below is only ever reached
+ * when vines really did claim them.
+ */
+function noSharedBedsNote(beds: readonly PlanBed[]): string {
+  if (!beds.length) {
+    return 'No growing area is mapped yet, so there was nowhere to put the vegetables you chose. Draw a veg bed on the map and run the suggestion again.';
+  }
+  if (!beds.some((bed) => bed.kind !== 'plot')) {
+    return 'Every growing area on your map is a staple plot, and the vegetables you chose need a regular veg bed. Draw a veg bed on the map, or plant them on a plot yourself once you have checked the row layout.';
+  }
+  return 'No beds free for family crops once space-hungry vines were placed.';
+}
+
 interface RotationSlot {
   cropKey: string;
   family: RotationFamily;
@@ -1038,10 +1061,29 @@ class BedRotation {
   }
 }
 
+/**
+ * What actually stopped a PARTIAL_FIT from being an OK. Recorded rather than
+ * guessed because the old farmer-facing copy asserted one specific cause —
+ * "beds are full" — for every partial outcome, including the case where the
+ * bed was empty eleven months of twelve and a correct rotation veto was the
+ * only thing in the way (2026-08-19 audit, Mbombela repro).
+ */
+type SuccessionBlock = 'rotation' | 'space' | 'both';
+
+function combineBlock(
+  previous: SuccessionBlock | undefined,
+  next: SuccessionBlock,
+): SuccessionBlock {
+  if (!previous || previous === next) return next;
+  return 'both';
+}
+
 interface SuccessionOutcome {
   plantings: Planting[];
   status: 'OK' | 'PARTIAL_FIT' | 'DELAYED_START' | 'NO_WINDOW';
   nextWindowMonth?: number;
+  /** Only meaningful with status 'PARTIAL_FIT'. */
+  blockedBy?: SuccessionBlock;
 }
 
 /**
@@ -1063,6 +1105,24 @@ function planSuccession(
   fractionIfShared: number,
   rotation: BedRotation,
   permitFractionalBatches = true,
+  /**
+   * "A few big harvests" means ONE COHORT per crop — it never meant one
+   * planting for the whole farm. Commercial concentration area-balances a
+   * GROUP of beds onto each focus crop, and the single-placement loop below
+   * then filled the first bed that fitted and silently abandoned every other
+   * bed in that crop's group for the entire twelve months (2026-08-19 audit,
+   * Springbok 14-bed repro: 2 plantings, 12 empty beds, no note). With this
+   * flag the one cohort is the crop going into ALL of its assigned beds
+   * together, each at its own earliest legal sow month — still at most one
+   * planting per bed per year, so the no-monthly-filler promise is untouched.
+   *
+   * Off by default, and deliberately NOT inferred from `wholeBed`: the family
+   * breadth-first pass also uses whole-bed few-big placements, and there the
+   * round-robin outer loop hands the unused beds to the next crop in the
+   * queue rather than stranding them, so its one-cohort-per-crop semantics
+   * are correct as they stand.
+   */
+  synchronizedGroupCohort = false,
 ): SuccessionOutcome {
   const clusters = clusterSowMonths(crop.sowMonths[pattern]);
   // THE choke point for automatic place compatibility. Every allocation route
@@ -1128,13 +1188,49 @@ function planSuccession(
     : fractionIfShared;
 
   const plantings: Planting[] = [];
+  let blockedBy: SuccessionBlock | undefined;
+
+  // ONE COHORT, ACROSS THE WHOLE GROUP — see synchronizedGroupCohort above.
+  if (synchronizedGroupCohort && rhythm === 'few-big' && wholeBed && bedsForCrop.length > 1) {
+    for (const bed of bedsForCrop) {
+      for (const sowMonth of sowMonthsToTry) {
+        if (rotation.repeats(bed.id, crop, sowMonth)) {
+          blockedBy = combineBlock(blockedBy, 'rotation');
+          continue;
+        }
+        const share = usableShare(occupancy, bed, sowMonth, crop, perBatchFraction, 1, true);
+        if (share === null) {
+          blockedBy = combineBlock(blockedBy, 'space');
+          continue;
+        }
+        occupancy.add(bed.id, sowMonth, crop, share);
+        const areaFraction = share < 1 ? share : undefined;
+        plantings.push({
+          id: plantingId(bed.id, crop.key, sowMonth, areaFraction),
+          bedId: bed.id,
+          cropKey: crop.key,
+          sowMonth,
+          areaFraction,
+        });
+        rotation.recordUse(bed.id, crop, sowMonth);
+        break; // this bed has had its one planting for the year
+      }
+    }
+    return plantings.length < bedsForCrop.length
+      ? { plantings, status: 'PARTIAL_FIT', blockedBy: blockedBy ?? 'space' }
+      : { plantings, status: 'OK' };
+  }
+
   let bedCursor = rotation.nextIndex(bedsForCrop);
   for (const sowMonth of sowMonthsToTry) {
     if (plantings.length >= numBatches) break;
     let placed = false;
     for (let i = 0; i < bedsForCrop.length; i++) {
         const bed = bedsForCrop[(bedCursor + i) % bedsForCrop.length];
-        if (rotation.repeats(bed.id, crop, sowMonth)) continue;
+        if (rotation.repeats(bed.id, crop, sowMonth)) {
+          blockedBy = combineBlock(blockedBy, 'rotation');
+          continue;
+        }
         // A plot never hosts a fraction (see fractionPresetsFor) — today's callers only
         // reach a plot with whole-area placements, so this is armour, not a live branch.
         if (bed.kind === 'plot' && perBatchFraction < 1) continue;
@@ -1158,9 +1254,12 @@ function planSuccession(
           placed = true;
           break;
         }
+        blockedBy = combineBlock(blockedBy, 'space');
     }
   }
-  return { plantings, status: plantings.length < numBatches ? 'PARTIAL_FIT' : 'OK' };
+  return plantings.length < numBatches
+    ? { plantings, status: 'PARTIAL_FIT', blockedBy: blockedBy ?? 'space' }
+    : { plantings, status: 'OK' };
 }
 
 export function planningWeightBenchmarkScore(crop: CropDef): number {
@@ -1310,10 +1409,26 @@ function runCommercialConcentration(
     bedsByCrop.get(leastCrop.key)!.push(bed);
     areaByCrop.set(leastCrop.key, areaByCrop.get(leastCrop.key)! + bed.areaM2);
   }
+  const assignedBeds: PlanBed[] = [];
   for (const crop of focusCrops) {
     const cropBeds = bedsByCrop.get(crop.key) ?? [];
     if (!cropBeds.length) continue;
-    const outcome = planSuccession(crop, pattern, cropBeds, occupancy, nowMonth, true, rhythm, 1, rotation);
+    assignedBeds.push(...cropBeds);
+    const outcome = planSuccession(
+      crop,
+      pattern,
+      cropBeds,
+      occupancy,
+      nowMonth,
+      true,
+      rhythm,
+      1,
+      rotation,
+      true,
+      // One cohort per crop must mean the crop going into all of its assigned
+      // beds together, not one bed and eleven months of silence on the rest.
+      true,
+    );
     if (outcome.status === 'NO_WINDOW') {
       notes.push(crop.sowMonths[pattern].length
         ? `${crop.name} has a supported sowing window, but none of its assigned growing areas has a supported automatic layout.`
@@ -1321,10 +1436,124 @@ function runCommercialConcentration(
       continue;
     }
     if (outcome.status === 'DELAYED_START') { laterThisYear.push({ cropKey: crop.key, nextWindowMonth: outcome.nextWindowMonth! }); continue; }
-    if (outcome.status === 'PARTIAL_FIT') notes.push(`${crop.name}'s beds are full for now — later successions will need to wait for space to free up.`);
+    // CAUSE-HONEST. The old single sentence asserted "beds are full" for every
+    // partial outcome — including a single empty bed whose only obstacle was a
+    // correct rotation veto on the one focus crop (2026-08-19 audit, Mbombela
+    // repro: the bed was free eleven months of twelve).
+    if (outcome.status === 'PARTIAL_FIT') {
+      const reach = outcome.plantings.length
+        ? `${crop.name} could not take every growing area set aside for it`
+        : `${crop.name} could not be placed on any of the growing areas set aside for it`;
+      notes.push(outcome.blockedBy === 'rotation'
+        ? `${reach} — crop rotation ruled it out there, because the same botanical family was grown on that ground too recently.`
+        : outcome.blockedBy === 'space'
+          ? `${reach} — what is already in the ground fills those beds right through ${crop.name}'s sowing windows this year.`
+          : `${reach} — crop rotation and what is already in the ground both limited where it can go this year.`);
+    }
     plantings.push(...outcome.plantings);
   }
+
+  // ---- beds assigned to a focus crop that ended up with nothing ------------
+  // The area balance above hands every target bed to exactly one focus crop.
+  // When that crop cannot use a bed, the bed is not "spare" — it is silently
+  // abandoned for the whole plan year unless something else claims it. Try the
+  // OTHER focus crops the farmer chose (never a crop they did not choose: the
+  // app's job here is honesty and farmer agency, not quietly widening their
+  // focus), then name every bed still empty and say why.
+  //
+  // FEW-BIG ONLY, deliberately. Under 'steady' the closing passes still run
+  // over the whole farm (ensureSowingCadence + fillRemainingGaps, drawing from
+  // the same focus-crop pool) and reportStillRestingBeds already names whatever
+  // is left bare — so a stranded bed there is neither abandoned nor unexplained.
+  // Claiming it here first measured strictly WORSE: a whole-bed rescue cohort
+  // pre-empted the finer fractional successions those passes would have laid
+  // down (a 5-bed summer commercial farm lost its second cohort on Bed 5).
+  // Under 'few-big' none of those passes runs at all, which is exactly why the
+  // beds vanished silently in the first place.
+  const plantedBedIds = new Set(plantings.map((planting) => planting.bedId));
+  const stranded = rhythm === 'few-big'
+    ? assignedBeds.filter((bed) => !plantedBedIds.has(bed.id))
+    : [];
+  for (const bed of stranded) {
+    for (const crop of focusCrops) {
+      if (!supportsAutomaticPlacement(crop, bed)) continue;
+      // One whole-bed cohort, exactly like the few-big promise — a rescue pass
+      // must not turn a "few big harvests" plan into a succession plan.
+      const rescue = planSuccession(
+        crop, pattern, [bed], occupancy, nowMonth, true, 'few-big', 1, rotation,
+      );
+      if (!rescue.plantings.length) continue;
+      plantings.push(...rescue.plantings);
+      plantedBedIds.add(bed.id);
+      notes.push(`${bed.label} was set aside for a different focus crop that could not use it, so ${crop.name} — also one of your focus crops — took it instead.`);
+      break;
+    }
+  }
+  for (const bed of stranded) {
+    if (plantedBedIds.has(bed.id)) continue;
+    notes.push(strandedBedNote(bed, focusCrops, pattern, nowMonth, occupancy, rotation));
+  }
   return { plantings, notes, laterThisYear };
+}
+
+/**
+ * Why one assigned bed ended the commercial pass with nothing in it — read off
+ * the same two gates the placement loop just used, PER FOCUS CROP, so the
+ * sentence can never name a cause a given crop did not actually hit.
+ *
+ * 2026-08-19 adversarial audit (6.3% of 3,792 note appearances, 240 cases):
+ * the old version pooled rotationBlocked/spaceBlocked across every focus crop
+ * before picking a sentence, so a bed where ONE crop was rotation-blocked and
+ * a DIFFERENT crop was merely space-blocked still got told "shares a
+ * botanical family with every crop" — false for the space-blocked one, and
+ * directly contradicting that same crop's own B3 note in the same plan
+ * (repro: Bed 02, cabbage rotation-blocked, tomatoes only space-blocked, note
+ * claimed rotation blocked both). Cause is now tracked per crop and the
+ * sentence only claims what every participating crop actually hit: all of
+ * them rotation-blocked, all of them purely space-blocked, or — the honest
+ * middle case the old code could never say — a mix of both. Ends with what
+ * the farmer can DO about it; the planner deliberately does not fix it by
+ * planting a crop they did not choose.
+ */
+function strandedBedNote(
+  bed: PlanBed,
+  focusCrops: readonly CropDef[],
+  pattern: RainPattern,
+  nowMonth: number,
+  occupancy: Occupancy,
+  rotation: BedRotation,
+): string {
+  const advice = 'Pick a crop for it by hand, or raise the number of crops you are focusing on.';
+  const causes: { rotationBlocked: boolean; spaceBlocked: boolean }[] = [];
+  for (const crop of focusCrops) {
+    if (!supportsAutomaticPlacement(crop, bed)) continue;
+    let rotationBlocked = false;
+    let spaceBlocked = false;
+    for (const cluster of clusterSowMonths(crop.sowMonths[pattern])) {
+      for (const sowMonth of cluster.months) {
+        if (monthsForward(nowMonth, sowMonth) > PLAN_HORIZON_MONTHS) continue;
+        if (usableShare(occupancy, bed, sowMonth, crop, 1, 1, true) === null) {
+          spaceBlocked = true;
+          continue;
+        }
+        if (rotation.repeats(bed.id, crop, sowMonth)) rotationBlocked = true;
+      }
+    }
+    // Only a crop this loop actually reached a verdict on counts — a crop
+    // with no reachable sow month at all says nothing about rotation or
+    // space and must not force the bed into the "mixed" branch below.
+    if (rotationBlocked || spaceBlocked) causes.push({ rotationBlocked, spaceBlocked });
+  }
+  if (!causes.length) {
+    return `${bed.label} has nothing planted: none of your focus crops has a sowing window that reaches it in the next twelve months. ${advice}`;
+  }
+  if (causes.every((c) => c.rotationBlocked)) {
+    return `${bed.label} has nothing planted: what it has already grown shares a botanical family with every crop in your commercial focus, so Rotate crops blocked all of them here. ${advice}`;
+  }
+  if (causes.every((c) => c.spaceBlocked && !c.rotationBlocked)) {
+    return `${bed.label} has nothing planted: what is already growing in it fills the bed through every sowing window your focus crops have this year. ${advice}`;
+  }
+  return `${bed.label} has nothing planted: some of your focus crops would repeat this bed's recent family under Rotate crops, and the rest simply could not fit around what is already in the ground. ${advice}`;
 }
 
 /**
@@ -1381,6 +1610,52 @@ function winterCoveringSowMonths(
  * only as a guard beyond the shared horizon (unreachable today: mod-12
  * forward distance never exceeds 11).
  */
+/**
+ * KZN DARD explicitly documents oats as a winter cover in MAIZE LANDS, so the
+ * generic family-repeat brake must not overrule that named local practice on a
+ * farmer-mapped staple plot. Plot-only and cover-only — and deliberately still
+ * a real rotation repeat, which is why every placement site treats it as a LAST
+ * RESORT behind any cover that passes rotation outright (see rotationLegalTiered).
+ */
+function passesViaOatsMaizeLandException(bed: PlanBed, crop: CropDef): boolean {
+  return bed.kind === 'plot' && crop.key === 'oats' && isPlotWinterCover(crop);
+}
+
+/**
+ * The rotation-legal candidates for a bed, in preference order: everything that
+ * passes rotation OUTRIGHT first, and only when nothing does, the candidates
+ * that pass solely through the oats maize-lands exception above.
+ *
+ * The leading tier is the fix for a real inversion (2026-08-19 audit,
+ * Bloemfontein repro): the sow-scarcity and crop-spread tiebreaks could route
+ * OATS onto the plot carrying the maize history — the one plot where oats is
+ * the rotation repeat — while broad beans, which is rotation-clean after a
+ * cereal, took the clean plot. lib/crop-groups.ts's oats comment describes the
+ * opposite pairing, and that pairing is the correct one. Every existing
+ * tiebreak survives WITHIN each tier: both partitions keep the caller's
+ * incoming order, so this only decides which tier is consulted at all.
+ */
+function rotationLegalTiered<T extends { crop: CropDef; sowMonth: number }>(
+  sortedCandidates: readonly T[],
+  bed: PlanBed,
+  rotation: BedRotation,
+): { picks: T[]; viaException: boolean } {
+  const clean = sortedCandidates.filter((candidate) =>
+    !rotation.repeats(bed.id, candidate.crop, candidate.sowMonth));
+  if (clean.length) return { picks: clean, viaException: false };
+  const exception = sortedCandidates.filter((candidate) =>
+    passesViaOatsMaizeLandException(bed, candidate.crop));
+  return { picks: exception, viaException: exception.length > 0 };
+}
+
+/** Said ONCE per plan, naming the plots it actually happened on. A winter cover
+ * that is a cereal on cereal ground is a documented local practice, not a
+ * silent rule-break, so the farmer gets the source and the manual alternative. */
+function oatsMaizeLandNote(plotLabels: readonly string[]): string {
+  const where = plotLabels.length <= 3 ? plotLabels.join(', ') : `${plotLabels.length} plots`;
+  return `${where}: oats is the winter cover even though a grass-family crop (maize or oats) grew there recently — KZN DARD documents oats as a winter cover in maize lands, and no rotation-clean cover could be placed there. If carrying cereal disease over worries you, swap it for broad beans by hand.`;
+}
+
 function backfillWinterGaps(
   pool: CropDef[],
   beds: PlanBed[],
@@ -1392,10 +1667,16 @@ function backfillWinterGaps(
   spread: CropSpread,
   plotsWithCourse: ReadonlySet<string>,
   strictCropKeys?: ReadonlySet<string>,
-): { plantings: Planting[]; notes: string[]; laterThisYear: { cropKey: string; nextWindowMonth: number }[] } {
+): {
+  plantings: Planting[];
+  notes: string[];
+  laterThisYear: { cropKey: string; nextWindowMonth: number }[];
+  oatsExceptionBeds: string[];
+} {
   const plantings: Planting[] = [];
   const notes: string[] = [];
   const laterThisYear: { cropKey: string; nextWindowMonth: number }[] = [];
+  const oatsExceptionBeds: string[] = [];
 
   for (const bed of beds) {
     if (!WINTER_MONTHS.every((mo) => occupancy.fractionAt(bed.id, mo) === 0)) continue;
@@ -1437,12 +1718,9 @@ function backfillWinterGaps(
       continue;
     }
 
-    const nonRepeating = candidates.filter((c) =>
-      !rotation.repeats(bed.id, c.crop, c.sowMonth)
-      // KZN DARD explicitly documents oats as a winter cover in maize lands.
-      // The generic family-repeat brake must not overrule that named local
-      // practice; this exception is plot-only and cover-only.
-      || (bed.kind === 'plot' && c.crop.key === 'oats' && isPlotWinterCover(c.crop)));
+    // Rotation-clean covers outrank the oats maize-lands exception — see
+    // rotationLegalTiered. Existing tiebreaks still decide within each tier.
+    const { picks: nonRepeating, viaException } = rotationLegalTiered(candidates, bed, rotation);
     if (!nonRepeating.length) continue;
     const chosen = nonRepeating[0];
     const gap = monthsForward(nowMonth, chosen.sowMonth);
@@ -1476,10 +1754,11 @@ function backfillWinterGaps(
       sowMonth: chosen.sowMonth,
       areaFraction,
     });
+    if (viaException) oatsExceptionBeds.push(bed.label);
     notes.push(`${bed.label} would otherwise rest all winter — added ${chosen.crop.name} (sow ${MONTHS_SHORT[chosen.sowMonth - 1]}) to ${bridgeFraction >= 1 ? 'it' : `${Math.round(bridgeFraction * 100)}% of it`}, leaving room for winter sowings alongside.`);
   }
 
-  return { plantings, notes, laterThisYear };
+  return { plantings, notes, laterThisYear, oatsExceptionBeds };
 }
 
 /**
@@ -1758,8 +2037,9 @@ function fillRemainingGaps(
   plotsWithCourse: ReadonlySet<string>,
   supportedMonths: ReadonlySet<number>,
   strictCropKeys?: ReadonlySet<string>,
-): { plantings: Planting[] } {
+): { plantings: Planting[]; oatsExceptionBeds: string[] } {
   const plantings: Planting[] = [];
+  const oatsExceptionBeds: string[] = [];
   // Avoids the SAME crop landing back-to-back in one bed purely because it's
   // the highest-scoring option every time rotation has nothing conflict-free
   // left to offer (a real farm can end up growing one thing all year
@@ -1814,9 +2094,12 @@ function fillRemainingGaps(
         crop: CropDef;
         sowMonth: number;
         fraction: number;
+        /** True when this placement is legal only through the oats maize-lands
+         *  exception — the farmer is told so once per plan. */
+        viaException?: boolean;
         /** A second crop placed in the SAME iteration to consume the leftover
          *  the first one declined — see the companion note in tryFractions. */
-        companion?: { crop: CropDef; sowMonth: number; fraction: number };
+        companion?: { crop: CropDef; sowMonth: number; fraction: number; viaException?: boolean };
       } | null = null;
 
 
@@ -1871,9 +2154,9 @@ function fillRemainingGaps(
             .sort(preferenceRank);
           if (!fitting.length) continue; // this fraction can't fit anything — try a smaller share
 
-          const nonRepeating = fitting.filter((c) =>
-            !rotation.repeats(bed.id, c.crop, c.sowMonth)
-            || (bed.kind === 'plot' && c.crop.key === 'oats' && isPlotWinterCover(c.crop)));
+          // Rotation-clean candidates outrank the oats maize-lands exception —
+          // see rotationLegalTiered. preferenceRank still decides within a tier.
+          const { picks: nonRepeating, viaException } = rotationLegalTiered(fitting, bed, rotation);
           if (!nonRepeating.length) continue;
           const pool2 = nonRepeating;
           const nonRepeat = pool2.filter((c) => c.crop.key !== lastCropByBed.get(bed.id));
@@ -1905,26 +2188,31 @@ function fillRemainingGaps(
               // the fill loop had wandered to other beds and the leftover
               // decayed into exactly the ragged state this pass prevents.
               const leftover = wide - askSized;
-              let companion: { crop: CropDef; sowMonth: number; fraction: number } | undefined;
-              for (const c of [...reaching].sort(preferenceRank)) {
-                if (c.crop.key === pick.crop.key) continue;
-                if (rotation.repeats(bed.id, c.crop, c.sowMonth)
-                  && !(bed.kind === 'plot' && c.crop.key === 'oats' && isPlotWinterCover(c.crop))) continue;
+              let companion: { crop: CropDef; sowMonth: number; fraction: number; viaException?: boolean } | undefined;
+              const { picks: companionPicks, viaException: companionViaException } = rotationLegalTiered(
+                [...reaching].sort(preferenceRank).filter((c) => c.crop.key !== pick.crop.key),
+                bed,
+                rotation,
+              );
+              for (const c of companionPicks) {
                 const f = fractionPresetsFor(bed)
                   .filter((fr) => fr >= leftover - 0.001
                     && occupancy.fits(bed.id, c.sowMonth, c.crop, fr)
                     && !leavesDeadSliver(occupancy, bed, c.sowMonth, c.crop, fr))
                   .sort((a, b) => a - b)[0];
-                if (f !== undefined) { companion = { crop: c.crop, sowMonth: c.sowMonth, fraction: f }; break; }
+                if (f !== undefined) {
+                  companion = { crop: c.crop, sowMonth: c.sowMonth, fraction: f, viaException: companionViaException };
+                  break;
+                }
               }
               occupancy.add(bed.id, pick.sowMonth, pick.crop, -askSized);
               if (companion) {
-                return { crop: pick.crop, sowMonth: pick.sowMonth, fraction: askSized, companion };
+                return { crop: pick.crop, sowMonth: pick.sowMonth, fraction: askSized, viaException, companion };
               }
             }
-            return { crop: pick.crop, sowMonth: pick.sowMonth, fraction: share };
+            return { crop: pick.crop, sowMonth: pick.sowMonth, fraction: share, viaException };
           }
-          return { crop: pick.crop, sowMonth: pick.sowMonth, fraction };
+          return { crop: pick.crop, sowMonth: pick.sowMonth, fraction, viaException };
         }
         return null;
       };
@@ -1959,10 +2247,11 @@ function fillRemainingGaps(
         };
         plantings.push(planting);
         noteFreshCoverage(freshCoverage, planting);
+        if (placement.viaException) oatsExceptionBeds.push(bed.label);
       }
     }
   }
-  return { plantings };
+  return { plantings, oatsExceptionBeds };
 }
 
 /**
@@ -2372,7 +2661,7 @@ export function autoSuggestPlan(
     // rather than leaving any of them fully free for a "surplus" pass
     // afterward — reserving fixed whole beds up front sidesteps that.
     if (!sharedBeds.length) {
-      notes.push('No beds free for family crops once space-hungry vines were placed.');
+      notes.push(noSharedBedsNote(beds));
     } else {
       const wantedToSell = answers.focusCropCount ?? 0;
       let familyBeds = sharedBeds;
@@ -2398,7 +2687,7 @@ export function autoSuggestPlan(
   } else {
     // family
     if (!sharedBeds.length) {
-      notes.push('No beds free for family crops once space-hungry vines were placed.');
+      notes.push(noSharedBedsNote(beds));
     } else {
       const familyResult = runFamilyBreadthFirst(pool, sharedBeds, selectedGroups, pattern, occupancy, nowMonth, answers.rhythm, rotation, answers.allowMixedCropsInBed === true);
       added.push(...familyResult.plantings);
@@ -2446,6 +2735,9 @@ export function autoSuggestPlan(
   added.push(...winterResult.plantings);
   notes.push(...winterResult.notes);
   laterThisYear.push(...winterResult.laterThisYear);
+  // Every plot that ended up with oats on cereal ground, from BOTH closing
+  // passes — one honest, sourced note per plan rather than one per placement.
+  const oatsExceptionBeds = [...winterResult.oatsExceptionBeds];
 
   if (answers.rhythm === 'steady') {
     // One spread tally, seeded before the winter bridge and shared by every
@@ -2469,6 +2761,7 @@ export function autoSuggestPlan(
       strictCropKeys,
     );
     added.push(...gapResult.plantings);
+    oatsExceptionBeds.push(...gapResult.oatsExceptionBeds);
     notes.push(...reportStillRestingBeds(
       closingPool,
       beds,
@@ -2481,6 +2774,9 @@ export function autoSuggestPlan(
     ));
   } else {
     notes.push('A few big harvests was selected, so the planner did not add monthly filler crops merely to make the timeline look full.');
+  }
+  if (oatsExceptionBeds.length) {
+    notes.push(oatsMaizeLandNote([...new Set(oatsExceptionBeds)]));
   }
   // De-dupe laterThisYear (a crop could be considered more than once across passes).
   const seenLater = new Set<string>();

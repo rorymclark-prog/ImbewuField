@@ -25,9 +25,18 @@ export const FOOD_GROUP: Record<string, FoodGroup> = {
   maize: 'staple_grain',
   // A cereal, and grouped as one on purpose: that is exactly what makes it a
   // legal winter cover after a LEGUME staple course, where broad beans is a
-  // rotation repeat. The mirror case holds too — after a maize course oats is
-  // the repeat and broad beans is legal — so the two covers together answer all
-  // four staple courses. See PLOT_WINTER_COVER_KEYS in lib/staple-crops.ts.
+  // rotation repeat. The mirror case is where the two covers together answer
+  // all four staple courses — after a maize course broad beans is the
+  // rotation-clean cover and oats is the repeat.
+  //
+  // That mirror is a PREFERENCE, not an absolute (2026-08-19 audit). Oats after
+  // maize is also a KZN DARD-documented practice in maize lands, so the planner
+  // keeps it as a named exception — but strictly as a last resort: a cover that
+  // passes rotation outright always outranks one that only passes via the
+  // exception (rotationLegalTiered in lib/crop-autosuggest.ts), and when the
+  // exception is actually used the plan says so in a farmer-facing note that
+  // cites the source and offers broad beans as the manual swap.
+  // See PLOT_WINTER_COVER_KEYS in lib/staple-crops.ts.
   oats: 'staple_grain',
   'dry-beans': 'legume',
   'green-beans': 'legume',

@@ -816,6 +816,11 @@ function sameFamilyRotationViolations(
   existing: readonly Planting[],
   proposed: readonly Planting[],
   nowMonth: number,
+  /** Plot winter covers are their own documented course sequence, so the
+   *  vegetable-rotation gates below skip them. The oats maize-lands gate needs
+   *  the opposite view — it exists precisely to find the covers that ARE a
+   *  family repeat — so it opts back in. */
+  includePlotCovers = false,
 ): string[] {
   const out: string[] = [];
   for (const bed of beds) {
@@ -832,7 +837,7 @@ function sameFamilyRotationViolations(
         // The plot-only zero-food winter cover is a documented soil-cover
         // exception (docs/CROP-PLAN-TRUTH-AUDIT: staple plots carry their own
         // course sequence), not a vegetable rotation course.
-        if (a.plotCover || b.plotCover) continue;
+        if (!includePlotCovers && (a.plotCover || b.plotCover)) continue;
         const overlap = a.start <= b.end && b.start <= a.end;
         if (overlap) {
           out.push(`${bed.id}: ${a.cropKey}[${a.start}..${a.end}] overlaps ${b.cropKey}[${b.start}..${b.end}] (${a.family})`);
@@ -848,7 +853,8 @@ function sameFamilyRotationViolations(
         // Ties on end prefer the LARGER start (most lenient), so the oracle
         // is never stricter than the planner's own gate.
         const predecessorPool = courses.filter((other) =>
-          other !== later && other.end < later.start && !other.plotCover
+          other !== later && other.end < later.start
+          && (includePlotCovers || !other.plotCover)
           && ![...other.sourceIds].some((sourceId) => later.sourceIds.has(sourceId)));
         const nearest = predecessorPool.reduce<RotationCourseUnderTest | null>(
           (best, other) => {
@@ -941,4 +947,322 @@ test('with mixing ON and rotation ON, no bed ever holds two same-family courses 
   }
   assert.deepEqual(offenders.slice(0, 10), [],
     `${offenders.length} same-family rotation violations under mixed beds`);
+});
+
+// ── Planner honesty: a note must name the real cause ────────────────────────
+//
+// Three defects found by the 2026-08-19 multi-site audit, each of which passed
+// every existing test because every existing test asked what the engine
+// RETURNED and none asked whether the sentence the farmer reads is TRUE.
+
+test('a plot-only farm is told its real problem, not blamed on vines that were never placed', () => {
+  // Repro: the only mapped growing area is a staple plot and the household
+  // chose a veg crop, so `sharedBeds` is empty before the vine pre-pass has
+  // even run — and the plan said space-hungry vines had taken the beds.
+  const result = autoSuggestPlan({
+    goal: 'family', groups: [], cropKeys: ['cabbage'], rhythm: 'steady',
+    rotateCrops: false, allowVinesInBeds: false, reliableIrrigation: true,
+  }, 'winter', [{ id: 'p1', label: 'Plot 1', areaM2: 120, minDimM: 11, kind: 'plot' }], [], 3);
+  assert.equal(result.plantings.length, 0, 'the fixture is the empty-plan case the note has to explain');
+  assert.ok(!result.notes.some((note) => /space-hungry vines were placed/.test(note)),
+    `no vine was placed, so no note may blame one: ${JSON.stringify(result.notes)}`);
+  assert.ok(result.notes.some((note) => /staple plot/.test(note) && /veg bed/.test(note)),
+    `the real cause — every mapped area is a plot — must be named: ${JSON.stringify(result.notes)}`);
+});
+
+test('the vine-blame sentence only ever appears on a farm that actually has veg beds', () => {
+  // Population gate: the wording is legal only when the pre-pass could have
+  // taken a bed at all, i.e. at least one non-plot bed was mapped.
+  const offenders: string[] = [];
+  const plotsOnly: PlanBed[] = [
+    { id: 'po-1', label: 'Plot 1', areaM2: 110, minDimM: 11, kind: 'plot' },
+    { id: 'po-2', label: 'Plot 2', areaM2: 130, minDimM: 11, kind: 'plot' },
+  ];
+  for (const pattern of PATTERNS) {
+    for (const goal of GOALS) {
+      for (const nowMonth of [1, 4, 8, 11]) {
+        for (const allowVinesInBeds of [true, false]) {
+          for (const beds of [plotsOnly, [] as PlanBed[]]) {
+            const result = autoSuggestPlan({
+              goal, focusCropCount: 2, groups: [], rhythm: 'steady', rotateCrops: true,
+              allowVinesInBeds, allowMixedCropsInBed: true, reliableIrrigation: true,
+            }, pattern, beds, [], nowMonth);
+            if (result.notes.some((note) => /space-hungry vines were placed/.test(note))) {
+              offenders.push(`${pattern} · ${goal} · now=${nowMonth} · vines=${allowVinesInBeds} · ${beds.length} plots`);
+            }
+          }
+        }
+      }
+    }
+  }
+  assert.deepEqual(offenders.slice(0, 8), [],
+    `${offenders.length} plans blamed vines on a farm with no veg bed to take`);
+});
+
+test('a "few big harvests" commercial plan never leaves a bed empty in silence', () => {
+  // Repro (Springbok): 14 beds, focus on 2 crops, few-big — the engine placed
+  // exactly 2 plantings and abandoned 12 beds for the whole year with no note.
+  const beds: PlanBed[] = [];
+  for (let i = 1; i <= 14; i++) {
+    beds.push({ id: `sb-${i}`, label: `Bed ${String(i).padStart(2, '0')}`, areaM2: 4 + (i % 9), minDimM: 1.2 });
+  }
+  const result = autoSuggestPlan({
+    goal: 'commercial', focusCropCount: 2, groups: [], rhythm: 'few-big',
+    rotateCrops: true, allowVinesInBeds: false, reliableIrrigation: true,
+  }, 'winter', beds, [], 7);
+  const planted = new Set(result.plantings.map((planting) => planting.bedId));
+  const silent = beds.filter((bed) => !planted.has(bed.id)
+    && !result.notes.some((note) => note.includes(bed.label)));
+  assert.deepEqual(silent.map((bed) => bed.label), [],
+    `beds left out of a 12-month plan without a word: ${JSON.stringify(result.notes)}`);
+  // And the fix must be real capacity, not a note papering over two plantings.
+  assert.ok(result.plantings.length >= beds.length / 2,
+    `only ${result.plantings.length} plantings across ${beds.length} beds`);
+});
+
+test('every bed a commercial plan sets aside is either planted or named — at any farm size', () => {
+  const offenders: string[] = [];
+  for (const pattern of PATTERNS) {
+    for (const bedCount of [1, 3, 7, 14, 22]) {
+      for (const focusCropCount of [1, 2, 3]) {
+        for (const nowMonth of [2, 5, 7, 10]) {
+          for (const rhythm of RHYTHMS) {
+            const beds: PlanBed[] = [];
+            for (let i = 1; i <= bedCount; i++) {
+              beds.push({ id: `c-${i}`, label: `Bed ${String(i).padStart(2, '0')}`, areaM2: 4 + (i % 9), minDimM: 1.2 });
+            }
+            const result = autoSuggestPlan({
+              goal: 'commercial', focusCropCount, groups: [], rhythm,
+              rotateCrops: true, allowVinesInBeds: false, reliableIrrigation: true,
+            }, pattern, beds, [], nowMonth);
+            const planted = new Set(result.plantings.map((planting) => planting.bedId));
+            for (const bed of beds) {
+              if (planted.has(bed.id)) continue;
+              if (result.notes.some((note) => note.includes(bed.label))) continue;
+              offenders.push(`${pattern} · ${bedCount} beds · focus=${focusCropCount} · ${rhythm} · now=${nowMonth} — ${bed.label}`);
+            }
+          }
+        }
+      }
+    }
+  }
+  assert.deepEqual(offenders.slice(0, 8), [],
+    `${offenders.length} bed-years left empty and unexplained`);
+});
+
+test('a bed a rotation veto emptied is never described as full', () => {
+  // Repro (Mbombela): one 6 m² bed carrying a cabbage record, commercial focus
+  // on cabbage. The bed is free eleven months of twelve; the only obstacle is a
+  // correct cabbage-after-cabbage rotation veto. The plan said the bed was full.
+  const bed: PlanBed = { id: 'mb-1', label: 'Bed 1', areaM2: 6, minDimM: 1.2 };
+  const history: Planting[] = [
+    { id: 'mb-hist', bedId: 'mb-1', cropKey: 'cabbage', sowMonth: 2, existing: true },
+  ];
+  const result = autoSuggestPlan({
+    goal: 'commercial', focusCropCount: 1, groups: [], rhythm: 'few-big',
+    rotateCrops: true, allowVinesInBeds: false, reliableIrrigation: true,
+  }, 'winter', [bed], history, 9);
+  assert.equal(result.plantings.length, 0, 'the fixture is the empty-plan case the note has to explain');
+  assert.ok(!result.notes.some((note) => /beds are full for now|full for now/.test(note)),
+    `the bed is empty eleven months of twelve: ${JSON.stringify(result.notes)}`);
+  assert.ok(result.notes.some((note) => /rotation/i.test(note) && /family/i.test(note)),
+    `the real cause is the rotation veto and must be named: ${JSON.stringify(result.notes)}`);
+  assert.ok(result.notes.some((note) => note.includes(bed.label)),
+    `the bed itself must be named: ${JSON.stringify(result.notes)}`);
+});
+
+test('a stranded bed note never blames rotation for a focus crop that was only space-blocked', () => {
+  // Adversarial-verifier repro (2026-08-19): 240 of 3,792 stranded-bed note
+  // appearances (6.3%) claimed "shares a botanical family with EVERY crop in
+  // your commercial focus" even when one focus crop was never rotation-
+  // blocked at all — stopped purely by occupancy. Ground truth on Bed 02:
+  // cabbage is rotation-blocked (same family recently grown there) AND
+  // space-blocked (the bed is full of it); tomatoes is only space-blocked
+  // (a different family — rotation never touched it). "Rotate crops blocked
+  // all of them" is false for tomatoes and directly contradicts tomatoes'
+  // own B3 note in the same plan.
+  const beds: PlanBed[] = [
+    { id: 'b1', label: 'Bed 01', areaM2: 5, minDimM: 1.2 },
+    { id: 'b2', label: 'Bed 02', areaM2: 6, minDimM: 1.2 },
+    { id: 'b3', label: 'Bed 03', areaM2: 7, minDimM: 1.2 },
+  ];
+  const history: Planting[] = [
+    { id: 'h0', bedId: 'b1', cropKey: 'tomatoes', sowMonth: 1, existing: true },
+    { id: 'h1', bedId: 'b2', cropKey: 'cabbage', sowMonth: 6, existing: true },
+  ];
+  const result = autoSuggestPlan({
+    goal: 'commercial', focusCropCount: 2, groups: [], rhythm: 'few-big',
+    rotateCrops: true, allowVinesInBeds: false, allowMixedCropsInBed: true,
+    reliableIrrigation: true,
+  }, 'summer', beds, history, 6);
+  const bed02Note = result.notes.find((note) => note.includes('Bed 02') && note.includes('has nothing planted'));
+  assert.ok(bed02Note, `Bed 02 must be named as stranded: ${JSON.stringify(result.notes)}`);
+  assert.ok(!/shares a botanical family with every crop in your commercial focus/.test(bed02Note!),
+    `tomatoes was only space-blocked in Bed 02, so rotation cannot be blamed for both crops: ${bed02Note}`);
+  // The honest middle case: some focus crops would repeat the family, the
+  // rest simply could not fit — not a single pooled cause.
+  assert.ok(/would repeat this bed's recent family/.test(bed02Note!) && /could not fit around what is already in the ground/.test(bed02Note!),
+    `expected the mixed-cause sentence, got: ${bed02Note}`);
+});
+
+test('the rotation-claiming stranded-bed sentence only ever appears when every focus crop is genuinely family-blocked (population gate)', () => {
+  // Extends the single-fixture rotation-veto check above into a sweep. The
+  // oracle here is independent of strandedBedNote: rotationFamilyOf compared
+  // directly against what the test itself put in each bed's history. A
+  // family MISMATCH is unconditionally proof the crop was never rotation-
+  // blocked in that bed (the engine's own rotation gate can only fire on a
+  // family match) — so any "blocked all of them" sentence naming a bed where
+  // one focus crop's family has no match in that bed's history is a
+  // confirmed false claim, regardless of the engine's internal timing rules.
+  const PAIRS: [string, string][] = [['tomatoes', 'cabbage'], ['cabbage', 'tomatoes']];
+  const NOW_MONTHS = [1, 4, 6, 8, 11];
+  const familyMatchesBedHistory = (bedId: string, cropKey: string, history: Planting[]): boolean => {
+    const crop = cropByKey(cropKey);
+    if (!crop) return false;
+    const family = rotationFamilyOf(crop);
+    return history.some((h) => h.bedId === bedId
+      && cropByKey(h.cropKey) !== undefined
+      && rotationFamilyOf(cropByKey(h.cropKey)!) === family);
+  };
+  const offenders: string[] = [];
+  let rotationClaimsSeen = 0;
+  let mixedOrSpaceClaimsSeen = 0;
+  for (const pattern of PATTERNS) {
+    for (const nowMonth of NOW_MONTHS) {
+      for (const [cropA, cropB] of PAIRS) {
+        const beds: PlanBed[] = [
+          { id: 'b1', label: 'Bed 01', areaM2: 5, minDimM: 1.2 },
+          { id: 'b2', label: 'Bed 02', areaM2: 6, minDimM: 1.2 },
+          { id: 'b3', label: 'Bed 03', areaM2: 7, minDimM: 1.2 },
+        ];
+        const history: Planting[] = [
+          { id: 'h0', bedId: 'b1', cropKey: cropA, sowMonth: 1, existing: true },
+          { id: 'h1', bedId: 'b2', cropKey: cropB, sowMonth: 6, existing: true },
+        ];
+        const result = autoSuggestPlan({
+          goal: 'commercial', focusCropCount: 2, groups: [], cropKeys: ['tomatoes', 'cabbage'],
+          rhythm: 'few-big', rotateCrops: true, allowVinesInBeds: false,
+          allowMixedCropsInBed: true, reliableIrrigation: true,
+        }, pattern, beds, history, nowMonth);
+        for (const bed of beds) {
+          for (const note of result.notes) {
+            if (!note.includes(bed.label) || !note.includes('has nothing planted')) continue;
+            if (/shares a botanical family with every crop in your commercial focus/.test(note)) {
+              rotationClaimsSeen++;
+              const allMatch = ['tomatoes', 'cabbage'].every((key) => familyMatchesBedHistory(bed.id, key, history));
+              if (!allMatch) {
+                offenders.push(`${pattern} · now=${nowMonth} · history=${cropA}/${cropB} · ${bed.label}: ${note}`);
+              }
+            } else if (/would repeat this bed's recent family|fills the bed through every sowing window/.test(note)) {
+              mixedOrSpaceClaimsSeen++;
+            }
+          }
+        }
+      }
+    }
+  }
+  // The sweep must actually exercise the stranded-bed path, or a green
+  // result here would prove nothing.
+  assert.ok(mixedOrSpaceClaimsSeen > 0, 'the sweep never produced a mixed- or space-cause stranded-bed note');
+  assert.deepEqual(offenders.slice(0, 8), [],
+    `${offenders.length} rotation-blocked-all claims where a focus crop's family never matched that bed's history`);
+});
+
+// ── The winter cover a plot gets must be the rotation-preferred one ──────────
+
+test('a plot carrying a cereal takes the rotation-clean cover while one is available', () => {
+  // Repro (Bloemfontein family): Plot 2 already carries a maize record, and
+  // broad beans — rotation-clean after a cereal — passes there. The old
+  // sow-scarcity/crop-spread tiebreaks handed that plot OATS, which is legal
+  // only through the KZN DARD maize-lands exception, and sent broad beans
+  // elsewhere. lib/crop-groups.ts describes the opposite pairing, and it is the
+  // one the covers exist for.
+  const beds: PlanBed[] = [
+    { id: 'bf-b1', label: 'Bed 1', areaM2: 9, minDimM: 1.4 },
+    { id: 'bf-b2', label: 'Bed 2', areaM2: 9, minDimM: 1.4 },
+    { id: 'bf-b3', label: 'Bed 3', areaM2: 9, minDimM: 1.4 },
+    { id: 'bf-p1', label: 'Plot 1', areaM2: 105, minDimM: 11, kind: 'plot' },
+    { id: 'bf-p2', label: 'Plot 2', areaM2: 110, minDimM: 11, kind: 'plot' },
+    { id: 'bf-p3', label: 'Plot 3', areaM2: 115, minDimM: 11, kind: 'plot' },
+  ];
+  const history: Planting[] = [
+    { id: 'bf-h1', bedId: 'bf-p1', cropKey: 'maize', sowMonth: 6, existing: true },
+    { id: 'bf-h2', bedId: 'bf-p2', cropKey: 'maize', sowMonth: 6, existing: true },
+  ];
+  const result = autoSuggestPlan({
+    goal: 'family', focusCropCount: 2, groups: [],
+    cropKeys: ['maize', 'pumpkin', 'oats', 'broad-beans', 'potato'],
+    rhythm: 'steady', rotateCrops: true, allowVinesInBeds: true,
+    allowMixedCropsInBed: true, reliableIrrigation: true,
+  }, 'mild-frost', beds, history, 2);
+  const onPlot2 = result.plantings.filter((planting) => planting.bedId === 'bf-p2').map((p) => p.cropKey);
+  assert.ok(!onPlot2.includes('oats'),
+    `the maize plot took the cover that is a cereal repeat: ${JSON.stringify(onPlot2)}`);
+  assert.ok(onPlot2.includes('broad-beans'),
+    `the rotation-clean cover was available and must be the one used: ${JSON.stringify(onPlot2)}`);
+});
+
+test('an all-cereal farm can still take oats, and the plan cites the practice that allows it', () => {
+  // The exception is SOURCED and must survive: KZN DARD documents oats as a
+  // winter cover in maize lands. What must not survive is silence about it.
+  const beds: PlanBed[] = [
+    { id: 'mz-p1', label: 'Plot 1', areaM2: 105, minDimM: 11, kind: 'plot' },
+    { id: 'mz-p2', label: 'Plot 2', areaM2: 120, minDimM: 11, kind: 'plot' },
+  ];
+  const history: Planting[] = [
+    { id: 'mz-h1', bedId: 'mz-p1', cropKey: 'maize', sowMonth: 6, existing: true },
+  ];
+  const result = autoSuggestPlan({
+    goal: 'family', groups: [], rhythm: 'steady', rotateCrops: true,
+    allowVinesInBeds: false, allowMixedCropsInBed: true, reliableIrrigation: true,
+  }, 'summer', beds, history, 2);
+  const oatsPlots = result.plantings.filter((planting) => planting.cropKey === 'oats');
+  assert.ok(oatsPlots.length > 0, 'the sourced exception must remain reachable');
+  const citation = result.notes.find((note) => /KZN DARD/.test(note));
+  assert.ok(citation, `an exception placement must be explained: ${JSON.stringify(result.notes)}`);
+  assert.ok(/broad beans/i.test(citation!), 'the note must offer the manual swap');
+  assert.ok(oatsPlots.some((planting) => {
+    const bed = beds.find((candidate) => candidate.id === planting.bedId)!;
+    return citation!.includes(bed.label);
+  }), `the note must name a plot that actually received oats: ${citation}`);
+});
+
+test('an oats cover is never left unexplained on ground that just carried a cereal', () => {
+  // Population gate with an INDEPENDENT oracle: sameFamilyRotationViolations
+  // re-derives the courses from the plantings themselves and knows nothing
+  // about the engine's exception, so every oats cover that really is a
+  // grass-family repeat shows up here. Each one must be disclosed by name in
+  // the KZN DARD note. Rotation-clean oats — after a legume course, or on
+  // ground with no cereal near it — is ordinary and is not listed.
+  const offenders: string[] = [];
+  for (const pattern of PATTERNS) {
+    for (const plotCount of [1, 2, 3, 4]) {
+      for (const nowMonth of [1, 3, 6, 9]) {
+        for (const cereals of [0, 1, plotCount]) {
+          const beds: PlanBed[] = [];
+          for (let i = 1; i <= plotCount; i++) {
+            beds.push({ id: `ox-p${i}`, label: `Plot ${i}`, areaM2: 100 + i * 5, minDimM: 11, kind: 'plot' });
+          }
+          const history: Planting[] = [];
+          for (let i = 1; i <= cereals; i++) {
+            history.push({ id: `ox-h${i}`, bedId: `ox-p${i}`, cropKey: 'maize', sowMonth: 6, existing: true });
+          }
+          const result = autoSuggestPlan({
+            goal: 'family', groups: [], rhythm: 'steady', rotateCrops: true,
+            allowVinesInBeds: false, allowMixedCropsInBed: true, reliableIrrigation: true,
+          }, pattern, beds, history, nowMonth);
+          const citation = result.notes.find((note) => /KZN DARD/.test(note)) ?? '';
+          const repeats = sameFamilyRotationViolations(beds, history, result.plantings, nowMonth, true)
+            .filter((violation) => violation.includes('oats'));
+          for (const violation of repeats) {
+            const bed = beds.find((candidate) => violation.startsWith(`${candidate.id}:`));
+            if (bed && citation.includes(bed.label)) continue;
+            offenders.push(`${pattern} · ${plotCount} plots · cereals=${cereals} · now=${nowMonth} — ${violation}`);
+          }
+        }
+      }
+    }
+  }
+  assert.deepEqual(offenders.slice(0, 8), [],
+    `${offenders.length} cereal-on-cereal covers with no sourced explanation`);
 });
