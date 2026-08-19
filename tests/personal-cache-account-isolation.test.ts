@@ -142,7 +142,11 @@ test('a direct farmer switch keeps planning, progress and facilitator caches wit
   assert.deepEqual(cropPlan.loadCropPlan().plantings, []);
   assert.deepEqual([...cropPlan.loadFavouriteCropKeys()], []);
   assert.equal(cropPlan.loadAllowBedSharing(), false);
-  assert.deepEqual(cropPlan.loadCashflowSettings(), { sellPercent: 100, lossPercent: 0, confirmed: false });
+  // Fresh-account defaults (lossPercent opens at 25 since 2026-08-19 — sourced
+  // SA smallholder loss triangulation, see DEFAULT_CASHFLOW_SETTINGS). The
+  // isolation claim under test is unchanged: farmer-b gets FRESH defaults,
+  // never farmer-a's saved values.
+  assert.deepEqual(cropPlan.loadCashflowSettings(), { sellPercent: 100, lossPercent: 25, confirmed: false });
   assert.deepEqual(cropPrices.loadCropPriceOverrides(), {});
   assert.deepEqual([...taskBoard.loadCompletedTaskIds()], []);
   assert.deepEqual(siteProgress.getGuidedState(), {

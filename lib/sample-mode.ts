@@ -64,7 +64,10 @@ function freshSandbox(): SampleSandbox {
     cropPlan: buildDemoCropPlan(),
     favouriteCropKeys: new Set(),
     allowBedSharing: true,
-    cashflowSettings: { sellPercent: 100, lossPercent: 0, confirmed: false },
+    // Keep in lockstep with DEFAULT_CASHFLOW_SETTINGS in crop-plan.ts (a value
+    // import here would be circular — crop-plan imports this module). The
+    // cashflow-loss-default test asserts the two stay equal.
+    cashflowSettings: { sellPercent: 100, lossPercent: 25, confirmed: false },
     facilitatorDesign: buildDemoFacilitatorState(),
     sales: finance.sales,
     expenses: finance.expenses,
