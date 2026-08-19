@@ -81,6 +81,7 @@ import {
 import { waterLegendSectionForFeature } from '../lib/water-cartography.ts';
 import { plantingLegendSectionForFeature } from '../lib/planting-cartography.ts';
 import { structuresLegendSectionForFeature } from '../lib/structures-cartography.ts';
+import { CROPS } from '../lib/crop-catalog.ts';
 
 type LayerSheet = 'water' | 'planting' | 'structures';
 const WIZARD_STEPS = ['water', 'planting', 'structures'] as const;
@@ -399,4 +400,54 @@ test('AI PROMPT VOCABULARY: 16 catalog elements have zero vocabulary in BOTH ill
     'shade_sail', 'sign', 'solar_panel_ground', 'tree_natal_plum', 'tree_pomegranate',
     'tree_waterberry', 'tree_wild_plum', 'tree_marula', 'tree_kei_apple', 'washline',
   ].sort());
+});
+
+// ── CROP CATALOG: ICON UNIQUENESS ───────────────────────────────────────────────────────────
+//
+// lib/crop-catalog.ts's CROPS[].icon is rendered as the crop's chip on every icon-rendering
+// surface (prices, exchange, crops page, home, listing cards). Two crops sharing an icon
+// (found 2026-08-19 by the adversarial verifier: 'true-spinach' had been given '🌱', which
+// 'coriander' already used — true-spinach has no dedicated artwork yet, so the emoji IS its
+// face, and the two unrelated crops rendered an identical chip everywhere) is a silent UI bug:
+// nothing type-checks or renders differently, a farmer just can't tell the two crops apart by
+// icon. This gate makes a fresh collision a test failure instead of something only a human
+// (or another adversarial pass) happens to notice.
+//
+// GRANDFATHERED PAIR — do not add to this, and do not use it to justify a new collision. This
+// single pair (dry-beans / broad-beans sharing '🫘', the pulse/bean emoji) predates this gate
+// and is deliberately left alone: repainting broad-beans' icon changes existing farmer-visible
+// UI outside this fix's scope. New collisions get a new icon on the NEW crop, never an
+// allowlist entry — this list is shrink-only.
+const GRANDFATHERED_ICON_COLLISIONS: ReadonlyArray<readonly [string, string]> = [
+  ['dry-beans', 'broad-beans'], // both '🫘' — predates this gate, see comment above
+];
+
+test('CROP CATALOG icons: no two crops share an icon, except the grandfathered dry-beans/broad-beans pair', () => {
+  const byIcon = new Map<string, string[]>();
+  for (const crop of CROPS) {
+    const keys = byIcon.get(crop.icon) ?? [];
+    keys.push(crop.key);
+    byIcon.set(crop.icon, keys);
+  }
+
+  const allowedPairs = new Set(
+    GRANDFATHERED_ICON_COLLISIONS.map(([a, b]) => [a, b].sort().join('|')),
+  );
+
+  const unexpectedCollisions: string[] = [];
+  for (const [icon, keys] of byIcon) {
+    if (keys.length < 2) continue;
+    const sortedKeys = [...keys].sort();
+    const isFullyGrandfathered =
+      sortedKeys.length === 2 && allowedPairs.has(sortedKeys.join('|'));
+    if (!isFullyGrandfathered) {
+      unexpectedCollisions.push(`${icon}: ${sortedKeys.join(', ')}`);
+    }
+  }
+
+  assert.deepEqual(
+    unexpectedCollisions,
+    [],
+    'every crop icon should be unique (dry-beans/broad-beans \'🫘\' is the sole grandfathered exception)',
+  );
 });

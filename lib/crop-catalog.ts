@@ -147,6 +147,14 @@ export const CROPS: CropDef[] = [
     fieldSpacingVerified: true,
     yieldKgPerM2: 0.3, // NDF South Africa Maize Factsheet + Scielo Eastern Cape smallholder study (2-4 t/ha smallholder dryland, grain maize)
     note: 'Grain maize for mielie meal. Direct-sow in a mapped staple plot once frost risk has passed; use several adjacent rows for wind pollination. The 140-day calendar hold is conservative — confirm cultivar maturity before harvest.',
+    // FAO: "short-term storage (4-5 months), season-long storage (6-9
+    // months), long term storage (>9 months)" — 6 is the floor of the
+    // season-long practice category, at the required ≤14% moisture. Without
+    // drying and active weevil/larger-grain-borer control the source shows
+    // heavy infestation within 2-3 months.
+    storageMonths: 6,
+    storageSourceUrl: 'https://www.fao.org/fileadmin/user_upload/inpho/docs/Post_Harvest_Compendium_-_MAIZE.pdf',
+    storageConditions: 'Shelled grain dried to ≤14% moisture, kept in a clean sealed container or silo with active weevil/larger-grain-borer control.',
   },
   {
     key: 'dry-beans',
@@ -174,6 +182,13 @@ export const CROPS: CropDef[] = [
     fieldSpacingVerified: true,
     yieldKgPerM2: 0.2, // ~0.2 (1.8-2.2 t/ha) — Grain SA 'Know the value of DRY BEANS'
     note: 'Plant after frost danger: November to mid-January in frost areas, or March-April in frost-free areas. Leave pods to yellow and dry before shelling and storing.',
+    // FAO/CIAT: coating with edible vegetable oils "permits storage for at
+    // least 6 months without fear of insect [bruchid] damage"; a separate
+    // FAO table corroborates with "bean (dry) | 4-10°C | 40-50% RH | 180-300
+    // days" (180-day floor = 6 months). Untreated warm storage fails sooner.
+    storageMonths: 6,
+    storageSourceUrl: 'https://openknowledge.fao.org/server/api/core/bitstreams/f298d18a-182b-4ded-9863-6d0b60bf3024/content',
+    storageConditions: 'Fully dried grain (12-15% moisture), clean sealed containers, cool and dry, with bruchid/weevil control (e.g. edible-oil admix at 5ml/kg, or storage in-pod).',
   },
   {
     key: 'green-beans',
@@ -225,6 +240,15 @@ export const CROPS: CropDef[] = [
     // butternut duration and picking span; it is stated here, not hidden.
     harvestWindowMonths: 1,
     harvestPeriodRangeMonths: [1, 2],
+    // No butternut-specific SA storage figure exists (DAFF's Cucurbita
+    // moschata brochure says only "can be stored for use during the winter",
+    // no number). FAO Bulletin 151 Table 5's Pumpkins row (10-15°C/50-70%
+    // RH, 60-160 days) is applied as a genus-level proxy — butternut is
+    // Cucurbita moschata, sold and stored as a pumpkin type in SA. 2 months
+    // is the conservative 60-day floor.
+    storageMonths: 2,
+    storageSourceUrl: 'https://www.fao.org/4/y4893e/y4893e06.htm',
+    storageConditions: 'Mature hard-rind fruit, cured, clean, dry, undamaged, kept ventilated at 10-15°C/50-70% RH.',
   },
   {
     key: 'pumpkin',
@@ -254,6 +278,12 @@ export const CROPS: CropDef[] = [
     note: 'Needs bees for pollination; hand-pollinate with a small brush if fruit set is poor.',
     harvestWindowMonths: 1, // reserve 2 months total — upper end of KZN DARD's usual 1–2 month picking period
     harvestPeriodRangeMonths: [1, 2],
+    // FAO Bulletin 151 Table 5: "Pumpkins | 10-15°C | 50-70% RH | 60-160
+    // days". 2 months is the conservative 60-day floor of that range — a
+    // warmer, less-ventilated store shortens life well below the 160-day top.
+    storageMonths: 2,
+    storageSourceUrl: 'https://www.fao.org/4/y4893e/y4893e06.htm',
+    storageConditions: 'Mature, cured (hardened-skin) fruit, undamaged, kept ventilated at 10-15°C/50-70% RH.',
   },
   {
     key: 'swiss-chard',
@@ -441,6 +471,12 @@ export const CROPS: CropDef[] = [
       { name: 'Short-day type', bestFor: 'Highveld / northern & central interior', note: "Onions bulb by day-length, not just temperature — this is the one crop where variety is nearly mandatory, not a refinement: the wrong day-length type for your area simply won't bulb properly no matter when you sow it." },
       { name: 'Intermediate-day type', bestFor: 'Central & southern regions, coastal areas', note: "Suits areas with a bigger swing in day length through the growing season. Check the day-length rating on the seed packet — it matters more here than the sowing month." },
     ],
+    // FAO: "Field-dried onions can be stored up to two months under ambient
+    // conditions in well-ventilated trays." Phrased as a ceiling ("up to"),
+    // so the app does not extend past month 2.
+    storageMonths: 2,
+    storageSourceUrl: 'https://www.fao.org/4/t0073e/t0073e05.htm',
+    storageConditions: 'Field-dried (cured, necks fully dry) bulbs held at ambient temperature in well-ventilated trays/racks.',
   },
   {
     key: 'tomatoes',
@@ -449,7 +485,14 @@ export const CROPS: CropDef[] = [
     sowMonths: {
       summer: [8, 9, 10],
       winter: [8, 9, 10],
-      'all-year': [2, 3, 7, 8, 9],
+      // Was [2,3,7,8,9] — byte-identical to peppers, uncited, and narrower
+      // than mild-frost even though this pattern is meant to be the broadest
+      // (frost-free coastal, e.g. East London). KZN DARD Plant Establishment
+      // Table 6, Tomato row, 'Hot areas Frost-free' column: 'Dec - Mar, Jul -
+      // Sept' — the same table already cited below for mild-frost's 'Warm
+      // areas Light frosts' column. Widened to the verbatim column instead of
+      // guessing a wider window.
+      'all-year': [1, 2, 3, 7, 8, 9, 12],
       'mild-frost': [8, 9, 10, 11, 12], // KZN DARD Table 6, warm/light-frost area
     },
     daysToHarvest: 90, // upper end of 75–90 days from transplant — KZN DARD Length of Growing Period
@@ -480,7 +523,14 @@ export const CROPS: CropDef[] = [
     sowMonths: {
       summer: [8, 9, 10],
       winter: [8, 9, 10],
-      'all-year': [2, 3, 7, 8, 9],
+      // Was [2,3,7,8,9] — byte-identical to tomatoes, uncited, and narrower
+      // than mild-frost even though this pattern is meant to be the broadest
+      // (frost-free coastal, e.g. East London). KZN DARD Plant Establishment
+      // Table 6, Capsicum (chilli, green pepper) row, 'Hot areas Frost-free'
+      // column: 'Jan - Mar, Jul - Dec' — the same table already cited below
+      // for mild-frost's 'Warm areas Light frosts' column. Widened to the
+      // verbatim column instead of guessing a wider window.
+      'all-year': [1, 2, 3, 7, 8, 9, 10, 11, 12],
       'mild-frost': [8, 9, 10, 11], // KZN DARD Table 6, warm/light-frost area
     },
     daysToHarvest: 80, // upper end of 65–80 days from transplant — KZN DARD Length of Growing Period; Starke Ayres also gives 75–80 days
@@ -531,6 +581,12 @@ export const CROPS: CropDef[] = [
     note: 'Grown from rooted slips, not seed — plant into ridged soil for easy digging later.',
     harvestWindowMonths: 1,
     harvestPeriodRangeMonths: [1, 2],
+    // FAO: "Sweet potato can be stored safely for 3 to 4 months in the
+    // tropics provided that the storage practices previously outlined for
+    // potatoes ... are followed." 3 is the conservative floor of that range.
+    storageMonths: 3,
+    storageSourceUrl: 'https://www.fao.org/4/x5415e/x5415e04.htm',
+    storageConditions: 'Only mature, undamaged roots; cured 30-32°C/85-90% RH for 4-7 days, then stored with minimal handling as cool as achievable (source optimum 13°C) at ~85-90% RH. The sweet potato weevil (Cylas spp.) is the main storage threat.',
   },
   {
     key: 'potato',
@@ -563,6 +619,15 @@ export const CROPS: CropDef[] = [
     yieldRangeKgPerM2: [1, 1.7], // dryland/hot-area conservative through likely (10; 17 t/ha) — KZN DARD Expected Yields Table 8
     note: 'Plant certified seed potatoes and earth up the stems as they grow to prevent greening.',
     harvestPeriodRangeWeeks: [2, 4],
+    // FAO Table 4.2 (Wustman et al 1985): ware potatoes with no sprout
+    // inhibitor keep 2-3 months at ~15°C average ambient, 3-4 months at
+    // ~10°C, and the table has no usable entry above 20°C — 2 is the
+    // conservative floor at the achievable-temperature end, not the optimistic
+    // one. The FAO "up to six months in tropical highlands" line needs a
+    // long-dormancy cultivar or a sprout inhibitor and is deliberately unused.
+    storageMonths: 2,
+    storageSourceUrl: 'https://www.fao.org/4/x5415e/x5415e04.htm',
+    storageConditions: 'Cured 15-20°C/85-90% RH for 5-10 days, then kept dark and naturally ventilated averaging ~15°C or cooler, no sprout inhibitor.',
   },
   {
     key: 'lettuce',
@@ -624,6 +689,13 @@ export const CROPS: CropDef[] = [
     // this DAFF household geometry, so it cannot honestly score this plan.
     yieldKgPerM2: null,
     note: 'Propagate from whole tubers or corm cuttings. Needs consistently moist soil and warm, frost-free conditions.',
+    // FAO: "At higher ambient temperatures (25° to 30°C), cocoyams will
+    // store only for periods of 4 to 6 weeks without serious losses." 1
+    // month is the rounded-down floor of that range; the "up to four months"
+    // figure in the same source needs 7°C refrigeration, not smallholder-achievable.
+    storageMonths: 1,
+    storageSourceUrl: 'https://www.fao.org/4/x5415e/x5415e04.htm',
+    storageConditions: 'Cool, dry, well-ventilated storage at ambient 25-30°C — traditionally heaped corms under shade or covered with straw/plantain leaves.',
   },
   {
     key: 'groundnuts',
@@ -648,6 +720,16 @@ export const CROPS: CropDef[] = [
     sowDepthRangeCm: [5, 7.5],
     yieldKgPerM2: 0.12, // ~0.12 (1.0-1.5 t/ha) — Grain SA / ARC Grain Crops Institute (old value looked like a unit/decimal error, ~10x national average)
     note: 'This stand is the audited irrigated geometry. Groundnuts need sandy, well-drained soil and a long frost-free growing season.',
+    // FAO: "smallholder farmers ... store it in mud bins, basket, and earthen
+    // pots or in gunny bags for 6 to 8 months" (in-shell); 6 is the floor,
+    // corroborated by the same source's 6-month (Oct-Mar) naturally-ventilated
+    // warehouse trial at safe moisture. Applies to IN-SHELL pods dried to
+    // ~10% moisture or less (the document's shelled-kernel spec is a lower
+    // 6-8%, a different product — not used here). Hot/humid-season storage
+    // is limited to 1-2 months in the same source.
+    storageMonths: 6,
+    storageSourceUrl: 'https://www.fao.org/fileadmin/user_upload/inpho/docs/Post_Harvest_Compendium_-_Groundnut.pdf',
+    storageConditions: 'Unshelled (in-shell) pods dried to in-shell moisture ~10% or less, stored in gunny bags, mud bins, baskets or a ventilated dry room, protected from pests and damp.',
   },
   {
     key: 'garlic',
@@ -672,6 +754,14 @@ export const CROPS: CropDef[] = [
     yieldKgPerM2: 0.6,
     yieldRangeKgPerM2: [0.6, 1], // conservative through likely (6; 10 t/ha) — KZN DARD Expected Yields Table 8
     note: 'Plant individual cloves pointy-side up; a cool spell early on helps bulbs form properly.',
+    // FAO: common storage "can be held for 3 to 4 months"; independently,
+    // "storage life is 3 to 5 months under cool (60°F) dry, dark conditions"
+    // in mesh bags. 3 is the rounded-down floor shared by both lines. The
+    // same document gives only 1-2 months at hot ambient (20-30°C, RH<75%),
+    // so a hot lowveld/coastal store will fall short of this figure.
+    storageMonths: 3,
+    storageSourceUrl: 'https://www.fao.org/fileadmin/user_upload/inpho/docs/Post_Harvest_Compendium_-_Garlic.pdf',
+    storageConditions: 'Well-cured bulbs (dried several weeks, dark/dry/ventilated), then kept unrefrigerated in a cool, dry, dark, well-ventilated place (e.g. mesh bags).',
   },
   {
     key: 'peas',
@@ -879,6 +969,110 @@ export const CROPS: CropDef[] = [
     fieldSpacingInstruction: 'drill at 70kg seed/ha, or broadcast at 105–140kg/ha; terminate before the next summer staple crop',
     yieldKgPerM2: 0,
     note: 'A KZN winter cover for maize land, not a food harvest in this plan. Sow March-May while late-summer soil moisture remains, then cut or roll it before the next summer staple crop. Nothing is added to kitchen harvest totals.',
+  },
+  {
+    key: 'true-spinach',
+    name: 'True spinach (English spinach)',
+    // Was '🌱' (seedling), which Coriander also uses — two unrelated crops rendered
+    // an identical chip on every icon-rendering surface (prices, exchange, crops
+    // page, home, listing cards). '🍃' (leaf) and '🥬' (leafy green) were the two
+    // obvious leafy-green picks but both are already taken (Swiss chard, Cabbage
+    // respectively) — checked against every icon in this file, not assumed free.
+    // '🍀' (four-leaf clover) is unused elsewhere in the catalog and not visually
+    // confusable with any existing icon. See tests/catalog-matrix.test.ts's
+    // "no two crops share an icon" gate.
+    icon: '🍀',
+    sowMonths: {
+      // KZN DARD Table 6, 'Cold areas Moderate frosts' column: Aug-Mar.
+      // Nov-Jan (peak heat) stay closed — this pattern also spans hot
+      // interior (e.g. Limpopo), not just the KZN Midlands the column is
+      // anchored to, and DAFF separately warns seed germinates poorly in
+      // warm weather — mirrors the existing chard summer trim.
+      summer: [2, 3, 8, 9, 10],
+      // UNSOURCEABLE as a dedicated Western Cape calendar. Opened only the
+      // intersection of DAFF's national window ('planted from August until
+      // April') and KZN DARD Table 6's 'Warm areas Light frosts' column
+      // (Feb-May, Jul-Sept) — WC lowlands being a light-frost, cool-winter
+      // climate: {2,3,4} ∪ {8,9} (May and Jul are KZN-only, excluded).
+      winter: [2, 3, 4, 8, 9],
+      // KZN DARD Table 6, 'Hot areas Frost-free' column: Mar-Aug.
+      'all-year': [3, 4, 5, 6, 7, 8],
+      // KZN DARD Table 6, 'Warm areas Light frosts' column: Feb-May, Jul-Sept.
+      'mild-frost': [2, 3, 4, 5, 7, 8, 9],
+    },
+    // KZN DARD Length of Growing Period, 'Spinach, true' row: 40-55 days, no
+    // transplant asterisk (direct-sown crop; Plant Establishment Table 5 has
+    // only a direct seeding rate for spinach, no seedtray/seedbed rate).
+    daysToHarvest: 55,
+    daysToHarvestRange: [40, 55],
+    // Legacy single-figure fallback set to the Table 5 in-row midpoint (70-80mm).
+    spacingCm: 8,
+    rowSpacingCm: 20, // 200mm — KZN DARD 'Plant Establishment' Table 5, Spinach row
+    inRowSpacingCm: 7.5, // 70-80mm — same table, same row
+    sowDepthCm: 1.75, // 15-20mm — same table
+    rowSpacingRangeCm: [20, 20],
+    inRowSpacingRangeCm: [7, 8],
+    sowDepthRangeCm: [1.5, 2],
+    fieldSpacingVerified: true,
+    yieldKgPerM2: 0.7,
+    yieldRangeKgPerM2: [0.7, 1.2], // conservative through likely (7-8; 10-12 t/ha) — KZN DARD Expected Yields Table 8, 'Spinach, true' row
+    note: 'Real spinach (Spinacia oleracea) — not the Swiss chard South Africans usually call spinach. Cool-season and fast: it bolts in heat, so keep to the cool sowing windows and pick promptly. Same botanical family (Amaranthaceae) as Swiss chard and beetroot, so the rotation rule treats all three as one family — do not follow one with another in the same bed.',
+    // KZN DARD gives a 1-2 week usual harvesting period: fits inside the
+    // first harvest month in this monthly model, same treatment as lettuce
+    // and green beans — no extra whole calendar month.
+    harvestPeriodRangeWeeks: [1, 2],
+  },
+  {
+    key: 'turnip',
+    name: 'Turnips',
+    icon: '🟣',
+    sowMonths: {
+      // GDARD (Gauteng — summer-rainfall interior, region-matched provincial
+      // authority): 'Planting time/date: Jan-Apr, Aug-Sept'. KZN DARD Table 6
+      // cold/moderate-frost column corroborates Aug-Mar; Oct-Dec appear only
+      // in that KZN column and are excluded conservatively here.
+      summer: [1, 2, 3, 4, 8, 9],
+      // UNSOURCEABLE — no KZN DARD/GDARD/DALRRD/Elsenburg primary source
+      // names winter-rainfall Western Cape turnip sowing months, and Starke
+      // Ayres' national home-garden chart (Summer/Autumn only, no regional
+      // axis) cannot support month-level WC windows either. Empty array has
+      // catalog precedent (maize, dry-beans, oats) — an honest gap beats an
+      // invented month.
+      winter: [],
+      // KZN DARD Table 6, 'Hot areas Frost-free' column: 'Feb - Sept/Oct' —
+      // the ambiguous Oct endpoint is excluded conservatively.
+      'all-year': [2, 3, 4, 5, 6, 7, 8, 9],
+      // KZN DARD Table 6, 'Warm areas Light frosts' column: 'All year'.
+      'mild-frost': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+    },
+    // GDARD: 'Transplanting or planting to harvesting (days): 60-90' (direct
+    // sowing). KZN DARD Table 4 corroborates with 45-75 days and a 2-4 week
+    // picking period — both round up to the same 3-month coarse bed hold.
+    daysToHarvest: 90,
+    daysToHarvestRange: [60, 90],
+    spacingCm: 8,
+    rowSpacingCm: 50, // 400-600mm — KZN DARD 'Plant Establishment' Table 5, Turnip row
+    inRowSpacingCm: 8, // 80mm — same table, same row (single published value)
+    sowDepthCm: 1.75, // 15-20mm — same table
+    rowSpacingRangeCm: [40, 60],
+    inRowSpacingRangeCm: [8, 8],
+    sowDepthRangeCm: [1.5, 2],
+    // 8x50cm = 25 plants/m² = 250,000/ha — inside GDARD's own published
+    // population of 200,000-400,000/ha, so the GDARD yield applies to a
+    // consistent stand rather than a mismatched density (the amadumbe
+    // failure mode this catalog now checks for).
+    fieldSpacingVerified: true,
+    // Bottom of GDARD 'Estimated yield ton/ha: 10 - 30' — one undifferentiated
+    // estimate with no conservative/likely/target split (KZN DARD Expected
+    // Yields Table 8 has no turnip row at all), so only the bottom end is a
+    // defensible planning point. yieldRangeKgPerM2 is deliberately left unset:
+    // that field means a published conservative-to-likely split, which this
+    // source does not provide.
+    yieldKgPerM2: 1,
+    note: "Cool-weather Brassica root — direct-sow only and thin early so the roots can swell. Same botanical family as cabbage, kale and broccoli, so don't plan turnips straight after (or before) another brassica in the same bed. Young leaves are a traditional edible green — pick sparingly; the yield figure covers roots only.",
+    // KZN DARD Table 4, Turnips row: 2-4 week usual picking period — no
+    // extra whole calendar month beyond the first harvest month.
+    harvestPeriodRangeWeeks: [2, 4],
   },
 ];
 

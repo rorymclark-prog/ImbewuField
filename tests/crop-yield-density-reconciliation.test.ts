@@ -53,6 +53,7 @@ function tableText(rows: ImpliedRow[]): string {
 const RECORDED_IMPLIED_KG_PER_PLANT: Record<string, number> = {
   'oats': 0, // soil-cover crop: zero FOOD kg by design
   'groundnuts': 0.002812,
+  'true-spinach': 0.0105,
   'green-beans': 0.014438,
   'peas': 0.0156,
   'garlic': 0.019125,
@@ -60,6 +61,7 @@ const RECORDED_IMPLIED_KG_PER_PLANT: Record<string, number> = {
   'beetroot': 0.021,
   'dry-beans': 0.0225,
   'onions': 0.02625,
+  'turnip': 0.04,
   'broad-beans': 0.048,
   'maize': 0.06825,
   'broccoli': 0.121875,

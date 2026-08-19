@@ -835,7 +835,11 @@ test('positive-yield legacy timing makes a shared-bed benchmark unknown instead 
 });
 
 test('availability shows fresh picking windows without inventing an unsourced storage life', () => {
-  const freshCrop = CROPS.find((candidate) => (candidate.harvestWindowMonths ?? 0) > 0);
+  // Deliberately requires storageMonths === undefined too: several crops with
+  // a harvestWindowMonths now also carry a sourced storageMonths (2026-08-20
+  // storage wave), and this test's whole point is that a crop with NO sourced
+  // storage life never grows a 'stored' tail.
+  const freshCrop = CROPS.find((candidate) => (candidate.harvestWindowMonths ?? 0) > 0 && candidate.storageMonths === undefined);
   assert.ok(freshCrop);
   const plantings: Planting[] = [
     { id: 'fresh', bedId: BEDS[0].id, cropKey: freshCrop.key, sowMonth: 11 },
@@ -847,6 +851,41 @@ test('availability shows fresh picking windows without inventing an unsourced st
   assert.equal(availability.flat().some((item) => item.status === 'stored'), false);
   for (const month of availability) {
     assert.equal(new Set(month.map((item) => item.cropKey)).size, month.length);
+  }
+});
+
+test('availability grows a stored tail only for a crop with a sourced storage duration, and it never extends bed occupancy', () => {
+  // 2026-08-20: the storage wave gave real crops a sourced storageMonths for
+  // the first time — this machinery (buildFoodAvailability's storage span,
+  // buildFieldUtilizationByMonth's storage-excluded occupancy) existed since
+  // the 2026-08-06 audit but had zero crops to actually exercise it.
+  const storedCrop = CROPS.find((candidate) => (candidate.storageMonths ?? 0) > 0);
+  assert.ok(storedCrop, 'the storage wave should have left at least one crop with a sourced storageMonths');
+  assert.ok(storedCrop!.storageSourceUrl?.startsWith('https://'));
+  assert.ok(storedCrop!.storageConditions?.trim());
+
+  const plantings: Planting[] = [
+    { id: 'stored', bedId: BEDS[0].id, cropKey: storedCrop!.key, sowMonth: 3 },
+  ];
+  const availability = buildFoodAvailability(plantings, BEDS);
+  const utilization = buildFieldUtilizationByMonth(plantings, BEDS);
+
+  const monthsWithThisCrop = availability
+    .map((items, month) => ({ month, item: items.find((it) => it.cropKey === storedCrop!.key) }))
+    .filter((row) => row.item);
+  assert.ok(monthsWithThisCrop.some((row) => row.item!.status === 'fresh'), 'a stored crop must still show its fresh harvest month');
+  assert.ok(monthsWithThisCrop.some((row) => row.item!.status === 'stored'), 'a sourced storageMonths must produce a stored tail');
+
+  // The stored tail happens off the bed (shed/pantry) — it must never keep
+  // the bed itself occupied in the field-utilization chart, per
+  // buildFieldUtilizationByMonth's own documented contract.
+  const storedOnlyMonths = monthsWithThisCrop.filter((row) => row.item!.status === 'stored').map((row) => row.month);
+  assert.ok(storedOnlyMonths.length > 0);
+  for (const month of storedOnlyMonths) {
+    const freshElsewhereThisMonth = availability[month].some((it) => it.cropKey === storedCrop!.key && it.status === 'fresh');
+    if (!freshElsewhereThisMonth) {
+      assert.equal(utilization[month], 0, `month ${month} is a pure storage tail for ${storedCrop!.key} and must not occupy the bed`);
+    }
   }
 });
 
