@@ -214,7 +214,7 @@ export function buildLockedIllustrationPrompt(
       ? `PAPER FINISH: the app draws exact feature outlines, technical routes, labels, legend and title over your artwork afterwards. Make each illustrated element clean, well-separated and confident enough to read beneath that precise linework — and leave the white between elements genuinely empty, because that white is where the app's labels and leaders land.`
       : photoPreserving
       ? ''
-      : `HYBRID FINISH: the app restores protected roof, driveway, boundary and context pixels, then reinforces exact feature outlines, technical routes, labels and legend over your artwork. Make the painted trees, beds, tanks, basins, structures and ground visually rich enough to remain visible beneath that precise cartographic linework.`,
+      : `HYBRID FINISH: the app preserves the exact property edge and then reinforces exact illustrated roof and driveway geometry, technical routes, labels and legend over your artwork. It does not paste raw satellite or ground tiles back inside the painted property. Make the trees, beds, tanks, basins, structures and ground one continuous, visually rich illustration beneath that precise cartographic linework.`,
     waterArtDirection,
     groundClause,
     paintedPhotoCompleteness,

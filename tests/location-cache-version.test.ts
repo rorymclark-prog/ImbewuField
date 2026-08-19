@@ -18,15 +18,16 @@ import test from 'node:test';
 // shape. That distinction is invisible to a farmer and invisible to the cache. The rule is: if the
 // endpoint would now answer differently, bump.
 //
-// FOUR FILES, ONE VERSION. Two write the cache and two read it. Bumping only the writers is worse
-// than bumping nothing: the readers go looking for a key that is never written again, and the
-// sector card and tank calculator quietly lose their data instead of showing stale data.
+// FIVE FILES, ONE VERSION. Bumping only the writers is worse than bumping nothing: the readers go
+// looking for a key that is never written again, and the sector card and tank calculator quietly
+// lose their data instead of showing stale data.
 
 const FILES = [
   '../app/farmer/page.tsx',        // writes
   '../app/design/page.tsx',        // writes
   '../components/design/SectorSummary.tsx', // reads
   '../components/design/TankCalculator.tsx', // reads
+  '../lib/site-climate.ts',        // reads AND writes — the crop planner's per-site RainPattern
 ] as const;
 
 const source = (rel: string) => readFileSync(new URL(rel, import.meta.url), 'utf8');

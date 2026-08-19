@@ -24,6 +24,7 @@ import {
 } from '@/lib/facilitator-design';
 import { costForItem, costForLine, costForMeasuredAreaLine, formatZar, isAreaPricedItem, DISCLAIMER } from '@/lib/price-book';
 import { describeHarvest } from '@/lib/water-calc';
+import { loadCachedSiteClimate } from '@/lib/site-climate';
 
 // ── Copied label/colour tables (kept in sync manually with FacilitatorCanvas.tsx) ──
 
@@ -564,8 +565,15 @@ export default function FacilitatorPrintPage() {
       }));
     }
 
+    // Prefer the site's own satellite-derived rainfall over the 7-point regional
+    // table when this device has already analysed the site (same imbewu_loc_v4
+    // cache the sector card and tank calculator read — synchronous and offline-
+    // safe). describeHarvest's sentence states which basis it used either way.
+    const siteClimate = state.bgSite
+      ? loadCachedSiteClimate(state.bgSite.lat, state.bgSite.lon)
+      : null;
     const harvest = roofM2 >= 10 && state.bgSite
-      ? describeHarvest(roofM2, state.bgSite.lat, state.bgSite.lon)
+      ? describeHarvest(roofM2, state.bgSite.lat, state.bgSite.lon, siteClimate)
       : null;
 
     const scaleBarM = niceScaleLength(rawW);

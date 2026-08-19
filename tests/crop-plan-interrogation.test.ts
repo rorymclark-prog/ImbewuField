@@ -37,13 +37,16 @@ import {
   buildFoodAvailability,
   buildPlanYieldBenchmark,
   buildYearReport,
+  existingSowOffset,
   occupiedMonthsForPlanting,
   seedBoqForPlan,
   tasksForPlan,
+  TRANSPLANT_BED_RESERVED_FROM_MONTHS,
   type PlanBed,
   type Planting,
 } from '@/lib/crop-plan';
 import { isPlotWinterCover } from '@/lib/staple-crops';
+import { rotationFamilyOf } from '@/lib/crop-groups';
 
 // ── The sweep ───────────────────────────────────────────────────────────────
 
@@ -717,4 +720,225 @@ test('no vegetable bed on the reference family farm is completely bare in any mo
     }
   }
   assert.deepEqual(bare, [], `bare bed-months on the reference farm: ${bare.join(', ')}`);
+});
+
+// ── Rotation must hold on the real timeline, including mixed beds ───────────
+//
+// 2026-08-19 audit finding: BedRotation.wouldRepeat compared a candidate only
+// with the nearest previous and next course by time. Two holes followed:
+//   1. Overlap-blindness — with mixed beds ON (the guided-flow default), a
+//      same-family course whose occupancy OVERLAPS the candidate was in
+//      neither the "previous" nor the "next" set, so potato and tomatoes
+//      (both Solanaceae) could hold one bed at the same time with rotation ON.
+//   2. Shadowing — any unrelated course ending inside the gap hid an earlier
+//      same-family course: green beans sailed past a peas history because a
+//      lettuce merely ENDED later than the peas, without a full different-
+//      family course standing between peas and the beans.
+// The gate now checks the candidate against EVERY course whose occupancy
+// overlaps it, and on each side compares against the full CO-OCCUPANT SET of
+// the nearest neighbouring course: a same-family course only stops counting
+// as the immediate predecessor once a different course has fully succeeded
+// it (started at-or-after it ended) before the candidate. Same
+// immediate-chronological-neighbour semantics the audit doc documents — no
+// new agronomy, no invented gap length.
+
+interface RotationCourseUnderTest {
+  cropKey: string;
+  family: ReturnType<typeof rotationFamilyOf>;
+  start: number;
+  end: number;
+  sourceIds: Set<string>;
+  plotCover: boolean;
+}
+
+/** Bed-hold courses on the rolling timeline: existing rows once at their
+ * observed offset, proposed rows at +0 and +12 (the saved annual template
+ * repeats). Overlapping cohorts of ONE crop merge into one standing course,
+ * exactly as the planner's ledger treats staggered sowings. */
+function rotationCoursesUnderTest(
+  beds: readonly PlanBed[],
+  existing: readonly Planting[],
+  proposed: readonly Planting[],
+  bedId: string,
+  nowMonth: number,
+): RotationCourseUnderTest[] {
+  const course = (planting: Planting, shift: number): RotationCourseUnderTest | null => {
+    const crop = cropByKey(planting.cropKey);
+    if (!crop) return null;
+    const sowOffset = planting.existing
+      ? existingSowOffset(planting.sowMonth, nowMonth)
+      : ((planting.sowMonth - nowMonth + 12) % 12) + shift;
+    const start = sowOffset + (crop.transplant ? TRANSPLANT_BED_RESERVED_FROM_MONTHS : 0);
+    const span = occupiedMonthsForPlanting(planting).length;
+    if (span === 0) return null;
+    return {
+      cropKey: crop.key,
+      family: rotationFamilyOf(crop),
+      start,
+      end: start + span - 1,
+      sourceIds: new Set([planting.id]),
+      plotCover: beds.find((bed) => bed.id === bedId)?.kind === 'plot' && isPlotWinterCover(crop),
+    };
+  };
+  const raw = [
+    ...existing.filter((planting) => planting.bedId === bedId)
+      .map((planting) => course(planting, 0)),
+    ...proposed.filter((planting) => planting.bedId === bedId)
+      .flatMap((planting) => [course(planting, 0), course(planting, 12)]),
+  ].filter((candidate): candidate is RotationCourseUnderTest => candidate !== null)
+    .sort((a, b) => a.start - b.start || a.end - b.end);
+  // Merge PER CROP, transitively: in a mixed bed another crop's course can sit
+  // between two staggered cohorts of one crop in the sorted order, so a
+  // last-course-only merge would falsely split one standing course in two.
+  const courses: RotationCourseUnderTest[] = [];
+  for (const next of raw) {
+    const standing = courses.find((candidate) =>
+      candidate.cropKey === next.cropKey
+      && next.start <= candidate.end && candidate.start <= next.end);
+    if (standing) {
+      standing.start = Math.min(standing.start, next.start);
+      standing.end = Math.max(standing.end, next.end);
+      for (const sourceId of next.sourceIds) standing.sourceIds.add(sourceId);
+    } else {
+      courses.push({ ...next, sourceIds: new Set(next.sourceIds) });
+    }
+  }
+  return courses;
+}
+
+/** Same-family course pairs that either overlap in time or follow each other
+ * with the earlier course still part of the later course's immediate-
+ * predecessor tenure: the earlier course only stops being "the previous
+ * course" once some other course has fully succeeded it (started at or after
+ * its end) before the later course begins. */
+function sameFamilyRotationViolations(
+  beds: readonly PlanBed[],
+  existing: readonly Planting[],
+  proposed: readonly Planting[],
+  nowMonth: number,
+): string[] {
+  const out: string[] = [];
+  for (const bed of beds) {
+    const courses = rotationCoursesUnderTest(beds, existing, proposed, bed.id, nowMonth);
+    for (let i = 0; i < courses.length; i++) {
+      for (let j = i + 1; j < courses.length; j++) {
+        const a = courses[i];
+        const b = courses[j];
+        if (a.family !== b.family) continue;
+        // A course is never a rotation conflict with a set containing itself:
+        // the +12 row is the same annual template drawn again, and merged
+        // staggered cohorts already share ids with their own copies.
+        if ([...a.sourceIds].some((sourceId) => b.sourceIds.has(sourceId))) continue;
+        // The plot-only zero-food winter cover is a documented soil-cover
+        // exception (docs/CROP-PLAN-TRUTH-AUDIT: staple plots carry their own
+        // course sequence), not a vegetable rotation course.
+        if (a.plotCover || b.plotCover) continue;
+        const overlap = a.start <= b.end && b.start <= a.end;
+        if (overlap) {
+          out.push(`${bed.id}: ${a.cropKey}[${a.start}..${a.end}] overlaps ${b.cropKey}[${b.start}..${b.end}] (${a.family})`);
+          continue;
+        }
+        const [earlier, later] = a.end < b.start ? [a, b] : [b, a];
+        // Window semantics, mirroring the gate: find the nearest-ending
+        // course L that finished before the later course started (the later
+        // course's immediate predecessor tenure). The earlier same-family
+        // course is a violation iff it is L itself, or it was still in the
+        // ground when L's tenure began (earlier.end > L.start) — i.e. no
+        // distinct course fully succeeded it before the later one entered.
+        // Ties on end prefer the LARGER start (most lenient), so the oracle
+        // is never stricter than the planner's own gate.
+        const predecessorPool = courses.filter((other) =>
+          other !== later && other.end < later.start && !other.plotCover
+          && ![...other.sourceIds].some((sourceId) => later.sourceIds.has(sourceId)));
+        const nearest = predecessorPool.reduce<RotationCourseUnderTest | null>(
+          (best, other) => {
+            if (!best) return other;
+            if (other.end !== best.end) return other.end > best.end ? other : best;
+            return other.start > best.start ? other : best;
+          }, null);
+        if (nearest && (nearest === earlier || earlier.end > nearest.start)) {
+          out.push(`${bed.id}: ${earlier.cropKey}[${earlier.start}..${earlier.end}] -> ${later.cropKey}[${later.start}..${later.end}] (${a.family}) with no full course between`);
+        }
+      }
+    }
+  }
+  return out;
+}
+
+test('rotation ON blocks a same-family course that OVERLAPS another in the same mixed bed (potato + tomatoes)', () => {
+  // Reproduces the audited live bug: family goal, rotation ON, mixed beds ON
+  // (the guided-flow default), exact whitelist spanning two families so the
+  // one-family fallback cannot excuse anything. Before the fix this planted
+  // potato and tomatoes — both Solanaceae — overlapping in one bed.
+  const beds: PlanBed[] = [
+    { id: 'b1', label: 'Bed 1', areaM2: 16, minDimM: 1.2 },
+    { id: 'b2', label: 'Bed 2', areaM2: 16, minDimM: 1.2 },
+  ];
+  const offenders: string[] = [];
+  for (const nowMonth of [4, 8, 9]) {
+    const { plantings } = autoSuggestPlan({
+      goal: 'family', groups: [], cropKeys: ['potato', 'tomatoes', 'carrots'],
+      rhythm: 'steady', rotateCrops: true, allowVinesInBeds: false,
+      allowMixedCropsInBed: true, reliableIrrigation: true,
+    }, 'mild-frost', beds, [], nowMonth);
+    offenders.push(...sameFamilyRotationViolations(beds, [], plantings, nowMonth)
+      .map((violation) => `now=${nowMonth} ${violation}`));
+  }
+  assert.deepEqual(offenders, []);
+});
+
+test('rotation ON is not fooled by an overlapping course that merely ends later (peas history shadowed by lettuce)', () => {
+  // Reproduces the audited shadowing hole: the peas history ends two months
+  // before the green-beans candidate, and the lettuce OVERLAPS the peas but
+  // ends one month later. Nearest-course-by-end-time called lettuce "the
+  // previous course" and licensed a Fabaceae -> Fabaceae succession with no
+  // full different-family course between peas and beans.
+  const beds: PlanBed[] = [{ id: 'b1', label: 'Bed 1', areaM2: 9, minDimM: 1.2 }];
+  const history: Planting[] = [
+    { id: 'h-peas', bedId: 'b1', cropKey: 'peas', sowMonth: 7, existing: true },
+    { id: 'h-lettuce', bedId: 'b1', cropKey: 'lettuce', sowMonth: 6, existing: true },
+  ];
+  const { plantings } = autoSuggestPlan({
+    goal: 'family', groups: [], cropKeys: ['green-beans', 'carrots'],
+    rhythm: 'few-big', rotateCrops: true, allowVinesInBeds: false,
+    allowMixedCropsInBed: false, reliableIrrigation: true,
+  }, 'mild-frost', beds, history, 12);
+  assert.deepEqual(sameFamilyRotationViolations(beds, history, plantings, 12), []);
+  // The gate must veto the shadowed December sowing specifically — not merely
+  // happen to rank something else first.
+  const decemberBeans = plantings.find((planting) =>
+    planting.cropKey === 'green-beans' && (planting.sowMonth === 12 || planting.sowMonth === 1));
+  assert.equal(decemberBeans, undefined,
+    'green beans may not enter the bed straight after the peas history behind the lettuce shadow');
+});
+
+test('with mixing ON and rotation ON, no bed ever holds two same-family courses that overlap or break the gap', () => {
+  // The permanent population gate the 2026-08-19 audit asked for: the same
+  // farm sweep the other interrogations use, with allowMixedCropsInBed forced
+  // ON (the guided-flow default) and rotation ON.
+  const offenders: string[] = [];
+  for (const geo of geometries()) {
+    for (const pattern of PATTERNS) {
+      for (const goal of GOALS) {
+        for (const nowMonth of [1, 4, 8, 11]) {
+          const answers: AutoSuggestAnswers = {
+            goal,
+            householdSize: HOUSEHOLDS[nowMonth % HOUSEHOLDS.length],
+            focusCropCount: 2,
+            groups: [],
+            rhythm: RHYTHMS[nowMonth % RHYTHMS.length],
+            rotateCrops: true,
+            allowVinesInBeds: false,
+            allowMixedCropsInBed: true,
+            reliableIrrigation: true,
+          };
+          const { plantings } = autoSuggestPlan(answers, pattern, geo.beds, [], nowMonth);
+          offenders.push(...sameFamilyRotationViolations(geo.beds, [], plantings, nowMonth)
+            .map((violation) => `${geo.label} · ${pattern} · ${goal} · now=${nowMonth} — ${violation}`));
+        }
+      }
+    }
+  }
+  assert.deepEqual(offenders.slice(0, 10), [],
+    `${offenders.length} same-family rotation violations under mixed beds`);
 });

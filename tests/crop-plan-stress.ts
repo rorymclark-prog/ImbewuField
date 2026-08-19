@@ -22,7 +22,8 @@
 // Precedent: tests/benchmark-render-audit.ts (render the sheet and LOOK at it)
 // caught three defects 768 unit tests had missed.
 
-import { CROPS, cropByKey, hasPlanningYield, plantsPerM2Range } from '@/lib/crop-catalog';
+import { CROPS, cropByKey, hasPlanningYield, hasVerifiedSchedule, plantsPerM2Range } from '@/lib/crop-catalog';
+import { isPlotWinterCover } from '@/lib/staple-crops';
 import type { RainPattern } from '@/lib/crop-catalog';
 import { autoSuggestPlan } from '@/lib/crop-autosuggest';
 import type { AutoSuggestAnswers, GardenGoal, HarvestRhythm, HouseholdSize } from '@/lib/crop-autosuggest';
@@ -33,7 +34,7 @@ import {
   occupiedMonthsForPlanting,
   seedBoqForPlan,
   tasksForPlan,
-  TRANSPLANT_ENTRY_EARLIEST_MONTHS,
+  TRANSPLANT_BED_RESERVED_FROM_MONTHS,
   yieldByCrop,
   type PlanBed,
   type Planting,
@@ -173,7 +174,7 @@ function occupancy(site: Site, plantings: Planting[]): Map<string, number[]> {
     const start = (p.existing
       ? existingSowOffset(p.sowMonth, site.nowMonth)
       : ((p.sowMonth - site.nowMonth + 12) % 12))
-      + (crop.transplant ? TRANSPLANT_ENTRY_EARLIEST_MONTHS : 0);
+      + (crop.transplant ? TRANSPLANT_BED_RESERVED_FROM_MONTHS : 0);
     const span = occupiedMonthsForPlanting(p).length;
     for (let index = 0; index < span; index++) {
       const offset = start + index;
@@ -216,7 +217,7 @@ function rotationCourses(site: Site, bedId: string, plantings: Planting[]): Rota
     const sowOffset = planting.existing
       ? existingSowOffset(planting.sowMonth, site.nowMonth)
       : ((planting.sowMonth - site.nowMonth + 12) % 12) + shift;
-    const start = sowOffset + (crop.transplant ? 1 : 0);
+    const start = sowOffset + (crop.transplant ? TRANSPLANT_BED_RESERVED_FROM_MONTHS : 0);
     return {
       cropKey: crop.key,
       family: rotationFamilyOf(crop),
@@ -318,14 +319,39 @@ const CHECKS: Check[] = [
   {
     name: 'automatic plantings, work and purchases exclude every unsupported crop',
     run: (site, plantings) => {
+      // The one DELIBERATE exception (docs/CROP-PLAN-TRUTH-AUDIT: declared
+      // covers with a sourced field rate): a plot-only winter soil cover may
+      // enter the plan with zero food yield, provided its schedule is
+      // verified and its seed rate is a sourced range. This mirrors the
+      // interrogation suite's "declared covers" clause semantically — it
+      // does NOT loosen the yield/timing/spacing evidence bar for any food
+      // crop.
+      const supportedCover = (crop: NonNullable<ReturnType<typeof cropByKey>>): boolean =>
+        isPlotWinterCover(crop)
+        && crop.yieldKgPerM2 === 0
+        && hasVerifiedSchedule(crop)
+        && crop.seedRateKgPerHaRange !== undefined;
       const unsupported = (cropKey: string): boolean => {
         const crop = cropByKey(cropKey);
-        return !crop || !hasPlanningYield(crop)
+        if (!crop) return true;
+        if (supportedCover(crop)) return false;
+        return !hasPlanningYield(crop)
           || crop.timingVerified === false || crop.fieldSpacingVerified === false;
       };
+      const plotIds = new Set(site.beds.filter((bed) => bed.kind === 'plot').map((bed) => bed.id));
       const out = plantings
         .filter((planting) => unsupported(planting.cropKey))
         .map((planting) => `${planting.cropKey} entered the automatic plan`);
+      // The cover exception is PLOT-only: the same crop on a vegetable bed
+      // would displace food production without the sourced staple-plot
+      // rationale, so it stays a violation there.
+      out.push(...plantings
+        .filter((planting) => {
+          const crop = cropByKey(planting.cropKey);
+          return crop && supportedCover(crop) && !hasPlanningYield(crop)
+            && !plotIds.has(planting.bedId);
+        })
+        .map((planting) => `${planting.cropKey} is a plot-only cover but was planted on ${planting.bedId}`));
       out.push(...tasksForPlan(plantings, site.beds)
         .filter((task) => unsupported(task.cropKey))
         .map((task) => `${task.cropKey} produced an automatic field instruction`));
