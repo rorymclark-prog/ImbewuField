@@ -973,7 +973,15 @@ export const CROPS: CropDef[] = [
   {
     key: 'true-spinach',
     name: 'True spinach (English spinach)',
-    icon: '🌱',
+    // Was '🌱' (seedling), which Coriander also uses — two unrelated crops rendered
+    // an identical chip on every icon-rendering surface (prices, exchange, crops
+    // page, home, listing cards). '🍃' (leaf) and '🥬' (leafy green) were the two
+    // obvious leafy-green picks but both are already taken (Swiss chard, Cabbage
+    // respectively) — checked against every icon in this file, not assumed free.
+    // '🍀' (four-leaf clover) is unused elsewhere in the catalog and not visually
+    // confusable with any existing icon. See tests/catalog-matrix.test.ts's
+    // "no two crops share an icon" gate.
+    icon: '🍀',
     sowMonths: {
       // KZN DARD Table 6, 'Cold areas Moderate frosts' column: Aug-Mar.
       // Nov-Jan (peak heat) stay closed — this pattern also spans hot
