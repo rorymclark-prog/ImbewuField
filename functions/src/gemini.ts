@@ -77,6 +77,15 @@ export function geminiImageSize(quality: 'high' | 'medium' | 'low'): '1K' | '2K'
   return quality === 'low' ? '1K' : '2K';
 }
 
+/**
+ * High is the Studio's default paid setting, so it must use the quality model the screen promises.
+ * Lower settings remain available for a faster, lower-cost draft rather than quietly making every
+ * render expensive. This applies only after a farmer deliberately starts a render.
+ */
+export function geminiModelForQuality(quality: 'high' | 'medium' | 'low'): GeminiImageModel {
+  return quality === 'high' ? 'pro-preview' : 'flash';
+}
+
 export async function geminiEdit(
   key: string,
   imageB64: string,

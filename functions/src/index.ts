@@ -29,7 +29,7 @@ import { getFirestore, FieldValue, Timestamp, type DocumentReference } from 'fir
 import { getStorage } from 'firebase-admin/storage';
 import { PNG } from 'pngjs';
 import { compareRenders } from '../../lib/render-difference';
-import { geminiEdit, geminiAspectRatio, geminiImageSize } from './gemini';
+import { geminiEdit, geminiAspectRatio, geminiImageSize, geminiModelForQuality } from './gemini';
 import { friendlyProviderError } from './provider-errors';
 import {
   RENDER_SHEET_KEYS,
@@ -466,7 +466,14 @@ export const runRenderJob = onDocumentCreated(
                 ...(geminiAspectRatio(pngDims(buf)) ? { aspectRatio: geminiAspectRatio(pngDims(buf))! } : {}),
                 imageSize: geminiImageSize(quality),
               };
-              outB64 = await geminiEdit(geminiKey, buf.toString('base64'), prompt, 0, undefined, geminiConfig);
+              outB64 = await geminiEdit(
+                geminiKey,
+                buf.toString('base64'),
+                prompt,
+                0,
+                geminiModelForQuality(quality),
+                geminiConfig,
+              );
 
               if (maskB64) {
                  const maskBuf = Buffer.from(maskB64, 'base64');
