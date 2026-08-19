@@ -283,8 +283,15 @@ test('printed field and occupancy tables keep the nursery month out of a transpl
   const july = onionCalendar.cells[months.indexOf(7)];
   const december = onionCalendar.cells[months.indexOf(12)];
   assert.deepEqual(april, [], 'seedlings in a nursery do not occupy the bed');
-  assert.deepEqual(may, [], 'the first readiness check does not itself occupy the bed');
-  assert.equal(june[0]?.harvesting, false, 'the field calendar starts at the planned transplant month');
+  // 2026-08-19 (TRANSPLANT_BED_RESERVED_FROM_MONTHS): the same table tells
+  // the farmer "Check May-Jul; transplant when ready" — from May the farmer
+  // may put onions in this bed, so from May the calendar must show the bed
+  // held for onions. Until this fix May showed empty while the plan text
+  // invited a May transplant into it, the mismatch behind the stress
+  // harness's 2,003 double-bookings. Harvest timing is unchanged.
+  assert.equal(may[0]?.cropKey, 'onions', 'the bed is reserved from the first readiness-check month');
+  assert.equal(may[0]?.harvesting, false, 'reserved is not harvesting');
+  assert.equal(june[0]?.harvesting, false, 'the crop remains in the field after transplant');
   assert.equal(july[0]?.harvesting, false, 'the crop remains in the field after transplant');
   assert.equal(december[0]?.harvesting, true, 'the field calendar marks harvest from the planned field entry');
 });

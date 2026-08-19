@@ -139,6 +139,19 @@ test('the recommended family plan limits long per-bed harvest gaps and does not 
     assert.ok(wholeFarm[month].some((item) => item.status === 'fresh'), `the whole farm has no fresh crop in month ${month}`);
   }
 
+  // 2026-08-19 recalibration with the rotation-gate fix. The old per-bed
+  // floor of 7 fresh months was measured against plans that BROKE rotation:
+  // at the pre-fix baseline this exact fixture packed same-family courses
+  // overlapping in one bed — Bed 5 broccoli over cabbage (Brassicaceae),
+  // Bed 6 peppers over tomatoes (Solanaceae), Bed 7 broad beans over green
+  // beans and Bed 8 broad beans over peas (both Fabaceae). Those illegal
+  // sixth courses were what pushed several beds past 7 fresh months. With
+  // the gate closed the engine still fills every bed (5-6 legal courses
+  // each) and the whole farm still picks fresh in all 12 months (asserted
+  // above), but per-bed spread has an honest ceiling: floor 5, and the nine
+  // beds together must keep at least 60 fresh bed-months (62 today) so the
+  // aggregate cannot quietly decay back to the pre-2026-08-04 winter hole.
+  let totalFreshBedMonths = 0;
   for (const bed of NINE_BEDS) {
     const own = result.plantings.filter((planting) => planting.bedId === bed.id);
     const fresh = buildFoodAvailability(own, [bed]);
@@ -154,9 +167,12 @@ test('the recommended family plan limits long per-bed harvest gaps and does not 
         longest = Math.max(longest, ++run);
       }
     }
-    assert.ok(freshMonths >= 7, `${bed.label} has fresh picking in only ${freshMonths}/12 months`);
+    totalFreshBedMonths += freshMonths;
+    assert.ok(freshMonths >= 5, `${bed.label} has fresh picking in only ${freshMonths}/12 months`);
     assert.ok(longest <= 4, `${bed.label} has a ${longest}-month harvest gap`);
   }
+  assert.ok(totalFreshBedMonths >= 60,
+    `only ${totalFreshBedMonths} fresh bed-months across the nine beds (floor 60)`);
 
   const counts = result.plantings.reduce((acc, planting) => {
     acc.set(planting.cropKey, (acc.get(planting.cropKey) ?? 0) + 1);

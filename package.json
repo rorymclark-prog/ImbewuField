@@ -22,7 +22,8 @@
     "course:review-packet": "node --import ./tests/register-alias.mjs scripts/course-review-packet.mjs",
     "worker:status": "node scripts/worker-status.mjs",
     "notes:pending": "node scripts/release-notes-pending.mjs",
-    "crops:stress": "node --import ./tests/register-alias.mjs tests/crop-plan-stress.ts"
+    "crops:stress": "node --import ./tests/register-alias.mjs tests/crop-plan-stress.ts",
+    "crops:probe": "node --import ./tests/register-alias.mjs tests/crop-plan-utilization-probe.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.37.0",

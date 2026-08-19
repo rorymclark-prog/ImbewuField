@@ -838,7 +838,9 @@ function FacilitatorCropsPageInner() {
   // one — shown as a soft nudge, never a hard block.
   const pickerOverlap = useMemo(() => {
     if (!pickerBedId || !pickerCrop) return 0;
-    const entry = plannedBedEntryMonth(pickerMonth, pickerCrop);
+    // The reservation edge: the bed is committed from the printed earliest
+    // field-entry month (see TRANSPLANT_BED_RESERVED_FROM_MONTHS).
+    const entry = bedEntryMonth(pickerMonth, pickerCrop);
     const harvest = harvestEndMonthForCrop(pickerMonth, pickerCrop);
     // Exclude the planting being edited from its own overlap check — otherwise
     // editing would always see itself as "already committed" on this bed.
@@ -1978,7 +1980,13 @@ function PlantingBar({ planting, currentMonth, onTap }: { planting: Planting; cu
   const crop = cropByKey(planting.cropKey);
   if (!crop) return null;
   const readinessStart = bedEntryMonth(planting.sowMonth, crop);
+  // `entry` stays the PLANNED working transplant month for the tooltip copy;
+  // the BAR geometry starts at the reservation edge (readinessStart), the
+  // same edge plantingBedEntryOffsets and occupiedMonthsForPlanting use —
+  // mixing the two edges drew the bar one month late and released it one
+  // month past the true bed hold for tray crops.
   const entry = plannedBedEntryMonth(planting.sowMonth, crop);
+  const holdStart = readinessStart;
   const harvest = crop.timingVerified === false
     ? entry
     : harvestMonthForCrop(planting.sowMonth, crop);
@@ -1999,7 +2007,7 @@ function PlantingBar({ planting, currentMonth, onTap }: { planting: Planting; cu
   // an existing tray cohort back a year. Planned rows repeat annually for the
   // second-year preview; observed existing rows have exactly one occurrence.
   const entryOffsets = plantingBedEntryOffsets(planting, currentMonth, DISPLAY_MONTHS);
-  const instances = barInstances(entryOffsets, entry, harvestEnd);
+  const instances = barInstances(entryOffsets, holdStart, harvestEnd);
   if (!instances.length) return null; // entirely outside the visible window
   const fraction = planting.areaFraction ?? 1;
   const fLabel = fractionLabel(fraction);
@@ -2022,7 +2030,7 @@ function PlantingBar({ planting, currentMonth, onTap }: { planting: Planting; cu
   // Measured per COPY (seg.rawStart, not the shared sowOffset): the second
   // cycle's harvest starts 12 months after the first one's, and measuring
   // both from cycle 0 would paint the repeat gold from end to end.
-  const greenSpan = ((harvest - entry) % 12 + 12) % 12;
+  const greenSpan = ((harvest - holdStart) % 12 + 12) % 12;
   const readyMonthsFor = (seg: Segment) =>
     Math.max(0, Math.min(seg.end - Math.max(seg.rawStart + greenSpan, seg.start) + 1, segMonthCount(seg)));
   // Year two is a POSITION on the axis (past the ↻ seam), not "the second copy

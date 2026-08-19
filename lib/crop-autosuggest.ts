@@ -13,6 +13,7 @@ import {
   existingSowOffset,
   isSpaceHungry,
   planningMaturityMonths,
+  TRANSPLANT_BED_RESERVED_FROM_MONTHS,
   TRANSPLANT_ENTRY_PLANNED_MONTHS,
 } from './crop-plan';
 import type { FoodGroup, RotationFamily } from './crop-groups';
@@ -63,9 +64,15 @@ export interface AutoSuggestAnswers {
   // never auto-placed. Turning this on restores the old auto-placement
   // behaviour as an explicit, informed choice.
   allowVinesInBeds: boolean;
-  /** Allow two different crops to occupy the same bed at the same time.
-   * Default false: without a named crop pair and layout there is no defensible
-   * generic intercropping-yield assumption. Same-crop succession is allowed. */
+  /** Allow two different crops to share one bed at the same time, each on its
+   * own fraction of the area (quarter/third/half shares — side-by-side
+   * strips, not an intercropping-yield assumption; every share keeps its own
+   * sourced per-m² planning basis). The guided flow defaults this to TRUE
+   * (app/facilitator/crops/page.tsx): on small farms whole-bed-only packing
+   * strands most of the area, and the rotation ledger checks same-family
+   * conflicts against every co-occupant of a bed (see BedRotation), so
+   * mixing does not weaken rotation. Absent/false means one crop per bed at
+   * a time; same-crop succession is always allowed. */
   allowMixedCropsInBed?: boolean;
   /** Confirms managed water is available throughout the planned crop cycles.
    * Required because this engine deliberately packs successive crop cycles;
@@ -211,15 +218,32 @@ function holdSpanMonths(crop: BedHold): number {
     + (crop.harvestWindowMonths ?? 0);
 }
 
+/** Bed-hold start relative to the sow month: a tray crop's bed is reserved
+ * from the printed earliest field-entry month (sow+1), because that is the
+ * month the calendar tells the farmer to check seedlings and transplant when
+ * ready — see TRANSPLANT_BED_RESERVED_FROM_MONTHS in lib/crop-plan.ts. */
+function bedHoldStartOffsetMonths(crop: BedHold): number {
+  return crop.transplant ? TRANSPLANT_BED_RESERVED_FROM_MONTHS : 0;
+}
+
+/** Bed-hold length: holdSpanMonths measures from the PLANNED transplant month
+ * (harvest timing stays anchored there); reserving from the earlier printed
+ * entry edge stretches the hold by the difference without moving harvests. */
+function bedHoldSpanMonths(crop: BedHold): number {
+  return holdSpanMonths(crop)
+    + (crop.transplant
+      ? TRANSPLANT_ENTRY_PLANNED_MONTHS - TRANSPLANT_BED_RESERVED_FROM_MONTHS
+      : 0);
+}
+
 /** Every calendar month (1-12) a planting actually holds its bed, wrap-safe. */
 function occupiedMonths(sowMonth: number, crop: BedHold): number[] {
-  const span = holdSpanMonths(crop);
+  const span = bedHoldSpanMonths(crop);
   const months: number[] = [];
   // KZN DARD expresses the growing period for starred/transplanted crops from
-  // transplanting. Their tray month is nursery time, not occupied bed time.
-  let m = wrapMonth(
-    sowMonth + (crop.transplant ? TRANSPLANT_ENTRY_PLANNED_MONTHS : 0),
-  );
+  // transplanting. Their tray month is nursery time, not occupied bed time —
+  // but the sow+1 readiness month IS reserved bed time (see above).
+  let m = wrapMonth(sowMonth + bedHoldStartOffsetMonths(crop));
   for (let i = 0; i < span; i++) {
     months.push(m);
     m = m === 12 ? 1 : m + 1;
@@ -236,8 +260,8 @@ function plannedOccupiedOffsets(
   crop: BedHold,
 ): number[] {
   const startOffset = monthsForward(nowMonth, sowMonth)
-    + (crop.transplant ? TRANSPLANT_ENTRY_PLANNED_MONTHS : 0);
-  return Array.from({ length: holdSpanMonths(crop) }, (_, index) => startOffset + index);
+    + bedHoldStartOffsetMonths(crop);
+  return Array.from({ length: bedHoldSpanMonths(crop) }, (_, index) => startOffset + index);
 }
 
 /** Whether one proposed cohort reaches the target occurrence inside the
@@ -314,8 +338,8 @@ class Occupancy {
       const crop = holdOf(p);
       if (p.existing) {
         const entryOffset = existingSowOffset(p.sowMonth, nowMonth)
-          + (crop.transplant ? TRANSPLANT_ENTRY_PLANNED_MONTHS : 0);
-        for (let index = 0; index < holdSpanMonths(crop); index++) {
+          + bedHoldStartOffsetMonths(crop);
+        for (let index = 0; index < bedHoldSpanMonths(crop); index++) {
           const offset = entryOffset + index;
           if (offset >= 0) this.addExistingOffset(p.bedId, offset, crop.key, safeFraction);
         }
@@ -868,13 +892,12 @@ class BedRotation {
     const sowOffset = existing
       ? existingSowOffset(sowMonth, this.nowMonth)
       : monthsForward(this.nowMonth, sowMonth);
-    const startOffset = sowOffset
-      + (crop.transplant ? TRANSPLANT_ENTRY_PLANNED_MONTHS : 0);
+    const startOffset = sowOffset + bedHoldStartOffsetMonths(crop);
     return {
       cropKey: crop.key,
       family: rotationFamilyOf(crop),
       startOffset,
-      endOffset: startOffset + holdSpanMonths(crop) - 1,
+      endOffset: startOffset + bedHoldSpanMonths(crop) - 1,
       existing,
     };
   }
@@ -885,8 +908,28 @@ class BedRotation {
     this.slotsByBed.set(bedId, slots);
   }
 
-  /** True when the nearest distinct course before or after this candidate on
-   * the real timeline belongs to the same botanical family. */
+  /** True when this candidate would put two courses of one botanical family
+   * on the same ground without a full different course between them.
+   *
+   * 2026-08-19 audit: comparing the candidate only with the nearest previous
+   * and next course by time left two holes, both live with the guided flow's
+   * defaults (rotation ON, mixed beds ON):
+   *   1. Overlap-blindness — a same-family course whose occupancy OVERLAPS
+   *      the candidate was in neither the previous nor the next set, so
+   *      potato and tomatoes (both Solanaceae) could share a bed at once.
+   *   2. Shadowing — any unrelated course merely ENDING inside the gap hid an
+   *      earlier same-family course: green beans sailed past a peas history
+   *      because a lettuce that overlapped the peas ended one month later.
+   * The candidate is therefore checked against EVERY relevant course, not one
+   * per side: a same-family course overlapping the candidate is always a
+   * repeat, and on each side the whole CO-OCCUPANT SET of the nearest course
+   * is the neighbour — every course still in the ground after the nearest
+   * previous course STARTED (mirrored for the next side). A course that fully
+   * succeeded an earlier one (carrots entering as the cabbage left, holding
+   * the bed for months) still resets the family sequence exactly as before;
+   * a course that merely co-occupied the earlier one's tail and outlived it
+   * by a month no longer hides it. Same immediate-chronological-neighbour
+   * semantics the audit doc documents, no invented gap length. */
   private wouldRepeat(bedId: string, crop: CropDef, sowMonth: number): boolean {
     if (!this.rotateCrops) return false;
     const candidate = this.slotFor(crop, sowMonth, false);
@@ -921,26 +964,46 @@ class BedRotation {
       }
     }
     const neighbours = others.filter((slot) => !merged.has(slot));
-    const previousCandidates = neighbours
-      .filter((slot) => slot.endOffset < courseStart);
+    // A same-family course held at the SAME TIME as the candidate is the
+    // repeat risk in its most concentrated form; no neighbour ordering can
+    // excuse it.
+    if (neighbours.some((slot) => slot.family === family
+      && slot.startOffset <= courseEnd && slot.endOffset >= courseStart)) {
+      return true;
+    }
     // A future proposal copied to -12 is not evidence about what the farmer
     // actually grew. It used to sit one month nearer than a supplied history
     // row and licensed green beans -> green beans and green beans -> peas.
-    // Prefer real history and current-cycle proposal courses; use a -12 copy
-    // only when no real predecessor exists, preserving annual-wrap checks.
-    const realPrevious = previousCandidates
-      .filter((slot) => slot.existing || slot.cycleShift === 0)
-      .sort((a, b) => b.endOffset - a.endOffset)[0];
-    const previous = realPrevious ?? previousCandidates
-      .sort((a, b) => b.endOffset - a.endOffset)[0];
-    const nextCandidates = neighbours
-      .filter((slot) => slot.startOffset > courseEnd);
-    const realNext = nextCandidates
-      .filter((slot) => slot.cycleShift === 0)
-      .sort((a, b) => a.startOffset - b.startOffset)[0];
-    const next = realNext ?? nextCandidates
-      .sort((a, b) => a.startOffset - b.startOffset)[0];
-    return previous?.family === family || next?.family === family;
+    // Prefer real history and current-cycle proposal courses when finding the
+    // nearest neighbour; use a shifted copy only when no real one exists,
+    // preserving annual-wrap checks.
+    const isReal = (slot: ProjectedRotationSlot): boolean =>
+      slot.existing || slot.cycleShift === 0;
+    const nearestBy = (pool: ProjectedRotationSlot[], better: (a: ProjectedRotationSlot, b: ProjectedRotationSlot) => number) => {
+      const sorted = [...pool].sort(better);
+      return sorted.find(isReal) ?? sorted[0];
+    };
+    // Previous side: the nearest previous course plus every course still in
+    // the ground after it started — its co-occupants — are all neighbours.
+    const previousPool = neighbours.filter((slot) => slot.endOffset < courseStart);
+    const previous = nearestBy(previousPool, (a, b) => b.endOffset - a.endOffset);
+    if (previous && previousPool.some((slot) => slot.family === family
+      // Strict >: a course that ENDED exactly when the neighbour started was
+      // fully succeeded by it, not a co-occupant. The neighbour itself always
+      // blocks (a one-month course has start === end and needs the explicit
+      // self case).
+      && (slot === previous || slot.endOffset > previous.startOffset))) {
+      return true;
+    }
+    // Next side, mirrored: the nearest next course and everything already in
+    // the ground before it ends.
+    const nextPool = neighbours.filter((slot) => slot.startOffset > courseEnd);
+    const next = nearestBy(nextPool, (a, b) => a.startOffset - b.startOffset);
+    if (next && nextPool.some((slot) => slot.family === family
+      && (slot === next || slot.startOffset < next.endOffset))) {
+      return true;
+    }
+    return false;
   }
 
   /** A hard rotation veto unless every exact crop choice belongs to this one
@@ -1930,6 +1993,7 @@ function reportStillRestingBeds(
   occupancy: Occupancy,
   pattern: RainPattern,
   nowMonth: number,
+  rotation: BedRotation,
   supportedMonths: ReadonlySet<number>,
   strictCropKeys?: ReadonlySet<string>,
 ): string[] {
@@ -1940,6 +2004,12 @@ function reportStillRestingBeds(
   const canFill = (crops: CropDef[], bed: PlanBed, month: number): boolean =>
     reachingCandidates(crops, pattern, nowMonth, month, GAP_FILL_HORIZON_MONTHS, supportedMonths)
       .filter((candidate) => supportsAutomaticPlacement(candidate.crop, bed))
+      // Mirror fillRemainingGaps' rotation gate exactly: a candidate the
+      // rotation ledger vetoes could never actually be planted, so counting
+      // it as fillable would silently hide a resting stretch (the "poolCanFillSome
+      // true → stay silent" branch below assumes fillRemainingGaps could act).
+      .filter((candidate) => !rotation.repeats(bed.id, candidate.crop, candidate.sowMonth)
+        || (bed.kind === 'plot' && candidate.crop.key === 'oats' && isPlotWinterCover(candidate.crop)))
       .some((candidate) => usableShare(occupancy, bed, candidate.sowMonth, candidate.crop, 1) !== null);
   // Reach WITHOUT the occupancy check — the difference between "no crop's window covers this
   // stretch" (a seasonal fact about the catalogue) and "a crop could cover it but this bed's
@@ -1971,7 +2041,7 @@ function reportStillRestingBeds(
         : `${bed.label} still rests in ${label} — a crop outside your selected groups with a verified schedule could cover it; widen your crop groups only if that crop suits the household.`);
     } else if (!catalogCanFillSome
       && emptyMonths.some((m) => canReach(AUTOMATIC_PLANNING_CROPS, bed, m))) {
-      notes.push(`${bed.label} still rests in ${label} — ${exactChoice ? `${exactChoice} and other fully supported crops have` : 'fully supported crops have'} a window for that stretch, but this bed's surrounding months are already fully planted, so nothing long enough can fit. Freeing space nearby (or resting the bed) are both fine choices.`);
+      notes.push(`${bed.label} still rests in ${label} — ${exactChoice ? `${exactChoice} and other fully supported crops have` : 'fully supported crops have'} a window for that stretch, but this bed's surrounding months are already fully planted or crop rotation rules out the families that would fit, so nothing can be added. Freeing space nearby (or resting the bed) are both fine choices.`);
     } else if (!catalogCanFillSome) {
       notes.push(`${bed.label} still rests in ${label} — ${exactChoice ? `none of ${exactChoice}, and no other crop` : 'no crop'} with the full automatic planning basis (supported yield benchmark, duration and field spacing) passed the sow-window, occupancy and automatic-layout checks for that stretch. Confirm local options; this planner result is not proof that nothing can grow then.`);
     }
@@ -2405,6 +2475,7 @@ export function autoSuggestPlan(
       occupancy,
       pattern,
       nowMonth,
+      rotation,
       supportedMonths,
       strictCropKeys,
     ));
