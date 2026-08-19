@@ -1498,10 +1498,22 @@ function runCommercialConcentration(
 
 /**
  * Why one assigned bed ended the commercial pass with nothing in it — read off
- * the same three gates the placement loop just used, so the sentence can never
- * name a cause the engine did not actually hit. Ends with what the farmer can
- * DO about it; the planner deliberately does not fix it by planting a crop
- * they did not choose.
+ * the same two gates the placement loop just used, PER FOCUS CROP, so the
+ * sentence can never name a cause a given crop did not actually hit.
+ *
+ * 2026-08-19 adversarial audit (6.3% of 3,792 note appearances, 240 cases):
+ * the old version pooled rotationBlocked/spaceBlocked across every focus crop
+ * before picking a sentence, so a bed where ONE crop was rotation-blocked and
+ * a DIFFERENT crop was merely space-blocked still got told "shares a
+ * botanical family with every crop" — false for the space-blocked one, and
+ * directly contradicting that same crop's own B3 note in the same plan
+ * (repro: Bed 02, cabbage rotation-blocked, tomatoes only space-blocked, note
+ * claimed rotation blocked both). Cause is now tracked per crop and the
+ * sentence only claims what every participating crop actually hit: all of
+ * them rotation-blocked, all of them purely space-blocked, or — the honest
+ * middle case the old code could never say — a mix of both. Ends with what
+ * the farmer can DO about it; the planner deliberately does not fix it by
+ * planting a crop they did not choose.
  */
 function strandedBedNote(
   bed: PlanBed,
@@ -1512,10 +1524,11 @@ function strandedBedNote(
   rotation: BedRotation,
 ): string {
   const advice = 'Pick a crop for it by hand, or raise the number of crops you are focusing on.';
-  let rotationBlocked = false;
-  let spaceBlocked = false;
+  const causes: { rotationBlocked: boolean; spaceBlocked: boolean }[] = [];
   for (const crop of focusCrops) {
     if (!supportsAutomaticPlacement(crop, bed)) continue;
+    let rotationBlocked = false;
+    let spaceBlocked = false;
     for (const cluster of clusterSowMonths(crop.sowMonths[pattern])) {
       for (const sowMonth of cluster.months) {
         if (monthsForward(nowMonth, sowMonth) > PLAN_HORIZON_MONTHS) continue;
@@ -1526,14 +1539,21 @@ function strandedBedNote(
         if (rotation.repeats(bed.id, crop, sowMonth)) rotationBlocked = true;
       }
     }
+    // Only a crop this loop actually reached a verdict on counts — a crop
+    // with no reachable sow month at all says nothing about rotation or
+    // space and must not force the bed into the "mixed" branch below.
+    if (rotationBlocked || spaceBlocked) causes.push({ rotationBlocked, spaceBlocked });
   }
-  if (rotationBlocked) {
+  if (!causes.length) {
+    return `${bed.label} has nothing planted: none of your focus crops has a sowing window that reaches it in the next twelve months. ${advice}`;
+  }
+  if (causes.every((c) => c.rotationBlocked)) {
     return `${bed.label} has nothing planted: what it has already grown shares a botanical family with every crop in your commercial focus, so Rotate crops blocked all of them here. ${advice}`;
   }
-  if (spaceBlocked) {
+  if (causes.every((c) => c.spaceBlocked && !c.rotationBlocked)) {
     return `${bed.label} has nothing planted: what is already growing in it fills the bed through every sowing window your focus crops have this year. ${advice}`;
   }
-  return `${bed.label} has nothing planted: none of your focus crops has a sowing window that reaches it in the next twelve months. ${advice}`;
+  return `${bed.label} has nothing planted: some of your focus crops would repeat this bed's recent family under Rotate crops, and the rest simply could not fit around what is already in the ground. ${advice}`;
 }
 
 /**

@@ -1071,6 +1071,103 @@ test('a bed a rotation veto emptied is never described as full', () => {
     `the bed itself must be named: ${JSON.stringify(result.notes)}`);
 });
 
+test('a stranded bed note never blames rotation for a focus crop that was only space-blocked', () => {
+  // Adversarial-verifier repro (2026-08-19): 240 of 3,792 stranded-bed note
+  // appearances (6.3%) claimed "shares a botanical family with EVERY crop in
+  // your commercial focus" even when one focus crop was never rotation-
+  // blocked at all — stopped purely by occupancy. Ground truth on Bed 02:
+  // cabbage is rotation-blocked (same family recently grown there) AND
+  // space-blocked (the bed is full of it); tomatoes is only space-blocked
+  // (a different family — rotation never touched it). "Rotate crops blocked
+  // all of them" is false for tomatoes and directly contradicts tomatoes'
+  // own B3 note in the same plan.
+  const beds: PlanBed[] = [
+    { id: 'b1', label: 'Bed 01', areaM2: 5, minDimM: 1.2 },
+    { id: 'b2', label: 'Bed 02', areaM2: 6, minDimM: 1.2 },
+    { id: 'b3', label: 'Bed 03', areaM2: 7, minDimM: 1.2 },
+  ];
+  const history: Planting[] = [
+    { id: 'h0', bedId: 'b1', cropKey: 'tomatoes', sowMonth: 1, existing: true },
+    { id: 'h1', bedId: 'b2', cropKey: 'cabbage', sowMonth: 6, existing: true },
+  ];
+  const result = autoSuggestPlan({
+    goal: 'commercial', focusCropCount: 2, groups: [], rhythm: 'few-big',
+    rotateCrops: true, allowVinesInBeds: false, allowMixedCropsInBed: true,
+    reliableIrrigation: true,
+  }, 'summer', beds, history, 6);
+  const bed02Note = result.notes.find((note) => note.includes('Bed 02') && note.includes('has nothing planted'));
+  assert.ok(bed02Note, `Bed 02 must be named as stranded: ${JSON.stringify(result.notes)}`);
+  assert.ok(!/shares a botanical family with every crop in your commercial focus/.test(bed02Note!),
+    `tomatoes was only space-blocked in Bed 02, so rotation cannot be blamed for both crops: ${bed02Note}`);
+  // The honest middle case: some focus crops would repeat the family, the
+  // rest simply could not fit — not a single pooled cause.
+  assert.ok(/would repeat this bed's recent family/.test(bed02Note!) && /could not fit around what is already in the ground/.test(bed02Note!),
+    `expected the mixed-cause sentence, got: ${bed02Note}`);
+});
+
+test('the rotation-claiming stranded-bed sentence only ever appears when every focus crop is genuinely family-blocked (population gate)', () => {
+  // Extends the single-fixture rotation-veto check above into a sweep. The
+  // oracle here is independent of strandedBedNote: rotationFamilyOf compared
+  // directly against what the test itself put in each bed's history. A
+  // family MISMATCH is unconditionally proof the crop was never rotation-
+  // blocked in that bed (the engine's own rotation gate can only fire on a
+  // family match) — so any "blocked all of them" sentence naming a bed where
+  // one focus crop's family has no match in that bed's history is a
+  // confirmed false claim, regardless of the engine's internal timing rules.
+  const PAIRS: [string, string][] = [['tomatoes', 'cabbage'], ['cabbage', 'tomatoes']];
+  const NOW_MONTHS = [1, 4, 6, 8, 11];
+  const familyMatchesBedHistory = (bedId: string, cropKey: string, history: Planting[]): boolean => {
+    const crop = cropByKey(cropKey);
+    if (!crop) return false;
+    const family = rotationFamilyOf(crop);
+    return history.some((h) => h.bedId === bedId
+      && cropByKey(h.cropKey) !== undefined
+      && rotationFamilyOf(cropByKey(h.cropKey)!) === family);
+  };
+  const offenders: string[] = [];
+  let rotationClaimsSeen = 0;
+  let mixedOrSpaceClaimsSeen = 0;
+  for (const pattern of PATTERNS) {
+    for (const nowMonth of NOW_MONTHS) {
+      for (const [cropA, cropB] of PAIRS) {
+        const beds: PlanBed[] = [
+          { id: 'b1', label: 'Bed 01', areaM2: 5, minDimM: 1.2 },
+          { id: 'b2', label: 'Bed 02', areaM2: 6, minDimM: 1.2 },
+          { id: 'b3', label: 'Bed 03', areaM2: 7, minDimM: 1.2 },
+        ];
+        const history: Planting[] = [
+          { id: 'h0', bedId: 'b1', cropKey: cropA, sowMonth: 1, existing: true },
+          { id: 'h1', bedId: 'b2', cropKey: cropB, sowMonth: 6, existing: true },
+        ];
+        const result = autoSuggestPlan({
+          goal: 'commercial', focusCropCount: 2, groups: [], cropKeys: ['tomatoes', 'cabbage'],
+          rhythm: 'few-big', rotateCrops: true, allowVinesInBeds: false,
+          allowMixedCropsInBed: true, reliableIrrigation: true,
+        }, pattern, beds, history, nowMonth);
+        for (const bed of beds) {
+          for (const note of result.notes) {
+            if (!note.includes(bed.label) || !note.includes('has nothing planted')) continue;
+            if (/shares a botanical family with every crop in your commercial focus/.test(note)) {
+              rotationClaimsSeen++;
+              const allMatch = ['tomatoes', 'cabbage'].every((key) => familyMatchesBedHistory(bed.id, key, history));
+              if (!allMatch) {
+                offenders.push(`${pattern} · now=${nowMonth} · history=${cropA}/${cropB} · ${bed.label}: ${note}`);
+              }
+            } else if (/would repeat this bed's recent family|fills the bed through every sowing window/.test(note)) {
+              mixedOrSpaceClaimsSeen++;
+            }
+          }
+        }
+      }
+    }
+  }
+  // The sweep must actually exercise the stranded-bed path, or a green
+  // result here would prove nothing.
+  assert.ok(mixedOrSpaceClaimsSeen > 0, 'the sweep never produced a mixed- or space-cause stranded-bed note');
+  assert.deepEqual(offenders.slice(0, 8), [],
+    `${offenders.length} rotation-blocked-all claims where a focus crop's family never matched that bed's history`);
+});
+
 // ── The winter cover a plot gets must be the rotation-preferred one ──────────
 
 test('a plot carrying a cereal takes the rotation-clean cover while one is available', () => {
