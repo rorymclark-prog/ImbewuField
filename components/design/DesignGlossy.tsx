@@ -4632,7 +4632,9 @@ async function burnExactLabelLayer(
   H: number,
   labelMode: SheetLabelMode,
 ): Promise<{ map: string; gutterLayout?: GutterLayout }> {
-  const gutterLayout = filter === 'planting' || filter === 'structures' || filter === 'all'
+  // A full design already has one grouped inventory in its legend. Per-object margin leaders
+  // duplicate it, fill both margins, and make the masterplan harder to read than a layer sheet.
+  const gutterLayout = filter === 'planting' || filter === 'structures'
     ? sheetGutterLayout(state, refLayers, W, H, filter, labelMode)
     : undefined;
   const canvas = document.createElement('canvas');
@@ -7352,11 +7354,10 @@ async function buildReferenceBlueprintMap(
   // the band must be free to cover anything that strays into it.
   if (filter === 'planting') drawGroundAreaNames(ctx, renderState, renderRefLayers, W, H, filter);
   drawPlantMarks(ctx, renderState, filter, px, py, W / (renderFrame.imgW * renderFrame.mPerPx), labelMode);
-  // CALLOUTS ARE NOT DRAWN HERE ANY MORE. They live in the sheet's label gutters, which only exist
-  // once composeStyleSheet has widened the map into a sheet — see drawLabelGutter. What is computed
-  // here is only the LAYOUT, because this is where the presentation-space state and refLayers are
-  // in hand; the paint happens below, at sheet coordinates.
-  const gutterLayout = filter === 'planting' || filter === 'structures' || filter === 'all'
+  // CALLOUTS ARE NOT DRAWN HERE ANY MORE. Focused layer sheets use the reserved label gutters;
+  // a full masterplan does not, because its grouped legend and compact map codes are the single
+  // readable inventory. What is computed here is only the focused-sheet layout.
+  const gutterLayout = filter === 'planting' || filter === 'structures'
     ? sheetGutterLayout(renderState, renderRefLayers, W, H, filter, labelMode)
     : undefined;
 
@@ -7419,6 +7420,7 @@ async function buildReferenceBlueprintMap(
       // that draws them. A "MG ·" prefix on a sheet with no MG anywhere is a key to nothing.
       labelMode,
       gutterLayout,
+      includeLabelGutters: filter !== 'all',
       ...(waterBudget.length
         ? { footerHeading: 'WATER BUDGET', footerText: waterBudget.join('\n'), footerBox: true }
         : {}),
@@ -10277,14 +10279,17 @@ async function composeStyleSheet(
      *  sheets that burn their own on-map labels (01, 02, 09) — they still get the gutter WIDTH, so
      *  every sheet in the set carries the same margins, they just leave it as clean paper. */
     gutterLayout?: GutterLayout;
+    /** A full masterplan uses its grouped legend and compact map codes, not duplicate side leaders. */
+    includeLabelGutters?: boolean;
   } = {},
 ): Promise<string> {
   const map = await loadImage(mapDataUrl);
-  // THE SHEET IS [gutter][map][gutter][legend]. `W` remains "everything left of the legend panel",
-  // which is what every measurement below already means by it, so the panel code is untouched.
+  // Most sheets are [gutter][map][gutter][legend]. A full masterplan is [map][legend]: its grouped
+  // legend plus compact map codes are the complete inventory, so side leaders only waste map area.
+  // `W` remains "everything left of the legend panel", keeping the panel geometry unchanged.
   const mapW = map.width;
   const H = map.height;
-  const gutter = sheetGutterWidth(mapW);
+  const gutter = options.includeLabelGutters === false ? 0 : sheetGutterWidth(mapW);
   const W = mapW + gutter * 2;
   const legendW = styleSheetLegendWidth(W);
   const outW = W + legendW;
@@ -10305,7 +10310,7 @@ async function composeStyleSheet(
   } finally {
     releaseImageSource(map);
   }
-  if (options.gutterLayout) drawLabelGutter(ctx, options.gutterLayout, gutter, mapW, H);
+  if (gutter > 0 && options.gutterLayout) drawLabelGutter(ctx, options.gutterLayout, gutter, mapW, H);
 
   // ── Legend panel ──
   const benchmarkPanel = styleLabel === 'Reference Blueprint' && (filter === 'water' || filter === 'planting' || filter === 'structures');
@@ -11054,6 +11059,7 @@ async function composeSheetChromeOverMapArt(opts: {
     {
       labelMode,
       gutterLayout: labelled.gutterLayout,
+      includeLabelGutters: filter !== 'all',
       ...(filter === 'water'
         ? {
             footerHeading: 'NOTES',
@@ -12628,10 +12634,15 @@ export default function DesignGlossy({
         geometryLock ? REFERENCE_SHEET_LABEL[filter] : layerLabel,
         !geometryLock,
         geometryLock,
-        geometryLock && filter === 'water'
+        geometryLock
           ? {
-              footerHeading: 'NOTES',
-              footerText: waterReferenceFooterText(state, frame, refLayers, site),
+              includeLabelGutters: filter !== 'all',
+              ...(filter === 'water'
+                ? {
+                    footerHeading: 'NOTES',
+                    footerText: waterReferenceFooterText(state, frame, refLayers, site),
+                  }
+                : {}),
             }
           : {},
       );
@@ -12973,10 +12984,15 @@ export default function DesignGlossy({
           geometryLock ? REFERENCE_SHEET_LABEL[f] : layerLabel,
           !geometryLock,
           geometryLock,
-          geometryLock && f === 'water'
+          geometryLock
             ? {
-                footerHeading: 'NOTES',
-                footerText: waterReferenceFooterText(state, frame, refLayers, site),
+                includeLabelGutters: f !== 'all',
+                ...(f === 'water'
+                  ? {
+                      footerHeading: 'NOTES',
+                      footerText: waterReferenceFooterText(state, frame, refLayers, site),
+                    }
+                  : {}),
               }
             : {},
         );
@@ -13221,11 +13237,12 @@ export default function DesignGlossy({
       // called with includeLeaderLabels = locked and already draws every water label itself.
       // Passing labels here too burned a SECOND set a few pixels off the first, which is why every
       // pill had a half-hidden twin behind it ("MULCH BANK" over "MU…", "SMALL POND" over "SM…").
-      // Planting/structures/all now match the exact architecture instead of the pre-gutter one:
-      // no on-map pills — names live in the label gutters and the plant codes, both drawn by
-      // burnExactLabelLayer below. Keeping the pills alongside them would name one plant twice.
-      const gutterOwnsLabels = locked && (f === 'planting' || f === 'structures' || f === 'all');
-      const labels = (f === 'water' && locked) || gutterOwnsLabels
+      // Focused planting and structure sheets use side leaders; the full design keeps compact
+      // map codes and its one grouped legend. All three draw no on-map pills, otherwise a tree
+      // would be named by its pill, code and legend at once.
+      const gutterOwnsLabels = locked && (f === 'planting' || f === 'structures');
+      const exactMapOwnsLabels = locked && (gutterOwnsLabels || f === 'all');
+      const labels = (f === 'water' && locked) || exactMapOwnsLabels
         ? []
         // The exact zone overlay already carries a numbered badge at every saved zone and the
         // legend expands each number into its full name. Margin leaders added the same facts a
@@ -13286,7 +13303,7 @@ export default function DesignGlossy({
       // not one glyph of text on it. Stashed pre-labels, so what the model receives has nothing
       // writable to mangle; the label layer is re-drawn from the design over its output.
       if (locked) hybridMapForPolishRef.current = { key: f, map: final };
-      const labelled = gutterOwnsLabels
+      const labelled = exactMapOwnsLabels
         ? await burnExactLabelLayer(final, renderState, renderFrame, renderRefLayers, f, W, H, labelMode)
         : { map: final, gutterLayout: undefined };
       return composeStyleSheet(
@@ -13306,6 +13323,7 @@ export default function DesignGlossy({
               // rows must honour the farmer's label-mode choice — same contract as the exact sheet.
               labelMode,
               gutterLayout: labelled.gutterLayout,
+              includeLabelGutters: f !== 'all',
               ...(f === 'water'
                 ? {
                     footerHeading: 'NOTES',
