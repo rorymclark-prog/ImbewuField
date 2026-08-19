@@ -35,6 +35,13 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '19 August',
+    sha: '6c453fd',
+    changes: [
+      'Full-design maps now give the drawing more room and use one clear grouped legend',
+    ],
+  },
+  {
+    when: '19 August',
     sha: 'cb7290b',
     changes: [
       'Named tree cards now place immediately; use Other to choose from the full catalogue',

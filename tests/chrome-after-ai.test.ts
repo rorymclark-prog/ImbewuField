@@ -188,6 +188,35 @@ test('the chrome pass draws every app-owned element over the model art', () => {
   ]);
 });
 
+test('a full masterplan has one grouped inventory, not leader labels repeated in side gutters', () => {
+  // Rory's full design render showed the same trees three times: a code on the map, a grouped
+  // legend at right, then an item-by-item leader list in both cream margins. The last list made
+  // the drawing smaller and the leaders crossed the whole farm. Focused layer sheets keep those
+  // callouts; a complete plan must reserve its space for the actual map.
+  const exactLabels = functionBody(
+    'async function burnExactLabelLayer(',
+    '\n/**\n * The name of a traced AREA',
+  );
+  assert.match(exactLabels, /filter === 'planting' \|\| filter === 'structures'/);
+  assert.doesNotMatch(exactLabels, /filter === 'structures' \|\| filter === 'all'/,
+    'the masterplan must not create a gutter row for every object');
+
+  const composer = functionBody(
+    'async function composeStyleSheet(',
+    '\n// ── Persistence',
+  );
+  assert.match(composer, /includeLabelGutters\?: boolean/);
+  assert.match(composer, /options\.includeLabelGutters === false \? 0 : sheetGutterWidth\(mapW\)/,
+    'the masterplan must reclaim the physical margin width, not merely leave it blank');
+
+  const pass = functionBody(
+    'async function composeSheetChromeOverMapArt(',
+    '\n  return { sheet, mapArt };',
+  );
+  assert.match(pass, /includeLabelGutters: filter !== 'all'/,
+    'the paid chrome pass must apply the compact masterplan layout too');
+});
+
 test('nothing can stop the chrome pass running on a paid polish', () => {
   const finisher = callbackBody('finishStyledSheet');
   const branchStart = finisher.indexOf('if (paidPolishNeedsChromePass({');
