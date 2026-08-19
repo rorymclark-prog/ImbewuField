@@ -138,6 +138,20 @@ export interface HarvestDescription {
   regionName: string;
   recommendedTank: number;
   sentence: string;
+  /** Where annualMm/pattern came from: this site's own satellite climate, or the nearest regional reference point. */
+  rainfallBasis: 'site' | 'reference';
+}
+
+/**
+ * Per-site rainfall figures to use INSTEAD of the 7-point regional table —
+ * see lib/site-climate.ts, which derives these from the same NASA POWER /
+ * ERA5 monthly climate the site reports use. 'mild-frost' is the planner's
+ * summer-rainfall-with-light-frost variant, so for storage sizing (a purely
+ * rainfall-timing question) it maps onto the summer share.
+ */
+export interface SiteRainfallOverride {
+  annualMm: number;
+  pattern: 'summer' | 'winter' | 'all-year' | 'mild-frost';
 }
 
 /** Format a litre volume with space-separated thousands, e.g. 98000 -> '98 000'. */
@@ -148,37 +162,59 @@ function formatLitres(n: number): string {
 }
 
 /**
- * Describe a site's rainwater harvest potential and recommended storage,
- * using the nearest regional rainfall reference point.
+ * Describe a site's rainwater harvest potential and recommended storage.
+ *
+ * Prefers the site's OWN satellite-derived rainfall when the caller has it
+ * (see lib/site-climate.ts — same figures the site report shows); otherwise
+ * falls back to the nearest regional reference point, and says so in the
+ * sentence, because "915 mm (Durban)" and "768 mm measured over this
+ * site" are different claims and a reader must be able to tell them apart.
  */
 export function describeHarvest(
   roofM2: number,
   lat: number,
-  lon: number
+  lon: number,
+  site?: SiteRainfallOverride | null,
 ): HarvestDescription | null {
   if (!Number.isFinite(roofM2) || roofM2 <= 0) return null;
+  const siteAnnualMm = site && Number.isFinite(site.annualMm) && site.annualMm > 0
+    ? Math.round(site.annualMm)
+    : null;
   const region = nearestRainfall(lat, lon);
-  if (!region) return null;
+  if (siteAnnualMm === null && !region) return null;
+
+  // 'mild-frost' is summer rainfall with light winter frost — frost is
+  // irrelevant to storage sizing, so it takes the summer storage share.
+  const sitePattern = site?.pattern === 'mild-frost' ? 'summer' : site?.pattern;
+  const annualMm = siteAnnualMm ?? region!.annualMm;
+  const pattern: 'summer' | 'winter' | 'all-year' =
+    (siteAnnualMm !== null && sitePattern) ? sitePattern : region?.pattern ?? 'summer';
+  const rainfallBasis: 'site' | 'reference' = siteAnnualMm !== null ? 'site' : 'reference';
+
   // Maths uses the raw (unrounded) roofM2 — only display is rounded, below.
-  const annualLitres = annualHarvestLitres(roofM2, region.annualMm);
-  const recommendedTank = recommendedTankLitres(annualLitres, region.pattern);
+  const annualLitres = annualHarvestLitres(roofM2, annualMm);
+  const recommendedTank = recommendedTankLitres(annualLitres, pattern);
   const roundedRoofM2 = Math.round(roofM2);
   if (!Number.isFinite(annualLitres) || annualLitres <= 0
       || !Number.isFinite(recommendedTank) || recommendedTank <= 0
       || !Number.isFinite(roundedRoofM2) || roundedRoofM2 <= 0) return null;
 
+  const basisNote = rainfallBasis === 'site'
+    ? 'satellite climate records for this site'
+    : `nearest reference: ${region!.name} (fallback)`;
   const sentence =
     `Your ${roundedRoofM2} m² of roof can harvest ≈ ${formatLitres(annualLitres)} L/yr ` +
-    `(${region.annualMm} mm, ${region.pattern} rainfall) — ` +
+    `(${annualMm} mm, ${pattern} rainfall — ${basisNote}) — ` +
     `recommended storage ≈ ${formatLitres(recommendedTank)} L.`;
 
   return {
     roofM2: roundedRoofM2,
     annualLitres,
-    annualMm: region.annualMm,
-    pattern: region.pattern,
-    regionName: region.name,
+    annualMm,
+    pattern,
+    regionName: rainfallBasis === 'site' ? 'This site (satellite climate records)' : region!.name,
     recommendedTank,
     sentence,
+    rainfallBasis,
   };
 }

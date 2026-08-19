@@ -117,10 +117,15 @@ test('auto-suggest derives climate from the mapped site instead of asking the fa
   // Rory's field test caught the broken assumption: farmers may not know
   // whether a label such as "summer rain · light frost" describes them, while
   // the app already has their mapped location and rainfall-region data.
+  // The planning authority is still the mapped site — never the farmer. Since the
+  // per-site climate work, the resolution order is: the site's OWN satellite-derived
+  // pattern (siteClimate, via lib/site-climate.ts) first, then the nearest-reference
+  // mapPattern as the labelled fallback (no coords, offline, NASA outage). Both
+  // branches are automatic; neither asks the farmer to classify their climate.
   assert.match(
     CROP_PLAN_SCREEN,
-    /const pattern:\s*RainPattern\s*=\s*mapPattern/,
-    'the mapped climate must be the planning authority',
+    /const pattern:\s*RainPattern\s*=\s*siteClimate\?\.pattern\s*\?\?\s*mapPattern/,
+    'the mapped climate must be the planning authority — per-site reading first, nearest reference as fallback',
   );
   assert.match(
     CROP_PLAN_SCREEN,

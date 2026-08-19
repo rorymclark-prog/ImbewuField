@@ -24,6 +24,7 @@ import { loadFacilitatorState } from '@/lib/facilitator-design';
 import type { Design } from '@/lib/db/types';
 import { myDesigns } from '@/lib/db/queries';
 import { nearestRainfall } from '@/lib/water-calc';
+import { resolveSiteClimate, type SiteClimate } from '@/lib/site-climate';
 import type { CropDef, RainPattern } from '@/lib/crop-catalog';
 import { CROPS, cropByKey, hasAutomaticPlanningBasis, hasPlanningYield, hasVerifiedSchedule, MONTHS_SHORT } from '@/lib/crop-catalog';
 import type { PlanBed, Planting, CropPlanState, FoodAvailabilityItem, PlanYieldBenchmark, CashflowSettings } from '@/lib/crop-plan';
@@ -417,9 +418,16 @@ function FacilitatorCropsPageInner() {
       reliableIrrigation: aReliableIrrigation,
     };
     const suggested = autoSuggestPlan(answers, pattern, beds, plantings, currentMonth);
+    // Say WHERE the climate came from, not just what it is — a satellite-derived
+    // per-site profile and a reference city 250 km away are different claims.
+    const climateNote = climateSource === 'site'
+      ? `Climate derived from satellite climate records for this site: ${PATTERN_META[pattern].label}.`
+      : climateSource === 'reference'
+        ? `Climate from nearest reference region — ${region?.name} (fallback): ${PATTERN_META[pattern].label}.`
+        : `No mapped site — assuming ${PATTERN_META[pattern].label.toLowerCase()}.`;
     setAutoResult({
       ...suggested,
-      notes: [`Climate used from this site's map data: ${PATTERN_META[pattern].label}.`, ...suggested.notes],
+      notes: [climateNote, ...suggested.notes],
     });
     setAutoPhase('review');
   }
@@ -590,6 +598,30 @@ function FacilitatorCropsPageInner() {
     ? nearestRainfall(canvasLatLon.lat, canvasLatLon.lon)
     : (design?.bgSite ? nearestRainfall(design.bgSite.lat, design.bgSite.lon) : null);
 
+  // Per-site climate (Task: climatically correct plans for ANY SA site). When the
+  // site has coordinates, the pattern comes from the site's OWN monthly climate —
+  // the same NASA POWER/Open-Meteo → Köppen path the Atlas and site reports use —
+  // via the shared imbewu_loc_v4 localStorage cache (offline-safe) with a network
+  // fetch behind it. nearestRainfall() above remains the explicit, labelled
+  // fallback: it put the demo farm's frost-free Mkuze-valley coordinates on
+  // Durban's mild-frost profile from 255 km away, which is exactly the mistake
+  // this path exists to stop.
+  const siteLat = canvasLatLon?.lat ?? design?.bgSite?.lat;
+  const siteLon = canvasLatLon?.lon ?? design?.bgSite?.lon;
+  const hasSiteCoords = typeof siteLat === 'number' && typeof siteLon === 'number';
+  const [siteClimate, setSiteClimate] = useState<SiteClimate | null>(null);
+  useEffect(() => {
+    if (!hasSiteCoords) { setSiteClimate(null); return; }
+    let cancelled = false;
+    // Reset immediately so a site switch can never keep the previous site's pattern
+    // on screen while the new site's climate is still resolving.
+    setSiteClimate(null);
+    resolveSiteClimate(siteLat!, siteLon!).then((sc) => {
+      if (!cancelled) setSiteClimate(sc);
+    });
+    return () => { cancelled = true; };
+  }, [hasSiteCoords, siteLat, siteLon]);
+
   // ?canvasSite&auto=1 → open the auto-suggest questionnaire once, as soon as at
   // least one bed has loaded. Ref-guarded so a bed refresh (canvas-change event)
   // can't reopen it after the farmer has moved on.
@@ -612,7 +644,14 @@ function FacilitatorCropsPageInner() {
   // them, while the app already has the mapped location needed to decide it.
   // A plan made without a mapped site uses the visible summer-rain fallback;
   // it never invites the farmer to make an uninformed climate guess.
-  const pattern: RainPattern = mapPattern;
+  //
+  // Resolution order: the site's own satellite-derived climate wins; the
+  // 7-point nearest-reference table is the labelled fallback (no coords, API
+  // down, offline with nothing cached); no site at all assumes summer rain.
+  // `climateSource` travels with the pattern so every surface that prints the
+  // climate can say WHICH of the three it is printing.
+  const pattern: RainPattern = siteClimate?.pattern ?? mapPattern;
+  const climateSource: 'site' | 'reference' | 'none' = siteClimate ? 'site' : (region ? 'reference' : 'none');
   const patternMeta = PATTERN_META[pattern];
   const designTitle = design?.title || design?.bgSite?.name || 'Garden design';
 
@@ -765,13 +804,20 @@ function FacilitatorCropsPageInner() {
   const exportMeta = useMemo(() => {
     const plotCount = beds.filter((b) => b.kind === 'plot').length;
     const bedCount = beds.length - plotCount;
+    // Provenance travels onto paper too: a printed plan must say whether its
+    // climate is the site's own satellite-derived profile or a reference city.
+    const locationLine = climateSource === 'site'
+      ? 'This site (satellite climate records)'
+      : region ? `Nearest reference: ${region.name} (fallback)` : 'No site set';
     return {
       planTitle: (canvasSite ? placeName : null) ?? designTitle,
-      siteLine: region ? `${region.name} · ${patternMeta.label}` : `No site set · assuming ${patternMeta.label.toLowerCase()}`,
+      siteLine: climateSource === 'none'
+        ? `No site set · assuming ${patternMeta.label.toLowerCase()}`
+        : `${locationLine} · ${patternMeta.label}`,
       // The same two facts as separate values, because the PDF needs them apart and recovering
       // them by splitting siteLine printed "Climate: Not set" for every region in the country.
-      locationLine: region ? region.name : 'No site set',
-      climateLine: region ? patternMeta.label : `Assuming ${patternMeta.label.toLowerCase()}`,
+      locationLine,
+      climateLine: climateSource === 'none' ? `Assuming ${patternMeta.label.toLowerCase()}` : patternMeta.label,
       bedsSummary: `${bedCount} bed${bedCount === 1 ? '' : 's'}`
         + `${plotCount ? ` · ${plotCount} staple plot${plotCount === 1 ? '' : 's'}` : ''}`
         + ` · ${beds.reduce((s, b) => s + b.areaM2, 0).toFixed(1)} m² of growing space`,
@@ -780,7 +826,7 @@ function FacilitatorCropsPageInner() {
       lossPercent: cashflowSettings.lossPercent,
       lossAllowanceConfirmed: cashflowSettings.confirmed === true,
     };
-  }, [beds, canvasSite, placeName, designTitle, region, patternMeta, totalYieldKg, cashflowSettings.lossPercent, cashflowSettings.confirmed]);
+  }, [beds, canvasSite, placeName, designTitle, region, patternMeta, climateSource, totalYieldKg, cashflowSettings.lossPercent, cashflowSettings.confirmed]);
 
   function shareTasks() {
     const text = `🌱 Crop plan tasks\n${monthLabel(currentMonth)}: ${taskSentence(currentTasks)}\n${monthLabel(nextMonth)}: ${taskSentence(nextTasks)}`;
@@ -943,9 +989,21 @@ function FacilitatorCropsPageInner() {
           </button>
         )}
         <LessonLink id="crops:planner" label="Learn" />
-        {region ? (
-          <span className="flex-shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-sans" style={{ fontSize: 12, background: 'rgba(31,77,43,0.08)', color: '#1F4D2B', border: '1px solid rgba(31,77,43,0.18)' }}>
-            {patternMeta.icon} {region.name} · {patternMeta.label}
+        {climateSource === 'site' ? (
+          <span
+            className="flex-shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-sans"
+            title="Rainfall pattern derived from satellite climate records (NASA POWER / ERA5) for this site's own coordinates"
+            style={{ fontSize: 12, background: 'rgba(31,77,43,0.08)', color: '#1F4D2B', border: '1px solid rgba(31,77,43,0.18)' }}
+          >
+            {patternMeta.icon} {patternMeta.label} · satellite records for this site
+          </span>
+        ) : region ? (
+          <span
+            className="flex-shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-sans"
+            title="No per-site climate available (offline or not yet fetched) — using the nearest regional reference point instead"
+            style={{ fontSize: 12, background: 'rgba(31,77,43,0.08)', color: '#1F4D2B', border: '1px solid rgba(31,77,43,0.18)' }}
+          >
+            {patternMeta.icon} {patternMeta.label} · nearest reference: {region.name} (fallback)
           </span>
         ) : (
           <span className="flex-shrink-0 inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full font-sans" style={{ fontSize: 12, background: '#F5F0E8', color: '#8C7A62', border: '1px solid #E2D8C4' }}>
@@ -1498,7 +1556,7 @@ function FacilitatorCropsPageInner() {
           groups={aGroups} onToggleGroup={toggleGroup}
           cropKeys={aCropKeys} onToggleCrop={toggleAutoCrop} onSetCrops={setACropKeys}
           rhythm={aRhythm} onRhythm={setARhythm}
-          pattern={pattern} climateFromMap={region !== null}
+          pattern={pattern} climateSource={climateSource} referenceName={region?.name ?? null}
           rotateCrops={aRotateCrops} onRotateCrops={setARotateCrops}
           allowVinesInBeds={aAllowVinesInBeds} onAllowVinesInBeds={setAAllowVinesInBeds}
           allowMixedCropsInBed={aAllowMixedCropsInBed} onAllowMixedCropsInBed={setAAllowMixedCropsInBed}
@@ -2546,7 +2604,7 @@ const RHYTHM_OPTIONS: { key: HarvestRhythm; label: string; blurb: string }[] = [
 ];
 function AutoSuggestModal({
   phase, goal, onGoal, focusCount, onFocusCount,
-  groups, onToggleGroup, cropKeys, onToggleCrop, onSetCrops, rhythm, onRhythm, pattern, climateFromMap, rotateCrops, onRotateCrops,
+  groups, onToggleGroup, cropKeys, onToggleCrop, onSetCrops, rhythm, onRhythm, pattern, climateSource, referenceName, rotateCrops, onRotateCrops,
   allowVinesInBeds, onAllowVinesInBeds, allowMixedCropsInBed, onAllowMixedCropsInBed, reliableIrrigation, onReliableIrrigation,
   result, onGenerate, onAccept, onBackToQuestions, onClose,
 }: {
@@ -2556,7 +2614,11 @@ function AutoSuggestModal({
   groups: FoodGroup[]; onToggleGroup: (g: FoodGroup) => void;
   cropKeys: string[]; onToggleCrop: (cropKey: string) => void; onSetCrops: (cropKeys: string[]) => void;
   rhythm: HarvestRhythm; onRhythm: (r: HarvestRhythm) => void;
-  pattern: RainPattern; climateFromMap: boolean;
+  pattern: RainPattern;
+  /** Where the pattern came from: the site's own satellite climate, the nearest reference region, or no site at all. */
+  climateSource: 'site' | 'reference' | 'none';
+  /** Reference-region name when climateSource is 'reference'. */
+  referenceName: string | null;
   rotateCrops: boolean; onRotateCrops: (v: boolean) => void;
   allowVinesInBeds: boolean; onAllowVinesInBeds: (v: boolean) => void;
   allowMixedCropsInBed: boolean; onAllowMixedCropsInBed: (v: boolean) => void;
@@ -2716,9 +2778,11 @@ function AutoSuggestModal({
                 {PATTERN_META[pattern].icon} {PATTERN_META[pattern].label}
               </div>
               <p className="font-mono mt-1" style={{ fontSize: 10.5, color: '#687768', lineHeight: 1.4 }}>
-                {climateFromMap
-                  ? 'Taken from this garden’s mapped location. You do not need to choose a rainfall type.'
-                  : 'No mapped location is attached, so the planner is using the visible summer-rainfall fallback. Map the garden for a location-based climate profile.'}
+                {climateSource === 'site'
+                  ? 'Derived from satellite climate records for this site. You do not need to choose a rainfall type.'
+                  : climateSource === 'reference'
+                    ? `Per-site climate is not available right now (offline or still loading), so this uses the nearest reference: ${referenceName ?? 'regional point'} (fallback).`
+                    : 'No mapped location is attached, so the planner is using the visible summer-rainfall fallback. Map the garden for a location-based climate profile.'}
               </p>
             </div>
 

@@ -1,8 +1,11 @@
 // The "See a sample farm" demo dataset — Ubhejane Creche, a real food garden
-// at a creche/pre-school on the KZN coastal hinterland (Durban area, mild
-// winter frost, summer rainfall). DEMO_SITE's lat/lon are genuine: the app's
-// own /api/location-data fetch and the satellite background both resolve
-// real climate/soil/rainfall/elevation data for this spot. Everything below
+// at a creche/pre-school in the Mkuze valley, northern-KZN Zululand lowveld
+// (~70 km inland, frost-free, summer rainfall). NASA POWER climatology for
+// these exact coordinates (fetched 2026-08-19): coldest month mean 16.8 °C,
+// ~80% of annual rain in the summer half-year — the same reading the app's
+// own /api/location-data serves for this spot. DEMO_SITE's lat/lon are
+// genuine: that fetch and the satellite background both resolve real
+// climate/soil/rainfall/elevation data for this ground. Everything below
 // this point — the beds, the crop plan, the sales/expenses/invoices — is
 // hand-authored illustrative sample data, not a record of the real creche's
 // actual finances or layout.
@@ -63,7 +66,7 @@ export function buildDemoProfile(): Profile {
  */
 export function buildDemoLetterhead(): SellerLetterhead {
   return {
-    address: 'Sample — Ubhejane Crèche\nSample — Nquthu, KwaZulu-Natal',
+    address: 'Sample — Ubhejane Crèche\nSample — Mkuze, KwaZulu-Natal',
     email: 'sample@example.invalid',
     taxNumber: '',
     bankName: 'Sample — Demo Bank',
@@ -144,12 +147,19 @@ export function buildDemoFacilitatorState(): FacilitatorDesignState {
 }
 
 /* ── Crop plan: a full year across the 7 growing beds above ───────────────
-   'mild-frost' rain pattern (summer rainfall, mild winter frost — matches
-   DEMO_SITE). It mixes already-growing (existing:true) plantings with future
-   ones and divides several beds into measured strips. The fractions below
-   were checked against every month of the audited crop-duration calendar:
-   concurrent strips never exceed the mapped bed, and the harvested sample kg
-   remain at or below the catalog's published upper benchmark. */
+   DEMO_SITE resolves the 'summer' rain pattern through the per-site climate
+   path (lib/site-climate.ts over NASA POWER monthly normals for these exact
+   coordinates — summer-dominant rain, frost-free winter). The sow months
+   below are RECORDS of what this frost-free lowveld garden planted, not a
+   template: the autumn sowings (chard/carrots in April, lettuce in May) are
+   normal practice where winters carry no frost, and the planner shows its
+   "outside the usual sowing window — still allowed" advisory against the
+   conservative interior 'summer' windows rather than silently rewriting
+   history. The plan mixes already-growing (existing:true) plantings with
+   future ones and divides several beds into measured strips. The fractions
+   below were checked against every month of the audited crop-duration
+   calendar: concurrent strips never exceed the mapped bed, and the harvested
+   sample kg remain at or below the catalog's published upper benchmark. */
 
 export function buildDemoCropPlan(): CropPlanState {
   const plantings: Planting[] = [
@@ -224,7 +234,7 @@ export interface DemoFinance {
  *  provenance), never from a figure typed in here:
  *    'gate' — sold at the crèche gate to parents and neighbours, at that
  *             table's RETAIL price per kg;
- *    'shop' — sold to the spaza or the Nquthu co-op, who resell it, at 70% of
+ *    'shop' — sold to the spaza or the Mkuze co-op, who resell it, at 70% of
  *             retail rounded to the nearest rand — still comfortably above
  *             every one of these crops' wholesale figure in the same table.
  *  Derived rather than hardcoded so a correction to the price table moves the
@@ -330,10 +340,10 @@ const DEMO_SALES: DemoSaleSpec[] = [
   { month: 1, day: 14, cropKey: 'green-beans', kg: 1, channel: 'gate', buyer: 'Ubhejane parents' },
   { month: 1, day: 22, cropKey: 'tomatoes', kg: 6, channel: 'shop', buyer: 'Local spaza shop' },
   { month: 2, day: 12, cropKey: 'tomatoes', kg: 7, channel: 'shop', buyer: 'Local spaza shop' },
-  { month: 2, day: 26, cropKey: 'sweet-potato', kg: 7, channel: 'shop', buyer: 'Nquthu co-op' },
+  { month: 2, day: 26, cropKey: 'sweet-potato', kg: 7, channel: 'shop', buyer: 'Mkuze co-op' },
   { month: 3, day: 10, cropKey: 'tomatoes', kg: 5, channel: 'shop', buyer: 'Local spaza shop' },
   { month: 3, day: 14, cropKey: 'tomatoes', kg: 2, channel: 'gate', buyer: 'Ubhejane parents' },
-  { month: 4, day: 20, cropKey: 'butternut', kg: 6, channel: 'shop', buyer: 'Nquthu co-op' },
+  { month: 4, day: 20, cropKey: 'butternut', kg: 6, channel: 'shop', buyer: 'Mkuze co-op' },
   { month: 4, day: 22, cropKey: 'butternut', kg: 2, channel: 'gate', buyer: 'Ubhejane parents' },
   { month: 5, day: 18, cropKey: 'broccoli', kg: 1, channel: 'gate', buyer: 'Ubhejane parents' },
   { month: 6, day: 8, cropKey: 'swiss-chard', kg: 3.5, channel: 'shop', buyer: 'Local spaza shop' },
@@ -343,20 +353,20 @@ const DEMO_SALES: DemoSaleSpec[] = [
   { month: 6, day: 25, cropKey: 'lettuce', kg: 3, channel: 'gate', buyer: 'Ubhejane parents' },
   { month: 7, day: 11, cropKey: 'swiss-chard', kg: 4, channel: 'shop', buyer: 'Local spaza shop' },
   { month: 7, day: 19, cropKey: 'lettuce', kg: 3, channel: 'gate', buyer: 'Ubhejane parents' },
-  { month: 7, day: 27, cropKey: 'carrots', kg: 4, channel: 'shop', buyer: 'Nquthu co-op' },
+  { month: 7, day: 27, cropKey: 'carrots', kg: 4, channel: 'shop', buyer: 'Mkuze co-op' },
   { month: 7, day: 28, cropKey: 'carrots', kg: 2, channel: 'gate', buyer: 'Ubhejane parents' },
   { month: 8, day: 3, cropKey: 'swiss-chard', kg: 3, channel: 'shop', buyer: 'Local spaza shop' },
   { month: 8, day: 10, cropKey: 'lettuce', kg: 2, channel: 'gate', buyer: 'Ubhejane parents' },
   { month: 8, day: 17, cropKey: 'swiss-chard', kg: 1, channel: 'gate', buyer: 'Ubhejane parents' },
   { month: 9, day: 13, cropKey: 'swiss-chard', kg: 3.5, channel: 'shop', buyer: 'Local spaza shop' },
-  { month: 9, day: 24, cropKey: 'onions', kg: 7, channel: 'shop', buyer: 'Nquthu co-op' },
+  { month: 9, day: 24, cropKey: 'onions', kg: 7, channel: 'shop', buyer: 'Mkuze co-op' },
   { month: 9, day: 25, cropKey: 'onions', kg: 2.5, channel: 'gate', buyer: 'Ubhejane parents' },
   { month: 9, day: 27, cropKey: 'lettuce', kg: 2, channel: 'gate', buyer: 'Ubhejane parents' },
   { month: 10, day: 9, cropKey: 'lettuce', kg: 2, channel: 'gate', buyer: 'Ubhejane parents' },
-  { month: 10, day: 22, cropKey: 'carrots', kg: 7, channel: 'shop', buyer: 'Nquthu co-op' },
+  { month: 10, day: 22, cropKey: 'carrots', kg: 7, channel: 'shop', buyer: 'Mkuze co-op' },
   { month: 10, day: 23, cropKey: 'carrots', kg: 4, channel: 'gate', buyer: 'Ubhejane parents' },
   { month: 11, day: 12, cropKey: 'lettuce', kg: 2, channel: 'gate', buyer: 'Ubhejane parents' },
-  { month: 11, day: 20, cropKey: 'garlic', kg: 2, channel: 'shop', buyer: 'Nquthu co-op' },
+  { month: 11, day: 20, cropKey: 'garlic', kg: 2, channel: 'shop', buyer: 'Mkuze co-op' },
   { month: 11, day: 21, cropKey: 'garlic', kg: 1, channel: 'gate', buyer: 'Ubhejane parents' },
   { month: 12, day: 8, cropKey: 'lettuce', kg: 2, channel: 'gate', buyer: 'Ubhejane parents' },
   { month: 12, day: 15, cropKey: 'green-beans', kg: 1, channel: 'gate', buyer: 'Ubhejane parents' },
@@ -366,30 +376,30 @@ const DEMO_SALES: DemoSaleSpec[] = [
 // Seed and seedlings are bought the month BEFORE the crop plan sows them (the
 // month tasksForPlan schedules bed prep), manure lands ahead of the two big
 // planting rounds, and a taxi fare is only paid on the trips that actually go
-// to Nquthu — the spaza is walking distance.
+// to Mkuze — the spaza is walking distance.
 const DEMO_RUNNING_COSTS: DemoCostSpec[] = [
-  { month: 1, day: 20, item: 'broccoli seedlings', amount: 45, category: 'seed', supplier: 'Agri co-op Nquthu' },
-  { month: 2, day: 18, item: 'cabbage seedlings', amount: 60, category: 'seed', supplier: 'Agri co-op Nquthu' },
-  { month: 2, day: 26, item: 'transport to Nquthu co-op', amount: 70, category: 'transport', supplier: null },
-  { month: 3, day: 6, item: 'seed & seedlings — chard, lettuce, carrots, onions', amount: 185, category: 'seed', supplier: 'Agri co-op Nquthu' },
+  { month: 1, day: 20, item: 'broccoli seedlings', amount: 45, category: 'seed', supplier: 'Agri co-op Mkuze' },
+  { month: 2, day: 18, item: 'cabbage seedlings', amount: 60, category: 'seed', supplier: 'Agri co-op Mkuze' },
+  { month: 2, day: 26, item: 'transport to Mkuze co-op', amount: 70, category: 'transport', supplier: null },
+  { month: 3, day: 6, item: 'seed & seedlings — chard, lettuce, carrots, onions', amount: 185, category: 'seed', supplier: 'Agri co-op Mkuze' },
   { month: 3, day: 8, item: 'kraal manure, bakkie load', amount: 240, category: 'other', supplier: 'Neighbouring homestead' },
-  { month: 4, day: 20, item: 'transport to Nquthu co-op', amount: 60, category: 'transport', supplier: null },
-  { month: 5, day: 6, item: 'seed garlic & lettuce seed', amount: 120, category: 'seed', supplier: 'Agri co-op Nquthu' },
-  { month: 6, day: 14, item: 'carrot & lettuce seed', amount: 70, category: 'seed', supplier: 'Agri co-op Nquthu' },
-  { month: 7, day: 27, item: 'transport to Nquthu co-op', amount: 70, category: 'transport', supplier: null },
-  { month: 8, day: 6, item: 'lettuce seed', amount: 35, category: 'seed', supplier: 'Agri co-op Nquthu' },
+  { month: 4, day: 20, item: 'transport to Mkuze co-op', amount: 60, category: 'transport', supplier: null },
+  { month: 5, day: 6, item: 'seed garlic & lettuce seed', amount: 120, category: 'seed', supplier: 'Agri co-op Mkuze' },
+  { month: 6, day: 14, item: 'carrot & lettuce seed', amount: 70, category: 'seed', supplier: 'Agri co-op Mkuze' },
+  { month: 7, day: 27, item: 'transport to Mkuze co-op', amount: 70, category: 'transport', supplier: null },
+  { month: 8, day: 6, item: 'lettuce seed', amount: 35, category: 'seed', supplier: 'Agri co-op Mkuze' },
   { month: 9, day: 8, item: 'compost & kraal manure', amount: 220, category: 'other', supplier: 'Neighbouring homestead' },
-  { month: 9, day: 12, item: 'bean, maize & tomato seed, sweet-potato slips', amount: 240, category: 'seed', supplier: 'Agri co-op Nquthu' },
-  { month: 9, day: 24, item: 'transport to Nquthu co-op', amount: 70, category: 'transport', supplier: null },
-  { month: 10, day: 22, item: 'transport to Nquthu co-op', amount: 70, category: 'transport', supplier: null },
-  { month: 11, day: 8, item: 'butternut seed', amount: 40, category: 'seed', supplier: 'Agri co-op Nquthu' },
-  { month: 11, day: 20, item: 'transport to Nquthu co-op', amount: 60, category: 'transport', supplier: null },
+  { month: 9, day: 12, item: 'bean, maize & tomato seed, sweet-potato slips', amount: 240, category: 'seed', supplier: 'Agri co-op Mkuze' },
+  { month: 9, day: 24, item: 'transport to Mkuze co-op', amount: 70, category: 'transport', supplier: null },
+  { month: 10, day: 22, item: 'transport to Mkuze co-op', amount: 70, category: 'transport', supplier: null },
+  { month: 11, day: 8, item: 'butternut seed', amount: 40, category: 'seed', supplier: 'Agri co-op Mkuze' },
+  { month: 11, day: 20, item: 'transport to Mkuze co-op', amount: 60, category: 'transport', supplier: null },
 ];
 
 const DEMO_CAPITAL_COSTS: DemoCapitalSpec[] = [
-  { monthsBack: 11, day: 4, item: 'rainwater tank (2500 L) & stand', amount: 5500, supplier: 'Hardware store, Nquthu' },
-  { monthsBack: 11, day: 6, item: 'compost bays — timber & mesh (3-bay)', amount: 600, supplier: 'Hardware store, Nquthu' },
-  { monthsBack: 5, day: 12, item: 'hosepipe, watering cans & hand tools', amount: 420, supplier: 'Hardware store, Nquthu' },
+  { monthsBack: 11, day: 4, item: 'rainwater tank (2500 L) & stand', amount: 5500, supplier: 'Hardware store, Mkuze' },
+  { monthsBack: 11, day: 6, item: 'compost bays — timber & mesh (3-bay)', amount: 600, supplier: 'Hardware store, Mkuze' },
+  { monthsBack: 5, day: 12, item: 'hosepipe, watering cans & hand tools', amount: 420, supplier: 'Hardware store, Mkuze' },
 ];
 
 /* The one standing order the garden invoices rather than sells for cash: the
@@ -481,7 +491,7 @@ export function buildDemoFinance(): DemoFinance {
       no: DEMO_LAST_INVOICE_NO - monthsBefore,
       billTo: 'Sample — Ubhejane parents fund',
       billToDetails: {
-        address: 'Sample — Ubhejane Crèche\nSample — Nquthu, KwaZulu-Natal',
+        address: 'Sample — Ubhejane Crèche\nSample — Mkuze, KwaZulu-Natal',
         phone: '072 000 0101',
       },
       items: [{ desc: 'Sample — mixed vegetable box', qty: DEMO_BOX_KG, unit: 'kg', price: DEMO_BOX_PRICE_PER_KG }],
@@ -499,12 +509,12 @@ export function buildDemoFinance(): DemoFinance {
   const customers: Customer[] = [
     {
       name: 'Sample — Ubhejane parents fund',
-      address: 'Sample — Ubhejane Crèche\nSample — Nquthu, KwaZulu-Natal',
+      address: 'Sample — Ubhejane Crèche\nSample — Mkuze, KwaZulu-Natal',
       phone: '072 000 0101',
     },
     {
-      name: 'Sample — Nquthu co-op',
-      address: 'Sample — Co-op depot, Nquthu',
+      name: 'Sample — Mkuze co-op',
+      address: 'Sample — Co-op depot, Mkuze',
       phone: '072 000 0102',
       email: 'sample@example.invalid',
     },
@@ -624,8 +634,13 @@ export function buildDemoJournal(): JournalEntry[] {
     entry(19, 3, 'harvest', 'Second chard cut from Bed 1',
       'Second cut, a week after the first. Leaves noticeably smaller this time — the bed may want feeding before the next cut.',
       bed1, 'Swiss chard (spinach)'),
-    entry(20, 1, 'weather', 'Cold morning, no frost inside the fence',
-      'Frost lying on the grass outside the fence but nothing on the beds. The chard and the garlic look untouched.'),
+    // The old entry here described a frost morning — fabricated weather: this is
+    // frost-free lowveld (NASA POWER coldest-month mean ~17 °C for these exact
+    // coordinates). A cool dry-morning watering note is what a Mkuze-valley
+    // winter actually looks like, and stays plausible whenever the demo opens
+    // (journal dates are relative to today).
+    entry(20, 1, 'weather', 'Cool early morning — beds watered before school',
+      'Coolest start in a while, but no frost down here in the valley — there never is. The chard and the garlic each got a morning can from the tank before the children arrived.'),
   ];
 }
 
@@ -679,10 +694,11 @@ export function buildDemoBoundaryFC(): FeatureCollection {
   return buildDemoGeometryLockFixture(demoSiteId(), plotMetreToLngLat);
 }
 
-/* (b) Saved place — the "Ubhejane Creche" pin. biome/rainfall/elevation are plausible
-   for the northern-KZN coastal hinterland (Savanna, summer rainfall). 'Savanna' is a
-   real biome name (lib/design-elements.ts biomeClimates → subtropical), which keeps the
-   design's mango/avocado/indigenous fruit/moringa on-climate. */
+/* (b) Saved place — the "Ubhejane Creche" pin, for the Zululand-lowveld Mkuze valley.
+   'Savanna' matches SANBI's vegetation map for this point (see tests/biome-ground-truth
+   .test.ts — the 12 Aug fix) and is a real biome name (lib/design-elements.ts
+   biomeClimates → subtropical), which keeps the design's mango/avocado/indigenous
+   fruit/moringa on-climate. */
 export function buildDemoSavedPlace(): SavedPlace {
   return {
     id: 'demo-place-ubhejane',
@@ -690,7 +706,14 @@ export function buildDemoSavedPlace(): SavedPlace {
     lat: DEMO_SITE.lat,
     lon: DEMO_SITE.lon,
     biome: 'Savanna',
-    rainfall: 800,
+    // NASA POWER climatology for these exact coordinates (fetched 2026-08-19):
+    // 768 mm/yr — the same figure the app's own /api/location-data serves for
+    // this site, so the pin and the site report cannot disagree. (ERA5-Land via
+    // Open-Meteo reads 621 mm/yr for the same point on its finer 9 km grid; the
+    // app keeps the NASA figure because the two differ by less than the 30%
+    // switch threshold in lib/nasa-power.ts.) The old 800 was an uncited round
+    // number.
+    rainfall: 768,
     elevation: 430,
     savedAt: daysAgo(30),
     label: 'field',
