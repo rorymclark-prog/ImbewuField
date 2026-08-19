@@ -109,6 +109,12 @@ test('saved-map preview downloads the selected durable image and follows sheet-a
     'site switching must wait for the selected site rather than preview a stale farm');
   assert.match(glossy, /previous\.selectedNo === selectedNo[\s\S]*?previous\.producerStyle !== producerStyle[\s\S]*?setGalleryViewId\(null\)/,
     'changing only the underlay or style must return to the not-yet-generated state');
+  assert.match(glossy, /underlay: r\.underlay/,
+    'restored gallery rows must retain the underlay baked into each immutable bitmap');
+  assert.match(glossy, /underlay,\s*\n\s*freshness: 'current'/,
+    'a new exact or AI sheet must save the underlay that was actually rendered');
+  assert.match(glossy, /savedSheetUnderlayNote\(galleryViewItem\.underlay, underlay\)/,
+    'the selected saved map must distinguish its baked underlay from the picker for the next render');
 });
 
 test('saved-map labels from every plan-set layer select the right sheet', () => {

@@ -1,5 +1,10 @@
 import type { GlossyLayerFilter } from '@/lib/glossy-filters';
-import { isModelChromeStyle, type StylePreset } from '@/lib/producer-prompt';
+import {
+  groundContractFor,
+  isModelChromeStyle,
+  type GroundContract,
+  type StylePreset,
+} from '@/lib/producer-prompt';
 
 export type RenderAuthority = 'app' | 'model';
 
@@ -13,6 +18,42 @@ export interface StyleRenderPolicy {
 export interface RenderAuthorityFlags {
   showcase: boolean;
   geometryLock: boolean;
+}
+
+export interface GeometryLockCompositionPolicy {
+  ground: GroundContract;
+  protectUnmarkedGround: boolean;
+  protectHousePixels: boolean;
+  protectDrivewayPixels: boolean;
+  useSourceStructurePixels: boolean;
+  useExactGroundOverlay: boolean;
+}
+
+/**
+ * Decide which source pixels may be stamped back over a Geometry-Lock render.
+ *
+ * Painted styles need one continuous illustrated property interior. Restoring isolated source
+ * rectangles around every saved feature, then burning the exact ground artwork over them, is what
+ * turned Reference Blueprint into a collage of satellite keyholes and mismatched crop tiles.
+ * Photo Plan and plain paper have the opposite contract: their factual background is already the
+ * intended finish, so it remains protected and only the marked design features are editable.
+ */
+export function geometryLockCompositionPolicy(
+  style: StylePreset,
+  groundSource: 'photo' | 'paper' = 'photo',
+): GeometryLockCompositionPolicy {
+  const ground = groundContractFor(style, groundSource);
+  const keepsSourceGround = ground !== 'paint';
+  return {
+    ground,
+    protectUnmarkedGround: keepsSourceGround,
+    protectHousePixels: keepsSourceGround,
+    protectDrivewayPixels: keepsSourceGround,
+    // Plain paper has no factual roof pixels to recover; its exact corrugated roofs are drawn by
+    // the app. Only a genuinely photographic contract may paste photographed structures back.
+    useSourceStructurePixels: ground === 'photo',
+    useExactGroundOverlay: keepsSourceGround,
+  };
 }
 
 /**

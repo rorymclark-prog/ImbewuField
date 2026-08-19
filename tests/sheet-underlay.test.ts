@@ -5,6 +5,7 @@ import {
   canChooseUnderlay,
   frameForUnderlay,
   hasFarmerPhoto,
+  savedSheetUnderlayNote,
   sheetUnderlayOptions,
   underlayCacheSuffix,
 } from '@/lib/sheet-underlay';
@@ -133,4 +134,18 @@ test('satellite keeps the default cache key on a site that has no imported photo
   assert.equal(underlayCacheSuffix('plain', noPhoto), ':plain');
   // Called without a frame it keeps its original, frame-blind answers.
   assert.equal(underlayCacheSuffix('satellite'), ':satellite');
+});
+
+test('a saved satellite master cannot be described by the next plain-paper choice', () => {
+  assert.equal(
+    savedSheetUnderlayNote('satellite', 'plain'),
+    'Satellite underlay. Plain paper applies only to the next render.',
+  );
+});
+
+test('legacy masters stay usable without inventing which underlay was baked into them', () => {
+  assert.equal(
+    savedSheetUnderlayNote(undefined, 'plain'),
+    'This older saved map predates underlay tracking. Plain paper applies only to the next render.',
+  );
 });

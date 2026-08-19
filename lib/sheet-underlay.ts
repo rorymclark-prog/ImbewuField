@@ -38,6 +38,33 @@ import type { CanvasFrame } from '@/lib/design-canvas';
  */
 export type SheetUnderlay = 'photo' | 'satellite' | 'plain';
 
+/** Farmer-facing names shared by the picker and durable Saved-map provenance. */
+export const SHEET_UNDERLAY_LABEL: Readonly<Record<SheetUnderlay, string>> = {
+  photo: 'Your photo',
+  satellite: 'Satellite',
+  plain: 'Plain paper',
+};
+
+/**
+ * Explain which underlay belongs to an opened SAVED bitmap, independently of the picker.
+ *
+ * The picker controls the NEXT render. It does not repaint a bitmap already stored in IndexedDB.
+ * Before underlay provenance was stored, a satellite master could therefore be open beside a
+ * pressed "Plain paper" pill. The picture was intact, but the screen claimed the opposite and made
+ * it look as though a later Gemini run had replaced the exact layer. Keep that distinction in one
+ * tested sentence so every saved-map surface answers the same question.
+ */
+export function savedSheetUnderlayNote(
+  saved: SheetUnderlay | undefined,
+  next: SheetUnderlay,
+): string {
+  if (!saved) {
+    return `This older saved map predates underlay tracking. ${SHEET_UNDERLAY_LABEL[next]} applies only to the next render.`;
+  }
+  if (saved === next) return `${SHEET_UNDERLAY_LABEL[saved]} underlay.`;
+  return `${SHEET_UNDERLAY_LABEL[saved]} underlay. ${SHEET_UNDERLAY_LABEL[next]} applies only to the next render.`;
+}
+
 /**
  * True only where there is genuinely a choice BETWEEN THE TWO PHOTOGRAPHS.
  *

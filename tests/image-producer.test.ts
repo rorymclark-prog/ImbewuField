@@ -8,7 +8,7 @@ import { buildFinishedSheetPolishPrompt, buildLockedBackgroundPrompt, buildLocke
 import { ELEMENT_CATALOG } from '../lib/design-elements.ts';
 import { isDifferentBuild } from '../lib/pwa-update.ts';
 import { preserveCanvasNavigation, type DesignCanvasState } from '../lib/design-canvas.ts';
-import { exactModelInputMarks, hasConflictingRenderAuthority, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '../lib/render-policy.ts';
+import { exactModelInputMarks, geometryLockCompositionPolicy, hasConflictingRenderAuthority, polishModelInputMarks, RENDERED_DRIVEWAY_EDGE, renderAuthorityFlagsForStyle, renderPolicyForStyle } from '../lib/render-policy.ts';
 import { lineInFilter, REFERENCE_SHEET_LABEL } from '../lib/glossy-filters.ts';
 import { EARTHWORKS_ROUTE_STYLE, WATER_LEGEND_SECTION_ORDER, pairedWaterDestinationCanopyIds, waterFeaturePresentationDimensions, waterFeaturePresentationScale, waterLegendSectionForFeature, waterLegendSectionForRoute, waterRouteLegendEntries, waterRoutesWithVisualBridges, waterRouteStyleFor, earthworksRouteStyleFor } from '../lib/water-cartography.ts';
 import { authenticateApiRequest, MAX_API_BODY_BYTES, oversizedApiBodyResponse } from '../lib/api-auth.ts';
@@ -141,6 +141,50 @@ test('Satellite Overlay remains the explicit reversible model-authored style', (
     exactGeometry: false,
     useStyleReference: false,
   });
+});
+
+test('painted Geometry Lock keeps one editable property interior instead of satellite islands', () => {
+  for (const style of ['precision_atlas', 'extension_blueprint', 'field_ledger', 'homestead_storybook', 'karoo_folk', 'chatgpt_atlas', 'master_atlas'] as const) {
+    assert.deepEqual(geometryLockCompositionPolicy(style, 'photo'), {
+      ground: 'paint',
+      protectUnmarkedGround: false,
+      protectHousePixels: false,
+      protectDrivewayPixels: false,
+      useSourceStructurePixels: false,
+      useExactGroundOverlay: false,
+    }, style);
+  }
+});
+
+test('photo and paper Geometry Lock retain their factual background contracts', () => {
+  assert.deepEqual(geometryLockCompositionPolicy('photo_plan', 'photo'), {
+    ground: 'photo',
+    protectUnmarkedGround: true,
+    protectHousePixels: true,
+    protectDrivewayPixels: true,
+    useSourceStructurePixels: true,
+    useExactGroundOverlay: true,
+  });
+  assert.deepEqual(geometryLockCompositionPolicy('precision_atlas', 'paper'), {
+    ground: 'paper',
+    protectUnmarkedGround: true,
+    protectHousePixels: true,
+    protectDrivewayPixels: true,
+    useSourceStructurePixels: false,
+    useExactGroundOverlay: true,
+  });
+});
+
+test('the Geometry-Lock finisher obeys the shared composition policy', () => {
+  const src = readFileSync(new URL('../components/design/DesignGlossy.tsx', import.meta.url), 'utf8');
+  assert.match(src, /protectUnmarkedGround: composition\.protectUnmarkedGround/,
+    'the protect mask must take its background contract from the shared style policy');
+  assert.match(src, /locked && compositionPolicy\.useExactGroundOverlay/,
+    'painted styles must be able to suppress the exact ground tiles that caused the collage');
+  assert.match(src, /compositionPolicy\.useSourceStructurePixels/,
+    'the finisher must not paste photographic roof or driveway pixels into painted styles');
+  assert.match(src, /return polishModelInputMarks\(filter\)/,
+    'Gemini still needs the saved placement marks when the property interior is continuously editable');
 });
 
 test('style-derived queue flags have exactly one render authority', () => {
