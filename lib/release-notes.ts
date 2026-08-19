@@ -35,6 +35,19 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '19 August',
+    sha: '5f783d9',
+    changes: [
+      "Planting windows now follow your farm's own rainfall record, not the nearest big city's — and the plan says which it used",
+      'Crop plans no longer put the same crop family back-to-back in a bed, and tray-raised seedlings now hold their bed from the month you plant them out',
+      'The harvest-loss slider now starts at 25% — the researched figure for South African smallholders — and you can still set your own',
+      'Set your household size to see a guideline of the vegetables your family needs for the year',
+      'Orange, Lemon and Grapefruit now have their own tree cards',
+      'Painted map styles no longer cover the exact master drawing',
+      'Weather panel icons are bigger and easier to read',
+    ],
+  },
+  {
+    when: '19 August',
     sha: '6c453fd',
     changes: [
       'Full-design maps now give the drawing more room and use one clear grouped legend',
