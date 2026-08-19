@@ -552,9 +552,13 @@ test('coarse maturity planning rounds supported day counts up instead of freeing
 
 test('a tray crop keeps its readiness window separate from actual bed occupancy', () => {
   // KZN DARD gives a 4–6 week warm-condition nursery period that may double
-  // in cold conditions. The month plan may start checking at one month, but
-  // the actual calendar commits to one planned transplant month. Nursery
-  // uncertainty must not be painted as occupied field space.
+  // in cold conditions. The month plan may start checking at one month, and
+  // 2026-08-19 (see TRANSPLANT_BED_RESERVED_FROM_MONTHS): the bed is RESERVED
+  // from that earliest check month, because that is the month the farmer-
+  // facing surfaces (transplant task, buying schedule, occupancy bar) tell
+  // the farmer to be ready to plant — a bed the farmer may plant into cannot
+  // be offered to another crop. Harvest timing stays anchored to the planned
+  // (conservative, later) transplant month.
   const lettuce = cropByKey('lettuce');
   assert.ok(lettuce?.transplant);
   const planting: Planting = {
@@ -568,11 +572,16 @@ test('a tray crop keeps its readiness window separate from actual bed occupancy'
   assert.equal(plannedBedEntryMonth(planting.sowMonth, lettuce), 10);
   assert.equal(latestBedEntryMonth(planting.sowMonth, lettuce), 11);
   assert.equal(harvestMonthForCrop(planting.sowMonth, lettuce), 1);
-  assert.deepEqual(occupiedMonthsForPlanting(planting), [10, 11, 12, 1]);
+  // Occupancy runs from the earliest transplant month (9), not the planned
+  // one (10) — the same month the 'transplant' task below dates. Before the
+  // 2026-08-19 fix this was [10, 11, 12, 1] while the farmer was told to
+  // plant in month 9: the stress harness measured 2,003 double-bookings
+  // across 891 farms from exactly this one-month mismatch.
+  assert.deepEqual(occupiedMonthsForPlanting(planting), [9, 10, 11, 12, 1]);
   assert.equal(
     tasksForPlan([planting], BEDS).find((task) => task.action === 'transplant')?.month,
     9,
-    'the earlier dated marker is a readiness check, not occupied bed time',
+    'the dated marker and the start of reserved bed time now agree',
   );
 });
 
@@ -798,8 +807,13 @@ test('timeline offsets anchor field entry to sowing and never repeat an existing
     ...existingTrayCrop, id: 'planned-tray', sowMonth: 10, existing: undefined,
   };
 
-  assert.deepEqual(plantingBedEntryOffsets(existingTrayCrop, 11, 24), [2]);
-  assert.deepEqual(plantingBedEntryOffsets(nextOctoberTrayCrop, 11, 24), [13]);
+  // Bed-entry offsets use the RESERVED edge (sow + 1 for a tray crop) since
+  // 2026-08-19 — the month the transplant task tells the farmer to be ready,
+  // not the later planned month. Cabbage sown month 11 viewed from month 11:
+  // reserved from month 12 = offset 1 (was offset 2 when the planned edge
+  // leaked in here while every farmer-facing surface printed sow + 1).
+  assert.deepEqual(plantingBedEntryOffsets(existingTrayCrop, 11, 24), [1]);
+  assert.deepEqual(plantingBedEntryOffsets(nextOctoberTrayCrop, 11, 24), [12]);
   assert.equal(plantingIsActiveOrPlanned({ ...existingTrayCrop, sowMonth: 1 }, 11), false);
   assert.deepEqual(recurringPlanPlantings([existingTrayCrop, nextOctoberTrayCrop]), [nextOctoberTrayCrop]);
 });

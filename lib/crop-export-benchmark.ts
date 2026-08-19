@@ -368,7 +368,11 @@ export function buildOccupancyCalendar(
       if (!crop) continue;
       if (crop.timingVerified === false) continue;
       const span = holdMonths(p.sowMonth, crop).length;
-      const entry = plannedBedEntryMonth(p.sowMonth, crop);
+      // holdMonths and plantingBedEntryOffsets both start at the reserved
+      // earliest field-entry edge; measuring the growing (non-harvest) length
+      // from the PLANNED month here painted the whole bar one month late and
+      // ran it one month past the true bed release for tray crops.
+      const entry = bedEntryMonth(p.sowMonth, crop);
       const harvest = harvestMonthForCrop(p.sowMonth, crop);
       const greenSpan = ((harvest - entry) % 12 + 12) % 12;
       for (const start of plantingBedEntryOffsets(p, nowMonth, 12)) {

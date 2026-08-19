@@ -189,6 +189,24 @@ export const TRANSPLANT_ENTRY_LATEST_MONTHS = 3;
  */
 export const TRANSPLANT_ENTRY_PLANNED_MONTHS = 2;
 
+/**
+ * WHICH EDGE RESERVES THE BED (decided 2026-08-19, closing a 2,003-violation
+ * stress finding). The farmer-facing surfaces print the EARLIEST edge as the
+ * moment field entry may happen: tasksForPlan emits the "check seedlings;
+ * transplant when ready" job in the sow+1 month, the bed-plan and detail
+ * views print "check/transplant when ready <sow+1>–<sow+3>", the buying
+ * schedule stages seedlings for the sow+1 month, and the land-occupancy bar
+ * already painted from sow+1. The bed must be free when the farmer is told
+ * they may plant — so every occupancy ledger reserves the bed from
+ * TRANSPLANT_ENTRY_EARLIEST_MONTHS while harvest timing and bed RELEASE stay
+ * anchored to the PLANNED working transplant month (the conservative end of
+ * the published 4–6 week warm range). One month of the reservation therefore
+ * covers nursery-readiness uncertainty rather than guaranteed plant growth;
+ * that is the price of never double-booking ground the printed calendar has
+ * already offered to a tray of seedlings.
+ */
+export const TRANSPLANT_BED_RESERVED_FROM_MONTHS = TRANSPLANT_ENTRY_EARLIEST_MONTHS;
+
 /** Earliest month a tray crop may occupy the bed. Reserving from this edge
  * prevents another crop being placed on ground seedlings may already need. */
 export function bedEntryMonth(sowMonth: number, crop: Pick<CropDef, 'transplant'>): number {
@@ -249,8 +267,14 @@ export function occupiedMonthsForPlanting(
     return [];
   }
   const maturityOffset = planningMaturityMonths(crop.daysToHarvest);
-  const span = maturityOffset + (crop.harvestWindowMonths ?? 0) + 1;
-  const starts = plannedBedEntryMonth(planting.sowMonth, crop);
+  // Reserved from the printed earliest field-entry month; released after the
+  // harvest window computed from the PLANNED transplant month — see
+  // TRANSPLANT_BED_RESERVED_FROM_MONTHS for why the edges differ.
+  const reservedEarly = crop.transplant
+    ? TRANSPLANT_ENTRY_PLANNED_MONTHS - TRANSPLANT_BED_RESERVED_FROM_MONTHS
+    : 0;
+  const span = maturityOffset + (crop.harvestWindowMonths ?? 0) + 1 + reservedEarly;
+  const starts = bedEntryMonth(planting.sowMonth, crop);
   return Array.from({ length: span }, (_, offset) => wrapMonth(starts + offset));
 }
 
@@ -267,7 +291,11 @@ export function plantingBedEntryOffsets(
 ): number[] {
   const crop = cropByKey(planting.cropKey);
   if (!crop || horizonMonths <= 0) return [];
-  const nurseryOffset = crop.transplant ? TRANSPLANT_ENTRY_PLANNED_MONTHS : 0;
+  // The reservation edge, not the working transplant month: these offsets
+  // start occupancy bars and the occupancy calendar, which must begin where
+  // occupiedMonthsForPlanting begins or a bar painted one month late runs one
+  // month past the true bed release.
+  const nurseryOffset = crop.transplant ? TRANSPLANT_BED_RESERVED_FROM_MONTHS : 0;
   const first = planting.existing
     ? existingSowOffset(planting.sowMonth, nowMonth) + nurseryOffset
     : ((planting.sowMonth - nowMonth) % 12 + 12) % 12 + nurseryOffset;
@@ -1350,7 +1378,7 @@ export function buildFieldUtilizationByMonth(plantings: Planting[], beds: PlanBe
     if (!arr) { arr = Array<number>(13).fill(0); perBed.set(bed.id, arr); }
     occupiedMonthsForPlanting(p).forEach((month, offsetFromBedEntry) => {
       const offsetFromSow = offsetFromBedEntry
-        + (crop.transplant ? TRANSPLANT_ENTRY_PLANNED_MONTHS : 0);
+        + (crop.transplant ? TRANSPLANT_BED_RESERVED_FROM_MONTHS : 0);
       if (slotIsPast(p, nowMonth, offsetFromSow)) return; // finished months of an existing crop are history, not occupancy
       arr[month] += areaHere;
     });
