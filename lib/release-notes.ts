@@ -34,6 +34,14 @@ export interface ReleaseNote {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '19 August',
+    sha: 'cb7290b',
+    changes: [
+      'Named tree cards now place immediately; use Other to choose from the full catalogue',
+      'High-quality Gemini map renders now use Gemini Pro instead of the draft model',
+    ],
+  },
+  {
     when: '18 August',
     sha: '032c90d',
     changes: [
