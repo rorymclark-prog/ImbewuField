@@ -2998,8 +2998,15 @@ export function autoSuggestPlan(
   return {
     plantings,
     notes: orderNotes(notes),
-    laterThisYear: cropsWaitingOnTheirWindow(
-      explicitCropKeys, pool, beds, pattern, nowMonth, plantings, occupancy, rotation,
+    // Computed from the CONSOLIDATED plan, not the planning ledger. When two
+    // passes pick the same crop/bed/month, consolidatePlantings keeps the
+    // larger share as one cohort — but each pass had already added its own
+    // share to `occupancy`, so the internal ledger can read a bed as fuller
+    // than the plan the farmer is shown. The waiting panel must answer for
+    // the emitted plan ("given THIS plan, when could the crop first fit?"),
+    // so it rebuilds occupancy and rotation from exactly what is returned.
+    laterThisYear: recomputeLaterThisYear(
+      answers, pattern, beds, plantings, usableExistingPlantings, nowMonth,
     ),
   };
 }
@@ -3019,9 +3026,9 @@ export function autoSuggestPlan(
  * has its own note naming that cause, and telling the farmer to "wait for the
  * window" would be a second, wrong explanation for the same absence. So every
  * one of these must hold: the crop was chosen by name, the planner can
- * schedule it at all, this month is not in its sowing window, and — the part
- * that separates a timing story from a space story — there is STILL somewhere
- * on this farm the crop would fit at SOME month of that window. Checked against
+ * schedule it at all, and — the part that separates a timing story from a
+ * space story — there is STILL somewhere on this farm the crop would fit at
+ * SOME month of that window. Checked against
  * the final occupancy and the final rotation ledger, so it is a fact about the
  * finished plan rather than a guess about why a pass gave up. Where no month of
  * the window has room anywhere, the entry is dropped entirely: that absence is
@@ -3034,6 +3041,16 @@ export function autoSuggestPlan(
  * next sowing window starts around Aug" when beetroot's summer window opens in
  * February. Both facts are now carried separately and, when they differ, both
  * are said out loud.
+ *
+ * WINDOW-OPEN-NOW (the second 2026-08-20 fix). This used to skip any crop
+ * whose window CONTAINS the current month — so peas and peppers, chosen in
+ * August with August in their windows but no room this month, vanished from
+ * both the plan and this panel (Rory hit exactly that). A window that is open
+ * right now with the first real room months away is the strongest version of
+ * the timing story, not a reason to stay silent. The one case still skipped
+ * is firstFitMonth === nowMonth: an entry claiming there is room this month
+ * would contradict the plan that just declined to place the crop — the gap
+ * and choice notes own that absence.
  */
 function cropsWaitingOnTheirWindow(
   explicitCropKeys: ReadonlySet<string>,
@@ -3052,10 +3069,12 @@ function cropsWaitingOnTheirWindow(
     if (!explicitCropKeys.has(crop.key) || planted.has(crop.key)) continue;
     if (!hasVerifiedSchedule(crop)) continue;
     const sowMonths = crop.sowMonths[pattern];
-    if (!sowMonths.length || sowMonths.includes(nowMonth)) continue;
+    if (!sowMonths.length) continue;
     const byDistance = [...sowMonths]
       .sort((a, b) => monthsForward(nowMonth, a) - monthsForward(nowMonth, b));
     // The window's own start — a fact about the crop, not about this farm.
+    // When the window contains the current month this IS the current month
+    // (monthsForward === 0 sorts first).
     const nextWindowMonth = byDistance[0];
     // The soonest month of that window with somewhere to put it — a fact about
     // this farm. Undefined means nowhere at all, all year: not a timing story.
@@ -3065,11 +3084,99 @@ function cropsWaitingOnTheirWindow(
       && usableShare(occupancy, bed, sowMonth, crop, 1) !== null));
     if (firstFitMonth === undefined) continue;
     const opens = MONTHS_SHORT[nextWindowMonth - 1];
-    const text = firstFitMonth === nextWindowMonth
-      ? `${crop.name} — its next sowing window opens in ${opens}, and this plan still has room for it then.`
-      : `${crop.name} — its next sowing window opens in ${opens}, but this plan has nowhere to put it that month; `
-        + `the first sowing month it could still fit into is ${MONTHS_SHORT[firstFitMonth - 1]}.`;
+    let text: string;
+    if (nextWindowMonth === nowMonth) {
+      // Window open right now. Any other firstFitMonth is strictly forward by
+      // construction (byDistance sorts by monthsForward), so a plain !==
+      // comparison is wrap-safe where a numeric > would not be.
+      if (firstFitMonth === nowMonth) continue;
+      text = `${crop.name} — its sowing window is open right now, but this plan has nowhere to put it until ${MONTHS_SHORT[firstFitMonth - 1]}.`;
+    } else {
+      text = firstFitMonth === nextWindowMonth
+        ? `${crop.name} — its next sowing window opens in ${opens}, and this plan still has room for it then.`
+        : `${crop.name} — its next sowing window opens in ${opens}, but this plan has nowhere to put it that month; `
+          + `the first sowing month it could still fit into is ${MONTHS_SHORT[firstFitMonth - 1]}.`;
+    }
     out.push({ cropKey: crop.key, nextWindowMonth, firstFitMonth, text });
   }
   return out;
+}
+
+/**
+ * The "Waiting for their sowing window" list recomputed from a given month's
+ * perspective, for a proposal that was GENERATED at a different anchor month.
+ *
+ * The whole-year planner (lib/crop-plan-ideal.ts) runs autoSuggestPlan at all
+ * 12 anchor months and keeps the best cycle. That winner's own laterThisYear
+ * was written from its anchor's point of view — "opens in X" sentences that
+ * are false relative to the farmer's actual today — so the wrapper replaces
+ * it with this: the same deliberately-narrow producer, run against the same
+ * final plan, but with the ledgers rebuilt at the real current month.
+ *
+ * Mirrors autoSuggestPlan's own input hygiene and ledger seeding (the bed and
+ * planting filters, Occupancy.seed, BedRotation + recordUse) rather than
+ * exporting the private ledger classes.
+ */
+export function recomputeLaterThisYear(
+  answers: AutoSuggestAnswers,
+  pattern: RainPattern,
+  beds: PlanBed[],
+  proposedPlantings: readonly Planting[],
+  existingPlantings: readonly Planting[],
+  nowMonth: number,
+): LaterThisYearEntry[] {
+  const explicitCropKeys = new Set((answers.cropKeys ?? []).filter(Boolean));
+  if (!explicitCropKeys.size) return [];
+  // Mirror autoSuggestPlan's early exits exactly — a run that refuses to plan
+  // (no confirmed irrigation) reports NO waiting crops, and this recompute
+  // must agree with it rather than invent entries the plan never had.
+  if (answers.reliableIrrigation !== true) return [];
+  if (!Number.isInteger(nowMonth) || nowMonth < 1 || nowMonth > 12) nowMonth = 1;
+
+  const seenBedIds = new Set<string>();
+  const usableBeds = beds.filter((bed) => {
+    if (
+      !bed.id.trim()
+      || seenBedIds.has(bed.id)
+      || !Number.isFinite(bed.areaM2)
+      || bed.areaM2 <= 0
+      || (bed.minDimM !== undefined && (!Number.isFinite(bed.minDimM) || bed.minDimM <= 0))
+    ) return false;
+    seenBedIds.add(bed.id);
+    return true;
+  });
+  const usableBedIds = new Set(usableBeds.map((bed) => bed.id));
+  const usablePlanting = (planting: Planting) =>
+    usableBedIds.has(planting.bedId)
+    && Number.isInteger(planting.sowMonth)
+    && planting.sowMonth >= 1
+    && planting.sowMonth <= 12;
+  const usableExisting = existingPlantings.filter(usablePlanting);
+  const usableProposed = proposedPlantings.filter(usablePlanting);
+
+  const pool = SCHEDULABLE_CROPS.filter((crop) => explicitCropKeys.has(crop.key));
+
+  const occupancy = new Occupancy(answers.allowMixedCropsInBed === true, nowMonth);
+  const holdOf = (p: Planting) => {
+    const crop = CROPS.find((c) => c.key === p.cropKey);
+    return crop ?? { key: p.cropKey, daysToHarvest: 0 };
+  };
+  occupancy.seed(usableExisting, holdOf, nowMonth);
+  occupancy.seed(usableProposed, holdOf, nowMonth);
+
+  const exactFamilies = new Set(pool.map((crop) => rotationFamilyOf(crop)));
+  const rotation = new BedRotation(
+    usableExisting,
+    nowMonth,
+    answers.rotateCrops,
+    exactFamilies.size === 1 ? [...exactFamilies][0] : null,
+  );
+  for (const planting of usableProposed) {
+    const crop = CROPS.find((c) => c.key === planting.cropKey);
+    if (crop) rotation.recordUse(planting.bedId, crop, planting.sowMonth);
+  }
+
+  return cropsWaitingOnTheirWindow(
+    explicitCropKeys, pool, usableBeds, pattern, nowMonth, usableProposed, occupancy, rotation,
+  );
 }
