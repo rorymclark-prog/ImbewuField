@@ -34,6 +34,18 @@ export interface ReleaseNote {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '20 August',
+    sha: '7fa68e3',
+    changes: [
+      'Commercial plans now use every bed you set aside — none are skipped in silence',
+      'The plan now says why any bed was left empty, and what you can do about it',
+      'Stored crops like maize and beans now show how long they feed you after harvest',
+      'Two new crops: true spinach and turnips, with sourced planting windows',
+      'Coastal farms can now be offered pepper and tomato sowings through spring',
+      'Winter cover crops now prefer the rotation-friendly choice for each plot',
+    ],
+  },
+  {
     when: '19 August',
     sha: '5f783d9',
     changes: [
