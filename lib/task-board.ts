@@ -99,6 +99,11 @@ export interface BoardTask {
    *  ItemEditSheet use — instead of rendering `icon` as raw emoji text.
    *  Undefined for non-crop kinds (survey/lesson), which have no art system. */
   cropKey?: string;
+  /** CropTask['action'] (lib/crop-plan.ts), set only for kind 'crop' tasks. Lets a renderer
+   *  pick an icon/category per task without re-parsing the title string — added for the
+   *  Task Planner screen (app/cropplan), which used to invent its own day-of-week rota
+   *  instead of reading real tasks. */
+  action?: CropTask['action'];
   /** Real calendar month, 1-12, consistent with monthsAway — needed to emit a concrete .ics date. */
   dueMonth: number;
   /** Months until due; can exceed 11 for the harvest of a crop planned nearly a year out. */
@@ -162,6 +167,7 @@ export function buildCropBoardTasks(
       subtitle: `${t.bedLabel} · ${dueLabel(monthsAway)}`,
       icon: t.icon,
       cropKey: t.cropKey,
+      action: t.action,
       // Derived from the resolved offset (not t.month) so a clamped-to-now
       // prep task carries the month it's actually due.
       dueMonth: wrapMonth(currentMonth + monthsAway),
@@ -184,6 +190,15 @@ export function buildCropBoardTasks(
  */
 export function loadCropBoardTasks(completedIds: Set<string>): BoardTask[] {
   if (typeof window === 'undefined' || !window.localStorage) return [];
+  const { beds, plantings } = loadCropBoardSource();
+  const currentMonth = new Date().getMonth() + 1;
+  return buildCropBoardTasks(plantings, beds, currentMonth, completedIds);
+}
+
+/** Shared bed/planting resolution behind loadCropBoardTasks and
+ *  loadCropBoardTasksForMonth — same main-site Studio → legacy canvas →
+ *  virtual-bed fallback either way. */
+function loadCropBoardSource(): { beds: PlanBed[]; plantings: Planting[] } {
   const main = resolveMainSite(loadPlaces());
   const canvas = main && Number.isFinite(main.lat) && Number.isFinite(main.lon)
     ? loadCanvasState(designSiteIdFromLocation({ lat: main.lat, lon: main.lon } as LocationData))
@@ -191,8 +206,28 @@ export function loadCropBoardTasks(completedIds: Set<string>): BoardTask[] {
   const beds = taskBoardBeds(canvas, loadFacilitatorState());
   const bedIds = new Set(beds.map((b) => b.id));
   const plantings = loadCropPlan().plantings.filter((p) => bedIds.has(p.bedId));
-  const currentMonth = new Date().getMonth() + 1;
-  return buildCropBoardTasks(plantings, beds, currentMonth, completedIds);
+  return { beds, plantings };
+}
+
+/**
+ * Tasks due in one specific calendar month (1-12), independent of "now" —
+ * built for the Task Planner (app/cropplan), which browses forward and back
+ * through months rather than only showing what's due today. Crop-plan months
+ * carry no year (see lib/crop-plan.ts), so this returns whichever cohort
+ * tasks land on that month name each time it recurs, same convention as
+ * MONTH_FOCUS and the rest of the planner already use.
+ *
+ * Reuses buildCropBoardTasks by treating `month` as the reference "now" —
+ * taskMonthsFromNow then resolves to 0 for exactly the tasks due that month,
+ * so filtering to monthsAway === 0 gives that month's real, sourced tasks
+ * with no invented weekday rota layered on top.
+ */
+export function loadCropBoardTasksForMonth(month: number, completedIds: Set<string>): BoardTask[] {
+  if (typeof window === 'undefined' || !window.localStorage) return [];
+  if (!Number.isSafeInteger(month) || month < 1 || month > 12) return [];
+  const { beds, plantings } = loadCropBoardSource();
+  return buildCropBoardTasks(plantings, beds, month, completedIds)
+    .filter((t) => t.monthsAway === 0);
 }
 
 // ── Completion store ────────────────────────────────────────────────────────

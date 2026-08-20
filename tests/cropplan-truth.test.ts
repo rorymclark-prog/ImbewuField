@@ -1,23 +1,26 @@
 import assert from 'node:assert/strict';
-import { readFileSync, writeFileSync, unlinkSync } from 'node:fs';
-import { tmpdir } from 'node:os';
-import { join } from 'node:path';
-import { pathToFileURL } from 'node:url';
+import { readFileSync } from 'node:fs';
 import test from 'node:test';
 
 import { cropByKey } from '../lib/crop-catalog.ts';
-import { DEFAULT_BEDS } from '../app/cropplan/load-beds.ts';
 
 // TWO DEFECTS, ONE SCREEN: app/cropplan/page.tsx.
 //
-// 1. A farmer with a single bed configured — the normal state straight out of a fresh garden
-//    survey, or after adding one crop in the planner — crashed the whole Crop Plan screen.
-//    `beds[1]` and `beds[3] ?? beds[1]` resolved to plain `undefined` on five of the seven
-//    weekdays, and the job titles read `.letter` off it.
+// 1. jobsForDate used to invent a day-of-week rota (Mon water beds A&B, Tue mulch, Wed compost
+//    tea, Thu weed everything, Sat photo) parameterised only by whichever beds a farmer had — not
+//    by anything they had actually scheduled. It also used to crash on a one-bed farm reading
+//    `.letter` off `undefined`. Both defects are gone by construction now: the page no longer has
+//    a jobsForDate function at all — every job it shows comes from loadCropBoardTasksForMonth
+//    (lib/task-board.ts), which can only ever emit tasks traceable to a real planting
+//    (see tests/cropplan-task-source.test.ts for that guarantee). This test asserts the deleted
+//    function stays deleted and the real pipeline is what's wired in, so the fiction can't quietly
+//    creep back in a future edit.
 // 2. September told a farmer to sow maize. The catalog's own maize entry (lib/crop-catalog.ts)
 //    puts every rainfall pattern's sowing window at Oct-Dec — the same "false-early" defect
 //    tests/calendar-truth.test.ts already exists to catch on the neighbouring /calendar page, just
-//    typed by hand into this one instead.
+//    typed by hand into this one instead. MONTH_FOCUS is generic seasonal guidance (not derived
+//    from any farmer's beds) and survives the task-source rewrite unchanged, so this half of the
+//    guard is unchanged too.
 //
 // A third defect this file used to guard — /calendar having no door anywhere in the app — landed
 // independently via #215 (the seasonal calendar's own Farm Tools entry) and is covered there by
@@ -29,59 +32,32 @@ const read = (rel: string) => readFileSync(new URL(rel, import.meta.url), 'utf8'
 const PAGE = read('../app/cropplan/page.tsx');
 
 // ---------------------------------------------------------------------------
-// 1. jobsForDate must survive a one-bed farm
+// 1. No invented rota — the real task source is what's wired in
 // ---------------------------------------------------------------------------
 
-// Brace-balanced extraction, not a regex up to the next blank line — the function's body has its
-// own nested braces (a switch, arrow functions) and a fragile text boundary would silently stop
-// matching the day the function grows a line. This mirrors calendar-truth.test.ts's rule of
-// reading the page's own source rather than mirroring it by hand.
-function extractFunction(source: string, name: string): string {
-  const start = source.indexOf(`function ${name}(`);
-  assert.ok(start >= 0, `function ${name} not found in app/cropplan/page.tsx`);
-  const braceStart = source.indexOf('{', start);
-  let depth = 0;
-  for (let i = braceStart; i < source.length; i++) {
-    if (source[i] === '{') depth++;
-    else if (source[i] === '}') {
-      depth -= 1;
-      if (depth === 0) return source.slice(start, i + 1);
-    }
-  }
-  throw new Error(`unbalanced braces extracting ${name} from app/cropplan/page.tsx`);
-}
+test('the task-planner screen has no invented day-of-week job rota', () => {
+  assert.ok(
+    !/function jobsForDate/.test(PAGE),
+    'jobsForDate reappeared in app/cropplan/page.tsx — the invented weekday rota must not come back',
+  );
+  assert.ok(
+    !/getDay\(\)\s*\)\s*\{[\s\S]*case 1:/.test(PAGE),
+    'a day-of-week switch statement reappeared in app/cropplan/page.tsx',
+  );
+  assert.match(
+    PAGE,
+    /loadCropBoardTasksForMonth/,
+    'app/cropplan/page.tsx must source its jobs from loadCropBoardTasksForMonth (lib/task-board.ts)',
+  );
+  // The heading must not collide with the flagship /facilitator/crops "Crop Plan" screen —
+  // this one is "Task Planner" everywhere, matching its own NavDrawer label.
+  assert.match(PAGE, /Task Planner/);
+  assert.doesNotMatch(PAGE, />Crop Plan</, 'page heading still says "Crop Plan", colliding with /facilitator/crops');
+});
 
-test('a one-bed farm does not crash the crop-plan day/week views', async () => {
-  const jobsForDateSrc = extractFunction(PAGE, 'jobsForDate')
-    .replace('function jobsForDate', 'export function jobsForDate');
-
-  // .tsx can't be imported directly under plain `node --test` (JSX needs a real transform, not
-  // just type-stripping) — the codebase's existing tests read such files as text instead. This
-  // one goes a step further and actually executes the extracted logic, because a regression here
-  // is a crash, and a string match on the source can't prove the function still runs.
-  // DEFAULT_BEDS itself is imported live from load-beds.ts (see top of file) rather than
-  // regex-extracted from page.tsx text — it moved there in #215's account-isolation split, and an
-  // import that breaks if it moves again is a stronger guard than a source-text pattern would be.
-  const moduleSource = `const DEFAULT_BEDS = ${JSON.stringify(DEFAULT_BEDS)};\n${jobsForDateSrc}\n`;
-  const tmpFile = join(tmpdir(), `cropplan-jobsfordate-${process.pid}-${Date.now()}.ts`);
-  writeFileSync(tmpFile, moduleSource, 'utf8');
-  try {
-    const { jobsForDate } = await import(pathToFileURL(tmpFile).href);
-    const oneBed = [{ letter: 'A', crop: 'Spinach' }];
-    // Seven consecutive dates cover every getDay() value exactly once, whichever weekday the
-    // first one happens to land on — no dependency on knowing 1 Jan 2026's actual weekday.
-    const week = Array.from({ length: 7 }, (_, i) => new Date(2026, 0, 1 + i));
-    for (const day of week) {
-      const jobs = jobsForDate(day, oneBed);
-      assert.ok(Array.isArray(jobs) && jobs.length > 0, `no jobs returned for getDay()=${day.getDay()}`);
-      for (const job of jobs) {
-        assert.ok(!/undefined/.test(job.title), `job title leaked undefined: "${job.title}"`);
-        assert.ok(!/undefined/.test(job.sub), `job sub leaked undefined: "${job.sub}"`);
-      }
-    }
-  } finally {
-    unlinkSync(tmpFile);
-  }
+test('a farmer with no real crop plan sees an unconditional notice, not fabricated jobs', () => {
+  assert.match(PAGE, /!hasPlan/, 'the no-plan notice must be unconditional on whether a real plan exists');
+  assert.match(PAGE, /No crop plan yet/);
 });
 
 // ---------------------------------------------------------------------------

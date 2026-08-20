@@ -127,14 +127,20 @@ test('a real garden survey wins over a standalone planner crop list', () => {
   assert.deepEqual(result.beds, [{ letter: 'A', crop: 'Real crop' }]);
 });
 
-test('the page renders an unmissable, pinned banner with an escape hatch whenever the demo beds are in use', () => {
+test('the page renders an unmissable, pinned banner with an escape hatch whenever there is no real crop plan', () => {
+  // The Task Planner (app/cropplan/page.tsx) no longer generates any jobs from this
+  // module's beds at all — see tests/cropplan-task-source.test.ts. It sources jobs
+  // exclusively from the real crop plan (lib/task-board.ts's loadCropBoardTasksForMonth)
+  // and gates its notice on whether that real plan exists (`!hasPlan`), unconditionally —
+  // fixing the older bug where a farmer with only a garden survey (isDemo === false here,
+  // but still no real dated plan) got fabricated jobs with no warning at all.
   const pageSource = readFileSync(new URL('../app/cropplan/page.tsx', import.meta.url), 'utf8');
   // Pinned outside the `overflow-y-auto` scroll container, not inside it — scrolling the
   // job list must never be able to carry the notice off-screen.
   const scrollContainerIndex = pageSource.indexOf('overflow-y-auto');
-  const bannerIndex = pageSource.indexOf('isDemoBeds &&');
-  assert.ok(bannerIndex > 0, 'page.tsx must gate a banner on the loadBeds() isDemo flag');
-  assert.ok(bannerIndex < scrollContainerIndex, 'the demo banner must sit outside the scrollable content, not inside it');
-  assert.match(pageSource, /Example schedule/, 'the banner must say plainly that this is an example');
-  assert.match(pageSource, /href="\/facilitator\/crops"/, 'the banner must offer a real way to set up the farmer\'s own beds');
+  const bannerIndex = pageSource.indexOf('!hasPlan &&');
+  assert.ok(bannerIndex > 0, 'page.tsx must gate its no-plan notice on `!hasPlan`, unconditionally');
+  assert.ok(bannerIndex < scrollContainerIndex, 'the no-plan notice must sit outside the scrollable content, not inside it');
+  assert.match(pageSource, /No crop plan yet/, 'the notice must say plainly that there is no real plan yet');
+  assert.match(pageSource, /href="\/facilitator\/crops"/, 'the notice must offer a real way to set up the farmer\'s own crop plan');
 });

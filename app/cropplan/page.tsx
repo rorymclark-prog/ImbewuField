@@ -1,61 +1,50 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import Link from 'next/link';
 import {
-  Droplets, Layers, Sprout, Scissors, Leaf, Camera, ClipboardList,
+  Layers, Sprout, Scissors, Leaf, ClipboardList,
   ChevronLeft, ChevronRight, Sun, CloudRain, Snowflake, Sparkles,
+  CheckCircle2, Circle,
 } from 'lucide-react';
 import BackButton from '@/components/BackButton';
 import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
-import { DEFAULT_BEDS, loadBeds, type Bed } from './load-beds';
+import { loadCropPlan } from '@/lib/crop-plan';
+import {
+  TASK_BOARD_CHANGED_EVENTS, loadCropBoardTasksForMonth,
+  loadCompletedTaskIds, setCompletedTaskState, type BoardTask,
+} from '@/lib/task-board';
 
 // ─── Types & data ────────────────────────────────────────────────────────────
+//
+// This screen used to run its own invented weekly rota (Mon water beds A&B,
+// Tue mulch, Wed compost tea, Thu weed everything, Sat photo) derived from
+// nothing but the day of the week — the exact class of fabricated dated job
+// docs/CROP-PLAN-TRUTH-AUDIT-2026-08-06.md records as removed from the real
+// planner. Every job shown here now comes from loadCropBoardTasksForMonth
+// (lib/task-board.ts), the same sourced-task pipeline the home screen's task
+// card and /facilitator/crops already use — nothing is generated locally.
+// Crop-plan months carry no year, so "due this month" is the finest anchor
+// the real data supports: day and week views show that month's real tasks
+// rather than pinning them to invented weekdays.
 
 type View = 'day' | 'week' | 'month' | 'season';
-type JobType = 'water' | 'mulch' | 'feed' | 'weed' | 'harvest' | 'photo' | 'plan';
-interface Job { type: JobType; title: string; sub: string }
 
-const JOB_META: Record<JobType, { Icon: typeof Droplets; color: string; short: string }> = {
-  water:   { Icon: Droplets,      color: '#235E86', short: 'Water' },
-  mulch:   { Icon: Layers,        color: '#2E6B3A', short: 'Mulch' },
-  feed:    { Icon: Sprout,        color: '#1F4D2B', short: 'Feed' },
-  weed:    { Icon: Scissors,      color: '#5C4F3C', short: 'Weed' },
-  harvest: { Icon: Leaf,          color: '#C07A1E', short: 'Harvest' },
-  photo:   { Icon: Camera,        color: '#C07A1E', short: 'Photo' },
-  plan:    { Icon: ClipboardList, color: '#1F4D2B', short: 'Plan' },
+const ACTION_META: Record<NonNullable<BoardTask['action']>, { Icon: typeof Sprout; color: string; short: string }> = {
+  prep:               { Icon: ClipboardList, color: '#5C4F3C', short: 'Prep' },
+  sow:                { Icon: Sprout,        color: '#1F4D2B', short: 'Sow' },
+  transplant:         { Icon: Leaf,          color: '#2E6B3A', short: 'Transplant' },
+  mulch:              { Icon: Layers,        color: '#2E6B3A', short: 'Mulch' },
+  harvest:            { Icon: Leaf,          color: '#C07A1E', short: 'Harvest' },
+  'terminate-cover':  { Icon: Scissors,      color: '#5C4F3C', short: 'Cut down' },
+  'weed-early':       { Icon: Scissors,      color: '#5C4F3C', short: 'Weed' },
+  'weed-mid':         { Icon: Scissors,      color: '#5C4F3C', short: 'Weed' },
 };
-
-// Deterministic weekly job rota, parameterised by the farmer's beds.
-//
-// A farmer with a single bed configured (a common first-week state, straight
-// out of the garden survey) used to crash this whole screen: B and D fell
-// through `beds[1]` / `beds[3] ?? beds[1]` to plain `undefined`, and five of
-// the seven days read `.letter` off it. Every fallback below now resolves to
-// a real bed, and `pair()` collapses "beds A & A" down to "bed A" so a
-// one-bed farm reads like it was written for one bed, not like a typo.
-function jobsForDate(d: Date, beds: Bed[]): Job[] {
-  const A = beds[0] ?? DEFAULT_BEDS[0];
-  const B = beds[1] ?? A;
-  const C = beds[2] ?? A;
-  const D = beds[3] ?? B;
-  const leafy = beds.find((b) => /spinach|chard|lettuce|kale|cabbage|beans/i.test(b.crop)) ?? A;
-  const lc = (s: string) => s.toLowerCase();
-  const j = (type: JobType, title: string, sub: string): Job => ({ type, title, sub });
-  const pair = (x: Bed, y: Bed) => (x.letter === y.letter ? `bed ${x.letter}` : `beds ${x.letter} & ${y.letter}`);
-  switch (d.getDay()) {
-    case 1: return [j('water', `Water ${pair(A, B)}`, 'Morning · deep')];
-    case 2: return [j('water', `Water ${pair(A, B)}`, 'Morning · deep'), j('mulch', `Mulch ${lc(leafy.crop)}`, 'Straw, 5cm'), j('photo', `Photo bed ${C.letter}`, 'Pest check')];
-    case 3: return [j('feed', 'Feed all beds', 'Compost tea'), j('water', `Water ${pair(C, D)}`, 'Morning')];
-    case 4: return [j('weed', 'Weed all beds', 'Pull before they seed'), j('water', `Water ${pair(A, B)}`, 'Morning')];
-    case 5: return [j('water', `Water ${pair(C, D)}`, 'Morning · deep'), j('harvest', `Harvest ${lc(leafy.crop)}`, 'Pick outer leaves')];
-    case 6: return [j('harvest', `Harvest ${lc(A.crop)}`, 'Early, before the heat'), j('photo', 'Photo all beds', 'Lima checks growth')];
-    default: return [j('plan', 'Review the week', 'Log harvests in the journal'), j('plan', 'Plan next week', 'With Lima')];
-  }
-}
+const FALLBACK_META = { Icon: ClipboardList, color: '#5C4F3C', short: 'Task' };
+function actionMeta(task: BoardTask) { return (task.action && ACTION_META[task.action]) || FALLBACK_META; }
 
 // ─── Date helpers ────────────────────────────────────────────────────────────
 
@@ -99,42 +88,95 @@ const MONTH_FOCUS: Record<number, string> = {
   11: 'Early summer — first tomatoes; water daily, tie up trusses.',
 };
 
+// ─── Task list (shared by day / week / month) ───────────────────────────────
+
+function TaskList({ tasks, onToggle, emptyMessage }: {
+  tasks: BoardTask[]; onToggle: (id: string) => void; emptyMessage: string;
+}) {
+  if (tasks.length === 0) {
+    return (
+      <div className="rounded-2xl px-4 py-6 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
+        <p className="font-sans" style={{ fontSize: 14, color: '#8C7A62', lineHeight: 1.5 }}>{emptyMessage}</p>
+      </div>
+    );
+  }
+  return (
+    <div className="rounded-2xl overflow-hidden" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
+      {tasks.map((task, i) => {
+        const m = actionMeta(task);
+        return (
+          <div key={task.id} className="flex items-center gap-3 px-4 py-3.5" style={{ borderBottom: i < tasks.length - 1 ? '1px solid #E2D8C4' : 'none' }}>
+            <button
+              onClick={() => onToggle(task.id)}
+              aria-label={task.completed ? 'Mark not done' : 'Mark done'}
+              className="flex-shrink-0"
+              style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer', display: 'flex', color: '#1F4D2B' }}
+            >
+              {task.completed ? <CheckCircle2 size={20} strokeWidth={1.8} /> : <Circle size={20} strokeWidth={1.8} />}
+            </button>
+            <div className="flex items-center justify-center rounded-xl flex-shrink-0" style={{ width: 38, height: 38, background: m.color + '18' }}>
+              <m.Icon size={18} style={{ color: m.color }} strokeWidth={1.8} />
+            </div>
+            <div className="flex-1 min-w-0">
+              <div
+                className="font-display font-semibold"
+                style={{ fontSize: 'clamp(15px, 1.2vw, 16px)', color: '#20190F', textDecoration: task.completed ? 'line-through' : 'none', opacity: task.completed ? 0.55 : 1 }}
+              >
+                {task.title}
+              </div>
+              <div className="font-sans truncate" style={{ fontSize: 13, color: '#8C7A62' }}>{task.subtitle}</div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 // ─── Page ────────────────────────────────────────────────────────────────────
 
 export default function CropPlanPage() {
   const [view, setView] = useState<View>('day');
   const [cursor, setCursor] = useState<Date | null>(null);
   const [today, setToday] = useState<Date | null>(null);
-  const [beds, setBeds] = useState<Bed[]>(DEFAULT_BEDS);
-  const [isDemoBeds, setIsDemoBeds] = useState(false);
+  const [completedIds, setCompletedIds] = useState<Set<string>>(new Set());
+  const [hasPlan, setHasPlan] = useState(false);
   const [mounted, setMounted] = useState(false);
 
-  useEffect(() => {
-    const loaded = loadBeds();
-    setBeds(loaded.beds);
-    setIsDemoBeds(loaded.isDemo);
-    const now = new Date(); setCursor(now); setToday(now); setMounted(true);
+  const refresh = useCallback(() => {
+    setCompletedIds(loadCompletedTaskIds());
+    setHasPlan(loadCropPlan().plantings.length > 0);
   }, []);
+
+  useEffect(() => {
+    refresh();
+    const now = new Date(); setCursor(now); setToday(now); setMounted(true);
+    TASK_BOARD_CHANGED_EVENTS.forEach((ev) => window.addEventListener(ev, refresh));
+    return () => TASK_BOARD_CHANGED_EVENTS.forEach((ev) => window.removeEventListener(ev, refresh));
+  }, [refresh]);
+
+  function toggleTask(id: string) {
+    const before = loadCompletedTaskIds();
+    setCompletedIds(setCompletedTaskState(id, !before.has(id)));
+  }
 
   const safeCursor = cursor ?? new Date(0);
   const safeToday = today ?? new Date(0);
 
-  const dayJobs = useMemo(() => jobsForDate(safeCursor, beds), [safeCursor, beds]);
+  const cursorMonth = safeCursor.getMonth() + 1;
   const weekStart = useMemo(() => mondayOf(safeCursor), [safeCursor]);
+  const weekMonth = weekStart.getMonth() + 1;
   const weekDays = useMemo(() => Array.from({ length: 7 }, (_, i) => addDays(weekStart, i)), [weekStart]);
 
-  // Month matrix (Monday-first weeks)
-  const monthMatrix = useMemo(() => {
-    const first = new Date(safeCursor.getFullYear(), safeCursor.getMonth(), 1);
-    const start = mondayOf(first);
-    const weeks: Date[][] = [];
-    for (let w = 0; w < 6; w++) {
-      const row = Array.from({ length: 7 }, (_, i) => addDays(start, w * 7 + i));
-      weeks.push(row);
-      if (row[6].getMonth() !== safeCursor.getMonth() && w >= 4) break;
-    }
-    return weeks;
-  }, [safeCursor]);
+  // Real, sourced tasks — never invented. Day and month share the same
+  // calendar-month bucket; week anchors on the Monday of the viewed week
+  // (a "sensible anchor" per the audit fix, since crop-plan tasks carry no
+  // day-of-week, only a due month).
+  const monthTasks = useMemo(() => (mounted ? loadCropBoardTasksForMonth(cursorMonth, completedIds) : []), [mounted, cursorMonth, completedIds]);
+  const weekTasks = useMemo(
+    () => (mounted ? (weekMonth === cursorMonth ? monthTasks : loadCropBoardTasksForMonth(weekMonth, completedIds)) : []),
+    [mounted, weekMonth, cursorMonth, monthTasks, completedIds],
+  );
 
   const season = saSeason(safeCursor.getMonth());
 
@@ -159,30 +201,32 @@ export default function CropPlanPage() {
         <BackButton fallback="/plan" />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
-        <span className="text-xs font-display" style={{ color: '#5C5040' }}>Crop Plan</span>
+        <span className="text-xs font-display" style={{ color: '#5C5040' }}>Task Planner</span>
         <div className="flex-1" />
         <LessonLink id="crops:planner" label="Learn" />
         <SettingsButton />
       </header>
 
-      {/* Demo-fallback notice — pinned outside the scroll area so it can't be scrolled
-          past. Only DEFAULT_BEDS (an invented example, not anything the farmer saved)
-          triggers this; see load-beds.ts. */}
-      {mounted && isDemoBeds && (
+      {/* No-plan notice — pinned outside the scroll area so it can't be scrolled past.
+          Fires unconditionally whenever there is no real crop plan to source jobs from
+          (lib/crop-plan.ts, imbewu_crop_plan_v1) — a farmer who has only filled in a
+          garden survey, or nothing at all, used to get the invented weekday rota with
+          no warning; now they see nothing invented and this notice instead. */}
+      {mounted && !hasPlan && (
         <div
           className="flex-shrink-0 flex items-center justify-center gap-3 px-4 py-2 flex-wrap text-center"
           style={{ background: '#C07A1E', borderBottom: '1px solid rgba(32,25,15,0.15)' }}
         >
           <span className="flex items-center gap-1.5 font-display font-semibold" style={{ fontSize: 13, color: '#fff' }}>
             <Sparkles size={14} />
-            Example schedule — these are not your beds yet.
+            No crop plan yet — jobs will show here once you plan your crops.
           </span>
           <Link
             href="/facilitator/crops"
             className="flex items-center gap-1 px-3 py-1 rounded-full font-sans font-semibold"
             style={{ fontSize: 12, background: '#fff', color: '#C07A1E', textDecoration: 'none' }}
           >
-            Set up my beds
+            Plan my crops
           </Link>
         </div>
       )}
@@ -200,7 +244,7 @@ export default function CropPlanPage() {
           {/* Title row */}
           <div className="flex items-center justify-between mb-1">
             <div>
-              <div className="font-sans uppercase tracking-widest" style={{ fontSize: 11, color: '#C07A1E', letterSpacing: '0.12em' }}>Crop plan</div>
+              <div className="font-sans uppercase tracking-widest" style={{ fontSize: 11, color: '#C07A1E', letterSpacing: '0.12em' }}>Task planner</div>
               <h1 className="font-display font-bold" style={{ fontSize: 'clamp(22px, 2.6vw, 30px)', color: '#20190F', letterSpacing: '-0.02em', lineHeight: 1.1 }}>
                 {mounted && view === 'day' && `${DOW[(safeCursor.getDay() + 6) % 7]} · ${fmtDM(safeCursor)}`}
                 {mounted && view === 'week' && `Week of ${fmtDM(weekStart)}`}
@@ -234,20 +278,34 @@ export default function CropPlanPage() {
           {view === 'day' && (
             <div>
               <div className="font-sans uppercase tracking-widest mb-3" style={{ fontSize: 11, color: '#8C7A62', letterSpacing: '0.12em' }}>
-                {dayLabel} — {dayJobs.length} {dayJobs.length === 1 ? 'job' : 'jobs'}
+                {dayLabel} — {monthTasks.length} {monthTasks.length === 1 ? 'job' : 'jobs'} due this month
               </div>
-              <div className="rounded-2xl overflow-hidden" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-                {dayJobs.map((job, i) => {
-                  const m = JOB_META[job.type];
+              <TaskList
+                tasks={monthTasks}
+                onToggle={toggleTask}
+                emptyMessage="Nothing due from your crop plan for this day — check the month view."
+              />
+            </div>
+          )}
+
+          {/* ── WEEK ── */}
+          {view === 'week' && (
+            <div>
+              <div className="font-sans uppercase tracking-widest mb-3" style={{ fontSize: 11, color: '#8C7A62', letterSpacing: '0.12em' }}>
+                {weekTasks.length} {weekTasks.length === 1 ? 'job' : 'jobs'} due this month
+              </div>
+              <TaskList
+                tasks={weekTasks}
+                onToggle={toggleTask}
+                emptyMessage="Nothing due from your crop plan for this week — check the month view."
+              />
+              <div className="grid grid-cols-7 gap-1 mt-4">
+                {weekDays.map((d) => {
+                  const td = mounted && sameDay(d, safeToday);
                   return (
-                    <div key={i} className="flex items-center gap-3 px-4 py-3.5" style={{ borderBottom: i < dayJobs.length - 1 ? '1px solid #E2D8C4' : 'none' }}>
-                      <div className="flex items-center justify-center rounded-xl flex-shrink-0" style={{ width: 38, height: 38, background: m.color + '18' }}>
-                        <m.Icon size={18} style={{ color: m.color }} strokeWidth={1.8} />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <div className="font-display font-semibold" style={{ fontSize: 'clamp(15px, 1.2vw, 16px)', color: '#20190F' }}>{job.title}</div>
-                        <div className="font-sans" style={{ fontSize: 13, color: '#8C7A62' }}>{job.sub}</div>
-                      </div>
+                    <div key={d.toISOString()} className="rounded-xl py-2 text-center" style={{ background: td ? '#1F4D2B' : '#FFFEFA', border: `1px solid ${td ? '#1F4D2B' : '#E2D8C4'}` }}>
+                      <div className="font-sans font-semibold" style={{ fontSize: 11, color: td ? '#EAF3E2' : '#5C5040' }}>{DOW[(d.getDay() + 6) % 7]}</div>
+                      <div className="font-display" style={{ fontSize: 12, color: td ? '#EAF3E2' : '#8C7A62' }}>{d.getDate()}</div>
                     </div>
                   );
                 })}
@@ -255,71 +313,49 @@ export default function CropPlanPage() {
             </div>
           )}
 
-          {/* ── WEEK ── */}
-          {view === 'week' && (
-            <div className="grid grid-cols-1 md:grid-cols-7 gap-2">
-              {weekDays.map((d) => {
-                const jobs = jobsForDate(d, beds);
-                const td = mounted && sameDay(d, safeToday);
-                return (
-                  <div key={d.toISOString()} className="rounded-2xl p-3" style={{ background: '#FFFEFA', border: `1px solid ${td ? '#1F4D2B' : '#E2D8C4'}` }}>
-                    <div className="flex md:flex-col md:items-start items-center gap-2 mb-2">
-                      <span className="font-sans font-semibold" style={{ fontSize: 13, color: td ? '#1F4D2B' : '#5C5040' }}>{DOW[(d.getDay() + 6) % 7]}</span>
-                      <span className="font-display" style={{ fontSize: 13, color: '#8C7A62' }}>{d.getDate()}</span>
-                    </div>
-                    <div className="flex md:flex-col flex-wrap gap-1.5">
-                      {jobs.map((job, i) => {
-                        const m = JOB_META[job.type];
+          {/* ── MONTH ── */}
+          {view === 'month' && (
+            <div>
+              <div className="rounded-2xl p-3 md:p-4 mb-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
+                <div className="grid grid-cols-7 gap-1 mb-1">
+                  {DOW.map((d) => <div key={d} className="text-center font-sans" style={{ fontSize: 11, color: '#8C7A62' }}>{d}</div>)}
+                </div>
+                <div className="space-y-1">
+                  {(() => {
+                    const first = new Date(safeCursor.getFullYear(), safeCursor.getMonth(), 1);
+                    const start = mondayOf(first);
+                    const weeks: Date[][] = [];
+                    for (let w = 0; w < 6; w++) {
+                      const row = Array.from({ length: 7 }, (_, i) => addDays(start, w * 7 + i));
+                      weeks.push(row);
+                      if (row[6].getMonth() !== safeCursor.getMonth() && w >= 4) break;
+                    }
+                    return weeks;
+                  })().map((week, wi) => (
+                    <div key={wi} className="grid grid-cols-7 gap-1">
+                      {week.map((d) => {
+                        const inMonth = d.getMonth() === safeCursor.getMonth();
+                        const td = mounted && sameDay(d, safeToday);
                         return (
-                          <span key={i} className="inline-flex items-center gap-1 px-2 py-1 rounded-lg font-sans font-medium" style={{ fontSize: 12, background: m.color + '15', color: m.color }}>
-                            <m.Icon size={11} strokeWidth={2} />{m.short}
-                          </span>
+                          <button key={d.toISOString()} onClick={() => { setCursor(new Date(d)); setView('day'); }}
+                            className="rounded-lg flex flex-col items-center justify-center py-1.5"
+                            style={{ aspectRatio: '1', background: td ? '#1F4D2B' : inMonth ? 'rgba(226,216,196,0.3)' : 'transparent', border: td ? 'none' : '1px solid transparent', opacity: inMonth ? 1 : 0.35, cursor: 'pointer' }}>
+                            <span className="font-display" style={{ fontSize: 13, fontWeight: td ? 700 : 500, color: td ? '#EAF3E2' : '#20190F' }}>{d.getDate()}</span>
+                          </button>
                         );
                       })}
                     </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-
-          {/* ── MONTH ── */}
-          {view === 'month' && (
-            <div className="rounded-2xl p-3 md:p-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-              <div className="grid grid-cols-7 gap-1 mb-1">
-                {DOW.map((d) => <div key={d} className="text-center font-sans" style={{ fontSize: 11, color: '#8C7A62' }}>{d}</div>)}
+                  ))}
+                </div>
               </div>
-              <div className="space-y-1">
-                {monthMatrix.map((week, wi) => (
-                  <div key={wi} className="grid grid-cols-7 gap-1">
-                    {week.map((d) => {
-                      const inMonth = d.getMonth() === safeCursor.getMonth();
-                      const td = mounted && sameDay(d, safeToday);
-                      const jobs = jobsForDate(d, beds);
-                      const types = Array.from(new Set(jobs.map((j) => j.type))).slice(0, 3);
-                      return (
-                        <button key={d.toISOString()} onClick={() => { setCursor(new Date(d)); setView('day'); }}
-                          className="rounded-lg flex flex-col items-center justify-start py-1.5"
-                          style={{ aspectRatio: '1', background: td ? '#1F4D2B' : inMonth ? 'rgba(226,216,196,0.3)' : 'transparent', border: td ? 'none' : '1px solid transparent', opacity: inMonth ? 1 : 0.35, cursor: 'pointer' }}>
-                          <span className="font-display" style={{ fontSize: 13, fontWeight: td ? 700 : 500, color: td ? '#EAF3E2' : '#20190F' }}>{d.getDate()}</span>
-                          {inMonth && (
-                            <span className="flex gap-0.5 mt-1">
-                              {types.map((t, i) => <span key={i} className="rounded-full" style={{ width: 4, height: 4, background: td ? '#EAF3E2' : JOB_META[t].color }} />)}
-                            </span>
-                          )}
-                        </button>
-                      );
-                    })}
-                  </div>
-                ))}
+              <div className="font-sans uppercase tracking-widest mb-3" style={{ fontSize: 11, color: '#8C7A62', letterSpacing: '0.12em' }}>
+                {monthTasks.length} {monthTasks.length === 1 ? 'job' : 'jobs'} due this month
               </div>
-              <div className="flex flex-wrap gap-2.5 mt-3 pt-3" style={{ borderTop: '1px solid #E2D8C4' }}>
-                {(['water', 'mulch', 'feed', 'harvest'] as JobType[]).map((t) => (
-                  <span key={t} className="inline-flex items-center gap-1 font-sans" style={{ fontSize: 11, color: '#5C5040' }}>
-                    <span className="rounded-full" style={{ width: 6, height: 6, background: JOB_META[t].color }} />{JOB_META[t].short}
-                  </span>
-                ))}
-              </div>
+              <TaskList
+                tasks={monthTasks}
+                onToggle={toggleTask}
+                emptyMessage="Nothing due from your crop plan for this month."
+              />
             </div>
           )}
 
