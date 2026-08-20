@@ -32,7 +32,10 @@ import {
   type AutoSuggestAnswers,
 } from '@/lib/crop-autosuggest';
 import { MONTHS_SHORT } from '@/lib/crop-catalog';
-import { occupiedMonthsForPlanting, type PlanBed, type Planting } from '@/lib/crop-plan';
+import {
+  occupiedMonthsForPlanting, plantingBedEntryOffsets,
+  type PlanBed, type Planting,
+} from '@/lib/crop-plan';
 
 const REAL_NOW = 8; // the August this feature was born in
 const REAL_NOW_YEAR = 2026; // fixed: determinism oracle forbids reading the clock
@@ -314,4 +317,118 @@ test('scorePlan counts distinct crops per month and never counts a cover crop as
   assert.equal(result.meanMonthlyFreshCrops,
     Math.round(((12 - result.zeroFreshMonths.length) / 12) * 100) / 100);
   assert.ok(result.zeroFreshMonths.length >= 4, 'two chard cohorts cannot feed the whole year');
+});
+
+// ── H. a saved starter is not invisible to the sweep ────────────────────────
+//
+// The sweep evaluates twelve HYPOTHETICAL anchor months, and inside the engine
+// `nowMonth` is whichever one it is testing — not today. The occupancy ledger
+// keeps two views of that: offsets from `nowMonth`, and calendar months. A
+// template row is written to BOTH, and the calendar-month view is what makes
+// it legible from every anchor, because the anchor frame is a ROTATION of the
+// real one rather than a shift: read from a rotated frame, a real overlap can
+// look clear, and a clear month can look taken.
+//
+// A saved one-time starter (`once`) used to be written to the offset ledger
+// ALONE, on the reasoning that its months do not recur and so must not block
+// the same-named months next year. That left it legible only from the anchor
+// it was seeded under, and the sweep booked a second crop onto ground the
+// starter genuinely held. Farmers saw plots printed at 200%.
+//
+// Both tests below measure what the PDF measures — plantingBedEntryOffsets
+// against the REAL month, never a calendar-month shortcut. That distinction is
+// load-bearing here: a template row sown in a month that has already passed
+// has its first real sowing up to eleven months out, so its early calendar
+// months belong to year TWO. Those are exactly the year-one holes a starter is
+// added to fill, and a calendar-month oracle reports them as collisions when
+// nothing collides.
+
+const STARTER_BEDS: PlanBed[] = [
+  ...Array.from({ length: 4 }, (_, i) => ({
+    id: `b${i + 1}`, label: `Bed ${i + 1}`, areaM2: 9, minDimM: 1.5, kind: 'bed' as const,
+  })),
+  { id: 'p1', label: 'Plot 1', areaM2: 100, minDimM: 7, kind: 'plot' as const },
+  { id: 'p2', label: 'Plot 2', areaM2: 120, minDimM: 8, kind: 'plot' as const },
+];
+
+/** Printed occupancy: every row positioned against the REAL current month over
+ *  a two-year horizon, exactly as the plan PDF and occupancy calendar do it.
+ *  Returns bedId → offset → share of the bed committed. */
+function printedLoad(plantings: readonly Planting[], realNowMonth: number) {
+  const byBed = new Map<string, Map<number, number>>();
+  for (const p of plantings) {
+    const months = occupiedMonthsForPlanting(p);
+    if (!months.length) continue;
+    const share = p.areaFraction ?? 1;
+    for (const start of plantingBedEntryOffsets(p, realNowMonth, 24)) {
+      for (let i = 0; i < months.length; i++) {
+        const offset = start + i;
+        if (offset < 0 || offset >= 24) continue;
+        let bed = byBed.get(p.bedId);
+        if (!bed) { bed = new Map(); byBed.set(p.bedId, bed); }
+        bed.set(offset, (bed.get(offset) ?? 0) + share);
+      }
+    }
+  }
+  return byBed;
+}
+
+test('a saved starter holds its ground whichever anchor the sweep is testing', () => {
+  // Whole-plot maize sown in November, stamped for the coming November, read
+  // from a farm whose real month is August. From anchors later in the year the
+  // starter wrapped up to eleven months into that anchor's future, which is
+  // precisely where the offset-only ledger went blind to it.
+  const starter: Planting = {
+    id: 'starter-maize', bedId: 'p1', cropKey: 'maize',
+    sowMonth: 11, once: '2026-11', areaFraction: 1,
+  };
+  const answers = roryAnswers('family', 'steady');
+  const blindAnchors: string[] = [];
+
+  for (let anchorMonth = 1; anchorMonth <= 12; anchorMonth++) {
+    const result = autoSuggestPlan(answers, 'summer', STARTER_BEDS, [starter], anchorMonth);
+    // autoSuggestPlan returns only the rows it ADDED, so the starter goes back
+    // in by hand to measure what the printed plot would actually carry.
+    const load = printedLoad([starter, ...result.plantings], REAL_NOW).get('p1');
+    const worst = Math.max(0, ...[...(load?.values() ?? [])]);
+    if (worst > 1.0001) {
+      blindAnchors.push(`anchored at ${MONTHS_SHORT[anchorMonth - 1]}: Plot 1 reaches ${Math.round(worst * 100)}%`);
+    }
+  }
+
+  assert.deepEqual(blindAnchors, [],
+    `the sweep booked ground the starter already holds:\n  ${blindAnchors.join('\n  ')}`);
+});
+
+test('accept a whole-year plan, regenerate against it, and nothing prints over 100%', () => {
+  // The farmer-visible path end to end: generate, accept (rows merge into the
+  // saved plan), regenerate against the saved plan — then read the result the
+  // way the PDF reads it. Swept across every real starting month, because the
+  // bug only surfaces when the winning anchor differs from today, which is
+  // most of the year.
+  const failures: string[] = [];
+
+  for (const rhythm of ['steady', 'few-big'] as const) {
+    for (let realNowMonth = 1; realNowMonth <= 12; realNowMonth++) {
+      const answers = roryAnswers('family', rhythm);
+      const first = suggestIdealYearPlan(answers, 'summer', STARTER_BEDS, [], realNowMonth, REAL_NOW_YEAR);
+      const accepted = [...first.best.result.plantings];
+      if (!accepted.some((p) => typeof p.once === 'string')) continue; // no starter, nothing to pin
+
+      const second = suggestIdealYearPlan(answers, 'summer', STARTER_BEDS, accepted, realNowMonth, REAL_NOW_YEAR);
+      const finalPlan = [...accepted, ...second.best.result.plantings];
+
+      for (const [bedId, cells] of printedLoad(finalPlan, realNowMonth)) {
+        for (const [offset, total] of cells) {
+          if (total > 1.0001) {
+            failures.push(`${rhythm}, now=${MONTHS_SHORT[realNowMonth - 1]}: `
+              + `${bedId} at +${offset} months is ${Math.round(total * 100)}%`);
+          }
+        }
+      }
+    }
+  }
+
+  assert.deepEqual(failures.slice(0, 10), [],
+    `${failures.length} bed-months printed over 100%:\n  ${failures.slice(0, 10).join('\n  ')}`);
 });

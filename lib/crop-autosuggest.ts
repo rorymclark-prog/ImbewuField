@@ -432,15 +432,26 @@ class Occupancy {
           const offset = entryOffset + index;
           if (offset >= 0) this.addExistingOffset(p.bedId, offset, crop.key, safeFraction);
         }
-      } else if (typeof p.once === 'string') {
-        // A saved one-time starter: its sowing is still ahead, so it holds
-        // real forward offsets like any planned row — but it must never touch
-        // the ANNUAL ledger, because its months do not recur and would
-        // otherwise block a legal planting in the same-named months next year.
-        for (const offset of plannedOccupiedOffsets(nowMonth, p.sowMonth, crop)) {
-          this.addPlannedOffset(p.bedId, offset, crop.key, safeFraction);
-        }
       } else {
+        // A saved one-time starter holds ground exactly like a planned row, and
+        // is seeded as one — INCLUDING the annual ledger, which an earlier
+        // version deliberately skipped on the reasoning that its months do not
+        // recur so they must not block the same-named months next year.
+        //
+        // That reasoning ignored what it is being compared against. This ledger
+        // is rebuilt for each of twelve candidate anchors, so `nowMonth` is
+        // usually a synthetic anchor rather than today, and offsets are only
+        // meaningful within their own anchor's frame. Planned rows survive that
+        // because they are also written to the annual ledger, which is keyed by
+        // calendar month and therefore identical in every frame. A starter
+        // written to offsets ALONE was compared across rotated frames, so an
+        // overlap real in the printed year read as clear here — and the sweep
+        // scheduled a second crop on top of it. Farmers saw plots at 200%.
+        //
+        // Blocking the calendar month costs nothing it should have kept: every
+        // planned row repeats annually, so a recurring crop overlapping the
+        // starter's months collides in year one no matter which year it is
+        // read in. There is no legal planting here to lose.
         this.add(p.bedId, p.sowMonth, crop, safeFraction);
       }
     }
