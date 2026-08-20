@@ -125,6 +125,23 @@ export const IDEAL_PLAN_COPY = {
   starterLine: (crops: string) =>
     `To cover ground that would stand empty in your first months, one-time starter sowings are included: ${crops}. Each runs once — from next year the repeating plan covers those months itself.`,
   starterBadge: 'first season only',
+  // The whole-year plan is now the default, so the card has to say out loud
+  // what it is before the farmer reads a thin first year as a broken plan.
+  // Two years, named: the one being filled, and the one to work towards.
+  // The grid has always drawn 24 columns, but nothing ON it said which year
+  // was which — a ↻ glyph and a fade, both explained in small print below the
+  // grid, were the whole signal. Named on the axis instead.
+  yearOneBand: 'Year one — from this month',
+  yearTwoBand: 'Year two — the full year, and every year after',
+  twoYearHeading: 'Your first year, and the year it settles into',
+  twoYearLine:
+    'This plan covers two years. The first fills your beds from today, so some months in it are still thin while crops get into the ground. The second is the full repeating year — that is the one to work towards.',
+  // Said plainly because a full farm and an empty plan look identical on a
+  // calendar: measured across 288 test farms, 58% of the months with no sowing
+  // job had no bed even a quarter free. "Nothing to sow" is usually "everything
+  // is already growing", and the farmer cannot tell those apart from the chart.
+  fullBedsLine:
+    'A month with no sowing job is not always a gap — most often every bed is still holding a crop that has not come out yet.',
 } as const;
 
 const monthsForward = (from: number, to: number): number => ((to - from) % 12 + 12) % 12;

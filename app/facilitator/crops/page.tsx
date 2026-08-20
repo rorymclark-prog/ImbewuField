@@ -490,7 +490,11 @@ function FacilitatorCropsPageInner() {
   // repeating cycle. idealMeta is transient review-only metadata (like
   // laterThisYear) — nothing new is persisted, the whole-year basis note
   // rides the existing planNotes contract.
-  const [aPlanTiming, setAPlanTiming] = useState<PlanTiming>('fromNow');
+  // Defaults to the whole-year plan: it is the better plan on almost every
+  // farm, and left opt-in behind this toggle most farmers never saw it. The
+  // review card names the two years out loud (twoYearLine) so a thin first
+  // year reads as a farm filling up rather than a broken plan.
+  const [aPlanTiming, setAPlanTiming] = useState<PlanTiming>('idealYear');
   const [idealMeta, setIdealMeta] = useState<IdealYearPlan | null>(null);
   const [autoGenerating, setAutoGenerating] = useState(false);
 
@@ -504,7 +508,7 @@ function FacilitatorCropsPageInner() {
     setAAllowVinesInBeds(false);
     setAAllowMixedCropsInBed(true);
     setAReliableIrrigation(false);
-    setAPlanTiming('fromNow');
+    setAPlanTiming('idealYear');
     setIdealMeta(null);
     setAutoGenerating(false);
     setAutoResult(null);
@@ -1408,7 +1412,7 @@ function FacilitatorCropsPageInner() {
                 className="flex"
                 style={{ borderBottom: '1px solid #E2D8C4', position: 'sticky', top: 52, zIndex: 3, background: '#FFFEFA', borderTopLeftRadius: 16, borderTopRightRadius: 16 }}
               >
-                <div style={{ position: 'sticky', left: 0, zIndex: 2, width: 128, flexShrink: 0, background: '#FFFEFA', borderRight: '1px solid #E2D8C4', padding: '8px 10px' }}>
+                <div style={{ position: 'sticky', left: 0, zIndex: 2, width: 128, flexShrink: 0, background: '#FFFEFA', borderRight: '1px solid #E2D8C4', padding: '8px 10px', display: 'flex', alignItems: 'flex-end' }}>
                   <span className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.08em' }}>Bed</span>
                 </div>
                 <div
@@ -1416,7 +1420,31 @@ function FacilitatorCropsPageInner() {
                   className="flex-1"
                   style={{ overflowX: 'hidden' }}
                 >
-                  <div className="flex" style={{ minWidth: GRID_MIN_WIDTH - 128 }}>
+                  <div style={{ minWidth: GRID_MIN_WIDTH - 128 }}>
+                    {/* Year band. The two years were already on this axis —
+                        DISPLAY_MONTHS has been 24 for a long time — but the
+                        only thing naming them was a ↻ glyph and a paragraph
+                        below the grid, so a farmer scrolling right had no way
+                        to tell the settled year from the one being filled.
+                        Spans are derived from DISPLAY_MONTHS, not two 12s, so
+                        widening the window doesn't silently mislabel it. */}
+                    <div className="flex" style={{ borderBottom: '1px solid #EDE7DB' }}>
+                      <div
+                        className="font-sans uppercase tracking-widest"
+                        style={{ flex: 12, padding: '5px 8px', fontSize: 9.5, letterSpacing: '0.08em', color: '#5F735F', background: 'rgba(31,77,43,0.05)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}
+                      >
+                        {IDEAL_PLAN_COPY.yearOneBand}
+                      </div>
+                      {DISPLAY_MONTHS > 12 && (
+                        <div
+                          className="font-sans uppercase tracking-widest"
+                          style={{ flex: DISPLAY_MONTHS - 12, padding: '5px 8px', fontSize: 9.5, letterSpacing: '0.08em', color: '#8C7A62', borderLeft: '2px solid #C4A46A', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}
+                        >
+                          {IDEAL_PLAN_COPY.yearTwoBand}
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex">
                     {monthOrder.map((m, i) => (
                       <div
                         key={i}
@@ -1437,6 +1465,7 @@ function FacilitatorCropsPageInner() {
                         {i === 12 ? '↻ ' : ''}{MONTHS_SHORT[m - 1]}
                       </div>
                     ))}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -3608,7 +3637,9 @@ function AutoSuggestModal({
                   const line = { fontSize: 11.5, color: '#3E5240', lineHeight: 1.45 } as const;
                   return (
                     <div className="rounded-xl px-3 py-2.5 mb-2 space-y-1" style={{ background: '#F5F8F3', border: '1px solid #B9C9B9' }}>
-                      <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#5F735F', letterSpacing: '0.08em' }}>{IDEAL_PLAN_COPY.reviewHeading}</div>
+                      <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#5F735F', letterSpacing: '0.08em' }}>{IDEAL_PLAN_COPY.twoYearHeading}</div>
+                      <p className="font-sans" style={line}>{IDEAL_PLAN_COPY.twoYearLine}</p>
+                      <p className="font-sans" style={line}>{IDEAL_PLAN_COPY.fullBedsLine}</p>
                       <p className="font-sans" style={line}>
                         {idealMeta.sameAsToday ? IDEAL_PLAN_COPY.sameAsTodayLine : IDEAL_PLAN_COPY.chosenLine}
                       </p>
