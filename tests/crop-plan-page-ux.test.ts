@@ -2,11 +2,13 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
 
+import { cropByKey } from '@/lib/crop-catalog';
 import {
   bedOverlapFraction,
   bedOverlapWarning,
   benchmarkAreaConflictBedLabels,
   benchmarkAreaConflictDetails,
+  occupiedMonthsForPlanting,
   type PlanBed,
   type Planting,
 } from '@/lib/crop-plan';
@@ -53,7 +55,11 @@ test('a whole-bed planting onto occupied ground raises the same warning a fracti
   assert.equal(whole.committedFraction, 0.75);
   assert.equal(whole.totalFraction, 1.75);
   assert.deepEqual(whole.cropNames, ['Cabbage', 'Dry beans (sugar beans)']);
-  assert.ok(whole.overlapMonths.length > 0, 'the farmer is told WHICH months clash, not just a percentage');
+  assert.deepEqual(whole.clashes.map((clash) => clash.cropName), whole.cropNames);
+  assert.ok(
+    whole.clashes.every((clash) => clash.months.length > 0),
+    'the farmer is told WHICH months clash, not just a percentage',
+  );
 
   // Same computation, same numbers, as the fraction picker's own path.
   const half = bedOverlapWarning('bed-1', 12, 2, 0.5, plantings);
@@ -133,6 +139,99 @@ test('no conflict means no detail list', () => {
   assert.deepEqual(benchmarkAreaConflictDetails(plantings, BEDS, 1), []);
 });
 
+test('a crop that shares no month with anything is NOT listed under the same-ground headline', () => {
+  // The first cut of this list returned every planting on a flagged bed. The
+  // sentence above it tells the farmer these crops are on the same ground at
+  // the same time, so a crop growing alone in its own season was accused of a
+  // clash it is not part of — and handed an "Open ›" button to "fix" it.
+  const plantings: Planting[] = [
+    { id: 'carrots', bedId: 'bed-1', cropKey: 'carrots', sowMonth: 3, areaFraction: 1 },
+    { id: 'beetroot', bedId: 'bed-1', cropKey: 'beetroot', sowMonth: 3, areaFraction: 1 },
+    // Aug-Oct: shares no month with the Mar-Jul pair above it.
+    { id: 'beans', bedId: 'bed-1', cropKey: 'green-beans', sowMonth: 8, areaFraction: 1 },
+  ];
+  assert.deepEqual(
+    benchmarkAreaConflictBedLabels(plantings, BEDS, 1),
+    ['Bed 1'],
+    'the fixture must actually be a conflict, or this test proves nothing',
+  );
+  const [bed] = benchmarkAreaConflictDetails(plantings, BEDS, 1);
+  assert.deepEqual(
+    bed.plantings.map((row) => row.plantingId).sort(),
+    ['beetroot', 'carrots'],
+    'only the two crops standing on the same months belong under a same-ground headline',
+  );
+  assert.ok(bed.plantings.every((row) => row.reason === 'overlap'));
+});
+
+test('a bed flagged for an unusable share names that crop, and says that is the reason', () => {
+  // benchmarkAreaConflictBedLabels flags a bed for a SINGLE planting whose
+  // share is not a usable fraction. Nothing overlaps; the row must not be
+  // dressed as an overlap, and the screen reads its reason to write the line.
+  const plantings: Planting[] = [
+    { id: 'over', bedId: 'bed-1', cropKey: 'carrots', sowMonth: 3, areaFraction: 1.5 },
+  ];
+  assert.deepEqual(benchmarkAreaConflictBedLabels(plantings, BEDS, 1), ['Bed 1']);
+  const [bed] = benchmarkAreaConflictDetails(plantings, BEDS, 1);
+  assert.deepEqual(bed.plantings.map((row) => [row.plantingId, row.reason]), [['over', 'invalid-share']]);
+});
+
+test('a legacy crop whose months cannot be derived is never listed with an empty span', () => {
+  // Kale has no derivable occupied months. The old list printed it as a row
+  // with a blank month span under a headline claiming a same-time collision.
+  const plantings: Planting[] = [
+    { id: 'kale', bedId: 'bed-1', cropKey: 'kale', sowMonth: 3, areaFraction: 1 },
+    { id: 'carrots', bedId: 'bed-1', cropKey: 'carrots', sowMonth: 3, areaFraction: 1 },
+    { id: 'beetroot', bedId: 'bed-1', cropKey: 'beetroot', sowMonth: 3, areaFraction: 1 },
+  ];
+  const [bed] = benchmarkAreaConflictDetails(plantings, BEDS, 1);
+  assert.deepEqual(bed.plantings.map((row) => row.plantingId).sort(), ['beetroot', 'carrots']);
+  assert.ok(
+    bed.plantings.every((row) => row.months.length > 0),
+    'an overlap row with no months is a row the app cannot justify printing',
+  );
+});
+
+test('two beds sharing a label: only the overbooked one is listed', () => {
+  // Bed labels are farmer-typed and need not be unique. Selecting the detail
+  // beds by label listed an innocent bed's crops under the red headline.
+  const twins: PlanBed[] = [
+    { id: 'bed-1', label: 'Bed 1', areaM2: 10 },
+    { id: 'bed-2', label: 'Bed 1', areaM2: 10 },
+  ];
+  const plantings: Planting[] = [
+    { id: 'a', bedId: 'bed-1', cropKey: 'carrots', sowMonth: 3, areaFraction: 1 },
+    { id: 'b', bedId: 'bed-1', cropKey: 'beetroot', sowMonth: 3, areaFraction: 1 },
+    { id: 'innocent', bedId: 'bed-2', cropKey: 'carrots', sowMonth: 3, areaFraction: 1 },
+  ];
+  const details = benchmarkAreaConflictDetails(plantings, twins, 1);
+  assert.deepEqual(details.map((bed) => bed.bedId), ['bed-1']);
+  assert.deepEqual(details[0].plantings.map((row) => row.plantingId).sort(), ['a', 'b']);
+});
+
+test('the overlap warning names each crop\'s OWN clashing months, never a pooled span', () => {
+  // A union across crops reads as one span and can be wider than any real
+  // clash: dry beans meet the new crop from Dec, cabbage only from Jan, and
+  // "Cabbage and Dry beans in Dec–Feb" is a sentence the farmer cannot check
+  // against the chart above it.
+  const plantings: Planting[] = [
+    { id: 'first', bedId: 'bed-1', cropKey: 'dry-beans', sowMonth: 11, areaFraction: 0.5 },
+    { id: 'second', bedId: 'bed-1', cropKey: 'cabbage', sowMonth: 12, areaFraction: 0.25 },
+  ];
+  const warning = bedOverlapWarning('bed-1', 12, 2, 1, plantings);
+  assert.ok(warning);
+  const byCrop = new Map(warning.clashes.map((clash) => [clash.cropName, clash.months]));
+  assert.deepEqual(byCrop.get('Cabbage'), [1, 2], 'cabbage does not meet this planting in December');
+  assert.deepEqual(byCrop.get('Dry beans (sugar beans)'), [12, 1, 2]);
+  // Structural, not fixture-bound: no crop may be shown a month it does not
+  // actually hold at the same time as the new planting.
+  for (const { cropName, months } of warning.clashes) {
+    const owners = plantings.filter((planting) => cropByKey(planting.cropKey)?.name === cropName);
+    const held = new Set(owners.flatMap((planting) => occupiedMonthsForPlanting(planting)));
+    assert.ok(months.every((month) => held.has(month)), `${cropName} is shown a month it does not hold`);
+  }
+});
+
 // ── The site's own driest months ────────────────────────────────────────────
 
 test('driest months are the site\'s three lowest, in calendar order, or nothing', () => {
@@ -148,6 +247,21 @@ test('driest months are the site\'s three lowest, in calendar order, or nothing'
   assert.deepEqual(driestMonths([...rain.slice(0, 11), Number.NaN], 3), []);
 });
 
+test('a site with no dry season gets no "three driest months" finding', () => {
+  // "Its three driest months" reads as a finding about the site. On a flat
+  // record the three named would be an artefact of the month tie-break, so the
+  // page must print nothing rather than an arbitrary trio dressed as a finding.
+  assert.deepEqual(driestMonths(Array<number>(12).fill(90), 3), [], 'twelve equal months are not a dry season');
+  assert.deepEqual(driestMonths(Array<number>(12).fill(0), 3), [], 'an all-zero record is not a finding either');
+  assert.deepEqual(
+    driestMonths([90, 90.2, 90.4, 90.1, 90.3, 90.5, 90.6, 90.1, 90.2, 90.3, 90.4, 90.5], 3),
+    [],
+    'a sub-millimetre spread across the whole year is flat',
+  );
+  // A real dry season still reads normally.
+  assert.equal(driestMonths([120, 110, 90, 40, 20, 8, 6, 14, 35, 80, 130, 140], 3).length, 3);
+});
+
 // ── The page wiring ─────────────────────────────────────────────────────────
 
 test('the overlap warning is rendered outside the fraction-picker branch', () => {
@@ -157,7 +271,7 @@ test('the overlap warning is rendered outside the fraction-picker branch', () =>
   // The old bug in one line: the warning JSX lived between the fraction presets
   // and the closing fragment of the `allowBedSharing || fraction < 1` branch.
   const branchAt = page.indexOf('allowBedSharing || fraction < 1');
-  const warnAt = page.indexOf('This bed is already carrying');
+  const warnAt = page.indexOf('is already carrying');
   const elseAt = page.indexOf('Split this bed (intercrop or stagger a succession)?');
   assert.ok(branchAt > 0 && warnAt > 0 && elseAt > 0);
   assert.ok(
@@ -168,8 +282,8 @@ test('the overlap warning is rendered outside the fraction-picker branch', () =>
 
 test('the overlap warning leads with words and keeps the percentage secondary', () => {
   const page = source('../app/facilitator/crops/page.tsx');
-  const at = page.indexOf('This bed is already carrying');
-  const sentence = page.slice(at, at + 700);
+  const at = page.indexOf('is already carrying');
+  const sentence = page.slice(at, at + 900);
   assert.match(sentence, /compete for the same ground/, 'the farmer is told what happens, not just a total');
   assert.match(sentence, /Still allowed/, 'this stays a warning, never a block');
   // The arithmetic is in brackets, after the plain sentence.
@@ -184,7 +298,7 @@ test('the red benchmark state names the conflicting plantings and can open each 
   // The JSX itself, not the prose about it in a comment above.
   const at = page.indexOf('>Resolve overlapping bed space<');
   assert.ok(at > 0, 'the red state is gone; rewrite this test rather than deleting it');
-  const block = page.slice(at, at + 2600);
+  const block = page.slice(at, at + 3800);
   assert.match(block, /areaConflictDetails\.map/, 'the conflicting plantings must be listed, not only the bed labels');
   assert.match(block, /setActivePlanting\(planting\)/, 'each row opens the planting sheet the page already has');
 });
@@ -203,8 +317,21 @@ test('a disabled "Suggest a plan" says why, without softening the irrigation gat
 
 test('the two long reference cards open on demand, with nothing deleted', () => {
   const page = source('../app/facilitator/crops/page.tsx');
-  assert.match(page, /function DisclosureCard\(/, 'the shared collapsed-by-default card is gone');
-  assert.match(page, /useState\(false\);[\s\S]{0,600}aria-expanded=\{open\}/, 'DisclosureCard must start closed');
+  const cardAt = page.indexOf('function DisclosureCard(');
+  assert.ok(cardAt > 0, 'the shared collapsed-by-default card is gone');
+  // Anchored to DisclosureCard's own body, not a proximity match that any
+  // other `useState(false)` on this 3,000-line page could satisfy.
+  const cardBody = page.slice(cardAt, page.indexOf('\n}\n', cardAt));
+  assert.match(cardBody, /const \[open, setOpen\] = useState\(false\)/, 'DisclosureCard must start closed');
+  assert.match(cardBody, /aria-expanded=\{open\}/, 'the collapse must be announced to a screen reader');
+  assert.match(cardBody, /\{open && </, 'the body must actually be gated on open');
+  // The honesty CLAIM stays on screen even while the method is collapsed.
+  const proveAt = page.indexOf('🔎 What the planner can prove');
+  assert.match(
+    page.slice(proveAt, proveAt + 700),
+    /summary="Every yield figure and date here is either from a published source or labelled as an estimate/,
+    'the always-visible summary must carry the honesty claim itself, not just name the topic',
+  );
 
   for (const title of ['🔎 What the planner can prove', '🔄 Rotate by botanical family']) {
     const at = page.indexOf(title);
@@ -219,8 +346,43 @@ test('the two long reference cards open on demand, with nothing deleted', () => 
 test('the on-screen buying card is the dated calendar, not the flat aggregate', () => {
   const page = source('../app/facilitator/crops/page.tsx');
   assert.match(page, /buildBuyingSchedule\(plantings, beds, currentMonth\)/);
-  assert.doesNotMatch(page, /seedBoqForPlan/, 'the aggregate BOQ must not still feed the card');
-  assert.match(page, /VISIBLE_BUYING_MONTHS/, 'months past the near horizon collapse behind a disclosure');
+  // Anchored to the card itself rather than grepping the whole file.
+  const at = page.indexOf('🌱 Seeds &amp; seedlings');
+  assert.ok(at > 0, 'the buying card is gone; rewrite this test rather than deleting it');
+  const card = page.slice(at, at + 4000);
+  assert.doesNotMatch(card, /seedBoqForPlan/, 'the aggregate BOQ must not still feed the card');
+  assert.match(card, /buyingSchedule\.slice\(0, VISIBLE_BUYING_MONTHS\)/, 'months past the near horizon collapse behind a disclosure');
   // The caveat footnote stays: it is what keeps the quantities honest.
-  assert.match(page, /they are not guaranteed buy quantities/);
+  assert.match(card, /they are not guaranteed buy quantities/);
+
+  // Two sentences that have to hold for every plan that reaches them.
+  // buildBuyingSchedule drops empty months, so the first block is frequently
+  // NOT the current month; and its window is a ROLLING twelve months from now,
+  // which crosses the year seam for any plan opened after about March.
+  assert.doesNotMatch(card, /starting with this month/, 'the first block is often a later month');
+  assert.doesNotMatch(card, />Later in the year \(/, 'a rolling 12-month window is not "this year"');
+  assert.match(card, /Later in the next 12 months \(/);
+});
+
+test('a staple plot is never called a bed by the overlap warning', () => {
+  // The warning was hoisted out of the fraction branch, which is the `isPlot ?`
+  // else-arm — so it newly reached staple plots and called the plot a "bed"
+  // three times, four lines under the modal's own "there are no half-shares
+  // here" plot copy. "+ crop" is unconditional on every row, so two whole-plot
+  // crops in the same months is reachable and worth warning about; it just has
+  // to be worded for a plot.
+  const page = source('../app/facilitator/crops/page.tsx');
+  const at = page.indexOf('is already carrying');
+  assert.ok(at > 0);
+  const sentence = page.slice(at - 400, at + 900);
+  assert.match(sentence, /isPlot \? 'plot' : 'bed'/, 'the warning must name a plot a plot');
+  // The bed-share arithmetic is meaningless on a plot that has no half-shares.
+  assert.match(sentence, /isPlot \? null : \(/, 'the % of the bed line must be suppressed on a plot');
+  assert.match(sentence, /a staple plot grows one field crop at a time/);
+
+  // And the note under it must not point at a space check that did not render.
+  const noteAt = page.indexOf('has a legacy crop whose finish timing is not verified');
+  assert.ok(noteAt > 0);
+  const note = page.slice(noteAt - 300, noteAt + 700);
+  assert.match(note, /overlapWarning\s*\n?\s*\?/, 'the "space check above" reference must be conditional on it rendering');
 });

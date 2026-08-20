@@ -1410,8 +1410,15 @@ function FacilitatorCropsPageInner() {
                 </div>
                 {hasAreaConflict && (
                   <div className="mb-2">
+                    {/* One sentence that has to hold for EVERY row the list can
+                        contain. A bed reaches this state for three different
+                        reasons — crops sharing months, a share that is not a
+                        usable fraction, or a crop whose finish timing the app
+                        will not reason about — so the headline says only the
+                        thing all three have in common, and each row states its
+                        own reason underneath. */}
                     <div className="font-sans mb-1.5" style={{ fontSize: 11.5, color: '#A83A2C', lineHeight: 1.45 }}>
-                      No kg or value total is shown because these crops are booked onto the same ground at the same time. Open one and change its bed, month or share — the app will not guess which crop loses space.
+                      No kg or value total is shown because the space on these beds does not add up. Open a crop below and change its bed, month or share — the app will not guess which crop loses space.
                     </div>
                     {areaConflictDetails.map((conflict) => (
                       <div key={conflict.bedId} className="mb-1.5">
@@ -1419,6 +1426,14 @@ function FacilitatorCropsPageInner() {
                         {conflict.plantings.map((row) => {
                           const planting = plantings.find((p) => p.id === row.plantingId);
                           const span = monthSpanLabel(row.months);
+                          const detail = row.reason === 'invalid-share'
+                            ? (Number.isFinite(row.areaFraction)
+                              ? `share recorded as ${Math.round(row.areaFraction * 100)}% of the bed`
+                              : 'no usable share recorded')
+                            : row.reason === 'unverified-timing'
+                              ? 'finish timing not verified, so its months cannot be checked'
+                              : [span, row.areaFraction < 1 ? `${Math.round(row.areaFraction * 100)}% of the bed` : '']
+                                .filter(Boolean).join(' · ');
                           return (
                             <button
                               key={row.plantingId}
@@ -1432,8 +1447,7 @@ function FacilitatorCropsPageInner() {
                             >
                               <span>
                                 <CropIcon cropKey={row.cropKey} icon={cropByKey(row.cropKey)?.icon ?? '🌱'} size={14} /> {row.cropName}
-                                {span ? <span style={{ color: '#8C7A62' }}> · {span}</span> : null}
-                                {row.areaFraction < 1 ? <span style={{ color: '#8C7A62' }}> · {Math.round(row.areaFraction * 100)}% of the bed</span> : null}
+                                {detail ? <span style={{ color: '#8C7A62' }}> · {detail}</span> : null}
                               </span>
                               <span className="font-sans" style={{ fontSize: 11, color: '#A83A2C' }}>Open ›</span>
                             </button>
@@ -1531,7 +1545,11 @@ function FacilitatorCropsPageInner() {
               <div className="rounded-2xl p-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
                 <div className="font-display font-semibold" style={{ fontSize: 15, color: '#20190F' }}>🌱 Seeds &amp; seedlings — what to buy, and when</div>
                 <p className="font-sans mb-2 mt-0.5" style={{ fontSize: 11.5, color: '#8C7A62', lineHeight: 1.4 }}>
-                  Grouped by the month to get it, starting with this month. Ready-grown seedlings are listed for the month they go in the ground.
+                  {/* The subtitle must not promise which month comes first:
+                      buildBuyingSchedule drops months with nothing to buy, so
+                      the first block is frequently a later one. The month
+                      headings say which months these actually are. */}
+                  Grouped by the month to get it. Ready-grown seedlings are listed for the month they go in the ground.
                 </p>
                 {/* Was one flat alphabetical list of every crop in the plan — the
                     same aggregate the PDF stopped printing. buildBuyingSchedule
@@ -1545,7 +1563,11 @@ function FacilitatorCropsPageInner() {
                   {buyingSchedule.length > VISIBLE_BUYING_MONTHS && (
                     <details className="rounded-xl px-3 py-2" style={{ border: '1px solid #E2D8C4', background: '#FBF6EC' }}>
                       <summary className="font-display font-semibold" style={{ fontSize: 12.5, color: '#1F4D2B', cursor: 'pointer' }}>
-                        Later in the year ({buyingSchedule.length - VISIBLE_BUYING_MONTHS} more {buyingSchedule.length - VISIBLE_BUYING_MONTHS === 1 ? 'month' : 'months'})
+                        {/* The schedule is a ROLLING twelve months from this
+                            one (rollingMonths), so for any plan opened after
+                            about March "later in the year" named the wrong
+                            year for half these months. */}
+                        Later in the next 12 months ({buyingSchedule.length - VISIBLE_BUYING_MONTHS} more {buyingSchedule.length - VISIBLE_BUYING_MONTHS === 1 ? 'month' : 'months'})
                       </summary>
                       <div className="space-y-3 mt-2">
                         {buyingSchedule.slice(VISIBLE_BUYING_MONTHS).map((monthGroup) => (
@@ -1583,7 +1605,11 @@ function FacilitatorCropsPageInner() {
 
             <DisclosureCard
               title="🔎 What the planner can prove"
-              summary="Where the numbers come from, and what they are not."
+              // The card collapses; the CLAIM does not. This line is always on
+              // screen, so the honesty statement itself is what a farmer reads
+              // at a glance and the eleven sentences of method sit behind the
+              // tap — rather than the claim going behind it too.
+              summary="Every yield figure and date here is either from a published source or labelled as an estimate to confirm locally — tap for the method and the sources."
             >
               <p className="font-sans mb-2" style={{ fontSize: 12.5, color: '#5C5040', lineHeight: 1.5 }}>
                 Yield points use the conservative end of published commercial KZN benchmarks where that crop is
@@ -2645,21 +2671,37 @@ function CropPickerModal({
                 this screen is read by farmers, not by a spreadsheet. */}
             {overlapWarning && crop && (
               <div className="font-sans mb-2" style={{ fontSize: 11.5, color: '#9A6018', lineHeight: 1.45 }}>
-                ⚠ This bed is already carrying {listNames(overlapWarning.cropNames)}
-                {overlapWarning.overlapMonths.length > 0
-                  ? <> in {monthSpanLabel(overlapWarning.overlapMonths)}</>
-                  : null}
-                {' — '}adding {crop.name} {fraction >= 1 ? 'to the whole bed' : 'on top of that'} means
-                they compete for the same ground. Still allowed.{' '}
-                <span style={{ color: '#8C7A62' }}>
-                  (Together they need {Math.round(overlapWarning.totalFraction * 100)}% of the bed.)
-                </span>
+                {/* A staple plot reaches this too — "+ crop" is unconditional on
+                    every row, and two whole-plot crops in the same months is
+                    exactly the double-booking a plot most needs told about. So
+                    it gets its own wording rather than being called a bed four
+                    lines under "there are no half-shares here", and no
+                    percentage: on a plot the answer is never a share. */}
+                ⚠ This {isPlot ? 'plot' : 'bed'} is already carrying {listNames(overlapWarning.clashes.map((clash) => (
+                  clash.months.length > 0 ? `${clash.cropName} in ${monthSpanLabel(clash.months)}` : clash.cropName
+                )))}
+                {' — '}adding {crop.name}{isPlot ? '' : fraction >= 1 ? ' to the whole bed' : ' on top of that'} means
+                they compete for the same ground{isPlot ? ', and a staple plot grows one field crop at a time' : ''}. Still allowed.
+                {isPlot ? null : (
+                  <>
+                    {' '}
+                    <span style={{ color: '#8C7A62' }}>
+                      (Together they need {Math.round(overlapWarning.totalFraction * 100)}% of the bed.)
+                    </span>
+                  </>
+                )}
               </div>
             )}
 
             {hasUnverifiedTiming && (
               <div className="font-sans mb-2" style={{ fontSize: 11, color: '#9A6018' }}>
-                ⚠ This bed has a legacy crop whose finish timing is not verified. It is left out of the space check above; check that the ground is actually free before adding another crop.
+                {/* "the space check above" is only a real reference when the
+                    overlap warning actually rendered — with no overlap it
+                    pointed at nothing on screen. */}
+                ⚠ This {isPlot ? 'plot' : 'bed'} has a legacy crop whose finish timing is not verified.{' '}
+                {overlapWarning
+                  ? 'It is left out of the space check above; check that the ground is actually free before adding another crop.'
+                  : 'The app cannot tell whether it still holds this ground, so check that the ground is actually free before adding another crop.'}
               </div>
             )}
 

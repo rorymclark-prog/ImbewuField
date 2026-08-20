@@ -168,9 +168,18 @@ export interface DriestMonth {
  *
  * Returns [] unless all twelve monthly totals are finite, for the same reason
  * siteClimateFromLocationData refuses partial data.
+ *
+ * Also returns [] when the twelve totals are FLAT — all equal, all zero, or
+ * spread by less than a millimetre across the whole year. "Its three driest
+ * months" reads as a finding about the site; on a flat record the three months
+ * named would be an artefact of the month tie-break, so the honest output is
+ * nothing at all rather than an arbitrary trio presented as a finding.
  */
+const FLAT_RAINFALL_SPREAD_MM = 1;
+
 export function driestMonths(monthlyRainMm: number[], count = 3): DriestMonth[] {
   if (!twelveFinite(monthlyRainMm)) return [];
+  if (Math.max(...monthlyRainMm) - Math.min(...monthlyRainMm) < FLAT_RAINFALL_SPREAD_MM) return [];
   return monthlyRainMm
     .map((rainMm, index) => ({ month: index + 1, rainMm }))
     // Ties resolve by month so the same site always prints the same months.

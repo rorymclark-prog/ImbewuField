@@ -328,36 +328,91 @@ export function recurringPlanPlantings(plantings: Planting[]): Planting[] {
   return plantings.filter((planting) => planting.existing !== true);
 }
 
+/** One overbooked bed, and the plantings actually implicated in its conflict.
+ * Internal: the single authority both benchmarkAreaConflictBedLabels and
+ * benchmarkAreaConflictDetails read, so the bed the headline names and the
+ * crops the list under it names come from one pass over one definition of
+ * "this ground does not add up". */
+interface BedConflictRecord {
+  bedId: string;
+  bedLabel: string;
+  /** Every planting that takes part in this bed's conflict. */
+  plantingIds: Set<string>;
+  /** Shares that are not a usable fraction of a bed. */
+  invalidShareIds: Set<string>;
+  /** Crops whose finish timing is unverified, so their months cannot be tested. */
+  unverifiedTimingIds: Set<string>;
+}
+
 /** Beds whose saved planting shares cannot support a defensible yield or value
  * total. A manual plan may deliberately preserve an overbooked draft, but two
  * whole-bed crops standing in the same month cannot both receive a whole-bed
  * benchmark. The app must ask the farmer to resolve the layout rather than
  * guessing which crop loses area or yield. Invalid fractions are conflicts too:
- * they must not enter arithmetic as NaN, zero or negative land. */
-export function benchmarkAreaConflictBedLabels(
+ * they must not enter arithmetic as NaN, zero or negative land.
+ *
+ * A planting only joins a bed's record if it is part of WHY that bed is
+ * flagged: a crop occupying a month where the shares exceed the bed, a crop
+ * whose own share is unusable, or an unverified-timing crop whose unknown
+ * months could push a verified month over. A crop that stands alone in its own
+ * season on a flagged bed is not in the conflict and must not be listed as if
+ * it were. */
+function benchmarkAreaConflictBeds(
   plantings: Planting[],
   beds: PlanBed[],
   nowMonth?: number,
-): string[] {
-  if (nowMonth !== undefined) {
-    const bedById = new Map(beds.map((bed) => [bed.id, bed]));
-    const rows: Array<{ bedId: string; start: number; span: number; fraction: number; existing: boolean }> = [];
-    const uncertainShares = new Map<string, number>();
-    const conflicts = new Set<string>();
+): BedConflictRecord[] {
+  const bedById = new Map(beds.map((bed) => [bed.id, bed]));
+  const records = new Map<string, BedConflictRecord>();
+  const recordFor = (bedId: string): BedConflictRecord => {
+    const existingRecord = records.get(bedId);
+    if (existingRecord) return existingRecord;
+    const created: BedConflictRecord = {
+      bedId,
+      bedLabel: bedById.get(bedId)?.label ?? bedId,
+      plantingIds: new Set<string>(),
+      invalidShareIds: new Set<string>(),
+      unverifiedTimingIds: new Set<string>(),
+    };
+    records.set(bedId, created);
+    return created;
+  };
 
-    for (const planting of plantings) {
-      const bed = bedById.get(planting.bedId);
-      if (!bed) continue;
-      const fraction = planting.areaFraction ?? 1;
-      if (!Number.isFinite(fraction) || fraction <= 0 || fraction > 1.0001) {
-        conflicts.add(bed.label);
-        continue;
-      }
-      const crop = cropByKey(planting.cropKey);
-      if (crop?.timingVerified === false && hasPlanningYield(crop)) {
-        uncertainShares.set(bed.id, (uncertainShares.get(bed.id) ?? 0) + fraction);
-        continue;
-      }
+  // Rolling-horizon occupancy (offsets from nowMonth, repeating annual plan)
+  // when a month is known; year-free calendar months when it is not. Both walks
+  // now carry the CONTRIBUTING planting ids alongside the share total, which is
+  // the only new information — the arithmetic and the conflict thresholds are
+  // unchanged.
+  type OccupiedRow = { id: string; bedId: string; start: number; span: number; fraction: number; existing: boolean };
+  const rows: OccupiedRow[] = [];
+  const calendarMonths = new Map<string, number[]>();
+  const uncertain = new Map<string, { share: number; ids: string[] }>();
+
+  for (const planting of plantings) {
+    const bed = bedById.get(planting.bedId);
+    if (!bed) continue;
+    const fraction = planting.areaFraction ?? 1;
+    // A share above a whole bed is only detectable as invalid where the
+    // rolling walk runs; the year-free walk has always let it through into the
+    // month totals instead. Keep each branch's own rule.
+    const invalidShare = nowMonth !== undefined
+      ? (!Number.isFinite(fraction) || fraction <= 0 || fraction > 1.0001)
+      : (!Number.isFinite(fraction) || fraction <= 0);
+    if (invalidShare) {
+      const record = recordFor(bed.id);
+      record.plantingIds.add(planting.id);
+      record.invalidShareIds.add(planting.id);
+      continue;
+    }
+    const crop = cropByKey(planting.cropKey);
+    if (crop?.timingVerified === false && hasPlanningYield(crop)) {
+      const bucket = uncertain.get(bed.id) ?? { share: 0, ids: [] };
+      bucket.share += fraction;
+      bucket.ids.push(planting.id);
+      uncertain.set(bed.id, bucket);
+      continue;
+    }
+    if (nowMonth !== undefined) {
       const span = occupiedMonthsForPlanting(planting).length;
       // Planned cohorts can start up to twelve months ahead (plus nursery
       // lead time). A one-month horizon silently dropped every future crop,
@@ -366,9 +421,21 @@ export function benchmarkAreaConflictBedLabels(
       if (!span || start === undefined) continue;
       const end = start + span - 1;
       if (planting.existing && end < 0) continue;
-      rows.push({ bedId: bed.id, start, span, fraction, existing: planting.existing === true });
+      rows.push({ id: planting.id, bedId: bed.id, start, span, fraction, existing: planting.existing === true });
+    } else {
+      const months = occupiedMonthsForPlanting(planting);
+      if (!months.length) continue;
+      rows.push({ id: planting.id, bedId: bed.id, start: 0, span: 0, fraction, existing: false });
+      // The year-free walk indexes by calendar month; keep the months on the
+      // row rather than recomputing them below.
+      calendarMonths.set(planting.id, months);
     }
+  }
 
+  const occupancy = new Map<string, number[]>();
+  const contributors = new Map<string, Set<string>[]>();
+
+  if (nowMonth !== undefined) {
     const maxExistingEnd = rows
       .filter((row) => row.existing)
       .reduce((maximum, row) => Math.max(maximum, row.start + row.span - 1), 0);
@@ -377,7 +444,6 @@ export function benchmarkAreaConflictBedLabels(
       maxExistingEnd,
       ...rows.filter((row) => !row.existing).map((row) => row.start + row.span + 11),
     );
-    const occupancy = new Map<string, number[]>();
     for (const row of rows) {
       const starts = row.existing
         ? [row.start]
@@ -386,73 +452,66 @@ export function benchmarkAreaConflictBedLabels(
           (_, index) => row.start + index * 12,
         );
       const totals = occupancy.get(row.bedId) ?? Array<number>(horizon + 1).fill(0);
+      const who = contributors.get(row.bedId) ?? Array.from({ length: horizon + 1 }, () => new Set<string>());
       for (const start of starts) {
         for (let offset = Math.max(0, start); offset <= Math.min(horizon, start + row.span - 1); offset++) {
           totals[offset] += row.fraction;
-          if (totals[offset] > 1.0001) conflicts.add(bedById.get(row.bedId)!.label);
+          who[offset].add(row.id);
         }
       }
       occupancy.set(row.bedId, totals);
+      contributors.set(row.bedId, who);
     }
-
-    for (const [bedId, uncertainShare] of uncertainShares) {
-      const bed = bedById.get(bedId);
-      if (!bed) continue;
-      const verified = occupancy.get(bedId) ?? [];
-      if (uncertainShare > 1.0001 || verified.some((share) => share + uncertainShare > 1.0001)) {
-        conflicts.add(bed.label);
+  } else {
+    for (const row of rows) {
+      const totals = occupancy.get(row.bedId) ?? Array<number>(13).fill(0);
+      const who = contributors.get(row.bedId) ?? Array.from({ length: 13 }, () => new Set<string>());
+      for (const month of calendarMonths.get(row.id) ?? []) {
+        totals[month] += row.fraction;
+        who[month].add(row.id);
       }
-    }
-    return [...conflicts].sort((a, b) => a.localeCompare(b));
-  }
-
-  const bedById = new Map(beds.map((bed) => [bed.id, bed]));
-  const occupancy = new Map<string, number[]>();
-  // A positive-yield legacy crop with unverified timing still contributes a
-  // crop-cycle benchmark. Its calendar overlap is UNKNOWN, not zero. Track
-  // those shares separately and test them against every verified month so a
-  // whole-bed maize record cannot sit beside another whole-bed crop and make
-  // two full-bed yield claims merely because maize has no defensible dates.
-  const uncertainBenchmarkShares = new Map<string, number>();
-  const conflicts = new Set<string>();
-
-  for (const planting of plantings) {
-    const bed = bedById.get(planting.bedId);
-    if (!bed) continue;
-    const fraction = planting.areaFraction ?? 1;
-    if (!Number.isFinite(fraction) || fraction <= 0) {
-      conflicts.add(bed.label);
-      continue;
-    }
-    const crop = cropByKey(planting.cropKey);
-    if (crop?.timingVerified === false && hasPlanningYield(crop)) {
-      uncertainBenchmarkShares.set(
-        bed.id,
-        (uncertainBenchmarkShares.get(bed.id) ?? 0) + fraction,
-      );
-      continue;
-    }
-    const months = occupiedMonthsForPlanting(planting);
-    if (!months.length) continue;
-    const totals = occupancy.get(bed.id) ?? Array<number>(13).fill(0);
-    for (const month of months) {
-      totals[month] += fraction;
-      if (totals[month] > 1.0001) conflicts.add(bed.label);
-    }
-    occupancy.set(bed.id, totals);
-  }
-
-  for (const [bedId, uncertainShare] of uncertainBenchmarkShares) {
-    const bed = bedById.get(bedId);
-    if (!bed) continue;
-    const verifiedByMonth = occupancy.get(bedId) ?? Array<number>(13).fill(0);
-    if (uncertainShare > 1.0001
-      || verifiedByMonth.some((share, month) => month > 0 && share + uncertainShare > 1.0001)) {
-      conflicts.add(bed.label);
+      occupancy.set(row.bedId, totals);
+      contributors.set(row.bedId, who);
     }
   }
 
-  return [...conflicts].sort((a, b) => a.localeCompare(b));
+  for (const [bedId, totals] of occupancy) {
+    const who = contributors.get(bedId) ?? [];
+    totals.forEach((share, index) => {
+      if (share <= 1.0001) return;
+      const record = recordFor(bedId);
+      for (const id of who[index] ?? []) record.plantingIds.add(id);
+    });
+  }
+
+  for (const [bedId, bucket] of uncertain) {
+    if (!bedById.has(bedId)) continue;
+    const totals = occupancy.get(bedId) ?? [];
+    const who = contributors.get(bedId) ?? [];
+    const crowdedIndexes = totals
+      .map((share, index) => (share + bucket.share > 1.0001 ? index : -1))
+      .filter((index) => index >= 0 && (nowMonth !== undefined || index > 0));
+    if (bucket.share <= 1.0001 && crowdedIndexes.length === 0) continue;
+    const record = recordFor(bedId);
+    for (const id of bucket.ids) {
+      record.plantingIds.add(id);
+      record.unverifiedTimingIds.add(id);
+    }
+    for (const index of crowdedIndexes) {
+      for (const id of who[index] ?? []) record.plantingIds.add(id);
+    }
+  }
+
+  return [...records.values()].sort((a, b) => a.bedLabel.localeCompare(b.bedLabel) || a.bedId.localeCompare(b.bedId));
+}
+
+export function benchmarkAreaConflictBedLabels(
+  plantings: Planting[],
+  beds: PlanBed[],
+  nowMonth?: number,
+): string[] {
+  return [...new Set(benchmarkAreaConflictBeds(plantings, beds, nowMonth).map((record) => record.bedLabel))]
+    .sort((a, b) => a.localeCompare(b));
 }
 
 /**
@@ -864,6 +923,12 @@ export function buildPlanYieldBenchmark(plantings: Planting[], beds: PlanBed[], 
   };
 }
 
+/** Why one planting is part of a bed's conflict. The screen must be able to
+ * say the true thing about each row: a crop sharing months with another is a
+ * different problem from a crop whose recorded share is unreadable, or one
+ * whose finish timing the app refuses to reason about. */
+export type BedAreaConflictReason = 'overlap' | 'invalid-share' | 'unverified-timing';
+
 /** One overbooked bed, with the plantings the farmer has to choose between. */
 export interface BedAreaConflict {
   bedId: string;
@@ -875,15 +940,22 @@ export interface BedAreaConflict {
     /** Months this planting holds the bed (1-12), entry month first. */
     months: number[];
     areaFraction: number;
+    reason: BedAreaConflictReason;
   }[];
 }
 
 /**
  * The plantings behind each label benchmarkAreaConflictBedLabels returns, so a
  * screen can say WHICH crops are standing on the same ground instead of only
- * naming the bed. Deliberately built on that same function and the same
- * filtered planting set buildPlanYieldBenchmark uses, so the headline warning
- * and the list under it can never disagree about which beds are overbooked.
+ * naming the bed. Both read the same benchmarkAreaConflictBeds pass over the
+ * same filtered planting set buildPlanYieldBenchmark uses, so the headline
+ * warning and the list under it can never disagree — and, since that pass
+ * records only the plantings that actually take part in each bed's conflict, a
+ * crop growing alone in its own season on a flagged bed is NOT listed as
+ * though it were double-booked.
+ *
+ * Beds are matched by id, never by label: two beds may carry the same label,
+ * and only the one that is actually overbooked belongs in this list.
  */
 export function benchmarkAreaConflictDetails(
   plantings: Planting[], beds: PlanBed[], nowMonth?: number,
@@ -892,25 +964,29 @@ export function benchmarkAreaConflictDetails(
   const mapped = plantings.filter((planting) =>
     bedIds.has(planting.bedId)
       && (nowMonth === undefined || plantingIsActiveOrPlanned(planting, nowMonth)));
-  const labels = new Set(benchmarkAreaConflictBedLabels(mapped, beds, nowMonth));
-  if (labels.size === 0) return [];
-  return beds
-    .filter((bed) => labels.has(bed.label))
-    .map((bed) => ({
-      bedId: bed.id,
-      bedLabel: bed.label,
-      plantings: mapped
-        .filter((planting) => planting.bedId === bed.id)
+  const byId = new Map(mapped.map((planting) => [planting.id, planting]));
+  return benchmarkAreaConflictBeds(mapped, beds, nowMonth)
+    .map((record) => ({
+      bedId: record.bedId,
+      bedLabel: record.bedLabel,
+      plantings: [...record.plantingIds]
+        .map((id) => byId.get(id))
+        .filter((planting): planting is Planting => planting !== undefined)
         .map((planting) => ({
           plantingId: planting.id,
           cropKey: planting.cropKey,
           cropName: cropByKey(planting.cropKey)?.name ?? planting.cropKey,
           months: occupiedMonthsForPlanting(planting),
           areaFraction: planting.areaFraction ?? 1,
+          reason: record.invalidShareIds.has(planting.id)
+            ? 'invalid-share' as const
+            : record.unverifiedTimingIds.has(planting.id)
+              ? 'unverified-timing' as const
+              : 'overlap' as const,
         }))
         .sort((a, b) => (a.months[0] ?? 0) - (b.months[0] ?? 0) || a.cropName.localeCompare(b.cropName)),
     }))
-    .sort((a, b) => a.bedLabel.localeCompare(b.bedLabel));
+    .filter((conflict) => conflict.plantings.length > 0);
 }
 
 // Whether the crop picker offers bed-SHARING (splitting a bed by fraction —
@@ -1037,8 +1113,14 @@ export interface BedOverlapWarning {
   totalFraction: number;
   /** The crops already in the way, named, alphabetical for a stable sentence. */
   cropNames: string[];
-  /** The months where they meet, in the order the new crop runs through them. */
-  overlapMonths: number[];
+  /**
+   * One entry per crop already in the way, with the months THAT crop shares
+   * with the new one — never a union across crops. A union reads as a single
+   * span and can be wider than any real clash ("Cabbage and Dry beans in
+   * Nov–Feb" when cabbage only clashes in Nov and beans only in Feb), which is
+   * a sentence the farmer cannot check against the chart above it.
+   */
+  clashes: { cropName: string; months: number[] }[];
 }
 
 /**
@@ -1063,15 +1145,29 @@ export function bedOverlapWarning(
   if (!(totalFraction > 1.001) || others.length === 0) return null;
 
   const newMonths = monthsBetween(sowMonth, harvestEndMonth);
-  const busy = new Set(others.flatMap(({ planting }) => occupiedMonthsForPlanting(planting)));
-  const overlapMonths = newMonths.filter((month) => busy.has(month));
+  // Per crop, not pooled: the months named beside a crop's name are that
+  // crop's own clash with the new planting. Succession batches of the same
+  // crop merge under one name, and a broken set stays broken rather than
+  // being smoothed into a range (see monthSpanLabel at the render site).
+  const monthsByCrop = new Map<string, Set<number>>();
+  for (const { planting, crop } of others) {
+    const occupied = new Set(occupiedMonthsForPlanting(planting));
+    const shared = newMonths.filter((month) => occupied.has(month));
+    const bucket = monthsByCrop.get(crop.name) ?? new Set<number>();
+    for (const month of shared) bucket.add(month);
+    monthsByCrop.set(crop.name, bucket);
+  }
+  const cropNames = [...monthsByCrop.keys()].sort((a, b) => a.localeCompare(b));
   return {
     committedFraction,
     totalFraction,
-    cropNames: [...new Set(others.map(({ crop }) => crop.name))].sort((a, b) => a.localeCompare(b)),
+    cropNames,
     // A crop whose bed-reservation edge overlaps but whose occupied months do
-    // not line up leaves this empty rather than inventing a month.
-    overlapMonths,
+    // not line up gets an empty month list rather than an invented month.
+    clashes: cropNames.map((cropName) => ({
+      cropName,
+      months: newMonths.filter((month) => monthsByCrop.get(cropName)!.has(month)),
+    })),
   };
 }
 
