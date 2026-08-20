@@ -114,6 +114,29 @@ function quietRunFromSentence(sentence: string): number[] | null {
   return run;
 }
 
+/** Every month "Apr-Jun, Aug" names — INCLUDING the interior of a range, which
+ *  a bare split on /[,-]/ silently skips, so a phantom month could hide between
+ *  two honest endpoints. Ranges may wrap the year end (monthRunsLabel prints
+ *  cyclic runs). Unparseable tokens come back in `bad` so the caller can name
+ *  them instead of passing them silently. */
+function namedStorageMonths(label: string): { months: number[]; bad: string[] } {
+  const months: number[] = [];
+  const bad: string[] = [];
+  for (const piece of label.split(',')) {
+    const ends = piece.split('-').map((token) => token.trim());
+    const indices = ends.map((token) => MONTHS_SHORT.indexOf(token) + 1);
+    if (indices.some((m) => m < 1) || indices.length > 2) { bad.push(piece.trim()); continue; }
+    if (indices.length === 1) { months.push(indices[0]); continue; }
+    let month = indices[0];
+    months.push(month);
+    for (let step = 0; step < 12 && month !== indices[1]; step++) {
+      month = (month % 12) + 1;
+      months.push(month);
+    }
+  }
+  return { months, bad };
+}
+
 test('the fixture that used to contradict itself now names the storage that covers the gap', () => {
   // Butternut: sourced 2 storage months (FAO), harvested from a summer sowing.
   // The exact shape the audit measured — a quiet stretch that the plan's own
@@ -137,12 +160,13 @@ test('the fixture that used to contradict itself now names the storage that cove
 
   assert.match(quiet!, /Stored butternut should still be usable in/,
     'the sentence must acknowledge the storage that covers part of the gap it announces');
-  // Named months must be months this plan really marks stored.
-  for (const label of quiet!.match(/usable in ([^.]+?) if/)![1].split(/[,-]/)) {
-    const monthIndex = MONTHS_SHORT.indexOf(label.trim()) + 1;
-    assert.ok(monthIndex > 0, `unparseable month "${label}" in the storage clause`);
+  // Named months must be months this plan really marks stored — every month,
+  // interior of a range included.
+  const named = namedStorageMonths(quiet!.match(/usable in ([^.]+?) if/)![1]);
+  assert.deepEqual(named.bad, [], 'unparseable month tokens in the storage clause');
+  for (const monthIndex of named.months) {
     assert.ok(storedMonths.includes(monthIndex),
-      `${label} is named as stored but buildFoodAvailability does not mark it stored on this plan`);
+      `${MONTHS_SHORT[monthIndex - 1]} is named as stored but buildFoodAvailability does not mark it stored on this plan`);
   }
 });
 
@@ -175,13 +199,15 @@ test('no quiet-month line names a stretch the plan stores food across without sa
       offenders.push(`${scenario.label}: silent about stored cover in ${covered.map((m) => MONTHS_SHORT[m - 1]).join(',')} — ${quiet}`);
       continue;
     }
-    // Every month the clause names must really be stored on THIS plan.
-    const named = quiet.match(/usable in ([^.]+?) if/);
-    if (!named) { offenders.push(`${scenario.label}: unreadable storage clause — ${quiet}`); continue; }
-    for (const token of named[1].split(/[,-]/)) {
-      const monthIndex = MONTHS_SHORT.indexOf(token.trim()) + 1;
-      if (monthIndex < 1 || !storedMonths.has(monthIndex)) {
-        offenders.push(`${scenario.label}: names ${token.trim()} as stored, but the plan does not store then — ${quiet}`);
+    // Every month the clause names must really be stored on THIS plan —
+    // interior months of a range included, not just its endpoints.
+    const namedMatch = quiet.match(/usable in ([^.]+?) if/);
+    if (!namedMatch) { offenders.push(`${scenario.label}: unreadable storage clause — ${quiet}`); continue; }
+    const named = namedStorageMonths(namedMatch[1]);
+    for (const token of named.bad) offenders.push(`${scenario.label}: unparseable month "${token}" — ${quiet}`);
+    for (const monthIndex of named.months) {
+      if (!storedMonths.has(monthIndex)) {
+        offenders.push(`${scenario.label}: names ${MONTHS_SHORT[monthIndex - 1]} as stored, but the plan does not store then — ${quiet}`);
       }
     }
   }
@@ -209,7 +235,7 @@ test('the storage sentence appears exactly when the plan stores something, and n
     // Only plans that reach the narrative body — an area conflict or a zero
     // known total returns early, and neither of those is a storage claim.
     if (!report.some((line) => line.startsWith('For crops with a verified kg/m² benchmark'))) continue;
-    const line = report.find((paragraph) => / can be kept after harvest instead of eaten straight away\./.test(paragraph));
+    const line = report.find((paragraph) => / can be kept after harvest instead of being eaten straight away\./.test(paragraph));
     if (storedNames.size === 0) {
       withoutStorage++;
       if (line) offenders.push(`${scenario.label}: storage sentence on a plan that stores nothing — ${line}`);
@@ -331,14 +357,14 @@ function withLocalStorage<T>(store: Map<string, string>, run: () => T): T {
   }
 }
 
-test('a saved plan round-trips its notes and the month they were generated in', async () => {
+test('a saved plan round-trips its notes and the time they were generated at', async () => {
   const { loadCropPlan, saveCropPlan } = await import('@/lib/crop-plan');
   const store = new Map<string, string>();
   const plan: CropPlanState = {
     version: 1,
     plantings: [{ id: 'p1', bedId: 'b1', cropKey: 'cabbage', sowMonth: 3 }],
     planNotes: NOTES,
-    planNotesMonth: 8,
+    planNotesAt: Date.UTC(2026, 7, 20),
     updatedAt: 1,
   };
   const loaded = withLocalStorage(store, () => {
@@ -346,7 +372,7 @@ test('a saved plan round-trips its notes and the month they were generated in', 
     return loadCropPlan();
   });
   assert.deepEqual(loaded.planNotes, NOTES);
-  assert.equal(loaded.planNotesMonth, 8);
+  assert.equal(loaded.planNotesAt, Date.UTC(2026, 7, 20));
 });
 
 test('a plan saved before planNotes existed still loads, with no notes invented for it', async () => {
@@ -366,7 +392,7 @@ test('a plan saved before planNotes existed still loads, with no notes invented 
   assert.equal(loaded.plantings.length, 1, 'the legacy plan must still load');
   assert.equal(loaded.rainPattern, 'summer');
   assert.equal(loaded.planNotes, undefined);
-  assert.equal(loaded.planNotesMonth, undefined);
+  assert.equal(loaded.planNotesAt, undefined);
 });
 
 test('a hand-edited or corrupt notes blob is dropped rather than rendered', async () => {
@@ -384,42 +410,45 @@ test('a hand-edited or corrupt notes blob is dropped rather than rendered', asyn
         'a bare string',
         null,
       ],
-      planNotesMonth: 8,
+      planNotesAt: Date.UTC(2026, 7, 20),
       updatedAt: 7,
     }));
     return loadCropPlan();
   });
   assert.deepEqual(loaded.planNotes, [{ kind: 'warning', text: 'A real one.' }]);
 
-  // A month outside 1-12 cannot label anything, so the pair is dropped whole
-  // rather than shown undated.
-  const undated = withLocalStorage(new Map<string, string>(), () => {
-    (globalThis as unknown as { window: { localStorage: { setItem(k: string, v: string): void } } })
-      .window.localStorage.setItem('imbewu_crop_plan_v1', JSON.stringify({
-        version: 1,
-        plantings: [{ id: 'p1', bedId: 'b1', cropKey: 'cabbage', sowMonth: 3 }],
-        planNotes: NOTES,
-        planNotesMonth: 0,
-        updatedAt: 7,
-      }));
-    return loadCropPlan();
-  });
-  assert.equal(undated.planNotes, undefined, 'notes with no usable month must not render undated');
-  assert.equal(undated.planNotesMonth, undefined);
+  // A timestamp outside 2020-2100 (a seconds value, a month number from a
+  // hand-edited blob) cannot label anything honestly, so the pair is dropped
+  // whole rather than shown with a nonsense year.
+  for (const badAt of [0, 8, 1_755_648_000 /* seconds, not ms */, Date.UTC(2101, 0, 1), 'August']) {
+    const undated = withLocalStorage(new Map<string, string>(), () => {
+      (globalThis as unknown as { window: { localStorage: { setItem(k: string, v: string): void } } })
+        .window.localStorage.setItem('imbewu_crop_plan_v1', JSON.stringify({
+          version: 1,
+          plantings: [{ id: 'p1', bedId: 'b1', cropKey: 'cabbage', sowMonth: 3 }],
+          planNotes: NOTES,
+          planNotesAt: badAt,
+          updatedAt: 7,
+        }));
+      return loadCropPlan();
+    });
+    assert.equal(undated.planNotes, undefined, `notes with no usable date (${JSON.stringify(badAt)}) must not render undated`);
+    assert.equal(undated.planNotesAt, undefined);
+  }
 });
 
 test('CropPlanState declares the notes as optional so no migration is required', () => {
   assert.match(CROP_PLAN_LIB, /planNotes\?: PlanNote\[\];/);
-  assert.match(CROP_PLAN_LIB, /planNotesMonth\?: number;/);
+  assert.match(CROP_PLAN_LIB, /planNotesAt\?: number;/);
   // The import must stay type-only: crop-autosuggest imports crop-plan at
   // runtime, and a value import here would close the cycle.
   assert.match(CROP_PLAN_LIB, /import type \{ PlanNote, PlanNoteKind \} from '\.\/crop-autosuggest';/);
 });
 
-test('accepting a suggestion writes its notes and the month onto the saved plan', () => {
+test('accepting a suggestion writes its notes and the time onto the saved plan', () => {
   const accept = PAGE.slice(PAGE.indexOf('function acceptAutoSuggest()'), PAGE.indexOf('// Site picker'));
   assert.match(accept, /planNotes: autoResult\.notes/, 'the accepted notes must be written to the plan');
-  assert.match(accept, /planNotesMonth: currentMonth/, 'the generating month must travel with them');
+  assert.match(accept, /planNotesAt: Date\.now\(\)/, 'the generating time must travel with them');
 });
 
 test('the plan page renders the accepted notes with the same grouping the review modal uses', () => {
@@ -437,29 +466,33 @@ test('the plan page renders the accepted notes with the same grouping the review
 
   // Only shown when there is something to show — a hand-built plan gets no
   // empty card implying it came from a suggestion.
-  assert.match(PAGE, /plan\?\.planNotes\?\.length && plan\.planNotesMonth/);
+  // ...and never above an emptied bed grid: after "Clear all plantings" the
+  // old reasons describe nothing on screen.
+  assert.match(PAGE, /plan\?\.planNotes\?\.length && plan\.planNotesAt && plantings\.length > 0/);
   assert.match(PAGE, /Why this plan chose what it chose/);
   // Dated, because manual edits after Accept do not invalidate the notes —
   // the label is what carries that honesty.
-  assert.match(PAGE, /From the plan suggested in \{monthLabel\(generatedMonth\)\}/);
+  // Month AND year — "suggested in Sep" read thirteen months later points at
+  // the wrong September.
+  assert.match(PAGE, /From the plan suggested in \{planNotesDateLabel\(generatedAt\)\}/);
   assert.match(PAGE, /Anything you have changed by hand since is not\s*\n?\s*described here\./);
 });
 
 test('the printed plan carries the notes, kind-grouped and dated', () => {
   const pdf = source('../lib/crop-export-pdf.ts');
   assert.match(pdf, /planNotes\?: PlanNote\[\];/, 'the PDF input must accept them');
-  assert.match(pdf, /planNotesMonth\?: number;/);
+  assert.match(pdf, /planNotesAt\?: number;/);
   assert.match(pdf, /How this plan was put together/, 'the panel must be titled');
-  assert.match(pdf, /From the plan suggested in \$\{monthShort\(input\.planNotesMonth\)\}/, 'dated on paper too');
+  assert.match(pdf, /From the plan suggested in \$\{planNotesDateLabel\(input\.planNotesAt\)\}/, 'dated on paper too — month and year');
   assert.match(pdf, /const PLAN_NOTE_PANEL_ORDER: readonly PlanNoteKind\[\] = \['warning', 'choice', 'gap', 'basis'\];/,
     'the printed order must match the screen');
   assert.match(pdf, /if \(!notes\.length\) return;/, 'a plan with no notes gets no empty panel');
 
   // ...and the page actually hands them over, through the export card.
   const card = source('../components/crops/CropPlanExportCard.tsx');
-  assert.match(card, /planNotes, planNotesMonth/, 'the export card must forward them');
+  assert.match(card, /planNotes, planNotesAt/, 'the export card must forward them');
   assert.match(PAGE, /planNotes=\{plan\?\.planNotes\}/, 'the plan page must pass them to the export card');
-  assert.match(PAGE, /planNotesMonth=\{plan\?\.planNotesMonth\}/);
+  assert.match(PAGE, /planNotesAt=\{plan\?\.planNotesAt\}/);
 });
 
 // ── E. voice ────────────────────────────────────────────────────────────────
@@ -498,14 +531,24 @@ test('a crop is never named as stored in a month the plan does not store it', ()
       .map((item) => item.name)),
   );
   const report = buildYearReport(plantings, beds).join(' ');
-  for (const crop of CROPS) {
-    if ((crop.storageMonths ?? 0) === 0) continue;
-    if (storedNames.has(crop.name)) continue;
-    const lower = crop.name.charAt(0).toLowerCase() + crop.name.slice(1);
+  // Extract the EXACT name list from every storage clause instead of regexing
+  // raw catalog names into a pattern: four storage crops carry unescaped
+  // parentheses ("Maize (mielies)") that turned into capture groups and could
+  // never match, and \bpotato\b matches inside "sweet potato". namesSentence
+  // joins with ", " and a final " and ", so that is what is split on here.
+  const namedAsStored = [...report.matchAll(/Stored (.+?) should still be usable/g)]
+    .flatMap((clause) => clause[1].split(/,\s+|\s+and\s+/))
+    .map((name) => name.trim())
+    .filter(Boolean);
+  const storedNamesLower = new Set([...storedNames].map((name) => name.toLowerCase()));
+  for (const name of namedAsStored) {
     assert.ok(
-      !new RegExp(`Stored [^.]*\\b${lower}\\b`, 'i').test(report),
-      `${crop.name} is named as stored but this plan never stores it`,
+      storedNamesLower.has(name.toLowerCase()),
+      `${name} is named as stored but this plan never stores it`,
     );
   }
+  // The guard must actually meet a clause, or it verifies nothing: this
+  // fixture stores butternut, so at least one storage sentence must name it.
+  assert.ok(namedAsStored.length > 0, 'the fixture produced no storage clause for the guard to check');
   assert.ok(cropByKey('butternut'), 'fixture sanity');
 });

@@ -32,7 +32,7 @@ import {
   loadCropPlan, saveCropPlan, bedEntryMonth, latestBedEntryMonth, plannedBedEntryMonth, harvestEndMonthForCrop, harvestMonthForCrop, tasksForPlan, taskMonthsFromNow, estimatedYieldKgAdjusted, nextValidSowMonth,
   isSpaceHungry, bedOverlapWarning, benchmarkAreaConflictDetails, bedHasUnverifiedTiming, buildYearReport, buildFoodAvailability, buildPlanYieldBenchmark,
   buildFieldUtilizationByMonth, loadFavouriteCropKeys, saveFavouriteCropKeys, isGenuinelyIntercropped, plantingBedEntryOffsets, plantingIsActiveOrPlanned, recurringPlanPlantings,
-  loadAllowBedSharing, saveAllowBedSharing, loadCashflowSettings, saveCashflowSettings, DEFAULT_CASHFLOW_SETTINGS,
+  loadAllowBedSharing, saveAllowBedSharing, loadCashflowSettings, saveCashflowSettings, DEFAULT_CASHFLOW_SETTINGS, planNotesDateLabel,
 } from '@/lib/crop-plan';
 import type { FoodGroup } from '@/lib/crop-groups';
 import { FOOD_GROUP_META, foodGroupOf, ROTATION_FAMILY_META, rotationFamilyOf } from '@/lib/crop-groups';
@@ -521,7 +521,7 @@ function FacilitatorCropsPageInner() {
         // explain two different plans, and stacking them would put contradictory
         // sentences under one date label.
         planNotes: autoResult.notes,
-        planNotesMonth: currentMonth,
+        planNotesAt: Date.now(),
         updatedAt: Date.now(),
       };
     });
@@ -1544,7 +1544,7 @@ function FacilitatorCropsPageInner() {
               tasks={allTasks}
               yearReport={yearReport}
               planNotes={plan?.planNotes}
-              planNotesMonth={plan?.planNotesMonth}
+              planNotesAt={plan?.planNotesAt}
               meta={exportMeta}
             />
 
@@ -1614,8 +1614,8 @@ function FacilitatorCropsPageInner() {
             {/* Only for a plan that came from an accepted suggestion — a
                 hand-built plan has no such notes and must not get an empty
                 card implying it does. */}
-            {plan?.planNotes?.length && plan.planNotesMonth
-              ? <AcceptedPlanNotesCard notes={plan.planNotes} generatedMonth={plan.planNotesMonth} />
+            {plan?.planNotes?.length && plan.planNotesAt && plantings.length > 0
+              ? <AcceptedPlanNotesCard notes={plan.planNotes} generatedAt={plan.planNotesAt} />
               : null}
 
             <DisclosureCard
@@ -1825,8 +1825,12 @@ function MonthAvailabilityDetail({
           <X size={14} />
         </button>
       </div>
+      {/* "with a sourced shelf life", not "inside its shelf life": only crops
+          with a researched storageMonths ever show as stored, so about every
+          other crop this panel knows nothing — it must not claim the pantry
+          is empty, only that it has nothing sourced to report. */}
       {items.length === 0 && (
-        <div className="font-sans" style={{ fontSize: 12, color: '#8C7A62' }}>Nothing is scheduled for picking, and nothing harvested earlier is still inside its shelf life.</div>
+        <div className="font-sans" style={{ fontSize: 12, color: '#8C7A62' }}>Nothing is scheduled for picking, and nothing with a sourced shelf life is still in store.</div>
       )}
       {fresh.length > 0 && (
         <div className="mb-2">
@@ -1933,12 +1937,12 @@ function PlanNoteGroups({ notes }: { notes: PlanNote[] }) {
  * silently drop notes on the first hand edit (which would delete the warnings
  * exactly when a farmer started changing things).
  */
-function AcceptedPlanNotesCard({ notes, generatedMonth }: { notes: PlanNote[]; generatedMonth: number }) {
+function AcceptedPlanNotesCard({ notes, generatedAt }: { notes: PlanNote[]; generatedAt: number }) {
   return (
     <div className="rounded-2xl p-4 mt-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
       <div className="font-display font-semibold" style={{ fontSize: 15, color: '#20190F' }}>🧭 Why this plan chose what it chose</div>
       <p className="font-sans mb-3 mt-0.5" style={{ fontSize: 11.5, color: '#8C7A62', lineHeight: 1.4 }}>
-        From the plan suggested in {monthLabel(generatedMonth)}. Anything you have changed by hand since is not
+        From the plan suggested in {planNotesDateLabel(generatedAt)}. Anything you have changed by hand since is not
         described here.
       </p>
       <PlanNoteGroups notes={notes} />

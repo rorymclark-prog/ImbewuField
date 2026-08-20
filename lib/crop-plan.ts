@@ -67,12 +67,16 @@ export interface CropPlanState {
    */
   planNotes?: PlanNote[];
   /**
-   * The month (1-12) the accepted suggestion was generated in. Stored so the
+   * When the accepted suggestion was generated (epoch ms). Stored so the
    * on-screen panel can be HONEST about age — the farmer may have edited the
    * plan by hand since, and a note from five months ago must not read as if it
-   * describes the plan on screen today. Absent whenever planNotes is absent.
+   * describes the plan on screen today. A full timestamp rather than a bare
+   * month because a crop plan is a year-long object: "suggested in Sep" read
+   * thirteen months later points at the WRONG September, and updatedAt is
+   * stomped by every edit so the year is unrecoverable from anywhere else.
+   * Absent whenever planNotes is absent.
    */
-  planNotesMonth?: number;
+  planNotesAt?: number;
   updatedAt: number;
 }
 
@@ -98,11 +102,11 @@ export function loadCropPlan(): CropPlanState {
       version: 1,
       plantings: parsed.plantings,
       ...(isRainPattern(parsed.rainPattern) ? { rainPattern: parsed.rainPattern } : {}),
-      // The month travels ONLY with notes. A stored month on its own labels
-      // nothing, and notes without a month would have to be shown undated —
+      // The timestamp travels ONLY with notes. A stored date on its own labels
+      // nothing, and notes without a date would have to be shown undated —
       // which is the dishonesty this pair exists to prevent.
-      ...(planNotes.length && isPlanMonth(parsed.planNotesMonth)
-        ? { planNotes, planNotesMonth: parsed.planNotesMonth }
+      ...(planNotes.length && isPlanNotesAt(parsed.planNotesAt)
+        ? { planNotes, planNotesAt: parsed.planNotesAt }
         : {}),
       updatedAt: typeof parsed.updatedAt === 'number' ? parsed.updatedAt : Date.now(),
     };
@@ -113,8 +117,19 @@ export function loadCropPlan(): CropPlanState {
 
 const PLAN_NOTE_KINDS: readonly PlanNoteKind[] = ['warning', 'choice', 'gap', 'basis'];
 
-function isPlanMonth(value: unknown): value is number {
-  return typeof value === 'number' && Number.isInteger(value) && value >= 1 && value <= 12;
+/** Epoch ms bounded to 2020–2100: outside that, the value is corruption (a
+ *  seconds timestamp, a month number from a hand-edited blob) and a label
+ *  derived from it would date the notes to a nonsense year. */
+function isPlanNotesAt(value: unknown): value is number {
+  return typeof value === 'number' && Number.isFinite(value)
+    && value >= Date.UTC(2020, 0, 1) && value < Date.UTC(2100, 0, 1);
+}
+
+/** "September 2026" — the one label both the on-screen notes panel and the
+ *  printed plan derive from planNotesAt, so the two can never disagree about
+ *  when the plan was suggested. en-ZA month names are the app's English names. */
+export function planNotesDateLabel(planNotesAt: number): string {
+  return new Date(planNotesAt).toLocaleDateString('en-ZA', { month: 'long', year: 'numeric' });
 }
 
 /**
@@ -1605,8 +1620,11 @@ export function buildYearReport(plantings: Planting[], beds: PlanBed[]): string[
       .map((item) => item.name)),
   )].sort((a, b) => a.localeCompare(b));
   if (storedCropNames.length) {
+    const conditionsClause = storedCropNames.length === 1
+      ? 'The shelf life this plan uses assumes particular storage conditions, and does not hold if they are not met.'
+      : 'The shelf life this plan uses assumes particular storage conditions for each of those crops, and does not hold if they are not met.';
     paragraphs.push(
-      `${namesSentenceCapitalised(storedCropNames)} can be kept after harvest instead of eaten straight away. The shelf life this plan uses assumes particular storage conditions for each of those crops, and does not hold if they are not met.`,
+      `${namesSentenceCapitalised(storedCropNames)} can be kept after harvest instead of being eaten straight away. ${conditionsClause}`,
     );
   }
 

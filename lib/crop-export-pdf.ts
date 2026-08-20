@@ -33,6 +33,7 @@
 // computes a quantity — it only decides what things look like.
 
 import type { CropTask, PlanBed, Planting } from '@/lib/crop-plan';
+import { planNotesDateLabel } from '@/lib/crop-plan';
 import type { PlanNote, PlanNoteKind } from '@/lib/crop-autosuggest';
 import type { FoodGroup } from '@/lib/crop-groups';
 import {
@@ -98,9 +99,11 @@ export interface CropPlanPdfInput {
    * reads; the warnings and the choices behind the plan belong on it.
    */
   planNotes?: PlanNote[];
-  /** Month 1-12 the suggestion was made in, so the printed panel can be dated
-   * as honestly as the screen is. */
-  planNotesMonth?: number;
+  /** Epoch ms the suggestion was made at, so the printed panel can be dated
+   * as honestly as the screen is — month AND year: a printed plan outlives a
+   * season, and "suggested in Sep" on a page read next winter names the wrong
+   * September. */
+  planNotesAt?: number;
   /** "Today". Decides the reading order and every resolved year in the document. */
   now?: Date;
   /** Which of the five views to include. Omitted = all of them. */
@@ -546,8 +549,8 @@ function drawPlanNotes(s: Sheet, input: CropPlanPdfInput): void {
   const notes = input.planNotes ?? [];
   if (!notes.length) return;
 
-  const intro = input.planNotesMonth
-    ? `From the plan suggested in ${monthShort(input.planNotesMonth)}. Anything changed by hand since is not described here.`
+  const intro = input.planNotesAt
+    ? `From the plan suggested in ${planNotesDateLabel(input.planNotesAt)}. Anything changed by hand since is not described here.`
     : 'From the suggested plan that was accepted. Anything changed by hand since is not described here.';
   s.need(40);
   s.paragraph('How this plan was put together', { size: 10, bold: true, ink: INK.green, gap: 4 });
