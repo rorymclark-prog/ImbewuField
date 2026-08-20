@@ -12,6 +12,7 @@ import {
   type PlanBed,
   type Planting,
 } from '@/lib/crop-plan';
+import { IDEAL_PLAN_COPY } from '@/lib/crop-plan-ideal';
 import { driestMonths } from '@/lib/site-climate';
 
 // THE PLAN PAGE'S UX HONESTY GAPS (audit, 19 Aug 2026).
@@ -440,7 +441,9 @@ test('choosing whole-year over a non-empty plan surfaces the add-only hint, and 
     'the add-only hint shows exactly when the whole-year mode would plan around existing rows');
   assert.match(page, /IDEAL_PLAN_COPY\.fullPlanHint/);
   const openBody = page.slice(page.indexOf('function openAutoSuggest'), page.indexOf('function chooseGoal'));
-  for (const reset of ["setAPlanTiming('fromNow')", 'setIdealMeta(null)', 'setAutoGenerating(false)']) {
+  // Resets to the DEFAULT, which is now the whole-year plan — the assertion is
+  // that reopening clears whatever the last run left, not which mode wins.
+  for (const reset of ["setAPlanTiming('idealYear')", 'setIdealMeta(null)', 'setAutoGenerating(false)']) {
     assert.ok(openBody.includes(reset), `openAutoSuggest must reset the whole-year state: ${reset}`);
   }
 });
@@ -479,4 +482,75 @@ test('the "already growing" pill and tooltip speak nursery wording for a settled
     /planting\.inNursery \? ' · trays sown, not yet planted out' : planting\.existing \? ' · already growing' : ''/,
     'the Gantt tooltip must not call a nursery cohort "already growing"',
   );
+});
+
+// ── The whole-year plan becomes the default (2026-08-21) ────────────────────
+//
+// It was opt-in behind the timing toggle, defaulting to 'fromNow', so the
+// better plan was one most farmers never saw. Making it the default puts a
+// TRANSITION year in front of them by default too — and a first year that is
+// still filling up reads as a broken plan unless the card says otherwise.
+// Measured across 288 test farms: 58% of the months carrying no sowing job had
+// no bed even a quarter free, so "nothing to sow" is usually "everything is
+// already growing". These pin that the framing ships with the default.
+
+test('the whole-year plan is the default mode, and reopening returns to it', () => {
+  const page = source('../app/facilitator/crops/page.tsx');
+  assert.match(page, /useState<PlanTiming>\('idealYear'\)/,
+    'the plan-timing state must default to the whole-year plan');
+  assert.ok(!page.includes("setAPlanTiming('fromNow')"),
+    'nothing may reset the mode back to from-now, or reopening would undo the default');
+});
+
+test('the review card names both years before it says anything else', () => {
+  const page = source('../app/facilitator/crops/page.tsx');
+  for (const key of ['twoYearHeading', 'twoYearLine', 'fullBedsLine']) {
+    assert.ok(page.includes(`IDEAL_PLAN_COPY.${key}`), `the review card must render ${key}`);
+  }
+  // Order matters: the farmer reads why the first year is thin BEFORE reading
+  // which starting month won, or the thin year is the first thing they judge.
+  const twoYear = page.indexOf('IDEAL_PLAN_COPY.twoYearLine');
+  const chosen = page.indexOf('IDEAL_PLAN_COPY.chosenLine');
+  assert.ok(twoYear > 0 && chosen > twoYear,
+    'the two-year framing must come before the chosen-month line');
+});
+
+test('the two-year copy promises a second year and never calls the first one complete', () => {
+  assert.match(IDEAL_PLAN_COPY.twoYearLine, /two years/i);
+  assert.match(IDEAL_PLAN_COPY.twoYearLine, /work towards/i);
+  // The honest claim: the FIRST year is thin, not the plan. And the second is
+  // described as repeating, which is what the engine actually builds.
+  assert.match(IDEAL_PLAN_COPY.twoYearLine, /thin/i);
+  assert.match(IDEAL_PLAN_COPY.twoYearLine, /repeating/i);
+  // Never a promise that no month is empty — that claim is measurably false.
+  assert.doesNotMatch(IDEAL_PLAN_COPY.twoYearLine, /every month|no gaps|never empty/i);
+  assert.doesNotMatch(IDEAL_PLAN_COPY.fullBedsLine, /every month|no gaps|never empty/i);
+});
+
+test('both years are named on the grid axis, not only in the caption below it', () => {
+  const page = source('../app/facilitator/crops/page.tsx');
+  assert.ok(page.includes('IDEAL_PLAN_COPY.yearOneBand'), 'year one must be named on the axis');
+  assert.ok(page.includes('IDEAL_PLAN_COPY.yearTwoBand'), 'year two must be named on the axis');
+  // The band must ride the mirrored-scroll region, not sit outside it, or it
+  // stays put while the months pan and ends up labelling the wrong columns.
+  const scrollRegion = page.indexOf('ref={monthHeaderScrollRef}');
+  const band = page.indexOf('IDEAL_PLAN_COPY.yearOneBand');
+  const months = page.indexOf('{MONTHS_SHORT[m - 1]}', scrollRegion);
+  assert.ok(scrollRegion > 0 && band > scrollRegion && band < months,
+    'the year band belongs inside the scrolled header, above the month labels');
+  // Widths come from DISPLAY_MONTHS. A hardcoded second 12 would mislabel the
+  // axis the moment the window is widened or narrowed.
+  assert.match(page, /flex: DISPLAY_MONTHS - 12/,
+    'the year-two band must span the remainder of the window, not a fixed 12');
+});
+
+test('the year-band names match how the grid actually repeats', () => {
+  // The grid holds ONE annual cycle and redraws it (recurringPlanPlantings),
+  // so "every year after" is a description of the data model, not a promise.
+  assert.match(IDEAL_PLAN_COPY.yearOneBand, /year one/i);
+  assert.match(IDEAL_PLAN_COPY.yearTwoBand, /year two/i);
+  assert.match(IDEAL_PLAN_COPY.yearTwoBand, /every year after/i);
+  for (const band of [IDEAL_PLAN_COPY.yearOneBand, IDEAL_PLAN_COPY.yearTwoBand]) {
+    assert.ok(band.length <= 52, `a band label sits over 12 columns: ${band}`);
+  }
 });

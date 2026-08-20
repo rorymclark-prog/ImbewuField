@@ -279,6 +279,8 @@ test('no farmer-visible sentence leaks engine vocabulary', () => {
     IDEAL_PLAN_COPY.existingOverlapWarning('Bed 1'), IDEAL_PLAN_COPY.existingOverlapWarning('Bed 1, Bed 2'),
     IDEAL_PLAN_COPY.fullPlanHint,
     IDEAL_PLAN_COPY.starterLine('Kale (Aug), Lettuce (Sep)'), IDEAL_PLAN_COPY.starterBadge,
+    IDEAL_PLAN_COPY.twoYearHeading, IDEAL_PLAN_COPY.twoYearLine, IDEAL_PLAN_COPY.fullBedsLine,
+    IDEAL_PLAN_COPY.yearOneBand, IDEAL_PLAN_COPY.yearTwoBand,
   ];
   for (const text of rendered) {
     assert.ok(text.trim().length, 'no empty copy');
