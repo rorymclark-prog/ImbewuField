@@ -107,14 +107,17 @@ planting calendar → bill of quantities).
   from map → sun & slope → resources → goal → confirm beds), Lima sizes the beds
   (1.2 m × 8 m), then a six-week establishment plan you can slide + print. Saves
   to `imbewu_garden_survey`; beds seed from the planner crops (frame 29)
-- **Task Planner** at `/cropplan` (nav: "Task Planner") — task scheduler with
-  four zoom levels: Day/Week (that calendar month's real jobs, "due this
-  month"), Month (calendar for navigation + the same month's job list below
-  it), Season (3-month focus, generic SA guidance). Jobs are sourced entirely
-  from `loadCropBoardTasksForMonth` (lib/task-board.ts) — the real crop plan
-  (`imbewu_crop_plan_v1`), same pipeline as the home task card. No day-of-week
-  rota is invented; a farmer with no crop plan sees an unconditional notice
-  instead of fabricated jobs. Responsive type throughout (frame 31)
+- **Task Planner** at `/cropplan` (nav: "Task Planner") — two zoom levels only:
+  Month (a 12-month strip carrying each month's job count, plus that month's
+  checklist) and Season (3-month focus, generic SA guidance, each month linking
+  to its jobs). Day and Week views were REMOVED: crop-plan tasks carry a month
+  and no day, so they could only restate the month list under a finer heading.
+  Jobs are sourced entirely from `loadCropBoardYear` (lib/task-board.ts) — the
+  real crop plan (`imbewu_crop_plan_v1`), same pipeline as the home task card,
+  built once against the current month and filed by `dueMonth` so every harvest
+  and transplant the plan holds surfaces in its own month. No day-of-week rota
+  is invented; no crop plan shows a pinned notice, and a saved plan that yields
+  no job in any month says why. Responsive type throughout (frame 31)
 - AI permaculture report (frame 25); role dashboards NGO/Funder/Mentor/Student (frames 19/20)
 - Auth: email + Google + reset + change password; Firestore rules + indexes
 - **Desktop financial sheet** (frame 15) — at lg+ `/finances` shows the laptop

@@ -1,38 +1,49 @@
 'use client';
 
-import { useState, useEffect, useMemo, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import {
   Layers, Sprout, Scissors, Leaf, ClipboardList,
   ChevronLeft, ChevronRight, Sun, CloudRain, Snowflake, Sparkles,
-  CheckCircle2, Circle,
+  CheckCircle2, Circle, AlertCircle,
 } from 'lucide-react';
 import BackButton from '@/components/BackButton';
 import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
-import { loadCropPlan } from '@/lib/crop-plan';
 import {
-  TASK_BOARD_CHANGED_EVENTS, loadCropBoardTasksForMonth,
-  loadCompletedTaskIds, setCompletedTaskState, type BoardTask,
+  TASK_BOARD_CHANGED_EVENTS, loadCropBoardYear,
+  loadCompletedTaskIds, setCompletedTaskState,
+  type BoardTask, type CropBoardYear,
 } from '@/lib/task-board';
 
 // ─── Types & data ────────────────────────────────────────────────────────────
 //
 // This screen used to run its own invented weekly rota (Mon water beds A&B,
 // Tue mulch, Wed compost tea, Thu weed everything, Sat photo) derived from
-// nothing but the day of the week — the exact class of fabricated dated job
-// docs/CROP-PLAN-TRUTH-AUDIT-2026-08-06.md records as removed from the real
-// planner. Every job shown here now comes from loadCropBoardTasksForMonth
-// (lib/task-board.ts), the same sourced-task pipeline the home screen's task
-// card and /facilitator/crops already use — nothing is generated locally.
-// Crop-plan months carry no year, so "due this month" is the finest anchor
-// the real data supports: day and week views show that month's real tasks
-// rather than pinning them to invented weekdays.
+// nothing but the day of the week — an invented dated job, the class of
+// fabrication docs/CROP-PLAN-TRUTH-AUDIT-2026-08-06.md worked through
+// elsewhere in the crop-plan surfaces (it does not cover this screen; the
+// citation is to the pattern, not to a finding about /cropplan). Every job
+// shown here now comes from loadCropBoardYear (lib/task-board.ts), the same
+// sourced-task pipeline the home screen's task card and /facilitator/crops
+// already use — nothing is generated locally.
+//
+// GRANULARITY: crop-plan tasks carry a MONTH and no day (lib/crop-plan.ts), so
+// this screen offers month and season only. It used to have Day and Week tabs;
+// both were left over from the weekday rota and, once the rota went, they could
+// only ever show the whole month's list under a day or week heading. They are
+// deliberately gone rather than dressed up — the planner shows exactly the
+// precision the data has.
 
-type View = 'day' | 'week' | 'month' | 'season';
+type View = 'month' | 'season';
 
+// Every action lib/crop-plan.ts's CropTask can carry, so the map stays
+// exhaustive over the union. tasksForPlan currently emits prep, sow,
+// transplant, harvest and terminate-cover; it deliberately emits no mulch or
+// weeding task (those are field observations, not dated work), so those three
+// rows are here for type completeness and cannot render today.
 const ACTION_META: Record<NonNullable<BoardTask['action']>, { Icon: typeof Sprout; color: string; short: string }> = {
   prep:               { Icon: ClipboardList, color: '#5C4F3C', short: 'Prep' },
   sow:                { Icon: Sprout,        color: '#1F4D2B', short: 'Sow' },
@@ -46,28 +57,22 @@ const ACTION_META: Record<NonNullable<BoardTask['action']>, { Icon: typeof Sprou
 const FALLBACK_META = { Icon: ClipboardList, color: '#5C4F3C', short: 'Task' };
 function actionMeta(task: BoardTask) { return (task.action && ACTION_META[task.action]) || FALLBACK_META; }
 
-// ─── Date helpers ────────────────────────────────────────────────────────────
+// ─── Month helpers ───────────────────────────────────────────────────────────
 
-const DOW = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+const MONTHS_SHORT = MONTHS.map((m) => m.slice(0, 3));
 
-function mondayOf(d: Date): Date {
-  const x = new Date(d);
-  const day = (x.getDay() + 6) % 7; // 0 = Monday
-  x.setDate(x.getDate() - day);
-  x.setHours(0, 0, 0, 0);
-  return x;
-}
-function addDays(d: Date, n: number): Date { const x = new Date(d); x.setDate(x.getDate() + n); return x; }
-function sameDay(a: Date, b: Date) { return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate(); }
-function fmtDM(d: Date) { return `${d.getDate()} ${MONTHS[d.getMonth()].slice(0, 3)}`; }
+/** 1-12, wrapping. Same rule as lib/crop-plan.ts's wrapMonth. */
+function wrapMonth(m: number): number { return ((m - 1) % 12 + 12) % 12 + 1; }
+/** Months from `from` (1-12) forward to the next occurrence of `to` (1-12). */
+function monthsUntil(to: number, from: number): number { return ((to - from) % 12 + 12) % 12; }
 
-// SA southern-hemisphere season
+// SA southern-hemisphere season, keyed on a 1-12 month.
 function saSeason(month: number): { name: string; Icon: typeof Sun; months: number[] } {
-  if (month >= 8 && month <= 10) return { name: 'Spring', Icon: Sprout, months: [8, 9, 10] };
-  if (month === 11 || month <= 1) return { name: 'Summer', Icon: Sun, months: [11, 0, 1] };
-  if (month >= 2 && month <= 4) return { name: 'Autumn', Icon: CloudRain, months: [2, 3, 4] };
-  return { name: 'Winter', Icon: Snowflake, months: [5, 6, 7] };
+  if (month >= 9 && month <= 11) return { name: 'Spring', Icon: Sprout, months: [9, 10, 11] };
+  if (month === 12 || month <= 2) return { name: 'Summer', Icon: Sun, months: [12, 1, 2] };
+  if (month >= 3 && month <= 5) return { name: 'Autumn', Icon: CloudRain, months: [3, 4, 5] };
+  return { name: 'Winter', Icon: Snowflake, months: [6, 7, 8] };
 }
 const MONTH_FOCUS: Record<number, string> = {
   0: 'Peak summer harvest — water deeply, mulch, watch for pests daily.',
@@ -88,7 +93,7 @@ const MONTH_FOCUS: Record<number, string> = {
   11: 'Early summer — first tomatoes; water daily, tie up trusses.',
 };
 
-// ─── Task list (shared by day / week / month) ───────────────────────────────
+// ─── Task list ───────────────────────────────────────────────────────────────
 
 function TaskList({ tasks, onToggle, emptyMessage }: {
   tasks: BoardTask[]; onToggle: (id: string) => void; emptyMessage: string;
@@ -136,61 +141,50 @@ function TaskList({ tasks, onToggle, emptyMessage }: {
 // ─── Page ────────────────────────────────────────────────────────────────────
 
 export default function CropPlanPage() {
-  const [view, setView] = useState<View>('day');
-  const [cursor, setCursor] = useState<Date | null>(null);
-  const [today, setToday] = useState<Date | null>(null);
-  const [completedIds, setCompletedIds] = useState<Set<string>>(new Set());
-  const [hasPlan, setHasPlan] = useState(false);
+  const [view, setView] = useState<View>('month');
+  const [cursorMonth, setCursorMonth] = useState(1);
+  const [todayMonth, setTodayMonth] = useState(1);
+  const [year, setYear] = useState<CropBoardYear | null>(null);
   const [mounted, setMounted] = useState(false);
 
+  // One reload path for BOTH the completion set and the sourced tasks, so the
+  // list can never go stale against the crop plan. An earlier version memoised
+  // the month's tasks on [mounted, cursorMonth, completedIds] and so depended
+  // on loadCompletedTaskIds happening to return a fresh Set each call — a plan
+  // edit would silently stop refreshing the planner the day that changed.
   const refresh = useCallback(() => {
-    setCompletedIds(loadCompletedTaskIds());
-    setHasPlan(loadCropPlan().plantings.length > 0);
+    setYear(loadCropBoardYear(loadCompletedTaskIds()));
   }, []);
 
   useEffect(() => {
+    const now = new Date();
+    setCursorMonth(now.getMonth() + 1);
+    setTodayMonth(now.getMonth() + 1);
     refresh();
-    const now = new Date(); setCursor(now); setToday(now); setMounted(true);
+    setMounted(true);
     TASK_BOARD_CHANGED_EVENTS.forEach((ev) => window.addEventListener(ev, refresh));
     return () => TASK_BOARD_CHANGED_EVENTS.forEach((ev) => window.removeEventListener(ev, refresh));
   }, [refresh]);
 
   function toggleTask(id: string) {
-    const before = loadCompletedTaskIds();
-    setCompletedIds(setCompletedTaskState(id, !before.has(id)));
+    setCompletedTaskState(id, !loadCompletedTaskIds().has(id));
+    refresh();
   }
 
-  const safeCursor = cursor ?? new Date(0);
-  const safeToday = today ?? new Date(0);
+  const monthTasks = year?.byMonth.get(cursorMonth) ?? [];
+  const countFor = (month: number) => year?.byMonth.get(month)?.length ?? 0;
+  const savedPlantings = year?.savedPlantings ?? 0;
+  const totalTasks = year?.total ?? 0;
+  // A saved plan that produces no job in any of the twelve months. Kept
+  // distinct from "no plan yet" so neither notice can claim the wrong thing.
+  const planYieldsNothing = mounted && savedPlantings > 0 && totalTasks === 0;
+  const season = saSeason(cursorMonth);
+  const monthName = MONTHS[cursorMonth - 1];
+  const away = monthsUntil(cursorMonth, todayMonth);
 
-  const cursorMonth = safeCursor.getMonth() + 1;
-  const weekStart = useMemo(() => mondayOf(safeCursor), [safeCursor]);
-  const weekMonth = weekStart.getMonth() + 1;
-  const weekDays = useMemo(() => Array.from({ length: 7 }, (_, i) => addDays(weekStart, i)), [weekStart]);
-
-  // Real, sourced tasks — never invented. Day and month share the same
-  // calendar-month bucket; week anchors on the Monday of the viewed week
-  // (a "sensible anchor" per the audit fix, since crop-plan tasks carry no
-  // day-of-week, only a due month).
-  const monthTasks = useMemo(() => (mounted ? loadCropBoardTasksForMonth(cursorMonth, completedIds) : []), [mounted, cursorMonth, completedIds]);
-  const weekTasks = useMemo(
-    () => (mounted ? (weekMonth === cursorMonth ? monthTasks : loadCropBoardTasksForMonth(weekMonth, completedIds)) : []),
-    [mounted, weekMonth, cursorMonth, monthTasks, completedIds],
-  );
-
-  const season = saSeason(safeCursor.getMonth());
-
-  function step(dir: number) {
-    if (view === 'day') setCursor((c) => addDays(c ?? new Date(), dir));
-    else if (view === 'week') setCursor((c) => addDays(c ?? new Date(), dir * 7));
-    else setCursor((c) => { const d = c ?? new Date(); return new Date(d.getFullYear(), d.getMonth() + dir, 1); });
-  }
-
-  const isToday = mounted && sameDay(safeCursor, safeToday);
-  const dayLabel = isToday ? 'Today' : DOW[(safeCursor.getDay() + 6) % 7];
+  function stepMonth(dir: number) { setCursorMonth((m) => wrapMonth(m + dir)); }
 
   const TABS: { v: View; label: string }[] = [
-    { v: 'day', label: 'Day' }, { v: 'week', label: 'Week' },
     { v: 'month', label: 'Month' }, { v: 'season', label: 'Season' },
   ];
 
@@ -208,11 +202,12 @@ export default function CropPlanPage() {
       </header>
 
       {/* No-plan notice — pinned outside the scroll area so it can't be scrolled past.
-          Fires unconditionally whenever there is no real crop plan to source jobs from
-          (lib/crop-plan.ts, imbewu_crop_plan_v1) — a farmer who has only filled in a
-          garden survey, or nothing at all, used to get the invented weekday rota with
-          no warning; now they see nothing invented and this notice instead. */}
-      {mounted && !hasPlan && (
+          Gated on the SAME source the jobs come from (lib/task-board.ts's
+          loadCropBoardYear, which reads imbewu_crop_plan_v1): savedPlantings is the
+          stored plan's own planting count, so this fires exactly when there is no
+          plan to source jobs from. A farmer who has only filled in a garden survey,
+          or nothing at all, used to get the invented weekday rota with no warning. */}
+      {mounted && savedPlantings === 0 && (
         <div
           className="flex-shrink-0 flex items-center justify-center gap-3 px-4 py-2 flex-wrap text-center"
           style={{ background: '#C07A1E', borderBottom: '1px solid rgba(32,25,15,0.15)' }}
@@ -232,7 +227,7 @@ export default function CropPlanPage() {
       )}
 
       <div className="flex-1 overflow-y-auto">
-        <div className="mx-auto w-full px-4 py-5" style={{ maxWidth: view === 'week' || view === 'month' ? 880 : 560 }}>
+        <div className="mx-auto w-full px-4 py-5" style={{ maxWidth: 640 }}>
 
           {/* New: flagship bed-timeline crop planner on the design map */}
           <Link href="/facilitator/crops"
@@ -246,16 +241,14 @@ export default function CropPlanPage() {
             <div>
               <div className="font-sans uppercase tracking-widest" style={{ fontSize: 11, color: '#C07A1E', letterSpacing: '0.12em' }}>Task planner</div>
               <h1 className="font-display font-bold" style={{ fontSize: 'clamp(22px, 2.6vw, 30px)', color: '#20190F', letterSpacing: '-0.02em', lineHeight: 1.1 }}>
-                {mounted && view === 'day' && `${DOW[(safeCursor.getDay() + 6) % 7]} · ${fmtDM(safeCursor)}`}
-                {mounted && view === 'week' && `Week of ${fmtDM(weekStart)}`}
-                {mounted && view === 'month' && `${MONTHS[safeCursor.getMonth()]} ${safeCursor.getFullYear()}`}
-                {mounted && view === 'season' && `${season.name} ${safeCursor.getFullYear()}`}
+                {mounted && view === 'month' && monthName}
+                {mounted && view === 'season' && season.name}
               </h1>
             </div>
-            {view !== 'season' && (
+            {view === 'month' && (
               <div className="flex items-center gap-1 flex-shrink-0">
-                <button onClick={() => step(-1)} aria-label="Previous" className="flex items-center justify-center rounded-full" style={{ width: 34, height: 34, background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}><ChevronLeft size={16} /></button>
-                <button onClick={() => step(1)} aria-label="Next" className="flex items-center justify-center rounded-full" style={{ width: 34, height: 34, background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}><ChevronRight size={16} /></button>
+                <button onClick={() => stepMonth(-1)} aria-label="Previous month" className="flex items-center justify-center rounded-full" style={{ width: 34, height: 34, background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}><ChevronLeft size={16} /></button>
+                <button onClick={() => stepMonth(1)} aria-label="Next month" className="flex items-center justify-center rounded-full" style={{ width: 34, height: 34, background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}><ChevronRight size={16} /></button>
               </div>
             )}
           </div>
@@ -274,41 +267,27 @@ export default function CropPlanPage() {
             })}
           </div>
 
-          {/* ── DAY ── */}
-          {view === 'day' && (
-            <div>
-              <div className="font-sans uppercase tracking-widest mb-3" style={{ fontSize: 11, color: '#8C7A62', letterSpacing: '0.12em' }}>
-                {dayLabel} — {monthTasks.length} {monthTasks.length === 1 ? 'job' : 'jobs'} due this month
-              </div>
-              <TaskList
-                tasks={monthTasks}
-                onToggle={toggleTask}
-                emptyMessage="Nothing due from your crop plan for this day — check the month view."
-              />
-            </div>
-          )}
-
-          {/* ── WEEK ── */}
-          {view === 'week' && (
-            <div>
-              <div className="font-sans uppercase tracking-widest mb-3" style={{ fontSize: 11, color: '#8C7A62', letterSpacing: '0.12em' }}>
-                {weekTasks.length} {weekTasks.length === 1 ? 'job' : 'jobs'} due this month
-              </div>
-              <TaskList
-                tasks={weekTasks}
-                onToggle={toggleTask}
-                emptyMessage="Nothing due from your crop plan for this week — check the month view."
-              />
-              <div className="grid grid-cols-7 gap-1 mt-4">
-                {weekDays.map((d) => {
-                  const td = mounted && sameDay(d, safeToday);
-                  return (
-                    <div key={d.toISOString()} className="rounded-xl py-2 text-center" style={{ background: td ? '#1F4D2B' : '#FFFEFA', border: `1px solid ${td ? '#1F4D2B' : '#E2D8C4'}` }}>
-                      <div className="font-sans font-semibold" style={{ fontSize: 11, color: td ? '#EAF3E2' : '#5C5040' }}>{DOW[(d.getDay() + 6) % 7]}</div>
-                      <div className="font-display" style={{ fontSize: 12, color: td ? '#EAF3E2' : '#8C7A62' }}>{d.getDate()}</div>
-                    </div>
-                  );
-                })}
+          {/* A saved plan that produces no job in any month — say why rather than
+              leaving twelve empty months with no explanation. Every clause here has
+              to hold for every route into this state: a planting whose bed was
+              deleted, a crop with no verified timings, and an already-growing crop
+              whose picking months have all passed. */}
+          {planYieldsNothing && (
+            <div className="rounded-2xl px-4 py-4 mb-5 flex gap-3" style={{ background: '#FFFEFA', border: '1px solid #C07A1E' }}>
+              <AlertCircle size={18} style={{ color: '#C07A1E', flexShrink: 0, marginTop: 2 }} />
+              <div>
+                <div className="font-display font-semibold mb-1" style={{ fontSize: 15, color: '#20190F' }}>
+                  Your crop plan is not producing any jobs
+                </div>
+                <p className="font-sans" style={{ fontSize: 13.5, color: '#5C5040', lineHeight: 1.5 }}>
+                  It has {savedPlantings} {savedPlantings === 1 ? 'planting' : 'plantings'} saved, but nothing in it
+                  lands in any month. That happens when a planting sits on a bed that has been deleted, when its crop
+                  has no verified timings in the app, or when it is an existing crop whose picking months have already
+                  passed. Open the crop plan to check it.
+                </p>
+                <Link href="/facilitator/crops" className="inline-flex items-center gap-1 mt-2 font-sans font-semibold" style={{ fontSize: 13, color: '#1F4D2B' }}>
+                  Open crop plan<ChevronRight size={14} />
+                </Link>
               </div>
             </div>
           )}
@@ -316,45 +295,51 @@ export default function CropPlanPage() {
           {/* ── MONTH ── */}
           {view === 'month' && (
             <div>
-              <div className="rounded-2xl p-3 md:p-4 mb-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-                <div className="grid grid-cols-7 gap-1 mb-1">
-                  {DOW.map((d) => <div key={d} className="text-center font-sans" style={{ fontSize: 11, color: '#8C7A62' }}>{d}</div>)}
-                </div>
-                <div className="space-y-1">
-                  {(() => {
-                    const first = new Date(safeCursor.getFullYear(), safeCursor.getMonth(), 1);
-                    const start = mondayOf(first);
-                    const weeks: Date[][] = [];
-                    for (let w = 0; w < 6; w++) {
-                      const row = Array.from({ length: 7 }, (_, i) => addDays(start, w * 7 + i));
-                      weeks.push(row);
-                      if (row[6].getMonth() !== safeCursor.getMonth() && w >= 4) break;
-                    }
-                    return weeks;
-                  })().map((week, wi) => (
-                    <div key={wi} className="grid grid-cols-7 gap-1">
-                      {week.map((d) => {
-                        const inMonth = d.getMonth() === safeCursor.getMonth();
-                        const td = mounted && sameDay(d, safeToday);
-                        return (
-                          <button key={d.toISOString()} onClick={() => { setCursor(new Date(d)); setView('day'); }}
-                            className="rounded-lg flex flex-col items-center justify-center py-1.5"
-                            style={{ aspectRatio: '1', background: td ? '#1F4D2B' : inMonth ? 'rgba(226,216,196,0.3)' : 'transparent', border: td ? 'none' : '1px solid transparent', opacity: inMonth ? 1 : 0.35, cursor: 'pointer' }}>
-                            <span className="font-display" style={{ fontSize: 13, fontWeight: td ? 700 : 500, color: td ? '#EAF3E2' : '#20190F' }}>{d.getDate()}</span>
-                          </button>
-                        );
-                      })}
-                    </div>
-                  ))}
-                </div>
+              {/* Twelve-month strip: the plan's own annual cycle, with each month's
+                  real job count. Replaces the old day-grid calendar, which showed no
+                  task information at all and implied a day precision the crop plan
+                  does not have. */}
+              <div className="grid grid-cols-6 gap-1 mb-4">
+                {MONTHS_SHORT.map((label, i) => {
+                  const m = i + 1;
+                  const on = m === cursorMonth;
+                  const isNow = mounted && m === todayMonth;
+                  const n = countFor(m);
+                  return (
+                    <button key={label} onClick={() => setCursorMonth(m)}
+                      aria-label={`${MONTHS[i]} — ${n} ${n === 1 ? 'job' : 'jobs'}`}
+                      aria-current={on ? 'true' : undefined}
+                      className="rounded-lg py-1.5 flex flex-col items-center justify-center"
+                      style={{
+                        background: on ? '#1F4D2B' : '#FFFEFA',
+                        border: `1px solid ${on ? '#1F4D2B' : isNow ? '#1F4D2B' : '#E2D8C4'}`,
+                        cursor: 'pointer',
+                      }}>
+                      <span className="font-sans font-semibold" style={{ fontSize: 11, color: on ? '#EAF3E2' : '#5C5040' }}>{label}</span>
+                      <span className="font-display" style={{ fontSize: 12, color: on ? '#EAF3E2' : n > 0 ? '#1F4D2B' : '#C6BBA4' }}>{n}</span>
+                    </button>
+                  );
+                })}
               </div>
-              <div className="font-sans uppercase tracking-widest mb-3" style={{ fontSize: 11, color: '#8C7A62', letterSpacing: '0.12em' }}>
-                {monthTasks.length} {monthTasks.length === 1 ? 'job' : 'jobs'} due this month
+
+              <div className="flex items-center gap-2 mb-3 flex-wrap">
+                <span className="font-sans uppercase tracking-widest" style={{ fontSize: 11, color: '#8C7A62', letterSpacing: '0.12em' }}>
+                  {monthTasks.length} {monthTasks.length === 1 ? 'job' : 'jobs'} in {monthName}
+                </span>
+                {/* Describes the MONTH you are browsing, never the jobs in it — a job
+                    carries its own "Due in N months" line, and a picking that lands in
+                    next year's August still belongs in the August bucket. "This month"
+                    here would read as a claim about the jobs. */}
+                {mounted && (
+                  <span className="font-sans px-2 py-0.5 rounded-full" style={{ fontSize: 11, background: away === 0 ? 'rgba(31,77,43,0.1)' : 'rgba(226,216,196,0.6)', color: away === 0 ? '#1F4D2B' : '#5C5040' }}>
+                    {away === 0 ? 'Current month' : away === 1 ? '1 month ahead' : `${away} months ahead`}
+                  </span>
+                )}
               </div>
               <TaskList
                 tasks={monthTasks}
                 onToggle={toggleTask}
-                emptyMessage="Nothing due from your crop plan for this month."
+                emptyMessage={`Nothing due from your crop plan in ${monthName}.`}
               />
             </div>
           )}
@@ -367,19 +352,31 @@ export default function CropPlanPage() {
                   <season.Icon size={22} style={{ color: '#EAF3E2' }} strokeWidth={1.6} />
                 </div>
                 <div>
-                  <div className="font-sans uppercase tracking-widest" style={{ fontSize: 11, color: 'rgba(234,243,226,0.55)', letterSpacing: '0.1em' }}>This season</div>
+                  <div className="font-sans uppercase tracking-widest" style={{ fontSize: 11, color: 'rgba(234,243,226,0.55)', letterSpacing: '0.1em' }}>
+                    {mounted && season.months.includes(todayMonth) ? 'This season' : 'Season'}
+                  </div>
                   <div className="font-display font-bold" style={{ fontSize: 'clamp(20px, 2.2vw, 26px)', color: '#F7F2E9', lineHeight: 1.1 }}>{season.name} in South Africa</div>
                 </div>
               </div>
-              {season.months.map((m) => (
-                <div key={m} className="rounded-2xl px-4 py-3.5" style={{ background: '#FFFEFA', border: `1px solid ${mounted && m === safeToday.getMonth() ? '#1F4D2B40' : '#E2D8C4'}` }}>
-                  <div className="flex items-center gap-2 mb-1">
-                    <span className="font-display font-semibold" style={{ fontSize: 16, color: '#20190F' }}>{MONTHS[m]}</span>
-                    {mounted && m === safeToday.getMonth() && <span className="font-sans px-2 py-0.5 rounded-full" style={{ fontSize: 11, background: 'rgba(31,77,43,0.1)', color: '#1F4D2B' }}>Now</span>}
-                  </div>
-                  <p className="font-sans" style={{ fontSize: 'clamp(14px, 1.1vw, 15px)', color: '#5C5040', lineHeight: 1.5 }}>{MONTH_FOCUS[m]}</p>
-                </div>
-              ))}
+              {season.months.map((m) => {
+                const n = countFor(m);
+                return (
+                  <button key={m} onClick={() => { setCursorMonth(m); setView('month'); }}
+                    className="w-full text-left rounded-2xl px-4 py-3.5"
+                    style={{ background: '#FFFEFA', border: `1px solid ${mounted && m === todayMonth ? '#1F4D2B40' : '#E2D8C4'}`, cursor: 'pointer' }}>
+                    <div className="flex items-center gap-2 mb-1 flex-wrap">
+                      <span className="font-display font-semibold" style={{ fontSize: 16, color: '#20190F' }}>{MONTHS[m - 1]}</span>
+                      {mounted && m === todayMonth && <span className="font-sans px-2 py-0.5 rounded-full" style={{ fontSize: 11, background: 'rgba(31,77,43,0.1)', color: '#1F4D2B' }}>Now</span>}
+                      <span className="font-sans px-2 py-0.5 rounded-full" style={{ fontSize: 11, background: 'rgba(226,216,196,0.6)', color: '#5C5040' }}>
+                        {n} {n === 1 ? 'job' : 'jobs'} from your plan
+                      </span>
+                    </div>
+                    {/* Generic seasonal guidance, not derived from this farmer's beds —
+                        deliberately separate from the sourced job counts above. */}
+                    <p className="font-sans" style={{ fontSize: 'clamp(14px, 1.1vw, 15px)', color: '#5C5040', lineHeight: 1.5 }}>{MONTH_FOCUS[m - 1]}</p>
+                  </button>
+                );
+              })}
             </div>
           )}
 
