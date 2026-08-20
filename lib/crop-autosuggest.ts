@@ -1152,6 +1152,19 @@ class BedRotation {
     this.addSlot(bedId, this.slotFor(crop, sowMonth, false));
   }
 
+  /** Record a one-time first-season starter placed during THIS run.
+   *
+   * The same treatment the constructor gives a starter loaded from saved data:
+   * forward-anchored, but marked existing so wouldRepeat compares it as the one
+   * real course it is. Logged through recordUse instead, its ±12 annual
+   * projections would have it competing with itself a year out and could veto a
+   * later starter that is genuinely legal — understating how much bare ground
+   * the pass could honestly have filled, which is the whole point of the pass. */
+  recordOnceUse(bedId: string, crop: CropDef, sowMonth: number) {
+    this.lastBedId = bedId;
+    this.addSlot(bedId, { ...this.slotFor(crop, sowMonth, false), existing: true });
+  }
+
   fallbackNotes(beds: readonly PlanBed[]): string[] {
     const bedsByFamily = new Map<RotationFamily, string[]>();
     for (const [bedId, family] of this.fallbackBeds) {
@@ -2102,7 +2115,9 @@ export function fillFirstSeasonGaps(
       if (!picks.length) break;
       const chosen = picks[0];
       for (let index = 0; index < chosen.span; index++) occupied[chosen.entry + index] = true;
-      rotation.recordUse(bed.id, chosen.crop, chosen.sowMonth);
+      // A starter is one-time, so it is recorded as one real course rather than
+      // an annually repeating one — see recordOnceUse.
+      rotation.recordOnceUse(bed.id, chosen.crop, chosen.sowMonth);
       starters.push({
         id: `auto:starter:${encodeURIComponent(bed.id)}:${encodeURIComponent(chosen.crop.key)}:${chosen.sowMonth}`,
         bedId: bed.id,
