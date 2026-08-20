@@ -35,6 +35,20 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '20 August',
+    sha: 'f4d7acf',
+    changes: [
+      'Plan notes now lead with warnings in plain words; long lists fold behind one line',
+      'Your plan keeps those notes after you accept it — "Why this plan chose what it chose"',
+      'Crops waiting for their sowing window are listed with the month they can go in',
+      'Adding a crop to a busy bed now names the crops it would compete with, and when',
+      'The Seeds & seedlings list is grouped by the month to buy each packet or tray',
+      'Task Planner shows the real jobs from your crop plan in every month they are due',
+      'Stored crops now say how long they keep and what storage they need — tap a chart month',
+      'Turnips now carry a sourced price; true spinach says honestly why it has none',
+    ],
+  },
+  {
+    when: '20 August',
     sha: '7fa68e3',
     changes: [
       'Commercial plans now use every bed you set aside — none are skipped in silence',
