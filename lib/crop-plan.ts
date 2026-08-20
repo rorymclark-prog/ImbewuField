@@ -864,6 +864,55 @@ export function buildPlanYieldBenchmark(plantings: Planting[], beds: PlanBed[], 
   };
 }
 
+/** One overbooked bed, with the plantings the farmer has to choose between. */
+export interface BedAreaConflict {
+  bedId: string;
+  bedLabel: string;
+  plantings: {
+    plantingId: string;
+    cropKey: string;
+    cropName: string;
+    /** Months this planting holds the bed (1-12), entry month first. */
+    months: number[];
+    areaFraction: number;
+  }[];
+}
+
+/**
+ * The plantings behind each label benchmarkAreaConflictBedLabels returns, so a
+ * screen can say WHICH crops are standing on the same ground instead of only
+ * naming the bed. Deliberately built on that same function and the same
+ * filtered planting set buildPlanYieldBenchmark uses, so the headline warning
+ * and the list under it can never disagree about which beds are overbooked.
+ */
+export function benchmarkAreaConflictDetails(
+  plantings: Planting[], beds: PlanBed[], nowMonth?: number,
+): BedAreaConflict[] {
+  const bedIds = new Set(beds.map((bed) => bed.id));
+  const mapped = plantings.filter((planting) =>
+    bedIds.has(planting.bedId)
+      && (nowMonth === undefined || plantingIsActiveOrPlanned(planting, nowMonth)));
+  const labels = new Set(benchmarkAreaConflictBedLabels(mapped, beds, nowMonth));
+  if (labels.size === 0) return [];
+  return beds
+    .filter((bed) => labels.has(bed.label))
+    .map((bed) => ({
+      bedId: bed.id,
+      bedLabel: bed.label,
+      plantings: mapped
+        .filter((planting) => planting.bedId === bed.id)
+        .map((planting) => ({
+          plantingId: planting.id,
+          cropKey: planting.cropKey,
+          cropName: cropByKey(planting.cropKey)?.name ?? planting.cropKey,
+          months: occupiedMonthsForPlanting(planting),
+          areaFraction: planting.areaFraction ?? 1,
+        }))
+        .sort((a, b) => (a.months[0] ?? 0) - (b.months[0] ?? 0) || a.cropName.localeCompare(b.cropName)),
+    }))
+    .sort((a, b) => a.bedLabel.localeCompare(b.bedLabel));
+}
+
 // Whether the crop picker offers bed-SHARING (splitting a bed by fraction —
 // intercropping or a manual split) at all. Off by default: sharing a bed
 // well needs some gardening judgement (companion compatibility, genuine
@@ -922,30 +971,108 @@ export function isSpaceHungry(crop: CropDef): boolean {
  * window overlaps the given one — used to warn (not block) before splitting
  * a bed past 100%. `excludeId` skips the planting being edited, if any.
  */
+function monthRangesOverlap(aStart: number, aEnd: number, bStart: number, bEnd: number): boolean {
+  // Both ranges expressed as month-of-year spans that may wrap; a wrapping
+  // range (e.g. Nov→Feb) becomes ONE ascending segment on a doubled 1-24
+  // timeline (e+12 is always > s once wrapped) — comparing "b" at both its
+  // base position and +12 catches a match that only lines up a cycle later.
+  const norm = (s: number, e: number): [number, number] => (e >= s ? [s, e] : [s, e + 12]);
+  const [as, ae] = norm(aStart, aEnd);
+  for (const [bs, be] of [norm(bStart, bEnd), norm(bStart + 12, bEnd + 12)]) {
+    if (as <= be && bs <= ae) return true;
+  }
+  return false;
+}
+
+/** Calendar months (1-12) from `start` to `end` inclusive, wrapping through
+ * December. Caps at twelve distinct months: a longer span holds every month
+ * of the year, and repeating them would not tell a farmer anything more. */
+function monthsBetween(start: number, end: number): number[] {
+  const last = wrapMonth(end);
+  const months: number[] = [];
+  let month = wrapMonth(start);
+  for (let step = 0; step < 12; step++) {
+    months.push(month);
+    if (month === last) break;
+    month = wrapMonth(month + 1);
+  }
+  return months;
+}
+
+/**
+ * Every OTHER planting on this bed whose sow→harvest window meets the given
+ * one. Single source of truth for the crop picker's "is this ground already
+ * taken" question: the number in bedOverlapFraction and the crop names in the
+ * warning sentence come from the same pass, so they cannot drift apart.
+ */
+function overlappingBedPlantings(
+  bedId: string, sowMonth: number, harvestEndMonth: number, plantings: Planting[], excludeId?: string,
+): { planting: Planting; crop: CropDef }[] {
+  return plantings
+    .filter((p) => p.bedId === bedId && p.id !== excludeId)
+    .flatMap((planting) => {
+      const crop = cropByKey(planting.cropKey);
+      if (!crop || crop.timingVerified === false) return [];
+      const pStart = plannedBedEntryMonth(planting.sowMonth, crop);
+      const pHarvestEnd = harvestEndMonthForCrop(planting.sowMonth, crop);
+      return monthRangesOverlap(sowMonth, harvestEndMonth, pStart, pHarvestEnd)
+        ? [{ planting, crop }]
+        : [];
+    });
+}
+
 export function bedOverlapFraction(
   bedId: string, sowMonth: number, harvestEndMonth: number, plantings: Planting[], excludeId?: string,
 ): number {
-  const overlaps = (aStart: number, aEnd: number, bStart: number, bEnd: number): boolean => {
-    // Both ranges expressed as month-of-year spans that may wrap; a wrapping
-    // range (e.g. Nov→Feb) becomes ONE ascending segment on a doubled 1-24
-    // timeline (e+12 is always > s once wrapped) — comparing "b" at both its
-    // base position and +12 catches a match that only lines up a cycle later.
-    const norm = (s: number, e: number): [number, number] => (e >= s ? [s, e] : [s, e + 12]);
-    const [as, ae] = norm(aStart, aEnd);
-    for (const [bs, be] of [norm(bStart, bEnd), norm(bStart + 12, bEnd + 12)]) {
-      if (as <= be && bs <= ae) return true;
-    }
-    return false;
+  return overlappingBedPlantings(bedId, sowMonth, harvestEndMonth, plantings, excludeId)
+    .reduce((sum, { planting }) => sum + (planting.areaFraction ?? 1), 0);
+}
+
+/** What to tell the farmer before a planting is added onto ground another crop
+ * is already holding. */
+export interface BedOverlapWarning {
+  /** Share of the bed the other overlapping crops already hold. */
+  committedFraction: number;
+  /** That share plus the one about to be added. */
+  totalFraction: number;
+  /** The crops already in the way, named, alphabetical for a stable sentence. */
+  cropNames: string[];
+  /** The months where they meet, in the order the new crop runs through them. */
+  overlapMonths: number[];
+}
+
+/**
+ * The overlap warning for a planting about to be added or edited — for ANY
+ * share of the bed, whole or fractional. `addedFraction` is what the farmer is
+ * about to commit (1 for a whole bed). Returns null when the bed can carry it.
+ *
+ * This is a warning, never a block: a farmer may know something the mapped
+ * areas do not, and the app has always let them record it.
+ */
+export function bedOverlapWarning(
+  bedId: string,
+  sowMonth: number,
+  harvestEndMonth: number,
+  addedFraction: number,
+  plantings: Planting[],
+  excludeId?: string,
+): BedOverlapWarning | null {
+  const others = overlappingBedPlantings(bedId, sowMonth, harvestEndMonth, plantings, excludeId);
+  const committedFraction = others.reduce((sum, { planting }) => sum + (planting.areaFraction ?? 1), 0);
+  const totalFraction = committedFraction + addedFraction;
+  if (!(totalFraction > 1.001) || others.length === 0) return null;
+
+  const newMonths = monthsBetween(sowMonth, harvestEndMonth);
+  const busy = new Set(others.flatMap(({ planting }) => occupiedMonthsForPlanting(planting)));
+  const overlapMonths = newMonths.filter((month) => busy.has(month));
+  return {
+    committedFraction,
+    totalFraction,
+    cropNames: [...new Set(others.map(({ crop }) => crop.name))].sort((a, b) => a.localeCompare(b)),
+    // A crop whose bed-reservation edge overlaps but whose occupied months do
+    // not line up leaves this empty rather than inventing a month.
+    overlapMonths,
   };
-  return plantings
-    .filter((p) => p.bedId === bedId && p.id !== excludeId)
-    .reduce((sum, p) => {
-      const crop = cropByKey(p.cropKey);
-      if (!crop || crop.timingVerified === false) return sum;
-      const pStart = plannedBedEntryMonth(p.sowMonth, crop);
-      const pHarvestEnd = harvestEndMonthForCrop(p.sowMonth, crop);
-      return overlaps(sowMonth, harvestEndMonth, pStart, pHarvestEnd) ? sum + (p.areaFraction ?? 1) : sum;
-    }, 0);
 }
 
 /** Whether the numeric overlap excludes a legacy record whose finish timing

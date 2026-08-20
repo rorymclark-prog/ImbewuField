@@ -150,3 +150,31 @@ export async function resolveSiteClimate(lat: number, lon: number): Promise<Site
     return null;
   }
 }
+
+/** One month of the site's own rainfall normals. */
+export interface DriestMonth {
+  /** 1-12. */
+  month: number;
+  rainMm: number;
+}
+
+/**
+ * The site's driest calendar months, returned in calendar order.
+ *
+ * Descriptive only: this is the satellite rainfall record for the point, not a
+ * water requirement. Nothing here models evaporation, soil or crop demand — it
+ * exists so the planner can show the farmer WHICH months its "reliable
+ * irrigation" question is really about, in that site's own numbers.
+ *
+ * Returns [] unless all twelve monthly totals are finite, for the same reason
+ * siteClimateFromLocationData refuses partial data.
+ */
+export function driestMonths(monthlyRainMm: number[], count = 3): DriestMonth[] {
+  if (!twelveFinite(monthlyRainMm)) return [];
+  return monthlyRainMm
+    .map((rainMm, index) => ({ month: index + 1, rainMm }))
+    // Ties resolve by month so the same site always prints the same months.
+    .sort((a, b) => a.rainMm - b.rainMm || a.month - b.month)
+    .slice(0, Math.max(0, count))
+    .sort((a, b) => a.month - b.month);
+}
