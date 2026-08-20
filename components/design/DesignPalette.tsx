@@ -1528,6 +1528,15 @@ export default function DesignPalette({
               )}
             </button>
             {((desktopAside && !isPhone) || (layersOpen && layersAnchor)) && (
+              /* TWO layers of box on purpose. The outer carries position, width
+                 and chrome and NEVER scrolls; the inner scrolls the rows. The
+                 width-resize handle used to live inside a single scrolling box,
+                 positioned 9px OUTSIDE its left edge — and overflow-y:auto
+                 forces overflow-x:auto too (a visible/non-visible pair isn't
+                 allowed), which clips content left of the border box outright.
+                 The handle was therefore invisible and ungrabbable everywhere
+                 (Rory: "i cant easily grab a handle still to adjust width").
+                 Hanging it off this non-scrolling outer is the whole fix. */
               <div
                 style={{
                   position: 'fixed',
@@ -1537,18 +1546,27 @@ export default function DesignPalette({
                   right: desktopAside && !isPhone ? (effectiveLayersFloating && (workspaceMode === 'docked' || layersFloatMoved) ? undefined : 12) : layersAnchor?.right,
                   zIndex: desktopAside && !isPhone ? 15 : 1000,
                   display: 'flex',
-                  flexWrap: 'wrap',
-                  gap: 3,
+                  flexDirection: 'column',
                   width: desktopAside && !isPhone ? desktopLayersWidth : 300,
                   maxWidth: 'calc(100vw - 16px)',
                   maxHeight: desktopAside && !isPhone ? (effectiveLayersFloating ? '65dvh' : undefined) : layersAnchor?.maxHeight,
-                  overflowY: 'auto',
-                  overscrollBehavior: 'contain',
-                  padding: 10,
                   borderRadius: 12,
                   background: PAPER,
                   border: '1px solid rgba(0,0,0,0.15)',
                   boxShadow: '0 4px 16px rgba(0,0,0,0.2)',
+                  boxSizing: 'border-box',
+                }}
+              >
+              <div
+                style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: 3,
+                  flex: '1 1 auto',
+                  minHeight: 0,
+                  overflowY: 'auto',
+                  overscrollBehavior: 'contain',
+                  padding: 10,
                   boxSizing: 'border-box',
                 }}
               >
@@ -2066,15 +2084,19 @@ export default function DesignPalette({
                     ⠿
                   </div>
                 )}
+              </div>
                 {desktopAside && !isPhone && workspaceMode !== 'tray' && (
+                  /* Child of the NON-scrolling outer (see the comment above) so
+                     nothing clips it. Straddles the edge — 7px inside, 7px out —
+                     so there's a real target on both sides of the border. */
                   <div
                     role="separator"
                     aria-label="Drag to resize the Layers panel"
                     onPointerDown={(event) => beginDesktopResize('layers', event)}
                     style={{
-                      position: 'absolute', top: 0, bottom: 0, left: -9,
-                      width: 9, cursor: 'ew-resize', zIndex: 16, touchAction: 'none',
-                      background: 'linear-gradient(90deg, transparent 3px, rgba(31,77,43,0.38) 3px, rgba(31,77,43,0.38) 5px, transparent 5px)',
+                      position: 'absolute', top: 0, bottom: 0, left: -7,
+                      width: 14, cursor: 'ew-resize', zIndex: 16, touchAction: 'none',
+                      background: 'linear-gradient(90deg, transparent 5px, rgba(31,77,43,0.38) 5px, rgba(31,77,43,0.38) 8px, transparent 8px)',
                     }}
                   />
                 )}
@@ -3114,9 +3136,11 @@ export default function DesignPalette({
           aria-label="Drag to resize the Elements panel"
           onPointerDown={(event) => beginDesktopResize('elements', event)}
           style={{
-            position: 'absolute', top: 0, bottom: 0, right: -9,
-            width: 9, cursor: 'ew-resize', zIndex: 16, touchAction: 'none',
-            background: 'linear-gradient(90deg, transparent 3px, rgba(31,77,43,0.38) 3px, rgba(31,77,43,0.38) 5px, transparent 5px)',
+            /* Straddles the edge like the Layers handle — 7px in, 7px out —
+               doubling the old 9px all-outside target. */
+            position: 'absolute', top: 0, bottom: 0, right: -7,
+            width: 14, cursor: 'ew-resize', zIndex: 16, touchAction: 'none',
+            background: 'linear-gradient(90deg, transparent 6px, rgba(31,77,43,0.38) 6px, rgba(31,77,43,0.38) 9px, transparent 9px)',
           }}
         />
       )}
