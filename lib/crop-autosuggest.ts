@@ -129,10 +129,51 @@ function orderNotes(notes: readonly PlanNote[]): PlanNote[] {
     .map((entry) => entry.note);
 }
 
+/**
+ * A crop the farmer chose that this plan does not sow, with the honest timing
+ * story behind it.
+ *
+ * `nextWindowMonth` is the crop's TRUE next sowing window — the sow month with
+ * the smallest distance forward from today, full stop. It is never moved later
+ * because that later month happens to have room; picking the first month WITH
+ * room and calling it "the next window" told a space story in timing language
+ * (repro at now=Jan on two full beds: beetroot's summer window opens in
+ * February and the panel said August). `firstFitMonth` carries the space fact
+ * separately — the soonest month in the window where somewhere on this farm
+ * could actually take the crop. When the two differ, the sentence says so.
+ */
+export interface LaterThisYearEntry {
+  cropKey: string;
+  /** The crop's own next sowing month, whether or not the plan has room then. */
+  nextWindowMonth: number;
+  /** The soonest sow month with somewhere on this farm to put it. */
+  firstFitMonth: number;
+  /** The whole farmer-visible sentence, written here so the voice lint sees it. */
+  text: string;
+}
+
+/**
+ * Farmer-visible panel copy the review screen renders around the notes.
+ *
+ * It lives here rather than inline in page.tsx so the banned-terms lint and the
+ * truth gates in tests/crop-plan-notes.test.ts can see it — a sentence
+ * hardcoded in the component is a sentence no test reads, which is how
+ * "There is room for each of them when its window opens" shipped over a panel
+ * whose whole point is that sometimes there is not.
+ */
+export const PLAN_NOTES_PANEL_COPY = {
+  gapsHeading: 'Ground with no new sowing',
+  basisHeading: 'How this plan was made',
+  laterHeading: 'Later this year',
+  /** Deliberately promises NOTHING about room: some entries below are crops
+   * whose window opens into a plan that is already committed that month. */
+  laterSubtitle: 'Crops you chose that this plan does not sow yet, and when the next real chance comes.',
+} as const;
+
 export interface AutoSuggestResult {
   plantings: Planting[];
   notes: PlanNote[];
-  laterThisYear: { cropKey: string; nextWindowMonth: number }[];
+  laterThisYear: LaterThisYearEntry[];
 }
 
 function plantingId(
@@ -1811,11 +1852,18 @@ function backfillWinterGaps(
  * One winter-bridge note per bed while there are only a couple, otherwise a
  * single grouped one.
  *
- * The "leaving room for winter sowings alongside" clause is CONDITIONAL now.
- * It used to be printed unconditionally, including on plots, where the bridger
- * takes the whole area by identity (fractionPresetsFor) — so the sentence
- * promised room that did not exist on 5,560 of the plans in the 2026-08-19
- * sweep.
+ * The "leaving room for winter sowings alongside" clause is GONE. It was
+ * printed unconditionally, including on plots, where the bridger takes the
+ * whole area by identity (fractionPresetsFor) — so the sentence promised room
+ * that did not exist on 5,560 of the plans in the 2026-08-19 sweep. Making it
+ * conditional on `fraction < 1` was not enough either: this note is written
+ * inside backfillWinterGaps, BEFORE fillRemainingGaps runs, and a semantic
+ * gate over finished plans found 46 part-area bridges whose other half was
+ * then filled for the whole winter by a later pass. The clause could never be
+ * true at the moment it was written, so it says nothing about the future now
+ * — only what the bridge itself took. The whole-area case still states its own
+ * consequence, which IS knowable here: a bed held at full area for a span that
+ * covers every winter month has nothing free beside it.
  */
 function winterBridgeNotes(
   bridged: readonly { bed: PlanBed; cropName: string; sowMonth: number; fraction: number }[],
@@ -1828,8 +1876,8 @@ function winterBridgeNotes(
       'choice',
       `${entry.bed.label} would otherwise rest all winter — added ${entry.cropName} (sow ${MONTHS_SHORT[entry.sowMonth - 1]})`
       + (entry.fraction >= 1
-        ? '. It takes the whole area this winter, so there is no room for another sowing beside it.'
-        : ` to ${share(entry.fraction)}, leaving room for winter sowings alongside.`),
+        ? '. It takes the whole area, so nothing else can be sown in it this winter.'
+        : ` to ${share(entry.fraction)}.`),
       [entry.bed.id],
     ));
   }
@@ -1848,11 +1896,11 @@ function winterBridgeNotes(
     .join('; ');
   const anyWhole = bridged.some((entry) => entry.fraction >= 1);
   const anyPart = bridged.some((entry) => entry.fraction < 1);
-  const tail = anyWhole && anyPart
-    ? ' Where a crop took the whole area there is no room for another winter sowing beside it; the part-area ones leave room.'
-    : anyWhole
-      ? ' Each of these takes the whole area this winter, so there is no room for another sowing beside it.'
-      : ' Each takes part of the bed, leaving room for winter sowings alongside.';
+  const tail = anyWhole
+    ? (anyPart
+      ? ' Where a crop took the whole area, nothing else can be sown there this winter.'
+      : ' Each of these takes the whole area, so nothing else can be sown in them this winter.')
+    : '';
   return [planNote(
     'choice',
     `${bridged.length} growing areas would otherwise rest all winter, so a winter crop went in: ${lines}.${tail}`,
@@ -2457,7 +2505,11 @@ function reportStillRestingBeds(
     'other-crop-could': exactChoice
       ? `None of ${exactChoice} can fill those stretches in this plan. Another crop with a verified schedule could — add one only if the household actually wants it.`
       : 'A crop outside your selected groups, with a verified schedule, could cover those stretches. Widen your crop groups only if that crop suits the household.',
-    'plan-is-full': `${exactChoice ? `${exactChoice} and other well-documented crops have` : 'Well-documented crops have'} a sowing window for those stretches, but there is no room in the bed around them, or crop rotation rules out the families that would fit. Freeing space nearby, or letting the ground rest, are both fine choices.`,
+    // TEMPORAL, not spatial: the blocker is that the MONTHS on either side of
+    // the stretch are already planted, so a crop needing that run of months has
+    // nowhere in the calendar to sit. An earlier rewrite said "no room in the
+    // bed around them", which reads as a shortage of ground.
+    'plan-is-full': `${exactChoice ? `${exactChoice} and other well-documented crops have` : 'Well-documented crops have'} a sowing window for those stretches, but the months around them are already fully planted, or crop rotation rules out the families that would fit. Clearing a nearby month, or letting the ground rest, are both fine choices.`,
     'nothing-reaches': `${exactChoice ? `Nothing among ${exactChoice}, and no other crop` : 'No crop'} the catalog can plan properly — one with a checked growing time, spacing and yield — has a sowing window that reaches those stretches. Ask locally what else does; this plan is not proof that nothing can grow then.`,
   };
 
@@ -2969,9 +3021,19 @@ export function autoSuggestPlan(
  * one of these must hold: the crop was chosen by name, the planner can
  * schedule it at all, this month is not in its sowing window, and — the part
  * that separates a timing story from a space story — there is STILL somewhere
- * on this farm the crop would fit when that window does open. Checked against
+ * on this farm the crop would fit at SOME month of that window. Checked against
  * the final occupancy and the final rotation ledger, so it is a fact about the
- * finished plan rather than a guess about why a pass gave up.
+ * finished plan rather than a guess about why a pass gave up. Where no month of
+ * the window has room anywhere, the entry is dropped entirely: that absence is
+ * a space or rotation story, and the gap notes already own it.
+ *
+ * TRUTHFULNESS (the 2026-08-20 fix). The month printed is the window's own
+ * start, never a later month chosen because room exists there. The first draft
+ * returned the first REACHABLE sow month under the name `nextWindowMonth`, so
+ * on a farm whose beds were full in February the panel read "Beetroot — the
+ * next sowing window starts around Aug" when beetroot's summer window opens in
+ * February. Both facts are now carried separately and, when they differ, both
+ * are said out loud.
  */
 function cropsWaitingOnTheirWindow(
   explicitCropKeys: ReadonlySet<string>,
@@ -2982,26 +3044,32 @@ function cropsWaitingOnTheirWindow(
   plantings: readonly Planting[],
   occupancy: Occupancy,
   rotation: BedRotation,
-): { cropKey: string; nextWindowMonth: number }[] {
+): LaterThisYearEntry[] {
   if (!explicitCropKeys.size) return [];
   const planted = new Set(plantings.map((planting) => planting.cropKey));
-  const out: { cropKey: string; nextWindowMonth: number }[] = [];
+  const out: LaterThisYearEntry[] = [];
   for (const crop of pool) {
     if (!explicitCropKeys.has(crop.key) || planted.has(crop.key)) continue;
     if (!hasVerifiedSchedule(crop)) continue;
     const sowMonths = crop.sowMonths[pattern];
     if (!sowMonths.length || sowMonths.includes(nowMonth)) continue;
-    // The soonest sow month that is BOTH in the window and still open on the
-    // ground. A later month in the same window is a perfectly good answer —
-    // what would not be honest is naming a month with nowhere to put the crop.
-    const reachable = [...sowMonths]
-      .sort((a, b) => monthsForward(nowMonth, a) - monthsForward(nowMonth, b))
-      .find((sowMonth) => beds.some((bed) =>
-        supportsAutomaticPlacement(crop, bed)
-        && !rotation.repeats(bed.id, crop, sowMonth)
-        && usableShare(occupancy, bed, sowMonth, crop, 1) !== null));
-    if (reachable === undefined) continue;
-    out.push({ cropKey: crop.key, nextWindowMonth: reachable });
+    const byDistance = [...sowMonths]
+      .sort((a, b) => monthsForward(nowMonth, a) - monthsForward(nowMonth, b));
+    // The window's own start — a fact about the crop, not about this farm.
+    const nextWindowMonth = byDistance[0];
+    // The soonest month of that window with somewhere to put it — a fact about
+    // this farm. Undefined means nowhere at all, all year: not a timing story.
+    const firstFitMonth = byDistance.find((sowMonth) => beds.some((bed) =>
+      supportsAutomaticPlacement(crop, bed)
+      && !rotation.repeats(bed.id, crop, sowMonth)
+      && usableShare(occupancy, bed, sowMonth, crop, 1) !== null));
+    if (firstFitMonth === undefined) continue;
+    const opens = MONTHS_SHORT[nextWindowMonth - 1];
+    const text = firstFitMonth === nextWindowMonth
+      ? `${crop.name} — its next sowing window opens in ${opens}, and this plan still has room for it then.`
+      : `${crop.name} — its next sowing window opens in ${opens}, but this plan has nowhere to put it that month; `
+        + `the first sowing month it could still fit into is ${MONTHS_SHORT[firstFitMonth - 1]}.`;
+    out.push({ cropKey: crop.key, nextWindowMonth, firstFitMonth, text });
   }
   return out;
 }

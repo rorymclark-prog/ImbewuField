@@ -497,9 +497,9 @@ test('living planting material is not treated as a seed packet', () => {
   assert.equal(items[0].buyMonth, 10, 'fresh slips belong close to planting, not a month early');
   assert.match(items[0].note, new RegExp(positionRangeLabel(items[0].finalPlantPositionsRange)));
   assert.match(items[0].note, /Living planting material/);
-  // Same requirement, farmer-voice wording ("follow the supplier's or your
-  // local handling advice") after the 2026-08-20 jargon pass.
-  assert.match(items[0].note, /supplier.*local handling/i);
+  // Same requirement, farmer-voice wording after the 2026-08-20 jargon pass —
+  // pinned to the whole clause, not a two-word span with a wildcard between.
+  assert.match(items[0].note, /follow the supplier's or your local handling advice/i);
   assert.doesNotMatch(items[0].note, /cool and dry|Seed keeps/i);
 });
 

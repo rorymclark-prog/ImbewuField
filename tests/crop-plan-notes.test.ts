@@ -15,12 +15,19 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { autoSuggestPlan, type AutoSuggestAnswers, type PlanNote, type PlanNoteKind } from '@/lib/crop-autosuggest';
+import {
+  autoSuggestPlan,
+  PLAN_NOTES_PANEL_COPY,
+  type AutoSuggestAnswers,
+  type PlanNote,
+  type PlanNoteKind,
+} from '@/lib/crop-autosuggest';
 import { cropByKey, CROPS, type RainPattern } from '@/lib/crop-catalog';
 import {
   buildYearReport,
   harvestEndMonthForCrop,
   harvestMonthForCrop,
+  occupiedMonthsForPlanting,
   tasksForPlan,
   type PlanBed,
   type Planting,
@@ -31,6 +38,12 @@ const MONTHS_SHORT = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'S
 const KIND_RANK: Record<PlanNoteKind, number> = { warning: 0, choice: 1, gap: 2, basis: 3 };
 
 const wrapMonth = (month: number): number => ((month - 1) % 12 + 12) % 12 + 1;
+/** Distance forward from `from` to `to`, wrapping at December — the ordering
+ * the planner itself uses to decide which sowing month comes next. */
+const monthsForward = (from: number, to: number): number => (to - from + 12) % 12;
+/** The months the winter bridger exists to cover (lib/crop-autosuggest
+ * WINTER_MONTHS). Mirrored here because the constant is module-private. */
+const WINTER_MONTHS = [5, 6, 7, 8];
 
 function bedsFor(bedCount: number, plotCount: number, areaM2: number): PlanBed[] {
   const beds: PlanBed[] = [];
@@ -221,6 +234,20 @@ test('no gap-note month is a month the same plan is picking that same bed', () =
     const picking = pickingMonthsByBed(result.plantings);
     for (const note of result.notes) {
       if (note.kind !== 'gap') continue;
+      // strandedBedNote carries no "no new sowing: " marker, so the month
+      // parser above is structurally blind to it — and it is filed under the
+      // same "Ground with no new sowing" heading. Its claim is STRONGER (the
+      // bed has nothing planted at all), so check that claim directly rather
+      // than leaving a whole class of gap note outside this gate.
+      const stranded = /^(.+?) has nothing planted:/.exec(note.text);
+      if (stranded) {
+        const bed = scenario.beds.find((candidate) => candidate.label === stranded[1]);
+        if (!bed) {
+          offenders.push(`${scenario.label}: stranded note names unknown ${stranded[1]}`);
+        } else if (result.plantings.some((planting) => planting.bedId === bed.id)) {
+          offenders.push(`${scenario.label}: ${stranded[1]} is called empty while the plan plants it`);
+        }
+      }
       for (const [label, months] of gapMonthsByBedLabel(note)) {
         const bed = scenario.beds.find((candidate) => candidate.label === label);
         if (!bed) { offenders.push(`${scenario.label}: gap note names unknown ${label}`); continue; }
@@ -233,6 +260,53 @@ test('no gap-note month is a month the same plan is picking that same bed', () =
     }
   }
   assert.deepEqual(offenders.slice(0, 6), [], `${offenders.length} gap notes contradict the plan's own harvests`);
+});
+
+test('a bed called "has nothing planted" really has nothing planted', () => {
+  // The other half of the C gate. strandedBedNote makes the strongest gap
+  // claim in the product and is filed under the same "Ground with no new
+  // sowing" heading, but it carries no "no new sowing: " marker, so the month
+  // parser above cannot see it. The sweep in that test produces none of these
+  // notes at all (measured: 0 across its 384 plans), so this fixture — the
+  // commercial-focus shape that does produce them — carries the check, with a
+  // population counter so a green result cannot come from an empty sweep.
+  const offenders: string[] = [];
+  let strandedNotesSeen = 0;
+  for (const pattern of ['summer', 'winter', 'all-year', 'mild-frost'] as RainPattern[]) {
+    for (const nowMonth of [1, 4, 6, 8, 11]) {
+      for (const [cropA, cropB] of [['tomatoes', 'cabbage'], ['cabbage', 'tomatoes']]) {
+        const beds: PlanBed[] = [
+          { id: 'b1', label: 'Bed 01', areaM2: 5, minDimM: 1.2 },
+          { id: 'b2', label: 'Bed 02', areaM2: 6, minDimM: 1.2 },
+          { id: 'b3', label: 'Bed 03', areaM2: 7, minDimM: 1.2 },
+        ];
+        const history: Planting[] = [
+          { id: 'h0', bedId: 'b1', cropKey: cropA, sowMonth: 1, existing: true },
+          { id: 'h1', bedId: 'b2', cropKey: cropB, sowMonth: 6, existing: true },
+        ];
+        const result = autoSuggestPlan({
+          goal: 'commercial', focusCropCount: 2, groups: [], cropKeys: ['tomatoes', 'cabbage'],
+          rhythm: 'few-big', rotateCrops: true, allowVinesInBeds: false,
+          allowMixedCropsInBed: true, reliableIrrigation: true,
+        }, pattern, beds, history, nowMonth);
+        const where = `${pattern} now=${nowMonth} history=${cropA}/${cropB}`;
+        for (const note of result.notes) {
+          const stranded = /^(.+?) has nothing planted:/.exec(note.text);
+          if (!stranded) continue;
+          strandedNotesSeen++;
+          if (note.kind !== 'gap') offenders.push(`${where}: stranded note is kind ${note.kind}`);
+          const bed = beds.find((candidate) => candidate.label === stranded[1]);
+          if (!bed) { offenders.push(`${where}: names unknown ${stranded[1]}`); continue; }
+          const planted = result.plantings.filter((planting) => planting.bedId === bed.id);
+          if (planted.length) {
+            offenders.push(`${where}: ${bed.label} is called empty while the plan sows ${planted.map((p) => p.cropKey).join('/')} in it`);
+          }
+        }
+      }
+    }
+  }
+  assert.ok(strandedNotesSeen > 0, 'this fixture no longer produces stranded-bed notes — the gate is testing nothing');
+  assert.deepEqual(offenders.slice(0, 6), [], `${offenders.length} beds are called empty by a plan that plants them`);
 });
 
 test('the gap wording says what is missing — a new sowing — and never claims the ground is idle', () => {
@@ -268,9 +342,43 @@ test('a crop chosen out of season fills the Later this year panel that could nev
     'fixture assumes green beans did not make it into the plan');
   const entry = result.laterThisYear.find((later) => later.cropKey === 'green-beans');
   assert.ok(entry, `green beans must be named as waiting on its window: ${JSON.stringify(result.laterThisYear)}`);
-  assert.equal(entry!.nextWindowMonth, 9, 'the soonest reachable sow month is September');
+  assert.equal(entry!.nextWindowMonth, 9, 'September is the true start of the next window');
+  assert.equal(entry!.firstFitMonth, 9, 'and this plan has room for it then');
   assert.ok(beans.sowMonths.summer.includes(entry!.nextWindowMonth),
     'the named month must be one of the crop\'s own sow months');
+  assert.match(entry!.text, /next sowing window opens in Sep/);
+  assert.doesNotMatch(entry!.text, /nowhere to put it/,
+    'nothing blocked September here, so no full-then clause belongs in the sentence');
+});
+
+test('a window blocked for SPACE is never reported as a later window — both months are said out loud', () => {
+  // The 2026-08-20 blocker, as the verifier reproduced it. Beetroot's summer
+  // window is Feb, Mar, Aug, Sep, Oct: it opens NEXT MONTH. Both beds are full
+  // in February and March (swiss chard sown Feb, green beans sown Jan), so the
+  // first draft printed "the next sowing window starts around Aug" — a space
+  // rejection dressed up as the crop's own calendar.
+  const beetroot = cropByKey('beetroot')!;
+  const result = autoSuggestPlan({
+    goal: 'family', householdSize: 'medium', groups: [],
+    cropKeys: ['green-beans', 'beetroot', 'swiss-chard'], rhythm: 'few-big',
+    rotateCrops: true, allowVinesInBeds: false, allowMixedCropsInBed: false,
+    reliableIrrigation: true,
+  }, 'summer', [
+    { id: 'b1', label: 'Bed 1', areaM2: 9, minDimM: 0.8 },
+    { id: 'b2', label: 'Bed 2', areaM2: 9, minDimM: 1.2 },
+  ], [], 1);
+  const entry = result.laterThisYear.find((later) => later.cropKey === 'beetroot');
+  assert.ok(entry, `beetroot must still be named: ${JSON.stringify(result.laterThisYear)}`);
+  assert.equal(entry!.nextWindowMonth, 2, 'beetroot\'s summer window opens in February, whatever the beds hold');
+  assert.equal(entry!.firstFitMonth, 8, 'August is where the plan could first fit it, and that is a different fact');
+  assert.ok(beetroot.sowMonths.summer.includes(2) && beetroot.sowMonths.summer.includes(8));
+  // The sentence must carry BOTH, and must not present August as the window.
+  assert.match(entry!.text, /next sowing window opens in Feb/);
+  assert.match(entry!.text, /nowhere to put it that month/);
+  assert.match(entry!.text, /fit into is Aug/);
+  assert.doesNotMatch(entry!.text, /window opens in Aug|window starts around Aug/);
+  // And the panel's own subtitle must not promise room the plan does not have.
+  assert.doesNotMatch(PLAN_NOTES_PANEL_COPY.laterSubtitle, /there is room|room for (each|them|all)/i);
 });
 
 test('a chosen crop that actually got planted never appears in Later this year', () => {
@@ -284,11 +392,43 @@ test('a chosen crop that actually got planted never appears in Later this year',
       if (!crop) { offenders.push(`${scenario.label}: unknown crop ${later.cropKey}`); continue; }
       // It must be a TIMING story: this month is genuinely outside the window,
       // and the month named is genuinely in it.
-      if (crop.sowMonths[scenario.pattern].includes(scenario.nowMonth)) {
+      const window = crop.sowMonths[scenario.pattern];
+      if (window.includes(scenario.nowMonth)) {
         offenders.push(`${scenario.label}: ${later.cropKey} could be sown right now — this is not a timing gap`);
       }
-      if (!crop.sowMonths[scenario.pattern].includes(later.nextWindowMonth)) {
+      if (!window.includes(later.nextWindowMonth)) {
         offenders.push(`${scenario.label}: ${later.cropKey} points at a month outside its own window`);
+      }
+      if (!window.includes(later.firstFitMonth)) {
+        offenders.push(`${scenario.label}: ${later.cropKey} would be fitted in a month outside its own window`);
+      }
+      // MEMBERSHIP IS NOT ENOUGH — the blocker this gate missed the first time.
+      // The month printed as "the next sowing window" must be the window's own
+      // START, not simply some month of it that happened to have room.
+      const trueStart = [...window]
+        .sort((a, b) => monthsForward(scenario.nowMonth, a) - monthsForward(scenario.nowMonth, b))[0];
+      if (later.nextWindowMonth !== trueStart) {
+        offenders.push(`${scenario.label}: ${later.cropKey} calls ${MONTHS_SHORT[later.nextWindowMonth - 1]} the next window when it opens in ${MONTHS_SHORT[trueStart - 1]}`);
+      }
+      if (monthsForward(scenario.nowMonth, later.firstFitMonth)
+        < monthsForward(scenario.nowMonth, later.nextWindowMonth)) {
+        offenders.push(`${scenario.label}: ${later.cropKey} fits before its window opens`);
+      }
+      // ...and the printed sentence must be either the true window alone, or
+      // the true window WITH the reason a later month is the real chance.
+      const opens = MONTHS_SHORT[later.nextWindowMonth - 1];
+      if (!later.text.includes(`next sowing window opens in ${opens}`)) {
+        offenders.push(`${scenario.label}: ${later.cropKey} sentence does not name the true window month ${opens}: "${later.text}"`);
+      }
+      if (later.firstFitMonth === later.nextWindowMonth) {
+        if (/nowhere to put it|could still fit into/.test(later.text)) {
+          offenders.push(`${scenario.label}: ${later.cropKey} explains away a block that did not happen: "${later.text}"`);
+        }
+      } else {
+        const fits = MONTHS_SHORT[later.firstFitMonth - 1];
+        if (!/nowhere to put it that month/.test(later.text) || !later.text.includes(`fit into is ${fits}`)) {
+          offenders.push(`${scenario.label}: ${later.cropKey} hides that ${opens} is blocked and ${fits} is the real chance: "${later.text}"`);
+        }
       }
     }
   }
@@ -297,20 +437,64 @@ test('a chosen crop that actually got planted never appears in Later this year',
 
 // ── E. the bridge clause ────────────────────────────────────────────────────
 
+/**
+ * Is every winter month of this bed fully spoken for by the finished plan?
+ *
+ * Read off the plantings themselves — area fractions summed over the annual
+ * template — so the answer is a fact about the ground, not about how the note
+ * happened to be phrased.
+ */
+function bedIsFullEveryWinterMonth(bedId: string, plantings: readonly Planting[]): boolean {
+  const occupied = new Map<number, number>();
+  for (const planting of plantings) {
+    if (planting.bedId !== bedId) continue;
+    for (const month of occupiedMonthsForPlanting(planting)) {
+      occupied.set(month, (occupied.get(month) ?? 0) + (planting.areaFraction ?? 1));
+    }
+  }
+  return WINTER_MONTHS.every((month) => (occupied.get(month) ?? 0) >= 0.999);
+}
+
+/**
+ * Does this sentence tell the farmer something else can still go in beside the
+ * crop? Broad on the promise side (any wording that offers space) and narrow on
+ * the denial side, so a rephrasing has to get MORE explicit to pass, not less.
+ */
+function promisesRoomAlongside(text: string): boolean {
+  const promise = /\balongside\b|\broom\b|\bspace for\b|\broom for\b|\bstill fits?\b/i.test(text);
+  const denial = /\bno room\b|\bnothing else can be sown\b|\bno other sowing\b/i.test(text);
+  return promise && !denial;
+}
+
 test('a winter crop taking the whole area never promises room for sowings alongside', () => {
+  // SEMANTIC, not wording-locked. The first version of this gate recognised a
+  // whole-area bridge only by the FIXED sentences the fix introduced, so
+  // reinstating origin/main's "leaving room for winter sowings alongside"
+  // clause left it 12/12 green over 153 real whole-area bridges. The question
+  // it asks now is the farmer's own: for the beds this note is about, does the
+  // plan actually leave any area free in winter — and if not, does the note
+  // still promise some?
   const offenders: string[] = [];
+  let fullAreaBridges = 0;
   for (const scenario of sweep()) {
     const result = autoSuggestPlan(scenario.answers, scenario.pattern, scenario.beds, [], scenario.nowMonth);
     for (const note of result.notes) {
       if (!note.text.includes('would otherwise rest all winter')) continue;
-      const takesEverything = /It takes the whole area this winter/.test(note.text)
-        || /Each of these takes the whole area/.test(note.text)
-        || /the whole area\)/.test(note.text);
-      if (takesEverything && /leaving room for winter sowings alongside/.test(note.text)) {
-        offenders.push(`${scenario.label}: "${note.text.slice(0, 120)}"`);
+      const bedIds = note.bedIds ?? [];
+      const full = bedIds.filter((bedId) => bedIsFullEveryWinterMonth(bedId, result.plantings));
+      fullAreaBridges += full.length;
+      // A promise of space beside the bridge is allowed only if EVERY bed the
+      // note covers actually has some area free in every winter month of the
+      // finished plan. One full bed is enough to make the sentence false for
+      // the farmer standing in front of it.
+      if (full.length && promisesRoomAlongside(note.text)) {
+        offenders.push(`${scenario.label}: ${full.length}/${bedIds.length} bed(s) full every winter month — "${note.text.slice(0, 150)}"`);
       }
     }
   }
+  // Guards the gate against going vacuous if the bridger stops taking whole
+  // beds: the population it is written for must actually exist in the sweep.
+  assert.ok(fullAreaBridges >= 50, `only ${fullAreaBridges} whole-area winter bridges in the sweep — this gate is no longer testing anything`);
   assert.deepEqual(offenders.slice(0, 4), [], `${offenders.length} winter bridges promise room they took`);
 });
 
@@ -344,8 +528,26 @@ test('no farmer-visible string leaks engine vocabulary', () => {
     for (const month of buildBuyingSchedule(result.plantings, scenario.beds, scenario.nowMonth)) {
       for (const item of month.items) check(`${scenario.label} buying`, item.note);
     }
+    for (const later of result.laterThisYear) check(`${scenario.label} later`, later.text);
   }
+  // The panel headings and subtitle the review screen wraps around all of the
+  // above. They used to be hardcoded in page.tsx, where no test could read
+  // them — which is how a subtitle promising room the plan did not have got
+  // past a review whose whole subject was truthfulness.
+  for (const [key, text] of Object.entries(PLAN_NOTES_PANEL_COPY)) check(`panel copy ${key}`, text);
   assert.deepEqual(offenders.slice(0, 6), [], `${offenders.length} farmer-visible strings still use engine vocabulary`);
+});
+
+test('the Later this year panel copy makes no promise the entries below it may break', () => {
+  // Every sentence in this panel must hold for EVERY entry that can reach it,
+  // including a crop whose window opens into a plan with no space that month.
+  assert.doesNotMatch(PLAN_NOTES_PANEL_COPY.laterSubtitle, /there is room|room for (each|them|all)|when its window opens/i,
+    'the subtitle cannot promise room: entries with a blocked window month render under it');
+  assert.match(PLAN_NOTES_PANEL_COPY.laterSubtitle, /does not sow yet/,
+    'it must still say what the panel is');
+  for (const [key, text] of Object.entries(PLAN_NOTES_PANEL_COPY)) {
+    assert.ok(text.trim().length > 0, `${key} must not be blank`);
+  }
 });
 
 // ── G. the boilerplate demotion ─────────────────────────────────────────────

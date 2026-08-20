@@ -37,7 +37,7 @@ import {
 import type { FoodGroup } from '@/lib/crop-groups';
 import { FOOD_GROUP_META, foodGroupOf, ROTATION_FAMILY_META, rotationFamilyOf } from '@/lib/crop-groups';
 import type { AutoSuggestAnswers, AutoSuggestResult, GardenGoal, HarvestRhythm } from '@/lib/crop-autosuggest';
-import { autoSuggestPlan } from '@/lib/crop-autosuggest';
+import { autoSuggestPlan, PLAN_NOTES_PANEL_COPY } from '@/lib/crop-autosuggest';
 import type { CropPrice } from '@/lib/crop-prices';
 import { UNPRICED_CROPS, asFarmerOwnPrice, isUsablePrice, priceFor, loadCropPriceOverrides, saveCropPriceOverrides } from '@/lib/crop-prices';
 // The one place the price book's dates become farmer-visible copy on this page. Imported rather
@@ -3212,7 +3212,18 @@ function AutoSuggestModal({
                   {gaps.length > 0 && (
                     <details className="px-3 py-2 rounded-lg font-sans" style={{ fontSize: 11.5, background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#5C5040' }}>
                       <summary style={{ cursor: 'pointer' }}>
-                        Ground with no new sowing ({gaps.reduce((total, n) => total + (n.bedIds?.length ?? 1), 0)})
+                        {/* Count BEDS, deduped: one bed can be named by two gap
+                            notes (a stranded-bed note plus a grouped rest one),
+                            and summing bedIds lengths counted it twice. */}
+                        {PLAN_NOTES_PANEL_COPY.gapsHeading} ({(() => {
+                          const seen = new Set<string>();
+                          let unattributed = 0;
+                          for (const n of gaps) {
+                            if (n.bedIds?.length) for (const id of n.bedIds) seen.add(id);
+                            else unattributed++;
+                          }
+                          return seen.size + unattributed;
+                        })()})
                       </summary>
                       <div className="flex flex-col gap-1.5 pt-1.5">
                         {gaps.map((n, i) => <div key={i}>{n.text}</div>)}
@@ -3221,7 +3232,7 @@ function AutoSuggestModal({
                   )}
                   {basis.length > 0 && (
                     <details className="px-3 py-2 rounded-lg font-sans" style={{ fontSize: 10.5, background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#8C7A62' }}>
-                      <summary style={{ cursor: 'pointer' }}>How this plan was made</summary>
+                      <summary style={{ cursor: 'pointer' }}>{PLAN_NOTES_PANEL_COPY.basisHeading}</summary>
                       <div className="flex flex-col gap-1.5 pt-1.5">
                         {basis.map((n, i) => <div key={i}>{n.text}</div>)}
                       </div>
@@ -3232,15 +3243,19 @@ function AutoSuggestModal({
             })()}
             {result && result.laterThisYear.length > 0 && (
               <div className="px-3 py-2 rounded-lg font-sans" style={{ fontSize: 11.5, background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#5C5040' }}>
-                <div className="font-display font-semibold" style={{ fontSize: 11.5, color: '#20190F' }}>Later this year</div>
+                <div className="font-display font-semibold" style={{ fontSize: 11.5, color: '#20190F' }}>{PLAN_NOTES_PANEL_COPY.laterHeading}</div>
                 <div className="mb-1" style={{ fontSize: 10.5, color: '#8C7A62' }}>
-                  Crops you chose that this plan does not sow yet. There is room for each of them when its window opens.
+                  {PLAN_NOTES_PANEL_COPY.laterSubtitle}
                 </div>
+                {/* The sentence is written in lib (LaterThisYearEntry.text) so
+                    the voice lint and the truth gates can read it — and so the
+                    "window opens in X but nothing can take it until Y" case is
+                    never flattened back into a single month here. */}
                 {result.laterThisYear.map((l) => {
                   const crop = cropByKey(l.cropKey);
                   return (
                     <div key={l.cropKey} style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-                      {crop && <CropIcon cropKey={l.cropKey} icon={crop.icon} size={14} />} {crop?.name} — the next sowing window starts around {monthLabel(l.nextWindowMonth)}
+                      {crop && <CropIcon cropKey={l.cropKey} icon={crop.icon} size={14} />} {l.text}
                     </div>
                   );
                 })}
