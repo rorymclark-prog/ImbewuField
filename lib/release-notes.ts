@@ -35,6 +35,21 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '20 August',
+    sha: '5187094',
+    changes: [
+      'Suggest a plan can now plan the whole year, not just from today',
+      'It tries all 12 starting months and keeps the one with the fewest fresh-harvest gaps',
+      'The whole-year card says what to sow now and which sowings wait for next season',
+      'A crop whose window is open but has no room yet is named, with the month a spot opens',
+      'Delete questions now show as proper in-app dialogs instead of quietly cancelling',
+      '"Clear all" on the crop plan works again; the Back button no longer covers the header',
+      "The map's Layers panel can be resized by its corner handle again",
+      'Design Studio: a crop plan link in the header, and no more doubled preview map',
+      'The crop plan farm picker lists Design Studio farms and tells twin names apart',
+    ],
+  },
+  {
+    when: '20 August',
     sha: 'f4d7acf',
     changes: [
       'Plan notes now lead with warnings in plain words; long lists fold behind one line',
