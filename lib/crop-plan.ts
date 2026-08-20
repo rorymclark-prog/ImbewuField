@@ -9,6 +9,10 @@ import {
   getSandboxCashflowSettings, setSandboxCashflowSettings,
 } from './sample-mode';
 import { activeAccountLocalStorageKey } from './account-local-storage';
+// TYPE ONLY, and it has to stay that way: crop-autosuggest imports THIS module
+// at runtime, so a value import here would close the cycle. `import type` is
+// erased at compile time, so no runtime edge exists.
+import type { PlanNote, PlanNoteKind } from './crop-autosuggest';
 
 export interface PlanBed {
   id: string;
@@ -50,6 +54,25 @@ export interface CropPlanState {
   /** Climate window used when the plan was generated. Optional so every plan
    * saved before this field existed remains readable. */
   rainPattern?: RainPattern;
+  /**
+   * The explanatory notes from the suggested plan the farmer ACCEPTED.
+   *
+   * They used to live only in the one-shot review modal: the farmer read the
+   * warnings, the choices the planner made and the beds it left bare exactly
+   * once, tapped "Add ... to my plan", and every one of them was thrown away.
+   * Re-running the suggester against the now-populated plan produces different
+   * notes, so the originals were not recoverable by any route.
+   *
+   * Optional, so every plan saved before this field existed still loads.
+   */
+  planNotes?: PlanNote[];
+  /**
+   * The month (1-12) the accepted suggestion was generated in. Stored so the
+   * on-screen panel can be HONEST about age — the farmer may have edited the
+   * plan by hand since, and a note from five months ago must not read as if it
+   * describes the plan on screen today. Absent whenever planNotes is absent.
+   */
+  planNotesMonth?: number;
   updatedAt: number;
 }
 
@@ -70,15 +93,55 @@ export function loadCropPlan(): CropPlanState {
     if (!raw) return emptyPlan();
     const parsed = JSON.parse(raw) as Partial<CropPlanState> | null;
     if (!parsed || !Array.isArray(parsed.plantings)) return emptyPlan();
+    const planNotes = sanitisePlanNotes(parsed.planNotes);
     return {
       version: 1,
       plantings: parsed.plantings,
       ...(isRainPattern(parsed.rainPattern) ? { rainPattern: parsed.rainPattern } : {}),
+      // The month travels ONLY with notes. A stored month on its own labels
+      // nothing, and notes without a month would have to be shown undated —
+      // which is the dishonesty this pair exists to prevent.
+      ...(planNotes.length && isPlanMonth(parsed.planNotesMonth)
+        ? { planNotes, planNotesMonth: parsed.planNotesMonth }
+        : {}),
       updatedAt: typeof parsed.updatedAt === 'number' ? parsed.updatedAt : Date.now(),
     };
   } catch {
     return emptyPlan();
   }
+}
+
+const PLAN_NOTE_KINDS: readonly PlanNoteKind[] = ['warning', 'choice', 'gap', 'basis'];
+
+function isPlanMonth(value: unknown): value is number {
+  return typeof value === 'number' && Number.isInteger(value) && value >= 1 && value <= 12;
+}
+
+/**
+ * Notes come back out of localStorage, which anything on the device can write.
+ * A note with an unrecognised kind would fall through every grouped-render
+ * branch and vanish silently, and a non-string text would render as "[object
+ * Object]" in a panel whose entire job is plain sentences — so both are
+ * dropped here rather than trusted downstream.
+ */
+function sanitisePlanNotes(value: unknown): PlanNote[] {
+  if (!Array.isArray(value)) return [];
+  const out: PlanNote[] = [];
+  for (const raw of value) {
+    if (!raw || typeof raw !== 'object') continue;
+    const note = raw as Partial<PlanNote>;
+    if (typeof note.text !== 'string' || !note.text.trim()) continue;
+    if (!PLAN_NOTE_KINDS.includes(note.kind as PlanNoteKind)) continue;
+    const bedIds = Array.isArray(note.bedIds)
+      ? note.bedIds.filter((id): id is string => typeof id === 'string')
+      : undefined;
+    out.push({
+      kind: note.kind as PlanNoteKind,
+      text: note.text,
+      ...(bedIds && bedIds.length ? { bedIds } : {}),
+    });
+  }
+  return out;
 }
 
 function isRainPattern(value: unknown): value is RainPattern {
@@ -1396,6 +1459,43 @@ export function seedBoqForPlan(plantings: Planting[], beds: PlanBed[]): SeedBoqR
     b.finalPlantPositions - a.finalPlantPositions || a.cropName.localeCompare(b.cropName));
 }
 
+/** "butternut", "butternut and maize", "butternut, maize and dry beans". Names
+ * come from the catalog, which capitalises them; a mid-sentence list must not.
+ * Safe for every name that currently reaches it — if a crop whose name carries a
+ * proper noun ("Swiss chard") ever gains a sourced shelf life, it needs a
+ * capital-preserving branch here rather than this blanket lowercase. */
+function namesSentence(names: readonly string[]): string {
+  const lower = names.map((name) => name.charAt(0).toLowerCase() + name.slice(1));
+  if (lower.length <= 1) return lower[0] ?? '';
+  return `${lower.slice(0, -1).join(', ')} and ${lower[lower.length - 1]}`;
+}
+
+/** The same list at the START of a sentence, so the first name keeps its capital. */
+function namesSentenceCapitalised(names: readonly string[]): string {
+  const sentence = namesSentence(names);
+  return sentence.charAt(0).toUpperCase() + sentence.slice(1);
+}
+
+/**
+ * "Apr-Jun", "Apr, Jul", "Apr-May, Aug". Contiguous months collapse into a
+ * range; the gaps between them stay visible, because a farmer told "Apr-Aug"
+ * about a set that skips June has been told the wrong thing about June.
+ * Input must be ascending months of a single stretch (a run read left to right).
+ */
+function monthRunsLabel(monthsAscending: readonly number[]): string {
+  const runs: number[][] = [];
+  for (const month of monthsAscending) {
+    const last = runs[runs.length - 1];
+    if (last && (last[last.length - 1] % 12) + 1 === month) last.push(month);
+    else runs.push([month]);
+  }
+  return runs
+    .map((run) => (run.length === 1
+      ? MONTHS_SHORT[run[0] - 1]
+      : `${MONTHS_SHORT[run[0] - 1]}-${MONTHS_SHORT[run[run.length - 1] - 1]}`))
+    .join(', ');
+}
+
 /**
  * A short, deterministic (no LLM — same rules-engine philosophy as
  * lib/crop-autosuggest.ts: instant, offline, and every line is directly
@@ -1469,9 +1569,44 @@ export function buildYearReport(plantings: Planting[], beds: PlanBed[]): string[
     const label = longestRun.length === 1
       ? MONTHS_SHORT[longestRun[0] - 1]
       : `${MONTHS_SHORT[longestRun[0] - 1]}-${MONTHS_SHORT[longestRun.at(-1)! - 1]}`;
+    // THE CONTRADICTION THIS FIXES: this paragraph read only the 'fresh' half of
+    // buildFoodAvailability, so it announced a hungry stretch across months in
+    // which the SAME plan's own storage tail was still running — measured at
+    // 47.7% of generated plans on 2026-08-20. The stored half is not a second
+    // opinion; it is the same function's other status, and a farmer told
+    // "nothing is due for picking Apr-Jul" while the plan's butternut is sitting
+    // cured in the shed has been told something false about their own year.
+    const coveredMonths = longestRun.filter((month) =>
+      freshAvailability[month].some((item) => item.status === 'stored'));
+    const storedNames = [...new Set(
+      coveredMonths.flatMap((month) => freshAvailability[month]
+        .filter((item) => item.status === 'stored')
+        .map((item) => item.name)),
+    )].sort((a, b) => a.localeCompare(b));
     paragraphs.push(
       `No verified fresh-picking window is scheduled around ${label}. Nothing is due for picking then — that is a timing gap, not a crop failure.`
+      + (coveredMonths.length
+        ? ` Stored ${namesSentence(storedNames)} should still be usable in ${monthRunsLabel(coveredMonths)} if ${storedNames.length === 1 ? 'it was' : 'they were'} kept under the storage conditions ${storedNames.length === 1 ? 'its shelf life assumes' : 'their shelf lives assume'}.`
+        : '')
       + (unknownYieldCrops.length ? ' Crops with unavailable yield benchmarks may still be harvested in that period.' : ''),
+    );
+  }
+
+  // A plan that stores food should say so whether or not it has a quiet stretch:
+  // the shelf life and the conditions it depends on are the whole point, and
+  // until now they reached the farmer as a gold bar on one chart and nothing
+  // else. Deliberately makes no claim about HOW LONG or about covering any
+  // particular month: this paragraph also prints on paper, where the per-crop
+  // shelf life and conditions are not one tap away, so it must not point at a
+  // screen the reader may not be looking at.
+  const storedCropNames = [...new Set(
+    months.flatMap((month) => freshAvailability[month]
+      .filter((item) => item.status === 'stored')
+      .map((item) => item.name)),
+  )].sort((a, b) => a.localeCompare(b));
+  if (storedCropNames.length) {
+    paragraphs.push(
+      `${namesSentenceCapitalised(storedCropNames)} can be kept after harvest instead of eaten straight away. The shelf life this plan uses assumes particular storage conditions for each of those crops, and does not hold if they are not met.`,
     );
   }
 
