@@ -140,8 +140,14 @@ test('each saved map can be deleted without touching the design', () => {
   assert.match(page, /deleteSheet\(meta\.id\)/, 'the row does not delete its stored sheet');
   assert.match(page, /aria-label=\{`Delete saved map: \$\{m\.label\}`\}/,
     'the delete target is not attached to a specific saved map');
-  assert.match(page, /window\.confirm\(`Delete this saved map\?[\s\S]*Your design will stay unchanged\.`\)/,
-    'a destructive tap must confirm both what goes and what stays');
+  // Through the in-app dialog, NOT window.confirm — embedded webviews suppress native dialogs
+  // (auto-false, no UI), which made this delete a dead button there. tests/app-confirm.test.ts
+  // owns the repo-wide ban; this assertion pins that the question still names what goes AND
+  // what stays.
+  const confirmCall = page.slice(page.indexOf('await appConfirm({'), page.indexOf('});', page.indexOf('await appConfirm({')));
+  assert.match(confirmCall, /Delete this saved map\?/, 'a destructive tap must confirm what goes');
+  assert.match(confirmCall, /Your design will stay unchanged\./, 'the confirm must say what stays');
+  assert.match(confirmCall, /destructive: true/, 'a delete wears the destructive treatment');
   assert.match(page, /setMetas\(\(rows\) => rows\.filter\(\(row\) => row\.id !== meta\.id\)\)/,
     'the deleted row would remain visible until a reload');
   assert.doesNotMatch(page, /clearSheets\(/,

@@ -3,7 +3,9 @@
 import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react';
 
 /**
- * THE app's confirm dialog — the replacement for every window.confirm().
+ * THE app's confirm dialog — the replacement for every native confirm call.
+ * (tests/app-confirm.test.ts scans the whole tree for the native call token,
+ * with no exception for this file — hence the circumlocution.)
  *
  * Native confirm() is not merely ugly here, it is broken: embedded webviews
  * (the Claude browser pane, some Android PWA wrappers) suppress native dialogs
