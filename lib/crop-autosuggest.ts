@@ -381,6 +381,8 @@ export function plannedCohortReachesMonth(
 }
 
 export const BED_FRACTION_PRESETS = [1, 0.5, 1 / 3, 0.25] as const;
+/** A third of a bed is 0.333…; comparing shares needs slack or 3 × ⅓ > 1. */
+const BED_SHARE_EPS = 1e-6;
 export function isStandardBedFraction(fraction: number | undefined): boolean {
   const value = fraction ?? 1;
   return BED_FRACTION_PRESETS.some((preset) => Math.abs(preset - value) < 0.001);
@@ -2077,14 +2079,48 @@ export function fillFirstSeasonGaps(
   }
 
   // ---- real-offset occupancy, same arithmetic as the occupancy calendar ---
-  const occupiedByBed = new Map<string, boolean[]>();
+  // COMMITTED SHARE per offset, not a yes/no. The cycle sows quarter, third and
+  // half beds (BED_FRACTION_PRESETS), so a bed carrying one quarter-share crop
+  // read as fully spoken for and every starter that would have used the other
+  // three quarters was refused. Occupancy.fits — the cycle's own ledger — has
+  // always counted shares; this pass was the one place that did not.
+  // A `once` row carries the month it was sown IN ITS STAMP. Resolving it with
+  // monthsForward instead re-reads a stamp from last October as next October:
+  // ground that is already free reads as taken, and — since the coverage
+  // ledger below is plan-wide — food already eaten reads as food still coming,
+  // which then steers the crop chosen on a DIFFERENT bed. Measured: 46 of 1705
+  // single stale-row injections changed the starter set on beds the row never
+  // touched. loadCropPlan's settleOnceRows normally converts past `once` rows
+  // to existing before they ever arrive here, so this was latent — but nothing
+  // in this pass asserted that, and it is the only place where breaking it
+  // silently corrupts another bed. A past stamp now yields a NEGATIVE offset,
+  // which the horizon guards already drop.
+  const onceSowOffset = (stamp: string): number | null => {
+    const match = /^(\d{4})-(\d{2})$/.exec(stamp);
+    if (!match) return null;
+    const year = Number(match[1]);
+    const month = Number(match[2]);
+    if (!Number.isInteger(year) || month < 1 || month > 12) return null;
+    return (year * 12 + (month - 1)) - (realNowYear * 12 + (realNowMonth - 1));
+  };
+  const rowSowOffset = (p: Planting): number => {
+    if (typeof p.once === 'string') {
+      const fromStamp = onceSowOffset(p.once);
+      if (fromStamp !== null) return fromStamp;
+    }
+    return p.existing
+      ? existingSowOffset(p.sowMonth, realNowMonth)
+      : monthsForward(realNowMonth, p.sowMonth);
+  };
+
+  const occupiedByBed = new Map<string, number[]>();
   const unfillableBeds = new Set<string>();
-  const markOccupied = (bedId: string, entry: number, span: number): void => {
+  const markOccupied = (bedId: string, entry: number, span: number, share = 1): void => {
     let ledger = occupiedByBed.get(bedId);
-    if (!ledger) { ledger = Array<boolean>(HORIZON).fill(false); occupiedByBed.set(bedId, ledger); }
+    if (!ledger) { ledger = Array<number>(HORIZON).fill(0); occupiedByBed.set(bedId, ledger); }
     for (let index = 0; index < span; index++) {
       const offset = entry + index;
-      if (offset >= 0 && offset < HORIZON) ledger[offset] = true;
+      if (offset >= 0 && offset < HORIZON) ledger[offset] += share;
     }
   };
   for (const p of [...existingPlantings, ...cyclePlantings]) {
@@ -2096,15 +2132,14 @@ export function fillFirstSeasonGaps(
       unfillableBeds.add(p.bedId);
       continue;
     }
-    const sowOffset = p.existing
-      ? existingSowOffset(p.sowMonth, realNowMonth)
-      : monthsForward(realNowMonth, p.sowMonth);
+    const sowOffset = rowSowOffset(p);
     const entry = sowOffset + bedHoldStartOffsetMonths(crop);
     const span = bedHoldSpanMonths(crop);
+    const share = typeof p.areaFraction === 'number' && p.areaFraction > 0 ? p.areaFraction : 1;
     if (p.existing || typeof p.once === 'string') {
-      markOccupied(p.bedId, entry, span);
+      markOccupied(p.bedId, entry, span, share);
     } else {
-      for (let start = entry; start < HORIZON; start += 12) markOccupied(p.bedId, start, span);
+      for (let start = entry; start < HORIZON; start += 12) markOccupied(p.bedId, start, span, share);
     }
   }
 
@@ -2121,9 +2156,7 @@ export function fillFirstSeasonGaps(
   for (const p of [...existingPlantings, ...cyclePlantings]) {
     const crop = CROPS.find((candidate) => candidate.key === p.cropKey);
     if (!crop || !Number.isInteger(p.sowMonth) || p.sowMonth < 1 || p.sowMonth > 12) continue;
-    const sowOffset = p.existing
-      ? existingSowOffset(p.sowMonth, realNowMonth)
-      : monthsForward(realNowMonth, p.sowMonth);
+    const sowOffset = rowSowOffset(p);
     for (const offset of firstYearFreshOffsets(crop, sowOffset)) freshOffsetsCovered.add(offset);
   }
 
@@ -2139,8 +2172,22 @@ export function fillFirstSeasonGaps(
   for (const bed of beds) {
     if (unfillableBeds.has(bed.id)) continue;
     let ledger = occupiedByBed.get(bed.id);
-    if (!ledger) { ledger = Array<boolean>(HORIZON).fill(false); occupiedByBed.set(bed.id, ledger); }
+    if (!ledger) { ledger = Array<number>(HORIZON).fill(0); occupiedByBed.set(bed.id, ledger); }
     const occupied = ledger;
+    // What share of this bed a starter may take across `span` — 0 for none.
+    // The mixing gate is the farmer's, and it is the same rule Occupancy.fits
+    // applies to the cycle: with mixing OFF a starter still needs the whole
+    // bed standing free, so this pass collapses back to its old yes/no
+    // behaviour rather than quietly putting a second crop beside the first.
+    const shareFor = (entry: number, span: number): number => {
+      let worst = 0;
+      for (let index = 0; index < span; index++) worst = Math.max(worst, occupied[entry + index] ?? 0);
+      if (worst <= BED_SHARE_EPS) return 1;
+      if (answers.allowMixedCropsInBed !== true) return 0;
+      const room = 1 - worst;
+      for (const preset of BED_FRACTION_PRESETS) if (preset <= room + BED_SHARE_EPS) return preset;
+      return 0;
+    };
     // A long hole can take two short starters back to back, so keep placing
     // until nothing legal fits. Each placement occupies ≥1 offset, so this
     // terminates within the horizon.
@@ -2177,12 +2224,7 @@ export function fillFirstSeasonGaps(
           ...candidate,
           freshOffsets: firstYearFreshOffsets(candidate.crop, candidate.sowOffset),
         }))
-        .filter((candidate) => {
-          for (let index = 0; index < candidate.span; index++) {
-            if (occupied[candidate.entry + index]) return false;
-          }
-          return true;
-        })
+        .filter((candidate) => shareFor(candidate.entry, candidate.span) > 0)
         .sort((a, b) =>
           // Plots: the cover crop owns the slot (same reasoning as the winter
           // bridger). Beds: fresh food outranks a zero-yield cover.
@@ -2209,8 +2251,9 @@ export function fillFirstSeasonGaps(
       const { picks } = rotationLegalTiered(candidates, bed, rotation);
       if (!picks.length) break;
       const chosen = picks[0];
+      const share = shareFor(chosen.entry, chosen.span);
       for (const offset of chosen.freshOffsets) freshOffsetsCovered.add(offset);
-      for (let index = 0; index < chosen.span; index++) occupied[chosen.entry + index] = true;
+      for (let index = 0; index < chosen.span; index++) occupied[chosen.entry + index] += share;
       // A starter is one-time, so it is recorded as one real course rather than
       // an annually repeating one — see recordOnceUse.
       rotation.recordOnceUse(bed.id, chosen.crop, chosen.sowMonth);
@@ -2226,6 +2269,9 @@ export function fillFirstSeasonGaps(
         bedId: bed.id,
         cropKey: chosen.crop.key,
         sowMonth: chosen.sowMonth,
+        // Only stamped when it is really a share — a whole-bed starter keeps
+        // the shape it has always had, so nothing downstream sees a change.
+        ...(share < 1 ? { areaFraction: share } : {}),
         once: onceStamp(chosen.sowOffset),
       });
       added.push({ bed, cropName: chosen.crop.name, sowMonth: chosen.sowMonth });
@@ -2235,7 +2281,7 @@ export function fillFirstSeasonGaps(
     // around and naming it would bury the real message).
     let runStart = -1;
     for (let offset = 0; offset <= 12; offset++) {
-      const bare = offset < 12 && !occupied[offset];
+      const bare = offset < 12 && (occupied[offset] ?? 0) <= BED_SHARE_EPS;
       if (bare && runStart < 0) runStart = offset;
       if (!bare && runStart >= 0) {
         if (offset - runStart >= 2) stillBare.push({ bed, from: runStart, to: offset - 1 });

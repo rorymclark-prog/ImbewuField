@@ -30,6 +30,7 @@ import {
   autoSuggestPlan,
   recomputeLaterThisYear,
   type AutoSuggestAnswers,
+  fillFirstSeasonGaps,
 } from '@/lib/crop-autosuggest';
 import { cropByKey, MONTHS_SHORT } from '@/lib/crop-catalog';
 import {
@@ -543,3 +544,169 @@ test('four beds bridge four different months, not the same earliest-sown crop', 
     + `four times over: ${bedStarters.map((p) => `${p.bedId}=${p.cropKey}@${p.sowMonth}`).join(' ')}`);
 });
 
+
+// ── THE FIRST-SEASON FILL COUNTED BEDS, NOT SHARE (2026-08-21) ─────────────
+//
+// The cycle sows quarter, third and half beds. The first-season fill kept a
+// boolean ledger — "is anything here" — so a bed carrying ONE quarter-share
+// crop read as fully spoken for and every starter that would have used the
+// other three quarters was refused. Occupancy.fits, the cycle's own ledger,
+// has always counted shares; this pass was the one place that did not.
+//
+// Measured over 288 test farms: months with nothing to sow 1044 → 974, farms
+// with a completely bare sowing month 288 → 284, bare year-one HARVEST months
+// 1094 → 884, and total kg up 6%. Ground sold twice stayed at 0.
+
+function bedMonthCrops(plantings: readonly Planting[], realNowMonth: number) {
+  const byBed = new Map<string, Map<number, Set<string>>>();
+  for (const p of plantings) {
+    const months = occupiedMonthsForPlanting(p);
+    for (const start of plantingBedEntryOffsets(p, realNowMonth, 24)) {
+      for (let i = 0; i < months.length; i++) {
+        const offset = start + i;
+        if (offset < 0 || offset >= 24) continue;
+        let bed = byBed.get(p.bedId);
+        if (!bed) { bed = new Map(); byBed.set(p.bedId, bed); }
+        const set = bed.get(offset) ?? new Set<string>();
+        set.add(p.cropKey);
+        bed.set(offset, set);
+      }
+    }
+  }
+  return byBed;
+}
+
+test('a starter can take the free share of a part-used bed, not only an empty one', () => {
+  // The signature is a starter that carries a share at all. Against a boolean
+  // ledger this is unreachable by construction: any bed with a crop on it was
+  // refused outright, so every starter that ever landed took a whole bed.
+  const shares: string[] = [];
+  for (const goal of ['family', 'commercial'] as const) {
+    for (const rhythm of ['steady', 'few-big'] as const) {
+      for (const pattern of ['summer', 'winter'] as const) {
+        for (let realNowMonth = 1; realNowMonth <= 12; realNowMonth++) {
+          const plan = suggestIdealYearPlan(
+            roryAnswers(goal, rhythm), pattern, STARTER_BEDS, [], realNowMonth, REAL_NOW_YEAR,
+          ).best.result.plantings;
+          for (const p of plan) {
+            if (typeof p.once !== 'string') continue;
+            const share = p.areaFraction ?? 1;
+            if (share < 1) shares.push(`${goal}/${rhythm}/${pattern}/now${realNowMonth} ${p.bedId} ${p.cropKey} ${share.toFixed(2)}`);
+          }
+        }
+      }
+    }
+  }
+  assert.ok(shares.length > 0,
+    'no starter took a partial share of a bed anywhere in 96 farms — the fill is still '
+    + 'reading occupancy as yes/no, so three free quarters of a bed count as no room');
+});
+
+test('a starter never sells ground the cycle already sold', () => {
+  for (const rhythm of ['steady', 'few-big'] as const) {
+    for (let realNowMonth = 1; realNowMonth <= 12; realNowMonth++) {
+      const plan = suggestIdealYearPlan(
+        roryAnswers('family', rhythm), 'summer', STARTER_BEDS, [], realNowMonth, REAL_NOW_YEAR,
+      ).best.result.plantings;
+      for (const [bedId, offsets] of printedLoad(plan, realNowMonth)) {
+        for (const [offset, share] of offsets) {
+          assert.ok(share <= 1.0001,
+            `${bedId} is ${Math.round(share * 100)}% committed at offset ${offset} `
+            + `(${rhythm}, from month ${realNowMonth}) — a share ledger that can exceed a `
+            + 'whole bed is worse than the boolean one it replaced');
+        }
+      }
+    }
+  }
+});
+
+test('with mixing declined, no starter puts a second crop beside the first', () => {
+  // The farmer's own answer, and the same rule Occupancy.fits applies to the
+  // cycle. With mixing off the pass must collapse to exactly its old yes/no
+  // behaviour rather than quietly sharing a bed.
+  for (const rhythm of ['steady', 'few-big'] as const) {
+    for (const pattern of ['summer', 'winter'] as const) {
+      for (let realNowMonth = 1; realNowMonth <= 12; realNowMonth++) {
+        const answers = { ...roryAnswers('family', rhythm), allowMixedCropsInBed: false };
+        const plan = suggestIdealYearPlan(
+          answers, pattern, STARTER_BEDS, [], realNowMonth, REAL_NOW_YEAR,
+        ).best.result.plantings;
+        for (const p of plan) {
+          assert.ok((p.areaFraction ?? 1) >= 1,
+            `${p.cropKey} took ${p.areaFraction} of ${p.bedId} although the farmer asked for `
+            + 'one crop per bed');
+        }
+        for (const [bedId, offsets] of bedMonthCrops(plan, realNowMonth)) {
+          for (const [offset, crops] of offsets) {
+            assert.equal(crops.size, 1,
+              `${bedId} holds ${[...crops].join(' + ')} together at offset ${offset} `
+              + `(${pattern}, from month ${realNowMonth}) — mixing was declined`);
+          }
+        }
+      }
+    }
+  }
+});
+
+test('a starter sown three years ago cannot pick the crop for another bed', () => {
+  // The coverage ledger added in the gap fix is plan-WIDE: it is the first
+  // thing in this pass that lets one row reach a bed it does not stand on. A
+  // stale `once` row resolved with monthsForward reads as food still coming,
+  // and then picks the crop somewhere else. loadCropPlan's settleOnceRows
+  // converts past `once` rows to existing before they normally arrive here, so
+  // this was latent — but nothing in this pass asserted it, and a starter's
+  // stamp already carries the year, so it can simply be read.
+  //
+  // Measured over these 24 fills, cross-bed changes from ONE stale row:
+  // merged main 8, and 11 once the share ledger let more starters land. Now 0.
+  //
+  // The stale row's OWN bed is excluded on purpose. It still reaches rotation
+  // history, which is a different channel with its own reading of a past crop,
+  // and autoSuggestPlan reads stale rows too — neither is this pass's to
+  // answer, and folding them in would make this guard measure something else.
+  const otherBeds = ['b1', 'b3', 'b4', 'p1', 'p2'];
+  const sig = (rows: readonly Planting[]) => rows
+    .filter((p) => otherBeds.includes(p.bedId))
+    .map((p) => `${p.bedId}|${p.cropKey}|${p.sowMonth}|${(p.areaFraction ?? 1).toFixed(3)}`)
+    .sort().join(' ');
+
+  for (const rhythm of ['steady', 'few-big'] as const) {
+    for (let realNowMonth = 1; realNowMonth <= 12; realNowMonth++) {
+      const answers = roryAnswers('commercial', rhythm);
+      const cycle = autoSuggestPlan(answers, 'winter', STARTER_BEDS, [], realNowMonth).plantings;
+      const clean = sig(fillFirstSeasonGaps(
+        answers, 'winter', STARTER_BEDS, cycle, [], realNowMonth, REAL_NOW_YEAR,
+      ).starters);
+      // Sown and eaten years before this plan begins. It holds no ground today
+      // and it feeds nobody today.
+      const stale: Planting = {
+        id: 'stale-chard', bedId: 'b2', cropKey: 'swiss-chard',
+        sowMonth: realNowMonth, once: `${REAL_NOW_YEAR - 3}-${String(realNowMonth).padStart(2, '0')}`,
+      };
+      const withStale = sig(fillFirstSeasonGaps(
+        answers, 'winter', STARTER_BEDS, cycle, [stale], realNowMonth, REAL_NOW_YEAR,
+      ).starters);
+      assert.equal(withStale, clean,
+        `a starter from ${REAL_NOW_YEAR - 3} on Bed 2 changed what other beds sow, planning `
+        + `from month ${realNowMonth} (${rhythm}) — its stamp is being read as a month still to come`);
+    }
+  }
+});
+
+test('the coverage ledger gives the same answer every run', () => {
+  // Re-added at the config where the ledger is actually exercised. The earlier
+  // version of this test ran family/steady/summer on beds that place NO
+  // starters, so it compared two empty fills and could never have failed.
+  const build = () => suggestIdealYearPlan(
+    roryAnswers('commercial', 'few-big'), 'winter', STARTER_BEDS, [], 1, REAL_NOW_YEAR,
+  ).best.result.plantings
+    .filter((p) => typeof p.once === 'string')
+    .map((p) => `${p.bedId}|${p.cropKey}|${p.sowMonth}|${(p.areaFraction ?? 1).toFixed(3)}`)
+    .sort();
+
+  const first = build();
+  assert.ok(first.length > 0, 'this config must place starters or the guard is vacuous again');
+  for (let run = 0; run < 3; run++) {
+    assert.deepEqual(build(), first, 'the fill is order-dependent across runs');
+  }
+});
