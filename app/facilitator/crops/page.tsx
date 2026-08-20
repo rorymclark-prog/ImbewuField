@@ -13,6 +13,7 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { Search, X, Menu, ChevronDown, Home } from 'lucide-react';
 import NavDrawer from '@/components/NavDrawer';
+import { useRegisterBackControl } from '@/components/BackControl';
 import LessonLink from '@/components/design/LessonLink';
 import CropPlanExportCard from '@/components/crops/CropPlanExportCard';
 import CropIcon from '@/components/CropIcon';
@@ -90,6 +91,15 @@ const FRACTION_PRESETS: { label: string; value: number }[] = [
 // Months throughout lib/crop-plan.ts are 1-12 (Jan-Dec), wrapping via the
 // same rule as that module's internal wrapMonth — kept in sync here since
 // it isn't exported.
+
+/** The header below carries its own ways back (Home, "Back to design", "All crop
+ *  plans"), so the global floating Back pill must stand down — without this it
+ *  rendered on top of those very controls. Rendered INSIDE the header so the
+ *  registration exactly mirrors the header's own presence. */
+function RegisterInFlowBack() {
+  useRegisterBackControl();
+  return null;
+}
 
 function wrapMonth(m: number): number {
   return ((m - 1) % 12 + 12) % 12 + 1;
@@ -824,9 +834,16 @@ function FacilitatorCropsPageInner() {
   // Only drops plantings on beds actually shown right now (matches the
   // `plantings` derived read below) — never touches plantings parked under a
   // bed id that no longer exists in this design, same care as removePlanting.
+  //
+  // The confirmation is an IN-APP two-step, not window.confirm: embedded
+  // webviews (the Claude browser pane, some Android PWA wrappers) suppress
+  // native dialogs and return false without ever showing anything, which made
+  // this button silently dead there. confirmingClear swaps the button row for
+  // an inline question instead — no native dialog anywhere in this flow.
+  const [confirmingClear, setConfirmingClear] = useState(false);
   function clearAllPlantings() {
     if (!plantings.length) return;
-    if (!window.confirm(`Clear all ${plantings.length} planting${plantings.length > 1 ? 's' : ''} from every bed? You can undo this once right after.`)) return;
+    setConfirmingClear(false);
     pushPlanHistory();
     setPlan((prev) => {
       if (!prev) return prev;
@@ -1054,6 +1071,7 @@ function FacilitatorCropsPageInner() {
       )}
       {/* Header */}
       <header className="flex-shrink-0 flex items-center px-3 md:px-5 gap-2 md:gap-3 overflow-x-auto" style={{ height: 56, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
+        <RegisterInFlowBack />
         <button
           onClick={() => setNavOpen(true)}
           aria-label="Open navigation"
@@ -1271,6 +1289,30 @@ function FacilitatorCropsPageInner() {
               </div>
             )}
 
+            {confirmingClear && plantings.length > 0 ? (
+              <div
+                className="flex items-center gap-2 mb-3 px-3 py-2 rounded-xl"
+                style={{ background: 'rgba(179,58,58,0.06)', border: '1px solid rgba(179,58,58,0.3)' }}
+              >
+                <span className="font-sans flex-1" style={{ fontSize: 13, color: '#20190F' }}>
+                  Clear all {plantings.length} planting{plantings.length > 1 ? 's' : ''} from every bed? You can undo once right after.
+                </span>
+                <button
+                  onClick={clearAllPlantings}
+                  className="px-4 py-2 rounded-xl font-display font-semibold flex-shrink-0"
+                  style={{ fontSize: 13, background: '#B33A3A', border: '1px solid #B33A3A', color: '#FFFFFF', cursor: 'pointer' }}
+                >
+                  Yes, clear
+                </button>
+                <button
+                  onClick={() => setConfirmingClear(false)}
+                  className="px-4 py-2 rounded-xl font-display font-semibold flex-shrink-0"
+                  style={{ fontSize: 13, background: '#FFFFFF', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}
+                >
+                  Keep
+                </button>
+              </div>
+            ) : (
             <div className="flex gap-2 mb-3">
               <button
                 onClick={openAutoSuggest}
@@ -1291,7 +1333,7 @@ function FacilitatorCropsPageInner() {
               )}
               {plantings.length > 0 && (
                 <button
-                  onClick={clearAllPlantings}
+                  onClick={() => setConfirmingClear(true)}
                   className="px-4 py-2.5 rounded-xl font-display font-semibold transition-all inline-flex items-center justify-center gap-1"
                   style={{ fontSize: 13, background: '#FFFFFF', border: '1px solid rgba(179,58,58,0.3)', color: '#B33A3A', cursor: 'pointer' }}
                   title="Clear every planting from this plan"
@@ -1300,6 +1342,7 @@ function FacilitatorCropsPageInner() {
                 </button>
               )}
             </div>
+            )}
 
             {/* Timeline. The month header and the bed-rows body are TWO
                 separate horizontal-scroll regions kept in sync by JS
