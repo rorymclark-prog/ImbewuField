@@ -236,7 +236,11 @@ test('the invoice and records screens wire the crop picker, price book and paid-
   const records = readFileSync(new URL('../components/MyRecords.tsx', import.meta.url), 'utf8');
   assert.match(invoicePage, /<CropSelect/);
   assert.match(invoicePage, /await syncInvoiceSales\(updated\)/);
-  assert.match(invoicePage, /guide price, July 2026/);
+  // The guide-price line must derive its date per crop (a later-priced crop carries its own
+  // pricedAt) — the hardcoded "guide price, July 2026" literal this used to assert went stale
+  // the first time a crop was priced outside July. tests/crop-prices.test.ts holds the
+  // no-literal-date guard; this keeps asserting the invoice screen wires the price book's label.
+  assert.match(invoicePage, /guide price from \{priceDateLabel\(guide\)\}/);
   assert.match(records, /<CropSelect/);
   assert.match(records, /priceFor\(form\.cropKey, priceOverrides\)/);
 });
