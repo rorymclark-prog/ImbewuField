@@ -12,6 +12,7 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 import '@mapbox/mapbox-gl-draw/dist/mapbox-gl-draw.css';
 import type { SiteData, WaterData, LocationData } from '@/lib/types';
 import { loadPlaces, savePlace, deletePlace, updatePlacePosition, generateId, promptNearbyUpdate, mergeIncomingPlaces, featuresForPlace, PLACE_LABELS, placeColor, resolveColor, type SavedPlace, type PlaceLabel } from '@/lib/saved-places';
+import { useAppConfirm } from '@/components/AppConfirm';
 import { loadWaterPoints, saveWaterPoint, deleteWaterPoint, generateWaterPointId, mergeIncomingWaterPoints, WATER_POINT_CATEGORIES, categoryColor, type WaterPoint } from '@/lib/water-points';
 import { loadSiteElements, saveSiteElement, deleteSiteElement, getElementMeta, ELEMENT_TYPES, reconcileSiteElements, subscribeSiteElementsLive, type SiteElement, type SiteElementType } from '@/lib/site-elements';
 import { designSiteIdFromLocation } from '@/lib/design-studio';
@@ -337,6 +338,7 @@ const TANK_SIZE_OPTIONS_L = [750, 1000, 2500, 5000, 10000];
 const TREE_SPECIES_OPTIONS = ['Mango', 'Avocado', 'Lemon', 'Orange', 'Banana (single plant)', 'Mulberry', 'Pawpaw', 'Natal plum', 'Wild plum', 'Waterberry', 'Other tree'];
 
 export default function PermaMap({ onLocationSelect, selectedLocation, loading, onMapCapture, onMapReady, onSiteDrawn, onWaterDrawn, onCaptureClick, jumpTo, onJumpComplete, onDrawingChange, locationData, onPlaceSelect, activePlaceId, people, showPeople, onTogglePeople, onDesignPresenceChange, guided }: Props) {
+  const appConfirm = useAppConfirm();
   const { t } = useLanguage();
   const { user } = useAuth();
   const isPhone = usePhoneViewport();
@@ -583,7 +585,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     setCustomPlaceColor(p.color ?? '');
   }, []);
 
-  const confirmSavePlace = useCallback(() => {
+  const confirmSavePlace = useCallback(async () => {
     if (!namingPlace) return;
     const existingId = editingPlaceId;
     const existing = existingId ? savedPins.find((p) => p.id === existingId) : null;
@@ -591,7 +593,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     // Only for brand-new pin saves: the explicit edit flow (existingId set via startEditPlace) is
     // already an update of a known id. When the farmer opts to update the nearby place, its id
     // (and savedAt/notes) survive so coordinate-keyed downstream data doesn't fork.
-    const nearby = existingId ? null : promptNearbyUpdate(namingPlace.lat, namingPlace.lon);
+    const nearby = existingId ? null : await promptNearbyUpdate(namingPlace.lat, namingPlace.lon, appConfirm);
     const target = existing ?? nearby;
     savePlace({
       id: target?.id ?? generateId(),
@@ -610,7 +612,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
     setEditingPlaceId(null);
     setNamingPlace(null);
     if (!existingId) { setPlaceSaved(true); setTimeout(() => setPlaceSaved(false), 2500); }
-  }, [namingPlace, placeName, placeLabel, customPlaceColor, locationData, editingPlaceId, savedPins]);
+  }, [namingPlace, placeName, placeLabel, customPlaceColor, locationData, editingPlaceId, savedPins, appConfirm]);
 
   // Lima coach-marks — a quick guide that auto-shows the first time the tools
   // panel is opened, and reopens any time via the "?" in the panel header.

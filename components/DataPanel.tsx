@@ -6,6 +6,7 @@ import { loadSurvey, type SiteSurvey } from '@/lib/site-survey';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import RainfallChart from './RainfallChart';
 import { savePlace, generateId, loadPlaces, promptNearbyUpdate, type SavedPlace } from '@/lib/saved-places';
+import { useAppConfirm } from '@/components/AppConfirm';
 import { designSiteIdFromLocation } from '@/lib/design-studio';
 import { loadReports, deleteReport, type SavedReport } from '@/lib/saved-reports';
 import InsightsPanel from './InsightsPanel';
@@ -298,6 +299,7 @@ function Skeleton() {
 
 /* ── Main component ───────────────────────────────── */
 export default function DataPanel({ data, loading, coords, mapCapture, siteData, waterData, forcedTab, onTabChange, onOpenReport, onJumpTo, onViewReport, appLang, placeName, activePlaceId, people, peopleLoading, peopleError, currentUserId, onOpenProfile, initialChatQuery, initialChatPhoto, onChatDeepLinkConsumed, openSurvey, onSurveyOpened }: Props) {
+  const appConfirm = useAppConfirm();
   const { t } = useLanguage();
   const REPORT_GROUP_LABEL: Record<string, string> = {
     water: t('reportGroupWater'), structures: t('reportGroupStructures'),
@@ -629,13 +631,13 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
   }
 
   // One-tap save of the current location (prominent, vs the Places tab form).
-  const quickSavePlace = () => {
+  const quickSavePlace = async () => {
     if (!data || !coords) return;
     // Save-time duplicate guard — shared authority in lib/saved-places.ts promptNearbyUpdate.
     // The one-tap button is the EASIEST place to mint a second row for the same farm; updating
     // keeps the existing id (and the farmer's chosen name/notes/label/colour) so coordinate-keyed
     // downstream data (surveys, design studio) doesn't fork onto a second id.
-    const nearby = promptNearbyUpdate(coords.lat, coords.lon);
+    const nearby = await promptNearbyUpdate(coords.lat, coords.lon, appConfirm);
     if (nearby) {
       savePlace({
         ...nearby,

@@ -36,6 +36,7 @@ import {
   LayoutGrid, Square, Trash2,
 } from 'lucide-react';
 import BackButton from '@/components/BackButton';
+import { useAppConfirm } from '@/components/AppConfirm';
 import { getLastSite } from '@/lib/last-site';
 import { designSiteIdFromLocation } from '@/lib/design-studio';
 import {
@@ -114,6 +115,7 @@ function Segmented<T extends string>({ options, value, onChange, ariaLabel }: {
 }
 
 export default function PreviewExport() {
+  const appConfirm = useAppConfirm();
   // The saved sheets belong to the farmer's real site, not to the 2.0 scratch canvas — this page
   // previews work they have actually rendered, so it reads the same siteId the studio and the
   // report both derive from the last selected location.
@@ -167,7 +169,13 @@ export default function PreviewExport() {
   /** Delete ONE saved bitmap, never the design geometry that produced it. Each row owns its own
    *  button so there is no ambiguity about which of several same-named older renders will go. */
   const deleteSavedMap = useCallback(async (meta: StoredSheetMeta) => {
-    if (!window.confirm(`Delete this saved map?\n\n${meta.label}\n\nYour design will stay unchanged.`)) return;
+    const proceed = await appConfirm({
+      title: 'Delete this saved map?',
+      message: `${meta.label}\n\nYour design will stay unchanged.`,
+      confirmLabel: 'Delete map',
+      destructive: true,
+    });
+    if (!proceed) return;
     setDeleteError(null);
     setDeletingId(meta.id);
     const removed = await deleteSheet(meta.id);

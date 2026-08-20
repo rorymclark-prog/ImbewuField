@@ -2,6 +2,7 @@
 import { useState, useCallback, useEffect } from 'react';
 import { X, ChevronRight, ChevronLeft, Check, Users, Droplets, Home, Leaf, AlertTriangle, FileText, Sparkles } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
+import { useAppConfirm } from '@/components/AppConfirm';
 import {
   saveSurvey,
   loadSurvey,
@@ -165,6 +166,7 @@ function AutoFillNote({ areaM2 }: { areaM2: number }) {
 
 export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: Props) {
   const { t } = useLanguage();
+  const appConfirm = useAppConfirm();
   const STEPS = surveySteps(t);
   const PRODUCTION_ROWS = productionRows(t);
   const HDDS_LABELS = hddsLabels(t);
@@ -351,10 +353,15 @@ export default function SiteSurveySheet({ placeId, coords, onSaved, onClose }: P
   // has already cleared step 0's required fields and answered "Next" at least once, so an
   // X tap past that point is real, unsaved work — confirm before throwing it away, the same
   // way app/design/page.tsx and app/facilitator/crops/page.tsx guard their own data loss.
-  const closeWithConfirm = useCallback(() => {
-    if (step > 0 && !window.confirm(t('surveyDiscardConfirm'))) return;
+  const closeWithConfirm = useCallback(async () => {
+    if (step > 0 && !(await appConfirm({
+      message: t('surveyDiscardConfirm'),
+      confirmLabel: t('surveyDiscardBtn'),
+      cancelLabel: t('cancelBtn'),
+      destructive: true,
+    }))) return;
     onClose();
-  }, [step, onClose, t]);
+  }, [step, onClose, t, appConfirm]);
 
   return (
     // Full-screen step wizard (fixed inset-0, no viewport margin) rather than a partial-height
