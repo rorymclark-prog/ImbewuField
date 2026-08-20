@@ -268,7 +268,7 @@ export default function FieldJournal() {
           {/* Example entries — fixture data only, see EXAMPLE_JOURNAL_ENTRIES above.
               Dashed borders + reduced opacity + a per-card "Example" badge (all in the
               app's existing amber "this is a demo" colour, the same #C07A1E app/cropplan/
-              page.tsx uses for its own DEFAULT_BEDS fallback banner) so these can never
+              page.tsx uses for its own no-crop-plan-yet notice) so these can never
               read as the farmer's own history — no edit button, no delete, not clickable. */}
           <div style={{ marginBottom: 4 }}>
             <div style={{

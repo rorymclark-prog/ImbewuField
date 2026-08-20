@@ -99,6 +99,11 @@ export interface BoardTask {
    *  ItemEditSheet use — instead of rendering `icon` as raw emoji text.
    *  Undefined for non-crop kinds (survey/lesson), which have no art system. */
   cropKey?: string;
+  /** CropTask['action'] (lib/crop-plan.ts), set only for kind 'crop' tasks. Lets a renderer
+   *  pick an icon/category per task without re-parsing the title string — added for the
+   *  Task Planner screen (app/cropplan), which used to invent its own day-of-week rota
+   *  instead of reading real tasks. */
+  action?: CropTask['action'];
   /** Real calendar month, 1-12, consistent with monthsAway — needed to emit a concrete .ics date. */
   dueMonth: number;
   /** Months until due; can exceed 11 for the harvest of a crop planned nearly a year out. */
@@ -162,6 +167,7 @@ export function buildCropBoardTasks(
       subtitle: `${t.bedLabel} · ${dueLabel(monthsAway)}`,
       icon: t.icon,
       cropKey: t.cropKey,
+      action: t.action,
       // Derived from the resolved offset (not t.month) so a clamped-to-now
       // prep task carries the month it's actually due.
       dueMonth: wrapMonth(currentMonth + monthsAway),
@@ -184,15 +190,79 @@ export function buildCropBoardTasks(
  */
 export function loadCropBoardTasks(completedIds: Set<string>): BoardTask[] {
   if (typeof window === 'undefined' || !window.localStorage) return [];
+  const { beds, plantings } = loadCropBoardSource();
+  const currentMonth = new Date().getMonth() + 1;
+  return buildCropBoardTasks(plantings, beds, currentMonth, completedIds);
+}
+
+/** Shared bed/planting resolution behind loadCropBoardTasks and
+ *  loadCropBoardYear — same main-site Studio → legacy canvas → virtual-bed
+ *  fallback either way. `savedPlantings` is the UNFILTERED count straight off
+ *  the stored plan, so a screen can tell "no plan at all" apart from "a plan
+ *  whose plantings all sit on beds that no longer exist". */
+function loadCropBoardSource(): { beds: PlanBed[]; plantings: Planting[]; savedPlantings: number } {
   const main = resolveMainSite(loadPlaces());
   const canvas = main && Number.isFinite(main.lat) && Number.isFinite(main.lon)
     ? loadCanvasState(designSiteIdFromLocation({ lat: main.lat, lon: main.lon } as LocationData))
     : null;
   const beds = taskBoardBeds(canvas, loadFacilitatorState());
   const bedIds = new Set(beds.map((b) => b.id));
-  const plantings = loadCropPlan().plantings.filter((p) => bedIds.has(p.bedId));
-  const currentMonth = new Date().getMonth() + 1;
-  return buildCropBoardTasks(plantings, beds, currentMonth, completedIds);
+  const saved = loadCropPlan().plantings;
+  const plantings = saved.filter((p) => bedIds.has(p.bedId));
+  return { beds, plantings, savedPlantings: saved.length };
+}
+
+/** The whole plan laid out over the twelve calendar months, plus the counts a
+ *  screen needs to explain an empty result honestly. */
+export interface CropBoardYear {
+  /** Every month 1-12 is present, so a caller never has to distinguish
+   *  "no entry" from "no tasks". Each bucket keeps buildCropBoardTasks'
+   *  soonest-first order. */
+  byMonth: Map<number, BoardTask[]>;
+  /** Tasks across all twelve months — 0 means the planner is empty all year. */
+  total: number;
+  /** Plantings saved in the crop plan before ANY filtering (bed, sow month,
+   *  catalog, timing verification). 0 means there is genuinely no plan yet. */
+  savedPlantings: number;
+}
+
+function emptyMonthBuckets(): Map<number, BoardTask[]> {
+  const byMonth = new Map<number, BoardTask[]>();
+  for (let m = 1; m <= 12; m++) byMonth.set(m, []);
+  return byMonth;
+}
+
+/**
+ * The farmer's real tasks, filed under the calendar month each one falls in —
+ * built for the Task Planner (app/cropplan), which browses month by month
+ * through the plan's annual cycle rather than only showing what's due today.
+ *
+ * Built ONCE against the real current month and then filed by dueMonth. An
+ * earlier version rebuilt the list with the BROWSED month as "now" and kept
+ * only monthsAway === 0; because a planned crop's sowing always resolves to
+ * its NEXT occurrence (offset 0-11), every harvest (+3..+10), transplant (+1)
+ * and cover termination was then unreachable in all twelve months, and a
+ * clamped prep task showed up in two consecutive months. Anchoring once to the
+ * real clock keeps each task on its own cohort timeline, so it lands in
+ * exactly one month — the month the plan actually puts it in.
+ *
+ * Crop-plan months carry no year (lib/crop-plan.ts), so a month bucket is the
+ * finest honest granularity: `monthsAway` on each task still says which
+ * occurrence of that month name it belongs to.
+ */
+export function loadCropBoardYear(completedIds: Set<string>, now: Date = new Date()): CropBoardYear {
+  if (typeof window === 'undefined' || !window.localStorage) {
+    return { byMonth: emptyMonthBuckets(), total: 0, savedPlantings: 0 };
+  }
+  const { beds, plantings, savedPlantings } = loadCropBoardSource();
+  const clock = now instanceof Date && Number.isFinite(now.getTime()) ? now : new Date();
+  const tasks = buildCropBoardTasks(plantings, beds, clock.getMonth() + 1, completedIds);
+  const byMonth = emptyMonthBuckets();
+  for (const task of tasks) {
+    const bucket = byMonth.get(wrapMonth(task.dueMonth));
+    if (bucket) bucket.push(task);
+  }
+  return { byMonth, total: tasks.length, savedPlantings };
 }
 
 // ── Completion store ────────────────────────────────────────────────────────
