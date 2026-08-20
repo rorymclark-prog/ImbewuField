@@ -23,6 +23,7 @@ import LessonLink from '@/components/design/LessonLink';
 import CropSelect from '@/components/CropSelect';
 import { cropEntryOption } from '@/lib/crop-entry';
 import { loadCropPriceOverrides, priceFor, type CropPrice } from '@/lib/crop-prices';
+import { priceDateLabel } from '@/components/prices/CropPriceGuide.format';
 import { syncInvoiceSales } from '@/lib/db/queries';
 import { isSampleMode, getSandboxProfile } from '@/lib/sample-mode';
 import type { Profile } from '@/lib/db/types';
@@ -666,7 +667,7 @@ export default function InvoicePage() {
                       : `shops/bulk about R${guide.wholesalePerKg}/kg`;
                     return (
                       <div className="rounded-lg px-2.5 py-2 text-xs font-sans leading-relaxed" style={{ background: '#F7F2E9', color: '#5C5040' }}>
-                        <strong style={{ color: '#20190F' }}>{first}</strong> · {second} — guide price, July 2026.
+                        <strong style={{ color: '#20190F' }}>{first}</strong> · {second} — guide price from {priceDateLabel(guide)}.
                         {' '}{guide.confidence === 'estimated' ? 'Estimated; confirm locally.' : 'Sourced guide; enter your agreed price.'}
                       </div>
                     );
