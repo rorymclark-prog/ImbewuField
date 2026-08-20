@@ -167,3 +167,50 @@ export function treesFromDesignCanvas(
     count: counts.get(defId)!,
   }));
 }
+
+// ── Design Studio sites the crop planner can open ───────────────────────────
+//
+// The crop-plan site picker historically listed only cloud facilitator designs
+// (lib/db myDesigns), so a farm designed purely in the Design Studio — beds on
+// the canvas, name on the saved place — was invisible there: reachable only
+// through the Studio's own "plan crops" deep link (?canvasSite=…). These
+// helpers give the picker that same door: every saved place whose canvas holds
+// at least one plantable bed or staple plot, keyed by the exact siteId format
+// the deep link and the canvas storage key already share.
+
+export interface StudioPlanChoice {
+  /** `site:<lat>,<lon>` at 5 dp — the ?canvasSite deep-link value AND the canvas storage key. */
+  siteId: string;
+  /** The saved place's name — the only name a Studio design has. */
+  name: string;
+  bedCount: number;
+  plotCount: number;
+}
+
+/** The canonical canvas siteId for a saved place — 5 dp, matching loadCanvasState's key format. */
+export function canvasSiteIdForPlace(place: { lat: number; lon: number }): string {
+  return `site:${place.lat.toFixed(5)},${place.lon.toFixed(5)}`;
+}
+
+export function studioPlanChoices(
+  places: ReadonlyArray<{ lat: number; lon: number; name: string }>,
+  loadCanvas: (siteId: string) => DesignCanvasState | null,
+): StudioPlanChoice[] {
+  const out: StudioPlanChoice[] = [];
+  const seen = new Set<string>();
+  for (const place of places) {
+    const siteId = canvasSiteIdForPlace(place);
+    if (seen.has(siteId)) continue; // two pins in the same 5-dp cell share one canvas
+    seen.add(siteId);
+    let beds: PlanBed[];
+    try {
+      beds = bedsFromDesignCanvas(loadCanvas(siteId));
+    } catch {
+      continue; // one unreadable canvas must not hide the farmer's other sites
+    }
+    if (beds.length === 0) continue;
+    const plotCount = beds.filter((b) => b.kind === 'plot').length;
+    out.push({ siteId, name: place.name, bedCount: beds.length - plotCount, plotCount });
+  }
+  return out;
+}

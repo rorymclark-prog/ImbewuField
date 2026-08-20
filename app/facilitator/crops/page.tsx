@@ -17,7 +17,7 @@ import LessonLink from '@/components/design/LessonLink';
 import CropPlanExportCard from '@/components/crops/CropPlanExportCard';
 import CropIcon from '@/components/CropIcon';
 import { loadCanvasState, DESIGN_CANVAS_CHANGED_EVENT } from '@/lib/design-canvas';
-import { bedsFromDesignCanvas } from '@/lib/design-beds-bridge';
+import { bedsFromDesignCanvas, canvasSiteIdForPlace, studioPlanChoices, type StudioPlanChoice } from '@/lib/design-beds-bridge';
 import { loadPlaces, resolveMainSite } from '@/lib/saved-places';
 import type { FacilitatorDesignState } from '@/lib/facilitator-design';
 import { loadFacilitatorState } from '@/lib/facilitator-design';
@@ -319,6 +319,26 @@ function designStateFromCloudRow(d: Design): FacilitatorDesignState {
   };
 }
 
+/**
+ * One line under a cloud design's title in the site picker. Two of a farmer's
+ * cloud designs can carry the exact same title (nothing ever enforced
+ * uniqueness), and a title alone then reads as a duplicated row — the bed
+ * count and saved date are what actually tell them apart.
+ */
+function cloudRowSubtitle(d: Design): string {
+  let bedsPart: string | null = null;
+  try {
+    const n = computeDesignBeds(designStateFromCloudRow(d)).length;
+    bedsPart = n === 1 ? '1 bed' : `${n} beds`;
+  } catch { /* unreadable row data — the date still identifies the row */ }
+  const t = d as { updated_at?: { toMillis?: () => number }; created_at?: { toMillis?: () => number } };
+  const ms = t.updated_at?.toMillis?.() ?? t.created_at?.toMillis?.() ?? null;
+  const datePart = ms
+    ? `saved ${new Date(ms).toLocaleDateString('en-ZA', { day: 'numeric', month: 'short', year: 'numeric' })}`
+    : null;
+  return [bedsPart, datePart].filter(Boolean).join(' · ');
+}
+
 /** Beds = design items of type 'bed'/'hugel', in placement (array) order. */
 function computeDesignBeds(state: FacilitatorDesignState | null): PlanBed[] {
   if (!state) return [];
@@ -354,6 +374,11 @@ function FacilitatorCropsPageInner() {
   const searchParams = useSearchParams();
   const canvasSiteParam = searchParams.get('canvasSite');
   const autoParam = searchParams.get('auto');
+  // ?switch=1 — arrive with the site picker open and the main-site fallback held
+  // back. This is how a plan that IS on a Studio canvas offers "All crop plans":
+  // the picker needs a bare URL to render, but a bare URL would otherwise
+  // auto-jump straight back into the main site's canvas.
+  const switchParam = searchParams.get('switch');
 
   // FALLBACK when no ?canvasSite (home progress card, task board, nav drawer, /cropplan, /plan
   // all link here bare): use the MAIN saved place's Design-Studio canvas if it has beds. Without
@@ -361,14 +386,18 @@ function FacilitatorCropsPageInner() {
   // 'No beds designed yet' with a back-link to the OLD canvas — the flow audit's worst blocker.
   const [fallbackCanvasSite, setFallbackCanvasSite] = useState<string | null>(null);
   useEffect(() => {
+    // Not just an early-out: client-side nav from a plan's "All crop plans" chip
+    // arrives with the fallback ALREADY set from the previous render, and a stale
+    // fallback keeps canvasSite truthy — which is exactly what blocks the picker.
+    if (switchParam === '1') { setFallbackCanvasSite(null); return; }
     if (canvasSiteParam) return;
     try {
       const main = resolveMainSite(loadPlaces());
       if (!main) return;
-      const sid = `site:${main.lat.toFixed(5)},${main.lon.toFixed(5)}`;
+      const sid = canvasSiteIdForPlace(main);
       if (bedsFromDesignCanvas(loadCanvasState(sid)).length > 0) setFallbackCanvasSite(sid);
     } catch { /* corrupt cache — legacy behaviour stands */ }
-  }, [canvasSiteParam]);
+  }, [canvasSiteParam, switchParam]);
   const canvasSite = canvasSiteParam ?? fallbackCanvasSite;
 
   // The saved place's own name, for the printed plan's cover. Beds coming from
@@ -541,9 +570,21 @@ function FacilitatorCropsPageInner() {
   // crop-planning landing page you can always get back to, not just a
   // one-time gate on first load.
   const [switchingSite, setSwitchingSite] = useState(false);
+  useEffect(() => {
+    if (switchParam === '1') setSwitchingSite(true);
+  }, [switchParam]);
+  // Design Studio sites on this device whose canvas holds plantable beds — the
+  // picker lists these alongside the cloud designs, because a farm designed
+  // purely in the Studio otherwise never appears there at all (it was reachable
+  // only through the Studio's own "plan crops" deep link).
+  const [studioChoices, setStudioChoices] = useState<StudioPlanChoice[]>([]);
   // When beds come from the Design Studio (?canvasSite) the facilitator/Firestore
-  // picker is bypassed entirely — there's exactly one source of beds.
-  const needsSitePicker = !canvasSite && !!myDesignsList && (switchingSite || (myDesignsList.length > 1 && chosenDesignId === null));
+  // picker is bypassed entirely — there's exactly one source of beds. A single
+  // cloud design still skips the picker as before — unless Studio sites exist
+  // too, at which point there is real ambiguity, or the ONLY designs are Studio
+  // ones, which a bare URL could otherwise never reach.
+  const needsSitePicker = !canvasSite && !!myDesignsList && (switchingSite || (chosenDesignId === null
+    && (myDesignsList.length + studioChoices.length > 1 || (myDesignsList.length === 0 && studioChoices.length > 0))));
 
   const [favouriteCropKeys, setFavouriteCropKeys] = useState<Set<string>>(new Set());
   function toggleFavourite(cropKey: string) {
@@ -617,6 +658,9 @@ function FacilitatorCropsPageInner() {
     setCashflowSettings(loadCashflowSettings());
     setMounted(true);
     myDesigns().then(setMyDesignsList).catch(() => setMyDesignsList([]));
+    try {
+      setStudioChoices(studioPlanChoices(loadPlaces(), loadCanvasState));
+    } catch { /* corrupt cache — the cloud rows still render */ }
   }, []);
 
   // Live bed feed from the Design Studio canvas when arriving via ?canvasSite —
@@ -1044,6 +1088,19 @@ function FacilitatorCropsPageInner() {
             ‹ All crop plans
           </button>
         )}
+        {canvasSite && ((myDesignsList?.length ?? 0) + studioChoices.length > 1) && (
+          // On a Studio-canvas plan the picker can't render in place (beds are
+          // pinned to ?canvasSite), so "All crop plans" goes through ?switch=1 —
+          // a bare URL with the fallback held back and the picker forced open.
+          <Link
+            href="/facilitator/crops?switch=1"
+            className="flex-shrink-0 flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-display"
+            style={{ background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#20190F', textDecoration: 'none' }}
+            title="Switch to a different design's crop plan"
+          >
+            ‹ All crop plans
+          </Link>
+        )}
         <div className="w-px h-5 flex-shrink-0" style={{ background: '#E2D8C4' }} />
         {!canvasSite && myDesignsList && myDesignsList.length > 0 ? (
           <button
@@ -1154,7 +1211,9 @@ function FacilitatorCropsPageInner() {
                 </button>
               )}
             </div>
-            <p className="font-sans mb-3" style={{ fontSize: 13, color: '#5C5040' }}>You have {myDesignsList?.length} saved designs — pick one to see its beds.</p>
+            <p className="font-sans mb-3" style={{ fontSize: 13, color: '#5C5040' }}>
+              You have {(myDesignsList?.length ?? 0) + studioChoices.length} saved design{(myDesignsList?.length ?? 0) + studioChoices.length === 1 ? '' : 's'} — pick one to see its beds.
+            </p>
             {myDesignsList?.map((d) => (
               <button
                 key={d.id}
@@ -1162,9 +1221,34 @@ function FacilitatorCropsPageInner() {
                 className="w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl text-left transition-all"
                 style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}
               >
-                <span className="font-display font-semibold" style={{ fontSize: 14, color: '#20190F' }}>{d.title || 'Untitled design'}</span>
+                <span className="flex flex-col min-w-0">
+                  <span className="font-display font-semibold" style={{ fontSize: 14, color: '#20190F' }}>{d.title || 'Untitled design'}</span>
+                  {cloudRowSubtitle(d) && (
+                    <span className="font-sans" style={{ fontSize: 11, color: '#8C7A62' }}>{cloudRowSubtitle(d)}</span>
+                  )}
+                </span>
                 <span className="font-sans" style={{ fontSize: 11, color: '#9A8268' }}>›</span>
               </button>
+            ))}
+            {studioChoices.length > 0 && (
+              <p className="font-sans pt-3 mb-1" style={{ fontSize: 11.5, color: '#8C7A62' }}>From your Design Studio map</p>
+            )}
+            {studioChoices.map((c) => (
+              <Link
+                key={c.siteId}
+                href={`/facilitator/crops?canvasSite=${encodeURIComponent(c.siteId)}`}
+                onClick={() => setSwitchingSite(false)}
+                className="w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl text-left transition-all"
+                style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', textDecoration: 'none' }}
+              >
+                <span className="flex flex-col min-w-0">
+                  <span className="font-display font-semibold" style={{ fontSize: 14, color: '#20190F' }}>{c.name}</span>
+                  <span className="font-sans" style={{ fontSize: 11, color: '#8C7A62' }}>
+                    {c.bedCount === 1 ? '1 bed' : `${c.bedCount} beds`}{c.plotCount > 0 ? ` · ${c.plotCount} plot${c.plotCount === 1 ? '' : 's'}` : ''}
+                  </span>
+                </span>
+                <span className="font-sans" style={{ fontSize: 11, color: '#9A8268' }}>›</span>
+              </Link>
             ))}
             <button
               onClick={() => chooseSite('local')}
