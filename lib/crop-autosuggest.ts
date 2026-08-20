@@ -190,6 +190,23 @@ function plantingId(
  * Several coverage passes may independently choose the same cohort. Present
  * that as one planting with their combined bed share, not duplicate rows
  * distinguished only by opaque ids.
+ *
+ * SUMS the shares — it does NOT keep the larger one (as an earlier version
+ * did). Every occupancy.add() call site that can legally repeat a (bedId,
+ * cropKey, sowMonth) key only gets to because Occupancy.fits() already
+ * confirmed real, additional room was free at that moment — fillRemainingGaps
+ * topping up a bed a winter bridge only half-filled, ensureSowingCadence
+ * adding a second cabbage strip beside a first, and so on (see each call
+ * site's own comment). Two 0.5 shares placed that way are two genuine strips
+ * of the SAME crop sown the SAME month, not one planting guessed at twice by
+ * two passes — and the Occupancy ledger those passes checked fits() against
+ * already SUMS same-cohort adds. Taking the max instead of the sum here (the
+ * 2026-08-20 bug) silently discarded real, legally-placed area: the ledger
+ * used by every later pass in the SAME run correctly saw the bed as fuller
+ * than the emitted plan then claimed, so a farmer reading "50% free" was
+ * looking at ground the plan had actually already committed to 100%.
+ * Capped at 1 — occupancy.fits() already enforces that per add; this only
+ * guards float drift when 3+ shares of the same cohort are merged.
  */
 function consolidatePlantings(plantings: readonly Planting[]): Planting[] {
   const byCohort = new Map<string, Planting>();
@@ -200,11 +217,8 @@ function consolidatePlantings(plantings: readonly Planting[]): Planting[] {
       byCohort.set(key, { ...planting });
       continue;
     }
-    // Independent passes choosing the same crop, bed and month describe one
-    // cohort, not extra strips to add together. Keeping the larger named share
-    // prevents opaque 58%, 67% or 83% bed allocations in the farmer's plan.
-    const cohortFraction = Math.max(existing.areaFraction ?? 1, planting.areaFraction ?? 1);
-    existing.areaFraction = cohortFraction < 1 ? cohortFraction : undefined;
+    const cohortFraction = Math.min(1, (existing.areaFraction ?? 1) + (planting.areaFraction ?? 1));
+    existing.areaFraction = cohortFraction < 0.9999 ? cohortFraction : undefined;
   }
   return [...byCohort.values()].map((planting) => ({
     ...planting,
@@ -2998,13 +3012,16 @@ export function autoSuggestPlan(
   return {
     plantings,
     notes: orderNotes(notes),
-    // Computed from the CONSOLIDATED plan, not the planning ledger. When two
-    // passes pick the same crop/bed/month, consolidatePlantings keeps the
-    // larger share as one cohort — but each pass had already added its own
-    // share to `occupancy`, so the internal ledger can read a bed as fuller
-    // than the plan the farmer is shown. The waiting panel must answer for
-    // the emitted plan ("given THIS plan, when could the crop first fit?"),
-    // so it rebuilds occupancy and rotation from exactly what is returned.
+    // Computed from the CONSOLIDATED plan, not the planning ledger.
+    // consolidatePlantings now SUMS same-cohort shares (2026-08-20 fix — it
+    // used to keep only the larger one, which silently understated a bed the
+    // ledger already knew was full), so the two agree on how much of a bed
+    // is committed. This still rebuilds occupancy and rotation from exactly
+    // what is returned rather than reusing `occupancy` above for a different
+    // reason: the ideal-year feature re-derives the waiting panel at the REAL
+    // current month after planning from a different anchor, and the waiting
+    // panel must answer for the emitted plan ("given THIS plan, when could
+    // the crop first fit?"), not for whatever anchor month planning ran at.
     laterThisYear: recomputeLaterThisYear(
       answers, pattern, beds, plantings, usableExistingPlantings, nowMonth,
     ),

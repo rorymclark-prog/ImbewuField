@@ -490,6 +490,57 @@ test('recomputeLaterThisYear rebuilds exactly what autoSuggestPlan reported', ()
   assert.ok(compared >= 20, `the sweep must actually exercise this (${compared} explicit-crop scenarios)`);
 });
 
+test('the consolidated plan reports the SAME occupancy the ledger used to decide a bed was full — not a lossy max of duplicate-cohort shares', () => {
+  // 2026-08-20 bug. Multiple planning passes can each legally claim MORE of
+  // the SAME (bedId, cropKey, sowMonth) cohort once Occupancy.fits() confirms
+  // real room remains — e.g. fillRemainingGaps topping up a bed a winter
+  // bridge only half-filled with a second, later strip of the same crop and
+  // month. The Occupancy ledger every pass plans against SUMS those adds
+  // (correctly — that sum is exactly what let it refuse a later pass any more
+  // room there). consolidatePlantings used to collapse the duplicate rows by
+  // keeping only the LARGER single share, so the plan handed to the farmer
+  // could understate a bed the ledger had already committed in full — "50%
+  // free" on screen for ground the planner itself knew had nothing left.
+  //
+  // This exact 14-bed/cabbage+carrots/commercial/steady scenario is a fixed,
+  // deterministic repro (see project_imbewufield_whole_year_plan.md): b2's
+  // April carrots cohort is independently placed THREE times by three
+  // separate passes (confirmed by instrumenting Occupancy.add for this
+  // scenario) — 0.25, then 0.5, then 0.25 more, summing to exactly one full
+  // bed. The pre-fix engine emitted only 0.5, the largest single share.
+  const beds: PlanBed[] = Array.from({ length: 14 }, (_, i) => ({
+    id: `b${i + 1}`, label: `Bed ${i + 1}`, areaM2: 4, minDimM: 1.2,
+  }));
+  const answers: AutoSuggestAnswers = {
+    goal: 'commercial', householdSize: 'medium', focusCropCount: 2,
+    groups: [], cropKeys: ['cabbage', 'carrots'], rhythm: 'steady',
+    rotateCrops: false, allowVinesInBeds: false, allowMixedCropsInBed: true,
+    reliableIrrigation: true,
+  };
+  const result = autoSuggestPlan(answers, 'mild-frost', beds, [], 4);
+
+  const b2April = result.plantings.filter((p) => p.bedId === 'b2' && p.sowMonth === 4);
+  assert.equal(b2April.length, 1, 'one consolidated row per cohort — never duplicate rows distinguished only by opaque ids');
+  assert.equal(b2April[0].cropKey, 'carrots');
+  assert.equal(b2April[0].areaFraction, undefined,
+    'three legal same-cohort adds (0.25+0.5+0.25) summed to a full bed in the ledger this plan was built against; the emitted plan must say so too, not "50% free"');
+
+  // General conservation check alongside the hand-verified cohort above: the
+  // consolidated plan re-derives to no more than 100% of any real bed in any
+  // month — summing NEVER pushes a cohort's reported share past what the
+  // ledger's own fits() cap allowed it to actually claim.
+  const byBedMonth = new Map<string, number>();
+  for (const planting of result.plantings) {
+    if (!cropByKey(planting.cropKey)) continue;
+    for (const month of occupiedMonthsForPlanting(planting)) {
+      const key = `${planting.bedId}:${month}`;
+      byBedMonth.set(key, (byBedMonth.get(key) ?? 0) + (planting.areaFraction ?? 1));
+    }
+  }
+  const overbooked = [...byBedMonth.entries()].filter(([, total]) => total > 1.0001);
+  assert.deepEqual(overbooked, [], 'consolidated plan must never claim more than 100% of any bed in any month');
+});
+
 // ── E. the bridge clause ────────────────────────────────────────────────────
 
 /**
