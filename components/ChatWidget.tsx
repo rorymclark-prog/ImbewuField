@@ -93,9 +93,17 @@ export default function ChatWidget() {
   // That pill sits at calc(60px + safe-area + 36px) — 96px up — and stands about 41px tall, so it
   // reaches ~137px. 188px clears it with a thumb's width to spare. Only below lg, because the
   // pill is lg:hidden and the desktop corner really is free.
+  //
+  // /facilitator/crops is the same 12 Aug complaint on a different page: everything that page
+  // shows — section headings, the Availability tab, the benchmark kg headline, every task line —
+  // is LEFT-aligned, so a bottom-left FAB sits on top of the content and the tab's hit area at
+  // 375px. That page docks nothing to the bottom-right (its only fixed elements are full-screen
+  // modal overlays, which cover the FAB anyway), so the right corner is genuinely free.
   const FAB_DEFAULT_POS = pathname.startsWith('/farmer')
     ? 'bottom-[188px] left-4 lg:bottom-[100px] lg:left-4'
-    : 'bottom-[130px] left-4 lg:bottom-[100px] lg:left-4';
+    : pathname.startsWith('/facilitator/crops')
+      ? 'bottom-[130px] right-4 lg:bottom-[100px] lg:right-4'
+      : 'bottom-[130px] left-4 lg:bottom-[100px] lg:left-4';
 
   const lang = typeof window !== 'undefined' ? localStorage.getItem('permamap_lang') ?? undefined : undefined;
 

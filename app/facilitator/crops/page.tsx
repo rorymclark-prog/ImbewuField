@@ -8,7 +8,7 @@
 // own crop-plan store (lib/crop-plan.ts) for what's actually sown where.
 // Zero network, zero new deps.
 
-import { Suspense, useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
+import { Suspense, useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { Search, X, Menu, ChevronDown, Home } from 'lucide-react';
@@ -24,13 +24,13 @@ import { loadFacilitatorState } from '@/lib/facilitator-design';
 import type { Design } from '@/lib/db/types';
 import { myDesigns } from '@/lib/db/queries';
 import { nearestRainfall } from '@/lib/water-calc';
-import { resolveSiteClimate, type SiteClimate } from '@/lib/site-climate';
+import { driestMonths, resolveSiteClimate, type SiteClimate } from '@/lib/site-climate';
 import type { CropDef, RainPattern } from '@/lib/crop-catalog';
 import { CROPS, cropByKey, hasAutomaticPlanningBasis, hasPlanningYield, hasVerifiedSchedule, MONTHS_SHORT } from '@/lib/crop-catalog';
-import type { PlanBed, Planting, CropPlanState, FoodAvailabilityItem, PlanYieldBenchmark, CashflowSettings } from '@/lib/crop-plan';
+import type { PlanBed, Planting, CropPlanState, FoodAvailabilityItem, PlanYieldBenchmark, CashflowSettings, BedOverlapWarning } from '@/lib/crop-plan';
 import {
   loadCropPlan, saveCropPlan, bedEntryMonth, latestBedEntryMonth, plannedBedEntryMonth, harvestEndMonthForCrop, harvestMonthForCrop, tasksForPlan, taskMonthsFromNow, estimatedYieldKgAdjusted, nextValidSowMonth,
-  isSpaceHungry, bedOverlapFraction, bedHasUnverifiedTiming, seedBoqForPlan, buildYearReport, buildFoodAvailability, buildPlanYieldBenchmark,
+  isSpaceHungry, bedOverlapWarning, benchmarkAreaConflictDetails, bedHasUnverifiedTiming, buildYearReport, buildFoodAvailability, buildPlanYieldBenchmark,
   buildFieldUtilizationByMonth, loadFavouriteCropKeys, saveFavouriteCropKeys, isGenuinelyIntercropped, plantingBedEntryOffsets, plantingIsActiveOrPlanned, recurringPlanPlantings,
   loadAllowBedSharing, saveAllowBedSharing, loadCashflowSettings, saveCashflowSettings, DEFAULT_CASHFLOW_SETTINGS,
 } from '@/lib/crop-plan';
@@ -47,8 +47,9 @@ import { PRICE_SNAPSHOT_MONTHS } from '@/components/prices/CropPriceGuide.format
 // Task wording lives in the export module now, not here: the screen, the
 // calendar file and the printed plan all have to describe a task the same way,
 // and three copies of that sentence is how they stop doing so.
+import type { BuyingMonth } from '@/lib/crop-export-schedule';
 import {
-  positionRangeLabel, sowingInstruction, SUCCESSION_TIMING_GUIDANCE,
+  buildBuyingSchedule, positionRangeLabel, sowingInstruction, SUCCESSION_TIMING_GUIDANCE,
   taskSentence, TRANSPLANT_NURSERY_GUIDANCE,
 } from '@/lib/crop-export-schedule';
 
@@ -97,6 +98,23 @@ function monthLabel(m: number): string {
   return MONTHS_SHORT[wrapMonth(m) - 1];
 }
 
+/** "Jun", "Jun–Aug", or "Jun, Aug, Oct" — a run of months reads as a span, a
+ * broken set stays a list rather than being smoothed into a false range. */
+function monthSpanLabel(months: number[]): string {
+  if (months.length === 0) return '';
+  if (months.length === 1) return monthLabel(months[0]);
+  const contiguous = months.every((month, i) => i === 0 || month === wrapMonth(months[i - 1] + 1));
+  return contiguous
+    ? `${monthLabel(months[0])}–${monthLabel(months[months.length - 1])}`
+    : months.map(monthLabel).join(', ');
+}
+
+/** "maize", "maize and cabbage", "maize, cabbage and beans". */
+function listNames(names: string[]): string {
+  if (names.length <= 1) return names[0] ?? '';
+  return `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}`;
+}
+
 function cropDurationLabel(crop: CropDef): string {
   if (crop.timingVerified === false) return 'timing not verified';
   if (crop.daysToHarvestRange) {
@@ -142,6 +160,47 @@ function SeedBadge({ transplant, large }: { transplant: boolean; large?: boolean
     >
       {transplant ? '🪴' : '🌱'}
     </span>
+  );
+}
+
+/** How many buying months stay open on screen. The rest sit behind a
+ * disclosure: a shopping list you can act on this season is the point, and a
+ * full year of months scrolled the actionable ones off a phone. */
+const VISIBLE_BUYING_MONTHS = 3;
+
+/** One month of the buying calendar. Same rows the printed plan's buying
+ * schedule prints, in the same order, so the paper and the screen agree. */
+function BuyingMonthBlock({ monthGroup, isNow }: { monthGroup: BuyingMonth; isNow: boolean }) {
+  return (
+    <div>
+      <div className="font-display font-semibold mb-1" style={{ fontSize: 13, color: isNow ? '#1F4D2B' : '#20190F' }}>
+        {monthLabel(monthGroup.month)}{isNow ? ' · this month' : ''}
+      </div>
+      <div className="space-y-2">
+        {monthGroup.items.map((item) => (
+          <div key={`${item.cropKey}-${item.sowMonth}`} className="pb-2" style={{ borderBottom: '1px solid #F0EAD8' }}>
+            <div className="flex items-center justify-between font-sans gap-2" style={{ fontSize: 13, color: '#5C5040' }}>
+              <span><CropIcon cropKey={item.cropKey} icon={item.icon} size={14} /> {item.cropName}</span>
+              <span className="font-mono text-right" style={{ color: '#20190F' }}>
+                {item.quantityStatus === 'spacing-confirmation-required'
+                  ? 'confirm spacing first'
+                  : item.quantityStatus === 'packet-rate-required'
+                    ? 'packet rate needed'
+                    : item.quantityStatus === 'counted-piece-range' && item.countRange
+                      ? `~${positionRangeLabel(item.countRange)} ${item.unit} positions`
+                      : item.count === null
+                        ? 'confirm quantity'
+                        : `~${item.count.toLocaleString('en-ZA')} ${item.unit} positions`}
+              </span>
+            </div>
+            <div className="font-sans mt-0.5 flex items-start gap-1" style={{ fontSize: 11, color: '#8C7A62', lineHeight: 1.4 }}>
+              <SeedBadge transplant={item.transplant} />
+              <span>{item.note}{item.bedLabels.length > 0 ? ` · for ${item.bedLabels.join(', ')}` : ''}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
 
@@ -758,6 +817,13 @@ function FacilitatorCropsPageInner() {
     [plantings, beds, currentMonth],
   );
   const hasAreaConflict = planYieldBenchmark.areaConflictBedLabels.length > 0;
+  // Naming the bed was never enough to act on: the farmer still had to find
+  // which two crops were standing on it. Same authority as the labels above,
+  // so the headline and this list cannot disagree.
+  const areaConflictDetails = useMemo(
+    () => benchmarkAreaConflictDetails(plantings, beds, currentMonth),
+    [plantings, beds, currentMonth],
+  );
   const totalYieldKg = planYieldBenchmark.knownKg;
   const unknownYieldPlantings = benchmarkPlantings.filter((planting) => {
     const crop = cropByKey(planting.cropKey);
@@ -789,7 +855,10 @@ function FacilitatorCropsPageInner() {
     })
     .filter((row) => row.hasPlantings);
   const yieldByCropList = planYieldBenchmark.byCrop;
-  const seedBoq = useMemo(() => seedBoqForPlan(plantings, beds), [plantings, beds]);
+  const buyingSchedule = useMemo(
+    () => (mounted ? buildBuyingSchedule(plantings, beds, currentMonth) : []),
+    [mounted, plantings, beds, currentMonth],
+  );
   const yearReport = useMemo(() => buildYearReport(plantings, beds), [plantings, beds]);
   // TWO honest years, one chart (2026-08-04, Rory: "i want to show what a full years season
   // will look like... i am tired of not seeing a full ideal planting").
@@ -890,19 +959,26 @@ function FacilitatorCropsPageInner() {
     }
     closePicker();
   }
-  // Overlap warning: how much of the bed is already committed (by OTHER
-  // plantings whose sow→harvest window overlaps this one) before adding this
-  // one — shown as a soft nudge, never a hard block.
-  const pickerOverlap = useMemo(() => {
-    if (!pickerBedId || !pickerCrop) return 0;
+  // Overlap warning: which OTHER crops are already holding this bed over the
+  // same months, and how much of it they hold — a soft nudge, never a block.
+  //
+  // This used to be computed for the fraction picker and rendered inside it,
+  // so the DEFAULT whole-bed add (which shows no fraction picker) got no
+  // capacity feedback at all: the farmer only found out later, from the
+  // benchmark card's "Resolve overlapping bed space". It now runs for every
+  // share, whole bed included, and is rendered outside that branch.
+  const pickerOverlapWarning = useMemo(() => {
+    if (!pickerBedId || !pickerCrop) return null;
     // The reservation edge: the bed is committed from the printed earliest
     // field-entry month (see TRANSPLANT_BED_RESERVED_FROM_MONTHS).
     const entry = bedEntryMonth(pickerMonth, pickerCrop);
     const harvest = harvestEndMonthForCrop(pickerMonth, pickerCrop);
     // Exclude the planting being edited from its own overlap check — otherwise
     // editing would always see itself as "already committed" on this bed.
-    return bedOverlapFraction(pickerBedId, entry, harvest, plantings, editingPlantingId ?? undefined);
-  }, [pickerBedId, pickerCrop, pickerMonth, plantings, editingPlantingId]);
+    return bedOverlapWarning(
+      pickerBedId, entry, harvest, pickerFraction, plantings, editingPlantingId ?? undefined,
+    );
+  }, [pickerBedId, pickerCrop, pickerMonth, pickerFraction, plantings, editingPlantingId]);
   const pickerHasUnverifiedTiming = useMemo(() =>
     pickerBedId
       ? bedHasUnverifiedTiming(pickerBedId, plantings, editingPlantingId ?? undefined)
@@ -1333,8 +1409,52 @@ function FacilitatorCropsPageInner() {
                   )}
                 </div>
                 {hasAreaConflict && (
-                  <div className="font-sans mb-2" style={{ fontSize: 11, color: '#A83A2C', lineHeight: 1.45 }}>
-                    No kg or value total is shown because {planYieldBenchmark.areaConflictBedLabels.join(', ')} {planYieldBenchmark.areaConflictBedLabels.length === 1 ? 'has' : 'have'} overlapping or invalid planting shares. Edit those beds instead of guessing which crop loses growing area.
+                  <div className="mb-2">
+                    {/* One sentence that has to hold for EVERY row the list can
+                        contain. A bed reaches this state for three different
+                        reasons — crops sharing months, a share that is not a
+                        usable fraction, or a crop whose finish timing the app
+                        will not reason about — so the headline says only the
+                        thing all three have in common, and each row states its
+                        own reason underneath. */}
+                    <div className="font-sans mb-1.5" style={{ fontSize: 11.5, color: '#A83A2C', lineHeight: 1.45 }}>
+                      No kg or value total is shown because the space on these beds does not add up. Open a crop below and change its bed, month or share — the app will not guess which crop loses space.
+                    </div>
+                    {areaConflictDetails.map((conflict) => (
+                      <div key={conflict.bedId} className="mb-1.5">
+                        <div className="font-display font-semibold" style={{ fontSize: 12, color: '#20190F' }}>{conflict.bedLabel}</div>
+                        {conflict.plantings.map((row) => {
+                          const planting = plantings.find((p) => p.id === row.plantingId);
+                          const span = monthSpanLabel(row.months);
+                          const detail = row.reason === 'invalid-share'
+                            ? (Number.isFinite(row.areaFraction)
+                              ? `share recorded as ${Math.round(row.areaFraction * 100)}% of the bed`
+                              : 'no usable share recorded')
+                            : row.reason === 'unverified-timing'
+                              ? 'finish timing not verified, so its months cannot be checked'
+                              : [span, row.areaFraction < 1 ? `${Math.round(row.areaFraction * 100)}% of the bed` : '']
+                                .filter(Boolean).join(' · ');
+                          return (
+                            <button
+                              key={row.plantingId}
+                              onClick={() => { if (planting) setActivePlanting(planting); }}
+                              disabled={!planting}
+                              className="w-full flex items-center justify-between font-sans text-left rounded-lg px-2 py-1 mt-0.5"
+                              style={{
+                                fontSize: 12, color: '#5C5040', background: '#FBF3F0',
+                                border: '1px solid #E8CFC7', cursor: planting ? 'pointer' : 'default',
+                              }}
+                            >
+                              <span>
+                                <CropIcon cropKey={row.cropKey} icon={cropByKey(row.cropKey)?.icon ?? '🌱'} size={14} /> {row.cropName}
+                                {detail ? <span style={{ color: '#8C7A62' }}> · {detail}</span> : null}
+                              </span>
+                              <span className="font-sans" style={{ fontSize: 11, color: '#A83A2C' }}>Open ›</span>
+                            </button>
+                          );
+                        })}
+                      </div>
+                    ))}
                   </div>
                 )}
                 {hasKnownYield && (
@@ -1423,39 +1543,40 @@ function FacilitatorCropsPageInner() {
             {/* Seed BOQ + year-ahead report */}
             <div className="grid gap-4 mt-4" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
               <div className="rounded-2xl p-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-                <div className="font-display font-semibold mb-2" style={{ fontSize: 15, color: '#20190F' }}>🌱 Seeds & seedlings — and how to sow them</div>
-                <div className="space-y-2">
-                  {seedBoq.map((row) => {
-                    const crop = cropByKey(row.cropKey);
-                    return (
-                      <div key={row.cropKey} className="pb-2" style={{ borderBottom: '1px solid #F0EAD8' }}>
-                        <div className="flex items-center justify-between font-sans" style={{ fontSize: 13, color: '#5C5040' }}>
-                          <span><CropIcon cropKey={row.cropKey} icon={row.icon} size={14} /> {row.cropName}</span>
-                          <span className="font-mono text-right" style={{ color: '#20190F' }}>
-                            {row.quantityStatus === 'spacing-confirmation-required'
-                              ? 'confirm spacing first'
-                              : row.quantityStatus === 'packet-rate-required'
-                                ? 'packet rate needed'
-                                : row.quantityStatus === 'counted-piece-range' && row.countRange
-                                  ? `~${positionRangeLabel(row.countRange)} ${row.unit} positions`
-                                  : row.count === null
-                                    ? 'confirm quantity'
-                                    : `~${row.count.toLocaleString('en-ZA')} ${row.unit} positions`}
-                          </span>
-                        </div>
-                        {crop && (
-                          <div className="font-sans mt-0.5 flex items-center gap-1" style={{ fontSize: 11, color: '#8C7A62' }}>
-                            <SeedBadge transplant={!!crop.transplant} />
-                            <span>
-                              {crop.transplant ? 'transplant' : 'direct-sow'} · {sowingInstruction(crop)}
-                              {row.quantityStatus === 'packet-rate-required' ? ` · ~${positionRangeLabel(row.finalPlantPositionsRange)} final plant positions` : ''}
-                            </span>
-                          </div>
-                        )}
+                <div className="font-display font-semibold" style={{ fontSize: 15, color: '#20190F' }}>🌱 Seeds &amp; seedlings — what to buy, and when</div>
+                <p className="font-sans mb-2 mt-0.5" style={{ fontSize: 11.5, color: '#8C7A62', lineHeight: 1.4 }}>
+                  {/* The subtitle must not promise which month comes first:
+                      buildBuyingSchedule drops months with nothing to buy, so
+                      the first block is frequently a later one. The month
+                      headings say which months these actually are. */}
+                  Grouped by the month to get it. Ready-grown seedlings are listed for the month they go in the ground.
+                </p>
+                {/* Was one flat alphabetical list of every crop in the plan — the
+                    same aggregate the PDF stopped printing. buildBuyingSchedule
+                    is the calendar the printed plan already uses, including the
+                    buy-seedlings-at-planting-month distinction, so the screen and
+                    the paper now say the same thing in the same order. */}
+                <div className="space-y-3">
+                  {buyingSchedule.slice(0, VISIBLE_BUYING_MONTHS).map((monthGroup) => (
+                    <BuyingMonthBlock key={monthGroup.month} monthGroup={monthGroup} isNow={monthGroup.month === currentMonth} />
+                  ))}
+                  {buyingSchedule.length > VISIBLE_BUYING_MONTHS && (
+                    <details className="rounded-xl px-3 py-2" style={{ border: '1px solid #E2D8C4', background: '#FBF6EC' }}>
+                      <summary className="font-display font-semibold" style={{ fontSize: 12.5, color: '#1F4D2B', cursor: 'pointer' }}>
+                        {/* The schedule is a ROLLING twelve months from this
+                            one (rollingMonths), so for any plan opened after
+                            about March "later in the year" named the wrong
+                            year for half these months. */}
+                        Later in the next 12 months ({buyingSchedule.length - VISIBLE_BUYING_MONTHS} more {buyingSchedule.length - VISIBLE_BUYING_MONTHS === 1 ? 'month' : 'months'})
+                      </summary>
+                      <div className="space-y-3 mt-2">
+                        {buyingSchedule.slice(VISIBLE_BUYING_MONTHS).map((monthGroup) => (
+                          <BuyingMonthBlock key={monthGroup.month} monthGroup={monthGroup} isNow={false} />
+                        ))}
                       </div>
-                    );
-                  })}
-                  {seedBoq.length === 0 && (
+                    </details>
+                  )}
+                  {buyingSchedule.length === 0 && (
                     <div className="font-sans" style={{ fontSize: 12, color: '#8C7A62' }}>Nothing new to buy yet.</div>
                   )}
                 </div>
@@ -1482,8 +1603,14 @@ function FacilitatorCropsPageInner() {
               </div>
             </div>
 
-            <div className="rounded-2xl p-4 mt-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-              <div className="font-display font-semibold mb-2" style={{ fontSize: 15, color: '#20190F' }}>🔎 What the planner can prove</div>
+            <DisclosureCard
+              title="🔎 What the planner can prove"
+              // The card collapses; the CLAIM does not. This line is always on
+              // screen, so the honesty statement itself is what a farmer reads
+              // at a glance and the eleven sentences of method sit behind the
+              // tap — rather than the claim going behind it too.
+              summary="Every yield figure and date here is either from a published source or labelled as an estimate to confirm locally — tap for the method and the sources."
+            >
               <p className="font-sans mb-2" style={{ fontSize: 12.5, color: '#5C5040', lineHeight: 1.5 }}>
                 Yield points use the conservative end of published commercial KZN benchmarks where that crop is
                 listed. They compare plans; they do not predict this household&apos;s harvest. The warm/light-frost
@@ -1506,7 +1633,7 @@ function FacilitatorCropsPageInner() {
                 <a href="https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/length_of_growing_period.pdf" target="_blank" rel="noopener noreferrer" style={{ color: '#1F4D2B', textDecoration: 'underline' }}>growing and picking periods</a>, and{' '}
                 <a href="https://www.kzndard.gov.za/images/Documents/Horticulture/Veg_prod/successional_cropping.pdf" target="_blank" rel="noopener noreferrer" style={{ color: '#1F4D2B', textDecoration: 'underline' }}>succession limits and farmer choice</a>.
               </p>
-            </div>
+            </DisclosureCard>
 
             <RotationExplanationCard />
             <OrganicGuideCard />
@@ -1530,7 +1657,7 @@ function FacilitatorCropsPageInner() {
           onFraction={setPickerFraction}
           existing={pickerExisting}
           onExisting={setPickerExisting}
-          overlap={pickerOverlap}
+          overlapWarning={pickerOverlapWarning}
           hasUnverifiedTiming={pickerHasUnverifiedTiming}
           isEditing={!!editingPlantingId}
           favouriteCropKeys={favouriteCropKeys}
@@ -1572,6 +1699,7 @@ function FacilitatorCropsPageInner() {
           allowVinesInBeds={aAllowVinesInBeds} onAllowVinesInBeds={setAAllowVinesInBeds}
           allowMixedCropsInBed={aAllowMixedCropsInBed} onAllowMixedCropsInBed={setAAllowMixedCropsInBed}
           reliableIrrigation={aReliableIrrigation} onReliableIrrigation={setAReliableIrrigation}
+          siteClimate={siteClimate}
           result={autoResult}
           onGenerate={runAutoSuggest}
           onAccept={acceptAutoSuggest}
@@ -1924,10 +2052,45 @@ function FoodAvailabilityChart({
   );
 }
 
-function RotationExplanationCard() {
+/**
+ * A reference card that opens when the farmer wants it. Same collapsed-by-
+ * default behaviour as the Feeding/Protecting sections below, applied to the
+ * two long reference cards that were permanently expanded: on a phone they put
+ * ten-odd sentences of caveat between the plan and the rest of the page. The
+ * always-visible summary line says what is inside, so nothing is hidden — no
+ * text is removed, it is one tap away.
+ */
+function DisclosureCard({ title, summary, children }: {
+  title: string;
+  summary: string;
+  children: ReactNode;
+}) {
+  const [open, setOpen] = useState(false);
   return (
     <div className="rounded-2xl p-4 mt-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-      <div className="font-display font-semibold mb-2" style={{ fontSize: 15, color: '#20190F' }}>🔄 Rotate by botanical family</div>
+      <button
+        onClick={() => setOpen((o) => !o)}
+        aria-expanded={open}
+        className="w-full flex items-center justify-between gap-2 text-left"
+        style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+      >
+        <span>
+          <span className="font-display font-semibold block" style={{ fontSize: 15, color: '#20190F' }}>{title}</span>
+          <span className="font-sans block mt-0.5" style={{ fontSize: 11.5, color: '#8C7A62', lineHeight: 1.4 }}>{summary}</span>
+        </span>
+        <span style={{ fontSize: 14, color: '#5C5040' }}>{open ? '▾' : '▸'}</span>
+      </button>
+      {open && <div className="mt-3">{children}</div>}
+    </div>
+  );
+}
+
+function RotationExplanationCard() {
+  return (
+    <DisclosureCard
+      title="🔄 Rotate by botanical family"
+      summary="Which crops count as relatives, and why that is not the same as a food group."
+    >
       <p className="font-sans mb-3" style={{ fontSize: 12.5, color: '#5C5040', lineHeight: 1.5 }}>
         Food groups describe what a household eats; rotation follows plant relatives that share pests and
         diseases. With &quot;Rotate crops&quot; on, Auto-suggest avoids an immediate repeat of the same family — for
@@ -1941,7 +2104,7 @@ function RotationExplanationCard() {
           return <div key={family}><strong style={{ color: '#20190F' }}>{meta.label}:</strong> {names}</div>;
         })}
       </div>
-    </div>
+    </DisclosureCard>
   );
 }
 
@@ -2244,7 +2407,7 @@ function PlantingBar({ planting, currentMonth, onTap }: { planting: Planting; cu
 // ── Crop picker modal ────────────────────────────────────────────────────
 
 function CropPickerModal({
-  search, onSearch, crop, month, pattern, fraction, onFraction, existing, onExisting, overlap, hasUnverifiedTiming,
+  search, onSearch, crop, month, pattern, fraction, onFraction, existing, onExisting, overlapWarning, hasUnverifiedTiming,
   isEditing, favouriteCropKeys, onToggleFavourite, allowBedSharing, onEnableBedSharing, onPick, onBack, onMonth, onConfirm, onClose,
   isPlot,
 }: {
@@ -2257,7 +2420,8 @@ function CropPickerModal({
   onFraction: (f: number) => void;
   existing: boolean;
   onExisting: (v: boolean) => void;
-  overlap: number;
+  /** Null when the bed can carry this planting alongside what is already there. */
+  overlapWarning: BedOverlapWarning | null;
   hasUnverifiedTiming: boolean;
   isEditing: boolean;
   favouriteCropKeys: Set<string>;
@@ -2483,11 +2647,6 @@ function CropPickerModal({
                     </button>
                   ))}
                 </div>
-                {overlap + fraction > 1.001 && (
-                  <div className="font-sans mb-2" style={{ fontSize: 11, color: '#9A6018' }}>
-                    ⚠ This bed already has {Math.round(overlap * 100)}% committed to other crops over this period — {Math.round((overlap + fraction) * 100)}% total is more than the bed. Still allowed, but they'll compete for space.
-                  </div>
-                )}
               </>
             ) : (
               // Off by default — splitting/intercropping a bed needs a bit of
@@ -2506,9 +2665,43 @@ function CropPickerModal({
               </div>
             )}
 
+            {/* Outside the fraction branch on purpose: the DEFAULT add is a whole
+                bed, which shows no fraction picker, and used to get no capacity
+                feedback at all. Plain words first, arithmetic in brackets after —
+                this screen is read by farmers, not by a spreadsheet. */}
+            {overlapWarning && crop && (
+              <div className="font-sans mb-2" style={{ fontSize: 11.5, color: '#9A6018', lineHeight: 1.45 }}>
+                {/* A staple plot reaches this too — "+ crop" is unconditional on
+                    every row, and two whole-plot crops in the same months is
+                    exactly the double-booking a plot most needs told about. So
+                    it gets its own wording rather than being called a bed four
+                    lines under "there are no half-shares here", and no
+                    percentage: on a plot the answer is never a share. */}
+                ⚠ This {isPlot ? 'plot' : 'bed'} is already carrying {listNames(overlapWarning.clashes.map((clash) => (
+                  clash.months.length > 0 ? `${clash.cropName} in ${monthSpanLabel(clash.months)}` : clash.cropName
+                )))}
+                {' — '}adding {crop.name}{isPlot ? '' : fraction >= 1 ? ' to the whole bed' : ' on top of that'} means
+                they compete for the same ground{isPlot ? ', and a staple plot grows one field crop at a time' : ''}. Still allowed.
+                {isPlot ? null : (
+                  <>
+                    {' '}
+                    <span style={{ color: '#8C7A62' }}>
+                      (Together they need {Math.round(overlapWarning.totalFraction * 100)}% of the bed.)
+                    </span>
+                  </>
+                )}
+              </div>
+            )}
+
             {hasUnverifiedTiming && (
               <div className="font-sans mb-2" style={{ fontSize: 11, color: '#9A6018' }}>
-                ⚠ This bed has a legacy crop whose finish timing is not verified. It is excluded from the percentage above; check that the ground is actually free before adding another crop.
+                {/* "the space check above" is only a real reference when the
+                    overlap warning actually rendered — with no overlap it
+                    pointed at nothing on screen. */}
+                ⚠ This {isPlot ? 'plot' : 'bed'} has a legacy crop whose finish timing is not verified.{' '}
+                {overlapWarning
+                  ? 'It is left out of the space check above; check that the ground is actually free before adding another crop.'
+                  : 'The app cannot tell whether it still holds this ground, so check that the ground is actually free before adding another crop.'}
               </div>
             )}
 
@@ -2659,7 +2852,7 @@ function AutoSuggestModal({
   phase, goal, onGoal, focusCount, onFocusCount,
   groups, onToggleGroup, cropKeys, onToggleCrop, onSetCrops, rhythm, onRhythm, pattern, climateSource, referenceName, rotateCrops, onRotateCrops,
   allowVinesInBeds, onAllowVinesInBeds, allowMixedCropsInBed, onAllowMixedCropsInBed, reliableIrrigation, onReliableIrrigation,
-  result, onGenerate, onAccept, onBackToQuestions, onClose,
+  siteClimate, result, onGenerate, onAccept, onBackToQuestions, onClose,
 }: {
   phase: 'questions' | 'review';
   goal: GardenGoal; onGoal: (g: GardenGoal) => void;
@@ -2676,6 +2869,9 @@ function AutoSuggestModal({
   allowVinesInBeds: boolean; onAllowVinesInBeds: (v: boolean) => void;
   allowMixedCropsInBed: boolean; onAllowMixedCropsInBed: (v: boolean) => void;
   reliableIrrigation: boolean; onReliableIrrigation: (v: boolean) => void;
+  /** The site's own monthly climate, when it resolved. Null keeps the irrigation
+   * question generic rather than quoting a reference region's rain as this site's. */
+  siteClimate: SiteClimate | null;
   result: AutoSuggestResult | null;
   onGenerate: () => void; onAccept: () => void; onBackToQuestions: () => void; onClose: () => void;
 }) {
@@ -2900,26 +3096,69 @@ function AutoSuggestModal({
               </span>
             </button>
 
+            {/* The site's OWN driest months, in its own numbers — the page already
+                resolves this record and was throwing everything but the pattern
+                away. Descriptive only: rainfall as recorded, no water requirement
+                and no evaporation maths invented on top of it. */}
+            {(() => {
+              const driest = siteClimate ? driestMonths(siteClimate.monthlyRainMm, 3) : [];
+              if (driest.length === 0) return null;
+              return (
+                <div className="rounded-xl px-3 py-2.5" style={{ background: '#F3F6FA', border: '1px solid #C2CEDC' }}>
+                  <div className="font-sans uppercase tracking-widest mb-1" style={{ fontSize: 10, color: '#5D6B7C', letterSpacing: '0.08em' }}>Your driest months</div>
+                  <p className="font-sans" style={{ fontSize: 12, color: '#3E4A57', lineHeight: 1.45 }}>
+                    This site gets about {driest.map((m) => Math.round(m.rainMm)).join(' / ')} mm of rain
+                    in {driest.map((m) => monthLabel(m.month)).join(' / ')} — its three driest months
+                    (satellite record for this location).
+                  </p>
+                  <p className="font-sans mt-1" style={{ fontSize: 12, color: '#3E4A57', lineHeight: 1.45 }}>
+                    “Reliable irrigation” means your water, not the rain, carries every crop through months like these.
+                  </p>
+                </div>
+              );
+            })()}
+
             <p className="font-mono" style={{ fontSize: 10.5, color: '#9A8268', lineHeight: 1.45 }}>
               {allowMixedCropsInBed
                 ? 'Auto-suggest will use only full, half, third or quarter-bed sections. It does not claim a globally maximum plan or invent an exact row layout.'
                 : 'Whole-bed mode is on. Short blank periods can remain between full-bed crop cycles because the planner will not overlap two different crops in one bed.'}
             </p>
 
-            <button
-              onClick={onGenerate}
-              disabled={(goal !== 'family' && cropKeys.length === 0) || !reliableIrrigation}
-              className="w-full font-display font-semibold rounded-xl py-2.5"
-              style={{
-                fontSize: 14,
-                background: (goal === 'family' || cropKeys.length > 0) && reliableIrrigation ? '#1F4D2B' : '#D8D3C9',
-                color: (goal === 'family' || cropKeys.length > 0) && reliableIrrigation ? '#F7F2E9' : '#81796D',
-                border: 'none',
-                cursor: (goal === 'family' || cropKeys.length > 0) && reliableIrrigation ? 'pointer' : 'not-allowed',
-              }}
-            >
-              ✨ Suggest a plan
-            </button>
+            {/* WHY THE BUTTON IS GREY. Both gates are deliberate, but neither
+                said anything: tapping a dead button just did nothing. The
+                irrigation gate stays on — it is an honesty gate, not a default
+                to soften — so the fix is to say what to tap, not to pre-tick it. */}
+            {(() => {
+              const needsCrops = goal !== 'family' && cropKeys.length === 0;
+              const blockers = [
+                needsCrops ? 'Pick at least one crop above before the planner can suggest anything.' : null,
+                reliableIrrigation
+                  ? null
+                  : 'Turn on “Reliable irrigation for every crop cycle” above to generate a plan. This plan packs crop cycles back to back, so it only holds if you can water them through.',
+              ].filter((line): line is string => line !== null);
+              const canGenerate = blockers.length === 0;
+              return (
+                <>
+                  <button
+                    onClick={onGenerate}
+                    disabled={!canGenerate}
+                    className="w-full font-display font-semibold rounded-xl py-2.5"
+                    style={{
+                      fontSize: 14,
+                      background: canGenerate ? '#1F4D2B' : '#D8D3C9',
+                      color: canGenerate ? '#F7F2E9' : '#81796D',
+                      border: 'none',
+                      cursor: canGenerate ? 'pointer' : 'not-allowed',
+                    }}
+                  >
+                    ✨ Suggest a plan
+                  </button>
+                  {blockers.map((line) => (
+                    <p key={line} className="font-sans mt-1.5" style={{ fontSize: 12, color: '#9A6018', lineHeight: 1.45 }}>{line}</p>
+                  ))}
+                </>
+              );
+            })()}
           </div>
         ) : (
           <div className="p-4 space-y-3">

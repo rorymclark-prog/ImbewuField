@@ -59,6 +59,24 @@ test('the pages that hand the corner to something else still opt out entirely', 
   assert.doesNotMatch(skipBlock, /\/farmer/, 'Lima should move on the map, not disappear from it');
 });
 
+test('Lima\'s launcher stays off the crop plan\'s left-aligned content', () => {
+  // Same 12 August complaint, a different page. /facilitator/crops draws every
+  // section heading, the Availability tab, the benchmark kg headline and every
+  // task line flush LEFT, so the shared bottom-left default parked the FAB on
+  // top of them at 375px. That page docks nothing to the bottom-right — its
+  // only fixed elements are full-screen modal overlays — so the fix is a
+  // route-specific corner rather than another exclusion.
+  const widget = source('../components/ChatWidget.tsx');
+  const cropsDefault = widget.match(/pathname\.startsWith\('\/facilitator\/crops'\)\s*\n?\s*\?\s*'bottom-\[\d+px\] (left|right)-4/);
+  assert.ok(cropsDefault, 'ChatWidget no longer gives /facilitator/crops its own default position');
+  assert.equal(cropsDefault[1], 'right', 'the crop plan\'s content is left-aligned — the FAB must not park on it');
+
+  // It must MOVE, not vanish: the plan page is exactly where a farmer wants to ask.
+  const skipAt = widget.indexOf("pathname.startsWith('/gate')");
+  const skipBlock = widget.slice(skipAt, skipAt + 260);
+  assert.doesNotMatch(skipBlock, /facilitator/, 'Lima should move on the crop plan, not disappear from it');
+});
+
 test('the FAB still gets out of the way while a boundary is being drawn', () => {
   // The draw action bar takes the whole bottom strip, so the FAB hides rather than shifts. This
   // already worked; it is here so a positioning change cannot quietly cost it.
