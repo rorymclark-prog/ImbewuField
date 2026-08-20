@@ -34,6 +34,17 @@ export interface ReleaseNote {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '20 August (evening)',
+    sha: 'eb1fe7a',
+    changes: [
+      'The whole-year plan now adds one-off starter sowings to cover your first bare months',
+      'Those rows are marked "first season only" — on screen, in the PDF and in the report',
+      'A bed or plot is no longer shown carrying more crops at once than it has room for',
+      'A starter raised in trays keeps its planting-out job and seedling list for that month',
+      'A plot no longer gets two main crops sown over each other in its first season',
+    ],
+  },
+  {
     when: '20 August',
     sha: '5187094',
     changes: [
