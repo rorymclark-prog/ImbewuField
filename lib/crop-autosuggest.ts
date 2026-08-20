@@ -1991,7 +1991,9 @@ export interface FirstSeasonFill {
  *    staple course only accepts a winter cover here, so a starter can never
  *    spend a staple course the rotation needs later (most plot holes are
  *    2–4 months while the shortest staple needs 5 — they honestly rest,
- *    and the note below says so rather than papering over it);
+ *    and the note below says so rather than papering over it), and a starter
+ *    that spends a courseless plot's one course claims it here too, so the
+ *    same rule holds for the rest of this pass;
  *  - rotation is enforced against real history AND the upcoming cycle via
  *    the same BedRotation/rotationLegalTiered machinery;
  *  - occupancy uses the same bed-hold arithmetic as the printed occupancy
@@ -2036,6 +2038,8 @@ export function fillFirstSeasonGaps(
   const exactFallbackFamily = exactFamilies.size === 1 ? [...exactFamilies][0] : null;
 
   // A plot whose cycle already carries a planting has its courses spoken for.
+  // Starters claim into this set as they land, so the placement loop below must
+  // read it every turn — it is a live tally, not a snapshot.
   const plotKinds = new Map(beds.map((bed) => [bed.id, bed.kind]));
   const plotsWithCourse = new Set(
     cyclePlantings.filter((p) => plotKinds.get(p.bedId) === 'plot').map((p) => p.bedId),
@@ -2093,7 +2097,6 @@ export function fillFirstSeasonGaps(
 
   for (const bed of beds) {
     if (unfillableBeds.has(bed.id)) continue;
-    const bedPool = poolForBed(bed, pool, answers.allowVinesInBeds, plotsWithCourse, strictCropKeys);
     let ledger = occupiedByBed.get(bed.id);
     if (!ledger) { ledger = Array<boolean>(HORIZON).fill(false); occupiedByBed.set(bed.id, ledger); }
     const occupied = ledger;
@@ -2101,6 +2104,14 @@ export function fillFirstSeasonGaps(
     // until nothing legal fits. Each placement occupies ≥1 offset, so this
     // terminates within the horizon.
     for (;;) {
+      // Re-derived every turn: a starter that spends this plot's staple course
+      // below must narrow the pool to covers for the next turn. Hoisted out of
+      // this loop it was a snapshot taken before any starter landed, so a
+      // courseless plot kept drawing on the full staple pool turn after turn and
+      // could spend TWO courses (measured: potato Aug + dry beans Jan; and with
+      // rotation off, potato twice over) — the exact spend poolForBed's own
+      // comment exists to prevent.
+      const bedPool = poolForBed(bed, pool, answers.allowVinesInBeds, plotsWithCourse, strictCropKeys);
       const candidates = bedPool
         .flatMap((crop) => [...new Set(crop.sowMonths[pattern] ?? [])].map((sowMonth) => ({ crop, sowMonth })))
         .filter((candidate) => supportsAutomaticPlacement(candidate.crop, bed))
@@ -2143,6 +2154,13 @@ export function fillFirstSeasonGaps(
       // A starter is one-time, so it is recorded as one real course rather than
       // an annually repeating one — see recordOnceUse.
       rotation.recordOnceUse(bed.id, chosen.crop, chosen.sowMonth);
+      // ONE COURSE PER PLOT, starters included. rotationLegalTiered only bars a
+      // FAMILY repeat, so nothing stopped two unlike courses on one courseless
+      // plot. A winter cover is NOT a course and must not claim: the sort above
+      // deliberately lets the cover take the slot first, so claiming on any
+      // starter would cost the plot the one food course it is still owed
+      // (measured: 96 of 144 configs drop to zero food courses under that rule).
+      if (bed.kind === 'plot' && stapleCourseOf(chosen.crop)) plotsWithCourse.add(bed.id);
       starters.push({
         id: `auto:starter:${encodeURIComponent(bed.id)}:${encodeURIComponent(chosen.crop.key)}:${chosen.sowMonth}`,
         bedId: bed.id,

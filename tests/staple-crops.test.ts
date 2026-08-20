@@ -16,9 +16,10 @@ import {
   hasVerifiedFieldPlan,
   hasVerifiedSchedule,
 } from '@/lib/crop-catalog';
-import { occupiedMonthsForPlanting, type PlanBed } from '@/lib/crop-plan';
-import { autoSuggestPlan } from '@/lib/crop-autosuggest';
+import { occupiedMonthsForPlanting, type Planting, type PlanBed } from '@/lib/crop-plan';
+import { autoSuggestPlan, fillFirstSeasonGaps } from '@/lib/crop-autosuggest';
 import type { AutoSuggestAnswers } from '@/lib/crop-autosuggest';
+import { suggestIdealYearPlan } from '@/lib/crop-plan-ideal';
 import {
   STAPLE_CROPS_BY_COURSE,
   STAPLE_COURSE_SEQUENCE,
@@ -265,4 +266,104 @@ test('every automatic winter cover has verified timing and either food geometry 
       `${cover.key} has neither food-crop geometry nor a sourced cover-crop seed rate`,
     );
   }
+});
+
+// ---- fillFirstSeasonGaps: a courseless plot must never spend two staple ----
+// ---- courses across the starter-placement loop's turns --------------------
+//
+// The bug: bedPool (which narrows once a course is claimed) was computed ONCE
+// per bed before the placement loop, from a plotsWithCourse snapshot taken
+// before any starter had landed. A courseless plot could therefore be handed
+// a full staple pool on every turn of the loop and walk out with two staple
+// courses of one-time starters in a single first-season fill. The fix
+// re-derives bedPool inside the loop and has each landing starter claim the
+// plot's course the moment it commits, mirroring the main planner's own
+// plotsWithCourse predicate at its staple-claim site.
+
+const coursesOn = (rows: readonly Planting[], bedId: string): string[] => rows
+  .filter((r) => r.bedId === bedId)
+  .map((r) => stapleCourseOf(cropByKey(r.cropKey)!))
+  .filter(Boolean) as string[];
+
+const FILL_BEDS: PlanBed[] = [
+  { id: 'bed-1', label: 'Bed 1', areaM2: 9, minDimM: 1.5 },
+  { id: 'plot-1', label: 'Plot 1', areaM2: 120, minDimM: 8, kind: 'plot' },
+];
+const FILL_CYCLE: Planting[] = [{ id: 'c1', bedId: 'bed-1', cropKey: 'swiss-chard', sowMonth: 3 }];
+const FILL_ANSWERS: AutoSuggestAnswers = {
+  goal: 'family', groups: [], rhythm: 'few-big', rotateCrops: true,
+  allowVinesInBeds: false, allowMixedCropsInBed: true, reliableIrrigation: true,
+};
+
+test('a starter never spends a second staple course on one plot', () => {
+  // BEFORE the fix this plot walked out with dry-beans@1[pulse] AND
+  // potato@8[tuber] — two staple courses of one-time starters from a single
+  // fill pass, because the hoisted bedPool never saw the first starter's
+  // claim. AFTER the fix it stops at the first course.
+  const fill = fillFirstSeasonGaps(
+    { ...FILL_ANSWERS, cropKeys: ['potato', 'dry-beans', 'swiss-chard'] },
+    'summer', FILL_BEDS, FILL_CYCLE, [], 1, 2026,
+  );
+  assert.deepEqual(coursesOn(fill.starters, 'plot-1'), ['pulse']);
+});
+
+test("a winter-cover starter leaves the plot's food course still to spend (anti-over-fix guard)", () => {
+  // This is the test that stops the next person over-fixing by claiming on
+  // ANY starter (cover included). A winter cover is not a course — the sort
+  // deliberately lets it take the slot first, and claiming on it too would
+  // cost the plot the one food course it is still owed. That ungated variant
+  // was measured to strip the food course in 96 of 144 configs; this pins the
+  // gated behaviour so nobody reintroduces the stripped variant later.
+  const fill = fillFirstSeasonGaps(
+    { ...FILL_ANSWERS, cropKeys: ['potato', 'dry-beans', 'swiss-chard', 'broad-beans', 'oats'] },
+    'summer', FILL_BEDS, FILL_CYCLE, [], 8, 2026,
+  );
+  const keys = fill.starters.filter((s) => s.bedId === 'plot-1').map((s) => s.cropKey);
+  assert.ok(keys.includes('broad-beans'), 'the plot still takes its winter cover');
+  assert.ok(keys.includes('potato'), "the cover must not cost the plot its food course");
+  assert.deepEqual(coursesOn(fill.starters, 'plot-1'), ['tuber']);
+});
+
+test('the whole-year plan never sows one plot twice over in its first year', () => {
+  // Same defect, reached through the real entry point (suggestIdealYearPlan)
+  // rather than a direct call, with rotation OFF so a future refactor cannot
+  // dismiss the failure as an artefact of the direct-call fixture.
+  const beds: PlanBed[] = [
+    { id: 'b1', label: 'Bed 1', areaM2: 12, minDimM: 1.2 },
+    { id: 'p1', label: 'Plot 1', areaM2: 110, minDimM: 8, kind: 'plot' },
+  ];
+  const existing: Planting[] = [{ id: 'e1', bedId: 'p1', cropKey: 'amadumbe', sowMonth: 11, existing: true }];
+  const ideal = suggestIdealYearPlan(
+    { ...FILL_ANSWERS, rotateCrops: false, cropKeys: ['potato', 'dry-beans', 'swiss-chard'] },
+    'all-year', beds, existing, 8, 2026,
+  );
+  const rows = ideal.best.result.plantings;
+  const cycleCourses = coursesOn(rows.filter((p) => typeof p.once !== 'string'), 'p1');
+  assert.equal(cycleCourses.length, 0, 'fixture drifted: p1 must reach the starter pass courseless');
+  assert.deepEqual(coursesOn(rows.filter((p) => typeof p.once === 'string'), 'p1'), ['tuber']);
+});
+
+test("a plot that spends its course on a starter may still take a catalog winter cover", () => {
+  // The deliberate, non-subtractive side effect: with broad food-group
+  // answers, poolForBed's covers branch draws from the whole catalog
+  // (plotWinterCovers(SCHEDULABLE_CROPS)), not the selected groups — the same
+  // branch a plot with a cycle course already takes. So once this courseless
+  // plot claims its course from the 'root_tuber' group, it also gains access
+  // to a legume winter cover the group answer never selected. Measured over
+  // 240 broad-food-group configs: 92 configs gained a starter this way, 11
+  // lost one (a second same-course starter no longer fits after the first
+  // claims the plot), 137 were unchanged. This is agronomically correct
+  // (cover crops are soil management, not an answer to the food-group
+  // question — see poolForBed's own comment) but must stay pinned so nobody
+  // "fixes" it back out as an unintended side effect of the bug fix.
+  const fill = fillFirstSeasonGaps(
+    { ...FILL_ANSWERS, groups: ['root_tuber'] },
+    'summer', FILL_BEDS, FILL_CYCLE, [], 5, 2026,
+  );
+  const keys = fill.starters.filter((s) => s.bedId === 'plot-1').map((s) => s.cropKey);
+  assert.deepEqual(coursesOn(fill.starters, 'plot-1'), ['tuber']);
+  assert.ok(
+    keys.some((k) => isPlotWinterCover(cropByKey(k)!)),
+    'a cover is soil management, not an answer to the food-group question',
+  );
 });
