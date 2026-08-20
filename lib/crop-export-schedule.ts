@@ -425,7 +425,7 @@ function buyingNote(
   if (transplant) {
     const quantity = quantityStatus === 'spacing-confirmation-required'
       ? 'Confirm the local row layout before deciding how many are needed. '
-      : `The mapped area holds about ${positionRangeLabel(finalPlantPositionsRange)} plants at the spacings on the packet. This is not a guaranteed seedling order and it allows nothing for plants that do not take; ask your supplier what they advise for this crop. `;
+      : `The mapped area holds about ${positionRangeLabel(finalPlantPositionsRange)} plants at the spacings this plan uses. This is not a guaranteed seedling order and it allows nothing for plants that do not take; ask your supplier what they advise for this crop. `;
     const fieldWindow = bedMonth === bedMonthLatest
       ? monthLong(bedMonth)
       : `${monthLong(bedMonth)}–${monthLong(bedMonthLatest)}`;
@@ -437,9 +437,9 @@ function buyingNote(
     return `Confirm a locally appropriate row layout before buying planting material; the catalog does not have both verified spacing axes needed for an exact quantity. Plan to establish it in ${monthLong(sowMonth)}.`;
   }
   if (unit !== 'seeds') {
-    return `Living planting material — the mapped area holds about ${positionRangeLabel(finalPlantPositionsRange)} ${unit} at the spacings on the packet. This is not a guaranteed buy quantity and it allows nothing for material that does not take; ask the supplier what they advise for this crop. Get it close to planting in ${monthLong(sowMonth)}, then follow the supplier's or your local handling advice. No general storage advice is assumed here.`;
+    return `Living planting material — the mapped area holds about ${positionRangeLabel(finalPlantPositionsRange)} ${unit} at the spacings this plan uses. This is not a guaranteed buy quantity and it allows nothing for material that does not take; ask the supplier what they advise for this crop. Get it close to planting in ${monthLong(sowMonth)}, then follow the supplier's or your local handling advice. No general storage advice is assumed here.`;
   }
-  return `Source packet seed before the ${monthLong(sowMonth)} sowing month. Sow straight into the ground in ${monthLong(sowMonth)} for about ${positionRangeLabel(finalPlantPositionsRange)} plants at the spacings on the packet. `
+  return `Source packet seed before the ${monthLong(sowMonth)} sowing month. Sow straight into the ground in ${monthLong(sowMonth)} for about ${positionRangeLabel(finalPlantPositionsRange)} plants at the spacings this plan uses. `
     + `Use the packet's crop-specific direct-sowing rate and germination guidance; field spacing alone cannot tell you how much seed to buy.`;
 }
 

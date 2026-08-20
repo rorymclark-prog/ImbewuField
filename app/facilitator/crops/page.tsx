@@ -3164,7 +3164,7 @@ function AutoSuggestModal({
           <div className="p-4 space-y-3">
             {!result || result.plantings.length === 0 ? (
               <p className="font-sans" style={{ fontSize: 13, color: '#5C5040' }}>
-                Nothing fit this time — your beds may already be full, or the exact crops you picked have no supported slot that fits. Review the climate choice or crop list, or check "Later this year" below.
+                Nothing fit this time — your beds may already be full, or the exact crops you picked have no supported slot that fits. Review the climate choice or crop list, or check "Waiting for their sowing window" below.
               </p>
             ) : (
               <>
@@ -3254,7 +3254,7 @@ function AutoSuggestModal({
                 {result.laterThisYear.map((l) => {
                   const crop = cropByKey(l.cropKey);
                   return (
-                    <div key={l.cropKey} style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                    <div key={l.cropKey} style={{ display: 'flex', alignItems: 'flex-start', gap: 4 }}>
                       {crop && <CropIcon cropKey={l.cropKey} icon={crop.icon} size={14} />} {l.text}
                     </div>
                   );

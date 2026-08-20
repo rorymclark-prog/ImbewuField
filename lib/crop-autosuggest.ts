@@ -164,7 +164,7 @@ export interface LaterThisYearEntry {
 export const PLAN_NOTES_PANEL_COPY = {
   gapsHeading: 'Ground with no new sowing',
   basisHeading: 'How this plan was made',
-  laterHeading: 'Later this year',
+  laterHeading: 'Waiting for their sowing window',
   /** Deliberately promises NOTHING about room: some entries below are crops
    * whose window opens into a plan that is already committed that month. */
   laterSubtitle: 'Crops you chose that this plan does not sow yet, and when the next real chance comes.',
