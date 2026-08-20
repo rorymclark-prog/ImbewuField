@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs';
 import test from 'node:test';
 
 import { cropByKey, plantSpacingRangeCm, plantsPerM2Range } from '@/lib/crop-catalog';
-import { buildFieldUtilizationByMonth, buildFoodAvailability, buildYearReport, seedBoqForPlan, tasksForPlan, type PlanBed, type Planting } from '@/lib/crop-plan';
+import { buildFieldUtilizationByMonth, buildFoodAvailability, buildYearReport, seedBoqForPlan, settleOnceRows, tasksForPlan, type PlanBed, type Planting } from '@/lib/crop-plan';
 import { buildFieldSheet, buildOccupancyCalendar, buildPlanDashboard, buildPlanTableRows } from '@/lib/crop-export-benchmark';
 import {
   bedShareLabel,
@@ -567,6 +567,54 @@ test('already-growing crops are not on the shopping list', () => {
 test('an all-existing plan produces an empty schedule rather than a phantom shopping trip', () => {
   const allExisting = PLANTINGS.map((p) => ({ ...p, existing: true }));
   assert.deepEqual(buildBuyingSchedule(allExisting, BEDS, NOW_MONTH), []);
+});
+
+// ── a settled nursery cohort's seedling line survives into its own month ────
+//
+// A settled one-time starter still holding its `inNursery` stamp is a farmer
+// exception to "already-growing crops are not on the shopping list" above:
+// its trays are sown, but the ready-grown-seedling purchase is still ahead.
+
+const NURSERY_BED: PlanBed[] = [{ id: 'b1', label: 'Bed 1', areaM2: 20 }];
+
+test('a seedling line survives into the month it is staged for', () => {
+  const starter: Planting = { id: 's1', bedId: 'b1', cropKey: 'cabbage', sowMonth: 9, once: '2026-09' };
+  const nur = settleOnceRows([starter], 2026, 10)[0];
+
+  const octSchedule = buildBuyingSchedule([nur], NURSERY_BED, 10);
+  const items = octSchedule.flatMap((m) => m.items);
+  assert.equal(items.length, 1, 'BEFORE this fix: 0 — the schedule was empty');
+  assert.equal(items[0].cropKey, 'cabbage');
+  assert.equal(items[0].unit, 'seedlings');
+  assert.equal(items[0].buyMonth, 10);
+  assert.deepEqual(items[0].countRange, [74, 115]);
+  assert.equal(octSchedule[0].month, 10, 'filed in THIS October, not eleven months out');
+
+  // And it is gone the month after, same as the task list.
+  const nov = settleOnceRows([starter], 2026, 11);
+  assert.deepEqual(buildBuyingSchedule(nov, NURSERY_BED, 11), []);
+});
+
+test('a nursery line does not tell the farmer to buy seed for a month that has gone', () => {
+  const starter: Planting = { id: 's1', bedId: 'b1', cropKey: 'cabbage', sowMonth: 9, once: '2026-09' };
+  const nur = settleOnceRows([starter], 2026, 10)[0];
+  const items = buildBuyingSchedule([nur], NURSERY_BED, 10).flatMap((m) => m.items);
+  assert.equal(items.length, 1);
+  assert.ok(!items[0].note.includes('Raising your own'));
+  assert.ok(items[0].note.includes("tray-sowing month (September) has passed"));
+  assert.ok(items[0].note.includes('planning window is October–December'));
+});
+
+test('the quantity does not change when the row settles — only the note does', () => {
+  const starter: Planting = { id: 's1', bedId: 'b1', cropKey: 'cabbage', sowMonth: 9, once: '2026-09' };
+  const sepItems = buildBuyingSchedule(settleOnceRows([starter], 2026, 9), NURSERY_BED, 9).flatMap((m) => m.items);
+  const octItems = buildBuyingSchedule(settleOnceRows([starter], 2026, 10), NURSERY_BED, 10).flatMap((m) => m.items);
+  assert.equal(sepItems.length, 1);
+  assert.equal(octItems.length, 1);
+  assert.equal(sepItems[0].count, octItems[0].count);
+  assert.deepEqual(sepItems[0].countRange, octItems[0].countRange);
+  assert.equal(sepItems[0].buyMonth, octItems[0].buyMonth);
+  assert.notEqual(sepItems[0].note, octItems[0].note, 'the tray-sowing month has now passed');
 });
 
 test('a planting on a bed that no longer exists is skipped, not crashed on', () => {

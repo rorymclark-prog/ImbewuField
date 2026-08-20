@@ -39,6 +39,7 @@ import {
   planningMaturityMonths,
   recurringPlanPlantings,
   restampEditedOnce,
+  seedBoqBatchesForPlan,
   seedBoqForPlan,
   settleOnceRows,
   taskMonthsFromNow,
@@ -1082,4 +1083,140 @@ test('editing a starter into next year, or marking it already growing, both stay
   const plain: Planting = { id: 'p', bedId: 'b', cropKey: 'kale', sowMonth: 4 };
   assert.deepEqual(restampEditedOnce(plain, 2026, 10), plain);
   assert.deepEqual(restampEditedOnce({ ...plain, existing: true }, 2026, 10), { ...plain, existing: true });
+});
+
+// ── settled nursery cohorts: `inNursery` closes the sow+1 gap ───────────────
+//
+// A settled `once` transplant row (existing:true) loses its transplant job
+// and its seedling purchase in exactly the month it needs them, because
+// `existing` was overloaded to mean both "the sowing is done" and "every
+// establishment job is done". `inNursery` splits that second meaning off:
+// the tray sowing is history, the field entry is not, for exactly one month.
+
+const NURSERY_BED: PlanBed[] = [{ id: 'b1', label: 'Bed 1', areaM2: 20 }];
+
+test('a settled transplant starter keeps the transplant job it settles ON, and loses it the month after', () => {
+  const starter: Planting = { id: 's1', bedId: 'b1', cropKey: 'cabbage', sowMonth: 9, once: '2026-09' };
+
+  const oct = settleOnceRows([starter], 2026, 10)[0];
+  assert.equal(oct.existing, true);
+  assert.equal(oct.inNursery, '2026-09');
+  assert.ok(!('once' in oct), 'the once stamp is still consumed on settling');
+
+  const t = tasksForPlan([oct], NURSERY_BED, 10);
+  assert.deepEqual(t.map((x) => x.action), ['transplant', 'harvest'], 'BEFORE this fix: [\'harvest\'] alone');
+  assert.equal(t[0].month, 10);
+  assert.equal(taskMonthsFromNow(t[0], 10), 0);
+
+  // And it is gone the month after — no overdue state anywhere in this app.
+  const nov = settleOnceRows([starter], 2026, 11)[0];
+  assert.equal(nov.inNursery, undefined);
+  assert.ok(!tasksForPlan([nov], NURSERY_BED, 11).some((x) => x.action === 'transplant'));
+});
+
+test('the transplant job keeps its identity across the settle boundary, so a completion tick survives it', () => {
+  const starter: Planting = { id: 's1', bedId: 'b1', cropKey: 'cabbage', sowMonth: 9, once: '2026-09' };
+  const sep = tasksForPlan(settleOnceRows([starter], 2026, 9), NURSERY_BED, 9).find((x) => x.action === 'transplant')!;
+  const oct = tasksForPlan(settleOnceRows([starter], 2026, 10), NURSERY_BED, 10).find((x) => x.action === 'transplant')!;
+  assert.equal(sep.id, oct.id);
+  assert.equal(sep.id, 's1:transplant');
+  assert.equal(sep.month, oct.month);
+  assert.equal(taskMonthsFromNow(sep, 9), 1);
+  assert.equal(taskMonthsFromNow(oct, 10), 0);
+});
+
+test('a direct-sown starter\'s settle boundary does not move — no inNursery state exists for it', () => {
+  const direct: Planting = { id: 'd1', bedId: 'b1', cropKey: 'carrots', sowMonth: 9, once: '2026-09' };
+  assert.deepEqual(
+    settleOnceRows([direct], 2026, 10),
+    [{ id: 'd1', bedId: 'b1', cropKey: 'carrots', sowMonth: 9, existing: true }],
+  );
+  assert.deepEqual(
+    tasksForPlan(settleOnceRows([direct], 2026, 9), NURSERY_BED, 9).map((x) => x.action),
+    ['prep', 'sow', 'harvest'],
+  );
+  assert.deepEqual(
+    tasksForPlan(settleOnceRows([direct], 2026, 10), NURSERY_BED, 10).map((x) => x.action),
+    ['harvest'],
+  );
+});
+
+test('a farmer-declared already-growing tray crop gains nothing — the assertion that rejects a year-free flag', () => {
+  const grown: Planting = { id: 'g', bedId: 'b1', cropKey: 'cabbage', sowMonth: 9, existing: true };
+  for (const now of [9, 10, 11]) {
+    assert.deepEqual(settleOnceRows([grown], 2026, now), [grown]);
+    assert.ok(!tasksForPlan([grown], NURSERY_BED, now).some((x) => x.action === 'transplant'));
+  }
+});
+
+test('the nursery stamp is dead a year later — the anti-phantom-recurrence guard', () => {
+  const persisted: Planting = {
+    id: 'p', bedId: 'b1', cropKey: 'cabbage', sowMonth: 9, existing: true, inNursery: '2026-09',
+  };
+  assert.equal(settleOnceRows([persisted], 2026, 10)[0].inNursery, '2026-09', 'still live in its own sow+1 month');
+  for (const [y, m] of [[2026, 11], [2027, 9], [2027, 10], [2028, 9]] as const) {
+    const row = settleOnceRows([persisted], y, m)[0];
+    assert.ok(!('inNursery' in row), `${y}-${m} must not resurrect the nursery state`);
+    assert.ok(!tasksForPlan([row], NURSERY_BED, m).some((x) => x.action === 'transplant'));
+  }
+});
+
+test('the two flags can never disagree — inNursery is normalised at the load boundary', () => {
+  // No `existing` alongside inNursery: the farmer un-ticked "already growing".
+  assert.deepEqual(
+    settleOnceRows([{ id: 'x', bedId: 'b1', cropKey: 'cabbage', sowMonth: 9, inNursery: '2026-09' }], 2026, 10),
+    [{ id: 'x', bedId: 'b1', cropKey: 'cabbage', sowMonth: 9 }],
+  );
+  // The stamp's month no longer matches sowMonth: a hand edit moved the sowing.
+  const persisted: Planting = {
+    id: 'p', bedId: 'b1', cropKey: 'cabbage', sowMonth: 9, existing: true, inNursery: '2026-09',
+  };
+  assert.deepEqual(
+    settleOnceRows([{ ...persisted, sowMonth: 11 }], 2026, 10),
+    [{ id: 'p', bedId: 'b1', cropKey: 'cabbage', sowMonth: 11, existing: true }],
+  );
+  // A corrupt stamp never resurrects the nursery state.
+  for (const bad of ['garbage', '2026-13', '2026-9', '', 42 as unknown as string]) {
+    assert.ok(!('inNursery' in settleOnceRows([{ ...persisted, inNursery: bad }], 2026, 10)[0]), `bad stamp "${bad}"`);
+  }
+});
+
+test('the settle boundary still holds across the year end', () => {
+  const dec: Planting = { id: 'd', bedId: 'b1', cropKey: 'cabbage', sowMonth: 12, once: '2026-12' };
+  assert.equal(settleOnceRows([dec], 2027, 1)[0].inNursery, '2026-12');
+  const jan = tasksForPlan(settleOnceRows([dec], 2027, 1), NURSERY_BED, 1);
+  assert.ok(jan.some((x) => x.action === 'transplant' && x.month === 1), 'not 13, not next January');
+  assert.ok(!('inNursery' in settleOnceRows([dec], 2027, 2)[0]));
+});
+
+test('a farmer who opens the app late settles plain, with no stale transplant', () => {
+  const starter: Planting = { id: 's1', bedId: 'b1', cropKey: 'cabbage', sowMonth: 9, once: '2026-09' };
+  assert.ok(!('inNursery' in settleOnceRows([starter], 2026, 12)[0]));
+  assert.deepEqual(
+    tasksForPlan(settleOnceRows([starter], 2026, 12), NURSERY_BED, 12).map((x) => x.action),
+    ['harvest'],
+  );
+});
+
+test('a nursery row leaves every occupancy/rotation consumer byte-identical to the pre-fix reading', () => {
+  const starter: Planting = { id: 's1', bedId: 'b1', cropKey: 'cabbage', sowMonth: 9, once: '2026-09' };
+  const nur = settleOnceRows([starter], 2026, 10)[0];
+  assert.deepEqual(plantingBedEntryOffsets(nur, 10, 24), [0]);
+  assert.deepEqual(occupiedMonthsForPlanting(nur), [10, 11, 12, 1, 2, 3, 4]);
+  assert.equal(plantingIsActiveOrPlanned(nur, 10), true);
+  assert.equal(recurringPlanPlantings([nur]).length, 0);
+});
+
+test('a nursery cohort is never merged with a planned cohort of the same crop and month', () => {
+  const starter: Planting = { id: 's1', bedId: 'b1', cropKey: 'cabbage', sowMonth: 9, once: '2026-09' };
+  const nur = settleOnceRows([starter], 2026, 10)[0];
+  const planned: Planting = { id: 'q', bedId: 'b1', cropKey: 'cabbage', sowMonth: 9 };
+  const batches = seedBoqBatchesForPlan([nur, planned], NURSERY_BED);
+  assert.equal(batches.length, 2, 'BEFORE this fix: 1 batch, 74-115 doubled to 148-230');
+  assert.equal(batches.filter((b) => b.inNursery).length, 1);
+});
+
+test('the undated cohort list still excludes established rows with no nursery stamp', () => {
+  const grown: Planting = { id: 'g', bedId: 'b1', cropKey: 'cabbage', sowMonth: 9, existing: true };
+  assert.deepEqual(seedBoqForPlan([grown], NURSERY_BED), []);
 });

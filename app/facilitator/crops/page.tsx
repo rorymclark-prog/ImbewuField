@@ -2732,7 +2732,7 @@ function PlantingBar({ planting, currentMonth, onTap }: { planting: Planting; cu
             // colour on both would claim a certainty this plan doesn't have.
             opacity: isYearTwo(seg) ? 0.5 : 1,
           }}
-          title={`${crop.name} — sow ${monthLabel(planting.sowMonth)}, ${finishLabel} · ${fLabel} bed${planting.existing ? ' · already growing' : ''}${isYearTwo(seg) ? ' · year two, the same cycle coming round again' : ''}`}
+          title={`${crop.name} — sow ${monthLabel(planting.sowMonth)}, ${finishLabel} · ${fLabel} bed${planting.inNursery ? ' · trays sown, not yet planted out' : planting.existing ? ' · already growing' : ''}${isYearTwo(seg) ? ' · year two, the same cycle coming round again' : ''}`}
         >
           {BAR_STYLE === 'solid' && (
             // The "ready to harvest" marker — a hard colour + a line, not a
@@ -2767,7 +2767,7 @@ function PlantingBar({ planting, currentMonth, onTap }: { planting: Planting; cu
           "raised in a tray first", and is TAPPABLE (opening the same planting
           popover the bar itself opens) so the meaning is reachable rather than
           guessable. The timeline legend below the grid spells it out too. */}
-      {crop.transplant && !planting.existing && instances.map((seg, i) => {
+      {crop.transplant && (!planting.existing || planting.inNursery) && instances.map((seg, i) => {
         // Anchored to THIS copy's own unclipped sow offset (not re-derived
         // independently, and not shared across copies) so it always lands
         // right after that copy's sow month and never contradicts the bar
@@ -3165,7 +3165,7 @@ function PlantingPopover({ planting, bedAreaM2, allPlantings, onEdit, onRemove, 
         )}
         {planting.existing && (
           <div className="inline-block font-sans font-semibold mb-2 ml-1 px-2 py-0.5 rounded-full" style={{ fontSize: 11, background: 'rgba(140,134,84,0.18)', color: '#5C5040' }}>
-            Already growing
+            {planting.inNursery ? 'Trays sown — not yet planted out' : 'Already growing'}
           </div>
         )}
         <div className="font-sans space-y-1 mb-3" style={{ fontSize: 12.5, color: '#5C5040', lineHeight: 1.5 }}>

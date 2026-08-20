@@ -444,3 +444,39 @@ test('choosing whole-year over a non-empty plan surfaces the add-only hint, and 
     assert.ok(openBody.includes(reset), `openAutoSuggest must reset the whole-year state: ${reset}`);
   }
 });
+
+// ── The nursery-gap fix (2026-08-20): three surfaces, one commit ────────────
+//
+// Fixing tasksForPlan but not the page leaves the task list saying
+// "transplant" while the Gantt's 🪴 marker is gone — the same disappearance,
+// one surface over. These pin the wiring the lib-level fix depends on.
+
+test('the Gantt transplant marker never drifts out of sync with the task list', () => {
+  const page = source('../app/facilitator/crops/page.tsx');
+  assert.match(
+    page,
+    /crop\.transplant && \(!planting\.existing \|\| planting\.inNursery\)/,
+    'BEFORE this fix: crop.transplant && !planting.existing — the 🪴 marker vanished a month before the task did',
+  );
+});
+
+test('the "already growing" pill and tooltip speak nursery wording for a settled starter still in the nursery', () => {
+  const page = source('../app/facilitator/crops/page.tsx');
+  const pillAt = page.indexOf('Already growing');
+  assert.ok(pillAt > 0, 'the already-growing pill is gone; rewrite this test rather than deleting it');
+  const pillBlock = page.slice(pillAt - 200, pillAt + 50);
+  assert.match(
+    pillBlock,
+    /planting\.inNursery \? 'Trays sown — not yet planted out' : 'Already growing'/,
+    'the pill text must read "Already growing" only when the row is not still in the nursery',
+  );
+
+  const tooltipAt = page.indexOf('· already growing');
+  assert.ok(tooltipAt > 0);
+  const tooltipLine = page.slice(tooltipAt - 200, tooltipAt + 50);
+  assert.match(
+    tooltipLine,
+    /planting\.inNursery \? ' · trays sown, not yet planted out' : planting\.existing \? ' · already growing' : ''/,
+    'the Gantt tooltip must not call a nursery cohort "already growing"',
+  );
+});
