@@ -707,6 +707,12 @@ export interface PlanTableRow {
   harvest: string;
   /** Null means no verified kg/m² benchmark; it must never be formatted as 0kg. */
   yieldKg: number | null;
+  /** True for a one-time first-season starter (`Planting.once`). The printed
+   *  sheet is the copy a farmer carries into the field, and on paper a starter
+   *  is otherwise indistinguishable from a crop the repeating plan re-sows every
+   *  year — the exact phantom-recurrence reading the `once` field exists to
+   *  prevent, recreated in print. Consumers must mark these rows. */
+  once: boolean;
 }
 
 /**
@@ -742,6 +748,7 @@ export function buildPlanTableRows(plantings: Planting[], beds: PlanBed[]): Plan
         yieldKg: crop.yieldKgPerM2 === null
           ? null
           : estimatedYieldKgAdjusted(p, bed.areaM2, plantings),
+        once: typeof p.once === 'string',
       });
     });
   }

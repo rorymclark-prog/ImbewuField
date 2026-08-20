@@ -649,3 +649,19 @@ test('every string the PDF prints survives pdfSafe with content intact', () => {
     assert.ok([...pdfSafe(item.note)].every((ch) => (ch.codePointAt(0) ?? 0) <= 0xff));
   }
 });
+
+test('the printed bed-by-bed plan marks a one-time starter, so paper cannot read it as an annual crop', () => {
+  // The printed sheet is what a farmer carries into the field. A first-season
+  // starter that prints identically to a recurring row recreates, on paper,
+  // exactly the phantom-recurrence reading the `once` field exists to prevent.
+  const mixed: Planting[] = [
+    { id: 'recurring', bedId: 'bed-1', cropKey: 'cabbage', sowMonth: 2 },
+    { id: 'starter', bedId: 'bed-1', cropKey: 'cabbage', sowMonth: 9, once: '2026-09' },
+  ];
+  const rows = buildPlanTableRows(mixed, BEDS).filter((row) => row.area === 'Bed 1');
+  assert.equal(rows.length, 2);
+  const starterRow = rows.find((row) => row.establish.includes('Sep'))!;
+  const recurringRow = rows.find((row) => row.establish.includes('Feb'))!;
+  assert.equal(starterRow.once, true, 'the starter row carries the flag the printer needs');
+  assert.equal(recurringRow.once, false, 'a recurring row must never be flagged');
+});

@@ -128,6 +128,56 @@ export function settleOnceRows(
   });
 }
 
+/**
+ * Re-derive a one-time starter's stamp after the farmer edits it by hand.
+ *
+ * The stamp names the absolute month of the single intended sowing, so it goes
+ * stale the moment an edit moves the sow month — and a stale stamp is not a
+ * cosmetic problem: settleOnceRows reads ONLY the stamp, so it would settle the
+ * row against the month the farmer just moved away from. Left alone, a starter
+ * pushed from September to November settles in October and the app then reads a
+ * not-yet-sown crop as an eleven-month-old finished cohort, dropping it from
+ * tasks, the seed list and the timeline.
+ *
+ * Restamping (rather than clearing `once`) is what keeps the edit honest: a
+ * moved starter is still a ONE-TIME sowing. Clearing the field would promote it
+ * to an ordinary planned row — the repeating annual template — which is exactly
+ * the phantom-recurrence lie `once` exists to prevent. The new stamp is the next
+ * occurrence of the edited sow month, matching the field's "its sowing is still
+ * ahead" contract; an edit landing on the current month stays current, since
+ * settleOnceRows treats the stamped month itself as still live.
+ *
+ * Marking the row as already growing is the one edit that legitimately ends its
+ * one-time life: `existing` is the terminal state settleOnceRows itself hands a
+ * starter, and a row carrying both flags has no agreed meaning — rotation reads
+ * `once` first and anchors forward while every occupancy consumer reads
+ * `existing` first and anchors backward, putting the same row twelve months
+ * apart depending on who asks.
+ */
+export function restampEditedOnce(
+  planting: Planting,
+  nowYear: number,
+  nowMonth: number,
+): Planting {
+  if (typeof planting.once !== 'string') return planting;
+  if (planting.existing) {
+    const { once: _superseded, ...rest } = planting;
+    return rest;
+  }
+  if (!Number.isInteger(planting.sowMonth) || planting.sowMonth < 1 || planting.sowMonth > 12) {
+    return planting;
+  }
+  if (!Number.isInteger(nowYear) || !Number.isInteger(nowMonth) || nowMonth < 1 || nowMonth > 12) {
+    return planting;
+  }
+  const monthsAhead = ((planting.sowMonth - nowMonth) % 12 + 12) % 12;
+  const absolute = nowYear * 12 + (nowMonth - 1) + monthsAhead;
+  return {
+    ...planting,
+    once: `${Math.floor(absolute / 12)}-${String((absolute % 12) + 1).padStart(2, '0')}`,
+  };
+}
+
 export function loadCropPlan(): CropPlanState {
   const settleNow = new Date();
   const settle = (plantings: Planting[]): Planting[] =>

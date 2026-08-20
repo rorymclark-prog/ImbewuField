@@ -910,7 +910,11 @@ function drawFullPlan(s: Sheet, input: CropPlanPdfInput): void {
 
   const rows = buildPlanTableRows(input.plantings, input.beds).map((r) => ({
     area: r.area,
-    crop: r.crop,
+    // A one-time starter has to say so on its own line. Without it the sheet a
+    // farmer carries into the field reads a first-season bridge sowing as a
+    // standing annual crop. The cell wraps rather than truncating, so the row
+    // simply grows to fit.
+    crop: r.once ? `${r.crop} (first season only)` : r.crop,
     share: r.share,
     establish: r.establish,
     field: r.intoField,

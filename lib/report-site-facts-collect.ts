@@ -322,12 +322,12 @@ export function collectReportSiteFacts(input: CollectFactsInput): ReportSiteFact
     if (plantings.length) {
       const bedLabelById = new Map<string, string>();
       for (const bed of bedsFromDesignCanvas(canvas)) bedLabelById.set(bed.id, bed.label);
-      const byCrop = new Map<string, { name: string; sowMonths: Set<number>; bedLabels: Set<string>; alreadyGrowing: boolean }>();
+      const byCrop = new Map<string, { name: string; sowMonths: Set<number>; bedLabels: Set<string>; alreadyGrowing: boolean; recurringMonths: Set<number>; onceMonths: Set<number> }>();
       const bedsUsed = new Set<string>();
       for (const planting of plantings) {
         const crop = cropByKey(planting.cropKey);
         const name = crop?.name ?? planting.cropKey;
-        const entry = byCrop.get(name) ?? { name, sowMonths: new Set<number>(), bedLabels: new Set<string>(), alreadyGrowing: false };
+        const entry = byCrop.get(name) ?? { name, sowMonths: new Set<number>(), bedLabels: new Set<string>(), alreadyGrowing: false, recurringMonths: new Set<number>(), onceMonths: new Set<number>() };
         // Planting.sowMonth is ONE-based (1 = January) — every other reader in the codebase does
         // MONTHS_SHORT[sowMonth - 1] (crop-plan.ts:609, crop-autosuggest.ts:1004,
         // crop-export-schedule.ts:36) and occupiedMonthsForPlanting rejects anything outside 1..12.
@@ -335,6 +335,12 @@ export function collectReportSiteFacts(input: CollectFactsInput): ReportSiteFact
         // December entirely.
         if (Number.isInteger(planting.sowMonth) && planting.sowMonth >= 1 && planting.sowMonth <= 12) {
           entry.sowMonths.add(planting.sowMonth);
+          // A one-time first-season starter is tracked apart from the repeating
+          // rows: merged in, its month reads to the report model as ground the
+          // farmer's annual plan covers every year, which is the opposite of
+          // what a `once` row means.
+          if (typeof planting.once === 'string') entry.onceMonths.add(planting.sowMonth);
+          else entry.recurringMonths.add(planting.sowMonth);
         }
         const label = bedLabelById.get(planting.bedId);
         if (label) entry.bedLabels.add(label);
@@ -350,6 +356,13 @@ export function collectReportSiteFacts(input: CollectFactsInput): ReportSiteFact
           sowMonths: [...entry.sowMonths].sort((a, b) => a - b).map((month) => MONTHS_SHORT[month - 1] ?? String(month)),
           bedLabels: [...entry.bedLabels],
           alreadyGrowing: entry.alreadyGrowing,
+          // Only months NO recurring row covers: where the annual plan sows the
+          // same crop in the same month anyway, the month is genuinely covered
+          // every year and the starter is not what makes it true.
+          firstSeasonOnlyMonths: [...entry.onceMonths]
+            .filter((month) => !entry.recurringMonths.has(month))
+            .sort((a, b) => a - b)
+            .map((month) => MONTHS_SHORT[month - 1] ?? String(month)),
         })),
       };
     }

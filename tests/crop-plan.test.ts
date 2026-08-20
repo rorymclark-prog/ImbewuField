@@ -38,6 +38,7 @@ import {
   plantingIsActiveOrPlanned,
   planningMaturityMonths,
   recurringPlanPlantings,
+  restampEditedOnce,
   seedBoqForPlan,
   settleOnceRows,
   taskMonthsFromNow,
@@ -1035,4 +1036,50 @@ test('a pending starter occupies one single forward stretch — no annual repeat
   assert.equal(offsets[0], 3, 'anchored FORWARD at its coming sow month');
   // And it never joins the recurring annual view.
   assert.deepEqual(recurringPlanPlantings([starter]), []);
+});
+
+test('editing a starter to a later month restamps it, so it does not settle on the month the farmer abandoned', () => {
+  // The bug this pins: a September starter moved to November kept its
+  // September stamp, so the October load settled it to `existing` — and an
+  // existing row whose sow month reads as November is resolved BACKWARD, to
+  // last November. The crop the farmer had just scheduled vanished from tasks,
+  // the seed list and the timeline, eleven months in the past.
+  const starter: Planting = {
+    id: 'auto:starter:bed-1:true-spinach:9', bedId: 'bed-1', cropKey: 'true-spinach', sowMonth: 9, once: '2026-09',
+  };
+  const moved = restampEditedOnce({ ...starter, sowMonth: 11 }, 2026, 10);
+  assert.equal(moved.once, '2026-11', 'the stamp follows the edited sow month');
+  assert.equal(moved.existing, undefined, 'still a planned one-time sowing, not an observation');
+  // The month it used to be stamped for now passes harmlessly.
+  assert.deepEqual(settleOnceRows([moved], 2026, 10), [moved], 'still pending in October');
+  assert.deepEqual(settleOnceRows([moved], 2026, 11), [moved], 'still pending during its real month');
+  assert.equal(settleOnceRows([moved], 2026, 12)[0].existing, true, 'settles only after November');
+  // And it stays a single forward cohort the whole time — never an annual row.
+  assert.deepEqual(plantingBedEntryOffsets(moved, 10, 24), [1]);
+  assert.deepEqual(recurringPlanPlantings([moved]), []);
+});
+
+test('editing a starter into next year, or marking it already growing, both stay honest', () => {
+  const starter: Planting = { id: 's', bedId: 'b', cropKey: 'kale', sowMonth: 9, once: '2026-09' };
+  // Moved to a month that has already passed this year: the next occurrence is
+  // next year, not a stamp in the past that would settle it on sight.
+  const backwards = restampEditedOnce({ ...starter, sowMonth: 3 }, 2026, 10);
+  assert.equal(backwards.once, '2027-03');
+  assert.deepEqual(settleOnceRows([backwards], 2026, 12), [backwards]);
+  // Edited onto the current month: still live, because settleOnceRows treats
+  // the stamped month itself as current rather than past.
+  const thisMonth = restampEditedOnce({ ...starter, sowMonth: 10 }, 2026, 10);
+  assert.equal(thisMonth.once, '2026-10');
+  assert.deepEqual(settleOnceRows([thisMonth], 2026, 10), [thisMonth]);
+  // Ticking "already growing" ends the one-time life: `existing` is the
+  // terminal state, and a row carrying both flags has no agreed meaning —
+  // rotation reads `once` and anchors forward, occupancy reads `existing` and
+  // anchors backward, putting one row twelve months apart.
+  const nowGrowing = restampEditedOnce({ ...starter, existing: true }, 2026, 10);
+  assert.equal(nowGrowing.existing, true);
+  assert.ok(!('once' in nowGrowing), 'the stamp is dropped, never carried alongside existing');
+  // Rows that were never starters are untouched, whatever the edit.
+  const plain: Planting = { id: 'p', bedId: 'b', cropKey: 'kale', sowMonth: 4 };
+  assert.deepEqual(restampEditedOnce(plain, 2026, 10), plain);
+  assert.deepEqual(restampEditedOnce({ ...plain, existing: true }, 2026, 10), { ...plain, existing: true });
 });

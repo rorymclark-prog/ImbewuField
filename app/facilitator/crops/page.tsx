@@ -34,6 +34,7 @@ import {
   isSpaceHungry, bedOverlapWarning, benchmarkAreaConflictDetails, bedHasUnverifiedTiming, buildYearReport, buildFoodAvailability, buildPlanYieldBenchmark,
   buildFieldUtilizationByMonth, loadFavouriteCropKeys, saveFavouriteCropKeys, isGenuinelyIntercropped, plantingBedEntryOffsets, plantingIsActiveOrPlanned, recurringPlanPlantings,
   loadAllowBedSharing, saveAllowBedSharing, loadCashflowSettings, saveCashflowSettings, DEFAULT_CASHFLOW_SETTINGS, planNotesDateLabel,
+  restampEditedOnce,
 } from '@/lib/crop-plan';
 import type { FoodGroup } from '@/lib/crop-groups';
 import { FOOD_GROUP_META, foodGroupOf, ROTATION_FAMILY_META, rotationFamilyOf } from '@/lib/crop-groups';
@@ -851,8 +852,16 @@ function FacilitatorCropsPageInner() {
       return {
         ...prev,
         version: 1,
+        // A hand-edited one-time starter needs its stamp re-derived, not just
+        // carried through the spread: the stamp is what settleOnceRows reads,
+        // so a stale one settles the row against the month the farmer moved
+        // away from. See restampEditedOnce.
         plantings: prev.plantings.map((p) => p.id === id
-          ? { ...p, cropKey, sowMonth, areaFraction: areaFraction < 1 ? areaFraction : undefined, existing: existing || undefined }
+          ? restampEditedOnce(
+            { ...p, cropKey, sowMonth, areaFraction: areaFraction < 1 ? areaFraction : undefined, existing: existing || undefined },
+            new Date().getFullYear(),
+            currentMonth,
+          )
           : p),
         updatedAt: Date.now(),
       };

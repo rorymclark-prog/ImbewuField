@@ -291,3 +291,56 @@ test('the trust statement travels with the report, verbatim', () => {
     assert.ok(markdown.includes(paragraph), 'a trust paragraph was reworded or dropped');
   }
 });
+
+test('a one-time starter reaches the report prompt as a one-time sowing, not a month the plan covers every year', () => {
+  // The section prompts tell the model the farmer's plan "already covers"
+  // these months and to mark them "(already planned)". Merged in unqualified,
+  // a first-season bridge sowing reads as a standing annual commitment.
+  const plan = buildDemoCropPlan();
+  const [first] = plan.plantings;
+  const facts = collectReportSiteFacts({
+    siteId: 'site:-27.72623,31.96304',
+    lat: -27.726231,
+    lon: 31.963044,
+    canvas: buildDemoDesignCanvasState(),
+    farmName: buildDemoSavedPlace().name,
+    waterPoints: buildDemoWaterPoints(),
+    cropPlan: {
+      ...plan,
+      plantings: [
+        ...plan.plantings,
+        { id: 'starter', bedId: first.bedId, cropKey: 'kale', sowMonth: 9, once: '2026-09' },
+      ],
+    },
+  });
+  const kale = facts.crop?.crops.find((row) => row.name.toLowerCase().includes('kale'));
+  assert.ok(kale, 'the starter crop reached the facts');
+  assert.deepEqual(kale.firstSeasonOnlyMonths, ['Sep']);
+  const block = cropPlanPromptBlock(facts);
+  assert.match(block, /one-time first-season sowing/);
+  assert.match(block, /not repeated in later years/);
+});
+
+test('a starter month the repeating plan also covers is not called first-season-only', () => {
+  const plan = buildDemoCropPlan();
+  const [first] = plan.plantings;
+  const facts = collectReportSiteFacts({
+    siteId: 'site:-27.72623,31.96304',
+    lat: -27.726231,
+    lon: 31.963044,
+    canvas: buildDemoDesignCanvasState(),
+    farmName: buildDemoSavedPlace().name,
+    waterPoints: buildDemoWaterPoints(),
+    cropPlan: {
+      ...plan,
+      plantings: [
+        ...plan.plantings,
+        { id: 'recurring-kale', bedId: first.bedId, cropKey: 'kale', sowMonth: 9 },
+        { id: 'starter-kale', bedId: first.bedId, cropKey: 'kale', sowMonth: 9, once: '2026-09' },
+      ],
+    },
+  });
+  const kale = facts.crop?.crops.find((row) => row.name.toLowerCase().includes('kale'));
+  assert.ok(kale);
+  assert.deepEqual(kale.firstSeasonOnlyMonths, [], 'the annual plan genuinely covers September every year');
+});
