@@ -39,6 +39,7 @@ import {
   planningMaturityMonths,
   recurringPlanPlantings,
   seedBoqForPlan,
+  settleOnceRows,
   taskMonthsFromNow,
   tasksForPlan,
   yieldByCrop,
@@ -991,4 +992,47 @@ test('planting-material rows round once per sowing cohort, exclude existing crop
   assert.equal(beans.finalPlantPositions, expectedPositions);
   assert.equal(together.some((row) => row.cropKey === 'cabbage'), false);
   assert.ok(together.every((row) => row.finalPlantPositions > 0 && row.unit.trim().length > 0));
+});
+
+// ── one-time starters: the `once` life cycle ─────────────────────────────────
+
+test('a one-time starter stays planned until its stamped month passes, then settles as an existing cohort', () => {
+  const starter: Planting = {
+    id: 'auto:starter:bed-1:kale:9', bedId: 'bed-1', cropKey: 'kale', sowMonth: 9, once: '2026-09',
+  };
+  // Before and during its month: untouched, byte for byte.
+  assert.deepEqual(settleOnceRows([starter], 2026, 8), [starter]);
+  assert.deepEqual(settleOnceRows([starter], 2026, 9), [starter]);
+  // The month after (including across a year boundary for a December stamp):
+  // it becomes an ordinary existing row — `once` gone, never annual.
+  const settled = settleOnceRows([starter], 2026, 10)[0];
+  assert.equal(settled.existing, true);
+  assert.ok(!('once' in settled), 'the stamp is consumed on settling');
+  const december = { ...starter, sowMonth: 12, once: '2026-12' };
+  assert.deepEqual(settleOnceRows([december], 2026, 12), [december]);
+  assert.equal(settleOnceRows([december], 2027, 1)[0].existing, true);
+});
+
+test('a corrupt once stamp settles immediately — a one-off row must never fall back to recurring-annual semantics', () => {
+  for (const bad of ['2026-13', '2026-9', 'next month', '', '2026-00']) {
+    const row: Planting = { id: 'x', bedId: 'b', cropKey: 'kale', sowMonth: 9, once: bad };
+    const settled = settleOnceRows([row], 2026, 1)[0];
+    assert.equal(settled.existing, true, `stamp "${bad}" must settle, not recur`);
+    assert.ok(!('once' in settled));
+  }
+  // Rows without a stamp pass through untouched, planned and existing alike.
+  const planned: Planting = { id: 'p', bedId: 'b', cropKey: 'kale', sowMonth: 9 };
+  const existing: Planting = { id: 'e', bedId: 'b', cropKey: 'kale', sowMonth: 3, existing: true };
+  assert.deepEqual(settleOnceRows([planned, existing], 2030, 6), [planned, existing]);
+});
+
+test('a pending starter occupies one single forward stretch — no annual repeat, no phantom past', () => {
+  const starter: Planting = {
+    id: 's', bedId: 'bed-1', cropKey: 'green-beans', sowMonth: 11, once: '2026-11',
+  };
+  const offsets = plantingBedEntryOffsets(starter, 8, 24);
+  assert.equal(offsets.length, 1, 'exactly one occurrence inside any horizon');
+  assert.equal(offsets[0], 3, 'anchored FORWARD at its coming sow month');
+  // And it never joins the recurring annual view.
+  assert.deepEqual(recurringPlanPlantings([starter]), []);
 });

@@ -413,8 +413,8 @@ test('the timing question sits between the rhythm question and the climate card,
 
 test('the whole-year branch runs from the REAL current month and the busy state guards the sweep', () => {
   const page = source('../app/facilitator/crops/page.tsx');
-  assert.match(page, /suggestIdealYearPlan\(answers, pattern, beds, plantings, currentMonth\)/,
-    'the sweep must receive the device month, never a synthetic one');
+  assert.match(page, /suggestIdealYearPlan\(answers, pattern, beds, plantings, currentMonth, new Date\(\)\.getFullYear\(\)\)/,
+    'the sweep must receive the device month and year, never synthetic ones — the year dates the one-time starters\' `once` stamps');
   assert.match(page, /generating \? IDEAL_PLAN_COPY\.busyLabel/,
     'the Suggest button must show the busy label while the sweep runs');
   assert.match(page, /blockers\.length === 0 && !generating/,
@@ -428,6 +428,7 @@ test('the whole-year review card is gated on ideal metadata and speaks only lib 
   for (const key of [
     'sameAsTodayLine', 'chosenLine', 'startNowLine', 'rampInLine',
     'residualGapLine', 'transitionGapLine', 'fewBigNote', 'commercialNote',
+    'starterLine', 'starterBadge',
   ]) {
     assert.ok(page.includes(`IDEAL_PLAN_COPY.${key}`), `the card must render IDEAL_PLAN_COPY.${key}`);
   }

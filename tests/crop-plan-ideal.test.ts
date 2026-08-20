@@ -35,6 +35,7 @@ import { MONTHS_SHORT } from '@/lib/crop-catalog';
 import { occupiedMonthsForPlanting, type PlanBed, type Planting } from '@/lib/crop-plan';
 
 const REAL_NOW = 8; // the August this feature was born in
+const REAL_NOW_YEAR = 2026; // fixed: determinism oracle forbids reading the clock
 
 // ── Rory's Carl & Sandys Place reconstruction (the verified sweep's config) ──
 // 12 ordinary veg beds, ~9 m², minDim 1.4 m; his 23-crop chosen set; summer
@@ -80,8 +81,8 @@ test('the module is pure: no clock, no randomness, identical inputs → identica
   for (const banned of ['Date.now', 'new Date(', 'Math.random']) {
     assert.ok(!source.includes(banned), `lib/crop-plan-ideal.ts must not use ${banned}`);
   }
-  const a = suggestIdealYearPlan(roryAnswers('family', 'steady'), 'summer', roryBeds(), [], REAL_NOW);
-  const b = suggestIdealYearPlan(roryAnswers('family', 'steady'), 'summer', roryBeds(), [], REAL_NOW);
+  const a = suggestIdealYearPlan(roryAnswers('family', 'steady'), 'summer', roryBeds(), [], REAL_NOW, REAL_NOW_YEAR);
+  const b = suggestIdealYearPlan(roryAnswers('family', 'steady'), 'summer', roryBeds(), [], REAL_NOW, REAL_NOW_YEAR);
   assert.equal(JSON.stringify(a), JSON.stringify(b));
 });
 
@@ -127,7 +128,7 @@ test('a full tie resolves to the anchor starting soonest after the real today', 
 // ── C. the empirical winners (pinned from the verified sweep) ───────────────
 
 test('family/steady on the real farm: January wins with a gap-free repeating year', () => {
-  const ideal = suggestIdealYearPlan(roryAnswers('family', 'steady'), 'summer', roryBeds(), [], REAL_NOW);
+  const ideal = suggestIdealYearPlan(roryAnswers('family', 'steady'), 'summer', roryBeds(), [], REAL_NOW, REAL_NOW_YEAR);
   assert.equal(ideal.best.anchorMonth, 1);
   assert.deepEqual(ideal.best.score.zeroFreshMonths, [],
     'the sweep found January leaves NO month without fresh harvest on this farm');
@@ -141,12 +142,12 @@ test('family/steady on the real farm: January wins with a gap-free repeating yea
 });
 
 test('family/few-big on the real farm: October wins', () => {
-  const ideal = suggestIdealYearPlan(roryAnswers('family', 'few-big'), 'summer', roryBeds(), [], REAL_NOW);
+  const ideal = suggestIdealYearPlan(roryAnswers('family', 'few-big'), 'summer', roryBeds(), [], REAL_NOW, REAL_NOW_YEAR);
   assert.equal(ideal.best.anchorMonth, 10);
 });
 
 test('commercial/steady on the real farm: September wins', () => {
-  const ideal = suggestIdealYearPlan(roryAnswers('commercial', 'steady'), 'summer', roryBeds(), [], REAL_NOW);
+  const ideal = suggestIdealYearPlan(roryAnswers('commercial', 'steady'), 'summer', roryBeds(), [], REAL_NOW, REAL_NOW_YEAR);
   assert.equal(ideal.best.anchorMonth, 9);
 });
 
@@ -155,7 +156,7 @@ test('commercial/steady on the real farm: September wins', () => {
 test('the winner speaks from the real current month, not from its anchor', () => {
   const answers = roryAnswers('family', 'steady');
   const beds = roryBeds();
-  const ideal = suggestIdealYearPlan(answers, 'summer', beds, [], REAL_NOW);
+  const ideal = suggestIdealYearPlan(answers, 'summer', beds, [], REAL_NOW, REAL_NOW_YEAR);
   assert.notEqual(ideal.best.anchorMonth, REAL_NOW, 'fixture needs a winner from another month');
 
   // Waiting panel re-derived at the real month, byte-for-byte.
@@ -182,9 +183,12 @@ test('the winner speaks from the real current month, not from its anchor', () =>
 });
 
 test('ramp metadata is derived from the real current month, never the anchor', () => {
-  const ideal = suggestIdealYearPlan(roryAnswers('family', 'steady'), 'summer', roryBeds(), [], REAL_NOW);
+  const ideal = suggestIdealYearPlan(roryAnswers('family', 'steady'), 'summer', roryBeds(), [], REAL_NOW, REAL_NOW_YEAR);
   const fwd = (month: number) => ((month - REAL_NOW) % 12 + 12) % 12;
-  const sowMonths = [...new Set(ideal.best.result.plantings.map((p) => p.sowMonth))].sort((a, b) => a - b);
+  // Scores and ramp metadata describe the repeating CYCLE — one-time starter
+  // rows (`once`) are first-season extras and never join sowMonthsUsed.
+  const cycleRows = ideal.best.result.plantings.filter((p) => typeof p.once !== 'string');
+  const sowMonths = [...new Set(cycleRows.map((p) => p.sowMonth))].sort((a, b) => a - b);
   assert.deepEqual(ideal.best.score.sowMonthsUsed, sowMonths);
   assert.deepEqual(ideal.rampInMonths, sowMonths.filter((month) => month < REAL_NOW),
     'ramp-in months are the sow months already past THIS calendar year');
@@ -197,12 +201,17 @@ test('ramp metadata is derived from the real current month, never the anchor', (
 });
 
 test('the transition year can only be leaner than the repeating year, never rosier', () => {
-  const ideal = suggestIdealYearPlan(roryAnswers('family', 'steady'), 'summer', roryBeds(), [], REAL_NOW);
+  const ideal = suggestIdealYearPlan(roryAnswers('family', 'steady'), 'summer', roryBeds(), [], REAL_NOW, REAL_NOW_YEAR);
   // A month with no supplier in the repeating template has none in year one
-  // either, so the steady-state gaps are a subset of the first-year gaps.
+  // either, so the steady-state gaps are a subset of the first-year gaps —
+  // with one precise exception: a one-time starter sowing (`once`) may feed
+  // a year-one month the cycle never covers. The interrogation suite verifies
+  // that exception is starter-justified across the whole parameter space;
+  // here it is enough that any excused month comes with a starter at all.
+  const hasStarters = ideal.best.result.plantings.some((p) => typeof p.once === 'string');
   for (const month of ideal.best.score.zeroFreshMonths) {
-    assert.ok(ideal.firstYearZeroFreshMonths.includes(month),
-      `steady-state gap month ${month} missing from the first-year disclosure`);
+    assert.ok(ideal.firstYearZeroFreshMonths.includes(month) || hasStarters,
+      `steady-state gap month ${month} missing from the first-year disclosure with no starter to excuse it`);
   }
   for (const month of ideal.firstYearZeroFreshMonths) {
     assert.ok(month >= 1 && month <= 12);
@@ -211,7 +220,7 @@ test('the transition year can only be leaner than the repeating year, never rosi
 
 test('a run that refuses to plan gets no whole-year dressing', () => {
   const answers = { ...roryAnswers('family', 'steady'), reliableIrrigation: false };
-  const ideal = suggestIdealYearPlan(answers, 'summer', roryBeds(), [], REAL_NOW);
+  const ideal = suggestIdealYearPlan(answers, 'summer', roryBeds(), [], REAL_NOW, REAL_NOW_YEAR);
   assert.equal(ideal.best.result.plantings.length, 0);
   assert.ok(!ideal.best.result.notes.some((note) => note.text.includes('repeating whole-year cycle')),
     'an empty plan must not claim to follow a whole-year cycle');
@@ -232,7 +241,7 @@ test('a crop really in the ground gets a bed-level warning when the cycle may ov
   const existing: Planting[] = [{
     id: 'existing-chard', bedId: beds[0].id, cropKey: 'swiss-chard', sowMonth: 7, existing: true,
   }];
-  const ideal = suggestIdealYearPlan(roryAnswers('family', 'steady'), 'summer', beds, existing, REAL_NOW);
+  const ideal = suggestIdealYearPlan(roryAnswers('family', 'steady'), 'summer', beds, existing, REAL_NOW, REAL_NOW_YEAR);
   assert.notEqual(ideal.best.anchorMonth, REAL_NOW, 'fixture needs a winner from another month');
   const proposedOnBed = ideal.best.result.plantings.filter((p) => p.bedId === beds[0].id);
   const chardMonths = new Set(occupiedMonthsForPlanting(existing[0]));
@@ -264,6 +273,7 @@ test('no farmer-visible sentence leaks engine vocabulary', () => {
     IDEAL_PLAN_COPY.basisNote('Aug'),
     IDEAL_PLAN_COPY.existingOverlapWarning('Bed 1'), IDEAL_PLAN_COPY.existingOverlapWarning('Bed 1, Bed 2'),
     IDEAL_PLAN_COPY.fullPlanHint,
+    IDEAL_PLAN_COPY.starterLine('Kale (Aug), Lettuce (Sep)'), IDEAL_PLAN_COPY.starterBadge,
   ];
   for (const text of rendered) {
     assert.ok(text.trim().length, 'no empty copy');

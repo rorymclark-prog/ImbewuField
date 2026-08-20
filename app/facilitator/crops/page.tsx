@@ -548,7 +548,7 @@ function FacilitatorCropsPageInner() {
       // guards a double tap while the sweep runs.
       setAutoGenerating(true);
       setTimeout(() => {
-        const ideal = suggestIdealYearPlan(answers, pattern, beds, plantings, currentMonth);
+        const ideal = suggestIdealYearPlan(answers, pattern, beds, plantings, currentMonth, new Date().getFullYear());
         setIdealMeta(ideal);
         setAutoResult({
           ...ideal.best.result,
@@ -3611,6 +3611,23 @@ function AutoSuggestModal({
                           {IDEAL_PLAN_COPY.rampInLine(idealMeta.rampInMonths.length, monthLabel(idealMeta.fullCycleByMonth))}
                         </p>
                       )}
+                      {(() => {
+                        // One-time starters ride the plantings list itself (the
+                        // `once` stamp), so the card derives rather than stores.
+                        // Not gated on sameAsToday: a from-now-optimal cycle has
+                        // the same first-year holes and gets the same starters.
+                        const starterNames = idealMeta.best.result.plantings
+                          .filter((p) => typeof p.once === 'string')
+                          .map((p) => {
+                            const crop = cropByKey(p.cropKey);
+                            return crop ? `${crop.name} (${monthLabel(p.sowMonth)})` : null;
+                          })
+                          .filter((name): name is string => Boolean(name))
+                          .join(', ');
+                        return starterNames
+                          ? <p className="font-sans" style={line}>{IDEAL_PLAN_COPY.starterLine(starterNames)}</p>
+                          : null;
+                      })()}
                       {idealMeta.best.score.zeroFreshMonths.length > 0 && (
                         <p className="font-sans" style={line}>
                           {IDEAL_PLAN_COPY.residualGapLine(idealMeta.best.score.zeroFreshMonths.map(monthLabel).join(', '))}
@@ -3635,7 +3652,14 @@ function AutoSuggestModal({
                     const fieldEntry = plannedBedEntryMonth(p.sowMonth, crop);
                     return (
                       <div key={p.id} className="flex items-center justify-between px-3 py-2 rounded-lg font-sans" style={{ fontSize: 12.5, background: '#FFFFFF', border: '1px solid #E2D8C4' }}>
-                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}><CropIcon cropKey={crop.key} icon={crop.icon} size={14} /> {crop.name} ({fractionLabel(p.areaFraction ?? 1)} bed)</span>
+                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+                          <CropIcon cropKey={crop.key} icon={crop.icon} size={14} /> {crop.name} ({fractionLabel(p.areaFraction ?? 1)} bed)
+                          {typeof p.once === 'string' && (
+                            <span className="font-sans uppercase" style={{ fontSize: 8.5, letterSpacing: '0.06em', color: '#5F735F', background: '#F5F8F3', border: '1px solid #B9C9B9', borderRadius: 6, padding: '1px 5px' }}>
+                              {IDEAL_PLAN_COPY.starterBadge}
+                            </span>
+                          )}
+                        </span>
                         <span style={{ color: '#8C7A62', textAlign: 'right' }}>
                           {crop.transplant
                             ? `start tray ${monthLabel(p.sowMonth)} → transplant ${monthLabel(fieldEntry)} → harvest ${monthLabel(h)} (${cropDurationLabel(crop)} in bed)`
