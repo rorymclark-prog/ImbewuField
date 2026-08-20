@@ -78,6 +78,18 @@ export const DEFAULT_CROP_PRICES: Record<string, CropPrice> = {
 
   // No usable data found either direction — same-food-group proxy.
   'broad-beans': { retailPerKg: 35, wholesalePerKg: 13, confidence: 'estimated' }, // modeled fresh-podded in this catalog (harvestWindowMonths, not stored dry) — proxied off green-beans rather than dry-beans
+
+  // Added 2026-08-20 alongside true-spinach/turnip (see crop-catalog.ts).
+  // turnip: real Joburg Market wholesale trade, 19 Aug 2026 — R650.00 for
+  // 127kg (14 lots) = R5.12/kg (joburgmarket.co.za/jhb-market/dailyprices.php,
+  // fetched 2026-08-20). Thin volume, same caveat as amadumbe below — treat
+  // as a rough regional signal, not a firm number. No direct SA retail
+  // listing found (turnip barely appears in mainstream SA retail), so retail
+  // is derived via the root-crop wholesale/retail ratio (~38%, the same
+  // carrot/potato/onion cluster ratio used for dry-beans above): 5.12/0.38 ≈
+  // R13/kg, in the same band as carrots' real R14/kg — sanity-checked, not
+  // just formula output.
+  turnip: { retailPerKg: 13, wholesalePerKg: 5, confidence: 'estimated' },
 };
 
 // Herbs are sold and valued completely differently from bulk vegetables —
@@ -86,7 +98,30 @@ export const DEFAULT_CROP_PRICES: Record<string, CropPrice> = {
 // next to R15/kg cabbage, and no real per-kg source was found for it either.
 // Deliberately excluded from price-based value (kg totals elsewhere are
 // unaffected) rather than showing a number nobody could sanity-check.
-export const UNPRICED_CROPS = new Set<string>(['coriander']);
+//
+// true-spinach (added 2026-08-20): en-ZA market "spinach" is not this crop.
+// Multiple SA growing-guide sources confirm Swiss chard is what South
+// African markets, retailers and home gardeners actually call "spinach" —
+// "Swiss chard is one of South Africa's most commonly grown vegetables and
+// is often erroneously called spinach" (seedsandplants.co.za, "Differences
+// Between Chard and Spinach"). Checked directly: the Joburg Market
+// wholesale "spinach" commodity traded at R2.41/kg on 19 Aug 2026
+// (joburgmarket.co.za) — within a cent of this file's OWN swiss-chard
+// wholesale figure (R2.40/kg) above, i.e. the same crop already priced
+// under 'swiss-chard'. Pricing true-spinach off that number would just be
+// re-pricing chard under a different catalog key, not a real Spinacia
+// oleracea figure.
+// The one retail listing that is unambiguously true spinach — PnP "English
+// Spinach" / bagged "Baby Spinach" (Spinacia oleracea, sold as a salad
+// product) — runs ~R199.90/kg (100g bag "from R19.99", mrd.com delivery
+// listing, fetched 2026-08-20). Same problem as coriander: a bagged-salad
+// unit price that looks like a bug next to R14/kg carrots, AND a different
+// product form (100g washed leaf bag) from the bunched/mature-leaf crop
+// this catalog models — using it would misrepresent, not estimate, the
+// value of a field planting.
+// No bunch-form, field-crop retail price for true spinach specifically
+// could be found. Honest exclusion, same pattern as coriander.
+export const UNPRICED_CROPS = new Set<string>(['coriander', 'true-spinach']);
 
 const PRICE_OVERRIDES_KEY = 'imbewu_crop_price_overrides_v1';
 

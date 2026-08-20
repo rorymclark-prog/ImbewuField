@@ -1,7 +1,8 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-import { isUsablePrice } from '@/lib/crop-prices';
+import { CROPS, hasPlanningYield } from '@/lib/crop-catalog';
+import { DEFAULT_CROP_PRICES, isUsablePrice, UNPRICED_CROPS } from '@/lib/crop-prices';
 
 // A CLEARED PRICE FIELD USED TO ERASE A CROP'S INCOME, PERMANENTLY.
 //
@@ -40,4 +41,18 @@ test('a half-written or malformed override is rejected rather than half-applied'
   assert.equal(isUsablePrice(undefined), false);
   assert.equal(isUsablePrice('29'), false);
   assert.equal(isUsablePrice(29), false);
+});
+
+// The value-view flag at app/facilitator/crops/page.tsx ("Subtotal excludes
+// ... because a verified yield or usable per-kg price is missing") fires
+// silently, per crop, forever, whenever a catalog food crop has neither a
+// priced default nor a documented UNPRICED_CROPS exclusion — e.g. true-spinach
+// and turnip landed in neither list the day they were added to the catalog.
+// This guards every future food crop the same way: priced or explicitly,
+// deliberately excluded — never silently unpriced.
+test('every catalog crop with a planning yield is priced or deliberately excluded', () => {
+  const gaps = CROPS.filter(hasPlanningYield)
+    .filter((crop) => !DEFAULT_CROP_PRICES[crop.key] && !UNPRICED_CROPS.has(crop.key))
+    .map((crop) => crop.key);
+  assert.deepEqual(gaps, []);
 });
