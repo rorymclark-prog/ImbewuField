@@ -31,8 +31,10 @@ import {
   recomputeLaterThisYear,
   type AutoSuggestAnswers,
 } from '@/lib/crop-autosuggest';
-import { MONTHS_SHORT } from '@/lib/crop-catalog';
+import { cropByKey, MONTHS_SHORT } from '@/lib/crop-catalog';
 import {
+  TRANSPLANT_BED_RESERVED_FROM_MONTHS,
+  harvestEndMonthForCrop, harvestMonthForCrop,
   occupiedMonthsForPlanting, plantingBedEntryOffsets,
   type PlanBed, type Planting,
 } from '@/lib/crop-plan';
@@ -432,3 +434,110 @@ test('accept a whole-year plan, regenerate against it, and nothing prints over 1
   assert.deepEqual(failures.slice(0, 10), [],
     `${failures.length} bed-months printed over 100%:\n  ${failures.slice(0, 10).join('\n  ')}`);
 });
+
+// ── I. the first-season fill is judged on MONTHS FED, not ground freed ───────
+//
+// fillFirstSeasonGaps exists to bridge year-one holes, but its sort asked only
+// about ground: earliest sow, then shortest hold. Both are questions about when
+// a bed comes free, and neither asks the question the pass was written for —
+// whether the farmer eats that month. Measured on merged main before the fix,
+// 84 of 605 starters ripened entirely after month 11 (77 of them lettuce): food
+// arriving after the year it was placed to rescue, holding a bed the whole time.
+//
+// The named case, from the sweep: an August lettuce (hold 8-12, ripe at offset
+// 12) beat an August swiss chard (hold 7-12, ripe 9-12) because lettuce frees
+// the bed one month sooner — with offsets 9 and 11 sitting bare behind it.
+
+/** Offsets 0..11 at which a row puts fresh food on the table, positioned
+ *  against the REAL month. Cover crops and unverified timing are not food —
+ *  the same exclusion scorePlan's freshWindow makes.
+ *
+ *  The nursery month is subtracted back off, and that is not a nicety: for the
+ *  seven tray-raised crops (kale, cabbage, onions, tomatoes, peppers, lettuce,
+ *  broccoli) plantingBedEntryOffsets already returns the BED-ENTRY offset,
+ *  which includes TRANSPLANT_BED_RESERVED_FROM_MONTHS, while
+ *  harvestMonthForCrop measures from the SOW month and adds the nursery itself.
+ *  Adding the two dates every tray crop's harvest a month late — and with that
+ *  error this file's own ceiling passed without the fix it exists to guard. */
+function freshYearOneOffsets(p: Planting, realNowMonth: number): number[] {
+  const crop = cropByKey(p.cropKey);
+  if (!crop || crop.timingVerified === false || crop.yieldKgPerM2 === 0) return [];
+  const monthsForward = (from: number, to: number) => ((to - from) % 12 + 12) % 12;
+  const nursery = crop.transplant ? TRANSPLANT_BED_RESERVED_FROM_MONTHS : 0;
+  const toHarvest = monthsForward(p.sowMonth, harvestMonthForCrop(p.sowMonth, crop));
+  const window = monthsForward(
+    harvestMonthForCrop(p.sowMonth, crop),
+    harvestEndMonthForCrop(p.sowMonth, crop),
+  );
+  const offsets: number[] = [];
+  for (const bedEntry of plantingBedEntryOffsets(p, realNowMonth, 24)) {
+    const sowOffset = bedEntry - nursery;
+    for (let index = 0; index <= window; index++) {
+      const offset = sowOffset + toHarvest + index;
+      if (offset >= 0 && offset <= 11) offsets.push(offset);
+    }
+  }
+  return offsets;
+}
+
+test('the whole-year plan leaves the farmer far fewer bare months in year one', () => {
+  // Swept over both goals, both rhythms and all twelve real starting months on
+  // the 4-bed-plus-2-plot farm. The ceiling is deliberately slack: merged main
+  // scores 243 here and the coverage key scores 186, so 210 fails loudly if the
+  // key is removed or reordered while leaving room for honest catalog drift.
+  // It is NOT a target — 186 is not "good", it is "better", and most of what
+  // remains is biology (nothing sown today ripens this month or next).
+  let bare = 0;
+  const worstFarms: string[] = [];
+
+  for (const goal of ['family', 'commercial'] as const) {
+    for (const rhythm of ['steady', 'few-big'] as const) {
+      for (let realNowMonth = 1; realNowMonth <= 12; realNowMonth++) {
+        const answers = roryAnswers(goal, rhythm);
+        const plan = suggestIdealYearPlan(
+          answers, 'summer', STARTER_BEDS, [], realNowMonth, REAL_NOW_YEAR,
+        ).best.result.plantings;
+
+        const fed = new Set<number>();
+        for (const p of plan) for (const offset of freshYearOneOffsets(p, realNowMonth)) fed.add(offset);
+
+        let farmBare = 0;
+        for (let offset = 0; offset <= 11; offset++) if (!fed.has(offset)) farmBare++;
+        bare += farmBare;
+        if (farmBare >= 9) {
+          worstFarms.push(`${goal}/${rhythm} from ${MONTHS_SHORT[realNowMonth - 1]}: ${farmBare} bare`);
+        }
+      }
+    }
+  }
+
+  assert.ok(bare <= 210,
+    `${bare} bare year-one months across 48 farms (ceiling 210; merged main without the `
+    + `coverage key scores 243). Worst:\n  ${worstFarms.join('\n  ') || '(none)'}`);
+});
+
+test('four beds bridge four different months, not the same earliest-sown crop', () => {
+  // The mechanism, at the config where it was first named: commercial/few-big
+  // on winter rainfall, planning from January. Ranked on ground alone, every
+  // bed runs the same race and four beds reach the same two answers — merged
+  // main gives Bed 1 and Bed 3 an August lettuce and Bed 2 and Bed 4 a January
+  // cabbage, because those sow earliest and free the bed soonest. Four beds
+  // then bridge two months between them and the rest of the year stays bare.
+  //
+  // Ranked on months fed, each bed takes the crop that covers what the ones
+  // before it did not, so the count of distinct starter crops is the visible
+  // signature: 2 without the coverage key, 4 with it.
+  const plan = suggestIdealYearPlan(
+    roryAnswers('commercial', 'few-big'), 'winter', STARTER_BEDS, [], 1, REAL_NOW_YEAR,
+  ).best.result.plantings;
+
+  const bedStarters = plan.filter((p) => typeof p.once === 'string' && p.bedId.startsWith('b'));
+  const distinctCrops = new Set(bedStarters.map((p) => p.cropKey));
+
+  assert.ok(distinctCrops.size >= 3,
+    `${bedStarters.length} bed starters drew on only ${distinctCrops.size} crop(s) `
+    + `(${[...distinctCrops].join(', ')}). Ranked on ground rather than months fed, every `
+    + 'bed picks the same earliest-sown, shortest-holding crop and the farm bridges one month '
+    + `four times over: ${bedStarters.map((p) => `${p.bedId}=${p.cropKey}@${p.sowMonth}`).join(' ')}`);
+});
+
