@@ -42,7 +42,8 @@ export interface CropPrice {
    *  same-food-group proxy, or general knowledge) rather than directly
    *  found — a real number, but a rougher one; expect to correct it. */
   confidence: 'sourced' | 'estimated';
-  /** The date THIS price was researched, when that is not the shared snapshot date
+  /** The date THIS price is from — its market trading day where one applies, else the
+   *  day it was researched — when that is not the shared snapshot date
    *  (PRICE_SNAPSHOT_DATE in components/prices/CropPriceGuide.format.ts). Set it on any
    *  entry added or refreshed in a later pass. The farm-gate card prints "Priced <date>"
    *  directly under the number, so that date has to belong to the number beside it, not

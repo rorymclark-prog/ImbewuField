@@ -63,3 +63,20 @@ test('every catalog crop with a planning yield is priced or deliberately exclude
     .map((crop) => crop.key);
   assert.deepEqual(gaps, []);
 });
+
+// The invoice screen printed "guide price, July 2026." as a hardcoded literal,
+// so when turnip arrived carrying its own 19 August trading date the sentence
+// went false on that screen while the price card and the value tab were fixed.
+// Any surface that prints a price's date must derive it (priceDateLabel /
+// PRICE_SNAPSHOT_MONTHS), never restate it — this guards the one screen that
+// slipped, by construction rather than by value.
+test('the invoice guide-price line derives its date instead of hardcoding one', async () => {
+  const { readFile } = await import('node:fs/promises');
+  const source = await readFile(new URL('../app/invoice/page.tsx', import.meta.url), 'utf8');
+  assert.match(source, /priceDateLabel\(guide\)/, 'invoice must print the per-price date');
+  assert.doesNotMatch(
+    source,
+    /(January|February|March|April|May|June|July|August|September|October|November|December)\s+20\d\d/,
+    'no month-year date literal may appear in the invoice source',
+  );
+});
