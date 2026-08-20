@@ -39,6 +39,8 @@ import type { FoodGroup } from '@/lib/crop-groups';
 import { FOOD_GROUP_META, foodGroupOf, ROTATION_FAMILY_META, rotationFamilyOf } from '@/lib/crop-groups';
 import type { AutoSuggestAnswers, AutoSuggestResult, GardenGoal, HarvestRhythm, PlanNote } from '@/lib/crop-autosuggest';
 import { autoSuggestPlan, PLAN_NOTES_PANEL_COPY } from '@/lib/crop-autosuggest';
+import type { IdealYearPlan, PlanTiming } from '@/lib/crop-plan-ideal';
+import { IDEAL_PLAN_COPY, suggestIdealYearPlan } from '@/lib/crop-plan-ideal';
 import type { CropPrice } from '@/lib/crop-prices';
 import { UNPRICED_CROPS, asFarmerOwnPrice, isUsablePrice, priceFor, loadCropPriceOverrides, saveCropPriceOverrides } from '@/lib/crop-prices';
 // The one place the price book's dates become farmer-visible copy on this page. Imported rather
@@ -482,6 +484,14 @@ function FacilitatorCropsPageInner() {
   const [aAllowMixedCropsInBed, setAAllowMixedCropsInBed] = useState(true);
   const [aReliableIrrigation, setAReliableIrrigation] = useState(false);
   const [autoResult, setAutoResult] = useState<AutoSuggestResult | null>(null);
+  // Whole-year mode (lib/crop-plan-ideal.ts): 'fromNow' keeps today's exact
+  // behaviour; 'idealYear' sweeps all 12 starting months and keeps the best
+  // repeating cycle. idealMeta is transient review-only metadata (like
+  // laterThisYear) — nothing new is persisted, the whole-year basis note
+  // rides the existing planNotes contract.
+  const [aPlanTiming, setAPlanTiming] = useState<PlanTiming>('fromNow');
+  const [idealMeta, setIdealMeta] = useState<IdealYearPlan | null>(null);
+  const [autoGenerating, setAutoGenerating] = useState(false);
 
   function openAutoSuggest() {
     setAGoal('family');
@@ -493,6 +503,9 @@ function FacilitatorCropsPageInner() {
     setAAllowVinesInBeds(false);
     setAAllowMixedCropsInBed(true);
     setAReliableIrrigation(false);
+    setAPlanTiming('fromNow');
+    setIdealMeta(null);
+    setAutoGenerating(false);
     setAutoResult(null);
     setAutoPhase('questions');
   }
@@ -519,14 +532,35 @@ function FacilitatorCropsPageInner() {
       allowMixedCropsInBed: aAllowMixedCropsInBed,
       reliableIrrigation: aReliableIrrigation,
     };
-    const suggested = autoSuggestPlan(answers, pattern, beds, plantings, currentMonth);
     // Say WHERE the climate came from, not just what it is — a satellite-derived
     // per-site profile and a reference city 250 km away are different claims.
+    // Resolved at generate time for BOTH branches: climate can still be loading
+    // when the modal opens, so it is never precomputed.
     const climateNote = climateSource === 'site'
       ? `Climate derived from satellite climate records for this site: ${PATTERN_META[pattern].label}.`
       : climateSource === 'reference'
         ? `Climate from nearest reference region — ${region?.name} (fallback): ${PATTERN_META[pattern].label}.`
         : `No mapped site — assuming ${PATTERN_META[pattern].label.toLowerCase()}.`;
+    if (aPlanTiming === 'idealYear') {
+      // Busy label first, sweep second: the 12-anchor sweep is synchronous
+      // (~0.5 s on a 12-bed farm, more on a low-end phone), so the button must
+      // repaint to its busy state before the work starts. The flag also
+      // guards a double tap while the sweep runs.
+      setAutoGenerating(true);
+      setTimeout(() => {
+        const ideal = suggestIdealYearPlan(answers, pattern, beds, plantings, currentMonth);
+        setIdealMeta(ideal);
+        setAutoResult({
+          ...ideal.best.result,
+          notes: [{ kind: 'basis', text: climateNote }, ...ideal.best.result.notes],
+        });
+        setAutoGenerating(false);
+        setAutoPhase('review');
+      }, 30);
+      return;
+    }
+    setIdealMeta(null);
+    const suggested = autoSuggestPlan(answers, pattern, beds, plantings, currentMonth);
     setAutoResult({
       ...suggested,
       notes: [{ kind: 'basis', text: climateNote }, ...suggested.notes],
@@ -1836,6 +1870,9 @@ function FacilitatorCropsPageInner() {
           groups={aGroups} onToggleGroup={toggleGroup}
           cropKeys={aCropKeys} onToggleCrop={toggleAutoCrop} onSetCrops={setACropKeys}
           rhythm={aRhythm} onRhythm={setARhythm}
+          planTiming={aPlanTiming} onPlanTiming={setAPlanTiming}
+          generating={autoGenerating} idealMeta={idealMeta}
+          hasCurrentPlantings={plantings.length > 0}
           pattern={pattern} climateSource={climateSource} referenceName={region?.name ?? null}
           rotateCrops={aRotateCrops} onRotateCrops={setARotateCrops}
           allowVinesInBeds={aAllowVinesInBeds} onAllowVinesInBeds={setAAllowVinesInBeds}
@@ -3196,9 +3233,18 @@ const RHYTHM_OPTIONS: { key: HarvestRhythm; label: string; blurb: string }[] = [
   { key: 'steady', label: 'More regular harvests', blurb: 'Prefer staggered opportunities' },
   { key: 'few-big', label: 'A few big harvests', blurb: 'One flush at a time is fine' },
 ];
+// Labels live in lib (IDEAL_PLAN_COPY), not here — the voice lint and the
+// truth gates read the lib, and a sentence hardcoded in a component is a
+// sentence no test reads.
+const TIMING_OPTIONS: { key: PlanTiming; label: string; blurb: string }[] = [
+  { key: 'fromNow', label: IDEAL_PLAN_COPY.fromNowLabel, blurb: IDEAL_PLAN_COPY.fromNowBlurb },
+  { key: 'idealYear', label: IDEAL_PLAN_COPY.idealLabel, blurb: IDEAL_PLAN_COPY.idealBlurb },
+];
 function AutoSuggestModal({
   phase, goal, onGoal, focusCount, onFocusCount,
-  groups, onToggleGroup, cropKeys, onToggleCrop, onSetCrops, rhythm, onRhythm, pattern, climateSource, referenceName, rotateCrops, onRotateCrops,
+  groups, onToggleGroup, cropKeys, onToggleCrop, onSetCrops, rhythm, onRhythm,
+  planTiming, onPlanTiming, generating, idealMeta, hasCurrentPlantings,
+  pattern, climateSource, referenceName, rotateCrops, onRotateCrops,
   allowVinesInBeds, onAllowVinesInBeds, allowMixedCropsInBed, onAllowMixedCropsInBed, reliableIrrigation, onReliableIrrigation,
   siteClimate, result, onGenerate, onAccept, onBackToQuestions, onClose,
 }: {
@@ -3208,6 +3254,12 @@ function AutoSuggestModal({
   groups: FoodGroup[]; onToggleGroup: (g: FoodGroup) => void;
   cropKeys: string[]; onToggleCrop: (cropKey: string) => void; onSetCrops: (cropKeys: string[]) => void;
   rhythm: HarvestRhythm; onRhythm: (r: HarvestRhythm) => void;
+  planTiming: PlanTiming; onPlanTiming: (t: PlanTiming) => void;
+  /** True while the whole-year sweep runs — the Suggest button shows its busy label. */
+  generating: boolean;
+  /** Whole-year review metadata; null in from-now mode (review stays pixel-identical to before). */
+  idealMeta: IdealYearPlan | null;
+  hasCurrentPlantings: boolean;
   pattern: RainPattern;
   /** Where the pattern came from: the site's own satellite climate, the nearest reference region, or no site at all. */
   climateSource: 'site' | 'reference' | 'none';
@@ -3369,6 +3421,23 @@ function AutoSuggestModal({
               </div>
             </div>
 
+            <div>
+              <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.08em' }}>{IDEAL_PLAN_COPY.timingHeading}</div>
+              <div className="grid grid-cols-2 gap-1.5">
+                {TIMING_OPTIONS.map((o) => (
+                  <button key={o.key} onClick={() => onPlanTiming(o.key)} className="py-1.5 px-2 rounded-lg text-left transition-all" style={tileStyle(planTiming === o.key)}>
+                    <div className="font-display font-semibold" style={{ fontSize: 12.5 }}>{o.label}</div>
+                    <div className="font-mono" style={{ fontSize: 10, opacity: 0.85 }}>{o.blurb}</div>
+                  </button>
+                ))}
+              </div>
+              {planTiming === 'idealYear' && hasCurrentPlantings && (
+                <p className="font-mono mt-1.5" style={{ fontSize: 10.5, color: '#9A8268', lineHeight: 1.4 }}>
+                  {IDEAL_PLAN_COPY.fullPlanHint}
+                </p>
+              )}
+            </div>
+
             <div className="rounded-xl px-3 py-2.5" style={{ background: '#F5F8F3', border: '1px solid #B9C9B9' }}>
               <div className="font-sans uppercase tracking-widest mb-1" style={{ fontSize: 10, color: '#5F735F', letterSpacing: '0.08em' }}>Climate used automatically</div>
               <div className="font-display font-semibold" style={{ fontSize: 12.5, color: '#1F4D2B' }}>
@@ -3484,7 +3553,7 @@ function AutoSuggestModal({
                   ? null
                   : 'Turn on “Reliable irrigation for every crop cycle” above to generate a plan. This plan packs crop cycles back to back, so it only holds if you can water them through.',
               ].filter((line): line is string => line !== null);
-              const canGenerate = blockers.length === 0;
+              const canGenerate = blockers.length === 0 && !generating;
               return (
                 <>
                   <button
@@ -3499,7 +3568,7 @@ function AutoSuggestModal({
                       cursor: canGenerate ? 'pointer' : 'not-allowed',
                     }}
                   >
-                    ✨ Suggest a plan
+                    {generating ? IDEAL_PLAN_COPY.busyLabel : '✨ Suggest a plan'}
                   </button>
                   {blockers.map((line) => (
                     <p key={line} className="font-sans mt-1.5" style={{ fontSize: 12, color: '#9A6018', lineHeight: 1.45 }}>{line}</p>
@@ -3516,6 +3585,47 @@ function AutoSuggestModal({
               </p>
             ) : (
               <>
+                {idealMeta && (() => {
+                  // The whole-year story, all sentences from IDEAL_PLAN_COPY so
+                  // the truth gates read them. Ramp lines only when the winner
+                  // differs from today; the residual/transition gap lines only
+                  // when the gaps are real — never a promise of 12/12.
+                  const startNowNames = idealMeta.startNowCropKeys
+                    .map((key) => cropByKey(key)?.name)
+                    .filter((name): name is string => Boolean(name))
+                    .join(', ');
+                  const transitionOnly = idealMeta.firstYearZeroFreshMonths
+                    .filter((month) => !idealMeta.best.score.zeroFreshMonths.includes(month));
+                  const line = { fontSize: 11.5, color: '#3E5240', lineHeight: 1.45 } as const;
+                  return (
+                    <div className="rounded-xl px-3 py-2.5 mb-2 space-y-1" style={{ background: '#F5F8F3', border: '1px solid #B9C9B9' }}>
+                      <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#5F735F', letterSpacing: '0.08em' }}>{IDEAL_PLAN_COPY.reviewHeading}</div>
+                      <p className="font-sans" style={line}>
+                        {idealMeta.sameAsToday ? IDEAL_PLAN_COPY.sameAsTodayLine : IDEAL_PLAN_COPY.chosenLine}
+                      </p>
+                      {!idealMeta.sameAsToday && startNowNames && (
+                        <p className="font-sans" style={line}>{IDEAL_PLAN_COPY.startNowLine(startNowNames)}</p>
+                      )}
+                      {!idealMeta.sameAsToday && idealMeta.rampInMonths.length > 0 && (
+                        <p className="font-sans" style={line}>
+                          {IDEAL_PLAN_COPY.rampInLine(idealMeta.rampInMonths.length, monthLabel(idealMeta.fullCycleByMonth))}
+                        </p>
+                      )}
+                      {idealMeta.best.score.zeroFreshMonths.length > 0 && (
+                        <p className="font-sans" style={line}>
+                          {IDEAL_PLAN_COPY.residualGapLine(idealMeta.best.score.zeroFreshMonths.map(monthLabel).join(', '))}
+                        </p>
+                      )}
+                      {transitionOnly.length > 0 && (
+                        <p className="font-sans" style={line}>
+                          {IDEAL_PLAN_COPY.transitionGapLine(transitionOnly.map(monthLabel).join(', '))}
+                        </p>
+                      )}
+                      {rhythm === 'few-big' && <p className="font-sans" style={line}>{IDEAL_PLAN_COPY.fewBigNote}</p>}
+                      {goal === 'commercial' && <p className="font-sans" style={line}>{IDEAL_PLAN_COPY.commercialNote}</p>}
+                    </div>
+                  );
+                })()}
                 <p className="font-sans mb-2" style={{ fontSize: 13, color: '#5C5040' }}>{result.plantings.length} planting{result.plantings.length > 1 ? 's' : ''} suggested:</p>
                 <div className="space-y-1 mb-2">
                   {result.plantings.map((p) => {

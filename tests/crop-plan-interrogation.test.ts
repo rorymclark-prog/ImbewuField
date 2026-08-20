@@ -21,6 +21,7 @@ import test from 'node:test';
 
 import {
   CROPS,
+  MONTHS_SHORT,
   cropByKey,
   hasPlanningYield,
   hasVerifiedSchedule,
@@ -30,7 +31,9 @@ import {
 import type { RainPattern } from '@/lib/crop-catalog';
 import { buildBedPlanRows, positionRangeLabel, sowingInstruction } from '@/lib/crop-export-schedule';
 import { buildFieldSheet } from '@/lib/crop-export-benchmark';
-import { autoSuggestPlan, planningWeightBenchmarkScore } from '@/lib/crop-autosuggest';
+import { autoSuggestPlan, planningWeightBenchmarkScore, recomputeLaterThisYear } from '@/lib/crop-autosuggest';
+import { suggestIdealYearPlan } from '@/lib/crop-plan-ideal';
+import type { IdealYearPlan } from '@/lib/crop-plan-ideal';
 import type { AutoSuggestAnswers, GardenGoal, HouseholdSize, HarvestRhythm } from '@/lib/crop-autosuggest';
 import {
   buildFieldUtilizationByMonth,
@@ -1271,4 +1274,180 @@ test('an oats cover is never left unexplained on ground that just carried a cere
   }
   assert.deepEqual(offenders.slice(0, 8), [],
     `${offenders.length} cereal-on-cereal covers with no sourced explanation`);
+});
+
+// ── The whole-year plan tells the truth against its own plantings ───────────
+//
+// suggestIdealYearPlan runs the engine TWELVE times per call, so this file's
+// usual matrix (2 geometries × 4 patterns × 3 goals × 2 rotations × 4
+// now-months) would cost ~2,300 engine runs here. TRIMMED, deliberately: the
+// claims below are month-relative bookkeeping re-derived from the emitted
+// plantings, and that arithmetic does not vary by rain pattern or rotation
+// the way placement does — so each axis keeps two representative values
+// (≈220 engine runs) instead of all of them. Placement itself is already
+// interrogated at full width above; every whole-year winner is an ordinary
+// autoSuggestPlan result those tests cover.
+
+interface IdealRun {
+  label: string;
+  answers: AutoSuggestAnswers;
+  pattern: RainPattern;
+  beds: PlanBed[];
+  realNow: number;
+  ideal: IdealYearPlan;
+}
+
+const idealFwd = (from: number, to: number): number => ((to - from) % 12 + 12) % 12;
+
+let idealRunsCache: IdealRun[] | null = null;
+function idealRuns(): IdealRun[] {
+  if (idealRunsCache) return idealRunsCache;
+  const [owner, fourBeds] = geometries();
+  const cases: { geo: { label: string; beds: PlanBed[] }; pattern: RainPattern; goal: GardenGoal; rhythm: HarvestRhythm; realNow: number }[] = [];
+  for (const pattern of ['summer', 'mild-frost'] as RainPattern[]) {
+    for (const goal of ['family', 'commercial'] as GardenGoal[]) {
+      for (const rhythm of ['steady', 'few-big'] as HarvestRhythm[]) {
+        for (const realNow of [3, 8]) {
+          cases.push({ geo: fourBeds, pattern, goal, rhythm, realNow });
+        }
+      }
+    }
+  }
+  // Two owner-farm runs keep the plot/staple machinery inside the net.
+  cases.push({ geo: owner, pattern: 'summer', goal: 'family', rhythm: 'steady', realNow: 8 });
+  cases.push({ geo: owner, pattern: 'all-year', goal: 'commercial', rhythm: 'few-big', realNow: 3 });
+  const runs: IdealRun[] = cases.map((c, i) => {
+    const answers: AutoSuggestAnswers = {
+      goal: c.goal,
+      focusCropCount: 2,
+      groups: [],
+      // Half the runs pick crops by name, so the waiting panel has explicit
+      // crops to be honest ABOUT (it is empty by design without a whitelist).
+      cropKeys: i % 2 === 0 ? ['cabbage', 'carrots', 'peas', 'chard'] : undefined,
+      rhythm: c.rhythm,
+      rotateCrops: true,
+      allowVinesInBeds: false,
+      reliableIrrigation: true,
+    };
+    return {
+      label: `${c.geo.label} · ${c.pattern} · ${c.goal} · ${c.rhythm} · now=${c.realNow}${answers.cropKeys ? ' · picked crops' : ''}`,
+      answers,
+      pattern: c.pattern,
+      beds: c.geo.beds,
+      realNow: c.realNow,
+      ideal: suggestIdealYearPlan(answers, c.pattern, c.geo.beds, [], c.realNow),
+    };
+  });
+  idealRunsCache = runs;
+  return runs;
+}
+
+test('the whole-year headline is literally true: no other starting month has fewer months without a fresh harvest', () => {
+  const offenders: string[] = [];
+  for (const run of idealRuns()) {
+    run.ideal.perAnchor.forEach((score, i) => {
+      if (score.anchorMonth !== i + 1) offenders.push(`${run.label} — perAnchor[${i}] is anchor ${score.anchorMonth}`);
+    });
+    const counts = run.ideal.perAnchor.map((score) => score.zeroFreshMonths.length);
+    const minimum = Math.min(...counts);
+    if (run.ideal.best.score.zeroFreshMonths.length !== minimum) {
+      offenders.push(`${run.label} — kept a plan with ${run.ideal.best.score.zeroFreshMonths.length} zero-fresh months while an anchor with ${minimum} existed`);
+    }
+  }
+  assert.deepEqual(offenders, [], 'the review card promises "fewest months without a fresh harvest"');
+});
+
+test('sameAsToday means exactly that: the winner IS this month\'s own plan, plantings and all', () => {
+  const offenders: string[] = [];
+  for (const run of idealRuns()) {
+    const claims = run.ideal.sameAsToday;
+    const is = run.ideal.best.anchorMonth === run.realNow;
+    if (claims !== is) {
+      offenders.push(`${run.label} — sameAsToday=${claims} but anchor is ${run.ideal.best.anchorMonth} vs now=${run.realNow}`);
+      continue;
+    }
+    if (!claims) continue;
+    // "Starting this month already gives the best whole-year result" is only
+    // honest if the plan handed over is the from-now plan, byte for byte.
+    const fromNow = autoSuggestPlan(run.answers, run.pattern, run.beds, [], run.realNow);
+    if (JSON.stringify(run.ideal.best.result.plantings) !== JSON.stringify(fromNow.plantings)) {
+      offenders.push(`${run.label} — sameAsToday plan differs from the from-now plan`);
+    }
+  }
+  assert.deepEqual(offenders, []);
+});
+
+test('every start-now, ramp-in and full-cycle statement re-derives from the plantings themselves', () => {
+  const offenders: string[] = [];
+  for (const run of idealRuns()) {
+    const { ideal, realNow } = run;
+    const plantings = ideal.best.result.plantings.filter((p) => cropByKey(p.cropKey));
+    // "To begin: sow X this month or next" — exactly the crops with a sowing
+    // 0-1 months ahead of REAL today, no more and no less.
+    const startNow = new Set(plantings.filter((p) => idealFwd(realNow, p.sowMonth) <= 1).map((p) => p.cropKey));
+    for (const key of ideal.startNowCropKeys) {
+      if (!startNow.has(key)) offenders.push(`${run.label} — told to sow ${key} now but its sowings are further out`);
+    }
+    for (const key of startNow) {
+      if (!ideal.startNowCropKeys.includes(key)) offenders.push(`${run.label} — ${key} sows within a month but the card omits it`);
+    }
+    // "N sowing months have already passed this year" — re-derived.
+    const sowMonths = [...new Set(plantings.map((p) => p.sowMonth))].sort((a, b) => a - b);
+    const expectedRamp = sowMonths.filter((month) => month < realNow);
+    if (JSON.stringify(ideal.rampInMonths) !== JSON.stringify(expectedRamp)) {
+      offenders.push(`${run.label} — rampInMonths ${JSON.stringify(ideal.rampInMonths)} != passed sow months ${JSON.stringify(expectedRamp)}`);
+    }
+    // "All of this plan's sowings will have started by <month>" — the month
+    // printed must be the real last first-sowing, and within the coming year.
+    const expectedFull = sowMonths.length ? Math.max(...sowMonths.map((month) => idealFwd(realNow, month))) : 0;
+    if (ideal.monthsUntilFullCycle !== expectedFull) {
+      offenders.push(`${run.label} — monthsUntilFullCycle ${ideal.monthsUntilFullCycle} != ${expectedFull}`);
+    }
+    if (ideal.monthsUntilFullCycle < 0 || ideal.monthsUntilFullCycle > 11) {
+      offenders.push(`${run.label} — monthsUntilFullCycle ${ideal.monthsUntilFullCycle} outside 0..11`);
+    }
+    const expectedByMonth = ((realNow - 1 + ideal.monthsUntilFullCycle) % 12) + 1;
+    if (ideal.fullCycleByMonth !== expectedByMonth) {
+      offenders.push(`${run.label} — fullCycleByMonth ${ideal.fullCycleByMonth} != ${expectedByMonth}`);
+    }
+  }
+  assert.deepEqual(offenders, []);
+});
+
+test('the whole-year card speaks from today, not from its anchor month', () => {
+  const offenders: string[] = [];
+  for (const run of idealRuns()) {
+    const { ideal, realNow } = run;
+    const notes = ideal.best.result.notes.map((note) => note.text);
+    // The waiting panel must describe THIS plan from THIS month — the anchor
+    // run wrote it from a month that may not be today.
+    const honest = recomputeLaterThisYear(
+      run.answers, run.pattern, run.beds, ideal.best.result.plantings, [], realNow,
+    );
+    if (JSON.stringify(ideal.best.result.laterThisYear) !== JSON.stringify(honest)) {
+      offenders.push(`${run.label} — waiting panel differs from a recompute at the real month`);
+    }
+    if (ideal.best.result.plantings.length) {
+      const basisMentions = notes.filter((text) => text.includes('plans starting in each of the 12 months'));
+      if (basisMentions.length !== 1) {
+        offenders.push(`${run.label} — ${basisMentions.length} whole-year basis notes, expected exactly 1`);
+      } else if (!basisMentions[0].includes(`from ${MONTHS_SHORT[realNow - 1]}.`)) {
+        offenders.push(`${run.label} — basis note does not name the real month ${MONTHS_SHORT[realNow - 1]}: "${basisMentions[0]}"`);
+      }
+    }
+    // With an empty bed history nothing can be "already growing" — the
+    // overlap warning appearing here would be a fabricated hazard.
+    for (const text of notes) {
+      if (text.includes('already growing')) offenders.push(`${run.label} — overlap warning on an empty farm: "${text}"`);
+    }
+    // The transition year may only ever be LEANER than the repeating year the
+    // scores describe — a steady-state gap that vanishes in year one would
+    // mean one of the two disclosures is lying.
+    for (const month of ideal.best.score.zeroFreshMonths) {
+      if (!ideal.firstYearZeroFreshMonths.includes(month)) {
+        offenders.push(`${run.label} — month ${month} is zero-fresh in the repeating year but claimed fresh in year one`);
+      }
+    }
+  }
+  assert.deepEqual(offenders, []);
 });

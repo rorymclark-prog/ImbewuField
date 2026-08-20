@@ -18,6 +18,7 @@ import assert from 'node:assert/strict';
 import {
   autoSuggestPlan,
   PLAN_NOTES_PANEL_COPY,
+  recomputeLaterThisYear,
   type AutoSuggestAnswers,
   type PlanNote,
   type PlanNoteKind,
@@ -390,12 +391,11 @@ test('a chosen crop that actually got planted never appears in Later this year',
       if (planted.has(later.cropKey)) offenders.push(`${scenario.label}: ${later.cropKey} is both planted and "later"`);
       const crop = CROPS.find((candidate) => candidate.key === later.cropKey);
       if (!crop) { offenders.push(`${scenario.label}: unknown crop ${later.cropKey}`); continue; }
-      // It must be a TIMING story: this month is genuinely outside the window,
-      // and the month named is genuinely in it.
+      // It must be a TIMING story about a real month of the crop's window.
+      // (A window CONTAINING the current month is allowed since the
+      // 2026-08-20 open-now fix — but only when the plan has no room this
+      // month, checked in the sentence branch below.)
       const window = crop.sowMonths[scenario.pattern];
-      if (window.includes(scenario.nowMonth)) {
-        offenders.push(`${scenario.label}: ${later.cropKey} could be sown right now — this is not a timing gap`);
-      }
       if (!window.includes(later.nextWindowMonth)) {
         offenders.push(`${scenario.label}: ${later.cropKey} points at a month outside its own window`);
       }
@@ -417,15 +417,24 @@ test('a chosen crop that actually got planted never appears in Later this year',
       // ...and the printed sentence must be either the true window alone, or
       // the true window WITH the reason a later month is the real chance.
       const opens = MONTHS_SHORT[later.nextWindowMonth - 1];
-      if (!later.text.includes(`next sowing window opens in ${opens}`)) {
+      const fits = MONTHS_SHORT[later.firstFitMonth - 1];
+      if (later.nextWindowMonth === scenario.nowMonth) {
+        // The window is open RIGHT NOW. Only the blocked form may appear —
+        // an entry with room this month would contradict the plan that just
+        // declined to place the crop, so the producer must have skipped it.
+        if (later.firstFitMonth === scenario.nowMonth) {
+          offenders.push(`${scenario.label}: ${later.cropKey} claims to be waiting while the plan has room right now`);
+        }
+        if (!/sowing window is open right now/.test(later.text) || !later.text.includes(`nowhere to put it until ${fits}`)) {
+          offenders.push(`${scenario.label}: ${later.cropKey} open-now sentence must carry both facts: "${later.text}"`);
+        }
+      } else if (!later.text.includes(`next sowing window opens in ${opens}`)) {
         offenders.push(`${scenario.label}: ${later.cropKey} sentence does not name the true window month ${opens}: "${later.text}"`);
-      }
-      if (later.firstFitMonth === later.nextWindowMonth) {
+      } else if (later.firstFitMonth === later.nextWindowMonth) {
         if (/nowhere to put it|could still fit into/.test(later.text)) {
           offenders.push(`${scenario.label}: ${later.cropKey} explains away a block that did not happen: "${later.text}"`);
         }
       } else {
-        const fits = MONTHS_SHORT[later.firstFitMonth - 1];
         if (!/nowhere to put it that month/.test(later.text) || !later.text.includes(`fit into is ${fits}`)) {
           offenders.push(`${scenario.label}: ${later.cropKey} hides that ${opens} is blocked and ${fits} is the real chance: "${later.text}"`);
         }
@@ -433,6 +442,52 @@ test('a chosen crop that actually got planted never appears in Later this year',
     }
   }
   assert.deepEqual(offenders.slice(0, 6), [], `${offenders.length} dishonest Later-this-year entries`);
+});
+
+test('a crop whose window is open RIGHT NOW but has no room is reported, not silently dropped', () => {
+  // The 2026-08-20 gap: the old producer skipped any crop whose window
+  // contained the current month, so a farmer generating in August was never
+  // told that peas (window open in August) had nowhere to go until February —
+  // the crop just vanished from both the plan and the panel.
+  const peas = cropByKey('peas')!;
+  assert.deepEqual(peas.sowMonths.summer, [2, 3, 8], 'fixture assumes the Aug window with Feb/Mar as the wrap-around fits');
+  const answers: AutoSuggestAnswers = {
+    goal: 'family', householdSize: 'medium', groups: [],
+    cropKeys: ['peas'], rhythm: 'few-big',
+    rotateCrops: false, allowVinesInBeds: false, allowMixedCropsInBed: false,
+    reliableIrrigation: true,
+  };
+  const beds: PlanBed[] = [{ id: 'b1', label: 'Bed 1', areaM2: 9, minDimM: 1.2 }];
+  // Swiss chard sown July holds the only bed Jul-Dec (2 months to maturity,
+  // 3 picking months, +1), so August is full while Jan-Jun stay free.
+  const proposed: Planting[] = [{ id: 'p1', bedId: 'b1', cropKey: 'swiss-chard', sowMonth: 7 }];
+  const entries = recomputeLaterThisYear(answers, 'summer', beds, proposed, [], 8);
+  const entry = entries.find((later) => later.cropKey === 'peas');
+  assert.ok(entry, `peas must appear even though its window contains August: ${JSON.stringify(entries)}`);
+  assert.equal(entry!.nextWindowMonth, 8, 'the window that matters is the one open right now');
+  assert.equal(entry!.firstFitMonth, 2, 'February is the first month of its window with room — a WRAP past December');
+  assert.match(entry!.text, /sowing window is open right now/);
+  assert.match(entry!.text, /nowhere to put it until Feb/);
+  assert.doesNotMatch(entry!.text, /next sowing window opens/,
+    'an open window must never be narrated as a future one');
+});
+
+test('recomputeLaterThisYear rebuilds exactly what autoSuggestPlan reported', () => {
+  // The ideal-year feature re-derives the waiting panel at the REAL current
+  // month after planning from a different anchor. That is only honest if the
+  // standalone recompute agrees byte-for-byte with the engine's own output
+  // whenever it is fed the same inputs back.
+  let compared = 0;
+  for (const scenario of sweep()) {
+    if (!scenario.answers.cropKeys?.length) continue; // panel is explicit-crops-only
+    const result = autoSuggestPlan(scenario.answers, scenario.pattern, scenario.beds, [], scenario.nowMonth);
+    const recomputed = recomputeLaterThisYear(
+      scenario.answers, scenario.pattern, scenario.beds, result.plantings, [], scenario.nowMonth,
+    );
+    assert.deepEqual(recomputed, result.laterThisYear, `${scenario.label}: recompute disagrees with the engine`);
+    compared++;
+  }
+  assert.ok(compared >= 20, `the sweep must actually exercise this (${compared} explicit-crop scenarios)`);
 });
 
 // ── E. the bridge clause ────────────────────────────────────────────────────

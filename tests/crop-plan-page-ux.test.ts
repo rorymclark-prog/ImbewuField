@@ -386,3 +386,60 @@ test('a staple plot is never called a bed by the overlap warning', () => {
   const note = page.slice(noteAt - 300, noteAt + 700);
   assert.match(note, /overlapWarning\s*\n?\s*\?/, 'the "space check above" reference must be conditional on it rendering');
 });
+
+// ── The whole-year plan wiring (2026-08-20) ─────────────────────────────────
+//
+// The feature's engine and copy live in lib/crop-plan-ideal.ts and are truth-
+// tested there; these assert the page actually consumes them — the bug class
+// where a lib ships and the component quietly keeps its own hardcoded story.
+
+test('the timing question sits between the rhythm question and the climate card, built from lib copy', () => {
+  const page = source('../app/facilitator/crops/page.tsx');
+  const rhythmAt = page.indexOf('How do you want your harvests spread out?');
+  const timingAt = page.indexOf('IDEAL_PLAN_COPY.timingHeading');
+  const climateAt = page.indexOf('Climate used automatically');
+  assert.ok(rhythmAt > 0 && timingAt > 0 && climateAt > 0, 'all three blocks must exist');
+  assert.ok(rhythmAt < timingAt && timingAt < climateAt,
+    'the timing question renders after the rhythm question and before the climate card');
+  // The option labels come from lib, never re-typed here: a hardcoded copy is
+  // a sentence the voice lint and the truth gates cannot see.
+  assert.match(page, /IDEAL_PLAN_COPY\.fromNowLabel/);
+  assert.match(page, /IDEAL_PLAN_COPY\.idealLabel/);
+  assert.ok(!page.includes("'Best whole-year plan'") && !page.includes('"Best whole-year plan"'),
+    'the ideal label must not be duplicated as a page literal');
+  assert.ok(!page.includes("'Start from this month'") && !page.includes('"Start from this month"'),
+    'the from-now label must not be duplicated as a page literal');
+});
+
+test('the whole-year branch runs from the REAL current month and the busy state guards the sweep', () => {
+  const page = source('../app/facilitator/crops/page.tsx');
+  assert.match(page, /suggestIdealYearPlan\(answers, pattern, beds, plantings, currentMonth\)/,
+    'the sweep must receive the device month, never a synthetic one');
+  assert.match(page, /generating \? IDEAL_PLAN_COPY\.busyLabel/,
+    'the Suggest button must show the busy label while the sweep runs');
+  assert.match(page, /blockers\.length === 0 && !generating/,
+    'the generating flag must gate the button against a double tap');
+});
+
+test('the whole-year review card is gated on ideal metadata and speaks only lib sentences', () => {
+  const page = source('../app/facilitator/crops/page.tsx');
+  assert.match(page, /idealMeta && \(\(\) => \{/,
+    'the review card renders only in whole-year mode — from-now review stays pixel-identical');
+  for (const key of [
+    'sameAsTodayLine', 'chosenLine', 'startNowLine', 'rampInLine',
+    'residualGapLine', 'transitionGapLine', 'fewBigNote', 'commercialNote',
+  ]) {
+    assert.ok(page.includes(`IDEAL_PLAN_COPY.${key}`), `the card must render IDEAL_PLAN_COPY.${key}`);
+  }
+});
+
+test('choosing whole-year over a non-empty plan surfaces the add-only hint, and reopening resets the mode', () => {
+  const page = source('../app/facilitator/crops/page.tsx');
+  assert.match(page, /planTiming === 'idealYear' && hasCurrentPlantings/,
+    'the add-only hint shows exactly when the whole-year mode would plan around existing rows');
+  assert.match(page, /IDEAL_PLAN_COPY\.fullPlanHint/);
+  const openBody = page.slice(page.indexOf('function openAutoSuggest'), page.indexOf('function chooseGoal'));
+  for (const reset of ["setAPlanTiming('fromNow')", 'setIdealMeta(null)', 'setAutoGenerating(false)']) {
+    assert.ok(openBody.includes(reset), `openAutoSuggest must reset the whole-year state: ${reset}`);
+  }
+});

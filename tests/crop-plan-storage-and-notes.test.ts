@@ -552,3 +552,13 @@ test('a crop is never named as stored in a month the plan does not store it', ()
   assert.ok(namedAsStored.length > 0, 'the fixture produced no storage clause for the guard to check');
   assert.ok(cropByKey('butternut'), 'fixture sanity');
 });
+
+// ── The from-now regression pin (added with the whole-year feature) ─────────
+
+test('the from-now engine call in page.tsx survives the whole-year feature byte-for-byte', () => {
+  // "Start from this month" must keep the EXACT behaviour every existing plan
+  // was generated with. The whole-year branch is additive; if this literal
+  // call ever changes shape, the from-now path is no longer today's path.
+  assert.match(PAGE, /autoSuggestPlan\(answers, pattern, beds, plantings, currentMonth\)/,
+    'the literal from-now engine call must survive unchanged');
+});
