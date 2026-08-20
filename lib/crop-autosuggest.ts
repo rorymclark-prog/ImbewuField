@@ -1970,6 +1970,28 @@ export interface FirstSeasonFill {
 }
 
 /**
+ * The month-offsets 0..11 — the farmer's REAL first twelve months — at which a
+ * cohort sown `sowOffset` months from now would put fresh food on the table.
+ *
+ * The same arithmetic freshHarvestMonths uses, expressed in real offsets rather
+ * than calendar months, because that is the frame the first-season question is
+ * asked in: a harvest at offset 12 is next year's, not this year's, and a
+ * bridge that lands there bridges nothing. Cover crops and unverified timing
+ * yield no food and are excluded exactly as freshHarvestMonths excludes them.
+ */
+function firstYearFreshOffsets(crop: CropDef, sowOffset: number): number[] {
+  if (crop.timingVerified === false || crop.yieldKgPerM2 === 0) return [];
+  const delta = planningMaturityMonths(crop.daysToHarvest)
+    + (crop.transplant ? TRANSPLANT_ENTRY_PLANNED_MONTHS : 0);
+  const offsets: number[] = [];
+  for (let index = 0; index <= (crop.harvestWindowMonths ?? 0); index++) {
+    const offset = sowOffset + delta + index;
+    if (offset >= 0 && offset <= 11) offsets.push(offset);
+  }
+  return offsets;
+}
+
+/**
  * FIRST-SEASON transition fill — the answer to "huge gaps" in year one of a
  * whole-year plan (2026-08-20, measured on the real 13-area farm the
  * complaint came from).
@@ -2086,6 +2108,25 @@ export function fillFirstSeasonGaps(
     }
   }
 
+  // ---- what the farmer can already eat, month by month, in year ONE -------
+  // The pass below picks the ground it fills by how EMPTY that ground is. Empty
+  // ground and an empty plate are not the same question, and only the second is
+  // the one this pass exists to answer: measured before this ledger, 84 of 605
+  // starters ripened entirely after month 11 (77 of them lettuce) and another
+  // 132 ripened only into months the cycle already fed — a third of every
+  // starter placed, holding bed-months that a crop feeding a bare month could
+  // have had. Seeded from every row already committed, and updated as each
+  // starter lands so four beds do not all bridge the same month.
+  const freshOffsetsCovered = new Set<number>();
+  for (const p of [...existingPlantings, ...cyclePlantings]) {
+    const crop = CROPS.find((candidate) => candidate.key === p.cropKey);
+    if (!crop || !Number.isInteger(p.sowMonth) || p.sowMonth < 1 || p.sowMonth > 12) continue;
+    const sowOffset = p.existing
+      ? existingSowOffset(p.sowMonth, realNowMonth)
+      : monthsForward(realNowMonth, p.sowMonth);
+    for (const offset of firstYearFreshOffsets(crop, sowOffset)) freshOffsetsCovered.add(offset);
+  }
+
   const onceStamp = (sowOffset: number): string => {
     const absolute = realNowYear * 12 + (realNowMonth - 1) + sowOffset;
     return `${Math.floor(absolute / 12)}-${String((absolute % 12) + 1).padStart(2, '0')}`;
@@ -2112,6 +2153,10 @@ export function fillFirstSeasonGaps(
       // rotation off, potato twice over) — the exact spend poolForBed's own
       // comment exists to prevent.
       const bedPool = poolForBed(bed, pool, answers.allowVinesInBeds, plotsWithCourse, strictCropKeys);
+      // Read every turn for the same reason bedPool is: a starter that lands
+      // below closes months, and the next turn must be judged against that.
+      const newFreshMonths = (candidate: { freshOffsets: number[] }): number =>
+        candidate.freshOffsets.filter((offset) => !freshOffsetsCovered.has(offset)).length;
       const candidates = bedPool
         .flatMap((crop) => [...new Set(crop.sowMonths[pattern] ?? [])].map((sowMonth) => ({ crop, sowMonth })))
         .filter((candidate) => supportsAutomaticPlacement(candidate.crop, bed))
@@ -2128,6 +2173,10 @@ export function fillFirstSeasonGaps(
         // months, and every month it takes must be provably bare — including
         // any tail that crosses into the cycle's second year.
         .filter((candidate) => candidate.entry <= 11 && candidate.entry + candidate.span <= HORIZON)
+        .map((candidate) => ({
+          ...candidate,
+          freshOffsets: firstYearFreshOffsets(candidate.crop, candidate.sowOffset),
+        }))
         .filter((candidate) => {
           for (let index = 0; index < candidate.span; index++) {
             if (occupied[candidate.entry + index]) return false;
@@ -2140,6 +2189,16 @@ export function fillFirstSeasonGaps(
           (bed.kind === 'plot'
             ? Number(!isPlotWinterCover(a.crop)) - Number(!isPlotWinterCover(b.crop))
             : Number(a.crop.yieldKgPerM2 === 0) - Number(b.crop.yieldKgPerM2 === 0))
+          // MONTHS THE FARMER WOULD OTHERWISE NOT EAT — the whole point of the
+          // pass, so it leads. Without it the two keys below decided alone, and
+          // "earliest, then shortest" is a race about GROUND: on the reference
+          // farm they picked an August lettuce (hold 8-12, ripe at 12) over an
+          // August chard (hold 7-12, ripe 9-12) because lettuce's hold was one
+          // month shorter — spending the bed's last four months on a harvest
+          // that arrives after the farmer's first year is over, while three
+          // bare months sat behind it. Ties still fall through to the old
+          // order, so nothing changes where coverage is equal.
+          || (bed.kind === 'plot' ? 0 : newFreshMonths(b) - newFreshMonths(a))
           // Earliest start closes the emptiest early months first (the farmer
           // is standing in front of bare ground TODAY)…
           || (a.sowOffset - b.sowOffset)
@@ -2150,6 +2209,7 @@ export function fillFirstSeasonGaps(
       const { picks } = rotationLegalTiered(candidates, bed, rotation);
       if (!picks.length) break;
       const chosen = picks[0];
+      for (const offset of chosen.freshOffsets) freshOffsetsCovered.add(offset);
       for (let index = 0; index < chosen.span; index++) occupied[chosen.entry + index] = true;
       // A starter is one-time, so it is recorded as one real course rather than
       // an annually repeating one — see recordOnceUse.
