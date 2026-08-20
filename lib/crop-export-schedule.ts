@@ -333,9 +333,11 @@ export interface BuyingMonth {
  * Botanical seed intentionally has no inferred buy count: field spacing proves
  * an approximate final stand, not the packet quantity needed to establish it.
  *
- * `existing` (already-growing) plantings are skipped — seedBoqForPlan skips
- * them too, because there is nothing left to buy for a crop already in the
- * ground.
+ * `existing` (already-growing) plantings are skipped — seedBoqBatchesForPlan
+ * skips them too, because there is nothing left to buy for a crop already in
+ * the ground. A settled one-time starter still holding its nursery stamp
+ * (Planting.inNursery) is the one exception: its trays are sown but its field
+ * entry is not, so the ready-grown-seedling purchase is still ahead of it.
  */
 export function buildBuyingSchedule(
   plantings: Planting[],
@@ -384,6 +386,7 @@ export function buildBuyingSchedule(
         bedMonthLatest,
         boq.finalPlantPositionsRange,
         boq.quantityStatus,
+        boq.inNursery,
       ),
     });
   }
@@ -421,6 +424,7 @@ function buyingNote(
   bedMonthLatest: number,
   finalPlantPositionsRange: readonly [number, number],
   quantityStatus: SeedBoqRow['quantityStatus'],
+  inNursery = false,
 ): string {
   if (transplant) {
     const quantity = quantityStatus === 'spacing-confirmation-required'
@@ -430,7 +434,12 @@ function buyingNote(
       ? monthLong(bedMonth)
       : `${monthLong(bedMonth)}–${monthLong(bedMonthLatest)}`;
     return `Buying ready-grown seedlings? Source them only when the bed and seedlings are ready; the planning window is ${fieldWindow}. ${quantity}`
-      + `Raising your own instead? Source packet seed before the ${monthLong(sowMonth)} tray-sowing month, use its tray-sowing rate, and sow trays in ${monthLong(sowMonth)}. `
+      + (inNursery
+        // The tray-sowing month is behind the farmer, so the "raise your own"
+        // half is spent — printing it in October tells them to buy packet seed
+        // for a month that has gone.
+        ? `This one-time starter's tray-sowing month (${monthLong(sowMonth)}) has passed, so buying ready-grown seedlings is the remaining route. `
+        : `Raising your own instead? Source packet seed before the ${monthLong(sowMonth)} tray-sowing month, use its tray-sowing rate, and sow trays in ${monthLong(sowMonth)}. `)
       + TRANSPLANT_NURSERY_GUIDANCE;
   }
   if (quantityStatus === 'spacing-confirmation-required') {

@@ -447,6 +447,25 @@ class Occupancy {
           if (offset >= 0) this.addExistingOffset(p.bedId, offset, crop.key, safeFraction);
         }
       } else {
+        // A saved one-time starter holds ground exactly like a planned row, and
+        // is seeded as one — INCLUDING the annual ledger, which an earlier
+        // version deliberately skipped on the reasoning that its months do not
+        // recur so they must not block the same-named months next year.
+        //
+        // That reasoning ignored what it is being compared against. This ledger
+        // is rebuilt for each of twelve candidate anchors, so `nowMonth` is
+        // usually a synthetic anchor rather than today, and offsets are only
+        // meaningful within their own anchor's frame. Planned rows survive that
+        // because they are also written to the annual ledger, which is keyed by
+        // calendar month and therefore identical in every frame. A starter
+        // written to offsets ALONE was compared across rotated frames, so an
+        // overlap real in the printed year read as clear here — and the sweep
+        // scheduled a second crop on top of it. Farmers saw plots at 200%.
+        //
+        // Blocking the calendar month costs nothing it should have kept: every
+        // planned row repeats annually, so a recurring crop overlapping the
+        // starter's months collides in year one no matter which year it is
+        // read in. There is no legal planting here to lose.
         this.add(p.bedId, p.sowMonth, crop, safeFraction);
       }
     }
@@ -1004,6 +1023,15 @@ class BedRotation {
     for (const planting of existingPlantings) {
       const crop = CROPS.find((candidate) => candidate.key === planting.cropKey);
       if (!crop) continue;
+      if (typeof planting.once === 'string') {
+        // A saved one-time starter's sowing is still AHEAD. Anchoring it as an
+        // observed past course (existingSowOffset) would rewrite a future
+        // sowing into last year's history and corrupt every neighbour
+        // comparison. Forward anchor, but marked existing so wouldRepeat
+        // treats it as one real course — never a ±12-projected annual copy.
+        this.addSlot(planting.bedId, { ...this.slotFor(crop, planting.sowMonth, false), existing: true });
+        continue;
+      }
       this.addSlot(planting.bedId, this.slotFor(crop, planting.sowMonth, true));
     }
   }
@@ -1147,6 +1175,19 @@ class BedRotation {
     }
     this.lastBedId = bedId;
     this.addSlot(bedId, this.slotFor(crop, sowMonth, false));
+  }
+
+  /** Record a one-time first-season starter placed during THIS run.
+   *
+   * The same treatment the constructor gives a starter loaded from saved data:
+   * forward-anchored, but marked existing so wouldRepeat compares it as the one
+   * real course it is. Logged through recordUse instead, its ±12 annual
+   * projections would have it competing with itself a year out and could veto a
+   * later starter that is genuinely legal — understating how much bare ground
+   * the pass could honestly have filled, which is the whole point of the pass. */
+  recordOnceUse(bedId: string, crop: CropDef, sowMonth: number) {
+    this.lastBedId = bedId;
+    this.addSlot(bedId, { ...this.slotFor(crop, sowMonth, false), existing: true });
   }
 
   fallbackNotes(beds: readonly PlanBed[]): string[] {
@@ -1920,6 +1961,280 @@ function winterBridgeNotes(
     `${bridged.length} growing areas would otherwise rest all winter, so a winter crop went in: ${lines}.${tail}`,
     bridged.map((entry) => entry.bed.id),
   )];
+}
+
+export interface FirstSeasonFill {
+  /** One-time starter plantings, each stamped with `once: 'YYYY-MM'`. */
+  starters: Planting[];
+  notes: PlanNote[];
+}
+
+/**
+ * FIRST-SEASON transition fill — the answer to "huge gaps" in year one of a
+ * whole-year plan (2026-08-20, measured on the real 13-area farm the
+ * complaint came from).
+ *
+ * The repeating annual cycle is scored cyclically, so a sowing that wraps the
+ * year boundary (July broad beans covering Aug–Nov) counts as coverage — but
+ * in the farmer's FIRST year that sowing has not happened yet, and the ground
+ * it would cover stands bare. Every one of the 12 anchor months leaves 20–31
+ * idle bed-months in year one on that farm; no scoring change can fix what is
+ * a structural property of starting a cycle mid-air. So this pass runs on the
+ * WINNING cycle only, finds ground that is fully bare during the first twelve
+ * real months, and places ONE-TIME starter sowings there from the farmer's
+ * own allowed crops — never touching the cycle itself, never recurring.
+ *
+ * Rules carried over from the engine's own placement passes:
+ *  - the candidate pool is built exactly as autoSuggestPlan builds it (exact
+ *    crop choices stay exact, otherwise verified yield-backed food crops);
+ *  - plots route through poolForBed: a plot whose cycle already has its
+ *    staple course only accepts a winter cover here, so a starter can never
+ *    spend a staple course the rotation needs later (most plot holes are
+ *    2–4 months while the shortest staple needs 5 — they honestly rest,
+ *    and the note below says so rather than papering over it), and a starter
+ *    that spends a courseless plot's one course claims it here too, so the
+ *    same rule holds for the rest of this pass;
+ *  - rotation is enforced against real history AND the upcoming cycle via
+ *    the same BedRotation/rotationLegalTiered machinery;
+ *  - occupancy uses the same bed-hold arithmetic as the printed occupancy
+ *    calendar, so a filled hole here is a filled hole on the farmer's PDF.
+ */
+export function fillFirstSeasonGaps(
+  answers: AutoSuggestAnswers,
+  pattern: RainPattern,
+  beds: PlanBed[],
+  cyclePlantings: readonly Planting[],
+  existingPlantings: readonly Planting[],
+  realNowMonth: number,
+  realNowYear: number,
+): FirstSeasonFill {
+  // The fill BRIDGES a cycle; it is never a plan of its own. An engine run
+  // that refused to plan (irrigation unconfirmed, nothing schedulable) must
+  // not be second-guessed by a back door that plants anyway.
+  if (answers.reliableIrrigation !== true || !cyclePlantings.length) {
+    return { starters: [], notes: [] };
+  }
+
+  // Provable-free horizon: a starter's whole hold must sit inside it, and it
+  // must reach far enough to see the cycle's second year coming (a starter
+  // tail that crosses month 12 collides with next year's repeat if occupied).
+  const HORIZON = 24;
+
+  // ---- candidate pool: mirror autoSuggestPlan's construction exactly ------
+  const selectedGroups = answers.groups.length ? new Set(answers.groups) : null;
+  const yieldBackedFood = SCHEDULABLE_CROPS.filter(hasAutomaticPlanningBasis);
+  const explicitCropKeys = new Set((answers.cropKeys ?? []).filter(Boolean));
+  let pool = explicitCropKeys.size
+    ? SCHEDULABLE_CROPS.filter((crop) => explicitCropKeys.has(crop.key))
+    : yieldBackedFood.filter((crop) => !selectedGroups || selectedGroups.has(foodGroupOf(crop)));
+  if (!pool.length) {
+    if (explicitCropKeys.size) return { starters: [], notes: [] };
+    pool = yieldBackedFood;
+  }
+  const strictCropKeys = explicitCropKeys.size ? explicitCropKeys : undefined;
+  const exactFamilies = explicitCropKeys.size
+    ? new Set(pool.map((crop) => rotationFamilyOf(crop)))
+    : new Set<RotationFamily>();
+  const exactFallbackFamily = exactFamilies.size === 1 ? [...exactFamilies][0] : null;
+
+  // A plot whose cycle already carries a planting has its courses spoken for.
+  // Starters claim into this set as they land, so the placement loop below must
+  // read it every turn — it is a live tally, not a snapshot.
+  const plotKinds = new Map(beds.map((bed) => [bed.id, bed.kind]));
+  const plotsWithCourse = new Set(
+    cyclePlantings.filter((p) => plotKinds.get(p.bedId) === 'plot').map((p) => p.bedId),
+  );
+
+  // ---- rotation: real history first, then the cycle as upcoming courses ---
+  const rotation = new BedRotation(
+    existingPlantings, realNowMonth, answers.rotateCrops, exactFallbackFamily,
+  );
+  for (const p of cyclePlantings) {
+    const crop = CROPS.find((candidate) => candidate.key === p.cropKey);
+    if (crop) rotation.recordUse(p.bedId, crop, p.sowMonth);
+  }
+
+  // ---- real-offset occupancy, same arithmetic as the occupancy calendar ---
+  const occupiedByBed = new Map<string, boolean[]>();
+  const unfillableBeds = new Set<string>();
+  const markOccupied = (bedId: string, entry: number, span: number): void => {
+    let ledger = occupiedByBed.get(bedId);
+    if (!ledger) { ledger = Array<boolean>(HORIZON).fill(false); occupiedByBed.set(bedId, ledger); }
+    for (let index = 0; index < span; index++) {
+      const offset = entry + index;
+      if (offset >= 0 && offset < HORIZON) ledger[offset] = true;
+    }
+  };
+  for (const p of [...existingPlantings, ...cyclePlantings]) {
+    const crop = CROPS.find((candidate) => candidate.key === p.cropKey);
+    if (!crop || crop.timingVerified === false
+      || !Number.isInteger(p.sowMonth) || p.sowMonth < 1 || p.sowMonth > 12) {
+      // Ground held by a crop whose months cannot be derived is not provably
+      // free anywhere — never place a starter on top of an unknown.
+      unfillableBeds.add(p.bedId);
+      continue;
+    }
+    const sowOffset = p.existing
+      ? existingSowOffset(p.sowMonth, realNowMonth)
+      : monthsForward(realNowMonth, p.sowMonth);
+    const entry = sowOffset + bedHoldStartOffsetMonths(crop);
+    const span = bedHoldSpanMonths(crop);
+    if (p.existing || typeof p.once === 'string') {
+      markOccupied(p.bedId, entry, span);
+    } else {
+      for (let start = entry; start < HORIZON; start += 12) markOccupied(p.bedId, start, span);
+    }
+  }
+
+  const onceStamp = (sowOffset: number): string => {
+    const absolute = realNowYear * 12 + (realNowMonth - 1) + sowOffset;
+    return `${Math.floor(absolute / 12)}-${String((absolute % 12) + 1).padStart(2, '0')}`;
+  };
+
+  const starters: Planting[] = [];
+  const added: { bed: PlanBed; cropName: string; sowMonth: number }[] = [];
+  const stillBare: { bed: PlanBed; from: number; to: number }[] = [];
+
+  for (const bed of beds) {
+    if (unfillableBeds.has(bed.id)) continue;
+    let ledger = occupiedByBed.get(bed.id);
+    if (!ledger) { ledger = Array<boolean>(HORIZON).fill(false); occupiedByBed.set(bed.id, ledger); }
+    const occupied = ledger;
+    // A long hole can take two short starters back to back, so keep placing
+    // until nothing legal fits. Each placement occupies ≥1 offset, so this
+    // terminates within the horizon.
+    for (;;) {
+      // Re-derived every turn: a starter that spends this plot's staple course
+      // below must narrow the pool to covers for the next turn. Hoisted out of
+      // this loop it was a snapshot taken before any starter landed, so a
+      // courseless plot kept drawing on the full staple pool turn after turn and
+      // could spend TWO courses (measured: potato Aug + dry beans Jan; and with
+      // rotation off, potato twice over) — the exact spend poolForBed's own
+      // comment exists to prevent.
+      const bedPool = poolForBed(bed, pool, answers.allowVinesInBeds, plotsWithCourse, strictCropKeys);
+      const candidates = bedPool
+        .flatMap((crop) => [...new Set(crop.sowMonths[pattern] ?? [])].map((sowMonth) => ({ crop, sowMonth })))
+        .filter((candidate) => supportsAutomaticPlacement(candidate.crop, bed))
+        .map((candidate) => {
+          const sowOffset = monthsForward(realNowMonth, candidate.sowMonth);
+          return {
+            ...candidate,
+            sowOffset,
+            entry: sowOffset + bedHoldStartOffsetMonths(candidate.crop),
+            span: bedHoldSpanMonths(candidate.crop),
+          };
+        })
+        // First season only: the hold must START inside the first twelve real
+        // months, and every month it takes must be provably bare — including
+        // any tail that crosses into the cycle's second year.
+        .filter((candidate) => candidate.entry <= 11 && candidate.entry + candidate.span <= HORIZON)
+        .filter((candidate) => {
+          for (let index = 0; index < candidate.span; index++) {
+            if (occupied[candidate.entry + index]) return false;
+          }
+          return true;
+        })
+        .sort((a, b) =>
+          // Plots: the cover crop owns the slot (same reasoning as the winter
+          // bridger). Beds: fresh food outranks a zero-yield cover.
+          (bed.kind === 'plot'
+            ? Number(!isPlotWinterCover(a.crop)) - Number(!isPlotWinterCover(b.crop))
+            : Number(a.crop.yieldKgPerM2 === 0) - Number(b.crop.yieldKgPerM2 === 0))
+          // Earliest start closes the emptiest early months first (the farmer
+          // is standing in front of bare ground TODAY)…
+          || (a.sowOffset - b.sowOffset)
+          // …then the shorter hold, freeing room for a second starter.
+          || (a.span - b.span)
+          || (commercialScore(b.crop) - commercialScore(a.crop))
+          || a.crop.key.localeCompare(b.crop.key));
+      const { picks } = rotationLegalTiered(candidates, bed, rotation);
+      if (!picks.length) break;
+      const chosen = picks[0];
+      for (let index = 0; index < chosen.span; index++) occupied[chosen.entry + index] = true;
+      // A starter is one-time, so it is recorded as one real course rather than
+      // an annually repeating one — see recordOnceUse.
+      rotation.recordOnceUse(bed.id, chosen.crop, chosen.sowMonth);
+      // ONE COURSE PER PLOT, starters included. rotationLegalTiered only bars a
+      // FAMILY repeat, so nothing stopped two unlike courses on one courseless
+      // plot. A winter cover is NOT a course and must not claim: the sort above
+      // deliberately lets the cover take the slot first, so claiming on any
+      // starter would cost the plot the one food course it is still owed
+      // (measured: 96 of 144 configs drop to zero food courses under that rule).
+      if (bed.kind === 'plot' && stapleCourseOf(chosen.crop)) plotsWithCourse.add(bed.id);
+      starters.push({
+        id: `auto:starter:${encodeURIComponent(bed.id)}:${encodeURIComponent(chosen.crop.key)}:${chosen.sowMonth}`,
+        bedId: bed.id,
+        cropKey: chosen.crop.key,
+        sowMonth: chosen.sowMonth,
+        once: onceStamp(chosen.sowOffset),
+      });
+      added.push({ bed, cropName: chosen.crop.name, sowMonth: chosen.sowMonth });
+    }
+    // What honestly remains bare in year one on this ground (runs ≥ 2 months
+    // are worth a sentence; a single bare month between crops is normal turn-
+    // around and naming it would bury the real message).
+    let runStart = -1;
+    for (let offset = 0; offset <= 12; offset++) {
+      const bare = offset < 12 && !occupied[offset];
+      if (bare && runStart < 0) runStart = offset;
+      if (!bare && runStart >= 0) {
+        if (offset - runStart >= 2) stillBare.push({ bed, from: runStart, to: offset - 1 });
+        runStart = -1;
+      }
+    }
+  }
+
+  return { starters, notes: firstSeasonFillNotes(realNowMonth, added, stillBare) };
+}
+
+/** Grouped like winterBridgeNotes: a couple of starters read individually, a
+ * fleet reads as one sentence. The rest note names what stays bare and WHY in
+ * farmer terms — the repeating plan's own crops arrive too late this first
+ * year, and nothing chosen both suits that ground and finishes in time. */
+function firstSeasonFillNotes(
+  realNowMonth: number,
+  added: readonly { bed: PlanBed; cropName: string; sowMonth: number }[],
+  stillBare: readonly { bed: PlanBed; from: number; to: number }[],
+): PlanNote[] {
+  const notes: PlanNote[] = [];
+  const tailLine = 'It runs once — from next year the repeating plan covers those months itself.';
+  if (added.length && added.length <= 2) {
+    for (const entry of added) {
+      notes.push(planNote(
+        'choice',
+        `${entry.bed.label} would stand empty early on, so a one-time starter went in: ${entry.cropName} (sow ${MONTHS_SHORT[entry.sowMonth - 1]}). ${tailLine}`,
+        [entry.bed.id],
+      ));
+    }
+  } else if (added.length) {
+    const runs = new Map<string, { cropName: string; sowMonth: number; labels: string[] }>();
+    for (const entry of added) {
+      const key = `${entry.cropName} ${entry.sowMonth}`;
+      const run = runs.get(key) ?? { cropName: entry.cropName, sowMonth: entry.sowMonth, labels: [] };
+      run.labels.push(entry.bed.label);
+      runs.set(key, run);
+    }
+    const lines = [...runs.values()]
+      .map((run) => `${run.labels.join(', ')} — ${run.cropName} (sow ${MONTHS_SHORT[run.sowMonth - 1]})`)
+      .join('; ');
+    notes.push(planNote(
+      'choice',
+      `${added.length} growing areas would stand empty for part of your first year, so one-time starter sowings went in: ${lines}. Each runs once — from next year the repeating plan covers those months itself.`,
+      added.map((entry) => entry.bed.id),
+    ));
+  }
+  if (stillBare.length) {
+    const monthName = (offset: number): string => MONTHS_SHORT[(realNowMonth - 1 + offset) % 12];
+    const spans = stillBare
+      .map((hole) => `${hole.bed.label} (${monthName(hole.from)}–${monthName(hole.to)})`)
+      .join(', ');
+    notes.push(planNote(
+      'gap',
+      `First-year rest: ${spans}. The crops that cover ${stillBare.length === 1 ? 'this stretch' : 'these stretches'} in the repeating plan are sown too late this year to fill ${stillBare.length === 1 ? 'it' : 'them'}, and no chosen crop both suits that ground and finishes in time. From next year the repeating plan covers ${stillBare.length === 1 ? 'it' : 'them'}.`,
+      stillBare.map((hole) => hole.bed.id),
+    ));
+  }
+  return notes;
 }
 
 /**

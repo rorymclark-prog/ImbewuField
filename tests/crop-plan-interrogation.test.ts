@@ -30,7 +30,7 @@ import {
 } from '@/lib/crop-catalog';
 import type { RainPattern } from '@/lib/crop-catalog';
 import { buildBedPlanRows, positionRangeLabel, sowingInstruction } from '@/lib/crop-export-schedule';
-import { buildFieldSheet } from '@/lib/crop-export-benchmark';
+import { buildFieldSheet, buildOccupancyCalendar } from '@/lib/crop-export-benchmark';
 import { autoSuggestPlan, planningWeightBenchmarkScore, recomputeLaterThisYear } from '@/lib/crop-autosuggest';
 import { suggestIdealYearPlan } from '@/lib/crop-plan-ideal';
 import type { IdealYearPlan } from '@/lib/crop-plan-ideal';
@@ -41,6 +41,8 @@ import {
   buildPlanYieldBenchmark,
   buildYearReport,
   existingSowOffset,
+  harvestEndMonthForCrop,
+  harvestMonthForCrop,
   occupiedMonthsForPlanting,
   seedBoqForPlan,
   tasksForPlan,
@@ -1335,7 +1337,7 @@ function idealRuns(): IdealRun[] {
       pattern: c.pattern,
       beds: c.geo.beds,
       realNow: c.realNow,
-      ideal: suggestIdealYearPlan(answers, c.pattern, c.geo.beds, [], c.realNow),
+      ideal: suggestIdealYearPlan(answers, c.pattern, c.geo.beds, [], c.realNow, 2026),
     };
   });
   idealRunsCache = runs;
@@ -1368,10 +1370,19 @@ test('sameAsToday means exactly that: the winner IS this month\'s own plan, plan
     }
     if (!claims) continue;
     // "Starting this month already gives the best whole-year result" is only
-    // honest if the plan handed over is the from-now plan, byte for byte.
+    // honest if the CYCLE handed over is the from-now plan, byte for byte.
+    // One-time starters (`once`) ride alongside — a from-now-optimal cycle
+    // has the same first-year holes as any other and gets the same bridging —
+    // so they are flagged extras, never silent mutations of the cycle rows.
     const fromNow = autoSuggestPlan(run.answers, run.pattern, run.beds, [], run.realNow);
-    if (JSON.stringify(run.ideal.best.result.plantings) !== JSON.stringify(fromNow.plantings)) {
-      offenders.push(`${run.label} — sameAsToday plan differs from the from-now plan`);
+    const cycleRows = run.ideal.best.result.plantings.filter((p) => typeof p.once !== 'string');
+    if (JSON.stringify(cycleRows) !== JSON.stringify(fromNow.plantings)) {
+      offenders.push(`${run.label} — sameAsToday cycle differs from the from-now plan`);
+    }
+    for (const p of run.ideal.best.result.plantings) {
+      if (typeof p.once === 'string' && !/^\d{4}-(0[1-9]|1[0-2])$/.test(p.once)) {
+        offenders.push(`${run.label} — starter row ${p.id} carries a malformed once stamp "${p.once}"`);
+      }
     }
   }
   assert.deepEqual(offenders, []);
@@ -1391,8 +1402,12 @@ test('every start-now, ramp-in and full-cycle statement re-derives from the plan
     for (const key of startNow) {
       if (!ideal.startNowCropKeys.includes(key)) offenders.push(`${run.label} — ${key} sows within a month but the card omits it`);
     }
-    // "N sowing months have already passed this year" — re-derived.
-    const sowMonths = [...new Set(plantings.map((p) => p.sowMonth))].sort((a, b) => a - b);
+    // "N sowing months have already passed this year" — re-derived. Ramp and
+    // full-cycle lines describe the repeating CYCLE, so one-time starters
+    // (first-season extras, `once`) stay out of this derivation — while the
+    // start-now list above deliberately includes them: a starter sowing this
+    // month IS an instruction to sow this month.
+    const sowMonths = [...new Set(plantings.filter((p) => typeof p.once !== 'string').map((p) => p.sowMonth))].sort((a, b) => a - b);
     const expectedRamp = sowMonths.filter((month) => month < realNow);
     if (JSON.stringify(ideal.rampInMonths) !== JSON.stringify(expectedRamp)) {
       offenders.push(`${run.label} — rampInMonths ${JSON.stringify(ideal.rampInMonths)} != passed sow months ${JSON.stringify(expectedRamp)}`);
@@ -1441,13 +1456,73 @@ test('the whole-year card speaks from today, not from its anchor month', () => {
       if (text.includes('already growing')) offenders.push(`${run.label} — overlap warning on an empty farm: "${text}"`);
     }
     // The transition year may only ever be LEANER than the repeating year the
-    // scores describe — a steady-state gap that vanishes in year one would
-    // mean one of the two disclosures is lying.
+    // scores describe — with ONE precise exception: a one-time starter
+    // sowing (`once`) can feed a year-one month the repeating cycle never
+    // covers. A steady-state gap month claimed fresh in year one must
+    // therefore be justified by a specific starter whose own first-year
+    // fresh window covers it, recomputed here independently; anything else
+    // means one of the two disclosures is lying.
+    const starterFreshMonths = new Set<number>();
+    for (const p of ideal.best.result.plantings) {
+      if (typeof p.once !== 'string') continue;
+      const crop = cropByKey(p.cropKey);
+      if (!crop || crop.timingVerified === false || crop.yieldKgPerM2 === 0) continue;
+      const first = harvestMonthForCrop(p.sowMonth, crop);
+      const last = harvestEndMonthForCrop(p.sowMonth, crop);
+      const span = ((last - first) % 12 + 12) % 12;
+      const sowOffset = ((p.sowMonth - realNow) % 12 + 12) % 12;
+      const freshDelta = ((first - p.sowMonth) % 12 + 12) % 12;
+      for (let i = 0; i <= span; i++) {
+        if (sowOffset + freshDelta + i <= 11) starterFreshMonths.add(((first - 1 + i) % 12) + 1);
+      }
+    }
     for (const month of ideal.best.score.zeroFreshMonths) {
-      if (!ideal.firstYearZeroFreshMonths.includes(month)) {
-        offenders.push(`${run.label} — month ${month} is zero-fresh in the repeating year but claimed fresh in year one`);
+      if (!ideal.firstYearZeroFreshMonths.includes(month) && !starterFreshMonths.has(month)) {
+        offenders.push(`${run.label} — month ${month} is zero-fresh in the repeating year, claimed fresh in year one, and no one-time starter feeds it`);
       }
     }
   }
   assert.deepEqual(offenders, []);
+});
+
+test('one-time starters stand only on ground the cycle leaves bare, at full width, and only ever reduce idle ground', () => {
+  // The same calendar the farmer's PDF prints, before and after the starters
+  // join. A starter intruding on an occupied cell would be a double-booking
+  // the printed sheet cannot survive; a starter that fails to reduce idle
+  // ground would be decoration. Abbreviation codes are position-dependent
+  // (a new crop can renumber the taken set), so cells compare on substance.
+  const substance = (cells: { cropKey: string; share: string; harvesting: boolean }[]) =>
+    JSON.stringify(cells.map(({ cropKey, share, harvesting }) => ({ cropKey, share, harvesting })));
+  const idleCells = (calendar: ReturnType<typeof buildOccupancyCalendar>) =>
+    calendar.reduce((total, row) => total + row.cells.filter((cell) => !cell.length).length, 0);
+  const offenders: string[] = [];
+  let startersSeen = 0;
+  for (const run of idealRuns()) {
+    const { ideal, realNow } = run;
+    const final = ideal.best.result.plantings;
+    const starters = final.filter((p) => typeof p.once === 'string');
+    if (!starters.length) continue;
+    startersSeen += starters.length;
+    const cycleRows = final.filter((p) => typeof p.once !== 'string');
+    const before = buildOccupancyCalendar(cycleRows, run.beds, realNow);
+    const after = buildOccupancyCalendar(final, run.beds, realNow);
+    for (let rowIndex = 0; rowIndex < before.length; rowIndex++) {
+      for (let monthIndex = 0; monthIndex < 12; monthIndex++) {
+        const cycleCell = before[rowIndex].cells[monthIndex];
+        const finalCell = after[rowIndex].cells[monthIndex];
+        if (cycleCell.length) {
+          if (substance(finalCell) !== substance(cycleCell)) {
+            offenders.push(`${run.label} — ${before[rowIndex].label} offset ${monthIndex}: a starter intruded on occupied ground`);
+          }
+        } else if (finalCell.some((entry) => entry.share !== 'Full')) {
+          offenders.push(`${run.label} — ${before[rowIndex].label} offset ${monthIndex}: starter cell not full-width`);
+        }
+      }
+    }
+    if (idleCells(after) >= idleCells(before)) {
+      offenders.push(`${run.label} — starters failed to reduce idle ground (${idleCells(before)} -> ${idleCells(after)})`);
+    }
+  }
+  assert.deepEqual(offenders, []);
+  assert.ok(startersSeen > 0, 'the parameter space must exercise the starter path at least once');
 });

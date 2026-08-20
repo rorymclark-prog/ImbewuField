@@ -134,8 +134,14 @@ export interface FactMeasurements {
 export interface FactCropPlan {
   plantingCount: number;
   bedsPlanted: number;
-  /** One row per crop the farmer actually put in the plan. No yields — see the note below. */
-  crops: Array<{ name: string; sowMonths: string[]; bedLabels: string[]; alreadyGrowing: boolean }>;
+  /** One row per crop the farmer actually put in the plan. No yields — see the note below.
+   *  `firstSeasonOnlyMonths` are sow months this crop occupies ONCE, as a
+   *  first-season starter bridging ground the repeating plan leaves bare in year
+   *  one (Planting.once). They are a subset of sowMonths, and only listed when
+   *  no recurring row also covers that month. The report prompt tells the model
+   *  the farmer's plan "already covers" its sow months, so a one-time bridge
+   *  presented as an unqualified fact reads as a standing annual commitment. */
+  crops: Array<{ name: string; sowMonths: string[]; bedLabels: string[]; alreadyGrowing: boolean; firstSeasonOnlyMonths: string[] }>;
 }
 
 export interface ReportSiteFacts {
@@ -397,6 +403,7 @@ export function normaliseReportSiteFacts(value: unknown): ReportSiteFacts | null
         sowMonths: rows<string>(item.sowMonths, (month) => text(month, 12)),
         bedLabels: rows<string>(item.bedLabels, (label) => text(label, 40)),
         alreadyGrowing: item.alreadyGrowing === true,
+        firstSeasonOnlyMonths: rows<string>(item.firstSeasonOnlyMonths, (month) => text(month, 12)),
       };
     });
     const plantingCount = num(c.plantingCount, { min: 1, max: 10000 });
@@ -664,7 +671,14 @@ export function cropPlanPromptBlock(facts: ReportSiteFacts | null | undefined): 
     `CROP PLAN ALREADY ENTERED BY THE FARMER (${crop.plantingCount} plantings across ${crop.bedsPlanted} beds/plots)`,
   ];
   for (const row of crop.crops) {
-    lines.push(`· ${row.name} — sown ${row.sowMonths.join(', ')}${row.bedLabels.length ? ` in ${row.bedLabels.join(', ')}` : ''}${row.alreadyGrowing ? ' (already in the ground)' : ''}`);
+    // A first-season starter is sown ONCE. Unqualified, it reads to the model
+    // as a month the farmer's repeating plan covers every year, and the section
+    // prompts below explicitly ask it to say which months the plan already
+    // covers — so the one-time months are named as such here.
+    const onceNote = row.firstSeasonOnlyMonths?.length
+      ? ` — ${row.firstSeasonOnlyMonths.join(', ')} ${row.firstSeasonOnlyMonths.length === 1 ? 'is a' : 'are'} one-time first-season sowing${row.firstSeasonOnlyMonths.length === 1 ? '' : 's'} only, not repeated in later years`
+      : '';
+    lines.push(`· ${row.name} — sown ${row.sowMonths.join(', ')}${row.bedLabels.length ? ` in ${row.bedLabels.join(', ')}` : ''}${row.alreadyGrowing ? ' (already in the ground)' : ''}${onceNote}`);
   }
   lines.push(
     'Build the Planting Calendar, Crop Rotation and Year-Round Food Production sections AROUND this existing plan: '

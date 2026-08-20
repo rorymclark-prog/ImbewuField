@@ -24,6 +24,7 @@
  */
 import {
   autoSuggestPlan,
+  fillFirstSeasonGaps,
   recomputeLaterThisYear,
   type AutoSuggestAnswers,
   type AutoSuggestResult,
@@ -117,6 +118,13 @@ export const IDEAL_PLAN_COPY = {
   existingOverlapWarning: (bedLabels: string) =>
     `Check ${bedLabels} before sowing there: something is already growing in ${bedLabels.includes(',') ? 'those beds' : 'that bed'} and this whole-year plan may overlap it in its first months.`,
   fullPlanHint: 'Crops already on your plan stay where they are — the whole-year plan only adds around them. For a plan of the whole farm, remove old plantings first.',
+  // One-time starters: the repeating cycle's wrap-around sowings have not
+  // happened yet in the farmer's first year, so ground they would cover
+  // stands bare. Starters bridge what can honestly be bridged; each runs
+  // exactly once and never recurs.
+  starterLine: (crops: string) =>
+    `To cover ground that would stand empty in your first months, one-time starter sowings are included: ${crops}. Each runs once — from next year the repeating plan covers those months itself.`,
+  starterBadge: 'first season only',
 } as const;
 
 const monthsForward = (from: number, to: number): number => ((to - from) % 12 + 12) % 12;
@@ -303,6 +311,7 @@ export function suggestIdealYearPlan(
   beds: PlanBed[],
   existingPlantings: Planting[],
   realNowMonth: number,
+  realNowYear: number,
 ): IdealYearPlan {
   if (!Number.isInteger(realNowMonth) || realNowMonth < 1 || realNowMonth > 12) realNowMonth = 1;
 
@@ -316,15 +325,30 @@ export function suggestIdealYearPlan(
   const winner = candidates[bestScore.anchorMonth - 1];
   const sameAsToday = winner.anchorMonth === realNowMonth;
 
+  // ---- first-season transition fill: the cycle's wrap-around sowings have
+  // not happened yet in the farmer's first year, so even the best cycle
+  // leaves real ground bare for real months (measured: 20–31 idle bed-months
+  // at EVERY anchor on the farm this was built for). One-time starters fill
+  // what the farmer's own crop rules honestly allow; the cycle itself — and
+  // every score describing it — is untouched. Starters apply equally when
+  // sameAsToday: a from-now plan has the identical year-one holes. An invalid
+  // year cannot produce an honest `once` stamp, so the fill is skipped rather
+  // than stamped with fiction.
+  const fill = Number.isInteger(realNowYear) && realNowYear >= 2020 && realNowYear <= 2100
+    ? fillFirstSeasonGaps(answers, pattern, beds, winner.result.plantings, existingPlantings, realNowMonth, realNowYear)
+    : { starters: [], notes: [] };
+  const finalPlantings = [...winner.result.plantings, ...fill.starters];
+
   // ---- truthfulness pass (on copies — the raw engine result is not mutated)
   let notes = winner.result.notes;
+  for (const note of fill.notes) notes = insertNoteOrdered(notes, note);
   let laterThisYear = winner.result.laterThisYear;
   if (winner.result.plantings.length) {
     notes = insertNoteOrdered(notes, {
       kind: 'basis',
       text: IDEAL_PLAN_COPY.basisNote(MONTHS_SHORT[realNowMonth - 1]),
     });
-    const overlapBeds = overlapBedIds(winner.result.plantings, existingPlantings, realNowMonth);
+    const overlapBeds = overlapBedIds(finalPlantings, existingPlantings, realNowMonth);
     if (!sameAsToday && overlapBeds.length) {
       const labelOf = new Map(beds.map((bed) => [bed.id, bed.label]));
       const labels = overlapBeds.map((bedId) => labelOf.get(bedId) ?? bedId).join(', ');
@@ -335,20 +359,21 @@ export function suggestIdealYearPlan(
       });
     }
   }
-  if (!sameAsToday) {
-    // The winner's waiting panel was written from its anchor's point of view
-    // ("opens in X" relative to a month that is not today). Recompute it
-    // against the same final plan from the real current month.
-    laterThisYear = recomputeLaterThisYear(
-      answers, pattern, beds, winner.result.plantings, existingPlantings, realNowMonth,
-    );
-  }
+  // The winner's waiting panel was written from its anchor's point of view,
+  // and starters were not part of the engine run at all — so it is recomputed
+  // against the FINAL plan from the real current month, unconditionally (a
+  // sameAsToday plan still gains starters that may close a waiting gap).
+  laterThisYear = recomputeLaterThisYear(
+    answers, pattern, beds, finalPlantings, existingPlantings, realNowMonth,
+  );
 
-  // ---- ramp metadata, ALWAYS against realNowMonth, never the anchor
+  // ---- ramp metadata, ALWAYS against realNowMonth, never the anchor.
+  // Ramp lines describe the repeating CYCLE (bestScore is cycle-only), but
+  // "start now" is an instruction list and starters are exactly that.
   const fwd = (month: number) => monthsForward(realNowMonth, month);
   const sowMonthsUsed = bestScore.sowMonthsUsed;
   const startNowCropKeys = [...new Set(
-    winner.result.plantings
+    finalPlantings
       .filter((planting) => fwd(planting.sowMonth) <= 1)
       .map((planting) => planting.cropKey),
   )];
@@ -360,7 +385,7 @@ export function suggestIdealYearPlan(
   return {
     best: {
       anchorMonth: winner.anchorMonth,
-      result: { ...winner.result, notes, laterThisYear },
+      result: { ...winner.result, plantings: finalPlantings, notes, laterThisYear },
       score: bestScore,
     },
     perAnchor,
@@ -369,6 +394,9 @@ export function suggestIdealYearPlan(
     rampInMonths,
     monthsUntilFullCycle,
     fullCycleByMonth: wrapMonth(realNowMonth + monthsUntilFullCycle),
-    firstYearZeroFreshMonths: firstYearZeroFresh(winner.result.plantings, realNowMonth),
+    // Over the FINAL list: a card that kept quoting pre-starter gaps would
+    // name months the starters just covered. freshWindow's first occurrence
+    // (fwd of sow month) is exactly a `once` row's single occurrence.
+    firstYearZeroFreshMonths: firstYearZeroFresh(finalPlantings, realNowMonth),
   };
 }

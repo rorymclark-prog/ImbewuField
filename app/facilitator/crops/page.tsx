@@ -34,6 +34,7 @@ import {
   isSpaceHungry, bedOverlapWarning, benchmarkAreaConflictDetails, bedHasUnverifiedTiming, buildYearReport, buildFoodAvailability, buildPlanYieldBenchmark,
   buildFieldUtilizationByMonth, loadFavouriteCropKeys, saveFavouriteCropKeys, isGenuinelyIntercropped, plantingBedEntryOffsets, plantingIsActiveOrPlanned, recurringPlanPlantings,
   loadAllowBedSharing, saveAllowBedSharing, loadCashflowSettings, saveCashflowSettings, DEFAULT_CASHFLOW_SETTINGS, planNotesDateLabel,
+  restampEditedOnce,
 } from '@/lib/crop-plan';
 import type { FoodGroup } from '@/lib/crop-groups';
 import { FOOD_GROUP_META, foodGroupOf, ROTATION_FAMILY_META, rotationFamilyOf } from '@/lib/crop-groups';
@@ -548,7 +549,7 @@ function FacilitatorCropsPageInner() {
       // guards a double tap while the sweep runs.
       setAutoGenerating(true);
       setTimeout(() => {
-        const ideal = suggestIdealYearPlan(answers, pattern, beds, plantings, currentMonth);
+        const ideal = suggestIdealYearPlan(answers, pattern, beds, plantings, currentMonth, new Date().getFullYear());
         setIdealMeta(ideal);
         setAutoResult({
           ...ideal.best.result,
@@ -851,8 +852,16 @@ function FacilitatorCropsPageInner() {
       return {
         ...prev,
         version: 1,
+        // A hand-edited one-time starter needs its stamp re-derived, not just
+        // carried through the spread: the stamp is what settleOnceRows reads,
+        // so a stale one settles the row against the month the farmer moved
+        // away from. See restampEditedOnce.
         plantings: prev.plantings.map((p) => p.id === id
-          ? { ...p, cropKey, sowMonth, areaFraction: areaFraction < 1 ? areaFraction : undefined, existing: existing || undefined }
+          ? restampEditedOnce(
+            { ...p, cropKey, sowMonth, areaFraction: areaFraction < 1 ? areaFraction : undefined, existing: existing || undefined },
+            new Date().getFullYear(),
+            currentMonth,
+          )
           : p),
         updatedAt: Date.now(),
       };
@@ -2723,7 +2732,7 @@ function PlantingBar({ planting, currentMonth, onTap }: { planting: Planting; cu
             // colour on both would claim a certainty this plan doesn't have.
             opacity: isYearTwo(seg) ? 0.5 : 1,
           }}
-          title={`${crop.name} — sow ${monthLabel(planting.sowMonth)}, ${finishLabel} · ${fLabel} bed${planting.existing ? ' · already growing' : ''}${isYearTwo(seg) ? ' · year two, the same cycle coming round again' : ''}`}
+          title={`${crop.name} — sow ${monthLabel(planting.sowMonth)}, ${finishLabel} · ${fLabel} bed${planting.inNursery ? ' · trays sown, not yet planted out' : planting.existing ? ' · already growing' : ''}${isYearTwo(seg) ? ' · year two, the same cycle coming round again' : ''}`}
         >
           {BAR_STYLE === 'solid' && (
             // The "ready to harvest" marker — a hard colour + a line, not a
@@ -2758,7 +2767,7 @@ function PlantingBar({ planting, currentMonth, onTap }: { planting: Planting; cu
           "raised in a tray first", and is TAPPABLE (opening the same planting
           popover the bar itself opens) so the meaning is reachable rather than
           guessable. The timeline legend below the grid spells it out too. */}
-      {crop.transplant && !planting.existing && instances.map((seg, i) => {
+      {crop.transplant && (!planting.existing || planting.inNursery) && instances.map((seg, i) => {
         // Anchored to THIS copy's own unclipped sow offset (not re-derived
         // independently, and not shared across copies) so it always lands
         // right after that copy's sow month and never contradicts the bar
@@ -3156,7 +3165,7 @@ function PlantingPopover({ planting, bedAreaM2, allPlantings, onEdit, onRemove, 
         )}
         {planting.existing && (
           <div className="inline-block font-sans font-semibold mb-2 ml-1 px-2 py-0.5 rounded-full" style={{ fontSize: 11, background: 'rgba(140,134,84,0.18)', color: '#5C5040' }}>
-            Already growing
+            {planting.inNursery ? 'Trays sown — not yet planted out' : 'Already growing'}
           </div>
         )}
         <div className="font-sans space-y-1 mb-3" style={{ fontSize: 12.5, color: '#5C5040', lineHeight: 1.5 }}>
@@ -3611,6 +3620,23 @@ function AutoSuggestModal({
                           {IDEAL_PLAN_COPY.rampInLine(idealMeta.rampInMonths.length, monthLabel(idealMeta.fullCycleByMonth))}
                         </p>
                       )}
+                      {(() => {
+                        // One-time starters ride the plantings list itself (the
+                        // `once` stamp), so the card derives rather than stores.
+                        // Not gated on sameAsToday: a from-now-optimal cycle has
+                        // the same first-year holes and gets the same starters.
+                        const starterNames = idealMeta.best.result.plantings
+                          .filter((p) => typeof p.once === 'string')
+                          .map((p) => {
+                            const crop = cropByKey(p.cropKey);
+                            return crop ? `${crop.name} (${monthLabel(p.sowMonth)})` : null;
+                          })
+                          .filter((name): name is string => Boolean(name))
+                          .join(', ');
+                        return starterNames
+                          ? <p className="font-sans" style={line}>{IDEAL_PLAN_COPY.starterLine(starterNames)}</p>
+                          : null;
+                      })()}
                       {idealMeta.best.score.zeroFreshMonths.length > 0 && (
                         <p className="font-sans" style={line}>
                           {IDEAL_PLAN_COPY.residualGapLine(idealMeta.best.score.zeroFreshMonths.map(monthLabel).join(', '))}
@@ -3635,7 +3661,14 @@ function AutoSuggestModal({
                     const fieldEntry = plannedBedEntryMonth(p.sowMonth, crop);
                     return (
                       <div key={p.id} className="flex items-center justify-between px-3 py-2 rounded-lg font-sans" style={{ fontSize: 12.5, background: '#FFFFFF', border: '1px solid #E2D8C4' }}>
-                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}><CropIcon cropKey={crop.key} icon={crop.icon} size={14} /> {crop.name} ({fractionLabel(p.areaFraction ?? 1)} bed)</span>
+                        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+                          <CropIcon cropKey={crop.key} icon={crop.icon} size={14} /> {crop.name} ({fractionLabel(p.areaFraction ?? 1)} bed)
+                          {typeof p.once === 'string' && (
+                            <span className="font-sans uppercase" style={{ fontSize: 8.5, letterSpacing: '0.06em', color: '#5F735F', background: '#F5F8F3', border: '1px solid #B9C9B9', borderRadius: 6, padding: '1px 5px' }}>
+                              {IDEAL_PLAN_COPY.starterBadge}
+                            </span>
+                          )}
+                        </span>
                         <span style={{ color: '#8C7A62', textAlign: 'right' }}>
                           {crop.transplant
                             ? `start tray ${monthLabel(p.sowMonth)} → transplant ${monthLabel(fieldEntry)} → harvest ${monthLabel(h)} (${cropDurationLabel(crop)} in bed)`

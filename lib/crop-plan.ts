@@ -46,6 +46,39 @@ export interface Planting {
    *  cover-crop termination remains, and it doesn't read as "new" in the
    *  estimated-harvest split. */
   existing?: boolean;
+  /** 'YYYY-MM' = a ONE-TIME sowing intended for that specific month — a
+   *  first-season starter that bridges ground the repeating annual plan
+   *  leaves bare in its first year (the cycle's wrap-around crops were never
+   *  sown last season, so year one has holes steady state does not). Unlike a
+   *  planned row it never recurs annually; unlike an existing row its sowing
+   *  is still ahead. Once the stamped month has passed, loadCropPlan settles
+   *  it into an ordinary existing row (see settleOnceRows), after which the
+   *  proven existing-cohort age-out machinery applies. Absent on every row
+   *  saved before this field existed. */
+  once?: string;
+  /**
+   * 'YYYY-MM' — the TRAY-SOW month a settled one-time starter came from, kept
+   * only while its field entry is still ahead. Set alongside `existing: true`,
+   * only by settleOnceRows, only on a transplant crop.
+   *
+   * `existing` answered two questions at once: "is this ONE dated cohort,
+   * anchored backward?" (existingSowOffset, plantingBedEntryOffsets, Occupancy,
+   * BedRotation, ~10 sites) and "is every establishment job behind the farmer?"
+   * (two sites: the prep/sow/transplant gate in tasksForPlan and the skip in
+   * seedBoqBatchesForPlan). For a direct-sown crop both flip in the same month,
+   * so one flag covered both. For a tray crop they are a month apart: the tray
+   * sowing is history the month after it happens, while the transplant job and
+   * the ready-grown-seedling purchase are still ahead. This field carries ONLY
+   * the second answer, so the anchoring one keeps its single meaning and every
+   * occupancy/rotation consumer stays untouched.
+   *
+   * It is a STAMP, not a boolean, because it is persisted. A year-free flag is
+   * live again whenever existingSowOffset + 1 >= 0, so a plan reopened twelve
+   * months later would resurrect this cohort's transplant job and its seedling
+   * purchase — the phantom-recurrence lie `once` exists to prevent. An absolute
+   * stamp can be live for at most two absolute months, ever.
+   */
+  inNursery?: string;
 }
 
 export interface CropPlanState {
@@ -87,8 +120,141 @@ function emptyPlan(): CropPlanState {
   return { version: 1, plantings: [], updatedAt: Date.now() };
 }
 
+function stampIndexOf(stamp: unknown): number | null {
+  if (typeof stamp !== 'string') return null;
+  const match = /^(\d{4})-(0[1-9]|1[0-2])$/.exec(stamp);
+  return match ? Number(match[1]) * 12 + (Number(match[2]) - 1) : null;
+}
+
+/** TRANSPLANT_ENTRY_EARLIEST_MONTHS, not PLANNED: that is the offset this
+ *  cohort's transplant task and seedling line are already stamped with, and a
+ *  task one month past its own month reports taskMonthsFromNow = -1, which
+ *  task-board.ts, crop-export-schedule.ts's buildTaskMonths,
+ *  crop-export-benchmark.ts's workload chart and the crops page's ===0..11
+ *  filters all drop. A later boundary buys a month no farmer can see. */
+function nurseryStampIsLive(planting: Planting, nowIndex: number): boolean {
+  if (planting.existing !== true) return false;
+  const stampIndex = stampIndexOf(planting.inNursery);
+  if (stampIndex === null) return false;
+  if (stampIndex % 12 + 1 !== planting.sowMonth) return false;
+  if (cropByKey(planting.cropKey)?.transplant !== true) return false;
+  return nowIndex <= stampIndex + TRANSPLANT_ENTRY_EARLIEST_MONTHS;
+}
+
+/**
+ * Settle expired one-time starters into ordinary existing rows.
+ *
+ * A `once` row's stamp names the specific month its single sowing belongs to.
+ * While that month is still ahead (or current) the row is a planned sowing —
+ * tasks, seed lists and occupancy all treat it as upcoming. The month after,
+ * the sowing either happened (now it IS an existing cohort) or was skipped
+ * (an existing row ages out by the same machinery, so nothing phantom
+ * lingers). Either way `existing: true` is the honest state and the only one
+ * with proven downstream behaviour. A corrupt stamp settles immediately: a
+ * one-off row must NEVER fall back to recurring-annual semantics, because
+ * that re-creates the very phantom-recurrence lie the field exists to avoid.
+ *
+ * For a TRAY crop, settling on the sow month conflates two different facts:
+ * the tray sowing is history, but the field entry (the transplant job and the
+ * ready-grown-seedling purchase) is stamped a month LATER, at
+ * TRANSPLANT_ENTRY_EARLIEST_MONTHS. Settling straight to plain `existing`
+ * loses both the month after the tray sowing — the exact month the farmer is
+ * meant to plant the seedlings out. `inNursery` carries that one extra month
+ * of honesty; see its doc on `Planting` for why it is a stamp, not a flag.
+ */
+export function settleOnceRows(
+  plantings: Planting[],
+  nowYear: number,
+  nowMonth: number,
+): Planting[] {
+  const nowIndex = nowYear * 12 + (nowMonth - 1);
+  return plantings.map((planting) => {
+    // (a) The nursery stage expires on its own, and normalises the two
+    //     pairings that have no agreed meaning — inNursery without `existing`
+    //     (the farmer un-ticked "already growing"), and a stamp whose month no
+    //     longer matches sowMonth (a hand edit moved the sowing). Runs on EVERY
+    //     row, before the stamp branch, because by then the `once` stamp that
+    //     created it is long gone. Do not "simplify" this away.
+    let row = planting;
+    if (row.inNursery !== undefined && !nurseryStampIsLive(row, nowIndex)) {
+      const { inNursery: _grown, ...grown } = row;
+      row = grown;
+    }
+    if (typeof row.once !== 'string') return row;
+    const stampIndex = stampIndexOf(row.once);
+    if (stampIndex !== null && nowIndex <= stampIndex) return row; // still ahead/current
+    const { once: _settled, ...rest } = row;
+    const crop = cropByKey(rest.cropKey);
+    // Settling in the month AFTER a tray sowing means exactly one thing: the
+    // trays are sown and the field entry is not. Any later first load (the
+    // farmer was away) settles plain — a missed transplant retires like a
+    // missed harvest, because this app has no overdue state anywhere.
+    const stillInTheNursery = stampIndex !== null
+      && crop?.transplant === true
+      && stampIndex % 12 + 1 === rest.sowMonth
+      && nowIndex === stampIndex + TRANSPLANT_ENTRY_EARLIEST_MONTHS;
+    return { ...rest, existing: true, ...(stillInTheNursery ? { inNursery: row.once } : {}) };
+  });
+}
+
+/**
+ * Re-derive a one-time starter's stamp after the farmer edits it by hand.
+ *
+ * The stamp names the absolute month of the single intended sowing, so it goes
+ * stale the moment an edit moves the sow month — and a stale stamp is not a
+ * cosmetic problem: settleOnceRows reads ONLY the stamp, so it would settle the
+ * row against the month the farmer just moved away from. Left alone, a starter
+ * pushed from September to November settles in October and the app then reads a
+ * not-yet-sown crop as an eleven-month-old finished cohort, dropping it from
+ * tasks, the seed list and the timeline.
+ *
+ * Restamping (rather than clearing `once`) is what keeps the edit honest: a
+ * moved starter is still a ONE-TIME sowing. Clearing the field would promote it
+ * to an ordinary planned row — the repeating annual template — which is exactly
+ * the phantom-recurrence lie `once` exists to prevent. The new stamp is the next
+ * occurrence of the edited sow month, matching the field's "its sowing is still
+ * ahead" contract; an edit landing on the current month stays current, since
+ * settleOnceRows treats the stamped month itself as still live.
+ *
+ * Marking the row as already growing is the one edit that legitimately ends its
+ * one-time life: `existing` is the terminal state settleOnceRows itself hands a
+ * starter, and a row carrying both flags has no agreed meaning — rotation reads
+ * `once` first and anchors forward while every occupancy consumer reads
+ * `existing` first and anchors backward, putting the same row twelve months
+ * apart depending on who asks.
+ */
+export function restampEditedOnce(
+  planting: Planting,
+  nowYear: number,
+  nowMonth: number,
+): Planting {
+  if (typeof planting.once !== 'string') return planting;
+  if (planting.existing) {
+    const { once: _superseded, ...rest } = planting;
+    return rest;
+  }
+  if (!Number.isInteger(planting.sowMonth) || planting.sowMonth < 1 || planting.sowMonth > 12) {
+    return planting;
+  }
+  if (!Number.isInteger(nowYear) || !Number.isInteger(nowMonth) || nowMonth < 1 || nowMonth > 12) {
+    return planting;
+  }
+  const monthsAhead = ((planting.sowMonth - nowMonth) % 12 + 12) % 12;
+  const absolute = nowYear * 12 + (nowMonth - 1) + monthsAhead;
+  return {
+    ...planting,
+    once: `${Math.floor(absolute / 12)}-${String((absolute % 12) + 1).padStart(2, '0')}`,
+  };
+}
+
 export function loadCropPlan(): CropPlanState {
-  if (isSampleMode()) return getSandboxCropPlan();
+  const settleNow = new Date();
+  const settle = (plantings: Planting[]): Planting[] =>
+    settleOnceRows(plantings, settleNow.getFullYear(), settleNow.getMonth() + 1);
+  if (isSampleMode()) {
+    const sandbox = getSandboxCropPlan();
+    return { ...sandbox, plantings: settle(sandbox.plantings) };
+  }
   if (typeof window === 'undefined' || !window.localStorage) {
     return emptyPlan();
   }
@@ -100,7 +266,7 @@ export function loadCropPlan(): CropPlanState {
     const planNotes = sanitisePlanNotes(parsed.planNotes);
     return {
       version: 1,
-      plantings: parsed.plantings,
+      plantings: settle(parsed.plantings),
       ...(isRainPattern(parsed.rainPattern) ? { rainPattern: parsed.rainPattern } : {}),
       // The timestamp travels ONLY with notes. A stored date on its own labels
       // nothing, and notes without a date would have to be shown undated —
@@ -363,7 +529,7 @@ export function occupiedMonthsForPlanting(
  * offset is essential across Dec/Jan (and at the far edge of the rolling
  * window): resolving the entry month independently can move it back a year. */
 export function plantingBedEntryOffsets(
-  planting: Pick<Planting, 'cropKey' | 'sowMonth' | 'existing'>,
+  planting: Pick<Planting, 'cropKey' | 'sowMonth' | 'existing' | 'once'>,
   nowMonth: number,
   horizonMonths = 24,
 ): number[] {
@@ -377,7 +543,10 @@ export function plantingBedEntryOffsets(
   const first = planting.existing
     ? existingSowOffset(planting.sowMonth, nowMonth) + nurseryOffset
     : ((planting.sowMonth - nowMonth) % 12 + 12) % 12 + nurseryOffset;
-  if (planting.existing) return [first];
+  // A one-time starter (`once`) has exactly one occurrence like an existing
+  // row, but anchored FORWARD: its sowing has not happened yet. Repeating it
+  // annually would paint next year's calendar with a crop no one will plant.
+  if (planting.existing || typeof planting.once === 'string') return [first];
   const offsets: number[] = [];
   for (let offset = first; offset < horizonMonths; offset += 12) offsets.push(offset);
   return offsets;
@@ -401,9 +570,11 @@ export function plantingIsActiveOrPlanned(
 }
 
 /** Rows that can honestly recur in an established annual view. Existing crops
- * are observations, not instructions to plant the same crop every year. */
+ * are observations, not instructions to plant the same crop every year, and a
+ * one-time starter (`once`) is a single first-season bridge by definition. */
 export function recurringPlanPlantings(plantings: Planting[]): Planting[] {
-  return plantings.filter((planting) => planting.existing !== true);
+  return plantings.filter((planting) =>
+    planting.existing !== true && typeof planting.once !== 'string');
 }
 
 /** One overbooked bed, and the plantings actually implicated in its conflict.
@@ -461,7 +632,7 @@ function benchmarkAreaConflictBeds(
   // now carry the CONTRIBUTING planting ids alongside the share total, which is
   // the only new information — the arithmetic and the conflict thresholds are
   // unchanged.
-  type OccupiedRow = { id: string; bedId: string; start: number; span: number; fraction: number; existing: boolean };
+  type OccupiedRow = { id: string; bedId: string; start: number; span: number; fraction: number; existing: boolean; once: boolean };
   const rows: OccupiedRow[] = [];
   const calendarMonths = new Map<string, number[]>();
   const uncertain = new Map<string, { share: number; ids: string[] }>();
@@ -499,11 +670,15 @@ function benchmarkAreaConflictBeds(
       if (!span || start === undefined) continue;
       const end = start + span - 1;
       if (planting.existing && end < 0) continue;
-      rows.push({ id: planting.id, bedId: bed.id, start, span, fraction, existing: planting.existing === true });
+      rows.push({ id: planting.id, bedId: bed.id, start, span, fraction, existing: planting.existing === true, once: typeof planting.once === 'string' });
     } else {
+      // A one-time starter is a single dated cohort; folding it into the
+      // year-free ANNUAL month totals would report a conflict with ground it
+      // only holds once. The rolling walk above handles it honestly.
+      if (typeof planting.once === 'string') continue;
       const months = occupiedMonthsForPlanting(planting);
       if (!months.length) continue;
-      rows.push({ id: planting.id, bedId: bed.id, start: 0, span: 0, fraction, existing: false });
+      rows.push({ id: planting.id, bedId: bed.id, start: 0, span: 0, fraction, existing: false, once: false });
       // The year-free walk indexes by calendar month; keep the months on the
       // row rather than recomputing them below.
       calendarMonths.set(planting.id, months);
@@ -523,7 +698,7 @@ function benchmarkAreaConflictBeds(
       ...rows.filter((row) => !row.existing).map((row) => row.start + row.span + 11),
     );
     for (const row of rows) {
-      const starts = row.existing
+      const starts = row.existing || row.once
         ? [row.start]
         : Array.from(
           { length: Math.max(0, Math.floor((horizon - row.start) / 12) + 1) },
@@ -742,9 +917,9 @@ export function tasksForPlan(plantings: Planting[], beds: PlanBed[], nowMonth?: 
 
     // Already-growing crops were sown before the farmer started using the
     // app — bed prep, sowing and the first mulch are already done. Only a
-    // genuinely still-ahead harvest or cover termination belongs on the task
-    // list; the nowMonth-aware checks below remove work already completed by
-    // time itself.
+    // genuinely still-ahead field-entry job, harvest or cover termination
+    // belongs on the task list; the nowMonth-aware checks below remove work
+    // already completed by time itself.
     if (!p.existing) {
       // Preparation is deliberately an assessment, not a universal input
       // prescription. Soil condition, drainage, prior fertility and the crop
@@ -782,28 +957,36 @@ export function tasksForPlan(plantings: Planting[], beds: PlanBed[], nowMonth?: 
         action: 'sow',
       });
 
-      if (crop.transplant) {
-        tasks.push({
-          id: `${p.id}:transplant`,
-          plantingId: p.id,
-          ...cohortBase,
-          cohortMonthOffset: TRANSPLANT_ENTRY_EARLIEST_MONTHS,
-          month: monthFor(
-            bedEntryMonth(p.sowMonth, crop),
-            TRANSPLANT_ENTRY_EARLIEST_MONTHS,
-          ),
-          bedLabel: label,
-          cropName: crop.name,
-          cropKey: crop.key,
-          icon: crop.icon,
-          action: 'transplant',
-        });
-      }
-
       // Mulching and weeding remain field observations, not dated generic
       // tasks. Soil cover, weed pressure, crop stage and local practice decide
       // whether and when they are appropriate; the catalog has no authority
       // for a blanket schedule.
+    }
+
+    // `existing` settles the SOWING, and with it prep (offset -1 or 0) and the
+    // sowing itself (offset 0). It does NOT settle the transplant: that job is
+    // stamped a month LATER, at TRANSPLANT_ENTRY_EARLIEST_MONTHS. A settled
+    // one-time starter still holding its nursery stamp (see settleOnceRows) has
+    // its trays sown and its field entry ahead — gated on `existing` alone,
+    // this job vanished on the morning it was to be done. A row the FARMER
+    // declared already growing carries no stamp and is untouched: that
+    // declaration says the transplant is done, and it is not ours to contradict.
+    if (crop.transplant && (p.existing !== true || p.inNursery !== undefined)) {
+      tasks.push({
+        id: `${p.id}:transplant`,
+        plantingId: p.id,
+        ...cohortBase,
+        cohortMonthOffset: TRANSPLANT_ENTRY_EARLIEST_MONTHS,
+        month: monthFor(
+          bedEntryMonth(p.sowMonth, crop),
+          TRANSPLANT_ENTRY_EARLIEST_MONTHS,
+        ),
+        bedLabel: label,
+        cropName: crop.name,
+        cropKey: crop.key,
+        icon: crop.icon,
+        action: 'transplant',
+      });
     }
 
     const firstHarvest = harvestMonthForCrop(p.sowMonth, crop);
@@ -1338,6 +1521,10 @@ export interface SeedBoqBatch extends SeedBoqRow {
   /** One independently timed purchase/sowing cohort. */
   sowMonth: number;
   bedIds: string[];
+  /** This cohort's trays are already sown — only the ready-grown-seedling route
+   *  is left. NEVER merged with a planned cohort of the same crop and month:
+   *  that one is a whole year away. */
+  inNursery: boolean;
 }
 
 // A few catalog crops aren't grown from botanical seed at all — their own
@@ -1363,13 +1550,18 @@ export function seedBoqBatchesForPlan(plantings: Planting[], beds: PlanBed[]): S
   const rawByBatch = new Map<string, {
     cropKey: string;
     sowMonth: number;
+    inNursery: boolean;
     rawCount: number;
     rawMinimum: number;
     rawMaximum: number;
     bedIds: Set<string>;
   }>();
   for (const p of plantings) {
-    if (p.existing) continue;
+    // An established cohort has nothing left to buy. A cohort still in the
+    // nursery does — the farmer buying ready-grown seedlings has not bought
+    // them yet, and this is the month the plan stages them for. No nowMonth
+    // here: settleOnceRows at load is the single time authority for that stamp.
+    if (p.existing && p.inNursery === undefined) continue;
     const crop = cropByKey(p.cropKey);
     const bed = beds.find((b) => b.id === p.bedId);
     if (!crop || !bed) continue;
@@ -1388,10 +1580,14 @@ export function seedBoqBatchesForPlan(plantings: Planting[], beds: PlanBed[]): S
     const rawCount = areaM2 * plantsPerM2(crop);
     const [minimumDensity, maximumDensity] = plantsPerM2Range(crop);
     const sowMonth = wrapMonth(p.sowMonth);
-    const key = `${crop.key}::${sowMonth}`;
+    const inNursery = p.inNursery !== undefined;
+    // A nursery cohort and a planned cohort sharing a crop and a month number
+    // are a YEAR apart, not one purchase — see SeedBoqBatch.inNursery.
+    const key = `${crop.key}::${sowMonth}::${inNursery ? 'nursery' : 'ahead'}`;
     const batch = rawByBatch.get(key) ?? {
       cropKey: crop.key,
       sowMonth,
+      inNursery,
       rawCount: 0,
       rawMinimum: 0,
       rawMaximum: 0,
@@ -1404,7 +1600,7 @@ export function seedBoqBatchesForPlan(plantings: Planting[], beds: PlanBed[]): S
     rawByBatch.set(key, batch);
   }
   return [...rawByBatch.values()]
-    .map(({ cropKey, sowMonth, rawCount, rawMinimum, rawMaximum, bedIds }) => {
+    .map(({ cropKey, sowMonth, inNursery, rawCount, rawMinimum, rawMaximum, bedIds }) => {
       const crop = cropByKey(cropKey)!;
       const unit = PROPAGATION_UNIT[cropKey] ?? (crop.transplant ? 'seedlings' : 'seeds');
       const finalPlantPositions = Math.max(1, Math.round(rawCount));
@@ -1431,6 +1627,7 @@ export function seedBoqBatchesForPlan(plantings: Planting[], beds: PlanBed[]): S
         finalPlantPositionsRange,
         sowMonth,
         bedIds: [...bedIds],
+        inNursery,
       };
     })
     .sort((a, b) => a.sowMonth - b.sowMonth || a.cropName.localeCompare(b.cropName));
