@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { ChevronLeft, Camera, Loader2, Check, Trash2, X } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { useLanguage } from '@/lib/i18n';
+import { useAppConfirm } from '@/components/AppConfirm';
 import { communityEnabled } from '@/lib/community/flag';
 import { uploadPhoto } from '@/lib/db/queries';
 import {
@@ -60,6 +61,7 @@ function Toggle({ label, sub, on, onChange }: { label: string; sub?: string; on:
 export default function CommunityProfilePage() {
   const { user, loading } = useAuth();
   const { t } = useLanguage();
+  const appConfirm = useAppConfirm();
   const router = useRouter();
   const fileRef = useRef<HTMLInputElement>(null);
 
@@ -156,7 +158,13 @@ export default function CommunityProfilePage() {
   }
 
   async function handleDelete() {
-    if (!window.confirm(t('communityDeleteProfileConfirm'))) return;
+    const proceed = await appConfirm({
+      message: t('communityDeleteProfileConfirm'),
+      confirmLabel: t('communityDeleteProfile'),
+      cancelLabel: t('cancelBtn'),
+      destructive: true,
+    });
+    if (!proceed) return;
     await deleteCommunityProfile();
     router.push('/community');
   }

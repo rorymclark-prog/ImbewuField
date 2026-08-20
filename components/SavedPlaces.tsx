@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { loadPlaces, savePlace, deletePlace, generateId, promptNearbyUpdate, type SavedPlace } from '@/lib/saved-places';
+import { useAppConfirm } from '@/components/AppConfirm';
 import type { LocationData } from '@/lib/types';
 
 interface Props {
@@ -21,6 +22,7 @@ function timeAgo(iso: string): string {
 }
 
 export default function SavedPlaces({ locationData, coords, onJumpTo }: Props) {
+  const appConfirm = useAppConfirm();
   const [places, setPlaces] = useState<SavedPlace[]>([]);
   const [saving, setSaving] = useState(false);
   const [name, setName] = useState('');
@@ -45,7 +47,7 @@ export default function SavedPlaces({ locationData, coords, onJumpTo }: Props) {
     }
   }, [locationData, coords, saving]);
 
-  function handleSave() {
+  async function handleSave() {
     if (!coords || !locationData || !name.trim()) return;
     const trimmedName = name.trim();
     const trimmedNotes = notes.trim() || undefined;
@@ -54,7 +56,7 @@ export default function SavedPlaces({ locationData, coords, onJumpTo }: Props) {
     // (same guard as DataPanel's quick save and Map's pin save): two saves of the same real-world
     // farm would otherwise mint a second SavedPlace row, and coordinate-keyed downstream data
     // (designSiteIdFromLocation, 5dp-rounded) forks between the two ids. Never merges silently.
-    const nearby = promptNearbyUpdate(coords.lat, coords.lon);
+    const nearby = await promptNearbyUpdate(coords.lat, coords.lon, appConfirm);
     if (nearby) {
       // Keep the existing id — that's the entire point, so downstream coordinate-keyed data
       // (design studio sites, surveys) doesn't fork onto a second id. Reuse savePlace(), the

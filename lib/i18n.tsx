@@ -952,6 +952,9 @@ const T_en: Dict = {
   surveyStepResourcesInputs: 'Resources & Inputs',
   surveyCloseAriaLabel: 'Close',
   surveyDiscardConfirm: 'Discard your answers so far? This questionnaire has not been saved yet.',
+  // English-only (locale fallback serves English until a first-language reviewer supplies the
+  // real words — same rule as the other NEW_ENGLISH_ONLY survey keys, tests/site-survey-i18n).
+  surveyDiscardBtn: 'Discard answers',
   surveyAdultsChip1: '1',
   surveyAdultsChipRange2to5: '2–5',
   surveyAdultsChipRange6to10: '6–10',

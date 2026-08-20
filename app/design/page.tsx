@@ -13,6 +13,7 @@ import { ArrowLeft, Compass, MapPin, ChevronUp, ChevronDown, ChevronLeft, Chevro
 import { CRASH_LOOP_SETTLE_MS, designSafeMode, exitSafeMode, lastCrashPhase, markPageSettled, noteCrashPhase } from '@/lib/crash-loop';
 import { clearPulseCookie } from '@/lib/server-rescue';
 import { loadPlaces, resolveColor, type SavedPlace } from '@/lib/saved-places';
+import { useAppConfirm } from '@/components/AppConfirm';
 
 import type { LocationData } from '@/lib/types';
 import type { SectorSite } from '@/lib/sector';
@@ -579,6 +580,7 @@ function EmptyState() {
 }
 
 function DesignStudioInner() {
+  const appConfirm = useAppConfirm();
   const { user, loading: authLoading } = useAuth();
   const params = useSearchParams();
   const latRaw = params.get('lat');
@@ -2101,13 +2103,17 @@ function DesignStudioInner() {
   // nothing and cannot be lost by a mis-tap. Nothing about the DESIGN is touched — no item, zone,
   // line or metre — because the frame's ground scale never belonged to the photo in the first
   // place (see applyCustomBase), so the farm keeps its size on the satellite exactly as drawn.
-  const deleteCustomBase = useCallback(() => {
-    if (typeof window !== 'undefined'
-      && !window.confirm('Remove your photo and go back to the satellite view?\n\nYour design is not affected.')) return;
+  const deleteCustomBase = useCallback(async () => {
+    const proceed = await appConfirm({
+      message: 'Remove your photo and go back to the satellite view?\n\nYour design is not affected.',
+      confirmLabel: 'Remove photo',
+      destructive: true,
+    });
+    if (!proceed) return;
     customBaseSourceRef.current = null;
     revertToSatellite();
     handleChange((prev) => ({ ...prev, customBase: null }));
-  }, [handleChange, revertToSatellite]);
+  }, [handleChange, revertToSatellite, appConfirm]);
 
   const handleUndo = useCallback(() => {
     setSaved(false);

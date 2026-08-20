@@ -256,15 +256,37 @@ export function findNearbyPlace(lat: number, lon: number, radiusM = 60): SavedPl
  * Returns the existing nearby place the farmer chose to UPDATE (callers must reuse its id — that
  * is the entire point, so coordinate-keyed downstream data doesn't fork onto a second id), or
  * null to proceed with a brand-new save (no nearby place, farmer declined, or SSR).
+ *
+ * The question is asked through the injected `ask` (components/AppConfirm.tsx useAppConfirm),
+ * never window.confirm: embedded webviews suppress native dialogs and auto-return false, which
+ * silently answered "make a duplicate" — the exact outcome this guard exists to prevent. The
+ * message and both button labels still live HERE, once, so the three call sites can't drift.
  */
-export function promptNearbyUpdate(lat: number, lon: number): SavedPlace | null {
+export interface NearbyUpdateAsk {
+  (opts: {
+    title?: string;
+    message: string;
+    confirmLabel: string;
+    cancelLabel?: string;
+    destructive?: boolean;
+  }): Promise<boolean>;
+}
+
+export async function promptNearbyUpdate(
+  lat: number,
+  lon: number,
+  ask: NearbyUpdateAsk,
+): Promise<SavedPlace | null> {
   if (typeof window === 'undefined') return null;
   const nearby = findNearbyPlace(lat, lon);
   if (!nearby) return null;
   const distM = Math.round(distanceMeters(lat, lon, nearby.lat, nearby.lon));
-  const update = window.confirm(
-    `You already saved "${nearby.name}" about ${distM} m from here. Update that place instead of creating a second one? (OK = update "${nearby.name}", Cancel = save as a new place)`,
-  );
+  const update = await ask({
+    title: 'Update saved place?',
+    message: `You already saved "${nearby.name}" about ${distM} m from here. Update that place instead of creating a second one?`,
+    confirmLabel: `Update "${nearby.name}"`,
+    cancelLabel: 'Save as new place',
+  });
   return update ? nearby : null;
 }
 

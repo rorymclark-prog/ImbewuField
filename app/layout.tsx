@@ -5,6 +5,7 @@ import { AuthProvider } from '@/lib/auth';
 import { ThemeProvider } from '@/lib/theme';
 import { LanguageProvider } from '@/lib/i18n';
 import BackControlProvider from '@/components/BackControl';
+import AppConfirmProvider from '@/components/AppConfirm';
 import ChatWidget from '@/components/ChatWidget';
 import PWAUpdateNotifier from '@/components/PWAUpdateNotifier';
 import SampleModeBanner from '@/components/SampleModeBanner';
@@ -114,11 +115,17 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <ThemeProvider>
           <AuthProvider>
             <LanguageProvider>
-              <AccountOnboardingGates />
-              <BackControlProvider>{children}</BackControlProvider>
-              <ChatWidget />
-              <PWAUpdateNotifier initialBuildSha={loadedBuildSha} />
-              <SampleModeBanner />
+              {/* AppConfirm replaces window.confirm app-wide: embedded webviews suppress native
+                  dialogs and auto-return false, silently killing (or inverting) every
+                  confirm-gated flow. Inside LanguageProvider so translated surfaces can pass
+                  t() labels; wraps ChatWidget too so any surface can ask. */}
+              <AppConfirmProvider>
+                <AccountOnboardingGates />
+                <BackControlProvider>{children}</BackControlProvider>
+                <ChatWidget />
+                <PWAUpdateNotifier initialBuildSha={loadedBuildSha} />
+                <SampleModeBanner />
+              </AppConfirmProvider>
             </LanguageProvider>
           </AuthProvider>
         </ThemeProvider>
