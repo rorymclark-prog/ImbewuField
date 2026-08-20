@@ -46,6 +46,12 @@ import {
   type Planting,
 } from '@/lib/crop-plan';
 
+/** `AutoSuggestResult.notes` became `{ kind, bedIds?, text }[]` in the Notes
+ * Engine v2 change. These assertions are about the farmer-visible sentence, so
+ * they read `.text` and are otherwise unchanged. */
+const noteText = (r: { notes: readonly { text: string }[] }): string[] => r.notes.map((note) => note.text);
+
+
 const BEDS: PlanBed[] = Array.from({ length: 4 }, (_, index) => ({
   id: `bed-${index + 1}`,
   label: `Bed ${index + 1}`,
@@ -137,7 +143,10 @@ test('a no-mixing plan discloses every winter rest instead of painting the chart
         coveredBedMonths++;
       } else {
         assert.ok(
-          result.notes.some((note) => note.startsWith(`${bed.label} still rests in`)),
+          // Per-bed rest notes were collapsed into one grouped gap note per
+          // cause ("3 growing areas have a stretch with no new sowing: Bed 1
+          // (Aug), ..."), so the bed is now named inside that list.
+          noteText(result).some((note) => note.includes('no new sowing') && note.includes(`${bed.label} (`)),
           `${bed.label}'s winter month ${month} rest is hidden`,
         );
       }
@@ -224,7 +233,7 @@ test('unusable and duplicate beds never receive crop recommendations', () => {
 
   assert.ok(result.plantings.length > 0);
   assert.ok(result.plantings.every((planting) => planting.bedId === BEDS[0].id));
-  assert.match(result.notes.join(' '), /unusable|duplicate/i);
+  assert.match(noteText(result).join(' '), /unusable|duplicate/i);
   assert.doesNotMatch(JSON.stringify(result), /NaN|Infinity/);
   assert.deepEqual(beds, before);
 });
@@ -236,7 +245,7 @@ test('invalid calendar input falls back explicitly without changing January’s 
     const result = autoSuggestPlan(ANSWERS, 'mild-frost', BEDS, [], invalidMonth);
     assert.deepEqual(result.plantings, january.plantings);
     assert.deepEqual(result.laterThisYear, january.laterThisYear);
-    assert.match(result.notes.join(' '), /current month.*January/i);
+    assert.match(noteText(result).join(' '), /current month.*January/i);
   }
 });
 
@@ -255,7 +264,7 @@ test('damaged existing rows are accounted for conservatively and inputs are neve
   };
   const result = autoSuggestPlan(answers, 'mild-frost', beds, existing, 7);
 
-  assert.match(result.notes.join(' '), /existing planting record/i);
+  assert.match(noteText(result).join(' '), /existing planting record/i);
   assert.doesNotMatch(JSON.stringify(result), /NaN|Infinity/);
   assert.deepEqual({ answers, beds, existing }, before);
   const cabbage = cropByKey('cabbage');

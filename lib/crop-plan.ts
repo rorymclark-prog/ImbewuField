@@ -1470,7 +1470,7 @@ export function buildYearReport(plantings: Planting[], beds: PlanBed[]): string[
       ? MONTHS_SHORT[longestRun[0] - 1]
       : `${MONTHS_SHORT[longestRun[0] - 1]}-${MONTHS_SHORT[longestRun.at(-1)! - 1]}`;
     paragraphs.push(
-      `No verified fresh-picking window is scheduled around ${label}. This is a timing flag, not a zero-kilogram forecast.`
+      `No verified fresh-picking window is scheduled around ${label}. Nothing is due for picking then — that is a timing gap, not a crop failure.`
       + (unknownYieldCrops.length ? ' Crops with unavailable yield benchmarks may still be harvested in that period.' : ''),
     );
   }
