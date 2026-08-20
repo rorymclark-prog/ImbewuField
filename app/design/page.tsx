@@ -3042,6 +3042,20 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
         {/* RETIRED — the Geometry Lock chip. It is jargon, it confused its own author, and the
             recommended Satellite Overlay style ignores it entirely (see isModelChromeStyle). Render
             behaviour belongs to the chosen STYLE, not to a header switch. */}
+        {canvasState && (
+          <Link
+            href={`/facilitator/crops?canvasSite=${encodeURIComponent(canvasState.siteId)}`}
+            aria-label="Open this farm's crop plan"
+            style={{
+              display: 'inline-flex', alignItems: 'center', gap: 6,
+              minHeight: 32, padding: '5px 12px', borderRadius: 10,
+              border: '1px solid rgba(31,77,43,0.20)', background: PAPER, color: GREEN,
+              fontSize: 12, fontWeight: 800, whiteSpace: 'nowrap',
+            }}
+          >
+            <Sprout size={15} /> Crop plan
+          </Link>
+        )}
         {canvasState && frame && (
           <button
             type="button"
@@ -3252,7 +3266,11 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               </>
             );
           })()}
-          {canvasState.step !== 'glossy' && (
+          {/* Phone-only: the header renders its own Preview map button on wider screens
+              (hidden there on phones), so without this gate a desktop user saw the same
+              button twice — once in the header, once here at the end of the steps strip,
+              where it also read like a tenth step. One button per viewport. */}
+          {isPhone && canvasState.step !== 'glossy' && (
             <button
               type="button"
               onClick={() =>
