@@ -1,5 +1,8 @@
 // Retail + wholesale price-per-kg estimates for the crop-value/cashflow view
-// — a ONE-TIME researched snapshot (2026-07-14), NOT a live feed. Checkers/
+// — a researched snapshot, NOT a live feed. Nearly all of it comes from one
+// research pass (2026-07-14); a crop researched in a later pass carries its
+// own `pricedAt` (see CropPrice below) so the farm-gate card prints that
+// crop's real research date instead of the shared one. Checkers/
 // Shoprite have no public pricing API; a genuinely "live" weekly refresh
 // would need a scraper + somewhere to run it on a schedule + ongoing upkeep
 // as their sites change — real infrastructure this app doesn't have, for a
@@ -19,6 +22,8 @@
 //   (joburgmarket.co.za), 13 Jul 2026 — real traded price, though several
 //   crops traded on very thin volume that day (noted below) and one
 //   (watermelon) was pulled mid-winter, i.e. out of season and priced up.
+//   Turnip is the single entry from a later trading day (19 Aug 2026) and
+//   carries `pricedAt` for exactly that reason.
 // - Wholesale-to-retail ratio: derived from the 6 crops with BOTH real
 //   retail and real wholesale figures (onion/potato/tomato/butternut/
 //   carrot cluster at wholesale ~33-45% of retail; cabbage — cheap, bulky,
@@ -37,6 +42,13 @@ export interface CropPrice {
    *  same-food-group proxy, or general knowledge) rather than directly
    *  found — a real number, but a rougher one; expect to correct it. */
   confidence: 'sourced' | 'estimated';
+  /** The date THIS price was researched, when that is not the shared snapshot date
+   *  (PRICE_SNAPSHOT_DATE in components/prices/CropPriceGuide.format.ts). Set it on any
+   *  entry added or refreshed in a later pass. The farm-gate card prints "Priced <date>"
+   *  directly under the number, so that date has to belong to the number beside it, not
+   *  to the book as a whole. Absent = researched in the shared pass. Never set on a
+   *  farmer's own override — see asFarmerOwnPrice. */
+  pricedAt?: string;
 }
 
 export const DEFAULT_CROP_PRICES: Record<string, CropPrice> = {
@@ -79,17 +91,19 @@ export const DEFAULT_CROP_PRICES: Record<string, CropPrice> = {
   // No usable data found either direction — same-food-group proxy.
   'broad-beans': { retailPerKg: 35, wholesalePerKg: 13, confidence: 'estimated' }, // modeled fresh-podded in this catalog (harvestWindowMonths, not stored dry) — proxied off green-beans rather than dry-beans
 
-  // Added 2026-08-20 alongside true-spinach/turnip (see crop-catalog.ts).
-  // turnip: real Joburg Market wholesale trade, 19 Aug 2026 — R650.00 for
-  // 127kg (14 lots) = R5.12/kg (joburgmarket.co.za/jhb-market/dailyprices.php,
-  // fetched 2026-08-20). Thin volume, same caveat as amadumbe below — treat
-  // as a rough regional signal, not a firm number. No direct SA retail
-  // listing found (turnip barely appears in mainstream SA retail), so retail
-  // is derived via the root-crop wholesale/retail ratio (~38%, the same
-  // carrot/potato/onion cluster ratio used for dry-beans above): 5.12/0.38 ≈
-  // R13/kg, in the same band as carrots' real R14/kg — sanity-checked, not
-  // just formula output.
-  turnip: { retailPerKg: 13, wholesalePerKg: 5, confidence: 'estimated' },
+  // turnip (priced 2026-08-20, when the crop itself was added — see
+  // crop-catalog.ts): real Joburg Market wholesale trade for 19 August 2026 —
+  // R650.00 total value over 127 kg sold citywide = R5.12/kg
+  // (joburgmarket.co.za/jhb-market/dailyprices.php, fetched 2026-08-20).
+  // Thin volume, same caveat as amadumbe above — a rough regional signal, not
+  // a firm number. That trading day is five weeks after the rest of this
+  // book, so this entry carries its own `pricedAt` rather than inheriting the
+  // shared snapshot date. No direct SA retail listing found (turnip barely
+  // appears in mainstream SA retail), so retail is derived via the root-crop
+  // wholesale/retail ratio (~38%, the same carrot/potato/onion cluster ratio
+  // used for dry-beans above): 5.12/0.38 ≈ R13/kg, in the same band as
+  // carrots' real R14/kg — sanity-checked, not just formula output.
+  turnip: { retailPerKg: 13, wholesalePerKg: 5.12, confidence: 'estimated', pricedAt: '19 August 2026' },
 };
 
 // Herbs are sold and valued completely differently from bulk vegetables —
@@ -100,27 +114,26 @@ export const DEFAULT_CROP_PRICES: Record<string, CropPrice> = {
 // unaffected) rather than showing a number nobody could sanity-check.
 //
 // true-spinach (added 2026-08-20): en-ZA market "spinach" is not this crop.
-// Multiple SA growing-guide sources confirm Swiss chard is what South
-// African markets, retailers and home gardeners actually call "spinach" —
-// "Swiss chard is one of South Africa's most commonly grown vegetables and
-// is often erroneously called spinach" (seedsandplants.co.za, "Differences
-// Between Chard and Spinach"). Checked directly: the Joburg Market
-// wholesale "spinach" commodity traded at R2.41/kg on 19 Aug 2026
-// (joburgmarket.co.za) — within a cent of this file's OWN swiss-chard
-// wholesale figure (R2.40/kg) above, i.e. the same crop already priced
-// under 'swiss-chard'. Pricing true-spinach off that number would just be
-// re-pricing chard under a different catalog key, not a real Spinacia
-// oleracea figure.
-// The one retail listing that is unambiguously true spinach — PnP "English
-// Spinach" / bagged "Baby Spinach" (Spinacia oleracea, sold as a salad
-// product) — runs ~R199.90/kg (100g bag "from R19.99", mrd.com delivery
-// listing, fetched 2026-08-20). Same problem as coriander: a bagged-salad
-// unit price that looks like a bug next to R14/kg carrots, AND a different
-// product form (100g washed leaf bag) from the bunched/mature-leaf crop
-// this catalog models — using it would misrepresent, not estimate, the
-// value of a field planting.
-// No bunch-form, field-crop retail price for true spinach specifically
-// could be found. Honest exclusion, same pattern as coriander.
+// SA growing guides say so plainly — "Most of the “spinach” sold in South
+// African supermarkets is actually Swiss chard" (plantinfo.co.za, "How to
+// Grow Spinach (Swiss Chard) in South Africa", fetched 2026-08-20).
+// Checked against this file's own numbers rather than taken on trust: the
+// Joburg Market wholesale "spinach" commodity traded R79,551.72 over
+// 33,083 kg on 19 August 2026 = R2.40/kg (joburgmarket.co.za/jhb-market/
+// dailyprices.php, fetched 2026-08-20) — the same figure, to the cent, as
+// this file's own swiss-chard wholesale (2.4) above. That exact match is
+// the check: the commodity the market calls "spinach" is the crop already
+// priced here under 'swiss-chard', so pricing true-spinach off it would
+// re-price chard under a second catalog key rather than put a real
+// Spinacia oleracea number in front of a farmer.
+// The retail side has coriander's problem. What is sold in SA as true
+// spinach is the washed baby/English spinach salad bag — a 100-200g
+// packaged salad line, priced as one. A per-kg figure derived from a salad
+// bag looks like a bug next to R14/kg carrots AND describes a different
+// product from the bunched, mature-leaf crop this catalog models, so it
+// would misrepresent a field planting rather than estimate it. No
+// bunch-form or field-crop per-kg price for true spinach specifically could
+// be found. Honest exclusion, same pattern as coriander.
 export const UNPRICED_CROPS = new Set<string>(['coriander', 'true-spinach']);
 
 const PRICE_OVERRIDES_KEY = 'imbewu_crop_price_overrides_v1';
@@ -161,12 +174,31 @@ export function isUsablePrice(value: unknown): boolean {
   return ok(p.retailPerKg) && ok(p.wholesalePerKg);
 }
 
+/**
+ * A farmer's own edited price, stripped of the price book's research provenance.
+ *
+ * THE EDITOR BUILDS AN OVERRIDE BY SPREADING THE RESEARCHED DEFAULT — `{ ...price,
+ * retailPerKg: Number(...) }` in app/facilitator/crops/page.tsx. Without this, a farmer who
+ * corrects turnip today keeps the book's `pricedAt`, and the farm-gate card then prints
+ * "Priced 19 August 2026" directly under a number the farmer typed this morning: a freshness
+ * claim about a figure that has nothing to do with that date. The editor already downgrades
+ * `confidence` to 'estimated' at the input for the same reason; this is the other half of the
+ * same provenance reset, kept here so it holds for every caller and not just that one handler.
+ */
+export function asFarmerOwnPrice(price: CropPrice): CropPrice {
+  const { pricedAt: _researchDate, ...own } = price;
+  return own;
+}
+
 export function saveCropPriceOverrides(overrides: Record<string, CropPrice>): void {
   if (typeof window === 'undefined' || !window.localStorage) return;
   // Never persist an unusable override — see isUsablePrice. Dropping the key restores the
-  // researched default, which is the only "reset" the editor has.
+  // researched default, which is the only "reset" the editor has. Stored overrides are the
+  // farmer's own numbers by definition, so none of them keeps the book's research date.
   overrides = Object.fromEntries(
-    Object.entries(overrides ?? {}).filter(([, v]) => isUsablePrice(v)),
+    Object.entries(overrides ?? {})
+      .filter(([, v]) => isUsablePrice(v))
+      .map(([k, v]) => [k, asFarmerOwnPrice(v as CropPrice)]),
   ) as Record<string, CropPrice>;
   try {
     window.localStorage.setItem(

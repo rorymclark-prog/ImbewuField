@@ -1,7 +1,7 @@
 'use client';
 
 import { AlertTriangle, CheckCircle2, ChevronLeft } from 'lucide-react';
-import { formatPrice, PRICE_SNAPSHOT_DATE, type PricedCrop } from './CropPriceGuide.format';
+import { formatPrice, priceDateLabel, type PricedCrop } from './CropPriceGuide.format';
 import { getCropArt } from '@/lib/crop-art';
 
 /**
@@ -65,7 +65,8 @@ export function CropPriceDetail({ crop, onChangeCrop }: { crop: PricedCrop; onCh
         </span>
       </div>
       <div className="font-sans" style={{ fontSize: 12, color: 'var(--color-muted)', marginTop: 6, maxWidth: 260 }}>
-        Priced {PRICE_SNAPSHOT_DATE} — always check today&apos;s real price before you agree.
+        {/* This crop's own research date, not the book's headline date — see priceDateLabel. */}
+        Priced {priceDateLabel(price)} — always check today&apos;s real price before you agree.
       </div>
 
       <div style={{ width: '100%', marginTop: 22, display: 'flex', flexDirection: 'column', gap: 12 }}>

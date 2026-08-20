@@ -50,6 +50,13 @@ test('a half-written or malformed override is rejected rather than half-applied'
 // and turnip landed in neither list the day they were added to the catalog.
 // This guards every future food crop the same way: priced or explicitly,
 // deliberately excluded — never silently unpriced.
+//
+// BOUNDARY: hasPlanningYield means yieldKgPerM2 > 0, so a food crop shipped with
+// yieldKgPerM2: 0 or null (the oats/cover-crop shape) is invisible to this test.
+// That is intentional — with no planning yield there are no kg to value, so the
+// subtotal flag above cannot fire for it — but it does mean this is not a
+// whole-catalog price census; give such a crop a yield and this test starts
+// covering it.
 test('every catalog crop with a planning yield is priced or deliberately excluded', () => {
   const gaps = CROPS.filter(hasPlanningYield)
     .filter((crop) => !DEFAULT_CROP_PRICES[crop.key] && !UNPRICED_CROPS.has(crop.key))

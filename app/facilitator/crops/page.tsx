@@ -39,7 +39,11 @@ import { FOOD_GROUP_META, foodGroupOf, ROTATION_FAMILY_META, rotationFamilyOf } 
 import type { AutoSuggestAnswers, AutoSuggestResult, GardenGoal, HarvestRhythm } from '@/lib/crop-autosuggest';
 import { autoSuggestPlan } from '@/lib/crop-autosuggest';
 import type { CropPrice } from '@/lib/crop-prices';
-import { UNPRICED_CROPS, isUsablePrice, priceFor, loadCropPriceOverrides, saveCropPriceOverrides } from '@/lib/crop-prices';
+import { UNPRICED_CROPS, asFarmerOwnPrice, isUsablePrice, priceFor, loadCropPriceOverrides, saveCropPriceOverrides } from '@/lib/crop-prices';
+// The one place the price book's dates become farmer-visible copy on this page. Imported rather
+// than retyped so the wording cannot drift from the book it describes (that drift is exactly what
+// left this sentence naming a single day after a crop was priced five weeks later).
+import { PRICE_SNAPSHOT_MONTHS } from '@/components/prices/CropPriceGuide.format';
 // Task wording lives in the export module now, not here: the screen, the
 // calendar file and the printed plan all have to describe a task the same way,
 // and three copies of that sentence is how they stop doing so.
@@ -508,7 +512,13 @@ function FacilitatorCropsPageInner() {
   function updatePriceOverride(cropKey: string, price: CropPrice) {
     setPriceOverrides((prev) => {
       const next = { ...prev };
-      if (isUsablePrice(price)) next[cropKey] = price;
+      // The inputs below build the edit by spreading the researched default, so the book's own
+      // research date would ride along into the farmer's number — and the farm-gate card would
+      // then date a figure typed today to a market day weeks ago. asFarmerOwnPrice strips it,
+      // the same reset the inputs already apply to `confidence`. Applied to the in-memory state
+      // too, not just on save, so the current session shows the honest date immediately.
+      const own = asFarmerOwnPrice(price);
+      if (isUsablePrice(own)) next[cropKey] = own;
       else delete next[cropKey];
       saveCropPriceOverrides(next);
       return next;
@@ -1825,7 +1835,7 @@ function FoodAvailabilityChart({
       {mode === 'value' && (
         <>
           <p className="font-sans mb-3" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.45 }}>
-            What-if value for the saved plan&apos;s crop-cycle benchmark totals. It is not a monthly cashflow forecast, annual profit, live market quote or harvest promise. Default prices are an editable South African snapshot from 14 July 2026; confirm a real buyer and current local price before planting for sale.
+            What-if value for the saved plan&apos;s crop-cycle benchmark totals. It is not a monthly cashflow forecast, annual profit, live market quote or harvest promise. Default prices are an editable South African snapshot from {PRICE_SNAPSHOT_MONTHS}; confirm a real buyer and current local price before planting for sale.
           </p>
           <div className="inline-flex rounded-full p-0.5 mb-3" style={{ background: '#F5F0E8', border: '1px solid #E2D8C4' }}>
             {(['retail', 'wholesale'] as const).map((priceMode) => <button key={priceMode} onClick={() => setValuePriceMode(priceMode)} className="font-sans font-semibold" style={{ fontSize: 11, padding: '4px 10px', borderRadius: 999, border: 'none', cursor: 'pointer', background: valuePriceMode === priceMode ? '#5C5040' : 'transparent', color: valuePriceMode === priceMode ? '#F7F2E9' : '#5C5040' }}>{priceMode === 'retail' ? 'Direct retail' : 'Wholesale'}</button>)}
