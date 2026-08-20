@@ -63,6 +63,14 @@ export interface PlanDashboard {
   netKg: number | null;
   /** Months with at least one verified fresh-picking window. Timing only. */
   freshPickingMonths: number;
+  /** Months in which something harvested earlier is still inside the sourced
+   * shelf life the catalog carries for it — counted whether or not the same
+   * month also has a fresh window, so the two stats are independent readings of
+   * the same year rather than a partition of it. */
+  storedFoodMonths: number;
+  /** The crops behind storedFoodMonths, alphabetically. Empty when a plan holds
+   * nothing with a sourced shelf life — which is a real answer, not a zero. */
+  storedFoodCrops: string[];
   /** Food crops omitted from every kg figure because the catalog has no
    * verified kg/m² benchmark for them. */
   unknownYieldCrops: string[];
@@ -107,6 +115,13 @@ export function buildPlanDashboard(
   const availability = buildFoodAvailability(accountedPlantings, beds, opts.nowMonth);
   const freshPickingMonths = availability.slice(1, 13)
     .filter((month) => month.some((item) => item.status === 'fresh')).length;
+  const storedFoodMonths = availability.slice(1, 13)
+    .filter((month) => month.some((item) => item.status === 'stored')).length;
+  const storedFoodCrops = [...new Set(
+    availability.slice(1, 13).flatMap((month) => month
+      .filter((item) => item.status === 'stored')
+      .map((item) => item.name)),
+  )].sort((a, b) => a.localeCompare(b));
 
   const workload = buildWorkloadSeries(tasks, opts.nowMonth);
   const busiest = [...workload].sort((a, b) => b.count - a.count).slice(0, 3)
@@ -186,7 +201,7 @@ export function buildPlanDashboard(
   }
   if (!lossConfirmed) decisions.push('Confirm a loss allowance from actual records before calculating a usable total.');
 
-  return { stats, signals, decisions, grossKg, netKg, freshPickingMonths, unknownYieldCrops, hasKnownYield, areaConflictBedLabels };
+  return { stats, signals, decisions, grossKg, netKg, freshPickingMonths, storedFoodMonths, storedFoodCrops, unknownYieldCrops, hasKnownYield, areaConflictBedLabels };
 }
 
 /** Bed-months with nothing in the ground — the honest counterweight to a big total. */

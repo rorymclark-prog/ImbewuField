@@ -33,6 +33,8 @@
 // computes a quantity — it only decides what things look like.
 
 import type { CropTask, PlanBed, Planting } from '@/lib/crop-plan';
+import { planNotesDateLabel } from '@/lib/crop-plan';
+import type { PlanNote, PlanNoteKind } from '@/lib/crop-autosuggest';
 import type { FoodGroup } from '@/lib/crop-groups';
 import {
   buildBuyingSchedule, monthShort, monthYearLabel, positionRangeLabel, rollingMonths,
@@ -91,6 +93,17 @@ export interface CropPlanPdfInput {
   meta: CropPlanPdfMeta;
   /** buildYearReport's paragraphs — the plan in plain words. */
   yearReport?: string[];
+  /**
+   * The accepted suggestion's own notes, off the saved plan (CropPlanState).
+   * The printed plan is what a farmer takes to the field and what a mentor
+   * reads; the warnings and the choices behind the plan belong on it.
+   */
+  planNotes?: PlanNote[];
+  /** Epoch ms the suggestion was made at, so the printed panel can be dated
+   * as honestly as the screen is — month AND year: a printed plan outlives a
+   * season, and "suggested in Sep" on a page read next winter names the wrong
+   * September. */
+  planNotesAt?: number;
   /** "Today". Decides the reading order and every resolved year in the document. */
   now?: Date;
   /** Which of the five views to include. Omitted = all of them. */
@@ -502,6 +515,61 @@ function drawDashboard(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: n
     s.paragraph('Also worth knowing', { size: 10, bold: true, ink: INK.green, gap: 6 });
     for (const para of extra) s.paragraph(para, { size: 8.8, ink: INK.muted, gap: 5 });
   }
+
+  drawPlanNotes(s, input);
+}
+
+/** panel() draws at s.y without checking whether the page has room; this is the
+ * same arithmetic it uses, so a caller can ask for the space first. */
+function panelHeight(s: Sheet, body: string[], hasTitle: boolean, accent: boolean): number {
+  const innerW = s.contentWidth - 20 - (accent ? 4 : 0);
+  s.font(8.5);
+  let lines = 0;
+  for (const b of body) lines += (s.doc.splitTextToSize(pdfSafe(b), innerW) as string[]).length;
+  return 20 + (hasTitle ? 14 : 0) + lines * 11.5;
+}
+
+const PLAN_NOTE_PANEL_TITLES: Record<PlanNoteKind, string> = {
+  warning: 'WHAT TO WATCH',
+  choice: 'CHOICES THIS PLAN MADE',
+  gap: 'GROUND WITH NO NEW SOWING',
+  basis: 'HOW THIS PLAN WAS MADE',
+};
+/** warning -> choice -> gap -> basis, the same ranking the screen renders. */
+const PLAN_NOTE_PANEL_ORDER: readonly PlanNoteKind[] = ['warning', 'choice', 'gap', 'basis'];
+
+/**
+ * The accepted suggestion's reasons, on paper.
+ *
+ * Same grouping and same order as the screen, and dated for the same reason:
+ * the plan can have been hand-edited after the suggestion was made, so the
+ * panel says WHEN it describes rather than implying it describes now.
+ */
+function drawPlanNotes(s: Sheet, input: CropPlanPdfInput): void {
+  const notes = input.planNotes ?? [];
+  if (!notes.length) return;
+
+  const intro = input.planNotesAt
+    ? `From the plan suggested in ${planNotesDateLabel(input.planNotesAt)}. Anything changed by hand since is not described here.`
+    : 'From the suggested plan that was accepted. Anything changed by hand since is not described here.';
+  s.need(40);
+  s.paragraph('How this plan was put together', { size: 10, bold: true, ink: INK.green, gap: 4 });
+  s.paragraph(intro, { size: 8, ink: INK.faint, gap: 6 });
+
+  for (const kind of PLAN_NOTE_PANEL_ORDER) {
+    const body = notes.filter((note) => note.kind === kind).map((note) => note.text);
+    if (!body.length) continue;
+    const accent = kind === 'warning' ? INK.gold : undefined;
+    const h = panelHeight(s, body, true, accent !== undefined);
+    s.need(h + 12);
+    const drawn = panel(s, {
+      title: PLAN_NOTE_PANEL_TITLES[kind],
+      ...(accent ? { accent } : {}),
+      bg: kind === 'warning' ? INK.panelCream : INK.panelGrey,
+      body,
+    });
+    s.y += drawn + 10;
+  }
 }
 
 // ── 2. Year in numbers ──────────────────────────────────────────────────────
@@ -581,11 +649,23 @@ function drawYearInNumbers(
     : coverage.hasKnownYield
     ? `The ${coverage.grossKg!.toFixed(1)} kg figure is a sum of crop-cycle benchmarks. It is not divided into months because the source does not provide a within-window picking curve.`
     : 'No kilogram comparison is available because none of this plan\'s food crops has a verified kg/m² benchmark. An unavailable benchmark is not a 0kg harvest.';
+  // The standfirst above tells the reader to use this page to compare storage,
+  // and until now the page said nothing whatsoever about storage: the sourced
+  // shelf lives existed in the catalog and reached the printed plan nowhere. A
+  // plan with no storage crop gets no line at all rather than a "0 of 12", which
+  // would read as a finding about the year instead of the absence of the data.
+  const storedNote = coverage.storedFoodMonths > 0
+    ? `${coverage.storedFoodMonths} of 12 months also have food from store, from ${coverage.storedFoodCrops.length} crop${coverage.storedFoodCrops.length === 1 ? '' : 's'} with a sourced shelf life (${coverage.storedFoodCrops.join(', ')}). Each shelf life assumes particular storage conditions for that crop and does not hold without them.`
+    : null;
   const yieldH = panel(s, {
     title: 'CROP-CYCLE BENCHMARK ONLY',
     accent: INK.gold,
     bg: INK.panelCream,
-    body: [yieldNote, `${coverage.freshPickingMonths} of 12 months have at least one verified fresh-picking window; that is timing, not monthly kilograms.`],
+    body: [
+      yieldNote,
+      `${coverage.freshPickingMonths} of 12 months have at least one verified fresh-picking window; that is timing, not monthly kilograms.`,
+      ...(storedNote ? [storedNote] : []),
+    ],
   });
   s.y += yieldH + 18;
 

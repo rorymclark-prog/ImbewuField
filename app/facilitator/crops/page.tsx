@@ -32,11 +32,11 @@ import {
   loadCropPlan, saveCropPlan, bedEntryMonth, latestBedEntryMonth, plannedBedEntryMonth, harvestEndMonthForCrop, harvestMonthForCrop, tasksForPlan, taskMonthsFromNow, estimatedYieldKgAdjusted, nextValidSowMonth,
   isSpaceHungry, bedOverlapWarning, benchmarkAreaConflictDetails, bedHasUnverifiedTiming, buildYearReport, buildFoodAvailability, buildPlanYieldBenchmark,
   buildFieldUtilizationByMonth, loadFavouriteCropKeys, saveFavouriteCropKeys, isGenuinelyIntercropped, plantingBedEntryOffsets, plantingIsActiveOrPlanned, recurringPlanPlantings,
-  loadAllowBedSharing, saveAllowBedSharing, loadCashflowSettings, saveCashflowSettings, DEFAULT_CASHFLOW_SETTINGS,
+  loadAllowBedSharing, saveAllowBedSharing, loadCashflowSettings, saveCashflowSettings, DEFAULT_CASHFLOW_SETTINGS, planNotesDateLabel,
 } from '@/lib/crop-plan';
 import type { FoodGroup } from '@/lib/crop-groups';
 import { FOOD_GROUP_META, foodGroupOf, ROTATION_FAMILY_META, rotationFamilyOf } from '@/lib/crop-groups';
-import type { AutoSuggestAnswers, AutoSuggestResult, GardenGoal, HarvestRhythm } from '@/lib/crop-autosuggest';
+import type { AutoSuggestAnswers, AutoSuggestResult, GardenGoal, HarvestRhythm, PlanNote } from '@/lib/crop-autosuggest';
 import { autoSuggestPlan, PLAN_NOTES_PANEL_COPY } from '@/lib/crop-autosuggest';
 import type { CropPrice } from '@/lib/crop-prices';
 import { UNPRICED_CROPS, asFarmerOwnPrice, isUsablePrice, priceFor, loadCropPriceOverrides, saveCropPriceOverrides } from '@/lib/crop-prices';
@@ -516,6 +516,12 @@ function FacilitatorCropsPageInner() {
         version: 1,
         rainPattern: pattern,
         plantings: [...base.plantings, ...autoResult.plantings],
+        // The reasons the farmer just read stay with the plan. They REPLACE any
+        // earlier set rather than accumulating: two suggestions run months apart
+        // explain two different plans, and stacking them would put contradictory
+        // sentences under one date label.
+        planNotes: autoResult.notes,
+        planNotesAt: Date.now(),
         updatedAt: Date.now(),
       };
     });
@@ -1537,6 +1543,8 @@ function FacilitatorCropsPageInner() {
               beds={beds}
               tasks={allTasks}
               yearReport={yearReport}
+              planNotes={plan?.planNotes}
+              planNotesAt={plan?.planNotesAt}
               meta={exportMeta}
             />
 
@@ -1602,6 +1610,13 @@ function FacilitatorCropsPageInner() {
                 )}
               </div>
             </div>
+
+            {/* Only for a plan that came from an accepted suggestion — a
+                hand-built plan has no such notes and must not get an empty
+                card implying it does. */}
+            {plan?.planNotes?.length && plan.planNotesAt && plantings.length > 0
+              ? <AcceptedPlanNotesCard notes={plan.planNotes} generatedAt={plan.planNotesAt} />
+              : null}
 
             <DisclosureCard
               title="🔎 What the planner can prove"
@@ -1753,6 +1768,188 @@ function EmptyState({ onVirtual, designHref }: { onVirtual: () => void; designHr
   );
 }
 
+// ── The storage story, in one place ─────────────────────────────────────
+//
+// The catalog has carried a sourced storageMonths, the storage CONDITIONS it
+// depends on, and the source URL for ten crops — and none of it reached a
+// farmer. The shelf life became a gold bar on one chart; the conditions and the
+// source rendered nowhere at all. A shelf life without its conditions is not a
+// fact about food, it is a number: FAO's two months for butternut is two months
+// for a CURED, undamaged, ventilated fruit and nothing at all for a bruised one.
+// So the two always travel together, from here, wherever storage is mentioned.
+
+function CropStorageLine({ crop }: { crop: CropDef }) {
+  if (crop.storageMonths === undefined || !crop.storageConditions) return null;
+  return (
+    <div>
+      Keeps about {crop.storageMonths} month{crop.storageMonths === 1 ? '' : 's'} in store — {crop.storageConditions}
+      {crop.storageSourceUrl && (
+        <>
+          {' '}
+          <a
+            href={crop.storageSourceUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{ color: '#1F4D2B', textDecoration: 'underline' }}
+          >
+            source
+          </a>
+        </>
+      )}
+    </div>
+  );
+}
+
+/**
+ * One month of the availability chart, opened by tapping its column.
+ *
+ * Fresh rows say only that the crop is in its picking window — that is all the
+ * chart ever claimed. Stored rows carry the shelf life, the conditions and the
+ * source, exactly as the planting sheet does, because those three together are
+ * what make a "stored" square mean anything.
+ */
+function MonthAvailabilityDetail({
+  month, items, onClose,
+}: {
+  month: number;
+  items: FoodAvailabilityItem[];
+  onClose: () => void;
+}) {
+  const fresh = items.filter((item) => item.status === 'fresh');
+  const stored = items.filter((item) => item.status === 'stored');
+  return (
+    <div className="rounded-xl p-3 mt-3" style={{ background: '#F5F0E8', border: '1px solid #E2D8C4' }}>
+      <div className="flex items-start justify-between gap-2 mb-1.5">
+        <div className="font-display font-semibold" style={{ fontSize: 13, color: '#20190F' }}>{monthLabel(month)}</div>
+        <button onClick={onClose} aria-label={`Close ${monthLabel(month)} detail`} style={{ background: 'none', border: 'none', cursor: 'pointer', color: '#8C7A62', padding: 0 }}>
+          <X size={14} />
+        </button>
+      </div>
+      {/* "with a sourced shelf life", not "inside its shelf life": only crops
+          with a researched storageMonths ever show as stored, so about every
+          other crop this panel knows nothing — it must not claim the pantry
+          is empty, only that it has nothing sourced to report. */}
+      {items.length === 0 && (
+        <div className="font-sans" style={{ fontSize: 12, color: '#8C7A62' }}>Nothing is scheduled for picking, and nothing with a sourced shelf life is still in store.</div>
+      )}
+      {fresh.length > 0 && (
+        <div className="mb-2">
+          <div className="font-sans uppercase tracking-widest mb-1" style={{ fontSize: 9.5, color: '#8C7A62', letterSpacing: '0.08em' }}>Ready to pick</div>
+          {fresh.map((item) => (
+            <div key={item.cropKey} className="font-sans flex items-center gap-1.5" style={{ fontSize: 12, color: '#5C5040', lineHeight: 1.5 }}>
+              <CropIcon cropKey={item.cropKey} icon={item.icon} size={13} /> {item.name}
+            </div>
+          ))}
+        </div>
+      )}
+      {stored.length > 0 && (
+        <div>
+          <div className="font-sans uppercase tracking-widest mb-1" style={{ fontSize: 9.5, color: '#8C7A62', letterSpacing: '0.08em' }}>From store</div>
+          {stored.map((item) => {
+            const crop = cropByKey(item.cropKey);
+            return (
+              <div key={item.cropKey} className="mb-1.5">
+                <div className="font-sans flex items-center gap-1.5" style={{ fontSize: 12, color: '#5C5040', lineHeight: 1.5 }}>
+                  <CropIcon cropKey={item.cropKey} icon={item.icon} size={13} /> {item.name}
+                </div>
+                {crop && (
+                  <div className="font-sans" style={{ fontSize: 11, color: '#8C7A62', lineHeight: 1.45 }}>
+                    <CropStorageLine crop={crop} />
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// ── Plan notes, grouped by kind ─────────────────────────────────────────
+//
+// ONE renderer, two places. The review modal shows the notes of a suggestion
+// the farmer has not accepted yet; the plan page shows the notes of the
+// suggestion they DID accept, read back off the saved plan. They are the same
+// sentences and must be ranked, grouped and collapsed the same way — a second
+// copy of this markup is how the two drift until the persisted one quietly
+// becomes the flat amber wall this grouping was written to kill.
+
+function PlanNoteGroups({ notes }: { notes: PlanNote[] }) {
+  // Grouped by kind, not stacked into one amber wall: the two load-bearing
+  // vine warnings used to sit at positions 5-6 under twenty-six copies of a
+  // per-bed rest note.
+  const warnings = notes.filter((n) => n.kind === 'warning');
+  const choices = notes.filter((n) => n.kind === 'choice');
+  const gaps = notes.filter((n) => n.kind === 'gap');
+  const basis = notes.filter((n) => n.kind === 'basis');
+  return (
+    <div className="flex flex-col gap-2">
+      {warnings.length > 0 && (
+        <div className="px-3 py-2 rounded-lg font-sans flex flex-col gap-1.5" style={{ fontSize: 12.5, background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.4)', color: '#8A5210' }}>
+          {warnings.map((n, i) => <div key={i}>{n.text}</div>)}
+        </div>
+      )}
+      {choices.length > 0 && (
+        <ul className="px-3 py-2 rounded-lg font-sans flex flex-col gap-1" style={{ fontSize: 11.5, background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#5C5040', listStyle: 'disc', paddingInlineStart: 26 }}>
+          {choices.map((n, i) => <li key={i}>{n.text}</li>)}
+        </ul>
+      )}
+      {gaps.length > 0 && (
+        <details className="px-3 py-2 rounded-lg font-sans" style={{ fontSize: 11.5, background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#5C5040' }}>
+          <summary style={{ cursor: 'pointer' }}>
+            {/* Count BEDS, deduped: one bed can be named by two gap notes (a
+                stranded-bed note plus a grouped rest one), and summing bedIds
+                lengths counted it twice. */}
+            {PLAN_NOTES_PANEL_COPY.gapsHeading} ({(() => {
+              const seen = new Set<string>();
+              let unattributed = 0;
+              for (const n of gaps) {
+                if (n.bedIds?.length) for (const id of n.bedIds) seen.add(id);
+                else unattributed++;
+              }
+              return seen.size + unattributed;
+            })()})
+          </summary>
+          <div className="flex flex-col gap-1.5 pt-1.5">
+            {gaps.map((n, i) => <div key={i}>{n.text}</div>)}
+          </div>
+        </details>
+      )}
+      {basis.length > 0 && (
+        <details className="px-3 py-2 rounded-lg font-sans" style={{ fontSize: 10.5, background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#8C7A62' }}>
+          <summary style={{ cursor: 'pointer' }}>{PLAN_NOTES_PANEL_COPY.basisHeading}</summary>
+          <div className="flex flex-col gap-1.5 pt-1.5">
+            {basis.map((n, i) => <div key={i}>{n.text}</div>)}
+          </div>
+        </details>
+      )}
+    </div>
+  );
+}
+
+/**
+ * The accepted suggestion's reasons, on the plan page itself.
+ *
+ * The date label is not decoration. Nothing invalidates these notes when the
+ * farmer edits the plan afterwards — they describe the suggestion as it was
+ * made, and the honest fix for that is to SAY when it was made rather than to
+ * silently drop notes on the first hand edit (which would delete the warnings
+ * exactly when a farmer started changing things).
+ */
+function AcceptedPlanNotesCard({ notes, generatedAt }: { notes: PlanNote[]; generatedAt: number }) {
+  return (
+    <div className="rounded-2xl p-4 mt-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
+      <div className="font-display font-semibold" style={{ fontSize: 15, color: '#20190F' }}>🧭 Why this plan chose what it chose</div>
+      <p className="font-sans mb-3 mt-0.5" style={{ fontSize: 11.5, color: '#8C7A62', lineHeight: 1.4 }}>
+        From the plan suggested in {planNotesDateLabel(generatedAt)}. Anything you have changed by hand since is not
+        described here.
+      </p>
+      <PlanNoteGroups notes={notes} />
+    </div>
+  );
+}
+
 // ── Food availability + rotation explanation ────────────────────────────
 
 /**
@@ -1837,6 +2034,8 @@ function FoodAvailabilityChart({
   onYearModeChange: (m: 'established' | 'fromToday') => void;
 }) {
   const [mode, setMode] = useState<FoodValueMode>('availability');
+  // Which month column is expanded. Null = none; tapping the open one closes it.
+  const [openMonth, setOpenMonth] = useState<number | null>(null);
   const [valuePriceMode, setValuePriceMode] = useState<'retail' | 'wholesale'>('retail');
   const [editingPrices, setEditingPrices] = useState(false);
   // DISPLAY-ONLY household guideline (docs/CROP-PLAN-TRUTH-AUDIT-2026-08-06.md
@@ -1922,30 +2121,51 @@ function FoodAvailabilityChart({
                     const storedHeight = total === 0 ? 0 : Math.round((stored.length / total) * height);
                     return (
                       <div key={i} style={{ flex: 1, textAlign: 'center', minWidth: 56 }}>
-                        <div style={{ height: BAR_MAX_H, display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
-                          {total === 0 ? <div style={{ width: '60%', height: 2, background: '#E2D8C4', borderRadius: 1 }} /> : (
-                            <div title={[...stored, ...fresh].map((item) => `${item.icon} ${item.name} — ${item.status}`).join('\n')} style={{ width: '60%', display: 'flex', flexDirection: 'column', borderRadius: 4, overflow: 'hidden' }}>
-                              {storedHeight > 0 && <div style={{ height: storedHeight, background: '#D4A017' }} />}
-                              {height - storedHeight > 0 && <div style={{ height: height - storedHeight, background: '#7FAE6E' }} />}
-                            </div>
-                          )}
-                        </div>
-                        <div className="font-sans" style={{ fontSize: 10, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? '#1F4D2B' : '#8C7A62', marginTop: 4 }}>{MONTHS_SHORT[m - 1]}</div>
-                        <div style={{ fontSize: 13, minHeight: 16, display: 'flex', flexWrap: 'wrap', gap: 1, justifyContent: 'center' }}>
-                          {fresh.map((item, idx) => (
-                            <CropIcon key={`${item.cropKey}-${idx}`} cropKey={item.cropKey} icon={item.icon} size={13} />
-                          ))}
-                        </div>
-                        <div style={{ fontSize: 13, minHeight: 16, opacity: 0.6, display: 'flex', flexWrap: 'wrap', gap: 1, justifyContent: 'center' }}>
-                          {stored.map((item, idx) => (
-                            <CropIcon key={`${item.cropKey}-${idx}`} cropKey={item.cropKey} icon={item.icon} size={13} />
-                          ))}
-                        </div>
+                        {/* A BUTTON, not a div with a tooltip. The stored half of
+                            this chart carried its only explanation in a `title`
+                            attribute, which on a phone — where this app is used —
+                            never appears at all: the sourced shelf life and the
+                            conditions it depends on were desktop-only. The hover
+                            text stays for a mouse; the tap opens the same detail. */}
+                        <button
+                          type="button"
+                          onClick={() => setOpenMonth(openMonth === m ? null : m)}
+                          aria-expanded={openMonth === m}
+                          aria-label={`${MONTHS_SHORT[m - 1]} — ${total === 0 ? 'nothing scheduled' : `${total} crop${total === 1 ? '' : 's'}`}, tap for detail`}
+                          style={{ display: 'block', width: '100%', background: openMonth === m ? '#F5F0E8' : 'none', border: 'none', borderRadius: 6, padding: '2px 0', cursor: 'pointer' }}
+                        >
+                          <div style={{ height: BAR_MAX_H, display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
+                            {total === 0 ? <div style={{ width: '60%', height: 2, background: '#E2D8C4', borderRadius: 1 }} /> : (
+                              <div title={[...stored, ...fresh].map((item) => `${item.icon} ${item.name} — ${item.status}`).join('\n')} style={{ width: '60%', display: 'flex', flexDirection: 'column', borderRadius: 4, overflow: 'hidden' }}>
+                                {storedHeight > 0 && <div style={{ height: storedHeight, background: '#D4A017' }} />}
+                                {height - storedHeight > 0 && <div style={{ height: height - storedHeight, background: '#7FAE6E' }} />}
+                              </div>
+                            )}
+                          </div>
+                          <div className="font-sans" style={{ fontSize: 10, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? '#1F4D2B' : '#8C7A62', marginTop: 4 }}>{MONTHS_SHORT[m - 1]}</div>
+                          <div style={{ fontSize: 13, minHeight: 16, display: 'flex', flexWrap: 'wrap', gap: 1, justifyContent: 'center' }}>
+                            {fresh.map((item, idx) => (
+                              <CropIcon key={`${item.cropKey}-${idx}`} cropKey={item.cropKey} icon={item.icon} size={13} />
+                            ))}
+                          </div>
+                          <div style={{ fontSize: 13, minHeight: 16, opacity: 0.6, display: 'flex', flexWrap: 'wrap', gap: 1, justifyContent: 'center' }}>
+                            {stored.map((item, idx) => (
+                              <CropIcon key={`${item.cropKey}-${idx}`} cropKey={item.cropKey} icon={item.icon} size={13} />
+                            ))}
+                          </div>
+                        </button>
                       </div>
                     );
                   })}
                 </div>
               </div>
+              {openMonth !== null && (
+                <MonthAvailabilityDetail
+                  month={openMonth}
+                  items={availability[openMonth] ?? []}
+                  onClose={() => setOpenMonth(null)}
+                />
+              )}
             </>
           )}
         </>
@@ -2783,6 +3003,7 @@ function PlantingPopover({ planting, bedAreaM2, allPlantings, onEdit, onRemove, 
           {pickingPeriodLabel(crop) && <div>Usual picking period: {pickingPeriodLabel(crop)} · bed reserved through the upper end unless you finish it earlier</div>}
           {crop.transplant && <div>Field-readiness window: {monthLabel(bedEntryMonth(planting.sowMonth, crop))}–{monthLabel(latestBedEntryMonth(planting.sowMonth, crop))}; transplant when ready.</div>}
           {crop.transplant && <div>{TRANSPLANT_NURSERY_GUIDANCE}</div>}
+          <CropStorageLine crop={crop} />
           <div>{crop.note}</div>
         </div>
         <div className="font-mono font-bold mb-3" style={{ fontSize: 18, color: '#1F4D2B' }}>
@@ -3189,58 +3410,7 @@ function AutoSuggestModal({
                 </div>
               </>
             )}
-            {result && result.notes.length > 0 && (() => {
-              // Grouped by kind, not stacked into one amber wall: the two
-              // load-bearing vine warnings used to sit at positions 5-6 under
-              // twenty-six copies of a per-bed rest note.
-              const warnings = result.notes.filter((n) => n.kind === 'warning');
-              const choices = result.notes.filter((n) => n.kind === 'choice');
-              const gaps = result.notes.filter((n) => n.kind === 'gap');
-              const basis = result.notes.filter((n) => n.kind === 'basis');
-              return (
-                <div className="flex flex-col gap-2">
-                  {warnings.length > 0 && (
-                    <div className="px-3 py-2 rounded-lg font-sans flex flex-col gap-1.5" style={{ fontSize: 12.5, background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.4)', color: '#8A5210' }}>
-                      {warnings.map((n, i) => <div key={i}>{n.text}</div>)}
-                    </div>
-                  )}
-                  {choices.length > 0 && (
-                    <ul className="px-3 py-2 rounded-lg font-sans flex flex-col gap-1" style={{ fontSize: 11.5, background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#5C5040', listStyle: 'disc', paddingInlineStart: 26 }}>
-                      {choices.map((n, i) => <li key={i}>{n.text}</li>)}
-                    </ul>
-                  )}
-                  {gaps.length > 0 && (
-                    <details className="px-3 py-2 rounded-lg font-sans" style={{ fontSize: 11.5, background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#5C5040' }}>
-                      <summary style={{ cursor: 'pointer' }}>
-                        {/* Count BEDS, deduped: one bed can be named by two gap
-                            notes (a stranded-bed note plus a grouped rest one),
-                            and summing bedIds lengths counted it twice. */}
-                        {PLAN_NOTES_PANEL_COPY.gapsHeading} ({(() => {
-                          const seen = new Set<string>();
-                          let unattributed = 0;
-                          for (const n of gaps) {
-                            if (n.bedIds?.length) for (const id of n.bedIds) seen.add(id);
-                            else unattributed++;
-                          }
-                          return seen.size + unattributed;
-                        })()})
-                      </summary>
-                      <div className="flex flex-col gap-1.5 pt-1.5">
-                        {gaps.map((n, i) => <div key={i}>{n.text}</div>)}
-                      </div>
-                    </details>
-                  )}
-                  {basis.length > 0 && (
-                    <details className="px-3 py-2 rounded-lg font-sans" style={{ fontSize: 10.5, background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#8C7A62' }}>
-                      <summary style={{ cursor: 'pointer' }}>{PLAN_NOTES_PANEL_COPY.basisHeading}</summary>
-                      <div className="flex flex-col gap-1.5 pt-1.5">
-                        {basis.map((n, i) => <div key={i}>{n.text}</div>)}
-                      </div>
-                    </details>
-                  )}
-                </div>
-              );
-            })()}
+            {result && result.notes.length > 0 && <PlanNoteGroups notes={result.notes} />}
             {result && result.laterThisYear.length > 0 && (
               <div className="px-3 py-2 rounded-lg font-sans" style={{ fontSize: 11.5, background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#5C5040' }}>
                 <div className="font-display font-semibold" style={{ fontSize: 11.5, color: '#20190F' }}>{PLAN_NOTES_PANEL_COPY.laterHeading}</div>

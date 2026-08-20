@@ -13,6 +13,7 @@
 
 import { useEffect, useState } from 'react';
 import type { CropTask, PlanBed, Planting } from '@/lib/crop-plan';
+import type { PlanNote } from '@/lib/crop-autosuggest';
 import { buildCropPlanIcs, cropPlanIcsFilename } from '@/lib/crop-calendar-ics';
 import { buildCropPlanPdf, cropPlanPdfFilename, type CropPlanPdfMeta } from '@/lib/crop-export-pdf';
 import {
@@ -25,11 +26,15 @@ export interface CropPlanExportCardProps {
   tasks: CropTask[];
   meta: CropPlanPdfMeta;
   yearReport?: string[];
+  /** The accepted suggestion's own notes, so the printed plan carries the
+   * reasons behind it and not just the rows. */
+  planNotes?: PlanNote[];
+  planNotesAt?: number;
 }
 
 type Busy = 'ics' | 'pdf' | null;
 
-export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearReport }: CropPlanExportCardProps) {
+export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearReport, planNotes, planNotesAt }: CropPlanExportCardProps) {
   const [busy, setBusy] = useState<Busy>(null);
   const [status, setStatus] = useState<string | null>(null);
   const empty = tasks.length === 0;
@@ -77,7 +82,7 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearR
     setBusy('pdf');
     setStatus(null);
     try {
-      const blob = await buildCropPlanPdf({ plantings, beds, tasks, meta, yearReport });
+      const blob = await buildCropPlanPdf({ plantings, beds, tasks, meta, yearReport, planNotes, planNotesAt });
       await run(blob);
       setStatus(done);
     } catch (err) {
