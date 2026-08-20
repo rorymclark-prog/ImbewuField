@@ -490,7 +490,7 @@ function FacilitatorCropsPageInner() {
         : `No mapped site — assuming ${PATTERN_META[pattern].label.toLowerCase()}.`;
     setAutoResult({
       ...suggested,
-      notes: [climateNote, ...suggested.notes],
+      notes: [{ kind: 'basis', text: climateNote }, ...suggested.notes],
     });
     setAutoPhase('review');
   }
@@ -3189,19 +3189,58 @@ function AutoSuggestModal({
                 </div>
               </>
             )}
-            {result && result.notes.length > 0 && (
-              <div className="px-3 py-2 rounded-lg font-sans" style={{ fontSize: 11.5, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: '#9A6018' }}>
-                {result.notes.map((n, i) => <div key={i}>{n}</div>)}
-              </div>
-            )}
+            {result && result.notes.length > 0 && (() => {
+              // Grouped by kind, not stacked into one amber wall: the two
+              // load-bearing vine warnings used to sit at positions 5-6 under
+              // twenty-six copies of a per-bed rest note.
+              const warnings = result.notes.filter((n) => n.kind === 'warning');
+              const choices = result.notes.filter((n) => n.kind === 'choice');
+              const gaps = result.notes.filter((n) => n.kind === 'gap');
+              const basis = result.notes.filter((n) => n.kind === 'basis');
+              return (
+                <div className="flex flex-col gap-2">
+                  {warnings.length > 0 && (
+                    <div className="px-3 py-2 rounded-lg font-sans flex flex-col gap-1.5" style={{ fontSize: 12.5, background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.4)', color: '#8A5210' }}>
+                      {warnings.map((n, i) => <div key={i}>{n.text}</div>)}
+                    </div>
+                  )}
+                  {choices.length > 0 && (
+                    <ul className="px-3 py-2 rounded-lg font-sans flex flex-col gap-1" style={{ fontSize: 11.5, background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#5C5040', listStyle: 'disc', paddingInlineStart: 26 }}>
+                      {choices.map((n, i) => <li key={i}>{n.text}</li>)}
+                    </ul>
+                  )}
+                  {gaps.length > 0 && (
+                    <details className="px-3 py-2 rounded-lg font-sans" style={{ fontSize: 11.5, background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#5C5040' }}>
+                      <summary style={{ cursor: 'pointer' }}>
+                        Ground with no new sowing ({gaps.reduce((total, n) => total + (n.bedIds?.length ?? 1), 0)})
+                      </summary>
+                      <div className="flex flex-col gap-1.5 pt-1.5">
+                        {gaps.map((n, i) => <div key={i}>{n.text}</div>)}
+                      </div>
+                    </details>
+                  )}
+                  {basis.length > 0 && (
+                    <details className="px-3 py-2 rounded-lg font-sans" style={{ fontSize: 10.5, background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#8C7A62' }}>
+                      <summary style={{ cursor: 'pointer' }}>How this plan was made</summary>
+                      <div className="flex flex-col gap-1.5 pt-1.5">
+                        {basis.map((n, i) => <div key={i}>{n.text}</div>)}
+                      </div>
+                    </details>
+                  )}
+                </div>
+              );
+            })()}
             {result && result.laterThisYear.length > 0 && (
               <div className="px-3 py-2 rounded-lg font-sans" style={{ fontSize: 11.5, background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#5C5040' }}>
-                <div className="font-display font-semibold mb-1" style={{ fontSize: 11.5, color: '#20190F' }}>Later this year</div>
+                <div className="font-display font-semibold" style={{ fontSize: 11.5, color: '#20190F' }}>Later this year</div>
+                <div className="mb-1" style={{ fontSize: 10.5, color: '#8C7A62' }}>
+                  Crops you chose that this plan does not sow yet. There is room for each of them when its window opens.
+                </div>
                 {result.laterThisYear.map((l) => {
                   const crop = cropByKey(l.cropKey);
                   return (
                     <div key={l.cropKey} style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-                      {crop && <CropIcon cropKey={l.cropKey} icon={crop.icon} size={14} />} {crop?.name} — the next recorded sowing window starts around {monthLabel(l.nextWindowMonth)}
+                      {crop && <CropIcon cropKey={l.cropKey} icon={crop.icon} size={14} />} {crop?.name} — the next sowing window starts around {monthLabel(l.nextWindowMonth)}
                     </div>
                   );
                 })}

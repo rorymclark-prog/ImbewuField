@@ -48,6 +48,12 @@ import {
 import { isPlotWinterCover } from '@/lib/staple-crops';
 import { rotationFamilyOf } from '@/lib/crop-groups';
 
+/** `AutoSuggestResult.notes` became `{ kind, bedIds?, text }[]` in the Notes
+ * Engine v2 change. These assertions are about the farmer-visible sentence, so
+ * they read `.text` and are otherwise unchanged. */
+const noteText = (r: { notes: readonly { text: string }[] }): string[] => r.notes.map((note) => note.text);
+
+
 // ── The sweep ───────────────────────────────────────────────────────────────
 
 const PATTERNS: RainPattern[] = ['summer', 'winter', 'all-year', 'mild-frost'];
@@ -964,10 +970,10 @@ test('a plot-only farm is told its real problem, not blamed on vines that were n
     rotateCrops: false, allowVinesInBeds: false, reliableIrrigation: true,
   }, 'winter', [{ id: 'p1', label: 'Plot 1', areaM2: 120, minDimM: 11, kind: 'plot' }], [], 3);
   assert.equal(result.plantings.length, 0, 'the fixture is the empty-plan case the note has to explain');
-  assert.ok(!result.notes.some((note) => /space-hungry vines were placed/.test(note)),
-    `no vine was placed, so no note may blame one: ${JSON.stringify(result.notes)}`);
-  assert.ok(result.notes.some((note) => /staple plot/.test(note) && /veg bed/.test(note)),
-    `the real cause — every mapped area is a plot — must be named: ${JSON.stringify(result.notes)}`);
+  assert.ok(!noteText(result).some((note) => /space-hungry vines were placed/.test(note)),
+    `no vine was placed, so no note may blame one: ${JSON.stringify(noteText(result))}`);
+  assert.ok(noteText(result).some((note) => /staple plot/.test(note) && /veg bed/.test(note)),
+    `the real cause — every mapped area is a plot — must be named: ${JSON.stringify(noteText(result))}`);
 });
 
 test('the vine-blame sentence only ever appears on a farm that actually has veg beds', () => {
@@ -987,7 +993,7 @@ test('the vine-blame sentence only ever appears on a farm that actually has veg 
               goal, focusCropCount: 2, groups: [], rhythm: 'steady', rotateCrops: true,
               allowVinesInBeds, allowMixedCropsInBed: true, reliableIrrigation: true,
             }, pattern, beds, [], nowMonth);
-            if (result.notes.some((note) => /space-hungry vines were placed/.test(note))) {
+            if (noteText(result).some((note) => /space-hungry vines were placed/.test(note))) {
               offenders.push(`${pattern} · ${goal} · now=${nowMonth} · vines=${allowVinesInBeds} · ${beds.length} plots`);
             }
           }
@@ -1012,9 +1018,9 @@ test('a "few big harvests" commercial plan never leaves a bed empty in silence',
   }, 'winter', beds, [], 7);
   const planted = new Set(result.plantings.map((planting) => planting.bedId));
   const silent = beds.filter((bed) => !planted.has(bed.id)
-    && !result.notes.some((note) => note.includes(bed.label)));
+    && !noteText(result).some((note) => note.includes(bed.label)));
   assert.deepEqual(silent.map((bed) => bed.label), [],
-    `beds left out of a 12-month plan without a word: ${JSON.stringify(result.notes)}`);
+    `beds left out of a 12-month plan without a word: ${JSON.stringify(noteText(result))}`);
   // And the fix must be real capacity, not a note papering over two plantings.
   assert.ok(result.plantings.length >= beds.length / 2,
     `only ${result.plantings.length} plantings across ${beds.length} beds`);
@@ -1038,7 +1044,7 @@ test('every bed a commercial plan sets aside is either planted or named — at a
             const planted = new Set(result.plantings.map((planting) => planting.bedId));
             for (const bed of beds) {
               if (planted.has(bed.id)) continue;
-              if (result.notes.some((note) => note.includes(bed.label))) continue;
+              if (noteText(result).some((note) => note.includes(bed.label))) continue;
               offenders.push(`${pattern} · ${bedCount} beds · focus=${focusCropCount} · ${rhythm} · now=${nowMonth} — ${bed.label}`);
             }
           }
@@ -1063,12 +1069,12 @@ test('a bed a rotation veto emptied is never described as full', () => {
     rotateCrops: true, allowVinesInBeds: false, reliableIrrigation: true,
   }, 'winter', [bed], history, 9);
   assert.equal(result.plantings.length, 0, 'the fixture is the empty-plan case the note has to explain');
-  assert.ok(!result.notes.some((note) => /beds are full for now|full for now/.test(note)),
-    `the bed is empty eleven months of twelve: ${JSON.stringify(result.notes)}`);
-  assert.ok(result.notes.some((note) => /rotation/i.test(note) && /family/i.test(note)),
-    `the real cause is the rotation veto and must be named: ${JSON.stringify(result.notes)}`);
-  assert.ok(result.notes.some((note) => note.includes(bed.label)),
-    `the bed itself must be named: ${JSON.stringify(result.notes)}`);
+  assert.ok(!noteText(result).some((note) => /beds are full for now|full for now/.test(note)),
+    `the bed is empty eleven months of twelve: ${JSON.stringify(noteText(result))}`);
+  assert.ok(noteText(result).some((note) => /rotation/i.test(note) && /family/i.test(note)),
+    `the real cause is the rotation veto and must be named: ${JSON.stringify(noteText(result))}`);
+  assert.ok(noteText(result).some((note) => note.includes(bed.label)),
+    `the bed itself must be named: ${JSON.stringify(noteText(result))}`);
 });
 
 test('a stranded bed note never blames rotation for a focus crop that was only space-blocked', () => {
@@ -1095,8 +1101,8 @@ test('a stranded bed note never blames rotation for a focus crop that was only s
     rotateCrops: true, allowVinesInBeds: false, allowMixedCropsInBed: true,
     reliableIrrigation: true,
   }, 'summer', beds, history, 6);
-  const bed02Note = result.notes.find((note) => note.includes('Bed 02') && note.includes('has nothing planted'));
-  assert.ok(bed02Note, `Bed 02 must be named as stranded: ${JSON.stringify(result.notes)}`);
+  const bed02Note = noteText(result).find((note) => note.includes('Bed 02') && note.includes('has nothing planted'));
+  assert.ok(bed02Note, `Bed 02 must be named as stranded: ${JSON.stringify(noteText(result))}`);
   assert.ok(!/shares a botanical family with every crop in your commercial focus/.test(bed02Note!),
     `tomatoes was only space-blocked in Bed 02, so rotation cannot be blamed for both crops: ${bed02Note}`);
   // The honest middle case: some focus crops would repeat the family, the
@@ -1145,7 +1151,7 @@ test('the rotation-claiming stranded-bed sentence only ever appears when every f
           allowMixedCropsInBed: true, reliableIrrigation: true,
         }, pattern, beds, history, nowMonth);
         for (const bed of beds) {
-          for (const note of result.notes) {
+          for (const note of noteText(result)) {
             if (!note.includes(bed.label) || !note.includes('has nothing planted')) continue;
             if (/shares a botanical family with every crop in your commercial focus/.test(note)) {
               rotationClaimsSeen++;
@@ -1218,8 +1224,8 @@ test('an all-cereal farm can still take oats, and the plan cites the practice th
   }, 'summer', beds, history, 2);
   const oatsPlots = result.plantings.filter((planting) => planting.cropKey === 'oats');
   assert.ok(oatsPlots.length > 0, 'the sourced exception must remain reachable');
-  const citation = result.notes.find((note) => /KZN DARD/.test(note));
-  assert.ok(citation, `an exception placement must be explained: ${JSON.stringify(result.notes)}`);
+  const citation = noteText(result).find((note) => /KZN DARD/.test(note));
+  assert.ok(citation, `an exception placement must be explained: ${JSON.stringify(noteText(result))}`);
   assert.ok(/broad beans/i.test(citation!), 'the note must offer the manual swap');
   assert.ok(oatsPlots.some((planting) => {
     const bed = beds.find((candidate) => candidate.id === planting.bedId)!;
@@ -1251,7 +1257,7 @@ test('an oats cover is never left unexplained on ground that just carried a cere
             goal: 'family', groups: [], rhythm: 'steady', rotateCrops: true,
             allowVinesInBeds: false, allowMixedCropsInBed: true, reliableIrrigation: true,
           }, pattern, beds, history, nowMonth);
-          const citation = result.notes.find((note) => /KZN DARD/.test(note)) ?? '';
+          const citation = noteText(result).find((note) => /KZN DARD/.test(note)) ?? '';
           const repeats = sameFamilyRotationViolations(beds, history, result.plantings, nowMonth, true)
             .filter((violation) => violation.includes('oats'));
           for (const violation of repeats) {

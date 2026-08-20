@@ -25,6 +25,12 @@ import { cropByKey, CROPS, hasAutomaticPlanningBasis, hasVerifiedFieldPlan, hasV
 import { foodGroupOf, rotationFamilyOf } from '../lib/crop-groups.ts';
 import { isStapleCrop } from '../lib/staple-crops.ts';
 
+/** `AutoSuggestResult.notes` became `{ kind, bedIds?, text }[]` in the Notes
+ * Engine v2 change. These assertions are about the farmer-visible sentence, so
+ * they read `.text` and are otherwise unchanged. */
+const noteText = (r: { notes: readonly { text: string }[] }): string[] => r.notes.map((note) => note.text);
+
+
 const NINE_BEDS: PlanBed[] = Array.from({ length: 9 }, (_, i) => ({
   id: `bed-${i + 1}`, label: `Bed ${i + 1}`, areaM2: 9, minDimM: 3,
 }));
@@ -55,8 +61,8 @@ test('auto-suggest refuses to invent a production plan until reliable irrigation
     );
     assert.deepEqual(result.plantings, []);
     assert.deepEqual(result.laterThisYear, []);
-    assert.match(result.notes.join(' '), /reliable irrigation was not confirmed/i);
-    assert.match(result.notes.join(' '), /packs successive crop cycles.*rainfall label.*does not prove/i);
+    assert.match(noteText(result).join(' '), /reliable irrigation was not confirmed/i);
+    assert.match(noteText(result).join(' '), /packs successive crop cycles.*rainfall label.*does not prove/i);
   }
 });
 
@@ -77,8 +83,8 @@ test('a crop with unresolved timing or field geometry stays selectable for revie
     }, 'mild-frost', [NINE_BEDS[0], FOUR_PLOTS[0]], [], 8);
     assert.deepEqual(result.plantings, [], `${key} entered a new automatic schedule`);
     assert.deepEqual(result.laterThisYear, [], `${key} was offered as a later automatic schedule`);
-    assert.match(result.notes.join(' '), /duration or field-establishment basis/i);
-    assert.doesNotMatch(result.notes.join(' '), /widen.*(?:group|selection)/i);
+    assert.match(noteText(result).join(' '), /duration or field-establishment basis/i);
+    assert.doesNotMatch(noteText(result).join(' '), /widen.*(?:group|selection)/i);
   }
 });
 
@@ -108,7 +114,7 @@ test('amadumbe can be scheduled from verified timing and spacing without inventi
   }, 'mild-frost', NINE_BEDS, [], 8);
   assert.ok(result.plantings.length > 0, 'Amadumbe remained impossible to schedule');
   assert.ok(result.plantings.every((planting) => planting.cropKey === 'amadumbe'));
-  assert.match(result.notes.join(' '), /No supported food-yield benchmark.*kilograms and value remain blank/i);
+  assert.match(noteText(result).join(' '), /No supported food-yield benchmark.*kilograms and value remain blank/i);
 });
 
 test('maize and dry beans now use source-backed staple schedules, while oats is a timed cover without fake plant spacing', () => {
@@ -251,7 +257,7 @@ test('an exact crop rest explanation names the whitelist instead of promising gr
     cropKeys: ['green-beans'],
     rotateCrops: false,
   }, 'winter', [bed], [], 11);
-  const restNote = result.notes.find((note) => note.includes('still rests')) ?? '';
+  const restNote = noteText(result).find((note) => note.includes('no new sowing')) ?? '';
 
   assert.match(restNote, /chosen crops \(Green beans\)/);
   assert.match(restNote, /verified schedule/i);
@@ -339,13 +345,16 @@ test('the winter bridger commits far-out sowings instead of narrating a rest it 
     [],
     8,
   );
-  for (const note of res.notes) {
+  for (const note of noteText(res)) {
     assert.doesNotMatch(note, /too far out to plant now/, 'the dropped-bridge note was removed with the gate');
     // A "rests over winter" claim while the same result plants that very stretch was the
     // self-contradiction class — reportStillRestingBeds, computed against FINAL occupancy,
     // is the only voice allowed to say "rests", and after the fixes it should have no
     // winter rest to report under this profile.
     assert.doesNotMatch(note, /rests? (all|over|in) .*(Jun|Jul)/i, `contradictory or stale rest note: "${note}"`);
+    // Same rule against the grouped replacement wording, so the gate above did
+    // not go quiet when "still rests in ..." stopped being emitted.
+    assert.doesNotMatch(note, /no new sowing:.*(Jun|Jul)/i, `contradictory or stale gap note: "${note}"`);
   }
 });
 
@@ -366,7 +375,7 @@ test('winter production stays source-backed and every resting bed is disclosed w
     );
     for (const bed of NINE_BEDS.filter((candidate) => !activeBedIds.has(candidate.id))) {
       assert.ok(
-        res.notes.some((note) => note.startsWith(`${bed.label} still rests in`)),
+        noteText(res).some((note) => note.includes('no new sowing') && note.includes(`${bed.label} (`)),
         `${bed.label}'s month ${m} rest is hidden from the farmer`,
       );
     }
@@ -563,7 +572,7 @@ test('an exact one-family choice falls back truthfully instead of returning an u
 
   assert.ok(result.plantings.length > 0, 'rotation silently vetoed the only exact crop choice');
   assert.ok(result.plantings.every((planting) => planting.cropKey === 'broccoli'));
-  assert.match(result.notes.join(' '), /every exact crop.*Cabbage family.*kept your chosen crop/i);
+  assert.match(noteText(result).join(' '), /every exact crop.*Cabbage family.*kept your chosen crop/i);
 });
 
 test('a completed crop followed next month is a new rotation course, not an overlapping cohort', () => {
@@ -615,5 +624,5 @@ test('commercial concentration does not invent a universal plants-across cutoff 
     'a legitimate single-row cabbage bed was rejected by an invented two-plants-across rule',
   );
   assert.ok(result.plantings.some((planting) => planting.bedId === 'wide'));
-  assert.doesNotMatch(result.notes.join(' '), /too narrow|measured width/i);
+  assert.doesNotMatch(noteText(result).join(' '), /too narrow|measured width/i);
 });
