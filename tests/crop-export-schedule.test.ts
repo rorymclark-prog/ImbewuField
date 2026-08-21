@@ -329,8 +329,11 @@ test('an unverified crop benchmark stays unavailable in the report, dashboard an
   assert.equal(dashboard.hasKnownYield, false);
   assert.deepEqual(dashboard.unknownYieldCrops, ['Coriander', 'Kale']);
   assert.equal(dashboard.stats[1].value, 'Not shown');
-  assert.equal(dashboard.stats[2].value, 'Not calculated');
-  assert.equal(dashboard.stats[3].label, 'fresh-picking months');
+  // No known kg means no density to show either — it must not read as a 0.
+  assert.equal(dashboard.stats[2].label, 'benchmark density');
+  assert.equal(dashboard.stats[2].value, 'Not shown');
+  assert.equal(dashboard.stats[3].value, 'Not calculated');
+  assert.equal(dashboard.stats[4].label, 'fresh-picking months');
   assert.match(dashboard.signals.join(' '), /excluded from every kg total, not counted as 0kg/);
 });
 
@@ -360,6 +363,7 @@ test('a mixed plan labels its kg as a known benchmark subtotal and names every e
     lossPercent: 0,
   });
   const expectedKnownKg = cropByKey('carrots')!.yieldKgPerM2! * BEDS[0].areaM2;
+  const totalAreaM2 = BEDS.reduce((sum, bed) => sum + bed.areaM2, 0);
 
   assert.equal(dashboard.grossKg, expectedKnownKg);
   assert.equal(dashboard.netKg, null, 'a default 0% loss is not a confirmed loss assumption');
@@ -367,7 +371,10 @@ test('a mixed plan labels its kg as a known benchmark subtotal and names every e
   assert.equal('peakKg' in dashboard, false);
   assert.equal(dashboard.stats[1].label, 'known benchmark total');
   assert.equal(dashboard.stats[1].value, `${expectedKnownKg.toFixed(1)} kg`);
-  assert.equal(dashboard.stats[2].value, 'Not calculated');
+  // The density stat is the SAME two numbers divided, not a third estimate.
+  assert.equal(dashboard.stats[2].label, 'benchmark density');
+  assert.equal(dashboard.stats[2].value, `${(expectedKnownKg / totalAreaM2).toFixed(2)} kg/m2`);
+  assert.equal(dashboard.stats[3].value, 'Not calculated');
   assert.deepEqual(dashboard.unknownYieldCrops, ['Kale']);
   assert.match(dashboard.decisions.join(' '), /not a meal or surplus guarantee/);
 
@@ -390,8 +397,10 @@ test('loss-adjusted benchmark appears only after the allowance is explicitly con
 
   assert.notEqual(dashboard.grossKg, null);
   assert.equal(dashboard.netKg, dashboard.grossKg! * 0.9);
-  assert.equal(dashboard.stats[2].value, `${dashboard.netKg!.toFixed(1)} kg`);
-  assert.match(dashboard.stats[2].detail, /allowance you confirmed/);
+  // The loss-adjusted stat sits one slot later than before it — the density
+  // stat above it (unaffected by the loss allowance) now occupies index 2.
+  assert.equal(dashboard.stats[3].value, `${dashboard.netKg!.toFixed(1)} kg`);
+  assert.match(dashboard.stats[3].detail, /allowance you confirmed/);
 });
 
 test('the printable plan has no monthly yield chart or peak derived from an even split', () => {

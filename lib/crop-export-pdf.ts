@@ -425,17 +425,32 @@ function drawDashboard(s: Sheet, input: CropPlanPdfInput, now: Date, nowMonth: n
     nowMonth,
   });
 
-  // Four stat tiles.
-  const tileW = (s.contentWidth - 3 * 8) / 4;
+  // Stat tiles, sized to however many dash.stats actually holds — a fixed
+  // "four tiles" assumption crashed the moment a fifth stat was added
+  // (Sheet.fill(undefined) reading past the end of a 4-entry palette), so
+  // the width and the palette index both cycle off the real count instead.
+  const tileGap = 8;
+  const tileW = (s.contentWidth - (dash.stats.length - 1) * tileGap) / dash.stats.length;
   const tileH = 74;
   const tints = [INK.panelGrey, INK.panelCream, INK.panelGreen, INK.panelPink];
   const values = [INK.text, INK.gold, INK.teal, INK.terracotta];
   dash.stats.forEach((stat, i) => {
-    const x = s.margin + i * (tileW + 8);
-    s.fill(tints[i]);
+    const x = s.margin + i * (tileW + tileGap);
+    s.fill(tints[i % tints.length]);
     s.doc.rect(x, s.y, tileW, tileH, 'F');
-    s.font(17, true);
-    s.ink(values[i]);
+    // Shrink the value to fit rather than let it run into the next tile's
+    // fill (which silently CLIPS it, invisibly, since the next rect paints
+    // over the overflow) — the fallback strings ("Not shown", "Not
+    // calculated") are exactly as long regardless of how many tiles the row
+    // has to share its width with.
+    const valueMaxW = tileW - 20;
+    let valueSize = 17;
+    s.font(valueSize, true);
+    while (valueSize > 10 && s.doc.getTextWidth(pdfSafe(stat.value)) > valueMaxW) {
+      valueSize -= 1;
+      s.font(valueSize, true);
+    }
+    s.ink(values[i % values.length]);
     s.doc.text(pdfSafe(stat.value), x + 10, s.y + 30);
     s.font(8, true);
     s.ink(INK.text);
