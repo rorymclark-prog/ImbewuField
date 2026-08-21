@@ -343,6 +343,41 @@ test('the whole-year plan never sows one plot twice over in its first year', () 
   assert.deepEqual(coursesOn(rows.filter((p) => typeof p.once === 'string'), 'p1'), ['tuber']);
 });
 
+// ---- fillFirstSeasonGaps: "next year the repeating plan covers it" was a --
+// ---- false promise, unconditionally, not just in the reported repro -------
+//
+// cyclePlantings is seeded into the same ledger this pass reads with a fixed
+// 12-month repeat, so whatever calendar months it does or doesn't occupy
+// this year it does or doesn't occupy identically every year after — this
+// codebase has no year-over-year variation in the repeating plan. A starter
+// or a still-bare stretch only ever reaches these notes because the cycle
+// already failed to reach that ground, which means the cycle cannot be the
+// thing that closes the gap next year either. Both note templates used to
+// assert exactly that relief (2026-08-22, second-opinion review of the
+// Ubhejane Crèche PDF: Plot 1's printed "from next year the repeating plan
+// covers them" was false for its Jun–Dec rest).
+test('a starter note never promises the repeating plan covers its months next year', () => {
+  const fill = fillFirstSeasonGaps(
+    { ...FILL_ANSWERS, cropKeys: ['potato', 'dry-beans', 'swiss-chard', 'broad-beans'] },
+    'summer', FILL_BEDS, FILL_CYCLE, [], 1, 2026,
+  );
+  const starterNote = fill.notes.find((n) => n.text.includes('one-time starter sowings went in'));
+  assert.ok(starterNote, 'fixture drifted: expected this config to add starters');
+  assert.ok(!starterNote!.text.includes('from next year the repeating plan covers'));
+  assert.match(starterNote!.text, /repeating plan does not reach these months on its own/);
+});
+
+test('a still-bare rest note never promises the repeating plan covers it next year', () => {
+  const fill = fillFirstSeasonGaps(
+    { ...FILL_ANSWERS, cropKeys: ['potato', 'dry-beans', 'swiss-chard', 'broad-beans'] },
+    'summer', FILL_BEDS, FILL_CYCLE, [], 1, 2026,
+  );
+  const restNote = fill.notes.find((n) => n.text.startsWith('First-year rest:'));
+  assert.ok(restNote, 'fixture drifted: expected this config to leave a stretch bare');
+  assert.ok(!restNote!.text.includes('From next year the repeating plan covers'));
+  assert.match(restNote!.text, /does not reach these stretches either.*recurs every year/);
+});
+
 test("a plot that spends its course on a starter may still take a catalog winter cover", () => {
   // The deliberate, non-subtractive side effect: with broad food-group
   // answers, poolForBed's covers branch draws from the whole catalog

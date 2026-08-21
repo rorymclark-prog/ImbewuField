@@ -2377,14 +2377,28 @@ export function fillFirstSeasonGaps(
 /** Grouped like winterBridgeNotes: a couple of starters read individually, a
  * fleet reads as one sentence. The rest note names what stays bare and WHY in
  * farmer terms — the repeating plan's own crops arrive too late this first
- * year, and nothing chosen both suits that ground and finishes in time. */
+ * year, and nothing chosen both suits that ground and finishes in time.
+ *
+ * TRUTHFUL ABOUT WHAT "NEXT YEAR" MEANS. Every closing sentence here used to
+ * promise "from next year the repeating plan covers it" — but cyclePlantings
+ * is seeded into the SAME ledger this function reads with a fixed 12-month
+ * repeat (see fillFirstSeasonGaps above): whatever calendar months it does or
+ * doesn't occupy this year, it does or doesn't occupy identically every year
+ * after, because this codebase has no year-over-year variation in the
+ * repeating plan. A starter or a stillBare stretch only ever reaches this
+ * code because the cycle already failed to reach that ground — so the cycle
+ * structurally cannot be the thing that closes the gap next year either.
+ * (2026-08-22, second-opinion review of the Ubhejane Crèche PDF: Plot 1's
+ * printed "from next year the repeating plan covers them" was false for its
+ * Jun–Dec rest — and re-reading this function found the same false premise
+ * baked into every sentence here, not just that one.) */
 function firstSeasonFillNotes(
   realNowMonth: number,
   added: readonly { bed: PlanBed; cropName: string; sowMonth: number }[],
   stillBare: readonly { bed: PlanBed; from: number; to: number }[],
 ): PlanNote[] {
   const notes: PlanNote[] = [];
-  const tailLine = 'It runs once — from next year the repeating plan covers those months itself.';
+  const tailLine = 'It runs once, this year only — the repeating plan does not reach these months on its own, so this ground will likely need the same kind of one-off help again next year unless the plan itself changes.';
   if (added.length && added.length <= 2) {
     for (const entry of added) {
       notes.push(planNote(
@@ -2406,7 +2420,7 @@ function firstSeasonFillNotes(
       .join('; ');
     notes.push(planNote(
       'choice',
-      `${added.length} growing areas would stand empty for part of your first year, so one-time starter sowings went in: ${lines}. Each runs once — from next year the repeating plan covers those months itself.`,
+      `${added.length} growing areas would stand empty for part of your first year, so one-time starter sowings went in: ${lines}. Each runs once, this year only — the repeating plan does not reach these months on its own, so expect to sow the same kind of bridge again next year unless the plan itself changes.`,
       added.map((entry) => entry.bed.id),
     ));
   }
@@ -2417,7 +2431,7 @@ function firstSeasonFillNotes(
       .join(', ');
     notes.push(planNote(
       'gap',
-      `First-year rest: ${spans}. The crops that cover ${stillBare.length === 1 ? 'this stretch' : 'these stretches'} in the repeating plan are sown too late this year to fill ${stillBare.length === 1 ? 'it' : 'them'}, and no chosen crop both suits that ground and finishes in time. From next year the repeating plan covers ${stillBare.length === 1 ? 'it' : 'them'}.`,
+      `First-year rest: ${spans}. No chosen crop both suits that ground and finishes in time this year — and the repeating plan itself does not reach ${stillBare.length === 1 ? 'this stretch' : 'these stretches'} either, so this is not just a first-year gap: it recurs every year unless the plan itself changes.`,
       stillBare.map((hole) => hole.bed.id),
     ));
   }
