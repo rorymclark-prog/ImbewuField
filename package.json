@@ -20,6 +20,7 @@
     "course:import-audio": "node --import ./tests/register-alias.mjs scripts/import-course-audio.mjs",
     "course:record-sheet": "node --import ./tests/register-alias.mjs scripts/course-narration-export.mjs",
     "course:review-packet": "node --import ./tests/register-alias.mjs scripts/course-review-packet.mjs",
+    "course:render-deck": "node --import ./tests/register-alias.mjs scripts/render-course-deck.mjs",
     "worker:status": "node scripts/worker-status.mjs",
     "notes:pending": "node scripts/release-notes-pending.mjs",
     "crops:stress": "node --import ./tests/register-alias.mjs tests/crop-plan-stress.ts",

@@ -308,12 +308,32 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
       )}
 
       {img && !img.exact && (
-        // Only on the slide it is actually true of. A localized deck can have one missing asset,
-        // so saying "these slides are in English" across the whole module would be false for the
-        // rest of the lesson and would make a finished lesson look unfinished.
-        <p style={{ margin: 0, fontSize: 11.5, lineHeight: 1.4, color: MUTED }}>
-          This one slide is only in English. The spoken lesson is in your language.
-        </p>
+        slideLang.exact ? (
+          // A GENUINE ONE-SLIDE GAP: this deck IS in the learner's language and a single asset is
+          // absent. Saying "these slides are in English" across the whole module would be false for
+          // the rest of the lesson and would make a finished lesson look unfinished.
+          <p style={{ margin: 0, fontSize: 11.5, lineHeight: 1.4, color: MUTED }}>
+            This one slide is only in English. The spoken lesson is in your language.
+          </p>
+        ) : index === 0 ? (
+          // THE WHOLE DECK IS ENGLISH, which is a different fact and needs different words.
+          //
+          // The sentence above was written when Seeds — isiZulu throughout, with one missing
+          // slide — was the only deck. The moment an English-only deck shipped (intro-permaculture,
+          // the first generated one), an isiZulu learner met "This one slide is only in English"
+          // on every slide in the module: the whole-module apology this file's own rule forbids,
+          // repeated 22 times, and its second sentence was a lie as well, because a module with no
+          // isiZulu slides has no isiZulu recording either.
+          //
+          // So it is said once, on the way in, and only claims what is true. Which of the two
+          // notes applies is read off slideLang.exact — module-level — rather than off the
+          // per-slide result, because that is the distinction being drawn.
+          <p style={{ margin: 0, fontSize: 11.5, lineHeight: 1.4, color: MUTED }}>
+            {narration?.languages.includes(lang)
+              ? 'These slides are in English. The spoken lesson is in your language.'
+              : 'This module is in English only, for now.'}
+          </p>
+        ) : null
       )}
 
       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
