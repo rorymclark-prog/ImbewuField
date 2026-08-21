@@ -332,9 +332,26 @@ export function suggestIdealYearPlan(
 ): IdealYearPlan {
   if (!Number.isInteger(realNowMonth) || realNowMonth < 1 || realNowMonth > 12) realNowMonth = 1;
 
+  // Same validity bar the fill below already applies to realNowYear (an
+  // invalid year cannot honestly stamp a starter, see its comment) — reused
+  // here so a garbage year can't feed onceStampIsPast's arithmetic instead of
+  // being caught. It would degrade harmlessly on its own (NaN comparisons are
+  // always false, so a bad year reads every once row as "not stale" — exactly
+  // today's pre-fix behaviour), but this file already established the
+  // pattern of checking rather than relying on that, one call below.
+  const realNowYearValid = Number.isInteger(realNowYear) && realNowYear >= 2020 && realNowYear <= 2100;
+  // realNow travels alongside anchorMonth, never derived from it: anchorMonth
+  // is a synthetic sweep month (1..12 in turn), but realNow is the farmer's
+  // actual wall-clock month/year regardless of which anchor is being tried —
+  // it is what lets a stale `once` row in existingPlantings be read as
+  // history rather than a sowing still ahead, at every anchor. undefined
+  // when the year is invalid: autoSuggestPlan/recomputeLaterThisYear already
+  // treat "no realNow supplied" as their documented, unchanged prior
+  // behaviour, so this is the same honest fallback the fill below takes.
+  const realNow = realNowYearValid ? { year: realNowYear, month: realNowMonth } : undefined;
   const candidates = Array.from({ length: 12 }, (_, i) => {
     const anchorMonth = i + 1;
-    const result = autoSuggestPlan(answers, pattern, beds, existingPlantings, anchorMonth);
+    const result = autoSuggestPlan(answers, pattern, beds, existingPlantings, anchorMonth, realNow);
     return { anchorMonth, result, score: scorePlan(anchorMonth, result.plantings, beds) };
   });
   const perAnchor = candidates.map((candidate) => candidate.score);
@@ -351,7 +368,7 @@ export function suggestIdealYearPlan(
   // sameAsToday: a from-now plan has the identical year-one holes. An invalid
   // year cannot produce an honest `once` stamp, so the fill is skipped rather
   // than stamped with fiction.
-  const fill = Number.isInteger(realNowYear) && realNowYear >= 2020 && realNowYear <= 2100
+  const fill = realNowYearValid
     ? fillFirstSeasonGaps(answers, pattern, beds, winner.result.plantings, existingPlantings, realNowMonth, realNowYear)
     : { starters: [], notes: [] };
   const finalPlantings = [...winner.result.plantings, ...fill.starters];
@@ -381,7 +398,7 @@ export function suggestIdealYearPlan(
   // against the FINAL plan from the real current month, unconditionally (a
   // sameAsToday plan still gains starters that may close a waiting gap).
   laterThisYear = recomputeLaterThisYear(
-    answers, pattern, beds, finalPlantings, existingPlantings, realNowMonth,
+    answers, pattern, beds, finalPlantings, existingPlantings, realNowMonth, realNow,
   );
 
   // ---- ramp metadata, ALWAYS against realNowMonth, never the anchor.

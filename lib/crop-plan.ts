@@ -126,6 +126,20 @@ function stampIndexOf(stamp: unknown): number | null {
   return match ? Number(match[1]) * 12 + (Number(match[2]) - 1) : null;
 }
 
+/**
+ * Whether a `once` row's stamp names a month that has already passed,
+ * relative to nowYear/nowMonth. Mirrors settleOnceRows' own past/current test
+ * exactly (nowIndex <= stampIndex means "still ahead/current" there), so any
+ * other caller checking staleness agrees with what actually happens at load.
+ * An unparseable stamp counts as past: a one-off row must never fall back to
+ * being read as still ahead just because its stamp is corrupt.
+ */
+export function onceStampIsPast(stamp: string, nowYear: number, nowMonth: number): boolean {
+  const nowIndex = nowYear * 12 + (nowMonth - 1);
+  const stampIndex = stampIndexOf(stamp);
+  return stampIndex === null || nowIndex > stampIndex;
+}
+
 /** TRANSPLANT_ENTRY_EARLIEST_MONTHS, not PLANNED: that is the offset this
  *  cohort's transplant task and seedling line are already stamped with, and a
  *  task one month past its own month reports taskMonthsFromNow = -1, which
