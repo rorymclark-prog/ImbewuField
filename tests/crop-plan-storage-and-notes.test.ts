@@ -559,6 +559,19 @@ test('the from-now engine call in page.tsx survives the whole-year feature byte-
   // "Start from this month" must keep the EXACT behaviour every existing plan
   // was generated with. The whole-year branch is additive; if this literal
   // call ever changes shape, the from-now path is no longer today's path.
-  assert.match(PAGE, /autoSuggestPlan\(answers, pattern, beds, plantings, currentMonth\)/,
-    'the literal from-now engine call must survive unchanged');
+  //
+  // The first five arguments are the pin this test exists to protect — they
+  // must stay byte-identical to the call every existing plan was generated
+  // with. The sixth, realNow, is a DELIBERATE addition (the stale-once-row
+  // fix): without it, a stale `once` row surviving to this call site would be
+  // read as a sowing still ahead, exactly the bug #312 fixed for
+  // fillFirstSeasonGaps but left open here. Passing it through is the
+  // conscious shape-change this pin is meant to force a look at, not an
+  // accidental drift — so the pin now covers it too.
+  assert.match(
+    PAGE,
+    /autoSuggestPlan\(\s*answers, pattern, beds, plantings, currentMonth,\s*\{ year: new Date\(\)\.getFullYear\(\), month: currentMonth \},\s*\)/,
+    'the literal from-now engine call must keep its first five arguments unchanged, and pass '
+    + 'realNow explicitly',
+  );
 });

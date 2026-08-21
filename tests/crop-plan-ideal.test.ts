@@ -39,6 +39,7 @@ import {
   occupiedMonthsForPlanting, plantingBedEntryOffsets,
   type PlanBed, type Planting,
 } from '@/lib/crop-plan';
+import { wrapMonth } from '@/lib/crop-export-schedule';
 
 const REAL_NOW = 8; // the August this feature was born in
 const REAL_NOW_YEAR = 2026; // fixed: determinism oracle forbids reading the clock
@@ -708,5 +709,145 @@ test('the coverage ledger gives the same answer every run', () => {
   assert.ok(first.length > 0, 'this config must place starters or the guard is vacuous again');
   for (let run = 0; run < 3; run++) {
     assert.deepEqual(build(), first, 'the fill is order-dependent across runs');
+  }
+});
+
+// ── J. a stale `once` row must be read as history, not a sowing still ahead ─
+//
+// PR #312 fixed fillFirstSeasonGaps's OWN coverage ledger to read a `once`
+// row's absolute YYYY-MM stamp instead of resolving it with monthsForward,
+// which read a stamp from three years ago as three years IN THE FUTURE. Two
+// other channels made that same mistake and were never touched by #312,
+// because each reads `once` rows through its own separate machinery and
+// neither asserted the dependency on settleOnceRows (which normally converts
+// a stale `once` row to `existing: true` before either of these ever sees
+// it) — every test below regenerates a plan at a LATER month than the one it
+// was generated at, which is the gap that let both stay latent:
+//
+//  1. autoSuggestPlan's own Occupancy ledger (used for the succession CYCLE,
+//     not the first-season fill) — a stale row seeded there blocked its
+//     calendar month on the ANNUAL ledger forever, steering the cycle chosen
+//     on every bed, not just the stale row's own.
+//  2. BedRotation, seeded from `existingPlantings` in every caller — a stale
+//     row was always forward-anchored as "a sowing still ahead", corrupting
+//     the family-rotation history of its own bed.
+//
+// Neither test below uses "the row absent" as its reference: a saved once
+// row, however stale, is real information the engine must schedule around.
+// The only proven-correct reading of a stale row is the one loadCropPlan's
+// settleOnceRows already gives it every time a farmer reopens the app — a
+// plain `existing: true` row, sowMonth unchanged. That settled equivalent is
+// the reference both tests check against.
+
+test('a stale once row reads exactly like its own settled-existing equivalent (autoSuggestPlan)', () => {
+  // The task's own measurement: family/steady/summer, injecting a once row
+  // stamped three years ago changed the CYCLE at realNowMonth 1, 5 and 9 —
+  // even though the stale row's own crop/bed never appears in the emitted
+  // plan (autoSuggestPlan returns only what it ADDS, so this is entirely the
+  // stale row steering what gets picked elsewhere).
+  const beds = roryBeds();
+  const sig = (r: { plantings: readonly Planting[] }) => r.plantings
+    .map((p) => `${p.bedId}|${p.cropKey}|${p.sowMonth}|${(p.areaFraction ?? 1).toFixed(3)}`)
+    .sort().join(' ');
+
+  for (const realNowMonth of [1, 5, 9]) {
+    const answers = roryAnswers('family', 'steady');
+    const staleStamp = `${REAL_NOW_YEAR - 3}-${String(realNowMonth).padStart(2, '0')}`;
+    const settled: Planting = {
+      id: 'stale-row', bedId: beds[0].id, cropKey: 'tomatoes', sowMonth: realNowMonth, existing: true,
+    };
+    const staleOnce: Planting = {
+      id: 'stale-row', bedId: beds[0].id, cropKey: 'tomatoes', sowMonth: realNowMonth, once: staleStamp,
+    };
+
+    const expected = sig(autoSuggestPlan(answers, 'summer', beds, [settled], realNowMonth));
+    const actual = sig(autoSuggestPlan(
+      answers, 'summer', beds, [staleOnce], realNowMonth,
+      { year: REAL_NOW_YEAR, month: realNowMonth },
+    ));
+    assert.equal(actual, expected,
+      `a once row stamped ${staleStamp} (three years stale) produced a different cycle than its `
+      + `settled-existing equivalent, planning from month ${realNowMonth} — it is being read as a `
+      + 'sowing still to come');
+  }
+});
+
+test('a stale once row on its own bed reads like its settled equivalent in rotation history too', () => {
+  // Companion to "a starter sown three years ago cannot pick the crop for
+  // another bed" above, which deliberately excludes the stale row's OWN bed
+  // (b2) — per its own comment, rotation history is a different channel with
+  // its own reading of a past crop, not that pass's to answer. Now it is:
+  // fillFirstSeasonGaps passes realNow to its own BedRotation unconditionally,
+  // so a stale row reaches rotation history exactly as its settled-existing
+  // equivalent would.
+  //
+  // sowMonth is offset four months from realNowMonth on purpose — AT
+  // sowMonth === nowMonth, existingSowOffset (the settled/backward reading)
+  // and monthsForward (the old, wrong once-row reading) degenerately compute
+  // the SAME offset, so that fixture cannot tell the two readings apart. An
+  // offset that actually differs between them is what makes this a real test.
+  const allBeds = ['b1', 'b2', 'b3', 'b4', 'p1', 'p2'];
+  const sig = (rows: readonly Planting[]) => rows
+    .filter((p) => allBeds.includes(p.bedId))
+    .map((p) => `${p.bedId}|${p.cropKey}|${p.sowMonth}|${(p.areaFraction ?? 1).toFixed(3)}`)
+    .sort().join(' ');
+
+  for (const rhythm of ['steady', 'few-big'] as const) {
+    for (let realNowMonth = 1; realNowMonth <= 12; realNowMonth++) {
+      const staleSowMonth = wrapMonth(realNowMonth + 4);
+      const answers = roryAnswers('commercial', rhythm);
+      const cycle = autoSuggestPlan(answers, 'winter', STARTER_BEDS, [], realNowMonth).plantings;
+      const settled: Planting = {
+        id: 'stale-chard', bedId: 'b2', cropKey: 'swiss-chard', sowMonth: staleSowMonth, existing: true,
+      };
+      const settledFill = sig(fillFirstSeasonGaps(
+        answers, 'winter', STARTER_BEDS, cycle, [settled], realNowMonth, REAL_NOW_YEAR,
+      ).starters);
+      // Whichever real year puts staleSowMonth unambiguously in the past —
+      // the exact year does not matter to the fix, only that it is one.
+      const staleYear = staleSowMonth > realNowMonth ? REAL_NOW_YEAR - 4 : REAL_NOW_YEAR - 3;
+      const staleOnce: Planting = {
+        id: 'stale-chard', bedId: 'b2', cropKey: 'swiss-chard', sowMonth: staleSowMonth,
+        once: `${staleYear}-${String(staleSowMonth).padStart(2, '0')}`,
+      };
+      const withStale = sig(fillFirstSeasonGaps(
+        answers, 'winter', STARTER_BEDS, cycle, [staleOnce], realNowMonth, REAL_NOW_YEAR,
+      ).starters);
+      assert.equal(withStale, settledFill,
+        `a once row stamped ${staleYear}-${String(staleSowMonth).padStart(2, '0')} on its own bed `
+        + `(b2) filled differently than its settled-existing equivalent, planning from month `
+        + `${realNowMonth} (${rhythm}) — BedRotation is reading it as a sowing still ahead`);
+    }
+  }
+});
+
+test('a once row with no realNow context warns in dev, and stops once realNow is supplied', () => {
+  // Never a throw: this file's own "a starter sown three years ago..." tests
+  // above (and other test files) deliberately feed raw, unsettled `once` rows
+  // straight into these functions with no realNow at all, to probe library
+  // behaviour in isolation — an established idiom this guard must not break.
+  // It exists to catch a caller-discipline regression (a future call site
+  // that forgets to wire realNow through), not to re-detect staleness itself.
+  const beds = roryBeds();
+  const answers = roryAnswers('family', 'steady');
+  const onceRow: Planting = {
+    id: 'r1', bedId: beds[0].id, cropKey: 'tomatoes', sowMonth: 3, once: '2023-03',
+  };
+  const originalWarn = console.warn;
+  try {
+    const withoutRealNow: unknown[][] = [];
+    console.warn = (...args: unknown[]) => { withoutRealNow.push(args); };
+    autoSuggestPlan(answers, 'summer', beds, [onceRow], 5);
+    assert.ok(withoutRealNow.length > 0,
+      'a once-carrying row arrived with no realNow context and nothing warned that staleness '
+      + 'cannot be checked');
+
+    const withRealNow: unknown[][] = [];
+    console.warn = (...args: unknown[]) => { withRealNow.push(args); };
+    autoSuggestPlan(answers, 'summer', beds, [onceRow], 5, { year: 2026, month: 5 });
+    assert.equal(withRealNow.length, 0,
+      'realNow was supplied, so staleness can be checked directly — nothing should warn');
+  } finally {
+    console.warn = originalWarn;
   }
 });

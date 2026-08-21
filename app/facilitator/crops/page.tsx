@@ -565,7 +565,10 @@ function FacilitatorCropsPageInner() {
       return;
     }
     setIdealMeta(null);
-    const suggested = autoSuggestPlan(answers, pattern, beds, plantings, currentMonth);
+    const suggested = autoSuggestPlan(
+      answers, pattern, beds, plantings, currentMonth,
+      { year: new Date().getFullYear(), month: currentMonth },
+    );
     setAutoResult({
       ...suggested,
       notes: [{ kind: 'basis', text: climateNote }, ...suggested.notes],

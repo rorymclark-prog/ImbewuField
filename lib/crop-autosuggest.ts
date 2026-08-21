@@ -14,6 +14,7 @@ import {
   harvestEndMonthForCrop,
   harvestMonthForCrop,
   isSpaceHungry,
+  onceStampIsPast,
   planningMaturityMonths,
   TRANSPLANT_BED_RESERVED_FROM_MONTHS,
   TRANSPLANT_ENTRY_PLANNED_MONTHS,
@@ -398,6 +399,51 @@ function closestPreset(target: number): number {
 const PLAN_HORIZON_MONTHS = 11;
 
 /**
+ * Absolute wall-clock context, threaded SEPARATELY from nowMonth/anchorMonth.
+ * Inside suggestIdealYearPlan's whole-year sweep, nowMonth is often a
+ * synthetic anchor rather than today (see Occupancy.seed's own comment on
+ * that), so "what is the real month right now" cannot be derived from it.
+ * Optional everywhere it threads: a caller that omits it keeps that
+ * function's exact prior behaviour, unchanged — this is additive context,
+ * not a new requirement.
+ */
+export interface RealNow {
+  year: number;
+  month: number;
+}
+
+/**
+ * Dev-only signal for a caller-discipline regression, not a staleness check.
+ *
+ * Once a caller supplies `realNow`, a stale `once` row is read correctly by
+ * the branch this guards (see Occupancy.seed / BedRotation's constructor) —
+ * nothing to warn about there. This fires only on the one thing knowable
+ * with no clock at all: a once-carrying, not-yet-settled row arrived and no
+ * real-clock context was supplied, so this pass has no way to tell a stale
+ * stamp from one still ahead. That is exactly the caller-discipline gap that
+ * let a three-year-old stamp be read as a sowing still to come — a future
+ * caller (batch job, new page, different test) skipping `realNow` would
+ * silently reintroduce it. Never throws: several test files deliberately
+ * feed raw, unsettled `once` rows straight into these functions to probe
+ * library behaviour in isolation, and that is a legitimate, established use
+ * — this only asks a build/test log to say so.
+ */
+function warnIfOnceRowUnverifiable(
+  plantings: readonly Planting[],
+  realNow: RealNow | undefined,
+  source: string,
+): void {
+  if (process.env.NODE_ENV === 'production' || realNow) return;
+  if (plantings.some((p) => typeof p.once === 'string' && p.existing !== true)) {
+    console.warn(
+      `[crop-autosuggest] ${source} received a once-stamped row with no realNow context — `
+      + 'staleness cannot be checked; pass realNow or ensure the caller already ran '
+      + 'settleOnceRows.',
+    );
+  }
+}
+
+/**
  * Precise per-bed occupancy ledger — NOT the same thing
  * as lib/crop-plan.ts's bedOverlapFraction (a pairwise range-overlap sum,
  * fine as an ADVISORY warning for a human reviewing one change at a time,
@@ -431,7 +477,13 @@ class Occupancy {
     return this.allowMixedCropsInBed;
   }
 
-  seed(plantings: Planting[], holdOf: (p: Planting) => BedHold, nowMonth: number) {
+  seed(
+    plantings: Planting[],
+    holdOf: (p: Planting) => BedHold,
+    nowMonth: number,
+    realNow?: RealNow,
+  ) {
+    warnIfOnceRowUnverifiable(plantings, realNow, 'Occupancy.seed');
     for (const p of plantings) {
       if (!Number.isInteger(p.sowMonth) || p.sowMonth < 1 || p.sowMonth > 12) continue;
       const fraction = p.areaFraction;
@@ -441,7 +493,16 @@ class Occupancy {
           ? fraction
           : 1;
       const crop = holdOf(p);
-      if (p.existing) {
+      // A `once` row whose stamp is already behind realNow was never settled
+      // to `existing: true` before it reached here (settleOnceRows normally
+      // does that at load) — but its sowing already happened, or didn't, and
+      // either way it is history, not something still ahead. Reading it
+      // exactly like `existing` (below) is the only anchoring that is honest
+      // about that; see onceStampIsPast's doc for why an unparseable stamp
+      // counts as past too.
+      const stale = realNow !== undefined && typeof p.once === 'string'
+        && onceStampIsPast(p.once, realNow.year, realNow.month);
+      if (p.existing || stale) {
         const entryOffset = existingSowOffset(p.sowMonth, nowMonth)
           + bedHoldStartOffsetMonths(crop);
         for (let index = 0; index < bedHoldSpanMonths(crop); index++) {
@@ -467,7 +528,10 @@ class Occupancy {
         // Blocking the calendar month costs nothing it should have kept: every
         // planned row repeats annually, so a recurring crop overlapping the
         // starter's months collides in year one no matter which year it is
-        // read in. There is no legal planting here to lose.
+        // read in. There is no legal planting here to lose. This branch is
+        // also where a `once` row lands when realNow was not supplied at all
+        // (see warnIfOnceRowUnverifiable) — unchanged from before this fix,
+        // since without realNow this function cannot tell stale from ahead.
         this.add(p.bedId, p.sowMonth, crop, safeFraction);
       }
     }
@@ -1018,21 +1082,31 @@ class BedRotation {
     nowMonth: number,
     rotateCrops: boolean,
     exactFallbackFamily: RotationFamily | null,
+    realNow?: RealNow,
   ) {
     this.nowMonth = nowMonth;
     this.rotateCrops = rotateCrops;
     this.exactFallbackFamily = exactFallbackFamily;
+    warnIfOnceRowUnverifiable(existingPlantings, realNow, 'BedRotation');
     for (const planting of existingPlantings) {
       const crop = CROPS.find((candidate) => candidate.key === planting.cropKey);
       if (!crop) continue;
       if (typeof planting.once === 'string') {
-        // A saved one-time starter's sowing is still AHEAD. Anchoring it as an
-        // observed past course (existingSowOffset) would rewrite a future
-        // sowing into last year's history and corrupt every neighbour
-        // comparison. Forward anchor, but marked existing so wouldRepeat
-        // treats it as one real course — never a ±12-projected annual copy.
-        this.addSlot(planting.bedId, { ...this.slotFor(crop, planting.sowMonth, false), existing: true });
-        continue;
+        // A saved one-time starter's sowing is still AHEAD — UNLESS its stamp
+        // is already behind realNow, in which case it never got settled to
+        // `existing: true` before it reached here (settleOnceRows normally
+        // does that at load) but is history all the same. Only when realNow
+        // says otherwise do we forward-anchor it: anchoring it as an observed
+        // past course (existingSowOffset) would rewrite a future sowing into
+        // last year's history and corrupt every neighbour comparison. Forward
+        // anchor, but marked existing so wouldRepeat treats it as one real
+        // course — never a ±12-projected annual copy.
+        const stale = realNow !== undefined
+          && onceStampIsPast(planting.once, realNow.year, realNow.month);
+        if (!stale) {
+          this.addSlot(planting.bedId, { ...this.slotFor(crop, planting.sowMonth, false), existing: true });
+          continue;
+        }
       }
       this.addSlot(planting.bedId, this.slotFor(crop, planting.sowMonth, true));
     }
@@ -2070,8 +2144,15 @@ export function fillFirstSeasonGaps(
   );
 
   // ---- rotation: real history first, then the cycle as upcoming courses ---
+  // realNow is supplied unconditionally here: this function already has both
+  // realNowMonth and realNowYear as real (never synthetic-anchor) parameters,
+  // so a stale `once` row fed straight into rotation history is read as the
+  // history it is, not as a sowing still ahead. Closes the residual gap #312
+  // explicitly punted on ("Rotation history... reads stale rows through
+  // their own paths; neither is this pass's to answer").
   const rotation = new BedRotation(
     existingPlantings, realNowMonth, answers.rotateCrops, exactFallbackFamily,
+    { year: realNowYear, month: realNowMonth },
   );
   for (const p of cyclePlantings) {
     const crop = CROPS.find((candidate) => candidate.key === p.cropKey);
@@ -3002,6 +3083,7 @@ export function autoSuggestPlan(
   beds: PlanBed[],
   existingPlantings: Planting[],
   nowMonth: number,
+  realNow?: RealNow,
 ): AutoSuggestResult {
   const notes: PlanNote[] = [];
   const added: Planting[] = [];
@@ -3060,7 +3142,7 @@ export function autoSuggestPlan(
     const crop = CROPS.find((c) => c.key === p.cropKey);
     // Unknown crop key — nothing more is known, so occupy just the sow month (holdSpanMonths(0) === 1).
     return crop ?? { key: p.cropKey, daysToHarvest: 0 };
-  }, nowMonth);
+  }, nowMonth, realNow);
 
   const selectedGroups = answers.groups.length ? new Set(answers.groups) : null;
   // THE POOL IS FOOD. A crop that yields nothing to eat (a verified cover crop)
@@ -3115,6 +3197,7 @@ export function autoSuggestPlan(
     nowMonth,
     answers.rotateCrops,
     exactFallbackFamily,
+    realNow,
   );
 
   const dedicated = new Set<string>();
@@ -3444,7 +3527,7 @@ export function autoSuggestPlan(
     // panel must answer for the emitted plan ("given THIS plan, when could
     // the crop first fit?"), not for whatever anchor month planning ran at.
     laterThisYear: recomputeLaterThisYear(
-      answers, pattern, beds, plantings, usableExistingPlantings, nowMonth,
+      answers, pattern, beds, plantings, usableExistingPlantings, nowMonth, realNow,
     ),
   };
 }
@@ -3562,6 +3645,7 @@ export function recomputeLaterThisYear(
   proposedPlantings: readonly Planting[],
   existingPlantings: readonly Planting[],
   nowMonth: number,
+  realNow?: RealNow,
 ): LaterThisYearEntry[] {
   const explicitCropKeys = new Set((answers.cropKeys ?? []).filter(Boolean));
   if (!explicitCropKeys.size) return [];
@@ -3599,8 +3683,8 @@ export function recomputeLaterThisYear(
     const crop = CROPS.find((c) => c.key === p.cropKey);
     return crop ?? { key: p.cropKey, daysToHarvest: 0 };
   };
-  occupancy.seed(usableExisting, holdOf, nowMonth);
-  occupancy.seed(usableProposed, holdOf, nowMonth);
+  occupancy.seed(usableExisting, holdOf, nowMonth, realNow);
+  occupancy.seed(usableProposed, holdOf, nowMonth, realNow);
 
   const exactFamilies = new Set(pool.map((crop) => rotationFamilyOf(crop)));
   const rotation = new BedRotation(
@@ -3608,6 +3692,7 @@ export function recomputeLaterThisYear(
     nowMonth,
     answers.rotateCrops,
     exactFamilies.size === 1 ? [...exactFamilies][0] : null,
+    realNow,
   );
   for (const planting of usableProposed) {
     const crop = CROPS.find((c) => c.key === planting.cropKey);
