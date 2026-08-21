@@ -20,7 +20,7 @@ import {
   planningWeightBenchmarkScore,
   type AutoSuggestAnswers,
 } from '../lib/crop-autosuggest.ts';
-import { buildFieldUtilizationByMonth, buildFoodAvailability, occupiedMonthsForPlanting, type PlanBed } from '../lib/crop-plan.ts';
+import { buildFieldUtilizationByMonth, buildFoodAvailability, isSpaceHungry, occupiedMonthsForPlanting, type PlanBed } from '../lib/crop-plan.ts';
 import { cropByKey, CROPS, hasAutomaticPlanningBasis, hasVerifiedFieldPlan, hasVerifiedSchedule } from '../lib/crop-catalog.ts';
 import { foodGroupOf, rotationFamilyOf } from '../lib/crop-groups.ts';
 import { isStapleCrop } from '../lib/staple-crops.ts';
@@ -115,6 +115,43 @@ test('amadumbe can be scheduled from verified timing and spacing without inventi
   assert.ok(result.plantings.length > 0, 'Amadumbe remained impossible to schedule');
   assert.ok(result.plantings.every((planting) => planting.cropKey === 'amadumbe'));
   assert.match(noteText(result).join(' '), /No supported food-yield benchmark.*kilograms and value remain blank/i);
+});
+
+test('a chosen, verified, non-vine crop that loses every placement pass gets an honest "did not fit" note, not silence', () => {
+  // A real client's plan (Ubhejane Creche, 2026-08-21 audit) selected Peppers,
+  // Amadumbe, Groundnuts and Peas -- all fully verified, none of them a vine --
+  // and every one of them vanished from the printed plan with NOTHING saying
+  // why: not the catalog-gap note (they have real schedules), not the vine note
+  // (they are not space-hungry), and not even the app's own "later this year"
+  // panel, which never reaches the PDF export. One crowded 9m2 bed reproduces
+  // the same squeeze here: some of these crops will lose every ranked pass to
+  // the others, and the loser MUST now say so.
+  const crowded = ['peppers', 'amadumbe', 'groundnuts', 'peas', 'beetroot', 'cabbage', 'carrots', 'onions'];
+  for (const key of crowded) assert.ok(cropByKey(key), `${key} disappeared from the catalog`);
+
+  const result = autoSuggestPlan({
+    ...FAMILY,
+    cropKeys: crowded,
+    groups: [],
+  }, 'mild-frost', [NINE_BEDS[0]], [], 8);
+
+  const placedKeys = new Set(result.plantings.map((p) => p.cropKey));
+  const text = noteText(result).join(' ');
+  let checked = 0;
+  for (const key of crowded) {
+    const crop = cropByKey(key);
+    assert.ok(crop, `${key} disappeared from the catalog`);
+    if (placedKeys.has(key)) continue; // won a slot -- nothing to explain
+    if (!hasVerifiedSchedule(crop)) continue; // owned by the catalog-gap note
+    if (isSpaceHungry(crop)) continue; // owned by the vine-sprawl note
+    checked += 1;
+    assert.match(
+      text,
+      new RegExp(`${crop.name.replace(/[()]/g, '\\$&')}.*(?:was|were) chosen but didn't fit anywhere in this plan`, 'i'),
+      `${crop.name} was chosen, verified and not a vine, but ended with zero plantings and no note explaining why`,
+    );
+  }
+  assert.ok(checked > 0, 'this fixture placed every explicit crop -- tighten it so the new note actually gets exercised');
 });
 
 test('maize and dry beans now use source-backed staple schedules, while oats is a timed cover without fake plant spacing', () => {
