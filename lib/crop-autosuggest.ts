@@ -3512,6 +3512,31 @@ export function autoSuggestPlan(
   }
   for (const text of rotation.fallbackNotes(beds)) notes.push(planNote('warning', text));
 
+  // A crop chosen by name, with a fully verified catalog schedule, that is
+  // neither a catalog-gap crop (selectedWithoutSchedule, above) nor a
+  // space-hungry vine with nowhere to sprawl (vinesStillWanting, above) can
+  // still end the plan with zero plantings — it simply lost every ranked
+  // placement pass to other explicit choices on a crowded farm. That absence
+  // used to own no note at all: not a catalog-gap story, not a sprawl story,
+  // and (PDF-side) not even the "later this year" panel, which never reaches
+  // the printed export (2026-08-21 audit — Peppers, Amadumbe, Groundnuts and
+  // Peas vanished from a real client's plan this way, silently). Silence here
+  // reads as "the planner forgot you asked for it" rather than the true
+  // story: there was no room left once everything else was placed.
+  const explicitlyPlacedKeys = new Set(added.map((p) => p.cropKey));
+  const selectedWithoutScheduleKeys = new Set(selectedWithoutSchedule.map((crop) => crop.key));
+  const explicitlyChosenButAbsent = CROPS.filter((crop) =>
+    explicitCropKeys.has(crop.key)
+    && hasVerifiedSchedule(crop)
+    && !explicitlyPlacedKeys.has(crop.key)
+    && !selectedWithoutScheduleKeys.has(crop.key)
+    && !isSpaceHungry(crop));
+  if (explicitlyChosenButAbsent.length) {
+    const names = explicitlyChosenButAbsent.map((crop) => crop.name).join(', ');
+    const one = explicitlyChosenButAbsent.length === 1;
+    notes.push(planNote('warning', `${names} ${one ? 'was' : 'were'} chosen but didn't fit anywhere in this plan — every sowing window ${one ? 'it has' : 'they have'} was already committed to other crops, or ruled out by rotation. Add ${one ? 'it' : 'them'} by hand if you want to make room.`));
+  }
+
   const plantings = consolidatePlantings(added);
   return {
     plantings,
