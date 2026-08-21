@@ -102,11 +102,11 @@ export function buildPlanDashboard(
 ): PlanDashboard {
   const lossConfirmed = opts.lossAllowanceConfirmed === true;
   const loss = Math.max(0, Math.min(100, opts.lossPercent ?? 0));
-  const areaM2 = beds.reduce((s, b) => s + b.areaM2, 0);
 
   const bedIds = new Set(beds.map((bed) => bed.id));
   const accountedPlantings = plantings.filter((planting) => bedIds.has(planting.bedId));
   const benchmark = buildPlanYieldBenchmark(accountedPlantings, beds, opts.nowMonth);
+  const areaM2 = benchmark.growingAreaM2;
   const grossKg = benchmark.knownKg;
   const netKg = lossConfirmed && grossKg !== null ? grossKg * (1 - loss / 100) : null;
   const unknownYieldCrops = benchmark.unknownYieldCrops;
@@ -142,6 +142,16 @@ export function buildPlanDashboard(
       detail: areaConflictBedLabels.length
         ? `resolve overlapping shares in ${areaConflictBedLabels.join(', ')}`
         : hasKnownYield ? 'verified kg/m² crop entries only' : 'no verified kg/m² crop entry',
+    },
+    {
+      // Same knownKg ÷ same areaM2 already above — never a separate estimate,
+      // so it cannot read "in line" while the two figures it is built from
+      // disagree with each other.
+      value: hasKnownYield && benchmark.kgPerM2 !== null ? `${benchmark.kgPerM2.toFixed(2)} kg/m2` : 'Not shown',
+      label: areaConflictBedLabels.length ? 'benchmark density blocked' : 'benchmark density',
+      detail: areaConflictBedLabels.length
+        ? 'blocked with the total above until shares are resolved'
+        : 'known benchmark total ÷ whole growing area, for comparing against other plans',
     },
     lossConfirmed
       ? {

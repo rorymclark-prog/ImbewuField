@@ -1155,6 +1155,14 @@ export function nonFoodCropNames(plantings: Planting[]): string[] {
   return [...names].sort((a, b) => a.localeCompare(b));
 }
 
+/** Sum of every bed and plot's area, in m². The one place this is added up —
+ * every other spot that wants "how big is this farm" should call this rather
+ * than repeat the `.reduce()`, so a definition change (e.g. excluding a bed
+ * kind) only has one call site to fix. */
+export function totalGrowingAreaM2(beds: PlanBed[]): number {
+  return beds.reduce((sum, bed) => sum + bed.areaM2, 0);
+}
+
 export interface PlanYieldBenchmark {
   /** Sum of the conservative crop-cycle benchmarks for mapped plantings whose
    * catalog entries have a verified positive kg/m² value. This is deliberately
@@ -1170,6 +1178,16 @@ export interface PlanYieldBenchmark {
   nonFoodCrops: string[];
   /** Resolve these bed layouts before any kg or Rand subtotal is shown. */
   areaConflictBedLabels: string[];
+  /** Every bed and plot's area, m² — the same total `knownKg` is divided by
+   * to make `kgPerM2`, so a screen showing both can never show a kg/m² that
+   * doesn't match its own kg and its own m² figures. */
+  growingAreaM2: number;
+  /** `knownKg / growingAreaM2` — a production-density figure, not a separate
+   * estimate: it is derived from the same verified benchmark total above, so
+   * it inherits every caveat that total already carries (crop-cycle, not
+   * annual; excludes unverified and cover crops). Null whenever `knownKg` is
+   * null, or the plan has no growing area to divide by. */
+  kgPerM2: number | null;
 }
 
 /**
@@ -1186,15 +1204,19 @@ export function buildPlanYieldBenchmark(plantings: Planting[], beds: PlanBed[], 
       && (nowMonth === undefined || plantingIsActiveOrPlanned(planting, nowMonth)));
   const areaConflictBedLabels = benchmarkAreaConflictBedLabels(mapped, beds, nowMonth);
   const byCrop = yieldByCrop(mapped, beds);
+  const knownKg = areaConflictBedLabels.length
+    ? null
+    : byCrop.reduce((sum, crop) => sum + crop.kg, 0);
+  const growingAreaM2 = totalGrowingAreaM2(beds);
   return {
-    knownKg: areaConflictBedLabels.length
-      ? null
-      : byCrop.reduce((sum, crop) => sum + crop.kg, 0),
+    knownKg,
     // Keep the conflict structurally unable to leak into a value subtotal.
     byCrop: areaConflictBedLabels.length ? [] : byCrop,
     unknownYieldCrops: unverifiedYieldCropNames(mapped),
     nonFoodCrops: nonFoodCropNames(mapped),
     areaConflictBedLabels,
+    growingAreaM2,
+    kgPerM2: knownKg !== null && growingAreaM2 > 0 ? knownKg / growingAreaM2 : null,
   };
 }
 

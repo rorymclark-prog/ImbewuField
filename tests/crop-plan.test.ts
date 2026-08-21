@@ -44,6 +44,7 @@ import {
   settleOnceRows,
   taskMonthsFromNow,
   tasksForPlan,
+  totalGrowingAreaM2,
   yieldByCrop,
   type PlanBed,
   type Planting,
@@ -777,6 +778,55 @@ test('crop-cycle benchmark counts each planting once without inventing monthly k
     /buildFoodValueByMonth|kgPerMonth/,
     'production must not recreate an even monthly split from a crop-cycle benchmark',
   );
+});
+
+test('a plan\'s benchmark density is the SAME knownKg divided by the SAME growing area, not a third estimate', () => {
+  const totalArea = totalGrowingAreaM2(BEDS);
+  assert.equal(totalArea, BEDS.reduce((sum, bed) => sum + bed.areaM2, 0));
+
+  const planting: Planting = { id: 'density-carrots', bedId: BEDS[0].id, cropKey: 'carrots', sowMonth: 3 };
+  const benchmark = buildPlanYieldBenchmark([planting], BEDS);
+
+  assert.equal(benchmark.growingAreaM2, totalArea);
+  assert.notEqual(benchmark.knownKg, null);
+  assert.notEqual(benchmark.kgPerM2, null);
+  assert.ok(Math.abs(benchmark.kgPerM2! - benchmark.knownKg! / totalArea) < 1e-9);
+
+  // A crop with no verified catalog yield contributes 0, same as knownKg
+  // already does for this case — kgPerM2 must match that existing behaviour
+  // exactly rather than invent its own "unknown" state. The screen's "No
+  // verified kg total" message comes from hasKnownYield/byCrop.length, not
+  // from knownKg or kgPerM2 being null — this field never distinguished the
+  // two before this metric, and it must keep not distinguishing them now.
+  const noYield = buildPlanYieldBenchmark(
+    [{ id: 'density-unknown', bedId: BEDS[0].id, cropKey: 'coriander', sowMonth: 3 }],
+    BEDS,
+  );
+  assert.equal(noYield.knownKg, 0);
+  assert.equal(noYield.kgPerM2, 0);
+  assert.equal(noYield.byCrop.length, 0, 'still the signal a screen must use to withhold the figure');
+
+  // An area conflict blocks knownKg — it must block the density figure the
+  // exact same way, not silently divide by a total that includes the
+  // disputed bed.
+  const conflict = buildPlanYieldBenchmark(
+    [
+      { id: 'conflict-a', bedId: BEDS[0].id, cropKey: 'carrots', sowMonth: 3 },
+      { id: 'conflict-b', bedId: BEDS[0].id, cropKey: 'beetroot', sowMonth: 3 },
+    ],
+    BEDS,
+  );
+  assert.equal(conflict.knownKg, null);
+  assert.equal(conflict.kgPerM2, null);
+  // growingAreaM2 itself is unaffected by a share conflict — it is a fact
+  // about the beds, not about what is planted in them.
+  assert.equal(conflict.growingAreaM2, totalArea);
+
+  // No growing area at all (a plan with beds removed) must not divide by
+  // zero into Infinity/NaN.
+  const noBeds = buildPlanYieldBenchmark([planting], []);
+  assert.equal(noBeds.growingAreaM2, 0);
+  assert.equal(noBeds.kgPerM2, null);
 });
 
 test('overlapping manual bed shares withhold every kg and value benchmark instead of double-counting land', () => {

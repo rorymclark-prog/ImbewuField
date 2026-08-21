@@ -1616,6 +1616,11 @@ function FacilitatorCropsPageInner() {
                     <>0.0 <span style={{ fontSize: 14, fontWeight: 500, color: '#8C7A62' }}>kg · no crops to plant</span></>
                   )}
                 </div>
+                {!hasAreaConflict && hasKnownYield && planYieldBenchmark.kgPerM2 !== null && (
+                  <div className="mb-2" style={{ fontSize: 12, color: '#8C7A62' }}>
+                    {planYieldBenchmark.kgPerM2.toFixed(2)} kg/m² across {planYieldBenchmark.growingAreaM2.toFixed(1)} m² of growing space — a density figure for comparing plans, not a yield promise
+                  </div>
+                )}
                 {hasAreaConflict && (
                   <div className="mb-2">
                     {/* One sentence that has to hold for EVERY row the list can
