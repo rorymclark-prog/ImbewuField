@@ -291,20 +291,36 @@ export interface CropVolume { cropKey: string; name: string; kg: number; group: 
  */
 export const FOLDED_ACTIONS: ReadonlySet<CropTask['action']> = new Set(['mulch']);
 
-/** How many jobs land in each month — the labour curve the kg chart never shows. */
+/**
+ * How many jobs land in each month — the labour curve the kg chart never shows.
+ *
+ * 2026-08-22: this used to count every raw task itself (minus FOLDED_ACTIONS),
+ * one unit per bed. `buildFieldSheet`'s own `mergeIdenticalWork` comment states
+ * the codebase's actual definition of "a job": row count scales with the
+ * number of DISTINCT instructions, not with the number of beds — "Sow carrots"
+ * going into four beds the same month is one job, printed as one row naming
+ * all four beds. The raw-task count here never applied that rule, so any month
+ * where several beds got the same treatment inflated silently: on the real
+ * Ubhejane Crèche plan, August's field sheet prints 12 rows but this chart —
+ * and the "Plan signals" bullet that reads its peak — said 29, and the true
+ * top-3 busiest months (by the field sheet's own row count) were not even the
+ * same three months the chart picked out. That is exactly the failure this
+ * file already worried about for mulch (see FOLDED_ACTIONS above): "a staffing
+ * conclusion a funder hires against, drawn from a doubled month" — just via a
+ * mechanism the mulch fix didn't cover. Delegating to buildFieldSheet's own
+ * `workRows` for every month makes it impossible for the chart, the "Plan
+ * signals" bullet, and the printed field sheet to disagree about the same
+ * month again — one aggregation, read three times, not three separate counts
+ * that can drift apart.
+ */
 export function buildWorkloadSeries(tasks: CropTask[], nowMonth: number): MonthCount[] {
-  const counts = new Map<number, number>();
-  for (const t of tasks) {
-    if (FOLDED_ACTIONS.has(t.action)) continue;
-    const monthsAway = taskMonthsFromNow(t, nowMonth);
-    // This chart is explicitly the next twelve months. A later occurrence of
-    // the same named month belongs to the following crop year and must not be
-    // folded into the current month's workload.
-    if (monthsAway < 0 || monthsAway >= 12) continue;
-    const month = wrapMonth(nowMonth + monthsAway);
-    counts.set(month, (counts.get(month) ?? 0) + 1);
-  }
-  return rollingMonths(nowMonth).map((m) => ({ month: m, count: counts.get(m) ?? 0 }));
+  // buildFieldSheet only reads the month number off `now` for cohort math; the
+  // full date only affects the printed year label, which nothing here reads.
+  const now = new Date(2000, nowMonth - 1, 1);
+  return rollingMonths(nowMonth).map((m) => ({
+    month: m,
+    count: buildFieldSheet(m, tasks, now).workRows,
+  }));
 }
 
 /** Biggest crops by planned volume, for the "what dominates this plan" bar. */
@@ -560,8 +576,9 @@ export function buildFieldSheet(
         break;
       case 'mulch':
         // Folded into the sow/transplant row above — never its own line, and never its own count.
-        // FOLDED_ACTIONS is the single statement of that rule; buildWorkloadSeries reads the same
-        // constant, which is what stopped the chart and this sheet disagreeing about the same job.
+        // 2026-08-22: buildWorkloadSeries used to read FOLDED_ACTIONS to apply this same fold
+        // independently; it now calls buildFieldSheet directly for its per-month count, so this
+        // fold rule only needs stating here — see buildWorkloadSeries's own doc comment.
         break;
     }
   }
