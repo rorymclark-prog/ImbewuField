@@ -554,3 +554,29 @@ test('the year-band names match how the grid actually repeats', () => {
     assert.ok(band.length <= 52, `a band label sits over 12 columns: ${band}`);
   }
 });
+
+// ── The Production score comparison bands (2026-08-22) ──────────────────────
+//
+// Nobody publishes smallholder production value in R/m² — the bands shown
+// under "How does this compare to other growers?" are DERIVED (published SA
+// yields × typical retail prices). Shipping them without saying so would be
+// exactly the invented authority docs/CROP-PLAN-TRUTH-AUDIT-2026-08-06.md
+// bans, so the caveat is pinned to the block: whoever trims the copy has to
+// meet this test's reasoning first.
+test('the comparison bands never ship without their derivation caveat', () => {
+  const page = source('../app/facilitator/crops/page.tsx');
+  const bands = page.indexOf('How does this compare to other growers?');
+  assert.ok(bands > 0, 'the comparison block must exist');
+  const caveat = page.indexOf('not a published statistic', bands);
+  assert.ok(caveat > bands, 'the bands must state they are derived, not published');
+  assert.match(page.slice(bands, bands + 4000), /not targets/i,
+    'orientation bands must disclaim being targets or promises');
+  // Rory's ask was specifically about irrigation as the driver; the
+  // pulls-it-down list must lead with water, because in SA dryland context it
+  // IS the biggest lever — burying it under softer causes would misrank them.
+  const pullsDown = page.indexOf('What pulls the figure down', bands);
+  assert.ok(pullsDown > bands, 'the value-drivers list must exist alongside the bands');
+  const water = page.indexOf('Water that fails in the dry months', pullsDown);
+  const nextDriver = page.indexOf('Ground standing bare', pullsDown);
+  assert.ok(water > pullsDown && water < nextDriver, 'water must be the FIRST driver named');
+});
