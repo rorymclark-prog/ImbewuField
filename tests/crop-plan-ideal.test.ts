@@ -134,11 +134,18 @@ test('a full tie resolves to the anchor starting soonest after the real today', 
 
 // ── C. the empirical winners (pinned from the verified sweep) ───────────────
 
-test('family/steady on the real farm: January wins with a gap-free repeating year', () => {
+test('family/steady on the real farm: December wins with a gap-free repeating year', () => {
+  // Re-pinned 2026-08-23 (was January): kale's duration/spacing verification
+  // made it schedulable, and its fresh leaf coverage now closes the winter
+  // gap from almost every anchor — 11 of 12 anchors sweep gap-free, so the
+  // comparator falls through to soonest-after-today and December (4 months
+  // out from the August REAL_NOW) beats January (5). Kale lands in its
+  // published Feb/Mar summer-window months; the sweep was re-read by hand
+  // before re-pinning, not just re-recorded.
   const ideal = suggestIdealYearPlan(roryAnswers('family', 'steady'), 'summer', roryBeds(), [], REAL_NOW, REAL_NOW_YEAR);
-  assert.equal(ideal.best.anchorMonth, 1);
+  assert.equal(ideal.best.anchorMonth, 12);
   assert.deepEqual(ideal.best.score.zeroFreshMonths, [],
-    'the sweep found January leaves NO month without fresh harvest on this farm');
+    'the sweep found December leaves NO month without fresh harvest on this farm');
   assert.equal(ideal.sameAsToday, false);
   assert.equal(ideal.perAnchor.length, 12);
   ideal.perAnchor.forEach((entry, i) => assert.equal(entry.anchorMonth, i + 1, 'perAnchor is in anchor order'));
@@ -148,9 +155,13 @@ test('family/steady on the real farm: January wins with a gap-free repeating yea
     `generating from August must actually be worse than the winner (got ${JSON.stringify(august.zeroFreshMonths)})`);
 });
 
-test('family/few-big on the real farm: October wins', () => {
+test('family/few-big on the real farm: March wins', () => {
+  // Re-pinned 2026-08-23 (was October) for the same kale shift as the steady
+  // pin above: with kale schedulable, March is the ONLY anchor whose year
+  // sweeps gap-free (every other anchor leaves at least one bare month), so
+  // the continuity-first key decides before kg is even compared.
   const ideal = suggestIdealYearPlan(roryAnswers('family', 'few-big'), 'summer', roryBeds(), [], REAL_NOW, REAL_NOW_YEAR);
-  assert.equal(ideal.best.anchorMonth, 10);
+  assert.equal(ideal.best.anchorMonth, 3);
 });
 
 test('commercial/steady on the real farm: September wins', () => {

@@ -97,11 +97,13 @@ test('a bed that can carry the planting raises nothing at all', () => {
   assert.equal(bedOverlapWarning('bed-2', 12, 2, 1, plantings), null, 'another bed is not this bed');
 });
 
-test('an unverified-timing legacy crop is not turned into an overlap warning', () => {
+test('a record whose crop months cannot be derived is not turned into an overlap warning', () => {
   // Same rule bedOverlapFraction has held since the legacy-record work: the app
   // cannot prove that ground is busy, so it must not claim a percentage for it.
-  // bedHasUnverifiedTiming is the separate, honest message for that case.
-  const legacyOnly: Planting[] = [{ id: 'legacy-kale', bedId: 'bed-1', cropKey: 'kale', sowMonth: 4 }];
+  // Kale carried this fixture until 2026-08-23 (timing now verified); with no
+  // timing-unverified crop left in the catalog, the underivable-months branch
+  // is reached through a record whose crop cannot be resolved at all.
+  const legacyOnly: Planting[] = [{ id: 'legacy-row', bedId: 'bed-1', cropKey: 'retired-crop', sowMonth: 4 }];
   assert.equal(bedOverlapWarning('bed-1', 4, 8, 1, legacyOnly), null);
 });
 
@@ -177,11 +179,13 @@ test('a bed flagged for an unusable share names that crop, and says that is the 
   assert.deepEqual(bed.plantings.map((row) => [row.plantingId, row.reason]), [['over', 'invalid-share']]);
 });
 
-test('a legacy crop whose months cannot be derived is never listed with an empty span', () => {
-  // Kale has no derivable occupied months. The old list printed it as a row
-  // with a blank month span under a headline claiming a same-time collision.
+test('a record whose crop months cannot be derived is never listed with an empty span', () => {
+  // A row with no derivable occupied months (an unresolvable crop key — the
+  // role timing-unverified kale played until 2026-08-23) used to print as a
+  // row with a blank month span under a headline claiming a same-time
+  // collision.
   const plantings: Planting[] = [
-    { id: 'kale', bedId: 'bed-1', cropKey: 'kale', sowMonth: 3, areaFraction: 1 },
+    { id: 'legacy', bedId: 'bed-1', cropKey: 'retired-crop', sowMonth: 3, areaFraction: 1 },
     { id: 'carrots', bedId: 'bed-1', cropKey: 'carrots', sowMonth: 3, areaFraction: 1 },
     { id: 'beetroot', bedId: 'bed-1', cropKey: 'beetroot', sowMonth: 3, areaFraction: 1 },
   ];

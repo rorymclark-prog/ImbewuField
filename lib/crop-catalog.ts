@@ -320,30 +320,54 @@ export const CROPS: CropDef[] = [
     key: 'kale',
     name: 'Kale',
     icon: '🌿',
+    // Sowing windows corroborated 2026-08-23: Starke Ayres' national home
+    // sowing guide ticks kale for all four seasons ("recommended sowing —
+    // depending on severity of frost") and both of its kale variety pages
+    // (1000 Headed, Black Tuscan) call it an all-year full-sun crop, while
+    // Kirchhoffs' Chou Moullier Thousand Headed page gives spring-to-autumn
+    // and warns the plants "do not handle extreme heat". The zone windows
+    // below stay the conservative subset this catalog has always carried
+    // rather than the widest single claim.
     sowMonths: {
       summer: [1, 2, 3, 8, 9],
       winter: [1, 2, 3, 8, 9],
       'all-year': [1, 2, 3, 4, 8, 9, 10, 11, 12],
       // Kale shrugs off far worse than light frost — its own note below says
-      // frost sweetens it — so it's a genuine May-Jul winter crop here.
+      // frost sweetens it — so it's a genuine May-Jul winter crop here, and
+      // Starke Ayres' guide gates winter sowing on frost severity, not on
+      // the crop.
       'mild-frost': [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
     },
-    daysToHarvest: 70,
-    timingVerified: false,
+    // Two SA seed-trade figures measure different endpoints: Starke Ayres
+    // lists 55-60 days to maturity (1000 Headed / Black Tuscan variety
+    // pages — the first-picking end), while Kirchhoffs publishes 100-120
+    // days to harvest for the same Thousand Headed type (the full-season
+    // end). Occupancy takes the combined upper end, exactly as cabbage
+    // does; first leaves usually come far sooner.
+    daysToHarvest: 120,
+    daysToHarvestRange: [55, 120],
     transplant: true,
     spacingCm: 45,
-    fieldSpacingVerified: false,
-    fieldSpacingInstruction: 'confirm a locally appropriate kale transplant spacing before ordering; no verified field geometry is held in this catalog',
-    // NOT source-backed — kale doesn't appear as its own line in the KZN DARD
-    // Expected Yields table (checked 2026-07-15; the table only has "Spinach,
-    // true" and "Swiss chard" among leafy greens) and no other SA
-    // production-guide figure was found. A made-up point estimate must not
-    // become a harvest promise or an optimiser input; keep the crop manual-only
-    // until an agronomist/grower-survey figure can verify it.
+    rowSpacingCm: 40, // Kirchhoffs Chou Moullier Thousand Headed: "Spacing: 40 x 40 cm"
+    inRowSpacingCm: 40, // same source
+    sowDepthCm: 1, // Starke Ayres 1000 Headed and Black Tuscan variety pages both give 1cm
+    rowSpacingRangeCm: [40, 40],
+    inRowSpacingRangeCm: [40, 40],
+    sowDepthRangeCm: [0.2, 1], // Kirchhoffs publishes "Depth: 2 mm", Starke Ayres 1cm — both retained
+    // STILL no defensible food-yield figure — re-checked 2026-08-23 across
+    // all five KZN DARD veg-production tables (expected yields, plant
+    // establishment, length of growing period, successional cropping,
+    // populations/spacings: no kale row in any of them), the DALRRD leafy-
+    // vegetables brochure and the GDARD vegetable guideline (kale absent
+    // from both); Agricol's published kale figure is fodder dry matter for
+    // grazing, not a food harvest. Same rule as amadumbe: verified timing
+    // and spacing put kale on the calendar, while its kilograms stay
+    // deliberately unknown rather than invented.
     yieldKgPerM2: null,
-    note: 'Legacy crop record only: confirm the exact kale type, local sowing window, nursery period and field spacing before planning it again.',
-    // KZN DARD's duration table has no separate kale row; no extra whole-month
-    // picking span is claimed until a relevant source is verified.
+    note: 'Cut-and-come-again leafy brassica: pick outer leaves and the plant keeps producing, and light frost sweetens the flavour. It does not handle extreme heat — in hot areas prefer late-summer and autumn sowings. No verified SA yield figure exists yet, so plans show no kilogram estimate for kale.',
+    // No harvestWindowMonths is claimed: neither source publishes a usual
+    // picking period for kale, and the 120-day occupancy end already covers
+    // the sourced production span.
   },
   {
     key: 'cabbage',

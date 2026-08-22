@@ -341,13 +341,16 @@ test('audited duration ranges reserve beds through their conservative upper endp
   }
 });
 
-test('legacy crop records remain named while unresolved timing or spacing blocks auto-scheduling', () => {
-  for (const key of ['kale']) {
-    const crop = cropByKey(key);
-    assert.ok(crop, `${key} can no longer be read from a saved record`);
+test('crops without a verified field plan remain named while blocked from automatic planning', () => {
+  // Kale left this sweep on 2026-08-23 when its duration and spacing were
+  // sourced; today it covers oats' legacy density placeholder. If it ever
+  // matches nothing, the last unverified field geometry was verified — update
+  // the count below deliberately, don't fake a fixture.
+  const unplanned = CROPS.filter((crop) => !hasVerifiedFieldPlan(crop));
+  assert.ok(unplanned.length >= 1, 'expected the oats legacy-geometry record to still be swept here');
+  for (const crop of unplanned) {
     assert.ok(crop.name.trim() && crop.icon.trim() && crop.note.trim());
-    assert.equal(hasVerifiedFieldPlan(crop), false, `${key} unexpectedly has a verified timed field plan`);
-    assert.equal(hasAutomaticPlanningBasis(crop), false, `${key} can still enter automatic planning`);
+    assert.equal(hasAutomaticPlanningBasis(crop), false, `${crop.key} can still enter automatic planning`);
   }
 });
 
@@ -729,10 +732,17 @@ test('bed overlap is wrap-safe, additive by occupied fraction, and excludes the 
   );
   assert.equal(bedOverlapFraction('bed-1', 9, 10, plantings), 0);
 
-  const withLegacy: Planting[] = [...plantings, { id: 'legacy-kale', bedId: 'bed-1', cropKey: 'kale', sowMonth: 4 }];
-  assert.equal(bedHasUnverifiedTiming('bed-1', withLegacy), true);
-  assert.equal(bedHasUnverifiedTiming('bed-1', withLegacy, 'legacy-kale'), false);
-  assert.equal(bedOverlapFraction('bed-1', 4, 8, [withLegacy.at(-1)!]), 0, 'unverified timing must not be converted into a legacy overlap');
+  // Since 2026-08-23 (kale's timing verified) the catalog holds no
+  // timing-unverified crop, so the unverified-timing guard can only be
+  // exercised here through a record whose crop cannot be resolved at all —
+  // the same "months cannot be derived" branch in overlappingBedPlantings.
+  // bedHasUnverifiedTiming deliberately stays false for an unknown key: its
+  // message names a KNOWN crop whose duration lacks a source, which is a
+  // different sentence from "this record's crop no longer exists". If a crop
+  // ever ships with timingVerified: false again, it must return true for it.
+  const withLegacy: Planting[] = [...plantings, { id: 'legacy-row', bedId: 'bed-1', cropKey: 'retired-crop', sowMonth: 4 }];
+  assert.equal(bedHasUnverifiedTiming('bed-1', withLegacy), false, 'an unknown key is not the unverified-timing message');
+  assert.equal(bedOverlapFraction('bed-1', 4, 8, [withLegacy.at(-1)!]), 0, 'a record whose months cannot be derived must not be converted into an overlap');
 });
 
 test('crop totals reconcile exactly with adjusted per-planting yields, including existing crops', () => {
