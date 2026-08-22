@@ -2489,13 +2489,28 @@ function FoodAvailabilityChart({
                         <span style={{ fontSize: 13, fontWeight: 500, color: '#B9CDB4' }}> /m² this plan cycle</span>
                       </div>
                       <div className="font-sans mt-1" style={{ fontSize: 11, color: '#B9CDB4', lineHeight: 1.4 }}>
-                        Cash + home-use value ÷ {yieldBenchmark.growingAreaM2.toFixed(1)} m² of mapped growing area — a density figure for comparing plans or layouts, not a profit guarantee.
+                        {/* 2026-08-22, Rory: "so thats the value regardless if selling or
+                            consumption and its wholesale or retail" — the one-line caption
+                            said "cash + home-use value" without saying what mix of selling
+                            vs. eating that blends, or which price basis the sold half uses.
+                            Spell out both: it is BOTH scenarios blended by the sliders above
+                            (not "regardless of" them — the split is exactly what you set),
+                            and the two halves are priced differently on purpose (sold produce
+                            at whichever channel is picked above; produce you eat is always
+                            valued at retail, since that is the cost it replaces). */}
+                        Blends both: {cashflowSettings.sellPercent}% of the harvest sold at {valuePriceMode === 'retail' ? 'direct retail' : 'wholesale'} prices, the rest ({100 - cashflowSettings.sellPercent}%) valued at what it would have cost to buy at retail instead of growing it — divided by {yieldBenchmark.growingAreaM2.toFixed(1)} m² of mapped growing area. A density figure for comparing plans or layouts, not a profit guarantee.
                       </div>
                     </div>
                   )}
                   <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#8C7A62' }}>Known benchmark subtotal for this plan cycle</div>
                   <div className="font-mono font-bold" style={{ fontSize: 20, color: '#1F4D2B' }}>R{Math.round(cashIncome).toLocaleString()} <span style={{ fontSize: 12, fontWeight: 500, color: '#8C7A62' }}>cash scenario</span></div>
-                  {homeValue > 0.5 && <div className="font-mono" style={{ fontSize: 13, color: '#5C5040' }}>+ R{Math.round(homeValue).toLocaleString()} <span style={{ fontSize: 11.5, color: '#8C7A62' }}>home-use replacement-value scenario</span></div>}
+                  <div className="font-sans" style={{ fontSize: 10.5, color: '#8C7A62', lineHeight: 1.35 }}>{cashflowSettings.sellPercent}% of harvest sold, priced at {valuePriceMode === 'retail' ? 'direct retail' : 'wholesale'} rates (change the price toggle above to switch).</div>
+                  {homeValue > 0.5 && (
+                    <>
+                      <div className="font-mono mt-1.5" style={{ fontSize: 13, color: '#5C5040' }}>+ R{Math.round(homeValue).toLocaleString()} <span style={{ fontSize: 11.5, color: '#8C7A62' }}>home-use replacement-value scenario</span></div>
+                      <div className="font-sans" style={{ fontSize: 10.5, color: '#8C7A62', lineHeight: 1.35 }}>The {100 - cashflowSettings.sellPercent}% kept at home — always valued at retail, whichever price toggle is selected above, because retail is the price you'd otherwise pay to replace it.</div>
+                    </>
+                  )}
                 </div>
               )}
               {(yieldBenchmark.unknownYieldCrops.length > 0 || unpricedBenchmarkCrops.length > 0) && <div className="font-sans mt-2" style={{ fontSize: 11, color: '#9A6018', lineHeight: 1.4 }}>Subtotal excludes {[...new Set([...yieldBenchmark.unknownYieldCrops, ...unpricedBenchmarkCrops])].join(', ')} because a verified yield or usable per-kg price is missing.</div>}
