@@ -328,6 +328,18 @@ test('the whole-year plan never sows one plot twice over in its first year', () 
   // Same defect, reached through the real entry point (suggestIdealYearPlan)
   // rather than a direct call, with rotation OFF so a future refactor cannot
   // dismiss the failure as an artefact of the direct-call fixture.
+  //
+  // 2026-08-22: potato's and swiss-chard's `all-year` sowMonths were corrected
+  // against KZN DARD Table 6 (both were previously uncited; potato was
+  // outright missing an Apr-May window the table gives). That widened both
+  // crops' eligible windows enough that dry-beans now reaches the plot
+  // through the ORDINARY CYCLE pass (a repeating March sowing) instead of
+  // potato reaching it only through the once-off starter pass — a legitimate
+  // scheduling shift from more accurate data, not a reappearance of the
+  // double-course defect this test guards. The invariant that actually
+  // matters is the total below (exactly one staple course, cycle + starter
+  // combined); which specific crop and which specific pass claims it is
+  // allowed to drift as the catalog improves.
   const beds: PlanBed[] = [
     { id: 'b1', label: 'Bed 1', areaM2: 12, minDimM: 1.2 },
     { id: 'p1', label: 'Plot 1', areaM2: 110, minDimM: 8, kind: 'plot' },
@@ -339,8 +351,13 @@ test('the whole-year plan never sows one plot twice over in its first year', () 
   );
   const rows = ideal.best.result.plantings;
   const cycleCourses = coursesOn(rows.filter((p) => typeof p.once !== 'string'), 'p1');
-  assert.equal(cycleCourses.length, 0, 'fixture drifted: p1 must reach the starter pass courseless');
-  assert.deepEqual(coursesOn(rows.filter((p) => typeof p.once === 'string'), 'p1'), ['tuber']);
+  const starterCourses = coursesOn(rows.filter((p) => typeof p.once === 'string'), 'p1');
+  assert.equal(
+    cycleCourses.length + starterCourses.length, 1,
+    'p1 must spend exactly one staple course in its first year, cycle + starter combined',
+  );
+  assert.deepEqual(cycleCourses, ['pulse'], 'fixture drifted: dry-beans now reaches the plot through the ordinary cycle pass');
+  assert.deepEqual(starterCourses, [], 'fixture drifted: nothing is left for the starter pass once the cycle pass claims the course');
 });
 
 // ---- fillFirstSeasonGaps: "next year the repeating plan covers it" was a --

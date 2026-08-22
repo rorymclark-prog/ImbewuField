@@ -292,7 +292,11 @@ export const CROPS: CropDef[] = [
     sowMonths: {
       summer: [2, 3, 8, 9, 10],
       winter: [2, 3, 4, 8, 9, 10],
-      'all-year': [1, 2, 3, 4, 5, 8, 9, 10, 11, 12],
+      // Was [1,2,3,4,5,8,9,10,11,12], uncited — did not match the source
+      // table's Hot-areas column in either direction (missing Jun-Jul, which
+      // it includes; carrying Jan and Sep-Dec, which it doesn't). KZN DARD
+      // Table 6, Swiss chard row, 'Hot areas Frost-free' column: 'Feb - Aug'.
+      'all-year': [2, 3, 4, 5, 6, 7, 8],
       // KZN DARD Plant Establishment Table 6 gives Jan-Apr and Jul-Sep for
       // Swiss chard in a warm/light-frost area; June is not in that window.
       'mild-frost': [1, 2, 3, 4, 7, 8, 9], // KZN DARD Plant Establishment Table 6, warm/light-frost area
@@ -447,7 +451,9 @@ export const CROPS: CropDef[] = [
     sowMonths: {
       summer: [3, 4, 5],
       winter: [2, 3, 4],
-      'all-year': [2, 3, 4, 5],
+      // Was [2,3,4,5], uncited — an extra May not in the source table.
+      // KZN DARD Table 6, Onion row, 'Hot areas Frost-free' column: 'Feb - Apr'.
+      'all-year': [2, 3, 4],
       'mild-frost': [2, 3], // KZN DARD Table 6, warm/light-frost area
     },
     daysToHarvest: 180, // upper end of 140–180 days from transplant — KZN DARD Length of Growing Period
@@ -632,7 +638,17 @@ export const CROPS: CropDef[] = [
     sowMonths: {
       summer: [2, 3, 8, 9],
       winter: [7, 8, 9],
-      'all-year': [2, 3, 7, 8, 9],
+      // Added 4,5 (Apr-May): a 2026-08-19 audit (commit ff2c014) removed this
+      // window from mild-frost below because its source (a potato-specific
+      // bulletin) explicitly ties it to frost-free, irrigated conditions —
+      // but never gave it a new home, so the codebase carried the comment
+      // without the data it describes. KZN DARD Table 6 (the SAME table
+      // mild-frost below is sourced from, a different document from the
+      // potato-specific bulletin) independently gives Potato's own 'Hot areas
+      // Frost-free' column as exactly 'April/May' — confirming the window
+      // belongs under all-year, not re-added to mild-frost as a second,
+      // differently-sourced number.
+      'all-year': [2, 3, 4, 5, 7, 8, 9],
       // KZN's potato-specific bulletin limits cooler-area planting to Aug-Oct
       // plus January; its Apr-May slot is explicitly frost-free and irrigated.
       'mild-frost': [1, 8, 9, 10],
