@@ -67,6 +67,7 @@ const RECORDED_IMPLIED_KG_PER_PLANT: Record<string, number> = {
   'broccoli': 0.121875,
   'lettuce': 0.162,
   'swiss-chard': 0.3,
+  'chilli': 0.315, // same spacing as peppers, half its yieldKgPerM2 (1 vs 2) — see crop-catalog.ts
   'potato': 0.3325,
   'sweet-potato': 0.463125,
   'peppers': 0.63,

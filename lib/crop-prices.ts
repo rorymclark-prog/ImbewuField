@@ -76,6 +76,7 @@ export const DEFAULT_CROP_PRICES: Record<string, CropPrice> = {
   'swiss-chard': { retailPerKg: 14, wholesalePerKg: 2.4, confidence: 'estimated' },
   beetroot: { retailPerKg: 27, wholesalePerKg: 10, confidence: 'estimated' },
   peppers: { retailPerKg: 28, wholesalePerKg: 10.5, confidence: 'estimated' }, // green pepper wholesale used as the base — red/yellow trade far higher (R48-57/kg) if that's what's actually grown
+  chilli: { retailPerKg: 70, wholesalePerKg: 25, confidence: 'estimated' }, // no Joburg Market figure found (traded on essentially no reported volume) — a general shelf-price estimate reflecting chilli's known small-quantity, higher-R/kg character versus green pepper, not a sourced trade figure
   garlic: { retailPerKg: 160, wholesalePerKg: 61, confidence: 'estimated' }, // garlic is genuinely a high-R/kg crop (small quantities used) — this checks out against typical SA shelf prices, not just the formula
   amadumbe: { retailPerKg: 65, wholesalePerKg: 25, confidence: 'estimated' }, // wholesale traded on thin volume (160kg citywide) — treat as a rough regional-market signal, not a firm number
 
