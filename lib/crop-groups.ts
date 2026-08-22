@@ -62,6 +62,7 @@ export const FOOD_GROUP: Record<string, FoodGroup> = {
   pumpkin: 'fruiting_veg',
   tomatoes: 'fruiting_veg',
   peppers: 'fruiting_veg',
+  chilli: 'fruiting_veg',
   cucumber: 'fruiting_veg',
   watermelon: 'fruiting_veg',
 };
@@ -132,6 +133,7 @@ export const ROTATION_FAMILY: Record<string, RotationFamily> = {
   garlic: 'amaryllidaceae',
   tomatoes: 'solanaceae',
   peppers: 'solanaceae',
+  chilli: 'solanaceae',
   potato: 'solanaceae',
   'sweet-potato': 'convolvulaceae',
   amadumbe: 'araceae',

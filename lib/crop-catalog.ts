@@ -552,6 +552,43 @@ export const CROPS: CropDef[] = [
     harvestPeriodRangeMonths: [2, 3],
   },
   {
+    key: 'chilli',
+    name: 'Chilli',
+    icon: '🌶️',
+    // Same rows as Peppers (crop-catalog.ts above): KZN DARD Table 6 groups
+    // chilli and green pepper under one "Capsicum" line, so sow window,
+    // spacing, duration and rotation family carry over unchanged. Only
+    // yield is chilli-specific — see below.
+    sowMonths: {
+      summer: [8, 9, 10],
+      winter: [8, 9, 10],
+      'all-year': [1, 2, 3, 7, 8, 9, 10, 11, 12],
+      'mild-frost': [8, 9, 10, 11], // KZN DARD Table 6, warm/light-frost area
+    },
+    daysToHarvest: 80, // upper end of 65–80 days from transplant — same Capsicum row as Peppers
+    daysToHarvestRange: [65, 80],
+    transplant: true,
+    spacingCm: 40,
+    rowSpacingCm: 70,
+    inRowSpacingCm: 45,
+    sowDepthCm: 1.75,
+    rowSpacingRangeCm: [60, 80],
+    inRowSpacingRangeCm: [40, 50],
+    sowDepthRangeCm: [1.5, 2],
+    // KZN DARD's Table 8 Expected Yields figure (20-30 t/ha, reused above for
+    // Peppers) is a sweet-pepper number. Its own fact sheet for capsicum/chilli
+    // gives a materially lower fresh yield for chilli specifically — about half
+    // the sweet-pepper figure — so this is its own value, not Peppers' number
+    // relabelled. Modelled as a single-cycle annual like every other catalog
+    // crop; this codebase has no perennial "bush" mode to model real chilli
+    // longevity, so no multi-season yield is claimed here.
+    yieldKgPerM2: 1,
+    yieldRangeKgPerM2: [1, 1.5],
+    note: 'A smaller, hotter relative of sweet pepper — yield here is roughly half the Peppers figure, not the same number relabelled. Start seed in trays in a warm spot.',
+    harvestWindowMonths: 2, // reserve 3 months total — same picking-period basis as Peppers
+    harvestPeriodRangeMonths: [2, 3],
+  },
+  {
     key: 'sweet-potato',
     name: 'Sweet potato',
     icon: '🍠',
