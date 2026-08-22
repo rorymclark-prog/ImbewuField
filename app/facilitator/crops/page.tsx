@@ -2296,6 +2296,16 @@ function FoodAvailabilityChart({
   const homeValue = homeReplacementValueAtRetail * harvestableFraction * (1 - soldFraction);
   const BAR_MAX_H = 56;
 
+  // 2026-08-22, Rory: "i dont think this start from today function works."
+  // Traced (background diagnosis workflow, confirmed live against the
+  // Ubhejane Creche sample plan) to a real design edge case, not a wiring
+  // bug: "From today" only differs from "An established year" for plantings
+  // marked existing/once (see recurringPlanPlantings + slotIsPast in
+  // lib/crop-plan.ts) — a plan built purely by auto-suggest has none of
+  // those, so the toggle is a genuine no-op on it. Say so plainly instead of
+  // silently doing nothing.
+  const hasHistoryToTrim = plantings.some((p) => p.existing === true || typeof p.once === 'string');
+
   return (
     <div className="rounded-2xl p-4 mt-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
       <div className="font-display font-semibold mb-1" style={{ fontSize: 15, color: '#20190F' }}>🍽️ Food, field & value</div>
@@ -2317,7 +2327,9 @@ function FoodAvailabilityChart({
             ))}
           </div>
           <span className="font-sans" style={{ fontSize: 11, color: '#8C7A62', lineHeight: 1.4 }}>
-            {yearMode === 'established' ? 'The repeated annual timing of planned rows; one-off existing crops are not repeated.' : 'Only timing still ahead from today; finished existing crops do not remain on the chart.'}
+            {!hasHistoryToTrim
+              ? 'Both views match for now — this plan has no already-growing or one-off crops yet for "From today" to trim.'
+              : yearMode === 'established' ? 'The repeated annual timing of planned rows; one-off existing crops are not repeated.' : 'Only timing still ahead from today; finished existing crops do not remain on the chart.'}
           </span>
         </div>
       )}
