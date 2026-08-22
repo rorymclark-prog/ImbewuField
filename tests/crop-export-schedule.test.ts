@@ -181,8 +181,12 @@ test('sowingInstruction prints published bounds and suppresses unverified legacy
 
   assert.match(sowingInstruction(cropByKey('maize')!), /rows 91cm apart.*25cm apart.*5–10cm deep/i);
   assert.doesNotMatch(sowingInstruction(cropByKey('maize')!), /rows 90cm|20cm apart|4cm deep/i);
-  assert.match(sowingInstruction(cropByKey('kale')!), /confirm a locally appropriate kale transplant spacing/i);
-  assert.doesNotMatch(sowingInstruction(cropByKey('kale')!), /45cm/i);
+  // Kale's field geometry was sourced 2026-08-23 (Kirchhoffs: 40 x 40 cm,
+  // 2mm depth; Starke Ayres: 1cm depth) — the old confirm-locally
+  // placeholder must be gone and the deprecated 45cm square must not leak.
+  assert.match(sowingInstruction(cropByKey('kale')!), /plant spacing 40cm each way/i);
+  assert.match(sowingInstruction(cropByKey('kale')!), /sow 0\.2–1cm deep/i);
+  assert.doesNotMatch(sowingInstruction(cropByKey('kale')!), /confirm a locally appropriate|45cm/i);
 });
 
 test('source-audited transplant timing shows readiness without painting it as field occupancy', () => {

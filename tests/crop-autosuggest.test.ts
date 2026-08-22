@@ -66,23 +66,25 @@ test('auto-suggest refuses to invent a production plan until reliable irrigation
   }
 });
 
-test('a crop with unresolved timing or field geometry stays selectable for review but cannot enter auto-suggest', () => {
-  // Kale remains selectable so the UI never dead-ends a farmer, but a checkbox
-  // is not permission to invent its missing local calendar and field geometry.
-  for (const key of ['kale']) {
-    const crop = cropByKey(key);
-    assert.ok(crop, `${key} disappeared from historical crop lookup`);
-    assert.ok(crop.name.trim() && crop.note.trim(), `${key} is no longer readable as a named record`);
-    assert.equal(hasVerifiedFieldPlan(crop), false, `${key} unexpectedly gained a verified field plan`);
-    assert.equal(hasAutomaticPlanningBasis(crop), false, `${key} can still drive automatic planning`);
+test('any crop without a verified schedule stays selectable for review but cannot enter auto-suggest', () => {
+  // Kale was the last such crop; its duration and spacing were sourced on
+  // 2026-08-23 (see the kale test below), so this sweep matches nothing
+  // today. It stays as a live guard: any future crop that ships without a
+  // verified duration or field-establishment basis is swept up automatically
+  // — it must remain a readable named record, never enter a new schedule,
+  // and its refusal must say why rather than dead-end the farmer.
+  const unscheduled = CROPS.filter((crop) => !hasVerifiedSchedule(crop));
+  for (const crop of unscheduled) {
+    assert.ok(crop.name.trim() && crop.note.trim(), `${crop.key} is no longer readable as a named record`);
+    assert.equal(hasAutomaticPlanningBasis(crop), false, `${crop.key} can still drive automatic planning`);
 
     const result = autoSuggestPlan({
       ...FAMILY,
-      cropKeys: [key],
+      cropKeys: [crop.key],
       groups: [],
     }, 'mild-frost', [NINE_BEDS[0], FOUR_PLOTS[0]], [], 8);
-    assert.deepEqual(result.plantings, [], `${key} entered a new automatic schedule`);
-    assert.deepEqual(result.laterThisYear, [], `${key} was offered as a later automatic schedule`);
+    assert.deepEqual(result.plantings, [], `${crop.key} entered a new automatic schedule`);
+    assert.deepEqual(result.laterThisYear, [], `${crop.key} was offered as a later automatic schedule`);
     assert.match(noteText(result).join(' '), /duration or field-establishment basis/i);
     assert.doesNotMatch(noteText(result).join(' '), /widen.*(?:group|selection)/i);
   }
@@ -114,6 +116,31 @@ test('amadumbe can be scheduled from verified timing and spacing without inventi
   }, 'mild-frost', NINE_BEDS, [], 8);
   assert.ok(result.plantings.length > 0, 'Amadumbe remained impossible to schedule');
   assert.ok(result.plantings.every((planting) => planting.cropKey === 'amadumbe'));
+  assert.match(noteText(result).join(' '), /No supported food-yield benchmark.*kilograms and value remain blank/i);
+});
+
+test('kale schedules from its verified duration and spacing without inventing a yield', () => {
+  // The Ubhejane Creche plan selected kale explicitly and the engine refused
+  // it for months as a no-schedule legacy record. Duration and spacing are now
+  // sourced (Kirchhoffs: 40x40cm, 100-120 days; Starke Ayres: 55-60-day
+  // maturity), so a selected kale must place exactly the way amadumbe does —
+  // while its kg benchmark stays honestly null instead of invented.
+  const kale = cropByKey('kale');
+  assert.ok(kale);
+  assert.equal(hasVerifiedFieldPlan(kale), true, 'kale duration/spacing verification regressed');
+  assert.equal(hasAutomaticPlanningBasis(kale), false, 'kale must not gain a yield basis without a source');
+  const result = autoSuggestPlan({
+    ...FAMILY,
+    cropKeys: ['kale'],
+    groups: [],
+  }, 'mild-frost', NINE_BEDS, [], 8);
+  assert.ok(result.plantings.length > 0, 'explicitly selected kale was still refused a schedule');
+  assert.ok(result.plantings.every((planting) => planting.cropKey === 'kale'));
+  assert.doesNotMatch(
+    noteText(result).join(' '),
+    /Kale.*not placed automatically/i,
+    'kale must no longer carry the no-schedule warning',
+  );
   assert.match(noteText(result).join(' '), /No supported food-yield benchmark.*kilograms and value remain blank/i);
 });
 

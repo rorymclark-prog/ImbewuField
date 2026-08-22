@@ -127,10 +127,13 @@ test('the descriptive crop readout keeps yield-null food crops but excludes zero
   assert.deepEqual(sowableInMonth('summer', 10, crops).map((c) => c.key), ['yielding', 'unverified-yield']);
 });
 
-test('coriander remains visible where its sourced window opens while legacy kale timing does not', () => {
+test('coriander and kale stay visible in their sourced windows even with unverified kilograms', () => {
+  // Kale's June listing flipped on 2026-08-23 when its duration was sourced;
+  // both crops still carry yieldKgPerM2: null, which must never hide a crop
+  // whose timing is verified.
   const open = sowableInMonth('mild-frost', 6);
   assert.ok(open.some((crop) => crop.key === 'coriander' && crop.yieldKgPerM2 === null));
-  assert.equal(open.some((crop) => crop.key === 'kale'), false);
+  assert.ok(open.some((crop) => crop.key === 'kale' && crop.yieldKgPerM2 === null));
   assert.ok(open.every((crop) => crop.timingVerified !== false));
 });
 
