@@ -15,7 +15,9 @@ import { useEffect, useState } from 'react';
 import type { CropTask, PlanBed, Planting } from '@/lib/crop-plan';
 import type { PlanNote } from '@/lib/crop-autosuggest';
 import { buildCropPlanIcs, cropPlanIcsFilename } from '@/lib/crop-calendar-ics';
-import { buildCropPlanPdf, cropPlanPdfFilename, type CropPlanPdfMeta } from '@/lib/crop-export-pdf';
+import {
+  buildCropPlanPdf, cropPlanPdfFilename, type CropPlanPageFormat, type CropPlanPdfInput, type CropPlanPdfMeta,
+} from '@/lib/crop-export-pdf';
 import {
   canShareFiles, deliverFile, downloadFile, openFileInTab, prefersShareSheet,
 } from '@/lib/crop-export-deliver';
@@ -37,6 +39,7 @@ type Busy = 'ics' | 'pdf' | null;
 export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearReport, planNotes, planNotesAt }: CropPlanExportCardProps) {
   const [busy, setBusy] = useState<Busy>(null);
   const [status, setStatus] = useState<string | null>(null);
+  const [quickPrintFormat, setQuickPrintFormat] = useState<CropPlanPageFormat>('a4');
   const empty = tasks.length === 0;
 
   async function exportCalendar() {
@@ -77,12 +80,16 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearR
     setShareFirst(prefersShareSheet());
   }, []);
 
-  async function withPdf(run: (blob: Blob) => void | Promise<void>, done: string) {
+  async function withPdf(
+    run: (blob: Blob) => void | Promise<void>,
+    done: string,
+    overrides?: Pick<CropPlanPdfInput, 'sections' | 'pageFormat'>,
+  ) {
     if (busy) return;
     setBusy('pdf');
     setStatus(null);
     try {
-      const blob = await buildCropPlanPdf({ plantings, beds, tasks, meta, yearReport, planNotes, planNotesAt });
+      const blob = await buildCropPlanPdf({ plantings, beds, tasks, meta, yearReport, planNotes, planNotesAt, ...overrides });
       await run(blob);
       setStatus(done);
     } catch (err) {
@@ -116,6 +123,20 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearR
   const printPdf = () => withPdf(
     (blob) => { if (!openFileInTab(blob)) downloadFile(blob, cropPlanPdfFilename(meta.planTitle)); },
     'Opened in a new tab — use your browser\'s Print button there.',
+  );
+
+  // Two pages only, for pinning on a wall: the bed calendar and the
+  // month-by-month task list. "Open to print" mirrors printPdf exactly —
+  // the reader wants the browser's own Print dialog, not a share sheet.
+  // The filename carries a `quick-print-<size>` kind so a popup-blocked
+  // fallback download never shares a name with the full document (or with
+  // quick-print at a different paper size) for the same plan on the same day.
+  const quickPrint = () => withPdf(
+    (blob) => {
+      if (!openFileInTab(blob)) downloadFile(blob, cropPlanPdfFilename(meta.planTitle, new Date(), `quick-print-${quickPrintFormat}`));
+    },
+    'Opened in a new tab — use your browser\'s Print button there.',
+    { sections: ['calendar', 'taskSummary'], pageFormat: quickPrintFormat },
   );
 
   const buttonStyle = (primary: boolean, disabled: boolean) => ({
@@ -157,6 +178,30 @@ export default function CropPlanExportCard({ plantings, beds, tasks, meta, yearR
         >
           {busy === 'pdf' ? '⏳ Building…' : shareFirst ? '📤 Share the plan (PDF)' : '⬇ Download the plan (PDF)'}
         </button>
+      </div>
+
+      <div className="flex flex-wrap items-center gap-2 mt-3 pt-3" style={{ borderTop: '1px solid #E2D8C4' }}>
+        <button
+          onClick={quickPrint}
+          disabled={busy !== null}
+          className="font-display font-semibold inline-flex items-center gap-1.5"
+          style={buttonStyle(false, busy !== null)}
+          title="Two pages only: the bed calendar and a month-by-month task list — made for pinning on a wall"
+        >
+          {busy === 'pdf' ? '⏳ Building…' : '📋 Quick print (2 pages)'}
+        </button>
+        <select
+          value={quickPrintFormat}
+          onChange={(e) => setQuickPrintFormat(e.target.value as CropPlanPageFormat)}
+          disabled={busy !== null}
+          className="font-sans rounded-lg"
+          style={{ fontSize: 12, padding: '6px 8px', border: '1px solid #E2D8C4', color: '#5C5040', background: '#FFFFFF' }}
+          title="Paper size — pick A3 or A2 for a wall-sized print"
+        >
+          <option value="a4">A4</option>
+          <option value="a3">A3</option>
+          <option value="a2">A2</option>
+        </select>
       </div>
 
       <div className="font-sans mt-2" style={{ fontSize: 11.5, color: '#5C5040', lineHeight: 1.6 }}>
