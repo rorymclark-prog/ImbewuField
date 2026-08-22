@@ -2463,6 +2463,24 @@ function FoodAvailabilityChart({
                 </div>
               ) : (
                 <div className="mt-3 pt-3" style={{ borderTop: '1px solid #E2D8C4' }}>
+                  {yieldBenchmark.growingAreaM2 > 0 && (
+                    // Prominent by request (2026-08-22, Rory: "where oh where is my
+                    // production score metric!!!! R/m2!"). Cash + home-use value
+                    // together, because a garden that's mostly eaten at home is not
+                    // less productive — it just cashes out differently. Divided by
+                    // the SAME mapped growing area the kg/m² density card above
+                    // uses, so the two density figures are directly comparable.
+                    <div className="rounded-xl p-3 mb-3" style={{ background: '#1F4D2B' }}>
+                      <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#B9CDB4' }}>Production score</div>
+                      <div className="font-mono font-bold" style={{ fontSize: 28, color: '#F7F2E9' }}>
+                        R{Math.round((cashIncome + homeValue) / yieldBenchmark.growingAreaM2).toLocaleString()}
+                        <span style={{ fontSize: 13, fontWeight: 500, color: '#B9CDB4' }}> /m² this plan cycle</span>
+                      </div>
+                      <div className="font-sans mt-1" style={{ fontSize: 11, color: '#B9CDB4', lineHeight: 1.4 }}>
+                        Cash + home-use value ÷ {yieldBenchmark.growingAreaM2.toFixed(1)} m² of mapped growing area — a density figure for comparing plans or layouts, not a profit guarantee.
+                      </div>
+                    </div>
+                  )}
                   <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#8C7A62' }}>Known benchmark subtotal for this plan cycle</div>
                   <div className="font-mono font-bold" style={{ fontSize: 20, color: '#1F4D2B' }}>R{Math.round(cashIncome).toLocaleString()} <span style={{ fontSize: 12, fontWeight: 500, color: '#8C7A62' }}>cash scenario</span></div>
                   {homeValue > 0.5 && <div className="font-mono" style={{ fontSize: 13, color: '#5C5040' }}>+ R{Math.round(homeValue).toLocaleString()} <span style={{ fontSize: 11.5, color: '#8C7A62' }}>home-use replacement-value scenario</span></div>}
