@@ -2195,8 +2195,20 @@ function MonthLineChart({
   const defaultDotColor = (v: number) => (v <= 0 ? '#D8CFBC' : color);
   return (
     <div style={{ overflowX: 'auto' }}>
-      <div style={{ minWidth: GRID_MIN_WIDTH }}>
-        <svg viewBox={`0 0 ${W} ${H}`} width="100%" height={H} preserveAspectRatio="none" style={{ display: 'block' }}>
+      {/* GRID_MIN_WIDTH belongs to the OTHER (24-month bed-timeline) chart
+       * elsewhere in this file — MonthLineChart has exactly one call site
+       * (the 15-month Field utilization tab below) and its own natural width
+       * is W, not that constant. Borrowing it left the wrapper's floor wider
+       * than this chart's own coordinate space, and the SVG's width="100%"
+       * meant it always stretched to fill that (or any wider ancestor)
+       * regardless of the floor — while the label row below stays pinned at
+       * a literal W. The two drifted apart increasingly toward the right
+       * (2026-08-22, screenshot repro: percentages read correctly, but sat
+       * far right of the point they belonged to). Fixed by giving the SVG
+       * the SAME literal pixel width as the label row, so neither one can
+       * ever stretch independently of the other. */}
+      <div style={{ minWidth: W }}>
+        <svg viewBox={`0 0 ${W} ${H}`} width={W} height={H} style={{ display: 'block' }}>
           {referenceValue !== undefined && (
             <line x1={0} x2={W} y1={yAt(referenceValue)} y2={yAt(referenceValue)} stroke="#C4A46A" strokeWidth={1} strokeDasharray="4 3" />
           )}
