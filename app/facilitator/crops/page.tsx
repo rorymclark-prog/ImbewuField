@@ -2260,6 +2260,9 @@ function FoodAvailabilityChart({
   const [openMonth, setOpenMonth] = useState<number | null>(null);
   const [valuePriceMode, setValuePriceMode] = useState<'retail' | 'wholesale'>('retail');
   const [editingPrices, setEditingPrices] = useState(false);
+  // Collapsed by default: the comparison bands are orientation, not part of
+  // the plan's own numbers, and the card is already dense.
+  const [showComparison, setShowComparison] = useState(false);
   // DISPLAY-ONLY household guideline (docs/CROP-PLAN-TRUTH-AUDIT-2026-08-06.md
   // bans headcount as a planting input). This state exists purely to render a
   // consumption-guideline sentence; it is never persisted and must never be
@@ -2276,24 +2279,33 @@ function FoodAvailabilityChart({
   const utilMax = Math.max(1, ...monthOrder.map((m) => utilizationByMonth[m] ?? 0));
   const pricedCropKeys = [...new Set(plantings.map((p) => p.cropKey))].filter((key) => !UNPRICED_CROPS.has(key)).sort();
   const unpricedBenchmarkCrops = yieldBenchmark.byCrop.filter((row) => !priceFor(row.cropKey, priceOverrides)).map((row) => row.name);
-  const cashValueAtSelectedChannel = yieldBenchmark.byCrop.reduce((sum, row) => {
-    const price = priceFor(row.cropKey, priceOverrides);
-    if (!price) return sum;
-    return sum + row.kg * (valuePriceMode === 'retail' ? price.retailPerKg : price.wholesalePerKg);
-  }, 0);
-  const homeReplacementValueAtRetail = yieldBenchmark.byCrop.reduce((sum, row) => {
-    const price = priceFor(row.cropKey, priceOverrides);
-    if (!price) return sum;
-    return sum + row.kg * price.retailPerKg;
-  }, 0);
   const assumptionsConfirmed = cashflowSettings.confirmed === true;
   const harvestableFraction = 1 - cashflowSettings.lossPercent / 100;
   const soldFraction = cashflowSettings.sellPercent / 100;
-  const cashIncome = cashValueAtSelectedChannel * harvestableFraction * soldFraction;
+  // ONE value computation for the blended Production score AND the per-kind
+  // beds/plots split under it (2026-08-22, Rory: "should we give a veg beds
+  // figure and a staple crops figure seperately?") — three R/m² figures off
+  // one formula, so they cannot drift onto different price/slider rules.
   // Produce kept at home replaces a retail purchase regardless of which sale
-  // channel is selected. Reusing the wholesale toggle here understated the
+  // channel is selected. Reusing the wholesale toggle there understated the
   // home side and made one label describe two different calculations.
-  const homeValue = homeReplacementValueAtRetail * harvestableFraction * (1 - soldFraction);
+  const scenarioValues = (rows: PlanYieldBenchmark['byCrop']) => {
+    const cashAtChannel = rows.reduce((sum, row) => {
+      const price = priceFor(row.cropKey, priceOverrides);
+      if (!price) return sum;
+      return sum + row.kg * (valuePriceMode === 'retail' ? price.retailPerKg : price.wholesalePerKg);
+    }, 0);
+    const homeAtRetail = rows.reduce((sum, row) => {
+      const price = priceFor(row.cropKey, priceOverrides);
+      if (!price) return sum;
+      return sum + row.kg * price.retailPerKg;
+    }, 0);
+    return {
+      cash: cashAtChannel * harvestableFraction * soldFraction,
+      home: homeAtRetail * harvestableFraction * (1 - soldFraction),
+    };
+  };
+  const { cash: cashIncome, home: homeValue } = scenarioValues(yieldBenchmark.byCrop);
   const BAR_MAX_H = 56;
 
   // 2026-08-22, Rory: "i dont think this start from today function works."
@@ -2499,6 +2511,89 @@ function FoodAvailabilityChart({
                             at whichever channel is picked above; produce you eat is always
                             valued at retail, since that is the cost it replaces). */}
                         Blends both: {cashflowSettings.sellPercent}% of the harvest sold at {valuePriceMode === 'retail' ? 'direct retail' : 'wholesale'} prices, the rest ({100 - cashflowSettings.sellPercent}%) valued at what it would have cost to buy at retail instead of growing it — divided by {yieldBenchmark.growingAreaM2.toFixed(1)} m² of mapped growing area. A density figure for comparing plans or layouts, not a profit guarantee.
+                      </div>
+                      {/* 2026-08-22, Rory: "should we give a veg beds figure and a
+                          staple crops figure seperately? that would be more heloful
+                          i think" — the blend hides that beds and staple plots are
+                          different economic animals: maize/dry-bean ground reads at
+                          field-crop value per m² by NATURE, and averaging it into
+                          the veg beds makes both halves unreadable. Shown only when
+                          the plan actually has both kinds of ground — a beds-only
+                          plan's split would just restate the headline. Same
+                          scenarioValues() formula and the benchmark's own partition
+                          fields, so the two sub-figures can never disagree with the
+                          blend they sit under. */}
+                      {yieldBenchmark.bedAreaM2 > 0 && yieldBenchmark.plotAreaM2 > 0 && (() => {
+                        const bedsSplit = scenarioValues(yieldBenchmark.byCropBeds);
+                        const plotsSplit = scenarioValues(yieldBenchmark.byCropPlots);
+                        const rows: [string, { cash: number; home: number }, number][] = [
+                          ['Veg beds', bedsSplit, yieldBenchmark.bedAreaM2],
+                          ['Staple plots', plotsSplit, yieldBenchmark.plotAreaM2],
+                        ];
+                        return (
+                          <div className="mt-2 pt-2" style={{ borderTop: '1px dashed rgba(185,205,180,0.4)' }}>
+                            {rows.map(([label, split, areaM2]) => (
+                              <div key={label} className="flex items-baseline justify-between" style={{ gap: 8 }}>
+                                <span className="font-sans" style={{ fontSize: 11, color: '#B9CDB4' }}>{label} · {areaM2.toFixed(1).replace(/\.0$/, '')} m²</span>
+                                <span className="font-mono font-semibold" style={{ fontSize: 14, color: '#F7F2E9' }}>
+                                  R{Math.round((split.cash + split.home) / areaM2).toLocaleString()}<span style={{ fontSize: 10.5, fontWeight: 500, color: '#B9CDB4' }}> /m²</span>
+                                </span>
+                              </div>
+                            ))}
+                            <div className="font-sans mt-1" style={{ fontSize: 10.5, color: '#B9CDB4', lineHeight: 1.4 }}>
+                              Same sliders and prices as the blended figure. Staple ground reads low per m² by nature — maize, beans and potatoes are cheap per kilogram but store and feed the household through the year — so compare beds with beds and plots with plots, not one against the other.
+                            </div>
+                          </div>
+                        );
+                      })()}
+                      {/* 2026-08-22, Rory: "can you also add what is typical forr
+                          farmers market gardeners small scale farmers with limited
+                          irrigation and maybe add what will reduce prodiction value
+                          sucha badd irrigation etc etc". The bands below are NOT a
+                          published statistic — nobody publishes smallholder value
+                          in R/m² — they are derived: SA home-garden productivity
+                          averages ~1.8 kg/m²/yr (≈18 t/ha across cabbage, chard,
+                          beans, tomato, potato — Khumalo et al. 2021, S.Afr.J.Sci
+                          home-gardening/food-insecurity study), intensive
+                          market-garden beds reach 3–6 kg/m²/yr, dryland maize runs
+                          0.1–0.5 kg/m² smallholder — each valued at the same
+                          typical mixed retail R20–35/kg era as the price snapshot
+                          this card already uses. That derivation MUST stay stated
+                          in the on-screen caveat below; bands presented as a
+                          published benchmark would be invented authority (see
+                          docs/CROP-PLAN-TRUTH-AUDIT-2026-08-06.md's ban on
+                          invented precision — the page-ux test pins the caveat to
+                          this block). */}
+                      <div className="mt-2 pt-2" style={{ borderTop: '1px dashed rgba(185,205,180,0.4)' }}>
+                        <button onClick={() => setShowComparison((open) => !open)} className="font-sans underline" style={{ fontSize: 11, color: '#B9CDB4', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
+                          {showComparison ? 'Hide the comparison' : 'How does this compare to other growers?'}
+                        </button>
+                        {showComparison && (
+                          <div className="mt-2">
+                            {([
+                              ['Dryland staple plot — maize, dry beans, pumpkin, no irrigation', 'R2–10'],
+                              ['Home garden, limited watering', 'R10–30'],
+                              ['Community or school garden, reliable basic irrigation', 'R30–60'],
+                              ['Intensive market-garden beds — drip, tight succession', 'R60–150+'],
+                            ] as [string, string][]).map(([label, band]) => (
+                              <div key={label} className="flex items-baseline justify-between" style={{ gap: 8, marginBottom: 2 }}>
+                                <span className="font-sans" style={{ fontSize: 10.5, color: '#B9CDB4', lineHeight: 1.35 }}>{label}</span>
+                                <span className="font-mono" style={{ fontSize: 11.5, color: '#F7F2E9', whiteSpace: 'nowrap' }}>{band} /m²</span>
+                              </div>
+                            ))}
+                            <div className="font-sans mt-1.5" style={{ fontSize: 10, color: '#B9CDB4', lineHeight: 1.4, fontStyle: 'italic' }}>
+                              Rough bands, not a published statistic: derived from published South African yields valued at typical retail prices from the same era as this card&apos;s price snapshot. Orientation only — not targets, and not promises.
+                            </div>
+                            <div className="font-sans uppercase tracking-widest mt-2.5" style={{ fontSize: 9.5, color: '#B9CDB4' }}>What pulls the figure down</div>
+                            <ul className="font-sans mt-1" style={{ fontSize: 10.5, color: '#B9CDB4', lineHeight: 1.5, paddingLeft: 16, margin: '4px 0 0' }}>
+                              <li>Water that fails in the dry months — the single biggest driver here; one missed month can cost the whole crop cycle, which is the gap between the two irrigated bands above and the two that are not.</li>
+                              <li>Ground standing bare between crops — the Field utilization tab above shows exactly which months yours stands empty.</li>
+                              <li>Harvest lost or unsold — that is the % loss slider above, already in this figure.</li>
+                              <li>A crop mix weighted to low price-per-kg crops. That can still be the right choice — staples store and feed the household — which is why the beds and plots figures are shown separately.</li>
+                              <li>Patchy stands: poor germination never re-sown, or spacing wider than the packet calls for, quietly harvests a fraction of the bed you prepared.</li>
+                            </ul>
+                          </div>
+                        )}
                       </div>
                     </div>
                   )}

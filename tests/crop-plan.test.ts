@@ -829,6 +829,59 @@ test('a plan\'s benchmark density is the SAME knownKg divided by the SAME growin
   assert.equal(noBeds.kgPerM2, null);
 });
 
+// 2026-08-22: the Production score card gained a beds-vs-staple-plots split
+// (Rory: a single blended R/m² hides that maize/dry-bean ground reads at
+// field-crop value per m² by nature, dragging the veg beds' figure down into
+// meaninglessness). The split lives in the benchmark itself so a screen can
+// never partition differently from the blend it sits under — these pin that
+// the partition is exact: no overlap, no gap, no drift.
+test('the beds/plots benchmark split is a true partition of the blended benchmark', () => {
+  const mixed: PlanBed[] = [
+    { id: 'veg-1', label: 'Bed 1', areaM2: 8, minDimM: 2 }, // kind absent = 'bed'
+    { id: 'veg-2', label: 'Bed 2', areaM2: 8, minDimM: 2, kind: 'bed' },
+    { id: 'field-1', label: 'Plot 1', areaM2: 40, kind: 'plot' },
+  ];
+  const plantings: Planting[] = [
+    { id: 'p-carrots', bedId: 'veg-1', cropKey: 'carrots', sowMonth: 3 },
+    { id: 'p-cabbage', bedId: 'veg-2', cropKey: 'cabbage', sowMonth: 3 },
+    { id: 'p-maize', bedId: 'field-1', cropKey: 'maize', sowMonth: 11 },
+  ];
+  const benchmark = buildPlanYieldBenchmark(plantings, mixed);
+
+  // Areas partition exactly, and are bed facts — independent of plantings.
+  assert.equal(benchmark.bedAreaM2, 16);
+  assert.equal(benchmark.plotAreaM2, 40);
+  assert.equal(benchmark.bedAreaM2 + benchmark.plotAreaM2, benchmark.growingAreaM2);
+
+  // Each planting lands in exactly one subset, by its ground's kind —
+  // kind-absent counts as a bed, exactly as PlanBed.kind documents.
+  assert.deepEqual(benchmark.byCropBeds.map((r) => r.cropKey).sort(), ['cabbage', 'carrots']);
+  assert.deepEqual(benchmark.byCropPlots.map((r) => r.cropKey), ['maize']);
+
+  // kg conservation: the two subsets sum to the blend, row for row.
+  const kgOf = (rows: { kg: number }[]) => rows.reduce((sum, row) => sum + row.kg, 0);
+  assert.ok(Math.abs(kgOf(benchmark.byCropBeds) + kgOf(benchmark.byCropPlots) - kgOf(benchmark.byCrop)) < 1e-9);
+
+  // A plan with no plots (every pre-split plan ever saved): the whole blend
+  // is the beds subset and the plots subset is empty, never undefined.
+  const bedsOnly = buildPlanYieldBenchmark(plantings.slice(0, 2), mixed.slice(0, 2));
+  assert.equal(bedsOnly.plotAreaM2, 0);
+  assert.deepEqual(bedsOnly.byCropPlots, []);
+  assert.ok(Math.abs(kgOf(bedsOnly.byCropBeds) - kgOf(bedsOnly.byCrop)) < 1e-9);
+
+  // An area conflict must void the split subsets exactly like it voids
+  // byCrop — a per-kind figure leaking past the conflict veto would be the
+  // same double-counted land the veto exists to withhold.
+  const conflicted = buildPlanYieldBenchmark(
+    [...plantings,
+      { id: 'p-clash', bedId: 'veg-1', cropKey: 'beetroot', sowMonth: 3 }],
+    mixed,
+  );
+  assert.ok(conflicted.areaConflictBedLabels.length > 0);
+  assert.deepEqual(conflicted.byCropBeds, []);
+  assert.deepEqual(conflicted.byCropPlots, []);
+});
+
 test('overlapping manual bed shares withhold every kg and value benchmark instead of double-counting land', () => {
   const conflict: Planting[] = [
     { id: 'whole-a', bedId: BEDS[0].id, cropKey: 'carrots', sowMonth: 3 },
