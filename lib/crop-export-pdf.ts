@@ -37,8 +37,8 @@ import { planNotesDateLabel } from '@/lib/crop-plan';
 import type { PlanNote, PlanNoteKind } from '@/lib/crop-autosuggest';
 import type { FoodGroup } from '@/lib/crop-groups';
 import {
-  buildBuyingSchedule, monthShort, monthYearLabel, positionRangeLabel, rollingMonths,
-  SUCCESSION_TIMING_GUIDANCE,
+  buildBuyingSchedule, buildTaskMonths, monthShort, monthYearLabel, positionRangeLabel, rollingMonths,
+  SUCCESSION_TIMING_GUIDANCE, taskPhrase,
 } from '@/lib/crop-export-schedule';
 import {
   buildFieldSheet, buildOccupancyCalendar, buildPlanDashboard,
@@ -108,10 +108,21 @@ export interface CropPlanPdfInput {
   now?: Date;
   /** Which of the five views to include. Omitted = all of them. */
   sections?: CropPlanSection[];
+  /** Paper size for every page this call produces. Only the quick-print
+   * export ever passes anything but the default: it is meant to be printed
+   * at true scale and pinned on a wall, so a facilitator can pick A3 or A2
+   * instead of A4. Omitted = 'a4', matching every existing caller exactly. */
+  pageFormat?: CropPlanPageFormat;
 }
 
-export type CropPlanSection = 'dashboard' | 'numbers' | 'calendar' | 'plan' | 'buying' | 'fieldsheets' | 'record';
+export type CropPlanSection = 'dashboard' | 'numbers' | 'calendar' | 'plan' | 'buying' | 'fieldsheets' | 'record' | 'taskSummary';
 
+export type CropPlanPageFormat = 'a4' | 'a3' | 'a2';
+
+// 'taskSummary' is deliberately excluded: it's a condensed one-pager built
+// only for the quick-print export (calendar + taskSummary, nothing else).
+// The full document already covers every month in detail via 'fieldsheets';
+// including both there would print the same tasks twice.
 export const ALL_SECTIONS: CropPlanSection[] = [
   'dashboard', 'numbers', 'calendar', 'plan', 'buying', 'fieldsheets', 'record',
 ];
@@ -200,6 +211,31 @@ const GROUP_LEGEND: { label: string; ink: readonly number[] }[] = [
 
 type Doc = import('jspdf').jsPDF;
 
+/**
+ * Trim `text` to fit within `maxW` points at whatever font/size is currently
+ * set on `doc`, appending "..." (never a Unicode ellipsis — pdfSafe strips
+ * it) if a cut was needed. Callers pass text already through `pdfSafe`.
+ *
+ * Exists because plain jsPDF `.text()` calls do not wrap or clip — a string
+ * that runs past its column just draws over whatever is printed next to it.
+ * Two real spots hit this with farmer-authored, unbounded-length text: a
+ * custom bed/plot name sharing its narrow column with the area figure
+ * (drawCalendar), and a long plan title sharing the footer with the fixed
+ * assurance line (Sheet.stampFooter).
+ */
+function truncateToWidth(doc: Doc, text: string, maxW: number): string {
+  const ellipsis = '...';
+  if (doc.getTextWidth(text) <= maxW) return text;
+  let lo = 0;
+  let hi = text.length;
+  while (lo < hi) {
+    const mid = Math.ceil((lo + hi) / 2);
+    const candidate = `${text.slice(0, mid).trimEnd()}${ellipsis}`;
+    if (doc.getTextWidth(candidate) <= maxW) lo = mid; else hi = mid - 1;
+  }
+  return lo <= 0 ? ellipsis : `${text.slice(0, lo).trimEnd()}${ellipsis}`;
+}
+
 interface Column {
   key: string;
   header: string;
@@ -218,10 +254,12 @@ class Sheet {
   y = 0;
   margin = 40;
   private footerNote: string;
+  private format: CropPlanPageFormat;
 
-  constructor(doc: Doc, footerNote: string) {
+  constructor(doc: Doc, footerNote: string, format: CropPlanPageFormat = 'a4') {
     this.doc = doc;
     this.footerNote = footerNote;
+    this.format = format;
   }
 
   get width(): number { return this.doc.internal.pageSize.getWidth(); }
@@ -242,18 +280,23 @@ class Sheet {
     this.font(7.5);
     this.ink(INK.faint);
     // Just the plan name on the left: "ImbewuField crop plan - Ubhejane Creche"
-    // ran straight into the centred note on a portrait page.
-    this.doc.text(pdfSafe(this.footerNote), this.margin, this.height - 26);
-    this.doc.text(
-      pdfSafe(ASSURANCE_ONE_LINE),
-      this.width / 2, this.height - 26, { align: 'center' },
-    );
+    // ran straight into the centred note on a portrait page. A short title
+    // still can, on a narrow enough page (A4 portrait, most facilitators'
+    // default) — so the left string is truncated to whatever room is
+    // actually free before the fixed centred assurance line begins, rather
+    // than assumed to always be short enough.
+    const assuranceText = pdfSafe(ASSURANCE_ONE_LINE);
+    const assuranceLeft = this.width / 2 - this.doc.getTextWidth(assuranceText) / 2;
+    const noteMaxW = Math.max(20, assuranceLeft - this.margin - 12);
+    const note = truncateToWidth(this.doc, pdfSafe(this.footerNote), noteMaxW);
+    this.doc.text(note, this.margin, this.height - 26);
+    this.doc.text(assuranceText, this.width / 2, this.height - 26, { align: 'center' });
     this.doc.text(String(this.doc.getNumberOfPages()), this.width - this.margin, this.height - 26, { align: 'right' });
   }
 
   page(orientation: 'portrait' | 'landscape' = 'portrait'): void {
     this.stampFooter();
-    this.doc.addPage('a4', orientation);
+    this.doc.addPage(this.format, orientation);
     this.y = this.margin;
   }
 
@@ -769,12 +812,23 @@ function drawCalendar(s: Sheet, input: CropPlanPdfInput, nowMonth: number, rows:
     s.doc.setLineWidth(0.4);
     s.doc.line(s.margin, s.y + rowH, s.margin + s.contentWidth, s.y + rowH);
 
-    s.font(8, true);
-    s.ink(INK.text);
-    s.doc.text(pdfSafe(row.label), s.margin + 8, s.y + 13);
+    // row.label is the farmer's own name for a mapped bed or staple-garden
+    // zone ("Bed 1 - Nursery corner", "Plot A - Maize block"), not the
+    // short "Bed N" fallback — routinely too long for this 96pt column to
+    // hold next to the right-aligned area figure. Reserve the area figure's
+    // own width first and truncate the label into whatever is left, rather
+    // than let the two run together into unreadable overlapping text.
     s.font(6.5);
     s.ink(INK.faint);
-    s.doc.text(pdfSafe(`${row.areaM2.toFixed(1)} m2`), s.margin + labelW - 8, s.y + 13, { align: 'right' });
+    const areaText = pdfSafe(`${row.areaM2.toFixed(1)} m2`);
+    const areaW = s.doc.getTextWidth(areaText);
+    s.font(8, true);
+    s.ink(INK.text);
+    const labelMaxW = labelW - 16 - areaW - 4;
+    s.doc.text(truncateToWidth(s.doc, pdfSafe(row.label), Math.max(20, labelMaxW)), s.margin + 8, s.y + 13);
+    s.font(6.5);
+    s.ink(INK.faint);
+    s.doc.text(areaText, s.margin + labelW - 8, s.y + 13, { align: 'right' });
 
     row.cells.forEach((cell, i) => {
       const cx = s.margin + labelW + i * colW;
@@ -829,6 +883,77 @@ function drawCalendar(s: Sheet, input: CropPlanPdfInput, nowMonth: number, rows:
     s.doc.text(slice.map(pdfSafe), s.margin + c * (s.contentWidth / cols), s.y);
   }
   s.y += perCol * 9 + 6;
+}
+
+// ── Compact task summary (quick print) ──────────────────────────────────────
+
+/**
+ * One page, every task, grouped by month, one line each — the exact wording
+ * the screen's "📋 Tasks" panel already shows (taskPhrase/taskSentence,
+ * lib/crop-export-schedule.ts), just one task per row instead of joined with
+ * " · " so a printed sheet can be scanned top to bottom rather than read as a
+ * paragraph. Built only for the quick-print export (calendar + this page);
+ * see the ALL_SECTIONS comment for why the full document never includes it.
+ *
+ * Sized to fit ~40-50 tasks across 12 months on one A4 portrait page. Still
+ * goes through s.need() per row: a plan with an outlier number of tasks or
+ * unusually long crop/bed names must overflow onto a second page rather than
+ * print off the bottom of the first.
+ */
+function drawTaskSummary(s: Sheet, input: CropPlanPdfInput, nowMonth: number): void {
+  masthead(s, 'Task summary');
+  // No standfirst, for the same reason drawCalendar has none: the whole
+  // point of this page is fitting the year on one sheet, and an
+  // introduction is exactly the two or three lines that would cost it.
+  pageTitle(s, 'Task summary', 'Tasks by month');
+
+  // Same 12-month window as the calendar this page sits behind (rollingMonths
+  // / drawCalendar): buildTaskMonths does not cap monthsAway, and a slow
+  // crop's next occurrence can be well over a year out. This page must never
+  // show a month the calendar on page 1 didn't draw.
+  const months = buildTaskMonths(input.tasks, nowMonth).filter((m) => m.monthsAway < 12);
+
+  if (!months.length) {
+    s.paragraph('No plantings yet, so there is nothing to print here.', { size: 9.5, ink: INK.muted });
+    return;
+  }
+
+  const monthColW = 34;
+  const textColW = s.contentWidth - monthColW;
+
+  const continued = () => {
+    masthead(s, 'Task summary');
+    s.font(11, true);
+    s.ink(INK.text);
+    s.doc.text(pdfSafe('Tasks by month (continued)'), s.margin, s.y);
+    s.y += 16;
+  };
+
+  for (const group of months) {
+    let first = true;
+    for (const task of group.tasks) {
+      s.font(7.5);
+      const lines = s.doc.splitTextToSize(pdfSafe(taskPhrase(task)), textColW) as string[];
+      const rowH = Math.max(11, lines.length * 10.5);
+      if (s.need(rowH + (first ? 4 : 0))) { continued(); first = true; }
+
+      if (first) {
+        s.y += 4;
+        s.stroke(INK.hair);
+        s.doc.setLineWidth(0.4);
+        s.doc.line(s.margin, s.y - 2, s.margin + s.contentWidth, s.y - 2);
+        s.font(7.5, true);
+        s.ink(INK.green);
+        s.doc.text(pdfSafe(monthShort(group.month)), s.margin, s.y + 7);
+      }
+
+      s.font(7.5);
+      s.ink(INK.text);
+      s.doc.text(lines, s.margin + monthColW, s.y + 7);
+      s.y += rowH;
+      first = false;
+    }
+  }
 }
 
 // ── Table primitive ─────────────────────────────────────────────────────────
@@ -1220,12 +1345,13 @@ function drawHarvestRecord(s: Sheet, input: CropPlanPdfInput): void {
 /** Build the printable plan as a PDF blob. Throws if jsPDF cannot be loaded. */
 export async function buildCropPlanPdf(input: CropPlanPdfInput): Promise<Blob> {
   const { jsPDF } = await import('jspdf');
-  const doc = new jsPDF({ unit: 'pt', format: 'a4' });
+  const pageFormat: CropPlanPageFormat = input.pageFormat ?? 'a4';
+  const doc = new jsPDF({ unit: 'pt', format: pageFormat });
 
   const now = input.now ?? new Date();
   const nowMonth = now.getMonth() + 1;
   const want = new Set(input.sections ?? ALL_SECTIONS);
-  const s = new Sheet(doc, input.meta.planTitle);
+  const s = new Sheet(doc, input.meta.planTitle, pageFormat);
 
   const workload = buildWorkloadSeries(input.tasks, nowMonth);
   const calendar = buildOccupancyCalendar(input.plantings, input.beds, nowMonth);
@@ -1239,7 +1365,7 @@ export async function buildCropPlanPdf(input: CropPlanPdfInput): Promise<Blob> {
     started = true;
     if (orientation === 'landscape') {
       doc.deletePage(1);
-      doc.addPage('a4', 'landscape');
+      doc.addPage(pageFormat, 'landscape');
     }
     s.y = s.margin;
   };
@@ -1247,6 +1373,7 @@ export async function buildCropPlanPdf(input: CropPlanPdfInput): Promise<Blob> {
   if (want.has('dashboard')) { startPage('portrait'); drawDashboard(s, input, now, nowMonth); }
   if (want.has('numbers')) { startPage('portrait'); drawYearInNumbers(s, input, nowMonth, workload); }
   if (want.has('calendar')) { startPage('landscape'); drawCalendar(s, input, nowMonth, calendar); }
+  if (want.has('taskSummary')) { startPage('portrait'); drawTaskSummary(s, input, nowMonth); }
   if (want.has('plan')) { startPage('landscape'); drawFullPlan(s, input); }
   if (want.has('buying')) { startPage('landscape'); drawBuying(s, input, now, nowMonth); }
   if (want.has('fieldsheets')) drawFieldSheets(s, input, now, nowMonth, startPage);
@@ -1256,8 +1383,16 @@ export async function buildCropPlanPdf(input: CropPlanPdfInput): Promise<Blob> {
   return doc.output('blob');
 }
 
-/** `ImbewuField-Crop-Plan-<site>-<date>.pdf` — sorts by date in a downloads folder. */
-export function cropPlanPdfFilename(planTitle?: string, date = new Date()): string {
+/**
+ * `ImbewuField-Crop-Plan-<site>-<date>.pdf`, or with `kind`
+ * (e.g. `'quick-print-a3'`) `ImbewuField-Crop-Plan-<site>-<kind>-<date>.pdf`
+ * — sorts by date in a downloads folder. `kind` exists so a 2-page quick
+ * print never shares a filename with the full document (or with
+ * quick-print at a different paper size) for the same plan on the same
+ * day — without it, a popup-blocked download silently offers the same
+ * suggested name as a much longer file with nothing to tell them apart.
+ */
+export function cropPlanPdfFilename(planTitle?: string, date = new Date(), kind?: string): string {
   const slug = (planTitle ?? 'plan')
     .normalize('NFKD')
     .replace(/[̀-ͯ]/g, '')
@@ -1265,5 +1400,6 @@ export function cropPlanPdfFilename(planTitle?: string, date = new Date()): stri
     .replace(/^-+|-+$/g, '')
     .slice(0, 40) || 'plan';
   const stamp = date.toISOString().slice(0, 10);
-  return `ImbewuField-Crop-Plan-${slug}-${stamp}.pdf`;
+  const suffix = kind ? `-${kind}` : '';
+  return `ImbewuField-Crop-Plan-${slug}${suffix}-${stamp}.pdf`;
 }

@@ -9,7 +9,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-import { buildCropPlanPdf, type CropPlanPdfInput } from '@/lib/crop-export-pdf';
+import { buildCropPlanPdf, cropPlanPdfFilename, type CropPlanPdfInput } from '@/lib/crop-export-pdf';
 import { tasksForPlan, type PlanBed, type Planting } from '@/lib/crop-plan';
 import type { PlanNote } from '@/lib/crop-autosuggest';
 
@@ -81,4 +81,52 @@ test('notes with no usable date still build, with the undated intro', async () =
   const blob = await buildCropPlanPdf(input({ planNotes: NOTES }));
   assert.ok(blob instanceof Blob);
   assert.ok(blob.size > 20_000);
+});
+
+test('cropPlanPdfFilename with a kind never collides with the full-document filename for the same plan and day', () => {
+  const date = new Date('2026-08-22T06:00:00.000Z');
+  const full = cropPlanPdfFilename('Ubhejane Crèche', date);
+  const quickA4 = cropPlanPdfFilename('Ubhejane Crèche', date, 'quick-print-a4');
+  const quickA3 = cropPlanPdfFilename('Ubhejane Crèche', date, 'quick-print-a3');
+  assert.notEqual(quickA4, full);
+  assert.notEqual(quickA4, quickA3);
+  assert.equal(full, 'ImbewuField-Crop-Plan-Ubhejane-Creche-2026-08-22.pdf');
+  assert.equal(quickA4, 'ImbewuField-Crop-Plan-Ubhejane-Creche-quick-print-a4-2026-08-22.pdf');
+});
+
+test('the quick-print export (calendar + taskSummary only) builds a short, real PDF', async () => {
+  const blob = await buildCropPlanPdf(input({ sections: ['calendar', 'taskSummary'] }));
+  assert.ok(blob instanceof Blob);
+  assert.equal(blob.type, 'application/pdf');
+  // Two pages only — no dashboard, plan, buying schedule or field sheets — so
+  // this must land well short of the full document's size, not just "not empty".
+  const full = await buildCropPlanPdf(input());
+  assert.ok(blob.size < full.size, `quick print (${blob.size}) was not smaller than the full document (${full.size})`);
+  assert.ok(blob.size > 5_000, `quick print looked too small to hold two real pages (${blob.size} bytes)`);
+});
+
+test('quick print builds at every paper size the picker offers', async () => {
+  for (const pageFormat of ['a4', 'a3', 'a2'] as const) {
+    const blob = await buildCropPlanPdf(input({ sections: ['calendar', 'taskSummary'], pageFormat }));
+    assert.ok(blob instanceof Blob, `pageFormat ${pageFormat} did not produce a Blob`);
+    assert.ok(blob.size > 5_000, `pageFormat ${pageFormat} looked too small (${blob.size} bytes)`);
+  }
+});
+
+test('a busy plan with long custom bed/plot names does not overflow the task summary onto extra pages, and truncates labels instead of overlapping the area figure', async () => {
+  // Real farmer-authored names, not the "Bed N" fallback — the exact shape
+  // that made drawCalendar's label column overlap its own area text.
+  const beds = [
+    { id: 'b1', label: 'Bed 1 - Nursery corner, by the gate', areaM2: 8, kind: 'bed' as const },
+    { id: 'pA', label: 'Plot A - Maize block, north side', areaM2: 60, kind: 'plot' as const },
+  ];
+  const plantings = [
+    { id: 'q1', bedId: 'b1', cropKey: 'cabbage', sowMonth: 8 },
+    { id: 'q2', bedId: 'pA', cropKey: 'butternut', sowMonth: 10 },
+  ];
+  const blob = await buildCropPlanPdf(input({
+    beds, plantings, tasks: tasksForPlan(plantings, beds), sections: ['calendar', 'taskSummary'],
+  }));
+  assert.ok(blob instanceof Blob);
+  assert.ok(blob.size > 5_000);
 });
