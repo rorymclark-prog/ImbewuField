@@ -1188,6 +1188,23 @@ export interface PlanYieldBenchmark {
    * annual; excludes unverified and cover crops). Null whenever `knownKg` is
    * null, or the plan has no growing area to divide by. */
   kgPerM2: number | null;
+  /** The same `byCrop` rows, partitioned by the KIND of ground each planting
+   * sits on: small worked beds (PlanBed.kind absent or 'bed') vs field-scale
+   * staple plots (kind 'plot'). Same filtered planting set, same conflict
+   * veto, just split — so `byCropBeds` + `byCropPlots` always sum to `byCrop`
+   * kg-for-kg, and a screen showing a per-kind density can never disagree
+   * with the blended one it sits under. Added 2026-08-22 because a single
+   * blended R/m² hides that veg beds and staple plots are DIFFERENT economic
+   * animals: maize/dry-bean ground reads at field-crop value per m² by
+   * nature, and averaging it into the veg beds makes both numbers
+   * meaningless for comparison. */
+  byCropBeds: ReturnType<typeof yieldByCrop>;
+  byCropPlots: ReturnType<typeof yieldByCrop>;
+  /** Partition of `growingAreaM2` by the same kind rule; the two always sum
+   * to it. Facts about the beds, so — like growingAreaM2 — unaffected by an
+   * area conflict. */
+  bedAreaM2: number;
+  plotAreaM2: number;
 }
 
 /**
@@ -1208,14 +1225,24 @@ export function buildPlanYieldBenchmark(plantings: Planting[], beds: PlanBed[], 
     ? null
     : byCrop.reduce((sum, crop) => sum + crop.kg, 0);
   const growingAreaM2 = totalGrowingAreaM2(beds);
+  // Partition by the ground's kind. Each planting sits on exactly one bed, so
+  // the two subsets are a true partition of `mapped` — never an overlap, never
+  // a gap — and their kg totals sum to byCrop's by construction.
+  const plotIds = new Set(beds.filter((bed) => bed.kind === 'plot').map((bed) => bed.id));
+  const byCropBeds = yieldByCrop(mapped.filter((p) => !plotIds.has(p.bedId)), beds);
+  const byCropPlots = yieldByCrop(mapped.filter((p) => plotIds.has(p.bedId)), beds);
   return {
     knownKg,
     // Keep the conflict structurally unable to leak into a value subtotal.
     byCrop: areaConflictBedLabels.length ? [] : byCrop,
+    byCropBeds: areaConflictBedLabels.length ? [] : byCropBeds,
+    byCropPlots: areaConflictBedLabels.length ? [] : byCropPlots,
     unknownYieldCrops: unverifiedYieldCropNames(mapped),
     nonFoodCrops: nonFoodCropNames(mapped),
     areaConflictBedLabels,
     growingAreaM2,
+    bedAreaM2: totalGrowingAreaM2(beds.filter((bed) => bed.kind !== 'plot')),
+    plotAreaM2: totalGrowingAreaM2(beds.filter((bed) => bed.kind === 'plot')),
     kgPerM2: knownKg !== null && growingAreaM2 > 0 ? knownKg / growingAreaM2 : null,
   };
 }

@@ -2276,24 +2276,33 @@ function FoodAvailabilityChart({
   const utilMax = Math.max(1, ...monthOrder.map((m) => utilizationByMonth[m] ?? 0));
   const pricedCropKeys = [...new Set(plantings.map((p) => p.cropKey))].filter((key) => !UNPRICED_CROPS.has(key)).sort();
   const unpricedBenchmarkCrops = yieldBenchmark.byCrop.filter((row) => !priceFor(row.cropKey, priceOverrides)).map((row) => row.name);
-  const cashValueAtSelectedChannel = yieldBenchmark.byCrop.reduce((sum, row) => {
-    const price = priceFor(row.cropKey, priceOverrides);
-    if (!price) return sum;
-    return sum + row.kg * (valuePriceMode === 'retail' ? price.retailPerKg : price.wholesalePerKg);
-  }, 0);
-  const homeReplacementValueAtRetail = yieldBenchmark.byCrop.reduce((sum, row) => {
-    const price = priceFor(row.cropKey, priceOverrides);
-    if (!price) return sum;
-    return sum + row.kg * price.retailPerKg;
-  }, 0);
   const assumptionsConfirmed = cashflowSettings.confirmed === true;
   const harvestableFraction = 1 - cashflowSettings.lossPercent / 100;
   const soldFraction = cashflowSettings.sellPercent / 100;
-  const cashIncome = cashValueAtSelectedChannel * harvestableFraction * soldFraction;
+  // ONE value computation for the blended Production score AND the per-kind
+  // beds/plots split under it (2026-08-22, Rory: "should we give a veg beds
+  // figure and a staple crops figure seperately?") — three R/m² figures off
+  // one formula, so they cannot drift onto different price/slider rules.
   // Produce kept at home replaces a retail purchase regardless of which sale
-  // channel is selected. Reusing the wholesale toggle here understated the
+  // channel is selected. Reusing the wholesale toggle there understated the
   // home side and made one label describe two different calculations.
-  const homeValue = homeReplacementValueAtRetail * harvestableFraction * (1 - soldFraction);
+  const scenarioValues = (rows: PlanYieldBenchmark['byCrop']) => {
+    const cashAtChannel = rows.reduce((sum, row) => {
+      const price = priceFor(row.cropKey, priceOverrides);
+      if (!price) return sum;
+      return sum + row.kg * (valuePriceMode === 'retail' ? price.retailPerKg : price.wholesalePerKg);
+    }, 0);
+    const homeAtRetail = rows.reduce((sum, row) => {
+      const price = priceFor(row.cropKey, priceOverrides);
+      if (!price) return sum;
+      return sum + row.kg * price.retailPerKg;
+    }, 0);
+    return {
+      cash: cashAtChannel * harvestableFraction * soldFraction,
+      home: homeAtRetail * harvestableFraction * (1 - soldFraction),
+    };
+  };
+  const { cash: cashIncome, home: homeValue } = scenarioValues(yieldBenchmark.byCrop);
   const BAR_MAX_H = 56;
 
   // 2026-08-22, Rory: "i dont think this start from today function works."
@@ -2500,6 +2509,40 @@ function FoodAvailabilityChart({
                             valued at retail, since that is the cost it replaces). */}
                         Blends both: {cashflowSettings.sellPercent}% of the harvest sold at {valuePriceMode === 'retail' ? 'direct retail' : 'wholesale'} prices, the rest ({100 - cashflowSettings.sellPercent}%) valued at what it would have cost to buy at retail instead of growing it — divided by {yieldBenchmark.growingAreaM2.toFixed(1)} m² of mapped growing area. A density figure for comparing plans or layouts, not a profit guarantee.
                       </div>
+                      {/* 2026-08-22, Rory: "should we give a veg beds figure and a
+                          staple crops figure seperately? that would be more heloful
+                          i think" — the blend hides that beds and staple plots are
+                          different economic animals: maize/dry-bean ground reads at
+                          field-crop value per m² by NATURE, and averaging it into
+                          the veg beds makes both halves unreadable. Shown only when
+                          the plan actually has both kinds of ground — a beds-only
+                          plan's split would just restate the headline. Same
+                          scenarioValues() formula and the benchmark's own partition
+                          fields, so the two sub-figures can never disagree with the
+                          blend they sit under. */}
+                      {yieldBenchmark.bedAreaM2 > 0 && yieldBenchmark.plotAreaM2 > 0 && (() => {
+                        const bedsSplit = scenarioValues(yieldBenchmark.byCropBeds);
+                        const plotsSplit = scenarioValues(yieldBenchmark.byCropPlots);
+                        const rows: [string, { cash: number; home: number }, number][] = [
+                          ['Veg beds', bedsSplit, yieldBenchmark.bedAreaM2],
+                          ['Staple plots', plotsSplit, yieldBenchmark.plotAreaM2],
+                        ];
+                        return (
+                          <div className="mt-2 pt-2" style={{ borderTop: '1px dashed rgba(185,205,180,0.4)' }}>
+                            {rows.map(([label, split, areaM2]) => (
+                              <div key={label} className="flex items-baseline justify-between" style={{ gap: 8 }}>
+                                <span className="font-sans" style={{ fontSize: 11, color: '#B9CDB4' }}>{label} · {areaM2.toFixed(1).replace(/\.0$/, '')} m²</span>
+                                <span className="font-mono font-semibold" style={{ fontSize: 14, color: '#F7F2E9' }}>
+                                  R{Math.round((split.cash + split.home) / areaM2).toLocaleString()}<span style={{ fontSize: 10.5, fontWeight: 500, color: '#B9CDB4' }}> /m²</span>
+                                </span>
+                              </div>
+                            ))}
+                            <div className="font-sans mt-1" style={{ fontSize: 10.5, color: '#B9CDB4', lineHeight: 1.4 }}>
+                              Same sliders and prices as the blended figure. Staple ground reads low per m² by nature — maize, beans and potatoes are cheap per kilogram but store and feed the household through the year — so compare beds with beds and plots with plots, not one against the other.
+                            </div>
+                          </div>
+                        );
+                      })()}
                     </div>
                   )}
                   <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#8C7A62' }}>Known benchmark subtotal for this plan cycle</div>
