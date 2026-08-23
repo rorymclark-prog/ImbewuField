@@ -34,6 +34,8 @@ import type { FinancePlanSource } from '@/lib/finance-plan-source';
 import { buildFinanceSeries, type FinanceMonthPoint } from '@/lib/finance-series';
 import { buildPlanVsActual, type PlanVsActualRow } from '@/lib/plan-vs-actual';
 import { kgLabel } from '@/lib/format-figures';
+import { cappedScale } from '@/lib/chart-scale';
+import { BreakMark, BreakEdge } from '@/components/ChartBreakMark';
 
 const CARD: React.CSSProperties = { background: '#FFFEFA', border: '1px solid #E2D8C4' };
 
@@ -186,9 +188,13 @@ function MeasuredView({
   const totalH = PAD.top + PLOT_H + PAD.bottom;
 
   // The scale must fit the taller of the two, because a month that sold more than
-  // it logged picking draws an outline up to the sold figure.
-  const maxKg = Math.max(...months.map((m) => Math.max(m.producedKg, m.soldKg)), 1);
-  const y = (kg: number) => PAD.top + PLOT_H - (kg / maxKg) * PLOT_H;
+  // it logged picking draws an outline up to the sold figure. Capped: one bumper
+  // month of a bulk crop otherwise turns the rest of the year into hairlines. Any
+  // month that gets cut carries a break mark and is named in full underneath.
+  const monthTotals = months.map((m) => Math.max(m.producedKg, m.soldKg));
+  const kgScale = cappedScale(monthTotals);
+  const maxKg = Math.max(kgScale.max, 1);
+  const y = (kg: number) => PAD.top + PLOT_H - (Math.min(kg, maxKg) / maxKg) * PLOT_H;
   const cx = (i: number) => PAD.left + i * colW + colW / 2;
   const showLabel = (i: number) => n <= 12 || i === 0 || i === n - 1 || i % 2 === 0;
 
@@ -197,6 +203,10 @@ function MeasuredView({
     ?? months[n - 1];
 
   const anyShort = months.some((m) => m.soldExceedsProduced);
+  // A capped axis is only honest while the figures it cut are still on the screen.
+  const clipped = months
+    .filter((_, i) => kgScale.isClipped(monthTotals[i]))
+    .map((m) => `${m.longLabel}, ${kgLabel(Math.max(m.producedKg, m.soldKg))}`);
 
   return (
     <>
@@ -242,6 +252,7 @@ function MeasuredView({
                     fill="none" stroke={SHORT} strokeWidth="1" strokeDasharray="2.5,2" rx="2"
                   />
                 )}
+                {kgScale.isClipped(monthTotals[i]) && <BreakMark x={x} y={PAD.top} w={barW} down />}
               </g>
             );
           })}
@@ -294,6 +305,12 @@ function MeasuredView({
             usually picking that never got written down, sometimes a sale out of an earlier month&apos;s harvest.
           </p>
         )}
+        {clipped.length > 0 && (
+          <p className="font-sans" style={{ fontSize: 10.5, color: FAINT, lineHeight: 1.5 }}>
+            Too tall for this chart, and cut off at the mark so the other months stay readable:{' '}
+            <b style={{ color: MUTED, fontWeight: 600 }}>{clipped.join('; ')}</b>.
+          </p>
+        )}
         <p className="font-sans" style={{ fontSize: 10.5, color: FAINT, lineHeight: 1.5 }}>
           Entries land in the month you recorded them; the logging forms have no date field yet.
         </p>
@@ -328,8 +345,16 @@ function PlanView({ plan, source }: { plan: ReturnType<typeof buildPlanVsActual>
     );
   }
 
-  const max = Math.max(...plan.rows.map((r) => Math.max(r.benchmarkKg, r.harvestedKg)), 1);
+  // One shared scale so the rows compare to each other — capped, because one
+  // maize plot against a herb bed would leave every small crop with no bar at all
+  // and nothing to read. Each row prints its own two figures regardless.
+  const rowTotals = plan.rows.map((r) => Math.max(r.benchmarkKg, r.harvestedKg));
+  const rowScale = cappedScale(rowTotals);
+  const max = Math.max(rowScale.max, 1);
   const pct = (kg: number) => `${Math.min(100, (kg / max) * 100)}%`;
+  const clippedRows = plan.rows
+    .filter((_, i) => rowScale.isClipped(rowTotals[i]))
+    .map((r) => `${r.cropName}, ${kgLabel(r.benchmarkKg)}`);
 
   return (
     <>
@@ -338,7 +363,10 @@ function PlanView({ plan, source }: { plan: ReturnType<typeof buildPlanVsActual>
       </p>
 
       <div className="px-4 py-3 flex flex-col" style={{ gap: 14 }}>
-        {plan.rows.map((row) => <PlanRow key={row.cropKey} row={row} pct={pct} lossPercent={plan.lossPercent} />)}
+        {plan.rows.map((row, i) => (
+          <PlanRow key={row.cropKey} row={row} pct={pct} lossPercent={plan.lossPercent}
+            clipped={rowScale.isClipped(rowTotals[i])} />
+        ))}
       </div>
 
       <div className="px-4 pb-3 flex flex-wrap items-center" style={{ gap: '4px 14px' }}>
@@ -360,6 +388,12 @@ function PlanView({ plan, source }: { plan: ReturnType<typeof buildPlanVsActual>
           ground is worth in kilograms — not a target for this calendar year. A short green bar can mean the cycle is
           not finished, or that picking was not written down. It is not proof of a lost harvest.
         </p>
+        {clippedRows.length > 0 && (
+          <p className="font-sans" style={{ fontSize: 10.5, color: FAINT, lineHeight: 1.5 }}>
+            Too long for these bars, and cut off at the mark so the smaller crops still have one:{' '}
+            <b style={{ color: MUTED, fontWeight: 600 }}>{clippedRows.join('; ')}</b>.
+          </p>
+        )}
         {plan.unbenchmarkedCropNames.length > 0 && (
           <p className="font-sans" style={{ fontSize: 10.5, color: FAINT, lineHeight: 1.5 }}>
             Left out — no verified yield figure yet: {plan.unbenchmarkedCropNames.join(', ')}.
@@ -375,7 +409,9 @@ function PlanView({ plan, source }: { plan: ReturnType<typeof buildPlanVsActual>
   );
 }
 
-function PlanRow({ row, pct, lossPercent }: { row: PlanVsActualRow; pct: (kg: number) => string; lossPercent: number }) {
+function PlanRow({ row, pct, lossPercent, clipped }: {
+  row: PlanVsActualRow; pct: (kg: number) => string; lossPercent: number; clipped: boolean;
+}) {
   return (
     <div>
       <div className="flex items-baseline justify-between gap-3">
@@ -400,6 +436,7 @@ function PlanRow({ row, pct, lossPercent }: { row: PlanVsActualRow; pct: (kg: nu
             style={{ position: 'absolute', top: -1, height: 16, left: pct(row.afterLossKg), width: 2, background: '#C07A1E', borderRadius: 1 }}
           />
         )}
+        {clipped && <BreakEdge />}
       </div>
 
       {row.soldExceedsHarvested && (

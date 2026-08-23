@@ -27,6 +27,8 @@ import { TrendingUp } from 'lucide-react';
 import type { ExpenseLog, ProductionLog, SalesLog } from '@/lib/db/types';
 import type { SavedInvoice } from '@/lib/invoices';
 import { buildFinanceSeries, type FinanceMonthPoint } from '@/lib/finance-series';
+import { cappedScale } from '@/lib/chart-scale';
+import { BreakMark } from '@/components/ChartBreakMark';
 import { randLabel, randTick } from '@/lib/format-figures';
 
 const CARD: React.CSSProperties = { background: '#FFFEFA', border: '1px solid #E2D8C4' };
@@ -147,6 +149,8 @@ export default function CashflowChart({
 
       <Readout month={selected} />
 
+      <ClipNote months={series.months} />
+
       <div className="px-4 py-2.5" style={{ borderTop: `1px solid ${HAIRLINE}`, background: '#FBF7EF' }}>
         <p className="font-sans" style={{ fontSize: 10.5, color: FAINT, lineHeight: 1.5 }}>
           The lower band is the running total across these months only, starting from zero — not a bank balance.
@@ -196,9 +200,14 @@ function Panels({
   const barW = Math.min(colW * 0.52, 15);
   const totalH = PAD.top + BARS_H + GAP_H + RUN_H + PAD.bottom;
 
-  const maxIn = Math.max(...months.map((m) => m.moneyInZar), 0);
-  const maxOut = Math.max(...months.map((m) => m.moneyOutZar), 0);
-  // One shared span, so a R500 cost and a R500 sale are drawn the same length.
+  // One shared span, so a R500 cost and a R500 sale are drawn the same length —
+  // but capped, because a single R6 600 setup cost otherwise takes 93% of the
+  // height and reduces eleven months of real trading to slivers. Whatever is cut
+  // keeps a break mark here and its true figure in the note under the chart.
+  const inScale = cappedScale(months.map((m) => m.moneyInZar));
+  const outScale = cappedScale(months.map((m) => m.moneyOutZar));
+  const maxIn = inScale.max;
+  const maxOut = outScale.max;
   const span = maxIn + maxOut || 1;
   const zeroY = PAD.top + (maxIn / span) * BARS_H;
 
@@ -239,8 +248,8 @@ function Panels({
         )}
 
         {months.map((m, i) => {
-          const inH = (m.moneyInZar / span) * BARS_H;
-          const outH = (m.moneyOutZar / span) * BARS_H;
+          const inH = (inScale.draw(m.moneyInZar) / span) * BARS_H;
+          const outH = (outScale.draw(m.moneyOutZar) / span) * BARS_H;
           const x = cx(i) - barW / 2;
           return (
             <g key={m.key}>
@@ -249,6 +258,8 @@ function Panels({
                   readable in greyscale and to a colourblind reader. */}
               {m.moneyInZar > 0 && <rect x={x} y={zeroY - inH} width={barW} height={inH} fill={IN} rx="2" />}
               {m.moneyOutZar > 0 && <rect x={x} y={zeroY} width={barW} height={outH} fill={OUT} rx="2" />}
+              {inScale.isClipped(m.moneyInZar) && <BreakMark x={x} y={zeroY - inH} w={barW} down />}
+              {outScale.isClipped(m.moneyOutZar) && <BreakMark x={x} y={zeroY + outH} w={barW} />}
             </g>
           );
         })}
@@ -259,7 +270,12 @@ function Panels({
         <path d={runArea} fill="rgba(35,94,134,0.14)" />
         <path d={runPath} fill="none" stroke={RUN} strokeWidth="1.6" strokeLinejoin="round" strokeLinecap="round" />
         <circle cx={cx(n - 1)} cy={runY(months[n - 1].runningZar)} r="2.4" fill={RUN} />
-        <text x={PAD.left - 4} y={runTop + 4} textAnchor="end" fontSize="6.5" fill={FAINT} fontFamily="monospace">{randTick(runMax)}</text>
+        {runMax > 0 && (
+          <text x={PAD.left - 4} y={runTop + 4} textAnchor="end" fontSize="6.5" fill={FAINT} fontFamily="monospace">{randTick(runMax)}</text>
+        )}
+        {runMin < 0 && (
+          <text x={PAD.left - 4} y={runTop + RUN_H} textAnchor="end" fontSize="6.5" fill={FAINT} fontFamily="monospace">{randTick(runMin)}</text>
+        )}
 
         {/* Month labels, and a year mark wherever the axis crosses into January. */}
         {months.map((m, i) => (
@@ -291,6 +307,29 @@ function Panels({
           </g>
         ))}
       </svg>
+    </div>
+  );
+}
+
+/**
+ * A capped axis is only honest while the figures it cut are still on the screen.
+ * This is that condition, kept: every clipped month is named in full.
+ */
+function ClipNote({ months }: { months: FinanceMonthPoint[] }) {
+  const inScale = cappedScale(months.map((m) => m.moneyInZar));
+  const outScale = cappedScale(months.map((m) => m.moneyOutZar));
+  const cut: string[] = [];
+  for (const m of months) {
+    if (inScale.isClipped(m.moneyInZar)) cut.push(`${m.longLabel}, ${randLabel(m.moneyInZar)} in`);
+    if (outScale.isClipped(m.moneyOutZar)) cut.push(`${m.longLabel}, ${randLabel(m.moneyOutZar)} out`);
+  }
+  if (cut.length === 0) return null;
+  return (
+    <div className="px-4 py-2" style={{ borderTop: '1px solid #F0E9DA' }}>
+      <p className="font-sans" style={{ fontSize: 11, color: MUTED, lineHeight: 1.5 }}>
+        Too tall for this chart, and cut off at the mark so the other months stay readable:{' '}
+        <b style={{ fontWeight: 600 }}>{cut.join('; ')}</b>.
+      </p>
     </div>
   );
 }
