@@ -463,7 +463,13 @@ export default function InvoicePage() {
 
   return (
     <div className="invoice-page flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
-      <header className="no-print flex-shrink-0 flex items-center px-4 gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
+      {/* overflow-x-auto, like the crop-plan header: seven controls (Back, home,
+          title, Learn, Share PDF, Print, Settings) do not fit a 375px phone and
+          never did — 90px of this bar, Settings included, was simply off-screen
+          and unreachable before the menu button was added here. Scrolling is not
+          the prettiest answer, but a control a farmer cannot reach is worse than
+          one they have to swipe to. */}
+      <header className="no-print flex-shrink-0 flex items-center px-4 gap-3 overflow-x-auto" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
         <MenuButton />
         <BackButton fallback="/finances" />
         <BrandLogo />
