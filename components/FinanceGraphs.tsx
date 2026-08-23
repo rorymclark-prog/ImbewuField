@@ -25,8 +25,8 @@
 // says what the bar contains so the word does not have to carry it alone.
 
 import Link from 'next/link';
-import { useMemo, useState } from 'react';
-import { BarChart3 } from 'lucide-react';
+import { useEffect, useMemo, useState } from 'react';
+import { BarChart3, Trees } from 'lucide-react';
 import type { ProductionLog, SalesLog } from '@/lib/db/types';
 import type { SavedInvoice } from '@/lib/invoices';
 import type { CashflowSettings } from '@/lib/crop-plan';
@@ -36,6 +36,13 @@ import { buildPlanVsActual, type PlanVsActualRow } from '@/lib/plan-vs-actual';
 import { kgLabel } from '@/lib/format-figures';
 import { cappedScale } from '@/lib/chart-scale';
 import { BreakMark, BreakEdge } from '@/components/ChartBreakMark';
+import {
+  countsWithScope,
+  loadIncludePerennials,
+  saveIncludePerennials,
+  DEFAULT_INCLUDE_PERENNIALS,
+  produceKindOf,
+} from '@/lib/produce-scope';
 
 const CARD: React.CSSProperties = { background: '#FFFEFA', border: '1px solid #E2D8C4' };
 
@@ -70,11 +77,17 @@ export default function FinanceGraphs({
   const [view, setView] = useState<View>('measured');
   const [windowMonths, setWindowMonths] = useState(12);
   const [picked, setPicked] = useState<string | null>(null);
+  // Read after mount, not during render: the stored choice lives in localStorage, which the server
+  // render cannot see, and starting from the default keeps the first paint matching the HTML.
+  const [includePerennials, setIncludePerennials] = useState(DEFAULT_INCLUDE_PERENNIALS);
+  useEffect(() => { setIncludePerennials(loadIncludePerennials()); }, []);
 
   const now = useMemo(() => new Date(), []);
   const series = useMemo(
-    () => buildFinanceSeries(production, sales, [], invoices, now, windowMonths),
-    [production, sales, invoices, now, windowMonths],
+    () => buildFinanceSeries(production, sales, [], invoices, now, windowMonths, {
+      countsKg: (name) => countsWithScope(name, includePerennials),
+    }),
+    [production, sales, invoices, now, windowMonths, includePerennials],
   );
   // Always the year. The plan's benchmark is a crop-CYCLE total, so month and
   // season have no defensible answer — lib/plan-vs-actual.ts refuses them, and
@@ -84,6 +97,15 @@ export default function FinanceGraphs({
     [source.plantings, source.beds, production, sales, now, settings],
   );
 
+  // Named so the plan view can explain an absence instead of leaving one. Only computed from what
+  // is actually recorded: a farmer with no trees should never read a paragraph about trees.
+  const orchardRecorded = useMemo(() => {
+    const names = new Set<string>();
+    for (const row of production) if (produceKindOf(row.crop) === 'perennial') names.add(row.crop.trim());
+    for (const row of sales) if (produceKindOf(row.crop) === 'perennial') names.add(row.crop.trim());
+    return [...names].sort((a, b) => a.localeCompare(b, 'en-ZA'));
+  }, [production, sales]);
+
   const header = (
     <div className="px-4 py-3" style={{ borderBottom: `1px solid ${HAIRLINE}` }}>
       <p className="text-xs font-mono uppercase tracking-wider flex items-center gap-1.5" style={{ color: MUTED }}>
@@ -92,6 +114,12 @@ export default function FinanceGraphs({
       <div className="flex flex-wrap items-center gap-1.5 mt-2">
         <Segment active={view === 'measured'} onClick={() => setView('measured')}>Picked &amp; sold</Segment>
         <Segment active={view === 'plan'} onClick={() => setView('plan')}>Plan vs actual</Segment>
+        {view === 'measured' && (
+          <OrchardToggle
+            on={includePerennials}
+            onChange={(next) => { setIncludePerennials(next); saveIncludePerennials(next); }}
+          />
+        )}
         {view === 'measured' && (
           <span className="flex items-center gap-1 ml-auto">
             {WINDOWS.map((n) => (
@@ -123,8 +151,45 @@ export default function FinanceGraphs({
       {header}
       {view === 'measured'
         ? <MeasuredView series={series} pickedKey={picked} onPick={setPicked} wide={wide} />
-        : <PlanView plan={plan} source={source} wide={wide} />}
+        : <PlanView plan={plan} source={source} wide={wide} orchard={orchardRecorded} />}
     </section>
+  );
+}
+
+/**
+ * The orchard switch.
+ *
+ * It reads as one control with two states rather than a checkbox, because what it does is not
+ * "filter" but "answer a different question": with it on the card is the whole farm's harvest,
+ * with it off it is the vegetable beds' harvest. Both are true; they are not a subset and a
+ * superset in the farmer's head.
+ *
+ * It sits with the view switch and not in a settings panel because the note it produces is on this
+ * card — a control whose effect you cannot see from where you flick it is the bug class already
+ * recorded twice in this codebase.
+ */
+function OrchardToggle({ on, onChange }: { on: boolean; onChange: (next: boolean) => void }) {
+  return (
+    <button
+      type="button"
+      onClick={() => onChange(!on)}
+      aria-pressed={on}
+      title={on
+        ? 'Fruit, nuts and other orchard produce are counted in these kilograms. Tap to show the vegetable beds on their own.'
+        : 'Only the vegetable beds are counted. Tap to include fruit, nuts and the rest of the food forest.'}
+      className="font-sans rounded-full px-2.5 py-1 flex items-center gap-1"
+      style={{
+        fontSize: 11,
+        fontWeight: on ? 600 : 400,
+        border: `1px solid ${on ? SOLD : HAIRLINE}`,
+        background: on ? 'rgba(31,77,43,0.08)' : 'transparent',
+        color: on ? SOLD : FAINT,
+        cursor: 'pointer',
+      }}
+    >
+      <Trees size={12} strokeWidth={on ? 2.2 : 1.6} />
+      {on ? 'Orchard in' : 'Orchard out'}
+    </button>
   );
 }
 
@@ -300,6 +365,13 @@ function MeasuredView({
       </div>
 
       <div className="px-4 py-2.5" style={{ borderTop: `1px solid ${HAIRLINE}`, background: '#FBF7EF' }}>
+        {series.excludedKg > 0 && (
+          <p className="font-sans" style={{ fontSize: 10.5, color: MUTED, lineHeight: 1.5 }}>
+            <b style={{ fontWeight: 600 }}>Orchard is switched off</b>, so {kgLabel(series.excludedKg)} is
+            left out of every figure on this card: {series.excludedNames.join(', ')}. The rands elsewhere on this
+            page still count those sales — only the kilograms here are filtered.
+          </p>
+        )}
         <p className="font-sans" style={{ fontSize: 10.5, color: FAINT, lineHeight: 1.5 }}>
           <b style={{ color: MUTED, fontWeight: 600 }}>Kept</b> is what you picked less what you sold — food eaten at
           home, given away, fed out, saved for seed or spoiled. The app cannot tell those apart, so it does not guess.
@@ -326,8 +398,10 @@ function MeasuredView({
 
 /* ── View 2: plan vs actual ────────────────────────────────────────────────── */
 
-function PlanView({ plan, source, wide }: {
+function PlanView({ plan, source, wide, orchard }: {
   plan: ReturnType<typeof buildPlanVsActual>; source: FinancePlanSource; wide: boolean;
+  /** Orchard produce this farm has actually recorded, so its absence below can be explained. */
+  orchard: string[];
 }) {
   if (!source.loaded) {
     return <div className="px-4 py-6 font-sans" style={{ fontSize: 13, color: FAINT }}>Reading your crop plan…</div>;
@@ -390,6 +464,16 @@ function PlanView({ plan, source, wide }: {
       </div>
 
       <div className="px-4 py-2.5" style={{ borderTop: `1px solid ${HAIRLINE}`, background: '#FBF7EF' }}>
+        {/* Deliberately does NOT repeat the names: `offPlanNames` below already lists them, and on
+            a farm with fruit trees this paragraph and that one would otherwise say the same word
+            twice, three lines apart. This one carries the reason; that one carries the list. */}
+        {orchard.length > 0 && (
+          <p className="font-sans" style={{ fontSize: 10.5, color: FAINT, lineHeight: 1.5 }}>
+            <b style={{ color: MUTED, fontWeight: 600 }}>Nothing from the orchard is compared here.</b> A tree is not
+            planted into a bed for a season, so there is no plan benchmark to hold it against. Its harvests and sales
+            still count everywhere else on this page.
+          </p>
+        )}
         <p className="font-sans" style={{ fontSize: 10.5, color: FAINT, lineHeight: 1.5 }}>
           The benchmark is what one <b style={{ color: MUTED, fontWeight: 600 }}>complete crop cycle</b> on that much
           ground is worth in kilograms — not a target for this calendar year. A short green bar can mean the cycle is

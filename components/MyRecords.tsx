@@ -29,6 +29,7 @@ import {
   Ruler,
   Landmark,
   Sparkles,
+  Trees,
 } from 'lucide-react';
 import type { ProductionLog, SalesLog, ExpenseLog, Design, Profile } from '@/lib/db/types';
 import CropSelect from '@/components/CropSelect';
@@ -37,6 +38,12 @@ import { parseDecimalInput } from '@/lib/decimal-input';
 import { loadInvoices, type SavedInvoice } from '@/lib/invoices';
 import { cashIncomeTotal } from '@/lib/invoice-sales';
 import { creditPackHasAnyRecords } from '@/lib/credit-pack';
+import {
+  countsWithScope,
+  loadIncludePerennials,
+  saveIncludePerennials,
+  DEFAULT_INCLUDE_PERENNIALS,
+} from '@/lib/produce-scope';
 import {
   buildCreditPackPdf,
   deliverCreditPackPdf,
@@ -561,6 +568,52 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
 const EXAMPLE_PRODUCTION = { crop: 'Spinach', dateLabel: '3 days ago', kg: 4 };
 const EXAMPLE_SALE = { crop: 'Spinach', buyer: 'Local market', dateLabel: '3 days ago', kg: 4, amount: 120 };
 
+/**
+ * The orchard switch, on the Records screen.
+ *
+ * Same one setting as the Finance screen's graphs — a farmer flicks it in either place and both
+ * follow. It is placed on the harvest card because that is where the kilogram total it changes
+ * is; a control whose effect you cannot see from where you press it is a bug this codebase has
+ * already shipped twice.
+ */
+function OrchardSwitch({ on, onChange, t }: {
+  on: boolean; onChange: (next: boolean) => void; t: (key: string) => string;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={() => onChange(!on)}
+      aria-pressed={on}
+      className="font-sans rounded-full px-2 py-0.5 mt-1.5 inline-flex items-center gap-1"
+      style={{
+        fontSize: 10.5,
+        fontWeight: on ? 600 : 400,
+        border: `1px solid ${on ? '#1F4D2B' : '#E2D8C4'}`,
+        background: on ? 'rgba(31,77,43,0.08)' : 'transparent',
+        color: on ? '#1F4D2B' : '#8C7A62',
+        cursor: 'pointer',
+      }}
+    >
+      <Trees size={11} strokeWidth={on ? 2.2 : 1.6} />
+      {t(on ? 'recordsOrchardIn' : 'recordsOrchardOut')}
+    </button>
+  );
+}
+
+/** What the switch left out, named — the condition that makes hiding it honest rather than wrong. */
+function OrchardNote({ kg, names, t, money = false }: {
+  kg: number; names: string[]; t: (key: string) => string; money?: boolean;
+}) {
+  const figure = kg % 1 === 0 ? String(kg) : kg.toFixed(1);
+  return (
+    <p className="font-sans mt-2" style={{ fontSize: 10.5, color: '#8C7A62', lineHeight: 1.5 }}>
+      {t(money ? 'recordsOrchardOutNoteMoney' : 'recordsOrchardOutNote')
+        .replace('{kg}', figure)
+        .replace('{names}', names.join(', '))}
+    </p>
+  );
+}
+
 function ExampleRowsHeading({ label }: { label: string }) {
   return (
     <div
@@ -950,6 +1003,15 @@ export default function MyRecords() {
    */
   const [loadError, setLoadError] = useState(false);
 
+  /**
+   * The orchard switch, shared with the Finance screen's graphs through one stored setting — so a
+   * farmer who asked for the vegetable beds on their own over there is not shown a whole-farm
+   * total over here without noticing. Read after mount because localStorage is client-only.
+   */
+  const [includePerennials, setIncludePerennials] = useState(DEFAULT_INCLUDE_PERENNIALS);
+  useEffect(() => { setIncludePerennials(loadIncludePerennials()); }, []);
+  const inScope = (crop: string) => countsWithScope(crop, includePerennials);
+
   // Paid invoices are localStorage-only (see lib/invoice-seller.ts) and never come back from
   // myProduction/mySales/designsSharedWithMe, so they get their own load + change listener —
   // same pattern as app/finances/page.tsx — instead of waiting on auth or the Firestore round trip.
@@ -1105,11 +1167,18 @@ export default function MyRecords() {
 
       {/* ── Harvest summary ─────────────────────────── */}
       {production.length > 0 && (() => {
-        const totalKg = production.reduce((s, p) => s + (p.kg ?? 0), 0);
+        // Scoped, not filtered-away: what the switch removes is counted separately and named
+        // underneath, so a total that suddenly drops has its missing kilograms on the same card.
+        const counted = production.filter((p) => inScope(p.crop));
+        const left = production.filter((p) => !inScope(p.crop));
+        const excludedKg = left.reduce((s, p) => s + (p.kg ?? 0), 0);
+        const excludedNames = [...new Set(left.filter((p) => (p.kg ?? 0) > 0).map((p) => p.crop.trim()))]
+          .sort((a, b) => a.localeCompare(b, 'en-ZA'));
+        const totalKg = counted.reduce((s, p) => s + (p.kg ?? 0), 0);
         const byCrop: Record<string, number> = {};
-        production.forEach((p) => { byCrop[p.crop] = (byCrop[p.crop] ?? 0) + (p.kg ?? 0); });
+        counted.forEach((p) => { byCrop[p.crop] = (byCrop[p.crop] ?? 0) + (p.kg ?? 0); });
         const topCrop = Object.entries(byCrop).sort((a, b) => b[1] - a[1])[0];
-        const recent = production.slice(0, 12);
+        const recent = counted.slice(0, 12);
         const maxKg = Math.max(...recent.map((p) => p.kg ?? 0), 1);
         const W = 180; const H = 36; const pts = recent.map((p, i) => {
           const x = (i / Math.max(recent.length - 1, 1)) * W;
@@ -1126,6 +1195,11 @@ export default function MyRecords() {
                 <div className="font-sans text-xs mt-0.5" style={{ color: '#8C7A62' }}>
                   {t('myRecordsTotalHarvested')}{topCrop ? ` · ${topCrop[0]} ${t('myRecordsTopsLabel')}` : ''}
                 </div>
+                <OrchardSwitch
+                  on={includePerennials}
+                  onChange={(next) => { setIncludePerennials(next); saveIncludePerennials(next); }}
+                  t={t}
+                />
               </div>
               <svg width={W} height={H} style={{ overflow: 'visible', flexShrink: 0 }}>
                 <polyline points={pts} fill="none" stroke="rgba(31,77,43,0.25)" strokeWidth="1.5" strokeLinejoin="round" />
@@ -1137,6 +1211,9 @@ export default function MyRecords() {
                 })}
               </svg>
             </div>
+            {excludedKg > 0 && (
+              <OrchardNote kg={excludedKg} names={excludedNames} t={t} />
+            )}
           </Card>
         );
       })()}
@@ -1161,7 +1238,15 @@ export default function MyRecords() {
         // (they never create a sales row — their weight is unknown). cashIncomeTotal is the one
         // place that combines sales and invoices correctly; see lib/invoice-sales.ts.
         const totalRev = cashIncomeTotal(sales, invoices);
-        const totalKgSold = sales.reduce((s, p) => s + (p.kg ?? 0), 0);
+        // The rand total is NEVER scoped. An invoice can carry delivery, a discount or crate
+        // lines, so splitting it between the beds and the orchard would be a claim the invoice
+        // does not make — and cashIncomeTotal is the one place that counts a paid invoice once.
+        // Only the kilogram figure beside it follows the switch, and says so when it does.
+        const soldLeftOut = sales.filter((p) => !inScope(p.crop));
+        const soldExcludedKg = soldLeftOut.reduce((s, p) => s + (p.kg ?? 0), 0);
+        const soldExcludedNames = [...new Set(soldLeftOut.filter((p) => (p.kg ?? 0) > 0).map((p) => p.crop.trim()))]
+          .sort((a, b) => a.localeCompare(b, 'en-ZA'));
+        const totalKgSold = sales.filter((p) => inScope(p.crop)).reduce((s, p) => s + (p.kg ?? 0), 0);
         const recent = sales.slice(0, 12);
         const maxAmt = Math.max(...recent.map((p) => p.amount ?? 0), 1);
         const W = 180; const H = 36;
@@ -1191,6 +1276,9 @@ export default function MyRecords() {
                 })}
               </svg>
             </div>
+            {soldExcludedKg > 0 && (
+              <OrchardNote kg={soldExcludedKg} names={soldExcludedNames} t={t} money />
+            )}
           </Card>
         );
       })()}

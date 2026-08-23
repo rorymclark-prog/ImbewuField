@@ -4,6 +4,7 @@
 // crops: a plausible allocation would turn a guess into a reported profit.
 
 import type { PlanBed, Planting } from './crop-plan';
+import { produceKindOf } from './produce-scope';
 import { cropByKey } from './crop-catalog';
 import { buildCropAliasIndex, matchCropKey } from './harvest-reconciliation';
 import type { ExpenseLog, ProductionLog, SalesLog } from './db/types';
@@ -38,6 +39,14 @@ export interface GardenGrossMargin {
 
 export interface FarmMetrics {
   crops: CropMetric[];
+  /**
+   * Orchard produce that was recorded and is deliberately NOT a row above, named so the card can
+   * say so. Every figure in `crops` is per square metre of bed, and a tree's harvest does not come
+   * off a bed — see lib/produce-scope.ts. This exclusion is a rule, not a preference: it holds
+   * whatever the orchard switch is set to, because the alternative is a kg/m² that rises without
+   * bound as the trees grow and means nothing.
+   */
+  perennialProduceNames: string[];
   gardenMargins: GardenGrossMargin[];
   unattributedExpensesZar: number;
   hasUnattributedExpenses: boolean;
@@ -192,8 +201,19 @@ export function buildFarmMetrics(
     if (isInFinancePeriod(dateFor(expense), period, now)) garden(expense.garden_id).expensesZar += finiteNonNegative(expense.amount);
   }
 
+  // Partitioned, not filtered: what comes out is named on the card, the same condition that makes
+  // any other hiding in this screen honest. Note the money below is untouched — gardenMargins is
+  // built from the sales and invoices directly, so an avocado sale is still in the farm's margin.
+  const perennialProduceNames: string[] = [];
+  const bedRows = [...rows.values()].filter((row) => {
+    if (produceKindOf(row.cropName) !== 'perennial') return true;
+    perennialProduceNames.push(row.cropName);
+    return false;
+  });
+
   return {
-    crops: [...rows.values()]
+    perennialProduceNames: perennialProduceNames.sort((a, b) => a.localeCompare(b, 'en-ZA')),
+    crops: bedRows
       .map((row) => ({
         ...row,
         yieldKgPerM2: row.areaM2 !== null && row.hasHarvest ? row.harvestedKg / row.areaM2 : null,

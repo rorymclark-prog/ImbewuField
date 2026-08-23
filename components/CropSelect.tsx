@@ -3,7 +3,8 @@
 import { useEffect, useMemo, useState } from 'react';
 import {
   CROP_ENTRY_OPTIONS,
-  cropEntryOption,
+  PERENNIAL_ENTRY_GROUPS,
+  produceEntryOption,
   loadCustomCropNames,
   saveCustomCropName,
 } from '@/lib/crop-entry';
@@ -26,14 +27,14 @@ export default function CropSelect({ value, onChange, ariaLabel = 'Crop', rememb
     const seen = new Set<string>();
     return [...customNames, ...rememberedCrops].filter((name) => {
       const key = name.trim().toLocaleLowerCase('en-ZA');
-      if (!key || seen.has(key) || cropEntryOption(name)) return false;
+      if (!key || seen.has(key) || produceEntryOption(name)) return false;
       seen.add(key);
       return true;
     });
   }, [customNames, rememberedCrops]);
 
   const selected = useMemo(() => {
-    const catalogue = cropEntryOption(value);
+    const catalogue = produceEntryOption(value);
     if (catalogue) return `catalogue:${catalogue.key}`;
     const customIndex = savedNames.findIndex(
       (name) => name.toLocaleLowerCase('en-ZA') === value.trim().toLocaleLowerCase('en-ZA'),
@@ -51,7 +52,8 @@ export default function CropSelect({ value, onChange, ariaLabel = 'Crop', rememb
     setAdding(false);
     if (next.startsWith('catalogue:')) {
       const key = next.slice('catalogue:'.length);
-      const crop = CROP_ENTRY_OPTIONS.find((option) => option.key === key);
+      const crop = CROP_ENTRY_OPTIONS.find((option) => option.key === key)
+        ?? PERENNIAL_ENTRY_GROUPS.flatMap((entry) => entry.options).find((option) => option.key === key);
       if (crop) onChange(crop.label, crop.key);
       return;
     }
@@ -66,7 +68,7 @@ export default function CropSelect({ value, onChange, ariaLabel = 'Crop', rememb
   function addCrop() {
     const saved = saveCustomCropName(newName);
     if (!saved) return;
-    const catalogue = cropEntryOption(saved);
+    const catalogue = produceEntryOption(saved);
     const names = loadCustomCropNames();
     setCustomNames(names);
     setAdding(false);
@@ -89,6 +91,17 @@ export default function CropSelect({ value, onChange, ariaLabel = 'Crop', rememb
             <option key={crop.key} value={`catalogue:${crop.key}`}>{crop.label}</option>
           ))}
         </optgroup>
+        {/* The orchard and the food forest. Before this a farmer could draw twelve avocado trees on
+            the design map and had no way to record a single avocado — the only route was to type the
+            name, which spelt it differently every time. These sit under the annual crops because
+            that is the order of a working day, not because they matter less. */}
+        {PERENNIAL_ENTRY_GROUPS.map((entry) => (
+          <optgroup key={entry.group} label={entry.label}>
+            {entry.options.map((produce) => (
+              <option key={produce.key} value={`catalogue:${produce.key}`}>{produce.label}</option>
+            ))}
+          </optgroup>
+        ))}
         {savedNames.length > 0 && (
           <optgroup label="Crops you added">
             {savedNames.map((name, index) => (
