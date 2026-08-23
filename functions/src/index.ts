@@ -244,15 +244,19 @@ async function openaiEdit(
   }
   clearTimeout(timer);
 
+  // EVERY retry must carry `quality` forward. Dropping it re-enters this function on the
+  // parameter default ('high'), so a sheet the caller asked to render at 'low' comes back at
+  // roughly 35x the price it was budgeted at — and 429 is exactly the response a busy fleet
+  // provokes, so the escalation fires hardest at the moment the spend governors matter most.
   if (res.status === 429 && attempt < MAX_429_RETRIES) {
     const ra = Number(res.headers.get('retry-after'));
     const wait = Number.isFinite(ra) && ra > 0 ? ra * 1000 : 30_000 + Math.floor(Math.random() * 15_000);
     await sleep(wait);
-    return openaiEdit(key, imageB64, prompt, maskB64, styleReference, attempt + 1);
+    return openaiEdit(key, imageB64, prompt, maskB64, styleReference, attempt + 1, quality);
   }
   if (res.status >= 500 && attempt < MAX_RETRIES) {
     await sleep(2000 * (attempt + 1));
-    return openaiEdit(key, imageB64, prompt, maskB64, styleReference, attempt + 1);
+    return openaiEdit(key, imageB64, prompt, maskB64, styleReference, attempt + 1, quality);
   }
   if (!res.ok) {
     const detail = await res.text().catch(() => '');
