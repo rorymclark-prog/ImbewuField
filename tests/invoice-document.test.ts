@@ -94,9 +94,76 @@ test('the letterhead carries every detail the farmer entered', () => {
     },
   });
   assert.deepEqual(doc.sellerLines, [
-    'Tugela Valley smallholding', 'Plot 14, Nquthu', '072 345 6789',
+    'Thandi Mbeki', 'Plot 14, Nquthu', '072 345 6789',
     'thandi@example.co.za', 'VAT/Tax no. 4820123456',
   ]);
+});
+
+/* ── Who the invoice is FROM ────────────────────────────────────────── */
+
+test('a business invoices as the business, with the person underneath', () => {
+  // A crèche selling vegetables sends an invoice from the crèche. The document used to lead
+  // with whoever held the app account and push the enterprise into the small print, so the
+  // buyer filed it under a person's name and could not match it to the supplier they had
+  // agreed terms with.
+  const doc = buildInvoiceDocument({
+    ...BASE,
+    seller: { name: 'Rory Clark', farm: 'Ubhejane Creche', phone: '072 345 6789' },
+  });
+  assert.equal(doc.sellerName, 'Ubhejane Creche');
+  assert.deepEqual(doc.sellerLines, ['Rory Clark', '072 345 6789']);
+});
+
+test('with no business name the person leads, and is never printed twice', () => {
+  // The other half of the same rule: nothing is invented for an unset enterprise, and the
+  // name that took the heading must not also appear as a contact line under itself.
+  const doc = buildInvoiceDocument({
+    ...BASE,
+    seller: { name: 'Thandi Mbeki', phone: '072 345 6789' },
+  });
+  assert.equal(doc.sellerName, 'Thandi Mbeki');
+  assert.deepEqual(doc.sellerLines, ['072 345 6789']);
+});
+
+test('a whitespace-only business name does not take the heading', () => {
+  const doc = buildInvoiceDocument({
+    ...BASE,
+    seller: { name: 'Thandi Mbeki', farm: '   ' },
+  });
+  assert.equal(doc.sellerName, 'Thandi Mbeki');
+  assert.deepEqual(doc.sellerLines, []);
+});
+
+/* ── The logo ───────────────────────────────────────────────────────── */
+
+test('only a real image payload becomes a logo', () => {
+  // The letterhead is drawn from whatever this field holds, on a document a buyer keeps.
+  // A stray string would render as a broken-image icon there, so anything that is not an
+  // image data URL is dropped rather than passed through.
+  const png = 'data:image/png;base64,iVBORw0KGgo=';
+  assert.equal(buildInvoiceDocument({ ...BASE, seller: { name: 'T', logo: png } }).sellerLogo, png);
+  assert.equal(buildInvoiceDocument({ ...BASE, seller: { name: 'T', logo: 'https://example.com/l.png' } }).sellerLogo, null);
+  assert.equal(buildInvoiceDocument({ ...BASE, seller: { name: 'T', logo: '  ' } }).sellerLogo, null);
+  assert.equal(buildInvoiceDocument(BASE).sellerLogo, null);
+});
+
+/* ── Units ──────────────────────────────────────────────────────────── */
+
+test('a quantity of one is not printed as a plural', () => {
+  // "1 bunches x R5,00" shipped on a real invoice. The unit list is plural because that is
+  // how it reads in the picker; the document is what a buyer keeps.
+  const doc = buildInvoiceDocument({
+    ...BASE,
+    items: [
+      { desc: 'Swiss chard', qty: 1, unit: 'bunches', price: 5 },
+      { desc: 'Maize', qty: 3, unit: 'bags', price: 40 },
+      { desc: 'Tomatoes', qty: 1, unit: 'kg', price: 22 },
+    ],
+  });
+  assert.equal(doc.rows[0].detail, '1 bunch × R5,00');
+  assert.equal(doc.rows[1].detail, '3 bags × R40,00');
+  // 'kg' and 'each' have no separate singular — they must be left exactly as they are.
+  assert.equal(doc.rows[2].detail, '1 kg × R22,00');
 });
 
 test('the buyer block carries an address, which the document had no field for at all', () => {

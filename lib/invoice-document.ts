@@ -74,6 +74,19 @@ function lines(...values: (string | null | undefined)[]): string[] {
     .filter((value) => value.length > 0);
 }
 
+/**
+ * "1 bunches × R5,00" is what shipped. The unit list is plural because that is how
+ * a farmer picks it from a dropdown, but a quantity of exactly one reads as broken
+ * English on the buyer's copy. Only the units the picker actually offers are
+ * handled; anything else is returned untouched rather than guessed at.
+ */
+const SINGULAR_UNIT: Record<string, string> = {
+  bags: 'bag', crates: 'crate', bunches: 'bunch', trays: 'tray',
+};
+export function unitLabel(qty: number, unit: string): string {
+  return qty === 1 ? (SINGULAR_UNIT[unit] ?? unit) : unit;
+}
+
 export interface InvoiceParty {
   name?: string | null;
   /** Freeform, multi-line. Never geocoded, never validated — it is what the farmer typed. */
@@ -96,7 +109,10 @@ export interface InvoiceDocumentInput {
   /** The date the invoice was ISSUED. Not "today" — a reprint must not re-date the document. */
   issuedISO: string;
   dueISO?: string | null;
-  seller: InvoiceParty & { farm?: string | null };
+  /** `farm` is the ENTERPRISE name — the trading name the buyer knows. When it is
+   * set it becomes the document's heading and the person's name drops to a contact
+   * line; see buildInvoiceDocument. `logo` is a data URL, already downscaled. */
+  seller: InvoiceParty & { farm?: string | null; logo?: string | null };
   buyer: InvoiceParty;
   items: readonly InvoiceItem[];
   /** The buyer's own order number / reference, so they can match it in their books. */
@@ -119,9 +135,16 @@ export interface InvoiceDocument {
   number: string;
   issuedLabel: string;
   dueLabel: string | null;
+  /** The ENTERPRISE name when the farmer has set one, otherwise their own name.
+   * A business invoices as the business; "Ubhejane Creche" is what the buyer files
+   * the document under, not the name of whoever happens to hold the account. */
   sellerName: string;
-  /** Address / phone / email / tax number, already trimmed and blank-filtered. */
+  /** The person's name (only when an enterprise name took the heading), then
+   * address / phone / email / tax number — trimmed and blank-filtered. */
   sellerLines: string[];
+  /** Data URL for the enterprise logo, or null. Null draws the app's own mark
+   * instead — never a placeholder that could be mistaken for someone's brand. */
+  sellerLogo: string | null;
   buyerName: string;
   buyerLines: string[];
   referenceLabel: string | null;
@@ -142,8 +165,8 @@ export function buildInvoiceDocument(input: InvoiceDocumentInput): InvoiceDocume
   const rows: InvoiceDocumentRow[] = items.map((item) => ({
     desc: item.desc.trim(),
     detail: item.price > 0
-      ? `${formatQuantity(item.qty)} ${item.unit} × ${formatInvoiceZar(item.price)}`
-      : `${formatQuantity(item.qty)} ${item.unit}`,
+      ? `${formatQuantity(item.qty)} ${unitLabel(item.qty, item.unit)} × ${formatInvoiceZar(item.price)}`
+      : `${formatQuantity(item.qty)} ${unitLabel(item.qty, item.unit)}`,
     amount: formatInvoiceZar(item.qty * item.price),
   }));
 
@@ -154,6 +177,16 @@ export function buildInvoiceDocument(input: InvoiceDocumentInput): InvoiceDocume
     banking.accountNumber ? `Account ${banking.accountNumber.trim()}` : null,
     banking.branchCode ? `Branch code ${banking.branchCode.trim()}` : null,
   );
+
+  // Who the document is FROM. A farmer trading as "Ubhejane Creche" is owed an
+  // invoice that says so: the enterprise name leads, and their own name moves to a
+  // contact line underneath. With no enterprise set, nothing is invented — the
+  // person's name leads exactly as it always has.
+  const sellerPerson = (input.seller.name ?? '').trim();
+  const sellerEnterprise = (input.seller.farm ?? '').trim();
+  const sellerHeading = sellerEnterprise || sellerPerson;
+
+  const logo = (input.seller.logo ?? '').trim();
 
   const paidOn = input.status === 'paid' && input.paidAt ? shortDate(input.paidAt) : null;
   const paidStamp = input.status === 'paid'
@@ -168,9 +201,11 @@ export function buildInvoiceDocument(input: InvoiceDocumentInput): InvoiceDocume
     // date — a wrong date on an invoice is worse than a visibly missing one.
     issuedLabel: longDate(input.issuedISO) ?? '—',
     dueLabel: input.dueISO ? longDate(input.dueISO) : null,
-    sellerName: (input.seller.name ?? '').trim(),
+    sellerName: sellerHeading,
     sellerLines: lines(
-      input.seller.farm,
+      // When the enterprise took the heading, the person becomes a contact line.
+      // When it did not, the person IS the heading and must not be repeated here.
+      sellerEnterprise ? sellerPerson : null,
       input.seller.address,
       input.seller.phone,
       input.seller.email,
@@ -189,6 +224,9 @@ export function buildInvoiceDocument(input: InvoiceDocumentInput): InvoiceDocume
     bankingLines,
     notes: input.notes?.trim() ? input.notes.trim() : null,
     paidStamp,
+    // Only a real image payload counts. A stray non-image string would otherwise
+    // render as a broken-image icon on a document a buyer keeps.
+    sellerLogo: logo.startsWith('data:image/') ? logo : null,
     footer: INVOICE_FOOTER,
   };
 }
