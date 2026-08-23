@@ -2963,6 +2963,9 @@ function reportStillRestingBeds(
   supportedMonths: ReadonlySet<number>,
   plantings: readonly Planting[],
   strictCropKeys?: ReadonlySet<string>,
+  /** Plots whose staple course is already spent — the same set the closing
+   * passes used, so this note asks the question those passes actually answered. */
+  plotsWithCourse?: ReadonlySet<string>,
 ): PlanNote[] {
   const pickingMonths = freshHarvestMonthsByBed(plantings);
   const automaticPool = strictCropKeys
@@ -3016,7 +3019,15 @@ function reportStillRestingBeds(
     if (!emptyMonths.length) continue;
 
     const label = emptyMonths.length === 12 ? 'all year' : monthRangeLabel(emptyMonths);
-    const poolCanFillSome = emptyMonths.some((m) => canFill(automaticPool, bed, m));
+    // PER BED, not the flat catalogue. A plot's candidates are a small named list
+    // (its staple course, then a winter cover), and asking the flat pool whether
+    // "some crop" could fill a plot's empty months answered yes on the strength of
+    // a cabbage that could never legally be planted there. cause then stayed null
+    // and the stretch was dropped in silence — measured as 13 bare plot bed-months
+    // with no note at all on the owner's own farm. Routing through poolForBed asks
+    // the same question the closing passes asked, so the answer matches the plan.
+    const bedAutomaticPool = poolForBed(bed, automaticPool, true, plotsWithCourse, strictCropKeys);
+    const poolCanFillSome = emptyMonths.some((m) => canFill(bedAutomaticPool, bed, m));
     const catalogCanFillSome = emptyMonths.some((m) => canFill(AUTOMATIC_PLANNING_CROPS, bed, m));
     let cause: RestCause | null = null;
     if (!poolCanFillSome && catalogCanFillSome) cause = 'other-crop-could';
@@ -3043,19 +3054,53 @@ function reportStillRestingBeds(
     'nothing-reaches': `${exactChoice ? `Nothing among ${exactChoice}, and no other crop` : 'No crop'} the catalog can plan properly — one with a checked growing time, spacing and yield — has a sowing window that reaches those stretches. Ask locally what else does; this plan is not proof that nothing can grow then.`,
   };
 
+  // A field plot reaches 'other-crop-could' for a different reason than a bed
+  // does, so it may not borrow the bed's sentence. A bed's stretch is open
+  // because the household's crop groups are narrow — widening them is real
+  // advice. A plot's stretch is open because the planner will not put a
+  // vegetable on a traced field on its own, which no amount of widening
+  // changes; told the bed's version, a farmer would go looking for a setting
+  // that does not exist. Only this one cause is split: the other two are true
+  // of a plot exactly as written, and splitting them would break up bed notes
+  // that are already grouped correctly.
+  const plotOnly = (entries: { bed: PlanBed; label: string }[]) => entries.filter((e) => e.bed.kind === 'plot');
+  const bedOnly = (entries: { bed: PlanBed; label: string }[]) => entries.filter((e) => e.bed.kind !== 'plot');
+  const sentence = (entries: { bed: PlanBed; label: string }[], why: string): PlanNote => {
+    const where = entries.map((entry) => `${entry.bed.label} (${entry.label})`).join(', ');
+    return planNote(
+      'gap',
+      `${entries.length} growing area${entries.length === 1 ? ' has' : 's have'} a stretch with no new sowing: ${where}. ${why}`,
+      entries.map((entry) => entry.bed.id),
+    );
+  };
+
   const notes: PlanNote[] = [];
   for (const cause of REST_CAUSE_ORDER) {
     const entries = byCause.get(cause);
     if (!entries?.length) continue;
-    const where = entries.map((entry) => `${entry.bed.label} (${entry.label})`).join(', ');
-    notes.push(planNote(
-      'gap',
-      `${entries.length} growing area${entries.length === 1 ? ' has' : 's have'} a stretch with no new sowing: ${where}. ${explain[cause]}`,
-      entries.map((entry) => entry.bed.id),
-    ));
+    if (cause !== 'other-crop-could') {
+      notes.push(sentence(entries, explain[cause]));
+      continue;
+    }
+    const beds_ = bedOnly(entries);
+    const plots_ = plotOnly(entries);
+    if (beds_.length) notes.push(sentence(beds_, explain[cause]));
+    if (plots_.length) notes.push(sentence(plots_, PLOT_REST_EXPLANATION));
   }
   return notes;
 }
+
+/**
+ * Why a staple plot rests, in the farmer's terms. Deliberately says what the
+ * planner WILL NOT do and why, rather than implying a setting would fix it.
+ */
+const PLOT_REST_EXPLANATION = 'A staple plot grows one crop across the whole '
+  + 'block, and its course for the year is already spent, so no second staple '
+  + 'may follow it and no declared winter cover reaches those months. A '
+  + 'vegetable crop could cover them, but the planner will not put a vegetable '
+  + 'on a traced field on its own — planted at full block width that is a '
+  + 'sizeable commitment, so it is left as your decision. Sowing one by hand, '
+  + 'or resting the ground, are both sound choices.';
 
 /** Why a stretch of ground gets no new sowing. Ordered most-actionable first. */
 type RestCause = 'other-crop-could' | 'plan-is-full' | 'nothing-reaches';
@@ -3517,6 +3562,7 @@ export function autoSuggestPlan(
       supportedMonths,
       [...usableExistingPlantings, ...added],
       strictCropKeys,
+      plotsWithCourse,
     ));
   } else {
     notes.push(planNote('choice', 'A few big harvests was selected, so the planner did not add monthly filler crops merely to make the timeline look full.'));
