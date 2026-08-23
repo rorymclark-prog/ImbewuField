@@ -3090,7 +3090,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           <div
             title={`Build source: ${buildInfo.source ?? 'unknown'}${buildInfo.branch ? ` · branch ${buildInfo.branch}` : ''}${buildInfo.repoRoot ? ` · ${buildInfo.repoRoot}` : ''}`}
             style={{
-              display: 'inline-flex',
+              display: 'none',
               alignItems: 'center',
               minHeight: 32,
               padding: '0 10px',

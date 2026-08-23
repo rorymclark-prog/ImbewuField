@@ -538,14 +538,14 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
 
         {!isIn && (
           <div>
-            <label className="block text-xs font-sans uppercase tracking-wider mb-1" style={{ color: '#5C5040' }}>
-              Crop this cost was for <span className="normal-case" style={{ color: '#8C7A62' }}>(optional)</span>
+            <label className="block text-xs font-sans uppercase tracking-wider mb-1" style={{ color: 'var(--color-muted-strong)' }}>
+              Crop this cost was for <span className="normal-case" style={{ color: 'var(--color-muted)' }}>(optional)</span>
             </label>
             <input type="text" placeholder="Leave blank if it served the whole garden"
               value={form.expenseCrop} onChange={(e) => setForm((f) => ({ ...f, expenseCrop: e.target.value }))}
               className="w-full rounded-lg px-3 py-2 text-sm font-display outline-none"
-              style={{ background: '#E4DCC6', border: '1px solid #E2D8C4', color: '#20190F' }} />
-            <p className="text-xs font-sans mt-1" style={{ color: '#8C7A62' }}>Only tag a crop when this cost was just for that crop.</p>
+              style={{ background: 'var(--color-canvas)', border: '1px solid var(--color-border)', color: 'var(--color-ink)' }} />
+            <p className="text-xs font-sans mt-1" style={{ color: 'var(--color-muted)' }}>Only tag a crop when this cost was just for that crop.</p>
           </div>
         )}
 
@@ -807,7 +807,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
           <button onClick={onAddEntry}
             className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg font-sans font-semibold transition-all"
             style={{ background: 'var(--color-forest-800)', border: '1px solid rgba(31,77,43,0.22)', color: 'var(--color-canvas)', fontSize: 14, cursor: 'pointer' }}>
-            <Plus size={15} />Add entry
+            <Plus size={15} />New entry
           </button>
         </div>
       </div>
@@ -837,7 +837,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
           <tbody>
             {rows.length === 0 ? (
               <tr><td colSpan={7} className="px-5 py-10 text-center font-sans" style={{ fontSize: 14, color: 'var(--color-muted)' }}>
-                No entries for this {period}. Use the Add-entry button, the Invoice tool, or your phone — everything shows here. {DUPLICATE_LEDGER_FOOTER}
+                No entries for this {period}. Use the New-entry button, the Invoice tool, or your phone — everything shows here. {DUPLICATE_LEDGER_FOOTER}
               </td></tr>
             ) : rows.map((r, i) => (
               <tr key={`${r.kind}-${r.id}`} style={{ borderBottom: i < rows.length - 1 ? '1px solid var(--color-border)' : 'none' }}>

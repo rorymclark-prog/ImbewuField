@@ -53,7 +53,7 @@ export default function SampleModeBanner() {
     >
       <span className="flex items-center gap-1.5 font-display font-semibold" style={{ fontSize: 13, color: '#fff' }}>
         <Sparkles size={14} />
-        Sample mode — Ubhejane Creche demo data. Nothing here is saved.
+        Sample farm — Ubhejane Crèche demo data. Nothing here is saved.
       </span>
       <button
         type="button"

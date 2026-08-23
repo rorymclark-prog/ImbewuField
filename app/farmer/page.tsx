@@ -515,7 +515,7 @@ function HomeInner() {
           {buildInfo?.sha && (
             <div
               title={`Build source: ${buildInfo.source ?? 'unknown'}${buildInfo.branch ? ` · branch ${buildInfo.branch}` : ''}${buildInfo.repoRoot ? ` · ${buildInfo.repoRoot}` : ''}`}
-              className="hidden md:flex items-center flex-shrink-0 rounded-full border px-2.5 py-1 font-sans"
+              className="hidden items-center flex-shrink-0 rounded-full border px-2.5 py-1 font-sans"
               style={{
                 minHeight: 30,
                 borderColor: 'rgba(31,77,43,0.2)',
