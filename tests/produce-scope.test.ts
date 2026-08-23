@@ -9,6 +9,7 @@ import {
 } from '@/lib/produce-scope';
 import { PERENNIAL_PRODUCE } from '@/lib/perennial-produce';
 import { buildFinanceSeries } from '@/lib/finance-series';
+import { buildFarmMetrics } from '@/lib/farm-metrics';
 import type { ProductionLog, SalesLog } from '@/lib/db/types';
 
 const NOW = new Date(2026, 7, 15);
@@ -138,4 +139,30 @@ test('produce scope: every catalogue name resolves to its own fruit, never a nei
       `${produce.label} resolves to something else`,
     );
   }
+});
+
+test('produce scope: the per-square-metre card drops orchard produce and names it', () => {
+  // A RULE, NOT A PREFERENCE, and so not wired to the switch at all: every figure on the Crop
+  // performance card is per square metre of bed. A tree's fruit does not come off a bed, so a
+  // kg/m² for it would rise without bound as the tree grew and mean nothing. Before this an
+  // avocado appeared there reading "Planted area not recorded" in warning orange — an instruction
+  // a tree can never carry out.
+  const metrics = buildFarmMetrics([], [], [
+    harvest('Tomatoes', 10, '2026-08-04T08:00:00.000Z'),
+    harvest('Avocados', 40, '2026-08-05T08:00:00.000Z'),
+  ], [sale('Avocados', 40, 800, '2026-08-06T08:00:00.000Z')], [], 'year', NOW, []);
+
+  assert.deepEqual(metrics.crops.map((c) => c.cropName), ['Tomatoes']);
+  assert.deepEqual(metrics.perennialProduceNames, ['Avocados']);
+});
+
+test('produce scope: taking the orchard off that card never moves the farm\'s money', () => {
+  // The gross margin is built from the sales and invoices directly, not from the per-m² rows, so
+  // an avocado sale is still the farm's income even though avocado is not a row above it.
+  const metrics = buildFarmMetrics([], [], [], [
+    sale('Avocados', 40, 800, '2026-08-06T08:00:00.000Z'),
+    sale('Tomatoes', 5, 100, '2026-08-07T08:00:00.000Z'),
+  ], [], 'year', NOW, []);
+  const total = metrics.gardenMargins.reduce((s, m) => s + m.grossMarginZar, 0);
+  assert.equal(total, 900, 'the avocado sale left the farm margin');
 });

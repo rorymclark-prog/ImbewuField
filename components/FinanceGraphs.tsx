@@ -464,11 +464,14 @@ function PlanView({ plan, source, wide, orchard }: {
       </div>
 
       <div className="px-4 py-2.5" style={{ borderTop: `1px solid ${HAIRLINE}`, background: '#FBF7EF' }}>
+        {/* Deliberately does NOT repeat the names: `offPlanNames` below already lists them, and on
+            a farm with fruit trees this paragraph and that one would otherwise say the same word
+            twice, three lines apart. This one carries the reason; that one carries the list. */}
         {orchard.length > 0 && (
           <p className="font-sans" style={{ fontSize: 10.5, color: FAINT, lineHeight: 1.5 }}>
-            <b style={{ color: MUTED, fontWeight: 600 }}>Nothing from the orchard is on this list</b> — {orchard.join(', ')}.
-            A tree is not planted into a bed for a season, so there is no plan benchmark to compare it against. Its
-            harvests and sales still count everywhere else on this page.
+            <b style={{ color: MUTED, fontWeight: 600 }}>Nothing from the orchard is compared here.</b> A tree is not
+            planted into a bed for a season, so there is no plan benchmark to hold it against. Its harvests and sales
+            still count everywhere else on this page.
           </p>
         )}
         <p className="font-sans" style={{ fontSize: 10.5, color: FAINT, lineHeight: 1.5 }}>

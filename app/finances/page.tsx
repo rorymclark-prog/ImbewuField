@@ -941,6 +941,17 @@ function FarmMetrics({ sales, production, expenses, invoices, period, now, loadi
           ))}
         </div>
       )}
+      {metrics.perennialProduceNames.length > 0 && (
+        /* Named rather than silently absent. Before this, an avocado appeared here as a row reading
+           "Planted area not recorded" in warning orange — an instruction a tree can never carry
+           out, since its fruit does not come off a bed. Every figure on this card is per square
+           metre, so a perennial cannot be one of its rows whatever the orchard switch says. */
+        <p className="px-4 py-3 text-xs font-sans" style={{ color: '#8C7A62', borderTop: '1px solid #E2D8C4' }}>
+          <b style={{ color: '#5C5040', fontWeight: 600 }}>Not on this list:</b> {metrics.perennialProduceNames.join(', ')}.
+          Everything above is worked out per square metre of bed, and fruit off a tree does not come
+          off a bed. Those harvests and sales still count in your totals and in the money below.
+        </p>
+      )}
       <div className="px-4 py-3" style={{ background: '#F7F2E9', borderTop: '1px solid #E2D8C4' }}>
         <p className="text-xs font-mono uppercase tracking-wider" style={{ color: '#5C5040' }}>Garden gross margin</p>
         {metrics.gardenMargins.length === 0 ? (
