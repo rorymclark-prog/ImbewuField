@@ -29,6 +29,8 @@ import { cashLedgerSales, cashIncomeTotal } from '@/lib/invoice-sales';
 import { loadCashflowSettings, DEFAULT_CASHFLOW_SETTINGS, type CashflowSettings, type PlanBed, type Planting } from '@/lib/crop-plan';
 import { useFinancePlanSource } from '@/lib/finance-plan-source';
 import ComingUpHarvests from '@/components/ComingUpHarvests';
+import CashflowChart from '@/components/CashflowChart';
+import FinanceGraphs from '@/components/FinanceGraphs';
 import MenuButton from '@/components/MenuButton';
 import type { CropPrice } from '@/lib/crop-prices';
 import { loadCropPriceOverrides } from '@/lib/crop-prices';
@@ -1148,6 +1150,10 @@ export default function FinancesPage() {
           <>
             {/* Wide / laptop: the financial-sheet ledger workspace (frame 15) */}
             <div className="hidden lg:block space-y-6">
+              {/* "a cashflow graph right at the top" — above the ledger, because the
+                  ledger answers "what happened" and this answers "which way is it
+                  going", and only one of those is worth the first screenful. */}
+              <CashflowChart sales={sales} expenses={expenses} production={production} invoices={invoices} loading={dataLoading} wide />
               <FinancialSheet
                 sales={sales}
                 production={production}
@@ -1162,6 +1168,10 @@ export default function FinancesPage() {
                 onEditExpense={(row) => { setEditing({ type: 'expense', row }); setDesktopEntryOpen(true); }}
                 onSeeSample={sampling ? undefined : handleSeeSample}
               />
+              {/* Measured kilograms, then the plan's benchmark beside them. Sits
+                  after the ledger and before the per-crop numbers: it is the
+                  picture those numbers are the detail of. */}
+              <FinanceGraphs production={production} sales={sales} invoices={invoices} source={planSource} settings={cashflowSettings} wide />
               <FarmMetrics sales={sales} production={production} expenses={expenses} invoices={invoices} period={period} now={now} loading={dataLoading} plantings={planSource.plantings} beds={planSource.beds} planLoaded={planSource.loaded} />
               <ComingUpHarvests source={planSource} prices={priceOverrides} settings={cashflowSettings} />
               <HarvestReconciliation production={production} sales={sales} period={period} now={now} loading={dataLoading} plantings={planSource.plantings} beds={planSource.beds} planLoaded={planSource.loaded} />
@@ -1188,6 +1198,7 @@ export default function FinancesPage() {
             </div>
             {/* Phone / tablet: the simple money view */}
             <div className="lg:hidden space-y-4">
+              <CashflowChart sales={sales} expenses={expenses} production={production} invoices={invoices} loading={dataLoading} />
               <SummaryCards
                 sales={sales}
                 production={production}
@@ -1202,6 +1213,7 @@ export default function FinancesPage() {
               >
                 <Sprout size={16} />Log harvest
               </Link>
+              <FinanceGraphs production={production} sales={sales} invoices={invoices} source={planSource} settings={cashflowSettings} />
               <ComingUpHarvests source={planSource} prices={priceOverrides} settings={cashflowSettings} />
               <HarvestReconciliation production={production} sales={sales} period="month" now={now} loading={dataLoading} plantings={planSource.plantings} beds={planSource.beds} planLoaded={planSource.loaded} />
               <FarmMetrics sales={sales} production={production} expenses={expenses} invoices={invoices} period="month" now={now} loading={dataLoading} plantings={planSource.plantings} beds={planSource.beds} planLoaded={planSource.loaded} />
