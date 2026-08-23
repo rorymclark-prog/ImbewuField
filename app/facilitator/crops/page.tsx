@@ -17,6 +17,8 @@ import { useRegisterBackControl } from '@/components/BackControl';
 import LessonLink from '@/components/design/LessonLink';
 import CropPlanExportCard from '@/components/crops/CropPlanExportCard';
 import CropIcon from '@/components/CropIcon';
+import MiniPlanPlate from '@/components/MiniPlanPlate';
+import { miniPlanFromCanvas, miniPlanFromFacilitator, type MiniPlan } from '@/lib/mini-plan';
 import { loadCanvasState, DESIGN_CANVAS_CHANGED_EVENT } from '@/lib/design-canvas';
 import { bedsFromDesignCanvas, canvasSiteIdForPlace, studioPlanChoices, type StudioPlanChoice } from '@/lib/design-beds-bridge';
 import { loadPlaces, resolveMainSite } from '@/lib/saved-places';
@@ -332,24 +334,87 @@ function designStateFromCloudRow(d: Design): FacilitatorDesignState {
   };
 }
 
+
 /**
- * One line under a cloud design's title in the site picker. Two of a farmer's
- * cloud designs can carry the exact same title (nothing ever enforced
- * uniqueness), and a title alone then reads as a duplicated row — the bed
- * count and saved date are what actually tell them apart.
+ * One site in the crop-plan picker.
+ *
+ * The picture is the point. Before this card the picker was a stack of text
+ * rows, and two saved designs of the same farm — or two farms with six beds
+ * each — read identically; a farmer had to open one to find out which it was.
+ * The geometry was already in memory in both cases (see lib/mini-plan.ts), so
+ * the plate costs nothing but pixels.
+ *
+ * NOTE THE MISSING TOTAL. There is deliberately no "N designs · X beds · Y m²
+ * altogether" line across the cards: two saved designs are very often two
+ * versions of ONE farm, so summing them would report a farmer's land as twice
+ * its size. Per-card numbers are the only ones that are true.
  */
-function cloudRowSubtitle(d: Design): string {
-  let bedsPart: string | null = null;
-  try {
-    const n = computeDesignBeds(designStateFromCloudRow(d)).length;
-    bedsPart = n === 1 ? '1 bed' : `${n} beds`;
-  } catch { /* unreadable row data — the date still identifies the row */ }
-  const t = d as { updated_at?: { toMillis?: () => number }; created_at?: { toMillis?: () => number } };
-  const ms = t.updated_at?.toMillis?.() ?? t.created_at?.toMillis?.() ?? null;
-  const datePart = ms
-    ? `saved ${new Date(ms).toLocaleDateString('en-ZA', { day: 'numeric', month: 'short', year: 'numeric' })}`
-    : null;
-  return [bedsPart, datePart].filter(Boolean).join(' · ');
+function SiteCard({
+  title, plan, bedCount, plotCount, areaM2, source, tag, href, onClick,
+}: {
+  title: string;
+  plan: MiniPlan | null;
+  bedCount: number;
+  plotCount: number;
+  areaM2: number;
+  /** Where this design lives — shown only so two similar cards are tellable apart. */
+  source: string;
+  /** Extra distinguishing detail, set ONLY when another card shares this title. */
+  tag: string | null;
+  href?: string;
+  onClick?: () => void;
+}) {
+  const parts: string[] = [];
+  // Em-dash, never a zero: a site with no beds at all says so in words, and a
+  // site with no staple plot simply does not mention staple plots.
+  parts.push(bedCount === 0 ? 'No beds yet' : `${bedCount} bed${bedCount === 1 ? '' : 's'}`);
+  if (plotCount > 0) parts.push(`${plotCount} staple plot${plotCount === 1 ? '' : 's'}`);
+  if (areaM2 > 0) parts.push(`${areaM2.toFixed(1)} m²`);
+
+  const inner = (
+    <>
+      <div style={{ borderBottom: '1px solid #E2D8C4', background: '#F6F1E6' }}>
+        {plan ? (
+          <MiniPlanPlate plan={plan} />
+        ) : (
+          <div
+            className="flex items-center justify-center font-sans"
+            style={{ aspectRatio: '8 / 5', fontSize: 11.5, color: '#9A8268' }}
+          >
+            No map traced for this one
+          </div>
+        )}
+      </div>
+      <div className="px-3 py-2.5 flex flex-col" style={{ gap: 2 }}>
+        <div className="flex items-baseline justify-between gap-2">
+          <span className="font-display font-semibold truncate" style={{ fontSize: 14, color: '#20190F' }}>{title}</span>
+          <span className="font-sans flex-shrink-0" style={{ fontSize: 12, color: '#9A8268' }}>›</span>
+        </div>
+        <span className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>{parts.join(' · ')}</span>
+        <span className="font-sans" style={{ fontSize: 10.5, color: '#9A8268' }}>
+          {source}{tag ? ` · ${tag}` : ''}
+        </span>
+      </div>
+    </>
+  );
+
+  const style = {
+    background: '#FFFEFA',
+    border: '1px solid #E2D8C4',
+    borderRadius: 14,
+    overflow: 'hidden',
+    textAlign: 'left' as const,
+    textDecoration: 'none',
+    display: 'block',
+    padding: 0,
+    cursor: 'pointer',
+  };
+
+  return href ? (
+    <Link href={href} onClick={onClick} className="w-full transition-all" style={style}>{inner}</Link>
+  ) : (
+    <button type="button" onClick={onClick} className="w-full transition-all" style={style}>{inner}</button>
+  );
 }
 
 /** Beds = design items of type 'bed'/'hugel', in placement (array) order. */
@@ -637,6 +702,66 @@ function FacilitatorCropsPageInner() {
   // ones, which a bare URL could otherwise never reach.
   const needsSitePicker = !canvasSite && !!myDesignsList && (switchingSite || (chosenDesignId === null
     && (myDesignsList.length + studioChoices.length > 1 || (myDesignsList.length === 0 && studioChoices.length > 0))));
+
+  // ── the picker's cards ────────────────────────────────────────────────────
+  //
+  // Both sources already hold their geometry in memory — a cloud row carries its
+  // items in the row itself, and a Studio canvas has to be read from localStorage
+  // to be counted at all — so drawing each site costs one more pass over data
+  // already in hand, and no network. A design whose geometry will not parse is
+  // still listed, just without its picture: losing a site from the picker is far
+  // worse than a card with no plate on it.
+  const cloudCards = useMemo(() => (myDesignsList ?? []).map((d) => {
+    let plan: MiniPlan | null = null;
+    let beds: PlanBed[] = [];
+    try {
+      const st = designStateFromCloudRow(d);
+      plan = miniPlanFromFacilitator(st);
+      beds = computeDesignBeds(st);
+    } catch { /* unreadable row data — the card still identifies it */ }
+    const t = d as { updated_at?: { toMillis?: () => number }; created_at?: { toMillis?: () => number } };
+    const ms = t.updated_at?.toMillis?.() ?? t.created_at?.toMillis?.() ?? null;
+    return {
+      id: d.id,
+      title: (d.title || '').trim() || 'Untitled design',
+      plan,
+      bedCount: beds.length,
+      areaM2: beds.reduce((sum, b) => sum + b.areaM2, 0),
+      savedLabel: ms
+        ? `saved ${new Date(ms).toLocaleDateString('en-ZA', { day: 'numeric', month: 'short', year: 'numeric' })}`
+        : null,
+    };
+  }), [myDesignsList]);
+
+  const studioCards = useMemo(() => studioChoices.map((c) => {
+    let plan: MiniPlan | null = null;
+    let beds: PlanBed[] = [];
+    try {
+      const st = loadCanvasState(c.siteId);
+      plan = miniPlanFromCanvas(st);
+      beds = bedsFromDesignCanvas(st);
+    } catch { /* as above — the card lists, the plate is what is lost */ }
+    return {
+      siteId: c.siteId,
+      title: c.name,
+      plan,
+      bedCount: c.bedCount,
+      plotCount: c.plotCount,
+      areaM2: beds.reduce((sum, b) => sum + b.areaM2, 0),
+      // Two saved places really can share a name; their coordinates never do.
+      coordLabel: c.siteId.replace(/^site:/, '').split(',').map((n) => Number(n).toFixed(3)).join(', '),
+    };
+  }), [studioChoices]);
+
+  // A distinguishing tag ONLY where two cards share a title. Tagging every card
+  // with its date or its coordinates would bury the one case it exists for.
+  const duplicateTitles = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const t of [...cloudCards.map((c) => c.title), ...studioCards.map((c) => c.title)]) {
+      counts.set(t, (counts.get(t) ?? 0) + 1);
+    }
+    return new Set([...counts.entries()].filter(([, n]) => n > 1).map(([t]) => t));
+  }, [cloudCards, studioCards]);
 
   const [favouriteCropKeys, setFavouriteCropKeys] = useState<Set<string>>(new Set());
   function toggleFavourite(cropKey: string) {
@@ -1264,10 +1389,10 @@ function FacilitatorCropsPageInner() {
           <span className="font-display text-sm" style={{ color: '#8C7A62' }}>Loading crop plan…</span>
         </div>
       ) : needsSitePicker ? (
-        <div className="flex-1 overflow-y-auto flex items-start justify-center py-8 px-4">
-          <div className="w-full space-y-2" style={{ maxWidth: 480 }}>
+        <div className="flex-1 overflow-y-auto py-7 px-4">
+          <div className="mx-auto w-full" style={{ maxWidth: 760 }}>
             <div className="flex items-start justify-between gap-3">
-              <h1 className="font-display font-semibold" style={{ fontSize: 18, color: '#20190F' }}>Which site are you planning?</h1>
+              <h1 className="font-display font-semibold" style={{ fontSize: 19, color: '#20190F', letterSpacing: '-0.01em' }}>Which site are you planning?</h1>
               {chosenDesignId !== null && (
                 <button
                   onClick={() => setSwitchingSite(false)}
@@ -1279,48 +1404,45 @@ function FacilitatorCropsPageInner() {
                 </button>
               )}
             </div>
-            <p className="font-sans mb-3" style={{ fontSize: 13, color: '#5C5040' }}>
-              You have {(myDesignsList?.length ?? 0) + studioChoices.length} saved design{(myDesignsList?.length ?? 0) + studioChoices.length === 1 ? '' : 's'} — pick one to see its beds.
+            <p className="font-sans mb-4" style={{ fontSize: 13, color: '#5C5040' }}>
+              {cloudCards.length + studioCards.length === 1
+                ? 'One saved design — here is what is on it.'
+                : `${cloudCards.length + studioCards.length} saved designs. Each one is drawn as it sits on the ground.`}
             </p>
-            {myDesignsList?.map((d) => (
-              <button
-                key={d.id}
-                onClick={() => chooseSite(d.id)}
-                className="w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl text-left transition-all"
-                style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}
-              >
-                <span className="flex flex-col min-w-0">
-                  <span className="font-display font-semibold" style={{ fontSize: 14, color: '#20190F' }}>{d.title || 'Untitled design'}</span>
-                  {cloudRowSubtitle(d) && (
-                    <span className="font-sans" style={{ fontSize: 11, color: '#8C7A62' }}>{cloudRowSubtitle(d)}</span>
-                  )}
-                </span>
-                <span className="font-sans" style={{ fontSize: 11, color: '#9A8268' }}>›</span>
-              </button>
-            ))}
-            {studioChoices.length > 0 && (
-              <p className="font-sans pt-3 mb-1" style={{ fontSize: 11.5, color: '#8C7A62' }}>From your Design Studio map</p>
-            )}
-            {studioChoices.map((c) => (
-              <Link
-                key={c.siteId}
-                href={`/facilitator/crops?canvasSite=${encodeURIComponent(c.siteId)}`}
-                onClick={() => setSwitchingSite(false)}
-                className="w-full flex items-center justify-between gap-3 px-4 py-3 rounded-xl text-left transition-all"
-                style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', textDecoration: 'none' }}
-              >
-                <span className="flex flex-col min-w-0">
-                  <span className="font-display font-semibold" style={{ fontSize: 14, color: '#20190F' }}>{c.name}</span>
-                  <span className="font-sans" style={{ fontSize: 11, color: '#8C7A62' }}>
-                    {c.bedCount === 1 ? '1 bed' : `${c.bedCount} beds`}{c.plotCount > 0 ? ` · ${c.plotCount} plot${c.plotCount === 1 ? '' : 's'}` : ''}
-                  </span>
-                </span>
-                <span className="font-sans" style={{ fontSize: 11, color: '#9A8268' }}>›</span>
-              </Link>
-            ))}
+
+            <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(215px, 1fr))' }}>
+              {cloudCards.map((c) => (
+                <SiteCard
+                  key={c.id}
+                  title={c.title}
+                  plan={c.plan}
+                  bedCount={c.bedCount}
+                  plotCount={0}
+                  areaM2={c.areaM2}
+                  source={c.savedLabel ? `Saved design · ${c.savedLabel}` : 'Saved design'}
+                  tag={duplicateTitles.has(c.title) && !c.savedLabel ? 'this device' : null}
+                  onClick={() => chooseSite(c.id)}
+                />
+              ))}
+              {studioCards.map((c) => (
+                <SiteCard
+                  key={c.siteId}
+                  title={c.title}
+                  plan={c.plan}
+                  bedCount={c.bedCount}
+                  plotCount={c.plotCount}
+                  areaM2={c.areaM2}
+                  source="Design Studio map"
+                  tag={duplicateTitles.has(c.title) ? c.coordLabel : null}
+                  href={`/facilitator/crops?canvasSite=${encodeURIComponent(c.siteId)}`}
+                  onClick={() => setSwitchingSite(false)}
+                />
+              ))}
+            </div>
+
             <button
               onClick={() => chooseSite('local')}
-              className="w-full px-4 py-3 rounded-xl text-left font-sans transition-all"
+              className="w-full mt-3 px-4 py-3 rounded-xl text-left font-sans transition-all"
               style={{ background: 'transparent', border: '1px dashed #C7BCA6', color: '#8C7A62', fontSize: 13 }}
             >
               Or use the design already open on this device
