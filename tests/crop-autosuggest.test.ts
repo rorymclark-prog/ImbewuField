@@ -119,16 +119,20 @@ test('amadumbe can be scheduled from verified timing and spacing without inventi
   assert.match(noteText(result).join(' '), /No supported food-yield benchmark.*kilograms and value remain blank/i);
 });
 
-test('kale schedules from its verified duration and spacing without inventing a yield', () => {
+test('kale schedules and carries kilograms from its fully sourced basis', () => {
   // The Ubhejane Creche plan selected kale explicitly and the engine refused
-  // it for months as a no-schedule legacy record. Duration and spacing are now
-  // sourced (Kirchhoffs: 40x40cm, 100-120 days; Starke Ayres: 55-60-day
-  // maturity), so a selected kale must place exactly the way amadumbe does —
-  // while its kg benchmark stays honestly null instead of invented.
+  // it for months as a no-schedule legacy record. Duration and spacing were
+  // sourced first (Kirchhoffs: 40x40cm, 100-120 days; Starke Ayres: 55-60-day
+  // maturity), which let a selected kale place the way amadumbe does. Its
+  // kilograms followed on 2026-08-23 from international extension sources
+  // (KALRO/MOALF Kenya, Oregon State, Oklahoma State — no SA figure has ever
+  // been published), so kale now clears the full planning basis rather than
+  // the timing-only half.
   const kale = cropByKey('kale');
   assert.ok(kale);
   assert.equal(hasVerifiedFieldPlan(kale), true, 'kale duration/spacing verification regressed');
-  assert.equal(hasAutomaticPlanningBasis(kale), false, 'kale must not gain a yield basis without a source');
+  assert.equal(hasAutomaticPlanningBasis(kale), true, 'kale lost the sourced yield basis');
+  assert.equal(kale.yieldKgPerM2, 1.5, 'the kale planning yield moved without a source note');
   const result = autoSuggestPlan({
     ...FAMILY,
     cropKeys: ['kale'],
@@ -141,7 +145,11 @@ test('kale schedules from its verified duration and spacing without inventing a 
     /Kale.*not placed automatically/i,
     'kale must no longer carry the no-schedule warning',
   );
-  assert.match(noteText(result).join(' '), /No supported food-yield benchmark.*kilograms and value remain blank/i);
+  assert.doesNotMatch(
+    noteText(result).join(' '),
+    /No supported food-yield benchmark/i,
+    'kale carries a sourced benchmark now, so the blank-kilograms note must not fire for it',
+  );
 });
 
 test('a chosen, verified, non-vine crop that loses every placement pass gets an honest "did not fit" note, not silence', () => {

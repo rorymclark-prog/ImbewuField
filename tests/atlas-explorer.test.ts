@@ -128,12 +128,14 @@ test('the descriptive crop readout keeps yield-null food crops but excludes zero
 });
 
 test('coriander and kale stay visible in their sourced windows even with unverified kilograms', () => {
-  // Kale's June listing flipped on 2026-08-23 when its duration was sourced;
-  // both crops still carry yieldKgPerM2: null, which must never hide a crop
-  // whose timing is verified.
+  // Kale's June listing flipped on 2026-08-23 when its duration was sourced,
+  // and its kilograms landed later the same day from international sources —
+  // so coriander now carries the yieldKgPerM2: null case alone. The rule the
+  // test guards is unchanged: a null yield must never hide a crop whose
+  // timing is verified.
   const open = sowableInMonth('mild-frost', 6);
   assert.ok(open.some((crop) => crop.key === 'coriander' && crop.yieldKgPerM2 === null));
-  assert.ok(open.some((crop) => crop.key === 'kale' && crop.yieldKgPerM2 === null));
+  assert.ok(open.some((crop) => crop.key === 'kale'));
   assert.ok(open.every((crop) => crop.timingVerified !== false));
 });
 
