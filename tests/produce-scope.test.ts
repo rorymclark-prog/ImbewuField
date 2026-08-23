@@ -350,3 +350,27 @@ test('a produce the app cannot place keeps the words the farmer wrote', async ()
   assert.equal(produceDisplayName('Gogo’s special'), 'Gogo’s special');
   assert.equal(produceDisplayName(''), '');
 });
+
+// ── Both notes on My Records, not just the first (2026-08-23) ───────────────
+//
+// Found by switching the orchard off on the live build and reading the screen:
+// the harvest note said "Avocado" and the sales note three centimetres below it
+// said "Avocados". Same component, 78 lines apart — fixing one and not the other
+// produced a screen that names one tree two ways in adjacent sentences.
+//
+// Asserted at the helper both notes now call, since the components themselves are
+// React and this suite is pure. The invariant is that ANY list of what a filter
+// left out is built through produceDisplayName, never off raw `.crop` text.
+
+test('every list of what the orchard switch hid is deduped through the catalogue', async () => {
+  const { produceDisplayName } = await import('@/lib/perennial-produce');
+  // The exact rows behind the two notes: a picker-written harvest and a typed sale.
+  const harvestSide = ['Avocado'];
+  const saleSide = ['Avocados'];
+  const named = [...new Set([...harvestSide, ...saleSide].map(produceDisplayName))];
+  assert.deepEqual(named, ['Avocado'], 'the two notes cannot disagree about the name of one tree');
+
+  // And the raw-text version this replaced, kept as the thing that must never come back.
+  const rawWay = [...new Set([...harvestSide, ...saleSide].map((s) => s.trim()))];
+  assert.equal(rawWay.length, 2, 'raw text really does split it — this is why the helper exists');
+});
