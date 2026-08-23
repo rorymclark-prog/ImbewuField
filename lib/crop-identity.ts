@@ -19,7 +19,7 @@
  */
 
 import { cropByKey } from './crop-catalog';
-import { buildCropAliasIndex, matchCropKey } from './harvest-reconciliation';
+import { buildCropAliasIndex, exactCropKey, matchCropKey } from './harvest-reconciliation';
 import { perennialKeyForName, perennialProduceByKey } from './perennial-produce';
 
 export interface CropIdentity {
@@ -44,11 +44,24 @@ export { buildCropAliasIndex };
  * of stay two rows rather than being merged on a hunch.
  */
 export function cropIdentityOf(label: string, aliases: CropAliasIndex): CropIdentity {
-  const key = matchCropKey(label, aliases);
-  if (key) return { key, label: cropByKey(key)?.name ?? label.trim() };
-  const perennialKey = perennialKeyForName(label);
+  // EXACT BEFORE FUZZY, and only then annual before perennial.
+  //
+  // Asking the annual catalogue's FULL matcher first meant its substring fallback outranked an
+  // exact perennial hit. "Malabar spinach" — the label the orchard picker itself writes for the
+  // food-forest climber Basella alba — contains "spinach", so it was filed as Swiss chard; a
+  // free-typed "Pigeon peas" contains "peas" and landed on the annual Peas bed. Both then had
+  // their kilograms divided by a bed area they never grew on, which rule (c) exists to prevent.
+  // An exact hit is an identity; a substring is a guess, and a guess must not beat a catalogue
+  // that knows the name outright.
+  const exactAnnual = exactCropKey(label, aliases);
+  if (exactAnnual) return { key: exactAnnual, label: cropByKey(exactAnnual)?.name ?? label.trim() };
   // Perennial keys are namespaced precisely so they can never collide with a CROPS key here.
+  // perennialKeyForName is itself exact (label plus its plural forms) — never a substring — so
+  // this tier cannot swallow a name the way the one below it could.
+  const perennialKey = perennialKeyForName(label);
   if (perennialKey) return { key: perennialKey, label: perennialProduceByKey(perennialKey)?.label ?? label.trim() };
+  const fuzzyAnnual = matchCropKey(label, aliases);
+  if (fuzzyAnnual) return { key: fuzzyAnnual, label: cropByKey(fuzzyAnnual)?.name ?? label.trim() };
   return { key: null, label: label.trim() || 'Unnamed crop' };
 }
 

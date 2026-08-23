@@ -180,6 +180,22 @@ export function matchCropKey(loggedText: string, index: Map<string, string>): st
   return candidates.length === 1 ? candidates[0] : null;
 }
 
+/**
+ * The exact-alias tier of the match, with the substring fallback withheld.
+ *
+ * Exists so a caller can tell "this IS that crop" from "this CONTAINS that crop's name". The
+ * distinction turned out to matter: "Malabar spinach" is a food-forest climber and "Pigeon peas"
+ * is a shrub, and both were being handed to the annual catalogue by the substring pass — one into
+ * Swiss chard's row, the other onto the Peas bed, both then divided by a bed area they never grew
+ * on. Neither is an ambiguity the caller can resolve; the perennial catalogue knows each of them
+ * outright.
+ */
+export function exactCropKey(loggedText: string, index: Map<string, string>): string | null {
+  const norm = normalize(loggedText);
+  if (!norm) return null;
+  return index.get(norm) ?? null;
+}
+
 /* ── Crop-cycle benchmark yield ─────────────────────────────── */
 
 /**
@@ -375,12 +391,19 @@ export function buildReconciliation(
     const cropCycleBenchmarkKg = intendedByCrop.get(cropKey) ?? null;
     const intendedKg = period === 'year' ? cropCycleBenchmarkKg : null;
 
-    const harvestRows = productionInPeriod.filter(
-      (p) => matchCropKey(loggedCropLabel(p.crop), aliasIndex) === cropKey,
-    );
-    const saleRows = salesInPeriod.filter(
-      (s) => matchCropKey(loggedCropLabel(s.crop), aliasIndex) === cropKey,
-    );
+    /* A NAME THE PERENNIAL CATALOGUE KNOWS IS NEVER AN ANNUAL ROW.
+       matchCropKey falls back to a substring pass, and the orchard picker writes labels that
+       contain annual aliases outright — "Malabar spinach" contains "spinach", "Pigeon peas"
+       contains "peas". Without this guard a food-forest climber was folded into Swiss chard's
+       row and measured against Swiss chard's crop-cycle benchmark, which rule (e) forbids: a
+       perennial is recorded and counted, never planned, scheduled or benchmarked. The rows still
+       appear — they fall to the "Other activity" bucket below, which is where an orchard harvest
+       belongs, because nothing in the orchard is ever in the crop plan. */
+    const isAnnualRow = (raw: string) =>
+      perennialKeyForName(loggedCropLabel(raw)) === null
+      && matchCropKey(loggedCropLabel(raw), aliasIndex) === cropKey;
+    const harvestRows = productionInPeriod.filter((p) => isAnnualRow(p.crop));
+    const saleRows = salesInPeriod.filter((s) => isAnnualRow(s.crop));
     harvestRows.forEach((r) => matchedProductionIds.add(r.id));
     saleRows.forEach((r) => matchedSalesIds.add(r.id));
 
