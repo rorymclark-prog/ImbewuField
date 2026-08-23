@@ -146,7 +146,7 @@ export default function NetworkPage() {
         <BackButton fallback="/home" />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: LINE }} />
-        <span className="text-xs font-display" style={{ color: INK_SOFT }}>
+        <span className="text-xs font-display truncate min-w-0" style={{ color: INK_SOFT }}>
           Network · funder portfolio
         </span>
         <div className="flex-1" />

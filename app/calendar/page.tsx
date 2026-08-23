@@ -357,7 +357,7 @@ export default function CalendarPage() {
         <MenuButton />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
-        <span className="text-xs font-display" style={{ color: '#5C5040' }}>Planting Calendar</span>
+        <span className="text-xs font-display truncate min-w-0" style={{ color: '#5C5040' }}>Planting Calendar</span>
         <div className="flex-1" />
         <LessonLink id="crops:calendar" label="Learn" />
         <SettingsButton />

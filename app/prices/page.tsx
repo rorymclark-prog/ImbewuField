@@ -43,7 +43,7 @@ export default function PricesPage() {
         <BackButton fallback="/home" />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: 'var(--color-border)' }} />
-        <span className="text-xs font-display" style={{ color: 'var(--color-muted-strong)' }}>Farm-gate prices</span>
+        <span className="text-xs font-display truncate min-w-0" style={{ color: 'var(--color-muted-strong)' }}>Farm-gate prices</span>
         <div className="flex-1" />
         <LessonLink id="prices:overview" label="Learn" />
         <SettingsButton />

@@ -549,7 +549,7 @@ export default function SurveysPage() {
         <BackButton fallback="/home" />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
-        <span className="text-xs font-display" style={{ color: '#5C5040' }}>Surveys</span>
+        <span className="text-xs font-display truncate min-w-0" style={{ color: '#5C5040' }}>Surveys</span>
         <div className="flex-1" />
         <LessonLink id="surveys:overview" label="Learn" />
         <SettingsButton />

@@ -146,7 +146,7 @@ export default function AccountPage() {
         <MenuButton />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
-        <span className="text-xs font-display" style={{ color: '#5C5040' }}>Account</span>
+        <span className="text-xs font-display truncate min-w-0" style={{ color: '#5C5040' }}>Account</span>
         <div className="flex-1" />
         <LessonLink id="account:overview" label="Learn" />
         <button onClick={() => setSettingsOpen(true)} aria-label="Settings"
