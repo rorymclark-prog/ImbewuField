@@ -1117,8 +1117,13 @@ export default function FinancesPage() {
       >
         <MenuButton />
         <BrandLogo />
-        <div className="w-px h-5" style={{ background: 'var(--color-border)' }} />
-        <span className="text-xs font-display truncate min-w-0" style={{ color: 'var(--color-muted-strong)' }}>Finances</span>
+        {/* On a 375px phone the burger, the logo, Learn, Invoice and Settings leave
+            this label about four characters, so it read "Finan…" — a truncation that
+            tells you less than nothing. The bottom nav already names this screen and
+            highlights it, so below sm the label simply steps aside, which is the same
+            pattern the funder and NGO headers use. */}
+        <div className="w-px h-5 hidden sm:block" style={{ background: 'var(--color-border)' }} />
+        <span className="text-xs font-display truncate min-w-0 hidden sm:block" style={{ color: 'var(--color-muted-strong)' }}>Finances</span>
         <div className="flex-1" />
         <LessonLink id="finances:overview" label="Learn" />
         <Link href="/invoice"
