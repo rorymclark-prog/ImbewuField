@@ -44,6 +44,7 @@ import {
   saveIncludePerennials,
   DEFAULT_INCLUDE_PERENNIALS,
 } from '@/lib/produce-scope';
+import { produceDisplayName } from '@/lib/perennial-produce';
 import {
   buildCreditPackPdf,
   deliverCreditPackPdf,
@@ -1172,11 +1173,15 @@ export default function MyRecords() {
         const counted = production.filter((p) => inScope(p.crop));
         const left = production.filter((p) => !inScope(p.crop));
         const excludedKg = left.reduce((s, p) => s + (p.kg ?? 0), 0);
-        const excludedNames = [...new Set(left.filter((p) => (p.kg ?? 0) > 0).map((p) => p.crop.trim()))]
+        // Named by the catalogue, so one fruit is one name however the picker and the sale form
+        // each spelt it.
+        const excludedNames = [...new Set(left.filter((p) => (p.kg ?? 0) > 0).map((p) => produceDisplayName(p.crop)))]
           .sort((a, b) => a.localeCompare(b, 'en-ZA'));
         const totalKg = counted.reduce((s, p) => s + (p.kg ?? 0), 0);
         const byCrop: Record<string, number> = {};
-        counted.forEach((p) => { byCrop[p.crop] = (byCrop[p.crop] ?? 0) + (p.kg ?? 0); });
+        // Same grouping rule, so two spellings of one fruit cannot split its kilograms and cost it
+        // the top-crop line it earned.
+        counted.forEach((p) => { const n = produceDisplayName(p.crop); byCrop[n] = (byCrop[n] ?? 0) + (p.kg ?? 0); });
         const topCrop = Object.entries(byCrop).sort((a, b) => b[1] - a[1])[0];
         const recent = counted.slice(0, 12);
         const maxKg = Math.max(...recent.map((p) => p.kg ?? 0), 1);

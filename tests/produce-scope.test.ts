@@ -70,7 +70,8 @@ test('produce scope: the kilogram series drops orchard rows and says what it dro
 
   const all = buildFinanceSeries(production, sales, [], [], NOW, 12);
   assert.equal(all.totalProducedKg, 50);
-  assert.equal(all.excludedKg, 0);
+  assert.equal(all.excludedProducedKg, 0);
+  assert.equal(all.excludedSoldKg, 0);
   assert.deepEqual(all.excludedNames, []);
 
   const vegOnly = buildFinanceSeries(production, sales, [], [], NOW, 12, {
@@ -78,9 +79,12 @@ test('produce scope: the kilogram series drops orchard rows and says what it dro
   });
   assert.equal(vegOnly.totalProducedKg, 10, 'the avocado harvest still counted');
   assert.equal(vegOnly.totalSoldKg, 0, 'the avocado sale still counted');
-  // The honesty condition: 80 kg left out (40 picked + 40 sold), and the fruit named.
-  assert.equal(vegOnly.excludedKg, 80);
-  assert.deepEqual(vegOnly.excludedNames, ['Avocados']);
+  // The honesty condition, stated as two figures because the card has two. Their SUM is not a
+  // quantity of fruit: 40 kg was picked and 40 kg of it sold, so "80 kg left out" would name a
+  // heap that never existed and match none of the card's picked, sold or kept figures.
+  assert.equal(vegOnly.excludedProducedKg, 40);
+  assert.equal(vegOnly.excludedSoldKg, 40);
+  assert.deepEqual(vegOnly.excludedNames, ['Avocado'], 'the catalogue name, not the typed plural');
 });
 
 test('produce scope: the money is never filtered, only the kilograms', () => {
@@ -104,7 +108,7 @@ test('produce scope: a zero-kilogram orchard row is not reported as something hi
   const vegOnly = buildFinanceSeries([], [sale('Avocados', 0, 300, '2026-08-06T08:00:00.000Z')], [], [], NOW, 12, {
     countsKg: (name) => countsWithScope(name, false),
   });
-  assert.equal(vegOnly.excludedKg, 0);
+  assert.equal(vegOnly.excludedProducedKg, 0);
   assert.deepEqual(vegOnly.excludedNames, []);
   assert.equal(vegOnly.totalInZar, 300);
 });
@@ -118,14 +122,14 @@ test('produce scope: two spellings of one fruit are named once each, in a stable
   const vegOnly = buildFinanceSeries(production, [], [], [], NOW, 12, {
     countsKg: (name) => countsWithScope(name, false),
   });
-  assert.equal(vegOnly.excludedKg, 10);
-  assert.deepEqual(vegOnly.excludedNames, ['Avocado', 'Mangoes']);
+  assert.equal(vegOnly.excludedProducedKg, 10);
+  assert.deepEqual(vegOnly.excludedNames, ['Avocado', 'Mango'], 'one line per fruit, under its catalogue name');
 });
 
 test('produce scope: with no filter given, nothing is excluded and nothing is claimed to be', () => {
   const series = buildFinanceSeries([harvest('Avocados', 9, '2026-08-04T08:00:00.000Z')], [], [], [], NOW, 12);
   assert.equal(series.totalProducedKg, 9);
-  assert.equal(series.excludedKg, 0);
+  assert.equal(series.excludedProducedKg, 0);
   assert.deepEqual(series.excludedNames, []);
 });
 
@@ -316,4 +320,33 @@ test('a name in no catalogue still keeps its own line and its own words', async 
     harvest('Eggs', 3, '2026-08-05T08:00:00.000Z'),
   ], [], 'year', NOW);
   assert.deepEqual(result.unplannedActivity.map((r) => r.label), ['Eggs']);
+});
+
+// ── What the switch says it hid (2026-08-23) ────────────────────────────────
+//
+// Seen on the live build with the orchard switched off: "so 65.0 kg is left out of
+// every figure on this card: Avocado, Avocados." One tree named twice, and a figure
+// that is neither picked (40), sold (25) nor kept (15) — it is 40 + 25, which counts
+// the sold kilograms a second time and names a heap that never existed.
+
+test('what the orchard switch hides is stated as picked and sold, never as their sum', () => {
+  const vegOnly = buildFinanceSeries(
+    [harvest('Avocado', 40, '2026-08-05T08:00:00.000Z')],
+    [sale('Avocados', 25, 500, '2026-08-06T08:00:00.000Z')],
+    [], [], NOW, 12, { countsKg: (name) => countsWithScope(name, false) },
+  );
+  assert.equal(vegOnly.excludedProducedKg, 40);
+  assert.equal(vegOnly.excludedSoldKg, 25);
+  // The kept figure the card also shows: 15 kg. Every one of the three is available;
+  // no single number stands for all three, which is why none is offered.
+  assert.equal(vegOnly.excludedProducedKg - vegOnly.excludedSoldKg, 15);
+  assert.deepEqual(vegOnly.excludedNames, ['Avocado'], 'one tree, one name');
+});
+
+test('a produce the app cannot place keeps the words the farmer wrote', async () => {
+  const { produceDisplayName } = await import('@/lib/perennial-produce');
+  assert.equal(produceDisplayName('Avocados'), 'Avocado');
+  assert.equal(produceDisplayName('  avocado  '), 'Avocado');
+  assert.equal(produceDisplayName('Gogo’s special'), 'Gogo’s special');
+  assert.equal(produceDisplayName(''), '');
 });
