@@ -9,6 +9,8 @@ import { listGardens, listGardeners, getGardenerProfile } from '@/lib/db/queries
 import { getFirebase } from '@/lib/firebase/init';
 import { COURSE_MODULES } from '@/lib/course-modules';
 import { getCropArt } from '@/lib/crop-art';
+import { buildCropAliasIndex, cropIdentityOf } from '@/lib/crop-identity';
+import { cropByKey } from '@/lib/crop-catalog';
 import type { Garden as DbGarden, GardenMember, Profile, GardenerProfile as DbGardenerProfile, ProductionLog, SalesLog, CourseProgress } from '@/lib/db/types';
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
@@ -101,9 +103,38 @@ function gardenersFor(garden: Garden): Gardener[] {
 
 // ── helpers to map live DB types onto the UI shape ──
 
+/**
+ * A real gardener's written crop name, resolved for display on the NGO/funder panel.
+ *
+ * WHAT THIS USED TO DO, AND WHY IT WAS WORSE THAN A MISSING ICON:
+ *   const found = CROPS.find((c) => name.toLowerCase().includes(c.n.toLowerCase()));
+ *   return found ?? CROPS[0];
+ * CROPS is the ten-item DEMO array at the top of this file, there to give fake gardeners
+ * plausible rows. Nothing in it is a substring of "Avocado", so `found` was undefined and every
+ * unrecognised crop fell to CROPS[0] — Spinach, drawn with swiss-chard artwork. A funder or
+ * programme officer opening a real gardener saw her avocado harvest reported as spinach. Not a
+ * missing icon: a different crop, named and illustrated, in the screen people fund her from.
+ *
+ * The name now comes from the real catalogues via lib/crop-identity.ts, so it agrees with every
+ * other screen, and a crop NEITHER catalogue knows keeps the words she wrote (rule d). Artwork is
+ * keyed on the resolved catalogue key — CROP_ART is keyed by CropDef.key — so a crop with no
+ * drawing falls back to its own emoji, and a perennial (namespaced `perennial:`) has neither and
+ * gets a neutral marker. Showing nothing is honest; showing another crop is not.
+ */
+const NEUTRAL_PRODUCE_TINT = '#8C7A62';
+/* Built once: the alias index walks the whole annual catalogue, and this runs per logged row. */
+const ngoAliasIndex = buildCropAliasIndex();
+
 function cropForName(name: string): typeof CROPS[number] {
-  const found = CROPS.find((c) => name.toLowerCase().includes(c.n.toLowerCase()));
-  return found ?? CROPS[0];
+  const identity = cropIdentityOf(name, ngoAliasIndex);
+  const catalogued = identity.key ? cropByKey(identity.key) : null;
+  const demo = identity.key ? CROPS.find((c) => c.k === identity.key) : undefined;
+  return {
+    n: identity.label,
+    e: catalogued?.icon ?? '\u{1F33F}',
+    c: demo?.c ?? NEUTRAL_PRODUCE_TINT,
+    k: identity.key ?? '',
+  };
 }
 
 function fmtDate(iso: string): string {
@@ -382,7 +413,11 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
     return { produced, soldKg, soldR, kept };
   })();
 
-  const photoCrops = gardener ? Array.from(new Map(gardener.production.map((p) => [p.crop.n, { crop: p.crop, photoUrl: p.photoUrl }])).values()).slice(0, 5) : [];
+  /* Deduped on the resolved catalogue key, not the displayed name. While every unmatched crop was
+     renamed "Spinach" this line collapsed all of them into ONE tile and threw the rest of the
+     gardener's photos away before the slice ever ran. A crop the catalogues do not know has an
+     empty key, so those keep deduping on the words she wrote. */
+  const photoCrops = gardener ? Array.from(new Map(gardener.production.map((p) => [p.crop.k || p.crop.n, { crop: p.crop, photoUrl: p.photoUrl }])).values()).slice(0, 5) : [];
 
   return (
     <div className="flex flex-col w-full h-full overflow-hidden">
