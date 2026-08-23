@@ -77,23 +77,45 @@ export async function buildInvoicePdf(doc: InvoiceDocument, fileName: string): P
   };
 
   /* ── Letterhead ─────────────────────────────────────────── */
+  // The enterprise logo, when set, leads on the left and the text block indents past
+  // it — the same order as the screen document, so the WhatsApped PDF and the printed
+  // page are the same letterhead. A logo that jsPDF cannot decode must not take the
+  // whole invoice down with it: the document is what the buyer pays from, so a failed
+  // image is dropped and everything else still prints.
+  const LOGO = 44;
+  let headX = M;
+  if (doc.sellerLogo) {
+    try {
+      pdf.addImage(doc.sellerLogo, M, 54, LOGO, LOGO, undefined, 'FAST');
+      headX = M + LOGO + 12;
+    } catch {
+      headX = M;
+    }
+  }
+  // With a logo the text starts past it and runs to the right margin; without one it
+  // starts at the margin and stops short of the app mark that sits in the corner.
+  const headW = headX === M ? CONTENT_W - 46 : PAGE.width - M - headX;
+
   y = 70;
   pdf.setFont('helvetica', 'bold');
   pdf.setFontSize(18);
   setInk(INK);
-  // Reserve the logo square so a long trading name cannot run underneath it.
-  wrapped(doc.sellerName || ' ', M, CONTENT_W - 46, 21);
+  // Reserve the mark square so a long trading name cannot run underneath it.
+  wrapped(doc.sellerName || ' ', headX, headW, 21);
 
   pdf.setFont('helvetica', 'normal');
   pdf.setFontSize(9.5);
   setInk(BODY);
   for (const line of doc.sellerLines) {
     y += 1;
-    wrapped(line, M, CONTENT_W - 46, 12);
+    wrapped(line, headX, headW, 12);
   }
 
-  pdf.setFillColor(GREEN[0], GREEN[1], GREEN[2]);
-  pdf.roundedRect(PAGE.width - M - 32, 54, 32, 32, 6, 6, 'F');
+  // The app's own mark only stands in when there is no enterprise logo.
+  if (headX === M) {
+    pdf.setFillColor(GREEN[0], GREEN[1], GREEN[2]);
+    pdf.roundedRect(PAGE.width - M - 32, 54, 32, 32, 6, 6, 'F');
+  }
 
   /* ── Invoice number, dates, reference ───────────────────── */
   y += 14;

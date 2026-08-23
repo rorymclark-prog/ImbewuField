@@ -25,6 +25,15 @@ export interface Profile {
    * the wrong farm is not, so an unset value prints nothing rather than a placeholder.
    */
   farm_name?: string | null;
+  /**
+   * The enterprise logo, as a downscaled data URL (see `resizeLogoForStorage`).
+   *
+   * Stored inline rather than in object storage because it is small, it is needed
+   * synchronously by the jsPDF writer (which cannot await a fetch mid-document), and an
+   * invoice must still render its letterhead offline. Unset means the app's own mark is
+   * drawn instead — never an empty box, and never someone else's brand.
+   */
+  farm_logo?: string | null;
   skills?: string[] | null;
   showOnMap?: boolean;
   mapLat?: number | null;

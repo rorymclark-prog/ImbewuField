@@ -26,9 +26,23 @@ import { loadCropPriceOverrides, priceFor, type CropPrice } from '@/lib/crop-pri
 import { priceDateLabel } from '@/components/prices/CropPriceGuide.format';
 import { syncInvoiceSales } from '@/lib/db/queries';
 import { isSampleMode, getSandboxProfile } from '@/lib/sample-mode';
+import { updateMyProfile } from '@/lib/db/queries';
 import type { Profile } from '@/lib/db/types';
 
-interface LineItem { id: number; desc: string; qty: number; unit: string; price: number }
+interface LineItem {
+  id: number; desc: string; qty: number; unit: string; price: number;
+  /**
+   * This price came from the researched guide, not from the farmer.
+   *
+   * The guide used to be shown beside an empty box and never written into it, on the
+   * reasoning that a guide is not an agreed price. In practice that left every farmer
+   * copying a number that was already on screen, by hand, on a phone. So it is filled in
+   * — and flagged, so the line can say it is a suggestion, and so a later change of buyer
+   * can re-price it. The instant the farmer types their own figure the flag clears and
+   * the app never touches that line's price again.
+   */
+  priceFromGuide?: boolean;
+}
 
 const UNITS = ['bags', 'kg', 'crates', 'bunches', 'trays', 'each'];
 const PAYMENT_METHODS: PaymentMethod[] = ['cash', 'eft', 'card', 'mobile', 'other'];
@@ -85,7 +99,7 @@ function Disclosure({
 }
 
 export default function InvoicePage() {
-  const { user, profile: signedInProfile } = useAuth();
+  const { user, profile: signedInProfile, refreshProfile } = useAuth();
   // Sample mode has no signed-in user, so useAuth() returns no profile and the demo invoice
   // printed a bare "Your name" placeholder — which reads as an unbuilt feature rather than an
   // unset field. Not a second authority: in sample mode the sandbox profile IS the profile, the
@@ -93,6 +107,9 @@ export default function InvoicePage() {
   const [sampleProfile, setSampleProfile] = useState<Profile | null>(null);
   const profile = sampleProfile ?? signedInProfile;
 
+  // Mirrors profile.farm_name while the field is being typed into, so a half-typed name is
+  // never written to the account and never flickers onto the live document preview.
+  const [businessNameDraft, setBusinessNameDraft] = useState('');
   const [seq, setSeq] = useState(44);
   const [currentNo, setCurrentNo] = useState(44);
   const [currentId, setCurrentId] = useState<string | null>(null);
@@ -146,6 +163,59 @@ export default function InvoicePage() {
   // lines, so there is no stand-in on either the screen or the PDF.
   const sellerFarm = profile?.farm_name?.trim() ?? '';
 
+  // Seed the editable draft from whatever the account holds, once it arrives. Guarded on the
+  // draft still being empty so it cannot overwrite something the farmer is mid-way through
+  // typing when a background profile refresh lands.
+  useEffect(() => {
+    const stored = profile?.farm_name?.trim() ?? '';
+    if (stored) setBusinessNameDraft((current) => (current ? current : stored));
+  }, [profile?.farm_name]);
+  // Same rule as the farm name: unset draws the app's own mark, never a stand-in logo.
+  const sellerLogo = profile?.farm_logo ?? '';
+
+  /**
+   * Which side of the guide applies to THIS buyer.
+   *
+   * Selling a crate at the farm gate and selling the same crate into a spaza shop are
+   * different prices, and the guide publishes both. The buyer type the farmer has already
+   * chosen decides which one is offered.
+   */
+  const wholesaleBuyer = WHOLESALE_BUYERS.includes(billTo.trim().toLocaleLowerCase('en-ZA'));
+
+  /** The guide price for a crop description, or null when the crop is not priced. */
+  function guidePriceFor(desc: string, wholesale: boolean): number | null {
+    const crop = cropEntryOption(desc);
+    if (!crop) return null;
+    const guide = priceFor(crop.key, priceOverrides);
+    if (!guide) return null;
+    const value = wholesale ? guide.wholesalePerKg : guide.retailPerKg;
+    return Number.isFinite(value) && value > 0 ? value : null;
+  }
+
+  /**
+   * A suggested price follows the buyer.
+   *
+   * Switching "Bill to" from Farm gate to Spaza shop moves every still-suggested line to
+   * the wholesale side of the same guide, because that is the price that just became the
+   * right one. A line the farmer has typed into is never touched — `priceFromGuide` is
+   * cleared the moment they edit it, and this only ever reads lines that still carry it.
+   */
+  useEffect(() => {
+    setItems((prev) => {
+      let changed = false;
+      const next = prev.map((item) => {
+        if (!item.priceFromGuide || item.unit !== 'kg') return item;
+        const guide = guidePriceFor(item.desc, wholesaleBuyer);
+        if (guide === null || guide === item.price) return item;
+        changed = true;
+        return { ...item, price: guide };
+      });
+      return changed ? next : prev;
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- guidePriceFor is re-created every
+    // render; its only real inputs are the two below.
+  }, [wholesaleBuyer, priceOverrides]);
+
   const total = items.reduce((s, it) => s + it.qty * it.price, 0);
   const valid = billTo.trim() !== '' && items.some((it) => it.desc.trim() !== '' && it.qty > 0);
   const invoiceNo = `#${String(currentNo).padStart(4, '0')}`;
@@ -158,7 +228,7 @@ export default function InvoicePage() {
     issuedISO,
     dueISO: due,
     seller: {
-      name: sellerName, farm: sellerFarm, phone: sellerPhone,
+      name: sellerName, farm: sellerFarm, phone: sellerPhone, logo: sellerLogo,
       address: letterhead.address, email: letterhead.email, taxNumber: letterhead.taxNumber,
     },
     buyer: { name: billTo, ...buyerDetails },
@@ -175,6 +245,22 @@ export default function InvoicePage() {
     paidAt: saved.find((s) => s.id === currentId)?.paidAt,
     paymentMethod: saved.find((s) => s.id === currentId)?.paymentMethod,
   }), [currentNo, issuedISO, due, sellerName, sellerFarm, sellerPhone, letterhead, billTo, buyerDetails, items, reference, notes, saved, currentId]);
+
+  /**
+   * Save the business name back to the account, on blur rather than per keystroke.
+   *
+   * In sample mode `updateMyProfile` writes to the in-memory sandbox, so the demo can be
+   * renamed without touching anybody's real account — but `refreshProfile` reads the signed-in
+   * user, which sample mode does not have. The local sample profile is therefore patched
+   * directly, the same substitution this page already makes when it loads.
+   */
+  async function saveBusinessName() {
+    const next = businessNameDraft.trim();
+    if (next === (profile?.farm_name ?? '').trim()) return;
+    await updateMyProfile({ farm_name: next || null });
+    if (isSampleMode()) setSampleProfile(getSandboxProfile());
+    else await refreshProfile();
+  }
 
   function patchLetterhead(patch: Partial<SellerLetterhead>) {
     setLetterhead((prev) => {
@@ -194,12 +280,17 @@ export default function InvoicePage() {
       const remembered = products.find(
         (product) => product.desc.toLocaleLowerCase('en-ZA') === crop.toLocaleLowerCase('en-ZA'),
       );
+      // What this farmer actually charged last time beats any published guide.
       if (remembered && remembered.unit === 'kg') {
-        return { ...item, desc: crop, unit: 'kg', price: remembered.price };
+        return { ...item, desc: crop, unit: 'kg', price: remembered.price, priceFromGuide: false };
       }
-      // Every researched guide is per kg. A catalogue selection must therefore change the unit
-      // before any guide is shown, and a guide is never copied into the farmer's price field.
-      return { ...item, desc: crop, unit: cropKey ? 'kg' : (remembered?.unit ?? 'kg'), price: remembered?.price ?? 0 };
+      // Every researched guide is per kg, so a catalogue selection sets the unit first.
+      const unit = cropKey ? 'kg' : (remembered?.unit ?? 'kg');
+      if (remembered) return { ...item, desc: crop, unit, price: remembered.price, priceFromGuide: false };
+      const guide = unit === 'kg' ? guidePriceFor(crop, wholesaleBuyer) : null;
+      return guide !== null
+        ? { ...item, desc: crop, unit, price: guide, priceFromGuide: true }
+        : { ...item, desc: crop, unit, price: 0, priceFromGuide: false };
     }));
   }
 
@@ -495,8 +586,25 @@ export default function InvoicePage() {
               title="Your details & banking"
               hint={doc.bankingLines.length > 0 ? 'Printed on every invoice' : 'Add an address and bank account so buyers can pay you'}
             >
+              {/* The business name is the one letterhead field that is NOT device-local — it
+                  lives on the account, because it is the same on every device the farmer signs
+                  in from. It is editable here anyway: this is the screen where somebody
+                  discovers their invoice is headed with the wrong name, and sending them to
+                  Account to fix it is how a two-tap change becomes an abandoned one. */}
+              <label className="block">
+                <FieldLabel>Business name</FieldLabel>
+                <input value={businessNameDraft} onChange={(e) => setBusinessNameDraft(e.target.value)}
+                  onBlur={saveBusinessName}
+                  placeholder="e.g. Ubhejane Creche"
+                  className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5" style={FIELD} />
+                <div className="text-xs font-sans mt-1" style={{ color: '#8C7A62' }}>
+                  {businessNameDraft.trim()
+                    ? 'This heads your invoices. Your own name is printed underneath it.'
+                    : 'Leave empty to invoice under your own name. Add a logo in Account.'}
+                </div>
+              </label>
               <p className="text-xs font-sans leading-relaxed" style={{ color: '#8C7A62' }}>
-                Your name, phone and farm name come from your account. Everything here is added to
+                Your name and phone come from your account. Everything else here is added to
                 the letterhead on every invoice, and stays on this device.
               </p>
               <label className="block">
@@ -640,14 +748,14 @@ export default function InvoicePage() {
                       className="w-16 text-sm font-display outline-none rounded-lg px-2.5 py-2 tabular-nums" style={FIELD} />
                     <select value={it.unit} aria-label="Unit" onChange={(e) => updateItem(it.id, {
                       unit: e.target.value,
-                      ...(it.unit === 'kg' && e.target.value !== 'kg' ? { price: 0 } : {}),
+                      ...(it.unit === 'kg' && e.target.value !== 'kg' ? { price: 0, priceFromGuide: false } : {}),
                     })}
                       className="text-sm font-display outline-none rounded-lg px-2 py-2 appearance-none" style={FIELD}>
                       {UNITS.map((u) => <option key={u} value={u}>{u}</option>)}
                     </select>
                     <div className="flex items-center gap-1 flex-1 rounded-lg px-2.5 py-2" style={FIELD}>
                       <span className="text-sm font-display" style={{ color: '#8C7A62' }}>R</span>
-                      <input type="number" min={0} inputMode="decimal" value={it.price || ''} onChange={(e) => updateItem(it.id, { price: Math.max(0, parseFloat(e.target.value) || 0) })}
+                      <input type="number" min={0} inputMode="decimal" value={it.price || ''} onChange={(e) => updateItem(it.id, { price: Math.max(0, parseFloat(e.target.value) || 0), priceFromGuide: false })}
                         placeholder="0" aria-label="Price each"
                         className="w-full text-sm font-display outline-none tabular-nums"
                         style={{ background: 'transparent', border: 'none', color: '#20190F' }} />
@@ -658,17 +766,21 @@ export default function InvoicePage() {
                     const crop = cropEntryOption(it.desc);
                     const guide = crop ? priceFor(crop.key, priceOverrides) : null;
                     if (!guide || it.unit !== 'kg') return null;
-                    const wholesaleFirst = WHOLESALE_BUYERS.includes(billTo.trim().toLocaleLowerCase('en-ZA'));
-                    const first = wholesaleFirst
+                    const first = wholesaleBuyer
                       ? `Shops/bulk about R${guide.wholesalePerKg}/kg`
                       : `Direct/farm gate about R${guide.retailPerKg}/kg`;
-                    const second = wholesaleFirst
+                    const second = wholesaleBuyer
                       ? `direct/farm gate about R${guide.retailPerKg}/kg`
                       : `shops/bulk about R${guide.wholesalePerKg}/kg`;
                     return (
                       <div className="rounded-lg px-2.5 py-2 text-xs font-sans leading-relaxed" style={{ background: '#F7F2E9', color: '#5C5040' }}>
+                        {it.priceFromGuide && (
+                          <div className="font-semibold mb-0.5" style={{ color: '#1F4D2B' }}>
+                            Suggested price filled in — change it if you agreed something else.
+                          </div>
+                        )}
                         <strong style={{ color: '#20190F' }}>{first}</strong> · {second} — guide price from {priceDateLabel(guide)}.
-                        {' '}{guide.confidence === 'estimated' ? 'Estimated; confirm locally.' : 'Sourced guide; enter your agreed price.'}
+                        {' '}{guide.confidence === 'estimated' ? 'Estimated; confirm locally.' : 'Sourced guide.'}
                       </div>
                     );
                   })()}

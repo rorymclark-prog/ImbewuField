@@ -5,11 +5,12 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import { updateMyProfile, uploadPhoto } from '@/lib/db/queries';
+import { resizeLogoForStorage } from '@/lib/invoice-logo';
 import { APP_LANGS } from '@/lib/i18n';
 import TabBar from '@/components/TabBar';
 import BrandLogo from '@/components/BrandLogo';
 import ThemePanel from '@/components/ThemePanel';
-import { Settings, Sprout, Mail, Phone, Globe, LogOut, ChevronRight, User, Pencil, Check, X, Camera, Lock, Eye, EyeOff, type LucideIcon } from 'lucide-react';
+import { Settings, Sprout, Mail, Phone, Globe, LogOut, ChevronRight, User, Pencil, Check, X, Camera, Lock, Eye, EyeOff, Image as ImageIcon, type LucideIcon } from 'lucide-react';
 import type { UserRole } from '@/lib/db/types';
 import LessonLink from '@/components/design/LessonLink';
 
@@ -41,6 +42,9 @@ export default function AccountPage() {
   const [form, setForm] = useState({ name: '', phone: '', farmName: '', language: 'en' });
   const [photoUploading, setPhotoUploading] = useState(false);
   const photoInputRef = useRef<HTMLInputElement>(null);
+  const [logoUploading, setLogoUploading] = useState(false);
+  const [logoError, setLogoError] = useState<string | null>(null);
+  const logoInputRef = useRef<HTMLInputElement>(null);
   const [changingPw, setChangingPw] = useState(false);
   const [pwForm, setPwForm] = useState({ current: '', next: '', confirm: '' });
   const [pwError, setPwError] = useState<string | null>(null);
@@ -84,6 +88,30 @@ export default function AccountPage() {
       setPhotoUploading(false);
       if (photoInputRef.current) photoInputRef.current.value = '';
     }
+  }
+
+  async function handleLogoChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setLogoError(null);
+    setLogoUploading(true);
+    try {
+      const dataUrl = await resizeLogoForStorage(file);
+      await updateMyProfile({ farm_logo: dataUrl });
+      await refreshProfile();
+    } catch (err) {
+      // The farmer chose a file and watched nothing happen otherwise. Say which part failed.
+      setLogoError(err instanceof Error ? err.message : 'Could not add that logo.');
+    } finally {
+      setLogoUploading(false);
+      if (logoInputRef.current) logoInputRef.current.value = '';
+    }
+  }
+
+  async function handleRemoveLogo() {
+    setLogoError(null);
+    await updateMyProfile({ farm_logo: null });
+    await refreshProfile();
   }
 
   async function handleChangePw() {
@@ -193,15 +221,56 @@ export default function AccountPage() {
                   style={{ background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }} />
               </label>
 
-              {/* Printed under your name on every invoice. Blank is fine — it simply prints
-                  nothing, which is why there is no placeholder value standing in for it. */}
+              {/* The trading name the buyer knows — it HEADS every invoice, and the person's
+                  own name moves to a contact line underneath it. Blank is fine: the invoice
+                  then leads with the personal name, which is what a farmer trading under
+                  their own name wants. Nothing is ever substituted for an unset value. */}
               <label className="block">
-                <div className="text-xs font-mono mb-1" style={{ color: '#8C7A62' }}>Farm name <span style={{ opacity: 0.7 }}>(shown on invoices)</span></div>
+                <div className="text-xs font-mono mb-1" style={{ color: '#8C7A62' }}>Business name <span style={{ opacity: 0.7 }}>(heads your invoices)</span></div>
                 <input value={form.farmName} onChange={(e) => setForm((f) => ({ ...f, farmName: e.target.value }))}
-                  placeholder="e.g. Plot 14, Nquthu"
+                  placeholder="e.g. Ubhejane Creche"
                   className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5"
                   style={{ background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }} />
+                <div className="text-xs font-sans mt-1" style={{ color: '#8C7A62' }}>
+                  Leave this empty to invoice under your own name instead.
+                </div>
               </label>
+
+              {/* Business logo. Saved on its own the moment a file is chosen, rather than
+                  waiting for Save — the picture is already visible by then, so a logo that
+                  vanished on Cancel would read as a failed upload. */}
+              <div className="block">
+                <div className="text-xs font-mono mb-1" style={{ color: '#8C7A62' }}>Business logo <span style={{ opacity: 0.7 }}>(shown on invoices)</span></div>
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center justify-center rounded-xl flex-shrink-0 overflow-hidden"
+                    style={{ width: 56, height: 56, background: '#fff', border: '1px solid #D8CBB2' }}>
+                    {profile?.farm_logo
+                      /* eslint-disable-next-line @next/next/no-img-element -- farmer-supplied data URL */
+                      ? <img src={profile.farm_logo} alt="" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                      : <ImageIcon size={20} style={{ color: '#C3B79E' }} />}
+                  </div>
+                  <div className="flex flex-col gap-1.5 min-w-0">
+                    <div className="flex gap-1.5 flex-wrap">
+                      <button type="button" onClick={() => logoInputRef.current?.click()} disabled={logoUploading}
+                        className="px-3 py-1.5 rounded-lg text-xs font-sans font-semibold"
+                        style={{ background: '#fff', border: '1px solid #D8CBB2', color: '#1F4D2B', cursor: logoUploading ? 'default' : 'pointer', opacity: logoUploading ? 0.6 : 1 }}>
+                        {logoUploading ? 'Adding…' : profile?.farm_logo ? 'Replace' : 'Add a logo'}
+                      </button>
+                      {profile?.farm_logo && !logoUploading && (
+                        <button type="button" onClick={handleRemoveLogo}
+                          className="px-3 py-1.5 rounded-lg text-xs font-sans"
+                          style={{ background: 'transparent', border: '1px solid #D8CBB2', color: '#8C7A62', cursor: 'pointer' }}>
+                          Remove
+                        </button>
+                      )}
+                    </div>
+                    <div className="text-xs font-sans" style={{ color: logoError ? '#A8443A' : '#8C7A62' }}>
+                      {logoError ?? 'A photo of your sign works. It is made smaller automatically.'}
+                    </div>
+                  </div>
+                </div>
+                <input ref={logoInputRef} type="file" accept="image/*" onChange={handleLogoChange} style={{ display: 'none' }} />
+              </div>
 
               <label className="block">
                 <div className="text-xs font-mono mb-1" style={{ color: '#8C7A62' }}>Language</div>

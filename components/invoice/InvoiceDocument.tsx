@@ -40,22 +40,39 @@ export default function InvoiceDocumentView({ doc }: { doc: InvoiceDocument }) {
   return (
     <div id="invoice-doc" className="rounded-2xl p-5" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
 
-      {/* Seller letterhead */}
-      <div className="invoice-head flex items-start justify-between gap-4 mb-4">
-        <div className="min-w-0">
-          <div className="invoice-seller-name font-display font-bold text-lg" style={{ color: '#20190F', lineHeight: 1.15 }}>
-            {doc.sellerName || <span style={{ color: '#B8AC97' }}>Your name</span>}
+      {/* Seller letterhead. The enterprise logo, when the farmer has set one, leads on the
+          left the way a letterhead reads. With no logo there is no empty slot — the app's own
+          mark sits on the right instead, so an unbranded invoice looks finished rather than
+          like a business that failed to upload something. */}
+      <div className="invoice-head flex items-start justify-between gap-3.5 mb-4">
+        <div className="flex items-start gap-3 min-w-0">
+          {doc.sellerLogo && (
+            /* eslint-disable-next-line @next/next/no-img-element -- a data URL the farmer
+               supplied; next/image cannot optimise it and would only add a loader. */
+            <img
+              className="invoice-logo flex-shrink-0 rounded-lg object-contain"
+              src={doc.sellerLogo}
+              alt=""
+              style={{ width: 52, height: 52, background: '#fff' }}
+            />
+          )}
+          <div className="min-w-0">
+            <div className="invoice-seller-name font-display font-bold text-xl" style={{ color: '#20190F', lineHeight: 1.1, letterSpacing: '-0.01em' }}>
+              {doc.sellerName || <span style={{ color: '#B8AC97' }}>Your business name</span>}
+            </div>
+            {doc.sellerLines.map((line) => (
+              <div key={line} className="text-xs font-sans mt-0.5" style={{ color: '#5C5040' }}>{line}</div>
+            ))}
           </div>
-          {doc.sellerLines.map((line) => (
-            <div key={line} className="text-xs font-sans mt-0.5" style={{ color: '#5C5040' }}>{line}</div>
-          ))}
         </div>
-        <div
-          className="invoice-mark flex items-center justify-center rounded-xl flex-shrink-0"
-          style={{ width: 40, height: 40, background: '#1F4D2B' }}
-        >
-          <Sprout />
-        </div>
+        {!doc.sellerLogo && (
+          <div
+            className="invoice-mark flex items-center justify-center rounded-xl flex-shrink-0"
+            style={{ width: 40, height: 40, background: '#1F4D2B' }}
+          >
+            <Sprout />
+          </div>
+        )}
       </div>
 
       {/* Invoice number, dates, buyer reference */}
@@ -114,10 +131,14 @@ export default function InvoiceDocumentView({ doc }: { doc: InvoiceDocument }) {
         ))}
       </div>
 
-      {/* Total */}
-      <div className="flex items-center justify-between mt-3 pt-3" style={{ borderTop: '2px solid #1F4D2B' }}>
+      {/* Total — the one number the buyer is looking for, so it gets its own tinted band
+          rather than sitting as one more row in the list. */}
+      <div
+        className="invoice-total-band flex items-center justify-between mt-3 px-3 py-2.5 rounded-lg"
+        style={{ background: 'rgba(31,77,43,0.07)', borderTop: '2px solid #1F4D2B' }}
+      >
         <span className="font-display font-semibold text-sm" style={{ color: '#20190F' }}>Total due</span>
-        <span className="invoice-total font-display font-bold text-xl tabular-nums" style={{ color: '#1F4D2B' }}>
+        <span className="invoice-total font-display font-bold text-2xl tabular-nums" style={{ color: '#1F4D2B', letterSpacing: '-0.01em' }}>
           {doc.totalLabel}
         </span>
       </div>
