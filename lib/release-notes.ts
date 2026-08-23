@@ -54,7 +54,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     changes: [
       'A Production score says what a square metre of your plan earns, in rands',
       'That score is split between vegetable beds and staple plots, which earn very differently',
-      'The score card says what it assumes you sell, what it assumes is lost, and which price it used',
+      'The score card names what it assumes you sell, what is lost, and which price',
       'A two-page quick print: a calendar for the wall, and the tasks that go with it',
       'The workload chart in the crop-plan PDF agrees with the field sheets beside it again',
       'The Field utilization chart lines up with its own month labels again',
@@ -70,8 +70,8 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       'When a crop you chose does not make it into the plan, the plan says why',
       'A bed that is only part taken can take a starter crop in the room that is left',
       'A one-off sowing whose month has passed reads as history, not as work still ahead',
-      'First-season notes no longer promise a gap will close when the repeating cycle cannot close it',
-      'Starter crops are ranked by how many months they feed you, not how fast they clear the ground',
+      'First-season notes no longer promise a gap the repeating cycle cannot close',
+      'Starter crops are ranked by months they feed you, not how fast they clear ground',
     ],
   },
   {
