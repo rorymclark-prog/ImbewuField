@@ -35,9 +35,12 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '23 August',
-    sha: '0acc973',
+    sha: 'df0d080',
     changes: [
       'Fruit, nuts and berries can be recorded now — your orchard is in the crop list',
+      'The orchard has its own figures: kilograms picked, rand taken, and price a kilogram',
+      'One fruit is one row, however you spelt its name when you logged it',
+      'A staple plot standing bare for months is now named on your plan, with the reason',
       'An Orchard button counts the trees in your totals, or leaves them out',
       'When it leaves them out, the screen says how many kilograms and which fruit',
       'Rand totals always count every sale — only the kilograms follow that button',
