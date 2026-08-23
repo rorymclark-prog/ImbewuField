@@ -123,7 +123,7 @@ export default function InvoicePage() {
   const [syncingInvoiceId, setSyncingInvoiceId] = useState<string | null>(null);
 
   useEffect(() => {
-    if (isSampleMode()) setSampleProfile(getSandboxProfile());
+    if (isSampleMode()) { setSampleProfile(getSandboxProfile()); setShowSaved(true); }
     const nextNumber = loadNextInvoiceNumber();
     setSeq(nextNumber);
     setCurrentNo(nextNumber);

@@ -1323,7 +1323,7 @@ function FacilitatorCropsPageInner() {
               className="w-full px-4 py-3 rounded-xl text-left font-sans transition-all"
               style={{ background: 'transparent', border: '1px dashed #C7BCA6', color: '#8C7A62', fontSize: 13 }}
             >
-              or use whatever design is currently open on this device
+              Or use the design already open on this device
             </button>
           </div>
         </div>
@@ -1367,7 +1367,7 @@ function FacilitatorCropsPageInner() {
               <button
                 onClick={openAutoSuggest}
                 className="flex-1 py-2.5 rounded-xl font-display font-semibold transition-all inline-flex items-center justify-center gap-1.5"
-                style={{ fontSize: 13, background: 'rgba(31,77,43,0.10)', border: '1px solid rgba(31,77,43,0.3)', color: '#1F4D2B', cursor: 'pointer' }}
+                style={{ fontSize: 14, background: '#1F4D2B', border: '1px solid #1F4D2B', color: '#F7F2E9', cursor: 'pointer' }}
               >
                 ✨ Auto-suggest a plan
               </button>
@@ -1456,7 +1456,7 @@ function FacilitatorCropsPageInner() {
                           flex: 1, padding: '8px 2px', fontSize: 11,
                           fontWeight: i === 0 ? 700 : 500,
                           color: i === 0 ? '#1F4D2B' : i >= 12 ? '#A89A82' : '#8C7A62',
-                          background: i === 0 ? 'rgba(31,77,43,0.08)' : 'transparent',
+                          background: i === 0 ? 'rgba(31,77,43,0.08)' : i >= 12 ? 'rgba(196,164,106,0.07)' : 'transparent',
                           // A month label repeats every 12 columns (no year field
                           // anywhere in this data model) — a visible seam at the
                           // 1-year mark stops "Jul" (this year) and "Jul" (next
@@ -1505,14 +1505,20 @@ function FacilitatorCropsPageInner() {
               </span>{' '}
               marks when to start checking seedlings raised in a tray. The crop bar starts at the planned transplant month;
               if seedlings are delayed, update the planting instead of treating the bed as occupied. Tap it (or the crop bar) for details.
-              <br />
-              ↻ marks where year two begins. The timeline shows <strong style={{ color: '#5C5040' }}>two full years</strong> — pan
-              sideways to reach the second one. This plan holds one annual cycle rather than a separate plan per
-              year, so year two is that same cycle coming round again, drawn <em>faded</em> to say so: it is what
-              these beds do if nothing changes, not a second year you have decided on.{' '}
-              <strong style={{ color: '#5C5040' }}>Rotate crops</strong> only avoids immediate same-family
-              sequences inside this annual plan and after a crop marked as already growing. A sound multi-year
-              rotation needs dated records from earlier seasons; this screen does not store or invent them.
+              <details className="mt-1.5">
+                <summary className="font-sans" style={{ cursor: 'pointer', color: '#5C5040', fontWeight: 600 }}>
+                  How the two-year timeline works (↻, faded bars, rotation)
+                </summary>
+                <div className="mt-1">
+                  ↻ marks where year two begins. The timeline shows <strong style={{ color: '#5C5040' }}>two full years</strong> — pan
+                  sideways to reach the second one. This plan holds one annual cycle rather than a separate plan per
+                  year, so year two is that same cycle coming round again, drawn <em>faded</em> to say so: it is what
+                  these beds do if nothing changes, not a second year you have decided on.{' '}
+                  <strong style={{ color: '#5C5040' }}>Rotate crops</strong> only avoids immediate same-family
+                  sequences inside this annual plan and after a crop marked as already growing. A sound multi-year
+                  rotation needs dated records from earlier seasons; this screen does not store or invent them.
+                </div>
+              </details>
             </div>
 
             {/* Food/field/cashflow resilience — moved directly under the plan
@@ -1537,14 +1543,14 @@ function FacilitatorCropsPageInner() {
             <div className="grid gap-4" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
               <div className="rounded-2xl p-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
                 <div className="font-display font-semibold mb-2" style={{ fontSize: 15, color: '#20190F' }}>📋 Tasks</div>
-                <div className="font-sans rounded-lg px-2.5 py-2 mb-3" style={{ fontSize: 11.5, color: '#7A4A12', lineHeight: 1.45, background: '#FFF8E8', border: '1px solid rgba(154,96,24,0.3)' }}>
-                  {SUCCESSION_TIMING_GUIDANCE}
-                </div>
                 <div className="font-sans mb-1" style={{ fontSize: 13, color: '#20190F' }}>
                   <strong>{monthLabel(currentMonth)}:</strong> <span style={{ color: '#5C5040' }}>{taskSentence(currentTasks)}</span>
                 </div>
-                <div className="font-sans mb-3" style={{ fontSize: 13, color: '#20190F' }}>
+                <div className="font-sans mb-2" style={{ fontSize: 13, color: '#20190F' }}>
                   <strong>{monthLabel(nextMonth)}:</strong> <span style={{ color: '#5C5040' }}>{taskSentence(nextTasks)}</span>
+                </div>
+                <div className="font-sans rounded-lg px-2.5 py-2 mb-3" style={{ fontSize: 11.5, color: '#7A4A12', lineHeight: 1.45, background: '#FFF8E8', border: '1px solid rgba(154,96,24,0.3)' }}>
+                  {SUCCESSION_TIMING_GUIDANCE}
                 </div>
                 <button
                   onClick={shareTasks}
@@ -1585,7 +1591,7 @@ function FacilitatorCropsPageInner() {
 
               <div className="rounded-2xl p-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
                 <div className="flex items-center justify-between mb-2 gap-2">
-                  <div className="font-display font-semibold" style={{ fontSize: 15, color: '#20190F' }}>🥬 Conservative benchmark comparison</div>
+                  <div className="font-display font-semibold" style={{ fontSize: 15, color: '#20190F' }}>🥬 Harvest total — conservative benchmark</div>
                   <div className="flex rounded-lg overflow-hidden flex-shrink-0" style={{ border: '1px solid #E2D8C4' }}>
                     {(['crop', 'bed'] as const).map((v) => (
                       <button
@@ -1795,13 +1801,18 @@ function FacilitatorCropsPageInner() {
                     <div className="font-sans" style={{ fontSize: 12, color: '#8C7A62' }}>Nothing new to buy yet.</div>
                   )}
                 </div>
-                <p className="font-mono mt-2" style={{ fontSize: 10, color: '#9A8268' }}>
-                  Field-position ranges come from mapped area and published spacing; they are not guaranteed buy quantities
-                  or germination/loss allowances. Supplier and crop-specific guidance may change what to purchase. Botanical seed quantity is
-                  not inferred from mature spacing: use the packet&apos;s crop-specific direct-sowing rate and germination
-                  guidance. Planting-piece ranges are shown only for seedlings, cloves, corms, slips and seed potatoes when both spacing
-                  axes are verified. Where a row layout is not verified, confirm it locally before buying material.
-                </p>
+                <details className="mt-2">
+                  <summary className="font-sans" style={{ fontSize: 11, color: '#8C7A62', cursor: 'pointer' }}>
+                    What these quantities do and do not cover
+                  </summary>
+                  <p className="font-mono mt-1" style={{ fontSize: 10, color: '#9A8268' }}>
+                    Field-position ranges come from mapped area and published spacing; they are not guaranteed buy quantities
+                    or germination/loss allowances. Supplier and crop-specific guidance may change what to purchase. Botanical seed quantity is
+                    not inferred from mature spacing: use the packet&apos;s crop-specific direct-sowing rate and germination
+                    guidance. Planting-piece ranges are shown only for seedlings, cloves, corms, slips and seed potatoes when both spacing
+                    axes are verified. Where a row layout is not verified, confirm it locally before buying material.
+                  </p>
+                </details>
               </div>
 
               <div className="rounded-2xl p-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
@@ -2101,9 +2112,12 @@ function PlanNoteGroups({ notes }: { notes: PlanNote[] }) {
         </div>
       )}
       {choices.length > 0 && (
-        <ul className="px-3 py-2 rounded-lg font-sans flex flex-col gap-1" style={{ fontSize: 11.5, background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#5C5040', listStyle: 'disc', paddingInlineStart: 26 }}>
-          {choices.map((n, i) => <li key={i}>{n.text}</li>)}
-        </ul>
+        <details className="px-3 py-2 rounded-lg font-sans" style={{ fontSize: 11.5, background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#5C5040' }}>
+          <summary style={{ cursor: 'pointer' }}>What the planner chose, bed by bed ({choices.length})</summary>
+          <ul className="flex flex-col gap-1 pt-1.5" style={{ listStyle: 'disc', paddingInlineStart: 26 }}>
+            {choices.map((n, i) => <li key={i}>{n.text}</li>)}
+          </ul>
+        </details>
       )}
       {gaps.length > 0 && (
         <details className="px-3 py-2 rounded-lg font-sans" style={{ fontSize: 11.5, background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#5C5040' }}>
@@ -2808,7 +2822,7 @@ function BedRow({ bed, plantings, currentMonth, onAddCrop, onTapPlanting }: {
                 flex: 1,
                 borderRight: i < DISPLAY_MONTHS - 1 ? '1px solid #EDE7DB' : 'none',
                 borderLeft: i === 12 ? '2px solid #C4A46A' : undefined,
-                background: i === 0 ? 'rgba(31,77,43,0.05)' : 'transparent',
+                background: i === 0 ? 'rgba(31,77,43,0.05)' : i >= 12 ? 'rgba(196,164,106,0.07)' : 'transparent',
               }}
             />
           ))}
@@ -3057,6 +3071,9 @@ function CropPickerModal({
                 style={{ fontSize: 14, color: '#20190F' }}
               />
             </div>
+            <p className="font-sans mb-2" style={{ fontSize: 11, color: '#8C7A62', lineHeight: 1.4 }}>
+              Twelve dots = Jan to Dec. Green marks the months you can sow that crop in this site's rainfall pattern.
+            </p>
             <div className="space-y-1">
               {filtered.map((c) => {
                 const windowMonths = c.sowMonths[pattern];
@@ -3699,7 +3716,7 @@ function AutoSuggestModal({
             <button
               onClick={() => onReliableIrrigation(!reliableIrrigation)}
               className="w-full text-left px-3 py-2.5 rounded-xl transition-all flex items-start gap-2.5"
-              style={tileStyle(reliableIrrigation)}
+              style={reliableIrrigation ? tileStyle(true) : { ...tileStyle(false), background: '#FFF8E8', border: '1px solid #C07A1E' }}
             >
               <span style={{ fontSize: 16, lineHeight: 1 }}>{reliableIrrigation ? '💧' : '⭘'}</span>
               <span>

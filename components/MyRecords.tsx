@@ -886,8 +886,9 @@ function CreditPackCard({
 
       {sampling ? (
         <p className="text-xs font-sans rounded-lg px-3 py-2" style={{ background: '#F7F2E9', color: '#9A8268', border: '1px solid #E2D8C4' }}>
-          This export is turned off while you are viewing the sample farm. Sign in and turn off the
-          sample to export your own records.
+          Deliberately blocked while the sample farm is open: a document a lender may act on must
+          carry real records from a real farm, never demo numbers. Sign in and exit the sample to
+          export your own.
         </p>
       ) : !ready ? (
         <p className="text-xs font-sans rounded-lg px-3 py-2" style={{ background: '#F7F2E9', color: '#9A8268', border: '1px solid #E2D8C4' }}>
@@ -1020,7 +1021,7 @@ export default function MyRecords() {
   // Load data once signed in
   useEffect(() => {
     let cancelled = false;
-    if (user && user !== 'loading') {
+    if (isSampleMode() || (user && user !== 'loading')) {
       void loadData(() => cancelled);
     } else if (user === null) {
       setProduction([]);
@@ -1048,8 +1049,9 @@ export default function MyRecords() {
     );
   }
 
-  // Firebase not configured OR no logged-in user
-  if (!user) {
+  // Firebase not configured OR no logged-in user — but the in-memory sample farm is
+  // deliberately viewable signed out, so it must never hit the sign-in wall.
+  if (!user && !isSampleMode()) {
     return (
       <div className="p-4">
         <SignInPrompt />
