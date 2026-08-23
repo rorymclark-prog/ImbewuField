@@ -7,6 +7,7 @@ import {
   summariseExchange,
 } from '@/lib/exchange';
 import ExchangeBoard from '@/components/exchange/ExchangeBoard';
+import MenuButton from '@/components/MenuButton';
 import { getCropArt } from '@/lib/crop-art';
 
 /*
@@ -58,6 +59,7 @@ export default function ExchangePage() {
         className="flex items-center gap-3 px-4"
         style={{ height: 56, borderBottom: '1px solid #E2D8C4', background: '#FFFEFA' }}
       >
+        <MenuButton />
         <Link
           href="/home"
           aria-label="Back"

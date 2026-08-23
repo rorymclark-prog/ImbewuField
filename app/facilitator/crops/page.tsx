@@ -11,8 +11,8 @@
 import { Suspense, useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
-import { Search, X, Menu, ChevronDown, Home } from 'lucide-react';
-import NavDrawer from '@/components/NavDrawer';
+import { Search, X, ChevronDown, Home } from 'lucide-react';
+import MenuButton from '@/components/MenuButton';
 import { useRegisterBackControl } from '@/components/BackControl';
 import LessonLink from '@/components/design/LessonLink';
 import CropPlanExportCard from '@/components/crops/CropPlanExportCard';
@@ -512,7 +512,6 @@ function FacilitatorCropsPageInner() {
   const [mounted, setMounted] = useState(false);
   const [currentMonth, setCurrentMonth] = useState(1);
   const [useVirtual, setUseVirtual] = useState(false);
-  const [navOpen, setNavOpen] = useState(false);
 
   const [pickerBedId, setPickerBedId] = useState<string | null>(null);
   const [showBedCheck, setShowBedCheck] = useState(false);
@@ -1248,14 +1247,7 @@ function FacilitatorCropsPageInner() {
       {/* Header */}
       <header className="flex-shrink-0 flex items-center px-3 md:px-5 gap-2 md:gap-3 overflow-x-auto" style={{ height: 56, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
         <RegisterInFlowBack />
-        <button
-          onClick={() => setNavOpen(true)}
-          aria-label="Open navigation"
-          className="flex-shrink-0 flex items-center justify-center rounded-xl"
-          style={{ width: 34, height: 34, background: 'rgba(32,25,15,0.06)', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}
-        >
-          <Menu size={17} strokeWidth={1.7} />
-        </button>
+        <MenuButton />
         <Link
           href="/home"
           aria-label="Home"
@@ -2072,7 +2064,6 @@ function FacilitatorCropsPageInner() {
         />
       )}
 
-      <NavDrawer open={navOpen} onClose={() => setNavOpen(false)} />
     </div>
   );
 }

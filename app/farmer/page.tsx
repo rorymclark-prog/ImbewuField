@@ -4,7 +4,7 @@ import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { useState, useCallback, useEffect, useMemo, useRef, Suspense } from 'react';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
-import { Settings, AlertTriangle, ChevronUp, Menu, Plus } from 'lucide-react';
+import { Settings, AlertTriangle, ChevronUp, Plus } from 'lucide-react';
 import AddSheet from '@/components/AddSheet';
 import { MAP_ELEMENT_FOR, type AddAction } from '@/lib/add-actions';
 import { CRASH_LOOP_SETTLE_MS, FARMER_LOAD_KEY, exitPageCrashGuard, markPageSettled, pageCrashGuard } from '@/lib/crash-loop';
@@ -16,7 +16,7 @@ import RoleSwitcher from '@/components/RoleSwitcher';
 import AccountButton from '@/components/AccountButton';
 import BrandLogo from '@/components/BrandLogo';
 import ThemePanel from '@/components/ThemePanel';
-import NavDrawer from '@/components/NavDrawer';
+import MenuButton from '@/components/MenuButton';
 import ProfileSheet from '@/components/ProfileSheet';
 import LessonLink from '@/components/design/LessonLink';
 import { useLanguage } from '@/lib/i18n';
@@ -129,7 +129,6 @@ function HomeInner() {
   // "pull me down", so it now does — see lib/sheet-dismiss.ts. Rory: "I want to be able to drag
   // any of those top closing buttons in the modals and it closes."
   const sheetDrag = useSheetDismiss(() => setSheetOpen(false), sheetOpen);
-  const [navOpen, setNavOpen] = useState(false);
   // Draggable width of the desktop side panel — persisted, clamped 320–760px.
   const [panelWidth, setPanelWidth] = useState(390);
   useEffect(() => {
@@ -447,7 +446,6 @@ function HomeInner() {
   return (
     <>
       <ThemePanel open={settingsOpen} onClose={() => setSettingsOpen(false)} />
-      <NavDrawer open={navOpen} onClose={() => setNavOpen(false)} />
 
       {showReport && (data || savedReportView) && (
         <ReportView
@@ -479,19 +477,7 @@ function HomeInner() {
           }}
         >
           {/* Hamburger — visible on all screens */}
-          <button
-            onClick={() => setNavOpen(true)}
-            aria-label="Open navigation"
-            className="flex items-center justify-center rounded-xl flex-shrink-0"
-            style={{
-              width: 38, height: 38,
-              background: 'rgba(32,25,15,0.06)',
-              border: '1px solid #E2D8C4',
-              color: '#5C5040', cursor: 'pointer',
-            }}
-          >
-            <Menu size={18} strokeWidth={1.7} />
-          </button>
+          <MenuButton />
 
           <BrandLogo />
 

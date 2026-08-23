@@ -12,6 +12,7 @@ import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
+import MenuButton from '@/components/MenuButton';
 import {
   TASK_BOARD_CHANGED_EVENTS, loadCropBoardYear,
   loadCompletedTaskIds, setCompletedTaskState,
@@ -192,6 +193,7 @@ export default function CropPlanPage() {
     <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
       {/* Header */}
       <header className="flex-shrink-0 flex items-center px-4 gap-3" style={{ height: 56, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
+        <MenuButton />
         <BackButton fallback="/plan" />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />

@@ -29,6 +29,7 @@ import { cashLedgerSales, cashIncomeTotal } from '@/lib/invoice-sales';
 import { loadCashflowSettings, DEFAULT_CASHFLOW_SETTINGS, type CashflowSettings, type PlanBed, type Planting } from '@/lib/crop-plan';
 import { useFinancePlanSource } from '@/lib/finance-plan-source';
 import ComingUpHarvests from '@/components/ComingUpHarvests';
+import MenuButton from '@/components/MenuButton';
 import type { CropPrice } from '@/lib/crop-prices';
 import { loadCropPriceOverrides } from '@/lib/crop-prices';
 import { buildFarmMetrics, isInFinancePeriod, type FinancePeriod } from '@/lib/farm-metrics';
@@ -1112,6 +1113,7 @@ export default function FinancesPage() {
         className="flex-shrink-0 flex items-center px-4 gap-3"
         style={{ height: 52, background: 'var(--color-surface)', borderBottom: '1px solid var(--color-border)' }}
       >
+        <MenuButton />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: 'var(--color-border)' }} />
         <span className="text-xs font-display" style={{ color: 'var(--color-muted-strong)' }}>Finances</span>

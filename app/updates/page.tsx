@@ -9,6 +9,7 @@
 import { useEffect, useState } from 'react';
 import BackButton from '@/components/BackButton';
 import BrandLogo from '@/components/BrandLogo';
+import MenuButton from '@/components/MenuButton';
 import { RELEASE_NOTES } from '@/lib/release-notes';
 
 export default function UpdatesPage() {
@@ -28,6 +29,7 @@ export default function UpdatesPage() {
         className="flex-shrink-0 flex items-center px-3 md:px-5 gap-2 md:gap-4"
         style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}
       >
+        <MenuButton />
         <BackButton />
         <BrandLogo icon="✦" />
         <div className="w-px h-5" style={{ background: '#E2D8C4', opacity: 0.5 }} />

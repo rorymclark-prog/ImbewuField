@@ -19,6 +19,7 @@ import CourseAudioPlayer from '@/components/course/CourseAudioPlayer';
 import LessonInfographic from '@/components/course/LessonInfographic';
 import DeckPlayer from '@/components/course/DeckPlayer';
 import OfflineDownload from '@/components/course/OfflineDownload';
+import MenuButton from '@/components/MenuButton';
 import { hasDeck, deckSlideCount } from '@/lib/course-deck';
 import { isModuleComplete_Content, readinessLabel } from '@/lib/course-readiness';
 import { useLanguage } from '@/lib/i18n';
@@ -593,6 +594,7 @@ export default function StudentPage() {
     return (
       <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
         <header className="flex-shrink-0 flex items-center px-4 gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
+          <MenuButton />
           <BrandLogo />
         </header>
         <main className="flex-1 flex items-center justify-center">
@@ -606,6 +608,7 @@ export default function StudentPage() {
     return (
       <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
         <header className="flex-shrink-0 flex items-center px-4 gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
+          <MenuButton />
           <BrandLogo />
           <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
           <span className="text-xs font-display" style={{ color: '#5C5040' }}>Learning Portal</span>
@@ -652,6 +655,7 @@ export default function StudentPage() {
   return (
     <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
       <header className="flex-shrink-0 flex items-center px-4 gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
+        <MenuButton />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
         <span className="text-xs font-display" style={{ color: '#5C5040' }}>Learning Portal</span>

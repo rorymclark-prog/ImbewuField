@@ -18,6 +18,7 @@ import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
 import ContactInbox from '@/components/ContactInbox';
 import LessonLink from '@/components/design/LessonLink';
+import MenuButton from '@/components/MenuButton';
 import {
   DEFAULT_TRACK, STATUS_LABEL, effectiveStatus, enrollmentDocId, summariseCohort,
   type CourseEnrollment, type EnrollmentStatus,
@@ -465,6 +466,7 @@ export default function MentorPage() {
     return (
       <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
         <header className="flex-shrink-0 flex items-center px-4 gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
+          <MenuButton />
           <BrandLogo />
           <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
           <span className="text-xs font-display" style={{ color: '#5C5040' }}>Mentor</span>
@@ -517,6 +519,7 @@ export default function MentorPage() {
   return (
     <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
       <header className="flex-shrink-0 flex items-center px-4 gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
+        <MenuButton />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
         <span className="text-xs font-display" style={{ color: '#5C5040' }}>Mentor</span>

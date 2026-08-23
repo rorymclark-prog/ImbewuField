@@ -6,6 +6,7 @@ import LessonLink from '@/components/design/LessonLink';
 import MyRecords from '@/components/MyRecords';
 import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
+import MenuButton from '@/components/MenuButton';
 
 export default function RecordsPage() {
   return (
@@ -17,6 +18,7 @@ export default function RecordsPage() {
         className="flex-shrink-0 flex items-center px-4 gap-3"
         style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}
       >
+        <MenuButton />
         <BackButton fallback="/home" />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />

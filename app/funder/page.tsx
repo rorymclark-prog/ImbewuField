@@ -8,6 +8,7 @@ import BackButton from '@/components/BackButton';
 import SettingsButton from '@/components/SettingsButton';
 import BrandLogo from '@/components/BrandLogo';
 import LessonLink from '@/components/design/LessonLink';
+import MenuButton from '@/components/MenuButton';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import { canAccessRolePage } from '@/lib/role-access';
@@ -48,6 +49,7 @@ export default function FunderPage() {
     <div className="h-screen flex flex-col" style={{ background: '#E4DCC6' }}>
       <header className="flex-shrink-0 flex items-center px-3 md:px-5 gap-2 md:gap-4 overflow-x-auto"
         style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
+        <MenuButton />
         <BackButton />
         <BrandLogo icon="🏛" />
         <div className="w-px h-5" style={{ background: '#E2D8C4', opacity: 0.5 }} />

@@ -8,6 +8,7 @@ import LessonLink from '@/components/design/LessonLink';
 import TabBar from '@/components/TabBar';
 import { CropPriceDetail } from '@/components/prices/CropPriceGuide';
 import { pricedCropList } from '@/components/prices/CropPriceGuide.format';
+import MenuButton from '@/components/MenuButton';
 import { loadCropPriceOverrides, type CropPrice } from '@/lib/crop-prices';
 import { getCropArt } from '@/lib/crop-art';
 
@@ -38,6 +39,7 @@ export default function PricesPage() {
         className="flex-shrink-0 flex items-center px-4 gap-3"
         style={{ height: 52, background: 'var(--color-surface)', borderBottom: '1px solid var(--color-border)' }}
       >
+        <MenuButton />
         <BackButton fallback="/home" />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: 'var(--color-border)' }} />

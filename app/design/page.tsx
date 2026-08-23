@@ -142,6 +142,7 @@ import { type BasePhotoApplyResult } from '@/components/design/BasePhotoImport';
 import { zoneAdviceFromSuggestions, type ZoneAdvicePin } from '@/components/design/zone-advice';
 import SpeakButton from '@/components/SpeakButton';
 import LessonLink from '@/components/design/LessonLink';
+import MenuButton from '@/components/MenuButton';
 import { usePhoneViewport } from '@/lib/use-phone-viewport';
 import {
   DEFAULT_DESIGN_WORKSPACE_MODE,
@@ -2999,6 +3000,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
           WebkitOverflowScrolling: 'touch',
         }}
       >
+        <MenuButton />
         <Link
           href="/farmer"
           aria-label="Back to map"

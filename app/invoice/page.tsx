@@ -24,6 +24,7 @@ import CropSelect from '@/components/CropSelect';
 import { cropEntryOption } from '@/lib/crop-entry';
 import { loadCropPriceOverrides, priceFor, type CropPrice } from '@/lib/crop-prices';
 import { priceDateLabel } from '@/components/prices/CropPriceGuide.format';
+import MenuButton from '@/components/MenuButton';
 import { syncInvoiceSales } from '@/lib/db/queries';
 import { isSampleMode, getSandboxProfile } from '@/lib/sample-mode';
 import { updateMyProfile } from '@/lib/db/queries';
@@ -463,6 +464,7 @@ export default function InvoicePage() {
   return (
     <div className="invoice-page flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
       <header className="no-print flex-shrink-0 flex items-center px-4 gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
+        <MenuButton />
         <BackButton fallback="/finances" />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />

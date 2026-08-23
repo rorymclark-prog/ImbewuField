@@ -13,6 +13,7 @@ import TabBar from '@/components/TabBar';
 import BrandLogo from '@/components/BrandLogo';
 import type { Profile } from '@/lib/db/types';
 import LessonLink from '@/components/design/LessonLink';
+import MenuButton from '@/components/MenuButton';
 
 interface ContactReply {
   id: string;
@@ -136,6 +137,7 @@ export default function ContactPage() {
         className="flex-shrink-0 flex items-center gap-3 px-4"
         style={{ height: 56, borderBottom: '1px solid #E2D8C4', background: '#FFFEFA' }}
       >
+        <MenuButton />
         <Link
           href="/home"
           style={{ display: 'flex', alignItems: 'center', gap: 4, color: '#5C5040', textDecoration: 'none' }}
