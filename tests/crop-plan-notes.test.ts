@@ -695,3 +695,71 @@ test('the out-of-KZN calendar caveat leads with the action and stays prominent',
   assert.ok(!kzn.notes.some((note) => /extension officer/.test(note.text)),
     'the audited calendar must not carry the caveat');
 });
+
+// ── A resting staple plot is never passed over in silence ────────────────────
+//
+// Found 2026-08-23. reportStillRestingBeds asked whether "some crop in the pool"
+// could fill a bed's empty months using the FLAT catalogue, for every bed. On a
+// plot that question has the wrong answer built in: a cabbage is in the pool and
+// could fill June, but a cabbage may never be auto-planted on a traced field, so
+// the check said "coverable", no cause was assigned, and the stretch fell through
+// the `if (!cause) continue` branch reporting nothing at all. Measured on the
+// owner's own farm: Plot 3 bare Jun-Nov and Plot 4 bare Jan-Jul — 13 bed-months
+// of bare field with not one word about them anywhere in the plan.
+
+function plotRestFixture(): PlanBed[] {
+  const beds: PlanBed[] = [];
+  for (let i = 1; i <= 7; i++) beds.push({ id: `bed-${i}`, label: `Bed ${i}`, areaM2: 12, minDimM: 1.2 });
+  for (let i = 1; i <= 4; i++) beds.push({ id: `plot-${i}`, label: `Plot ${i}`, areaM2: 21, minDimM: 3.5, kind: 'plot' });
+  return beds;
+}
+
+const PLOT_REST_BASE: AutoSuggestAnswers = {
+  goal: 'family', householdSize: 'medium', focusCropCount: 2, groups: [], rhythm: 'steady',
+  rotateCrops: true, allowVinesInBeds: false, reliableIrrigation: true,
+};
+
+test('a staple plot standing bare for months is always named in a note', () => {
+  const beds = plotRestFixture();
+  const plots = beds.filter((bed) => bed.kind === 'plot');
+  for (const nowMonth of [2, 5, 8, 11]) {
+    const result = autoSuggestPlan(PLOT_REST_BASE, 'mild-frost', beds, [], nowMonth);
+    const gapText = result.notes.filter((note) => note.kind === 'gap').map((note) => note.text).join(' | ');
+    for (const plot of plots) {
+      const occupied = new Set<number>();
+      for (const planting of result.plantings.filter((p) => p.bedId === plot.id)) {
+        for (const m of occupiedMonthsForPlanting({ cropKey: planting.cropKey, sowMonth: planting.sowMonth })) occupied.add(m);
+      }
+      const picking = new Set<number>();
+      for (const planting of result.plantings.filter((p) => p.bedId === plot.id)) {
+        const crop = cropByKey(planting.cropKey);
+        if (crop) picking.add(harvestMonthForCrop(planting.sowMonth, crop));
+      }
+      const bare = [...Array(12)].map((_, i) => i + 1).filter((m) => !occupied.has(m) && !picking.has(m));
+      if (bare.length < 2) continue;
+      assert.ok(
+        gapText.includes(`${plot.label} (`),
+        `now=${nowMonth}: ${plot.label} stands bare in ${bare.length} months and no note mentions it — ${gapText || '(no gap notes at all)'}`,
+      );
+    }
+  }
+});
+
+test('a resting plot is told why a plot rests, not to widen crop groups it never narrowed', () => {
+  // The bed sentence points at the household's crop-group selection. A plot's
+  // stretch has nothing to do with that selection — the planner refuses field
+  // vegetables on principle — so the bed sentence would send a farmer hunting
+  // for a setting that cannot help. This fixture selects no groups at all,
+  // which is what made the borrowed advice absurd rather than merely wrong.
+  const result = autoSuggestPlan(PLOT_REST_BASE, 'mild-frost', plotRestFixture(), [], 8);
+  const plotNote = result.notes.find((note) => note.kind === 'gap'
+    && /Plot \d \(/.test(note.text)
+    && !/Bed \d \(/.test(note.text));
+  assert.ok(plotNote, `no plot-only rest note was produced: ${JSON.stringify(result.notes.map((n) => n.text))}`);
+  assert.doesNotMatch(plotNote!.text, /widen your crop groups/i, 'a plot was given the bed explanation');
+  assert.match(plotNote!.text, /one crop across the whole block/i, 'the note must say why a plot is different');
+  // It must also say the decision is the farmer's rather than implying the app
+  // failed, and must not promise the planner will fix it later.
+  assert.match(plotNote!.text, /your decision|by hand/i);
+  assert.ok(plotNote!.bedIds?.length, 'the note must carry the ids of the plots it names');
+});
