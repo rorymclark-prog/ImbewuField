@@ -22,6 +22,7 @@
  */
 
 import type { ExpenseCategory, ExpenseLog, ProductionLog, SalesLog } from './db/types';
+import { buildCropAliasIndex, cropIdentityMapKey, cropIdentityOf } from './crop-identity';
 
 /* ── Shared parsing helpers ──────────────────────────────────────────────── */
 
@@ -281,10 +282,6 @@ export const MIN_HARVESTS_FOR_TRACK_RECORD = 1;
 export const MIN_SALES_FOR_TRACK_RECORD = 1;
 const TOP_CROPS_LIMIT = 6;
 
-function cropDisplayName(raw: string | null | undefined): string {
-  const trimmed = (raw ?? '').trim();
-  return trimmed || 'Unnamed crop';
-}
 
 /** Every dated harvest and sale row, across the farmer's whole history (not windowed to the
  *  trailing months the cash-flow table uses) — a track record is stronger the longer it is. */
@@ -293,12 +290,23 @@ export function creditPackTrackRecord(
   sales: readonly SalesLog[],
 ): CreditPackTrackRecord {
   const crops = new Map<string, CreditPackCropTotal>();
+  const aliases = buildCropAliasIndex();
+  /* WHICH CROP A ROW IS ABOUT — see lib/crop-identity.ts.
+     This used to be `display.toLocaleLowerCase('en-ZA')`, i.e. the farmer's raw typing was the
+     identity. A harvest arrives from a picker as the catalogue's "Avocado"; the sale of that same
+     fruit is free-typed on /finances as "Avocados". Two keys, two rows, and the lender's page read
+       Avocado  | 40 kg | 0 kg  | R0,00
+       Avocados | 0 kg  | 25 kg | R500,00
+     — one tree presented to a bank as a grower who never sells beside a seller who never grows,
+     with "R0,00" printed against fruit the farmer had in fact sold. Both halves are true sums, and
+     the file's promise that every number is a direct total of the farmer's own rows held the whole
+     time. What was invented was the IDENTITY those true totals were filed under. */
   const ensureCrop = (name: string): CreditPackCropTotal => {
-    const display = cropDisplayName(name);
-    const key = display.toLocaleLowerCase('en-ZA');
+    const identity = cropIdentityOf(name, aliases);
+    const key = cropIdentityMapKey(identity);
     const existing = crops.get(key);
     if (existing) return existing;
-    const created: CreditPackCropTotal = { crop: display, harvestedKg: 0, soldKg: 0, revenueZar: 0 };
+    const created: CreditPackCropTotal = { crop: identity.label, harvestedKg: 0, soldKg: 0, revenueZar: 0 };
     crops.set(key, created);
     return created;
   };

@@ -4,10 +4,10 @@
 // crops: a plausible allocation would turn a guess into a reported profit.
 
 import type { PlanBed, Planting } from './crop-plan';
-import { perennialKeyForName, produceKindOf } from './produce-scope';
-import { perennialProduceByKey } from './perennial-produce';
+import { produceKindOf } from './produce-scope';
 import { cropByKey } from './crop-catalog';
-import { buildCropAliasIndex, matchCropKey } from './harvest-reconciliation';
+import { buildCropAliasIndex } from './harvest-reconciliation';
+import { cropIdentityOf, cropIdentityMapKey } from './crop-identity';
 import type { ExpenseLog, ProductionLog, SalesLog } from './db/types';
 import type { SavedInvoice } from './invoices';
 import { cashLedgerSales, invoiceSalesForPaidInvoice } from './invoice-sales';
@@ -106,31 +106,9 @@ function finiteNonNegative(value: number | null | undefined): number {
   return typeof value === 'number' && Number.isFinite(value) && value >= 0 ? value : 0;
 }
 
-/**
- * One produce identity for a written name, so every record naming the same thing lands on one row.
- *
- * BOTH catalogues are asked, in produceKindOf's own order: the annual one first, because it is the
- * schedulable one and a name that resolves to a plannable crop must keep resolving to it.
- *
- * The orchard half is not optional politeness. Logging forms write the CATALOGUE name from a
- * picker, while a sale's crop is free text a farmer types — so "Avocado" picked and "Avocados" sold
- * is the ORDINARY path, not an edge case. Matched only against the annual catalogue, both fell
- * through to the written-text bucket and split into two rows: one showing kilograms with no price,
- * one showing a price with nothing picked. Neither row is wrong on its own and together they are a
- * lie about how many trees the farmer has.
- */
-function cropIdentity(label: string, aliases: ReturnType<typeof buildCropAliasIndex>): { key: string | null; label: string } {
-  const key = matchCropKey(label, aliases);
-  if (key) return { key, label: cropByKey(key)?.name ?? label.trim() };
-  const perennialKey = perennialKeyForName(label);
-  // Perennial keys are namespaced precisely so they can never collide with a CROPS key here.
-  if (perennialKey) return { key: perennialKey, label: perennialProduceByKey(perennialKey)?.label ?? label.trim() };
-  return { key: null, label: label.trim() || 'Unnamed crop' };
-}
-
-function cropMapKey(identity: { key: string | null; label: string }): string {
-  return identity.key ? `crop:${identity.key}` : `written:${identity.label.toLocaleLowerCase()}`;
-}
+/* The identity rule these three loops share now lives in lib/crop-identity.ts, because on
+   2026-08-23 it was written out five times on five screens and a sixth copy — the one in the
+   document a farmer hands to a bank — was still splitting one avocado tree in two. */
 
 function dateFor(row: Pick<ProductionLog, 'logged_at'> | Pick<SalesLog, 'sold_at'> | Pick<ExpenseLog, 'spent_at'>): string {
   return 'logged_at' in row ? row.logged_at : 'sold_at' in row ? row.sold_at : row.spent_at;
@@ -170,7 +148,7 @@ export function buildFarmMetrics(
   ];
   const rows = new Map<string, Omit<CropMetric, 'yieldKgPerM2' | 'turnoverZarPerM2' | 'priceZarPerKg' | 'taggedCostZarPerM2'>>();
   const ensure = (identity: { key: string | null; label: string }) => {
-    const key = cropMapKey(identity);
+    const key = cropIdentityMapKey(identity);
     const current = rows.get(key);
     if (current) return current;
     const created = {
@@ -201,13 +179,13 @@ export function buildFarmMetrics(
 
   for (const harvest of production) {
     if (!isInFinancePeriod(dateFor(harvest), period, now)) continue;
-    const row = ensure(cropIdentity(harvest.crop, aliases));
+    const row = ensure(cropIdentityOf(harvest.crop, aliases));
     row.hasHarvest = true;
     row.harvestedKg += finiteNonNegative(harvest.kg);
   }
   for (const sale of cropTurnoverSales) {
     if (!isInFinancePeriod(dateFor(sale), period, now)) continue;
-    const row = ensure(cropIdentity(sale.crop, aliases));
+    const row = ensure(cropIdentityOf(sale.crop, aliases));
     row.hasSale = true;
     row.soldKg += finiteNonNegative(sale.kg);
     row.turnoverZar += finiteNonNegative(sale.amount);
@@ -223,7 +201,7 @@ export function buildFarmMetrics(
       unattributedExpensesZar += finiteNonNegative(expense.amount);
       continue;
     }
-    const row = ensure(cropIdentity(tag, aliases));
+    const row = ensure(cropIdentityOf(tag, aliases));
     row.hasTaggedCost = true;
     row.taggedCostsZar += finiteNonNegative(expense.amount);
   }
