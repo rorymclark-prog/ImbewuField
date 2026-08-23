@@ -166,3 +166,70 @@ test('produce scope: taking the orchard off that card never moves the farm\'s mo
   const total = metrics.gardenMargins.reduce((s, m) => s + m.grossMarginZar, 0);
   assert.equal(total, 900, 'the avocado sale left the farm margin');
 });
+
+// ── The orchard's ACHIEVED figures (2026-08-23) ──────────────────────────────
+//
+// The card above names orchard produce and stops there, because every figure on it
+// is divided by bed area and a tree's fruit does not come off a bed. But two of the
+// three figures a farmer asks for were never per-area — what came off the tree, and
+// what it fetched per kilogram — and the app was computing both and then discarding
+// the orchard side of the partition. These pin the recovered figures AND the line
+// that still holds: no per-area figure for a perennial, ever.
+
+test('orchard produce carries its achieved kilograms, rand and price per kilogram', () => {
+  const metrics = buildFarmMetrics([], [], [
+    harvest('Tomatoes', 10, '2026-08-04T08:00:00.000Z'),
+    harvest('Avocados', 40, '2026-08-05T08:00:00.000Z'),
+  ], [sale('Avocados', 25, 500, '2026-08-06T08:00:00.000Z')], [], 'year', NOW, []);
+
+  assert.equal(metrics.perennialCrops.length, 1);
+  const avo = metrics.perennialCrops[0];
+  assert.equal(avo.cropName, 'Avocados');
+  assert.equal(avo.harvestedKg, 40);
+  assert.equal(avo.soldKg, 25);
+  assert.equal(avo.turnoverZar, 500);
+  assert.equal(avo.priceZarPerKg, 20, 'R500 over 25 kg is R20/kg — the one achieved figure a tree can carry');
+  // The rule that has not moved: still not a per-m² row, and the annual still is.
+  assert.deepEqual(metrics.crops.map((c) => c.cropName), ['Tomatoes']);
+  // And the two orchard lists must always describe the same produce.
+  assert.deepEqual(metrics.perennialProduceNames, metrics.perennialCrops.map((c) => c.cropName));
+});
+
+test('orchard produce picked but never sold reports no price rather than a free one', () => {
+  // Zero would render as R0.00/kg, which reads as "this fruit is worthless" rather
+  // than "you have not sold any yet". Infinity is the other way to get this wrong:
+  // rand recorded against a blank kilogram figure must not divide by zero.
+  const metrics = buildFarmMetrics([], [], [
+    harvest('Mangoes', 12, '2026-08-05T08:00:00.000Z'),
+  ], [], [], 'year', NOW, []);
+  const mulberry = metrics.perennialCrops.find((c) => c.cropName === 'Mangoes');
+  assert.ok(mulberry, 'a harvested orchard produce with no sale still deserves a row');
+  assert.equal(mulberry!.harvestedKg, 12);
+  assert.equal(mulberry!.hasSale, false);
+  assert.equal(mulberry!.priceZarPerKg, null);
+
+  const blankKg = buildFarmMetrics([], [], [], [
+    sale('Mangoes', 0, 300, '2026-08-06T08:00:00.000Z'),
+  ], [], 'year', NOW, []);
+  const noKg = blankKg.perennialCrops.find((c) => c.cropName === 'Mangoes');
+  assert.equal(noKg?.priceZarPerKg, null, 'rand over zero kilograms must not become Infinity');
+});
+
+test('an orchard row never gains a per-area figure by any route', () => {
+  // The governing rule in lib/produce-scope.ts: a per-square-metre figure excludes
+  // perennials whatever the switch says, because a kg/m² for a tree rises without
+  // bound as it grows. Asserted structurally so a later refactor that spreads a
+  // CropMetric into an OrchardMetric fails here rather than on a farmer's screen.
+  const metrics = buildFarmMetrics([], [], [
+    harvest('Avocados', 40, '2026-08-05T08:00:00.000Z'),
+  ], [sale('Avocados', 25, 500, '2026-08-06T08:00:00.000Z')], [], 'year', NOW, []);
+  for (const row of metrics.perennialCrops) {
+    for (const field of Object.keys(row)) {
+      assert.ok(!/PerM2$/.test(field), `orchard row carries a per-area field: ${field}`);
+    }
+  }
+  assert.deepEqual(
+    Object.keys(metrics.perennialCrops[0]).sort(),
+    ['cropName', 'harvestedKg', 'hasHarvest', 'hasSale', 'priceZarPerKg', 'soldKg', 'turnoverZar'],
+  );
+});

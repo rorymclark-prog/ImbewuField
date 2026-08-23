@@ -30,6 +30,32 @@ export interface CropMetric {
   taggedCostZarPerM2: number | null;
 }
 
+/**
+ * An orchard produce the farmer actually recorded, carrying only the figures that
+ * are REAL for a tree.
+ *
+ * Note what is not here: nothing per square metre. That is the whole reason these
+ * rows were being thrown away — every figure in CropMetric is divided by bed area,
+ * and a tree's fruit does not come off a bed. But `priceZarPerKg` never was a
+ * per-area figure. It is turnover over kilograms sold, which is exactly as true of
+ * an avocado as of a cabbage, and the farm already has the numbers: the app was
+ * computing the partition and then dropping the orchard side of it on the floor.
+ *
+ * These are ACHIEVED figures — what was picked, what was sold, what it fetched.
+ * They carry no estimate, no projection and no yield model, so they need none of
+ * the sourcing that a kg-per-tree table would.
+ */
+export interface OrchardMetric {
+  cropName: string;
+  harvestedKg: number;
+  hasHarvest: boolean;
+  soldKg: number;
+  turnoverZar: number;
+  hasSale: boolean;
+  /** turnoverZar / soldKg. Null when nothing was sold — never 0, which would read as free. */
+  priceZarPerKg: number | null;
+}
+
 export interface GardenGrossMargin {
   gardenId: string | null;
   salesZar: number;
@@ -47,6 +73,8 @@ export interface FarmMetrics {
    * bound as the trees grow and means nothing.
    */
   perennialProduceNames: string[];
+  /** The same produce as above, with their achieved kg and rand. Same list, more detail. */
+  perennialCrops: OrchardMetric[];
   gardenMargins: GardenGrossMargin[];
   unattributedExpensesZar: number;
   hasUnattributedExpenses: boolean;
@@ -204,15 +232,30 @@ export function buildFarmMetrics(
   // Partitioned, not filtered: what comes out is named on the card, the same condition that makes
   // any other hiding in this screen honest. Note the money below is untouched — gardenMargins is
   // built from the sales and invoices directly, so an avocado sale is still in the farm's margin.
-  const perennialProduceNames: string[] = [];
+  const perennialRows: ReturnType<typeof ensure>[] = [];
   const bedRows = [...rows.values()].filter((row) => {
     if (produceKindOf(row.cropName) !== 'perennial') return true;
-    perennialProduceNames.push(row.cropName);
+    perennialRows.push(row);
     return false;
   });
+  const byName = (a: { cropName: string }, b: { cropName: string }) => a.cropName.localeCompare(b.cropName, 'en-ZA');
 
   return {
-    perennialProduceNames: perennialProduceNames.sort((a, b) => a.localeCompare(b, 'en-ZA')),
+    perennialProduceNames: perennialRows.map((row) => row.cropName).sort((a, b) => a.localeCompare(b, 'en-ZA')),
+    perennialCrops: perennialRows
+      .map((row) => ({
+        cropName: row.cropName,
+        harvestedKg: row.harvestedKg,
+        hasHarvest: row.hasHarvest,
+        soldKg: row.soldKg,
+        turnoverZar: row.turnoverZar,
+        hasSale: row.hasSale,
+        // Guarded on soldKg rather than turnover: a giveaway logged as a sale of 0
+        // rand over 20 kg is a real R0.00/kg, but 20 kg sold for R400 with the kg
+        // left blank would divide by zero and print Infinity on the card.
+        priceZarPerKg: row.hasSale && row.soldKg > 0 ? row.turnoverZar / row.soldKg : null,
+      }))
+      .sort(byName),
     crops: bedRows
       .map((row) => ({
         ...row,
