@@ -354,17 +354,43 @@ export const CROPS: CropDef[] = [
     rowSpacingRangeCm: [40, 40],
     inRowSpacingRangeCm: [40, 40],
     sowDepthRangeCm: [0.2, 1], // Kirchhoffs publishes "Depth: 2 mm", Starke Ayres 1cm — both retained
-    // STILL no defensible food-yield figure — re-checked 2026-08-23 across
+    // NO South African food-yield figure exists — re-checked 2026-08-23 across
     // all five KZN DARD veg-production tables (expected yields, plant
     // establishment, length of growing period, successional cropping,
     // populations/spacings: no kale row in any of them), the DALRRD leafy-
     // vegetables brochure and the GDARD vegetable guideline (kale absent
     // from both); Agricol's published kale figure is fodder dry matter for
-    // grazing, not a food harvest. Same rule as amadumbe: verified timing
-    // and spacing put kale on the calendar, while its kilograms stay
-    // deliberately unknown rather than invented.
-    yieldKgPerM2: null,
-    note: 'Cut-and-come-again leafy brassica: pick outer leaves and the plant keeps producing, and light frost sweetens the flavour. It does not handle extreme heat — in hot areas prefer late-summer and autumn sowings. No verified SA yield figure exists yet, so plans show no kilogram estimate for kale.',
+    // grazing, not a food harvest. So this benchmark is INTERNATIONAL, not
+    // SA, and is labelled as such wherever it is shown.
+    //
+    // International sources, all fresh leaf and all collard/curly kale
+    // (B. oleracea var. acephala — fodder kale and Brassica carinata
+    // "Ethiopian kale" excluded, and FAOSTAT is unusable because it folds
+    // kale into "cabbages and other brassicas"):
+    //   KALRO Kenya kale TIMPs: 35-40 t/ha standard, Mfalme F1 35-50 t/ha
+    //     (the Kinale/Tosha 90-245 t/ha landrace rows are cumulative over a
+    //     1-2 year picking life and are deliberately excluded)
+    //   MOALF Kenya / JICA SHEP PLUS smallholder module: 15 000 kg/acre
+    //     = 37 t/ha at 60x40cm with manure + TSP/CAN and ~750mm rain
+    //   Oregon State Extension: ~3 200 dozen 1-lb bunches/acre = 43 t/ha
+    //     over 2-4 pickings in four months; collards 150 cwt/acre = 16.8 t/ha
+    //   Oklahoma State Extension: fresh market 500-800 bu/acre = 12-22 t/ha
+    //
+    // Those are irrigated, fertilised, full-picking-life figures. Two
+    // independent per-plant checks size the household case instead: Utah
+    // State Extension home-garden guidance of 3-5 lb per 10 ft of row at
+    // 12in in-row spacing = 0.14-0.23 kg/plant, and a published spacing
+    // trial at 166 g/plant. At this entry's own 40x40cm = 6.25 plants/m2,
+    // 1.5 kg/m2 is 0.24 kg/plant over the 120-day occupancy — at the top of
+    // that household evidence and roughly 25% below the Kenyan smallholder
+    // business-budget figure (8 000 kg/acre = 2.0 kg/m2), which assumes drip
+    // irrigation, feeding, and a picking life longer than 120 days. The 3.0
+    // ceiling is the well-fed cool-season bed; the 0.8 floor matches
+    // Ontario's marketed low end. Valid for the autumn-winter window in
+    // summer-rainfall SA, where kale is a cool-season crop.
+    yieldKgPerM2: 1.5,
+    yieldRangeKgPerM2: [0.8, 3.0],
+    note: 'Cut-and-come-again leafy brassica: pick outer leaves and the plant keeps producing, and light frost sweetens the flavour. It does not handle extreme heat — in hot areas prefer late-summer and autumn sowings. No South African kale yield has ever been published, so the kilogram estimate here comes from Kenyan and United States extension figures trimmed for a hand-watered bed — treat it as a planning slot, not a promise.',
     // No harvestWindowMonths is claimed: neither source publishes a usual
     // picking period for kale, and the 120-day occupancy end already covers
     // the sourced production span.

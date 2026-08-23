@@ -66,6 +66,7 @@ const RECORDED_IMPLIED_KG_PER_PLANT: Record<string, number> = {
   'maize': 0.06825,
   'broccoli': 0.121875,
   'lettuce': 0.162,
+  'kale': 0.24, // 1.5 kg/m2 international benchmark ÷ 6.25 plants/m2 (40x40cm) — see crop-catalog.ts
   'swiss-chard': 0.3,
   'chilli': 0.315, // same spacing as peppers, half its yieldKgPerM2 (1 vs 2) — see crop-catalog.ts
   'potato': 0.3325,

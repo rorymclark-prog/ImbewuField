@@ -313,7 +313,10 @@ test('a cut-and-come-again crop shows a harvest window, a one-shot crop shows on
 
 test('an unverified crop benchmark stays unavailable in the report, dashboard and PDF row', () => {
   const unknown: Planting[] = [
-    { id: 'unknown-kale', bedId: 'bed-1', cropKey: 'kale', sowMonth: 4 },
+    // Kale carried this fixture until 2026-08-23, when it gained a sourced
+    // international benchmark. Amadumbe is now the catalog's verified-schedule,
+    // no-kilograms case, so it takes over the role.
+    { id: 'unknown-amadumbe', bedId: 'bed-1', cropKey: 'amadumbe', sowMonth: 4 },
     { id: 'unknown-coriander', bedId: 'bed-2', cropKey: 'coriander', sowMonth: 5 },
   ];
   const rows = buildPlanTableRows(unknown, BEDS);
@@ -323,7 +326,7 @@ test('an unverified crop benchmark stays unavailable in the report, dashboard an
   const report = buildYearReport(unknown, BEDS);
   assert.equal(report.length, 1);
   assert.match(report[0], /No kilogram food-yield total is shown/);
-  assert.match(report[0], /Coriander, Kale/);
+  assert.match(report[0], /Amadumbe \(taro\), Coriander/);
   assert.doesNotMatch(report.join(' '), /totals? about 0(?:\.0)?kg/i);
 
   const dashboard = buildPlanDashboard(unknown, BEDS, tasksForPlan(unknown, BEDS), {
@@ -331,7 +334,7 @@ test('an unverified crop benchmark stays unavailable in the report, dashboard an
     lossPercent: 10,
   });
   assert.equal(dashboard.hasKnownYield, false);
-  assert.deepEqual(dashboard.unknownYieldCrops, ['Coriander', 'Kale']);
+  assert.deepEqual(dashboard.unknownYieldCrops, ['Amadumbe (taro)', 'Coriander']);
   assert.equal(dashboard.stats[1].value, 'Not shown');
   // No known kg means no density to show either — it must not read as a 0.
   assert.equal(dashboard.stats[2].label, 'benchmark density');
@@ -360,7 +363,7 @@ test('a soil-cover crop is labelled as no food yield rather than unverified or f
 test('a mixed plan labels its kg as a known benchmark subtotal and names every exclusion', () => {
   const mixed: Planting[] = [
     { id: 'known-carrots', bedId: 'bed-1', cropKey: 'carrots', sowMonth: 3 },
-    { id: 'unknown-kale', bedId: 'bed-2', cropKey: 'kale', sowMonth: 4 },
+    { id: 'unknown-amadumbe', bedId: 'bed-2', cropKey: 'amadumbe', sowMonth: 4 },
   ];
   const dashboard = buildPlanDashboard(mixed, BEDS, tasksForPlan(mixed, BEDS), {
     nowMonth: NOW_MONTH,
@@ -379,12 +382,12 @@ test('a mixed plan labels its kg as a known benchmark subtotal and names every e
   assert.equal(dashboard.stats[2].label, 'benchmark density');
   assert.equal(dashboard.stats[2].value, `${(expectedKnownKg / totalAreaM2).toFixed(2)} kg/m2`);
   assert.equal(dashboard.stats[3].value, 'Not calculated');
-  assert.deepEqual(dashboard.unknownYieldCrops, ['Kale']);
+  assert.deepEqual(dashboard.unknownYieldCrops, ['Amadumbe (taro)']);
   assert.match(dashboard.decisions.join(' '), /not a meal or surplus guarantee/);
 
   const report = buildYearReport(mixed, BEDS).join(' ');
   assert.match(report, /conservative commercial comparison/);
-  assert.match(report, /Kale has no verified kg\/m² benchmark/);
+  assert.match(report, /Amadumbe \(taro\) has no verified kg\/m² benchmark/);
   assert.match(report, /not being counted as 0kg/);
   assert.doesNotMatch(report, /sum of every crop line|farm-yield promise/i);
 });

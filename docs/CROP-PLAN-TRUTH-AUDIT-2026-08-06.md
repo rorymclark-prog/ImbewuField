@@ -146,3 +146,32 @@ clean. Mean mapped vegetable-bed utilisation was **56.7%**. That percentage is
 descriptive evidence about this test population, not proof of a global optimum;
 crop whitelists, rotation, real sow windows, picking periods and honest rest
 periods intentionally leave some ground-months unused.
+
+---
+
+## Addendum — 2026-08-23: kale
+
+The line above ("Changed kale and coriander yield to `null`") no longer describes
+kale. Both halves of its basis were sourced on 2026-08-23:
+
+- **Schedule** — Kirchhoffs (40×40 cm, 100–120 days to harvest) and Starke Ayres
+  (55–60 days to maturity, 1 cm sowing depth) put kale on the calendar.
+- **Kilograms** — `yieldKgPerM2: 1.5`, range 0.8–3.0, from **international**
+  extension sources: KALRO Kenya, MOALF Kenya / JICA SHEP PLUS, Oregon State and
+  Oklahoma State. **No South African kale food-yield figure exists** — re-checked
+  across all five KZN DARD vegetable-production tables, the DALRRD leafy-vegetables
+  brochure and the GDARD vegetable guideline; Agricol's kale figure is fodder dry
+  matter, and FAOSTAT folds kale into "cabbages and other brassicas". The farmer-
+  facing note says so in those words.
+
+The published international figures are irrigated, fertilised, full-picking-life
+numbers (37–43 t/ha). The catalog point is deliberately **below** them: at this
+entry's own 40×40 cm = 6.25 plants/m², 1.5 kg/m² is 0.24 kg/plant over the 120-day
+occupancy, sized against two independent per-plant checks (Utah State Extension
+home-garden 0.14–0.23 kg/plant; a published spacing trial at 166 g/plant) rather
+than against the commercial totals. An initial 2.0 kg/m² proposal was rejected in
+review: its per-plant sanity check used the Kenyan 60×40 cm density (4.2 plants/m²)
+instead of this catalog's own 6.25, which inflated the result by ~25%.
+
+**Coriander is unchanged** — still `null`, still the catalog's unverified-yield case
+alongside amadumbe (verified schedule, no published kilograms).
