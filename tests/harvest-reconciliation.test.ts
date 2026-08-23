@@ -492,3 +492,30 @@ test('selling exactly what you harvested is complete books, not an unknown', () 
   assert.equal(row.soldExceedsHarvested, false, 'equal is not "more sold than harvested"');
   assert.equal(row.keptKg, 0, 'kept really is zero here, and saying so is correct');
 });
+
+test('a perennial harvest is never folded into an annual crop’s row or its benchmark', () => {
+  // Rule (e): perennials are recorded and counted, never planned, scheduled or benchmarked.
+  //
+  // matchCropKey falls back to a substring pass, and the orchard picker writes labels that
+  // contain annual aliases outright: "Malabar spinach" (the food-forest climber Basella alba)
+  // contains "spinach", so it was folded into Swiss chard's row and compared against Swiss
+  // chard's crop-cycle benchmark — a benchmark for something that is not an annual crop and
+  // was never in the plan. The climber belongs in "Other activity", which is where every
+  // orchard harvest belongs, because nothing in the orchard is ever in the crop plan.
+  const result = buildReconciliation(
+    [planting('chard', 'swiss-chard', 'bed-a')],
+    BEDS,
+    [production('climber-log', 'Malabar spinach', 12), production('chard-log', 'Swiss chard', 5)],
+    [],
+    'year',
+    NOW,
+  );
+  const chard = result.matched.find((row) => row.cropKey === 'swiss-chard');
+  assert.ok(chard, 'the annual row still exists');
+  assert.equal(chard.harvestedKg, 5, 'and holds only the chard that was actually picked');
+  const other = result.unplannedActivity.map((row) => row.label);
+  assert.ok(
+    other.includes('Malabar spinach'),
+    `the climber belongs in Other activity, got [${other.join(', ')}]`,
+  );
+});

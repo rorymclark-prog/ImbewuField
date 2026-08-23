@@ -8,6 +8,7 @@ import {
   DEFAULT_INCLUDE_PERENNIALS,
 } from '@/lib/produce-scope';
 import { PERENNIAL_PRODUCE } from '@/lib/perennial-produce';
+import { buildCropAliasIndex, cropIdentityOf } from '@/lib/crop-identity';
 import { buildFinanceSeries } from '@/lib/finance-series';
 import { buildFarmMetrics } from '@/lib/farm-metrics';
 import type { ProductionLog, SalesLog } from '@/lib/db/types';
@@ -373,4 +374,25 @@ test('every list of what the orchard switch hid is deduped through the catalogue
   // And the raw-text version this replaced, kept as the thing that must never come back.
   const rawWay = [...new Set([...harvestSide, ...saleSide].map((s) => s.trim()))];
   assert.equal(rawWay.length, 2, 'raw text really does split it — this is why the helper exists');
+});
+
+test('a name the orchard catalogue knows outright beats the annual catalogue guessing', () => {
+  // "Malabar spinach" is the label the orchard picker itself writes for the food-forest climber
+  // Basella alba, and "Pigeon peas" is a shrub. Both CONTAIN an annual alias, and the annual
+  // matcher's substring pass was outranking an exact perennial hit — so a climber was filed as
+  // Swiss chard and a shrub landed on the Peas bed. An exact hit is an identity; a substring is
+  // a guess, and a guess must not beat a catalogue that knows the name outright.
+  const aliases = buildCropAliasIndex();
+  assert.equal(cropIdentityOf('Malabar spinach', aliases).key, 'perennial:malabar-spinach');
+  assert.equal(cropIdentityOf('Pigeon peas', aliases).key, 'perennial:pigeon-pea');
+});
+
+test('an exact annual name still wins, because a schedulable crop must stay schedulable', () => {
+  // The half of the old ordering that was right, pinned so the fix above cannot swing too far.
+  const aliases = buildCropAliasIndex();
+  assert.equal(cropIdentityOf('Spinach', aliases).key, 'swiss-chard');
+  assert.equal(cropIdentityOf('Peas', aliases).key, 'peas');
+  // And the substring pass still works for everything the perennial catalogue does not claim —
+  // the sample farm labels every row "Sample — <crop>".
+  assert.equal(cropIdentityOf('Sample — tomatoes', aliases).key, 'tomatoes');
 });
