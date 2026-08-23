@@ -10,6 +10,7 @@ import type { Planting, PlanBed } from './crop-plan';
 import { buildPlanYieldBenchmark } from './crop-plan';
 import type { FacilitatorDesignState } from './facilitator-design';
 import { cropByKey, CROPS } from './crop-catalog';
+import { perennialKeyForName, perennialProduceByKey } from './perennial-produce';
 import type { ProductionLog, SalesLog } from './db/types';
 
 export type Period = 'month' | 'season' | 'year';
@@ -417,16 +418,38 @@ export function buildReconciliation(
   }
 
   const unplannedMap = new Map<string, UnplannedRow>();
+  /**
+   * Bucketed by the produce's own key where the app knows one, and only otherwise by the written
+   * text.
+   *
+   * The orchard half is not a nicety. Nothing here is in the crop plan — a tree never can be —
+   * so EVERY fruit the farm records lands in this bucket, and the two forms that feed it disagree
+   * by design: a harvest is picked from a list and arrives as the catalogue name, while a sale's
+   * crop is free text the farmer types. Bucketing on text alone put "Avocado" harvested and
+   * "Avocados" sold on two lines, one showing kilograms with nothing sold and one showing a sale
+   * off no harvest. Both lines true; the pair of them a lie about the orchard.
+   */
+  const perennialFor = (raw: string) => perennialKeyForName(loggedCropLabel(raw));
   const bucketKey = (raw: string) => {
+    const perennialKey = perennialFor(raw);
+    if (perennialKey) return `perennial:${perennialKey}`;
     const label = loggedCropLabel(raw);
     return normalize(label) || label.trim().toLowerCase() || 'unnamed';
   };
-  const emptyRow = (raw: string): UnplannedRow => ({
-    label: loggedCropLabel(raw).trim() || 'Unnamed',
-    harvestedKg: 0,
-    soldKg: 0,
-    ambiguous: matchCropCandidates(loggedCropLabel(raw), aliasIndex).length > 1,
-  });
+  const emptyRow = (raw: string): UnplannedRow => {
+    const perennialKey = perennialFor(raw);
+    const written = loggedCropLabel(raw).trim();
+    return {
+      // The catalogue's name once it is known, so the row is not labelled by whichever of the two
+      // forms happened to be filled in first.
+      label: (perennialKey && perennialProduceByKey(perennialKey)?.label) || written || 'Unnamed',
+      harvestedKg: 0,
+      soldKg: 0,
+      // A name the perennial catalogue resolves outright is not ambiguous, whatever the annual
+      // catalogue's substring pass makes of it.
+      ambiguous: !perennialKey && matchCropCandidates(loggedCropLabel(raw), aliasIndex).length > 1,
+    };
+  };
   for (const p of productionInPeriod) {
     if (matchedProductionIds.has(p.id)) continue;
     const key = bucketKey(p.crop);

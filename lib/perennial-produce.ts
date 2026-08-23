@@ -212,3 +212,50 @@ export function isPerennialProduceKey(key: string | null | undefined): boolean {
 export function perennialProduceInGroup(group: PerennialGroup): PerennialProduce[] {
   return PERENNIAL_PRODUCE.filter((p) => p.group === group);
 }
+
+/* ── Matching a written name to this catalogue ───────────────────────────────
+   Lives here rather than beside the finance switch that first needed it: this is catalogue data,
+   and lib/harvest-reconciliation.ts needs it while being contractually free of storage reads. */
+
+function normalise(value: string): string {
+  return value.trim().toLocaleLowerCase('en-ZA').replace(/\s+/g, ' ');
+}
+
+/**
+ * Names to match a perennial by.
+ *
+ * Logs store a NAME, not a key (ProductionLog.crop and SalesLog.crop are both `string`), so
+ * matching is by text. A plural is included because a farmer records "Avocados" and the catalogue
+ * says "Avocado", and both plainly mean the same fruit.
+ */
+function pluralsOf(base: string): string[] {
+  const forms = [`${base}s`];
+  // berry -> berries, but not "grey" -> "greies".
+  if (/[^aeiou]y$/.test(base)) forms.push(`${base.slice(0, -1)}ies`);
+  // peach -> peaches, citrus -> citruses.
+  if (/(ch|sh|s|x|z)$/.test(base)) forms.push(`${base}es`);
+  // mango -> mangoes. Both spellings are current, so keep the -s form above too.
+  if (base.endsWith('o')) forms.push(`${base}es`);
+  return forms;
+}
+
+function perennialAliases(): Map<string, string> {
+  const map = new Map<string, string>();
+  // Two passes so a real catalogue name always beats a plural GENERATED from another name. One
+  // fruit's plural colliding with another fruit's actual name would file every log of the second
+  // under the first, and nothing on screen would show it happening.
+  for (const produce of PERENNIAL_PRODUCE) map.set(normalise(produce.label), produce.key);
+  for (const produce of PERENNIAL_PRODUCE) {
+    for (const form of pluralsOf(normalise(produce.label))) {
+      if (!map.has(form)) map.set(form, produce.key);
+    }
+  }
+  return map;
+}
+
+const PERENNIAL_ALIASES = perennialAliases();
+
+/** The perennial produce key a recorded name refers to, or null. */
+export function perennialKeyForName(name: string): string | null {
+  return PERENNIAL_ALIASES.get(normalise(name)) ?? null;
+}
