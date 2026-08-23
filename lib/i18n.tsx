@@ -815,6 +815,13 @@ const T_en: Dict = {
   myRecordsRetry: 'Retry',
   myRecordsNoHarvests: 'No harvests logged yet.',
   myRecordsTotalHarvested: 'total harvested',
+  // The orchard switch. English only, per the rule in tests/farmer-i18n-gaps.test.ts: new keys go
+  // in this block alone and the fallback serves English until a first-language reviewer supplies
+  // the real words. No isiZulu or any other language may be coined here.
+  recordsOrchardIn: 'Orchard in',
+  recordsOrchardOut: 'Orchard out',
+  recordsOrchardOutNote: 'Orchard is switched off, so {kg} kg is not in this total: {names}. Nothing was deleted — switch it back on to count it again.',
+  recordsOrchardOutNoteMoney: 'Orchard is switched off, so {kg} kg is not in the weight above: {names}. The rand total still counts every sale, orchard included.',
   myRecordsTopsLabel: 'tops',
   // Example-row heading/badge shown above ProductionList/SalesList only when that list is
   // genuinely empty (never in sample mode) — English-only for now; t() falls back.

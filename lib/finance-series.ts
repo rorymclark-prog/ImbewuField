@@ -88,6 +88,15 @@ export interface FinanceSeries {
   totalNetZar: number;
   totalProducedKg: number;
   totalSoldKg: number;
+  /**
+   * Kilograms a `countsKg` filter left out, and what they were.
+   *
+   * A chart that quietly drops rows reports a smaller farm than the farmer has. These two carry
+   * what was removed so the card can say it out loud — the same rule the capped axis follows in
+   * lib/chart-scale.ts: hiding something is honest only while what was hidden is still on screen.
+   */
+  excludedKg: number;
+  excludedNames: string[];
   /** Null when the window's sales exceed its harvest log — same rule, applied to the total. */
   totalKeptKg: number | null;
 
@@ -161,6 +170,16 @@ function windowKeys(now: Date, windowMonths: number): { year: number; month: num
  * is still read, but only to answer "are there earlier records" and "when did this
  * farmer start".
  */
+export interface FinanceSeriesOptions {
+  /**
+   * Count this produce in the kilogram series? Default: everything counts.
+   *
+   * Used by the orchard switch — see lib/produce-scope.ts. It never touches the money figures, and
+   * whatever it removes is reported back in `excludedKg` / `excludedNames`.
+   */
+  countsKg?: (cropName: string) => boolean;
+}
+
 export function buildFinanceSeries(
   production: readonly ProductionLog[],
   sales: readonly SalesLog[],
@@ -168,7 +187,28 @@ export function buildFinanceSeries(
   invoices: readonly SavedInvoice[],
   now: Date,
   windowMonthsInput = 12,
+  options: FinanceSeriesOptions = {},
 ): FinanceSeries {
+  // Applied to the KILOGRAM series only, never to the money.
+  //
+  // Money in is a bank-statement question and an invoice total is one entry: it can carry a
+  // delivery charge, a discount, or lines sold by the crate that never become kilograms at all.
+  // Splitting that total between vegetables and fruit would be a claim the invoice does not make,
+  // and it would break the one arithmetic rule this file exists to hold — that a paid invoice is
+  // counted once. Kilograms carry a produce name on every row, so they can be filtered honestly.
+  const countsKg = options.countsKg ?? (() => true);
+  let excludedKg = 0;
+  const excludedNames = new Set<string>();
+  const kgOf = (name: string, kg: number): number => {
+    const value = positive(kg);
+    if (countsKg(name)) return value;
+    if (value > 0) {
+      excludedKg += value;
+      const label = name.trim();
+      if (label) excludedNames.add(label);
+    }
+    return 0;
+  };
   const windowMonths = clampWindowMonths(windowMonthsInput);
   const frame = windowKeys(now, windowMonths);
   const inWindow = new Set(frame.map((f) => f.key));
@@ -220,7 +260,7 @@ export function buildFinanceSeries(
     sawRecord(key);
     if (!key || !inWindow.has(key)) continue;
     const b = bucket(key);
-    b.producedKg += positive(row.kg);
+    b.producedKg += kgOf(row.crop, row.kg);
     b.records += 1;
   }
 
@@ -230,7 +270,7 @@ export function buildFinanceSeries(
     if (!key || !inWindow.has(key)) continue;
     const b = bucket(key);
     b.moneyInSales.push(row);
-    b.soldKg += positive(row.kg);
+    b.soldKg += kgOf(row.crop, row.kg);
     b.records += 1;
   }
 
@@ -245,7 +285,7 @@ export function buildFinanceSeries(
   for (const line of invoiceKgLines) {
     const key = monthKeyOf(line.sold_at);
     if (!key || !inWindow.has(key)) continue;
-    bucket(key).soldKg += positive(line.kg);
+    bucket(key).soldKg += kgOf(line.crop, line.kg);
   }
 
   for (const row of expenseRows) {
@@ -312,5 +352,8 @@ export function buildFinanceSeries(
     hasRecords: months.some((m) => m.hasRecords),
     earlierRecords: recordedKeys.some((key) => !inWindow.has(key)),
     firstRecordLabel,
+    excludedKg,
+    // Sorted so the card's wording does not reshuffle every time a row is logged.
+    excludedNames: [...excludedNames].sort((a, b) => a.localeCompare(b, 'en-ZA')),
   };
 }
