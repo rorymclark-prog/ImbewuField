@@ -83,8 +83,9 @@ export interface MiniPlan {
   bedCount: number;
   plotCount: number;
   /**
-   * Longest side of the drawn ground, in metres — the plate's own sense of scale.
-   * Null when the geometry gave no usable extent.
+   * Longest side of the FRAMED ground, in metres — the plate's own sense of scale.
+   * That is the growing area (see fit()), not the whole property. Null when the
+   * geometry gave no usable extent.
    */
   spanM: number | null;
 }
@@ -127,6 +128,14 @@ function rectCorners(cx: number, cy: number, w: number, h: number, rotDeg: numbe
  * Fit metre-space shapes into the output box: uniform scale (never stretched —
  * a squashed plan is a lie about the ground), centred, capped at
  * MINI_MAX_PX_PER_M. Returns null when there is nothing with real extent to draw.
+ *
+ * THE FRAME IS THE GROWING AREA, not everything on the site. A rainwater tank at
+ * the far corner of a plot would otherwise set the bounding box and shrink the
+ * beds — the subject of a crop plan — to specks in the middle of it. So beds and
+ * staple plots choose the frame and the context ink is simply allowed to run off
+ * the edge, which the viewBox clips and which reads like a cropped survey plate.
+ * A design with no beds or plots at all (an orchard, say) falls back to framing
+ * on everything, because then there is no subject to prefer.
  */
 function fit(shapes: MetreShape[], bedCount: number, plotCount: number): MiniPlan | null {
   if (shapes.length === 0) return null;
@@ -138,7 +147,8 @@ function fit(shapes: MetreShape[], bedCount: number, plotCount: number): MiniPla
     if (y < minY) minY = y;
     if (y > maxY) maxY = y;
   };
-  for (const s of shapes) {
+  const subject = shapes.filter((s) => s.paint === 'bed' || s.paint === 'plot');
+  for (const s of (subject.length > 0 ? subject : shapes)) {
     if (s.kind === 'poly') {
       for (const [x, y] of s.points) note(x, y);
     } else {

@@ -1405,9 +1405,14 @@ function FacilitatorCropsPageInner() {
               )}
             </div>
             <p className="font-sans mb-4" style={{ fontSize: 13, color: '#5C5040' }}>
-              {cloudCards.length + studioCards.length === 1
-                ? 'One saved design — here is what is on it.'
-                : `${cloudCards.length + studioCards.length} saved designs. Each one is drawn as it sits on the ground.`}
+              {/* Zero IS reachable — arriving with ?switch=1 opens the picker before any
+                  design exists — and "0 saved designs. Each one is drawn…" was nonsense
+                  in exactly the moment a farmer most needs telling what to do next. */}
+              {cloudCards.length + studioCards.length === 0
+                ? 'No saved designs yet. Draw your beds in the Design Studio and this is where they will appear.'
+                : cloudCards.length + studioCards.length === 1
+                  ? 'One saved design — here is what is on it.'
+                  : `${cloudCards.length + studioCards.length} saved designs. Each one is drawn as it sits on the ground.`}
             </p>
 
             <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(215px, 1fr))' }}>

@@ -257,3 +257,34 @@ test('mini plan (cloud): a design of only trees still draws, with no beds claime
   assert.equal(plan.bedCount, 0);
   assert.equal(plan.shapes.filter((s) => s.paint === 'canopy').length, 2);
 });
+
+test('mini plan: a far-off tank sets no frame — the beds do', () => {
+  // The subject of a crop plan is its beds. A rainwater tank 80 m away used to set
+  // the bounding box and shrink every bed to a speck in the middle of the plate.
+  const items = [
+    { id: 'a', defId: 'veg_bed', x: 0.40, y: 0.50 },
+    { id: 'b', defId: 'veg_bed', x: 0.46, y: 0.50 },
+  ] as DesignCanvasState['items'];
+  const tight = miniPlanFromCanvas(canvas({ items }));
+  const withTank = miniPlanFromCanvas(canvas({
+    items: [...items, { id: 't', defId: 'jojo_5000', x: 0.95, y: 0.05 }] as DesignCanvasState['items'],
+  }));
+  assert.ok(tight && withTank);
+  const [a] = bedsOf(tight);
+  const [b] = bedsOf(withTank);
+  assert.equal(a.w, b.w, 'the beds must be drawn at the same size with or without the tank');
+  assert.equal(tight.spanM, withTank.spanM, 'the framed span is the growing area');
+  assert.ok(withTank.shapes.some((s) => s.paint === 'water'), 'the tank is still drawn, just not framed on');
+});
+
+test('mini plan: a design with no beds at all still frames on what it does have', () => {
+  const plan = miniPlanFromCanvas(canvas({
+    items: [
+      { id: 't1', defId: 'tree_citrus', x: 0.3, y: 0.4 },
+      { id: 't2', defId: 'tree_citrus', x: 0.7, y: 0.6 },
+    ] as DesignCanvasState['items'],
+  }));
+  assert.ok(plan, 'an orchard has no subject to prefer — everything frames it');
+  assert.equal(plan.bedCount, 0);
+  assert.equal(plan.shapes.length, 2);
+});
