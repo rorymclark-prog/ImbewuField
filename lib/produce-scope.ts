@@ -22,7 +22,7 @@
 
 import { activeAccountLocalStorageKey } from './account-local-storage';
 import { isSampleMode } from './sample-mode';
-import { PERENNIAL_PRODUCE } from './perennial-produce';
+import { perennialKeyForName } from './perennial-produce';
 import { cropEntryOption } from './crop-entry';
 
 /**
@@ -34,48 +34,14 @@ import { cropEntryOption } from './crop-entry';
  */
 export type ProduceKind = 'annual' | 'perennial' | 'unknown';
 
-function normalise(value: string): string {
-  return value.trim().toLocaleLowerCase('en-ZA').replace(/\s+/g, ' ');
-}
-
 /**
- * Names to match a perennial by.
+ * The perennial produce key a recorded name refers to, or null.
  *
- * Logs store a NAME, not a key (ProductionLog.crop and SalesLog.crop are both `string`), so
- * matching is by text. A plural is included because a farmer records "Avocados" and the catalogue
- * says "Avocado", and both plainly mean the same fruit.
+ * Re-exported rather than defined here: the alias table is CATALOGUE data, not a view switch, and
+ * lib/harvest-reconciliation.ts needs it while being contractually free of storage reads. See
+ * lib/perennial-produce.ts for the two-pass build and why a plural is in it.
  */
-function pluralsOf(base: string): string[] {
-  const forms = [`${base}s`];
-  // berry -> berries, but not "grey" -> "greies".
-  if (/[^aeiou]y$/.test(base)) forms.push(`${base.slice(0, -1)}ies`);
-  // peach -> peaches, citrus -> citruses.
-  if (/(ch|sh|s|x|z)$/.test(base)) forms.push(`${base}es`);
-  // mango -> mangoes. Both spellings are current, so keep the -s form above too.
-  if (base.endsWith('o')) forms.push(`${base}es`);
-  return forms;
-}
-
-function perennialAliases(): Map<string, string> {
-  const map = new Map<string, string>();
-  // Two passes so a real catalogue name always beats a plural GENERATED from another name. One
-  // fruit's plural colliding with another fruit's actual name would file every log of the second
-  // under the first, and nothing on screen would show it happening.
-  for (const produce of PERENNIAL_PRODUCE) map.set(normalise(produce.label), produce.key);
-  for (const produce of PERENNIAL_PRODUCE) {
-    for (const form of pluralsOf(normalise(produce.label))) {
-      if (!map.has(form)) map.set(form, produce.key);
-    }
-  }
-  return map;
-}
-
-const PERENNIAL_ALIASES = perennialAliases();
-
-/** The perennial produce key a recorded name refers to, or null. */
-export function perennialKeyForName(name: string): string | null {
-  return PERENNIAL_ALIASES.get(normalise(name)) ?? null;
-}
+export { perennialKeyForName } from './perennial-produce';
 
 /**
  * Classify a recorded produce name.

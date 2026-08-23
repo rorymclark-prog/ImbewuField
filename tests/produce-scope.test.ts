@@ -288,3 +288,32 @@ test('an expense tagged with a fruit lands on that fruit, however it was spelt',
   assert.equal(metrics.perennialCrops[0].cropName, 'Avocado');
   assert.equal(metrics.perennialCrops[0].harvestedKg, 40);
 });
+
+// ── The same split, on the reconciliation card (2026-08-23) ─────────────────
+//
+// Second surface, same cause. Nothing in the orchard is in the crop plan — a tree
+// never can be — so EVERY fruit lands in "Other activity". That bucket was keyed on
+// the written text, and the two forms feeding it disagree by design: a harvest is
+// picked from a list and arrives as the catalogue name, a sale's crop is typed.
+
+test('the reconciliation card buckets one fruit once, not once per spelling', async () => {
+  const { buildReconciliation } = await import('@/lib/harvest-reconciliation');
+  const result = buildReconciliation([], [], [
+    harvest('Avocado', 40, '2026-08-05T08:00:00.000Z'),
+  ], [sale('Avocados', 25, 500, '2026-08-06T08:00:00.000Z')], 'year', NOW);
+
+  const avo = result.unplannedActivity.filter((r) => /avocado/i.test(r.label));
+  assert.equal(avo.length, 1, `one avocado line, got ${JSON.stringify(avo.map((r) => r.label))}`);
+  assert.equal(avo[0].label, 'Avocado', 'labelled by the catalogue, not by whichever form was filled first');
+  assert.equal(avo[0].harvestedKg, 40);
+  assert.equal(avo[0].soldKg, 25);
+  assert.equal(avo[0].ambiguous, false, 'a name the perennial catalogue resolves outright is not ambiguous');
+});
+
+test('a name in no catalogue still keeps its own line and its own words', async () => {
+  const { buildReconciliation } = await import('@/lib/harvest-reconciliation');
+  const result = buildReconciliation([], [], [
+    harvest('Eggs', 3, '2026-08-05T08:00:00.000Z'),
+  ], [], 'year', NOW);
+  assert.deepEqual(result.unplannedActivity.map((r) => r.label), ['Eggs']);
+});
