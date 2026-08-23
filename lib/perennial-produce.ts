@@ -77,6 +77,19 @@ export interface PerennialProduce {
  */
 const WOODY: ReadonlySet<SpeciesStratum> = new Set<SpeciesStratum>(['canopy', 'sub-canopy', 'shrub', 'climber']);
 
+/**
+ * Sections a reviewer has already called fruit.
+ *
+ * A second way in, alongside WOODY, because two indigenous food plants sit in a fruit section
+ * without being trees — sour fig, a groundcover, and waterblommetjie, a herb. Both are picked and
+ * eaten off ground a farmer keeps for years, and a person who reviewed this catalogue filed them
+ * under fruit. Deferring to that beats a stratum rule that would drop them.
+ */
+const FRUIT_SECTIONS: ReadonlySet<SpeciesSection> = new Set<SpeciesSection>([
+  'Indigenous fruit',
+  'Exotic fruit & nuts',
+]);
+
 function groupFor(section: SpeciesSection): PerennialGroup {
   if (section === 'Indigenous fruit') return 'indigenous_fruit';
   if (section === 'Exotic fruit & nuts') return 'fruit_nut';
@@ -107,8 +120,26 @@ function isFoodPerennial(s: Species): boolean {
   // 1a and 1b must be removed from the land and may never be planted, so they are never offered —
   // the same guard the design picker uses. A farmer clearing one can still free-type what came off
   // it; the app just will not list it as something you grow.
-  return s.uses.includes('food') && WOODY.has(s.stratum) && isPlantable(s);
+  return s.uses.includes('food') && (WOODY.has(s.stratum) || FRUIT_SECTIONS.has(s.section)) && isPlantable(s);
 }
+
+/*
+ * WHAT IS KNOWINGLY LEFT OUT, AND WHY IT IS NOT AN OVERSIGHT.
+ *
+ * "Groundcovers & herbaceous" holds both halves of the thing this file has to tell apart, and the
+ * catalogue carries no field that separates them: cowpea, sweet potato, pumpkin, watermelon, grain
+ * sorghum and broad bean are annual vegetables; pineapple, ginger, globe artichoke, wild garlic and
+ * Livingstone potato are perennials a food forest really does hold. `Species` records stratum,
+ * section and use — it does not record whether a plant lives one season or ten.
+ *
+ * Taking the whole section would file a cowpea harvest as orchard produce, and the orchard switch
+ * would then hide it from the vegetable-bed totals. That is a wrong answer arriving quietly, which
+ * is worse than the gap: a farmer with a pineapple types the name, it is treated as their own
+ * entry, and their own entries are NEVER hidden by the switch. The safe direction is the default.
+ *
+ * The fix is a perennial/annual field on Species, set by whoever reviews the botany — not a guess
+ * made here from a name.
+ */
 
 /**
  * One catalogue entry can name TWO produce.

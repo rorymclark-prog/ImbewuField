@@ -4,7 +4,6 @@ import { useEffect, useMemo, useState } from 'react';
 import {
   CROP_ENTRY_OPTIONS,
   PERENNIAL_ENTRY_GROUPS,
-  cropEntryOption,
   produceEntryOption,
   loadCustomCropNames,
   saveCustomCropName,

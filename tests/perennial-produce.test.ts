@@ -122,32 +122,48 @@ test('perennial produce: nothing regulated 1a or 1b is ever offered', () => {
   assert.deepEqual(rows.map((r) => r.label).sort(), ['Perfectly Fine Fruit', 'Permit Fruit']);
 });
 
-test('perennial produce: an annual in a herb or groundcover stratum never reaches the list', () => {
-  // CROPS already schedules these. Offering one twice — once plannable, once not — is worse than
-  // not offering it here.
+test('perennial produce: a herb or groundcover gets in on a fruit section and nothing else', () => {
+  // "Groundcovers & herbaceous" mixes annual vegetables CROPS already schedules with real
+  // perennials, and no field in the catalogue separates them — so that section stays out. A fruit
+  // section is a person's judgement already made, so a herb filed there is taken at its word.
   const rows = buildPerennialProduce([
     fixture({ id: 'tree', commonName: 'Real Tree Fruit', stratum: 'canopy' }),
     fixture({ id: 'vine', commonName: 'Real Vine Fruit', stratum: 'climber' }),
-    fixture({ id: 'herb', commonName: 'Herb Thing', stratum: 'herb' }),
-    fixture({ id: 'ground', commonName: 'Ground Thing', stratum: 'groundcover' }),
+    fixture({ id: 'herb', commonName: 'Herb Thing', stratum: 'herb', section: 'Groundcovers & herbaceous' }),
+    fixture({ id: 'ground', commonName: 'Ground Thing', stratum: 'groundcover', section: 'Groundcovers & herbaceous' }),
+    fixture({ id: 'pondweed', commonName: 'Water Flower', stratum: 'herb', section: 'Indigenous fruit' }),
+    fixture({ id: 'sourfig', commonName: 'Sour Thing', stratum: 'groundcover', section: 'Indigenous fruit' }),
     fixture({ id: 'nonfood', commonName: 'Timber Tree', stratum: 'canopy', uses: ['shade'] as Species['uses'] }),
   ]);
-  assert.deepEqual(rows.map((r) => r.label).sort(), ['Real Tree Fruit', 'Real Vine Fruit']);
+  assert.deepEqual(
+    rows.map((r) => r.label).sort(),
+    ['Real Tree Fruit', 'Real Vine Fruit', 'Sour Thing', 'Water Flower'],
+  );
 });
 
-test('perennial produce: only woody perennials, never an annual already in the crop list', () => {
-  // 'herb' and 'groundcover' mix true perennials with annuals CROPS already schedules. Offering
-  // cowpea both as a schedulable crop and as unschedulable orchard produce is worse than not
-  // offering it here at all.
+test('perennial produce: every entry is woody or in a fruit section, and all of them are food', () => {
+  // The whole membership rule, checked against the real catalogue. A non-woody plant is only here
+  // because a reviewer put it in a fruit section; nothing gets in on a name.
   const byId = new Map(SPECIES.map((s) => [s.id, s]));
   for (const p of PERENNIAL_PRODUCE) {
     for (const id of p.speciesIds) {
       const s = byId.get(id);
       assert.ok(s, `${id} missing`);
-      assert.ok(['canopy', 'sub-canopy', 'shrub', 'climber'].includes(s.stratum),
-        `${p.label} is ${s.stratum}, which is not woody`);
+      const woody = ['canopy', 'sub-canopy', 'shrub', 'climber'].includes(s.stratum);
+      const fruitSection = s.section === 'Indigenous fruit' || s.section === 'Exotic fruit & nuts';
+      assert.ok(woody || fruitSection,
+        `${p.label} is a ${s.stratum} in "${s.section}" — neither woody nor filed as fruit`);
       assert.ok(s.uses.includes('food'), `${p.label} has no food use`);
     }
+  }
+});
+
+test('perennial produce: the annual vegetables of the herb section are still kept out', () => {
+  // The named risk of widening the rule. Each of these is an annual a farmer plants into a bed;
+  // if one appeared here the orchard switch could hide their harvest from the bed totals.
+  const labels = new Set(PERENNIAL_PRODUCE.map((p) => p.label.toLocaleLowerCase('en-ZA')));
+  for (const annual of ['cowpea', 'sweet potato', 'grain sorghum', 'watermelon', 'amaranth', 'broad bean']) {
+    assert.ok(!labels.has(annual), `${annual} reached the orchard list`);
   }
 });
 
