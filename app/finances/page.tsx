@@ -35,6 +35,7 @@ import MenuButton from '@/components/MenuButton';
 import type { CropPrice } from '@/lib/crop-prices';
 import { loadCropPriceOverrides } from '@/lib/crop-prices';
 import { buildFarmMetrics, isInFinancePeriod, type FinancePeriod } from '@/lib/farm-metrics';
+import { countsWithScope, loadIncludePerennials, DEFAULT_INCLUDE_PERENNIALS } from '@/lib/produce-scope';
 
 /* ── Format helpers ──────────────────────────────────────────────────────── */
 
@@ -90,16 +91,43 @@ interface SummaryProps {
   loading: boolean;
 }
 
+/**
+ * The orchard switch, read once on mount.
+ *
+ * Both kilogram tiles on this screen used to ignore it while the finance graphs and
+ * the Records screen honoured it, so with the switch off the same farm showed two
+ * different "kg" figures on one page and nothing on screen said why. The switch is
+ * a kilogram filter only — it has never touched money, and it must not start here.
+ */
+function useIncludePerennials(): boolean {
+  const [include, setInclude] = useState(DEFAULT_INCLUDE_PERENNIALS);
+  useEffect(() => { setInclude(loadIncludePerennials()); }, []);
+  return include;
+}
+
+/** Kilograms in scope, plus what was left out — never one without the other. */
+function scopeKg(rows: { crop: string; kg?: number | null }[], includePerennials: boolean) {
+  let counted = 0;
+  let excluded = 0;
+  const excludedNames = new Set<string>();
+  for (const row of rows) {
+    const kg = row.kg ?? 0;
+    if (countsWithScope(row.crop, includePerennials)) counted += kg;
+    else { excluded += kg; excludedNames.add(row.crop.trim()); }
+  }
+  return { counted, excluded, excludedNames: [...excludedNames].sort((a, b) => a.localeCompare(b, 'en-ZA')) };
+}
+
 function SummaryCards({ sales, production, expenses, invoices, loading }: SummaryProps) {
+  const includePerennials = useIncludePerennials();
   const thisMonthSales = sales.filter((s) => isThisMonth(s.sold_at));
   const thisMonthPaidInvoices = invoices.filter((i) => i.status === 'paid' && isThisMonth(i.paidAt));
   const totalRevenue = cashIncomeTotal(thisMonthSales, thisMonthPaidInvoices);
   const totalSpent = expenses
     .filter((x) => isThisMonth(x.spent_at))
     .reduce((acc, x) => acc + (x.amount ?? 0), 0);
-  const totalKg = production
-    .filter((p) => isThisMonth(p.logged_at))
-    .reduce((acc, p) => acc + (p.kg ?? 0), 0);
+  const monthKg = scopeKg(production.filter((p) => isThisMonth(p.logged_at)), includePerennials);
+  const totalKg = monthKg.counted;
 
   const cards = [
     {
@@ -129,7 +157,8 @@ function SummaryCards({ sales, production, expenses, invoices, loading }: Summar
   ];
 
   return (
-    <div className="grid grid-cols-3 gap-3">
+    <>
+      <div className="grid grid-cols-3 gap-3">
       {cards.map((card, i) => (
         <div
           key={i}
@@ -160,7 +189,17 @@ function SummaryCards({ sales, production, expenses, invoices, loading }: Summar
           )}
         </div>
       ))}
-    </div>
+      </div>
+      {!loading && monthKg.excluded > 0 && (
+        /* Named and quantified, never just subtracted. The same condition that makes a
+           capped chart axis honest rather than wrong applies to a filtered total: a
+           number with its missing part nowhere on screen is not a filtered figure. */
+        <p className="font-sans text-xs mt-2" style={{ color: 'var(--color-muted-strong)' }}>
+          Orchard is switched off, so {monthKg.excluded.toFixed(1)} kg is not in the harvest
+          figure: {monthKg.excludedNames.join(', ')}. The rand figures still count every sale.
+        </p>
+      )}
+    </>
   );
 }
 
@@ -755,7 +794,9 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
   const income = rows.reduce((a, r) => a + (r.inAmt ?? 0), 0);
   const expenseTotal = rows.reduce((a, r) => a + (r.outAmt ?? 0), 0);
   const net = income - expenseTotal;
-  const yieldKg = production.filter((p) => isInFinancePeriod(p.logged_at, period, now)).reduce((a, p) => a + (p.kg ?? 0), 0);
+  const includePerennials = useIncludePerennials();
+  const periodKg = scopeKg(production.filter((p) => isInFinancePeriod(p.logged_at, period, now)), includePerennials);
+  const yieldKg = periodKg.counted;
   const yieldLabel = yieldKg >= 1000 ? `${(yieldKg / 1000).toFixed(1)} t` : `${yieldKg.toFixed(0)} kg`;
 
   function exportCsv() { exportLedgerCsv(rows, period); }
@@ -823,6 +864,14 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
           </div>
         ))}
       </div>
+      {!loading && periodKg.excluded > 0 && (
+        /* Same rule as the phone summary: what the switch removes is named and
+           counted on the same screen, so "Yield logged" is never quietly short. */
+        <p className="font-sans mb-5" style={{ fontSize: 12, color: 'var(--color-muted-strong)', marginTop: -12 }}>
+          Orchard is switched off, so {periodKg.excluded.toFixed(1)} kg is not in Yield
+          logged: {periodKg.excludedNames.join(', ')}. Income and Net profit still count every sale.
+        </p>
+      )}
 
       {/* Ledger table */}
       <div className="rounded-2xl overflow-hidden" style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
@@ -941,16 +990,58 @@ function FarmMetrics({ sales, production, expenses, invoices, period, now, loadi
           ))}
         </div>
       )}
-      {metrics.perennialProduceNames.length > 0 && (
-        /* Named rather than silently absent. Before this, an avocado appeared here as a row reading
-           "Planted area not recorded" in warning orange — an instruction a tree can never carry
-           out, since its fruit does not come off a bed. Every figure on this card is per square
-           metre, so a perennial cannot be one of its rows whatever the orchard switch says. */
-        <p className="px-4 py-3 text-xs font-sans" style={{ color: '#8C7A62', borderTop: '1px solid #E2D8C4' }}>
-          <b style={{ color: '#5C5040', fontWeight: 600 }}>Not on this list:</b> {metrics.perennialProduceNames.join(', ')}.
-          Everything above is worked out per square metre of bed, and fruit off a tree does not come
-          off a bed. Those harvests and sales still count in your totals and in the money below.
-        </p>
+      {metrics.perennialCrops.length > 0 && (
+        /* The orchard, measured the way a tree CAN be measured.
+           Before this the card only named these produce and stopped, because every figure above is
+           divided by bed area and a tree's fruit does not come off a bed. But two of the three
+           figures a farmer actually asks for were never per-area: what came off the tree, and what
+           it fetched per kilogram. The app was already computing both and dropping them on the
+           floor. There is still deliberately no yield-per-area and no projection here — these are
+           achieved numbers off the farmer's own logs, which is why they need no sourcing. */
+        <div className="px-4 py-3" style={{ borderTop: '1px solid #E2D8C4' }}>
+          <div className="flex items-baseline justify-between gap-3">
+            <p className="text-xs font-mono uppercase tracking-wider" style={{ color: '#5C5040' }}>Orchard &amp; food forest</p>
+            <p className="text-xs font-sans" style={{ color: '#8C7A62' }}>picked &amp; sold, not per m²</p>
+          </div>
+          {metrics.perennialCrops.map((row) => (
+            <div key={row.cropName} className="mt-3">
+              <p className="text-sm font-display font-semibold" style={{ color: '#20190F' }}>{row.cropName}</p>
+              <div className="grid grid-cols-3 gap-2 mt-1">
+                <div>
+                  <p className="text-xs font-mono uppercase" style={{ color: '#8C7A62' }}>Picked</p>
+                  <p className="text-sm font-display font-semibold" style={{ color: '#1F4D2B' }}>
+                    {row.hasHarvest ? metricNumber(row.harvestedKg, 'kg') : 'No harvest logged'}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-xs font-mono uppercase" style={{ color: '#8C7A62' }}>Sold for</p>
+                  <p className="text-sm font-display font-semibold" style={{ color: '#235E86' }}>
+                    {row.hasSale ? fmtZAR(row.turnoverZar) : 'No sales logged'}
+                  </p>
+                </div>
+                <div>
+                  <p className="text-xs font-mono uppercase" style={{ color: '#8C7A62' }}>Price</p>
+                  <p className="text-sm font-display font-semibold" style={{ color: '#9E5C08' }}>
+                    {row.priceZarPerKg !== null ? metricNumber(row.priceZarPerKg, 'R/kg') : 'No sales logged'}
+                  </p>
+                </div>
+              </div>
+              {row.hasSale && row.hasHarvest && row.soldKg < row.harvestedKg && (
+                /* Said out loud rather than left for the farmer to subtract. The gap between picked
+                   and sold is the eaten-at-home-or-lost share, and on fruit it is usually the
+                   larger half — printing only the rand would quietly imply the rest was worthless. */
+                <p className="text-xs font-sans mt-1" style={{ color: '#5C5040' }}>
+                  {metricNumber(row.soldKg, 'kg')} of that was sold · {metricNumber(row.harvestedKg - row.soldKg, 'kg')} eaten at home, given away or lost
+                </p>
+              )}
+            </div>
+          ))}
+          <p className="text-xs font-sans mt-3" style={{ color: '#8C7A62' }}>
+            These are not rows in the list above because every figure there is worked out per square
+            metre of bed, and fruit off a tree does not come off a bed. The sales here are already
+            counted in the money below.
+          </p>
+        </div>
       )}
       <div className="px-4 py-3" style={{ background: '#F7F2E9', borderTop: '1px solid #E2D8C4' }}>
         <p className="text-xs font-mono uppercase tracking-wider" style={{ color: '#5C5040' }}>Garden gross margin</p>
