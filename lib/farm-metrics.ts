@@ -4,7 +4,8 @@
 // crops: a plausible allocation would turn a guess into a reported profit.
 
 import type { PlanBed, Planting } from './crop-plan';
-import { produceKindOf } from './produce-scope';
+import { perennialKeyForName, produceKindOf } from './produce-scope';
+import { perennialProduceByKey } from './perennial-produce';
 import { cropByKey } from './crop-catalog';
 import { buildCropAliasIndex, matchCropKey } from './harvest-reconciliation';
 import type { ExpenseLog, ProductionLog, SalesLog } from './db/types';
@@ -105,9 +106,26 @@ function finiteNonNegative(value: number | null | undefined): number {
   return typeof value === 'number' && Number.isFinite(value) && value >= 0 ? value : 0;
 }
 
+/**
+ * One produce identity for a written name, so every record naming the same thing lands on one row.
+ *
+ * BOTH catalogues are asked, in produceKindOf's own order: the annual one first, because it is the
+ * schedulable one and a name that resolves to a plannable crop must keep resolving to it.
+ *
+ * The orchard half is not optional politeness. Logging forms write the CATALOGUE name from a
+ * picker, while a sale's crop is free text a farmer types — so "Avocado" picked and "Avocados" sold
+ * is the ORDINARY path, not an edge case. Matched only against the annual catalogue, both fell
+ * through to the written-text bucket and split into two rows: one showing kilograms with no price,
+ * one showing a price with nothing picked. Neither row is wrong on its own and together they are a
+ * lie about how many trees the farmer has.
+ */
 function cropIdentity(label: string, aliases: ReturnType<typeof buildCropAliasIndex>): { key: string | null; label: string } {
   const key = matchCropKey(label, aliases);
-  return key ? { key, label: cropByKey(key)?.name ?? label.trim() } : { key: null, label: label.trim() || 'Unnamed crop' };
+  if (key) return { key, label: cropByKey(key)?.name ?? label.trim() };
+  const perennialKey = perennialKeyForName(label);
+  // Perennial keys are namespaced precisely so they can never collide with a CROPS key here.
+  if (perennialKey) return { key: perennialKey, label: perennialProduceByKey(perennialKey)?.label ?? label.trim() };
+  return { key: null, label: label.trim() || 'Unnamed crop' };
 }
 
 function cropMapKey(identity: { key: string | null; label: string }): string {

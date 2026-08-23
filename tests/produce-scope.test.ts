@@ -153,7 +153,9 @@ test('produce scope: the per-square-metre card drops orchard produce and names i
   ], [sale('Avocados', 40, 800, '2026-08-06T08:00:00.000Z')], [], 'year', NOW, []);
 
   assert.deepEqual(metrics.crops.map((c) => c.cropName), ['Tomatoes']);
-  assert.deepEqual(metrics.perennialProduceNames, ['Avocados']);
+  // 'Avocado' rather than the 'Avocados' the fixture logged: one produce gets one name, so a
+  // picker-written harvest and a hand-typed sale can never sit on the screen as two fruits.
+  assert.deepEqual(metrics.perennialProduceNames, ['Avocado']);
 });
 
 test('produce scope: taking the orchard off that card never moves the farm\'s money', () => {
@@ -184,7 +186,7 @@ test('orchard produce carries its achieved kilograms, rand and price per kilogra
 
   assert.equal(metrics.perennialCrops.length, 1);
   const avo = metrics.perennialCrops[0];
-  assert.equal(avo.cropName, 'Avocados');
+  assert.equal(avo.cropName, 'Avocado', 'the catalogue name, not whichever spelling was typed first');
   assert.equal(avo.harvestedKg, 40);
   assert.equal(avo.soldKg, 25);
   assert.equal(avo.turnoverZar, 500);
@@ -202,7 +204,7 @@ test('orchard produce picked but never sold reports no price rather than a free 
   const metrics = buildFarmMetrics([], [], [
     harvest('Mangoes', 12, '2026-08-05T08:00:00.000Z'),
   ], [], [], 'year', NOW, []);
-  const mulberry = metrics.perennialCrops.find((c) => c.cropName === 'Mangoes');
+  const mulberry = metrics.perennialCrops.find((c) => c.cropName === 'Mango');
   assert.ok(mulberry, 'a harvested orchard produce with no sale still deserves a row');
   assert.equal(mulberry!.harvestedKg, 12);
   assert.equal(mulberry!.hasSale, false);
@@ -211,7 +213,7 @@ test('orchard produce picked but never sold reports no price rather than a free 
   const blankKg = buildFarmMetrics([], [], [], [
     sale('Mangoes', 0, 300, '2026-08-06T08:00:00.000Z'),
   ], [], 'year', NOW, []);
-  const noKg = blankKg.perennialCrops.find((c) => c.cropName === 'Mangoes');
+  const noKg = blankKg.perennialCrops.find((c) => c.cropName === 'Mango');
   assert.equal(noKg?.priceZarPerKg, null, 'rand over zero kilograms must not become Infinity');
 });
 
@@ -232,4 +234,57 @@ test('an orchard row never gains a per-area figure by any route', () => {
     Object.keys(metrics.perennialCrops[0]).sort(),
     ['cropName', 'harvestedKg', 'hasHarvest', 'hasSale', 'priceZarPerKg', 'soldKg', 'turnoverZar'],
   );
+});
+
+// ── One produce, one row (2026-08-23) ────────────────────────────────────────
+//
+// Found by logging an avocado on the live build rather than in a test. The harvest
+// form writes the CATALOGUE name from a picker; a sale's crop is free text the
+// farmer types. So "Avocado" picked and "Avocados" sold is the ordinary path — and
+// the screen showed two rows: 40 kg picked with no price, beside R500 taken with
+// nothing picked. Both rows true, the pair of them a lie about the orchard.
+
+test('one fruit written two ways is one orchard row, not two half-rows', () => {
+  const metrics = buildFarmMetrics([], [], [
+    harvest('Avocado', 40, '2026-08-05T08:00:00.000Z'),
+  ], [sale('Avocados', 25, 500, '2026-08-06T08:00:00.000Z')], [], 'year', NOW, []);
+
+  assert.equal(metrics.perennialCrops.length, 1, 'the picked kilograms and the sale found each other');
+  const avo = metrics.perennialCrops[0];
+  assert.equal(avo.cropName, 'Avocado');
+  assert.equal(avo.harvestedKg, 40);
+  assert.equal(avo.soldKg, 25);
+  assert.equal(avo.turnoverZar, 500);
+  assert.equal(avo.priceZarPerKg, 20);
+  // The whole reason the row matters: 15 kg went somewhere other than a sale, and
+  // that subtraction is only available once both halves are on one row.
+  assert.equal(avo.harvestedKg - avo.soldKg, 15);
+});
+
+test('the annual catalogue still wins, and a name in neither is left alone', () => {
+  // produceKindOf's documented order, asserted where it now has a second catalogue to
+  // beat: a schedulable crop must keep resolving to the schedulable crop. And a name
+  // the app has never heard of stays exactly as the farmer wrote it — filing it under
+  // a fruit it merely resembles would move real kilograms onto the wrong tree.
+  const metrics = buildFarmMetrics([], [], [
+    harvest('Tomatoes', 10, '2026-08-04T08:00:00.000Z'),
+    harvest('Gogo\u2019s special', 3, '2026-08-04T08:00:00.000Z'),
+  ], [], [], 'year', NOW, []);
+
+  assert.deepEqual(metrics.perennialCrops.map((c) => c.cropName), []);
+  assert.deepEqual(metrics.crops.map((c) => c.cropName).sort(), ['Gogo\u2019s special', 'Tomatoes']);
+});
+
+test('an expense tagged with a fruit lands on that fruit, however it was spelt', () => {
+  // cropIdentity is the one choke point for harvests, sales AND expense tags. A cost
+  // tagged "Avocados" must not open a second identity that the harvest never joins.
+  const metrics = buildFarmMetrics([], [], [
+    harvest('Avocado', 40, '2026-08-05T08:00:00.000Z'),
+  ], [], [
+    { id: 'e1', crop: 'Avocados', amount: 120, spent_at: '2026-08-06T08:00:00.000Z', garden_id: null },
+  ] as never, 'year', NOW, []);
+
+  assert.equal(metrics.perennialCrops.length, 1);
+  assert.equal(metrics.perennialCrops[0].cropName, 'Avocado');
+  assert.equal(metrics.perennialCrops[0].harvestedKg, 40);
 });
