@@ -469,7 +469,7 @@ export default function InvoicePage() {
           and unreachable before the menu button was added here. Scrolling is not
           the prettiest answer, but a control a farmer cannot reach is worse than
           one they have to swipe to. */}
-      <header className="no-print flex-shrink-0 flex items-center px-4 gap-3 overflow-x-auto" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
+      <header className="no-print flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3 overflow-x-auto" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
         <MenuButton />
         <BackButton fallback="/finances" />
         <BrandLogo />

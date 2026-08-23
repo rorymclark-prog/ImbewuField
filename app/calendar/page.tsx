@@ -353,7 +353,7 @@ export default function CalendarPage() {
       }}
     >
       {/* Header */}
-      <header className="flex-shrink-0 flex items-center px-4 gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
+      <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
         <MenuButton />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />

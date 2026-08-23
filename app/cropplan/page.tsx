@@ -192,7 +192,7 @@ export default function CropPlanPage() {
   return (
     <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
       {/* Header */}
-      <header className="flex-shrink-0 flex items-center px-4 gap-3" style={{ height: 56, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
+      <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={{ height: 56, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
         <MenuButton />
         <BackButton fallback="/plan" />
         <BrandLogo />

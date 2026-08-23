@@ -17,7 +17,7 @@ export default function JournalPage() {
           the pill rendered on top of the brand logo and clipped the title, so
           the page read "ield Journal". Suppressing the pill instead would
           strand the page — tests/back-control.test.ts defends that. */}
-      <header className="flex-shrink-0 flex items-center px-4 gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
+      <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
         <MenuButton />
         <BackButton fallback="/home" />
         <BrandLogo />

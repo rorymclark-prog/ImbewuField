@@ -36,7 +36,7 @@ export default function PricesPage() {
       {/* Header — the in-header BackButton keeps the global floating back pill away; see
           components/BackButton.tsx and tests/back-control.test.ts. */}
       <header
-        className="flex-shrink-0 flex items-center px-4 gap-3"
+        className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3"
         style={{ height: 52, background: 'var(--color-surface)', borderBottom: '1px solid var(--color-border)' }}
       >
         <MenuButton />
