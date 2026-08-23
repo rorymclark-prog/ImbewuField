@@ -259,3 +259,20 @@ const PERENNIAL_ALIASES = perennialAliases();
 export function perennialKeyForName(name: string): string | null {
   return PERENNIAL_ALIASES.get(normalise(name)) ?? null;
 }
+
+/**
+ * The name to SHOW for a recorded produce.
+ *
+ * Every screen that lists what a filter left out was building its list from the raw logged text,
+ * so one avocado tree appeared as "Avocado, Avocados" — the harvest form writes the catalogue name
+ * from a picker while a sale's crop is free text the farmer types. A farmer reading that has to
+ * work out which of their trees is which, and there is only one.
+ *
+ * A name in no catalogue is returned exactly as written. Filing it under a fruit it merely
+ * resembles would rename the farmer's own record on their own screen.
+ */
+export function produceDisplayName(name: string): string {
+  const written = typeof name === 'string' ? name.trim() : '';
+  const key = perennialKeyForName(written);
+  return (key && perennialProduceByKey(key)?.label) || written;
+}

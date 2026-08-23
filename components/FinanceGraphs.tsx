@@ -365,10 +365,16 @@ function MeasuredView({
       </div>
 
       <div className="px-4 py-2.5" style={{ borderTop: `1px solid ${HAIRLINE}`, background: '#FBF7EF' }}>
-        {series.excludedKg > 0 && (
+        {(series.excludedProducedKg > 0 || series.excludedSoldKg > 0) && (
+          /* Picked and sold said separately, because the card's own figures are separate and their
+             sum is not a quantity of fruit — 40 kg picked of which 25 were sold is 40 kg, and a
+             single "65 kg" would match none of picked, sold or kept. */
           <p className="font-sans" style={{ fontSize: 10.5, color: MUTED, lineHeight: 1.5 }}>
-            <b style={{ fontWeight: 600 }}>Orchard is switched off</b>, so {kgLabel(series.excludedKg)} is
-            left out of every figure on this card: {series.excludedNames.join(', ')}. The rands elsewhere on this
+            <b style={{ fontWeight: 600 }}>Orchard is switched off</b>, so this card leaves out
+            {series.excludedProducedKg > 0 ? ` ${kgLabel(series.excludedProducedKg)} picked` : ''}
+            {series.excludedProducedKg > 0 && series.excludedSoldKg > 0 ? ' and' : ''}
+            {series.excludedSoldKg > 0 ? ` ${kgLabel(series.excludedSoldKg)} sold` : ''}
+            : {series.excludedNames.join(', ')}. The rands elsewhere on this
             page still count those sales — only the kilograms here are filtered.
           </p>
         )}

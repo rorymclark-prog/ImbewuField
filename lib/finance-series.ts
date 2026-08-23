@@ -43,6 +43,7 @@
 import type { ExpenseLog, ProductionLog, SalesLog } from './db/types';
 import type { SavedInvoice } from './invoices';
 import { cashIncomeTotal, cashLedgerSales, invoiceSalesForPaidInvoice } from './invoice-sales';
+import { produceDisplayName } from './perennial-produce';
 
 export interface FinanceMonthPoint {
   year: number;
@@ -91,11 +92,17 @@ export interface FinanceSeries {
   /**
    * Kilograms a `countsKg` filter left out, and what they were.
    *
-   * A chart that quietly drops rows reports a smaller farm than the farmer has. These two carry
-   * what was removed so the card can say it out loud — the same rule the capped axis follows in
+   * A chart that quietly drops rows reports a smaller farm than the farmer has. These carry what
+   * was removed so the card can say it out loud — the same rule the capped axis follows in
    * lib/chart-scale.ts: hiding something is honest only while what was hidden is still on screen.
+   *
+   * PICKED AND SOLD ARE KEPT APART, and one summed figure is not offered, because their sum is not
+   * a quantity of anything. Forty kilograms picked of which twenty-five were sold is forty
+   * kilograms of fruit; reporting sixty-five names a heap that never existed, and matches none of
+   * the three figures on the card it explains — picked lost 40, sold lost 25, kept lost 15.
    */
-  excludedKg: number;
+  excludedProducedKg: number;
+  excludedSoldKg: number;
   excludedNames: string[];
   /** Null when the window's sales exceed its harvest log — same rule, applied to the total. */
   totalKeptKg: number | null;
@@ -197,14 +204,17 @@ export function buildFinanceSeries(
   // and it would break the one arithmetic rule this file exists to hold — that a paid invoice is
   // counted once. Kilograms carry a produce name on every row, so they can be filtered honestly.
   const countsKg = options.countsKg ?? (() => true);
-  let excludedKg = 0;
+  let excludedProducedKg = 0;
+  let excludedSoldKg = 0;
   const excludedNames = new Set<string>();
-  const kgOf = (name: string, kg: number): number => {
+  const kgOf = (name: string, kg: number, side: 'picked' | 'sold'): number => {
     const value = positive(kg);
     if (countsKg(name)) return value;
     if (value > 0) {
-      excludedKg += value;
-      const label = name.trim();
+      if (side === 'picked') excludedProducedKg += value; else excludedSoldKg += value;
+      // The catalogue's own name, so one fruit is named once however the two forms spelt it. A
+      // farmer told "Avocado, Avocados" was left out has to wonder which of their trees is which.
+      const label = produceDisplayName(name);
       if (label) excludedNames.add(label);
     }
     return 0;
@@ -260,7 +270,7 @@ export function buildFinanceSeries(
     sawRecord(key);
     if (!key || !inWindow.has(key)) continue;
     const b = bucket(key);
-    b.producedKg += kgOf(row.crop, row.kg);
+    b.producedKg += kgOf(row.crop, row.kg, 'picked');
     b.records += 1;
   }
 
@@ -270,7 +280,7 @@ export function buildFinanceSeries(
     if (!key || !inWindow.has(key)) continue;
     const b = bucket(key);
     b.moneyInSales.push(row);
-    b.soldKg += kgOf(row.crop, row.kg);
+    b.soldKg += kgOf(row.crop, row.kg, 'sold');
     b.records += 1;
   }
 
@@ -285,7 +295,7 @@ export function buildFinanceSeries(
   for (const line of invoiceKgLines) {
     const key = monthKeyOf(line.sold_at);
     if (!key || !inWindow.has(key)) continue;
-    bucket(key).soldKg += kgOf(line.crop, line.kg);
+    bucket(key).soldKg += kgOf(line.crop, line.kg, 'sold');
   }
 
   for (const row of expenseRows) {
@@ -352,7 +362,8 @@ export function buildFinanceSeries(
     hasRecords: months.some((m) => m.hasRecords),
     earlierRecords: recordedKeys.some((key) => !inWindow.has(key)),
     firstRecordLabel,
-    excludedKg,
+    excludedProducedKg,
+    excludedSoldKg,
     // Sorted so the card's wording does not reshuffle every time a row is logged.
     excludedNames: [...excludedNames].sort((a, b) => a.localeCompare(b, 'en-ZA')),
   };

@@ -36,6 +36,7 @@ import type { CropPrice } from '@/lib/crop-prices';
 import { loadCropPriceOverrides } from '@/lib/crop-prices';
 import { buildFarmMetrics, isInFinancePeriod, type FinancePeriod } from '@/lib/farm-metrics';
 import { countsWithScope, loadIncludePerennials, DEFAULT_INCLUDE_PERENNIALS } from '@/lib/produce-scope';
+import { produceDisplayName } from '@/lib/perennial-produce';
 
 /* ── Format helpers ──────────────────────────────────────────────────────── */
 
@@ -113,7 +114,9 @@ function scopeKg(rows: { crop: string; kg?: number | null }[], includePerennials
   for (const row of rows) {
     const kg = row.kg ?? 0;
     if (countsWithScope(row.crop, includePerennials)) counted += kg;
-    else { excluded += kg; excludedNames.add(row.crop.trim()); }
+    // The catalogue's own name: a picker-written harvest and a hand-typed sale are one fruit,
+    // and naming it twice makes a farmer count trees they do not have.
+    else { excluded += kg; excludedNames.add(produceDisplayName(row.crop)); }
   }
   return { counted, excluded, excludedNames: [...excludedNames].sort((a, b) => a.localeCompare(b, 'en-ZA')) };
 }
