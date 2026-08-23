@@ -34,6 +34,47 @@ export interface ReleaseNote {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '23 August',
+    sha: '132815e',
+    changes: [
+      'Finance opens with a cash-flow graph — money in against money out, month by month',
+      'A harvest graph shows what you picked, what you sold, and what stayed on the farm',
+      'A second view puts your plan\u2019s benchmark beside what you have actually picked',
+      'Finance now lists what the crop plan says is coming up to harvest',
+      'The menu button is on every screen, so no screen is a dead end',
+      'Invoices head with your enterprise name and logo, with prices already suggested',
+      'The finance demo runs in sample mode instead of writing rows into your real books',
+      'The crop-plan picker draws each farm instead of listing it by name',
+      'Kale can be scheduled now; its yield figure is labelled international, not South African',
+    ],
+  },
+  {
+    when: '22 August',
+    sha: '3f44004',
+    changes: [
+      'A Production score says what a square metre of your plan earns, in rands',
+      'That score is split between vegetable beds and staple plots, which earn very differently',
+      'The score card says what it assumes you sell, what it assumes is lost, and which price it used',
+      'A two-page quick print: a calendar for the wall, and the tasks that go with it',
+      'The workload chart in the crop-plan PDF agrees with the field sheets beside it again',
+      'The Field utilization chart lines up with its own month labels again',
+      'Chilli is its own crop now, separate from peppers',
+      'Onion, Swiss chard and potato sowing months follow the KZN department\u2019s own table',
+    ],
+  },
+  {
+    when: '21 August',
+    sha: 'cfd0bd9',
+    changes: [
+      'A new figure says whether your plan\u2019s yield is in line with the ground it uses',
+      'When a crop you chose does not make it into the plan, the plan says why',
+      'A bed that is only part taken can take a starter crop in the room that is left',
+      'A one-off sowing whose month has passed reads as history, not as work still ahead',
+      'First-season notes no longer promise a gap will close when the repeating cycle cannot close it',
+      'Starter crops are ranked by how many months they feed you, not how fast they clear the ground',
+    ],
+  },
+  {
     when: '20 August (evening)',
     sha: 'eb1fe7a',
     changes: [
