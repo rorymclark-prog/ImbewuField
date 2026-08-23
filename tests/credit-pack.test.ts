@@ -220,13 +220,18 @@ test('crop totals merge case- and whitespace-insensitively, and rank by combined
   const production = [harvest(10, '2026-06-01T00:00:00.000Z', 'Spinach'), harvest(4, '2026-06-05T00:00:00.000Z', ' spinach ')];
   const sales = [sale(50, '2026-06-10T00:00:00.000Z', 'SPINACH', 5), sale(500, '2026-06-11T00:00:00.000Z', 'Amadumbe', 20)];
   const record = creditPackTrackRecord(production, sales);
-  const spinach = record.topCrops.find((c) => c.crop === 'Spinach')!;
+  // The printed name is now the CATALOGUE's, not the first spelling that happened to arrive.
+  // This test used to expect 'Spinach' and 'Amadumbe' — the raw text — which was only ever right
+  // because the identity WAS the raw text. Every other screen in the app already says
+  // "Swiss chard (spinach)"; a lender document that disagreed with the app it was exported from
+  // would be the worse of the two answers.
+  const spinach = record.topCrops.find((c) => c.crop === 'Swiss chard (spinach)')!;
   assert.ok(spinach, 'case/whitespace variants of the same crop name should merge into one row');
   assert.equal(spinach.harvestedKg, 14);
   assert.equal(spinach.soldKg, 5);
   assert.equal(spinach.revenueZar, 50);
   // Amadumbe (20kg sold) outweighs spinach (14kg harvested + 5kg sold = 19) and ranks first.
-  assert.equal(record.topCrops[0].crop, 'Amadumbe');
+  assert.equal(record.topCrops[0].crop, 'Amadumbe (taro)');
 });
 
 test('a blank crop name is labelled rather than left empty', () => {
@@ -269,4 +274,41 @@ test('the assurance line never claims an approval, a score, or a guarantee', () 
   assert.ok(lower.includes('not a loan approval') || lower.includes('not an approval'));
   assert.ok(lower.includes('not a guarantee'));
   assert.doesNotMatch(lower, /\bapproved\b|\bqualifies\b|\beligible\b/);
+});
+
+test('the lender document files one tree under one name, however the farmer spelt it', () => {
+  // A harvest is PICKED FROM A LIST, so it arrives as the catalogue's "Avocado". The sale of that
+  // same fruit is free text typed into /finances, so it arrives as "Avocados". That is the ordinary
+  // path, not an edge case — and this document is the one that leaves the app and goes to a bank.
+  const track = creditPackTrackRecord(
+    [{ crop: 'Avocado', kg: 40, logged_at: '2026-08-23T00:00:00.000Z' } as ProductionLog],
+    [{ crop: 'Avocados', kg: 25, amount: 500, sold_at: '2026-08-23T00:00:00.000Z' } as SalesLog],
+  );
+  assert.equal(track.topCrops.length, 1, 'one tree is one row');
+  assert.deepEqual(track.topCrops[0], {
+    crop: 'Avocado', harvestedKg: 40, soldKg: 25, revenueZar: 500,
+  });
+});
+
+test('the lender document never prints a crop that earned nothing off fruit that sold', () => {
+  // The shape of the bug, stated as the thing a lender would read off the page: a row saying
+  // 40 kg harvested and R0,00 earned, with the R500 attributed to no crop at all.
+  const track = creditPackTrackRecord(
+    [{ crop: 'Avocado', kg: 40, logged_at: '2026-08-23T00:00:00.000Z' } as ProductionLog],
+    [{ crop: 'Avocados', kg: 25, amount: 500, sold_at: '2026-08-23T00:00:00.000Z' } as SalesLog],
+  );
+  const earnedNothing = track.topCrops.filter((c) => c.harvestedKg > 0 && c.revenueZar === 0);
+  assert.deepEqual(earnedNothing, [], 'no row claims a harvest that earned nothing');
+  const grewNothing = track.topCrops.filter((c) => c.revenueZar > 0 && c.harvestedKg === 0);
+  assert.deepEqual(grewNothing, [], 'no row claims income off nothing grown');
+});
+
+test('a name in neither catalogue keeps the words the farmer wrote', () => {
+  // Rule (d). A crop the app has never heard of is printed exactly as typed on a document the
+  // farmer signs — never title-cased, never guessed at, never merged with something else on a hunch.
+  const track = creditPackTrackRecord(
+    [{ crop: 'umbhida wesintu', kg: 10, logged_at: '2026-08-01T00:00:00.000Z' } as ProductionLog],
+    [],
+  );
+  assert.equal(track.topCrops[0].crop, 'umbhida wesintu');
 });
