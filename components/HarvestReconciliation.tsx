@@ -1,12 +1,10 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { ClipboardList, AlertTriangle, Sprout } from 'lucide-react';
 import type { ProductionLog, SalesLog } from '@/lib/db/types';
 import type { PlanBed, Planting } from '@/lib/crop-plan';
-import { loadCropPlan } from '@/lib/crop-plan';
-import { loadFacilitatorState } from '@/lib/facilitator-design';
-import { bedsFromDesign, buildReconciliation, type Period, type CropRow, type UnplannedRow } from '@/lib/harvest-reconciliation';
+import { buildReconciliation, type Period, type CropRow, type UnplannedRow } from '@/lib/harvest-reconciliation';
 import { getCropArt } from '@/lib/crop-art';
 
 interface Props {
@@ -15,6 +13,11 @@ interface Props {
   period: Period;
   now: Date;
   loading: boolean;
+  /** From lib/finance-plan-source — the SAME beds and plan every other card on
+   *  /finances is given, so no two cards can measure different land. */
+  plantings: Planting[];
+  beds: PlanBed[];
+  planLoaded: boolean;
 }
 
 function fmtKg(n: number): string {
@@ -103,17 +106,17 @@ function UnplannedRowView({ row }: { row: UnplannedRow }) {
   );
 }
 
-export default function HarvestReconciliation({ production, sales, period, now, loading }: Props) {
-  const [plantings, setPlantings] = useState<Planting[]>([]);
-  const [beds, setBeds] = useState<PlanBed[]>([]);
-  const [planLoaded, setPlanLoaded] = useState(false);
-
-  useEffect(() => {
-    setPlantings(loadCropPlan().plantings);
-    setBeds(bedsFromDesign(loadFacilitatorState()));
-    setPlanLoaded(true);
-  }, []);
-
+/**
+ * THE BEDS NOW ARRIVE AS A PROP, and that is the whole point of the change.
+ *
+ * This card used to read `bedsFromDesign(loadFacilitatorState())` — the LEGACY
+ * facilitator canvas — while the FarmMetrics card directly above it read the
+ * Design Studio canvas. On the sample farm that is 44 m² against 128 m², so the
+ * two adjacent cards reported production densities three times apart, both
+ * presented as facts about one farm. lib/finance-plan-source.ts is now the one
+ * authority for the screen and hands the same beds to both.
+ */
+export default function HarvestReconciliation({ production, sales, period, now, loading, plantings, beds, planLoaded }: Props) {
   const result = useMemo(
     () => buildReconciliation(plantings, beds, production, sales, period, now),
     [plantings, beds, production, sales, period, now],

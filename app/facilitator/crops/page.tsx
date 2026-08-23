@@ -18,6 +18,7 @@ import LessonLink from '@/components/design/LessonLink';
 import CropPlanExportCard from '@/components/crops/CropPlanExportCard';
 import CropIcon from '@/components/CropIcon';
 import MiniPlanPlate from '@/components/MiniPlanPlate';
+import { planValue } from '@/lib/plan-value';
 import { miniPlanFromCanvas, miniPlanFromFacilitator, type MiniPlan } from '@/lib/mini-plan';
 import { loadCanvasState, DESIGN_CANVAS_CHANGED_EVENT } from '@/lib/design-canvas';
 import { bedsFromDesignCanvas, canvasSiteIdForPlace, studioPlanChoices, type StudioPlanChoice } from '@/lib/design-beds-bridge';
@@ -2421,31 +2422,21 @@ function FoodAvailabilityChart({
   const pricedCropKeys = [...new Set(plantings.map((p) => p.cropKey))].filter((key) => !UNPRICED_CROPS.has(key)).sort();
   const unpricedBenchmarkCrops = yieldBenchmark.byCrop.filter((row) => !priceFor(row.cropKey, priceOverrides)).map((row) => row.name);
   const assumptionsConfirmed = cashflowSettings.confirmed === true;
-  const harvestableFraction = 1 - cashflowSettings.lossPercent / 100;
-  const soldFraction = cashflowSettings.sellPercent / 100;
   // ONE value computation for the blended Production score AND the per-kind
   // beds/plots split under it (2026-08-22, Rory: "should we give a veg beds
   // figure and a staple crops figure seperately?") — three R/m² figures off
   // one formula, so they cannot drift onto different price/slider rules.
-  // Produce kept at home replaces a retail purchase regardless of which sale
-  // channel is selected. Reusing the wholesale toggle there understated the
-  // home side and made one label describe two different calculations.
-  const scenarioValues = (rows: PlanYieldBenchmark['byCrop']) => {
-    const cashAtChannel = rows.reduce((sum, row) => {
-      const price = priceFor(row.cropKey, priceOverrides);
-      if (!price) return sum;
-      return sum + row.kg * (valuePriceMode === 'retail' ? price.retailPerKg : price.wholesalePerKg);
-    }, 0);
-    const homeAtRetail = rows.reduce((sum, row) => {
-      const price = priceFor(row.cropKey, priceOverrides);
-      if (!price) return sum;
-      return sum + row.kg * price.retailPerKg;
-    }, 0);
-    return {
-      cash: cashAtChannel * harvestableFraction * soldFraction,
-      home: homeAtRetail * harvestableFraction * (1 - soldFraction),
-    };
-  };
+  //
+  // The formula itself now lives in lib/plan-value.ts, because the Finance
+  // screen's forward card values kilograms the same way. A second inline copy
+  // there would have been a second answer to "what is my plan worth", drifting
+  // the first time either the loss slider, the sale channel or the home-
+  // consumption rule changed — with nothing failing to say so. (That module also
+  // keeps the rule that produce kept at home is valued at RETAIL whichever
+  // channel is selected: reusing the wholesale toggle there understated the home
+  // side and made one label describe two different calculations.)
+  const scenarioValues = (rows: PlanYieldBenchmark['byCrop']) =>
+    planValue(rows, priceOverrides, valuePriceMode, cashflowSettings);
   const { cash: cashIncome, home: homeValue } = scenarioValues(yieldBenchmark.byCrop);
   const BAR_MAX_H = 56;
 

@@ -26,13 +26,12 @@ import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
 import EmptyState from '@/components/EmptyState';
 import { cashLedgerSales, cashIncomeTotal } from '@/lib/invoice-sales';
-import { loadCropPlan, CROP_PLAN_CHANGED_EVENT, type PlanBed, type Planting } from '@/lib/crop-plan';
-import { bedsFromDesignCanvas } from '@/lib/design-beds-bridge';
-import { DESIGN_CANVAS_CHANGED_EVENT, loadCanvasState } from '@/lib/design-canvas';
-import { designSiteIdFromLocation } from '@/lib/design-studio';
-import { loadPlaces, resolveMainSite } from '@/lib/saved-places';
+import { loadCashflowSettings, DEFAULT_CASHFLOW_SETTINGS, type CashflowSettings, type PlanBed, type Planting } from '@/lib/crop-plan';
+import { useFinancePlanSource } from '@/lib/finance-plan-source';
+import ComingUpHarvests from '@/components/ComingUpHarvests';
+import type { CropPrice } from '@/lib/crop-prices';
+import { loadCropPriceOverrides } from '@/lib/crop-prices';
 import { buildFarmMetrics, isInFinancePeriod, type FinancePeriod } from '@/lib/farm-metrics';
-import type { LocationData } from '@/lib/types';
 
 /* ── Format helpers ──────────────────────────────────────────────────────── */
 
@@ -889,32 +888,16 @@ function metricNumber(value: number | null, unit: string): string {
   return value === null || !Number.isFinite(value) ? 'Unknown' : `${value.toFixed(1)} ${unit}`;
 }
 
-function FarmMetrics({ sales, production, expenses, invoices, period, now, loading }: { sales: SalesLog[]; production: ProductionLog[]; expenses: ExpenseLog[]; invoices: SavedInvoice[]; period: FinancePeriod; now: Date; loading: boolean }) {
-  const [plantings, setPlantings] = useState<Planting[]>([]);
-  const [beds, setBeds] = useState<PlanBed[]>([]);
-  const [planLoaded, setPlanLoaded] = useState(false);
-
-  useEffect(() => {
-    const refresh = () => {
-      const mainSite = resolveMainSite(loadPlaces());
-      const canvas = mainSite
-        ? loadCanvasState(designSiteIdFromLocation({ lat: mainSite.lat, lon: mainSite.lon } as LocationData))
-        : null;
-      // Design-beds-bridge is the sole Design Studio → crop-plan area authority.
-      // If this crop plan has no matching placed bed, the metric stays unknown.
-      setBeds(bedsFromDesignCanvas(canvas));
-      setPlantings(loadCropPlan().plantings);
-      setPlanLoaded(true);
-    };
-    refresh();
-    window.addEventListener(CROP_PLAN_CHANGED_EVENT, refresh);
-    window.addEventListener(DESIGN_CANVAS_CHANGED_EVENT, refresh);
-    return () => {
-      window.removeEventListener(CROP_PLAN_CHANGED_EVENT, refresh);
-      window.removeEventListener(DESIGN_CANVAS_CHANGED_EVENT, refresh);
-    };
-  }, []);
-
+/**
+ * BEDS AND PLANTINGS ARRIVE AS A PROP now (lib/finance-plan-source.ts), not from
+ * this card's own read. It used to load the Design Studio canvas itself while
+ * HarvestReconciliation, directly below it, loaded the LEGACY facilitator canvas
+ * — 128 m² against 44 m² on the sample farm, so the two cards printed production
+ * densities three times apart as facts about one farm. One source now answers
+ * for the whole screen; the events this effect used to listen to are handled
+ * there, so an edit in the Studio still updates every card at once.
+ */
+function FarmMetrics({ sales, production, expenses, invoices, period, now, loading, plantings, beds, planLoaded }: { sales: SalesLog[]; production: ProductionLog[]; expenses: ExpenseLog[]; invoices: SavedInvoice[]; period: FinancePeriod; now: Date; loading: boolean; plantings: Planting[]; beds: PlanBed[]; planLoaded: boolean }) {
   const metrics = useMemo(
     () => buildFarmMetrics(plantings, beds, production, sales, expenses, period, now, invoices),
     [plantings, beds, production, sales, expenses, period, now, invoices],
@@ -1018,6 +1001,19 @@ export default function FinancesPage() {
   // The toggle is right there for anyone who wants the tighter window.
   const [period, setPeriod] = useState<Period>('season');
   const now = useMemo(() => new Date(), []);
+
+  // ONE bed authority for this whole screen — see lib/finance-plan-source.ts for
+  // the two-authorities bug this closed. Every card that measures land takes its
+  // beds from here, so no two of them can be about different land again.
+  const planSource = useFinancePlanSource();
+  // The forward card values kilograms; both of these are read once here rather
+  // than inside it, so the card stays a pure function of its props.
+  const [priceOverrides, setPriceOverrides] = useState<Record<string, CropPrice>>({});
+  const [cashflowSettings, setCashflowSettings] = useState<CashflowSettings>(DEFAULT_CASHFLOW_SETTINGS);
+  useEffect(() => {
+    setPriceOverrides(loadCropPriceOverrides());
+    setCashflowSettings(loadCashflowSettings());
+  }, []);
 
   // Auth: same pattern as MyRecords
   useEffect(() => {
@@ -1164,8 +1160,9 @@ export default function FinancesPage() {
                 onEditExpense={(row) => { setEditing({ type: 'expense', row }); setDesktopEntryOpen(true); }}
                 onSeeSample={sampling ? undefined : handleSeeSample}
               />
-              <FarmMetrics sales={sales} production={production} expenses={expenses} invoices={invoices} period={period} now={now} loading={dataLoading} />
-              <HarvestReconciliation production={production} sales={sales} period={period} now={now} loading={dataLoading} />
+              <FarmMetrics sales={sales} production={production} expenses={expenses} invoices={invoices} period={period} now={now} loading={dataLoading} plantings={planSource.plantings} beds={planSource.beds} planLoaded={planSource.loaded} />
+              <ComingUpHarvests source={planSource} prices={priceOverrides} settings={cashflowSettings} />
+              <HarvestReconciliation production={production} sales={sales} period={period} now={now} loading={dataLoading} plantings={planSource.plantings} beds={planSource.beds} planLoaded={planSource.loaded} />
               {/* Same LogSaleForm as the phone branch, hosted in a modal. Mounted
                   only while open so every dismissal starts the next entry fresh. */}
               {desktopEntryOpen && (
@@ -1203,8 +1200,9 @@ export default function FinancesPage() {
               >
                 <Sprout size={16} />Log harvest
               </Link>
-              <HarvestReconciliation production={production} sales={sales} period="month" now={now} loading={dataLoading} />
-              <FarmMetrics sales={sales} production={production} expenses={expenses} invoices={invoices} period="month" now={now} loading={dataLoading} />
+              <ComingUpHarvests source={planSource} prices={priceOverrides} settings={cashflowSettings} />
+              <HarvestReconciliation production={production} sales={sales} period="month" now={now} loading={dataLoading} plantings={planSource.plantings} beds={planSource.beds} planLoaded={planSource.loaded} />
+              <FarmMetrics sales={sales} production={production} expenses={expenses} invoices={invoices} period="month" now={now} loading={dataLoading} plantings={planSource.plantings} beds={planSource.beds} planLoaded={planSource.loaded} />
               {/* Never offered while offline: "no data" may only mean "not reachable", and this
                   button writes real rows into the farmer's real ledger. */}
               {!online && (
