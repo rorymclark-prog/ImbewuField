@@ -1249,7 +1249,10 @@ export default function MyRecords() {
         // Only the kilogram figure beside it follows the switch, and says so when it does.
         const soldLeftOut = sales.filter((p) => !inScope(p.crop));
         const soldExcludedKg = soldLeftOut.reduce((s, p) => s + (p.kg ?? 0), 0);
-        const soldExcludedNames = [...new Set(soldLeftOut.filter((p) => (p.kg ?? 0) > 0).map((p) => p.crop.trim()))]
+        // Through the catalogue, exactly as the harvest note above does. These two notes sit on the
+        // same screen: with one spelling raw and one canonical, one avocado tree read as "Avocado"
+        // in the note above and "Avocados" in this one.
+        const soldExcludedNames = [...new Set(soldLeftOut.filter((p) => (p.kg ?? 0) > 0).map((p) => produceDisplayName(p.crop)))]
           .sort((a, b) => a.localeCompare(b, 'en-ZA'));
         const totalKgSold = sales.filter((p) => inScope(p.crop)).reduce((s, p) => s + (p.kg ?? 0), 0);
         const recent = sales.slice(0, 12);

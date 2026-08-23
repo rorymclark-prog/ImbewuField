@@ -43,6 +43,7 @@ import {
   DEFAULT_INCLUDE_PERENNIALS,
   produceKindOf,
 } from '@/lib/produce-scope';
+import { produceDisplayName } from '@/lib/perennial-produce';
 
 const CARD: React.CSSProperties = { background: '#FFFEFA', border: '1px solid #E2D8C4' };
 
@@ -100,9 +101,12 @@ export default function FinanceGraphs({
   // Named so the plan view can explain an absence instead of leaving one. Only computed from what
   // is actually recorded: a farmer with no trees should never read a paragraph about trees.
   const orchardRecorded = useMemo(() => {
+    // Deduped through the catalogue even though only this Set's SIZE is read today. A Set of raw
+    // text does not deduplicate the same tree written two ways, so the moment anyone renders this
+    // list — the obvious next edit — it names one tree twice.
     const names = new Set<string>();
-    for (const row of production) if (produceKindOf(row.crop) === 'perennial') names.add(row.crop.trim());
-    for (const row of sales) if (produceKindOf(row.crop) === 'perennial') names.add(row.crop.trim());
+    for (const row of production) if (produceKindOf(row.crop) === 'perennial') names.add(produceDisplayName(row.crop));
+    for (const row of sales) if (produceKindOf(row.crop) === 'perennial') names.add(produceDisplayName(row.crop));
     return [...names].sort((a, b) => a.localeCompare(b, 'en-ZA'));
   }, [production, sales]);
 
