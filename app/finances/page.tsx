@@ -12,7 +12,7 @@ import {
   WriteTimeoutError,
 } from '@/lib/db/queries';
 import type { SalesLog, ProductionLog, ExpenseLog, ExpenseCategory } from '@/lib/db/types';
-import { loadInvoices, saveInvoice, addCustomer, addProduct, invoiceId, paymentMethodLabel, type SavedInvoice } from '@/lib/invoices';
+import { loadInvoices, paymentMethodLabel, type SavedInvoice } from '@/lib/invoices';
 import {
   isSampleMode, enterSampleMode,
   getSandboxSales, addSandboxSale, updateSandboxSale, deleteSandboxSale,
@@ -742,7 +742,7 @@ function exportLedgerCsv(rows: LedgerRow[], period: Period) {
   URL.revokeObjectURL(url);
 }
 
-function FinancialSheet({ sales, production, expenses, invoices, name, loading, period, setPeriod, onAddEntry, onEditSale, onEditExpense }: { sales: SalesLog[]; production: ProductionLog[]; expenses: ExpenseLog[]; invoices: SavedInvoice[]; name: string; loading: boolean; period: Period; setPeriod: (p: Period) => void; onAddEntry: () => void; onEditSale: (s: SalesLog) => void; onEditExpense: (x: ExpenseLog) => void }) {
+function FinancialSheet({ sales, production, expenses, invoices, name, loading, period, setPeriod, onAddEntry, onEditSale, onEditExpense, onSeeSample }: { sales: SalesLog[]; production: ProductionLog[]; expenses: ExpenseLog[]; invoices: SavedInvoice[]; name: string; loading: boolean; period: Period; setPeriod: (p: Period) => void; onAddEntry: () => void; onEditSale: (s: SalesLog) => void; onEditExpense: (x: ExpenseLog) => void; onSeeSample?: () => void }) {
   const now = useMemo(() => new Date(), []);
 
   const rows: LedgerRow[] = useMemo(
@@ -774,6 +774,14 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
           <h1 className="font-display font-semibold" style={{ fontSize: 30, color: 'var(--color-ink)', letterSpacing: '-0.02em', lineHeight: 1.1 }}>Financial sheet</h1>
         </div>
         <div className="flex items-center gap-2">
+          {onSeeSample && (
+            <button onClick={onSeeSample}
+              title="Open a fully-worked demo farm. Your own books are not touched."
+              className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg font-sans font-semibold transition-all"
+              style={{ background: 'transparent', border: '1px dashed rgba(192,122,30,0.5)', color: '#C07A1E', fontSize: 14, cursor: 'pointer' }}>
+              <Sparkles size={15} />See a sample
+            </button>
+          )}
           <div className="flex rounded-lg p-0.5 gap-0.5" style={{ background: 'rgba(226,216,196,0.5)', border: '1px solid var(--color-border)' }}>
             {(['month', 'season', 'year'] as Period[]).map((p) => (
               <button key={p} onClick={() => setPeriod(p)}
@@ -965,52 +973,14 @@ function FarmMetrics({ sales, production, expenses, invoices, period, now, loadi
 
 /* ── Main page ───────────────────────────────────────────────────────────── */
 
-// Generates ~6 sample sales, ~5 sample expenses and 2 sample invoices (one paid, one
-// unpaid) through the normal add paths, spread over recent weeks. Item names are
-// prefixed "Sample —" so they're obviously demo data and easy to spot for deletion.
-async function loadSampleData(): Promise<void> {
-  const daysAgo = (n: number) => new Date(Date.now() - n * 86400000).toISOString();
-
-  const sampleSales: Partial<SalesLog>[] = [
-    { crop: 'Sample — spinach', kg: 4, amount: 120, buyer: 'Local market', sold_at: daysAgo(3) },
-    { crop: 'Sample — eggs', kg: 2, amount: 90, buyer: 'Spar Nquthu', sold_at: daysAgo(7) },
-    { crop: 'Sample — tomatoes', kg: 6, amount: 180, buyer: 'Local market', sold_at: daysAgo(10) },
-    { crop: 'Sample — spinach', kg: 5, amount: 150, buyer: 'Agri Co-op', sold_at: daysAgo(15) },
-    { crop: 'Sample — eggs', kg: 3, amount: 135, buyer: 'Local market', sold_at: daysAgo(20) },
-    { crop: 'Sample — tomatoes', kg: 8, amount: 240, buyer: 'Spar Nquthu', sold_at: daysAgo(25) },
-  ];
-  const sampleExpenses: Partial<ExpenseLog>[] = [
-    { item: 'Sample — chicken feed', amount: 220, supplier: 'Agri Co-op', category: 'feed', spent_at: daysAgo(4) },
-    { item: 'Sample — spinach seed', amount: 85, supplier: 'Agri Co-op', category: 'seed', spent_at: daysAgo(9) },
-    { item: 'Sample — diesel', amount: 350, supplier: 'Total garage', category: 'fuel', spent_at: daysAgo(12) },
-    { item: 'Sample — hoe handle', amount: 60, supplier: null, category: 'equipment', spent_at: daysAgo(18) },
-    { item: 'Sample — transport to market', amount: 100, supplier: null, category: 'transport', spent_at: daysAgo(22) },
-  ];
-
-  await Promise.all([
-    ...sampleSales.map((s) => addSale(s)),
-    ...sampleExpenses.map((x) => addExpense(x)),
-  ]);
-
-  // Invoices go through the normal invoice add paths (customer/product presets + saveInvoice).
-  const paidItems = [{ desc: 'Sample — spinach', qty: 4, unit: 'kg', price: 30 }];
-  addCustomer('Sample — Spar Nquthu');
-  paidItems.forEach((it) => addProduct(it));
-  saveInvoice({
-    id: invoiceId(), no: 9001, billTo: 'Sample — Spar Nquthu',
-    items: paidItems, total: paidItems.reduce((a, it) => a + it.qty * it.price, 0),
-    dateISO: daysAgo(14), status: 'paid', paidAt: daysAgo(11),
-  });
-
-  const unpaidItems = [{ desc: 'Sample — eggs', qty: 3, unit: 'trays', price: 45 }];
-  addCustomer('Sample — Local market');
-  unpaidItems.forEach((it) => addProduct(it));
-  saveInvoice({
-    id: invoiceId(), no: 9002, billTo: 'Sample — Local market',
-    items: unpaidItems, total: unpaidItems.reduce((a, it) => a + it.qty * it.price, 0),
-    dateISO: daysAgo(2), status: 'unpaid',
-  });
-}
+// The Finance demo is sample mode (lib/sample-mode.ts, seeded from the Ubhejane Creche
+// fixture in lib/demo-farm.ts): a full worked year of sales, harvests, running and capital
+// costs, and seven invoices, held in memory for this tab only.
+//
+// It replaces an earlier "Load sample data" button that wrote thirteen 'Sample —' rows
+// through the REAL addSale/addExpense/saveInvoice paths into the farmer's own books —
+// demo data she then had to find and delete by hand. Sample mode shows strictly more,
+// is equally editable, and cannot touch a real ledger.
 
 export default function FinancesPage() {
   const [user, setUser] = useState<User | null | 'loading'>('loading');
@@ -1021,15 +991,14 @@ export default function FinancesPage() {
   const [dataLoading, setDataLoading] = useState(false);
   const [editing, setEditing] = useState<EditTarget>(null);
   const [desktopEntryOpen, setDesktopEntryOpen] = useState(false);
-  const [seeding, setSeeding] = useState(false);
   /**
    * WHETHER THE DEVICE IS ONLINE. An empty ledger and an unreachable one rendered identically —
    * "R 0" and "No sales logged yet" — because an offline getDocs FULFILS with an empty snapshot
    * rather than rejecting, so the allSettled handler below never saw a failure to report.
    *
-   * This drives two things: an honest banner, and suppressing the sample-data offer. That offer
-   * calls the REAL addSale/addExpense/saveInvoice, so a farmer looking at a wrongly-empty screen
-   * could tap it and write thirteen fake rows permanently into her own books.
+   * This drives the honest offline banner. It used to also suppress the old sample-data offer,
+   * which wrote real rows and so must never be shown over a wrongly-empty screen; the sample is
+   * now session-only sample mode, which writes nothing and is safe to offer offline.
    */
   const [online, setOnline] = useState(true);
   useEffect(() => {
@@ -1125,15 +1094,16 @@ export default function FinancesPage() {
   }
 
   const hasAnyData = sales.length > 0 || expenses.length > 0 || production.length > 0 || invoices.length > 0;
+  // Read once per render rather than calling isSampleMode() inline in JSX: this drives the
+  // sheet's own farm name, so it must never disagree with the data the same render shows.
+  const sampling = isSampleMode();
 
-  async function handleLoadSampleData() {
-    setSeeding(true);
-    try {
-      await loadSampleData();
-      await loadData();
-    } finally {
-      setSeeding(false);
-    }
+  // Hard navigation, not client-side routing: enterSampleMode() reseeds the sandbox and the
+  // localStorage shim, so every hook on this page must remount and re-read through
+  // isSampleMode() from a clean mount (the same reason SampleModeBanner's exit handler
+  // does a full location change).
+  function handleSeeSample() {
+    if (enterSampleMode()) window.location.href = '/finances';
   }
 
   return (
@@ -1185,13 +1155,14 @@ export default function FinancesPage() {
                 production={production}
                 expenses={expenses}
                 invoices={invoices}
-                name={user ? (user.displayName ?? 'My farm') : 'Ubhejane Creche (sample)'}
+                name={sampling ? 'Ubhejane Creche (sample)' : (user ? (user.displayName ?? 'My farm') : 'My farm')}
                 loading={dataLoading}
                 period={period}
                 setPeriod={setPeriod}
                 onAddEntry={() => { setEditing(null); setDesktopEntryOpen(true); }}
                 onEditSale={(row) => { setEditing({ type: 'sale', row }); setDesktopEntryOpen(true); }}
                 onEditExpense={(row) => { setEditing({ type: 'expense', row }); setDesktopEntryOpen(true); }}
+                onSeeSample={sampling ? undefined : handleSeeSample}
               />
               <FarmMetrics sales={sales} production={production} expenses={expenses} invoices={invoices} period={period} now={now} loading={dataLoading} />
               <HarvestReconciliation production={production} sales={sales} period={period} now={now} loading={dataLoading} />
@@ -1245,16 +1216,21 @@ export default function FinancesPage() {
                   appear when you have signal again.
                 </div>
               )}
-              {!dataLoading && !hasAnyData && online && (
+              {/* Offered whether or not the ledger has rows — a farmer with one entry still
+                  needs to see what a worked year looks like. Sample mode is session-only and
+                  in-memory, so unlike the seeder this replaced it can never write to her books. */}
+              {!sampling && (
                 <button
                   type="button"
-                  onClick={handleLoadSampleData}
-                  disabled={seeding}
-                  className="w-full flex flex-col items-center justify-center gap-2 py-6 rounded-2xl text-sm font-display font-semibold transition-all"
-                  style={{ background: 'transparent', border: '1px dashed rgba(31,77,43,0.35)', color: 'var(--color-forest-800)', cursor: seeding ? 'wait' : 'pointer' }}
+                  onClick={handleSeeSample}
+                  className="w-full flex flex-col items-center justify-center gap-1.5 py-6 px-4 rounded-2xl text-sm font-display font-semibold transition-all"
+                  style={{ background: 'transparent', border: '1px dashed rgba(192,122,30,0.5)', color: '#C07A1E', cursor: 'pointer' }}
                 >
-                  {seeding ? <Loader2 size={18} className="animate-spin" /> : <Sparkles size={18} />}
-                  {seeding ? 'Loading sample data...' : 'Load sample data — see how Finance works'}
+                  <span className="flex items-center gap-2"><Sparkles size={18} />See a sample — how Finance works</span>
+                  <span className="font-sans font-normal" style={{ fontSize: 11.5, color: 'var(--color-muted-strong)', lineHeight: 1.4 }}>
+                    A worked year from the Ubhejane Crèche demo farm: sales, costs, harvests and
+                    invoices. Your own books are not touched.
+                  </span>
                 </button>
               )}
               <button

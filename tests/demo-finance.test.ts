@@ -9,6 +9,7 @@
 // no snapshot test can see.
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 
 import {
   buildDemoCropPlan,
@@ -169,4 +170,42 @@ test('the sample ledger covers the trailing twelve months and stops at today', (
     ...finance.expenses.filter((r) => monthKey(r.spent_at) === thisMonth),
   ];
   assert.ok(rowsThisMonth.length >= 4, `the default month view opened on only ${rowsThisMonth.length} rows`);
+});
+
+/* ── The Finance page's own sample entry point (23 Aug 2026) ─────────────────
+   The Finance page used to offer its demo in the one shape that could hurt a
+   farmer: a phone-only button, shown only while the ledger was empty, that
+   wrote thirteen 'Sample —' rows through the REAL addSale/addExpense/
+   saveInvoice paths into her own books. It also meant a signed-in farmer with
+   one entry — the exact state a new user reaches after their first sale —
+   could not see a worked example at all.
+
+   The page now enters sample mode instead. That is a page composition rather
+   than a lib function, so it is asserted against the source: weaker than a
+   render, strictly stronger than the nothing that let the writing version
+   ship. */
+test('the finances page offers its sample through sample mode, never by writing demo rows into real books', () => {
+  const page = readFileSync(new URL('../app/finances/page.tsx', import.meta.url), 'utf8');
+
+  assert.match(page, /function handleSeeSample\(\)/, 'the finances page lost its sample entry point');
+  assert.match(page, /if \(enterSampleMode\(\)\) window\.location\.href = '\/finances'/,
+    'the sample entry must enter sample mode and hard-navigate so every hook remounts');
+
+  // The destructive seeder and its real-write imports must stay gone.
+  assert.doesNotMatch(page, /loadSampleData/, 'the real-books sample seeder is back');
+  assert.doesNotMatch(page, /^import \{[^}]*\bsaveInvoice\b/m,
+    'the finances page must not import invoice writers it only needed for the old seeder');
+
+  // Offered on both layouts: the desktop sheet takes it as a prop, the phone view renders it inline.
+  assert.match(page, /onSeeSample=\{sampling \? undefined : handleSeeSample\}/,
+    'the desktop financial sheet must offer the sample (and not while already in it)');
+  assert.match(page, /onClick=\{handleSeeSample\}/, 'the phone view must offer the sample');
+
+  // No longer gated on an empty ledger — a farmer with one row still needs the example.
+  assert.doesNotMatch(page, /!hasAnyData && online/,
+    'the sample offer must not be hidden once the farmer has logged anything');
+
+  // A signed-in farmer inside sample mode must never see her own name over demo books.
+  assert.match(page, /name=\{sampling \? 'Ubhejane Creche \(sample\)'/,
+    "the sheet's farm name must follow sample mode, not the signed-in user");
 });
