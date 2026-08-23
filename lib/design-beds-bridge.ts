@@ -27,8 +27,12 @@ const round1 = (n: number): number => Math.round(n * 10) / 10;
  * rather than imported because that module exports no such helper and is owned by another
  * engineer right now; this is the SAME projection, not a second one — see studio-traced-areas.ts's
  * own module comment for why a second opinion on this maths is the thing to avoid.
+ *
+ * Exported (rather than module-private, as it was) so lib/mini-plan.ts can draw a site's
+ * thumbnail in the SAME metre frame the bed areas are measured in. A thumbnail computing its
+ * own idea of ground scale is exactly the second opinion this comment warns about.
  */
-function metreExtent(state: DesignCanvasState): { wMetres: number; hMetres: number } {
+export function canvasMetreExtent(state: DesignCanvasState): { wMetres: number; hMetres: number } {
   const scale = state.scaleFactor && Number.isFinite(state.scaleFactor) && state.scaleFactor > 0
     ? state.scaleFactor
     : 1;
@@ -112,7 +116,7 @@ export function bedsFromDesignCanvas(state: DesignCanvasState | null): PlanBed[]
     });
   }
 
-  const { wMetres, hMetres } = metreExtent(state);
+  const { wMetres, hMetres } = canvasMetreExtent(state);
   let plotN = 0;
   for (const zone of state.zones) {
     if (zone.feature !== 'staple_garden') continue;

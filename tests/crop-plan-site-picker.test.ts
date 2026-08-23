@@ -108,8 +108,11 @@ test('the crops page feeds saved places + canvas loader into studioPlanChoices o
   assert.match(PAGE, /studioPlanChoices\(loadPlaces\(\), loadCanvasState\)/);
 });
 
-test('the picker renders a Design Studio group with a canvasSite deep link per site', () => {
-  assert.match(PAGE, /From your Design Studio map/);
+test('the picker labels Studio sites as such and deep-links each one by canvasSite', () => {
+  // The label used to be a group heading above a list; it is now the provenance line
+  // on each card ("Design Studio map"), which is what a farmer reads when two cards
+  // of the same farm come from different places. Either way it must be SAID.
+  assert.match(PAGE, /Design Studio map/);
   assert.match(PAGE, /\/facilitator\/crops\?canvasSite=\$\{encodeURIComponent\(c\.siteId\)\}/);
 });
 
@@ -118,8 +121,28 @@ test('picker visibility counts Studio sites — and Studio-only farms open it to
   assert.match(PAGE, /myDesignsList\.length === 0 && studioChoices\.length > 0/);
 });
 
-test('cloud rows carry a disambiguating subtitle — twin titles must not read as a duplicated row', () => {
-  assert.match(PAGE, /cloudRowSubtitle\(d\)/);
+test('twin titles must not read as a duplicated row — the collision itself is detected', () => {
+  // Nothing has ever enforced unique design titles, so two cards CAN read identically.
+  // The old fix was a subtitle on every cloud row; the card grid instead computes the
+  // actual collision set and tags only the cards that collide. Both halves are load-
+  // bearing: a tag nobody computes is decoration, and a collision nobody tags is the
+  // bug. The saved date must still be on every cloud card — it is what tells two
+  // versions of one farm apart.
+  assert.match(PAGE, /duplicateTitles/);
+  assert.match(PAGE, /counts\.set\(t, \(counts\.get\(t\) \?\? 0\) \+ 1\)/);
+  assert.match(PAGE, /tag=\{duplicateTitles\.has\(c\.title\)/);
+  assert.match(PAGE, /savedLabel/);
+});
+
+test('every picker card draws the site it stands for, from geometry already in memory', () => {
+  // The whole point of the redesign: a stack of "6 beds · saved 3 Aug" rows was
+  // unusable when two designs were of the same farm. If these calls go, the cards
+  // are text rows again.
+  assert.match(PAGE, /miniPlanFromFacilitator\(st\)/);
+  assert.match(PAGE, /miniPlanFromCanvas\(st\)/);
+  assert.match(PAGE, /<MiniPlanPlate/);
+  // …and a design whose geometry will not parse must still be LISTED, without a plate.
+  assert.match(PAGE, /plan=\{c\.plan\}/);
 });
 
 test('?switch=1 CLEARS the main-site fallback so the picker can render from a Studio plan', () => {
