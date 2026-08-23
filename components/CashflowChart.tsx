@@ -49,12 +49,22 @@ export default function CashflowChart({
   production,
   invoices,
   loading,
+  wide = false,
 }: {
   sales: SalesLog[];
   expenses: ExpenseLog[];
   production: ProductionLog[];
   invoices: SavedInvoice[];
   loading: boolean;
+  /**
+   * The desktop column is ~1 150px wide against a phone's 375. An SVG with a
+   * fixed viewBox and width:100% does not gain detail at that size, it magnifies
+   * — 7px axis text renders at 26px and the chart grows taller than the screen.
+   * So the desktop copy is drawn in its own larger coordinate system instead.
+   * /finances renders both copies and lets CSS pick one, so this is a prop, not
+   * a media query.
+   */
+  wide?: boolean;
 }) {
   const [windowMonths, setWindowMonths] = useState(12);
   const [picked, setPicked] = useState<string | null>(null);
@@ -145,7 +155,7 @@ export default function CashflowChart({
         />
       </div>
 
-      <Panels months={series.months} selectedKey={selected.key} onPick={setPicked} />
+      <Panels months={series.months} selectedKey={selected.key} onPick={setPicked} wide={wide} />
 
       <Readout month={selected} />
 
@@ -179,25 +189,25 @@ function Figure({ label, value, tone }: { label: string; value: string; tone: st
    same month, and two separate <svg>s with independent padding would not
    guarantee that at every container width. */
 
-const W = 320;
-const PAD = { left: 34, right: 8, top: 12, bottom: 16 };
-const BARS_H = 118;   // the in/out panel, excluding its padding
-const GAP_H = 10;
-const RUN_H = 44;     // the running-total band
+const PHONE = { W: 320, PAD: { left: 34, right: 8, top: 12, bottom: 16 }, BARS_H: 118, GAP_H: 10, RUN_H: 44, barCap: 15 };
+const DESK  = { W: 760, PAD: { left: 52, right: 12, top: 14, bottom: 18 }, BARS_H: 150, GAP_H: 14, RUN_H: 56, barCap: 22 };
 
 function Panels({
   months,
   selectedKey,
   onPick,
+  wide,
 }: {
   months: FinanceMonthPoint[];
   selectedKey: string;
   onPick: (key: string) => void;
+  wide: boolean;
 }) {
+  const { W, PAD, BARS_H, GAP_H, RUN_H, barCap } = wide ? DESK : PHONE;
   const n = months.length;
   const plotW = W - PAD.left - PAD.right;
   const colW = plotW / n;
-  const barW = Math.min(colW * 0.52, 15);
+  const barW = Math.min(colW * 0.52, barCap);
   const totalH = PAD.top + BARS_H + GAP_H + RUN_H + PAD.bottom;
 
   // One shared span, so a R500 cost and a R500 sale are drawn the same length —

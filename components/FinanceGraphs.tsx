@@ -57,12 +57,15 @@ export default function FinanceGraphs({
   invoices,
   source,
   settings,
+  wide = false,
 }: {
   production: ProductionLog[];
   sales: SalesLog[];
   invoices: SavedInvoice[];
   source: FinancePlanSource;
   settings: CashflowSettings;
+  /** See CashflowChart: the desktop copy is drawn larger, not magnified. */
+  wide?: boolean;
 }) {
   const [view, setView] = useState<View>('measured');
   const [windowMonths, setWindowMonths] = useState(12);
@@ -119,8 +122,8 @@ export default function FinanceGraphs({
     <section className="rounded-2xl overflow-hidden" style={CARD}>
       {header}
       {view === 'measured'
-        ? <MeasuredView series={series} pickedKey={picked} onPick={setPicked} />
-        : <PlanView plan={plan} source={source} />}
+        ? <MeasuredView series={series} pickedKey={picked} onPick={setPicked} wide={wide} />
+        : <PlanView plan={plan} source={source} wide={wide} />}
     </section>
   );
 }
@@ -148,19 +151,21 @@ function Segment({ active, onClick, children }: { active: boolean; onClick: () =
 
 /* ── View 1: picked & sold ─────────────────────────────────────────────────── */
 
-const W = 320;
-const PAD = { left: 28, right: 8, top: 14, bottom: 16 };
-const PLOT_H = 118;
+const PHONE = { W: 320, PAD: { left: 28, right: 8, top: 14, bottom: 16 }, PLOT_H: 118, barCap: 16 };
+const DESK  = { W: 760, PAD: { left: 44, right: 12, top: 16, bottom: 18 }, PLOT_H: 168, barCap: 24 };
 
 function MeasuredView({
   series,
   pickedKey,
   onPick,
+  wide,
 }: {
   series: ReturnType<typeof buildFinanceSeries>;
   pickedKey: string | null;
   onPick: (key: string) => void;
+  wide: boolean;
 }) {
+  const { W, PAD, PLOT_H, barCap } = wide ? DESK : PHONE;
   if (!series.hasRecords) {
     return (
       <div className="px-4 py-5">
@@ -184,7 +189,7 @@ function MeasuredView({
   const n = months.length;
   const plotW = W - PAD.left - PAD.right;
   const colW = plotW / n;
-  const barW = Math.min(colW * 0.54, 16);
+  const barW = Math.min(colW * 0.54, barCap);
   const totalH = PAD.top + PLOT_H + PAD.bottom;
 
   // The scale must fit the taller of the two, because a month that sold more than
@@ -321,7 +326,9 @@ function MeasuredView({
 
 /* ── View 2: plan vs actual ────────────────────────────────────────────────── */
 
-function PlanView({ plan, source }: { plan: ReturnType<typeof buildPlanVsActual>; source: FinancePlanSource }) {
+function PlanView({ plan, source, wide }: {
+  plan: ReturnType<typeof buildPlanVsActual>; source: FinancePlanSource; wide: boolean;
+}) {
   if (!source.loaded) {
     return <div className="px-4 py-6 font-sans" style={{ fontSize: 13, color: FAINT }}>Reading your crop plan…</div>;
   }
@@ -362,7 +369,7 @@ function PlanView({ plan, source }: { plan: ReturnType<typeof buildPlanVsActual>
         Each crop&apos;s plan benchmark, with what you have logged picking this year on top of it.
       </p>
 
-      <div className="px-4 py-3 flex flex-col" style={{ gap: 14 }}>
+      <div className="px-4 py-3 flex flex-col" style={{ gap: 14, maxWidth: wide ? 760 : undefined }}>
         {plan.rows.map((row, i) => (
           <PlanRow key={row.cropKey} row={row} pct={pct} lossPercent={plan.lossPercent}
             clipped={rowScale.isClipped(rowTotals[i])} />

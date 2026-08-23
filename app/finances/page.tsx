@@ -1153,7 +1153,7 @@ export default function FinancesPage() {
               {/* "a cashflow graph right at the top" — above the ledger, because the
                   ledger answers "what happened" and this answers "which way is it
                   going", and only one of those is worth the first screenful. */}
-              <CashflowChart sales={sales} expenses={expenses} production={production} invoices={invoices} loading={dataLoading} />
+              <CashflowChart sales={sales} expenses={expenses} production={production} invoices={invoices} loading={dataLoading} wide />
               <FinancialSheet
                 sales={sales}
                 production={production}
@@ -1171,7 +1171,7 @@ export default function FinancesPage() {
               {/* Measured kilograms, then the plan's benchmark beside them. Sits
                   after the ledger and before the per-crop numbers: it is the
                   picture those numbers are the detail of. */}
-              <FinanceGraphs production={production} sales={sales} invoices={invoices} source={planSource} settings={cashflowSettings} />
+              <FinanceGraphs production={production} sales={sales} invoices={invoices} source={planSource} settings={cashflowSettings} wide />
               <FarmMetrics sales={sales} production={production} expenses={expenses} invoices={invoices} period={period} now={now} loading={dataLoading} plantings={planSource.plantings} beds={planSource.beds} planLoaded={planSource.loaded} />
               <ComingUpHarvests source={planSource} prices={priceOverrides} settings={cashflowSettings} />
               <HarvestReconciliation production={production} sales={sales} period={period} now={now} loading={dataLoading} plantings={planSource.plantings} beds={planSource.beds} planLoaded={planSource.loaded} />
