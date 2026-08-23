@@ -14,6 +14,7 @@ import BrandLogo from '@/components/BrandLogo';
 import TabBar from '@/components/TabBar';
 import ContactInbox from '@/components/ContactInbox';
 import LessonLink from '@/components/design/LessonLink';
+import MenuButton from '@/components/MenuButton';
 import type { UserRole } from '@/lib/db/types';
 
 const NgoDashboard = dynamic(() => import('@/components/NgoDashboard'), {
@@ -53,6 +54,7 @@ export default function NgoPage() {
     <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
       <header className="flex-shrink-0 flex items-center px-3 md:px-5 gap-2 md:gap-4 overflow-x-auto"
         style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
+        <MenuButton />
         <BackButton />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: 'var(--border-bright)', opacity: 0.5 }} />

@@ -15,6 +15,7 @@ import TabBar from '@/components/TabBar';
 import { getLastSite } from '@/lib/last-site';
 import { loadPlaces, type SavedPlace } from '@/lib/saved-places';
 import LessonLink from '@/components/design/LessonLink';
+import MenuButton from '@/components/MenuButton';
 import { activeAccountLocalStorageKey } from '@/lib/account-local-storage';
 import { buildSurveyPdf, surveyPdfFilename } from '@/lib/survey-pdf';
 import { deliverFile } from '@/lib/file-delivery';
@@ -204,11 +205,12 @@ function SurveyInner() {
   return (
     <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
       {/* Header */}
-      <header className="no-print flex-shrink-0 flex items-center px-4 gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
+      <header className="no-print flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
+        <MenuButton />
         <BackButton fallback="/home" />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
-        <span className="text-xs font-display" style={{ color: '#5C5040' }}>Garden Survey{selectedPlace ? ` · ${selectedPlace.name}` : ''}</span>
+        <span className="text-xs font-display truncate min-w-0" style={{ color: '#5C5040' }}>Garden Survey{selectedPlace ? ` · ${selectedPlace.name}` : ''}</span>
         <div className="flex-1" />
         <LessonLink id="survey:garden" label="Learn" />
         {step === 5 && (

@@ -8,6 +8,7 @@ import LessonLink from '@/components/design/LessonLink';
 import TabBar from '@/components/TabBar';
 import { CropPriceDetail } from '@/components/prices/CropPriceGuide';
 import { pricedCropList } from '@/components/prices/CropPriceGuide.format';
+import MenuButton from '@/components/MenuButton';
 import { loadCropPriceOverrides, type CropPrice } from '@/lib/crop-prices';
 import { getCropArt } from '@/lib/crop-art';
 
@@ -35,13 +36,14 @@ export default function PricesPage() {
       {/* Header — the in-header BackButton keeps the global floating back pill away; see
           components/BackButton.tsx and tests/back-control.test.ts. */}
       <header
-        className="flex-shrink-0 flex items-center px-4 gap-3"
+        className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3"
         style={{ height: 52, background: 'var(--color-surface)', borderBottom: '1px solid var(--color-border)' }}
       >
+        <MenuButton />
         <BackButton fallback="/home" />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: 'var(--color-border)' }} />
-        <span className="text-xs font-display" style={{ color: 'var(--color-muted-strong)' }}>Farm-gate prices</span>
+        <span className="text-xs font-display truncate min-w-0" style={{ color: 'var(--color-muted-strong)' }}>Farm-gate prices</span>
         <div className="flex-1" />
         <LessonLink id="prices:overview" label="Learn" />
         <SettingsButton />

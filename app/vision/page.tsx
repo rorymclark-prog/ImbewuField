@@ -8,6 +8,7 @@ import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
+import MenuButton from '@/components/MenuButton';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -159,13 +160,14 @@ export default function VisionPage() {
 
       {/* ── Header ── */}
       <header
-        className="flex-shrink-0 flex items-center px-4 gap-3"
+        className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3"
         style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}
       >
+        <MenuButton />
         <BackButton fallback="/home" />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
-        <span className="text-xs font-display" style={{ color: '#5C5040' }}>Lima Vision</span>
+        <span className="text-xs font-display truncate min-w-0" style={{ color: '#5C5040' }}>Lima Vision</span>
         <div className="flex-1" />
         <LessonLink id="vision:overview" label="Learn" />
         <SettingsButton />

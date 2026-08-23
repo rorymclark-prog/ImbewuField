@@ -30,6 +30,7 @@ import BackButton from '@/components/BackButton';
 import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
+import MenuButton from '@/components/MenuButton';
 import {
   attentionFlags,
   filterNetwork,
@@ -141,10 +142,11 @@ export default function NetworkPage() {
         className="flex-shrink-0 flex items-center px-3 md:px-4 gap-2"
         style={{ height: 52, background: PAPER, borderBottom: `1px solid ${LINE}` }}
       >
+        <MenuButton />
         <BackButton fallback="/home" />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: LINE }} />
-        <span className="text-xs font-display" style={{ color: INK_SOFT }}>
+        <span className="text-xs font-display truncate min-w-0" style={{ color: INK_SOFT }}>
           Network · funder portfolio
         </span>
         <div className="flex-1" />

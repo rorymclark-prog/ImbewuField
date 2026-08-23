@@ -14,7 +14,6 @@ import {
   CalendarDays,
   ClipboardList,
   Camera,
-  Menu,
   DollarSign,
   MessageCircle,
   Wheat,
@@ -30,7 +29,7 @@ import { enterSampleMode } from '@/lib/sample-mode';
 import ThemePanel from '@/components/ThemePanel';
 import LimaBar from '@/components/LimaBar';
 import TabBar from '@/components/TabBar';
-import NavDrawer from '@/components/NavDrawer';
+import MenuButton from '@/components/MenuButton';
 import HomeHeroCard from '@/components/home/HomeHeroCard';
 import CropIcon from '@/components/CropIcon';
 import { useLanguage } from '@/lib/i18n';
@@ -280,7 +279,6 @@ function HomeLandingInner() {
   const { t, lang } = useLanguage();
   const router = useRouter();
   const [settingsOpen, setSettingsOpen] = useState(false);
-  const [navOpen, setNavOpen] = useState(false);
   const [rolesOpen, setRolesOpen] = useState(false);
   const [lastSite, setLastSite] = useState<LastSite | null>(null);
   // null until the places effect runs → HomeHeroCard paints its DEFAULT (today's CTA)
@@ -353,14 +351,7 @@ function HomeLandingInner() {
         className="flex-shrink-0 flex items-center gap-3 px-4"
         style={{ height: 56, borderBottom: '1px solid var(--color-border)' }}
       >
-        <button
-          onClick={() => setNavOpen(true)}
-          aria-label="Open navigation"
-          className="flex items-center justify-center rounded-xl flex-shrink-0"
-          style={{ width: 36, height: 36, background: 'rgba(32,25,15,0.06)', border: '1px solid var(--color-border)', color: 'var(--color-muted-strong)', cursor: 'pointer' }}
-        >
-          <Menu size={18} strokeWidth={1.7} />
-        </button>
+        <MenuButton />
 
         <div className="flex flex-col justify-center flex-1">
           <span className="uppercase tracking-widest font-sans" style={{ fontSize: 9.5, color: 'var(--color-harvest)', letterSpacing: '0.12em', lineHeight: 1 }}>
@@ -531,7 +522,6 @@ function HomeLandingInner() {
       <LimaBar />
       <TabBar />
       <ThemePanel open={settingsOpen} onClose={() => setSettingsOpen(false)} />
-      <NavDrawer open={navOpen} onClose={() => setNavOpen(false)} />
     </div>
   );
 }

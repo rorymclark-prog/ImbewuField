@@ -13,6 +13,7 @@ import ThemePanel from '@/components/ThemePanel';
 import { Settings, Sprout, Mail, Phone, Globe, LogOut, ChevronRight, User, Pencil, Check, X, Camera, Lock, Eye, EyeOff, Image as ImageIcon, type LucideIcon } from 'lucide-react';
 import type { UserRole } from '@/lib/db/types';
 import LessonLink from '@/components/design/LessonLink';
+import MenuButton from '@/components/MenuButton';
 
 const ROLE_LABELS: Record<UserRole, string> = {
   farmer: 'Farmer', mentor: 'Mentor',
@@ -141,10 +142,11 @@ export default function AccountPage() {
 
   return (
     <div className="flex flex-col" style={{ height: '100dvh', background: '#E4DCC6' }}>
-      <header className="flex-shrink-0 flex items-center px-4 gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
+      <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
+        <MenuButton />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
-        <span className="text-xs font-display" style={{ color: '#5C5040' }}>Account</span>
+        <span className="text-xs font-display truncate min-w-0" style={{ color: '#5C5040' }}>Account</span>
         <div className="flex-1" />
         <LessonLink id="account:overview" label="Learn" />
         <button onClick={() => setSettingsOpen(true)} aria-label="Settings"

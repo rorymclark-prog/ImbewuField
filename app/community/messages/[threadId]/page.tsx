@@ -11,6 +11,7 @@ import { getThread, subscribeMessages, sendMessage, reportContent } from '@/lib/
 import type { MessageThread, ThreadMessage } from '@/lib/db/types';
 import BrandLogo from '@/components/BrandLogo';
 import LessonLink from '@/components/design/LessonLink';
+import MenuButton from '@/components/MenuButton';
 
 function timeAgo(ts: unknown): string {
   const t = ts as { toDate?: () => Date; seconds?: number } | null;
@@ -116,6 +117,7 @@ export default function MessageThreadPage() {
   return (
     <div className="h-[100dvh] flex flex-col font-sans" style={{ background: '#E4DCC6', color: '#20190F' }}>
       <header className="flex-shrink-0 flex items-center gap-3 px-4" style={{ height: 56, borderBottom: '1px solid #E2D8C4', background: '#FFFEFA' }}>
+        <MenuButton />
         <Link href="/community" style={{ display: 'flex', alignItems: 'center', gap: 4, color: '#5C5040', textDecoration: 'none' }}>
           <ChevronLeft size={18} strokeWidth={1.7} />
         </Link>
