@@ -52,6 +52,49 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 2026-08-24 (Phase 1/4 of NGO/funder dashboards: cross-org Firestore/Storage leak fix — PR #350, draft)
+Rory: *"i need to build the full ngo and funder dashboard now the ngo needs admin powers to
+designate what users can or cannot do audit and research what we need and they need to be able
+to see all the data and compile reports accordingly etc etc i will be the developer and i need
+to be able to update the app from time to time so make i can o that safely"*. Plan (4 sequential
+draft PRs): (1) security fix + data model, (2) platform admin panel, (3) farmer consent flow,
+(4) dashboard real-data + aggregate reporting. **This is Phase 1**, opened as draft PR #350.
+
+Root problem, independently flagged CRITICAL in `docs/AUDIT-NEEDS-RORY-2026-08-15.md` Finding
+#1 and left unfixed pending this decision: any provisioned `ngo`/`funder`/`admin` account could
+read every OTHER org's farmers, not just their own — `profiles` (list), `organizations`,
+`designs`, `course_submissions`, `survey_responses`, `course_progress` and the three financial
+log collections all gated on a bare staff-role check with no org comparison.
+
+**Fix:** `firestore.rules` — `isAdmin()` unconditional platform-admin bypass; `staffOrgAccess(d)`
+requires `d.org_id == myOrg()` for ngo/funder; `grantedOrg(orgId)` lets a funder read any NGO org
+it holds a new `/grants/{funder_org_id}_{ngo_org_id}` record for (funder → many NGOs);
+`consentGranted()`/`staffConsentedAccess()` additionally require the farmer's own
+`Profile.dataConsent.granted == true` on the five collections that identify a specific farmer
+(the three log collections, `course_progress`, `course_submissions`) — mentor access is
+deliberately untouched by consent anywhere. `storage.rules`' `isCourseStaffOrMentor()` now
+org-scopes the same way via a second Firestore lookup. Defense in depth: `designs`/
+`course_progress`/`course_submissions`/`survey_responses` create now pin `org_id` to the
+caller's own, so a farmer can't spoof their doc into another org's staff view.
+
+**Data model:** new `Grant` type; `Profile.dataConsent?`; optional `org_id` denormalised onto
+`Design`/`CourseProgress`/`SurveyResponse`/`CourseSubmission` (optional, not required — existing
+docs don't have it yet). `lib/db/queries.ts` stamps `org_id` at write time and filters by it at
+read time for the four newly-scoped collections. New `scripts/backfill-org-id.mjs`
+(`npm run backfill:org-id`) — **Rory needs to run this against production** before/alongside
+deploying the new rules, or pre-existing docs in those four collections go invisible to staff
+until backfilled. `app_config/ngo_dashboard_v2` scaffolded (`ngoDashboardV2On()`) but not wired
+to anything yet — ready for phases 2-4.
+
+New `tests/firestore-rules.test.ts` coverage for every changed branch (same-org allow / cross-org
+deny, admin unconditional, funder-with/without-grant, consent-withheld vs. mentor-unaffected, the
+org-spoof-on-create rejection, `/grants` read scope + no client writes). Verified: `tsc --noEmit`
+clean, `npm run build` clean, `npm test` at baseline (3055 pass / 2 pre-existing unrelated
+auth-suite failures / 1 pre-existing TODO, no regressions). **`npm run test:rules` could not run
+in this sandbox** (no firebase CLI/emulator/egress) — flagged explicitly in the PR for Rory to
+run before trusting the rules as verified rather than just read-through. No UI changes; rules
+deploy stays a manual step.
+
 ### 2026-08-15 (the real /design crash fix: `lib/i18n.tsx` bundle diet, not another band-aid)
 Rory: *"It still crashes"* (iOS Safari's native "A problem repeatedly occurred" crash-loop on
 `/design`), after "i want a comprehensive fix... i dont want any light page fix" and "disable
