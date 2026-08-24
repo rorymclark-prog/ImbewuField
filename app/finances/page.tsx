@@ -37,6 +37,7 @@ import { loadCropPriceOverrides } from '@/lib/crop-prices';
 import { buildFarmMetrics, isInFinancePeriod, type FinancePeriod } from '@/lib/farm-metrics';
 import { countsWithScope, loadIncludePerennials, DEFAULT_INCLUDE_PERENNIALS } from '@/lib/produce-scope';
 import { produceDisplayName } from '@/lib/perennial-produce';
+import { paidApiHeaders } from '@/lib/api-client-auth';
 
 /* ── Format helpers ──────────────────────────────────────────────────────── */
 
@@ -436,7 +437,7 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
       const mediaType = dataUrl.slice(5, dataUrl.indexOf(';')) || 'image/jpeg';
       const resp = await fetch('/api/read-slip', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...await paidApiHeaders() },
         body: JSON.stringify({ image: { data, mediaType } }),
       });
       const r = await resp.json();

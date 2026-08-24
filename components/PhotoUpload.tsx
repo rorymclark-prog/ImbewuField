@@ -3,6 +3,7 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { Camera, Loader2 } from 'lucide-react';
 import type { LocationData } from '@/lib/types';
+import { paidApiHeaders } from '@/lib/api-client-auth';
 
 interface Props {
   locationData: LocationData | null;
@@ -111,7 +112,7 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
     try {
       const res = await fetch('/api/analyse-photos', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...await paidApiHeaders() },
         body: JSON.stringify({ images: imgs, locationData, source }),
       });
       if (!res.ok) throw new Error(`Server error ${res.status}`);

@@ -9,6 +9,7 @@ import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
 import MenuButton from '@/components/MenuButton';
+import { paidApiHeaders } from '@/lib/api-client-auth';
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -133,7 +134,7 @@ export default function VisionPage() {
     try {
       const res = await fetch('/api/lima-vision', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...await paidApiHeaders() },
         body: JSON.stringify({ image: imagePayload, mode }),
       });
 

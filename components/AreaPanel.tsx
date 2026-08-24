@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { Loader2, RefreshCw } from 'lucide-react';
+import { paidApiHeaders } from '@/lib/api-client-auth';
 
 interface Props { coords: { lat: number; lon: number } | null }
 
@@ -81,7 +82,7 @@ export default function AreaPanel({ coords }: Props) {
     setError(''); setProfile(''); setLoading(true);
     try {
       const res = await fetch('/api/area-profile', {
-        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        method: 'POST', headers: { 'Content-Type': 'application/json', ...await paidApiHeaders() },
         body: JSON.stringify({ lat: c.lat, lon: c.lon }), signal: ac.signal,
       });
       if (!res.ok) throw new Error(`API error ${res.status}`);

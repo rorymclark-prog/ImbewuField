@@ -39,6 +39,7 @@ import EvidenceCatalogue from './EvidenceCatalogue';
 import { EVIDENCE_CATALOGUE, EVIDENCE_GROUP_ICON, type EvidenceCatalogueGroup, type EvidenceCatalogueItem } from '@/lib/evidence-catalogue';
 import { evidenceSiteId, getSiteEvidence, getReportCompleteness, getGroupCount, type EvidenceItem } from '@/lib/site-evidence';
 import type { Profile } from '@/lib/db/types';
+import { paidApiHeaders } from '@/lib/api-client-auth';
 
 // These two are the biggest sub-panels in this file (the farm-records ledger and the full site
 // survey) and each is reachable from only one tab. Statically importing them meant every farmer —
@@ -595,7 +596,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
     try {
       const res = await fetch('/api/analyse-photos', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...await paidApiHeaders() },
         body: JSON.stringify({ images: promptImageData, locationData: data, source: 'upload' }),
       });
       if (!res.ok) throw new Error(`Error ${res.status}`);
