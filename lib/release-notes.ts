@@ -34,6 +34,17 @@ export interface ReleaseNote {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '24 August',
+    sha: 'b0c1755',
+    changes: [
+      'Your lender pack adds up: the table now matches the total above it',
+      'Avocado and Avocados are one tree again, not two',
+      'The panel your funder opens names your real crop, with the right picture',
+      'Malabar spinach and pigeon peas stay in the orchard, not on a vegetable bed',
+      'Your records are visible to your own organisation only',
+    ],
+  },
+  {
     when: '23 August',
     sha: 'aec85dc',
     changes: [
