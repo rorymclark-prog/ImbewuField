@@ -5,6 +5,7 @@ import test from 'node:test';
 // Emulator-backed suites have their own command because running them here would make the
 // canonical no-services test lane fail on every developer checkout. They are still explicit
 // tests, and package.json's test:rules script is the registration point for this one.
+// KEEP IN SYNC WITH tests/test-registry.test.ts, which holds its own copy of this set.
 const EXTERNAL_TEST_FILES = new Set(['firestore-rules.test.ts', 'storage-rules.test.ts']);
 
 test('npm test runs every repository test file exactly once', () => {
