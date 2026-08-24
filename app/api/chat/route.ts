@@ -154,10 +154,33 @@ export async function POST(req: NextRequest) {
     return new Response('Ask me anything about your site, crops, finances or project.', { status: 200 });
   }
 
+  // PROMPT CACHING, and why it goes HERE rather than on the report builder.
+  //
+  // Measured from source before choosing: one report costs ~R7.35 of a typical farmer's ~R29 cycle,
+  // while chat costs ~R14.76 — chat is the larger line by double. And chat is the shape caching
+  // actually wants. `system` is SYSTEM + language line + the site context block: ~2,500 tokens that
+  // are IDENTICAL on every turn of a conversation, re-sent in full each time. Only the trailing
+  // messages change.
+  //
+  // Turns are also SEQUENTIAL, which is the property that makes this safe. A cache write costs 1.25x
+  // an ordinary send, so caching pays only once something has already written the entry. The report
+  // builder fires its batches through Promise.all — all of them in flight before any has written —
+  // so the same change there would produce N misses, N writes and a bill 25% HIGHER. A conversation
+  // cannot do that to itself: turn 2 always follows turn 1. See lib/ai-cost.ts and its test.
+  //
+  // Below the model's minimum cacheable prefix the marker is simply ignored and nothing is charged
+  // for it, but a farmer with no site yet has a short system prompt and every one of their turns
+  // would pay the write multiplier for an entry never read. So it is only marked when there is
+  // enough shared text for the saving to be real.
+  const CACHE_MIN_CHARS = 4000; // ~1k tokens, the smallest prefix the model will cache
+  const cacheableSystem = system.length >= CACHE_MIN_CHARS;
+
   const stream = await client.messages.stream({
     model: 'claude-sonnet-4-6',
     max_tokens: 1500,
-    system,
+    system: cacheableSystem
+      ? [{ type: 'text' as const, text: system, cache_control: { type: 'ephemeral' as const } }]
+      : system,
     messages: clean,
   });
 
