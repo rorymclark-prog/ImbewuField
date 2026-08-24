@@ -38,6 +38,35 @@ export interface Profile {
   showOnMap?: boolean;
   mapLat?: number | null;
   mapLon?: number | null;
+  /**
+   * Explicit, revocable opt-in for the farmer's own org staff (ngo/funder — never the farmer's
+   * mentor, whose visibility predates this field and isn't gated by it) to see their
+   * production/sales/course data on the NGO/funder dashboards. Absent or `granted: false` means
+   * not opted in — this is opt-in, not opt-out, by design. The farmer owns this field and can
+   * write it themselves (same as any other profile field except `role`/`org_id`); see the
+   * settings toggle that sets it.
+   */
+  dataConsent?: {
+    granted: boolean;
+    grantedAt: string | null;
+    revokedAt: string | null;
+  };
+}
+
+/**
+ * A funder org's standing permission to read one specific NGO org's data — the funder->many-NGOs
+ * relationship a single `Profile.org_id` can't express on its own. Deterministic id
+ * `${funder_org_id}_${ngo_org_id}` (mirrors `course_enrollments`' `${profile_id}_${track}`
+ * pattern in `lib/course-enrollment.ts`), so a rule can check `exists()` on it directly without a
+ * query. Admin-SDK-write-only: client-side rules deny all writes (see `firestore.rules`), created
+ * via the platform admin panel (phase 2).
+ */
+export interface Grant {
+  id: string;
+  funder_org_id: string;
+  ngo_org_id: string;
+  created_at: string;
+  created_by: string;
 }
 
 export interface Garden {
@@ -74,7 +103,14 @@ export interface ExpenseLog {
 }
 
 export interface Design {
-  id: string; owner_id: string; garden_id: string | null; title: string;
+  id: string; owner_id: string;
+  /**
+   * Denormalised from the owner's profile at save time — needed for the org-scoped staff read
+   * rule. Optional because designs saved before this fix have no such field yet (see
+   * scripts/backfill-org-id.mjs) — treat a missing value the same as null, not as an error.
+   */
+  org_id?: string | null;
+  garden_id: string | null; title: string;
   data: Record<string, unknown>; shared_with: string | null; created_at: string;
   updated_at?: unknown;
 }
@@ -83,7 +119,16 @@ export interface Report {
   id: string; owner_id: string; garden_id: string | null; title: string; content: string | null; lang: string; created_at: string;
 }
 
-export interface CourseProgress { id: string; profile_id: string; module: string; done: boolean; updated_at: string }
+export interface CourseProgress {
+  id: string; profile_id: string;
+  /**
+   * Denormalised from the learner's profile at write time — needed for the org-scoped staff read
+   * rule. Optional because rows written before this fix have no such field yet (see
+   * scripts/backfill-org-id.mjs) — treat a missing value the same as null, not as an error.
+   */
+  org_id?: string | null;
+  module: string; done: boolean; updated_at: string;
+}
 
 export interface MentorVisit {
   id: string; mentor_id: string; trainee_id: string;
@@ -103,7 +148,16 @@ export interface GardenerProfile {
 export type SurveyQType = 'yesno' | 'choice' | 'text';
 export interface SurveyQuestion { id: string; text: string; type: SurveyQType; options: string[] }
 export interface Survey { id: string; org_name: string; title: string; questions: SurveyQuestion[]; created_by: string; created_at: string }
-export interface SurveyResponse { id: string; survey_id: string; profile_id: string; answers: Record<string, string>; created_at: string }
+export interface SurveyResponse {
+  id: string; survey_id: string; profile_id: string;
+  /**
+   * Denormalised from the responder's profile at write time — needed for the org-scoped staff
+   * read rule. Optional because responses written before this fix have no such field yet (see
+   * scripts/backfill-org-id.mjs) — treat a missing value the same as null, not as an error.
+   */
+  org_id?: string | null;
+  answers: Record<string, string>; created_at: string;
+}
 
 // ─── Community layer (opt-in profiles, trade board, 1:1 messaging) ──────────
 // All additive/new — none of this touches the Profile/Garden model above.

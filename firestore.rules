@@ -19,6 +19,57 @@ service cloud.firestore {
     // accounts against each other (null == null would otherwise be true).
     function inMyOrg(d)      { return signedIn() && myOrg() != null && d.org_id == myOrg(); }
     function isCourseStaff() { return isMentor() || isStaff(); }
+
+    // ─── Cross-org leak fix (docs/AUDIT-NEEDS-RORY-2026-08-15.md #1) ───────────────────────────
+    // isStaff() and, in two places below, isMentor() were bare role checks with no org_id term,
+    // so ANY provisioned ngo/funder/admin/mentor account could list or read every OTHER org's
+    // farmers. The five helpers below replace every bare isStaff()/isMentor() read branch on
+    // profiles (list+get), organizations, designs, course_submissions and survey_responses —
+    // mirroring the sameOrg() fix surveys already got, plus two things surveys didn't need:
+    // an unconditional admin bypass (Rory's platform role), and a funder->many-NGOs grant.
+    function isAdmin() { return myRole() == 'admin'; }
+    // Funder -> many-NGOs: a funder's org may read one NGO org's data only if a /grants doc
+    // names that exact pairing. Deterministic id `${funder_org_id}_${ngo_org_id}` (see /grants
+    // below) — a single exists() check, no query, so this works inside `list` rules too wherever
+    // the OTHER branches of the same OR already make the query provably safe.
+    function grantedOrg(orgId) {
+      return myRole() == 'funder' && myOrg() != null && orgId != null
+        && exists(/databases/$(database)/documents/grants/$(myOrg() + '_' + orgId));
+    }
+    // The ngo/funder half of "same org or granted". Deliberately excludes isMentor() and
+    // isAdmin() — every call site below combines this with those separately, so admin stays
+    // unconditional and mentor keeps its own, unchanged trust boundary (narrowed to inMyOrg()
+    // where it was bare, but never consent-gated — see consentGranted()).
+    function staffOrgAccess(d) {
+      return (myRole() in ['ngo', 'funder'] && myOrg() != null && d.org_id == myOrg())
+        || grantedOrg(d.org_id);
+    }
+    // Per-farmer opt-in gate (Profile.dataConsent) for the NGO/funder dashboards specifically.
+    // NEVER combined with isMentor() or isAdmin() below — a farmer's mentor relationship is the
+    // pre-existing, already-consented-by-enrollment path this app has always had, and Rory's own
+    // platform-admin access isn't the thing POPIA consent is meant to gate. This only narrows the
+    // NEW ngo/funder visibility Rory asked to be consent-gated.
+    function consentGranted(profileId) {
+      return exists(/databases/$(database)/documents/profiles/$(profileId))
+        && get(/databases/$(database)/documents/profiles/$(profileId)).data.get('dataConsent', null) != null
+        && get(/databases/$(database)/documents/profiles/$(profileId)).data.dataConsent.granted == true;
+    }
+    // isAdmin() bypass + staffOrgAccess(d), gated by the farmer's consent — the shape every
+    // farmer-identifying collection's staff branch below uses. NOT applied to isMentor(), by
+    // design (see consentGranted() above).
+    function staffConsentedAccess(d) {
+      return isAdmin() || (staffOrgAccess(d) && consentGranted(d.profile_id));
+    }
+    // Feature-flag scaffold for the NGO dashboard v2 surfaces (admin panel, consent-aware
+    // dashboard wiring, aggregate reporting) built on top of this fix — same on/off pattern as
+    // communityOn()/rendersOn() below. Not wired to any match block yet: phases 2-4 gate their
+    // new UI/collections on this once they exist. Toggle by writing { enabled: true } to
+    // app_config/ngo_dashboard_v2 via the Firebase console or an Admin-SDK script.
+    function ngoDashboardV2On() {
+      return exists(/databases/$(database)/documents/app_config/ngo_dashboard_v2)
+        && get(/databases/$(database)/documents/app_config/ngo_dashboard_v2).data.enabled == true;
+    }
+
     // Backend kill switch for the community layer — evaluated ONLY inside the
     // community_* match blocks below, so it never adds a read to unrelated
     // collections. Doc absent or enabled != true => every community read/write
@@ -36,8 +87,17 @@ service cloud.firestore {
       // cannot be proven and drags the whole OR to false — which is why the mentor dashboard
       // could never load a cohort and always showed its empty state. Querying the directory
       // is a staff/mentor capability and nothing else, so `list` says exactly that.
-      allow get:    if signedIn() && (uid == request.auth.uid || isStaff() || isMentor());
-      allow list:   if signedIn() && (isStaff() || isMentor());
+      allow get:    if signedIn() && (
+        uid == request.auth.uid ||
+        isAdmin() ||
+        (isMentor() && inMyOrg(resource.data)) ||
+        staffOrgAccess(resource.data)
+      );
+      allow list:   if signedIn() && (
+        isAdmin() ||
+        (isMentor() && inMyOrg(resource.data)) ||
+        staffOrgAccess(resource.data)
+      );
       // Self-service signup may pick one of the offered roles, but NEVER admin, and may
       // never self-assign an org (that grants cross-tenant access). org_id is admin-driven.
       allow create: if signedIn() && uid == request.auth.uid
@@ -51,7 +111,7 @@ service cloud.firestore {
         && request.resource.data.org_id == resource.data.org_id;
     }
 
-    match /organizations/{id} { allow read: if signedIn() && (id == myOrg() || isStaff()); }
+    match /organizations/{id} { allow read: if signedIn() && (id == myOrg() || isAdmin() || grantedOrg(id)); }
     match /programmes/{id}    { allow read: if signedIn() && resource.data.org_id == myOrg(); }
 
     match /gardens/{gid} {
@@ -81,7 +141,7 @@ service cloud.firestore {
     // by explicit garden id, which the scoped per-garden rule above already permits.
 
     match /production_logs/{id} {
-      allow read:   if owns(resource.data) || sameOrg(resource.data) || (isMentor() && inMyOrg(resource.data));
+      allow read:   if owns(resource.data) || staffConsentedAccess(resource.data) || (isMentor() && inMyOrg(resource.data));
       allow create: if signedIn()
         && request.resource.data.profile_id == request.auth.uid
         && request.resource.data.kg is number && request.resource.data.kg > 0
@@ -103,7 +163,7 @@ service cloud.firestore {
     }
 
     match /sales_logs/{id} {
-      allow read:   if owns(resource.data) || sameOrg(resource.data) || (isMentor() && inMyOrg(resource.data));
+      allow read:   if owns(resource.data) || staffConsentedAccess(resource.data) || (isMentor() && inMyOrg(resource.data));
       allow create: if signedIn()
         && request.resource.data.profile_id == request.auth.uid
         && request.resource.data.kg is number && request.resource.data.kg > 0
@@ -127,7 +187,7 @@ service cloud.firestore {
     }
 
     match /expense_logs/{id} {
-      allow read:   if owns(resource.data) || sameOrg(resource.data) || (isMentor() && inMyOrg(resource.data));
+      allow read:   if owns(resource.data) || staffConsentedAccess(resource.data) || (isMentor() && inMyOrg(resource.data));
       allow create: if signedIn()
         && request.resource.data.profile_id == request.auth.uid
         && request.resource.data.amount is number && request.resource.data.amount >= 0
@@ -149,9 +209,11 @@ service cloud.firestore {
     }
 
     match /designs/{id} {
-      allow read:   if ownsField(resource.data, 'owner_id') || ownsField(resource.data, 'shared_with') || isStaff();
-      allow create: if signedIn() && request.resource.data.owner_id == request.auth.uid;
-      allow update, delete: if ownsField(resource.data, 'owner_id');
+      allow read:   if ownsField(resource.data, 'owner_id') || ownsField(resource.data, 'shared_with') || isAdmin() || staffOrgAccess(resource.data);
+      allow create: if signedIn() && request.resource.data.owner_id == request.auth.uid
+        && request.resource.data.org_id == myOrg();
+      allow update: if ownsField(resource.data, 'owner_id') && request.resource.data.org_id == resource.data.org_id;
+      allow delete: if ownsField(resource.data, 'owner_id');
     }
 
     match /reports/{id} {
@@ -166,9 +228,10 @@ service cloud.firestore {
     }
 
     match /course_progress/{id} {
-      allow read:  if owns(resource.data) || isStaff() || isMentor();
+      allow read:  if owns(resource.data) || isAdmin() || (isMentor() && inMyOrg(resource.data)) || staffConsentedAccess(resource.data);
       allow write: if signedIn()
         && request.resource.data.profile_id == request.auth.uid
+        && request.resource.data.org_id == myOrg()
         && request.resource.data.module is string
         && request.resource.data.done is bool;
     }
@@ -212,15 +275,17 @@ service cloud.firestore {
     // gating for what this unlocks lives in lib/course-gating.ts (client-side; these rules are
     // the actual boundary). Deterministic id `${profile_id}_${module}`, same upsert pattern as
     // course_progress and course_assignments — resubmitting a module overwrites its evidence
-    // rather than growing a duplicate row. No org_id field (mirrors course_progress, not the
-    // org-scoped enrollment/assignment rules above): read parity is with course_progress
-    // specifically — a mentor/staff member who can already see a module is done can see the
-    // evidence that unlocked it, which is the same trust boundary, not a bigger one. Writes are
-    // learner-only; mentors/staff never write a submission on a learner's behalf.
+    // rather than growing a duplicate row. Read parity is with course_progress specifically — a
+    // mentor/staff member who can already see a module is done can see the evidence that
+    // unlocked it, which is the same trust boundary, not a bigger one (now org-scoped +
+    // consent-gated for ngo/funder, see docs/AUDIT-NEEDS-RORY-2026-08-15.md #1 — it previously
+    // had no org_id field at all and this bare isStaff()/isMentor() reached every org). Writes
+    // are learner-only; mentors/staff never write a submission on a learner's behalf.
     match /course_submissions/{id} {
-      allow read: if owns(resource.data) || isStaff() || isMentor();
+      allow read: if owns(resource.data) || isAdmin() || (isMentor() && inMyOrg(resource.data)) || staffConsentedAccess(resource.data);
       allow create, update: if signedIn()
         && request.resource.data.profile_id == request.auth.uid
+        && request.resource.data.org_id == myOrg()
         && request.resource.data.module is string
         && request.resource.data.submitted_at is string
         && request.resource.data.self_check is list
@@ -251,8 +316,26 @@ service cloud.firestore {
     }
 
     match /survey_responses/{id} {
-      allow read:   if signedIn() && (resource.data.profile_id == request.auth.uid || isStaff());
-      allow create: if signedIn() && request.resource.data.profile_id == request.auth.uid;
+      // Org-scoped (not consent-gated — survey_responses isn't in the consent list Rory asked
+      // for; a farmer answering an org's own survey is a different trust relationship than the
+      // ambient production/sales/course visibility consent gates). It previously had no org_id
+      // field at all and bare isStaff() reached every org — see
+      // docs/AUDIT-NEEDS-RORY-2026-08-15.md #1.
+      allow read:   if signedIn() && (resource.data.profile_id == request.auth.uid || isAdmin() || staffOrgAccess(resource.data));
+      allow create: if signedIn() && request.resource.data.profile_id == request.auth.uid
+        && request.resource.data.org_id == myOrg();
+    }
+
+    // Funder -> NGO grant: admin-SDK-write-only (phase 2's platform admin panel), so client
+    // writes are always denied here regardless of role. Deterministic id
+    // `${funder_org_id}_${ngo_org_id}` — see grantedOrg() above and the Grant type in
+    // lib/db/types.ts. Reads are scoped to the two orgs the grant names, plus admin.
+    match /grants/{id} {
+      allow read: if signedIn() && (
+        isAdmin() ||
+        (myOrg() != null && (resource.data.funder_org_id == myOrg() || resource.data.ngo_org_id == myOrg()))
+      );
+      allow write: if false;
     }
 
     // Per-user map data (farm shapes, saved places, water points) — cross-device sync.

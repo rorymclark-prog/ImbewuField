@@ -257,7 +257,8 @@ export async function myProduction(): Promise<ProductionLog[]> {
 export async function saveDesign(d: Partial<Design>): Promise<string | null> {
   if (isSampleMode()) return `demo-design-${Date.now()}`;
   const f = fb(); const u = uid(); if (!f || !u) return null;
-  const r = await addDoc(collection(f.db, 'designs'), { ...d, owner_id: u, created_at: serverTimestamp(), updated_at: serverTimestamp() });
+  const me = await getMyProfile();
+  const r = await addDoc(collection(f.db, 'designs'), { ...d, owner_id: u, org_id: me?.org_id ?? null, created_at: serverTimestamp(), updated_at: serverTimestamp() });
   return r.id;
 }
 export async function updateDesign(id: string, patch: Partial<Design>): Promise<boolean> {
@@ -380,17 +381,28 @@ export async function myCourseProgress(): Promise<CourseProgress[]> {
   return rows<CourseProgress>(s);
 }
 export async function getCourseProgress(profileId: string): Promise<CourseProgress[]> {
+  // For a mentor/staff view of one learner's progress — like getCourseSubmissions below, this
+  // needs an org_id filter alongside profile_id or the org-scoped rules can't prove the list is
+  // safe and deny it outright. Callers today (app/mentor/page.tsx) already only reach here for
+  // trainees in the caller's own org, so this doesn't narrow anything that currently works.
   if (isSampleMode()) return [];
   const f = fb(); if (!f) return [];
-  const s = await getDocs(query(collection(f.db, 'course_progress'), where('profile_id', '==', profileId)));
+  const me = await getMyProfile();
+  if (!me?.org_id) return []; // no org == the rule can never prove this list is safe; don't even try
+  const s = await getDocs(query(
+    collection(f.db, 'course_progress'),
+    where('profile_id', '==', profileId),
+    where('org_id', '==', me.org_id),
+  ));
   return rows<CourseProgress>(s);
 }
 export async function setCourseProgress(module: string, done: boolean): Promise<void> {
   if (isSampleMode()) return;
   const f = fb(); const u = uid(); if (!f || !u) return;
+  const me = await getMyProfile();
   // Deterministic doc ID enables upsert without extra reads
   await setDoc(doc(f.db, 'course_progress', `${u}_${module}`), {
-    profile_id: u, module, done, updated_at: serverTimestamp(),
+    profile_id: u, org_id: me?.org_id ?? null, module, done, updated_at: serverTimestamp(),
   });
 }
 
@@ -434,12 +446,21 @@ export async function listSurveys(): Promise<Survey[]> {
 export async function addSurveyResponse(survey_id: string, answers: Record<string, string>): Promise<void> {
   if (isSampleMode()) return;
   const f = fb(); const u = uid(); if (!f || !u) return;
-  await addDoc(collection(f.db, 'survey_responses'), { survey_id, answers, profile_id: u, created_at: serverTimestamp() });
+  const me = await getMyProfile();
+  await addDoc(collection(f.db, 'survey_responses'), { survey_id, answers, profile_id: u, org_id: me?.org_id ?? null, created_at: serverTimestamp() });
 }
 export async function listSurveyResponses(surveyId: string): Promise<SurveyResponse[]> {
+  // Staff-only (a survey's creator reading its responses) — needs an org_id filter alongside
+  // survey_id or the org-scoped rules can't prove the list is safe and deny it outright.
   if (isSampleMode()) return [];
   const f = fb(); const u = uid(); if (!f || !u) return [];
-  const s = await getDocs(query(collection(f.db, 'survey_responses'), where('survey_id', '==', surveyId)));
+  const me = await getMyProfile();
+  if (!me?.org_id) return [];
+  const s = await getDocs(query(
+    collection(f.db, 'survey_responses'),
+    where('survey_id', '==', surveyId),
+    where('org_id', '==', me.org_id),
+  ));
   return rows<SurveyResponse>(s);
 }
 export async function myRespondedSurveyIds(): Promise<string[]> {
@@ -584,11 +605,21 @@ export async function myCourseSubmissions(): Promise<CourseSubmission[]> {
   return rows<CourseSubmission>(s);
 }
 
-/** For a mentor/staff view of one learner's evidence — read parity with getCourseProgress. */
+/**
+ * For a mentor/staff view of one learner's evidence — read parity with getCourseProgress.
+ * Needs an org_id filter alongside profile_id or the org-scoped rules can't prove the list is
+ * safe and deny it outright (see firestore.indexes.json for the composite index this needs).
+ */
 export async function getCourseSubmissions(profileId: string): Promise<CourseSubmission[]> {
   if (isSampleMode()) return [];
   const f = fb(); if (!f) return [];
-  const s = await getDocs(query(collection(f.db, 'course_submissions'), where('profile_id', '==', profileId)));
+  const me = await getMyProfile();
+  if (!me?.org_id) return []; // no org == the rule can never prove this list is safe; don't even try
+  const s = await getDocs(query(
+    collection(f.db, 'course_submissions'),
+    where('profile_id', '==', profileId),
+    where('org_id', '==', me.org_id),
+  ));
   return rows<CourseSubmission>(s);
 }
 
@@ -616,8 +647,10 @@ export async function submitCourseModule(input: {
 }): Promise<void> {
   if (isSampleMode()) return;
   const f = fb(); const u = uid(); if (!f || !u) return;
+  const me = await getMyProfile();
   await setDoc(doc(f.db, 'course_submissions', courseSubmissionDocId(u, input.module)), {
     profile_id: u,
+    org_id: me?.org_id ?? null,
     module: input.module,
     submitted_at: new Date().toISOString(),
     self_check: input.self_check,

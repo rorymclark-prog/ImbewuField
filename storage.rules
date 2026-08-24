@@ -12,13 +12,30 @@ service firebase.storage {
     // pattern Firebase Storage rules support for gating storage reads on a Firestore-held role —
     // this repo has no prior example of it, so treat as unverified until deploy-checked
     // (`firebase deploy --only storage --dry-run` or the emulator) before relying on it.
-    function isCourseStaffOrMentor() {
+    //
+    // isCourseStaffOrMentor(uid) used to be a bare role check with no org term — same class of
+    // bug as the Firestore cross-org leak (docs/AUDIT-NEEDS-RORY-2026-08-15.md #1): any
+    // mentor/ngo/funder account could read ANY learner's evidence file, in any org. Unlike a
+    // Firestore `list`, a Storage read is always by one exact known path (this uid, this module,
+    // this file) — never a query — so there's no list-provability concern here at all, and this
+    // can compare both accounts' org_id directly via a second Firestore lookup. Admin stays
+    // unconditional (Rory's platform role); mentor/ngo/funder now require a matching org_id.
+    function isCourseStaffOrMentor(uid) {
       return request.auth != null
         && firestore.exists(/databases/(default)/documents/profiles/$(request.auth.uid))
-        && firestore.get(/databases/(default)/documents/profiles/$(request.auth.uid)).data.role in ['mentor', 'ngo', 'funder', 'admin'];
+        && firestore.get(/databases/(default)/documents/profiles/$(request.auth.uid)).data.role in ['mentor', 'ngo', 'funder', 'admin']
+        && (
+          firestore.get(/databases/(default)/documents/profiles/$(request.auth.uid)).data.role == 'admin'
+          || (
+            firestore.exists(/databases/(default)/documents/profiles/$(uid))
+            && firestore.get(/databases/(default)/documents/profiles/$(request.auth.uid)).data.org_id != null
+            && firestore.get(/databases/(default)/documents/profiles/$(request.auth.uid)).data.org_id
+               == firestore.get(/databases/(default)/documents/profiles/$(uid)).data.org_id
+          )
+        );
     }
     match /course_submissions/{uid}/{moduleId}/{file} {
-      allow read: if request.auth != null && (request.auth.uid == uid || isCourseStaffOrMentor());
+      allow read: if request.auth != null && (request.auth.uid == uid || isCourseStaffOrMentor(uid));
       allow write: if request.auth != null && request.auth.uid == uid
                    && request.resource.size < 10 * 1024 * 1024
                    && (request.resource.contentType.matches('image/.*') || request.resource.contentType.matches('audio/.*'));

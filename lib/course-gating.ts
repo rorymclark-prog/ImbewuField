@@ -28,6 +28,12 @@ import type { CourseAssignment } from './course-assignments';
 export interface CourseSubmission {
   id: string;
   profile_id: string;
+  /**
+   * Denormalised from the learner's profile at write time — needed for the org-scoped staff read
+   * rule. Optional because submissions written before this fix have no such field yet (see
+   * scripts/backfill-org-id.mjs) — treat a missing value the same as null, not as an error.
+   */
+  org_id?: string | null;
   /** Module id from lib/course-modules.ts. */
   module: string;
   /** ISO timestamp of the submit action. */
