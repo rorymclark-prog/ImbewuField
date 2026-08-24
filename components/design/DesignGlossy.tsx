@@ -654,6 +654,7 @@ export interface DesignGlossyProps {
 export { SCALE, setSheetScale, AI_INPUT_WIDTH } from '@/lib/sheet-scale';
 import { SCALE, AI_INPUT_WIDTH, deviceSheetScale, setSheetScale } from '@/lib/sheet-scale';
 import { phoneGradeDevice } from '@/lib/device-grade';
+import { paidApiHeaders } from '@/lib/api-client-auth';
 
 /** Farmer-facing names for the underlay control. Short enough to sit on a pill on a phone. */
 const UNDERLAY_LABEL: Readonly<Record<SheetUnderlay, string>> = {
@@ -1945,7 +1946,7 @@ async function requestProducer(
   const capped = stripDataUrl(await capForAiInput(`data:image/png;base64,${imageBase64}`));
   const res = await fetch('/api/image-producer', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', ...await paidApiHeaders() },
     body: JSON.stringify({
       imageBase64: capped,
       layerLabel,

@@ -4,6 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { TreeDeciduous, Sprout, Apple, Cherry, Nut, Bird, Loader2 } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
 import type { LocationData } from '@/lib/types';
+import { paidApiHeaders } from '@/lib/api-client-auth';
 
 interface PlantEntry { name: string; localName?: string; role?: string; notes?: string; season?: string }
 interface AnimalEntry { type: string; breeds?: string; notes: string; scale: 'Micro' | 'Small' | 'Medium' | 'Large' }
@@ -121,11 +122,12 @@ export default function LifeGuide({ locationData }: { locationData: LocationData
 
     setLoading(true);
     setError('');
-    fetch('/api/life-guide', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ locationData }),
-    })
+    paidApiHeaders()
+      .then((auth) => fetch('/api/life-guide', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', ...auth },
+        body: JSON.stringify({ locationData }),
+      }))
       .then(async (r) => { if (!r.ok) throw new Error(String(r.status)); const d = await r.json(); if (!d || typeof d.ecosystem !== 'string') throw new Error('bad-shape'); return d; })
       .then((d: LifeGuideData) => { writeCache(cacheKey, d); setData(d); setLoading(false); })
       .catch(() => { setError(t('lifeGuideLoadError')); setLoading(false); });

@@ -7,6 +7,7 @@ import { loadReports } from '@/lib/saved-reports';
 import { myProduction, mySales } from '@/lib/db/queries';
 import { loadSampleFarmData, clearSampleFarmData, getLocalProduction, getLocalSales, getLocalProject, hasSampleData } from '@/lib/demo-data';
 import { getLastSite } from '@/lib/last-site';
+import { paidApiHeaders } from '@/lib/api-client-auth';
 
 interface Msg { role: 'user' | 'assistant'; content: string; image?: string }
 
@@ -133,7 +134,7 @@ export default function ChatPanel({ locationData, siteData, waterData, appLang, 
     try {
       const res = await fetch('/api/chat', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...await paidApiHeaders() },
         body: JSON.stringify({
           messages: history.map(({ role, content }) => ({ role, content })),
           context: buildContext(),
