@@ -117,3 +117,9 @@ jobs:
 
       - name: Firestore rules
         run: npm run test:rules
+
+      # Storage rules ride in the SAME job for the same reason the job exists. /photos/** was
+      # world-readable and the rules file said that was required for reports to work; it was not,
+      # and nothing anywhere proved either claim. This step is what stops that being true again.
+      - name: Storage rules
+        run: npm run test:storage-rules
