@@ -1,7 +1,8 @@
 'use client';
 import { useState, useRef, useCallback, useEffect } from 'react';
 import { X, Camera, Check, Loader2, User } from 'lucide-react';
-import { uploadProfilePhoto, updateMyProfile } from '@/lib/db/queries';
+import { uploadProfilePhoto, updateMyProfile, getOrganization } from '@/lib/db/queries';
+import { nextDataConsent } from '@/lib/data-consent';
 import type { Profile } from '@/lib/db/types';
 
 const ROLE_LABEL: Record<string, string> = {
@@ -184,11 +185,29 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
   const [showOnMap, setShowOnMap] = useState(profile?.showOnMap ?? false);
   const [photoUrl, setPhotoUrl] = useState<string | null>(profile?.photo_url ?? null);
 
+  // Data-sharing consent (Phase 3 of the NGO/funder dashboard build) — gates whether the
+  // farmer's own org staff (ngo/funder) can see their production/sales/course records on the
+  // NGO/funder dashboards. Opt-in, not opt-out: absent or false means not shared. Only relevant
+  // when the farmer actually belongs to an org — a farmer with no org_id has nobody to share
+  // with, so the section is hidden entirely rather than shown disabled.
+  const initialConsentGranted = profile?.dataConsent?.granted ?? false;
+  const [dataConsentGranted, setDataConsentGranted] = useState(initialConsentGranted);
+  const [orgName, setOrgName] = useState<string | null>(null);
+
   const [uploading, setUploading] = useState(false);
   const [saving, setSaving] = useState(false);
   const [savedFlash, setSavedFlash] = useState(false);
 
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (!open || !profile?.org_id) { setOrgName(null); return; }
+    let cancelled = false;
+    getOrganization(profile.org_id).then((org) => {
+      if (!cancelled) setOrgName(org?.name ?? null);
+    });
+    return () => { cancelled = true; };
+  }, [open, profile?.org_id]);
 
   const toggleSkill = useCallback((skill: string) => {
     setSkills(prev =>
@@ -237,6 +256,12 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
         patch.mapLon = null;
       }
 
+      // Only stamp a new dataConsent record when the toggle actually moved this save — saving
+      // unrelated fields (name, bio, ...) must not silently re-stamp grantedAt/revokedAt.
+      if (dataConsentGranted !== initialConsentGranted) {
+        patch.dataConsent = nextDataConsent(profile.dataConsent, dataConsentGranted, new Date().toISOString());
+      }
+
       await updateMyProfile(patch);
 
       const updated: typeof profile = { ...profile, ...patch };
@@ -251,7 +276,7 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
     } finally {
       setSaving(false);
     }
-  }, [profile, fullName, bio, skills, showOnMap, photoUrl, mapCenter, onSaved, onClose]);
+  }, [profile, fullName, bio, skills, showOnMap, photoUrl, dataConsentGranted, initialConsentGranted, mapCenter, onSaved, onClose]);
 
   // Close on Escape — matches every other full-screen sheet in the app (AddSheet, ThemePanel, etc).
   useEffect(() => {
@@ -532,6 +557,20 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
               )}
             </div>
           </div>
+
+          {/* ── Data sharing (Phase 3 consent gate) — only relevant if the farmer belongs to
+               an org. Revocable at any time; the toggle here is the whole UI for it. ── */}
+          {profile?.org_id && (
+            <div>
+              <SectionLabel>Data sharing</SectionLabel>
+              <Toggle
+                label={orgName ? `Share my data with ${orgName}` : 'Share my data with my organisation'}
+                sub="Lets their staff see your production, sales and course records on their dashboard. Off by default — you can turn this off again at any time."
+                on={dataConsentGranted}
+                onChange={setDataConsentGranted}
+              />
+            </div>
+          )}
 
         </div>
       </div>

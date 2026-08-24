@@ -20,7 +20,7 @@ import {
 import type {
   Profile, Garden, GardenMember, ProductionLog, SalesLog, ExpenseLog, Design, Report,
   CourseProgress, GardenerProfile, MentorVisit,
-  Survey, SurveyQuestion, SurveyResponse,
+  Survey, SurveyQuestion, SurveyResponse, Organization,
 } from './types';
 import type { CourseEnrollment } from '@/lib/course-enrollment';
 import { DEFAULT_TRACK, enrollmentDocId, newEnrollment } from '@/lib/course-enrollment';
@@ -106,6 +106,17 @@ export async function updateMyProfile(patch: Partial<Profile>): Promise<void> {
   if (isSampleMode()) { setSandboxProfile(patch); return; }
   const f = fb(); const u = uid(); if (!f || !u) return;
   await setDoc(doc(f.db, 'profiles', u), patch, { merge: true });
+}
+
+// Reads a single org by id — used by the farmer's own profile sheet to name the org a
+// data-sharing consent toggle would apply to. Rules gate this the same as everywhere else
+// (`organizations/{id}`: readable by that org's own members, admin, or a funder with a grant),
+// so a farmer reading their own org_id is always allowed.
+export async function getOrganization(orgId: string): Promise<Organization | null> {
+  if (isSampleMode()) return null;
+  const f = fb(); if (!f) return null;
+  const s = await getDoc(doc(f.db, 'organizations', orgId));
+  return s.exists() ? ({ id: s.id, ...s.data() } as unknown as Organization) : null;
 }
 
 // ---- people directory (org-scoped) ----

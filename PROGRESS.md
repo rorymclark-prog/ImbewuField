@@ -52,6 +52,38 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 2026-08-24 (Phase 3/4 of NGO/funder dashboards: farmer consent flow)
+Third of four sequential draft PRs (see Phase 1 entry below for the full plan). Phase 1 shipped
+`Profile.dataConsent` and the rule enforcement (`consentGranted()`/`staffConsentedAccess()`) that
+gates a farmer's production/sales/expense/course records behind it; until now nothing in the app
+ever wrote the field, so it was permanently absent (== not shared) for every farmer.
+
+**`lib/data-consent.ts`** — new pure `nextDataConsent(current, granted, now)`. Both timestamps
+survive repeated grant/revoke cycles: granting stamps a fresh `grantedAt` and leaves the previous
+`revokedAt` untouched, revoking is the mirror image — so the record always shows "most recently
+granted at X" and "most recently revoked at Y" instead of only ever remembering one of the two.
+
+**`lib/db/queries.ts`** — new `getOrganization(orgId)`, read-only, used only to name the org a
+farmer's consent toggle would apply to (`organizations/{id}` is already readable by that org's
+own members under the Phase 1 rules, so a farmer reading their own `org_id` needs no rule change).
+
+**`components/ProfileSheet.tsx`** — new "Data sharing" section, farmer's own profile sheet only
+(`app/farmer/page.tsx`). Opt-in, not opt-out, matching POPIA: hidden entirely (not shown-disabled)
+for a farmer with no `org_id`, since there's nobody to share with. One toggle — "Share my data
+with \[org name]" — revocable at any time. Save only stamps a new `dataConsent` record when the
+toggle actually moved during that save, so saving unrelated fields (name, bio, skills, ...) never
+silently re-stamps `grantedAt`/`revokedAt`.
+
+New `tests/data-consent.test.ts` (9 cases: `nextDataConsent` grant-from-empty, revoke-from-empty,
+re-grant-after-revoke preserving `revokedAt`, re-revoke-after-grant preserving `grantedAt`,
+idempotent re-grant, plus source-pattern checks that `ProfileSheet.tsx` imports the helper, gates
+the section on `profile?.org_id`, and only patches `dataConsent` when the toggle moved) — same
+`readFileSync`-based style as `tests/write-timeout.test.ts`. Verified: `tsc --noEmit` clean,
+`npm run build` clean, `npm test` at baseline (3085 pass / 2 pre-existing unrelated auth-suite
+failures / 1 pre-existing TODO, no regressions — new test file registered in `package.json`'s
+explicit test list). No rules changes this phase (Phase 1 already covers consent enforcement) —
+`npm run test:rules` not applicable.
+
 ### 2026-08-24 (Phase 2/4 of NGO/funder dashboards: platform admin panel)
 Second of four sequential draft PRs (see Phase 1 entry below for the full plan). Unblocks
 testing phases 3-4 for real: until now there was no way to provision a real `ngo`/`funder`/
