@@ -35,7 +35,7 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '24 August',
-    sha: 'b0c1755',
+    sha: '9e27855',
     changes: [
       'Your lender pack adds up: the table now matches the total above it',
       'Avocado and Avocados are one tree again, not two',
