@@ -18,8 +18,28 @@ function logUnauthenticated(routeName: string, reason: string): void {
   console.warn(`[api-auth] ${routeName}: unauthenticated request (${reason})`);
 }
 
+/**
+ * The project id the Admin SDK validates a token's `aud`/`iss` claims against.
+ *
+ * This MUST be passed explicitly. `initializeApp()` with no argument resolves the project from
+ * Application Default Credentials or the GCP metadata server, and this app runs on Vercel, which
+ * has neither. Reproduced with the real SDK in a clean environment: it throws
+ * "Unable to detect a Project Id in the current environment." — *before* it looks at the token.
+ * That throw lands in the catch below and returns `unauthorised()`, so with REQUIRE_API_AUTH=1
+ * every request 401s, a perfectly valid farmer token included. The failure is total and it is
+ * indistinguishable from correct behaviour when you test it the obvious way: an anonymous request
+ * is *supposed* to 401, so a broken verifier and a working one give the identical answer.
+ *
+ * No service account is needed beyond this. verifyIdToken fetches Google's signing certificates
+ * over public HTTPS; the project id is the only thing it cannot discover for itself.
+ */
+const ADMIN_PROJECT_ID =
+  process.env.FIREBASE_PROJECT_ID
+  ?? process.env.GOOGLE_CLOUD_PROJECT
+  ?? process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
+
 async function verifyWithFirebaseAdmin(idToken: string): Promise<{ uid: string }> {
-  const app = getApps().length > 0 ? getApp() : initializeApp();
+  const app = getApps().length > 0 ? getApp() : initializeApp({ projectId: ADMIN_PROJECT_ID });
   return getAuth(app).verifyIdToken(idToken);
 }
 
