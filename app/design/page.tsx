@@ -115,6 +115,7 @@ import {
   type LayerElementVisibilityKey,
 } from '@/lib/design-layer-membership';
 import { biomeKeyForName } from '@/lib/biome';
+import { maturityLabel } from '@/lib/perennial-maturity';
 import { loadSiteElements, type SiteElementType } from '@/lib/site-elements';
 import type { LineShape } from '@/lib/design-canvas';
 import { suggestZones } from '@/lib/design-suggest';
@@ -4180,6 +4181,7 @@ interface ItemEditPatch {
   wM?: number;
   hM?: number;
   rot?: number;
+  plantedYear?: number;
 }
 
 function ItemEditSheet({
@@ -4201,6 +4203,31 @@ function ItemEditSheet({
   const [wM, setWM] = useState(String(item.wM ?? def?.wM ?? 1));
   const [hM, setHM] = useState(String(item.hM ?? def?.hM ?? 1));
   const [rot, setRot] = useState(String(Math.round(item.rot ?? 0)));
+  const [plantedYear, setPlantedYear] = useState(item.plantedYear !== undefined ? String(item.plantedYear) : '');
+  // Fetched lazily, same as runTapAction's own species lookup below — the catalog is a large
+  // module and this whole page is already split into parts to keep /design's first load light
+  // (see "THE STUDIO ARRIVES IN PARTS" further down this file).
+  const [maturityWindow, setMaturityWindow] = useState<{ yearsToFirstHarvest: number; yearsToFullBearing: number } | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    if (!item.speciesId) { setMaturityWindow(null); return; }
+    import('@/lib/species-catalog').then(({ SPECIES }) => {
+      if (cancelled) return;
+      const sp = SPECIES.find((s) => s.id === item.speciesId);
+      setMaturityWindow(
+        sp && sp.yearsToFirstHarvest !== undefined && sp.yearsToFullBearing !== undefined
+          ? { yearsToFirstHarvest: sp.yearsToFirstHarvest, yearsToFullBearing: sp.yearsToFullBearing }
+          : null,
+      );
+    });
+    return () => { cancelled = true; };
+  }, [item.speciesId]);
+
+  const parsedPlantedYear = plantedYear.trim() ? parseInt(plantedYear, 10) : NaN;
+  const maturityPreview = maturityWindow && Number.isFinite(parsedPlantedYear)
+    ? maturityLabel({ ...maturityWindow, plantedYear: parsedPlantedYear }, new Date())
+    : null;
 
   function handleSave() {
     const parsedW = parseFloat(wM);
@@ -4209,6 +4236,7 @@ function ItemEditSheet({
       label: label.trim() ? label.trim() : undefined,
       note: note.trim() ? note.trim() : undefined,
       status,
+      plantedYear: Number.isFinite(parsedPlantedYear) ? parsedPlantedYear : undefined,
     };
     if (Number.isFinite(parsedW) && parsedW > 0) {
       patch.wM = parsedW;
@@ -4314,6 +4342,38 @@ function ItemEditSheet({
             <option value="existing">Already here</option>
           </select>
         </label>
+
+        {item.speciesId && (
+          <label style={{ display: 'flex', flexDirection: 'column', gap: 4, fontSize: 12.5, color: DARK }}>
+            Year planted
+            <input
+              type="number"
+              inputMode="numeric"
+              min={1980}
+              max={new Date().getFullYear() + 1}
+              step={1}
+              placeholder={status === 'existing' ? 'e.g. 2019' : String(new Date().getFullYear())}
+              value={plantedYear}
+              onChange={(e) => setPlantedYear(e.target.value)}
+              style={{
+                minHeight: 44,
+                borderRadius: 10,
+                border: '1px solid rgba(11,18,11,0.2)',
+                padding: '0 12px',
+                fontSize: 14,
+                background: '#FFFFFF',
+                color: DARK,
+              }}
+            />
+            {/* Roughly when it went in the ground — used to estimate how far into cropping it is,
+                never to invent a yield number. See lib/perennial-maturity.ts's header. */}
+            {maturityPreview ? (
+              <span style={{ fontSize: 11.5, color: 'rgba(32,25,15,0.65)' }}>{maturityPreview}</span>
+            ) : maturityWindow ? (
+              <span style={{ fontSize: 11.5, color: 'rgba(32,25,15,0.5)' }}>Add a year to see cropping stage</span>
+            ) : null}
+          </label>
+        )}
 
         <div style={{ display: 'flex', gap: 10 }}>
           <label style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 4, fontSize: 12.5, color: DARK }}>

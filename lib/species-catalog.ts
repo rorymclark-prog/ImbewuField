@@ -265,7 +265,10 @@ export const SPECIES: Species[] = [
     "why": "Albany Thicket contains South Africa's second-largest citrus region (Sundays River Valley around Kirkwood/Addo and the Gamtoos), the Eastern Cape carries 6,666 ha of soft citrus, and mandarin is the most cold-hardy citrus type — but ARC is explicit that rainfall is 'insufficient in most situations', so this is an irrigated crop, never rain-fed.",
     "source": "https://www.cga.co.za/wp-content/uploads/2025/03/CGA-Key-Industry-Statistics-2025.pdf",
     "nemba": "none",
-    "reviewed": false
+    "reviewed": false,
+    "yearsToFirstHarvest": 3,
+    "yearsToFullBearing": 6,
+    "maturitySource": "https://homeguides.sfgate.com/age-citrus-tree-start-produce-fruit-55580.html"
   },
   {
     "id": "citrus-limon",
@@ -311,7 +314,10 @@ export const SPECIES: Species[] = [
     "why": "The Eastern Cape's biggest single citrus type at 7,525 ha, and ARC notes lemon 'is well suited to a broader variety of climatic conditions' than other citrus — the safest citrus for a marginal thicket site, still needing frost protection below about -2°C and year-round irrigation.",
     "source": "https://www.cga.co.za/wp-content/uploads/2025/03/CGA-Key-Industry-Statistics-2025.pdf",
     "nemba": "none",
-    "reviewed": false
+    "reviewed": false,
+    "yearsToFirstHarvest": 3,
+    "yearsToFullBearing": 6,
+    "maturitySource": "https://homeguides.sfgate.com/age-citrus-tree-start-produce-fruit-55580.html"
   },
   {
     "id": "ficus-carica",
@@ -359,7 +365,10 @@ export const SPECIES: Species[] = [
     "why": "Figs are ruled out of summer-rainfall South Africa because harvest rain cracks the fruit — but Albany Thicket's driest months are December to February, exactly when figs ripen, and the tree already tolerates about -5°C, so this biome is one of the few summer-side places where fig genuinely works unirrigated.",
     "source": "https://www.agribook.co.za/deciduous-fruit/",
     "nemba": "none",
-    "reviewed": false
+    "reviewed": false,
+    "yearsToFirstHarvest": 2,
+    "yearsToFullBearing": 4,
+    "maturitySource": "https://www.agribook.co.za/deciduous-fruit/"
   },
   {
     "id": "punica-granatum",
@@ -411,7 +420,10 @@ export const SPECIES: Species[] = [
     "why": "The lowest chill requirement of any temperate fruit (about 200 hours), mature hardiness to roughly -10°C and active benefit from 38°C heat — it spans the whole biome from near-frost-free coast to 19-25 frost-day inland valleys, and it wants the dry ripening window this biome has.",
     "source": "https://www.agribook.co.za/deciduous-fruit/",
     "nemba": "none",
-    "reviewed": false
+    "reviewed": false,
+    "yearsToFirstHarvest": 1,
+    "yearsToFullBearing": 3,
+    "maturitySource": "https://www.agribook.co.za/deciduous-fruit/"
   },
   {
     "id": "prunus-persica",
@@ -454,7 +466,10 @@ export const SPECIES: Species[] = [
     "why": "ARC Infruitec has released peach and nectarine selections that fruit on as few as 200-500 chill units specifically for emerging and small-scale growers, which puts a real deciduous fruit into inland Albany Thicket (mean 7-25 frost days) where apples and pears cannot go — buy a named low-chill cultivar, not a Ceres variety.",
     "source": "https://www.hortgro.co.za/wp-content/uploads/docs/dlm_uploads/2022/08/KEY-DECIDUOUS-FRUIT-STATSISTICS-2021.pdf",
     "nemba": "none",
-    "reviewed": false
+    "reviewed": false,
+    "yearsToFirstHarvest": 2,
+    "yearsToFullBearing": 4,
+    "maturitySource": "https://www.hortgro.co.za/wp-content/uploads/docs/dlm_uploads/2022/08/KEY-DECIDUOUS-FRUIT-STATSISTICS-2021.pdf"
   },
   {
     "id": "olea-europaea-subsp-europaea",
@@ -494,7 +509,10 @@ export const SPECIES: Species[] = [
     "why": "Alicedale in the Eastern Cape is a named South African olive district and sits in this biome; olive needs at least 10 weeks below about 13°C and June-July maxima under 21°C, which the inland thicket valleys deliver and the frost-free coastal strip does not — and SA Olive is clear that drip or micro irrigation 'is a prerequisite'.",
     "source": "https://www.saolive.co.za/olive-growing/",
     "nemba": "none",
-    "reviewed": false
+    "reviewed": false,
+    "yearsToFirstHarvest": 3,
+    "yearsToFullBearing": 8,
+    "maturitySource": "https://www.saolive.co.za/olive-growing/"
   },
   {
     "id": "morus-nigra",
@@ -527,7 +545,10 @@ export const SPECIES: Species[] = [
     "why": "The classic chicken-and-pig forage tree plus a heavy human fruit crop, and the legal distinction is the whole point: white mulberry may not be planted, propagated, moved or given away in South Africa, while black mulberry is entirely unlisted.",
     "source": "https://www.gov.za/sites/default/files/gcis_document/202009/43726gon1003.pdf",
     "nemba": "3",
-    "reviewed": false
+    "reviewed": false,
+    "yearsToFirstHarvest": 2,
+    "yearsToFullBearing": 4,
+    "maturitySource": "https://everglades.farm/blogs/news/when-do-mulberries-produce-fruit-key-factors-for-success"
   },
   {
     "id": "vachellia-karroo",
@@ -2068,7 +2089,10 @@ export const SPECIES: Species[] = [
     "why": "ARC Infruitec's low-chill breeding programme released peach, nectarine and plum selections performing on as few as 200–500 chill units, explicitly aimed at reducing climatic risk for emerging and small-scale producers — that makes peach the only temperate fruit with a genuinely national footprint, and it fruits early enough to beat the worst summer heat.",
     "source": "Research brief on SA deciduous ranges (Hortgro Key Deciduous Fruit Statistics 2021 + ARC Infruitec low-chill programme): dessert peach 1 277 ha with Limpopo the LARGEST single district at 216 ha, ahead of Ceres (213 ha); ARC low-chill releases perform at 200–500 chill units",
     "nemba": "none",
-    "reviewed": false
+    "reviewed": false,
+    "yearsToFirstHarvest": 2,
+    "yearsToFullBearing": 4,
+    "maturitySource": "https://www.hortgro.co.za/wp-content/uploads/docs/dlm_uploads/2022/08/KEY-DECIDUOUS-FRUIT-STATSISTICS-2021.pdf"
   },
   {
     "id": "pistacia-vera",
@@ -2129,7 +2153,10 @@ export const SPECIES: Species[] = [
     "why": "Only for the Orange River and Vaalharts irrigation corridor, where 80–90% of SA's pecans already grow: it actively NEEDS the Karoo's winter frost for budbreak, then the long hot low-humidity summer, and the low humidity keeps scab out — but SAPPA specifies 15 000 m³/ha/yr in the warm dry west (Prieska, Douglas, Upington), so do not plant it on a rainfed farm.",
     "source": "https://www.sappa.za.org/wp-content/uploads/2018/11/sappa-water-requirement-per-production-area.pdf (SAPPA: 15 000 m³/ha/yr for the warm dry west — Vaalharts, Douglas, Prieska, Upington, Augrabies; peak 460–800 L/tree/day) + ARC Climate-Smart module (winter frost June–August needed for budding; humidity below 55%)",
     "nemba": "none",
-    "reviewed": false
+    "reviewed": false,
+    "yearsToFirstHarvest": 7,
+    "yearsToFullBearing": 13,
+    "maturitySource": "https://www.foodformzansi.co.za/a-beginners-guide-to-pecan-farming/"
   },
   {
     "id": "dovyalis-caffra",
@@ -2701,7 +2728,10 @@ export const SPECIES: Species[] = [
     "why": "74% of SA's mangoes are in Limpopo savanna: it survives 45 degC and under 300 mm, but only frost-free and below about 600 m, and it wants a DRY summer (humidity 55% or less) — a wet summer hurts it more than a dry one.",
     "source": "SAMGA Mango Tree Census 2024 (LP 4,280 ha of 5,775 ha) https://mango.co.za/wp-content/uploads/2024/10/Mango-Tree-Census-2024.pdf; 600 m altitude limit, 45 degC tolerance and monthly rainfall ceilings per ARC CSA module 6",
     "nemba": "none",
-    "reviewed": false
+    "reviewed": false,
+    "yearsToFirstHarvest": 4,
+    "yearsToFullBearing": 8,
+    "maturitySource": "https://southafrica.co.za/how-to-farm-mangoes.html"
   },
   {
     "id": "moringa-oleifera",
@@ -2769,7 +2799,10 @@ export const SPECIES: Species[] = [
     "why": "Bears within 10-14 months from seed with almost no footprint, so it is the fastest return on a new frost-free savanna plot while the slow indigenous trees establish.",
     "source": "Not on the NEMBA 2020 plant list (verified against parsed GN 1003, GG 43726). Subtropical siting per ARC CSA module 6 https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/6.pdf",
     "nemba": "none",
-    "reviewed": false
+    "reviewed": false,
+    "yearsToFirstHarvest": 1,
+    "yearsToFullBearing": 2,
+    "maturitySource": "https://www.agribook.co.za/subtropical-fruit/"
   },
   {
     "id": "psidium-guajava",
@@ -2800,7 +2833,10 @@ export const SPECIES: Species[] = [
     "why": "Climatically the most forgiving exotic here (fruits to 1,515 m, drought-tolerant with age, takes light frost when mature) — but legally it is the biggest trap in the biome: in Limpopo, Mpumalanga, North West and KZN a non-plantation guava is Category 3, so planting, propagating, moving, selling or giving one away is prohibited. Only recommend it in Gauteng, Free State, Northern Cape savanna, or under a Category 2 plantation permit.",
     "source": "Alien and Invasive Species Lists 2020, GN 1003 GG 43726, List 1 item 292 (parsed text verified locally) https://www.gov.za/sites/default/files/gcis_document/202009/43726gon1003.pdf; climate/altitude per ARC CSA module 6",
     "nemba": "2",
-    "reviewed": false
+    "reviewed": false,
+    "yearsToFirstHarvest": 3,
+    "yearsToFullBearing": 5,
+    "maturitySource": "https://www.agribook.co.za/subtropical-fruit/"
   },
   {
     "id": "faidherbia-albida",
@@ -3461,7 +3497,10 @@ export const SPECIES: Species[] = [
     "why": "The KZN north and south coasts are one of only about five frost-free pockets in the country where bananas are commercially viable, and on a smallholding the clump is a two-for-one — the highest calorie return per square metre available here, plus a standing supply of pseudostem and leaf for the mulch that these leached sands constantly demand.",
     "source": "https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/6.pdf (ARC Climate-Smart Agriculture module 6: SA banana regions are Onderberg/Komatipoort, Kiepersol, Levubu, Letaba and the KZN north and south coasts; 'nearly all bananas are irrigated'; winds above 50 km/h cause blowdowns)",
     "nemba": "none",
-    "reviewed": false
+    "reviewed": false,
+    "yearsToFirstHarvest": 1,
+    "yearsToFullBearing": 2,
+    "maturitySource": "https://www.nda.gov.za/phocadownloadpap/Agricultural_Marketing_Commodity_Profiles/Banana%20market%20value%20chain%20profile%202012.pdf"
   },
   {
     "id": "macadamia-integrifolia",
@@ -3493,7 +3532,10 @@ export const SPECIES: Species[] = [
     "why": "KwaZulu-Natal carries roughly 23 800 ha of macadamia — the biome's dominant cash crop and the one exotic here with an established buyer network — and the IOCB's ~1000 mm of evenly distributed rain plus the lowest evaporation in the country is the closest South Africa gets to its water demand without irrigation.",
     "source": "https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/6.pdf (ARC: requires 16–25°C, 'should not be considered frost resistant'); SAMAC tree census ~65 516 ha national, KZN ~23 806 ha; Water Research Commission/Mayo Macs measured 750–850 mm/yr in the Nelspruit area",
     "nemba": "none",
-    "reviewed": false
+    "reviewed": false,
+    "yearsToFirstHarvest": 5,
+    "yearsToFullBearing": 9,
+    "maturitySource": "https://openknowledge.fao.org/server/api/core/bitstreams/960e1dbe-e4f9-44f1-9d68-eaf93713c80d/content"
   },
   {
     "id": "persea-americana",
@@ -3525,7 +3567,10 @@ export const SPECIES: Species[] = [
     "why": "KZN carries 3 429 ha and the biome's >1000 mm evenly distributed rainfall matches ARC's stated requirement almost exactly — but plant it on a raised bed on the free-draining dune sand, never in a depression, because the same rainfall that makes it viable also makes Phytophthora cinnamomi root rot the main way it fails here.",
     "source": "https://avocado.co.za/wp-content/uploads/2024/10/SAAGA-Industry-Census-Report-2024.pdf (KZN 3 429 ha of 19 240 ha censused) and https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/6.pdf (ARC: >1 000 mm/yr evenly distributed; absolute floor −4°C; Mexican race hardiest)",
     "nemba": "none",
-    "reviewed": false
+    "reviewed": false,
+    "yearsToFirstHarvest": 4,
+    "yearsToFullBearing": 7,
+    "maturitySource": "http://avocadosource.com/temp/OLD%20WAC%20II/WAC2_p653.htm"
   },
   {
     "id": "litchi-chinensis",
@@ -3553,7 +3598,10 @@ export const SPECIES: Species[] = [
     "why": "Litchi is the narrowest-range fruit crop in South Africa and the KZN coastal belt is one of only three areas in the country that satisfies its whole envelope at once — frost-free, winter minima above 6°C but below 14°C to trigger flowering, summer maxima under 32°C, and humidity above 50%.",
     "source": "https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/6.pdf (ARC names the Mpumalanga Lowveld, the Soutpansberg and the KwaZulu-Natal coastal belt as the only qualifying areas; full climatic envelope as stated)",
     "nemba": "none",
-    "reviewed": false
+    "reviewed": false,
+    "yearsToFirstHarvest": 4,
+    "yearsToFullBearing": 7,
+    "maturitySource": "https://southafrica.co.za/how-to-farm-litchis.html"
   },
   {
     "id": "coffea-arabica",
@@ -4103,7 +4151,10 @@ export const SPECIES: Species[] = [
     "why": "The Klein Karoo is the single largest plum district in South Africa at 3.63 million trees, so plum is proven at scale in this biome's rainshadow valleys rather than merely climatically plausible.",
     "source": "https://www.hortgro.co.za/wp-content/uploads/docs/dlm_uploads/2022/08/KEY-DECIDUOUS-FRUIT-STATSISTICS-2021.pdf (Tree Census 2021, plum by district)",
     "nemba": "none",
-    "reviewed": false
+    "reviewed": false,
+    "yearsToFirstHarvest": 3,
+    "yearsToFullBearing": 5,
+    "maturitySource": "https://www.cumminsnursery.com/learn-trees/growing-trees/harvesting/time-to-productivity-maturity"
   },
   {
     "id": "prunus-dulcis",
@@ -4135,7 +4186,10 @@ export const SPECIES: Species[] = [
     "why": "Chill requirement of 300–600 hours fits the Karoo winter and the Klein Karoo is named among SA's suited districts, but it flowers in late winter — so site it on a slope with cold-air drainage and never in a valley-bottom inversion pocket, where this biome's 15–30 frost days will take the crop.",
     "source": "https://southafrica.co.za/almonds.html (Western Cape almond production; Klein Karoo, Breede River, Olifants River Valley named)",
     "nemba": "none",
-    "reviewed": false
+    "reviewed": false,
+    "yearsToFirstHarvest": 3,
+    "yearsToFullBearing": 5,
+    "maturitySource": "https://www.cumminsnursery.com/learn-trees/growing-trees/harvesting/time-to-productivity-maturity"
   },
   {
     "id": "ceratonia-siliqua",
@@ -4195,7 +4249,10 @@ export const SPECIES: Species[] = [
     "why": "Citrus has the broadest reach of any SA fruit crop but this is its frost edge, not its heartland — soft citrus and lemon survive mild -1 to -2°C winters in sheltered Robertson, Montagu and Oudtshoorn gardens, so plant only in a warm frost-free pocket near a wall or under canopy, and never in the Roggeveld, Tanqua or a cold valley floor.",
     "source": "https://www.cga.co.za/wp-content/uploads/2025/03/CGA-Key-Industry-Statistics-2025.pdf (Klein Karoo is not a listed citrus district); ARC frost thresholds (-2 to -3°C floor, no chill requirement)",
     "nemba": "none",
-    "reviewed": false
+    "reviewed": false,
+    "yearsToFirstHarvest": 3,
+    "yearsToFullBearing": 6,
+    "maturitySource": "https://homeguides.sfgate.com/age-citrus-tree-start-produce-fruit-55580.html"
   },
   {
     "id": "carpobrotus-edulis",
@@ -4649,7 +4706,10 @@ export const SPECIES: Species[] = [
     "why": "The Free State's 527 ha proves apples crop on the Highveld, but this is a managed workaround not a natural fit — SA apples run on 500 chill units against a 1,000–1,200 CU textbook need, using rest-breaking agents and central-leader training. Pick low-chill cultivars and the coldest site you have.",
     "source": "https://www.hortgro-science.co.za/wp-content/uploads/docs/2022/09/CLIMATE-18-MIDGLEY-Guide-to-climate-change-and-pome-and-stone-fruit-production-extended-executive-summary.pdf",
     "nemba": "none",
-    "reviewed": false
+    "reviewed": false,
+    "yearsToFirstHarvest": 3,
+    "yearsToFullBearing": 5,
+    "maturitySource": "https://www.hortgro.co.za/wp-content/uploads/docs/dlm_uploads/2022/08/KEY-DECIDUOUS-FRUIT-STATSISTICS-2021.pdf"
   },
   {
     "id": "pyrus-communis",
@@ -4970,7 +5030,10 @@ export const SPECIES: Species[] = [
     "why": "ARC Infruitec has released peach selections that fruit on as few as 200–500 chill units, explicitly to reduce climatic risk for small-scale producers — worth trying only on the cooler winter-rainfall coastal side or higher ground; the hot-winter Gariep interior (MAT 23.3°C at Goodhouse) will not accumulate enough chill and the tree will simply not break dormancy properly.",
     "source": "Hortgro chill-accumulation mapping and ARC Infruitec low-chill breeding programme (https://www.hortgro-science.co.za/wp-content/uploads/docs/2022/09/CLIMATE-18-MIDGLEY-Guide-to-climate-change-and-pome-and-stone-fruit-production-extended-executive-summary.pdf)",
     "nemba": "none",
-    "reviewed": false
+    "reviewed": false,
+    "yearsToFirstHarvest": 2,
+    "yearsToFullBearing": 4,
+    "maturitySource": "https://www.hortgro.co.za/wp-content/uploads/docs/dlm_uploads/2022/08/KEY-DECIDUOUS-FRUIT-STATSISTICS-2021.pdf"
   },
   {
     "id": "ficus-cordata",
@@ -5874,7 +5937,10 @@ export const SPECIES: Species[] = [
     "why": "The cold-insurance fruit for high mistbelt margins where avocado and banana get burnt — hardy to about -10°C dormant, clips into a shelter hedge, and is the legal substitute for guava, which is Category 3 across most of this biome's provinces.",
     "source": "https://tropical.theferns.info/viewtropical.php?id=Acca+sellowiana ('3 - 7.5 metres tall'; 'can survive temperatures down to about -10°c'; 'grown as a shelter hedge... responds well to trimming'; rainfall '750 - 1,500mm')",
     "nemba": "none",
-    "reviewed": false
+    "reviewed": false,
+    "yearsToFirstHarvest": 3,
+    "yearsToFullBearing": 5,
+    "maturitySource": "https://www.milkwood.net/2018/05/10/all-about-feijoas-growing-harvesting-recipes/"
   },
   {
     "id": "ekebergia-capensis",
@@ -6392,6 +6458,9 @@ export const SPECIES: Species[] = [
     "why": "Included only because it is genuinely universal practice in KZN and Eastern Cape homesteads and crops heavily in this warm, humid, high-rainfall climate — but the app must warn, because on most Forest-biome farms it is a Category 2 species and an unpermitted vine is treated as Category 1b under regulation 4(4), converting a normal garden plant into a compulsory-control obligation.",
     "source": "https://www.gov.za/sites/default/files/gcis_document/202009/43726gon1003.pdf (Notice 3, List 1 item 256) + https://www.arc.agric.za/arc-iscw/CSA-Toolbox/Pages/assets/modules/6.pdf",
     "nemba": "2",
-    "reviewed": false
+    "reviewed": false,
+    "yearsToFirstHarvest": 1,
+    "yearsToFullBearing": 2,
+    "maturitySource": "https://harvesttotable.com/how-to-grow-passion-fruit/"
   }
 ];

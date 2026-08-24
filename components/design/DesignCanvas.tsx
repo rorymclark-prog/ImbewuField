@@ -1131,6 +1131,11 @@ export default function DesignCanvas({
       const item: PlacedItem = { id: newId(), defId: placeDefId, x: pt[0], y: pt[1], status: 'proposed' };
       if (placeSpeciesId) {
         item.speciesId = placeSpeciesId;
+        // Every item made through this path is freshly `status: 'proposed'` above — a plan
+        // targets planting it now, so "this year" is the honest default. No prompt needed; an
+        // 'existing' surveyed tree's real planting year can't be guessed this way and is asked
+        // for later, in ItemEditSheet, when the farmer marks it "Already here".
+        item.plantedYear = new Date().getFullYear();
         const { SPECIES } = await import('@/lib/species-catalog');
         const sp = SPECIES.find(s => s.id === placeSpeciesId);
         if (sp) {

@@ -136,6 +136,19 @@ export interface Species {
   nemba: NembaCategory;
   /** False until an agronomist has signed this entry off. The picker says so on screen. */
   reviewed: boolean;
+  /**
+   * Perennial cropping-maturity window, in years since planting a young nursery tree/vine —
+   * NOT since seed, and not for a farmer-surveyed existing specimen (that's the placed item's
+   * own age, not the species'). Both optional together: most of the catalog has neither, and a
+   * missing pair means "cannot estimate", never an inferred zero. When set, `yearsToFirstHarvest`
+   * is when a farmer should expect the first light crop and `yearsToFullBearing` is when yield
+   * plateaus at its mature level. Deliberately NOT a yield number — see lib/perennial-produce.ts's
+   * header: this file will not invent a kg figure Species has never carried.
+   */
+  yearsToFirstHarvest?: number;
+  yearsToFullBearing?: number;
+  /** Where the maturity window came from. Required whenever either maturity field is set. */
+  maturitySource?: string;
 }
 
 export interface SpeciesBiomeFit {
@@ -231,6 +244,17 @@ export function validateSpecies(all: Species[]): string[] {
     // draw the wrong thing on a plan and mis-price the bill of quantities.
     if (s.stratum === 'canopy' && s.matureHeightM < 5) problems.push(`${s.commonName} is canopy but only ${s.matureHeightM}m tall`);
     if (s.stratum === 'groundcover' && s.matureHeightM > 1) problems.push(`${s.commonName} is groundcover but ${s.matureHeightM}m tall`);
+
+    // Maturity window: optional, but half a window or a window with no citation is worse than
+    // none — it would silently under- or over-promise a farmer's early-years harvest.
+    const hasFirst = s.yearsToFirstHarvest !== undefined;
+    const hasFull = s.yearsToFullBearing !== undefined;
+    if (hasFirst !== hasFull) problems.push(`${s.commonName} has only one of yearsToFirstHarvest/yearsToFullBearing`);
+    if (hasFirst && hasFull) {
+      if (!(s.yearsToFirstHarvest! >= 0)) problems.push(`${s.commonName} has a negative yearsToFirstHarvest`);
+      if (!(s.yearsToFullBearing! > s.yearsToFirstHarvest!)) problems.push(`${s.commonName} yearsToFullBearing must be after yearsToFirstHarvest`);
+      if (!s.maturitySource?.trim()) problems.push(`${s.commonName} has a maturity window but no maturitySource`);
+    }
 
     const ranks = new Map<string, number>();
     for (const fit of s.biomes) {

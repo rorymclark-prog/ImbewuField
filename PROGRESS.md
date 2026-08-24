@@ -52,6 +52,48 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 2026-08-24 (perennial cropping-maturity ramp-up: log a tree's age, see its production stage)
+Rory: log an existing tree's age, and a newly-placed tree's production should step up over
+years rather than read as instantly mature — avocado producing nothing years 1-3, some by 4-5,
+full later. Scoped as a standalone signal, not wired into `lib/crop-plan.ts`/
+`lib/forward-harvests.ts`/`lib/plan-value.ts`/`lib/finance-series.ts` — none of those carry a
+tree-yield concept today, so this ships as an honest "how mature is this specimen" readout
+rather than a forced integration into finance planning.
+
+**`lib/species-palette.ts`** — new optional `Species.yearsToFirstHarvest`/`yearsToFullBearing`/
+`maturitySource` fields (both years required together, or neither — a half window is worse than
+none), enforced in `validateSpecies()`.
+
+**`lib/species-catalog.ts`** — populated 23 curated fruit/nut trees with real, cited maturity
+windows sourced from SA/international agricultural-extension references (hortgro.co.za,
+agribook.co.za, avocadosource.com, southafrica.co.za, FAO, etc — full list in the PR). Avocado:
+4 years to first harvest, 7 to full bearing, matching Rory's own example almost exactly. Marula
+was deliberately left unset — no citable source found; "never invent, only cite" per this file's
+existing convention.
+
+**`lib/design-canvas.ts`** — new optional `PlacedItem.plantedYear`: the calendar year a specimen
+went, or will go, into the ground. Works for both an `'existing'` surveyed tree (farmer recalls
+roughly when it was planted) and a `'proposed'` one (defaults to the plan's target year).
+
+**`lib/perennial-maturity.ts`** (new) — pure, `now`-parameterized module (same discipline as
+`lib/forward-harvests.ts`) producing a 0..1 yield-fraction ramp between a species' cited
+`yearsToFirstHarvest`/`yearsToFullBearing`, plus a three-word stage (`'not yet bearing'` /
+`'first crops'` / `'full bearing'`) and a short label like "first crops · 5 yrs". Deliberately
+carries no yield/price number, same as `lib/perennial-produce.ts`. Returns `null` — never a
+guessed 0 or a guessed "mature" — whenever the species has no cited window or the item has no
+known planting year. 14 new tests in `tests/perennial-maturity.test.ts`.
+
+**UI wiring**: `components/design/DesignCanvas.tsx`'s tap-to-place now defaults a newly-placed
+tree's `plantedYear` to the current year automatically (no prompt — a plan places it now).
+`app/design/page.tsx`'s existing `ItemEditSheet` (the post-placement edit sheet, opened via the
+pencil action on a selected item) gains a "Year planted" field for any item with a `speciesId`,
+with a live maturity-stage preview underneath once both a cited window and a year are known —
+this is also how a farmer logs an *existing* tree's real age ("Already here" status + a
+remembered planting year).
+
+Verified: `tsc --noEmit` clean, `npm test` 3108 pass / 2 pre-existing unrelated auth-suite
+failures / 1 pre-existing TODO — unchanged baseline, no regressions — `npm run build` clean.
+
 ### 2026-08-24 (Phase 4/4 of NGO/funder dashboards: real-data wiring + aggregate reporting)
 Last of four sequential draft PRs (see Phase 1 entry below for the full plan). Phases 1-3 built
 the security fix, the admin panel, and the consent toggle; this phase is where the NGO/funder
