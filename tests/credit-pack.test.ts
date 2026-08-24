@@ -234,6 +234,63 @@ test('crop totals merge case- and whitespace-insensitively, and rank by combined
   assert.equal(record.topCrops[0].crop, 'Amadumbe (taro)');
 });
 
+test('the by-crop table names what its cap left out, as three separate true sums', () => {
+  // Eight crops, a six-row table. Before this, the two smallest simply vanished: the page said
+  // BY CROP, listed six, and gave a lender no way to tell a selection from a complete list — so a
+  // farmer growing eight things was presented as growing six, understated by the very document
+  // meant to vouch for them.
+  const production = [
+    harvest(100, '2026-06-01T00:00:00.000Z', 'Amadumbe'),
+    harvest(90, '2026-06-01T00:00:00.000Z', 'Cabbage'),
+    harvest(80, '2026-06-01T00:00:00.000Z', 'Potato'),
+    harvest(70, '2026-06-01T00:00:00.000Z', 'Carrots'),
+    harvest(60, '2026-06-01T00:00:00.000Z', 'Onions'),
+    harvest(50, '2026-06-01T00:00:00.000Z', 'Beetroot'),
+    harvest(30, '2026-06-01T00:00:00.000Z', 'Kale'),
+    harvest(10, '2026-06-01T00:00:00.000Z', 'Peas'),
+  ];
+  const sales = [
+    sale(240, '2026-06-10T00:00:00.000Z', 'Kale', 12),
+    sale(60, '2026-06-10T00:00:00.000Z', 'Peas', 3),
+  ];
+  const track = creditPackTrackRecord(production, sales);
+
+  assert.equal(track.topCrops.length, 6, 'the printed table is still capped');
+  assert.deepEqual(track.omittedCrops, ['Kale', 'Peas'], 'the crops it dropped are named, in rank order');
+  assert.equal(track.omittedHarvestedKg, 40);
+  assert.equal(track.omittedSoldKg, 15);
+  assert.equal(track.omittedRevenueZar, 300);
+
+  // Every printed figure must still be a direct sum of the farmer's own rows: the six listed plus
+  // the omitted line must reconcile to the totals at the top of the page, with nothing lost.
+  const listedHarvested = track.topCrops.reduce((t, c) => t + c.harvestedKg, 0);
+  const listedSold = track.topCrops.reduce((t, c) => t + c.soldKg, 0);
+  const listedRevenue = track.topCrops.reduce((t, c) => t + c.revenueZar, 0);
+  assert.equal(listedHarvested + track.omittedHarvestedKg, track.totalHarvestedKg);
+  assert.equal(listedSold + track.omittedSoldKg, track.totalSoldKg);
+  assert.equal(listedRevenue + track.omittedRevenueZar, track.totalRevenueZar);
+
+  // THE HONESTY RULE. Kilograms harvested, kilograms sold and rand are three different quantities.
+  // A single merged "hidden" figure would be a number that is not a weight or a price of anything
+  // — this repo has printed exactly that before — so the record must not offer one.
+  const merged = track.omittedHarvestedKg + track.omittedSoldKg + track.omittedRevenueZar;
+  assert.ok(
+    !Object.values(track as unknown as Record<string, unknown>).includes(merged),
+    'no field may carry the three omitted sums added together',
+  );
+});
+
+test('nothing is omitted, and nothing is claimed to be, when every crop fits', () => {
+  const track = creditPackTrackRecord(
+    [harvest(10, '2026-06-01T00:00:00.000Z', 'Cabbage'), harvest(5, '2026-06-01T00:00:00.000Z', 'Kale')],
+    [],
+  );
+  assert.deepEqual(track.omittedCrops, []);
+  assert.equal(track.omittedHarvestedKg, 0);
+  assert.equal(track.omittedSoldKg, 0);
+  assert.equal(track.omittedRevenueZar, 0);
+});
+
 test('a blank crop name is labelled rather than left empty', () => {
   const record = creditPackTrackRecord([harvest(3, '2026-06-01T00:00:00.000Z', '   ')], []);
   assert.equal(record.topCrops[0].crop, 'Unnamed crop');

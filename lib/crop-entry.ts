@@ -1,6 +1,7 @@
 import { activeAccountLocalStorageKey } from './account-local-storage';
 import { CROPS, hasPlanningYield } from './crop-catalog';
-import { PERENNIAL_PRODUCE, PERENNIAL_GROUP_LABEL, PERENNIAL_GROUP_ORDER, type PerennialGroup } from './perennial-produce';
+import { buildCropAliasIndex, exactCropKey } from './harvest-reconciliation';
+import { PERENNIAL_PRODUCE, PERENNIAL_GROUP_LABEL, PERENNIAL_GROUP_ORDER, perennialKeyForName, type PerennialGroup } from './perennial-produce';
 
 export interface CropEntryOption {
   key: string;
@@ -62,17 +63,41 @@ function cropAliases(option: CropEntryOption): string[] {
  * "is this a plannable crop"; a perennial answers no to the second and has no answer to the first.
  * Use produceEntryOption() when you only need to know whether a name is already catalogued at all.
  */
+/** Built once — the shared annual alias index, real names plus generated plurals. */
+const ANNUAL_ALIASES = buildCropAliasIndex();
+
 export function cropEntryOption(value: string): CropEntryOption | null {
   const needle = normalise(value);
   if (!needle) return null;
-  return CROP_ENTRY_OPTIONS.find((option) => cropAliases(option).includes(needle)) ?? null;
+  const direct = CROP_ENTRY_OPTIONS.find((option) => cropAliases(option).includes(needle));
+  if (direct) return direct;
+  // Same second pass as the orchard half below, for the same reason: `cropAliases` is derived from
+  // the option's own label and knows nothing about plurals, so "Cabbages" resolved to nothing and
+  // became a rival custom crop beside the catalogue's "Cabbage". The shared alias index is the
+  // EXACT tier only — never the substring guess — so this can widen the match without ever
+  // rewriting a name the catalogue does not genuinely know.
+  const key = exactCropKey(value, ANNUAL_ALIASES);
+  // Mapped back through CROP_ENTRY_OPTIONS, not CROPS, so the pickers' own rule still decides what
+  // counts as produce — a cover crop stays unsellable however the farmer spells it.
+  return key ? CROP_ENTRY_OPTIONS.find((option) => option.key === key) ?? null : null;
 }
 
-/** The orchard half of the same lookup. */
+/** The orchard half of the same lookup.
+ *
+ *  Two passes, and the order matters. `cropAliases` is derived from the option's own label, so it
+ *  matches keys and bracketed synonyms but knows nothing about plurals — which meant a farmer
+ *  typing "Avocados" fell straight through the duplicate guard that calls this, and ended up with
+ *  a custom "Avocados" row beside the catalogue's "Avocado": two rows, two prices, one tree.
+ *  `perennialKeyForName` already handles plural forms for the produce catalogue, so the fix is to
+ *  fall back to it rather than teach this file a second, drifting copy of the same rules.
+ *  Additive on purpose: the exact-alias pass still wins, so nothing that matched before changes. */
 export function perennialEntryOption(value: string): CropEntryOption | null {
   const needle = normalise(value);
   if (!needle) return null;
-  return PERENNIAL_ENTRY_OPTIONS.find((option) => cropAliases(option).includes(needle)) ?? null;
+  const direct = PERENNIAL_ENTRY_OPTIONS.find((option) => cropAliases(option).includes(needle));
+  if (direct) return direct;
+  const key = perennialKeyForName(value);
+  return key ? PERENNIAL_ENTRY_OPTIONS.find((option) => option.key === key) ?? null : null;
 }
 
 /**

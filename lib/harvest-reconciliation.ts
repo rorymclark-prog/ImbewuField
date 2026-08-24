@@ -6,6 +6,7 @@
 // facilitator design) stay in the calling component; this module only takes
 // already-loaded data in.
 
+import { pluralFormsOf } from './plural-forms';
 import type { Planting, PlanBed } from './crop-plan';
 import { buildPlanYieldBenchmark } from './crop-plan';
 import type { FacilitatorDesignState } from './facilitator-design';
@@ -135,12 +136,33 @@ function aliasesForCropName(name: string): string[] {
   return [primary, ...extras];
 }
 
-/** normalized alias string -> catalog crop key, built once from CROPS. */
+/**
+ * normalized alias string -> catalog crop key, built once from CROPS.
+ *
+ * Two passes, and the order is the whole point. Real catalogue aliases go in first; plural forms
+ * are GENERATED second and only ever fill a slot no real name already holds, so a crop's own name
+ * can never be outranked by a plural invented from another crop's. (Checked at the current
+ * catalogue: the second pass adds 58 forms and collides with nothing.)
+ *
+ * The plural pass is new. Without it this index answered "no" to "Cabbages", "Potatoes" and
+ * "Beetroots" — every catalogue name that is not already plural — and those names survived only
+ * by falling through to the substring tier below, which the comments there call a guess and which
+ * returns null outright once a name is ambiguous. The orchard catalogue had handled plurals for
+ * its whole life, so the two halves of one identity rule disagreed about the most ordinary case
+ * there is: a farmer typing the plural of what they grew.
+ */
 export function buildCropAliasIndex(): Map<string, string> {
   const index = new Map<string, string>();
   for (const crop of CROPS) {
     for (const alias of aliasesForCropName(crop.name)) {
       if (alias) index.set(alias, crop.key);
+    }
+  }
+  for (const crop of CROPS) {
+    for (const alias of aliasesForCropName(crop.name)) {
+      for (const form of pluralFormsOf(alias)) {
+        if (form && !index.has(form)) index.set(form, crop.key);
+      }
     }
   }
   return index;

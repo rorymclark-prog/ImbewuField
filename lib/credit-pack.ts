@@ -276,6 +276,19 @@ export interface CreditPackTrackRecord {
   lastSaleIso: string | null;
   /** Highest combined harvested+sold weight first, capped for a printed table. */
   topCrops: CreditPackCropTotal[];
+  /**
+   * What the cap left out. A lender reading BY CROP has no way to tell a complete list from a
+   * top-six unless the document says so, and a table that silently drops a crop understates the
+   * farmer it is meant to vouch for.
+   *
+   * Kept as THREE separate sums on purpose. Harvested kilograms, sold kilograms and rand are
+   * different quantities; a single "hidden" total would be a number that is not a weight or a
+   * price of anything, and this repo has printed exactly that mistake before.
+   */
+  omittedCrops: string[];
+  omittedHarvestedKg: number;
+  omittedSoldKg: number;
+  omittedRevenueZar: number;
 }
 
 export const MIN_HARVESTS_FOR_TRACK_RECORD = 1;
@@ -352,10 +365,11 @@ export function creditPackTrackRecord(
     if (lastSaleMs === null || ms > lastSaleMs) { lastSaleMs = ms; lastSaleIso = row.sold_at; }
   }
 
-  const topCrops = [...crops.values()]
+  const ranked = [...crops.values()]
     .filter((c) => c.harvestedKg > 0 || c.soldKg > 0)
-    .sort((a, b) => (b.harvestedKg + b.soldKg) - (a.harvestedKg + a.soldKg))
-    .slice(0, TOP_CROPS_LIMIT);
+    .sort((a, b) => (b.harvestedKg + b.soldKg) - (a.harvestedKg + a.soldKg));
+  const topCrops = ranked.slice(0, TOP_CROPS_LIMIT);
+  const omitted = ranked.slice(TOP_CROPS_LIMIT);
 
   return {
     harvestEntryCount,
@@ -368,6 +382,10 @@ export function creditPackTrackRecord(
     firstSaleIso,
     lastSaleIso,
     topCrops,
+    omittedCrops: omitted.map((c) => c.crop),
+    omittedHarvestedKg: omitted.reduce((t, c) => t + c.harvestedKg, 0),
+    omittedSoldKg: omitted.reduce((t, c) => t + c.soldKg, 0),
+    omittedRevenueZar: omitted.reduce((t, c) => t + c.revenueZar, 0),
   };
 }
 

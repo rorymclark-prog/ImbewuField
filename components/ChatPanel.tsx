@@ -4,7 +4,7 @@ import { useState, useRef, useEffect, useCallback, type ChangeEvent } from 'reac
 import { Camera, Send, FlaskConical, Loader2, X } from 'lucide-react';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import { loadReports } from '@/lib/saved-reports';
-import { myProduction } from '@/lib/db/queries';
+import { myProduction, mySales } from '@/lib/db/queries';
 import { loadSampleFarmData, clearSampleFarmData, getLocalProduction, getLocalSales, getLocalProject, hasSampleData } from '@/lib/demo-data';
 import { getLastSite } from '@/lib/last-site';
 
@@ -62,6 +62,7 @@ export default function ChatPanel({ locationData, siteData, waterData, appLang, 
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [production, setProduction] = useState<{ crop: string; kg: number }[]>([]);
+  const [salesRows, setSalesRows] = useState<{ crop: string; kg: number; amount: number }[]>([]);
   const [pendingImage, setPendingImage] = useState<{ data: string; mediaType: string; preview: string } | null>(null);
   const [hasSample, setHasSample] = useState(false);
   const endRef = useRef<HTMLDivElement>(null);
@@ -79,11 +80,19 @@ export default function ChatPanel({ locationData, siteData, waterData, appLang, 
     return () => window.removeEventListener('imbewu-farmdata-changed', refresh);
   }, []);
 
-  // Best-effort load of real production records (signed-in users). No-ops otherwise.
+  // Best-effort load of the signed-in farmer's real records. No-ops otherwise.
+  // Harvests AND sales: for a long time only production was loaded here, so a signed-in farmer's
+  // real harvests reached the assistant while their real sales did not — and the `sales` field was
+  // filled from the DEMO store alone. Ask "what did I earn from my cabbages" and the answer came
+  // back from sample data, or from nothing, while the rows sat in Firestore.
   useEffect(() => {
     let alive = true;
     (async () => {
       try { const rows = await myProduction(); if (alive) setProduction(rows.map((r) => ({ crop: r.crop, kg: r.kg }))); }
+      catch { /* not signed in / offline */ }
+    })();
+    (async () => {
+      try { const rows = await mySales(); if (alive) setSalesRows(rows.map((r) => ({ crop: r.crop, kg: r.kg, amount: r.amount }))); }
       catch { /* not signed in / offline */ }
     })();
     return () => { alive = false; };
@@ -92,8 +101,9 @@ export default function ChatPanel({ locationData, siteData, waterData, appLang, 
   const buildContext = useCallback(() => {
     const reports = loadReports();
     const localProd = getLocalProduction().map((p) => ({ crop: p.crop, kg: p.kg }));
-    const sales = getLocalSales().map((s) => ({ crop: s.crop, kg: s.kg, amount: s.amount }));
+    const localSales = getLocalSales().map((s) => ({ crop: s.crop, kg: s.kg, amount: s.amount }));
     const prod = [...production, ...localProd];
+    const sales = [...salesRows, ...localSales];
     // Live site (from the map) takes priority; otherwise fall back to the last
     // analysed site so the assistant stays site-aware on any page.
     const last = locationData ? null : getLastSite();
@@ -107,7 +117,7 @@ export default function ChatPanel({ locationData, siteData, waterData, appLang, 
       project: getLocalProject() ?? undefined,
       reports: reports.length ? reports.map((r, i) => ({ name: r.name, savedAt: r.savedAt, text: i === 0 ? r.report : undefined })) : undefined,
     };
-  }, [locationData, siteData, waterData, appLang, production]);
+  }, [locationData, siteData, waterData, appLang, production, salesRows]);
 
   const send = useCallback(async (text: string) => {
     const q = text.trim();

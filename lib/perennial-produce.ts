@@ -34,6 +34,7 @@
 // scheduled, or given a benchmark, and it must never reach a per-m²-of-bed figure. See
 // lib/produce-scope.ts for the switches that keep it out of those places.
 
+import { pluralFormsOf } from './plural-forms';
 import { SPECIES } from './species-catalog';
 import { isPlantable, type Species, type SpeciesSection, type SpeciesStratum } from './species-palette';
 
@@ -228,17 +229,6 @@ function normalise(value: string): string {
  * matching is by text. A plural is included because a farmer records "Avocados" and the catalogue
  * says "Avocado", and both plainly mean the same fruit.
  */
-function pluralsOf(base: string): string[] {
-  const forms = [`${base}s`];
-  // berry -> berries, but not "grey" -> "greies".
-  if (/[^aeiou]y$/.test(base)) forms.push(`${base.slice(0, -1)}ies`);
-  // peach -> peaches, citrus -> citruses.
-  if (/(ch|sh|s|x|z)$/.test(base)) forms.push(`${base}es`);
-  // mango -> mangoes. Both spellings are current, so keep the -s form above too.
-  if (base.endsWith('o')) forms.push(`${base}es`);
-  return forms;
-}
-
 function perennialAliases(): Map<string, string> {
   const map = new Map<string, string>();
   // Two passes so a real catalogue name always beats a plural GENERATED from another name. One
@@ -246,7 +236,7 @@ function perennialAliases(): Map<string, string> {
   // under the first, and nothing on screen would show it happening.
   for (const produce of PERENNIAL_PRODUCE) map.set(normalise(produce.label), produce.key);
   for (const produce of PERENNIAL_PRODUCE) {
-    for (const form of pluralsOf(normalise(produce.label))) {
+    for (const form of pluralFormsOf(normalise(produce.label))) {
       if (!map.has(form)) map.set(form, produce.key);
     }
   }

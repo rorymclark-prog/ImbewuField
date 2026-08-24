@@ -338,6 +338,26 @@ export async function buildCreditPackPdf(input: CreditPackDocumentInput): Promis
       ]),
       new Set([1, 2, 3]),
     );
+    if (track.omittedCrops.length > 0) {
+      /* The table is a top-six, so on its own it reads as "this is everything the farmer grows"
+         and quietly understates them. Name the crops it left out and give their totals — as three
+         separate sums, because kilograms harvested, kilograms sold and rand are three different
+         quantities and one merged "hidden" figure would be a number that measures nothing. */
+      y += 2;
+      doc.setFont('helvetica', 'italic');
+      doc.setFontSize(8);
+      setInk(INK.muted);
+      const note =
+        `Table shows the ${track.topCrops.length} largest crops by weight. ` +
+        `Also recorded, not listed above: ${track.omittedCrops.join(', ')} — ` +
+        `${formatQuantity(track.omittedHarvestedKg)} kg harvested, ` +
+        `${formatQuantity(track.omittedSoldKg)} kg sold, ` +
+        `${formatInvoiceZar(track.omittedRevenueZar)} revenue.`;
+      const noteLines = doc.splitTextToSize(note, CW) as string[];
+      need(noteLines.length * 10 + 6);
+      doc.text(noteLines, M, y);
+      y += noteLines.length * 10 + 6;
+    }
   }
 
   footer();
