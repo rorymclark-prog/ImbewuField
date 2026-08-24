@@ -43,6 +43,8 @@ const {
 const {
   CROP_ENTRY_OPTIONS,
   cropEntryOption,
+  perennialEntryOption,
+  produceEntryOption,
   loadCustomCropNames,
   saveCustomCropName,
 } = await import('../lib/crop-entry.ts');
@@ -197,6 +199,34 @@ test('crop pickers come from the reviewed catalogue and remember a farmer-added 
   // A catalogue alias resolves to its reviewed name instead of creating a rival crop entry.
   assert.equal(saveCustomCropName(' spinach '), 'Swiss chard (spinach)');
   assert.deepEqual(loadCustomCropNames(), ['garden special']);
+});
+
+test('a farmer typing the plural gets the catalogue crop, not a rival custom one', () => {
+  installBrowser();
+  // The guard in saveCustomCropName exists so one fruit cannot become two rows with two prices.
+  // It asked the pickers "do you know this name?" using aliases derived from each option's LABEL,
+  // which knew keys and bracketed synonyms but nothing about plurals — so "Avocados" walked
+  // straight past a guard written to stop exactly that, and /finances ended up offering
+  // Avocados at R25 beside Avocado at R40: one tree, two prices, a split record.
+  assert.equal(perennialEntryOption('Avocados')?.key, 'perennial:avocado');
+  assert.equal(perennialEntryOption('Mangoes')?.key, 'perennial:mango');
+  assert.equal(saveCustomCropName('Avocados'), 'Avocado', 'the orchard name wins over a new custom row');
+
+  // The annual half had the identical hole, and vegetables are the commoner case: "Tomatoes" and
+  // "Carrots" only ever worked because those catalogue labels are already plural.
+  assert.equal(cropEntryOption('Cabbages')?.key, 'cabbage');
+  assert.equal(cropEntryOption('Potatoes')?.key, 'potato');
+  assert.equal(cropEntryOption('Beetroots')?.key, 'beetroot');
+  assert.equal(saveCustomCropName('Cabbages'), 'Cabbage');
+
+  // Widening the match must not start rewriting names. A cover crop is still not produce however
+  // it is spelled, a genuinely new name is still the farmer's own words, and an ambiguous one is
+  // still refused rather than guessed at.
+  assert.equal(cropEntryOption('Oats'), null, 'a soil-building cover with no food harvest is still not produce');
+  assert.equal(produceEntryOption('Beans'), null, '"beans" hits three catalogue crops and must not be resolved to one');
+  assert.equal(saveCustomCropName('Imifino yesintu'), 'Imifino yesintu');
+  assert.ok(loadCustomCropNames().includes('Imifino yesintu'));
+  assert.ok(!loadCustomCropNames().some((n) => /avocado|cabbage/i.test(n)), 'no catalogue crop leaked into custom names');
 });
 
 test('a paid invoice creates kg crop-sale evidence while cash totals still count the invoice once', () => {
