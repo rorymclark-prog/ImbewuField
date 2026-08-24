@@ -91,7 +91,7 @@ with a live maturity-stage preview underneath once both a cited window and a yea
 this is also how a farmer logs an *existing* tree's real age ("Already here" status + a
 remembered planting year).
 
-Verified: `tsc --noEmit` clean, `npm test` 3108 pass / 2 pre-existing unrelated auth-suite
+Verified: `tsc --noEmit` clean, `npm test` 3111 pass / 2 pre-existing unrelated auth-suite
 failures / 1 pre-existing TODO — unchanged baseline, no regressions — `npm run build` clean.
 
 ### 2026-08-24 (Phase 4/4 of NGO/funder dashboards: real-data wiring + aggregate reporting)
