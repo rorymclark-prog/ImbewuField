@@ -72,6 +72,13 @@ export interface Grant {
 export interface Garden {
   id: string; programme_id: string | null; name: string; town: string | null;
   lat: number | null; lon: number | null; status: GardenStatus; supervisor_id: string | null; created_at: string;
+  /**
+   * Denormalised owning org — needed for the org-scoped `gardens` read rule (`sameOrg`/
+   * `staffOrgAccess`) and for `listGardens()` to scope its query. Optional because gardens
+   * written before this field existed have none (see scripts/backfill-org-id.mjs) — treat a
+   * missing value the same as null, not as an error.
+   */
+  org_id?: string | null;
 }
 
 export interface GardenMember {
@@ -142,6 +149,14 @@ export interface GardenerProfile {
   production: ProductionLog[];
   sales: SalesLog[];
   courses: CourseProgress[];
+  /**
+   * Whether this farmer has opted in to `dataConsent` — set even when the caller is an admin
+   * (whose own reads bypass the consent gate, but the flag still reports the farmer's real
+   * choice rather than always reading `true`). `getGardenerProfile()` uses this, not a caught
+   * error code, to tell "not opted in yet" (expected, `production`/`sales`/`courses` come back
+   * empty) apart from a genuine fetch failure (which still throws).
+   */
+  consented: boolean;
 }
 
 // ─── Surveys (NGO asks, farmer answers) ──────────────────────────────────────

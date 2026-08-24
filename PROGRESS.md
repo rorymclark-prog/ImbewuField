@@ -52,6 +52,46 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
+### 2026-08-24 (Phase 4/4 of NGO/funder dashboards: real-data wiring + aggregate reporting)
+Last of four sequential draft PRs (see Phase 1 entry below for the full plan). Phases 1-3 built
+the security fix, the admin panel, and the consent toggle; this phase is where the NGO/funder
+dashboard actually reads real Firestore data and gets an aggregate M&E report, all behind the
+`ngo_dashboard_v2` flag so `/ngo` and `/funder` keep showing demo data until Rory flips it on.
+
+**`firestore.rules`** — widened the `gardens`/`gardens/{id}/members` rules with the same
+`staffOrgAccess(d)` pattern Phase 1 already applied to `profiles`/`organizations`/etc: same-org
+staff, an `isAdmin()` account, and a funder with a `grants` record for that org can all read a
+garden and its members; a cross-org or ungranted account cannot. The pre-existing supervisor and
+self-member read paths are unaffected. New emulator coverage in `tests/firestore-rules.test.ts`
+(4 tests: same-org/granted-funder/admin allowed vs cross-org/ungranted denied, for both
+`gardens` and `gardens/members`, plus the supervisor/self-member paths still working) —
+`npm run test:rules` passes 24/24 against the real Firestore emulator.
+
+**`lib/report-org-summary.ts`** — new pure aggregation module, same "never infer, only measure
+what's there" discipline as `lib/report-boq.ts`. `summarizeOrgReport(gardens, farmerRows)` totals
+production/sales/training only across *consented* farmers (a non-consenting farmer is still
+counted in `totalFarmers`/`gardens` so nothing is silently hidden, but their figures never reach
+a total); `orgReportToCsv()` renders one row per farmer, "Not yet" with blank figures (not an
+omitted row) for anyone who hasn't consented; `orgReportCsvFilename()` makes a safe, dated,
+lowercased slug of the org name (falls back to "organisation" for a name with no alphanumerics).
+**`lib/org-report-pdf.ts`** builds `ReportBlock[]` from the same summary and hands off to the
+existing `lib/report-pdf.ts` renderer, rather than inventing new PDF infrastructure.
+
+**`components/NgoDashboard.tsx`** — wired the previously-inert report-generation state/callbacks
+into the actual render tree: a new "Impact report" panel (gated on `ngo_dashboard_v2` and not
+demo mode) between the gardens sidebar and the map, with a "Generate report" button, loading
+skeletons, an error state, and — once generated — a consent-count disclosure, a Gardens/
+Production/Sales/Training stats grid, and CSV/PDF/Refresh actions.
+
+New `tests/report-org-summary.test.ts` (9 cases over `summarizeOrgReport`/`orgReportToCsv`/
+`orgReportCsvFilename`: consent exclusion from totals, garden-status breakdown, avgCoursesPct
+NaN-avoidance with zero consented farmers, multi-farmer summation, CSV "Not yet" row shape, CSV
+escaping, header-only-when-empty, filename slugging and its no-alphanumerics fallback) —
+registered in `package.json`'s explicit test-file list. Verified: `tsc --noEmit` clean,
+`npm run test:rules` 24/24 against the real Firestore emulator, `npm test` 3094 pass / 2
+pre-existing unrelated auth-suite failures / 1 pre-existing TODO — unchanged from baseline, no
+regressions.
+
 ### 2026-08-24 (Phase 3/4 of NGO/funder dashboards: farmer consent flow)
 Third of four sequential draft PRs (see Phase 1 entry below for the full plan). Phase 1 shipped
 `Profile.dataConsent` and the rule enforcement (`consentGranted()`/`staffConsentedAccess()`) that
