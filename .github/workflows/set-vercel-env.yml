@@ -23,6 +23,10 @@ jobs:
       NEXT_PUBLIC_FIREBASE_APP_ID: ${{ secrets.NEXT_PUBLIC_FIREBASE_APP_ID }}
       NEXT_PUBLIC_MAPBOX_TOKEN: ${{ secrets.NEXT_PUBLIC_MAPBOX_TOKEN }}
       ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      # Server-only — deliberately NOT NEXT_PUBLIC_*. Already used by deploy-functions.yml for the
+      # Cloud Functions deploy; the app/api/admin/* routes (lib/admin-auth.ts) need it too, since
+      # Vercel serverless functions have no ADC/metadata-service fallback the way Cloud Functions do.
+      FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
     steps:
       - name: Check Vercel token
         run: |
@@ -50,7 +54,7 @@ jobs:
           for k in NEXT_PUBLIC_FIREBASE_API_KEY NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN \
                    NEXT_PUBLIC_FIREBASE_PROJECT_ID NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET \
                    NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID NEXT_PUBLIC_FIREBASE_APP_ID \
-                   NEXT_PUBLIC_MAPBOX_TOKEN ANTHROPIC_API_KEY; do
+                   NEXT_PUBLIC_MAPBOX_TOKEN ANTHROPIC_API_KEY FIREBASE_SERVICE_ACCOUNT; do
             eval "v=\${$k}"
             upsert "$k" "$v"
           done

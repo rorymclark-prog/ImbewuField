@@ -52,7 +52,58 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
-### 2026-08-24 (Phase 1/4 of NGO/funder dashboards: cross-org Firestore/Storage leak fix — PR #350, draft)
+### 2026-08-24 (Phase 2/4 of NGO/funder dashboards: platform admin panel)
+Second of four sequential draft PRs (see Phase 1 entry below for the full plan). Unblocks
+testing phases 3-4 for real: until now there was no way to provision a real `ngo`/`funder`/
+`admin` test account other than hand-editing the Firestore console.
+
+**`lib/admin-auth.ts`** — `requireAdmin(req, routeName, verifyToken?, lookupRole?)`, the guard for
+every `app/api/admin/*` route. Deliberately its own module, not a reuse of `lib/api-auth.ts`'s
+`guardPaidApiRequest`: that guard is SOFT by default (`REQUIRE_API_AUTH` gates whether a failure
+actually blocks the request, so the paid-route auth cutover can be smoke-tested without breaking
+farmers mid-design) — `requireAdmin()` always hard-fails, on a missing/invalid bearer token AND
+on a caller whose Firestore `profiles.role` isn't `'admin'`, independent of any env var. Own
+credentialed Admin SDK app init (`cert(FIREBASE_SERVICE_ACCOUNT)`, falling back to ADC), exposed
+via `getAdminFirestore()` so the three route files below share one init path.
+
+**`app/api/admin/users` (GET list/search, PATCH role+org_id)**, **`app/api/admin/orgs`** (GET
+list, POST create), **`app/api/admin/grants`** (GET list, POST create, DELETE) — all Admin-SDK,
+all behind `requireAdmin()`. This is the trusted path the rules comments already called for:
+`profiles.role`/`org_id` are client-immutable by rule, and `/grants` denies all client writes, so
+these Admin-SDK routes are now the only writer for either.
+
+**`app/admin` + `components/AdminPanel.tsx`** — gated by `canAccessRolePage(role, {'admin'})`
+(same pattern as `app/ngo/page.tsx`) and the new `ngo_dashboard_v2` flag; an unauth visit or the
+flag being off both silently redirect to `/home`, matching `app/community/page.tsx`'s pattern.
+User search/list with a per-row role + org dropdown, org creation form, grant creation/revoke —
+role + org assignment only, no suspend/disable, no audit-log UI, per the locked-in scope. **Not
+linked from any nav** — reached by URL only, Rory-only.
+
+**`lib/ngo-dashboard-v2-flag.ts`** — new client-side kill switch mirroring
+`lib/community/flag.ts` exactly (`NEXT_PUBLIC_NGO_DASHBOARD_V2_ENABLED` + a
+`imbewufield_ngo_dashboard_v2_preview` localStorage escape hatch). Gates the admin panel now;
+will gate the consent-aware dashboard wiring and aggregate reporting UI in phases 3-4. Separate
+from the rules-side `ngoDashboardV2On()` kill switch shipped in phase 1 — the two don't read each
+other, by design.
+
+**`.github/workflows/set-vercel-env.yml`** — added `FIREBASE_SERVICE_ACCOUNT` to the mirrored
+secrets (server-only, not `NEXT_PUBLIC_*`). It already existed as a GitHub secret (used by
+`deploy-functions.yml`) but was never pushed to Vercel — Vercel serverless functions have no
+ADC/metadata-service fallback the way Cloud Functions do, so the new admin routes would 401 on
+every request in production without this. **Rory: run `gh workflow run set-vercel-env.yml`
+before smoke-testing `/admin` live.**
+
+New `tests/admin-auth.test.ts` (18 cases: missing/malformed token, verifier throws, no uid,
+no-profile → 403, every non-admin role → 403, role-lookup throws → 401 not silently-allowed,
+`REQUIRE_API_AUTH` proven to make no difference in either direction, Bearer-scheme
+case-insensitivity, the happy path) — same injectable-dependency shape as `tests/api-auth.test.ts`,
+no real firebase-admin/network. Verified: `tsc --noEmit` clean, `npm run build` clean, `npm test`
+at baseline (3070 pass / 2 pre-existing unrelated auth-suite failures / 1 pre-existing TODO, no
+regressions — the two "every test file is registered" meta-tests and the "every header has a
+MenuButton" coverage test all needed `/admin` and the new test file wired in, done here). Rules
+untouched this phase — `npm run test:rules` not applicable.
+
+### 2026-08-24 (Phase 1/4 of NGO/funder dashboards: cross-org Firestore/Storage leak fix — PR #350, merged)
 Rory: *"i need to build the full ngo and funder dashboard now the ngo needs admin powers to
 designate what users can or cannot do audit and research what we need and they need to be able
 to see all the data and compile reports accordingly etc etc i will be the developer and i need
