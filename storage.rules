@@ -1,17 +1,41 @@
 rules_version = '2';
 
-// ImbewuField — Firebase Storage rules. Photos (produce/grower/garden) are
-// publicly readable (so they show in reports/dashboards) and writable by any
-// signed-in user under their own folder.
+// ImbewuField — Firebase Storage rules.
+//
+// NOTHING in this bucket is world-readable. Photos used to be, and the comment here used to say
+// that was necessary "so they show in reports/dashboards". It was not. Every photo in this app is
+// stored in Firestore as the URL getDownloadURL() returned (lib/db/queries.ts) and rendered with a
+// plain <img src>. That URL carries a Firebase download token, and a token is a capability: the
+// fetch behind an <img> is unauthenticated and never consults these rules at all.
+//
+// Checked on the storage emulator rather than assumed, because the whole change rests on it: with
+// reads locked to the owner, an anonymous fetch of the stored URL still returned HTTP 200, while
+// the same URL with the token stripped returned 403. Reports, dashboards, the people panel and the
+// community feed keep working; what stops is walking the bucket by path.
+//
+// It was live. On the production bucket an unauthenticated GET of a non-existent object under
+// /photos returned 404 (missing object, read permitted) while the same GET under /renders returned
+// 403 (read denied) — the control that proves the 404 meant "allowed", not "no such bucket".
+//
+// WHAT THIS DOES AND DOES NOT BUY. It closes unauthenticated enumeration of the bucket — the part
+// that matters, since these are photographs of identifiable people and an operator carries
+// responsible-party liability for them under POPIA. It does NOT retract a URL already shared: a
+// token is a bearer capability, so anyone holding the link keeps access. Making photos properly
+// revocable means storing the PATH and resolving it per reader through getDownloadURL(), which is
+// what course_submissions below already does and lib/course-gating.ts explains. That is a change
+// across ~30 render sites and is not this.
 service firebase.storage {
   match /b/{bucket}/o {
-    // Course-portal submission evidence (photo + optional voice note per module). Private —
-    // unlike /photos/** above, NOT world-readable: scoped to the learner who submitted it plus
-    // the mentors/staff who can already read the matching course_submissions/course_progress
-    // Firestore docs (see firestore.rules). Cross-service Firestore lookup, same documented
-    // pattern Firebase Storage rules support for gating storage reads on a Firestore-held role —
-    // this repo has no prior example of it, so treat as unverified until deploy-checked
-    // (`firebase deploy --only storage --dry-run` or the emulator) before relying on it.
+    // Course-portal submission evidence (photo + optional voice note per module). Scoped to the
+    // learner who submitted it plus the mentors/staff who can already read the matching
+    // course_submissions/course_progress Firestore docs (see firestore.rules).
+    //
+    // The cross-service Firestore lookup below carried a note to treat it as unverified — the repo
+    // had no prior example of one and nothing had exercised it. It is exercised now, against the
+    // firestore+storage emulators together, in tests/storage-rules.test.ts: learner yes, same-org
+    // mentor yes, another org's mentor no, a farmer no, signed-out no. Note the property that
+    // makes it safe to lean on: firestore.get() on a MISSING profile fails the rule outright
+    // rather than yielding a roleless object, so an account with no profile doc is denied.
     //
     // isCourseStaffOrMentor(uid) used to be a bare role check with no org term — same class of
     // bug as the Firestore cross-org leak (docs/AUDIT-NEEDS-RORY-2026-08-15.md #1): any
@@ -41,14 +65,31 @@ service firebase.storage {
                    && (request.resource.contentType.matches('image/.*') || request.resource.contentType.matches('audio/.*'));
     }
 
+    // Produce/grower/garden photos, one folder per owner. SDK reads are the owner's alone; every
+    // other viewer reaches the image through the stored download URL, which is why locking this
+    // breaks nothing on screen (see the header).
     match /photos/{folder}/{uid}/{file=**} {
-      allow read: if true;
+      allow read: if request.auth != null && request.auth.uid == uid;
       allow write: if request.auth != null && request.auth.uid == uid
                    && request.resource.size < 8 * 1024 * 1024
                    && request.resource.contentType.matches('image/.*');
     }
-    match /photos/{allPaths=**} {
-      allow read: if true;
+    // The catch-all that used to sit here (`match /photos/{allPaths=**} { allow read: if true; }`)
+    // is deliberately gone rather than tightened. Uploads only ever write the three-segment shape
+    // above, so it granted nothing the app needed and served only to make any path under /photos
+    // readable to anyone who could guess it. Default-deny is the right floor.
+
+    // Profile avatars. THIS BLOCK IS NEW, AND ITS ABSENCE WAS A LIVE BUG: uploadProfilePhoto()
+    // writes to profile_photos/{uid}/... (lib/db/queries.ts) and that path matched no rule in this
+    // file, so default-deny refused every upload. components/ProfileSheet.tsx awaits it inside a
+    // try/finally with NO catch, so the spinner stopped and nothing else happened — a farmer
+    // choosing a photo got silence, and no error anywhere a person could see. Confirmed denied on
+    // the emulator before this block was written, and allowed after.
+    match /profile_photos/{uid}/{file=**} {
+      allow read: if request.auth != null && request.auth.uid == uid;
+      allow write: if request.auth != null && request.auth.uid == uid
+                   && request.resource.size < 8 * 1024 * 1024
+                   && request.resource.contentType.matches('image/.*');
     }
 
     // AI-render job images, scoped per user. The browser writes each sheet's INPUT composite and
