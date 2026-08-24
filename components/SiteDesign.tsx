@@ -4,6 +4,7 @@ import { useState, useRef, useCallback, useEffect } from 'react';
 import Link from 'next/link';
 import { PenLine, Sprout, GraduationCap, Loader2, Check, PencilRuler } from 'lucide-react';
 import type { LocationData } from '@/lib/types';
+import { paidApiHeaders } from '@/lib/api-client-auth';
 
 interface Props {
   locationData: LocationData | null;
@@ -99,7 +100,7 @@ export default function SiteDesign({ locationData, photoAnalysis, appLang, place
     try {
       const res = await fetch('/api/design', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...await paidApiHeaders() },
         body: JSON.stringify({ images: [imageData], locationData, photoAnalysis, language, tone }),
       });
       if (!res.ok) throw new Error(`Server error ${res.status}`);

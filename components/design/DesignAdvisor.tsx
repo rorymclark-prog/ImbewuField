@@ -14,6 +14,7 @@ import { ELEMENTS_BY_ID, GROUND_FEATURES } from '@/lib/design-elements';
 import { evaluateDesign, type Advice, type AdviceLayer } from '@/lib/design-rules';
 import { formatDesignTranslation } from '@/lib/design-studio-i18n';
 import { useLanguage } from '@/lib/i18n';
+import { paidApiHeaders } from '@/lib/api-client-auth';
 
 const GOLD = '#F7C97E';
 const DARK = '#0B120B';
@@ -224,7 +225,7 @@ export default function DesignAdvisor({ state, site, houseXY, lastChangeId }: De
     try {
       const res = await fetch('/api/design-advice', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...await paidApiHeaders() },
         body: JSON.stringify({ designSummary, site }),
       });
       if (!res.ok) {

@@ -4,6 +4,7 @@ import { useState, useRef } from 'react';
 import { Loader2 } from 'lucide-react';
 import type { LocationData } from '@/lib/types';
 import { useLanguage } from '@/lib/i18n';
+import { paidApiHeaders } from '@/lib/api-client-auth';
 
 interface Props { locationData: LocationData | null }
 
@@ -75,7 +76,7 @@ export default function InsightsPanel({ locationData }: Props) {
     try {
       const res = await fetch('/api/ai-insights', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', ...await paidApiHeaders() },
         body: JSON.stringify(locationData),
         signal: abortRef.current.signal,
       });
