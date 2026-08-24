@@ -3,14 +3,18 @@
 import { useState, useMemo, useRef, useEffect, useCallback } from 'react';
 import ReactMapGL, { Marker, type MapRef } from 'react-map-gl';
 import 'mapbox-gl/dist/mapbox-gl.css';
-import { Loader2, MapPin, User, Camera, BookOpen, Check, Map as MapIcon, FileText, ArrowLeft } from 'lucide-react';
+import { Loader2, MapPin, User, Camera, BookOpen, Check, Map as MapIcon, FileText, ArrowLeft, Download, ShieldOff, RefreshCw } from 'lucide-react';
 import { onAuthStateChanged } from 'firebase/auth';
-import { listGardens, listGardeners, getGardenerProfile } from '@/lib/db/queries';
+import { listGardens, listGardeners, getGardenerProfile, getMyProfile, getOrganization, buildOrgReportRows } from '@/lib/db/queries';
 import { getFirebase } from '@/lib/firebase/init';
 import { COURSE_MODULES } from '@/lib/course-modules';
 import { getCropArt } from '@/lib/crop-art';
 import { buildCropAliasIndex, cropIdentityOf } from '@/lib/crop-identity';
 import { cropByKey } from '@/lib/crop-catalog';
+import { ngoDashboardV2Enabled } from '@/lib/ngo-dashboard-v2-flag';
+import { summarizeOrgReport, orgReportToCsv, orgReportCsvFilename, type OrgReportSummary } from '@/lib/report-org-summary';
+import { buildOrgReportPdf, orgReportPdfFilename, deliverOrgReportPdf } from '@/lib/org-report-pdf';
+import { downloadFile } from '@/lib/file-delivery';
 import type { Garden as DbGarden, GardenMember, Profile, GardenerProfile as DbGardenerProfile, ProductionLog, SalesLog, CourseProgress } from '@/lib/db/types';
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN!;
@@ -76,6 +80,9 @@ interface SaleRow { date: string; crop: typeof CROPS[number]; kg: number; rand: 
 interface Gardener {
   id: string; profileId: string; name: string; plot: string; idNumber: string; sizeM2: number; lat: number; lon: number;
   trainingPct: number; courses: { name: string; done: boolean }[]; production: ProdRow[]; sales: SaleRow[];
+  /** Live mode only — undefined in demo mode, where consent doesn't apply. `false` means this
+   * farmer hasn't opted in to share data with their org yet, per `Profile.dataConsent`. */
+  consented?: boolean;
 }
 
 function gardenersFor(garden: Garden): Gardener[] {
@@ -220,6 +227,7 @@ function mapDbGardenerFull(gp: DbGardenerProfile, garden: Garden, base: Gardener
     courses: mappedCourses,
     production: mappedProd,
     sales: mappedSales,
+    consented: gp.consented,
   };
 }
 
@@ -274,6 +282,16 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
   // Per-gardener full profile (live)
   const [gardenerLoading, setGardenerLoading] = useState(false);
   const [gardenerError, setGardenerError] = useState(false);
+
+  // Aggregate org report (Phase 4, gated behind ngo_dashboard_v2) — generated on demand, not on
+  // every page load, since it fans out a query per farmer (see lib/db/queries.ts's
+  // buildOrgReportRows for why a single org-wide query can't be used instead).
+  const [v2Enabled, setV2Enabled] = useState(false);
+  useEffect(() => { setV2Enabled(ngoDashboardV2Enabled()); }, []);
+  const [orgName, setOrgName] = useState('');
+  const [orgReportSummary, setOrgReportSummary] = useState<OrgReportSummary | null>(null);
+  const [orgReportLoading, setOrgReportLoading] = useState(false);
+  const [orgReportError, setOrgReportError] = useState(false);
 
   // Wait for Firebase auth to rehydrate before querying — otherwise the first
   // fetch races ahead of currentUser and the rules deny it (→ false demo mode).
@@ -401,6 +419,41 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
     setLiveGardeners(null);
   }, []);
 
+  // ── Aggregate org report: fan out per garden → per member (see buildOrgReportRows), then
+  // reduce to totals. On demand only, not on load — this is one read round-trip per farmer. ──
+  const generateOrgReport = useCallback(async () => {
+    if (isDemo || !liveGardens) return;
+    setOrgReportLoading(true);
+    setOrgReportError(false);
+    try {
+      const [me, rowsData] = await Promise.all([getMyProfile(), buildOrgReportRows(liveGardens)]);
+      if (me?.org_id) {
+        const org = await getOrganization(me.org_id);
+        if (org) setOrgName(org.name);
+      }
+      const gardenInputs = liveGardens.map((g) => ({ id: g.id, name: g.name, status: g.status }));
+      setOrgReportSummary(summarizeOrgReport(gardenInputs, rowsData));
+    } catch {
+      setOrgReportError(true);
+    } finally {
+      setOrgReportLoading(false);
+    }
+  }, [isDemo, liveGardens]);
+
+  const exportOrgReportCsv = useCallback(() => {
+    if (!orgReportSummary) return;
+    const dateLabel = new Date().toISOString().slice(0, 10);
+    const csv = orgReportToCsv(orgReportSummary);
+    downloadFile(new Blob([csv], { type: 'text/csv;charset=utf-8' }), orgReportCsvFilename(orgName, dateLabel));
+  }, [orgReportSummary, orgName]);
+
+  const exportOrgReportPdf = useCallback(async () => {
+    if (!orgReportSummary) return;
+    const dateLabel = new Date().toLocaleDateString('en-ZA', { year: 'numeric', month: 'long', day: 'numeric' });
+    const blob = await buildOrgReportPdf(orgName || 'Organisation', orgReportSummary, dateLabel);
+    await deliverOrgReportPdf(blob, orgReportPdfFilename(orgName || 'Organisation'));
+  }, [orgReportSummary, orgName]);
+
   const totals = gardener && (() => {
     const produced = gardener.production.reduce((s, p) => s + p.kg, 0);
     const soldKg = gardener.sales.reduce((s, p) => s + p.kg, 0);
@@ -504,6 +557,63 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
               </div>
             )}
           </div>
+
+          {/* ── Aggregate impact report — behind ngo_dashboard_v2, real data only ── */}
+          {v2Enabled && !isDemo && (
+            <div className="p-3 border-t" style={{ borderColor: '#E2D8C4' }}>
+              <div className="text-xs font-mono uppercase tracking-wider mb-2 px-1" style={{ color: '#9A8268' }}>
+                Impact report
+              </div>
+              {!orgReportSummary && !orgReportLoading && (
+                <button
+                  onClick={generateOrgReport}
+                  disabled={gardens.length === 0}
+                  className="w-full flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg text-xs font-mono transition-all disabled:opacity-50"
+                  style={{ background: '#1F4D2B', color: '#F7F2E9' }}
+                >
+                  <FileText size={13} /> Generate report
+                </button>
+              )}
+              {orgReportLoading && (
+                <div className="space-y-1">
+                  <SkeletonRow /><SkeletonRow />
+                </div>
+              )}
+              {orgReportError && (
+                <div className="rounded-lg px-3 py-3 text-xs font-sans leading-relaxed mt-1" style={{ background: '#FFFEFA', border: '1px solid #D8B7A8', color: '#8C4938' }}>
+                  Could not build the report. Try again.
+                </div>
+              )}
+              {orgReportSummary && (
+                <div className="rounded-lg p-3 space-y-2" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
+                  <div className="text-xs font-sans leading-relaxed flex items-start gap-2" style={{ color: '#5C5040' }}>
+                    <ShieldOff size={13} className="flex-shrink-0 mt-0.5" style={{ color: '#9A8268' }} />
+                    <span>
+                      {orgReportSummary.consentedFarmers} of {orgReportSummary.totalFarmers} farmers have opted in to
+                      share data. Figures below cover only them.
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2 text-xs font-mono" style={{ color: '#20190F' }}>
+                    <div>Gardens<div className="font-display text-base" style={{ color: '#1F4D2B' }}>{orgReportSummary.gardens}</div></div>
+                    <div>Production<div className="font-display text-base" style={{ color: '#1F4D2B' }}>{orgReportSummary.productionKg.toFixed(0)}kg</div></div>
+                    <div>Sales<div className="font-display text-base" style={{ color: '#1F4D2B' }}>R{orgReportSummary.salesAmount.toLocaleString('en-ZA', { maximumFractionDigits: 0 })}</div></div>
+                    <div>Training<div className="font-display text-base" style={{ color: '#1F4D2B' }}>{orgReportSummary.avgCoursesPct}%</div></div>
+                  </div>
+                  <div className="flex gap-1.5 pt-1">
+                    <button onClick={exportOrgReportCsv} className="flex-1 flex items-center justify-center gap-1 px-2 py-1.5 rounded-lg text-xs font-mono" style={{ background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#5C5040' }}>
+                      <Download size={12} /> CSV
+                    </button>
+                    <button onClick={exportOrgReportPdf} className="flex-1 flex items-center justify-center gap-1 px-2 py-1.5 rounded-lg text-xs font-mono" style={{ background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#5C5040' }}>
+                      <Download size={12} /> PDF
+                    </button>
+                    <button onClick={generateOrgReport} className="px-2 py-1.5 rounded-lg text-xs font-mono" style={{ background: '#F5F0E8', border: '1px solid #E2D8C4', color: '#5C5040' }} title="Refresh">
+                      <RefreshCw size={12} />
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
         {/* CENTRE — map. Fixed-height band on mobile, hidden once a garden is selected;
@@ -596,6 +706,11 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                     >
                       Retry
                     </button>
+                  </div>
+                ) : gardener.consented === false ? (
+                  <div className="rounded-lg px-3 py-4 text-xs font-sans leading-relaxed flex items-start gap-2" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#5C5040' }}>
+                    <ShieldOff size={14} className="flex-shrink-0 mt-0.5" style={{ color: '#9A8268' }} />
+                    <span>{gardener.name} has not opted in to share their production, sales and training data with your organisation yet. This is their choice, made in their own settings, and can be changed at any time.</span>
                   </div>
                 ) : (
                   <>

@@ -52,7 +52,172 @@ must provision — not buildable from code alone).
 
 ## Build Log (newest first)
 
-### 2026-08-24 (Phase 1/4 of NGO/funder dashboards: cross-org Firestore/Storage leak fix — PR #350, draft)
+### 2026-08-24 (perennial cropping-maturity ramp-up: log a tree's age, see its production stage)
+Rory: log an existing tree's age, and a newly-placed tree's production should step up over
+years rather than read as instantly mature — avocado producing nothing years 1-3, some by 4-5,
+full later. Scoped as a standalone signal, not wired into `lib/crop-plan.ts`/
+`lib/forward-harvests.ts`/`lib/plan-value.ts`/`lib/finance-series.ts` — none of those carry a
+tree-yield concept today, so this ships as an honest "how mature is this specimen" readout
+rather than a forced integration into finance planning.
+
+**`lib/species-palette.ts`** — new optional `Species.yearsToFirstHarvest`/`yearsToFullBearing`/
+`maturitySource` fields (both years required together, or neither — a half window is worse than
+none), enforced in `validateSpecies()`.
+
+**`lib/species-catalog.ts`** — populated 23 curated fruit/nut trees with real, cited maturity
+windows sourced from SA/international agricultural-extension references (hortgro.co.za,
+agribook.co.za, avocadosource.com, southafrica.co.za, FAO, etc — full list in the PR). Avocado:
+4 years to first harvest, 7 to full bearing, matching Rory's own example almost exactly. Marula
+was deliberately left unset — no citable source found; "never invent, only cite" per this file's
+existing convention.
+
+**`lib/design-canvas.ts`** — new optional `PlacedItem.plantedYear`: the calendar year a specimen
+went, or will go, into the ground. Works for both an `'existing'` surveyed tree (farmer recalls
+roughly when it was planted) and a `'proposed'` one (defaults to the plan's target year).
+
+**`lib/perennial-maturity.ts`** (new) — pure, `now`-parameterized module (same discipline as
+`lib/forward-harvests.ts`) producing a 0..1 yield-fraction ramp between a species' cited
+`yearsToFirstHarvest`/`yearsToFullBearing`, plus a three-word stage (`'not yet bearing'` /
+`'first crops'` / `'full bearing'`) and a short label like "first crops · 5 yrs". Deliberately
+carries no yield/price number, same as `lib/perennial-produce.ts`. Returns `null` — never a
+guessed 0 or a guessed "mature" — whenever the species has no cited window or the item has no
+known planting year. 14 new tests in `tests/perennial-maturity.test.ts`.
+
+**UI wiring**: `components/design/DesignCanvas.tsx`'s tap-to-place now defaults a newly-placed
+tree's `plantedYear` to the current year automatically (no prompt — a plan places it now).
+`app/design/page.tsx`'s existing `ItemEditSheet` (the post-placement edit sheet, opened via the
+pencil action on a selected item) gains a "Year planted" field for any item with a `speciesId`,
+with a live maturity-stage preview underneath once both a cited window and a year are known —
+this is also how a farmer logs an *existing* tree's real age ("Already here" status + a
+remembered planting year).
+
+Verified: `tsc --noEmit` clean, `npm test` 3111 pass / 2 pre-existing unrelated auth-suite
+failures / 1 pre-existing TODO — unchanged baseline, no regressions — `npm run build` clean.
+
+### 2026-08-24 (Phase 4/4 of NGO/funder dashboards: real-data wiring + aggregate reporting)
+Last of four sequential draft PRs (see Phase 1 entry below for the full plan). Phases 1-3 built
+the security fix, the admin panel, and the consent toggle; this phase is where the NGO/funder
+dashboard actually reads real Firestore data and gets an aggregate M&E report, all behind the
+`ngo_dashboard_v2` flag so `/ngo` and `/funder` keep showing demo data until Rory flips it on.
+
+**`firestore.rules`** — widened the `gardens`/`gardens/{id}/members` rules with the same
+`staffOrgAccess(d)` pattern Phase 1 already applied to `profiles`/`organizations`/etc: same-org
+staff, an `isAdmin()` account, and a funder with a `grants` record for that org can all read a
+garden and its members; a cross-org or ungranted account cannot. The pre-existing supervisor and
+self-member read paths are unaffected. New emulator coverage in `tests/firestore-rules.test.ts`
+(4 tests: same-org/granted-funder/admin allowed vs cross-org/ungranted denied, for both
+`gardens` and `gardens/members`, plus the supervisor/self-member paths still working) —
+`npm run test:rules` passes 24/24 against the real Firestore emulator.
+
+**`lib/report-org-summary.ts`** — new pure aggregation module, same "never infer, only measure
+what's there" discipline as `lib/report-boq.ts`. `summarizeOrgReport(gardens, farmerRows)` totals
+production/sales/training only across *consented* farmers (a non-consenting farmer is still
+counted in `totalFarmers`/`gardens` so nothing is silently hidden, but their figures never reach
+a total); `orgReportToCsv()` renders one row per farmer, "Not yet" with blank figures (not an
+omitted row) for anyone who hasn't consented; `orgReportCsvFilename()` makes a safe, dated,
+lowercased slug of the org name (falls back to "organisation" for a name with no alphanumerics).
+**`lib/org-report-pdf.ts`** builds `ReportBlock[]` from the same summary and hands off to the
+existing `lib/report-pdf.ts` renderer, rather than inventing new PDF infrastructure.
+
+**`components/NgoDashboard.tsx`** — wired the previously-inert report-generation state/callbacks
+into the actual render tree: a new "Impact report" panel (gated on `ngo_dashboard_v2` and not
+demo mode) between the gardens sidebar and the map, with a "Generate report" button, loading
+skeletons, an error state, and — once generated — a consent-count disclosure, a Gardens/
+Production/Sales/Training stats grid, and CSV/PDF/Refresh actions.
+
+New `tests/report-org-summary.test.ts` (9 cases over `summarizeOrgReport`/`orgReportToCsv`/
+`orgReportCsvFilename`: consent exclusion from totals, garden-status breakdown, avgCoursesPct
+NaN-avoidance with zero consented farmers, multi-farmer summation, CSV "Not yet" row shape, CSV
+escaping, header-only-when-empty, filename slugging and its no-alphanumerics fallback) —
+registered in `package.json`'s explicit test-file list. Verified: `tsc --noEmit` clean,
+`npm run test:rules` 24/24 against the real Firestore emulator, `npm test` 3094 pass / 2
+pre-existing unrelated auth-suite failures / 1 pre-existing TODO — unchanged from baseline, no
+regressions.
+
+### 2026-08-24 (Phase 3/4 of NGO/funder dashboards: farmer consent flow)
+Third of four sequential draft PRs (see Phase 1 entry below for the full plan). Phase 1 shipped
+`Profile.dataConsent` and the rule enforcement (`consentGranted()`/`staffConsentedAccess()`) that
+gates a farmer's production/sales/expense/course records behind it; until now nothing in the app
+ever wrote the field, so it was permanently absent (== not shared) for every farmer.
+
+**`lib/data-consent.ts`** — new pure `nextDataConsent(current, granted, now)`. Both timestamps
+survive repeated grant/revoke cycles: granting stamps a fresh `grantedAt` and leaves the previous
+`revokedAt` untouched, revoking is the mirror image — so the record always shows "most recently
+granted at X" and "most recently revoked at Y" instead of only ever remembering one of the two.
+
+**`lib/db/queries.ts`** — new `getOrganization(orgId)`, read-only, used only to name the org a
+farmer's consent toggle would apply to (`organizations/{id}` is already readable by that org's
+own members under the Phase 1 rules, so a farmer reading their own `org_id` needs no rule change).
+
+**`components/ProfileSheet.tsx`** — new "Data sharing" section, farmer's own profile sheet only
+(`app/farmer/page.tsx`). Opt-in, not opt-out, matching POPIA: hidden entirely (not shown-disabled)
+for a farmer with no `org_id`, since there's nobody to share with. One toggle — "Share my data
+with \[org name]" — revocable at any time. Save only stamps a new `dataConsent` record when the
+toggle actually moved during that save, so saving unrelated fields (name, bio, skills, ...) never
+silently re-stamps `grantedAt`/`revokedAt`.
+
+New `tests/data-consent.test.ts` (9 cases: `nextDataConsent` grant-from-empty, revoke-from-empty,
+re-grant-after-revoke preserving `revokedAt`, re-revoke-after-grant preserving `grantedAt`,
+idempotent re-grant, plus source-pattern checks that `ProfileSheet.tsx` imports the helper, gates
+the section on `profile?.org_id`, and only patches `dataConsent` when the toggle moved) — same
+`readFileSync`-based style as `tests/write-timeout.test.ts`. Verified: `tsc --noEmit` clean,
+`npm run build` clean, `npm test` at baseline (3085 pass / 2 pre-existing unrelated auth-suite
+failures / 1 pre-existing TODO, no regressions — new test file registered in `package.json`'s
+explicit test list). No rules changes this phase (Phase 1 already covers consent enforcement) —
+`npm run test:rules` not applicable.
+
+### 2026-08-24 (Phase 2/4 of NGO/funder dashboards: platform admin panel)
+Second of four sequential draft PRs (see Phase 1 entry below for the full plan). Unblocks
+testing phases 3-4 for real: until now there was no way to provision a real `ngo`/`funder`/
+`admin` test account other than hand-editing the Firestore console.
+
+**`lib/admin-auth.ts`** — `requireAdmin(req, routeName, verifyToken?, lookupRole?)`, the guard for
+every `app/api/admin/*` route. Deliberately its own module, not a reuse of `lib/api-auth.ts`'s
+`guardPaidApiRequest`: that guard is SOFT by default (`REQUIRE_API_AUTH` gates whether a failure
+actually blocks the request, so the paid-route auth cutover can be smoke-tested without breaking
+farmers mid-design) — `requireAdmin()` always hard-fails, on a missing/invalid bearer token AND
+on a caller whose Firestore `profiles.role` isn't `'admin'`, independent of any env var. Own
+credentialed Admin SDK app init (`cert(FIREBASE_SERVICE_ACCOUNT)`, falling back to ADC), exposed
+via `getAdminFirestore()` so the three route files below share one init path.
+
+**`app/api/admin/users` (GET list/search, PATCH role+org_id)**, **`app/api/admin/orgs`** (GET
+list, POST create), **`app/api/admin/grants`** (GET list, POST create, DELETE) — all Admin-SDK,
+all behind `requireAdmin()`. This is the trusted path the rules comments already called for:
+`profiles.role`/`org_id` are client-immutable by rule, and `/grants` denies all client writes, so
+these Admin-SDK routes are now the only writer for either.
+
+**`app/admin` + `components/AdminPanel.tsx`** — gated by `canAccessRolePage(role, {'admin'})`
+(same pattern as `app/ngo/page.tsx`) and the new `ngo_dashboard_v2` flag; an unauth visit or the
+flag being off both silently redirect to `/home`, matching `app/community/page.tsx`'s pattern.
+User search/list with a per-row role + org dropdown, org creation form, grant creation/revoke —
+role + org assignment only, no suspend/disable, no audit-log UI, per the locked-in scope. **Not
+linked from any nav** — reached by URL only, Rory-only.
+
+**`lib/ngo-dashboard-v2-flag.ts`** — new client-side kill switch mirroring
+`lib/community/flag.ts` exactly (`NEXT_PUBLIC_NGO_DASHBOARD_V2_ENABLED` + a
+`imbewufield_ngo_dashboard_v2_preview` localStorage escape hatch). Gates the admin panel now;
+will gate the consent-aware dashboard wiring and aggregate reporting UI in phases 3-4. Separate
+from the rules-side `ngoDashboardV2On()` kill switch shipped in phase 1 — the two don't read each
+other, by design.
+
+**`.github/workflows/set-vercel-env.yml`** — added `FIREBASE_SERVICE_ACCOUNT` to the mirrored
+secrets (server-only, not `NEXT_PUBLIC_*`). It already existed as a GitHub secret (used by
+`deploy-functions.yml`) but was never pushed to Vercel — Vercel serverless functions have no
+ADC/metadata-service fallback the way Cloud Functions do, so the new admin routes would 401 on
+every request in production without this. **Rory: run `gh workflow run set-vercel-env.yml`
+before smoke-testing `/admin` live.**
+
+New `tests/admin-auth.test.ts` (18 cases: missing/malformed token, verifier throws, no uid,
+no-profile → 403, every non-admin role → 403, role-lookup throws → 401 not silently-allowed,
+`REQUIRE_API_AUTH` proven to make no difference in either direction, Bearer-scheme
+case-insensitivity, the happy path) — same injectable-dependency shape as `tests/api-auth.test.ts`,
+no real firebase-admin/network. Verified: `tsc --noEmit` clean, `npm run build` clean, `npm test`
+at baseline (3070 pass / 2 pre-existing unrelated auth-suite failures / 1 pre-existing TODO, no
+regressions — the two "every test file is registered" meta-tests and the "every header has a
+MenuButton" coverage test all needed `/admin` and the new test file wired in, done here). Rules
+untouched this phase — `npm run test:rules` not applicable.
+
+### 2026-08-24 (Phase 1/4 of NGO/funder dashboards: cross-org Firestore/Storage leak fix — PR #350, merged)
 Rory: *"i need to build the full ngo and funder dashboard now the ngo needs admin powers to
 designate what users can or cannot do audit and research what we need and they need to be able
 to see all the data and compile reports accordingly etc etc i will be the developer and i need

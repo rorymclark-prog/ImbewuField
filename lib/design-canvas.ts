@@ -112,6 +112,14 @@ export interface PlacedItem {
   speciesCrownForm?: string;
   speciesHeightM?: number;
   speciesWidthM?: number;
+  /**
+   * Calendar year this specimen went, or will go, into the ground — not an age captured once and
+   * left to drift. Works the same for both statuses: for an `'existing'` tree the farmer is
+   * recalling roughly when it was planted (today's year minus the age they know); for a
+   * `'proposed'` one it defaults to the planting year the plan targets. Undefined means unknown —
+   * lib/perennial-maturity.ts must return null rather than guess an age from a missing year.
+   */
+  plantedYear?: number;
 }
 
 // Real ground/built features the farmer traces on their own site (house outline, paving,

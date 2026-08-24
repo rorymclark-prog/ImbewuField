@@ -20,8 +20,9 @@ import {
 import type {
   Profile, Garden, GardenMember, ProductionLog, SalesLog, ExpenseLog, Design, Report,
   CourseProgress, GardenerProfile, MentorVisit,
-  Survey, SurveyQuestion, SurveyResponse,
+  Survey, SurveyQuestion, SurveyResponse, Organization, Grant,
 } from './types';
+import type { OrgReportFarmerRow } from '@/lib/report-org-summary';
 import type { CourseEnrollment } from '@/lib/course-enrollment';
 import { DEFAULT_TRACK, enrollmentDocId, newEnrollment } from '@/lib/course-enrollment';
 import type { CourseAssignment } from '@/lib/course-assignments';
@@ -30,6 +31,7 @@ import type { CourseSubmission } from '@/lib/course-gating';
 import { courseSubmissionDocId } from '@/lib/course-gating';
 import type { SavedInvoice } from '@/lib/invoices';
 import { invoiceSaleDocumentId, invoiceSalesForPaidInvoice } from '@/lib/invoice-sales';
+import { COURSE_MODULES } from '@/lib/course-modules';
 
 // Every function below is a real Firestore/Storage writer or a reader that could
 // surface the real signed-in user's data. Each checks isSampleMode() FIRST and
@@ -108,6 +110,17 @@ export async function updateMyProfile(patch: Partial<Profile>): Promise<void> {
   await setDoc(doc(f.db, 'profiles', u), patch, { merge: true });
 }
 
+// Reads a single org by id — used by the farmer's own profile sheet to name the org a
+// data-sharing consent toggle would apply to. Rules gate this the same as everywhere else
+// (`organizations/{id}`: readable by that org's own members, admin, or a funder with a grant),
+// so a farmer reading their own org_id is always allowed.
+export async function getOrganization(orgId: string): Promise<Organization | null> {
+  if (isSampleMode()) return null;
+  const f = fb(); if (!f) return null;
+  const s = await getDoc(doc(f.db, 'organizations', orgId));
+  return s.exists() ? ({ id: s.id, ...s.data() } as unknown as Organization) : null;
+}
+
 // ---- people directory (org-scoped) ----
 export async function listOrgPeople(): Promise<Profile[]> {
   if (isSampleMode()) return []; // never query/expose the real signed-in user's real org directory during a demo
@@ -132,19 +145,52 @@ export async function uploadProfilePhoto(file: File): Promise<string> {
 }
 
 // ---- gardens (oversight) ----
+
+/**
+ * Every NGO org id this signed-in funder's org holds a standing `grants` record for — the
+ * funder->many-NGOs relationship (Phase 1). Empty for non-funders, or a funder with no grants
+ * yet. The `grants` read rule (`resource.data.funder_org_id == myOrg()`) is provable against
+ * this exact query — it filters on the same field the rule checks.
+ */
+export async function listGrantedOrgIds(): Promise<string[]> {
+  if (isSampleMode()) return [];
+  const f = fb(); if (!f) return [];
+  const me = await getMyProfile();
+  if (!me || me.role !== 'funder' || !me.org_id) return [];
+  const s = await getDocs(query(collection(f.db, 'grants'), where('funder_org_id', '==', me.org_id)));
+  return rows<Grant>(s).map((g) => g.ngo_org_id);
+}
+
+const sortByName = (list: Garden[]) => list.sort((a, b) =>
+  ((a as { name?: string }).name ?? '').localeCompare((b as { name?: string }).name ?? ''));
+
 export async function listGardens(): Promise<Garden[]> {
   if (isSampleMode()) return [];
   const f = fb(); const u = uid(); if (!f || !u) return [];
   // Firestore rules are NOT filters: the gardens read rule requires
-  // org_id == myOrg, so the QUERY must be constrained by org_id or it's denied.
-  // Fetch the caller's org first, then scope the query (sort client-side to
-  // avoid needing a composite index).
+  // org_id == myOrg (or a granted org), so the QUERY must be constrained by org_id or it's
+  // denied. Fetch the caller's org first, then scope the query (sort client-side to avoid
+  // needing a composite index).
   const me = await getMyProfile();
   const base = collection(f.db, 'gardens');
-  const q = me?.org_id ? query(base, where('org_id', '==', me.org_id)) : query(base);
-  const list = rows<Garden>(await getDocs(q));
-  return list.sort((a, b) =>
-    ((a as { name?: string }).name ?? '').localeCompare((b as { name?: string }).name ?? ''));
+  if (!me?.org_id) return sortByName(rows<Garden>(await getDocs(query(base))));
+
+  // A funder may hold grants on several NGO orgs (Phase 1) — read across all of them, not just
+  // its own org_id, so the dashboard shows every garden the funder has actually been granted.
+  const grantedIds = me.role === 'funder' ? await listGrantedOrgIds() : [];
+  const orgIds = Array.from(new Set([me.org_id, ...grantedIds]));
+  if (orgIds.length <= 1) {
+    return sortByName(rows<Garden>(await getDocs(query(base, where('org_id', '==', me.org_id)))));
+  }
+  // Firestore's `in` operator caps at 30 values — chunk and merge/dedupe client-side.
+  const chunks: string[][] = [];
+  for (let i = 0; i < orgIds.length; i += 30) chunks.push(orgIds.slice(i, i + 30));
+  const snaps = await Promise.all(
+    chunks.map((c) => getDocs(query(base, where('org_id', 'in', c)))),
+  );
+  const merged = new Map<string, Garden>();
+  snaps.forEach((snap) => rows<Garden>(snap).forEach((g) => merged.set(g.id, g)));
+  return sortByName(Array.from(merged.values()));
 }
 export async function listGardeners(gardenId: string): Promise<{ member: GardenMember; profile: Profile }[]> {
   if (isSampleMode()) return [];
@@ -162,6 +208,21 @@ export async function getGardenerProfile(profileId: string): Promise<GardenerPro
   const f = fb(); if (!f) return null;
   const pSnap = await getDoc(doc(f.db, 'profiles', profileId));
   if (!pSnap.exists()) return null;
+  const profile = { id: pSnap.id, ...pSnap.data() } as unknown as Profile;
+  const consented = profile.dataConsent?.granted === true;
+
+  // Not opted in: `staffConsentedAccess()` denies everyone except admin, and we already know
+  // that from `profile.dataConsent` — no need to fire the read and let the rules bounce it back
+  // as a caught error. This is what lets the caller tell "farmer hasn't opted in" (expected,
+  // `consented: false`, empty arrays) apart from a genuine unexpected failure (still throws,
+  // from the getDocs calls below, exactly as before this change).
+  if (!consented) {
+    const me = await getMyProfile();
+    if (me?.role !== 'admin') {
+      return { profile, member: undefined, production: [], sales: [], courses: [], consented: false };
+    }
+  }
+
   // NB: the member doc (plot/size) is already known to callers from listGardeners,
   // so we don't re-fetch it here — a collectionGroup('members') query would need a
   // dedicated COLLECTION_GROUP index. Caller merges member fields it already holds.
@@ -171,12 +232,48 @@ export async function getGardenerProfile(profileId: string): Promise<GardenerPro
     getDocs(query(collection(f.db, 'course_progress'), where('profile_id', '==', profileId))),
   ]);
   return {
-    profile: { id: pSnap.id, ...pSnap.data() } as unknown as Profile,
+    profile,
     member: undefined,
     production: rows<ProductionLog>(prodSnap),
     sales: rows<SalesLog>(salesSnap),
     courses: rows<CourseProgress>(courseSnap),
+    consented,
   };
+}
+
+/**
+ * Every farmer row for an org's aggregate report, fetched garden-by-garden (see this module's
+ * header on why a single org-wide log query can't be used here). Consent-withheld farmers are
+ * INCLUDED in the returned list — `lib/report-org-summary.ts` is what excludes them from totals
+ * — so the caller can always say how many of the org's farmers are and are not represented.
+ */
+export async function buildOrgReportRows(
+  gardens: { id: string; name?: string }[],
+): Promise<OrgReportFarmerRow[]> {
+  if (isSampleMode()) return [];
+  const f = fb(); if (!f) return [];
+  const out: OrgReportFarmerRow[] = [];
+  for (const garden of gardens) {
+    const members = await listGardeners(garden.id);
+    for (const { profile } of members) {
+      const gp = await getGardenerProfile(profile.id);
+      if (!gp) continue;
+      const coursesDone = gp.courses.filter((c) => c.done).length;
+      out.push({
+        profileId: profile.id,
+        name: profile.full_name ?? 'Unknown',
+        gardenId: garden.id,
+        gardenName: garden.name ?? '',
+        consented: gp.consented,
+        productionKg: gp.production.reduce((s, p) => s + (p.kg || 0), 0),
+        salesKg: gp.sales.reduce((s, sale) => s + (sale.kg || 0), 0),
+        salesAmount: gp.sales.reduce((s, sale) => s + (sale.amount || 0), 0),
+        coursesDone,
+        coursesTotal: COURSE_MODULES.length,
+      });
+    }
+  }
+  return out;
 }
 
 // ---- production / sales ----

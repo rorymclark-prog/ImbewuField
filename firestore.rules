@@ -115,8 +115,13 @@ service cloud.firestore {
     match /programmes/{id}    { allow read: if signedIn() && resource.data.org_id == myOrg(); }
 
     match /gardens/{gid} {
+      // isAdmin()/staffOrgAccess() supersede the older sameOrg() branch — Phase 4 of the
+      // NGO/funder dashboard build needs a platform admin and a funder-with-a-grant to read a
+      // garden doc too, matching the idiom `designs` already uses. sameOrg() is subsumed by
+      // staffOrgAccess() (same-org staff is its first branch) but is harmless to leave implied.
       allow read: if signedIn() && (
-        sameOrg(resource.data) ||
+        isAdmin() ||
+        staffOrgAccess(resource.data) ||
         resource.data.supervisor_id == request.auth.uid ||
         isMentor() ||
         exists(/databases/$(database)/documents/gardens/$(gid)/members/$(request.auth.uid))
@@ -124,10 +129,12 @@ service cloud.firestore {
       allow write: if signedIn() && (isStaff() || resource.data.supervisor_id == request.auth.uid);
 
       match /members/{pid} {
-        // Scope to the parent garden — same-org staff, the supervisor, a mentor, or the
-        // member themselves. Prevents cross-org enumeration of every garden's participants.
+        // Scope to the parent garden — same-org staff, a granted funder, admin, the supervisor,
+        // a mentor, or the member themselves. Prevents cross-org enumeration of every garden's
+        // participants.
         allow read: if signedIn() && (
-          sameOrg(get(/databases/$(database)/documents/gardens/$(gid)).data) ||
+          isAdmin() ||
+          staffOrgAccess(get(/databases/$(database)/documents/gardens/$(gid)).data) ||
           get(/databases/$(database)/documents/gardens/$(gid)).data.supervisor_id == request.auth.uid ||
           isMentor() ||
           pid == request.auth.uid

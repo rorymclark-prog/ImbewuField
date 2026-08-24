@@ -167,6 +167,23 @@ async function seed() {
       setDoc(doc(db, 'survey_responses', 'resp-org2'), {
         survey_id: 'survey-2', profile_id: 'farmer-org2', org_id: 'org-2', answers: {}, created_at: '2026-08-01T00:00:00.000Z',
       }),
+      // Phase 4 (NGO/funder dashboard real-data wiring): gardens/{gid} and its members
+      // subcollection widened from sameOrg() to staffOrgAccess() so a granted funder or platform
+      // admin can read a garden too, matching the idiom `designs` already uses.
+      setDoc(doc(db, 'gardens', 'garden-org1'), {
+        programme_id: null, name: 'Org1 Garden', town: 'Ladysmith', lat: -28.5, lon: 29.7,
+        status: 'thriving', supervisor_id: LINKED_MENTOR, created_at: '2026-08-01T00:00:00.000Z',
+        org_id: 'org-1',
+      }),
+      setDoc(doc(db, 'gardens', 'garden-org2'), {
+        programme_id: null, name: 'Org2 Garden', town: 'Dundee', lat: -28.2, lon: 30.2,
+        status: 'thriving', supervisor_id: 'supervisor-org2', created_at: '2026-08-01T00:00:00.000Z',
+        org_id: 'org-2',
+      }),
+      setDoc(doc(db, 'gardens', 'garden-org1', 'members', FARMER_WITH_LINK), {
+        garden_id: 'garden-org1', profile_id: FARMER_WITH_LINK, plot: 'Plot 1', size_m2: 100,
+        lat: -28.5, lon: 29.7,
+      }),
     ]);
   });
 }
@@ -404,4 +421,60 @@ test('grants: readable only by the two named orgs or admin, never client-writabl
   await assertFails(setDoc(doc(grantedDb, 'grants', 'client-write-attempt'), {
     funder_org_id: FUNDER_ORG_A, ngo_org_id: 'org-1', created_at: '2026-08-01T00:00:00.000Z', created_by: FUNDER_WITH_GRANT,
   }));
+});
+
+// ── Phase 4: gardens/members widened to staffOrgAccess() ───────────────────────────────────────
+// A funder-with-a-grant or a platform admin previously fell through the old sameOrg() check on
+// gardens/{gid} and its members subcollection even though staffOrgAccess() already let them read
+// the farmer-level logs — this closes that gap so the NGO/funder dashboard's garden/member reads
+// (lib/db/queries.ts's listGardens/listGardeners) actually work end to end.
+
+test('gardens: same-org staff, granted funder and admin can read; cross-org staff and ungranted funder cannot', async () => {
+  const sameOrgDb = env.authenticatedContext(NGO_SAME_ORG).firestore();
+  await assertSucceeds(getDoc(doc(sameOrgDb, 'gardens', 'garden-org1')));
+
+  const otherOrgDb = env.authenticatedContext(NGO_OTHER_ORG).firestore();
+  await assertFails(getDoc(doc(otherOrgDb, 'gardens', 'garden-org1')));
+
+  const grantedDb = env.authenticatedContext(FUNDER_WITH_GRANT).firestore();
+  await assertSucceeds(getDoc(doc(grantedDb, 'gardens', 'garden-org1')));
+
+  const ungrantedDb = env.authenticatedContext(FUNDER_NO_GRANT).firestore();
+  await assertFails(getDoc(doc(ungrantedDb, 'gardens', 'garden-org1')));
+
+  const adminDb = env.authenticatedContext(PLATFORM_ADMIN).firestore();
+  await assertSucceeds(getDoc(doc(adminDb, 'gardens', 'garden-org2')));
+});
+
+test('gardens: the supervisor and a member of their own garden can still read it', async () => {
+  const supervisorDb = env.authenticatedContext(LINKED_MENTOR).firestore();
+  await assertSucceeds(getDoc(doc(supervisorDb, 'gardens', 'garden-org1')));
+
+  const memberDb = env.authenticatedContext(FARMER_WITH_LINK).firestore();
+  await assertSucceeds(getDoc(doc(memberDb, 'gardens', 'garden-org1')));
+});
+
+test('gardens/members: same-org staff, granted funder and admin can read; cross-org staff and ungranted funder cannot', async () => {
+  const sameOrgDb = env.authenticatedContext(NGO_SAME_ORG).firestore();
+  await assertSucceeds(getDoc(doc(sameOrgDb, 'gardens', 'garden-org1', 'members', FARMER_WITH_LINK)));
+
+  const otherOrgDb = env.authenticatedContext(NGO_OTHER_ORG).firestore();
+  await assertFails(getDoc(doc(otherOrgDb, 'gardens', 'garden-org1', 'members', FARMER_WITH_LINK)));
+
+  const grantedDb = env.authenticatedContext(FUNDER_WITH_GRANT).firestore();
+  await assertSucceeds(getDoc(doc(grantedDb, 'gardens', 'garden-org1', 'members', FARMER_WITH_LINK)));
+
+  const ungrantedDb = env.authenticatedContext(FUNDER_NO_GRANT).firestore();
+  await assertFails(getDoc(doc(ungrantedDb, 'gardens', 'garden-org1', 'members', FARMER_WITH_LINK)));
+
+  const adminDb = env.authenticatedContext(PLATFORM_ADMIN).firestore();
+  await assertSucceeds(getDoc(doc(adminDb, 'gardens', 'garden-org1', 'members', FARMER_WITH_LINK)));
+});
+
+test('gardens/members: a member can read their own row; another farmer cannot', async () => {
+  const selfDb = env.authenticatedContext(FARMER_WITH_LINK).firestore();
+  await assertSucceeds(getDoc(doc(selfDb, 'gardens', 'garden-org1', 'members', FARMER_WITH_LINK)));
+
+  const otherFarmerDb = env.authenticatedContext(FARMER_WITHOUT_LINK).firestore();
+  await assertFails(getDoc(doc(otherFarmerDb, 'gardens', 'garden-org1', 'members', FARMER_WITH_LINK)));
 });
