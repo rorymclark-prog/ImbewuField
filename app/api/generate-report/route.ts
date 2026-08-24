@@ -33,6 +33,7 @@ import {
   normaliseSiteAnalysisImages,
   siteImagesPromptBlock,
 } from '@/lib/report-site-images';
+import { logAiUsage, totalCost, type AiCost } from '@/lib/ai-cost';
 import {
   groundPhotosPromptBlock,
   normaliseGroundPhotos,
@@ -748,6 +749,12 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
   // parallel calls is well inside Anthropic rate limits.
   const batchResults: string[] = new Array(batches.length);
 
+  // Per-call cost, collected so the REPORT can be priced rather than the call. See lib/ai-cost.ts:
+  // the per-farmer figure in circulation was render spend for a feature being parked, and the text
+  // side — where the same seven images ride along with every one of these batches — had never been
+  // measured at all.
+  const batchCosts: AiCost[] = [];
+
   // The sheets ride along with EVERY batch, not just the first. Batches are independent calls that
   // cannot see each other (that is the whole reason the anti-invention rule is a system prompt), so
   // a picture shown once would inform one or two sections and leave the rest writing blind. The
@@ -812,6 +819,9 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
         // ships an honest per-section placeholder instead.
         signal: AbortSignal.timeout(240_000),
       });
+      batchCosts.push(
+        logAiUsage('generate-report', 'claude-sonnet-4-6', msg.usage, `batch ${idx + 1}/${batches.length}`),
+      );
       const text = msg.content.map((b) => (b.type === 'text' ? b.text : '')).join('');
       const cutShort = msg.stop_reason === 'max_tokens';
       batchResults[idx] = text + (cutShort
@@ -823,6 +833,26 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
   };
 
   await Promise.all(batches.map((b, i) => runBatch(b, i)));
+
+  // The unit that gets priced is one report for one farmer, not one API call. `perFarmer` is the
+  // number to put in a pricing conversation; `sharedPerBatch` is the number to attack, because it
+  // is the same content paid for once per batch.
+  {
+    const t = totalCost(batchCosts);
+    console.log(`[ai-cost] ${JSON.stringify({
+      route: 'generate-report:TOTAL',
+      length: reportLength,
+      batches: batches.length,
+      calls: t.calls,
+      images: siteImages.length + groundPhotos.length,
+      in: t.inputTokens,
+      out: t.outputTokens,
+      cacheWrite: t.cacheWriteTokens,
+      cacheRead: t.cacheReadTokens,
+      usdPerReport: Number(t.usd.toFixed(4)),
+      zarPerReport: Number((t.usd * 18.5).toFixed(2)),
+    })}`);
+  }
 
   // ── Front matter and back matter, written in CODE ────────────────────────────
   //

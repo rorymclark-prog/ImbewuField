@@ -2,6 +2,7 @@ import { NextRequest } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import { guardPaidApiRequest } from '@/lib/api-auth';
+import { logAiUsage } from '@/lib/ai-cost';
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
 
@@ -173,6 +174,16 @@ export async function POST(req: NextRequest) {
         controller.enqueue(new TextEncoder().encode(`\n\n⚠ ${msg}`));
       } finally {
         controller.close();
+        // Usage arrives on the final message, which only exists once the stream has drained — so it
+        // is read here rather than beside the create() call. Never allowed to affect the response:
+        // the farmer's answer has already been delivered by this point, and a metrics failure must
+        // not surface as an error on a reply that worked.
+        try {
+          const final = await stream.finalMessage();
+          logAiUsage('chat', 'claude-sonnet-4-6', final.usage, image?.data ? 'with image' : undefined);
+        } catch {
+          // Deliberately silent: cost telemetry is never worth breaking a delivered answer for.
+        }
       }
     },
   });
