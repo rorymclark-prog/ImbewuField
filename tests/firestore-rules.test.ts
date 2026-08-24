@@ -36,7 +36,7 @@ const {
 // needs an emulator) and no workflow ran `test:rules`, so the suite reported green while these
 // seven tests could not even construct a document reference.
 const {
-  collection, doc, getDoc, getDocs, setDoc, updateDoc,
+  collection, doc, getDoc, getDocs, setDoc, updateDoc, query, where,
 } = require('@firebase/firestore') as {
   collection: (...args: unknown[]) => unknown;
   doc: (...args: unknown[]) => never;
@@ -44,6 +44,8 @@ const {
   getDocs: (...args: unknown[]) => Promise<unknown>;
   setDoc: (...args: unknown[]) => Promise<unknown>;
   updateDoc: (...args: unknown[]) => Promise<unknown>;
+  query: (...args: unknown[]) => unknown;
+  where: (...args: unknown[]) => unknown;
 };
 
 const PROJECT_ID = 'fieldproof-sa';
@@ -55,6 +57,18 @@ const LINKED_MENTOR = 'mentor-with-link';
 const SELF_ASSIGNED_MENTOR = 'self-assigned-mentor';
 const OUT_OF_ORG_MENTOR = 'mentor-other-org';
 const NEW_SIGNUP = 'brand-new-signup';
+
+// Fixtures for the cross-org leak fix (docs/AUDIT-NEEDS-RORY-2026-08-15.md #1): an ngo staff
+// account in each of two orgs, a funder with a grant onto org-1 and one without, the platform
+// admin role, and a farmer who has explicitly opted in via dataConsent.
+const NGO_SAME_ORG = 'ngo-org-1';
+const NGO_OTHER_ORG = 'ngo-org-2';
+const FUNDER_ORG_A = 'funder-org-a';
+const FUNDER_ORG_B = 'funder-org-b';
+const FUNDER_WITH_GRANT = 'funder-with-grant';
+const FUNDER_NO_GRANT = 'funder-no-grant';
+const PLATFORM_ADMIN = 'platform-admin';
+const CONSENTED_FARMER = 'farmer-consented';
 
 let env: RulesEnvironment;
 
@@ -87,6 +101,18 @@ async function seed() {
       // A real, admin-granted mentor belonging to a DIFFERENT org. Financial logs must be closed
       // to them entirely — this is the case org scoping exists to stop.
       profile(db, OUT_OF_ORG_MENTOR, 'mentor', 'org-2'),
+      profile(db, NGO_SAME_ORG, 'ngo', 'org-1'),
+      profile(db, NGO_OTHER_ORG, 'ngo', 'org-2'),
+      profile(db, FUNDER_WITH_GRANT, 'funder', FUNDER_ORG_A),
+      profile(db, FUNDER_NO_GRANT, 'funder', FUNDER_ORG_B),
+      profile(db, PLATFORM_ADMIN, 'admin', null),
+      // A farmer who has explicitly opted in (Profile.dataConsent.granted). Every other farmer
+      // fixture is left without the field, which the consent check treats as not-granted.
+      setDoc(doc(db, 'profiles', CONSENTED_FARMER), {
+        role: 'farmer', org_id: 'org-1', full_name: CONSENTED_FARMER, language: 'en',
+        created_at: '2026-08-01T00:00:00.000Z',
+        dataConsent: { granted: true, grantedAt: '2026-08-01T00:00:00.000Z', revokedAt: null },
+      }),
       setDoc(doc(db, 'course_enrollments', `${FARMER_WITH_LINK}_${DEFAULT_TRACK}`), {
         profile_id: FARMER_WITH_LINK,
         track: DEFAULT_TRACK,
@@ -99,10 +125,47 @@ async function seed() {
       ...LOG_COLLECTIONS.flatMap((collectionName) => [
         setDoc(doc(db, collectionName, `${FARMER_WITHOUT_LINK}-${collectionName}`), logData(FARMER_WITHOUT_LINK, 'org-1', collectionName)),
         setDoc(doc(db, collectionName, `${FARMER_WITH_LINK}-${collectionName}`), logData(FARMER_WITH_LINK, 'org-1', collectionName)),
+        setDoc(doc(db, collectionName, `${CONSENTED_FARMER}-${collectionName}`), logData(CONSENTED_FARMER, 'org-1', collectionName)),
       ]),
       setDoc(doc(db, 'shared_sites', 'ABC123'), {
         code: 'ABC123',
         geojson: { type: 'FeatureCollection', features: [] },
+      }),
+      setDoc(doc(db, 'organizations', 'org-1'), { name: 'Org One', kind: 'ngo', created_at: '2026-08-01T00:00:00.000Z' }),
+      setDoc(doc(db, 'organizations', 'org-2'), { name: 'Org Two', kind: 'ngo', created_at: '2026-08-01T00:00:00.000Z' }),
+      // The one grant on file: FUNDER_ORG_A -> org-1. FUNDER_ORG_B has none.
+      setDoc(doc(db, 'grants', `${FUNDER_ORG_A}_org-1`), {
+        funder_org_id: FUNDER_ORG_A, ngo_org_id: 'org-1', created_at: '2026-08-01T00:00:00.000Z', created_by: PLATFORM_ADMIN,
+      }),
+      setDoc(doc(db, 'designs', 'design-org1'), {
+        owner_id: FARMER_WITH_LINK, org_id: 'org-1', title: 'Org1 design', data: {}, shared_with: null, created_at: '2026-08-01T00:00:00.000Z',
+      }),
+      setDoc(doc(db, 'designs', 'design-org2'), {
+        owner_id: 'farmer-org2', org_id: 'org-2', title: 'Org2 design', data: {}, shared_with: null, created_at: '2026-08-01T00:00:00.000Z',
+      }),
+      setDoc(doc(db, 'course_submissions', 'sub-consented-org1'), {
+        profile_id: CONSENTED_FARMER, org_id: 'org-1', module: 'm1', submitted_at: '2026-08-01T00:00:00.000Z', self_check: [], photo_path: null, voice_path: null,
+      }),
+      setDoc(doc(db, 'course_submissions', 'sub-noconsent-org1'), {
+        profile_id: FARMER_WITH_LINK, org_id: 'org-1', module: 'm1', submitted_at: '2026-08-01T00:00:00.000Z', self_check: [], photo_path: null, voice_path: null,
+      }),
+      setDoc(doc(db, 'course_submissions', 'sub-org2'), {
+        profile_id: 'farmer-org2', org_id: 'org-2', module: 'm1', submitted_at: '2026-08-01T00:00:00.000Z', self_check: [], photo_path: null, voice_path: null,
+      }),
+      setDoc(doc(db, 'course_progress', 'cp-consented-org1'), {
+        profile_id: CONSENTED_FARMER, org_id: 'org-1', module: 'm1', done: true,
+      }),
+      setDoc(doc(db, 'course_progress', 'cp-noconsent-org1'), {
+        profile_id: FARMER_WITH_LINK, org_id: 'org-1', module: 'm1', done: true,
+      }),
+      setDoc(doc(db, 'course_progress', 'cp-org2'), {
+        profile_id: 'farmer-org2', org_id: 'org-2', module: 'm1', done: true,
+      }),
+      setDoc(doc(db, 'survey_responses', 'resp-org1'), {
+        survey_id: 'survey-1', profile_id: FARMER_WITH_LINK, org_id: 'org-1', answers: {}, created_at: '2026-08-01T00:00:00.000Z',
+      }),
+      setDoc(doc(db, 'survey_responses', 'resp-org2'), {
+        survey_id: 'survey-2', profile_id: 'farmer-org2', org_id: 'org-2', answers: {}, created_at: '2026-08-01T00:00:00.000Z',
       }),
     ]);
   });
@@ -221,4 +284,124 @@ test('a profile owner cannot change role or org_id, but can edit an ordinary pro
   await assertFails(updateDoc(doc(db, 'profiles', FARMER_WITH_LINK), { role: 'admin' }));
   await assertFails(updateDoc(doc(db, 'profiles', FARMER_WITH_LINK), { org_id: 'org-2' }));
   await assertSucceeds(updateDoc(doc(db, 'profiles', FARMER_WITH_LINK), { full_name: 'Updated name' }));
+});
+
+// ── Cross-org leak fix (docs/AUDIT-NEEDS-RORY-2026-08-15.md #1) ────────────────────────────────
+// Below: ngo/funder staff are scoped to their own org (or a granted org, for funders), admin
+// stays unconditional, and the five consent-gated collections additionally require the farmer's
+// own opt-in before an org-scoped staff account can read them. Mentor access is asserted
+// unaffected by consent throughout — narrowing mentor's existing same-org visibility was not
+// part of this fix.
+
+test('ngo staff can get/list same-org profiles; cross-org ngo staff cannot', async () => {
+  const sameOrgDb = env.authenticatedContext(NGO_SAME_ORG).firestore();
+  await assertSucceeds(getDoc(doc(sameOrgDb, 'profiles', FARMER_WITH_LINK)));
+  await assertSucceeds(getDocs(query(collection(sameOrgDb, 'profiles'), where('org_id', '==', 'org-1'))));
+
+  const otherOrgDb = env.authenticatedContext(NGO_OTHER_ORG).firestore();
+  await assertFails(getDoc(doc(otherOrgDb, 'profiles', FARMER_WITH_LINK)));
+  await assertFails(getDocs(query(collection(otherOrgDb, 'profiles'), where('org_id', '==', 'org-1'))));
+});
+
+test('admin can read any profile regardless of org', async () => {
+  const adminDb = env.authenticatedContext(PLATFORM_ADMIN).firestore();
+  await assertSucceeds(getDoc(doc(adminDb, 'profiles', FARMER_WITH_LINK)));
+  await assertSucceeds(getDocs(query(collection(adminDb, 'profiles'), where('org_id', '==', 'org-2'))));
+});
+
+test('organizations: staff read their own org, cross-org staff cannot, admin reads any', async () => {
+  const sameOrgDb = env.authenticatedContext(NGO_SAME_ORG).firestore();
+  await assertSucceeds(getDoc(doc(sameOrgDb, 'organizations', 'org-1')));
+
+  const otherOrgDb = env.authenticatedContext(NGO_OTHER_ORG).firestore();
+  await assertFails(getDoc(doc(otherOrgDb, 'organizations', 'org-1')));
+
+  const adminDb = env.authenticatedContext(PLATFORM_ADMIN).firestore();
+  await assertSucceeds(getDoc(doc(adminDb, 'organizations', 'org-2')));
+});
+
+test('a funder with a grant can read the granted org; a funder without one cannot', async () => {
+  const grantedDb = env.authenticatedContext(FUNDER_WITH_GRANT).firestore();
+  await assertSucceeds(getDoc(doc(grantedDb, 'organizations', 'org-1')));
+
+  const ungrantedDb = env.authenticatedContext(FUNDER_NO_GRANT).firestore();
+  await assertFails(getDoc(doc(ungrantedDb, 'organizations', 'org-1')));
+});
+
+test('designs: same-org staff can read, cross-org staff cannot, admin can', async () => {
+  const sameOrgDb = env.authenticatedContext(NGO_SAME_ORG).firestore();
+  await assertSucceeds(getDoc(doc(sameOrgDb, 'designs', 'design-org1')));
+
+  const otherOrgDb = env.authenticatedContext(NGO_OTHER_ORG).firestore();
+  await assertFails(getDoc(doc(otherOrgDb, 'designs', 'design-org1')));
+
+  const adminDb = env.authenticatedContext(PLATFORM_ADMIN).firestore();
+  await assertSucceeds(getDoc(doc(adminDb, 'designs', 'design-org2')));
+});
+
+test('a farmer cannot spoof another org onto their own design at create time', async () => {
+  const db = env.authenticatedContext(FARMER_WITH_LINK).firestore();
+  await assertFails(setDoc(doc(db, 'designs', 'spoofed-design'), {
+    owner_id: FARMER_WITH_LINK, org_id: 'org-2', title: 'Spoofed', data: {}, shared_with: null, created_at: '2026-08-01T00:00:00.000Z',
+  }));
+  await assertSucceeds(setDoc(doc(db, 'designs', 'honest-design'), {
+    owner_id: FARMER_WITH_LINK, org_id: 'org-1', title: 'Honest', data: {}, shared_with: null, created_at: '2026-08-01T00:00:00.000Z',
+  }));
+});
+
+test('course_submissions: consent gates ngo/funder staff reads but not same-org mentor', async () => {
+  const staffDb = env.authenticatedContext(NGO_SAME_ORG).firestore();
+  await assertSucceeds(getDoc(doc(staffDb, 'course_submissions', 'sub-consented-org1')));
+  await assertFails(getDoc(doc(staffDb, 'course_submissions', 'sub-noconsent-org1')));
+  await assertFails(getDoc(doc(staffDb, 'course_submissions', 'sub-org2')));
+
+  const mentorDb = env.authenticatedContext(LINKED_MENTOR).firestore();
+  await assertSucceeds(getDoc(doc(mentorDb, 'course_submissions', 'sub-noconsent-org1')));
+
+  const adminDb = env.authenticatedContext(PLATFORM_ADMIN).firestore();
+  await assertSucceeds(getDoc(doc(adminDb, 'course_submissions', 'sub-org2')));
+});
+
+test('course_progress: consent gates ngo/funder staff reads but not same-org mentor', async () => {
+  const staffDb = env.authenticatedContext(NGO_SAME_ORG).firestore();
+  await assertSucceeds(getDoc(doc(staffDb, 'course_progress', 'cp-consented-org1')));
+  await assertFails(getDoc(doc(staffDb, 'course_progress', 'cp-noconsent-org1')));
+  await assertFails(getDoc(doc(staffDb, 'course_progress', 'cp-org2')));
+
+  const mentorDb = env.authenticatedContext(LINKED_MENTOR).firestore();
+  await assertSucceeds(getDoc(doc(mentorDb, 'course_progress', 'cp-noconsent-org1')));
+});
+
+test('survey_responses: same-org staff reads without needing consent; cross-org denied', async () => {
+  const staffDb = env.authenticatedContext(NGO_SAME_ORG).firestore();
+  await assertSucceeds(getDoc(doc(staffDb, 'survey_responses', 'resp-org1')));
+  await assertFails(getDoc(doc(staffDb, 'survey_responses', 'resp-org2')));
+
+  const adminDb = env.authenticatedContext(PLATFORM_ADMIN).firestore();
+  await assertSucceeds(getDoc(doc(adminDb, 'survey_responses', 'resp-org2')));
+});
+
+test('financial logs: consent gates ngo/funder staff reads but not same-org mentor', async () => {
+  const staffDb = env.authenticatedContext(NGO_SAME_ORG).firestore();
+  const mentorDb = env.authenticatedContext(LINKED_MENTOR).firestore();
+  for (const collectionName of LOG_COLLECTIONS) {
+    await assertSucceeds(getDoc(doc(staffDb, collectionName, `${CONSENTED_FARMER}-${collectionName}`)));
+    await assertFails(getDoc(doc(staffDb, collectionName, `${FARMER_WITH_LINK}-${collectionName}`)));
+    await assertSucceeds(getDoc(doc(mentorDb, collectionName, `${FARMER_WITH_LINK}-${collectionName}`)));
+  }
+});
+
+test('grants: readable only by the two named orgs or admin, never client-writable', async () => {
+  const grantedDb = env.authenticatedContext(FUNDER_WITH_GRANT).firestore();
+  await assertSucceeds(getDoc(doc(grantedDb, 'grants', `${FUNDER_ORG_A}_org-1`)));
+
+  const ungrantedDb = env.authenticatedContext(FUNDER_NO_GRANT).firestore();
+  await assertFails(getDoc(doc(ungrantedDb, 'grants', `${FUNDER_ORG_A}_org-1`)));
+
+  const ngoDb = env.authenticatedContext(NGO_SAME_ORG).firestore();
+  await assertSucceeds(getDoc(doc(ngoDb, 'grants', `${FUNDER_ORG_A}_org-1`)));
+
+  await assertFails(setDoc(doc(grantedDb, 'grants', 'client-write-attempt'), {
+    funder_org_id: FUNDER_ORG_A, ngo_org_id: 'org-1', created_at: '2026-08-01T00:00:00.000Z', created_by: FUNDER_WITH_GRANT,
+  }));
 });
