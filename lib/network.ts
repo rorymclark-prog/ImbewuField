@@ -13,6 +13,31 @@
  * data breach, not a feature. Do not "just try it and see if the rules allow
  * it" — some of these reads SUCCEED today and leak.
  *
+ * ── STATUS 2026-08-26: (A)-(D) ARE NOW BUILT, AND NOT YET DEPLOYED ─────────
+ *
+ *  The four preconditions below were written as a to-do list and have been
+ *  worked through. What each one became:
+ *
+ *    A → lib/network-access.ts (steps ii+iii, pure and unit-tested) and
+ *        app/api/network/farmers/route.ts (steps i+iv, Admin-SDK projection).
+ *    B → `Profile.funded_org_ids`, admin-SDK-write-only and pinned immutable
+ *        in firestore.rules; written by `provision-org.mjs --fund <orgId>`.
+ *    C → lib/consent.ts + /farmer_consents/{uid} + components/ConsentPanel.tsx.
+ *        `NetworkFarmer.consent` is now a real per-scope, revocable record for
+ *        any row this route produces; it stays 'demo' for lib/network-demo.ts.
+ *    D → the three collections are org-scoped and covered by nine cases in
+ *        tests/firestore-rules.test.ts, seven of which fail against the old rules.
+ *
+ *  WHAT IS STILL NOT TRUE, so read the paragraphs below as history plus these
+ *  three live caveats:
+ *    • THE RULES IN THIS REPO ARE NOT THE RULES IN PRODUCTION until someone
+ *      deploys them. Until then every leak described in (3) is still open live.
+ *    • scripts/backfill-org-id.mjs has NOT been run against a real database.
+ *      Existing training/survey rows carry no org_id, so after the rules deploy
+ *      they fail closed and vanish from mentor dashboards until it runs.
+ *    • REQUIRE_API_AUTH is still unset, so lib/api-auth.ts remains log-only for
+ *      every other route. The new route refuses a null uid on its own account.
+ *
  * ── WHAT IS ACTUALLY TRUE OF THE DEPLOYED RULES (firestore.rules, read
  *    2026-08-05; agents in this checkout may not edit or deploy them) ───────
  *
@@ -86,6 +111,11 @@
  *     `npm run test:rules` needs the emulator and has historically sat
  *     unexecuted; a rules change without a matching case in
  *     tests/firestore-rules.test.ts is not a fix.
+ *     DONE — and the test that matters is the negative one: seven of the nine
+ *     new cases were run against the PREVIOUS rules and fail there. A rules
+ *     test that passes both before and after a fix proves nothing, which is
+ *     exactly how the shared_sites assertion in that file sat green for weeks
+ *     without ever having executed.
  *
  * ── COORDINATE PRECISION IS ITSELF A PRIVACY BOUNDARY ─────────────────────
  *
