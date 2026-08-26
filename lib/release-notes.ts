@@ -34,6 +34,16 @@ export interface ReleaseNote {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '26 August',
+    sha: '67080d0',
+    changes: [
+      'You decide what your programme can see: Account → What you share',
+      'Nothing is shared until you switch it on — each thing separately',
+      'Sharing what you harvested no longer shares what you earned',
+      'One button stops all sharing, any time',
+    ],
+  },
+  {
     when: '24 August',
     sha: '9e27855',
     changes: [
