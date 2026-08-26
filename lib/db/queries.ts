@@ -17,6 +17,7 @@ import {
   getSandboxSales, addSandboxSale, updateSandboxSale, deleteSandboxSale,
   getSandboxExpenses, addSandboxExpense, updateSandboxExpense, deleteSandboxExpense,
 } from '@/lib/sample-mode';
+import { emptyConsent, revokeAll, setScope, type ConsentScope, type FarmerConsent } from '@/lib/consent';
 import type {
   Profile, Garden, GardenMember, ProductionLog, SalesLog, ExpenseLog, Design, Report,
   CourseProgress, GardenerProfile, MentorVisit,
@@ -468,6 +469,64 @@ export async function myRespondedSurveyIds(): Promise<string[]> {
   const f = fb(); const u = uid(); if (!f || !u) return [];
   const s = await getDocs(query(collection(f.db, 'survey_responses'), where('profile_id', '==', u)));
   return rows<SurveyResponse>(s).map((r) => r.survey_id);
+}
+
+/** The organisation a profile belongs to, for display. Readable by any member. */
+export async function getOrganizationName(orgId: string): Promise<string | null> {
+  if (isSampleMode()) return null;
+  const f = fb(); if (!f) return null;
+  const s = await getDoc(doc(f.db, 'organizations', orgId));
+  return s.exists() ? ((s.data() as { name?: string }).name ?? null) : null;
+}
+
+// ---- farmer consent (POPIA) ----
+// The record is the FARMER'S: firestore.rules lets only them write /farmer_consents/{uid},
+// and staff read it without ever being able to create or amend one. Policy and projection
+// live in lib/consent.ts; this is only the Firestore edge.
+
+export async function getMyConsent(): Promise<FarmerConsent | null> {
+  if (isSampleMode()) return null;
+  const f = fb(); const u = uid(); if (!f || !u) return null;
+  const s = await getDoc(doc(f.db, 'farmer_consents', u));
+  return s.exists() ? ({ ...s.data() } as unknown as FarmerConsent) : null;
+}
+
+/** Read one farmer's consent as staff/mentor — org-scoped by the rules, not by this call. */
+export async function getFarmerConsent(profileId: string): Promise<FarmerConsent | null> {
+  if (isSampleMode()) return null;
+  const f = fb(); if (!f) return null;
+  const s = await getDoc(doc(f.db, 'farmer_consents', profileId));
+  return s.exists() ? ({ ...s.data() } as unknown as FarmerConsent) : null;
+}
+
+/**
+ * Grant or withdraw ONE scope. Reads the current record first so setScope()'s
+ * granted_at/revoked_at bookkeeping applies to what is actually stored — a blind write
+ * would silently drop the other scopes the farmer had already chosen.
+ */
+export async function setMyConsentScope(scope: ConsentScope, value: boolean): Promise<FarmerConsent | null> {
+  if (isSampleMode()) return null;
+  const f = fb(); const u = uid(); if (!f || !u) return null;
+  const me = await getMyProfile();
+  const now = new Date().toISOString();
+  const current = (await getMyConsent()) ?? emptyConsent(u, me?.org_id ?? null, now);
+  // org_id is pinned to the farmer's own org by the rules; refresh it in case they were moved
+  // between orgs since the record was written, or the write is simply refused.
+  const next = setScope({ ...current, uid: u, org_id: me?.org_id ?? null }, scope, value, now);
+  await setDoc(doc(f.db, 'farmer_consents', u), next);
+  return next;
+}
+
+/** Withdraw everything at once. Deliberately not a six-toggle loop: revocation must be ONE
+ *  action a farmer can complete, not a checklist they might half-finish. */
+export async function revokeAllMyConsent(): Promise<FarmerConsent | null> {
+  if (isSampleMode()) return null;
+  const f = fb(); const u = uid(); if (!f || !u) return null;
+  const current = await getMyConsent();
+  if (!current) return null;
+  const next = revokeAll(current, new Date().toISOString());
+  await setDoc(doc(f.db, 'farmer_consents', u), next);
+  return next;
 }
 
 // ---- farmer / trainee directory ----

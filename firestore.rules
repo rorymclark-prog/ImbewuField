@@ -49,16 +49,24 @@ service cloud.firestore {
     // pre-existing, already-consented-by-enrollment path this app has always had, and Rory's own
     // platform-admin access isn't the thing POPIA consent is meant to gate. This only narrows the
     // NEW ngo/funder visibility Rory asked to be consent-gated.
-    function consentGranted(profileId) {
-      return exists(/databases/$(database)/documents/profiles/$(profileId))
-        && get(/databases/$(database)/documents/profiles/$(profileId)).data.get('dataConsent', null) != null
-        && get(/databases/$(database)/documents/profiles/$(profileId)).data.dataConsent.granted == true;
+    // CONSENT IS PER-SCOPE AND LIVES IN ITS OWN COLLECTION, not on the profile. It used to read
+    // `Profile.dataConsent.granted` — a single all-or-nothing bool on the same document a farmer
+    // rewrites every time they change their name, photo or language. A save that rebuilt that doc
+    // without the key would have silently revoked consent, and nothing would have reported it.
+    // /farmer_consents/{uid} is written by exactly one screen (ConsentPanel) and read here.
+    // ABSENCE IS REFUSAL: no doc, no scopes map, or the scope missing => false, so a farmer who
+    // has never answered is treated as having declined, never as a default yes.
+    function consentGranted(profileId, scope) {
+      return exists(/databases/$(database)/documents/farmer_consents/$(profileId))
+        && get(/databases/$(database)/documents/farmer_consents/$(profileId))
+             .data.get('scopes', {}).get(scope, false) == true;
     }
-    // isAdmin() bypass + staffOrgAccess(d), gated by the farmer's consent — the shape every
-    // farmer-identifying collection's staff branch below uses. NOT applied to isMentor(), by
-    // design (see consentGranted() above).
-    function staffConsentedAccess(d) {
-      return isAdmin() || (staffOrgAccess(d) && consentGranted(d.profile_id));
+    // isAdmin() bypass + staffOrgAccess(d), gated by the farmer's consent FOR THIS SCOPE — the
+    // shape every farmer-identifying collection's staff branch below uses. Each call site passes
+    // the scope that collection actually represents, so consenting to share harvest weights does
+    // not also hand over income. NOT applied to isMentor(), by design (see consentGranted()).
+    function staffConsentedAccess(d, scope) {
+      return isAdmin() || (staffOrgAccess(d) && consentGranted(d.profile_id, scope));
     }
     // Feature-flag scaffold for the NGO dashboard v2 surfaces (admin panel, consent-aware
     // dashboard wiring, aggregate reporting) built on top of this fix — same on/off pattern as
@@ -141,7 +149,7 @@ service cloud.firestore {
     // by explicit garden id, which the scoped per-garden rule above already permits.
 
     match /production_logs/{id} {
-      allow read:   if owns(resource.data) || staffConsentedAccess(resource.data) || (isMentor() && inMyOrg(resource.data));
+      allow read:   if owns(resource.data) || staffConsentedAccess(resource.data, 'production') || (isMentor() && inMyOrg(resource.data));
       allow create: if signedIn()
         && request.resource.data.profile_id == request.auth.uid
         && request.resource.data.kg is number && request.resource.data.kg > 0
@@ -163,7 +171,7 @@ service cloud.firestore {
     }
 
     match /sales_logs/{id} {
-      allow read:   if owns(resource.data) || staffConsentedAccess(resource.data) || (isMentor() && inMyOrg(resource.data));
+      allow read:   if owns(resource.data) || staffConsentedAccess(resource.data, 'sales') || (isMentor() && inMyOrg(resource.data));
       allow create: if signedIn()
         && request.resource.data.profile_id == request.auth.uid
         && request.resource.data.kg is number && request.resource.data.kg > 0
@@ -187,7 +195,7 @@ service cloud.firestore {
     }
 
     match /expense_logs/{id} {
-      allow read:   if owns(resource.data) || staffConsentedAccess(resource.data) || (isMentor() && inMyOrg(resource.data));
+      allow read:   if owns(resource.data) || staffConsentedAccess(resource.data, 'expenses') || (isMentor() && inMyOrg(resource.data));
       allow create: if signedIn()
         && request.resource.data.profile_id == request.auth.uid
         && request.resource.data.amount is number && request.resource.data.amount >= 0
@@ -228,7 +236,7 @@ service cloud.firestore {
     }
 
     match /course_progress/{id} {
-      allow read:  if owns(resource.data) || isAdmin() || (isMentor() && inMyOrg(resource.data)) || staffConsentedAccess(resource.data);
+      allow read:  if owns(resource.data) || isAdmin() || (isMentor() && inMyOrg(resource.data)) || staffConsentedAccess(resource.data, 'training');
       allow write: if signedIn()
         && request.resource.data.profile_id == request.auth.uid
         && request.resource.data.org_id == myOrg()
@@ -282,7 +290,7 @@ service cloud.firestore {
     // had no org_id field at all and this bare isStaff()/isMentor() reached every org). Writes
     // are learner-only; mentors/staff never write a submission on a learner's behalf.
     match /course_submissions/{id} {
-      allow read: if owns(resource.data) || isAdmin() || (isMentor() && inMyOrg(resource.data)) || staffConsentedAccess(resource.data);
+      allow read: if owns(resource.data) || isAdmin() || (isMentor() && inMyOrg(resource.data)) || staffConsentedAccess(resource.data, 'training');
       allow create, update: if signedIn()
         && request.resource.data.profile_id == request.auth.uid
         && request.resource.data.org_id == myOrg()
@@ -336,6 +344,28 @@ service cloud.firestore {
         (myOrg() != null && (resource.data.funder_org_id == myOrg() || resource.data.ngo_org_id == myOrg()))
       );
       allow write: if false;
+    }
+
+    // ─── Farmer consent (the writer behind consentGranted() above) ────────────────────────────
+    // ONE store, per scope, owned entirely by the farmer it describes. Staff may READ it — that
+    // is what lets a dashboard say "withheld" honestly instead of showing an empty chart that
+    // looks like a farmer who simply logged nothing — but they can never create or amend one:
+    // there is no branch below under which anybody other than the farmer writes this document.
+    // Deleting it is revocation (absence is refusal), so a farmer is never stuck with a doc they
+    // cannot get rid of.
+    match /farmer_consents/{uid} {
+      allow read: if signedIn() && (
+        uid == request.auth.uid ||
+        isAdmin() ||
+        (isMentor() && inMyOrg(resource.data)) ||
+        staffOrgAccess(resource.data)
+      );
+      allow create, update: if signedIn() && uid == request.auth.uid
+        && request.resource.data.uid == uid
+        && request.resource.data.org_id == myOrg()
+        && request.resource.data.scopes is map
+        && request.resource.data.updated_at is string;
+      allow delete: if signedIn() && uid == request.auth.uid;
     }
 
     // Per-user map data (farm shapes, saved places, water points) — cross-device sync.

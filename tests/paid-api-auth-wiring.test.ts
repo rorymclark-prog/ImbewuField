@@ -115,6 +115,13 @@ test('a route guarded on the server but never called from the client is reported
     'auto-design',
     'design-detect',
     'design-review',
+    // Added deliberately. The consent-projecting portfolio read exists and is guarded, but no
+    // dashboard calls it yet — components/network/* still runs on demo data. It is listed here
+    // rather than wired up because the route reads real farmers' money: it should go live when
+    // a screen is ready to consume the projection, not to clear a test. Unlike the AI routes
+    // above it also refuses outright when the caller has no verified uid, so it is not open
+    // surface while REQUIRE_API_AUTH is unset — see the header of the route itself.
+    'network/farmers',
     'suggest-zones-ai',
     'tree-id',
   ], 'the set of deployed-but-uncalled paid routes changed — add or remove one on purpose, not by accident');
