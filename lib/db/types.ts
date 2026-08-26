@@ -39,18 +39,15 @@ export interface Profile {
   mapLat?: number | null;
   mapLon?: number | null;
   /**
-   * Explicit, revocable opt-in for the farmer's own org staff (ngo/funder — never the farmer's
-   * mentor, whose visibility predates this field and isn't gated by it) to see their
-   * production/sales/course data on the NGO/funder dashboards. Absent or `granted: false` means
-   * not opted in — this is opt-in, not opt-out, by design. The farmer owns this field and can
-   * write it themselves (same as any other profile field except `role`/`org_id`); see the
-   * settings toggle that sets it.
+   * CONSENT DOES NOT LIVE HERE. It used to — a `dataConsent` object on this document — and the
+   * rule that read it shipped with no writer anywhere in the app, so it denied every ngo/funder
+   * read in production while looking implemented. It now lives in its own collection,
+   * /farmer_consents/{uid}, per scope: see lib/consent.ts for the model, ConsentPanel.tsx for
+   * the one screen that writes it, and `consentGranted()` in firestore.rules for the read. It
+   * was moved off this document because a farmer rewrites this one every time they change their
+   * name, photo or language, and a save that rebuilt it without the key would have silently
+   * revoked their consent.
    */
-  dataConsent?: {
-    granted: boolean;
-    grantedAt: string | null;
-    revokedAt: string | null;
-  };
 }
 
 /**

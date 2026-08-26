@@ -36,7 +36,7 @@ const {
 // needs an emulator) and no workflow ran `test:rules`, so the suite reported green while these
 // seven tests could not even construct a document reference.
 const {
-  collection, doc, getDoc, getDocs, setDoc, updateDoc, query, where,
+  collection, doc, getDoc, getDocs, setDoc, updateDoc, deleteDoc, query, where,
 } = require('@firebase/firestore') as {
   collection: (...args: unknown[]) => unknown;
   doc: (...args: unknown[]) => never;
@@ -44,6 +44,7 @@ const {
   getDocs: (...args: unknown[]) => Promise<unknown>;
   setDoc: (...args: unknown[]) => Promise<unknown>;
   updateDoc: (...args: unknown[]) => Promise<unknown>;
+  deleteDoc: (...args: unknown[]) => Promise<unknown>;
   query: (...args: unknown[]) => unknown;
   where: (...args: unknown[]) => unknown;
 };
@@ -60,7 +61,7 @@ const NEW_SIGNUP = 'brand-new-signup';
 
 // Fixtures for the cross-org leak fix (docs/AUDIT-NEEDS-RORY-2026-08-15.md #1): an ngo staff
 // account in each of two orgs, a funder with a grant onto org-1 and one without, the platform
-// admin role, and a farmer who has explicitly opted in via dataConsent.
+// admin role, and a farmer who has explicitly opted in via /farmer_consents.
 const NGO_SAME_ORG = 'ngo-org-1';
 const NGO_OTHER_ORG = 'ngo-org-2';
 const FUNDER_ORG_A = 'funder-org-a';
@@ -106,12 +107,19 @@ async function seed() {
       profile(db, FUNDER_WITH_GRANT, 'funder', FUNDER_ORG_A),
       profile(db, FUNDER_NO_GRANT, 'funder', FUNDER_ORG_B),
       profile(db, PLATFORM_ADMIN, 'admin', null),
-      // A farmer who has explicitly opted in (Profile.dataConsent.granted). Every other farmer
-      // fixture is left without the field, which the consent check treats as not-granted.
-      setDoc(doc(db, 'profiles', CONSENTED_FARMER), {
-        role: 'farmer', org_id: 'org-1', full_name: CONSENTED_FARMER, language: 'en',
-        created_at: '2026-08-01T00:00:00.000Z',
-        dataConsent: { granted: true, grantedAt: '2026-08-01T00:00:00.000Z', revokedAt: null },
+      // A farmer who has explicitly opted in, per scope, at /farmer_consents/{uid}. Every other
+      // farmer fixture has NO consent doc at all, which the consent check treats as refusal.
+      // NOTE 'expenses' is deliberately absent from the scopes map: this fixture is what proves
+      // consent is per-scope rather than one global yes, so an ngo that may read this farmer's
+      // harvest and sales still cannot read what they spent.
+      profile(db, CONSENTED_FARMER, 'farmer', 'org-1'),
+      setDoc(doc(db, 'farmer_consents', CONSENTED_FARMER), {
+        uid: CONSENTED_FARMER,
+        org_id: 'org-1',
+        scopes: { production: true, sales: true, training: true },
+        granted_at: '2026-08-01T00:00:00.000Z',
+        revoked_at: null,
+        updated_at: '2026-08-01T00:00:00.000Z',
       }),
       setDoc(doc(db, 'course_enrollments', `${FARMER_WITH_LINK}_${DEFAULT_TRACK}`), {
         profile_id: FARMER_WITH_LINK,
@@ -385,10 +393,54 @@ test('financial logs: consent gates ngo/funder staff reads but not same-org ment
   const staffDb = env.authenticatedContext(NGO_SAME_ORG).firestore();
   const mentorDb = env.authenticatedContext(LINKED_MENTOR).firestore();
   for (const collectionName of LOG_COLLECTIONS) {
-    await assertSucceeds(getDoc(doc(staffDb, collectionName, `${CONSENTED_FARMER}-${collectionName}`)));
     await assertFails(getDoc(doc(staffDb, collectionName, `${FARMER_WITH_LINK}-${collectionName}`)));
     await assertSucceeds(getDoc(doc(mentorDb, collectionName, `${FARMER_WITH_LINK}-${collectionName}`)));
   }
+  // CONSENTED_FARMER granted production and sales but NOT expenses, so the same staff account
+  // reading the same farmer in the same org is admitted to two of these three collections and
+  // refused the third. If this ever passes for all three, consent has silently collapsed back
+  // into one global yes/no and the per-scope toggles in ConsentPanel are decorative.
+  await assertSucceeds(getDoc(doc(staffDb, 'production_logs', `${CONSENTED_FARMER}-production_logs`)));
+  await assertSucceeds(getDoc(doc(staffDb, 'sales_logs', `${CONSENTED_FARMER}-sales_logs`)));
+  await assertFails(getDoc(doc(staffDb, 'expense_logs', `${CONSENTED_FARMER}-expense_logs`)));
+});
+
+test('farmer_consents: only the farmer writes it; staff read it; nobody forges one', async () => {
+  const farmerDb = env.authenticatedContext(CONSENTED_FARMER).firestore();
+  const staffDb = env.authenticatedContext(NGO_SAME_ORG).firestore();
+  const otherOrgDb = env.authenticatedContext(NGO_OTHER_ORG).firestore();
+  const victimDb = env.authenticatedContext(FARMER_WITH_LINK).firestore();
+
+  await assertSucceeds(getDoc(doc(farmerDb, 'farmer_consents', CONSENTED_FARMER)));
+  // Staff may READ it — that is what lets a dashboard say "withheld" instead of showing an
+  // empty chart that reads as a farmer who logged nothing.
+  await assertSucceeds(getDoc(doc(staffDb, 'farmer_consents', CONSENTED_FARMER)));
+  await assertFails(getDoc(doc(otherOrgDb, 'farmer_consents', CONSENTED_FARMER)));
+
+  // THE ONE THAT MATTERS: staff cannot mint consent on a farmer's behalf. If this ever passes,
+  // the whole opt-in is theatre — an NGO could grant itself access to every farmer it hosts.
+  await assertFails(setDoc(doc(staffDb, 'farmer_consents', FARMER_WITH_LINK), {
+    uid: FARMER_WITH_LINK, org_id: 'org-1', scopes: { sales: true },
+    granted_at: null, revoked_at: null, updated_at: '2026-08-02T00:00:00.000Z',
+  }));
+  // Nor can one farmer consent on another's behalf.
+  await assertFails(setDoc(doc(victimDb, 'farmer_consents', CONSENTED_FARMER), {
+    uid: CONSENTED_FARMER, org_id: 'org-1', scopes: { expenses: true },
+    granted_at: null, revoked_at: null, updated_at: '2026-08-02T00:00:00.000Z',
+  }));
+  // A farmer may not point their consent at an org they do not belong to.
+  await assertFails(setDoc(doc(victimDb, 'farmer_consents', FARMER_WITH_LINK), {
+    uid: FARMER_WITH_LINK, org_id: 'org-2', scopes: { sales: true },
+    granted_at: null, revoked_at: null, updated_at: '2026-08-02T00:00:00.000Z',
+  }));
+
+  // The farmer writes their own, and can delete it outright — absence is refusal, so deletion
+  // is a complete revocation rather than a doc they are stuck with.
+  await assertSucceeds(setDoc(doc(victimDb, 'farmer_consents', FARMER_WITH_LINK), {
+    uid: FARMER_WITH_LINK, org_id: 'org-1', scopes: { sales: true },
+    granted_at: '2026-08-02T00:00:00.000Z', revoked_at: null, updated_at: '2026-08-02T00:00:00.000Z',
+  }));
+  await assertSucceeds(deleteDoc(doc(victimDb, 'farmer_consents', FARMER_WITH_LINK)));
 });
 
 test('grants: readable only by the two named orgs or admin, never client-writable', async () => {

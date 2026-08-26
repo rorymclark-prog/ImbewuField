@@ -23,6 +23,17 @@
  * Attach people to an organisation that already exists:
  *   node scripts/provision-org.mjs --org-id abc123 --grant new@act.org.za=ngo --apply
  *
+ * Let a funder see an org it funds. A funder funds SEVERAL NGOs, which the scalar org_id
+ * cannot express, so the pairing lives in its own /grants collection (firestore.rules
+ * `grantedOrg`), one document per funder-org/NGO-org pair, id `${funder_org_id}_${ngo_org_id}`:
+ *   node scripts/provision-org.mjs --org-id <funderOwnOrg> \
+ *     --grant reviewer@idc.co.za=funder --fund <ngoOrgId> --fund <otherNgoOrgId> --apply
+ *
+ * /grants is `allow write: if false` — no client, funder or otherwise, can create one — which
+ * is exactly why it has to be minted here. THIS SCRIPT IS THE ONLY WRITER. A funder able to
+ * widen its own reach would grant itself any organisation's farmer data, so the reach
+ * deliberately does not live on a document the funder can edit.
+ *
  * NOTE: profiles are keyed by AUTH UID (/profiles/{uid}), per firestore.rules.
  * Each grantee must already have signed in once so the account exists.
  */
@@ -36,6 +47,7 @@ import { getAuth } from 'firebase-admin/auth';
 
 const argv = process.argv.slice(2);
 const grants = [];
+const funds = [];
 const opt = {};
 for (let i = 0; i < argv.length; i++) {
   const a = argv[i];
@@ -44,7 +56,9 @@ for (let i = 0; i < argv.length; i++) {
   const v = argv[i + 1];
   if (v === undefined || v.startsWith('--')) { console.error(`ERROR: ${a} needs a value.`); process.exit(1); }
   i++;
-  if (a === '--grant') grants.push(v); else opt[a.slice(2)] = v;
+  if (a === '--grant') grants.push(v);
+  else if (a === '--fund') funds.push(v);
+  else opt[a.slice(2)] = v;
 }
 
 const STAFF_ROLES = ['ngo', 'funder', 'mentor', 'admin'];
@@ -143,7 +157,49 @@ async function main() {
     });
   }
 
-  // 3. staff grants
+  // 3. funded orgs (item B) — every target validated BEFORE a single grant doc is written, so a
+  //    typo in the third --fund cannot leave the first two already minted.
+  if (funds.length) {
+    const bad = [];
+    for (const f of funds) {
+      const snap = await db.collection('organizations').doc(f).get();
+      if (!snap.exists) bad.push(f);
+      else console.log(`[fund]      grants sight of "${snap.data().name}" (${f})`);
+    }
+    if (bad.length) {
+      console.error(`ERROR: --fund names organisation(s) that do not exist: ${bad.join(', ')}.`);
+      console.error('       Refusing to write an org id that resolves to nothing.');
+      process.exit(1);
+    }
+    if (!parsedGrants.length) {
+      console.error('ERROR: --fund needs at least one --grant <who>=funder.'); process.exit(1);
+    }
+    if (parsedGrants.some((g) => g.role !== 'funder')) {
+      console.error('ERROR: --fund applies only to funder grants, and a non-funder grant was also given.');
+      console.error('       Run the funder grant as its own command.');
+      process.exit(1);
+    }
+    if (funds.includes(orgId)) {
+      console.error(`ERROR: --fund ${orgId} is the funder's OWN org (--org-id). It already sees that one.`);
+      process.exit(1);
+    }
+
+    // The grant is org->org, so it is written ONCE per pair and not per grantee — every funder
+    // account in this org inherits it. Deterministic id makes re-running this a no-op instead
+    // of a second, divergent grant for the same pairing.
+    for (const f of funds) {
+      const id = `${orgId}_${f}`;
+      console.log(`[grant-doc] /grants/${id}`);
+      if (!DRY) {
+        await db.collection('grants').doc(id).set({
+          funder_org_id: orgId, ngo_org_id: f,
+          granted_at: FieldValue.serverTimestamp(),
+        }, { merge: true });
+      }
+    }
+  }
+
+  // 4. staff grants
   let missing = 0;
   for (const { who, role } of parsedGrants) {
     const acct = await resolveAccount(who);
@@ -154,7 +210,10 @@ async function main() {
     const pref = db.collection('profiles').doc(acct.uid);
     const existing = await pref.get();
     const before = existing.exists ? `${existing.data().role}/${existing.data().org_id ?? 'no-org'}` : 'new profile';
-    console.log(`[grant]     ${acct.label}\n              ${before} -> ${role}/${orgId}`);
+    // The funded orgs are NOT echoed onto the profile. They live only in /grants, so there is
+    // exactly one place that answers "what may this funder see" and no second copy to drift.
+    const fundNote = funds.length ? `  (org funds [${funds.join(', ')}] via /grants)` : '';
+    console.log(`[grant]     ${acct.label}\n              ${before} -> ${role}/${orgId}${fundNote}`);
     if (!DRY) {
       await pref.set({
         role, org_id: orgId,

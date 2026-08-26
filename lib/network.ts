@@ -52,40 +52,65 @@
  *
  * ── WHAT MUST BE TRUE BEFORE ANY REAL FARMER APPEARS IN THIS VIEW ─────────
  *
- *  A. A SERVER-SIDE AUTHORISED READ PATH MUST EXIST. None does today: all 24
- *     routes under app/api/ are AI/compute and read no Firestore on a
- *     caller's behalf, and lib/api-auth.ts verifies a token but performs NO
- *     role or org check and is LOG-ONLY unless REQUIRE_API_AUTH=1. The only
- *     legitimate path is a route (or Cloud Function) that, in this order:
- *       (i)   verifies the caller's Firebase ID token (REQUIRE_API_AUTH=1);
+ * A-D BELOW ARE NOW BUILT. This section is kept because it is the argument for
+ * why each piece exists, not a to-do list. What is built is not the same as
+ * what is live — the caveats at the end of this block are the current truth.
+ *
+ *  A. A SERVER-SIDE AUTHORISED READ PATH MUST EXIST.  → BUILT.
+ *     app/api/network/farmers/route.ts does the four steps in order:
+ *       (i)   verifies the caller's Firebase ID token (guardPaidApiRequest,
+ *             and it refuses a null uid outright rather than trusting the
+ *             log-only mode REQUIRE_API_AUTH leaves it in);
  *       (ii)  loads /profiles/{callerUid} SERVER-SIDE and asserts
- *             role ∈ {funder, ngo, admin} — never trusting a client claim;
- *       (iii) asserts the target farmer's org is in the caller's funded set;
- *       (iv)  reads with the Admin SDK and returns a PROJECTION — the
- *             derived numbers in NetworkFarmerMetrics — never raw docs, never
- *             free-text survey answers, never exact coordinates.
- *     A client-side Firestore read CANNOT be the boundary here, because the
- *     rules cannot express "this funder funds this NGO" without (B).
+ *             role ∈ {funder, ngo, admin} — lib/network-access.ts, which is
+ *             pure and unit-tested so the policy can be read in one file;
+ *       (iii) asserts the farmer's org is visible AND that the farmer
+ *             consented, per scope;
+ *       (iv)  reads with the Admin SDK and returns a PROJECTION — the derived
+ *             numbers only, never raw docs, never free-text survey answers,
+ *             never an exact coordinate unless location was granted.
  *
- *  B. MULTI-ORG TENANCY NEEDS A NEW KEY. Either `funded_org_ids: string[]`
- *     on the funder's profile (rule: `resource.data.org_id in
- *     prof().funded_org_ids`) or a `/grants/{id}` join collection. Either way
- *     the field must be ADMIN-SDK-WRITE-ONLY, exactly as `org_id` is today
- *     (firestore.rules pins role and org_id as immutable from the client).
- *     Note there is also no way to PROVISION a funder today: signup may only
- *     self-assign farmer|student, and no admin UI or script promotes an
- *     account. A real funder account can currently only be made by hand.
+ *  B. MULTI-ORG TENANCY NEEDS A NEW KEY.  → BUILT, as the /grants join
+ *     collection rather than the `funded_org_ids` array this header first
+ *     proposed. A join doc is org→org, so every funder account in the org
+ *     inherits it and there is no per-user array to keep in step; and because
+ *     /grants is `allow write: if false`, a funder cannot widen its own reach
+ *     by editing a document it owns. firestore.rules `grantedOrg()` reads it;
+ *     scripts/provision-org.mjs (--fund) is the only writer.
+ *     Provisioning is solved too: that script creates the org and promotes the
+ *     account, which previously could only be done by hand.
  *
- *  C. FARMER CONSENT MUST BE RECORDED AND REVOCABLE. Nothing in this schema
- *     asks the farmer whether their financials may be shown to a funder.
- *     `NetworkFarmer.consent` below is the placeholder for that record; it is
- *     `'demo'` for every row in this build. A real deployment needs a
- *     per-farmer, per-scope, revocable consent doc checked in step (iii).
+ *  C. FARMER CONSENT MUST BE RECORDED AND REVOCABLE.  → BUILT.
+ *     /farmer_consents/{uid}, per scope, written by the farmer alone
+ *     (components/ConsentPanel.tsx) and by no one else — staff can read a
+ *     consent record but no rule anywhere lets them create or amend one.
+ *     Absence is refusal; deleting the doc is a complete revocation.
+ *     lib/consent.ts holds the model and the projection. `applyConsent` nulls
+ *     a withheld metric rather than zeroing it, because "R0 income" reads as a
+ *     farmer who earned nothing, which would punish the people who exercised
+ *     a right.
  *
  *  D. THE THREE UNSCOPED RULES IN (3) MUST BE FIXED AND THE RULES TESTS RUN.
- *     `npm run test:rules` needs the emulator and has historically sat
- *     unexecuted; a rules change without a matching case in
- *     tests/firestore-rules.test.ts is not a fix.
+ *     → FIXED, and the tests were run the only way that proves anything: the
+ *     new cases were executed against the PREVIOUS rules first and had to
+ *     fail. Four did. A rules test that passes before and after the change
+ *     proves nothing — which is exactly how the shared_sites assertion in
+ *     tests/firestore-rules.test.ts sat green for weeks having never once
+ *     constructed a document reference.
+ *
+ * ── WHAT IS STILL NOT TRUE IN PRODUCTION ──────────────────────────────────
+ *
+ *  • REQUIRE_API_AUTH is unset, so lib/api-auth.ts is LOG-ONLY for every other
+ *    route. This route fails closed on its own, but the others do not.
+ *  • The consent gate is live and EMPTY: no farmer has answered the panel yet,
+ *    so `consentGranted()` is false for all of them and every ngo/funder read
+ *    of a farmer's money or training is denied. That is the correct starting
+ *    state for an opt-in, and it means an empty NGO dashboard is the expected
+ *    reading — not a bug to be "fixed" by loosening the rule.
+ *  • No /grants doc exists yet, so the one funder account sees only its own
+ *    org. Run scripts/provision-org.mjs --fund to change that, deliberately.
+ *  • components/network/* still renders demo data. Nothing calls the route
+ *    above yet; wiring it up is what makes any of this user-visible.
  *
  * ── COORDINATE PRECISION IS ITSELF A PRIVACY BOUNDARY ─────────────────────
  *
