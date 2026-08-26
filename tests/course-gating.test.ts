@@ -66,8 +66,8 @@ test('courseSubmissionDocId is one row per learner per module, so resubmitting i
 
 test('submittedModuleIds reads the module off each submission row', () => {
   const subs: CourseSubmission[] = [
-    { id: 'p1_m1', profile_id: 'p1', module: 'm1', submitted_at: '2026-07-01T00:00:00.000Z', self_check: [], photo_path: 'course_submissions/p1/m1/photo.jpg', voice_path: null },
-    { id: 'p1_m2', profile_id: 'p1', module: 'm2', submitted_at: '2026-07-02T00:00:00.000Z', self_check: ['watered beds'], photo_path: null, voice_path: null },
+    { id: 'p1_m1', profile_id: 'p1', org_id: 'org-1', module: 'm1', submitted_at: '2026-07-01T00:00:00.000Z', self_check: [], photo_path: 'course_submissions/p1/m1/photo.jpg', voice_path: null },
+    { id: 'p1_m2', profile_id: 'p1', org_id: 'org-1', module: 'm2', submitted_at: '2026-07-02T00:00:00.000Z', self_check: ['watered beds'], photo_path: null, voice_path: null },
   ];
   assert.deepEqual(submittedModuleIds(subs), new Set(['m1', 'm2']));
 });

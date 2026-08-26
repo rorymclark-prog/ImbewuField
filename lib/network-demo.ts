@@ -767,6 +767,7 @@ function buildRecord(seed: DemoSiteSeed, now: Date): DemoFarmerRecord {
     return {
       id: `${seed.id}-course-${module}`,
       profile_id: seed.id,
+      org_id: DEMO_IMPLEMENTER.id,
       module,
       done,
       updated_at: new Date(stamp).toISOString(),
@@ -778,6 +779,7 @@ function buildRecord(seed: DemoSiteSeed, now: Date): DemoFarmerRecord {
     id: `${seed.id}-survey-${i}`,
     survey_id: `demo-survey-round-${i + 1}`,
     profile_id: seed.id,
+    org_id: DEMO_IMPLEMENTER.id,
     answers: {
       water_access: i === 0 ? 'Municipal tap' : 'Rainwater tank + tap',
       selling_regularly: seed.sellShare > 0.5 ? 'Yes' : 'Sometimes',

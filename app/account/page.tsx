@@ -4,11 +4,12 @@ import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
-import { updateMyProfile, uploadPhoto } from '@/lib/db/queries';
+import { updateMyProfile, uploadPhoto, getOrganizationName } from '@/lib/db/queries';
 import { APP_LANGS } from '@/lib/i18n';
 import TabBar from '@/components/TabBar';
 import BrandLogo from '@/components/BrandLogo';
 import ThemePanel from '@/components/ThemePanel';
+import ConsentPanel from '@/components/ConsentPanel';
 import { Settings, Sprout, Mail, Phone, Globe, LogOut, ChevronRight, User, Pencil, Check, X, Camera, Lock, Eye, EyeOff, type LucideIcon } from 'lucide-react';
 import type { UserRole } from '@/lib/db/types';
 import LessonLink from '@/components/design/LessonLink';
@@ -47,10 +48,17 @@ export default function AccountPage() {
   const [pwSuccess, setPwSuccess] = useState(false);
   const [pwSaving, setPwSaving] = useState(false);
   const [showPw, setShowPw] = useState(false);
+  // Named so the consent screen can say WHICH organisation would see the data, rather than
+  // "your organisation" — a person cannot meaningfully consent to an unnamed recipient.
+  const [orgName, setOrgName] = useState<string | null>(null);
 
   useEffect(() => {
     if (!loading && !user && isBackendConfigured()) router.replace('/login');
   }, [user, loading, router]);
+
+  useEffect(() => {
+    if (profile?.org_id) getOrganizationName(profile.org_id).then(setOrgName).catch(() => setOrgName(null));
+  }, [profile?.org_id]);
 
   useEffect(() => {
     if (profile) setForm({ name: profile.full_name ?? '', phone: profile.phone ?? '', farmName: profile.farm_name ?? '', language: profile.language ?? 'en' });
@@ -232,6 +240,13 @@ export default function AccountPage() {
               <Row icon={Globe} label="Language" value={langLabel} />
               <Row icon={User} label="Role" value={roleLabel} />
             </div>
+          )}
+
+          {/* What you share — POPIA consent. Farmers only: it is the farmer's own record, and
+              staff/mentor accounts have nothing to consent to. Hidden when the farmer has no
+              org, because consent is granted TO an organisation and the rules pin it to theirs. */}
+          {profile?.role === 'farmer' && profile?.org_id && (
+            <ConsentPanel orgName={orgName} />
           )}
 
           {/* Change password */}

@@ -17,6 +17,16 @@ export interface Profile {
   language: string; id_number: string | null; phone: string | null; photo_url: string | null; created_at: string;
   bio?: string | null;
   /**
+   * FUNDERS ONLY. A funder funds SEVERAL NGOs, which the single scalar `org_id` cannot
+   * express. Org ids listed here are readable by this account exactly as if they were
+   * its own org.
+   *
+   * ADMIN-SDK-WRITE-ONLY, pinned immutable in firestore.rules alongside role and org_id —
+   * a client that could append to this array would grant itself any org's farmer data.
+   * Written by `scripts/provision-org.mjs --fund <orgId>`.
+   */
+  funded_org_ids?: string[];
+  /**
    * What the farmer calls their farm — "Tugela Valley smallholding", "Plot 14, Nquthu".
    *
    * Printed under the seller's name on every invoice. It was a hardcoded string until 2026-08-06,
@@ -74,7 +84,10 @@ export interface Report {
   id: string; owner_id: string; garden_id: string | null; title: string; content: string | null; lang: string; created_at: string;
 }
 
-export interface CourseProgress { id: string; profile_id: string; module: string; done: boolean; updated_at: string }
+// org_id is DENORMALISED here so firestore.rules can scope staff/mentor reads to one org.
+// Without it the read rule could only say `isStaff() || isMentor()`, which let any staff
+// account in ANY org read every learner's training record in the database.
+export interface CourseProgress { id: string; profile_id: string; org_id: string | null; module: string; done: boolean; updated_at: string }
 
 export interface MentorVisit {
   id: string; mentor_id: string; trainee_id: string;
@@ -94,7 +107,10 @@ export interface GardenerProfile {
 export type SurveyQType = 'yesno' | 'choice' | 'text';
 export interface SurveyQuestion { id: string; text: string; type: SurveyQType; options: string[] }
 export interface Survey { id: string; org_name: string; title: string; questions: SurveyQuestion[]; created_by: string; created_at: string }
-export interface SurveyResponse { id: string; survey_id: string; profile_id: string; answers: Record<string, string>; created_at: string }
+// org_id DENORMALISED for rule scoping — see the note on CourseProgress. Survey answers are
+// free text a farmer wrote about their own household; a bare `isStaff()` read rule exposed
+// every one of them to every staff account in every org.
+export interface SurveyResponse { id: string; survey_id: string; profile_id: string; org_id: string | null; answers: Record<string, string>; created_at: string }
 
 // ─── Community layer (opt-in profiles, trade board, 1:1 messaging) ──────────
 // All additive/new — none of this touches the Profile/Garden model above.

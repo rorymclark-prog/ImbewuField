@@ -20,6 +20,7 @@ function progress(rows: Array<[string, boolean]>, profileId = 'p1'): CourseProgr
   return rows.map(([module, done]) => ({
     id: `${profileId}_${module}`,
     profile_id: profileId,
+    org_id: 'org-1',
     module,
     done,
     updated_at: '2026-07-01T00:00:00.000Z',

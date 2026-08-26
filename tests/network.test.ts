@@ -107,7 +107,7 @@ function expenses(rows: Array<[string, number, string]>): ExpenseLog[] {
 
 function courses(doneCount: number): CourseProgress[] {
   return Array.from({ length: 10 }, (_, i) => ({
-    id: `c${i}`, profile_id: 'f1', module: `m${i}`, done: i < doneCount,
+    id: `c${i}`, profile_id: 'f1', org_id: 'org-1', module: `m${i}`, done: i < doneCount,
     updated_at: '2026-07-01T00:00:00.000Z',
   }));
 }

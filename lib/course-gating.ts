@@ -28,6 +28,8 @@ import type { CourseAssignment } from './course-assignments';
 export interface CourseSubmission {
   id: string;
   profile_id: string;
+  /** DENORMALISED for rule scoping — see the note on CourseProgress in lib/db/types.ts. */
+  org_id: string | null;
   /** Module id from lib/course-modules.ts. */
   module: string;
   /** ISO timestamp of the submit action. */

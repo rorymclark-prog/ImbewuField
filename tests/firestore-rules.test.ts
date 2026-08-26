@@ -36,7 +36,7 @@ const {
 // needs an emulator) and no workflow ran `test:rules`, so the suite reported green while these
 // seven tests could not even construct a document reference.
 const {
-  collection, doc, getDoc, getDocs, setDoc, updateDoc,
+  collection, doc, getDoc, getDocs, setDoc, updateDoc, deleteDoc, query, where,
 } = require('@firebase/firestore') as {
   collection: (...args: unknown[]) => unknown;
   doc: (...args: unknown[]) => never;
@@ -44,6 +44,9 @@ const {
   getDocs: (...args: unknown[]) => Promise<unknown>;
   setDoc: (...args: unknown[]) => Promise<unknown>;
   updateDoc: (...args: unknown[]) => Promise<unknown>;
+  deleteDoc: (...args: unknown[]) => Promise<unknown>;
+  query: (...args: unknown[]) => unknown;
+  where: (...args: unknown[]) => unknown;
 };
 
 const PROJECT_ID = 'fieldproof-sa';
@@ -55,6 +58,15 @@ const LINKED_MENTOR = 'mentor-with-link';
 const SELF_ASSIGNED_MENTOR = 'self-assigned-mentor';
 const OUT_OF_ORG_MENTOR = 'mentor-other-org';
 const NEW_SIGNUP = 'brand-new-signup';
+const STAFF_IN_ORG = 'ngo-org-1';
+const STAFF_OTHER_ORG = 'ngo-org-2';
+const FUNDER_FUNDING_ORG1 = 'funder-funds-org-1';
+const FUNDER_FUNDING_NOTHING = 'funder-funds-nothing';
+// The three collections that were UNSCOPED: their read rule was a bare isStaff()/isMentor()
+// that never inspected resource.data, so any staff account in any org read every farmer's
+// record in the database. They carry a denormalised org_id now; these are the cases that
+// would have passed before the fix and must fail after it.
+const LEAKY_COLLECTIONS = ['course_progress', 'course_submissions', 'survey_responses'] as const;
 
 let env: RulesEnvironment;
 
@@ -100,6 +112,30 @@ async function seed() {
         setDoc(doc(db, collectionName, `${FARMER_WITHOUT_LINK}-${collectionName}`), logData(FARMER_WITHOUT_LINK, 'org-1', collectionName)),
         setDoc(doc(db, collectionName, `${FARMER_WITH_LINK}-${collectionName}`), logData(FARMER_WITH_LINK, 'org-1', collectionName)),
       ]),
+      profile(db, STAFF_IN_ORG, 'ngo', 'org-1'),
+      profile(db, STAFF_OTHER_ORG, 'ngo', 'org-2'),
+      // A funder in its OWN org (org-3) that funds org-1 through the new multi-org key.
+      setDoc(doc(db, 'profiles', FUNDER_FUNDING_ORG1), {
+        role: 'funder', org_id: 'org-3', funded_org_ids: ['org-1'],
+        full_name: FUNDER_FUNDING_ORG1, language: 'en', created_at: '2026-08-01T00:00:00.000Z',
+      }),
+      profile(db, FUNDER_FUNDING_NOTHING, 'funder', 'org-3'),
+      setDoc(doc(db, 'course_progress', `${FARMER_WITH_LINK}_m1`), {
+        profile_id: FARMER_WITH_LINK, org_id: 'org-1', module: 'm1', done: true, updated_at: 'x',
+      }),
+      setDoc(doc(db, 'course_submissions', `${FARMER_WITH_LINK}_m1`), {
+        profile_id: FARMER_WITH_LINK, org_id: 'org-1', module: 'm1',
+        submitted_at: '2026-08-01T00:00:00.000Z', self_check: [], photo_path: null, voice_path: null,
+      }),
+      setDoc(doc(db, 'survey_responses', `${FARMER_WITH_LINK}-survey`), {
+        survey_id: 's1', profile_id: FARMER_WITH_LINK, org_id: 'org-1',
+        answers: { income: 'R400 a month' }, created_at: '2026-08-01T00:00:00.000Z',
+      }),
+      setDoc(doc(db, 'farmer_consents', FARMER_WITH_LINK), {
+        uid: FARMER_WITH_LINK, org_id: 'org-1', scopes: { training: true },
+        granted_at: '2026-08-01T00:00:00.000Z', revoked_at: null,
+        updated_at: '2026-08-01T00:00:00.000Z',
+      }),
       setDoc(doc(db, 'shared_sites', 'ABC123'), {
         code: 'ABC123',
         geojson: { type: 'FeatureCollection', features: [] },
@@ -221,4 +257,128 @@ test('a profile owner cannot change role or org_id, but can edit an ordinary pro
   await assertFails(updateDoc(doc(db, 'profiles', FARMER_WITH_LINK), { role: 'admin' }));
   await assertFails(updateDoc(doc(db, 'profiles', FARMER_WITH_LINK), { org_id: 'org-2' }));
   await assertSucceeds(updateDoc(doc(db, 'profiles', FARMER_WITH_LINK), { full_name: 'Updated name' }));
+});
+
+/* ─── ITEM D: the three collections that leaked across orgs ─────────────────── */
+
+test('staff in another org cannot read training, submissions or survey answers', async () => {
+  // BEFORE THE FIX ALL THREE OF THESE SUCCEEDED. The read rules said `isStaff() || isMentor()`
+  // with no reference to the document, so one signed-up NGO account read every farmer's
+  // training record and every free-text survey answer in the entire database.
+  const db = env.authenticatedContext(STAFF_OTHER_ORG).firestore();
+  for (const name of LEAKY_COLLECTIONS) {
+    await assertFails(getDoc(doc(db, name, name === 'survey_responses'
+      ? `${FARMER_WITH_LINK}-survey` : `${FARMER_WITH_LINK}_m1`)));
+  }
+});
+
+test('staff in the same org still can read them — the fix must not break the dashboard', async () => {
+  const db = env.authenticatedContext(STAFF_IN_ORG).firestore();
+  for (const name of LEAKY_COLLECTIONS) {
+    await assertSucceeds(getDoc(doc(db, name, name === 'survey_responses'
+      ? `${FARMER_WITH_LINK}-survey` : `${FARMER_WITH_LINK}_m1`)));
+  }
+});
+
+test('a farmer cannot stamp another org onto their own training or survey rows', async () => {
+  // Without pinning org_id to the writer's own org, a farmer could appear inside any org's
+  // dashboard by writing that org's id — the mirror image of the leak above.
+  const db = env.authenticatedContext(FARMER_WITH_LINK).firestore();
+  await assertFails(setDoc(doc(db, 'course_progress', `${FARMER_WITH_LINK}_m2`), {
+    profile_id: FARMER_WITH_LINK, org_id: 'org-2', module: 'm2', done: true, updated_at: 'x',
+  }));
+  await assertSucceeds(setDoc(doc(db, 'course_progress', `${FARMER_WITH_LINK}_m2`), {
+    profile_id: FARMER_WITH_LINK, org_id: 'org-1', module: 'm2', done: true, updated_at: 'x',
+  }));
+});
+
+test('staff cannot list the profiles of another org', async () => {
+  // `allow list` was `isStaff() || isMentor()` — an UNFILTERED list of every profile in the
+  // database, names and phone numbers included.
+  const outsider = env.authenticatedContext(STAFF_OTHER_ORG).firestore();
+  await assertFails(getDocs(query(
+    collection(outsider, 'profiles'), where('org_id', '==', 'org-1'),
+  )));
+  const insider = env.authenticatedContext(STAFF_IN_ORG).firestore();
+  await assertSucceeds(getDocs(query(
+    collection(insider, 'profiles'), where('org_id', '==', 'org-1'),
+  )));
+});
+
+/* ─── ITEM B: multi-org funders ─────────────────────────────────────────────── */
+
+test('a funder reads the money of an org it funds, and only that org', async () => {
+  const funder = env.authenticatedContext(FUNDER_FUNDING_ORG1).firestore();
+  for (const collectionName of LOG_COLLECTIONS) {
+    await assertSucceeds(getDoc(doc(funder, collectionName, `${FARMER_WITH_LINK}-${collectionName}`)));
+  }
+  // Same role, same org, no grant — funded_org_ids absent must collapse to the old
+  // single-org behaviour rather than defaulting open.
+  const unfunded = env.authenticatedContext(FUNDER_FUNDING_NOTHING).firestore();
+  for (const collectionName of LOG_COLLECTIONS) {
+    await assertFails(getDoc(doc(unfunded, collectionName, `${FARMER_WITH_LINK}-${collectionName}`)));
+  }
+});
+
+test('a funder cannot grant itself an org', async () => {
+  // The entire value of funded_org_ids depends on it being admin-SDK-write-only. If a client
+  // can append to it, any funder account reads any org's farmer money on demand.
+  const db = env.authenticatedContext(FUNDER_FUNDING_NOTHING).firestore();
+  await assertFails(updateDoc(doc(db, 'profiles', FUNDER_FUNDING_NOTHING), {
+    funded_org_ids: ['org-1'],
+  }));
+  await assertFails(updateDoc(doc(db, 'profiles', FUNDER_FUNDING_ORG1), { funded_org_ids: ['org-1', 'org-2'] }));
+  // and a brand-new signup cannot smuggle it in at create time
+  const fresh = env.authenticatedContext('funder-smuggler').firestore();
+  await assertFails(setDoc(doc(fresh, 'profiles', 'funder-smuggler'), {
+    role: 'farmer', org_id: null, funded_org_ids: ['org-1'], full_name: 'x', language: 'en',
+  }));
+});
+
+/* ─── ITEM C: farmer consent ────────────────────────────────────────────────── */
+
+test('only the farmer may write their own consent; staff may read it but never write it', async () => {
+  const staff = env.authenticatedContext(STAFF_IN_ORG).firestore();
+  // A consent an NGO can write on a farmer's behalf is not consent. This is the assertion
+  // that makes the record worth anything.
+  await assertFails(setDoc(doc(staff, 'farmer_consents', FARMER_WITH_LINK), {
+    uid: FARMER_WITH_LINK, org_id: 'org-1', scopes: { sales: true, expenses: true },
+    granted_at: 'now', revoked_at: null, updated_at: 'now',
+  }));
+  await assertSucceeds(getDoc(doc(staff, 'farmer_consents', FARMER_WITH_LINK)));
+
+  const outsider = env.authenticatedContext(STAFF_OTHER_ORG).firestore();
+  await assertFails(getDoc(doc(outsider, 'farmer_consents', FARMER_WITH_LINK)));
+
+  const farmer = env.authenticatedContext(FARMER_WITH_LINK).firestore();
+  await assertSucceeds(setDoc(doc(farmer, 'farmer_consents', FARMER_WITH_LINK), {
+    uid: FARMER_WITH_LINK, org_id: 'org-1', scopes: { sales: true },
+    granted_at: 'now', revoked_at: null, updated_at: 'now',
+  }));
+});
+
+test('a farmer cannot aim their consent at an org they do not belong to', async () => {
+  const db = env.authenticatedContext(FARMER_WITH_LINK).firestore();
+  await assertFails(setDoc(doc(db, 'farmer_consents', FARMER_WITH_LINK), {
+    uid: FARMER_WITH_LINK, org_id: 'org-2', scopes: { sales: true },
+    granted_at: 'now', revoked_at: null, updated_at: 'now',
+  }));
+  // nor forge one for somebody else
+  await assertFails(setDoc(doc(db, 'farmer_consents', FARMER_WITHOUT_LINK), {
+    uid: FARMER_WITHOUT_LINK, org_id: 'org-1', scopes: { sales: true },
+    granted_at: 'now', revoked_at: null, updated_at: 'now',
+  }));
+});
+
+test('a farmer can revoke by deleting the record, and staff cannot delete it for them', async () => {
+  await env.withSecurityRulesDisabled(async (c) => {
+    await setDoc(doc(c.firestore(), 'farmer_consents', FARMER_WITHOUT_LINK), {
+      uid: FARMER_WITHOUT_LINK, org_id: 'org-1', scopes: { sales: true },
+      granted_at: 'now', revoked_at: null, updated_at: 'now',
+    });
+  });
+  const staff = env.authenticatedContext(STAFF_IN_ORG).firestore();
+  await assertFails(deleteDoc(doc(staff, 'farmer_consents', FARMER_WITHOUT_LINK)));
+  const farmer = env.authenticatedContext(FARMER_WITHOUT_LINK).firestore();
+  await assertSucceeds(deleteDoc(doc(farmer, 'farmer_consents', FARMER_WITHOUT_LINK)));
 });

@@ -14,7 +14,15 @@ service cloud.firestore {
     function isMentor()    { return myRole() == 'mentor'; }
     function owns(d)       { return signedIn() && d.profile_id == request.auth.uid; }
     function ownsField(d, field) { return signedIn() && d[field] == request.auth.uid; }
-    function sameOrg(d)    { return isStaff() && myOrg() != null && d.org_id == myOrg(); }
+    // ITEM B — MULTI-ORG TENANCY. A funder funds SEVERAL NGOs; the scalar org_id cannot say so.
+    // funded_org_ids is ADMIN-SDK-WRITE-ONLY (pinned immutable on /profiles below, exactly as
+    // role and org_id are) and written by scripts/provision-org.mjs --fund. Absent => [] => this
+    // collapses to the previous single-org behaviour, so nothing widens for existing accounts.
+    function myFunded()    { return signedIn() ? prof().get('funded_org_ids', []) : []; }
+    function fundsOrg(o)   { return myRole() == 'funder' && o in myFunded(); }
+    // o != null is load-bearing: without it two org-less accounts match through null == null.
+    function orgVisible(o) { return o != null && (o == myOrg() || fundsOrg(o)); }
+    function sameOrg(d)    { return isStaff() && orgVisible(d.org_id); }
     // Stricter than sameOrg(): also admits mentors, and refuses to match two org-less
     // accounts against each other (null == null would otherwise be true).
     function inMyOrg(d)      { return signedIn() && myOrg() != null && d.org_id == myOrg(); }
@@ -37,18 +45,26 @@ service cloud.firestore {
       // could never load a cohort and always showed its empty state. Querying the directory
       // is a staff/mentor capability and nothing else, so `list` says exactly that.
       allow get:    if signedIn() && (uid == request.auth.uid || isStaff() || isMentor());
-      allow list:   if signedIn() && (isStaff() || isMentor());
+      // LIST IS ORG-SCOPED. `isStaff() || isMentor()` alone authorised an UNFILTERED list of every
+      // profile in the database — every farmer's name, phone number and id_number, in every org.
+      // All four list call sites (listOrgPeople, listFarmers, listTrainees) already filter by
+      // org_id, so this costs nothing and closes cross-tenant enumeration.
+      allow list:   if signedIn() && (isStaff() || isMentor()) && orgVisible(resource.data.org_id);
       // Self-service signup may pick one of the offered roles, but NEVER admin, and may
       // never self-assign an org (that grants cross-tenant access). org_id is admin-driven.
       allow create: if signedIn() && uid == request.auth.uid
         && request.resource.data.role in ['farmer', 'student']
-        && (!('org_id' in request.resource.data) || request.resource.data.org_id == null);
+        && (!('org_id' in request.resource.data) || request.resource.data.org_id == null)
+        && !('funded_org_ids' in request.resource.data);
       // role and org_id are IMMUTABLE from the client — pin them to the existing values so a
       // user can edit name/photo/language but can never self-promote to admin or spoof an org.
       // Promotion/org assignment must go through a trusted Admin-SDK backend or custom claims.
       allow update: if signedIn() && uid == request.auth.uid
         && request.resource.data.role == resource.data.role
-        && request.resource.data.org_id == resource.data.org_id;
+        && request.resource.data.org_id == resource.data.org_id
+        // funded_org_ids grants cross-org read of farmer money — pin it exactly like org_id.
+        // get() with a default handles profiles predating the field on both sides.
+        && request.resource.data.get('funded_org_ids', []) == resource.data.get('funded_org_ids', []);
     }
 
     match /organizations/{id} { allow read: if signedIn() && (id == myOrg() || isStaff()); }
@@ -165,10 +181,16 @@ service cloud.firestore {
       allow create: if signedIn() && request.resource.data.profile_id == request.auth.uid;
     }
 
+    // ITEM D — WAS UNSCOPED. `isStaff() || isMentor()` never inspected resource.data, so any
+    // staff/mentor account in ANY org could read EVERY learner's training record in the database.
+    // Fixed by denormalising org_id at write time (setCourseProgress in lib/db/queries.ts) and
+    // scoping the read to it. The write pins org_id to the writer's OWN org so a farmer cannot
+    // stamp someone else's org onto their row and surface inside that org's dashboard.
     match /course_progress/{id} {
-      allow read:  if owns(resource.data) || isStaff() || isMentor();
+      allow read:  if owns(resource.data) || (isCourseStaff() && inMyOrg(resource.data));
       allow write: if signedIn()
         && request.resource.data.profile_id == request.auth.uid
+        && request.resource.data.org_id == myOrg()
         && request.resource.data.module is string
         && request.resource.data.done is bool;
     }
@@ -217,10 +239,13 @@ service cloud.firestore {
     // specifically — a mentor/staff member who can already see a module is done can see the
     // evidence that unlocked it, which is the same trust boundary, not a bigger one. Writes are
     // learner-only; mentors/staff never write a submission on a learner's behalf.
+    // ITEM D — WAS UNSCOPED, same defect and same fix as course_progress above. Submission
+    // evidence is a photo of the learner's own homestead plus free-text self-check ticks.
     match /course_submissions/{id} {
-      allow read: if owns(resource.data) || isStaff() || isMentor();
+      allow read: if owns(resource.data) || (isCourseStaff() && inMyOrg(resource.data));
       allow create, update: if signedIn()
         && request.resource.data.profile_id == request.auth.uid
+        && request.resource.data.org_id == myOrg()
         && request.resource.data.module is string
         && request.resource.data.submitted_at is string
         && request.resource.data.self_check is list
@@ -250,9 +275,44 @@ service cloud.firestore {
       allow update, delete: if signedIn() && resource.data.created_by == request.auth.uid;
     }
 
+    // ITEM D — WAS UNSCOPED. A bare `isStaff()` read exposed every farmer's free-text survey
+    // answers, in every org, to every staff account. These are household answers about income,
+    // food security and land tenure. org_id is now stamped by addSurveyResponse and scoped here.
     match /survey_responses/{id} {
-      allow read:   if signedIn() && (resource.data.profile_id == request.auth.uid || isStaff());
-      allow create: if signedIn() && request.resource.data.profile_id == request.auth.uid;
+      allow read:   if signedIn() && (resource.data.profile_id == request.auth.uid || sameOrg(resource.data));
+      allow create: if signedIn() && request.resource.data.profile_id == request.auth.uid
+        && request.resource.data.org_id == myOrg();
+    }
+
+    // ─── ITEM C — FARMER CONSENT (POPIA) ──────────────────────────────────
+    // Nothing in this schema previously asked a farmer whether their financials, training
+    // record or location could be shown to a funder. NetworkFarmer.consent was the string
+    // 'demo' for every row. This collection is that record, and it is the FARMER'S:
+    //
+    //   • ONLY the farmer writes it. Staff and mentors can read it and can never create,
+    //     amend or delete one. A consent an NGO could write on a farmer's behalf is not
+    //     consent, and that is the whole POPIA property being bought here.
+    //   • It is PER-SCOPE, not a single yes. A farmer may share training progress without
+    //     opening their books; `scopes` is a map of scope -> bool (see lib/consent.ts).
+    //   • It is REVOCABLE — set a scope false, or delete the doc entirely. Absent doc means
+    //     NO consent, so the fail-closed default is the one you get by doing nothing.
+    //   • org_id is pinned to the farmer's OWN org: consent is granted TO the org they are
+    //     enrolled with, and cannot be aimed at an org they do not belong to.
+    //
+    // These rules make the RECORD trustworthy. Enforcing it on the data still requires the
+    // server projection in lib/network-access.ts — a client-side read cannot be the boundary.
+    match /farmer_consents/{uid} {
+      allow read: if signedIn() && (
+        uid == request.auth.uid ||
+        sameOrg(resource.data) ||
+        (isMentor() && inMyOrg(resource.data))
+      );
+      allow create, update: if signedIn() && uid == request.auth.uid
+        && request.resource.data.uid == uid
+        && request.resource.data.org_id == myOrg()
+        && request.resource.data.scopes is map
+        && request.resource.data.updated_at is string;
+      allow delete: if signedIn() && uid == request.auth.uid;
     }
 
     // Per-user map data (farm shapes, saved places, water points) — cross-device sync.

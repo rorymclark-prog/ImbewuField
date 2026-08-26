@@ -118,7 +118,7 @@ function TraineeCard({
   const status: EnrollmentStatus | null = enrollment
     ? effectiveStatus(
         enrollment,
-        [...doneIds].map((module) => ({ id: `${trainee.id}_${module}`, profile_id: trainee.id, module, done: true, updated_at: '' })),
+        [...doneIds].map((module) => ({ id: `${trainee.id}_${module}`, profile_id: trainee.id, org_id: trainee.org_id ?? null, module, done: true, updated_at: '' })),
         COURSE_MODULES.map((m) => m.id),
       )
     : null;
@@ -503,7 +503,7 @@ export default function MentorPage() {
     Object.values(enrollBy).filter((e) => trainees.some((t) => t.id === e.profile_id)),
     Object.fromEntries(trainees.map((t) => [
       t.id,
-      [...doneIdsFor(t.id)].map((module) => ({ id: `${t.id}_${module}`, profile_id: t.id, module, done: true, updated_at: '' })),
+      [...doneIdsFor(t.id)].map((module) => ({ id: `${t.id}_${module}`, profile_id: t.id, org_id: t.org_id ?? null, module, done: true, updated_at: '' })),
     ])),
     moduleIds,
   );
