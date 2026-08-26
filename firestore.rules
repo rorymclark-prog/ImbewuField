@@ -44,7 +44,7 @@ service cloud.firestore {
       return (myRole() in ['ngo', 'funder'] && myOrg() != null && d.org_id == myOrg())
         || grantedOrg(d.org_id);
     }
-    // Per-farmer opt-in gate (Profile.dataConsent) for the NGO/funder dashboards specifically.
+    // Per-farmer opt-in gate for the NGO/funder dashboards specifically.
     // NEVER combined with isMentor() or isAdmin() below — a farmer's mentor relationship is the
     // pre-existing, already-consented-by-enrollment path this app has always had, and Rory's own
     // platform-admin access isn't the thing POPIA consent is meant to gate. This only narrows the
