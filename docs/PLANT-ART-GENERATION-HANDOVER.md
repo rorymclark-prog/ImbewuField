@@ -1,6 +1,6 @@
 # Plant-art generation handover
 
-**Last updated:** 2026-08-27
+**Last updated:** 2026-08-28
 
 **Working branch:** `codex/climate-zone-plant-art`
 
@@ -198,8 +198,9 @@ paths in the same change that adds its catalogue mappings.
 
 ## Current status
 
-As of 2026-08-27, 51 deliverables are approved and staged: 20 of 22 exotic-fruit-and-nut
-deliverables, 29 of 30 indigenous-fruit deliverables and 2 shrub deliverables.
+As of 2026-08-28, 58 deliverables are approved and staged: 20 of 22 exotic-fruit-and-nut
+deliverables, 29 of 30 indigenous-fruit deliverables, 2 shrub deliverables and 7 small-tree /
+large-shrub deliverables.
 
 | Species | Top-down | Picker |
 |---|---|---|
@@ -254,6 +255,23 @@ and the botanical sources linked there; no species names or catalogue facts were
 The brief heading says "Shrubs (6)" but supplies five rows. Do not invent a sixth species; preserve
 the five named rows unless the source brief is explicitly corrected.
 
+### Small trees and large shrubs
+
+| Species | Top-down | Picker |
+|---|---|---|
+| Dogwood / umglindi | `top-down/dogwood-v1.png` | **pending** |
+| Cape boxthorn / kriedoring | **pending** | **pending** |
+| Honey-thorn / kriedoring | **pending** | **pending** |
+| Natal currant | `top-down/natal-currant-v1.png` | `picker/tree_natal_currant.png` |
+| Pigeon pea | `top-down/pigeon-pea-v1.png` | **pending** |
+| Quiver tree / kokerboom | **pending** | `picker/tree_quiver_tree.png` |
+| Spekboom | `top-down/spekboom-v1.png` | **pending** |
+| Waxberry / wasbessie | `top-down/waxberry-v1.png` | **pending** |
+
+The seven approved files in this section were visually inspected at their prepared delivery size
+and passed the applicable alpha/canopy or picker pixel checks. Species traits were checked against
+primary SANBI PlantZAfrica pages where available; pigeon pea used FAO and USDA descriptions.
+
 ### Pending transparency failures
 
 - Banana top-down: the visually approved source
@@ -298,11 +316,39 @@ the five named rows unless the source brief is explicitly corrected.
   and picker candidate
   `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-27c33807-3b0d-4683-b90d-38b0a1d27e64.png`
   are RGB checkerboards. Do not stage them.
+- Dogwood picker: the corrected front-elevation source
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-47f7ff3f-cb02-4b4b-8c74-8642ae52be77.png`
+  is visually approved, but it and its extraction are RGB checkerboards. Do not stage them.
+- Cape boxthorn: overhead candidate
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-94935d18-8eed-446d-887c-f3a588eafd6a.png`
+  and picker candidate
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-d793332a-ac3c-43a3-b381-ada340a76281.png`
+  are visually approved RGB checkerboards. Do not stage them.
+- Honey-thorn: overhead candidate
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-5fae27c0-ce04-46e1-93ed-4ed3e1b80d07.png`
+  and picker candidate
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-278e383d-4513-46fa-adf5-e3beaeedf7e0.png`
+  are visually approved RGB checkerboards. Do not stage them.
+- Pigeon pea picker: the visually approved source
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-ac6ade8d-8e5d-4787-a742-c99f23f4c373.png`
+  and its extraction
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-29d3a649-15b8-4f97-9207-a10e1249a4a9.png`
+  are RGB checkerboards. Do not stage them.
+- Quiver tree top-down: the visually approved source
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-5602f4d5-1332-430b-bfd7-e35a455aeaa2.png`
+  and its extraction
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-350df27c-c06b-465c-b40c-52280083f9fc.png`
+  are RGB checkerboards. Do not stage them.
+- Spekboom picker: the visually approved source
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-baf42529-b0d9-47ee-8667-4ddeb772e49f.png`
+  is an RGB checkerboard. Its extraction
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-6d787f66-630f-4106-bd4d-b12d5e244512.png`
+  replaced the background with an opaque coloured vignette and must also be rejected.
 
-The next untouched species in the brief is **Dogwood / umglindi**, the first small tree / large
-shrub. Continue in the exact source-table order, while keeping every pending transparency failure
-visible in status reports. Do not silently switch to the CLI/API fallback to resolve them; that
-requires explicit user approval.
+The next untouched species in the brief is **Baboon grape**, the first climber. Waxberry picker is
+also still unattempted. Continue in exact source-table order, while keeping every pending
+transparency failure visible in status reports. Do not silently switch to the CLI/API fallback to
+resolve them; that requires explicit user approval.
 
 Do not modify `PLAN_VERSION`. Do not touch the original checkout at
 `/Users/roryclark/ImbewuField`; it contains another session's uncommitted files.
