@@ -34,6 +34,16 @@ export interface ReleaseNote {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '27 August (late)',
+    sha: 'f9b5338',
+    changes: [
+      'Choose your language first, before the Start button, when you set the app up',
+      'You can change language on a phone now — Settings, at the top',
+      'The language you pick in your account now actually changes the app',
+      'The bar at the bottom asks Lima for help instead of waiting for typing',
+    ],
+  },
+  {
     when: '27 August (evening)',
     sha: '80ae8f2',
     changes: [

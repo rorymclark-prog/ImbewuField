@@ -126,7 +126,7 @@ export default function TabBar() {
               <span
                 className="font-sans"
                 style={{
-                  fontSize: 11,
+                  fontSize: 12,
                   fontWeight: active ? 700 : 600,
                   color: active ? '#1F4D2B' : 'var(--text-muted)',
                   letterSpacing: '0.01em',

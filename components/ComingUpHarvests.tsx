@@ -154,7 +154,7 @@ export default function ComingUpHarvests({
         )}
       </div>
 
-      <p className="px-4 pb-3 font-sans" style={{ fontSize: 11, color: '#8C7A62', lineHeight: 1.45 }}>
+      <p className="px-4 pb-3 font-sans" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.45 }}>
         Each figure is a whole crop&apos;s harvest counted in the month its picking{' '}
         <em>starts</em> — not what you pick during that month. Planning estimates, not promises.
       </p>
@@ -179,7 +179,7 @@ function Figure({ label, value, tone = '#20190F' }: { label: string; value: stri
   return (
     <span className="flex flex-col">
       <span className="font-mono font-semibold" style={{ fontSize: 20, color: tone, letterSpacing: '-0.01em' }}>{value}</span>
-      <span className="font-sans" style={{ fontSize: 10.5, color: '#8C7A62' }}>{label}</span>
+      <span className="font-sans" style={{ fontSize: 12, color: '#8C7A62' }}>{label}</span>
     </span>
   );
 }
@@ -198,7 +198,7 @@ function MonthRow({ month, open, onToggle }: { month: ForwardHarvestMonth; open:
         <span className="flex items-center gap-2 min-w-0">
           <span className="font-display font-semibold" style={{ fontSize: 13, color: '#20190F' }}>{month.label}</span>
           {!empty && (
-            <span className="font-sans truncate" style={{ fontSize: 11.5, color: '#8C7A62' }}>
+            <span className="font-sans truncate" style={{ fontSize: 12, color: '#8C7A62' }}>
               {month.harvests.length === 1 ? month.harvests[0].name : `${month.harvests.length} crops`}
             </span>
           )}
@@ -264,7 +264,7 @@ function Exclusions({
   return (
     <div className="px-4 py-2.5" style={{ borderTop: '1px solid #E2D8C4', background: '#FBF7EF' }}>
       {lines.map((l) => (
-        <p key={l} className="font-sans" style={{ fontSize: 10.5, color: '#8C7A62', lineHeight: 1.5 }}>{l}</p>
+        <p key={l} className="font-sans" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.5 }}>{l}</p>
       ))}
     </div>
   );

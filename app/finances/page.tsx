@@ -347,7 +347,7 @@ function SalesLedger({ sales, expenses, invoices, loading, onEditSale, onEditExp
                     aria-label={pendingDelete === item.id ? 'Confirm delete' : 'Delete'}
                     onClick={() => requestDelete(item)}
                     style={pendingDelete === item.id
-                      ? { background: 'rgba(196,58,58,0.12)', border: '1px solid rgba(196,58,58,0.35)', borderRadius: 8, cursor: 'pointer', padding: '3px 6px', color: '#B23A3A', fontSize: 11, fontFamily: 'inherit', fontWeight: 600 }
+                      ? { background: 'rgba(196,58,58,0.12)', border: '1px solid rgba(196,58,58,0.35)', borderRadius: 8, cursor: 'pointer', padding: '3px 6px', color: '#B23A3A', fontSize: 12, fontFamily: 'inherit', fontWeight: 600 }
                       : { background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: 'var(--color-muted-strong)', opacity: 0.55 }}
                   >
                     {pendingDelete === item.id ? 'Sure?' : <Trash2 size={14} />}
@@ -817,7 +817,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
       {/* Title bar */}
       <div className="flex items-end justify-between gap-4 mb-5 flex-wrap">
         <div>
-          <div className="font-sans uppercase tracking-widest" style={{ fontSize: 11, color: 'var(--color-muted)', letterSpacing: '0.14em' }}>{name}</div>
+          <div className="font-sans uppercase tracking-widest" style={{ fontSize: 12, color: 'var(--color-muted)', letterSpacing: '0.14em' }}>{name}</div>
           <h1 className="font-display font-semibold" style={{ fontSize: 30, color: 'var(--color-ink)', letterSpacing: '-0.02em', lineHeight: 1.1 }}>Financial sheet</h1>
         </div>
         <div className="flex items-center gap-2">
@@ -863,7 +863,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
       <div className="grid grid-cols-4 gap-4 mb-5">
         {stats.map((s) => (
           <div key={s.label} className="rounded-2xl px-5 py-4" style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}>
-            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 11, color: 'var(--color-muted)', letterSpacing: '0.1em' }}>{s.label}</div>
+            <div className="font-sans uppercase tracking-widest" style={{ fontSize: 12, color: 'var(--color-muted)', letterSpacing: '0.1em' }}>{s.label}</div>
             <div className="font-display font-bold mt-1" style={{ fontSize: 28, color: s.color, letterSpacing: '-0.02em' }}>{loading ? '…' : s.value}</div>
           </div>
         ))}
@@ -884,7 +884,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
             <tr style={{ borderBottom: '1px solid var(--color-border)' }}>
               {['Date', 'Description', 'Qty', 'In', 'Source', 'Out'].map((h, i) => (
                 <th key={h} className="font-sans uppercase tracking-wider px-5 py-3"
-                  style={{ fontSize: 11, color: 'var(--color-muted)', textAlign: i >= 3 && (h === 'In' || h === 'Out') ? 'right' : 'left', letterSpacing: '0.08em', fontWeight: 700 }}>{h}</th>
+                  style={{ fontSize: 12, color: 'var(--color-muted)', textAlign: i >= 3 && (h === 'In' || h === 'Out') ? 'right' : 'left', letterSpacing: '0.08em', fontWeight: 700 }}>{h}</th>
               ))}
               <th style={{ width: 40 }} />
             </tr>
@@ -900,7 +900,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
                 <td className="px-5 py-3 font-display font-medium" style={{ fontSize: 14, color: 'var(--color-ink)' }}>
                   {r.desc}
                   {r.duplicateSuspect && (
-                    <span className="block font-sans" style={{ fontSize: 11.5, color: '#B07A1E', marginTop: 2 }}>
+                    <span className="block font-sans" style={{ fontSize: 12, color: '#B07A1E', marginTop: 2 }}>
                       {DUPLICATE_ROW_NOTE}
                     </span>
                   )}
@@ -1350,7 +1350,7 @@ export default function FinancesPage() {
                   style={{ background: 'transparent', border: '1px dashed rgba(192,122,30,0.5)', color: '#C07A1E', cursor: 'pointer' }}
                 >
                   <span className="flex items-center gap-2"><Sparkles size={18} />See a sample — how Finance works</span>
-                  <span className="font-sans font-normal" style={{ fontSize: 11.5, color: 'var(--color-muted-strong)', lineHeight: 1.4 }}>
+                  <span className="font-sans font-normal" style={{ fontSize: 12, color: 'var(--color-muted-strong)', lineHeight: 1.4 }}>
                     A worked year from the Ubhejane Crèche demo farm: sales, costs, harvests and
                     invoices. Your own books are not touched.
                   </span>

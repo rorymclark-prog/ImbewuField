@@ -445,7 +445,7 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
               <span
                 className="font-sans"
                 style={{
-                  fontSize: 11.5,
+                  fontSize: 12,
                   color: bioRemaining < 20 ? '#B83A18' : '#94876F',
                 }}
               >

@@ -173,7 +173,7 @@ export default function NextStepCoach({ inputs, coords, onOpenSurvey, variant = 
       <div className="flex items-center gap-2">
         <span
           className="font-sans font-bold uppercase flex-shrink-0"
-          style={{ fontSize: 11, color: '#C07A1E', letterSpacing: '0.05em' }}
+          style={{ fontSize: 12, color: '#C07A1E', letterSpacing: '0.05em' }}
         >
           {t('coachOverline')}
         </span>
@@ -212,7 +212,7 @@ export default function NextStepCoach({ inputs, coords, onOpenSurvey, variant = 
           </div>
           <span
             className="font-sans font-bold uppercase flex-1 min-w-0"
-            style={{ fontSize: 11, color: '#C07A1E', letterSpacing: '0.06em' }}
+            style={{ fontSize: 12, color: '#C07A1E', letterSpacing: '0.06em' }}
           >
             {t('coachOverline')}
           </span>

@@ -507,7 +507,7 @@ function HomeInner() {
                 borderColor: 'rgba(31,77,43,0.2)',
                 background: 'rgba(31,77,43,0.04)',
                 color: '#1F4D2B',
-                fontSize: 11,
+                fontSize: 12,
                 fontWeight: 800,
                 letterSpacing: 0.2,
                 whiteSpace: 'nowrap',
