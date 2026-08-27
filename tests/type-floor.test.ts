@@ -66,6 +66,8 @@ const FARMER_SURFACES: Record<string, string> = {
   'components/PhotoUpload.tsx': 'adding a photo',
   'components/ProfileSheet.tsx': 'her own account',
   'components/ThemePanel.tsx': 'language and text size — the last place that may be unreadable',
+  'components/design/LessonLink.tsx': 'the "Learn" button in the /finances and /home headers — farmer chrome, '
+    + 'despite living under design/. The deployed build settled this: it renders in her header.',
   'components/LimaBar.tsx': 'the help she is offered',
   'components/ChatPanel.tsx': 'the answer she is given',
   'components/EmptyState.tsx': 'what a screen says when it has nothing yet',
@@ -101,7 +103,7 @@ const EXPERT_SURFACES: Record<string, { reason: string; budget: number }> = {
   },
   'components/DataPanel.tsx': {
     reason: 'the site analysis panel — dense climate and soil figures read at a laptop',
-    budget: 29,
+    budget: 33,
   },
   'components/SiteSurveySheet.tsx': {
     reason: 'the facilitator survey, filled in by a field officer',
@@ -116,7 +118,6 @@ const EXPERT_SURFACES: Record<string, { reason: string; budget: number }> = {
     budget: 3,
   },
   'components/design/LessonPanel.tsx': { reason: 'design studio, laptop tool', budget: 3 },
-  'components/design/LessonLink.tsx': { reason: 'design studio, laptop tool', budget: 1 },
   'components/AreaPanel.tsx': { reason: 'the drawing tool\'s measurement readout', budget: 0 },
   'components/InsightsPanel.tsx': { reason: 'the analysis side panel', budget: 0 },
   'components/EvidenceCatalogue.tsx': { reason: 'the NGO evidence library', budget: 0 },
@@ -161,26 +162,58 @@ function reachable(): string[] {
 
 type Small = { line: number; px: number; text: string };
 
-/** Every font-size declaration under the floor, in source order. */
-function belowFloor(rel: string): Small[] {
+/**
+ * SVG font-size ATTRIBUTES, counted apart from DOM type.
+ *
+ * `fontSize="7"` on a <text> inside a chart is a different animal from `style={{ fontSize: 7 }}`,
+ * and this test was blind to it on its first run — the source scan reported a clean sweep while
+ * the deployed /finances at 375px still had 32 labels rendering at 6–7px. Measured in the browser,
+ * not inferred. LOOK AT THE SCREEN.
+ *
+ * They are not fixed here because the fix is not a number. The axis lives in a 320-unit-wide
+ * viewBox with a 28–34 unit gutter: "−R6.3k" at 12px needs ~45 units, and twelve month labels at
+ * 12px need ~260 of the ~262 units the plot has, so they would collide. Making these legible means
+ * widening the gutter and labelling every third month — a chart change worth looking at, not
+ * worth guessing at.
+ *
+ * So they are COUNTED. Exactly, like every other ratchet here. They cannot grow, they cannot be
+ * forgotten, and the day someone lays the axes out properly this table goes to zero.
+ */
+const CHART_AXIS_DEBT: Record<string, { reason: string; budget: number }> = {
+  'components/FinanceGraphs.tsx': { reason: 'picked/sold y-ticks and month labels', budget: 3 },
+  'components/CashflowChart.tsx': { reason: 'in/out ticks, running-total ticks, month + year', budget: 7 },
+  'components/WaterBalance.tsx': { reason: 'the water chart\'s own axis', budget: 2 },
+};
+
+const DOM_SIZE = [
+  /text-\[(\d+(?:\.\d+)?)px\]/g,                          // text-[10px]
+  /fontSize:\s*'?"?(\d+(?:\.\d+)?)(?:px)?'?"?/g,           // style={{ fontSize: 10 }}
+] as const;
+const SVG_ATTR_SIZE = /fontSize=(?:"(\d+(?:\.\d+)?)"|\{(\d+(?:\.\d+)?)\})/g;
+
+/** Font-size declarations under the floor. `kind` picks DOM styling or SVG attributes. */
+function belowFloor(rel: string, kind: 'dom' | 'svg'): Small[] {
   assert.ok(
     existsSync(path.join(ROOT, rel)),
-    `${rel} is listed in FARMER_SURFACES or EXPERT_SURFACES but does not exist. Remove it from `
-    + 'its register — a classification pointing at nothing protects nothing.',
+    `${rel} is listed in a register but does not exist. Remove it — a classification pointing at `
+    + 'nothing protects nothing.',
   );
   const out: Small[] = [];
   source(rel).split('\n').forEach((line, i) => {
     const add = (px: number) => {
       if (px < FLOOR) out.push({ line: i + 1, px, text: line.trim().slice(0, 100) });
     };
-    // Tailwind arbitrary values: text-[10px], text-[0.6rem]
-    for (const m of line.matchAll(/text-\[(\d+(?:\.\d+)?)px\]/g)) add(Number(m[1]));
-    for (const m of line.matchAll(/text-\[(\d*\.?\d+)rem\]/g)) add(Number(m[1]) * 16);
-    // React inline styles and Recharts tick objects: fontSize: 10, fontSize: '10px'
-    for (const m of line.matchAll(/fontSize:\s*'?"?(\d+(?:\.\d+)?)(?:px)?'?"?/g)) add(Number(m[1]));
+    if (kind === 'dom') {
+      for (const re of DOM_SIZE) for (const m of line.matchAll(re)) add(Number(m[1]));
+      for (const m of line.matchAll(/text-\[(\d*\.?\d+)rem\]/g)) add(Number(m[1]) * 16);
+    } else {
+      for (const m of line.matchAll(SVG_ATTR_SIZE)) add(Number(m[1] ?? m[2]));
+    }
   });
   return out;
 }
+
+const all = (rel: string) => [...belowFloor(rel, 'dom'), ...belowFloor(rel, 'svg')];
 
 const report = (rel: string, small: Small[]) =>
   small.map((s) => `\n    ${rel}:${s.line}  ${s.px}px  ${s.text}`).join('');
@@ -188,7 +221,7 @@ const report = (rel: string, small: Small[]) =>
 test('nothing a farmer has to read is set below 12px', () => {
   const failures: string[] = [];
   for (const [rel, why] of Object.entries(FARMER_SURFACES)) {
-    const small = belowFloor(rel);
+    const small = belowFloor(rel, 'dom');
     if (small.length) failures.push(`\n  ${rel} — ${why}${report(rel, small)}`);
   }
   assert.equal(
@@ -198,18 +231,44 @@ test('nothing a farmer has to read is set below 12px', () => {
   );
 });
 
+test('the chart axes she cannot read are counted, not overlooked', () => {
+  // Exact, both directions — the same ratchet as the expert tools. These are the 6–8px labels the
+  // browser found on the deployed /finances while the source scan said the sweep was clean.
+  for (const [rel, { reason, budget }] of Object.entries(CHART_AXIS_DEBT)) {
+    const found = belowFloor(rel, 'svg').length;
+    assert.ok(
+      found <= budget,
+      `${rel} (${reason}) now draws ${found} axis labels under ${FLOOR}px, up from ${budget}. `
+      + `Her money screen does not need more type she cannot read:${report(rel, belowFloor(rel, 'svg'))}\n`,
+    );
+    assert.equal(
+      found, budget,
+      `${rel} is down to ${found} sub-${FLOOR}px axis labels from ${budget}. Lower its budget in `
+      + 'CHART_AXIS_DEBT to lock that in.',
+    );
+  }
+  // A farmer file that starts drawing SVG text without declaring the debt is the real leak: the
+  // DOM check above would pass it, and nobody would be looking at the chart.
+  const undeclared = Object.keys(FARMER_SURFACES)
+    .filter((rel) => !(rel in CHART_AXIS_DEBT) && belowFloor(rel, 'svg').length > 0);
+  assert.deepEqual(
+    undeclared, [],
+    `${undeclared.length} farmer surface(s) draw sub-${FLOOR}px SVG text without an entry in `
+    + `CHART_AXIS_DEBT:\n    ${undeclared.join('\n    ')}\n`,
+  );
+});
+
 test('the expert tools cannot get worse, and a fix cannot go unrecorded', () => {
   // Exact equality in BOTH directions, the same shape as tests/nav-role-filtering.test.ts. Over
   // budget means someone added tiny type. Under budget means someone fixed some and left the
   // ratchet where it was — which would leave room for a future regression to slip in unseen.
   for (const [rel, { reason, budget }] of Object.entries(EXPERT_SURFACES)) {
-    const found = belowFloor(rel).length;
-    if (found > budget) {
-      assert.fail(
-        `${rel} (${reason}) now has ${found} declarations under ${FLOOR}px, up from ${budget}. `
-        + `The ratchet only turns one way:${report(rel, belowFloor(rel))}\n`,
-      );
-    }
+    const found = all(rel).length;
+    assert.ok(
+      found <= budget,
+      `${rel} (${reason}) now has ${found} declarations under ${FLOOR}px, up from ${budget}. `
+      + `The ratchet only turns one way:${report(rel, all(rel))}\n`,
+    );
     assert.equal(
       found, budget,
       `${rel} is down to ${found} sub-${FLOOR}px declarations from ${budget} — good. Lower its `
