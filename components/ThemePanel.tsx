@@ -5,6 +5,7 @@ import { Satellite, Sprout, Mountain, Sparkles, Sun, Moon, Monitor, Check, X, Fo
 import { useTheme, type ThemeName, type ThemeMode } from '@/lib/theme';
 import { getGuidedState, setGuidedState, GUIDED_CHANGED_EVENT } from '@/lib/site-progress';
 import { isTtsSupported, getTtsMuted, setTtsMuted } from '@/lib/tts';
+import { APP_LANGS, useLanguage } from '@/lib/i18n';
 
 // Small pill switch, matching the app's toggle style (used for the Guidance rows).
 function PillToggle({ on, onClick, label }: { on: boolean; onClick: () => void; label: string }) {
@@ -56,6 +57,7 @@ interface Props {
 
 export default function ThemePanel({ open, onClose }: Props) {
   const { theme, mode, textScale, setTheme, setMode, setTextScale } = useTheme();
+  const { lang, setLang, t } = useLanguage();
   const panelRef = useRef<HTMLDivElement>(null);
 
   // Guidance (Lima) settings — read client-side so SSR/first paint is stable.
@@ -150,7 +152,7 @@ export default function ThemePanel({ open, onClose }: Props) {
             <div style={{ fontSize: 18, fontWeight: 600, color: 'var(--text-primary)', fontFamily: 'var(--font-display)' }}>
               Appearance
             </div>
-            <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 2 }}>Text size, theme &amp; display</div>
+            <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 2 }}>Language, text size &amp; theme</div>
           </div>
           <button
             onClick={onClose}
@@ -170,6 +172,47 @@ export default function ThemePanel({ open, onClose }: Props) {
 
         {/* Content */}
         <div style={{ flex: 1, overflowY: 'auto', padding: '20px' }}>
+
+          {/* LANGUAGE — first, because a panel she cannot read is not a panel.
+              This is the only working language control on a phone. The onboarding screen ends
+              with "you can change this later" (pickLangSub), and until now that was not true:
+              components/LangSwitcher.tsx is `hidden md:block`, so it does not exist below 768px,
+              and the Language select on /account writes profile.language to Firestore — a field
+              NOTHING reads back. She chose once, at the very moment she understood the app least,
+              and was then locked in. The Account button that opens this panel is even labelled
+              "Appearance & language", which had no language in it.
+              Labels are each language's own name, so finding yours never depends on reading the
+              one you are stuck in. */}
+          <div style={{ marginBottom: 28 }}>
+            <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 12 }}>
+              {t('pickLang')}
+            </div>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+              {APP_LANGS.map((l) => {
+                const active = l.code === lang;
+                return (
+                  <button
+                    key={l.code}
+                    onClick={() => setLang(l.code)}
+                    aria-pressed={active}
+                    style={{
+                      minHeight: 46, padding: '10px 12px', borderRadius: 8,
+                      border: active ? '1.5px solid var(--emerald)' : '1px solid var(--border)',
+                      background: active ? 'var(--badge-bg)' : 'var(--bg-2)',
+                      color: active ? 'var(--emerald)' : 'var(--text-secondary)',
+                      fontSize: 14, fontWeight: active ? 700 : 500,
+                      fontFamily: 'var(--font-display)', cursor: 'pointer',
+                      display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 6,
+                      transition: 'all 0.15s ease',
+                    }}
+                  >
+                    <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{l.native}</span>
+                    {active && <Check size={15} style={{ flexShrink: 0 }} />}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
 
           {/* Text size section — first, since it's the accessibility lever */}
           <div style={{ marginBottom: 28 }}>

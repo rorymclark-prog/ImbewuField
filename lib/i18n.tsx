@@ -113,6 +113,12 @@ const T_en: Dict = {
   waterPointAddButton: 'Water point',
   waterPointFallbackLabel: 'Water point',
   askLimaButton: 'Ask Lima about your land',
+  // The home help strip. It used to be a free-text box reading "Ask Lima anything..." — hardcoded
+  // English, and an open composer is the hardest control there is for someone who types slowly.
+  // Now a labelled button, and Lima is finally introduced. See components/LimaBar.tsx.
+  limaWhoIs: 'Lima, your planting helper',
+  limaAskButton: 'Ask for help',
+  limaPhotoButton: 'Photo',
   askLimaSubtitle: 'Sizes, water, what to plant…',
   elevationReadoutLabel: 'elev',
   elevationReadoutUnit: 'asl',
