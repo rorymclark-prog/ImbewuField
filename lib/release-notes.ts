@@ -34,6 +34,16 @@ export interface ReleaseNote {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '27 August (evening)',
+    sha: '6758663',
+    changes: [
+      'The Journal is for notes and photos — it no longer says "Log harvests"',
+      'What you harvested and what you sold go in My Records; the Journal now says so and takes you there',
+      'Journal entries stay on this phone only, and the Journal tells you that too',
+      'The menu shows only the pages your account can open — no more screens that turn you away',
+    ],
+  },
+  {
     when: '27 August',
     sha: '2a35eed',
     changes: [
