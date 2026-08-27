@@ -9,6 +9,8 @@ import {
   Camera, Home, User, Users, BarChart3, Building2, Palette, Handshake, Sparkles, Earth, Sprout,
 } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
+import { useAuth } from '@/lib/auth';
+import { canSeeNavLink } from '@/lib/role-access';
 import { communityEnabled } from '@/lib/community/flag';
 
 interface NavDrawerProps {
@@ -19,6 +21,10 @@ interface NavDrawerProps {
 export default function NavDrawer({ open, onClose }: NavDrawerProps) {
   const pathname = usePathname();
   const { t } = useLanguage();
+  // Every link below used to be offered to everybody, including the four staff dashboards. See
+  // lib/role-access.ts for why that is a usability failure rather than a security one, and for
+  // what `role === null` deliberately does NOT do.
+  const { role } = useAuth();
 
   const mainItems = [
     { href: '/home',    Icon: Home,          label: t('tabHome') },
@@ -31,9 +37,9 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
     { href: '/finances', Icon: DollarSign,   label: t('tabFinance') },
     { href: '/student', Icon: GraduationCap, label: t('homeQuickStudy') },
     { href: '/contact', Icon: MessageCircle, label: t('homeQuickContact') },
-    // Ungated on purpose: neither route reads Firestore or another account's
-    // data — both run entirely on their own declared sample sets, so there is
-    // nothing here for a kill switch to protect.
+    // /network was ungated when it ran on lib/network-demo.ts. It now reads real farmers'
+    // production and income through /api/network/farmers and is gated to ngo/funder/admin, so
+    // this link is filtered like the other staff routes rather than opening onto a refusal.
     { href: '/network',  Icon: Users,     label: 'Network' },
     { href: '/exchange', Icon: Sprout,    label: 'Exchange' },
     // Invisible when the master kill switch is off — no entry point, no reads.
@@ -173,7 +179,15 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
 
         {/* Nav sections */}
         <div style={{ flex: 1, overflowY: 'auto', paddingTop: 8, paddingBottom: 24 }}>
-          {NAV_SECTIONS.map((section) => (
+          {NAV_SECTIONS.map((section) => ({
+            ...section,
+            items: section.items.filter(({ href }) => canSeeNavLink(role, href)),
+          }))
+            // A section whose every link was filtered out must go too, heading and all —
+            // otherwise a farmer gets an "ORGANISATION" label with nothing beneath it, which
+            // reads as something failing to load rather than as something not meant for her.
+            .filter((section) => section.items.length > 0)
+            .map((section) => (
             <div key={section.label} style={{ marginBottom: 4 }}>
               <div
                 className="font-sans uppercase tracking-widest"

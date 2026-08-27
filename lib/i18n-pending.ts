@@ -9,6 +9,31 @@
 
 export type Dict = Record<string, string>;
 
+/*
+ * Copy whose EXISTING translations had to be withdrawn because they were faithful translations
+ * of something untrue, and which is therefore waiting on review just like new copy is.
+ *
+ * `homeQuickJournalDesc` said "Log harvests" and all ten locales said it too — isiZulu
+ * "Rekhoda izivuno", isiXhosa "Rekhoda iivuno", Afrikaans "Teken oeste aan". The Field Journal
+ * has no kilogram field, writes to localStorage only, and never reaches production_logs, the
+ * finance totals or the farmer's programme. So the tile pulled exactly the farmer who wanted to
+ * record a harvest into the one place that cannot record one, and told her so in her own
+ * language.
+ *
+ * The stale strings are DELETED from lib/locales/*.ts rather than rewritten here: coining farming
+ * copy in ten languages without a first-language reviewer is what tests/farmer-i18n-gaps.test.ts
+ * exists to prevent, and a true sentence in English beats a fluent false one in isiZulu. Spread
+ * into every locale (not left to translate()'s fallback) so the gap is explicit in each slot —
+ * the same reason the Design Studio block below is spread. A reviewer overrides the key inside
+ * their own locale, below the spread, and it stops being pending.
+ */
+export const JOURNAL_ENGLISH_PENDING: Dict = {
+  homeQuickJournalDesc: 'Notes & photos',
+  journalLocalOnlyNote: 'Kept on this phone.',
+  journalWeightsLiveElsewhere: 'Harvest weights and sales go in My Records.',
+  journalOpenRecords: 'Open My Records',
+};
+
 export const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   designStepBase: 'Base',
   designStepSector: 'Sector',

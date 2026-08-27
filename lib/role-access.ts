@@ -20,3 +20,53 @@ import type { UserRole } from './db/types';
 export function canAccessRolePage(role: UserRole | null, allowed: ReadonlySet<UserRole>): boolean {
   return role !== null && allowed.has(role);
 }
+
+/*
+ * ── WHICH GATED ROUTES A NAVIGATION SURFACE MAY OFFER ────────────────────────────────────────
+ *
+ * The gate above is called by the four pages that need it, and it works. What did not work was
+ * everything that LINKS to them: components/NavDrawer.tsx offered all 22 links to everybody, and
+ * app/home/page.tsx rendered a "Dashboards · Farmer · Mentor · NGO · Funder · Student" row that
+ * was equally unfiltered — it imports useAuth and destructures `{ user }`, never `role`. So a
+ * farmer was handed four doors that open onto "This is the NGO area".
+ *
+ * That is worse than untidy for the farmer this was audited against: an isiZulu-speaking
+ * smallholder learning the phone cannot tell a door she is not allowed through from one she is
+ * using wrong, so a refusal screen reads as "I broke it".
+ *
+ * THE REGISTRY IS DUPLICATION, AND THAT IS WHY THERE IS A TEST. Each page still declares its own
+ * allow-set inline — that is the real gate and it must stay next to the code it protects. This
+ * mirror exists so navigation can ask the question WITHOUT importing four page components, and
+ * tests/nav-role-filtering.test.ts parses those four pages and asserts this table still matches
+ * them exactly. If someone widens a page's roles and forgets this file, the test fails rather
+ * than the menu quietly hiding a page the user is now allowed to open.
+ */
+export const ROLE_GATED_ROUTES: Readonly<Record<string, ReadonlySet<UserRole>>> = Object.freeze({
+  '/network': new Set<UserRole>(['ngo', 'funder', 'admin']),
+  '/funder':  new Set<UserRole>(['funder', 'admin']),
+  '/mentor':  new Set<UserRole>(['mentor', 'ngo', 'funder', 'admin']),
+  '/ngo':     new Set<UserRole>(['ngo', 'admin']),
+});
+
+/**
+ * May a navigation surface show this link?
+ *
+ * Ungated routes are always shown. A gated route is hidden ONLY when we have a resolved role that
+ * fails its gate — deliberately not when the role is merely unknown:
+ *
+ *   • signed out — the sample/demo tour is meant to show what the programme dashboards look like,
+ *     and hiding them would quietly delete that story. Those routes bounce to /login themselves.
+ *   • signed in, profile still loading — `role` is null for a moment on a Google redirect (see the
+ *     note above). Hiding on null would make links appear a beat late, which reads as a glitch on
+ *     a slow phone. The page's own gate is what actually protects it; this only decides whether
+ *     offering the link is honest, and offering it for one render is not a security question.
+ *
+ * The query string is ignored so `/farmer?panel=Reports` matches `/farmer`.
+ */
+export function canSeeNavLink(role: UserRole | null, href: string): boolean {
+  const path = href.split('?')[0].split('#')[0];
+  const allowed = ROLE_GATED_ROUTES[path];
+  if (!allowed) return true;      // not a gated route
+  if (role === null) return true;  // unknown role — see above
+  return allowed.has(role);
+}

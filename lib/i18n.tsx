@@ -691,7 +691,15 @@ const T_en: Dict = {
   homeQuickContact: 'Contact',
   homeQuickContactDesc: 'Mentor · NGO',
   homeQuickJournal: 'Journal',
-  homeQuickJournalDesc: 'Log harvests',
+  // "Log harvests" was false: the Field Journal is a dated diary (planting, weather, pest,
+  // maintenance) with no kilogram field, saved to localStorage only. It never reaches
+  // production_logs, the finance totals, or the farmer's programme — so the tile most likely to
+  // catch "let me write down what I picked" led to the one screen that cannot record it, and
+  // looked like it had worked. My Records is where a harvest goes. See lib/i18n-pending.ts.
+  homeQuickJournalDesc: 'Notes & photos',
+  journalLocalOnlyNote: 'Kept on this phone.',
+  journalWeightsLiveElsewhere: 'Harvest weights and sales go in My Records.',
+  journalOpenRecords: 'Open My Records',
   homeQuickCropPlanner: 'Crop Planner',
   homeQuickCropPlannerDesc: 'Plan the season',
   homeQuickMyRecords: 'My Records',
