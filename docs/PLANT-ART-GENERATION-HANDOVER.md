@@ -198,8 +198,8 @@ paths in the same change that adds its catalogue mappings.
 
 ## Current status
 
-As of 2026-08-27, 49 deliverables are approved and staged: 20 of 22 exotic-fruit-and-nut
-deliverables and 29 of 30 indigenous-fruit deliverables.
+As of 2026-08-27, 51 deliverables are approved and staged: 20 of 22 exotic-fruit-and-nut
+deliverables, 29 of 30 indigenous-fruit deliverables and 2 shrub deliverables.
 
 | Species | Top-down | Picker |
 |---|---|---|
@@ -241,6 +241,19 @@ Every staged indigenous file was visually inspected after preparation and passed
 canopy or picker pixel checks. Species traits came only from the source brief, existing catalogue
 and the botanical sources linked there; no species names or catalogue facts were changed.
 
+### Shrubs
+
+| Species | Top-down | Picker |
+|---|---|---|
+| Bietou / bush-tick berry | `top-down/bietou-v1.png` | **pending** |
+| Brandybush / velvet raisin | `top-down/brandybush-v1.png` | **pending** |
+| Honeybush / heuningbos | **pending** | **pending** |
+| Rooibos | **pending** | **pending** |
+| Rosemary | **pending** | **pending** |
+
+The brief heading says "Shrubs (6)" but supplies five rows. Do not invent a sixth species; preserve
+the five named rows unless the source brief is explicitly corrected.
+
 ### Pending transparency failures
 
 - Banana top-down: the visually approved source
@@ -256,11 +269,40 @@ and the botanical sources linked there; no species names or catalogue facts were
   is RGB with a baked checkerboard. The background-extraction retry
   `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-586af579-8e07-4db5-9be3-1f02a439de64.png`
   also has no alpha. Do not stage either one.
+- Bietou picker: the preferred spreading-shrub source
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-aae1ac31-371c-40da-9d91-baefeb9cdc9c.png`
+  and its extraction
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-5a082ae4-4842-4a05-be8a-68c52f4b6a6f.png`
+  are RGB checkerboards. A fresh generation did the same. Do not stage them.
+- Brandybush picker: the preferred multi-stem source
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-4b7efb73-0636-4741-b6a6-118e4d703455.png`
+  and extraction
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-9d724c4c-f1ea-445e-bd26-add82176e2c3.png`
+  are RGB checkerboards. Do not stage them.
+- Honeybush: overhead candidate
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-2eb25c1c-004f-48ff-bfc1-b2d399850629.png`,
+  its extraction
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-175da6d0-1c03-44b0-9419-0808a71e3a52.png`
+  and picker candidate
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-6c017d74-a62f-4800-91a9-013d79a579c0.png`
+  are RGB checkerboards. Do not stage them.
+- Rooibos: overhead candidate
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-91573396-131f-4d1e-9ed7-6a78524ba8c4.png`
+  has an opaque black background; its extraction
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-6ac44639-bb1e-4f57-9a27-d8c2833a55b3.png`
+  and picker candidate
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-0e1b936d-de62-4056-87cc-1a6a9aea2973.png`
+  are RGB checkerboards. Do not stage them.
+- Rosemary: overhead candidate
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-6afb407f-490b-4eb1-bdb8-8d391a7f85ab.png`
+  and picker candidate
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-27c33807-3b0d-4683-b90d-38b0a1d27e64.png`
+  are RGB checkerboards. Do not stage them.
 
-The next untouched species in the brief is **Bietou**, the first shrub. Continue in the exact
-source-table order, while keeping the banana top-down, carob picker and Bluebush picker visible in
-status reports. Do not silently switch to the CLI/API fallback to resolve them; that requires
-explicit user approval.
+The next untouched species in the brief is **Dogwood / umglindi**, the first small tree / large
+shrub. Continue in the exact source-table order, while keeping every pending transparency failure
+visible in status reports. Do not silently switch to the CLI/API fallback to resolve them; that
+requires explicit user approval.
 
 Do not modify `PLAN_VERSION`. Do not touch the original checkout at
 `/Users/roryclark/ImbewuField`; it contains another session's uncommitted files.
