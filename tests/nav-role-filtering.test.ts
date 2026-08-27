@@ -160,3 +160,19 @@ test('the Journal says on screen where it saves, and where weights go instead', 
   assert.match(view, /journalWeightsLiveElsewhere/, 'it must say where harvest weights actually go');
   assert.match(view, /href="\/records"/, 'and link there — telling her without a way is not a fix');
 });
+
+test('the example entries do not teach her to record a yield in the diary', () => {
+  // The label was only half the lie. The first thing a farmer with no entries sees is the example
+  // card, and it read "Cabbage harvested — 6 heads … weighed 9 kg" — a worked demonstration of
+  // putting a harvest weight into a store that has no weight field, shown directly beneath the
+  // new line saying weights go elsewhere. An example outranks a caption.
+  const src = read('components/journal/FieldJournal.tsx');
+  const block = src.match(/EXAMPLE_JOURNAL_ENTRIES[^=]*=\s*\[([\s\S]*?)\n\];/);
+  assert.ok(block, 'EXAMPLE_JOURNAL_ENTRIES must be a readable array literal');
+  const examples = code(block[1]);
+  assert.doesNotMatch(examples, /\d+\s?kg/i,
+    'no example may show a weight being recorded in the Journal — that is what /records is for');
+  assert.match(examples, /My Records/,
+    'the harvest example should say where the weight actually went, so the split is demonstrated ' +
+    'rather than only asserted in the note above it');
+});
