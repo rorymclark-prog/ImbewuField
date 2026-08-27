@@ -34,6 +34,15 @@ export interface ReleaseNote {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '27 August',
+    sha: '2a35eed',
+    changes: [
+      'The sharing switches you set yesterday now actually reach your programme',
+      'Your programme sees only the categories you switched on — and only your own organisation',
+      'If you share nothing, you are not on their list at all',
+    ],
+  },
+  {
     when: '26 August',
     sha: '67080d0',
     changes: [
