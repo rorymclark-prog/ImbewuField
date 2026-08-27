@@ -12,8 +12,10 @@ or infer a different style from branch names.
 
 ## Source of truth and scope
 
-The source brief is `docs/PLANT-ART-BRIEF-CLIMATE-ZONES.md` in the original checkout. It lists
-52 catalogue species that need two different views each:
+The exact source brief is committed beside this handover as
+`docs/PLANT-ART-BRIEF-CLIMATE-ZONES.md`. It is a byte-for-byte copy of the previously untracked
+brief from the original checkout (SHA-1 `475bf794d2a62bd91ff3d92ac74c6075d15dd2f7`) and lists 52
+catalogue species that need two different views each:
 
 1. Picker: `public/element-art/tree_<id>.png` — front/side elevation, delivered at 192×192.
 2. Map: `public/render-assets/reference-blueprint/<slug>-v1.png` — strict top-down canopy,
@@ -196,15 +198,38 @@ paths in the same change that adds its catalogue mappings.
 
 ## Current status
 
-- Apricot top-down: approved, prepared, and placed in the branch staging directory.
-- Apricot picker front elevation: generated, prepared, and placed in the branch staging directory.
-- Almond top-down: generated and alpha-corrected on 2026-08-27, then rejected during visual QA
-  because leaf lobes were clipped by the square edge. The rejected prepared file was moved to
-  `/tmp/almond-tree-needs-redraw.png`; it is not an approved or durable asset.
-- Almond picker: three generation/extraction attempts still baked the checkerboard or a green
-  field into RGB pixels. No almond picker file is approved or staged. Generate it again with the
-  built-in tool; do not treat a visually checkered preview as transparency.
-- Continue in the exact exotic-fruit-and-nut table order after almond.
+As of 2026-08-27, 20 of the 22 exotic-fruit-and-nut deliverables are approved and staged.
+
+| Species | Top-down | Picker |
+|---|---|---|
+| Almond | `top-down/almond-tree-v1.png` | `picker/tree_almond.png` |
+| Apricot | `top-down/apricot-tree-v1.png` | `picker/tree_apricot.png` |
+| Arabica coffee | `top-down/arabica-coffee-tree-v1.png` | `picker/tree_arabica_coffee.png` |
+| Dwarf Cavendish/Williams banana | **pending** | `picker/tree_banana_dwarf_cavendish_williams.png` |
+| Black mulberry | `top-down/black-mulberry-tree-v1.png` | `picker/tree_black_mulberry.png` |
+| Carob | `top-down/carob-tree-v1.png` | **pending** |
+| Date palm | `top-down/date-palm-v1.png` | `picker/tree_date_palm.png` |
+| Pecan | `top-down/pecan-tree-v1.png` | `picker/tree_pecan.png` |
+| Pistachio | `top-down/pistachio-tree-v1.png` | `picker/tree_pistachio.png` |
+| Quince | `top-down/quince-tree-v1.png` | `picker/tree_quince.png` |
+| Sweet cherry | `top-down/sweet-cherry-tree-v1.png` | `picker/tree_sweet_cherry.png` |
+
+All paths in this table are relative to `design/plant-art-staging/`.
+
+### Pending transparency failures
+
+- Banana top-down: the visually approved source
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-1febd2a4-fb1f-405d-b0d1-217098c62229.png`
+  is RGB with a baked checkerboard. Two background-extraction calls and one fresh regeneration
+  also returned RGB checkerboards. Do not stage any of them.
+- Carob picker: the visually approved source
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-7f08a6f4-9c7b-4fe5-ac20-945c6cfc9395.png`
+  is RGB with a baked checkerboard. One extraction invented an opaque green/tan vignette despite
+  adding an alpha channel, and the follow-up returned another RGB checkerboard. Do not stage them.
+
+The next untouched species in the brief is **Bluebush**. Continue in the exact source-table order,
+while keeping the two pending exotic assets visible in status reports. Do not silently switch to
+the CLI/API fallback to resolve them; that requires explicit user approval.
 
 Do not modify `PLAN_VERSION`. Do not touch the original checkout at
 `/Users/roryclark/ImbewuField`; it contains another session's uncommitted files.
