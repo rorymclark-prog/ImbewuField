@@ -54,11 +54,16 @@ const EXAMPLE_JOURNAL_ENTRIES: ReadonlyArray<{
   cropName: string;
 }> = [
   {
+    // THE EXAMPLE TEACHES THE SPLIT, because it used to teach the opposite. It read "Cabbage
+    // harvested — 6 heads … weighed 9 kg before it went to the stall", which is a farmer
+    // recording her yield in the one store that has no weight field — the same mistake the home
+    // tile's old "Log harvests" label invited, made again in the example she is shown first.
+    // A harvest note still belongs here; what belongs here is the part My Records cannot hold.
     id: 'example-harvest',
     category: 'harvest',
     dateLabel: 'Tue 14 Jul',
-    title: 'Cabbage harvested — 6 heads',
-    notes: 'Cut the heads that had firmed up from Bed 2 and weighed 9 kg before it went to the stall.',
+    title: 'Cabbage from Bed 2 came in early',
+    notes: 'Cut the heads that had firmed up and put the weight in My Records. Writing it down here because they were ready three weeks sooner than last winter — worth sowing earlier next year.',
     bedLabel: 'Bed 2',
     cropName: 'Cabbage',
   },
