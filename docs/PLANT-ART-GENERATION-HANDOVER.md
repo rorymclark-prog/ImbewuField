@@ -198,7 +198,8 @@ paths in the same change that adds its catalogue mappings.
 
 ## Current status
 
-As of 2026-08-27, 20 of the 22 exotic-fruit-and-nut deliverables are approved and staged.
+As of 2026-08-27, 49 deliverables are approved and staged: 20 of 22 exotic-fruit-and-nut
+deliverables and 29 of 30 indigenous-fruit deliverables.
 
 | Species | Top-down | Picker |
 |---|---|---|
@@ -216,6 +217,30 @@ As of 2026-08-27, 20 of the 22 exotic-fruit-and-nut deliverables are approved an
 
 All paths in this table are relative to `design/plant-art-staging/`.
 
+### Indigenous fruit
+
+| Species | Top-down | Picker |
+|---|---|---|
+| Bluebush | `top-down/bluebush-v1.png` | **pending** |
+| Brown ivory / motsintsila | `top-down/brown-ivory-tree-v1.png` | `picker/tree_brown_ivory_motsintsila.png` |
+| Coastal red milkwood | `top-down/coastal-red-milkwood-tree-v1.png` | `picker/tree_coastal_red_milkwood.png` |
+| Cross-berry | `top-down/cross-berry-v1.png` | `picker/tree_cross_berry.png` |
+| Gariep ebony | `top-down/gariep-ebony-tree-v1.png` | `picker/tree_gariep_ebony.png` |
+| Glossy currant | `top-down/glossy-currant-v1.png` | `picker/tree_glossy_currant.png` |
+| Karoo crossberry | `top-down/karoo-crossberry-v1.png` | `picker/tree_karoo_crossberry.png` |
+| Kuni bush | `top-down/kuni-bush-v1.png` | `picker/tree_kuni_bush.png` |
+| Puzzle bush | `top-down/puzzle-bush-v1.png` | `picker/tree_puzzle_bush.png` |
+| Red milkwood / moepel | `top-down/red-milkwood-tree-v1.png` | `picker/tree_red_milkwood_moepel.png` |
+| Shepherd's tree | `top-down/shepherds-tree-v1.png` | `picker/tree_shepherd_s_tree.png` |
+| Small-leaved guarri | `top-down/small-leaved-guarri-v1.png` | `picker/tree_small_leaved_guarri.png` |
+| Waterblommetjie | `top-down/waterblommetjie-v1.png` | `picker/tree_waterblommetjie.png` |
+| Wild date palm | `top-down/wild-date-palm-v1.png` | `picker/tree_wild_date_palm.png` |
+| Wild medlar / mmilo | `top-down/wild-medlar-v1.png` | `picker/tree_wild_medlar_mmilo.png` |
+
+Every staged indigenous file was visually inspected after preparation and passed the appropriate
+canopy or picker pixel checks. Species traits came only from the source brief, existing catalogue
+and the botanical sources linked there; no species names or catalogue facts were changed.
+
 ### Pending transparency failures
 
 - Banana top-down: the visually approved source
@@ -226,10 +251,16 @@ All paths in this table are relative to `design/plant-art-staging/`.
   `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-7f08a6f4-9c7b-4fe5-ac20-945c6cfc9395.png`
   is RGB with a baked checkerboard. One extraction invented an opaque green/tan vignette despite
   adding an alpha channel, and the follow-up returned another RGB checkerboard. Do not stage them.
+- Bluebush picker: the visually approved source
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-e40717f1-0b17-478d-b0d7-354c32811069.png`
+  is RGB with a baked checkerboard. The background-extraction retry
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-586af579-8e07-4db5-9be3-1f02a439de64.png`
+  also has no alpha. Do not stage either one.
 
-The next untouched species in the brief is **Bluebush**. Continue in the exact source-table order,
-while keeping the two pending exotic assets visible in status reports. Do not silently switch to
-the CLI/API fallback to resolve them; that requires explicit user approval.
+The next untouched species in the brief is **Bietou**, the first shrub. Continue in the exact
+source-table order, while keeping the banana top-down, carob picker and Bluebush picker visible in
+status reports. Do not silently switch to the CLI/API fallback to resolve them; that requires
+explicit user approval.
 
 Do not modify `PLAN_VERSION`. Do not touch the original checkout at
 `/Users/roryclark/ImbewuField`; it contains another session's uncommitted files.
