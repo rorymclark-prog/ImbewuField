@@ -18,14 +18,33 @@
  * numbers, names, districts — before any map tile loads, and if the map fails
  * entirely the funder still sees the portfolio rather than a blank rectangle.
  *
- * DATA: DEMO_NETWORK only. No Firestore read happens on this route, by design
- * — see the security header in components/network/NetworkMap.tsx for what
- * would have to be true before this may show one real user's data to another.
+ * DATA: the AUTHORISED read, via useNetworkPortfolio() — /api/network/orgs for
+ * the orgs this caller may see, then /api/network/farmers for the chosen one.
+ * The four preconditions listed in the security header of NetworkMap.tsx are
+ * now met: the read is server-side under the Admin SDK, the caller's role is
+ * decided from their own profile, the org is checked against their portfolio,
+ * and every field is projected through the farmer's per-scope consent.
+ *
+ * DEMO_NETWORK is still here, but only as SAMPLE MODE — a signed-out visitor
+ * or a build with no backend. It is never a fallback for a failed read: if the
+ * authorised read fails we do not know what this funder may see, and invented
+ * farmers shown at that moment look exactly like a real portfolio. See the
+ * header of lib/use-network-portfolio.ts.
+ *
+ * ROLE GATE: this route reads other people's finances, so it is restricted to
+ * the portfolio roles. It previously had no gate at all, which was harmless
+ * only for as long as the data was invented.
  */
 
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import { Search, X, List, AlertTriangle } from 'lucide-react';
+import { useAuth } from '@/lib/auth';
+import { isBackendConfigured } from '@/lib/firebase/init';
+import { canAccessRolePage } from '@/lib/role-access';
+import { useNetworkPortfolio } from '@/lib/use-network-portfolio';
+import type { UserRole } from '@/lib/db/types';
 import BackButton from '@/components/BackButton';
 import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
@@ -39,7 +58,7 @@ import {
   sortNetwork,
   type NetworkSortKey,
 } from '@/lib/network';
-import { DEMO_NETWORK, DEMO_NETWORK_NOTICE } from '@/lib/network-demo';
+import { DEMO_NETWORK_NOTICE } from '@/lib/network-demo';
 import type { GardenStatus } from '@/lib/db/types';
 
 const NetworkMap = dynamic(() => import('@/components/network/NetworkMap'), {
@@ -87,8 +106,20 @@ const SORTS: Array<{ key: NetworkSortKey; label: string }> = [
   { key: 'production', label: 'Harvest' },
 ];
 
+/* Reads other people's finances — same set as the NGO area, plus funder. */
+const NETWORK_ALLOWED_ROLES = new Set<UserRole>(['ngo', 'funder', 'admin']);
+
 export default function NetworkPage() {
-  const all = DEMO_NETWORK.farmers;
+  const { user, role, loading: authLoading } = useAuth();
+  const router = useRouter();
+  const isLive = isBackendConfigured();
+
+  useEffect(() => {
+    if (!authLoading && !user && isLive) router.replace('/login');
+  }, [user, authLoading, router, isLive]);
+
+  const portfolio = useNetworkPortfolio(Boolean(user));
+  const all = portfolio.rows;
 
   const [query, setQuery] = useState('');
   const [districts, setDistricts] = useState<string[]>([]);
@@ -135,6 +166,22 @@ export default function NetworkPage() {
     },
   ];
 
+  // After every hook, never before — an early return above them would change the hook order
+  // between renders as auth rehydrates.
+  if (!authLoading && user && isLive && !canAccessRolePage(role, NETWORK_ALLOWED_ROLES)) {
+    return (
+      <div className="flex h-screen items-center justify-center px-4" style={{ background: '#E4DCC6' }}>
+        <div className="rounded-2xl px-6 py-8 text-center max-w-xs" style={{ background: PAPER, border: `1px solid ${LINE}` }}>
+          <p className="text-sm font-display font-semibold mb-1" style={{ color: INK }}>This is the portfolio view</p>
+          <p className="text-xs font-sans leading-relaxed" style={{ color: INK_MUTED }}>
+            It shows farmers&apos; own production and income figures, so it is limited to programme
+            teams and their funders.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
       {/* ── Header ── */}
@@ -150,28 +197,90 @@ export default function NetworkPage() {
           Network · funder portfolio
         </span>
         <div className="flex-1" />
-        <span
-          // NEVER hide this on small screens. The privacy review caught it at
-          // 375px: the stat strip read "16 sites · 27 090 kg · R215 520" with
-          // no sample label anywhere on the first paint, so a funder's phone
-          // screenshot would carry fabricated figures as if they were programme
-          // results. A disclaimer that disappears at the size people actually
-          // photograph is worse than none.
-          className="font-sans font-semibold"
-          style={{
-            fontSize: 10.5,
-            color: '#9E5C08',
-            background: 'rgba(158,92,8,0.10)',
-            border: '1px solid rgba(158,92,8,0.30)',
-            borderRadius: 999,
-            padding: '3px 9px',
-            marginRight: 4,
-          }}
-        >
-          Sample portfolio
-        </span>
+
+        {/* The org picker only appears for a caller entitled to more than one org — a
+            single-org NGO has nothing to choose and should not be asked to. */}
+        {!portfolio.isDemo && portfolio.orgs.length > 1 && (
+          <select
+            aria-label="Organisation"
+            value={portfolio.orgId ?? ''}
+            onChange={(e) => portfolio.setOrgId(e.target.value)}
+            className="font-sans"
+            style={{
+              fontSize: 11.5, color: INK, background: PAPER, border: `1px solid ${LINE}`,
+              borderRadius: 8, padding: '4px 8px', maxWidth: 190, marginRight: 4,
+            }}
+          >
+            {portfolio.orgs.map((o) => (
+              <option key={o.id} value={o.id}>{o.name}</option>
+            ))}
+          </select>
+        )}
+
+        {portfolio.isDemo && (
+          <span
+            // NEVER hide this on small screens. The privacy review caught it at
+            // 375px: the stat strip read "16 sites · 27 090 kg · R215 520" with
+            // no sample label anywhere on the first paint, so a funder's phone
+            // screenshot would carry fabricated figures as if they were programme
+            // results. A disclaimer that disappears at the size people actually
+            // photograph is worse than none.
+            //
+            // It is now conditional on isDemo, and ONLY on isDemo — the label must
+            // track what the rows actually are. Leaving it on real data would be
+            // the same failure in the other direction: a funder discounting real
+            // programme results as a mock-up.
+            className="font-sans font-semibold"
+            style={{
+              fontSize: 10.5,
+              color: '#9E5C08',
+              background: 'rgba(158,92,8,0.10)',
+              border: '1px solid rgba(158,92,8,0.30)',
+              borderRadius: 999,
+              padding: '3px 9px',
+              marginRight: 4,
+            }}
+          >
+            Sample portfolio
+          </span>
+        )}
         <SettingsButton />
       </header>
+
+      {/* An authorised read that failed says so. It must not render as an empty portfolio:
+          "no farmers" and "we could not find out" look identical on a dashboard and mean
+          completely different things to whoever is reading it. */}
+      {portfolio.error && (
+        <div
+          className="flex-shrink-0 flex items-center gap-2 px-3 md:px-4 py-2"
+          style={{ background: 'rgba(158,92,8,0.08)', borderBottom: `1px solid ${LINE}` }}
+        >
+          <AlertTriangle size={13} style={{ color: '#9E5C08', flexShrink: 0 }} />
+          <span className="font-sans" style={{ fontSize: 11.5, color: '#7A4A06' }}>
+            {portfolio.error}
+          </span>
+          <button
+            onClick={portfolio.reload}
+            className="font-sans font-semibold"
+            style={{
+              fontSize: 11, color: '#7A4A06', background: 'transparent',
+              border: '1px solid rgba(158,92,8,0.35)', borderRadius: 7,
+              padding: '2px 9px', cursor: 'pointer', marginLeft: 'auto', flexShrink: 0,
+            }}
+          >
+            Try again
+          </button>
+        </div>
+      )}
+
+      {portfolio.loading && !portfolio.error && (
+        <div
+          className="flex-shrink-0 px-3 md:px-4 py-1.5 font-sans"
+          style={{ fontSize: 11, color: INK_MUTED, background: PAPER, borderBottom: `1px solid ${LINE}` }}
+        >
+          Loading the portfolio…
+        </div>
+      )}
 
       {/* ── Summary bar ── */}
       <div
@@ -413,7 +522,15 @@ export default function NetworkPage() {
                 borderTop: `1px solid ${LINE}`,
               }}
             >
-              {DEMO_NETWORK_NOTICE}
+              {portfolio.isDemo
+                ? DEMO_NETWORK_NOTICE
+                : portfolio.withheldForConsent > 0
+                  // Stated, not silent. A roster shorter than the programme's roll is a
+                  // consent outcome; unexplained, it reads as a small or shrinking programme.
+                  ? `${portfolio.withheldForConsent} more ${
+                      portfolio.withheldForConsent === 1 ? 'farmer is' : 'farmers are'
+                    } enrolled here but have not agreed to share their figures, so they are not listed.`
+                  : 'Every figure here is shared by the farmer it belongs to, and only for the categories they agreed to.'}
             </p>
           </div>
         </aside>

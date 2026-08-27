@@ -207,6 +207,20 @@ export interface NetworkBounds {
  * read by no code anywhere in the app today — the live system leans entirely
  * on the single scalar `Profile.org_id`. See precondition (B).
  */
+/**
+ * One organisation a portfolio caller is entitled to see, as returned by /api/network/orgs.
+ *
+ * Declared HERE, in the pure module, rather than in the route that produces it: the client hook
+ * needs this shape, and importing it from `app/api/.../route.ts` would put a module that pulls in
+ * firebase-admin into the browser's import graph. A type-only import is erased at build time, but
+ * the dependency edge is a trap for the next person who reaches for a value from the same file.
+ */
+export interface NetworkOrgOption {
+  id: string;
+  name: string;
+  kind: 'ngo' | 'funder' | null;
+}
+
 export interface NetworkOrg {
   id: string;
   name: string;

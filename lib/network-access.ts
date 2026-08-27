@@ -49,8 +49,27 @@ export interface AccessGranted {
   ok: true;
   callerId: string;
   role: UserRole;
-  /** Every org this caller may see. Empty is impossible — a granted decision has at least one. */
+  /**
+   * The orgs this caller may see BY NAME. For an admin this is not the whole answer —
+   * see `allOrgs`, which is what actually decides an admin's reach. It can be empty for
+   * an admin (and only for an admin), because a platform admin need not belong anywhere.
+   */
   visibleOrgIds: string[];
+  /**
+   * ADMIN ONLY: this caller may see every org, including ones not in `visibleOrgIds`.
+   *
+   * This exists because the platform admin role was a master key that opened nothing. The
+   * rules have always given admin an unconditional bypass (`isAdmin()` short-circuits both
+   * org scoping and the consent gate), but this module refused an admin whose `org_id` was
+   * null — which is the NORMAL state for a platform admin, since admins are not members of
+   * a tenant. The result was an account with permission to read everything and a portfolio
+   * containing nothing, and the failure looked exactly like "there is no data yet".
+   *
+   * Kept as an explicit flag rather than by stuffing every org id into `visibleOrgIds`:
+   * that would need a full read of /organizations here (this module is pure), and it would
+   * silently go stale the moment an org is created.
+   */
+  allOrgs: boolean;
 }
 export type NetworkAccess = AccessGranted | AccessDenied;
 
@@ -82,19 +101,26 @@ export function decideNetworkAccess(profile: CallerProfile | null): NetworkAcces
     for (const id of profile.fundedOrgIds ?? []) if (id) visible.add(id);
   }
 
+  // Admin is the platform role, not a tenant role, so it is decided BEFORE the org check
+  // below — an admin with no org is the normal case, not a misconfigured one.
+  if (profile.role === 'admin') {
+    return { ok: true, callerId: profile.id, role: profile.role, visibleOrgIds: [...visible], allOrgs: true };
+  }
+
   if (visible.size === 0) {
     // An org-less staff account. This is the state EVERY staff account was in before
     // scripts/provision-org.mjs existed, and it must resolve to "sees nothing" rather
     // than to a null that some downstream comparison treats as a wildcard.
     return { ok: false, status: 403, reason: 'This account is not linked to an organisation.' };
   }
-  return { ok: true, callerId: profile.id, role: profile.role, visibleOrgIds: [...visible] };
+  return { ok: true, callerId: profile.id, role: profile.role, visibleOrgIds: [...visible], allOrgs: false };
 }
 
 /** Step (iii-b): is this specific farmer inside the caller's visible set? */
 export function canSeeOrg(access: NetworkAccess, orgId: string | null | undefined): boolean {
   if (!access.ok) return false;
-  if (!orgId) return false;              // an org-less farmer belongs to no portfolio
+  if (!orgId) return false;              // an org-less farmer belongs to no portfolio, admin included
+  if (access.allOrgs) return true;
   return access.visibleOrgIds.includes(orgId);
 }
 
