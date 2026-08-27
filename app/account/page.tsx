@@ -6,7 +6,7 @@ import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import { updateMyProfile, uploadPhoto, getOrganizationName } from '@/lib/db/queries';
 import { resizeLogoForStorage } from '@/lib/invoice-logo';
-import { APP_LANGS } from '@/lib/i18n';
+import { APP_LANGS, useLanguage } from '@/lib/i18n';
 import TabBar from '@/components/TabBar';
 import BrandLogo from '@/components/BrandLogo';
 import ThemePanel from '@/components/ThemePanel';
@@ -36,6 +36,7 @@ function Row({ icon: Icon, label, value }: { icon: LucideIcon; label: string; va
 
 export default function AccountPage() {
   const { user, profile, signOutUser, changePassword, refreshProfile, loading } = useAuth();
+  const { setLang } = useLanguage();
   const router = useRouter();
   const [signingOut, setSigningOut] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
@@ -81,6 +82,12 @@ export default function AccountPage() {
   async function saveProfile() {
     setSaving(true);
     await updateMyProfile({ full_name: form.name.trim() || undefined, phone: form.phone.trim() || null, farm_name: form.farmName.trim() || null, language: form.language });
+    // AND ACTUALLY SWITCH THE APP. This select has always written profile.language to Firestore
+    // and nothing has ever read it back — a control that looked like it worked, saved without
+    // error, and changed nothing. (Same shape as the settings-panel-writes-nothing-re-reads bug
+    // class.) The profile field stays written, because it is the durable per-account preference;
+    // setLang is what makes the screen obey it now.
+    setLang(form.language);
     await refreshProfile();
     setSaving(false);
     setEditing(false);

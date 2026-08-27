@@ -49,22 +49,20 @@ export default function Onboarding() {
           <div className="font-display text-sm" style={{ color: '#5C5040' }}>{tp('welcomeSub')}</div>
         </div>
 
-        {/* Primary action — prominent, immediately actionable */}
-        <button onClick={() => completeOnboarding(picked)}
-          aria-label={`${tp('start')} — ${tp('welcomeTitle')}`}
-          className="w-full py-3 rounded-xl text-base font-display font-semibold transition-all mb-5"
-          style={{ background: '#1F4D2B', color: '#fff', boxShadow: '0 4px 16px rgba(31,77,43,0.20)' }}>
-          <span className="flex items-center justify-center gap-1.5">{tp('start')}<ArrowRight size={16} /></span>
-        </button>
-
-        {/* Language grid — secondary, clearly labelled */}
+        {/* LANGUAGE FIRST, BUTTON SECOND — this order is the whole point.
+            It used to be the other way round: a big dark-green "Start" over a grid of language
+            names styled as a secondary afterthought. A farmer who does not read English taps the
+            obvious primary control, and lands in an English app she then has to find her way out
+            of — through a switcher that is `hidden md:block` on /farmer, i.e. not on her phone at
+            all. The one screen where she is asked to choose must ask before it offers the exit.
+            The button below is labelled in the picked language, so it answers as she chooses. */}
         <div className="mb-1 flex items-center gap-2">
           <div className="text-xs font-mono uppercase tracking-wider" style={{ color: '#5C5040' }}>
             {tp('pickLang')}
           </div>
           <div className="flex-1 h-px" style={{ background: '#E2D8C4' }} />
         </div>
-        <div className="grid grid-cols-3 gap-2 mb-3">
+        <div className="grid grid-cols-3 gap-2 mb-4">
           {APP_LANGS.map((l) => (
             <button key={l.code} onClick={() => setPicked(l.code)}
               className="py-2 px-2 rounded-lg font-display transition-all"
@@ -75,6 +73,14 @@ export default function Onboarding() {
             </button>
           ))}
         </div>
+
+        {/* Primary action — prominent, immediately actionable */}
+        <button onClick={() => completeOnboarding(picked)}
+          aria-label={`${tp('start')} — ${tp('welcomeTitle')}`}
+          className="w-full py-3 rounded-xl text-base font-display font-semibold transition-all mb-4"
+          style={{ background: '#1F4D2B', color: '#fff', boxShadow: '0 4px 16px rgba(31,77,43,0.20)' }}>
+          <span className="flex items-center justify-center gap-1.5">{tp('start')}<ArrowRight size={16} /></span>
+        </button>
 
         {/* Reassurance — language is always changeable */}
         <div className="text-xs font-display text-center" style={{ color: '#5C5040', opacity: 0.65 }}>

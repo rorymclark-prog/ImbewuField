@@ -27,6 +27,21 @@ export type Dict = Record<string, string>;
  * the same reason the Design Studio block below is spread. A reviewer overrides the key inside
  * their own locale, below the spread, and it stops being pending.
  */
+/*
+ * The home help strip, pending review.
+ *
+ * The strip it replaces was never translated at all: `LimaBar` hardcoded the English placeholder
+ * "Ask Lima anything..." as a default prop, so the most prominent line on the home screen stayed
+ * English in all ten languages. These three keys are new English awaiting a first-language
+ * reviewer — the same explicit-gap treatment as the blocks below, and a strict improvement on a
+ * string that was not in the dictionary at all.
+ */
+export const LIMA_ENGLISH_PENDING: Dict = {
+  limaWhoIs: 'Lima, your planting helper',
+  limaAskButton: 'Ask for help',
+  limaPhotoButton: 'Photo',
+};
+
 export const JOURNAL_ENGLISH_PENDING: Dict = {
   homeQuickJournalDesc: 'Notes & photos',
   journalLocalOnlyNote: 'Kept on this phone.',
