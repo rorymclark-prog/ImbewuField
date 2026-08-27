@@ -35,12 +35,12 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '27 August (evening)',
-    sha: '6758663',
+    sha: '80ae8f2',
     changes: [
-      'The Journal is for notes and photos — it no longer says "Log harvests"',
-      'What you harvested and what you sold go in My Records; the Journal now says so and takes you there',
-      'Journal entries stay on this phone only, and the Journal tells you that too',
-      'The menu shows only the pages your account can open — no more screens that turn you away',
+      'The Journal is for notes and photos, not for logging harvests',
+      'Harvest weights and sales go in My Records — the Journal now says so',
+      'The Journal also tells you it is kept on this phone only',
+      'The menu shows only the pages your account can open',
     ],
   },
   {
