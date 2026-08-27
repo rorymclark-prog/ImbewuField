@@ -64,12 +64,12 @@ The fallback CLI is not approved for this batch. Do not silently switch tools or
 
 ## Approved style anchor
 
-The approved apricot files are the durable visual anchors. They remain in staging until Claude
-wires the corresponding catalogue species; placing them in runtime directories before that makes
-the repository's unreachable-art tests fail:
+The approved apricot files are the durable visual anchors. On 2026-08-28 Rory explicitly asked
+Codex to deploy the verified art before the chat could crash, so the approved assets were moved
+from staging into their mapped runtime directories:
 
-- Top-down: `design/plant-art-staging/top-down/apricot-tree-v1.png`
-- Picker: `design/plant-art-staging/picker/tree_apricot.png`
+- Top-down: `public/render-assets/reference-blueprint/apricot-tree-v1.png`
+- Picker: `public/element-art/tree_apricot.png`
 
 The top-down style was approved after several deliberate corrections:
 
@@ -183,62 +183,57 @@ damaging the asset. Picker files must stay below the repository's enforced 250 K
 Never claim a visual result is fixed without viewing the actual prepared file. Never rely only on
 the PNG header; decode alpha pixels.
 
-### Staging before wiring
+### Staging and runtime wiring
 
-New species art must first go under:
-
-- `design/plant-art-staging/picker/`
-- `design/plant-art-staging/top-down/`
-
-The repository rejects files placed directly in `public/element-art/` or
-`public/render-assets/reference-blueprint/` when no live catalogue mapping points at them. The
-source brief assigns TypeScript wiring to Claude, so Codex must not weaken those tests or edit the
-wiring just to make an art-only branch pass. Claude moves each approved pair to its final runtime
-paths in the same change that adds its catalogue mappings.
+New generations still start under `design/plant-art-staging/picker/` and
+`design/plant-art-staging/top-down/` until their visual and alpha checks pass. Once approved, move
+them to `public/element-art/` and `public/render-assets/reference-blueprint/` only in the same
+change that adds the `lib/species-art.ts` mapping. The reachability tests must continue to reject
+every public PNG that no live catalogue species or element can use.
 
 ## Current status
 
-As of 2026-08-28, 58 deliverables are approved and staged: 20 of 22 exotic-fruit-and-nut
+As of 2026-08-28, 58 deliverables are approved and deployed: 20 of 22 exotic-fruit-and-nut
 deliverables, 29 of 30 indigenous-fruit deliverables, 2 shrub deliverables and 7 small-tree /
 large-shrub deliverables.
 
 | Species | Top-down | Picker |
 |---|---|---|
-| Almond | `top-down/almond-tree-v1.png` | `picker/tree_almond.png` |
-| Apricot | `top-down/apricot-tree-v1.png` | `picker/tree_apricot.png` |
-| Arabica coffee | `top-down/arabica-coffee-tree-v1.png` | `picker/tree_arabica_coffee.png` |
-| Dwarf Cavendish/Williams banana | **pending** | `picker/tree_banana_dwarf_cavendish_williams.png` |
-| Black mulberry | `top-down/black-mulberry-tree-v1.png` | `picker/tree_black_mulberry.png` |
-| Carob | `top-down/carob-tree-v1.png` | **pending** |
-| Date palm | `top-down/date-palm-v1.png` | `picker/tree_date_palm.png` |
-| Pecan | `top-down/pecan-tree-v1.png` | `picker/tree_pecan.png` |
-| Pistachio | `top-down/pistachio-tree-v1.png` | `picker/tree_pistachio.png` |
-| Quince | `top-down/quince-tree-v1.png` | `picker/tree_quince.png` |
-| Sweet cherry | `top-down/sweet-cherry-tree-v1.png` | `picker/tree_sweet_cherry.png` |
+| Almond | `/render-assets/reference-blueprint/almond-tree-v1.png` | `/element-art/tree_almond.png` |
+| Apricot | `/render-assets/reference-blueprint/apricot-tree-v1.png` | `/element-art/tree_apricot.png` |
+| Arabica coffee | `/render-assets/reference-blueprint/arabica-coffee-tree-v1.png` | `/element-art/tree_arabica_coffee.png` |
+| Dwarf Cavendish/Williams banana | **pending** | `/element-art/tree_banana_dwarf_cavendish_williams.png` |
+| Black mulberry | `/render-assets/reference-blueprint/black-mulberry-tree-v1.png` | `/element-art/tree_black_mulberry.png` |
+| Carob | `/render-assets/reference-blueprint/carob-tree-v1.png` | **pending** |
+| Date palm | `/render-assets/reference-blueprint/date-palm-v1.png` | `/element-art/tree_date_palm.png` |
+| Pecan | `/render-assets/reference-blueprint/pecan-tree-v1.png` | `/element-art/tree_pecan.png` |
+| Pistachio | `/render-assets/reference-blueprint/pistachio-tree-v1.png` | `/element-art/tree_pistachio.png` |
+| Quince | `/render-assets/reference-blueprint/quince-tree-v1.png` | `/element-art/tree_quince.png` |
+| Sweet cherry | `/render-assets/reference-blueprint/sweet-cherry-tree-v1.png` | `/element-art/tree_sweet_cherry.png` |
 
-All paths in this table are relative to `design/plant-art-staging/`.
+Top-down paths use the public reference-blueprint root; picker paths use the public element-art root.
 
 ### Indigenous fruit
 
 | Species | Top-down | Picker |
 |---|---|---|
-| Bluebush | `top-down/bluebush-v1.png` | **pending** |
-| Brown ivory / motsintsila | `top-down/brown-ivory-tree-v1.png` | `picker/tree_brown_ivory_motsintsila.png` |
-| Coastal red milkwood | `top-down/coastal-red-milkwood-tree-v1.png` | `picker/tree_coastal_red_milkwood.png` |
-| Cross-berry | `top-down/cross-berry-v1.png` | `picker/tree_cross_berry.png` |
-| Gariep ebony | `top-down/gariep-ebony-tree-v1.png` | `picker/tree_gariep_ebony.png` |
-| Glossy currant | `top-down/glossy-currant-v1.png` | `picker/tree_glossy_currant.png` |
-| Karoo crossberry | `top-down/karoo-crossberry-v1.png` | `picker/tree_karoo_crossberry.png` |
-| Kuni bush | `top-down/kuni-bush-v1.png` | `picker/tree_kuni_bush.png` |
-| Puzzle bush | `top-down/puzzle-bush-v1.png` | `picker/tree_puzzle_bush.png` |
-| Red milkwood / moepel | `top-down/red-milkwood-tree-v1.png` | `picker/tree_red_milkwood_moepel.png` |
-| Shepherd's tree | `top-down/shepherds-tree-v1.png` | `picker/tree_shepherd_s_tree.png` |
-| Small-leaved guarri | `top-down/small-leaved-guarri-v1.png` | `picker/tree_small_leaved_guarri.png` |
-| Waterblommetjie | `top-down/waterblommetjie-v1.png` | `picker/tree_waterblommetjie.png` |
-| Wild date palm | `top-down/wild-date-palm-v1.png` | `picker/tree_wild_date_palm.png` |
-| Wild medlar / mmilo | `top-down/wild-medlar-v1.png` | `picker/tree_wild_medlar_mmilo.png` |
+| Bluebush | `/render-assets/reference-blueprint/bluebush-v1.png` | **pending** |
+| Brown ivory / motsintsila | `/render-assets/reference-blueprint/brown-ivory-tree-v1.png` | `/element-art/tree_brown_ivory_motsintsila.png` |
+| Coastal red milkwood | `/render-assets/reference-blueprint/coastal-red-milkwood-tree-v1.png` | `/element-art/tree_coastal_red_milkwood.png` |
+| Cross-berry | `/render-assets/reference-blueprint/cross-berry-v1.png` | `/element-art/tree_cross_berry.png` |
+| Gariep ebony | `/render-assets/reference-blueprint/gariep-ebony-tree-v1.png` | `/element-art/tree_gariep_ebony.png` |
+| Glossy currant | `/render-assets/reference-blueprint/glossy-currant-v1.png` | `/element-art/tree_glossy_currant.png` |
+| Karoo crossberry | `/render-assets/reference-blueprint/karoo-crossberry-v1.png` | `/element-art/tree_karoo_crossberry.png` |
+| Kuni bush | `/render-assets/reference-blueprint/kuni-bush-v1.png` | `/element-art/tree_kuni_bush.png` |
+| Puzzle bush | `/render-assets/reference-blueprint/puzzle-bush-v1.png` | `/element-art/tree_puzzle_bush.png` |
+| Red milkwood / moepel | `/render-assets/reference-blueprint/red-milkwood-tree-v1.png` | `/element-art/tree_red_milkwood_moepel.png` |
+| Shepherd's tree | `/render-assets/reference-blueprint/shepherds-tree-v1.png` | `/element-art/tree_shepherd_s_tree.png` |
+| Small-leaved guarri | `/render-assets/reference-blueprint/small-leaved-guarri-v1.png` | `/element-art/tree_small_leaved_guarri.png` |
+| Waterblommetjie | `/render-assets/reference-blueprint/waterblommetjie-v1.png` | `/element-art/tree_waterblommetjie.png` |
+| Wild date palm | `/render-assets/reference-blueprint/wild-date-palm-v1.png` | `/element-art/tree_wild_date_palm.png` |
+| Wild medlar / mmilo | `/render-assets/reference-blueprint/wild-medlar-v1.png` | `/element-art/tree_wild_medlar_mmilo.png` |
 
-Every staged indigenous file was visually inspected after preparation and passed the appropriate
+Every deployed indigenous file was visually inspected after preparation and passed the appropriate
 canopy or picker pixel checks. Species traits came only from the source brief, existing catalogue
 and the botanical sources linked there; no species names or catalogue facts were changed.
 
@@ -246,8 +241,8 @@ and the botanical sources linked there; no species names or catalogue facts were
 
 | Species | Top-down | Picker |
 |---|---|---|
-| Bietou / bush-tick berry | `top-down/bietou-v1.png` | **pending** |
-| Brandybush / velvet raisin | `top-down/brandybush-v1.png` | **pending** |
+| Bietou / bush-tick berry | `/render-assets/reference-blueprint/bietou-v1.png` | **pending** |
+| Brandybush / velvet raisin | `/render-assets/reference-blueprint/brandybush-v1.png` | **pending** |
 | Honeybush / heuningbos | **pending** | **pending** |
 | Rooibos | **pending** | **pending** |
 | Rosemary | **pending** | **pending** |
@@ -259,14 +254,14 @@ the five named rows unless the source brief is explicitly corrected.
 
 | Species | Top-down | Picker |
 |---|---|---|
-| Dogwood / umglindi | `top-down/dogwood-v1.png` | **pending** |
+| Dogwood / umglindi | `/render-assets/reference-blueprint/dogwood-v1.png` | **pending** |
 | Cape boxthorn / kriedoring | **pending** | **pending** |
 | Honey-thorn / kriedoring | **pending** | **pending** |
-| Natal currant | `top-down/natal-currant-v1.png` | `picker/tree_natal_currant.png` |
-| Pigeon pea | `top-down/pigeon-pea-v1.png` | **pending** |
-| Quiver tree / kokerboom | **pending** | `picker/tree_quiver_tree.png` |
-| Spekboom | `top-down/spekboom-v1.png` | **pending** |
-| Waxberry / wasbessie | `top-down/waxberry-v1.png` | **pending** |
+| Natal currant | `/render-assets/reference-blueprint/natal-currant-v1.png` | `/element-art/tree_natal_currant.png` |
+| Pigeon pea | `/render-assets/reference-blueprint/pigeon-pea-v1.png` | **pending** |
+| Quiver tree / kokerboom | **pending** | `/element-art/tree_quiver_tree.png` |
+| Spekboom | `/render-assets/reference-blueprint/spekboom-v1.png` | **pending** |
+| Waxberry / wasbessie | `/render-assets/reference-blueprint/waxberry-v1.png` | **pending** |
 
 The seven approved files in this section were visually inspected at their prepared delivery size
 and passed the applicable alpha/canopy or picker pixel checks. Species traits were checked against

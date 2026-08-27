@@ -3,6 +3,7 @@ import { SPECIES } from '@/lib/species-catalog';
 import { sectionedPaletteFor, broadReachPalette, type Species } from '@/lib/species-palette';
 import { BIOMES } from '@/lib/biome';
 import { useLanguage } from '@/lib/i18n';
+import { speciesPickerArtworkUrl } from '@/lib/species-art';
 
 interface SpeciesPickerProps {
   /** A lib/biome.ts BIOMES registry key ("IOCB"), never the display name — see biomeKeyForName. */
@@ -81,6 +82,7 @@ export default function SpeciesPicker({
             <div style={{ border: '1px solid rgba(0,0,0,0.08)', borderRadius: 6, overflow: 'hidden' }}>
               {sec.species.map((s, idx) => {
                 const isSelected = selectedSpeciesId === s.id;
+                const art = speciesPickerArtworkUrl(s.id);
                 return (
                   <button
                     key={s.id}
@@ -94,29 +96,41 @@ export default function SpeciesPicker({
                       border: 'none',
                       borderBottom: idx < sec.species.length - 1 ? '1px solid rgba(0,0,0,0.04)' : 'none',
                       cursor: 'pointer',
-                      display: 'flex',
-                      flexDirection: 'column',
+                      display: 'grid',
+                      gridTemplateColumns: art ? '56px minmax(0, 1fr)' : '1fr',
                       gap: 4,
                       textAlign: 'left',
                       font: 'inherit',
                       color: 'inherit',
                     }}
                   >
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                      <div>
-                        <div style={{ fontWeight: 600, fontSize: 13, color: '#0B120B' }}>{s.commonName}</div>
-                        <div style={{ fontStyle: 'italic', fontSize: 11.5, color: '#555' }}>{s.botanicalName}</div>
+                    {art && (
+                      <img
+                        src={art}
+                        alt=""
+                        aria-hidden
+                        width={48}
+                        height={48}
+                        style={{ width: 48, height: 48, objectFit: 'contain', alignSelf: 'center' }}
+                      />
+                    )}
+                    <div style={{ minWidth: 0 }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', gap: 8 }}>
+                        <div>
+                          <div style={{ fontWeight: 600, fontSize: 13, color: '#0B120B' }}>{s.commonName}</div>
+                          <div style={{ fontStyle: 'italic', fontSize: 11.5, color: '#555' }}>{s.botanicalName}</div>
+                        </div>
+                        <div style={{ fontSize: 11.5, color: '#555', textAlign: 'right', flexShrink: 0 }}>
+                          {s.matureHeightM}m h × {s.matureWidthM}m w
+                        </div>
                       </div>
-                      <div style={{ fontSize: 11.5, color: '#555', textAlign: 'right' }}>
-                        {s.matureHeightM}m h × {s.matureWidthM}m w
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 4 }}>
+                        {s.uses.map(u => (
+                          <span key={u} style={{ background: '#E0E0E0', borderRadius: 4, padding: '2px 6px', fontSize: 10, color: '#333' }}>
+                            {u}
+                          </span>
+                        ))}
                       </div>
-                    </div>
-                    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
-                      {s.uses.map(u => (
-                        <span key={u} style={{ background: '#E0E0E0', borderRadius: 4, padding: '2px 6px', fontSize: 10, color: '#333' }}>
-                          {u}
-                        </span>
-                      ))}
                     </div>
                   </button>
                 );

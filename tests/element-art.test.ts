@@ -13,6 +13,7 @@ import { PNG } from 'pngjs';
 // nothing else, so every assertion here is about that one field.
 
 import { ELEMENT_CATALOG } from '../lib/design-elements.ts';
+import { SPECIES_PICKER_ART } from '../lib/species-art.ts';
 
 const ROOT = join(process.cwd(), 'public', 'element-art');
 const PREFIX = '/element-art/';
@@ -44,8 +45,15 @@ test('art is named for the catalogue id it belongs to', () => {
 
 test('no art ships unreferenced', () => {
   const used = new Set(declared.map((d) => d.art!.slice(PREFIX.length)));
+  for (const file of SPECIES_PICKER_ART) used.add(file);
   const orphans = onDisk.filter((f) => !used.has(f));
   assert.deepEqual(orphans, [], `these files are in the bundle but no catalogue entry points at them: ${orphans.join(', ')}`);
+});
+
+test('every mapped species picker image exists in the shared picker library', () => {
+  for (const file of SPECIES_PICKER_ART) {
+    assert.doesNotThrow(() => statSync(join(ROOT, file)), `${file}: species picker art is mapped but not on disk`);
+  }
 });
 
 test('every asset is a real cut-out, not a flattened export', () => {
