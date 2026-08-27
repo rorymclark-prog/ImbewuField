@@ -54,8 +54,21 @@ export default function FunderPage() {
         <BrandLogo icon="🏛" />
         <div className="w-px h-5" style={{ background: '#E2D8C4', opacity: 0.5 }} />
         <span className="text-xs hidden sm:block font-display" style={{ color: '#5C5040' }}>Funder · impact oversight</span>
-        <span className="text-xs px-2 py-0.5 rounded-full font-mono hidden md:block" style={{ background: 'rgba(47,111,158,0.12)', border: '1px solid rgba(47,111,158,0.3)', color: '#2F6F9E' }}>read-only · demo data</span>
+        {/* Was an unconditional "demo data". NgoDashboard reads REAL Firestore via listGardens()
+            and only falls back to its sample gardens when there is no backend configured, so the
+            label now tracks that same condition. A permanent "demo" badge on real programme
+            figures teaches a funder to discount them. */}
+        {!isLive && (
+          <span className="text-xs px-2 py-0.5 rounded-full font-mono hidden md:block" style={{ background: 'rgba(47,111,158,0.12)', border: '1px solid rgba(47,111,158,0.3)', color: '#2F6F9E' }}>sample data</span>
+        )}
         <div className="flex-1" />
+        <a
+          href="/network"
+          className="text-xs font-display hidden sm:block"
+          style={{ color: '#2F6F9E', textDecoration: 'none', marginRight: 4 }}
+        >
+          Portfolio map →
+        </a>
         <LessonLink id="funder:overview" label="Learn" />
         <SettingsButton />
         <RoleSwitcher current="funder" />

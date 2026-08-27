@@ -33,11 +33,9 @@
  */
 
 import { NextRequest } from 'next/server';
-import { getApps, getApp, initializeApp } from 'firebase-admin/app';
-import { getFirestore } from 'firebase-admin/firestore';
-import { guardPaidApiRequest } from '@/lib/api-auth';
-import { decideNetworkAccess, canSeeOrg, type CallerProfile } from '@/lib/network-access';
-import { applyConsent, type FarmerConsent } from '@/lib/consent';
+import { canSeeOrg } from '@/lib/network-access';
+import { resolveNetworkCaller } from '@/lib/network-caller';
+import { applyConsent, consentState, type FarmerConsent } from '@/lib/consent';
 import { buildFarmerMetrics, coarsenFarmerLocation, type NetworkFarmer } from '@/lib/network';
 
 export const runtime = 'nodejs';
@@ -48,62 +46,18 @@ function json(body: unknown, status: number) {
 }
 
 export async function GET(req: NextRequest) {
-  // ── (i) identity ────────────────────────────────────────────────────────────
-  const auth = await guardPaidApiRequest(req, ROUTE);
-  if (auth.response) return auth.response;
-  if (!auth.uid) {
-    // Reached only when REQUIRE_API_AUTH is unset. Log-only auth is acceptable for the AI
-    // routes it was written for; it is not acceptable for one that reads other people's money.
-    console.warn(`[${ROUTE}] refused an unauthenticated request (REQUIRE_API_AUTH is not set)`);
-    return json({ error: 'Authentication required.' }, 401);
-  }
-
-  let db;
-  try {
-    db = getFirestore(getApps().length > 0 ? getApp() : initializeApp());
-  } catch (e) {
-    console.error(`[${ROUTE}] no Admin SDK credentials:`, e instanceof Error ? e.message : e);
-    return json({ error: 'Portfolio data is unavailable.' }, 503);
-  }
-
-  // ── (ii) authorisation, from the caller's OWN profile — never from the request ──
-  // Fields are copied ACROSS EXPLICITLY rather than spread. A spread would carry whatever else
-  // the profile document happens to hold into the authorisation input, so a future writable
-  // profile field named like an authorisation one would start deciding access.
-  const callerSnap = await db.collection('profiles').doc(auth.uid).get();
-  const callerData = callerSnap.exists ? (callerSnap.data() as Record<string, unknown>) : null;
-  let caller: CallerProfile | null = callerData
-    ? {
-        id: callerSnap.id,
-        role: callerData.role as CallerProfile['role'],
-        org_id: (callerData.org_id as string | null) ?? null,
-      }
-    : null;
-
-  // A funder's reach comes from /grants, NOT from anything on its own profile. The grant docs
-  // are `allow write: if false` in firestore.rules, so only an Admin-SDK script can mint one
-  // (scripts/provision-org.mjs --fund) — a funder cannot widen its own portfolio by editing a
-  // document it owns. This mirrors `grantedOrg()` in the rules exactly; if the two ever
-  // disagree, the rules win and this route simply returns rows the client then cannot re-read.
-  if (caller && caller.role === 'funder' && caller.org_id) {
-    const grantSnap = await db.collection('grants')
-      .where('funder_org_id', '==', caller.org_id).get();
-    caller = {
-      ...caller,
-      fundedOrgIds: grantSnap.docs
-        .map((d) => (d.data() as { ngo_org_id?: string }).ngo_org_id)
-        .filter((id): id is string => typeof id === 'string' && id.length > 0),
-    };
-  }
-
-  const access = decideNetworkAccess(caller);
-  if (!access.ok) return json({ error: access.reason }, access.status);
+  // Steps (i) and (ii) — token, caller profile, role decision, funder /grants resolution — are
+  // shared with every other portfolio route and live in lib/network-caller.ts so there is exactly
+  // one implementation of them. See that file for why duplicating them would be a hazard.
+  const caller = await resolveNetworkCaller(req, ROUTE);
+  if (!caller.ok) return caller.response;
+  const { db, access } = caller;
 
   // ── (iii) scope + consent, per farmer ───────────────────────────────────────
   const orgId = req.nextUrl.searchParams.get('org_id');
   if (!orgId) return json({ error: 'org_id is required.' }, 400);
   if (!canSeeOrg(access, orgId)) {
-    console.warn(`[${ROUTE}] ${auth.uid} (${access.role}) asked for org ${orgId}, outside its portfolio`);
+    console.warn(`[${ROUTE}] ${caller.uid} (${access.role}) asked for org ${orgId}, outside its portfolio`);
     return json({ error: 'That organisation is not in your portfolio.' }, 403);
   }
 
@@ -112,6 +66,7 @@ export async function GET(req: NextRequest) {
 
   const out = [];
   let withheldEntirely = 0;
+  let adminBypassed = 0;
 
   for (const doc of farmerSnap.docs) {
     const consentSnap = await db.collection('farmer_consents').doc(doc.id).get();
@@ -135,14 +90,29 @@ export async function GET(req: NextRequest) {
       ...(doc.data().network ?? {}),
     } as unknown as NetworkFarmer;
 
-    const summary = applyConsent(
-      { farmer, metrics: buildFarmerMetrics(farmer, {
+    const raw = {
+      farmer,
+      metrics: buildFarmerMetrics(farmer, {
         production: rows(production), sales: rows(sales), expenses: rows(expenses),
         courses: rows(courses), surveys: rows(surveys),
-      }) },
-      consent,
-      coarsenFarmerLocation,
-    );
+      }),
+    };
+
+    if (access.role === 'admin') {
+      // THE ADMIN BYPASS, MATCHING firestore.rules EXACTLY. `staffConsentedAccess()` there is
+      // `isAdmin() || (staffOrgAccess(d) && consentGranted(...))` — an unconditional admin
+      // short-circuit — and its comment states the reason: the platform operator's own access is
+      // not the third-party disclosure that POPIA consent exists to gate. Without this branch the
+      // route contradicted the rules it was written to mirror, and the contradiction was invisible
+      // because it only showed up as an empty dashboard, which is also what a real empty programme
+      // looks like. The consent STATE is still reported on the row, so the UI can say plainly that
+      // a farmer has not agreed to share — the operator sees the figure and sees that fact.
+      adminBypassed++;
+      out.push({ farmer: { ...raw.farmer, consent: consentState(consent) }, metrics: raw.metrics });
+      continue;
+    }
+
+    const summary = applyConsent(raw, consent, coarsenFarmerLocation);
 
     // A farmer who granted nothing at all is not listed as an empty card — an all-null row
     // still discloses that this person is enrolled, which is itself their information.
@@ -152,6 +122,11 @@ export async function GET(req: NextRequest) {
 
   if (withheldEntirely > 0) {
     console.info(`[${ROUTE}] org ${orgId}: ${withheldEntirely} farmer(s) omitted — no consent on record`);
+  }
+  if (adminBypassed > 0) {
+    // Logged every time, deliberately. An operator reading figures a farmer has not agreed to
+    // share is permitted, but it should never be silent — this is the only record that it happened.
+    console.info(`[${ROUTE}] ADMIN BYPASS: ${caller.uid} read ${adminBypassed} farmer(s) in org ${orgId} without applying the consent projection`);
   }
   return json({
     farmers: out,

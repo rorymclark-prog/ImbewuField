@@ -75,3 +75,32 @@ test('scoping reports what it withheld instead of silently shrinking', () => {
   const denied = decideNetworkAccess(null);
   assert.deepEqual(scopeToVisible(denied, rows), { visible: [], withheld: 3 });
 });
+
+test('a platform admin with NO org sees every org — the master key must open something', () => {
+  // REGRESSION. admin used to fall through to the org-less refusal below, so the one role
+  // whose whole purpose is unconditional access got a 403 and an empty dashboard. The failure
+  // was indistinguishable from "this programme has no farmers yet", which is why it survived.
+  const d = decideNetworkAccess(p({ role: 'admin', org_id: null }));
+  assert.equal(d.ok, true);
+  assert.equal(d.ok && d.allOrgs, true);
+  assert.equal(canSeeOrg(d, 'org-nobody-told-us-about'), true);
+  assert.equal(canSeeOrg(d, 'some-other-org'), true);
+});
+
+test('admin still cannot see an org-LESS farmer, because that farmer is in no portfolio', () => {
+  const d = decideNetworkAccess(p({ role: 'admin', org_id: null }));
+  assert.equal(canSeeOrg(d, null), false);
+  assert.equal(canSeeOrg(d, undefined), false);
+  assert.equal(canSeeOrg(d, ''), false);
+});
+
+test('the admin wildcard does NOT leak to ngo or funder', () => {
+  // The whole tenancy boundary rests on allOrgs being admin-only. If a role check ever
+  // widens, this is the test that should go red first.
+  for (const role of ['ngo', 'funder'] as const) {
+    const d = decideNetworkAccess(p({ role, org_id: 'org-1' }));
+    assert.equal(d.ok, true);
+    assert.equal(d.ok && d.allOrgs, false, `${role} must not get the wildcard`);
+    assert.equal(canSeeOrg(d, 'org-2'), false, `${role} must not reach org-2`);
+  }
+});
