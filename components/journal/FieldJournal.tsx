@@ -1,7 +1,9 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import Link from 'next/link';
 import { Plus, Pencil, NotebookPen, Sparkles } from 'lucide-react';
+import { useLanguage } from '@/lib/i18n';
 import { bedsFromDesignCanvas } from '@/lib/design-beds-bridge';
 import { loadCanvasState } from '@/lib/design-canvas';
 import { loadPlaces, resolveMainSite } from '@/lib/saved-places';
@@ -81,6 +83,7 @@ const EXAMPLE_JOURNAL_ENTRIES: ReadonlyArray<{
 ];
 
 export default function FieldJournal() {
+  const { t } = useLanguage();
   const [entries, setEntries] = useState<JournalEntry[]>([]);
   const [ready, setReady] = useState(false);
   const [filter, setFilter] = useState<Filter>('all');
@@ -193,6 +196,25 @@ export default function FieldJournal() {
           <Plus size={20} />
           New entry
         </button>
+
+        {/* WHERE THIS GOES, said on the screen itself.
+            The journal is a diary — no kilogram field — and saveJournal() writes to
+            localStorage only, deliberately (sample mode patches Storage.prototype, so a
+            local-only store is sandboxed for free; see lib/field-journal.ts). Nothing here
+            reaches production_logs, the finance totals or the farmer's programme, and a
+            cleared cache or a new phone erases it. The home tile used to say "Log harvests"
+            and pulled precisely the farmer who wanted to record a harvest into the one screen
+            that cannot. The label is fixed; this says the rest out loud, and points at the
+            screen that DOES keep a weight, so the correction ends somewhere useful rather
+            than just taking a promise away. */}
+        <p style={{
+          margin: '8px 2px 0', font: '500 12px/1.5 system-ui, sans-serif', color: '#6B6152',
+        }}>
+          {t('journalLocalOnlyNote')} {t('journalWeightsLiveElsewhere')}{' '}
+          <Link href="/records" style={{ color: '#274D2C', fontWeight: 700 }}>
+            {t('journalOpenRecords')}
+          </Link>
+        </p>
       </div>
 
       {notice && (

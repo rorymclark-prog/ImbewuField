@@ -34,6 +34,7 @@ import HomeHeroCard from '@/components/home/HomeHeroCard';
 import CropIcon from '@/components/CropIcon';
 import { useLanguage } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
+import { canSeeNavLink } from '@/lib/role-access';
 import { getLastSite, type LastSite } from '@/lib/last-site';
 import LessonLink from '@/components/design/LessonLink';
 import { loadPlaces, resolveMainSite, setMainSiteId, type SavedPlace } from '@/lib/saved-places';
@@ -285,7 +286,10 @@ function HomeLandingInner() {
   // on SSR/first render, so returning users never flash the new-user welcome.
   const [places, setPlaces] = useState<SavedPlace[] | null>(null);
   const [boardTasks, setBoardTasks] = useState<BoardTask[]>([]);
-  const { user } = useAuth();
+  // `role`, not just `user`. The dashboards row below listed all five destinations to everyone,
+  // so a farmer was offered the Mentor, NGO and Funder dashboards — three doors that answer with
+  // "This is the NGO area". See lib/role-access.ts.
+  const { user, role } = useAuth();
   const firstName = user?.displayName?.split(' ')[0] ?? null;
 
   useEffect(() => {
@@ -321,7 +325,7 @@ function HomeLandingInner() {
     { href: '/student', Icon: GraduationCap, label: t('homeRoleStudentLabel'), desc: t('homeRoleStudentDesc') },
     { href: '/ngo',     Icon: BarChart3,     label: t('homeRoleNGOLabel'),     desc: t('homeRoleNGODesc') },
     { href: '/funder',  Icon: Building2,     label: t('homeRoleFunderLabel'),  desc: t('homeRoleFunderDesc') },
-  ];
+  ].filter(({ href }) => canSeeNavLink(role, href));
 
   const QUICK_ACTIONS = [
     { href: '/finances',          Icon: DollarSign,    art: undefined as string | undefined, label: t('homeQuickFinance'),     desc: t('homeQuickFinanceDesc'),     color: 'var(--color-harvest)', bg: 'rgba(192,122,30,0.10)' },

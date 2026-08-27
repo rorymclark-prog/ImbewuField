@@ -1,10 +1,11 @@
 // Auto-split from the former monolithic lib/i18n.tsx (bundle diet, task #6) — mechanical
 // extraction of this locale's existing key/value pairs, no translated text touched. Loaded
 // on demand via loadLocale() in lib/i18n.tsx, not bundled into every page's initial JS.
-import { DESIGN_STUDIO_ENGLISH_PENDING, type Dict } from '@/lib/i18n-pending';
+import { DESIGN_STUDIO_ENGLISH_PENDING, JOURNAL_ENGLISH_PENDING, type Dict } from '@/lib/i18n-pending';
 
 const dict: Dict = {
   ...DESIGN_STUDIO_ENGLISH_PENDING,
+  ...JOURNAL_ENGLISH_PENDING,
   tagline: 'Vutlhari bya Permaculture',
   welcomeTitle: 'U amukeriwile eka ImbewuField',
   welcomeSub: 'Ku kunguhata ko tlhariha ka permaculture ka misava ya Afrika Dzonga.',
@@ -626,7 +627,6 @@ const dict: Dict = {
   homeQuickContact: 'Landzela',
   homeQuickContactDesc: 'Mulayeri · Nhlangano',
   homeQuickJournal: 'Tsariwa ra siku',
-  homeQuickJournalDesc: 'Tsarisa ku kotula',
   homeQuickCropPlanner: 'Munyikisi wa Milaka',
   homeQuickCropPlannerDesc: 'Rindza nkarhi wa ku byala',
   homeQuickMyRecords: 'Swirekodo Swa Mina',
