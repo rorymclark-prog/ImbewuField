@@ -193,9 +193,10 @@ every public PNG that no live catalogue species or element can use.
 
 ## Current status
 
-As of 2026-08-28, 58 deliverables are approved and deployed: 20 of 22 exotic-fruit-and-nut
-deliverables, 29 of 30 indigenous-fruit deliverables, 2 shrub deliverables and 7 small-tree /
-large-shrub deliverables.
+As of 2026-08-28, 59 deliverables are approved: 58 are deployed and one is held in staging for
+the next mapped batch. The deployed set contains 20 of 22 exotic-fruit-and-nut deliverables,
+29 of 30 indigenous-fruit deliverables, 2 shrub deliverables and 7 small-tree / large-shrub
+deliverables. The staged file is the Baboon grape picker.
 
 | Species | Top-down | Picker |
 |---|---|---|
@@ -266,6 +267,18 @@ the five named rows unless the source brief is explicitly corrected.
 The seven approved files in this section were visually inspected at their prepared delivery size
 and passed the applicable alpha/canopy or picker pixel checks. Species traits were checked against
 primary SANBI PlantZAfrica pages where available; pigeon pea used FAO and USDA descriptions.
+
+### Climbers
+
+| Species | Top-down | Picker |
+|---|---|---|
+| Baboon grape | **pending** | `design/plant-art-staging/picker/tree_baboon_grape.png` |
+
+The Baboon grape picker was visually inspected at 192 px and at its 24 px recognition size. It is
+a 45.8 KB RGBA cut-out with all four corner alphas zero and 69.4% fully transparent pixels. Its
+digitately compound leaves, rust-red new growth, tendrils and enlarged red-brown/purple berry
+clusters remain legible after downscaling. The morphology came from the existing catalogue and
+the linked SANBI PlantZAfrica source; no catalogue facts changed.
 
 ### Pending transparency failures
 
@@ -339,11 +352,22 @@ primary SANBI PlantZAfrica pages where available; pigeon pea used FAO and USDA d
   is an RGB checkerboard. Its extraction
   `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-6d787f66-630f-4106-bd4d-b12d5e244512.png`
   replaced the background with an opaque coloured vignette and must also be rejected.
+- Waxberry picker: the preferred broad, low, fruiting-shrub source
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-222f60c0-1672-43c2-966b-10cc86732ce9.png`
+  is an RGB checkerboard. Its extraction
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-73fa6241-051e-4360-adc5-dff62aa95826.png`
+  added alpha but changed the square composition into a 3:2 crop with a green vignette, so it
+  must also be rejected.
+- Baboon grape top-down: the visually approved source
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-d7c95c15-1f7c-4456-8f4c-c94535d3f5b3.png`
+  and its extraction
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-a0a42df8-c34f-4d1d-bc33-1714585da196.png`
+  are RGB checkerboards. Do not stage either one.
 
-The next untouched species in the brief is **Baboon grape**, the first climber. Waxberry picker is
-also still unattempted. Continue in exact source-table order, while keeping every pending
-transparency failure visible in status reports. Do not silently switch to the CLI/API fallback to
-resolve them; that requires explicit user approval.
+The next untouched species in the brief is **Bushman's grape**, the second climber. Waxberry picker
+and Baboon grape top-down were attempted and remain pending as documented above. Continue in exact
+source-table order, while keeping every pending transparency failure visible in status reports. Do
+not silently switch to the CLI/API fallback to resolve them; that requires explicit user approval.
 
 Do not modify `PLAN_VERSION`. Do not touch the original checkout at
 `/Users/roryclark/ImbewuField`; it contains another session's uncommitted files.
