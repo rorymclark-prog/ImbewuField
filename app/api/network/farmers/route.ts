@@ -35,7 +35,7 @@
 import { NextRequest } from 'next/server';
 import { canSeeOrg } from '@/lib/network-access';
 import { resolveNetworkCaller } from '@/lib/network-caller';
-import { applyConsent, type FarmerConsent } from '@/lib/consent';
+import { applyConsent, consentState, type FarmerConsent } from '@/lib/consent';
 import { buildFarmerMetrics, coarsenFarmerLocation, type NetworkFarmer } from '@/lib/network';
 
 export const runtime = 'nodejs';
@@ -66,6 +66,7 @@ export async function GET(req: NextRequest) {
 
   const out = [];
   let withheldEntirely = 0;
+  let adminBypassed = 0;
 
   for (const doc of farmerSnap.docs) {
     const consentSnap = await db.collection('farmer_consents').doc(doc.id).get();
@@ -89,14 +90,29 @@ export async function GET(req: NextRequest) {
       ...(doc.data().network ?? {}),
     } as unknown as NetworkFarmer;
 
-    const summary = applyConsent(
-      { farmer, metrics: buildFarmerMetrics(farmer, {
+    const raw = {
+      farmer,
+      metrics: buildFarmerMetrics(farmer, {
         production: rows(production), sales: rows(sales), expenses: rows(expenses),
         courses: rows(courses), surveys: rows(surveys),
-      }) },
-      consent,
-      coarsenFarmerLocation,
-    );
+      }),
+    };
+
+    if (access.role === 'admin') {
+      // THE ADMIN BYPASS, MATCHING firestore.rules EXACTLY. `staffConsentedAccess()` there is
+      // `isAdmin() || (staffOrgAccess(d) && consentGranted(...))` — an unconditional admin
+      // short-circuit — and its comment states the reason: the platform operator's own access is
+      // not the third-party disclosure that POPIA consent exists to gate. Without this branch the
+      // route contradicted the rules it was written to mirror, and the contradiction was invisible
+      // because it only showed up as an empty dashboard, which is also what a real empty programme
+      // looks like. The consent STATE is still reported on the row, so the UI can say plainly that
+      // a farmer has not agreed to share — the operator sees the figure and sees that fact.
+      adminBypassed++;
+      out.push({ farmer: { ...raw.farmer, consent: consentState(consent) }, metrics: raw.metrics });
+      continue;
+    }
+
+    const summary = applyConsent(raw, consent, coarsenFarmerLocation);
 
     // A farmer who granted nothing at all is not listed as an empty card — an all-null row
     // still discloses that this person is enrolled, which is itself their information.
@@ -106,6 +122,11 @@ export async function GET(req: NextRequest) {
 
   if (withheldEntirely > 0) {
     console.info(`[${ROUTE}] org ${orgId}: ${withheldEntirely} farmer(s) omitted — no consent on record`);
+  }
+  if (adminBypassed > 0) {
+    // Logged every time, deliberately. An operator reading figures a farmer has not agreed to
+    // share is permitted, but it should never be silent — this is the only record that it happened.
+    console.info(`[${ROUTE}] ADMIN BYPASS: ${caller.uid} read ${adminBypassed} farmer(s) in org ${orgId} without applying the consent projection`);
   }
   return json({
     farmers: out,
