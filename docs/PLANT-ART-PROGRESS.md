@@ -5,7 +5,7 @@ Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 - Last full checker inventory: 2026-08-28
 - Checker: `/Users/roryclark/ImbewuField/scripts/check-plant-art.py`
 - Required scope: 53 species, 106 views
-- Current result: 65 PASS, 29 FAIL, 12 MISSING
+- Current result: 66 PASS, 28 FAIL, 12 MISSING
 - A row is complete only when both views are `PASS` and their SHAs name pushed commits.
 
 | Species | Front | Front path | Front SHA | Top-down | Top-down path | Top SHA |
@@ -52,7 +52,7 @@ Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 | Baboon grape | PASS | `public/element-art/tree_baboon_grape.png` | `8db4efe` | FAIL | `public/render-assets/reference-blueprint/baboon-grape-v1.png` | `95cdbf3` |
 | Bushman's grape | PASS | `public/element-art/tree_bushman_s_grape.png` | `8db4efe` | PASS | `public/render-assets/reference-blueprint/bushmans-grape-v1.png` | `e4b759b` |
 | Common wild grape / bosdruif | PASS | `public/element-art/tree_common_wild_grape.png` | `9596647` | PASS | `public/render-assets/reference-blueprint/common-wild-grape-v1.png` | `b983f99` |
-| Grape vine / wingerd | PASS | `public/element-art/tree_grape_vine.png` | `8db4efe` | FAIL | `public/render-assets/reference-blueprint/grape-vine-v1.png` | `8db4efe` |
+| Grape vine / wingerd | PASS | `public/element-art/tree_grape_vine.png` | `8db4efe` | PASS | `public/render-assets/reference-blueprint/grape-vine-v1.png` | `0c85a6a` |
 | Lablab / dolichos bean | PASS | `public/element-art/tree_lablab.png` | `8db4efe` | FAIL | `public/render-assets/reference-blueprint/lablab-v1.png` | `8db4efe` |
 | Malabar spinach | PASS | `public/element-art/tree_malabar_spinach.png` | `8db4efe` | FAIL | `public/render-assets/reference-blueprint/malabar-spinach-v1.png` | `8db4efe` |
 | Purple granadilla / passion fruit | PASS | `public/element-art/tree_purple_granadilla.png` | `8db4efe` | FAIL | `public/render-assets/reference-blueprint/purple-granadilla-v1.png` | `8db4efe` |
