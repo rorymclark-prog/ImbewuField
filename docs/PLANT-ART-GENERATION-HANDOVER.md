@@ -193,9 +193,9 @@ every public PNG that no live catalogue species or element can use.
 
 ## Current status
 
-As of 2026-08-28, 86 deliverables are approved and deployed. The deployed set contains 21 of 22
+As of 2026-08-28, 87 deliverables are approved and deployed. The deployed set contains 21 of 22
 exotic-fruit-and-nut deliverables, 29 of 30 indigenous-fruit deliverables, 7 shrub deliverables,
-7 small-tree / large-shrub deliverables, 13 climber deliverables and all 8 medium-tree
+8 small-tree / large-shrub deliverables, 13 climber deliverables and all 8 medium-tree
 deliverables, plus the first large-tree picker. Baboon grape remains the only climber without an
 approved top-down counterpart.
 
@@ -256,7 +256,7 @@ the five named rows unless the source brief is explicitly corrected.
 
 | Species | Top-down | Picker |
 |---|---|---|
-| Dogwood / umglindi | `/render-assets/reference-blueprint/dogwood-v1.png` | **pending** |
+| Dogwood / umglindi | `/render-assets/reference-blueprint/dogwood-v1.png` | `/element-art/tree_dogwood.png` |
 | Cape boxthorn / kriedoring | **pending** | **pending** |
 | Honey-thorn / kriedoring | **pending** | **pending** |
 | Natal currant | `/render-assets/reference-blueprint/natal-currant-v1.png` | `/element-art/tree_natal_currant.png` |
@@ -489,32 +489,61 @@ enlarged angular green and pink-brown fruit. Morphology was checked against SANB
   remains pending.
 - Dogwood picker: the corrected front-elevation source
   `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-47f7ff3f-cb02-4b4b-8c74-8642ae52be77.png`
-  is visually approved, but it and its extraction are RGB checkerboards. Do not stage them.
+  is visually approved, but it and its extraction are RGB checkerboards. A fresh source
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-ff1ee194-c50e-4fcc-ad15-ad567f60ecd5.png`
+  restored genuine RGBA and preserved the rounded multi-stem habit, clean glossy leaves and
+  deliberately enlarged green, red and purple-black fruit. Its raw output touched the lower edge
+  and contained an isolated saturated-red rendering artefact behind the trunk base. The accepted
+  delivery preparation removed only that bottom-central red spill, uniformly scaled the plant to
+  add transparent breathing room, and was inspected at 192 px and 24 px. The deployed picker is
+  192×192 RGBA, 54,495 bytes, has transparent corners, 56.64% fully transparent pixels and its
+  widest canopy row is at 52.36% height.
 - Cape boxthorn: overhead candidate
   `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-94935d18-8eed-446d-887c-f3a588eafd6a.png`
   and picker candidate
   `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-d793332a-ac3c-43a3-b381-ada340a76281.png`
-  are visually approved RGB checkerboards. Do not stage them.
+  are visually approved RGB checkerboards. Fresh overhead
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-41920b05-c78c-46b2-a163-ca12d8e91fbe.png`
+  and picker
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-d54d5b2e-242a-47b7-8e38-08e7d3e4dcd5.png`
+  regenerations also baked checkerboards into RGB files. A picker retry using only an approved
+  transparent house-style reference
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-be10bf30-b845-4312-81f3-641439632897.png`
+  did the same. Do not stage any of them.
 - Honey-thorn: overhead candidate
   `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-5fae27c0-ce04-46e1-93ed-4ed3e1b80d07.png`
   and picker candidate
   `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-278e383d-4513-46fa-adf5-e3beaeedf7e0.png`
-  are visually approved RGB checkerboards. Do not stage them.
+  are visually approved RGB checkerboards. Fresh picker
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-f66f2084-1de5-436f-bdf6-4e58aa76c8f2.png`
+  and overhead
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-58bef397-a2e8-404c-b6aa-f901deefcb32.png`
+  regenerations have strong morphology but opaque white RGB fields. White-key extraction would
+  damage the cream flowers and leaf highlights, so neither was staged.
 - Pigeon pea picker: the visually approved source
   `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-ac6ade8d-8e5d-4787-a742-c99f23f4c373.png`
   and its extraction
   `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-29d3a649-15b8-4f97-9207-a10e1249a4a9.png`
-  are RGB checkerboards. Do not stage them.
+  are RGB checkerboards. A fresh morphology-correct picker with deliberately enlarged pods
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-aa03c0d8-144d-420f-9372-f8bf12cb0ae0.png`
+  also baked its checkerboard into RGB. Do not stage it.
 - Quiver tree top-down: the visually approved source
   `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-5602f4d5-1332-430b-bfd7-e35a455aeaa2.png`
   and its extraction
   `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-350df27c-c06b-465c-b40c-52280083f9fc.png`
-  are RGB checkerboards. Do not stage them.
+  are RGB checkerboards. A fresh overhead regeneration
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-4a2a0938-82ce-4b67-b3e5-1cf3b9131604.png`
+  retained correct radial aloe rosettes and yellow flowers but was another RGB checkerboard. Do not
+  stage it.
 - Spekboom picker: the visually approved source
   `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-baf42529-b0d9-47ee-8667-4ddeb772e49f.png`
   is an RGB checkerboard. Its extraction
   `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-6d787f66-630f-4106-bd4d-b12d5e244512.png`
   replaced the background with an opaque coloured vignette and must also be rejected.
+  A fresh picker
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-4919f0dd-d9e4-4089-be13-02259e1ac5c0.png`
+  restored clean paired succulent leaves, red-brown stems and readable pink flowers but again baked
+  a checkerboard into RGB, so it also remains unshipped.
 - Waxberry picker: the preferred broad, low, fruiting-shrub source
   `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-222f60c0-1672-43c2-966b-10cc86732ce9.png`
   is an RGB checkerboard. Its extraction
@@ -639,10 +668,10 @@ black-field extraction of the stronger checkerboard composition still returned a
 checkerboard. No White milkwood asset was staged or deployed.
 
 All source-table species have now been attempted. The unresolved deliverables are Banana overhead,
-Bluebush picker, Honeybush overhead, Rooibos overhead, Rosemary overhead, Dogwood picker, both Cape
-boxthorn views, both Honey-thorn views, Pigeon pea picker, Quiver tree overhead, Spekboom picker,
+Bluebush picker, Honeybush overhead, Rooibos overhead, Rosemary overhead, both Cape boxthorn views,
+both Honey-thorn views, Pigeon pea picker, Quiver tree overhead, Spekboom picker,
 Waxberry picker, Baboon grape overhead, Karee overhead and both White milkwood views. The next
-untouched recovery target after this batch is Dogwood picker; the earlier failed assets remain
+untouched recovery target after this batch is the Cape boxthorn pair; the earlier failed assets remain
 pending and must not be skipped in status reports. Keep every transparency, morphology or scale
 failure visible. Do not silently switch to the CLI/API fallback to resolve them; that requires
 explicit user approval.

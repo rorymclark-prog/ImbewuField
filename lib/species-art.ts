@@ -43,7 +43,7 @@ export const SPECIES_ART = {
   'aspalathus-linearis': { picker: 'tree_rooibos.png', plan: null },
   'salvia-rosmarinus-rosmarinus-officinalis': { picker: 'tree_rosemary.png', plan: null },
   'salvia-rosmarinus': { picker: 'tree_rosemary.png', plan: null },
-  'rhamnus-prinoides': { picker: null, plan: 'dogwood-v1.png' },
+  'rhamnus-prinoides': { picker: 'tree_dogwood.png', plan: 'dogwood-v1.png' },
   'searsia-natalensis': { picker: 'tree_natal_currant.png', plan: 'natal-currant-v1.png' },
   'cajanus-cajan': { picker: null, plan: 'pigeon-pea-v1.png' },
   'aloidendron-dichotomum': { picker: 'tree_quiver_tree.png', plan: null },
