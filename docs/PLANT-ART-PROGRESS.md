@@ -5,7 +5,7 @@ Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 - Last full checker inventory: 2026-08-28
 - Checker: `/Users/roryclark/ImbewuField/scripts/check-plant-art.py`
 - Required scope: 53 species, 106 views
-- Current result: 93 PASS, 1 FAIL, 12 MISSING
+- Current result: 94 PASS, 0 FAIL, 12 MISSING
 - A row is complete only when both views are `PASS` and their SHAs name pushed commits.
 
 | Species | Front | Front path | Front SHA | Top-down | Top-down path | Top SHA |
@@ -62,7 +62,7 @@ Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 | Powder-puff tree / iBoqo | PASS | `public/element-art/tree_powder_puff_tree.png` | `1ecd8f2` | PASS | `public/render-assets/reference-blueprint/powder-puff-tree-v1.png` | `3716cf4` |
 | Karee | PASS | `public/element-art/tree_karee.png` | `d21827f` | PASS | `public/render-assets/reference-blueprint/karee-v1.png` | `b740cab` |
 | White milkwood | PASS | `public/element-art/tree_white_milkwood.png` | `1ecd8f2` | PASS | `public/render-assets/reference-blueprint/white-milkwood-v1.png` | `543d418` |
-| Olive | PASS | `public/element-art/tree_olive.png` | `018d9e2` | FAIL | `public/render-assets/reference-blueprint/olive-v1.png` | `81e0528` |
+| Olive | PASS | `public/element-art/tree_olive.png` | `018d9e2` | PASS | `public/render-assets/reference-blueprint/olive-v1.png` | `2fcd949` |
 
 ## Resume protocol
 
