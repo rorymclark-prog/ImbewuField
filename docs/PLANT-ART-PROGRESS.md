@@ -5,7 +5,7 @@ Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 - Last full checker inventory: 2026-08-28
 - Checker: `/Users/roryclark/ImbewuField/scripts/check-plant-art.py`
 - Required scope: 53 species, 106 views
-- Current result: 84 PASS, 10 FAIL, 12 MISSING
+- Current result: 85 PASS, 9 FAIL, 12 MISSING
 - A row is complete only when both views are `PASS` and their SHAs name pushed commits.
 
 | Species | Front | Front path | Front SHA | Top-down | Top-down path | Top SHA |
@@ -27,7 +27,7 @@ Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 | Cross-berry | PASS | `public/element-art/tree_cross_berry.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/cross-berry-v1.png` | `f9fdd30` |
 | Gariep ebony | PASS | `public/element-art/tree_gariep_ebony.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/gariep-ebony-tree-v1.png` | `0cd1d72` |
 | Glossy currant | PASS | `public/element-art/tree_glossy_currant.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/glossy-currant-v1.png` | `1e01f01` |
-| Karoo crossberry | PASS | `public/element-art/tree_karoo_crossberry.png` | `b93e78d` | FAIL | `public/render-assets/reference-blueprint/karoo-crossberry-v1.png` | `b93e78d` |
+| Karoo crossberry | PASS | `public/element-art/tree_karoo_crossberry.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/karoo-crossberry-v1.png` | `2491a1e` |
 | Kuni bush | PASS | `public/element-art/tree_kuni_bush.png` | `b93e78d` | FAIL | `public/render-assets/reference-blueprint/kuni-bush-v1.png` | `b93e78d` |
 | Puzzle bush | PASS | `public/element-art/tree_puzzle_bush.png` | `9596647` | PASS | `public/render-assets/reference-blueprint/puzzle-bush-v1.png` | `b900a35` |
 | Red milkwood / moepel | PASS | `public/element-art/tree_red_milkwood_moepel.png` | `c1f4f37` | PASS | `public/render-assets/reference-blueprint/red-milkwood-tree-v1.png` | `353a7d0` |
