@@ -5,7 +5,7 @@ Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 - Last full checker inventory: 2026-08-28
 - Checker: `/Users/roryclark/ImbewuField/scripts/check-plant-art.py`
 - Required scope: 53 species, 106 views
-- Current result: 79 PASS, 15 FAIL, 12 MISSING
+- Current result: 80 PASS, 14 FAIL, 12 MISSING
 - A row is complete only when both views are `PASS` and their SHAs name pushed commits.
 
 | Species | Front | Front path | Front SHA | Top-down | Top-down path | Top SHA |
@@ -35,7 +35,7 @@ Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 | Small-leaved guarri | PASS | `public/element-art/tree_small_leaved_guarri.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/small-leaved-guarri-v1.png` | `88045ae` |
 | Waterblommetjie | PASS | `public/element-art/tree_waterblommetjie.png` | `c1f4f37` | FAIL | `public/render-assets/reference-blueprint/waterblommetjie-v1.png` | `b93e78d` |
 | Wild date palm | PASS | `public/element-art/tree_wild_date_palm.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/wild-date-palm-v1.png` | `4e9365f` |
-| Wild medlar / mmilo | PASS | `public/element-art/tree_wild_medlar_mmilo.png` | `b93e78d` | FAIL | `public/render-assets/reference-blueprint/wild-medlar-v1.png` | `b93e78d` |
+| Wild medlar / mmilo | PASS | `public/element-art/tree_wild_medlar_mmilo.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/wild-medlar-v1.png` | `24c2316` |
 | Bietou / bush-tick berry | PASS | `public/element-art/tree_bietou.png` | `017067c` | FAIL | `public/render-assets/reference-blueprint/bietou-v1.png` | `b93e78d` |
 | Brandybush / velvet raisin | PASS | `public/element-art/tree_brandybush.png` | `202ccec` | FAIL | `public/render-assets/reference-blueprint/brandybush-v1.png` | `b93e78d` |
 | Honeybush / heuningbos | PASS | `public/element-art/tree_honeybush.png` | `d21827f` | MISSING | `public/render-assets/reference-blueprint/honeybush-v1.png` | `—` |
