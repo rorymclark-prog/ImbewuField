@@ -193,11 +193,10 @@ every public PNG that no live catalogue species or element can use.
 
 ## Current status
 
-As of 2026-08-28, 87 deliverables are approved and deployed. The deployed set contains 21 of 22
+As of 2026-08-28, 89 deliverables are approved and deployed. The deployed set contains 21 of 22
 exotic-fruit-and-nut deliverables, 29 of 30 indigenous-fruit deliverables, 7 shrub deliverables,
-8 small-tree / large-shrub deliverables, 13 climber deliverables and all 8 medium-tree
-deliverables, plus the first large-tree picker. Baboon grape remains the only climber without an
-approved top-down counterpart.
+9 small-tree / large-shrub deliverables, all 14 climber deliverables and all 8 medium-tree
+deliverables, plus the first large-tree picker.
 
 | Species | Top-down | Picker |
 |---|---|---|
@@ -263,9 +262,9 @@ the five named rows unless the source brief is explicitly corrected.
 | Pigeon pea | `/render-assets/reference-blueprint/pigeon-pea-v1.png` | **pending** |
 | Quiver tree / kokerboom | **pending** | `/element-art/tree_quiver_tree.png` |
 | Spekboom | `/render-assets/reference-blueprint/spekboom-v1.png` | **pending** |
-| Waxberry / wasbessie | `/render-assets/reference-blueprint/waxberry-v1.png` | **pending** |
+| Waxberry / wasbessie | `/render-assets/reference-blueprint/waxberry-v1.png` | `/element-art/tree_waxberry.png` |
 
-The seven approved files in this section were visually inspected at their prepared delivery size
+The nine approved files in this section were visually inspected at their prepared delivery size
 and passed the applicable alpha/canopy or picker pixel checks. Species traits were checked against
 primary SANBI PlantZAfrica pages where available; pigeon pea used FAO and USDA descriptions.
 
@@ -273,7 +272,7 @@ primary SANBI PlantZAfrica pages where available; pigeon pea used FAO and USDA d
 
 | Species | Top-down | Picker |
 |---|---|---|
-| Baboon grape | **pending** | `/element-art/tree_baboon_grape.png` |
+| Baboon grape | `/render-assets/reference-blueprint/baboon-grape-v1.png` | `/element-art/tree_baboon_grape.png` |
 | Bushman's grape | `/render-assets/reference-blueprint/bushmans-grape-v1.png` | `/element-art/tree_bushman_s_grape.png` |
 | Common wild grape / bosdruif | `/render-assets/reference-blueprint/common-wild-grape-v1.png` | `/element-art/tree_common_wild_grape.png` |
 | Grape vine / wingerd | `/render-assets/reference-blueprint/grape-vine-v1.png` | `/element-art/tree_grape_vine.png` |
@@ -286,6 +285,13 @@ a 45.8 KB RGBA cut-out with all four corner alphas zero and 69.4% fully transpar
 digitately compound leaves, rust-red new growth, tendrils and enlarged red-brown/purple berry
 clusters remain legible after downscaling. The morphology came from the existing catalogue and
 the linked SANBI PlantZAfrica source; no catalogue facts changed.
+
+The Baboon grape top-down was visually inspected at 1024 px and at its 24 px recognition size. It
+is a 1,994,121-byte RGBA cut-out with all four corner alphas zero and 25.60% fully transparent
+pixels. Painted alpha reaches at least 97% radius in 8 of 16 sampled directions, and the exact HSV
+check finds 5.25% brown pixels in the outer annulus. The accepted version preserves SANBI's shiny
+three- or five-part digitally compound mature leaves with smooth entire margins, rust-red new
+growth, tendrils and deliberately enlarged dark purple-black fruit clusters.
 
 Both Bushman's grape views were visually inspected at delivery size; the picker was also inspected
 at 24 px. The 1024 px overhead is RGBA with all corner alphas zero, 11.29% fully transparent pixels,
@@ -549,12 +555,35 @@ enlarged angular green and pink-brown fruit. Morphology was checked against SANB
   is an RGB checkerboard. Its extraction
   `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-73fa6241-051e-4360-adc5-dff62aa95826.png`
   added alpha but changed the square composition into a 3:2 crop with a green vignette, so it
-  must also be rejected.
+  must also be rejected. The accepted recovery source
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-5b329750-ad5b-4c02-a87e-61bbcdd1edd8.png`
+  was deliberately generated on a flat orange key field and corrected the plant to SANBI's low,
+  broad spreading habit, small shiny heart-shaped toothed leaves and silvery-waxed purple-blue
+  fruit. The image skill's local chroma-key remover sampled `#fd5901` from the border, used a soft
+  matte with 18/100 thresholds, despill and one-pixel edge contraction, then the plant was uniformly
+  fitted to the delivery canvas. The deployed 192×192 RGBA picker is 48,123 bytes, has transparent
+  corners and 63.95% fully transparent pixels, and was inspected at 192 px and 24 px. Its widest
+  row is at 68.06% height under the documented ground-skirt shrub exception. Only one residual
+  orange pixel remains and it has alpha 8, below visible delivery strength.
 - Baboon grape top-down: the visually approved source
   `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-d7c95c15-1f7c-4456-8f4c-c94535d3f5b3.png`
   and its extraction
   `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-a0a42df8-c34f-4d1d-bc33-1714585da196.png`
-  are RGB checkerboards. Do not stage either one.
+  are RGB checkerboards. Do not stage either one. A fresh orange-field source
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-62bf32c2-c0eb-4b47-8ae9-457ff63f35bd.png`
+  was rejected because its mature leaflet margins were serrated instead of entire. The corrected
+  orange-field source
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-4c44be21-ab16-4634-97c2-d7cbdcc7b32b.png`
+  fixed the leaflet morphology, but chroma extraction damaged the rust-red new growth. A magenta
+  recovery
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-7aeedd15-5d32-476d-8f0c-ed0a14247b6d.png`
+  preserved the plant but failed at 11.49% brown in the outer annulus. The accepted source
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-24b8949f-1eb1-410a-84c2-b7a25981177a.png`
+  adds mature green perimeter foliage while retaining the oversized fruit, entire-margined
+  leaflets and rust-red new growth. The image skill's chroma remover sampled `#ec01e2`, used a soft
+  matte with 18/100 thresholds, despill and one-pixel edge contraction. The fitted output needed
+  only a 2% uniform presentation enlargement to pass the hard radial gate; its final 8/16 reach,
+  5.25% outer-annulus brown and 25.60% transparency measurements are recorded above.
 - Bushman's grape picker: the first front-elevation source
   `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-74ed8990-55a1-4025-8222-fafb69bd6563.png`
   and its extraction
@@ -669,9 +698,9 @@ checkerboard. No White milkwood asset was staged or deployed.
 
 All source-table species have now been attempted. The unresolved deliverables are Banana overhead,
 Bluebush picker, Honeybush overhead, Rooibos overhead, Rosemary overhead, both Cape boxthorn views,
-both Honey-thorn views, Pigeon pea picker, Quiver tree overhead, Spekboom picker,
-Waxberry picker, Baboon grape overhead, Karee overhead and both White milkwood views. The next
-untouched recovery target after this batch is the Cape boxthorn pair; the earlier failed assets remain
+both Honey-thorn views, Pigeon pea picker, Quiver tree overhead, Spekboom picker, Karee overhead
+and both White milkwood views. The next untouched recovery target after this batch is Karee
+overhead; the earlier failed assets remain
 pending and must not be skipped in status reports. Keep every transparency, morphology or scale
 failure visible. Do not silently switch to the CLI/API fallback to resolve them; that requires
 explicit user approval.
