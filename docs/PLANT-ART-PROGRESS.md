@@ -5,7 +5,7 @@ Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 - Last full checker inventory: 2026-08-28
 - Checker: `/Users/roryclark/ImbewuField/scripts/check-plant-art.py`
 - Required scope: 53 species, 106 views
-- Current result: 81 PASS, 13 FAIL, 12 MISSING
+- Current result: 82 PASS, 12 FAIL, 12 MISSING
 - A row is complete only when both views are `PASS` and their SHAs name pushed commits.
 
 | Species | Front | Front path | Front SHA | Top-down | Top-down path | Top SHA |
@@ -21,7 +21,7 @@ Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 | Pistachio | PASS | `public/element-art/tree_pistachio.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/pistachio-tree-v1.png` | `64d7a8a` |
 | Quince | PASS | `public/element-art/tree_quince.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/quince-tree-v1.png` | `64d7a8a` |
 | Sweet cherry | PASS | `public/element-art/tree_sweet_cherry.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/sweet-cherry-tree-v1.png` | `64d7a8a` |
-| Bluebush | MISSING | `public/element-art/tree_bluebush.png` | `—` | FAIL | `public/render-assets/reference-blueprint/bluebush-v1.png` | `b93e78d` |
+| Bluebush | MISSING | `public/element-art/tree_bluebush.png` | `—` | PASS | `public/render-assets/reference-blueprint/bluebush-v1.png` | `8489f3e` |
 | Brown ivory / motsintsila | PASS | `public/element-art/tree_brown_ivory_motsintsila.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/brown-ivory-tree-v1.png` | `b366a42` |
 | Coastal red milkwood | PASS | `public/element-art/tree_coastal_red_milkwood.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/coastal-red-milkwood-tree-v1.png` | `f30def8` |
 | Cross-berry | PASS | `public/element-art/tree_cross_berry.png` | `b93e78d` | FAIL | `public/render-assets/reference-blueprint/cross-berry-v1.png` | `b93e78d` |
