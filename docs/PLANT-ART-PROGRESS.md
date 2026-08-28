@@ -5,7 +5,7 @@ Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 - Last full checker inventory: 2026-08-28
 - Checker: `/Users/roryclark/ImbewuField/scripts/check-plant-art.py`
 - Required scope: 53 species, 106 views
-- Current result: 94 PASS, 0 FAIL, 12 MISSING
+- Current result: 95 PASS, 0 FAIL, 11 MISSING
 - A row is complete only when both views are `PASS` and their SHAs name pushed commits.
 
 | Species | Front | Front path | Front SHA | Top-down | Top-down path | Top SHA |
@@ -13,7 +13,7 @@ Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 | Almond | PASS | `public/element-art/tree_almond.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/almond-tree-v1.png` | `64d7a8a` |
 | Apricot | PASS | `public/element-art/tree_apricot.png` | `64d7a8a` | PASS | `public/render-assets/reference-blueprint/apricot-tree-v1.png` | `64d7a8a` |
 | Arabica coffee | PASS | `public/element-art/tree_arabica_coffee.png` | `64d7a8a` | PASS | `public/render-assets/reference-blueprint/arabica-coffee-tree-v1.png` | `64d7a8a` |
-| Dwarf Cavendish/Williams banana | PASS | `public/element-art/tree_banana_dwarf_cavendish_williams.png` | `b93e78d` | MISSING | `public/render-assets/reference-blueprint/banana-dwarf-cavendish-williams-v1.png` | `—` |
+| Dwarf Cavendish/Williams banana | PASS | `public/element-art/tree_banana_dwarf_cavendish_williams.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/banana-dwarf-cavendish-williams-v1.png` | `73580c7` |
 | Black mulberry | PASS | `public/element-art/tree_black_mulberry.png` | `64d7a8a` | PASS | `public/render-assets/reference-blueprint/black-mulberry-tree-v1.png` | `64d7a8a` |
 | Carob | PASS | `public/element-art/tree_carob.png` | `64d7a8a` | PASS | `public/render-assets/reference-blueprint/carob-tree-v1.png` | `64d7a8a` |
 | Date palm | PASS | `public/element-art/tree_date_palm.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/date-palm-v1.png` | `64d7a8a` |
