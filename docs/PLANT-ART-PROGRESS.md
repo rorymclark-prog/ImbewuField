@@ -5,7 +5,7 @@ Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 - Last full checker inventory: 2026-08-28
 - Checker: `/Users/roryclark/ImbewuField/scripts/check-plant-art.py`
 - Required scope: 53 species, 106 views
-- Current result: 96 PASS, 0 FAIL, 10 MISSING
+- Current result: 97 PASS, 0 FAIL, 9 MISSING
 - A row is complete only when both views are `PASS` and their SHAs name pushed commits.
 
 | Species | Front | Front path | Front SHA | Top-down | Top-down path | Top SHA |
@@ -38,7 +38,7 @@ Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 | Wild medlar / mmilo | PASS | `public/element-art/tree_wild_medlar_mmilo.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/wild-medlar-v1.png` | `24c2316` |
 | Bietou / bush-tick berry | PASS | `public/element-art/tree_bietou.png` | `017067c` | PASS | `public/render-assets/reference-blueprint/bietou-v1.png` | `fc23ce8` |
 | Brandybush / velvet raisin | PASS | `public/element-art/tree_brandybush.png` | `202ccec` | PASS | `public/render-assets/reference-blueprint/brandybush-v1.png` | `6be1b8f` |
-| Honeybush / heuningbos | PASS | `public/element-art/tree_honeybush.png` | `d21827f` | MISSING | `public/render-assets/reference-blueprint/honeybush-v1.png` | `—` |
+| Honeybush / heuningbos | PASS | `public/element-art/tree_honeybush.png` | `d21827f` | PASS | `public/render-assets/reference-blueprint/honeybush-v1.png` | `4b3863b` |
 | Rooibos | PASS | `public/element-art/tree_rooibos.png` | `1ecd8f2` | MISSING | `public/render-assets/reference-blueprint/rooibos-v1.png` | `—` |
 | Rosemary | PASS | `public/element-art/tree_rosemary.png` | `1ecd8f2` | MISSING | `public/render-assets/reference-blueprint/rosemary-v1.png` | `—` |
 | Dogwood / umglindi | PASS | `public/element-art/tree_dogwood.png` | `9596647` | PASS | `public/render-assets/reference-blueprint/dogwood-v1.png` | `a30f1c5` |
