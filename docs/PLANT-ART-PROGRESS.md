@@ -25,7 +25,7 @@ Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 | Brown ivory / motsintsila | PASS | `public/element-art/tree_brown_ivory_motsintsila.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/brown-ivory-tree-v1.png` | `b366a42` |
 | Coastal red milkwood | PASS | `public/element-art/tree_coastal_red_milkwood.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/coastal-red-milkwood-tree-v1.png` | `f30def8` |
 | Cross-berry | PASS | `public/element-art/tree_cross_berry.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/cross-berry-v1.png` | `f9fdd30` |
-| Gariep ebony | PASS | `public/element-art/tree_gariep_ebony.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/gariep-ebony-tree-v1.png` | `032fc29` |
+| Gariep ebony | PASS | `public/element-art/tree_gariep_ebony.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/gariep-ebony-tree-v1.png` | `fb4606d` |
 | Glossy currant | PASS | `public/element-art/tree_glossy_currant.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/glossy-currant-v1.png` | `1e01f01` |
 | Karoo crossberry | PASS | `public/element-art/tree_karoo_crossberry.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/karoo-crossberry-v1.png` | `2491a1e` |
 | Kuni bush | PASS | `public/element-art/tree_kuni_bush.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/kuni-bush-v1.png` | `9912b11` |
