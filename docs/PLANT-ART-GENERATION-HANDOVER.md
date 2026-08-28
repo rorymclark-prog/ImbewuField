@@ -193,8 +193,8 @@ every public PNG that no live catalogue species or element can use.
 
 ## Current status
 
-As of 2026-08-28, 80 deliverables are approved and deployed. The deployed set contains 20 of 22
-exotic-fruit-and-nut deliverables, 29 of 30 indigenous-fruit deliverables, 2 shrub deliverables,
+As of 2026-08-28, 86 deliverables are approved and deployed. The deployed set contains 21 of 22
+exotic-fruit-and-nut deliverables, 29 of 30 indigenous-fruit deliverables, 7 shrub deliverables,
 7 small-tree / large-shrub deliverables, 13 climber deliverables and all 8 medium-tree
 deliverables, plus the first large-tree picker. Baboon grape remains the only climber without an
 approved top-down counterpart.
@@ -206,7 +206,7 @@ approved top-down counterpart.
 | Arabica coffee | `/render-assets/reference-blueprint/arabica-coffee-tree-v1.png` | `/element-art/tree_arabica_coffee.png` |
 | Dwarf Cavendish/Williams banana | **pending** | `/element-art/tree_banana_dwarf_cavendish_williams.png` |
 | Black mulberry | `/render-assets/reference-blueprint/black-mulberry-tree-v1.png` | `/element-art/tree_black_mulberry.png` |
-| Carob | `/render-assets/reference-blueprint/carob-tree-v1.png` | **pending** |
+| Carob | `/render-assets/reference-blueprint/carob-tree-v1.png` | `/element-art/tree_carob.png` |
 | Date palm | `/render-assets/reference-blueprint/date-palm-v1.png` | `/element-art/tree_date_palm.png` |
 | Pecan | `/render-assets/reference-blueprint/pecan-tree-v1.png` | `/element-art/tree_pecan.png` |
 | Pistachio | `/render-assets/reference-blueprint/pistachio-tree-v1.png` | `/element-art/tree_pistachio.png` |
@@ -243,11 +243,11 @@ and the botanical sources linked there; no species names or catalogue facts were
 
 | Species | Top-down | Picker |
 |---|---|---|
-| Bietou / bush-tick berry | `/render-assets/reference-blueprint/bietou-v1.png` | **pending** |
-| Brandybush / velvet raisin | `/render-assets/reference-blueprint/brandybush-v1.png` | **pending** |
-| Honeybush / heuningbos | **pending** | **pending** |
-| Rooibos | **pending** | **pending** |
-| Rosemary | **pending** | **pending** |
+| Bietou / bush-tick berry | `/render-assets/reference-blueprint/bietou-v1.png` | `/element-art/tree_bietou.png` |
+| Brandybush / velvet raisin | `/render-assets/reference-blueprint/brandybush-v1.png` | `/element-art/tree_brandybush.png` |
+| Honeybush / heuningbos | **pending** | `/element-art/tree_honeybush.png` |
+| Rooibos | **pending** | `/element-art/tree_rooibos.png` |
+| Rosemary | **pending** | `/element-art/tree_rosemary.png` |
 
 The brief heading says "Shrubs (6)" but supplies five rows. Do not invent a sixth species; preserve
 the five named rows unless the source brief is explicitly corrected.
@@ -420,45 +420,73 @@ enlarged angular green and pink-brown fruit. Morphology was checked against SANB
 - Banana top-down: the visually approved source
   `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-1febd2a4-fb1f-405d-b0d1-217098c62229.png`
   is RGB with a baked checkerboard. Two background-extraction calls and one fresh regeneration
-  also returned RGB checkerboards. Do not stage any of them.
-- Carob picker: the visually approved source
+  also returned RGB checkerboards. Two fresh genuine-RGBA regenerations ended with obvious
+  neon/chroma edge spill and only 5/16 and 3/16 radial-reach directions. A uniform-black recovery
+  of the approved composition still extracted to another RGB checkerboard. Do not stage any of
+  them.
+- Carob picker: the earlier visually approved source
   `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-7f08a6f4-9c7b-4fe5-ac20-945c6cfc9395.png`
   is RGB with a baked checkerboard. One extraction invented an opaque green/tan vignette despite
-  adding an alpha channel, and the follow-up returned another RGB checkerboard. Do not stage them.
+  adding an alpha channel, and the follow-up returned another RGB checkerboard. The fresh accepted
+  RGBA source
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-a9f77a43-e311-4832-99db-5aa73f0634bc.png`
+  restored the paired compound leaflets and enlarged pods and was prepared and deployed.
 - Bluebush picker: the visually approved source
   `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-e40717f1-0b17-478d-b0d7-354c32811069.png`
   is RGB with a baked checkerboard. The background-extraction retry
   `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-586af579-8e07-4db5-9be3-1f02a439de64.png`
-  also has no alpha. Do not stage either one.
-- Bietou picker: the preferred spreading-shrub source
+  also has no alpha. A fresh RGBA source had correct glaucous foliage and readable red fruit but a
+  cyan/green fringe remained visible at 192 px; its black-field extraction returned another RGB
+  checkerboard. Bluebush picker remains pending.
+- Bietou picker: the earlier preferred spreading-shrub source
   `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-aae1ac31-371c-40da-9d91-baefeb9cdc9c.png`
   and its extraction
   `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-5a082ae4-4842-4a05-be8a-68c52f4b6a6f.png`
-  are RGB checkerboards. A fresh generation did the same. Do not stage them.
-- Brandybush picker: the preferred multi-stem source
+  are RGB checkerboards. The fresh accepted RGBA source
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-efb06ed0-a7f0-4595-b865-23cda34b2ea5.png`
+  produced a broad low shrub with readable yellow flowers and black fruit and was prepared and
+  deployed.
+- Brandybush picker: the earlier preferred multi-stem source
   `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-4b7efb73-0636-4741-b6a6-118e4d703455.png`
   and extraction
   `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-9d724c4c-f1ea-445e-bd26-add82176e2c3.png`
-  are RGB checkerboards. Do not stage them.
+  are RGB checkerboards. The fresh accepted RGBA source
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-3137c5ee-7192-4055-bc7d-40cc67261f3a.png`
+  uses SANBI's grey-green serrated leaves, yellow star flowers and enlarged two-lobed reddish-brown
+  fruit and was prepared and deployed.
 - Honeybush: overhead candidate
   `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-2eb25c1c-004f-48ff-bfc1-b2d399850629.png`,
   its extraction
   `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-175da6d0-1c03-44b0-9419-0808a71e3a52.png`
   and picker candidate
   `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-6c017d74-a62f-4800-91a9-013d79a579c0.png`
-  are RGB checkerboards. Do not stage them.
+  are RGB checkerboards. The fresh overhead
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-c4d6e884-2a85-4216-bc6d-f4d70a49d817.png`
+  was rejected at 4/16 reach directions and 37.20% outer-annulus brown/yellow. The accepted fresh
+  RGBA picker
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-49921cea-802b-4400-8c7d-4a8532b9e0f3.png`
+  was prepared and deployed; Honeybush overhead remains pending.
 - Rooibos: overhead candidate
   `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-91573396-131f-4d1e-9ed7-6a78524ba8c4.png`
   has an opaque black background; its extraction
   `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-6ac44639-bb1e-4f57-9a27-d8c2833a55b3.png`
   and picker candidate
   `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-0e1b936d-de62-4056-87cc-1a6a9aea2973.png`
-  are RGB checkerboards. Do not stage them.
+  are RGB checkerboards. The fresh genuine-RGBA overhead
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-b4653da3-9807-4c6a-b82a-dae684cd8830.png`
+  was rejected at 2/16 reach directions. The accepted fresh RGBA picker
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-9878f707-58a0-4a47-8099-b2986c139f0f.png`
+  was prepared and deployed; Rooibos overhead remains pending.
 - Rosemary: overhead candidate
   `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-6afb407f-490b-4eb1-bdb8-8d391a7f85ab.png`
   and picker candidate
   `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-27c33807-3b0d-4683-b90d-38b0a1d27e64.png`
-  are RGB checkerboards. Do not stage them.
+  are RGB checkerboards. The fresh genuine-RGBA overhead
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-7426791c-1d2b-4463-9a66-6ec6eca737fe.png`
+  was rejected at 4/16 reach directions. The accepted fresh RGBA picker
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-6016e54b-05c6-4490-8a77-6162229cb1f8.png`
+  was prepared and deployed and is mapped to both live Rosemary catalogue IDs; Rosemary overhead
+  remains pending.
 - Dogwood picker: the corrected front-elevation source
   `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-47f7ff3f-cb02-4b4b-8c74-8642ae52be77.png`
   is visually approved, but it and its extraction are RGB checkerboards. Do not stage them.
@@ -610,11 +638,14 @@ the purple fruit became too quiet at 24 px. A larger-fruit attempt returned an o
 black-field extraction of the stronger checkerboard composition still returned an RGB
 checkerboard. No White milkwood asset was staged or deployed.
 
-All source-table species have now been attempted. Karee overhead, White milkwood overhead and
-picker, Waxberry picker and Baboon grape top-down remain pending as documented above. Return to
-these pending assets in source-table order, while keeping every transparency, morphology or scale
-failure visible in status reports. Do not silently switch to the CLI/API fallback to resolve them;
-that requires explicit user approval.
+All source-table species have now been attempted. The unresolved deliverables are Banana overhead,
+Bluebush picker, Honeybush overhead, Rooibos overhead, Rosemary overhead, Dogwood picker, both Cape
+boxthorn views, both Honey-thorn views, Pigeon pea picker, Quiver tree overhead, Spekboom picker,
+Waxberry picker, Baboon grape overhead, Karee overhead and both White milkwood views. The next
+untouched recovery target after this batch is Dogwood picker; the earlier failed assets remain
+pending and must not be skipped in status reports. Keep every transparency, morphology or scale
+failure visible. Do not silently switch to the CLI/API fallback to resolve them; that requires
+explicit user approval.
 
 Do not modify `PLAN_VERSION`. Do not touch the original checkout at
 `/Users/roryclark/ImbewuField`; it contains another session's uncommitted files.
