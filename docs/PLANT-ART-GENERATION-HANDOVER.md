@@ -193,10 +193,11 @@ every public PNG that no live catalogue species or element can use.
 
 ## Current status
 
-As of 2026-08-28, 79 deliverables are approved and deployed. The deployed set contains 20 of 22
+As of 2026-08-28, 80 deliverables are approved and deployed. The deployed set contains 20 of 22
 exotic-fruit-and-nut deliverables, 29 of 30 indigenous-fruit deliverables, 2 shrub deliverables,
 7 small-tree / large-shrub deliverables, 13 climber deliverables and all 8 medium-tree
-deliverables. Baboon grape remains the only climber without an approved top-down counterpart.
+deliverables, plus the first large-tree picker. Baboon grape remains the only climber without an
+approved top-down counterpart.
 
 | Species | Top-down | Picker |
 |---|---|---|
@@ -569,10 +570,51 @@ enlarged angular green and pink-brown fruit. Morphology was checked against SANB
   `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-4ad10842-5390-41fb-bdd5-b72299df0a4d.png`
   was prepared and deployed.
 
-The next untouched species in the brief is **Karee**, the first large tree. Waxberry picker and
-Baboon grape top-down were attempted and remain pending as documented above. Continue in exact
-source-table order, while keeping every pending transparency failure visible in status reports. Do
-not silently switch to the CLI/API fallback to resolve them; that requires explicit user approval.
+### Karee large-tree work in progress
+
+The approved Karee picker is deployed at `public/element-art/tree_karee.png` and mapped to both live
+catalogue IDs, `searsia-lancea` and `searsia-lancea-rhus-lancea`, because both entries name the same
+species and use the same SANBI source. It is a 192×192 RGBA front elevation with a
+rounded, softly drooping crown, visible coarse trunk and deliberately readable but restrained
+yellow-to-brown fruit. It passed delivery-size inspection at both 192 px and 24 px, has fully
+transparent corners, 42.40% transparent pixels, and its widest row is at 49.5% height. Its accepted
+RGBA source is
+`/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-e3981994-49ec-49c1-a43a-dc090501371d.png`.
+
+Karee overhead remains pending. The attempts through
+`/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-a227351d-ea1c-4241-a75d-db6ccc785530.png`
+were rejected rather than deployed. Across those attempts, either the generator produced
+five-to-seven-part radial leaf rosettes instead of diagnostic three-leaflet leaves, returned an
+opaque checkerboard, or introduced a neon green edge fringe during alpha extraction. The final
+fresh source is genuine RGBA and has cleaner edges, but still reads as many-part starbursts at full
+size, so it is not botanically acceptable. Do not promote `/tmp/karee-v1.png`; it is an earlier
+fringe-contaminated preparation.
+
+### White milkwood large-tree work in progress
+
+White milkwood was attempted but neither view is approved. The best overhead morphology source is
+the genuine-RGBA
+`/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-0a4c8916-5936-4e16-86bf-d1f136cc274e.png`.
+It has the correct dense rounded habit, simple leathery leaves, greenish-white flowers and enlarged
+purple-black berry clusters, with 26.54% fully transparent pixels, transparent corners and only
+2.46% brown pixels in the outer annulus. It failed the hard radial-reach gate in its unmodified
+1024 px preparation: 4 of 16 directions reached 97% radius, below the required 8. A 4% enlargement
+raised reach to 12 of 16 but visibly clipped leaves at the top and left, so that preparation was
+rejected. Other overhead attempts either baked checkerboards into RGB files, retained lime edge
+spill, or measured even lower reach. Do not promote `/tmp/white-milkwood-v3-fill.png`.
+
+The strongest genuine-RGBA picker source is
+`/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-ab07c554-c360-44b0-a6ae-1bd9a356d71b.png`.
+Its 192 px preparation passed alpha, corner, transparency and front-elevation geometry checks, but
+the purple fruit became too quiet at 24 px. A larger-fruit attempt returned an opaque vignette, and
+black-field extraction of the stronger checkerboard composition still returned an RGB
+checkerboard. No White milkwood asset was staged or deployed.
+
+All source-table species have now been attempted. Karee overhead, White milkwood overhead and
+picker, Waxberry picker and Baboon grape top-down remain pending as documented above. Return to
+these pending assets in source-table order, while keeping every transparency, morphology or scale
+failure visible in status reports. Do not silently switch to the CLI/API fallback to resolve them;
+that requires explicit user approval.
 
 Do not modify `PLAN_VERSION`. Do not touch the original checkout at
 `/Users/roryclark/ImbewuField`; it contains another session's uncommitted files.

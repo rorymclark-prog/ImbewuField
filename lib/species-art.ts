@@ -56,6 +56,8 @@ export const SPECIES_ART = {
   'schotia-afra-var-afra': { picker: 'tree_karoo_boer_bean.png', plan: 'karoo-boer-bean-v1.png' },
   'trema-orientalis': { picker: 'tree_pigeonwood.png', plan: 'pigeonwood-v1.png' },
   'barringtonia-racemosa': { picker: 'tree_powder_puff_tree.png', plan: 'powder-puff-tree-v1.png' },
+  'searsia-lancea': { picker: 'tree_karee.png', plan: null },
+  'searsia-lancea-rhus-lancea': { picker: 'tree_karee.png', plan: null },
 } as const satisfies Readonly<Record<string, SpeciesArtwork>>;
 
 export type SpeciesReferenceArtwork = Exclude<
