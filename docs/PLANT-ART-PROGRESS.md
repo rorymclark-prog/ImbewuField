@@ -5,7 +5,7 @@ Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 - Last full checker inventory: 2026-08-28
 - Checker: `/Users/roryclark/ImbewuField/scripts/check-plant-art.py`
 - Required scope: 53 species, 106 views
-- Current result: 101 PASS, 0 FAIL, 5 MISSING
+- Current result: 102 PASS, 0 FAIL, 4 MISSING
 - A row is complete only when both views are `PASS` and their SHAs name pushed commits.
 
 | Species | Front | Front path | Front SHA | Top-down | Top-down path | Top SHA |
@@ -43,7 +43,7 @@ Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 | Rosemary | PASS | `public/element-art/tree_rosemary.png` | `1ecd8f2` | PASS | `public/render-assets/reference-blueprint/rosemary-v1.png` | `6745798` |
 | Dogwood / umglindi | PASS | `public/element-art/tree_dogwood.png` | `9596647` | PASS | `public/render-assets/reference-blueprint/dogwood-v1.png` | `a30f1c5` |
 | Cape boxthorn / kriedoring | PASS | `public/element-art/tree_cape_boxthorn.png` | `df1b4ac` | PASS | `public/render-assets/reference-blueprint/cape-boxthorn-v1.png` | `f5a6be6` |
-| Honey-thorn / kriedoring | MISSING | `public/element-art/tree_honey_thorn.png` | `—` | MISSING | `public/render-assets/reference-blueprint/honey-thorn-v1.png` | `—` |
+| Honey-thorn / kriedoring | PASS | `public/element-art/tree_honey_thorn.png` | `5337360` | MISSING | `public/render-assets/reference-blueprint/honey-thorn-v1.png` | `—` |
 | Natal currant | PASS | `public/element-art/tree_natal_currant.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/natal-currant-v1.png` | `4d55148` |
 | Pigeon pea | MISSING | `public/element-art/tree_pigeon_pea.png` | `—` | PASS | `public/render-assets/reference-blueprint/pigeon-pea-v1.png` | `b8f9ef2` |
 | Quiver tree / kokerboom | PASS | `public/element-art/tree_quiver_tree.png` | `b93e78d` | MISSING | `public/render-assets/reference-blueprint/quiver-tree-v1.png` | `—` |
