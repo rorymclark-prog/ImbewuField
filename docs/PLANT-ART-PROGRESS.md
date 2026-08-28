@@ -5,7 +5,7 @@ Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 - Last full checker inventory: 2026-08-28
 - Checker: `/Users/roryclark/ImbewuField/scripts/check-plant-art.py`
 - Required scope: 53 species, 106 views
-- Current result: 71 PASS, 23 FAIL, 12 MISSING
+- Current result: 72 PASS, 22 FAIL, 12 MISSING
 - A row is complete only when both views are `PASS` and their SHAs name pushed commits.
 
 | Species | Front | Front path | Front SHA | Top-down | Top-down path | Top SHA |
@@ -58,7 +58,7 @@ Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 | Purple granadilla / passion fruit | PASS | `public/element-art/tree_purple_granadilla.png` | `8db4efe` | PASS | `public/render-assets/reference-blueprint/purple-granadilla-v1.png` | `fba826b` |
 | Buffalo thorn | PASS | `public/element-art/tree_buffalo_thorn.png` | `d21827f` | PASS | `public/render-assets/reference-blueprint/buffalo-thorn-v1.png` | `9573aca` |
 | Karoo boer-bean | PASS | `public/element-art/tree_karoo_boer_bean.png` | `018d9e2` | PASS | `public/render-assets/reference-blueprint/karoo-boer-bean-v1.png` | `a4f908d` |
-| Pigeonwood / umbengele | PASS | `public/element-art/tree_pigeonwood.png` | `018d9e2` | FAIL | `public/render-assets/reference-blueprint/pigeonwood-v1.png` | `213ab1d` |
+| Pigeonwood / umbengele | PASS | `public/element-art/tree_pigeonwood.png` | `018d9e2` | PASS | `public/render-assets/reference-blueprint/pigeonwood-v1.png` | `16788da` |
 | Powder-puff tree / iBoqo | PASS | `public/element-art/tree_powder_puff_tree.png` | `1ecd8f2` | FAIL | `public/render-assets/reference-blueprint/powder-puff-tree-v1.png` | `213ab1d` |
 | Karee | PASS | `public/element-art/tree_karee.png` | `d21827f` | FAIL | `public/render-assets/reference-blueprint/karee-v1.png` | `81e0528` |
 | White milkwood | PASS | `public/element-art/tree_white_milkwood.png` | `1ecd8f2` | FAIL | `public/render-assets/reference-blueprint/white-milkwood-v1.png` | `81e0528` |
