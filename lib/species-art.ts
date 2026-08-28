@@ -52,6 +52,10 @@ export const SPECIES_ART = {
   'lablab-purpureus': { picker: 'tree_lablab.png', plan: 'lablab-v1.png' },
   'basella-alba': { picker: 'tree_malabar_spinach.png', plan: 'malabar-spinach-v1.png' },
   'passiflora-edulis': { picker: 'tree_purple_granadilla.png', plan: 'purple-granadilla-v1.png' },
+  'ziziphus-mucronata': { picker: 'tree_buffalo_thorn.png', plan: 'buffalo-thorn-v1.png' },
+  'schotia-afra-var-afra': { picker: 'tree_karoo_boer_bean.png', plan: 'karoo-boer-bean-v1.png' },
+  'trema-orientalis': { picker: 'tree_pigeonwood.png', plan: 'pigeonwood-v1.png' },
+  'barringtonia-racemosa': { picker: 'tree_powder_puff_tree.png', plan: 'powder-puff-tree-v1.png' },
 } as const satisfies Readonly<Record<string, SpeciesArtwork>>;
 
 export type SpeciesReferenceArtwork = Exclude<

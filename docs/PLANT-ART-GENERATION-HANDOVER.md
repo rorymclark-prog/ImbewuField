@@ -193,10 +193,10 @@ every public PNG that no live catalogue species or element can use.
 
 ## Current status
 
-As of 2026-08-28, 71 deliverables are approved and deployed. The deployed set contains 20 of 22
+As of 2026-08-28, 79 deliverables are approved and deployed. The deployed set contains 20 of 22
 exotic-fruit-and-nut deliverables, 29 of 30 indigenous-fruit deliverables, 2 shrub deliverables,
-7 small-tree / large-shrub deliverables and 13 climber deliverables. Baboon grape remains the only
-climber without an approved top-down counterpart.
+7 small-tree / large-shrub deliverables, 13 climber deliverables and all 8 medium-tree
+deliverables. Baboon grape remains the only climber without an approved top-down counterpart.
 
 | Species | Top-down | Picker |
 |---|---|---|
@@ -343,7 +343,78 @@ passion flowers and deliberately oversized green and ripe purple fruits legible 
 Morphology was checked against Kew and NParks descriptions of *Passiflora edulis*; no catalogue
 facts changed.
 
-### Pending transparency failures
+### Medium trees
+
+| Species | Top-down | Picker |
+|---|---|---|
+| Buffalo thorn | `/render-assets/reference-blueprint/buffalo-thorn-v1.png` | `/element-art/tree_buffalo_thorn.png` |
+| Karoo boer-bean | `/render-assets/reference-blueprint/karoo-boer-bean-v1.png` | `/element-art/tree_karoo_boer_bean.png` |
+| Pigeonwood / umbengele | `/render-assets/reference-blueprint/pigeonwood-v1.png` | `/element-art/tree_pigeonwood.png` |
+| Powder-puff tree / iBoqo | `/render-assets/reference-blueprint/powder-puff-tree-v1.png` | `/element-art/tree_powder_puff_tree.png` |
+
+Both Buffalo thorn views were visually inspected at delivery size; the picker was also inspected
+at 24 px. The 1024 px overhead is RGBA with all corner alphas zero, 14.21% fully transparent
+pixels, painted alpha reaching at least 97% radius in 14 of 16 sampled directions, and 6.69% brown
+pixels in the outer annulus. The 192 px picker is a 66.3 KB RGBA cut-out with all corner alphas
+zero, 50.00% fully transparent pixels and its widest painted row at 36.5% of frame height. Both
+retain glossy broad-ovate leaves, zigzag reddish young twigs, thorn cues and deliberately enlarged
+green-to-red-brown drupes. Morphology was checked against SANBI PlantZAfrica for *Ziziphus
+mucronata*; no catalogue facts changed. The accepted generated sources are:
+
+- overhead: `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-3d9ccfc4-8ed0-421f-b665-7d1fa3f499b5.png`;
+- picker: `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-e9caf61b-685f-4189-801d-fe5ef7f45303.png`.
+
+Both Karoo boer-bean views were visually inspected at delivery size; the picker was also inspected
+at 24 px. The accepted 1024 px overhead is a centred 1100 px crop of its generated source. It is
+RGBA with all corner alphas zero, 12.38% fully transparent pixels, painted alpha reaching at least
+97% radius in 16 of 16 sampled directions, and 9.93% brown pixels in the outer annulus. The 192 px
+picker is a 75.5 KB RGBA cut-out with all corner alphas zero, 39.45% fully transparent pixels and
+its widest painted row at 55.7% of frame height. Both retain olive-green pinnate leaves, vivid red
+flowers and deliberately enlarged lime-green, pink and brown pods. Morphology was checked against
+SANBI PlantZAfrica for *Schotia afra var. afra*; no catalogue facts changed. The accepted generated
+sources are:
+
+- overhead: `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-51ca892e-7402-4239-996c-2143c53dca7b.png`;
+- picker: `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-52e65e1b-0d90-449d-ba6d-6e3a8c41b5f0.png`.
+
+Both Pigeonwood views were visually inspected at delivery size; the picker was also inspected at
+24 px. The 1024 px overhead is RGBA with all corner alphas zero, 10.32% fully transparent pixels,
+painted alpha reaching at least 97% radius in 15 of 16 sampled directions, and 0.65% brown pixels
+in the outer annulus. The 192 px picker is a 72.4 KB RGBA cut-out with all corner alphas zero,
+46.87% fully transparent pixels and its widest painted row at 34.4% of frame height. Both retain
+the open, soft-drooping foliage, elongated serrated leaves and deliberately enlarged green and
+black fruit. Morphology was checked against SANBI PlantZAfrica for *Trema orientalis*; no catalogue
+facts changed. The accepted generated sources are:
+
+- overhead: `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-3808e6b8-ba3e-41f2-a1a8-7e9b05f133de.png`;
+- picker: `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-22a1bcb0-87b6-40be-b642-e514dc4534b8.png`.
+
+Both Powder-puff tree views were visually inspected at delivery size; the picker was also inspected
+at 24 px. The 1024 px overhead is RGBA with all corner alphas zero, 10.61% fully transparent
+pixels, painted alpha reaching at least 97% radius in 15 of 16 sampled directions, and 6.51% brown
+pixels in the outer annulus. The 192 px picker is a 69.0 KB RGBA cut-out with all corner alphas
+zero, 47.82% fully transparent pixels and its widest painted row at 31.3% of frame height. Both
+retain large spear-shaped leaf rosettes, long hanging pink-white flower tassels and deliberately
+enlarged angular green and pink-brown fruit. Morphology was checked against SANBI PlantZAfrica for
+*Barringtonia racemosa*; no catalogue facts changed. The accepted generated sources are:
+
+- overhead: `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-5911aea2-98ae-4f6a-b94f-bed7ddea2d86.png`;
+- picker: `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-c37f74a8-e4d6-44a3-a231-d21ac7dfc372.png`.
+
+### Pending transparency failures and rejected sources
+
+- Pigeonwood picker: the first genuine-alpha source
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-fdc7d462-b566-48df-8f52-aa31db484596.png`
+  passed mechanical alpha checks but its fruit disappeared at 24 px, so it was rejected. The two
+  attempted fruit-enlargement/background-extraction outputs
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-edb166e8-d593-4af5-9968-e65a64a11069.png`
+  and
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-4d54149b-8854-48b1-abeb-a36246a583a1.png`
+  are RGB checkerboards. Only the fresh accepted RGBA source recorded above was deployed.
+- Powder-puff tree picker: the first source
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-1cb231d5-9441-4a00-83f3-3cfc6eb30154.png`
+  has an opaque coloured gradient/vignette rather than a transparent background and was rejected.
+  Only the fresh accepted RGBA source recorded above was deployed.
 
 - Banana top-down: the visually approved source
   `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-1febd2a4-fb1f-405d-b0d1-217098c62229.png`
@@ -498,8 +569,8 @@ facts changed.
   `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-4ad10842-5390-41fb-bdd5-b72299df0a4d.png`
   was prepared and deployed.
 
-The next untouched species in the brief is **Buffalo thorn**, the first medium tree. Waxberry picker
-and Baboon grape top-down were attempted and remain pending as documented above. Continue in exact
+The next untouched species in the brief is **Karee**, the first large tree. Waxberry picker and
+Baboon grape top-down were attempted and remain pending as documented above. Continue in exact
 source-table order, while keeping every pending transparency failure visible in status reports. Do
 not silently switch to the CLI/API fallback to resolve them; that requires explicit user approval.
 
