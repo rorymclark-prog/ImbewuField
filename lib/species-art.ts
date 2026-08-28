@@ -45,6 +45,13 @@ export const SPECIES_ART = {
   'aloidendron-dichotomum': { picker: 'tree_quiver_tree.png', plan: null },
   'portulacaria-afra': { picker: null, plan: 'spekboom-v1.png' },
   'morella-cordifolia': { picker: null, plan: 'waxberry-v1.png' },
+  'rhoicissus-digitata': { picker: 'tree_baboon_grape.png', plan: null },
+  'rhoicissus-tridentata': { picker: 'tree_bushman_s_grape.png', plan: 'bushmans-grape-v1.png' },
+  'rhoicissus-tomentosa': { picker: 'tree_common_wild_grape.png', plan: 'common-wild-grape-v1.png' },
+  'vitis-vinifera': { picker: 'tree_grape_vine.png', plan: 'grape-vine-v1.png' },
+  'lablab-purpureus': { picker: 'tree_lablab.png', plan: 'lablab-v1.png' },
+  'basella-alba': { picker: 'tree_malabar_spinach.png', plan: 'malabar-spinach-v1.png' },
+  'passiflora-edulis': { picker: 'tree_purple_granadilla.png', plan: 'purple-granadilla-v1.png' },
 } as const satisfies Readonly<Record<string, SpeciesArtwork>>;
 
 export type SpeciesReferenceArtwork = Exclude<

@@ -193,10 +193,10 @@ every public PNG that no live catalogue species or element can use.
 
 ## Current status
 
-As of 2026-08-28, 59 deliverables are approved: 58 are deployed and one is held in staging for
-the next mapped batch. The deployed set contains 20 of 22 exotic-fruit-and-nut deliverables,
-29 of 30 indigenous-fruit deliverables, 2 shrub deliverables and 7 small-tree / large-shrub
-deliverables. The staged file is the Baboon grape picker.
+As of 2026-08-28, 71 deliverables are approved and deployed. The deployed set contains 20 of 22
+exotic-fruit-and-nut deliverables, 29 of 30 indigenous-fruit deliverables, 2 shrub deliverables,
+7 small-tree / large-shrub deliverables and 13 climber deliverables. Baboon grape remains the only
+climber without an approved top-down counterpart.
 
 | Species | Top-down | Picker |
 |---|---|---|
@@ -272,13 +272,76 @@ primary SANBI PlantZAfrica pages where available; pigeon pea used FAO and USDA d
 
 | Species | Top-down | Picker |
 |---|---|---|
-| Baboon grape | **pending** | `design/plant-art-staging/picker/tree_baboon_grape.png` |
+| Baboon grape | **pending** | `/element-art/tree_baboon_grape.png` |
+| Bushman's grape | `/render-assets/reference-blueprint/bushmans-grape-v1.png` | `/element-art/tree_bushman_s_grape.png` |
+| Common wild grape / bosdruif | `/render-assets/reference-blueprint/common-wild-grape-v1.png` | `/element-art/tree_common_wild_grape.png` |
+| Grape vine / wingerd | `/render-assets/reference-blueprint/grape-vine-v1.png` | `/element-art/tree_grape_vine.png` |
+| Lablab / dolichos bean | `/render-assets/reference-blueprint/lablab-v1.png` | `/element-art/tree_lablab.png` |
+| Malabar spinach | `/render-assets/reference-blueprint/malabar-spinach-v1.png` | `/element-art/tree_malabar_spinach.png` |
+| Purple granadilla / passion fruit | `/render-assets/reference-blueprint/purple-granadilla-v1.png` | `/element-art/tree_purple_granadilla.png` |
 
 The Baboon grape picker was visually inspected at 192 px and at its 24 px recognition size. It is
 a 45.8 KB RGBA cut-out with all four corner alphas zero and 69.4% fully transparent pixels. Its
 digitately compound leaves, rust-red new growth, tendrils and enlarged red-brown/purple berry
 clusters remain legible after downscaling. The morphology came from the existing catalogue and
 the linked SANBI PlantZAfrica source; no catalogue facts changed.
+
+Both Bushman's grape views were visually inspected at delivery size; the picker was also inspected
+at 24 px. The 1024 px overhead is RGBA with all corner alphas zero, 11.29% fully transparent pixels,
+painted alpha reaching at least 97% radius in 11 of 16 sampled directions, and 1.89% brown pixels in
+the outer annulus under the brief's exact HSV definition. The 192 px picker is a 54.5 KB RGBA
+cut-out with all corner alphas zero, 60.88% fully transparent pixels and its widest painted row at
+44.3% of the frame height. Both retain trifoliate toothed leaves, tendrils and deliberately enlarged
+red-to-purplish-black berries. Morphology was checked against the catalogue's linked SANBI
+PlantZAfrica page for *Rhoicissus tridentata*; no catalogue facts changed.
+
+Both Common wild grape views were visually inspected at delivery size; the picker was also
+inspected at 24 px. The 1024 px overhead is RGBA with all corner alphas zero, 12.69% fully
+transparent pixels, painted alpha reaching at least 97% radius in 10 of 16 sampled directions,
+and 8.70% brown pixels in the outer annulus. The 192 px picker is a 45.4 KB RGBA cut-out with all
+corner alphas zero, 66.57% fully transparent pixels and its widest painted row at 34.4% of frame
+height. Its large simple three-veined leaves, copper/rust new growth and deliberately enlarged
+green-to-red-to-purple-black bunches distinguish it from the compound-leaved grapes at 24 px.
+Morphology was checked against the catalogue's linked SANBI PlantZAfrica page for *Rhoicissus
+tomentosa*; no catalogue facts changed.
+
+Both cultivated grape vine views were visually inspected at delivery size; the picker was also
+inspected at 24 px. The 1024 px overhead is RGBA with all corner alphas zero, 12.24% fully
+transparent pixels, painted alpha reaching at least 97% radius in 11 of 16 sampled directions,
+and 1.87% brown pixels in the outer annulus. The 192 px picker is a 62.2 KB RGBA cut-out with all
+corner alphas zero, 52.38% fully transparent pixels and its widest painted row at 54.7% of frame
+height. It preserves the catalogue's wider-than-tall 2 m × 3 m proportion, deeply 3-to-5-lobed
+coarsely toothed leaves and deliberately enlarged golden-green and red-purple/blue-black bunches.
+Morphology was checked against Kew and Royal Botanic Gardens Victoria descriptions of *Vitis
+vinifera*; no catalogue facts changed.
+
+Both Lablab views were visually inspected at delivery size; the picker was also inspected at
+24 px. The 1024 px overhead is RGBA with all corner alphas zero, 14.23% fully transparent pixels,
+painted alpha reaching at least 97% radius in 8 of 16 sampled directions, and 1.61% brown pixels in
+the outer annulus. The 192 px picker is a 58.4 KB RGBA cut-out with all corner alphas zero, 57.13%
+fully transparent pixels and its widest painted row at 34.4% of frame height. Both retain broad
+trifoliate leaves, purple flower racemes and deliberately oversized violet-purple and green pods
+that remain the strongest cue at 24 px. Morphology was checked against Royal Botanic Garden Sydney
+and Kew descriptions of *Lablab purpureus*; no catalogue facts changed.
+
+Both Malabar spinach views were visually inspected at delivery size; the picker was also inspected
+at 24 px. The 1024 px overhead is RGBA with all corner alphas zero, 14.95% fully transparent pixels,
+painted alpha reaching at least 97% radius in 9 of 16 sampled directions, and 2.19% brown pixels in
+the outer annulus. The 192 px picker is a 47.2 KB RGBA cut-out with all corner alphas zero, 65.68%
+fully transparent pixels and its widest painted row at 50.5% of frame height. Both retain unusually
+smooth thick heart-shaped leaves, reddish succulent stems, pink flower spikes and deliberately
+enlarged red-purple-to-black berry clusters legible at 24 px. Morphology was checked against Kew and
+NParks descriptions of *Basella alba*; no catalogue facts changed.
+
+Both Purple granadilla views were visually inspected at delivery size; the picker was also
+inspected at 24 px. The 1024 px overhead is RGBA with all corner alphas zero, 13.52% fully
+transparent pixels, painted alpha reaching at least 97% radius in 11 of 16 sampled directions,
+and 1.44% brown pixels in the outer annulus. The 192 px picker is a 60.8 KB RGBA cut-out with all
+corner alphas zero, 54.00% fully transparent pixels and its widest painted row at 40.6% of frame
+height. Both retain repeated three-lobed serrated leaves, curling tendrils, complete white/purple
+passion flowers and deliberately oversized green and ripe purple fruits legible at 24 px.
+Morphology was checked against Kew and NParks descriptions of *Passiflora edulis*; no catalogue
+facts changed.
 
 ### Pending transparency failures
 
@@ -363,8 +426,79 @@ the linked SANBI PlantZAfrica source; no catalogue facts changed.
   and its extraction
   `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-a0a42df8-c34f-4d1d-bc33-1714585da196.png`
   are RGB checkerboards. Do not stage either one.
+- Bushman's grape picker: the first front-elevation source
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-74ed8990-55a1-4025-8222-fafb69bd6563.png`
+  and its extraction
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-2d5461bb-9a7d-4ce3-a853-8206bf268cd8.png`
+  are RGB checkerboards. The second direct generation
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-d7ba6242-89bc-4e8f-a8b4-eb95de38edf1.png`
+  has an opaque black RGB background; only its successful RGBA extraction
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-eddcfe54-4c30-4dd3-8bbf-d56aaa5fb564.png`
+  was prepared and deployed.
+- Common wild grape: the accepted overhead and picker compositions first arrived as RGB
+  checkerboards at
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-24fe863c-518b-4cd9-abb7-c75c867df781.png`
+  and
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-b33630e2-2ab8-472e-8275-2ca275595090.png`.
+  Only their successful RGBA extractions
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-8dd3c696-2656-4dd8-a7d3-c370e5685edb.png`
+  and
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-805274d9-98fa-4ecf-ac00-33c4c09de159.png`
+  were prepared and deployed.
+- Grape vine: the overhead source
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-564e3910-1209-4de3-8fd8-5ef54ed99451.png`
+  and its direct extraction
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-5cd3210a-f2f0-49b6-965a-d23a90766141.png`
+  are RGB checkerboards. A uniform-black intermediate
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-a3818002-f128-4fee-8afc-ece8dd0bcede.png`
+  enabled the accepted RGBA extraction
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-a0b00ada-e2c3-4002-a87f-252189ba6336.png`.
+  The picker source
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-e5c1c612-934a-4dd3-9c58-686cb2ae41ae.png`
+  is an RGB checkerboard; only its accepted RGBA extraction
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-a343a084-866b-4891-acaa-5d13237a6d2f.png`
+  was prepared and deployed.
+- Lablab: the overhead source
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-967f05d1-60ad-4740-8c5b-c8d74744de3e.png`
+  and its direct extraction
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-865f856f-dff1-47f8-8dbb-72fb389e1f8c.png`
+  are RGB checkerboards. A uniform-black intermediate
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-e6f12c18-2784-49ce-b3d1-f5798e1f452a.png`
+  enabled the accepted RGBA extraction
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-fbaecd60-887b-4431-bdef-88f4c861eed1.png`.
+  The picker source
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-363e0690-ef10-4fa0-bd69-f32130bc64c3.png`
+  is an RGB checkerboard; only its accepted RGBA extraction
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-a9cd74e6-9425-4148-ae7b-9158f17186d3.png`
+  was prepared and deployed.
+- Malabar spinach: the overhead and picker sources
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-c24d1dc0-57f1-4460-bb99-7b0e5cd58ebd.png`
+  and
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-c720611f-626e-4dff-8797-24bf4f6bcecb.png`
+  are RGB checkerboards. Only their accepted RGBA extractions
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-e74a5629-c0a2-49e3-adc1-13568c53a1a4.png`
+  and
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-242d655f-d75e-44c8-a0ae-b8b8828b02fd.png`
+  were prepared and deployed.
+- Purple granadilla: the first overhead source
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-bfb9696f-c38c-4a05-be89-2d19cc961ae9.png`
+  was rejected because it produced five-lobed leaves. The corrected overhead source and its first
+  extraction
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-88eaf3b5-2b20-4ce5-9e63-56180154d755.png`
+  and
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-ed014ea0-b29c-4784-952d-ddbc4d20ca51.png`
+  had correct three-lobed foliage and RGBA after extraction, but failed the canopy reach gate.
+  The denser corrected source
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-a3771229-e0c9-440d-8b1f-e9146b8e9ffc.png`
+  is an RGB checkerboard; only its accepted RGBA extraction
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-678dab28-5c6a-42fb-8986-b0efb343fbd9.png`
+  was prepared and deployed. The picker source
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-d753bc8d-9780-4a24-8ce1-d8a801ee3d49.png`
+  is an RGB checkerboard; only its accepted RGBA extraction
+  `/Users/roryclark/.codex/generated_images/01a043ff-7491-7fc3-94c6-b3f83e525e0b/exec-4ad10842-5390-41fb-bdd5-b72299df0a4d.png`
+  was prepared and deployed.
 
-The next untouched species in the brief is **Bushman's grape**, the second climber. Waxberry picker
+The next untouched species in the brief is **Buffalo thorn**, the first medium tree. Waxberry picker
 and Baboon grape top-down were attempted and remain pending as documented above. Continue in exact
 source-table order, while keeping every pending transparency failure visible in status reports. Do
 not silently switch to the CLI/API fallback to resolve them; that requires explicit user approval.
