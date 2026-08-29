@@ -5,7 +5,7 @@ Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 - Last full checker inventory: 2026-08-29
 - Checker: `/Users/roryclark/ImbewuField/scripts/check-plant-art.py`
 - Required scope: 53 species, 106 views
-- Current result: 104 PASS, 0 FAIL, 0 MISSING, 2 IN PROGRESS (top-down dimensions)
+- Current result: 105 PASS, 0 FAIL, 0 MISSING, 1 IN PROGRESS (top-down dimensions)
 - Dimension audit is stricter than the checker's `square` rule: every top-down file must be exactly 1024×1024.
 - A row is complete only when both views are `PASS` and their SHAs name pushed commits.
 
@@ -62,7 +62,7 @@ Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 | Pigeonwood / umbengele | PASS | `public/element-art/tree_pigeonwood.png` | `018d9e2` | PASS | `public/render-assets/reference-blueprint/pigeonwood-v1.png` | `473be5f` |
 | Powder-puff tree / iBoqo | PASS | `public/element-art/tree_powder_puff_tree.png` | `1ecd8f2` | PASS | `public/render-assets/reference-blueprint/powder-puff-tree-v1.png` | `42810ac` |
 | Karee | PASS | `public/element-art/tree_karee.png` | `d21827f` | PASS | `public/render-assets/reference-blueprint/karee-v1.png` | `b740cab` |
-| White milkwood | PASS | `public/element-art/tree_white_milkwood.png` | `1ecd8f2` | IN PROGRESS | `public/render-assets/reference-blueprint/white-milkwood-v1.png` | `543d418` |
+| White milkwood | PASS | `public/element-art/tree_white_milkwood.png` | `1ecd8f2` | PASS | `public/render-assets/reference-blueprint/white-milkwood-v1.png` | `ae48dbd` |
 | Olive | PASS | `public/element-art/tree_olive.png` | `018d9e2` | IN PROGRESS | `public/render-assets/reference-blueprint/olive-v1.png` | `2fcd949` |
 
 ## Resume protocol
