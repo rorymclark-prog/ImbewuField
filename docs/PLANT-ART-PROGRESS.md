@@ -2,10 +2,11 @@
 
 Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 
-- Last full checker inventory: 2026-08-28
+- Last full checker inventory: 2026-08-29
 - Checker: `/Users/roryclark/ImbewuField/scripts/check-plant-art.py`
 - Required scope: 53 species, 106 views
-- Current result: 106 PASS, 0 FAIL, 0 MISSING
+- Current result: 98 PASS, 0 FAIL, 0 MISSING, 8 IN PROGRESS (top-down dimensions)
+- Dimension audit is stricter than the checker's `square` rule: every top-down file must be exactly 1024×1024.
 - A row is complete only when both views are `PASS` and their SHAs name pushed commits.
 
 | Species | Front | Front path | Front SHA | Top-down | Top-down path | Top SHA |
@@ -39,10 +40,10 @@ Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 | Bietou / bush-tick berry | PASS | `public/element-art/tree_bietou.png` | `017067c` | PASS | `public/render-assets/reference-blueprint/bietou-v1.png` | `fc23ce8` |
 | Brandybush / velvet raisin | PASS | `public/element-art/tree_brandybush.png` | `202ccec` | PASS | `public/render-assets/reference-blueprint/brandybush-v1.png` | `6be1b8f` |
 | Honeybush / heuningbos | PASS | `public/element-art/tree_honeybush.png` | `d21827f` | PASS | `public/render-assets/reference-blueprint/honeybush-v1.png` | `e3433fc` |
-| Rooibos | PASS | `public/element-art/tree_rooibos.png` | `1ecd8f2` | PASS | `public/render-assets/reference-blueprint/rooibos-v1.png` | `e6628f4` |
-| Rosemary | PASS | `public/element-art/tree_rosemary.png` | `1ecd8f2` | PASS | `public/render-assets/reference-blueprint/rosemary-v1.png` | `6745798` |
+| Rooibos | PASS | `public/element-art/tree_rooibos.png` | `1ecd8f2` | IN PROGRESS | `public/render-assets/reference-blueprint/rooibos-v1.png` | `e6628f4` |
+| Rosemary | PASS | `public/element-art/tree_rosemary.png` | `1ecd8f2` | IN PROGRESS | `public/render-assets/reference-blueprint/rosemary-v1.png` | `6745798` |
 | Dogwood / umglindi | PASS | `public/element-art/tree_dogwood.png` | `9596647` | PASS | `public/render-assets/reference-blueprint/dogwood-v1.png` | `a30f1c5` |
-| Cape boxthorn / kriedoring | PASS | `public/element-art/tree_cape_boxthorn.png` | `df1b4ac` | PASS | `public/render-assets/reference-blueprint/cape-boxthorn-v1.png` | `f5a6be6` |
+| Cape boxthorn / kriedoring | PASS | `public/element-art/tree_cape_boxthorn.png` | `df1b4ac` | IN PROGRESS | `public/render-assets/reference-blueprint/cape-boxthorn-v1.png` | `f5a6be6` |
 | Honey-thorn / kriedoring | PASS | `public/element-art/tree_honey_thorn.png` | `5337360` | PASS | `public/render-assets/reference-blueprint/honey-thorn-v1.png` | `e0b6963` |
 | Natal currant | PASS | `public/element-art/tree_natal_currant.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/natal-currant-v1.png` | `4d55148` |
 | Pigeon pea | PASS | `public/element-art/tree_pigeon_pea.png` | `cd97a95` | PASS | `public/render-assets/reference-blueprint/pigeon-pea-v1.png` | `b8f9ef2` |
@@ -57,12 +58,12 @@ Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 | Malabar spinach | PASS | `public/element-art/tree_malabar_spinach.png` | `8db4efe` | PASS | `public/render-assets/reference-blueprint/malabar-spinach-v1.png` | `4a8739b` |
 | Purple granadilla / passion fruit | PASS | `public/element-art/tree_purple_granadilla.png` | `8db4efe` | PASS | `public/render-assets/reference-blueprint/purple-granadilla-v1.png` | `fba826b` |
 | Buffalo thorn | PASS | `public/element-art/tree_buffalo_thorn.png` | `d21827f` | PASS | `public/render-assets/reference-blueprint/buffalo-thorn-v1.png` | `9573aca` |
-| Karoo boer-bean | PASS | `public/element-art/tree_karoo_boer_bean.png` | `018d9e2` | PASS | `public/render-assets/reference-blueprint/karoo-boer-bean-v1.png` | `a4f908d` |
-| Pigeonwood / umbengele | PASS | `public/element-art/tree_pigeonwood.png` | `018d9e2` | PASS | `public/render-assets/reference-blueprint/pigeonwood-v1.png` | `16788da` |
-| Powder-puff tree / iBoqo | PASS | `public/element-art/tree_powder_puff_tree.png` | `1ecd8f2` | PASS | `public/render-assets/reference-blueprint/powder-puff-tree-v1.png` | `3716cf4` |
+| Karoo boer-bean | PASS | `public/element-art/tree_karoo_boer_bean.png` | `018d9e2` | IN PROGRESS | `public/render-assets/reference-blueprint/karoo-boer-bean-v1.png` | `a4f908d` |
+| Pigeonwood / umbengele | PASS | `public/element-art/tree_pigeonwood.png` | `018d9e2` | IN PROGRESS | `public/render-assets/reference-blueprint/pigeonwood-v1.png` | `16788da` |
+| Powder-puff tree / iBoqo | PASS | `public/element-art/tree_powder_puff_tree.png` | `1ecd8f2` | IN PROGRESS | `public/render-assets/reference-blueprint/powder-puff-tree-v1.png` | `3716cf4` |
 | Karee | PASS | `public/element-art/tree_karee.png` | `d21827f` | PASS | `public/render-assets/reference-blueprint/karee-v1.png` | `b740cab` |
-| White milkwood | PASS | `public/element-art/tree_white_milkwood.png` | `1ecd8f2` | PASS | `public/render-assets/reference-blueprint/white-milkwood-v1.png` | `543d418` |
-| Olive | PASS | `public/element-art/tree_olive.png` | `018d9e2` | PASS | `public/render-assets/reference-blueprint/olive-v1.png` | `2fcd949` |
+| White milkwood | PASS | `public/element-art/tree_white_milkwood.png` | `1ecd8f2` | IN PROGRESS | `public/render-assets/reference-blueprint/white-milkwood-v1.png` | `543d418` |
+| Olive | PASS | `public/element-art/tree_olive.png` | `018d9e2` | IN PROGRESS | `public/render-assets/reference-blueprint/olive-v1.png` | `2fcd949` |
 
 ## Resume protocol
 
