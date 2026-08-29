@@ -714,7 +714,11 @@ export function buildDemoSavedPlace(): SavedPlace {
     // switch threshold in lib/nasa-power.ts.) The old 800 was an uncited round
     // number.
     rainfall: 768,
-    elevation: 430,
+    // OpenTopoData SRTM30m for these exact coordinates (checked 2026-08-29) — the same
+    // source lib/elevation.ts's fetchElevation() queries live, so the saved-place pin and
+    // the Overview tab's own elevation read cannot disagree. The old 430 was an uncited
+    // number that made the sample farm contradict itself between two tabs of its own data.
+    elevation: 328,
     savedAt: daysAgo(30),
     label: 'field',
   };
