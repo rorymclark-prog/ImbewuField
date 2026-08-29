@@ -28,9 +28,9 @@ import test from 'node:test';
 //   get worse forever and would let a fix go unrecorded; a ratchet cannot. The numbers are meant
 //   to come down, and every one of them is a line of work still owed.
 //
-// The third test is the one that actually stops the regression: every .tsx reachable from the four
-// routes must appear in exactly one register. Drop a new component onto /home and this file fails
-// until someone has decided, in writing, which kind of screen it is.
+// The third test is the one that actually stops the regression: every .tsx reachable from the
+// routes below must appear in exactly one register. Drop a new component onto /home and this
+// file fails until someone has decided, in writing, which kind of screen it is.
 
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '..');
@@ -45,6 +45,23 @@ const ROUTES = [
   'app/records/page.tsx',
   'app/finances/page.tsx',
   'app/farmer/page.tsx',
+];
+
+// The NGO, funder and public-showcase routes — added 29 August after the same audit found
+// /funder and /ngo permanently mounting components/NgoDashboard.tsx (PR #371) with two live
+// sub-floor lines, and /partners uncovered entirely. Walked into the SAME reachable() sweep as
+// the farmer routes above, so nothing they mount goes unclassified either — but the reader here
+// is an NGO coordinator, a funder or a prospective partner, at a laptop far more often than not,
+// the same "expert" audience tests/type-floor.test.ts already carves out for components/Map.tsx
+// and components/DataPanel.tsx, not the phone-literacy-constrained farmer FARMER_SURFACES exists
+// to protect. That is why everything newly reachable ONLY from these three lands in
+// EXPERT_SURFACES below, never FARMER_SURFACES — audited (they are opened on phones too, and
+// this whole file exists because 375×812 is where tiny type disappears), but ratcheted, not
+// held to a zero floor.
+const STAFF_ROUTES = [
+  'app/funder/page.tsx',
+  'app/ngo/page.tsx',
+  'app/partners/page.tsx',
 ];
 
 /** Files whose type she reads. Floor of 12px, no allowance. */
@@ -130,6 +147,39 @@ const EXPERT_SURFACES: Record<string, { reason: string; budget: number }> = {
   'components/SiteManageMenu.tsx': { reason: 'site administration', budget: 0 },
   'components/RoleSwitcher.tsx': { reason: 'an operator control, not a farmer one', budget: 0 },
   'components/report/SavedReportsList.tsx': { reason: 'the report shelf', budget: 0 },
+
+  // STAFF_ROUTES — /funder, /ngo, /partners. See that const's own comment for why these land
+  // here and not in FARMER_SURFACES.
+  'app/funder/page.tsx': { reason: 'the funder dashboard shell — a funder at a laptop', budget: 0 },
+  'app/ngo/page.tsx': { reason: 'the NGO dashboard shell — a coordinator at a laptop', budget: 0 },
+  'app/partners/page.tsx': {
+    reason: 'the public showcase for NGOs and funders, deliberately outside the farmer app shell '
+      + '(no auth check, not linked from TabBar or NavDrawer)',
+    budget: 0,
+  },
+  'components/NgoDashboard.tsx': {
+    reason: 'the NGO/funder gardens-and-gardeners dashboard (PR #371). Its two sub-floor lines '
+      + '(the produce-photo crop-name label, the 26px avatar initials) were fixed outright rather '
+      + 'than budgeted, so this starts at zero — any new one here is a genuine regression.',
+    budget: 0,
+  },
+  'components/funder/CohortDashboard.tsx': { reason: 'the funder cohort dashboard', budget: 0 },
+  'components/funder/CohortCharts.tsx': { reason: 'the funder cohort charts', budget: 0 },
+  'components/network/FarmerPanel.tsx': {
+    reason: 'a funder/NGO\'s drill-down into one farmer\'s record, reached from the cohort '
+      + 'dashboard — dense metrics read at a laptop by staff, not the farmer\'s own screen. '
+      + 'Pre-existing debt, not fixed here: out of this change\'s scope.',
+    budget: 39,
+  },
+  'components/partners/Screenshot.tsx': {
+    reason: 'a captioned screenshot tile on the public /partners showcase',
+    budget: 0,
+  },
+  'components/ContactInbox.tsx': {
+    reason: 'the mentor/org side of the farmer contact inbox, mounted on /ngo — staff reading and '
+      + 'replying, not the farmer\'s own /contact screen',
+    budget: 2,
+  },
 };
 
 const source = (rel: string) => readFileSync(path.join(ROOT, rel), 'utf8');
@@ -146,10 +196,10 @@ function resolveImport(spec: string, fromFile: string): string | null {
   return null;
 }
 
-/** Every file reachable from the four farmer routes, static imports and dynamic alike. */
+/** Every file reachable from the farmer routes or the staff routes, static imports and dynamic alike. */
 function reachable(): string[] {
   const seen = new Set<string>();
-  const queue = [...ROUTES];
+  const queue = [...ROUTES, ...STAFF_ROUTES];
   while (queue.length) {
     const f = queue.shift() as string;
     if (seen.has(f)) continue;
@@ -281,25 +331,26 @@ test('the expert tools cannot get worse, and a fix cannot go unrecorded', () => 
   }
 });
 
-test('every screen reachable from a farmer route has been classified', () => {
-  // The regression this whole file exists to stop: a new component lands on /home, nobody thinks
-  // about type size, and the floor quietly applies to one file fewer than it used to.
+test('every screen reachable from a farmer or staff route has been classified', () => {
+  // The regression this whole file exists to stop: a new component lands on /home (or /funder,
+  // /ngo, /partners), nobody thinks about type size, and the floor quietly applies to one file
+  // fewer than it used to.
   const known = new Set<string>([...Object.keys(FARMER_SURFACES), ...Object.keys(EXPERT_SURFACES)]);
   const seen = reachable().filter((f) => f.endsWith('.tsx'));
 
   const unclassified = seen.filter((f) => !known.has(f));
   assert.deepEqual(
     unclassified, [],
-    `${unclassified.length} file(s) render on a farmer route but are in neither register. Add each `
-    + 'to FARMER_SURFACES (floor of 12px) or to EXPERT_SURFACES with its current count and a '
-    + `reason:\n    ${unclassified.join('\n    ')}\n`,
+    `${unclassified.length} file(s) render on a farmer or staff route but are in neither register. `
+    + 'Add each to FARMER_SURFACES (floor of 12px) or to EXPERT_SURFACES with its current count '
+    + `and a reason:\n    ${unclassified.join('\n    ')}\n`,
   );
 
   const stale = [...known].filter((f) => !seen.includes(f));
   assert.deepEqual(
     stale, [],
-    `${stale.length} classified file(s) no longer render on any farmer route. Remove them, or the `
-    + `registers drift into fiction:\n    ${stale.join('\n    ')}\n`,
+    `${stale.length} classified file(s) no longer render on any farmer or staff route. Remove `
+    + `them, or the registers drift into fiction:\n    ${stale.join('\n    ')}\n`,
   );
 
   const both = Object.keys(FARMER_SURFACES).filter((f) => f in EXPERT_SURFACES);
