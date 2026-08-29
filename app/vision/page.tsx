@@ -370,7 +370,7 @@ export default function VisionPage() {
                     </Link>
                   ) : (
                     <Link
-                      href="/finances"
+                      href="/records?tab=charts"
                       className="flex items-center gap-2 px-4 py-3 text-xs font-display font-semibold"
                       style={{ color: '#1F4D2B', textDecoration: 'none' }}
                     >

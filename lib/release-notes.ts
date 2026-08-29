@@ -35,8 +35,12 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '29 August',
-    sha: 'a000770',
+    sha: '1cba56e',
     changes: [
+      'Your picked, sold and spent money now lives in one book',
+      'Tap Picked, Sold or Spent at the top — the charts are in there too',
+      'What you sold and spent this month now shows on every page of that book',
+      'One money door on the home screen and in the menu, not two',
       'Programme reports now remember which organisation they belong to',
       'Catalogue plants now show their own picture, with fruit and flowers easy to see',
       'The design map now uses the matching overhead crown for each named plant',
