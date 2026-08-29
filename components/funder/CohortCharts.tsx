@@ -25,6 +25,23 @@
  *    "not shared" rather than a confident R0. The pure module carries that distinction the whole
  *    way; this file's only job is not to flatten it on the last step to the screen.
  *
+ * 4. A BAR MAY NEVER COME OUT SHORTER THAN THE FIGURE PRINTED ABOVE IT. The kilogram panel has two
+ *    drawings, and which one it uses is decided by `series.keptComparable` alone:
+ *
+ *      PAIRED — every farmer behind these bars shared BOTH their harvest and their sales book, so
+ *        "sold" really is a part of "picked" for these people and the column is one stack: forest
+ *        sold at the bottom, gold kept above, and a dashed outline to the true sold height on a
+ *        month whose sales run past its harvest log.
+ *      SIDE BY SIDE — anyone shared only one of the two, so the picked bar and the sold bar are
+ *        made of DIFFERENT PEOPLE. Stacking them would assert that one is part of the other; the
+ *        old code went further and clamped the sold bar down to the picked figure, which drew a
+ *        bar quietly shorter than the "Sold" total beside it. They now stand apart, each at its
+ *        own true height, and the card says in words whose books each one is.
+ *
+ *    The sold bar's height is never computed here. lib/cohort-series.ts#soldBarParts returns it as
+ *    a filled part and an outlined part that always add back up to the stated total, so no clamp
+ *    can survive in this file without its outline.
+ *
  * ── WHY THE BARS ARE HTML AND NOT SVG ────────────────────────────────────────────────────────
  * The app's other charts label their axes with SVG <text>, sized in viewBox units: the same "9"
  * renders around 11px on a phone and 7px on a wide laptop, under any readable floor and under the
@@ -36,10 +53,10 @@
 
 import { useMemo } from 'react';
 import { BarChart3, GraduationCap } from 'lucide-react';
-import { cappedScale } from '@/lib/chart-scale';
+import { cappedScale, type CappedScale } from '@/lib/chart-scale';
 import { BreakTop } from '@/components/ChartBreakMark';
 import { kgLabel, kgTotalLabel, randLabel, randTick } from '@/lib/format-figures';
-import type { CohortMonth, CohortSeries } from '@/lib/cohort-series';
+import { soldBarParts, type CohortMonth, type CohortSeries, type SoldBarParts } from '@/lib/cohort-series';
 import type { CohortTraining } from '@/lib/cohort-report';
 
 /* ── palette: the finance charts', unchanged, so three screens read as one app ───────────────── */
@@ -51,6 +68,11 @@ const HAIRLINE = '#E2D8C4';
 const AXIS = 'rgba(140,122,98,0.45)';
 const SOLD = '#1F4D2B';   // forest — sold kilograms and money in, exactly CashflowChart's IN
 const KEPT = '#C4A46A';   // gold — lighter, so the split survives greyscale and a printed report
+// Gold again, for the whole picked bar when picked and sold are drawn side by side. Not a new
+// hue: gold is already "harvest kilograms this chart is not attributing to a sale", and when the
+// two bars come from different farmers that is the entire picked figure. The legend says which
+// reading is in force, because the drawing changes with it.
+const PICKED = KEPT;
 // The sold total when a month's harvest rows do not account for it: the SAME forest as the
 // filled sold bar, dashed, so it reads as "this much was sold, this much of it is backed by a
 // harvest row in this month" rather than as an alert. Selling stock picked earlier is ordinary
@@ -146,6 +168,24 @@ function Key({ colour, label, outline = false }: { colour: string; label: string
   );
 }
 
+/**
+ * The key for two bars that are NOT one stack: the swatch is the two colours standing apart, which
+ * is exactly what the plot does when the picked farmers and the sold farmers are different people.
+ * The same discipline as components/ChartBreakMark.tsx — a drawing that is not a plain reading of
+ * the data carries a mark saying so, and the words underneath say the rest.
+ */
+function SplitKey({ label }: { label: string }) {
+  return (
+    <span className="flex items-center gap-1.5">
+      <span aria-hidden="true" className="flex items-end" style={{ gap: 2, flexShrink: 0 }}>
+        <span style={{ width: 5, height: 11, borderRadius: 2, background: PICKED }} />
+        <span style={{ width: 5, height: 8, borderRadius: 2, background: SOLD }} />
+      </span>
+      <span className="font-sans" style={{ fontSize: MICRO, color: MUTED }}>{label}</span>
+    </span>
+  );
+}
+
 /* ════════════════════════════════════════════════════════════════════════════
  * Chart 1 — harvest and income, month by month
  * ══════════════════════════════════════════════════════════════════════════*/
@@ -159,6 +199,123 @@ function kgTopOf(m: CohortMonth): number {
   return Math.max(m.producedKg ?? 0, m.soldKg ?? 0);
 }
 
+interface ColumnProps {
+  m: CohortMonth;
+  /** The month's sold figure, already split into what a harvest record backs and what it does not. */
+  parts: SoldBarParts;
+  scale: CappedScale;
+  /** The drawn top of the axis. */
+  maxKg: number;
+}
+
+/**
+ * PAIRED: one stack, because every farmer here shared both books and "sold" really is part of
+ * "picked" for them. Unchanged from the drawing this chart shipped with — the sample cohort, whose
+ * sixteen farmers all share everything, still lands here and looks exactly as it did.
+ */
+function PairedKgColumn({ m, parts, scale, maxKg }: ColumnProps) {
+  const sold = parts.backedKg;              // = min(sold, picked) here — and never on its own: the
+  const kept = m.keptKg ?? 0;               //   outline below always draws the rest of the figure.
+  const cut = scale.isClipped(kgTopOf(m));
+  const soldPct = (scale.draw(sold) / maxKg) * 100;
+  const keptPct = (scale.draw(Math.min(kept, Math.max(0, maxKg - sold))) / maxKg) * 100;
+  // Sold beyond what the picking log accounts for: an open outline to the sold figure, never a
+  // filled block — no harvest record stands behind that height.
+  const overPct = parts.unbackedKg > 0 ? (scale.draw(parts.totalKg) / maxKg) * 100 : 0;
+
+  return (
+    <>
+      {overPct > 0 && (
+        <div
+          aria-hidden="true"
+          style={{
+            position: 'absolute', left: '18%', right: '18%', bottom: 0,
+            height: `${overPct}%`, border: `1px dashed ${OVER}`, borderRadius: 3,
+          }}
+        />
+      )}
+      {keptPct > 0 && (
+        <div
+          className="relative"
+          style={{
+            margin: '0 18%', height: `${keptPct}%`, minHeight: 2,
+            background: KEPT, borderRadius: '3px 3px 0 0',
+          }}
+        >
+          {cut && <BreakTop />}
+        </div>
+      )}
+      {soldPct > 0 && (
+        <div
+          className="relative"
+          style={{
+            margin: '0 18%', height: `${soldPct}%`, minHeight: 2,
+            background: SOLD, borderRadius: keptPct > 0 ? 0 : '3px 3px 0 0',
+          }}
+        >
+          {cut && keptPct === 0 && <BreakTop />}
+        </div>
+      )}
+    </>
+  );
+}
+
+/**
+ * SIDE BY SIDE: picked and sold are different sets of farmers, so neither may be stacked on,
+ * subtracted from or clamped down to the other. Each is drawn at its own true height, which is
+ * what makes it impossible for either bar to come out shorter than its own headline figure — the
+ * failure the old single clamped stack produced silently under any mixed consent.
+ *
+ * The sold bar keeps the outline reading it has in the paired drawing: filled as far as a harvest
+ * record in this same chart stands behind it, open outline the rest of the way. With nobody
+ * sharing both books, that outline is the whole bar, which is the honest picture.
+ */
+function SplitKgColumn({ m, parts, scale, maxKg }: ColumnProps) {
+  const pickedPct = m.producedKg === null ? 0 : (scale.draw(m.producedKg) / maxKg) * 100;
+  const backedPct = (scale.draw(parts.backedKg) / maxKg) * 100;
+  const totalPct = (scale.draw(parts.totalKg) / maxKg) * 100;
+  const pickedCut = scale.isClipped(m.producedKg ?? 0);
+  const soldCut = scale.isClipped(parts.totalKg);
+
+  return (
+    <div style={{ display: 'flex', alignItems: 'flex-end', height: '100%', gap: 2 }}>
+      <div style={{ flex: 1, position: 'relative', height: '100%' }}>
+        {pickedPct > 0 && (
+          <div
+            style={{
+              position: 'absolute', left: 0, right: 0, bottom: 0,
+              height: `${pickedPct}%`, minHeight: 2, background: PICKED, borderRadius: '3px 3px 0 0',
+            }}
+          >
+            {pickedCut && <BreakTop />}
+          </div>
+        )}
+      </div>
+      <div style={{ flex: 1, position: 'relative', height: '100%' }}>
+        {parts.unbackedKg > 0 && totalPct > 0 && (
+          <div
+            aria-hidden="true"
+            style={{
+              position: 'absolute', left: 0, right: 0, bottom: 0,
+              height: `${totalPct}%`, minHeight: 3, border: `1px dashed ${OVER}`, borderRadius: 3,
+            }}
+          />
+        )}
+        {backedPct > 0 && (
+          <div
+            style={{
+              position: 'absolute', left: 0, right: 0, bottom: 0,
+              height: `${backedPct}%`, minHeight: 2, background: SOLD, borderRadius: '3px 3px 0 0',
+            }}
+          >
+            {soldCut && <BreakTop />}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export function CohortTimeline({ series, className }: { series: CohortSeries; className?: string }) {
   const months = series.months;
 
@@ -166,19 +323,27 @@ export function CohortTimeline({ series, className }: { series: CohortSeries; cl
   const zarTops = useMemo(() => months.map((m) => m.incomeZar ?? 0), [months]);
   const kgScale = useMemo(() => cappedScale(kgTops), [kgTops]);
   const zarScale = useMemo(() => cappedScale(zarTops), [zarTops]);
+  // Every sold height on this screen comes from here. See rule 4 in the header.
+  const soldParts = useMemo(() => months.map(soldBarParts), [months]);
 
   const maxKg = Math.max(kgScale.max, 1);
   const maxZar = Math.max(zarScale.max, 1);
 
-  // Rule 2: every bar the axis cut is named in full, in words, underneath the chart.
+  // Rule 2: every bar the axis cut is named in full, in words, underneath the chart. Picked and
+  // sold are named separately, because when they come from different farmers only one of them may
+  // be the bar that was actually cut.
   const cutInFull = useMemo(() => {
     const out: string[] = [];
     months.forEach((m, i) => {
-      if (kgScale.isClipped(kgTops[i])) out.push(`${m.longLabel} — ${kgTotalLabel(kgTops[i])} picked`);
+      const picked = m.producedKg ?? 0;
+      if (kgScale.isClipped(picked)) out.push(`${m.longLabel} — ${kgTotalLabel(picked)} picked`);
+      if (kgScale.isClipped(soldParts[i].totalKg)) {
+        out.push(`${m.longLabel} — ${kgTotalLabel(soldParts[i].totalKg)} sold`);
+      }
       if (zarScale.isClipped(zarTops[i])) out.push(`${m.longLabel} — ${randLabel(zarTops[i])} in`);
     });
     return out;
-  }, [months, kgTops, zarTops, kgScale, zarScale]);
+  }, [months, soldParts, zarTops, kgScale, zarScale]);
 
   if (!series.renderable) {
     return (
@@ -191,7 +356,11 @@ export function CohortTimeline({ series, className }: { series: CohortSeries; cl
   }
 
   const columns = `repeat(${months.length}, minmax(0, 1fr))`;
+  // ONE decision, taken here and nowhere else: may these bars be stacked? See rule 4 in the header
+  // and the contract on CohortSeries.keptComparable.
+  const paired = series.keptComparable;
   const anyOverSold = months.some((m) => m.soldExceedsProduced);
+  const anyUnbacked = soldParts.some((p) => p.unbackedKg > 0);
 
   return (
     <div className={className}>
@@ -212,8 +381,13 @@ export function CohortTimeline({ series, className }: { series: CohortSeries; cl
             value={series.totalSoldKg === null ? 'Not shared' : kgTotalLabel(series.totalSoldKg)}
             tone={series.totalSoldKg === null ? FAINT : SOLD}
           />
+          {/* Named for the population it is actually made of. A kept figure worked out across four
+              farms, sitting unlabelled beside a picked figure covering six, invites the reader to
+              subtract two numbers that were never about the same people. */}
           <Figure
-            label="Kept on the farms"
+            label={paired || series.comparableFarmers === 0
+              ? 'Kept on the farms'
+              : `Kept, on ${series.comparableFarmers} farms`}
             value={series.totalKeptKg === null ? 'Not comparable' : kgTotalLabel(series.totalKeptKg)}
             tone={series.totalKeptKg === null ? FAINT : KEPT}
           />
@@ -227,71 +401,37 @@ export function CohortTimeline({ series, className }: { series: CohortSeries; cl
         {/* ── panel 1: kilograms ── */}
         <div className="px-4">
           <div className="flex items-baseline justify-between" style={{ marginBottom: 4 }}>
-            <span className="font-sans" style={{ fontSize: MICRO, color: FAINT }}>Kilograms picked</span>
+            <span className="font-sans" style={{ fontSize: MICRO, color: FAINT }}>
+              {/* Names only the bars actually below it. */}
+              {paired || series.salesFarmers === 0
+                ? 'Kilograms picked'
+                : series.productionFarmers === 0 ? 'Kilograms sold' : 'Kilograms picked, and sold'}
+            </span>
             <span className="font-sans" style={{ fontSize: MICRO, color: FAINT, fontVariantNumeric: 'tabular-nums' }}>
               {kgTotalLabel(maxKg)}
             </span>
           </div>
           <div
             role="img"
-            aria-label={`Kilograms picked each month across ${series.productionFarmers} farms, split into what was sold and what was kept.`}
+            aria-label={kgPlotDescription(series, paired)}
             style={{
               display: 'grid', gridTemplateColumns: columns, alignItems: 'end', gap: 2,
               height: PLOT_KG, borderBottom: `1px solid ${AXIS}`,
               borderTop: '1px dashed rgba(140,122,98,0.20)',
             }}
           >
-            {months.map((m, i) => {
-              const produced = m.producedKg ?? 0;
-              const sold = Math.min(m.soldKg ?? 0, produced);
-              const kept = m.keptKg ?? 0;
-              const cut = kgScale.isClipped(kgTops[i]);
-              const soldPct = (kgScale.draw(sold) / maxKg) * 100;
-              const keptPct = (kgScale.draw(Math.min(kept, Math.max(0, maxKg - sold))) / maxKg) * 100;
-              // Sold beyond what the picking log accounts for: an open outline to the sold figure,
-              // never a filled block — no harvest record stands behind that height.
-              const overPct = m.soldExceedsProduced ? (kgScale.draw(m.soldKg ?? 0) / maxKg) * 100 : 0;
-              return (
-                <div
-                  key={m.key}
-                  className="relative flex flex-col justify-end"
-                  style={{ height: '100%' }}
-                  title={monthTooltip(m)}
-                >
-                  {overPct > 0 && (
-                    <div
-                      aria-hidden="true"
-                      style={{
-                        position: 'absolute', left: '18%', right: '18%', bottom: 0,
-                        height: `${overPct}%`, border: `1px dashed ${OVER}`, borderRadius: 3,
-                      }}
-                    />
-                  )}
-                  {keptPct > 0 && (
-                    <div
-                      className="relative"
-                      style={{
-                        margin: '0 18%', height: `${keptPct}%`, minHeight: 2,
-                        background: KEPT, borderRadius: '3px 3px 0 0',
-                      }}
-                    >
-                      {cut && <BreakTop />}
-                    </div>
-                  )}
-                  {soldPct > 0 && (
-                    <div
-                      className="relative"
-                      style={{
-                        margin: '0 18%', height: `${soldPct}%`, minHeight: 2,
-                        background: SOLD, borderRadius: keptPct > 0 ? 0 : '3px 3px 0 0',
-                      }}
-                    >
-                      {cut && keptPct === 0 && <BreakTop />}
-                    </div>
-                  )}
-                </div>
-              );
-            })}
+            {months.map((m, i) => (
+              <div
+                key={m.key}
+                className="relative flex flex-col justify-end"
+                style={{ height: '100%' }}
+                title={monthTooltip(m)}
+              >
+                {paired
+                  ? <PairedKgColumn m={m} parts={soldParts[i]} scale={kgScale} maxKg={maxKg} />
+                  : <SplitKgColumn m={m} parts={soldParts[i]} scale={kgScale} maxKg={maxKg} />}
+              </div>
+            ))}
           </div>
         </div>
 
@@ -353,9 +493,29 @@ export function CohortTimeline({ series, className }: { series: CohortSeries; cl
 
         <div className="px-4 pb-4" style={{ paddingTop: 11 }}>
           <div className="flex flex-wrap items-center" style={{ gap: '5px 14px' }}>
-            <Key colour={SOLD} label="Sold" />
-            <Key colour={KEPT} label="Kept on the farm" />
-            {anyOverSold && <Key colour={OVER} label="More sold than picked that month" outline />}
+            {paired ? (
+              <>
+                <Key colour={SOLD} label="Sold" />
+                <Key colour={KEPT} label="Kept on the farm" />
+                {anyOverSold && <Key colour={OVER} label="More sold than picked that month" outline />}
+              </>
+            ) : (
+              /* Only the bars actually on the plot get a key. A "Sold · 0 farms" swatch beside an
+                 empty half-column is a legend for something nobody drew, and the two-colour split
+                 key means nothing until there really are two populations to keep apart. */
+              <>
+                {series.productionFarmers > 0 && (
+                  <Key colour={PICKED} label={`Picked · ${series.productionFarmers} ${series.productionFarmers === 1 ? 'farm' : 'farms'}`} />
+                )}
+                {series.salesFarmers > 0 && (
+                  <Key colour={SOLD} label={`Sold · ${series.salesFarmers} ${series.salesFarmers === 1 ? 'farm' : 'farms'}`} />
+                )}
+                {anyUnbacked && <Key colour={OVER} label="Sold with no harvest logged behind it" outline />}
+                {series.productionFarmers > 0 && series.salesFarmers > 0 && (
+                  <SplitKey label="Different farmers — never stacked" />
+                )}
+              </>
+            )}
           </div>
 
           <Footnote>
@@ -368,17 +528,28 @@ export function CohortTimeline({ series, className }: { series: CohortSeries; cl
               Drawn short so the rest of the year stays readable: {cutInFull.join(' · ')}.
             </Footnote>
           )}
-          {!series.keptComparable && series.productionFarmers > 0 && series.salesFarmers > 0 && (
+          {!paired && (series.productionFarmers > 0 || series.salesFarmers > 0) && (
+            <Footnote>{populationSentence(series)}</Footnote>
+          )}
+          {!paired && series.totalKeptKg !== null && (
             <Footnote>
-              Harvest and sales here come from different sets of farmers, so what was kept on the
-              farms cannot be worked out by subtracting one from the other.
+              Kept is worked out only across the {series.comparableFarmers}{' '}
+              {series.comparableFarmers === 1 ? 'farm' : 'farms'} sharing both books, so it is not
+              the picked figure above minus the sold one.
             </Footnote>
           )}
-          {anyOverSold && (
+          {paired && anyOverSold && (
             <Footnote>
               A dashed outline is a month whose sales run past the harvest logged in that same
               month. Usually that is produce picked earlier and sold later; occasionally it is a
               harvest nobody wrote down.
+            </Footnote>
+          )}
+          {!paired && anyUnbacked && (
+            <Footnote>
+              A dashed sold bar is weight with no harvest record behind it here — either that
+              farmer has not shared their harvest book, or the produce was picked in an earlier
+              month. The bar still reaches the full figure it sold; nothing is drawn short of it.
             </Footnote>
           )}
         </div>
@@ -402,9 +573,60 @@ function monthTooltip(m: CohortMonth): string {
 function coverageSentence(series: CohortSeries): string {
   const total = series.farmerCount;
   const farms = total === 1 ? 'farm shares' : 'farms share';
+  const sold = series.salesFarmers;
+  const both = series.keptComparable
+    ? '' // every farmer here shares both, so naming the overlap would only repeat the two counts
+    : ` ${series.comparableFarmers === 0 ? 'None' : series.comparableFarmers} of them ${series.comparableFarmers === 1 ? 'shares' : 'share'} both.`;
   return (
-    `${series.productionFarmers} of ${total} ${farms} a harvest record and ${series.salesFarmers} share sales. ` +
+    `${series.productionFarmers} of ${total} ${farms} a harvest record and ${sold} ${sold === 1 ? 'shares' : 'share'} sales.${both} ` +
     'Anyone who has not is absent from these bars, not counted as a zero.'
+  );
+}
+
+/**
+ * What the kilogram plot is, for a screen reader. It must describe the drawing actually on the
+ * page — a stack, two bars apart, or a single population's bars — because the alternative is a
+ * blind funder being told about a split that is not there or a stack that is not either.
+ */
+function kgPlotDescription(series: CohortSeries, paired: boolean): string {
+  const { productionFarmers: picked, salesFarmers: sold } = series;
+  if (paired) {
+    return `Kilograms picked each month across ${picked} farms, split into what was sold and what was kept.`;
+  }
+  if (sold === 0) return `Kilograms picked each month across ${picked} farms. Nobody here shares a sales record.`;
+  if (picked === 0) return `Kilograms sold each month across ${sold} farms. Nobody here shares a harvest record.`;
+  return (
+    `Kilograms picked each month across ${picked} farms, and kilograms sold across ${sold} farms, `
+    + 'drawn side by side because they are not the same farms.'
+  );
+}
+
+/**
+ * Why the picked bars and the sold bars are drawn apart — printed whenever they are.
+ *
+ * The precedent this follows is components/ChartBreakMark.tsx and the capped-axis contract in
+ * lib/chart-scale.ts: a drawing that is not a plain reading of the data carries a visible mark AND
+ * the true position is stated in words. Here the mark is the two bars standing apart with their
+ * own key, and this is the sentence.
+ */
+function populationSentence(series: CohortSeries): string {
+  const { productionFarmers: picked, salesFarmers: sold, comparableFarmers: both } = series;
+  if (picked === 0) {
+    return 'Nobody here has agreed to share a harvest record, so only the sold bars are drawn. '
+      + 'The empty half of each column is a permission nobody gave, not a harvest of nothing.';
+  }
+  if (sold === 0) {
+    return 'Nobody here has agreed to share a sales record, so only the picked bars are drawn. '
+      + 'The empty half of each column is a permission nobody gave, not a harvest nobody sold.';
+  }
+  const overlap = both === 0
+    ? 'no farm shares both'
+    : `only ${both} ${both === 1 ? 'farm shares' : 'farms share'} both`;
+  return (
+    `${picked} ${picked === 1 ? 'farm shares' : 'farms share'} a harvest record and ${sold} `
+    + `${sold === 1 ? 'shares' : 'share'} sales, but ${overlap}. `
+    + 'Picked and sold stand side by side because they are not the same farms: neither can be '
+    + 'stacked on, subtracted from, or cut down to the other.'
   );
 }
 

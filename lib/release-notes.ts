@@ -35,10 +35,13 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '29 August',
-    sha: '77f0e53',
+    sha: '813e78e',
     changes: [
       'Catalogue plants now show their own picture, with fruit and flowers easy to see',
       'The design map now uses the matching overhead crown for each named plant',
+      'Funder charts now say when picked and sold come from different farmers, never guessing',
+      'A sold bar is never drawn shorter than the sold figure printed above it',
+      'Lima now knows about your sharing settings and can say who sees what',
     ],
   },
   {
