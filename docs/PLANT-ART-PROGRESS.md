@@ -5,7 +5,7 @@ Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 - Last full checker inventory: 2026-08-29
 - Checker: `/Users/roryclark/ImbewuField/scripts/check-plant-art.py`
 - Required scope: 53 species, 106 views
-- Current result: 104 PASS, 2 FAIL, 0 MISSING, 0 IN PROGRESS
+- Current result: 105 PASS, 1 FAIL, 0 MISSING, 0 IN PROGRESS
 - Dimension audit is stricter than the checker's `square` rule: every top-down file must be exactly 1024×1024.
 - A top-down `FAIL` below passes the repository checker but fails the brief's authoritative
   16-direction reach gate (`alpha > 32`, at least 8 of 16 exact rays reaching 97% radius).
@@ -63,7 +63,7 @@ Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 | Karoo boer-bean | PASS | `public/element-art/tree_karoo_boer_bean.png` | `018d9e2` | PASS | `public/render-assets/reference-blueprint/karoo-boer-bean-v1.png` | `6b2c24f` |
 | Pigeonwood / umbengele | PASS | `public/element-art/tree_pigeonwood.png` | `018d9e2` | PASS | `public/render-assets/reference-blueprint/pigeonwood-v1.png` | `473be5f` |
 | Powder-puff tree / iBoqo | PASS | `public/element-art/tree_powder_puff_tree.png` | `1ecd8f2` | PASS | `public/render-assets/reference-blueprint/powder-puff-tree-v1.png` | `42810ac` |
-| Karee | PASS | `public/element-art/tree_karee.png` | `d21827f` | FAIL | `public/render-assets/reference-blueprint/karee-v1.png` | `b740cab` |
+| Karee | PASS | `public/element-art/tree_karee.png` | `d21827f` | PASS | `public/render-assets/reference-blueprint/karee-v1.png` | `2fe827b` |
 | White milkwood | PASS | `public/element-art/tree_white_milkwood.png` | `1ecd8f2` | PASS | `public/render-assets/reference-blueprint/white-milkwood-v1.png` | `ae48dbd` |
 | Olive | PASS | `public/element-art/tree_olive.png` | `018d9e2` | FAIL | `public/render-assets/reference-blueprint/olive-v1.png` | `e4e6f2e` |
 
