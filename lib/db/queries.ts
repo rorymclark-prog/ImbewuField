@@ -309,7 +309,11 @@ export async function designsSharedWithMe(): Promise<Design[]> {
 export async function saveReport(r: Partial<Report>): Promise<void> {
   if (isSampleMode()) return;
   const f = fb(); const u = uid(); if (!f || !u) return;
-  await addDoc(collection(f.db, 'reports'), { ...r, owner_id: u, created_at: serverTimestamp() });
+  // org_id is stamped the same way saveDesign() stamps it — needed so a future cohort report
+  // list can be scoped to an org (see docs on the Report type and scripts/backfill-org-id.mjs;
+  // reports saved before this line have no org_id at all).
+  const me = await getMyProfile();
+  await addDoc(collection(f.db, 'reports'), { ...r, owner_id: u, org_id: me?.org_id ?? null, created_at: serverTimestamp() });
 }
 
 // Saved-places DB helpers removed 2026-07: they wrote to a Firestore
