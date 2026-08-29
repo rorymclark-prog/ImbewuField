@@ -11,6 +11,16 @@ import {
   decideAttach,
 } from '../scripts/provisioning-guards.mjs';
 
+// scripts/provisioning-guards.mjs is plain JS (allowJs, not checkJs — see tsconfig.json), so
+// TS infers each guard's return type as a union where `reason` only exists on the blocked/
+// not-ok branch. assert.equal(...) does not narrow that union, so every call site accessing
+// `.reason` needs it already narrowed to `string` — this helper does that once, asserting the
+// shape at runtime rather than casting past the type checker.
+function assertReasonMatches(result: { reason?: string }, pattern: RegExp): void {
+  assert.equal(typeof result.reason, 'string', 'expected a reason string');
+  assert.match(result.reason as string, pattern);
+}
+
 test('STAFF_ROLES and ATTACHABLE_ROLES are disjoint', () => {
   // A role string must never be valid for both --grant (creates profiles, changes role) and
   // --attach (never creates, never changes role) — see decideAttach()'s doc comment.
@@ -37,8 +47,8 @@ test('checkReassignment: re-granting the SAME org is a no-op, not a block', () =
 test('checkReassignment: moving to a DIFFERENT org is blocked without --reassign', () => {
   const result = checkReassignment({ existingOrgId: 'org-1', newOrgId: 'org-2', allowReassign: false });
   assert.equal(result.blocked, true);
-  assert.match(result.reason, /already in org org-1/);
-  assert.match(result.reason, /--reassign/);
+  assertReasonMatches(result, /already in org org-1/);
+  assertReasonMatches(result, /--reassign/);
 });
 
 test('checkReassignment: --reassign explicitly allows the move', () => {
@@ -50,20 +60,20 @@ test('checkReassignment: --reassign explicitly allows the move', () => {
 test('decideAttach: refuses a role outside farmer/student', () => {
   const result = decideAttach({ existingRole: 'ngo', existingOrgId: null, requestedRole: 'ngo', newOrgId: 'org-2', allowReassign: false });
   assert.equal(result.ok, false);
-  assert.match(result.reason, /--attach role must be one of/);
+  assertReasonMatches(result, /--attach role must be one of/);
 });
 
 test('decideAttach: refuses when no profile exists yet', () => {
   const result = decideAttach({ existingRole: undefined, existingOrgId: null, requestedRole: 'farmer', newOrgId: 'org-2', allowReassign: false });
   assert.equal(result.ok, false);
-  assert.match(result.reason, /sign in and complete signup/);
+  assertReasonMatches(result, /sign in and complete signup/);
 });
 
 test('decideAttach: refuses a role mismatch (never promotes/demotes)', () => {
   const result = decideAttach({ existingRole: 'student', existingOrgId: null, requestedRole: 'farmer', newOrgId: 'org-2', allowReassign: false });
   assert.equal(result.ok, false);
-  assert.match(result.reason, /existing profile role is "student"/);
-  assert.match(result.reason, /never changes role/);
+  assertReasonMatches(result, /existing profile role is "student"/);
+  assertReasonMatches(result, /never changes role/);
 });
 
 test('decideAttach: succeeds for a matching-role, org-less profile', () => {
@@ -83,7 +93,7 @@ test('decideAttach: re-attaching to the SAME org is idempotent (ok, not blocked)
 test('decideAttach: blocks moving a farmer already in a DIFFERENT org without --reassign', () => {
   const result = decideAttach({ existingRole: 'farmer', existingOrgId: 'org-1', requestedRole: 'farmer', newOrgId: 'org-2', allowReassign: false });
   assert.equal(result.ok, false);
-  assert.match(result.reason, /already in org org-1/);
+  assertReasonMatches(result, /already in org org-1/);
 });
 
 test('decideAttach: --reassign allows moving a farmer from a different org', () => {
@@ -98,5 +108,5 @@ test('decideAttach: role mismatch is checked BEFORE the reassignment guard', () 
   // reason (which --reassign cannot fix) rather than the reassignment reason (which it can).
   const result = decideAttach({ existingRole: 'student', existingOrgId: 'org-1', requestedRole: 'farmer', newOrgId: 'org-2', allowReassign: true });
   assert.equal(result.ok, false);
-  assert.match(result.reason, /existing profile role is "student"/);
+  assertReasonMatches(result, /existing profile role is "student"/);
 });

@@ -21,6 +21,9 @@ import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { randomUUID } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
+import type { App } from 'firebase-admin/app';
+import type { Auth } from 'firebase-admin/auth';
+import type { Firestore } from 'firebase-admin/firestore';
 
 const execFileAsync = promisify(execFile);
 
@@ -38,9 +41,9 @@ const PROJECT_ID = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
 const PROVISION_SCRIPT = fileURLToPath(new URL('../scripts/provision-org.mjs', import.meta.url));
 const SEED_SCRIPT = fileURLToPath(new URL('../scripts/seed.mjs', import.meta.url));
 
-let app;
-let auth;
-let db;
+let app: App;
+let auth: Auth;
+let db: Firestore;
 
 before(() => {
   app = initializeApp({ projectId: PROJECT_ID }, `provision-org-test-${randomUUID()}`);
@@ -48,8 +51,16 @@ before(() => {
   db = getFirestore(app);
 });
 
+interface RunResult { code: number; out: string }
+
+/** child_process rejects with an Error carrying these extra fields — narrowed out of `unknown`. */
+function execFailure(err: unknown): RunResult {
+  const e = err as { code?: unknown; stdout?: string; stderr?: string };
+  return { code: typeof e.code === 'number' ? e.code : 1, out: `${e.stdout ?? ''}${e.stderr ?? ''}` };
+}
+
 /** Run provision-org.mjs (or another script) as a real subprocess, exactly as an operator would. */
-async function run(script, args) {
+async function run(script: string, args: string[]): Promise<RunResult> {
   try {
     const { stdout } = await execFileAsync('node', [script, ...args], {
       env: process.env,
@@ -57,13 +68,13 @@ async function run(script, args) {
     });
     return { code: 0, out: stdout };
   } catch (err) {
-    return { code: typeof err.code === 'number' ? err.code : 1, out: `${err.stdout ?? ''}${err.stderr ?? ''}` };
+    return execFailure(err);
   }
 }
 
-const provision = (args) => run(PROVISION_SCRIPT, args);
+const provision = (args: string[]): Promise<RunResult> => run(PROVISION_SCRIPT, args);
 
-async function makeSignedUpAccount(role, orgId = null) {
+async function makeSignedUpAccount(role: string, orgId: string | null = null) {
   const email = `${randomUUID()}@tenant2-test.example`;
   const user = await auth.createUser({ email, password: 'x'.repeat(8) });
   await db.collection('profiles').doc(user.uid).set({
@@ -73,7 +84,7 @@ async function makeSignedUpAccount(role, orgId = null) {
   return { email, uid: user.uid };
 }
 
-async function orgsNamed(name) {
+async function orgsNamed(name: string) {
   const snap = await db.collection('organizations').where('name', '==', name).get();
   return snap.docs;
 }
@@ -108,7 +119,7 @@ test('provisioning org #2 while org #1 has live data does not collide, and re-ru
 
   // And org #1's farmer is completely untouched by any of this.
   const org1FarmerProfile = await db.collection('profiles').doc(org1Farmer.uid).get();
-  assert.equal(org1FarmerProfile.data().org_id, org1.id);
+  assert.equal(org1FarmerProfile.data()?.org_id, org1.id);
 });
 
 /* ── programme creation: same dedupe guard, added by this change ────────── */
@@ -155,13 +166,14 @@ test('--attach puts an org-less, self-signed-up farmer into an org', async () =>
   assert.equal(result.code, 0, result.out);
 
   const profile = await db.collection('profiles').doc(farmer.uid).get();
-  assert.equal(profile.data().org_id, org.id);
-  assert.equal(profile.data().role, 'farmer', '--attach must never change role');
+  assert.equal(profile.data()?.org_id, org.id);
+  assert.equal(profile.data()?.role, 'farmer', '--attach must never change role');
 });
 
 test('--attach is idempotent: attaching the same farmer to the same org twice is a no-op, not an error', async () => {
   const orgName = `Attach Idempotent Org ${randomUUID()}`;
   const create = await provision(['--org', orgName, '--kind', 'ngo', '--apply']);
+  assert.equal(create.code, 0, create.out);
   const [org] = await orgsNamed(orgName);
   const farmer = await makeSignedUpAccount('farmer', null);
 
@@ -171,7 +183,7 @@ test('--attach is idempotent: attaching the same farmer to the same org twice is
   assert.equal(second.code, 0, 'attaching to the SAME org a second time must succeed, not refuse');
 
   const profile = await db.collection('profiles').doc(farmer.uid).get();
-  assert.equal(profile.data().org_id, org.id);
+  assert.equal(profile.data()?.org_id, org.id);
 });
 
 test('--attach refuses to move a farmer who already belongs to a DIFFERENT org, without --reassign', async () => {
@@ -190,13 +202,13 @@ test('--attach refuses to move a farmer who already belongs to a DIFFERENT org, 
   assert.match(blocked.out, /already in org/);
 
   const untouchedProfile = await db.collection('profiles').doc(farmer.uid).get();
-  assert.equal(untouchedProfile.data().org_id, org1.id, 'org #2 must not have pulled org #1\'s farmer out of org #1');
+  assert.equal(untouchedProfile.data()?.org_id, org1.id, 'org #2 must not have pulled org #1\'s farmer out of org #1');
 
   // --reassign is the explicit override.
   const reassigned = await provision(['--org-id', org2.id, '--attach', `${farmer.email}=farmer`, '--reassign', '--apply']);
   assert.equal(reassigned.code, 0, reassigned.out);
   const movedProfile = await db.collection('profiles').doc(farmer.uid).get();
-  assert.equal(movedProfile.data().org_id, org2.id);
+  assert.equal(movedProfile.data()?.org_id, org2.id);
 });
 
 test('--attach refuses an account with no profile yet, and a role that does not match the existing profile', async () => {
@@ -217,7 +229,7 @@ test('--attach refuses an account with no profile yet, and a role that does not 
   assert.equal(wrongRole.code, 0);
   assert.match(wrongRole.out, /existing profile role is "student"/);
   const untouched = await db.collection('profiles').doc(student.uid).get();
-  assert.equal(untouched.data().org_id, null, 'a role mismatch must not have set org_id');
+  assert.equal(untouched.data()?.org_id, null, 'a role mismatch must not have set org_id');
 });
 
 test('--attach rejects a staff role outright (that is what --grant is for)', async () => {
@@ -245,12 +257,12 @@ test('--grant refuses to move a staff member who already belongs to a DIFFERENT 
   assert.equal(blocked.code, 0);
   assert.match(blocked.out, /BLOCKED/);
   const stillOrg1 = await db.collection('profiles').doc(mentor.uid).get();
-  assert.equal(stillOrg1.data().org_id, org1.id);
+  assert.equal(stillOrg1.data()?.org_id, org1.id);
 
   const reassigned = await provision(['--org-id', org2.id, '--grant', `${mentor.email}=mentor`, '--reassign', '--apply']);
   assert.equal(reassigned.code, 0, reassigned.out);
   const movedProfile = await db.collection('profiles').doc(mentor.uid).get();
-  assert.equal(movedProfile.data().org_id, org2.id);
+  assert.equal(movedProfile.data()?.org_id, org2.id);
 });
 
 /* ── seed.mjs: idempotency guard on the fixed demo-org name ─────────────── */
@@ -263,12 +275,12 @@ test('seed.mjs refuses to seed a duplicate demo org, and --force is the delibera
   const seedApp = initializeApp({ projectId: seedProjectId }, `seed-test-${randomUUID()}`);
   const seedDb = getFirestore(seedApp);
 
-  async function runSeed(args = []) {
+  async function runSeed(args: string[] = []): Promise<RunResult> {
     try {
       const { stdout } = await execFileAsync('node', [SEED_SCRIPT, ...args], { env: seedEnv, encoding: 'utf8' });
       return { code: 0, out: stdout };
     } catch (err) {
-      return { code: typeof err.code === 'number' ? err.code : 1, out: `${err.stdout ?? ''}${err.stderr ?? ''}` };
+      return execFailure(err);
     }
   }
 
