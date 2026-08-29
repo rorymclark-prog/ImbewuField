@@ -35,11 +35,13 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '29 August',
-    sha: 'cf94de4',
+    sha: 'a8596de',
     changes: [
       'The smallest text on farmer pages has been bumped up to stay readable in the sun',
       'Map trees and garden pictures now stay on your phone after an update',
       'Those pictures are also much smaller now, so the first download costs far less data',
+      'Tapping a report with no signal now tells you, instead of doing nothing at all',
+      'When writing a report fails for lack of signal, it now says so in plain words',
     ],
   },
   {
