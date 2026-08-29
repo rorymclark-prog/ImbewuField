@@ -11,7 +11,7 @@
 // SAME numbers the security rules enforce (keep them in sync). See functions/README.md.
 
 import { getFirebase } from '@/lib/firebase/init';
-import { isSampleMode } from '@/lib/sample-mode';
+import { isSampleMode, SAMPLE_MODE_RENDER_REFUSAL } from '@/lib/sample-mode';
 import { doc, onSnapshot, serverTimestamp, setDoc, Timestamp, type FirestoreError } from 'firebase/firestore';
 import { deleteObject, getDownloadURL, ref, uploadString } from 'firebase/storage';
 import { hasConflictingRenderAuthority } from '@/lib/render-policy';
@@ -328,7 +328,7 @@ export async function enqueueRenderJob(opts: {
   // renders/{uid} storage, so they're off while sampling. The exact (no-AI) sheets all work
   // in the sample — this only blocks the billed path. (Safety layer 2, lib/sample-mode.ts.)
   if (isSampleMode()) {
-    throw new RenderJobError('AI sheets are switched off in the sample farm. Exit the sample and open your own farm to render AI sheets.');
+    throw new RenderJobError(SAMPLE_MODE_RENDER_REFUSAL);
   }
   const requestError = renderJobRequestError(opts.sheets);
   if (requestError) throw new RenderJobError(requestError);
