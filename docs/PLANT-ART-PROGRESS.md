@@ -17,7 +17,7 @@ Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 | Dwarf Cavendish/Williams banana | PASS | `public/element-art/tree_banana_dwarf_cavendish_williams.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/banana-dwarf-cavendish-williams-v1.png` | `73580c7` |
 | Black mulberry | PASS | `public/element-art/tree_black_mulberry.png` | `64d7a8a` | PASS | `public/render-assets/reference-blueprint/black-mulberry-tree-v1.png` | `64d7a8a` |
 | Carob | PASS | `public/element-art/tree_carob.png` | `64d7a8a` | PASS | `public/render-assets/reference-blueprint/carob-tree-v1.png` | `64d7a8a` |
-| Date palm | PASS | `public/element-art/tree_date_palm.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/date-palm-v1.png` | `64d7a8a` |
+| Date palm | PASS | `public/element-art/tree_date_palm.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/date-palm-v1.png` | `dc420c0` |
 | Pecan | PASS | `public/element-art/tree_pecan.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/pecan-tree-v1.png` | `64d7a8a` |
 | Pistachio | PASS | `public/element-art/tree_pistachio.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/pistachio-tree-v1.png` | `64d7a8a` |
 | Quince | PASS | `public/element-art/tree_quince.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/quince-tree-v1.png` | `64d7a8a` |
