@@ -123,7 +123,14 @@ service cloud.firestore {
     match /programmes/{id}    { allow read: if signedIn() && resource.data.org_id == myOrg(); }
 
     match /gardens/{gid} {
+      // isAdmin() added here (data-integrity audit, row 4): sameOrg() alone means the platform
+      // admin role only reads a garden when its OWN org_id happens to match the admin's — same
+      // gap the 2026-08-15 fix closed elsewhere by pairing sameOrg()/staffOrgAccess() with an
+      // explicit isAdmin() bypass. This one and the three below it were missed at the time because
+      // gardens/reports/surveys still call the older bare sameOrg() helper directly instead of
+      // staffOrgAccess()/staffConsentedAccess(), which already carry isAdmin() internally.
       allow read: if signedIn() && (
+        isAdmin() ||
         sameOrg(resource.data) ||
         resource.data.supervisor_id == request.auth.uid ||
         isMentor() ||
@@ -132,9 +139,11 @@ service cloud.firestore {
       allow write: if signedIn() && (isStaff() || resource.data.supervisor_id == request.auth.uid);
 
       match /members/{pid} {
-        // Scope to the parent garden — same-org staff, the supervisor, a mentor, or the
-        // member themselves. Prevents cross-org enumeration of every garden's participants.
+        // Scope to the parent garden — same-org staff, the supervisor, a mentor, the member
+        // themselves, or admin (see the isAdmin() note on the parent match above — same gap,
+        // same fix). Prevents cross-org enumeration of every garden's participants.
         allow read: if signedIn() && (
+          isAdmin() ||
           sameOrg(get(/databases/$(database)/documents/gardens/$(gid)).data) ||
           get(/databases/$(database)/documents/gardens/$(gid)).data.supervisor_id == request.auth.uid ||
           isMentor() ||
@@ -225,8 +234,17 @@ service cloud.firestore {
     }
 
     match /reports/{id} {
-      allow read:   if ownsField(resource.data, 'owner_id') || sameOrg(resource.data) || (isMentor() && inMyOrg(resource.data));
-      allow create: if signedIn() && request.resource.data.owner_id == request.auth.uid;
+      // isAdmin() added (data-integrity audit, row 4) — see the note on /gardens above; sameOrg()
+      // here has the same admin-org-mismatch gap.
+      allow read:   if ownsField(resource.data, 'owner_id') || isAdmin() || sameOrg(resource.data) || (isMentor() && inMyOrg(resource.data));
+      // org_id is now stamped by saveReport() (lib/db/queries.ts), the same way saveDesign()
+      // stamps it on /designs — pinned here so a client can't write a report claiming an org it
+      // doesn't belong to, which would otherwise make the stamp meaningless. Reports written
+      // before this line have no org_id at all (see scripts/backfill-org-id.mjs); this only
+      // constrains NEW creates and does not touch the read rule's existing dependency on org_id
+      // (sameOrg() above already needed it) or require it on any existing document.
+      allow create: if signedIn() && request.resource.data.owner_id == request.auth.uid
+        && request.resource.data.org_id == myOrg();
       allow update, delete: if ownsField(resource.data, 'owner_id');
     }
 
@@ -318,7 +336,13 @@ service cloud.firestore {
     match /surveys/{id} {
       // sameOrg (not bare isStaff) so a staff member can't read another org's surveys by id.
       // createSurvey stamps org_id and listSurveys queries by org, so this matches the app.
-      allow read:   if signedIn() && (sameOrg(resource.data) || resource.data.created_by == request.auth.uid);
+      // isAdmin() added (data-integrity audit, row 4): this was the exact gap the file's own
+      // comment above sameOrg() already named — surveys got the sameOrg() fix before the
+      // isAdmin()/grantedOrg() extensions existed, and never got either retrofitted. Adding
+      // isAdmin() here; grantedOrg() (funder -> many-NGOs) is a separate, not-yet-made product
+      // decision about whether a funder should see another org's raw survey answers, so it is
+      // deliberately left out — see the PR description.
+      allow read:   if signedIn() && (isAdmin() || sameOrg(resource.data) || resource.data.created_by == request.auth.uid);
       allow create: if signedIn() && isStaff() && request.resource.data.created_by == request.auth.uid;
       allow update, delete: if signedIn() && resource.data.created_by == request.auth.uid;
     }

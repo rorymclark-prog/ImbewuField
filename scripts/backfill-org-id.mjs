@@ -1,7 +1,7 @@
 /**
  * ImbewuField — one-off org_id backfill
  *
- * Part of the cross-org Firestore leak fix (docs/AUDIT-NEEDS-RORY-2026-08-15.md #1). The new
+ * Part of the cross-org Firestore leak fix (docs/AUDIT-NEEDS-RORY-2026-08-15.md #1). The
  * org-scoped rules on `designs`, `course_progress`, `course_submissions` and `survey_responses`
  * compare `resource.data.org_id` against the caller's own org — but every doc in those four
  * collections written BEFORE this fix has no `org_id` field at all (undefined != any org, so
@@ -9,11 +9,21 @@
  * unaffected (owns()/owns-field branches don't touch org_id) — this only restores staff/mentor
  * visibility of PRE-EXISTING rows.
  *
- * For each doc, org_id is taken from its own `profile_id` (or `owner_id` for designs) field's
- * CURRENT profile — i.e. "whatever org this person belongs to today". Docs whose profile_id no
- * longer resolves to a profile, or whose owning profile has no org, are left with org_id: null
- * (matching what a fresh write would stamp for an org-less user) rather than skipped, so nothing
- * is silently left in the pre-fix "no field at all" state.
+ * EXTENDED (data-integrity audit, follow-up to the above): `production_logs`, `sales_logs` and
+ * `expense_logs` — the three money-log collections — read via `staffConsentedAccess()`, which
+ * already compares `d.org_id == myOrg()` the same way, but they were never added to this script's
+ * TARGETS. Any row written before this fix, or by a code path that predates the `org_id: me?.org_id
+ * ?? null` stamp in lib/db/queries.ts's addProduction/addSale/addExpense, is in the same
+ * permanently-unreadable-to-staff state the original four collections were in. `reports` is added
+ * too: its write path (lib/db/queries.ts saveReport) never stamped org_id at all until this same
+ * change, so every report saved before today has no org_id field to backfill FROM the profile —
+ * this just brings it into line with the others now that the writer stamps one.
+ *
+ * For each doc, org_id is taken from its own `profile_id` (or `owner_id` for designs and reports)
+ * field's CURRENT profile — i.e. "whatever org this person belongs to today". Docs whose
+ * profile_id no longer resolves to a profile, or whose owning profile has no org, are left with
+ * org_id: null (matching what a fresh write would stamp for an org-less user) rather than skipped,
+ * so nothing is silently left in the pre-fix "no field at all" state.
  *
  * Idempotent: only writes docs that are missing org_id, so it's safe to re-run.
  *
@@ -25,7 +35,13 @@
  * Or place serviceAccount.json in the project root and set only
  * NEXT_PUBLIC_FIREBASE_PROJECT_ID (the script falls back to the file).
  *
- * Add --dry-run to report what WOULD be written without writing anything.
+ * Add --dry-run to report what WOULD be written without writing anything. --dry-run is a single
+ * global flag, not per-target — it covers every entry in TARGETS below (old and new alike) in one
+ * pass, since backfillCollection() checks it on every doc it would otherwise write. There is no
+ * per-collection flag to run just the new targets in isolation; to preview only their effect,
+ * temporarily comment out the other TARGETS entries before running with --dry-run, or just read
+ * the per-collection summary line each target already prints (it names its own collection, so the
+ * four new lines are easy to pick out of the full-run output).
  */
 
 import { existsSync, readFileSync } from 'fs';
@@ -60,6 +76,13 @@ const TARGETS = [
   { collection: 'course_progress', ownerField: 'profile_id' },
   { collection: 'course_submissions', ownerField: 'profile_id' },
   { collection: 'survey_responses', ownerField: 'profile_id' },
+  // The three money-log collections — same staffConsentedAccess() org check, just missed when
+  // this script was first written (see the EXTENDED note above).
+  { collection: 'production_logs', ownerField: 'profile_id' },
+  { collection: 'sales_logs', ownerField: 'profile_id' },
+  { collection: 'expense_logs', ownerField: 'profile_id' },
+  // Reports use owner_id (there is no profile_id on a report doc), same as designs.
+  { collection: 'reports', ownerField: 'owner_id' },
 ];
 
 async function orgIdForProfile(profileCache, profileId) {
