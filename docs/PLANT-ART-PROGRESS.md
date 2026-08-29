@@ -5,7 +5,7 @@ Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 - Last full checker inventory: 2026-08-29
 - Checker: `/Users/roryclark/ImbewuField/scripts/check-plant-art.py`
 - Required scope: 53 species, 106 views
-- Current result: 98 PASS, 8 FAIL, 0 MISSING, 0 IN PROGRESS
+- Current result: 99 PASS, 7 FAIL, 0 MISSING, 0 IN PROGRESS
 - Dimension audit is stricter than the checker's `square` rule: every top-down file must be exactly 1024×1024.
 - A top-down `FAIL` below passes the repository checker but fails the brief's authoritative
   16-direction reach gate (`alpha > 32`, at least 8 of 16 exact rays reaching 97% radius).
@@ -43,7 +43,7 @@ Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 | Brandybush / velvet raisin | PASS | `public/element-art/tree_brandybush.png` | `202ccec` | PASS | `public/render-assets/reference-blueprint/brandybush-v1.png` | `303c6f9` |
 | Honeybush / heuningbos | PASS | `public/element-art/tree_honeybush.png` | `d21827f` | PASS | `public/render-assets/reference-blueprint/honeybush-v1.png` | `33d19ba` |
 | Rooibos | PASS | `public/element-art/tree_rooibos.png` | `1ecd8f2` | PASS | `public/render-assets/reference-blueprint/rooibos-v1.png` | `9297a1d` |
-| Rosemary | PASS | `public/element-art/tree_rosemary.png` | `1ecd8f2` | FAIL | `public/render-assets/reference-blueprint/rosemary-v1.png` | `ee1999f` |
+| Rosemary | PASS | `public/element-art/tree_rosemary.png` | `1ecd8f2` | PASS | `public/render-assets/reference-blueprint/rosemary-v1.png` | `59e6948` |
 | Dogwood / umglindi | PASS | `public/element-art/tree_dogwood.png` | `9596647` | PASS | `public/render-assets/reference-blueprint/dogwood-v1.png` | `a30f1c5` |
 | Cape boxthorn / kriedoring | PASS | `public/element-art/tree_cape_boxthorn.png` | `df1b4ac` | FAIL | `public/render-assets/reference-blueprint/cape-boxthorn-v1.png` | `a5358a7` |
 | Honey-thorn / kriedoring | PASS | `public/element-art/tree_honey_thorn.png` | `5337360` | FAIL | `public/render-assets/reference-blueprint/honey-thorn-v1.png` | `e0b6963` |
