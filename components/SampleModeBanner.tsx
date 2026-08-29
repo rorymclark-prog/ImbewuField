@@ -7,10 +7,12 @@
 // particular page's own layout.
 
 import { useEffect, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { Sparkles, X } from 'lucide-react';
 import { isSampleMode, exitSampleMode, SAMPLE_MODE_EVENT } from '@/lib/sample-mode';
 
 export default function SampleModeBanner() {
+  const pathname = usePathname() || '';
   const [active, setActive] = useState(false);
 
   useEffect(() => {
@@ -31,7 +33,12 @@ export default function SampleModeBanner() {
     };
   }, []);
 
-  if (!active) return null;
+  // The /pitch projector deck opts out. The deck enters sample mode itself as load-bearing
+  // setup for its live slides, and those slides carry this banner INSIDE their app frames,
+  // where it is true and useful. Floating it over the deck chrome as well would put an
+  // "Exit sample" button on a projected slide — a control whose only possible effect is to
+  // break the presentation in front of the audience.
+  if (!active || pathname.startsWith('/pitch')) return null;
 
   function handleExit() {
     exitSampleMode();

@@ -26,6 +26,7 @@ import { NO_FLOATING_BACK } from '../lib/back-routes.ts';
 
 const page = readFileSync(new URL('../app/pitch/page.tsx', import.meta.url), 'utf8');
 const chatWidget = readFileSync(new URL('../components/ChatWidget.tsx', import.meta.url), 'utf8');
+const sampleBanner = readFileSync(new URL('../components/SampleModeBanner.tsx', import.meta.url), 'utf8');
 
 test('sample mode is entered on mount, and live iframes mount only after a visit', () => {
   assert.match(
@@ -49,12 +50,20 @@ test('live frames are same-origin relative paths, never absolute URLs', () => {
   );
 });
 
-test('the deck owns its screen: no floating back, no chat FAB', () => {
+test('the deck owns its screen: no floating back, no chat FAB, no sample banner', () => {
   assert.ok(NO_FLOATING_BACK.has('/pitch'), '/pitch must opt out of the floating back button');
   assert.match(
     chatWidget,
     /pathname\.startsWith\('\/pitch'\)/,
     'ChatWidget must skip /pitch — the FAB would float over the slides'
+  );
+  // Found live on the preview: the global sample banner floated over every slide with an
+  // "Exit sample" button — a control that would break the live slides mid-presentation.
+  // The banner still shows INSIDE the embedded app frames, where it is true and useful.
+  assert.match(
+    sampleBanner,
+    /pathname\.startsWith\('\/pitch'\)/,
+    'SampleModeBanner must skip /pitch — Exit sample over a projected slide kills the demo'
   );
 });
 
