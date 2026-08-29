@@ -15,6 +15,17 @@
  * receives derived numbers and nothing else, so a bug in a dashboard component cannot expose a
  * field the farmer withheld.
  *
+ * THE `monthly` FIELD, AND WHY IT IS NOT A WIDENING OF SCOPE. `farmers[]` carries per-farmer
+ * TOTALS, which is enough for a card and useless for the question a funder actually asks — is this
+ * programme growing? `monthly` answers it with the cohort's own kilograms and rands bucketed by
+ * calendar month (lib/cohort-series.ts). It is an AGGREGATE ACROSS FARMERS of figures already
+ * disclosed as totals, under the SAME per-scope consent test applied one line above it: a farmer
+ * who withheld sales contributes `null` to the money series, not a zero. No farmer is identifiable
+ * in it and no row of theirs appears in it. The one case worth naming out loud is a single-farmer
+ * org, where the cohort series IS that farmer's series at finer time resolution — still inside the
+ * scopes they granted, and the alternative was a dashboard with no honest time axis at all, which
+ * is precisely the dashboard that ends up drawing an invented one.
+ *
  * DEPLOYMENT PRECONDITIONS, both of which are OFF by default and neither of which this file can
  * assert for itself:
  *   • REQUIRE_API_AUTH=1 — otherwise lib/api-auth.ts is LOG-ONLY and an unauthenticated caller
@@ -35,8 +46,10 @@
 import { NextRequest } from 'next/server';
 import { canSeeOrg } from '@/lib/network-access';
 import { resolveNetworkCaller } from '@/lib/network-caller';
-import { applyConsent, consentState, type FarmerConsent } from '@/lib/consent';
+import { applyConsent, consentState, hasConsent, type FarmerConsent } from '@/lib/consent';
+import { buildCohortSeries, type CohortLedger } from '@/lib/cohort-series';
 import { buildFarmerMetrics, coarsenFarmerLocation, type NetworkFarmer } from '@/lib/network';
+import type { ExpenseLog, ProductionLog, SalesLog } from '@/lib/db/types';
 
 export const runtime = 'nodejs';
 const ROUTE = 'network/farmers';
@@ -65,6 +78,11 @@ export async function GET(req: NextRequest) {
     .where('role', '==', 'farmer').where('org_id', '==', orgId).get();
 
   const out = [];
+  // The ledgers behind the cohort chart, consent-filtered exactly like the metrics beside it —
+  // see the `monthly` note in the header. A farmer contributes to a series only where they
+  // granted that scope; everyone else contributes a `null` book, which the series counts as
+  // "not readable" rather than as a month of zero.
+  const ledgers: CohortLedger[] = [];
   let withheldEntirely = 0;
   let adminBypassed = 0;
 
@@ -82,6 +100,11 @@ export async function GET(req: NextRequest) {
     ]);
     const rows = <T,>(s: FirebaseFirestore.QuerySnapshot) =>
       s.docs.map((d) => ({ id: d.id, ...d.data() })) as unknown as T[];
+    // Mapped once and reused by both the metrics and the monthly series. Two independent maps of
+    // the same snapshot are two chances for the chart and the card to be built from different rows.
+    const productionRows = rows<ProductionLog>(production);
+    const salesRows = rows<SalesLog>(sales);
+    const expenseRows = rows<ExpenseLog>(expenses);
 
     const farmer = {
       id: doc.id,
@@ -93,7 +116,7 @@ export async function GET(req: NextRequest) {
     const raw = {
       farmer,
       metrics: buildFarmerMetrics(farmer, {
-        production: rows(production), sales: rows(sales), expenses: rows(expenses),
+        production: productionRows, sales: salesRows, expenses: expenseRows,
         courses: rows(courses), surveys: rows(surveys),
       }),
     };
@@ -109,6 +132,10 @@ export async function GET(req: NextRequest) {
       // a farmer has not agreed to share — the operator sees the figure and sees that fact.
       adminBypassed++;
       out.push({ farmer: { ...raw.farmer, consent: consentState(consent) }, metrics: raw.metrics });
+      ledgers.push({
+        production: productionRows, sales: salesRows, expenses: expenseRows,
+        joinedAt: farmer.joinedAt ?? null,
+      });
       continue;
     }
 
@@ -116,8 +143,19 @@ export async function GET(req: NextRequest) {
 
     // A farmer who granted nothing at all is not listed as an empty card — an all-null row
     // still discloses that this person is enrolled, which is itself their information.
-    if (summary.farmer.consent === 'granted') out.push(summary);
-    else withheldEntirely++;
+    if (summary.farmer.consent === 'granted') {
+      out.push(summary);
+      // Per-scope, and only reached for a non-admin caller (the admin branch above returned).
+      // `null` — not an empty array — is what a withheld book contributes: lib/cohort-series.ts
+      // reads that as "not readable by this account", which is the whole reason a funder's chart
+      // can say "covers 9 of 16 farmers" instead of drawing seven farmers' silence as zero.
+      ledgers.push({
+        production: hasConsent(consent, 'production') ? productionRows : null,
+        sales: hasConsent(consent, 'sales') ? salesRows : null,
+        expenses: hasConsent(consent, 'expenses') ? expenseRows : null,
+        joinedAt: farmer.joinedAt ?? null,
+      });
+    } else withheldEntirely++;
   }
 
   if (withheldEntirely > 0) {
@@ -132,5 +170,9 @@ export async function GET(req: NextRequest) {
     farmers: out,
     // Stated, not silent: a shorter list than the org's roll is a consent outcome, not attrition.
     withheldForConsent: withheldEntirely,
+    // The cohort's own month-by-month totals. Summaries carry totals only, so without this the
+    // dashboard could not draw a single honest point over time — and a dashboard that cannot draw
+    // one is exactly the dashboard that invents one.
+    monthly: buildCohortSeries(ledgers, { months: 12 }),
   }, 200);
 }

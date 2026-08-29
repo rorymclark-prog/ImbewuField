@@ -92,7 +92,7 @@ export default function CashflowChart({
               aria-pressed={windowMonths === n}
               className="font-mono rounded-full px-2 py-0.5"
               style={{
-                fontSize: 10.5,
+                fontSize: 12,
                 border: `1px solid ${windowMonths === n ? IN : HAIRLINE}`,
                 background: windowMonths === n ? IN : 'transparent',
                 color: windowMonths === n ? '#FFFEFA' : MUTED,
@@ -162,10 +162,10 @@ export default function CashflowChart({
       <ClipNote months={series.months} />
 
       <div className="px-4 py-2.5" style={{ borderTop: `1px solid ${HAIRLINE}`, background: '#FBF7EF' }}>
-        <p className="font-sans" style={{ fontSize: 10.5, color: FAINT, lineHeight: 1.5 }}>
+        <p className="font-sans" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }}>
           The lower band is the running total across these months only, starting from zero — not a bank balance.
         </p>
-        <p className="font-sans" style={{ fontSize: 10.5, color: FAINT, lineHeight: 1.5 }}>
+        <p className="font-sans" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }}>
           Entries land in the month you recorded them. There is no date field on the logging forms yet, so a month
           you caught up on later will sit in the month you typed it.
         </p>
@@ -178,7 +178,7 @@ function Figure({ label, value, tone }: { label: string; value: string; tone: st
   return (
     <span className="flex flex-col">
       <span className="font-mono font-semibold" style={{ fontSize: 20, color: tone, letterSpacing: '-0.01em' }}>{value}</span>
-      <span className="font-sans" style={{ fontSize: 10.5, color: FAINT }}>{label}</span>
+      <span className="font-sans" style={{ fontSize: 12, color: FAINT }}>{label}</span>
     </span>
   );
 }
@@ -336,7 +336,7 @@ function ClipNote({ months }: { months: FinanceMonthPoint[] }) {
   if (cut.length === 0) return null;
   return (
     <div className="px-4 py-2" style={{ borderTop: '1px solid #F0E9DA' }}>
-      <p className="font-sans" style={{ fontSize: 11, color: MUTED, lineHeight: 1.5 }}>
+      <p className="font-sans" style={{ fontSize: 12, color: MUTED, lineHeight: 1.5 }}>
         Too tall for this chart, and cut off at the mark so the other months stay readable:{' '}
         <b style={{ fontWeight: 600 }}>{cut.join('; ')}</b>.
       </p>
@@ -356,7 +356,7 @@ function Readout({ month }: { month: FinanceMonthPoint }) {
         </>
       ) : (
         // Not "R0 in, R0 out". Nothing was written down, which is a different fact.
-        <span className="font-sans" style={{ fontSize: 11.5, color: FAINT }}>nothing recorded this month</span>
+        <span className="font-sans" style={{ fontSize: 12, color: FAINT }}>nothing recorded this month</span>
       )}
     </div>
   );
@@ -367,7 +367,7 @@ function Chip({ dot, label, value }: { dot: string; label: string; value: string
     <span className="flex items-baseline gap-1.5">
       <span aria-hidden="true" style={{ width: 7, height: 7, borderRadius: 2, background: dot, display: 'inline-block' }} />
       <span className="font-mono" style={{ fontSize: 12, color: INK }}>{value}</span>
-      <span className="font-sans" style={{ fontSize: 10.5, color: FAINT }}>{label}</span>
+      <span className="font-sans" style={{ fontSize: 12, color: FAINT }}>{label}</span>
     </span>
   );
 }

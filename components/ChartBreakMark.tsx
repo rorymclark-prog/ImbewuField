@@ -39,3 +39,26 @@ export function BreakEdge() {
     />
   );
 }
+
+/**
+ * HTML variant for a VERTICAL bar drawn to a capped axis: the same striped cut, across the bar's
+ * top edge. `BreakEdge` above does the horizontal bullet bars; the SVG `BreakMark` does the charts
+ * drawn as SVG. A third chart drawing its own ad-hoc cut mark would be a third way of saying the
+ * same thing, and the whole point of this file is that every capped chart cuts identically.
+ */
+export function BreakTop() {
+  return (
+    <span
+      aria-hidden="true"
+      style={{
+        position: 'absolute',
+        left: 0,
+        top: 0,
+        width: '100%',
+        height: 7,
+        borderRadius: 3,
+        background: `repeating-linear-gradient(115deg, ${CARD} 0 1.5px, transparent 1.5px 4px)`,
+      }}
+    />
+  );
+}

@@ -10,6 +10,7 @@ import { MAP_ELEMENT_FOR, type AddAction } from '@/lib/add-actions';
 import { CRASH_LOOP_SETTLE_MS, FARMER_LOAD_KEY, exitPageCrashGuard, markPageSettled, pageCrashGuard } from '@/lib/crash-loop';
 import { FARMER_PULSE_COOKIE, clearPulseCookie } from '@/lib/server-rescue';
 import DataPanel from '@/components/DataPanel';
+import { useAppConfirm } from '@/components/AppConfirm';
 import TabBar from '@/components/TabBar';
 import LangSwitcher from '@/components/LangSwitcher';
 import RoleSwitcher from '@/components/RoleSwitcher';
@@ -90,10 +91,35 @@ function HomeInner() {
   const [reportPhotoAnalysis, setReportPhotoAnalysis] = useState<string | undefined>();
   const [savedReportView, setSavedReportView] = useState<SavedReport | null>(null);
 
+  // BOTH report doors go through the preflight below. The report view is a lazy chunk (see
+  // the dynamic() import above) — and on a phone that has never opened Reports while online,
+  // tapping it offline made the chunk import fail and the tap do NOTHING: showReport flipped,
+  // no view arrived, the screen stayed exactly as it was. import() of the same module is
+  // deduped by the bundler, so when the chunk is already on the phone this preflight costs
+  // nothing; when it is not, the farmer gets the true sentence instead of a dead tap, and the
+  // state never flips into showing a view that cannot render.
+  const appConfirm = useAppConfirm();
+  const withReportChunk = useCallback((open: () => void) => {
+    const attempt = () => {
+      import('@/components/ReportView').then(open, async () => {
+        const retry = await appConfirm({
+          title: 'Reports need signal the first time',
+          message: 'This part of the app is not saved on your phone yet, and there is no signal right now. Open it once with signal and it will work offline after that.',
+          confirmLabel: 'Try again',
+          cancelLabel: 'Close',
+        });
+        if (retry) attempt();
+      });
+    };
+    attempt();
+  }, [appConfirm]);
+
   const handleViewReport = useCallback((r: SavedReport) => {
-    setSavedReportView(r);
-    setShowReport(true);
-  }, []);
+    withReportChunk(() => {
+      setSavedReportView(r);
+      setShowReport(true);
+    });
+  }, [withReportChunk]);
 
   // CRASH GUARD — the same escape hatch the design page has (lib/crash-loop.ts), because on
   // 13 August this page earned it: "It's happening everywhere!", with /farmer?panel=Reports on
@@ -277,9 +303,11 @@ function HomeInner() {
   }, [searchKey]);
 
   const handleOpenReport = useCallback((photoAnalysis?: string) => {
-    setReportPhotoAnalysis(photoAnalysis);
-    setShowReport(true);
-  }, []);
+    withReportChunk(() => {
+      setReportPhotoAnalysis(photoAnalysis);
+      setShowReport(true);
+    });
+  }, [withReportChunk]);
 
   // ── "+ Add" catalog (spec §2.3) ──
   // The tools-panel row and any other door dispatch 'imbewu-open-add'; we host the sheet.
@@ -507,7 +535,7 @@ function HomeInner() {
                 borderColor: 'rgba(31,77,43,0.2)',
                 background: 'rgba(31,77,43,0.04)',
                 color: '#1F4D2B',
-                fontSize: 11,
+                fontSize: 12,
                 fontWeight: 800,
                 letterSpacing: 0.2,
                 whiteSpace: 'nowrap',

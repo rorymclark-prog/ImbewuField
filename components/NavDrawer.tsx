@@ -160,7 +160,7 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
             <div className="font-display font-bold" style={{ fontSize: 17, color: 'var(--text-primary)', letterSpacing: '-0.01em' }}>
               ImbewuField
             </div>
-            <div className="font-sans" style={{ fontSize: 10.5, color: 'var(--text-muted)', marginTop: 1 }}>
+            <div className="font-sans" style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 1 }}>
               {t('tagline')}
             </div>
           </div>
@@ -191,7 +191,7 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
             <div key={section.label} style={{ marginBottom: 4 }}>
               <div
                 className="font-sans uppercase tracking-widest"
-                style={{ fontSize: 9.5, color: 'var(--text-muted)', letterSpacing: '0.13em', padding: '8px 20px 4px' }}
+                style={{ fontSize: 12, color: 'var(--text-muted)', letterSpacing: '0.13em', padding: '8px 20px 4px' }}
               >
                 {section.label}
               </div>
@@ -247,7 +247,7 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
         {/* Footer */}
         <div
           className="font-sans flex-shrink-0"
-          style={{ fontSize: 10.5, color: 'var(--text-muted)', padding: '12px 20px', borderTop: '1px solid var(--border)' }}
+          style={{ fontSize: 12, color: 'var(--text-muted)', padding: '12px 20px', borderTop: '1px solid var(--border)' }}
         >
           {t('homeFooter')}
         </div>

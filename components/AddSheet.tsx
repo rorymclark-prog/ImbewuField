@@ -127,7 +127,7 @@ export default function AddSheet({ open, surface, onClose, onPick }: AddSheetPro
               <div key={group} className="mb-3">
                 <div
                   className="font-sans px-2 mb-1.5"
-                  style={{ fontSize: 11, fontWeight: 800, letterSpacing: '0.12em', textTransform: 'uppercase', color: INK_MUTED }}
+                  style={{ fontSize: 12, fontWeight: 800, letterSpacing: '0.12em', textTransform: 'uppercase', color: INK_MUTED }}
                 >
                   {t(ADD_GROUP_LABEL_KEYS[group])}
                 </div>
@@ -169,7 +169,7 @@ export default function AddSheet({ open, surface, onClose, onPick }: AddSheetPro
                           <span
                             className="font-sans flex-shrink-0 whitespace-nowrap"
                             style={{
-                              fontSize: 10.5, fontWeight: 700, letterSpacing: '0.03em',
+                              fontSize: 12, fontWeight: 700, letterSpacing: '0.03em',
                               color: OCHRE, background: 'rgba(192,122,30,0.12)',
                               borderRadius: 6, padding: '3px 7px',
                             }}

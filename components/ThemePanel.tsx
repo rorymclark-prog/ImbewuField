@@ -403,7 +403,7 @@ export default function ThemePanel({ open, onClose }: Props) {
           display: 'flex', alignItems: 'center', gap: 8,
         }}>
           <div style={{ width: 8, height: 8, borderRadius: '50%', background: 'var(--emerald)', flexShrink: 0 }} />
-          <span style={{ fontSize: 11, color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
+          <span style={{ fontSize: 12, color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>
             ImbewuField · saved automatically
           </span>
         </div>

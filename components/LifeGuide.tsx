@@ -176,8 +176,8 @@ export default function LifeGuide({ locationData }: { locationData: LocationData
         {(data.vegetables ?? []).map((v, i) => (
           <div key={i} className="rounded-lg p-2" style={{ background: '#FFFEFA', border: '1px solid rgba(226,216,196,0.8)' }}>
             <p className="text-xs font-display font-semibold" style={{ color: '#20190F' }}>{v.name}</p>
-            {v.season && <p className="text-xs font-mono mt-0.5" style={{ color: '#C07A1E', fontSize: 10 }}>{v.season}</p>}
-            {v.notes && <p className="text-xs font-display mt-0.5 leading-snug" style={{ color: '#8C7A62', fontSize: 10 }}>{v.notes}</p>}
+            {v.season && <p className="text-xs font-mono mt-0.5" style={{ color: '#C07A1E', fontSize: 12 }}>{v.season}</p>}
+            {v.notes && <p className="text-xs font-display mt-0.5 leading-snug" style={{ color: '#8C7A62', fontSize: 12 }}>{v.notes}</p>}
           </div>
         ))}
       </div>
@@ -188,7 +188,7 @@ export default function LifeGuide({ locationData }: { locationData: LocationData
         {(data.fruitTrees ?? []).map((f, i) => (
           <div key={i} className="rounded-lg px-2.5 py-1.5" style={{ background: '#FFFEFA', border: '1px solid rgba(226,216,196,0.8)' }}>
             <p className="text-xs font-display font-medium" style={{ color: '#20190F' }}>{f.name}</p>
-            {f.notes && <p className="text-xs font-mono leading-snug" style={{ color: '#8C7A62', fontSize: 10 }}>{f.notes}</p>}
+            {f.notes && <p className="text-xs font-mono leading-snug" style={{ color: '#8C7A62', fontSize: 12 }}>{f.notes}</p>}
           </div>
         ))}
       </div>
@@ -205,7 +205,7 @@ export default function LifeGuide({ locationData }: { locationData: LocationData
         {(data.nuts ?? []).map((n, i) => (
           <div key={i} className="rounded-lg px-2.5 py-1.5" style={{ background: '#FFFEFA', border: '1px solid rgba(226,216,196,0.8)' }}>
             <p className="text-xs font-display font-medium" style={{ color: '#20190F' }}>{n.name}</p>
-            {n.notes && <p className="text-xs font-mono leading-snug" style={{ color: '#8C7A62', fontSize: 10 }}>{n.notes}</p>}
+            {n.notes && <p className="text-xs font-mono leading-snug" style={{ color: '#8C7A62', fontSize: 12 }}>{n.notes}</p>}
           </div>
         ))}
       </div>

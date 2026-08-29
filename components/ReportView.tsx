@@ -521,7 +521,17 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       }
       setGenerated(true);
     } catch (err: unknown) {
-      if (err instanceof Error && err.name !== 'AbortError') setError(err.message);
+      if (err instanceof Error && err.name !== 'AbortError') {
+        // A dead connection surfaces as TypeError('Failed to fetch') (Chrome) or 'Load failed'
+        // (Safari) — browser jargon that tells a farmer nothing. Say the true thing in her
+        // words. navigator.onLine alone is not trusted (it lies on captive portals), so the
+        // message shape is matched too.
+        const offline = typeof navigator !== 'undefined' && !navigator.onLine;
+        const networkShaped = /failed to fetch|load failed|network/i.test(err.message);
+        setError(offline || networkShaped
+          ? 'No signal — writing the report needs internet. Your section choices are kept; try again when you have bars.'
+          : err.message);
+      }
     } finally {
       // The page is alive to run this line, which is the entire test. Success, an HTTP error and
       // a cancel all clear the streak — they are disappointments, not deaths, and escalating a

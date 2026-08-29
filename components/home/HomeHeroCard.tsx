@@ -60,7 +60,7 @@ function Overline({ children }: { children: string }) {
   return (
     <div className="flex items-center gap-2 mb-2">
       <LimaMark />
-      <span className="uppercase tracking-widest font-sans" style={{ fontSize: 10, color: 'rgba(234,243,226,0.65)', letterSpacing: '0.12em' }}>
+      <span className="uppercase tracking-widest font-sans" style={{ fontSize: 12, color: 'rgba(234,243,226,0.65)', letterSpacing: '0.12em' }}>
         {children}
       </span>
     </div>

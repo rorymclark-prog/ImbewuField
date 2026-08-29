@@ -34,6 +34,29 @@ export interface ReleaseNote {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '29 August',
+    sha: '52f625c',
+    changes: [
+      'The smallest text on farmer pages has been bumped up to stay readable in the sun',
+      'Map trees and garden pictures now stay on your phone after an update',
+      'Those pictures are also much smaller now, so the first download costs far less data',
+      'Tapping a report with no signal now tells you, instead of doing nothing at all',
+      'When writing a report fails for lack of signal, it now says so in plain words',
+      'Programme funders get their own view: progress, harvests and sales across a cohort',
+      'That funder view only ever shows what each farmer has agreed to share',
+    ],
+  },
+  {
+    when: '27 August (late)',
+    sha: 'f9b5338',
+    changes: [
+      'Choose your language first, before the Start button, when you set the app up',
+      'You can change language on a phone now — Settings, at the top',
+      'The language you pick in your account now actually changes the app',
+      'The bar at the bottom asks Lima for help instead of waiting for typing',
+    ],
+  },
+  {
     when: '27 August (evening)',
     sha: '80ae8f2',
     changes: [

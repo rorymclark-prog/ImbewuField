@@ -82,7 +82,7 @@ function RoleChip({ role }: { role: string }) {
         alignItems: 'center',
         padding: '2px 7px',
         borderRadius: 20,
-        fontSize: 10.5,
+        fontSize: 12,
         fontWeight: 600,
         fontFamily: 'var(--font-display)',
         background: `${color}18`,
@@ -188,7 +188,7 @@ function PersonCard({
           {isCurrentUser && (
             <span
               style={{
-                fontSize: 10,
+                fontSize: 12,
                 fontWeight: 700,
                 fontFamily: 'var(--font-sans)',
                 padding: '1px 6px',
@@ -219,7 +219,7 @@ function PersonCard({
         {bio && (
           <p
             style={{
-              fontSize: 11,
+              fontSize: 12,
               color: '#8C7A62',
               margin: '4px 0 0',
               lineHeight: 1.4,
@@ -350,7 +350,7 @@ export default function PeoplePanel({ people, loading, error = false, currentUse
           </div>
           <div
             style={{
-              fontSize: 11.5,
+              fontSize: 12,
               color: '#5C5040',
               marginTop: 2,
               fontFamily: 'var(--font-sans)',
@@ -361,7 +361,7 @@ export default function PeoplePanel({ people, loading, error = false, currentUse
         </div>
         <span
           style={{
-            fontSize: 11,
+            fontSize: 12,
             fontWeight: 600,
             fontFamily: 'var(--font-display)',
             padding: '4px 10px',
@@ -387,7 +387,7 @@ export default function PeoplePanel({ people, loading, error = false, currentUse
         <span
           className="font-mono"
           style={{
-            fontSize: 10.5,
+            fontSize: 12,
             fontWeight: 600,
             textTransform: 'uppercase',
             letterSpacing: '0.12em',
@@ -399,7 +399,7 @@ export default function PeoplePanel({ people, loading, error = false, currentUse
         {!loading && (
           <span
             style={{
-              fontSize: 11,
+              fontSize: 12,
               fontFamily: 'var(--font-sans)',
               color: '#8C7A62',
             }}
