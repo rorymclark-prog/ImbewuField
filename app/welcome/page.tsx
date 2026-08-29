@@ -15,16 +15,23 @@ import TrustFooter from './sections/TrustFooter';
  *     `header` tag to carry a MenuButton (the signed-in nav drawer's opener) — wrong for
  *     an anonymous visitor, so the top bar below is a plain div, exactly like /partners.
  *   - No useAuth()/redirect, no Firebase import, no client data fetching anywhere in
- *     this file or the sections it renders — every one of them is a pure server
- *     component that renders the same thing for everyone, instantly, logged in or not.
+ *     this file or the sections it renders — every one of them renders the same
+ *     content for everyone, instantly, logged in or not. Product and TrustFooter each
+ *     carry a small 'use client' boundary purely for a decorative scroll-reveal (see
+ *     their own header comments), and Hero renders one client child (HeroVisual) for
+ *     its own entrance animation — none of the three fetches data, checks auth, or
+ *     hides content pending JS; the boundary only ever adds motion, never visibility.
+ *     Audiences and Install stay pure server components throughout.
  *   - Not linked from TabBar or NavDrawer — reached by a direct link, same as /partners.
  *
- * This file is a thin shell: the top bar plus the four content sections below, split
+ * This file is a thin shell: the top bar plus the five content sections below, split
  * one component per file under ./sections/ so each can be worked on without the others
  * changing underfoot. In reading order: Hero (the claim + primary CTA), Audiences
- * (farmer / NGO / funder), Product (how it works), TrustFooter (consent/POPIA stance,
- * closing CTA, footer). ElementArt.tsx (the hand-drawn permaculture-element renderer)
- * lives alongside this file since Hero is currently its only caller.
+ * (farmer / NGO / funder), Product (how it works, then the app's own real screens as
+ * proof), Install (get it on your phone), TrustFooter (consent/POPIA stance, closing
+ * CTA, footer). ElementArt.tsx (the hand-drawn permaculture-element renderer) lives
+ * alongside this file — Hero, Audiences, Product and TrustFooter each import it
+ * directly for their own decorative pieces.
  *
  * COPY SOURCE: every claim, number and framing in the sections below is reused from
  * app/pitch/page.tsx (the partner deck) and app/partners/page.tsx (the existing

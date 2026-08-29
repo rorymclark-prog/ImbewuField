@@ -1,15 +1,41 @@
 'use client';
 
+import { Component, type ReactNode } from 'react';
+
 type HeroVisualProps = {
   className?: string;
+  /**
+   * Rendered in place of the animated collage if it ever fails to mount. Hero.tsx —
+   * this component's only caller — always supplies one (see its StaticHeroCollage),
+   * so a defect on this side of the build can never blank the hero's visual.
+   */
+  fallback?: ReactNode;
 };
+
+type BoundaryProps = { fallback: ReactNode; children: ReactNode };
+type BoundaryState = { failed: boolean };
+
+/**
+ * A render error in AnimatedPlan swaps to `fallback` instead of taking the whole
+ * /welcome page down with it — this file is under active parallel development, so
+ * the caller gets a real safety net, not just a best-effort import.
+ */
+class HeroVisualBoundary extends Component<BoundaryProps, BoundaryState> {
+  state: BoundaryState = { failed: false };
+  static getDerivedStateFromError() {
+    return { failed: true };
+  }
+  render() {
+    return this.state.failed ? this.props.fallback : this.props.children;
+  }
+}
 
 /**
  * A decorative farm plan built from the same hand-drawn elements used by the
  * design tool. Each piece arrives independently, as if the plan is being laid
  * out on the plot; reduced-motion users see the completed plan immediately.
  */
-export default function HeroVisual({ className = '' }: HeroVisualProps) {
+function AnimatedPlan({ className }: { className: string }) {
   return (
     <div className={`heroVisual ${className}`} aria-hidden="true">
       <div className="plotGrid" />
@@ -218,5 +244,13 @@ export default function HeroVisual({ className = '' }: HeroVisualProps) {
         }
       `}</style>
     </div>
+  );
+}
+
+export default function HeroVisual({ className = '', fallback = null }: HeroVisualProps) {
+  return (
+    <HeroVisualBoundary fallback={fallback}>
+      <AnimatedPlan className={className} />
+    </HeroVisualBoundary>
   );
 }

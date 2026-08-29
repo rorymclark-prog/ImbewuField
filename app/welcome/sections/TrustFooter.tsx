@@ -1,16 +1,75 @@
+'use client';
+
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import {
   ArrowRight, ShieldCheck, Building2, DatabaseBackup, Mail,
 } from 'lucide-react';
+import ElementArt from '../ElementArt';
 
 /**
  * TrustFooter — the closing arc of /welcome: the POPIA-consent stance that makes the
- * data promise concrete, a closing CTA that recaps the hero's choice, and the site
- * footer. This is where impact-number proof (as it's sourced and added) belongs too.
+ * data promise concrete (named plainly, not just implied), the impact-number proof
+ * this route's copy source promises ("nothing here is invented" — see page.tsx's
+ * header comment), a closing CTA that recaps the hero's choice, and the site footer.
+ *
+ * SOURCING — every number below is copied from app/pitch/page.tsx, not invented:
+ * the 197-species catalogue and "33-lesson course in 10 modules" (slide 3, "one app,
+ * four jobs"), 11 languages total = English + "isiZulu, isiXhosa, Afrikaans, Sesotho
+ * and six more" (slide 5, "field constraints"), and daily backups with point-in-time
+ * recovery (same slide). Pricing (R150/participant, R75,000 Pilot, R145,000 Founding)
+ * is deliberately NOT repeated here — see page.tsx's header comment: those figures
+ * stay on /pitch, where they're kept current, and this file links out to it instead
+ * (Audiences.tsx does the same). The consent category list below (sales, spending,
+ * harvests, training, survey answers, location) matches lib/consent.ts's
+ * CONSENT_SCOPES exactly — re-checked against that file directly, not just recalled.
+ * "Stopping is one button" is components/ConsentPanel.tsx's own header comment.
+ *
+ * MOTION — one small scroll-reveal (useRevealOnScroll below), applied to the Data &
+ * consent block only. It renders fully visible with no JS and under prefers-reduced-
+ * motion (the hook simply never hides it in either case), so this is a settle-into-
+ * view treatment, never a loading state anything depends on. This is the only
+ * animation this file adds — Hero already carries its own entrance animation
+ * (HeroVisual.tsx) — so the closing CTA and footer below stay still on purpose.
  *
  * Split out of app/welcome/page.tsx (now a thin shell) — see that file's header
  * comment for this route's shared constraints.
  */
+
+// Renders "revealed" (settled, visible) by default — matches the server-rendered
+// HTML and the no-JS case exactly, so there is nothing to fix if this hook never
+// runs at all. On mount, client JS hides ONLY a target still off-screen, then
+// reveals it with a short opacity/transform transition as it crosses into view.
+// Anything already on screen at mount (a short viewport, a mid-page reload, or
+// prefers-reduced-motion) is left alone — visible, unanimated, from the first paint.
+function useRevealOnScroll<T extends HTMLElement = HTMLElement>() {
+  const ref = useRef<T | null>(null);
+  const [revealed, setRevealed] = useState(true);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return undefined;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
+
+    const alreadyVisible = el.getBoundingClientRect().top < window.innerHeight * 0.92;
+    if (alreadyVisible) return undefined;
+
+    setRevealed(false);
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setRevealed(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.15 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  return { ref, revealed };
+}
 
 interface PrivacyPoint {
   Icon: typeof ShieldCheck;
@@ -26,7 +85,7 @@ const PRIVACY_POINTS: PrivacyPoint[] = [
   {
     Icon: ShieldCheck,
     title: 'Off until she says otherwise',
-    body: 'No pre-ticked box and no default sharing. A farmer who never opens her sharing settings shares nothing.',
+    body: "No pre-ticked box and no default sharing. A farmer who never opens her sharing settings shares nothing — and if she has shared, stopping is one button, not a checklist.",
   },
   {
     Icon: Building2,
@@ -41,11 +100,18 @@ const PRIVACY_POINTS: PrivacyPoint[] = [
 ];
 
 export default function TrustFooter() {
+  const { ref: trustRef, revealed } = useRevealOnScroll<HTMLDivElement>();
+
   return (
     <>
       {/* ── Data & consent ─────────────────────────────────────────────── */}
       <section id="privacy" className="px-5 sm:px-8 lg:px-10 py-14 sm:py-20 bg-forest">
-        <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-10 lg:gap-14 items-start">
+        <div
+          ref={trustRef}
+          className={`max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] gap-10 lg:gap-14 items-start transition-[opacity,transform] duration-200 ease-out ${
+            revealed ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-3'
+          }`}
+        >
           <div>
             <span className="block text-[13px] font-sans font-semibold uppercase tracking-[0.14em]" style={{ color: '#9FD4AE' }}>
               Data &amp; consent
@@ -54,10 +120,16 @@ export default function TrustFooter() {
               Farmers control what a funder sees.
             </h2>
             <p className="mt-4 text-[15px] leading-relaxed" style={{ color: '#D9E8DC' }}>
-              Sharing starts switched off. A farmer chooses, category by category &mdash; sales,
-              spending, harvests, training, survey answers, even how precisely her farm location
-              shows &mdash; what her programme can see. A programme sees only its own farmers,
-              and only what each farmer agreed to share.
+              Under POPIA &mdash; South Africa&rsquo;s Protection of Personal Information Act
+              &mdash; a farmer decides who sees her data. Sharing starts switched off: she
+              chooses, category by category &mdash; sales, spending, harvests, training, survey
+              answers, even how precisely her farm location shows &mdash; what her programme can
+              see. A programme sees only its own farmers, and only what each farmer agreed to
+              share.
+            </p>
+            <p className="mt-4 text-[15px] leading-relaxed" style={{ color: '#D9E8DC' }}>
+              None of this is aspirational: a 197-species catalogue, a 33-lesson course across 10
+              modules, and 11 languages &mdash; all live in the app today, not slides in a deck.
             </p>
           </div>
           <div className="flex flex-col gap-5">
@@ -79,7 +151,10 @@ export default function TrustFooter() {
       {/* ── Closing CTA ─────────────────────────────────────────────────── */}
       <section className="px-5 sm:px-8 lg:px-10 py-14 sm:py-16 text-center">
         <div className="max-w-2xl mx-auto">
-          <h2 className="font-display font-semibold text-[24px] sm:text-[28px] leading-[1.2] tracking-[-0.02em] text-ink">
+          <div aria-hidden="true" className="flex justify-center mb-4">
+            <ElementArt name="gate" size={56} rotate={-4} />
+          </div>
+          <h2 className="font-display font-semibold text-[26px] sm:text-[32px] leading-[1.2] tracking-[-0.02em] text-ink">
             See your own land, mapped.
           </h2>
           <p className="mt-3 text-[15px] leading-relaxed text-ink-muted">

@@ -1,24 +1,101 @@
 import Link from 'next/link';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Languages, ShieldCheck, Smartphone, WifiOff } from 'lucide-react';
 import ElementArt from '../ElementArt';
+import HeroVisual from '../HeroVisual';
 
 /**
  * Hero — the first thing a stranger lands on at /welcome: the one-sentence claim,
- * the primary CTA, and the element-art collage that makes the claim concrete.
+ * the primary CTA, and the visual that makes the claim concrete.
  *
  * Split out of app/welcome/page.tsx (now a thin shell that renders this alongside
  * Audiences, Product and TrustFooter) so each section can be worked on on its own —
  * see page.tsx's header comment for the route-level constraints every section here
  * shares: no <header> tag, no client data fetching, not linked from nav.
+ *
+ * THE VISUAL: HeroVisual.tsx — a separate build track's "plan assembling itself"
+ * collage, animated from the same hand-drawn elements the design tool draws with —
+ * is the art here. It's the single most characteristic thing in ImbewuField's world,
+ * so it belongs above the fold, not held for Product's how-it-works section further
+ * down. It renders behind a real React error boundary (defined inside HeroVisual.tsx
+ * itself, since that file is under active parallel development); StaticHeroCollage
+ * below is what the boundary falls back to — the same ElementArt component and the
+ * same six pieces this file rendered before HeroVisual existed, just reframed as a
+ * plot card instead of a bare grid. That fallback fires on any render failure in the
+ * animated file, and is also exactly what ships if HeroVisual.tsx is ever removed —
+ * this section never depends on that file existing to render something worth seeing.
+ *
+ * MOTION BUDGET: HeroVisual's own settle-in sequence is this section's one animation
+ * (transform/opacity only, its own prefers-reduced-motion fallback built in — see
+ * that file). Deliberately not layering a second, independent entrance animation
+ * (e.g. an IntersectionObserver reveal) onto the text column: that technique reveals
+ * content as it scrolls into view, and the hero is already the first thing in view on
+ * load — it would either fire immediately (doing nothing) or, worse, hide the thesis
+ * sentence for a beat on first paint, working against the 5-second-clarity goal.
+ * Staying free of 'use client' here also means the part of the hero that actually has
+ * to be legible in the first second — the headline, the CTAs — ships as plain static
+ * HTML with zero hydration cost; only the decorative visual carries a client boundary.
  */
 
-const HERO_FACTS = ['Works offline', '11 languages', 'Installs on entry-level Android', 'POPIA consent per farmer'];
+interface HeroFact {
+  Icon: typeof WifiOff;
+  label: string;
+}
+
+const HERO_FACTS: HeroFact[] = [
+  { Icon: WifiOff, label: 'Works offline' },
+  { Icon: Languages, label: '11 languages' },
+  { Icon: Smartphone, label: 'Installs on entry-level Android' },
+  { Icon: ShieldCheck, label: 'POPIA consent per farmer' },
+];
 
 function SectionEyebrow({ children }: { children: React.ReactNode }) {
   return (
     <span className="block text-[13px] font-sans font-semibold uppercase tracking-[0.14em] text-forest">
       {children}
     </span>
+  );
+}
+
+/**
+ * The guaranteed-safe visual: the same six hand-drawn elements this section rendered
+ * before HeroVisual existed, now framed as a small plot card so it still reads as
+ * "a plan" instead of a bare icon row. Passed to HeroVisual as its error-boundary
+ * fallback (see this file's header comment) — nothing here depends on the animated
+ * file, so it can't inherit a defect from that side of the build. Centered on every
+ * breakpoint (no lg:mx-0 override) to match HeroVisual's own unconditional centering,
+ * so the hero looks the same regardless of which of the two actually renders.
+ */
+function StaticHeroCollage() {
+  return (
+    <div
+      className="w-full max-w-[460px] mx-auto rounded-[28px] p-4 sm:p-6"
+      style={{
+        background: 'linear-gradient(180deg, rgba(31,77,43,0.06), rgba(31,77,43,0.015)), #F3EEDF',
+        boxShadow: 'inset 0 0 0 2px rgba(31,77,43,0.14)',
+      }}
+      aria-hidden="true"
+    >
+      <div className="flex items-center justify-center">
+        <ElementArt name="tree_indigenous" size={104} rotate={-5} priority />
+      </div>
+      <div className="mt-4 sm:mt-5 grid grid-cols-3 gap-3 sm:gap-4">
+        <div className="flex items-center justify-center">
+          <ElementArt name="banana_circle-v3" size={84} rotate={4} offset={16} />
+        </div>
+        <div className="flex items-center justify-center">
+          <ElementArt name="beehive" size={76} rotate={-3} offset={-6} />
+        </div>
+        <div className="flex items-center justify-center">
+          <ElementArt name="chicken_coop" size={92} rotate={5} offset={4} />
+        </div>
+        <div className="flex items-center justify-center">
+          <ElementArt name="keyhole_bed" size={88} rotate={-4} offset={-10} />
+        </div>
+        <div className="flex items-center justify-center">
+          <ElementArt name="jojo_5000" size={72} rotate={3} offset={10} />
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -53,40 +130,21 @@ export default function Hero() {
             </div>
           </div>
           <div className="mt-8 flex flex-wrap items-center justify-center lg:justify-start gap-2.5">
-            {HERO_FACTS.map((f) => (
+            {HERO_FACTS.map(({ Icon, label }) => (
               <span
-                key={f}
-                className="rounded-full px-3.5 py-1.5 text-[13px] font-sans font-semibold text-ink-muted bg-card border"
+                key={label}
+                className="inline-flex items-center gap-1.5 rounded-full px-3.5 py-1.5 text-[13px] font-sans font-semibold text-ink-muted bg-card border"
                 style={{ borderColor: '#E2D8C4' }}
               >
-                {f}
+                <Icon size={13} strokeWidth={2} className="text-forest" />
+                {label}
               </span>
             ))}
           </div>
         </div>
 
-        <div
-          className="grid grid-cols-3 gap-3 sm:gap-5 max-w-[420px] mx-auto lg:mx-0"
-          aria-hidden="true"
-        >
-          <div className="flex items-center justify-center">
-            <ElementArt name="tree_indigenous" size={104} rotate={-5} priority />
-          </div>
-          <div className="flex items-center justify-center">
-            <ElementArt name="banana_circle-v3" size={84} rotate={4} offset={16} />
-          </div>
-          <div className="flex items-center justify-center">
-            <ElementArt name="beehive" size={76} rotate={-3} offset={-6} />
-          </div>
-          <div className="flex items-center justify-center">
-            <ElementArt name="chicken_coop" size={92} rotate={5} offset={4} />
-          </div>
-          <div className="flex items-center justify-center">
-            <ElementArt name="keyhole_bed" size={88} rotate={-4} offset={-10} />
-          </div>
-          <div className="flex items-center justify-center">
-            <ElementArt name="jojo_5000" size={72} rotate={3} offset={10} />
-          </div>
+        <div>
+          <HeroVisual fallback={<StaticHeroCollage />} />
         </div>
       </div>
     </section>

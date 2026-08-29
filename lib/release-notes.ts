@@ -35,7 +35,7 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '29 August',
-    sha: '91116b4',
+    sha: '452fec7',
     changes: [
       'Turnips, chillies and true spinach now show their own crop pictures',
       'The sample farm now opens from a welcoming South African garden picture',
@@ -69,6 +69,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       'Text on the funder and NGO programme views is now easier to read on a phone',
       'Trying the app without an account now also opens the Study and Mentor pages',
       'Mentors now see the course work they assigned a trainee, not a blank list',
+      'A public home page now says what ImbewuField is, and how to get it on your phone',
     ],
   },
   {
