@@ -120,7 +120,21 @@ service cloud.firestore {
     }
 
     match /organizations/{id} { allow read: if signedIn() && (id == myOrg() || isAdmin() || grantedOrg(id)); }
-    match /programmes/{id}    { allow read: if signedIn() && resource.data.org_id == myOrg(); }
+
+    // programmes had no staff/admin concept at all (org-isolation matrix audit, 2026-08-29): the
+    // bare `resource.data.org_id == myOrg()` compares two values directly instead of going
+    // through the inMyOrg() helper, so it has exactly the null==null footgun inMyOrg()'s own
+    // comment above warns about — an org-less signed-in account (a mentor/farmer with no org, or
+    // even a staff account between admin actions) could read any org-less programme document.
+    // No client anywhere in this app reads or writes /programmes (no lib/db/queries.ts function
+    // touches it — it is Admin-SDK/console-authored only), so there is no existing query shape to
+    // preserve; inMyOrg() + isAdmin() is simply this file's standard org-scoped read, matching
+    // every other collection. `allow write: if false` makes the already-true "no client write
+    // path" explicit rather than an accident of no rule matching.
+    match /programmes/{id} {
+      allow read: if signedIn() && (isAdmin() || inMyOrg(resource.data));
+      allow write: if false;
+    }
 
     match /gardens/{gid} {
       // isAdmin() added here (data-integrity audit, row 4): sameOrg() alone means the platform
@@ -129,11 +143,21 @@ service cloud.firestore {
       // explicit isAdmin() bypass. This one and the three below it were missed at the time because
       // gardens/reports/surveys still call the older bare sameOrg() helper directly instead of
       // staffOrgAccess()/staffConsentedAccess(), which already carry isAdmin() internally.
+      //
+      // isMentor() below was ALSO still bare (org-isolation matrix audit, 2026-08-29) — the one
+      // pair of read branches in this whole file the 2026-08-15 fix's own comment (top of file)
+      // didn't actually reach, even though it claims "every bare isStaff()/isMentor() read
+      // branch". Any provisioned mentor account, in ANY org, could read every OTHER org's
+      // gardens — not just get() by id: listGardens() (lib/db/queries.ts) issues an unfiltered
+      // query for an org-less caller and a same-org-filtered query otherwise, but a bare
+      // resource-independent OR branch authorises a LIST regardless of the query's own where
+      // clause, so a mentor's client could have listed every garden in every org directly. Now
+      // matches the (isMentor() && inMyOrg(resource.data)) idiom every other collection uses.
       allow read: if signedIn() && (
         isAdmin() ||
         sameOrg(resource.data) ||
         resource.data.supervisor_id == request.auth.uid ||
-        isMentor() ||
+        (isMentor() && inMyOrg(resource.data)) ||
         exists(/databases/$(database)/documents/gardens/$(gid)/members/$(request.auth.uid))
       );
       allow write: if signedIn() && (isStaff() || resource.data.supervisor_id == request.auth.uid);
@@ -142,11 +166,16 @@ service cloud.firestore {
         // Scope to the parent garden — same-org staff, the supervisor, a mentor, the member
         // themselves, or admin (see the isAdmin() note on the parent match above — same gap,
         // same fix). Prevents cross-org enumeration of every garden's participants.
+        //
+        // isMentor() below was bare too (same org-isolation matrix audit finding as the parent
+        // match's read rule) — a member doc has no org_id of its own to check via inMyOrg(), so
+        // this reaches through to the PARENT garden's org the same way the sameOrg() branch
+        // immediately above it already does.
         allow read: if signedIn() && (
           isAdmin() ||
           sameOrg(get(/databases/$(database)/documents/gardens/$(gid)).data) ||
           get(/databases/$(database)/documents/gardens/$(gid)).data.supervisor_id == request.auth.uid ||
-          isMentor() ||
+          (isMentor() && myOrg() != null && get(/databases/$(database)/documents/gardens/$(gid)).data.org_id == myOrg()) ||
           pid == request.auth.uid
         );
         allow write: if signedIn() && (isStaff() ||
@@ -269,7 +298,12 @@ service cloud.firestore {
     // accounts can never see each other through a null == null match.
 
     match /course_enrollments/{id} {
-      allow read: if owns(resource.data) || (isCourseStaff() && inMyOrg(resource.data));
+      // isAdmin() added (org-isolation matrix audit, 2026-08-29): same admin-org-mismatch gap
+      // #375 fixed on gardens/gardens.members/reports/surveys, reached here via
+      // isCourseStaff()/inMyOrg() instead of sameOrg() — inMyOrg() requires the CALLER's own
+      // org_id to be non-null and match too, so the platform admin (org_id: null) failed closed
+      // on every enrollment despite isCourseStaff() being true for the admin role.
+      allow read: if isAdmin() || owns(resource.data) || (isCourseStaff() && inMyOrg(resource.data));
       allow create: if isCourseStaff()
         && inMyOrg(request.resource.data)
         && request.resource.data.enrolled_by == request.auth.uid
@@ -287,7 +321,8 @@ service cloud.firestore {
     }
 
     match /course_assignments/{id} {
-      allow read: if owns(resource.data) || (isCourseStaff() && inMyOrg(resource.data));
+      // isAdmin() added — same admin-org-mismatch gap as course_enrollments above.
+      allow read: if isAdmin() || owns(resource.data) || (isCourseStaff() && inMyOrg(resource.data));
       allow create, update: if isCourseStaff()
         && inMyOrg(request.resource.data)
         && request.resource.data.assigned_by == request.auth.uid
@@ -321,14 +356,27 @@ service cloud.firestore {
     }
 
     match /mentor_visits/{id} {
+      // Bare isStaff() (org-isolation matrix audit, 2026-08-29) let ANY ngo/funder/admin account,
+      // in ANY org, read every org's mentor visits — MentorVisit had no org_id field at all, so
+      // there was nothing to scope staff reads against. logMentorVisit() (lib/db/queries.ts) now
+      // stamps org_id from the writing mentor's own profile, the same way createSurvey() already
+      // stamps it on /surveys; sameOrg() + isAdmin() below mirrors the idiom every other
+      // staff-read branch in this file uses (see /gardens, /reports, /surveys). Visits written
+      // before this change have no org_id — scripts/backfill-org-id.mjs now backfills this
+      // collection too, from trainee_id (the learner being visited is the record's real "whose
+      // org is this" owner, same role profile_id plays on course_progress/course_submissions).
+      // mentor_id/trainee_id self-access is untouched: myMentorVisits() (currently unused by any
+      // page, but exported) queries mentor_id + trainee_id directly and never relied on isStaff().
       allow read:   if signedIn() && (
         resource.data.mentor_id == request.auth.uid ||
         resource.data.trainee_id == request.auth.uid ||
-        isStaff()
+        isAdmin() ||
+        sameOrg(resource.data)
       );
       allow create: if signedIn()
         && isMentor()
         && request.resource.data.mentor_id == request.auth.uid
+        && request.resource.data.org_id == myOrg()
         && request.resource.data.notes is string;
       allow update, delete: if signedIn() && resource.data.mentor_id == request.auth.uid;
     }
