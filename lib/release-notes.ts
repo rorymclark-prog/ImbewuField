@@ -35,7 +35,7 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '29 August',
-    sha: '52f625c',
+    sha: '0706e88',
     changes: [
       'The smallest text on farmer pages has been bumped up to stay readable in the sun',
       'Map trees and garden pictures now stay on your phone after an update',
@@ -44,6 +44,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       'When writing a report fails for lack of signal, it now says so in plain words',
       'Programme funders get their own view: progress, harvests and sales across a cohort',
       'That funder view only ever shows what each farmer has agreed to share',
+      'A public page now introduces the app to NGOs and funders, with a link to get it',
     ],
   },
   {
