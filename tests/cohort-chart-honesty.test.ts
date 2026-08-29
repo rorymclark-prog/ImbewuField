@@ -248,6 +248,31 @@ test('nobody sharing sales no longer blanks the kilogram panel', () => {
   assert.equal(soldBarParts(may(s)).totalKg, 0, 'and no sold bar is invented for it');
 });
 
+test('nobody sharing sales is income-null in every month, never income-zero', () => {
+  const s = buildCohortSeries([productionOnlyFarmer('a', 30)], { months: 12, now: NOW });
+
+  assert.equal(s.salesFarmers, 0);
+  // The equivalence the money panel's axis guard stands on: salesFarmers === 0 means every
+  // month's income is null (no book to read), never 0 (a book that read zero).
+  for (const m of s.months) assert.equal(m.incomeZar, null);
+});
+
+test('the money panel never prints a rand tick over a withheld book', () => {
+  // With every incomeZar null, cappedScale(zeros).max is 0 and the Math.max(…, 1) floor used to
+  // print an axis tick reading "R1" above a completely empty plot — a rand figure corresponding
+  // to nothing, on the dashboard whose whole design rule is that null is not zero.
+  const chart = code('components/funder/CohortCharts.tsx');
+
+  // The guard is population-based (whose book exists), not value-sniffing (were the numbers 0).
+  assert.match(chart, /const zarWithheld = series\.salesFarmers === 0/);
+  // The tick says "Not shared" — the words the Farmer income figure already uses — or the real max.
+  assert.match(chart, /zarWithheld \? 'Not shared' : randTick\(maxZar\)/);
+  // No unconditional tick survives; "R1" was exactly this expression.
+  assert.doesNotMatch(chart, /\{randTick\(maxZar\)\}/);
+  // The withheld branch keeps the plot's height, so the shared month axis cannot shift.
+  assert.match(chart, /flex items-center" style=\{\{ height: PLOT_ZAR/);
+});
+
 /* ════════════════════════════════════════════════════════════════════════════
  * 3 — all mixed: the series carries what the card needs to say so
  * ══════════════════════════════════════════════════════════════════════════*/
