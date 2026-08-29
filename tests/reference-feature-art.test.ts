@@ -15,6 +15,17 @@ import {
   VEG_SPRITES,
 } from '@/lib/reference-feature-art';
 import { ELEMENT_CATALOG, plantingGroupFor } from '@/lib/design-elements';
+import { SPECIES_REFERENCE_ART } from '@/lib/species-art';
+
+function mappedReferenceArtwork(): Set<string> {
+  const mapped = new Set<string>(
+    ELEMENT_CATALOG
+      .map((element) => referenceFeatureArtworkFor(element.id))
+      .filter((asset): asset is NonNullable<typeof asset> => asset !== null),
+  );
+  for (const asset of SPECIES_REFERENCE_ART) mapped.add(asset);
+  return mapped;
+}
 
 test('an optional painted asset can never hold the exact-lock stage open forever', async () => {
   assert.ok(REFERENCE_FEATURE_ART_WAIT_MS > 0);
@@ -51,6 +62,7 @@ test('Reference Blueprint maps high-impact Water and Planting features to reusab
   assert.equal(referenceFeatureArtworkFor('keyhole_bed'), 'keyhole-bed-v1.png');
   assert.equal(referenceFeatureArtworkFor('herb_spiral'), 'herb-spiral-v1.png');
   assert.equal(referenceFeatureArtworkFor('spekboom_hedge'), 'spekboom-hedge-v1.png');
+  assert.equal(referenceFeatureArtworkFor('tree_other', 'prunus-armeniaca'), 'apricot-tree-v1.png');
 });
 
 test('JoJo tanks show an upright cylinder at map scale, not a dark lid-only disc', () => {
@@ -279,11 +291,7 @@ test('litchi and banana keep their fruit-family colour cues at map scale', () =>
 });
 
 test('every mapped catalogue artwork is a real, dimensioned PNG in the public asset root', () => {
-  const mapped = new Set(
-    ELEMENT_CATALOG
-      .map((element) => referenceFeatureArtworkFor(element.id))
-      .filter((asset): asset is NonNullable<typeof asset> => asset !== null),
-  );
+  const mapped = mappedReferenceArtwork();
   assert.ok(mapped.size > 0, 'the catalogue must exercise the reference-art path');
 
   const publicRoot = join(process.cwd(), 'public', REFERENCE_FEATURE_ART_ROOT.replace(/^\//, ''));
@@ -309,11 +317,7 @@ test('every mapped catalogue artwork is a real, dimensioned PNG in the public as
 // declared an alpha channel, it was just filled 255 everywhere. Only decoding the pixels tells
 // the truth, so this test decodes them.
 test('every mapped artwork carries real transparency, so it composites as a silhouette not a square', () => {
-  const mapped = new Set(
-    ELEMENT_CATALOG
-      .map((element) => referenceFeatureArtworkFor(element.id))
-      .filter((asset): asset is NonNullable<typeof asset> => asset !== null),
-  );
+  const mapped = mappedReferenceArtwork();
   const publicRoot = join(process.cwd(), 'public', REFERENCE_FEATURE_ART_ROOT.replace(/^\//, ''));
 
   for (const asset of mapped) {
@@ -342,11 +346,7 @@ test('every mapped artwork carries real transparency, so it composites as a silh
 });
 
 test('every shipped reference artwork is reachable from a real catalogue element', () => {
-  const mapped = new Set(
-    ELEMENT_CATALOG
-      .map((element) => referenceFeatureArtworkFor(element.id))
-      .filter((asset): asset is NonNullable<typeof asset> => asset !== null),
-  );
+  const mapped = mappedReferenceArtwork();
   // The staple field tiles are reachable from a traced staple_garden ZONE, not from a placed
   // element — every ordinal resolves to one of them through stapleTileFor, which is asserted to
   // cover the whole set in its own test below. They join the reachable set here rather than

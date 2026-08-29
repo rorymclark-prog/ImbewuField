@@ -1,4 +1,8 @@
 import { normaliseLookupKey } from '@/lib/key-normalisation';
+import {
+  speciesReferenceArtworkFor,
+  type SpeciesReferenceArtwork,
+} from '@/lib/species-art';
 
 export const REFERENCE_FEATURE_ART_ROOT = '/render-assets/reference-blueprint';
 
@@ -28,6 +32,7 @@ export async function settleOptionalReferenceArtLoad<T>(
 }
 
 export type ReferenceFeatureArtwork =
+  | SpeciesReferenceArtwork
   | 'banana-basin-v1.png'
   // v1 was leaves-only, no visible fruit (Rory: "banana circle needs to have bananas in it just
   // like banana clumps"). v2 adds three fruit bunches in the same ring composition.
@@ -172,7 +177,12 @@ const PLANTING_DETAIL_ART: Readonly<Record<string, ReferenceFeatureArtwork>> = {
  * The mapping is deliberately conservative. A generic basin never receives a tree canopy, and an
  * unknown/custom item stays on the deterministic fallback instead of being visually invented.
  */
-export function referenceFeatureArtworkFor(defId: string): ReferenceFeatureArtwork | null {
+export function referenceFeatureArtworkFor(
+  defId: string,
+  speciesId?: string | null,
+): ReferenceFeatureArtwork | null {
+  const speciesArt = speciesReferenceArtworkFor(speciesId);
+  if (speciesArt) return speciesArt;
   const key = normaliseLookupKey(defId, '_');
   if (TANK_TOP_ART[key]) return TANK_TOP_ART[key];
   if (key === 'banana_circle') return 'banana-basin-v2.png';
@@ -227,7 +237,7 @@ export function vegSpriteUrl(glyph: string): string | null {
   return file ? `${REFERENCE_FEATURE_ART_ROOT}/${file}` : null;
 }
 
-export function referenceFeatureArtworkUrl(defId: string): string | null {
-  const asset = referenceFeatureArtworkFor(defId);
+export function referenceFeatureArtworkUrl(defId: string, speciesId?: string | null): string | null {
+  const asset = referenceFeatureArtworkFor(defId, speciesId);
   return asset ? `${REFERENCE_FEATURE_ART_ROOT}/${asset}` : null;
 }
