@@ -38,7 +38,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     sha: 'cf94de4',
     changes: [
       'The smallest text on farmer pages has been bumped up to stay readable in the sun',
-      'The map’s trees and garden pictures stay on your phone after an update — no more re-downloading them on your airtime',
+      'Map trees and garden pictures now stay on your phone after an update',
       'Those pictures are also much smaller now, so the first download costs far less data',
     ],
   },
