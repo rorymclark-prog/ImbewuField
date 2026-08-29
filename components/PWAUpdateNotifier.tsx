@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
+import { usePathname } from 'next/navigation';
 import { isDifferentBuild } from '@/lib/pwa-update';
 import { visibleNotes } from '@/lib/release-notes';
 
@@ -26,6 +27,7 @@ const UPDATE_RELOAD_TIMEOUT_MS = 1_200;
  * itself — only a user click calls location.reload()).
  */
 export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateNotifierProps) {
+  const pathname = usePathname() || '';
   const [updateAvailable, setUpdateAvailable] = useState(false);
   const [nextBuildSha, setNextBuildSha] = useState<string | null>(null);
   // Null until the server tells us; the local copy is the offline/older-server fallback.
@@ -206,7 +208,12 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
     setDismissed(false);
   }, [nextBuildSha]);
 
-  if (!updateAvailable || dismissed) return null;
+  // Only the TOAST stays off the /pitch projector deck — the service-worker registration in
+  // the effects above must keep running there like everywhere else. A deploy landing mid-meeting
+  // should not put an "Update ready" pill on a projected slide; the presenter refreshes after.
+  const onPitchDeck = pathname.startsWith('/pitch');
+
+  if (!updateAvailable || dismissed || onPitchDeck) return null;
   // The NEW build's notes when the server could supply them; ours only as a fallback (a
   // service-worker-triggered update never hits /api/build-info, and an offline tab cannot ask).
   const notes = nextBuildNotes ?? visibleNotes();

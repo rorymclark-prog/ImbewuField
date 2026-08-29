@@ -27,6 +27,7 @@ import { NO_FLOATING_BACK } from '../lib/back-routes.ts';
 const page = readFileSync(new URL('../app/pitch/page.tsx', import.meta.url), 'utf8');
 const chatWidget = readFileSync(new URL('../components/ChatWidget.tsx', import.meta.url), 'utf8');
 const sampleBanner = readFileSync(new URL('../components/SampleModeBanner.tsx', import.meta.url), 'utf8');
+const updateNotifier = readFileSync(new URL('../components/PWAUpdateNotifier.tsx', import.meta.url), 'utf8');
 
 test('sample mode is entered on mount, and live iframes mount only after a visit', () => {
   assert.match(
@@ -64,6 +65,14 @@ test('the deck owns its screen: no floating back, no chat FAB, no sample banner'
     sampleBanner,
     /pathname\.startsWith\('\/pitch'\)/,
     'SampleModeBanner must skip /pitch — Exit sample over a projected slide kills the demo'
+  );
+  // Also found live: a deploy landing mid-session floats "Update ready" over the slide. Only
+  // the toast may skip the deck — SW registration must keep running, so pin the guard shape:
+  // the pathname check must sit in the render guard, not ahead of the effects.
+  assert.match(
+    updateNotifier,
+    /if \(!updateAvailable \|\| dismissed \|\| onPitchDeck\) return null;/,
+    'PWAUpdateNotifier must keep registering the SW but never toast over a slide'
   );
 });
 
