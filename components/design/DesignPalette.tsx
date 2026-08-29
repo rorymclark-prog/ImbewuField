@@ -567,6 +567,13 @@ export default function DesignPalette({
       if (!el) return;
       const rect = el.getBoundingClientRect();
       const gap = 8;
+      const panelWidth = Math.min(360, window.innerWidth * 0.9);
+      const rawRight = window.innerWidth - rect.right;
+      // A docked left-hand palette can put the trigger less than 360 px from the viewport edge.
+      // Aligning the picker's right edge to that trigger then pushes the species artwork off-screen
+      // even though the panel is otherwise open and scrollable. Preserve the established right-edge
+      // alignment wherever it fits, but clamp the panel itself inside the visible viewport.
+      const maxRight = Math.max(gap, window.innerWidth - panelWidth - gap);
       const spaceAbove = rect.top - gap;
       const spaceBelow = window.innerHeight - rect.bottom - gap;
       // Prefer up (the established behaviour, and the one that keeps a phone's list off the
@@ -574,7 +581,7 @@ export default function DesignPalette({
       const openDown = spaceBelow > spaceAbove;
       setSpeciesAnchor({
         top: window.innerHeight - rect.top,
-        right: window.innerWidth - rect.right,
+        right: Math.min(Math.max(gap, rawRight), maxRight),
         openDown,
         downTop: rect.bottom + gap,
         // Never taller than the side it opens into — an unclamped panel is what ran off the top.

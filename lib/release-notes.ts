@@ -35,6 +35,14 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '29 August',
+    sha: '77f0e53',
+    changes: [
+      'Catalogue plants now show their own picture, with fruit and flowers easy to see',
+      'The design map now uses the matching overhead crown for each named plant',
+    ],
+  },
+  {
+    when: '29 August',
     sha: 'f4b01b6',
     changes: [
       'The smallest text on farmer pages has been bumped up to stay readable in the sun',
