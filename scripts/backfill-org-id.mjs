@@ -33,6 +33,14 @@
  * mentor's — a mentor could in principle move between orgs while a visit they once logged
  * should stay attached to the org the trainee actually belongs to.
  *
+ * EXTENDED A THIRD TIME (contact org-scope fix, 2026-08-29): `contact_messages` — the farmer →
+ * mentor/organisation/support messages. These never had a rules block AT ALL (default deny — the
+ * feature was dead in production), so in practice the collection should be empty; this target
+ * exists for any rows created through the console or a future import. Owner field is `from_uid`
+ * (the sender): the sender's org is the org whose inbox the message belongs in. contact_replies
+ * is deliberately NOT a target — replies are read by `for_uid` (a uid, not an org), so they need
+ * no org_id to be correctly scoped.
+ *
  * Idempotent: only writes docs that are missing org_id, so it's safe to re-run.
  *
  * Usage:
@@ -93,6 +101,8 @@ const TARGETS = [
   { collection: 'reports', ownerField: 'owner_id' },
   // mentor_visits uses trainee_id, not profile_id — see the EXTENDED AGAIN note above.
   { collection: 'mentor_visits', ownerField: 'trainee_id' },
+  // contact_messages uses from_uid (the sender) — see the EXTENDED A THIRD TIME note above.
+  { collection: 'contact_messages', ownerField: 'from_uid' },
 ];
 
 async function orgIdForProfile(profileCache, profileId) {
