@@ -35,7 +35,7 @@ Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 | Small-leaved guarri | PASS | `public/element-art/tree_small_leaved_guarri.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/small-leaved-guarri-v1.png` | `98808c9` |
 | Waterblommetjie | PASS | `public/element-art/tree_waterblommetjie.png` | `c1f4f37` | PASS | `public/render-assets/reference-blueprint/waterblommetjie-v1.png` | `d008768` |
 | Wild date palm | PASS | `public/element-art/tree_wild_date_palm.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/wild-date-palm-v1.png` | `64aa601` |
-| Wild medlar / mmilo | PASS | `public/element-art/tree_wild_medlar_mmilo.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/wild-medlar-v1.png` | `24c2316` |
+| Wild medlar / mmilo | PASS | `public/element-art/tree_wild_medlar_mmilo.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/wild-medlar-v1.png` | `bbba3bc` |
 | Bietou / bush-tick berry | PASS | `public/element-art/tree_bietou.png` | `017067c` | PASS | `public/render-assets/reference-blueprint/bietou-v1.png` | `fc23ce8` |
 | Brandybush / velvet raisin | PASS | `public/element-art/tree_brandybush.png` | `202ccec` | PASS | `public/render-assets/reference-blueprint/brandybush-v1.png` | `6be1b8f` |
 | Honeybush / heuningbos | PASS | `public/element-art/tree_honeybush.png` | `d21827f` | PASS | `public/render-assets/reference-blueprint/honeybush-v1.png` | `4b3863b` |
