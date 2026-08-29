@@ -16,13 +16,17 @@
  * a home screen means leaving the app. The auth routes are gates, where a back button offers an
  * escape from the very thing the gate exists to enforce. `/design` draws its own arrow in its
  * title bar, positioned where its own layout expects it; a second one would both duplicate and
- * collide.
+ * collide. `/partners` is the public NGO/funder showcase — reached only by an external link
+ * (email, QR code, a conference flyer), never from in-app navigation, so `window.history.length`
+ * is typically 1 and the fallback's own goBack() would push an anonymous visitor into /home —
+ * the signed-in app the button has no business sending them to. Same class of exclusion as the
+ * auth gates, for the same reason: nowhere real to go back to.
  *
  * Keep this list short. Every entry is a page where "every page has a back button" is knowingly
  * untrue, so each one needs a reason.
  */
 export const NO_FLOATING_BACK: ReadonlySet<string> = new Set([
-  '/', '/home', '/farmer', '/finances', '/account', '/login', '/gate', '/design',
+  '/', '/home', '/farmer', '/finances', '/account', '/login', '/gate', '/design', '/partners',
 ]);
 
 /** Whether the floating fallback may render for this path. */

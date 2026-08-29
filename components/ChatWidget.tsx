@@ -8,7 +8,9 @@ import ChatPanel from './ChatPanel';
 
 /**
  * Lima — the almanac field guide persona. Docked at the bottom of every page
- * so help is always one tap away. Pre-auth pages (gate/login) are excluded.
+ * so help is always one tap away. Pre-auth pages (gate/login) are excluded,
+ * as is /partners — the public NGO/funder showcase, where a farming AI
+ * assistant docked over the pitch reads as off-product rather than helpful.
  * "Lima" means "to cultivate" in Nguni languages.
  */
 export default function ChatWidget() {
@@ -74,11 +76,14 @@ export default function ChatWidget() {
     try { localStorage.setItem('imbewu_lima_fab_pos', JSON.stringify({ x: d.lx, y: d.ly })); } catch { /* ignore */ }
   }
 
-  // Skip on auth pages, home (which has LimaBar), and the Design Studio (its
-  // bottom-docked tool palette owns the bottom-left corner — the FAB covered Select).
+  // Skip on auth pages, home (which has LimaBar), the Design Studio (its
+  // bottom-docked tool palette owns the bottom-left corner — the FAB covered Select), and the
+  // public partners showcase (no farmer context to chat about, and it collides with that page's
+  // own "Get the app" CTA).
   if (
     pathname.startsWith('/gate') || pathname.startsWith('/login') ||
-    pathname.startsWith('/home') || pathname.startsWith('/design')
+    pathname.startsWith('/home') || pathname.startsWith('/design') ||
+    pathname.startsWith('/partners')
   ) return null;
 
   // WHERE THE FAB PARKS WHEN NOBODY HAS MOVED IT.
