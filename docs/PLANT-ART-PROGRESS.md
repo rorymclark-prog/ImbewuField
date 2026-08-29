@@ -29,7 +29,7 @@ Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 | Glossy currant | PASS | `public/element-art/tree_glossy_currant.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/glossy-currant-v1.png` | `1e01f01` |
 | Karoo crossberry | PASS | `public/element-art/tree_karoo_crossberry.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/karoo-crossberry-v1.png` | `2491a1e` |
 | Kuni bush | PASS | `public/element-art/tree_kuni_bush.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/kuni-bush-v1.png` | `9912b11` |
-| Puzzle bush | PASS | `public/element-art/tree_puzzle_bush.png` | `9596647` | PASS | `public/render-assets/reference-blueprint/puzzle-bush-v1.png` | `b900a35` |
+| Puzzle bush | PASS | `public/element-art/tree_puzzle_bush.png` | `9596647` | PASS | `public/render-assets/reference-blueprint/puzzle-bush-v1.png` | `6c6a692` |
 | Red milkwood / moepel | PASS | `public/element-art/tree_red_milkwood_moepel.png` | `c1f4f37` | PASS | `public/render-assets/reference-blueprint/red-milkwood-tree-v1.png` | `353a7d0` |
 | Shepherd's tree | PASS | `public/element-art/tree_shepherd_s_tree.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/shepherds-tree-v1.png` | `8ea514b` |
 | Small-leaved guarri | PASS | `public/element-art/tree_small_leaved_guarri.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/small-leaved-guarri-v1.png` | `88045ae` |
