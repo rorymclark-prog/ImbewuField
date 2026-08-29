@@ -139,6 +139,10 @@ export interface CourseProgress {
 export interface MentorVisit {
   id: string; mentor_id: string; trainee_id: string;
   garden_id: string | null; notes: string; visited_at: string; created_at: string;
+  // Stamped by logMentorVisit() from the writing mentor's own profile (org-isolation matrix
+  // audit, 2026-08-29) — see the read-rule comment on /mentor_visits in firestore.rules. Absent
+  // (undefined, not just null) on any visit written before this field existed.
+  org_id?: string | null;
 }
 
 // Convenience view models the UI uses
