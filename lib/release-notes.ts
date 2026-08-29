@@ -35,8 +35,9 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '29 August',
-    sha: 'f4b01b6',
+    sha: '77f0e53',
     changes: [
+      'Fair-use limits now share the AI helpers out, so one visitor cannot use them all up',
       'The smallest text on farmer pages has been bumped up to stay readable in the sun',
       'Map trees and garden pictures now stay on your phone after an update',
       'Those pictures are also much smaller now, so the first download costs far less data',
