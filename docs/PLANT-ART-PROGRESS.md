@@ -5,7 +5,7 @@ Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 - Last full checker inventory: 2026-08-29
 - Checker: `/Users/roryclark/ImbewuField/scripts/check-plant-art.py`
 - Required scope: 53 species, 106 views
-- Current result: 100 PASS, 0 FAIL, 0 MISSING, 6 IN PROGRESS (top-down dimensions)
+- Current result: 101 PASS, 0 FAIL, 0 MISSING, 5 IN PROGRESS (top-down dimensions)
 - Dimension audit is stricter than the checker's `square` rule: every top-down file must be exactly 1024×1024.
 - A row is complete only when both views are `PASS` and their SHAs name pushed commits.
 
@@ -43,7 +43,7 @@ Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 | Rooibos | PASS | `public/element-art/tree_rooibos.png` | `1ecd8f2` | PASS | `public/render-assets/reference-blueprint/rooibos-v1.png` | `fedd351` |
 | Rosemary | PASS | `public/element-art/tree_rosemary.png` | `1ecd8f2` | PASS | `public/render-assets/reference-blueprint/rosemary-v1.png` | `ee1999f` |
 | Dogwood / umglindi | PASS | `public/element-art/tree_dogwood.png` | `9596647` | PASS | `public/render-assets/reference-blueprint/dogwood-v1.png` | `a30f1c5` |
-| Cape boxthorn / kriedoring | PASS | `public/element-art/tree_cape_boxthorn.png` | `df1b4ac` | IN PROGRESS | `public/render-assets/reference-blueprint/cape-boxthorn-v1.png` | `f5a6be6` |
+| Cape boxthorn / kriedoring | PASS | `public/element-art/tree_cape_boxthorn.png` | `df1b4ac` | PASS | `public/render-assets/reference-blueprint/cape-boxthorn-v1.png` | `a5358a7` |
 | Honey-thorn / kriedoring | PASS | `public/element-art/tree_honey_thorn.png` | `5337360` | PASS | `public/render-assets/reference-blueprint/honey-thorn-v1.png` | `e0b6963` |
 | Natal currant | PASS | `public/element-art/tree_natal_currant.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/natal-currant-v1.png` | `4d55148` |
 | Pigeon pea | PASS | `public/element-art/tree_pigeon_pea.png` | `cd97a95` | PASS | `public/render-assets/reference-blueprint/pigeon-pea-v1.png` | `b8f9ef2` |
