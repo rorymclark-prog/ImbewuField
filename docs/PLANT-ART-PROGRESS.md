@@ -5,7 +5,7 @@ Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 - Last full checker inventory: 2026-08-28
 - Checker: `/Users/roryclark/ImbewuField/scripts/check-plant-art.py`
 - Required scope: 53 species, 106 views
-- Current result: 104 PASS, 0 FAIL, 2 MISSING
+- Current result: 105 PASS, 0 FAIL, 1 MISSING
 - A row is complete only when both views are `PASS` and their SHAs name pushed commits.
 
 | Species | Front | Front path | Front SHA | Top-down | Top-down path | Top SHA |
@@ -46,7 +46,7 @@ Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 | Honey-thorn / kriedoring | PASS | `public/element-art/tree_honey_thorn.png` | `5337360` | PASS | `public/render-assets/reference-blueprint/honey-thorn-v1.png` | `e0b6963` |
 | Natal currant | PASS | `public/element-art/tree_natal_currant.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/natal-currant-v1.png` | `4d55148` |
 | Pigeon pea | PASS | `public/element-art/tree_pigeon_pea.png` | `cd97a95` | PASS | `public/render-assets/reference-blueprint/pigeon-pea-v1.png` | `b8f9ef2` |
-| Quiver tree / kokerboom | PASS | `public/element-art/tree_quiver_tree.png` | `b93e78d` | MISSING | `public/render-assets/reference-blueprint/quiver-tree-v1.png` | `—` |
+| Quiver tree / kokerboom | PASS | `public/element-art/tree_quiver_tree.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/quiver-tree-v1.png` | `f80bd9f` |
 | Spekboom | MISSING | `public/element-art/tree_spekboom.png` | `—` | PASS | `public/render-assets/reference-blueprint/spekboom-v1.png` | `c207b8b` |
 | Waxberry / wasbessie | PASS | `public/element-art/tree_waxberry.png` | `c1f4f37` | PASS | `public/render-assets/reference-blueprint/waxberry-v1.png` | `f65b3f8` |
 | Baboon grape | PASS | `public/element-art/tree_baboon_grape.png` | `8db4efe` | PASS | `public/render-assets/reference-blueprint/baboon-grape-v1.png` | `e84f7a2` |
