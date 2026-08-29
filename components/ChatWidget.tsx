@@ -100,7 +100,10 @@ export default function ChatWidget() {
     pathname.startsWith('/gate') || pathname.startsWith('/login') ||
     pathname.startsWith('/home') || pathname.startsWith('/design') ||
     pathname.startsWith('/partners') || pathname.startsWith('/funder') ||
-    pathname.startsWith('/ngo') || pathname.startsWith('/pitch')
+    pathname.startsWith('/ngo') || pathname.startsWith('/pitch') ||
+    // The public marketing page: Lima is the signed-in farmer's assistant, and a floating
+    // chat button on the front door offers a stranger a conversation the app cannot yet have.
+    pathname.startsWith('/welcome')
   ) return null;
 
   // WHERE THE FAB PARKS WHEN NOBODY HAS MOVED IT.
