@@ -35,8 +35,12 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '29 August',
-    sha: 'f4b01b6',
+    sha: '77f0e53',
     changes: [
+      'Your picked, sold and spent money now lives in one book',
+      'Tap Picked, Sold or Spent at the top — the charts are in there too',
+      'What you sold and spent this month now shows on every page of that book',
+      'One money door on the home screen and in the menu, not two',
       'The smallest text on farmer pages has been bumped up to stay readable in the sun',
       'Map trees and garden pictures now stay on your phone after an update',
       'Those pictures are also much smaller now, so the first download costs far less data',
