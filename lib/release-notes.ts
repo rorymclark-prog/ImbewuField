@@ -34,6 +34,15 @@ export interface ReleaseNote {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '29 August',
+    sha: 'cf94de4',
+    changes: [
+      'The smallest text on farmer pages has been bumped up to stay readable in the sun',
+      'The map’s trees and garden pictures stay on your phone after an update — no more re-downloading them on your airtime',
+      'Those pictures are also much smaller now, so the first download costs far less data',
+    ],
+  },
+  {
     when: '27 August (late)',
     sha: 'f9b5338',
     changes: [
