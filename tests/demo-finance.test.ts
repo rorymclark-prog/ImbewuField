@@ -184,11 +184,13 @@ test('the sample ledger covers the trailing twelve months and stops at today', (
    than a lib function, so it is asserted against the source: weaker than a
    render, strictly stronger than the nothing that let the writing version
    ship. */
+// The money screen moved: /records is the merged Picked · Sold · Spent book and /finances is
+// now only a redirect onto it (app/finances/page.tsx). The rule this test protects is unchanged.
 test('the finances page offers its sample through sample mode, never by writing demo rows into real books', () => {
-  const page = readFileSync(new URL('../app/finances/page.tsx', import.meta.url), 'utf8');
+  const page = readFileSync(new URL('../app/records/page.tsx', import.meta.url), 'utf8');
 
   assert.match(page, /function handleSeeSample\(\)/, 'the finances page lost its sample entry point');
-  assert.match(page, /if \(enterSampleMode\(\)\) window\.location\.href = '\/finances'/,
+  assert.match(page, /if \(enterSampleMode\(\)\) window\.location\.href = '\/records\?tab=charts'/,
     'the sample entry must enter sample mode and hard-navigate so every hook remounts');
 
   // The destructive seeder and its real-write imports must stay gone.

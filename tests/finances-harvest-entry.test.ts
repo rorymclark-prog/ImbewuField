@@ -6,17 +6,21 @@ import type { ExpenseLog, ProductionLog, SalesLog } from '../lib/db/types.ts';
 import type { SavedInvoice } from '../lib/invoices.ts';
 import { cashLedgerSales, cashIncomeTotal } from '../lib/invoice-sales.ts';
 
-test('Finances puts harvest logging one tap from the harvested-kilogram figure', () => {
-  const source = readFileSync(new URL('../app/finances/page.tsx', import.meta.url), 'utf8');
+// WAS: "Finances puts harvest logging one tap from the harvested-kilogram figure", asserting two
+// cross-page <Link href="/records"> from /finances. There is nothing to link to now — the Gogo
+// Test merge put the kilogram figure and the harvest form in one book at /records, so "one tap"
+// is a tab switch inside a single page. The rule survives the move: from the screen showing her
+// harvested kilograms, recording another one must never be more than one tap away.
+test('the money book puts harvest logging one tap from the harvested-kilogram figure', () => {
   const recordsSource = readFileSync(new URL('../app/records/page.tsx', import.meta.url), 'utf8');
   const homeSource = readFileSync(new URL('../app/home/page.tsx', import.meta.url), 'utf8');
-  const harvestLinks = source.match(/href="\/records"/g) ?? [];
 
-  assert.equal(harvestLinks.length, 2, 'desktop and phone finance views must both link to the harvest form');
-  assert.match(source, /<Sprout size=\{16\} \/>Log harvest/, 'the phone action must say what it records');
-  assert.match(source, /<Sprout size=\{15\} \/>Log harvest/, 'the desktop action must say what it records');
+  assert.match(recordsSource, /<Sprout size=\{15\} \/>Log harvest/, 'the desktop action must say what it records');
+  assert.match(recordsSource, /onLogHarvest=\{\(\) => setTab\('picked'\)\}/,
+    'the desktop sheet\'s Log harvest control must open the Picked page of the same book');
   assert.match(homeSource, /href: '\/records'.*homeQuickMyRecords/, 'the home My Records action must use the same records screen');
-  assert.match(recordsSource, /<MyRecords \/>/, 'the records screen must mount the real harvest and sales forms');
+  assert.match(recordsSource, /<MyRecords section=\{tab\} onChanged=\{loadData\} \/>/,
+    'the book must mount the real harvest and sales forms, and refresh its own totals when one saves');
   assert.doesNotMatch(recordsSource, /DataPanel|MapView/, 'logging weights must not require or render the land map');
 });
 
@@ -109,7 +113,7 @@ test('the season view keeps December once the calendar has crossed into the new 
     'a December from a year further back is a different season, not this one',
   );
 
-  const source = readFileSync(new URL('../app/finances/page.tsx', import.meta.url), 'utf8');
+  const source = readFileSync(new URL('../app/records/page.tsx', import.meta.url), 'utf8');
   assert.doesNotMatch(
     source,
     /function saSeasonMonths/,
