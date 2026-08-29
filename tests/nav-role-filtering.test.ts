@@ -176,3 +176,81 @@ test('the example entries do not teach her to record a yield in the diary', () =
     'the harvest example should say where the weight actually went, so the split is demonstrated ' +
     'rather than only asserted in the note above it');
 });
+
+/*
+ * ── the bottom bar, and whose land it assumes ────────────────────────────────
+ *
+ * Same audit finding as everything above, one surface further down. That pass covered NavDrawer
+ * and the home Dashboards row; components/TabBar.tsx was left alone and is rendered on nineteen
+ * routes, four of them the role-gated staff dashboards. Two of its four tabs — /farmer and
+ * /records — are strictly my-own surfaces, so an NGO officer, a mentor or a funder was handed a
+ * map with no land on it and an empty money book whose Add buttons work.
+ *
+ * This is NOT the ROLE_GATED_ROUTES question and must not be folded into that table: /farmer and
+ * /records gate nobody, they open for anyone and are merely empty. The table above is a mirror of
+ * four pages' inline canAccessRolePage sets and the test at the top asserts that equality, so a
+ * route with no inline gate has no business in it. See lib/role-access.ts.
+ */
+
+/** Every href declared in TabBar's own TABS array, in source order. */
+function tabHrefs(): string[] {
+  const block = code(read('components/TabBar.tsx')).match(/const TABS\s*=\s*\[([\s\S]*?)\n\];/);
+  assert.ok(block, 'TabBar must declare TABS as an array literal this test can read');
+  return [...block[1].matchAll(/href:\s*'([^']+)'/g)].map((m) => m[1]);
+}
+
+/** The subset TabBar hides from an account with no farm of its own. */
+function ownLandTabs(): string[] {
+  const m = code(read('components/TabBar.tsx')).match(/OWN_LAND_TABS[^=]*=\s*new Set\(\[([^\]]*)\]\)/);
+  assert.ok(m, 'OWN_LAND_TABS must be an explicit new Set([...]) literal');
+  return m[1].split(',').map((s) => s.trim().replace(/['"]/g, '')).filter(Boolean).sort();
+}
+
+test('the bottom bar asks whose land it is, and asks about the person', () => {
+  const tabBar = code(read('components/TabBar.tsx'));
+  assert.match(tabBar, /farmsOwnLand\(role\)/,
+    'TabBar must filter its tabs through farmsOwnLand — the registry is inert until asked');
+  assert.match(tabBar, /=\s*useAuth\(\)/,
+    'TabBar must read the role it filters by; filtering on undefined hides nothing');
+  // AND THE FILTERED LIST MUST BE THE ONE THAT RENDERS. Asserting only that farmsOwnLand is
+  // called passes happily against `const tabs = farmsOwnLand(role) ? ... ` followed by
+  // `{TABS.map(` — the predicate runs, the result is dropped on the floor, and all four tabs
+  // ship to everyone with the guard still green. Caught by mutation-testing this very file.
+  assert.match(tabBar, /\{\s*tabs\.map\(/,
+    'TabBar must render the FILTERED list; mapping TABS again discards the filter silently');
+  // Filtered, never early-returned. An early `return null` for staff would both break the rules
+  // of hooks against the effect below it and stop --bottom-nav-height being published, which
+  // PWAUpdateNotifier positions itself from (see tests/bottom-nav-height.test.ts).
+  assert.doesNotMatch(tabBar, /if\s*\(\s*!\s*farmsOwnLand[\s\S]{0,40}return null/,
+    'TabBar must filter the tab list, not return null for staff — the height must keep publishing');
+});
+
+test('exactly the two my-own tabs are role-filtered, and they are real tabs', () => {
+  const hrefs = tabHrefs();
+  const gated = ownLandTabs();
+  assert.deepEqual(gated, ['/farmer', '/records'],
+    '/farmer is the places THIS account saved and /records is myProduction/mySales/myExpenses. ' +
+    'Adding a third here hides a door from staff; removing one hands them an empty room again.');
+  // Home and Account are true for every account there is. If either were ever filtered, a staff
+  // user would be left with a one-tab bar, or none.
+  assert.ok(!gated.includes('/home') && !gated.includes('/account'),
+    'Home and Account must never be role-filtered — every account has both');
+  for (const href of gated) {
+    assert.ok(hrefs.includes(href), `${href} is filtered but is not one of TabBar's own tabs`);
+  }
+  assert.ok(hrefs.length - gated.length >= 2,
+    'a staff account must keep at least two tabs, or the bar should not be rendered at all');
+});
+
+test('every role-gated staff dashboard ends with the same bottom bar', () => {
+  // The inconsistency this change closes: /ngo, /mentor and /network each rendered TabBar and
+  // /funder did not, so one staff dashboard in four had no bottom navigation and no comment
+  // saying why. Equality across all four is the point — pinning it here means the next person to
+  // add a staff page has to decide deliberately rather than by omission.
+  const missing = GATED
+    .filter(({ file }) => !/<TabBar\s*\/>/.test(code(read(file))))
+    .map(({ file }) => file);
+  assert.deepEqual(missing, [],
+    'these role-gated dashboards render no TabBar while their siblings do. TabBar is role-aware ' +
+    'now, so a staff account gets Home and Account there rather than a farm it does not have.');
+});

@@ -14,6 +14,7 @@ import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import { isSampleMode } from '@/lib/sample-mode';
 import { canAccessRolePage } from '@/lib/role-access';
+import TabBar from '@/components/TabBar';
 import type { UserRole } from '@/lib/db/types';
 
 const NgoDashboard = dynamic(() => import('@/components/NgoDashboard'), {
@@ -141,6 +142,14 @@ export default function FunderPage() {
       <div className="flex-1 flex overflow-hidden">
         {view === 'cohort' ? <CohortDashboard mode="funder" /> : <NgoDashboard mode="funder" />}
       </div>
+
+      {/* /ngo, /mentor and /network have always ended with this bar and /funder never did — one
+          staff dashboard out of four with no bottom navigation, for no stated reason. It is safe
+          to add now because TabBar filters itself by role: a funder gets Home and Account, not a
+          map of land they do not farm and a money book they are told is read-only. Deliberately
+          NOT on the "This is the Funder area" refusal branch above, which is a dead end by
+          design. */}
+      <TabBar />
     </div>
   );
 }

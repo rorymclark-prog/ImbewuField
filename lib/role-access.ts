@@ -70,3 +70,47 @@ export function canSeeNavLink(role: UserRole | null, href: string): boolean {
   if (role === null) return true;  // unknown role — see above
   return allowed.has(role);
 }
+
+/*
+ * ── WHOSE LAND IS IT ─────────────────────────────────────────────────────────────────────────
+ *
+ * A different question from the one above, and the difference is the whole point.
+ *
+ * ROLE_GATED_ROUTES answers "will this page refuse you?" — it mirrors the four pages that call
+ * canAccessRolePage. /farmer and /records refuse nobody: any signed-in account may open them and
+ * they render perfectly. They are simply EMPTY, because both are strictly my-own surfaces —
+ * /farmer draws the places this account saved (loadPlaces / resolveMainSite) and /records reads
+ * myProduction, mySales and myExpenses.
+ *
+ * So for a programme officer, a mentor or a funder the farmer tabs are not doors that refuse.
+ * They are doors onto an empty room with the light on, which is worse in one specific way: the
+ * money book's Add buttons work. A funder whose own role description in lib/i18n.tsx reads
+ * "Read-only impact oversight" can file a sale against their own profile and leave a row in the
+ * org's ledger that no report will ever reconcile.
+ *
+ * WHY THIS FOLLOWS THE PERSON, NOT THE PAGE. /mentor admits mentor, ngo, funder AND admin (see
+ * the table above), so answering per-route would hand an NGO officer the farmer's bar on
+ * /mentor and take it away again on /funder — the same person, the same session, two answers.
+ * Only the account can settle it.
+ *
+ * Who farms: 'farmer' plainly; 'student' because the nine-month course is practical work on the
+ * learner's own plot and /records is where that work lands; 'admin' because the platform operator
+ * is the escape hatch in every allow-set above and should never be shown less than exists.
+ * 'mentor' is NOT on this list — lib/i18n.tsx describes the role as "Run the course, visit farms,
+ * sign off progress", and the farms being visited are other people's.
+ */
+export const OWN_LAND_ROLES: ReadonlySet<UserRole> = new Set<UserRole>(['farmer', 'student', 'admin']);
+
+/**
+ * Does this account have a farm of its own — so that "my map" and "my money book" mean anything?
+ *
+ * A null role answers TRUE, exactly as canSeeNavLink does and for the same two reasons: signed
+ * out is the sample tour, which has to show the farmer flow or the story disappears; and a
+ * profile that lags its auth account by a beat must not make two tabs pop in late on a slow
+ * phone. Nothing here is a security boundary — /farmer and /records are open to everyone and
+ * always have been. This only decides whether OFFERING the tab is honest.
+ */
+export function farmsOwnLand(role: UserRole | null): boolean {
+  if (role === null) return true;
+  return OWN_LAND_ROLES.has(role);
+}
