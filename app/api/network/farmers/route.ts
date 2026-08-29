@@ -67,7 +67,7 @@ const ROUTE = 'network/farmers';
 // One request round trip's worth of concurrent farmers. Large enough that an org of a few hundred
 // farmers finishes in a handful of batches, small enough that this route can never fire an
 // unbounded burst of Admin SDK reads sized by however large one org has grown to.
-export const BATCH_SIZE = 50;
+const BATCH_SIZE = 50;
 
 function json(body: unknown, status: number) {
   return new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json' } });

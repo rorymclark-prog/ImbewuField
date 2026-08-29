@@ -28,6 +28,10 @@
  */
 export const NO_FLOATING_BACK: ReadonlySet<string> = new Set([
   '/', '/home', '/farmer', '/records', '/account', '/login', '/gate', '/design', '/partners',
+  // /pitch is the projector deck: it is opened directly for a meeting, owns the whole
+  // viewport, and has its own Back/Next controls — a floating back button over a slide
+  // would be a second, wrong navigation system.
+  '/pitch',
 ]);
 
 /** Whether the floating fallback may render for this path. */
