@@ -36,14 +36,24 @@
  *     an empty portfolio — an empty list here reads as "the programme has no farmers".
  *
  * KNOWN COST: this reads six queries PER FARMER (consent + five log collections), so an org of
- * 44 farmers costs ~264 document reads per call. That is fine at the current single-org scale and
- * is not fine at fifty orgs; the fix when it matters is a collectionGroup query per collection
- * filtered by org_id, then a group-by in memory. Left as the simple shape deliberately — the
- * correctness of the consent projection is what this route exists for, and batching it before
- * anyone depends on it would make that harder to review.
+ * 44 farmers costs ~264 document reads per call. That read count is O(farmers) and unchanged below
+ * — the fix for THAT, if it ever matters, is a collectionGroup query per collection filtered by
+ * org_id, then a group-by in memory, deliberately still not done: the correctness of the consent
+ * projection is what this route exists for, and reshaping the query itself would make that harder
+ * to review than reshaping the concurrency around it.
+ *
+ * What DID change (2026-08-29, scale audit): farmers used to load one at a time, fully, before the
+ * next started — an org of 500 farmers was ~500 sequential round trips, which reached Vercel's own
+ * request ceiling well before the per-read dollar cost became the concern (~900s modelled at 5,000
+ * farmers). loadFarmer() below is the exact same per-farmer body, unchanged; what wraps it now is
+ * lib/batch.ts's runInBatches(), which runs BATCH_SIZE farmers concurrently instead of one, cutting
+ * that same org to ~10 round trips. A batch, not one unbounded Promise.all across the whole org, so
+ * one request can't fire an unbounded burst of concurrent Admin SDK reads at whatever size an org
+ * happens to grow to — see tests/batch.test.ts for the concurrency-bound and ordering proof.
  */
 
 import { NextRequest } from 'next/server';
+import { runInBatches } from '@/lib/batch';
 import { canSeeOrg } from '@/lib/network-access';
 import { resolveNetworkCaller } from '@/lib/network-caller';
 import { applyConsent, consentState, hasConsent, type FarmerConsent } from '@/lib/consent';
@@ -54,9 +64,19 @@ import type { ExpenseLog, ProductionLog, SalesLog } from '@/lib/db/types';
 export const runtime = 'nodejs';
 const ROUTE = 'network/farmers';
 
+// One request round trip's worth of concurrent farmers. Large enough that an org of a few hundred
+// farmers finishes in a handful of batches, small enough that this route can never fire an
+// unbounded burst of Admin SDK reads sized by however large one org has grown to.
+export const BATCH_SIZE = 50;
+
 function json(body: unknown, status: number) {
   return new Response(JSON.stringify(body), { status, headers: { 'Content-Type': 'application/json' } });
 }
+
+type FarmerLoadResult =
+  | { kind: 'admin'; out: unknown; ledger: CohortLedger }
+  | { kind: 'granted'; out: unknown; ledger: CohortLedger }
+  | { kind: 'withheld' };
 
 export async function GET(req: NextRequest) {
   // Steps (i) and (ii) — token, caller profile, role decision, funder /grants resolution — are
@@ -77,16 +97,10 @@ export async function GET(req: NextRequest) {
   const farmerSnap = await db.collection('profiles')
     .where('role', '==', 'farmer').where('org_id', '==', orgId).get();
 
-  const out = [];
-  // The ledgers behind the cohort chart, consent-filtered exactly like the metrics beside it —
-  // see the `monthly` note in the header. A farmer contributes to a series only where they
-  // granted that scope; everyone else contributes a `null` book, which the series counts as
-  // "not readable" rather than as a month of zero.
-  const ledgers: CohortLedger[] = [];
-  let withheldEntirely = 0;
-  let adminBypassed = 0;
-
-  for (const doc of farmerSnap.docs) {
+  // Same per-farmer read-derive-project shape as before, extracted only so it can run inside a
+  // batch instead of a bare for-loop. See KNOWN COST above for why this stays six reads per
+  // farmer rather than becoming a collectionGroup query.
+  async function loadFarmer(doc: (typeof farmerSnap.docs)[number]): Promise<FarmerLoadResult> {
     const consentSnap = await db.collection('farmer_consents').doc(doc.id).get();
     const consent = (consentSnap.exists ? consentSnap.data() : null) as FarmerConsent | null;
 
@@ -130,13 +144,14 @@ export async function GET(req: NextRequest) {
       // because it only showed up as an empty dashboard, which is also what a real empty programme
       // looks like. The consent STATE is still reported on the row, so the UI can say plainly that
       // a farmer has not agreed to share — the operator sees the figure and sees that fact.
-      adminBypassed++;
-      out.push({ farmer: { ...raw.farmer, consent: consentState(consent) }, metrics: raw.metrics });
-      ledgers.push({
-        production: productionRows, sales: salesRows, expenses: expenseRows,
-        joinedAt: farmer.joinedAt ?? null,
-      });
-      continue;
+      return {
+        kind: 'admin',
+        out: { farmer: { ...raw.farmer, consent: consentState(consent) }, metrics: raw.metrics },
+        ledger: {
+          production: productionRows, sales: salesRows, expenses: expenseRows,
+          joinedAt: farmer.joinedAt ?? null,
+        },
+      };
     }
 
     const summary = applyConsent(raw, consent, coarsenFarmerLocation);
@@ -144,18 +159,43 @@ export async function GET(req: NextRequest) {
     // A farmer who granted nothing at all is not listed as an empty card — an all-null row
     // still discloses that this person is enrolled, which is itself their information.
     if (summary.farmer.consent === 'granted') {
-      out.push(summary);
       // Per-scope, and only reached for a non-admin caller (the admin branch above returned).
       // `null` — not an empty array — is what a withheld book contributes: lib/cohort-series.ts
       // reads that as "not readable by this account", which is the whole reason a funder's chart
       // can say "covers 9 of 16 farmers" instead of drawing seven farmers' silence as zero.
-      ledgers.push({
-        production: hasConsent(consent, 'production') ? productionRows : null,
-        sales: hasConsent(consent, 'sales') ? salesRows : null,
-        expenses: hasConsent(consent, 'expenses') ? expenseRows : null,
-        joinedAt: farmer.joinedAt ?? null,
-      });
-    } else withheldEntirely++;
+      return {
+        kind: 'granted',
+        out: summary,
+        ledger: {
+          production: hasConsent(consent, 'production') ? productionRows : null,
+          sales: hasConsent(consent, 'sales') ? salesRows : null,
+          expenses: hasConsent(consent, 'expenses') ? expenseRows : null,
+          joinedAt: farmer.joinedAt ?? null,
+        },
+      };
+    }
+    return { kind: 'withheld' };
+  }
+
+  const out = [];
+  // The ledgers behind the cohort chart, consent-filtered exactly like the metrics beside it —
+  // see the `monthly` note in the header. A farmer contributes to a series only where they
+  // granted that scope; everyone else contributes a `null` book, which the series counts as
+  // "not readable" rather than as a month of zero.
+  const ledgers: CohortLedger[] = [];
+  let withheldEntirely = 0;
+  let adminBypassed = 0;
+
+  // Farmers run BATCH_SIZE at a time, concurrently within a batch — see the "What DID change"
+  // note above. runInBatches (lib/batch.ts) preserves farmerSnap.docs order in its result
+  // regardless of which farmer's reads finish first, so out[]/ledgers[] end up identical to the
+  // old sequential loop's; only the wall-clock changes.
+  const results = await runInBatches(farmerSnap.docs, BATCH_SIZE, loadFarmer);
+  for (const result of results) {
+    if (result.kind === 'withheld') { withheldEntirely++; continue; }
+    out.push(result.out);
+    ledgers.push(result.ledger);
+    if (result.kind === 'admin') adminBypassed++;
   }
 
   if (withheldEntirely > 0) {
