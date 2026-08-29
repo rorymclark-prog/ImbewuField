@@ -329,6 +329,13 @@ export function CohortTimeline({ series, className }: { series: CohortSeries; cl
   const maxKg = Math.max(kgScale.max, 1);
   const maxZar = Math.max(zarScale.max, 1);
 
+  // Rule 3 reaches the axis itself. With no sales book shared, every month's incomeZar is null
+  // (lib/cohort-series.ts sets income to 0 only when salesFarmers > 0), cappedScale sees only
+  // zeros, and the Math.max(…, 1) floor above would print a confident "R1" over an empty plot —
+  // a rand figure that corresponds to nothing. The tick and the plot say what is true instead;
+  // the panel keeps its height so the month axis both panels share cannot move.
+  const zarWithheld = series.salesFarmers === 0;
+
   // Rule 2: every bar the axis cut is named in full, in words, underneath the chart. Picked and
   // sold are named separately, because when they come from different farmers only one of them may
   // be the bar that was actually cut.
@@ -440,9 +447,20 @@ export function CohortTimeline({ series, className }: { series: CohortSeries; cl
           <div className="flex items-baseline justify-between" style={{ marginBottom: 4 }}>
             <span className="font-sans" style={{ fontSize: MICRO, color: FAINT }}>Money the farmers took in</span>
             <span className="font-sans" style={{ fontSize: MICRO, color: FAINT, fontVariantNumeric: 'tabular-nums' }}>
-              {randTick(maxZar)}
+              {zarWithheld ? 'Not shared' : randTick(maxZar)}
             </span>
           </div>
+          {zarWithheld ? (
+            /* The training chart's answer to the same situation, in the same voice — but kept at
+               the plot's full height, because the month axis below is shared with the kilogram
+               panel and must not shift when this one has nothing to draw. */
+            <div className="flex items-center" style={{ height: PLOT_ZAR, borderBottom: `1px solid ${AXIS}` }}>
+              <p className="font-sans" style={{ fontSize: 13, color: MUTED, lineHeight: 1.55, margin: 0 }}>
+                No farm in this cohort has shared its sales book. Income nobody agreed to show is
+                not an income of R0, so these months are simply not drawn.
+              </p>
+            </div>
+          ) : (
           <div
             role="img"
             aria-label={`Rand income each month across ${series.salesFarmers} farms.`}
@@ -475,6 +493,7 @@ export function CohortTimeline({ series, className }: { series: CohortSeries; cl
               );
             })}
           </div>
+          )}
         </div>
 
         {/* ── the one month axis both panels are drawn against ── */}

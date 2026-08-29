@@ -35,12 +35,13 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '29 August',
-    sha: 'a000770',
+    sha: '1cba56e',
     changes: [
       'Programme reports now remember which organisation they belong to',
       'Catalogue plants now show their own picture, with fruit and flowers easy to see',
       'The design map now uses the matching overhead crown for each named plant',
       'Fair-use limits now share the AI helpers out, so one visitor cannot use them all up',
+      'The funder money chart now says when no one shares sales, instead of inventing a scale',
       'Funder charts now say when picked and sold come from different farmers, never guessing',
       'A sold bar is never drawn shorter than the sold figure printed above it',
       'Lima now knows about your sharing settings and can say who sees what',
