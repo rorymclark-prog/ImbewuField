@@ -31,7 +31,7 @@ Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 | Kuni bush | PASS | `public/element-art/tree_kuni_bush.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/kuni-bush-v1.png` | `9912b11` |
 | Puzzle bush | PASS | `public/element-art/tree_puzzle_bush.png` | `9596647` | PASS | `public/render-assets/reference-blueprint/puzzle-bush-v1.png` | `6c6a692` |
 | Red milkwood / moepel | PASS | `public/element-art/tree_red_milkwood_moepel.png` | `c1f4f37` | PASS | `public/render-assets/reference-blueprint/red-milkwood-tree-v1.png` | `353a7d0` |
-| Shepherd's tree | PASS | `public/element-art/tree_shepherd_s_tree.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/shepherds-tree-v1.png` | `8ea514b` |
+| Shepherd's tree | PASS | `public/element-art/tree_shepherd_s_tree.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/shepherds-tree-v1.png` | `75b461b` |
 | Small-leaved guarri | PASS | `public/element-art/tree_small_leaved_guarri.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/small-leaved-guarri-v1.png` | `88045ae` |
 | Waterblommetjie | PASS | `public/element-art/tree_waterblommetjie.png` | `c1f4f37` | PASS | `public/render-assets/reference-blueprint/waterblommetjie-v1.png` | `d008768` |
 | Wild date palm | PASS | `public/element-art/tree_wild_date_palm.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/wild-date-palm-v1.png` | `4e9365f` |
