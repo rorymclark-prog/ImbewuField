@@ -1,6 +1,6 @@
 # Climate-zone crown HSV audit
 
-- Git commit: `f00c0a113fd578df6d4a0e35fc42643190f77690`
+- Git commit: `9b642d42fe70b21f5a07fa4d47acd94f2197776d`
 - Top-down assets: 53 / 53
 - Pixel selection: decoded RGBA pixels with alpha > 128.
 - Hue: circular mean weighted by saturation × alpha. Neutral pixels therefore do not impose an arbitrary hue, and antialiased pixels contribute in proportion to coverage.
