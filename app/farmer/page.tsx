@@ -103,16 +103,16 @@ function HomeInner() {
     const attempt = () => {
       import('@/components/ReportView').then(open, async () => {
         const retry = await appConfirm({
-          title: 'Reports need signal the first time',
-          message: 'This part of the app is not saved on your phone yet, and there is no signal right now. Open it once with signal and it will work offline after that.',
-          confirmLabel: 'Try again',
-          cancelLabel: 'Close',
+          title: t('reportsOfflineTitle'),
+          message: t('reportsOfflineMessage'),
+          confirmLabel: t('reportsOfflineRetry'),
+          cancelLabel: t('reportsOfflineClose'),
         });
         if (retry) attempt();
       });
     };
     attempt();
-  }, [appConfirm]);
+  }, [appConfirm, t]);
 
   const handleViewReport = useCallback((r: SavedReport) => {
     withReportChunk(() => {

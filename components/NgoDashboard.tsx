@@ -660,7 +660,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                               <img src={photoUrl} alt={c.n} className="w-full h-full object-cover" />
                             </div>
                           ) : (
-                            <div key={i} className="rounded-lg flex flex-col items-center justify-center" style={{ width: 54, height: 54, background: `${c.c}33`, border: `1px solid ${c.c}` }}><CropIcon crop={c} size={20} /><span className="font-mono" style={{ fontSize: 8, color: '#9A8268' }}>{c.n}</span></div>
+                            <div key={i} className="rounded-lg flex flex-col items-center justify-center" style={{ width: 54, height: 54, background: `${c.c}33`, border: `1px solid ${c.c}` }}><CropIcon crop={c} size={18} /><span className="font-mono text-center leading-none break-words px-0.5" style={{ fontSize: 12, color: '#9A8268' }}>{c.n}</span></div>
                           )
                         ))}
                       </div>
@@ -713,7 +713,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                         const prod = gr.production.reduce((s, p) => s + p.kg, 0);
                         return (
                           <button key={gr.id} onClick={() => openGardener(gr)} className="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-left transition-all" style={{ background: '#F5F0E8', border: '1px solid #E2D8C4' }}>
-                            <div className="rounded-full flex items-center justify-center flex-shrink-0" style={{ width: 26, height: 26, background: 'rgba(31,77,43,0.18)', color: '#1F4D2B', fontSize: 10, fontWeight: 600 }}>{initials(gr.name)}</div>
+                            <div className="rounded-full flex items-center justify-center flex-shrink-0" style={{ width: 28, height: 28, background: 'rgba(31,77,43,0.18)', color: '#1F4D2B', fontSize: 12, fontWeight: 600 }}>{initials(gr.name)}</div>
                             <div className="flex-1 min-w-0"><div className="text-xs font-display font-medium truncate" style={{ color: '#20190F' }}>{gr.name}</div><div className="text-xs font-mono" style={{ color: '#9A8268' }}>{gr.plot} · {gr.sizeM2}m²</div></div>
                             <span className="text-xs font-mono flex-shrink-0" style={{ color: '#1F4D2B' }}>{prod > 0 ? `${prod}kg` : '—'}</span>
                           </button>

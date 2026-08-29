@@ -16,6 +16,7 @@ import {
   getSandboxProduction, addSandboxProduction, deleteSandboxProduction,
   getSandboxSales, addSandboxSale, updateSandboxSale, deleteSandboxSale,
   getSandboxExpenses, addSandboxExpense, updateSandboxExpense, deleteSandboxExpense,
+  getSandboxConsent, setSandboxConsentScope, revokeAllSandboxConsent,
 } from '@/lib/sample-mode';
 import { emptyConsent, revokeAll, setScope, type ConsentScope, type FarmerConsent } from '@/lib/consent';
 import type {
@@ -494,7 +495,10 @@ export async function getOrganizationName(orgId: string): Promise<string | null>
 // live in lib/consent.ts; this is only the Firestore edge.
 
 export async function getMyConsent(): Promise<FarmerConsent | null> {
-  if (isSampleMode()) return null;
+  // A working sandbox, not a dead one: serve the in-memory demo record instead of null, or
+  // ConsentPanel.tsx's toggle() assigns `null` to state and every switch reverts to unchecked
+  // the instant it is flipped — see lib/sample-mode.ts's consent section for the full story.
+  if (isSampleMode()) return getSandboxConsent();
   const f = fb(); const u = uid(); if (!f || !u) return null;
   const s = await getDoc(doc(f.db, 'farmer_consents', u));
   return s.exists() ? ({ ...s.data() } as unknown as FarmerConsent) : null;
@@ -514,7 +518,7 @@ export async function getFarmerConsent(profileId: string): Promise<FarmerConsent
  * would silently drop the other scopes the farmer had already chosen.
  */
 export async function setMyConsentScope(scope: ConsentScope, value: boolean): Promise<FarmerConsent | null> {
-  if (isSampleMode()) return null;
+  if (isSampleMode()) return setSandboxConsentScope(scope, value);
   const f = fb(); const u = uid(); if (!f || !u) return null;
   const me = await getMyProfile();
   const now = new Date().toISOString();
@@ -529,7 +533,7 @@ export async function setMyConsentScope(scope: ConsentScope, value: boolean): Pr
 /** Withdraw everything at once. Deliberately not a six-toggle loop: revocation must be ONE
  *  action a farmer can complete, not a checklist they might half-finish. */
 export async function revokeAllMyConsent(): Promise<FarmerConsent | null> {
-  if (isSampleMode()) return null;
+  if (isSampleMode()) return revokeAllSandboxConsent();
   const f = fb(); const u = uid(); if (!f || !u) return null;
   const current = await getMyConsent();
   if (!current) return null;

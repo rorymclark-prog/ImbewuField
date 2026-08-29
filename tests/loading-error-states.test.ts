@@ -38,6 +38,22 @@ test('a failed replies read on the contact screen says so and offers Retry, inst
     'the failure banner must offer a way to retry the same read, not just an apology');
 });
 
+test('a failed profile read on the contact screen says so and offers Retry, instead of silently hiding the phone-contact card', () => {
+  const page = source('../app/contact/page.tsx');
+  assert.match(page, /const \[profileError, setProfileError\] = useState/,
+    'the contact screen must track a distinct failed-profile-read state, not just leave profile null');
+  assert.match(page, /setProfileError\(true\)/,
+    'a rejected getMyProfile() read must flip the error state, not disappear into an empty catch');
+  assert.match(page, /\{profileError && \(/, 'a failed profile read must render a card');
+  assert.match(page, /onClick=\{loadProfile\}/,
+    'the failure card must offer a way to retry the same read, not just an apology');
+  // The regression this guards: profile?.phone gates the whole quick-contact call card, so a
+  // swallowed failure here did not just hide an error — it silently deleted a farmer's fastest
+  // path to a human, with nothing on screen to say why.
+  assert.doesNotMatch(page, /getMyProfile\(\)\.then\(setProfile\)\.catch\(\(\) => \{\}\);/,
+    'the profile fetch must not go back to a bare swallowed catch');
+});
+
 test('a failed photo-analysis call on the design panel keeps the sheet open and says so, instead of opening a report that analysed nothing', () => {
   const panel = source('../components/DataPanel.tsx');
   assert.match(panel, /const \[promptError, setPromptError\] = useState/,
