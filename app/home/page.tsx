@@ -417,6 +417,23 @@ function HomeLandingInner() {
             cursor: 'pointer',
           }}
         >
+          <img
+            src="/home-images/sample-farm-landscape.webp"
+            alt=""
+            aria-hidden="true"
+            loading="lazy"
+            decoding="async"
+            style={{
+              display: 'block',
+              width: '100%',
+              height: 118,
+              objectFit: 'cover',
+              objectPosition: 'center',
+              borderRadius: 14,
+              marginBottom: 13,
+              border: '1px solid rgba(32,25,15,0.08)',
+            }}
+          />
           <div className="flex items-center gap-2 mb-1.5">
             <Sparkles size={16} style={{ color: 'var(--color-harvest)', flexShrink: 0 }} />
             <span className="font-display font-semibold" style={{ fontSize: 15, color: 'var(--color-ink)' }}>

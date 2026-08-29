@@ -1,21 +1,18 @@
 # Crop Art Brief
 
-**Status:** ready for generation
-**Branch:** `codex/crop-art`
+**Status:** deployed and guarded by `tests/element-art.test.ts`
 **Requested by:** Rory, 2026-08-15 — flagged the Farm-gate Prices screen showing a
 raw 🧡 orange-heart emoji for Butternut ("that's just an orange heart... we can do
 better than that").
 
 ## What this is
 
-26 crops in `lib/crop-catalog.ts` (`CROPS`) currently render as raw emoji
+29 crops in `lib/crop-catalog.ts` (`CROPS`) use purpose-made produce pictures
 everywhere a price, listing, or harvest record needs an icon — Farm-gate Prices,
 the Exchange board and listing cards, Harvest Reconciliation, the Atlas panel,
-the facilitator crop screen, and the NGO dashboard. Some of those emoji are
-actively wrong for South African context (🧡 for butternut, 🎃 "jack-o'-lantern
-pumpkin" for a savoury African pumpkin, 🥗 "salad bowl" for lettuce-the-plant).
-This brief specifies one real PNG per crop to replace them, with the emoji kept
-as the permanent fallback.
+the facilitator crop screen, and the NGO dashboard. The original emoji remain
+the permanent fallback, but the deployed mapping is complete. This brief records
+the rules that replacements and newly added crops must continue to satisfy.
 
 **This batch is produce icons, not garden-element art.** It is a sibling effort
 to `docs/ELEMENT-ART-BRIEF.md` (which covers plants/objects placed on the design
@@ -57,9 +54,9 @@ all readable apart in silhouette alone, before color even enters. Draw the
 correct real silhouette for each crop; don't default to "round blob, tinted
 differently" for the 11 crops below that are predominantly green.
 
-**11 of 26 crops are naturally green-dominant** (swiss-chard, kale, cabbage,
+**12 of 29 crops are naturally green-dominant** (swiss-chard, kale, cabbage,
 lettuce, coriander, peas, broccoli, cucumber, green-beans, broad-beans,
-watermelon-rind). This is exactly the failure mode the hue-spread rule exists
+watermelon-rind, true-spinach). This is exactly the failure mode the hue-spread rule exists
 to catch. Differentiate them on three axes at once, not color alone:
 1. **Silhouette** (see above — this does most of the work here)
 2. **Value** — dark kale vs. pale-green cabbage vs. mid-green lettuce vs. bright
@@ -88,6 +85,7 @@ reason but the anchor is what a 24px thumbnail should read as.
 | onions | Onions | 🧅 | `#C9A15A` | papery gold-brown skin |
 | tomatoes | Tomatoes | 🍅 | `#D14B2E` | small vine cluster, bright red |
 | peppers | Peppers | 🫑 | `#3E9142` | green bell, glossy |
+| chilli | Chilli | 🌶️ | `#D62929` | long tapered hot chillies, mostly red; never another bell pepper |
 | sweet-potato | Sweet potato | 🍠 | `#A8542E` | reddish-brown skin, distinct from potato below |
 | potato | Potato | 🥔 | `#B89968` | tan/buff skin, matte, lumpy |
 | lettuce | Lettuce | 🥗 | `#7BAE4E` | loose leafy head, mid-green |
@@ -101,6 +99,8 @@ reason but the anchor is what a 24px thumbnail should read as.
 | watermelon | Watermelon | 🍉 | `#2E7D32` | rind green outside; a cut wedge showing red flesh is a good differentiator if it still reads at 24px |
 | coriander | Coriander | 🌱 | `#5C9C4A` | loose leafy bunch, lighter/yellower green than kale |
 | oats | Oats (winter cover crop) | 🌾 | `#D6C280` | golden dry stalks tied at base, only non-vegetable in the set |
+| true-spinach | True spinach | 🥬 | `#356B3B` | smooth tender leaves; no crinkled kale or thick chard stalks |
+| turnip | Turnip | 🫜 | `#7A3F83` | white roots with unmistakable purple shoulders |
 
 Spread check: hue runs full circle (red 10°, orange 30°, gold 45°, yellow-green
 90°, green 100-140°, blue-green 150°, magenta 330°) — well over the 55° floor.
@@ -111,7 +111,8 @@ three-axis rule above rather than drifting them all toward the table's average.
 ## Hard technical rules (same as `ELEMENT-ART-BRIEF.md` — repeated here for a
 ## self-contained brief)
 
-- **1024×1024 PNG, RGBA.** All four corners fully transparent (alpha = 0).
+- **256×256 deployed PNG, RGBA.** Generate larger when useful, then downsample once with
+  high-quality filtering before committing. All four corners fully transparent (alpha = 0).
 - **No baked ground, shadow, or surface.** The app places these icons on its
   own backgrounds (white cards, colored chips, map pins) — a baked shadow or
   ground plane under the product will look wrong in every one of them.
@@ -133,7 +134,7 @@ three-axis rule above rather than drifting them all toward the table's average.
 
 `public/crop-art/<key>.png` — using the catalog `key` field exactly as it
 appears in `lib/crop-catalog.ts` (e.g. `public/crop-art/butternut.png`,
-`public/crop-art/dry-beans.png`, hyphens kept as-is). 26 files total.
+`public/crop-art/dry-beans.png`, hyphens kept as-is). 29 files total.
 
 ## Mandatory self-check
 
@@ -149,7 +150,7 @@ import sys
 for path in sys.argv[1:]:
     im = Image.open(path).convert("RGBA")
     w, h = im.size
-    assert (w, h) == (1024, 1024), f"{path}: wrong size {w}x{h}"
+    assert (w, h) == (256, 256), f"{path}: wrong size {w}x{h}"
     corners = [im.getpixel((0, 0)), im.getpixel((w-1, 0)),
                im.getpixel((0, h-1)), im.getpixel((w-1, h-1))]
     for i, (r, g, b, a) in enumerate(corners):
@@ -168,16 +169,10 @@ contrast needs more separation, not a color tweak.
 
 ## What Codex should do
 
-1. Generate all 26 PNGs into `public/crop-art/` per this brief.
-2. Run the self-check script above against all 26 files; fix any failures.
-3. Do the manual 24×24 downscale-and-look pass on the full set, paying
-   particular attention to the 11 green-dominant crops listed above — commit
-   again if any need rework.
-4. Commit everything to the **`codex/crop-art`** branch (already checked out
-   in this worktree). Do not push, do not open a PR — Claude handles push,
-   PR, CI monitoring, and merge.
-5. Do not touch `lib/crop-catalog.ts` — it belongs to another in-flight branch.
-   The art files are self-contained; wiring them into the app is a separate
-   commit Claude will make once the art lands (see `lib/crop-art.ts`, already
-   wired to fall back to the current emoji for any crop that doesn't have art
-   yet, so partial delivery is safe to commit incrementally).
+1. Generate or replace one PNG at a time in `public/crop-art/` per this brief.
+2. Run the pixel-level check immediately; do not move to another crop while it fails.
+3. Do the manual 24×24 downscale-and-look pass, paying particular attention to
+   the 12 green-dominant crops listed above.
+4. Add the matching `lib/crop-art.ts` entry in the same commit. The automated
+   guard requires every catalog key, mapping and on-disk filename to agree.
+5. Do not change a crop name while doing artwork; the checked catalog is the authority.

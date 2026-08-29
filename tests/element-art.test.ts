@@ -14,6 +14,8 @@ import { PNG } from 'pngjs';
 
 import { ELEMENT_CATALOG } from '../lib/design-elements.ts';
 import { SPECIES_PICKER_ART } from '../lib/species-art.ts';
+import { CROPS } from '../lib/crop-catalog.ts';
+import { CROP_ART } from '../lib/crop-art.ts';
 
 const ROOT = join(process.cwd(), 'public', 'element-art');
 const PREFIX = '/element-art/';
@@ -193,4 +195,54 @@ test('the JoJo tank family reads as four different SIZES, not four labels', () =
       'the size on the card must track the size on the ground',
     );
   }
+});
+
+// Crop pictures are another small-image picker library with the same failure modes: an unnamed
+// file falls back to an emoji, an RGB export paints a square, and generation-sized PNGs make a
+// farmer download tens of megabytes for pictures that are normally only 20-68px on screen.
+const CROP_ROOT = join(process.cwd(), 'public', 'crop-art');
+const CROP_PREFIX = '/crop-art/';
+const cropFiles = readdirSync(CROP_ROOT).filter((file) => file.endsWith('.png')).sort();
+
+test('every crop has one correctly named picture and no crop picture is orphaned', () => {
+  const cropKeys = CROPS.map((crop) => crop.key).sort();
+  assert.deepEqual(Object.keys(CROP_ART).sort(), cropKeys,
+    'a crop without art silently falls back to an emoji, while an extra mapping cannot belong to a crop');
+
+  const mappedFiles = cropKeys.map((key) => {
+    assert.equal(CROP_ART[key], `${CROP_PREFIX}${key}.png`, `${key}: picture path must follow its stable crop key`);
+    return `${key}.png`;
+  }).sort();
+  assert.deepEqual(cropFiles, mappedFiles, 'crop-art on disk and crop-art shown in the app must be the same set');
+});
+
+test('crop pictures are real transparent cut-outs at their deployed resolution', () => {
+  for (const file of cropFiles) {
+    const image = PNG.sync.read(readFileSync(join(CROP_ROOT, file)));
+    assert.deepEqual([image.width, image.height], [256, 256],
+      `${file}: shipping a raw generation-sized image wastes mobile data`);
+
+    const alphaAt = (x: number, y: number) => image.data[(y * image.width + x) * 4 + 3];
+    for (const [x, y] of [[0, 0], [image.width - 1, 0], [0, image.height - 1], [image.width - 1, image.height - 1]]) {
+      assert.equal(alphaAt(x, y), 0,
+        `${file}: corner (${x},${y}) is not transparent — a baked background would paint a square on every card`);
+    }
+
+    let transparent = 0;
+    for (let i = 3; i < image.data.length; i += 4) if (image.data[i] === 0) transparent += 1;
+    const fraction = transparent / (image.width * image.height);
+    assert.ok(fraction > 0.10 && fraction < 0.85,
+      `${file}: ${(fraction * 100).toFixed(1)}% transparent — likely flattened or too small to read as an icon`);
+  }
+});
+
+test('the complete crop-picture library stays practical on a rural connection', () => {
+  const sizes = cropFiles.map((file) => ({ file, bytes: statSync(join(CROP_ROOT, file)).size }));
+  const total = sizes.reduce((sum, item) => sum + item.bytes, 0);
+  const worst = sizes.sort((a, b) => b.bytes - a.bytes)[0];
+
+  assert.ok(worst.bytes < 180_000,
+    `${worst.file} is ${(worst.bytes / 1024).toFixed(0)} KB — one phone-sized crop picture should stay below 180 KB`);
+  assert.ok(total < 4_000_000,
+    `crop-art totals ${(total / 1_000_000).toFixed(1)} MB — over the 4 MB budget for the complete library`);
 });
