@@ -24,6 +24,13 @@ import type { ToolMode } from './StudioShell';
 export const PX_PER_M = 16;
 const STAGE_W_M = 34;
 const STAGE_H_M = 20;
+/** True-scale footprint in px at 1:1 zoom — the size every child (grid, boundary, items) is
+ *  laid out at. On viewports narrower than this the whole stage is shrunk with a CSS
+ *  transform (see `--stage-scale` below) rather than left to overflow/scroll-clip, which is
+ *  what was happening on phone: the map rendered at full 544px width inside a ~360px
+ *  viewport and got cut off at the right edge instead of framing to the screen. */
+const STAGE_PX_W = STAGE_W_M * PX_PER_M;
+const STAGE_PX_H = STAGE_H_M * PX_PER_M;
 /** Mirrors DesignCanvas.tsx's MIN_ITEM_HIT_PX precedent: a real footprint drawn narrower than
  *  this would be unreadable/untappable, so the DRAWN size is floored — the stored wM/hM (and
  *  therefore the dimension label on the palette card) is never touched. */
@@ -70,8 +77,14 @@ export default function CanvasStage({
   const toMetres = useCallback((clientX: number, clientY: number): [number, number] => {
     const rect = stageRef.current?.getBoundingClientRect();
     if (!rect) return [0, 0];
-    const xM = Math.min(STAGE_W_M, Math.max(0, (clientX - rect.left) / PX_PER_M));
-    const yM = Math.min(STAGE_H_M, Math.max(0, (clientY - rect.top) / PX_PER_M));
+    // rect is the POST-transform (visually scaled) box on phone, so derive px/metre from
+    // what's actually on screen rather than assuming the 1:1 PX_PER_M constant — otherwise a
+    // tap on a shrunk stage lands at the wrong metre coordinate (and half the map becomes
+    // unclickable, clamped short of its real 34x20m extent).
+    const scaleX = rect.width / STAGE_PX_W;
+    const scaleY = rect.height / STAGE_PX_H;
+    const xM = Math.min(STAGE_W_M, Math.max(0, (clientX - rect.left) / (PX_PER_M * scaleX)));
+    const yM = Math.min(STAGE_H_M, Math.max(0, (clientY - rect.top) / (PX_PER_M * scaleY)));
     return [Math.round(xM * 10) / 10, Math.round(yM * 10) / 10];
   }, []);
 
@@ -98,20 +111,44 @@ export default function CanvasStage({
     : null;
 
   return (
-    <div className="relative flex-1 overflow-auto p-4" style={{ background: 'var(--bg)' }}>
-      <div
-        ref={stageRef}
-        onPointerDown={handleStageClick}
-        className="relative shrink-0 select-none overflow-hidden rounded-xl border shadow-[var(--shadow-card)]"
-        style={{
-          width: STAGE_W_M * PX_PER_M,
-          height: STAGE_H_M * PX_PER_M,
-          borderColor: 'var(--border)',
-          background: baseMap.visible ? 'var(--surface)' : '#FFFFFF',
-          opacity: baseMap.visible ? Math.max(baseMap.opacity / 100, 0.55) : 1,
-          cursor: tool === 'draw' || tool === 'measure' || armedDefId ? 'crosshair' : 'default',
-        }}
-      >
+    <div
+      className="relative flex-1 overflow-auto p-4"
+      style={{
+        background: 'var(--bg)',
+        // Establishes this div as the query container so `cqw` below measures ITS content
+        // width (after padding) — the space actually available to frame the map into.
+        containerType: 'inline-size',
+        // Shrink past 1:1, never magnify past it: on a phone-width container this comes out
+        // < 1 and the transform below scales the true-size stage down to fit; on desktop the
+        // container is already wider than the stage so this clamps to exactly 1 (unchanged
+        // from before this fix).
+        // Dividing a length (100cqw) by a bare number produces a length again, which
+        // `scale()` below rejects (it wants a unitless ratio) — dividing length-by-length
+        // (100cqw / 544px) is what actually yields a number. Silently invalid CSS like the
+        // number-divisor version doesn't error anywhere; it just makes `transform` compute
+        // to `none` and the stage renders unscaled — exactly this bug's original shape.
+        '--stage-scale': `min(1, calc(100cqw / ${STAGE_PX_W}px))`,
+      } as React.CSSProperties}
+    >
+      {/* Reserves the correctly-scaled box (via aspect-ratio) so the transformed stage below
+          doesn't leave dead space or force the parent to overflow — width is real layout,
+          not just a visual scale, so the page around it reflows to match. */}
+      <div className="relative" style={{ width: '100%', maxWidth: STAGE_PX_W, aspectRatio: `${STAGE_PX_W} / ${STAGE_PX_H}` }}>
+        <div
+          ref={stageRef}
+          onPointerDown={handleStageClick}
+          className="relative shrink-0 select-none overflow-hidden rounded-xl border shadow-[var(--shadow-card)]"
+          style={{
+            width: STAGE_PX_W,
+            height: STAGE_PX_H,
+            transform: 'scale(var(--stage-scale))',
+            transformOrigin: 'top left',
+            borderColor: 'var(--border)',
+            background: baseMap.visible ? 'var(--surface)' : '#FFFFFF',
+            opacity: baseMap.visible ? Math.max(baseMap.opacity / 100, 0.55) : 1,
+            cursor: tool === 'draw' || tool === 'measure' || armedDefId ? 'crosshair' : 'default',
+          }}
+        >
         {/* Base map grid — every 5 m, stands in for the satellite/drone photo underlay. */}
         {baseMap.visible && (
           <svg className="pointer-events-none absolute inset-0 h-full w-full" aria-hidden>
@@ -219,12 +256,16 @@ export default function CanvasStage({
           );
         })}
       </div>
+      </div>
 
       {/* Scale bar + north arrow — cheap, honest cartography chrome; PX_PER_M is a real,
-          declared constant, so a 5 m bar really does measure 5*PX_PER_M px. */}
+          declared constant, so a 5 m bar really does measure 5*PX_PER_M px AT 1:1 ZOOM. On a
+          shrunk phone stage the tick is scaled by the same --stage-scale the map itself uses,
+          so "5 m" keeps meaning 5 m on screen instead of silently going stale once the stage
+          stops rendering at native size. */}
       <div className="mt-2 flex items-center gap-4 text-xs text-ink-muted">
         <div className="flex items-center gap-1.5">
-          <span style={{ width: 5 * PX_PER_M, height: 3, background: 'var(--text)' }} />
+          <span style={{ width: `calc(${5 * PX_PER_M}px * var(--stage-scale))`, height: 3, background: 'var(--text)' }} />
           5 m
         </div>
         <div>N ↑</div>
