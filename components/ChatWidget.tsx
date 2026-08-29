@@ -77,13 +77,14 @@ export default function ChatWidget() {
   }
 
   // Skip on auth pages, home (which has LimaBar), the Design Studio (its
-  // bottom-docked tool palette owns the bottom-left corner — the FAB covered Select), and the
+  // bottom-docked tool palette owns the bottom-left corner — the FAB covered Select), the
   // public partners showcase (no farmer context to chat about, and it collides with that page's
-  // own "Get the app" CTA).
+  // own "Get the app" CTA), and the /pitch projector deck (a chat FAB floating over a
+  // presentation slide, and over the live app already embedded inside it, helps nobody).
   if (
     pathname.startsWith('/gate') || pathname.startsWith('/login') ||
     pathname.startsWith('/home') || pathname.startsWith('/design') ||
-    pathname.startsWith('/partners')
+    pathname.startsWith('/partners') || pathname.startsWith('/pitch')
   ) return null;
 
   // WHERE THE FAB PARKS WHEN NOBODY HAS MOVED IT.
