@@ -803,6 +803,20 @@ const T_en: Dict = {
   communitySignInRequired: 'Sign in to use the community layer.',
   communityLoadError: 'Couldn\'t load the community layer right now. Check your connection and try again.',
   communityRetry: 'Retry',
+  /*
+   * THE THREE TABS, PLUS THE CHARTS AS A VIEW INSIDE THE BOOK.
+   *
+   * ENGLISH ONLY, ON PURPOSE. The Gogo Test audit gave these words — "one book with three tabs:
+   * Picked · Sold · Spent. That's her mental model already and it needs no translation" — and no
+   * existing key in this dictionary carries any of them as a standalone label. Nothing here may
+   * be coined in isiZulu or any other language without a first-language reviewer (see
+   * tests/farmer-i18n-gaps.test.ts), so the other ten locales fall through to these strings until
+   * one supplies the real words. A true English word beats a fluent invented isiZulu one.
+   */
+  bookTabPicked: 'Picked',
+  bookTabSold: 'Sold',
+  bookTabSpent: 'Spent',
+  bookTabCharts: 'Charts',
   myRecordsTitle: 'My Records',
   myRecordsSubtitle: 'What you grow · what you sell · designs from your supervisor',
   myRecordsSignInTitle: 'Sign in to keep your own records',

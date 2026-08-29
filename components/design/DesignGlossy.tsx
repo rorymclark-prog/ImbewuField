@@ -47,6 +47,7 @@ import { zoneBadgePositions } from '@/lib/canvas-labels';
 import { enqueueRenderJob, mapSerially, subscribeRenderJob, fetchRenderOutput, qualityCacheSuffix, recordResumeAttempt, clearResumeAttempts, resumeAttemptsExhausted, renderJobAttribution, type RenderQuality } from '@/lib/render-jobs';
 import type { RenderEngine } from '@/lib/render-job-contract';
 import { authoritativeHouseFootprints } from '@/lib/house-footprints';
+import { isSampleMode, SAMPLE_MODE_RENDER_REFUSAL } from '@/lib/sample-mode';
 // Extracted (behaviour-preserving) — see lib/glossy-filters.ts and lib/producer-labels.ts.
 // Re-exported below so existing consumers (lib/producer-prompt.ts comments, app/design/page.tsx,
 // components/design/DesignPrint.tsx) keep importing them from this module unchanged.
@@ -1942,6 +1943,13 @@ async function requestProducer(
   designBrief = '',
   promptVariant: 'rewrite' | 'legacy' = 'rewrite',
 ): Promise<string> {
+  // Sample farm is look-don't-spend, same rule as the queue (lib/render-jobs.ts) and requestRender
+  // (lib/ai-render-client.ts): this call bills a real vendor account directly via
+  // /api/image-producer, so it must refuse here, at the boundary, where no future call site —
+  // generateProducer, generateAllStyledSheets, or one not yet written — can forget it.
+  if (isSampleMode()) {
+    throw new Error(SAMPLE_MODE_RENDER_REFUSAL);
+  }
   // The cap applies at the boundary itself so no future call site can forget it.
   const capped = stripDataUrl(await capForAiInput(`data:image/png;base64,${imageBase64}`));
   const res = await fetch('/api/image-producer', {

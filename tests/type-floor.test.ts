@@ -36,6 +36,10 @@ const HERE = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(HERE, '..');
 const FLOOR = 12;
 
+// /finances is still listed even though the Picked · Sold · Spent merge left it a thin
+// server-side redirect onto /records: it is a route a farmer still reaches (an installed PWA's
+// old tab, a bookmark, the Journal's link), so if anyone ever puts markup back on it, the floor
+// should apply from the first line rather than from whenever someone remembers this file.
 const ROUTES = [
   'app/home/page.tsx',
   'app/records/page.tsx',
@@ -63,8 +67,8 @@ const STAFF_ROUTES = [
 /** Files whose type she reads. Floor of 12px, no allowance. */
 const FARMER_SURFACES: Record<string, string> = {
   'app/home/page.tsx': 'the first screen, and the tile subtitles the audit was about',
-  'app/records/page.tsx': 'where the kilograms go',
-  'app/finances/page.tsx': 'where the money is',
+  'app/records/page.tsx': 'the money book — Picked, Sold, Spent, and the charts inside it',
+  'app/finances/page.tsx': 'the old money door, now a redirect onto the book — it must stay empty of type',
   'app/farmer/page.tsx': 'her own farm',
   'components/TabBar.tsx': 'the four labels under every single screen',
   'components/NavDrawer.tsx': 'the menu',

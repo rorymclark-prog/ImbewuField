@@ -59,7 +59,7 @@ test('finance page: every card takes its beds from the ONE plan source', () => {
   // 44 m² on the sample farm, densities a factor of three apart, both printed
   // as facts about one farm. If a future edit gives either card its own bed
   // loader again, this fails.
-  const src = readFileSync(new URL('../app/finances/page.tsx', import.meta.url), 'utf8');
+  const src = readFileSync(new URL('../app/records/page.tsx', import.meta.url), 'utf8');
 
   const cardUses = [...src.matchAll(/<(FarmMetrics|HarvestReconciliation)\b([^>]*)>/g)];
   assert.ok(cardUses.length >= 2, `expected both cards in the page, found ${cardUses.length}`);
