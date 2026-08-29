@@ -5,7 +5,7 @@ Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 - Last full checker inventory: 2026-08-29
 - Checker: `/Users/roryclark/ImbewuField/scripts/check-plant-art.py`
 - Required scope: 53 species, 106 views
-- Current result: 103 PASS, 3 FAIL, 0 MISSING, 0 IN PROGRESS
+- Current result: 104 PASS, 2 FAIL, 0 MISSING, 0 IN PROGRESS
 - Dimension audit is stricter than the checker's `square` rule: every top-down file must be exactly 1024×1024.
 - A top-down `FAIL` below passes the repository checker but fails the brief's authoritative
   16-direction reach gate (`alpha > 32`, at least 8 of 16 exact rays reaching 97% radius).
@@ -52,7 +52,7 @@ Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 | Quiver tree / kokerboom | PASS | `public/element-art/tree_quiver_tree.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/quiver-tree-v1.png` | `566b691` |
 | Spekboom | PASS | `public/element-art/tree_spekboom.png` | `355d170` | PASS | `public/render-assets/reference-blueprint/spekboom-v1.png` | `c207b8b` |
 | Waxberry / wasbessie | PASS | `public/element-art/tree_waxberry.png` | `c1f4f37` | PASS | `public/render-assets/reference-blueprint/waxberry-v1.png` | `f65b3f8` |
-| Baboon grape | PASS | `public/element-art/tree_baboon_grape.png` | `8db4efe` | FAIL | `public/render-assets/reference-blueprint/baboon-grape-v1.png` | `e84f7a2` |
+| Baboon grape | PASS | `public/element-art/tree_baboon_grape.png` | `8db4efe` | PASS | `public/render-assets/reference-blueprint/baboon-grape-v1.png` | `f863782` |
 | Bushman's grape | PASS | `public/element-art/tree_bushman_s_grape.png` | `8db4efe` | PASS | `public/render-assets/reference-blueprint/bushmans-grape-v1.png` | `e4b759b` |
 | Common wild grape / bosdruif | PASS | `public/element-art/tree_common_wild_grape.png` | `9596647` | PASS | `public/render-assets/reference-blueprint/common-wild-grape-v1.png` | `b983f99` |
 | Grape vine / wingerd | PASS | `public/element-art/tree_grape_vine.png` | `8db4efe` | PASS | `public/render-assets/reference-blueprint/grape-vine-v1.png` | `0c85a6a` |
