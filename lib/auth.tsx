@@ -28,6 +28,8 @@ import {
   type User,
 } from 'firebase/auth';
 import { getFirebase, isBackendConfigured } from '@/lib/firebase/init';
+import { usePathname } from 'next/navigation';
+import { shouldSuspendAccountTree } from '@/lib/public-routes';
 import { getMyProfile, updateMyProfile } from '@/lib/db/queries';
 import type { Profile, UserRole } from '@/lib/db/types';
 import {
@@ -332,7 +334,21 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const role: UserRole | null = profile?.role ?? null;
-  const suspendAccountTree = isBackendConfigured() && loading;
+
+  // WHY A ROUTE IS PART OF THIS DECISION. Holding the tree unmounted until Firebase answers is
+  // right for a farm and wrong for a poster. Because this provider sits in the root layout, the
+  // hold also covered the marketing pages — so the html the SERVER sent for /partners and /pitch
+  // was the spinner below and nothing else, to crawlers and to first paint alike. lib/public-
+  // routes.ts carries the list, the safety rule for adding to it, and why those pages are exempt.
+  //
+  // Note this reads a route but stays a per-render decision, not a per-route branch: the moment
+  // `loading` clears, every route takes the same path again.
+  const pathname = usePathname();
+  const suspendAccountTree = shouldSuspendAccountTree({
+    backendConfigured: isBackendConfigured(),
+    loading,
+    pathname,
+  });
   const accountTreeKey = user?.uid ?? 'signed-out';
 
   return (

@@ -69,6 +69,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       'Text on the funder and NGO programme views is now easier to read on a phone',
       'Trying the app without an account now also opens the Study and Mentor pages',
       'Mentors now see the course work they assigned a trainee, not a blank list',
+      'The public pages about the app now show their text straight away, even on a slow phone',
     ],
   },
   {
