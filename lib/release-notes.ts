@@ -35,8 +35,9 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '29 August',
-    sha: 'bb0ba30',
+    sha: '74efb87',
     changes: [
+      'A slideshow for meetings now shows the live app to partners, with a print-to-PDF copy',
       'Your picked, sold and spent money now lives in one book',
       "Lima's chat button now stays out of the way of other buttons on busy pages",
       'Tap Picked, Sold or Spent at the top — the charts are in there too',
