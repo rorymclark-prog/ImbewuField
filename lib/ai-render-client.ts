@@ -10,6 +10,7 @@
 // hit. (The stale comment here claimed "~30-90s" / "45x3000ms" — it had drifted from both the code
 // and reality.) A deadline says what we mean far better than a magic iteration count.
 import { paidApiHeaders } from '@/lib/api-client-auth';
+import { isSampleMode, SAMPLE_MODE_RENDER_REFUSAL } from '@/lib/sample-mode';
 
 const RENDER_DEADLINE_MS = 8 * 60 * 1000;
 
@@ -53,6 +54,12 @@ export async function pollFalRender(statusUrl: string, responseUrl: string): Pro
 // runAiRender does (json-catch → 'Server error…', !ok → error/detail, pending → poll),
 // and return the final image data URL.
 export async function requestRender(body: Record<string, unknown>): Promise<string> {
+  // Sample farm is look-don't-spend (lib/render-jobs.ts enforces the same rule for the queue
+  // path): this call bills a real vendor account directly, so it must refuse before any network
+  // work — not just inside enqueueRenderJob, which this call never goes through.
+  if (isSampleMode()) {
+    throw new Error(SAMPLE_MODE_RENDER_REFUSAL);
+  }
   const authHeaders = await paidApiHeaders();
   const res = await fetch('/api/ai-render', {
     method: 'POST',
