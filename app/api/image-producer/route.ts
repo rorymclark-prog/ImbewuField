@@ -8,32 +8,19 @@ import { guardPaidApiRequest } from '@/lib/api-auth';
 // Gemini image generation can take 10-60s — Vercel max.
 export const maxDuration = 60;
 
-// BEST-EFFORT per-IP rate limit — this route calls billed external AI APIs
-// (Gemini pro-preview and, since the second engine was added, OpenAI's
-// gpt-image-2 via fal.ai at 'high' quality) and the site currently has NO
-// auth wall at all (see
-// middleware.ts — the shared-password gate was deliberately disabled during
-// prototyping), so without SOME limit any anonymous caller could script an
-// unbounded loop against real API keys. This in-memory sliding window is NOT
-// a real security boundary (it resets on cold start and isn't shared across
-// serverless instances/regions) — it only raises the bar above a trivial
-// unthrottled loop. The durable fix is re-enabling the site's auth wall or a
-// proper shared store (Vercel KV etc.); that's a product call, not made here.
-const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
-const RATE_LIMIT_MAX = 20; // generous enough for a real editing session (style/engine A-B, retries)
-const requestLog = new Map<string, number[]>();
-
-function isRateLimited(ip: string): boolean {
-  const now = Date.now();
-  const recent = (requestLog.get(ip) ?? []).filter((t) => now - t < RATE_LIMIT_WINDOW_MS);
-  recent.push(now);
-  requestLog.set(ip, recent);
-  return recent.length > RATE_LIMIT_MAX;
-}
-
-function clientIp(req: NextRequest): string {
-  return req.headers.get('x-forwarded-for')?.split(',')[0].trim() || 'unknown';
-}
+// THE PER-IP RATE LIMIT THAT USED TO LIVE HERE NOW LIVES IN lib/api-rate-limit.ts, APPLIED BY
+// guardPaidApiRequest BELOW — so all nineteen paid routes have one, not just this one.
+//
+// The old local limiter was 20 requests per 10 minutes per address, and it was the only spend
+// ceiling anywhere in the app. Its own comment said what it could not do: no shared store, resets
+// on cold start, "not a real security boundary". All of that is still true of the shared limiter
+// (same constraint, same honesty — see that file's header), with three differences that matter:
+// the budget now applies to every billed route rather than this one, a SIGNED-IN caller is counted
+// by uid rather than by address so a shared connection is not one bucket, and the refusal is a
+// farmer-readable JSON body with a Retry-After rather than a bare 429.
+//
+// The image budget is 60/hour for a signed-in caller and 8/hour anonymously. A burst of twenty in
+// ten minutes — the editing session the old number was chosen for — still passes.
 
 const GEMINI_MODELS = {
   flash: 'gemini-3.1-flash-image',
@@ -171,12 +158,6 @@ async function submitGptImage2(key: string, imageBase64: string, prompt: string)
 export async function POST(req: NextRequest) {
   const auth = await guardPaidApiRequest(req, '/api/image-producer');
   if (auth.response) return auth.response;
-  if (isRateLimited(clientIp(req))) {
-    return NextResponse.json(
-      { error: 'Too many produce requests from this connection — please wait a few minutes and try again.' },
-      { status: 429 },
-    );
-  }
 
   let body: {
     imageBase64?: string;

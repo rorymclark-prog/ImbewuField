@@ -1583,7 +1583,7 @@ async function preloadReferenceFeatureArtwork(
   for (const item of state.items) {
     const def = ELEMENTS_BY_ID[item.defId];
     if (!def) continue;
-    const url = referenceFeatureArtworkUrl(def.id);
+    const url = referenceFeatureArtworkUrl(def.id, item.speciesId);
     if (url && !referenceFeatureArtworkCache.has(url)) urls.add(url);
   }
   // Veg sprites are keyed off the row engine's CropGlyph, not off an element id — preloaded
@@ -5186,7 +5186,7 @@ function drawPaintedReferenceFeature(
   /** True when something smaller is planted inside this canopy — see overstoryCanopyIds. */
   isOverstory = false,
 ): boolean {
-  const url = referenceFeatureArtworkUrl(def.id);
+  const url = referenceFeatureArtworkUrl(def.id, it.speciesId);
   const image = url ? referenceFeatureArtworkCache.get(url) : undefined;
   if (!image) return false;
 
@@ -5783,7 +5783,7 @@ function drawTrueFootprint(
   if (VETIVER_HEDGE_IDS.has(def.id)) {
     if (paintVetiverHedge(ctx, it, def, px, py, pxPerM)) return;
   }
-  const artUrl = referenceFeatureArtworkUrl(def.id);
+  const artUrl = referenceFeatureArtworkUrl(def.id, it.speciesId);
   if (artUrl && referenceFeatureArtworkCache.has(artUrl)) {
     // Reusable art improves material and detail. Area features keep their literal footprint; tiny
     // infrastructure may use a bounded print symbol, but its centre and rotation never move.
