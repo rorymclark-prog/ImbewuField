@@ -6,7 +6,7 @@
 
 import {
   collection, doc, getDoc, getDocs, setDoc, updateDoc, deleteDoc,
-  addDoc, query, where, orderBy, serverTimestamp, writeBatch,
+  addDoc, query, where, orderBy, serverTimestamp, writeBatch, getCountFromServer,
 } from 'firebase/firestore';
 import { ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { getFirebase } from '@/lib/firebase/init';
@@ -43,6 +43,19 @@ const fb = () => getFirebase();
 const uid = () => fb()?.auth.currentUser?.uid ?? null;
 const rows = <T,>(snap: { docs: { id: string; data: () => unknown }[] }) =>
   snap.docs.map((d) => ({ id: d.id, ...(d.data() as object) })) as unknown as T[];
+
+// ---- batched-by-id reads (query scale) ----
+// Firestore's `in` operator accepts AT MOST 30 comparison values per query — this is a hard
+// server-side limit, not a style choice, so IN_QUERY_CHUNK must never be raised without checking
+// that ceiling first. Exported so tests/query-scale.test.ts can pin the boundary directly rather
+// than trusting a comment: bump this past 30 and a real org-scale query starts throwing
+// INVALID_ARGUMENT in production, one org roster too late.
+export const IN_QUERY_CHUNK = 30;
+export function chunkIds(ids: string[], size: number = IN_QUERY_CHUNK): string[][] {
+  const out: string[][] = [];
+  for (let i = 0; i < ids.length; i += size) out.push(ids.slice(i, i + size));
+  return out;
+}
 
 // ---- bounded writes (patchy rural connectivity) ----
 // addDoc/setDoc/updateDoc/deleteDoc do NOT resolve until the backend acks the write — that is
@@ -401,6 +414,39 @@ export async function getCourseProgress(profileId: string): Promise<CourseProgre
   ));
   return rows<CourseProgress>(s);
 }
+
+/**
+ * The batched sibling of getCourseProgress — one call for a mentor's WHOLE cohort instead of one
+ * getCourseProgress() per trainee. app/mentor/page.tsx used to fan out N getCourseProgress() calls
+ * (one per trainee, each re-fetching the mentor's own profile just to learn its own org_id) for
+ * every cohort load; at a 500-trainee org that is 500 round trips before a single row renders, and
+ * at 5,000 it is enough to make the page time out rather than merely load slowly. This chunks by
+ * IN_QUERY_CHUNK (Firestore's `in` ceiling) and runs the chunks in parallel, so a 500-trainee org
+ * costs ~17 queries instead of 500. `org_id` + `profile_id in [...]` is still equality/`in`-only —
+ * no orderBy, no range — so per Firestore's automatic indexing it needs no composite index (see
+ * firestore.indexes.json's absence of one for this shape, and the PR notes for how that was
+ * checked against the emulator's rule engine, not just assumed).
+ * Trainees with zero progress rows are simply absent from the returned record — every call site
+ * already reads it as `progressMap[id] ?? []`, so this is not a behaviour change from the N+1 form.
+ */
+export async function getCourseProgressForProfiles(profileIds: string[]): Promise<Record<string, CourseProgress[]>> {
+  const out: Record<string, CourseProgress[]> = {};
+  if (isSampleMode() || profileIds.length === 0) return out;
+  const f = fb(); if (!f) return out;
+  const me = await getMyProfile();
+  if (!me?.org_id) return out; // same rule as getCourseProgress: no org, no provably-safe read
+  const snaps = await Promise.all(chunkIds(profileIds).map((ids) => getDocs(query(
+    collection(f.db, 'course_progress'),
+    where('org_id', '==', me.org_id),
+    where('profile_id', 'in', ids),
+  ))));
+  for (const snap of snaps) {
+    for (const row of rows<CourseProgress>(snap)) {
+      (out[row.profile_id] ??= []).push(row);
+    }
+  }
+  return out;
+}
 export async function setCourseProgress(module: string, done: boolean): Promise<void> {
   if (isSampleMode()) return;
   const f = fb(); const u = uid(); if (!f || !u) return;
@@ -467,6 +513,32 @@ export async function listSurveyResponses(surveyId: string): Promise<SurveyRespo
     where('org_id', '==', me.org_id),
   ));
   return rows<SurveyResponse>(s);
+}
+
+/**
+ * How many farmers answered one survey — for the "N responses" badge on the staff survey list
+ * (app/surveys/page.tsx), one per survey card. That badge used to call listSurveyResponses() and
+ * read `.length`, which means every response's full document — every farmer's free-text answers —
+ * was pulled over the wire and immediately discarded to keep a number. At a 500-farmer org that is
+ * up to 500 document reads, repeated once per survey, purely to render a count. getCountFromServer
+ * runs the SAME query shape (so it is covered by the SAME rule and needs no new index) but is
+ * billed as an aggregation, not per matched document — same badge, a fraction of the reads.
+ */
+export async function countSurveyResponses(surveyId: string): Promise<number> {
+  if (isSampleMode()) return 0;
+  const f = fb(); const u = uid(); if (!f || !u) return 0;
+  const me = await getMyProfile();
+  if (!me?.org_id) return 0;
+  try {
+    const snap = await getCountFromServer(query(
+      collection(f.db, 'survey_responses'),
+      where('survey_id', '==', surveyId),
+      where('org_id', '==', me.org_id),
+    ));
+    return snap.data().count;
+  } catch {
+    return 0;
+  }
 }
 export async function myRespondedSurveyIds(): Promise<string[]> {
   if (isSampleMode()) return [];
@@ -623,11 +695,53 @@ export async function myAssignments(): Promise<CourseAssignment[]> {
   return rows<CourseAssignment>(s);
 }
 
+/**
+ * For a mentor/staff view of one learner's assignments — read parity with getCourseProgress, which
+ * needs the SAME org_id filter for the SAME reason: firestore.rules' course_assignments read rule
+ * is `owns(resource.data) || (isCourseStaff() && inMyOrg(resource.data))`, and `inMyOrg()` reads
+ * resource.data.org_id — a field this query did not filter on before. A profile_id-only query is
+ * provably safe ONLY when profileId is the caller's own uid (the `owns()` branch); for a mentor
+ * reading a TRAINEE's assignments it is neither, so Firestore's rule engine cannot prove `inMyOrg()`
+ * for every possible result and refuses the whole list — confirmed against the rules emulator,
+ * which raises exactly `Property org_id is undefined on object` for this shape. app/mentor/page.tsx
+ * called this once per trainee wrapped in `.catch(() => [])`, so the failure was never a crash, it
+ * was every mentor's assignment column reading permanently empty. The org_id filter here is what
+ * getCourseProgress already had; assignBy[t.id] now gets real data instead of a caught rejection.
+ */
 export async function getAssignments(profileId: string): Promise<CourseAssignment[]> {
   if (isSampleMode()) return [];
   const f = fb(); if (!f) return [];
-  const s = await getDocs(query(collection(f.db, 'course_assignments'), where('profile_id', '==', profileId)));
+  const me = await getMyProfile();
+  if (!me?.org_id) return [];
+  const s = await getDocs(query(
+    collection(f.db, 'course_assignments'),
+    where('profile_id', '==', profileId),
+    where('org_id', '==', me.org_id),
+  ));
   return rows<CourseAssignment>(s);
+}
+
+/** The batched sibling of getAssignments — see getCourseProgressForProfiles immediately above
+ *  getCourseProgress for the full rationale (same N+1, same org, same trainee list, same
+ *  IN_QUERY_CHUNK ceiling). Trainees with no assignments are absent from the result, matching how
+ *  every call site already reads it (`assignBy[t.id] ?? []`). */
+export async function getAssignmentsForProfiles(profileIds: string[]): Promise<Record<string, CourseAssignment[]>> {
+  const out: Record<string, CourseAssignment[]> = {};
+  if (isSampleMode() || profileIds.length === 0) return out;
+  const f = fb(); if (!f) return out;
+  const me = await getMyProfile();
+  if (!me?.org_id) return out;
+  const snaps = await Promise.all(chunkIds(profileIds).map((ids) => getDocs(query(
+    collection(f.db, 'course_assignments'),
+    where('org_id', '==', me.org_id),
+    where('profile_id', 'in', ids),
+  ))));
+  for (const snap of snaps) {
+    for (const row of rows<CourseAssignment>(snap)) {
+      (out[row.profile_id] ??= []).push(row);
+    }
+  }
+  return out;
 }
 
 /** Assign (or re-assign, which just moves the due date) one module to one learner. */
