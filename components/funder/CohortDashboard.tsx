@@ -42,7 +42,7 @@
 
 import { useCallback, useMemo, useState } from 'react';
 import {
-  AlertTriangle, ArrowUpRight, Download, Search, SlidersHorizontal, X,
+  AlertTriangle, ArrowUpRight, Building2, Download, Search, SlidersHorizontal, Sprout, X,
 } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { useNetworkPortfolio } from '@/lib/use-network-portfolio';
@@ -71,6 +71,8 @@ const PAPER = '#FFFEFA';
 const FIELD = '#F4EFE4';
 const FOREST = '#1F4D2B';
 const ATTENTION = '#C0531E';
+/** LINE at ~50% opacity — the same skeleton wash DataPanel/MyRecords already use. */
+const SKELETON_WASH = 'rgba(226,216,196,0.5)';
 
 const STATUS_COLOR: Record<GardenStatus, string> = {
   thriving: '#1F4D2B',
@@ -82,6 +84,16 @@ const STATUS_COLOR: Record<GardenStatus, string> = {
 const MICRO = 12;
 
 const DASH = '—';
+
+/**
+ * The exact message lib/use-network-portfolio.ts sets when /api/network/orgs comes back empty —
+ * this account genuinely has no organisation to read yet, which is a setup state, not a failed
+ * fetch. Matched by value because the hook (outside this file) carries no separate reason code;
+ * if its wording ever changes, this simply falls through to the generic "could not load" card
+ * below, which is still an honest description of the same empty portfolio.
+ */
+const NO_ORG_LINKED = 'No organisation is linked to this account yet.';
+
 /** Space-grouped thousands, locale-independent so SSR and the first client render agree. */
 function group(n: number): string {
   return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
@@ -125,7 +137,7 @@ function Tile({ label, value, sub, tone }: {
       <div
         className="font-display font-bold"
         style={{
-          fontSize: 'clamp(19px, 2.1vw, 26px)', lineHeight: 1.15, marginTop: 3,
+          fontSize: 'clamp(20px, 2.2vw, 28px)', lineHeight: 1.15, marginTop: 3,
           color: tone === 'attention' ? ATTENTION : INK,
           fontVariantNumeric: 'tabular-nums', whiteSpace: 'nowrap',
           overflow: 'hidden', textOverflow: 'ellipsis',
@@ -138,6 +150,59 @@ function Tile({ label, value, sub, tone }: {
           {sub}
         </div>
       )}
+    </div>
+  );
+}
+
+/* ────────────────────────────────────────────────────────────────────────────
+ * Loading / empty / error — the three ways this screen has nothing to show
+ * yet. Never a bare "Loading…" string: a shape of the real layout while it
+ * loads, and the honest reason underneath an icon — never an invented zero —
+ * when it can't.
+ * ──────────────────────────────────────────────────────────────────────────*/
+
+/** Shaped like the tiles/charts/roster below it, so real content never jumps into place. */
+function CohortSkeleton() {
+  return (
+    <div aria-hidden="true">
+      <div className="grid gap-2.5 grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+        {Array.from({ length: 8 }, (_, i) => (
+          <div
+            key={i}
+            className="rounded-2xl animate-pulse"
+            style={{ height: 74, background: SKELETON_WASH, animationDelay: `${i * 60}ms` }}
+          />
+        ))}
+      </div>
+      <div className="grid gap-3 xl:grid-cols-2" style={{ marginTop: 14 }}>
+        <div className="rounded-2xl animate-pulse" style={{ height: 300, background: SKELETON_WASH }} />
+        <div className="rounded-2xl animate-pulse" style={{ height: 220, background: SKELETON_WASH, animationDelay: '80ms' }} />
+      </div>
+      <div className="rounded-2xl animate-pulse" style={{ height: 240, background: SKELETON_WASH, marginTop: 14 }} />
+    </div>
+  );
+}
+
+/** The empty-portfolio and couldn't-load cards: the same calm shape, a different icon and reason. */
+function PortfolioNotice({ icon, title, children, action }: {
+  icon: React.ReactNode; title: string; children: React.ReactNode; action?: React.ReactNode;
+}) {
+  return (
+    <div
+      className="rounded-2xl px-5 flex flex-col items-center text-center animate-fade-up"
+      style={{ background: PAPER, border: `1px solid ${LINE}`, paddingTop: 40, paddingBottom: 40 }}
+    >
+      {icon}
+      <p
+        className="font-display font-semibold"
+        style={{ fontSize: 'clamp(16px, 1.8vw, 19px)', color: INK, margin: '0 0 6px', maxWidth: 420 }}
+      >
+        {title}
+      </p>
+      <p className="font-sans" style={{ fontSize: 12.5, color: INK_SOFT, margin: 0, lineHeight: 1.6, maxWidth: 380 }}>
+        {children}
+      </p>
+      {action && <div style={{ marginTop: 16 }}>{action}</div>}
     </div>
   );
 }
@@ -267,7 +332,7 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
             <button
               type="button"
               onClick={portfolio.reload}
-              className="font-sans font-semibold"
+              className="font-sans font-semibold transition duration-150 hover:brightness-95"
               style={{
                 fontSize: MICRO, color: '#7A4A06', background: 'transparent',
                 border: '1px solid rgba(158,92,8,0.35)', borderRadius: 7,
@@ -278,12 +343,19 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
             </button>
           </div>
         )}
-        {portfolio.loading && !portfolio.error && (
+        {/* Only for a background refresh with data already on screen — the first, empty-handed
+            load gets the full skeleton below instead of a one-line promise. */}
+        {portfolio.loading && !portfolio.error && all.length > 0 && (
           <div
-            className="px-3 md:px-5 py-1.5 font-sans"
+            className="flex items-center gap-2 px-3 md:px-5 py-1.5 font-sans"
             style={{ fontSize: MICRO, color: INK_MUTED, background: PAPER, borderBottom: `1px solid ${LINE}` }}
           >
-            Loading the cohort…
+            <span
+              aria-hidden="true"
+              className="rounded-full animate-pulse"
+              style={{ width: 6, height: 6, background: INK_MUTED, flexShrink: 0 }}
+            />
+            Refreshing the cohort…
           </div>
         )}
         {portfolio.isDemo && (
@@ -304,7 +376,7 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
           {/* ── 1. what the cohort adds up to ─────────────────────────────────────────── */}
           <h2
             className="font-display font-bold"
-            style={{ fontSize: 'clamp(17px, 1.9vw, 21px)', color: INK, margin: '0 0 2px' }}
+            style={{ fontSize: 'clamp(17px, 1.9vw, 22px)', color: INK, margin: '0 0 2px' }}
           >
             {mode === 'funder' ? 'The cohort you are funding' : 'The cohort'}
           </h2>
@@ -314,40 +386,111 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
               : `Totals cover the ${totals.reportingCount} of ${totals.farmerCount} farms whose records this account may read. The other ${totals.farmerCount - totals.reportingCount} are counted as farms, never as zeros.`}
           </p>
 
-          {emptyPortfolio ? (
-            <div
-              className="rounded-2xl px-4 py-6"
-              style={{ background: PAPER, border: `1px solid ${LINE}` }}
+          {portfolio.loading && all.length === 0 ? (
+            <CohortSkeleton />
+          ) : emptyPortfolio ? (
+            <PortfolioNotice
+              icon={
+                <div
+                  aria-hidden="true"
+                  className="flex items-center justify-center"
+                  style={{ width: 44, height: 44, borderRadius: 999, background: 'rgba(31,77,43,0.08)', marginBottom: 14 }}
+                >
+                  <Sprout size={19} style={{ color: FOREST }} />
+                </div>
+              }
+              title="No farms are visible to this account yet"
             >
-              <p className="font-display font-semibold" style={{ fontSize: 15, color: INK, margin: '0 0 6px' }}>
-                No farms are visible to this account yet
-              </p>
-              <p className="font-sans" style={{ fontSize: 12.5, color: INK_SOFT, margin: 0, lineHeight: 1.6 }}>
-                Farmers appear here once they have agreed to share their records with the
-                organisation.{' '}
-                {portfolio.withheldForConsent > 0
-                  ? `${portfolio.withheldForConsent} ${portfolio.withheldForConsent === 1 ? 'farmer is' : 'farmers are'} enrolled here and have not yet done so.`
-                  : 'Nothing is hidden by an error — the list is genuinely empty.'}
-              </p>
-            </div>
+              Farmers appear here once they have agreed to share their records with the
+              organisation.{' '}
+              {portfolio.withheldForConsent > 0
+                ? `${portfolio.withheldForConsent} ${portfolio.withheldForConsent === 1 ? 'farmer is' : 'farmers are'} enrolled here and have not yet done so.`
+                : 'Nothing is hidden by an error — the list is genuinely empty.'}
+            </PortfolioNotice>
+          ) : portfolio.error === NO_ORG_LINKED && all.length === 0 ? (
+            // A calm setup state, not an alarm: reload cannot manufacture an organisation, but it
+            // can pick one up the moment an administrator links it, so the action stays honest as
+            // a "check again" rather than the ochre "Try again" the fetch-failure card below uses.
+            <PortfolioNotice
+              icon={
+                <div
+                  aria-hidden="true"
+                  className="flex items-center justify-center"
+                  style={{ width: 44, height: 44, borderRadius: 999, background: 'rgba(31,77,43,0.08)', marginBottom: 14 }}
+                >
+                  <Building2 size={19} style={{ color: FOREST }} />
+                </div>
+              }
+              title="Not linked to a funded organisation yet"
+              action={
+                <button
+                  type="button"
+                  onClick={portfolio.reload}
+                  className="font-sans font-semibold transition duration-150 hover:brightness-95"
+                  style={{
+                    fontSize: 12.5, color: INK_SOFT, background: 'rgba(32,25,15,0.05)',
+                    border: `1px solid ${LINE}`, borderRadius: 8,
+                    padding: '7px 14px', cursor: 'pointer',
+                  }}
+                >
+                  Check again
+                </button>
+              }
+            >
+              Once an administrator links this account to an organisation, the farms and figures
+              it funds will appear here.
+            </PortfolioNotice>
+          ) : portfolio.error && all.length === 0 ? (
+            <PortfolioNotice
+              icon={
+                <div
+                  aria-hidden="true"
+                  className="flex items-center justify-center"
+                  style={{ width: 44, height: 44, borderRadius: 999, background: 'rgba(158,92,8,0.10)', marginBottom: 14 }}
+                >
+                  <AlertTriangle size={19} style={{ color: '#9E5C08' }} />
+                </div>
+              }
+              title="The cohort could not be loaded"
+              action={
+                <button
+                  type="button"
+                  onClick={portfolio.reload}
+                  className="font-sans font-semibold transition duration-150 hover:brightness-95"
+                  style={{
+                    fontSize: 12.5, color: '#7A4A06', background: 'rgba(158,92,8,0.08)',
+                    border: '1px solid rgba(158,92,8,0.35)', borderRadius: 8,
+                    padding: '7px 14px', cursor: 'pointer',
+                  }}
+                >
+                  Try again
+                </button>
+              }
+            >
+              {portfolio.error}
+            </PortfolioNotice>
           ) : (
             <>
-              <div className="grid gap-2.5 grid-cols-2 md:grid-cols-3 xl:grid-cols-4">
+              {/* Staggered fade-up on first paint only — see PortfolioNotice above for the same
+                  0.2s ease-out settle. React keeps this branch mounted through every later filter,
+                  sort or background refresh, so the entrance never replays once the cohort is on
+                  screen; it only ever plays across the loading → loaded transition. */}
+              <div className="grid gap-2.5 grid-cols-2 md:grid-cols-3 xl:grid-cols-4 animate-fade-up">
                 {tiles.map((t) => (
                   <Tile key={t.label} label={t.label} value={t.value} sub={t.sub} tone={t.tone} />
                 ))}
               </div>
 
               {/* ── 2 and 3. the two charts ───────────────────────────────────────────── */}
-              <div className="grid gap-3 xl:grid-cols-2" style={{ marginTop: 14 }}>
+              <div className="grid gap-3 xl:grid-cols-2 animate-fade-up" style={{ marginTop: 14, animationDelay: '60ms' }}>
                 <CohortTimeline series={monthly} />
                 <CohortTrainingChart training={training} />
               </div>
 
               {/* ── 4. every farm ─────────────────────────────────────────────────────── */}
               <section
-                className="rounded-2xl overflow-hidden"
-                style={{ background: PAPER, border: `1px solid ${LINE}`, marginTop: 14 }}
+                className="rounded-2xl overflow-hidden animate-fade-up"
+                style={{ background: PAPER, border: `1px solid ${LINE}`, marginTop: 14, animationDelay: '120ms' }}
               >
                 <div className="px-4 pt-3.5 pb-3" style={{ borderBottom: `1px solid ${LINE}` }}>
                   <div className="flex items-center flex-wrap gap-2">
@@ -361,7 +504,7 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
                       type="button"
                       onClick={exportCsv}
                       disabled={sorted.length === 0}
-                      className="flex items-center gap-1.5 font-sans font-semibold"
+                      className="flex items-center gap-1.5 font-sans font-semibold transition duration-150 hover:brightness-95"
                       style={{
                         fontSize: 12.5, borderRadius: 9, padding: '6px 11px',
                         minHeight: 34,
@@ -394,7 +537,8 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
                         type="button"
                         onClick={() => setQuery('')}
                         aria-label="Clear search"
-                        style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: INK_MUTED, display: 'flex' }}
+                        className="transition duration-150 hover:opacity-60"
+                        style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 6, color: INK_MUTED, display: 'flex' }}
                       >
                         <X size={14} />
                       </button>
@@ -411,7 +555,7 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
                           type="button"
                           onClick={() => toggleDistrict(d.key)}
                           aria-pressed={on}
-                          className="font-sans font-semibold"
+                          className="font-sans font-semibold transition duration-150 hover:brightness-95"
                           style={{
                             fontSize: MICRO, borderRadius: 999, padding: '5px 10px', cursor: 'pointer',
                             background: on ? FOREST : 'rgba(32,25,15,0.05)',
@@ -427,7 +571,7 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
                       type="button"
                       onClick={() => setAttentionOnly((v) => !v)}
                       aria-pressed={attentionOnly}
-                      className="flex items-center gap-1.5 font-sans font-semibold"
+                      className="flex items-center gap-1.5 font-sans font-semibold transition duration-150 hover:brightness-95"
                       style={{
                         fontSize: MICRO, borderRadius: 999, padding: '5px 10px', cursor: 'pointer',
                         background: attentionOnly ? 'rgba(192,83,30,0.12)' : 'rgba(32,25,15,0.05)',
@@ -455,7 +599,7 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
                         type="button"
                         onClick={() => setSort(s.key)}
                         aria-pressed={sort === s.key}
-                        className="font-sans font-semibold"
+                        className="font-sans font-semibold transition duration-150 hover:brightness-95"
                         style={{
                           fontSize: MICRO, borderRadius: 999, padding: '4px 9px', cursor: 'pointer',
                           background: sort === s.key ? 'rgba(31,77,43,0.12)' : 'transparent',
@@ -479,7 +623,7 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
                         <button
                           type="button"
                           onClick={clearFilters}
-                          className="font-sans font-semibold"
+                          className="font-sans font-semibold transition duration-150 hover:opacity-70"
                           style={{
                             fontSize: MICRO, background: 'none', border: 'none', padding: 0,
                             color: FOREST, cursor: 'pointer', textDecoration: 'underline',
@@ -568,7 +712,7 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
       {/* ── 5. one farm, in full — the same panel the portfolio map opens ── */}
       {selected && (
         <div
-          className="absolute inset-x-0 bottom-0 z-20 rounded-t-3xl shadow-float max-h-[72dvh] md:static md:z-auto md:w-[380px] lg:w-[400px] md:flex-shrink-0 md:rounded-none md:border-l md:max-h-none md:shadow-none"
+          className="absolute inset-x-0 bottom-0 z-20 rounded-t-3xl shadow-float max-h-[72dvh] md:static md:z-auto md:w-[380px] lg:w-[400px] md:flex-shrink-0 md:rounded-none md:border-l md:max-h-none md:shadow-none animate-fade-up"
           style={{ background: PAPER, borderColor: LINE, display: 'flex', flexDirection: 'column' }}
         >
           <div className="flex items-center justify-between px-4 pt-2.5 pb-1.5 flex-shrink-0">
@@ -586,9 +730,10 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
               type="button"
               onClick={() => setSelectedId(null)}
               aria-label="Close farmer record"
+              className="transition duration-150 hover:brightness-95"
               style={{
                 background: 'rgba(32,25,15,0.06)', border: `1px solid ${LINE}`, borderRadius: 8,
-                padding: 6, cursor: 'pointer', color: INK_SOFT, display: 'flex', marginTop: 4,
+                padding: 7, cursor: 'pointer', color: INK_SOFT, display: 'flex', marginTop: 4,
               }}
             >
               <X size={15} />
@@ -610,6 +755,10 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
           </div>
         </div>
       )}
+      <style jsx global>{`
+        .imf-funder-row { cursor: pointer; transition: background-color 150ms ease; }
+        .imf-funder-row:hover { background: rgba(31,77,43,0.045); }
+      `}</style>
     </div>
   );
 }
@@ -651,7 +800,11 @@ function FarmRow({ row, selected, onOpen }: {
     color: INK_SOFT, whiteSpace: 'nowrap', fontVariantNumeric: 'tabular-nums',
   };
   return (
-    <tr style={{ background: selected ? 'rgba(31,77,43,0.06)' : 'transparent' }}>
+    <tr
+      onClick={onOpen}
+      className="imf-funder-row"
+      style={{ background: selected ? 'rgba(31,77,43,0.06)' : undefined }}
+    >
       <td style={{ ...cell, color: INK }}>
         <span className="flex items-center gap-2">
           <span
@@ -674,7 +827,7 @@ function FarmRow({ row, selected, onOpen }: {
         <button
           type="button"
           onClick={onOpen}
-          className="inline-flex items-center gap-1 font-sans font-semibold"
+          className="inline-flex items-center gap-1 font-sans font-semibold transition duration-150 hover:brightness-95"
           style={{
             fontSize: MICRO, color: FOREST, background: 'rgba(31,77,43,0.08)',
             border: '1px solid rgba(31,77,43,0.25)', borderRadius: 8,

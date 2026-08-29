@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
-import { BarChart3, Sprout } from 'lucide-react';
+import { BarChart3, Loader2, Sprout } from 'lucide-react';
 import RoleSwitcher from '@/components/RoleSwitcher';
 import BackButton from '@/components/BackButton';
 import SettingsButton from '@/components/SettingsButton';
@@ -19,7 +19,8 @@ import type { UserRole } from '@/lib/db/types';
 const NgoDashboard = dynamic(() => import('@/components/NgoDashboard'), {
   ssr: false,
   loading: () => (
-    <div className="flex-1 flex items-center justify-center" style={{ color: '#9A8268' }}>
+    <div className="flex-1 flex items-center justify-center gap-2" style={{ color: 'var(--text-muted)' }}>
+      <Loader2 className="animate-spin" size={16} aria-hidden="true" />
       <span className="text-sm font-display">Loading dashboard…</span>
     </div>
   ),
@@ -39,7 +40,8 @@ const NgoDashboard = dynamic(() => import('@/components/NgoDashboard'), {
 const CohortDashboard = dynamic(() => import('@/components/funder/CohortDashboard'), {
   ssr: false,
   loading: () => (
-    <div className="flex-1 flex items-center justify-center" style={{ color: '#9A8268' }}>
+    <div className="flex-1 flex items-center justify-center gap-2" style={{ color: 'var(--text-muted)' }}>
+      <Loader2 className="animate-spin" size={16} aria-hidden="true" />
       <span className="text-sm font-display">Loading the cohort…</span>
     </div>
   ),
@@ -70,7 +72,7 @@ export default function FunderPage() {
 
   if (!loading && user && isLive && !canAccessRolePage(role, FUNDER_ALLOWED_ROLES)) {
     return (
-      <div className="flex h-screen items-center justify-center px-4" style={{ background: '#E4DCC6' }}>
+      <div className="flex h-screen items-center justify-center px-4" style={{ background: 'var(--bg-0)' }}>
         <div className="rounded-2xl px-6 py-8 text-center max-w-xs" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
           <p className="text-sm font-display font-semibold mb-1" style={{ color: '#20190F' }}>This is the Funder area</p>
           <p className="text-xs font-sans leading-relaxed" style={{ color: '#8C7A62' }}>This dashboard is for funders and administrators.</p>
@@ -80,13 +82,13 @@ export default function FunderPage() {
   }
 
   return (
-    <div className="h-screen flex flex-col" style={{ background: '#E4DCC6' }}>
+    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: 'var(--bg-0)' }}>
       <header className="flex-shrink-0 flex items-center px-3 md:px-5 gap-2 md:gap-4 overflow-x-auto"
         style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
         <MenuButton />
         <BackButton />
-        <BrandLogo icon="🏛" />
-        <div className="w-px h-5" style={{ background: '#E2D8C4', opacity: 0.5 }} />
+        <BrandLogo />
+        <div className="w-px h-5" style={{ background: 'var(--border-bright)', opacity: 0.5 }} />
         <span className="text-xs hidden sm:block font-display" style={{ color: '#5C5040' }}>Funder · impact oversight</span>
         {/* Was an unconditional "demo data". NgoDashboard reads REAL Firestore via listGardens()
             and only falls back to its sample gardens when there is no backend configured, so the
@@ -97,13 +99,13 @@ export default function FunderPage() {
             a configured backend with no signed-in caller is still sample data. Two badges saying
             it at once, from two different tests, is how they end up disagreeing. */}
         {(!isLive || sample) && view === 'gardens' && (
-          <span className="text-xs px-2 py-0.5 rounded-full font-mono hidden md:block" style={{ background: 'rgba(47,111,158,0.12)', border: '1px solid rgba(47,111,158,0.3)', color: '#2F6F9E' }}>sample data</span>
+          <span className="text-xs px-2 py-0.5 rounded-full font-mono hidden md:block" style={{ background: 'rgba(158,92,8,0.12)', border: '1px solid rgba(158,92,8,0.3)', color: '#9E5C08' }}>sample data</span>
         )}
         <div className="flex-1" />
         <a
           href="/network"
           className="text-xs font-display hidden sm:block"
-          style={{ color: '#2F6F9E', textDecoration: 'none', marginRight: 4 }}
+          style={{ color: '#1F4D2B', textDecoration: 'none', marginRight: 4 }}
         >
           Portfolio map →
         </a>
@@ -122,7 +124,7 @@ export default function FunderPage() {
             key={key}
             onClick={() => setView(key)}
             aria-pressed={view === key}
-            className="flex items-center gap-1.5 py-2.5 px-3 font-display text-xs font-semibold"
+            className="flex items-center gap-1.5 py-2.5 px-3 font-display text-xs font-semibold transition-colors duration-150"
             style={{
               background: 'transparent',
               border: 'none',

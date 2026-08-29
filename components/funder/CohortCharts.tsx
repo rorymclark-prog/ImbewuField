@@ -124,8 +124,11 @@ function ChartCard({ title, icon, note, children }: {
     <section className="rounded-2xl overflow-hidden" style={CARD_STYLE}>
       <div className="px-4 py-3" style={{ borderBottom: `1px solid ${HAIRLINE}` }}>
         <Overline icon={icon}>{title}</Overline>
+        {/* 13px, not MICRO(12): this is the card's own explanation of what it covers — the same
+            reading role as NoChart's reason text below, which already sits at 13px. The smaller
+            Footnotes further down stay at MICRO on purpose; this one line carries more weight. */}
         {note && (
-          <p className="font-sans" style={{ fontSize: MICRO, color: FAINT, margin: '5px 0 0', lineHeight: 1.5 }}>
+          <p className="font-sans" style={{ fontSize: 13, color: FAINT, margin: '5px 0 0', lineHeight: 1.5 }}>
             {note}
           </p>
         )}
@@ -136,11 +139,22 @@ function ChartCard({ title, icon, note, children }: {
 }
 
 /** Printed instead of a chart when the data refuses to draw itself. Never a blank rectangle. */
-function NoChart({ reason }: { reason: string }) {
+function NoChart({ reason, icon }: { reason: string; icon?: React.ReactNode }) {
   return (
-    <p className="px-4 py-5 font-sans" style={{ fontSize: 13, color: MUTED, lineHeight: 1.55, margin: 0 }}>
-      {reason}
-    </p>
+    <div className="px-4 py-8 flex flex-col items-center text-center">
+      {icon && (
+        <div
+          aria-hidden="true"
+          className="flex items-center justify-center"
+          style={{ width: 36, height: 36, borderRadius: 999, background: 'rgba(140,122,98,0.12)', marginBottom: 10, color: FAINT }}
+        >
+          {icon}
+        </div>
+      )}
+      <p className="font-sans" style={{ fontSize: 13, color: MUTED, lineHeight: 1.55, margin: 0, maxWidth: 360 }}>
+        {reason}
+      </p>
+    </div>
   );
 }
 
@@ -356,7 +370,7 @@ export function CohortTimeline({ series, className }: { series: CohortSeries; cl
     return (
       <div className={className}>
         <ChartCard title="Harvest and income, month by month" icon={<BarChart3 size={13} />}>
-          <NoChart reason={series.reason} />
+          <NoChart reason={series.reason} icon={<BarChart3 size={16} />} />
         </ChartCard>
       </div>
     );
@@ -430,7 +444,7 @@ export function CohortTimeline({ series, className }: { series: CohortSeries; cl
             {months.map((m, i) => (
               <div
                 key={m.key}
-                className="relative flex flex-col justify-end"
+                className="relative flex flex-col justify-end imf-cohort-bar-col"
                 style={{ height: '100%' }}
                 title={monthTooltip(m)}
               >
@@ -453,8 +467,11 @@ export function CohortTimeline({ series, className }: { series: CohortSeries; cl
           {zarWithheld ? (
             /* The training chart's answer to the same situation, in the same voice — but kept at
                the plot's full height, because the month axis below is shared with the kilogram
-               panel and must not shift when this one has nothing to draw. */
-            <div className="flex items-center" style={{ height: PLOT_ZAR, borderBottom: `1px solid ${AXIS}` }}>
+               panel and must not shift when this one has nothing to draw. The div below stays on
+               ONE line on purpose: tests/cohort-chart-honesty.test.ts proves that height survives
+               by matching `flex items-center" style={{ height: PLOT_ZAR` as adjacent source text,
+               so splitting the attributes across lines silently disables that guard. */
+            <div className="flex items-center" style={{ height: PLOT_ZAR, borderBottom: `1px solid ${AXIS}`, borderTop: '1px dashed rgba(140,122,98,0.20)' }}>
               <p className="font-sans" style={{ fontSize: 13, color: MUTED, lineHeight: 1.55, margin: 0 }}>
                 No farm in this cohort has shared its sales book. Income nobody agreed to show is
                 not an income of R0, so these months are simply not drawn.
@@ -467,6 +484,7 @@ export function CohortTimeline({ series, className }: { series: CohortSeries; cl
             style={{
               display: 'grid', gridTemplateColumns: columns, alignItems: 'end', gap: 2,
               height: PLOT_ZAR, borderBottom: `1px solid ${AXIS}`,
+              borderTop: '1px dashed rgba(140,122,98,0.20)',
             }}
           >
             {months.map((m, i) => {
@@ -474,7 +492,7 @@ export function CohortTimeline({ series, className }: { series: CohortSeries; cl
               return (
                 <div
                   key={m.key}
-                  className="flex flex-col justify-end"
+                  className="flex flex-col justify-end imf-cohort-bar-col"
                   style={{ height: '100%' }}
                   title={monthTooltip(m)}
                 >
@@ -511,7 +529,7 @@ export function CohortTimeline({ series, className }: { series: CohortSeries; cl
         </div>
 
         <div className="px-4 pb-4" style={{ paddingTop: 11 }}>
-          <div className="flex flex-wrap items-center" style={{ gap: '5px 14px' }}>
+          <div className="flex flex-wrap items-center" style={{ gap: '6px 16px' }}>
             {paired ? (
               <>
                 <Key colour={SOLD} label="Sold" />
@@ -573,6 +591,10 @@ export function CohortTimeline({ series, className }: { series: CohortSeries; cl
           )}
         </div>
       </ChartCard>
+      <style jsx global>{`
+        .imf-cohort-bar-col { border-radius: 4px; transition: background-color 120ms ease; }
+        .imf-cohort-bar-col:hover { background: rgba(140,122,98,0.08); }
+      `}</style>
     </div>
   );
 }
@@ -667,7 +689,10 @@ export function CohortTrainingChart({ training, className }: { training: CohortT
     <div className={className}>
       <ChartCard title="Course progress across the cohort" icon={<GraduationCap size={13} />} note={note}>
         {reporting === 0 ? (
-          <NoChart reason="A training record nobody agreed to share is not a farmer who has done no training, so nobody is drawn at zero here — they are simply not drawn." />
+          <NoChart
+            reason="A training record nobody agreed to share is not a farmer who has done no training, so nobody is drawn at zero here — they are simply not drawn."
+            icon={<GraduationCap size={16} />}
+          />
         ) : (
           <>
             <div className="px-4 py-3 flex flex-wrap" style={{ gap: '10px 22px' }}>
@@ -694,6 +719,7 @@ export function CohortTrainingChart({ training, className }: { training: CohortT
                 style={{
                   display: 'grid', gridTemplateColumns: `repeat(${bands.length}, minmax(0, 1fr))`,
                   alignItems: 'end', gap: 2, height: PLOT_TRAINING, borderBottom: `1px solid ${AXIS}`,
+                  borderTop: '1px dashed rgba(140,122,98,0.20)',
                 }}
               >
                 {bands.map((band) => {
@@ -701,7 +727,7 @@ export function CohortTrainingChart({ training, className }: { training: CohortT
                   return (
                     <div
                       key={band.done}
-                      className="flex flex-col justify-end"
+                      className="flex flex-col justify-end imf-cohort-bar-col"
                       style={{ height: '100%' }}
                       title={`${band.farmers} ${band.farmers === 1 ? 'farmer has' : 'farmers have'} finished ${band.done} of ${modulesTotal} modules`}
                     >
@@ -749,6 +775,10 @@ export function CohortTrainingChart({ training, className }: { training: CohortT
           </>
         )}
       </ChartCard>
+      <style jsx global>{`
+        .imf-cohort-bar-col { border-radius: 4px; transition: background-color 120ms ease; }
+        .imf-cohort-bar-col:hover { background: rgba(140,122,98,0.08); }
+      `}</style>
     </div>
   );
 }

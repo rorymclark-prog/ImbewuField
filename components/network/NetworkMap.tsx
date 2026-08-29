@@ -352,7 +352,9 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
                         boxShadow: isSel
                           ? '0 0 0 4px rgba(31,77,43,0.22), 0 4px 14px rgba(32,25,15,0.38)'
                           : '0 2px 8px rgba(32,25,15,0.30)',
-                        transition: 'width 140ms ease, height 140ms ease',
+                        /* A settle, not a snap — the ring and lift on selection ease in
+                         * alongside the resize, calm rather than sudden. */
+                        transition: 'width 160ms ease, height 160ms ease, box-shadow 220ms ease, border-color 220ms ease',
                       }}
                     />
                     {(isSel || isHover) && (
@@ -369,6 +371,10 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
                           whiteSpace: 'nowrap',
                           boxShadow: '0 2px 8px rgba(32,25,15,0.16)',
                           pointerEvents: 'none',
+                          /* u-fadeIn is declared globally in app/globals.css (already
+                           * used app-wide via .u-anim-sheet); referenced directly here
+                           * since this label's mount is conditional, not a sheet. */
+                          animation: 'u-fadeIn 140ms ease',
                         }}
                       >
                         {farmer.name}
@@ -408,7 +414,7 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
             fitAll();
           }}
           aria-label="Zoom out to the whole portfolio"
-          className="absolute z-10 flex items-center gap-1.5 px-3 py-2 font-display font-semibold"
+          className="absolute z-10 flex items-center gap-1.5 px-3.5 py-2.5 font-display font-semibold transition hover:brightness-95 active:brightness-90"
           style={{
             top: 12,
             left: 12,
@@ -418,12 +424,40 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
             fontSize: 12.5,
             color: INK,
             cursor: 'pointer',
+            minHeight: 40,
             boxShadow: '0 4px 16px rgba(32,25,15,0.12)',
           }}
         >
           <Maximize2 size={13} style={{ color: INK_SOFT }} />
           Fit all
         </button>
+
+        {/* No sites to show — the current filters (or an empty portfolio)
+            leave nothing to draw. An empty map with no explanation reads as
+            broken; this says why and names the visible way out. */}
+        {rows.length === 0 && (
+          <div
+            className="absolute inset-0 z-10 flex items-center justify-center px-6"
+            style={{ pointerEvents: 'none' }}
+          >
+            <div
+              className="u-anim-sheet text-center px-4 py-3 rounded-2xl"
+              style={{
+                background: 'rgba(255,254,250,0.96)',
+                border: `1px solid ${LINE}`,
+                boxShadow: '0 4px 16px rgba(32,25,15,0.14)',
+                maxWidth: 300,
+              }}
+            >
+              <div className="font-display font-semibold" style={{ fontSize: 14, color: INK }}>
+                No farmer sites to show
+              </div>
+              <div className="font-sans" style={{ fontSize: 11.5, color: INK_SOFT, marginTop: 4, lineHeight: 1.4 }}>
+                Try widening the filters above, or use Fit all once sites are back in view.
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* ── Legend: says exactly what the pins encode ── */}
         <div
@@ -442,14 +476,16 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
         >
           <button
             onClick={() => setLegendOpen((v) => !v)}
-            className="w-full flex items-center justify-between px-3 py-2 font-sans font-bold uppercase"
+            aria-expanded={legendOpen}
+            className="w-full flex items-center justify-between px-3 py-2.5 font-sans font-bold uppercase transition hover:brightness-95 active:brightness-90"
             style={{
               background: 'none',
               border: 'none',
               cursor: 'pointer',
-              fontSize: 10,
+              fontSize: 11,
               letterSpacing: '0.12em',
               color: INK_MUTED,
+              minHeight: 40,
             }}
           >
             Legend
@@ -457,8 +493,8 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
           </button>
 
           {legendOpen && (
-            <div className="px-3 pb-3" style={{ borderTop: `1px solid ${LINE}` }}>
-              <div className="font-sans" style={{ fontSize: 10.5, color: INK_MUTED, margin: '8px 0 5px' }}>
+            <div className="px-3 pb-3 u-anim-sheet" style={{ borderTop: `1px solid ${LINE}` }}>
+              <div className="font-sans" style={{ fontSize: 11, color: INK_MUTED, margin: '8px 0 5px' }}>
                 COLOUR — site status
               </div>
               {(Object.keys(STATUS) as GardenStatus[]).map((s) => (
@@ -479,7 +515,7 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
                 </div>
               ))}
 
-              <div className="font-sans" style={{ fontSize: 10.5, color: INK_MUTED, margin: '9px 0 5px' }}>
+              <div className="font-sans" style={{ fontSize: 11, color: INK_MUTED, margin: '9px 0 5px' }}>
                 SIZE — plot area
               </div>
               <div className="flex items-center gap-2">
@@ -489,12 +525,12 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
                 <span
                   style={{ width: 19, height: 19, borderRadius: '50%', background: INK_SOFT, flexShrink: 0 }}
                 />
-                <span className="font-sans" style={{ fontSize: 11, color: INK_SOFT }}>
+                <span className="font-sans" style={{ fontSize: 11, color: INK_SOFT, fontVariantNumeric: 'tabular-nums' }}>
                   {group(minM2)}–{group(maxM2)} m²
                 </span>
               </div>
 
-              <div className="font-sans" style={{ fontSize: 10.5, color: INK_MUTED, margin: '9px 0 5px' }}>
+              <div className="font-sans" style={{ fontSize: 11, color: INK_MUTED, margin: '9px 0 5px' }}>
                 RING — needs attention
               </div>
               <div className="flex items-center gap-2">
@@ -515,7 +551,7 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
 
               <p
                 className="font-sans"
-                style={{ fontSize: 10, color: INK_MUTED, marginTop: 9, lineHeight: 1.45 }}
+                style={{ fontSize: 11, color: INK_MUTED, marginTop: 9, lineHeight: 1.45 }}
               >
                 Pins show status and plot size only — both recorded for every
                 site. Harvest, income and progress are in the panel, where
@@ -529,7 +565,7 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
       {/* ── Detail panel: bottom sheet (mobile) / right column (md+) ── */}
       {selected && (
         <div
-          className="absolute inset-x-0 bottom-0 z-20 rounded-t-3xl shadow-float max-h-[68dvh] md:static md:z-auto md:w-[400px] md:flex-shrink-0 md:rounded-none md:border-l md:max-h-none md:shadow-none"
+          className="absolute inset-x-0 bottom-0 z-20 rounded-t-3xl shadow-float max-h-[68dvh] md:static md:z-auto md:w-[400px] md:flex-shrink-0 md:rounded-none md:border-l md:max-h-none md:shadow-none u-anim-sheet"
           style={{
             background: PANEL,
             borderColor: LINE,
@@ -544,21 +580,26 @@ export default function NetworkMap({ rows, selectedId, onSelect }: NetworkMapPro
             />
             <span
               className="font-sans font-bold uppercase"
-              style={{ fontSize: 10.5, letterSpacing: '0.12em', color: INK_MUTED, marginTop: 6 }}
+              style={{ fontSize: 11, letterSpacing: '0.12em', color: INK_MUTED, marginTop: 6 }}
             >
               Farmer
             </span>
             <button
               onClick={() => onSelect(null)}
               aria-label="Close farmer panel"
+              className="transition hover:brightness-95 active:brightness-90"
               style={{
                 background: 'rgba(32,25,15,0.06)',
                 border: `1px solid ${LINE}`,
                 borderRadius: 8,
-                padding: 6,
+                padding: 8,
                 cursor: 'pointer',
                 color: INK_SOFT,
                 display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                minWidth: 40,
+                minHeight: 40,
                 marginTop: 4,
               }}
             >
