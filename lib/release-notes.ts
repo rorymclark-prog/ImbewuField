@@ -35,7 +35,7 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '29 August',
-    sha: '1cba56e',
+    sha: '86c2c9a',
     changes: [
       'Your picked, sold and spent money now lives in one book',
       'Tap Picked, Sold or Spent at the top — the charts are in there too',
