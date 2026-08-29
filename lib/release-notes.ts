@@ -35,8 +35,13 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '29 August',
-    sha: '1cba56e',
+    sha: '0858941',
     changes: [
+      'Your picked, sold and spent money now lives in one book',
+      "Lima's chat button now stays out of the way of other buttons on busy pages",
+      'Tap Picked, Sold or Spent at the top — the charts are in there too',
+      'What you sold and spent this month now shows on every page of that book',
+      'One money door on the home screen and in the menu, not two',
       'Programme reports now remember which organisation they belong to',
       'Catalogue plants now show their own picture, with fruit and flowers easy to see',
       'The design map now uses the matching overhead crown for each named plant',
@@ -54,6 +59,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       'That funder view only ever shows what each farmer has agreed to share',
       'A public page now introduces the app to NGOs and funders, with a link to get it',
       'Trying the app without an account now shows the funder and NGO screens with sample data',
+      'The sample farm now says AI pictures are off there, instead of quietly spending',
     ],
   },
   {

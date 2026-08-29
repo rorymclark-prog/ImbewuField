@@ -985,7 +985,40 @@ function CreditPackCard({
 
 /* ── Main MyRecords component ────────────────────────────────────────────── */
 
-export default function MyRecords() {
+/**
+ * WHICH PAGE OF THE BOOK THIS IS STANDING ON.
+ *
+ * This component used to be the whole of /records: harvests, sales, the credit pack and shared
+ * designs on one scroll. The Gogo Test audit merged /records and /finances into one book with
+ * tabs — Picked · Sold · Spent — and a tab called "Picked" that also holds a sale form is the
+ * same lying label the Journal tile already had to have fixed. So the blocks are split by page.
+ *
+ * A PROP, NOT A SPLIT INTO TWO COMPONENTS. Everything below the render shares one auth
+ * subscription and one allSettled read of production, sales, expenses, designs and profile.
+ * Splitting the file would have meant two of each, or lifting state into the page — and the page
+ * is where the second, money-side data owner already lives. Picked and Sold are rendered from the
+ * same mounted element in app/records/page.tsx, so switching between them changes this prop and
+ * nothing refetches.
+ *
+ * 'all' keeps the original one-scroll behaviour for any caller that has not been told about tabs.
+ */
+export type MyRecordsSection = 'all' | 'picked' | 'sold';
+
+export default function MyRecords({
+  section = 'all',
+  onChanged,
+}: {
+  section?: MyRecordsSection;
+  /**
+   * Fires after a save lands, so the book's own totals (SummaryCards, the ledger, the charts)
+   * refresh from the same tap. Without it, logging a harvest here would update this list and
+   * leave "Kg harvested" above the tabs showing the old number — the split-brain the merge
+   * exists to end.
+   */
+  onChanged?: () => void;
+}) {
+  const showPicked = section === 'all' || section === 'picked';
+  const showSold = section === 'all' || section === 'sold';
   const { t } = useLanguage();
   const [user, setUser] = useState<User | null | 'loading'>('loading');
   const [production, setProduction] = useState<ProductionLog[]>([]);
@@ -1081,6 +1114,18 @@ export default function MyRecords() {
     }
   }, []);
 
+  /**
+   * What both forms call after a successful save: re-read this component's own lists, then tell
+   * the book. Two owners read the same three collections (this component and app/records/page.tsx
+   * — see the note on the `section` prop), and only one of them can be refreshed by a save that
+   * happens in here. A harvest that updates "Recent harvests" but leaves "Kg harvested" above the
+   * tabs stale would be two answers to one question on one screen.
+   */
+  const handleSaved = useCallback(() => {
+    void loadData();
+    onChanged?.();
+  }, [loadData, onChanged]);
+
   // Load data once signed in
   useEffect(() => {
     let cancelled = false;
@@ -1125,23 +1170,33 @@ export default function MyRecords() {
   return (
     <div className="p-4 space-y-4">
 
-      {/* ── Section header ──────────────────────────── */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h2
-            className="font-display font-bold text-base leading-tight"
-            style={{ color: '#20190F' }}
-          >
-            {t('myRecordsTitle')}
-          </h2>
-          <p className="font-display text-xs mt-0.5" style={{ color: '#9A8268' }}>
-            {t('myRecordsSubtitle')}
-          </p>
+      {/* ── Section header ────────────────────────────
+             Only on the one-scroll view. Inside the book the tab strip directly above already
+             says which page this is, and a heading repeating it would push the harvest form —
+             the thing she came to fill in — further down a 375px screen for nothing. The
+             loading spinner survives either way; it is the only thing here that is news. */}
+      {section === 'all' ? (
+        <div className="flex items-center justify-between">
+          <div>
+            <h2
+              className="font-display font-bold text-base leading-tight"
+              style={{ color: '#20190F' }}
+            >
+              {t('myRecordsTitle')}
+            </h2>
+            <p className="font-display text-xs mt-0.5" style={{ color: '#9A8268' }}>
+              {t('myRecordsSubtitle')}
+            </p>
+          </div>
+          {dataLoading && (
+            <Loader2 size={16} className="animate-spin" style={{ color: '#1F4D2B' }} />
+          )}
         </div>
-        {dataLoading && (
+      ) : dataLoading ? (
+        <div className="flex justify-end">
           <Loader2 size={16} className="animate-spin" style={{ color: '#1F4D2B' }} />
-        )}
-      </div>
+        </div>
+      ) : null}
 
       {/* ── Load error banner ───────────────────────── */}
       {loadError && !dataLoading && (
@@ -1163,11 +1218,13 @@ export default function MyRecords() {
         </div>
       )}
 
-      {/* ── Log production ──────────────────────────── */}
-      <LogProductionForm onSaved={loadData} />
+      {/* ── Log production — THE harvest form. Crop, kilograms, optional photo, save.
+             The audit's "do not touch" list names this shape exactly; the merge moved its
+             front door and left every field and every branch of its save path alone. ── */}
+      {showPicked && <LogProductionForm onSaved={handleSaved} />}
 
       {/* ── Harvest summary ─────────────────────────── */}
-      {production.length > 0 && (() => {
+      {showPicked && production.length > 0 && (() => {
         // Scoped, not filtered-away: what the switch removes is counted separately and named
         // underneath, so a total that suddenly drops has its missing kilograms on the same card.
         const counted = production.filter((p) => inScope(p.crop));
@@ -1224,20 +1281,26 @@ export default function MyRecords() {
       })()}
 
       {/* ── Recent harvests ─────────────────────────── */}
-      <Card>
-        <SectionLabel>{t('myRecordsRecentHarvests')}</SectionLabel>
-        <ProductionList items={production.slice(0, 10)} />
-      </Card>
+      {showPicked && (
+        <Card>
+          <SectionLabel>{t('myRecordsRecentHarvests')}</SectionLabel>
+          <ProductionList items={production.slice(0, 10)} />
+        </Card>
+      )}
 
-      <Divider />
+      {showPicked && showSold && <Divider />}
 
-      {/* ── Log sale ────────────────────────────────── */}
-      <LogSaleForm
-        onSaved={() => { void loadData(); }}
-      />
+      {/* ── Log sale — the crop-picker sale form, with the guide price beside it. Lives on the
+             Sold page of the book; the plain-text entry and the edit/delete ledger are on the
+             same page, below this component. ── */}
+      {showSold && (
+        <LogSaleForm
+          onSaved={handleSaved}
+        />
+      )}
 
       {/* ── Sales summary ────────────────────────────── */}
-      {(sales.length > 0 || invoices.some((i) => i.status === 'paid')) && (() => {
+      {showSold && (sales.length > 0 || invoices.some((i) => i.status === 'paid')) && (() => {
         // Summing `sales` alone double-counted a paid invoice's kg lines (also synced into
         // `sales` by syncInvoiceSales) while missing its bags/crates/other non-kg lines entirely
         // (they never create a sales row — their weight is unknown). cashIncomeTotal is the one
@@ -1292,23 +1355,32 @@ export default function MyRecords() {
       })()}
 
       {/* ── Recent sales ────────────────────────────── */}
-      <Card>
-        <SectionLabel>{t('myRecordsSalesHeader')}</SectionLabel>
-        <SalesList items={sales.slice(0, 10)} />
-      </Card>
+      {showSold && (
+        <Card>
+          <SectionLabel>{t('myRecordsSalesHeader')}</SectionLabel>
+          <SalesList items={sales.slice(0, 10)} />
+        </Card>
+      )}
 
-      <Divider />
+      {/* ── Records for a lender, and the designs her supervisor shared ───────────────
+             Both stay on Picked. They are about what she has recorded rather than about a
+             single sale or cost, and the credit pack needs harvests, sales AND costs — it is
+             one of the few things in the app that reads all three, so it belongs on the page
+             she reaches first rather than on one of the two money pages. ── */}
+      {showPicked && (
+        <>
+          <Divider />
 
-      {/* ── Records for a lender ─────────────────────── */}
-      <CreditPackCard production={production} sales={sales} expenses={expenses} profile={profile} />
+          <CreditPackCard production={production} sales={sales} expenses={expenses} profile={profile} />
 
-      <Divider />
+          <Divider />
 
-      {/* ── Shared designs ──────────────────────────── */}
-      <Card accent="#2F6F9E">
-        <SectionLabel>{t('myRecordsSharedWithMe')}</SectionLabel>
-        <SharedDesignsList items={designs} />
-      </Card>
+          <Card accent="#2F6F9E">
+            <SectionLabel>{t('myRecordsSharedWithMe')}</SectionLabel>
+            <SharedDesignsList items={designs} />
+          </Card>
+        </>
+      )}
 
     </div>
   );

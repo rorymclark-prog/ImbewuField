@@ -24,7 +24,9 @@ test('nested routes follow their section, so a deep link is never stranded', () 
 
 test('tab-bar destinations and auth gates never get one', () => {
   // The tab bar IS the navigation for these four; "back" from a home screen means leaving the app.
-  for (const path of ['/', '/home', '/farmer', '/finances', '/account']) {
+  // '/records' replaced '/finances' in that four when the two money screens became one book —
+  // /finances is a redirect onto /records now, so it is no longer a destination at all.
+  for (const path of ['/', '/home', '/farmer', '/records', '/account']) {
     assert.equal(floatingBackAllowed(path), false, `${path} is a top-level destination`);
   }
   // A gate exists to be answered, not walked around.
