@@ -4,7 +4,8 @@ import { useState, useRef, useEffect, useCallback, type ChangeEvent } from 'reac
 import { Camera, Send, FlaskConical, Loader2, X } from 'lucide-react';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import { loadReports } from '@/lib/saved-reports';
-import { myProduction, mySales } from '@/lib/db/queries';
+import { getMyConsent, myProduction, mySales } from '@/lib/db/queries';
+import { CONSENT_SCOPES, hasConsent, type FarmerConsent } from '@/lib/consent';
 import { loadSampleFarmData, clearSampleFarmData, getLocalProduction, getLocalSales, getLocalProject, hasSampleData } from '@/lib/demo-data';
 import { getLastSite } from '@/lib/last-site';
 import { paidApiHeaders } from '@/lib/api-client-auth';
@@ -64,6 +65,7 @@ export default function ChatPanel({ locationData, siteData, waterData, appLang, 
   const [loading, setLoading] = useState(false);
   const [production, setProduction] = useState<{ crop: string; kg: number }[]>([]);
   const [salesRows, setSalesRows] = useState<{ crop: string; kg: number; amount: number }[]>([]);
+  const [consent, setConsent] = useState<FarmerConsent | null>(null);
   const [pendingImage, setPendingImage] = useState<{ data: string; mediaType: string; preview: string } | null>(null);
   const [hasSample, setHasSample] = useState(false);
   const endRef = useRef<HTMLDivElement>(null);
@@ -96,6 +98,15 @@ export default function ChatPanel({ locationData, siteData, waterData, appLang, 
       try { const rows = await mySales(); if (alive) setSalesRows(rows.map((r) => ({ crop: r.crop, kg: r.kg, amount: r.amount }))); }
       catch { /* not signed in / offline */ }
     })();
+    // The farmer's own sharing settings, read through the SAME query ConsentPanel uses, so the
+    // assistant and the screen can never describe different switches. Sample mode and a farmer who
+    // has never opened that screen both come back null — which stays null all the way to the
+    // prompt, where "I cannot see your settings, open Account" is the honest answer. Filling in a
+    // confident "you are sharing nothing" from a failed read is the one thing not to do here.
+    (async () => {
+      try { const c = await getMyConsent(); if (alive) setConsent(c); }
+      catch { /* not signed in / offline / sample mode */ }
+    })();
     return () => { alive = false; };
   }, []);
 
@@ -115,10 +126,18 @@ export default function ChatPanel({ locationData, siteData, waterData, appLang, 
       language: appLang ?? (typeof window !== 'undefined' ? localStorage.getItem('permamap_lang') ?? undefined : undefined),
       production: prod.length ? prod : undefined,
       sales: sales.length ? sales : undefined,
+      // Their own switches, by their own labels — never another farmer's, never a cohort's.
+      consent: consent
+        ? {
+            sharing: CONSENT_SCOPES.filter((s) => hasConsent(consent, s.id)).map((s) => s.label),
+            notSharing: CONSENT_SCOPES.filter((s) => !hasConsent(consent, s.id)).map((s) => s.label),
+            stoppedAt: consent.revoked_at ?? null,
+          }
+        : undefined,
       project: getLocalProject() ?? undefined,
       reports: reports.length ? reports.map((r, i) => ({ name: r.name, savedAt: r.savedAt, text: i === 0 ? r.report : undefined })) : undefined,
     };
-  }, [locationData, siteData, waterData, appLang, production, salesRows]);
+  }, [locationData, siteData, waterData, appLang, production, salesRows, consent]);
 
   const send = useCallback(async (text: string) => {
     const q = text.trim();
