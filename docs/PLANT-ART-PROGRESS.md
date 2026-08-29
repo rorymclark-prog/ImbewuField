@@ -20,7 +20,7 @@ Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 | Date palm | PASS | `public/element-art/tree_date_palm.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/date-palm-v1.png` | `dc420c0` |
 | Pecan | PASS | `public/element-art/tree_pecan.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/pecan-tree-v1.png` | `64d7a8a` |
 | Pistachio | PASS | `public/element-art/tree_pistachio.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/pistachio-tree-v1.png` | `64d7a8a` |
-| Quince | PASS | `public/element-art/tree_quince.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/quince-tree-v1.png` | `64d7a8a` |
+| Quince | PASS | `public/element-art/tree_quince.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/quince-tree-v1.png` | `84253b2` |
 | Sweet cherry | PASS | `public/element-art/tree_sweet_cherry.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/sweet-cherry-tree-v1.png` | `64d7a8a` |
 | Bluebush | PASS | `public/element-art/tree_bluebush.png` | `72e0bbb` | PASS | `public/render-assets/reference-blueprint/bluebush-v1.png` | `8489f3e` |
 | Brown ivory / motsintsila | PASS | `public/element-art/tree_brown_ivory_motsintsila.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/brown-ivory-tree-v1.png` | `b366a42` |
