@@ -113,7 +113,16 @@ export interface Design {
 }
 
 export interface Report {
-  id: string; owner_id: string; garden_id: string | null; title: string; content: string | null; lang: string; created_at: string;
+  id: string; owner_id: string;
+  /**
+   * Denormalised from the owner's profile at save time — needed for the org-scoped staff read
+   * rule, and for a future cohort report list (Funder & NGO dashboards can't scope reports to an
+   * org without it). Optional because reports saved before this field existed have no such field
+   * yet (see scripts/backfill-org-id.mjs) — treat a missing value the same as null, not as an
+   * error.
+   */
+  org_id?: string | null;
+  garden_id: string | null; title: string; content: string | null; lang: string; created_at: string;
 }
 
 export interface CourseProgress {

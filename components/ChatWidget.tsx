@@ -12,6 +12,19 @@ import ChatPanel from './ChatPanel';
  * as is /partners — the public NGO/funder showcase, where a farming AI
  * assistant docked over the pitch reads as off-product rather than helpful.
  * "Lima" means "to cultivate" in Nguni languages.
+ *
+ * /funder and /ngo are excluded too, for a different reason: unlike /partners
+ * this isn't about tone, it's that no fixed FAB position is safe on either
+ * route. Both host the same NgoDashboard Gardens tab, whose map view keeps a
+ * status legend permanently parked at bottom-left of a non-scrolling panel —
+ * there's no scroll gesture that ever moves it out from under a bottom-left
+ * FAB. Both also host CohortDashboard, a farmer list that fills the entire
+ * scrollable area, so a long list always has some row sitting at whatever
+ * height the FAB occupies. Confirmed at 375px on the live site (sample mode):
+ * measured the legend covered on Gardens, and covered farmer rows/action
+ * icons on Cohort at scroll positions a user reaches normally. And staff
+ * doing impact oversight or setting up gardens isn't who a *farming* AI
+ * assistant expects to help.
  */
 export default function ChatWidget() {
   const pathname = usePathname() || '';
@@ -79,12 +92,15 @@ export default function ChatWidget() {
   // Skip on auth pages, home (which has LimaBar), the Design Studio (its
   // bottom-docked tool palette owns the bottom-left corner — the FAB covered Select), the
   // public partners showcase (no farmer context to chat about, and it collides with that page's
-  // own "Get the app" CTA), and the /pitch projector deck (a chat FAB floating over a
+  // own "Get the app" CTA), the funder/NGO staff dashboards — see the class comment above for
+  // why no repositioning fixes those two (a permanently-parked map legend, and a farmer list that
+  // fills the whole scrollable area) — and the /pitch projector deck (a chat FAB floating over a
   // presentation slide, and over the live app already embedded inside it, helps nobody).
   if (
     pathname.startsWith('/gate') || pathname.startsWith('/login') ||
     pathname.startsWith('/home') || pathname.startsWith('/design') ||
-    pathname.startsWith('/partners') || pathname.startsWith('/pitch')
+    pathname.startsWith('/partners') || pathname.startsWith('/funder') ||
+    pathname.startsWith('/ngo') || pathname.startsWith('/pitch')
   ) return null;
 
   // WHERE THE FAB PARKS WHEN NOBODY HAS MOVED IT.
@@ -105,11 +121,25 @@ export default function ChatWidget() {
   // is LEFT-aligned, so a bottom-left FAB sits on top of the content and the tab's hit area at
   // 375px. That page docks nothing to the bottom-right (its only fixed elements are full-screen
   // modal overlays, which cover the FAB anyway), so the right corner is genuinely free.
+  //
+  // /invoice's last screen is a two-up "Share PDF" / "Print" row that is the literal end of that
+  // page's scroll container — nothing follows it but the tab bar. At rest (scrolled to the
+  // bottom, which sending an invoice requires), the default 130px offset put the FAB over 84% of
+  // Share PDF's height and a third of its width — the WhatsApp-green button that actually
+  // delivers the invoice to a buyer. Measured on the live site at 375px (sample mode, an invoice
+  // with a buyer and item filled in so the row enables): button at viewport y:[644,689], default
+  // FAB at y:[626,682]. Raising to 176px clears it (new FAB band y:[580,636], 8px above the
+  // button's top) but lands on the optional "Note on the invoice" textarea instead — only a
+  // 43×35px corner of it, since that field ends at y:615, 11px of clearance the button doesn't
+  // have. A corner nick on an optional multi-line field beats hiding the send action, and the two
+  // can't both be fully clear: the 29px gap between them is smaller than the 56px FAB.
   const FAB_DEFAULT_POS = pathname.startsWith('/farmer')
     ? 'bottom-[188px] left-4 lg:bottom-[100px] lg:left-4'
     : pathname.startsWith('/facilitator/crops')
       ? 'bottom-[130px] right-4 lg:bottom-[100px] lg:right-4'
-      : 'bottom-[130px] left-4 lg:bottom-[100px] lg:left-4';
+      : pathname.startsWith('/invoice')
+        ? 'bottom-[176px] left-4 lg:bottom-[100px] lg:left-4'
+        : 'bottom-[130px] left-4 lg:bottom-[100px] lg:left-4';
 
   const lang = typeof window !== 'undefined' ? localStorage.getItem('permamap_lang') ?? undefined : undefined;
 

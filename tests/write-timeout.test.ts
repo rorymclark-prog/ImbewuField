@@ -16,7 +16,7 @@ import test from 'node:test';
 // persistentLocalCache — so giving up on the wait is not giving up on the write. lib/db/queries.ts
 // races every add* write against WRITE_TIMEOUT_MS and rejects with WriteTimeoutError rather than
 // leaving the caller to guess; both save screens then tell the farmer the entry is safe, using the
-// SAME navigator.onLine signal app/finances/page.tsx's read-side offline banner already tracks.
+// SAME navigator.onLine signal app/records/page.tsx's read-side offline banner already tracks.
 
 import {
   withWriteTimeout,
@@ -102,10 +102,11 @@ test('addProduction, addSale and addExpense each race their write against the ti
   }
 });
 
-/* ── app/finances/page.tsx: the same bounded save, an honest branch ─────────── */
+/* ── app/records/page.tsx: the same bounded save, an honest branch ───────────
+   The money forms moved with the Picked · Sold · Spent merge; /finances is a redirect now. */
 
 test('the finances Log sale/cost form tells a timeout apart from a real failure', () => {
-  const src = read('../app/finances/page.tsx');
+  const src = read('../app/records/page.tsx');
   assert.match(
     src,
     /import \{[\s\S]*?WriteTimeoutError[\s\S]*?\} from '@\/lib\/db\/queries'/,
@@ -125,12 +126,12 @@ test('the finances Log sale/cost form tells a timeout apart from a real failure'
   assert.doesNotMatch(branch, /Failed to save/, 'a queued write must never be reported to the farmer as failed');
   assert.match(branch, /saved on your phone/i, 'the timeout message must say the entry is safe, not just stop spinning');
   // Reuses the SAME navigator.onLine-derived `online` signal the read-side banner already
-  // tracks (app/finances/page.tsx ~line 1023) rather than inventing a second offline mechanism.
+  // tracks (app/records/page.tsx) rather than inventing a second offline mechanism.
   assert.match(branch, /error: online\s*\n?\s*\?/, 'the wording must branch on the existing `online` signal, not a new one');
 });
 
 test('a timed-out save clears the entered values so a re-tap cannot log the same entry twice', () => {
-  const src = read('../app/finances/page.tsx');
+  const src = read('../app/records/page.tsx');
   const handlerStart = src.indexOf('async function handleSubmit');
   const handler = src.slice(handlerStart, handlerStart + 3600);
   const branchStart = handler.indexOf('err instanceof WriteTimeoutError');
@@ -144,9 +145,13 @@ test('a timed-out save clears the entered values so a re-tap cannot log the same
 });
 
 test('both LogSaleForm mount points feed the shared online signal into the save path', () => {
-  const src = read('../app/finances/page.tsx');
+  const src = read('../app/records/page.tsx');
   const mounts = src.match(/<LogSaleForm[\s\S]*?\/>/g) ?? [];
-  assert.equal(mounts.length, 2, 'expected exactly the desktop-modal mount and the phone mount');
+  // Three now, not two: the merge split the one combined phone mount into a Sold mount and a
+  // Spent mount (money-in and money-out, the toggle replaced by the tab you are standing on)
+  // beside the unchanged desktop-modal mount. Every one of them still has to carry the shared
+  // online signal, which is what this test is actually for.
+  assert.equal(mounts.length, 3, 'expected the desktop-modal mount plus the Sold and Spent mounts');
   for (const mount of mounts) {
     assert.match(mount, /online=\{online\}/, `LogSaleForm mount is missing online={online}:\n${mount}`);
   }

@@ -34,7 +34,10 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
     // `panel=Reports` lands on the list — generate one, or re-open any of the saved ones.
     { href: '/farmer?panel=Reports', Icon: FileText, label: t('siteReportOverline') },
     { href: '/atlas',   Icon: Earth,         label: 'Atlas' },
-    { href: '/finances', Icon: DollarSign,   label: t('tabFinance') },
+    // ONE money door. This row used to be the only way into /finances from the menu, and
+    // there was no row for /records at all — so the menu offered half her money and the home
+    // screen offered the other half under a different name. Both are the same book now.
+    { href: '/records', Icon: DollarSign,   label: t('homeQuickMyRecords') },
     { href: '/student', Icon: GraduationCap, label: t('homeQuickStudy') },
     { href: '/contact', Icon: MessageCircle, label: t('homeQuickContact') },
     // /network was ungated when it ran on lib/network-demo.ts. It now reads real farmers'

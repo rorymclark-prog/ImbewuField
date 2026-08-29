@@ -6,11 +6,19 @@ import { usePathname } from 'next/navigation';
 import { Home, Map, DollarSign, User } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
 
+// The third tab is the farmer's money, and there is one of it now. It used to point at
+// /finances while a second door, "My Records", held her kilograms — the split the Gogo Test
+// audit found she could not reconcile ("she cannot answer how much did I make this season").
+// /finances redirects here, so an installed PWA with the old tab still lands in the right place.
+//
+// 'homeQuickMyRecords', not 'tabFinance': the label has to match the tile and the header, and
+// this key is already translated in all ten locales — renaming the door would have meant either
+// coining farming copy in ten languages or shipping an English tab under a translated tile.
 const TABS = [
-  { href: '/home',     key: 'tabHome',    Icon: Home },
-  { href: '/farmer',   key: 'tabMap',     Icon: Map },
-  { href: '/finances', key: 'tabFinance', Icon: DollarSign },
-  { href: '/account',  key: 'tabAccount', Icon: User },
+  { href: '/home',     key: 'tabHome',           Icon: Home },
+  { href: '/farmer',   key: 'tabMap',            Icon: Map },
+  { href: '/records',  key: 'homeQuickMyRecords', Icon: DollarSign },
+  { href: '/account',  key: 'tabAccount',        Icon: User },
 ];
 
 export default function TabBar() {

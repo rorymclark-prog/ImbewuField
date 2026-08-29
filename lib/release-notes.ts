@@ -35,9 +35,22 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '29 August',
-    sha: '77f0e53',
+    sha: 'ac6d370',
     changes: [
       'A slideshow for meetings now shows the live app to partners, with a print-to-PDF copy',
+      'Your picked, sold and spent money now lives in one book',
+      "Lima's chat button now stays out of the way of other buttons on busy pages",
+      'Tap Picked, Sold or Spent at the top — the charts are in there too',
+      'What you sold and spent this month now shows on every page of that book',
+      'One money door on the home screen and in the menu, not two',
+      'Programme reports now remember which organisation they belong to',
+      'Catalogue plants now show their own picture, with fruit and flowers easy to see',
+      'The design map now uses the matching overhead crown for each named plant',
+      'Fair-use limits now share the AI helpers out, so one visitor cannot use them all up',
+      'The funder money chart now says when no one shares sales, instead of inventing a scale',
+      'Funder charts now say when picked and sold come from different farmers, never guessing',
+      'A sold bar is never drawn shorter than the sold figure printed above it',
+      'Lima now knows about your sharing settings and can say who sees what',
       'The smallest text on farmer pages has been bumped up to stay readable in the sun',
       'Map trees and garden pictures now stay on your phone after an update',
       'Those pictures are also much smaller now, so the first download costs far less data',
@@ -47,6 +60,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       'That funder view only ever shows what each farmer has agreed to share',
       'A public page now introduces the app to NGOs and funders, with a link to get it',
       'Trying the app without an account now shows the funder and NGO screens with sample data',
+      'The sample farm now says AI pictures are off there, instead of quietly spending',
     ],
   },
   {

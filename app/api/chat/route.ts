@@ -16,6 +16,7 @@ const SYSTEM = `You are ImbewuField's farm assistant — a knowledgeable, friend
 - Sustainable living, water harvesting, soil building, indigenous/climate-appropriate species, food forests, companion planting, natural pest & disease management.
 - The economics & financials of THIS farm — crop value, gross margins, viability, market opportunities, what's most profitable to grow — grounded in the farmer's own production AND sales records when provided. Use real rand figures from their sales.
 - Their project, contracts, funding and programme participation, at a practical level.
+- What they share, and with whom: the app's sharing settings, on the Account screen.
 - Diagnosing plants, pests, diseases, weeds and soil from PHOTOS the farmer sends — identify the issue and give organic/regenerative remedies (companion planting, natural sprays, soil/biological fixes). Never a chemical-pesticide recommendation.
 
 Hard rules:
@@ -23,7 +24,12 @@ Hard rules:
 - NEVER recommend synthetic/commercial pesticides, herbicides or chemical fertilisers. Always favour natural, organic, regenerative methods.
 - Decline politely and redirect anything off-topic (e.g. holidays, unrelated trivia) — you only help with their farming, site, sustainability, finances and project.
 - Be practical, specific and concise — concrete steps, species, quantities, timing, rand figures where useful. Short paragraphs or bullets, plain warm language.
-- Ground every answer in the SITE CONTEXT, REPORTS and RECORDS below whenever relevant.`;
+- Ground every answer in the SITE CONTEXT, REPORTS and RECORDS below whenever relevant.
+
+Sharing and privacy — how this app actually works, so answer from it and never guess:
+- The farmer decides what their NGO or funder may see, on the Account screen. Six separate switches: what they sold and earned, what they spent, what they harvested, their training, their survey answers, and their exact farm location.
+- Every switch starts OFF. Nothing is shared until they turn it on, they can turn any of them off again whenever they like, and "Stop sharing everything" withdraws all six at once. Staff and funders only ever see the switches that are on; with location off they see the district, never the plot.
+- If their own settings are listed below, answer from those exactly. If they are not, say you cannot see their current settings and point them to the Account screen — never assume what they are or are not sharing.`;
 
 interface ChatMsg { role: 'user' | 'assistant'; content: string }
 interface Ctx {
@@ -34,6 +40,25 @@ interface Ctx {
   reports?: { name: string; savedAt: string; text?: string }[];
   production?: { crop: string; kg: number }[];
   sales?: { crop: string; kg: number; amount: number }[];
+  /**
+   * THIS farmer's own sharing settings, read from their own consent record (lib/consent.ts) by the
+   * client that is already signed in as them. Never anyone else's, and never a whole cohort's — a
+   * farmer asking "does my NGO see my income?" is asking about themselves, and the assistant has
+   * no business holding another farmer's answer to that question.
+   *
+   * Absent when the record could not be read (sample mode, offline, or a farmer who has never
+   * opened the sharing screen). Absent is NOT "sharing nothing": the prompt tells the model to say
+   * it cannot see the settings and to point at the Account screen, because guessing wrong here
+   * either alarms someone who is private or reassures someone who is not.
+   */
+  consent?: {
+    /** Farmer-facing labels of the scopes that are switched ON. Possibly empty. */
+    sharing: string[];
+    /** Farmer-facing labels of the scopes that are switched OFF. Possibly empty. */
+    notSharing: string[];
+    /** ISO date they pressed "Stop sharing everything", if they have. */
+    stoppedAt?: string | null;
+  };
   project?: {
     programme: string; funder: string; ngo?: string;
     contractValue?: number; disbursed?: number; currency?: string;
@@ -80,6 +105,16 @@ Soil: ${loc.soil.textureClass}, pH ${loc.soil.ph}, organic carbon ${loc.soil.org
       .map(([c, v]) => `${c}: ${Math.round(v.kg)}kg sold for R${Math.round(v.amount)} (≈R${(v.amount / Math.max(1, v.kg)).toFixed(2)}/kg)`)
       .join('\n');
     parts.push(`--- THIS FARMER'S SALES / INCOME ---\nTotal income: R${Math.round(totalIncome)}\n${lines}`);
+  }
+
+  if (ctx.consent) {
+    const c = ctx.consent;
+    const lines = [
+      c.sharing.length ? `Switched ON (their NGO/funder can see these): ${c.sharing.join(', ')}` : 'Switched ON: nothing — they are sharing none of it.',
+      c.notSharing.length ? `Switched OFF (nobody outside their own account sees these): ${c.notSharing.join(', ')}` : 'Switched OFF: nothing — every switch is on.',
+    ];
+    if (c.stoppedAt) lines.push(`They used "Stop sharing everything" on ${c.stoppedAt.slice(0, 10)}.`);
+    parts.push(`--- WHAT THIS FARMER IS SHARING (their own choice, on the Account screen) ---\n${lines.join('\n')}`);
   }
 
   if (ctx.project) {

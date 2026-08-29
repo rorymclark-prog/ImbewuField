@@ -13,7 +13,8 @@
  * Routes that must NOT get the floating back button.
  *
  * The four tab-bar destinations are top-level — the tab bar IS their navigation, and "back" from
- * a home screen means leaving the app. The auth routes are gates, where a back button offers an
+ * a home screen means leaving the app. (`/records` took `/finances`'s place in that four when the
+ * two money screens were merged into one book; /finances is now only a redirect onto it.) The auth routes are gates, where a back button offers an
  * escape from the very thing the gate exists to enforce. `/design` draws its own arrow in its
  * title bar, positioned where its own layout expects it; a second one would both duplicate and
  * collide. `/partners` is the public NGO/funder showcase — reached only by an external link
@@ -26,7 +27,7 @@
  * untrue, so each one needs a reason.
  */
 export const NO_FLOATING_BACK: ReadonlySet<string> = new Set([
-  '/', '/home', '/farmer', '/finances', '/account', '/login', '/gate', '/design', '/partners',
+  '/', '/home', '/farmer', '/records', '/account', '/login', '/gate', '/design', '/partners',
   // /pitch is the projector deck: it is opened directly for a meeting, owns the whole
   // viewport, and has its own Back/Next controls — a floating back button over a slide
   // would be a second, wrong navigation system.
