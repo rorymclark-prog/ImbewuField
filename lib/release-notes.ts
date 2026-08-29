@@ -35,18 +35,12 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '29 August',
-    sha: '813e78e',
+    sha: 'a000770',
     changes: [
+      'Programme reports now remember which organisation they belong to',
       'Catalogue plants now show their own picture, with fruit and flowers easy to see',
       'The design map now uses the matching overhead crown for each named plant',
-      'Sharing switches in the try-it farm now hold, instead of switching themselves off',
-      'Text on the funder and NGO programme views is now easier to read on a phone',
-    ],
-  },
-  {
-    when: '29 August',
-    sha: 'f4b01b6',
-    changes: [
+      'Fair-use limits now share the AI helpers out, so one visitor cannot use them all up',
       'The smallest text on farmer pages has been bumped up to stay readable in the sun',
       'Map trees and garden pictures now stay on your phone after an update',
       'Those pictures are also much smaller now, so the first download costs far less data',
@@ -56,6 +50,8 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       'That funder view only ever shows what each farmer has agreed to share',
       'A public page now introduces the app to NGOs and funders, with a link to get it',
       'Trying the app without an account now shows the funder and NGO screens with sample data',
+      'Sharing switches in the try-it farm now hold, instead of switching themselves off',
+      'Text on the funder and NGO programme views is now easier to read on a phone',
     ],
   },
   {
