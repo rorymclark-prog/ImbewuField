@@ -5,7 +5,7 @@ Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 - Last full checker inventory: 2026-08-29
 - Checker: `/Users/roryclark/ImbewuField/scripts/check-plant-art.py`
 - Required scope: 53 species, 106 views
-- Current result: 101 PASS, 0 FAIL, 0 MISSING, 5 IN PROGRESS (top-down dimensions)
+- Current result: 102 PASS, 0 FAIL, 0 MISSING, 4 IN PROGRESS (top-down dimensions)
 - Dimension audit is stricter than the checker's `square` rule: every top-down file must be exactly 1024×1024.
 - A row is complete only when both views are `PASS` and their SHAs name pushed commits.
 
@@ -58,7 +58,7 @@ Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 | Malabar spinach | PASS | `public/element-art/tree_malabar_spinach.png` | `8db4efe` | PASS | `public/render-assets/reference-blueprint/malabar-spinach-v1.png` | `4a8739b` |
 | Purple granadilla / passion fruit | PASS | `public/element-art/tree_purple_granadilla.png` | `8db4efe` | PASS | `public/render-assets/reference-blueprint/purple-granadilla-v1.png` | `fba826b` |
 | Buffalo thorn | PASS | `public/element-art/tree_buffalo_thorn.png` | `d21827f` | PASS | `public/render-assets/reference-blueprint/buffalo-thorn-v1.png` | `9573aca` |
-| Karoo boer-bean | PASS | `public/element-art/tree_karoo_boer_bean.png` | `018d9e2` | IN PROGRESS | `public/render-assets/reference-blueprint/karoo-boer-bean-v1.png` | `a4f908d` |
+| Karoo boer-bean | PASS | `public/element-art/tree_karoo_boer_bean.png` | `018d9e2` | PASS | `public/render-assets/reference-blueprint/karoo-boer-bean-v1.png` | `6b2c24f` |
 | Pigeonwood / umbengele | PASS | `public/element-art/tree_pigeonwood.png` | `018d9e2` | IN PROGRESS | `public/render-assets/reference-blueprint/pigeonwood-v1.png` | `16788da` |
 | Powder-puff tree / iBoqo | PASS | `public/element-art/tree_powder_puff_tree.png` | `1ecd8f2` | IN PROGRESS | `public/render-assets/reference-blueprint/powder-puff-tree-v1.png` | `3716cf4` |
 | Karee | PASS | `public/element-art/tree_karee.png` | `d21827f` | PASS | `public/render-assets/reference-blueprint/karee-v1.png` | `b740cab` |
