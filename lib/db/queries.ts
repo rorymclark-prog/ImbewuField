@@ -415,7 +415,12 @@ export async function setCourseProgress(module: string, done: boolean): Promise<
 export async function logMentorVisit(v: { trainee_id: string; garden_id?: string | null; notes: string; visited_at: string }): Promise<void> {
   if (isSampleMode()) return;
   const f = fb(); const u = uid(); if (!f || !u) return;
-  await addDoc(collection(f.db, 'mentor_visits'), { ...v, mentor_id: u, created_at: serverTimestamp() });
+  // org_id is stamped from the mentor's own profile (org-isolation matrix audit, 2026-08-29) —
+  // same idiom as createSurvey() below — so the firestore.rules staff read can be scoped by
+  // sameOrg() instead of the bare isStaff() it used to be. The rule pins this to myOrg() at
+  // create time, so a mentor cannot claim a different org than their own.
+  const me = await getMyProfile();
+  await addDoc(collection(f.db, 'mentor_visits'), { ...v, mentor_id: u, org_id: me?.org_id ?? null, created_at: serverTimestamp() });
 }
 export async function myMentorVisits(traineeId: string): Promise<MentorVisit[]> {
   if (isSampleMode()) return [];
