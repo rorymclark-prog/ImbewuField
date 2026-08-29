@@ -175,6 +175,43 @@ async function seed() {
       setDoc(doc(db, 'survey_responses', 'resp-org2'), {
         survey_id: 'survey-2', profile_id: 'farmer-org2', org_id: 'org-2', answers: {}, created_at: '2026-08-01T00:00:00.000Z',
       }),
+      // ── Fixtures for the isAdmin gap fix (data-integrity audit, row 4): gardens (+ its members
+      // subcollection), reports and surveys all read via the bare sameOrg() helper, which has no
+      // admin bypass — see the isAdmin() comments on each of these four blocks in firestore.rules.
+      // PLATFORM_ADMIN's own org_id is null (see its profile above), so sameOrg()'s `myOrg() !=
+      // null` term is what makes it fail closed for admin specifically — no missing-field error
+      // is needed to prove that part of the gap.
+      setDoc(doc(db, 'gardens', 'garden-org1'), {
+        programme_id: null, name: 'Org1 Garden', town: 'Test town', lat: null, lon: null,
+        status: 'active', supervisor_id: FARMER_WITHOUT_LINK, org_id: 'org-1', created_at: '2026-08-01T00:00:00.000Z',
+      }),
+      setDoc(doc(db, 'gardens', 'garden-org2'), {
+        programme_id: null, name: 'Org2 Garden', town: 'Test town', lat: null, lon: null,
+        status: 'active', supervisor_id: 'farmer-org2', org_id: 'org-2', created_at: '2026-08-01T00:00:00.000Z',
+      }),
+      // FARMER_WITH_LINK is a member of garden-org1 but NOT its supervisor — the member-exists
+      // branch is the other pre-existing self-access path the isAdmin() addition must not disturb.
+      setDoc(doc(db, 'gardens', 'garden-org1', 'members', FARMER_WITH_LINK), {
+        garden_id: 'garden-org1', profile_id: FARMER_WITH_LINK, plot: 'A1', size_m2: 20, lat: null, lon: null,
+      }),
+      setDoc(doc(db, 'reports', 'report-org1'), {
+        owner_id: FARMER_WITH_LINK, org_id: 'org-1', garden_id: null, title: 'Org1 report', content: 'x', lang: 'en', created_at: '2026-08-01T00:00:00.000Z',
+      }),
+      setDoc(doc(db, 'reports', 'report-org2'), {
+        owner_id: 'farmer-org2', org_id: 'org-2', garden_id: null, title: 'Org2 report', content: 'x', lang: 'en', created_at: '2026-08-01T00:00:00.000Z',
+      }),
+      // A report saved before saveReport() stamped org_id — every real report predates this fix.
+      // sameOrg() cannot prove any staff account safe on this doc (the field is absent, not just
+      // mismatched); only the owner's ownsField() branch and the new isAdmin() bypass can reach it.
+      setDoc(doc(db, 'reports', 'report-legacy-noorg'), {
+        owner_id: FARMER_WITHOUT_LINK, garden_id: null, title: 'Pre-fix report', content: 'x', lang: 'en', created_at: '2026-08-01T00:00:00.000Z',
+      }),
+      setDoc(doc(db, 'surveys', 'survey-org1'), {
+        org_name: 'Org One', title: 'Survey 1', questions: [], created_by: NGO_SAME_ORG, org_id: 'org-1', created_at: '2026-08-01T00:00:00.000Z',
+      }),
+      setDoc(doc(db, 'surveys', 'survey-org2'), {
+        org_name: 'Org Two', title: 'Survey 2', questions: [], created_by: NGO_OTHER_ORG, org_id: 'org-2', created_at: '2026-08-01T00:00:00.000Z',
+      }),
     ]);
   });
 }
@@ -456,4 +493,96 @@ test('grants: readable only by the two named orgs or admin, never client-writabl
   await assertFails(setDoc(doc(grantedDb, 'grants', 'client-write-attempt'), {
     funder_org_id: FUNDER_ORG_A, ngo_org_id: 'org-1', created_at: '2026-08-01T00:00:00.000Z', created_by: FUNDER_WITH_GRANT,
   }));
+});
+
+// ── isAdmin gap fix (data-integrity audit, row 4) ───────────────────────────────────────────────
+// gardens, gardens/members, reports and surveys all read via the bare sameOrg() helper, which
+// never had an admin bypass: sameOrg() requires isStaff() AND the caller's own org to equal the
+// resource's, so PLATFORM_ADMIN (org_id: null) failed closed on every one of these four reads even
+// though every OTHER staff-scoped collection in this file already carries an unconditional
+// isAdmin() branch (directly, or via staffOrgAccess()/staffConsentedAccess()). These four tests
+// assert the fix without loosening anything else: admin now reads across orgs, non-admin cross-org
+// access is exactly as closed as before, and every pre-existing self-access path (supervisor,
+// garden member, report owner, survey creator) is unaffected.
+
+test('gardens: same-org staff and the supervisor/member can read; cross-org staff cannot; admin can', async () => {
+  const sameOrgDb = env.authenticatedContext(NGO_SAME_ORG).firestore();
+  await assertSucceeds(getDoc(doc(sameOrgDb, 'gardens', 'garden-org1')));
+
+  const otherOrgDb = env.authenticatedContext(NGO_OTHER_ORG).firestore();
+  await assertFails(getDoc(doc(otherOrgDb, 'gardens', 'garden-org1')));
+
+  // Pre-existing self-access, unaffected by isAdmin(): the supervisor, and a farmer who is a
+  // member of the garden but not its supervisor.
+  const supervisorDb = env.authenticatedContext(FARMER_WITHOUT_LINK).firestore();
+  await assertSucceeds(getDoc(doc(supervisorDb, 'gardens', 'garden-org1')));
+  const memberDb = env.authenticatedContext(FARMER_WITH_LINK).firestore();
+  await assertSucceeds(getDoc(doc(memberDb, 'gardens', 'garden-org1')));
+  await assertSucceeds(getDoc(doc(memberDb, 'gardens', 'garden-org1', 'members', FARMER_WITH_LINK)));
+
+  // THE FIX: admin's own org_id is null, so sameOrg() alone always failed closed here.
+  const adminDb = env.authenticatedContext(PLATFORM_ADMIN).firestore();
+  await assertSucceeds(getDoc(doc(adminDb, 'gardens', 'garden-org2')));
+  await assertSucceeds(getDoc(doc(adminDb, 'gardens', 'garden-org1', 'members', FARMER_WITH_LINK)));
+
+  // Write was never gated by sameOrg() (isStaff() is bare there already, so admin write already
+  // worked) — confirmed unaffected by this change, not a new capability from it.
+  await assertSucceeds(setDoc(doc(adminDb, 'gardens', 'admin-written-garden'), {
+    programme_id: null, name: 'Admin garden', town: null, lat: null, lon: null,
+    status: 'active', supervisor_id: PLATFORM_ADMIN, org_id: 'org-2', created_at: '2026-08-01T00:00:00.000Z',
+  }));
+});
+
+test('reports: owner reads their own (even a pre-org_id one); same-org staff scoped; admin reads any', async () => {
+  const ownerDb = env.authenticatedContext(FARMER_WITH_LINK).firestore();
+  await assertSucceeds(getDoc(doc(ownerDb, 'reports', 'report-org1')));
+
+  const sameOrgDb = env.authenticatedContext(NGO_SAME_ORG).firestore();
+  await assertSucceeds(getDoc(doc(sameOrgDb, 'reports', 'report-org1')));
+
+  const otherOrgDb = env.authenticatedContext(NGO_OTHER_ORG).firestore();
+  await assertFails(getDoc(doc(otherOrgDb, 'reports', 'report-org1')));
+
+  // Pre-existing self-access, unaffected: the owner of a report saved before org_id existed can
+  // still read it purely via ownsField() — that branch never touches org_id at all.
+  const legacyOwnerDb = env.authenticatedContext(FARMER_WITHOUT_LINK).firestore();
+  await assertSucceeds(getDoc(doc(legacyOwnerDb, 'reports', 'report-legacy-noorg')));
+  // A same-org staff account that is NOT the owner still cannot reach it: sameOrg() needs
+  // org_id, which this legacy doc doesn't have, so this branch is exactly as closed as before.
+  await assertFails(getDoc(doc(sameOrgDb, 'reports', 'report-legacy-noorg')));
+
+  // THE FIX, twice over: admin's own org_id is null (fails sameOrg() on report-org2), AND admin
+  // can now reach a report with no org_id at all — neither was possible before isAdmin() was
+  // added. Both are read-only: create/update/delete stay owner-pinned, unchanged by this fix.
+  const adminDb = env.authenticatedContext(PLATFORM_ADMIN).firestore();
+  await assertSucceeds(getDoc(doc(adminDb, 'reports', 'report-org2')));
+  await assertSucceeds(getDoc(doc(adminDb, 'reports', 'report-legacy-noorg')));
+  await assertFails(setDoc(doc(adminDb, 'reports', 'admin-spoofed-report'), {
+    owner_id: FARMER_WITH_LINK, org_id: 'org-1', garden_id: null, title: 'x', content: null, lang: 'en', created_at: '2026-08-01T00:00:00.000Z',
+  }));
+});
+
+test('reports: a new report is stamped with the writer\'s own org_id and cannot be spoofed', async () => {
+  const db = env.authenticatedContext(FARMER_WITH_LINK).firestore();
+  await assertFails(setDoc(doc(db, 'reports', 'spoofed-report'), {
+    owner_id: FARMER_WITH_LINK, org_id: 'org-2', garden_id: null, title: 'Spoofed', content: null, lang: 'en', created_at: '2026-08-01T00:00:00.000Z',
+  }));
+  await assertSucceeds(setDoc(doc(db, 'reports', 'honest-report'), {
+    owner_id: FARMER_WITH_LINK, org_id: 'org-1', garden_id: null, title: 'Honest', content: null, lang: 'en', created_at: '2026-08-01T00:00:00.000Z',
+  }));
+});
+
+test('surveys: creator and same-org staff read; cross-org staff cannot; admin reads any', async () => {
+  const creatorDb = env.authenticatedContext(NGO_SAME_ORG).firestore();
+  await assertSucceeds(getDoc(doc(creatorDb, 'surveys', 'survey-org1')));
+
+  const otherOrgDb = env.authenticatedContext(NGO_OTHER_ORG).firestore();
+  await assertFails(getDoc(doc(otherOrgDb, 'surveys', 'survey-org1')));
+  // Pre-existing self-access, unaffected: the creator of the other org's survey reads their own.
+  await assertSucceeds(getDoc(doc(otherOrgDb, 'surveys', 'survey-org2')));
+
+  // THE FIX: admin's own org_id is null, so sameOrg() alone always failed closed here.
+  const adminDb = env.authenticatedContext(PLATFORM_ADMIN).firestore();
+  await assertSucceeds(getDoc(doc(adminDb, 'surveys', 'survey-org1')));
+  await assertSucceeds(getDoc(doc(adminDb, 'surveys', 'survey-org2')));
 });
