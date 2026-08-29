@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { CheckCircle, Circle, Clock, Loader2, GraduationCap, Sprout, ChevronDown, ChevronUp, BookOpen, Home, Lightbulb, CalendarClock, AlertTriangle, ClipboardList, Headphones, Video, ExternalLink, Lock, Camera, Mic, Trophy, PlayCircle } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
+import { isSampleMode } from '@/lib/sample-mode';
 import {
   myCourseProgress, setCourseProgress, myAssignments,
   myCourseSubmissions, submitCourseModule, uploadCourseSubmissionFile,
@@ -470,7 +471,9 @@ export default function StudentPage() {
   useEffect(() => { setToday(toDateKey(new Date())); }, []);
 
   useEffect(() => {
-    if (!loading && !user && isLive) router.replace('/login');
+    // Sample mode has no user by design; bouncing it to /login would make the
+    // student demo unreachable on production, where a backend is always configured.
+    if (!loading && !user && isLive && !isSampleMode()) router.replace('/login');
   }, [user, loading, router, isLive]);
 
   const load = useCallback(async () => {
@@ -589,8 +592,10 @@ export default function StudentPage() {
     return m;
   }, [submissions]);
 
-  // Gate: do not render protected content while auth is resolving or user is absent
-  if (isLive && (loading || !user)) {
+  // Gate: do not render protected content while auth is resolving or user is absent.
+  // Sample mode is exempt for the same reason as the redirect above — it has no user
+  // by design, and this gate would otherwise spin forever instead of showing the demo.
+  if (isLive && (loading || !user) && !isSampleMode()) {
     return (
       <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
         <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
