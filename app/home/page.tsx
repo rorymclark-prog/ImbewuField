@@ -14,7 +14,6 @@ import {
   CalendarDays,
   ClipboardList,
   Camera,
-  DollarSign,
   MessageCircle,
   Wheat,
   Circle,
@@ -327,8 +326,20 @@ function HomeLandingInner() {
     { href: '/funder',  Icon: Building2,     label: t('homeRoleFunderLabel'),  desc: t('homeRoleFunderDesc') },
   ].filter(({ href }) => canSeeNavLink(role, href));
 
+  // ONE MONEY TILE, NOT TWO.
+  //
+  // This grid used to open with "Finance · Income & costs" and carry "My Records · Crops & sales"
+  // four rows below it. Two tiles, two screens, and no way to add up what they each held — the
+  // Gogo Test audit's finding was that a farmer could not answer "how much did I make this
+  // season?" because the answer was split across them. They are one book now (/records), so
+  // there is one tile.
+  //
+  // ITS SUBTITLE STAYS "Crops & sales", which does not name the third page. Naming all three
+  // would have meant a new English-only key, and homeQuickMyRecordsDesc is already translated in
+  // all ten locales — "Izitshalo nezithengiso" on the tile the isiZulu-speaking farmer this was
+  // audited against actually taps. A partial subtitle in her language beats a complete one in
+  // someone else's; the tab strip inside names all three pages the moment she opens it.
   const QUICK_ACTIONS = [
-    { href: '/finances',          Icon: DollarSign,    art: undefined as string | undefined, label: t('homeQuickFinance'),     desc: t('homeQuickFinanceDesc'),     color: 'var(--color-harvest)', bg: 'rgba(192,122,30,0.10)' },
     { href: '/student',           Icon: GraduationCap, art: undefined as string | undefined, label: t('homeQuickStudy'),       desc: t('homeQuickStudyDesc'),       color: 'var(--color-water)', bg: 'rgba(35,94,134,0.10)' },
     { href: '/contact',           Icon: MessageCircle, art: undefined as string | undefined, label: t('homeQuickContact'),     desc: t('homeQuickContactDesc'),     color: '#5A7A3A', bg: 'rgba(90,122,58,0.10)' },
     // These four carry real illustrated art (public/home-icons/) instead of a Lucide glyph —

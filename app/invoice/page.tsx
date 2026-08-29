@@ -471,7 +471,7 @@ export default function InvoicePage() {
           one they have to swipe to. */}
       <header className="no-print flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3 overflow-x-auto" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
         <MenuButton />
-        <BackButton fallback="/finances" />
+        <BackButton fallback="/records?tab=sold" />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
         <span className="text-xs font-display truncate min-w-0" style={{ color: '#5C5040' }}>Invoice {invoiceNo}</span>
