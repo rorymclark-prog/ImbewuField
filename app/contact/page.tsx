@@ -53,12 +53,27 @@ export default function ContactPage() {
   const [error, setError] = useState('');
   const [replies, setReplies] = useState<ContactReply[]>([]);
   const [repliesError, setRepliesError] = useState(false);
+  const [profileError, setProfileError] = useState(false);
   const [expandedReply, setExpandedReply] = useState<string | null>(null);
 
   useEffect(() => {
     // Sample mode never redirects to /login — a signed-out evaluator can view the demo page.
     if (!loading && !user && isLive && !isSampleMode()) router.replace('/login');
   }, [user, loading, router, isLive]);
+
+  // Extracted so a failed read can be retried from the card below, not just silently dropped —
+  // this used to be a bare getMyProfile().then(setProfile).catch(() => {}): on failure `profile`
+  // just stayed null forever, so the phone quick-contact card below (gated on profile?.phone)
+  // never rendered, with no error and no way to ask it to try again. Mirrors loadReplies just
+  // below, which already fixed the identical shape of bug for this same page's replies read.
+  const loadProfile = useCallback(() => {
+    if (loading || !user || !isLive || isSampleMode()) return;
+    setProfileError(false);
+    getMyProfile().then(setProfile).catch((err) => {
+      console.error('[contact] profile read failed:', err);
+      setProfileError(true);
+    });
+  }, [user, loading, isLive]);
 
   // Extracted so a failed read can be retried from the banner below, not just silently dropped —
   // components/ContactInbox.tsx (the mentor/org side of this same conversation) already tells a
@@ -87,10 +102,10 @@ export default function ContactPage() {
     // (getMyProfile already sandboxes; the direct contact_replies query would NOT be intercepted
     // by the sample gates, so guard it here).
     if (!loading && user && isLive && !isSampleMode()) {
-      getMyProfile().then(setProfile).catch(() => {});
+      loadProfile();
       loadReplies();
     }
-  }, [user, loading, isLive, loadReplies]);
+  }, [user, loading, isLive, loadProfile, loadReplies]);
 
   async function handleSend(e: React.FormEvent) {
     e.preventDefault();
@@ -275,6 +290,23 @@ export default function ContactPage() {
             </div>
 
             {/* Quick contact buttons (phone/email if available) */}
+            {profileError && (
+              <div
+                className="flex items-center justify-between gap-3 rounded-xl px-4 py-3 mb-3"
+                style={{ background: '#FFFEFA', border: '1px solid #D8B7A8' }}
+              >
+                <span className="font-sans" style={{ fontSize: 12, color: '#8C4938' }}>
+                  Couldn&apos;t load your phone number.
+                </span>
+                <button
+                  onClick={loadProfile}
+                  className="font-sans font-semibold flex-shrink-0"
+                  style={{ fontSize: 12, color: '#1F4D2B', background: 'transparent', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}
+                >
+                  Retry
+                </button>
+              </div>
+            )}
             {profile?.phone && (
               <a
                 href={`tel:${profile.phone}`}
