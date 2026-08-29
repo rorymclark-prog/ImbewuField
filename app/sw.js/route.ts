@@ -47,6 +47,23 @@ const PRECACHE_URLS = [
 const COURSE_CACHE = 'imbewu-course-v1';
 const COURSE_PATH = /^\\/course-(decks|audio|animations|images)\\//;
 
+// PLANT & ELEMENT ART — the same idea as COURSE_CACHE, with one honest difference.
+//
+// This art lived in RUNTIME_CACHE, which is named with CACHE_VERSION and swept on every
+// activate. Tens of MB of map canopies and picker sprites, identical bytes deploy after
+// deploy, re-downloaded on a farmer's airtime every time we shipped anything at all —
+// a copy fix on the login page cost her the whole art set again.
+//
+// The difference from course files: art DOES occasionally change in place. A regenerated
+// canopy keeps its filename, so a cache that never expires would pin the old drawing
+// forever. Hence the hand-bumped version in the name: bump it in the SAME commit that
+// ships a visual refresh of existing files, and the activate sweep below (which spares
+// only the exact current name) deletes the old cache in the field. New files under a new
+// filename do NOT need a bump — a miss falls through to the network and is cached on
+// first sight. Ordinary deploys leave the constant alone and the art survives.
+const ART_CACHE = 'imbewu-art-v1';
+const ART_PATH = /^\\/(element-art|element-art-2|render-assets)\\//;
+
 self.addEventListener('install', function (event) {
   event.waitUntil(
     caches.open(SHELL_CACHE).then(function (cache) {
@@ -73,8 +90,10 @@ self.addEventListener('activate', function (event) {
       return Promise.all(
         keys
           .filter(function (key) {
-            // COURSE_CACHE survives every deploy on purpose — see the comment on its declaration.
-            return key !== SHELL_CACHE && key !== RUNTIME_CACHE && key !== COURSE_CACHE;
+            // COURSE_CACHE and ART_CACHE survive every deploy on purpose — see the comments on
+            // their declarations. A superseded art cache (imbewu-art-v1 after the constant moves
+            // to v2) no longer matches and is swept here like any other stale cache.
+            return key !== SHELL_CACHE && key !== RUNTIME_CACHE && key !== COURSE_CACHE && key !== ART_CACHE;
           })
           .map(function (key) { return caches.delete(key); })
       );
@@ -108,6 +127,27 @@ self.addEventListener('fetch', function (event) {
       caches.open(COURSE_CACHE).then(function (cache) {
         return cache.match(request, { ignoreSearch: true }).then(function (hit) {
           return hit || fetch(request);
+        });
+      })
+    );
+    return;
+  }
+
+  // Art is cache-first with a network fill, and NO background revalidation. The generic
+  // stale-while-revalidate below would serve the cached sprite and then re-fetch the full
+  // body anyway — right for a JS chunk, wasted airtime for a canopy that changes once a
+  // season. Freshness is handled by the ART_CACHE version bump, not by re-downloading.
+  if (ART_PATH.test(url.pathname)) {
+    event.respondWith(
+      caches.open(ART_CACHE).then(function (cache) {
+        return cache.match(request).then(function (hit) {
+          if (hit) return hit;
+          return fetch(request).then(function (response) {
+            if (response && response.status === 200) {
+              cache.put(request, response.clone());
+            }
+            return response;
+          });
         });
       })
     );

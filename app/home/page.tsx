@@ -95,7 +95,7 @@ function LastSiteCard({ site }: { site: LastSite }) {
           {stats.map((s) => (
             <div key={s.label} className="rounded-xl px-2.5 py-2 text-center" style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.08)' }}>
               <div className="font-display font-semibold text-sm" style={{ color: 'var(--color-ink)' }}>{s.value}</div>
-              <div className="font-mono mt-0.5" style={{ color: 'var(--color-muted)', fontSize: 10 }}>{s.label}</div>
+              <div className="font-mono mt-0.5" style={{ color: 'var(--color-muted)', fontSize: 12 }}>{s.label}</div>
             </div>
           ))}
         </div>
@@ -122,7 +122,7 @@ function MainSiteWeatherCard({ site, places, onSetMain }: { site: SavedPlace; pl
             onChange={(e) => onSetMain(e.target.value)}
             aria-label={t('homeSetAsMain')}
             className="font-sans"
-            style={{ fontSize: 11, border: '1px solid var(--color-border)', borderRadius: 8, background: 'var(--color-surface)', color: 'var(--color-muted-strong)', padding: '4px 6px', maxWidth: 120 }}
+            style={{ fontSize: 12, border: '1px solid var(--color-border)', borderRadius: 8, background: 'var(--color-surface)', color: 'var(--color-muted-strong)', padding: '4px 6px', maxWidth: 120 }}
           >
             {places.map((p) => (
               <option key={p.id} value={p.id}>{p.name}</option>
@@ -149,7 +149,7 @@ function TaskBoardCard({ tasks, onToggle }: { tasks: BoardTask[]; onToggle: (id:
   return (
     <section>
       <div className="flex items-center justify-between" style={{ padding: '2px 2px' }}>
-        <span className="uppercase tracking-widest font-sans" style={{ fontSize: 10, color: 'var(--color-muted)', letterSpacing: '0.12em' }}>
+        <span className="uppercase tracking-widest font-sans" style={{ fontSize: 12, color: 'var(--color-muted)', letterSpacing: '0.12em' }}>
           {t('homeUpcomingTasks')}
         </span>
         <Link href="/facilitator/crops" className="flex items-center gap-1 font-display" style={{ fontSize: 12, color: 'var(--color-forest-800)', textDecoration: 'none' }}>
@@ -358,7 +358,7 @@ function HomeLandingInner() {
         <MenuButton />
 
         <div className="flex flex-col justify-center flex-1">
-          <span className="uppercase tracking-widest font-sans" style={{ fontSize: 9.5, color: 'var(--color-harvest)', letterSpacing: '0.12em', lineHeight: 1 }}>
+          <span className="uppercase tracking-widest font-sans" style={{ fontSize: 12, color: 'var(--color-harvest)', letterSpacing: '0.12em', lineHeight: 1 }}>
             {getDayDate(lang)}
           </span>
           <span className="font-display font-bold" style={{ fontSize: 20, letterSpacing: '-0.02em', color: 'var(--color-ink)', lineHeight: 1.15, marginTop: 2 }}>
@@ -440,7 +440,7 @@ function HomeLandingInner() {
               </div>
               <div>
                 <div className="font-display font-semibold" style={{ fontSize: 12.5, color: 'var(--color-ink)', lineHeight: 1.2 }}>{q.label}</div>
-                <div className="font-sans" style={{ fontSize: 10.5, color: 'var(--color-muted)', marginTop: 1 }}>{q.desc}</div>
+                <div className="font-sans" style={{ fontSize: 12, color: 'var(--color-muted)', marginTop: 1 }}>{q.desc}</div>
               </div>
             </Link>
           ))}
@@ -456,7 +456,7 @@ function HomeLandingInner() {
             aria-expanded={rolesOpen}
             style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '2px 2px' }}
           >
-            <span className="uppercase tracking-widest font-sans" style={{ fontSize: 10, color: 'var(--color-muted)', letterSpacing: '0.12em' }}>
+            <span className="uppercase tracking-widest font-sans" style={{ fontSize: 12, color: 'var(--color-muted)', letterSpacing: '0.12em' }}>
               {t('homeDashboards')}
             </span>
             <span className="flex items-center gap-1 font-sans" style={{ fontSize: 12, color: 'var(--color-muted)' }}>
@@ -518,7 +518,7 @@ function HomeLandingInner() {
           )}
         </section>
 
-        <footer className="text-center font-sans" style={{ fontSize: 11, color: 'var(--color-muted)', opacity: 0.7, paddingBottom: 8 }}>
+        <footer className="text-center font-sans" style={{ fontSize: 12, color: 'var(--color-muted)', opacity: 0.7, paddingBottom: 8 }}>
           {t('homeFooter')}
         </footer>
       </main>

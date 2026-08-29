@@ -119,7 +119,7 @@ export default function WeatherWidget({ lat, lon, compact = false }: Props) {
             <div className="font-display font-bold" style={{ fontSize: compact ? 16 : 18, color: '#20190F', lineHeight: 1.1 }}>
               {Math.round(current.tempC)}°C
             </div>
-            <div className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>{currentDesc.label}</div>
+            <div className="font-sans" style={{ fontSize: 12, color: '#5C5040' }}>{currentDesc.label}</div>
           </div>
           <div className="flex items-center gap-1 flex-shrink-0" style={{ color: '#94876F' }}>
             <Wind size={14} />
@@ -130,7 +130,7 @@ export default function WeatherWidget({ lat, lon, compact = false }: Props) {
         {today.et0Mm !== null && (
           <div className="flex items-center gap-2 px-3.5 py-2" style={{ borderBottom: '1px solid #E2D8C4' }}>
             <Droplets size={14} style={{ color: '#235E86', flexShrink: 0 }} />
-            <span className="font-sans" style={{ fontSize: 11.5, color: '#5C5040' }}>
+            <span className="font-sans" style={{ fontSize: 12, color: '#5C5040' }}>
               Crops will lose about <span className="font-semibold" style={{ color: '#20190F' }}>{today.et0Mm.toFixed(1)}mm</span> of water today — water roughly that much if there's no rain
             </span>
           </div>
@@ -146,7 +146,7 @@ export default function WeatherWidget({ lat, lon, compact = false }: Props) {
                 className="flex flex-col items-center flex-shrink-0 px-2 py-2"
                 style={{ minWidth: 58, borderRight: i < stripDays.length - 1 ? '1px solid #F0E9D8' : 'none' }}
               >
-                <div className="font-sans font-medium" style={{ fontSize: 10.5, color: '#94876F' }}>{dayLabel(d.date, i)}</div>
+                <div className="font-sans font-medium" style={{ fontSize: 12, color: '#94876F' }}>{dayLabel(d.date, i)}</div>
                 {getElementArt2(desc.key) ? (
                   <img src={getElementArt2(desc.key)} alt="" aria-hidden style={{ width: 23, height: 23, margin: '1px 0' }} />
                 ) : (
@@ -156,7 +156,7 @@ export default function WeatherWidget({ lat, lon, compact = false }: Props) {
                   <span className="font-semibold">{Math.round(d.tMaxC)}°</span>
                   <span style={{ color: '#94876F' }}> {Math.round(d.tMinC)}°</span>
                 </div>
-                <div className="font-sans" style={{ fontSize: 10, color: d.precipMm > 0 ? '#235E86' : '#C4BAA4', marginTop: 2 }}>
+                <div className="font-sans" style={{ fontSize: 12, color: d.precipMm > 0 ? '#235E86' : '#C4BAA4', marginTop: 2 }}>
                   {d.precipMm > 0 ? `${d.precipMm.toFixed(0)}mm` : '—'}
                   {d.precipProbability !== null && d.precipProbability > 0 ? ` · ${d.precipProbability}%` : ''}
                 </div>

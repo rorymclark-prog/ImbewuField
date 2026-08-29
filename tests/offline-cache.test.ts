@@ -290,3 +290,40 @@ test('invalid byte metadata and storage estimates never surface NaN or Infinity'
   });
   assert.deepEqual(await storageEstimate(), { usage: 0, quota: 0 });
 });
+
+test('plant art survives a deploy: unversioned cache, spared sweep, no revalidation re-download', () => {
+  const source = readFileSync(new URL('../app/sw.js/route.ts', import.meta.url), 'utf8');
+
+  // The art set is tens of MB and lived in the build-named RUNTIME_CACHE, so every deploy —
+  // any deploy at all — re-downloaded the lot on the farmer's airtime. The cache name is
+  // hand-versioned instead: bumped only in the commit that redraws existing files.
+  const artCache = source.match(/const ART_CACHE = '([^']+)'/)?.[1];
+  assert.ok(artCache, 'ART_CACHE must exist');
+  assert.doesNotMatch(source, /ART_CACHE\s*=\s*['"][^'"]*['"]\s*\+\s*(?:CACHE_VERSION|BUILD_ID)/);
+
+  // Spared from the activate sweep like COURSE_CACHE. A superseded name (v1 after a bump to
+  // v2) stops matching the spare-list and is swept in the field like any stale cache.
+  assert.match(source, /key !== COURSE_CACHE && key !== ART_CACHE/);
+
+  // Run the actual path regex, don't just eyeball it: `element-art|element-art-2` is an
+  // ordered alternation, and only the mandatory trailing slash keeps element-art-2 from
+  // being half-matched by the shorter branch.
+  const rawArt = source.match(/const ART_PATH = \/(.+)\/;/)?.[1] ?? '';
+  assert.ok(rawArt, 'ART_PATH must exist');
+  const artRe = new RegExp(rawArt.replace(/\\\\/g, '\\'));
+  for (const p of [
+    '/element-art/veg_bed.png',
+    '/element-art-2/lawn.png',
+    '/render-assets/reference-blueprint/apple-tree-v1.png',
+  ]) {
+    assert.ok(artRe.test(p), `${p} must be served from the art cache`);
+  }
+  assert.ok(!artRe.test('/course-decks/intro/slide-1.png'), 'course files keep their own cache');
+
+  // Cache-first with a network fill and NO stale-while-revalidate: the generic handler below
+  // it would serve the cached sprite and then re-fetch the full body anyway — right for a JS
+  // chunk, wasted airtime for a canopy. Freshness is the version bump's job, not a re-download.
+  const artBlock = source.match(/if \(ART_PATH\.test\(url\.pathname\)\) \{([\s\S]*?)\n  \}/)?.[1] ?? '';
+  assert.ok(artBlock.includes('caches.open(ART_CACHE)'), 'art requests must be answered from ART_CACHE');
+  assert.ok(artBlock.includes('if (hit) return hit;'), 'a cached sprite returns with no background re-fetch');
+});
