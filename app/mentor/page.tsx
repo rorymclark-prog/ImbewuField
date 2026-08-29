@@ -8,9 +8,9 @@ import { isBackendConfigured } from '@/lib/firebase/init';
 import { isSampleMode } from '@/lib/sample-mode';
 import { canAccessRolePage } from '@/lib/role-access';
 import {
-  listTrainees, getCourseProgress, logMentorVisit,
+  listTrainees, getCourseProgressForProfiles, logMentorVisit,
   listOrgEnrollments, enrolLearner, setEnrollmentStatus,
-  getAssignments, assignModule, unassignModule,
+  getAssignmentsForProfiles, assignModule, unassignModule,
 } from '@/lib/db/queries';
 import { COURSE_MODULES, TOTAL_MODULES, CATEGORY_COLORS } from '@/lib/course-modules';
 import type { Profile, CourseProgress, UserRole } from '@/lib/db/types';
@@ -361,16 +361,14 @@ export default function MentorPage() {
         ]);
         setTrainees(list);
         setEnrollBy(Object.fromEntries(enrollments.map((e) => [e.profile_id, e])));
-        const progress: Record<string, CourseProgress[]> = {};
-        const assigns: Record<string, CourseAssignment[]> = {};
-        await Promise.all(list.map(async (t) => {
-          const [p, a] = await Promise.all([
-            getCourseProgress(t.id).catch(() => [] as CourseProgress[]),
-            getAssignments(t.id).catch(() => [] as CourseAssignment[]),
-          ]);
-          progress[t.id] = p;
-          assigns[t.id] = a;
-        }));
+        // Batched, not one getCourseProgress()/getAssignments() round trip per trainee — see
+        // getCourseProgressForProfiles's doc comment in lib/db/queries.ts. A trainee absent from
+        // either map has no rows, same as the old per-trainee `.catch(() => [])` default.
+        const ids = list.map((t) => t.id);
+        const [progress, assigns] = await Promise.all([
+          getCourseProgressForProfiles(ids).catch(() => ({} as Record<string, CourseProgress[]>)),
+          getAssignmentsForProfiles(ids).catch(() => ({} as Record<string, CourseAssignment[]>)),
+        ]);
         setProgressMap(progress);
         setAssignBy(assigns);
       } else {

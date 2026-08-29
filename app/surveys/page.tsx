@@ -17,7 +17,7 @@ import {
   createSurvey,
   listSurveys,
   addSurveyResponse,
-  listSurveyResponses,
+  countSurveyResponses,
   myRespondedSurveyIds,
 } from '@/lib/db/queries';
 import type { Survey, SurveyQuestion, SurveyQType } from '@/lib/db/types';
@@ -324,7 +324,10 @@ function StaffSurveyCard({ survey, isLive }: { survey: Survey; isLive: boolean }
 
   useEffect(() => {
     if (!isLive) { setResponseCount(Math.floor(Math.random() * 12)); return; }
-    listSurveyResponses(survey.id).then((rs) => setResponseCount(rs.length));
+    // countSurveyResponses(), not listSurveyResponses().length — this badge only ever needed the
+    // number, and the list form was pulling every farmer's full free-text answers over the wire
+    // (up to one document per farmer in the org) just to discard them. See lib/db/queries.ts.
+    countSurveyResponses(survey.id).then(setResponseCount);
   }, [survey.id, isLive]);
 
   return (

@@ -35,7 +35,7 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '29 August',
-    sha: '5d2f2e6',
+    sha: '74efb87',
     changes: [
       'A slideshow for meetings now shows the live app to partners, with a print-to-PDF copy',
       'Your picked, sold and spent money now lives in one book',
@@ -65,6 +65,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       'Sharing switches in the try-it farm now hold, instead of switching themselves off',
       'Text on the funder and NGO programme views is now easier to read on a phone',
       'Trying the app without an account now also opens the Study and Mentor pages',
+      'Mentors now see the course work they assigned a trainee, not a blank list',
     ],
   },
   {
