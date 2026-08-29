@@ -4,7 +4,7 @@ import type { CSSProperties } from 'react';
 import Link from 'next/link';
 import { ArrowRight, MapPin, Eye } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
-import { useSiteProgress, STEP_COPY, getGuidedState } from '@/lib/site-progress';
+import { useSiteProgress } from '@/lib/site-progress';
 import type { SavedPlace } from '@/lib/saved-places';
 
 export interface HomeHeroCardProps {
@@ -169,10 +169,6 @@ export default function HomeHeroCard({ places, mainSite, firstName }: HomeHeroCa
   // ── CONTINUE — returner with at least one saved site. ──
   if (mainSite) {
     const pct = progress?.pct;
-    const rawNextStep = progress?.nextStep ?? null;
-    const nextStepEntry = rawNextStep && rawNextStep !== 'located' ? STEP_COPY[rawNextStep] : null;
-    const guided = progress ? getGuidedState() : null; // gated on `progress` — post-mount only, hydration-safe
-    const showNextStepLine = !!guided?.enabled && !guided?.retired && !!nextStepEntry;
 
     return (
       <div className="imf-hero-settle" style={SHELL_STYLE}>
@@ -191,12 +187,6 @@ export default function HomeHeroCard({ places, mainSite, firstName }: HomeHeroCa
             <div className="font-sans" style={{ fontSize: 12, color: 'rgba(234,243,226,0.78)', marginTop: 6 }}>
               {t('continueSitePct').replace('{pct}', String(pct))}
             </div>
-          </div>
-        )}
-
-        {showNextStepLine && nextStepEntry && (
-          <div className="font-sans" style={{ fontSize: 13, color: 'rgba(234,243,226,0.85)', marginBottom: 16 }}>
-            {t('coachOverline')}: {t(nextStepEntry.titleKey)}
           </div>
         )}
 

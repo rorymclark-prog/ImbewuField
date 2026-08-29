@@ -35,8 +35,11 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '29 August',
-    sha: '91116b4',
+    sha: '452fec7',
     changes: [
+      "Home now puts Lima's next step before site figures and weather",
+      'The home screen now uses desktop space while keeping the phone order clear',
+      'Repeated site details stay hidden when the last and main site are the same',
       'Turnips, chillies and true spinach now show their own crop pictures',
       'The sample farm now opens from a welcoming South African garden picture',
       'Crop pictures now use far less data without losing phone-sized detail',

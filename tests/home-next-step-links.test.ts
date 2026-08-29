@@ -23,6 +23,30 @@ test('the "Your farm plan" boundary step actually lands on the boundary tool', (
   assert.match(boundaryBlock![0], /siteId/, 'boundary href must thread the farmer\'s own site id through, not a blank map');
 });
 
+test('home leads with the recommendation and next action before weather or repeated site facts', () => {
+  const priority = HOME_SOURCE.indexOf('home-priority-primary');
+  const hero = HOME_SOURCE.indexOf('<HomeHeroCard', priority);
+  const nextAction = HOME_SOURCE.indexOf('<FarmPlanCard', hero);
+  const weather = HOME_SOURCE.indexOf('<MainSiteWeatherCard', nextAction);
+  assert.ok(priority > 0 && hero > priority && nextAction > hero && weather > nextAction,
+    'the signed-in home must answer what to do next before it asks the farmer to read weather data');
+
+  assert.match(HOME_SOURCE, /lastSiteMatchesMain[\s\S]*Math\.abs[\s\S]*0\.00001/,
+    'the last-viewed and main-site cards need one coordinate comparison instead of repeating one farm');
+  assert.match(HOME_SOURCE, /lastSite && !lastSiteMatchesMain && <LastSiteCard/,
+    'the recent-site card should render only when it is genuinely a different place');
+  assert.match(HOME_SOURCE, /STEP_COPY\[nextStep\][\s\S]*t\(nextStepCopy\.titleKey\)/,
+    'the highlighted action and the guided journey must name one step from the same copy authority');
+});
+
+test('home uses a two-column priority area on wide screens but keeps one reading order on phones', () => {
+  assert.match(HOME_SOURCE, /max-w-5xl/, 'the desktop home is back to a narrow phone column');
+  assert.match(HOME_SOURCE, /@media \(min-width: 900px\)[\s\S]*home-priority-grid\.has-main-site[\s\S]*grid-template-columns/,
+    'the signed-in priority area must use the available desktop width');
+  assert.match(HOME_SOURCE, /home-quick-grid[\s\S]*repeat\(6/,
+    'six quick actions should form one calm desktop row rather than two phone rows');
+});
+
 test('the farmer page still understands ?arm=site — the link above depends on it', () => {
   // app/farmer/page.tsx's one-shot ?arm=site|water deep link is what the Home link above
   // relies on. If that handler is ever removed without updating the Home link, this is the
