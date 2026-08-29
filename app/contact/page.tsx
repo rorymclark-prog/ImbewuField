@@ -118,9 +118,19 @@ export default function ContactPage() {
       if (isLive && user && !isSampleMode()) {
         const fb = getFirebase();
         if (!fb) throw new Error('Firebase not initialised');
+        // The profile may still be loading on a fast send — resolve it now rather than stamping
+        // org_id null and having the rules (org_id must equal the sender's own org) refuse it.
+        const prof = profile ?? (await getMyProfile());
+        if (!prof?.org_id && recipient !== 'support') {
+          setError('Messaging your mentor or organisation needs a programme link on your account. You can still contact ImbewuField Support.');
+          return;
+        }
         await addDoc(collection(fb.db, 'contact_messages'), {
           from_uid: user.uid,
-          from_name: profile?.full_name ?? user.displayName ?? user.email,
+          from_name: prof?.full_name ?? user.displayName ?? user.email,
+          // The org whose inbox this message belongs in — firestore.rules scopes the mentor and
+          // organisation buckets by this field, and requires it to equal the sender's own org.
+          org_id: prof?.org_id ?? null,
           recipient,
           subject: subject.trim() || '(no subject)',
           body: body.trim(),
@@ -348,16 +358,24 @@ export default function ContactPage() {
                   Send to
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-                  {RECIPIENT_OPTIONS.map(({ value, label, sub, Icon }) => (
+                  {RECIPIENT_OPTIONS.map(({ value, label, sub, Icon }) => {
+                    // An account with no programme link has no mentor and no organisation to
+                    // deliver to — lock those two honestly instead of accepting a message that
+                    // no inbox on the platform would ever show. (profile === null means still
+                    // loading; only lock once we know the org is genuinely absent.)
+                    const orgLocked = value !== 'support' && isLive && !isSampleMode()
+                      && profile !== null && !profile.org_id;
+                    return (
                     <button
                       key={value}
                       type="button"
-                      onClick={() => setRecipient(value)}
+                      onClick={() => { if (!orgLocked) setRecipient(value); }}
                       className="flex items-center gap-3 rounded-xl p-3 text-left transition-all"
                       style={{
                         background: recipient === value ? 'rgba(31,77,43,0.08)' : '#FFFEFA',
                         border: `1px solid ${recipient === value ? 'rgba(31,77,43,0.35)' : '#E2D8C4'}`,
-                        cursor: 'pointer',
+                        cursor: orgLocked ? 'default' : 'pointer',
+                        opacity: orgLocked ? 0.55 : 1,
                       }}
                     >
                       <div style={{
@@ -383,7 +401,8 @@ export default function ContactPage() {
                         )}
                       </div>
                     </button>
-                  ))}
+                    );
+                  })}
                 </div>
               </div>
 

@@ -93,6 +93,7 @@
       "collectionGroup": "contact_messages",
       "queryScope": "COLLECTION",
       "fields": [
+        { "fieldPath": "org_id", "order": "ASCENDING" },
         { "fieldPath": "recipient", "order": "ASCENDING" },
         { "fieldPath": "created_at", "order": "DESCENDING" }
       ]

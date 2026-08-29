@@ -5,6 +5,8 @@ import { MessageCircle, ChevronDown, ChevronUp, Mail, Loader2, MailOpen, CornerD
 import { collection, query, where, orderBy, getDocs, updateDoc, addDoc, doc, serverTimestamp } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { getFirebase, isBackendConfigured } from '@/lib/firebase/init';
+import { isSampleMode } from '@/lib/sample-mode';
+import { getMyProfile } from '@/lib/db/queries';
 
 interface ContactMessage {
   id: string;
@@ -43,6 +45,7 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
   const [messages, setMessages] = useState<ContactMessage[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
+  const [noOrg, setNoOrg] = useState(false);
   const [actionError, setActionError] = useState(false);
   const [expanded, setExpanded] = useState<string | null>(null);
   const [replyText, setReplyText] = useState<Record<string, string>>({});
@@ -53,12 +56,21 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
   const load = useCallback(async () => {
     setLoadError(false);
     if (!isLive) { setLoading(false); return; }
+    // Sample mode shows the empty inbox and never queries real Firestore — same guard /contact uses.
+    if (isSampleMode()) { setMessages([]); setLoading(false); return; }
     const fb = getFirebase();
     if (!fb) { setLoading(false); return; }
     try {
+      // The inbox is scoped to MY org, not just to the bucket name: 'mentor' and 'organisation'
+      // are single buckets shared by every org on the platform, so without this filter (and the
+      // matching org term in firestore.rules) every org's mentors would share one inbox.
+      const me = await getMyProfile();
+      const myOrgId = me?.org_id ?? null;
+      if (!myOrgId) { setNoOrg(true); setMessages([]); setLoading(false); return; }
       const q = query(
         collection(fb.db, 'contact_messages'),
         where('recipient', '==', recipient),
+        where('org_id', '==', myOrgId),
         orderBy('created_at', 'desc'),
       );
       const snap = await getDocs(q);
@@ -155,6 +167,16 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
         <Mail size={26} style={{ color: '#8C4938', margin: '0 auto 10px' }} strokeWidth={1.5} />
         <p className="text-sm font-display font-semibold" style={{ color: '#8C4938' }}>Messages unavailable</p>
         <p className="text-xs font-sans mt-1" style={{ color: '#8C7A62' }}>You may not have access, or the connection is unavailable.</p>
+      </div>
+    );
+  }
+
+  if (noOrg) {
+    return (
+      <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
+        <Mail size={26} style={{ color: '#8C7A62', margin: '0 auto 10px' }} strokeWidth={1.5} />
+        <p className="text-sm font-display font-semibold" style={{ color: '#5C5040' }}>No organisation linked yet</p>
+        <p className="text-xs font-sans mt-1" style={{ color: '#8C7A62' }}>Messages are shared inside an organisation. They appear here once your account is linked to one.</p>
       </div>
     );
   }

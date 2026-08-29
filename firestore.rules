@@ -410,6 +410,64 @@ service cloud.firestore {
     // writes are always denied here regardless of role. Deterministic id
     // `${funder_org_id}_${ngo_org_id}` — see grantedOrg() above and the Grant type in
     // lib/db/types.ts. Reads are scoped to the two orgs the grant names, plus admin.
+    // ── Contact messages (farmer → mentor / organisation / support) ───────────────────────────
+    // These two collections had NO match block at all until 2026-08-29 — Firestore's default deny
+    // meant the whole contact feature was dead in production (sends refused, both inboxes showing
+    // their error state) from the day it shipped. That accident also means the obvious first fix —
+    // "allow read if the recipient bucket matches my role" — was never deployed, which is lucky:
+    // `recipient` is one of three FIXED BUCKET NAMES shared by every organisation on the platform,
+    // so a recipient-only read rule hands every org's mentor inbox to every mentor in every other
+    // org. The rules below are the org-scoped version the feature should have launched with: a
+    // message belongs to the sender's org (stamped at write; scripts/backfill-org-id.mjs covers
+    // any console-era rows), and the mentor/organisation buckets only open inside that same org.
+    match /contact_messages/{id} {
+      // The sender writes their own message: their uid, their org (null for an org-less account —
+      // the contact page now says plainly that mentor/organisation messages need a programme),
+      // always born unread.
+      allow create: if signedIn()
+        && request.resource.data.from_uid == request.auth.uid
+        && request.resource.data.org_id == myOrg()
+        && request.resource.data.recipient in ['mentor', 'organisation', 'support']
+        && request.resource.data.status == 'unread';
+      // The sender sees their own message; support goes to the platform admin; the mentor and
+      // organisation buckets are role-matched AND org-matched — inMyOrg() (never sameOrg()) so
+      // two org-less accounts can never match each other through null == null.
+      allow read: if signedIn() && (
+        resource.data.from_uid == request.auth.uid
+        || isAdmin()
+        || (resource.data.recipient == 'mentor' && isMentor() && inMyOrg(resource.data))
+        || (resource.data.recipient == 'organisation' && myRole() == 'ngo' && inMyOrg(resource.data))
+      );
+      // Inbox actions (mark read / mark replied) belong to the inbox owners above — never the
+      // sender — and may touch NOTHING but status: without the field mask this rule would also
+      // let an inbox owner rewrite body, org_id or recipient after the fact.
+      allow update: if signedIn()
+        && (isAdmin()
+          || (resource.data.recipient == 'mentor' && isMentor() && inMyOrg(resource.data))
+          || (resource.data.recipient == 'organisation' && myRole() == 'ngo' && inMyOrg(resource.data)))
+        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status'])
+        && request.resource.data.status in ['unread', 'read', 'replied'];
+      allow delete: if false;
+    }
+    // A reply is pinned to the message it answers: it must name a real contact_messages doc, be
+    // addressed to that message's sender, and come from a mentor/ngo account in that message's
+    // own org (or the platform admin, who answers the support bucket). The farmer reads replies
+    // by for_uid — their uid, not an org — so no reply is ever visible to another farmer.
+    match /contact_replies/{id} {
+      allow read: if signedIn() && (resource.data.for_uid == request.auth.uid || isAdmin());
+      allow create: if signedIn()
+        && (isMentor() || myRole() == 'ngo' || isAdmin())
+        && request.resource.data.message_id is string
+        && exists(/databases/$(database)/documents/contact_messages/$(request.resource.data.message_id))
+        && get(/databases/$(database)/documents/contact_messages/$(request.resource.data.message_id))
+             .data.from_uid == request.resource.data.for_uid
+        && (isAdmin()
+          || (myOrg() != null
+            && get(/databases/$(database)/documents/contact_messages/$(request.resource.data.message_id))
+                 .data.org_id == myOrg()));
+      allow update, delete: if false;
+    }
+
     match /grants/{id} {
       allow read: if signedIn() && (
         isAdmin() ||
