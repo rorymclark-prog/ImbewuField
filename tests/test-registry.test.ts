@@ -23,7 +23,11 @@ const ROOT = new URL('..', import.meta.url);
 // KEEP IN SYNC WITH tests/test-manifest.test.ts, which holds its own copy of this set. Two lists
 // of the same fact is one list too many: adding storage-rules.test.ts to the manifest and not to
 // this file is exactly what happened, and only CI caught it.
-const EXTERNAL_TEST_FILES = new Set(['firestore-rules.test.ts', 'storage-rules.test.ts']);
+const EXTERNAL_TEST_FILES = new Set([
+  'firestore-rules.test.ts',
+  'storage-rules.test.ts',
+  'provision-org.emulator.test.ts',
+]);
 
 test('every test file on disk is registered in the npm test script', () => {
   const pkg = JSON.parse(readFileSync(new URL('package.json', ROOT), 'utf8'));

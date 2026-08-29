@@ -9,6 +9,13 @@
  *
  * Or place serviceAccount.json in the project root and set only
  * NEXT_PUBLIC_FIREBASE_PROJECT_ID (the script falls back to the file).
+ *
+ * ONE-TIME USE, GUARDED. Unlike scripts/provision-org.mjs, this script has no concept of "an
+ * org that already exists" — every run unconditionally calls `organizations.doc()` (a fresh
+ * auto-id) and writes a full fictional NGO under it. Before this guard, running it twice (or
+ * pointing it at a project that already had a real org #1) silently produced a SECOND
+ * "ImbewuField NGO" with duplicate gardens/farmers/logs, because nothing ever checked. Pass
+ * --force to seed anyway (e.g. deliberately seeding a second demo org for local comparison).
  */
 
 import { existsSync, readFileSync } from 'fs';
@@ -24,14 +31,21 @@ if (!projectId) {
   process.exit(1);
 }
 
-const credPath = process.env.GOOGLE_APPLICATION_CREDENTIALS ?? './serviceAccount.json';
-if (!existsSync(credPath)) {
-  console.error(`ERROR: Service account not found at ${credPath}.`);
-  console.error('Set GOOGLE_APPLICATION_CREDENTIALS or place serviceAccount.json in the project root.');
-  process.exit(1);
+// Emulator mode (see scripts/seed-emulator.mjs / scripts/provision-org.mjs for the same
+// convention) — lets the idempotency guard above be exercised in a test without a throwaway
+// serviceAccount.json that would otherwise exist only to satisfy existsSync().
+if (process.env.FIRESTORE_EMULATOR_HOST || process.env.FIREBASE_AUTH_EMULATOR_HOST) {
+  initializeApp({ projectId });
+} else {
+  const credPath = process.env.GOOGLE_APPLICATION_CREDENTIALS ?? './serviceAccount.json';
+  if (!existsSync(credPath)) {
+    console.error(`ERROR: Service account not found at ${credPath}.`);
+    console.error('Set GOOGLE_APPLICATION_CREDENTIALS or place serviceAccount.json in the project root.');
+    process.exit(1);
+  }
+  const json = JSON.parse(readFileSync(credPath, 'utf8'));
+  initializeApp({ credential: cert(json), projectId });
 }
-const json = JSON.parse(readFileSync(credPath, 'utf8'));
-initializeApp({ credential: cert(json), projectId });
 const db = getFirestore();
 
 // ── Source data (from NgoDashboard.tsx) ────────────────────────────────────
@@ -135,14 +149,26 @@ function parseDate(dateStr) {
 
 // ── Main seed ──────────────────────────────────────────────────────────────
 
+const FORCE = process.argv.includes('--force');
+const SEED_ORG_NAME = 'ImbewuField NGO';
+
 async function seed() {
   console.log('ImbewuField Firestore seed starting...\n');
+
+  // Idempotency guard — see the header comment. Checked before any write, same pattern as
+  // provision-org.mjs's own by-name dedupe.
+  const dupe = await db.collection('organizations').where('name', '==', SEED_ORG_NAME).limit(1).get();
+  if (!dupe.empty && !FORCE) {
+    console.error(`ERROR: an organisation named "${SEED_ORG_NAME}" already exists (${dupe.docs[0].id}).`);
+    console.error('       Refusing to seed a duplicate demo org. Pass --force to seed anyway.');
+    process.exit(1);
+  }
 
   // 1. Organisation
   console.log('[1/5] Writing organisation...');
   const orgRef = db.collection('organizations').doc();
   await orgRef.set({
-    name: 'ImbewuField NGO',
+    name: SEED_ORG_NAME,
     kind: 'ngo',
     created_at: FieldValue.serverTimestamp(),
   });
