@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Search, Users, CheckCircle, ChevronDown, ChevronUp, BookOpen, Send, Loader2, GraduationCap, Inbox, Home, UserPlus, X, CalendarClock, AlertTriangle, PauseCircle, PlayCircle } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
+import { isSampleMode } from '@/lib/sample-mode';
 import { canAccessRolePage } from '@/lib/role-access';
 import {
   listTrainees, getCourseProgressForProfiles, logMentorVisit,
@@ -345,7 +346,9 @@ export default function MentorPage() {
   useEffect(() => { setToday(toDateKey(new Date())); }, []);
 
   useEffect(() => {
-    if (!loading && !user && isLive) router.replace('/login');
+    // Sample mode has no user by design; bouncing it to /login would make the
+    // mentor demo unreachable on production, where a backend is always configured.
+    if (!loading && !user && isLive && !isSampleMode()) router.replace('/login');
   }, [user, loading, router, isLive]);
 
   const load = useCallback(async () => {

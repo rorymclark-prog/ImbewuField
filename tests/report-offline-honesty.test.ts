@@ -16,6 +16,7 @@ import { readFileSync } from 'node:fs';
 
 const farmer = readFileSync(new URL('../app/farmer/page.tsx', import.meta.url), 'utf8');
 const reportView = readFileSync(new URL('../components/ReportView.tsx', import.meta.url), 'utf8');
+const i18n = readFileSync(new URL('../lib/i18n.tsx', import.meta.url), 'utf8');
 
 test('both report doors preflight the lazy chunk before flipping state', () => {
   // The preflight must load the SAME module the dynamic() uses — a different specifier
@@ -33,10 +34,20 @@ test('both report doors preflight the lazy chunk before flipping state', () => {
 });
 
 test('the chunk-failure path speaks through the app dialog, not a swallowed catch', () => {
-  const preflight = farmer.match(/const withReportChunk = useCallback[\s\S]*?\}, \[appConfirm\]\);/)?.[0] ?? '';
+  // Dependency list is [appConfirm] or [appConfirm, t] — the dialog's copy moved behind t() for
+  // i18n readiness (tests/farmer-i18n-gaps.test.ts), which correctly adds `t` alongside
+  // `appConfirm` so the closure cannot go stale after a language change.
+  const preflight = farmer.match(/const withReportChunk = useCallback[\s\S]*?\}, \[appConfirm(?:, t)?\]\);/)?.[0] ?? '';
   assert.ok(preflight, 'preflight must depend on appConfirm — a silent failure path is the bug this exists to stop');
   assert.ok(preflight.includes('appConfirm({'), 'failure must surface as a dialog');
-  assert.match(preflight, /signal/i, 'the message must name the actual problem in farmer words');
+  // The copy itself moved behind t() (lib/i18n.tsx) so the dialog is i18n-ready; the source no
+  // longer carries the words directly, so read the real English text it resolves to instead.
+  assert.match(preflight, /title:\s*t\('(\w+)'\)/, 'the dialog title must come from t(), not a literal string');
+  const messageKey = preflight.match(/message:\s*t\('(\w+)'\)/)?.[1];
+  assert.ok(messageKey, 'the dialog message must come from t(), not a literal string');
+  const enBlock = i18n.slice(i18n.indexOf('const T_en: Dict = {'), i18n.indexOf('\n};'));
+  const enValue = enBlock.match(new RegExp(`^  ${messageKey}: '([^']*)'`, 'm'))?.[1] ?? '';
+  assert.match(enValue, /signal/i, 'the message must name the actual problem in farmer words');
 });
 
 test('a dead connection during generate reads as no-signal, not as Failed to fetch', () => {
