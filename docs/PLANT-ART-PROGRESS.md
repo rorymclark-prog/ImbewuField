@@ -5,7 +5,7 @@ Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 - Last full checker inventory: 2026-08-29
 - Checker: `/Users/roryclark/ImbewuField/scripts/check-plant-art.py`
 - Required scope: 53 species, 106 views
-- Current result: 102 PASS, 4 FAIL, 0 MISSING, 0 IN PROGRESS
+- Current result: 103 PASS, 3 FAIL, 0 MISSING, 0 IN PROGRESS
 - Dimension audit is stricter than the checker's `square` rule: every top-down file must be exactly 1024×1024.
 - A top-down `FAIL` below passes the repository checker but fails the brief's authoritative
   16-direction reach gate (`alpha > 32`, at least 8 of 16 exact rays reaching 97% radius).
@@ -49,7 +49,7 @@ Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 | Honey-thorn / kriedoring | PASS | `public/element-art/tree_honey_thorn.png` | `5337360` | PASS | `public/render-assets/reference-blueprint/honey-thorn-v1.png` | `5c630cd` |
 | Natal currant | PASS | `public/element-art/tree_natal_currant.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/natal-currant-v1.png` | `4d55148` |
 | Pigeon pea | PASS | `public/element-art/tree_pigeon_pea.png` | `cd97a95` | PASS | `public/render-assets/reference-blueprint/pigeon-pea-v1.png` | `304e10d` |
-| Quiver tree / kokerboom | PASS | `public/element-art/tree_quiver_tree.png` | `b93e78d` | FAIL | `public/render-assets/reference-blueprint/quiver-tree-v1.png` | `f80bd9f` |
+| Quiver tree / kokerboom | PASS | `public/element-art/tree_quiver_tree.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/quiver-tree-v1.png` | `566b691` |
 | Spekboom | PASS | `public/element-art/tree_spekboom.png` | `355d170` | PASS | `public/render-assets/reference-blueprint/spekboom-v1.png` | `c207b8b` |
 | Waxberry / wasbessie | PASS | `public/element-art/tree_waxberry.png` | `c1f4f37` | PASS | `public/render-assets/reference-blueprint/waxberry-v1.png` | `f65b3f8` |
 | Baboon grape | PASS | `public/element-art/tree_baboon_grape.png` | `8db4efe` | FAIL | `public/render-assets/reference-blueprint/baboon-grape-v1.png` | `e84f7a2` |
