@@ -9,8 +9,16 @@
 // `import { getFirebase } from './firebase/init'` — fail to resolve under plain `node --test`
 // without this. Only kicks in when the default resolver can't find the bare specifier.
 //
-// Everything else (bare package specifiers like 'firebase/firestore') passes straight through
-// to the default resolver. Registered via tests/register-alias.mjs (see package.json's "test" script).
+// The same extensionless problem exists for BARE specifiers into a package that publishes no
+// `exports` map: Next 14 ships next/navigation.js and no exports field, so webpack finds
+// 'next/navigation' by adding the extension and Node's ESM resolver refuses it outright
+// ("Did you mean to import next/navigation.js?"). Any test whose module graph reaches a client
+// component that calls usePathname() therefore died at import time — not on an assertion, which
+// makes it read as an unrelated crash. Same rule as above: only ever after the default resolver
+// has already failed, so a package that resolves normally is never second-guessed.
+//
+// Everything else passes straight through to the default resolver. Registered via
+// tests/register-alias.mjs (see package.json's "test" script).
 import { existsSync } from 'node:fs';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
@@ -44,5 +52,22 @@ export async function resolve(specifier, context, nextResolve) {
       throw err;
     }
   }
+  // Bare specifier ('next/navigation', 'some-pkg/sub'). Let the default resolver try first; only
+  // if it cannot find the module do we retry with each extension appended, exactly as the
+  // relative-specifier branch above does. A specifier with its own extension is left alone.
+  if (!specifier.startsWith('.') && !specifier.startsWith('@/') && specifier.includes('/')) {
+    try {
+      return await nextResolve(specifier, context);
+    } catch (err) {
+      if (err?.code !== 'ERR_MODULE_NOT_FOUND') throw err;
+      for (const ext of EXTENSIONS) {
+        try {
+          return await nextResolve(specifier + ext, context);
+        } catch { /* try the next extension */ }
+      }
+      throw err;
+    }
+  }
+
   return nextResolve(specifier, context);
 }
