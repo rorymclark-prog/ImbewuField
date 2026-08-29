@@ -25,12 +25,24 @@
 import { useCallback, useEffect, useState } from 'react';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
-import { DEMO_NETWORK } from '@/lib/network-demo';
+import { DEMO_COHORT_MONTHLY, DEMO_NETWORK } from '@/lib/network-demo';
+import { emptyCohortSeries, type CohortSeries } from '@/lib/cohort-series';
 import type { NetworkFarmerSummary, NetworkOrgOption } from '@/lib/network';
+
+/* The shape a failed or not-yet-arrived read hands the dashboard. Never the demo series: the same
+   rule as the rows — an unknown portfolio must not be dressed as a sample one. */
+const NO_SERIES = emptyCohortSeries('The month-by-month totals have not been loaded for this organisation.');
 
 export interface NetworkPortfolio {
   /** Rows for the map/list. Demo rows in sample mode, authorised rows otherwise, [] on error. */
   rows: NetworkFarmerSummary[];
+  /**
+   * The cohort's month-by-month kilograms and rands, built server-side under the same consent
+   * projection as the rows (see app/api/network/farmers/route.ts). Not derivable on the client —
+   * `rows` carries totals only — so on any failure this is an empty, unrenderable series rather
+   * than a guess.
+   */
+  monthly: CohortSeries;
   /** Orgs this caller may ask about. Empty in sample mode. */
   orgs: NetworkOrgOption[];
   orgId: string | null;
@@ -54,6 +66,7 @@ export function useNetworkPortfolio(signedIn: boolean): NetworkPortfolio {
   const [orgs, setOrgs] = useState<NetworkOrgOption[]>([]);
   const [orgId, setOrgId] = useState<string | null>(null);
   const [rows, setRows] = useState<NetworkFarmerSummary[]>([]);
+  const [monthly, setMonthly] = useState<CohortSeries>(NO_SERIES);
   const [withheldForConsent, setWithheld] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -89,7 +102,7 @@ export function useNetworkPortfolio(signedIn: boolean): NetworkPortfolio {
 
   // ── farmers for the chosen org ──
   useEffect(() => {
-    if (!live || !orgId) { setRows([]); setWithheld(0); return; }
+    if (!live || !orgId) { setRows([]); setWithheld(0); setMonthly(NO_SERIES); return; }
     let cancelled = false;
     setLoading(true);
     setError(null);
@@ -103,13 +116,16 @@ export function useNetworkPortfolio(signedIn: boolean): NetworkPortfolio {
         if (!res.ok) {
           // Empty, never demo: see the header. An unknown portfolio must not be dressed as one.
           setError(body.error ?? 'Could not load farmers for this organisation.');
-          setRows([]); setWithheld(0);
+          setRows([]); setWithheld(0); setMonthly(NO_SERIES);
           return;
         }
         setRows(body.farmers ?? []);
         setWithheld(body.withheldForConsent ?? 0);
+        // An older deployment of the route has no `monthly`. That is a missing series, not an
+        // empty programme, so it stays unrenderable and the card says why instead of drawing zero.
+        setMonthly(body.monthly ?? NO_SERIES);
       } catch {
-        if (!cancelled) { setError('Could not reach the portfolio service.'); setRows([]); setWithheld(0); }
+        if (!cancelled) { setError('Could not reach the portfolio service.'); setRows([]); setWithheld(0); setMonthly(NO_SERIES); }
       } finally {
         if (!cancelled) setLoading(false);
       }
@@ -119,10 +135,10 @@ export function useNetworkPortfolio(signedIn: boolean): NetworkPortfolio {
 
   if (!live) {
     return {
-      rows: DEMO_NETWORK.farmers, orgs: [], orgId: null, setOrgId: () => {},
+      rows: DEMO_NETWORK.farmers, monthly: DEMO_COHORT_MONTHLY, orgs: [], orgId: null, setOrgId: () => {},
       isDemo: true, loading: false, error: null, withheldForConsent: 0, reload,
     };
   }
 
-  return { rows, orgs, orgId, setOrgId, isDemo: false, loading, error, withheldForConsent, reload };
+  return { rows, monthly, orgs, orgId, setOrgId, isDemo: false, loading, error, withheldForConsent, reload };
 }

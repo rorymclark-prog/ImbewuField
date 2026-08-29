@@ -28,3 +28,20 @@ export function randTick(amount: number): string {
   if (abs >= 1000) return `${sign}R${(abs / 1000).toFixed(1)}k`;
   return `${sign}R${Math.round(abs)}`;
 }
+
+/**
+ * '27 090 kg' — whole kilograms, space-grouped, for a figure that adds up a whole cohort.
+ *
+ * {@link kgLabel} above is the per-farm figure and keeps a tenth of a kilogram below 100, which is
+ * right when the number is one farmer's morning. Across sixteen farms over a year that decimal is
+ * noise and the thousands separator is the thing that makes the number readable at a glance.
+ *
+ * Grouped by regex rather than `toLocaleString('en-ZA')` deliberately, matching the `group()`
+ * helper on app/network/page.tsx: the locale route emits U+00A0 (see this file's header) and its
+ * output differs between the server and the browser's ICU build, so a server-rendered total and
+ * its first client render could disagree on a hydrated page.
+ */
+export function kgTotalLabel(kg: number): string {
+  if (!Number.isFinite(kg)) return '0 kg';
+  return `${Math.round(kg).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')} kg`;
+}

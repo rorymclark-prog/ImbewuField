@@ -30,6 +30,7 @@
  * Pure module: no I/O, no localStorage, no Firestore, no React.
  */
 
+import { buildCohortSeries, type CohortSeries } from './cohort-series';
 import { cropByKey } from './crop-catalog';
 import type {
   CourseProgress,
@@ -654,14 +655,25 @@ function buildRecord(seed: DemoSiteSeed, now: Date): DemoFarmerRecord {
     // 1-3 harvest events, spread back through the covered period.
     const events = 1 + Math.floor(rng() * Math.min(3, Math.max(1, monthsCovered - 1)));
     let logged = 0;
+    // The earliest harvest stamp for THIS crop, so the sale below cannot precede it. See there.
+    let firstHarvestMs = Number.POSITIVE_INFINITY;
     for (let e = 0; e < events; e += 1) {
       const share = e === events - 1 ? harvestedKg - logged : round(harvestedKg / events, 1);
       if (share <= 0) continue;
       logged += share;
+      // SLICE CENTRES, NOT SLICE STARTS. This was `e / events`, which puts the first event at day
+      // zero of the window and — because `e` never reaches `events` — never reaches the far end at
+      // all. A crop with a single harvest event therefore logged its ENTIRE year within the last
+      // three weeks, and across sixteen sites that piled roughly two thirds of the cohort's annual
+      // harvest into the current calendar month. Invisible for as long as nothing plotted these
+      // rows against a calendar (a per-farm TOTAL is the same either way, which is why it survived
+      // this long) and unmissable the moment the cohort chart did. `(e + 0.5) / events` walks the
+      // centre of each equal slice, so one event lands mid-window and three land at 1/6, 1/2, 5/6.
       const daysAgo = Math.round(
-        (monthsCovered - 1) * 30.44 * (e / Math.max(1, events)) + rng() * 18 + 4 + silence,
+        (monthsCovered - 1) * 30.44 * ((e + 0.5) / Math.max(1, events)) + rng() * 18 + 4 + silence,
       );
       const stamp = Math.max(joinedMs + 3 * 86400000, now.getTime() - daysAgo * 86400000);
+      firstHarvestMs = Math.min(firstHarvestMs, stamp);
       production.push({
         id: `${seed.id}-prod-${cropKey}-${e}`,
         profile_id: seed.id,
@@ -679,7 +691,15 @@ function buildRecord(seed: DemoSiteSeed, now: Date): DemoFarmerRecord {
       const basePrice = DEMO_FARM_GATE_ZAR_PER_KG[cropKey] ?? 9;
       const price = round(basePrice * (0.88 + rng() * 0.28), 2);
       const daysAgo = Math.round(rng() * Math.max(20, (monthsCovered - 1) * 26) + 6 + silence);
-      const stamp = Math.max(joinedMs + 5 * 86400000, now.getTime() - daysAgo * 86400000);
+      // A CROP CANNOT BE SOLD BEFORE IT IS PICKED. Harvest and sale dates were drawn independently,
+      // so a sale routinely landed months ahead of the crop's first harvest row. On a per-farm
+      // total that is invisible — the year still balances — but plotted against a calendar it puts
+      // the cohort's sales ahead of its harvests and lights up the chart's "sold beyond the harvest
+      // log" marker, which exists to flag exactly this in REAL data. Sample rows must not trip a
+      // real warning. Two days after the crop's first harvest is the floor, not its last, so a
+      // grower selling through a long picking season still reads as one.
+      const floorMs = Number.isFinite(firstHarvestMs) ? firstHarvestMs + 2 * 86400000 : joinedMs;
+      const stamp = Math.max(joinedMs + 5 * 86400000, floorMs, now.getTime() - daysAgo * 86400000);
       sales.push({
         id: `${seed.id}-sale-${cropKey}`,
         profile_id: seed.id,
@@ -903,3 +923,26 @@ export const DEMO_FARMER_IDS: string[] = DEMO_SITE_SEEDS.map((s) => s.id);
 export function demoFarmerById(id: string): DemoFarmerRecord | null {
   return DEMO_NETWORK.records.find((r) => r.farmer.id === id) ?? null;
 }
+
+/**
+ * The demo portfolio's month-by-month totals.
+ *
+ * Built from the SAME records the cards are built from — {@link buildCohortSeries} is handed the
+ * raw ledgers `buildRecord` already generated, not a second set of numbers written for a chart. So
+ * the sample cohort chart and the sample cohort totals cannot drift apart, and a demo site that
+ * joined three months ago contributes to three columns and no more.
+ *
+ * Exported as its own constant rather than as a field on {@link DEMO_NETWORK} on purpose:
+ * tests/network-portfolio-wiring.test.ts counts how many times the hook mentions DEMO_NETWORK, so
+ * that the sample portfolio can only ever be reached from the not-live branch. Reaching the series
+ * through that constant would have added a mention and blunted the count.
+ */
+export const DEMO_COHORT_MONTHLY: CohortSeries = buildCohortSeries(
+  DEMO_NETWORK.records.map((record) => ({
+    production: record.sources.production,
+    sales: record.sources.sales,
+    expenses: record.sources.expenses,
+    joinedAt: record.farmer.joinedAt,
+  })),
+  { months: 12, now: new Date(DEMO_NETWORK.generatedAt) },
+);
