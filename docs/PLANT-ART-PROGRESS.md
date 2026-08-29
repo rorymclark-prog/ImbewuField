@@ -5,7 +5,7 @@ Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 - Last full checker inventory: 2026-08-29
 - Checker: `/Users/roryclark/ImbewuField/scripts/check-plant-art.py`
 - Required scope: 53 species, 106 views
-- Current result: 95 PASS, 11 FAIL, 0 MISSING, 0 IN PROGRESS
+- Current result: 96 PASS, 10 FAIL, 0 MISSING, 0 IN PROGRESS
 - Dimension audit is stricter than the checker's `square` rule: every top-down file must be exactly 1024×1024.
 - A top-down `FAIL` below passes the repository checker but fails the brief's authoritative
   16-direction reach gate (`alpha > 32`, at least 8 of 16 exact rays reaching 97% radius).
@@ -40,7 +40,7 @@ Authoritative recovery ledger for `codex/climate-zone-plant-art`.
 | Wild date palm | PASS | `public/element-art/tree_wild_date_palm.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/wild-date-palm-v1.png` | `64aa601` |
 | Wild medlar / mmilo | PASS | `public/element-art/tree_wild_medlar_mmilo.png` | `b93e78d` | PASS | `public/render-assets/reference-blueprint/wild-medlar-v1.png` | `bbba3bc` |
 | Bietou / bush-tick berry | PASS | `public/element-art/tree_bietou.png` | `017067c` | PASS | `public/render-assets/reference-blueprint/bietou-v1.png` | `b67a5dd` |
-| Brandybush / velvet raisin | PASS | `public/element-art/tree_brandybush.png` | `202ccec` | FAIL | `public/render-assets/reference-blueprint/brandybush-v1.png` | `6be1b8f` |
+| Brandybush / velvet raisin | PASS | `public/element-art/tree_brandybush.png` | `202ccec` | PASS | `public/render-assets/reference-blueprint/brandybush-v1.png` | `303c6f9` |
 | Honeybush / heuningbos | PASS | `public/element-art/tree_honeybush.png` | `d21827f` | FAIL | `public/render-assets/reference-blueprint/honeybush-v1.png` | `e3433fc` |
 | Rooibos | PASS | `public/element-art/tree_rooibos.png` | `1ecd8f2` | FAIL | `public/render-assets/reference-blueprint/rooibos-v1.png` | `fedd351` |
 | Rosemary | PASS | `public/element-art/tree_rosemary.png` | `1ecd8f2` | FAIL | `public/render-assets/reference-blueprint/rosemary-v1.png` | `ee1999f` |
