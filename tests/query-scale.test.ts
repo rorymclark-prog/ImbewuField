@@ -101,6 +101,14 @@ export const getSandboxExpenses = () => [];
 export const addSandboxExpense = () => {};
 export const updateSandboxExpense = () => {};
 export const deleteSandboxExpense = () => {};
+// isSampleMode() is always false above, so none of these three ever actually run in this test —
+// they exist only so lib/db/queries.ts's static import of them (added by PR #383's consent-sandbox
+// fix) has something to bind to. A missing export here is a SyntaxError at module load, not a test
+// failure, so this list has to track queries.ts's @/lib/sample-mode import line, not just what this
+// file's own tests exercise.
+export const getSandboxConsent = () => ({});
+export const setSandboxConsentScope = () => ({});
+export const revokeAllSandboxConsent = () => ({});
 `);
 
 Object.assign(globalThis, { __queryScaleProbeState: state });
