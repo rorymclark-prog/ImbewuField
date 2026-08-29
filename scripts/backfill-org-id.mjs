@@ -25,6 +25,14 @@
  * org_id: null (matching what a fresh write would stamp for an org-less user) rather than skipped,
  * so nothing is silently left in the pre-fix "no field at all" state.
  *
+ * EXTENDED AGAIN (org-isolation matrix audit, 2026-08-29): `mentor_visits` read via a bare
+ * `isStaff()` with no org_id field to check at all — see the read-rule comment in
+ * firestore.rules. logMentorVisit() (lib/db/queries.ts) now stamps org_id going forward, and
+ * this collection uses `trainee_id` as its owner field rather than `profile_id`: the visit is
+ * fundamentally the TRAINEE's record (same role profile_id plays everywhere else), not the
+ * mentor's — a mentor could in principle move between orgs while a visit they once logged
+ * should stay attached to the org the trainee actually belongs to.
+ *
  * Idempotent: only writes docs that are missing org_id, so it's safe to re-run.
  *
  * Usage:
@@ -83,6 +91,8 @@ const TARGETS = [
   { collection: 'expense_logs', ownerField: 'profile_id' },
   // Reports use owner_id (there is no profile_id on a report doc), same as designs.
   { collection: 'reports', ownerField: 'owner_id' },
+  // mentor_visits uses trainee_id, not profile_id — see the EXTENDED AGAIN note above.
+  { collection: 'mentor_visits', ownerField: 'trainee_id' },
 ];
 
 async function orgIdForProfile(profileCache, profileId) {

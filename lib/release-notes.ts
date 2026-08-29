@@ -35,7 +35,7 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '29 August',
-    sha: '5278ab3',
+    sha: '5d2f2e6',
     changes: [
       'A slideshow for meetings now shows the live app to partners, with a print-to-PDF copy',
       'Your picked, sold and spent money now lives in one book',
@@ -61,6 +61,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       'A public page now introduces the app to NGOs and funders, with a link to get it',
       'Trying the app without an account now shows the funder and NGO screens with sample data',
       'The sample farm now says AI pictures are off there, instead of quietly spending',
+      'Each organisation now provably sees only its own gardens, visits and courses',
       'Sharing switches in the try-it farm now hold, instead of switching themselves off',
       'Text on the funder and NGO programme views is now easier to read on a phone',
       'Trying the app without an account now also opens the Study and Mentor pages',

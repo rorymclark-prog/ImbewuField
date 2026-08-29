@@ -123,3 +123,10 @@ jobs:
       # and nothing anywhere proved either claim. This step is what stops that being true again.
       - name: Storage rules
         run: npm run test:storage-rules
+
+      # Tenant-2-onboarding provisioning path (scripts/provision-org.mjs, scripts/seed.mjs).
+      # Needs Auth as well as Firestore — resolveAccount() looks grantees/attachees up by
+      # email via the Auth emulator, unlike the rules-unit-testing suites above which simulate
+      # auth contexts themselves and never touch a real Auth emulator.
+      - name: Org provisioning
+        run: npm run test:provisioning
