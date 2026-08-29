@@ -35,10 +35,12 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '29 August',
-    sha: '77f0e53',
+    sha: '813e78e',
     changes: [
       'Catalogue plants now show their own picture, with fruit and flowers easy to see',
       'The design map now uses the matching overhead crown for each named plant',
+      'Sharing switches in the try-it farm now hold, instead of switching themselves off',
+      'Text on the funder and NGO programme views is now easier to read on a phone',
     ],
   },
   {

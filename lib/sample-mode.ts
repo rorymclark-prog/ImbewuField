@@ -32,6 +32,7 @@ import type { SavedInvoice, Product, Customer } from './invoices';
 import type { SellerLetterhead } from './invoice-seller';
 import type { SavedPlace } from './saved-places';
 import { buildDemoCropPlan, buildDemoFacilitatorState, buildDemoFinance, buildDemoLetterhead, buildDemoProfile, buildDemoSavedPlace, buildDemoStorageSeeds } from './demo-farm';
+import { emptyConsent, revokeAll, setScope, type ConsentScope, type FarmerConsent } from './consent';
 
 const FLAG_KEY = 'imbewu_sample_mode';
 export const SAMPLE_MODE_EVENT = 'imbewu-sample-mode-changed';
@@ -51,6 +52,7 @@ interface SampleSandbox {
   products: Product[];
   profile: Profile;
   places: SavedPlace[];
+  consent: FarmerConsent;
 }
 
 let sandbox: SampleSandbox | null = null;
@@ -60,6 +62,7 @@ let sandbox: SampleSandbox | null = null;
 // without the evaluator having to find and flip a settings toggle first.
 function freshSandbox(): SampleSandbox {
   const finance = buildDemoFinance();
+  const profile = buildDemoProfile();
   return {
     cropPlan: buildDemoCropPlan(),
     favouriteCropKeys: new Set(),
@@ -76,7 +79,17 @@ function freshSandbox(): SampleSandbox {
     customers: finance.customers,
     letterhead: buildDemoLetterhead(),
     products: finance.products,
-    profile: buildDemoProfile(),
+    profile,
+    // Consent (POPIA) starts EMPTY here too — unlike allowBedSharing above, this is not a
+    // "reveal the demo feature" deviation from the real default, it is the SAME default a
+    // real farmer gets, because it is the true current state of every real farmer's record:
+    // lib/network.ts documents the live consent gate as empty because no real farmer has
+    // answered the panel yet. lib/network-demo.ts's synthetic funder-side farmers show a
+    // 'demo' consent literal that bypasses this system entirely for the same reason — there
+    // is no real grant to model. Seeding this sandbox pre-ticked would tell a DIFFERENT and
+    // false story: that opting in is the norm. A farmer trying the sample sees exactly what
+    // their own first visit to this screen would show, and toggling it is the whole feature.
+    consent: emptyConsent(profile.id, profile.org_id, new Date().toISOString()),
     // The crèche arrives pre-saved so the saved-places list, the farmer map and the Design
     // entry point all light up immediately (loadPlaces() serves THIS list in sample mode —
     // the localStorage seed alone never reaches it).
@@ -309,4 +322,22 @@ export function deleteSandboxPlace(id: string): SavedPlace[] {
   const s = ensure();
   s.places = s.places.filter((p) => p.id !== id);
   return s.places;
+}
+
+/* ── Consent (POPIA) ──────────────────────────────────────────────────────
+   The choke point lib/db/queries.ts's getMyConsent/setMyConsentScope/revokeAllMyConsent
+   read and write in sample mode, so a demo toggle behaves like a real one — it persists
+   in this sandbox and survives closing and reopening the panel — instead of the three
+   Firestore-backed queries each returning null, which left ConsentPanel.tsx's toggle()
+   handler assigning `null` to component state and every switch reverting to unchecked. */
+export function getSandboxConsent(): FarmerConsent { return ensure().consent; }
+export function setSandboxConsentScope(scope: ConsentScope, value: boolean): FarmerConsent {
+  const s = ensure();
+  s.consent = setScope(s.consent, scope, value, new Date().toISOString());
+  return s.consent;
+}
+export function revokeAllSandboxConsent(): FarmerConsent {
+  const s = ensure();
+  s.consent = revokeAll(s.consent, new Date().toISOString());
+  return s.consent;
 }

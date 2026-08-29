@@ -46,6 +46,13 @@ const T_en: Dict = {
   mapHeldTitle: 'The map is taking a break',
   mapHeldBody: 'This page closed unexpectedly a few times in a row, so the map is paused to get you back in. Your reports, photos and places all still work below.',
   mapHeldLoad: 'Load the map',
+  // Farmer-page report-chunk preflight (app/farmer/page.tsx's withReportChunk) — the retry
+  // dialog shown when Reports has never been opened with signal on this phone. English-only
+  // for now; t() falls back.
+  reportsOfflineTitle: 'Reports need signal the first time',
+  reportsOfflineMessage: 'This part of the app is not saved on your phone yet, and there is no signal right now. Open it once with signal and it will work offline after that.',
+  reportsOfflineRetry: 'Try again',
+  reportsOfflineClose: 'Close',
   clickAnalyse: 'Tap the map to analyse',
   dataSources: 'Data sources',
   language: 'Language',
