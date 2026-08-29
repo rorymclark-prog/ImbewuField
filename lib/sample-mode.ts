@@ -19,7 +19,12 @@
 //    lib/design-canvas-sync.ts, lib/db/queries.ts, lib/render-jobs.ts,
 //    lib/site-share.ts): every remote reconcile/push no-ops in sample mode, so
 //    mounting the map/design pages can never sync sandbox data into a signed-in
-//    user's cloud copy — or pull their real cloud data into the sample.
+//    user's cloud copy — or pull their real cloud data into the sample. The
+//    SAME gate (SAMPLE_MODE_RENDER_REFUSAL below) also sits in the two DIRECT
+//    render callers that bypass lib/render-jobs.ts's queue entirely —
+//    lib/ai-render-client.ts's requestRender and DesignGlossy's requestProducer
+//    — because a billed /api/ai-render or /api/image-producer call is exactly
+//    as real a leak as an unguarded Firestore write.
 //
 // On top of that, Firestore-backed VIEW data (crop plan, finances, invoices,
 // profile) reads/writes the typed sandbox below via the narrow getters/setters —
@@ -97,6 +102,17 @@ export function isSampleMode(): boolean {
     return false;
   }
 }
+
+/**
+ * Sample farm is look-don't-spend: every route that bills a real vendor account must refuse while
+ * sampling, and say so in the farmer's own words rather than failing silently. lib/render-jobs.ts's
+ * queue uses this for its own refusal, and so do the two DIRECT /api/ai-render and
+ * /api/image-producer callers that bypass the queue — lib/ai-render-client.ts's requestRender and
+ * DesignGlossy's requestProducer (analysis styles and "style all sheets") — so a farmer sees
+ * identical text no matter which render path they hit.
+ */
+export const SAMPLE_MODE_RENDER_REFUSAL =
+  'AI sheets are switched off in the sample farm. Exit the sample and open your own farm to render AI sheets.';
 
 export function enterSampleMode(): boolean {
   if (typeof window === 'undefined') return false;
