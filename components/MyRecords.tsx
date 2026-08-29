@@ -587,7 +587,7 @@ function OrchardSwitch({ on, onChange, t }: {
       aria-pressed={on}
       className="font-sans rounded-full px-2 py-0.5 mt-1.5 inline-flex items-center gap-1"
       style={{
-        fontSize: 10.5,
+        fontSize: 12,
         fontWeight: on ? 600 : 400,
         border: `1px solid ${on ? '#1F4D2B' : '#E2D8C4'}`,
         background: on ? 'rgba(31,77,43,0.08)' : 'transparent',
@@ -607,7 +607,7 @@ function OrchardNote({ kg, names, t, money = false }: {
 }) {
   const figure = kg % 1 === 0 ? String(kg) : kg.toFixed(1);
   return (
-    <p className="font-sans mt-2" style={{ fontSize: 10.5, color: '#8C7A62', lineHeight: 1.5 }}>
+    <p className="font-sans mt-2" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.5 }}>
       {t(money ? 'recordsOrchardOutNoteMoney' : 'recordsOrchardOutNote')
         .replace('{kg}', figure)
         .replace('{names}', names.join(', '))}

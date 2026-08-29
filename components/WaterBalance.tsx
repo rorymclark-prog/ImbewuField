@@ -244,7 +244,7 @@ function StatBox({ label, value, sub, color }: { label: string; value: string; s
     <div className="rounded-xl p-3" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
       <p className="text-xs font-mono" style={{ color: '#8C7A62', marginBottom: 2 }}>{label}</p>
       <p className="font-display font-semibold" style={{ fontSize: 16, color, lineHeight: 1.2 }}>{value}</p>
-      <p className="text-xs font-mono mt-1" style={{ color: '#8C7A62', fontSize: 10 }}>{sub}</p>
+      <p className="text-xs font-mono mt-1" style={{ color: '#8C7A62', fontSize: 12 }}>{sub}</p>
     </div>
   );
 }

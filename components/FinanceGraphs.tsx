@@ -134,7 +134,7 @@ export default function FinanceGraphs({
                 aria-pressed={windowMonths === n}
                 className="font-mono rounded-full px-2 py-0.5"
                 style={{
-                  fontSize: 10.5,
+                  fontSize: 12,
                   border: `1px solid ${windowMonths === n ? SOLD : HAIRLINE}`,
                   background: windowMonths === n ? SOLD : 'transparent',
                   color: windowMonths === n ? '#FFFEFA' : MUTED,
@@ -183,7 +183,7 @@ function OrchardToggle({ on, onChange }: { on: boolean; onChange: (next: boolean
         : 'Only the vegetable beds are counted. Tap to include fruit, nuts and the rest of the food forest.'}
       className="font-sans rounded-full px-2.5 py-1 flex items-center gap-1"
       style={{
-        fontSize: 11,
+        fontSize: 12,
         fontWeight: on ? 600 : 400,
         border: `1px solid ${on ? SOLD : HAIRLINE}`,
         background: on ? 'rgba(31,77,43,0.08)' : 'transparent',
@@ -205,7 +205,7 @@ function Segment({ active, onClick, children }: { active: boolean; onClick: () =
       aria-pressed={active}
       className="font-sans rounded-full px-3 py-1"
       style={{
-        fontSize: 11.5,
+        fontSize: 12,
         fontWeight: active ? 600 : 400,
         border: `1px solid ${active ? SOLD : HAIRLINE}`,
         background: active ? SOLD : 'transparent',
@@ -359,12 +359,12 @@ function MeasuredView({
           <>
             <Chip dot={SOLD} label="sold" value={kgLabel(selected.soldKg)} />
             {selected.keptKg === null
-              ? <span className="font-sans" style={{ fontSize: 11.5, color: SHORT }}>sold more than was logged picked</span>
+              ? <span className="font-sans" style={{ fontSize: 12, color: SHORT }}>sold more than was logged picked</span>
               : <Chip dot={KEPT} label="kept" value={kgLabel(selected.keptKg)} />}
             <Chip dot="transparent" label="picked in total" value={kgLabel(selected.producedKg)} />
           </>
         ) : (
-          <span className="font-sans" style={{ fontSize: 11.5, color: FAINT }}>nothing recorded this month</span>
+          <span className="font-sans" style={{ fontSize: 12, color: FAINT }}>nothing recorded this month</span>
         )}
       </div>
 
@@ -373,7 +373,7 @@ function MeasuredView({
           /* Picked and sold said separately, because the card's own figures are separate and their
              sum is not a quantity of fruit — 40 kg picked of which 25 were sold is 40 kg, and a
              single "65 kg" would match none of picked, sold or kept. */
-          <p className="font-sans" style={{ fontSize: 10.5, color: MUTED, lineHeight: 1.5 }}>
+          <p className="font-sans" style={{ fontSize: 12, color: MUTED, lineHeight: 1.5 }}>
             <b style={{ fontWeight: 600 }}>Orchard is switched off</b>, so this card leaves out
             {series.excludedProducedKg > 0 ? ` ${kgLabel(series.excludedProducedKg)} picked` : ''}
             {series.excludedProducedKg > 0 && series.excludedSoldKg > 0 ? ' and' : ''}
@@ -382,23 +382,23 @@ function MeasuredView({
             page still count those sales — only the kilograms here are filtered.
           </p>
         )}
-        <p className="font-sans" style={{ fontSize: 10.5, color: FAINT, lineHeight: 1.5 }}>
+        <p className="font-sans" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }}>
           <b style={{ color: MUTED, fontWeight: 600 }}>Kept</b> is what you picked less what you sold — food eaten at
           home, given away, fed out, saved for seed or spoiled. The app cannot tell those apart, so it does not guess.
         </p>
         {anyShort && (
-          <p className="font-sans" style={{ fontSize: 10.5, color: FAINT, lineHeight: 1.5 }}>
+          <p className="font-sans" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }}>
             A dashed outline means more was sold that month than was logged as picked, so the kept figure is unknown —
             usually picking that never got written down, sometimes a sale out of an earlier month&apos;s harvest.
           </p>
         )}
         {clipped.length > 0 && (
-          <p className="font-sans" style={{ fontSize: 10.5, color: FAINT, lineHeight: 1.5 }}>
+          <p className="font-sans" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }}>
             Too tall for this chart, and cut off at the mark so the other months stay readable:{' '}
             <b style={{ color: MUTED, fontWeight: 600 }}>{clipped.join('; ')}</b>.
           </p>
         )}
-        <p className="font-sans" style={{ fontSize: 10.5, color: FAINT, lineHeight: 1.5 }}>
+        <p className="font-sans" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }}>
           Entries land in the month you recorded them; the logging forms have no date field yet.
         </p>
       </div>
@@ -449,7 +449,7 @@ function PlanView({ plan, source, wide, orchard }: {
 
   return (
     <>
-      <p className="px-4 pt-3 font-sans" style={{ fontSize: 11.5, color: MUTED, lineHeight: 1.5 }}>
+      <p className="px-4 pt-3 font-sans" style={{ fontSize: 12, color: MUTED, lineHeight: 1.5 }}>
         Each crop&apos;s plan benchmark, with what you have logged picking this year on top of it.
       </p>
 
@@ -467,7 +467,7 @@ function PlanView({ plan, source, wide, orchard }: {
           ? <Chip dot="#C07A1E" label={`after your ${Math.round(plan.lossPercent)}% loss allowance`} value="" />
           : (
             <Link href="/facilitator/crops" className="font-sans"
-              style={{ fontSize: 11, color: SOLD, textDecoration: 'underline' }}>
+              style={{ fontSize: 12, color: SOLD, textDecoration: 'underline' }}>
               Set your loss allowance to mark it on these bars
             </Link>
           )}
@@ -478,30 +478,30 @@ function PlanView({ plan, source, wide, orchard }: {
             a farm with fruit trees this paragraph and that one would otherwise say the same word
             twice, three lines apart. This one carries the reason; that one carries the list. */}
         {orchard.length > 0 && (
-          <p className="font-sans" style={{ fontSize: 10.5, color: FAINT, lineHeight: 1.5 }}>
+          <p className="font-sans" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }}>
             <b style={{ color: MUTED, fontWeight: 600 }}>Nothing from the orchard is compared here.</b> A tree is not
             planted into a bed for a season, so there is no plan benchmark to hold it against. Its harvests and sales
             still count everywhere else on this page.
           </p>
         )}
-        <p className="font-sans" style={{ fontSize: 10.5, color: FAINT, lineHeight: 1.5 }}>
+        <p className="font-sans" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }}>
           The benchmark is what one <b style={{ color: MUTED, fontWeight: 600 }}>complete crop cycle</b> on that much
           ground is worth in kilograms — not a target for this calendar year. A short green bar can mean the cycle is
           not finished, or that picking was not written down. It is not proof of a lost harvest.
         </p>
         {clippedRows.length > 0 && (
-          <p className="font-sans" style={{ fontSize: 10.5, color: FAINT, lineHeight: 1.5 }}>
+          <p className="font-sans" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }}>
             Too long for these bars, and cut off at the mark so the smaller crops still have one:{' '}
             <b style={{ color: MUTED, fontWeight: 600 }}>{clippedRows.join('; ')}</b>.
           </p>
         )}
         {plan.unbenchmarkedCropNames.length > 0 && (
-          <p className="font-sans" style={{ fontSize: 10.5, color: FAINT, lineHeight: 1.5 }}>
+          <p className="font-sans" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }}>
             Left out — no verified yield figure yet: {plan.unbenchmarkedCropNames.join(', ')}.
           </p>
         )}
         {plan.offPlanNames.length > 0 && (
-          <p className="font-sans" style={{ fontSize: 10.5, color: FAINT, lineHeight: 1.5 }}>
+          <p className="font-sans" style={{ fontSize: 12, color: FAINT, lineHeight: 1.5 }}>
             Harvested but not in the plan, so not compared: {plan.offPlanNames.join(', ')}.
           </p>
         )}
@@ -519,7 +519,7 @@ function PlanRow({ row, pct, lossPercent, clipped }: {
         <span className="font-sans truncate min-w-0" style={{ fontSize: 12.5, color: INK }}>
           <span aria-hidden="true">{row.icon}</span> {row.cropName}
         </span>
-        <span className="font-mono flex-shrink-0" style={{ fontSize: 11.5, color: MUTED }}>
+        <span className="font-mono flex-shrink-0" style={{ fontSize: 12, color: MUTED }}>
           {kgLabel(row.harvestedKg)} <span style={{ color: '#B8AC96' }}>of {kgLabel(row.benchmarkKg)}</span>
         </span>
       </div>
@@ -541,7 +541,7 @@ function PlanRow({ row, pct, lossPercent, clipped }: {
       </div>
 
       {row.soldExceedsHarvested && (
-        <p className="font-sans mt-1" style={{ fontSize: 10.5, color: SHORT }}>
+        <p className="font-sans mt-1" style={{ fontSize: 12, color: SHORT }}>
           Sold {kgLabel(row.soldKg)} — more than was logged picked, so the green bar is short of what really came off.
         </p>
       )}
@@ -555,7 +555,7 @@ function Figure({ label, value, tone }: { label: string; value: string; tone: st
   return (
     <span className="flex flex-col">
       <span className="font-mono font-semibold" style={{ fontSize: 20, color: tone, letterSpacing: '-0.01em' }}>{value}</span>
-      <span className="font-sans" style={{ fontSize: 10.5, color: FAINT }}>{label}</span>
+      <span className="font-sans" style={{ fontSize: 12, color: FAINT }}>{label}</span>
     </span>
   );
 }
@@ -568,7 +568,7 @@ function Chip({ dot, label, value }: { dot: string; label: string; value: string
         background: dot, border: dot === 'transparent' ? `1px solid ${HAIRLINE}` : undefined,
       }} />
       {value && <span className="font-mono" style={{ fontSize: 12, color: INK }}>{value}</span>}
-      <span className="font-sans" style={{ fontSize: 10.5, color: FAINT }}>{label}</span>
+      <span className="font-sans" style={{ fontSize: 12, color: FAINT }}>{label}</span>
     </span>
   );
 }

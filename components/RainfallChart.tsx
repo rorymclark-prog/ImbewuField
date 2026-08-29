@@ -29,12 +29,12 @@ export default function RainfallChart({ rainfall }: Props) {
         <BarChart data={data} margin={{ top: 4, right: 0, bottom: 0, left: -20 }}>
           <XAxis
             dataKey="month"
-            tick={{ fill: '#526a4c', fontSize: 10, fontFamily: 'monospace' }}
+            tick={{ fill: '#526a4c', fontSize: 12, fontFamily: 'monospace' }}
             axisLine={{ stroke: '#2d4528' }}
             tickLine={false}
           />
           <YAxis
-            tick={{ fill: '#526a4c', fontSize: 9, fontFamily: 'monospace' }}
+            tick={{ fill: '#526a4c', fontSize: 12, fontFamily: 'monospace' }}
             axisLine={false}
             tickLine={false}
             width={30}

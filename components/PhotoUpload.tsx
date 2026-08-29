@@ -159,7 +159,7 @@ export default function PhotoUpload({ locationData, onAnalysisComplete, mapCaptu
               if (line.startsWith('- ') || line.startsWith('• ')) {
                 return (
                   <div key={j} className="flex gap-2 text-xs font-display leading-relaxed" style={{ color: '#20190F' }}>
-                    <span style={{ color: '#1F4D2B', flexShrink: 0, fontSize: 10 }}>-</span>
+                    <span style={{ color: '#1F4D2B', flexShrink: 0, fontSize: 12 }}>-</span>
                     <span>{line.replace(/^[-•]\s*/, '')}</span>
                   </div>
                 );

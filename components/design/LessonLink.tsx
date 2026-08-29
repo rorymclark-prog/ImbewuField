@@ -51,7 +51,7 @@ export default function LessonLink({
           border: 'none',
           background: 'transparent',
           color: GREEN,
-          fontSize: 11.5,
+          fontSize: 12,
           fontWeight: 700,
           textDecoration: 'underline',
           cursor: 'pointer',
