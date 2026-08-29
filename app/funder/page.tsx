@@ -12,6 +12,7 @@ import LessonLink from '@/components/design/LessonLink';
 import MenuButton from '@/components/MenuButton';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
+import { isSampleMode } from '@/lib/sample-mode';
 import { canAccessRolePage } from '@/lib/role-access';
 import type { UserRole } from '@/lib/db/types';
 
@@ -55,10 +56,16 @@ export default function FunderPage() {
   const { user, role, loading } = useAuth();
   const router = useRouter();
   const isLive = isBackendConfigured();
+  // useState+useEffect, not a direct isSampleMode() read in render: sessionStorage is
+  // client-only, so a render-time read would disagree with the server-rendered HTML.
+  const [sample, setSample] = useState(false);
+  useEffect(() => { setSample(isSampleMode()); }, []);
   const [view, setView] = useState<'cohort' | 'gardens'>('cohort');
 
   useEffect(() => {
-    if (!loading && !user && isLive) router.replace('/login');
+    // Sample mode has no user by design; bouncing it to /login would make the
+    // funder/NGO demo unreachable on production, where a backend is always configured.
+    if (!loading && !user && isLive && !isSampleMode()) router.replace('/login');
   }, [user, loading, router, isLive]);
 
   if (!loading && user && isLive && !canAccessRolePage(role, FUNDER_ALLOWED_ROLES)) {
@@ -83,13 +90,13 @@ export default function FunderPage() {
         <span className="text-xs hidden sm:block font-display" style={{ color: '#5C5040' }}>Funder · impact oversight</span>
         {/* Was an unconditional "demo data". NgoDashboard reads REAL Firestore via listGardens()
             and only falls back to its sample gardens when there is no backend configured, so the
-            label now tracks that same condition. A permanent "demo" badge on real programme
+            label now tracks that same condition — no backend, or sample mode. A permanent "demo" badge on real programme
             figures teaches a funder to discount them. */}
         {/* Scoped to the gardens view: the cohort view labels its own sample state from what the
             portfolio read actually returned (`portfolio.isDemo`), which is the more exact test —
             a configured backend with no signed-in caller is still sample data. Two badges saying
             it at once, from two different tests, is how they end up disagreeing. */}
-        {!isLive && view === 'gardens' && (
+        {(!isLive || sample) && view === 'gardens' && (
           <span className="text-xs px-2 py-0.5 rounded-full font-mono hidden md:block" style={{ background: 'rgba(47,111,158,0.12)', border: '1px solid rgba(47,111,158,0.3)', color: '#2F6F9E' }}>sample data</span>
         )}
         <div className="flex-1" />

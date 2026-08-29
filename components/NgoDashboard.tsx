@@ -7,6 +7,7 @@ import { Loader2, MapPin, User, Camera, BookOpen, Check, Map as MapIcon, FileTex
 import { onAuthStateChanged } from 'firebase/auth';
 import { listGardens, listGardeners, getGardenerProfile } from '@/lib/db/queries';
 import { getFirebase } from '@/lib/firebase/init';
+import { isSampleMode } from '@/lib/sample-mode';
 import { COURSE_MODULES } from '@/lib/course-modules';
 import { getCropArt } from '@/lib/crop-art';
 import { buildCropAliasIndex, cropIdentityOf } from '@/lib/crop-identity';
@@ -280,7 +281,8 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
   const [authReady, setAuthReady] = useState(false);
   useEffect(() => {
     const fb = getFirebase();
-    if (!fb) { setAuthReady(true); return; } // no backend → straight to sample mode
+    // No backend, or sample mode: auth is irrelevant to the demo — don't wait on it.
+    if (!fb || isSampleMode()) { setAuthReady(true); return; }
     const unsub = onAuthStateChanged(fb.auth, () => setAuthReady(true));
     return () => unsub();
   }, []);
@@ -289,7 +291,11 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
   useEffect(() => {
     if (!authReady) return;
     const fb = getFirebase();
-    if (!fb) {
+    // Sample mode must land HERE, not fall through: listGardens() answers [] in the
+    // sandbox (an org-scoped Firestore query has no meaning there), so falling through
+    // renders "no gardens yet" on the exact view the /partners page sends funders to
+    // try. The sample gardens live in this component, not the query layer.
+    if (!fb || isSampleMode()) {
       setIsDemo(true);
       setLiveGardens(null);
       setGardensLoadError(false);

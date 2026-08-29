@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic';
 import { BarChart3, Sprout, Inbox } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
+import { isSampleMode } from '@/lib/sample-mode';
 import { canAccessRolePage } from '@/lib/role-access';
 import RoleSwitcher from '@/components/RoleSwitcher';
 import BackButton from '@/components/BackButton';
@@ -47,11 +48,17 @@ export default function NgoPage() {
   const { user, role, loading } = useAuth();
   const router = useRouter();
   const isLive = isBackendConfigured();
+  // useState+useEffect, not a direct isSampleMode() read in render: sessionStorage is
+  // client-only, so a render-time read would disagree with the server-rendered HTML.
+  const [sample, setSample] = useState(false);
+  useEffect(() => { setSample(isSampleMode()); }, []);
   const [view, setView] = useState<'cohort' | 'gardens' | 'messages'>('cohort');
   const [msgUnread, setMsgUnread] = useState(0);
 
   useEffect(() => {
-    if (!loading && !user && isLive) router.replace('/login');
+    // Sample mode has no user by design; bouncing it to /login would make the
+    // funder/NGO demo unreachable on production, where a backend is always configured.
+    if (!loading && !user && isLive && !isSampleMode()) router.replace('/login');
   }, [user, loading, router, isLive]);
 
   if (!loading && user && isLive && !canAccessRolePage(role, NGO_ALLOWED_ROLES)) {
@@ -75,10 +82,10 @@ export default function NgoPage() {
         <div className="w-px h-5" style={{ background: 'var(--border-bright)', opacity: 0.5 }} />
         <span className="text-xs hidden sm:block font-display" style={{ color: '#5C5040' }}>NGO · programme overview</span>
         {/* Conditional for the same reason as /funder: this dashboard reads real gardens and
-            gardeners, and only shows sample ones when no backend is configured. */}
+            gardeners, and only shows sample ones when no backend is configured, or in sample mode. */}
         {/* Scoped to the gardens view — the cohort view carries its own, more exact sample label
             (see the matching comment on app/funder/page.tsx). */}
-        {!isLive && view === 'gardens' && (
+        {(!isLive || sample) && view === 'gardens' && (
           <span className="text-xs px-2 py-0.5 rounded-full font-mono hidden md:block" style={{ background: 'rgba(212,168,83,0.12)', border: '1px solid rgba(212,168,83,0.3)', color: 'var(--gold)' }}>sample data</span>
         )}
         <div className="flex-1" />
