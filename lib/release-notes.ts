@@ -35,8 +35,11 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '29 August',
-    sha: 'f872fc3',
+    sha: '91116b4',
     changes: [
+      'Turnips, chillies and true spinach now show their own crop pictures',
+      'The sample farm now opens from a welcoming South African garden picture',
+      'Crop pictures now use far less data without losing phone-sized detail',
       'A slideshow for meetings now shows the live app to partners, with a print-to-PDF copy',
       'Your picked, sold and spent money now lives in one book',
       "Lima's chat button now stays out of the way of other buttons on busy pages",
