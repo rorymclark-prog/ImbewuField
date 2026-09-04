@@ -1,5 +1,7 @@
 'use client';
 
+import workspace from '@/components/layout/Workspace.module.css';
+
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
@@ -96,7 +98,7 @@ export default function PublicCommunityProfilePage() {
         <LessonLink id="community:profile" label="Learn" />
       </header>
 
-      <main className="flex-1 overflow-y-auto" style={{ padding: '20px 16px', maxWidth: 480, width: '100%', margin: '0 auto' }}>
+      <main className={`${workspace.workspace} ${workspace.readingWidth} flex-1 overflow-y-auto px-4 py-5 sm:px-6 sm:py-6`}>
         {!profile ? (
           <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
             <p className="font-sans" style={{ fontSize: 13, color: '#5C5040' }}>This profile is no longer available.</p>
@@ -121,7 +123,7 @@ export default function PublicCommunityProfilePage() {
             </div>
 
             {profile.bio && (
-              <p className="font-sans" style={{ fontSize: 14, color: '#5C5040', lineHeight: 1.6, marginBottom: 16 }}>{profile.bio}</p>
+              <p className="font-sans max-w-prose" style={{ fontSize: 14, color: '#5C5040', lineHeight: 1.6, marginBottom: 16 }}>{profile.bio}</p>
             )}
 
             {profile.crops?.length > 0 && (

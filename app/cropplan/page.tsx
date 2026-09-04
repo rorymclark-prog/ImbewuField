@@ -1,5 +1,7 @@
 'use client';
 
+import workspace from '@/components/layout/Workspace.module.css';
+
 import { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
 import {
@@ -107,11 +109,11 @@ function TaskList({ tasks, onToggle, emptyMessage }: {
     );
   }
   return (
-    <div className="rounded-2xl overflow-hidden" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-      {tasks.map((task, i) => {
+    <div className={workspace.cards}>
+      {tasks.map((task) => {
         const m = actionMeta(task);
         return (
-          <div key={task.id} className="flex items-center gap-3 px-4 py-3.5" style={{ borderBottom: i < tasks.length - 1 ? '1px solid #E2D8C4' : 'none' }}>
+          <div key={task.id} className="flex items-center gap-3 px-4 py-3.5 rounded-2xl" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
             <button
               onClick={() => onToggle(task.id)}
               aria-label={task.completed ? 'Mark not done' : 'Mark done'}
@@ -229,7 +231,7 @@ export default function CropPlanPage() {
       )}
 
       <div className="flex-1 overflow-y-auto">
-        <div className="mx-auto w-full px-4 py-5" style={{ maxWidth: 640 }}>
+        <div className={`${workspace.workspace} px-4 py-5 sm:px-6 sm:py-6`}>
 
           {/* New: flagship bed-timeline crop planner on the design map */}
           <Link href="/facilitator/crops"
@@ -301,7 +303,7 @@ export default function CropPlanPage() {
                   real job count. Replaces the old day-grid calendar, which showed no
                   task information at all and implied a day precision the crop plan
                   does not have. */}
-              <div className="grid grid-cols-6 gap-1 mb-4">
+              <div className="grid grid-cols-6 lg:grid-cols-12 gap-1 mb-4">
                 {MONTHS_SHORT.map((label, i) => {
                   const m = i + 1;
                   const on = m === cursorMonth;
@@ -360,6 +362,7 @@ export default function CropPlanPage() {
                   <div className="font-display font-bold" style={{ fontSize: 'clamp(20px, 2.2vw, 26px)', color: '#F7F2E9', lineHeight: 1.1 }}>{season.name} in South Africa</div>
                 </div>
               </div>
+              <div className={workspace.cards}>
               {season.months.map((m) => {
                 const n = countFor(m);
                 return (
@@ -379,6 +382,7 @@ export default function CropPlanPage() {
                   </button>
                 );
               })}
+              </div>
             </div>
           )}
 

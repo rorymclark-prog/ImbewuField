@@ -1,5 +1,7 @@
 'use client';
 
+import workspace from '@/components/layout/Workspace.module.css';
+
 import { useEffect, useMemo, useState } from 'react';
 import BackButton from '@/components/BackButton';
 import BrandLogo from '@/components/BrandLogo';
@@ -49,26 +51,25 @@ export default function PricesPage() {
         <SettingsButton />
       </header>
 
-      <main className="flex-1 overflow-y-auto px-4 py-5 max-w-md mx-auto w-full">
-        {selected ? (
-          <CropPriceDetail crop={selected} onChangeCrop={() => setSelectedKey(null)} />
-        ) : (
-          <>
+      <main className={`flex-1 overflow-y-auto px-4 py-5 sm:px-6 sm:py-6 ${workspace.workspace}`}>
+        <div className={workspace.priceWorkspace}>
+          <div className={selected ? workspace.pricePickerActive : undefined}>
             <p className="font-sans" style={{ fontSize: 13, color: 'var(--color-muted-strong)', lineHeight: 1.5 }}>
               Tap a crop to see today&apos;s wholesale and retail price per kg — for when you&apos;re standing at the gate.
             </p>
-            <div className="grid grid-cols-2 gap-3" style={{ marginTop: 16 }}>
+            <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-3" style={{ marginTop: 16 }}>
               {crops.map((crop) => (
                 <button
                   key={crop.key}
                   type="button"
                   onClick={() => setSelectedKey(crop.key)}
+                  aria-pressed={selectedKey === crop.key}
                   className="flex flex-col items-center justify-center gap-2 rounded-2xl text-center"
                   style={{
                     minHeight: 92,
                     padding: '14px 8px',
                     background: 'var(--color-surface)',
-                    border: '1px solid var(--color-border)',
+                    border: selectedKey === crop.key ? '2px solid #1F4D2B' : '1px solid var(--color-border)',
                     cursor: 'pointer',
                   }}
                 >
@@ -86,8 +87,13 @@ export default function PricesPage() {
                 </button>
               ))}
             </div>
-          </>
-        )}
+          </div>
+          {selected && (
+            <div className={workspace.priceDetail}>
+              <CropPriceDetail crop={selected} onChangeCrop={() => setSelectedKey(null)} />
+            </div>
+          )}
+        </div>
       </main>
 
       <TabBar />

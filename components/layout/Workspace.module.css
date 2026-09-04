@@ -1,0 +1,84 @@
+/* Layout follows the available CSS width, including tablet rotation, split view
+   and browser zoom. No device detection or change to the saved app state. */
+.workspace {
+  width: 100%;
+  max-width: 90rem;
+  min-width: 0;
+  margin-inline: auto;
+}
+
+.formWidth { max-width: 72rem; }
+.readingWidth { max-width: 60rem; }
+
+.twoColumns {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: start;
+  gap: 20px;
+}
+
+.twoColumns > *, .cards > * { min-width: 0; }
+.fullRow { grid-column: 1 / -1; }
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  gap: 16px;
+  align-items: start;
+}
+
+.invoice {
+  max-width: 48rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+}
+.invoicePreview, .invoiceEditor { min-width: 0; }
+
+.priceWorkspace { display: grid; gap: 24px; align-items: start; }
+.pricePickerActive { display: none; }
+.priceDetail { min-width: 0; }
+
+.journal {
+  display: block;
+}
+.journalSidebar, .journalTimeline { min-width: 0; }
+.journalSidebar { display: contents; }
+.journalAction {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+}
+.journalMonth { position: sticky; top: 62px; }
+
+.contactForm { display: grid; gap: 16px; align-items: start; }
+.contactCompose { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+
+@media (min-width: 768px) {
+  .twoColumns { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+}
+
+/* Two invoice panels need more space than two short form groups. Portrait
+   tablets keep a generous single column; landscape tablets can show both. */
+@media (min-width: 1024px) {
+  .invoice {
+    max-width: 90rem;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+    gap: 32px;
+    align-items: start;
+  }
+  .invoicePreview {
+    grid-column: 2;
+    grid-row: 1;
+    position: sticky;
+    top: 24px;
+  }
+  .invoiceEditor { grid-column: 1; grid-row: 1; }
+  .priceWorkspace:has(.priceDetail) { grid-template-columns: minmax(0, 1fr) minmax(24rem, 0.85fr); }
+  .pricePickerActive { display: block; }
+  .priceDetail { position: sticky; top: 0; }
+  .journal { display: grid; grid-template-columns: minmax(18rem, 0.45fr) minmax(0, 1fr); gap: 32px; }
+  .journalSidebar { display: block; position: sticky; top: 14px; align-self: start; }
+  .journalAction, .journalMonth { position: static; }
+  .contactForm { grid-template-columns: minmax(16rem, 0.65fr) minmax(0, 1fr); gap: 32px; }
+}

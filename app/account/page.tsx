@@ -1,5 +1,7 @@
 'use client';
 
+import workspace from '@/components/layout/Workspace.module.css';
+
 import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth';
@@ -173,7 +175,8 @@ export default function AccountPage() {
       </header>
 
       <div className="flex-1 overflow-y-auto">
-        <div className="max-w-md mx-auto px-4 py-6 space-y-5">
+        <div className={`${workspace.workspace} ${workspace.formWidth} ${workspace.twoColumns} px-4 py-6 sm:px-6`}>
+          <section className="min-w-0 space-y-5" aria-label="Profile details">
 
           {/* Avatar + name */}
           <div className="rounded-2xl p-5 flex items-center gap-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
@@ -320,6 +323,8 @@ export default function AccountPage() {
             </div>
           )}
 
+          </section>
+          <section className="min-w-0 space-y-5" aria-label="Account settings">
           {/* What you share — POPIA consent. Farmers only: it is the farmer's own record, and
               staff/mentor accounts have nothing to consent to. Hidden when the farmer has no
               org, because consent is granted TO an organisation and the rules pin it to theirs. */}
@@ -400,6 +405,7 @@ export default function AccountPage() {
           <p className="text-center text-xs font-mono" style={{ color: '#8C7A62' }}>
             ImbewuField · growing with you
           </p>
+          </section>
         </div>
       </div>
 

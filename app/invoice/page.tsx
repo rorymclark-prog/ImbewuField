@@ -1,5 +1,7 @@
 'use client';
 
+import workspace from '@/components/layout/Workspace.module.css';
+
 import { useState, useEffect, useMemo } from 'react';
 import { Plus, Trash2, Printer, Share2, FilePlus2, Clock, X, ChevronDown, Building2, Landmark } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
@@ -498,12 +500,14 @@ export default function InvoicePage() {
       </header>
 
       <div className="invoice-scroll flex-1 overflow-y-auto">
-        <div className="invoice-column max-w-md mx-auto px-4 py-5 space-y-4">
+        <div className={`invoice-column ${workspace.workspace} ${workspace.invoice} px-4 py-5 sm:px-6 sm:py-6`}>
 
-          <InvoiceDocumentView doc={doc} />
+          <div className={`invoice-preview ${workspace.invoicePreview}`}>
+            <InvoiceDocumentView doc={doc} />
+          </div>
 
           {/* ── Editor (screen only) ───────────────────────────────────── */}
-          <div className="no-print space-y-4">
+          <div className={`no-print ${workspace.invoiceEditor} space-y-4`}>
 
             <div className="flex items-center gap-2 flex-wrap">
               <button onClick={newInvoice}
@@ -881,8 +885,9 @@ export default function InvoicePage() {
 
           /* Every ancestor between <body> and the document has to give up its screen layout,
              or the sheet inherits the app's background and its phone-width column. */
-          .invoice-page, .invoice-scroll, .invoice-column {
+          .invoice-page, .invoice-scroll, .invoice-column, .invoice-preview {
             display: block !important;
+            position: static !important;
             background: #fff !important;
             max-width: none !important;
             width: auto !important;

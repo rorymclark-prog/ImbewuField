@@ -5,9 +5,9 @@
  * `buildInvoiceDocument()`, which the PDF writer also consumes — see the header comment in
  * `lib/invoice-document.ts` for why the two renderers are not allowed their own arithmetic.
  *
- * Print behaviour lives in `app/invoice/print.css`, keyed off `#invoice-doc`. On screen this is
- * a card in a 28rem column; on A4 it is the whole page. Both used to be true at once, which is
- * why printing produced a narrow strip of invoice floating in a full page of beige.
+ * Print behaviour lives in `app/invoice/page.tsx`, keyed off `#invoice-doc`. The responsive
+ * screen preview sits beside the editor on wide displays; print resets every wrapper so
+ * A4 still uses the whole page, without the editor, app background or sticky positioning.
  */
 
 import type { InvoiceDocument } from '@/lib/invoice-document';
@@ -38,7 +38,7 @@ function Label({ children }: { children: React.ReactNode }) {
 
 export default function InvoiceDocumentView({ doc }: { doc: InvoiceDocument }) {
   return (
-    <div id="invoice-doc" className="rounded-2xl p-5" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
+    <div id="invoice-doc" className="rounded-2xl p-5 sm:p-8" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
 
       {/* Seller letterhead. The enterprise logo, when the farmer has set one, leads on the
           left the way a letterhead reads. With no logo there is no empty slot — the app's own
