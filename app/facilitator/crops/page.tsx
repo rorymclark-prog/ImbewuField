@@ -164,40 +164,54 @@ function TaskList({ tasks }: { tasks: CropTask[] }) {
   }
   return (
     <div className="space-y-2">
-      {groups.map((group) => (
-        <div key={group.action} className="rounded-xl" style={{ background: '#F8F4EA', border: '1px solid #EAE2D0', padding: '7px 9px' }}>
-          <div className="flex items-baseline gap-1.5 mb-1">
-            <span style={{ fontSize: 13 }}>{TASK_ACTION_ICON[group.action]}</span>
-            <span className="font-display font-semibold" style={{ fontSize: 13, color: '#20190F' }}>{group.label}</span>
-            <span className="font-mono" style={{ fontSize: 10.5, color: '#8C7A62' }}>
-              {group.jobCount} {group.jobCount === 1 ? 'job' : 'jobs'}
-            </span>
-          </div>
-          <div className="space-y-1.5">
-            {group.crops.map((row) => (
-              <div key={`${row.cropKey}-${row.bedLabels[0]}`}>
-                <div className="flex flex-wrap items-center gap-x-1.5 gap-y-1">
-                  <span className="font-sans font-semibold" style={{ fontSize: 12.5, color: '#20190F' }}>
-                    <CropIcon cropKey={row.cropKey} icon={row.icon} size={16} /> {row.cropName}
-                  </span>
-                  {row.bedLabels.map((bed) => (
-                    <span
-                      key={bed}
-                      className="font-sans"
-                      style={{ fontSize: 10.5, color: '#1F4D2B', background: '#E4EEDF', border: '1px solid #CBDDC2', borderRadius: 999, padding: '1px 7px', whiteSpace: 'nowrap' }}
-                    >
-                      {bed}
+      {groups.map((group) => {
+        // Ground prep says the same sentence for every crop in the month — it is
+        // about the ground, not the crop — so four crops meant four identical
+        // lines. When the whole group shares one how-to, it is said once under
+        // the heading and the crop rows carry only their beds. Sowing, where
+        // each crop's spacing genuinely differs, keeps its per-crop line.
+        const shared = group.crops.length > 1 && group.crops[0].detail
+          && group.crops.every((c) => c.detail === group.crops[0].detail)
+          ? group.crops[0].detail
+          : null;
+        return (
+          <div key={group.action} className="rounded-xl" style={{ background: '#F8F4EA', border: '1px solid #EAE2D0', padding: '7px 9px' }}>
+            <div className="flex items-baseline gap-1.5">
+              <span style={{ fontSize: 13 }}>{TASK_ACTION_ICON[group.action]}</span>
+              <span className="font-display font-semibold" style={{ fontSize: 13, color: '#20190F' }}>{group.label}</span>
+              <span className="font-mono" style={{ fontSize: 10.5, color: '#8C7A62' }}>
+                {group.jobCount} {group.jobCount === 1 ? 'job' : 'jobs'}
+              </span>
+            </div>
+            {shared && (
+              <div className="font-sans mb-1.5" style={{ fontSize: 11.5, color: '#5C5040', lineHeight: 1.4 }}>{shared}</div>
+            )}
+            <div className={shared ? 'space-y-1' : 'space-y-1.5 mt-1'}>
+              {group.crops.map((row) => (
+                <div key={`${row.cropKey}-${row.bedLabels[0]}`}>
+                  <div className="flex flex-wrap items-center gap-x-1.5 gap-y-1">
+                    <span className="font-sans font-semibold" style={{ fontSize: 12.5, color: '#20190F' }}>
+                      <CropIcon cropKey={row.cropKey} icon={row.icon} size={16} /> {row.cropName}
                     </span>
-                  ))}
+                    {row.bedLabels.map((bed) => (
+                      <span
+                        key={bed}
+                        className="font-sans"
+                        style={{ fontSize: 10.5, color: '#1F4D2B', background: '#E4EEDF', border: '1px solid #CBDDC2', borderRadius: 999, padding: '1px 7px', whiteSpace: 'nowrap' }}
+                      >
+                        {bed}
+                      </span>
+                    ))}
+                  </div>
+                  {!shared && row.detail && (
+                    <div className="font-sans" style={{ fontSize: 11.5, color: '#5C5040', lineHeight: 1.4, marginTop: 1 }}>{row.detail}</div>
+                  )}
                 </div>
-                {row.detail && (
-                  <div className="font-sans" style={{ fontSize: 11.5, color: '#5C5040', lineHeight: 1.4, marginTop: 1 }}>{row.detail}</div>
-                )}
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
-      ))}
+        );
+      })}
     </div>
   );
 }
