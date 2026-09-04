@@ -55,7 +55,7 @@ const SAMPLE_TOP_CROPS = listingCropOptions(OPEN_SAMPLE_LISTINGS).slice(0, 6);
 
 export default function ExchangePage() {
   return (
-    <div className="min-h-[100dvh] font-sans" style={{ background: '#E4DCC6', color: '#20190F' }}>
+    <div className="h-[100dvh] overflow-y-auto font-sans" style={{ background: '#E4DCC6', color: '#20190F' }}>
       <header
         className="flex items-center gap-3 px-4"
         style={{ height: 56, borderBottom: '1px solid #E2D8C4', background: '#FFFEFA' }}

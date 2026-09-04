@@ -35,10 +35,11 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '4 September',
-    sha: 'a8370ed',
+    sha: 'e058d1f',
     changes: [
       'Invoices show the editor beside a larger preview on a laptop or landscape tablet',
       'Prices, tasks and community cards spread across the space on larger screens',
+      'The farmer exchange scrolls through every listing',
       'Account, contact, survey and journal pages now adjust to phone, tablet and desktop widths',
       'Printed invoices still fill an A4 page',
     ],
