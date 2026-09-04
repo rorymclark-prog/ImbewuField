@@ -83,6 +83,13 @@ const DISPLAY_MONTHS = 24;
 // legible). Deliberately not DISPLAY_MONTHS.
 const CHART_MONTHS = 15;
 const GRID_MIN_WIDTH = Math.round((760 * DISPLAY_MONTHS) / 12);
+// Widest the planning page is allowed to get on a desktop or landscape tablet.
+// Not an arbitrary round number: the wrapper carries 20px of padding a side at
+// md and up, so GRID_MIN_WIDTH + 40 leaves exactly GRID_MIN_WIDTH of content —
+// the width at which every one of the DISPLAY_MONTHS columns is on screen and
+// the timeline's own horizontal scrollbar disappears. Below this the page is
+// fluid and fills whatever it is given; the timeline keeps scrolling.
+const PAGE_MAX_WIDTH = GRID_MIN_WIDTH + 40;
 
 // Bed-sharing presets — "half a bed" or a 3-way intercrop split. A custom
 // fraction can still be reached by adding more crops of the same preset.
@@ -1451,7 +1458,7 @@ function FacilitatorCropsPageInner() {
         <EmptyState onVirtual={() => setUseVirtual(true)} designHref={designHref} />
       ) : (
         <div className="flex-1 overflow-y-auto">
-          <div className="mx-auto w-full px-3 md:px-5 py-4" style={{ maxWidth: 1100 }}>
+          <div className="mx-auto w-full px-3 md:px-5 py-4" style={{ maxWidth: PAGE_MAX_WIDTH }}>
             {useVirtual && designBeds.length === 0 && (
               <div className="mb-3 px-3 py-2 rounded-xl font-sans" style={{ fontSize: 12, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: '#9A6018' }}>
                 Planning without a map — one virtual 10 m² bed.{' '}
@@ -1616,7 +1623,7 @@ function FacilitatorCropsPageInner() {
                 </div>
               </div>
             </div>
-            <div className="font-sans mb-5" style={{ fontSize: 11.5, color: '#8C7A62', lineHeight: 1.5, marginTop: -12 }}>
+            <div className="font-sans mb-5" style={{ fontSize: 11.5, color: '#8C7A62', lineHeight: 1.5, marginTop: -12, maxWidth: 820 }}>
               <span
                 className="font-sans"
                 style={{ fontWeight: 600, color: '#9A6018', border: '1px solid rgba(154,96,24,0.35)', borderRadius: 4, padding: '0 3px', fontSize: 10 }}
@@ -1988,10 +1995,15 @@ function FacilitatorCropsPageInner() {
               </p>
             </DisclosureCard>
 
-            <RotationExplanationCard />
-            <OrganicGuideCard />
+            {/* Two standing explainers. Side by side once there is room for
+                two readable columns, stacked below that — left full-width they
+                would run to a 200-character measure on a desktop. */}
+            <div className="grid gap-4" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))' }}>
+              <RotationExplanationCard />
+              <OrganicGuideCard />
+            </div>
 
-            <div className="font-sans mt-4 text-center" style={{ fontSize: 11, color: '#9A8268', lineHeight: 1.5 }}>
+            <div className="font-sans mt-4 text-center mx-auto" style={{ fontSize: 11, color: '#9A8268', lineHeight: 1.5, maxWidth: 820 }}>
               Planning guide only — sow windows are general. Adjust to your local rainfall, frost dates and microclimate.
             </div>
           </div>
