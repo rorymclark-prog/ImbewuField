@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
-import { BarChart3, Sprout, Inbox } from 'lucide-react';
+import { BarChart3, Sprout, Inbox, Loader2 } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import { isSampleMode } from '@/lib/sample-mode';
@@ -21,8 +21,9 @@ import type { UserRole } from '@/lib/db/types';
 const NgoDashboard = dynamic(() => import('@/components/NgoDashboard'), {
   ssr: false,
   loading: () => (
-    <div className="flex-1 flex items-center justify-center" style={{ color: 'var(--text-muted)' }}>
-      <span className="text-sm font-display">Loading dashboard...</span>
+    <div className="flex-1 flex items-center justify-center gap-2" style={{ color: 'var(--text-muted)' }}>
+      <Loader2 className="animate-spin" size={16} aria-hidden="true" />
+      <span className="text-sm font-display">Loading dashboard…</span>
     </div>
   ),
 });
@@ -36,8 +37,9 @@ const NgoDashboard = dynamic(() => import('@/components/NgoDashboard'), {
 const CohortDashboard = dynamic(() => import('@/components/funder/CohortDashboard'), {
   ssr: false,
   loading: () => (
-    <div className="flex-1 flex items-center justify-center" style={{ color: 'var(--text-muted)' }}>
-      <span className="text-sm font-display">Loading the cohort...</span>
+    <div className="flex-1 flex items-center justify-center gap-2" style={{ color: 'var(--text-muted)' }}>
+      <Loader2 className="animate-spin" size={16} aria-hidden="true" />
+      <span className="text-sm font-display">Loading the cohort…</span>
     </div>
   ),
 });
@@ -111,7 +113,8 @@ export default function NgoPage() {
           <button
             key={key}
             onClick={() => setView(key)}
-            className="flex items-center gap-1.5 py-2.5 px-3 font-display text-xs font-semibold"
+            aria-pressed={view === key}
+            className="flex items-center gap-1.5 py-2.5 px-3 font-display text-xs font-semibold transition-colors duration-150"
             style={{
               background: 'transparent',
               border: 'none',
