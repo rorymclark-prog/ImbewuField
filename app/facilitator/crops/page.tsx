@@ -85,11 +85,14 @@ const CHART_MONTHS = 15;
 const GRID_MIN_WIDTH = Math.round((760 * DISPLAY_MONTHS) / 12);
 // Widest the planning page is allowed to get on a desktop or landscape tablet.
 // Not an arbitrary round number: the wrapper carries 20px of padding a side at
-// md and up, so GRID_MIN_WIDTH + 40 leaves exactly GRID_MIN_WIDTH of content —
-// the width at which every one of the DISPLAY_MONTHS columns is on screen and
-// the timeline's own horizontal scrollbar disappears. Below this the page is
-// fluid and fills whatever it is given; the timeline keeps scrolling.
-const PAGE_MAX_WIDTH = GRID_MIN_WIDTH + 40;
+// md and up (40px) and the timeline card draws a 1px border on each side (2px),
+// so GRID_MIN_WIDTH + 42 leaves exactly GRID_MIN_WIDTH of content — the width at
+// which every one of the DISPLAY_MONTHS columns is on screen and the timeline's
+// own horizontal scrollbar disappears. Measured, not assumed: at +40 the grid
+// still had 2px of scroll left, which is enough to summon a classic scrollbar on
+// a platform that draws one. Below this the page is fluid and fills whatever it
+// is given; the timeline keeps scrolling.
+const PAGE_MAX_WIDTH = GRID_MIN_WIDTH + 42;
 
 // Bed-sharing presets — "half a bed" or a 3-way intercrop split. A custom
 // fraction can still be reached by adding more crops of the same preset.
