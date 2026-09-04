@@ -37,8 +37,8 @@ export const RELEASE_NOTES: ReleaseNote[] = [
     when: '4 September',
     sha: 'f412562',
     changes: [
-      'Your crop plan now fills the whole screen on a laptop or tablet — year two is no longer hidden off the side',
-      'The month row across the top of the crop plan now stays put while you scroll down your beds',
+      'Your crop plan now fills a laptop or tablet screen — year two is no longer off the side',
+      'The month row stays put at the top while you scroll down your beds',
       'Crop names in the suggested plan are readable again on the dark theme',
       'Your money sheet now uses the full width of a laptop screen',
       'The design map now always opens as the exact map you drew',
