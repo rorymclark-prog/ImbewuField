@@ -35,7 +35,7 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '4 September',
-    sha: '01d274b',
+    sha: '0631f44',
     changes: [
       'Month tasks are grouped by job and crop — spacing is said once, not once per bed',
       'The harvest list shows each crop as a share of your total, with a bar to compare',
