@@ -1,5 +1,7 @@
 'use client';
 
+import workspace from '@/components/layout/Workspace.module.css';
+
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { Plus, Pencil, NotebookPen, Sparkles } from 'lucide-react';
@@ -167,7 +169,8 @@ export default function FieldJournal() {
   return (
     // Bottom padding clears the tab bar AND the sample-mode banner stacked above it,
     // so the oldest entry is never trapped behind them.
-    <div style={{ padding: '14px 14px 176px', maxWidth: 720, margin: '0 auto' }}>
+    <div className={`${workspace.workspace} ${workspace.journal}`} style={{ padding: '14px 14px 176px' }}>
+      <aside className={workspace.journalSidebar} aria-label="Journal overview">
       {/* Stat row */}
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8, marginBottom: 14 }}>
         <Stat value={String(summary.total)} label="entries" />
@@ -183,8 +186,7 @@ export default function FieldJournal() {
           z-index 9999 and wraps to two lines on a phone, so anything floating
           above the tab bar is invisible for the whole of a sample-mode demo —
           exactly when this button matters most. */}
-      <div style={{
-        position: 'sticky', top: 0, zIndex: 3,
+      <div className={workspace.journalAction} style={{
         padding: '2px 0 10px',
         background: 'linear-gradient(#E4DCC6 78%, rgba(228,220,198,0))',
       }}>
@@ -258,6 +260,8 @@ export default function FieldJournal() {
         </div>
       )}
 
+      </aside>
+      <div className={workspace.journalTimeline}>
       {/* Category filter */}
       {usedCategories.length > 1 && (
         <div style={{ display: 'flex', gap: 7, overflowX: 'auto', paddingBottom: 10, marginBottom: 4 }}>
@@ -378,9 +382,9 @@ export default function FieldJournal() {
 
       {months.map((group) => (
         <section key={group.key} style={{ marginBottom: 18 }}>
-          <div style={{
+          <div className={workspace.journalMonth} style={{
             // Tucks under the sticky New-entry bar above (50px button + its padding).
-            position: 'sticky', top: 62, zIndex: 1,
+            zIndex: 1,
             padding: '6px 2px 8px', margin: '0 0 6px',
             background: 'linear-gradient(#E4DCC6 72%, rgba(228,220,198,0))',
             font: '700 11px/1 system-ui, sans-serif', letterSpacing: '0.1em',
@@ -478,6 +482,7 @@ export default function FieldJournal() {
         </section>
       ))}
 
+      </div>
       {sheet.open && (
         <JournalEntrySheet
           entry={sheet.entry}

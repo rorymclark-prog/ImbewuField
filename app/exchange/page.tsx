@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import workspace from '@/components/layout/Workspace.module.css';
 import Link from 'next/link';
 import {
   DEMO_EXCHANGE,
@@ -95,7 +96,7 @@ export default function ExchangePage() {
         </span>
       </header>
 
-      <main className="mx-auto px-4 py-4" style={{ maxWidth: 780 }}>
+      <main className={`${workspace.workspace} px-4 py-4 sm:px-6 sm:py-6`}>
         {/* Server-rendered lede — the page says what is on the board before any
             JavaScript runs, and keeps saying it if JavaScript never arrives. */}
         <section

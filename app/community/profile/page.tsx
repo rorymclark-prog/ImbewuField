@@ -1,5 +1,7 @@
 'use client';
 
+import workspace from '@/components/layout/Workspace.module.css';
+
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -191,12 +193,12 @@ export default function CommunityProfilePage() {
         <span className="font-display font-semibold" style={{ fontSize: 15, color: '#20190F' }}>{t('communityEditProfileTitle')}</span>
       </header>
 
-      <main className="flex-1 overflow-y-auto" style={{ padding: '20px 16px', maxWidth: 480, width: '100%', margin: '0 auto' }}>
+      <main className={`${workspace.workspace} ${workspace.formWidth} flex-1 overflow-y-auto px-4 py-5 sm:px-6 sm:py-6`}>
         <p className="font-sans" style={{ fontSize: 13, color: '#5C5040', lineHeight: 1.5, marginBottom: 20 }}>
           {t('communityEditProfileIntro')}
         </p>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
+        <div className={workspace.twoColumns}>
           <div>
             <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.12em', marginBottom: 6 }}>
               {t('communityDisplayNameLabel')}
@@ -292,7 +294,7 @@ export default function CommunityProfilePage() {
             />
           </div>
 
-          {error && <p className="font-sans" style={{ fontSize: 13, color: '#8B2020' }}>{error}</p>}
+          {error && <p className={`${workspace.fullRow} font-sans`} style={{ fontSize: 13, color: '#8B2020' }}>{error}</p>}
 
           <button
             onClick={handleSave}

@@ -1,5 +1,7 @@
 'use client';
 
+import workspace from '@/components/layout/Workspace.module.css';
+
 import { useState, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { MessageCircle, Phone, Mail, Users, Building2, Send, CheckCircle, ChevronLeft, MailOpen, ChevronDown, ChevronUp } from 'lucide-react';
@@ -167,8 +169,7 @@ export default function ContactPage() {
 
       {/* Content */}
       <main
-        className="flex-1 overflow-y-auto"
-        style={{ padding: '20px 16px', maxWidth: 480, width: '100%', margin: '0 auto' }}
+        className={`${workspace.workspace} ${workspace.formWidth} flex-1 overflow-y-auto px-4 py-5 sm:px-6 sm:py-6`}
       >
         {sent ? (
           /* Success state */
@@ -340,7 +341,7 @@ export default function ContactPage() {
             )}
 
             {/* Message form */}
-            <form onSubmit={handleSend} style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
+            <form onSubmit={handleSend} className={workspace.contactForm}>
 
               {/* Recipient selector */}
               <div>
@@ -387,6 +388,7 @@ export default function ContactPage() {
                 </div>
               </div>
 
+              <div className={workspace.contactCompose}>
               {/* Subject */}
               <div>
                 <div className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.12em', marginBottom: 6 }}>
@@ -452,6 +454,7 @@ export default function ContactPage() {
                   <><Send size={16} strokeWidth={1.8} /> Send message</>
                 )}
               </button>
+              </div>
             </form>
           </>
         )}

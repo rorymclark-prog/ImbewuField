@@ -1,5 +1,7 @@
 'use client';
 
+import workspace from '@/components/layout/Workspace.module.css';
+
 /*
  * ═══ FARMER EXCHANGE — the board ═════════════════════════════════════════════
  *
@@ -445,7 +447,7 @@ export default function ExchangeBoard() {
               </button>
             )}
           </div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+          <div className={workspace.cards}>
             {rows.map((row) => (
               <ListingCard
                 key={row.listing.id}

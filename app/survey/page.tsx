@@ -1,5 +1,7 @@
 'use client';
 
+import workspace from '@/components/layout/Workspace.module.css';
+
 import { useState, useEffect, useMemo, Suspense } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -224,7 +226,7 @@ function SurveyInner() {
       </header>
 
       <div className="flex-1 overflow-y-auto">
-        <div className="max-w-md mx-auto px-4 py-5">
+        <div className={`${workspace.workspace} ${workspace.readingWidth} px-4 py-5 sm:px-6 sm:py-6`}>
 
           {/* Progress (wizard steps only) */}
           {step < TOTAL && (
@@ -309,8 +311,8 @@ function SurveyInner() {
 
           {/* ── Step 1 · Sun & slope ── */}
           {step === 1 && (
-            <div className="space-y-5">
-              <h1 className="font-display font-bold text-2xl" style={{ color: '#20190F', letterSpacing: '-0.02em' }}>Sun &amp; slope</h1>
+            <div className={workspace.twoColumns}>
+              <h1 className={`${workspace.fullRow} font-display font-bold text-2xl`} style={{ color: '#20190F', letterSpacing: '-0.02em' }}>Sun &amp; slope</h1>
               <div>
                 <div className="text-xs font-sans uppercase tracking-widest mb-2" style={{ color: '#8C7A62', letterSpacing: '0.1em' }}>How much sun does it get?</div>
                 <div className="grid grid-cols-3 gap-2">
@@ -382,7 +384,7 @@ function SurveyInner() {
           {step === 3 && (
             <div className="space-y-4">
               <h1 className="font-display font-bold text-2xl" style={{ color: '#20190F', letterSpacing: '-0.02em' }}>What do you most want from your land?</h1>
-              <div className="space-y-2.5">
+              <div className={workspace.twoColumns}>
                 {GOALS.map(({ v, label, desc }) => {
                   const on = goal === v;
                   return (
@@ -428,7 +430,7 @@ function SurveyInner() {
               </div>
 
               {/* Bed grid */}
-              <div className="grid grid-cols-2 gap-2.5">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5">
                 {bedCrops.map((crop, i) => (
                   <div key={i} className="rounded-2xl px-3.5 py-3" style={{ background: '#1F4D2B' }}>
                     <div className="text-xs font-sans uppercase tracking-wider" style={{ color: 'rgba(234,243,226,0.6)', letterSpacing: '0.06em' }}>Bed {bedLetter(i)} · {BED_M2} m²</div>
@@ -451,7 +453,7 @@ function SurveyInner() {
               </div>
 
               {/* Beds */}
-              <div className="grid grid-cols-2 gap-2.5">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5">
                 {bedCrops.map((crop, i) => (
                   <div key={i} className="rounded-2xl px-3.5 py-3" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
                     <div className="text-xs font-sans uppercase tracking-wider" style={{ color: '#8C7A62', letterSpacing: '0.06em' }}>Bed {bedLetter(i)} · {BED_M2} m²</div>

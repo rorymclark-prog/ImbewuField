@@ -1,5 +1,7 @@
 'use client';
 
+import workspace from '@/components/layout/Workspace.module.css';
+
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -147,7 +149,7 @@ export default function CommunityHubPage() {
         ))}
       </div>
 
-      <main className="flex-1 overflow-y-auto" style={{ padding: '16px', maxWidth: 560, width: '100%', margin: '0 auto' }}>
+      <main className={`${workspace.workspace} flex-1 overflow-y-auto px-4 py-4 sm:px-6 sm:py-6`}>
         {loadError && !busy && (
           <div className="flex items-center justify-between gap-3 rounded-xl" style={{ padding: '10px 14px', marginBottom: 14, background: 'rgba(139,32,32,0.08)', border: '1px solid rgba(139,32,32,0.25)' }}>
             <span className="font-sans" style={{ fontSize: 12.5, color: '#8B2020' }}>{t('communityLoadError')}</span>
@@ -201,7 +203,7 @@ function NearbyTab({ nearby, onOpenProfile }: { nearby: CommunityProfile[]; onOp
         {t('communityNearbyIntro')}
       </p>
       {pinned.length > 0 && (
-        <div style={{ height: 260, marginBottom: 16 }}>
+        <div style={{ height: 'clamp(260px, 35vw, 440px)', marginBottom: 16 }}>
           <NearbyMap people={pinned} onOpenProfile={onOpenProfile} />
         </div>
       )}
@@ -211,7 +213,7 @@ function NearbyTab({ nearby, onOpenProfile }: { nearby: CommunityProfile[]; onOp
           <p className="font-sans" style={{ fontSize: 13, color: '#5C5040' }}>{t('communityNearbyEmpty')}</p>
         </div>
       ) : (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+        <div className={workspace.cards}>
           {nearby.map((p) => (
             <button
               key={p.uid}
@@ -264,7 +266,7 @@ function BoardTab({
           <p className="font-sans" style={{ fontSize: 13, color: '#5C5040' }}>{t('communityBoardEmpty')}</p>
         </div>
       ) : (
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+        <div className={workspace.cards}>
           {posts.map((p) => (
             <div key={p.id} className="rounded-2xl p-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
               <div className="flex items-center gap-2" style={{ marginBottom: 6 }}>
@@ -442,7 +444,7 @@ function MessagesTab({ threads, myUid, onOpen }: { threads: MessageThread[]; myU
     );
   }
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+    <div className={workspace.cards}>
       {threads.map((th) => {
         const otherUid = th.participants.find((p) => p !== myUid) ?? '';
         const otherName = th.participant_names?.[otherUid] ?? 'Farmer';

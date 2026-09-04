@@ -1,5 +1,7 @@
 'use client';
 
+import workspace from '@/components/layout/Workspace.module.css';
+
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { useRouter, useParams } from 'next/navigation';
 import Link from 'next/link';
@@ -162,12 +164,12 @@ export default function MessageThreadPage() {
         </div>
       )}
 
-      <main className="flex-1 overflow-y-auto" style={{ padding: '16px', maxWidth: 560, width: '100%', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: 8 }}>
+      <main className={`${workspace.workspace} ${workspace.readingWidth} flex-1 overflow-y-auto flex flex-col gap-2 px-4 py-4 sm:px-6`}>
         {messages.map((m) => {
           const mine = m.sender_id === user.uid;
           return (
             <div key={m.id} style={{ display: 'flex', justifyContent: mine ? 'flex-end' : 'flex-start' }}>
-              <div style={{ maxWidth: '75%' }}>
+              <div style={{ maxWidth: 'min(75%, 40rem)', overflowWrap: 'anywhere' }}>
                 <div
                   className="font-sans"
                   style={{
@@ -197,14 +199,14 @@ export default function MessageThreadPage() {
           {t('communitySendError')}
         </p>
       )}
-      <div className="flex-shrink-0 flex items-center gap-2 px-3 py-3" style={{ borderTop: '1px solid #E2D8C4', background: '#FFFEFA', paddingBottom: 'calc(12px + env(safe-area-inset-bottom, 0px))' }}>
+      <div className={`${workspace.workspace} ${workspace.readingWidth} flex-shrink-0 flex items-center gap-2 px-3 py-3 sm:px-6`} style={{ borderTop: '1px solid #E2D8C4', background: '#FFFEFA', paddingBottom: 'calc(12px + env(safe-area-inset-bottom, 0px))' }}>
         <input
           type="text"
           value={body}
           onChange={(e) => { setBody(e.target.value); if (sendError) setSendError(false); }}
           onKeyDown={(e) => { if (e.key === 'Enter') handleSend(); }}
           placeholder={t('communityMessageInputPlaceholder')}
-          className="flex-1 rounded-full px-4 py-2.5 font-sans"
+          className="flex-1 min-w-0 rounded-full px-4 py-2.5 font-sans"
           style={{ fontSize: 14, background: '#fff', border: '1px solid #D8CBB2', color: '#20190F', outline: 'none' }}
         />
         <button
