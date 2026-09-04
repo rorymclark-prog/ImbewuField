@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { middayFromLat } from '@/lib/sector';
 import { isValidEarthLatitude } from '@/lib/solar';
 import { guardPaidApiRequest } from '@/lib/api-auth';
+import { aiRenderEnabled, AI_RENDER_DISABLED_MESSAGE, AI_RENDER_DISABLED_STATUS } from '@/lib/ai-render/flag';
 
 // Gemini image generation can take 10-60s — Vercel max.
 export const maxDuration = 60;
@@ -798,6 +799,11 @@ async function submitFalGptQueue(
 }
 
 export async function POST(req: NextRequest) {
+  // Kill switch first — before auth, before parsing a body, before any vendor
+  // credential is read. A refusal here costs nothing and cannot spend anything.
+  if (!aiRenderEnabled()) {
+    return NextResponse.json({ error: AI_RENDER_DISABLED_MESSAGE }, { status: AI_RENDER_DISABLED_STATUS });
+  }
   const auth = await guardPaidApiRequest(req, '/api/ai-render');
   if (auth.response) return auth.response;
   let body: { imageBase64?: string; satBase64?: string; maskBase64?: string; photos?: string[]; context?: RenderContext; provider?: 'gemini' | 'openai' | 'fal' | 'falgpt'; geminiModel?: GeminiModel; touchupPrompt?: string };
