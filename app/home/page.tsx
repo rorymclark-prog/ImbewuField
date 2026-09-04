@@ -38,7 +38,7 @@ import { getLastSite, type LastSite } from '@/lib/last-site';
 import LessonLink from '@/components/design/LessonLink';
 import { loadPlaces, resolveMainSite, setMainSiteId, type SavedPlace } from '@/lib/saved-places';
 import { TASK_BOARD_CHANGED_EVENTS, loadCropBoardTasks, loadCompletedTaskIds, setCompletedTaskState, downloadTaskIcs, type BoardTask } from '@/lib/task-board';
-import { useSiteProgress, type Coords } from '@/lib/site-progress';
+import { STEP_COPY, useSiteProgress, type Coords } from '@/lib/site-progress';
 import type { CompletionStepKey } from '@/lib/completion-score';
 import WeatherWidget from '@/components/WeatherWidget';
 
@@ -225,6 +225,7 @@ const STEP_ACTIONS: Record<CompletionStepKey, StepAction> = {
 };
 
 function FarmPlanCard({ places, mainSite }: { places: SavedPlace[] | null; mainSite: SavedPlace | null }) {
+  const { t } = useLanguage();
   const coords: Coords | null = mainSite ? { lat: mainSite.lat, lon: mainSite.lon } : null;
   const progress = useSiteProgress(coords);
 
@@ -238,40 +239,46 @@ function FarmPlanCard({ places, mainSite }: { places: SavedPlace[] | null; mainS
   const { pct, nextStep } = progress;
   const designHref = coords ? `/design?lat=${coords.lat.toFixed(5)}&lon=${coords.lon.toFixed(5)}` : '/design';
 
+  const href = nextStep ? STEP_ACTIONS[nextStep].href(coords, mainSite?.id) : designHref;
+  const nextStepCopy = nextStep && nextStep !== 'located' ? STEP_COPY[nextStep] : null;
+  const label = nextStepCopy
+    ? t(nextStepCopy.titleKey)
+    : nextStep
+      ? STEP_ACTIONS[nextStep].label
+      : 'Plan complete — print your plan set';
+
   return (
-    <div style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', borderRadius: 20, padding: '16px 18px' }}>
-      <div className="font-display font-semibold" style={{ fontSize: 15, color: 'var(--color-ink)', marginBottom: 10 }}>
-        Your farm plan
+    <Link
+      href={href}
+      className="flex items-center gap-4"
+      style={{
+        minHeight: 92,
+        padding: '16px 18px',
+        textDecoration: 'none',
+        background: 'linear-gradient(135deg, rgba(192,122,30,0.14), rgba(255,254,250,0.96) 62%)',
+        border: '1px solid rgba(192,122,30,0.3)',
+        borderRadius: 20,
+        boxShadow: '0 8px 22px -20px rgba(83,52,18,0.7)',
+      }}
+    >
+      <div className="flex-1 min-w-0">
+        <div className="uppercase tracking-widest font-sans" style={{ fontSize: 12, color: 'var(--color-harvest)', letterSpacing: '0.12em', marginBottom: 4 }}>
+          {nextStep ? t('coachOverline') : 'Your farm plan'}
+        </div>
+        <div className="font-display font-semibold" style={{ fontSize: 19, lineHeight: 1.2, color: 'var(--color-ink)' }}>
+          {label}
+        </div>
+        <div className="font-sans" style={{ fontSize: 12.5, color: 'var(--color-muted-strong)', marginTop: 4 }}>
+          {pct}% complete
+        </div>
       </div>
-
-      <div style={{ height: 8, borderRadius: 4, background: '#EDE7DB', overflow: 'hidden' }}>
-        <div
-          style={{ height: '100%', width: `${pct}%`, background: 'var(--color-forest-800)', borderRadius: 4, transition: 'width 0.4s ease' }}
-        />
-      </div>
-      <div className="font-sans" style={{ fontSize: 12, color: 'var(--color-muted)', marginTop: 6 }}>
-        {pct}% complete
-      </div>
-
-      {nextStep ? (
-        <Link
-          href={STEP_ACTIONS[nextStep].href(coords, mainSite?.id)}
-          className="flex items-center justify-between font-sans font-semibold"
-          style={{ marginTop: 12, fontSize: 14, color: 'var(--color-forest-800)', textDecoration: 'none' }}
-        >
-          {STEP_ACTIONS[nextStep].label}
-          <ChevronRight size={16} strokeWidth={1.8} />
-        </Link>
-      ) : (
-        <Link
-          href={designHref}
-          className="flex items-center font-sans font-semibold"
-          style={{ marginTop: 12, fontSize: 14, color: 'var(--color-forest-800)', textDecoration: 'none' }}
-        >
-          Plan complete — print your plan set →
-        </Link>
-      )}
-    </div>
+      <span
+        className="flex items-center justify-center flex-shrink-0"
+        style={{ width: 42, height: 42, borderRadius: 999, background: 'var(--color-forest-800)', color: '#F7F2E9', boxShadow: '0 3px 10px rgba(31,77,43,0.22)' }}
+      >
+        <ChevronRight size={20} strokeWidth={2} />
+      </span>
+    </Link>
   );
 }
 
@@ -306,6 +313,12 @@ function HomeLandingInner() {
   }, []);
 
   const mainSite = resolveMainSite(places ?? []);
+  // The analysed point and the designated site answer different questions, but when they are
+  // the same coordinates two full cards merely repeat the same farm. Keep the recent-point card
+  // only when it would genuinely take the farmer somewhere else.
+  const lastSiteMatchesMain = !!lastSite && !!mainSite
+    && Math.abs(lastSite.locationData.lat - mainSite.lat) < 0.00001
+    && Math.abs(lastSite.locationData.lon - mainSite.lon) < 0.00001;
 
   function toggleTaskComplete(id: string) {
     if (!boardTasks.some((task) => task.id === id)) return;
@@ -388,17 +401,73 @@ function HomeLandingInner() {
         </button>
       </header>
 
+      <style jsx global>{`
+        .home-priority-grid,
+        .home-priority-primary,
+        .home-priority-secondary {
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+          min-width: 0;
+        }
+        @media (min-width: 900px) {
+          .home-priority-grid.has-main-site {
+            display: grid;
+            grid-template-columns: minmax(0, 1.08fr) minmax(340px, 0.92fr);
+            gap: 24px;
+            align-items: start;
+          }
+          .home-quick-grid {
+            grid-template-columns: repeat(6, minmax(0, 1fr));
+          }
+        }
+      `}</style>
+
       {/* ── Main content ── */}
-      <main className="flex-1 overflow-y-auto flex flex-col px-4 py-6 max-w-xl mx-auto w-full gap-6">
+      <main className="flex-1 overflow-y-auto flex flex-col px-4 py-6 max-w-5xl mx-auto w-full gap-6">
 
-        {lastSite && <LastSiteCard site={lastSite} />}
+        {/* The home screen answers the farmer's questions in order: what should I do, what is
+            happening at my farm, then everything else. On desktop these become two balanced
+            columns; on a phone they keep this exact reading order. */}
+        <section className={`home-priority-grid${mainSite ? ' has-main-site' : ''}`}>
+          <div className="home-priority-primary">
+            <HomeHeroCard places={places} mainSite={mainSite} firstName={firstName} />
+            <FarmPlanCard places={places} mainSite={mainSite} />
+          </div>
 
-        {places && mainSite && (
-          <MainSiteWeatherCard site={mainSite} places={places} onSetMain={setMainSiteId} />
-        )}
+          {(mainSite || (lastSite && !lastSiteMatchesMain)) && (
+            <div className="home-priority-secondary">
+              {places && mainSite && (
+                <MainSiteWeatherCard site={mainSite} places={places} onSetMain={setMainSiteId} />
+              )}
+              {lastSite && !lastSiteMatchesMain && <LastSiteCard site={lastSite} />}
+            </div>
+          )}
+        </section>
 
-        {/* ── Hero: new-user welcome / returner Continue / default analyse-CTA ── */}
-        <HomeHeroCard places={places} mainSite={mainSite} firstName={firstName} />
+        {/* ── Quick actions ── */}
+        <div className="home-quick-grid grid grid-cols-3 gap-3">
+          {QUICK_ACTIONS.map((q) => (
+            <Link
+              key={q.href}
+              href={q.href}
+              className="flex flex-col items-center gap-2 p-3 rounded-2xl text-center transition-all hover:opacity-90"
+              style={{ textDecoration: 'none', background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}
+            >
+              <div className="flex items-center justify-center rounded-xl" style={{ width: 44, height: 44, background: q.bg, color: q.color }}>
+                {q.art ? (
+                  <img src={q.art} alt="" aria-hidden style={{ width: 38, height: 38, objectFit: 'contain' }} />
+                ) : (
+                  <q.Icon size={20} strokeWidth={1.6} />
+                )}
+              </div>
+              <div>
+                <div className="font-display font-semibold" style={{ fontSize: 12.5, color: 'var(--color-ink)', lineHeight: 1.2 }}>{q.label}</div>
+                <div className="font-sans" style={{ fontSize: 12, color: 'var(--color-muted)', marginTop: 1 }}>{q.desc}</div>
+              </div>
+            </Link>
+          ))}
+        </div>
 
         {/* ── See a sample farm — NGO/onboarding "show me how it works" entry point.
             Sample mode is a session-only, in-memory overlay (lib/sample-mode.ts) —
@@ -407,7 +476,8 @@ function HomeLandingInner() {
           type="button"
           onClick={() => { if (enterSampleMode()) router.push('/farmer?panel=Overview'); }}
           style={{
-            display: 'block',
+            display: 'grid',
+            gridTemplateColumns: 'minmax(0, 1fr)',
             width: '100%',
             textAlign: 'left',
             background: 'transparent',
@@ -445,34 +515,6 @@ function HomeLandingInner() {
             expenses, invoices. Look around, change anything — it never touches your own farm.
           </p>
         </button>
-
-        {/* ── Your farm plan — gamified pull-through: overall % + the single next
-            action, deep-linked. Hidden for brand-new users (no saved places). ── */}
-        <FarmPlanCard places={places} mainSite={mainSite} />
-
-        {/* ── Quick actions ── */}
-        <div className="grid grid-cols-3 gap-3">
-          {QUICK_ACTIONS.map((q) => (
-            <Link
-              key={q.href}
-              href={q.href}
-              className="flex flex-col items-center gap-2 p-3 rounded-2xl text-center transition-all hover:opacity-90"
-              style={{ textDecoration: 'none', background: 'var(--color-surface)', border: '1px solid var(--color-border)' }}
-            >
-              <div className="flex items-center justify-center rounded-xl" style={{ width: 44, height: 44, background: q.bg, color: q.color }}>
-                {q.art ? (
-                  <img src={q.art} alt="" aria-hidden style={{ width: 38, height: 38, objectFit: 'contain' }} />
-                ) : (
-                  <q.Icon size={20} strokeWidth={1.6} />
-                )}
-              </div>
-              <div>
-                <div className="font-display font-semibold" style={{ fontSize: 12.5, color: 'var(--color-ink)', lineHeight: 1.2 }}>{q.label}</div>
-                <div className="font-sans" style={{ fontSize: 12, color: 'var(--color-muted)', marginTop: 1 }}>{q.desc}</div>
-              </div>
-            </Link>
-          ))}
-        </div>
 
         {boardTasks.length > 0 && <TaskBoardCard tasks={boardTasks} onToggle={toggleTaskComplete} />}
 
