@@ -26,6 +26,7 @@ import type { DesignElementDef } from '@/lib/design-elements';
 import { ELEMENT_CATALOG, ELEMENTS_BY_ID } from '@/lib/design-elements';
 import { GROUND_FEATURES, ZONE_DEFS } from '@/lib/design-elements';
 import { requestRender, stripDataUrl, pollFalRender } from '@/lib/ai-render-client';
+import { aiRenderEnabled } from '@/lib/ai-render/flag';
 import { compositeAccurateMap, measureRenderDifference, restoreProtectedPixels, type LabelStyle, type ProducerLabel } from '@/lib/image-producer';
 import { paidRenderDecision } from '@/lib/render-difference';
 import { auditFromReport, recordRenderAudit } from '@/lib/render-audit';
@@ -11764,7 +11765,11 @@ export default function DesignGlossy({
   // Output mode — AI illustration is the DEFAULT; exact/no-AI is the option (Rory's ask). A sheet's
   // chip + this switch together decide which generator runs (see applySheet). selectedNo tracks
   // which of the 9 sheets is active so toggling mode re-maps the SAME sheet to the other generator.
-  const [mode, setMode] = useState<'ai' | 'exact'>('ai');
+  // AI map generation is behind a kill switch (lib/ai-render/flag.ts). With it
+  // off, this screen opens on — and stays on — the exact vector master: the
+  // renders it can still produce are the ones that cost nothing.
+  const aiRenderOn = aiRenderEnabled();
+  const [mode, setMode] = useState<'ai' | 'exact'>(aiRenderOn ? 'ai' : 'exact');
   // "More options" collapse (mockup): engine, AI-legend toggle, Gemini analysis maps, style-all.
   const [moreOpen, setMoreOpen] = useState(false);
   const [selectedNo, setSelectedNo] = useState(() => {
@@ -11843,15 +11848,15 @@ export default function DesignGlossy({
   // ground texture the model returns — so the model's reframing can only ever shift decorative
   // texture, never a feature anything aligns to. See docs/SECTOR-AI-LEGEND-PLAN-2026-07-21.md.
   const restyleAiKind: 'sector' | 'base' | null =
-    mode === 'ai' && selectedSheet && 'exact' in selectedSheet && (selectedSheet.exact === 'base' || selectedSheet.exact === 'sector')
+    aiRenderOn && mode === 'ai' && selectedSheet && 'exact' in selectedSheet && (selectedSheet.exact === 'base' || selectedSheet.exact === 'sector')
       ? selectedSheet.exact
       : null;
   const sectorAiMode = restyleAiKind !== null;
   // Phasing (08) in AI mode: decorative background pass + schedule composite-back. exactSheet is
   // null (AI mode cleared it) and producerStyle is set, so runCurrentSheet must check this BEFORE
   // falling through to generateOneViaQueue's GlossyLayerFilter path. See generatePhasingViaQueue.
-  const phasingAiMode = mode === 'ai' && !!selectedSheet && 'exact' in selectedSheet && selectedSheet.exact === 'implementation';
-  const aiLayerMode = mode === 'ai' && !!selectedSheet && (!('exact' in selectedSheet) || sectorAiMode || phasingAiMode);
+  const phasingAiMode = aiRenderOn && mode === 'ai' && !!selectedSheet && 'exact' in selectedSheet && selectedSheet.exact === 'implementation';
+  const aiLayerMode = aiRenderOn && mode === 'ai' && !!selectedSheet && (!('exact' in selectedSheet) || sectorAiMode || phasingAiMode);
   // `initialFilter` chooses which sheet Preview map opens on; it must not choose a second, retired
   // layout. That coupling is what made the modal fall back to the old full-width control dump while
   // the Glossy step showed the current three-column Preview & Export workspace.
@@ -15585,7 +15590,7 @@ export default function DesignGlossy({
               it used to start a Full Treatment while saying "1 AI render", which is two.
               Flipping BACK to exact from an older AI result spends nothing, and a farmer looking at
               a sheet they already paid for must always be able to leave it. */}
-          {selectedSheet && !galleryViewItem && (
+          {aiRenderOn && selectedSheet && !galleryViewItem && (
             <button
               type="button"
               onClick={() => {

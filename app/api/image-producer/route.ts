@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { buildProducerPrompt, buildProducerPromptLegacy, STYLE_LINES, type StylePreset } from '@/lib/producer-prompt';
 import { guardPaidApiRequest } from '@/lib/api-auth';
+import { aiRenderEnabled, AI_RENDER_DISABLED_MESSAGE, AI_RENDER_DISABLED_STATUS } from '@/lib/ai-render/flag';
 
 // Strict single-purpose "restyle, never redesign" endpoint. The caller has already
 // composited the exact scene (satellite + placed elements + boundary) — this route
@@ -156,6 +157,11 @@ async function submitGptImage2(key: string, imageBase64: string, prompt: string)
 }
 
 export async function POST(req: NextRequest) {
+  // Kill switch first — before auth, before parsing a body, before any vendor
+  // credential is read. A refusal here costs nothing and cannot spend anything.
+  if (!aiRenderEnabled()) {
+    return NextResponse.json({ error: AI_RENDER_DISABLED_MESSAGE }, { status: AI_RENDER_DISABLED_STATUS });
+  }
   const auth = await guardPaidApiRequest(req, '/api/image-producer');
   if (auth.response) return auth.response;
 
