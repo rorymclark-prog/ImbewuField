@@ -113,12 +113,18 @@ const TASK_ACTION_ICON: Record<CropTask['action'], string> = {
  * read as 0%, which is exactly the claim the rest of this panel refuses to make.
  */
 function HarvestShareRow({
-  cropKey, icon, name, share, children,
+  cropKey, icon, name, share, relative, children,
 }: {
   cropKey?: string;
   icon?: string;
   name: string;
+  /** Share of the plan's verified kg total — the number printed beside the bar. */
   share: number | null;
+  /** Length of the bar as a fraction of the biggest row's, so the comparison
+   *  uses the whole track instead of the left sixth of it. Still one shared
+   *  linear scale from zero — only the reference point differs from `share`,
+   *  and the caption above the list says which is which. */
+  relative: number | null;
   children: React.ReactNode;
 }) {
   return (
@@ -134,7 +140,7 @@ function HarvestShareRow({
           <div style={{ flex: 1, height: 8, background: '#EFE9DA', borderRadius: 4, overflow: 'hidden' }}>
             {/* Floor of 2% so a real but tiny crop still draws something. The
                 number beside it is the honest figure; the bar is the glance. */}
-            <div style={{ width: `${Math.max(2, Math.round(share * 100))}%`, height: '100%', background: '#5B8F4E', borderRadius: '0 4px 4px 0' }} />
+            <div style={{ width: `${Math.max(2, Math.round((relative ?? share) * 100))}%`, height: '100%', background: '#5B8F4E', borderRadius: '0 4px 4px 0' }} />
           </div>
           <span className="font-mono flex-shrink-0" style={{ fontSize: 11, color: '#8C7A62', fontVariantNumeric: 'tabular-nums', minWidth: 30, textAlign: 'right' }}>
             {Math.round(share * 100)}%
@@ -1245,6 +1251,14 @@ function FacilitatorCropsPageInner() {
     })
     .filter((row) => row.hasPlantings);
   const yieldByCropList = planYieldBenchmark.byCrop;
+  // The biggest single row in whichever view is showing, so the longest bar
+  // fills the track. Against the TOTAL the longest bar was 16% of a 622px row
+  // and all twelve crops crushed into the left sixth of it — technically
+  // truthful, useless to compare.
+  const biggestCropKg = Math.max(0, ...yieldByCropList.map((row) => row.kg));
+  const biggestBedKg = Math.max(0, ...yieldByBed.map((row) => row.kg));
+  const relativeTo = (kg: number, biggest: number): number | null =>
+    biggest > 0 && Number.isFinite(kg) ? kg / biggest : null;
   const buyingSchedule = useMemo(
     () => (mounted ? buildBuyingSchedule(plantings, beds, currentMonth) : []),
     [mounted, plantings, beds, currentMonth],
@@ -2000,7 +2014,7 @@ function FacilitatorCropsPageInner() {
 
                 {totalYieldKg !== null && totalYieldKg > 0 && (
                   <div className="font-sans mb-1.5" style={{ fontSize: 10.5, color: '#8C7A62', textTransform: 'uppercase', letterSpacing: '0.07em' }}>
-                    Bars show share of the {totalYieldKg.toFixed(1)} kg above
+                    Bar length compares crops · % is share of the {totalYieldKg.toFixed(1)} kg above
                   </div>
                 )}
                 <div>
@@ -2013,6 +2027,7 @@ function FacilitatorCropsPageInner() {
                           icon={icon}
                           name={name}
                           share={shareOfHarvest(kg)}
+                          relative={relativeTo(kg, biggestCropKg)}
                         >
                           <span style={{ color: '#20190F' }}>{kg.toFixed(1)} kg</span>
                         </HarvestShareRow>
@@ -2021,7 +2036,7 @@ function FacilitatorCropsPageInner() {
                         const crop = cropByKey(cropKey);
                         if (!crop) return null;
                         return (
-                          <HarvestShareRow key={cropKey} cropKey={crop.key} icon={crop.icon} name={crop.name} share={null}>
+                          <HarvestShareRow key={cropKey} cropKey={crop.key} icon={crop.icon} name={crop.name} share={null} relative={null}>
                             <span style={{ color: '#9A6018' }}>not verified</span>
                           </HarvestShareRow>
                         );
@@ -2030,7 +2045,7 @@ function FacilitatorCropsPageInner() {
                         const crop = cropByKey(cropKey);
                         if (!crop) return null;
                         return (
-                          <HarvestShareRow key={cropKey} cropKey={crop.key} icon={crop.icon} name={crop.name} share={null}>
+                          <HarvestShareRow key={cropKey} cropKey={crop.key} icon={crop.icon} name={crop.name} share={null} relative={null}>
                             <span style={{ color: '#7A5B24' }}>soil cover · 0 food kg</span>
                           </HarvestShareRow>
                         );
@@ -2042,7 +2057,7 @@ function FacilitatorCropsPageInner() {
                   ) : (
                     <>
                       {yieldByBed.map(({ bed, kg, unknownNames, coverNames }) => (
-                        <HarvestShareRow key={bed.id} name={bed.label} share={kg > 0 ? shareOfHarvest(kg) : null}>
+                        <HarvestShareRow key={bed.id} name={bed.label} share={kg > 0 ? shareOfHarvest(kg) : null} relative={kg > 0 ? relativeTo(kg, biggestBedKg) : null}>
                           <span className="text-right" style={{ color: '#20190F', display: 'inline-block' }}>
                             {kg > 0 && `${kg.toFixed(1)} kg known`}
                             {kg > 0 && unknownNames.length > 0 && <br />}
