@@ -35,9 +35,13 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '4 September',
-    sha: 'f412562',
+    sha: '0631f44',
     changes: [
+      'Month tasks are grouped by job and crop — spacing is said once, not once per bed',
+      'The harvest list shows each crop as a share of your total, with a bar to compare',
+      'The food months chart is drawn bigger, with the number of crops on each bar',
       'Your crop plan now fills a laptop or tablet screen — year two is no longer off the side',
+      'The home screen uses the whole width of a laptop instead of one narrow column',
       'The month row stays put at the top while you scroll down your beds',
       'Crop names in the suggested plan are readable again on the dark theme',
       'Your money sheet now uses the full width of a laptop screen',

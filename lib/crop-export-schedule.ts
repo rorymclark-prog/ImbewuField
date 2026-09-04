@@ -182,6 +182,103 @@ export function taskPhrase(t: CropTask): string {
   return `${verb} ${t.cropName.toLowerCase()}${instruction} (${t.bedLabel})`;
 }
 
+/**
+ * The how-to half of `taskPhrase` — spacing, depth, or the ground-prep wording —
+ * with no verb, crop name or bed attached.
+ *
+ * WHY THIS IS SEPARATE. `taskPhrase` bakes the how-to into every single task, and
+ * the how-to for a crop is IDENTICAL on every bed. Rory, 2026-09-04, looking at a
+ * twelve-bed plan: "i cant see whats happening on the tasks". He was reading
+ * "sow cucumber — rows 120-140cm apart · 35-50cm apart in the row · sow 2-3cm
+ * deep (Bed 1)" and then the same twenty-two words again for Bed 7, Bed 8, Bed 10
+ * and Bed 11. A grouped view states it once and lists the beds.
+ *
+ * Returns null when the action carries no how-to, so a caller can tell "nothing to
+ * say" from an empty string it would have to render anyway.
+ */
+export function taskDetail(t: CropTask): string | null {
+  const crop = (t.action === 'sow' || t.action === 'transplant') ? cropByKey(t.cropKey) : undefined;
+  if (crop && t.action === 'sow') {
+    const trayDepth = sowDepthRange(crop);
+    return crop.transplant
+      ? `start in a tray${trayDepth ? `, ${formatCmRange(trayDepth)}cm deep` : ''}`
+      : sowingInstruction(crop);
+  }
+  if (crop?.transplant && t.action === 'transplant') return fieldSpacingInstruction(crop);
+  if (t.action === 'prep' && t.prepText) return t.prepText;
+  return null;
+}
+
+/** One crop's work of a single kind, and every bed it is due on. */
+export interface TaskCropRow {
+  cropKey: string;
+  cropName: string;
+  icon: string;
+  /** Every bed needing this action on this crop, in the order the tasks arrived. */
+  bedLabels: string[];
+  /** The how-to, said once for the whole row. Null when the action carries none. */
+  detail: string | null;
+  /** The underlying task ids, so a caller can still reach each individual job. */
+  taskIds: string[];
+}
+
+/** One kind of work — all the sowing, or all the prep — across every crop and bed. */
+export interface TaskActionGroup {
+  action: CropTask['action'];
+  /** TASK_TITLE's wording, so the grouped view speaks the app's own vocabulary. */
+  label: string;
+  /** How many individual jobs this group collapses. */
+  jobCount: number;
+  crops: TaskCropRow[];
+}
+
+/**
+ * The order a farmer actually works through a month: ground first, seed in, then
+ * tending, then picking. NOT alphabetical, and not the order tasksForPlan happens
+ * to emit them in.
+ */
+const TASK_ACTION_ORDER: readonly CropTask['action'][] = [
+  'prep', 'sow', 'transplant', 'weed-early', 'weed-mid', 'mulch', 'harvest', 'terminate-cover',
+];
+
+/**
+ * Collapse a month's tasks into one row per crop per kind of work.
+ *
+ * Rows are keyed by crop AND detail, not crop alone: `prepText` differs by ground
+ * kind — a 1.2x3m bed gets the compost-and-rest wording, a quarter-hectare staple
+ * plot gets plough/manure — so the same crop on both would otherwise be merged
+ * under one of the two wordings and the other silently lost.
+ */
+export function groupTasksByAction(tasks: CropTask[]): TaskActionGroup[] {
+  const byAction = new Map<CropTask['action'], Map<string, TaskCropRow>>();
+  for (const t of tasks) {
+    const detail = taskDetail(t);
+    const rows = byAction.get(t.action) ?? new Map<string, TaskCropRow>();
+    // \u0000 cannot appear in a crop key or an instruction, so it is a safe joiner.
+    const key = `${t.cropKey}\u0000${detail ?? ''}`;
+    const row = rows.get(key) ?? {
+      cropKey: t.cropKey, cropName: t.cropName, icon: t.icon,
+      bedLabels: [], detail, taskIds: [],
+    };
+    // A crop can hold two cycles on one bed in the same month; the bed is named once.
+    if (!row.bedLabels.includes(t.bedLabel)) row.bedLabels.push(t.bedLabel);
+    row.taskIds.push(t.id);
+    rows.set(key, row);
+    byAction.set(t.action, rows);
+  }
+  return TASK_ACTION_ORDER
+    .filter((action) => byAction.has(action))
+    .map((action) => {
+      const crops = [...byAction.get(action)!.values()];
+      return {
+        action,
+        label: TASK_TITLE[action],
+        jobCount: crops.reduce((n, row) => n + row.taskIds.length, 0),
+        crops,
+      };
+    });
+}
+
 export function taskSentence(tasks: CropTask[]): string {
   if (tasks.length === 0) return 'nothing due';
   return tasks.map(taskPhrase).join(' · ');

@@ -19,6 +19,7 @@ import {
   taskLine,
   taskSentence,
   taskTitle,
+  groupTasksByAction,
 } from '@/lib/crop-export-schedule';
 import { benchmarkYieldLabel, pdfSafe } from '@/lib/crop-export-pdf';
 
@@ -74,6 +75,72 @@ test('taskSentence puts field spacing on direct sow or transplant, never tray so
   assert.doesNotMatch(taskSentence([tasks.find((t) => t.id === 'pl-b:sow')!]), /rows 20–30cm apart/);
   assert.match(taskSentence([tasks.find((t) => t.id === 'pl-b:transplant')!]), /rows 20–30cm apart/);
   assert.doesNotMatch(taskSentence([tasks.find((t) => t.id === 'pl-c:harvest')!]), /rows 45–60cm apart/);
+});
+
+// ── Grouped tasks (what the crop-plan screen shows) ─────────────────────────
+
+test('groupTasksByAction says the how-to once and lists the beds, not once per bed', () => {
+  // The bug this exists to kill: five beds of carrots printed the same
+  // twenty-two words of spacing five times, and the month read as a wall.
+  const fiveBeds: PlanBed[] = [1, 2, 3, 4, 5].map((n) => ({
+    id: `b${n}`, label: `Bed ${n}`, areaM2: 6, minDimM: 1.2,
+  }));
+  const tasks = tasksForPlan(
+    fiveBeds.map((b, i) => ({ id: `p${i}`, bedId: b.id, cropKey: 'carrots', sowMonth: 3 })),
+    fiveBeds,
+  ).filter((t) => t.action === 'sow');
+
+  const [sow] = groupTasksByAction(tasks);
+  assert.equal(sow.label, 'Sow');
+  assert.equal(sow.jobCount, 5, 'all five jobs are still counted');
+  assert.equal(sow.crops.length, 1, 'one carrot row, not five');
+  assert.deepEqual(sow.crops[0].bedLabels, ['Bed 1', 'Bed 2', 'Bed 3', 'Bed 4', 'Bed 5']);
+  assert.equal(sow.crops[0].taskIds.length, 5, 'every underlying job is still reachable');
+  assert.match(sow.crops[0].detail!, /rows .*cm apart/);
+});
+
+test('groupTasksByAction orders the work the way a farmer does it', () => {
+  const tasks = tasksForPlan(PLANTINGS, BEDS);
+  const seen = groupTasksByAction(tasks).map((g) => g.action);
+  const order = ['prep', 'sow', 'transplant', 'weed-early', 'weed-mid', 'mulch', 'harvest', 'terminate-cover'];
+  assert.deepEqual(seen, order.filter((a) => seen.includes(a as never)), 'ground first, then seed, then tending, then picking');
+});
+
+test('groupTasksByAction keeps bed prep and plot prep apart', () => {
+  // prepText differs by ground kind. Merging on crop alone would show one
+  // wording and silently drop the other for half the ground.
+  const sameCropBothKinds: Planting[] = [
+    { id: 'p-bed', bedId: 'bed-1', cropKey: 'green-beans', sowMonth: 11 },
+    { id: 'p-plot', bedId: 'plot-1', cropKey: 'green-beans', sowMonth: 11 },
+  ];
+  const prep = tasksForPlan(sameCropBothKinds, BEDS).filter((t) => t.action === 'prep');
+  const [group] = groupTasksByAction(prep);
+  assert.equal(group.jobCount, 2);
+  assert.equal(group.crops.length, 2, 'two prep wordings means two rows');
+  assert.notEqual(group.crops[0].detail, group.crops[1].detail);
+});
+
+test('groupTasksByAction names a bed once even when a crop runs two cycles on it', () => {
+  const twice: Planting[] = [
+    { id: 'first', bedId: 'bed-1', cropKey: 'carrots', sowMonth: 3 },
+    { id: 'second', bedId: 'bed-1', cropKey: 'carrots', sowMonth: 3 },
+  ];
+  const [sow] = groupTasksByAction(tasksForPlan(twice, BEDS).filter((t) => t.action === 'sow'));
+  assert.deepEqual(sow.crops[0].bedLabels, ['Bed 1']);
+  assert.equal(sow.jobCount, 2, 'the bed is named once but both jobs are counted');
+});
+
+test('groupTasksByAction gives harvest no how-to, so the screen renders no empty line', () => {
+  const harvest = tasksForPlan(PLANTINGS, BEDS).filter((t) => t.action === 'harvest');
+  const [group] = groupTasksByAction(harvest);
+  assert.ok(group.crops.every((c) => c.detail === null));
+});
+
+test('groupTasksByAction loses no work: every task lands in exactly one row', () => {
+  const tasks = tasksForPlan(PLANTINGS, BEDS);
+  const ids = groupTasksByAction(tasks).flatMap((g) => g.crops.flatMap((c) => c.taskIds));
+  assert.equal(ids.length, tasks.length);
+  assert.deepEqual([...ids].sort(), tasks.map((t) => t.id).sort());
 });
 
 test('a crop with a multi-month picking window creates work in every picking month', () => {

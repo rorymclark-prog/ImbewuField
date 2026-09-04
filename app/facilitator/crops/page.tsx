@@ -31,7 +31,7 @@ import { nearestRainfall } from '@/lib/water-calc';
 import { driestMonths, resolveSiteClimate, type SiteClimate } from '@/lib/site-climate';
 import type { CropDef, RainPattern } from '@/lib/crop-catalog';
 import { CROPS, cropByKey, hasAutomaticPlanningBasis, hasPlanningYield, hasVerifiedSchedule, MONTHS_SHORT } from '@/lib/crop-catalog';
-import type { PlanBed, Planting, CropPlanState, FoodAvailabilityItem, PlanYieldBenchmark, CashflowSettings, BedOverlapWarning } from '@/lib/crop-plan';
+import type { PlanBed, Planting, CropPlanState, FoodAvailabilityItem, PlanYieldBenchmark, CashflowSettings, BedOverlapWarning, CropTask } from '@/lib/crop-plan';
 import {
   loadCropPlan, saveCropPlan, bedEntryMonth, latestBedEntryMonth, plannedBedEntryMonth, harvestEndMonthForCrop, harvestMonthForCrop, tasksForPlan, taskMonthsFromNow, estimatedYieldKgAdjusted, nextValidSowMonth,
   isSpaceHungry, bedOverlapWarning, benchmarkAreaConflictDetails, bedHasUnverifiedTiming, buildYearReport, buildFoodAvailability, buildPlanYieldBenchmark,
@@ -57,7 +57,7 @@ import { PRICE_SNAPSHOT_MONTHS } from '@/components/prices/CropPriceGuide.format
 import type { BuyingMonth } from '@/lib/crop-export-schedule';
 import {
   buildBuyingSchedule, positionRangeLabel, sowingInstruction, SUCCESSION_TIMING_GUIDANCE,
-  taskSentence, TRANSPLANT_NURSERY_GUIDANCE,
+  taskSentence, groupTasksByAction, TRANSPLANT_NURSERY_GUIDANCE,
 } from '@/lib/crop-export-schedule';
 
 const ALL_GROUPS: FoodGroup[] = ['leafy_green', 'legume', 'root_tuber', 'allium_aromatic', 'fruiting_veg', 'staple_grain'];
@@ -83,6 +83,144 @@ const DISPLAY_MONTHS = 24;
 // legible). Deliberately not DISPLAY_MONTHS.
 const CHART_MONTHS = 15;
 const GRID_MIN_WIDTH = Math.round((760 * DISPLAY_MONTHS) / 12);
+
+// One emoji per kind of work, so a farmer scanning the month sees the SHAPE of
+// it — three rows of ground prep, one of harvest — before reading a word. Kept
+// here and not beside TASK_TITLE in lib/, because that module also feeds the
+// ICS export and the PDF, and pdfSafe strips emoji outright.
+const TASK_ACTION_ICON: Record<CropTask['action'], string> = {
+  prep: '🪵',
+  sow: '🌱',
+  transplant: '🪴',
+  mulch: '💧',
+  harvest: '🧺',
+  'terminate-cover': '✂️',
+  'weed-early': '🌿',
+  'weed-mid': '🐛',
+};
+
+/**
+ * One line of the harvest list: what it is, how much, and how big a share of the
+ * plan's total it is.
+ *
+ * Rory, 2026-09-04: "on the percentage of veg make graphics bigger make a slider
+ * o show proportions". The list was icon + name + kg and nothing else, so which
+ * crop actually carried the plan was arithmetic you had to do yourself across a
+ * dozen rows.
+ *
+ * `share` is null for a crop with no verified kg/m² benchmark and for a soil-cover
+ * crop, and those rows then draw NO bar at all — an empty track beside them would
+ * read as 0%, which is exactly the claim the rest of this panel refuses to make.
+ */
+function HarvestShareRow({
+  cropKey, icon, name, share, relative, children,
+}: {
+  cropKey?: string;
+  icon?: string;
+  name: string;
+  /** Share of the plan's verified kg total — the number printed beside the bar. */
+  share: number | null;
+  /** Length of the bar as a fraction of the biggest row's, so the comparison
+   *  uses the whole track instead of the left sixth of it. Still one shared
+   *  linear scale from zero — only the reference point differs from `share`,
+   *  and the caption above the list says which is which. */
+  relative: number | null;
+  children: React.ReactNode;
+}) {
+  return (
+    <div style={{ marginBottom: 7 }}>
+      <div className="flex items-center justify-between gap-2 font-sans" style={{ fontSize: 13, color: '#5C5040' }}>
+        <span className="font-sans" style={{ color: '#20190F' }}>
+          {cropKey ? <CropIcon cropKey={cropKey} icon={icon ?? '🌱'} size={20} /> : null} {name}
+        </span>
+        <span className="font-mono flex-shrink-0" style={{ fontVariantNumeric: 'tabular-nums' }}>{children}</span>
+      </div>
+      {share !== null && (
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 3 }}>
+          <div style={{ flex: 1, height: 8, background: '#EFE9DA', borderRadius: 4, overflow: 'hidden' }}>
+            {/* Floor of 2% so a real but tiny crop still draws something. The
+                number beside it is the honest figure; the bar is the glance. */}
+            <div style={{ width: `${Math.max(2, Math.round((relative ?? share) * 100))}%`, height: '100%', background: '#5B8F4E', borderRadius: '0 4px 4px 0' }} />
+          </div>
+          <span className="font-mono flex-shrink-0" style={{ fontSize: 11, color: '#8C7A62', fontVariantNumeric: 'tabular-nums', minWidth: 30, textAlign: 'right' }}>
+            {Math.round(share * 100)}%
+          </span>
+        </div>
+      )}
+    </div>
+  );
+}
+
+/**
+ * A month's work as a grouped list.
+ *
+ * REPLACES a single ` · `-joined sentence. Rory, 2026-09-04: "i cant see whats
+ * happening on the tasks make this much much better". On a twelve-bed plan that
+ * sentence ran to several hundred words, because every bed repeated its crop's
+ * full spacing instruction — the same twenty-two words five times over. Nothing
+ * was missing from it; it just could not be read. Same tasks, same wording,
+ * grouped by kind of work, then by crop, with the beds as chips and the how-to
+ * stated once. taskSentence() stays for the WhatsApp share and the PDF, where a
+ * flat line is the right shape.
+ */
+function TaskList({ tasks }: { tasks: CropTask[] }) {
+  const groups = groupTasksByAction(tasks);
+  if (groups.length === 0) {
+    return <div className="font-sans" style={{ fontSize: 12.5, color: '#8C7A62' }}>Nothing due.</div>;
+  }
+  return (
+    <div className="space-y-2">
+      {groups.map((group) => {
+        // Ground prep says the same sentence for every crop in the month — it is
+        // about the ground, not the crop — so four crops meant four identical
+        // lines. When the whole group shares one how-to, it is said once under
+        // the heading and the crop rows carry only their beds. Sowing, where
+        // each crop's spacing genuinely differs, keeps its per-crop line.
+        const shared = group.crops.length > 1 && group.crops[0].detail
+          && group.crops.every((c) => c.detail === group.crops[0].detail)
+          ? group.crops[0].detail
+          : null;
+        return (
+          <div key={group.action} className="rounded-xl" style={{ background: '#F8F4EA', border: '1px solid #EAE2D0', padding: '7px 9px' }}>
+            <div className="flex items-baseline gap-1.5">
+              <span style={{ fontSize: 13 }}>{TASK_ACTION_ICON[group.action]}</span>
+              <span className="font-display font-semibold" style={{ fontSize: 13, color: '#20190F' }}>{group.label}</span>
+              <span className="font-mono" style={{ fontSize: 10.5, color: '#8C7A62' }}>
+                {group.jobCount} {group.jobCount === 1 ? 'job' : 'jobs'}
+              </span>
+            </div>
+            {shared && (
+              <div className="font-sans mb-1.5" style={{ fontSize: 11.5, color: '#5C5040', lineHeight: 1.4 }}>{shared}</div>
+            )}
+            <div className={shared ? 'space-y-1' : 'space-y-1.5 mt-1'}>
+              {group.crops.map((row) => (
+                <div key={`${row.cropKey}-${row.bedLabels[0]}`}>
+                  <div className="flex flex-wrap items-center gap-x-1.5 gap-y-1">
+                    <span className="font-sans font-semibold" style={{ fontSize: 12.5, color: '#20190F' }}>
+                      <CropIcon cropKey={row.cropKey} icon={row.icon} size={16} /> {row.cropName}
+                    </span>
+                    {row.bedLabels.map((bed) => (
+                      <span
+                        key={bed}
+                        className="font-sans"
+                        style={{ fontSize: 10.5, color: '#1F4D2B', background: '#E4EEDF', border: '1px solid #CBDDC2', borderRadius: 999, padding: '1px 7px', whiteSpace: 'nowrap' }}
+                      >
+                        {bed}
+                      </span>
+                    ))}
+                  </div>
+                  {!shared && row.detail && (
+                    <div className="font-sans" style={{ fontSize: 11.5, color: '#5C5040', lineHeight: 1.4, marginTop: 1 }}>{row.detail}</div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
 // Widest the planning page is allowed to get on a desktop or landscape tablet.
 // Not an arbitrary round number: the wrapper carries 20px of padding a side at
 // md and up (40px) and the timeline card draws a 1px border on each side (2px),
@@ -1077,6 +1215,12 @@ function FacilitatorCropsPageInner() {
     [plantings, beds, currentMonth],
   );
   const totalYieldKg = planYieldBenchmark.knownKg;
+  // Share of the VERIFIED kg total — the same number printed above the list, so
+  // the bars and the headline cannot disagree. Null whenever there is no total to
+  // be a share of (bed space in conflict, nothing planted, no verified crop), and
+  // the row then draws no bar rather than a 0% one.
+  const shareOfHarvest = (kg: number): number | null =>
+    totalYieldKg !== null && totalYieldKg > 0 && Number.isFinite(kg) ? kg / totalYieldKg : null;
   const unknownYieldPlantings = benchmarkPlantings.filter((planting) => {
     const crop = cropByKey(planting.cropKey);
     return crop?.yieldKgPerM2 === null;
@@ -1107,6 +1251,14 @@ function FacilitatorCropsPageInner() {
     })
     .filter((row) => row.hasPlantings);
   const yieldByCropList = planYieldBenchmark.byCrop;
+  // The biggest single row in whichever view is showing, so the longest bar
+  // fills the track. Against the TOTAL the longest bar was 16% of a 622px row
+  // and all twelve crops crushed into the left sixth of it — technically
+  // truthful, useless to compare.
+  const biggestCropKg = Math.max(0, ...yieldByCropList.map((row) => row.kg));
+  const biggestBedKg = Math.max(0, ...yieldByBed.map((row) => row.kg));
+  const relativeTo = (kg: number, biggest: number): number | null =>
+    biggest > 0 && Number.isFinite(kg) ? kg / biggest : null;
   const buyingSchedule = useMemo(
     () => (mounted ? buildBuyingSchedule(plantings, beds, currentMonth) : []),
     [mounted, plantings, beds, currentMonth],
@@ -1703,12 +1855,17 @@ function FacilitatorCropsPageInner() {
             <div className="grid gap-4" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))' }}>
               <div className="rounded-2xl p-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
                 <div className="font-display font-semibold mb-2" style={{ fontSize: 15, color: '#20190F' }}>📋 Tasks</div>
-                <div className="font-sans mb-1" style={{ fontSize: 13, color: '#20190F' }}>
-                  <strong>{monthLabel(currentMonth)}:</strong> <span style={{ color: '#5C5040' }}>{taskSentence(currentTasks)}</span>
-                </div>
-                <div className="font-sans mb-2" style={{ fontSize: 13, color: '#20190F' }}>
-                  <strong>{monthLabel(nextMonth)}:</strong> <span style={{ color: '#5C5040' }}>{taskSentence(nextTasks)}</span>
-                </div>
+                {([[currentMonth, currentTasks], [nextMonth, nextTasks]] as [number, CropTask[]][]).map(([m, t], idx) => (
+                  <div key={m} className="mb-2.5">
+                    <div className="font-display font-semibold flex items-baseline gap-2 mb-1" style={{ fontSize: 13.5, color: '#20190F' }}>
+                      {monthLabel(m)}
+                      <span className="font-sans" style={{ fontSize: 10, color: '#8C7A62', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+                        {idx === 0 ? 'this month' : 'next month'}
+                      </span>
+                    </div>
+                    <TaskList tasks={t} />
+                  </div>
+                ))}
                 <div className="font-sans rounded-lg px-2.5 py-2 mb-3" style={{ fontSize: 11.5, color: '#7A4A12', lineHeight: 1.45, background: '#FFF8E8', border: '1px solid rgba(154,96,24,0.3)' }}>
                   {SUCCESSION_TIMING_GUIDANCE}
                 </div>
@@ -1736,8 +1893,11 @@ function FacilitatorCropsPageInner() {
                         const t = allTasks.filter((task) => taskMonthsFromNow(task, currentMonth) === i);
                         if (t.length === 0) return null;
                         return (
-                          <div key={i} className="font-sans" style={{ fontSize: 12, color: '#5C5040' }}>
-                            <strong style={{ color: '#20190F' }}>{monthLabel(m)}{i >= 12 ? ' (next year)' : ''}</strong> — {taskSentence(t)}
+                          <div key={i} className="mb-2">
+                            <div className="font-display font-semibold mb-1" style={{ fontSize: 12.5, color: '#20190F' }}>
+                              {monthLabel(m)}{i >= 12 ? ' (next year)' : ''}
+                            </div>
+                            <TaskList tasks={t} />
                           </div>
                         );
                       })}
@@ -1852,33 +2012,42 @@ function FacilitatorCropsPageInner() {
                   </div>
                 )}
 
-                <div className="space-y-1">
+                {totalYieldKg !== null && totalYieldKg > 0 && (
+                  <div className="font-sans mb-1.5" style={{ fontSize: 10.5, color: '#8C7A62', textTransform: 'uppercase', letterSpacing: '0.07em' }}>
+                    Bar length compares crops · % is share of the {totalYieldKg.toFixed(1)} kg above
+                  </div>
+                )}
+                <div>
                   {harvestBoxView === 'crop' ? (
                     <>
                       {yieldByCropList.map(({ cropKey, name, icon, kg }) => (
-                        <div key={cropKey} className="flex items-center justify-between font-sans" style={{ fontSize: 13, color: '#5C5040' }}>
-                          <span><CropIcon cropKey={cropKey} icon={icon} size={14} /> {name}</span>
-                          <span className="font-mono" style={{ color: '#20190F' }}>{kg.toFixed(1)} kg</span>
-                        </div>
+                        <HarvestShareRow
+                          key={cropKey}
+                          cropKey={cropKey}
+                          icon={icon}
+                          name={name}
+                          share={shareOfHarvest(kg)}
+                          relative={relativeTo(kg, biggestCropKg)}
+                        >
+                          <span style={{ color: '#20190F' }}>{kg.toFixed(1)} kg</span>
+                        </HarvestShareRow>
                       ))}
                       {[...new Set(unknownYieldPlantings.map((planting) => planting.cropKey))].map((cropKey) => {
                         const crop = cropByKey(cropKey);
                         if (!crop) return null;
                         return (
-                          <div key={cropKey} className="flex items-center justify-between font-sans" style={{ fontSize: 13, color: '#5C5040' }}>
-                            <span><CropIcon cropKey={crop.key} icon={crop.icon} size={14} /> {crop.name}</span>
-                            <span className="font-mono" style={{ color: '#9A6018' }}>not verified</span>
-                          </div>
+                          <HarvestShareRow key={cropKey} cropKey={crop.key} icon={crop.icon} name={crop.name} share={null} relative={null}>
+                            <span style={{ color: '#9A6018' }}>not verified</span>
+                          </HarvestShareRow>
                         );
                       })}
                       {[...new Set(coverCropPlantings.map((planting) => planting.cropKey))].map((cropKey) => {
                         const crop = cropByKey(cropKey);
                         if (!crop) return null;
                         return (
-                          <div key={cropKey} className="flex items-center justify-between font-sans" style={{ fontSize: 13, color: '#5C5040' }}>
-                            <span><CropIcon cropKey={crop.key} icon={crop.icon} size={14} /> {crop.name}</span>
-                            <span className="font-mono" style={{ color: '#7A5B24' }}>soil cover · 0 food kg</span>
-                          </div>
+                          <HarvestShareRow key={cropKey} cropKey={crop.key} icon={crop.icon} name={crop.name} share={null} relative={null}>
+                            <span style={{ color: '#7A5B24' }}>soil cover · 0 food kg</span>
+                          </HarvestShareRow>
                         );
                       })}
                       {plantings.length === 0 && (
@@ -1888,16 +2057,15 @@ function FacilitatorCropsPageInner() {
                   ) : (
                     <>
                       {yieldByBed.map(({ bed, kg, unknownNames, coverNames }) => (
-                        <div key={bed.id} className="flex items-center justify-between font-sans" style={{ fontSize: 13, color: '#5C5040' }}>
-                          <span>{bed.label}</span>
-                          <span className="font-mono text-right" style={{ color: '#20190F' }}>
+                        <HarvestShareRow key={bed.id} name={bed.label} share={kg > 0 ? shareOfHarvest(kg) : null} relative={kg > 0 ? relativeTo(kg, biggestBedKg) : null}>
+                          <span className="text-right" style={{ color: '#20190F', display: 'inline-block' }}>
                             {kg > 0 && `${kg.toFixed(1)} kg known`}
                             {kg > 0 && unknownNames.length > 0 && <br />}
                             {unknownNames.length > 0 && <span style={{ color: '#9A6018' }}>{unknownNames.join(', ')} not verified</span>}
                             {(kg > 0 || unknownNames.length > 0) && coverNames.length > 0 && <br />}
                             {coverNames.length > 0 && <span style={{ color: '#7A5B24' }}>{coverNames.join(', ')} soil cover</span>}
                           </span>
-                        </div>
+                        </HarvestShareRow>
                       ))}
                       {plantings.length === 0 && (
                         <div className="font-sans" style={{ fontSize: 12, color: '#8C7A62' }}>Nothing planted yet.</div>
@@ -2474,7 +2642,12 @@ function FoodAvailabilityChart({
   const scenarioValues = (rows: PlanYieldBenchmark['byCrop']) =>
     planValue(rows, priceOverrides, valuePriceMode, cashflowSettings);
   const { cash: cashIncome, home: homeValue } = scenarioValues(yieldBenchmark.byCrop);
-  const BAR_MAX_H = 56;
+  // 128, not the 56 it was. Rory, 2026-09-04, on a laptop: "can you make these
+  // graphics bigger we have space so make use of it so we can see them better".
+  // The chart sits in a card that is already GRID_MIN_WIDTH (1520px) wide for
+  // its 15 columns, so height was the only axis still starved — at 56px a
+  // one-crop month and a three-crop month were 8px apart and read the same.
+  const BAR_MAX_H = 128;
 
   // 2026-08-22, Rory: "i dont think this start from today function works."
   // Traced (background diagnosis workflow, confirmed live against the
@@ -2531,10 +2704,19 @@ function FoodAvailabilityChart({
                 <div className="flex" style={{ minWidth: GRID_MIN_WIDTH, gap: 6 }}>
                   {cols.map(({ m, fresh, stored }, i) => {
                     const total = fresh.length + stored.length;
-                    const height = total === 0 ? 0 : Math.max(8, Math.round((total / maxTotal) * BAR_MAX_H));
-                    const storedHeight = total === 0 ? 0 : Math.round((stored.length / total) * height);
+                    const height = total === 0 ? 0 : Math.max(10, Math.round((total / maxTotal) * BAR_MAX_H));
+                    // The two fills are separated by a 2px strip of the card, so
+                    // a stored month reads as two quantities rather than one bar
+                    // with a colour change. That gap has to come OUT of the bar,
+                    // not be added to it, or a split month would stand taller
+                    // than a solid month holding the same number of crops.
+                    const GAP = 2;
+                    const split = stored.length > 0 && fresh.length > 0;
+                    const body = Math.max(0, height - (split ? GAP : 0));
+                    const storedHeight = total === 0 ? 0 : Math.round((stored.length / total) * body);
+                    const freshHeight = body - storedHeight;
                     return (
-                      <div key={i} style={{ flex: 1, textAlign: 'center', minWidth: 56 }}>
+                      <div key={i} style={{ flex: 1, textAlign: 'center', minWidth: 64 }}>
                         {/* A BUTTON, not a div with a tooltip. The stored half of
                             this chart carried its only explanation in a `title`
                             attribute, which on a phone — where this app is used —
@@ -2548,23 +2730,32 @@ function FoodAvailabilityChart({
                           aria-label={`${MONTHS_SHORT[m - 1]} — ${total === 0 ? 'nothing scheduled' : `${total} crop${total === 1 ? '' : 's'}`}, tap for detail`}
                           style={{ display: 'block', width: '100%', background: openMonth === m ? '#F5F0E8' : 'none', border: 'none', borderRadius: 6, padding: '2px 0', cursor: 'pointer' }}
                         >
+                          {/* The bar's own number, on the bar. The icon rows
+                              below say WHICH crops; without this you had to
+                              count them to learn how many, which is the one
+                              thing the bar height is there to tell you. */}
+                          <div className="font-mono" style={{ fontSize: 12, fontWeight: 700, height: 16, color: total === 0 ? '#C9BFA8' : '#20190F' }}>
+                            {total === 0 ? '–' : total}
+                          </div>
                           <div style={{ height: BAR_MAX_H, display: 'flex', alignItems: 'flex-end', justifyContent: 'center' }}>
-                            {total === 0 ? <div style={{ width: '60%', height: 2, background: '#E2D8C4', borderRadius: 1 }} /> : (
-                              <div title={[...stored, ...fresh].map((item) => `${item.icon} ${item.name} — ${item.status}`).join('\n')} style={{ width: '60%', display: 'flex', flexDirection: 'column', borderRadius: 4, overflow: 'hidden' }}>
-                                {storedHeight > 0 && <div style={{ height: storedHeight, background: '#D4A017' }} />}
-                                {height - storedHeight > 0 && <div style={{ height: height - storedHeight, background: '#7FAE6E' }} />}
+                            {total === 0 ? <div style={{ width: '68%', height: 3, background: '#E2D8C4', borderRadius: 2 }} /> : (
+                              <div title={[...stored, ...fresh].map((item) => `${item.icon} ${item.name} — ${item.status}`).join('\n')} style={{ width: '68%', display: 'flex', flexDirection: 'column', gap: split ? GAP : 0 }}>
+                                {/* Rounded at the data end only — the top of the
+                                    column, away from the baseline it grows off. */}
+                                {storedHeight > 0 && <div style={{ height: storedHeight, background: '#D4A017', borderRadius: '4px 4px 0 0' }} />}
+                                {freshHeight > 0 && <div style={{ height: freshHeight, background: '#7FAE6E', borderRadius: '4px 4px 0 0' }} />}
                               </div>
                             )}
                           </div>
-                          <div className="font-sans" style={{ fontSize: 10, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? '#1F4D2B' : '#8C7A62', marginTop: 4 }}>{MONTHS_SHORT[m - 1]}</div>
-                          <div style={{ fontSize: 13, minHeight: 16, display: 'flex', flexWrap: 'wrap', gap: 1, justifyContent: 'center' }}>
+                          <div className="font-sans" style={{ fontSize: 12, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? '#1F4D2B' : '#8C7A62', marginTop: 6 }}>{MONTHS_SHORT[m - 1]}</div>
+                          <div style={{ fontSize: 18, minHeight: 22, display: 'flex', flexWrap: 'wrap', gap: 2, justifyContent: 'center', marginTop: 2 }}>
                             {fresh.map((item, idx) => (
-                              <CropIcon key={`${item.cropKey}-${idx}`} cropKey={item.cropKey} icon={item.icon} size={13} />
+                              <CropIcon key={`${item.cropKey}-${idx}`} cropKey={item.cropKey} icon={item.icon} size={18} />
                             ))}
                           </div>
-                          <div style={{ fontSize: 13, minHeight: 16, opacity: 0.6, display: 'flex', flexWrap: 'wrap', gap: 1, justifyContent: 'center' }}>
+                          <div style={{ fontSize: 18, minHeight: 22, opacity: 0.6, display: 'flex', flexWrap: 'wrap', gap: 2, justifyContent: 'center' }}>
                             {stored.map((item, idx) => (
-                              <CropIcon key={`${item.cropKey}-${idx}`} cropKey={item.cropKey} icon={item.icon} size={13} />
+                              <CropIcon key={`${item.cropKey}-${idx}`} cropKey={item.cropKey} icon={item.icon} size={18} />
                             ))}
                           </div>
                         </button>
