@@ -867,7 +867,9 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
   ];
 
   return (
-    <div className="max-w-5xl mx-auto w-full">
+    // 5xl (1024px) was leaving a third of a desktop empty on the one screen
+    // in the book that is a wide table: four stat tiles and a dated ledger.
+    <div className="mx-auto w-full" style={{ maxWidth: 1280 }}>
       {/* Title bar */}
       <div className="flex items-end justify-between gap-4 mb-5 flex-wrap">
         <div>

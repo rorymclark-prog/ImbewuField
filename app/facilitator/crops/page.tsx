@@ -83,6 +83,16 @@ const DISPLAY_MONTHS = 24;
 // legible). Deliberately not DISPLAY_MONTHS.
 const CHART_MONTHS = 15;
 const GRID_MIN_WIDTH = Math.round((760 * DISPLAY_MONTHS) / 12);
+// Widest the planning page is allowed to get on a desktop or landscape tablet.
+// Not an arbitrary round number: the wrapper carries 20px of padding a side at
+// md and up (40px) and the timeline card draws a 1px border on each side (2px),
+// so GRID_MIN_WIDTH + 42 leaves exactly GRID_MIN_WIDTH of content — the width at
+// which every one of the DISPLAY_MONTHS columns is on screen and the timeline's
+// own horizontal scrollbar disappears. Measured, not assumed: at +40 the grid
+// still had 2px of scroll left, which is enough to summon a classic scrollbar on
+// a platform that draws one. Below this the page is fluid and fills whatever it
+// is given; the timeline keeps scrolling.
+const PAGE_MAX_WIDTH = GRID_MIN_WIDTH + 42;
 
 // Bed-sharing presets — "half a bed" or a 3-way intercrop split. A custom
 // fraction can still be reached by adding more crops of the same preset.
@@ -1230,7 +1240,15 @@ function FacilitatorCropsPageInner() {
   const loading = design === undefined || plan === null || !mounted;
 
   return (
-    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
+    // EVERY surface on this screen is a hard-coded light one (#E4DCC6 paper,
+    // #FFFEFA cards, #FFFFFF rows) — none of them read a theme token. But text
+    // colour was left to inherit, and body's inherited colour IS a theme token:
+    // in Earth Dark `--color-ink` is #EEE4D0, a pale cream. So on a dark theme
+    // every child that did not name its own colour rendered pale cream on white
+    // — the Auto-suggest crop names were invisible. Pinning the ink at the root
+    // fixes all of them at once and, unlike colouring the 31 light containers
+    // one by one, cannot be regressed by the next child someone adds.
+    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6', color: '#20190F' }}>
       {/* AUTOSAVE FAILED — above the header, because everything below it is now unsaved work.
           It stays until a later autosave succeeds; there is no dismiss, since dismissing it would
           not save anything and the farmer would be back to believing the plan is stored. */}
@@ -1451,7 +1469,7 @@ function FacilitatorCropsPageInner() {
         <EmptyState onVirtual={() => setUseVirtual(true)} designHref={designHref} />
       ) : (
         <div className="flex-1 overflow-y-auto">
-          <div className="mx-auto w-full px-3 md:px-5 py-4" style={{ maxWidth: 1100 }}>
+          <div className="mx-auto w-full px-3 md:px-5 py-4" style={{ maxWidth: PAGE_MAX_WIDTH }}>
             {useVirtual && designBeds.length === 0 && (
               <div className="mb-3 px-3 py-2 rounded-xl font-sans" style={{ fontSize: 12, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: '#9A6018' }}>
                 Planning without a map — one virtual 10 m² bed.{' '}
@@ -1533,9 +1551,31 @@ function FacilitatorCropsPageInner() {
                   sticky-left independently, so both axes pin correctly. */}
               <div
                 className="flex"
-                style={{ borderBottom: '1px solid #E2D8C4', position: 'sticky', top: 52, zIndex: 3, background: '#FFFEFA', borderTopLeftRadius: 16, borderTopRightRadius: 16 }}
+                style={{
+                  borderBottom: '1px solid #D8CDB4',
+                  position: 'sticky',
+                  // top:0, not 52. The 56px page header is a FLEX SIBLING of the
+                  // scroll container, not an overlay inside it, so the scrollport
+                  // already begins below it — the old 52px offset was pure dead
+                  // band, and the crop grid scrolled past *above* the frozen row
+                  // instead of under it.
+                  top: 0,
+                  // Above every mark in the body (the tallest is the transplant
+                  // chip at 2) with headroom, so nothing can paint over the row.
+                  zIndex: 5,
+                  // Warm paper, not the card's own #FFFEFA: frozen chrome has to
+                  // read as chrome. With both the same colour there was nothing
+                  // to tell a farmer this row was pinned rather than scrolled to.
+                  background: '#F5F0E8',
+                  // Content passes underneath, so say so.
+                  boxShadow: '0 6px 12px -6px rgba(32,25,15,0.28)',
+                  borderTopLeftRadius: 16,
+                  borderTopRightRadius: 16,
+                }}
               >
-                <div style={{ position: 'sticky', left: 0, zIndex: 2, width: 128, flexShrink: 0, background: '#FFFEFA', borderRight: '1px solid #E2D8C4', padding: '8px 10px', display: 'flex', alignItems: 'flex-end' }}>
+                {/* Same paper as the row around it — otherwise the frozen bar
+                    is two-tone and the corner cell reads as a separate card. */}
+                <div style={{ position: 'sticky', left: 0, zIndex: 2, width: 128, flexShrink: 0, background: '#F5F0E8', borderRight: '1px solid #D8CDB4', padding: '8px 10px', display: 'flex', alignItems: 'flex-end' }}>
                   <span className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.08em' }}>Bed</span>
                 </div>
                 <div
@@ -1616,7 +1656,7 @@ function FacilitatorCropsPageInner() {
                 </div>
               </div>
             </div>
-            <div className="font-sans mb-5" style={{ fontSize: 11.5, color: '#8C7A62', lineHeight: 1.5, marginTop: -12 }}>
+            <div className="font-sans mb-5" style={{ fontSize: 11.5, color: '#8C7A62', lineHeight: 1.5, marginTop: -12, maxWidth: 820 }}>
               <span
                 className="font-sans"
                 style={{ fontWeight: 600, color: '#9A6018', border: '1px solid rgba(154,96,24,0.35)', borderRadius: 4, padding: '0 3px', fontSize: 10 }}
@@ -1988,10 +2028,15 @@ function FacilitatorCropsPageInner() {
               </p>
             </DisclosureCard>
 
-            <RotationExplanationCard />
-            <OrganicGuideCard />
+            {/* Two standing explainers. Side by side once there is room for
+                two readable columns, stacked below that — left full-width they
+                would run to a 200-character measure on a desktop. */}
+            <div className="grid gap-4" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))' }}>
+              <RotationExplanationCard />
+              <OrganicGuideCard />
+            </div>
 
-            <div className="font-sans mt-4 text-center" style={{ fontSize: 11, color: '#9A8268', lineHeight: 1.5 }}>
+            <div className="font-sans mt-4 text-center mx-auto" style={{ fontSize: 11, color: '#9A8268', lineHeight: 1.5, maxWidth: 820 }}>
               Planning guide only — sow windows are general. Adjust to your local rainfall, frost dates and microclimate.
             </div>
           </div>
