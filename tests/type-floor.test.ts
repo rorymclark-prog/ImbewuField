@@ -70,7 +70,7 @@ const FARMER_SURFACES: Record<string, string> = {
   'app/records/page.tsx': 'the money book — Picked, Sold, Spent, and the charts inside it',
   'app/finances/page.tsx': 'the old money door, now a redirect onto the book — it must stay empty of type',
   'app/farmer/page.tsx': 'her own farm',
-  'components/TabBar.tsx': 'the four labels under every single screen',
+  'components/TabBar.tsx': 'the labels under every single screen',
   'components/NavDrawer.tsx': 'the menu',
   'components/MyRecords.tsx': 'the records list itself',
   'components/FinanceGraphs.tsx': 'picked and sold, in her own numbers',

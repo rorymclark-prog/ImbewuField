@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Home, Map, DollarSign, User } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
+import { useAuth } from '@/lib/auth';
+import { farmsOwnLand } from '@/lib/role-access';
 
 // The third tab is the farmer's money, and there is one of it now. It used to point at
 // /finances while a second door, "My Records", held her kilograms — the split the Gogo Test
@@ -21,10 +23,25 @@ const TABS = [
   { href: '/account',  key: 'tabAccount',        Icon: User },
 ];
 
+// The two tabs that only mean anything if you have a farm of your own. /farmer draws the places
+// THIS account saved; /records is myProduction, mySales and myExpenses. Home and Account are true
+// for every account there is, so they are never filtered out and a staff user always keeps a bar
+// rather than watching the bottom of the app vanish on four screens out of nineteen.
+//
+// The filter keys off the ROLE, not the route, and lib/role-access.ts explains why: /mentor admits
+// mentor, ngo, funder and admin, so a per-route answer would give one NGO officer two different
+// bottom bars in one session. Every page that renders this component gets the same treatment.
+const OWN_LAND_TABS: ReadonlySet<string> = new Set(['/farmer', '/records']);
+
 export default function TabBar() {
   const pathname = usePathname();
   const { t } = useLanguage();
+  const { role } = useAuth();
   const barRef = useRef<HTMLDivElement>(null);
+
+  // Filtered, not early-returned: the hooks below must run in the same order on every render, and
+  // the height this bar publishes has to keep being published for a staff user too.
+  const tabs = farmsOwnLand(role) ? TABS : TABS.filter(({ href }) => !OWN_LAND_TABS.has(href));
 
   // Publishes this bar's own rendered height as --bottom-nav-height, so anything that needs to
   // clear it (PWAUpdateNotifier's pill) reads a measured number instead of a guessed constant.
@@ -100,7 +117,7 @@ export default function TabBar() {
         paddingBottom: 'env(safe-area-inset-bottom, 0px)',
       }}
     >
-      {TABS.map(({ href, key, Icon }) => {
+      {tabs.map(({ href, key, Icon }) => {
         const active = isActive(href);
         return (
           <Link
