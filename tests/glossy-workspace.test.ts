@@ -33,9 +33,11 @@ test('Preview map chooses a starting sheet without reviving the retired compact 
 
 test('the left rail reads as one numbered Preview & Export workflow', () => {
   assert.match(glossy, /className=\{styles\.controlsBackdrop\}/);
-  for (let number = 1; number <= 6; number += 1) {
+  for (let number = 1; number <= 5; number += 1) {
     assert.match(glossy, new RegExp(`WorkflowHeading number=\\{${number}\\}`));
   }
+  // The tester-only engine/style steps disappear for ordinary accounts.
+  assert.match(glossy, /WorkflowHeading number=\{aiRenderOn \? 6 : 4\}/);
   assert.match(css, /\.controlsBackdrop \{[\s\S]*?grid-row: 2 \/ span 2;/,
     'settings and finish controls should sit on one visual panel rather than swapped cards');
 });
@@ -92,8 +94,9 @@ test('saved maps can switch sites without retargeting the open design or a paid 
     'Manage → Clear must apply to the site named by the gallery selector');
   assert.match(glossy, /sheetExportFileName\(\s*gallerySiteName,/,
     'downloads from another site must carry that site name, not the open design name');
-  assert.match(glossy, /saveSheet\(\{ \.\.\.item, siteId: state\.siteId/,
-    'rendered sheets must remain attached to the open design, never the browsed gallery site');
+  assert.match(glossy, /saveSheet\(\{ \.\.\.item, siteId: targetSiteId/,
+    'rendered sheets must remain attached to their captured design, never the browsed gallery site');
+  assert.match(glossy, /const targetSiteId = provenance\.siteId \?\? state\.siteId/);
   assert.doesNotMatch(glossy, /saveSheet\(\{ \.\.\.item, siteId: gallerySiteId/,
     'browsing another site must not retarget a paid render');
 });
@@ -111,7 +114,7 @@ test('saved-map preview downloads the selected durable image and follows sheet-a
     'changing only the underlay or style must return to the not-yet-generated state');
   assert.match(glossy, /underlay: r\.underlay/,
     'restored gallery rows must retain the underlay baked into each immutable bitmap');
-  assert.match(glossy, /underlay,\s*\n\s*freshness: 'current'/,
+  assert.match(glossy, /underlay: provenance\.underlay \?\? underlay,\s*\n\s*freshness: 'current'/,
     'a new exact or AI sheet must save the underlay that was actually rendered');
   assert.match(glossy, /savedSheetUnderlayNote\(galleryViewItem\.underlay, underlay\)/,
     'the selected saved map must distinguish its baked underlay from the picker for the next render');
@@ -224,9 +227,9 @@ test('finish choices appear before advanced options and their longer explanation
 
   assert.ok(finish >= 0 && explanation > finish && more >= 0,
     'finish controls and their collapsed explanation must remain in the primary action rail');
-  assert.match(actions, /WorkflowHeading number=\{5\}[\s\S]*?enginePicker[\s\S]*?qualityPicker[\s\S]*?WorkflowHeading number=\{6\}[\s\S]*?designGlossyFinishHeading/,
+  assert.match(actions, /WorkflowHeading number=\{5\}[\s\S]*?enginePicker[\s\S]*?qualityPicker[\s\S]*?WorkflowHeading number=\{aiRenderOn \? 6 : 4\}[\s\S]*?designGlossyFinishHeading/,
     'engine and quality are step 5; the paid/free finish decision follows as step 6');
-  assert.match(actions, /order: 1,[\s\S]*?WorkflowHeading number=\{6\}[\s\S]*?order: 2,[\s\S]*?designGlossyHowFinishesWork/,
+  assert.match(actions, /order: 1,[\s\S]*?WorkflowHeading number=\{aiRenderOn \? 6 : 4\}[\s\S]*?order: 2,[\s\S]*?designGlossyHowFinishesWork/,
     'the numbered finish choice and its disclosure must lead the action rail');
   assert.match(actions, /order: 3,[\s\S]*?designGlossyMoreOptions/,
     'advanced controls must visually follow the primary finish controls');

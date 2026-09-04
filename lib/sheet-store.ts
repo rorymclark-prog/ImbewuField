@@ -31,6 +31,7 @@ const SAMPLE_OWNER = 'sample';
 
 export type SheetResultKind = 'exact' | 'hybrid' | 'ai-polished' | 'ai-illustrated' | 'legacy';
 export type SheetProvider = 'exact' | 'openai' | 'gemini' | 'unknown';
+export type SheetValidationStatus = 'needs-review' | 'unscored' | 'verified';
 
 export interface StoredSheet {
   id: string;
@@ -57,8 +58,16 @@ export interface StoredSheet {
    * paid model actually produced the saved pixels. Older rows omit these fields and read as legacy. */
   resultKind?: SheetResultKind;
   provider?: SheetProvider;
+  /** The requested composition policy, not evidence that generated features were verified. */
   geometryLock?: boolean;
   showcase?: boolean;
+  jobId?: string;
+  attemptId?: string;
+  designRevision?: string;
+  /** A difference score or geometryLock flag must never automatically promote this to verified. */
+  validationStatus?: SheetValidationStatus;
+  /** Original worker output location, retained separately from the final composed bitmap. */
+  rawOutputPath?: string;
   /** The base actually baked into this immutable bitmap. The picker may since have changed. */
   underlay?: SheetUnderlay;
 }
@@ -72,10 +81,15 @@ const RESULT_KINDS = new Set<SheetResultKind>([
 ]);
 const PROVIDERS = new Set<SheetProvider>(['exact', 'openai', 'gemini', 'unknown']);
 const UNDERLAYS = new Set<SheetUnderlay>(['photo', 'satellite', 'plain']);
+const VALIDATION_STATUSES = new Set<SheetValidationStatus>(['needs-review', 'unscored', 'verified']);
 const IMAGE_DATA_URL = /^data:image\/(?:png|jpeg|webp);base64,([A-Za-z0-9+/]*={0,2})$/i;
 
 function nonEmptyString(value: unknown): value is string {
   return typeof value === 'string' && value.trim().length > 0;
+}
+
+function boundedProvenanceString(value: unknown, maxLength: number): value is string {
+  return nonEmptyString(value) && value.length <= maxLength && !/[\u0000-\u001f\u007f]/.test(value);
 }
 
 function isImageDataUrl(value: unknown): value is string {
@@ -112,6 +126,14 @@ function normaliseStoredSheet(value: unknown): StoredSheet | null {
   )) return null;
   if (row.geometryLock !== undefined && typeof row.geometryLock !== 'boolean') return null;
   if (row.showcase !== undefined && typeof row.showcase !== 'boolean') return null;
+  if (row.jobId !== undefined && !boundedProvenanceString(row.jobId, 256)) return null;
+  if (row.attemptId !== undefined && !boundedProvenanceString(row.attemptId, 256)) return null;
+  if (row.designRevision !== undefined && !boundedProvenanceString(row.designRevision, 256)) return null;
+  if (row.rawOutputPath !== undefined && !boundedProvenanceString(row.rawOutputPath, 2048)) return null;
+  if (row.validationStatus !== undefined && (
+    typeof row.validationStatus !== 'string'
+    || !VALIDATION_STATUSES.has(row.validationStatus as SheetValidationStatus)
+  )) return null;
   if (row.underlay !== undefined && (
     typeof row.underlay !== 'string'
     || !UNDERLAYS.has(row.underlay as SheetUnderlay)
@@ -130,6 +152,11 @@ function normaliseStoredSheet(value: unknown): StoredSheet | null {
     ...(row.provider === undefined ? {} : { provider: row.provider as SheetProvider }),
     ...(row.geometryLock === undefined ? {} : { geometryLock: row.geometryLock }),
     ...(row.showcase === undefined ? {} : { showcase: row.showcase }),
+    ...(row.jobId === undefined ? {} : { jobId: row.jobId }),
+    ...(row.attemptId === undefined ? {} : { attemptId: row.attemptId }),
+    ...(row.designRevision === undefined ? {} : { designRevision: row.designRevision }),
+    ...(row.validationStatus === undefined ? {} : { validationStatus: row.validationStatus as SheetValidationStatus }),
+    ...(row.rawOutputPath === undefined ? {} : { rawOutputPath: row.rawOutputPath }),
     ...(row.underlay === undefined ? {} : { underlay: row.underlay as SheetUnderlay }),
   };
 }

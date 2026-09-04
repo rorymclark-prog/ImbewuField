@@ -62,6 +62,14 @@ test('a water sheet on paper also loses the ground-painting art direction', () =
   assert.match(prompt, /WATER FEATURE ROLE/, 'the water direction itself must survive');
 });
 
+test('a painted water sheet derives its surroundings from the source instead of inventing a forest', () => {
+  const prompt = buildLockedIllustrationPrompt('Water', 'homestead_storybook', 'JoJo Tank 2500L x1');
+  assert.doesNotMatch(prompt, /forest context beyond the property/);
+  assert.match(prompt, /preserve the source land-cover pattern/);
+  assert.match(prompt, /keep unidentifiable surroundings neutral/);
+  assert.match(prompt, /only surfaces identified in the source photograph or saved design/);
+});
+
 test('the photo and painted contracts are byte-for-byte what they were', () => {
   // This change must be invisible to every render that has a photograph under it.
   for (const style of ['photo_plan', 'satellite_overlay', 'homestead_storybook'] as const) {

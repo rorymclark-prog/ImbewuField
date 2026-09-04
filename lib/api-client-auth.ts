@@ -21,8 +21,12 @@ import { SAMPLE_REQUEST_HEADER } from '@/lib/api-auth-shared';
  * The sample branch is checked only when there is NO user: a signed-in farmer who wandered into the
  * sample farm sends their token, and the server prefers a verified uid over any declaration.
  */
-export async function paidApiHeaders(): Promise<Record<string, string>> {
-  const user = getFirebase()?.auth.currentUser;
+export async function paidApiHeaders(
+  // Access checks bind their response to a particular user. Capture that same user's token,
+  // even if Firebase switches accounts while the request is awaiting authentication.
+  forUser?: { getIdToken(): Promise<string> } | null,
+): Promise<Record<string, string>> {
+  const user = forUser === undefined ? getFirebase()?.auth.currentUser : forUser;
   if (!user) return isSampleMode() ? { [SAMPLE_REQUEST_HEADER]: '1' } : {};
   return { Authorization: `Bearer ${await user.getIdToken()}` };
 }

@@ -26,10 +26,12 @@ import { SAMPLE_REQUEST_HEADER } from '@/lib/api-auth-shared';
  */
 export const MAX_API_BODY_BYTES = 5 * 1024 * 1024;
 
-export type VerifyIdToken = (idToken: string) => Promise<{ uid: string }>;
+export type VerifyIdToken = (idToken: string) => Promise<{ uid: string; aiRenderTester?: unknown }>;
 
 export interface ApiAuthResult {
   uid: string | null;
+  /** Copied only from a verified Firebase custom claim, never from request/profile data. */
+  aiRenderTester?: true;
   /**
    * Set only when the request was admitted through the guest lane — an anonymous sample-farm
    * visitor on a demo-safe route. Absent otherwise, deliberately: a route that does not know
@@ -140,7 +142,7 @@ const ADMIN_PROJECT_ID =
   ?? process.env.GOOGLE_CLOUD_PROJECT
   ?? process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
 
-async function verifyWithFirebaseAdmin(idToken: string): Promise<{ uid: string }> {
+async function verifyWithFirebaseAdmin(idToken: string): Promise<{ uid: string; aiRenderTester?: unknown }> {
   const app = getApps().length > 0 ? getApp() : initializeApp({ projectId: ADMIN_PROJECT_ID });
   return getAuth(app).verifyIdToken(idToken);
 }
@@ -181,7 +183,7 @@ export async function authenticateApiRequest(
   try {
     const decoded = await verifyToken(match[1]);
     if (!decoded?.uid) return unauthorised(req, routeName, 'token had no uid');
-    return { uid: decoded.uid };
+    return { uid: decoded.uid, ...(decoded.aiRenderTester === true ? { aiRenderTester: true as const } : {}) };
   } catch (error) {
     const reason = error instanceof Error ? error.message : 'token verification failed';
     return unauthorised(req, routeName, reason.slice(0, 160));

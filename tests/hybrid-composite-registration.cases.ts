@@ -249,14 +249,14 @@ for (const sheet of ['masterplan', 'water layer'] as const) {
     });
   });
 
-  test(`${sheet} full treatment restores exact corners onto a different-aspect AI result`, async () => {
+  test(`${sheet} restoration keeps exact corners when the AI returns a proportional resize`, async () => {
     await withRasterDocument(async (canvases) => {
       const finishedHybrid = raster(24, 16, MODEL);
-      const polished = raster(20, 20, [120, 84, 48, 255]); // model changed both size and aspect
+      const polished = raster(36, 24, [120, 84, 48, 255]);
       const protectMask = raster(24, 16, [255, 255, 255, 0]);
       setPixel(finishedHybrid, 12, 8, [240, 20, 80, 255]);
       setPixel(protectMask, 12, 8, [255, 255, 255, 128]);
-      setPixel(polished, 10, 10, AI_GROUND_MARKER);
+      setPixel(polished, 18, 12, AI_GROUND_MARKER);
       for (const [x, y] of [[6, 4], [18, 4], [18, 12], [6, 12]] as const) {
         setPixel(finishedHybrid, x, y, EXACT);
         setPixel(protectMask, x, y, [255, 255, 255, 255]);
@@ -270,17 +270,60 @@ for (const sheet of ['masterplan', 'water layer'] as const) {
 
       const output = canvases.at(-1)?.encoded;
       assert.ok(output, 'the restore never encoded a picture — drained before toDataURL?');
-      // Scaling 24×16 source/mask to the square 20×20 response maps those same normalised ground
-      // corners to these pixels. Exact and AI layers take the identical transform.
-      for (const [x, y] of [[5, 5], [15, 5], [15, 15], [5, 15]] as const) {
+      // The old test accepted stretching a landscape map onto a square. Registering two
+      // stretched layers together does not preserve ground geometry; only uniform resizing does.
+      for (const [x, y] of [[9, 6], [27, 6], [27, 18], [9, 18]] as const) {
         assertColorWithinOnePixel(output, x, y, EXACT);
       }
       assert.deepEqual(
-        pixel(output, 10, 10),
+        pixel(output, 18, 12),
         [...REGISTERED_BLEND],
         'known Full Treatment ground marker and restored exact marker must share one output pixel',
       );
-      assert.deepEqual(pixel(output, 11, 11), [120, 84, 48, 255], 'editable AI ground stays painted');
+      assert.deepEqual(pixel(output, 20, 14), [120, 84, 48, 255], 'editable AI ground stays painted');
     });
   });
 }
+
+test('a square AI return cannot stretch a landscape source and protection mask into agreement', async () => {
+  await withRasterDocument(async (canvases) => {
+    await assert.rejects(restoreProtectedPixels(
+      asImageInput(raster(24, 16, SATELLITE)),
+      asImageInput(raster(20, 20, MODEL)),
+      asImageInput(raster(24, 16, [255, 255, 255, 255])),
+    ), /model aspect does not match source/);
+    assert.equal(canvases.length, 0, 'mismatched geometry must be rejected before rasterising');
+  });
+});
+
+test('a mask from a differently shaped map cannot restore pixels onto this map', async () => {
+  await withRasterDocument(async (canvases) => {
+    await assert.rejects(restoreProtectedPixels(
+      asImageInput(raster(24, 16, SATELLITE)),
+      asImageInput(raster(36, 24, MODEL)),
+      asImageInput(raster(16, 16, [255, 255, 255, 255])),
+    ), /mask aspect does not match source/);
+    assert.equal(canvases.length, 0);
+  });
+});
+
+test('a fully protected mask restores the source instead of exposing the whole AI redraw', async () => {
+  await withRasterDocument(async (canvases) => {
+    const source = raster(24, 16, SATELLITE);
+    setPixel(source, 12, 8, EXACT);
+    await restoreProtectedPixels(
+      asImageInput(source),
+      asImageInput(raster(36, 24, MODEL)),
+      asImageInput(raster(12, 8, [255, 255, 255, 255])),
+    );
+    const output = canvases.at(-1)?.encoded;
+    assert.ok(output, 'the source restoration must remain available as a PNG');
+    assert.deepEqual(pixel(output, 18, 12), [...EXACT]);
+    assert.deepEqual(pixel(output, 0, 0), [...SATELLITE]);
+    assert.deepEqual(pixel(output, 35, 23), [...SATELLITE]);
+    for (let i = 0; i < output.data.length; i += 4) {
+      assert.notDeepEqual(Array.from(output.data.subarray(i, i + 4)), [...MODEL],
+        'no raw model pixel may escape an entirely protected mask');
+    }
+  });
+});

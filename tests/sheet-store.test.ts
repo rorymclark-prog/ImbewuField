@@ -259,11 +259,47 @@ test('saved sheets round-trip with provenance and load oldest first', async () =
     geometryLock: true,
     showcase: true,
     underlay: 'satellite',
+    jobId: 'paid-job-1',
+    attemptId: 'workflow-1',
+    designRevision: 'design-sha-1',
+    validationStatus: 'needs-review',
+    rawOutputPath: 'renders/farmer-a/paid-job-1/planting-output.png',
   });
   const earlier = sheet('earlier', 'site-a', '2026-01-01');
   assert.equal(await saveSheet(later), true);
   assert.equal(await saveSheet(earlier), true);
   assert.deepEqual(await loadSheets('site-a'), [earlier, later]);
+});
+
+test('gallery metadata preserves render provenance and uncertainty after a reload', async () => {
+  const factory = new FakeIndexedDb();
+  install(factory);
+  const saved = sheet('paid', 'site-a', '2026-02-01', {
+    resultKind: 'hybrid',
+    provider: 'gemini',
+    geometryLock: true,
+    jobId: 'job-1',
+    attemptId: 'attempt-1',
+    designRevision: 'revision-1',
+    validationStatus: 'unscored',
+    rawOutputPath: 'renders/farmer-a/job-1/whole-output.png',
+  });
+  assert.equal(await saveSheet(saved), true);
+  const { image: _image, ...expectedMeta } = saved;
+  assert.deepEqual(await loadSheetMetas('site-a'), [expectedMeta]);
+  assert.equal((await loadSheets('site-a'))[0].validationStatus, 'unscored');
+});
+
+test('legacy geometry-lock flags never become verified geometry on load', async () => {
+  const factory = new FakeIndexedDb();
+  install(factory);
+  const legacy = sheet('legacy', 'site-a', '2026-02-01', {
+    resultKind: 'hybrid',
+    provider: 'openai',
+    geometryLock: true,
+  });
+  factory.rows.set(legacy.id, legacy);
+  assert.equal((await loadSheetMetas('site-a'))[0].validationStatus, undefined);
 });
 
 test('site reads and clear-all never cross into another farmer design', async () => {
@@ -385,6 +421,15 @@ test('invalid records are rejected on write before they can replace a durable sh
     sheet('one', 'site-a', '2026-02-01', { provider: 'invented' as StoredSheet['provider'] }),
     sheet('one', 'site-a', '2026-02-01', { underlay: 'invented' as StoredSheet['underlay'] }),
     sheet('one', 'site-a', '2026-02-01', { renderRecipe: '' }),
+    sheet('one', 'site-a', '2026-02-01', { jobId: '' }),
+    sheet('one', 'site-a', '2026-02-01', { attemptId: ' ' }),
+    sheet('one', 'site-a', '2026-02-01', { jobId: 'a'.repeat(257) }),
+    sheet('one', 'site-a', '2026-02-01', { attemptId: 'a'.repeat(257) }),
+    sheet('one', 'site-a', '2026-02-01', { designRevision: 'a'.repeat(257) }),
+    sheet('one', 'site-a', '2026-02-01', { designRevision: 'revision\nother' }),
+    sheet('one', 'site-a', '2026-02-01', { rawOutputPath: 'a'.repeat(2049) }),
+    sheet('one', 'site-a', '2026-02-01', { rawOutputPath: 7 as unknown as string }),
+    sheet('one', 'site-a', '2026-02-01', { validationStatus: 'passed' as StoredSheet['validationStatus'] }),
   ];
   for (const row of invalid) assert.equal(await saveSheet(row), false);
   assert.deepEqual(await loadSheets('site-a'), [original]);
@@ -401,6 +446,8 @@ test('loads quarantine malformed rows while preserving valid legacy rows', async
   factory.rows.set('bad-image', { ...sheet('bad-image', 'site-a', '2026-01-03'), image: 'broken' });
   factory.rows.set('bad-date', { ...sheet('bad-date', 'site-a', 'yesterday') });
   factory.rows.set('bad-provenance', { ...sheet('bad-provenance', 'site-a', '2026-01-04'), provider: 'vendor' });
+  factory.rows.set('bad-attempt', { ...sheet('bad-attempt', 'site-a', '2026-01-04'), attemptId: ['attempt-1'] });
+  factory.rows.set('bad-validation', { ...sheet('bad-validation', 'site-a', '2026-01-04'), validationStatus: true });
 
   assert.deepEqual(await loadSheets('site-a'), [legacy]);
 });

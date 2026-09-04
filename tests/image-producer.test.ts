@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
 import './hybrid-composite-registration.cases.ts';
-import { blendProtectedPixels, countProtectedPixelMismatches, maskEditableFraction, precisionAtlasContextPixels, shouldUseModelChrome } from '../lib/image-producer.ts';
+import { assertMatchingImageAspects, blendProtectedPixels, countProtectedPixelMismatches, maskEditableFraction, precisionAtlasContextPixels, shouldUseModelChrome } from '../lib/image-producer.ts';
 import { buildFinishedSheetPolishPrompt, buildLockedBackgroundPrompt, buildLockedIllustrationPrompt, buildSatelliteOverlayPrompt, buildSectorRestylePrompt, buildSectorSheetPolishPrompt, isModelChromeStyle, buildProducerPrompt, buildProducerPromptLegacy, buildShowcasePrompt, buildShowcasePromptLegacy, STYLE_LINES, SHEET_NO } from '../lib/producer-prompt.ts';
 import { ELEMENT_CATALOG } from '../lib/design-elements.ts';
 import { isDifferentBuild } from '../lib/pwa-update.ts';
@@ -44,6 +44,38 @@ test('maskEditableFraction reports how much of the sheet the model may repaint',
   const allEditable = new Uint8ClampedArray([0, 0, 0, 0, 0, 0, 0, 0]);
   assert.equal(maskEditableFraction(allEditable), 1);
   assert.equal(maskEditableFraction(new Uint8ClampedArray([])), 0);
+});
+
+test('registered maps may change resolution with pixel rounding, but never shape', () => {
+  assert.doesNotThrow(() => assertMatchingImageAspects(
+    { width: 3072, height: 2049 },
+    { width: 1536, height: 1025 },
+    { width: 768, height: 512 },
+  ));
+  assert.throws(() => assertMatchingImageAspects(
+    { width: 1600, height: 900 },
+    { width: 1024, height: 1024 },
+    { width: 800, height: 450 },
+  ), /model aspect does not match source/);
+  assert.throws(() => assertMatchingImageAspects(
+    { width: 1600, height: 900 },
+    { width: 800, height: 450 },
+    { width: 800, height: 600 },
+  ), /mask aspect does not match source/);
+  // A one-pixel discrepancy on a tiny image is not permission to stretch it by 12.5%.
+  assert.throws(() => assertMatchingImageAspects(
+    { width: 12, height: 8 },
+    { width: 12, height: 9 },
+  ), /model aspect does not match source/);
+});
+
+test('invalid image dimensions cannot reach a restoration canvas', () => {
+  const valid = { width: 1024, height: 768 };
+  for (const bad of [0, -1, 1.5, Number.NaN, Number.POSITIVE_INFINITY]) {
+    assert.throws(() => assertMatchingImageAspects({ width: bad, height: 768 }, valid, valid), /source has invalid dimensions/);
+    assert.throws(() => assertMatchingImageAspects(valid, { width: 1024, height: bad }, valid), /model has invalid dimensions/);
+    assert.throws(() => assertMatchingImageAspects(valid, valid, { width: bad, height: 768 }), /mask has invalid dimensions/);
+  }
 });
 
 test('blendProtectedPixels keeps the model output where the mask is transparent', () => {
@@ -456,9 +488,11 @@ test('locked illustration prompt paints the whole sheet without inventing featur
   // Labels, legend and north arrow are the browser's job — the model must not draw text.
   assert.match(p, /no writing, numbers, title, legend/i);
   assert.match(p, /WATER FEATURE ROLE/);
-  assert.match(p, /deep dark-green illustrated forest context/);
-  assert.match(p, /moderate olive\/moss property interior/);
-  assert.match(p, /high-contrast, moody and editorial/);
+  // The old assertion required a forest on every source, contradicting this test's own
+  // "without inventing features" claim. Ground contrast must come from the actual site.
+  assert.match(p, /preserve the source land-cover pattern/);
+  assert.match(p, /keep unidentifiable surroundings neutral/);
+  assert.doesNotMatch(p, /forest context beyond the property/);
   assert.doesNotMatch(p, /15-20% brighter/);
   assert.match(p, /JoJo Tank 5000L ×2, Greywater line ×3/);
   assert.match(p, /WHOLE-SITE CONSISTENCY BRIEF: One fixed whole-site brief/);
@@ -1463,13 +1497,11 @@ test('every prompt path that can name a vegetable bed describes it as planted, n
 
 // ── The staple garden ───────────────────────────────────────────────────────────────────────────
 //
-// A traced AREA, not a placed element, so it reaches the model through the register (painted
-// styles) or the fabric channel (Satellite Overlay) rather than as a marker to replace. Rory:
-// "when ai or hybrid rendering it needs to show maize and beans etc growing."
-
-test('a staple garden is rendered as a standing maize/bean/pumpkin crop on every AI path', () => {
-  const register = 'Staple garden (maize & beans), 🥬 Vegetable Bed ×4';
-  const paths: Array<[string, string]> = [
+// A traced AREA is a land-use choice, not permission to add a particular crop. The old test
+// required pumpkins even though its own register named only maize and beans. That sample-specific
+// appearance must not become a compulsory mixture on every farmer's plot.
+function staplePromptPaths(register: string): Array<[string, string]> {
+  return [
     ['locked hybrid', buildLockedIllustrationPrompt('Planting', 'precision_atlas', register)],
     ['showcase', buildShowcasePrompt('Planting', 'precision_atlas', register, 'Ubhejane', 'planting')],
     ['producer', buildProducerPrompt('Planting', 'precision_atlas', register, 'full')],
@@ -1477,13 +1509,35 @@ test('a staple garden is rendered as a standing maize/bean/pumpkin crop on every
       layerLabel: 'Planting', stylePreset: 'satellite_overlay', elementsText: register, sheetKind: 'planting',
     })],
   ];
+}
+
+test('a named staple mixture keeps the supplied crops without adding another one', () => {
+  const paths = staplePromptPaths('Staple garden (maize & beans), 🥬 Vegetable Bed ×4');
   for (const [name, prompt] of paths) {
     assert.match(prompt, /maize/i, `${name} must name the maize`);
     assert.match(prompt, /bean/i, `${name} must name the beans`);
-    assert.match(prompt, /pumpkin/i, `${name} must name the pumpkin`);
+    assert.doesNotMatch(prompt, /pumpkin/i, `${name} must not add a crop absent from the register`);
     // The failure mode for a large plain polygon is being painted away as grass.
     assert.match(prompt, /never (mown )?lawn/i, `${name} must rule out painting the plot as lawn`);
   }
+});
+
+test('an unnamed staple plot gets generic cultivation rather than an invented crop or growth stage', () => {
+  for (const [name, prompt] of staplePromptPaths('Staple garden')) {
+    assert.doesNotMatch(prompt, /maize|beans?|pumpkin/i, `${name} must not choose crops for the farmer`);
+    assert.match(prompt, /generic cultivation texture/, `${name} must have a drawable fallback`);
+    assert.match(prompt, /without identifiable crop species or an implied growth stage/);
+  }
+});
+
+test('existing staple ground never gains a standing crop absent from its source facts', () => {
+  const prompt = buildSatelliteOverlayPrompt({
+    layerLabel: 'Planting', stylePreset: 'satellite_overlay',
+    elementsText: 'Mango Tree ×1', fabric: 'Staple garden', sheetKind: 'planting',
+  });
+  assert.match(prompt, /preserving its observed current state/);
+  assert.match(prompt, /without adding a standing crop that the photograph or saved facts do not show/);
+  assert.doesNotMatch(prompt, /maize|beans?|pumpkin|whether or not the photograph shows/i);
 });
 
 test('a sheet with no staple garden is never told to draw one', () => {

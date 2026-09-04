@@ -2,11 +2,13 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
+import { decideAiRenderAccess, readAiRenderTesterAccess } from '@/lib/ai-render/access';
 
 // AI MAP GENERATION MUST BE OFF UNLESS SOMEBODY TURNED IT ON.
 //
-// /api/ai-render, /api/ai-render/poll and /api/image-producer are the three calls
-// in this app that bill a vendor account per image. The failure this guards is the
+// /api/ai-render and /api/image-producer submit new billed image work. Polling an already-created
+// request is retrieval, so switching off new work must not strand an image already paid for.
+// The failure this guards is the
 // one already in this repo's history (see the paid-render-gate suite, and the open
 // paid routes found in the API-auth audit): a real, correct guard that was simply
 // never in force in production because the variable enabling it was unset.
@@ -19,7 +21,6 @@ const read = (p: string) => readFileSync(join(process.cwd(), p), 'utf8');
 
 const ROUTES = [
   'app/api/ai-render/route.ts',
-  'app/api/ai-render/poll/route.ts',
   'app/api/image-producer/route.ts',
 ];
 
@@ -72,6 +73,74 @@ for (const route of ROUTES) {
   });
 }
 
+test('experimental map access is denied without an explicit trusted account grant', () => {
+  for (const claims of [undefined, null, {}, { aiRenderTester: false }, { aiRenderTester: 'true' }, { role: 'admin' }, { role: 'owner' }, { rolloutPercent: 1 }]) {
+    assert.equal(decideAiRenderAccess('farmer-1', claims).allowed, false);
+  }
+  assert.equal(decideAiRenderAccess(null, { aiRenderTester: true }).allowed, false);
+  assert.equal(decideAiRenderAccess('farmer-1', { aiRenderTester: true }).allowed, true);
+});
+
+test('worker access uses current trusted claims and fails closed on revoked or unavailable accounts', async () => {
+  const calls: string[] = [];
+  const approved = await readAiRenderTesterAccess('tester-1', async (uid) => {
+    calls.push(uid);
+    return { aiRenderTester: true };
+  });
+  assert.equal(approved.allowed, true);
+  const revoked = await readAiRenderTesterAccess('tester-1', async () => ({}));
+  assert.equal(revoked.allowed, false, 'the previous approval must not be cached');
+  const unavailable = await readAiRenderTesterAccess('tester-1', async () => { throw new Error('Auth unavailable'); });
+  assert.equal(unavailable.allowed, false);
+  assert.equal(unavailable.reason, 'unavailable');
+  const anonymous = await readAiRenderTesterAccess(null, async () => { throw new Error('must not look up a missing UID'); });
+  assert.equal(anonymous.reason, 'sign-in-required');
+  assert.deepEqual(calls, ['tester-1']);
+});
+
+test('every image-generation endpoint enforces the verified grant before body or vendor handling', () => {
+  for (const route of ROUTES) {
+    const src = read(route);
+    const post = src.indexOf('export async function POST(');
+    const handler = src.slice(post);
+    const gate = handler.indexOf('decideAiRenderAccess(auth.uid, auth)');
+    assert.ok(gate >= 0, `${route} must use verified auth, not request data or a role`);
+    assert.match(handler, /if \(!access\.allowed\)/);
+    for (const needle of ['await req.json()', 'process.env.FAL_KEY', 'process.env.OPENAI_API_KEY', 'process.env.GEMINI_API_KEY']) {
+      const position = handler.indexOf(needle);
+      if (position >= 0) assert.ok(position > gate, `${route} reaches ${needle} before checking tester access`);
+    }
+  }
+});
+
+test('the worker rejects unapproved jobs before reserving quota, including owner jobs', () => {
+  const src = read('functions/src/index.ts');
+  const claim = src.slice(src.indexOf('async function claimJob('), src.indexOf('export const runRenderJob'));
+  const gate = claim.indexOf('readAiRenderTesterAccess(job.uid');
+  assert.ok(gate >= 0);
+  assert.match(claim, /getAuth\(\)\.getUser\(uid\)/);
+  assert.match(claim, /account\.disabled \? null : account\.customClaims/,
+    'a disabled Auth account must lose rendering even if its old claim remains true');
+  assert.match(claim, /if \(!access\.allowed\)/);
+  assert.ok(gate < claim.indexOf('const usageRef'), 'unapproved users must not consume usage counters');
+  assert.ok(gate < claim.indexOf('const isOwner'), 'the old owner budget exemption must not grant access');
+});
+
+test('the access endpoint returns only a noncached decision for the verified caller', () => {
+  const src = read('app/api/ai-render/access/route.ts');
+  assert.match(src, /authenticateApiRequest/);
+  assert.match(src, /decideAiRenderAccess\(auth\.uid, auth\)/);
+  assert.match(src, /private, no-store/);
+  assert.doesNotMatch(src, /getFirestore|profiles|Math\.random|localStorage/);
+});
+
+test('previously submitted images remain retrievable after tester access is removed', () => {
+  const src = read('app/api/ai-render/poll/route.ts');
+  assert.doesNotMatch(src, /aiRenderEnabled\(|decideAiRenderAccess\(/);
+  assert.match(src, /guardPaidApiRequest/);
+  assert.match(src, /isFalQueueUrl/);
+});
+
 test('the Design Studio controls are driven by the same switch', () => {
   const src = read('components/design/DesignGlossy.tsx');
 
@@ -100,4 +169,16 @@ test('the Design Studio controls are driven by the same switch', () => {
     /useState<'ai' \| 'exact'>\(aiRenderOn \? 'ai' : 'exact'\)/,
     'the initial render mode ignores the kill switch',
   );
+
+  const accessStart = src.indexOf('const aiRenderOn =');
+  const access = src.slice(accessStart, src.indexOf(';', accessStart));
+  assert.match(access, /approvedRenderUid === renderUser\.uid/,
+    'a previous account approval must not enable the next signed-in account');
+  assert.match(access, /!isSampleMode\(\)/);
+  assert.match(src, /\{aiRenderOn && selectedSheet && enginePicker\}/);
+  assert.match(src, /\{aiRenderOn && selectedSheet && qualityPicker\}/);
+  assert.match(src, /\{aiRenderOn && \(<button/,
+    'the paid finish button must be hidden for ordinary users');
+  assert.match(src, /\{aiRenderOn && fullTreatmentVisible && \(/,
+    'the developer finish toggle must not bypass tester approval');
 });

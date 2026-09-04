@@ -286,10 +286,10 @@ test('the design-layer polish uploads the Hybrid MAP, never the Hybrid page', ()
     /compositeDataUrl: hybridResultRef/,
     'the composed page must never be uploaded to the model',
   );
-  // And the stash is filled from the pre-label map, not from a finished sheet.
+  // The stash uses the pre-label map and a cancelled completion may never overwrite it.
   assert.match(
     DESIGN_GLOSSY_SOURCE,
-    /if \(locked\) hybridMapForPolishRef\.current = \{ key: f, map: final \};/,
+    /if \(locked && canPublish\(\)\) hybridMapForPolishRef\.current = \{ key: f, map: final \};/,
   );
 });
 

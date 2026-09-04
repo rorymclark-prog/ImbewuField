@@ -109,7 +109,7 @@ test('scoring can never reject a render it merely failed to measure', () => {
 
 test('the first paid Hybrid is scored raw input-vs-output before exact content is composited back', () => {
   const inputFetch = SOURCE.indexOf(
-    "const sourceImage = (isHybridResult || sheet.protectMaskPath)",
+    "const sourceImage = await fetchRenderOutput(sheet.inputPath)",
   );
   const hybridScore = SOURCE.indexOf(
     "measureRenderDifference(sourceImage, raw, protectMask)",
@@ -117,7 +117,7 @@ test('the first paid Hybrid is scored raw input-vs-output before exact content i
   );
   const finalAssembly = SOURCE.indexOf('const finalSheet =', inputFetch);
 
-  assert.ok(inputFetch !== -1, 'Hybrid completion must fetch the exact uploaded model input');
+  assert.ok(inputFetch !== -1, 'Both paid stages must fetch the exact uploaded model input, including after reload');
   assert.ok(hybridScore > inputFetch, 'Hybrid must compare its uploaded input with the raw model return');
   assert.ok(
     hybridScore < finalAssembly,
@@ -134,4 +134,17 @@ test('an unchanged Hybrid is not saved, labelled, or advanced into Full Treatmen
   assert.match(gate, /polishAfterHybridRef\.current = false/);
   assert.match(gate, /hybridResultRef\.current = null/);
   assert.match(gate, /continue/);
+});
+
+
+test('queued output is composed from its saved scene and cannot be filed under another farm', () => {
+  const completion = SOURCE.slice(SOURCE.indexOf('async function handleSnapshot('));
+  assert.match(completion, /job\.siteId !== siteId/);
+  assert.match(completion, /fetchRenderJobScene\(queueJobId!, job\)/);
+  assert.match(completion, /if \(!frozenScene\)/);
+  assert.match(completion, /sameDesignRevision[\s\S]*stillOnTargetSheet/);
+  assert.match(completion, /if \(!active\) return/);
+  assert.match(completion, /active = false; unsub\(\)/);
+  assert.match(completion, /geometryLock: finalGeometryLocked/);
+  assert.match(completion, /const finalGeometryLocked = false/);
 });

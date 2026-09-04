@@ -165,11 +165,13 @@ export async function geminiEdit(
     const ra = Number(res.headers.get('retry-after'));
     const wait = Number.isFinite(ra) && ra > 0 ? ra * 1000 : 30_000 + Math.floor(Math.random() * 15_000);
     await sleep(wait);
-    return geminiEdit(key, imageB64, prompt, attempt + 1, model);
+    // Transient failures must not silently change the sheet's aspect ratio or paid resolution,
+    // nor reintroduce a config field this model has already rejected.
+    return geminiEdit(key, imageB64, prompt, attempt + 1, model, imageConfig, dropImageConfig);
   }
   if (res.status >= 500 && attempt < MAX_RETRIES) {
     await sleep(2000 * (attempt + 1));
-    return geminiEdit(key, imageB64, prompt, attempt + 1, model);
+    return geminiEdit(key, imageB64, prompt, attempt + 1, model, imageConfig, dropImageConfig);
   }
   if (!res.ok) {
     const detail = await res.text().catch(() => '');

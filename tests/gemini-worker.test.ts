@@ -1,4 +1,4 @@
-import test from 'node:test';
+import test, { type TestContext } from 'node:test';
 import assert from 'node:assert';
 import { readFileSync } from 'node:fs';
 import { geminiEdit, GEMINI_IMAGE_MODELS, geminiModelForQuality } from '../functions/src/gemini.ts';
@@ -100,4 +100,72 @@ test('geminiEdit sends the correct shape and strict prompt', async (t) => {
   } finally {
     global.fetch = originalFetch;
   }
+});
+
+// Exercise the actual retry requests without a provider call or waiting through backoff. The
+// timeout for each fetch remains in place; only the retry delay is shortened in these tests.
+function skipRetryDelays(t: TestContext) {
+  const originalSetTimeout = globalThis.setTimeout;
+  t.mock.method(globalThis, 'setTimeout', (callback: (...args: any[]) => void, delay?: number, ...args: any[]) =>
+    originalSetTimeout(callback, delay === 60_000 ? delay : 0, ...args));
+}
+
+function renderedImageResponse() {
+  return Response.json({
+    candidates: [{ content: { parts: [{ inlineData: { mimeType: 'image/png', data: 'rendered-image' } }] } }],
+  });
+}
+
+for (const failure of ['network', 429, 503] as const) {
+  test(`a ${failure} retry preserves the requested model, sheet aspect and output size`, async (t) => {
+    skipRetryDelays(t);
+    const requests: Array<{ url: string; body: any }> = [];
+    t.mock.method(globalThis, 'fetch', async (url: string, init: RequestInit) => {
+      requests.push({ url: String(url), body: JSON.parse(String(init.body)) });
+      if (requests.length === 1) {
+        if (failure === 'network') throw new Error('simulated connection reset');
+        return new Response('temporary failure', { status: failure, headers: { 'retry-after': '1' } });
+      }
+      return renderedImageResponse();
+    });
+    const imageConfig = { aspectRatio: '4:3', imageSize: '2K' };
+    assert.equal(await geminiEdit('fake_key', 'source-image', 'draw this saved map', 0, 'pro-preview', imageConfig), 'rendered-image');
+    assert.equal(requests.length, 2);
+    for (const request of requests) {
+      assert.ok(request.url.includes(GEMINI_IMAGE_MODELS['pro-preview']));
+      assert.deepEqual(request.body.generationConfig.imageConfig, imageConfig);
+      assert.deepEqual(request.body.contents, requests[0].body.contents);
+    }
+  });
+}
+
+test('transient retries keep the unsupported-config fallback after a model explicitly rejects it', async (t) => {
+  skipRetryDelays(t);
+  const configs: unknown[] = [];
+  const statuses = [400, 429, 503, 200];
+  t.mock.method(globalThis, 'fetch', async (_url: string, init: RequestInit) => {
+    configs.push(JSON.parse(String(init.body)).generationConfig.imageConfig);
+    const status = statuses[configs.length - 1];
+    return status === 200
+      ? renderedImageResponse()
+      : new Response(status === 400 ? 'Unsupported imageConfig' : 'temporary failure', {
+        status, headers: { 'retry-after': '1' },
+      });
+  });
+  const imageConfig = { aspectRatio: '3:2', imageSize: '1K' };
+  assert.equal(await geminiEdit('fake_key', 'source-image', 'draw this saved map', 0, 'flash', imageConfig), 'rendered-image');
+  assert.deepEqual(configs, [imageConfig, undefined, undefined, undefined]);
+});
+
+test('a 400 unrelated to image configuration does not silently remove the chosen output settings', async (t) => {
+  let calls = 0;
+  t.mock.method(globalThis, 'fetch', async () => {
+    calls += 1;
+    return new Response('Invalid source image', { status: 400 });
+  });
+  await assert.rejects(
+    geminiEdit('fake_key', 'source-image', 'draw this saved map', 0, 'flash', { aspectRatio: '3:2', imageSize: '1K' }),
+    /Gemini 400: Invalid source image/,
+  );
+  assert.equal(calls, 1);
 });
