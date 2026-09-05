@@ -18,7 +18,7 @@ const examples = [
 ] as const;
 export default function SamplesPage() {
   const router = useRouter(); const [error, setError] = useState('');
-  return <main className={styles.root} style={{ minHeight: '100dvh', paddingBottom: 180 }}><div className={styles.wrap}>
+  return <main className={styles.root} style={{ height: '100dvh', minHeight: 0, overflowY: 'auto', paddingBottom: 'calc(180px + env(safe-area-inset-bottom, 0px))', scrollPaddingBottom: 'calc(180px + env(safe-area-inset-bottom, 0px))' }}><div className={styles.wrap}>
     <header className={styles.row}><MenuButton /><BackButton fallback="/account" /><Link href="/account">Account</Link></header>
     <div className={styles.hero} style={{ marginTop: 20 }}><span>IMBEWUFIELD · SAMPLE WORKSPACE</span><h1>Choose a sample view</h1><p>Demo the app without changing a real project. Switch views from the sample banner; reset when you want to start again.</p></div>
     <p className={styles.notice}>All sample programme results and people are fictional. The farmer example uses the saved Ubhejane design. These are demonstrations, not verified project deliverables.</p>

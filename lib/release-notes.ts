@@ -33,6 +33,10 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '5 September 2026', sha: 'c7f5940', changes: [
+    'Organisation: check a member’s saved access and assigned farmer group.',
+    'Sample chooser: scroll to every card and button above the bottom banner.',
+  ] },
   { when: '5 September', sha: 'e3d817fb', changes: [
     'Record training attendance, venue photos and progress milestones.',
     'Add partner logos to reports; try new sample photos and a smaller sample bar.',

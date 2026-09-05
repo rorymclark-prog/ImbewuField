@@ -15,6 +15,31 @@ export function melCan(role: UserRole, permission: MelPermission | null, action:
   return permission?.[action] ?? role === 'ngo';
 }
 
+// Use the same effective capabilities in the service and access inspector. Stored
+// checkboxes alone are misleading after a member changes from staff to farmer.
+export function programmeCapabilities(role: UserRole, permission: MelPermission | null) {
+  const organisation = role === 'ngo' || role === 'admin';
+  const manage = organisation && melCan(role, permission, 'manage');
+  const brand = organisation && melCan(role, permission, 'people');
+  const record = melCan(role, permission, 'training');
+  const analyse = melCan(role, permission, 'analyse');
+  return { manage, brand, record, analyse, read: record || analyse };
+}
+
+export function memberAccessSummary(role: UserRole, permission: MelPermission | null) {
+  const evidence = programmeCapabilities(role, permission);
+  return [
+    { id: 'manage', label: 'Create and manage assessments', allowed: melCan(role, permission, 'manage') },
+    { id: 'analyse', label: 'Read private assessment analysis', allowed: evidence.analyse },
+    { id: 'training', label: 'Record training and attendance', allowed: evidence.record },
+    { id: 'evidence', label: 'Read training evidence', allowed: evidence.read },
+    { id: 'publish', label: 'Manage milestones and approve training for funders', allowed: evidence.manage && (evidence.read || evidence.brand) },
+    { id: 'people', label: 'Manage people and mentor assignments', allowed: evidence.brand },
+    { id: 'branding', label: 'Edit organisation names and logos', allowed: evidence.brand },
+    { id: 'visits', label: 'Record visits for assigned farmers', allowed: role === 'mentor' },
+  ];
+}
+
 // A tenant can delegate its own work. Platform administration, funder identities and
 // moving people between tenants remain outside the tenant's authority.
 export function canChangeOrgRole(actor: { id: string; role: UserRole; orgId: string | null }, target: { id: string; role: UserRole; orgId: string | null }, next: UserRole) {

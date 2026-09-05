@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server';
 import { getApps, getApp, initializeApp } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
 import { guardPaidApiRequest } from '@/lib/api-auth';
-import { melCan, type MelPermission } from '@/lib/mel';
+import { melCan, programmeCapabilities, type MelPermission } from '@/lib/mel';
 import { validFieldId } from '@/lib/field-teams';
 import { blankBranding, publishedTraining, validProgrammeBranding, validProgrammeMilestone, validTrainingRecord, type TrainingRecord, type ProgrammeMilestone, type ProgrammeBranding } from '@/lib/programme-evidence';
 import type { UserRole } from '@/lib/db/types';
@@ -27,9 +27,7 @@ async function handle(req: NextRequest, write: boolean) {
       const [grant, controls] = await Promise.all([db.collection('grants').doc(`${p!.org_id}_${org}`).get(), db.collection('organization_controls').doc(org).get()]);
       if (!grant.exists || controls.data()?.funderAccess === false) fail('The organisation has not shared this programme.',403);
     }
-    const manage = ['ngo','admin'].includes(role) && melCan(role, permissions, 'manage');
-    const brand = ['ngo','admin'].includes(role) && melCan(role, permissions, 'people');
-    const record = ['ngo','mentor','admin'].includes(role) && melCan(role, permissions, 'training');
+    const { manage, brand, record } = programmeCapabilities(role, permissions);
     if (role!=='funder' && !record && !brand && !melCan(role,permissions,'analyse')) fail('Your organisation has not granted access to these records.',403);
     const root = db.collection('programme_evidence').doc(org);
     const mode=req.nextUrl.searchParams.get('mode');

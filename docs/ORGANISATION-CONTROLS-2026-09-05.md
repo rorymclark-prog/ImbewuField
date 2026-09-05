@@ -104,3 +104,23 @@ chooser. Reusable fictional portraits and produce photos show spinach bunches,
 tomato bags and cabbage heads. Garden cards open an illustrative design and simulated
 aerial without WebGL or access to real participant locations. Source prompts and
 fictional-use constraints are recorded in `public/demo/README.md`.
+
+
+## Follow-up: inspect saved member access
+
+The control centre's View as a role tab now includes a read-only saved-member
+access inspector. It reads current server roles and delegated permissions, rather
+than treating stored checkboxes as effective rights. A farmer with stale staff
+flags still has no staff programme powers. Mentor assignments exclude accounts
+which have left the organisation or ceased to be farmers/students.
+
+The access endpoint is restricted to organisation access managers and scoped
+platform administrators. It returns capability labels and assigned member names;
+it does not return private survey answers, visit notes, credentials or tokens.
+The sample version reads the same disposable permissions and team fixtures as the
+other sample screens. Existing fictional workspace previews remain available.
+
+This is not full live-role impersonation. App-wide feature switches, effective
+read-only workspace previews, project-specific/multiple-funder branding and the
+remaining report/language/phone audit are still outstanding. The new inspector's
+visual QA is pending because the browser connection stalled before interaction.
