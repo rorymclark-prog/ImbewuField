@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { freshEvidenceData, trainingTotals, milestoneAt, publishedTraining, validTrainingRecord, validProgrammeMilestone, validProgrammeBranding, validEvidenceImage } from '../lib/programme-evidence';
-import { melCan } from '../lib/mel';
+import { melCan, memberAccessSummary, programmeCapabilities } from '../lib/mel';
 
 test('training totals count repeat attendance but deduplicate participants and respect the report date', () => {
   const session = freshEvidenceData().sessions[0];
@@ -54,4 +54,28 @@ test('training permission is independent from survey analysis and user-managemen
   assert.equal(melCan('mentor',{training:true},'people'),false);
   assert.equal(melCan('ngo',{training:false,manage:true},'training'),false);
   assert.equal(melCan('farmer',{training:true},'training'),false);
+});
+
+
+test('saved staff switches cannot grant programme powers after a member becomes a farmer or funder', () => {
+  const all = { manage: true, analyse: true, people: true, training: true };
+  for (const role of ['farmer', 'student', 'funder'] as const) {
+    assert.ok(memberAccessSummary(role, all).every(c => !c.allowed));
+    assert.deepEqual(programmeCapabilities(role, all), {manage:false,brand:false,record:false,analyse:false,read:false});
+  }
+  const mentor = memberAccessSummary('mentor', all);
+  assert.equal(mentor.find(c => c.id === 'people')?.allowed, false);
+  assert.equal(mentor.find(c => c.id === 'publish')?.allowed, false);
+  assert.equal(mentor.find(c => c.id === 'training')?.allowed, true);
+  assert.equal(mentor.find(c => c.id === 'visits')?.allowed, true);
+});
+
+test('access inspection honours explicit denial and preserves organisation defaults', () => {
+  const defaults = memberAccessSummary('ngo', null);
+  assert.equal(defaults.find(c => c.id === 'people')?.allowed, true);
+  const denied = memberAccessSummary('ngo', {manage:false,analyse:false,people:false,training:false});
+  assert.ok(denied.every(c => !c.allowed));
+  const traineeRecorder = memberAccessSummary('mentor', {training:true,analyse:false});
+  assert.equal(traineeRecorder.find(c => c.id === 'evidence')?.allowed, true);
+  assert.equal(traineeRecorder.find(c => c.id === 'analyse')?.allowed, false);
 });

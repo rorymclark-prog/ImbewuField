@@ -5,6 +5,7 @@ import { useState } from 'react';
 import MelDashboard from './MelDashboard';
 import ProgrammeEvidence from './ProgrammeEvidence';
 import FieldTeams from './FieldTeams';
+import MemberAccessPreview from './MemberAccessPreview';
 import styles from './MelDashboard.module.css';
 
 export default function OrganisationControlCentre() {
@@ -17,6 +18,7 @@ export default function OrganisationControlCentre() {
     {tab === 'people' && <MelDashboard accessOnly />}
     {tab === 'branding' && <ProgrammeEvidence initialTab="branding" />}
     {tab === 'teams' && <FieldTeams organisation />}
+    {tab === 'preview' && <MemberAccessPreview />}
     {tab === 'preview' && <><p className={styles.notice}>These previews use fictional sample data. They show each role’s workspace without signing in as another person or changing anyone’s permissions. They do not impersonate a particular user’s live data or custom access.</p><div className={styles.grid}>{([['farmer', 'Farmer'], ['mentor', 'Mentor / extension officer'], ['student', 'Student'], ['ngo', 'Organisation'], ['funder', 'Funder']] as const).map(([role, label]) => <button key={role} className={styles.card} onClick={() => { if (startRolePreview(role)) router.push(`/${role}`); else setError('The sample could not open. Please try again.'); }}><h2>{label}</h2><p>Open sample workspace →</p></button>)}</div>{error && <p role="alert">{error}</p>}</>}
   </div></section>;
 }

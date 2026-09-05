@@ -2,7 +2,7 @@ import { NextRequest } from 'next/server';
 import { getApps, getApp, initializeApp } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
 import { guardPaidApiRequest } from '@/lib/api-auth';
-import { analyseAssessment, canChangeOrgRole, matchedChange, melCan, validAnswers, MEL_STAGES, type MelAssessment, type MelPermission, type MelResponse, type MelStage } from '@/lib/mel';
+import { analyseAssessment, canChangeOrgRole, memberAccessSummary, matchedChange, melCan, validAnswers, MEL_STAGES, type MelAssessment, type MelPermission, type MelResponse, type MelStage } from '@/lib/mel';
 import { MEL_TEMPLATES } from '@/lib/mel-templates';
 import type { UserRole } from '@/lib/db/types';
 
@@ -45,6 +45,28 @@ async function handle(req: NextRequest, write: boolean) {
     };
     if (!write) {
       const mode = req.nextUrl.searchParams.get('mode');
+      if (mode === 'access-preview') {
+        if (!['ngo', 'admin'].includes(role) || !can('people')) fail('Organisation access management is restricted.', 403);
+        const id = req.nextUrl.searchParams.get('id');
+        if (!safeId(id)) fail('Choose a member.');
+        const [target, savedPermission, team] = await Promise.all([
+          db.collection('profiles').doc(id).get(),
+          db.collection('org_permissions').doc(id).get(),
+          db.collection('field_teams').doc(orgId).collection('mentors').doc(id).get(),
+        ]);
+        const member = target.data();
+        if (!member || member.org_id !== orgId) fail('Member unavailable in this organisation.', 403);
+        const targetRole = member.role as UserRole;
+        const ids = targetRole === 'mentor' && Array.isArray(team.data()?.farmerIds)
+          ? [...new Set<string>(team.data()!.farmerIds)].filter(safeId) : [];
+        if (ids.length > 250) fail('This team exceeds the access preview limit.', 422);
+        const assigned = ids.length ? await db.getAll(...ids.map(key => db.collection('profiles').doc(key))) : [];
+        return json({ id, name: member.full_name ?? 'Unnamed member', role: targetRole,
+          capabilities: memberAccessSummary(targetRole, savedPermission.data() as MelPermission ?? null),
+          location: targetRole === 'mentor' ? team.data()?.location ?? '' : '',
+          people: assigned.filter(d => d.data()?.org_id === orgId && ['farmer', 'student'].includes(d.data()?.role)).map(d => ({ id: d.id, name: d.data()?.full_name ?? 'Unnamed member' })),
+          checkedAt: new Date().toISOString(), sample: false });
+      }
       if (mode === 'participants') {
         if (!can('manage')) fail('Managing assessments is restricted.', 403);
         const people = await db.collection('profiles').where('org_id', '==', orgId).limit(1001).get();
