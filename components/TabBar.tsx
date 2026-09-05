@@ -3,7 +3,8 @@
 import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Home, Map, DollarSign, User } from 'lucide-react';
+import { Home, Map, DollarSign, User, Users, BarChart3 } from 'lucide-react';
+import { useRoleNavigation } from '@/lib/use-role-navigation';
 import { useLanguage } from '@/lib/i18n';
 
 // The third tab is the farmer's money, and there is one of it now. It used to point at
@@ -24,6 +25,16 @@ const TABS = [
 export default function TabBar() {
   const pathname = usePathname();
   const { t } = useLanguage();
+  const { navigationRole } = useRoleNavigation();
+  const tabs = navigationRole === 'funder' ? [
+    { href: '/funder', key: 'homeRoleFunderLabel', Icon: BarChart3 },
+    { href: '/network', key: 'navSectionOrganisation', Icon: Users },
+    { href: '/account', key: 'tabAccount', Icon: User },
+  ] : navigationRole === 'ngo' ? [
+    { href: '/ngo', key: 'navNGODashboard', Icon: BarChart3 },
+    { href: '/network', key: 'navSectionOrganisation', Icon: Users },
+    { href: '/account', key: 'tabAccount', Icon: User },
+  ] : TABS;
   const barRef = useRef<HTMLDivElement>(null);
 
   // Publishes this bar's own rendered height as --bottom-nav-height, so anything that needs to
@@ -100,7 +111,7 @@ export default function TabBar() {
         paddingBottom: 'env(safe-area-inset-bottom, 0px)',
       }}
     >
-      {TABS.map(({ href, key, Icon }) => {
+      {tabs.map(({ href, key, Icon }) => {
         const active = isActive(href);
         return (
           <Link

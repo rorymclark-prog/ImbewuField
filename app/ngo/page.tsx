@@ -17,6 +17,8 @@ import ContactInbox from '@/components/ContactInbox';
 import LessonLink from '@/components/design/LessonLink';
 import MenuButton from '@/components/MenuButton';
 import type { UserRole } from '@/lib/db/types';
+const MelDashboard = dynamic(() => import('@/components/MelDashboard'), { ssr: false });
+const FunderAssessments = dynamic(() => import('@/components/funder/FunderAssessments'), { ssr: false });
 
 const NgoDashboard = dynamic(() => import('@/components/NgoDashboard'), {
   ssr: false,
@@ -52,7 +54,7 @@ export default function NgoPage() {
   // client-only, so a render-time read would disagree with the server-rendered HTML.
   const [sample, setSample] = useState(false);
   useEffect(() => { setSample(isSampleMode()); }, []);
-  const [view, setView] = useState<'cohort' | 'gardens' | 'messages'>('cohort');
+  const [view, setView] = useState<'cohort' | 'gardens' | 'messages' | 'assessments' | 'funder-preview'>('cohort');
   const [msgUnread, setMsgUnread] = useState(0);
 
   useEffect(() => {
@@ -61,7 +63,7 @@ export default function NgoPage() {
     if (!loading && !user && isLive && !isSampleMode()) router.replace('/login');
   }, [user, loading, router, isLive]);
 
-  if (!loading && user && isLive && !canAccessRolePage(role, NGO_ALLOWED_ROLES)) {
+  if (!loading && user && isLive && !sample && !canAccessRolePage(role, NGO_ALLOWED_ROLES)) {
     return (
       <div className="flex h-screen items-center justify-center px-4" style={{ background: 'var(--bg-0)' }}>
         <div className="rounded-2xl px-6 py-8 text-center max-w-xs" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
@@ -107,6 +109,8 @@ export default function NgoPage() {
           { key: 'cohort',   label: 'Cohort',   icon: BarChart3, badge: 0 },
           { key: 'gardens',  label: 'Gardens',  icon: Sprout,    badge: 0 },
           { key: 'messages', label: 'Messages', icon: Inbox,     badge: msgUnread },
+          { key: 'assessments', label: 'Assessments', icon: BarChart3, badge: 0 },
+          { key: 'funder-preview', label: 'Funder summary preview', icon: BarChart3, badge: 0 },
         ] as const).map(({ key, label, icon: Icon, badge }) => (
           <button
             key={key}
@@ -137,7 +141,8 @@ export default function NgoPage() {
       </div>
 
       {view === 'cohort' && (
-        <div className="flex-1 flex overflow-hidden">
+        <div className="flex-1 flex flex-col overflow-hidden">
+          <MelDashboard compact />
           <CohortDashboard mode="ngo" />
         </div>
       )}
@@ -151,6 +156,8 @@ export default function NgoPage() {
           <ContactInbox recipient="organisation" onUnreadCount={setMsgUnread} />
         </div>
       )}
+      {view === 'assessments' && <div className="flex-1 flex overflow-hidden" style={{ paddingBottom: 64 }}><MelDashboard /></div>}
+      {view === 'funder-preview' && <div className="flex-1 flex overflow-hidden"><FunderAssessments /></div>}
 
       <TabBar />
     </div>

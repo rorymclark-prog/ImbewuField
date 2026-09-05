@@ -972,10 +972,7 @@ test('cross-org isolation matrix: surveys and survey_responses', async () => {
   await assertSucceeds(getDoc(doc(adminDb, 'surveys', 'survey-b')));
   await assertSucceeds(getDoc(doc(adminDb, 'survey_responses', 'resp-b')));
 
-  // KNOWN, DELIBERATELY UNCHANGED GAP (RULES-FIX-PROPOSAL-2026-08-01.md Part 3 #7): survey
-  // CREATE does not pin org_id == myOrg() the way reports/designs/course_progress do — an
-  // isStaff() account of either org can currently create a survey document claiming the OTHER
-  // org's id. Not fixed or asserted here (report-only backlog item); see the PR description.
+  // Cross-organisation survey creation is now refused; covered below with the MEL access tests.
 });
 
 test('cross-org isolation matrix: course_progress', async () => {
@@ -1182,4 +1179,32 @@ test('cross-org isolation matrix: per-user collections (not org-scoped by design
   // plus signedIn() only, by product design, not an oversight. Out of scope for an ORG isolation
   // matrix, which is about tenants who should NOT see each other — community is the one place
   // farmers from different orgs are meant to.
+});
+
+// NGO assessment publication replaces unrestricted raw funder survey reads.
+test('funders cannot read raw survey responses even with a valid NGO grant', async () => {
+  const funderDb = env.authenticatedContext(FUNDER_WITH_GRANT).firestore();
+  await assertFails(getDoc(doc(funderDb, 'survey_responses', 'resp-org1')));
+  await assertFails(setDoc(doc(funderDb, 'org_permissions', FUNDER_WITH_GRANT), { analyse: true }));
+  await assertFails(setDoc(doc(funderDb, 'organization_controls', 'org-1'), { funderAccess: true }));
+  await assertFails(setDoc(doc(funderDb, 'mel_assessments', 'injected'), { orgId: 'org-1', published: true }));
+});
+
+test('survey authors cannot create surveys in a different organisation', async () => {
+  const ngoDb = env.authenticatedContext(STAFF_A).firestore();
+  await assertFails(setDoc(doc(ngoDb, 'surveys', 'spoofed-survey'), { created_by: STAFF_A, org_id: ORG_B, title: 'Injected', questions: [] }));
+});
+
+test('an NGO pause blocks a funder grant and cannot be undone by a client write', async () => {
+  const funderDb = env.authenticatedContext(FUNDER_WITH_GRANT).firestore();
+  await assertSucceeds(getDoc(doc(funderDb, 'profiles', FARMER_WITH_LINK)));
+  await env.withSecurityRulesDisabled(async (context) => {
+    await setDoc(doc(context.firestore(), 'organization_controls', 'org-1'), { funderAccess: false });
+  });
+  try {
+    await assertFails(getDoc(doc(funderDb, 'profiles', FARMER_WITH_LINK)));
+    await assertFails(updateDoc(doc(funderDb, 'organization_controls', 'org-1'), { funderAccess: true }));
+  } finally {
+    await env.withSecurityRulesDisabled(async (context) => { await deleteDoc(doc(context.firestore(), 'organization_controls', 'org-1')); });
+  }
 });

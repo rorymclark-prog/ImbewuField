@@ -94,6 +94,11 @@ export async function GET(req: NextRequest) {
     return json({ error: 'That organisation is not in your portfolio.' }, 403);
   }
 
+  if (access.role === 'funder') {
+    const control = await db.collection('organization_controls').doc(orgId).get();
+    if (control.data()?.funderAccess === false) return json({ error: 'The NGO has paused funder dashboard access.' }, 403);
+  }
+
   const farmerSnap = await db.collection('profiles')
     .where('role', '==', 'farmer').where('org_id', '==', orgId).get();
 
@@ -102,7 +107,12 @@ export async function GET(req: NextRequest) {
   // farmer rather than becoming a collectionGroup query.
   async function loadFarmer(doc: (typeof farmerSnap.docs)[number]): Promise<FarmerLoadResult> {
     const consentSnap = await db.collection('farmer_consents').doc(doc.id).get();
-    const consent = (consentSnap.exists ? consentSnap.data() : null) as FarmerConsent | null;
+    const storedConsent = (consentSnap.exists ? consentSnap.data() : null) as FarmerConsent | null;
+    // Legacy survey counts do not imply permission to publish the underlying
+    // assessment. Funder MEL data now comes from explicitly approved summaries.
+    const consent = storedConsent && access.role === 'funder'
+      ? { ...storedConsent, scopes: { ...storedConsent.scopes, surveys: false } }
+      : storedConsent;
 
     // ── (iv) read, derive, project ──
     const [production, sales, expenses, courses, surveys] = await Promise.all([

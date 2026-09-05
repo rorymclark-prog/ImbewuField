@@ -24,6 +24,7 @@
 
 import { useCallback, useEffect, useState } from 'react';
 import { paidApiHeaders } from '@/lib/api-client-auth';
+import { isSampleMode } from '@/lib/sample-mode';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import { DEMO_COHORT_MONTHLY, DEMO_NETWORK } from '@/lib/network-demo';
 import { emptyCohortSeries, type CohortSeries } from '@/lib/cohort-series';
@@ -61,7 +62,10 @@ export interface NetworkPortfolio {
 }
 
 export function useNetworkPortfolio(signedIn: boolean): NetworkPortfolio {
-  const live = isBackendConfigured() && signedIn;
+  const [sample, setSample] = useState<boolean | null>(null);
+  useEffect(() => { setSample(isSampleMode()); }, [signedIn]);
+  // A signed-in owner exploring sample roles must never read a live portfolio.
+  const live = isBackendConfigured() && signedIn && sample === false;
 
   const [orgs, setOrgs] = useState<NetworkOrgOption[]>([]);
   const [orgId, setOrgId] = useState<string | null>(null);

@@ -66,6 +66,8 @@ const STAFF_ROUTES = [
 
 /** Files whose type she reads. Floor of 12px, no allowance. */
 const FARMER_SURFACES: Record<string, string> = {
+  'components/MelDashboard.tsx': 'farmer assessment forms and NGO analysis',
+  'components/funder/FunderAssessments.tsx': 'approved assessment summaries',
   'app/home/page.tsx': 'the first screen, and the tile subtitles the audit was about',
   'app/records/page.tsx': 'the money book — Picked, Sold, Spent, and the charts inside it',
   'app/finances/page.tsx': 'the old money door, now a redirect onto the book — it must stay empty of type',

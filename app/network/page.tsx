@@ -41,6 +41,7 @@ import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import { Search, X, List, AlertTriangle } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
+import { useSampleRole } from '@/lib/use-role-navigation';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import { canAccessRolePage } from '@/lib/role-access';
 import { useNetworkPortfolio } from '@/lib/use-network-portfolio';
@@ -112,7 +113,8 @@ const NETWORK_ALLOWED_ROLES = new Set<UserRole>(['ngo', 'funder', 'admin']);
 export default function NetworkPage() {
   const { user, role, loading: authLoading } = useAuth();
   const router = useRouter();
-  const isLive = isBackendConfigured();
+  const sampleRole = useSampleRole();
+  const isLive = isBackendConfigured() && !sampleRole;
 
   useEffect(() => {
     if (!authLoading && !user && isLive) router.replace('/login');

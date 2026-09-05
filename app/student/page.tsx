@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { CheckCircle, Circle, Clock, Loader2, GraduationCap, Sprout, ChevronDown, ChevronUp, BookOpen, Home, Lightbulb, CalendarClock, AlertTriangle, ClipboardList, Headphones, Video, ExternalLink, Lock, Camera, Mic, Trophy, PlayCircle } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
+import { useSampleRole } from '@/lib/use-role-navigation';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import { isSampleMode } from '@/lib/sample-mode';
 import {
@@ -449,7 +450,8 @@ export default function StudentPage() {
   const { user, role, loading } = useAuth();
   const { lang } = useLanguage();
   const router = useRouter();
-  const isLive = isBackendConfigured();
+  const sampleRole = useSampleRole();
+  const isLive = isBackendConfigured() && !sampleRole;
 
   const [doneIds, setDoneIds] = useState<Set<string>>(new Set());
   const [assignments, setAssignments] = useState<CourseAssignment[]>([]);

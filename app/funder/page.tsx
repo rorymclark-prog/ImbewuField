@@ -46,10 +46,12 @@ const CohortDashboard = dynamic(() => import('@/components/funder/CohortDashboar
 });
 
 const FUNDER_ALLOWED_ROLES = new Set<UserRole>(['funder', 'admin']);
+const FunderAssessments = dynamic(() => import('@/components/funder/FunderAssessments'), { ssr: false });
 
 const FUNDER_VIEWS = [
   { key: 'cohort', label: 'Cohort', icon: BarChart3 },
   { key: 'gardens', label: 'Gardens', icon: Sprout },
+  { key: 'assessments', label: 'Assessments', icon: BarChart3 },
 ] as const;
 
 export default function FunderPage() {
@@ -60,7 +62,7 @@ export default function FunderPage() {
   // client-only, so a render-time read would disagree with the server-rendered HTML.
   const [sample, setSample] = useState(false);
   useEffect(() => { setSample(isSampleMode()); }, []);
-  const [view, setView] = useState<'cohort' | 'gardens'>('cohort');
+  const [view, setView] = useState<'cohort' | 'gardens' | 'assessments'>('cohort');
 
   useEffect(() => {
     // Sample mode has no user by design; bouncing it to /login would make the
@@ -68,7 +70,7 @@ export default function FunderPage() {
     if (!loading && !user && isLive && !isSampleMode()) router.replace('/login');
   }, [user, loading, router, isLive]);
 
-  if (!loading && user && isLive && !canAccessRolePage(role, FUNDER_ALLOWED_ROLES)) {
+  if (!loading && user && isLive && !sample && !canAccessRolePage(role, FUNDER_ALLOWED_ROLES)) {
     return (
       <div className="flex h-screen items-center justify-center px-4" style={{ background: '#E4DCC6' }}>
         <div className="rounded-2xl px-6 py-8 text-center max-w-xs" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
@@ -139,7 +141,7 @@ export default function FunderPage() {
       </div>
 
       <div className="flex-1 flex overflow-hidden">
-        {view === 'cohort' ? <CohortDashboard mode="funder" /> : <NgoDashboard mode="funder" />}
+        {view === 'cohort' ? <CohortDashboard mode="funder" /> : view === 'assessments' ? <FunderAssessments /> : <NgoDashboard mode="funder" />}
       </div>
     </div>
   );

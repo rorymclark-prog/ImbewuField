@@ -143,7 +143,9 @@ test('the menu and the tab bar each offer one money door, and it is the book', (
   const moneyRows = [...navDrawer.matchAll(/href: '(\/records|\/finances)'/g)].map((m) => m[1]);
   assert.deepEqual(moneyRows, ['/records'], 'the menu must offer exactly one money row');
 
-  const tabs = [...tabBar.matchAll(/href: '([^']+)'/g)].map((m) => m[1]);
+  // These are the farmer's tabs; funders and NGOs now have their own workspaces.
+  const farmerTabs = tabBar.match(/const TABS = \[([\s\S]*?)\];/)?.[1] ?? '';
+  const tabs = [...farmerTabs.matchAll(/href: '([^']+)'/g)].map((m) => m[1]);
   assert.deepEqual(
     tabs,
     ['/home', '/farmer', '/records', '/account'],

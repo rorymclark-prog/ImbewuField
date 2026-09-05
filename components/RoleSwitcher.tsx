@@ -3,6 +3,9 @@
 import Link from 'next/link';
 import { Sprout, Users, GraduationCap, BarChart3, Building2, type LucideIcon } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
+import { useRouter } from 'next/navigation';
+import { useRoleNavigation, startRolePreview } from '@/lib/use-role-navigation';
+import { visibleRoleTabs } from '@/lib/role-navigation';
 
 const ROLES: { key: string; labelKey: string; Icon: LucideIcon; href: string; ready: boolean }[] = [
   { key: 'farmer',  labelKey: 'homeRoleFarmerLabel',  Icon: Sprout,        href: '/farmer',  ready: true },
@@ -18,11 +21,14 @@ const ROLE_ALIASES: Record<string, string> = { facilitator: 'mentor' };
 
 export default function RoleSwitcher({ current }: { current: string }) {
   const { t } = useLanguage();
+  const router = useRouter();
+  const { accountRole, navigationRole, sample } = useRoleNavigation();
+  const visible = visibleRoleTabs(navigationRole);
   const effectiveCurrent = ROLE_ALIASES[current] ?? current;
   return (
     <div className="flex items-center gap-1 px-1.5 py-1 rounded-full"
       style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-      {ROLES.map((r) => {
+      {ROLES.filter(r => visible.includes(r.key)).map((r) => {
         const active = r.key === effectiveCurrent;
         const isAliasMatch = active && current !== r.key;
         // Nav items: Public Sans 16/600 on desktop (handoff §0 type scale).
@@ -57,6 +63,13 @@ export default function RoleSwitcher({ current }: { current: string }) {
           </Link>
         );
       })}
+      {(accountRole === 'ngo' || accountRole === 'admin') && <label className="font-sans text-sm" style={{ padding: '4px 8px', color: '#243d2d' }}>
+        <span className="sr-only">View as with sample data</span>
+        <select aria-label="View as with sample data" value="" onChange={e => { const target = ROLES.find(r => r.key === e.target.value); if (target && startRolePreview(target.key)) router.push(target.href); }} style={{ minHeight: 40, maxWidth: 180, background: 'white', color: '#243d2d', borderRadius: 8, padding: 6 }}>
+          <option value="">{sample ? 'Previewing · view as…' : 'View as… (sample)'}</option>
+          {ROLES.map(r => <option key={r.key} value={r.key}>{t(r.labelKey)}</option>)}
+        </select>
+      </label>}
     </div>
   );
 }

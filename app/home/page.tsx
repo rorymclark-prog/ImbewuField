@@ -34,6 +34,8 @@ import CropIcon from '@/components/CropIcon';
 import { useLanguage } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
 import { canSeeNavLink } from '@/lib/role-access';
+import { canSeeWorkspaceLink } from '@/lib/role-navigation';
+import { useRoleNavigation } from '@/lib/use-role-navigation';
 import { getLastSite, type LastSite } from '@/lib/last-site';
 import LessonLink from '@/components/design/LessonLink';
 import { loadPlaces, resolveMainSite, setMainSiteId, type SavedPlace } from '@/lib/saved-places';
@@ -285,6 +287,8 @@ function FarmPlanCard({ places, mainSite }: { places: SavedPlace[] | null; mainS
 function HomeLandingInner() {
   const { t, lang } = useLanguage();
   const router = useRouter();
+  const { navigationRole, sample: roleSample } = useRoleNavigation();
+  useEffect(() => { if (!roleSample && navigationRole === 'funder') router.replace('/funder'); }, [navigationRole, roleSample, router]);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [rolesOpen, setRolesOpen] = useState(false);
   const [lastSite, setLastSite] = useState<LastSite | null>(null);
@@ -337,7 +341,7 @@ function HomeLandingInner() {
     { href: '/student', Icon: GraduationCap, label: t('homeRoleStudentLabel'), desc: t('homeRoleStudentDesc') },
     { href: '/ngo',     Icon: BarChart3,     label: t('homeRoleNGOLabel'),     desc: t('homeRoleNGODesc') },
     { href: '/funder',  Icon: Building2,     label: t('homeRoleFunderLabel'),  desc: t('homeRoleFunderDesc') },
-  ].filter(({ href }) => canSeeNavLink(role, href));
+  ].filter(({ href }) => canSeeNavLink(role, href) && canSeeWorkspaceLink(navigationRole, href));
 
   // ONE MONEY TILE, NOT TWO.
   //

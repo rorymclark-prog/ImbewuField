@@ -56,7 +56,7 @@ function makeQuestionId(i: number) {
   return `q${Date.now()}${i}`;
 }
 
-const STAFF_ROLES = new Set(['ngo', 'funder', 'admin']);
+const STAFF_ROLES = new Set(['ngo', 'admin']);
 
 // ─── Staff: survey builder ────────────────────────────────────────────────────
 
