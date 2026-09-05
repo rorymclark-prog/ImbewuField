@@ -34,8 +34,16 @@ export interface ReleaseNote {
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
+    when: '5 September',
+    sha: '9111dea1',
+    changes: [
+      'AI map controls stay hidden unless you are approved for experimental testing',
+      'Your Exact Canvas and saved maps remain available',
+    ],
+  },
+  {
     when: '4 September',
-    sha: 'e058d1f',
+    sha: 'f6d1ea1',
     changes: [
       'Invoices show the editor beside a larger preview on a laptop or landscape tablet',
       'Prices, tasks and community cards spread across the space on larger screens',
