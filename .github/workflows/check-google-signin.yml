@@ -1,0 +1,33 @@
+name: Check Google sign-in configuration
+on:
+  push:
+    branches: [main, codex/auth-provider-repair]
+    paths:
+      - scripts/check-google-signin.mjs
+      - .github/workflows/check-google-signin.yml
+permissions:
+  contents: read
+concurrency:
+  group: google-signin-configuration
+  cancel-in-progress: false
+jobs:
+  check:
+    if: github.repository == 'rorymclark-prog/ImbewuField'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - name: Report provider status without secrets or user data
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: node scripts/check-google-signin.mjs
+      - name: Enable existing Google configuration and verify
+        if: github.ref == 'refs/heads/main'
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: node scripts/check-google-signin.mjs --apply

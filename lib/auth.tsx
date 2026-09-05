@@ -268,7 +268,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       await syncProfile(cred.user);
       return null;
     } catch (err) {
-      return friendlyAuthError(err);
+      return friendlyAuthError(err, 'google');
     }
   }, [syncProfile]);
 
@@ -353,7 +353,7 @@ export function useAuth() {
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
-function friendlyAuthError(err: unknown): string {
+function friendlyAuthError(err: unknown, method: 'google' | 'password' = 'password'): string {
   const code = (err as { code?: string }).code ?? '';
   const map: Record<string, string> = {
     'auth/invalid-email':                            'That doesn\'t look like a valid email address.',
@@ -368,7 +368,9 @@ function friendlyAuthError(err: unknown): string {
     'auth/popup-closed-by-user':                     'Sign-in was cancelled.',
     'auth/account-exists-with-different-credential': 'An account already exists with this email using a different sign-in method.',
     'auth/requires-recent-login':                    'Please sign out and sign back in before changing your password.',
-    'auth/operation-not-allowed':                    'Google sign-in isn\'t enabled for this app yet. Use email + password, or ask the admin to enable Google.',
+    'auth/operation-not-allowed':                    method === 'google'
+      ? 'Google sign-in is disabled for this app. The app administrator needs to enable it.'
+      : 'Email and password sign-in is disabled for this app. The app administrator needs to enable it.',
     'auth/popup-blocked': 'Your browser blocked Google sign-in. Allow popups for this site and try again, or open it in Safari / Chrome.',
     'auth/unauthorized-domain':                      'This web address isn\'t authorised for Google sign-in yet. Use email + password for now.',
     'auth/cancelled-popup-request':                  'Sign-in was cancelled.',
