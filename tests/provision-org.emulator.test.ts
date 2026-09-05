@@ -24,6 +24,7 @@ import { fileURLToPath } from 'node:url';
 import type { App } from 'firebase-admin/app';
 import type { Auth } from 'firebase-admin/auth';
 import type { Firestore } from 'firebase-admin/firestore';
+import { emailDigest, provisionPlatformOwner } from '../scripts/provision-platform-owner.mjs';
 
 const execFileAsync = promisify(execFile);
 
@@ -49,6 +50,46 @@ before(() => {
   app = initializeApp({ projectId: PROJECT_ID }, `provision-org-test-${randomUUID()}`);
   auth = getAuth(app);
   db = getFirestore(app);
+});
+
+test('owner bootstrap changes only the authorised role, preserves all existing fields, and cannot replay a revoked grant', async () => {
+  const owner = await makeSignedUpAccount('farmer', `existing-org-${randomUUID()}`);
+  const other = await makeSignedUpAccount('farmer', `other-org-${randomUUID()}`);
+  await auth.updateUser(owner.uid, { emailVerified: true });
+  const ref = db.collection('profiles').doc(owner.uid);
+  const before = (await ref.get()).data();
+  const otherBefore = (await db.collection('profiles').doc(other.uid).get()).data();
+  const auditId = `test-owner-${randomUUID()}`;
+  const options = { auth, db, expectedDigest: emailDigest(owner.email), auditId,
+    timestamp: () => new Date() };
+  const dry = await provisionPlatformOwner(options);
+  assert.equal(dry.status, 'dry-run');
+  assert.deepEqual((await ref.get()).data(), before);
+  assert.equal((await db.collection('org_access_audit').doc(auditId).get()).exists, false);
+  await assert.rejects(provisionPlatformOwner({ ...options, apply: true }), /EXPLICIT_ADMIN_FLAG/);
+  const applied = await provisionPlatformOwner({ ...options, apply: true, allowAdmin: true });
+  assert.equal(applied.role, 'admin');
+  assert.deepEqual((await ref.get()).data(), { ...before, role: 'admin' });
+  assert.deepEqual((await db.collection('profiles').doc(other.uid).get()).data(), otherBefore);
+  assert.equal((await db.collection('org_access_audit').doc(auditId).get()).data()?.previous_role, 'farmer');
+  const repeated = await provisionPlatformOwner({ ...options, apply: true, allowAdmin: true });
+  assert.equal(repeated.status, 'already-completed');
+  await ref.update({ role: 'farmer' });
+  await assert.rejects(provisionPlatformOwner({ ...options, apply: true, allowAdmin: true }), /ACCESS_WAS_REVOKED/);
+  assert.equal((await ref.get()).data()?.role, 'farmer');
+});
+
+test('owner bootstrap refuses unverified or missing profiles without creating an audit or changing access', async () => {
+  const owner = await makeSignedUpAccount('student');
+  const options = { auth, db, expectedDigest: emailDigest(owner.email), auditId: `test-owner-${randomUUID()}`,
+    apply: true, allowAdmin: true, timestamp: () => new Date() };
+  await assert.rejects(provisionPlatformOwner(options), /EMAIL_NOT_VERIFIED/);
+  assert.equal((await db.collection('profiles').doc(owner.uid).get()).data()?.role, 'student');
+  await auth.updateUser(owner.uid, { emailVerified: true });
+  await db.collection('profiles').doc(owner.uid).delete();
+  await assert.rejects(provisionPlatformOwner(options), /PROFILE_NOT_FOUND/);
+  assert.equal((await db.collection('profiles').doc(owner.uid).get()).exists, false);
+  assert.equal((await db.collection('org_access_audit').doc(options.auditId).get()).exists, false);
 });
 
 interface RunResult { code: number; out: string }
