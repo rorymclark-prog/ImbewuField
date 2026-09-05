@@ -1208,3 +1208,14 @@ test('an NGO pause blocks a funder grant and cannot be undone by a client write'
     await env.withSecurityRulesDisabled(async (context) => { await deleteDoc(doc(context.firestore(), 'organization_controls', 'org-1')); });
   }
 });
+
+// The service publishes only aggregates; even NGO staff cannot bypass its validation.
+test('production registers and their evidence history deny direct client access', async () => {
+  for (const uid of [FUNDER_WITH_GRANT, STAFF_A, FARMER_A]) {
+    const db = env.authenticatedContext(uid).firestore();
+    for (const path of ['production_sites/org-1/sites/garden-01', 'production_sites/org-1/sites/garden-01/history/change']) {
+      await assertFails(getDoc(doc(db, path)));
+      await assertFails(setDoc(doc(db, path), { published: true, vegetableM2: 999999 }));
+    }
+  }
+});

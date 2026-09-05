@@ -213,9 +213,9 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
       sub: `${totals.municipalityCount} ${totals.municipalityCount === 1 ? 'district' : 'districts'}`,
     },
     {
-      label: 'Land under plan',
+      label: 'Reported plot area',
       value: `${totals.totalPlotHa} ha`,
-      sub: `${group(totals.totalPlotM2)} m²`,
+      sub: `${group(totals.totalPlotM2)} m² · reported; may include shared gardens`,
     },
     { label: 'Harvested', value: statKg(totals.producedKg), sub: `${statKg(totals.soldKg)} sold` },
     {
@@ -224,9 +224,9 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
       sub: totals.netZar === null ? undefined : `${statZar(totals.netZar)} after costs`,
     },
     {
-      label: 'Household value',
-      value: statZar(totals.estimatedValueZar),
-      sub: 'income plus produce kept, at R15/kg',
+      label: 'Training records shared',
+      value: `${training.reporting} / ${training.total}`,
+      sub: 'farmers sharing course progress',
     },
     {
       label: 'Logged this month',

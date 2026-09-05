@@ -33,6 +33,8 @@ import { useFinancePlanSource } from '@/lib/finance-plan-source';
 import ComingUpHarvests from '@/components/ComingUpHarvests';
 import CashflowChart from '@/components/CashflowChart';
 import FinanceGraphs from '@/components/FinanceGraphs';
+import AreaReturnCards from '@/components/AreaReturnCards';
+import type { GrowingEnterprise } from '@/lib/area-returns';
 import MenuButton from '@/components/MenuButton';
 import type { CropPrice } from '@/lib/crop-prices';
 import { loadCropPriceOverrides } from '@/lib/crop-prices';
@@ -402,6 +404,7 @@ function SalesLedger({ sales, expenses, invoices, loading, onEditSale, onEditExp
 /* ── Log a sale form ─────────────────────────────────────────────────────── */
 
 interface SaleFormState {
+  enterprise: GrowingEnterprise | null;
   crop: string;
   expenseCrop: string;
   kg: string;
@@ -415,7 +418,7 @@ interface SaleFormState {
 // Editing target: either an existing sale or expense being edited, or null for a fresh entry.
 export type EditTarget = { type: 'sale'; row: SalesLog } | { type: 'expense'; row: ExpenseLog } | null;
 
-const emptyForm = (): SaleFormState => ({ crop: '', expenseCrop: '', kg: '', price: '', buyer: '', category: null, loading: false, error: '' });
+const emptyForm = (): SaleFormState => ({ enterprise: null, crop: '', expenseCrop: '', kg: '', price: '', buyer: '', category: null, loading: false, error: '' });
 
 // `alwaysOpen` skips the collapsed "New entry" button state (the desktop modal
 // provides its own open/close chrome); `onDone` fires on cancel or successful
@@ -459,10 +462,10 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
     setScanNote('');
     if (editing.type === 'sale') {
       setKind('in');
-      setForm({ crop: editing.row.crop, expenseCrop: '', kg: String(editing.row.kg ?? ''), price: String(editing.row.amount ?? ''), buyer: editing.row.buyer ?? '', category: null, loading: false, error: '' });
+      setForm({ enterprise: editing.row.enterprise ?? null, crop: editing.row.crop, expenseCrop: '', kg: String(editing.row.kg ?? ''), price: String(editing.row.amount ?? ''), buyer: editing.row.buyer ?? '', category: null, loading: false, error: '' });
     } else {
       setKind('out');
-      setForm({ crop: editing.row.item, expenseCrop: editing.row.crop ?? '', kg: '', price: String(editing.row.amount ?? ''), buyer: editing.row.supplier ?? '', category: editing.row.category ?? null, loading: false, error: '' });
+      setForm({ enterprise: editing.row.enterprise ?? null, crop: editing.row.item, expenseCrop: editing.row.crop ?? '', kg: '', price: String(editing.row.amount ?? ''), buyer: editing.row.supplier ?? '', category: editing.row.category ?? null, loading: false, error: '' });
     }
   }, [editing, lockKind]);
 
@@ -522,18 +525,18 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
       const sampling = isSampleMode();
       if (isIn) {
         if (editing?.type === 'sale') {
-          const patch = { crop: what, kg, amount, buyer: form.buyer.trim() || null };
+          const patch = { enterprise: form.enterprise, crop: what, kg, amount, buyer: form.buyer.trim() || null };
           if (sampling) updateSandboxSale(editing.row.id, patch); else await updateSale(editing.row.id, patch);
         } else {
-          const row = { crop: what, kg, amount, buyer: form.buyer.trim() || null, sold_at: new Date().toISOString() };
+          const row = { enterprise: form.enterprise, crop: what, kg, amount, buyer: form.buyer.trim() || null, sold_at: new Date().toISOString() };
           if (sampling) addSandboxSale(row); else await addSale(row);
         }
       } else {
         if (editing?.type === 'expense') {
-          const patch = { item: what, amount, supplier: form.buyer.trim() || null, category: form.category, crop: form.expenseCrop.trim() || null };
+          const patch = { enterprise: form.enterprise, item: what, amount, supplier: form.buyer.trim() || null, category: form.category, crop: form.expenseCrop.trim() || null };
           if (sampling) updateSandboxExpense(editing.row.id, patch); else await updateExpense(editing.row.id, patch);
         } else {
-          const row = { item: what, amount, supplier: form.buyer.trim() || null, category: form.category, crop: form.expenseCrop.trim() || null, spent_at: new Date().toISOString() };
+          const row = { enterprise: form.enterprise, item: what, amount, supplier: form.buyer.trim() || null, category: form.category, crop: form.expenseCrop.trim() || null, spent_at: new Date().toISOString() };
           if (sampling) addSandboxExpense(row); else await addExpense(row);
         }
       }
@@ -616,6 +619,12 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
         )}
       </div>
       <form onSubmit={handleSubmit} className="p-4 pt-2 space-y-3">
+        <label className="block text-sm">Growing area for this entry (optional)
+          <select className="w-full rounded-lg border px-3 py-2 mt-1" value={form.enterprise ?? ''} onChange={e => setForm(f => ({ ...f, enterprise: e.target.value ? e.target.value as GrowingEnterprise : null }))}>
+            <option value="">Unassigned</option><option value="vegetables">Vegetable beds</option><option value="staples">Staple plots</option>{!isIn && <option value="shared">Shared by beds and staple plots</option>}<option value="other">Orchard / other</option>
+          </select>
+          <span className="block text-xs mt-1">Choose only when this sale or cost belongs to that growing area.</span>
+        </label>
         {/* Scan a till slip — Lima reads it and fills the cost in (Money out only) */}
         {!isIn && (
           <div>
@@ -862,7 +871,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
   const stats = [
     { label: 'Income', value: fmtZAR(income), color: '#2E6B3A' },
     { label: 'Expenses', value: expenseTotal ? fmtZAR(expenseTotal) : '—', color: '#C07A1E' },
-    { label: 'Net profit', value: fmtZAR(net), color: 'var(--color-forest-800)' },
+    { label: 'Recorded cash margin', value: fmtZAR(net), color: 'var(--color-forest-800)' },
     { label: 'Yield logged', value: yieldLabel, color: 'var(--color-water)' },
   ];
 
@@ -931,7 +940,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
            counted on the same screen, so "Yield logged" is never quietly short. */
         <p className="font-sans mb-5" style={{ fontSize: 12, color: 'var(--color-muted-strong)', marginTop: -12 }}>
           Orchard is switched off, so {periodKg.excluded.toFixed(1)} kg is not in Yield
-          logged: {periodKg.excludedNames.join(', ')}. Income and Net profit still count every sale.
+          logged: {periodKg.excludedNames.join(', ')}. Income and recorded cash margin still count every sale.
         </p>
       )}
 
@@ -1496,6 +1505,7 @@ export default function RecordsPage() {
                       after the ledger and before the per-crop numbers: it is the
                       picture those numbers are the detail of. */}
                   <FinanceGraphs production={production} sales={sales} invoices={invoices} source={planSource} settings={cashflowSettings} wide />
+                  <AreaReturnCards beds={planSource.beds} sales={sales} expenses={expenses} invoices={invoices} period={period} now={now} loading={dataLoading || !planSource.loaded} />
                   <FarmMetrics sales={sales} production={production} expenses={expenses} invoices={invoices} period={period} now={now} loading={dataLoading} plantings={planSource.plantings} beds={planSource.beds} planLoaded={planSource.loaded} />
                   <ComingUpHarvests source={planSource} prices={priceOverrides} settings={cashflowSettings} />
                   <HarvestReconciliation production={production} sales={sales} period={period} now={now} loading={dataLoading} plantings={planSource.plantings} beds={planSource.beds} planLoaded={planSource.loaded} />
@@ -1526,6 +1536,7 @@ export default function RecordsPage() {
                   <FinanceGraphs production={production} sales={sales} invoices={invoices} source={planSource} settings={cashflowSettings} />
                   <ComingUpHarvests source={planSource} prices={priceOverrides} settings={cashflowSettings} />
                   <HarvestReconciliation production={production} sales={sales} period="month" now={now} loading={dataLoading} plantings={planSource.plantings} beds={planSource.beds} planLoaded={planSource.loaded} />
+                  <AreaReturnCards beds={planSource.beds} sales={sales} expenses={expenses} invoices={invoices} period="month" now={now} loading={dataLoading || !planSource.loaded} />
                   <FarmMetrics sales={sales} production={production} expenses={expenses} invoices={invoices} period="month" now={now} loading={dataLoading} plantings={planSource.plantings} beds={planSource.beds} planLoaded={planSource.loaded} />
                   {/* Never hidden behind a tab switch: "no data" may only mean "not reachable",
                       and every figure on this page is wrong in that case. */}

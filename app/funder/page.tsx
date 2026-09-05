@@ -46,11 +46,13 @@ const CohortDashboard = dynamic(() => import('@/components/funder/CohortDashboar
 });
 
 const FUNDER_ALLOWED_ROLES = new Set<UserRole>(['funder', 'admin']);
+const ProductionAreas = dynamic(() => import('@/components/ProductionAreas'), { ssr: false });
 const FunderAssessments = dynamic(() => import('@/components/funder/FunderAssessments'), { ssr: false });
 
 const FUNDER_VIEWS = [
   { key: 'cohort', label: 'Cohort', icon: BarChart3 },
   { key: 'gardens', label: 'Gardens', icon: Sprout },
+  { key: 'area', label: 'Production area', icon: Sprout },
   { key: 'assessments', label: 'Assessments', icon: BarChart3 },
 ] as const;
 
@@ -62,7 +64,7 @@ export default function FunderPage() {
   // client-only, so a render-time read would disagree with the server-rendered HTML.
   const [sample, setSample] = useState(false);
   useEffect(() => { setSample(isSampleMode()); }, []);
-  const [view, setView] = useState<'cohort' | 'gardens' | 'assessments'>('cohort');
+  const [view, setView] = useState<'cohort' | 'gardens' | 'assessments' | 'area'>('cohort');
 
   useEffect(() => {
     // Sample mode has no user by design; bouncing it to /login would make the
@@ -141,7 +143,7 @@ export default function FunderPage() {
       </div>
 
       <div className="flex-1 flex overflow-hidden">
-        {view === 'cohort' ? <CohortDashboard mode="funder" /> : view === 'assessments' ? <FunderAssessments /> : <NgoDashboard mode="funder" />}
+        {view === 'cohort' ? <CohortDashboard mode="funder" /> : view === 'area' ? <ProductionAreas publishedOnly /> : view === 'assessments' ? <FunderAssessments /> : <NgoDashboard mode="funder" />}
       </div>
     </div>
   );

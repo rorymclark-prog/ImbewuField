@@ -143,3 +143,6 @@
 .printPreview .summaryTile, .printPreview .summaryPage { box-shadow: none; border-radius: 0; }
 @media (max-width: 767px) { .readingControls { padding: 10px; font-size: 12px; gap: 8px; } .summaryPage { padding: 14px; } }
 @media print { .summaryPage { break-after: page; border: 0; padding: 0; } .summaryPage:last-child { break-after: auto; } .readingControls, .languageNote { display: none; } }
+
+/* Long translated choices must wrap rather than clip in the settings rail. */
+.workspace button { white-space: normal; overflow-wrap: anywhere; }

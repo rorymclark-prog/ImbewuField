@@ -31,6 +31,7 @@ export interface Customer {
 export type CustomerDetails = Pick<Customer, 'address' | 'phone' | 'email'>;
 
 export interface SavedInvoice {
+  enterprise?: import('./area-returns').GrowingEnterprise | null;
   id: string;
   no: number;
   billTo: string;
@@ -224,6 +225,7 @@ function cleanInvoice(row: unknown): SavedInvoice | null {
     ? invoice.dueDateISO
     : undefined;
   return {
+    enterprise: ['vegetables', 'staples', 'other'].includes(String(invoice.enterprise)) ? invoice.enterprise : undefined,
     id: invoice.id.trim(),
     no: invoice.no!,
     billTo: invoice.billTo.trim(),

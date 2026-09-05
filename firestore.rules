@@ -425,6 +425,7 @@ service cloud.firestore {
 
     // These documents are accessed through the authenticated assessment API only.
     // Keeping them server-only also prevents profile edits from granting capabilities.
+    match /production_sites/{document=**} { allow read, write: if false; }
     match /mel_assessments/{document=**} { allow read, write: if false; }
     match /org_permissions/{id} { allow read, write: if false; }
     match /organization_controls/{id} { allow read, write: if false; }

@@ -393,8 +393,8 @@ export function CohortTimeline({ series, className }: { series: CohortSeries; cl
               subtract two numbers that were never about the same people. */}
           <Figure
             label={paired || series.comparableFarmers === 0
-              ? 'Kept on the farms'
-              : `Kept, on ${series.comparableFarmers} farms`}
+              ? 'Harvest not matched to sales'
+              : `Unmatched, on ${series.comparableFarmers} farms`}
             value={series.totalKeptKg === null ? 'Not comparable' : kgTotalLabel(series.totalKeptKg)}
             tone={series.totalKeptKg === null ? FAINT : KEPT}
           />
@@ -515,7 +515,7 @@ export function CohortTimeline({ series, className }: { series: CohortSeries; cl
             {paired ? (
               <>
                 <Key colour={SOLD} label="Sold" />
-                <Key colour={KEPT} label="Kept on the farm" />
+                <Key colour={KEPT} label="Harvest not matched to sales" />
                 {anyOverSold && <Key colour={OVER} label="More sold than picked that month" outline />}
               </>
             ) : (
@@ -538,6 +538,7 @@ export function CohortTimeline({ series, className }: { series: CohortSeries; cl
           </div>
 
           <Footnote>
+            Unmatched harvest may be stored, eaten, donated, lost or missing a sales entry. It is not measured household consumption.
             These four figures cover the {months.length} months drawn here. A cohort total
             elsewhere on this page counts every record since each farm joined, so it can be a
             little larger — the two are different periods, not two answers.
@@ -610,7 +611,7 @@ function coverageSentence(series: CohortSeries): string {
 function kgPlotDescription(series: CohortSeries, paired: boolean): string {
   const { productionFarmers: picked, salesFarmers: sold } = series;
   if (paired) {
-    return `Kilograms picked each month across ${picked} farms, split into what was sold and what was kept.`;
+    return `Kilograms picked each month across ${picked} farms, showing sold kilograms and harvest not matched to sales.`;
   }
   if (sold === 0) return `Kilograms picked each month across ${picked} farms. Nobody here shares a sales record.`;
   if (picked === 0) return `Kilograms sold each month across ${sold} farms. Nobody here shares a harvest record.`;

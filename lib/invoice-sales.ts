@@ -3,7 +3,7 @@ import type { SalesLog } from './db/types';
 
 export type InvoiceSaleDraft = Pick<
   SalesLog,
-  'crop' | 'kg' | 'amount' | 'buyer' | 'sold_at' | 'invoice_id' | 'invoice_line'
+  'crop' | 'kg' | 'amount' | 'buyer' | 'sold_at' | 'invoice_id' | 'invoice_line' | 'enterprise'
 >;
 
 /**
@@ -30,6 +30,7 @@ export function invoiceSalesForPaidInvoice(invoice: SavedInvoice): InvoiceSaleDr
       sold_at: invoice.paidAt!,
       invoice_id: invoice.id,
       invoice_line: invoiceLine,
+      ...(invoice.enterprise ? { enterprise: invoice.enterprise } : {}),
     }];
   });
 }

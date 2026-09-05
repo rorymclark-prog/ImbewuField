@@ -648,7 +648,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
 
         <div className="min-w-0 flex-1">
           <div className="text-sm font-display font-semibold truncate" style={{ color: 'var(--report-ink)' }}>
-            Site Analysis Report
+            {tr('Site Analysis Report', 'Umbiko wokuhlola indawo')}
           </div>
           <div className="text-xs font-mono truncate" style={{ color: 'var(--report-muted)' }}>
             {ecology.label} · {Math.abs(d.lat).toFixed(3)}°S {d.lon.toFixed(3)}°E
@@ -665,9 +665,9 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
               ? { background: 'rgba(31,77,43,0.15)', border: '1px solid rgba(31,77,43,0.4)', color: 'var(--report-green)' }
               : { background: 'var(--report-panel)', border: '1px solid var(--report-border)', color: 'var(--report-muted)' }}
           >
-            {panelOpen && report
-              ? <><FileText size={12} />Report</>
-              : <><SlidersHorizontal size={12} />Settings</>}
+            {panelOpen && (report || reading !== 'full')
+              ? <><FileText size={12} />{tr('Report', 'Umbiko')}</>
+              : <><SlidersHorizontal size={12} />{tr('Settings', 'Izilungiselelo')}</>}
           </button>
         )}
 
@@ -748,7 +748,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
 
       <div className={`${styles.readingControls} no-print`}>
         <div><button aria-pressed={presentation === 'screen'} onClick={() => setPresentation('screen')}>{tr('Screen', 'Isikrini')}</button><button aria-pressed={presentation === 'print'} onClick={() => setPresentation('print')}>{tr('Print · save ink', 'Phrinta · yonga uyinki')}</button></div>
-        <div>{([['one', '1-page summary', 'Isifinyezo sekhasi elilodwa'], ['five', '5-page summary', 'Isifinyezo samakhasi amahlanu'], ['full', 'Full report', 'Umbiko ogcwele']] as const).map(([value, en, zu]) => <button key={value} aria-pressed={reading === value} onClick={() => setReading(value)}>{tr(en, zu)}</button>)}</div>
+        <div>{([['one', '1-page summary', 'Isifinyezo sekhasi elilodwa'], ['five', '5-page summary', 'Isifinyezo samakhasi amahlanu'], ['full', 'Full report', 'Umbiko ogcwele']] as const).map(([value, en, zu]) => <button key={value} aria-pressed={reading === value} onClick={() => { setReading(value); setPanelOpen(false); }}>{tr(en, zu)}</button>)}</div>
         {reading === 'full' && <label><input type="checkbox" checked={includeImages} onChange={e => setIncludeImages(e.target.checked)} /> {tr('Include photos and maps in PDF', 'Faka izithombe namamephu ku-PDF')}</label>}
       </div>
       {language !== (activeSaved?.lang ?? appLang ?? 'en') && report && reading === 'full' && <p className={`${styles.languageNote} no-print`}>{tr('Language changes apply to new reports and summaries. Regenerate to translate the full advice.', 'Ushintsho lolimi lusebenza emibikweni emisha nasezifinyezweni. Khiqiza kabusha ukuhumusha zonke izeluleko.')}</p>}
@@ -768,13 +768,13 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
              }}>
 
           {/* Phone: the report is the primary read once it exists */}
-          {!isWide && report && (
+          {!isWide && (report || reading !== 'full') && (
             <button
               onClick={() => setPanelOpen(false)}
               className="w-full flex items-center justify-center gap-2 mb-4 py-2.5 rounded-lg text-sm font-display font-semibold"
               style={{ background: 'var(--report-button)', color: '#F7F2E9', border: 'none' }}
             >
-              <FileText size={14} />Read the report
+              <FileText size={14} />{label('Read the report')}
             </button>
           )}
 
@@ -921,11 +921,11 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           {/* Satellite capture status */}
           <div className="mt-3 p-2.5 rounded-lg" style={{ background: mapCapture ? 'rgba(31,77,43,0.06)' : 'rgba(226,216,196,0.4)', border: `1px solid ${mapCapture ? 'rgba(31,77,43,0.2)' : 'var(--report-border)'}` }}>
             <div className="text-xs font-display font-medium mb-0.5" style={{ color: mapCapture ? 'var(--report-green)' : 'var(--report-muted)' }}>
-              {mapCapture ? '✓ Aerial snapshot captured' : 'No aerial snapshot'}
+              {mapCapture ? tr('✓ Aerial snapshot captured', '✓ Isithombe sasemoyeni sigciniwe') : tr('No aerial snapshot', 'Asikho isithombe sasemoyeni')}
             </div>
             {!mapCapture && (
               <div className="text-xs font-mono" style={{ color: 'var(--report-muted)' }}>
-                Close report → zoom into your site on the map → tap Capture → reopen
+                {tr('Close report → zoom into your site on the map → tap Capture → reopen', 'Vala umbiko → sondeza indawo ebalazweni → thepha Capture → uvule umbiko futhi')}
               </div>
             )}
           </div>
@@ -1205,8 +1205,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                 maps and an appendix the farmer expected. */}
             {reading === 'full' && plates.length === 0 && (
               <div className="mb-6 p-4 rounded-xl font-sans" style={{ background: 'var(--report-panel)', border: '1px dashed var(--report-border)', fontSize: 12, color: 'var(--report-muted)' }}>
-                No design maps are saved for this site yet, so the report has none to show or to read
-                from. Render your plan sheets in the Design Map for this place and generate again.
+                {tr('No design maps are saved for this site yet. Save your plan sheets in the Design Map to include them here.', 'Awakagcinwa amamephu omklamo wale ndawo. Gcina amakhasi omklamo ku-Design Map ukuze afakwe lapha.')}
               </div>
             )}
 
