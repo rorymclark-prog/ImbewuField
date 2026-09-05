@@ -8,7 +8,7 @@
 // own crop-plan store (lib/crop-plan.ts) for what's actually sown where.
 // Zero network, zero new deps.
 
-import { Suspense, useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react';
+import { Suspense, useCallback, useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import { Search, X, ChevronDown, Home } from 'lucide-react';
@@ -77,12 +77,12 @@ const ALL_GROUPS: FoodGroup[] = ['leafy_green', 'legume', 'root_tuber', 'allium_
 // barInstances), which is what this plan literally is — one annual cycle
 // repeated for visibility, not a stored second-season rotation.
 const DISPLAY_MONTHS = 24;
-// The resilience chart below keeps the previous window: it plots the annual
-// RHYTHM, and a second identical copy of every column adds no information
-// there (unlike the timeline, where the repeat is what makes a wrapped bar
-// legible). Deliberately not DISPLAY_MONTHS.
-const CHART_MONTHS = 15;
+// The task list keeps its shorter reading window; both charts share the
+// calendar's full axis so a month below always sits under that month above.
+const LOOK_AHEAD_MONTHS = 15;
 const GRID_MIN_WIDTH = Math.round((760 * DISPLAY_MONTHS) / 12);
+const BED_LABEL_WIDTH = 128;
+const MONTH_COLUMNS: CSSProperties = { display: 'grid', gridTemplateColumns: `repeat(${DISPLAY_MONTHS}, minmax(0, 1fr))` };
 
 // One emoji per kind of work, so a farmer scanning the month sees the SHAPE of
 // it — three rows of ground prep, one of harvest — before reading a word. Kept
@@ -929,6 +929,20 @@ function FacilitatorCropsPageInner() {
   const [showLookingAhead, setShowLookingAhead] = useState(false);
   const monthHeaderScrollRef = useRef<HTMLDivElement>(null);
   const bedRowsScrollRef = useRef<HTMLDivElement>(null);
+  const foodChartScrollRef = useRef<HTMLDivElement | null>(null);
+  const timelineScrollLeftRef = useRef(0);
+  const syncMonthScroll = useCallback((source: HTMLDivElement) => {
+    const left = source.scrollLeft;
+    timelineScrollLeftRef.current = left;
+    for (const node of [monthHeaderScrollRef.current, bedRowsScrollRef.current, foodChartScrollRef.current]) {
+      if (node && node !== source && Math.abs(node.scrollLeft - left) > 0.5) node.scrollLeft = left;
+    }
+  }, []);
+  const registerFoodChartScroll = useCallback((node: HTMLDivElement | null) => {
+    foodChartScrollRef.current = node;
+    // Changing chart tabs must keep the month the farmer was looking at.
+    if (node) node.scrollLeft = timelineScrollLeftRef.current;
+  }, []);
   function toggleAllowBedSharing() {
     setAllowBedSharing((prev) => {
       const next = !prev;
@@ -1190,13 +1204,8 @@ function FacilitatorCropsPageInner() {
   // months before anything useful starts. Scrollable out to a full 2 years
   // ahead rather than a hard 12-month wall.
   const monthOrder = useMemo(() => Array.from({ length: DISPLAY_MONTHS }, (_, i) => wrapMonth(currentMonth + i)), [currentMonth]);
-  // The resilience chart and the "Looking ahead" task list keep the shorter
-  // window. Both are ANNUAL readings — "what does a year of this plan put on
-  // the table", "what do I do next" — and a second identical copy of every
-  // month would add a repeated task list and a mirrored chart, neither of
-  // which tells the farmer anything the first year didn't. Only the timeline
-  // needs the repeat, because only the timeline has bars that wrap.
-  const chartMonthOrder = useMemo(() => Array.from({ length: CHART_MONTHS }, (_, i) => wrapMonth(currentMonth + i)), [currentMonth]);
+  // Keep the task list concise; the charts use monthOrder to align with the beds.
+  const lookAheadMonthOrder = useMemo(() => Array.from({ length: LOOK_AHEAD_MONTHS }, (_, i) => wrapMonth(currentMonth + i)), [currentMonth]);
 
   const benchmarkPlantings = useMemo(
     () => plantings.filter((planting) => plantingIsActiveOrPlanned(planting, currentMonth)),
@@ -1270,17 +1279,24 @@ function FacilitatorCropsPageInner() {
   // repeated every year, the steady state a garden grows into. It is the DEFAULT because it
   // is the picture the plan is FOR; a garden starting today inevitably shows near-empty
   // early months, which reads as a broken plan rather than a young one.
-  // 'fromToday' passes currentMonth so the aggregations drop the ALREADY-FINISHED months of
-  // existing crops — without that, a crop sown last March stamps Mar-May as occupied forever
-  // and utilization reads 100% over beds the Gantt correctly shows empty.
+  // 'fromToday' uses the same absolute occurrences as the bed timeline. A
+  // repeated month name must not repeat an existing or one-time planting.
   const [yearMode, setYearMode] = useState<'established' | 'fromToday'>('established');
   const chartNowMonth = yearMode === 'fromToday' ? currentMonth : undefined;
   const chartPlantings = useMemo(
     () => yearMode === 'established' ? recurringPlanPlantings(plantings) : plantings,
     [yearMode, plantings],
   );
-  const foodAvailability = useMemo(() => buildFoodAvailability(chartPlantings, beds, chartNowMonth), [chartPlantings, beds, chartNowMonth]);
-  const fieldUtilizationByMonth = useMemo(() => buildFieldUtilizationByMonth(chartPlantings, beds, chartNowMonth), [chartPlantings, beds, chartNowMonth]);
+  const foodAvailability = useMemo(() => {
+    if (chartNowMonth !== undefined) return buildFoodAvailability(chartPlantings, beds, chartNowMonth, DISPLAY_MONTHS);
+    const annual = buildFoodAvailability(chartPlantings, beds);
+    return monthOrder.map((month) => annual[month]);
+  }, [chartPlantings, beds, chartNowMonth, monthOrder]);
+  const fieldUtilization = useMemo(() => {
+    if (chartNowMonth !== undefined) return buildFieldUtilizationByMonth(chartPlantings, beds, chartNowMonth, DISPLAY_MONTHS);
+    const annual = buildFieldUtilizationByMonth(chartPlantings, beds);
+    return monthOrder.map((month) => annual[month]);
+  }, [chartPlantings, beds, chartNowMonth, monthOrder]);
 
   // Cover-page facts for the printed plan and the calendar's name. Built from
   // the same values the header and the bed-check strip already show, so the
@@ -1727,15 +1743,15 @@ function FacilitatorCropsPageInner() {
               >
                 {/* Same paper as the row around it — otherwise the frozen bar
                     is two-tone and the corner cell reads as a separate card. */}
-                <div style={{ position: 'sticky', left: 0, zIndex: 2, width: 128, flexShrink: 0, background: '#F5F0E8', borderRight: '1px solid #D8CDB4', padding: '8px 10px', display: 'flex', alignItems: 'flex-end' }}>
+                <div style={{ position: 'sticky', left: 0, zIndex: 2, width: BED_LABEL_WIDTH, flexShrink: 0, background: '#F5F0E8', borderRight: '1px solid #D8CDB4', padding: '8px 10px', display: 'flex', alignItems: 'flex-end' }}>
                   <span className="font-sans uppercase tracking-widest" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.08em' }}>Bed</span>
                 </div>
                 <div
                   ref={monthHeaderScrollRef}
                   className="flex-1"
-                  style={{ overflowX: 'hidden' }}
+                  style={{ overflowX: 'hidden', minWidth: 0 }}
                 >
-                  <div style={{ minWidth: GRID_MIN_WIDTH - 128 }}>
+                  <div style={{ minWidth: GRID_MIN_WIDTH - BED_LABEL_WIDTH }}>
                     {/* Year band. The two years were already on this axis —
                         DISPLAY_MONTHS has been 24 for a long time — but the
                         only thing naming them was a ↻ glyph and a paragraph
@@ -1759,13 +1775,13 @@ function FacilitatorCropsPageInner() {
                         </div>
                       )}
                     </div>
-                    <div className="flex">
+                    <div style={MONTH_COLUMNS} data-crop-month-header>
                     {monthOrder.map((m, i) => (
                       <div
                         key={i}
                         className="text-center font-sans"
                         style={{
-                          flex: 1, padding: '8px 2px', fontSize: 11,
+                          minWidth: 0, padding: '8px 2px', fontSize: 11,
                           fontWeight: i === 0 ? 700 : 500,
                           color: i === 0 ? '#1F4D2B' : i >= 12 ? '#A89A82' : '#8C7A62',
                           background: i === 0 ? 'rgba(31,77,43,0.08)' : i >= 12 ? 'rgba(196,164,106,0.07)' : 'transparent',
@@ -1785,13 +1801,11 @@ function FacilitatorCropsPageInner() {
                 </div>
               </div>
 
-              {/* Bed rows — the body owns the REAL horizontal scrollbar; its
-                  onScroll mirrors scrollLeft onto the header above. */}
+              {/* Either the beds or the food chart can pan the shared axis. */}
               <div
                 ref={bedRowsScrollRef}
-                onScroll={(e) => {
-                  if (monthHeaderScrollRef.current) monthHeaderScrollRef.current.scrollLeft = e.currentTarget.scrollLeft;
-                }}
+                onScroll={(e) => syncMonthScroll(e.currentTarget)}
+                data-crop-bed-scroll
                 style={{ overflowX: 'auto' }}
               >
                 <div style={{ minWidth: GRID_MIN_WIDTH }}>
@@ -1838,10 +1852,12 @@ function FacilitatorCropsPageInner() {
                 since it's the single view most likely to answer "am I actually
                 covered month to month" at a glance. */}
             <FoodAvailabilityChart
-              monthOrder={chartMonthOrder}
+              monthOrder={monthOrder}
               availability={foodAvailability}
               yieldBenchmark={planYieldBenchmark}
-              utilizationByMonth={fieldUtilizationByMonth}
+              utilization={fieldUtilization}
+              registerScroll={registerFoodChartScroll}
+              onMonthScroll={syncMonthScroll}
               plantings={plantings}
               priceOverrides={priceOverrides}
               onPriceOverrideChange={updatePriceOverride}
@@ -1888,7 +1904,7 @@ function FacilitatorCropsPageInner() {
                   {showLookingAhead && (
                     <div className="space-y-1 mt-1.5">
                       {/* i<2 (this month, next month) is already shown above — repeating it here just eats space for no new information. */}
-                      {chartMonthOrder.map((m, i) => {
+                      {lookAheadMonthOrder.map((m, i) => {
                         if (i < 2) return null;
                         const t = allTasks.filter((task) => taskMonthsFromNow(task, currentMonth) === i);
                         if (t.length === 0) return null;
@@ -2516,6 +2532,25 @@ function AcceptedPlanNotesCard({ notes, generatedAt }: { notes: PlanNote[]; gene
  * stays a stacked bar (fresh vs storage is a composition, not a single
  * trend, so a bar reads better there).
  */
+function CropMonthViewport({ children, registerScroll, onMonthScroll }: {
+  children: ReactNode;
+  registerScroll: (node: HTMLDivElement | null) => void;
+  onMonthScroll: (node: HTMLDivElement) => void;
+}) {
+  return (
+    <div ref={registerScroll} onScroll={(event) => onMonthScroll(event.currentTarget)}
+      role="region" aria-label="Crop chart months, scroll to match the planting calendar" tabIndex={0}
+      data-crop-chart-scroll style={{ overflowX: 'auto', marginInline: -16 }}>
+      {/* Undo the card padding and reserve the same bed-label gutter. The
+          plot, labels and calendar then have identical edges and scroll range. */}
+      <div style={{ display: 'flex', minWidth: GRID_MIN_WIDTH }}>
+        <div aria-hidden="true" style={{ width: BED_LABEL_WIDTH, flexShrink: 0, position: 'sticky', left: 0, zIndex: 1, background: '#FFFEFA' }} />
+        <div style={{ flex: 1, minWidth: 0 }}>{children}</div>
+      </div>
+    </div>
+  );
+}
+
 function MonthLineChart({
   monthOrder, values, max, color, formatLabel, labelColor, dotColor, referenceValue, tooltipFor,
 }: {
@@ -2531,30 +2566,30 @@ function MonthLineChart({
   tooltipFor?: (i: number) => string | undefined;
 }) {
   const H = 56;
-  const colW = 56;
-  const W = monthOrder.length * colW;
-  const xAt = (i: number) => (i + 0.5) * colW;
+  const plotRef = useRef<HTMLDivElement>(null);
+  const [W, setWidth] = useState(GRID_MIN_WIDTH - BED_LABEL_WIDTH);
+  useEffect(() => {
+    const node = plotRef.current;
+    if (!node) return;
+    setWidth(node.clientWidth);
+    // Content-box units match the SVG viewport even when the farmer uses
+    // the app's Large text setting (root CSS zoom).
+    const observer = new ResizeObserver(([entry]) => setWidth(entry.contentRect.width));
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+  const xAt = (i: number) => (i + 0.5) * W / monthOrder.length;
   const yAt = (v: number) => H - Math.max(0, Math.min(1, v / max)) * (H - 6) - 3;
   const points = monthOrder.map((_, i) => ({ x: xAt(i), y: yAt(values[i]), v: values[i] }));
   const linePath = points.map((p, i) => `${i === 0 ? 'M' : 'L'} ${p.x.toFixed(1)} ${p.y.toFixed(1)}`).join(' ');
   const areaPath = `${linePath} L ${points[points.length - 1].x.toFixed(1)} ${H} L ${points[0].x.toFixed(1)} ${H} Z`;
   const defaultDotColor = (v: number) => (v <= 0 ? '#D8CFBC' : color);
   return (
-    <div style={{ overflowX: 'auto' }}>
-      {/* GRID_MIN_WIDTH belongs to the OTHER (24-month bed-timeline) chart
-       * elsewhere in this file — MonthLineChart has exactly one call site
-       * (the 15-month Field utilization tab below) and its own natural width
-       * is W, not that constant. Borrowing it left the wrapper's floor wider
-       * than this chart's own coordinate space, and the SVG's width="100%"
-       * meant it always stretched to fill that (or any wider ancestor)
-       * regardless of the floor — while the label row below stays pinned at
-       * a literal W. The two drifted apart increasingly toward the right
-       * (2026-08-22, screenshot repro: percentages read correctly, but sat
-       * far right of the point they belonged to). Fixed by giving the SVG
-       * the SAME literal pixel width as the label row, so neither one can
-       * ever stretch independently of the other. */}
-      <div style={{ minWidth: W }}>
-        <svg viewBox={`0 0 ${W} ${H}`} width={W} height={H} style={{ display: 'block' }}>
+    <div ref={plotRef}>
+      {/* Measure the shared column container: stretching only the SVG once
+          left the month labels behind. Both now fill the same responsive
+          width, while the measured viewBox keeps dots round after resizing. */}
+        <svg viewBox={`0 0 ${W} ${H}`} width="100%" height={H} style={{ display: 'block' }} data-crop-utilization-plot>
           {referenceValue !== undefined && (
             <line x1={0} x2={W} y1={yAt(referenceValue)} y2={yAt(referenceValue)} stroke="#C4A46A" strokeWidth={1} strokeDasharray="4 3" />
           )}
@@ -2566,11 +2601,11 @@ function MonthLineChart({
             </circle>
           ))}
         </svg>
-        <div className="flex" style={{ width: W }}>
+        <div style={MONTH_COLUMNS} data-crop-chart-labels>
           {monthOrder.map((m, i) => (
-            <div key={i} style={{ width: colW, textAlign: 'center' }}>
+            <div key={i} style={{ minWidth: 0, textAlign: 'center', borderLeft: i === 12 ? '2px solid #C4A46A' : undefined }} title={i >= 12 ? `${MONTHS_SHORT[m - 1]}, next year` : undefined}>
               <div className="font-sans" style={{ fontSize: 10, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? '#1F4D2B' : '#8C7A62', marginTop: 4 }}>
-                {MONTHS_SHORT[m - 1]}
+                {i === 12 ? '↻ ' : ''}{MONTHS_SHORT[m - 1]}
               </div>
               <div className="font-mono font-semibold" style={{ fontSize: 11, color: labelColor ? labelColor(values[i]) : '#20190F', marginTop: 2 }}>
                 {formatLabel(values[i])}
@@ -2578,7 +2613,6 @@ function MonthLineChart({
             </div>
           ))}
         </div>
-      </div>
     </div>
   );
 }
@@ -2586,13 +2620,15 @@ function MonthLineChart({
 type FoodValueMode = 'availability' | 'utilization' | 'value';
 
 function FoodAvailabilityChart({
-  monthOrder, availability, yieldBenchmark, utilizationByMonth, plantings, priceOverrides, onPriceOverrideChange,
-  cashflowSettings, onCashflowSettingsChange, yearMode, onYearModeChange,
+  monthOrder, availability, yieldBenchmark, utilization, plantings, priceOverrides, onPriceOverrideChange,
+  cashflowSettings, onCashflowSettingsChange, yearMode, onYearModeChange, registerScroll, onMonthScroll,
 }: {
   monthOrder: number[];
   availability: FoodAvailabilityItem[][];
   yieldBenchmark: PlanYieldBenchmark;
-  utilizationByMonth: number[];
+  utilization: number[];
+  registerScroll: (node: HTMLDivElement | null) => void;
+  onMonthScroll: (node: HTMLDivElement) => void;
   plantings: Planting[];
   priceOverrides: Record<string, CropPrice>;
   onPriceOverrideChange: (cropKey: string, price: CropPrice) => void;
@@ -2615,14 +2651,14 @@ function FoodAvailabilityChart({
   // passed to autoSuggestPlan, bed sizing, repetitions or any lib/ function.
   // The household-guideline-guardrail test enforces both properties.
   const [householdSizeGuideline, setHouseholdSizeGuideline] = useState('');
-  const cols = monthOrder.map((m) => {
-    const items = availability[m] ?? [];
+  const cols = monthOrder.map((m, i) => {
+    const items = availability[i] ?? [];
     return { m, fresh: items.filter((it) => it.status === 'fresh'), stored: items.filter((it) => it.status === 'stored') };
   });
   const maxTotal = Math.max(1, ...cols.map((c) => c.fresh.length + c.stored.length));
   const hasStoredItems = cols.some((c) => c.stored.length > 0);
   const isAvailabilityEmpty = cols.every((c) => c.fresh.length + c.stored.length === 0);
-  const utilMax = Math.max(1, ...monthOrder.map((m) => utilizationByMonth[m] ?? 0));
+  const utilMax = Math.max(1, ...utilization);
   const pricedCropKeys = [...new Set(plantings.map((p) => p.cropKey))].filter((key) => !UNPRICED_CROPS.has(key)).sort();
   const unpricedBenchmarkCrops = yieldBenchmark.byCrop.filter((row) => !priceFor(row.cropKey, priceOverrides)).map((row) => row.name);
   const assumptionsConfirmed = cashflowSettings.confirmed === true;
@@ -2644,20 +2680,9 @@ function FoodAvailabilityChart({
   const { cash: cashIncome, home: homeValue } = scenarioValues(yieldBenchmark.byCrop);
   // 128, not the 56 it was. Rory, 2026-09-04, on a laptop: "can you make these
   // graphics bigger we have space so make use of it so we can see them better".
-  // The chart sits in a card that is already GRID_MIN_WIDTH (1520px) wide for
-  // its 15 columns, so height was the only axis still starved — at 56px a
-  // one-crop month and a three-crop month were 8px apart and read the same.
+  // At 56px a one-crop month and a three-crop month were 8px apart and read
+  // the same. Keep the larger bars when aligning them with the calendar.
   const BAR_MAX_H = 128;
-
-  // 2026-08-22, Rory: "i dont think this start from today function works."
-  // Traced (background diagnosis workflow, confirmed live against the
-  // Ubhejane Creche sample plan) to a real design edge case, not a wiring
-  // bug: "From today" only differs from "An established year" for plantings
-  // marked existing/once (see recurringPlanPlantings + slotIsPast in
-  // lib/crop-plan.ts) — a plan built purely by auto-suggest has none of
-  // those, so the toggle is a genuine no-op on it. Say so plainly instead of
-  // silently doing nothing.
-  const hasHistoryToTrim = plantings.some((p) => p.existing === true || typeof p.once === 'string');
 
   return (
     <div className="rounded-2xl p-4 mt-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
@@ -2680,9 +2705,7 @@ function FoodAvailabilityChart({
             ))}
           </div>
           <span className="font-sans" style={{ fontSize: 11, color: '#8C7A62', lineHeight: 1.4 }}>
-            {!hasHistoryToTrim
-              ? 'Both views match for now — this plan has no already-growing or one-off crops yet for "From today" to trim.'
-              : yearMode === 'established' ? 'The repeated annual timing of planned rows; one-off existing crops are not repeated.' : 'Only timing still ahead from today; finished existing crops do not remain on the chart.'}
+            {yearMode === 'established' ? 'The repeated annual timing of planned rows; one-off existing crops are not repeated.' : 'Follows the planting calendar from today; existing and one-off crops appear only in their own season.'}
           </span>
         </div>
       )}
@@ -2700,8 +2723,8 @@ function FoodAvailabilityChart({
                 <span className="inline-flex items-center gap-1.5"><span style={{ width: 9, height: 9, borderRadius: 2, background: '#7FAE6E', display: 'inline-block' }} /> Fresh</span>
                 {hasStoredItems && <span className="inline-flex items-center gap-1.5"><span style={{ width: 9, height: 9, borderRadius: 2, background: '#D4A017', display: 'inline-block' }} /> Stored under named conditions</span>}
               </div>
-              <div style={{ overflowX: 'auto' }}>
-                <div className="flex" style={{ minWidth: GRID_MIN_WIDTH, gap: 6 }}>
+              <CropMonthViewport registerScroll={registerScroll} onMonthScroll={onMonthScroll}>
+                <div style={MONTH_COLUMNS} data-crop-availability-columns>
                   {cols.map(({ m, fresh, stored }, i) => {
                     const total = fresh.length + stored.length;
                     const height = total === 0 ? 0 : Math.max(10, Math.round((total / maxTotal) * BAR_MAX_H));
@@ -2716,7 +2739,7 @@ function FoodAvailabilityChart({
                     const storedHeight = total === 0 ? 0 : Math.round((stored.length / total) * body);
                     const freshHeight = body - storedHeight;
                     return (
-                      <div key={i} style={{ flex: 1, textAlign: 'center', minWidth: 64 }}>
+                      <div key={i} style={{ textAlign: 'center', minWidth: 0, borderLeft: i === 12 ? '2px solid #C4A46A' : undefined }}>
                         {/* A BUTTON, not a div with a tooltip. The stored half of
                             this chart carried its only explanation in a `title`
                             attribute, which on a phone — where this app is used —
@@ -2725,10 +2748,10 @@ function FoodAvailabilityChart({
                             text stays for a mouse; the tap opens the same detail. */}
                         <button
                           type="button"
-                          onClick={() => setOpenMonth(openMonth === m ? null : m)}
-                          aria-expanded={openMonth === m}
-                          aria-label={`${MONTHS_SHORT[m - 1]} — ${total === 0 ? 'nothing scheduled' : `${total} crop${total === 1 ? '' : 's'}`}, tap for detail`}
-                          style={{ display: 'block', width: '100%', background: openMonth === m ? '#F5F0E8' : 'none', border: 'none', borderRadius: 6, padding: '2px 0', cursor: 'pointer' }}
+                          onClick={() => setOpenMonth(openMonth === i ? null : i)}
+                          aria-expanded={openMonth === i}
+                          aria-label={`${MONTHS_SHORT[m - 1]}${i >= 12 ? ', next year' : ''} — ${total === 0 ? 'nothing scheduled' : `${total} crop${total === 1 ? '' : 's'}`}, tap for detail`}
+                          style={{ display: 'block', width: '100%', background: openMonth === i ? '#F5F0E8' : 'none', border: 'none', borderRadius: 6, padding: '2px 0', cursor: 'pointer' }}
                         >
                           {/* The bar's own number, on the bar. The icon rows
                               below say WHICH crops; without this you had to
@@ -2747,7 +2770,7 @@ function FoodAvailabilityChart({
                               </div>
                             )}
                           </div>
-                          <div className="font-sans" style={{ fontSize: 12, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? '#1F4D2B' : '#8C7A62', marginTop: 6 }}>{MONTHS_SHORT[m - 1]}</div>
+                          <div className="font-sans" style={{ fontSize: 12, fontWeight: i === 0 ? 700 : 500, color: i === 0 ? '#1F4D2B' : '#8C7A62', marginTop: 6 }}>{i === 12 ? '↻ ' : ''}{MONTHS_SHORT[m - 1]}</div>
                           <div style={{ fontSize: 18, minHeight: 22, display: 'flex', flexWrap: 'wrap', gap: 2, justifyContent: 'center', marginTop: 2 }}>
                             {fresh.map((item, idx) => (
                               <CropIcon key={`${item.cropKey}-${idx}`} cropKey={item.cropKey} icon={item.icon} size={18} />
@@ -2763,10 +2786,10 @@ function FoodAvailabilityChart({
                     );
                   })}
                 </div>
-              </div>
+              </CropMonthViewport>
               {openMonth !== null && (
                 <MonthAvailabilityDetail
-                  month={openMonth}
+                  month={monthOrder[openMonth]}
                   items={availability[openMonth] ?? []}
                   onClose={() => setOpenMonth(null)}
                 />
@@ -2781,7 +2804,9 @@ function FoodAvailabilityChart({
           <p className="font-sans mb-3" style={{ fontSize: 12, color: '#8C7A62', lineHeight: 1.4 }}>
             Share of mapped growing area occupied each month. The planner reserves each crop through the upper end of its supported maturity and picking range to avoid double-booking; finish a crop earlier only after checking the bed.
           </p>
-          <MonthLineChart monthOrder={monthOrder} values={monthOrder.map((m) => utilizationByMonth[m] ?? 0)} max={utilMax} color="#5C7FA6" referenceValue={1} dotColor={(value) => (value <= 0 ? '#D8CFBC' : value > 1 ? '#B33A3A' : '#5C7FA6')} labelColor={(value) => (value > 1 ? '#B33A3A' : '#20190F')} formatLabel={(value) => `${Math.round(value * 100)}%`} />
+          <CropMonthViewport registerScroll={registerScroll} onMonthScroll={onMonthScroll}>
+            <MonthLineChart monthOrder={monthOrder} values={utilization} max={utilMax} color="#5C7FA6" referenceValue={1} dotColor={(value) => (value <= 0 ? '#D8CFBC' : value > 1 ? '#B33A3A' : '#5C7FA6')} labelColor={(value) => (value > 1 ? '#B33A3A' : '#20190F')} formatLabel={(value) => `${Math.round(value * 100)}%`} />
+          </CropMonthViewport>
         </>
       )}
 
@@ -3131,7 +3156,7 @@ function BedRow({ bed, plantings, currentMonth, onAddCrop, onTapPlanting }: {
 
   return (
     <div className="flex" style={{ borderBottom: '1px solid #E2D8C4' }}>
-      <div style={{ position: 'sticky', left: 0, zIndex: 2, width: 128, flexShrink: 0, background: bed.kind === 'plot' ? '#FBF6EC' : '#FFFEFA', borderRight: '1px solid #E2D8C4', padding: '10px 10px' }}>
+      <div style={{ position: 'sticky', left: 0, zIndex: 2, width: BED_LABEL_WIDTH, flexShrink: 0, background: bed.kind === 'plot' ? '#FBF6EC' : '#FFFEFA', borderRight: '1px solid #E2D8C4', padding: '10px 10px' }}>
         <div className="font-display font-semibold" style={{ fontSize: 13, color: '#20190F' }}>
           {bed.label}
           {bed.kind === 'plot' && (
@@ -3157,14 +3182,14 @@ function BedRow({ bed, plantings, currentMonth, onAddCrop, onTapPlanting }: {
           </div>
         )}
       </div>
-      <div style={{ flex: '1 1 auto', position: 'relative' }}>
+      <div style={{ flex: '1 1 auto', minWidth: 0, position: 'relative' }}>
         {/* month gridlines (background) — column 0 is always "this month" now */}
-        <div style={{ position: 'absolute', inset: 0, display: 'flex', pointerEvents: 'none' }}>
+        <div style={{ ...MONTH_COLUMNS, position: 'absolute', inset: 0, pointerEvents: 'none' }}>
           {Array.from({ length: DISPLAY_MONTHS }, (_, i) => i).map((i) => (
             <div
               key={i}
               style={{
-                flex: 1,
+                minWidth: 0,
                 borderRight: i < DISPLAY_MONTHS - 1 ? '1px solid #EDE7DB' : 'none',
                 borderLeft: i === 12 ? '2px solid #C4A46A' : undefined,
                 background: i === 0 ? 'rgba(31,77,43,0.05)' : i >= 12 ? 'rgba(196,164,106,0.07)' : 'transparent',
