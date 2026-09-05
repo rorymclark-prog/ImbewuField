@@ -11,15 +11,10 @@
 //           then redeploy that environment.
 // Turn OFF: remove the variable (or set it to anything else), redeploy.
 //
-// The intended shape is ON for Preview, OFF for Production: AI rendering stays
-// available on imbewufield-<branch>.vercel.app to keep working on, while no
-// farmer on the live site can start a paid render.
-//
-// Deliberately NO localStorage escape hatch (unlike lib/community/flag.ts). That
-// flag guards whether a feature is VISIBLE; this one guards whether money can be
-// spent, and a switch a browser console can flip is not a spend control. One
-// variable drives both the UI and the routes, so the button and the endpoint can
-// never disagree — no dead control, no reachable-but-hidden endpoint.
+// This switch enables the environment, not every account. A verified aiRenderTester custom
+// claim additionally grants each tester access; the routes and worker enforce it independently
+// of the interface. Keep this switch off until both sides of that gate have been deployed.
+// There is deliberately no localStorage or query-string override for paid rendering.
 
 export const AI_RENDER_FLAG = 'NEXT_PUBLIC_AI_RENDER_ENABLED';
 

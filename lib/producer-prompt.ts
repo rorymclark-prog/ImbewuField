@@ -77,13 +77,19 @@ export function groundContractFor(style: StylePreset, groundSource: 'photo' | 'p
 // STYLE_LINES lives further down (with the showcase-prompt rewrite) since both the strict
 // buildProducerPrompt below and the showcase prompts share the one definition.
 
+// A staple-garden outline identifies a land use, not a crop mixture. A previous glossary added
+// three specific crops to every plot, even when the farmer had named fewer crops or none at all.
+// Share this rule across prompt paths so an illustration cannot silently become a planting plan.
+const STAPLE_GARDEN_APPEARANCE =
+  'the staple garden: one cultivated plot occupying exactly its saved outline. Use only crop identities and growth state explicitly supplied for this plot; never infer a crop mixture from its name, colour, location or outline. If these details are unspecified, use generic cultivation texture without identifiable crop species or an implied growth stage. Keep the plot distinct from surrounding ground: never mown lawn, never a block of trees or shrubs';
+
 // What each coloured placeholder marker on the input composite should become. Module-scoped so both
 // the strict buildProducerPrompt and the illustrated buildShowcasePrompt share the one legend.
 const FEATURE_LEGEND =
   // Fourth copy of the bed wording (with M.bed, OVERLAY_ICONS.bed and — until this session — a
   // buildLockedIllustrationPrompt that had no glossary at all). Kept in step with M.bed by
   // tests/producer-prompt.test.ts's cross-table check rather than by anyone remembering.
-  `a green rectangle marker → a PLANTED vegetable bed in full growth, never bare or freshly tilled ground: dense rows of leafy vegetables filling the rectangle, individual plants visible from above as distinct rosettes and clumps, with only narrow strips of soil between the rows; beds side by side stay separate rectangles and never merge into one green band, hedge or shrub row; an olive-gold area marker → the staple garden: a standing field crop of tall maize with beans climbing the stems and broad pumpkin leaves along the rows, never lawn and never bare soil; a small cylinder/drum marker → a green cylindrical JoJo water tank; a hive marker → a striped beehive; a tree marker → a fruit tree with a full canopy; a hut/shed marker → that building; ` +
+  `a green rectangle marker → a PLANTED vegetable bed in full growth, never bare or freshly tilled ground: dense rows of leafy vegetables filling the rectangle, individual plants visible from above as distinct rosettes and clumps, with only narrow strips of soil between the rows; beds side by side stay separate rectangles and never merge into one green band, hedge or shrub row; an olive-gold area marker → ${STAPLE_GARDEN_APPEARANCE}; a small cylinder/drum marker → a green cylindrical JoJo water tank; a hive marker → a striped beehive; a tree marker → a fruit tree with a full canopy; a hut/shed marker → that building; ` +
   `a grey/tan tinted polygon area → a real driveway surface (gravel or paving) exactly that shape and size, empty of vehicles; a warm-tan tinted polygon area → a paved outdoor patio exactly that shape and size; a blue tinted polygon area → a real dam or pond of open water exactly that shape and size; ` +
   // Line features — drawn into every composite but previously never explained (audit find):
   `a dusty-violet line → a real farm fence following exactly that path (posts + wire); a gold dashed line → a walking path of exactly that route; a light-blue dashed line → a swale (on-contour water-harvesting ditch with a planted berm) along exactly that line; a dark-blue solid line → a buried water pipe route (show as a subtle trench-line); a bright-blue solid line → a drip-irrigation line with sparse emitters along the beds it crosses; a solid violet line → a subsurface filtered-greywater route, buried and never an open channel; a deep-green line → a windbreak hedge of dense shrubs/trees along exactly that line. `;
@@ -149,13 +155,11 @@ export function buildLockedIllustrationPrompt(
   const waterArtDirection = /water/i.test(layerLabel)
     ? [
         `WATER FEATURE ROLE: polish every already-marked tank, tap, basin, pond and fitting into a recognisable realistic top-down farm feature at its exact saved centre, count, orientation and footprint. Keep buried water pipe blue, filtered-greywater routes purple, and drip irrigation blue with sparse emitters. The app reinforces the measured routes, leaders, labels and legend afterwards.`,
-        // TONAL HIERARCHY and MATERIAL SEPARATION order a painted-illustration ground treatment —
-        // "layered watercolor-and-gouache texture", a repainted "high-contrast, moody" forest
-        // context — which is the exact contradiction fixed below for the sheet body: photo_plan and
-        // satellite_overlay must not repaint the ground at all. Skipped for those two styles so this
-        // block cannot reopen the contradiction the sheet-level branch just closed.
-        paintGround ? `TONAL HIERARCHY: use a deep dark-green illustrated forest context beyond the property, with a moderate olive/moss property interior. Keep the whole sheet high-contrast, moody and editorial from directly overhead; do not brighten or pale the land relative to the source.` : '',
-        paintGround ? `MATERIAL SEPARATION: distinguish mown lawn, rough veld, bare soil, tilled ground, planted beds and paving through layered watercolor-and-gouache texture with fine dry-brush grain. Keep the driveway quiet, flat and charcoal, with no bright border, kerb, raised edge, hatch, shadow or roof-like treatment.` : '',
+        // Painted styles may change texture, never the site's land cover. A dark forest outside
+        // every property was an art-direction instruction with no basis in the source photograph.
+        // Photo and paper contracts still skip this block entirely.
+        paintGround ? `TONAL HIERARCHY: preserve the source land-cover pattern and relative light and dark areas inside and beyond the property. Apply the selected illustration style only to surfaces already evidenced by the source; keep unidentifiable surroundings neutral and do not infer vegetation or terrain. Use contrast to make the saved water features readable from directly overhead.` : '',
+        paintGround ? `MATERIAL SEPARATION: distinguish only surfaces identified in the source photograph or saved design through layered watercolor-and-gouache texture with fine dry-brush grain. Preserve each surface's identity and extent; use neutral texture wherever its identity is unknown. Where a driveway is present, keep its supplied surface quiet and flat, with no bright border, kerb, raised edge, hatch, shadow or roof-like treatment.` : '',
         `SOURCE LOCK: preserve the exact top-down source crop, scale, aspect ratio, camera position and geometry. Invent nothing: add no trees, beds, tanks, ponds, paths, fences, buildings or other features not already visible or marked. Add no writing or sheet furniture; the app adds those afterwards.`,
       ].filter(Boolean).join('\n\n')
     : '';
@@ -532,13 +536,7 @@ const M = {
   // leaf and habit, never by species — naming a species in a prompt is a propagation
   // recommendation, and which species may be propagated here is regulated (NEMBA).
   bed: 'each green rectangle is a PLANTED vegetable bed in full growth, never bare or freshly tilled ground: dense regular rows of leafy vegetables filling that rectangle, individual plants clearly visible from above as distinct rosettes and clumps in several greens, with only narrow strips of brown soil showing between the rows. Beds standing side by side stay separate rectangles with their paths visible between them — never merged into one continuous green band, hedge, shrub row or treeline',
-  // The household staple plot. It is a traced AREA, so — like the zone bands and unlike every
-  // marker above — the instruction has to say "this whole region is one crop" or the model reads a
-  // large plain polygon as lawn and paints it away. Maize-legume intercropping with pumpkin run
-  // through it as the ground layer is the traditional smallholder practice across eastern and
-  // southern Africa; these three are named because the farmer chose this specific tool, so they
-  // are what the tool means, not a species recommendation the prompt invented.
-  staple_garden: 'the olive-gold area is the staple garden — a standing field crop filling that whole outline: regular rows of tall maize seen from directly above as a mass of star-shaped leaf whorls, with bean plants climbing the stems between them and broad pumpkin leaves running across the ground along the rows. It is a cropped field, never mown lawn, never bare soil, never a block of trees or shrubs',
+  staple_garden: `the olive-gold area is ${STAPLE_GARDEN_APPEARANCE}`,
   tank: 'a small drum marker is a green cylindrical JoJo water tank',
   hive: 'a hive marker is a striped beehive',
   tree: 'a tree marker is a fruit tree with a full canopy',
@@ -821,10 +819,7 @@ const OVERLAY_ICONS: Record<string, string> = {
   // habit, never by species: naming one in a prompt is a propagation recommendation, and which
   // species may be propagated here is regulated (NEMBA).
   bed:       'a green rectangle marker → a PLANTED vegetable bed in full growth, never bare or freshly tilled ground: dense regular rows of leafy vegetables filling the rectangle, individual plants clearly visible from above as distinct rosettes and clumps in several greens, with only narrow strips of brown soil showing between the rows. Beds standing side by side stay separate rectangles with their paths visible between them — never merged into one continuous green band, hedge, shrub row or treeline',
-  // The household staple plot — a traced AREA, so it is described as a whole cropped region rather
-  // than as a marker to be replaced. See the M.staple_garden twin for why maize/beans/pumpkin are
-  // named here when almost nothing else in this table names a species.
-  staple_garden: 'an olive-gold area marker → the staple garden: a standing field crop filling that whole outline, regular rows of tall maize seen from directly above as a mass of star-shaped leaf whorls, bean plants climbing the stems between them, and broad pumpkin leaves running across the ground along the rows. A cropped field, never mown lawn, never bare soil, never a block of trees or shrubs',
+  staple_garden: `an olive-gold area marker → ${STAPLE_GARDEN_APPEARANCE}`,
   // The indigenous shade tree had no crown description here at all, so the model fell back to a
   // generic — and often conical, conifer-like — canopy. In South Africa that is not a neutral
   // default: it reads as a pine plantation, the invasive thing these plans usually exist to
@@ -1011,7 +1006,7 @@ export function buildSatelliteOverlayPrompt(args: {
   // groundRegister's 'absent' case), so every kind that reaches this string shares one register.
   const fabricIsContent = groundRegister('lawn', sheetKind) === 'content';
   const siteFabric = fabric.trim()
-    ? `\n\nEXISTING SITE FABRIC — WHAT IS ALREADY THERE, NOT PART OF THIS DESIGN. The large, soft-edged, low-opacity tinted areas already on the photograph are ground the farmer has traced and named: ${fabric}. They are AREAS OF EXISTING GROUND, never placement markers: redraw each one as the real surface it already is, in place, keeping its exact outline — lawn as even mown grass, orchard and veg garden as the planting already visible in the photograph there, staple garden as one standing field crop filling its whole outline (rows of tall maize with beans climbing the stems and broad pumpkin leaves running along the ground between them — a cropped field, never lawn and never bare soil, whether or not the photograph shows a crop standing there today), patio and paving as a clean flat slab, cleared ground as bare earth, driveway as the quiet grey tar rule 9 describes, house as the roof rule 8 describes, terrace bank / level change as a hatched, textured retained riser face — visibly distinct from the flat platforms either side of it, never flattened into the same lawn it retains. Nothing is invented inside one and no pictorial icon is placed on one. ADD NO NEW PLANTING ANYWHERE: existing site fabric is redrawn, never grown — no extra trees, canopies, shrubs, hedges or beds appear on or around it, and the open lawn between these areas stays open lawn.${fabricIsContent ? ' Give each one a small white caption naming it, and one legend row each under an EXISTING heading.' : ' On this sheet they carry no caption and no legend row of their own — they are context only, there so the reader can place this layer on the real site.'}`
+    ? `\n\nEXISTING SITE FABRIC — WHAT IS ALREADY THERE, NOT PART OF THIS DESIGN. The large, soft-edged, low-opacity tinted areas already on the photograph are ground the farmer has traced and named: ${fabric}. They are AREAS OF EXISTING GROUND, never placement markers: redraw each one as the real surface it already is, in place, keeping its exact outline — lawn as even mown grass, orchard and veg garden as the planting already visible in the photograph there, staple garden as the cultivated ground already visible within its exact outline, preserving its observed current state; use only crop identities explicitly supplied for that plot, and use generic cultivation texture when crop details are unknown, without adding a standing crop that the photograph or saved facts do not show, patio and paving as a clean flat slab, cleared ground as bare earth, driveway as the quiet grey tar rule 9 describes, house as the roof rule 8 describes, terrace bank / level change as a hatched, textured retained riser face — visibly distinct from the flat platforms either side of it, never flattened into the same lawn it retains. Nothing is invented inside one and no pictorial icon is placed on one. ADD NO NEW PLANTING ANYWHERE: existing site fabric is redrawn, never grown — no extra trees, canopies, shrubs, hedges or beds appear on or around it, and the open lawn between these areas stays open lawn.${fabricIsContent ? ' Give each one a small white caption naming it, and one legend row each under an EXISTING heading.' : ' On this sheet they carry no caption and no legend row of their own — they are context only, there so the reader can place this layer on the real site.'}`
     : '';
 
   // Served fixtures need the same data/grammar split as the designed-element list below. `served`

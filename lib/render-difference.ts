@@ -63,6 +63,15 @@ export interface PaidRenderDecision {
   message: string | null;
 }
 
+/** After composition, most of a page may be identical source pixels and app-owned chrome.
+ * Reusing the raw pass's 10% redraw floor would reject a useful repaint of a small feature.
+ * This check only asks whether visible model work survived the overlays. It does not certify
+ * quality, feature counts, positions or fidelity; the result remains a review candidate. */
+export function retainedRenderHasVisibleChange(report: DifferenceReport): boolean {
+  return report.verdict !== 'content-erased'
+    && report.redrawnFraction * report.comparedPixels >= 8;
+}
+
 /** Below this per-channel delta a pixel is the same pixel — encoder noise, not a decision. */
 const TRIVIAL_DELTA = 4;
 /** At or above this, a human sees a different surface rather than a shifted tone. */

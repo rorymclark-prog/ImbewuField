@@ -9,6 +9,7 @@
 // SECURITY MODEL: the job doc is an UNTRUSTED public API — any signed-in client can write one. So
 // the worker is the enforcement boundary, NOT the UI/rules:
 //   • KILL SWITCH   — app_config/renders.enabled must be true (console toggle stops all spend).
+//   • TESTER ACCESS — current Firebase Auth record must explicitly grant aiRenderTester:true.
 //   • QUOTA         — per-user daily sheet/job cap, counted transactionally (render_usage/{uid_day}).
 //   • IDEMPOTENCY   — the job is claimed queued→running in a transaction; a redelivered event bails.
 //   • PATH SCOPING  — inputPath is DERIVED server-side (never the client value); keys allow-listed.
@@ -25,10 +26,12 @@ import { onSchedule } from 'firebase-functions/v2/scheduler';
 import { defineSecret } from 'firebase-functions/params';
 import { setGlobalOptions, logger } from 'firebase-functions/v2';
 import { initializeApp } from 'firebase-admin/app';
+import { getAuth } from 'firebase-admin/auth';
 import { getFirestore, FieldValue, Timestamp, type DocumentReference } from 'firebase-admin/firestore';
 import { getStorage } from 'firebase-admin/storage';
 import { PNG } from 'pngjs';
 import { compareRenders } from '../../lib/render-difference';
+import { readAiRenderTesterAccess } from '../../lib/ai-render/access';
 import { geminiEdit, geminiAspectRatio, geminiImageSize, geminiModelForQuality } from './gemini';
 import { friendlyProviderError } from './provider-errors';
 import {
@@ -337,6 +340,17 @@ async function claimJob(ref: DocumentReference, jobId: string): Promise<ClaimRes
         updatedAt: FieldValue.serverTimestamp(),
       });
       return { proceed: false, reason: `invalid: ${contractError}` };
+    }
+
+    // The job is client-written, so no approval field in it is trusted. Read the current Auth
+    // grant, including for owner/admin accounts, before either usage counter or any provider call.
+    const access = await readAiRenderTesterAccess(job.uid, async (uid) => {
+      const account = await getAuth().getUser(uid);
+      return account.disabled ? null : account.customClaims;
+    });
+    if (!access.allowed) {
+      tx.update(ref, { status: 'error', error: access.message, updatedAt: FieldValue.serverTimestamp() });
+      return { proceed: false, reason: `tester-access: ${access.reason}` };
     }
 
     // Per-user daily quota — the enforceable spend cap (rules can't do cross-doc counters).

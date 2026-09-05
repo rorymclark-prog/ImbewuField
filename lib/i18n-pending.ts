@@ -401,7 +401,7 @@ export const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   designGlossyQualityMediumSub: 'about a quarter of the cost',
   designGlossyQualityLow: 'Low',
   designGlossyQualityLowSub: 'cheapest · for testing',
-  designGlossyQualityNote: 'The AI paints the background only — your exact shapes, labels and legend are drawn on top afterwards. Render the same sheet at each setting and compare before choosing.',
+  designGlossyQualityNote: 'AI artwork can change or invent features. Source protections, labels and legend are applied afterwards, but compare positions and counts with your Exact Canvas map before using the illustration. Higher AI quality does not verify accuracy.',
   designGlossyFinishHeading: 'Choose your finish',
   designGlossyExactCanvas: 'Exact Canvas',
   designGlossyExactCanvasHint: 'Straight canvas render · instant · no AI cost',

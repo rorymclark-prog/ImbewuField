@@ -459,7 +459,7 @@ test('wires Sector jobs through authoritative houses and protected-pixel restora
   );
   assert.match(
     completion,
-    /: sheet\.key === 'sector'\s*\n\s*\? await finishSectorRef\.current\(factualModelImage\)/,
+    /: sheet\.key === 'sector'\s*\n\s*\? await finishSectorRef\.current\(factualModelImage, frozenScene\)/,
     'both Sector stages must recompose the app-owned analysis — a raw model return has no legend on it',
   );
   assert.doesNotMatch(

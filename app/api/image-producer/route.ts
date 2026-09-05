@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { buildProducerPrompt, buildProducerPromptLegacy, STYLE_LINES, type StylePreset } from '@/lib/producer-prompt';
 import { guardPaidApiRequest } from '@/lib/api-auth';
 import { aiRenderEnabled, AI_RENDER_DISABLED_MESSAGE, AI_RENDER_DISABLED_STATUS } from '@/lib/ai-render/flag';
+import { decideAiRenderAccess, aiRenderAccessHttpStatus } from '@/lib/ai-render/access';
 
 // Strict single-purpose "restyle, never redesign" endpoint. The caller has already
 // composited the exact scene (satellite + placed elements + boundary) — this route
@@ -164,6 +165,10 @@ export async function POST(req: NextRequest) {
   }
   const auth = await guardPaidApiRequest(req, '/api/image-producer');
   if (auth.response) return auth.response;
+  const access = decideAiRenderAccess(auth.uid, auth);
+  if (!access.allowed) {
+    return NextResponse.json({ error: access.message, ...access }, { status: aiRenderAccessHttpStatus(access) });
+  }
 
   let body: {
     imageBase64?: string;

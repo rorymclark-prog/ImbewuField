@@ -65,6 +65,16 @@ const throwIfCalled: () => Promise<{ uid: string }> = async () => {
   throw new Error('verifyToken must not be called when there is no bearer token to verify');
 };
 
+test('AI tester access comes only from an explicit verified custom claim', async () => {
+  const req = requestWithHeaders({ authorization: 'Bearer signed-token', 'x-ai-render-tester': 'true' });
+  const approved = await authenticateApiRequest(req, '/api/ai-render', async () => ({ uid: 'tester', aiRenderTester: true }));
+  assert.equal(approved.aiRenderTester, true);
+  for (const value of [undefined, false, 'true', 1, { enabled: true }]) {
+    const result = await authenticateApiRequest(req, '/api/ai-render', async () => ({ uid: 'farmer', aiRenderTester: value }));
+    assert.equal(result.aiRenderTester, undefined, 'headers and truthy claim values must not grant access');
+  }
+});
+
 // ── Soft mode: REQUIRE_API_AUTH unset ─────────────────────────────────────────
 
 test('soft mode: a request with no Authorization header proceeds unauthenticated', async () => {

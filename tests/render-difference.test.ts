@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 
-import { compareRenders, differenceMessage, paidRenderDecision } from '@/lib/render-difference';
+import { compareRenders, differenceMessage, paidRenderDecision, retainedRenderHasVisibleChange } from '@/lib/render-difference';
 
 // Rory paid for Full Treatment repeatedly and got back the picture he already had. Six commits
 // across two days were reported as fixing it, every one with a green suite behind it, because
@@ -242,4 +242,26 @@ test('the paid Hybrid gate rejects a known copy and keeps a known redraw', () =>
   assert.match(unchanged.message ?? '', /AI pass returned the same map/);
   assert.match(unchanged.message ?? '', /exact map is unchanged/);
   assert.deepEqual(redrawn, { keep: true, message: null });
+});
+
+
+test('a small visible edit can survive composition without repainting ten percent of the page', () => {
+  const before = new Uint8ClampedArray(100 * 100 * 4).fill(160);
+  const after = before.slice();
+  // A 4x4 mark is 0.16% of the page; untouched legends and ground must not hide its existence.
+  for (let y = 20; y < 24; y++) for (let x = 20; x < 24; x++) {
+    const offset = (y * 100 + x) * 4;
+    after[offset] = 40; after[offset + 1] = 75; after[offset + 2] = 25;
+  }
+  const report = compareRenders(before, after);
+  assert.equal(paidRenderDecision(report, 'hybrid').keep, false);
+  assert.equal(retainedRenderHasVisibleChange(report), true);
+  assert.equal(retainedRenderHasVisibleChange(compareRenders(before, before)), false);
+});
+
+test('one stray changed pixel does not pass the retained-artwork visibility check', () => {
+  const before = new Uint8ClampedArray(100 * 100 * 4).fill(160);
+  const after = before.slice();
+  after[0] = 0; after[1] = 0; after[2] = 0;
+  assert.equal(retainedRenderHasVisibleChange(compareRenders(before, after)), false);
 });

@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { guardPaidApiRequest } from '@/lib/api-auth';
-import { aiRenderEnabled, AI_RENDER_DISABLED_MESSAGE, AI_RENDER_DISABLED_STATUS } from '@/lib/ai-render/flag';
 
 // Polls a fal.ai queue request (used by the gpt-image-2 async path). The client calls this
 // every few seconds with the status/response URLs fal handed back at submit time. Each call
@@ -11,11 +10,8 @@ export const maxDuration = 30;
 const isFalQueueUrl = (u?: string) => !!u && /^https:\/\/queue\.fal\.run\//.test(u);
 
 export async function POST(req: NextRequest) {
-  // Kill switch first — before auth, before parsing a body, before any vendor
-  // credential is read. A refusal here costs nothing and cannot spend anything.
-  if (!aiRenderEnabled()) {
-    return NextResponse.json({ error: AI_RENDER_DISABLED_MESSAGE }, { status: AI_RENDER_DISABLED_STATUS });
-  }
+  // Polling retrieves an already-submitted image; it starts no generation. Keep it available
+  // after experimental access is revoked or new rendering is switched off, so paid work survives.
   const auth = await guardPaidApiRequest(req, '/api/ai-render/poll');
   if (auth.response) return auth.response;
   const key = process.env.FAL_KEY;

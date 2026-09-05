@@ -1,6 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import {
+  createRenderSceneSnapshot,
+  decodeRenderSceneSnapshot,
+  MAX_RENDER_SCENE_BYTES,
+  parseRenderSceneJson,
+  type RenderSceneInput,
+} from '../lib/render-scene.ts';
 
 import {
   MAX_COMPOSITE_BYTES,
@@ -404,6 +411,134 @@ test('subscription snapshots reject impossible status, authority and identity co
     ...job,
     sheets: [{ ...baseSheet, outputPath: `renders/farmer-1/${jobId}/output-water.png` }],
   }), null);
+});
+
+function sceneInput(): RenderSceneInput {
+  const frame = { centerLng: 31.9, centerLat: -27.7, zoom: 18, imgW: 960, imgH: 640, mPerPx: 0.4 };
+  return {
+    state: {
+      siteId: 'farm-1', frame: { ...frame, underlayDataUrl: png },
+      items: [{ id: 'tree-1', defId: 'existing-tree', x: 0.25, y: 0.5 }],
+      zones: [{ id: 'bed-1', zone: 1, points: [[0.1, 0.1], [0.3, 0.1], [0.3, 0.3]] }],
+      lines: [{ id: 'water-1', kind: 'pipe', points: [[0.2, 0.3], [0.5, 0.8]] }],
+      step: 'review', updatedAt: '2026-09-04T12:00:00Z', rev: 3,
+    },
+    frame: { ...frame, satDataUrl: png, underlayDataUrl: png },
+    refLayers: { boundary: [[0, 0], [1, 0], [1, 1], [0, 1]], house: [], driveway: [], drivewayClosed: false },
+    site: { rainfallMm: 800 }, placeName: 'Farm', labelMode: 'codes', underlay: 'satellite',
+    outputScale: 2, renderRecipe: 'snapshot-test', planVersion: 'v93', cacheSuffix: ':test',
+  };
+}
+
+test('a paid scene survives a reload without borrowing a moved tree, changed scale or another base image', async () => {
+  const input = sceneInput();
+  const pending = createRenderSceneSnapshot(input);
+  // Change the original objects before the asynchronous hash finishes, just as live editing can.
+  input.state.items[0].x = 0.9;
+  input.refLayers.boundary[0][0] = 0.2;
+  input.frame.mPerPx = 2;
+  input.frame.satDataUrl = 'data:image/png;base64,TQ==';
+  const prepared = await pending;
+  const restored = await decodeRenderSceneSnapshot(prepared.sceneJson, prepared.designRevision, prepared.sourceDataUrl);
+  assert.equal(restored.state.items[0].x, 0.25);
+  assert.deepEqual(restored.refLayers.boundary[0], [0, 0]);
+  assert.equal(restored.frame.mPerPx, 0.4);
+  assert.equal(restored.frame.satDataUrl, png);
+  assert.equal(restored.state.rev, 3);
+  assert.equal(restored.labelMode, 'codes');
+  assert.equal(restored.outputScale, 2);
+  assert.equal(restored.cacheSuffix, ':test');
+  assert.doesNotMatch(prepared.sceneJson, /satDataUrl|underlayDataUrl|data:image/,
+    'large inline imagery must not leak into Firestore through either frame');
+  restored.state.items[0].x = 0.7;
+  const again = await decodeRenderSceneSnapshot(prepared.sceneJson, prepared.designRevision, prepared.sourceDataUrl);
+  assert.equal(again.state.items[0].x, 0.25, 'decoded copies must not share mutable geometry');
+  await assert.rejects(decodeRenderSceneSnapshot(prepared.sceneJson, prepared.designRevision, input.frame.satDataUrl), /source image does not match/);
+});
+
+test('a design revision ignores navigation and key insertion order but notices geometry, imagery and render settings', async () => {
+  const original = sceneInput();
+  const expected = await createRenderSceneSnapshot(original);
+  const reordered = sceneInput();
+  reordered.state = { ...reordered.state, step: 'planting', rev: 30, updatedAt: '2026-09-05T12:00:00Z' };
+  reordered.state.items[0] = { y: 0.5, x: 0.25, defId: 'existing-tree', id: 'tree-1' };
+  assert.equal((await createRenderSceneSnapshot(reordered)).designRevision, expected.designRevision);
+  const changes: Array<(input: RenderSceneInput) => void> = [
+    (input) => { input.state.items[0].x += 0.01; },
+    (input) => { input.state.lines[0].points[0][0] += 0.01; },
+    (input) => { input.refLayers.boundary[0][0] += 0.01; },
+    (input) => { input.frame.satDataUrl = 'data:image/png;base64,TQ=='; },
+    (input) => { input.frame.mPerPx = 0.5; },
+    (input) => { input.labelMode = 'names'; },
+    (input) => { input.outputScale = 3; },
+    (input) => { input.renderRecipe = 'another-recipe'; },
+  ];
+  for (const change of changes) {
+    const changed = sceneInput();
+    change(changed);
+    assert.notEqual((await createRenderSceneSnapshot(changed)).designRevision, expected.designRevision);
+  }
+  const tampered = JSON.parse(expected.sceneJson);
+  tampered.state.items[0].x = 0.8;
+  await assert.rejects(decodeRenderSceneSnapshot(JSON.stringify(tampered), expected.designRevision, expected.sourceDataUrl), /revision does not match/);
+});
+
+test('invalid and oversized render scenes fail before any upload or paid job can start', async () => {
+  for (const invalidNumber of [NaN, Infinity, -Infinity]) {
+    const input = sceneInput();
+    input.state.lines[0].points[0][0] = invalidNumber;
+    await assert.rejects(createRenderSceneSnapshot(input), /non-finite/);
+  }
+  for (const invalidRevision of [-1, 0.5, Number.MAX_SAFE_INTEGER + 1]) {
+    const input = sceneInput();
+    input.state.rev = invalidRevision;
+    await assert.rejects(createRenderSceneSnapshot(input), /invalid geometry/);
+  }
+  const input = sceneInput();
+  input.state.items[0].note = 'x'.repeat(MAX_RENDER_SCENE_BYTES);
+  await assert.rejects(createRenderSceneSnapshot(input), /too large/);
+  await assert.rejects(enqueueRenderJob({
+    siteId: 'farm-1', style: 'storybook', engine: 'openai', sheets: [sheet()],
+    sceneSnapshot: { sceneJson: JSON.stringify(input), designRevision: 'a'.repeat(64) },
+  }), /saved render scene is invalid/,
+  'scene validation must run before Firebase sign-in or storage access');
+  const prepared = await createRenderSceneSnapshot(sceneInput());
+  await assert.rejects(enqueueRenderJob({
+    siteId: 'farm-1', style: 'storybook', engine: 'openai', sheets: [sheet()],
+    sceneSnapshot: { ...prepared, designRevision: 'a'.repeat(64) },
+  }), /revision does not match/, 'a correctly shaped but false hash must also fail before uploads');
+  await assert.rejects(enqueueRenderJob({
+    siteId: 'farm-1', style: 'storybook', engine: 'openai', sheets: [sheet()], attemptId: 'other/job',
+  }), /attempt identifier is invalid/);
+  assert.equal(parseRenderSceneJson('{}', 'invalid-revision'), null);
+});
+
+test('reattachment retains paid quality and the original scene while refusing a source from another job', async () => {
+  const prepared = await createRenderSceneSnapshot(sceneInput());
+  const jobId = 'farmer-1_123_abc';
+  const job = {
+    uid: 'farmer-1', siteId: 'farm-1', style: 'storybook', engine: 'openai', quality: 'medium',
+    status: 'queued', sceneJson: prepared.sceneJson, designRevision: prepared.designRevision,
+    attemptId: 'attempt-123', outputMode: 'hybrid', sourcePath: `renders/farmer-1/${jobId}/source.jpg`,
+    sheets: [{ key: 'water', label: 'Water', prompt: 'render', status: 'queued', inputPath: `renders/farmer-1/${jobId}/input-water.jpg` }],
+  };
+  assert.deepEqual(normaliseRenderJobDoc(jobId, job), job);
+  assert.equal(normaliseRenderJobDoc(jobId, { ...job, quality: 'invented' }), null);
+  assert.equal(normaliseRenderJobDoc(jobId, { ...job, outputMode: 'invented' }), null);
+  assert.equal(normaliseRenderJobDoc(jobId, { ...job, outputMode: 'full' })?.outputMode, 'full',
+    'resuming an optional two-pass workflow must retain that intent after React state is gone');
+  assert.equal(normaliseRenderJobDoc(jobId, { ...job, sourcePath: 'renders/farmer-1/another-job/source.jpg' }), null);
+  assert.equal(normaliseRenderJobDoc(jobId, { ...job, sourcePath: undefined }), null);
+  assert.equal(normaliseRenderJobDoc(jobId, { ...job, siteId: 'another-farm' }), null);
+  assert.equal(normaliseRenderJobDoc(jobId, { ...job, designRevision: 'corrupt' }), null);
+  assert.equal(normaliseRenderJobDoc(jobId, { ...job, attemptId: undefined }), null);
+  const plain = sceneInput();
+  plain.frame.satDataUrl = null;
+  const noImage = await createRenderSceneSnapshot(plain);
+  const restored = await decodeRenderSceneSnapshot(noImage.sceneJson, noImage.designRevision);
+  assert.equal(restored.frame.satDataUrl, null);
+  assert.equal(normaliseRenderJobDoc(jobId, { ...job, sceneJson: noImage.sceneJson, designRevision: noImage.designRevision }), null);
+  assert.ok(normaliseRenderJobDoc(jobId, { ...job, sceneJson: noImage.sceneJson, designRevision: noImage.designRevision, sourcePath: undefined }));
 });
 
 // ── THE PAID QUALITY DIAL AND ITS CACHE SLOT ────────────────────────────────────────────────

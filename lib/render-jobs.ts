@@ -17,6 +17,12 @@ import { deleteObject, getDownloadURL, ref, uploadString } from 'firebase/storag
 import { hasConflictingRenderAuthority } from '@/lib/render-policy';
 import { releaseCanvas, releaseImageSource } from '@/lib/release-canvas';
 import {
+  decodeRenderSceneSnapshot,
+  parseRenderSceneJson,
+  type PreparedRenderSceneSnapshot,
+  type RenderSceneSnapshot,
+} from '@/lib/render-scene';
+import {
   MAX_RENDER_SHEETS_PER_JOB,
   RENDER_SHEET_KEYS,
   isRenderEngine,
@@ -26,6 +32,7 @@ import {
 export type RenderSheetStatus = 'queued' | 'running' | 'done' | 'error';
 export type RenderJobStatus = 'queued' | 'running' | 'complete' | 'failed' | 'error';
 export type RenderResultKind = 'hybrid' | 'ai-polished' | 'legacy-ai';
+export type RenderOutputMode = 'hybrid' | 'full';
 
 /** Max sheets per job and max bytes per composite — MUST match firestore.rules / storage.rules. */
 export const MAX_SHEETS_PER_JOB = MAX_RENDER_SHEETS_PER_JOB;
@@ -131,6 +138,12 @@ export interface RenderJobDoc {
   style: string;
   engine: string;
   quality?: RenderQuality;
+  /** Old jobs have no scene; new jobs carry the design and image that were actually submitted. */
+  sceneJson?: string;
+  designRevision?: string;
+  attemptId?: string;
+  sourcePath?: string;
+  outputMode?: RenderOutputMode;
   sheets: RenderSheetState[];
   status: RenderJobStatus;
   error?: string;
@@ -323,7 +336,13 @@ export async function enqueueRenderJob(opts: {
   /** Omitted means 'high' — the setting every render used before this dial existed. */
   quality?: RenderQuality;
   sheets: RenderSheetSpec[];
+  sceneSnapshot?: PreparedRenderSceneSnapshot;
+  attemptId?: string;
+  outputMode?: RenderOutputMode;
 }): Promise<string> {
+  // Preparation and upload are asynchronous; retain the submitted settings even if the caller
+  // changes its options object while those operations run.
+  opts = { ...opts, sheets: opts.sheets.map((sheet) => ({ ...sheet })) };
   // Sample farm is look-don't-spend: AI renders bill a real OpenAI account and write
   // renders/{uid} storage, so they're off while sampling. The exact (no-AI) sheets all work
   // in the sample — this only blocks the billed path. (Safety layer 2, lib/sample-mode.ts.)
@@ -335,11 +354,36 @@ export async function enqueueRenderJob(opts: {
   if (!opts.siteId.trim()) throw new RenderJobError('Choose a farm before rendering AI sheets.');
   if (!isRenderEngine(opts.engine)) throw new RenderJobError('Unknown AI render engine.');
   if (!opts.style.trim()) throw new RenderJobError('Choose a render style.');
+  if (opts.quality !== undefined && !RENDER_QUALITIES.includes(opts.quality)) {
+    throw new RenderJobError('Choose a valid AI render quality.');
+  }
+  if (opts.attemptId !== undefined && !validAttemptId(opts.attemptId)) {
+    throw new RenderJobError('The render attempt identifier is invalid.');
+  }
+  if (opts.outputMode !== undefined && opts.outputMode !== 'hybrid' && opts.outputMode !== 'full') {
+    throw new RenderJobError('The requested render workflow is invalid.');
+  }
+  // Snapshot integrity and byte limits fail before Firebase access, uploads or a billable job.
+  // Capture primitive fields here so mutating an options object during an upload cannot replace
+  // the revision that just passed validation.
+  const sceneSnapshot = opts.sceneSnapshot ? { ...opts.sceneSnapshot } : undefined;
+  if (sceneSnapshot) {
+    if (sceneSnapshot.sourceDataUrl !== undefined && (
+      !validImageDataUrl(sceneSnapshot.sourceDataUrl)
+      || dataUrlBytes(sceneSnapshot.sourceDataUrl) >= MAX_COMPOSITE_BYTES
+    )) throw new RenderJobError('The render source image must be a valid image under 12 MB.');
+    const scene = await decodeRenderSceneSnapshot(
+      sceneSnapshot.sceneJson, sceneSnapshot.designRevision, sceneSnapshot.sourceDataUrl,
+    );
+    if (scene.state.siteId !== opts.siteId) throw new RenderJobError('The render scene belongs to a different farm.');
+  }
   const fb = getFirebase();
   const uid = fb?.auth.currentUser?.uid;
   if (!fb || !uid) throw new RenderJobError('You need to be signed in to generate AI sheets.');
 
   const jobId = `${uid}_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+  const sourcePath = sceneSnapshot?.sourceDataUrl ? `renders/${uid}/${jobId}/source.jpg` : undefined;
+  const attemptId = opts.attemptId ?? (sceneSnapshot ? jobId : undefined);
 
   // Track successes so a later failure can roll them back. Serial work is intentional: validating
   // four masks together retained four canvases plus four ImageData arrays (~75 MiB at Standard)
@@ -347,6 +391,10 @@ export async function enqueueRenderJob(opts: {
   const uploaded: string[] = [];
   let sheets: RenderSheetState[];
   try {
+    if (sourcePath && sceneSnapshot?.sourceDataUrl) {
+      await uploadString(ref(fb.storage, sourcePath), sceneSnapshot.sourceDataUrl, 'data_url');
+      uploaded.push(sourcePath);
+    }
     sheets = await mapSerially(opts.sheets, async (s): Promise<RenderSheetState> => {
       const inputPath = `renders/${uid}/${jobId}/input-${s.key}.jpg`;
       await uploadString(ref(fb.storage, inputPath), s.compositeDataUrl, 'data_url');
@@ -393,6 +441,10 @@ export async function enqueueRenderJob(opts: {
       // Spread rather than assign: an explicit `undefined` is not a legal Firestore value, and a
       // job doc WITHOUT this field must keep meaning 'high' for every render already in flight.
       ...(opts.quality ? { quality: opts.quality } : {}),
+      ...(sceneSnapshot ? { sceneJson: sceneSnapshot.sceneJson, designRevision: sceneSnapshot.designRevision } : {}),
+      ...(sourcePath ? { sourcePath } : {}),
+      ...(attemptId ? { attemptId } : {}),
+      ...(opts.outputMode ? { outputMode: opts.outputMode } : {}),
       sheets,
       status: 'queued',
       createdAt: serverTimestamp(),
@@ -408,6 +460,10 @@ export async function enqueueRenderJob(opts: {
 
 function nonEmptyString(value: unknown): value is string {
   return typeof value === 'string' && value.trim().length > 0;
+}
+
+function validAttemptId(value: unknown): value is string {
+  return nonEmptyString(value) && value.length <= 200 && !value.includes('/');
 }
 
 /** Firestore snapshots are network data, even though the worker normally authored the updates.
@@ -429,6 +485,16 @@ export function normaliseRenderJobDoc(jobId: string, value: unknown): RenderJobD
     || job.sheets.length > MAX_SHEETS_PER_JOB
   ) return null;
   if (job.error !== undefined && typeof job.error !== 'string') return null;
+  if (job.quality !== undefined && !RENDER_QUALITIES.includes(job.quality as RenderQuality)) return null;
+  if (job.attemptId !== undefined && !validAttemptId(job.attemptId)) return null;
+  if (job.outputMode !== undefined && job.outputMode !== 'hybrid' && job.outputMode !== 'full') return null;
+  if (job.sceneJson !== undefined || job.designRevision !== undefined || job.sourcePath !== undefined) {
+    const scene = parseRenderSceneJson(job.sceneJson, job.designRevision);
+    if (!scene || scene.state.siteId !== job.siteId || !validAttemptId(job.attemptId)) return null;
+    if (scene.sourceImageDigest) {
+      if (job.sourcePath !== `renders/${job.uid}/${jobId}/source.jpg`) return null;
+    } else if (job.sourcePath !== undefined) return null;
+  }
 
   const seen = new Set<string>();
   const sheets: RenderSheetState[] = [];
@@ -501,10 +567,26 @@ export function normaliseRenderJobDoc(jobId: string, value: unknown): RenderJobD
     siteId: job.siteId,
     style: job.style,
     engine: job.engine,
+    ...(job.quality === undefined ? {} : { quality: job.quality as RenderQuality }),
+    ...(job.sceneJson === undefined ? {} : { sceneJson: job.sceneJson as string }),
+    ...(job.designRevision === undefined ? {} : { designRevision: job.designRevision as string }),
+    ...(job.sourcePath === undefined ? {} : { sourcePath: job.sourcePath as string }),
+    ...(job.attemptId === undefined ? {} : { attemptId: job.attemptId as string }),
+    ...(job.outputMode === undefined ? {} : { outputMode: job.outputMode as RenderOutputMode }),
     sheets,
     status: job.status as RenderJobStatus,
     ...(job.error === undefined ? {} : { error: job.error }),
   };
+}
+
+/** Recover the original scene on any device. A legacy job returns null deliberately: filling in
+ * missing geometry from the current Studio would falsely attach today's plan to yesterday's AI. */
+export async function fetchRenderJobScene(jobId: string, value: RenderJobDoc): Promise<RenderSceneSnapshot | null> {
+  const job = normaliseRenderJobDoc(jobId, value);
+  if (!job) throw new RenderJobError('The saved render job is invalid.');
+  if (!job.sceneJson || !job.designRevision) return null;
+  const sourceDataUrl = job.sourcePath ? await fetchRenderOutput(job.sourcePath) : undefined;
+  return decodeRenderSceneSnapshot(job.sceneJson, job.designRevision, sourceDataUrl);
 }
 
 /** Streams the job doc. Returns an unsubscribe fn. `onError` (if given) fires on a listener error

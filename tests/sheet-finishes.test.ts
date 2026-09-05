@@ -100,7 +100,9 @@ test('a finished sheet is badged with the button the farmer pressed', () => {
   // The stored resultKind stays 'hybrid' (see the provenance test above); only the words change.
   assert.doesNotMatch(glossy, /Geometry-locked hybrid/, 'no badge may name the internal stage');
   assert.doesNotMatch(glossy, /'AI hybrid'/, 'no label may name the internal stage');
-  assert.match(glossy, /AI Polished · geometry locked/, 'the single paid pass is badged as AI Polished');
+  // A requested geometry lock and an image-change score do not verify every AI-drawn feature.
+  assert.match(glossy, /AI Polished · \$\{item.validationStatus/, 'keep the button name and expose the actual review status');
+  assert.doesNotMatch(glossy, /AI Polished · geometry locked/, 'never infer verified geometry from the paid stage');
   // The shelved second pass keeps a distinct name, so a sheet already paid for still says which of
   // the two produced it.
   assert.match(glossy, /AI Polished \+ 2nd pass/);

@@ -1,8 +1,8 @@
 // ── Image Producer: deterministic composite-back ─────────────────────────────
 //
-// The AI polish problem is that image models invent (a Base-map render grew a
-// fantasy farm with a name banner). Prompting can reduce it but never guarantee
-// it. This module removes the model's power to corrupt structure entirely:
+// Image models can invent features (a Base-map render grew a fantasy farm with a
+// name banner). These helpers restore declared source regions and compose saved
+// overlays. They do not verify the content of any region left to the model.
 //
 //   1. The model ("nano banana" / Gemini flash image) beautifies the whole
 //      composited scene — it is a TEXTURE/STYLE engine, nothing more.
@@ -14,8 +14,8 @@
 //          so every feature is pixel-true and in the precise place they put it,
 //          not the model's fuzzy interpretation.
 //
-// Net: the model can hallucinate all it likes; the hallucination is clipped and
-// over-painted out of existence. Accuracy is guaranteed by construction.
+// The calling workflow owns the protection mask and overlays. A restored boundary
+// does not establish that every tree, bed or route inside it is correct.
 
 import { compareRenders, type DifferenceReport } from '@/lib/render-difference';
 import { drainCanvasToDataUrl, releaseCanvas } from '@/lib/release-canvas';
@@ -384,6 +384,40 @@ export function countProtectedPixelMismatches(
  *  (~60 MB) alive at once, inside the render-completion path that iOS was already killing. */
 export const MEASURE_MAX_DIMENSION = 1024;
 
+export interface ImageDimensions {
+  width: number;
+  height: number;
+}
+
+/**
+ * Uniform resizing preserves map registration; stretching a returned square onto a landscape
+ * source does not. Allow only the rounding introduced when an upload is capped to whole pixels.
+ * This checks aspect, not feature alignment within the image: a same-size redraw can still move
+ * a tree, and must not receive a geometry-verification badge merely for passing this check.
+ */
+export function assertMatchingImageAspects(
+  source: ImageDimensions,
+  model: ImageDimensions,
+  mask?: ImageDimensions,
+): void {
+  const images = [['source', source], ['model', model], ...(mask ? [['mask', mask] as const] : [])] as const;
+  for (const [name, size] of images) {
+    if (!Number.isSafeInteger(size.width) || !Number.isSafeInteger(size.height)
+      || size.width <= 0 || size.height <= 0) {
+      throw new Error(`image registration: ${name} has invalid dimensions (${size.width}x${size.height})`);
+    }
+  }
+  const sourceAspect = source.width / source.height;
+  for (const [name, size] of images.slice(1)) {
+    const aspect = size.width / size.height;
+    const relativeDrift = Math.abs(sourceAspect - aspect) / Math.max(sourceAspect, aspect);
+    const roundingTolerance = Math.min(0.005, 1 / Math.min(source.width, source.height, size.width, size.height));
+    if (relativeDrift > roundingTolerance) {
+      throw new Error(`image registration: ${name} aspect does not match source (${size.width}x${size.height} vs ${source.width}x${source.height})`);
+    }
+  }
+}
+
 /** The size the comparison actually runs at: proportional, capped, never below 1px. */
 export function measureCompareSize(
   width: number,
@@ -453,6 +487,11 @@ export async function restoreProtectedPixels(
 
   const width = model.naturalWidth || model.width;
   const height = model.naturalHeight || model.height;
+  assertMatchingImageAspects(
+    { width: source.naturalWidth || source.width, height: source.naturalHeight || source.height },
+    { width, height },
+    { width: mask.naturalWidth || mask.width, height: mask.naturalHeight || mask.height },
+  );
   const drawToCanvas = (img: HTMLImageElement) => {
     const canvas = document.createElement('canvas');
     canvas.width = width;
@@ -469,19 +508,13 @@ export async function restoreProtectedPixels(
   const modelPixels = drawToCanvas(model);
   const maskPixels = drawToCanvas(mask);
 
-  // A fully opaque mask restores every pixel, which silently discards the render and returns the
-  // raw satellite composite — the exact "the map didn't change" failure seen in production
-  // (job …_w0c6b5: 100% protected, 0 editable pixels). No legitimate mask looks like this, so
-  // treat it as "no usable mask" and keep the model artwork rather than shipping a dead render.
-  const usableMask = maskEditableFraction(maskPixels) > 0;
-  const blended = usableMask
-    ? blendProtectedPixels(sourcePixels, modelPixels, maskPixels)
-    : new Uint8ClampedArray(modelPixels);
-  if (usableMask) {
-    const mismatches = countProtectedPixelMismatches(sourcePixels, blended, maskPixels);
-    if (mismatches > 0) {
-      throw new Error(`restore verification failed for ${mismatches} protected pixel${mismatches === 1 ? '' : 's'}`);
-    }
+  // No editable pixels means the source wins everywhere. Returning the raw model in that case
+  // silently removed every protection precisely when the mask was strictest. The caller can
+  // report that no AI artwork survived; it cannot reinterpret an opaque mask as permission.
+  const blended = blendProtectedPixels(sourcePixels, modelPixels, maskPixels);
+  const mismatches = countProtectedPixelMismatches(sourcePixels, blended, maskPixels);
+  if (mismatches > 0) {
+    throw new Error(`restore verification failed for ${mismatches} protected pixel${mismatches === 1 ? '' : 's'}`);
   }
 
   const outCanvas = document.createElement('canvas');
