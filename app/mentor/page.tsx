@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { Search, Users, CheckCircle, ChevronDown, ChevronUp, BookOpen, Send, Loader2, GraduationCap, Inbox, Home, UserPlus, X, CalendarClock, AlertTriangle, PauseCircle, PlayCircle } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
+import { useSampleRole } from '@/lib/use-role-navigation';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import { isSampleMode } from '@/lib/sample-mode';
 import { canAccessRolePage } from '@/lib/role-access';
@@ -329,7 +330,10 @@ const MENTOR_ALLOWED_ROLES = new Set<UserRole>(['mentor', 'ngo', 'funder', 'admi
 export default function MentorPage() {
   const { user, role, loading } = useAuth();
   const router = useRouter();
-  const isLive = isBackendConfigured();
+  const sampleRole = useSampleRole();
+  const isLive = isBackendConfigured() && !sampleRole;
+  const [sample, setSample] = useState(false);
+  useEffect(() => { setSample(isSampleMode()); }, []);
 
   const [view, setView] = useState<'trainees' | 'messages'>('trainees');
   const [msgUnread, setMsgUnread] = useState(0);
@@ -463,7 +467,7 @@ export default function MentorPage() {
     setBusyId(null);
   }, [isLive, afterWrite]);
 
-  if (!loading && user && isLive && !canAccessRolePage(role, MENTOR_ALLOWED_ROLES)) {
+  if (!loading && user && isLive && !sample && !canAccessRolePage(role, MENTOR_ALLOWED_ROLES)) {
     return (
       <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
         <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>

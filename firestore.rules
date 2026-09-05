@@ -14,7 +14,7 @@ service cloud.firestore {
     function isMentor()    { return myRole() == 'mentor'; }
     function owns(d)       { return signedIn() && d.profile_id == request.auth.uid; }
     function ownsField(d, field) { return signedIn() && d[field] == request.auth.uid; }
-    function sameOrg(d)    { return isStaff() && myOrg() != null && d.org_id == myOrg(); }
+    function sameOrg(d)    { return isStaff() && myOrg() != null && d.org_id == myOrg() && (myRole() != 'funder' || funderEnabled(d.org_id)); }
     // Stricter than sameOrg(): also admits mentors, and refuses to match two org-less
     // accounts against each other (null == null would otherwise be true).
     function inMyOrg(d)      { return signedIn() && myOrg() != null && d.org_id == myOrg(); }
@@ -28,12 +28,25 @@ service cloud.firestore {
     // mirroring the sameOrg() fix surveys already got, plus two things surveys didn't need:
     // an unconditional admin bypass (Rory's platform role), and a funder->many-NGOs grant.
     function isAdmin() { return myRole() == 'admin'; }
+    // NGO-controlled master gate. Missing preserves existing portfolio access;
+    // new assessment summaries still require their own explicit publication.
+    function funderEnabled(orgId) {
+      return !exists(/databases/$(database)/documents/organization_controls/$(orgId))
+        || get(/databases/$(database)/documents/organization_controls/$(orgId)).data.get('funderAccess', true) == true;
+    }
+    function surveyAnalyst(d) {
+      return myRole() in ['ngo', 'mentor'] && inMyOrg(d)
+        && (!exists(/databases/$(database)/documents/org_permissions/$(request.auth.uid))
+          ? myRole() == 'ngo'
+          : get(/databases/$(database)/documents/org_permissions/$(request.auth.uid)).data.get('analyse', myRole() == 'ngo') == true);
+    }
     // Funder -> many-NGOs: a funder's org may read one NGO org's data only if a /grants doc
     // names that exact pairing. Deterministic id `${funder_org_id}_${ngo_org_id}` (see /grants
     // below) — a single exists() check, no query, so this works inside `list` rules too wherever
     // the OTHER branches of the same OR already make the query provably safe.
     function grantedOrg(orgId) {
       return myRole() == 'funder' && myOrg() != null && orgId != null
+        && funderEnabled(orgId)
         && exists(/databases/$(database)/documents/grants/$(myOrg() + '_' + orgId));
     }
     // The ngo/funder half of "same org or granted". Deliberately excludes isMentor() and
@@ -41,7 +54,7 @@ service cloud.firestore {
     // unconditional and mentor keeps its own, unchanged trust boundary (narrowed to inMyOrg()
     // where it was bare, but never consent-gated — see consentGranted()).
     function staffOrgAccess(d) {
-      return (myRole() in ['ngo', 'funder'] && myOrg() != null && d.org_id == myOrg())
+      return (myRole() in ['ngo', 'funder'] && myOrg() != null && d.org_id == myOrg() && (myRole() != 'funder' || funderEnabled(d.org_id)))
         || grantedOrg(d.org_id);
     }
     // Per-farmer opt-in gate for the NGO/funder dashboards specifically.
@@ -391,8 +404,11 @@ service cloud.firestore {
       // decision about whether a funder should see another org's raw survey answers, so it is
       // deliberately left out — see the PR description.
       allow read:   if signedIn() && (isAdmin() || sameOrg(resource.data) || resource.data.created_by == request.auth.uid);
-      allow create: if signedIn() && isStaff() && request.resource.data.created_by == request.auth.uid;
-      allow update, delete: if signedIn() && resource.data.created_by == request.auth.uid;
+      allow create: if signedIn() && myRole() in ['ngo', 'admin'] && myOrg() != null
+        && request.resource.data.org_id == myOrg() && request.resource.data.created_by == request.auth.uid;
+      allow update: if signedIn() && myRole() in ['ngo', 'admin'] && resource.data.created_by == request.auth.uid
+        && request.resource.data.org_id == resource.data.org_id && request.resource.data.created_by == resource.data.created_by;
+      allow delete: if signedIn() && myRole() in ['ngo', 'admin'] && resource.data.created_by == request.auth.uid;
     }
 
     match /survey_responses/{id} {
@@ -401,10 +417,18 @@ service cloud.firestore {
       // ambient production/sales/course visibility consent gates). It previously had no org_id
       // field at all and bare isStaff() reached every org — see
       // docs/AUDIT-NEEDS-RORY-2026-08-15.md #1.
-      allow read:   if signedIn() && (resource.data.profile_id == request.auth.uid || isAdmin() || staffOrgAccess(resource.data));
+      // Staff feedback is never a raw funder document, even with a grant.
+      allow read:   if signedIn() && (resource.data.profile_id == request.auth.uid || isAdmin() || surveyAnalyst(resource.data));
       allow create: if signedIn() && request.resource.data.profile_id == request.auth.uid
         && request.resource.data.org_id == myOrg();
     }
+
+    // These documents are accessed through the authenticated assessment API only.
+    // Keeping them server-only also prevents profile edits from granting capabilities.
+    match /mel_assessments/{document=**} { allow read, write: if false; }
+    match /org_permissions/{id} { allow read, write: if false; }
+    match /organization_controls/{id} { allow read, write: if false; }
+    match /org_access_audit/{id} { allow read, write: if false; }
 
     // Funder -> NGO grant: admin-SDK-write-only (phase 2's platform admin panel), so client
     // writes are always denied here regardless of role. Deterministic id

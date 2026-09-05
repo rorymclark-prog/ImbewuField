@@ -11,6 +11,8 @@ import {
 import { useLanguage } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
 import { canSeeNavLink } from '@/lib/role-access';
+import { useRoleNavigation } from '@/lib/use-role-navigation';
+import { canSeeWorkspaceLink } from '@/lib/role-navigation';
 import { communityEnabled } from '@/lib/community/flag';
 
 interface NavDrawerProps {
@@ -25,6 +27,7 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
   // lib/role-access.ts for why that is a usability failure rather than a security one, and for
   // what `role === null` deliberately does NOT do.
   const { role } = useAuth();
+  const { navigationRole, sample } = useRoleNavigation();
 
   const mainItems = [
     { href: '/home',    Icon: Home,          label: t('tabHome') },
@@ -84,6 +87,7 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
       label: t('navSectionOrganisation'),
       items: [
         { href: '/surveys',     Icon: ClipboardList, label: t('homeSurveysLabel') },
+        { href: '/assessments', Icon: ClipboardList, label: 'Project assessments' },
         { href: '/mentor',      Icon: Users,         label: t('homeRoleMentorLabel') },
         { href: '/ngo',         Icon: BarChart3,     label: t('navNGODashboard') },
         { href: '/funder',      Icon: Building2,     label: t('homeRoleFunderLabel') },
@@ -184,7 +188,7 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
         <div style={{ flex: 1, overflowY: 'auto', paddingTop: 8, paddingBottom: 24 }}>
           {NAV_SECTIONS.map((section) => ({
             ...section,
-            items: section.items.filter(({ href }) => canSeeNavLink(role, href)),
+            items: section.items.filter(({ href }) => (sample || canSeeNavLink(role, href)) && canSeeWorkspaceLink(navigationRole, href)),
           }))
             // A section whose every link was filtered out must go too, heading and all —
             // otherwise a farmer gets an "ORGANISATION" label with nothing beneath it, which

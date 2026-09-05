@@ -35,6 +35,16 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '5 September',
+    sha: '2fc94c72',
+    changes: [
+      'NGOs can assign project assessments, review responses and share approved funder summaries',
+      'Assessment questions are available in English and isiZulu',
+      'Your account explains your access and lets you explore sample roles',
+      'Funders see a simpler menu with their own workspace',
+    ],
+  },
+  {
+    when: '5 September',
     sha: '5a58548d',
     changes: [
       'Food and field charts line up with all 24 crop-plan months and scroll together',

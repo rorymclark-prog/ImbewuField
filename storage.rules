@@ -44,10 +44,13 @@ service firebase.storage {
     // this file) — never a query — so there's no list-provability concern here at all, and this
     // can compare both accounts' org_id directly via a second Firestore lookup. Admin stays
     // unconditional (Rory's platform role); mentor/ngo/funder now require a matching org_id.
+    // Funders receive approved summaries, not private learner evidence files.
+    // This also keeps Storage within its two cross-service-document lookup limit.
     function isCourseStaffOrMentor(uid) {
       return request.auth != null
         && firestore.exists(/databases/(default)/documents/profiles/$(request.auth.uid))
-        && firestore.get(/databases/(default)/documents/profiles/$(request.auth.uid)).data.role in ['mentor', 'ngo', 'funder', 'admin']
+        && firestore.get(/databases/(default)/documents/profiles/$(request.auth.uid)).data.role in ['mentor', 'ngo', 'admin']
+
         && (
           firestore.get(/databases/(default)/documents/profiles/$(request.auth.uid)).data.role == 'admin'
           || (

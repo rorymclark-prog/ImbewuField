@@ -1,0 +1,39 @@
+name: Deploy data access rules
+
+on:
+  push:
+    branches: [main]
+    paths: ['firestore.rules', 'storage.rules', 'firestore.indexes.json']
+  workflow_dispatch: {}
+
+concurrency:
+  group: deploy-data-rules
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Check and write deployment credential
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: |
+          if [ -z "$FIREBASE_SERVICE_ACCOUNT" ]; then
+            echo "::error::FIREBASE_SERVICE_ACCOUNT is unavailable. Data access rules were NOT deployed."
+            exit 1
+          fi
+          umask 077
+          printf '%s' "$FIREBASE_SERVICE_ACCOUNT" > "$RUNNER_TEMP/imbewu-rules-service-account.json"
+      - name: Deploy tested rules and indexes
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ runner.temp }}/imbewu-rules-service-account.json
+        run: npx --yes firebase-tools@15 deploy --only firestore:rules,firestore:indexes,storage --project fieldproof-sa --non-interactive
+      - name: Remove temporary credential
+        if: always()
+        run: rm -f "$RUNNER_TEMP/imbewu-rules-service-account.json"

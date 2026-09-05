@@ -5,6 +5,7 @@ import workspace from '@/components/layout/Workspace.module.css';
 import { useEffect, useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth';
+import AccountAccess from '@/components/AccountAccess';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import { updateMyProfile, uploadPhoto, getOrganizationName } from '@/lib/db/queries';
 import { resizeLogoForStorage } from '@/lib/invoice-logo';
@@ -325,6 +326,7 @@ export default function AccountPage() {
 
           </section>
           <section className="min-w-0 space-y-5" aria-label="Account settings">
+          <AccountAccess />
           {/* What you share — POPIA consent. Farmers only: it is the farmer's own record, and
               staff/mentor accounts have nothing to consent to. Hidden when the farmer has no
               org, because consent is granted TO an organisation and the rules pin it to theirs. */}
