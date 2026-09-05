@@ -522,7 +522,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
         {/* CENTRE — map. Fixed-height band on mobile, hidden once a garden is selected;
             fills remaining width on desktop. */}
         <div className={`${garden ? 'hidden md:block' : 'block'} relative h-[42vh] md:h-auto md:flex-1`} style={{ minWidth: 0 }}>
-          <div className="absolute top-2 left-2 z-10 px-2.5 py-1 rounded-lg pointer-events-none" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
+          {!isDemo && <div className="absolute top-2 left-2 z-10 px-2.5 py-1 rounded-lg pointer-events-none" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
             <span className="text-xs font-mono flex items-center gap-1" style={{ color: '#9A8268' }}>
               {gardener
                 ? <><MapPin size={12} style={{ color: '#9A8268' }} /> {isDemo ? `${gardener.name} · fictional example` : `${gardener.name} · ${gardener.lat.toFixed(4)}, ${gardener.lon.toFixed(4)}`}</>
@@ -532,7 +532,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                     ? 'Gardens unavailable'
                     : `Showing ${gardens.length} gardens`}
             </span>
-          </div>
+          </div>}
           {isDemo ? <SampleGardenVisual name={garden?.name ?? 'Example garden landscape'} initial="aerial" /> : <ReactMapGL ref={mapRef} mapboxAccessToken={TOKEN} initialViewState={{ longitude: 25, latitude: -29, zoom: 4.4 }} mapStyle="mapbox://styles/mapbox/dark-v11" style={{ width: '100%', height: '100%' }}>
             {gardens.map((g) => (
               <Marker key={g.id} longitude={g.lon} latitude={g.lat} anchor="center">
@@ -620,8 +620,8 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                     </div>
                     <p className="text-xs font-sans mt-2" style={{ color: '#5C5040' }}>
                       {totals.kept === null
-                        ? 'Food kept: not known — more was sold than harvested was logged'
-                        : `Food kept: ${totals.kept} kg`}
+                        ? 'Harvest not matched to sales: unknown — sales exceed recorded harvest'
+                        : `Harvest not matched to sales: ${totals.kept} kg`}
                     </p>
 
                     {/* Courses */}

@@ -53,10 +53,12 @@ test('Finance measures each crop from its own planned area and never assigns sha
   assert.equal(metrics.gardenMargins[0].grossMarginZar, 200);
 });
 
-test('NGO farmer summary does not turn kept kilograms into a blanket-price money figure', () => {
+test('organisation summary labels unmatched harvest without inventing household use or value', () => {
   const source = readFileSync(new URL('../components/NgoDashboard.tsx', import.meta.url), 'utf8');
   assert.match(source, /Sales received/);
-  assert.match(source, /Food kept:/);
+  // The difference between harvest and sales does not prove food was kept or eaten.
+  assert.match(source, /Harvest not matched to sales:/);
+  assert.doesNotMatch(source, /Food kept:/);
   assert.doesNotMatch(source, /kept\s*\*\s*15/);
 });
 
