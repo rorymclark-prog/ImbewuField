@@ -35,6 +35,11 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '5 September',
+    sha: '048ab920',
+    changes: ['Sign-in errors now identify the method that failed, instead of always blaming Google'],
+  },
+  {
+    when: '5 September',
     sha: 'ce2daed4',
     changes: [
       'Sample returns now show assigned bed sales, staple preparation and shared costs',

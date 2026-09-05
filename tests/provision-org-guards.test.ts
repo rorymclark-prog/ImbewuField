@@ -136,3 +136,53 @@ test('decideAttach: role mismatch is checked BEFORE the reassignment guard', () 
   assert.equal(result.ok, false);
   assertReasonMatches(result, /existing profile role is "student"/);
 });
+
+
+type AuthConfigRequest = { path: string; method?: string; body?: unknown; allowMissing?: boolean };
+
+test('Google provider diagnostics expose status only and never mutate in a dry run', async () => {
+  const { checkGoogleSignin } = await import('../scripts/check-google-signin.mjs');
+  const result = await checkGoogleSignin({ request: async (path: string, options?: Omit<AuthConfigRequest, 'path'>) => {
+    assert.notEqual(options?.method, 'PATCH');
+    return path === '/config' ? { authorizedDomains: ['imbewufield.vercel.app'], signIn: { email: { enabled: false } } }
+      : { enabled: false, clientId: 'private-client', clientSecret: 'private-secret' };
+  } });
+  assert.equal(result.emailEnabled, false);
+  assert.equal(result.googleEnabled, false);
+  assert.equal(result.googleConfigured, true);
+  assert.doesNotMatch(JSON.stringify(result), /private-client|private-secret/);
+});
+
+test('Google repair only toggles enabled on existing credentials and verifies read-back', async () => {
+  const { checkGoogleSignin } = await import('../scripts/check-google-signin.mjs');
+  const requests: AuthConfigRequest[] = [];
+  let enabled = false;
+  const result = await checkGoogleSignin({ apply: true, request: async (path: string, options?: Omit<AuthConfigRequest, 'path'>) => {
+    requests.push({ path, ...options });
+    if (path === '/config') return { authorizedDomains: ['imbewufield.vercel.app'] };
+    if (options?.method === 'PATCH') {
+      assert.equal(path, '/defaultSupportedIdpConfigs/google.com?updateMask=enabled');
+      assert.deepEqual(options.body, { enabled: true });
+      enabled = true;
+    }
+    return { enabled, clientId: 'existing-client', clientSecret: 'existing-secret' };
+  } });
+  assert.equal(result.changed, true);
+  assert.equal(result.googleEnabled, true);
+  assert.equal(requests.filter(r => r.method === 'PATCH').length, 1);
+  assert.equal(requests.at(-1)?.path, '/defaultSupportedIdpConfigs/google.com');
+});
+
+test('Google repair refuses missing setup or unauthorized production domains without a write', async () => {
+  const { checkGoogleSignin } = await import('../scripts/check-google-signin.mjs');
+  for (const [authorizedDomains, google, error] of [
+    [['imbewufield.vercel.app'], null, /GOOGLE_CONSOLE_SETUP_REQUIRED/],
+    [['imbewufield.vercel.app'], { clientId: 'client' }, /GOOGLE_CONSOLE_SETUP_REQUIRED/],
+    [[], { clientId: 'client', clientSecret: 'secret' }, /PRODUCTION_DOMAIN_NOT_AUTHORIZED/],
+  ] as const) {
+    await assert.rejects(checkGoogleSignin({ apply: true, request: async (path: string, options?: Omit<AuthConfigRequest, 'path'>) => {
+      assert.notEqual(options?.method, 'PATCH');
+      return path === '/config' ? { authorizedDomains } : google;
+    } }), error);
+  }
+});

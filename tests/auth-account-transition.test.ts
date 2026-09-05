@@ -43,6 +43,7 @@ let authListener: AuthListener | null = null;
 const pendingProfiles: PendingProfile[] = [];
 
 const harness = {
+  popupError: 'auth/popup-blocked',
   popupCalls: 0,
   redirectCalls: 0,
   firebase: { auth: fakeAuth },
@@ -84,7 +85,7 @@ export const onAuthStateChanged = (_auth, listener) =>
   harness.installAuthListener(listener);
 export const getRedirectResult = async () => null;
 export const signInWithEmailAndPassword = async () => {
-  throw new Error('not used by this test');
+  throw { code: 'auth/operation-not-allowed' };
 };
 export const createUserWithEmailAndPassword = async () => {
   throw new Error('not used by this test');
@@ -96,7 +97,7 @@ export const updatePassword = async () => {};
 export const reauthenticateWithCredential = async () => {};
 export const signInWithPopup = async () => {
   harness.popupCalls++;
-  throw { code: 'auth/popup-blocked' };
+  throw { code: harness.popupError };
 };
 export const signInWithRedirect = async () => { harness.redirectCalls++; };
 export class GoogleAuthProvider {}
@@ -280,6 +281,13 @@ test('a direct A to B switch unmounts account state and rejects a delayed A prof
   assert.equal(harness.popupCalls, 1, 'touch devices must use popup auth to avoid Safari redirect storage loss');
   assert.equal(harness.redirectCalls, 0, 'a blocked popup must not silently fall back to the broken redirect');
   assert.match(googleError ?? '', /Allow popups/, 'a blocked popup must give the farmer a recovery action');
+  const passwordError = await (latestAuth as ReturnType<typeof useAuth>).signIn('demo@example.invalid', 'sample-password');
+  assert.match(passwordError ?? '', /Email and password sign-in is disabled/);
+  assert.doesNotMatch(passwordError ?? '', /Google/, 'a disabled password provider must not blame Google');
+  harness.popupError = 'auth/operation-not-allowed';
+  const disabledGoogle = await (latestAuth as ReturnType<typeof useAuth>).signInWithGoogle();
+  assert.match(disabledGoogle ?? '', /Google sign-in is disabled/);
+  assert.doesNotMatch(disabledGoogle ?? '', /Use email/, 'do not promise another provider that might also be disabled');
   let staleRefresh: Promise<void> | null = null;
   act(() => {
     staleRefresh = latestAuth?.refreshProfile() ?? null;
