@@ -283,8 +283,12 @@ test('every crop with a sourced shelf life has its conditions and source reachab
 test('the availability chart reaches its stored detail by tap, not only by hover', () => {
   // The stored half of the chart used to explain itself ONLY through a `title`
   // attribute — invisible on the phones this app is used on.
-  assert.match(PAGE, /setOpenMonth\(openMonth === m \? null : m\)/, 'a month column must be tappable');
-  assert.match(PAGE, /aria-expanded=\{openMonth === m\}/, 'the column must announce its expanded state');
+  // The calendar now spans two years. Select the column offset, not the
+  // repeated month number, so tapping next September cannot open this September.
+  assert.match(PAGE, /setOpenMonth\(openMonth === i \? null : i\)/, 'a specific month occurrence must be tappable');
+  assert.match(PAGE, /aria-expanded=\{openMonth === i\}/, 'only that occurrence announces its expanded state');
+  assert.match(PAGE, /month=\{monthOrder\[openMonth\]\}/, 'the detail names the selected calendar month');
+  assert.match(PAGE, /items=\{availability\[openMonth\]/, 'the detail reads the selected occurrence, not a repeated annual bucket');
   assert.match(PAGE, /<MonthAvailabilityDetail/, 'the tap must open a per-month detail');
   assert.match(PAGE, /function MonthAvailabilityDetail\(/, 'the detail renderer must exist');
   // The detail reuses the SAME storage renderer as the planting sheet, so the

@@ -63,6 +63,53 @@ const BEDS: PlanBed[] = Array.from({ length: 4 }, (_, index) => ({
   minDimM: 2,
 }));
 
+test('rolling charts keep a one-off crop out of next year and keep future harvests after sowing', () => {
+  const row: Planting = { id: 'once', bedId: BEDS[0].id, cropKey: 'carrots', sowMonth: 11, once: '2026-11' };
+  const crop = cropByKey(row.cropKey)!;
+  assert.ok(crop);
+  const occupancy = buildFieldUtilizationByMonth([row], BEDS, 9, 24);
+  const food = buildFoodAvailability([row], BEDS, 9, 24);
+  assert.equal(occupancy.length, 24);
+  assert.equal(food.length, 24);
+  assert.equal(occupancy[0], 0);
+  assert.equal(occupancy[2], 0.25);
+  assert.ok(occupancy.slice(14).every((value) => value === 0), 'the next November is not another one-off sowing');
+  const harvestOffset = 2 + planningMaturityMonths(crop.daysToHarvest);
+  assert.ok(food.slice(0, harvestOffset).every((items) => items.length === 0));
+  assert.ok(food[harvestOffset].some((item) => item.cropKey === row.cropKey && item.status === 'fresh'));
+  assert.ok(food.slice(harvestOffset + 12).every((items) => items.length === 0));
+  const recurring = { ...row, once: undefined };
+  const repeated = buildFieldUtilizationByMonth([recurring], BEDS, 9, 24);
+  assert.equal(repeated[14], 0.25, 'an annual planned row does repeat');
+});
+
+test('rolling field chart uses the calendar entry and release for existing and transplanted crops', () => {
+  const rows: Planting[] = [
+    { id: 'existing', bedId: BEDS[0].id, cropKey: 'carrots', sowMonth: 12, existing: true },
+    { id: 'tray', bedId: BEDS[1].id, cropKey: 'tomatoes', sowMonth: 12 },
+  ];
+  for (const row of rows) {
+    const result = buildFieldUtilizationByMonth([row], BEDS, 1, 24);
+    const starts = plantingBedEntryOffsets(row, 1, 24);
+    const duration = occupiedMonthsForPlanting(row).length;
+    assert.ok(duration > 0);
+    for (let slot = 0; slot < 24; slot++) {
+      const occupied = starts.some((start) => slot >= start && slot < start + duration);
+      assert.equal(result[slot], occupied ? 0.25 : 0, `${row.id} at offset ${slot}`);
+    }
+  }
+  assert.ok(buildFieldUtilizationByMonth([rows[0]], BEDS, 1, 24).slice(12).every((value) => value === 0));
+  assert.ok(buildFoodAvailability([rows[0]], BEDS, 1, 24).slice(12).every((items) => items.length === 0));
+});
+
+test('rolling charts cap overlaps per bed and keep unknown timing off the chart', () => {
+  const row: Planting = { id: 'crop', bedId: BEDS[0].id, cropKey: 'carrots', sowMonth: 9 };
+  assert.equal(buildFieldUtilizationByMonth([row, { ...row, id: 'overlap' }], BEDS, 9, 24)[0], 0.25);
+  const unknown = { ...row, cropKey: 'missing-crop' };
+  assert.ok(buildFieldUtilizationByMonth([unknown], BEDS, 9, 24).every((value) => value === 0));
+  assert.ok(buildFoodAvailability([unknown], BEDS, 9, 24).every((items) => items.length === 0));
+});
+
 const ANSWERS: AutoSuggestAnswers = {
   goal: 'family',
   householdSize: 'medium',

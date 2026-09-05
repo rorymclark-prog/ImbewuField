@@ -1945,10 +1945,11 @@ export interface FoodAvailabilityItem {
  *
  * Includes existing (already-growing) plantings, not just new ones — this
  * This is an availability guide, not a food-security or sufficiency claim.
- * 1-indexed like kgByMonth above ([0] unused, months are 1-12).
+ * By default, 1-indexed ([0] unused, months are 1-12). With horizonMonths,
+ * returns that many zero-based slots starting at the required nowMonth.
  */
-export function buildFoodAvailability(plantings: Planting[], beds: PlanBed[], nowMonth?: number): FoodAvailabilityItem[][] {
-  const byMonth: Map<string, FoodAvailabilityStatus>[] = Array.from({ length: 13 }, () => new Map());
+export function buildFoodAvailability(plantings: Planting[], beds: PlanBed[], nowMonth?: number, horizonMonths?: number): FoodAvailabilityItem[][] {
+  const byMonth: Map<string, FoodAvailabilityStatus>[] = Array.from({ length: horizonMonths ?? 13 }, () => new Map());
   for (const p of plantings) {
     const crop = cropByKey(p.cropKey);
     const bed = beds.find((b) => b.id === p.bedId);
@@ -1956,21 +1957,21 @@ export function buildFoodAvailability(plantings: Planting[], beds: PlanBed[], no
     // fresh-availability month. Both used to make legacy oats appear as food
     // exactly 100 days after sowing.
     if (!crop || !bed || crop.timingVerified === false || crop.yieldKgPerM2 === 0) continue;
-    const hMonth = harvestMonthForCrop(p.sowMonth, crop);
     const maturityOffset = planningMaturityMonths(crop.daysToHarvest)
       + (crop.transplant ? TRANSPLANT_ENTRY_PLANNED_MONTHS : 0);
     const freshSpan = crop.harvestWindowMonths ?? 0;
     for (let off = 0; off <= freshSpan; off++) {
       // Fresh months an existing crop already delivered are over. A storage
       // tail is added below only when the catalog carries sourced conditions.
-      if (slotIsPast(p, nowMonth, maturityOffset + off)) continue;
-      byMonth[wrapMonth(hMonth + off)].set(crop.key, 'fresh');
+      for (const slot of chartSlotsForPlanting(p, maturityOffset + off, nowMonth, horizonMonths)) {
+        byMonth[slot].set(crop.key, 'fresh');
+      }
     }
     const storageSpan = crop.storageMonths ?? 0;
     for (let off = 1; off <= storageSpan; off++) {
-      if (slotIsPast(p, nowMonth, maturityOffset + freshSpan + off)) continue;
-      const m = wrapMonth(hMonth + freshSpan + off);
-      if (byMonth[m].get(crop.key) !== 'fresh') byMonth[m].set(crop.key, 'stored');
+      for (const slot of chartSlotsForPlanting(p, maturityOffset + freshSpan + off, nowMonth, horizonMonths)) {
+        if (byMonth[slot].get(crop.key) !== 'fresh') byMonth[slot].set(crop.key, 'stored');
+      }
     }
   }
   return byMonth.map((map) =>
@@ -1983,6 +1984,26 @@ export function buildFoodAvailability(plantings: Planting[], beds: PlanBed[], no
   );
 }
 
+/** Calendar readers use 1–12. The rolling charts instead request a horizon
+ * and receive zero-based offsets from nowMonth, just like the planting bars.
+ * Repeating a 13-slot calendar array across two years resurrects one-off crops
+ * and puts a future planting's harvest before its sowing. Keep the existing
+ * timing calculations, but place their results at the same occurrences as
+ * the bed timeline. With a horizon, nowMonth is required. */
+function chartSlotsForPlanting(planting: Planting, offsetFromSow: number, nowMonth?: number, horizonMonths?: number): number[] {
+  if (horizonMonths === undefined) {
+    return slotIsPast(planting, nowMonth, offsetFromSow)
+      ? [] : [wrapMonth(planting.sowMonth + offsetFromSow)];
+  }
+  if (nowMonth === undefined) throw new Error('A rolling crop chart needs its starting month');
+  const crop = cropByKey(planting.cropKey);
+  if (!crop || !Number.isInteger(planting.sowMonth) || planting.sowMonth < 1 || planting.sowMonth > 12) return [];
+  const nurseryOffset = crop.transplant ? TRANSPLANT_BED_RESERVED_FROM_MONTHS : 0;
+  return plantingBedEntryOffsets(planting, nowMonth, horizonMonths)
+    .map((entry) => entry - nurseryOffset + offsetFromSow)
+    .filter((slot) => slot >= 0 && slot < horizonMonths);
+}
+
 /**
  * What fraction of the total bed area is actually working for you each
  * month — a bed is "occupied" from sow month through the end of its
@@ -1990,13 +2011,15 @@ export function buildFoodAvailability(plantings: Planting[], beds: PlanBed[], no
  * a cut-and-come-again crop still physically holds the bed while it keeps
  * producing, but a storageMonths crop's shelf life happens OFF the bed (in
  * a shed/pantry), so that doesn't extend occupancy. 1-indexed 13-slot like
- * the other month aggregations here ([0] unused). Each physical bed is
+ * the other month aggregations here ([0] unused). With horizonMonths,
+ * returns zero-based slots from the required nowMonth. Each physical bed is
  * capped at its own area before the site total is calculated: overlapping
  * successions cannot make one bed more than 100% occupied.
  */
-export function buildFieldUtilizationByMonth(plantings: Planting[], beds: PlanBed[], nowMonth?: number): number[] {
+export function buildFieldUtilizationByMonth(plantings: Planting[], beds: PlanBed[], nowMonth?: number, horizonMonths?: number): number[] {
+  const slotCount = horizonMonths ?? 13;
   const totalArea = beds.reduce((s, b) => s + b.areaM2, 0);
-  if (totalArea <= 0) return Array<number>(13).fill(0);
+  if (totalArea <= 0) return Array<number>(slotCount).fill(0);
   // Occupancy is accumulated PER BED per month, then each bed is clamped to its
   // own area before summing — a single physical bed can never be more than 100%
   // occupied. Without the clamp, a cut-and-come-again crop's harvest-window tail
@@ -2011,19 +2034,20 @@ export function buildFieldUtilizationByMonth(plantings: Planting[], beds: PlanBe
     if (!crop || !bed) continue;
     const areaHere = bed.areaM2 * (p.areaFraction ?? 1);
     let arr = perBed.get(bed.id);
-    if (!arr) { arr = Array<number>(13).fill(0); perBed.set(bed.id, arr); }
-    occupiedMonthsForPlanting(p).forEach((month, offsetFromBedEntry) => {
+    if (!arr) { arr = Array<number>(slotCount).fill(0); perBed.set(bed.id, arr); }
+    occupiedMonthsForPlanting(p).forEach((_, offsetFromBedEntry) => {
       const offsetFromSow = offsetFromBedEntry
         + (crop.transplant ? TRANSPLANT_BED_RESERVED_FROM_MONTHS : 0);
-      if (slotIsPast(p, nowMonth, offsetFromSow)) return; // finished months of an existing crop are history, not occupancy
-      arr[month] += areaHere;
+      for (const slot of chartSlotsForPlanting(p, offsetFromSow, nowMonth, horizonMonths)) {
+        arr[slot] += areaHere;
+      }
     });
   }
-  const occupiedArea = Array<number>(13).fill(0);
+  const occupiedArea = Array<number>(slotCount).fill(0);
   for (const bed of beds) {
     const arr = perBed.get(bed.id);
     if (!arr) continue;
-    for (let m = 1; m <= 12; m++) occupiedArea[m] += Math.min(arr[m], bed.areaM2);
+    for (let m = 0; m < slotCount; m++) occupiedArea[m] += Math.min(arr[m], bed.areaM2);
   }
   return occupiedArea.map((a) => a / totalArea);
 }

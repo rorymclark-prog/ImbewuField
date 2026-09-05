@@ -35,6 +35,14 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '5 September',
+    sha: '5a58548d',
+    changes: [
+      'Food and field charts line up with all 24 crop-plan months and scroll together',
+      'From today keeps one-off crops in their own season, including across New Year',
+    ],
+  },
+  {
+    when: '5 September',
     sha: '9111dea1',
     changes: [
       'AI map controls stay hidden unless you are approved for experimental testing',
