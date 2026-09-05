@@ -1,3 +1,5 @@
+import { bedsFromDesignCanvas } from '../lib/design-beds-bridge.ts';
+import { buildAreaReturns } from '../lib/area-returns.ts';
 // The sample farm's books have to survive a funder adding up a column, so the
 // three rules buildDemoFinance() is written to (see the comment block above it
 // in lib/demo-farm.ts) are asserted here rather than left to inspection:
@@ -13,6 +15,7 @@ import { readFileSync } from 'node:fs';
 
 import {
   buildDemoCropPlan,
+  buildDemoDesignCanvasState,
   buildDemoFacilitatorState,
   buildDemoFinance,
 } from '../lib/demo-farm.ts';
@@ -210,4 +213,25 @@ test('the finances page offers its sample through sample mode, never by writing 
   // A signed-in farmer inside sample mode must never see her own name over demo books.
   assert.match(page, /name=\{sampling \? 'Ubhejane Creche \(sample\)'/,
     "the sheet's farm name must follow sample mode, not the signed-in user");
+});
+
+test('sample returns use the mapped beds and plots without losing or duplicating money', () => {
+  const { sales, expenses, invoices } = buildDemoFinance();
+  const beds = bedsFromDesignCanvas(buildDemoDesignCanvasState());
+  const september = new Date(expenses.find(e => e.id === 'demo-expense-11')!.spent_at);
+  const result = buildAreaReturns(beds, sales, expenses, invoices, 'month', september);
+  assert.equal(result.unassignedEntries, 0);
+  assert.ok(sales.every(row => row.enterprise === 'vegetables'));
+  assert.ok(invoices.every(row => row.enterprise === 'vegetables'));
+  // The sample plan grows even its maize and sweet potato on beds. The separate
+  // mapped staple plots have preparation costs, not an invented harvest.
+  assert.ok(buildDemoCropPlan().plantings.every(p => beds.some(b => b.id === p.bedId && b.kind !== 'plot')));
+  assert.equal(result.cards[0].areaM2, 44);
+  assert.ok(Math.abs(result.cards[1].areaM2 - 84) < 0.01);
+  for (const card of result.cards) assert.notEqual(card.contributionPerM2, null);
+  assert.equal(result.cards[1].sales, 0);
+  assert.ok(result.cards[1].costs > 0);
+  const inPeriod = (iso: string) => new Date(iso).getFullYear() === september.getFullYear() && new Date(iso).getMonth() === 8;
+  assert.equal(result.cards[2].sales, sales.filter(s => inPeriod(s.sold_at)).reduce((n, s) => n + s.amount, 0) + invoices.filter(i => i.status === 'paid' && i.paidAt && inPeriod(i.paidAt)).reduce((n, i) => n + i.total, 0));
+  assert.equal(result.cards[2].costs, expenses.filter(e => inPeriod(e.spent_at)).reduce((n, e) => n + e.amount, 0));
 });

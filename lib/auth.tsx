@@ -23,7 +23,6 @@ import {
   EmailAuthProvider,
   GoogleAuthProvider,
   signInWithPopup,
-  signInWithRedirect,
   getRedirectResult,
   type User,
 } from 'firebase/auth';
@@ -254,11 +253,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
     const provider = new GoogleAuthProvider();
     try {
-      if (prefersRedirect()) {
-        // Full-page redirect — resolves on return via getRedirectResult (below).
-        await signInWithRedirect(fb.auth, provider);
-        return null; // navigates away; nothing more to do here
-      }
+      // Safari can discard the cross-site redirect result on Vercel. Use
+      // Firebase's popup flow on phones too, directly from the user's tap.
       const cred = await signInWithPopup(fb.auth, provider);
       const popupUid = cred.user.uid;
       migrateGuestWorkToAccount(popupUid);
@@ -272,11 +268,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       await syncProfile(cred.user);
       return null;
     } catch (err) {
-      // A blocked popup on desktop → fall back to the redirect flow once.
-      const code = (err as { code?: string }).code ?? '';
-      if (code === 'auth/popup-blocked' || code === 'auth/cancelled-popup-request') {
-        try { await signInWithRedirect(fb.auth, provider); return null; } catch (e2) { return friendlyAuthError(e2); }
-      }
       return friendlyAuthError(err);
     }
   }, [syncProfile]);
@@ -375,10 +366,10 @@ function friendlyAuthError(err: unknown): string {
     'auth/too-many-requests':                        'Too many attempts — wait a moment and try again.',
     'auth/network-request-failed':                   'Network error — check your connection.',
     'auth/popup-closed-by-user':                     'Sign-in was cancelled.',
-    'auth/popup-blocked':                            'Pop-up was blocked — allow pop-ups for this site and try again.',
     'auth/account-exists-with-different-credential': 'An account already exists with this email using a different sign-in method.',
     'auth/requires-recent-login':                    'Please sign out and sign back in before changing your password.',
     'auth/operation-not-allowed':                    'Google sign-in isn\'t enabled for this app yet. Use email + password, or ask the admin to enable Google.',
+    'auth/popup-blocked': 'Your browser blocked Google sign-in. Allow popups for this site and try again, or open it in Safari / Chrome.',
     'auth/unauthorized-domain':                      'This web address isn\'t authorised for Google sign-in yet. Use email + password for now.',
     'auth/cancelled-popup-request':                  'Sign-in was cancelled.',
     'auth/web-storage-unsupported':                  'This browser blocks the storage Google sign-in needs — open the site in Chrome or Safari.',
@@ -399,9 +390,3 @@ export function isEmbeddedBrowser(): boolean {
   const iosInApp = /iPhone|iPod|iPad/.test(ua) && !/Safari/.test(ua);
   return embedded || iosInApp;
 }
-
-const prefersRedirect = (): boolean => {
-  if (typeof window === 'undefined') return false;
-  // Popups are unreliable on touch devices — redirect is the robust path there.
-  return window.matchMedia?.('(pointer: coarse)').matches || 'ontouchstart' in window;
-};

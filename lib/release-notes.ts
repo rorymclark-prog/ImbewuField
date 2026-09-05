@@ -35,6 +35,14 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '5 September',
+    sha: 'ce2daed4',
+    changes: [
+      'Sample returns now show assigned bed sales, staple preparation and shared costs',
+      'Google sign-in on phones avoids the redirect that can return you to the login screen',
+    ],
+  },
+  {
+    when: '5 September',
     sha: 'dd019b65',
     changes: [
       'Track recorded returns per m² for vegetable beds, staple plots and both together',

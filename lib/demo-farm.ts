@@ -280,6 +280,7 @@ interface DemoSaleSpec {
 interface DemoHarvestSpec { month: number; day: number; cropKey: string; kg: number }
 
 interface DemoCostSpec {
+  enterprise: NonNullable<ExpenseLog['enterprise']>;
   month: number;
   day: number;
   item: string;
@@ -378,22 +379,22 @@ const DEMO_SALES: DemoSaleSpec[] = [
 // planting rounds, and a taxi fare is only paid on the trips that actually go
 // to Mkuze — the spaza is walking distance.
 const DEMO_RUNNING_COSTS: DemoCostSpec[] = [
-  { month: 1, day: 20, item: 'broccoli seedlings', amount: 45, category: 'seed', supplier: 'Agri co-op Mkuze' },
-  { month: 2, day: 18, item: 'cabbage seedlings', amount: 60, category: 'seed', supplier: 'Agri co-op Mkuze' },
-  { month: 2, day: 26, item: 'transport to Mkuze co-op', amount: 70, category: 'transport', supplier: null },
-  { month: 3, day: 6, item: 'seed & seedlings — chard, lettuce, carrots, onions', amount: 185, category: 'seed', supplier: 'Agri co-op Mkuze' },
-  { month: 3, day: 8, item: 'kraal manure, bakkie load', amount: 240, category: 'other', supplier: 'Neighbouring homestead' },
-  { month: 4, day: 20, item: 'transport to Mkuze co-op', amount: 60, category: 'transport', supplier: null },
-  { month: 5, day: 6, item: 'seed garlic & lettuce seed', amount: 120, category: 'seed', supplier: 'Agri co-op Mkuze' },
-  { month: 6, day: 14, item: 'carrot & lettuce seed', amount: 70, category: 'seed', supplier: 'Agri co-op Mkuze' },
-  { month: 7, day: 27, item: 'transport to Mkuze co-op', amount: 70, category: 'transport', supplier: null },
-  { month: 8, day: 6, item: 'lettuce seed', amount: 35, category: 'seed', supplier: 'Agri co-op Mkuze' },
-  { month: 9, day: 8, item: 'compost & kraal manure', amount: 220, category: 'other', supplier: 'Neighbouring homestead' },
-  { month: 9, day: 12, item: 'bean, maize & tomato seed, sweet-potato slips', amount: 240, category: 'seed', supplier: 'Agri co-op Mkuze' },
-  { month: 9, day: 24, item: 'transport to Mkuze co-op', amount: 70, category: 'transport', supplier: null },
-  { month: 10, day: 22, item: 'transport to Mkuze co-op', amount: 70, category: 'transport', supplier: null },
-  { month: 11, day: 8, item: 'butternut seed', amount: 40, category: 'seed', supplier: 'Agri co-op Mkuze' },
-  { month: 11, day: 20, item: 'transport to Mkuze co-op', amount: 60, category: 'transport', supplier: null },
+  { month: 1, day: 20, item: 'broccoli seedlings', amount: 45, category: 'seed', enterprise: 'vegetables', supplier: 'Agri co-op Mkuze' },
+  { month: 2, day: 18, item: 'cabbage seedlings', amount: 60, category: 'seed', enterprise: 'vegetables', supplier: 'Agri co-op Mkuze' },
+  { month: 2, day: 26, item: 'transport to Mkuze co-op', amount: 70, category: 'transport', enterprise: 'shared', supplier: null },
+  { month: 3, day: 6, item: 'seed & seedlings — chard, lettuce, carrots, onions', amount: 185, category: 'seed', enterprise: 'vegetables', supplier: 'Agri co-op Mkuze' },
+  { month: 3, day: 8, item: 'kraal manure, bakkie load — staple plot preparation', amount: 240, category: 'other', enterprise: 'staples', supplier: 'Neighbouring homestead' },
+  { month: 4, day: 20, item: 'transport to Mkuze co-op', amount: 60, category: 'transport', enterprise: 'shared', supplier: null },
+  { month: 5, day: 6, item: 'seed garlic & lettuce seed', amount: 120, category: 'seed', enterprise: 'vegetables', supplier: 'Agri co-op Mkuze' },
+  { month: 6, day: 14, item: 'carrot & lettuce seed', amount: 70, category: 'seed', enterprise: 'vegetables', supplier: 'Agri co-op Mkuze' },
+  { month: 7, day: 27, item: 'transport to Mkuze co-op', amount: 70, category: 'transport', enterprise: 'shared', supplier: null },
+  { month: 8, day: 6, item: 'lettuce seed', amount: 35, category: 'seed', enterprise: 'vegetables', supplier: 'Agri co-op Mkuze' },
+  { month: 9, day: 8, item: 'compost & kraal manure — staple plot preparation', amount: 220, category: 'other', enterprise: 'staples', supplier: 'Neighbouring homestead' },
+  { month: 9, day: 12, item: 'bean, maize & tomato seed, sweet-potato slips', amount: 240, category: 'seed', enterprise: 'vegetables', supplier: 'Agri co-op Mkuze' },
+  { month: 9, day: 24, item: 'transport to Mkuze co-op', amount: 70, category: 'transport', enterprise: 'shared', supplier: null },
+  { month: 10, day: 22, item: 'transport to Mkuze co-op', amount: 70, category: 'transport', enterprise: 'shared', supplier: null },
+  { month: 11, day: 8, item: 'butternut seed', amount: 40, category: 'seed', enterprise: 'vegetables', supplier: 'Agri co-op Mkuze' },
+  { month: 11, day: 20, item: 'transport to Mkuze co-op', amount: 60, category: 'transport', enterprise: 'shared', supplier: null },
 ];
 
 const DEMO_CAPITAL_COSTS: DemoCapitalSpec[] = [
@@ -452,6 +453,9 @@ export function buildDemoFinance(): DemoFinance {
       // Whole rand, and always exactly kg × the per-kg price above.
       amount: Math.round(row.kg * pricePerKg(row.cropKey, row.channel)),
       buyer: row.buyer, sold_at: iso, created_at: iso,
+      // All harvested crops in buildDemoCropPlan occupy the seven beds,
+      // including maize and sweet potato. Crop names do not define a plot.
+      enterprise: 'vegetables',
     };
   });
 
@@ -470,7 +474,7 @@ export function buildDemoFinance(): DemoFinance {
       return {
         id: `demo-expense-${i + 1}`, profile_id: 'demo', garden_id: null,
         item: `Sample — ${row.item}`, amount: row.amount, supplier: row.supplier,
-        category: row.category, spent_at: iso, created_at: iso,
+        category: row.category, enterprise: row.enterprise, spent_at: iso, created_at: iso,
       };
     }),
     ...DEMO_CAPITAL_COSTS.map((row, i) => {
@@ -478,7 +482,7 @@ export function buildDemoFinance(): DemoFinance {
       return {
         id: `demo-expense-capital-${i + 1}`, profile_id: 'demo', garden_id: null,
         item: `Sample — ${row.item}`, amount: row.amount, supplier: row.supplier,
-        category: 'equipment' as const, spent_at: iso, created_at: iso,
+        enterprise: 'shared' as const, category: 'equipment' as const, spent_at: iso, created_at: iso,
       };
     }),
   ];
@@ -489,6 +493,7 @@ export function buildDemoFinance(): DemoFinance {
     return {
       id: `demo-invoice-${i + 1}`,
       no: DEMO_LAST_INVOICE_NO - monthsBefore,
+      enterprise: 'vegetables',
       billTo: 'Sample — Ubhejane parents fund',
       billToDetails: {
         address: 'Sample — Ubhejane Crèche\nSample — Mkuze, KwaZulu-Natal',
