@@ -718,3 +718,6 @@ body.is-sample-mode .pwa-update-notifier {
 .produce-art { min-width:32px; min-height:32px; flex-shrink:0; object-fit:contain; vertical-align:middle; }
 .produce-art-fallback { display:inline-block; line-height:1.1; vertical-align:middle; }
 @media print { .produce-art { min-width:0; min-height:0; } }
+
+/* Photo previews are keyboard controls as well as tap targets. */
+img[data-photo-preview]:focus-visible { outline: 3px solid var(--accent, #b87924); outline-offset: 3px; }

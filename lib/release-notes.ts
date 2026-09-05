@@ -33,6 +33,11 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '5 September 2026', sha: 'a83605e', changes: [
+    'Tap profile and site photos to open a larger view.',
+    'Explore 18 sample gardens, with regional names and Sesotho-speaking groups.',
+    'Try the farm tour, sample evidence report and feedback form from Settings.',
+  ] },
   { when: '5 September 2026', sha: 'c7f5940', changes: [
     'Organisation: check a member’s saved access and assigned farmer group.',
     'Sample chooser: scroll to every card and button above the bottom banner.',

@@ -223,7 +223,7 @@ function NearbyTab({ nearby, onOpenProfile }: { nearby: CommunityProfile[]; onOp
             >
               <div style={{ width: 40, height: 40, borderRadius: '50%', overflow: 'hidden', flexShrink: 0, background: '#1F4D2B', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 {p.photos?.[0]
-                  ? <img src={p.photos[0]} alt={p.display_name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  ? <img data-photo-preview src={p.photos[0]} alt={p.display_name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   : <span style={{ color: '#F7F2E9', fontWeight: 700, fontSize: 15 }}>{(p.display_name?.[0] ?? '?').toUpperCase()}</span>}
               </div>
               <div style={{ flex: 1, minWidth: 0 }}>
@@ -278,7 +278,7 @@ function BoardTab({
                 <span className="font-sans" style={{ fontSize: 11, color: '#8C7A62' }}>{timeAgo(p.created_at)}</span>
               </div>
               {p.photo_url && (
-                <img src={p.photo_url} alt="" style={{ width: '100%', maxHeight: 160, objectFit: 'cover', borderRadius: 10, marginBottom: 8 }} />
+                <img data-photo-preview src={p.photo_url} alt="" style={{ width: '100%', maxHeight: 160, objectFit: 'cover', borderRadius: 10, marginBottom: 8 }} />
               )}
               <p className="font-sans" style={{ fontSize: 14, color: '#20190F', lineHeight: 1.5, marginBottom: 6 }}>{p.description}</p>
               <div className="flex items-center gap-1.5" style={{ marginBottom: 10 }}>
@@ -404,7 +404,7 @@ function NewBoardPostForm({ myAreaText, onPosted, onCancel }: { myAreaText: stri
       <div>
         {photoUrl ? (
           <div style={{ position: 'relative', width: 80, height: 80 }}>
-            <img src={photoUrl} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 10 }} />
+            <img data-photo-preview src={photoUrl} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 10 }} />
             <button onClick={() => setPhotoUrl(null)} style={{ position: 'absolute', top: 2, right: 2, background: 'rgba(0,0,0,0.55)', border: 'none', borderRadius: '50%', width: 20, height: 20, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}>
               <X size={12} color="#fff" />
             </button>

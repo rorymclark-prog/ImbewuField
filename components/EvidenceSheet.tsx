@@ -233,7 +233,7 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
               {photoItems.map((ev) => (
                 <div key={ev.id} style={{ position: 'relative', width: 70, height: 70, borderRadius: 9, overflow: 'hidden', background: '#E0D6C2' }}>
                   {ev.dataUrl && (
-                    <img src={ev.dataUrl} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <img data-photo-preview src={ev.dataUrl} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   )}
                   <button
                     onClick={() => handleRemove(ev.id)}

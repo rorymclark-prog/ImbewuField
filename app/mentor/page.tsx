@@ -161,7 +161,7 @@ function TraineeCard({
         style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}>
         <div className="flex-shrink-0 flex items-center justify-center rounded-full font-display font-bold"
           style={{ width: 40, height: 40, fontSize: 15, background: 'linear-gradient(135deg,#1F4D2B,#2D6B3C)', color: '#EAF3E2' }}>
-          {isSampleMode() ? <img src={samplePortrait(trainee.id)} alt="Fictional profile portrait" className="w-full h-full rounded-full object-cover" /> : initials(trainee.full_name)}
+          {isSampleMode() ? <img data-photo-preview src={samplePortrait(trainee.id)} alt="Fictional profile portrait" className="w-full h-full rounded-full object-cover" /> : initials(trainee.full_name)}
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">

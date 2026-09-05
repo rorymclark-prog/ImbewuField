@@ -471,7 +471,7 @@ export function FarmerPanel({
             }}
             aria-hidden
           >
-            {farmer.photoUrl ? <img key={farmer.photoUrl} src={farmer.photoUrl} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : initialsOf(farmer.name)}
+            {farmer.photoUrl ? <img data-photo-preview key={farmer.photoUrl} src={farmer.photoUrl} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : initialsOf(farmer.name)}
           </div>
           <div className="min-w-0 flex-1">
             {/* ← NetworkFarmer.name (Profile.full_name). No ID number — see (F). */}

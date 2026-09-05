@@ -9,6 +9,7 @@ import AppConfirmProvider from '@/components/AppConfirm';
 import ChatWidget from '@/components/ChatWidget';
 import PWAUpdateNotifier from '@/components/PWAUpdateNotifier';
 import SampleModeBanner from '@/components/SampleModeBanner';
+import PhotoViewer from '@/components/PhotoViewer';
 import AccountOnboardingGates from '@/components/AccountOnboardingGates';
 
 const newsreader = Newsreader({
@@ -125,6 +126,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 <ChatWidget />
                 <PWAUpdateNotifier initialBuildSha={loadedBuildSha} />
                 <SampleModeBanner />
+                <PhotoViewer />
               </AppConfirmProvider>
             </LanguageProvider>
           </AuthProvider>

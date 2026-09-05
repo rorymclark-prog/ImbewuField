@@ -183,7 +183,7 @@ export default function AccountPage() {
           <div className="rounded-2xl p-5 flex items-center gap-4" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
             <div className="relative flex-shrink-0">
               {profile?.photo_url ? (
-                <img src={profile.photo_url} alt={displayName ?? 'Avatar'}
+                <img data-photo-preview src={profile.photo_url} alt={displayName ?? 'Avatar'}
                   className="rounded-full object-cover"
                   style={{ width: 64, height: 64 }} />
               ) : (

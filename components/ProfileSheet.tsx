@@ -325,7 +325,7 @@ export default function ProfileSheet({ open, onClose, profile, mapCenter, onSave
           <div className="flex flex-col items-center gap-3">
             <div style={{ position: 'relative' }}>
               {photoUrl ? (
-                <img
+                <img data-photo-preview
                   src={photoUrl}
                   alt={fullName || 'Profile photo'}
                   style={{
