@@ -29,26 +29,29 @@ const STATUS: Record<Status, { label: string; color: string }> = {
   support: { label: 'Needs support', color: '#C0531E' },
 };
 
-interface Garden { id: string; name: string; town: string; lat: number; lon: number; farmers: number; status: Status; produceKg: number; training: number; facilitator: string }
+interface Garden { id: string; name: string; town: string; lat: number; lon: number; farmers: number; status: Status; produceKg: number; training: number; facilitator: string; kind?: string; areaM2?: number }
 
 // ── fallback sample data (kept as-is for demo mode) ──
 const SAMPLE_GARDENS: Garden[] = [
-  { id: 'g1', name: 'Siyazama Community Garden', town: 'Soweto, GP', lat: -26.267, lon: 27.858, farmers: 28, status: 'thriving', produceKg: 1240, training: 92, facilitator: 'Nomsa M.' },
-  { id: 'g2', name: 'Umlazi Food Garden', town: 'Umlazi, KZN', lat: -29.966, lon: 30.889, farmers: 19, status: 'thriving', produceKg: 980, training: 84, facilitator: 'Sipho D.' },
-  { id: 'g3', name: 'Mthatha Permaculture Hub', town: 'Mthatha, EC', lat: -31.589, lon: 28.783, farmers: 22, status: 'establishing', produceKg: 410, training: 61, facilitator: 'Thandi N.' },
-  { id: 'g4', name: 'Gugulethu Greens', town: 'Gugulethu, WC', lat: -33.98, lon: 18.571, farmers: 16, status: 'thriving', produceKg: 1130, training: 88, facilitator: 'Aviwe K.' },
-  { id: 'g5', name: 'Tzaneen Agroecology Plot', town: 'Tzaneen, LP', lat: -23.833, lon: 30.163, farmers: 31, status: 'thriving', produceKg: 1560, training: 79, facilitator: 'Rofhiwa M.' },
-  { id: 'g6', name: 'Botshabelo Plots', town: 'Botshabelo, FS', lat: -29.27, lon: 26.74, farmers: 14, status: 'support', produceKg: 180, training: 38, facilitator: 'Lerato S.' },
-  { id: 'g7', name: 'Kuyasa Kitchen Garden', town: 'Khayelitsha, WC', lat: -34.043, lon: 18.681, farmers: 20, status: 'establishing', produceKg: 520, training: 66, facilitator: 'Aviwe K.' },
-  { id: 'g8', name: 'Giyani Indigenous Garden', town: 'Giyani, LP', lat: -23.302, lon: 30.718, farmers: 25, status: 'thriving', produceKg: 1020, training: 81, facilitator: 'Rofhiwa M.' },
-  { id: 'g9', name: 'Mdantsane Veg Co-op', town: 'Mdantsane, EC', lat: -32.94, lon: 27.78, farmers: 18, status: 'establishing', produceKg: 470, training: 58, facilitator: 'Thandi N.' },
-  { id: 'g10', name: 'Galeshewe Food Forest', town: 'Kimberley, NC', lat: -28.715, lon: 24.733, farmers: 12, status: 'support', produceKg: 140, training: 32, facilitator: 'Lerato S.' },
-  { id: 'g11', name: 'Bushbuckridge Garden', town: 'Bushbuckridge, MP', lat: -24.83, lon: 31.08, farmers: 27, status: 'thriving', produceKg: 1310, training: 86, facilitator: 'Sipho D.' },
-  { id: 'g12', name: 'Rustenburg Roots', town: 'Rustenburg, NW', lat: -25.667, lon: 27.242, farmers: 17, status: 'establishing', produceKg: 600, training: 64, facilitator: 'Nomsa M.' },
+  { id: 'g1', kind: 'Community garden', areaM2: 6000, name: 'Siyazama Community Garden', town: 'Soweto, GP', lat: -26.267, lon: 27.858, farmers: 28, status: 'thriving', produceKg: 1240, training: 92, facilitator: 'Nomsa M.' },
+  { id: 'g2', kind: 'Crèche garden', areaM2: 2400, name: 'Umlazi Little Leaves Crèche Garden', town: 'Umlazi, KZN', lat: -29.966, lon: 30.889, farmers: 19, status: 'thriving', produceKg: 980, training: 84, facilitator: 'Sipho D.' },
+  { id: 'g3', kind: 'School garden', areaM2: 3600, name: 'Mthatha Learning School Garden', town: 'Mthatha, EC', lat: -31.589, lon: 28.783, farmers: 22, status: 'establishing', produceKg: 410, training: 61, facilitator: 'Thandi N.' },
+  { id: 'g4', kind: 'Homestead garden', areaM2: 1000, name: 'Gugulethu Homestead Greens', town: 'Gugulethu, WC', lat: -33.98, lon: 18.571, farmers: 16, status: 'thriving', produceKg: 1130, training: 88, facilitator: 'Aviwe K.' },
+  { id: 'g5', kind: 'Commercial garden', areaM2: 4046.8564224, name: 'Tzaneen Agroecology Plot', town: 'Tzaneen, LP', lat: -23.833, lon: 30.163, farmers: 31, status: 'thriving', produceKg: 1560, training: 79, facilitator: 'Rofhiwa M.' },
+  { id: 'g6', kind: 'Community garden', areaM2: 4000, name: 'Botshabelo Plots', town: 'Botshabelo, FS', lat: -29.27, lon: 26.74, farmers: 14, status: 'support', produceKg: 180, training: 38, facilitator: 'Lerato S.' },
+  { id: 'g7', kind: 'Homestead garden', areaM2: 1000, name: 'Kuyasa Kitchen Garden', town: 'Khayelitsha, WC', lat: -34.043, lon: 18.681, farmers: 20, status: 'establishing', produceKg: 520, training: 66, facilitator: 'Aviwe K.' },
+  { id: 'g8', kind: 'Community garden', areaM2: 7000, name: 'Giyani Indigenous Garden', town: 'Giyani, LP', lat: -23.302, lon: 30.718, farmers: 25, status: 'thriving', produceKg: 1020, training: 81, facilitator: 'Rofhiwa M.' },
+  { id: 'g9', kind: 'Commercial garden', areaM2: 4046.8564224, name: 'Mdantsane Veg Co-op', town: 'Mdantsane, EC', lat: -32.94, lon: 27.78, farmers: 18, status: 'establishing', produceKg: 470, training: 58, facilitator: 'Thandi N.' },
+  { id: 'g10', kind: 'Community food forest', areaM2: 3000, name: 'Galeshewe Food Forest', town: 'Kimberley, NC', lat: -28.715, lon: 24.733, farmers: 12, status: 'support', produceKg: 140, training: 32, facilitator: 'Lerato S.' },
+  { id: 'g11', kind: 'School garden', areaM2: 5000, name: 'Bushbuckridge School Garden', town: 'Bushbuckridge, MP', lat: -24.83, lon: 31.08, farmers: 27, status: 'thriving', produceKg: 1310, training: 86, facilitator: 'Sipho D.' },
+  { id: 'g12', kind: 'Community garden', areaM2: 8000, name: 'Rustenburg Roots', town: 'Rustenburg, NW', lat: -25.667, lon: 27.242, farmers: 17, status: 'establishing', produceKg: 600, training: 64, facilitator: 'Nomsa M.' },
+  { id: 'g13', name: 'Little Sunbirds Crèche Garden', town: 'Durban, KZN', lat: -29.85, lon: 31.02, farmers: 6, status: 'establishing', produceKg: 120, training: 60, facilitator: 'Nosipho K.', kind: 'Crèche garden', areaM2: 800 },
+  { id: 'g14', name: 'Masakhane One Acre Co-op', town: 'Howick, KZN', lat: -29.48, lon: 30.23, farmers: 12, status: 'thriving', produceKg: 1900, training: 90, facilitator: 'Helen B.', kind: 'Community garden', areaM2: 4046.8564224 },
+  { id: 'g15', name: 'Green Horizon Market Garden', town: 'Pietermaritzburg, KZN', lat: -29.61, lon: 30.39, farmers: 4, status: 'thriving', produceKg: 2100, training: 85, facilitator: 'Sibusiso N.', kind: 'Commercial garden', areaM2: 4046.8564224 },
 ];
 // Headlines are derived from the displayed garden register, including in samples.
 
-const NAMES = ['Thabo Mahlangu', 'Nosipho Khumalo', 'Jabu Dlamini', 'Maria Sithole', 'Andile Ngubane', 'Grace Mokoena', 'Sibusiso Ndlovu', 'Lerato Phiri', 'Bongani Zulu', 'Precious Mbeki'];
+const NAMES = ['Thabo Mahlangu', 'Nosipho Khumalo', 'Jabu Dlamini', 'Maria Sithole', 'Andile Ngubane', 'Grace Mokoena', 'Sibusiso Ndlovu', 'Lerato Phiri', 'Bongani Zulu', 'Precious Mbeki', 'Aviwe Jacobs', 'Asha Naidoo', 'Helen Botha', 'Ravi Naidoo', 'Zodwa Mthethwa'];
 // `k` maps each demo crop name to its lib/crop-catalog.ts key so it can pick up
 // real art from lib/crop-art.ts — this list is synthetic seeded demo data, not
 // read from the catalog, so the mapping is by closest match (e.g. "Spinach"
@@ -94,10 +97,10 @@ function gardenersFor(garden: Garden): Gardener[] {
     return {
       id: `${garden.id}-${i}`,
       profileId: `${garden.id}-${i}`,
-      name: NAMES[(i * 3 + garden.id.length * 2) % NAMES.length],
+      name: NAMES[((Number(garden.id.slice(1)) - 1) * 3 + i) % NAMES.length],
       plot: `Plot ${i + 1}`,
       idNumber: `${rint(r, 70, 99)}${rint(r, 10, 12)}${rint(r, 10, 28)}••••${pick(r, ['08', '18', '19'])}${rint(r, 0, 9)}`,
-      sizeM2: rint(r, 80, 620),
+      sizeM2: Math.floor((garden.areaM2 ?? 2000) / (n + 1)),
       lat: garden.lat + (r() - 0.5) * 0.012,
       lon: garden.lon + (r() - 0.5) * 0.012,
       trainingPct,
@@ -509,7 +512,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                     <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: STATUS[g.status].color }} />
                     <div className="flex-1 min-w-0">
                       <div className="text-xs font-display font-medium truncate" style={{ color: '#20190F' }}>{g.name}</div>
-                      <div className="text-xs font-mono" style={{ color: '#9A8268' }}>{g.town} · {g.farmers || '—'} farmers</div>
+                      <div className="text-xs font-mono" style={{ color: '#9A8268' }}>{g.town} · {g.farmers || '—'} farmers</div>{g.kind && <div className="text-xs mt-1" style={{ color: '#36553d' }}>{g.kind} · {Math.round(g.areaM2 ?? 0).toLocaleString()} m²{g.areaM2 === 4046.8564224 ? ' · 1 acre' : ''}</div>}
                     </div>
                     <span className="text-xs font-mono flex-shrink-0" style={{ color: '#2F6F9E' }}>{g.produceKg > 0 ? `${g.produceKg}kg` : '—'}</span>
                   </button>
@@ -533,7 +536,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                     : `Showing ${gardens.length} gardens`}
             </span>
           </div>}
-          {isDemo ? <SampleGardenVisual name={garden?.name ?? 'Example garden landscape'} initial="aerial" /> : <ReactMapGL ref={mapRef} mapboxAccessToken={TOKEN} initialViewState={{ longitude: 25, latitude: -29, zoom: 4.4 }} mapStyle="mapbox://styles/mapbox/dark-v11" style={{ width: '100%', height: '100%' }}>
+          {isDemo ? <SampleGardenVisual kind={garden?.kind} variant={garden?.id} name={garden?.name ?? 'Example garden landscape'} initial="aerial" /> : <ReactMapGL ref={mapRef} mapboxAccessToken={TOKEN} initialViewState={{ longitude: 25, latitude: -29, zoom: 4.4 }} mapStyle="mapbox://styles/mapbox/dark-v11" style={{ width: '100%', height: '100%' }}>
             {gardens.map((g) => (
               <Marker key={g.id} longitude={g.lon} latitude={g.lat} anchor="center">
                 <button onClick={() => selectGarden(g)} className="rounded-full transition-all"
@@ -578,7 +581,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                 {/* Identity */}
                 <div className="flex items-center gap-3">
                   <div className="rounded-full flex items-center justify-center flex-shrink-0 relative" style={{ width: 48, height: 48, background: 'rgba(31,77,43,0.18)', border: '1px solid rgba(31,77,43,0.4)', color: '#1F4D2B', fontWeight: 600 }}>
-                    {isDemo ? <img src={samplePortrait(gardener.id)} alt="Fictional profile portrait" className="w-full h-full object-cover rounded-full" /> : initials(gardener.name)}
+                    {isDemo ? <img src={samplePortrait(gardener.name)} alt="Fictional profile portrait" className="w-full h-full object-cover rounded-full" /> : initials(gardener.name)}
                     <span className="absolute -bottom-1 -right-1"><Camera size={10} style={{ color: '#1F4D2B' }} /></span>
                   </div>
                   <div className="min-w-0">
@@ -640,7 +643,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                       </div>
                     </div>
 
-                    {isDemo && <><button type="button" className="w-full rounded-xl p-3 text-sm font-semibold" style={{ background: '#e9f1e9', color: '#214d35' }} onClick={() => setSampleView('design')}>Open example garden design →</button>{sampleView && <div><button type="button" className="text-sm underline py-2" onClick={() => setSampleView(null)}>Close example</button><SampleGardenVisual key={sampleView} name={garden.name} initial={sampleView} /></div>}<button type="button" className="text-xs underline py-2" onClick={() => { if (startRolePreview('farmer')) router.push('/farmer'); }}>Explore the separate Ubhejane design workspace →</button></>}
+                    {isDemo && <><button type="button" className="w-full rounded-xl p-3 text-sm font-semibold" style={{ background: '#e9f1e9', color: '#214d35' }} onClick={() => setSampleView('design')}>Open example garden design →</button>{sampleView && <div><button type="button" className="text-sm underline py-2" onClick={() => setSampleView(null)}>Close example</button><SampleGardenVisual kind={garden.kind} variant={garden.id} key={sampleView} name={garden.name} initial={sampleView} /></div>}<button type="button" className="text-xs underline py-2" onClick={() => { if (startRolePreview('farmer')) router.push('/farmer'); }}>Explore the separate Ubhejane design workspace →</button></>}
                     {!isDemo && <p className="text-xs" style={{ color: '#506158' }}>This register does not include the farmer’s private design.</p>}
                     <details className={reportStyles.root} style={{ padding: 12, borderRadius: 12 }}><summary>Preview & download this garden record</summary>
                       <ReportComposer title="Garden production record" sample={isDemo} sections={[
@@ -697,7 +700,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                 <button onClick={() => setGarden(null)} className="text-xs font-mono flex items-center gap-1" style={{ color: '#9A8268' }}><ArrowLeft size={14} /> all gardens</button>
                 <div>
                   <div className="flex items-center gap-2"><span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: STATUS[garden.status].color }} /><span className="font-display font-bold text-base" style={{ color: '#20190F' }}>{garden.name}</span></div>
-                  <div className="text-xs font-mono mt-0.5" style={{ color: '#9A8268' }}>{garden.town}{garden.facilitator ? ` · supervisor ${garden.facilitator}` : ''}</div>
+                  <div className="text-xs font-mono mt-0.5" style={{ color: '#9A8268' }}>{garden.town}{garden.facilitator ? ` · supervisor ${garden.facilitator}` : ''}</div>{garden.kind && <p className="text-sm mt-2" style={{ color: '#36553d' }}>{garden.kind} · {Math.round(garden.areaM2 ?? 0).toLocaleString()} m²{garden.areaM2 === 4046.8564224 ? ' · 1 acre' : ''} · fictional site area</p>}
                 </div>
                 <div className="grid grid-cols-3 gap-2">
                   {[['Farmers', garden.farmers || gardeners.length, '#20190F'], ['Produce', `${garden.produceKg || gardeners.reduce((s, g) => s + g.production.reduce((a, p) => a + p.kg, 0), 0)}kg`, '#2F6F9E'], ['Training', garden.training ? `${garden.training}%` : '—', '#9E5C08']].map(([l, v, c]) => (
@@ -716,7 +719,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                         const prod = gr.production.reduce((s, p) => s + p.kg, 0);
                         return (
                           <button key={gr.id} onClick={() => openGardener(gr)} className="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-left transition-all" style={{ background: '#F5F0E8', border: '1px solid #E2D8C4' }}>
-                            <div className="rounded-full flex items-center justify-center flex-shrink-0" style={{ width: 28, height: 28, background: 'rgba(31,77,43,0.18)', color: '#1F4D2B', fontSize: 12, fontWeight: 600 }}>{isDemo ? <img src={samplePortrait(gr.id)} alt="" className="w-full h-full object-cover rounded-full" /> : initials(gr.name)}</div>
+                            <div className="rounded-full flex items-center justify-center flex-shrink-0" style={{ width: 48, height: 48, background: 'rgba(31,77,43,0.18)', color: '#1F4D2B', fontSize: 12, fontWeight: 600 }}>{isDemo ? <img src={samplePortrait(gr.name)} alt="" className="w-full h-full object-cover rounded-full" /> : initials(gr.name)}</div>
                             <div className="flex-1 min-w-0"><div className="text-xs font-display font-medium truncate" style={{ color: '#20190F' }}>{gr.name}</div><div className="text-xs font-mono" style={{ color: '#9A8268' }}>{gr.plot} · {gr.sizeM2}m²</div></div>
                             <span className="text-xs font-mono flex-shrink-0" style={{ color: '#1F4D2B' }}>{prod > 0 ? `${prod}kg` : '—'}</span>
                           </button>

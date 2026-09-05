@@ -1,3 +1,4 @@
+import { samplePortrait } from './sample-media';
 /*
  * ═══ DEMO DATA — NOT REAL FARMERS, NOT REAL FINANCES ═════════════════════════
  *
@@ -382,13 +383,13 @@ const DEMO_SITE_SEEDS: DemoSiteSeed[] = [
   {
     id: 'demo-farmer-nquthu',
     farmerName: 'Sanele Mabaso',
-    siteName: 'Nquthu Ridge Plot',
+    siteName: 'Nquthu School Garden',
     district: 'Nquthu',
     municipality: 'uMzinyathi',
     lat: -28.2119,
     lon: 30.68,
     plotSizeM2: 1320,
-    plotLabel: 'Ridge plot',
+    plotLabel: 'School food garden',
     cohortId: 'demo-cohort-mkhuze-1',
     joinedMonthsAgo: 28,
     status: 'establishing',
@@ -407,8 +408,8 @@ const DEMO_SITE_SEEDS: DemoSiteSeed[] = [
     municipality: 'Zululand',
     lat: -27.7692,
     lon: 30.7914,
-    plotSizeM2: 2400,
-    plotLabel: 'Erf 221',
+    plotSizeM2: 4046.8564224,
+    plotLabel: 'Commercial market garden · 1 acre',
     cohortId: 'demo-cohort-mkhuze-1',
     joinedMonthsAgo: 32,
     status: 'thriving',
@@ -482,13 +483,13 @@ const DEMO_SITE_SEEDS: DemoSiteSeed[] = [
   {
     id: 'demo-farmer-melmoth',
     farmerName: 'Sindi Ngobese',
-    siteName: 'Melmoth Roadside Plot',
+    siteName: 'Melmoth Little Leaves Crèche Garden',
     district: 'Melmoth',
     municipality: 'King Cetshwayo',
     lat: -28.5872,
     lon: 31.4008,
     plotSizeM2: 420,
-    plotLabel: 'Roadside strip',
+    plotLabel: 'Crèche kitchen garden',
     cohortId: 'demo-cohort-midlands-3',
     joinedMonthsAgo: 3,
     // Newest joiner in the portfolio: first beds only, no crop plan yet, so no
@@ -509,8 +510,8 @@ const DEMO_SITE_SEEDS: DemoSiteSeed[] = [
     municipality: 'uThukela',
     lat: -28.7333,
     lon: 29.3583,
-    plotSizeM2: 1900,
-    plotLabel: 'Foothills block',
+    plotSizeM2: 4046.8564224,
+    plotLabel: 'Community market garden · 1 acre',
     cohortId: 'demo-cohort-midlands-3',
     joinedMonthsAgo: 6,
     status: 'establishing',
@@ -618,7 +619,7 @@ function buildRecord(seed: DemoSiteSeed, now: Date): DemoFarmerRecord {
     plotLabel: seed.plotLabel,
     joinedAt,
     status: seed.status,
-    photoUrl: null,
+    photoUrl: samplePortrait(seed.farmerName),
     consent: 'demo',
     isDemo: true,
   };

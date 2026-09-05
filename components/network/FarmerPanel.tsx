@@ -457,17 +457,21 @@ export function FarmerPanel({
           </div>
         )}
 
+        {farmer.isDemo && <div className="flex items-center gap-4" style={{ background: '#fff', padding: 8, borderRadius: 12 }}>
+          <img src="/demo/logo-organisation.png" alt="Imbewu KZN — fictional implementing partner" width={76} height={76} style={{ objectFit: 'contain' }} />
+          <img src="/demo/logo-funder.png" alt="Thembalethu Trust — fictional funding partner" width={76} height={76} style={{ objectFit: 'contain' }} />
+        </div>}
         {/* ── identity + site ────────────────────────────────────────────── */}
         <div className="flex items-center gap-3">
           <div
             className="rounded-full flex items-center justify-center flex-shrink-0 font-display font-semibold"
             style={{
-              width: 46, height: 46, background: 'rgba(31,77,43,0.14)',
+              width: 72, height: 72, overflow: 'hidden', background: 'rgba(31,77,43,0.14)',
               border: '1px solid rgba(31,77,43,0.35)', color: FOREST, fontSize: 16,
             }}
             aria-hidden
           >
-            {initialsOf(farmer.name)}
+            {farmer.photoUrl ? <img key={farmer.photoUrl} src={farmer.photoUrl} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} /> : initialsOf(farmer.name)}
           </div>
           <div className="min-w-0 flex-1">
             {/* ← NetworkFarmer.name (Profile.full_name). No ID number — see (F). */}
