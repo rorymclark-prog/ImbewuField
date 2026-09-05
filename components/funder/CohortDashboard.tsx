@@ -62,13 +62,13 @@ import FarmerPanel from '@/components/network/FarmerPanel';
 import { CohortTimeline, CohortTrainingChart } from './CohortCharts';
 import type { GardenStatus } from '@/lib/db/types';
 
-/* ── palette: /network's, verbatim, so the two funder screens are one screen ─────────────────── */
-const INK = '#20190F';
-const INK_SOFT = '#5C5040';
-const INK_MUTED = '#8C7A62';
-const LINE = '#E2D8C4';
-const PAPER = '#FFFEFA';
-const FIELD = '#F4EFE4';
+/* Programme surfaces match the assessment cards; chart meanings retain their colours. */
+const INK = '#183427';
+const INK_SOFT = '#44574B';
+const INK_MUTED = '#506158';
+const LINE = '#D7E3D9';
+const PAPER = '#FFFFFF';
+const FIELD = '#EFF4EF';
 const FOREST = '#1F4D2B';
 const ATTENTION = '#C0531E';
 
@@ -111,7 +111,7 @@ function Tile({ label, value, sub, tone }: {
 }) {
   return (
     <div
-      className="rounded-2xl px-3.5 py-3 min-w-0"
+      className="rounded-2xl px-4 py-4 min-w-0"
       style={{ background: PAPER, border: `1px solid ${LINE}` }}
     >
       {/* Wraps rather than truncates. At 375px a two-column tile is ~160px wide and "Logged this
@@ -300,11 +300,11 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
           </div>
         )}
 
-        <div className="px-3 md:px-5 pt-4" style={{ paddingBottom: 28 }}>
+        <div className="px-3 md:px-5 pt-4" style={{ paddingBottom: 160, maxWidth: 1480, margin: '0 auto' }}>
           {/* ── 1. what the cohort adds up to ─────────────────────────────────────────── */}
           <h2
             className="font-display font-bold"
-            style={{ fontSize: 'clamp(17px, 1.9vw, 21px)', color: INK, margin: '0 0 2px' }}
+            style={{ fontSize: 'clamp(25px, 2.5vw, 32px)', color: INK, margin: '0 0 2px' }}
           >
             {mode === 'funder' ? 'The cohort you are funding' : 'The cohort'}
           </h2>

@@ -131,7 +131,7 @@ function MelDashboardBody({ compact = false, accessOnly = false }: { compact?: b
     {role === 'admin' && !sample && <label>Organisation<select value={org} onChange={e => { setOrg(e.target.value); setSelected(null); setAnalysis(null); }}>{orgs.map(o => <option key={o.id} value={o.id}>{o.name}</option>)}</select></label>}
     {error && <p role="alert" className={styles.error}>{error}</p>}{notice && <p role="status" className={styles.notice}>{notice}</p>}
     {accessOnly && <div className={styles.card} style={{ marginBottom: 16 }}><h2>People & access</h2><p>Set member roles, delegate assessments and control funder sharing for this organisation.</p><p>These controls cover the permissions listed below. They do not yet provide a separate on/off switch for every app feature. Platform administrator and funder accounts remain platform-managed.</p></div>}
-    {sample ? <SampleProgramme accessOnly={accessOnly} /> : <>
+    {sample ? <SampleProgramme accessOnly={accessOnly} language={zu} /> : <>
 
       {!ready && <p>Loading assessments…</p>}
       {staff && !accessOnly && <>

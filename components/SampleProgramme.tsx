@@ -12,10 +12,11 @@ export function readSampleProgramme(): SampleProgrammeControls {
   try { const saved = window.localStorage.getItem(KEY); if (saved) return JSON.parse(saved); } catch { /* reset to fixture */ }
   return freshSampleProgramme();
 }
-export default function SampleProgramme({ funder = false, accessOnly = false, compact = false }: { funder?: boolean; accessOnly?: boolean; compact?: boolean }) {
+export default function SampleProgramme({ funder = false, accessOnly = false, compact = false, language }: { funder?: boolean; accessOnly?: boolean; compact?: boolean; language?: boolean }) {
   const [controls, setControls] = useState(freshSampleProgramme);
   const [selected, setSelected] = useState('sample-baseline');
-  const [zu, setZu] = useState(false);
+  const [localZu, setZu] = useState(false);
+  const zu = language ?? localZu;
   const [notice, setNotice] = useState('');
   useEffect(() => { setControls(readSampleProgramme()); }, []);
   function update(next: SampleProgrammeControls) {
@@ -41,7 +42,7 @@ export default function SampleProgramme({ funder = false, accessOnly = false, co
   return <>
     <p className={styles.notice}>Fictional sample learning cohort · 16 example participants. Counts are assignments, not messages sent or unique farmers. Missing numerical answers remain unknown.</p>
     <div className={styles.grid}>{[['Assigned', assigned], ['Completed', completed], ['Awaiting responses', assigned - completed], ['Shared summaries', controls.published.length]].map(([label, value]) => <div key={label} className={styles.card}>{label}<strong className={styles.stat}>{value}</strong></div>)}</div>
-    <div className={styles.row}><button onClick={() => setZu(false)} aria-pressed={!zu}>English</button><button onClick={() => setZu(true)} aria-pressed={zu}>isiZulu</button></div>
+    {language === undefined && <div className={styles.row}><button onClick={() => setZu(false)} aria-pressed={!zu}>English</button><button onClick={() => setZu(true)} aria-pressed={zu}>isiZulu</button></div>}
     <div className={styles.grid}>{data.map(({ assessment: a, rows }) => <button key={a.id} onClick={() => setSelected(a.id)} aria-pressed={a.id === selected}>{zu ? MEL_TEMPLATES[a.stage].zu : a.title}<p>{a.state} · {rows.length}/{a.participantIds.length} completed</p></button>)}</div>
     <article className={styles.card}><h2>{zu ? MEL_TEMPLATES[chosen.assessment.stage].zu : chosen.assessment.title}</h2>
       {chosen.assessment.state === 'draft' ? <p>This draft demonstrates the next stage. No participants are assigned yet.</p> : <MelMetrics metrics={analyseAssessment(chosen.assessment, MEL_TEMPLATES[chosen.assessment.stage], chosen.rows).metrics} zu={zu} />}

@@ -59,12 +59,12 @@ import { kgLabel, kgTotalLabel, randLabel, randTick } from '@/lib/format-figures
 import { soldBarParts, type CohortMonth, type CohortSeries, type SoldBarParts } from '@/lib/cohort-series';
 import type { CohortTraining } from '@/lib/cohort-report';
 
-/* ── palette: the finance charts', unchanged, so three screens read as one app ───────────────── */
-const CARD_STYLE: React.CSSProperties = { background: '#FFFEFA', border: '1px solid #E2D8C4' };
-const INK = '#20190F';
-const MUTED = '#5C5040';
-const FAINT = '#8C7A62';
-const HAIRLINE = '#E2D8C4';
+/* White programme cards and darker labels; preserve the harvest/sales colour meanings. */
+const CARD_STYLE: React.CSSProperties = { background: '#FFFFFF', border: '1px solid #D7E3D9' };
+const INK = '#183427';
+const MUTED = '#44574B';
+const FAINT = '#506158';
+const HAIRLINE = '#D7E3D9';
 const AXIS = 'rgba(140,122,98,0.45)';
 const SOLD = '#1F4D2B';   // forest — sold kilograms and money in, exactly CashflowChart's IN
 const KEPT = '#C4A46A';   // gold — lighter, so the split survives greyscale and a printed report

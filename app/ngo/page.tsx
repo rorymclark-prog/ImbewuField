@@ -71,7 +71,7 @@ export default function NgoPage() {
       <div className="flex h-screen items-center justify-center px-4" style={{ background: 'var(--bg-0)' }}>
         <div className="rounded-2xl px-6 py-8 text-center max-w-xs" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
           <p className="text-sm font-display font-semibold mb-1" style={{ color: '#20190F' }}>This is the NGO area</p>
-          <p className="text-xs font-sans leading-relaxed" style={{ color: '#8C7A62' }}>This dashboard is for NGO programme teams and administrators.</p>
+          <p className="text-xs font-sans leading-relaxed" style={{ color: '#506158' }}>This dashboard is for NGO programme teams and administrators.</p>
         </div>
       </div>
     );
@@ -120,13 +120,15 @@ export default function NgoPage() {
           <button
             key={key}
             onClick={() => setView(key)}
-            className="flex shrink-0 whitespace-nowrap items-center gap-1.5 py-2.5 px-3 font-display text-xs font-semibold"
+            aria-pressed={view === key}
+            className="flex shrink-0 whitespace-nowrap items-center gap-1.5 py-2.5 px-3 font-sans text-sm font-semibold"
             onFocus={e => e.currentTarget.scrollIntoView({ block: 'nearest', inline: 'nearest' })}
             style={{
               background: 'transparent',
+              minHeight: 44,
               border: 'none',
               cursor: 'pointer',
-              color: view === key ? '#1F4D2B' : '#8C7A62',
+              color: view === key ? '#1F4D2B' : '#506158',
               borderBottom: view === key ? '2px solid #1F4D2B' : '2px solid transparent',
               marginBottom: -1,
             }}
