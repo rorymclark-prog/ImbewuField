@@ -74,7 +74,7 @@ export default function PricesPage() {
                   }}
                 >
                   {getCropArt(crop.key) ? (
-                    <img src={getCropArt(crop.key)} alt="" aria-hidden style={{ width: 32, height: 32, objectFit: 'contain' }} />
+                    <img className="produce-art" src={getCropArt(crop.key)} alt="" aria-hidden style={{ width: 32, height: 32, objectFit: 'contain' }} />
                   ) : (
                     <span style={{ fontSize: 32, lineHeight: 1 }}>{crop.icon}</span>
                   )}

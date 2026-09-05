@@ -123,7 +123,7 @@ export default function ExchangePage() {
                 <span key={crop.cropKey} style={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}>
                   {i > 0 && ' · '}
                   {getCropArt(crop.cropKey) ? (
-                    <img src={getCropArt(crop.cropKey)} alt="" aria-hidden style={{ width: 14, height: 14, objectFit: 'contain' }} />
+                    <img className="produce-art" src={getCropArt(crop.cropKey)} alt="" aria-hidden style={{ width: 14, height: 14, objectFit: 'contain' }} />
                   ) : (
                     <span>{crop.icon}</span>
                   )}{' '}

@@ -1219,3 +1219,25 @@ test('production registers and their evidence history deny direct client access'
     }
   }
 });
+
+
+test('field team assignments and private visit notes cannot be forged or read through client bypasses', async () => {
+  for (const uid of [MENTOR_A, STAFF_A, FUNDER_WITH_GRANT, PLATFORM_ADMIN]) {
+    const db = env.authenticatedContext(uid).firestore();
+    await assertFails(setDoc(doc(db, 'field_teams', ORG_A, 'mentors', MENTOR_A), { farmerIds: [FARMER_B] }));
+    await assertFails(getDoc(doc(db, 'field_teams', ORG_A, 'mentors', MENTOR_A)));
+    await assertFails(setDoc(doc(db, 'field_team_visits', 'forged'), { orgId: ORG_A, mentorId: uid, notes: 'Forged' }));
+    await assertFails(getDoc(doc(db, 'field_team_visits', 'forged')));
+  }
+});
+
+test('training evidence, logos and attendance require the server projection, even for linked funders', async () => {
+  for (const uid of [MENTOR_A, STAFF_A, FUNDER_WITH_GRANT, PLATFORM_ADMIN]) {
+    const db = env.authenticatedContext(uid).firestore();
+    for (const path of ['sessions/session1','photos/session1','settings/branding','milestones/target1','history/change1']) {
+      const ref=doc(db, `programme_evidence/${ORG_A}/${path}`);
+      await assertFails(getDoc(ref));
+      await assertFails(setDoc(ref,{published:true,attendance:[{name:'Private person'}]}));
+    }
+  }
+});

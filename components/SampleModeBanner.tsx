@@ -8,7 +8,6 @@
 
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { enterSampleMode } from '@/lib/sample-mode';
 import { usePathname } from 'next/navigation';
 import { Sparkles, X } from 'lucide-react';
 import { isSampleMode, exitSampleMode, SAMPLE_MODE_EVENT } from '@/lib/sample-mode';
@@ -52,28 +51,29 @@ export default function SampleModeBanner() {
 
   return (
     <div
-      className="no-print fixed bottom-[calc(60px+env(safe-area-inset-bottom,0px))] lg:bottom-0 left-0 right-0 flex items-center justify-center gap-3 px-4 py-2 flex-wrap text-center"
+      className="no-print fixed bottom-[calc(60px+env(safe-area-inset-bottom,0px))] lg:bottom-0 left-0 right-0 flex items-center justify-center gap-2 px-3 py-0 text-center whitespace-nowrap"
       style={{
         zIndex: 9999,
         background: '#7A4A06',
         borderTop: '1px solid rgba(32,25,15,0.15)',
+        fontSize: 12,
         boxShadow: '0 -2px 12px rgba(32,25,15,0.18)',
       }}
     >
       <span className="flex items-center gap-1.5 font-display font-semibold" style={{ fontSize: 13, color: '#fff' }}>
         <Sparkles size={14} />
-        Sample workspace · fictional data
+        Sample · fictional
       </span>
-      <Link href="/samples" style={{ color: 'white', textDecoration: 'underline', minHeight: 44, display: 'inline-flex', alignItems: 'center' }}>Switch sample view</Link>
-      <button type="button" onClick={() => { if (enterSampleMode()) window.location.reload(); }} style={{ color: 'white', minHeight: 44 }}>Reset sample</button>
+      <Link href="/samples" style={{ color: 'white', textDecoration: 'underline', minHeight: 44, display: 'inline-flex', alignItems: 'center' }} aria-label="Switch sample view">Switch</Link>
       <button
         type="button"
+        aria-label="Exit sample"
         onClick={handleExit}
         className="flex items-center gap-1 px-3 py-1 rounded-full font-sans font-semibold"
         style={{ fontSize: 12, background: '#fff', color: '#7A4A06', minHeight: 44, border: 'none', cursor: 'pointer' }}
       >
         <X size={13} />
-        Exit sample
+        Exit
       </button>
     </div>
   );

@@ -5,14 +5,15 @@ import Link from 'next/link';
 import BackButton from '@/components/BackButton';
 import MenuButton from '@/components/MenuButton';
 import { Users, HandCoins, Sprout, GraduationCap, BookOpen } from 'lucide-react';
+import { enterSampleMode } from '@/lib/sample-mode';
 import { startRolePreview } from '@/lib/use-role-navigation';
 import styles from '@/components/MelDashboard.module.css';
 const icons = { ngo: Users, funder: HandCoins, farmer: Sprout, mentor: GraduationCap, student: BookOpen };
 const examples = [
-  ['ngo', 'NGO', 'Run a programme', 'Explore the cohort, gardens, assessments and People & access controls.'],
+  ['ngo', 'Organisation', 'Run a programme', 'Explore gardens, assessments, reports and the organisation Control centre.'],
   ['funder', 'Funder', 'Review what is shared', 'See the same sample programme through its published summaries.'],
   ['farmer', 'Farmer', 'Explore Ubhejane Crèche', 'Open the farm map, crop plan, harvests and example sales.'],
-  ['mentor', 'Mentor', 'Support a grower', 'Explore the existing sample mentoring workspace.'],
+  ['mentor', 'Mentor', 'Support a grower', 'Explore assigned farmers, organisation guidance, visits and reports.'],
   ['student', 'Student', 'Try the learning workspace', 'Explore the existing sample course and progress.'],
 ] as const;
 export default function SamplesPage() {
@@ -23,6 +24,7 @@ export default function SamplesPage() {
     <p className={styles.notice}>All sample programme results and people are fictional. The farmer example uses the saved Ubhejane design. These are demonstrations, not verified project deliverables.</p>
     {error && <p role="alert">{error}</p>}
     <div className={styles.sampleGrid}>{examples.map(([role, label, title, description]) => { const Icon = icons[role]; return <article key={role} className={`${styles.card} ${styles.sampleCard}`}><Icon size={28} aria-hidden="true" /><span className={styles.tag}>{label}</span><h2 style={{ marginTop: 16 }}>{title}</h2><p>{description}</p><button className={styles.primary} onClick={() => { if (startRolePreview(role)) router.push('/' + role); else setError('Sample mode could not start. Please allow session storage and try again.'); }}>Open {label} sample</button></article>; })}</div>
+    <button type="button" onClick={() => { if (enterSampleMode()) window.location.reload(); }}>Reset sample</button>
     <p>Changes stay in this sample session. Resetting or reloading starts fresh. Signing in is not required and switching sample views never changes your real account permissions.</p>
   </div></main>;
 }

@@ -32,7 +32,7 @@ function MatchedRow({ row }: { row: CropRow }) {
       <div className="flex items-center justify-between gap-3">
         <p className="text-sm font-display font-medium" style={{ color: '#20190F', display: 'flex', alignItems: 'center', gap: 4 }}>
           {getCropArt(row.cropKey) ? (
-            <img src={getCropArt(row.cropKey)} alt="" aria-hidden style={{ width: 16, height: 16, objectFit: 'contain' }} />
+            <img className="produce-art" src={getCropArt(row.cropKey)} alt="" aria-hidden style={{ width: 16, height: 16, objectFit: 'contain' }} />
           ) : (
             <span>{row.icon}</span>
           )}{' '}
@@ -71,7 +71,7 @@ function SoftRow({ row }: { row: CropRow }) {
     <div className="flex items-center justify-between gap-3 px-4 py-2.5">
       <p className="text-sm font-display" style={{ color: '#20190F', display: 'flex', alignItems: 'center', gap: 4 }}>
         {getCropArt(row.cropKey) ? (
-          <img src={getCropArt(row.cropKey)} alt="" aria-hidden style={{ width: 14, height: 14, objectFit: 'contain' }} />
+          <img className="produce-art" src={getCropArt(row.cropKey)} alt="" aria-hidden style={{ width: 14, height: 14, objectFit: 'contain' }} />
         ) : (
           <span>{row.icon}</span>
         )}{' '}

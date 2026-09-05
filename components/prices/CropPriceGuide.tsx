@@ -38,7 +38,7 @@ export function CropPriceDetail({ crop, onChangeCrop }: { crop: PricedCrop; onCh
       </button>
 
       {getCropArt(crop.key) ? (
-        <img src={getCropArt(crop.key)} alt="" aria-hidden style={{ width: 68, height: 68, objectFit: 'contain' }} />
+        <img className="produce-art" src={getCropArt(crop.key)} alt="" aria-hidden style={{ width: 68, height: 68, objectFit: 'contain' }} />
       ) : (
         <div style={{ fontSize: 68, lineHeight: 1 }}>{crop.icon}</div>
       )}

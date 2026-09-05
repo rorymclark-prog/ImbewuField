@@ -269,7 +269,7 @@ export default function FieldJournal() {
           {usedCategories.map((c) => (
             <Chip key={c.key} on={filter === c.key} onClick={() => setFilter(c.key)} tint={c.tint} ink={c.ink}>
               {getElementArt2(`journal_${c.key}`) ? (
-                <img src={getElementArt2(`journal_${c.key}`)} alt="" aria-hidden style={{ width: 12, height: 12, objectFit: 'contain', display: 'inline-block', verticalAlign: '-2px' }} />
+                <img className="produce-art" src={getElementArt2(`journal_${c.key}`)} alt="" aria-hidden style={{ width: 12, height: 12, objectFit: 'contain', display: 'inline-block', verticalAlign: '-2px' }} />
               ) : (
                 c.icon
               )}{' '}
@@ -421,7 +421,7 @@ export default function FieldJournal() {
                           font: '700 10px/1 system-ui, sans-serif',
                         }}>
                           {getElementArt2(`journal_${entry.category}`) ? (
-                            <img src={getElementArt2(`journal_${entry.category}`)} alt="" aria-hidden style={{ width: 11, height: 11, objectFit: 'contain', display: 'inline-block', verticalAlign: '-1px' }} />
+                            <img className="produce-art" src={getElementArt2(`journal_${entry.category}`)} alt="" aria-hidden style={{ width: 11, height: 11, objectFit: 'contain', display: 'inline-block', verticalAlign: '-1px' }} />
                           ) : (
                             cat.icon
                           )}{' '}

@@ -9,7 +9,7 @@ export default function AccountAccess() {
   const { user, profile, refreshProfile } = useAuth();
   const router = useRouter();
   const [message, setMessage] = useState('');
-  const destinations = [['Farmer', '/farmer'], ['Student', '/student'], ['Mentor', '/mentor'], ['NGO', '/ngo'], ['Funder', '/funder']] as const;
+  const destinations = [['Farmer', '/farmer'], ['Student', '/student'], ['Mentor', '/mentor'], ['Organisation', '/ngo'], ['Funder', '/funder']] as const;
   return <section className={`${styles.root} ${styles.card}`}><h2>Your app access</h2><p><strong>{profile?.role === 'admin' ? 'Platform administrator' : profile?.role ?? 'Profile not loaded'}</strong>{profile?.org_id ? ' · linked to an organisation' : ' · no organisation linked'}</p>
     <p>{profile?.role === 'admin' ? 'Your account can open every role dashboard. Choose the relevant organisation inside the portfolio.' : 'Your normal login stays the same. A platform administrator must enable owner access on the correct account; choosing a dashboard does not change your permissions.'}</p>
     <button onClick={async () => { try { await refreshProfile(); setMessage('Access refreshed.'); } catch { setMessage('Could not refresh access. Try again.'); } }}>Refresh my access</button>

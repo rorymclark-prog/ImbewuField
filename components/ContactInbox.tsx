@@ -4,6 +4,8 @@ import { useState, useEffect, useCallback } from 'react';
 import { MessageCircle, ChevronDown, ChevronUp, Mail, Loader2, MailOpen, CornerDownRight, Send } from 'lucide-react';
 import { collection, query, where, orderBy, getDocs, updateDoc, addDoc, doc, serverTimestamp } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
+import { isSampleMode } from '@/lib/sample-mode';
+import { sampleRead, sampleWrite, freshSampleMessages, type SampleMessage } from '@/lib/sample-operations';
 import { getFirebase, isBackendConfigured } from '@/lib/firebase/init';
 
 interface ContactMessage {
@@ -49,10 +51,12 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
   const [replySending, setReplySending] = useState<string | null>(null);
   const [replySent, setReplySent] = useState<Set<string>>(new Set());
   const isLive = isBackendConfigured();
+  const [sample, setSample] = useState(false);
 
   const load = useCallback(async () => {
     setLoadError(false);
-    if (!isLive) { setLoading(false); return; }
+    if (isSampleMode()) { const rows = sampleRead(`messages-${recipient}`, () => freshSampleMessages(recipient)); setSample(true); setMessages(rows); onUnreadCount?.(rows.filter(m => m.status === 'unread').length); setLoading(false); return; }
+    if (sample || !isLive) { setLoading(false); return; }
     const fb = getFirebase();
     if (!fb) { setLoading(false); return; }
     try {
@@ -76,6 +80,8 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
   useEffect(() => { load(); }, [load]);
 
   async function markRead(id: string) {
+    if (isSampleMode()) { const next = sampleRead(`messages-${recipient}`, () => freshSampleMessages(recipient)).map(m => m.id === id ? { ...m, status: 'read' as const } : m); sampleWrite(`messages-${recipient}`, next); setMessages(next); onUnreadCount?.(next.filter(m => m.status === 'unread').length); return; }
+    if (sample) return;
     const fb = getFirebase();
     if (!fb) return;
     try {
@@ -101,7 +107,9 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
 
   async function sendReply(msg: ContactMessage) {
     const text = (replyText[msg.id] ?? '').trim();
-    if (!text || !isLive) return;
+    if (!text) return;
+    if (isSampleMode()) { const next = sampleRead(`messages-${recipient}`, () => freshSampleMessages(recipient)).map(m => m.id === msg.id ? { ...m, status: 'replied' as const, reply: text } : m); sampleWrite(`messages-${recipient}`, next); setMessages(next); setReplySent(s => new Set(s).add(msg.id)); setReplyText(t => ({ ...t, [msg.id]: '' })); return; }
+    if (sample || !isLive) return;
     const fb = getFirebase();
     if (!fb) return;
     setReplySending(msg.id);
@@ -131,7 +139,7 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
 
   const unreadCount = messages.filter((m) => m.status === 'unread').length;
 
-  if (!isLive) {
+  if (!isLive && !sample) {
     return (
       <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
         <MessageCircle size={26} style={{ color: '#8C7A62', margin: '0 auto 10px' }} strokeWidth={1.5} />
@@ -171,6 +179,7 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
 
   return (
     <div className="space-y-2">
+      {sample && <p className="rounded-xl p-3 text-sm" style={{ background: '#E5EFF8', color: '#244B6B' }}>Sample inbox · replies are kept in this demo session only. Nothing is sent.</p>}
       {actionError && (
         <div className="rounded-xl px-3 py-2 text-xs font-sans" style={{ background: '#FFF4EF', border: '1px solid #D8B7A8', color: '#8C4938' }}>
           That action could not be saved. Check your account access or connection and try again.
@@ -255,6 +264,7 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
                   {msg.body}
                 </p>
 
+                {sample && (msg as SampleMessage).reply && <p className="text-sm"><strong>Sample reply:</strong> {(msg as SampleMessage).reply}</p>}
                 {/* Reply box */}
                 <div className="mt-4 pt-3" style={{ borderTop: '1px solid #E2D8C4' }}>
                   <div className="flex items-center gap-1.5 mb-2">
@@ -280,7 +290,7 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
                     }}
                   >
                     {replySending === msg.id ? <Loader2 size={12} className="animate-spin" /> : <Send size={12} />}
-                    {replySent.has(msg.id) ? 'Sent!' : replySending === msg.id ? 'Sending…' : 'Send reply'}
+                    {replySent.has(msg.id) ? (sample ? 'Saved in sample' : 'Sent!') : replySending === msg.id ? 'Sending…' : sample ? 'Save sample reply' : 'Send reply'}
                   </button>
                 </div>
               </div>

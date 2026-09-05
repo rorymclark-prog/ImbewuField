@@ -66,6 +66,12 @@ const STAFF_ROUTES = [
 
 /** Files whose type she reads. Floor of 12px, no allowance. */
 const FARMER_SURFACES: Record<string, string> = {
+  'components/ProgrammeEvidence.tsx': 'readable training evidence and branding on phones',
+  'components/SampleGardenVisual.tsx': 'readable example location and design',
+  'components/OrganisationControlCentre.tsx': 'organisation controls and role previews on phones',
+  'components/FieldTeams.tsx': 'mentor field work on phones',
+  'components/ReportComposer.tsx': 'shared readable report preview and export',
+  'components/ProgrammeReports.tsx': 'organisation and funder reporting',
   'components/DashboardTabs.tsx': 'touch and keyboard navigation across staff sections',
   'components/SampleProgramme.tsx': 'NGO and funder sample analysis and access controls',
   'components/AreaReturnCards.tsx': 'farmers compare the recorded return from their growing space',

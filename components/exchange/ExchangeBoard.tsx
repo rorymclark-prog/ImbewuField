@@ -318,7 +318,7 @@ export default function ExchangeBoard() {
               onClick={() => setCropKeys((v) => toggle(v, c.cropKey))}
             >
               {getCropArt(c.cropKey) ? (
-                <img src={getCropArt(c.cropKey)} alt="" aria-hidden style={{ width: 13, height: 13, objectFit: 'contain', verticalAlign: '-2px' }} />
+                <img className="produce-art" src={getCropArt(c.cropKey)} alt="" aria-hidden style={{ width: 13, height: 13, objectFit: 'contain', verticalAlign: '-2px' }} />
               ) : (
                 c.icon
               )}{' '}

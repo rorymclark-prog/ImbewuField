@@ -26,17 +26,30 @@ export function buildSampleAssessments() {
   });
 }
 export type SampleProgrammeControls = {
-  funderAccess: boolean; published: string[];
-  people: { id: string; name: string; role: 'farmer' | 'student' | 'mentor' | 'ngo'; manage: boolean; analyse: boolean; people: boolean }[];
+  funderAccess: boolean; published: string[]; assessments?: ReturnType<typeof buildSampleAssessments>;
+  people: { id: string; name: string; role: 'farmer' | 'student' | 'mentor' | 'ngo'; manage: boolean; analyse: boolean; people: boolean; training?: boolean }[];
 };
 export function freshSampleProgramme(): SampleProgrammeControls {
   return { funderAccess: true, published: buildSampleAssessments().filter(x => x.assessment.published).map(x => x.assessment.id), people: [
-    { id: 'sample-mentor', name: 'Sample mentor', role: 'mentor', manage: true, analyse: false, people: false },
+    { id: 'sample-mentor', name: 'Sample mentor', role: 'mentor', training: true, manage: true, analyse: false, people: false },
     { id: 'sample-farmer', name: 'Sample farmer', role: 'farmer', manage: false, analyse: false, people: false },
     { id: 'sample-student', name: 'Sample student', role: 'student', manage: false, analyse: false, people: false },
   ] };
 }
 export function samplePublishedAssessments(controls: SampleProgrammeControls) {
   if (!controls.funderAccess) return [];
-  return buildSampleAssessments().filter(x => x.assessment.state === 'closed' && controls.published.includes(x.assessment.id)).map(x => ({ ...x.assessment, ...analyseAssessment(x.assessment, MEL_TEMPLATES[x.assessment.stage], x.rows, true) }));
+  return sampleAssessments(controls).filter(x => x.assessment.state === 'closed' && controls.published.includes(x.assessment.id)).map(x => ({ ...x.assessment, ...analyseAssessment(x.assessment, MEL_TEMPLATES[x.assessment.stage], x.rows, true) }));
+}
+
+export function sampleAssessments(controls: SampleProgrammeControls) {
+  return controls.assessments ?? buildSampleAssessments();
+}
+export function changeSampleAssessment(controls: SampleProgrammeControls, id: string, patch: Partial<MelAssessment>): SampleProgrammeControls {
+  const data = sampleAssessments(controls);
+  const found = data.find(x => x.assessment.id === id);
+  if (!found) throw Error('Sample assessment not found.');
+  if (patch.state === 'open' && found.assessment.state !== 'draft') throw Error('Only a draft can be opened.');
+  if (patch.state === 'closed' && found.assessment.state !== 'open') throw Error('Only an open assessment can be closed.');
+  if (patch.state === 'open' && !patch.participantIds?.length) throw Error('Choose participants first.');
+  return { ...controls, assessments: data.map(x => x.assessment.id === id ? { ...x, assessment: { ...x.assessment, ...patch, id, updatedAt: new Date().toISOString() } } : x) };
 }

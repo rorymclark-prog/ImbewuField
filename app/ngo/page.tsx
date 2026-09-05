@@ -19,6 +19,9 @@ import ContactInbox from '@/components/ContactInbox';
 import LessonLink from '@/components/design/LessonLink';
 import MenuButton from '@/components/MenuButton';
 import type { UserRole } from '@/lib/db/types';
+const OrganisationControlCentre = dynamic(() => import('@/components/OrganisationControlCentre'), { ssr: false });
+const ProgrammeEvidence = dynamic(() => import('@/components/ProgrammeEvidence'), { ssr: false });
+const ProgrammeReports = dynamic(() => import('@/components/ProgrammeReports'), { ssr: false });
 const ProductionAreas = dynamic(() => import('@/components/ProductionAreas'), { ssr: false });
 const MelDashboard = dynamic(() => import('@/components/MelDashboard'), { ssr: false });
 const FunderAssessments = dynamic(() => import('@/components/funder/FunderAssessments'), { ssr: false });
@@ -57,7 +60,7 @@ export default function NgoPage() {
   // client-only, so a render-time read would disagree with the server-rendered HTML.
   const [sample, setSample] = useState(false);
   useEffect(() => { setSample(isSampleMode()); }, []);
-  const [view, setView] = useState<'cohort' | 'gardens' | 'messages' | 'assessments' | 'funder-preview' | 'area' | 'access'>('cohort');
+  const [view, setView] = useState<'cohort' | 'gardens' | 'messages' | 'assessments' | 'funder-preview' | 'area' | 'access' | 'reports' | 'evidence'>('cohort');
   const [msgUnread, setMsgUnread] = useState(0);
 
   useEffect(() => {
@@ -70,8 +73,8 @@ export default function NgoPage() {
     return (
       <div className="flex h-screen items-center justify-center px-4" style={{ background: 'var(--bg-0)' }}>
         <div className="rounded-2xl px-6 py-8 text-center max-w-xs" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-          <p className="text-sm font-display font-semibold mb-1" style={{ color: '#20190F' }}>This is the NGO area</p>
-          <p className="text-xs font-sans leading-relaxed" style={{ color: '#506158' }}>This dashboard is for NGO programme teams and administrators.</p>
+          <p className="text-sm font-display font-semibold mb-1" style={{ color: '#20190F' }}>This is the organisation area</p>
+          <p className="text-xs font-sans leading-relaxed" style={{ color: '#506158' }}>This dashboard is for Organisation programme teams and administrators.</p>
         </div>
       </div>
     );
@@ -85,7 +88,7 @@ export default function NgoPage() {
         <BackButton />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: 'var(--border-bright)', opacity: 0.5 }} />
-        <span className="text-xs hidden sm:block font-display" style={{ color: '#5C5040' }}>NGO · programme overview</span>
+        <span className="text-xs hidden sm:block font-display" style={{ color: '#5C5040' }}>Organisation · programme overview</span>
         {/* Conditional for the same reason as /funder: this dashboard reads real gardens and
             gardeners, and only shows sample ones when no backend is configured, or in sample mode. */}
         {/* Scoped to the gardens view — the cohort view carries its own, more exact sample label
@@ -109,7 +112,9 @@ export default function NgoPage() {
 
       <DashboardTabs>
         {([
-          { key: 'access', label: 'People & access', icon: BarChart3, badge: 0 },
+          { key: 'access', label: 'Control centre', icon: BarChart3, badge: 0 },
+          { key: 'evidence', label: 'Training & progress', icon: BarChart3, badge: 0 },
+          { key: 'reports', label: 'Reports', icon: BarChart3, badge: 0 },
           { key: 'cohort',   label: 'Cohort',   icon: BarChart3, badge: 0 },
           { key: 'gardens',  label: 'Gardens',  icon: Sprout,    badge: 0 },
           { key: 'messages', label: 'Messages', icon: Inbox,     badge: msgUnread },
@@ -148,6 +153,7 @@ export default function NgoPage() {
         ))}
       </DashboardTabs>
 
+      {view === 'evidence' && <div className="flex-1 overflow-y-auto"><ProgrammeEvidence /></div>}
       {view === 'cohort' && (
         <div className="flex-1 flex flex-col overflow-hidden">
           <MelDashboard compact />
@@ -164,7 +170,8 @@ export default function NgoPage() {
           <ContactInbox recipient="organisation" onUnreadCount={setMsgUnread} />
         </div>
       )}
-      {view === 'access' && <div className="flex-1 min-h-0 flex overflow-hidden"><MelDashboard accessOnly /></div>}
+      {view === 'access' && <div className="flex-1 min-h-0 flex overflow-hidden"><OrganisationControlCentre /></div>}
+      {view === 'reports' && <div className="flex-1 min-h-0 flex overflow-hidden"><ProgrammeReports /></div>}
       {view === 'area' && <div className="flex-1 min-h-0 min-w-0 flex overflow-hidden"><ProductionAreas /></div>}
       {view === 'assessments' && <div className="flex-1 min-h-0 min-w-0 flex overflow-hidden"><MelDashboard /></div>}
       {view === 'funder-preview' && <div className="flex-1 min-h-0 min-w-0 flex overflow-hidden"><div className="flex-1 overflow-y-auto"><FunderAssessments /><ProductionAreas publishedOnly /></div></div>}

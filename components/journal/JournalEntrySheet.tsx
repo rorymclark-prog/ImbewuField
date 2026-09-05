@@ -159,7 +159,7 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
                     }}
                   >
                     {getElementArt2(`journal_${c.key}`) ? (
-                      <img src={getElementArt2(`journal_${c.key}`)} alt="" aria-hidden style={{ width: 15, height: 15, objectFit: 'contain' }} />
+                      <img className="produce-art" src={getElementArt2(`journal_${c.key}`)} alt="" aria-hidden style={{ width: 15, height: 15, objectFit: 'contain' }} />
                     ) : (
                       <span style={{ fontSize: 15 }}>{c.icon}</span>
                     )}

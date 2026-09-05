@@ -33,6 +33,13 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '5 September', sha: 'e3d817fb', changes: [
+    'Record training attendance, venue photos and progress milestones.',
+    'Add partner logos to reports; try new sample photos and a smaller sample bar.',
+    'Crop pictures in lists are larger and easier to recognise.',
+    'Organisation replaces NGO, with a Control centre for people and mentor teams.',
+    'Try sample area edits, inbox replies, field visits and downloadable programme reports.',
+  ] },
   { when: '5 September', sha: '3e79be00', changes: [
     'NGO and funder dashboards have clearer labels and matching white cards.',
     'Sample views have aligned buttons, clearer icons and one language control.',
