@@ -1,5 +1,7 @@
 'use client';
 
+import { samplePortrait } from '@/lib/sample-media';
+
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { Search, Users, CheckCircle, ChevronDown, ChevronUp, BookOpen, Send, Loader2, GraduationCap, Inbox, Home, UserPlus, X, CalendarClock, AlertTriangle, PauseCircle, PlayCircle } from 'lucide-react';
@@ -16,11 +18,13 @@ import {
 } from '@/lib/db/queries';
 import { COURSE_MODULES, TOTAL_MODULES, CATEGORY_COLORS } from '@/lib/course-modules';
 import type { Profile, CourseProgress, UserRole } from '@/lib/db/types';
+import BackButton from '@/components/BackButton';
 import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
 import { sampleRead, sampleWrite } from '@/lib/sample-operations';
 import { freshFieldWorkspace } from '@/lib/field-teams';
+import ProgrammeEvidence from '@/components/ProgrammeEvidence';
 import FieldTeams from '@/components/FieldTeams';
 import RoleSwitcher from '@/components/RoleSwitcher';
 import DashboardTabs from '@/components/DashboardTabs';
@@ -157,7 +161,7 @@ function TraineeCard({
         style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}>
         <div className="flex-shrink-0 flex items-center justify-center rounded-full font-display font-bold"
           style={{ width: 40, height: 40, fontSize: 15, background: 'linear-gradient(135deg,#1F4D2B,#2D6B3C)', color: '#EAF3E2' }}>
-          {initials(trainee.full_name)}
+          {isSampleMode() ? <img src={samplePortrait(trainee.id)} alt="Fictional profile portrait" className="w-full h-full rounded-full object-cover" /> : initials(trainee.full_name)}
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
@@ -341,7 +345,7 @@ export default function MentorPage() {
   const [sample, setSample] = useState(false);
   useEffect(() => { setSample(isSampleMode()); }, []);
 
-  const [view, setView] = useState<'field' | 'trainees' | 'messages'>('field');
+  const [view, setView] = useState<'field' | 'trainees' | 'messages' | 'evidence'>('field');
   const [msgUnread, setMsgUnread] = useState(0);
   const [trainees, setTrainees] = useState<Profile[]>([]);
   const [progressMap, setProgressMap] = useState<Record<string, CourseProgress[]>>({});
@@ -489,6 +493,7 @@ export default function MentorPage() {
       <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
         <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
           <MenuButton />
+          <BackButton />
           <BrandLogo />
           <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
           <span className="text-xs font-display truncate min-w-0" style={{ color: '#5C5040' }}>Mentor</span>
@@ -542,6 +547,7 @@ export default function MentorPage() {
     <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
       <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
         <MenuButton />
+          <BackButton />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
         <span className="text-xs font-display truncate min-w-0" style={{ color: '#5C5040' }}>Mentor</span>
@@ -554,6 +560,7 @@ export default function MentorPage() {
       {/* Tab strip */}
       <DashboardTabs>
         {([
+          { key: 'evidence', label: 'Training & evidence', icon: BookOpen, badge: 0 },
           { key: 'field', label: 'My field team & reports', icon: Users, badge: 0 },
           { key: 'trainees', label: 'Trainees', icon: Users,  badge: 0 },
           { key: 'messages', label: 'Messages', icon: Inbox, badge: msgUnread },
@@ -585,7 +592,7 @@ export default function MentorPage() {
 
       <main className="flex-1 overflow-y-auto px-4 py-4 space-y-4" style={{ paddingBottom: 80 }}>
 
-        {view === 'field' ? <FieldTeams /> : view === 'messages' ? (
+        {view === 'evidence' ? <ProgrammeEvidence mentor initialTab="training" /> : view === 'field' ? <FieldTeams /> : view === 'messages' ? (
           <ContactInbox recipient="mentor" onUnreadCount={setMsgUnread} />
         ) : (<>
 

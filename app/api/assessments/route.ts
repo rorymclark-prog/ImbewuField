@@ -141,13 +141,14 @@ async function handle(req: NextRequest, write: boolean) {
         batch.create(db.collection('org_access_audit').doc(), { orgId, actor: uid, action: 'funder_access', enabled: b.funderAccess, at: now });
         await batch.commit(); return json({ saved: true });
       }
-      if (!safeId(b.id) || !b.permissions || !['manage', 'analyse', 'people'].every(k => typeof b.permissions[k] === 'boolean')) fail('Choose a member and their permissions.');
+      if (!safeId(b.id) || !b.permissions || (b.permissions.training !== undefined && typeof b.permissions.training !== 'boolean') || !['manage', 'analyse', 'people'].every(k => typeof b.permissions[k] === 'boolean')) fail('Choose a member and their permissions.');
       await db.runTransaction(async tx => {
         const ref = db.collection('profiles').doc(b.id);
         const target = (await tx.get(ref)).data();
         if (!target || !canChangeOrgRole({ id: uid, role, orgId }, { id: b.id, role: target.role, orgId: target.org_id }, b.role)) fail('You can change another member of your NGO, but cannot assign platform or funder powers.', 403);
+        const previousPermissions = (await tx.get(db.collection('org_permissions').doc(b.id))).data();
         tx.update(ref, { role: b.role });
-        tx.set(db.collection('org_permissions').doc(b.id), { manage: b.permissions.manage, analyse: b.permissions.analyse, people: b.permissions.people });
+        tx.set(db.collection('org_permissions').doc(b.id), { manage: b.permissions.manage, analyse: b.permissions.analyse, people: b.permissions.people, training: b.permissions.training ?? previousPermissions?.training ?? (b.role === 'ngo') });
         tx.create(db.collection('org_access_audit').doc(), { orgId, actor: uid, target: b.id, action: 'member_access', previousRole: target.role, role: b.role, permissions: b.permissions, at: now });
       }); return json({ saved: true });
     }

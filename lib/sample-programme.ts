@@ -27,11 +27,11 @@ export function buildSampleAssessments() {
 }
 export type SampleProgrammeControls = {
   funderAccess: boolean; published: string[]; assessments?: ReturnType<typeof buildSampleAssessments>;
-  people: { id: string; name: string; role: 'farmer' | 'student' | 'mentor' | 'ngo'; manage: boolean; analyse: boolean; people: boolean }[];
+  people: { id: string; name: string; role: 'farmer' | 'student' | 'mentor' | 'ngo'; manage: boolean; analyse: boolean; people: boolean; training?: boolean }[];
 };
 export function freshSampleProgramme(): SampleProgrammeControls {
   return { funderAccess: true, published: buildSampleAssessments().filter(x => x.assessment.published).map(x => x.assessment.id), people: [
-    { id: 'sample-mentor', name: 'Sample mentor', role: 'mentor', manage: true, analyse: false, people: false },
+    { id: 'sample-mentor', name: 'Sample mentor', role: 'mentor', training: true, manage: true, analyse: false, people: false },
     { id: 'sample-farmer', name: 'Sample farmer', role: 'farmer', manage: false, analyse: false, people: false },
     { id: 'sample-student', name: 'Sample student', role: 'student', manage: false, analyse: false, people: false },
   ] };

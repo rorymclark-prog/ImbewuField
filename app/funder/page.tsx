@@ -49,11 +49,13 @@ const CohortDashboard = dynamic(() => import('@/components/funder/CohortDashboar
 });
 
 const FUNDER_ALLOWED_ROLES = new Set<UserRole>(['funder', 'admin']);
+const ProgrammeEvidence = dynamic(() => import('@/components/ProgrammeEvidence'), { ssr: false });
 const ProgrammeReports = dynamic(() => import('@/components/ProgrammeReports'), { ssr: false });
 const ProductionAreas = dynamic(() => import('@/components/ProductionAreas'), { ssr: false });
 const FunderAssessments = dynamic(() => import('@/components/funder/FunderAssessments'), { ssr: false });
 
 const FUNDER_VIEWS = [
+  { key: 'evidence', label: 'Progress & milestones', icon: BarChart3 },
   { key: 'reports', label: 'Reports', icon: BarChart3 },
   { key: 'cohort', label: 'Cohort', icon: BarChart3 },
   { key: 'gardens', label: 'Gardens', icon: Sprout },
@@ -69,7 +71,7 @@ export default function FunderPage() {
   // client-only, so a render-time read would disagree with the server-rendered HTML.
   const [sample, setSample] = useState(false);
   useEffect(() => { setSample(isSampleMode()); }, []);
-  const [view, setView] = useState<'cohort' | 'gardens' | 'assessments' | 'area' | 'reports'>('cohort');
+  const [view, setView] = useState<'cohort' | 'gardens' | 'assessments' | 'area' | 'reports' | 'evidence'>('cohort');
 
   useEffect(() => {
     // Sample mode has no user by design; bouncing it to /login would make the
@@ -147,7 +149,7 @@ export default function FunderPage() {
       </DashboardTabs>
 
       <div className="flex-1 min-h-0 min-w-0 flex overflow-hidden">
-        <SampleFunderGate key={view}>{view === 'reports' ? <ProgrammeReports funder /> : view === 'cohort' ? <CohortDashboard mode="funder" /> : view === 'area' ? <ProductionAreas publishedOnly /> : view === 'assessments' ? <FunderAssessments /> : <NgoDashboard mode="funder" />}</SampleFunderGate>
+        <SampleFunderGate key={view}>{view === 'evidence' ? <ProgrammeEvidence funder /> : view === 'reports' ? <ProgrammeReports funder /> : view === 'cohort' ? <CohortDashboard mode="funder" /> : view === 'area' ? <ProductionAreas publishedOnly /> : view === 'assessments' ? <FunderAssessments /> : <NgoDashboard mode="funder" />}</SampleFunderGate>
       </div>
     </div>
   );

@@ -36,8 +36,8 @@ export default function SampleProgramme({ funder = false, accessOnly = false, co
     <h2>People & access · sample</h2><p className={styles.notice}>Practise with fictional members. These switches affect this sample only, never a real person.</p>
     <label className={styles.option}><input type="checkbox" checked={controls.funderAccess} onChange={e => update({ ...controls, funderAccess: e.target.checked })} />Allow linked funders to view our dashboards</label>
     <p>Member roles choose the workspace. Assessment permissions let the organisation delegate specific work. Farmer consent and publication checks still apply.</p>
-    {controls.people.map(p => <div key={p.id} className={styles.metric}><h3>{p.name}</h3><label>App role<select value={p.role} onChange={e => update({ ...controls, people: controls.people.map(x => x.id === p.id ? { ...x, role: e.target.value as typeof p.role, manage: false, analyse: false, people: false } : x) })}>{['farmer', 'student', 'mentor', 'ngo'].map(role => <option key={role}>{role}</option>)}</select></label>
-      {(['manage', 'analyse', 'people'] as const).map(key => <label key={key} className={styles.option}><input type="checkbox" checked={p[key]} disabled={key === 'people' ? p.role !== 'ngo' : !['ngo', 'mentor'].includes(p.role)} onChange={e => update({ ...controls, people: controls.people.map(x => x.id === p.id ? { ...x, [key]: e.target.checked } : x) })} />{{ manage: 'Manage assessments', analyse: 'Read private analysis', people: 'Manage people' }[key]}</label>)}
+    {controls.people.map(p => <div key={p.id} className={styles.metric}><h3>{p.name}</h3><label>App role<select value={p.role} onChange={e => update({ ...controls, people: controls.people.map(x => x.id === p.id ? { ...x, role: e.target.value as typeof p.role, manage: false, analyse: false, people: false, training: false } : x) })}>{['farmer', 'student', 'mentor', 'ngo'].map(role => <option key={role} value={role}>{role === 'ngo' ? 'Organisation' : role[0].toUpperCase() + role.slice(1)}</option>)}</select></label>
+      {(['manage', 'analyse', 'training', 'people'] as const).map(key => <label key={key} className={styles.option}><input type="checkbox" checked={p[key] ?? false} disabled={key === 'people' ? p.role !== 'ngo' : !['ngo', 'mentor'].includes(p.role)} onChange={e => update({ ...controls, people: controls.people.map(x => x.id === p.id ? { ...x, [key]: e.target.checked } : x) })} />{{ manage: 'Manage assessments', analyse: 'Read private analysis', training: 'Record training & attendance', people: 'Manage people' }[key]}</label>)}
     </div>)}{notice && <p role="status">{notice}</p>}
   </div>;
   const published = samplePublishedAssessments(controls);
@@ -75,5 +75,5 @@ export function SampleFunderGate({ children }: { children: React.ReactNode }) {
   const [allowed, setAllowed] = useState<boolean | null>(null);
   useEffect(() => { setAllowed(!isSampleMode() || readSampleProgramme().funderAccess); }, []);
   if (allowed === null) return null;
-  return allowed ? children : <section className={styles.root}><h1>Sample funder access is off</h1><p>The sample organisation has hidden its dashboards. Switch to Organisation → People & access to turn sharing back on, or reset the sample.</p></section>;
+  return allowed ? children : <section className={styles.root}><h1>Sample funder access is off</h1><p>The sample organisation has hidden its dashboards. Switch to Organisation → Control centre → People & permissions to turn sharing back on, or reset the sample.</p></section>;
 }

@@ -6,7 +6,7 @@ export type MelQuestion = { id: string; en: string; zu: string; kind: 'choice' |
 export type MelTemplate = { version: 1; stage: MelStage; en: string; zu: string; timing: string; questions: MelQuestion[] };
 export type MelAssessment = { id: string; orgId: string; project: string; title: string; stage: MelStage; version: 1; participantIds: string[]; due: string; state: 'draft' | 'open' | 'closed'; published: boolean; createdAt: string; updatedAt: string; action: string; actionOwner: string; actionDue: string; actionDone: boolean };
 export type MelResponse = { assessmentId: string; participantId: string; orgId: string; version: 1; answers: Record<string, string>; language: 'en' | 'zu'; submittedAt: string; consent: true };
-export type MelPermission = { manage?: boolean; analyse?: boolean; people?: boolean };
+export type MelPermission = { manage?: boolean; analyse?: boolean; people?: boolean; training?: boolean };
 export type OrgControls = { funderAccess?: boolean };
 
 export function melCan(role: UserRole, permission: MelPermission | null, action: keyof MelPermission) {

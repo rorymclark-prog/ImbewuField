@@ -20,6 +20,7 @@ import LessonLink from '@/components/design/LessonLink';
 import MenuButton from '@/components/MenuButton';
 import type { UserRole } from '@/lib/db/types';
 const OrganisationControlCentre = dynamic(() => import('@/components/OrganisationControlCentre'), { ssr: false });
+const ProgrammeEvidence = dynamic(() => import('@/components/ProgrammeEvidence'), { ssr: false });
 const ProgrammeReports = dynamic(() => import('@/components/ProgrammeReports'), { ssr: false });
 const ProductionAreas = dynamic(() => import('@/components/ProductionAreas'), { ssr: false });
 const MelDashboard = dynamic(() => import('@/components/MelDashboard'), { ssr: false });
@@ -59,7 +60,7 @@ export default function NgoPage() {
   // client-only, so a render-time read would disagree with the server-rendered HTML.
   const [sample, setSample] = useState(false);
   useEffect(() => { setSample(isSampleMode()); }, []);
-  const [view, setView] = useState<'cohort' | 'gardens' | 'messages' | 'assessments' | 'funder-preview' | 'area' | 'access' | 'reports'>('cohort');
+  const [view, setView] = useState<'cohort' | 'gardens' | 'messages' | 'assessments' | 'funder-preview' | 'area' | 'access' | 'reports' | 'evidence'>('cohort');
   const [msgUnread, setMsgUnread] = useState(0);
 
   useEffect(() => {
@@ -112,6 +113,7 @@ export default function NgoPage() {
       <DashboardTabs>
         {([
           { key: 'access', label: 'Control centre', icon: BarChart3, badge: 0 },
+          { key: 'evidence', label: 'Training & progress', icon: BarChart3, badge: 0 },
           { key: 'reports', label: 'Reports', icon: BarChart3, badge: 0 },
           { key: 'cohort',   label: 'Cohort',   icon: BarChart3, badge: 0 },
           { key: 'gardens',  label: 'Gardens',  icon: Sprout,    badge: 0 },
@@ -151,6 +153,7 @@ export default function NgoPage() {
         ))}
       </DashboardTabs>
 
+      {view === 'evidence' && <div className="flex-1 overflow-y-auto"><ProgrammeEvidence /></div>}
       {view === 'cohort' && (
         <div className="flex-1 flex flex-col overflow-hidden">
           <MelDashboard compact />

@@ -51,3 +51,56 @@ Trusts, charities and other implementing organisations use the same workspace.
   no arbitrary month filter, net-profit inference or causal impact claim is invented.
 
 Design Studio, saved farm geometry, crop-plan versioning and species data are untouched.
+
+## Training evidence and reporting audit
+
+The new Training & progress workspace records sessions, training dates, venue names,
+optional coordinates, a named attendance register, a mini report, private follow-up,
+a linked existing assessment and up to two captioned venue photographs. Mentors
+need the separate Record training & attendance permission; enrolled people must
+belong to their current assigned group. Manual guests use stable guest codes so
+repeat attendees can be counted once. No survey responses are fabricated.
+
+Organisation managers review and publish each session. Linked funders receive only
+published summaries, counts and reviewed photos: no named register, participant IDs,
+internal follow-up, facilitator account IDs or precise coordinates. Approved free
+text and photographs still require a human sharing review. Training snapshots and
+milestone edits leave server-side history. API access checks current membership;
+the backing collections deny direct client reads and writes.
+
+Milestones record a definition/source/frequency, responsible person, unit, baseline
+(or explicitly unknown), target, due date and dated actual totals with evidence.
+The timeline selects observations up to a date; it uses the latest corrected record,
+not a historical reconstruction of what was known on that date. Cumulative observations
+are never summed together. Attending a session is not treated as proof of learning
+or causal impact. The report can be produced at any time, with missing data labelled.
+
+This follows the measurement structure in the [MCC indicator tracking guidance](https://www.mcc.gov/resources/doc/guidance-on-the-indicator-tracking-table/)
+and the [IFRC monitoring framework](https://preparecenter.org/site/dmerl-framework/monitor/):
+keep baseline, target, actual, reporting date, definition and evidence together.
+Course pre/post assessments and follow-up adoption observations remain distinct
+from attendance and satisfaction. Project managers should agree indicators and
+reporting frequency with their funder rather than apply a generic impact score.
+
+Names & logos provides three default partner identities per implementing organisation:
+organisation, community/project, funder. These appear in the new programme, field-team,
+training and progress report composer. Several projects should use programme-wide
+branding; per-project/multiple-funder branding is a future extension. These controls
+do not restyle legacy Site Analysis or invoice export engines. Screen reports have
+clear cards and larger artwork; PDFs use white paper, dark text, a restrained green
+rule and small logos. Session photos are an explicit optional PDF appendix to save ink.
+
+Remaining reporting limits: maximum 500 session records, 200 milestones, 500 profiles
+and 200 assessments per organisation load. The API refuses an incomplete total above
+these limits rather than silently truncating. Pagination, file/document attachments,
+bulk register import, detailed photo revision recovery, and automatic evidence-to-target
+reconciliation need subsequent work. Published funder views omit distinct-participant
+counts rather than derive a misleading unique total from anonymised attendance counts.
+
+## Demo presentation
+
+One compact sample banner, consistent Switch/Exit actions and a reset in the sample
+chooser. Reusable fictional portraits and produce photos show spinach bunches,
+tomato bags and cabbage heads. Garden cards open an illustrative design and simulated
+aerial without WebGL or access to real participant locations. Source prompts and
+fictional-use constraints are recorded in `public/demo/README.md`.
