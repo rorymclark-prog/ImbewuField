@@ -166,7 +166,7 @@ export default function NgoPage() {
       )}
       {view === 'access' && <div className="flex-1 min-h-0 flex overflow-hidden"><MelDashboard accessOnly /></div>}
       {view === 'area' && <div className="flex-1 min-h-0 min-w-0 flex overflow-hidden"><ProductionAreas /></div>}
-      {view === 'assessments' && <div className="flex-1 min-h-0 min-w-0 flex overflow-hidden" style={{ paddingBottom: 64 }}><MelDashboard /></div>}
+      {view === 'assessments' && <div className="flex-1 min-h-0 min-w-0 flex overflow-hidden"><MelDashboard /></div>}
       {view === 'funder-preview' && <div className="flex-1 min-h-0 min-w-0 flex overflow-hidden"><div className="flex-1 overflow-y-auto"><FunderAssessments /><ProductionAreas publishedOnly /></div></div>}
 
       <TabBar />
