@@ -9,10 +9,10 @@ import { startRolePreview } from '@/lib/use-role-navigation';
 import styles from '@/components/MelDashboard.module.css';
 const icons = { ngo: Users, funder: HandCoins, farmer: Sprout, mentor: GraduationCap, student: BookOpen };
 const examples = [
-  ['ngo', 'NGO', 'Run a programme', 'Explore the cohort, gardens, assessments and People & access controls.'],
+  ['ngo', 'Organisation', 'Run a programme', 'Explore the cohort, gardens, assessments and Control centre, mentor teams and reports.'],
   ['funder', 'Funder', 'Review what is shared', 'See the same sample programme through its published summaries.'],
   ['farmer', 'Farmer', 'Explore Ubhejane Crèche', 'Open the farm map, crop plan, harvests and example sales.'],
-  ['mentor', 'Mentor', 'Support a grower', 'Explore the existing sample mentoring workspace.'],
+  ['mentor', 'Mentor', 'Support a grower', 'Explore assigned farmers, organisation guidance, visits and reports.'],
   ['student', 'Student', 'Try the learning workspace', 'Explore the existing sample course and progress.'],
 ] as const;
 export default function SamplesPage() {

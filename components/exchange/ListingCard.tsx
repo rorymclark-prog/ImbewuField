@@ -104,7 +104,7 @@ export default function ListingCard({
         {crop && (
           <span className="font-sans" style={{ fontSize: 11.5, color: EX.muted, display: 'inline-flex', alignItems: 'center', gap: 3 }}>
             {getCropArt(listing.cropKey ?? '') ? (
-              <img src={getCropArt(listing.cropKey ?? '')} alt="" aria-hidden style={{ width: 12, height: 12, objectFit: 'contain' }} />
+              <img className="produce-art" src={getCropArt(listing.cropKey ?? '')} alt="" aria-hidden style={{ width: 12, height: 12, objectFit: 'contain' }} />
             ) : (
               <span>{crop.icon}</span>
             )}{' '}

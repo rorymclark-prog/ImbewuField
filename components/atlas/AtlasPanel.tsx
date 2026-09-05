@@ -347,7 +347,7 @@ export default function AtlasPanel({ data, placeName, now = new Date() }: {
                   }}
                 >
                   {getCropArt(c.key) ? (
-                    <img src={getCropArt(c.key)} alt="" aria-hidden style={{ width: 14, height: 14, objectFit: 'contain' }} />
+                    <img className="produce-art" src={getCropArt(c.key)} alt="" aria-hidden style={{ width: 14, height: 14, objectFit: 'contain' }} />
                   ) : (
                     <span aria-hidden style={{ fontSize: 14 }}>{c.icon}</span>
                   )}

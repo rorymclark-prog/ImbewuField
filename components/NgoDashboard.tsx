@@ -40,7 +40,7 @@ const SAMPLE_GARDENS: Garden[] = [
   { id: 'g11', name: 'Bushbuckridge Garden', town: 'Bushbuckridge, MP', lat: -24.83, lon: 31.08, farmers: 27, status: 'thriving', produceKg: 1310, training: 86, facilitator: 'Sipho D.' },
   { id: 'g12', name: 'Rustenburg Roots', town: 'Rustenburg, NW', lat: -25.667, lon: 27.242, farmers: 17, status: 'establishing', produceKg: 600, training: 64, facilitator: 'Nomsa M.' },
 ];
-const TOTALS = { gardens: 142, farmers: 3012, produceT: 38.6, training: 78, deployed: 'R48.6m' };
+// Headlines are derived from the displayed garden register, including in samples.
 
 const NAMES = ['Thabo Mahlangu', 'Nosipho Khumalo', 'Jabu Dlamini', 'Maria Sithole', 'Andile Ngubane', 'Grace Mokoena', 'Sibusiso Ndlovu', 'Lerato Phiri', 'Bongani Zulu', 'Precious Mbeki'];
 // `k` maps each demo crop name to its lib/crop-catalog.ts key so it can pick up
@@ -57,9 +57,9 @@ const CROPS = [
 function CropIcon({ crop, size }: { crop: typeof CROPS[number]; size: number }) {
   const art = getCropArt(crop.k);
   return art ? (
-    <img src={art} alt="" aria-hidden style={{ width: size, height: size, objectFit: 'contain' }} />
+    <img className="produce-art" src={art} alt="" aria-hidden style={{ width: size, height: size, objectFit: 'contain' }} />
   ) : (
-    <span style={{ fontSize: size }}>{crop.e}</span>
+    <span style={{ fontSize: Math.max(32, size), flexShrink: 0 }}>{crop.e}</span>
   );
 }
 const MONTHS = ['Feb', 'Mar', 'Apr', 'May', 'Jun'];
@@ -329,7 +329,6 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
   }, [isDemo, liveGardens]);
 
   const dashboardTotals = useMemo(() => {
-    if (isDemo) return TOTALS;
     const farmers = gardens.reduce((sum, g) => sum + g.farmers, 0);
     const produceKg = gardens.reduce((sum, g) => sum + g.produceKg, 0);
     const training = gardens.length > 0
@@ -431,14 +430,14 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
       <div className="flex-shrink-0 grid grid-cols-2 gap-2 px-3 py-3 md:flex md:gap-3 md:px-4" style={{ borderBottom: '1px solid #E2D8C4' }}>
         {mode === 'funder' ? (
           <>
-            {isDemo && <Stat label="Funds deployed" value={TOTALS.deployed} sub="presidential fund + IDC" color="#9E5C08" />}
-            <Stat label="Gardens" value={dashboardTotals.gardens.toString()} sub={isDemo ? '9 provinces' : 'in your organisation'} color="#1F4D2B" />
+
+            <Stat label="Gardens" value={dashboardTotals.gardens.toString()} sub={isDemo ? 'in this sample register' : 'in your organisation'} color="#1F4D2B" />
             <Stat label="Livelihoods" value={dashboardTotals.farmers.toLocaleString()} sub="farmers supported" color="#20190F" />
             <Stat label="Food grown" value={`${dashboardTotals.produceT} t`} sub="this season" color="#2F6F9E" />
           </>
         ) : (
           <>
-            <Stat label="Active gardens" value={dashboardTotals.gardens.toString()} sub={isDemo ? 'across 9 provinces' : 'in your organisation'} color="#1F4D2B" />
+            <Stat label="Active gardens" value={dashboardTotals.gardens.toString()} sub={isDemo ? 'in this sample register' : 'in your organisation'} color="#1F4D2B" />
             <Stat label="Farmers" value={dashboardTotals.farmers.toLocaleString()} sub="enrolled this cycle" color="#20190F" />
             <Stat label="Produce, season" value={`${dashboardTotals.produceT} t`} sub="logged by supervisors" color="#2F6F9E" />
             <Stat label="Training done" value={`${dashboardTotals.training}%`} sub="across active gardens" color="#9E5C08" />
@@ -520,7 +519,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
               {gardener
                 ? <><MapPin size={12} style={{ color: '#9A8268' }} /> {`${gardener.name} · ${gardener.lat.toFixed(4)}, ${gardener.lon.toFixed(4)}`}</>
                 : isDemo
-                  ? `Showing ${gardens.length} of ${TOTALS.gardens} gardens · demo`
+                  ? `Showing ${gardens.length} fictional sample gardens`
                   : gardensLoadError
                     ? 'Gardens unavailable'
                     : `Showing ${gardens.length} gardens`}
@@ -655,12 +654,12 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                       <div className="flex gap-1.5 flex-wrap">
                         {photoCrops.map(({ crop: c, photoUrl }, i) => (
                           photoUrl ? (
-                            <div key={i} className="rounded-lg overflow-hidden" style={{ width: 54, height: 54, border: `1px solid ${c.c}` }}>
+                            <div key={i} className="rounded-lg overflow-hidden" style={{ width: 80, height: 88, border: `1px solid ${c.c}` }}>
                               {/* eslint-disable-next-line @next/next/no-img-element */}
                               <img src={photoUrl} alt={c.n} className="w-full h-full object-cover" />
                             </div>
                           ) : (
-                            <div key={i} className="rounded-lg flex flex-col items-center justify-center" style={{ width: 54, height: 54, background: `${c.c}33`, border: `1px solid ${c.c}` }}><CropIcon crop={c} size={18} /><span className="font-mono text-center leading-none break-words px-0.5" style={{ fontSize: 12, color: '#9A8268' }}>{c.n}</span></div>
+                            <div key={i} className="rounded-lg flex flex-col items-center justify-center" style={{ width: 80, height: 88, background: `${c.c}33`, border: `1px solid ${c.c}` }}><CropIcon crop={c} size={44} /><span className="font-mono text-center leading-none break-words px-0.5" style={{ fontSize: 12, color: '#9A8268' }}>{c.n}</span></div>
                           )
                         ))}
                       </div>
@@ -671,7 +670,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                       <div className="text-xs font-mono uppercase tracking-wider mb-1.5 flex items-center gap-1.5" style={{ color: '#9A8268' }}><BookOpen size={13} /> Books — production</div>
                       <div className="space-y-1">
                         {gardener.production.map((p, i) => (
-                          <div key={i} className="flex items-center gap-2 text-xs font-display px-2 py-1 rounded-lg" style={{ background: '#F5F0E8' }}><CropIcon crop={p.crop} size={13} /><span className="flex-1" style={{ color: '#5C5040' }}>{p.crop.n}</span><span className="font-mono" style={{ color: '#9A8268' }}>{p.date}</span><span className="font-mono font-semibold" style={{ color: '#1F4D2B' }}>{p.kg}kg</span></div>
+                          <div key={i} className="flex items-center gap-2 text-xs font-display px-2 py-1 rounded-lg" style={{ background: '#F5F0E8' }}><CropIcon crop={p.crop} size={36} /><span className="flex-1" style={{ color: '#5C5040' }}>{p.crop.n}</span><span className="font-mono" style={{ color: '#9A8268' }}>{p.date}</span><span className="font-mono font-semibold" style={{ color: '#1F4D2B' }}>{p.kg}kg</span></div>
                         ))}
                       </div>
                     </div>
@@ -681,7 +680,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                       <div className="text-xs font-mono uppercase tracking-wider mb-1.5 flex items-center gap-1.5" style={{ color: '#9A8268' }}><BookOpen size={13} /> Books — sales</div>
                       <div className="space-y-1">
                         {gardener.sales.map((p, i) => (
-                          <div key={i} className="flex items-center gap-2 text-xs font-display px-2 py-1 rounded-lg" style={{ background: '#F5F0E8' }}><CropIcon crop={p.crop} size={13} /><span className="flex-1 truncate" style={{ color: '#5C5040' }}>{p.kg}kg → {p.buyer}</span><span className="font-mono font-semibold" style={{ color: '#2F6F9E' }}>R{p.rand}</span></div>
+                          <div key={i} className="flex items-center gap-2 text-xs font-display px-2 py-1 rounded-lg" style={{ background: '#F5F0E8' }}><CropIcon crop={p.crop} size={36} /><span className="flex-1 truncate" style={{ color: '#5C5040' }}>{p.kg}kg → {p.buyer}</span><span className="font-mono font-semibold" style={{ color: '#2F6F9E' }}>R{p.rand}</span></div>
                         ))}
                       </div>
                     </div>

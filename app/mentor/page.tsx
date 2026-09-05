@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { Search, Users, CheckCircle, ChevronDown, ChevronUp, BookOpen, Send, Loader2, GraduationCap, Inbox, Home, UserPlus, X, CalendarClock, AlertTriangle, PauseCircle, PlayCircle } from 'lucide-react';
+import { paidApiHeaders } from '@/lib/api-client-auth';
 import { useAuth } from '@/lib/auth';
 import { useSampleRole } from '@/lib/use-role-navigation';
 import { isBackendConfigured } from '@/lib/firebase/init';
@@ -18,6 +19,11 @@ import type { Profile, CourseProgress, UserRole } from '@/lib/db/types';
 import BrandLogo from '@/components/BrandLogo';
 import SettingsButton from '@/components/SettingsButton';
 import TabBar from '@/components/TabBar';
+import { sampleRead, sampleWrite } from '@/lib/sample-operations';
+import { freshFieldWorkspace } from '@/lib/field-teams';
+import FieldTeams from '@/components/FieldTeams';
+import RoleSwitcher from '@/components/RoleSwitcher';
+import DashboardTabs from '@/components/DashboardTabs';
 import ContactInbox from '@/components/ContactInbox';
 import LessonLink from '@/components/design/LessonLink';
 import MenuButton from '@/components/MenuButton';
@@ -33,9 +39,9 @@ import {
 // ─── Sample data ─────────────────────────────────────────────────────────────
 
 const SAMPLE: Profile[] = [
-  { id: 's1', full_name: 'Nomvula Dlamini',  role: 'farmer',  org_id: null, language: 'zu', id_number: null, phone: '+27 71 234 5678', photo_url: null, created_at: '' },
-  { id: 's2', full_name: 'Sipho Nkosi',       role: 'student', org_id: null, language: 'zu', id_number: null, phone: '+27 82 345 6789', photo_url: null, created_at: '' },
-  { id: 's3', full_name: 'Thandi Mokoena',    role: 'farmer',  org_id: null, language: 'st', id_number: null, phone: '+27 63 456 7890', photo_url: null, created_at: '' },
+  { id: 's1', full_name: 'Nomvula Dlamini',  role: 'farmer',  org_id: null, language: 'zu', id_number: null, phone: null, photo_url: null, created_at: '' },
+  { id: 's2', full_name: 'Sipho Nkosi',       role: 'student', org_id: null, language: 'zu', id_number: null, phone: null, photo_url: null, created_at: '' },
+  { id: 's3', full_name: 'Thandi Mokoena',    role: 'farmer',  org_id: null, language: 'st', id_number: null, phone: null, photo_url: null, created_at: '' },
   { id: 's4', full_name: 'Bongani Zulu',      role: 'student', org_id: null, language: 'zu', id_number: null, phone: null,             photo_url: null, created_at: '' },
 ];
 const SAMPLE_DONE: Record<string, string[]> = {
@@ -335,7 +341,7 @@ export default function MentorPage() {
   const [sample, setSample] = useState(false);
   useEffect(() => { setSample(isSampleMode()); }, []);
 
-  const [view, setView] = useState<'trainees' | 'messages'>('trainees');
+  const [view, setView] = useState<'field' | 'trainees' | 'messages'>('field');
   const [msgUnread, setMsgUnread] = useState(0);
   const [trainees, setTrainees] = useState<Profile[]>([]);
   const [progressMap, setProgressMap] = useState<Record<string, CourseProgress[]>>({});
@@ -363,12 +369,20 @@ export default function MentorPage() {
           listTrainees(),
           listOrgEnrollments().catch(() => [] as CourseEnrollment[]),
         ]);
-        setTrainees(list);
+        let assignedList = list;
+        if (role === 'mentor') {
+          const response = await fetch('/api/field-teams', { headers: await paidApiHeaders() });
+          const workspace = await response.json();
+          if (!response.ok) throw Error(workspace.error);
+          const ids = new Set<string>(workspace.teams.flatMap((t: { farmerIds: string[] }) => t.farmerIds));
+          assignedList = list.filter(p => ids.has(p.id));
+        }
+        setTrainees(assignedList);
         setEnrollBy(Object.fromEntries(enrollments.map((e) => [e.profile_id, e])));
         // Batched, not one getCourseProgress()/getAssignments() round trip per trainee — see
         // getCourseProgressForProfiles's doc comment in lib/db/queries.ts. A trainee absent from
         // either map has no rows, same as the old per-trainee `.catch(() => [])` default.
-        const ids = list.map((t) => t.id);
+        const ids = assignedList.map((t) => t.id);
         const [progress, assigns] = await Promise.all([
           getCourseProgressForProfiles(ids).catch(() => ({} as Record<string, CourseProgress[]>)),
           getAssignmentsForProfiles(ids).catch(() => ({} as Record<string, CourseAssignment[]>)),
@@ -376,9 +390,10 @@ export default function MentorPage() {
         setProgressMap(progress);
         setAssignBy(assigns);
       } else {
-        setTrainees(SAMPLE);
-        setEnrollBy(Object.fromEntries(SAMPLE_ENROLLMENTS.map((e) => [e.profile_id, e])));
-        setAssignBy(SAMPLE_ASSIGNMENTS);
+        const ids = isSampleMode() ? sampleRead('field-teams', freshFieldWorkspace).teams.find(t => t.mentorId === 'sample-mentor')?.farmerIds ?? [] : SAMPLE.map(p => p.id);
+        setTrainees(SAMPLE.filter(p => ids.includes(p.id)));
+        setEnrollBy(isSampleMode() ? sampleRead('mentor-enrollments', () => Object.fromEntries(SAMPLE_ENROLLMENTS.map((e) => [e.profile_id, e]))) : Object.fromEntries(SAMPLE_ENROLLMENTS.map((e) => [e.profile_id, e])));
+        setAssignBy(isSampleMode() ? sampleRead('mentor-assignments', () => SAMPLE_ASSIGNMENTS) : SAMPLE_ASSIGNMENTS);
       }
     } catch (err) {
       // Leave trainees empty (the spinner clears via finally), but do NOT swallow the reason.
@@ -389,7 +404,7 @@ export default function MentorPage() {
     } finally {
       setFetching(false);
     }
-  }, [isLive, user]);
+  }, [isLive, user, role]);
 
   // Wait for auth to resolve before loading. Every query in load() is org-scoped, and the
   // org comes from the caller's own profile — run it while `currentUser` is still null and
@@ -409,6 +424,8 @@ export default function MentorPage() {
       await load();
     }
   }, [load]);
+
+  useEffect(() => { if (isSampleMode() && trainees.length) { sampleWrite('mentor-enrollments', enrollBy); sampleWrite('mentor-assignments', assignBy); } }, [enrollBy, assignBy, trainees]);
 
   const handleEnrol = useCallback(async (profileId: string) => {
     setBusyId(profileId);
@@ -530,18 +547,20 @@ export default function MentorPage() {
         <span className="text-xs font-display truncate min-w-0" style={{ color: '#5C5040' }}>Mentor</span>
         <div className="flex-1" />
         <LessonLink id="mentor:overview" label="Learn" />
+        <RoleSwitcher current="mentor" />
         <SettingsButton />
       </header>
 
       {/* Tab strip */}
-      <div className="flex-shrink-0 flex" style={{ background: '#FFFEFA', borderBottom: '1px solid #E2D8C4', paddingLeft: 16, paddingRight: 16, gap: 0 }}>
+      <DashboardTabs>
         {([
+          { key: 'field', label: 'My field team & reports', icon: Users, badge: 0 },
           { key: 'trainees', label: 'Trainees', icon: Users,  badge: 0 },
           { key: 'messages', label: 'Messages', icon: Inbox, badge: msgUnread },
         ] as const).map(({ key, label, icon: Icon, badge }) => (
           <button
             key={key}
-            onClick={() => setView(key)}
+            onClick={() => { setView(key); if (key === 'trainees') void load(); }}
             className="flex items-center gap-1.5 py-2.5 px-3 font-display text-xs font-semibold relative"
             style={{
               background: 'transparent',
@@ -562,11 +581,11 @@ export default function MentorPage() {
             )}
           </button>
         ))}
-      </div>
+      </DashboardTabs>
 
       <main className="flex-1 overflow-y-auto px-4 py-4 space-y-4" style={{ paddingBottom: 80 }}>
 
-        {view === 'messages' ? (
+        {view === 'field' ? <FieldTeams /> : view === 'messages' ? (
           <ContactInbox recipient="mentor" onUnreadCount={setMsgUnread} />
         ) : (<>
 

@@ -20,13 +20,14 @@ export default function CropIcon({
   const art = getCropArt(cropKey);
   return art ? (
     <img
+      className="produce-art"
       src={art}
       alt=""
       aria-hidden
       style={{ width: size, height: size, objectFit: 'contain', display: 'inline-block', verticalAlign: '-15%', ...style }}
     />
   ) : (
-    <span aria-hidden style={{ fontSize: size, ...style }}>
+    <span aria-hidden className="produce-art-fallback" style={{ fontSize: Math.max(32, size), flexShrink: 0, ...style }}>
       {icon}
     </span>
   );

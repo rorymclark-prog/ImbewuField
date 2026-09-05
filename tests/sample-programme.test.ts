@@ -38,3 +38,53 @@ test('owner access editor remains scoped to the selected NGO and cannot demote i
   assert.equal(canChangeOrgRole(actor, target, 'admin'), false);
   assert.equal(canChangeOrgRole(actor, target, 'funder'), false);
 });
+
+
+// Stateful demos must preserve the same publication and assignment rules as live work.
+import { changeSampleAssessment, sampleAssessments } from '../lib/sample-programme';
+import { freshSampleAreas, upsertSampleArea, sampleRead, sampleWrite } from '../lib/sample-operations';
+import { freshFieldWorkspace, projectFieldWorkspace, validFieldTeam } from '../lib/field-teams';
+
+test('opening a sample assessment needs participants and never invents completed responses', () => {
+  const fresh = freshSampleProgramme();
+  assert.throws(() => changeSampleAssessment(fresh, 'sample-closeout', { state: 'open', participantIds: [] }));
+  const open = changeSampleAssessment(fresh, 'sample-closeout', { state: 'open', participantIds: ['sample-person-1'] });
+  assert.equal(sampleAssessments(open).find(x => x.assessment.id === 'sample-closeout')!.rows.length, 0);
+  assert.throws(() => changeSampleAssessment(open, 'sample-closeout', { state: 'open', participantIds: ['sample-person-1'] }));
+  assert.equal(sampleAssessments(changeSampleAssessment(open, 'sample-closeout', { state: 'closed' })).find(x => x.assessment.id === 'sample-closeout')!.assessment.state, 'closed');
+  assert.equal(sampleAssessments(fresh).find(x => x.assessment.id === 'sample-closeout')!.assessment.state, 'draft');
+});
+test('updating a sample garden replaces its area instead of double counting land', () => {
+  const rows = freshSampleAreas();
+  const changed = { ...rows[0], vegetableM2: rows[0].vegetableM2 + 10 };
+  assert.equal(upsertSampleArea(rows, changed, '2026-09-05').length, 1);
+  assert.equal(upsertSampleArea(rows, changed, '2026-09-05')[0].vegetableM2, changed.vegetableM2);
+  assert.throws(() => upsertSampleArea(rows, { ...changed, vegetableM2: -1 }, '2026-09-05'));
+  assert.throws(() => upsertSampleArea(rows, { ...changed, observedOn: '2099-01-01' }, '2026-09-05'));
+});
+test('sample stores refuse use outside a sample, including stale handlers after exit', () => {
+  assert.throws(() => sampleRead('areas', freshSampleAreas));
+  assert.throws(() => sampleWrite('areas', []));
+});
+test('mentors receive only explicitly assigned people, guidance and their own visit notes', () => {
+  const data = freshFieldWorkspace();
+  data.teams.push({ mentorId: 'someone-else', location: 'Same location', farmerIds: ['s3'], guidance: 'Private other team', updatedAt: '' });
+  data.visits = [
+    { id: 'one', mentorId: 'sample-mentor', farmerId: 's1', date: '2026-09-01', notes: 'Mine' },
+    { id: 'two', mentorId: 'someone-else', farmerId: 's1', date: '2026-09-01', notes: 'Another mentor' },
+    { id: 'three', mentorId: 'sample-mentor', farmerId: 's3', date: '2026-09-01', notes: 'No longer assigned' },
+  ];
+  const view = projectFieldWorkspace(data, 'sample-mentor', false);
+  assert.deepEqual(view.teams.map(t => t.mentorId), ['sample-mentor']);
+  assert.deepEqual(view.people.map(p => p.id).sort(), ['s1', 's2', 'sample-mentor']);
+  assert.deepEqual(view.visits.map(v => v.id), ['one']);
+  assert.equal(projectFieldWorkspace(data, 'unassigned', false).people.length, 0);
+  assert.equal(projectFieldWorkspace(data, 'organisation', true).visits.length, 3);
+});
+test('team assignments reject malformed IDs and duplicate farmer membership', () => {
+  const team = freshFieldWorkspace().teams[0];
+  assert.ok(validFieldTeam(team));
+  assert.equal(validFieldTeam({ ...team, farmerIds: ['s1', 's1'] }), false);
+  assert.equal(validFieldTeam({ ...team, mentorId: '../other' }), false);
+  assert.equal(validFieldTeam({ ...team, location: ' ' }), false);
+});

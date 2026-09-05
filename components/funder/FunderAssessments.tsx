@@ -37,7 +37,7 @@ export default function FunderAssessments() {
     void melRequest(`?mode=published&org=${encodeURIComponent(org)}`).then(d => { if (!cancelled) setSummaries(d.assessments); }).catch(e => { if (!cancelled) setError(e.message); }).finally(() => { if (!cancelled) setLoading(false); });
     return () => { cancelled = true; };
   }, [org]);
-  return <section className={styles.root}><div className={styles.wrap}><div className={styles.hero}><h1>Learning from the project</h1><p>Assessment summaries reviewed and shared by the NGO.</p></div>
+  return <section className={styles.root}><div className={styles.wrap}><div className={styles.hero}><h1>Learning from the project</h1><p>Assessment summaries reviewed and shared by the organisation.</p></div>
     {sample ? <SampleProgramme funder /> : <>
       <label>Organisation<select value={org} onChange={e => setOrg(e.target.value)}>{orgs.map(o => <option key={o.id} value={o.id}>{o.name}</option>)}</select></label>
       {error && <p role="alert" className={styles.error}>{error}</p>}{loading && <p>Loading approved summaries…</p>}

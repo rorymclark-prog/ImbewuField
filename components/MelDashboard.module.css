@@ -44,3 +44,6 @@
 .root summary { cursor:pointer; padding:8px 0; font-weight:600; line-height:1.5; }
 @media(max-width:1000px) { .sampleGrid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
 @media(max-width:600px) { .sampleGrid { grid-template-columns:1fr; } }
+
+/* Embedded control panels share one scroll surface and one bottom clearance. */
+.root .root { padding:20px 0 0; overflow:visible; background:transparent; }
