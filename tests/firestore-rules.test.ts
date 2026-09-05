@@ -1198,13 +1198,13 @@ test('survey authors cannot create surveys in a different organisation', async (
 test('an NGO pause blocks a funder grant and cannot be undone by a client write', async () => {
   const funderDb = env.authenticatedContext(FUNDER_WITH_GRANT).firestore();
   await assertSucceeds(getDoc(doc(funderDb, 'profiles', FARMER_WITH_LINK)));
-  await env.withSecurityRulesDisabled(async ({ firestore }) => {
-    await setDoc(doc(firestore(), 'organization_controls', 'org-1'), { funderAccess: false });
+  await env.withSecurityRulesDisabled(async (context) => {
+    await setDoc(doc(context.firestore(), 'organization_controls', 'org-1'), { funderAccess: false });
   });
   try {
     await assertFails(getDoc(doc(funderDb, 'profiles', FARMER_WITH_LINK)));
     await assertFails(updateDoc(doc(funderDb, 'organization_controls', 'org-1'), { funderAccess: true }));
   } finally {
-    await env.withSecurityRulesDisabled(async ({ firestore }) => { await deleteDoc(doc(firestore(), 'organization_controls', 'org-1')); });
+    await env.withSecurityRulesDisabled(async (context) => { await deleteDoc(doc(context.firestore(), 'organization_controls', 'org-1')); });
   }
 });
