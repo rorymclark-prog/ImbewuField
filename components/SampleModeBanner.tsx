@@ -55,14 +55,14 @@ export default function SampleModeBanner() {
       className="no-print fixed bottom-[calc(60px+env(safe-area-inset-bottom,0px))] lg:bottom-0 left-0 right-0 flex items-center justify-center gap-3 px-4 py-2 flex-wrap text-center"
       style={{
         zIndex: 9999,
-        background: '#C07A1E',
+        background: '#7A4A06',
         borderTop: '1px solid rgba(32,25,15,0.15)',
         boxShadow: '0 -2px 12px rgba(32,25,15,0.18)',
       }}
     >
       <span className="flex items-center gap-1.5 font-display font-semibold" style={{ fontSize: 13, color: '#fff' }}>
         <Sparkles size={14} />
-        Sample workspace · fictional data. Real projects are unchanged.
+        Sample workspace · fictional data
       </span>
       <Link href="/samples" style={{ color: 'white', textDecoration: 'underline', minHeight: 44, display: 'inline-flex', alignItems: 'center' }}>Switch sample view</Link>
       <button type="button" onClick={() => { if (enterSampleMode()) window.location.reload(); }} style={{ color: 'white', minHeight: 44 }}>Reset sample</button>
@@ -70,7 +70,7 @@ export default function SampleModeBanner() {
         type="button"
         onClick={handleExit}
         className="flex items-center gap-1 px-3 py-1 rounded-full font-sans font-semibold"
-        style={{ fontSize: 12, background: '#fff', color: '#C07A1E', border: 'none', cursor: 'pointer' }}
+        style={{ fontSize: 12, background: '#fff', color: '#7A4A06', minHeight: 44, border: 'none', cursor: 'pointer' }}
       >
         <X size={13} />
         Exit sample
