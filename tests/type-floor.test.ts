@@ -68,6 +68,7 @@ const STAFF_ROUTES = [
 const FARMER_SURFACES: Record<string, string> = {
   'components/MemberAccessPreview.tsx': 'readable member access checks on phones',
   'components/ProgrammeEvidence.tsx': 'readable training evidence and branding on phones',
+  'components/VenueLocation.tsx': 'one-tap venue location on phones',
   'components/SampleGardenVisual.tsx': 'readable example location and design',
   'components/OrganisationControlCentre.tsx': 'organisation controls and role previews on phones',
   'components/FieldTeams.tsx': 'mentor field work on phones',

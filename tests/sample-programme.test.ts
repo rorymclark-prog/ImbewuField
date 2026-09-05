@@ -3,6 +3,38 @@ import assert from 'node:assert/strict';
 import { buildSampleAssessments, freshSampleProgramme, samplePublishedAssessments } from '../lib/sample-programme';
 import { MEL_TEMPLATES } from '../lib/mel-templates';
 import { analyseAssessment, canChangeOrgRole, validAnswers } from '../lib/mel';
+import { FARM_TOUR, sampleRolesFor, cleanTourProgress } from '../lib/sample-tour';
+import { freshSampleAssessment, freshSampleFarmPack, SAMPLE_FARM_SITE_ID, sampleFarmSections, SAMPLE_PHOTOS } from '../lib/sample-farm-pack';
+import { validFeedback, feedbackText } from '../lib/product-feedback';
+import { buildDemoSavedPlace } from '../lib/demo-farm';
+
+test('sample tour spans 15 minutes and leads to real farm pages with bounded progress',()=>{
+  assert.equal(FARM_TOUR.reduce((n,s)=>n+s.minutes,0),15);
+  assert.equal(new Set(FARM_TOUR.map(s=>s.id)).size,FARM_TOUR.length);
+  for(const s of FARM_TOUR)assert.ok(existsSync(`app${s.href.split(/[?#]/)[0]}/page.tsx`),s.href);
+  assert.deepEqual(cleanTourProgress(['map','map','made-up',null]),['map']);
+  assert.deepEqual(sampleRolesFor('farmer'),['farmer']);
+  assert.deepEqual(sampleRolesFor('mentor'),['mentor']);
+  assert.deepEqual(sampleRolesFor('funder'),['funder']);
+  assert.equal(sampleRolesFor('ngo').length,5);
+});
+test('farm evidence uses the saved place, reset-safe fixtures and explicit fictional provenance',()=>{
+  const a=freshSampleAssessment(),p=freshSampleFarmPack();
+  assert.equal(a.placeId,buildDemoSavedPlace().id);assert.equal(a.siteId,SAMPLE_FARM_SITE_ID);
+  assert.match(a.notes,/FICTIONAL/);assert.match(p.soil.reference,/NOT A LAB CERTIFICATE/);
+  p.household.adults=99;a.goals.length=0;
+  assert.equal(freshSampleFarmPack().household.adults,2);assert.ok(freshSampleAssessment().goals.length>0);
+  const sections=sampleFarmSections(p,a);assert.ok(sections.some(s=>s.lines.some(l=>l.includes('99 adults'))));
+  for(const photo of SAMPLE_PHOTOS){assert.ok(existsSync(`public${photo.src}`));assert.match(photo.caption,/AI-generated/);}
+});
+test('feedback is bounded and never includes query strings, external URLs or automatic farm attachments',()=>{
+  const good={id:'demo-request-001',kind:'bug',title:'Map labels',details:'The label is cut off on my phone.',path:'/farmer',sample:true};
+  assert.ok(validFeedback(good));assert.match(feedbackText(good as import('../lib/product-feedback').FeedbackInput),/Sample workspace: yes/);
+  for(const patch of [{id:'../bad'},{kind:'admin'},{details:'short'},{title:'x'.repeat(161)},{details:'x'.repeat(4001)},{path:'https://example.com'},{path:'/farmer?token=secret'},{sample:'yes'}])assert.equal(validFeedback({...good,...patch}),false);
+  const route=readFileSync('app/api/product-feedback/route.ts','utf8');
+  assert.match(route,/guardPaidApiRequest/);assert.match(route,/profile\.data\(\)\?\.role!=='admin'/);
+  assert.match(route,/senderId:auth\.uid/);assert.match(route,/runTransaction/);
+});
 
 test('sample completion comes from assigned responses and never fabricates production or money', () => {
   for (const { assessment: a, rows } of buildSampleAssessments()) {
@@ -76,7 +108,8 @@ test('mentors receive only explicitly assigned people, guidance and their own vi
   ];
   const view = projectFieldWorkspace(data, 'sample-mentor', false);
   assert.deepEqual(view.teams.map(t => t.mentorId), ['sample-mentor']);
-  assert.deepEqual(view.people.map(p => p.id).sort(), ['s1', 's2', 'sample-mentor']);
+  assert.deepEqual(view.people.map(p => p.id).sort(), [...data.teams[0].farmerIds, 'sample-mentor'].sort());
+  assert.equal(view.people.some(p => p.id === 's3'), false, 'another mentor’s farmer stays private');
   assert.deepEqual(view.visits.map(v => v.id), ['one']);
   assert.equal(projectFieldWorkspace(data, 'unassigned', false).people.length, 0);
   assert.equal(projectFieldWorkspace(data, 'organisation', true).visits.length, 3);
@@ -100,6 +133,21 @@ test('sample reports retain their sample warning on every page and summaries omi
   const brief = await buildProgrammePdf('Field report', true, sections, 'summary');
   assert.ok(brief.output().includes('Visit record 5:'));
   assert.ok(!brief.output().includes('Visit record 6:'));
+});
+
+test('three demo mentors each receive fifteen distinct gardens without cross-team leakage', () => {
+  const data = freshFieldWorkspace();
+  assert.equal(data.teams.length, 3);
+  assert.equal(new Set(data.teams.flatMap(t => t.farmerIds)).size, 45);
+  for (const team of data.teams) {
+    assert.equal(team.farmerIds.length, 15);
+    const view = projectFieldWorkspace(data, team.mentorId, false);
+    const gardeners = view.people.filter(p => p.id !== team.mentorId);
+    assert.equal(gardeners.length, 15);
+    assert.equal(new Set(gardeners.map(p => p.gardenName)).size, 15);
+    assert.ok(gardeners.every(p => p.gardenName && p.gardenAreaM2 && p.gardenAreaM2 > 0));
+    assert.equal(new Set(gardeners.map(p => p.gardenType)).size, 5);
+  }
 });
 
 // Demo identities must not regress to blank initials or missing public files.

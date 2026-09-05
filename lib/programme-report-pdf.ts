@@ -3,7 +3,7 @@ import { pdfSafe } from '@/lib/crop-export-pdf';
 
 export type ReportSection = { title: string; lines: string[] };
 
-export async function buildProgrammePdf(title: string, sample: boolean, sections: ReportSection[], format: 'summary' | 'full', branding?: ProgrammeBranding, photos: VenuePhoto[] = []) {
+export async function buildProgrammePdf(title: string, sample: boolean, sections: ReportSection[], format: 'summary' | 'full', branding?: ProgrammeBranding, photos: VenuePhoto[] = [], photoHeading = 'Training venue evidence') {
   const { jsPDF } = await import('jspdf');
   const doc = new jsPDF();
   let y = 25;
@@ -45,7 +45,7 @@ export async function buildProgrammePdf(title: string, sample: boolean, sections
     (lines.length ? lines : ['Nothing recorded yet.']).forEach(text => line(text));
   }
   if (photos.length) {
-    newPage(); line('Training venue evidence', true);
+    newPage(); line(photoHeading, true);
     for (const photo of photos) {
       const image = doc.getImageProperties(photo.image);
       const ratio = Math.min(150 / image.width, 78 / image.height);

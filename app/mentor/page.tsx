@@ -395,7 +395,8 @@ export default function MentorPage() {
         setAssignBy(assigns);
       } else {
         const ids = isSampleMode() ? sampleRead('field-teams', freshFieldWorkspace).teams.find(t => t.mentorId === 'sample-mentor')?.farmerIds ?? [] : SAMPLE.map(p => p.id);
-        setTrainees(SAMPLE.filter(p => ids.includes(p.id)));
+        const samplePeople = isSampleMode() ? sampleRead('field-teams', freshFieldWorkspace).people : [];
+        setTrainees(isSampleMode() ? samplePeople.filter(p => ids.includes(p.id)).map(p => ({ id: p.id, full_name: p.name, role: p.role, org_id: null, language: 'en', id_number: null, phone: null, photo_url: samplePortrait(p.id), created_at: '' })) : SAMPLE.filter(p => ids.includes(p.id)));
         setEnrollBy(isSampleMode() ? sampleRead('mentor-enrollments', () => Object.fromEntries(SAMPLE_ENROLLMENTS.map((e) => [e.profile_id, e]))) : Object.fromEntries(SAMPLE_ENROLLMENTS.map((e) => [e.profile_id, e])));
         setAssignBy(isSampleMode() ? sampleRead('mentor-assignments', () => SAMPLE_ASSIGNMENTS) : SAMPLE_ASSIGNMENTS);
       }

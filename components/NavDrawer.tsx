@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 import {
   X, Map, DollarSign, GraduationCap, Wheat, FileText,
   MessageCircle, Leaf, Calendar, LayoutGrid, ClipboardList,
-  Camera, Home, User, Users, BarChart3, Building2, Palette, Handshake, Sparkles, Earth, Sprout,
+  Camera, Home, User, Users, BarChart3, Building2, Palette, Handshake, Sparkles, Earth, Sprout, Footprints,
 } from 'lucide-react';
 import { useLanguage } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
@@ -98,6 +98,9 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
       label: t('tabAccount'),
       items: [
         { href: '/account', Icon: User, label: t('navMyAccount') },
+        { href: '/samples', Icon: Sprout, label: 'Try a sample' },
+        { href: '/tour', Icon: Footprints, label: '15-minute tour' },
+        { href: '/feedback', Icon: MessageCircle, label: 'Report a bug / suggest a feature' },
         { href: '/updates', Icon: Sparkles, label: "What's new" },
       ],
     },

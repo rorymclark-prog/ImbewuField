@@ -2,9 +2,11 @@
 
 import { useEffect, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { APP_LANGS, useLanguage, translate, loadLocale } from '@/lib/i18n';
 
 export default function Onboarding() {
+  const router = useRouter();
   const { onboarded, completeOnboarding } = useLanguage();
   const [picked, setPicked] = useState('en');
   // This is the language-pick screen, so prefetching every locale's small chunk here (rather
@@ -82,6 +84,10 @@ export default function Onboarding() {
           <span className="flex items-center justify-center gap-1.5">{tp('start')}<ArrowRight size={16} /></span>
         </button>
 
+        <button type="button" onClick={() => { completeOnboarding(picked); router.push('/tour'); }}
+          style={{display:'block',width:'100%',minHeight:44,fontSize:16,color:'#1F4D2B',marginBottom:16,textDecoration:'underline'}}>
+          {picked === 'zu' ? 'Zama isibonelo · imizuzu engu-15' : 'Show me the 15-minute sample tour'}
+        </button>
         {/* Reassurance — language is always changeable */}
         <div className="text-xs font-display text-center" style={{ color: '#5C5040', opacity: 0.65 }}>
           {tp('pickLangSub')}

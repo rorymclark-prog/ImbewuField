@@ -65,6 +65,7 @@ export default function SampleModeBanner() {
         Sample · fictional
       </span>
       <Link href="/samples" style={{ color: 'white', textDecoration: 'underline', minHeight: 44, display: 'inline-flex', alignItems: 'center' }} aria-label="Switch sample view">Switch</Link>
+      <Link href="/tour" style={{ color:'white', textDecoration:'underline', minHeight:44, display:'inline-flex', alignItems:'center' }}>Tour</Link>
       <button
         type="button"
         aria-label="Exit sample"
