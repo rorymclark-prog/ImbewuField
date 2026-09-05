@@ -188,7 +188,7 @@ test('every batch is shown the sheets, images before text', () => {
 test('the report screen shows the maps and sends them to be read', () => {
   const view = readFileSync(new URL('../components/ReportView.tsx', import.meta.url), 'utf8');
   // 1. The maps are IN the report on screen, not only in the exported PDF.
-  assert.match(view, /Your design maps/, 'the report on screen has no figures again');
+  assert.match(view, /Your saved design maps/, 'the report on screen has no figures again');
   assert.match(view, /plate\.thumb/, 'the strip is holding print-resolution masters in state');
   assert.match(view, /loadSheetImage\(plate\.id\)/, 'opening a sheet must fetch it on demand');
   // 2. And they are sent for analysis, prepared with the same downscaler the PDF plates use.

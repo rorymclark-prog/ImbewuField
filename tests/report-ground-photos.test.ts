@@ -239,17 +239,18 @@ test('the strip and the PDF both carry the photographs', () => {
 
   // On screen, below the plan sheets — the order the model reads them in and the order they make
   // sense in: the plans say what is where, the photographs say what state it is in.
-  assert.match(view, /Your photos of this land/, 'the report on screen shows no photographs again');
+  assert.match(view, /Your saved site photos/, 'the report on screen shows no photographs again');
   assert.ok(
-    view.indexOf('Your design maps') < view.indexOf('Your photos of this land'),
+    view.indexOf('Your saved design maps') < view.indexOf('Your saved site photos'),
     'the photographs must come after the plans',
   );
   assert.match(view, /groundPhotoGallery\(getSiteEvidence\(evidenceSiteId\(activePlaceId\)\)\)/);
   // Tapping one opens it full size, the same as a design sheet.
   assert.match(view, /setOpenPlate\(\{ label: p\.label, image: p\.dataUrl \}\)/);
 
-  // And into the exported PDF, which is the copy that gets handed to a funder.
-  assert.match(view, /photos: photoGallery\.shown\.map/, 'the PDF export drops the photographs');
+  // Images are opt-in for ink saving; selecting them must still carry the real photos.
+  assert.match(view, /\[includeImages, setIncludeImages\] = useState\(false\)/);
+  assert.match(view, /photos: includeImages \? photoGallery\.shown\.map/, 'the PDF export drops the photographs');
   assert.match(pdf, /photos\?: ReportPdfPhoto\[\]/);
   assert.match(pdf, /const photos = meta\.photos \?\? \[\]/);
   // Two to a page: a 400px phone snap printed a full page wide is a blurry phone snap.

@@ -133,8 +133,8 @@ const EXPERT_SURFACES: Record<string, { reason: string; budget: number }> = {
     budget: 11,
   },
   'components/ReportView.tsx': {
-    reason: 'the report document, which carries its own print type scale',
-    budget: 6,
+    reason: 'screen report captions are now at least 12px; PDF type is handled separately',
+    budget: 0,
   },
   'components/report/CompletionScore.tsx': {
     reason: 'the report scorecard, same print scale',

@@ -3,6 +3,7 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import RainfallChart from './RainfallChart';
+import styles from './ReportView.module.css';
 import { loadReports, saveReport, deleteReport, reportId, MAX_REPORTS, type SavedReport, type SaveReportReason } from '@/lib/saved-reports';
 import { isSampleMode } from '@/lib/sample-mode';
 import { PLACE_LABELS, placeColor, type SavedPlace } from '@/lib/saved-places';
@@ -22,6 +23,11 @@ import { loadCanvasState } from '@/lib/design-canvas';
 import { resolveBaseLayers } from '@/lib/base-layers';
 import { buildPhasePlan } from '@/lib/phasing';
 import { collectReportSiteFacts } from '@/lib/report-site-facts-collect';
+import type { ReportSiteFacts } from '@/lib/report-site-facts';
+import { reportSummaryPages, buildInkSummaryPdf } from '@/lib/report-summary';
+import { CROPS } from '@/lib/crop-catalog';
+import { getCropArt } from '@/lib/crop-art';
+import { REPORT_ZU } from '@/lib/report-localisation';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { recordReportAttempt, reportAttemptSurvived, reportShouldGoLight } from '@/lib/report-attempts';
 
@@ -122,21 +128,21 @@ function renderReport(text: string) {
         isExecSummary ? (
           <div key={i} className="report-h2 rounded-xl p-4 my-6"
                style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.2)' }}>
-            <div className="font-display font-bold text-lg mb-1" style={{ color: '#1F4D2B' }}>
+            <div className="font-display font-bold text-lg mb-1" style={{ color: 'var(--report-green)' }}>
               Executive Summary
             </div>
           </div>
         ) : (
           <h2 key={i} id={headingId} className="report-h2 font-display font-bold text-xl mt-10 mb-3 pt-4 pb-2 flex items-center gap-3"
-              style={{ color: '#1F4D2B', borderBottom: '1px solid #E2D8C4' }}>
-            <span style={{ display: 'inline-block', width: 3, height: 20, borderRadius: 2, background: '#C07A1E', flexShrink: 0 }} />
+              style={{ color: 'var(--report-green)', borderBottom: '1px solid var(--report-border)' }}>
+            <span style={{ display: 'inline-block', width: 3, height: 20, borderRadius: 2, background: 'var(--report-gold)', flexShrink: 0 }} />
             {heading}
           </h2>
         )
       );
     } else if (line.startsWith('### ')) {
       elements.push(
-        <h3 key={i} className="font-display font-semibold text-base mt-5 mb-2" style={{ color: '#C07A1E' }}>
+        <h3 key={i} className="font-display font-semibold text-base mt-5 mb-2" style={{ color: 'var(--report-gold)' }}>
           {line.replace('### ', '')}
         </h3>
       );
@@ -145,13 +151,13 @@ function renderReport(text: string) {
       // literal "# " on screen; now that the title carries the farm's name it is the first thing
       // a reader sees, so it renders as a title.
       elements.push(
-        <h1 key={i} className="font-display font-bold text-2xl mt-1 mb-1" style={{ color: '#20190F' }}>
+        <h1 key={i} className="font-display font-bold text-2xl mt-1 mb-1" style={{ color: 'var(--report-ink)' }}>
           {stripInlineMarkdown(line.slice(2))}
         </h1>
       );
     } else if (line.startsWith('**') && line.endsWith('**')) {
       elements.push(
-        <p key={i} className="font-display font-semibold text-sm mt-3 mb-1" style={{ color: '#20190F' }}>
+        <p key={i} className="font-display font-semibold text-sm mt-3 mb-1" style={{ color: 'var(--report-ink)' }}>
           {stripInlineMarkdown(line)}
         </p>
       );
@@ -181,9 +187,9 @@ function renderReport(text: string) {
         <div key={`table-${i}`} className="overflow-x-auto my-4">
           <table className="w-full text-xs font-display border-collapse">
             <thead>
-              <tr style={{ borderBottom: '1px solid #E2D8C4' }}>
+              <tr style={{ borderBottom: '1px solid var(--report-border)' }}>
                 {headers.map((h, j) => (
-                  <th key={j} className="text-left py-2 px-3 font-semibold" style={{ color: '#5C5040' }}>
+                  <th key={j} className="text-left py-2 px-3 font-semibold" style={{ color: 'var(--report-muted)' }}>
                     {h.trim()}
                   </th>
                 ))}
@@ -191,9 +197,9 @@ function renderReport(text: string) {
             </thead>
             <tbody>
               {rows.map((row, ri) => (
-                <tr key={ri} style={{ borderBottom: '1px solid #E2D8C4', background: ri % 2 === 0 ? 'transparent' : 'rgba(31,77,43,0.04)' }}>
+                <tr key={ri} style={{ borderBottom: '1px solid var(--report-border)', background: ri % 2 === 0 ? 'transparent' : 'rgba(31,77,43,0.04)' }}>
                   {row.map((cell, ci) => (
-                    <td key={ci} className="py-2 px-3 leading-relaxed font-sans" style={{ color: '#20190F' }}>
+                    <td key={ci} className="py-2 px-3 leading-relaxed font-sans" style={{ color: 'var(--report-ink)' }}>
                       {stripInlineMarkdown(cell)}
                     </td>
                   ))}
@@ -209,10 +215,10 @@ function renderReport(text: string) {
       if (match) {
         elements.push(
           <div key={i} className="flex gap-3 my-2">
-            <span className="font-display font-bold text-sm flex-shrink-0 w-5 text-right" style={{ color: '#C07A1E' }}>{match[1]}.</span>
+            <span className="font-display font-bold text-sm flex-shrink-0 w-5 text-right" style={{ color: 'var(--report-gold)' }}>{match[1]}.</span>
             <div>
-              <span className="font-display font-semibold text-sm" style={{ color: '#2D6B3C' }}>{match[2]}</span>
-              {match[3] && <span className="font-display text-sm leading-relaxed" style={{ color: '#20190F' }}>{match[3]}</span>}
+              <span className="font-display font-semibold text-sm" style={{ color: 'var(--report-green)' }}>{match[2]}</span>
+              {match[3] && <span className="font-sans text-sm leading-relaxed" style={{ color: 'var(--report-ink)' }}>{match[3]}</span>}
             </div>
           </div>
         );
@@ -220,10 +226,10 @@ function renderReport(text: string) {
     } else if (line.match(/^\d+\./)) {
       elements.push(
         <div key={i} className="flex gap-3 my-1.5">
-          <span className="font-display font-semibold text-sm flex-shrink-0 w-5 text-right" style={{ color: '#C07A1E' }}>
+          <span className="font-display font-semibold text-sm flex-shrink-0 w-5 text-right" style={{ color: 'var(--report-gold)' }}>
             {line.match(/^\d+/)?.[0]}.
           </span>
-          <p className="font-display text-sm leading-relaxed" style={{ color: '#20190F' }}>
+          <p className="font-sans text-sm leading-relaxed" style={{ color: 'var(--report-ink)' }}>
             {stripInlineMarkdown(line.replace(/^\d+\.\s*/, ''))}
           </p>
         </div>
@@ -231,15 +237,15 @@ function renderReport(text: string) {
     } else if (line.startsWith('- ') || line.startsWith('• ')) {
       elements.push(
         <div key={i} className="flex gap-2 my-1">
-          <span className="flex-shrink-0 mt-0.5" style={{ color: '#1F4D2B' }}><ChevronRight size={12} /></span>
-          <p className="font-display text-sm leading-relaxed" style={{ color: '#20190F' }}>
+          <span className="flex-shrink-0 mt-0.5" style={{ color: 'var(--report-green)' }}><ChevronRight size={12} /></span>
+          <p className="font-sans text-sm leading-relaxed" style={{ color: 'var(--report-ink)' }}>
             {stripInlineMarkdown(line.replace(/^[-•]\s*/, ''))}
           </p>
         </div>
       );
     } else {
       elements.push(
-        <p key={i} className="font-display text-sm leading-relaxed my-1.5" style={{ color: '#20190F' }}>
+        <p key={i} className="font-sans text-sm leading-relaxed my-1.5" style={{ color: 'var(--report-ink)' }}>
           {stripInlineMarkdown(line)}
         </p>
       );
@@ -262,6 +268,20 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   const [error, setError] = useState('');
   const [generated, setGenerated] = useState(!!savedReport);
   const [language, setLanguage] = useState(savedReport?.lang ?? appLang ?? 'en');
+  const [facts, setFacts] = useState<ReportSiteFacts | null>(savedReport?.facts ?? null);
+  const [reading, setReading] = useState<'full' | 'one' | 'five'>('full');
+  const [presentation, setPresentation] = useState<'screen' | 'print'>('screen');
+  const [includeImages, setIncludeImages] = useState(false);
+  const tr = (en: string, zu: string) => language === 'zu' ? zu : en;
+  const label = (en: string) => language === 'zu' ? REPORT_ZU[en] ?? en : en;
+  const showVisuals = reading === 'full' && (presentation === 'screen' || includeImages);
+  const reportDate = activeSaved?.savedAt ?? new Date().toISOString();
+  const summaryPages = reportSummaryPages(facts, d, reading === 'one' ? 1 : 5, language);
+  useEffect(() => {
+    if (activeSaved) { setFacts(activeSaved.facts ?? null); return; }
+    const siteId = designSiteIdFromLocation(d);
+    setFacts(collectReportSiteFacts({ siteId, lat: d.lat, lon: d.lon, canvas: loadCanvasState(siteId), farmName: savedPlaces?.find(p => p.id === activePlaceId)?.name }));
+  }, [activeSaved, d, savedPlaces, activePlaceId]);
   const [bilingual, setBilingual] = useState(false);
   const [tone, setTone] = useState<'simple' | 'professional'>('simple');
   const [length, setLength] = useState<'one-pager' | 'standard' | 'comprehensive'>('standard');
@@ -359,6 +379,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       location: d,
       siteData: siteData ?? undefined,
       waterData: waterData ?? undefined,
+      facts: facts ?? undefined,
     });
     // A storage refusal (full disk, private mode) is the case that costs the farmer the report.
     // It STAYS on screen until the next attempt succeeds — a message that clears itself after two
@@ -372,7 +393,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     setSaveFailedReason(null);
     setJustSaved(true);
     setTimeout(() => setJustSaved(false), 2500);
-  }, [report, activeSaved, d, siteData, waterData, language]);
+  }, [report, activeSaved, d, siteData, waterData, language, facts]);
 
   // Once there is a report to read, a phone should be showing the report — not
   // the settings that produced it. Read the media query at call time rather than
@@ -386,6 +407,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     setActiveSaved(r);
     setReport(r.report);
     setLanguage(r.lang);
+    setFacts(r.facts ?? null);
     setGenerated(true);
     setError('');
     collapsePanelOnNarrow();
@@ -477,6 +499,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         farmName: (activePlaceId ? savedPlaces?.find((place) => place.id === activePlaceId)?.name : undefined)
           ?? savedPlaces?.[0]?.name,
       });
+      setFacts(siteFacts);
 
       // THE MODEL LOOKS AT THE PLAN, NOT ONLY AT NUMBERS ABOUT IT. siteFacts above carries the
       // geometry as figures; these are the drawings those figures came off, downsized for a vision
@@ -546,9 +569,16 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   // a phone and threw nothing anyone could catch. We build the PDF ourselves and
   // hand it to the device. See lib/report-pdf.ts.
   const exportPdf = useCallback(async () => {
-    if (!report) return;
+    if (!report && reading === 'full') return;
     setPdfState('working');
     try {
+      if (reading !== 'full') {
+        const blob = await buildInkSummaryPdf(reportSummaryPages(facts, d, reading === 'one' ? 1 : 5, language), (activeSaved?.savedAt ?? new Date().toISOString()).slice(0, 10), language);
+        await deliverPdf(blob, reportPdfFilename(ecology.placeName).replace('.pdf', `-${reading === 'one' ? '1' : '5'}-page-summary.pdf`));
+        setPdfState('done');
+        setTimeout(() => setPdfState('idle'), 2500);
+        return;
+      }
       // THE DESIGN MAPS GO IN THE REPORT. Rory: "Our report still doesn't have the images the
       // design maps we create". Metas only here — ids and labels, no pixels. The PDF pulls each
       // sheet's image immediately before it draws that plate and never holds two at once, because
@@ -566,14 +596,15 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         lat: d.lat,
         lon: d.lon,
         rainfallMm: d.rainfall.annual,
-        soilPh: d.soil.ph,
+        soilPh: d.soil.soilSource === 'lab' || d.soil.soilSource === 'soilgrids' ? d.soil.ph : undefined,
+        language,
         meanTempC: d.climate.meanTemp,
-        dateLabel: new Date().toLocaleDateString('en-ZA', { year: 'numeric', month: 'long', day: 'numeric' }),
-        sheets: plates,
+        dateLabel: new Date(reportDate).toLocaleDateString(language === 'zu' ? 'zu-ZA' : 'en-ZA', { year: 'numeric', month: 'long', day: 'numeric' }),
+        sheets: includeImages ? plates : [],
         loadSheetImage,
         // The same photographs the model read and the screen shows — so the printed report a
         // farmer hands to a funder carries the evidence the advice was drawn from.
-        photos: photoGallery.shown.map((p) => ({ label: p.label, note: p.note, dataUrl: p.dataUrl })),
+        photos: includeImages ? photoGallery.shown.map((p) => ({ label: p.label, note: p.note, dataUrl: p.dataUrl })) : [],
       });
       await deliverPdf(blob, reportPdfFilename(ecology.placeName));
       setPdfState('done');
@@ -584,7 +615,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       setError(err instanceof Error ? `Could not build the PDF: ${err.message}` : 'Could not build the PDF.');
       setTimeout(() => setPdfState('idle'), 4000);
     }
-  }, [report, d]);
+  }, [report, d, reading, language, facts, includeImages, activeSaved, ecology.placeName, photoGallery, reportDate]);
 
   async function shareReport() {
     if (!d || !report) return;
@@ -598,7 +629,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col" style={{ background: '#E4DCC6' }}>
+    <div className={`${styles.workspace} ${presentation === 'print' ? styles.printPreview : ''} fixed inset-0 z-50 flex flex-col`}>
 
       {/* ── Toolbar ──────────────────────────────────────────────────────────
           Wraps rather than scrolls. At 375px the old single non-wrapping row was
@@ -607,19 +638,19 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           wrapping groups: every control stays on screen at any width.
       */}
       <div
-        className="no-print flex-shrink-0 flex flex-wrap items-center gap-x-3 gap-y-2 px-3 md:px-6 py-2.5 md:py-3"
-        style={{ background: 'rgba(226,216,196,0.3)', borderBottom: '1px solid #E2D8C4' }}
+        className={`${styles.toolbar} no-print flex-shrink-0 flex flex-wrap items-center gap-x-3 gap-y-2 px-3 md:px-6 py-2.5 md:py-3`}
+        style={{ background: 'var(--report-panel)', borderBottom: '1px solid var(--report-border)' }}
       >
         <button onClick={onClose} className="text-xs font-mono px-3 py-1.5 rounded-lg transition-all flex-shrink-0"
-                style={{ color: '#5C5040', background: 'rgba(226,216,196,0.5)', border: '1px solid #E2D8C4' }}>
+                style={{ color: 'var(--report-muted)', background: 'var(--report-panel)', border: '1px solid var(--report-border)' }}>
           Back
         </button>
 
         <div className="min-w-0 flex-1">
-          <div className="text-sm font-display font-semibold truncate" style={{ color: '#20190F' }}>
+          <div className="text-sm font-display font-semibold truncate" style={{ color: 'var(--report-ink)' }}>
             Site Analysis Report
           </div>
-          <div className="text-xs font-mono truncate" style={{ color: '#5C5040' }}>
+          <div className="text-xs font-mono truncate" style={{ color: 'var(--report-muted)' }}>
             {ecology.label} · {Math.abs(d.lat).toFixed(3)}°S {d.lon.toFixed(3)}°E
           </div>
         </div>
@@ -631,8 +662,8 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             onClick={() => setPanelOpen((v) => !v)}
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-display font-medium transition-all flex-shrink-0"
             style={panelOpen
-              ? { background: 'rgba(31,77,43,0.15)', border: '1px solid rgba(31,77,43,0.4)', color: '#1F4D2B' }
-              : { background: 'rgba(226,216,196,0.5)', border: '1px solid #E2D8C4', color: '#5C5040' }}
+              ? { background: 'rgba(31,77,43,0.15)', border: '1px solid rgba(31,77,43,0.4)', color: 'var(--report-green)' }
+              : { background: 'var(--report-panel)', border: '1px solid var(--report-border)', color: 'var(--report-muted)' }}
           >
             {panelOpen && report
               ? <><FileText size={12} />Report</>
@@ -651,8 +682,8 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
               style={saveFailed
                 ? { background: 'rgba(154,52,18,0.12)', border: '1px solid rgba(154,52,18,0.45)', color: '#9A3412' }
                 : justSaved
-                ? { background: 'rgba(31,77,43,0.15)', border: '1px solid rgba(31,77,43,0.4)', color: '#1F4D2B' }
-                : { background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.3)', color: '#1F4D2B' }}
+                ? { background: 'rgba(31,77,43,0.15)', border: '1px solid rgba(31,77,43,0.4)', color: 'var(--report-green)' }
+                : { background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.3)', color: 'var(--report-green)' }}
             >
               {saveFailed
                 ? (saveFailedReason === 'store-full'
@@ -662,7 +693,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             </button>
           )}
 
-          {generated && (
+          {(generated || reading !== 'full') && (
             <button
               onClick={exportPdf}
               disabled={pdfState === 'working'}
@@ -670,12 +701,12 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
               style={{
                 background: 'linear-gradient(135deg, rgba(192,122,30,0.15), rgba(192,122,30,0.06))',
                 border: '1px solid rgba(192,122,30,0.35)',
-                color: '#C07A1E',
+                color: 'var(--report-gold)',
                 opacity: pdfState === 'working' ? 0.6 : 1,
               }}
             >
               {pdfState === 'working' && <Loader2 size={12} className="animate-spin" />}
-              {pdfState === 'working' ? 'Building…' : pdfState === 'done' ? 'PDF ready' : 'Export PDF'}
+              {label(pdfState === 'working' ? 'Building…' : pdfState === 'done' ? 'PDF ready' : 'Export PDF')}
             </button>
           )}
 
@@ -686,10 +717,10 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
               style={{
                 background: copied ? 'rgba(35,94,134,0.15)' : 'rgba(35,94,134,0.08)',
                 border: '1px solid rgba(35,94,134,0.3)',
-                color: '#235E86',
+                color: 'var(--report-blue)',
               }}
             >
-              <Share2 size={12} />{copied ? 'Copied!' : 'Share'}
+              <Share2 size={12} />{label(copied ? 'Copied!' : 'Share')}
             </button>
           )}
 
@@ -701,20 +732,26 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             className="flex items-center gap-1.5 px-3 md:px-4 py-1.5 rounded-lg text-xs font-display font-semibold transition-all"
             style={
               loading || selected.size === 0
-                ? { background: 'rgba(226,216,196,0.6)', color: '#5C5040', border: '1px solid #E2D8C4' }
+                ? { background: 'rgba(226,216,196,0.6)', color: 'var(--report-muted)', border: '1px solid var(--report-border)' }
                 : {
-                    background: '#1F4D2B',
+                    background: 'var(--report-button)',
                     border: '1px solid rgba(31,77,43,0.6)',
                     color: '#F7F2E9',
                     boxShadow: '0 0 16px rgba(31,77,43,0.2)',
                   }
             }
           >
-            {loading ? <><Loader2 size={14} className="animate-spin inline mr-1" /> Generating...</> : generated ? 'Regenerate' : 'Generate report'}
+            {loading ? <><Loader2 size={14} className="animate-spin inline mr-1" /> Generating...</> : label(generated ? 'Regenerate' : 'Generate report')}
           </button>
         </div>
       </div>
 
+      <div className={`${styles.readingControls} no-print`}>
+        <div><button aria-pressed={presentation === 'screen'} onClick={() => setPresentation('screen')}>{tr('Screen', 'Isikrini')}</button><button aria-pressed={presentation === 'print'} onClick={() => setPresentation('print')}>{tr('Print · save ink', 'Phrinta · yonga uyinki')}</button></div>
+        <div>{([['one', '1-page summary', 'Isifinyezo sekhasi elilodwa'], ['five', '5-page summary', 'Isifinyezo samakhasi amahlanu'], ['full', 'Full report', 'Umbiko ogcwele']] as const).map(([value, en, zu]) => <button key={value} aria-pressed={reading === value} onClick={() => setReading(value)}>{tr(en, zu)}</button>)}</div>
+        {reading === 'full' && <label><input type="checkbox" checked={includeImages} onChange={e => setIncludeImages(e.target.checked)} /> {tr('Include photos and maps in PDF', 'Faka izithombe namamephu ku-PDF')}</label>}
+      </div>
+      {language !== (activeSaved?.lang ?? appLang ?? 'en') && report && reading === 'full' && <p className={`${styles.languageNote} no-print`}>{tr('Language changes apply to new reports and summaries. Regenerate to translate the full advice.', 'Ushintsho lolimi lusebenza emibikweni emisha nasezifinyezweni. Khiqiza kabusha ukuhumusha zonke izeluleko.')}</p>}
       <div className="flex-1 flex overflow-hidden">
 
         {/* ── Section controls sidebar ───────────
@@ -722,12 +759,12 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             Phone: full width, and only one of the two is displayed at a time.
             Both stay mounted so reportRef and the report's scroll position
             survive toggling. */}
-        <div className="no-print flex-shrink-0 overflow-y-auto py-4 px-3"
+        <div className={`${styles.sidebar} no-print flex-shrink-0 overflow-y-auto py-4 px-3`}
              style={{
-               width: isWide ? 232 : '100%',
+               width: isWide ? 256 : '100%',
                display: showPanel ? 'block' : 'none',
-               background: '#FFFEFA',
-               borderRight: isWide ? '1px solid #E2D8C4' : 'none',
+               background: 'var(--report-paper)',
+               borderRight: isWide ? '1px solid var(--report-border)' : 'none',
              }}>
 
           {/* Phone: the report is the primary read once it exists */}
@@ -735,7 +772,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             <button
               onClick={() => setPanelOpen(false)}
               className="w-full flex items-center justify-center gap-2 mb-4 py-2.5 rounded-lg text-sm font-display font-semibold"
-              style={{ background: '#1F4D2B', color: '#F7F2E9', border: 'none' }}
+              style={{ background: 'var(--report-button)', color: '#F7F2E9', border: 'none' }}
             >
               <FileText size={14} />Read the report
             </button>
@@ -744,17 +781,17 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           {/* Saved reports — reopen a past report without regenerating */}
           {savedList.length > 0 && (
             <div className="mb-4">
-              <div className="text-xs font-mono uppercase tracking-wider mb-2" style={{ color: '#5C5040' }}>Saved reports</div>
+              <div className="text-xs font-mono uppercase tracking-wider mb-2" style={{ color: 'var(--report-muted)' }}>{label('Saved reports')}</div>
               <div className="flex flex-col gap-1.5">
                 {savedList.map((r) => (
-                  <div key={r.id} className="flex items-center gap-1 rounded-lg" style={{ background: 'rgba(226,216,196,0.5)', border: '1px solid #E2D8C4' }}>
+                  <div key={r.id} className="flex items-center gap-1 rounded-lg" style={{ background: 'var(--report-panel)', border: '1px solid var(--report-border)' }}>
                     <button onClick={() => openSaved(r)}
                       className="flex-1 min-w-0 text-left px-2.5 py-1.5 rounded-lg"
-                      style={{ color: activeSaved?.id === r.id ? '#1F4D2B' : '#20190F' }}>
+                      style={{ color: activeSaved?.id === r.id ? 'var(--report-green)' : 'var(--report-ink)' }}>
                       <div className="text-xs font-display truncate">{r.name}</div>
                     </button>
                     <button onClick={() => deleteReport(r.id)} title="Delete"
-                      className="px-2 py-1.5 text-xs font-display" style={{ color: '#5C5040' }}>Delete</button>
+                      className="px-2 py-1.5 text-xs font-display" style={{ color: 'var(--report-muted)' }}>Delete</button>
                   </div>
                 ))}
               </div>
@@ -762,12 +799,12 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           )}
 
           {/* Language */}
-          <div className="text-xs font-mono uppercase tracking-wider mb-2" style={{ color: '#5C5040' }}>Language</div>
+          <div className="text-xs font-mono uppercase tracking-wider mb-2" style={{ color: 'var(--report-muted)' }}>{label('Language')}</div>
           <select
             value={language}
             onChange={(e) => { setLanguage(e.target.value); if (e.target.value === 'en') setBilingual(false); }}
             className="w-full text-xs font-display rounded-lg px-2.5 py-1.5 mb-2 outline-none cursor-pointer"
-            style={{ background: 'rgba(226,216,196,0.5)', border: '1px solid #E2D8C4', color: '#20190F' }}
+            style={{ background: 'var(--report-panel)', border: '1px solid var(--report-border)', color: 'var(--report-ink)' }}
           >
             {LANGUAGE_OPTIONS.map((l) => <option key={l.code} value={l.code}>{l.label}</option>)}
           </select>
@@ -776,33 +813,33 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
               onClick={() => setBilingual(!bilingual)}
               className="w-full flex items-center justify-between px-2.5 py-1.5 mb-4 rounded-lg text-xs font-display transition-all"
               style={bilingual
-                ? { background: 'rgba(45,107,60,0.12)', border: '1px solid rgba(45,107,60,0.35)', color: '#2D6B3C' }
-                : { background: 'rgba(226,216,196,0.5)', border: '1px solid #E2D8C4', color: '#5C5040' }}
+                ? { background: 'rgba(45,107,60,0.12)', border: '1px solid rgba(45,107,60,0.35)', color: 'var(--report-green)' }
+                : { background: 'var(--report-panel)', border: '1px solid var(--report-border)', color: 'var(--report-muted)' }}
             >
-              <span>+ English alongside</span>
+              <span>{tr('+ English alongside', '+ IsiNgisi eceleni')}</span>
               <span>{bilingual ? <Circle size={12} fill="currentColor" /> : <Circle size={12} />}</span>
             </button>
           )}
 
           {/* Tone */}
-          <div className="text-xs font-mono uppercase tracking-wider mb-2" style={{ color: '#5C5040' }}>Wording</div>
+          <div className="text-xs font-mono uppercase tracking-wider mb-2" style={{ color: 'var(--report-muted)' }}>{label('Wording')}</div>
           <div className="flex gap-1.5 mb-4">
             {([['simple', 'Simple'], ['professional', 'Detailed']] as const).map(([val, label]) => (
               <button key={val} onClick={() => setTone(val)}
                 className="flex-1 py-1.5 rounded-lg text-xs font-display transition-all"
                 style={tone === val
-                  ? { background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.3)', color: '#1F4D2B' }
-                  : { background: 'rgba(226,216,196,0.3)', border: '1px solid #E2D8C4', color: '#5C5040' }}>
-                {label}
+                  ? { background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.3)', color: 'var(--report-green)' }
+                  : { background: 'var(--report-panel)', border: '1px solid var(--report-border)', color: 'var(--report-muted)' }}>
+                {language === 'zu' ? REPORT_ZU[label] ?? label : label}
               </button>
             ))}
           </div>
 
           {/* Length */}
-          <div className="text-xs font-mono uppercase tracking-wider mb-2" style={{ color: '#5C5040' }}>Length</div>
+          <div className="text-xs font-mono uppercase tracking-wider mb-2" style={{ color: 'var(--report-muted)' }}>{label('Length')}</div>
           <div className="flex flex-col gap-1.5 mb-4">
             {([
-              ['one-pager', 'One pager', 'Executive Summary only — fits one printed page'] as const,
+              ['one-pager', 'Brief advice', 'Generate brief advice. Use 1-page summary above for a fixed-length PDF.'] as const,
               ['standard', 'Standard', 'Core sections for the farmer'] as const,
               ['comprehensive', 'Comprehensive', 'All sections, full detail'] as const,
             ]).map(([val, label, tip]) => (
@@ -815,39 +852,39 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                 className="w-full py-1.5 rounded-lg text-xs font-display transition-all text-left px-2.5"
                 title={tip}
                 style={length === val
-                  ? { background: 'rgba(192,122,30,0.1)', border: '1px solid rgba(192,122,30,0.3)', color: '#C07A1E' }
-                  : { background: 'rgba(226,216,196,0.3)', border: '1px solid #E2D8C4', color: '#5C5040' }}>
-                {label}
+                  ? { background: 'rgba(192,122,30,0.1)', border: '1px solid rgba(192,122,30,0.3)', color: 'var(--report-gold)' }
+                  : { background: 'var(--report-panel)', border: '1px solid var(--report-border)', color: 'var(--report-muted)' }}>
+                {language === 'zu' ? REPORT_ZU[label] ?? label : label}
               </button>
             ))}
           </div>
 
           <div className="flex items-center justify-between mb-2">
-            <div className="text-xs font-mono uppercase tracking-wider" style={{ color: '#5C5040' }}>Sections</div>
+            <div className="text-xs font-mono uppercase tracking-wider" style={{ color: 'var(--report-muted)' }}>{label('Sections')}</div>
             <div className="flex gap-1">
               <button onClick={() => setSelected(new Set(FARMER_ESSENTIALS))}
                 className="text-xs font-mono px-1.5 py-0.5 rounded transition-all"
-                style={{ color: '#1F4D2B', background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.2)' }}
+                style={{ color: 'var(--report-green)', background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.2)' }}
                 title="Select the sections most useful to a small-scale farmer">
-                Farmer
+                {tr('Farmer', 'Umlimi')}
               </button>
               <button onClick={() => setSelected(new Set(ALL_SECTIONS))}
                 className="text-xs font-mono px-1.5 py-0.5 rounded transition-all"
-                style={{ color: '#5C5040', background: 'rgba(226,216,196,0.3)', border: '1px solid #E2D8C4' }}
+                style={{ color: 'var(--report-muted)', background: 'var(--report-panel)', border: '1px solid var(--report-border)' }}
                 title="Select all sections">
-                All
+                {tr('All', 'Zonke')}
               </button>
               <button onClick={() => setSelected(new Set())}
                 className="text-xs font-mono px-1.5 py-0.5 rounded transition-all"
-                style={{ color: '#9B4040', background: 'rgba(155,64,64,0.1)', border: '1px solid rgba(155,64,64,0.2)' }}
+                style={{ color: 'var(--report-danger)', background: 'rgba(155,64,64,0.1)', border: '1px solid rgba(155,64,64,0.2)' }}
                 title="Deselect all sections">
-                None
+                {tr('None', 'Azikho')}
               </button>
             </div>
           </div>
           {length === 'one-pager' && (
-            <div className="text-xs font-mono px-2 py-1.5 rounded-lg mb-1" style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: '#9A6010' }}>
-              One pager = Executive Summary only
+            <div className="text-xs font-mono px-2 py-1.5 rounded-lg mb-1" style={{ background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: 'var(--report-gold)' }}>
+              {tr('Brief advice = Executive Summary only. Use the summary controls above to choose a fixed page count.', 'Izeluleko ezimfushane = isifinyezo kuphela. Khetha inani lamakhasi ezinkinobheni zesifinyezo ezingenhla.')}
             </div>
           )}
           <div className="space-y-1" style={{ opacity: length === 'one-pager' ? 0.4 : 1, pointerEvents: length === 'one-pager' ? 'none' : 'auto' }}>
@@ -862,32 +899,32 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                 className="w-full flex items-center gap-2 px-2.5 py-1.5 rounded-lg text-xs font-display text-left transition-all"
                 style={
                   selected.has(s)
-                    ? { background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.3)', color: '#1F4D2B' }
-                    : { background: 'transparent', border: '1px solid transparent', color: '#5C5040' }
+                    ? { background: 'rgba(31,77,43,0.1)', border: '1px solid rgba(31,77,43,0.3)', color: 'var(--report-green)' }
+                    : { background: 'transparent', border: '1px solid transparent', color: 'var(--report-muted)' }
                 }
               >
-                <span style={{ color: selected.has(s) ? '#1F4D2B' : '#5C5040' }}>
+                <span style={{ color: selected.has(s) ? 'var(--report-green)' : 'var(--report-muted)' }}>
                   {selected.has(s) ? <Check size={10} /> : <Circle size={10} />}
                 </span>
-                {s}
+                {label(s)}
               </button>
             ))}
           </div>
 
           {photoAnalysis && (
             <div className="mt-4 p-2.5 rounded-lg" style={{ background: 'rgba(31,77,43,0.06)', border: '1px solid rgba(31,77,43,0.2)' }}>
-              <div className="text-xs font-display font-medium mb-0.5" style={{ color: '#1F4D2B' }}>Photos included</div>
-              <div className="text-xs font-mono" style={{ color: '#5C5040' }}>Photo analysis will inform the report</div>
+              <div className="text-xs font-display font-medium mb-0.5" style={{ color: 'var(--report-green)' }}>{label('Photos included')}</div>
+              <div className="text-xs font-mono" style={{ color: 'var(--report-muted)' }}>{label('Photo analysis will inform the report')}</div>
             </div>
           )}
 
           {/* Satellite capture status */}
-          <div className="mt-3 p-2.5 rounded-lg" style={{ background: mapCapture ? 'rgba(31,77,43,0.06)' : 'rgba(226,216,196,0.4)', border: `1px solid ${mapCapture ? 'rgba(31,77,43,0.2)' : '#E2D8C4'}` }}>
-            <div className="text-xs font-display font-medium mb-0.5" style={{ color: mapCapture ? '#1F4D2B' : '#8C7A62' }}>
+          <div className="mt-3 p-2.5 rounded-lg" style={{ background: mapCapture ? 'rgba(31,77,43,0.06)' : 'rgba(226,216,196,0.4)', border: `1px solid ${mapCapture ? 'rgba(31,77,43,0.2)' : 'var(--report-border)'}` }}>
+            <div className="text-xs font-display font-medium mb-0.5" style={{ color: mapCapture ? 'var(--report-green)' : 'var(--report-muted)' }}>
               {mapCapture ? '✓ Aerial snapshot captured' : 'No aerial snapshot'}
             </div>
             {!mapCapture && (
-              <div className="text-xs font-mono" style={{ color: '#8C7A62' }}>
+              <div className="text-xs font-mono" style={{ color: 'var(--report-muted)' }}>
                 Close report → zoom into your site on the map → tap Capture → reopen
               </div>
             )}
@@ -902,8 +939,8 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
               });
             if (!tocItems.length) return null;
             return (
-              <div className="mt-6 pt-4" style={{ borderTop: '1px solid #E2D8C4' }}>
-                <div className="text-xs font-mono uppercase tracking-wider mb-2" style={{ color: '#5C5040' }}>
+              <div className="mt-6 pt-4" style={{ borderTop: '1px solid var(--report-border)' }}>
+                <div className="text-xs font-mono uppercase tracking-wider mb-2" style={{ color: 'var(--report-muted)' }}>
                   In this report
                 </div>
                 <div className="space-y-0.5">
@@ -921,9 +958,9 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                         });
                       }}
                       className="w-full text-left px-2 py-1.5 rounded-lg text-xs font-display transition-all"
-                      style={{ color: '#5C5040', background: 'transparent', border: '1px solid transparent' }}
-                      onMouseEnter={e => { (e.target as HTMLButtonElement).style.color = '#20190F'; (e.target as HTMLButtonElement).style.background = 'rgba(226,216,196,0.3)'; }}
-                      onMouseLeave={e => { (e.target as HTMLButtonElement).style.color = '#5C5040'; (e.target as HTMLButtonElement).style.background = 'transparent'; }}
+                      style={{ color: 'var(--report-muted)', background: 'transparent', border: '1px solid transparent' }}
+                      onMouseEnter={e => { (e.target as HTMLButtonElement).style.color = 'var(--report-ink)'; (e.target as HTMLButtonElement).style.background = 'var(--report-panel)'; }}
+                      onMouseLeave={e => { (e.target as HTMLButtonElement).style.color = 'var(--report-muted)'; (e.target as HTMLButtonElement).style.background = 'transparent'; }}
                     >
                       {title}
                     </button>
@@ -935,67 +972,67 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         </div>
 
         {/* ── Report content ────────────────────── */}
-        <div className="report-column flex-1 overflow-y-auto relative"
+        <div className={`${styles.column} report-column flex-1 overflow-y-auto relative`}
              ref={reportRef}
              style={{ display: showReportColumn ? 'block' : 'none' }}>
           {report && (
             <div
               style={{
                 position: 'sticky', top: 0, left: 0, right: 0, height: 2,
-                background: '#E2D8C4', zIndex: 10,
+                background: 'var(--report-border)', zIndex: 10,
               }}
             >
               <div style={{
                 height: '100%',
-                background: 'linear-gradient(90deg, #1F4D2B, #2D6B3C)',
+                background: 'linear-gradient(90deg, var(--report-green), var(--report-green))',
                 width: loading ? '60%' : '100%',
                 transition: 'width 1s ease',
               }} />
             </div>
           )}
-          <div className="max-w-3xl mx-auto px-4 md:px-8 py-6 md:py-8">
+          <div className={styles.document}>
 
             {/* Print header */}
-            <div className="print-header mb-8 pb-6" style={{ borderBottom: '2px solid #E2D8C4' }}>
-              <div className="flex items-start justify-between gap-4">
+            <div className="print-header mb-8 pb-6" hidden={reading !== 'full'} style={{ borderBottom: '2px solid var(--report-border)' }}>
+              <div className={`${styles.coverTitle} flex items-start justify-between gap-4`}>
                 <div>
-                  <div className="font-display font-bold text-3xl mb-1" style={{ letterSpacing: '-0.02em', color: '#20190F' }}>
+                  <div className={`${styles.brand} font-sans font-semibold`}>
                     ImbewuField
                   </div>
-                  <div className="font-display text-base" style={{ color: '#20190F' }}>
-                    Permaculture Site Analysis Report
+                  <div className={`${styles.title} font-display font-bold`}>
+                    {label('Permaculture Site Analysis Report')}
                   </div>
                 </div>
                 <div className="text-right">
-                  <div className="text-xs font-mono" style={{ color: '#5C5040' }}>
-                    {new Date().toLocaleDateString('en-ZA', { year: 'numeric', month: 'long', day: 'numeric' })}
+                  <div className={`${styles.date} font-sans`}>
+                    {new Date(reportDate).toLocaleDateString(language === 'zu' ? 'zu-ZA' : 'en-ZA', { year: 'numeric', month: 'long', day: 'numeric' })}
                   </div>
                 </div>
               </div>
 
               {/* Site summary bar */}
-              {/* Two columns on a phone — six 60px-wide tiles wrap every value
-                  onto its own line and read as noise. Desktop keeps one row. */}
-              <div className={`mt-5 grid gap-3 grid-cols-2 ${['', '', 'md:grid-cols-2', 'md:grid-cols-3', 'md:grid-cols-4', 'md:grid-cols-5', 'md:grid-cols-6', 'md:grid-cols-7', 'md:grid-cols-8'][4 + (siteData ? 1 : 0) + (waterData ? 1 : 0) + (d.vegetation ? 1 : 0) + (d.bru ? 1 : 0)]}`}>
+              {/* Four readable tiles per row on desktop, two on smaller screens. */}
+              <div className={styles.summaryGrid}>
                 {[
-                  { label: 'Biome', value: ecology.label, color: bColor },
-                  { label: 'Rainfall', value: `${d.rainfall.annual}mm/yr`, color: '#235E86' },
-                  { label: 'Elevation', value: `${d.elevation.elevation}m · ${d.elevation.slopeDeg}°`, color: undefined },
-                  { label: 'Soil pH', value: `pH ${d.soil.ph} · OC ${d.soil.organicCarbon}%`, color: d.soil.ph < 5.5 || d.soil.ph > 7.5 ? '#D4922A' : '#2D6B3C' },
+                  { label: label('Biome'), value: ecology.label, color: bColor },
+                  { label: label('Rainfall'), value: `${d.rainfall.annual}mm/yr`, color: 'var(--report-blue)' },
+                  { label: label('Elevation'), value: `${d.elevation.elevation}m · ${d.elevation.slopeDeg}°`, color: undefined },
+                  { label: label('Soil pH'), value: d.soil.soilSource === 'estimate' || !d.soil.soilSource ? tr('Not measured — soil test needed', 'Awukahlolwa — hlola umhlabathi') : `pH ${d.soil.ph} · OC ${d.soil.organicCarbon}%`, color: 'var(--report-gold)' },
                   ...(d.vegetation ? [{ label: 'Vegetation', value: d.vegetation.vegUnit, color: bColor }] : []),
                   ...(d.bru ? [{ label: 'BRU Zone', value: `${d.bru.brucode} · approx. ${d.bru.nearestBrg}`, color: bColor }] : []),
-                  ...(siteData ? [{ label: 'Site Area', value: `${siteData.areaHa} ha`, color: '#2D6B3C' }] : []),
-                  ...(waterData ? [{ label: 'Water Storage', value: `~${waterData.estVolumeKL.toLocaleString()} kL`, color: '#235E86' }] : []),
+                  ...(facts?.boundary ? [{ label: tr('Mapped boundary', 'Umngcele obalazwe'), value: `${(facts.boundary.areaM2 / 10000).toFixed(3)} ha`, color: 'var(--report-green)' }] : []),
+                  ...(facts?.design ? [{ label: tr('Mapped growing area', 'Indawo yokutshala ebalazwe'), value: `${facts.design.growingAreaM2.toLocaleString()} m²`, color: 'var(--report-green)' }] : []),
+                  ...(facts?.water ? [{ label: tr('Tank capacity in plan', 'Umthamo wamathangi ohlelweni'), value: `${facts.water.statedStorageLitres.toLocaleString()} L`, color: 'var(--report-blue)' }] : []),
                 ].map(({ label, value, color }) => (
-                  <div key={label} className="p-3 rounded-xl" style={{ background: 'rgba(226,216,196,0.5)', border: '1px solid #E2D8C4' }}>
-                    <div className="text-xs font-mono mb-0.5" style={{ color: '#5C5040' }}>{label}</div>
-                    <div className="text-sm font-display font-semibold" style={{ color: color ?? '#20190F' }}>{value}</div>
+                  <div key={label} className={styles.summaryTile} style={{ borderTop: `3px solid ${color ?? 'var(--report-border)'}` }}>
+                    <div className={`${styles.summaryLabel} font-sans`}>{label}</div>
+                    <div className={`${styles.summaryValue} font-sans font-semibold`}>{value}</div>
                   </div>
                 ))}
               </div>
 
               {/* Coords */}
-              <div className="mt-3 text-xs font-mono" style={{ color: '#5C5040' }}>
+              <div className="mt-3 text-xs font-mono" style={{ color: 'var(--report-muted)' }}>
                 {Math.abs(d.lat).toFixed(4)}°S, {d.lon.toFixed(4)}°E · Köppen {d.climate.koppen} ({d.climate.koppenDesc}) ·
                 {d.rainfall.pattern} rainfall · {d.rainfall.wetSeason} wet / {d.rainfall.drySeason} dry ·
                 {d.climate.meanTemp}°C mean ({d.climate.minTemp}–{d.climate.maxTemp}°C)
@@ -1005,7 +1042,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                 // Rainfall intentionally omitted from this footnote — the "Rainfall" summary tile above
                 // is the single measured annual figure for this site; restating BRU's zone-average mm/yr
                 // here reads as a second, conflicting rainfall claim for a non-expert reader.
-                <div className="mt-1 text-xs font-mono" style={{ color: '#94876F' }}>
+                <div className="mt-1 text-xs font-mono" style={{ color: 'var(--report-muted)' }}>
                   {d.bru.attribution} — BRU {d.bru.brucode} (parent {d.bru.bruParent}): {d.bru.tmean}°C mean ({d.bru.tmin}–{d.bru.tmax}°C).
                   Zone name &ldquo;{d.bru.nearestBrg}&rdquo; is a best-effort climate match, not a verified BRU→Bioresource Group crosswalk.
                 </div>
@@ -1013,20 +1050,20 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             </div>
 
             {/* Saved places — GPS points for the farm (home, fields, water) */}
-            {savedPlaces && savedPlaces.length > 0 && (
-              <div className="mb-6 p-4 rounded-xl" style={{ background: 'rgba(226,216,196,0.5)', border: '1px solid #E2D8C4' }}>
-                <div className="text-xs font-mono uppercase tracking-wider mb-3" style={{ color: '#5C5040' }}>
-                  Saved Places · GPS Points
+            {reading === 'full' && savedPlaces && savedPlaces.length > 0 && (
+              <div className="mb-6 p-4 rounded-xl" style={{ background: 'var(--report-panel)', border: '1px solid var(--report-border)' }}>
+                <div className="text-xs font-mono uppercase tracking-wider mb-3" style={{ color: 'var(--report-muted)' }}>
+                  {label('Saved Places · GPS Points')}
                 </div>
                 <div className="space-y-1.5">
                   {savedPlaces.map((p) => (
-                    <div key={p.id} className="flex items-center gap-2.5 text-sm" style={{ color: '#20190F' }}>
+                    <div key={p.id} className={`${styles.placeRow} text-sm`} style={{ color: 'var(--report-ink)' }}>
                       <MapPin size={14} style={{ color: placeColor(p.label), flexShrink: 0 }} />
                       <span className="font-display font-semibold flex-1 min-w-0 truncate">{p.name}</span>
-                      <span className="font-sans text-xs" style={{ color: '#8C7A62' }}>
+                      <span className="font-sans text-xs" style={{ color: 'var(--report-muted)' }}>
                         {PLACE_LABELS.find((l) => l.v === p.label)?.name ?? 'Place'}
                       </span>
-                      <span className="font-mono text-xs" style={{ color: '#5C5040' }}>
+                      <span className="font-mono text-xs" style={{ color: 'var(--report-muted)' }}>
                         {Math.abs(p.lat).toFixed(5)}°S, {p.lon.toFixed(5)}°E
                       </span>
                     </div>
@@ -1036,19 +1073,19 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             )}
 
             {/* Captured satellite view */}
-            {mapCapture && (
-              <div className="mb-6 p-4 rounded-xl" style={{ background: 'rgba(226,216,196,0.5)', border: '1px solid #E2D8C4' }}>
-                <div className="text-xs font-mono uppercase tracking-wider mb-3" style={{ color: '#5C5040' }}>
-                  Site Satellite View
+            {showVisuals && mapCapture && (
+              <div className="mb-6 p-4 rounded-xl" style={{ background: 'var(--report-panel)', border: '1px solid var(--report-border)' }}>
+                <div className="text-xs font-mono uppercase tracking-wider mb-3" style={{ color: 'var(--report-muted)' }}>
+                  {label('Site Satellite View')}
                 </div>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={`data:image/jpeg;base64,${mapCapture}`}
                   alt="Captured satellite view of the site"
                   className="w-full rounded-lg"
-                  style={{ border: '1px solid #E2D8C4' }}
+                  style={{ border: '1px solid var(--report-border)' }}
                 />
-                <div className="text-xs font-mono mt-2" style={{ color: '#5C5040', opacity: 0.7 }}>
+                <div className="text-xs font-mono mt-2" style={{ color: 'var(--report-muted)', opacity: 0.7 }}>
                   Maxar satellite imagery · {Math.abs(d.lat).toFixed(4)}°S {d.lon.toFixed(4)}°E
                 </div>
               </div>
@@ -1057,7 +1094,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             {/* One honest line when generation went light — the farmer should never wonder why
                 this report's advice stopped quoting the masterplan. */}
             {wentLight && (
-              <div className="mb-4 px-4 py-3 rounded-xl font-sans" style={{ background: '#FDF4E3', border: '1px solid #E8D5A8', fontSize: 12.5, color: '#20190F' }}>
+              <div className="mb-4 px-4 py-3 rounded-xl font-sans" style={{ background: '#FDF4E3', border: '1px solid #E8D5A8', fontSize: 12.5, color: 'var(--report-ink)' }}>
                 The last attempt closed the app, so this report was made without sending your design
                 maps to be read — everything else is complete, and your maps still show below and in
                 the PDF. Generate again any time to retry with them.
@@ -1068,19 +1105,19 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                 Present whether or not a report has been generated: they are the
                 farmer's own work and the strongest evidence in the document.
                 Thumbnails here, full sheet on tap — see the memory note above. */}
-            {plates.length > 0 && (
-              <div className="mb-6 p-4 rounded-xl" style={{ background: 'rgba(226,216,196,0.5)', border: '1px solid #E2D8C4' }}>
-                <div className="text-xs font-sans uppercase tracking-wider mb-3" style={{ color: '#5C5040' }}>
-                  Your design maps · {plates.length} sheet{plates.length === 1 ? '' : 's'}
+            {showVisuals && plates.length > 0 && (
+              <div className="mb-6 p-4 rounded-xl" style={{ background: 'var(--report-panel)', border: '1px solid var(--report-border)' }}>
+                <div className="text-xs font-sans uppercase tracking-wider mb-3" style={{ color: 'var(--report-muted)' }}>
+                  {tr('Your saved design maps', 'Amamephu omklamo wakho agciniwe')} · {plates.length}
                 </div>
-                <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))' }}>
+                <div className={styles.mapGrid}>
                   {plates.map((plate, i) => (
                     <button
                       key={plate.id}
                       onClick={() => { void openSheet(plate); }}
                       className="text-left"
                       style={{
-                        background: '#FBF6EC', border: '1px solid #E2D8C4', borderRadius: 10,
+                        background: 'var(--report-paper)', border: '1px solid var(--report-border)', borderRadius: 10,
                         padding: 6, cursor: 'pointer', display: 'flex', flexDirection: 'column', gap: 6,
                       }}
                     >
@@ -1097,20 +1134,20 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                           style={{
                             display: 'flex', alignItems: 'center', justifyContent: 'center',
                             aspectRatio: '4 / 3', borderRadius: 6, background: 'rgba(31,77,43,0.06)',
-                            color: '#5C5040', fontSize: 11,
+                            color: 'var(--report-muted)', fontSize: 12,
                           }}
                         >
                           Tap to open
                         </div>
                       )}
-                      <span className="font-sans" style={{ fontSize: 11, color: '#20190F', lineHeight: 1.3 }}>
+                      <span className="font-sans" style={{ fontSize: 12, color: 'var(--report-ink)', lineHeight: 1.3 }}>
                         Figure {i + 1} — {stripInlineMarkdown(plate.label)}
                       </span>
                     </button>
                   ))}
                 </div>
-                <div className="font-sans mt-3" style={{ fontSize: 10.5, color: '#5C5040', opacity: 0.8 }}>
-                  These sheets are read by the report and appended to the exported PDF.
+                <div className="font-sans mt-3" style={{ fontSize: 12, color: 'var(--report-muted)', opacity: 0.8 }}>
+                  {tr('Saved plan sheets. Open a sheet to inspect it. Include images in the full PDF when you need them.', 'Amakhasi omklamo agciniwe. Vula ikhasi ukuze ulihlole. Faka izithombe ku-PDF egcwele uma uzidinga.')}
                 </div>
               </div>
             )}
@@ -1124,20 +1161,20 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                 more exist. A strip of everything on file would look more generous and be less true
                 — advice about the soil beside twelve pictures, four of which informed it, with
                 nothing marking which four. */}
-            {photoGallery.shown.length > 0 && (
-              <div className="mb-6 p-4 rounded-xl" style={{ background: 'rgba(226,216,196,0.5)', border: '1px solid #E2D8C4' }}>
-                <div className="text-xs font-sans uppercase tracking-wider mb-3" style={{ color: '#5C5040' }}>
-                  Your photos of this land · {photoGallery.shown.length} read
+            {showVisuals && photoGallery.shown.length > 0 && (
+              <div className="mb-6 p-4 rounded-xl" style={{ background: 'var(--report-panel)', border: '1px solid var(--report-border)' }}>
+                <div className="text-xs font-sans uppercase tracking-wider mb-3" style={{ color: 'var(--report-muted)' }}>
+                  {tr('Your saved site photos', 'Izithombe zakho zendawo ezigciniwe')} · {photoGallery.shown.length}
                   {photoGallery.total > photoGallery.shown.length ? ` of ${photoGallery.total}` : ''}
                 </div>
-                <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))' }}>
+                <div className="grid gap-3" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(230px, 1fr))' }}>
                   {photoGallery.shown.map((p, i) => (
                     <button
                       key={`${p.key}-${i}`}
                       onClick={() => setOpenPlate({ label: p.label, image: p.dataUrl })}
                       className="u-tap-target text-left"
                       style={{
-                        background: '#FBF6EC', border: '1px solid #E2D8C4', borderRadius: 10,
+                        background: 'var(--report-paper)', border: '1px solid var(--report-border)', borderRadius: 10,
                         padding: 6, cursor: 'pointer', display: 'flex', flexDirection: 'column', gap: 6,
                       }}
                     >
@@ -1147,38 +1184,45 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                         alt={p.label}
                         style={{ width: '100%', aspectRatio: '4 / 3', objectFit: 'cover', borderRadius: 6, display: 'block' }}
                       />
-                      <span className="font-sans" style={{ fontSize: 11, color: '#20190F', lineHeight: 1.3 }}>
+                      <span className="font-sans" style={{ fontSize: 12, color: 'var(--report-ink)', lineHeight: 1.3 }}>
                         Photo {i + 1} — {p.label}
                       </span>
                       {p.note && (
-                        <span className="font-sans" style={{ fontSize: 10, color: '#5C5040', opacity: 0.85, lineHeight: 1.3 }}>
+                        <span className="font-sans" style={{ fontSize: 12, color: 'var(--report-muted)', opacity: 0.85, lineHeight: 1.3 }}>
                           “{p.note}”
                         </span>
                       )}
                     </button>
                   ))}
                 </div>
-                <div className="font-sans mt-3" style={{ fontSize: 10.5, color: '#5C5040', opacity: 0.8 }}>
-                  {photoGallery.total > photoGallery.shown.length
-                    ? `These photos are read by the report and printed in the exported PDF. You have ${photoGallery.total} saved for this site; the report reads a spread across water, soil, trees and structures rather than several of one thing.`
-                    : 'These photos are read by the report and printed in the exported PDF.'}
+                <div className="font-sans mt-3" style={{ fontSize: 12, color: 'var(--report-muted)', opacity: 0.8 }}>
+                  {tr('Photos from your current site evidence. Saved report text may refer to an earlier selection. Photos can be included in the full PDF.', 'Izithombe ezisebufakazini bakho bendawo njengamanje. Umbiko ogciniwe ungase ubhekisele ezithombeni zangaphambili. Ungafaka izithombe ku-PDF egcwele.')}
                 </div>
               </div>
             )}
 
             {/* No sheets for this site: say so, rather than silently producing a report with no
                 maps and an appendix the farmer expected. */}
-            {plates.length === 0 && (
-              <div className="mb-6 p-4 rounded-xl font-sans" style={{ background: 'rgba(226,216,196,0.35)', border: '1px dashed #E2D8C4', fontSize: 12, color: '#5C5040' }}>
+            {reading === 'full' && plates.length === 0 && (
+              <div className="mb-6 p-4 rounded-xl font-sans" style={{ background: 'var(--report-panel)', border: '1px dashed var(--report-border)', fontSize: 12, color: 'var(--report-muted)' }}>
                 No design maps are saved for this site yet, so the report has none to show or to read
                 from. Render your plan sheets in the Design Map for this place and generate again.
               </div>
             )}
 
+            {showVisuals && facts?.crop && <section className={styles.plantPanel}>
+              <h2>{tr('Your planned crops', 'Izitshalo zakho ezihleliwe')}</h2>
+              <p>{tr('Saved planting rows. Catalogue illustrations show the crop, not a photograph of this garden.', 'Imigqa yokutshala egciniwe. Imidwebo yekhathalogi ikhombisa isitshalo, ayisona isithombe sale nsimu.')}</p>
+              <div className={styles.plantGrid}>{facts.crop.crops.map(c => {
+                const crop = CROPS.find(x => x.name === c.name);
+                const art = crop ? getCropArt(crop.key) : undefined;
+                return <article key={c.name}>{art && <img src={art} alt="" loading="lazy" />}<h3>{c.name}</h3><p>{c.bedLabels.join(', ')}</p><p>{c.sowMonths.join(' · ')}</p></article>;
+              })}</div>
+            </section>}
             {/* Rainfall chart in report */}
-            <div className="mb-6 p-4 rounded-xl" style={{ background: 'rgba(226,216,196,0.5)', border: '1px solid #E2D8C4' }}>
-              <div className="text-xs font-mono uppercase tracking-wider mb-3" style={{ color: '#5C5040' }}>
-                Monthly Rainfall Pattern
+            <div hidden={reading !== 'full'} className="mb-6 p-4 rounded-xl" style={{ background: 'var(--report-panel)', border: '1px solid var(--report-border)' }}>
+              <div className="text-xs font-mono uppercase tracking-wider mb-3" style={{ color: 'var(--report-muted)' }}>
+                {label('Monthly Rainfall Pattern')}
               </div>
               <RainfallChart rainfall={d.rainfall} />
             </div>
@@ -1193,16 +1237,16 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             )}
 
             {error && (
-              <div className="text-sm font-display p-4 rounded-xl" style={{ background: 'rgba(212,110,66,0.1)', border: '1px solid rgba(212,110,66,0.3)', color: '#D4922A' }}>
+              <div className="text-sm font-display p-4 rounded-xl" style={{ background: 'rgba(212,110,66,0.1)', border: '1px solid rgba(212,110,66,0.3)', color: 'var(--report-gold)' }}>
                 {error}
               </div>
             )}
 
             {/* Generated report */}
-            {report && (
-              <div className="report-body">
-                {renderReport(report)}
-                {loading && <span className="inline-block w-2 h-4 rounded-sm animate-pulse ml-1" style={{ background: '#2D6B3C' }} />}
+            {(report || reading !== 'full') && (
+              <div className={`${styles.body} report-body`}>
+                {reading === 'full' ? renderReport(report) : summaryPages.map((page, i) => <section className={styles.summaryPage} key={page.title}><span className={styles.summaryLabel}>{i + 1} / {summaryPages.length}</span><h2>{page.title}</h2>{page.lines.map((line, n) => <p key={n}>{line}</p>)}</section>)}
+                {loading && <span className="inline-block w-2 h-4 rounded-sm animate-pulse ml-1" style={{ background: 'var(--report-button)' }} />}
                 {/* Print-only footer — hidden on screen */}
                 <div className="print-footer" aria-hidden="true">
                   Generated by ImbewuField &mdash; imbewufield.vercel.app
@@ -1211,13 +1255,13 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             )}
 
             {/* Placeholder before generation */}
-            {!report && !loading && !error && (
+            {reading === 'full' && !report && !loading && !error && (
               <div className="text-center py-16">
-                <div className="text-base font-display font-semibold mb-4" style={{ color: '#5C5040' }}>Report</div>
-                <p className="font-display text-base mb-2" style={{ color: '#20190F' }}>
+                <div className="text-base font-display font-semibold mb-4" style={{ color: 'var(--report-muted)' }}>Report</div>
+                <p className="font-display text-base mb-2" style={{ color: 'var(--report-ink)' }}>
                   Select your sections and click Generate
                 </p>
-                <p className="font-display text-sm" style={{ color: '#5C5040' }}>
+                <p className="font-display text-sm" style={{ color: 'var(--report-muted)' }}>
                   {selected.size} section{selected.size !== 1 ? 's' : ''} selected
                   {photoAnalysis ? ' · photos included' : ''}
                 </p>

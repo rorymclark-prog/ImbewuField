@@ -314,16 +314,14 @@ test('a new plate page and a new photo page both stamp the footer of the page th
 // long enough to split continued on page two as bare numbers with nothing above them to say
 // which column was which. lib/crop-export-pdf.ts's table() already repeats its header on every
 // continuation page; this file's table case did not.
-test('a report table repeats its header when it breaks across a page', () => {
-  const src = readFileSync(new URL('../lib/report-pdf.ts', import.meta.url), 'utf8');
-  const tableCase = src.slice(src.indexOf("case 'table': {"), src.indexOf("default: {"));
-  assert.match(
-    tableCase,
-    /if \(need\([^)]*\)\s*&&\s*!bold\)\s*drawRow\(block\.headers,\s*true\)/,
-    'a data row that breaks the page must redraw the header row before continuing',
-  );
-  // need() must report whether it broke the page at all, or the table has nothing to act on.
-  assert.match(src, /const need = \(h: number\): boolean =>/, 'need() no longer reports whether it broke the page');
+test('a report table repeats its header and retains its final row across pages', async () => {
+  // Test the emitted document rather than pinning one pagination implementation.
+  const { buildReportPdf } = await import('../lib/report-pdf.ts');
+  const rows = Array.from({ length: 160 }, (_, i) => `| Crop ${i} | Recorded observation ${i} |`).join('\n');
+  const blob = await buildReportPdf(`# QA\n\n## Table\n| Crop | Field observation |\n|---|---|\n${rows}`, { biome: 'Fixture', lat: -27, lon: 31, rainfallMm: 800, meanTempC: 21, dateLabel: '2026-09-05' });
+  const output = await blob.text();
+  assert.ok((output.match(/Field observation/g) ?? []).length > 1, 'header must repeat');
+  assert.match(output, /Recorded observation 159/, 'the final row must survive pagination');
 });
 
 test('sheetPlate returns null instead of throwing when an image will not load', async () => {
@@ -342,5 +340,19 @@ test('sheetPlate returns null instead of throwing when an image will not load', 
     assert.equal(await sheetPlate('data:image/png;base64,BROKEN'), null);
   } finally {
     g.document = prevDoc; g.Image = prevImg;
+  }
+});
+
+test('ink summaries preserve an exact page count and disclose missing data', async () => {
+  const { reportSummaryPages, buildInkSummaryPdf } = await import('../lib/report-summary.ts');
+  const { DEMO_LOCATION } = await import('../lib/demo-site.ts');
+  const location = { ...DEMO_LOCATION, soil: { ...DEMO_LOCATION.soil, soilSource: 'estimate' as const } };
+  const one = reportSummaryPages(null, location, 1);
+  assert.match(one[0].lines.join('\n'), /Not measured/);
+  assert.doesNotMatch(one[0].lines.join('\n'), /pH 6\.5|subtotal: R 0/);
+  for (const count of [1, 5] as const) {
+    const pages = reportSummaryPages(null, location, count, 'zu');
+    const blob = await buildInkSummaryPdf(pages, '2026-09-05', 'zu');
+    assert.equal(((await blob.text()).match(/\/Type \/Page\b/g) ?? []).length, count);
   }
 });

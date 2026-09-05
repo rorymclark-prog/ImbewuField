@@ -112,7 +112,7 @@ test('the report export uses the selection, not the raw gallery', () => {
   const view = readFileSync(new URL('../components/ReportView.tsx', import.meta.url), 'utf8');
   assert.match(view, /selectReportPlates\(sheetMetas, PLAN_VERSION, SHEET_RENDER_RECIPE\)/,
     'the export is back to handing every saved sheet to the PDF');
-  assert.match(view, /sheets: plates,/, 'the PDF is not being given the selected plates');
+  assert.match(view, /sheets: includeImages \? plates : \[\],/, 'opting into PDF imagery must use the selected plates, while ink-saving export omits them');
   assert.ok(!/sheets: sheetMetas\.map/.test(view), 'the raw gallery mapping is back');
 });
 

@@ -35,6 +35,16 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '5 September',
+    sha: '32331d62',
+    changes: [
+      'Site reports show larger saved maps, photos and crop illustrations',
+      'Choose one-page, five-page or full reports and print with less ink',
+      'Report summaries and section controls now include isiZulu',
+      'Report figures follow your saved design and show missing readings',
+    ],
+  },
+  {
+    when: '5 September',
     sha: '2fc94c72',
     changes: [
       'NGOs can assign project assessments, review responses and share approved funder summaries',
