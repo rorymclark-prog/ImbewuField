@@ -344,3 +344,11 @@ test('a starter month the repeating plan also covers is not called first-season-
   assert.ok(kale);
   assert.deepEqual(kale.firstSeasonOnlyMonths, [], 'the annual plan genuinely covers September every year');
 });
+
+test('a site report excludes crop rows from another garden', () => {
+  const cropPlan = buildDemoCropPlan();
+  cropPlan.plantings.push({ ...cropPlan.plantings[0], id: 'unrelated-row', bedId: 'another-garden-bed', cropKey: 'not-a-site-crop' });
+  const facts = collectReportSiteFacts({ siteId: 'site:-27.72623,31.96304', lat: -27.726231, lon: 31.963044, canvas: buildDemoDesignCanvasState(), cropPlan });
+  assert.equal(facts.crop?.plantingCount, cropPlan.plantings.length - 1);
+  assert.ok(!facts.crop?.crops.some(c => c.name === 'not-a-site-crop'));
+});

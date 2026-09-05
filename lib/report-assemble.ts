@@ -25,6 +25,7 @@ import {
 } from '@/lib/report-structure';
 
 export interface AssembleInput {
+  language?: string;
   /** Cover page + document control. Owns the document's only `# ` heading. */
   cover: string;
   /** The code-authored Site at a Glance table (no title — see ReportHeaderInput.omitTitle). */
@@ -57,7 +58,7 @@ export function assembleReportDocument(input: AssembleInput): AssembledReport {
   // 3 — then sections, which also yields the heading list the contents needs.
   const numbered = numberSections(figured.markdown);
 
-  const contents = buildContents(numbered.headings);
+  const contents = buildContents(numbered.headings).replace('## Contents', input.language === 'zu' ? '## Okuqukethwe' : '## Contents');
   const figuresList = buildListOfFigures(figured.figures);
 
   // 4 — front matter goes in only now, and is itself never numbered (see UNNUMBERED_TITLES).

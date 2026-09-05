@@ -45,7 +45,7 @@ export function buildMonitoringPlan(facts: ReportSiteFacts | null | undefined): 
   rows.push({
     indicator: 'Harvest by crop',
     question: 'Is the land actually producing food, and which crops carry it?',
-    baseline: 'Nothing logged yet — the first month you record becomes the baseline',
+    baseline: 'The report does not read harvest logs; record the starting period before support, or label a later baseline as retrospective',
     method: 'Weigh each pick and log it against the crop',
     frequency: 'Every harvest',
     recordedIn: 'Harvest log',
@@ -55,7 +55,7 @@ export function buildMonitoringPlan(facts: ReportSiteFacts | null | undefined): 
     indicator: 'Sold vs kept',
     question: 'How much of the harvest was sold, and how much fed the household?',
     baseline: 'Set by the first full month of both logs',
-    method: 'Log each sale (crop, kg, amount). What was harvested and not sold is what stayed home',
+    method: 'Log sales, home use, donations, losses and stored stock separately. Harvest minus sales is not household consumption.',
     frequency: 'Every sale',
     recordedIn: 'Sales ledger',
   });
@@ -73,7 +73,7 @@ export function buildMonitoringPlan(facts: ReportSiteFacts | null | undefined): 
     baseline: treeTotal > 0
       ? `${treeTotal} placed on the plan${trees.length ? ` (${trees.map((g) => `${g.name} x${g.count}`).join(', ')})` : ''}`
       : 'No trees placed on the plan yet',
-    method: 'Walk the plan and count living plants against the number placed. Record replacements separately from survivors',
+    method: 'First verify how many were actually planted and when. Count living plants against that planting cohort, not proposed map items; record replacements separately.',
     frequency: 'Every six months, and after any drought or fire',
     recordedIn: 'Field journal',
   });
@@ -113,7 +113,7 @@ export function buildMonitoringPlan(facts: ReportSiteFacts | null | undefined): 
       indicator: 'Growing area in use',
       question: 'How much of the drawn growing area is actually planted?',
       baseline: `${groupDigits(design.growingAreaM2)} m² drawn across ${parts.join(' and ')}`,
-      method: 'Count the beds carrying a crop against the beds drawn',
+      method: 'Measure the physical beds carrying a crop, counting each once. A saved crop plan is planned use, not confirmation of actual planting.',
       frequency: 'Monthly',
       recordedIn: 'Crop planner',
     });
@@ -132,7 +132,7 @@ export function monitoringMarkdown(rows: MonitoringRow[]): string {
     out.push(`| ${r.indicator} | ${r.question} | ${r.baseline} | ${r.method} | ${r.frequency} | ${r.recordedIn} |`);
   }
   out.push('');
-  out.push('Take the baseline readings BEFORE the first work starts. A baseline measured after the fact is not a baseline, and every claim of improvement made against it is unprovable.');
+  out.push('Take baseline readings before support starts. Label any later or recalled starting figures clearly; compare matching periods and do not attribute every change to the project.');
   out.push('');
   return out.join('\n');
 }

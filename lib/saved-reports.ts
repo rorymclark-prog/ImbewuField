@@ -4,6 +4,7 @@ import { isSampleMode } from './sample-mode';
 import { isValidLocationData, isValidSiteData, isValidWaterData } from './last-site';
 import type { SavedPlace } from './saved-places';
 import { designSiteIdFromLocation } from './design-studio';
+import { normaliseReportSiteFacts, type ReportSiteFacts } from './report-site-facts';
 
 // A permaculture report saved locally so the farmer can re-read it without
 // regenerating (each generation is an AI call). We store the markdown plus a
@@ -17,6 +18,8 @@ export interface SavedReport {
   location: LocationData;
   siteData?: SiteData;
   waterData?: WaterData;
+  /** The measured design/crop/BOQ facts used when this report was generated. */
+  facts?: ReportSiteFacts;
 }
 
 const KEY = 'imbewu_saved_reports';
@@ -46,6 +49,8 @@ function normaliseReport(value: unknown): SavedReport | null {
   };
   if (isValidSiteData(row.siteData)) report.siteData = row.siteData;
   if (isValidWaterData(row.waterData)) report.waterData = row.waterData;
+  const facts = normaliseReportSiteFacts(row.facts);
+  if (facts) report.facts = facts;
   return report;
 }
 

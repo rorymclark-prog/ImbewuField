@@ -318,10 +318,11 @@ export function collectReportSiteFacts(input: CollectFactsInput): ReportSiteFact
   // ── The crop plan already entered — WHAT and WHERE and WHEN, deliberately no yields ──
   try {
     const plan = input.cropPlan ?? loadCropPlan();
-    const plantings = plan?.plantings ?? [];
+    const bedLabelById = new Map(bedsFromDesignCanvas(canvas).map(bed => [bed.id, bed.label]));
+    // The account stores plans for several gardens together. Only rows whose
+    // physical bed belongs to this report's canvas describe this site.
+    const plantings = (plan?.plantings ?? []).filter(p => bedLabelById.has(p.bedId));
     if (plantings.length) {
-      const bedLabelById = new Map<string, string>();
-      for (const bed of bedsFromDesignCanvas(canvas)) bedLabelById.set(bed.id, bed.label);
       const byCrop = new Map<string, { name: string; sowMonths: Set<number>; bedLabels: Set<string>; alreadyGrowing: boolean; recurringMonths: Set<number>; onceMonths: Set<number> }>();
       const bedsUsed = new Set<string>();
       for (const planting of plantings) {
@@ -339,7 +340,7 @@ export function collectReportSiteFacts(input: CollectFactsInput): ReportSiteFact
           // rows: merged in, its month reads to the report model as ground the
           // farmer's annual plan covers every year, which is the opposite of
           // what a `once` row means.
-          if (typeof planting.once === 'string') entry.onceMonths.add(planting.sowMonth);
+          if (typeof planting.once === 'string' || planting.existing) entry.onceMonths.add(planting.sowMonth);
           else entry.recurringMonths.add(planting.sowMonth);
         }
         const label = bedLabelById.get(planting.bedId);
