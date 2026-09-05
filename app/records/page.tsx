@@ -1505,7 +1505,7 @@ export default function RecordsPage() {
                       after the ledger and before the per-crop numbers: it is the
                       picture those numbers are the detail of. */}
                   <FinanceGraphs production={production} sales={sales} invoices={invoices} source={planSource} settings={cashflowSettings} wide />
-                  <AreaReturnCards beds={planSource.beds} sales={sales} expenses={expenses} invoices={invoices} period={period} now={now} loading={dataLoading || !planSource.loaded} />
+                  <AreaReturnCards sample={sampling} beds={planSource.beds} sales={sales} expenses={expenses} invoices={invoices} period={period} now={now} loading={dataLoading || !planSource.loaded} />
                   <FarmMetrics sales={sales} production={production} expenses={expenses} invoices={invoices} period={period} now={now} loading={dataLoading} plantings={planSource.plantings} beds={planSource.beds} planLoaded={planSource.loaded} />
                   <ComingUpHarvests source={planSource} prices={priceOverrides} settings={cashflowSettings} />
                   <HarvestReconciliation production={production} sales={sales} period={period} now={now} loading={dataLoading} plantings={planSource.plantings} beds={planSource.beds} planLoaded={planSource.loaded} />
@@ -1536,7 +1536,7 @@ export default function RecordsPage() {
                   <FinanceGraphs production={production} sales={sales} invoices={invoices} source={planSource} settings={cashflowSettings} />
                   <ComingUpHarvests source={planSource} prices={priceOverrides} settings={cashflowSettings} />
                   <HarvestReconciliation production={production} sales={sales} period="month" now={now} loading={dataLoading} plantings={planSource.plantings} beds={planSource.beds} planLoaded={planSource.loaded} />
-                  <AreaReturnCards beds={planSource.beds} sales={sales} expenses={expenses} invoices={invoices} period="month" now={now} loading={dataLoading || !planSource.loaded} />
+                  <AreaReturnCards sample={sampling} beds={planSource.beds} sales={sales} expenses={expenses} invoices={invoices} period="month" now={now} loading={dataLoading || !planSource.loaded} />
                   <FarmMetrics sales={sales} production={production} expenses={expenses} invoices={invoices} period="month" now={now} loading={dataLoading} plantings={planSource.plantings} beds={planSource.beds} planLoaded={planSource.loaded} />
                   {/* Never hidden behind a tab switch: "no data" may only mean "not reachable",
                       and every figure on this page is wrong in that case. */}

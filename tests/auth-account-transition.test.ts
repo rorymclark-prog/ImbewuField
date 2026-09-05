@@ -43,6 +43,8 @@ let authListener: AuthListener | null = null;
 const pendingProfiles: PendingProfile[] = [];
 
 const harness = {
+  popupCalls: 0,
+  redirectCalls: 0,
   firebase: { auth: fakeAuth },
   installAuthListener(listener: AuthListener) {
     authListener = listener;
@@ -64,6 +66,8 @@ Object.assign(globalThis, {
 Object.defineProperty(globalThis, 'window', {
   configurable: true,
   value: {
+    ontouchstart: null,
+    matchMedia: () => ({ matches: true }),
     sessionStorage: {
       getItem: () => null,
     },
@@ -91,9 +95,10 @@ export const sendPasswordResetEmail = async () => {};
 export const updatePassword = async () => {};
 export const reauthenticateWithCredential = async () => {};
 export const signInWithPopup = async () => {
-  throw new Error('not used by this test');
+  harness.popupCalls++;
+  throw { code: 'auth/popup-blocked' };
 };
-export const signInWithRedirect = async () => {};
+export const signInWithRedirect = async () => { harness.redirectCalls++; };
 export class GoogleAuthProvider {}
 export const EmailAuthProvider = {
   credential: () => ({ providerId: 'password' }),
@@ -271,6 +276,10 @@ test('a direct A to B switch unmounts account state and rejects a delayed A prof
   assert.equal(renderedText(renderer), 'farmer-a|Farmer A|1|A-only-state');
 
   assert.ok(latestAuth);
+  const googleError = await (latestAuth as ReturnType<typeof useAuth>).signInWithGoogle();
+  assert.equal(harness.popupCalls, 1, 'touch devices must use popup auth to avoid Safari redirect storage loss');
+  assert.equal(harness.redirectCalls, 0, 'a blocked popup must not silently fall back to the broken redirect');
+  assert.match(googleError ?? '', /Allow popups/, 'a blocked popup must give the farmer a recovery action');
   let staleRefresh: Promise<void> | null = null;
   act(() => {
     staleRefresh = latestAuth?.refreshProfile() ?? null;
