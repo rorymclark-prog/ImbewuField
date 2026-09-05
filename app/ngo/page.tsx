@@ -17,6 +17,7 @@ import ContactInbox from '@/components/ContactInbox';
 import LessonLink from '@/components/design/LessonLink';
 import MenuButton from '@/components/MenuButton';
 import type { UserRole } from '@/lib/db/types';
+const ProductionAreas = dynamic(() => import('@/components/ProductionAreas'), { ssr: false });
 const MelDashboard = dynamic(() => import('@/components/MelDashboard'), { ssr: false });
 const FunderAssessments = dynamic(() => import('@/components/funder/FunderAssessments'), { ssr: false });
 
@@ -54,7 +55,7 @@ export default function NgoPage() {
   // client-only, so a render-time read would disagree with the server-rendered HTML.
   const [sample, setSample] = useState(false);
   useEffect(() => { setSample(isSampleMode()); }, []);
-  const [view, setView] = useState<'cohort' | 'gardens' | 'messages' | 'assessments' | 'funder-preview'>('cohort');
+  const [view, setView] = useState<'cohort' | 'gardens' | 'messages' | 'assessments' | 'funder-preview' | 'area'>('cohort');
   const [msgUnread, setMsgUnread] = useState(0);
 
   useEffect(() => {
@@ -110,6 +111,7 @@ export default function NgoPage() {
           { key: 'gardens',  label: 'Gardens',  icon: Sprout,    badge: 0 },
           { key: 'messages', label: 'Messages', icon: Inbox,     badge: msgUnread },
           { key: 'assessments', label: 'Assessments', icon: BarChart3, badge: 0 },
+          { key: 'area', label: 'Production area', icon: BarChart3, badge: 0 },
           { key: 'funder-preview', label: 'Funder summary preview', icon: BarChart3, badge: 0 },
         ] as const).map(({ key, label, icon: Icon, badge }) => (
           <button
@@ -156,8 +158,9 @@ export default function NgoPage() {
           <ContactInbox recipient="organisation" onUnreadCount={setMsgUnread} />
         </div>
       )}
+      {view === 'area' && <div className="flex-1 flex overflow-hidden"><ProductionAreas /></div>}
       {view === 'assessments' && <div className="flex-1 flex overflow-hidden" style={{ paddingBottom: 64 }}><MelDashboard /></div>}
-      {view === 'funder-preview' && <div className="flex-1 flex overflow-hidden"><FunderAssessments /></div>}
+      {view === 'funder-preview' && <div className="flex-1 flex overflow-hidden"><div className="flex-1 overflow-y-auto"><FunderAssessments /><ProductionAreas publishedOnly /></div></div>}
 
       <TabBar />
     </div>

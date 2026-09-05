@@ -66,6 +66,8 @@ const STAFF_ROUTES = [
 
 /** Files whose type she reads. Floor of 12px, no allowance. */
 const FARMER_SURFACES: Record<string, string> = {
+  'components/AreaReturnCards.tsx': 'farmers compare the recorded return from their growing space',
+  'components/ProductionAreas.tsx': 'staff record and read checked production areas',
   'components/MelDashboard.tsx': 'farmer assessment forms and NGO analysis',
   'components/funder/FunderAssessments.tsx': 'approved assessment summaries',
   'app/home/page.tsx': 'the first screen, and the tile subtitles the audit was about',

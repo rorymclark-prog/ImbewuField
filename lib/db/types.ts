@@ -82,6 +82,7 @@ export interface ProductionLog {
 }
 
 export interface SalesLog {
+  enterprise?: import('../area-returns').GrowingEnterprise | null;
   id: string; profile_id: string; garden_id: string | null; crop: string; kg: number;
   amount: number; buyer: string | null; sold_at: string; created_at: string;
   /** Present when this crop-sale row was generated from a paid invoice. */
@@ -92,6 +93,7 @@ export interface SalesLog {
 export type ExpenseCategory = 'feed' | 'seed' | 'fuel' | 'equipment' | 'labour' | 'transport' | 'other';
 
 export interface ExpenseLog {
+  enterprise?: import('../area-returns').GrowingEnterprise | null;
   id: string; profile_id: string; garden_id: string | null; item: string;
   amount: number; supplier: string | null; spent_at: string; created_at: string;
   category?: ExpenseCategory | null;

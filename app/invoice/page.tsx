@@ -128,6 +128,7 @@ export default function InvoicePage() {
   const [termsDays, setTermsDays] = useState<number | null>(null);
   const [reference, setReference] = useState('');
   const [notes, setNotes] = useState('');
+  const [enterprise, setEnterprise] = useState<'vegetables' | 'staples' | 'other' | ''>('');
 
   const [letterhead, setLetterhead] = useState<SellerLetterhead>(EMPTY_LETTERHEAD);
   const [customers, setCustomers] = useState<Customer[]>([]);
@@ -342,6 +343,7 @@ export default function InvoicePage() {
       dueDateISO: due ?? undefined,
       reference: reference.trim() || undefined,
       notes: notes.trim() || undefined,
+      enterprise: enterprise || undefined,
       status: existing?.status ?? 'unpaid',
       paidAt: existing?.paidAt,
     });
@@ -417,6 +419,7 @@ export default function InvoicePage() {
     // Terms and the standing note come back from the letterhead, not from the invoice just closed.
     setTermsDays(letterhead.paymentTermsDays);
     setNotes(letterhead.notes);
+    setEnterprise('');
     setShowSaved(false);
   }
 
@@ -434,6 +437,7 @@ export default function InvoicePage() {
     setNextId(inv.items.length + 1);
     setReference(inv.reference ?? '');
     setNotes(inv.notes ?? '');
+    setEnterprise(inv.enterprise === 'shared' ? '' : inv.enterprise ?? '');
     // Reconstruct the term from the two stored dates rather than reusing the current default,
     // so reopening an invoice cannot quietly change what it says is due and when.
     setTermsDays(inv.dueDateISO
@@ -828,6 +832,13 @@ export default function InvoicePage() {
                 <input value={reference} onChange={(e) => setReference(e.target.value)}
                   placeholder="Their order number — optional"
                   className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5" style={FIELD} />
+              </label>
+              <label className="block">
+                <FieldLabel>Growing area for these sales</FieldLabel>
+                <select value={enterprise} onChange={e => setEnterprise(e.target.value as typeof enterprise)} className="w-full text-sm rounded-xl px-3 py-2.5" style={FIELD}>
+                  <option value="">Unassigned / mixed invoice</option><option value="vegetables">Vegetable beds</option><option value="staples">Staple plots</option><option value="other">Orchard / other</option>
+                </select>
+                <span className="block text-xs mt-1">For your R/m² records. Choose only if every line belongs to this area.</span>
               </label>
               <label className="block">
                 <FieldLabel>Note on the invoice</FieldLabel>

@@ -734,11 +734,11 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
   // Lima contextual read — one-line from actual data
   const limaRead = (() => {
     const r = data.rainfall.annual;
-    const soil = data.soil.textureClass.toLowerCase();
-    const crops = data.biome.keySpecies.slice(0, 2).join(' and ');
-    const waterNote = r < 400 ? `Only ${r}mm of rain so water harvesting is essential.` : `${r}mm of rain — enough for year-round production.`;
+    const soilMeasured = data.soil.soilSource === 'lab';
+    const waterNote = r < 400 ? `Only ${r}mm of rain so water harvesting is essential.` : `${r}mm annual rainfall estimate. Check dry-season supply before planning year-round crops.`;
     const frostNote = data.climate.minTemp < 2 ? ' Protect against frost in winter.' : '';
-    return `${waterNote} This ${soil} soil works well for ${crops || 'food trees and vegetables'}.${frostNote} Want a full planting plan?`;
+    const soilNote = soilMeasured ? ' Use your soil test and local crop requirements to plan amendments.' : ' Soil conditions need checking on site; arrange a soil test.';
+    return `${waterNote}${soilNote}${frostNote} Want a full planting plan?`;
   })();
 
   return (
@@ -1043,7 +1043,9 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                 (data.climate.windSpeed * 3.6) > 18
                   ? { color: '#D4922A', text: t('insightHighWind').replace('{kmh}', (data.climate.windSpeed * 3.6).toFixed(0)).replace('{dir}', data.climate.windFromSummer) }
                   : { color: '#5C5040', text: t('insightModerateWind').replace('{dir}', data.climate.windFromSummer) },
-                data.soil.organicCarbon < 1.5
+                data.soil.soilSource !== 'lab' && data.soil.soilSource !== 'soilgrids'
+                  ? { color: '#5C5040', text: appLang === 'zu' ? 'Umhlabathi awukahlolwa. Hlela ukuhlolwa ngaphambi kokuthenga izinto zokuwulungisa.' : 'Soil carbon is not measured here. Arrange a soil test before amendment purchases.' }
+                  : data.soil.organicCarbon < 1.5
                   ? { color: '#C07A1E', text: t('insightLowSoilCarbon').replace('{oc}', String(data.soil.organicCarbon)) }
                   : { color: '#1F4D2B', text: t('insightGoodSoilCarbon').replace('{oc}', String(data.soil.organicCarbon)) },
               ] as { color: string; text: string }[]).map((ins, i) => (

@@ -35,6 +35,15 @@ export interface ReleaseNote {
 export const RELEASE_NOTES: ReleaseNote[] = [
   {
     when: '5 September',
+    sha: 'dd019b65',
+    changes: [
+      'Track recorded returns per m² for vegetable beds, staple plots and both together',
+      'Assign sales and costs to growing areas without guessing how shared costs are split',
+      'NGOs can record checked production areas and share selected totals with funders',
+    ],
+  },
+  {
+    when: '5 September',
     sha: '32331d62',
     changes: [
       'Site reports show larger saved maps, photos and crop illustrations',

@@ -636,7 +636,7 @@ const T_en: Dict = {
   insightFrostFree: 'Frost-free year-round ({tempC}°C min). Tropical and subtropical food trees are viable here.',
   insightHighWind: 'High wind exposure ({kmh} km/h avg). Windbreaks on the {dir} side are your highest-return first investment.',
   insightModerateWind: 'Moderate wind from {dir}. A single hedge row on the windward side reduces crop stress noticeably.',
-  insightLowSoilCarbon: 'Low soil carbon ({oc}%). Compost, kraal manure, and thick mulch layers will double your yield within two seasons.',
+  insightLowSoilCarbon: 'Reported soil carbon ({oc}%). Check the source and soil test; suitable organic matter may help, but yield gains are not guaranteed.',
   insightGoodSoilCarbon: 'Reasonable soil carbon ({oc}%). Maintain with compost and minimal tillage to hold gains.',
   climateRainfallInsight: 'Most rain falls {wet}. Store storm-water to carry the {dry} dry spell.',
   reportCompletenessLabel: 'Report completeness',
