@@ -108,7 +108,7 @@ export default function PublicCommunityProfilePage() {
             <div className="flex items-center gap-4" style={{ marginBottom: 18 }}>
               <div style={{ width: 64, height: 64, borderRadius: '50%', overflow: 'hidden', flexShrink: 0, background: '#1F4D2B', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 {profile.photos?.[0]
-                  ? <img src={profile.photos[0]} alt={profile.display_name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  ? <img data-photo-preview src={profile.photos[0]} alt={profile.display_name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   : <span style={{ color: '#F7F2E9', fontWeight: 700, fontSize: 22 }}>{(profile.display_name?.[0] ?? '?').toUpperCase()}</span>}
               </div>
               <div>

@@ -48,7 +48,7 @@ export default function NearbyMap({ people, onOpenProfile }: Props) {
                 boxShadow: '0 2px 8px rgba(0,0,0,0.25)',
               }}>
                 {p.photos?.[0]
-                  ? <img src={p.photos[0]} alt={p.display_name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  ? <img data-photo-preview src={p.photos[0]} alt={p.display_name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   : <span style={{ color: '#F7F2E9', fontWeight: 700, fontSize: 14 }}>{(p.display_name?.[0] ?? '?').toUpperCase()}</span>}
               </div>
             </div>

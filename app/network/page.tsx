@@ -477,7 +477,7 @@ export default function NetworkPage() {
                   }}
                 >
                   <div className="flex items-center gap-2">
-                    {farmer.photoUrl && <img src={farmer.photoUrl} alt="" width={44} height={44} style={{ borderRadius: '50%', objectFit: 'cover', flexShrink: 0 }} />}
+                    {farmer.photoUrl && <img data-photo-preview src={farmer.photoUrl} alt="" width={44} height={44} style={{ borderRadius: '50%', objectFit: 'cover', flexShrink: 0 }} />}
                     <span
                       style={{
                         width: 9,

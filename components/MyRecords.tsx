@@ -345,7 +345,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
           {form.photoPreview && (
             <div className="mb-2 relative w-full h-24 overflow-hidden rounded-lg">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <img data-photo-preview
                 src={form.photoPreview}
                 alt="Preview"
                 className="w-full h-full object-cover"
@@ -698,7 +698,7 @@ function ProductionList({ items }: { items: ProductionLog[] }) {
           {item.photo_url ? (
             <div className="w-10 h-10 rounded-lg overflow-hidden flex-shrink-0">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <img data-photo-preview
                 src={item.photo_url}
                 alt={item.crop}
                 className="w-full h-full object-cover"

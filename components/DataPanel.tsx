@@ -1759,7 +1759,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                     <div style={{ display: 'flex', gap: 5 }}>
                       {groupPhotos.map((ev) => (
                         <div key={ev.id} style={{ width: 34, height: 34, borderRadius: 7, overflow: 'hidden', background: '#E0D6C2', flexShrink: 0 }}>
-                          {ev.dataUrl && <img src={ev.dataUrl} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}
+                          {ev.dataUrl && <img data-photo-preview src={ev.dataUrl} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}
                         </div>
                       ))}
                       <div style={{
@@ -1799,7 +1799,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
                   <div style={{ display: 'flex', gap: 6 }}>
                     {allPhotos.slice(0, 4).map((ev) => (
                       <div key={ev.id} style={{ flex: 1, height: 44, borderRadius: 8, overflow: 'hidden', background: '#E0D6C2', minWidth: 0 }}>
-                        {ev.dataUrl && <img src={ev.dataUrl} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}
+                        {ev.dataUrl && <img data-photo-preview src={ev.dataUrl} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />}
                       </div>
                     ))}
                     <div style={{ width: 44, height: 44, borderRadius: 8, border: '1.5px dashed #C3B695', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
@@ -1923,7 +1923,7 @@ export default function DataPanel({ data, loading, coords, mapCapture, siteData,
             ) : (
               <div className="flex gap-2 pb-1 overflow-x-auto">
                 {promptPreviews.map((url, i) => (
-                  <img key={i} src={url} alt="" className="rounded-xl object-cover flex-shrink-0" style={{ width: 68, height: 68, border: '1.5px solid rgba(31,77,43,0.2)' }} />
+                  <img data-photo-preview key={i} src={url} alt="" className="rounded-xl object-cover flex-shrink-0" style={{ width: 68, height: 68, border: '1.5px solid rgba(31,77,43,0.2)' }} />
                 ))}
                 {promptPreviews.length < 6 && (
                   <button

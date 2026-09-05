@@ -18,7 +18,9 @@
 
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
+import { SAMPLE_GARDENS, SAMPLE_PARTICIPANTS } from '../lib/sample-gardens';
+import { samplePortrait } from '../lib/sample-media';
 
 const dash = readFileSync(new URL('../components/NgoDashboard.tsx', import.meta.url), 'utf8');
 const funder = readFileSync(new URL('../app/funder/page.tsx', import.meta.url), 'utf8');
@@ -34,13 +36,11 @@ test('NgoDashboard enters demo mode in sample mode, not only when the backend is
   assert.match(dash, /if \(!fb \|\| isSampleMode\(\)\) \{ setAuthReady\(true\); return; \}/);
 });
 
-test('the sample gardens live in the component; the query layer stays empty on purpose', () => {
-  // listGardens() answering [] in sample mode is CORRECT — an org-scoped Firestore
-  // query has no meaning in the sandbox. If you are here because you moved the sample
-  // fallback into lib/db/queries.ts: don't. NgoDashboard owns the demo dataset
-  // (SAMPLE_GARDENS + seeded gardeners); two sources of sample gardens will drift.
+test('one shared sample catalog feeds the dashboard; the live query layer stays empty', () => {
+  // The catalog moved to a pure shared module so regional samples can be checked.
+  // It still never populates a live Firestore query or creates a second dataset.
   assert.match(queries, /export async function listGardens\(\): Promise<Garden\[\]> \{\s*\n\s*if \(isSampleMode\(\)\) return \[\];/);
-  assert.match(dash, /const SAMPLE_GARDENS: Garden\[\] = \[/);
+  assert.match(dash, /import \{ SAMPLE_GARDENS, SAMPLE_PARTICIPANTS \} from '@\/lib\/sample-gardens'/);
 });
 
 test('/funder and /ngo stay reachable in sample mode instead of bouncing to /login', () => {
@@ -68,4 +68,23 @@ test('the default cohort view demos off the absence of a user, which covers samp
   // Sample mode never has a user, so Boolean(user) is the load-bearing expression:
   // change it to "backend configured" and the funder landing view goes blank in demos.
   assert.match(cohort, /useNetworkPortfolio\(Boolean\(user\)\)/);
+});
+
+
+test('the demo offers distinct garden settings and regional participant photos that exist', () => {
+  assert.ok(SAMPLE_GARDENS.length >= 15);
+  assert.equal(new Set(SAMPLE_GARDENS.map(g => g.id)).size, SAMPLE_GARDENS.length);
+  assert.equal(new Set(SAMPLE_GARDENS.map(g => g.name)).size, SAMPLE_GARDENS.length);
+  for (const kind of ['Homestead garden', 'Commercial garden', 'Crèche garden', 'School garden', 'Community garden']) {
+    assert.ok(SAMPLE_GARDENS.some(g => g.kind === kind), `Missing ${kind}`);
+  }
+  const sotho = SAMPLE_GARDENS.filter(g => g.language === 'Sesotho');
+  assert.ok(sotho.length >= 3);
+  for (const garden of SAMPLE_GARDENS) {
+    assert.ok(garden.areaM2 && garden.areaM2 > 0);
+    assert.ok(Number.isFinite(garden.lat) && Number.isFinite(garden.lon));
+    const people = SAMPLE_PARTICIPANTS[garden.language!];
+    assert.ok(people?.length >= 4, garden.name);
+    for (const person of people) assert.ok(existsSync(`public${samplePortrait(person)}`), person);
+  }
 });

@@ -18,7 +18,7 @@ This register describes product capability, not verified project outcomes.
 | Samples | Role chooser, disposable fictional data, 15 portraits, partner logos, varied gardens | Separate demo registers are not one verified dataset |
 | Training evidence | Venue name, date, attendance, notes, photos and assessment reference | Online saving; offline reliability not yet audited |
 
-## Current implementation batch — awaiting deployment verification
+## Farm demo and tour — deployed 5 September 2026 (a83605e)
 
 - Three sample mentors, each with 15 uniquely assigned fictional gardens (45 total).
   Five garden types per group; illustrative areas including one-acre commercial sites.
@@ -43,14 +43,24 @@ This register describes product capability, not verified project outcomes.
   signed-out visitors, private platform-admin inbox. Server-authenticated,
   bounded payloads and idempotent retry. No automatic screenshot or farm upload.
 
+## Garden directory and photo viewer — current batch
+
+- Organisation/funder garden directory: 18 distinct fictional gardens, including
+  homestead, commercial, crèche, school, community and food-forest settings.
+- Regional fictional participant groups; four Sesotho-speaking sample gardens
+  around Botshabelo. Language labels describe the sample group, not an entire town.
+  Reuses existing generated adult portraits; regional cast is Black African.
+- Tap profile, site, training-venue or sample produce photos to open a large viewer;
+  keyboard Enter/Space, Close/Escape, enlarge/fit and return to the original photo.
+  Native modal dialog displays above the sample banner. Diagrams and crop icons
+  retain their existing actions. Browser visual verification is still outstanding.
+
 ## Agreed work still to complete
 
 - Broader demo unification: the farm pack, national garden directory and mentor
   portfolio remain separate illustrative datasets. Do not present their totals
   as one reconciled project. Soil / household examples in the farm pack do not
   constitute lab ingestion or a completed validated MEL household instrument.
-- Profile-photo enlargement throughout the app: accessible large preview, Close
-  and Escape support, above the sample banner, no accidental profile navigation.
 - Mentor resource area: farmer course, facilitation toolkit and mentorship
   toolkit. Reuse approved material; do not invent or rewrite lesson bodies.
   Lesson previews must not complete a farmer's learning progress.

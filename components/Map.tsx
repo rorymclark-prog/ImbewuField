@@ -2368,7 +2368,7 @@ export default function PermaMap({ onLocationSelect, selectedLocation, loading, 
                 boxShadow: '0 2px 8px rgba(0,0,0,0.25)',
               }}>
                 {p.photoUrl
-                  ? <img src={p.photoUrl} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  ? <img data-photo-preview src={p.photoUrl} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   : <span style={{ color: 'white', fontWeight: 700, fontSize: 15, fontFamily: 'system-ui' }}>
                       {(p.name?.[0] ?? '?').toUpperCase()}
                     </span>

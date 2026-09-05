@@ -36,7 +36,7 @@ function Avatar({ person }: { person: Profile }) {
 
   if (person.photo_url) {
     return (
-      <img
+      <img data-photo-preview
         src={person.photo_url}
         alt={person.full_name ?? 'Profile photo'}
         style={{
