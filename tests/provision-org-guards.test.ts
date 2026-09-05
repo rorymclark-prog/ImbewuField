@@ -5,12 +5,44 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { emailDigest, findOwnerAccount, verifyOwnerAccount } from '../scripts/provision-platform-owner.mjs';
+import { configureProductionAuth, PRODUCTION_AUTH_DOMAINS } from '../scripts/configure-production-auth.mjs';
 import {
   STAFF_ROLES,
   ATTACHABLE_ROLES,
   checkReassignment,
   decideAttach,
 } from '../scripts/provisioning-guards.mjs';
+
+test('production auth repair preserves existing domains and patches no other setting', async () => {
+  const original = ['fieldproof-sa.firebaseapp.com', 'existing.example.test'];
+  let domains = [...original];
+  const writes: { path: string; body: unknown }[] = [];
+  const request = async (method: string, path: string, body?: { authorizedDomains: string[] }) => {
+    if (path.includes('google.com')) return { enabled: true, clientSecret: 'must-not-be-output' };
+    if (method === 'PATCH') {
+      writes.push({ path, body });
+      domains = body!.authorizedDomains;
+    }
+    return { authorizedDomains: [...domains], signIn: { allowDuplicateEmails: false } };
+  };
+  const dry = await configureProductionAuth({ request });
+  assert.deepEqual(dry.missingBefore, PRODUCTION_AUTH_DOMAINS);
+  assert.equal(writes.length, 0, 'a dry run must not change production configuration');
+  assert.equal(JSON.stringify(dry).includes('must-not-be-output'), false);
+  const applied = await configureProductionAuth({ request, apply: true });
+  assert.equal(applied.verified, true);
+  assert.deepEqual(writes, [{ path: '/config?updateMask=authorizedDomains',
+    body: { authorizedDomains: [...original, ...PRODUCTION_AUTH_DOMAINS] } }]);
+  assert.equal((await configureProductionAuth({ request, apply: true })).status, 'already-configured');
+  assert.equal(writes.length, 1, 'retry must be a no-op once production domains are authorised');
+});
+
+test('auth repair refuses a disabled provider and detects an unsuccessful config write', async () => {
+  await assert.rejects(configureProductionAuth({ request: async () => ({ enabled: false }), apply: true }), /PROVIDER_NOT_ENABLED/);
+  const request = async (_method: string, path: string) => path.includes('google.com')
+    ? { enabled: true } : { authorizedDomains: ['fieldproof-sa.firebaseapp.com'] };
+  await assert.rejects(configureProductionAuth({ request, apply: true }), /READBACK_FAILED/);
+});
 
 test('owner bootstrap requires the exact verified, enabled identity', () => {
   const digest = emailDigest('owner@example.test');
