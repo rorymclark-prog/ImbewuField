@@ -275,10 +275,10 @@ export function financeRows(m: NetworkFarmerMetrics): PanelRow[] {
   // ← NetworkFarmerMetrics.estimatedValueZar (income + keptKg × KEPT_KG_VALUE_ZAR)
   rows.push({
     key: 'value',
-    label: 'Household value',
+    label: 'Illustrative value scenario',
     selector: 'NetworkFarmerMetrics.estimatedValueZar',
     tone: 'neutral',
-    caveat: 'Estimate: cash income plus produce kept, valued at R15/kg. Not revenue.',
+    caveat: 'Illustrative estimate: cash income plus unmatched harvest at an assumed R15/kg. Not revenue, profit or measured household benefit.',
     readout: toReadout(m.estimatedValueZar, formatZar, {
       emptyText: 'Not recorded yet',
       emptyNote: 'Needs both the sales and production books',
@@ -320,12 +320,12 @@ export function produceRows(m: NetworkFarmerMetrics): PanelRow[] {
     {
       // ← NetworkFarmerMetrics.keptKg (produced − sold; null unless BOTH readable)
       key: 'kept',
-      label: 'Kept / eaten',
+      label: 'Harvest not matched to sales',
       selector: 'NetworkFarmerMetrics.keptKg',
       tone: 'neutral',
       readout: toReadout(m.keptKg, formatKg, {
-        emptyText: 'Nothing kept',
-        emptyNote: 'Everything harvested was sold',
+        emptyText: 'No positive harvest-sales balance',
+        emptyNote: 'This does not establish how much was eaten, donated, stored or lost',
       }),
     },
   ];

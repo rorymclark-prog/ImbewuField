@@ -120,7 +120,7 @@ export const COHORT_CSV_COLUMNS = [
   'Plot m2',
   'Harvested kg',
   'Sold kg',
-  'Kept kg',
+  'Harvest not matched to sales kg',
   'Income R',
   'Expenses R',
   'Net R',

@@ -400,6 +400,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
 /* ── Log sale form ───────────────────────────────────────────────────────── */
 
 interface SaleFormState {
+  enterprise?: SalesLog['enterprise'];
   crop: string;
   cropKey: string | null;
   kg: string;
@@ -444,6 +445,7 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
     setForm((f) => ({ ...f, loading: true, error: '' }));
     try {
       await addSale({
+        enterprise: form.enterprise ?? null,
         crop,
         kg,
         amount,
@@ -524,6 +526,11 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
             )}
           </div>
         )}
+        <label className="block text-sm">Growing area for this sale (optional)
+          <select className="w-full rounded-lg border px-3 py-2 mt-1" value={form.enterprise ?? ''} onChange={e => setForm(f => ({ ...f, enterprise: e.target.value ? e.target.value as SalesLog['enterprise'] : null }))}>
+            <option value="">Unassigned</option><option value="vegetables">Vegetable beds</option><option value="staples">Staple plots</option><option value="other">Orchard / other</option>
+          </select>
+        </label>
         <div className="grid grid-cols-2 gap-2">
           <div>
             <FieldLabel>{t('myRecordsAmountLabel')}</FieldLabel>

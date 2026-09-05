@@ -38,3 +38,5 @@ Regression cases cover weighted combined returns, shared costs, unknowns, paid-i
 ## Browser-review corrections
 
 The adjoining site overview claimed rainfall alone ensured year-round production and compost would double yield within two seasons. Those promises have been removed. Generic soil-carbon defaults no longer trigger a measured-soil assessment there. Short report choices now open the reading pane directly on phones; long translated controls wrap instead of clipping.
+
+The funder headline no longer presents a blanket R15/kg residual as household benefit. Its replacement reports actual training-record coverage. Cohort charts, CSV and farmer-detail labels call harvest minus sales an unmatched balance; it may reflect storage, consumption, donation, losses or incomplete logging. The older per-farmer value calculation remains available only as an explicitly labelled hypothetical scenario, never revenue or profit.
