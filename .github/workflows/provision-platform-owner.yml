@@ -1,0 +1,38 @@
+name: Provision authorised platform owner
+
+# Runs only after this narrowly scoped maintenance change is reviewed and merged.
+# No pull-request trigger, account input, downloaded credential or browser bypass.
+on:
+  push:
+    branches: [main]
+    paths:
+      - scripts/provision-platform-owner.mjs
+      - .github/workflows/provision-platform-owner.yml
+
+concurrency:
+  group: platform-owner-bootstrap
+  cancel-in-progress: false
+
+jobs:
+  provision:
+    if: github.repository == 'rorymclark-prog/ImbewuField'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: npm
+      - name: Install trusted dependencies
+        run: npm ci --ignore-scripts
+      - name: Verify owner account without writing
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: node scripts/provision-platform-owner.mjs
+      - name: Apply authorised role and verify read-back
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+        run: node scripts/provision-platform-owner.mjs --apply --allow-admin

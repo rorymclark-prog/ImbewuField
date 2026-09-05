@@ -4,12 +4,38 @@
 
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import { emailDigest, findOwnerAccount, verifyOwnerAccount } from '../scripts/provision-platform-owner.mjs';
 import {
   STAFF_ROLES,
   ATTACHABLE_ROLES,
   checkReassignment,
   decideAttach,
 } from '../scripts/provisioning-guards.mjs';
+
+test('owner bootstrap requires the exact verified, enabled identity', () => {
+  const digest = emailDigest('owner@example.test');
+  const owner = { uid: 'owner', email: 'Owner@Example.Test', emailVerified: true, disabled: false };
+  assert.doesNotThrow(() => verifyOwnerAccount(owner, digest));
+  assert.throws(() => verifyOwnerAccount({ ...owner, email: 'another@example.test' }, digest), /IDENTITY_MISMATCH/);
+  assert.throws(() => verifyOwnerAccount({ ...owner, disabled: true }, digest), /ACCOUNT_DISABLED/);
+  assert.throws(() => verifyOwnerAccount({ ...owner, emailVerified: false }, digest), /EMAIL_NOT_VERIFIED/);
+});
+
+test('owner lookup follows pagination, retains only the match, and rechecks current identity', async () => {
+  const owner = { uid: 'target', email: 'owner@example.test', emailVerified: true, disabled: false };
+  const tokens: unknown[] = [];
+  const auth = {
+    listUsers: async (_size: number, token?: string) => {
+      tokens.push(token);
+      return token ? { users: [owner] } : { users: [{ uid: 'other', email: 'other@example.test' }], pageToken: 'next' };
+    },
+    getUser: async (uid: string) => { assert.equal(uid, 'target'); return owner; },
+  };
+  assert.deepEqual(await findOwnerAccount(auth, emailDigest(owner.email)), owner);
+  assert.deepEqual(tokens, [undefined, 'next']);
+  await assert.rejects(findOwnerAccount(auth, emailDigest('missing@example.test')), /ACCOUNT_NOT_FOUND/);
+  await assert.rejects(findOwnerAccount({ ...auth, getUser: async () => ({ ...owner, disabled: true }) }, emailDigest(owner.email)), /ACCOUNT_DISABLED/);
+});
 
 // scripts/provisioning-guards.mjs is plain JS (allowJs, not checkJs — see tsconfig.json), so
 // TS infers each guard's return type as a union where `reason` only exists on the blocked/
