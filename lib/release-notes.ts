@@ -33,6 +33,11 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '5 September', sha: 'b38ef59e', changes: [
+    'Choose NGO, funder and farmer samples from one shared sample workspace',
+    'Scroll dashboard sections and find People & access directly in the NGO dashboard',
+    'Try sample assessment summaries and practise changing what funders can see',
+  ] },
   {
     when: '5 September',
     sha: '048ab920',

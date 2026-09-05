@@ -7,6 +7,8 @@
 // particular page's own layout.
 
 import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { enterSampleMode } from '@/lib/sample-mode';
 import { usePathname } from 'next/navigation';
 import { Sparkles, X } from 'lucide-react';
 import { isSampleMode, exitSampleMode, SAMPLE_MODE_EVENT } from '@/lib/sample-mode';
@@ -60,8 +62,10 @@ export default function SampleModeBanner() {
     >
       <span className="flex items-center gap-1.5 font-display font-semibold" style={{ fontSize: 13, color: '#fff' }}>
         <Sparkles size={14} />
-        Sample farm — Ubhejane Crèche demo data. Nothing here is saved.
+        Sample workspace · fictional data. Real projects are unchanged.
       </span>
+      <Link href="/samples" style={{ color: 'white', textDecoration: 'underline', minHeight: 44, display: 'inline-flex', alignItems: 'center' }}>Switch sample view</Link>
+      <button type="button" onClick={() => { if (enterSampleMode()) window.location.reload(); }} style={{ color: 'white', minHeight: 44 }}>Reset sample</button>
       <button
         type="button"
         onClick={handleExit}

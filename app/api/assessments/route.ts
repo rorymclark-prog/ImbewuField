@@ -66,7 +66,7 @@ async function handle(req: NextRequest, write: boolean) {
         })) });
       }
       if (mode === 'people') {
-        if (role !== 'ngo' || !can('people')) fail('Organisation access management is restricted.', 403);
+        if (!['ngo', 'admin'].includes(role) || !can('people')) fail('Organisation access management is restricted.', 403);
         const [people, control] = await Promise.all([db.collection('profiles').where('org_id', '==', orgId).limit(251).get(), db.collection('organization_controls').doc(orgId).get()]);
         if (people.size > 250) fail('This organisation exceeds the 250-person access editor. Contact the platform administrator.', 422);
         const records = await Promise.all(people.docs.map(async p => {
@@ -107,7 +107,7 @@ async function handle(req: NextRequest, write: boolean) {
         const r = await d.ref.collection('responses').doc(uid).get();
         return { id: a.id, title: a.title, project: a.project, stage: a.stage, due: a.due, state: a.state, response: r.exists ? r.data() : null };
       }));
-      return json({ assessments: list.filter(Boolean), permissions: { manage: can('manage'), analyse: can('analyse'), people: role === 'ngo' && can('people') } });
+      return json({ assessments: list.filter(Boolean), permissions: { manage: can('manage'), analyse: can('analyse'), people: ['ngo', 'admin'].includes(role) && can('people') } });
     }
     const raw = await req.text();
     if (raw.length > 40000) fail('This assessment request is too large.', 413);
@@ -133,7 +133,7 @@ async function handle(req: NextRequest, write: boolean) {
       return json({ saved: true });
     }
     if (b.action === 'person' || b.action === 'sharing') {
-      if (role !== 'ngo' || !can('people')) fail('Organisation access management is restricted.', 403);
+      if (!['ngo', 'admin'].includes(role) || !can('people')) fail('Organisation access management is restricted.', 403);
       if (b.action === 'sharing') {
         if (typeof b.funderAccess !== 'boolean') fail('Choose whether funder access is enabled.');
         const batch = db.batch();

@@ -22,7 +22,7 @@ export function useRoleNavigation() {
   return { accountRole: role, sample: !!sampleRole, navigationRole: (sampleRole && sampleRole !== 'sample' ? sampleRole : role) as UserRole | null };
 }
 export function startRolePreview(role: string): boolean {
-  if (!ROLES.includes(role) || !enterSampleMode()) return false;
+  if (!ROLES.includes(role) || (!isSampleMode() && !enterSampleMode())) return false;
   try { sessionStorage.setItem(KEY, role); } catch { return false; }
   window.dispatchEvent(new CustomEvent(SAMPLE_MODE_EVENT));
   return true;

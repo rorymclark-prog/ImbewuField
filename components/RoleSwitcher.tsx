@@ -66,7 +66,7 @@ export default function RoleSwitcher({ current }: { current: string }) {
       {(accountRole === 'ngo' || accountRole === 'admin') && <label className="font-sans text-sm" style={{ padding: '4px 8px', color: '#243d2d' }}>
         <span className="sr-only">View as with sample data</span>
         <select aria-label="View as with sample data" value="" onChange={e => { const target = ROLES.find(r => r.key === e.target.value); if (target && startRolePreview(target.key)) router.push(target.href); }} style={{ minHeight: 40, maxWidth: 180, background: 'white', color: '#243d2d', borderRadius: 8, padding: 6 }}>
-          <option value="">{sample ? 'Previewing · view as…' : 'View as… (sample)'}</option>
+          <option value="">{sample ? 'Sample · switch view…' : 'View as… (sample)'}</option>
           {ROLES.map(r => <option key={r.key} value={r.key}>{t(r.labelKey)}</option>)}
         </select>
       </label>}

@@ -6,6 +6,7 @@ import { paidApiHeaders } from '@/lib/api-client-auth';
 import { MelMetrics, melRequest } from '@/components/MelDashboard';
 import type { MelMetric } from '@/lib/mel';
 import styles from '@/components/MelDashboard.module.css';
+import SampleProgramme from '@/components/SampleProgramme';
 
 type Summary = { id: string; title: string; project: string; due: string; completed: number; assigned: number; metrics: MelMetric[] };
 export default function FunderAssessments() {
@@ -37,7 +38,7 @@ export default function FunderAssessments() {
     return () => { cancelled = true; };
   }, [org]);
   return <section className={styles.root}><div className={styles.wrap}><div className={styles.hero}><h1>Learning from the project</h1><p>Assessment summaries reviewed and shared by the NGO.</p></div>
-    {sample ? <p className={styles.card}>Sample mode · no assessment results have been published. The NGO chooses which completed assessments to share. Private staff feedback and written responses stay with authorised NGO analysts.</p> : <>
+    {sample ? <SampleProgramme funder /> : <>
       <label>Organisation<select value={org} onChange={e => setOrg(e.target.value)}>{orgs.map(o => <option key={o.id} value={o.id}>{o.name}</option>)}</select></label>
       {error && <p role="alert" className={styles.error}>{error}</p>}{loading && <p>Loading approved summaries…</p>}
       {!loading && !error && !summaries.length && <p className={styles.card}>No approved assessment summaries are available here yet.</p>}
