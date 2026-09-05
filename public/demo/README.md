@@ -33,3 +33,71 @@ Square natural documentary product photograph for a fictional South African gard
 ### cabbage.webp
 
 Square natural documentary product photograph for a fictional South African garden app. Three freshly harvested whole green cabbage heads with crisp veined outer leaves on a weathered wooden market table. True natural pale green, soft daylight, close framing, no other crops, no people, no text, no brand. Generic reusable demo sales photo.
+
+## September 2026 fictional profile and partner collection
+
+Generated with the built-in image_gen tool. Fictional adults and invented demonstration branding. Never attach to live people or evidence. Existing profile-man/woman plus profile-03–15 make 15 distinct portraits. Web portraits resized to 384px; original generated images retained in scratch.
+
+### profile-03
+
+Fictional male extension officer portrait, olive shirt, natural daylight.
+
+### profile-04
+
+Use case: photorealistic-natural. Asset: square profile portrait for a fictional South African agriculture app demo. One fictional adult: Black South African woman extension officer aged 32, short natural afro, round glasses, teal collared shirt, blurred training venue. Chest-up centred face and shoulders, safe margin for circular avatar cropping. Natural skin texture, soft daylight, professional editorial photograph, warm approachable expression. Unique invented identity. No text, logos or watermark.
+
+### profile-05
+
+Use case: photorealistic-natural. Asset: square profile portrait for a fictional South African agriculture app demo. One fictional adult: Black South African older male community gardener aged 64, narrow face, grey moustache, beige canvas sunhat, blue work shirt, blurred vegetable beds. Chest-up centred face and shoulders, safe margin for circular avatar cropping. Natural skin texture, soft daylight, professional editorial photograph, warm approachable expression. Unique invented identity. No text, logos or watermark.
+
+### profile-06
+
+Use case: photorealistic-natural. Asset: square profile portrait for a fictional South African agriculture app demo. One fictional adult: Black South African woman crèche garden coordinator aged 48, broad smiling face, burgundy headwrap and cream blouse, blurred community garden. Chest-up centred face and shoulders, safe margin for circular avatar cropping. Natural skin texture, soft daylight, professional editorial photograph, warm approachable expression. Unique invented identity. No text, logos or watermark.
+
+### profile-07
+
+Use case: photorealistic-natural. Asset: square profile portrait for a fictional South African agriculture app demo. One fictional adult: South African Indian woman school garden mentor aged 42, shoulder-length black hair, navy cardigan, blurred school garden with no children. Chest-up centred face and shoulders, safe margin for circular avatar cropping. Natural skin texture, soft daylight, professional editorial photograph, warm approachable expression. Unique invented identity. No text, logos or watermark.
+
+### profile-08
+
+Use case: photorealistic-natural. Asset: square profile portrait for a fictional South African agriculture app demo. One fictional adult: Black South African young male market gardener aged 26, clean-shaven, slim oval face, short twist hairstyle, mustard T-shirt, vegetable garden. Chest-up centred face and shoulders, generous safe margin for circular avatar cropping. Natural skin texture, soft daylight, professional editorial photograph, warm approachable expression. Unique invented identity. No text, logos or watermark.
+
+### profile-09
+
+Use case: photorealistic-natural. Asset: square profile portrait for a fictional South African agriculture app demo. One fictional adult: Black South African woman homestead gardener aged 59, short grey natural hair, oval face, blue patterned blouse, garden. Chest-up centred face and shoulders, generous safe margin for circular avatar cropping. Natural skin texture, soft daylight, professional editorial photograph, warm approachable expression. Unique invented identity. No text, logos or watermark.
+
+### profile-10
+
+Use case: photorealistic-natural. Asset: square profile portrait for a fictional South African agriculture app demo. One fictional adult: South African mixed-race male commercial grower aged 44, curly dark hair, black rectangular spectacles, rust-coloured work shirt, market garden. Chest-up centred face and shoulders, generous safe margin for circular avatar cropping. Natural skin texture, soft daylight, professional editorial photograph, warm approachable expression. Unique invented identity. No text, logos or watermark.
+
+### profile-11
+
+Use case: photorealistic-natural. Asset: square profile portrait for a fictional South African agriculture app demo. One fictional adult: Black South African woman community organiser aged 35, long neat braids tied back, green blouse, garden. Chest-up centred face and shoulders, generous safe margin for circular avatar cropping. Natural skin texture, soft daylight, professional editorial photograph, warm approachable expression. Unique invented identity. No text, logos or watermark.
+
+### profile-12
+
+Use case: photorealistic-natural. Asset: square profile portrait for a fictional South African agriculture app demo. One fictional adult: white South African woman agricultural mentor aged 51, short wavy silver-blonde hair, freckles, olive field shirt, garden. Chest-up centred face and shoulders, generous safe margin for circular avatar cropping. Natural skin texture, soft daylight, professional editorial photograph, warm approachable expression. Unique invented identity. No text, logos or watermark.
+
+### profile-13
+
+Use case: photorealistic-natural. Asset: square profile portrait for a fictional South African agriculture app demo. One fictional adult: Black South African man school caretaker gardener aged 53, bald head, clean-shaven, broad face, maroon polo shirt, school vegetable garden with no children. Chest-up centred face and shoulders, generous safe margin for circular avatar cropping. Natural skin texture, soft daylight, professional editorial photograph, warm approachable expression. Unique invented identity. No text, logos or watermark.
+
+### profile-14
+
+Use case: photorealistic-natural. Asset: square profile portrait for a fictional South African agriculture app demo. One fictional adult: South African Indian male programme officer aged 37, swept short black hair, light stubble, light blue button-down shirt, softly blurred community training office. Chest-up centred face and shoulders, generous safe margin for circular avatar cropping. Natural skin texture, soft daylight, professional editorial photograph, warm approachable expression. Unique invented identity. No text, logos or watermark.
+
+### profile-15
+
+Use case: photorealistic-natural. Asset: square profile portrait for a fictional South African agriculture app demo. One fictional adult: Black South African woman funder programme manager aged 46, short natural hair, gold rim glasses, navy jacket, softly blurred bright office. Chest-up centred face and shoulders, generous safe margin for circular avatar cropping. Natural skin texture, soft daylight, professional editorial photograph, warm approachable expression. Unique invented identity. No text, logos or watermark.
+
+### logo-organisation
+
+Create one clean professional logo for a FICTIONAL agricultural demo partner called "Imbewu KZN". White background, generous margins, crisp flat artwork, three abstract green leaves above curved planted field rows, forest green and muted ochre. One central symbol above the exact legible name "Imbewu KZN", and small text "DEMO" below. Square image, no mockup, no texture, no photograph. New invented mark, do not copy existing brands.
+
+### logo-garden
+
+Create one clean professional logo for a FICTIONAL agricultural demo partner called "Siyazama Gardens". White background, generous margins, crisp flat artwork, a simple sprout growing from an open circle of green community shapes, leaf green and terracotta. One central symbol above the exact legible name "Siyazama Gardens", and small text "DEMO" below. Square image, no mockup, no texture, no photograph. New invented mark, do not copy existing brands.
+
+### logo-funder
+
+Create one clean professional logo for a FICTIONAL agricultural demo partner called "Thembalethu Trust". White background, generous margins, crisp flat artwork, an abstract rising sun held in two simple blue arcs, navy and gold. One central symbol above the exact legible name "Thembalethu Trust", and small text "DEMO" below. Square image, no mockup, no texture, no photograph. New invented mark, do not copy existing brands.

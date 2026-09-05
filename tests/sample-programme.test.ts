@@ -101,3 +101,21 @@ test('sample reports retain their sample warning on every page and summaries omi
   assert.ok(brief.output().includes('Visit record 5:'));
   assert.ok(!brief.output().includes('Visit record 6:'));
 });
+
+// Demo identities must not regress to blank initials or missing public files.
+import { existsSync, readFileSync } from 'node:fs';
+import { SAMPLE_PORTRAITS, samplePortrait } from '../lib/sample-media';
+import { SAMPLE_BRANDING } from '../lib/sample-branding';
+import { validProgrammeBranding } from '../lib/programme-evidence';
+import { DEMO_NETWORK } from '../lib/network-demo';
+test('all fifteen demo portraits are distinct assets and every portfolio person has one', () => {
+  assert.equal(SAMPLE_PORTRAITS.length, 15);
+  assert.equal(new Set(SAMPLE_PORTRAITS.map(path => readFileSync(`public${path}`).toString('base64'))).size, 15);
+  for (const row of DEMO_NETWORK.records) {
+    assert.ok(row.farmer.photoUrl);
+    assert.ok(existsSync(`public${row.farmer.photoUrl}`));
+    assert.equal(row.farmer.photoUrl, samplePortrait(row.farmer.name));
+    assert.equal(row.farmer.isDemo, true);
+  }
+  assert.ok(validProgrammeBranding(SAMPLE_BRANDING), 'sample logos must obey the same PDF image limits as uploaded branding');
+});

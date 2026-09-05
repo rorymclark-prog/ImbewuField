@@ -23,10 +23,14 @@ export function projectFieldWorkspace(data: FieldWorkspace, uid: string, manage:
 }
 export function freshFieldWorkspace(): FieldWorkspace {
   return { sample: true, canManage: true, selfId: 'sample-organisation', people: [
-    { id: 'sample-mentor', name: 'Sample mentor', role: 'mentor' },
+    { id: 'sample-mentor', name: 'Sibusiso Ndlovu (sample)', role: 'mentor' },
+    { id: 'sample-mentor-coast', name: 'Nosipho Khumalo (sample)', role: 'mentor' },
+    { id: 'sample-mentor-midlands', name: 'Helen Botha (sample)', role: 'mentor' },
     { id: 's1', name: 'Nomvula Dlamini (sample)', role: 'farmer' },
     { id: 's2', name: 'Sipho Nkosi (sample)', role: 'student' },
     { id: 's3', name: 'Thandi Mokoena (sample)', role: 'farmer' },
     { id: 's4', name: 'Bongani Zulu (sample)', role: 'student' },
-  ], teams: [{ mentorId: 'sample-mentor', location: 'Ubhejane demonstration group', farmerIds: ['s1', 's2'], guidance: 'Review each farmer’s current crop plan during the next visit. Record their support request and agree a follow-up date. This is fictional demonstration guidance.', updatedAt: '2026-09-01' }], visits: [] };
+  ], teams: [{ mentorId: 'sample-mentor', location: 'Ubhejane demonstration group', farmerIds: ['s1', 's2'], guidance: 'Review each farmer’s current crop plan during the next visit. Record their support request and agree a follow-up date. This is fictional demonstration guidance.', updatedAt: '2026-09-01' },
+    { mentorId: 'sample-mentor-coast', location: 'Coastal school and crèche gardens', farmerIds: ['s3'], guidance: 'Check the school garden log and arrange a practical learning visit. Fictional demo guidance.', updatedAt: '2026-09-01' },
+    { mentorId: 'sample-mentor-midlands', location: 'Midlands community and commercial gardens', farmerIds: ['s4'], guidance: 'Review the harvest records and confirm the next group training date. Fictional demo guidance.', updatedAt: '2026-09-01' }], visits: [] };
 }
