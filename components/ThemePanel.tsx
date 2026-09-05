@@ -6,6 +6,7 @@ import { useTheme, type ThemeName, type ThemeMode } from '@/lib/theme';
 import { getGuidedState, setGuidedState, GUIDED_CHANGED_EVENT } from '@/lib/site-progress';
 import { isTtsSupported, getTtsMuted, setTtsMuted } from '@/lib/tts';
 import { APP_LANGS, useLanguage } from '@/lib/i18n';
+import Link from 'next/link';
 
 // Small pill switch, matching the app's toggle style (used for the Guidance rows).
 function PillToggle({ on, onClick, label }: { on: boolean; onClick: () => void; label: string }) {
@@ -150,7 +151,7 @@ export default function ThemePanel({ open, onClose }: Props) {
         }}>
           <div>
             <div style={{ fontSize: 18, fontWeight: 600, color: 'var(--text-primary)', fontFamily: 'var(--font-display)' }}>
-              Appearance
+              Settings
             </div>
             <div style={{ fontSize: 13, color: 'var(--text-muted)', marginTop: 2 }}>Language, text size &amp; theme</div>
           </div>
@@ -172,6 +173,11 @@ export default function ThemePanel({ open, onClose }: Props) {
 
         {/* Content */}
         <div style={{ flex: 1, overflowY: 'auto', padding: '20px' }}>
+          <section style={{ marginBottom:28, display:'grid', gap:12, fontSize:16 }} aria-label="Tour and support">
+            <Link href="/tour" onClick={onClose}>Tour &amp; samples · 15 minutes</Link>
+            <Link href="/samples" onClick={onClose}>Choose a sample workspace</Link>
+            <Link href="/feedback" onClick={onClose}>Report a bug / request a feature</Link>
+          </section>
 
           {/* LANGUAGE — first, because a panel she cannot read is not a panel.
               This is the only working language control on a phone. The onboarding screen ends

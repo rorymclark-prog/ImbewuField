@@ -10,6 +10,7 @@ import { sampleAssessments } from '@/lib/sample-programme';
 import { resizeLogoForStorage } from '@/lib/invoice-logo';
 import { freshEvidenceData, milestoneAt, publishedTraining, trainingTotals, validTrainingRecord, validProgrammeMilestone, type EvidenceData, type TrainingRecord, type ProgrammeMilestone } from '@/lib/programme-evidence';
 import ReportComposer from './ReportComposer';
+import VenueLocation from './VenueLocation';
 import styles from './MelDashboard.module.css';
 
 type Tab = 'progress' | 'training' | 'targets' | 'branding';
@@ -65,6 +66,18 @@ export default function ProgrammeEvidence({ funder=false, mentor=false, initialT
     }catch(e){if(version===requestVersion.current)setError((e as Error).message);}finally{setBusy(false);}
   }
   async function editSession(s:TrainingRecord){const version=requestVersion.current;setError('');setPhotosBusy(true);setReviewed(false);try{const photos=data?.sample?s.photos:(await request(undefined,`&mode=photos&id=${encodeURIComponent(s.id)}`)).photos;if(version===requestVersion.current)setSession({...s,photos,published:data?.canRecord&&!data.canManage?false:s.published});}catch(e){setError((e as Error).message);}finally{setPhotosBusy(false);}}
+  async function addVenuePhotos(files: FileList | null) {
+    if (!session || !data?.canRecord || photosBusy || !files?.length) return;
+    const sessionId=session.id, version=requestVersion.current;
+    const selectedCount=files.length, remaining=2-session.photos.length, chosen=Array.from(files).slice(0,remaining);
+    setPhotosBusy(true);setError('');
+    try {
+      const photos=await Promise.all(chosen.map(async file=>({image:await resizeLogoForStorage(file,640),caption:''})));
+      if(version===requestVersion.current)setSession(s=>s?.id===sessionId?{...s,photos:[...s.photos,...photos].slice(0,2)}:s);
+      if(version===requestVersion.current&&selectedCount>remaining)setNotice('Added the first available photos. Each session supports up to two venue photos.');
+    } catch(e) { if(version===requestVersion.current)setError((e as Error).message); }
+    finally { if(version===requestVersion.current)setPhotosBusy(false); }
+  }
   const sessions=data?.sessions.filter(s=>!project||s.project===project)??[],targets=data?.milestones.filter(m=>!project||m.project===project)??[];
   const totals=trainingTotals(sessions,asOf,!funder), dated=sessions.filter(s=>s.date<=asOf);
   const dates=[...new Set([today(),...sessions.map(s=>s.date),...targets.flatMap(m=>m.observations.map(o=>o.date))])].sort();
@@ -102,14 +115,14 @@ export default function ProgrammeEvidence({ funder=false, mentor=false, initialT
           <h2>{data.canRecord?'Session record & attendance':'Published session report'}</h2>
           <fieldset disabled={!data.canRecord||busy||photosBusy} style={{minWidth:0}}>
             <div className={styles.grid}>{(['project','title','venue','facilitator'] as const).map(k=><label key={k}>{{project:'Project / cohort',title:'Session title',venue:'Training venue',facilitator:'Facilitator'}[k]}<input required maxLength={k==='project'||k==='facilitator'?120:160} value={session[k]} onChange={e=>setS(k,e.target.value)} /></label>)}<label>Training date<input type="date" required max={today()} value={session.date} onChange={e=>setS('date',e.target.value)}/></label></div>
-            {!funder&&<div className={styles.row}><label>Venue latitude (optional)<input type="number" min={-90} max={90} step="any" value={session.latitude??''} onChange={e=>setS('latitude',e.target.value===''?null:+e.target.value)}/></label><label>Venue longitude (optional)<input type="number" min={-180} max={180} step="any" value={session.longitude??''} onChange={e=>setS('longitude',e.target.value===''?null:+e.target.value)}/></label></div>}
+            {!funder&&<VenueLocation key={session.id} latitude={session.latitude} longitude={session.longitude} sample={data.sample} onChange={point=>setSession(s=>s?{...s,...point}:s)} />}
             {!funder&&<><h3>Attendance register</h3><p>Keep only the people expected at this session on the register, then tick Present for those who attended. Reuse guest codes across sessions so each person counts once.</p>{session.attendance.map(p=><div key={p.id} className={styles.row}><label className={styles.option}><input type="checkbox" checked={p.present} onChange={e=>setS('attendance',session.attendance.map(a=>a.id===p.id?{...a,present:e.target.checked}:a))}/>{p.name} · Present</label><button type="button" aria-label={`Remove ${p.name} from register`} onClick={()=>setS('attendance',session.attendance.filter(a=>a.id!==p.id))}>Remove from register</button></div>)}<label>Add an enrolled participant<select value="" onChange={e=>{const p=data.people.find(p=>p.id===e.target.value);if(p)setS('attendance',[...session.attendance,{...p,present:false}]);}}><option value="">Choose a participant</option>{data.people.filter(p=>!session.attendance.some(a=>a.id===p.id)).map(p=><option key={p.id} value={p.id}>{p.name}</option>)}</select></label>
             <div className={styles.row}><label>Guest code<input value={guestCode} placeholder="same code each visit" onChange={e=>setGuestCode(e.target.value)}/></label><label>Guest name<input value={guestName} maxLength={120} onChange={e=>setGuestName(e.target.value)}/></label><button type="button" onClick={()=>{if(!/^[\w-]{1,90}$/.test(guestCode)||!guestName.trim()){setError('Enter a guest name and a stable code using letters, numbers or dashes.');return;}const id='guest-'+guestCode;setS('attendance',[...session.attendance.filter(a=>a.id!==id),{id,name:guestName.trim(),present:true}]);setGuestName('');setGuestCode('');}}>Add guest</button></div>
             <label>Linked assessment<select value={session.assessmentId} onChange={e=>setS('assessmentId',e.target.value)}><option value="">No assessment linked</option>{data.assessments.map(a=><option key={a.id} value={a.id}>{a.title}</option>)}</select></label><p>Create and manage course feedback in Assessments. Linking records does not invent survey responses.</p></>}
             <label>Mini report · suitable for funders<textarea required maxLength={4000} value={session.report} onChange={e=>setS('report',e.target.value)} placeholder="Topics covered, activities completed and evidence. Leave private participant information out."/></label>
             {!funder&&<label>Internal follow-up<textarea maxLength={2000} value={session.nextSteps} onChange={e=>setS('nextSteps',e.target.value)}/></label>}
             <h3>Training venue photos</h3><div className={styles.grid}>{session.photos.map((p,i)=><figure key={i}><img src={p.image} alt={p.caption} style={{width:'100%',maxHeight:220,objectFit:'contain',borderRadius:12}}/>{data.canRecord?<><input aria-label={`Photo ${i+1} caption`} required maxLength={240} value={p.caption} onChange={e=>setS('photos',session.photos.map((p,j)=>j===i?{...p,caption:e.target.value}:p))}/><button type="button" onClick={()=>setS('photos',session.photos.filter((_,j)=>j!==i))}>Remove photo</button></>:<figcaption>{p.caption}</figcaption>}</figure>)}</div>
-            {data.canRecord&&session.photos.length<2&&<label>Add venue photo (up to two)<input type="file" accept="image/png,image/jpeg,image/webp" onChange={async e=>{const file=e.target.files?.[0];if(!file)return;const sessionId=session.id;setPhotosBusy(true);try{const image=await resizeLogoForStorage(file,640);setSession(s=>s?.id===sessionId?{...s,photos:[...s.photos,{image,caption:''}]}:s);}catch(e){setError((e as Error).message);}finally{setPhotosBusy(false);}}}/></label>}
+            {data.canRecord&&session.photos.length<2&&<div className={styles.grid}><label>Take a venue photo<input type="file" accept="image/*" capture="environment" onChange={e=>{void addVenuePhotos(e.target.files);e.target.value='';}} /></label><label>Choose photos (up to two)<input type="file" accept="image/png,image/jpeg,image/webp" multiple onChange={e=>{void addVenuePhotos(e.target.files);e.target.value='';}} /></label></div>}
             {data.canManage&&<><label className={styles.option}><input type="checkbox" checked={session.published} onChange={e=>setS('published',e.target.checked)}/>Share this session summary and venue photos with linked funders</label>{session.published&&<label className={styles.option}><input type="checkbox" checked={reviewed} onChange={e=>setReviewed(e.target.checked)}/>I reviewed the summary and photos for sharing. Attendance names and internal notes stay private.</label>}</>}
             {data.canRecord&&<button className={styles.primary} disabled={busy||photosBusy}>Save session</button>}
           </fieldset>
