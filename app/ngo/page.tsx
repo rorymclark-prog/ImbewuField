@@ -9,6 +9,8 @@ import { isBackendConfigured } from '@/lib/firebase/init';
 import { isSampleMode } from '@/lib/sample-mode';
 import { canAccessRolePage } from '@/lib/role-access';
 import RoleSwitcher from '@/components/RoleSwitcher';
+import DashboardTabs from '@/components/DashboardTabs';
+import Link from 'next/link';
 import BackButton from '@/components/BackButton';
 import SettingsButton from '@/components/SettingsButton';
 import BrandLogo from '@/components/BrandLogo';
@@ -55,7 +57,7 @@ export default function NgoPage() {
   // client-only, so a render-time read would disagree with the server-rendered HTML.
   const [sample, setSample] = useState(false);
   useEffect(() => { setSample(isSampleMode()); }, []);
-  const [view, setView] = useState<'cohort' | 'gardens' | 'messages' | 'assessments' | 'funder-preview' | 'area'>('cohort');
+  const [view, setView] = useState<'cohort' | 'gardens' | 'messages' | 'assessments' | 'funder-preview' | 'area' | 'access'>('cohort');
   const [msgUnread, setMsgUnread] = useState(0);
 
   useEffect(() => {
@@ -100,13 +102,14 @@ export default function NgoPage() {
           Portfolio map →
         </a>
         <LessonLink id="ngo:overview" label="Learn" />
+        <Link href="/samples" className="shrink-0 text-sm font-semibold">Try a sample</Link>
         <SettingsButton />
         <RoleSwitcher current="ngo" />
       </header>
 
-      {/* Tab strip */}
-      <div className="flex-shrink-0 flex" style={{ background: '#FFFEFA', borderBottom: '1px solid #E2D8C4', paddingLeft: 16, paddingRight: 16 }}>
+      <DashboardTabs>
         {([
+          { key: 'access', label: 'People & access', icon: BarChart3, badge: 0 },
           { key: 'cohort',   label: 'Cohort',   icon: BarChart3, badge: 0 },
           { key: 'gardens',  label: 'Gardens',  icon: Sprout,    badge: 0 },
           { key: 'messages', label: 'Messages', icon: Inbox,     badge: msgUnread },
@@ -117,7 +120,8 @@ export default function NgoPage() {
           <button
             key={key}
             onClick={() => setView(key)}
-            className="flex items-center gap-1.5 py-2.5 px-3 font-display text-xs font-semibold"
+            className="flex shrink-0 whitespace-nowrap items-center gap-1.5 py-2.5 px-3 font-display text-xs font-semibold"
+            onFocus={e => e.currentTarget.scrollIntoView({ block: 'nearest', inline: 'nearest' })}
             style={{
               background: 'transparent',
               border: 'none',
@@ -140,7 +144,7 @@ export default function NgoPage() {
             )}
           </button>
         ))}
-      </div>
+      </DashboardTabs>
 
       {view === 'cohort' && (
         <div className="flex-1 flex flex-col overflow-hidden">
@@ -149,7 +153,7 @@ export default function NgoPage() {
         </div>
       )}
       {view === 'gardens' && (
-        <div className="flex-1 flex overflow-hidden">
+        <div className="flex-1 min-h-0 min-w-0 flex overflow-hidden">
           <NgoDashboard />
         </div>
       )}
@@ -158,9 +162,10 @@ export default function NgoPage() {
           <ContactInbox recipient="organisation" onUnreadCount={setMsgUnread} />
         </div>
       )}
-      {view === 'area' && <div className="flex-1 flex overflow-hidden"><ProductionAreas /></div>}
-      {view === 'assessments' && <div className="flex-1 flex overflow-hidden" style={{ paddingBottom: 64 }}><MelDashboard /></div>}
-      {view === 'funder-preview' && <div className="flex-1 flex overflow-hidden"><div className="flex-1 overflow-y-auto"><FunderAssessments /><ProductionAreas publishedOnly /></div></div>}
+      {view === 'access' && <div className="flex-1 min-h-0 flex overflow-hidden"><MelDashboard accessOnly /></div>}
+      {view === 'area' && <div className="flex-1 min-h-0 min-w-0 flex overflow-hidden"><ProductionAreas /></div>}
+      {view === 'assessments' && <div className="flex-1 min-h-0 min-w-0 flex overflow-hidden" style={{ paddingBottom: 64 }}><MelDashboard /></div>}
+      {view === 'funder-preview' && <div className="flex-1 min-h-0 min-w-0 flex overflow-hidden"><div className="flex-1 overflow-y-auto"><FunderAssessments /><ProductionAreas publishedOnly /></div></div>}
 
       <TabBar />
     </div>

@@ -5,6 +5,9 @@ import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import { BarChart3, Sprout } from 'lucide-react';
 import RoleSwitcher from '@/components/RoleSwitcher';
+import DashboardTabs from '@/components/DashboardTabs';
+import { SampleFunderGate } from '@/components/SampleProgramme';
+import Link from 'next/link';
 import BackButton from '@/components/BackButton';
 import SettingsButton from '@/components/SettingsButton';
 import BrandLogo from '@/components/BrandLogo';
@@ -112,21 +115,19 @@ export default function FunderPage() {
           Portfolio map →
         </a>
         <LessonLink id="funder:overview" label="Learn" />
+        <Link href="/samples" className="shrink-0 text-sm font-semibold">Try a sample</Link>
         <SettingsButton />
         <RoleSwitcher current="funder" />
       </header>
 
-      {/* Tab strip — same idiom as /ngo, so the two staff areas are navigated the same way. */}
-      <div
-        className="flex-shrink-0 flex"
-        style={{ background: '#FFFEFA', borderBottom: '1px solid #E2D8C4', paddingLeft: 16, paddingRight: 16 }}
-      >
+      <DashboardTabs>
         {FUNDER_VIEWS.map(({ key, label, icon: Icon }) => (
           <button
             key={key}
             onClick={() => setView(key)}
             aria-pressed={view === key}
-            className="flex items-center gap-1.5 py-2.5 px-3 font-display text-xs font-semibold"
+            className="flex shrink-0 whitespace-nowrap items-center gap-1.5 py-2.5 px-3 font-display text-xs font-semibold"
+            onFocus={e => e.currentTarget.scrollIntoView({ block: 'nearest', inline: 'nearest' })}
             style={{
               background: 'transparent',
               border: 'none',
@@ -140,10 +141,10 @@ export default function FunderPage() {
             {label}
           </button>
         ))}
-      </div>
+      </DashboardTabs>
 
-      <div className="flex-1 flex overflow-hidden">
-        {view === 'cohort' ? <CohortDashboard mode="funder" /> : view === 'area' ? <ProductionAreas publishedOnly /> : view === 'assessments' ? <FunderAssessments /> : <NgoDashboard mode="funder" />}
+      <div className="flex-1 min-h-0 min-w-0 flex overflow-hidden">
+        <SampleFunderGate key={view}>{view === 'cohort' ? <CohortDashboard mode="funder" /> : view === 'area' ? <ProductionAreas publishedOnly /> : view === 'assessments' ? <FunderAssessments /> : <NgoDashboard mode="funder" />}</SampleFunderGate>
       </div>
     </div>
   );

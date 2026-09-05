@@ -18,7 +18,7 @@ export function melCan(role: UserRole, permission: MelPermission | null, action:
 // A tenant can delegate its own work. Platform administration, funder identities and
 // moving people between tenants remain outside the tenant's authority.
 export function canChangeOrgRole(actor: { id: string; role: UserRole; orgId: string | null }, target: { id: string; role: UserRole; orgId: string | null }, next: UserRole) {
-  return actor.role === 'ngo' && !!actor.orgId && actor.orgId === target.orgId && actor.id !== target.id
+  return (actor.role === 'ngo' || actor.role === 'admin') && !!actor.orgId && actor.orgId === target.orgId && actor.id !== target.id
     && ['farmer', 'student', 'mentor', 'ngo'].includes(target.role)
     && ['farmer', 'student', 'mentor', 'ngo'].includes(next);
 }
