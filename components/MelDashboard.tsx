@@ -1,6 +1,6 @@
 'use client';
 
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useAuth } from '@/lib/auth';
 import { isSampleMode } from '@/lib/sample-mode';
 import { paidApiHeaders } from '@/lib/api-client-auth';
@@ -15,6 +15,15 @@ export async function melRequest(query = '', body?: unknown) {
   if (!response.ok) throw new Error(data.error ?? 'Could not load assessments.');
   return data;
 }
+const TIMING_ZU: Record<MelStage, string> = {
+  baseline: 'Ngaphambi kokuthi kuqale usizo lwephrojekthi. Uma sekuqalile, bhala ukuthi izimpendulo zibheka emuva.',
+  course_before: 'Ekuqaleni kwesifundo, ngaphambi kokufundisa.',
+  course_after: 'Ngosuku lokugcina. Lawa amakhono abikwa umfundi; hlola nomsebenzi awenzayo ngokoqobo.',
+  midpoint: 'Maphakathi nephrojekthi, kusenesikhathi sokuthuthukisa usizo.',
+  closeout: 'Ekupheleni kwephrojekthi, kusetshenziswa izikhathi ezifanayo nezasekuqaleni.',
+  app_midpoint: 'Ngesikhathi sokubuyekeza maphakathi, njengefomu elihlukile lokuzithandela.',
+  app_closeout: 'Phinda ekupheleni ukuze ubone ukuthi izinguquko zisizile yini.',
+};
 type Listed = MelAssessment & { assigned: number; completed: number; response?: MelResponse | null };
 type Person = { id: string; name: string; role: UserRole; permissions: MelPermission | null };
 type Analysis = ReturnType<typeof analyseAssessment> & { comments: { question: string; text: string }[]; comparison: { id: string; en: string; n: number; change: number | null }[] | null; funderPreview: ReturnType<typeof analyseAssessment> };
@@ -22,9 +31,9 @@ type Analysis = ReturnType<typeof analyseAssessment> & { comments: { question: s
 export function MelMetrics({ metrics, zu = false }: { metrics: MelMetric[]; zu?: boolean }) {
   return <div>{metrics.map(m => <div className={styles.metric} key={m.id}>
     <strong>{zu ? m.zu : m.en}</strong>
-    {m.suppressed ? <p className={styles.muted}>Withheld to protect a small group.</p> : <>
-      <p className={styles.muted}>{m.n} answered · {m.missing} skipped</p>
-      {m.mean !== undefined && <p>Average: <strong>{m.mean.toLocaleString('en-ZA', { maximumFractionDigits: 2 })}</strong></p>}
+    {m.suppressed ? <p className={styles.muted}>{zu ? 'Kugodliwe ukuvikela iqembu elincane.' : 'Withheld to protect a small group.'}</p> : <>
+      <p className={styles.muted}>{m.n} {zu ? 'baphendulile' : 'answered'} · {m.missing} {zu ? 'beqile' : 'skipped'}</p>
+      {m.mean !== undefined && <p>{zu ? 'Isilinganiso' : 'Average'}: <strong>{m.mean.toLocaleString('en-ZA', { maximumFractionDigits: 2 })}</strong></p>}
       {m.choices?.map(o => <div key={o.value}><div className={styles.row}><span>{zu ? o.zu : o.en}</span><strong>{o.count}</strong></div><div className={styles.bar}><span style={{ width: `${m.n ? 100 * o.count / m.n : 0}%` }} /></div></div>)}
     </>}
   </div>)}</div>;
@@ -63,6 +72,8 @@ function MelDashboardBody({ compact = false }: { compact?: boolean }) {
   const [title, setTitle] = useState('');
   const [due, setDue] = useState('');
   const [zu, setZu] = useState(false);
+  const t = (en: string, zulu: string) => zu ? zulu : en;
+  const requestVersion = useRef(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [consent, setConsent] = useState(false);
   const [people, setPeople] = useState<Person[]>([]);
@@ -78,10 +89,11 @@ function MelDashboardBody({ compact = false }: { compact?: boolean }) {
   useEffect(() => { setSample(isSampleMode()); }, []);
   const reload = useCallback(async () => {
     if (!user || isSampleMode() || (role === 'admin' && !org)) { setReady(true); return; }
-    try { const data = await request(); setList(data.assessments); setPermissions(data.permissions); setReady(true); }
-    catch (e) { setError((e as Error).message); setReady(true); }
+    const version = ++requestVersion.current;
+    try { const data = await request(); if (version !== requestVersion.current) return; setList(data.assessments); setPermissions(data.permissions); setReady(true); }
+    catch (e) { if (version === requestVersion.current) { setError((e as Error).message); setReady(true); } }
   }, [user, role, org, request]);
-  useEffect(() => { setList([]); setSelected(null); setAnalysis(null); setPermissions({}); setError(''); setReady(false); void reload(); }, [reload]);
+  useEffect(() => { setList([]); setSelected(null); setAnalysis(null); setPermissions({}); setError(''); setPeople([]); setAccessView(false); setReady(false); void reload(); return () => { requestVersion.current++; }; }, [reload]);
   async function perform(body: unknown, message: string) {
     setBusy(true); setError(''); setNotice('');
     try { await request('', body); await reload(); setNotice(message); setSelected(null); setAnalysis(null); }
@@ -107,13 +119,13 @@ function MelDashboardBody({ compact = false }: { compact?: boolean }) {
   if (!user && !sample) return <div className={styles.root}><h1>Project assessments</h1><p><a href="/login">Sign in</a> to see assessments assigned by your NGO.</p></div>;
 
   return <section className={styles.root}><div className={styles.wrap}>
-    <div className={styles.hero}><span>IMBEWUFIELD · PROJECT LEARNING</span><h1>{zu ? 'Ukuhlola nokufunda' : 'Assessments & learning'}</h1><p>Listen to farmers. Follow progress. Record what we change.</p><div className={styles.row}><button onClick={() => setZu(false)} aria-pressed={!zu}>English</button><button onClick={() => setZu(true)} aria-pressed={zu}>isiZulu</button><a href="/ngo" style={{ color: 'white' }}>NGO dashboard</a></div></div>
+    <div className={styles.hero}><span>IMBEWUFIELD · PROJECT LEARNING</span><h1>{zu ? 'Ukuhlola nokufunda' : 'Assessments & learning'}</h1><p>{t('Listen to farmers. Follow progress. Record what we change.', 'Lalela abalimi. Landela intuthuko. Bhala esikushintshayo.')}</p><div className={styles.row}><button onClick={() => setZu(false)} aria-pressed={!zu}>English</button><button onClick={() => setZu(true)} aria-pressed={zu}>isiZulu</button><a href="/ngo" style={{ color: 'white' }}>{t('NGO dashboard', 'Ideshibhodi ye-NGO')}</a></div></div>
     {role === 'admin' && !sample && <label>Organisation<select value={org} onChange={e => { setOrg(e.target.value); setSelected(null); setAnalysis(null); }}>{orgs.map(o => <option key={o.id} value={o.id}>{o.name}</option>)}</select></label>}
     {error && <p role="alert" className={styles.error}>{error}</p>}{notice && <p role="status" className={styles.notice}>{notice}</p>}
     {sample ? <>
-      <p className={styles.notice}>Sample mode · browse the assessment questions below. No surveys have been assigned and no responses are saved.</p>
-      <div className={styles.grid}>{MEL_STAGES.map(s => <button key={s} className={styles.card} onClick={() => setStage(s)} aria-pressed={stage === s}>{zu ? MEL_TEMPLATES[s].zu : MEL_TEMPLATES[s].en}<p>{MEL_TEMPLATES[s].timing}</p></button>)}</div>
-      <div className={styles.card}><h2>{zu ? MEL_TEMPLATES[stage].zu : MEL_TEMPLATES[stage].en}</h2>{MEL_TEMPLATES[stage].questions.map(q => <p key={q.id}>{zu ? q.zu : q.en}{q.private && <span className={styles.tag}> Private NGO feedback</span>}</p>)}</div>
+      <p className={styles.notice}>{t('Sample mode · browse the assessment questions below. No surveys have been assigned and no responses are saved.', 'Imodi yesibonelo · buka imibuzo yokuhlola ngezansi. Akukho ukuhlola okwabiwe futhi azikho izimpendulo ezigciniwe.')}</p>
+      <div className={styles.grid}>{MEL_STAGES.map(s => <button key={s} className={styles.card} onClick={() => setStage(s)} aria-pressed={stage === s}>{zu ? MEL_TEMPLATES[s].zu : MEL_TEMPLATES[s].en}<p>{zu ? TIMING_ZU[s] : MEL_TEMPLATES[s].timing}</p></button>)}</div>
+      <div className={styles.card}><h2>{zu ? MEL_TEMPLATES[stage].zu : MEL_TEMPLATES[stage].en}</h2>{MEL_TEMPLATES[stage].questions.map(q => <p key={q.id}>{zu ? q.zu : q.en}{q.private && <span className={styles.tag}>{t(' Private NGO feedback', ' Impendulo yangasese ye-NGO')}</span>}</p>)}</div>
     </> : <>
       {!ready && <p>Loading assessments…</p>}
       {staff && <>
@@ -130,10 +142,10 @@ function MelDashboardBody({ compact = false }: { compact?: boolean }) {
           <button disabled={busy || p.id === user?.uid} onClick={() => void perform({ action: 'person', id: p.id, role: p.role, permissions: { manage: p.permissions?.manage ?? p.role === 'ngo', analyse: p.permissions?.analyse ?? p.role === 'ngo', people: p.permissions?.people ?? p.role === 'ngo' } }, `Access updated for ${p.name}.`)}>Save access</button>
         </div></div>)}
       </div>}
-      {permissions.manage && !selected && <details className={styles.card} style={{ marginTop: 16 }}><summary>Create an assessment</summary><label>Stage<select value={stage} onChange={e => setStage(e.target.value as MelStage)}>{MEL_STAGES.map(s => <option key={s} value={s}>{MEL_TEMPLATES[s].en}</option>)}</select></label><p>{MEL_TEMPLATES[stage].timing}</p><label>Project / course cohort<input value={project} maxLength={160} onChange={e => setProject(e.target.value)} placeholder="Use the same name throughout this assessment cycle" /></label><label>Assessment title<input value={title} maxLength={160} onChange={e => setTitle(e.target.value)} /></label><label>Due date<input type="date" value={due} onChange={e => setDue(e.target.value)} /></label><details><summary>Review the questions · English and isiZulu</summary>{MEL_TEMPLATES[stage].questions.map(q => <p key={q.id}><strong>{q.en}</strong><br />{q.zu}</p>)}</details><button className={styles.primary} disabled={busy || !project.trim() || !title.trim() || !due} onClick={() => void perform({ action: 'create', project, title, stage, due }, 'Draft created. Choose its participants before opening it.')}>Save draft</button></details>}
-      {!selected && <div className={styles.grid}>{list.map(a => <article className={styles.card} key={a.id}><span className={styles.tag}>{a.state}{a.published ? ' · published' : ''}</span><h2 style={{ marginTop: 12 }}>{a.title}</h2><p>{a.project} · {MEL_TEMPLATES[a.stage]?.en}</p><p className={styles.muted}>Due {a.due}{staff ? ` · ${a.completed}/${a.assigned} completed` : a.response ? ' · completed' : ''}</p><button disabled={busy} onClick={() => void open(a)}>{staff ? 'Open assessment' : a.response ? 'View my response' : 'Answer assessment'}</button></article>)}</div>}
-      {ready && !list.length && !sample && <p className={styles.card}>No assessments yet. {permissions.manage ? 'Create a draft using the questions above.' : 'Your NGO will assign assessments here.'}</p>}
-      {selected && <div className={styles.card} style={{ marginTop: 20 }}><button disabled={busy} onClick={() => { setSelected(null); setAnalysis(null); }}>← All assessments</button><h2 style={{ marginTop: 20 }}>{selected.title}</h2><p>{selected.project} · {selected.due}</p>
+      {permissions.manage && !selected && <details className={styles.card} style={{ marginTop: 16 }}><summary>Create an assessment</summary><label>Stage<select value={stage} onChange={e => setStage(e.target.value as MelStage)}>{MEL_STAGES.map(s => <option key={s} value={s}>{MEL_TEMPLATES[s].en}</option>)}</select></label><p>{zu ? TIMING_ZU[stage] : MEL_TEMPLATES[stage].timing}</p><label>Project / course cohort<input value={project} maxLength={160} onChange={e => setProject(e.target.value)} placeholder="Use the same name throughout this assessment cycle" /></label><label>Assessment title<input value={title} maxLength={160} onChange={e => setTitle(e.target.value)} /></label><label>Due date<input type="date" value={due} onChange={e => setDue(e.target.value)} /></label><details><summary>Review the questions · English and isiZulu</summary>{MEL_TEMPLATES[stage].questions.map(q => <p key={q.id}><strong>{q.en}</strong><br />{q.zu}</p>)}</details><button className={styles.primary} disabled={busy || !project.trim() || !title.trim() || !due} onClick={() => void perform({ action: 'create', project, title, stage, due }, 'Draft created. Choose its participants before opening it.')}>Save draft</button></details>}
+      {!selected && <div className={styles.grid}>{list.map(a => <article className={styles.card} key={a.id}><span className={styles.tag}>{a.state}{a.published ? ' · published' : ''}</span><h2 style={{ marginTop: 12 }}>{a.title}</h2><p>{a.project} · {zu ? MEL_TEMPLATES[a.stage]?.zu : MEL_TEMPLATES[a.stage]?.en}</p><p className={styles.muted}>Due {a.due}{staff ? ` · ${a.completed}/${a.assigned} completed` : a.response ? ' · completed' : ''}</p><button disabled={busy} onClick={() => void open(a)}>{staff ? t('Open assessment', 'Vula ukuhlola') : a.response ? t('View my response', 'Buka izimpendulo zami') : t('Answer assessment', 'Phendula ukuhlola')}</button></article>)}</div>}
+      {ready && !list.length && !sample && <p className={styles.card}>{t('No assessments yet.', 'Akukho ukuhlola okwamanje.')} {permissions.manage ? t('Create a draft using the questions above.', 'Dala uhlaka usebenzisa imibuzo engenhla.') : t('Your NGO will assign assessments here.', 'I-NGO yakho izokwabela ukuhlola lapha.')}</p>}
+      {selected && <div className={styles.card} style={{ marginTop: 20 }}><button disabled={busy} onClick={() => { setSelected(null); setAnalysis(null); }}>{t('← All assessments', '← Konke ukuhlola')}</button><h2 style={{ marginTop: 20 }}>{selected.title}</h2><p>{selected.project} · {selected.due}</p>
         {staff ? <>
           {selected.state === 'draft' && permissions.manage && <><h3>Choose participants</h3><p>Only selected farmers and students can answer. No external messages will be sent.</p><div className={styles.scroll}>{participants.map(p => <label key={p.id} className={styles.option}><input type="checkbox" checked={assigned.includes(p.id)} onChange={e => setAssigned(e.target.checked ? [...assigned, p.id] : assigned.filter(id => id !== p.id))} />{p.name}</label>)}</div><button disabled={busy || !assigned.length} className={styles.primary} onClick={() => void perform({ action: 'open', id: selected.id, participantIds: assigned }, 'Assessment opened for the selected participants.')}>Open for {assigned.length} participants</button></>}
           {selected.state === 'open' && permissions.manage && <button disabled={busy} onClick={() => void perform({ action: 'close', id: selected.id }, 'Assessment closed. Responses are now read-only.')}>Close assessment</button>}
