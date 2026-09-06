@@ -8,6 +8,8 @@ import { getMyConsent, myProduction, mySales } from '@/lib/db/queries';
 import { CONSENT_SCOPES, hasConsent, type FarmerConsent } from '@/lib/consent';
 import { loadSampleFarmData, clearSampleFarmData, getLocalProduction, getLocalSales, getLocalProject, hasSampleData } from '@/lib/demo-data';
 import { getLastSite } from '@/lib/last-site';
+import SampleLimaConversation from './SampleLimaConversation';
+import { useSampleRole } from '@/lib/use-role-navigation';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 
 interface Msg { role: 'user' | 'assistant'; content: string; image?: string }
@@ -59,7 +61,12 @@ function fileToPayload(file: File): Promise<{ data: string; mediaType: string; p
   });
 }
 
-export default function ChatPanel({ locationData, siteData, waterData, appLang, initialQuery, initialPhoto, onInitialConsumed }: Props) {
+export default function ChatPanel(props: Props) {
+  const role = useSampleRole();
+  return role ? <SampleLimaConversation key={role} role={role}/> : <LiveChatPanel {...props}/>;
+}
+
+function LiveChatPanel({ locationData, siteData, waterData, appLang, initialQuery, initialPhoto, onInitialConsumed }: Props) {
   const [messages, setMessages] = useState<Msg[]>([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);

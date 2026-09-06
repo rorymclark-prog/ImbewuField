@@ -8,7 +8,7 @@ export const REPORT_ZU: Record<string, string> = {
   'Language': 'Ulimi', 'Wording': 'Indlela yokuchaza', 'Length': 'Ubude bezeluleko', 'Sections': 'Izigaba',
   'Simple': 'Kulula', 'Detailed': 'Kunemininingwane', 'Brief advice': 'Izeluleko ezimfushane', 'Standard': 'Okujwayelekile', 'Comprehensive': 'Okuphelele',
   'Saved reports': 'Imibiko egciniwe', 'Read the report': 'Funda umbiko', 'Export PDF': 'Khipha i-PDF', 'PDF ready': 'I-PDF isilungile', 'Building…': 'Kuyakhiwa…',
-  'Generate report': 'Khiqiza umbiko', 'Regenerate': 'Khiqiza kabusha', 'Share': 'Yabelana', 'Copied!': 'Kukopishiwe!',
+  'Generate report': 'Khiqiza umbiko', 'Generate new report': 'Khiqiza umbiko omusha', 'Regenerate': 'Khiqiza kabusha', 'Share': 'Yabelana', 'Copied!': 'Kukopishiwe!',
   'Permaculture Site Analysis Report': 'Umbiko wokuhlola indawo ye-permaculture',
   'Saved Places · GPS Points': 'Izindawo ezigciniwe · Amaphoyinti e-GPS', 'Site Satellite View': 'Isithombe sendawo sesathelayithi',
   'Monthly Rainfall Pattern': 'Imvula yenyanga ngayinye', 'Photos included': 'Izithombe zifakiwe', 'Photo analysis will inform the report': 'Ukuhlolwa kwezithombe kuzosiza umbiko', 'Tap to open': 'Thepha ukuze uvule',

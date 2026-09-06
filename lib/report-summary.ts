@@ -74,3 +74,19 @@ export async function buildInkSummaryPdf(pages: ReportSummaryPage[], stamp: stri
   }
   return doc.output('blob');
 }
+
+/** A complete, no-network demo record assembled from this site's saved design.
+ * This is deliberately not presented as a freshly generated AI assessment. */
+export function sampleFullSiteReport(facts: ReportSiteFacts | null, location: LocationData, language = 'en'): string {
+  const pages = reportSummaryPages(facts, location, 5, language);
+  const sections = pages.map(page => `## ${page.title}\n\n${page.lines.map(line => `- ${line}`).join('\n')}`);
+  const inventory = facts?.design?.elements.map(item => `- ${item.name} × ${item.count} · ${item.status}`) ?? [];
+  const beds = facts?.design?.beds.map(bed => `- ${bed.label} · ${bed.areaM2.toLocaleString('en-ZA')} m² · ${bed.kind}`) ?? [];
+  return [
+    '## Sample report basis\n\nThis ready-to-read sample is assembled from the saved site and design records. It is not a new AI analysis or an independently verified assessment. Sample finances, soil examples and household examples remain illustrative wherever labelled. Planned areas and infrastructure do not establish completed work.',
+    ...sections,
+    `## Full design inventory\n\n${inventory.length ? inventory.join('\n') : 'No placed elements recorded.'}`,
+    `## Production spaces\n\n${beds.length ? beds.join('\n') : 'No production spaces recorded.'}`,
+    '## Evidence and limitations\n\nSite photos and map plates, where available, are shown separately in this report. An AI-generated reference photograph is not evidence of the real site. Missing measurements, quotes or records remain missing. Review the site, dates and evidence with the implementing organisation before using this example for a funding decision.',
+  ].join('\n\n');
+}

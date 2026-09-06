@@ -122,14 +122,15 @@ note itself has not yet been edited.
 - Validation: typecheck and full suite passed (3,398 pass, zero failures, one
   pre-existing TODO). All 18 SVG layouts rendered and visually inspected. Browser
   connection unavailable; interactive page verification remains outstanding.
-  Deployment awaits CI and production verification for this branch.
+  Subsequently deployed before the current batch (337b832).
 
 ## Crop timeline icon fit — 6 September 2026
 
 - Compact crop icons honour their supplied size for images and emoji, overriding
   the general list-art minimum. Timeline names sit beside the icon and truncate
   horizontally within short bars. Crop timings and planning calculations unchanged.
-- Browser visual verification outstanding; deployment follows CI.
+- Deployed in b7bdeef; production workflow confirmed the matching live build.
+  Interactive browser visual verification remains outstanding.
 - Recent harvests use matching catalogue artwork when no uploaded photo exists.
   Uploaded evidence photos retain priority; unknown crops retain a neutral symbol.
 - Map sheets default to Plain paper, including the fallback when a selected
@@ -139,3 +140,69 @@ note itself has not yet been edited.
   the supplied crop-plan screenshot is a full page rather than a modal.
 - Illustrated card palette is the standard view on first render and for existing
   classic preferences. Removed the trial view switch; design data is unchanged.
+
+
+## Current development batch — 6 September 2026
+
+**Status: typecheck and full suite passed locally; deployment pending.**
+Validation: 3,401 tests, 3,400 passed, zero failures and one pre-existing TODO.
+Photo assets were inspected. Interactive browser connection failed, so mobile
+and desktop interaction/visual verification remains outstanding. Do not describe
+these additions as live until deployment is confirmed.
+
+- Eighteen unique AI-generated garden reference photos, matched to each fictional
+  garden type; shared across its directory, visual preview and overview report.
+  Labelled as illustrations, not satellite measurements or actual project evidence.
+- Eighteen garden production allocations drive the sample production-area page;
+  vegetable and staple areas are separate and stay within each site's boundary.
+  Session migration preserves practice edits and adds missing garden records.
+- Funded gardens grouped by town/area with a filter. These are known locality
+  groupings; no unrecorded village boundaries are inferred.
+- Photorealistic AI crop references for harvest examples and the production form,
+  covering the existing sample produce catalogue. Uploaded harvest photos retain
+  priority. Reference pictures are not saved as evidence of a user's harvest.
+- Lima role-specific scripted conversations for farmer, mentor, organisation,
+  funder and student. Farmer example includes an illustrative aphid photograph.
+  Clearly marked as scripted; these do not demonstrate a verified live AI call.
+- Assessment and learning coverage shows all existing assessment stages,
+  including app feedback, while keeping unpublished responses private.
+- Sample programme reports open in full. The site report opens with a complete
+  locally assembled sample record including the saved crop plan, design inventory,
+  quantities and evidence limitations. It is not a newly generated AI assessment.
+- “Generate new report” appears after a report exists, alongside report view
+  controls. In sample site reports it refreshes the record from practice data
+  without a live AI call; live generation retains its existing online workflow.
+- Read [MEL-FEATURE-AUDIT.md](MEL-FEATURE-AUDIT.md) for the current MEL foundations,
+  missing tools, funder metrics and concept-note wording.
+
+## Real Ubhejane case study and sample boundaries
+
+The owner identifies Ubhejane as a real garden and its original design as the
+real reference. Actual site photos are awaiting upload. Do not label the whole
+case fictional, or label synthetic photos as real evidence. Current sample
+financials, household examples and soil examples remain illustrative until
+replaced with the owner's actual records; “only finances are fictional” is not
+yet a valid description of all seeded content.
+
+The existing sample storage layer redirects local changes into memory and blocks
+remote data writes. Practice design edits can survive in-app navigation; reload,
+reset or a fresh session rebuilds the original example. The original saved map is
+not overwritten. Preserve this protection when integrating actual site media.
+
+## Further agreed additions / remaining limits
+
+- Fully editable, connected Design Studio workspaces for the other 18 gardens:
+  pending. Their current overview gallery must not be confused with the one
+  connected Ubhejane farm workspace.
+- Reconciled national, mentor and farm demo datasets: pending; avoid combined totals.
+- Dated retail replacement values, price coverage and produce disposition metrics:
+  proposed; no unsupported portfolio value has been added.
+- Results framework, indicator register, formal data-quality reviews and learning
+  decisions linked to app releases: proposed, detailed in the MEL audit.
+- Full archived sample AI reports for every role/garden and automated report
+  version history: pending. Current samples provide generated record reports;
+  they are not claims of expert-validated agronomic advice.
+- Advanced panel resizing, expanded mentor resources/visits, privacy signing and
+  offline validation retain the open statuses above.
+- Latest actual site photographs and any genuine laboratory or household records
+  must be supplied before replacing the corresponding examples.

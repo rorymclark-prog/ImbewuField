@@ -1,4 +1,5 @@
 'use client';
+import MelCoverage from './MelCoverage';
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useAuth } from '@/lib/auth';
@@ -130,6 +131,7 @@ function MelDashboardBody({ compact = false, accessOnly = false }: { compact?: b
     {!accessOnly && <div className={styles.hero}><span>IMBEWUFIELD · PROJECT LEARNING</span><h1>{accessOnly ? 'People & access' : zu ? 'Ukuhlola nokufunda' : 'Assessments & learning'}</h1><p>{t('Listen to farmers. Follow progress. Record what we change.', 'Lalela abalimi. Landela intuthuko. Bhala esikushintshayo.')}</p><div className={styles.row}><button onClick={() => setZu(false)} aria-pressed={!zu}>English</button><button onClick={() => setZu(true)} aria-pressed={zu}>isiZulu</button><a href="/ngo" style={{ color: 'white' }}>{t('Organisation dashboard', 'Ideshibhodi ye-NGO')}</a></div></div>}
     {role === 'admin' && !sample && <label>Organisation<select value={org} onChange={e => { setOrg(e.target.value); setSelected(null); setAnalysis(null); }}>{orgs.map(o => <option key={o.id} value={o.id}>{o.name}</option>)}</select></label>}
     {error && <p role="alert" className={styles.error}>{error}</p>}{notice && <p role="status" className={styles.notice}>{notice}</p>}
+    {!accessOnly && <MelCoverage/>}
     {accessOnly && <div className={styles.card} style={{ marginBottom: 16 }}><h2>People & access</h2><p>Set member roles, delegate assessments and control funder sharing for this organisation.</p><p>These controls cover the permissions listed below. They do not yet provide a separate on/off switch for every app feature. Platform administrator and funder accounts remain platform-managed.</p></div>}
     {sample ? <SampleProgramme accessOnly={accessOnly} language={zu} /> : <>
 

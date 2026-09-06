@@ -112,3 +112,29 @@ test('farmers, mentors, funders and organisations can find the fictional garden 
   assert.equal(canSeeWorkspaceLink('funder', '/ngo'), false);
   assert.equal(canSeeWorkspaceLink('farmer', '/ngo'), false);
 });
+
+// Each demo site now has a distinct reference; changing a selection must change its media and areas.
+import { sampleSitePhoto, sampleSitePhotos } from '../lib/sample-gardens';
+import { freshSampleAreas, completeSampleAreas } from '../lib/sample-operations';
+import { validProductionSite, productionAreaSummary } from '../lib/production-sites';
+test('garden photos and production totals cover the same complete sample catalog', () => {
+  const rows = freshSampleAreas();
+  assert.deepEqual(rows.map(s=>s.code), SAMPLE_GARDENS.map(g=>g.id));
+  assert.equal(new Set(SAMPLE_GARDENS.map(g=>sampleSitePhoto(g.id))).size,SAMPLE_GARDENS.length);
+  for (const g of SAMPLE_GARDENS) {
+    assert.ok(existsSync(new URL(`../public${sampleSitePhoto(g.id)}`,import.meta.url)));
+    assert.match(sampleSitePhotos(g.id)[0].caption,/AI-generated fictional/);
+    const site=rows.find(s=>s.code===g.id)!;
+    assert.ok(validProductionSite(site,'2026-09-06'));
+    assert.ok(site.vegetableM2+site.stapleM2 < g.areaM2!);
+  }
+  assert.equal(productionAreaSummary(rows).combinedM2,SAMPLE_GARDENS.reduce((n,g)=>n+g.production.vegetableM2+g.production.stapleM2,0));
+  assert.equal(sampleSitePhoto('unknown'),undefined);
+});
+test('old sample sessions gain missing gardens without resetting edited areas or sharing',()=>{
+  const edited={...freshSampleAreas()[0],vegetableM2:5,published:false};
+  const migrated=completeSampleAreas([edited]);
+  assert.equal(migrated.length,SAMPLE_GARDENS.length);
+  assert.deepEqual(migrated.find(s=>s.code===edited.code),edited);
+  assert.deepEqual(completeSampleAreas(migrated),migrated);
+});

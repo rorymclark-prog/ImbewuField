@@ -33,6 +33,12 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '6 September 2026', sha: 'b7bdeef', changes: [
+    'Sample gardens have their own reference photos and planted-area records.',
+    'Browse funded gardens by area, and try a Lima example for your role.',
+    'Sample reports open ready to read; Generate new report sits beside the report options.',
+    'Harvest examples now show produce reference photographs.',
+  ] },
   { when: '6 September 2026', sha: '337b832', changes: [
     'Crop-plan pictures fit inside the timeline bars, with crop names beside them.',
     'Recent harvests show matching crop artwork when you have not added a photo.',

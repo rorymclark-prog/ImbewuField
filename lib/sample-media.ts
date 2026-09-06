@@ -39,4 +39,18 @@ export function samplePortrait(identity: string): string {
   const index = assigned ? assigned - 1 : [...identity].reduce((n, c) => (n * 31 + c.charCodeAt(0)) >>> 0, 0) % SAMPLE_PORTRAITS.length;
   return SAMPLE_PORTRAITS[index];
 }
-export const sampleProducePhoto = (name: string) => /tomato/i.test(name) ? '/demo/tomatoes.webp' : /spinach/i.test(name) ? '/demo/spinach.webp' : /cabbage/i.test(name) ? '/demo/cabbage.webp' : null;
+/** Representative AI photos, never uploaded evidence of a recorded harvest. */
+export function sampleProducePhoto(name: string): string | null {
+  const crop = name.replace(/^Sample\s*[—–-]\s*/i, '').toLowerCase().trim();
+  if (/tomato/.test(crop)) return '/demo/tomatoes.webp';
+  if (/spinach|swiss chard|swiss-chard/.test(crop)) return '/demo/spinach.webp';
+  if (/cabbage/.test(crop)) return '/demo/cabbage.webp';
+  const aliases: [RegExp, string][] = [
+    [/carrot/, 'carrots'], [/onion/, 'onions'], [/maize|mielie/, 'maize'],
+    [/^(dry beans|beans)$/, 'beans'], [/pumpkin/, 'pumpkin'],
+    [/sweet[- ]potato/, 'sweet-potato'], [/green pepper|bell pepper|^peppers$/, 'peppers'],
+    [/lettuce/, 'lettuce'], [/garlic/, 'garlic'], [/butternut/, 'butternut'],
+  ];
+  const match = aliases.find(([pattern]) => pattern.test(crop));
+  return match ? `/demo/produce/${match[1]}.jpg` : null;
+}

@@ -1,5 +1,4 @@
-import { buildDemoDesignCanvasState, DEMO_SITE } from './demo-farm';
-import { bedsFromDesignCanvas } from './design-beds-bridge';
+import { SAMPLE_GARDENS } from './sample-gardens';
 import { isSampleMode } from './sample-mode';
 import { validProductionSite, type ProductionSite } from './production-sites';
 
@@ -15,13 +14,18 @@ export function sampleWrite<T>(key: string, value: T): void {
   window.localStorage.setItem(`imbewu-sample-${key}`, JSON.stringify(value));
 }
 export function freshSampleAreas(): ProductionSite[] {
-  const beds = bedsFromDesignCanvas(buildDemoDesignCanvasState());
-  return [{ code: 'ubhejane-example', name: `${DEMO_SITE.name} · illustrative layout`, observedOn: '2026-09-01',
-    vegetableM2: beds.filter(b => b.kind !== 'plot').reduce((n, b) => n + b.areaM2, 0),
-    stapleM2: beds.filter(b => b.kind === 'plot').reduce((n, b) => n + b.areaM2, 0), boundaryM2: null,
-    evidence: 'Demo only: areas calculated from the saved sample design. This is not a surveyed or verified observation of the real crèche.',
-    published: true, updatedAt: '2026-09-01', updatedBy: 'sample-organisation' }];
+  return SAMPLE_GARDENS.map(g => ({ code: g.id, name: g.name, observedOn: '2026-09-01',
+    ...g.production, boundaryM2: g.areaM2 ?? null,
+    evidence: `Fictional ${g.kind} allocation for ${g.town}. Planted beds exclude buildings, paths, trees and unused land. AI reference photos do not establish measured area.`,
+    published: true, updatedAt: '2026-09-01', updatedBy: 'sample-organisation' }));
 }
+/** Upgrade the old one-garden seed without throwing away practice edits. */
+export function completeSampleAreas(rows: ProductionSite[]): ProductionSite[] {
+  const retained = rows.filter(s => !(s.code === 'ubhejane-example' && s.updatedAt === '2026-09-01'));
+  const codes = new Set(retained.map(s => s.code));
+  return [...retained, ...freshSampleAreas().filter(s => !codes.has(s.code))];
+}
+
 export function upsertSampleArea(rows: ProductionSite[], site: ProductionSite, today: string): ProductionSite[] {
   if (!validProductionSite(site, today)) throw Error('Check the date, areas, boundary and measurement evidence.');
   return [...rows.filter(s => s.code !== site.code), site];
