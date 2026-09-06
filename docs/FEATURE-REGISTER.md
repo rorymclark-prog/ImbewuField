@@ -43,7 +43,7 @@ This register describes product capability, not verified project outcomes.
   signed-out visitors, private platform-admin inbox. Server-authenticated,
   bounded payloads and idempotent retry. No automatic screenshot or farm upload.
 
-## Garden directory and photo viewer — current batch
+## Garden directory and photo viewer — deployed 5 September 2026 (8b1f9d4)
 
 - Organisation/funder garden directory: 18 distinct fictional gardens, including
   homestead, commercial, crèche, school, community and food-forest settings.
@@ -106,3 +106,20 @@ note itself has not yet been edited.
   implementation. Local report rendered and inspected (three pages); browser
   end-to-end and live feedback delivery remain to be verified after deployment.
 - Previous verified release: b4ea3ef — demo portraits, logos and varied gardens.
+
+## Garden selection and discovery — 6 September 2026
+
+- Direct `/samples/gardens` gallery, linked from the menu, Settings and sample
+  chooser; available to funders as a fictional farmer example.
+- Eighteen individually selectable profiles, type filters, a change-garden
+  selector, regional participants and a garden-specific overview PDF.
+- Different schematic layouts open first in both the gallery and dashboard.
+  Selecting another garden resets the picture and clears any previously selected
+  person. Mobile garden details include the layout without opening a participant.
+- The existing aerial photo remains shared and is explicitly labelled as such.
+- These are display-only overview samples, not eighteen fully editable Design
+  Studio farms. The separately labelled Ubhejane link opens the editable farm pack.
+- Validation: typecheck and full suite passed (3,398 pass, zero failures, one
+  pre-existing TODO). All 18 SVG layouts rendered and visually inspected. Browser
+  connection unavailable; interactive page verification remains outstanding.
+  Deployment awaits CI and production verification for this branch.
