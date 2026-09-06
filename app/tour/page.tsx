@@ -1,33 +1,40 @@
 'use client';
-import { useEffect, useState } from 'react';
+
 import Link from 'next/link';
 import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
 import SettingsButton from '@/components/SettingsButton';
-import { FARM_TOUR, cleanTourProgress } from '@/lib/sample-tour';
-import { enterSampleMode } from '@/lib/sample-mode';
-import { useSampleRole } from '@/lib/use-role-navigation';
-import { sampleRead, sampleWrite } from '@/lib/sample-operations';
-import { prepareSampleFarm } from '@/lib/sample-farm-session';
-import styles from '@/components/SampleExperience.module.css';
+import { useProductTour } from '@/components/ProductTourProvider';
+import { PRODUCT_TOUR } from '@/lib/sample-tour';
+import styles from '@/components/ProductTour.module.css';
 
 export default function TourPage() {
-  const sample = useSampleRole();
-  const [done,setDone] = useState<string[]>([]), [error,setError] = useState('');
-  useEffect(() => { if (sample) { try { prepareSampleFarm(); setDone(cleanTourProgress(sampleRead('farm-tour',()=>[]))); } catch(e) { setError((e as Error).message); } } else setDone([]); },[sample]);
-  function start() { if (!enterSampleMode()) setError('Could not open the sample. Please allow session storage.'); }
-  function mark(id:string, checked:boolean) { try { const next=cleanTourProgress(checked?[...done,id]:done.filter(x=>x!==id)); sampleWrite('farm-tour',next); setDone(next); } catch(e) { setError((e as Error).message); } }
+  const tour = useProductTour();
+  const minutes = PRODUCT_TOUR.reduce((sum, step) => sum + step.minutes, 0);
+  const tried = tour?.done.length ?? 0;
   return <main className={styles.page}><div className={styles.wrap}>
     <header className={styles.header}><MenuButton/><BackButton fallback="/home"/><SettingsButton/></header>
-    <h1>Your first 15 minutes</h1>
-    <p>Walk through one example garden: map, design, assessment, evidence, crop plan, money and report. You can change the sample and start again.</p>
-    <p className={styles.notice}>The sandbox uses the Ubhejane map location with an illustrative design and fictional records. Nothing here grants access to another person’s live farm. Reloading or resetting the sample discards demo edits.</p>
-    {error&&<p role="alert">{error}</p>}
-    {!sample ? <section className={styles.card}><h2>Try it without changing your project</h2><p>Your account permissions stay the same. Funder and organisation users can experiment with farm tools inside the sample.</p><button className={styles.primary} onClick={start}>Start the sample tour</button><p><Link href="/home">Skip for now</Link> · Replay from Settings → Tour &amp; samples.</p></section> : <>
-      <p aria-live="polite">{done.length} of {FARM_TOUR.length} stops tried</p><progress value={done.length} max={FARM_TOUR.length} aria-label="Tour progress"/>
-      <div className={styles.actions}><Link href="/samples/farm">Open the sample farm pack</Link><Link href="/samples">Choose a role sample</Link><button onClick={()=>{try{sampleWrite('farm-tour',[]);setDone([]);}catch(e){setError((e as Error).message);}}}>Restart checklist</button></div>
-      {FARM_TOUR.map((s,index)=><section className={styles.card} key={s.id}><span className={styles.meta}>{index+1} / {FARM_TOUR.length} · about {s.minutes} minutes</span><h2>{s.title}</h2><p>{s.task}</p><Link className={`${styles.button} ${styles.primary}`} href={s.href}>Try this step</Link><label className={styles.check}><input type="checkbox" checked={done.includes(s.id)} onChange={e=>mark(s.id,e.target.checked)}/>I have tried this</label></section>)}
-      <p>Come back through the Tour link in the sample banner. The checklist records what you mark—not training attendance or project achievements.</p>
-    </>}
+    <section className={styles.hero}>
+      <div><span className={styles.eyebrow}>FARMERS · MENTORS · ORGANISATIONS · FUNDERS</span>
+        <h1>See what ImbewuField can do.</h1>
+        <p>Explore the app in about {minutes} minutes: plan a garden, learn a skill, follow a sale, support growers and see the programme evidence.</p>
+        <p className={styles.hint}>A self-guided introduction, with real app screens to try. Stay longer wherever you like. No sign-in needed to start.</p>
+        <div className={styles.controls}>{tour?.active ? <button className={styles.primary} onClick={tour.open}>Continue tour · stop {tour.current+1}</button> : <button className={styles.primary} onClick={tour?.start} disabled={!tour?.ready}>{!tour?.ready ? 'Getting the tour ready…' : tried ? 'Try the tour again' : 'Start the 15-minute tour'}</button>}
+        <Link href="/samples/gardens">Browse the gardens</Link></div>
+      </div>
+      <figure><img src="/demo/harvest.webp" alt="Illustrated example of a garden harvest"/><figcaption>AI-generated illustration. Explore fictional records in the app.</figcaption></figure>
+    </section>
+    {tour?.error && <p role="alert">{tour.error}</p>}
+    <p className={styles.notice}>This is a practice workspace. People and results are fictional; sample edits reset on reload. Your real project stays separate. Tour progress is kept in this tab. Signed-in accounts retain their existing role access.</p>
+    {tried > 0 && !tour?.active && <section className={styles.complete}><h2>{tried === PRODUCT_TOUR.length ? 'You’ve explored the whole tour.' : 'Keep exploring at your own pace.'}</h2><p>{tried} of {PRODUCT_TOUR.length} stops marked as explored. These are your checklist choices, not a training certificate.</p><div className={styles.controls}><Link href="/samples">Explore another role</Link><Link href="/feedback">Request a feature or ask about customisation</Link></div></section>}
+    <h2>Nine stops, one connected story.</h2>
+    <p className={styles.hint}>On each screen, use the <strong>Tour</strong> button beside the menu for instructions and the next stop. Mark a stop when you have explored it, or skip ahead.</p>
+    {tour?.active && <><p aria-live="polite">{tried} of {PRODUCT_TOUR.length} stops explored</p><progress className={styles.progress} value={tried} max={PRODUCT_TOUR.length} aria-label="Tour progress"/></>}
+    <div className={styles.grid}>{PRODUCT_TOUR.map((step,index) => <article className={styles.card} key={step.id}>
+      <span className={styles.cardMeta}>{String(index+1).padStart(2,'0')} · about {step.minutes} {step.minutes === 1 ? 'minute' : 'minutes'}{tour?.done.includes(step.id) ? ' · Explored' : ''}</span>
+      <h2>{step.title}</h2><p>{step.task}</p>
+      {tour?.active && <button className={styles.primary} disabled={!tour.allowed(index)} onClick={()=>tour.go(index)}>{tour.allowed(index) ? 'Open this stop' : 'Unavailable for this account'}</button>}
+    </article>)}</div>
+    <div className={styles.controls}><Link href="/samples/farm">Full farm evidence pack</Link><Link href="/samples">All role workspaces</Link><Link href="/feedback">Feature requests &amp; programme customisation</Link></div>
   </div></main>;
 }

@@ -66,6 +66,7 @@ const STAFF_ROUTES = [
 
 /** Files whose type she reads. Floor of 12px, no allowance. */
 const FARMER_SURFACES: Record<string, string> = {
+  'components/ProductTourProvider.tsx': 'tour instructions and navigation must remain readable on farmers’ phones',
   'components/MemberAccessPreview.tsx': 'readable member access checks on phones',
   'components/ProgrammeEvidence.tsx': 'readable training evidence and branding on phones',
   'components/VenueLocation.tsx': 'one-tap venue location on phones',

@@ -10,6 +10,7 @@ import ChatWidget from '@/components/ChatWidget';
 import PWAUpdateNotifier from '@/components/PWAUpdateNotifier';
 import SampleModeBanner from '@/components/SampleModeBanner';
 import PhotoViewer from '@/components/PhotoViewer';
+import ProductTourProvider from '@/components/ProductTourProvider';
 import AccountOnboardingGates from '@/components/AccountOnboardingGates';
 
 const newsreader = Newsreader({
@@ -121,12 +122,14 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                   confirm-gated flow. Inside LanguageProvider so translated surfaces can pass
                   t() labels; wraps ChatWidget too so any surface can ask. */}
               <AppConfirmProvider>
+                <ProductTourProvider>
                 <AccountOnboardingGates />
                 <BackControlProvider>{children}</BackControlProvider>
                 <ChatWidget />
                 <PWAUpdateNotifier initialBuildSha={loadedBuildSha} />
                 <SampleModeBanner />
                 <PhotoViewer />
+                </ProductTourProvider>
               </AppConfirmProvider>
             </LanguageProvider>
           </AuthProvider>
