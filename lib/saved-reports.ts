@@ -191,3 +191,16 @@ export function groupReportsBySite(reports: SavedReport[], places: SavedPlace[])
   result.sort((a, b) => Date.parse(b.reports[0].savedAt) - Date.parse(a.reports[0].savedAt));
   return result;
 }
+
+/** The Reports door includes sites before their first report exists. Keep the established
+ * coordinate matching and orphan bucket so renaming a place cannot lose a saved report. */
+export function reportSiteChoices(reports: SavedReport[], places: SavedPlace[]): SiteReportGroup[] {
+  const groups = groupReportsBySite(reports, places);
+  const choices = new Map(groups.filter(g => g.place).map(g => [g.siteId, g]));
+  for (const place of places) {
+    const siteId = designSiteIdFromLocation(place);
+    if (!choices.has(siteId)) choices.set(siteId, { siteId, place, reports: [] });
+  }
+  return [...choices.values()].sort((a, b) => a.place!.name.localeCompare(b.place!.name))
+    .concat(groups.filter(g => !g.place));
+}

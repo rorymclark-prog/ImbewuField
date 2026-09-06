@@ -30,6 +30,7 @@ import { loadPlaces, resolveMainSite } from '@/lib/saved-places';
 import { listOrgPeople, getMyProfile } from '@/lib/db/queries';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import type { SavedReport } from '@/lib/saved-reports';
+import { designSiteIdFromLocation } from '@/lib/design-studio';
 import type { Profile } from '@/lib/db/types';
 import type { PeopleMarker } from '@/components/Map';
 
@@ -60,6 +61,7 @@ function HomeInner() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const searchKey = searchParams.toString();
+  const reportSiteFlow = searchParams.get('openReport') === '1' || searchParams.get('reportSite') === 'new';
   const [selected, setSelected] = useState<{ lat: number; lon: number } | null>(null);
   const [data, setData] = useState<LocationData | null>(null);
   const [loading, setLoading] = useState(false);
@@ -238,8 +240,16 @@ function HomeInner() {
     setSheetOpen(!!(panel || chat));
   }, [searchKey]);
 
+  const locationRequest = useRef(0);
   const handleLocationSelect = useCallback(async (lat: number, lon: number) => {
+    const request = ++locationRequest.current;
+    const named = loadPlaces().find(p=>designSiteIdFromLocation(p)===designSiteIdFromLocation({lat,lon}));
+    setActivePlaceId(named?.id??null);setActivePlaceName(named?.name??null);
     setSelected({ lat, lon });
+    setData(null);
+    setSiteData(null);
+    setWaterData(null);
+    setLoading(true);
     setMapCapture(null);
     setReportPhotoAnalysis(undefined);
     setError('');
@@ -261,8 +271,10 @@ function HomeInner() {
     try {
       const cached = localStorage.getItem(cacheKey);
       if (cached) {
-        setData(JSON.parse(cached));
-        return;
+        const parsed = JSON.parse(cached);
+        if (designSiteIdFromLocation(parsed) === designSiteIdFromLocation({ lat, lon })) {
+          setData(parsed); setLoading(false); return;
+        }
       }
     } catch { /* ignore parse errors */ }
 
@@ -271,12 +283,14 @@ function HomeInner() {
       const res = await fetch(`/api/location-data?lat=${lat.toFixed(6)}&lon=${lon.toFixed(6)}`);
       if (!res.ok) throw new Error(`${res.status}`);
       const json = await res.json();
+      if (request !== locationRequest.current) return;
+      if (designSiteIdFromLocation(json) !== designSiteIdFromLocation({ lat, lon })) throw Error('The loaded location did not match the selected site. Please select it again.');
       setData(json);
       try { localStorage.setItem(cacheKey, JSON.stringify(json)); } catch { /* quota exceeded */ }
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : 'Failed to load data');
+      if (request === locationRequest.current) setError(err instanceof Error ? err.message : 'Failed to load data');
     } finally {
-      setLoading(false);
+      if (request === locationRequest.current) setLoading(false);
     }
   }, []);
 
@@ -288,27 +302,43 @@ function HomeInner() {
   // Deep link: /farmer?site=<placeId> (from the home "Continue" card). Load that saved
   // site's report immediately (correct regardless of map state), then fly the camera once
   // the dynamically-imported Map has had a beat to mount. One-shot per navigation.
-  const siteParamHandled = useRef(false);
+  const siteParamHandled = useRef('');
   useEffect(() => {
-    if (siteParamHandled.current) return;
+    if (authLoading && !isSampleMode()) return;
     const siteId = searchParams.get('site');
-    if (!siteId) return;
-    siteParamHandled.current = true;
+    if (!siteId || siteParamHandled.current === siteId) return;
+    siteParamHandled.current = siteId;
     const p = loadPlaces().find((pl) => pl.id === siteId);
-    if (!p) return;
+    if (!p) { setError('This saved site is no longer available. Return to Site reports and choose another site.'); return; }
     handlePlaceSelect({ name: p.name, id: p.id });
     handleLocationSelect(p.lat, p.lon);
     const t = setTimeout(() => setJumpTo({ lat: p.lat, lon: p.lon }), 800);
     return () => clearTimeout(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchKey]);
+  }, [searchKey, authLoading]);
 
   const handleOpenReport = useCallback((photoAnalysis?: string) => {
     withReportChunk(() => {
+      setSavedReportView(null);
       setReportPhotoAnalysis(photoAnalysis);
       setShowReport(true);
     });
   }, [withReportChunk]);
+
+  // A report request may finish after another map tap. Open only the selected site's data,
+  // and do it once so closing the report does not immediately reopen it.
+  const reportIntentOpened = useRef('');
+  useEffect(() => {
+    if (!reportSiteFlow || !data || !selected || loading || reportIntentOpened.current === searchKey) return;
+    if (designSiteIdFromLocation(data) !== designSiteIdFromLocation(selected)) return;
+    const requested = searchParams.get('site');
+    if (requested) {
+      const place = loadPlaces().find(p => p.id === requested);
+      if (!place || designSiteIdFromLocation(place) !== designSiteIdFromLocation(data)) return;
+    }
+    reportIntentOpened.current = searchKey;
+    handleOpenReport();
+  }, [reportSiteFlow, data, selected, loading, searchKey, handleOpenReport]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // ── "+ Add" catalog (spec §2.3) ──
   // The tools-panel row and any other door dispatch 'imbewu-open-add'; we host the sheet.
@@ -403,7 +433,7 @@ function HomeInner() {
   // main-site paths above use; the delay lets the map finish mounting before
   // it is told to fly.
   useEffect(() => {
-    if (isSampleMode() && !selected) {
+    if (isSampleMode() && !selected && !searchParams.get('site') && !reportSiteFlow) {
       handleLocationSelect(DEMO_SITE.lat, DEMO_SITE.lon);
       const t = setTimeout(() => setJumpTo({ lat: DEMO_SITE.lat, lon: DEMO_SITE.lon }), 800);
       return () => clearTimeout(t);
@@ -487,7 +517,7 @@ function HomeInner() {
           appLang={lang}
           activePlaceId={activePlaceId ?? undefined}
           savedReport={savedReportView ?? undefined}
-          onClose={() => { setShowReport(false); setSavedReportView(null); }}
+          onClose={() => { setShowReport(false); setSavedReportView(null); if (reportSiteFlow) router.push('/reports'); }}
         />
       )}
 
@@ -572,6 +602,13 @@ function HomeInner() {
             <Settings size={18} />
           </button>
         </header>
+
+        {reportSiteFlow && !showReport && <div style={{padding:'12px 20px',background:'#f2f7f2',borderBottom:'1px solid #cbd9cc',fontSize:14}}>
+          <strong>{searchParams.get('reportSite') === 'new' ? 'Choose a site for your report' : 'Opening your site report'}</strong>
+          <p style={{margin:'6px 0'}}>{loading ? 'Loading the selected site’s conditions…' : 'Search for a place or tap its position on the map. Its Site Analysis Report will open when the site is ready.'}</p>
+          {error && <p role="alert">{error}</p>}
+          <Link href="/reports" style={{display:'inline-flex',alignItems:'center',minHeight:44,fontWeight:600}}>Back to saved sites</Link>
+        </div>}
 
         {/* ── Main ──────────────────────────────── */}
         {/*

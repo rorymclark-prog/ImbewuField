@@ -325,6 +325,19 @@ test('a report table repeats its header and retains its final row across pages',
   assert.match(output, /Recorded observation 159/, 'the final row must survive pagination');
 });
 
+test('full-colour chapter plates keep their captions in the PDF and ink output omits them',async()=>{
+  const {buildReportPdf}=await import('../lib/report-pdf');
+  const image='data:image/png;base64,'+readFileSync(new URL('../public/element-art/tree_marula.png',import.meta.url)).toString('base64');
+  const meta={biome:'Fixture',lat:-27,lon:31,rainfallMm:800,meanTempC:21,dateLabel:'2026-09-06'};
+  const report='## Indigenous Trees\nExisting narrative remains here.';
+  const rich=await buildReportPdf(report,{...meta,visualAssets:{charts:{},photos:[],chapters:{'Indigenous Trees':[{image,title:'Trees mentioned in this section',caption:'Catalogue illustration, not field evidence.'}]}}});
+  const richText=pdfContentStreams(await rich.arrayBuffer());
+  assert.match(richText,/Catalogue illustration/);assert.match(richText,/Existing narrative remains/);
+  const ink=await buildReportPdf(report,meta);
+  assert.doesNotMatch(pdfContentStreams(await ink.arrayBuffer()),/Catalogue illustration/);
+  assert.ok(rich.size>ink.size,'the full-colour document must actually embed its illustration');
+});
+
 test('sheetPlate returns null instead of throwing when an image will not load', async () => {
   class BrokenImage {
     naturalWidth = 0; naturalHeight = 0;

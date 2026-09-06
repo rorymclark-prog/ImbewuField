@@ -18,6 +18,7 @@ export interface EvidenceItem {
   note?: string;
   takenAt: number;     // Unix timestamp ms
   sizeBytes?: number;
+  documentId?: string; // Original lab PDF in the account/site-scoped document store.
 }
 
 export interface QuickNumbers {
@@ -56,6 +57,7 @@ function validStoredItem(value: unknown): value is EvidenceItem {
       || (value.dataUrl !== undefined && typeof value.dataUrl !== 'string')
       || (value.name !== undefined && typeof value.name !== 'string')
       || (value.note !== undefined && typeof value.note !== 'string')) return false;
+  if (value.documentId !== undefined && (typeof value.documentId !== 'string' || !/^[\w-]{1,100}$/.test(value.documentId))) return false;
   return true;
 }
 

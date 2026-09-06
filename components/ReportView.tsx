@@ -3,6 +3,9 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import ReportVisualOverview from './report/ReportVisualOverview';
+import ReportPreparation from './report/ReportPreparation';
+import ReportChapterGraphics from './report/ReportChapterGraphics';
+import { reportChapterGraphics, type ChapterGraphic } from '@/lib/report-chapter-visuals';
 import { siteReportVisuals } from '@/lib/report-visuals';
 import { prepareVisualPdfAssets } from '@/lib/report-visual-pdf';
 import styles from './ReportView.module.css';
@@ -113,7 +116,7 @@ interface Props {
   activePlaceId?: string;
 }
 
-function renderReport(text: string) {
+function renderReport(text: string, graphics:Record<string,ChapterGraphic[]> = {}) {
   const lines = text.split('\n');
   const elements: React.ReactNode[] = [];
   let i = 0;
@@ -142,6 +145,7 @@ function renderReport(text: string) {
           </h2>
         )
       );
+      if(graphics[heading]?.length)elements.push(<ReportChapterGraphics key={`visual-${i}`} graphics={graphics[heading]}/>);
     } else if (line.startsWith('### ')) {
       elements.push(
         <h3 key={i} className="font-display font-semibold text-base mt-5 mb-2" style={{ color: 'var(--report-gold)' }}>
@@ -257,10 +261,14 @@ function renderReport(text: string) {
   return elements;
 }
 
-export default function ReportView({ locationData, photoAnalysis, siteData: liveSite, waterData: liveWater, savedPlaces, mapCapture, appLang, onClose, savedReport, activePlaceId }: Props) {
+export default function ReportView({ locationData, photoAnalysis, siteData: liveSite, waterData: liveWater, savedPlaces, mapCapture, appLang, onClose, savedReport }: Props) {
   // When viewing a saved report, its snapshot overrides the live props so charts/header match.
   const [activeSaved, setActiveSaved] = useState<SavedReport | null>(savedReport ?? null);
   const d = activeSaved?.location ?? locationData;
+  const [preparedPlace,setPreparedPlace]=useState<SavedPlace|null>(null);
+  const [evidenceRevision,setEvidenceRevision]=useState(0);
+  const reportPlace=preparedPlace&&designSiteIdFromLocation(preparedPlace)===designSiteIdFromLocation(d)?preparedPlace:savedPlaces?.find(p=>designSiteIdFromLocation(p)===designSiteIdFromLocation(d));
+  const activePlaceId=reportPlace?.id;
   const siteData = activeSaved?.siteData ?? liveSite;
   const waterData = activeSaved?.waterData ?? liveWater;
 
@@ -278,13 +286,14 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   const label = (en: string) => language === 'zu' ? REPORT_ZU[en] ?? en : en;
   const showVisuals = reading === 'full' && (presentation !== 'print' || includeImages);
   const visuals = siteReportVisuals(facts, d, language);
+  const chapterVisuals = reportChapterGraphics(report,visuals);
   const reportDate = activeSaved?.savedAt ?? new Date().toISOString();
   const summaryPages = reportSummaryPages(facts, d, reading === 'one' ? 1 : 5, language);
   useEffect(() => {
     if (activeSaved) { setFacts(activeSaved.facts ?? null); return; }
     const siteId = designSiteIdFromLocation(d);
-    setFacts(collectReportSiteFacts({ siteId, lat: d.lat, lon: d.lon, canvas: loadCanvasState(siteId), farmName: savedPlaces?.find(p => p.id === activePlaceId)?.name }));
-  }, [activeSaved, d, savedPlaces, activePlaceId]);
+    setFacts(collectReportSiteFacts({ siteId, lat: d.lat, lon: d.lon, canvas: loadCanvasState(siteId), farmName: reportPlace?.name }));
+  }, [activeSaved, d, reportPlace, evidenceRevision]);
   const [bilingual, setBilingual] = useState(false);
   const [tone, setTone] = useState<'simple' | 'professional'>('simple');
   const [length, setLength] = useState<'one-pager' | 'standard' | 'comprehensive'>('standard');
@@ -322,8 +331,8 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   // print-resolution plan sheet.
   const [photoGallery, setPhotoGallery] = useState<{ shown: GroundPhotoView[]; total: number }>({ shown: [], total: 0 });
   useEffect(() => {
-    setPhotoGallery(groundPhotoGallery(getSiteEvidence(evidenceSiteId(activePlaceId))));
-  }, [activePlaceId]);
+    setPhotoGallery(groundPhotoGallery(activePlaceId?getSiteEvidence(evidenceSiteId(activePlaceId)):{}));
+  }, [activePlaceId, evidenceRevision]);
 
   const siteKey = designSiteIdFromLocation(d);
   useEffect(() => {
@@ -489,7 +498,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       // as `activePlaceId` and written in DataPanel as `activePlaceId ?? 'default'`, so a farmer
       // who had not tapped a saved place filed every photo under `default` and then generated a
       // report that read an empty object — silently, with no error and no missing-photo notice.
-      const rawEvidence = getSiteEvidence(evidenceSiteId(activePlaceId));
+      const rawEvidence = activePlaceId?getSiteEvidence(evidenceSiteId(activePlaceId)):{};
       const groundPhotos = prepareGroundPhotos(rawEvidence);
       const evidenceData: Record<string, { count: number; notes: string[] }> = {};
       for (const [key, items] of Object.entries(rawEvidence)) {
@@ -623,7 +632,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           const crop = CROPS.find(x => x.name === c.name);
           const image = crop ? getCropArt(crop.key) : undefined;
           return image ? [{ image, caption: `${c.name} · ${c.sowMonths.join(', ')}` }] : [];
-        }) : []) : undefined,
+        }) : [], includeImages ? chapterVisuals : {}) : undefined,
         biome: ecology.placeName,
         lat: d.lat,
         lon: d.lon,
@@ -647,7 +656,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       setError(err instanceof Error ? `Could not build the PDF: ${err.message}` : 'Could not build the PDF.');
       setTimeout(() => setPdfState('idle'), 4000);
     }
-  }, [report, d, reading, language, facts, includeImages, activeSaved, ecology.placeName, photoGallery, reportDate, presentation, mapCapture]);
+  }, [report, d, reading, language, facts, includeImages, activeSaved, ecology.placeName, photoGallery, reportDate, presentation, mapCapture, chapterVisuals]);
 
   async function shareReport() {
     if (!d || !report) return;
@@ -1007,6 +1016,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         <div className={`${styles.column} report-column flex-1 overflow-y-auto relative`}
              ref={reportRef}
              style={{ display: showReportColumn ? 'block' : 'none' }}>
+          <ReportPreparation location={d} place={reportPlace} onSavedPlace={setPreparedPlace} onChanged={()=>setEvidenceRevision(n=>n+1)} snapshot={!!activeSaved}/>
           {report && (
             <div
               style={{
@@ -1272,7 +1282,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             {/* Generated report */}
             {(report || reading !== 'full') && (
               <div className={`${styles.body} report-body`}>
-                {reading === 'full' ? renderReport(report) : summaryPages.map((page, i) => <section className={styles.summaryPage} key={page.title}><span className={styles.summaryLabel}>{i + 1} / {summaryPages.length}</span><h2>{page.title}</h2>{page.lines.map((line, n) => <p key={n}>{line}</p>)}</section>)}
+                {reading === 'full' ? renderReport(report, presentation !== 'print' ? chapterVisuals : {}) : summaryPages.map((page, i) => <section className={styles.summaryPage} key={page.title}><span className={styles.summaryLabel}>{i + 1} / {summaryPages.length}</span><h2>{page.title}</h2>{page.lines.map((line, n) => <p key={n}>{line}</p>)}</section>)}
                 {loading && <span className="inline-block w-2 h-4 rounded-sm animate-pulse ml-1" style={{ background: 'var(--report-button)' }} />}
                 {/* Print-only footer — hidden on screen */}
                 <div className="print-footer" aria-hidden="true">

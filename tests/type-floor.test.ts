@@ -45,6 +45,7 @@ const ROUTES = [
   'app/records/page.tsx',
   'app/finances/page.tsx',
   'app/farmer/page.tsx',
+  'app/reports/page.tsx',
 ];
 
 // The NGO, funder and public-showcase routes — added 29 August after the same audit found
@@ -66,6 +67,10 @@ const STAFF_ROUTES = [
 
 /** Files whose type she reads. Floor of 12px, no allowance. */
 const FARMER_SURFACES: Record<string, string> = {
+  'app/reports/page.tsx': 'farmers choose their saved sites and reports',
+  'components/ProgrammeProgress.tsx': 'readable programme indicators and source coverage',
+  'components/report/ReportPreparation.tsx': 'farmers find and complete missing report evidence',
+  'components/report/ReportChapterGraphics.tsx': 'illustrated report captions remain readable on phones',
   'components/MemberAccessPreview.tsx': 'readable member access checks on phones',
   'components/ProgrammeEvidence.tsx': 'readable training evidence and branding on phones',
   'components/VenueLocation.tsx': 'one-tap venue location on phones',

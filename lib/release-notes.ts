@@ -33,6 +33,12 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '6 September 2026', sha: '9c6bf79', changes: [
+    'Reports now opens Saved sites and Saved reports, with a new-site map option.',
+    'The report checklist helps you add photos, test results, survey details and your design.',
+    'Tree illustrations and visual guides appear within the full-colour report chapters.',
+    'Funder progress now includes growing areas, harvests, sales, costs and other indicators.',
+  ] },
   { when: '6 September 2026', sha: 'a120d93', changes: [
     'Site reports now open with photographs, key figures and charts from the saved plan.',
     'Choose a full-colour PDF with charts and images, or a separate ink-saving edition.',

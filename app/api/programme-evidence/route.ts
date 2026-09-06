@@ -90,11 +90,11 @@ async function handle(req: NextRequest, write: boolean) {
         tx.create(root.collection('history').doc(),{kind:'session',id:s.id,previous:old.data() ?? null,next,actor:auth.uid,at:now});
       });
     } else if (b.action==='milestone') {
-      if (!manage || !validProgrammeMilestone(b.milestone,today)) fail('Management access and a valid target, method and dated evidence are required.');
+      if (!manage || !validProgrammeMilestone(b.milestone,today)) fail('Management access and a valid indicator, method and dated evidence are required.');
       const m=b.milestone as ProgrammeMilestone,ref=root.collection('milestones').doc(m.id);
       await db.runTransaction(async tx=> {
         const old=await tx.get(ref); if(old.exists && old.data()?.updatedAt!==b.expectedUpdatedAt) fail('This milestone changed. Reload before saving.',409);
-        const next:ProgrammeMilestone={id:m.id,project:m.project.trim(),title:m.title.trim(),unit:m.unit.trim(),baseline:m.baseline,target:m.target,due:m.due,owner:m.owner.trim(),method:m.method.trim(),published:m.published,observations:m.observations.map(o=>{const prior=(old.data()?.observations as ProgrammeMilestone['observations'] | undefined)?.find(p=>p.date===o.date&&p.actual===o.actual&&p.evidence===o.evidence.trim());return {date:o.date,actual:o.actual,evidence:o.evidence.trim(),recordedAt:prior?.recordedAt ?? now};}),updatedAt:now};
+        const next:ProgrammeMilestone={id:m.id,project:m.project.trim(),title:m.title.trim(),...(m.category?{category:m.category}:{}),unit:m.unit.trim(),baseline:m.baseline,target:m.target,due:m.due,owner:m.owner.trim(),method:m.method.trim(),published:m.published,observations:m.observations.map(o=>{const prior=(old.data()?.observations as ProgrammeMilestone['observations'] | undefined)?.find(p=>p.date===o.date&&p.actual===o.actual&&p.evidence===o.evidence.trim());return {date:o.date,actual:o.actual,evidence:o.evidence.trim(),recordedAt:prior?.recordedAt ?? now};}),updatedAt:now};
         tx.set(ref,next);tx.create(root.collection('history').doc(),{kind:'milestone',id:m.id,previous:old.data() ?? null,next,actor:auth.uid,at:now});
       });
     } else fail('Unknown programme action.');

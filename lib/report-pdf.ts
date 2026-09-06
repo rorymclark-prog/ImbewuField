@@ -18,7 +18,7 @@
 // tested without a DOM, a browser, or jsPDF.
 
 import { deliverFile, type FileDelivery } from '@/lib/file-delivery';
-import { ensureDocumentArchitecture } from '@/lib/report-structure';
+import { ensureDocumentArchitecture, stripLeadingNumber } from '@/lib/report-structure';
 import { drainCanvasToDataUrl } from '@/lib/release-canvas';
 import { ASSURANCE_ONE_LINE } from '@/lib/plan-assurance';
 import { pdfSafe } from '@/lib/crop-export-pdf';
@@ -398,14 +398,38 @@ export async function buildReportPdf(rawMarkdown: string, meta: ReportPdfMeta): 
         break;
       }
       case 'h2': {
+        // Match before pagination so the chapter title stays with its first illustration.
+        const chapter=Object.entries(meta.visualAssets?.chapters??{}).find(([heading])=>stripLeadingNumber(pdfSafe(stripInlineMarkdown(heading)))===stripLeadingNumber(block.text));
+        const firstGraphic=chapter?.[1][0];
+        let firstGraphicRoom=0;
+        if(firstGraphic){
+          const info=doc.getImageProperties(firstGraphic.image);
+          doc.setFont('helvetica','normal');doc.setFontSize(9);
+          firstGraphicRoom=Math.min(345,CW*info.height/info.width)+doc.splitTextToSize(firstGraphic.caption,CW).length*12+43;
+        }
         doc.setFont('helvetica', 'bold'); doc.setFontSize(13); setInk(INK.green);
         const lines = doc.splitTextToSize(block.text, CW);
         // A heading alone at the foot of a page is worse than a slightly short page.
-        need(lines.length * 17 + 34);
+        need(lines.length * 17 + 34 + firstGraphicRoom);
         y += 10;
         doc.text(lines, M, y); y += lines.length * 17;
         doc.setDrawColor(226, 216, 196); doc.line(M, y - 4, PW - M, y - 4);
         y += 8;
+        // The PDF may number an older report now. Match its chapter by the same title rule
+        // as the document assembler, so illustrations survive added/changed numbering.
+        for (const graphic of chapter?.[1] ?? []) {
+          const info=doc.getImageProperties(graphic.image);
+          const height=Math.min(345,CW*info.height/info.width);
+          doc.setFont('helvetica','normal');doc.setFontSize(9);
+          const caption=doc.splitTextToSize(graphic.caption,CW) as string[];
+          need(height+caption.length*12+43);
+          doc.setFont('helvetica','bold');doc.setFontSize(12);setInk(INK.green);
+          doc.text(graphic.title,M,y+9);y+=22;
+          const width=height*info.width/info.height;
+          doc.addImage(graphic.image,'PNG',M+(CW-width)/2,y,width,height,undefined,'FAST');y+=height+14;
+          doc.setFont('helvetica','normal');doc.setFontSize(9);setInk(INK.muted);
+          textLines(caption,M,12);y+=14;
+        }
         break;
       }
       case 'h3': {

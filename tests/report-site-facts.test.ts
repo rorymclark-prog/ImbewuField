@@ -29,6 +29,36 @@ import {
   buildDemoWaterPoints,
 } from '../lib/demo-farm.ts';
 import { ASSURANCE_PARAGRAPHS, ASSURANCE_TITLE } from '../lib/plan-assurance.ts';
+import { reportPreparation } from '../lib/report-readiness';
+import { reportTreeIllustrations, reportChapterGraphics } from '../lib/report-chapter-visuals';
+import { siteReportVisuals } from '../lib/report-visuals';
+import { DEMO_LOCATION } from '../lib/demo-site';
+
+test('the report checklist does not mistake filenames, a started design or photos for verified tests',()=>{
+  const inputs={hasSite:true,boundaryPointCount:3,surveyFilledFields:2,surveyTotalFields:10,zoneCount:1,elementCount:0,hasCropPlan:false};
+  const items=reportPreparation(inputs,{
+    soil_lab_result:[{id:'old',type:'pdf',name:'soil-results.pdf',takenAt:1}],
+    water_lab_result:[{id:'new',type:'pdf',name:'water.pdf',documentId:'doc-1',takenAt:1}],
+    site_photos_site_photos:[{id:'photo',type:'photo',dataUrl:'data:image/jpeg;base64,x',takenAt:1}],
+  });
+  assert.equal(items.find(i=>i.id==='soil')!.hasRecord,false);
+  assert.match(items.find(i=>i.id==='water')!.status,/enter key results/);
+  assert.match(items.find(i=>i.id==='design')!.status,/started/);
+  assert.match(items.find(i=>i.id==='survey')!.status,/2 of 10/);
+  assert.equal(items.find(i=>i.id==='crops')!.hasRecord,false);
+});
+test('chapter graphics use named catalogue trees and typed chart values, never invented results',()=>{
+  const names=reportTreeIllustrations('Marula, avocado and wild plum. No other tree is specified.').map(t=>t.name);
+  assert.ok(names.includes('Marula'));assert.ok(names.includes('Avocado Tree'));assert.ok(names.includes('Wild Plum'));
+  assert.ok(!names.includes('Plum Tree'),'a named wild plum must not add a different plum');
+  assert.equal(reportTreeIllustrations('Trees should be surveyed.').length,0);
+  const visuals=siteReportVisuals(null,DEMO_LOCATION);
+  const chapters=reportChapterGraphics('## Natural Vegetation & Biome\nMarula.\n## Water Harvesting\nAn unmeasured catchment.\n## Soil Strategy\nTest results unavailable.',visuals);
+  assert.ok(chapters['Natural Vegetation & Biome'].some(g=>g.trees?.some(t=>t.name==='Marula')));
+  assert.ok(chapters['Water Harvesting'].some(g=>g.chart?.id==='rainfall'));
+  assert.ok(!chapters['Water Harvesting'].some(g=>g.chart?.id==='water'),'no tank capacity may be guessed from prose');
+  assert.ok(chapters['Soil Strategy'].some(g=>g.svg&&g.note.includes('does not describe measured')));
+});
 
 // The traced roof and the traced property boundary live in the MAP's shape store, which the
 // collector reads through the app's own accessors. Seed the demo's real storage so those two
