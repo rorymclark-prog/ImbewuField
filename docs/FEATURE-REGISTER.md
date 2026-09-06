@@ -260,3 +260,21 @@ one existing TODO. Deployment verification pending.
   fictional profile data as the real account’s permissions.
 - Browser preview connection was unavailable; phone rendering is not yet
   visually verified for this batch.
+
+## Visually rich site reports — 6 September 2026
+
+- Request: make generated site reports substantially richer with photographs,
+  maps, charts and plant graphics; provide full-colour print and separate
+  ink-saving output.
+- Implemented on `codex/visual-site-report`; production merge pending.
+- Site report: photographic/saved-plan cover, prominent figures, mapped growing
+  area, rainfall, tank capacity, saved sowing calendar and priced BOQ charts.
+  Catalogue crop images now enter full-colour PDF export where available.
+- Garden gallery: all 18 reports use each garden's own image and figures, with
+  area and training graphics, readable numbered sections and regenerated PDFs.
+- Screen and full-colour PDF share chart artwork and values. The ink-saving
+  option excludes photos by default. Existing compact 1/5-page summaries remain.
+- Typecheck, 3,409 passing tests, zero failures, one existing TODO and whitespace checks passed.
+- Local sample PDFs visually checked: full colour six pages; ink saving three.
+  Final browser and CI results will be recorded in the PR and continuing project source.
+- See [visual report audit](VISUAL-SITE-REPORT-AUDIT.md) for findings and data limits.

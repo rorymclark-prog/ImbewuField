@@ -73,6 +73,7 @@ const FARMER_SURFACES: Record<string, string> = {
   'components/OrganisationControlCentre.tsx': 'organisation controls and role previews on phones',
   'components/FieldTeams.tsx': 'mentor field work on phones',
   'components/ReportComposer.tsx': 'shared readable report preview and export',
+  'components/report/ReportVisualOverview.tsx': 'site charts, values and captions read by farmers on phones',
   'components/ProgrammeReports.tsx': 'organisation and funder reporting',
   'components/DashboardTabs.tsx': 'touch and keyboard navigation across staff sections',
   'components/SampleProgramme.tsx': 'NGO and funder sample analysis and access controls',

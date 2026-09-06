@@ -3,9 +3,14 @@ import { pdfSafe } from '@/lib/crop-export-pdf';
 
 export type ReportSection = { title: string; lines: string[] };
 
-export async function buildProgrammePdf(title: string, sample: boolean, sections: ReportSection[], format: 'summary' | 'full', branding?: ProgrammeBranding, photos: VenuePhoto[] = [], photoHeading = 'Training venue evidence') {
+export async function buildProgrammePdf(title: string, sample: boolean, sections: ReportSection[], format: 'summary' | 'full', branding?: ProgrammeBranding, photos: VenuePhoto[] = [], photoHeading = 'Training venue evidence', visual?: { visuals: import('./report-visuals').ReportVisuals; assets: import('./report-visual-pdf').VisualPdfAssets; date: string }) {
   const { jsPDF } = await import('jspdf');
-  const doc = new jsPDF();
+  const doc = new jsPDF({ compress: true });
+  if (visual) {
+    const { drawVisualReportFront } = await import('./report-visual-pdf');
+    drawVisualReportFront(doc, visual.visuals, visual.assets, visual.date);
+    doc.addPage();
+  }
   let y = 25;
   const partners = branding ? (['organisation','garden','funder'] as const).filter(k => branding[k].label || branding[k].image) : [];
   if (partners.length && branding) {
@@ -44,7 +49,7 @@ export async function buildProgrammePdf(title: string, sample: boolean, sections
     const lines = format === 'summary' ? section.lines.slice(0, 5) : section.lines;
     (lines.length ? lines : ['Nothing recorded yet.']).forEach(text => line(text));
   }
-  if (photos.length) {
+  if (photos.length && !visual) {
     newPage(); line(photoHeading, true);
     for (const photo of photos) {
       const image = doc.getImageProperties(photo.image);
