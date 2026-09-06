@@ -31,7 +31,7 @@ export default function ReportComposer({ title, sample, sections, branding: supp
     setBusy(true); setError('');
     try {
       const attached = includePhotos ? await Promise.all(photos.map(async photo => {
-        if (!photo.image.startsWith('/demo/sites/')) return photo;
+        if (!photo.image.startsWith('/demo/sites/') && !photo.image.startsWith('/demo/reports/')) return photo;
         const response = await fetch(photo.image);
         if (!response.ok) throw Error('Site photo unavailable');
         const blob = await response.blob();

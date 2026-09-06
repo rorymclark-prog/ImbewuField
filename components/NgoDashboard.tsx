@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { startRolePreview } from '@/lib/use-role-navigation';
 import SampleLimaConversation from './SampleLimaConversation';
 import ReportComposer from './ReportComposer';
+import { sampleGardenReportUrl } from '@/lib/sample-garden-reports';
 import { sampleSitePhotos } from '@/lib/sample-gardens';
 import SampleGardenVisual from './SampleGardenVisual';
 import { SAMPLE_GARDENS, SAMPLE_PARTICIPANTS } from '@/lib/sample-gardens';
@@ -696,6 +697,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                   <div className="flex items-center gap-2"><span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: STATUS[garden.status].color }} /><span className="font-display font-bold text-base" style={{ color: '#20190F' }}>{garden.name}</span></div>
                   <div className="text-xs font-mono mt-0.5" style={{ color: '#9A8268' }}>{garden.town}{garden.facilitator ? ` · supervisor ${garden.facilitator}` : ''}</div>{garden.kind && <p className="text-sm mt-2" style={{ color: '#36553d' }}>{garden.kind} · {Math.round(garden.areaM2 ?? 0).toLocaleString()} m²{garden.areaM2 === 4046.8564224 ? ' · 1 acre' : ''} · fictional site area</p>}{isDemo && garden.language && <p className="text-sm mt-1" style={{ color: '#36553d' }}>Example group language: {garden.language}</p>}
                 </div>
+                {isDemo && <a href={sampleGardenReportUrl(garden.id)} target="_blank" rel="noreferrer" className="block rounded-xl p-3 font-semibold" style={{background:'#e9f1e9',color:'#214d35'}}>Open completed garden report (PDF) →</a>}
                 {isDemo && <SampleGardenVisual key={garden.id} kind={garden.kind} variant={garden.id} name={garden.name} />}
                 <div className="grid grid-cols-3 gap-2">
                   {[['Farmers', garden.farmers || gardeners.length, '#20190F'], ['Produce', `${garden.produceKg || gardeners.reduce((s, g) => s + g.production.reduce((a, p) => a + p.kg, 0), 0)}kg`, '#2F6F9E'], ['Training', garden.training ? `${garden.training}%` : '—', '#9E5C08']].map(([l, v, c]) => (
