@@ -27,7 +27,7 @@ export default function TourPage() {
       <p aria-live="polite">{done.length} of {FARM_TOUR.length} stops tried</p><progress value={done.length} max={FARM_TOUR.length} aria-label="Tour progress"/>
       <div className={styles.actions}><Link href="/samples/farm">Open the sample farm pack</Link><Link href="/samples">Choose a role sample</Link><button onClick={()=>{try{sampleWrite('farm-tour',[]);setDone([]);}catch(e){setError((e as Error).message);}}}>Restart checklist</button></div>
       {FARM_TOUR.map((s,index)=><section className={styles.card} key={s.id}><span className={styles.meta}>{index+1} / {FARM_TOUR.length} · about {s.minutes} minutes</span><h2>{s.title}</h2><p>{s.task}</p><Link className={`${styles.button} ${styles.primary}`} href={s.href}>Try this step</Link><label className={styles.check}><input type="checkbox" checked={done.includes(s.id)} onChange={e=>mark(s.id,e.target.checked)}/>I have tried this</label></section>)}
-      <p>Come back through the Tour link in the sample banner. The checklist records what you mark—not training attendance or project achievements.</p>
+      <p>Come back through the Tour link in the Sample menu. The checklist records what you mark—not training attendance or project achievements.</p>
     </>}
   </div></main>;
 }
