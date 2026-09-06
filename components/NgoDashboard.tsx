@@ -397,6 +397,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
 
   const selectGarden = useCallback((g: Garden) => {
     setGarden(g);
+    setSampleView(null);
     setGardener(null);
     setLiveGardeners(null);
   }, []);
@@ -520,7 +521,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                     : `Showing ${gardens.length} gardens`}
             </span>
           </div>}
-          {isDemo ? <SampleGardenVisual kind={garden?.kind} variant={garden?.id} name={garden?.name ?? 'Example garden landscape'} initial="aerial" /> : <ReactMapGL ref={mapRef} mapboxAccessToken={TOKEN} initialViewState={{ longitude: 25, latitude: -29, zoom: 4.4 }} mapStyle="mapbox://styles/mapbox/dark-v11" style={{ width: '100%', height: '100%' }}>
+          {isDemo ? <SampleGardenVisual key={garden?.id ?? 'overview'} kind={garden?.kind} variant={garden?.id} name={garden?.name ?? 'Example garden landscape'} initial="design" /> : <ReactMapGL ref={mapRef} mapboxAccessToken={TOKEN} initialViewState={{ longitude: 25, latitude: -29, zoom: 4.4 }} mapStyle="mapbox://styles/mapbox/dark-v11" style={{ width: '100%', height: '100%' }}>
             {gardens.map((g) => (
               <Marker key={g.id} longitude={g.lon} latitude={g.lat} anchor="center">
                 <button onClick={() => selectGarden(g)} className="rounded-full transition-all"
@@ -627,7 +628,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                       </div>
                     </div>
 
-                    {isDemo && <><button type="button" className="w-full rounded-xl p-3 text-sm font-semibold" style={{ background: '#e9f1e9', color: '#214d35' }} onClick={() => setSampleView('design')}>Open example garden design →</button>{sampleView && <div><button type="button" className="text-sm underline py-2" onClick={() => setSampleView(null)}>Close example</button><SampleGardenVisual kind={garden.kind} variant={garden.id} key={sampleView} name={garden.name} initial={sampleView} /></div>}<button type="button" className="text-xs underline py-2" onClick={() => { if (startRolePreview('farmer')) router.push('/farmer'); }}>Explore the separate Ubhejane design workspace →</button></>}
+                    {isDemo && <><button type="button" className="w-full rounded-xl p-3 text-sm font-semibold" style={{ background: '#e9f1e9', color: '#214d35' }} onClick={() => setSampleView('design')}>Open example garden design →</button>{sampleView && <div><button type="button" className="text-sm underline py-2" onClick={() => setSampleView(null)}>Close example</button><SampleGardenVisual kind={garden.kind} variant={garden.id} key={`${garden.id}-${sampleView}`} name={garden.name} initial={sampleView} /></div>}<button type="button" className="text-xs underline py-2" onClick={() => { if (startRolePreview('farmer')) router.push('/farmer'); }}>Explore the separate Ubhejane design workspace →</button></>}
                     {!isDemo && <p className="text-xs" style={{ color: '#506158' }}>This register does not include the farmer’s private design.</p>}
                     <details className={reportStyles.root} style={{ padding: 12, borderRadius: 12 }}><summary>Preview & download this garden record</summary>
                       <ReportComposer title="Garden production record" sample={isDemo} sections={[
@@ -686,6 +687,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                   <div className="flex items-center gap-2"><span className="w-2.5 h-2.5 rounded-full flex-shrink-0" style={{ background: STATUS[garden.status].color }} /><span className="font-display font-bold text-base" style={{ color: '#20190F' }}>{garden.name}</span></div>
                   <div className="text-xs font-mono mt-0.5" style={{ color: '#9A8268' }}>{garden.town}{garden.facilitator ? ` · supervisor ${garden.facilitator}` : ''}</div>{garden.kind && <p className="text-sm mt-2" style={{ color: '#36553d' }}>{garden.kind} · {Math.round(garden.areaM2 ?? 0).toLocaleString()} m²{garden.areaM2 === 4046.8564224 ? ' · 1 acre' : ''} · fictional site area</p>}{isDemo && garden.language && <p className="text-sm mt-1" style={{ color: '#36553d' }}>Example group language: {garden.language}</p>}
                 </div>
+                {isDemo && <SampleGardenVisual key={garden.id} kind={garden.kind} variant={garden.id} name={garden.name} />}
                 <div className="grid grid-cols-3 gap-2">
                   {[['Farmers', garden.farmers || gardeners.length, '#20190F'], ['Produce', `${garden.produceKg || gardeners.reduce((s, g) => s + g.production.reduce((a, p) => a + p.kg, 0), 0)}kg`, '#2F6F9E'], ['Training', garden.training ? `${garden.training}%` : '—', '#9E5C08']].map(([l, v, c]) => (
                     <div key={l as string} className="p-2 rounded-lg" style={{ background: '#EDE7DB', border: '1px solid #E2D8C4' }}><div className="text-xs font-mono" style={{ color: '#9A8268' }}>{l}</div><div className="text-sm font-display font-semibold" style={{ color: c as string }}>{v}</div></div>

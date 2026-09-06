@@ -4,7 +4,7 @@ import type { UserRole } from './db/types';
 export function canSeeWorkspaceLink(role: UserRole | null, href: string): boolean {
   if (!role || role === 'admin') return true;
   const path = href.split('?')[0];
-  if (role === 'funder') return ['/home', '/funder', '/network', '/account', '/updates', '/contact', '/samples', '/tour', '/feedback'].includes(path);
+  if (role === 'funder') return ['/home', '/funder', '/network', '/account', '/updates', '/contact', '/samples', '/samples/gardens', '/tour', '/feedback'].includes(path);
   if (path === '/funder') return false;
   if (path === '/ngo') return role === 'ngo';
   if (path === '/mentor') return role === 'mentor' || role === 'ngo';

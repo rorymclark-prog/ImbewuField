@@ -88,3 +88,27 @@ test('the demo offers distinct garden settings and regional participant photos t
     for (const person of people) assert.ok(existsSync(`public${samplePortrait(person)}`), person);
   }
 });
+
+
+import { sampleGardenSvg, sampleGardenImage } from '../lib/sample-garden-layout';
+import { canSeeWorkspaceLink } from '../lib/role-navigation';
+
+test('changing garden produces distinct geometry instead of the same shared aerial picture', () => {
+  const pictures = SAMPLE_GARDENS.map(g => sampleGardenSvg(g.kind!, g.id));
+  // Strip wording: changing a title on the same drawing is not a new garden layout.
+  const geometry = pictures.map(svg => svg.replace(/<text[^>]*>.*?<\/text>/g, ''));
+  assert.equal(new Set(geometry).size, SAMPLE_GARDENS.length);
+  for (const [i,svg] of pictures.entries()) {
+    assert.doesNotMatch(svg, /NaN|undefined/);
+    assert.equal(decodeURIComponent(sampleGardenImage(SAMPLE_GARDENS[i].kind!, SAMPLE_GARDENS[i].id).split(',')[1]), svg);
+    assert.match(svg, /Fictional layout/);
+  }
+});
+
+test('farmers, mentors, funders and organisations can find the fictional garden gallery', () => {
+  for (const role of ['farmer', 'mentor', 'funder', 'ngo', 'admin'] as const) {
+    assert.equal(canSeeWorkspaceLink(role, '/samples/gardens'), true, role);
+  }
+  assert.equal(canSeeWorkspaceLink('funder', '/ngo'), false);
+  assert.equal(canSeeWorkspaceLink('farmer', '/ngo'), false);
+});

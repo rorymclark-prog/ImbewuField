@@ -33,6 +33,11 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '6 September 2026', sha: '8b1f9d4', changes: [
+    'Open Browse sample gardens from the menu to choose among 18 examples.',
+    'Each garden now opens on its own layout, with people and an example report.',
+    'The reused aerial picture is clearly labelled as a shared reference photo.',
+  ] },
   { when: '5 September 2026', sha: 'a83605e', changes: [
     'Tap profile and site photos to open a larger view.',
     'Explore 18 sample gardens, with regional names and Sesotho-speaking groups.',

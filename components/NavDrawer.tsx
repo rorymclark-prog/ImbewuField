@@ -99,6 +99,7 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
       items: [
         { href: '/account', Icon: User, label: t('navMyAccount') },
         { href: '/samples', Icon: Sprout, label: 'Try a sample' },
+        { href: '/samples/gardens', Icon: Sprout, label: 'Browse sample gardens' },
         { href: '/tour', Icon: Footprints, label: '15-minute tour' },
         { href: '/feedback', Icon: MessageCircle, label: 'Report a bug / suggest a feature' },
         { href: '/updates', Icon: Sparkles, label: "What's new" },

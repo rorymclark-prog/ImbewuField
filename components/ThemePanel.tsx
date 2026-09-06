@@ -176,6 +176,7 @@ export default function ThemePanel({ open, onClose }: Props) {
           <section style={{ marginBottom:28, display:'grid', gap:12, fontSize:16 }} aria-label="Tour and support">
             <Link href="/tour" onClick={onClose}>Tour &amp; samples · 15 minutes</Link>
             <Link href="/samples" onClick={onClose}>Choose a sample workspace</Link>
+            <Link href="/samples/gardens" onClick={onClose}>Browse 18 sample gardens</Link>
             <Link href="/feedback" onClick={onClose}>Report a bug / request a feature</Link>
           </section>
 
