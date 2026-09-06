@@ -138,3 +138,21 @@ test('old sample sessions gain missing gardens without resetting edited areas or
   assert.deepEqual(migrated.find(s=>s.code===edited.code),edited);
   assert.deepEqual(completeSampleAreas(migrated),migrated);
 });
+
+import { sampleGardenReportSections, sampleGardenReportUrl } from '../lib/sample-garden-reports';
+test('every catalogue garden has its own complete prepared PDF and layout', () => {
+  assert.equal(new Set(SAMPLE_GARDENS.map(g => sampleGardenReportUrl(g.id))).size, 18);
+  for (const garden of SAMPLE_GARDENS) {
+    const report = sampleGardenReportUrl(garden.id)!;
+    const bytes = readFileSync(new URL(`../public${report}`, import.meta.url));
+    assert.equal(bytes.subarray(0, 5).toString(), '%PDF-');
+    assert.ok(bytes.length > 10000, `${garden.id} has a populated report`);
+    assert.ok(existsSync(new URL(`../public/demo/reports/${garden.id}-layout.png`, import.meta.url)));
+    const sections = sampleGardenReportSections(garden);
+    assert.equal(sections.length, 8);
+    assert.ok(sections[0].lines.some(line => line.includes(garden.name)));
+    assert.ok(sections[1].lines.some(line => line.includes(garden.production.vegetableM2.toLocaleString('en-ZA', { maximumFractionDigits: 1 }))));
+    assert.ok(sections.every(s => s.lines.length >= 4));
+  }
+  assert.equal(sampleGardenReportUrl('missing-garden'), undefined);
+});

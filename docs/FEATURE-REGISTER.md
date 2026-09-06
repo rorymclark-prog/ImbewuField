@@ -144,11 +144,11 @@ note itself has not yet been edited.
 
 ## Current development batch — 6 September 2026
 
-**Status: typecheck and full suite passed locally; deployment pending.**
+**Status: deployed 6 September 2026 — live build 12502e5 (PR #418).**
 Validation: 3,401 tests, 3,400 passed, zero failures and one pre-existing TODO.
 Photo assets were inspected. Interactive browser connection failed, so mobile
-and desktop interaction/visual verification remains outstanding. Do not describe
-these additions as live until deployment is confirmed.
+and desktop interaction/visual verification remains outstanding. Production
+workflow confirmed that the live build matches the merged commit.
 
 - Eighteen unique AI-generated garden reference photos, matched to each fictional
   garden type; shared across its directory, visual preview and overview report.
@@ -199,10 +199,43 @@ not overwritten. Preserve this protection when integrating actual site media.
   proposed; no unsupported portfolio value has been added.
 - Results framework, indicator register, formal data-quality reviews and learning
   decisions linked to app releases: proposed, detailed in the MEL audit.
-- Full archived sample AI reports for every role/garden and automated report
-  version history: pending. Current samples provide generated record reports;
-  they are not claims of expert-validated agronomic advice.
+- Prepared full reports for all 18 catalogue gardens: implemented in the batch
+  below. Automated report version history and archived reports for every other
+  role remain pending; sample reports are not expert-validated agronomic advice.
 - Advanced panel resizing, expanded mentor resources/visits, privacy signing and
   offline validation retain the open statuses above.
 - Latest actual site photographs and any genuine laboratory or household records
   must be supplied before replacing the corresponding examples.
+
+
+## Funding and tangible delivery — proposed 6 September 2026
+
+- Existing: design-derived BOQ with known rates, explicit unpriced lines and
+  existing-item exclusions; generic milestone targets and dated observations.
+- Proposed: **Funding & delivery** in organisation/funder views, linking site
+  needs to approved BOQ revisions, funding allocations, funding gaps, procurement,
+  verified assets and follow-up functionality.
+- Keep current funded commitments distinct from additional needs beyond budget.
+  Track tanks and added storage, commissioned solar capacity, planted trees and
+  survival; never confuse installed capacity or spending with achieved outcomes.
+- Selected funding opportunities and branded gap/delivery reports, published by
+  the organisation for existing or prospective funders. No automatic outreach.
+- Full specification and concept-note paragraph: [FUNDING-AND-DELIVERY.md](FUNDING-AND-DELIVERY.md).
+- Status: design documented; complete linked workflow is not yet built.
+
+## Completed reports for all 18 gardens — 6 September 2026
+
+Status: implemented; 3,401 tests passed, no failures, one existing TODO.
+TypeScript and all 18 PDF content checks passed. Deployment verification pending.
+
+- Every garden card now links directly to its completed four-page sample PDF.
+  The organisation/funder garden detail also links to that same report.
+- Each report uses that garden’s own name, type, AI site reference photo,
+  schematic layout, planted areas, participant count and production figures.
+- Eight sections cover assessment, production, infrastructure needs, funding
+  readiness, evidence and next actions. Missing measured quantities and prices
+  are explicit; no invented commitments or laboratory results are presented.
+- The selected garden shows the full report text and a separate **Generate new
+  report PDF** action. Photo and layout are included by default in this gallery.
+- These are prepared demonstration reports requiring no live AI call. They do
+  not add 18 editable Design Studio farms or certify actual project outcomes.

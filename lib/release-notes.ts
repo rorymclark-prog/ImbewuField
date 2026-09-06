@@ -33,6 +33,10 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '6 September 2026', sha: '12502e5', changes: [
+    'Every sample garden has a completed report PDF, with its photo, layout and figures.',
+    'Open reports directly from garden cards, or generate a fresh copy from the garden view.',
+  ] },
   { when: '6 September 2026', sha: 'b7bdeef', changes: [
     'Sample gardens have their own reference photos and planted-area records.',
     'Browse funded gardens by area, and try a Lima example for your role.',
