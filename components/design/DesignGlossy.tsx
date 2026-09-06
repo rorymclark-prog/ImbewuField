@@ -11666,12 +11666,11 @@ export default function DesignGlossy({
    * the drawing on its own, at full sheet resolution with nothing soft behind it. None is correct
    * in general, which is why it is a control and not a constant.
    */
-  // Defaults to whichever picture the frame actually carries: the farmer's aerial when one has
-  // been imported, otherwise the satellite. 'photo' must never be the selection on a site with no
-  // photo — the sheet would render the satellite under a pill claiming otherwise.
-  const [underlay, setUnderlay] = useState<SheetUnderlay>(() => (hasFarmerPhoto(frameProp) ? 'photo' : 'satellite'));
+  // Rory prefers clean printable sheets on first opening. Photo and satellite remain
+  // explicit choices; losing an imported photo returns to the same plain default.
+  const [underlay, setUnderlay] = useState<SheetUnderlay>('plain');
   useEffect(() => {
-    if (underlay === 'photo' && !hasFarmerPhoto(frameProp)) setUnderlay('satellite');
+    if (underlay === 'photo' && !hasFarmerPhoto(frameProp)) setUnderlay('plain');
   }, [underlay, frameProp]);
   const underlayOptions = useMemo(() => sheetUnderlayOptions(frameProp), [frameProp]);
   // Escape hatch so the shelved SECOND paid pass can be looked at again without a redeploy — the

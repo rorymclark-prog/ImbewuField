@@ -123,3 +123,19 @@ note itself has not yet been edited.
   pre-existing TODO). All 18 SVG layouts rendered and visually inspected. Browser
   connection unavailable; interactive page verification remains outstanding.
   Deployment awaits CI and production verification for this branch.
+
+## Crop timeline icon fit — 6 September 2026
+
+- Compact crop icons honour their supplied size for images and emoji, overriding
+  the general list-art minimum. Timeline names sit beside the icon and truncate
+  horizontally within short bars. Crop timings and planning calculations unchanged.
+- Browser visual verification outstanding; deployment follows CI.
+- Recent harvests use matching catalogue artwork when no uploaded photo exists.
+  Uploaded evidence photos retain priority; unknown crops retain a neutral symbol.
+- Map sheets default to Plain paper, including the fallback when a selected
+  imported photo disappears. Photo and satellite remain selectable. PLAN_VERSION
+  and saved design geometry are unchanged.
+- Requested: side-drag resizing for panels/modals. Exact target needs identifying;
+  the supplied crop-plan screenshot is a full page rather than a modal.
+- Illustrated card palette is the standard view on first render and for existing
+  classic preferences. Removed the trial view switch; design data is unchanged.

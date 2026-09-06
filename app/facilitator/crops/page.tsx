@@ -3328,8 +3328,9 @@ function PlantingBar({ planting, currentMonth, onTap }: { planting: Planting; cu
               thing that made the far columns unreadable in the first place —
               a farmer panning right must be able to see WHAT is in the bed
               there without panning back a year to find out. */}
-          <span style={{ position: 'relative', zIndex: 1 }}>
-            <CropIcon cropKey={crop.key} icon={crop.icon} size={14} /> {crop.name}{fLabel ? ` (${fLabel})` : ''}
+          <span style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: 4, height: '100%', minWidth: 0, lineHeight: 1 }}>
+            <CropIcon cropKey={crop.key} icon={crop.icon} size={14} />
+            <span style={{ minWidth: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{crop.name}{fLabel ? ` (${fLabel})` : ''}</span>
           </span>
         </button>
       ))}

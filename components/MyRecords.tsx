@@ -33,6 +33,9 @@ import {
 } from 'lucide-react';
 import type { ProductionLog, SalesLog, ExpenseLog, Design, Profile } from '@/lib/db/types';
 import CropSelect from '@/components/CropSelect';
+import CropIcon from '@/components/CropIcon';
+import { buildCropAliasIndex, cropIdentityOf } from '@/lib/crop-identity';
+import { getCropArt } from '@/lib/crop-art';
 import { loadCropPriceOverrides, priceFor, type CropPrice } from '@/lib/crop-prices';
 import { parseDecimalInput } from '@/lib/decimal-input';
 import { loadInvoices, type SavedInvoice } from '@/lib/invoices';
@@ -645,6 +648,17 @@ function ExampleBadge({ label }: { label: string }) {
   );
 }
 
+const harvestArtAliases = buildCropAliasIndex();
+
+function HarvestCropPicture({ name }: { name: string }) {
+  // The demo prefix labels fiction; it is not part of the crop's identity.
+  const lookup = isSampleMode() ? name.replace(/^Sample\s*[—–-]\s*/i, '') : name;
+  const { key } = cropIdentityOf(lookup, harvestArtAliases);
+  return key && getCropArt(key)
+    ? <CropIcon cropKey={key} icon="🌱" size={32} />
+    : <Leaf size={18} style={{ color: '#1F4D2B' }} />;
+}
+
 /* ── Production list ─────────────────────────────────────────────────────── */
 
 function ProductionList({ items }: { items: ProductionLog[] }) {
@@ -668,7 +682,7 @@ function ProductionList({ items }: { items: ProductionLog[] }) {
             className="w-10 h-10 rounded-lg flex-shrink-0 flex items-center justify-center"
             style={{ background: 'rgba(31,77,43,0.08)', border: '1px dashed rgba(31,77,43,0.25)' }}
           >
-            <Leaf size={18} style={{ color: '#1F4D2B' }} />
+            <HarvestCropPicture name={EXAMPLE_PRODUCTION.crop} />
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-sm font-display font-medium leading-tight truncate" style={{ color: '#20190F' }}>
@@ -709,7 +723,7 @@ function ProductionList({ items }: { items: ProductionLog[] }) {
               className="w-10 h-10 rounded-lg flex-shrink-0 flex items-center justify-center"
               style={{ background: 'rgba(31,77,43,0.10)', border: '1px solid rgba(31,77,43,0.15)' }}
             >
-              <Leaf size={18} style={{ color: '#1F4D2B' }} />
+              <HarvestCropPicture name={item.crop} />
             </div>
           )}
           <div className="flex-1 min-w-0">
