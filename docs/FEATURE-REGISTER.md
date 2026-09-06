@@ -324,14 +324,17 @@ the production workflow verified that this commit is live.
 ## Compact sample chooser — 6 September 2026
 
 Status: implemented in this branch. TypeScript and whitespace checks passed;
-3,404 tests passed, zero failures and one existing TODO. Preview visual checking
-is pending. Production is the separate PR #420 release above until this follow-up
-is merged and deployed.
+3,404 tests passed, zero failures and one existing TODO. The desktop preview
+showed all five cards together, with working Funder selection and Sample menu
+controls. All five roles also opened on the deployed PR #420 release.
+Phone/tablet rendering remains unverified. Production is the separate PR #420
+release above until this follow-up is merged and deployed.
 
 - Organisation, Funder, Farmer, Mentor and Student are the first five cards.
   Wide screens show them in one row; tablets use a grid and phones compact rows.
 - Shorter introduction and supporting links below the choices; the full card is
   a touch target. The current view is indicated and account-role checks remain.
+  A shorter, top-aligned footer note clears the default floating Lima control.
 - Sample garden pages, the journal sheet and Design Studio no longer reserve
   space for the removed footer strip. The tour points to the Sample menu.
 - The carried-forward request table above retains incomplete work and records

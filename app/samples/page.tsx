@@ -113,7 +113,7 @@ export default function SamplesPage() {
         </section>
 
         <footer className={styles.footer}>
-          <p>Ubhejane uses a real saved garden design. Sample people, programme results, household answers and soil records are illustrative. Your account permissions stay the same.</p>
+          <p>Ubhejane uses its real saved design. Sample people, results and field records are illustrative.</p>
           <button type="button" className={styles.reset} onClick={() => {
             if (enterSampleMode()) window.location.reload();
             else setError('The sample could not reset. Please allow session storage and try again.');
