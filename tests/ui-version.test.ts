@@ -43,12 +43,13 @@ test('unset, unknown and corrupt stored values all resolve to the default', () =
   assert.equal(uiVersion(), DEFAULT_UI_VERSION);
 });
 
-test('the switch is reversible in both directions', () => {
+// Rory retired the classic choice: old preferences must not retain the old UI.
+test('legacy classic preferences resolve to the standard card view', () => {
   storage.raw().clear();
   setUiVersion('cards');
   assert.equal(uiVersion(), 'cards');
   setUiVersion('classic');
-  assert.equal(uiVersion(), 'classic');
+  assert.equal(uiVersion(), 'cards');
 });
 
 test('THE BOUNDARY: no data path reads the UI version', () => {

@@ -106,7 +106,7 @@ import {
 } from '@/lib/design-layer-membership';
 import { formatDesignTranslation } from '@/lib/design-studio-i18n';
 import { useLanguage } from '@/lib/i18n';
-import { uiVersion, setUiVersion, UI_VERSION_EVENT } from '@/lib/ui-version';
+import { uiVersion, DEFAULT_UI_VERSION, UI_VERSION_EVENT } from '@/lib/ui-version';
 import LessonLink from './LessonLink';
 import {
   clampDesktopPanelWidth,
@@ -679,7 +679,7 @@ export default function DesignPalette({
   // THE UI VERSION, read reactively. 'cards' renders the same catalogue, same handlers and same
   // selection state as big illustrated cards instead of 44px chips — presentation only, which is
   // the boundary lib/ui-version.ts exists to hold. Nothing below writes differently because of it.
-  const [cardsUi, setCardsUi] = useState(false);
+  const [cardsUi, setCardsUi] = useState(DEFAULT_UI_VERSION === 'cards');
   useEffect(() => {
     const sync = () => setCardsUi(uiVersion() === 'cards');
     sync();
@@ -2455,27 +2455,6 @@ export default function DesignPalette({
           >
             <span aria-hidden>⧉</span>
             <span style={{ whiteSpace: 'nowrap' }}>Float</span>
-          </button>
-          {/* THE UI VERSION TOGGLE — reversible per person, and the whole upgrade mechanism.
-              It lives where the change happens, so trying the new look and going back are the
-              same gesture in the same place. Flipping it changes NOTHING about the design,
-              the sheets or the renders — lib/ui-version.ts states the boundary. */}
-          <button
-            type="button"
-            onClick={() => setUiVersion(cardsUi ? 'classic' : 'cards')}
-            title={cardsUi ? 'Back to the compact chip palette' : 'Try the new card palette — bigger drawings, same elements'}
-            aria-pressed={cardsUi}
-            style={{
-              display: 'inline-flex', alignItems: 'center', gap: 4, flexShrink: 0,
-              minHeight: guided ? 44 : 34, padding: '0 9px', borderRadius: 9,
-              border: cardsUi ? `1px solid ${GREEN}` : '1px solid rgba(0,0,0,0.12)',
-              background: cardsUi ? GREEN : PAPER, color: cardsUi ? PAPER : '#6B6355',
-              fontSize: guided ? 12 : 11, fontWeight: 600, cursor: 'pointer',
-              alignSelf: cardsUi ? 'center' : undefined,
-            }}
-          >
-            <span aria-hidden>✦</span>
-            <span style={{ whiteSpace: 'nowrap' }}>{cardsUi ? 'New look' : 'New look'}</span>
           </button>
           {climateFilterActive && (
             <span

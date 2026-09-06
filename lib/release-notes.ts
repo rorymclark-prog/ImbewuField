@@ -33,6 +33,12 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '6 September 2026', sha: '337b832', changes: [
+    'Crop-plan pictures fit inside the timeline bars, with crop names beside them.',
+    'Recent harvests show matching crop artwork when you have not added a photo.',
+    'Map sheets open with Plain paper selected; you can still choose a photo or satellite.',
+    'The illustrated card palette is now standard, without a view-switch button.',
+  ] },
   { when: '6 September 2026', sha: '8b1f9d4', changes: [
     'Open Browse sample gardens from the menu to choose among 18 examples.',
     'Each garden now opens on its own layout, with people and an example report.',
@@ -796,7 +802,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       'Water tanks now wear their real colours — black, green, teal and sandstone by size',
       'The rain barrel card shows its typical size (about 200 litres)',
       'New Greywater section on the Water step — diverter, outlet, basin and soakaway',
-      'Try the new card palette with the "New look" button — switch back any time',
+      'Updated element palette with larger illustrations',
       'Saved maps open faster and no longer crash the app on phones',
       'Ten identical beds now share one label with a count, instead of ten',
       'New Quality setting: High redraws sheets at 1.5x resolution for printing',

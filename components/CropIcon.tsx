@@ -17,6 +17,8 @@ export default function CropIcon({
   size: number;
   style?: CSSProperties;
 }) {
+  // Timeline bars are only 26px high; the general 32px list-art floor clips
+  // their labels. An explicit size must apply to both artwork and emoji.
   const art = getCropArt(cropKey);
   return art ? (
     <img
@@ -24,10 +26,10 @@ export default function CropIcon({
       src={art}
       alt=""
       aria-hidden
-      style={{ width: size, height: size, objectFit: 'contain', display: 'inline-block', verticalAlign: '-15%', ...style }}
+      style={{ width: size, height: size, minWidth: size, minHeight: size, flexShrink: 0, objectFit: 'contain', display: 'inline-block', verticalAlign: '-15%', ...style }}
     />
   ) : (
-    <span aria-hidden className="produce-art-fallback" style={{ fontSize: Math.max(32, size), flexShrink: 0, ...style }}>
+    <span aria-hidden className="produce-art-fallback" style={{ fontSize: size, width: size, height: size, lineHeight: 1, flexShrink: 0, ...style }}>
       {icon}
     </span>
   );

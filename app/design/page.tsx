@@ -128,7 +128,7 @@ import DesignPalette, {
 } from '@/components/design/DesignPalette';
 import DesignWizard, { STEP_ORDER, STEP_LABELS } from '@/components/design/DesignWizard';
 import CardsStepper from '@/components/design/CardsStepper';
-import { uiVersion, UI_VERSION_EVENT } from '@/lib/ui-version';
+import { uiVersion, DEFAULT_UI_VERSION, UI_VERSION_EVENT } from '@/lib/ui-version';
 import { STUDIO_AREA_FOR, type AddActionId } from '@/lib/add-actions';
 import type { GlossyLayerFilter } from '@/components/design/DesignGlossy';
 
@@ -1094,7 +1094,7 @@ function DesignStudioInner() {
   // 'cards' the slim chrome bar carries the 2.0 numbered stepper (every step visible and
   // tappable) instead of the prev/next mini-nav; nothing about step semantics changes, it is
   // the same setStep the arrows call.
-  const [cardsUi, setCardsUi] = useState(false);
+  const [cardsUi, setCardsUi] = useState(DEFAULT_UI_VERSION === 'cards');
   useEffect(() => {
     const sync = () => setCardsUi(uiVersion() === 'cards');
     sync();
