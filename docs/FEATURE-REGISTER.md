@@ -4,6 +4,63 @@ Living register: update this file with each feature change. Do not mark a featur
 live solely because its code exists: record tests and deployment confirmation.
 This register describes product capability, not verified project outcomes.
 
+## Requests carried into this chat — 6 September 2026
+
+The previous chat's complete transcript could not be retrieved. This checklist
+carries forward the available conversation context, this living register, the
+MEL/funding specifications and current source. It is not a claim that every past
+message was recovered. A feature being present does not prove every interaction
+has been checked on a phone or against live organisation data.
+
+Current baseline: main `a120d9326aa87cb26d45928033b04c802cf10af6`.
+Production and test workflows passed on 6 September (deployment run 34022028378).
+All five sample cards and the menu badge were visually checked on the live desktop
+page. PR #419 also deployed the 18 prepared garden reports. The compact chooser
+layout in this follow-up is tracked separately below.
+
+| Request | Current state | Evidence / what remains |
+| --- | --- | --- |
+| All sample views on the chooser: organisation, funder, farmer, mentor, student | Live; compact layout in this branch | All five cards stay visible; the real account role controls availability. Anonymous visitors, organisations and administrators can explore all five. |
+| Replace bottom sample banner because it covers controls | Live; visually checked on desktop | A 44px menu button carries Sample; the drawer has choices, reports, tour and Exit. A top-corner fallback covers pages without a menu. This branch removes remaining strip spacing. |
+| At least 15 varied homestead, commercial, crèche, school and other gardens | Present in deployed source | 18 entries in `lib/sample-gardens.ts`, with individual selection and type filters |
+| Mainly African sample participants and Sesotho-speaking groups in relevant examples | Present in deployed source | Regional example profiles and four Sesotho-labelled Botshabelo gardens; portraits are illustrative |
+| Unique reference photo for each garden, reused consistently | Present in deployed source | 18 photo mappings in `lib/sample-media.ts`, reused by gallery, garden view and report |
+| Tap profile and site photos to enlarge | Present; interactive check still needed | Global `PhotoViewer` opens marked photos and supports keyboard, Close/Escape and enlarge/fit |
+| Change gardens and see a different layout/photo/person | Present; interactive check still needed | `/samples/gardens` and `SampleGardenVisual`; not a separate editable Design Studio for each garden |
+| Production areas follow the multiple sample gardens | Present in deployed source | `completeSampleAreas` seeds the 18 directory allocations, separates vegetables/staples and retains practice edits |
+| Group funded gardens by area | Present in deployed source | Town/area filters in the directory; no invented village boundaries |
+| One complete editable sample farm with map pin, design, assessment, household, soil, photos and report | Present for Ubhejane; partial against the wider request | `sample-farm-session`, `sample-farm-pack`, `/samples/farm`; household/soil examples are not validated live instruments |
+| Fully editable connected farms for every sample garden | Pending | The 18 directory gardens have overviews/reports; only Ubhejane has the connected farm workspace |
+| All demo totals represent one consistent programme | Pending | National garden, mentor, cohort and farm fixtures remain separate; do not add their totals together |
+| Completed reports for all 18 directory gardens | Deployed; workflow verified | Four-page PDFs and matching in-app text, using each garden's photo/layout/areas; not newly generated AI advice |
+| Ready-to-read sample reports and Generate new report beside report controls | Present in deployed source | `ReportView`, `ProgrammeReports` and sample garden report actions; sample refresh uses practice records |
+| Archived reports/version history across every role and garden | Partial / pending | Prepared directory PDFs exist; automatic history and all other role archives remain outstanding |
+| Usable 15-minute onboarding tour, replayable from Settings | Present; full tour still needs interaction check | Seven stops in `sample-tour`, onboarding offer, menu and Settings links |
+| Organisation/funder feature requests and bug reports | Present; delivery not reverified | `/feedback` and authenticated product-feedback API; no test message sent during this audit |
+| Separate organisation and funder views, cleaner funder navigation | Present | Role routes and `role-navigation`; demo selection does not modify real account roles |
+| NGO controls member powers and can inspect access | Partial | Scoped member/assessment controls and effective-access preview; not universal feature switches or live impersonation |
+| Developer/admin access | Existing provisioned role | No separate magic login; trusted admin provisioning is required |
+| Baseline, course before/after, midpoint including support, closeout, app midpoint/end | Present in deployed source | Seven assessment stages and NGO analysis/publication in `mel-templates` and `MelDashboard`; translations need facilitator review |
+| NGO/funder targets, evidence and progress remaining | Partial | Programme milestones, dated observations, training evidence and published summaries exist; complete results/indicator framework is still proposed |
+| R/m² cards for vegetable beds, staples and combined; productive hectares | Present with limits | Actual recorded sales less assigned costs / mapped area; separate NGO area register; no invented full-profit or portfolio ratio |
+| Training venue location and photos | Present; device check needed | One-tap venue location, camera/multi-select and two-photo limit; offline/photo sync remains unverified |
+| Mentor course, facilitation and mentorship resource area; organisation publication | Pending | Approved materials and controlled publication/assignment still needed |
+| Expanded mentor visits with location, photos, support, issues, actions and next visit | Partial | Basic visit records exist; expanded evidence and follow-up workflow remains outstanding |
+| Report screen/print modes, short/full choices, crop plan, BOQ and isiZulu | Present with limits | Site-report audit and exporters; full new AI output and complete language coverage are not verified |
+| Smaller crop graphic on phone timeline | Present; phone check needed | Compact icon sizing and horizontal title truncation in the previous release |
+| Plain-paper map default and standard illustrated palette | Present | Previous release; saved geometry and PLAN_VERSION unchanged |
+| Resize panels/modals from their sides | Target still unclear | Existing design panel sizing is separate; identify which additional modal/page was intended |
+| Lock experimental AI rendering for ordinary users | Present in deployed source | Existing approval/kill-switch checks; no paid generation run here |
+| Example Lima conversations for each role and illustrated farmer pest query | Present as scripted demos | `sample-lima`; not evidence of a live AI response |
+| Invoices, money book and responsive desktop/phone/tablet layouts | Present; end-to-end audit incomplete | Existing invoice/share/print and records workflows; check real device exports separately |
+| Preserve real Ubhejane identity and original map | Required and retained | Real reference design; latest actual photos/lab/household records await owner material; seeded records remain labelled examples |
+| Funding needs, BOQ-linked allocations, gaps, delivered tanks/solar/trees and funding opportunities | Specification only | `FUNDING-AND-DELIVERY.md`; full linked workflow is not built |
+| Retail replacement value and complete MEL learning/data-quality framework | Proposed | `MEL-FEATURE-AUDIT.md`; no unsupported financial or impact figures added |
+| Versioned privacy permissions, signing, receipts and guardian flow | Pending | Review/approval and implementation gates remain; no live signing enabled |
+| Offline audit on iPhone, Android and iPad; sync/camera/GPS/maps/lessons | Pending | Test matrix below remains open; no universal offline promise |
+| Update concept note after feature/offline audit; one-page, three-page and full versions | Pending in this implementation thread | Feature source maintained; refreshed documents and user screenshots still require the separate concept-note work |
+| Keep one continuing feature source with implementation/deployment limits | Updated by this change | Replace the same published FEATURE-REGISTER.md identity; retain its MEL and funding appendices |
+
 ## Available in production before this batch
 
 | Area | Capability | Limits / follow-up |
@@ -244,7 +301,8 @@ commit 5a13fe9; the production workflow verified the live build.
 ## Sample navigation and Back controls — 6 September 2026
 
 Status: implemented; TypeScript passed, 3,404 tests passed, zero failures,
-one existing TODO. Deployment verification pending.
+one existing TODO. Deployed through PR #420, commit a120d93;
+the production workflow verified that this commit is live.
 
 - The bottom sample banner is replaced by a small Sample indicator on the menu
   button. Its menu offers sample choices, 18 garden reports, tour and Exit.
@@ -258,5 +316,23 @@ one existing TODO. Deployment verification pending.
   and administrators can explore all roles. Unknown account roles fail closed.
 - Account’s sample view explains its practice profile instead of presenting
   fictional profile data as the real account’s permissions.
-- Browser preview connection was unavailable; phone rendering is not yet
-  visually verified for this batch.
+- The live desktop chooser was visually checked in this follow-up: all five
+  cards are present and no footer strip covers the page. Phone rendering remains
+  unverified.
+
+
+## Compact sample chooser — 6 September 2026
+
+Status: implemented in this branch. TypeScript and whitespace checks passed;
+3,404 tests passed, zero failures and one existing TODO. Preview visual checking
+is pending. Production is the separate PR #420 release above until this follow-up
+is merged and deployed.
+
+- Organisation, Funder, Farmer, Mentor and Student are the first five cards.
+  Wide screens show them in one row; tablets use a grid and phones compact rows.
+- Shorter introduction and supporting links below the choices; the full card is
+  a touch target. The current view is indicated and account-role checks remain.
+- Sample garden pages, the journal sheet and Design Studio no longer reserve
+  space for the removed footer strip. The tour points to the Sample menu.
+- The carried-forward request table above retains incomplete work and records
+  the limit that the full previous transcript was not available.

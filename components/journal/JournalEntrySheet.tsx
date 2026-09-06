@@ -103,12 +103,8 @@ export default function JournalEntrySheet({ entry, beds, crops, onSave, onDelete
         style={{
           background: '#FBF8F1', borderRadius: '22px 22px 0 0',
           maxHeight: '92dvh',
-          // Deep enough to clear BOTH the tab bar and components/SampleModeBanner.tsx,
-          // which is fixed at bottom 60px with z-index 9999 and wraps to two lines on a
-          // phone. Measured on a 375x812 viewport the banner covers y 658-752, and with
-          // the old 20px padding the Save button landed at y 740 — completely hidden for
-          // the whole of a sample-mode demo.
-          paddingBottom: 'calc(160px + env(safe-area-inset-bottom))',
+          // The sample indicator lives in the header; only bottom navigation needs space.
+          paddingBottom: 'calc(var(--bottom-nav-height, 64px) + 20px + env(safe-area-inset-bottom, 0px))',
         }}
       >
         {/* Grab handle + header */}

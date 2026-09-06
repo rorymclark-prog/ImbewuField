@@ -33,6 +33,10 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '6 September 2026', sha: 'a120d93', changes: [
+    'All five sample views sit together, with larger tap targets and compact phone cards.',
+    'Sample pages and Design Studio reclaim the space left by the old bottom banner.',
+  ] },
   { when: '6 September 2026', sha: '5a13fe9', changes: [
     'Sample controls moved into the menu, freeing the bottom of the screen.',
     'The chooser shows all five roles and checks your real account access.',

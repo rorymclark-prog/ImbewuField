@@ -21,7 +21,6 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { loadStudio2Design, saveStudio2Design } from '@/lib/design-studio-2-storage';
-import { isSampleMode, SAMPLE_MODE_EVENT } from '@/lib/sample-mode';
 import LeftToolbar from './LeftToolbar';
 import IdentityBar from './IdentityBar';
 import TopStepper from './TopStepper';
@@ -60,21 +59,6 @@ export default function StudioShell() {
   const [completed, setCompleted] = useState<Set<SheetId>>(new Set());
   const [layerState, setLayerState] = useState<LayerStateMap>(DEFAULT_LAYER_STATE);
   const [expanded, setExpanded] = useState<Set<LayerKeyId>>(new Set(['water']));
-
-  // SampleModeBanner.tsx is mounted globally (app/layout.tsx) and fixed-positions itself at
-  // the very bottom of the viewport whenever sample mode is on — it has no idea this shell
-  // also pins a BottomBar there. Reusing the same isSampleMode()/SAMPLE_MODE_EVENT pair the
-  // banner itself uses (rather than a body-class check of our own) so this can only ever agree
-  // with it, then reserving that strip in our OWN flow so the banner overlays blank background
-  // instead of our Continue button — same fix shape as globals.css's own
-  // `body.is-sample-mode .mapboxgl-ctrl-bottom-*` margin reserve for the Mapbox controls.
-  const [sampleBannerActive, setSampleBannerActive] = useState(false);
-  useEffect(() => {
-    const sync = () => setSampleBannerActive(isSampleMode());
-    sync();
-    window.addEventListener(SAMPLE_MODE_EVENT, sync);
-    return () => window.removeEventListener(SAMPLE_MODE_EVENT, sync);
-  }, []);
 
   const [tool, setTool] = useState<ToolMode>('add');
   // The right panel is a COLUMN on desktop and an OVERLAY DRAWER below lg. Rendered inline at a
@@ -297,27 +281,9 @@ export default function StudioShell() {
 
   return (
     <div
-      className={`studio-shell-root flex h-dvh w-full flex-col overflow-hidden ${sampleBannerActive ? 'reserve-sample-banner' : ''}`}
+      className="studio-shell-root flex h-dvh w-full flex-col overflow-hidden"
       style={{ background: 'var(--bg)', color: 'var(--text)' }}
     >
-      <style jsx>{`
-        /* Matches the banner's own breakpoint exactly (SampleModeBanner.tsx: "bottom-
-           [calc(60px+safe-area)] lg:bottom-0") so the reserve appears and disappears at the
-           same width the banner itself moves at, rather than guessing a breakpoint. */
-        /* 96, not 60: at 375px the banner's sentence wraps to two lines and its "Exit sample"
-           button sits below that, so it stands about 95px tall — and a 60px reserve left the
-           Continue button measurably inside the viewport (top 699 of 812) but underneath the
-           banner. The one control that advances the nine-sheet plan set was unreachable on a
-           phone in sample mode. Reserving for the tallest form the banner actually takes is
-           cheaper than trying to measure it. */
-        .reserve-sample-banner { padding-bottom: calc(156px + env(safe-area-inset-bottom, 0px)); }
-        @media (min-width: 640px) {
-          .reserve-sample-banner { padding-bottom: calc(60px + env(safe-area-inset-bottom, 0px)); }
-        }
-        @media (min-width: 1024px) {
-          .reserve-sample-banner { padding-bottom: 44px; }
-        }
-      `}</style>
       <IdentityBar
         siteName="Ubhejane Crèche"
         onUndo={handleUndo}
