@@ -18,6 +18,7 @@
 .sectionIntro h2 { font-family: var(--font-display), Georgia, serif; font-size: 28px; line-height: 1.2; font-weight: 500; margin: 0; }
 .sectionIntro p { font-size: 14px; color: var(--vr-muted); margin: 8px 0 0; }
 .charts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+.wideChart { grid-column: 1 / -1; }
 .chart { margin: 0 0 24px; padding: 22px; border: 1px solid var(--vr-line); border-radius: 12px; background: white; color: var(--vr-ink); min-width: 0; break-inside: avoid; }
 .chart h3 { font-family: var(--font-display), Georgia, serif; font-size: 25px; line-height: 1.2; font-weight: 500; margin: 7px 0 20px; }
 .kicker { color: #806028; font-size: 12px; font-weight: 600; letter-spacing: .12em; }

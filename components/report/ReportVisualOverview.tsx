@@ -5,7 +5,7 @@ import styles from './VisualReport.module.css';
 export function ReportChartCard({ chart, ink = false }: { chart: ReportChart; ink?: boolean }) {
   const art = reportChartSvg(chart, ink);
   const maximum = Math.max(...chart.rows.map(row => row.value), 1);
-  return <figure className={styles.chart}>
+  return <figure className={`${styles.chart} ${chart.id === 'cost' ? styles.wideChart : ''}`}>
     <figcaption><span className={styles.kicker}>{chart.unit || 'JAN – DEC'}</span><h3>{chart.title}</h3></figcaption>
     {chart.kind === 'bars' ? <div className={styles.bars}>{chart.rows.length ? chart.rows.map((row, i) => <div key={`${row.label}-${i}`}>
       <div className={styles.barLabel}><span>{row.label}</span><strong>{row.value.toLocaleString('en-ZA', { maximumFractionDigits: 1 })} {chart.unit}</strong></div>
@@ -26,7 +26,7 @@ export default function ReportVisualOverview({ visuals, image, imageCaption, ink
     </header>
     <div className={styles.metrics}>{visuals.metrics.map(metric => <div key={metric.label}><span>{metric.label}</span><strong>{metric.value}</strong><small>{metric.note}</small></div>)}</div>
     <p className={styles.basis}>{visuals.basis}</p>
-    {!compact && <><div className={styles.sectionIntro}><span>01</span><div><h2>{visuals.overviewTitle ?? 'The site at a glance'}</h2><p>{visuals.overviewNote ?? 'Space, seasons and the resources behind the plan.'}</p></div></div><div className={styles.charts}>{visuals.charts.filter(c => c.kind !== 'calendar').map(chart => <ReportChartCard key={chart.id} chart={chart} ink={ink} />)}</div>{visuals.charts.filter(c => c.kind === 'calendar').map(chart => <ReportChartCard key={chart.id} chart={chart} ink={ink} />)}</>}
+    {!compact && <><div className={styles.sectionIntro}><span>01</span><div><h2>{visuals.overviewTitle ?? 'The site at a glance'}</h2><p>{visuals.overviewNote ?? 'Space, seasons and the resources behind the plan.'}</p></div></div><div className={styles.charts}>{visuals.charts.filter(c => c.kind !== 'calendar' && c.kind !== 'months').map(chart => <ReportChartCard key={chart.id} chart={chart} ink={ink} />)}</div>{visuals.charts.filter(c => c.kind === 'months' || c.kind === 'calendar').map(chart => <ReportChartCard key={chart.id} chart={chart} ink={ink} />)}</>}
     {children}
   </div>;
 }

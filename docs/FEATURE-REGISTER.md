@@ -276,5 +276,7 @@ one existing TODO. Deployment verification pending.
   option excludes photos by default. Existing compact 1/5-page summaries remain.
 - Typecheck, 3,409 passing tests, zero failures, one existing TODO and whitespace checks passed.
 - Local sample PDFs visually checked: full colour six pages; ink saving three.
-  Final browser and CI results will be recorded in the PR and continuing project source.
+  Desktop browser review also checked the main site report, sample charts, crop
+  illustrations, enlarged pictures and colour/ink PDF controls. Final hosted
+  checks and the review handoff are recorded in PR #422 and the continuing project source.
 - See [visual report audit](VISUAL-SITE-REPORT-AUDIT.md) for findings and data limits.

@@ -60,5 +60,11 @@ own shared sample records. Focused checks cover missing measurements, unknown ta
 capacity, calendar continuation, first-season qualifiers, SVG label escaping and
 reconciliation of every sample area's chart.
 
-The final repository check and browser preview results are recorded in the feature
-register and PR. Production status must remain separate from preview status.
+Browser review covered the main Ubhejane site report and the crèche garden report
+at a 1363 px desktop viewport: charts, crop illustrations, image enlargement,
+colour/ink controls and PDF generation. The rainfall chart was moved out of the
+two-column grid after the review showed its final month needed horizontal scrolling.
+Phone layout has responsive styles but has not been verified on a phone.
+
+PR #422 records the final repository and hosted checks. Production status remains
+separate from preview status; the repository's normal merge review still applies.
