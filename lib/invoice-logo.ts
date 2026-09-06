@@ -49,6 +49,7 @@ export function resizeLogoForStorage(file: File, maxPx = LOGO_MAX_PX): Promise<s
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
         const transparent = hasTransparency(ctx, canvas.width, canvas.height);
+        let jpegCanvas = canvas;
         let out = transparent ? canvas.toDataURL('image/png') : canvas.toDataURL('image/jpeg', 0.85);
 
         // A photographed signboard can still exceed the ceiling as PNG. Falling back to
@@ -61,8 +62,31 @@ export function resizeLogoForStorage(file: File, maxPx = LOGO_MAX_PX): Promise<s
             flatCtx.fillStyle = '#ffffff';
             flatCtx.fillRect(0, 0, flat.width, flat.height);
             flatCtx.drawImage(canvas, 0, 0);
+            jpegCanvas = flat;
             out = flat.toDataURL('image/jpeg', 0.85);
+          } else { reject(new Error('Could not process that image.')); return; }
+        }
+
+        // The evidence report also uses this bounded encoder for 640px photos. A
+        // detailed garden exceeded 200k at quality .85 and blocked the whole PDF.
+        // Keep its dimensions first; reduce them only if compression is not enough.
+        if (out.length > LOGO_MAX_BYTES) {
+          for (const quality of [0.75, 0.65, 0.55]) {
+            out = jpegCanvas.toDataURL('image/jpeg', quality);
+            if (out.length <= LOGO_MAX_BYTES) break;
           }
+        }
+        while (out.length > LOGO_MAX_BYTES && Math.max(jpegCanvas.width, jpegCanvas.height) > 160) {
+          const smaller = document.createElement('canvas');
+          smaller.width = Math.max(1, Math.round(jpegCanvas.width * 0.75));
+          smaller.height = Math.max(1, Math.round(jpegCanvas.height * 0.75));
+          const smallerCtx = smaller.getContext('2d');
+          if (!smallerCtx) break;
+          smallerCtx.fillStyle = '#ffffff';
+          smallerCtx.fillRect(0, 0, smaller.width, smaller.height);
+          smallerCtx.drawImage(jpegCanvas, 0, 0, smaller.width, smaller.height);
+          jpegCanvas = smaller;
+          out = jpegCanvas.toDataURL('image/jpeg', 0.75);
         }
         if (out.length > LOGO_MAX_BYTES) {
           reject(new Error('That image is too big to store. Try a smaller or simpler picture.'));

@@ -43,13 +43,14 @@ export interface ProductTourStep {
 // Minutes are suggested exploration time, not a measured completion guarantee.
 export const PRODUCT_TOUR: readonly ProductTourStep[] = [
   {
-    id: 'garden', minutes: 1, title: 'Start with a garden', href: '/farmer',
-    task: 'Find the example garden on the map. Zoom in to see its boundary, then explore the soil, climate and water panels.',
+    id: 'garden', minutes: 1, title: 'Start with a garden', href: '/samples/gardens',
+    task: 'Browse the example garden photos, layouts and grower profiles. The next stops use one editable demonstration farm.',
+    secondaryLabel: 'Open the example on the map', secondaryHref: '/farmer?site=demo-place-ubhejane',
   },
   {
     id: 'planning', minutes: 2, title: 'Plan the growing season',
-    href: '/design?lat=-27.72623&lon=31.96304',
-    task: 'Select a bed or tree in Design Studio, move it and try Undo. Then open the crop plan to compare vegetable beds, staple plots and planting months.',
+    href: '/design?lat=-27.72623&lon=31.96304&simple=1',
+    task: 'Start on Planting in Design Studio. Select a bed or tree, move it and try Undo. Then open the crop plan to compare vegetable beds, staple plots and planting months.',
     secondaryLabel: 'Open the crop plan', secondaryHref: '/facilitator/crops',
   },
   {
@@ -59,12 +60,12 @@ export const PRODUCT_TOUR: readonly ProductTourStep[] = [
   },
   {
     id: 'business', minutes: 2, title: 'Record the work and the sale', href: '/records?tab=charts',
-    task: 'Compare harvests, sales and expenses in Charts. Open an invoice and find Saved, Share PDF and Print. See how the farmer keeps a digital record; you do not need to send anything to a buyer.',
+    task: 'Compare harvests, sales and expenses in Charts. Open invoices, choose Saved and open an existing invoice to find Share PDF and Print. See how the farmer keeps a digital record; you do not need to send anything to a buyer.',
     secondaryLabel: 'Explore an invoice', secondaryHref: '/invoice',
   },
   {
     id: 'mentor', minutes: 2, title: 'Support a group of growers', href: '/mentor', role: 'mentor',
-    task: 'Open an assigned grower. Review their learning progress, organisation guidance and visit notes, then find the follow-up and reporting tools.',
+    task: 'Review My field team & reports for assignments, organisation guidance and visit records. Choose Trainees and open a learner to see their progress, then find Messages for follow-up.',
   },
   {
     id: 'organisation', minutes: 2, title: 'Follow the whole programme', href: '/ngo', role: 'ngo',

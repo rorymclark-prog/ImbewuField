@@ -20,6 +20,16 @@ test('the short product tour includes grower tools, support and both partner vie
     'The timed report stop needs the ready evidence export, not an empty saved-report library or a paid AI request');
 });
 
+test('the opening is visual and the planning action opens an editable step', () => {
+  assert.equal(PRODUCT_TOUR[0].href, '/samples/gardens', 'Visitors should see garden examples before depending on live map tiles');
+  const map = new URL(PRODUCT_TOUR[0].secondaryHref!, 'https://imbewufield.vercel.app');
+  assert.equal(map.pathname, '/farmer');
+  assert.equal(map.searchParams.get('site'), 'demo-place-ubhejane', 'The optional map must focus the saved example');
+  const planning = PRODUCT_TOUR.find(step => step.id === 'planning')!;
+  assert.equal(new URL(planning.href, 'https://imbewufield.vercel.app').searchParams.get('simple'), '1',
+    'Move and Undo must open Planting rather than the read-only Review step');
+});
+
 test('every tour action leads to an existing app page without an external redirect', () => {
   for (const step of PRODUCT_TOUR) {
     assert.equal(!!step.secondaryHref, !!step.secondaryLabel, `${step.id} secondary action needs a destination and label`);
