@@ -69,3 +69,11 @@ services work without connectivity.
 
 These guide the proposed approach. They do not certify the application or imply
 that every tool is appropriate for every project.
+
+
+## Funding and deliverables extension
+
+See [FUNDING-AND-DELIVERY.md](FUNDING-AND-DELIVERY.md) for the proposed connection
+between assessment needs, drawing-derived quantities, funding gaps and verified
+tangible outputs. This extends the existing BOQ and milestones; it is not yet a
+completed funding/asset management workflow.

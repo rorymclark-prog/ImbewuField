@@ -144,11 +144,11 @@ note itself has not yet been edited.
 
 ## Current development batch — 6 September 2026
 
-**Status: typecheck and full suite passed locally; deployment pending.**
+**Status: deployed 6 September 2026 — live build 12502e5 (PR #418).**
 Validation: 3,401 tests, 3,400 passed, zero failures and one pre-existing TODO.
 Photo assets were inspected. Interactive browser connection failed, so mobile
-and desktop interaction/visual verification remains outstanding. Do not describe
-these additions as live until deployment is confirmed.
+and desktop interaction/visual verification remains outstanding. Production
+workflow confirmed that the live build matches the merged commit.
 
 - Eighteen unique AI-generated garden reference photos, matched to each fictional
   garden type; shared across its directory, visual preview and overview report.
@@ -206,3 +206,19 @@ not overwritten. Preserve this protection when integrating actual site media.
   offline validation retain the open statuses above.
 - Latest actual site photographs and any genuine laboratory or household records
   must be supplied before replacing the corresponding examples.
+
+
+## Funding and tangible delivery — proposed 6 September 2026
+
+- Existing: design-derived BOQ with known rates, explicit unpriced lines and
+  existing-item exclusions; generic milestone targets and dated observations.
+- Proposed: **Funding & delivery** in organisation/funder views, linking site
+  needs to approved BOQ revisions, funding allocations, funding gaps, procurement,
+  verified assets and follow-up functionality.
+- Keep current funded commitments distinct from additional needs beyond budget.
+  Track tanks and added storage, commissioned solar capacity, planted trees and
+  survival; never confuse installed capacity or spending with achieved outcomes.
+- Selected funding opportunities and branded gap/delivery reports, published by
+  the organisation for existing or prospective funders. No automatic outreach.
+- Full specification and concept-note paragraph: [FUNDING-AND-DELIVERY.md](FUNDING-AND-DELIVERY.md).
+- Status: design documented; complete linked workflow is not yet built.
