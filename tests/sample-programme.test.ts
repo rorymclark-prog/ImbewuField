@@ -124,16 +124,18 @@ test('team assignments reject malformed IDs and duplicate farmer membership', ()
 });
 
 import { buildProgrammePdf } from '../lib/programme-report-pdf';
+import { pdfContentStreams } from './pdf-content-streams.ts';
 test('sample reports retain their sample warning on every page and summaries omit excess detail', async () => {
   const sections = [{ title: 'Recorded visits', lines: Array.from({ length: 90 }, (_, i) => `Visit record ${i + 1}: fictional demonstration notes for the assigned farmer.`) }];
   const full = await buildProgrammePdf('Field report', true, sections, 'full');
   assert.ok(full.getNumberOfPages() > 1);
-  const output = full.output();
+  const output = pdfContentStreams(full.output('arraybuffer'));
   assert.equal(output.split('SAMPLE - NOT ACTUAL RESULTS').length - 1, full.getNumberOfPages());
   assert.ok(output.includes('Visit record 90:'));
   const brief = await buildProgrammePdf('Field report', true, sections, 'summary');
-  assert.ok(brief.output().includes('Visit record 5:'));
-  assert.ok(!brief.output().includes('Visit record 6:'));
+  const briefOutput = pdfContentStreams(brief.output('arraybuffer'));
+  assert.ok(briefOutput.includes('Visit record 5:'));
+  assert.ok(!briefOutput.includes('Visit record 6:'));
 });
 
 test('three demo mentors each receive fifteen distinct gardens without cross-team leakage', () => {

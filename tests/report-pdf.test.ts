@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { pdfContentStreams } from './pdf-content-streams.ts';
 
 import {
   layoutTableColumns,
@@ -319,7 +320,7 @@ test('a report table repeats its header and retains its final row across pages',
   const { buildReportPdf } = await import('../lib/report-pdf.ts');
   const rows = Array.from({ length: 160 }, (_, i) => `| Crop ${i} | Recorded observation ${i} |`).join('\n');
   const blob = await buildReportPdf(`# QA\n\n## Table\n| Crop | Field observation |\n|---|---|\n${rows}`, { biome: 'Fixture', lat: -27, lon: 31, rainfallMm: 800, meanTempC: 21, dateLabel: '2026-09-05' });
-  const output = await blob.text();
+  const output = pdfContentStreams(await blob.arrayBuffer());
   assert.ok((output.match(/Field observation/g) ?? []).length > 1, 'header must repeat');
   assert.match(output, /Recorded observation 159/, 'the final row must survive pagination');
 });
@@ -355,4 +356,50 @@ test('ink summaries preserve an exact page count and disclose missing data', asy
     const blob = await buildInkSummaryPdf(pages, '2026-09-05', 'zu');
     assert.equal(((await blob.text()).match(/\/Type \/Page\b/g) ?? []).length, count);
   }
+});
+
+// The visual report must preserve absent data and the saved calendar's one-off
+// qualifiers; decoration must never turn a plan into a claim of production.
+import { siteReportVisuals, sampleReportVisuals, reportChartSvg } from '../lib/report-visuals.ts';
+import type { ReportSiteFacts } from '../lib/report-site-facts.ts';
+import type { LocationData } from '../lib/types.ts';
+import { SAMPLE_GARDENS } from '../lib/sample-gardens.ts';
+const visualLocation = { lat: -27, lon: 31, rainfall: { annual: 600, monthly: Array(12).fill(50), rainfallSource: 'test fixture' } } as LocationData;
+
+test('visual report leaves missing ground measurements absent and rejects incomplete rainfall series', () => {
+  const view = siteReportVisuals(null, { ...visualLocation, rainfall: { ...visualLocation.rainfall, monthly: [50, 40] } });
+  assert.equal(view.charts.length, 0);
+  assert.ok(!view.metrics.some(m => /Growing space|Storage|Mapped site/.test(m.label)));
+});
+
+test('unknown tank capacity is not shown as zero available water', () => {
+  const facts: ReportSiteFacts = { water: { tanks: [{ name: 'Tank', count: 1, statedLitres: null, status: 'proposed' }], statedStorageLitres: 0, tanksOfUnknownCapacity: 1, mapPoints: [], bodies: [] } };
+  const view = siteReportVisuals(facts, visualLocation);
+  assert.equal(view.metrics.find(m => m.label === 'Storage in the plan')?.value, 'Not stated');
+  assert.deepEqual(view.charts.find(c => c.id === 'water')?.rows, []);
+});
+
+test('every saved crop survives calendar pagination with first-season months marked separately', () => {
+  const facts: ReportSiteFacts = { crop: { plantingCount: 16, bedsPlanted: 8, crops: Array.from({ length: 8 }, (_, i) => ({ name: `Saved row ${i}`, sowMonths: ['Jan', 'Apr'], firstSeasonOnlyMonths: ['Jan'], bedLabels: [`Bed ${i}`], alreadyGrowing: false })) } };
+  const calendars = siteReportVisuals(facts, visualLocation).charts.filter(c => c.kind === 'calendar');
+  assert.equal(calendars.length, 2);
+  assert.equal(calendars.flatMap(c => c.rows).length, 8);
+  assert.deepEqual(calendars[0].rows[0].months, [0, 3]);
+  assert.deepEqual(calendars[0].rows[0].once, [0]);
+  assert.match(reportChartSvg(calendars[0]).svg, /fill="white"/);
+});
+
+test('sample report charts reconcile to each garden without manufacturing financial or annual yield figures', () => {
+  for (const garden of SAMPLE_GARDENS) {
+    const view = sampleReportVisuals(garden);
+    assert.equal(view.charts.find(c => c.id === 'area')!.rows.reduce((n, r) => n + r.value, 0), garden.areaM2);
+    assert.equal(view.charts.find(c => c.id === 'learning')!.rows[0].value, garden.training);
+    assert.ok(!view.charts.some(c => /profit|yield|rain|cost/.test(c.id)));
+  }
+});
+
+test('chart artwork escapes saved labels before SVG rendering', () => {
+  const { svg } = reportChartSvg({ id: 'escape', title: 'Test', note: '', unit: 'm²', kind: 'bars', rows: [{ label: '<script> & "A"', value: 10 }] });
+  assert.ok(!svg.includes('<script>'));
+  assert.match(svg, /&lt;script&gt; &amp; &quot;A&quot;/);
 });

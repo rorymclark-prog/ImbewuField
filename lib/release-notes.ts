@@ -33,6 +33,11 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '6 September 2026', sha: 'a120d93', changes: [
+    'Site reports now open with photographs, key figures and charts from the saved plan.',
+    'Choose a full-colour PDF with charts and images, or a separate ink-saving edition.',
+    'All 18 garden examples have new visual reports with their own photographs and figures.',
+  ] },
   { when: '6 September 2026', sha: '5a13fe9', changes: [
     'Sample controls moved into the menu, freeing the bottom of the screen.',
     'The chooser shows all five roles and checks your real account access.',

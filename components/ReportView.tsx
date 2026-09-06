@@ -2,7 +2,9 @@
 
 import { useState, useRef, useCallback, useEffect } from 'react';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
-import RainfallChart from './RainfallChart';
+import ReportVisualOverview from './report/ReportVisualOverview';
+import { siteReportVisuals } from '@/lib/report-visuals';
+import { prepareVisualPdfAssets } from '@/lib/report-visual-pdf';
 import styles from './ReportView.module.css';
 import { loadReports, saveReport, deleteReport, reportId, MAX_REPORTS, type SavedReport, type SaveReportReason } from '@/lib/saved-reports';
 import { isSampleMode } from '@/lib/sample-mode';
@@ -270,11 +272,12 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   const [language, setLanguage] = useState(savedReport?.lang ?? appLang ?? 'en');
   const [facts, setFacts] = useState<ReportSiteFacts | null>(savedReport?.facts ?? null);
   const [reading, setReading] = useState<'full' | 'one' | 'five'>('full');
-  const [presentation, setPresentation] = useState<'screen' | 'print'>('screen');
-  const [includeImages, setIncludeImages] = useState(false);
+  const [presentation, setPresentation] = useState<'screen' | 'colour' | 'print'>('screen');
+  const [includeImages, setIncludeImages] = useState(true);
   const tr = (en: string, zu: string) => language === 'zu' ? zu : en;
   const label = (en: string) => language === 'zu' ? REPORT_ZU[en] ?? en : en;
-  const showVisuals = reading === 'full' && (presentation === 'screen' || includeImages);
+  const showVisuals = reading === 'full' && (presentation !== 'print' || includeImages);
+  const visuals = siteReportVisuals(facts, d, language);
   const reportDate = activeSaved?.savedAt ?? new Date().toISOString();
   const summaryPages = reportSummaryPages(facts, d, reading === 'one' ? 1 : 5, language);
   useEffect(() => {
@@ -613,6 +616,14 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       const sheetMetas = await loadSheetMetas(designSiteIdFromLocation(d)).catch(() => []);
       const plates = selectReportPlates(sheetMetas, PLAN_VERSION, SHEET_RENDER_RECIPE);
       const blob = await buildReportPdf(report, {
+        visuals: presentation !== 'print' ? visuals : undefined,
+        visualAssets: presentation !== 'print' ? await prepareVisualPdfAssets(visuals, includeImages ? [
+          ...(photoGallery.shown[0] ? [{ image: photoGallery.shown[0].dataUrl, caption: `${photoGallery.shown[0].label} · Current site evidence; it may postdate saved report text.` }] : mapCapture && !activeSaved ? [{ image: `data:image/jpeg;base64,${mapCapture}`, caption: 'Captured site satellite view' }] : []),
+        ] : [], includeImages ? (facts?.crop?.crops ?? []).flatMap(c => {
+          const crop = CROPS.find(x => x.name === c.name);
+          const image = crop ? getCropArt(crop.key) : undefined;
+          return image ? [{ image, caption: `${c.name} · ${c.sowMonths.join(', ')}` }] : [];
+        }) : []) : undefined,
         biome: ecology.placeName,
         lat: d.lat,
         lon: d.lon,
@@ -636,7 +647,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       setError(err instanceof Error ? `Could not build the PDF: ${err.message}` : 'Could not build the PDF.');
       setTimeout(() => setPdfState('idle'), 4000);
     }
-  }, [report, d, reading, language, facts, includeImages, activeSaved, ecology.placeName, photoGallery, reportDate]);
+  }, [report, d, reading, language, facts, includeImages, activeSaved, ecology.placeName, photoGallery, reportDate, presentation, mapCapture]);
 
   async function shareReport() {
     if (!d || !report) return;
@@ -650,7 +661,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   }
 
   return (
-    <div className={`${styles.workspace} ${presentation === 'print' ? styles.printPreview : ''} fixed inset-0 z-50 flex flex-col`}>
+    <div className={`${styles.workspace} ${presentation === 'print' ? styles.printPreview : ''} fixed inset-0 z-50 flex flex-col`} data-report-print={presentation === 'print' ? 'ink' : 'colour'}>
 
       {/* ── Toolbar ──────────────────────────────────────────────────────────
           Wraps rather than scrolls. At 375px the old single non-wrapping row was
@@ -767,7 +778,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           >
             {loading ? <><Loader2 size={14} className="animate-spin inline mr-1" /> Generating...</> : label(generated ? 'Generate new report' : 'Generate report')}
           </button>
-        <div><button aria-pressed={presentation === 'screen'} onClick={() => setPresentation('screen')}>{tr('Screen', 'Isikrini')}</button><button aria-pressed={presentation === 'print'} onClick={() => setPresentation('print')}>{tr('Print · save ink', 'Phrinta · yonga uyinki')}</button></div>
+        <div><button aria-pressed={presentation === 'screen'} onClick={() => { setPresentation('screen'); setIncludeImages(true); }}>{tr('Screen', 'Isikrini')}</button><button aria-pressed={presentation === 'colour'} onClick={() => { setPresentation('colour'); setIncludeImages(true); }}>{tr('Print · full colour', 'Phrinta · imibala egcwele')}</button><button aria-pressed={presentation === 'print'} onClick={() => { setPresentation('print'); setIncludeImages(false); }}>{tr('Print · save ink', 'Phrinta · yonga uyinki')}</button></div>
         <div>{([['one', '1-page summary', 'Isifinyezo sekhasi elilodwa'], ['five', '5-page summary', 'Isifinyezo samakhasi amahlanu'], ['full', 'Full report', 'Umbiko ogcwele']] as const).map(([value, en, zu]) => <button key={value} aria-pressed={reading === value} onClick={() => { setReading(value); setPanelOpen(false); }}>{tr(en, zu)}</button>)}</div>
         {reading === 'full' && <label><input type="checkbox" checked={includeImages} onChange={e => setIncludeImages(e.target.checked)} /> {tr('Include photos and maps in PDF', 'Faka izithombe namamephu ku-PDF')}</label>}
       </div>
@@ -1014,7 +1025,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           <div className={styles.document}>
 
             {/* Print header */}
-            <div className="print-header mb-8 pb-6" hidden={reading !== 'full'} style={{ borderBottom: '2px solid var(--report-border)' }}>
+            <div className="print-header mb-8 pb-6" hidden={reading !== 'full' || presentation !== 'print'} style={{ borderBottom: '2px solid var(--report-border)' }}>
               <div className={`${styles.coverTitle} flex items-start justify-between gap-4`}>
                 <div>
                   <div className={`${styles.brand} font-sans font-semibold`}>
@@ -1070,6 +1081,8 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
               )}
             </div>
 
+            {reading === 'full' && presentation !== 'print' && <ReportVisualOverview visuals={visuals} stamp={new Date(reportDate).toLocaleDateString('en-ZA', { day: 'numeric', month: 'short', year: 'numeric' })} image={photoGallery.shown[0]?.dataUrl ?? (!activeSaved && mapCapture ? `data:image/jpeg;base64,${mapCapture}` : plates[0]?.thumb)} imageCaption={photoGallery.shown[0] ? `${photoGallery.shown[0].label} · Current site evidence; it may postdate saved report text.` : !activeSaved && mapCapture ? 'Captured site satellite view' : plates[0] ? `Saved design: ${plates[0].label}` : undefined} />}
+
             {/* Saved places — GPS points for the farm (home, fields, water) */}
             {reading === 'full' && savedPlaces && savedPlaces.length > 0 && (
               <div className="mb-6 p-4 rounded-xl" style={{ background: 'var(--report-panel)', border: '1px solid var(--report-border)' }}>
@@ -1094,7 +1107,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             )}
 
             {/* Captured satellite view */}
-            {showVisuals && mapCapture && (
+            {showVisuals && mapCapture && !activeSaved && (
               <div className="mb-6 p-4 rounded-xl" style={{ background: 'var(--report-panel)', border: '1px solid var(--report-border)' }}>
                 <div className="text-xs font-mono uppercase tracking-wider mb-3" style={{ color: 'var(--report-muted)' }}>
                   {label('Site Satellite View')}
@@ -1239,13 +1252,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                 return <article key={c.name}>{art && <img src={art} alt="" loading="lazy" />}<h3>{c.name}</h3><p>{c.bedLabels.join(', ')}</p><p>{c.sowMonths.join(' · ')}</p></article>;
               })}</div>
             </section>}
-            {/* Rainfall chart in report */}
-            <div hidden={reading !== 'full'} className="mb-6 p-4 rounded-xl" style={{ background: 'var(--report-panel)', border: '1px solid var(--report-border)' }}>
-              <div className="text-xs font-mono uppercase tracking-wider mb-3" style={{ color: 'var(--report-muted)' }}>
-                {label('Monthly Rainfall Pattern')}
-              </div>
-              <RainfallChart rainfall={d.rainfall} />
-            </div>
+            {reading === 'full' && presentation === 'print' && <p className={styles.summaryLabel}>{tr('Ink-saving edition. Full-colour export includes the visual overview and charts.', 'Umbiko oyonga uyinki. Ukukhipha ngemibala egcwele kufaka amashadi.')}</p>}
 
             {/* Loading shimmer */}
             {loading && !report && (

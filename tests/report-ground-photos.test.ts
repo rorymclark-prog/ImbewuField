@@ -248,8 +248,10 @@ test('the strip and the PDF both carry the photographs', () => {
   // Tapping one opens it full size, the same as a design sheet.
   assert.match(view, /setOpenPlate\(\{ label: p\.label, image: p\.dataUrl \}\)/);
 
-  // Images are opt-in for ink saving; selecting them must still carry the real photos.
-  assert.match(view, /\[includeImages, setIncludeImages\] = useState\(false\)/);
+  // Rory requested a visual-first report on 6 September: colour starts with images,
+  // while choosing the ink-saving edition explicitly clears them.
+  assert.match(view, /\[includeImages, setIncludeImages\] = useState\(true\)/);
+  assert.match(view, /setPresentation\('print'\); setIncludeImages\(false\)/);
   assert.match(view, /photos: includeImages \? photoGallery\.shown\.map/, 'the PDF export drops the photographs');
   assert.match(pdf, /photos\?: ReportPdfPhoto\[\]/);
   assert.match(pdf, /const photos = meta\.photos \?\? \[\]/);

@@ -6,6 +6,8 @@ import BackButton from '@/components/BackButton';
 import SettingsButton from '@/components/SettingsButton';
 import SampleGardenVisual from '@/components/SampleGardenVisual';
 import ReportComposer from '@/components/ReportComposer';
+import { sampleReportVisuals } from '@/lib/report-visuals';
+import { SAMPLE_REPORT_DATE } from '@/lib/sample-garden-reports';
 import { SAMPLE_GARDENS, SAMPLE_PARTICIPANTS, sampleSitePhoto, sampleSitePhotos } from '@/lib/sample-gardens';
 import { sampleGardenReportSections, sampleGardenReportUrl } from '@/lib/sample-garden-reports';
 import { samplePortrait } from '@/lib/sample-media';
@@ -19,6 +21,7 @@ export default function SampleGardensPage() {
   const garden=SAMPLE_GARDENS.find(g=>g.id===selected);
   const kinds=['All',...new Set(SAMPLE_GARDENS.map(g=>g.kind??'Garden'))];
   const visible=SAMPLE_GARDENS.filter(g=>filter==='All'||g.kind===filter);
+  useEffect(() => { const id = new URLSearchParams(window.location.search).get('garden'); if (id && SAMPLE_GARDENS.some(g => g.id === id)) setSelected(id); }, []);
   useEffect(()=>{if(selected)detail.current?.scrollIntoView({block:'start',behavior:'auto'});},[selected]);
   return <main className={styles.page}><div className={styles.wrap}>
     <header className={styles.header}><MenuButton/><BackButton fallback="/samples"/><SettingsButton/></header>
@@ -32,7 +35,7 @@ export default function SampleGardensPage() {
       <div className={styles.grid}>{(SAMPLE_PARTICIPANTS[garden.language??'isiZulu']??[]).map(name=><figure key={name} style={{display:'flex',alignItems:'center',gap:14}}><img data-photo-preview src={samplePortrait(name)} alt={`Fictional participant ${name}`} width={80} height={80} style={{borderRadius:'50%',objectFit:'cover'}}/><figcaption>{name}</figcaption></figure>)}</div>
       <div className={styles.actions}><a href={sampleGardenReportUrl(garden.id)} target="_blank" rel="noreferrer">Open completed sample report (PDF)</a><a href={sampleGardenReportUrl(garden.id)} download={`${garden.id}-sample-report.pdf`}>Download saved sample</a></div>
       <p>The saved sample includes this garden's site photograph, layout, assessment narrative, programme figures and next actions. Generate a new report below to create another copy.</p>
-      <ReportComposer key={`report-${garden.id}`} sample photos={[...sampleSitePhotos(garden.id), { image: `/demo/reports/${garden.id}-layout.png`, caption: `${garden.name} — fictional schematic, not to scale` }]} photosByDefault photoHeading="Site reference and schematic layout" title={`${garden.name} — example report`} branding={{...SAMPLE_BRANDING,garden:{...SAMPLE_BRANDING.garden,label:garden.name}}} sections={sampleGardenReportSections(garden)}/>
+      <ReportComposer key={`report-${garden.id}`} sample visuals={sampleReportVisuals(garden)} reportDate={SAMPLE_REPORT_DATE} photos={[...sampleSitePhotos(garden.id), { image: `/demo/reports/${garden.id}-layout.png`, caption: `${garden.name} — fictional schematic, not to scale` }]} photosByDefault photoHeading="Site reference and schematic layout" title={`${garden.name} — example report`} branding={{...SAMPLE_BRANDING,garden:{...SAMPLE_BRANDING.garden,label:garden.name}}} sections={sampleGardenReportSections(garden)}/>
       <p><Link href="/samples/farm">Open the separate editable Ubhejane farm example</Link></p>
     </section>}
     <label>Garden type<select value={filter} onChange={e=>setFilter(e.target.value)}>{kinds.map(k=><option key={k}>{k}</option>)}</select></label>
