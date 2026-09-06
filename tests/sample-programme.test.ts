@@ -168,3 +168,33 @@ test('all fifteen demo portraits are distinct assets and every portfolio person 
   }
   assert.ok(validProgrammeBranding(SAMPLE_BRANDING), 'sample logos must obey the same PDF image limits as uploaded branding');
 });
+
+import { sampleChoicesForAccount } from '../lib/sample-tour';
+test('sample choices use confirmed account identity and fail closed during loading', () => {
+  assert.equal(sampleChoicesForAccount(null, false, true).length, 5);
+  assert.equal(sampleChoicesForAccount('ngo', true, true).length, 5);
+  assert.equal(sampleChoicesForAccount('admin', true, true).length, 5);
+  assert.deepEqual(sampleChoicesForAccount('farmer', true, true), ['farmer']);
+  assert.deepEqual(sampleChoicesForAccount('mentor', true, true), ['mentor']);
+  assert.deepEqual(sampleChoicesForAccount(null, true, true), []);
+  assert.deepEqual(sampleChoicesForAccount('admin', true, false), []);
+});
+test('chooser does not authorize from the sandbox farmer profile after reload', () => {
+  const source=readFileSync(new URL('../app/samples/page.tsx',import.meta.url),'utf8');
+  assert.match(source,/readSampleChooserAccountRole\(user.uid\)/);
+  assert.match(source,/sampleChoicesForAccount\(accountRole, !!user, choicesReady\)/);
+  assert.match(source,/examples.map\(/);
+  assert.doesNotMatch(source,/examples.filter\(/);
+  const reader=readFileSync(new URL('../lib/sample-choice-access.ts',import.meta.url),'utf8');
+  assert.match(reader,/doc\(firebase.db, 'profiles', expectedUid\)/);
+  assert.doesNotMatch(reader,/getSandboxProfile|getMyProfile/);
+  assert.equal((reader.match(/currentUser\?\.uid !== expectedUid/g)||[]).length,2);
+});
+test('sample controls cannot recreate the fixed bottom strip', () => {
+  const source=readFileSync(new URL('../components/SampleModeBanner.tsx',import.meta.url),'utf8');
+  assert.doesNotMatch(source,/bottom:|bottom-\[|zIndex:\s*9999/);
+  const menu=readFileSync(new URL('../components/NavDrawer.tsx',import.meta.url),'utf8');
+  assert.match(menu,/Sample controls/);
+  assert.match(menu,/Exit sample/);
+  assert.match(menu,/18 gardens &amp; completed reports/);
+});

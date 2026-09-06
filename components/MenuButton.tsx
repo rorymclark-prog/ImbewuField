@@ -21,16 +21,20 @@
 import { useState } from 'react';
 import { Menu } from 'lucide-react';
 import NavDrawer from './NavDrawer';
+import { useSampleRole } from '@/lib/use-role-navigation';
 
 export default function MenuButton() {
   const [open, setOpen] = useState(false);
+  const sample = !!useSampleRole();
   return (
     <>
       <button
+        type="button"
+        data-app-menu
         onClick={() => setOpen(true)}
         aria-label="Open navigation"
         aria-expanded={open}
-        title="Menu"
+        title={sample ? 'Sample — open choices, tour and exit' : 'Menu'}
         className="flex-shrink-0 flex items-center justify-center rounded-full transition-all"
         style={{
           // Tokens, not hexes — the lesson SettingsButton already carries: a control
@@ -39,12 +43,15 @@ export default function MenuButton() {
           width: 44,
           height: 44,
           background: 'var(--bg-1)',
-          border: '1px solid var(--border)',
+          border: sample ? '1px solid var(--color-harvest)' : '1px solid var(--border)',
           color: 'var(--text-primary)',
           cursor: 'pointer',
+          flexDirection: 'column',
+          gap: 1,
         }}
       >
         <Menu size={18} strokeWidth={1.7} />
+        {sample && <span style={{fontSize:12,lineHeight:1,fontWeight:700,color:'var(--color-harvest)'}}>Sample</span>}
       </button>
       <NavDrawer open={open} onClose={() => setOpen(false)} />
     </>

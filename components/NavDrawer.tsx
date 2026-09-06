@@ -8,6 +8,7 @@ import {
   MessageCircle, Leaf, Calendar, LayoutGrid, ClipboardList,
   Camera, Home, User, Users, BarChart3, Building2, Palette, Handshake, Sparkles, Earth, Sprout, Footprints,
 } from 'lucide-react';
+import { exitSampleMode } from '@/lib/sample-mode';
 import { useLanguage } from '@/lib/i18n';
 import { useAuth } from '@/lib/auth';
 import { canSeeNavLink } from '@/lib/role-access';
@@ -188,6 +189,7 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
           </button>
         </div>
 
+        {sample && <section style={{margin:'8px 16px',padding:12,border:'1px solid var(--border)',borderRadius:12}} aria-label="Sample controls"><strong>Sample workspace</strong><p style={{fontSize:12,margin:'6px 0'}}>Practice data · changes stay in this demo.</p><div style={{display:'grid',gap:8}}><Link href="/samples" onClick={onClose} style={{minHeight:44,display:'flex',alignItems:'center'}}>Choose sample view</Link><Link href="/samples/gardens" onClick={onClose} style={{minHeight:44,display:'flex',alignItems:'center'}}>18 gardens &amp; completed reports</Link><Link href="/tour" onClick={onClose} style={{minHeight:44,display:'flex',alignItems:'center'}}>Start the tour</Link><button type="button" onClick={()=>{exitSampleMode();window.location.href='/home';}} style={{minHeight:44,textAlign:'left'}}>Exit sample</button></div></section>}
         {/* Nav sections */}
         <div style={{ flex: 1, overflowY: 'auto', paddingTop: 8, paddingBottom: 24 }}>
           {NAV_SECTIONS.map((section) => ({

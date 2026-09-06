@@ -19,6 +19,7 @@ export default function BackButton({ fallback = '/' }: { fallback?: string }) {
   };
   return (
     <button
+      type="button"
       onClick={goBack}
       aria-label="Go back"
       title="Back"
@@ -36,7 +37,7 @@ export default function BackButton({ fallback = '/' }: { fallback?: string }) {
       }}
     >
       <ChevronLeft size={14} strokeWidth={2} />
-      <span className="hidden sm:inline">Back</span>
+      <span>Back</span>
     </button>
   );
 }

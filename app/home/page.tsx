@@ -29,6 +29,7 @@ import ThemePanel from '@/components/ThemePanel';
 import LimaBar from '@/components/LimaBar';
 import TabBar from '@/components/TabBar';
 import MenuButton from '@/components/MenuButton';
+import BackButton from '@/components/BackButton';
 import HomeHeroCard from '@/components/home/HomeHeroCard';
 import CropIcon from '@/components/CropIcon';
 import { useLanguage } from '@/lib/i18n';
@@ -383,7 +384,7 @@ function HomeLandingInner() {
         className="flex-shrink-0 flex items-center gap-3 px-4"
         style={{ height: 56, borderBottom: '1px solid var(--color-border)' }}
       >
-        <MenuButton />
+        <MenuButton /><BackButton fallback="/home" />
 
         <div className="flex flex-col justify-center flex-1">
           <span className="uppercase tracking-widest font-sans" style={{ fontSize: 12, color: 'var(--color-harvest)', letterSpacing: '0.12em', lineHeight: 1 }}>

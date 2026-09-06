@@ -6,6 +6,12 @@ export function sampleRolesFor(role: UserRole | null): string[] {
   return [role];
 }
 
+/** Unknown signed-in identities fail closed; anonymous visitors can explore public samples. */
+export function sampleChoicesForAccount(role: UserRole | null, signedIn: boolean, ready: boolean): string[] {
+  if (!ready || (signedIn && !role)) return [];
+  return sampleRolesFor(role);
+}
+
 export const FARM_TOUR = [
   { id: 'map', minutes: 2, title: 'Find the garden', href: '/farmer', task: 'Open the saved sample pin. Explore the map layers and garden boundary.' },
   { id: 'design', minutes: 3, title: 'Try the Design Studio', href: '/design?lat=-27.72623&lon=31.96304', task: 'Select a bed or tree, move it and try Undo. Edits affect only this sample.' },

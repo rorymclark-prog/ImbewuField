@@ -18,6 +18,7 @@ import BrandLogo from '@/components/BrandLogo';
 import TabBar from '@/components/TabBar';
 import LessonLink from '@/components/design/LessonLink';
 import MenuButton from '@/components/MenuButton';
+import BackButton from '@/components/BackButton';
 
 const CROP_OPTIONS = [
   'maize', 'beans', 'tomato', 'spinach', 'cabbage', 'potato', 'pumpkin',
@@ -183,7 +184,7 @@ export default function CommunityProfilePage() {
   return (
     <div className="h-[100dvh] flex flex-col font-sans" style={{ background: '#E4DCC6', color: '#20190F' }}>
       <header className="flex-shrink-0 flex items-center gap-3 px-4" style={{ height: 56, borderBottom: '1px solid #E2D8C4', background: '#FFFEFA' }}>
-        <MenuButton />
+        <MenuButton /><BackButton fallback="/home" />
         <Link href="/community" style={{ display: 'flex', alignItems: 'center', gap: 4, color: '#5C5040', textDecoration: 'none' }}>
           <ChevronLeft size={18} strokeWidth={1.7} />
         </Link>

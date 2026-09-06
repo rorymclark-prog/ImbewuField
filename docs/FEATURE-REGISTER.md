@@ -226,7 +226,8 @@ not overwritten. Preserve this protection when integrating actual site media.
 ## Completed reports for all 18 gardens — 6 September 2026
 
 Status: implemented; 3,401 tests passed, no failures, one existing TODO.
-TypeScript and all 18 PDF content checks passed. Deployment verification pending.
+TypeScript and all 18 PDF content checks passed. Deployed via PR #419,
+commit 5a13fe9; the production workflow verified the live build.
 
 - Every garden card now links directly to its completed four-page sample PDF.
   The organisation/funder garden detail also links to that same report.
@@ -239,3 +240,23 @@ TypeScript and all 18 PDF content checks passed. Deployment verification pending
   report PDF** action. Photo and layout are included by default in this gallery.
 - These are prepared demonstration reports requiring no live AI call. They do
   not add 18 editable Design Studio farms or certify actual project outcomes.
+
+## Sample navigation and Back controls — 6 September 2026
+
+Status: implemented; TypeScript passed, 3,404 tests passed, zero failures,
+one existing TODO. Deployment verification pending.
+
+- The bottom sample banner is replaced by a small Sample indicator on the menu
+  button. Its menu offers sample choices, 18 garden reports, tour and Exit.
+  Pages without that menu use a compact top-corner sample link.
+- Back controls added to Account, Home, Map, community, learning and other
+  missing headers; the label remains visible on phones. Existing Design Studio
+  back navigation is preserved.
+- All five role cards appear first in the chooser. Availability comes from the
+  signed-in account’s own role, not the fictional Sample Farmer profile after
+  a reload. Farmers and mentors retain their role restrictions; organisations
+  and administrators can explore all roles. Unknown account roles fail closed.
+- Account’s sample view explains its practice profile instead of presenting
+  fictional profile data as the real account’s permissions.
+- Browser preview connection was unavailable; phone rendering is not yet
+  visually verified for this batch.
