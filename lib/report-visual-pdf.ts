@@ -55,12 +55,12 @@ export async function prepareVisualPdfAssets(visuals: ReportVisuals, photos: Vis
         images.push({image,title:graphic.title,caption:graphic.note});
       }
       if(graphic.trees)for(let start=0;start<graphic.trees.length;start+=6){
-        const trees=graphic.trees.slice(start,start+6);const height=Math.ceil(trees.length/3)*260+30;
+        const trees=graphic.trees.slice(start,start+6);const columns=trees.length===4?2:Math.min(3,trees.length);const cellWidth=772/columns;const height=Math.ceil(trees.length/columns)*260+30;
         const parts=[`<svg xmlns="http://www.w3.org/2000/svg" width="820" height="${height}"><rect width="100%" height="100%" fill="#eff5e9"/>`];
         for(let i=0;i<trees.length;i++){
           const tree=trees[i];let source=cached.get(tree.image);
           if(!source){const response=await fetch(tree.image);if(!response.ok)throw Error('A tree illustration could not load. Reconnect and retry the full-colour export.');const blob=await response.blob();source=await new Promise<string>((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(String(reader.result));reader.onerror=reject;reader.readAsDataURL(blob);});cached.set(tree.image,source);}
-          const x=24+i%3*264,y=15+Math.floor(i/3)*260;
+          const x=24+i%columns*cellWidth+(cellWidth-240)/2,y=15+Math.floor(i/columns)*260;
           parts.push(`<image href="${source}" x="${x}" y="${y}" width="240" height="215"/><text x="${x+120}" y="${y+242}" text-anchor="middle" font-family="Arial,sans-serif" font-size="20" fill="#245738">${escape(tree.name)}</text>`);
         }
         images.push({image:await svgImage(parts.join('')+'</svg>'),title:graphic.title,caption:graphic.note});

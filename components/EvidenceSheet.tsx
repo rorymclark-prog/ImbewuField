@@ -383,7 +383,7 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
             <div style={{ flex: 1 }}>
               <div style={{ font: '400 13px/1.45 Newsreader, Georgia, serif', color: '#EAF2E2', fontStyle: 'italic' }}>{limaTip}</div>
               <div style={{ font: '400 10.5px/1 system-ui, sans-serif', color: '#9DBE9D', marginTop: 5 }}>
-                Lima · reads bills & reports for you
+                {isLab ? 'Site evidence · keep your original documents' : 'Lima · reads bills & reports for you'}
               </div>
             </div>
           </div>

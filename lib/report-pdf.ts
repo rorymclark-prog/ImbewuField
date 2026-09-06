@@ -398,17 +398,25 @@ export async function buildReportPdf(rawMarkdown: string, meta: ReportPdfMeta): 
         break;
       }
       case 'h2': {
+        // Match before pagination so the chapter title stays with its first illustration.
+        const chapter=Object.entries(meta.visualAssets?.chapters??{}).find(([heading])=>stripLeadingNumber(pdfSafe(stripInlineMarkdown(heading)))===stripLeadingNumber(block.text));
+        const firstGraphic=chapter?.[1][0];
+        let firstGraphicRoom=0;
+        if(firstGraphic){
+          const info=doc.getImageProperties(firstGraphic.image);
+          doc.setFont('helvetica','normal');doc.setFontSize(9);
+          firstGraphicRoom=Math.min(345,CW*info.height/info.width)+doc.splitTextToSize(firstGraphic.caption,CW).length*12+43;
+        }
         doc.setFont('helvetica', 'bold'); doc.setFontSize(13); setInk(INK.green);
         const lines = doc.splitTextToSize(block.text, CW);
         // A heading alone at the foot of a page is worse than a slightly short page.
-        need(lines.length * 17 + 34);
+        need(lines.length * 17 + 34 + firstGraphicRoom);
         y += 10;
         doc.text(lines, M, y); y += lines.length * 17;
         doc.setDrawColor(226, 216, 196); doc.line(M, y - 4, PW - M, y - 4);
         y += 8;
         // The PDF may number an older report now. Match its chapter by the same title rule
         // as the document assembler, so illustrations survive added/changed numbering.
-        const chapter=Object.entries(meta.visualAssets?.chapters??{}).find(([heading])=>stripLeadingNumber(pdfSafe(stripInlineMarkdown(heading)))===stripLeadingNumber(block.text));
         for (const graphic of chapter?.[1] ?? []) {
           const info=doc.getImageProperties(graphic.image);
           const height=Math.min(345,CW*info.height/info.width);
