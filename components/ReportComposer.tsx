@@ -10,7 +10,7 @@ import styles from './MelDashboard.module.css';
 
 import { buildProgrammePdf, type ReportSection } from '@/lib/programme-report-pdf';
 export type { ReportSection } from '@/lib/programme-report-pdf';
-export default function ReportComposer({ title, sample, sections, branding: suppliedBranding, orgId, photos = [] }: { title: string; sample: boolean; sections: ReportSection[]; branding?: ProgrammeBranding; orgId?: string | null; photos?: VenuePhoto[] }) {
+export default function ReportComposer({ title, sample, sections, branding: suppliedBranding, orgId, photos = [], photoHeading = 'Site photographs', photosByDefault = false }: { title: string; sample: boolean; sections: ReportSection[]; branding?: ProgrammeBranding; orgId?: string | null; photos?: VenuePhoto[]; photoHeading?: string; photosByDefault?: boolean }) {
   const { profile } = useAuth();
   const [loadedBranding, setLoadedBranding] = useState<ProgrammeBranding>();
   const branding = suppliedBranding ?? loadedBranding;
@@ -23,14 +23,22 @@ export default function ReportComposer({ title, sample, sections, branding: supp
     void (async () => { try { const res = await fetch(`/api/programme-evidence?org=${encodeURIComponent(id)}&mode=branding`, { headers: await paidApiHeaders() }); if (res.ok) { const d = await res.json(); if (!cancelled) setLoadedBranding(d.branding); } } catch { /* The report remains available without optional branding. */ } })();
     return () => { cancelled = true; };
   }, [orgId, profile, sample, suppliedBranding]);
-  const [includePhotos, setIncludePhotos] = useState(false);
-  const [format, setFormat] = useState<'summary' | 'full'>('summary');
+  const [includePhotos, setIncludePhotos] = useState(photosByDefault);
+  const [format, setFormat] = useState<'summary' | 'full'>(sample ? 'full' : 'summary');
   const [busy, setBusy] = useState(false), [error, setError] = useState('');
   const visible = sections.map(s => ({ ...s, lines: format === 'summary' ? s.lines.slice(0, 5) : s.lines }));
   async function download() {
     setBusy(true); setError('');
     try {
-      const doc = await buildProgrammePdf(title, sample, sections, format, branding, includePhotos ? photos : []);
+      const attached = includePhotos ? await Promise.all(photos.map(async photo => {
+        if (!photo.image.startsWith('/demo/sites/')) return photo;
+        const response = await fetch(photo.image);
+        if (!response.ok) throw Error('Site photo unavailable');
+        const blob = await response.blob();
+        const image = await new Promise<string>((resolve, reject) => { const reader = new FileReader(); reader.onload = () => resolve(String(reader.result)); reader.onerror = reject; reader.readAsDataURL(blob); });
+        return { ...photo, image };
+      })) : [];
+      const doc = await buildProgrammePdf(title, sample, sections, format, branding, attached, photoHeading);
       await deliverFile(doc.output('blob'), `${sample ? 'Sample-' : ''}ImbewuField-${title.replace(/[^a-zA-Z0-9]+/g, '-')}.pdf`, title);
     } catch { setError('The PDF could not be created. Your records have not changed.'); }
     finally { setBusy(false); }
@@ -38,9 +46,9 @@ export default function ReportComposer({ title, sample, sections, branding: supp
   return <article className={styles.card} style={{ marginTop: 20 }}>
     {branding && <div className={styles.grid} style={{ marginBottom: 20 }}>{(['organisation','garden','funder'] as const).map(key => branding[key].label || branding[key].image ? <div key={key} style={{ display:'flex', alignItems:'center', gap:12 }}>{branding[key].image ? <img src={branding[key].image} alt={`${key} logo`} style={{width:88,height:88,objectFit:'contain'}} /> : <span aria-hidden="true" style={{width:48,height:48,display:'grid',placeItems:'center',borderRadius:12,background:'#e7efe5',color:'#245739',fontWeight:700}}>{key==='organisation'?'O':key==='garden'?'G':'F'}</span>}<div><small style={{fontSize:12,color:'#526454'}}>{key==='organisation'?'Implemented by':key==='garden'?'Community / project':'Supported by'}</small><p style={{margin:0,fontWeight:600}}>{branding[key].label}</p></div></div> : null)}</div>}
     <div className={styles.row}><h2>{title}</h2><span className={styles.tag}>{sample ? 'Fictional sample' : 'Recorded data'}</span></div>
-    <div className={styles.row}><button type="button" aria-pressed={format === 'summary'} onClick={() => setFormat('summary')}>Brief summary</button><button type="button" aria-pressed={format === 'full'} onClick={() => setFormat('full')}>Full report</button><button type="button" className={styles.primary} disabled={busy} onClick={() => void download()}>{busy ? 'Preparing…' : 'Download ink-saving PDF'}</button></div>
-    <p>White paper, dark text and no background pictures. {format === 'summary' ? 'Showing up to five items per section; page count depends on the content.' : 'Includes all items available in this view.'}</p>
-    {photos.length > 0 && <label className={styles.option}><input type="checkbox" checked={includePhotos} onChange={e=>setIncludePhotos(e.target.checked)} />Include {photos.length} venue photos in the PDF (uses more ink)</label>}
+    <div className={styles.row}><button type="button" aria-pressed={format === 'summary'} onClick={() => setFormat('summary')}>Brief summary</button><button type="button" aria-pressed={format === 'full'} onClick={() => setFormat('full')}>Full report</button><button type="button" className={styles.primary} disabled={busy} onClick={() => void download()}>{busy ? 'Preparing…' : sample ? 'Generate new report PDF' : 'Download ink-saving PDF'}</button></div>
+    <p>{sample && 'The full sample report is ready below. Generate a new PDF to include your current practice records. '}White paper, dark text and no background pictures. {format === 'summary' ? 'Showing up to five items per section; page count depends on the content.' : 'Includes all items available in this view.'}</p>
+    {photos.length > 0 && <label className={styles.option}><input type="checkbox" checked={includePhotos} onChange={e=>setIncludePhotos(e.target.checked)} />Include {photos.length} photos in the PDF (uses more ink)</label>}
     {error && <p role="alert" className={styles.error}>{error}</p>}
     <div className={styles.grid}>{visible.map(s => <section key={s.title} className={styles.card}><h3>{s.title}</h3>{s.lines.length ? s.lines.map((line, i) => <p key={i}>{line}</p>) : <p>Nothing recorded yet.</p>}</section>)}</div>
   </article>;

@@ -1,5 +1,7 @@
 'use client';
 
+import { sampleProducePhoto } from '@/lib/sample-media';
+
 import { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import { onAuthStateChanged, type User } from 'firebase/auth';
@@ -325,6 +327,7 @@ function LogProductionForm({ onSaved }: { onSaved: () => void }) {
     <Card accent="#1F4D2B">
       <SectionLabel>{t('myRecordsLogProductionHeader')}</SectionLabel>
       <form onSubmit={handleSubmit} className="space-y-3">
+        {sampleProducePhoto(form.crop) && <figure className="flex items-center gap-3"><img src={sampleProducePhoto(form.crop)!} alt={form.crop} width={56} height={56} style={{ width: 56, height: 56, borderRadius: 8, objectFit: 'cover' }} /><figcaption className="text-xs">AI-generated crop reference · add your own harvest photo below.</figcaption></figure>}
         <div>
           <FieldLabel>{t('myRecordsCropLabel')}</FieldLabel>
           <CropSelect
@@ -653,6 +656,8 @@ const harvestArtAliases = buildCropAliasIndex();
 function HarvestCropPicture({ name }: { name: string }) {
   // The demo prefix labels fiction; it is not part of the crop's identity.
   const lookup = isSampleMode() ? name.replace(/^Sample\s*[—–-]\s*/i, '') : name;
+  const photo = isSampleMode() ? sampleProducePhoto(lookup) : null;
+  if (photo) return <img src={photo} alt={`${lookup} · AI-generated reference`} title="AI-generated crop reference, not harvest evidence" width={40} height={40} style={{ width: 40, height: 40, objectFit: 'cover', borderRadius: 8 }} data-photo-preview="true" />;
   const { key } = cropIdentityOf(lookup, harvestArtAliases);
   return key && getCropArt(key)
     ? <CropIcon cropKey={key} icon="🌱" size={32} />

@@ -1,9 +1,11 @@
 'use client';
 
-import { useState, useMemo, useRef, useEffect, useCallback } from 'react';
+import { Fragment, useState, useMemo, useRef, useEffect, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { startRolePreview } from '@/lib/use-role-navigation';
+import SampleLimaConversation from './SampleLimaConversation';
 import ReportComposer from './ReportComposer';
+import { sampleSitePhotos } from '@/lib/sample-gardens';
 import SampleGardenVisual from './SampleGardenVisual';
 import { SAMPLE_GARDENS, SAMPLE_PARTICIPANTS } from '@/lib/sample-gardens';
 import { samplePortrait, sampleProducePhoto } from '@/lib/sample-media';
@@ -252,6 +254,8 @@ function initials(name: string) { return name.split(' ').map((p) => p[0]).join('
 export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder' }) {
   const router = useRouter();
   const [sampleView, setSampleView] = useState<'design' | 'aerial' | null>(null);
+  const [areaFilter, setAreaFilter] = useState('All areas');
+  const [showSampleLima, setShowSampleLima] = useState(false);
   const [garden, setGarden] = useState<Garden | null>(null);
   const [gardener, setGardener] = useState<Gardener | null>(null);
   const mapRef = useRef<MapRef>(null);
@@ -420,6 +424,8 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
      empty key, so those keep deduping on the words she wrote. */
   const photoCrops = gardener ? Array.from(new Map(gardener.production.map((p) => [p.crop.k || p.crop.n, { crop: p.crop, photoUrl: p.photoUrl }])).values()).slice(0, 5) : [];
 
+  const areaNames = [...new Set(gardens.map(g=>g.town || 'Area not recorded'))].sort();
+  const areaGardens = gardens.filter(g=>areaFilter === 'All areas' || (g.town || 'Area not recorded') === areaFilter).sort((a,b)=>a.town.localeCompare(b.town));
   return (
     <div className="flex flex-col w-full h-full overflow-hidden">
       {/* Stat row — 2×2 grid on mobile (fits 375px), 4-across flex row on desktop */}
@@ -428,7 +434,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
           <>
 
             <Stat label="Gardens" value={dashboardTotals.gardens.toString()} sub={isDemo ? 'in this sample register' : 'in your organisation'} color="#1F4D2B" />
-            <Stat label="Livelihoods" value={dashboardTotals.farmers.toLocaleString()} sub="farmers supported" color="#20190F" />
+            <Stat label="Farmers" value={dashboardTotals.farmers.toLocaleString()} sub="farmers supported" color="#20190F" />
             <Stat label="Food grown" value={`${dashboardTotals.produceT} t`} sub="this season" color="#2F6F9E" />
           </>
         ) : (
@@ -470,6 +476,9 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                 <span className="text-xs font-mono px-1.5 py-0.5 rounded" style={{ background: 'rgba(158,92,8,0.12)', color: '#9E5C08', border: '1px solid rgba(158,92,8,0.3)' }}>demo sample</span>
               )}
             </div>
+            <label className="block text-sm mb-3" style={{color:'#36553d'}}>Area / village<select value={areaFilter} onChange={e=>{setAreaFilter(e.target.value); const first=gardens.find(g=>e.target.value==='All areas'||(g.town||'Area not recorded')===e.target.value); if(first)selectGarden(first);}} className="block w-full rounded-lg p-2 mt-1" style={{minHeight:44,background:'#fff',border:'1px solid #c6cfbf'}}><option>All areas</option>{areaNames.map(a=><option key={a}>{a}</option>)}</select></label>
+            {isDemo && <button type="button" className="text-sm underline mb-3" onClick={()=>setShowSampleLima(v=>!v)}>{showSampleLima?'Close Lima example':'Try Lima for this role'}</button>}
+            {showSampleLima && isDemo && <SampleLimaConversation role={mode==='funder'?'funder':'ngo'}/>}
             {gardensLoading ? (
               <div className="space-y-1">
                 <SkeletonRow /><SkeletonRow /><SkeletonRow /><SkeletonRow />
@@ -484,8 +493,8 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
               </div>
             ) : (
               <div className="space-y-1">
-                {gardens.map((g) => (
-                  <button
+                {areaGardens.map((g,index) => (
+                  <Fragment key={g.id}>{(index===0 || areaGardens[index-1].town!==g.town) && <h3 className="text-sm font-semibold pt-4 pb-2" style={{color:'#36553d'}}>{g.town || 'Area not recorded'} · {areaGardens.filter(x=>x.town===g.town).length} gardens</h3>}<button
                     key={g.id}
                     onClick={() => selectGarden(g)}
                     className="w-full flex items-center gap-2.5 px-2.5 py-2 rounded-lg text-left transition-all"
@@ -500,7 +509,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                       <div className="text-xs font-mono" style={{ color: '#9A8268' }}>{g.town} · {g.farmers || '—'} farmers</div>{g.kind && <div className="text-xs mt-1" style={{ color: '#36553d' }}>{g.kind} · {Math.round(g.areaM2 ?? 0).toLocaleString()} m²{g.areaM2 === 4046.8564224 ? ' · 1 acre' : ''}</div>}
                     </div>
                     <span className="text-xs font-mono flex-shrink-0" style={{ color: '#2F6F9E' }}>{g.produceKg > 0 ? `${g.produceKg}kg` : '—'}</span>
-                  </button>
+                  </button></Fragment>
                 ))}
               </div>
             )}
@@ -631,7 +640,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                     {isDemo && <><button type="button" className="w-full rounded-xl p-3 text-sm font-semibold" style={{ background: '#e9f1e9', color: '#214d35' }} onClick={() => setSampleView('design')}>Open example garden design →</button>{sampleView && <div><button type="button" className="text-sm underline py-2" onClick={() => setSampleView(null)}>Close example</button><SampleGardenVisual kind={garden.kind} variant={garden.id} key={`${garden.id}-${sampleView}`} name={garden.name} initial={sampleView} /></div>}<button type="button" className="text-xs underline py-2" onClick={() => { if (startRolePreview('farmer')) router.push('/farmer'); }}>Explore the separate Ubhejane design workspace →</button></>}
                     {!isDemo && <p className="text-xs" style={{ color: '#506158' }}>This register does not include the farmer’s private design.</p>}
                     <details className={reportStyles.root} style={{ padding: 12, borderRadius: 12 }}><summary>Preview & download this garden record</summary>
-                      <ReportComposer title="Garden production record" sample={isDemo} sections={[
+                      <ReportComposer title="Garden production record" sample={isDemo} photos={isDemo ? sampleSitePhotos(garden.id) : []} photosByDefault={isDemo} sections={[
                         { title: 'Garden record', lines: [garden.name, `${gardener.name} · ${gardener.plot}`, `Plot size recorded: ${gardener.sizeM2} m². This is not a verified active production area.`] },
                         { title: 'Production entries', lines: gardener.production.map(p => `${p.date}: ${p.crop.n}, ${p.kg} kg`) },
                         { title: 'Sales entries', lines: gardener.sales.map(p => `${p.date}: ${p.crop.n}, ${p.kg} kg; R${p.rand}`) },

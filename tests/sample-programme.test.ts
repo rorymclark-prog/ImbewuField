@@ -89,8 +89,9 @@ test('opening a sample assessment needs participants and never invents completed
 test('updating a sample garden replaces its area instead of double counting land', () => {
   const rows = freshSampleAreas();
   const changed = { ...rows[0], vegetableM2: rows[0].vegetableM2 + 10 };
-  assert.equal(upsertSampleArea(rows, changed, '2026-09-05').length, 1);
-  assert.equal(upsertSampleArea(rows, changed, '2026-09-05')[0].vegetableM2, changed.vegetableM2);
+  // The seed now covers the portfolio; replacement must preserve its size.
+  assert.equal(upsertSampleArea(rows, changed, '2026-09-05').length, rows.length);
+  assert.equal(upsertSampleArea(rows, changed, '2026-09-05').find(s => s.code === changed.code)!.vegetableM2, changed.vegetableM2);
   assert.throws(() => upsertSampleArea(rows, { ...changed, vegetableM2: -1 }, '2026-09-05'));
   assert.throws(() => upsertSampleArea(rows, { ...changed, observedOn: '2099-01-01' }, '2026-09-05'));
 });

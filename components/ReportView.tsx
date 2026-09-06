@@ -24,7 +24,7 @@ import { resolveBaseLayers } from '@/lib/base-layers';
 import { buildPhasePlan } from '@/lib/phasing';
 import { collectReportSiteFacts } from '@/lib/report-site-facts-collect';
 import type { ReportSiteFacts } from '@/lib/report-site-facts';
-import { reportSummaryPages, buildInkSummaryPdf } from '@/lib/report-summary';
+import { reportSummaryPages, buildInkSummaryPdf, sampleFullSiteReport } from '@/lib/report-summary';
 import { CROPS } from '@/lib/crop-catalog';
 import { getCropArt } from '@/lib/crop-art';
 import { REPORT_ZU } from '@/lib/report-localisation';
@@ -365,6 +365,16 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   // Controls start open (nothing to read yet) unless we opened straight into a
   // saved report, which already has content.
   const [panelOpen, setPanelOpen] = useState(!savedReport);
+  const sampleReportSeeded = useRef(false);
+  useEffect(() => {
+    if (!isSampleMode() || savedReport || !facts || sampleReportSeeded.current) return;
+    sampleReportSeeded.current = true;
+    setReport(sampleFullSiteReport(facts, d, language));
+    setGenerated(true);
+    setIncludeImages(true);
+    setPanelOpen(false);
+  }, [facts, d, language, savedReport]);
+
   const showPanel = isWide || panelOpen;
   const showReportColumn = isWide || !panelOpen;
 
@@ -432,6 +442,17 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   const [wentLight, setWentLight] = useState(false);
 
   const generate = useCallback(async () => {
+    if (isSampleMode()) {
+      const siteId = designSiteIdFromLocation(d);
+      const currentFacts = collectReportSiteFacts({ siteId, lat: d.lat, lon: d.lon, canvas: loadCanvasState(siteId), farmName: savedPlaces?.find(place => place.id === activePlaceId)?.name });
+      setFacts(currentFacts);
+      setReport(sampleFullSiteReport(currentFacts, d, language));
+      setGenerated(true);
+      setReading('full');
+      setError('');
+      collapsePanelOnNarrow();
+      return;
+    }
     abortRef.current?.abort();
     abortRef.current = new AbortController();
     setReport('');
@@ -724,8 +745,11 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
             </button>
           )}
 
-          {/* One regenerate control, not two — the primary button below already
-              switches its own label to "Regenerate" once a report exists. */}
+
+        </div>
+      </div>
+
+      <div className={`${styles.readingControls} no-print`}>
           <button
             onClick={generate}
             disabled={loading || selected.size === 0}
@@ -741,16 +765,13 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                   }
             }
           >
-            {loading ? <><Loader2 size={14} className="animate-spin inline mr-1" /> Generating...</> : label(generated ? 'Regenerate' : 'Generate report')}
+            {loading ? <><Loader2 size={14} className="animate-spin inline mr-1" /> Generating...</> : label(generated ? 'Generate new report' : 'Generate report')}
           </button>
-        </div>
-      </div>
-
-      <div className={`${styles.readingControls} no-print`}>
         <div><button aria-pressed={presentation === 'screen'} onClick={() => setPresentation('screen')}>{tr('Screen', 'Isikrini')}</button><button aria-pressed={presentation === 'print'} onClick={() => setPresentation('print')}>{tr('Print · save ink', 'Phrinta · yonga uyinki')}</button></div>
         <div>{([['one', '1-page summary', 'Isifinyezo sekhasi elilodwa'], ['five', '5-page summary', 'Isifinyezo samakhasi amahlanu'], ['full', 'Full report', 'Umbiko ogcwele']] as const).map(([value, en, zu]) => <button key={value} aria-pressed={reading === value} onClick={() => { setReading(value); setPanelOpen(false); }}>{tr(en, zu)}</button>)}</div>
         {reading === 'full' && <label><input type="checkbox" checked={includeImages} onChange={e => setIncludeImages(e.target.checked)} /> {tr('Include photos and maps in PDF', 'Faka izithombe namamephu ku-PDF')}</label>}
       </div>
+      {isSampleMode() && <p className={`${styles.languageNote} no-print`}>Ready-to-read sample report. Generate new report refreshes the complete record from your practice design; no live AI request is made. Language and advice settings apply to live AI reports; sample wording is an English reference with translated summaries where available.</p>}
       {language !== (activeSaved?.lang ?? appLang ?? 'en') && report && reading === 'full' && <p className={`${styles.languageNote} no-print`}>{tr('Language changes apply to new reports and summaries. Regenerate to translate the full advice.', 'Ushintsho lolimi lusebenza emibikweni emisha nasezifinyezweni. Khiqiza kabusha ukuhumusha zonke izeluleko.')}</p>}
       <div className="flex-1 flex overflow-hidden">
 
