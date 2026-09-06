@@ -1,9 +1,11 @@
 import type { jsPDF } from 'jspdf';
 import { pdfSafe } from './crop-export-pdf';
 import { reportChartSvg, type ReportVisuals } from './report-visuals';
+import type { ChapterGraphic } from './report-chapter-visuals';
 
 export type VisualImage = { image: string; caption: string };
-export type VisualPdfAssets = { charts: Record<string, string>; photos: VisualImage[]; plants?: VisualImage[] };
+export type ChapterImage = { image:string; title:string; caption:string };
+export type VisualPdfAssets = { charts: Record<string, string>; photos: VisualImage[]; plants?: VisualImage[]; chapters?:Record<string,ChapterImage[]> };
 
 async function svgImage(svg: string): Promise<string> {
   const url = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' }));
@@ -19,7 +21,7 @@ async function svgImage(svg: string): Promise<string> {
   } finally { URL.revokeObjectURL(url); }
 }
 
-export async function prepareVisualPdfAssets(visuals: ReportVisuals, photos: VisualImage[] = [], plants: VisualImage[] = []): Promise<VisualPdfAssets> {
+export async function prepareVisualPdfAssets(visuals: ReportVisuals, photos: VisualImage[] = [], plants: VisualImage[] = [], chapters:Record<string,ChapterGraphic[]> = {}): Promise<VisualPdfAssets> {
   const charts: Record<string, string> = {};
   // Sequential conversion keeps peak memory bounded on the farmer's phone.
   for (const chart of visuals.charts) charts[chart.id] = await svgImage(reportChartSvg(chart).svg);
@@ -40,7 +42,33 @@ export async function prepareVisualPdfAssets(visuals: ReportVisuals, photos: Vis
     const image = await new Promise<string>((resolve, reject) => { const reader = new FileReader(); reader.onload = () => resolve(String(reader.result)); reader.onerror = reject; reader.readAsDataURL(blob); });
     plantImages.push({ ...plant, image });
   }
-  return { charts, photos: attached, plants: plantImages };
+  const chapterImages:Record<string,ChapterImage[]>={};
+  const cached=new Map<string,string>();
+  const escape=(s:string)=>s.replace(/[<>&"']/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&apos;'}[c]!));
+  for(const [heading,graphics] of Object.entries(chapters)){
+    const images:ChapterImage[]=[];
+    for(const graphic of graphics){
+      if(graphic.svg||graphic.chart){
+        const key=graphic.svg?graphic.id:`chart-${graphic.chart!.id}`;
+        let image=cached.get(key);
+        if(!image){image=graphic.chart?charts[graphic.chart.id]??await svgImage(reportChartSvg(graphic.chart).svg):await svgImage(graphic.svg!);cached.set(key,image);}
+        images.push({image,title:graphic.title,caption:graphic.note});
+      }
+      if(graphic.trees)for(let start=0;start<graphic.trees.length;start+=6){
+        const trees=graphic.trees.slice(start,start+6);const height=Math.ceil(trees.length/3)*260+30;
+        const parts=[`<svg xmlns="http://www.w3.org/2000/svg" width="820" height="${height}"><rect width="100%" height="100%" fill="#eff5e9"/>`];
+        for(let i=0;i<trees.length;i++){
+          const tree=trees[i];let source=cached.get(tree.image);
+          if(!source){const response=await fetch(tree.image);if(!response.ok)throw Error('A tree illustration could not load. Reconnect and retry the full-colour export.');const blob=await response.blob();source=await new Promise<string>((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(String(reader.result));reader.onerror=reject;reader.readAsDataURL(blob);});cached.set(tree.image,source);}
+          const x=24+i%3*264,y=15+Math.floor(i/3)*260;
+          parts.push(`<image href="${source}" x="${x}" y="${y}" width="240" height="215"/><text x="${x+120}" y="${y+242}" text-anchor="middle" font-family="Arial,sans-serif" font-size="20" fill="#245738">${escape(tree.name)}</text>`);
+        }
+        images.push({image:await svgImage(parts.join('')+'</svg>'),title:graphic.title,caption:graphic.note});
+      }
+    }
+    if(images.length)chapterImages[heading]=images;
+  }
+  return { charts, photos: attached, plants: plantImages, chapters:chapterImages };
 }
 
 /** The PDF reuses the screen's exact chart artwork and data, at print resolution.

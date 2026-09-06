@@ -2,6 +2,9 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { freshEvidenceData, trainingTotals, milestoneAt, publishedTraining, validTrainingRecord, validProgrammeMilestone, validProgrammeBranding, validEvidenceImage } from '../lib/programme-evidence';
 import { melCan, memberAccessSummary, programmeCapabilities } from '../lib/mel';
+import { programmeRecordMetrics, PROGRESS_TEMPLATES, progressValue, progressRecordSections } from '../lib/programme-progress';
+import { DEMO_NETWORK } from '../lib/network-demo';
+import { productionAreaSummary } from '../lib/production-sites';
 
 test('training totals count repeat attendance but deduplicate participants and respect the report date', () => {
   const session = freshEvidenceData().sessions[0];
@@ -78,4 +81,33 @@ test('access inspection honours explicit denial and preserves organisation defau
   const traineeRecorder = memberAccessSummary('mentor', {training:true,analyse:false});
   assert.equal(traineeRecorder.find(c => c.id === 'evidence')?.allowed, true);
   assert.equal(traineeRecorder.find(c => c.id === 'analyse')?.allowed, false);
+});
+
+test('observed indicators may have an unagreed target without inventing progress percentages', () => {
+  const m={...freshEvidenceData().milestones[0],target:null,category:'water-energy' as const};
+  assert.equal(validProgrammeMilestone(m,'2026-09-06'),true);
+  assert.equal(milestoneAt(m,'2026-09-06').actual,1);
+  assert.equal(milestoneAt(m,'2026-09-06').percent,null);
+  assert.equal(milestoneAt(m,'2026-09-06').remaining,null);
+  assert.equal(milestoneAt(m,'2026-08-01').actual,null);
+  assert.equal(validProgrammeMilestone({...m,category:'invented'},'2026-09-06'),false);
+  assert.equal(validProgrammeMilestone({...m,category:undefined,target:4},'2026-09-06'),true,'older indicators remain readable');
+});
+test('programme totals distinguish unavailable records from recorded zero and preserve separate sources', () => {
+  const missing=programmeRecordMetrics(null,null);
+  assert.ok(missing.metrics.every(m=>m.value===null));
+  const farmer=structuredClone(DEMO_NETWORK.farmers[0]);
+  farmer.metrics.producedKg=0;farmer.metrics.incomeZar=null;farmer.metrics.expensesZar=null;
+  const records=programmeRecordMetrics([farmer],productionAreaSummary([]),2);
+  assert.equal(records.metrics.find(m=>m.id==='harvest')!.value,0);
+  assert.equal(records.metrics.find(m=>m.id==='income')!.value,null);
+  assert.equal(records.metrics.find(m=>m.id==='hectares')!.value,null);
+  assert.ok(records.notes.some(n=>n.includes('2 enrolled farmers')));
+  assert.ok(progressRecordSections(records).some(s=>s.title.includes('livelihoods')));
+  assert.ok(!records.metrics.some(m=>/profit|per m|r\/m/i.test(m.label)));
+  assert.notEqual(progressValue(0.0001,'ha'),'0 ha');
+});
+test('indicator suggestions cover the whole programme and do not pre-fill results or numeric targets', () => {
+  assert.equal(new Set(PROGRESS_TEMPLATES.map(t=>t.category)).size,7);
+  for(const template of PROGRESS_TEMPLATES){assert.ok(template.method);assert.ok(!('target' in template));assert.ok(!('baseline' in template));assert.ok(!('actual' in template));}
 });

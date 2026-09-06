@@ -244,7 +244,9 @@ test('the strip and the PDF both carry the photographs', () => {
     view.indexOf('Your saved design maps') < view.indexOf('Your saved site photos'),
     'the photographs must come after the plans',
   );
-  assert.match(view, /groundPhotoGallery\(getSiteEvidence\(evidenceSiteId\(activePlaceId\)\)\)/);
+  // The new-site report flow must not borrow the old, unassigned "default" photo bucket.
+  // Named sites still use the shared evidence key; an unnamed new site starts without photos.
+  assert.match(view, /groundPhotoGallery\(activePlaceId\?getSiteEvidence\(evidenceSiteId\(activePlaceId\)\):\{\}\)/);
   // Tapping one opens it full size, the same as a design sheet.
   assert.match(view, /setOpenPlate\(\{ label: p\.label, image: p\.dataUrl \}\)/);
 

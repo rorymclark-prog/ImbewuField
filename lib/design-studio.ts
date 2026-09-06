@@ -142,7 +142,7 @@ export function formatDesignArea(m2: number): string {
   return `${(m2 / 10_000).toFixed(2)} ha`;
 }
 
-export function designSiteIdFromLocation(locationData: LocationData | null): string {
+export function designSiteIdFromLocation(locationData: Pick<LocationData, 'lat' | 'lon'> | null): string {
   if (!locationData) return 'site:unselected';
   if (
     !Number.isFinite(locationData.lat)

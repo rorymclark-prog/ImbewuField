@@ -44,7 +44,7 @@ function headingText(line: string): string {
  * the number instead lets the normal pass below assign the right one, so the printed numbering and
  * the Contents page are always built from the same count.
  */
-function stripLeadingNumber(text: string): string {
+export function stripLeadingNumber(text: string): string {
   // A trailing dot is optional ONLY for a multi-part number, because this file's own subsection
   // format is "3.1 Title" with no dot after it — so a model imitating the house style writes
   // "9.9 Deep Detail" and the stricter pattern left it to be printed as "3.1 9.9 Deep Detail".

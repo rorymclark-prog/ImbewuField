@@ -69,6 +69,6 @@ test('an NGO cannot promote itself, create a platform admin or cross an organisa
 test('a funder has no farmer, mentor or design navigation, while the owner retains all role tabs', () => {
   assert.deepEqual(visibleRoleTabs('funder'), ['funder']);
   assert.equal(visibleRoleTabs('admin').length, 5);
-  for (const href of ['/farmer', '/farmer?panel=Reports', '/mentor', '/student', '/design', '/facilitator/crops', '/records', '/ngo']) assert.equal(canSeeWorkspaceLink('funder', href), false, href);
+  for (const href of ['/reports', '/farmer', '/farmer?panel=Reports', '/mentor', '/student', '/design', '/facilitator/crops', '/records', '/ngo']) assert.equal(canSeeWorkspaceLink('funder', href), false, href);
   for (const href of ['/funder', '/network', '/account']) assert.equal(canSeeWorkspaceLink('funder', href), true);
 });

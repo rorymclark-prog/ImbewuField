@@ -48,6 +48,23 @@ function reset(): void {
   accountHarness.currentUid = null;
 }
 
+test('lab PDFs retain their bytes separately and cannot be read through another site',async()=>{
+  const g=window as unknown as {sessionStorage:unknown};
+  g.sessionStorage={getItem:()=> '1'};
+  const documents=await import('../lib/evidence-documents');
+  try{
+    const file=new File(['%PDF-1.4\nLab fixture'], 'lab.pdf', {type:'application/pdf'});
+    const scope=documents.evidenceDocumentScope('site-a');
+    const id=await documents.saveEvidenceDocument(scope,file);
+    assert.equal(await (await documents.loadEvidenceDocument('site-a',id))!.text(),await file.text());
+    assert.equal(await documents.loadEvidenceDocument('site-b',id),null);
+    await documents.removeEvidenceDocument(scope,id);
+    assert.equal(await documents.loadEvidenceDocument('site-a',id),null);
+    await assert.rejects(documents.saveEvidenceDocument(scope,new File(['not PDF'],'bad.pdf')));
+    assert.equal(documents.validEvidencePdf('%PDF-',10*1024*1024+1),false);
+  }finally{g.sessionStorage={getItem:()=>null};}
+});
+
 test('malformed persisted sites, keys and rows are filtered into a safe store', () => {
   reset();
   storage.setItem(KEY, JSON.stringify({
