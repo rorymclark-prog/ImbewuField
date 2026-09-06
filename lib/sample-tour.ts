@@ -76,8 +76,8 @@ export const PRODUCT_TOUR: readonly ProductTourStep[] = [
   },
   {
     id: 'report', minutes: 1, title: 'Turn site evidence into a report', href: '/samples/farm#report',
-    task: 'Choose Download sample evidence report for a branded PDF with the example assessment, visit notes, photos and illustrative soil result. It is separate from the full site report, which uses your saved site and available evidence.',
-    secondaryLabel: 'Explore full site reports', secondaryHref: '/farmer?panel=Reports',
+    task: 'Choose Download sample evidence report for a branded PDF with the example assessment, visit notes, photos and illustrative soil result. Then explore Saved sites & reports: choose a site to see which photos, tests, survey answers and design work would improve its full report.',
+    secondaryLabel: 'Explore saved sites & reports', secondaryHref: '/reports',
   },
   {
     id: 'next', minutes: 1, title: 'Shape it for your programme', href: '/feedback',

@@ -7,7 +7,7 @@ import assert from 'node:assert/strict';
 // picker UI (components/report/SavedReportsList.tsx) actually branches on: none, one, several,
 // an orphan report matching no saved place, and two reports for the same place.
 
-import { groupReportsBySite, UNSAVED_SITE_KEY, type SavedReport } from '../lib/saved-reports.ts';
+import { groupReportsBySite, reportSiteChoices, UNSAVED_SITE_KEY, type SavedReport } from '../lib/saved-reports.ts';
 import type { SavedPlace } from '../lib/saved-places.ts';
 import type { LocationData } from '../lib/types.ts';
 
@@ -118,4 +118,13 @@ test('a place a few metres off the exact stored coordinate does not match — sa
   const groups = groupReportsBySite([farReport], places);
   assert.equal(groups.length, 1);
   assert.equal(groups[0].place, null, 'a coordinate ~1.1km off the saved place must not silently match it');
+});
+
+test('the report chooser includes sites awaiting their first report and retains orphan snapshots',()=>{
+  const places=[place('first','Renamed garden',KRE_CRECHE),place('duplicate','Duplicate pin',KRE_CRECHE),place('new','New site',RIVER_FIELD)];
+  const choices=reportSiteChoices([report('old',KRE_CRECHE,'2026-08-01'),report('orphan',UNSAVED_SPOT,'2026-08-02')],places);
+  assert.equal(choices.filter(c=>c.place).length,2,'same-coordinate pins do not create two report workspaces');
+  assert.equal(choices.find(c=>c.place?.id==='new')!.reports.length,0);
+  assert.equal(choices.find(c=>c.siteId===UNSAVED_SITE_KEY)!.reports[0].id,'orphan');
+  assert.equal(reportSiteChoices([],places).filter(c=>c.place).length,2);
 });

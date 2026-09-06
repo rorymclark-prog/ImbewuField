@@ -76,10 +76,10 @@ test('every translated string on these screens actually exists', () => {
   assert.deepEqual(missing, [], `keys used but never translated: ${missing.join(', ')}`);
 });
 
-test('the drawer entry and the panel it opens still agree', () => {
-  // Two halves, two files. The entry is useless if the panel name changes under it.
+test('the menu opens the site/report chooser and legacy report panel links remain supported', () => {
+  // The menu now chooses from all saved sites; existing panel links must still work.
   const nav = source('../components/NavDrawer.tsx');
-  assert.match(nav, /href: '\/farmer\?panel=Reports'/);
+  assert.match(nav, /href: '\/reports'/);
   const page = source('../app/farmer/page.tsx');
   assert.match(page, /VALID_PANELS = \[[^\]]*'Reports'/, "'Reports' must stay a valid panel name");
   assert.match(page, /searchParams\.get\('panel'\)/);

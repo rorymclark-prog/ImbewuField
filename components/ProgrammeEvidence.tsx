@@ -10,13 +10,16 @@ import { sampleAssessments } from '@/lib/sample-programme';
 import { resizeLogoForStorage } from '@/lib/invoice-logo';
 import { freshEvidenceData, milestoneAt, publishedTraining, trainingTotals, validTrainingRecord, validProgrammeMilestone, type EvidenceData, type TrainingRecord, type ProgrammeMilestone } from '@/lib/programme-evidence';
 import ReportComposer from './ReportComposer';
+import ProgrammeProgress from './ProgrammeProgress';
+import { loadProgrammeProgressRecords } from '@/lib/programme-progress-records';
+import { PROGRESS_AREAS, PROGRESS_TEMPLATES, progressArea, progressValue, progressRecordSections, programmeRecordMetrics, type ProgrammeRecords, type ProgressArea } from '@/lib/programme-progress';
 import VenueLocation from './VenueLocation';
 import styles from './MelDashboard.module.css';
 
 type Tab = 'progress' | 'training' | 'targets' | 'branding';
 const today=()=>new Date().toISOString().slice(0,10);
 const emptySession=():TrainingRecord=>({id:crypto.randomUUID(),project:'',title:'',date:today(),venue:'',latitude:null,longitude:null,facilitator:'',ownerId:'',attendance:[],presentCount:0,registeredCount:0,report:'',nextSteps:'',assessmentId:'',published:false,photos:[],photoCount:0,updatedAt:''});
-const emptyTarget=():ProgrammeMilestone=>({id:crypto.randomUUID(),project:'',title:'',unit:'sessions',baseline:null,target:1,due:today(),owner:'',method:'',published:false,observations:[],updatedAt:''});
+const emptyTarget=():ProgrammeMilestone=>({id:crypto.randomUUID(),project:'',category:'other',title:'',unit:'',baseline:null,target:null,due:today(),owner:'',method:'',published:false,observations:[],updatedAt:''});
 export default function ProgrammeEvidence({ funder=false, mentor=false, initialTab='progress' }: { funder?:boolean; mentor?:boolean; initialTab?:Tab }) {
   const {user,profile}=useAuth();
   const requestVersion=useRef(0);
@@ -25,6 +28,8 @@ export default function ProgrammeEvidence({ funder=false, mentor=false, initialT
   const [session,setSession]=useState<TrainingRecord|null>(null),[target,setTarget]=useState<ProgrammeMilestone|null>(null),[reviewed,setReviewed]=useState(false),[photosBusy,setPhotosBusy]=useState(false);
   const [guestCode,setGuestCode]=useState(''),[guestName,setGuestName]=useState('');
   const [observation,setObservation]=useState({date:today(),actual:'',evidence:''});
+  const [category,setCategory]=useState<ProgressArea|''>('');
+  const [records,setRecords]=useState<ProgrammeRecords|null>(null);
   async function request(body?:unknown,query='') {
     if(isSampleMode()) throw Error('This action must remain in the sample.');
     const res=await fetch(`/api/programme-evidence?org=${encodeURIComponent(org)}${query}`,{method:body?'POST':'GET',headers:{...(await paidApiHeaders()),'Content-Type':'application/json'},...(body?{body:JSON.stringify(body)}:{})});
@@ -44,6 +49,17 @@ export default function ProgrammeEvidence({ funder=false, mentor=false, initialT
   }
   useEffect(()=>{let cancelled=false;if(isSampleMode()){setOrgs([{id:'sample-ngo',name:'Sample organisation'}]);setOrg('sample-ngo');return;}if(!user)return;if(profile?.role==='mentor'&&profile.org_id){setOrg(profile.org_id);return;}void (async()=>{try{const res=await fetch('/api/network/orgs',{headers:await paidApiHeaders()});const d=await res.json();if(!res.ok)throw Error(d.error);if(!cancelled){setOrgs(d.orgs);setOrg(d.orgs[0]?.id??'');}}catch(e){if(!cancelled)setError((e as Error).message);}})();return()=>{cancelled=true;};},[user,profile]);
   useEffect(()=>{setData(null);setSession(null);setTarget(null);if(org)void reload();return()=>{requestVersion.current++;};},[org,funder,mentor]); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(()=>{
+    let cancelled=false;setRecords(null);
+    if(!data||data.brandingOnly||mentor||!org)return;
+    void loadProgrammeProgressRecords(org,funder,data.sample).then(result=>{if(!cancelled)setRecords(result);}).catch(e=>{
+      if(!cancelled)setRecords({...programmeRecordMetrics(null,null),errors:[e instanceof Error?e.message:'Shared programme records are unavailable.']});
+    });
+    return()=>{cancelled=true;};
+  },[data,org,funder,mentor]);
+  function addIndicator(area:ProgressArea='other') {
+    setTarget({...emptyTarget(),project,category:area});setObservation({date:today(),actual:'',evidence:''});setTab('targets');
+  }
   async function save(action:'session'|'milestone'|'branding') {
     if(!data||busy)return;const version=requestVersion.current;setBusy(true);setError('');setNotice('');
     try{
@@ -59,6 +75,7 @@ export default function ProgrammeEvidence({ funder=false, mentor=false, initialT
       if(isSampleMode()){
         const all=sampleRead('programme-evidence',freshEvidenceData);
         if(action==='session' && (!data.canRecord || mentor && !readSampleProgramme().people.find(p=>p.id==='sample-mentor')?.training))throw Error('Training access is not enabled.');
+        if(action==='milestone'&&!data.canManage)throw Error('Organisation management access is required.');
         if(action==='session' && s?.attendance.some(a=>!a.id.startsWith('guest-')&&!data.people.some(p=>p.id===a.id)))throw Error('Use members of your current assigned group.');
         sampleWrite('programme-evidence',action==='session'?{...all,sessions:[...all.sessions.filter(r=>r.id!==s!.id),{...s!,updatedAt:now}]}:action==='milestone'?{...all,milestones:[...all.milestones.filter(r=>r.id!==m!.id),{...m!,updatedAt:now}]}:{...all,branding:data.branding});
       }else{if(data.sample)throw Error('This sample ended. Reopen the workspace.');await request({action,session:s,milestone:m,branding:data.branding,reviewed,expectedUpdatedAt:action==='session'?session?.updatedAt:target?.updatedAt});}
@@ -80,31 +97,38 @@ export default function ProgrammeEvidence({ funder=false, mentor=false, initialT
   }
   const sessions=data?.sessions.filter(s=>!project||s.project===project)??[],targets=data?.milestones.filter(m=>!project||m.project===project)??[];
   const totals=trainingTotals(sessions,asOf,!funder), dated=sessions.filter(s=>s.date<=asOf);
+  const currentScope=asOf===today()&&!project&&!mentor;
+  const selectedTargets=targets.filter(m=>!category||progressArea(m)===category);
+  const selectedRecords=records?{...records,metrics:records.metrics.filter(m=>!category||m.category===category)}:null;
+  const showTraining=!category||category==='learning';
   const dates=[...new Set([today(),...sessions.map(s=>s.date),...targets.flatMap(m=>m.observations.map(o=>o.date))])].sort();
   const projects=[...new Set([...(data?.sessions.map(s=>s.project)??[]),...(data?.milestones.map(m=>m.project)??[])])].sort();
   const setS=(key:keyof TrainingRecord,value:unknown)=>setSession(s=> { if (!s) return s; const next={...s,[key]:value}; return {...next,presentCount:next.attendance.filter(a=>a.present).length,registeredCount:next.attendance.length}; });
   const setM=(key:keyof ProgrammeMilestone,value:unknown)=>setTarget(m=>m?{...m,[key]:value}:m);
   const logoUpload=async(key:'organisation'|'garden'|'funder',file?:File)=>{if(!file||!data)return;setBusy(true);try{const image=await resizeLogoForStorage(file);setData(d=>d?{...d,branding:{...d.branding,[key]:{...d.branding[key],image}}}:d);}catch(e){setError((e as Error).message);}finally{setBusy(false);}};
   return <section className={styles.root} style={initialTab==='branding'?{padding:0,background:'transparent'}:undefined}><div className={styles.wrap}>
-    {initialTab!=='branding'&&<div className={styles.hero}><h1>{funder?'Project progress & evidence':'Training, evidence & progress'}</h1><p>Attendance, session records and dated deliverables in one place. Print a progress report whenever you need it.</p></div>}
+    {initialTab!=='branding'&&<div className={styles.hero}><h1>{funder?'Project progress & evidence':'Programme evidence & progress'}</h1><p>Growing, water, land, livelihoods, participation, learning and delivery. Follow the recorded results and the evidence behind them.</p></div>}
     {orgs.length>1&&<label>Organisation<select disabled={busy||photosBusy} value={org} onChange={e=>setOrg(e.target.value)}>{orgs.map(o=><option key={o.id} value={o.id}>{o.name}</option>)}</select></label>}
     {error&&<p role="alert" className={styles.error}>{error}</p>}{notice&&<p role="status" className={styles.notice}>{notice}</p>}
     {!data&&!error&&<p>Loading authorised programme evidence…</p>}
     {data&&<>
       {data.sample&&<p className={styles.notice}>Fictional demonstration records. Changes stay in this sample session.</p>}
-      {initialTab!=='branding'&&<div className={styles.row}>{((data.brandingOnly?['branding']:['progress','training',...(!funder?['targets']:[]),...(data.canBrand?['branding']:[])]) as Tab[]).map(t=><button key={t} aria-pressed={tab===t} disabled={busy||photosBusy} onClick={()=>setTab(t)}>{{progress:'Progress report',training:'Training register',targets:'Milestones',branding:'Names & logos'}[t]}</button>)}</div>}
+      {initialTab!=='branding'&&<div className={styles.row}>{((data.brandingOnly?['branding']:['progress','training',...(!funder?['targets']:[]),...(data.canBrand?['branding']:[])]) as Tab[]).map(t=><button key={t} aria-pressed={tab===t} disabled={busy||photosBusy} onClick={()=>setTab(t)}>{{progress:'Progress report',training:'Training register',targets:'Indicators & targets',branding:'Names & logos'}[t]}</button>)}</div>}
       {tab!=='branding'&&!data.brandingOnly&&<label>Project<select value={project} onChange={e=>setProject(e.target.value)}><option value="">All visible projects</option>{projects.map(p=><option key={p}>{p}</option>)}</select></label>}
       {!data.brandingOnly&&tab==='progress'&&<>
         <div className={styles.card}><label>Progress as of<input type="date" value={asOf} max={today()} onChange={e=>{if(e.target.value)setAsOf(e.target.value);}} /></label><label>Timeline · recorded dates<input aria-label="Progress timeline" style={{accentColor:'#285c3e'}} type="range" min={0} max={Math.max(0,dates.length-1)} value={Math.max(0,dates.findLastIndex(d=>d<=asOf))} onChange={e=>setAsOf(dates[+e.target.value])} /></label><p>Shows observations dated on or before {asOf}, using the latest corrected records. This is not a reconstruction of what had been entered at that time.</p></div>
-        <div className={styles.grid}>{[['Sessions delivered',totals.sessions],['Attendances',totals.attendances],['Distinct participants',totals.uniqueParticipants??'Not included in funder projection']].map(([l,n])=><article className={styles.card} key={l}><h2>{l}</h2><strong className={styles.stat}>{n}</strong></article>)}</div>
-        <p>Repeat attendance counts as another attendance, not another person. Attendance and satisfaction are delivery evidence; they do not alone establish skills gained or impact.</p>
-        <div className={styles.grid}>{targets.map(m=>{const v=milestoneAt(m,asOf);return <article className={styles.card} key={m.id}><span className={styles.tag}>{v.status}</span><h2>{m.title}</h2><strong className={styles.stat}>{v.actual??'—'} / {m.target} {m.unit}</strong><progress aria-label={m.title} value={Math.min(100,v.percent??0)} max={100} style={{width:'100%',accentColor:'#285c3e'}} /><p>{v.percent===null?'No observation yet':`${Math.round(v.percent)}% of target · ${v.remaining} ${m.unit} remaining`}</p><p>Due {m.due} · baseline {m.baseline??'not recorded'}</p><p>{v.evidence}</p></article>;})}</div>
+        <ProgrammeProgress records={records} targets={targets} asOf={asOf} category={category} onCategory={setCategory} onAdd={data.canManage?addIndicator:undefined} currentScope={currentScope} showCurrentRecords={!mentor}/>
+        {showTraining&&<section className={styles.card}><h2>Training delivery</h2><div className={styles.grid}>{[['Sessions delivered',totals.sessions],['Attendances',totals.attendances],['Distinct participants',totals.uniqueParticipants??'Not included in funder projection']].map(([l,n])=><div key={l}><h3>{l}</h3><strong className={styles.stat}>{n}</strong></div>)}</div><p>Repeat attendance counts as another attendance, not another person. Attendance and satisfaction are delivery evidence; they do not alone establish skills gained or impact.</p></section>}
         <ReportComposer title="Project progress report" sample={data.sample} branding={data.branding} sections={[
-          {title:'Reporting scope',lines:[project||'All visible projects',`As of ${asOf}. Generated from the latest available records. ${funder?'Published records only.':'Includes internal records.'}`]},
-          {title:'Training delivery',lines:[`${totals.sessions} sessions; ${totals.attendances} attendances.`,totals.uniqueParticipants===null?'Distinct participant identities are excluded from this funder view.':`${totals.uniqueParticipants} distinct participants.`,...dated.map(s=>`${s.date}: ${s.title} | ${s.venue} | ${s.presentCount} present of ${s.registeredCount} registered.`)]},
-          {title:'Deliverable milestones',lines:targets.map(m=>{const v=milestoneAt(m,asOf);return `${m.title}: ${v.actual??'not recorded'} / ${m.target} ${m.unit}; baseline ${m.baseline??'not recorded'}; due ${m.due}. ${v.status}. Evidence: ${v.evidence}`;})},
-          {title:'Session reports',lines:dated.map(s=>`${s.title}: ${s.report}`)},
-          {title:'Follow-up actions',lines:funder?['Internal follow-up notes and named attendance registers are excluded.']:dated.map(s=>`${s.title}: ${s.nextSteps||'No next step recorded.'}`)},
+          {title:'Reporting scope',lines:[project||'All visible projects',category?PROGRESS_AREAS.find(a=>a.id===category)!.title:'All areas of work',`As of ${asOf}. Generated from the latest available records. ${funder?'Published evidence and consented portfolio records only.':'Includes internal records.'}`,currentScope?'Latest register totals have their own coverage and periods, as stated below.':'Current organisation totals are excluded from this dated or project-specific selection.']},
+          ...(currentScope&&selectedRecords?[...progressRecordSections(selectedRecords),{title:'Register coverage',lines:[...selectedRecords.notes,...selectedRecords.errors]}]:[]),
+          {title:'Dated indicators & targets',lines:selectedTargets.map(m=>{const v=milestoneAt(m,asOf);return `${m.title}: ${progressValue(v.actual,m.unit)}; target ${progressValue(m.target,m.unit)}; baseline ${progressValue(m.baseline,m.unit)}; due / review ${m.due}. ${v.status}. Observed ${v.observedOn??'not recorded'}. Method: ${m.method} Evidence: ${v.evidence}`;})},
+          ...(showTraining?[
+            {title:'Training delivery',lines:[`${totals.sessions} sessions; ${totals.attendances} attendances.`,totals.uniqueParticipants===null?'Distinct participant identities are excluded from this funder view.':`${totals.uniqueParticipants} distinct participants.`,...dated.map(s=>`${s.date}: ${s.title} | ${s.venue} | ${s.presentCount} present of ${s.registeredCount} registered.`)]},
+            {title:'Session reports',lines:dated.map(s=>`${s.title}: ${s.report}`)},
+            {title:'Follow-up actions',lines:funder?['Internal follow-up notes and named attendance registers are excluded.']:dated.map(s=>`${s.title}: ${s.nextSteps||'No next step recorded.'}`)},
+          ]:[]),
+          {title:'Further evidence to record',lines:PROGRESS_AREAS.filter(a=>a.id!=='other'&&(!category||a.id===category)).map(a=>`${a.title}: ${a.examples} These are possible measures, not reported results.`)},
         ]}/>
       </>}
       {!data.brandingOnly&&tab==='training'&&<>
@@ -132,12 +156,15 @@ export default function ProgrammeEvidence({ funder=false, mentor=false, initialT
         </form>}
       </>}
       {!data.brandingOnly&&tab==='targets'&&<>
-        <p>Track a cumulative total against a target. Enter the total observed by each date, not an increment to add again.</p>
-        {data.canManage&&<button onClick={()=>{setTarget({...emptyTarget(),project});setObservation({date:today(),actual:'',evidence:''});}}>Add a deliverable milestone</button>}
-        {targets.map(m=><article key={m.id} className={styles.card} style={{marginTop:16}}><h2>{m.title}</h2><p>Target {m.target} {m.unit} · due {m.due}</p><p>{m.method}</p>{data.canManage&&<button onClick={()=>{setTarget(m);setObservation({date:today(),actual:'',evidence:''});}}>Update target / record progress</button>}</article>)}
-        {target&&data.canManage&&<form className={styles.card} style={{marginTop:20}} onSubmit={e=>{e.preventDefault();void save('milestone');}}><fieldset disabled={busy} style={{minWidth:0}}><h2>Deliverable and measurement</h2><div className={styles.grid}>{(['project','title','unit','owner'] as const).map(k=><label key={k}>{{project:'Project',title:'Deliverable',unit:'Unit',owner:'Responsible person'}[k]}<input required value={target[k]} onChange={e=>setM(k,e.target.value)}/></label>)}<label>Baseline (leave blank if unknown)<input type="number" min="0" step="any" value={target.baseline??''} onChange={e=>setM('baseline',e.target.value===''?null:+e.target.value)}/></label><label>Target total<input type="number" required min="0.001" step="any" value={target.target} onChange={e=>setM('target',+e.target.value)}/></label><label>Due date<input required type="date" value={target.due} onChange={e=>setM('due',e.target.value)}/></label></div><label>Definition, source and measurement frequency<textarea required maxLength={1000} value={target.method} onChange={e=>setM('method',e.target.value)}/></label>
-          <h3>Dated observations</h3>{target.observations.map(o=><p key={o.date}>{o.date} · {o.actual} {target.unit} · {o.evidence}</p>)}<div className={styles.grid}><label>Observation date<input type="date" max={today()} value={observation.date} onChange={e=>setObservation({...observation,date:e.target.value})}/></label><label>Total achieved by this date<input type="number" min="0" step="any" value={observation.actual} onChange={e=>setObservation({...observation,actual:e.target.value})}/></label></div><label>Evidence / record reference<textarea maxLength={1500} value={observation.evidence} onChange={e=>setObservation({...observation,evidence:e.target.value})}/></label><button type="button" onClick={()=>{if(!observation.actual.trim()||!observation.evidence.trim()){setError('Enter an observed total and evidence reference.');return;}setM('observations',[...target.observations.filter(o=>o.date!==observation.date),{...observation,actual:+observation.actual,recordedAt:new Date().toISOString()}]);setObservation({date:today(),actual:'',evidence:''});}}>Add / replace dated observation</button>
-          <label className={styles.option}><input type="checkbox" checked={target.published} onChange={e=>setM('published',e.target.checked)}/>Share this milestone and its evidence notes with linked funders</label><button className={styles.primary}>Save milestone</button><button type="button" onClick={()=>setTarget(null)}>Cancel</button></fieldset></form>}
+        <p>Record production, water, land, livelihoods and other agreed indicators. Enter the total or reading on each date; repeated observations are not added together. Leave an unknown baseline or unagreed target blank.</p>
+        {data.canManage&&<button onClick={()=>addIndicator()}>Add a project indicator</button>}
+        {targets.map(m=><article key={m.id} className={styles.card} style={{marginTop:16}}><h2>{m.title}</h2><p>{PROGRESS_AREAS.find(a=>a.id===progressArea(m))!.title} · {m.target===null?'Target not yet agreed':`Target ${progressValue(m.target,m.unit)}`} · due / review {m.due}</p><p>{m.method}</p>{data.canManage&&<button onClick={()=>{setTarget(m);setObservation({date:today(),actual:'',evidence:''});}}>Update indicator / record progress</button>}</article>)}
+        {target&&data.canManage&&<form className={styles.card} style={{marginTop:20}} onSubmit={e=>{e.preventDefault();void save('milestone');}}><fieldset disabled={busy} style={{minWidth:0}}><h2>Indicator and measurement</h2>
+          {!target.updatedAt&&<label>Start with a suggested measure<select value="" onChange={e=>{const template=PROGRESS_TEMPLATES.find(t=>t.id===e.target.value);if(template)setTarget({...target,category:template.category,title:template.title,unit:template.unit,method:template.method});}}><option value="">Choose a measure, or write your own</option>{PROGRESS_AREAS.map(area=><optgroup key={area.id} label={area.title}>{PROGRESS_TEMPLATES.filter(t=>t.category===area.id).map(t=><option key={t.id} value={t.id}>{t.title}</option>)}</optgroup>)}</select></label>}
+          <label>Area of work<select value={progressArea(target)} onChange={e=>setM('category',e.target.value)}>{PROGRESS_AREAS.map(a=><option key={a.id} value={a.id}>{a.title}</option>)}</select></label>
+          <div className={styles.grid}>{(['project','title','unit','owner'] as const).map(k=><label key={k}>{{project:'Project',title:'Indicator',unit:'Unit',owner:'Responsible person'}[k]}<input required value={target[k]} onChange={e=>setM(k,e.target.value)}/></label>)}<label>Baseline (leave blank if unknown)<input type="number" min="0" step="any" value={target.baseline??''} onChange={e=>setM('baseline',e.target.value===''?null:+e.target.value)}/></label><label>Target (optional)<input type="number" min="0.001" step="any" value={target.target??''} onChange={e=>setM('target',e.target.value===''?null:+e.target.value)}/></label><label>Target / review date<input required type="date" value={target.due} onChange={e=>setM('due',e.target.value)}/></label></div><label>Definition, source, reporting period and measurement frequency<textarea required maxLength={1000} value={target.method} onChange={e=>setM('method',e.target.value)}/></label>
+          <h3>Dated observations</h3>{target.observations.map(o=><p key={o.date}>{o.date} · {o.actual} {target.unit} · {o.evidence}</p>)}<div className={styles.grid}><label>Observation date<input type="date" max={today()} value={observation.date} onChange={e=>setObservation({...observation,date:e.target.value})}/></label><label>Total or reading on this date<input type="number" min="0" step="any" value={observation.actual} onChange={e=>setObservation({...observation,actual:e.target.value})}/></label></div><label>Evidence / record reference<textarea maxLength={1500} value={observation.evidence} onChange={e=>setObservation({...observation,evidence:e.target.value})}/></label><button type="button" onClick={()=>{if(!observation.actual.trim()||!observation.evidence.trim()){setError('Enter an observed total and evidence reference.');return;}setM('observations',[...target.observations.filter(o=>o.date!==observation.date),{...observation,actual:+observation.actual,recordedAt:new Date().toISOString()}]);setObservation({date:today(),actual:'',evidence:''});}}>Add / replace dated observation</button>
+          <label className={styles.option}><input type="checkbox" checked={target.published} onChange={e=>setM('published',e.target.checked)}/>Share this indicator and its evidence notes with linked funders</label><button className={styles.primary}>Save indicator</button><button type="button" onClick={()=>setTarget(null)}>Cancel</button></fieldset></form>}
       </>}
       {(tab==='branding'||data.brandingOnly)&&data.canBrand&&<div className={styles.card}><h2>Organisation, garden & funder identity</h2><p>These are the default partner identities for this organisation’s programme reports. Use a programme-wide community name when several gardens are included. Upload logos you are authorised to use.</p><div className={styles.grid}>{(['organisation','garden','funder'] as const).map(key=><div key={key}><h3>{key==='organisation'?'Implementing organisation':key==='garden'?'Community garden / project':'Funding partner'}</h3>{data.branding[key].image&&<img src={data.branding[key].image} alt={`${key} logo`} style={{width:120,height:90,objectFit:'contain'}}/>}<label>Display name<input maxLength={120} value={data.branding[key].label} onChange={e=>setData({...data,branding:{...data.branding,[key]:{...data.branding[key],label:e.target.value}}})}/></label><label>Upload logo<input disabled={busy} type="file" accept="image/png,image/jpeg,image/webp" onChange={e=>void logoUpload(key,e.target.files?.[0])}/></label><button onClick={()=>setData({...data,branding:{...data.branding,[key]:{...data.branding[key],image:''}}})}>Remove logo</button></div>)}</div><button className={styles.primary} disabled={busy} onClick={()=>void save('branding')}>Save names & logos</button><ReportComposer title="Branded report preview" sample={data.sample} branding={data.branding} sections={[{title:'Programme identity',lines:['The saved names and logos are used on training and progress reports.']}]} /></div>}
     </>}

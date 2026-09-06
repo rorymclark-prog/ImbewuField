@@ -1,5 +1,6 @@
 import { SAMPLE_BRANDING } from './sample-branding';
 import { validFieldId } from './field-teams';
+import { validProgressArea, type ProgressArea } from './programme-progress';
 
 export type ProgrammeLogo = { label: string; image: string };
 export type ProgrammeBranding = { organisation: ProgrammeLogo; garden: ProgrammeLogo; funder: ProgrammeLogo };
@@ -11,7 +12,7 @@ export type TrainingRecord = {
   report: string; nextSteps: string; assessmentId: string; published: boolean; photos: VenuePhoto[]; photoCount: number; updatedAt: string;
 };
 export type MilestoneObservation = { date: string; actual: number; evidence: string; recordedAt: string };
-export type ProgrammeMilestone = { id: string; project: string; title: string; unit: string; baseline: number | null; target: number; due: string; owner: string; method: string; published: boolean; observations: MilestoneObservation[]; updatedAt: string };
+export type ProgrammeMilestone = { id: string; project: string; title: string; category?: ProgressArea; unit: string; baseline: number | null; target: number | null; due: string; owner: string; method: string; published: boolean; observations: MilestoneObservation[]; updatedAt: string };
 export type EvidenceData = { brandingOnly?: boolean; sessions: TrainingRecord[]; milestones: ProgrammeMilestone[]; branding: ProgrammeBranding; people: { id: string; name: string }[]; assessments: { id: string; title: string }[]; canManage: boolean; canRecord: boolean; canBrand: boolean; sample: boolean; revision: string };
 export const blankBranding = (): ProgrammeBranding => ({ organisation: { label: '', image: '' }, garden: { label: '', image: '' }, funder: { label: '', image: '' } });
 const text = (v: unknown, max: number, required = false): v is string => typeof v === 'string' && v.length <= max && (!required || v.trim().length > 0);
@@ -30,14 +31,15 @@ export function validTrainingRecord(s: unknown, today: string): s is TrainingRec
 export function validProgrammeMilestone(s: unknown, today: string): s is ProgrammeMilestone {
   if (!s || typeof s !== 'object') return false; const m=s as ProgrammeMilestone;
   return validFieldId(m.id) && text(m.project,120,true) && text(m.title,160,true) && text(m.unit,40,true) && (m.baseline===null || Number.isFinite(m.baseline) && m.baseline>=0)
-    && Number.isFinite(m.target) && m.target>0 && validEvidenceDate(m.due) && text(m.owner,120,true) && text(m.method,1000,true) && typeof m.published==='boolean'
+    && (m.category === undefined || validProgressArea(m.category))
+    && (m.target === null || Number.isFinite(m.target) && m.target>0) && validEvidenceDate(m.due) && text(m.owner,120,true) && text(m.method,1000,true) && typeof m.published==='boolean'
     && Array.isArray(m.observations) && m.observations.length<=100 && new Set(m.observations.map(o=>o?.date)).size===m.observations.length
     && m.observations.every(o=>!!o && validEvidenceDate(o.date) && o.date<=today && Number.isFinite(o.actual) && o.actual>=0 && text(o.evidence,1500,true));
 }
 export function milestoneAt(m: ProgrammeMilestone, date: string) {
   const observation=m.observations.filter(o=>o.date<=date).sort((a,b)=>a.date.localeCompare(b.date)).at(-1);
   const actual=observation?.actual ?? null;
-  return { actual, percent: actual===null ? null : actual/m.target*100, remaining: actual===null ? null : Math.max(0,m.target-actual), status: actual!==null && actual>=m.target ? 'Target met' : m.due<date ? 'Overdue' : 'In progress', evidence: observation?.evidence ?? 'No observation by this date', observedOn: observation?.date ?? null };
+  return { actual, percent: actual===null || m.target===null ? null : actual/m.target*100, remaining: actual===null || m.target===null ? null : Math.max(0,m.target-actual), status: m.target===null ? (actual===null ? 'Awaiting evidence' : 'Reported · no target') : actual!==null && actual>=m.target ? 'Target met' : m.due<date ? 'Overdue' : 'In progress', evidence: observation?.evidence ?? 'No observation by this date', observedOn: observation?.date ?? null };
 }
 /** Never send attendee names, private next steps, staff IDs or precise venue coordinates to a funder. */
 export function publishedTraining(r: TrainingRecord): TrainingRecord {
@@ -49,5 +51,5 @@ export function trainingTotals(sessions: TrainingRecord[], asOf: string, dedupli
 }
 export function freshEvidenceData(): EvidenceData {
   const attendance=[{id:'s1',name:'Nomvula Dlamini (sample)',present:true},{id:'s2',name:'Sipho Nkosi (sample)',present:true}];
-  return { sessions:[{id:'sample-training-1',project:'Demonstration programme',title:'Practical garden planning',date:'2026-08-15',venue:'Example community training garden',latitude:null,longitude:null,facilitator:'Sample mentor',ownerId:'sample-mentor',attendance,presentCount:2,registeredCount:2,report:'Fictional session: participants practised reading a garden plan and recording a harvest.',nextSteps:'Review the next crop plan during the follow-up visit.',assessmentId:'',published:true,photos:[],photoCount:0,updatedAt:'2026-08-15T12:00:00Z'}], milestones:[{id:'sample-training-target',project:'Demonstration programme',title:'Practical training sessions delivered',unit:'sessions',baseline:0,target:4,due:'2026-11-30',owner:'Programme coordinator',method:'Count completed sessions with an attendance register and session report. Cumulative total; repeated attendees are not new people.',published:true,observations:[{date:'2026-08-15',actual:1,evidence:'Fictional demonstration record: sample-training-1.',recordedAt:'2026-08-15T12:00:00Z'}],updatedAt:'2026-08-15T12:00:00Z'}], branding: structuredClone(SAMPLE_BRANDING), people:attendance.map(({id,name})=>({id,name})),assessments:[],canManage:true,canRecord:true,canBrand:true,sample:true,revision:'' };
+  return { sessions:[{id:'sample-training-1',project:'Demonstration programme',title:'Practical garden planning',date:'2026-08-15',venue:'Example community training garden',latitude:null,longitude:null,facilitator:'Sample mentor',ownerId:'sample-mentor',attendance,presentCount:2,registeredCount:2,report:'Fictional session: participants practised reading a garden plan and recording a harvest.',nextSteps:'Review the next crop plan during the follow-up visit.',assessmentId:'',published:true,photos:[],photoCount:0,updatedAt:'2026-08-15T12:00:00Z'}], milestones:[{id:'sample-training-target',category:'learning',project:'Demonstration programme',title:'Practical training sessions delivered',unit:'sessions',baseline:0,target:4,due:'2026-11-30',owner:'Programme coordinator',method:'Count completed sessions with an attendance register and session report. Cumulative total; repeated attendees are not new people.',published:true,observations:[{date:'2026-08-15',actual:1,evidence:'Fictional demonstration record: sample-training-1.',recordedAt:'2026-08-15T12:00:00Z'}],updatedAt:'2026-08-15T12:00:00Z'}], branding: structuredClone(SAMPLE_BRANDING), people:attendance.map(({id,name})=>({id,name})),assessments:[],canManage:true,canRecord:true,canBrand:true,sample:true,revision:'' };
 }

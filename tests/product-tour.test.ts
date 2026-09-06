@@ -15,7 +15,7 @@ test('the short product tour includes grower tools, support and both partner vie
     assert.ok(destinations.has(required), `The tour must demonstrate ${required}`);
   }
   assert.ok(destinations.has('/records?tab=charts'), 'The money step must open the figures it asks visitors to compare');
-  assert.ok(destinations.has('/farmer?panel=Reports'), 'The site report must be reachable beyond the separate evidence pack');
+  assert.ok(destinations.has('/reports'), 'The saved-site report workspace must be reachable beyond the separate evidence pack');
   assert.equal(PRODUCT_TOUR.find(step => step.id === 'report')?.href, '/samples/farm#report',
     'The timed report stop needs the ready evidence export, not an empty saved-report library or a paid AI request');
 });

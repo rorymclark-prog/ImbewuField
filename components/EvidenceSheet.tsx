@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { X, Camera, Upload, Trash2, FileText, AlertTriangle } from 'lucide-react';
 import type { EvidenceCatalogueGroup, EvidenceCatalogueItem } from '@/lib/evidence-catalogue';
 import { EVIDENCE_GROUP_ICON, QUICK_NUMBERS, LIMA_TIPS } from '@/lib/evidence-catalogue';
+import { evidenceDocumentScope, saveEvidenceDocument, loadEvidenceDocument, removeEvidenceDocument } from '@/lib/evidence-documents';
 import {
   getEvidenceItems,
   addEvidenceItem,
@@ -30,6 +31,9 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
   const [editValue, setEditValue] = useState('');
   const [uploading, setUploading] = useState(false);
   const [storageFull, setStorageFull] = useState(false);
+  const [fileError, setFileError] = useState('');
+  const [resultNote, setResultNote] = useState('');
+  const isLab = item?.key === 'lab_result' && (group.key === 'soil' || group.key === 'water');
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const quickFields = QUICK_NUMBERS[group.key] ?? [];
@@ -54,12 +58,21 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
     if (!files || files.length === 0) return;
     setUploading(true);
     setStorageFull(false);
+    setFileError('');
+    const scope = evidenceDocumentScope(siteId);
     for (const file of Array.from(files)) {
       try {
+        if (isLab && getEvidenceItems(siteId,itemKey).length >= 4) throw Error('This test folder holds four entries. Remove an older entry before adding another.');
         let saved: boolean;
         if (file.type.startsWith('image/')) {
           const dataUrl = await resizeForStorage(file);
+          if (scope !== evidenceDocumentScope(siteId)) throw Error('The account or sample changed. Reopen the upload.');
           saved = addEvidenceItem(siteId, itemKey, { type: 'photo', dataUrl, name: file.name, sizeBytes: file.size });
+        } else if (isLab) {
+          const documentId = await saveEvidenceDocument(scope, file);
+          if (scope !== evidenceDocumentScope(siteId)) { await removeEvidenceDocument(scope, documentId); throw Error('The account or sample changed. Reopen the upload.'); }
+          saved = addEvidenceItem(siteId, itemKey, { type:'pdf', name:file.name, sizeBytes:file.size, documentId });
+          if (!saved) await removeEvidenceDocument(scope, documentId);
         } else {
           // PDF or document — store filename only (no binary)
           saved = addEvidenceItem(siteId, itemKey, { type: 'pdf', name: file.name, sizeBytes: file.size });
@@ -69,7 +82,8 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
           break;
         }
       } catch (err) {
-        console.warn('Evidence upload error:', err);
+        setFileError(err instanceof Error ? err.message : 'The file could not be saved. Please try again.');
+        break;
       }
     }
     setEvidenceItems(getEvidenceItems(siteId, itemKey));
@@ -78,9 +92,21 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
   }
 
   function handleRemove(itemId: string) {
-    removeEvidenceItem(siteId, itemKey, itemId);
+    const documentId = evidenceItems.find(row => row.id === itemId)?.documentId;
+    if (removeEvidenceItem(siteId, itemKey, itemId) && documentId) void removeEvidenceDocument(evidenceDocumentScope(siteId), documentId).catch(() => {});
     setEvidenceItems(getEvidenceItems(siteId, itemKey));
     onChanged();
+  }
+
+  async function openDocument(id: string) {
+    setFileError('');
+    try {
+      const blob = await loadEvidenceDocument(siteId, id);
+      if (!blob) throw Error('This original PDF is unavailable here. Upload it again from your original copy.');
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');link.href=url;link.download=evidenceItems.find(row=>row.documentId===id)?.name??'lab-result.pdf';link.click();
+      setTimeout(()=>URL.revokeObjectURL(url),60000);
+    } catch (e) { setFileError(e instanceof Error ? e.message : 'The PDF could not be opened.'); }
   }
 
   function startEditField(fieldKey: string) {
@@ -150,6 +176,17 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
             localStorage alone, which can silently evict the oldest item once the site's own byte
             budget fills. For a PTO this is often the ONLY proof a farmer has — they must not read
             "saved here" as "backed up here". Keep this ahead of the capture buttons, not below them. */}
+        {isLab&&<div style={{padding:'16px 20px',fontSize:13,lineHeight:1.6}}>
+          <p>Upload the original test PDF (up to 10 MB) or a clear photograph. PDFs stay on this device and can be downloaded again here. Keep your original copy.</p>
+          <p>The report uses the results you enter below. PDF contents are not automatically read; a stored file alone does not establish a measured result.</p>
+          <label style={{display:'block',fontWeight:600}}>Results and sampling details<textarea value={resultNote} maxLength={1500} onChange={e=>setResultNote(e.target.value)} placeholder="Sampling date; sample location / ID; laboratory; each result with its unit and method; relevant laboratory comments." style={{display:'block',width:'100%',minHeight:110,padding:10,border:'1px solid #c9d6c9',borderRadius:8,fontSize:14,marginTop:6}}/></label>
+          <button disabled={uploading||!resultNote.trim()} onClick={()=>{
+            if(getEvidenceItems(siteId,itemKey).length>=4){setFileError('Remove an older entry before adding another.');return;}
+            if(!addEvidenceItem(siteId,itemKey,{type:'note',name:'Reported test results',note:resultNote.trim()})){setFileError('The results could not be saved. Keep a copy and try again.');return;}
+            setResultNote('');setEvidenceItems(getEvidenceItems(siteId,itemKey));onChanged();
+          }} style={{minHeight:44,marginTop:10,padding:'8px 14px',border:'1px solid #285c3e',borderRadius:8}}>Save test results</button>
+        </div>}
+        {fileError&&<p role="alert" style={{margin:'12px 20px',fontSize:14,color:'#9d2a20'}}>{fileError}</p>}
         {group.key === 'land_legal' && (
           <div style={{
             margin: '14px 20px 0', background: '#FFF6E5', border: '1.5px solid #EFC378',
@@ -272,6 +309,8 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ font: '600 13px/1 system-ui, sans-serif', color: '#2D2519', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{ev.name}</div>
+                    {ev.note&&<p style={{fontSize:13,lineHeight:1.5,whiteSpace:'pre-wrap',overflowWrap:'anywhere'}}>{ev.note}</p>}
+                    {ev.documentId?<button onClick={()=>void openDocument(ev.documentId!)} style={{minHeight:44,fontSize:13,textDecoration:'underline'}}>Download original PDF</button>:isLab&&ev.type==='pdf'&&<p style={{fontSize:13}}>Filename reference only. Upload the PDF again to retain its contents.</p>}
                     {ev.sizeBytes && (
                       <div style={{ font: '400 11px/1 system-ui, sans-serif', color: '#9A8B6E', marginTop: 3 }}>
                         {(ev.sizeBytes / 1024 / 1024).toFixed(1)} MB
@@ -344,7 +383,7 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
             <div style={{ flex: 1 }}>
               <div style={{ font: '400 13px/1.45 Newsreader, Georgia, serif', color: '#EAF2E2', fontStyle: 'italic' }}>{limaTip}</div>
               <div style={{ font: '400 10.5px/1 system-ui, sans-serif', color: '#9DBE9D', marginTop: 5 }}>
-                Lima · reads bills & reports for you
+                {isLab ? 'Site evidence · keep your original documents' : 'Lima · reads bills & reports for you'}
               </div>
             </div>
           </div>

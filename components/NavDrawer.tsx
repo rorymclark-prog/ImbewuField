@@ -35,8 +35,8 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
     { href: '/farmer',  Icon: Map,           label: t('navDesignMap') },
     // The report had no way in of its own: it lived behind the map, three taps down a panel
     // most farmers never scrolled to. It is the thing they came for, so it gets a door.
-    // `panel=Reports` lands on the list — generate one, or re-open any of the saved ones.
-    { href: '/farmer?panel=Reports', Icon: FileText, label: t('siteReportOverline') },
+    // Choose a saved site first, including sites that do not have a report yet.
+    { href: '/reports', Icon: FileText, label: t('siteReportOverline') },
     { href: '/atlas',   Icon: Earth,         label: 'Atlas' },
     // ONE money door. This row used to be the only way into /finances from the menu, and
     // there was no row for /records at all — so the menu offered half her money and the home

@@ -33,10 +33,16 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '6 September 2026', sha: '9c6bf79', changes: [
+  { when: '6 September 2026', sha: '4ad18aa', changes: [
     'Tour learning, invoices, mentor support and programme reporting in about 15 minutes.',
     'Use the Tour button beside the menu for instructions, previous and next stops.',
     'Tour progress stays in your tab when you reload. Practice farm edits still reset.',
+  ] },
+  { when: '6 September 2026', sha: '9c6bf79', changes: [
+    'Reports now opens Saved sites and Saved reports, with a new-site map option.',
+    'The report checklist helps you add photos, test results, survey details and your design.',
+    'Tree illustrations and visual guides appear within the full-colour report chapters.',
+    'Funder progress now includes growing areas, harvests, sales, costs and other indicators.',
   ] },
   { when: '6 September 2026', sha: 'a120d93', changes: [
     'Site reports now open with photographs, key figures and charts from the saved plan.',

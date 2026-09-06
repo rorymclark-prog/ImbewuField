@@ -34,6 +34,7 @@ export const EVIDENCE_CATALOGUE: EvidenceCatalogueGroup[] = [
       { key: 'irrigation', label: 'Irrigation & pumps' },
       { key: 'swales', label: 'Swales / berms' },
       { key: 'water_bills', label: 'Water bills / test', docOnly: true },
+      { key: 'lab_result', label: 'Lab water test result', docOnly: true },
     ],
   },
   {

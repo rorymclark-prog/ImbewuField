@@ -17,7 +17,7 @@ const read = (rel: string) => readFileSync(new URL(rel, import.meta.url), 'utf8'
 
 test('the drawer has a way into the site report', () => {
   const nav = read('../components/NavDrawer.tsx');
-  assert.match(nav, /href: '\/farmer\?panel=Reports'/, 'the entry must land on the report list, not the map');
+  assert.match(nav, /href: '\/reports'/, 'Rory requested a chooser of saved sites and saved reports before the map');
   assert.match(nav, /label: t\('siteReportOverline'\)/,
     'the label must come from the translations — this drawer is read in eleven languages');
   // Reusing an existing key rather than minting one is the whole reason this ships translated:
@@ -39,7 +39,7 @@ test('the drawer has a way into the site report', () => {
     'Lucide only — no emoji as UI icons');
 });
 
-test('the panel deep link the entry uses is a real one', () => {
+test('older report panel deep links remain supported', () => {
   // `panel=Reports` is read by app/farmer/page.tsx and handed to DataPanel as forcedTab; if either
   // half moves, the drawer entry silently lands on the Overview tab instead.
   const page = read('../app/farmer/page.tsx');

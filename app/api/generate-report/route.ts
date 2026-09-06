@@ -362,7 +362,7 @@ ${facts ? `\n${measurementsPromptBlock(facts)}` : ''}
 ${facts?.crop ? `\n${cropPlanPromptBlock(facts)}` : ''}
 ${photoAnalysis ? `\nSITE PHOTO ANALYSIS:\n${photoAnalysis}` : ''}
 ${surveyData ? `\nSITE SURVEY (farmer-completed — treat this as authoritative ground truth about the site):\n${surveyToPrompt(surveyData, d.rainfall.annual)}` : ''}
-${evidenceData && Object.keys(evidenceData).length > 0 ? `\nFARMER'S EVIDENCE (items the farmer has photographed, measured or noted on this site — treat as ACTUAL observed conditions, not estimates):\n${
+${evidenceData && Object.keys(evidenceData).length > 0 ? `\nFARMER-SUPPLIED EVIDENCE (reported observations and document references; preserve their source and uncertainty):\n${
   Object.entries(evidenceData)
     .map(([key, { count, notes }]) => {
       // The raw storage key used to be printed with its underscores swapped for spaces, which
@@ -373,7 +373,7 @@ ${evidenceData && Object.keys(evidenceData).length > 0 ? `\nFARMER'S EVIDENCE (i
       return `  · ${label}: ${count} item${count !== 1 ? 's' : ''}${notes.length > 0 ? ' — notes: ' + notes.map(n => `"${n}"`).join(', ') : ''}`;
     })
     .join('\n')
-}\nReference this evidence where relevant — if water items exist, mention them in the Water Harvesting section; soil items in Soil Strategy; etc. This is real ground-truth data.` : ''}
+}\nReference this evidence where relevant — if water items exist, mention them in the Water Harvesting section; soil items in Soil Strategy; etc. Counts and filenames do not establish measurements. Original PDF contents are not provided: use only explicit result notes and supplied images, with sampling details and units where recorded. A document being attached does not verify its contents. Do not infer pH, nutrients, water quality, safety or test results from its name or count.` : ''}
 ---
 
 ${withTitle ? `The document title, its subheading and a "Site at a Glance" table of this farm's measured figures have ALREADY been written for you and will be placed above your output — every figure in them is measured, so never contradict one. Do NOT write a title, a subheading, an introduction or a preamble of your own.\n\n` : ''}Do NOT write any document title, introduction or preamble. Output ONLY the section(s) requested below, starting directly with the first "## " heading.
