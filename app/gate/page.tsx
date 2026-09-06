@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import BackButton from '@/components/BackButton';
 import { ArrowRight } from 'lucide-react';
 
 export default function GatePage() {
@@ -24,7 +25,7 @@ export default function GatePage() {
     <div className="h-screen flex items-center justify-center p-4" style={{ background: 'var(--bg-0)' }}>
       <form onSubmit={submit} className="w-full max-w-sm rounded-2xl p-6"
         style={{ background: 'var(--color-surface)', border: '1px solid var(--border)', boxShadow: '0 4px 24px rgba(32,25,15,0.10)' }}>
-        <div className="text-center mb-5">
+        <BackButton fallback="/partners" /><div className="text-center mb-5">
           {/* Lima icon */}
           <div className="flex items-center justify-center mb-3">
             <div style={{ width: 44, height: 44, background: 'var(--color-forest-800)', borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>

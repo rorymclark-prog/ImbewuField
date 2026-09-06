@@ -3,6 +3,7 @@ import {
   Satellite, CalendarDays, Sprout, BarChart3, FileText, GraduationCap,
   WifiOff, Languages, Users, Camera, Smartphone, Mail, Building2, ArrowRight,
 } from 'lucide-react';
+import BackButton from '@/components/BackButton';
 import Screenshot from '@/components/partners/Screenshot';
 
 // Public showcase page for NGOs and funders — "the place an organisation lands to see what the
@@ -155,7 +156,7 @@ export default function PartnersPage() {
     <div className="h-[100dvh] flex flex-col overflow-hidden font-sans bg-paper text-ink">
       {/* Top bar — deliberately a div, not a semantic header tag: see the file-header comment. */}
       <div className="flex-shrink-0 flex items-center justify-between px-5 sm:px-8 py-4 border-b" style={{ borderColor: '#E2D8C4' }}>
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-2.5"><BackButton fallback="/samples" />
           <div className="flex items-center justify-center rounded-[10px] w-9 h-9 flex-shrink-0 bg-forest">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EAF3E2" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
               <path d="M12 21V11" />

@@ -18,6 +18,7 @@ import AccountButton from '@/components/AccountButton';
 import BrandLogo from '@/components/BrandLogo';
 import ThemePanel from '@/components/ThemePanel';
 import MenuButton from '@/components/MenuButton';
+import BackButton from '@/components/BackButton';
 import ProfileSheet from '@/components/ProfileSheet';
 import LessonLink from '@/components/design/LessonLink';
 import { useLanguage } from '@/lib/i18n';
@@ -505,7 +506,7 @@ function HomeInner() {
           }}
         >
           {/* Hamburger — visible on all screens */}
-          <MenuButton />
+          <MenuButton /><BackButton fallback="/home" />
 
           <BrandLogo />
 

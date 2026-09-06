@@ -2,13 +2,15 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth';
-import { startRolePreview } from '@/lib/use-role-navigation';
+import { startRolePreview, useSampleRole } from '@/lib/use-role-navigation';
 import styles from './MelDashboard.module.css';
 
 export default function AccountAccess() {
   const { user, profile, refreshProfile } = useAuth();
   const router = useRouter();
+  const sampleRole = useSampleRole();
   const [message, setMessage] = useState('');
+  if (sampleRole) return <section className={`${styles.root} ${styles.card}`}><h2>Sample workspace</h2><p>This is a practice profile. Your real account permissions have not changed.</p><a href="/samples">Choose a sample view →</a><p>The chooser checks your signed-in account role, not this fictional farmer profile.</p></section>;
   const destinations = [['Farmer', '/farmer'], ['Student', '/student'], ['Mentor', '/mentor'], ['Organisation', '/ngo'], ['Funder', '/funder']] as const;
   return <section className={`${styles.root} ${styles.card}`}><h2>Your app access</h2><p><strong>{profile?.role === 'admin' ? 'Platform administrator' : profile?.role ?? 'Profile not loaded'}</strong>{profile?.org_id ? ' · linked to an organisation' : ' · no organisation linked'}</p>
     <p>{profile?.role === 'admin' ? 'Your account can open every role dashboard. Choose the relevant organisation inside the portfolio.' : 'Your normal login stays the same. A platform administrator must enable owner access on the correct account; choosing a dashboard does not change your permissions.'}</p>
