@@ -25,3 +25,75 @@ export const FARM_TOUR = [
 export function cleanTourProgress(value: unknown): string[] {
   return Array.isArray(value) ? [...new Set(value.filter((x): x is string => typeof x === 'string' && FARM_TOUR.some(s => s.id === x)))] : [];
 }
+
+export interface ProductTourStep {
+  id: string;
+  minutes: number;
+  title: string;
+  href: string;
+  task: string;
+  /** A presentation hint inside the existing sandbox; never an account permission. */
+  role?: UserRole;
+  secondaryLabel?: string;
+  secondaryHref?: string;
+}
+
+// The original farm checklist remains available to existing consumers. This broader
+// route follows the work from a grower's garden through support and programme evidence.
+// Minutes are suggested exploration time, not a measured completion guarantee.
+export const PRODUCT_TOUR: readonly ProductTourStep[] = [
+  {
+    id: 'garden', minutes: 1, title: 'Start with a garden', href: '/samples/gardens',
+    task: 'Browse the example garden photos, layouts and grower profiles. The next stops use one editable demonstration farm.',
+    secondaryLabel: 'Open the example on the map', secondaryHref: '/farmer?site=demo-place-ubhejane',
+  },
+  {
+    id: 'planning', minutes: 2, title: 'Plan the growing season',
+    href: '/design?lat=-27.72623&lon=31.96304&simple=1',
+    task: 'Start on Planting in Design Studio. Select a bed or tree, move it and try Undo. Then open the crop plan to compare vegetable beds, staple plots and planting months.',
+    secondaryLabel: 'Open the crop plan', secondaryHref: '/facilitator/crops',
+  },
+  {
+    id: 'learning', minutes: 2, title: 'Learn and find guidance', href: '/student', role: 'student',
+    task: 'Open Seeds and Seed Sovereignty and try a lesson, narrated slide or quiz. Then open Ask Lima, review the example problem photo and tap its follow-up question. This prepared conversation demonstrates the help without running live AI.',
+    secondaryLabel: 'Explore Ask Lima', secondaryHref: '/farmer?panel=Ask',
+  },
+  {
+    id: 'business', minutes: 2, title: 'Record the work and the sale', href: '/records?tab=charts',
+    task: 'Compare harvests, sales and expenses in Charts. Open invoices, choose Saved and open an existing invoice to find Share PDF and Print. See how the farmer keeps a digital record; you do not need to send anything to a buyer.',
+    secondaryLabel: 'Explore an invoice', secondaryHref: '/invoice',
+  },
+  {
+    id: 'mentor', minutes: 2, title: 'Support a group of growers', href: '/mentor', role: 'mentor',
+    task: 'Review My field team & reports for assignments, organisation guidance and visit records. Choose Trainees and open a learner to see their progress, then find Messages for follow-up.',
+  },
+  {
+    id: 'organisation', minutes: 2, title: 'Follow the whole programme', href: '/ngo', role: 'ngo',
+    task: 'Choose Assessments to review stages and response counts. Then look at Training & progress and Reports: these bring monitoring, evaluation and learning records together for the programme team.',
+  },
+  {
+    id: 'funder', minutes: 2, title: 'See progress as a funder', href: '/funder', role: 'funder',
+    task: 'Review Cohort totals and charts, then choose Progress & milestones. Compare recorded progress with targets and open the shared assessments or reports. All figures here are demonstration records.',
+  },
+  {
+    id: 'report', minutes: 1, title: 'Turn site evidence into a report', href: '/samples/farm#report',
+    task: 'Choose Download sample evidence report for a branded PDF with the example assessment, visit notes, photos and illustrative soil result. Then explore Saved sites & reports: choose a site to see which photos, tests, survey answers and design work would improve its full report.',
+    secondaryLabel: 'Explore saved sites & reports', secondaryHref: '/reports',
+  },
+  {
+    id: 'next', minutes: 1, title: 'Shape it for your programme', href: '/feedback',
+    task: 'Choose Request a feature to see how you can describe a change that would help your programme. Explore the form only: sending it contacts the real developer. Customisation scope and pricing are agreed together.',
+  },
+];
+
+export function cleanProductTourProgress(value: unknown): string[] {
+  if (!Array.isArray(value)) return [];
+  const valid = new Set(PRODUCT_TOUR.map(step => step.id));
+  return [...new Set(value.filter((id): id is string => typeof id === 'string' && valid.has(id)))];
+}
+
+/** Resume the first untried stop, without inventing completion from page visits. */
+export function nextProductTourStep(progress: unknown): ProductTourStep | undefined {
+  const done = new Set(cleanProductTourProgress(progress));
+  return PRODUCT_TOUR.find(step => !done.has(step.id));
+}

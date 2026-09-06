@@ -18,6 +18,16 @@ import styles from '@/components/SampleExperience.module.css';
 export default function SampleFarmPage() {
   const sample=useSampleRole(); const [pack,setPack]=useState<SampleFarmPack|null>(null),[message,setMessage]=useState(''),[busy,setBusy]=useState(false);
   useEffect(()=>{setPack(null);if(sample){try{prepareSampleFarm();setPack(sampleRead('farm-pack',freshSampleFarmPack));}catch(e){setMessage((e as Error).message);}}},[sample]);
+  // Tour anchors arrive before this client-only evidence pack has mounted.
+  // Wait for its first render, without moving the visitor again as they edit fields.
+  const packReady = !!pack;
+  useEffect(() => {
+    if (!packReady) return;
+    const id = window.location.hash.slice(1);
+    if (id !== 'report' && id !== 'evidence') return;
+    const frame = requestAnimationFrame(() => document.getElementById(id)?.scrollIntoView({ block: 'start' }));
+    return () => cancelAnimationFrame(frame);
+  }, [packReady]);
   function save(){if(!pack)return;try{sampleWrite('farm-pack',pack);setMessage('Saved in this sample only. Reload or reset discards these edits.');}catch(e){setMessage((e as Error).message);}}
   async function report(){if(!pack||busy)return;setBusy(true);setMessage('');try{
     if(!isSampleMode())throw Error('Reopen the sample before exporting.');

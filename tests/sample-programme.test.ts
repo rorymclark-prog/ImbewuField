@@ -124,6 +124,54 @@ test('team assignments reject malformed IDs and duplicate farmer membership', ()
 });
 
 import { buildProgrammePdf } from '../lib/programme-report-pdf';
+import { resizeLogoForStorage, LOGO_MAX_BYTES } from '../lib/invoice-logo';
+
+test('detailed report photos fit the existing storage limit before the PDF is built', async () => {
+  const original = new Map(['FileReader', 'Image', 'document'].map(key => [key, Object.getOwnPropertyDescriptor(globalThis, key)]));
+  const encodes: { width: number; quality: number }[] = [];
+  let encoding: 'compressible' | 'needs-resize' | 'unencodable' = 'compressible';
+  class Reader {
+    onload?: (event: { target: { result: string } }) => void;
+    readAsDataURL() { queueMicrotask(() => this.onload?.({ target: { result: 'data:image/webp;base64,AAAA' } })); }
+  }
+  class Picture {
+    width = 1280; height = 960;
+    onload?: () => void;
+    set src(_value: string) { queueMicrotask(() => this.onload?.()); }
+  }
+  const context = { drawImage() {}, fillRect() {}, fillStyle: '', getImageData: () => ({ data: new Uint8ClampedArray([0, 0, 0, 255]) }) };
+  try {
+    Object.defineProperty(globalThis, 'FileReader', { configurable: true, value: Reader });
+    Object.defineProperty(globalThis, 'Image', { configurable: true, value: Picture });
+    Object.defineProperty(globalThis, 'document', { configurable: true, value: { createElement: () => ({
+      width: 0, height: 0, getContext: () => context,
+      toDataURL(_mime: string, quality = 1) {
+        encodes.push({ width: this.width, quality });
+        const fits = encoding === 'compressible' ? quality <= 0.75 : encoding === 'needs-resize' && this.width <= 480;
+        return 'data:image/jpeg;base64,' + 'A'.repeat(fits ? 100_000 : LOGO_MAX_BYTES);
+      },
+    }) } });
+    const file = new File(['example'], 'garden.webp', { type: 'image/webp' });
+    const photo = await resizeLogoForStorage(file, 640);
+    assert.ok(photo.length <= LOGO_MAX_BYTES, 'A busy 640px photo should be compressed instead of aborting export');
+    assert.ok(encodes.some(call => call.quality < 0.85));
+    assert.ok(encodes.every(call => call.width === 640), 'Keep report detail when quality alone is enough');
+
+    encoding = 'needs-resize'; encodes.length = 0;
+    assert.ok((await resizeLogoForStorage(file, 640)).length <= LOGO_MAX_BYTES);
+    assert.ok(encodes.some(call => call.width < 640), 'Reduce dimensions when every initial JPEG quality exceeds the cap');
+
+    encoding = 'unencodable';
+    await assert.rejects(resizeLogoForStorage(file, 640), /too big to store/,
+      'Never relax the payload ceiling shared by profile and training evidence storage');
+  } finally {
+    for (const [key, descriptor] of original) {
+      if (descriptor) Object.defineProperty(globalThis, key, descriptor);
+      else Reflect.deleteProperty(globalThis, key);
+    }
+  }
+});
+
 import { pdfContentStreams } from './pdf-content-streams.ts';
 test('sample reports retain their sample warning on every page and summaries omit excess detail', async () => {
   const sections = [{ title: 'Recorded visits', lines: Array.from({ length: 90 }, (_, i) => `Visit record ${i + 1}: fictional demonstration notes for the assigned farmer.`) }];
