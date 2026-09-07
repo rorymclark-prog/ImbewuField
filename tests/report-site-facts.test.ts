@@ -34,7 +34,7 @@ import { reportTreeIllustrations, reportChapterGraphics } from '../lib/report-ch
 import { siteReportVisuals } from '../lib/report-visuals';
 import { DEMO_LOCATION } from '../lib/demo-site';
 
-test('the report checklist does not mistake filenames, a started design or photos for verified tests',()=>{
+test('the report checklist acknowledges saved work without claiming it is verified',()=>{
   const inputs={hasSite:true,boundaryPointCount:3,surveyFilledFields:2,surveyTotalFields:10,zoneCount:1,elementCount:0,hasCropPlan:false};
   const items=reportPreparation(inputs,{
     soil_lab_result:[{id:'old',type:'pdf',name:'soil-results.pdf',takenAt:1}],
@@ -43,9 +43,46 @@ test('the report checklist does not mistake filenames, a started design or photo
   });
   assert.equal(items.find(i=>i.id==='soil')!.hasRecord,false);
   assert.match(items.find(i=>i.id==='water')!.status,/enter key results/);
-  assert.match(items.find(i=>i.id==='design')!.status,/started/);
+  // Saved records deserve recognition even when no approval or map export is recorded.
+  assert.equal(items.find(i=>i.id==='design')!.status,'Design records saved');
   assert.match(items.find(i=>i.id==='survey')!.status,/2 of 10/);
   assert.equal(items.find(i=>i.id==='crops')!.hasRecord,false);
+});
+
+test('report preparation uses the existing boundary measurements and saved map records',()=>{
+  const facts=demoFacts();
+  const inputs={hasSite:true,boundaryPointCount:10,surveyFilledFields:9,surveyTotalFields:10,zoneCount:3,elementCount:12,hasCropPlan:true};
+  const before=JSON.stringify(facts);
+  const items=reportPreparation(inputs,{}, {facts,maps:{count:9,latestAt:'2026-09-07T10:00:00Z'}});
+  const boundary=items.find(i=>i.id==='boundary')!;
+  assert.equal(boundary.status,'Boundary measurements available');
+  assert.ok(boundary.detail.includes(facts.boundary!.areaM2.toLocaleString('en-ZA',{maximumFractionDigits:1})));
+  assert.ok(boundary.detail.includes(facts.boundary!.perimeterM!.toLocaleString('en-ZA',{maximumFractionDigits:1})));
+  assert.equal(boundary.action,'View boundary and measurements');
+  const design=items.find(i=>i.id==='design')!;
+  assert.equal(design.status,'9 saved design maps available');
+  assert.match(design.detail,/7 Sept? 2026/);
+  assert.equal(design.action,'View saved design maps');
+  assert.equal(JSON.stringify(facts),before,'reading readiness must never change saved evidence');
+});
+
+test('fence lengths do not become a property perimeter and absent maps do not mean unfinished design',()=>{
+  const inputs={hasSite:true,boundaryPointCount:0,surveyFilledFields:0,surveyTotalFields:10,zoneCount:0,elementCount:0,hasCropPlan:false};
+  const facts=demoFacts();
+  delete facts.boundary;
+  facts.design!.routes=[{kind:'fence',label:'Fence',count:1,totalLengthM:12.5}];
+  const items=reportPreparation(inputs,{}, {facts,maps:{count:0}});
+  const boundary=items.find(i=>i.id==='boundary')!;
+  assert.equal(boundary.status,'Fence measurements available');
+  assert.match(boundary.detail,/12[.,]5 m/);
+  assert.doesNotMatch(boundary.detail,/perimeter/);
+  assert.match(items.find(i=>i.id==='design')!.detail,/in this browser/);
+  assert.doesNotMatch(items.find(i=>i.id==='design')!.status,/not started|complete|finished/i);
+  const mapsOnly=reportPreparation(inputs,{}, {maps:{count:1}}).find(i=>i.id==='design')!;
+  assert.equal(mapsOnly.hasRecord,true,'saved sheets remain evidence without a local editable canvas');
+  assert.equal(mapsOnly.status,'1 saved design map available');
+  const loading=reportPreparation(inputs,{}, {maps:null}).find(i=>i.id==='design')!;
+  assert.equal(loading.status,'Checking saved design maps…');
 });
 test('chapter graphics use named catalogue trees and typed chart values, never invented results',()=>{
   const names=reportTreeIllustrations('Marula, avocado and wild plum. No other tree is specified.').map(t=>t.name);
