@@ -33,7 +33,9 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '7 September 2026', sha: '6f46334', changes: [
+  { when: '7 September 2026', sha: 'b37644a', changes: [
+    'Site reports show the garden name, saved date and original settings when recorded.',
+    'New reports save as separate versions. Choose a map, photo or no cover picture.',
     'Phone headers and field-team statistics take less space, with single-line tabs.',
     'My Studies has illustrated modules and lessons, with compact progress and offline tools.',
     'Tour crop rows show harvests and sales, with clearer headings and lighter record cards.',

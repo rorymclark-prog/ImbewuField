@@ -9,6 +9,19 @@ import { normaliseReportSiteFacts, type ReportSiteFacts } from './report-site-fa
 // A permaculture report saved locally so the farmer can re-read it without
 // regenerating (each generation is an AI call). We store the markdown plus a
 // snapshot of the location data so the charts/header re-render exactly.
+export interface ReportGenerationSettings {
+  tone: 'simple' | 'professional';
+  length: 'one-pager' | 'standard' | 'comprehensive';
+  language: string;
+  bilingual: boolean;
+  sections: string[];
+  generatedAt: string;
+  provider?: string;
+  model?: string;
+}
+
+export type ReportCoverChoice = 'auto' | 'map' | 'photo' | 'none';
+
 export interface SavedReport {
   id: string;
   name: string;          // e.g. "Indian Ocean Coastal Belt · 2026-06-22"
@@ -20,6 +33,33 @@ export interface SavedReport {
   waterData?: WaterData;
   /** The measured design/crop/BOQ facts used when this report was generated. */
   facts?: ReportSiteFacts;
+  /** Absent on older reports: never infer historical settings from today's controls. */
+  settings?: ReportGenerationSettings;
+  coverChoice?: ReportCoverChoice;
+}
+
+export function reportSiteName(report: Pick<SavedReport, 'name' | 'facts' | 'location'>, places: SavedPlace[] = []): string {
+  return report.facts?.farmName?.trim()
+    || places.find(p => designSiteIdFromLocation(p) === designSiteIdFromLocation(report.location))?.name
+    || report.name;
+}
+
+export function normaliseReportSettings(value: unknown): ReportGenerationSettings | undefined {
+  if (!value || typeof value !== 'object') return undefined;
+  const s = value as Record<string, unknown>;
+  if (!['simple', 'professional'].includes(s.tone as string)
+    || !['one-pager', 'standard', 'comprehensive'].includes(s.length as string)
+    || typeof s.language !== 'string' || !s.language.trim()
+    || typeof s.bilingual !== 'boolean'
+    || !Array.isArray(s.sections) || !s.sections.length || s.sections.length > 100
+    || !s.sections.every(v => typeof v === 'string' && v.trim())
+    || typeof s.generatedAt !== 'string' || !Number.isFinite(Date.parse(s.generatedAt))) return undefined;
+  return {
+    tone: s.tone as ReportGenerationSettings['tone'], length: s.length as ReportGenerationSettings['length'],
+    language: s.language, bilingual: s.bilingual, sections: [...new Set(s.sections as string[])], generatedAt: s.generatedAt,
+    ...(typeof s.provider === 'string' && s.provider.trim() ? { provider: s.provider } : {}),
+    ...(typeof s.model === 'string' && s.model.trim() ? { model: s.model } : {}),
+  };
 }
 
 const KEY = 'imbewu_saved_reports';
@@ -54,6 +94,9 @@ function normaliseReport(value: unknown): SavedReport | null {
   if (isValidWaterData(row.waterData)) report.waterData = row.waterData;
   const facts = normaliseReportSiteFacts(row.facts);
   if (facts) report.facts = facts;
+  const settings = normaliseReportSettings(row.settings);
+  if (settings) report.settings = settings;
+  if (['auto', 'map', 'photo', 'none'].includes(row.coverChoice as string)) report.coverChoice = row.coverChoice as ReportCoverChoice;
   return report;
 }
 

@@ -957,6 +957,6 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
   });
 
   return new Response(readable, {
-    headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-cache' },
+    headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-cache', 'X-Report-Provider': 'Anthropic', 'X-Report-Model': 'claude-sonnet-4-6' },
   });
 }
