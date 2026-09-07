@@ -13,12 +13,12 @@ export function sampleChoicesForAccount(role: UserRole | null, signedIn: boolean
 }
 
 export const FARM_TOUR = [
-  { id: 'map', minutes: 2, title: 'Find the garden', href: '/farmer', task: 'Open the saved sample pin. Explore the map layers and garden boundary.' },
-  { id: 'design', minutes: 3, title: 'Try the Design Studio', href: '/design?lat=-27.72623&lon=31.96304', task: 'Select a bed or tree, move it and try Undo. Edits affect only this sample.' },
-  { id: 'assessment', minutes: 2, title: 'Review the site assessment', href: '/farmer?openSurvey=1', task: 'Review the completed example, change a water or site answer, then save.' },
-  { id: 'evidence', minutes: 2, title: 'Explore the evidence pack', href: '/samples/farm#evidence', task: 'Review the illustrative photos, fictional soil result and completed household interview.' },
+  { id: 'map', minutes: 2, title: 'Find the garden', href: '/farmer', task: 'Open the saved garden pin. Explore the map layers and garden boundary.' },
+  { id: 'design', minutes: 3, title: 'Try the Design Studio', href: '/design?lat=-27.72623&lon=31.96304', task: 'Select a bed or tree, move it and try Undo.' },
+  { id: 'assessment', minutes: 2, title: 'Review the site assessment', href: '/farmer?openSurvey=1', task: 'Review the site assessment, change a water or site answer, then save.' },
+  { id: 'evidence', minutes: 2, title: 'Explore the evidence pack', href: '/samples/farm#evidence', task: 'Review the site pictures, soil results and household interview.' },
   { id: 'crops', minutes: 2, title: 'Read the crop plan', href: '/facilitator/crops', task: 'Compare vegetable beds and staple plots. Inspect the planting calendar.' },
-  { id: 'money', minutes: 2, title: 'Follow the harvest and money', href: '/records', task: 'Compare sample income, costs and returns per square metre. These are invented transactions.' },
+  { id: 'money', minutes: 2, title: 'Follow the harvest and money', href: '/records', task: 'Compare harvests, income, costs and returns per square metre.' },
   { id: 'report', minutes: 2, title: 'Make a report', href: '/samples/farm#report', task: 'Download the branded farm evidence report, including your saved edits and illustrative photos.' },
 ] as const;
 
@@ -44,8 +44,8 @@ export interface ProductTourStep {
 export const PRODUCT_TOUR: readonly ProductTourStep[] = [
   {
     id: 'garden', minutes: 1, title: 'Start with a garden', href: '/samples/gardens',
-    task: 'Browse the example garden photos, layouts and grower profiles. The next stops use one editable demonstration farm.',
-    secondaryLabel: 'Open the example on the map', secondaryHref: '/farmer?site=demo-place-ubhejane',
+    task: 'Browse garden photos, layouts and grower profiles. The next stops follow one editable farm.',
+    secondaryLabel: 'Open the garden on the map', secondaryHref: '/farmer?site=demo-place-ubhejane',
   },
   {
     id: 'planning', minutes: 2, title: 'Plan the growing season',
@@ -55,7 +55,7 @@ export const PRODUCT_TOUR: readonly ProductTourStep[] = [
   },
   {
     id: 'learning', minutes: 2, title: 'Learn and find guidance', href: '/student', role: 'student',
-    task: 'Open Seeds and Seed Sovereignty and try a lesson, narrated slide or quiz. Then open Ask Lima, review the example problem photo and tap its follow-up question. This prepared conversation demonstrates the help without running live AI.',
+    task: 'Open Seeds and Seed Sovereignty and try a lesson, narrated slide or quiz. Then open Ask Lima, review the problem photo and tap its follow-up question.',
     secondaryLabel: 'Explore Ask Lima', secondaryHref: '/farmer?panel=Ask',
   },
   {
@@ -73,11 +73,11 @@ export const PRODUCT_TOUR: readonly ProductTourStep[] = [
   },
   {
     id: 'funder', minutes: 2, title: 'See progress as a funder', href: '/funder', role: 'funder',
-    task: 'Review Cohort totals and charts, then choose Progress & milestones. Compare recorded progress with targets and open the shared assessments or reports. All figures here are demonstration records.',
+    task: 'Review Cohort totals and charts, then choose Progress & milestones. Compare recorded progress with targets and open the shared assessments or reports.',
   },
   {
     id: 'report', minutes: 1, title: 'Turn site evidence into a report', href: '/samples/farm#report',
-    task: 'Choose Download sample evidence report for a branded PDF with the example assessment, visit notes, photos and illustrative soil result. Then explore Saved sites & reports: choose a site to see which photos, tests, survey answers and design work would improve its full report.',
+    task: 'Choose Download evidence report for a branded PDF with the assessment, visit notes, photos and soil results. Then explore Saved sites & reports: choose a site to see which photos, tests, survey answers and design work would improve its full report.',
     secondaryLabel: 'Explore saved sites & reports', secondaryHref: '/reports',
   },
   {
@@ -123,12 +123,12 @@ export const PRODUCT_TOUR_FEATURES: Record<string, readonly TourFeature[]> = {
     { title: 'See a useful summary', text: 'In Picked, open Records for a lender to view harvest, income and cost history and export the summary.' },
   ],
   mentor: [
-    { title: 'Meet your field team', text: 'My field team & reports brings assigned growers and visit records together. Open a group to inspect the work.' },
-    { title: 'Follow learning and visits', text: 'Use Trainees for individual learning progress, Training & evidence for course records, and Messages for follow-up.' },
+    { title: 'Meet your field team', text: 'Field team brings assigned growers and visit records together. Open a group to inspect the work.' },
+    { title: 'Follow learning and visits', text: 'Use Trainees for individual learning progress, Training for course records, and Messages for follow-up.' },
   ],
   organisation: [
     { title: 'See the programme together', text: 'Compare groups, gardens and recorded activity. Open Assessments to review the survey stages and responses.' },
-    { title: 'Follow progress into reports', text: 'Training & progress shows learner activity. Reports brings the programme evidence together for review and sharing.' },
+    { title: 'Follow progress into reports', text: 'Training & progress brings training and project evidence together. Reports prepares the programme record for review and sharing.' },
   ],
   funder: [
     { title: 'Look beyond attendance', text: 'Explore cohort totals and charts, then Progress & milestones for the wider programme record.' },
@@ -139,6 +139,6 @@ export const PRODUCT_TOUR_FEATURES: Record<string, readonly TourFeature[]> = {
     { title: 'Make the next report stronger', text: 'Review the site checklist for photographs, soil and water tests, survey answers and design work. Download the evidence report to see the finished document.' },
   ],
   next: [
-    { title: 'Tell us what your programme needs', text: 'Request a feature lets you describe the change and add a screenshot. Sending this form contacts the developer, so submit only when you are ready.' },
+    { title: 'Tell us what your programme needs', text: 'Choose Request a feature to describe the change and the app page. Download a copy of your draft, or sign in to send it to the developer.' },
   ],
 };

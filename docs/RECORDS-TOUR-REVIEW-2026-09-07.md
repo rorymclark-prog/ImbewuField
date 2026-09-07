@@ -15,12 +15,14 @@ to presentation, the existing isolated sample data and the receipt reader's usag
 | Records | Lighter dark cards; readable cream panels and chart headings; crop illustrations; current-month harvest, turnover and price for all planned crops. |
 | Saved sites & reports | Each site card has a miniature of its own saved layout, bed/plot counts and crop illustrations. It opens that site's crop plan; an empty plan offers a starting point. |
 | Report history in the tour | Save, reopen, update and delete report snapshots in the existing disposable sample store. History remains available during exploration and clears when the workspace is restarted; the account's real reports are untouched. |
+| Report cover and evidence forms | The screen loads the original saved map instead of stretching its 240 px thumbnail. Full-colour PDF uses a print-sized map on its cover when no site photo or captured satellite image exists. Soil/water evidence forms have dark text on their cream surface in either theme. |
 | Example books | Profitable invented practice records, with sale and harvest quantities coordinated. Every sale has a paid invoice; the cash ledger counts it once. |
 | Documents | Invoice number and View action open the saved invoice. Expense receipts are drawn from their matching sample expense. The tour can preview/export a lender summary; its cash totals now include all paid invoices once, while crop weights retain only recorded kilograms. |
 | Lima receipts | Prepared receipt fills the demo expense form without an API call. Existing real scanner now records provider token cost in server logs. |
 | Design Map | Replaces Exact Canvas in ordinary preview controls. Paid AI maps remain gated. |
 | Gates | Dedicated move handle, wider touch area, no pointer jump, length-only controls. Finished fence/property lines stop at the opening and the leaf is drawn open. |
 | Tour | Arrival opens a dimmed, dismissible feature dialogue, with short tips and Try it now. |
+| Tour wording | Evidence and assessment pages use normal headings and actions such as Save edits and Download evidence report. The overall Sample badge and source captions remain. |
 
 This changes the rendered map picture. `PLAN_VERSION` is deliberately untouched; the repository's
 merge owner assigns that shared version. No geometry is written during painting.

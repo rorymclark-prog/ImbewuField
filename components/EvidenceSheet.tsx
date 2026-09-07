@@ -146,7 +146,7 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
         aria-label={groupLabel}
         className="w-full max-w-md font-sans overflow-y-auto"
         style={{
-          background: '#FBF8F1', borderRadius: '22px 22px 0 0',
+          background: '#FBF8F1', color: '#2D2519', borderRadius: '22px 22px 0 0',
           maxHeight: '92dvh', paddingBottom: 'calc(20px + env(safe-area-inset-bottom))',
         }}
       >
@@ -161,9 +161,9 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
             </div>
             <div style={{ flex: 1 }}>
               <div style={{ font: '600 17px Newsreader, Georgia, serif', color: '#2D2519' }}>{groupLabel}</div>
-              <div style={{ font: '400 11.5px/1.4 system-ui, sans-serif', color: '#8A7C62', marginTop: 1 }}>{groupDesc}</div>
+              <div style={{ font: '400 13px/1.4 system-ui, sans-serif', color: '#665A47', marginTop: 1 }}>{groupDesc}</div>
             </div>
-            <button onClick={onClose} aria-label="Close" style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: '#8A7C62' }}>
+            <button onClick={onClose} aria-label="Close" style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: '#665A47', minWidth: 44, minHeight: 44, display: 'grid', placeItems: 'center' }}>
               <X size={20} />
             </button>
           </div>
@@ -179,12 +179,12 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
         {isLab&&<div style={{padding:'16px 20px',fontSize:13,lineHeight:1.6}}>
           <p>Upload the original test PDF (up to 10 MB) or a clear photograph. PDFs stay on this device and can be downloaded again here. Keep your original copy.</p>
           <p>The report uses the results you enter below. PDF contents are not automatically read; a stored file alone does not establish a measured result.</p>
-          <label style={{display:'block',fontWeight:600}}>Results and sampling details<textarea value={resultNote} maxLength={1500} onChange={e=>setResultNote(e.target.value)} placeholder="Sampling date; sample location / ID; laboratory; each result with its unit and method; relevant laboratory comments." style={{display:'block',width:'100%',minHeight:110,padding:10,border:'1px solid #c9d6c9',borderRadius:8,fontSize:14,marginTop:6}}/></label>
+          <label style={{display:'block',fontWeight:600}}>Results and sampling details<textarea value={resultNote} maxLength={1500} onChange={e=>setResultNote(e.target.value)} placeholder="Sampling date; sample location / ID; laboratory; each result with its unit and method; relevant laboratory comments." style={{display:'block',width:'100%',minHeight:110,padding:10,border:'1px solid #c9d6c9',borderRadius:8,fontSize:14,marginTop:6,background:'#fff',color:'#2D2519'}}/></label>
           <button disabled={uploading||!resultNote.trim()} onClick={()=>{
             if(getEvidenceItems(siteId,itemKey).length>=4){setFileError('Remove an older entry before adding another.');return;}
             if(!addEvidenceItem(siteId,itemKey,{type:'note',name:'Reported test results',note:resultNote.trim()})){setFileError('The results could not be saved. Keep a copy and try again.');return;}
             setResultNote('');setEvidenceItems(getEvidenceItems(siteId,itemKey));onChanged();
-          }} style={{minHeight:44,marginTop:10,padding:'8px 14px',border:'1px solid #285c3e',borderRadius:8}}>Save test results</button>
+          }} style={{minHeight:44,marginTop:10,padding:'8px 14px',border:'1px solid #285c3e',borderRadius:8,background:'#eaf1e6',color:'#234b32'}}>Save test results</button>
         </div>}
         {fileError&&<p role="alert" style={{margin:'12px 20px',fontSize:14,color:'#9d2a20'}}>{fileError}</p>}
         {group.key === 'land_legal' && (
