@@ -232,5 +232,263 @@
     "slide": 22,
     "art": "course-art/intro-permaculture/site-sketch.jpg",
     "caption": "Walk out and check your sketch against the ground."
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 2,
+    "art": "course-art/intro-permaculture/observe-rain.jpg",
+    "caption": "Every farm has patterns that work before we add anything."
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 3,
+    "art": "course-art/intro-permaculture/site-sketch.jpg",
+    "caption": "You will read sun angles, shade, wind, frost, and slope."
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 4,
+    "art": "course-art/intro-permaculture/observe-rain.jpg",
+    "caption": "Walk after the storm, when it is safe."
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 5,
+    "art": "course-images/reading-landscape/reading-landscape-l1.jpg",
+    "caption": "Follow where it speeds up, spreads, sinks, gathers, and leaves the land."
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 6,
+    "art": "course-art/reading-landscape/aframe-field.jpg",
+    "caption": "Calibrate before use."
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 7,
+    "art": "course-images/reading-landscape/reading-landscape-l1.jpg",
+    "caption": "Plan a safe overflow before earthworks."
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 8,
+    "art": "course-art/reading-landscape/winter-shadow.jpg",
+    "caption": "In South Africa, winter midday sun is to the north."
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 9,
+    "art": "course-art/reading-landscape/seasonal-shadows.svg",
+    "caption": "Compare summer’s high sun with winter’s lower sun."
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 10,
+    "art": "course-art/reading-landscape/winter-shadow.jpg",
+    "caption": "Mark the shadow edges on your sketch before placing anything permanent."
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 11,
+    "art": "course-art/reading-landscape/winter-shadow.jpg",
+    "caption": "A wall can store daytime warmth and release it at night."
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 12,
+    "art": "course-art/intro-permaculture/windward-shelter.svg",
+    "caption": "Use your observations when placing windbreaks and crops"
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 13,
+    "art": "course-images/reading-landscape/reading-landscape-l3.jpg",
+    "caption": "Trace cold air downhill into low ground"
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 14,
+    "art": "course-art/reading-landscape/cold-hollow.jpg",
+    "caption": "These hollows can be colder than nearby slopes."
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 15,
+    "art": "course-art/reading-landscape/cold-hollow.jpg",
+    "caption": "look for a sheltered, gently sloping position above the places where cold air collects."
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 16,
+    "art": "course-art/reading-landscape/measure-boundary.jpg",
+    "caption": "Record measured distances where you can."
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 17,
+    "art": "course-images/reading-landscape/reading-landscape-l4.jpg",
+    "caption": "Draw what already exists before planning changes."
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 18,
+    "art": "course-art/soil-health/soil-observation.jpg",
+    "caption": "Compare the soil beneath different patches."
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 19,
+    "art": "course-art/intro-permaculture/site-sketch.jpg",
+    "caption": "Update the sketch season by season."
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 20,
+    "art": "course-art/intro-permaculture/observe-rain.jpg",
+    "caption": "Walk after a storm when the site is safe."
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 21,
+    "art": "course-art/reading-landscape/aframe-field.jpg",
+    "caption": "Trace and peg a contour."
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 2,
+    "art": "course-art/reading-landscape/aframe-field.jpg",
+    "caption": "Find a level contour line before planning a swale."
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 3,
+    "art": "course-animations/water-harvesting/posters/swale-infiltration.jpg",
+    "caption": "The excavated soil forms a berm on the downhill side."
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 4,
+    "art": "course-animations/water-harvesting/posters/swale-infiltration.jpg",
+    "caption": "Water fills it evenly and soaks in rather than running off."
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 5,
+    "art": "course-animations/water-harvesting/posters/swale-infiltration.jpg",
+    "caption": "The berm, the downhill mound of excavated soil, is where you plant trees."
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 6,
+    "art": "course-animations/water-harvesting/posters/safe-overflow.jpg",
+    "caption": "Plan a stable overflow route before digging."
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 7,
+    "art": "course-animations/water-harvesting/posters/safe-overflow.jpg",
+    "caption": "The receiving basin also needs a safe way to deal with excess water."
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 8,
+    "art": "course-art/soil-health/soil-observation.jpg",
+    "caption": "A small soil observation cannot prove that a large earthwork is safe."
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 9,
+    "art": "course-animations/water-harvesting/posters/contour-vegetation.jpg",
+    "caption": "Flow slows at the barriers and some soil settles above them."
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 10,
+    "art": "course-art/water-harvesting/water-use-record.jpg",
+    "caption": "How long it lasts depends on rainfall, losses and how much you use."
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 11,
+    "art": "course-animations/water-harvesting/posters/dam-spillway.jpg",
+    "caption": "A spillway gives excess water a planned way around it."
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 12,
+    "art": "course-animations/water-harvesting/posters/dam-spillway.jpg",
+    "caption": "Excess leaves through the side spillway, clear of the earthen wall."
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 13,
+    "art": "course-art/water-harvesting/dam-inspection.jpg",
+    "caption": "Maintain the protective grass cover and keep the spillway clear."
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 14,
+    "art": "course-art/water-harvesting/tank-care.jpg",
+    "caption": "Roof area, rainfall and collection losses determine potential harvest."
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 15,
+    "art": "course-animations/water-harvesting/posters/first-flush.jpg",
+    "caption": "A first-flush diverter does not make water safe to drink."
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 16,
+    "art": "course-animations/water-harvesting/posters/first-flush.jpg",
+    "caption": "The float rises and closes it. Later runoff travels to the tank."
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 17,
+    "art": "course-art/water-harvesting/water-use-record.jpg",
+    "caption": "List the uses you want the tank to supply."
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 18,
+    "art": "course-art/water-harvesting/tank-care.jpg",
+    "caption": "Keep the tank covered and screen openings against insects."
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 19,
+    "art": "course-animations/water-harvesting/posters/greywater-under-mulch.jpg",
+    "caption": "Greywater is used water from washing."
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 20,
+    "art": "course-animations/water-harvesting/posters/greywater-under-mulch.jpg",
+    "caption": "Keep it below mulch, away from people and animals."
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 21,
+    "art": "course-animations/water-harvesting/posters/greywater-under-mulch.jpg",
+    "caption": "There is no spray and no contact with fruit."
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 22,
+    "art": "course-animations/water-harvesting/posters/greywater-under-mulch.jpg",
+    "caption": "Do not use greywater on leafy vegetables, root vegetables or seedlings."
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 23,
+    "art": "course-art/reading-landscape/aframe-field.jpg",
+    "caption": "Photograph the A-frame and the line you marked."
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 24,
+    "art": "course-art/reading-landscape/aframe-field.jpg",
+    "caption": "My marked line runs across the slope, not down it."
   }
 ]

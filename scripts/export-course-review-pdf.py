@@ -10,7 +10,11 @@ from reportlab.pdfgen import canvas
 from reportlab.lib.utils import ImageReader
 
 ROOT=Path(__file__).resolve().parents[1]
-TITLES={'intro-permaculture':'Introduction to Permaculture','soil-health':'Soil Health'}
+TITLES={'intro-permaculture':'Introduction to Permaculture','soil-health':'Soil Health',
+        'reading-landscape':'Reading the Landscape','water-harvesting':'Water Harvesting',
+        'plant-guilds':'Plant Guilds','food-forest':'Food Forest',
+        'vegetables-staples':'Vegetables and Staple Crops','small-livestock':'Small Livestock',
+        'market-community':'Market and Community'}
 
 def export(module, destination):
     folder=ROOT/'public/course-decks'/module/'en'

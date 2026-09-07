@@ -1,0 +1,18 @@
+[
+  {
+    "key": "water-tank-care",
+    "prompt": "Use case: illustration-story. One wordless 16:9 landscape teaching illustration, warm hand-drawn watercolour on cream paper, fine brown ink outlines, restrained earthy colours. A rural South African homestead with a sound corrugated roof and a correctly attached gutter leading to a covered cylindrical rainwater tank beside the house on a solid level base. The tank has a securely closed lid and a simple tap near the bottom; no drinking cup and nobody drinking. A visible screened inlet is covered, not a wide open hole. An African adult farmer stands safely on the ground beside the tank, looking at the gutter and holding a small brush for maintenance. Show real accessible equipment in a modest garden, all pipes connected sensibly; no cutaway, no flow arrows, no invented engineering dimensions, no ladder or rooftop work. No words, numbers, titles, diagrams, border, logo, captions, photorealism or glossy 3D."
+  },
+  {
+    "key": "water-demand-record",
+    "prompt": "Use case: illustration-story. One wordless 16:9 landscape illustration for South African smallholder farmers in warm hand-drawn watercolour, cream paper texture, fine brown pen outlines, muted greens and ochres. An African adult woman at a simple outdoor table records household garden water use in an open notebook with blank ruled columns but no legible writing. A modest covered rainwater tank connected to a homestead gutter is visible behind her. On the table beside her are an ordinary empty watering can and a plain bucket, both properly resting on the tabletop. One hand holds a pencil correctly above the notebook and the other rests on the table. Thoughtful practical observation, no magic calculation graphics, no water flowing, no crop yield guarantee. Clear large action at phone size. No numbers, letters, title, arrows, labels, border, logos, photorealism or 3D."
+  },
+  {
+    "key": "water-demand-record-corrected",
+    "prompt": "Edit this illustration. Preserve the farmer, hands, notebook, watering can, bucket, composition, cream-paper watercolour style and homestead exactly. Correct ONLY the background green rainwater tank: remove the loose dark tarpaulin completely and replace it with a rigid moulded green domed tank top and a securely closed round black access lid. Connect the downpipe through a neat proper covered inlet. It must look like an ordinary correctly covered South African rainwater tank, with no open top, torn cover, gaps or floating pipes. Do not add any text, numbers or labels."
+  },
+  {
+    "key": "water-dam-inspection",
+    "prompt": "Use case: illustration-story. One wordless 16:9 landscape educational illustration in warm hand-drawn watercolour with fine brown ink and cream paper texture, muted natural greens and ochres. South African rural farm scene showing routine visual inspection of the DOWNSTREAM OUTSIDE FACE of a modest existing earth dam embankment. The whole broad low embankment face has continuous short healthy grass. Absolutely no tree or deep-rooted shrub on the wall, no exposed vertical cliff, no water flowing over the crest. An African adult farmer stands on a firm dry access path well away from the wall's base, looking carefully at the grassed face and taking a note in a blank notebook. Another adult adviser beside them points toward the embankment. The crest is broad and low, proportions plausible, small rural hills in distance. Do not show construction, digging, a breach, a crack, dangerous water, an excavator, detailed spillway geometry or invented dimensions. Show observation only; no labels, arrows, numbers, captions, title, border or branding. Not photorealism, not glossy 3D."
+  }
+]

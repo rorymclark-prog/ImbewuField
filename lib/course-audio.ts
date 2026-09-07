@@ -132,6 +132,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
   },
   'reading-landscape': {
     languages: ['en'],
+    recordingHold: { en: 'The site-observation and A-frame instructions have changed. Read the corrected slides while replacement narration is prepared.' },
     recordedVoices: { en: 'en-ZA-LukeNeural' },
     // 21 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural and verified by
     // import-course-audio: every clip matched its script block.
@@ -151,7 +152,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
       { slide: 11, lesson: 'reading-landscape-l2', title: 'Protect Frost-Tender Plants' },
       { slide: 12, lesson: 'reading-landscape-l3', title: 'Lesson 3: Read Wind, Frost, and Slope' },
       { slide: 13, lesson: 'reading-landscape-l3', title: 'Watch: See Wind and Cold Air on the Map' },
-      { slide: 14, lesson: 'reading-landscape-l3', title: 'Frost Flows Downhill' },
+      { slide: 14, lesson: 'reading-landscape-l3', title: 'Cold Air Collects in Hollows' },
       { slide: 15, lesson: 'reading-landscape-l3', title: 'Choose Airflow and Warmth' },
       { slide: 16, lesson: 'reading-landscape-l4', title: 'Lesson 4: Start Your Site Map' },
       { slide: 17, lesson: 'reading-landscape-l4', title: 'Watch: Draw the Land You Already Have' },

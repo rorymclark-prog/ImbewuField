@@ -142,7 +142,7 @@ export interface SeasonalCondition {
  * row says so in its own words.
  */
 export const SEASONAL_CONDITIONS: SeasonalCondition[] = [
-  // "I walked my land during or just after rain to see the water"
+  // "I observed where rainwater went after the storm, when the site was safe"
   { moduleId: 'reading-landscape', needs: 'rain', source: 'selfCheck', index: 3 },
   // "Prepare and plant one bed…"
   { moduleId: 'vegetables-staples', needs: 'planting-window', source: 'prompt' },

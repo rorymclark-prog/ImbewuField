@@ -3,6 +3,19 @@
 Rory wants the remaining ImbewuField studies completed to the standard of the
 Seeds module. A text card with a demonstration title does not meet that brief.
 
+## Latest illustrated review
+
+Introduction now has 21 teaching fronts, Soil Health 18, Reading the Landscape 20, and Water Harvesting 23,
+plus their existing covers. Their complete reading cards and original narration
+identities remain. Ordinary downloadable PDF editions provide an alternative to
+the HTML viewer Rory could not open. See the module-specific illustrated-deck notes
+for exact source corrections and inspection evidence. The historical counts below
+describe earlier recovery stages; the current asset and draft inventories are generated.
+
+Reading, Introduction, Soil and Water narration changes supersede 25 Leah review takes
+and four full listening tracks. No replacement is activated, and the course remains
+a production draft. The remaining five modules still need their teaching fronts.
+
 ## Working branch
 
 `codex/studies-completion`, based on `main` at `6f46334` (PR #424).

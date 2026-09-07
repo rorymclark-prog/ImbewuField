@@ -864,7 +864,7 @@
     "narration": "Every farm has patterns that work before we add anything.\n\nRain already follows lines across the land. The sun already warms some places more than others. Wind already finds gaps and ridges. Cold air already settles in hollows.\n\nWhen you read these patterns first, you place water, crops, trees, and buildings where they can work with the land.",
     "narration_seconds": 28.584,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation production tracked separately",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
   },
   {
@@ -874,18 +874,20 @@
     "narration": "By the end of this module, you will be able to follow water across your land and find where it leaves.\n\nYou will read sun angles, shade, wind, frost, and slope.\n\nYou will use an A-frame level to trace contours.\n\nYou will draw a simple site map with water flow, seasonal winds, frost pockets, existing vegetation, zones, and sectors.",
     "narration_seconds": 28.08,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation production tracked separately",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
   },
   {
     "module": "reading-landscape",
     "slide": 4,
     "title": "Lesson 1: Where Rain Goes",
-    "narration": "Before you harvest water, learn where it already goes.\n\nWalk your land during and right after heavy rain. Watch for rills, places where water fans out, ponds, and every point where water leaves your property.\n\nWater that leaves is a resource lost. Water that stays can support soil, trees, crops, and a healthier farm.",
-    "narration_seconds": 27.72,
+    "narration": "Before you harvest water, learn where it already goes.\n\nWalk after the storm, when it is safe. Stay away from lightning, fast water and unstable banks. Look for rills, places where water spreads or ponds, and where it leaves your property.\n\nMark useful places to retain water and the routes excess water needs to leave safely. Keeping every drop is not safe on every site.",
+    "narration_seconds": null,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
-    "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
+    "art_status": "Illustrated teaching front rendered and visually checked; animation production tracked separately",
+    "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required",
+    "last_recorded_seconds": 27.72,
+    "narration_status": "Source corrected; replacement Leah take and listening review pending"
   },
   {
     "module": "reading-landscape",
@@ -894,7 +896,7 @@
     "narration": "The picture shows rain moving downhill. Follow where it speeds up, spreads, sinks, gathers, and leaves the land.",
     "narration_seconds": 10.344,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation production tracked separately",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required",
     "animation_owner": "Codex"
   },
@@ -902,31 +904,37 @@
     "module": "reading-landscape",
     "slide": 6,
     "title": "Trace Contours with an A-Frame",
-    "narration": "Build an A-frame level from three poles and a weighted string.\n\nWalk it across the land to find points at the same height. Join these points to trace a contour line.\n\nTwo people can trace contour lines across a two-hectare property in a morning. No surveyor is needed. This simple tool is practical for placing swales, dams, and tree rows.",
-    "narration_seconds": 28.08,
+    "narration": "Build a rigid A-frame from two equal legs, a crossbar and a weighted string hanging from the top. The weight must hang freely below the crossbar.\n\nCalibrate before use. Mark both foot positions on firm ground and mark where the settled string crosses the bar. Swap the legs onto the same two foot positions and mark the string again. Halfway between the two marks is the level mark. If they coincide, use that mark.\n\nKeep one foot fixed. Move the other across the slope until the settled string meets the level mark. Peg that foot position, pivot onto it, and repeat to trace a contour.\n\nRecheck calibration if the frame shifts. This marks level points; it does not design a dam or prove an earthwork is safe. Get suitable technical advice before digging.",
+    "narration_seconds": null,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
-    "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
+    "art_status": "Illustrated teaching front rendered and visually checked; animation production tracked separately",
+    "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required",
+    "last_recorded_seconds": 28.08,
+    "narration_status": "Source corrected; replacement Leah take and listening review pending"
   },
   {
     "module": "reading-landscape",
     "slide": 7,
     "title": "Slow It High, Sink It Mid, Control It Low",
-    "narration": "Water picks up speed and erosive force as it runs downhill.\n\nSlow it as high on the slope as possible. Sink it in the middle of the slope. Control it at the bottom.\n\nThis keeps more moisture in the land and prevents damage lower down. The higher you slow water, the earlier you stop erosion from growing.",
-    "narration_seconds": 25.608,
+    "narration": "Water can gain speed and erode soil as it runs downhill.\n\nLook for safe places to slow it high on the slope, let it soak in where the soil and site are suitable, and guide excess water safely away.\n\nDo not force water into unstable or already waterlogged ground. Plan a safe overflow before earthworks. The aim is useful moisture without creating a new erosion or flooding problem.",
+    "narration_seconds": null,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
-    "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
+    "art_status": "Illustrated teaching front rendered and visually checked; animation production tracked separately",
+    "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required",
+    "last_recorded_seconds": 25.608,
+    "narration_status": "Source corrected; replacement Leah take and listening review pending"
   },
   {
     "module": "reading-landscape",
     "slide": 8,
     "title": "Lesson 2: Read Sun and Shade",
-    "narration": "In South Africa, the sun tracks across the northern sky.\n\nNorth-facing slopes are warmer and drier. South-facing slopes are cooler and moister. On the Highveld, frost can sit in south-facing hollows long after it clears elsewhere.\n\nThis helps you choose where to place tender crops, trees, buildings, and other parts of your farm.",
-    "narration_seconds": 27.024,
+    "narration": "In South Africa, winter midday sun is to the north.\n\nNorth-facing slopes tend to receive more winter sun and warmth than south-facing slopes. Actual moisture and frost also depend on shade, soil and where cold air settles.\n\nObserve your own site across the seasons before choosing positions for tender crops, trees and buildings.",
+    "narration_seconds": null,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
-    "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
+    "art_status": "Illustrated teaching front rendered and visually checked; animation production tracked separately",
+    "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required",
+    "last_recorded_seconds": 27.024,
+    "narration_status": "Source corrected; replacement Leah take and listening review pending"
   },
   {
     "module": "reading-landscape",
@@ -935,7 +943,7 @@
     "narration": "Follow the sun, building, tree, and their shadows across the slope. Compare summer’s high sun with winter’s lower sun.",
     "narration_seconds": 10.104,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation production tracked separately",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required",
     "animation_owner": "Codex"
   },
@@ -943,31 +951,37 @@
     "module": "reading-landscape",
     "slide": 10,
     "title": "Check Winter Shadows Before Building",
-    "narration": "Winter sun sits lower and further north than summer sun.\n\nA wall that casts no shade in summer can shade a bed for hours in winter. A 2m shade cloth on the north side of a garden can block low winter sun for most of the day.\n\nCheck the spot at 8am, midday, and 4pm on a winter's day.",
-    "narration_seconds": 23.592,
+    "narration": "Winter sun sits lower than summer sun, so shadows change with the season.\n\nA wall or shade cloth north of a bed can block useful winter light. The effect depends on its height, distance from the bed and how much light passes through it.\n\nCheck the spot at 8am, midday, and 4pm on a winter's day. Mark the shadow edges on your sketch before placing anything permanent.",
+    "narration_seconds": null,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
-    "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
+    "art_status": "Illustrated teaching front rendered and visually checked; animation production tracked separately",
+    "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required",
+    "last_recorded_seconds": 23.592,
+    "narration_status": "Source corrected; replacement Leah take and listening review pending"
   },
   {
     "module": "reading-landscape",
     "slide": 11,
     "title": "Protect Frost-Tender Plants",
-    "narration": "For frost-sensitive plants such as pawpaw and young citrus, use the warmth of a north-facing wall.\n\nThe wall absorbs heat during the day and releases it at night. That night-time warmth can protect a tender plant when frost arrives.\n\nDo not place vulnerable crops in a cold, south-facing hollow. Choose a position that receives warmth and avoids trapped frost.",
-    "narration_seconds": 28.416,
+    "narration": "A sun-warmed north-facing wall can offer a warmer position for frost-sensitive plants such as pawpaw and young citrus.\n\nA wall can store daytime warmth and release it at night. This can help, but it does not guarantee protection from a severe frost.\n\nCheck local frost conditions and the plant's needs. Avoid a hollow where cold air collects and plan any additional protection before planting.",
+    "narration_seconds": null,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
-    "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
+    "art_status": "Illustrated teaching front rendered and visually checked; animation production tracked separately",
+    "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required",
+    "last_recorded_seconds": 28.416,
+    "narration_status": "Source corrected; replacement Leah take and listening review pending"
   },
   {
     "module": "reading-landscape",
     "slide": 12,
     "title": "Lesson 3: Read Wind, Frost, and Slope",
-    "narration": "Wind can damage a smallholding even when it is hard to see.\n\nHighveld farms face hot, dry north-westerlies in August and September. KZN escarpment farms face cold south-westerly fronts in winter and humid easterlies in summer.\n\nKnow your region's pattern before planting. Wind direction affects windbreaks, crop protection, drying, and disease.",
-    "narration_seconds": 28.656,
+    "narration": "Wind can damage a smallholding even when it is hard to see.\n\nObserve the directions damaging winds come from on your own site. Note the season, exposed ridges, gaps and sheltered places. Ask neighbours and check local weather records.\n\nWind patterns differ between sites. Use your observations when placing windbreaks and crops; do not copy a direction from another farm.",
+    "narration_seconds": null,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
-    "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
+    "art_status": "Illustrated teaching front rendered and visually checked; animation production tracked separately",
+    "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required",
+    "last_recorded_seconds": 28.656,
+    "narration_status": "Source corrected; replacement Leah take and listening review pending"
   },
   {
     "module": "reading-landscape",
@@ -976,39 +990,45 @@
     "narration": "Follow wind across the ridges and gaps. Trace cold air downhill into low ground, and notice where the land creates shelter or exposure.",
     "narration_seconds": 11.256,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation production tracked separately",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required",
     "animation_owner": "Codex"
   },
   {
     "module": "reading-landscape",
     "slide": 14,
-    "title": "Frost Flows Downhill",
-    "narration": "Frost behaves like water. At night, cold air flows downhill and pools in low ground.\n\nA valley bottom frosts weeks before and after the slopes above it. A gap in a ridgeline can funnel cold air two or three hundred metres into a sheltered valley.\n\nWalk the land at dawn on a cold June morning. Mist and frozen dew show where frost lingers.",
-    "narration_seconds": 28.584,
+    "title": "Cold Air Collects in Hollows",
+    "narration": "On clear, calm cold nights, cold air can drain downhill and collect in low ground.\n\nThese hollows can be colder than nearby slopes. The pattern depends on the land, barriers and weather.\n\nVisit safely at dawn in your local frost season. Look for ice crystals on surfaces and record where frost remains longest. Mist alone does not prove frost.",
+    "narration_seconds": null,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
-    "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
+    "art_status": "Illustrated teaching front rendered and visually checked; animation production tracked separately",
+    "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required",
+    "last_recorded_seconds": 28.584,
+    "narration_status": "Source corrected; replacement Leah take and listening review pending"
   },
   {
     "module": "reading-landscape",
     "slide": 15,
     "title": "Choose Airflow and Warmth",
-    "narration": "Put your most frost-sensitive seedling nursery on a gently sloping, north-facing hillside above the frost-pool zone.\n\nFor tomatoes troubled by late blight, move the bed somewhere with good airflow and morning sun. Morning sun dries leaves quickly.\n\nAir movement and dry leaves make it harder for fungal disease to keep the damp conditions it needs.",
-    "narration_seconds": 25.992,
+    "narration": "For a frost-sensitive nursery, look for a sheltered, gently sloping position above the places where cold air collects. A north-facing aspect can add winter warmth.\n\nFor tomatoes troubled by late blight, choose a site with good airflow and morning sun to help leaves dry.\n\nThis can reduce the time leaves stay wet. It does not cure late blight or replace disease identification and suitable management advice.",
+    "narration_seconds": null,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
-    "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
+    "art_status": "Illustrated teaching front rendered and visually checked; animation production tracked separately",
+    "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required",
+    "last_recorded_seconds": 25.992,
+    "narration_status": "Source corrected; replacement Leah take and listening review pending"
   },
   {
     "module": "reading-landscape",
     "slide": 16,
     "title": "Lesson 4: Start Your Site Map",
-    "narration": "A site map needs paper, a tape measure, a compass, and a morning to walk your land.\n\nPace the boundary and sketch it to scale. Mark north. Add the house, trees, water, roads, and fences.\n\nThen draw the patterns you have observed. Your map becomes the design skeleton for the whole smallholding.",
-    "narration_seconds": 26.832,
+    "narration": "Start with paper, a tape measure, a compass and time to observe your land.\n\nSketch the boundary and mark north. Record measured distances where you can. If you use pacing, label the distances as estimates. Add the house, trees, water, roads and fences.\n\nDraw the patterns you have observed. Check important distances before using the sketch to place anything permanent.",
+    "narration_seconds": null,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
-    "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
+    "art_status": "Illustrated teaching front rendered and visually checked; animation production tracked separately",
+    "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required",
+    "last_recorded_seconds": 26.832,
+    "narration_status": "Source corrected; replacement Leah take and listening review pending"
   },
   {
     "module": "reading-landscape",
@@ -1017,7 +1037,7 @@
     "narration": "Use the picture as a guide: boundary, buildings, roads, water, slopes, and direction arrows. Draw what already exists before planning changes.",
     "narration_seconds": 13.632,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation production tracked separately",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required",
     "animation_owner": "Codex"
   },
@@ -1025,11 +1045,13 @@
     "module": "reading-landscape",
     "slide": 18,
     "title": "Let Plants Help You Read Soil",
-    "narration": "Look for places where frost sits longest and where the ground smells damp during dry months.\n\nNotice existing vegetation. Thick khakibos or blackjack growing in one corner often signals disturbed or compacted soil.\n\nThese are pioneer weeds. They colonise ground that has been disturbed or compacted. Mark the area on your map so your future design responds to the soil condition.",
-    "narration_seconds": 29.976,
+    "narration": "Notice where frost remains longest and check where the soil stays damp in dry months.\n\nRecord existing vegetation, including patches of khakibos or blackjack. Their presence alone does not prove the soil is compacted or tell you its fertility.\n\nCompare the soil beneath different patches. Look at its structure, moisture and how water enters it. Mark observations and unanswered questions on your map.",
+    "narration_seconds": null,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
-    "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
+    "art_status": "Illustrated teaching front rendered and visually checked; animation production tracked separately",
+    "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required",
+    "last_recorded_seconds": 29.976,
+    "narration_status": "Source corrected; replacement Leah take and listening review pending"
   },
   {
     "module": "reading-landscape",
@@ -1038,28 +1060,32 @@
     "narration": "Mark summer and winter wind separately. They can come from different directions, so a windbreak or crop position that works in one season may be wrong in the other.\n\nOverlay your zones and sectors on the same base map.\n\nUpdate the sketch season by season. A pencil map you actually use is worth more than a perfect map drawn once.",
     "narration_seconds": 25.608,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation production tracked separately",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
   },
   {
     "module": "reading-landscape",
     "slide": 20,
     "title": "Field Assignment",
-    "narration": "Walk your land during or right after heavy rain. Mark rills, spreading water, ponds, and every place water leaves your property.\n\nReturn at dawn on a cold June morning. Mark mist, frozen dew, and the places frost lasts longest.\n\nOn paper, draw your boundary, mark north, and add the house, water, roads, fences, slopes, and existing vegetation.",
-    "narration_seconds": 32.544,
+    "narration": "Walk after a storm when the site is safe. Mark rills, spreading water, ponds and routes where excess water leaves. Stay away from lightning, fast water and unstable banks.\n\nReturn safely at dawn in your local frost season. Look for ice crystals and note where frost remains longest. Do not use mist alone as proof.\n\nDraw your boundary, mark north, and add the house, water, roads, fences, slopes and existing vegetation. Label estimated distances.",
+    "narration_seconds": null,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
-    "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
+    "art_status": "Illustrated teaching front rendered and visually checked; animation production tracked separately",
+    "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required",
+    "last_recorded_seconds": 32.544,
+    "narration_status": "Source corrected; replacement Leah take and listening review pending"
   },
   {
     "module": "reading-landscape",
     "slide": 21,
     "title": "Field Action",
-    "narration": "Build an A-frame level from three poles and a weighted string.\n\nUse it to trace contour lines across your land. Mark where you would slow water high, sink it mid-slope, and control it at the bottom.\n\nAdd summer and winter wind arrows, shade observations from 8am, midday, and 4pm, and your zones and sectors. Keep the map and update it.",
-    "narration_seconds": 28.896,
+    "narration": "Build and calibrate an A-frame as shown in this lesson. Check that its weight hangs freely and its joints are firm.\n\nTrace and peg a contour. Mark possible places to slow water and a safe overflow route on your map. Check soil and site suitability with a qualified adviser before digging earthworks.\n\nAdd summer and winter wind arrows, shade observations from 8am, midday, and 4pm, and your zones and sectors. Keep the map and update it.",
+    "narration_seconds": null,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
-    "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
+    "art_status": "Illustrated teaching front rendered and visually checked; animation production tracked separately",
+    "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required",
+    "last_recorded_seconds": 28.896,
+    "narration_status": "Source corrected; replacement Leah take and listening review pending"
   },
   {
     "module": "small-livestock",
@@ -1668,7 +1694,7 @@
     "narration": "Find a level contour line before planning a swale.\n\nExplain why a dam needs a designed spillway.\n\nFollow roof water through a first-flush diverter and into a covered tank.\n\nKeep greywater away from people and edible plant parts.",
     "narration_seconds": 18.648,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation production tracked separately",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
   },
   {
@@ -1678,7 +1704,7 @@
     "narration": "A swale is a level trench dug exactly on contour — not angled, perfectly level end to end — so water fills it evenly and soaks in rather than running off.\n\nThe excavated soil forms a berm on the downhill side.\n\nTrees planted there draw on stored water long after the rain has stopped.",
     "narration_seconds": 22.2,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation production tracked separately",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
   },
   {
@@ -1688,7 +1714,7 @@
     "narration": "A swale is a level trench on contour — it sinks water, it doesn't direct it.\n\n[pause]\n\nWater fills it evenly and soaks in rather than running off.",
     "narration_seconds": 11.424,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation production tracked separately",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required",
     "animation_owner": "Codex"
   },
@@ -1699,7 +1725,7 @@
     "narration": "The excavated soil forms a berm on the downhill side.\n\nThe berm, the downhill mound of excavated soil, is where you plant trees.\n\nTrees planted there draw on stored water long after the rain has stopped.",
     "narration_seconds": 16.68,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation production tracked separately",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
   },
   {
@@ -1709,7 +1735,7 @@
     "narration": "A storm can bring more water than a swale can hold. Plan a stable overflow route before digging.\n\nTrace it to a place that can receive the excess without erosion or harm. Do not simply send it towards a neighbour, road or building.\n\nA second swale or dam is only an option if its capacity and overflow have also been checked.",
     "narration_seconds": 25.872,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation production tracked separately",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
   },
   {
@@ -1719,7 +1745,7 @@
     "narration": "Watch the upper swale fill. Excess water then follows the protected overflow route.\n\n[pause]\n\nThe diagram shows a connection to another basin. It does not give construction sizes. The receiving basin also needs a safe way to deal with excess water.",
     "narration_seconds": 20.424,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation production tracked separately",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required",
     "animation_owner": "Codex"
   },
@@ -1730,7 +1756,7 @@
     "narration": "Slope alone does not tell you whether a swale is safe. Check soil depth, drainage, ground stability and what lies downhill.\n\nDo not dig into steep, unstable or waterlogged ground on the strength of this diagram. Get a competent local practitioner to assess the site.\n\nA small soil observation cannot prove that a large earthwork is safe.",
     "narration_seconds": 27.432,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation production tracked separately",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
   },
   {
@@ -1740,7 +1766,7 @@
     "narration": "This side view shows established grass barriers across a slope. Flow slows at the barriers and some soil settles above them.\n\n[pause]\n\nGrass barriers and terraces need their own site assessment. They are not an automatic fix for every steep slope. First mark and observe; agree on a suitable design before disturbing the ground.",
     "narration_seconds": 25.824,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation production tracked separately",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required",
     "animation_owner": "Codex"
   },
@@ -1751,7 +1777,7 @@
     "narration": "Stored water can help through dry periods. How long it lasts depends on rainfall, losses and how much you use.\n\nRecord when rain actually arrives on your site. A yearly rainfall total does not tell you how much water will be available in the driest month.",
     "narration_seconds": 20.52,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation production tracked separately",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
   },
   {
@@ -1761,7 +1787,7 @@
     "narration": "A dam wall holds water back. A spillway gives excess water a planned way around it.\n\nHave a competent dam designer assess the catchment, soil, flood flows and downstream consequences before any wall is built. Check the approvals needed locally.\n\nA bigger catchment also brings a bigger flood. Never build first and work out the spillway later.",
     "narration_seconds": 28.584,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation production tracked separately",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
   },
   {
@@ -1771,7 +1797,7 @@
     "narration": "Look down on the dam. Inflow raises the water level. Excess leaves through the side spillway, clear of the earthen wall.\n\n[pause]\n\nThis explains the flow route. It is not a plan for constructing a dam. The spillway and its outlet must be designed for the site.",
     "narration_seconds": 22.416,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation production tracked separately",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required",
     "animation_owner": "Codex"
   },
@@ -1782,7 +1808,7 @@
     "narration": "Keep trees and deep-rooted shrubs away from the dam wall, spillway and outlet. Their roots can damage these structures.\n\nMaintain the protective grass cover and keep the spillway clear. Report erosion, cracks or unexpected seepage to a competent dam practitioner.\n\nDo not dig out established roots from a dam wall yourself. Repairs need an assessed plan.",
     "narration_seconds": 29.208,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation production tracked separately",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
   },
   {
@@ -1792,7 +1818,7 @@
     "narration": "Roof area, rainfall and collection losses determine potential harvest. Tank overflow and water use reduce what remains available.\n\nFor a calculation exercise, assume a 100 square metre roof, 800 millimetres of rain and a collection factor of 0.9. Multiply these to get 72,000 litres.\n\nThose are example inputs, not a rainfall forecast or a promise that a garden will have enough water.",
     "narration_seconds": 34.608,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation production tracked separately",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
   },
   {
@@ -1802,7 +1828,7 @@
     "narration": "Roof runoff can carry droppings, dust and other contamination. Divert the first runoff before it enters the tank.\n\nThe amount to divert depends on roof area and local conditions. Follow a suitable design and the device instructions; there is no single volume for every roof.\n\nA first-flush diverter does not make water safe to drink.",
     "narration_seconds": 27.6,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation production tracked separately",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
   },
   {
@@ -1812,7 +1838,7 @@
     "narration": "The first runoff fills the separate chamber. The float rises and closes it. Later runoff travels to the tank.\n\n[pause]\n\nLater runoff is not necessarily safe drinking water. After the storm, drain and reset the diverter as its instructions require, away from edible crops.",
     "narration_seconds": 23.256,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation production tracked separately",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required",
     "animation_owner": "Codex"
   },
@@ -1823,7 +1849,7 @@
     "narration": "List the uses you want the tank to supply. Measure or estimate their daily demand.\n\nCompare that demand with local rainfall records, usable storage and the dry period you need to cover.\n\nA tank size on its own cannot tell you how many weeks it will last.",
     "narration_seconds": 20.112,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation production tracked separately",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
   },
   {
@@ -1833,7 +1859,7 @@
     "narration": "Keep the tank covered and screen openings against insects. Maintain the roof, gutters and diverter.\n\nA filter alone does not guarantee safe drinking water. Drinking use needs suitable treatment, disinfection and water-quality checks with qualified advice.\n\nKeep untreated water away from edible plant parts. Keep any alternative supply separate from drinking-water plumbing.",
     "narration_seconds": 30.696,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation production tracked separately",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
   },
   {
@@ -1843,7 +1869,7 @@
     "narration": "Greywater is used water from washing. Toilet water is different and must never enter this garden system.\n\nWashwater can still carry germs, salts and cleaning products. Reuse depends on its source, quality and where it will go. Do not assume that clear-looking water is safe.",
     "narration_seconds": 23.496,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation production tracked separately",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
   },
   {
@@ -1853,7 +1879,7 @@
     "narration": "Avoid water containing bleach, harsh cleaners or nappy waste. Do not reuse it when someone in the household is ill. Plain soap is not a guarantee of suitability.\n\nUse suitable greywater promptly, within 24 hours. Stop if it ponds, smells or runs off.\n\nKeep it below mulch, away from people and animals. Mulch does not disinfect water.",
     "narration_seconds": 31.704,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation production tracked separately",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
   },
   {
@@ -1863,7 +1889,7 @@
     "narration": "Used basin water travels through a pipe to soil beneath mulch, away from the tree trunk. It soaks into the root zone.\n\n[pause]\n\nThere is no spray and no contact with fruit. The water stays grey in the drawing because mulch does not make it safe to drink.",
     "narration_seconds": 19.656,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation production tracked separately",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required",
     "animation_owner": "Codex"
   },
@@ -1874,27 +1900,31 @@
     "narration": "Do not use greywater on leafy vegetables, root vegetables or seedlings.\n\nA suitable system may supply established trees or non-edible plants while keeping water off edible parts. Get advice on water quality and stop if plants or soil show damage.\n\nCheck municipal requirements before fitting a permanent system. This lesson does not approve an installation.",
     "narration_seconds": 28.344,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation production tracked separately",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
   },
   {
     "module": "water-harvesting",
     "slide": 23,
     "title": "Field Assignment",
-    "narration": "Build an A-frame level from three poles and a weighted string.\n\nUse it to find one level line across your slope.\n\nPhotograph the A-frame and the line you marked.",
-    "narration_seconds": 12.84,
+    "narration": "Build an A-frame level from three poles and a weighted string. Calibrate it before tracing a contour.\n\nMark both foot positions and where the settled string crosses the bar. Swap the legs onto those same foot positions and mark the string again. The midpoint between the marks is the level mark.\n\nUse it to find one level line across your slope. Photograph the A-frame and the line you marked.",
+    "narration_seconds": null,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
-    "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
+    "art_status": "Illustrated teaching front rendered and visually checked; animation production tracked separately",
+    "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required",
+    "last_recorded_seconds": 12.84,
+    "narration_status": "Calibration expanded; replacement Leah take and listening review pending"
   },
   {
     "module": "water-harvesting",
     "slide": 24,
     "title": "Check Your Work",
-    "narration": "My A-frame is built and I have tested it.\n\nTurn it around — it should read the same.\n\nI have marked at least three points at the same height across my slope.\n\nMy marked line runs across the slope, not down it.\n\nRealistic minimum time for the real work: 5 days.",
-    "narration_seconds": 22.2,
+    "narration": "My A-frame is built and I have calibrated it.\n\nI marked the same two foot positions, swapped the legs and checked the midpoint on the bar.\n\nI have marked at least three points at the same height across my slope.\n\nMy marked line runs across the slope, not down it.\n\nRealistic minimum time for the real work: 5 days.",
+    "narration_seconds": null,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
-    "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
+    "art_status": "Illustrated teaching front rendered and visually checked; animation production tracked separately",
+    "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required",
+    "last_recorded_seconds": 22.2,
+    "narration_status": "Calibration expanded; replacement Leah take and listening review pending"
   }
 ]

@@ -214,19 +214,19 @@ Check municipal requirements before fitting a permanent system. This lesson does
 
 **Slide 23 — Field Assignment**
 
-Build an A-frame level from three poles and a weighted string.
+Build an A-frame level from three poles and a weighted string. Calibrate it before tracing a contour.
 
-Use it to find one level line across your slope.
+Mark both foot positions and where the settled string crosses the bar. Swap the legs onto those same foot positions and mark the string again. The midpoint between the marks is the level mark.
 
-Photograph the A-frame and the line you marked.
+Use it to find one level line across your slope. Photograph the A-frame and the line you marked.
 
 ---
 
 **Slide 24 — Check Your Work**
 
-My A-frame is built and I have tested it.
+My A-frame is built and I have calibrated it.
 
-Turn it around — it should read the same.
+I marked the same two foot positions, swapped the legs and checked the midpoint on the bar.
 
 I have marked at least three points at the same height across my slope.
 

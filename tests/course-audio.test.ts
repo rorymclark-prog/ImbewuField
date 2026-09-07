@@ -77,6 +77,19 @@ test('a module with no recording is a normal state, not an error', () => {
   assert.equal(resolveNarrationLang(unrecorded, 'zu'), null);
 });
 
+test('corrected contour and frost guidance cannot replay its old recording', () => {
+  const id = 'reading-landscape';
+  assert.ok(narrationHoldReason(id, 'en'));
+  assert.deepEqual(availableNarrationLanguages(id), []);
+  for (const track of allTracks(id)) assert.equal(trackUrl(id, 'en', track.slide), null);
+  assert.equal(fullNarrationUrl(id, 'en'), null);
+  assert.equal(resolveNarrationLang(id, 'zu'), null);
+  const lesson = COURSE_MODULES.find(m => m.id === id)!.lessons[0];
+  assert.ok(lesson.body.includes('Swap the legs onto the same two foot positions'));
+  assert.ok(lesson.body.includes('Halfway between the two marks'));
+  assert.ok(lesson.quiz[0].rationale.includes('does not design a dam'));
+});
+
 test('the seeds module is recorded in isiZulu and English', () => {
   assert.equal(hasNarration('seeds-sovereignty'), true);
   const n = narrationFor('seeds-sovereignty');

@@ -15,6 +15,12 @@ module is held pending a complete reviewed replacement. The other fourteen
 Introduction scripts retain their recording identities. See
 `INTRO-ILLUSTRATED-DECK-2026-09-07.md` for source changes and references.
 
+Reading the Landscape blocks **4, 6, 7, 8, 10, 11, 12, 14, 15, 16, 18, 20, 21**
+and its full track are also superseded after calibration, frost and site-safety
+corrections. See `READING-ILLUSTRATED-DECK-2026-09-07.md`. Water blocks **23 and 24** and its full track are also superseded by the
+expanded A-frame calibration. Across the four modules, **25 numbered takes and four full tracks** in the historical pack now
+need replacement. No new take was generated during these illustration batches.
+
 ## Approval and completed recording
 
 Rory explicitly approved sending the nine English module narration scripts to

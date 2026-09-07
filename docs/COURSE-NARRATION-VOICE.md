@@ -3,9 +3,10 @@
 ## Latest recording status — 7 September 2026
 
 Later source corrections supersede Soil Health takes **3, 17** and Introduction
-takes **9, 13, 14, 15, 16, 18, 19, 20**, plus their full listening tracks.
+takes **9, 13, 14, 15, 16, 18, 19, 20**, and Reading the Landscape takes **4, 6, 7, 8, 10, 11, 12, 14, 15, 16, 18, 20, 21**,
+and Water takes **23, 24**, plus their four full listening tracks.
 Their replacements have not been recorded. The historical 185-clip pack below
-is not a current source match for those ten takes. Voice choice remains Leah.
+is not a current source match for those 25 takes. Voice choice remains Leah.
 
 Rory has now explicitly approved the Microsoft transfer. All 185 English clips
 for the nine remaining modules are recorded and saved for review, with nine full

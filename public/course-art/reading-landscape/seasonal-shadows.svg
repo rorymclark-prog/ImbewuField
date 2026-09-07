@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="810" viewBox="0 0 1440 810">
+  <defs>
+    <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#f7ead0"/><stop offset="1" stop-color="#fffaf0"/></linearGradient>
+    <pattern id="hatch" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(25)"><path d="M0 0V12" stroke="#637461" stroke-width="3" opacity=".3"/></pattern>
+  </defs>
+  <rect width="1440" height="810" fill="#F7F2E9"/>
+  <!-- Both panels use the same wall height and level ground. Rays pass from the sun
+       through the wall top to the end of its ground shadow; no latitude is implied. -->
+  <g transform="translate(35 90)">
+    <rect width="665" height="630" rx="14" fill="url(#sky)" stroke="#c6b38b" stroke-width="2"/>
+    <path d="M0 480H665V630H0Z" fill="#bdb78d"/>
+    <path d="M0 505H665V630H0Z" fill="#b28d62"/>
+    <path d="M0 480H665" stroke="#69744f" stroke-width="5"/>
+    <circle cx="130" cy="65" r="27" fill="#e4b945"/>
+    <g stroke="#d9aa32" stroke-width="4"><path d="M130 25V13M130 105V117M90 65H78M170 65H182M102 37L93 28M158 93L167 102M102 93L93 102M158 37L167 28"/></g>
+    <path d="M130 65L302.264 480" stroke="#cfac55" stroke-width="3" stroke-dasharray="8 7" fill="none"/>
+    <path d="M240 330L302.264 480H240Z" fill="#59695c" opacity=".14"/>
+    <path d="M240 480H302.264V495H240Z" fill="#59695c"/>
+    <path d="M226 330H240V480H226Z" fill="#ad845c" stroke="#71573d" stroke-width="2"/>
+    <path d="M228 368H239M228 405H239M228 443H239" stroke="#71573d"/>
+    <path d="M0 545H665M0 590H665" stroke="#947955" opacity=".3"/>
+  </g>
+  <g transform="translate(740 90)">
+    <rect width="665" height="630" rx="14" fill="url(#sky)" stroke="#c6b38b" stroke-width="2"/>
+    <path d="M0 480H665V630H0Z" fill="#bdb78d"/>
+    <path d="M0 505H665V630H0Z" fill="#b28d62"/>
+    <path d="M0 480H665" stroke="#69744f" stroke-width="5"/>
+    <circle cx="80" cy="218" r="27" fill="#e4b945"/>
+    <g stroke="#d9aa32" stroke-width="4"><path d="M80 178V166M80 258V270M40 218H28M120 218H132M52 190L43 181M108 246L117 255M52 246L43 255M108 190L117 181"/></g>
+    <path d="M80 218L454.286 480" stroke="#cfac55" stroke-width="3" stroke-dasharray="8 7" fill="none"/>
+    <path d="M240 330L454.286 480H240Z" fill="#59695c" opacity=".14"/>
+    <path d="M240 480H454.286V495H240Z" fill="#59695c"/>
+    <path d="M226 330H240V480H226Z" fill="#ad845c" stroke="#71573d" stroke-width="2"/>
+    <path d="M228 368H239M228 405H239M228 443H239" stroke="#71573d"/>
+    <path d="M0 545H665M0 590H665" stroke="#947955" opacity=".3"/>
+  </g>
+</svg>
