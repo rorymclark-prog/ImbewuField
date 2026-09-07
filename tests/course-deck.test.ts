@@ -16,6 +16,18 @@ import { COURSE_MODULES } from '@/lib/course-modules';
 const PUBLIC = new URL('../public/', import.meta.url);
 const onDisk = (url: string) => existsSync(new URL(url.replace(/^\//, ''), PUBLIC));
 
+test('every Watch promise now has a demonstration, and new wordless diagrams have readable explanations', () => {
+  for (const [moduleId, deck] of Object.entries(COURSE_DECKS)) {
+    for (const slide of deck.slides.filter(s => /^Watch:/.test(s.title))) {
+      const animation = animationUrls(moduleId, slide.slide);
+      assert.ok(animation, `${moduleId}/${slide.slide} promises a demonstration`);
+      assert.ok(onDisk(animation.video));
+      assert.ok(onDisk(animation.poster));
+      if (moduleId !== 'seeds-sovereignty') assert.ok(animation.description);
+    }
+  }
+});
+
 const normalizeText = (s: string) => s
   .replace(/<[^>]*>/g, ' ')
   .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"')

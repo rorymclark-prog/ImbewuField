@@ -29,6 +29,8 @@ export interface NarrationTrack {
 export interface ModuleNarration {
   /** Recorded languages, best first. Codes match lib/tts.ts LANG_TO_BCP47 keys. */
   languages: string[];
+  /** Voice IDs of the actual stored take, not the voice planned for its replacement. */
+  recordedVoices?: Record<string, string>;
   /** Existing recordings withheld because their instructions no longer match the lesson.
    * Keep their provenance and files, but never offer them for playback or offline download. */
   recordingHold?: Record<string, string>;
@@ -44,9 +46,15 @@ export interface ModuleNarration {
 
 /** Keyed by module id from lib/course-modules.ts. A module absent here simply has no
  *  recording yet — that is the normal state, not an error. */
+export const COURSE_VOICE_TARGETS: Readonly<Record<string, string>> = Object.freeze({
+  en: 'en-ZA-LeahNeural',
+  zu: 'zu-ZA-ThandoNeural',
+});
+
 export const COURSE_NARRATION: Record<string, ModuleNarration> = {
   'seeds-sovereignty': {
     languages: ['zu', 'en'],
+    recordedVoices: { en: 'en-ZA-LeahNeural', zu: 'zu-ZA-ThandoNeural' },
     // 24 slides, re-recorded 2026-07-28 to match the rewritten home-study scripts in
     // docs/narration/. The earlier 10-clip take was cut from a 10-slide deck written in
     // FACILITATOR voice — it addressed "the participants" and told the listener to pause the
@@ -91,6 +99,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
   },
   'intro-permaculture': {
     languages: ['en'],
+    recordedVoices: { en: 'en-ZA-LukeNeural' },
     // 22 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural (Antigravity's batch run) and
     // verified by import-course-audio: 22/22 clips matched their script blocks, median 3.22 w/s.
     // Replacement production follows Seeds: en-ZA-LeahNeural. The existing Luke take is
@@ -122,6 +131,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
   },
   'reading-landscape': {
     languages: ['en'],
+    recordedVoices: { en: 'en-ZA-LukeNeural' },
     // 21 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural and verified by
     // import-course-audio: every clip matched its script block.
     // This deck labels its own boundaries — slides 4, 8, 12 and 16 open "Lesson 1" to "Lesson 4" —
@@ -152,6 +162,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
   },
   'water-harvesting': {
     languages: ['en'],
+    recordedVoices: { en: 'en-ZA-LukeNeural' },
     recordingHold: { en: 'The water-safety instructions have changed. Read the updated slides while replacement narration is prepared.' },
     // 24 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural and verified by
     // import-course-audio: every clip matched its script block.
@@ -186,6 +197,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
   },
   'soil-health': {
     languages: ['en'],
+    recordedVoices: { en: 'en-ZA-LukeNeural' },
     // 20 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural and verified by
     // import-course-audio: every clip matched its script block.
     tracks: [
@@ -213,6 +225,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
   },
   'vegetables-staples': {
     languages: ['en'],
+    recordedVoices: { en: 'en-ZA-LukeNeural' },
     // 18 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural and verified by
     // import-course-audio: every clip matched its script block.
     tracks: [
@@ -238,6 +251,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
   },
   'plant-guilds': {
     languages: ['en'],
+    recordedVoices: { en: 'en-ZA-LukeNeural' },
     // 20 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural and verified by
     // import-course-audio: every clip matched its script block.
     // Slide 2 is this deck's "Why This Matters", under a module-specific name.
@@ -266,6 +280,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
   },
   'food-forest': {
     languages: ['en'],
+    recordedVoices: { en: 'en-ZA-LukeNeural' },
     // 20 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural and verified by
     // import-course-audio: every clip matched its script block.
     // Slide 8 reads back l1's closing lines about the canopy closing by year three to five, so it
@@ -295,6 +310,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
   },
   'small-livestock': {
     languages: ['en'],
+    recordedVoices: { en: 'en-ZA-LukeNeural' },
     // 20 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural and verified by
     // import-course-audio: every clip matched its script block.
     // The "Watch" clip leads each lesson here rather than following its opening slide (4, 9, 14),
@@ -324,6 +340,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
   },
   'market-community': {
     languages: ['en'],
+    recordedVoices: { en: 'en-ZA-LukeNeural' },
     // 20 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural and verified by
     // import-course-audio: every clip matched its script block.
     // Same deck shape as small-livestock: each lesson opens on its "Watch" clip (4, 9, 14).

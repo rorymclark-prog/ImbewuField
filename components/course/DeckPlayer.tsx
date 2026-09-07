@@ -86,6 +86,10 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   // is a lesson.
   const [running, setRunning] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const advancedSlide = useRef<number | null>(null);
+  const silentReadingElapsed = useRef(false);
+  useEffect(() => { advancedSlide.current = null; }, [index, lang, running]);
 
   const current = slides[index];
   const total = slides.length;
@@ -124,6 +128,12 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   // Stop button that stops nothing.
   useEffect(() => {
     const el = audioRef.current;
+    const video = videoRef.current;
+    if (!running) video?.pause();
+    else if (video?.paused) {
+      if (video.ended) video.currentTime = 0;
+      video.play()?.catch(() => setRunning(false));
+    }
     if (!el) return;
     el.pause();
     el.currentTime = 0;
@@ -160,15 +170,23 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
 
   // When a clip ends, turn the page. On the last slide, stop rather than loop.
   const advance = useCallback(() => {
+    // Audio and video can emit ended in the same tick; that still means one page turn.
+    if (advancedSlide.current === index) return;
+    advancedSlide.current = index;
     setIndex((i) => {
       if (i >= total - 1) { setRunning(false); return i; }
       return i + 1;
     });
-  }, [total]);
+  }, [total, index]);
 
   const onNarrationEnded = useCallback(() => {
-    if (running) advance();
+    // A short spoken sentence must not hide the last action in a longer demonstration.
+    if (running && (!videoRef.current || videoRef.current.ended)) advance();
   }, [running, advance]);
+
+  const onDemonstrationEnded = useCallback(() => {
+    if (running && (audioForCurrent ? audioRef.current?.ended : silentReadingElapsed.current)) advance();
+  }, [running, audioForCurrent, advance]);
 
   // A SLIDE WITH NO NARRATION MUST NOT END THE LESSON.
   //
@@ -181,10 +199,15 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   // Long enough to actually read the slide, since that is all there is to do on it.
   const SILENT_SLIDE_MS = 7000;
   useEffect(() => {
+    silentReadingElapsed.current = false;
     if (!running || audioForCurrent) return;
-    const t = setTimeout(advance, SILENT_SLIDE_MS);
+    const readingFrames = current ? slideImagesFor(moduleId, lang, current.slide).length : 1;
+    const t = setTimeout(() => {
+      silentReadingElapsed.current = true;
+      if (!videoRef.current || videoRef.current.ended) advance();
+    }, SILENT_SLIDE_MS * Math.max(1, readingFrames));
     return () => clearTimeout(t);
-  }, [running, audioForCurrent, advance]);
+  }, [running, audioForCurrent, advance, index, current, moduleId, lang]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -265,10 +288,13 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
       >
         {isPlaying && anim ? (
           <video
+            key={`${moduleId}-${current.slide}-${lang}`}
+            ref={videoRef}
             src={anim.video}
             poster={anim.poster}
             autoPlay
-            loop
+            onEnded={onDemonstrationEnded}
+            onError={() => setRunning(false)}
             muted
             playsInline
             controls
@@ -308,7 +334,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
           <summary style={{ cursor: 'pointer', padding: '8px 0', fontSize: 14 }}>{illustratedOpening ? 'Read the introduction' : 'Read this slide'}</summary>
           {(illustratedOpening ? continuationImages : frameImages).map((frame, part) => (
             // eslint-disable-next-line @next/next/no-img-element
-            <img key={frame.url} src={frame.url} alt={`${heading}, introduction part ${part + 1}`} loading="lazy"
+            <img key={frame.url} src={frame.url} alt={`${heading}, reading part ${part + 1}`} loading="lazy"
               style={{ display: 'block', width: '100%', height: 'auto', marginTop: 8, borderRadius: 10 }} />
           ))}
         </details>

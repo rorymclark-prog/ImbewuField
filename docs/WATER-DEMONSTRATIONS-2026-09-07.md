@@ -82,8 +82,9 @@ export refuses this stale translation. The generated comparison packet flags 16
 mechanical differences; that count is not a translation review. Its future narration
 target remains **Microsoft zu-ZA-ThandoNeural**.
 
-This workspace has no callable service for those voices and no installed `edge-tts`
-runtime. No replacement audio, voice audition or first-language approval is claimed.
+The later continuation installed `edge-tts` and generated a Leah reference, but
+automatic approval review requires permission for the full Microsoft speech transfer.
+No Water replacement take, voice audition or first-language approval is claimed.
 Keep the hold until a complete, reviewed replacement take has been imported, checked
 and documented. Duration checks alone cannot identify the voice or confirm the words.
 

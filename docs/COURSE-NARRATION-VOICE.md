@@ -22,7 +22,8 @@ This decision is a target for production. It does not change or relabel the audi
 already on disk: Seeds still uses Leah; the other nine English modules still use
 Luke until replacement recordings are generated and verified. Water’s old Luke
 take is retained for provenance but withheld from playback after source corrections. No replacement
-recording was made in this change. No earlier user preference between the two
+recording has been activated. Eight Food Forest clips were generated as a separate
+review pack in the later continuation; their listening review is still outstanding. No earlier user preference between the two
 English voices was recovered from the personal-context search.
 
 ## Recording and review
@@ -49,3 +50,22 @@ scripts originally labelled themselves drafts. Water is now also explicitly mark
 as a draft because the English safety instructions changed; its translation must
 be reconciled before production. New field activities require their own finalised
 scripts before any recording. Generating a recording sheet is not review approval.
+
+## Recording continuation — 7 September 2026
+
+`COURSE_VOICE_TARGETS` now supplies the recording-sheet voice; `recordedVoices`
+in each module records the actual existing take separately. The recording exporter
+also writes voice settings and the script's draft status. The review-pack recorder
+refuses settings marked for review and never writes to `public/course-audio`.
+
+A Leah reference succeeded after adding the operating system's existing trusted
+certificate authorities to the speech runtime. TLS verification stayed enabled.
+Eight Food Forest slide clips (1–8, 164.856 seconds) were generated before automatic
+approval review stopped the bulk request. Their source/audio hashes and speech
+boundaries are preserved in the review pack. They have not been auditioned here.
+
+The tool requires explicit user permission to send the nine English lesson scripts
+to Microsoft's speech service. GitHub confirms the source repository is public and
+the nine scripts match the published branch; the review still requires permission.
+Do not resume the batch without it. The review pack contains all 185 numbered text
+files, the eight completed clips and a short voice reference.

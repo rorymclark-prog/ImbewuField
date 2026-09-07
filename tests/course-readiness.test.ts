@@ -6,6 +6,16 @@ import { completeModuleIds, moduleReadiness, moduleReadinessDetail, readinessLab
 import { COURSE_DECKS } from '@/lib/course-deck';
 import { COURSE_NARRATION } from '@/lib/course-audio';
 
+test('bilingual audio in a different voice does not fulfil the Seeds production reference', () => {
+  const narration = COURSE_NARRATION['seeds-sovereignty'];
+  const voices = narration.recordedVoices;
+  try {
+    narration.recordedVoices = { en: 'en-ZA-LukeNeural', zu: 'zu-ZA-ThandoNeural' };
+    assert.equal(moduleReadiness('seeds-sovereignty'), 'in-progress');
+    assert.match(readinessLabel('seeds-sovereignty')!.detail, /consistent English narration voice/);
+  } finally { narration.recordedVoices = voices; }
+});
+
 test('new Water demonstrations do not conceal the held recording or the isiZulu gap', () => {
   const detail = moduleReadinessDetail('water-harvesting');
   assert.equal(detail.missingDemonstrations, 0);

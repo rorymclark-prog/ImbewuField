@@ -172,4 +172,5 @@ async function main() {
   }
   fs.writeFileSync(path.join(QA,'manifest.json'),JSON.stringify(report,null,2)+'\n');
 }
-main().catch(e=>{process.stderr.write(e.stack+'\n');process.exitCode=1;});
+module.exports = { C, clamp, progress, circle, line, shape, box, grass, tree, flow, rain, frame };
+if (require.main === module) main().catch(e=>{process.stderr.write(e.stack+'\n');process.exitCode=1;});

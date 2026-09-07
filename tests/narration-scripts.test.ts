@@ -5,7 +5,7 @@ import { join } from 'node:path';
 
 import { COURSE_NARRATION } from '@/lib/course-audio';
 import { COURSE_MODULES } from '@/lib/course-modules';
-import { NARRATION_BLOCKER_MARKERS } from '@/lib/narration-blockers';
+import { NARRATION_BLOCKER_MARKERS, hasNarrationBlocker } from '@/lib/narration-blockers';
 
 // A NARRATION SCRIPT IS READ ALOUD TO A FARMER AS INSTRUCTION. Whatever is in the file is what
 // they hear, so the file's contents are a safety surface, not just content.
@@ -30,6 +30,11 @@ import { NARRATION_BLOCKER_MARKERS } from '@/lib/narration-blockers';
 
 const DIR = join(process.cwd(), 'docs/narration');
 const SCRIPTS = readdirSync(DIR).filter((f) => f.endsWith('.md'));
+
+test('a translation marked source changed remains a draft on the production board', () => {
+  assert.equal(hasNarrationBlocker('> DRAFT — SOURCE CHANGED. Reconcile with the corrected source.'), true);
+  assert.equal(hasNarrationBlocker('This lesson explains where the water source is.'), false);
+});
 
 /** Phrases a script uses to say, in its own words, that it is not ready. */
 // Shared with scripts/course-status.mjs. This list used to live here alone, and the production

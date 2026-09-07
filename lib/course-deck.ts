@@ -113,6 +113,71 @@ const WATER_ANIMATIONS: Record<number, DeckAnimation> = {
     description: 'Used basin water travels through a pipe into soil beneath mulch, away from the trunk and fruit. It soaks into the root zone without spraying or pooling. Mulch does not disinfect it. Use suitable greywater promptly and keep people and animals away.' },
 };
 
+const SOIL_HEALTH_ANIMATIONS: Record<number, DeckAnimation> = {
+  5: { src: 'soil-observation', poster: 'soil-observation', bytes: 44815, seconds: 12,
+    description: "Look for soil crumbs, roots and open channels. Compare these with the tightly packed sample. Feel and smell your own soil too: colour alone does not tell the whole story." },
+  10: { src: 'compost-building', poster: 'compost-building', bytes: 51727, seconds: 12,
+    description: "Build with dry brown material and fresh green material. Add enough water to keep the heap moist, while leaving air spaces. Follow the lesson when choosing and mixing the materials." },
+  14: { src: 'mulch-and-rain', poster: 'mulch-and-rain', bytes: 243862, seconds: 12,
+    description: "Both soil sections receive the same rain. On the bare side, raindrops strike the surface and soil moves with runoff. Mulch cushions the soil and slows that movement." },
+};
+
+const PLANT_GUILDS_ANIMATIONS: Record<number, DeckAnimation> = {
+  5: { src: 'root-nodules', poster: 'root-nodules', bytes: 35003, seconds: 12,
+    description: "The close-up shows nodules on a legume root. Rhizobia living there help the plant use nitrogen from the air. Plant material and roots feed the soil as they break down." },
+  10: { src: 'chop-and-drop', poster: 'chop-and-drop', bytes: 46261, seconds: 12,
+    description: "Cut suitable leaves and spread them over exposed ground around living plants. Keep the crown and trunk clear. Soil life gradually breaks the leaves down." },
+  15: { src: 'tree-guild-roles', poster: 'tree-guild-roles', bytes: 61517, seconds: 12,
+    description: "Start with the central fruit tree. Add plants that supply mulch, support helpful insects and cover the soil. The two views show these roles from above and from the side; use the lesson to choose suitable plants." },
+};
+
+const FOOD_FOREST_ANIMATIONS: Record<number, DeckAnimation> = {
+  5: { src: 'seven-growing-layers', poster: 'seven-growing-layers', bytes: 53944, seconds: 12,
+    description: "Follow the highlight: canopy, smaller tree, shrub, herb, ground cover, roots and climber. Notice how each uses a different part of the growing space. The plants are spread apart here so you can see them clearly." },
+  10: { src: 'climate-and-selection', poster: 'climate-and-selection', bytes: 43927, seconds: 12,
+    description: "The left site is exposed to cold; the right site is warm. Choose plants that suit the conditions where they will grow. Check each choice before planting." },
+  15: { src: 'food-forest-establishment', poster: 'food-forest-establishment', bytes: 100448, seconds: 12,
+    description: "Prepare and mulch the ground. Establish suitable pioneers and fruit trees, then add lower plants, ground cover and climbers as shelter develops. These are stages to plan around your own conditions." },
+};
+
+const READING_LANDSCAPE_ANIMATIONS: Record<number, DeckAnimation> = {
+  5: { src: 'follow-rainwater', poster: 'follow-rainwater', bytes: 211214, seconds: 12,
+    description: "Follow rainfall down the slope. Some water soaks in; some spreads and gathers before excess water leaves. Walk your own site after rain and trace these paths." },
+  9: { src: 'sun-and-shadow', poster: 'sun-and-shadow', bytes: 48252, seconds: 12,
+    description: "Compare the higher and lower northern sun. The lower sun casts longer shadows towards the south. Both side views look east: north is on the left and south on the right." },
+  13: { src: 'wind-and-cold-air', poster: 'wind-and-cold-air', bytes: 254677, seconds: 12,
+    description: "Thin grey arrows show wind over the ridges and through the gap. The broad blue arrows show cold air moving downhill and gathering in low ground. Look for exposed places, shelter and frost pockets on your site." },
+  17: { src: 'map-existing-features', poster: 'map-existing-features', bytes: 72211, seconds: 12,
+    description: "Trace the boundary, building and access route. Add existing water, slope information and a direction arrow. Record what is already there before drawing a new design." },
+};
+
+const INTRO_PERMACULTURE_ANIMATIONS: Record<number, DeckAnimation> = {
+  7: { src: 'sharing-and-monitoring', poster: 'sharing-and-monitoring', bytes: 48204, seconds: 12,
+    description: "Neighbours share water while someone checks the source level. Agree who can collect water and how use will be monitored. Change the arrangement when the source or household needs change." },
+  13: { src: 'diversity-and-disturbance', poster: 'diversity-and-disturbance', bytes: 148971, seconds: 12,
+    description: "Both beds face the same disturbance. The uniform planting responds in a similar way; the mixed planting shows different responses, including damage. Diversity spreads risk, but a severe storm can still damage the whole garden." },
+  19: { src: 'windward-shelter', poster: 'windward-shelter', bytes: 190417, seconds: 12,
+    description: "Wind enters both plans from the upper left. On the left, the windbreak stands between it and the crops. On the right, the crops are exposed before wind reaches the trees. Observe the damaging wind on your own site before placing shelter." },
+};
+
+const SMALL_LIVESTOCK_ANIMATIONS: Record<number, DeckAnimation> = {
+  4: { src: 'moving-chicken-tractor', poster: 'moving-chicken-tractor', bytes: 99035, seconds: 12,
+    description: "Move the enclosure across an empty bed, keeping feed, water and shelter with the birds. Scratching disturbs old material and manure is left behind. Agree a safe manure and planting plan before growing food in the bed." },
+  9: { src: 'bees-and-flowers', poster: 'bees-and-flowers', bytes: 61125, seconds: 12,
+    description: "Follow the bee from the hive to one flower and then another. Pollen picked up at the first flower travels with it. The bee and pollen are enlarged so you can see the action." },
+  14: { src: 'livestock-nutrient-cycle', poster: 'livestock-nutrient-cycle', bytes: 61127, seconds: 12,
+    description: "Follow suitable plant material to the animals, manure to composting, and finished compost back to the bed. Feed choices and manure handling need care. The composting stage comes before material returns to food-growing soil." },
+};
+
+const MARKET_COMMUNITY_ANIMATIONS: Record<number, DeckAnimation> = {
+  4: { src: 'harvest-record', poster: 'harvest-record', bytes: 32633, seconds: 12,
+    description: "Each harvest gets a record. Follow the columns for household food, sales, gifts and compost. Add new rows as harvests happen, using your actual quantities and money amounts." },
+  9: { src: 'surplus-routes', poster: 'surplus-routes', bytes: 88496, seconds: 12,
+    description: "Follow the harvest to three possible destinations: a roadside stall, a group delivery to a shop, or a box delivered to a household. Compare the work and costs of each route." },
+  14: { src: 'neighbour-sharing', poster: 'neighbour-sharing', bytes: 115889, seconds: 12,
+    description: "Neighbours contribute seed, tools, learning and transport. Each contribution strengthens the local food network. Agree responsibilities and keep records of the sharing." },
+};
+
 /**
  * Slides are derived from the narration manifest rather than typed out again.
  *
@@ -161,19 +226,19 @@ export const COURSE_DECKS: Record<string, ModuleDeck> = {
   // spoken slide. Existing recording numbers remain stable. The old per-module production
   // observations are preserved in git; current status belongs in moduleReadinessDetail.
   //
-  // These nine modules still need matched teaching demonstrations and reviewed isiZulu slides
-  // and recordings. A cover plus text cards does not meet the Seeds production standard.
-  // Eight isiZulu scripts label themselves drafts; the missing flag on Water is not review proof.
+  // Every Watch slot now has a demonstration. These nine modules still need illustrated
+  // teaching compositions, reviewed isiZulu slides and consistent bilingual recordings.
+  // All nine isiZulu scripts carry a draft marker, including Water's SOURCE CHANGED hold.
   'intro-permaculture': {
     slideLanguages: ['en'],
     imageExt: 'svg',
-    slides: slidesFromNarration('intro-permaculture', {}),
+    slides: slidesFromNarration('intro-permaculture', INTRO_PERMACULTURE_ANIMATIONS),
   },
 
   'soil-health': {
     slideLanguages: ['en'],
     imageExt: 'svg',
-    slides: slidesFromNarration('soil-health', {}),
+    slides: slidesFromNarration('soil-health', SOIL_HEALTH_ANIMATIONS),
   },
 
   'vegetables-staples': {
@@ -185,25 +250,25 @@ export const COURSE_DECKS: Record<string, ModuleDeck> = {
   'food-forest': {
     slideLanguages: ['en'],
     imageExt: 'svg',
-    slides: slidesFromNarration('food-forest', {}),
+    slides: slidesFromNarration('food-forest', FOOD_FOREST_ANIMATIONS),
   },
 
   'market-community': {
     slideLanguages: ['en'],
     imageExt: 'svg',
-    slides: slidesFromNarration('market-community', {}),
+    slides: slidesFromNarration('market-community', MARKET_COMMUNITY_ANIMATIONS),
   },
 
   'plant-guilds': {
     slideLanguages: ['en'],
     imageExt: 'svg',
-    slides: slidesFromNarration('plant-guilds', {}),
+    slides: slidesFromNarration('plant-guilds', PLANT_GUILDS_ANIMATIONS),
   },
 
   'small-livestock': {
     slideLanguages: ['en'],
     imageExt: 'svg',
-    slides: slidesFromNarration('small-livestock', {}),
+    slides: slidesFromNarration('small-livestock', SMALL_LIVESTOCK_ANIMATIONS),
   },
 
   'water-harvesting': {
@@ -215,7 +280,7 @@ export const COURSE_DECKS: Record<string, ModuleDeck> = {
   'reading-landscape': {
     slideLanguages: ['en'],
     imageExt: 'svg',
-    slides: slidesFromNarration('reading-landscape', {}),
+    slides: slidesFromNarration('reading-landscape', READING_LANDSCAPE_ANIMATIONS),
   },
 };
 

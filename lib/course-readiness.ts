@@ -16,7 +16,7 @@
 // disappears by itself.
 
 import { COURSE_MODULES } from '@/lib/course-modules';
-import { narrationFor } from '@/lib/course-audio';
+import { narrationFor, COURSE_VOICE_TARGETS } from '@/lib/course-audio';
 import { hasDeck, deckFor, slideImageUrl, slideAudioUrl } from '@/lib/course-deck';
 import { COURSE_ASSET_SIZES } from '@/lib/course-asset-sizes';
 
@@ -31,6 +31,7 @@ export interface ReadinessDetail {
   totalLessons: number;
   slideLanguages: string[];
   missingDemonstrations: number;
+  narrationVoicesMatch: boolean;
 }
 
 /**
@@ -66,12 +67,15 @@ export function moduleReadinessDetail(moduleId: string): ReadinessDetail {
       || COURSE_ASSET_SIZES[`/course-animations/${moduleId}/posters/${animation.poster}.jpg`] === undefined;
   }).length;
 
+  const narrationVoicesMatch = ['en', 'zu'].every(lang =>
+    narration?.recordedVoices?.[lang] === COURSE_VOICE_TARGETS[lang]);
   const complete =
     totalLessons > 0 &&
     illustratedLessons === totalLessons &&
     narrationLanguages.includes('en') && narrationLanguages.includes('zu') &&
     slideLanguages.includes('en') && slideLanguages.includes('zu') &&
     missingDemonstrations === 0 &&
+    narrationVoicesMatch &&
     deck;
 
   return {
@@ -82,6 +86,7 @@ export function moduleReadinessDetail(moduleId: string): ReadinessDetail {
     totalLessons,
     slideLanguages,
     missingDemonstrations,
+    narrationVoicesMatch,
   };
 }
 
@@ -136,6 +141,7 @@ export function readinessLabel(moduleId: string): { text: string; detail: string
   if (!d.narrationLanguages.includes('zu')) toCome.push('isiZulu narration');
   if (d.hasDeck && !d.slideLanguages.includes('zu')) toCome.push('isiZulu slides');
   if (d.missingDemonstrations) toCome.push(`${d.missingDemonstrations} demonstrations`);
+  if (d.narrationLanguages.includes('en') && narrationFor(moduleId)?.recordedVoices?.en !== COURSE_VOICE_TARGETS.en) toCome.push('consistent English narration voice');
   if (d.illustratedLessons < d.totalLessons) toCome.push('lesson pictures');
 
   return {

@@ -34,7 +34,8 @@ const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const TODO_ONLY = process.argv.includes('--todo');
 
 const { COURSE_MODULES } = await import(join(ROOT, 'lib/course-modules.ts'));
-const { COURSE_NARRATION } = await import(join(ROOT, 'lib/course-audio.ts'));
+const { COURSE_NARRATION, COURSE_VOICE_TARGETS, narrationHoldReason } = await import(join(ROOT, 'lib/course-audio.ts'));
+const { moduleReadinessDetail } = await import(join(ROOT, 'lib/course-readiness.ts'));
 
 const LANGS = ['en', 'zu'];
 
@@ -85,7 +86,9 @@ const rows = COURSE_MODULES.map((mod) => {
   const script = {};
   for (const lang of LANGS) script[lang] = scriptBlocks(mod.id, lang);
 
-  return { id: mod.id, title: mod.title, lessons, withImage, files: illustrations(mod.id), promised, audio, script };
+  return { id: mod.id, title: mod.title, lessons, withImage, files: illustrations(mod.id), promised, audio, script,
+    hold: Object.fromEntries(LANGS.map(lang=>[lang,narrationHoldReason(mod.id,lang)])),
+    readiness: moduleReadinessDetail(mod.id), voices: COURSE_NARRATION[mod.id]?.recordedVoices ?? {} };
 });
 
 // ── Integrity: a promise without a delivery, or audio nobody claims ───────────
@@ -119,15 +122,15 @@ const pad = (s, n) => String(s).padEnd(n);
 
 if (!TODO_ONLY) {
   console.log(`\n  ImbewuField course — ${rows.length} modules, ${rows.reduce((a, r) => a + r.lessons, 0)} lessons\n`);
-  console.log(`  ${pad('MODULE', 22)}${pad('LESSONS', 9)}${pad('IMAGES', 9)}${pad('SCRIPT EN', 11)}${pad('SCRIPT ZU', 11)}${pad('AUDIO EN', 10)}AUDIO ZU`);
+  console.log(`  ${pad('MODULE', 22)}${pad('LESSONS', 9)}${pad('IMAGES', 9)}${pad('SCRIPT EN', 11)}${pad('SCRIPT ZU', 15)}${pad('AUDIO EN', 15)}AUDIO ZU`);
   console.log(`  ${'─'.repeat(80)}`);
   for (const r of rows) {
     const imgs = `${r.withImage}/${r.lessons}`;
     console.log(
       `  ${pad(r.id, 22)}${pad(r.lessons, 9)}${pad(imgs, 9)}` +
         pad(r.script.en ? `${r.script.en.blocks} blk` : '·', 11) +
-        pad(r.script.zu ? `${r.script.zu.blocks} blk${r.script.zu.draft ? ' draft' : ''}` : '·', 11) +
-        pad(r.audio.en ? `${r.audio.en} clip` : '·', 10) +
+        pad(r.script.zu ? `${r.script.zu.blocks} blk${r.script.zu.draft ? ' draft' : ''}` : '·', 15) +
+        pad(r.audio.en ? `${r.audio.en} clip${r.hold.en ? ' HELD' : ''}` : '·', 15) +
         (r.audio.zu ? `${r.audio.zu} clip` : '·'),
     );
   }
@@ -139,12 +142,16 @@ const todo = [];
 for (const r of rows) {
   if (r.withImage < r.lessons) todo.push(`${r.id}: ${r.lessons - r.withImage} lesson illustration(s) missing (${r.withImage}/${r.lessons})`);
   if (!r.script.en) todo.push(`${r.id}: no English narration script — ChatGPT, deck + script prompt`);
+  else if (r.hold.en) todo.push(`${r.id}: English recording HELD — replace in ${COURSE_VOICE_TARGETS.en} after source and listening review`);
   else if (!r.audio.en) todo.push(`${r.id}: English script written, not yet recorded — Antigravity, en-ZA voice`);
   else if (r.script.en.blocks > r.audio.en) todo.push(`${r.id}: English script rewritten to ${r.script.en.blocks} blocks, only ${r.audio.en} clips recorded — RE-RECORD`);
+  else if (r.voices.en !== COURSE_VOICE_TARGETS.en) todo.push(`${r.id}: replace ${r.voices.en || 'unverified voice'} with ${COURSE_VOICE_TARGETS.en}, matching Seeds`);
   if (!r.script.zu) todo.push(`${r.id}: no isiZulu script`);
   else if (r.script.zu.draft) todo.push(`${r.id}: isiZulu script is a DRAFT — needs a human isiZulu speaker before recording`);
-  else if (!r.audio.zu) todo.push(`${r.id}: isiZulu script reviewed, not yet recorded`);
+  else if (!r.audio.zu) todo.push(`${r.id}: isiZulu script has no draft marker; confirm review provenance before recording`);
   else if (r.script.zu.blocks > r.audio.zu) todo.push(`${r.id}: isiZulu script rewritten to ${r.script.zu.blocks} blocks, only ${r.audio.zu} clips recorded — RE-RECORD`);
+  if (!r.readiness.slideLanguages.includes('zu')) todo.push(`${r.id}: reviewed isiZulu slides still needed`);
+  if (r.readiness.missingDemonstrations) todo.push(`${r.id}: ${r.readiness.missingDemonstrations} promised demonstrations still missing`);
 }
 
 if (problems.length) {
@@ -162,11 +169,11 @@ console.log();
 // true, but nobody hands a reviewer twenty markdown files and two windows to scroll in step.
 const draftCount = rows.filter((r) => r.script.zu?.draft).length;
 if (draftCount > 0) {
-  console.log(`  ${draftCount} module(s) are waiting on one thing: a first-language isiZulu reader.`);
+  console.log(`  ${draftCount} isiZulu script(s) need a first-language reader before recording.`);
   console.log('  `npm run course:review-packet` writes each one as a single document — English and');
   console.log('  isiZulu together, the translator\'s own uncertain terms collected at the top, and');
   console.log('  the dropped lines and moved numbers already marked.\n');
 }
 
-const done = rows.filter((r) => r.withImage === r.lessons && r.audio.en && r.audio.zu).length;
-console.log(`  ${done}/${rows.length} modules fully produced (illustrated + narrated in both languages)\n`);
+const done = rows.filter((r) => r.readiness.readiness === 'complete').length;
+console.log(`  ${done}/${rows.length} modules fully produced (bilingual slides and narration, consistent voices, illustrations and promised demonstrations)\n`);

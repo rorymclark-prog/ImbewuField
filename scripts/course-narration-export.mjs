@@ -25,6 +25,8 @@ import { homedir } from 'node:os';
 import { join, resolve } from 'node:path';
 
 import { COURSE_MODULES } from '../lib/course-modules.ts';
+import { COURSE_VOICE_TARGETS } from '../lib/course-audio.ts';
+import { hasNarrationBlocker } from '../lib/narration-blockers.ts';
 
 const argv = process.argv.slice(2);
 const all = argv[0] === '--all';
@@ -107,7 +109,11 @@ function exportModule(moduleId) {
   const langName = lang === 'zu' ? 'isiZulu' : 'English';
   // Seeds is Rory's production reference. "A South African voice" previously allowed a second
   // batch to switch from Leah to Luke unnoticed. Name the actual voice on every recording sheet.
-  const voice = lang === 'zu' ? 'Microsoft zu-ZA-ThandoNeural' : 'Microsoft en-ZA-LeahNeural';
+  const voice = `Microsoft ${COURSE_VOICE_TARGETS[lang]}`;
+  writeFileSync(join(outDir, 'voice-settings.json'), JSON.stringify({
+    voice: COURSE_VOICE_TARGETS[lang], rate: '-12%', pitch: '+0Hz', volume: '+0%',
+    module: moduleId, lang, reviewRequired: hasNarrationBlocker(raw),
+  }, null, 2) + '\n');
   const total = slides.reduce((a, s) => a + s.words, 0);
 
   const sheet = [

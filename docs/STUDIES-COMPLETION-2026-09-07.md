@@ -50,6 +50,9 @@ phrase “wired into nothing” must not be read as describing the full PR diff.
 - Lesson IDs, narration files and block numbers remain stable. Water’s old English
   audio is withheld because its safety instructions were corrected; it needs a
   complete replacement take in Leah’s voice.
+- All 28 previously empty Watch slots outside Seeds now have produced demonstrations.
+  The 22 new sequences and playback/export repairs are documented in
+  `COURSE-DEMONSTRATIONS-2026-09-07.md`.
 - Six Water Harvesting demonstrations are produced and connected, with readable
   explanations, posters and offline downloads. Four Water lessons and affected
   quizzes now match their corrected source. See `WATER-DEMONSTRATIONS-2026-09-07.md`.
@@ -113,8 +116,9 @@ site-safety claims before publishing them.
 ## The 28 demonstration slots
 
 These are the actual English narration headings outside Seeds. Each needs a
-teaching asset, matched to its existing audio block. Six Water assets below are now produced and inspected. The remaining 22 slots
-are production proposals, not assertions that assets have been made.
+teaching asset, matched to its existing audio block. All 28 now have produced and
+inspected demonstrations. The original briefs below record their teaching purpose;
+`COURSE-DEMONSTRATIONS-2026-09-07.md` lists the final files for the latest 22.
 
 | Module | Slide | Existing title after “Watch:” | Proposed visual |
 | --- | ---: | --- | --- |
@@ -153,8 +157,8 @@ need the same review.
 
 ## Remaining work before release
 
-1. Produce and review the remaining 22 matched teaching demonstrations listed above,
-   plus the remaining illustrated teaching compositions. Cover art and text
+1. Complete the remaining illustrated teaching compositions and review their fit with
+   the now-produced demonstrations listed above. Cover art and text
    cards alone do not meet the Seeds brief. Any change to spoken content needs
    corresponding narration review and, where necessary, re-recording.
 2. Complete first-language isiZulu review and recording for the nine remaining
@@ -170,9 +174,10 @@ need the same review.
    assets offline. Static frame samples were inspected; browser interaction was
    blocked locally and has not been visually verified. In particular check the
    Vegetables slide-16 continuations and all module openings.
-5. The facilitator video builder still expects one raster or video per audio
-   block. It does not yet assemble these SVG continuation frames. Do not use a
-   base-frame-only export and silently lose the extra teaching in a compiled video.
+5. The facilitator video builder now accepts SVG continuation frames under the same
+   narration block. Its app-deck export also includes demonstrations and refuses to
+   cut an action that cannot fit the recording. Review card timing and prepare complete
+   facilitator videos after the replacement recordings are accepted.
 6. Review integration with the other active studies/design branch before any
    merge. The branch is published as draft PR #426; it has not been merged or deployed.
 
@@ -214,3 +219,12 @@ claiming that a first-language speaker approved the script.
   the other nine English modules use Luke. New recording sheets now name Leah and
   Thando explicitly, following Seeds as Rory’s reference. See
   `docs/COURSE-NARRATION-VOICE.md`. Existing audio has not been replaced.
+
+## Latest continuation
+
+All 22 remaining demonstration slots are filled; the production board now tracks
+voice consistency and correctly recognises Water's stale translation. Eight numbered
+Food Forest Leah recordings are preserved in a separate review pack; 185 English clips
+are planned across nine modules. Automatic approval review requires explicit permission
+for the Microsoft speech transfer before the batch can continue. No live audio changed.
+See `COURSE-DEMONSTRATIONS-2026-09-07.md` for the current production and validation record.
