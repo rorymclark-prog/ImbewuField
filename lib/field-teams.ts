@@ -1,10 +1,53 @@
 import type { UserRole } from './db/types';
+import { validEvidenceImage } from './invoice-logo';
 
 export type FieldMember = { id: string; name: string; role: UserRole; gardenName?: string; gardenType?: string; gardenAreaM2?: number };
 export type FieldTeam = { mentorId: string; location: string; farmerIds: string[]; guidance: string; updatedAt: string };
-export type FieldVisit = { id: string; mentorId: string; farmerId: string; date: string; notes: string };
+export type FieldVisitPhoto = { image: string; caption: string };
+export type FieldVisit = {
+  id: string; mentorId: string; farmerId: string; date: string; notes: string;
+  // Optional fields keep existing visit notes readable without a migration.
+  supportRequested?: string; observations?: string; agreedAction?: string;
+  responsiblePerson?: string; followUpDate?: string; location?: string;
+  photos?: FieldVisitPhoto[]; photoCount?: number; updatedAt?: string;
+};
 export type FieldWorkspace = { people: FieldMember[]; teams: FieldTeam[]; visits: FieldVisit[]; canManage: boolean; selfId: string; sample: boolean };
 export const validFieldId = (value: unknown): value is string => typeof value === 'string' && /^[\w-]{1,128}$/.test(value);
+const validVisitDate = (value: unknown): value is string => typeof value === 'string'
+  && /^\d{4}-\d{2}-\d{2}$/.test(value) && Number.isFinite(Date.parse(value)) && new Date(value).toISOString().slice(0,10)===value;
+const optionalText = (value: unknown, max: number): value is string | undefined => value===undefined || typeof value==='string' && value.length<=max;
+
+export function validFieldVisit(value: unknown, today: string): value is FieldVisit {
+  if (!value || typeof value!=='object') return false;
+  const visit=value as FieldVisit;
+  return validFieldId(visit.id) && validFieldId(visit.mentorId) && validFieldId(visit.farmerId)
+    && validVisitDate(visit.date) && visit.date<=today && typeof visit.notes==='string' && visit.notes.length<=4000
+    && optionalText(visit.supportRequested,2000) && optionalText(visit.observations,4000) && optionalText(visit.agreedAction,2000)
+    && optionalText(visit.responsiblePerson,120) && optionalText(visit.location,240)
+    && !!(visit.notes.trim() || visit.observations?.trim())
+    && (!visit.responsiblePerson?.trim() && !visit.followUpDate || !!visit.agreedAction?.trim())
+    && (visit.followUpDate===undefined || visit.followUpDate==='' || validVisitDate(visit.followUpDate) && visit.followUpDate>=visit.date)
+    && (visit.photos===undefined || Array.isArray(visit.photos) && visit.photos.length<=2 && visit.photos.every(photo=>!!photo && validEvidenceImage(photo.image) && typeof photo.caption==='string' && !!photo.caption.trim() && photo.caption.length<=240));
+}
+
+/** Accept the older API's prefixed IDs without prefixing them again on edit. */
+export function fieldVisitDocumentId(mentorId: string, visitId: string): string {
+  if (!validFieldId(mentorId) || !validFieldId(visitId)) throw Error('Choose a valid visit record.');
+  return visitId.startsWith(`${mentorId}_`) ? visitId : `${mentorId}_${visitId}`;
+}
+export function canReadFieldVisit(visit: FieldVisit, uid: string, manage: boolean, assignedFarmerIds: ReadonlySet<string>): boolean {
+  return manage || visit.mentorId===uid && assignedFarmerIds.has(visit.farmerId);
+}
+export function fieldVisitReportLines(visit: FieldVisit, farmerName: string, mentorName?: string): string[] {
+  return [`${visit.date} | ${farmerName}${mentorName ? ` | Mentor: ${mentorName}` : ''}`,
+    ...(visit.location ? [`Site location: ${visit.location}`] : []),
+    ...(visit.supportRequested ? [`Support requested: ${visit.supportRequested}`] : []),
+    ...(visit.observations ? [`Observations / issues: ${visit.observations}`] : []),
+    ...(visit.notes ? [`Visit notes: ${visit.notes}`] : []),
+    ...(visit.agreedAction ? [`Agreed action: ${visit.agreedAction}`,`Responsible person: ${visit.responsiblePerson || 'Not yet assigned'}`,`Follow-up: ${visit.followUpDate || 'Not yet scheduled'}`] : []),
+    ...(visit.photoCount || visit.photos?.length ? [`Visit photos: ${visit.photoCount ?? visit.photos?.length ?? 0}`] : []),
+  ];
+}
 
 // A location is descriptive. Explicit membership, never a matching place name,
 // determines which farmers are returned to a mentor.
@@ -19,7 +62,7 @@ export function projectFieldWorkspace(data: FieldWorkspace, uid: string, manage:
   const teams = manage ? data.teams : data.teams.filter(t => t.mentorId === uid);
   const ids = new Set(teams.flatMap(t => [t.mentorId, ...t.farmerIds]));
   return { ...data, canManage: manage, selfId: uid, teams, people: manage ? data.people : data.people.filter(p => ids.has(p.id)),
-    visits: manage ? data.visits : data.visits.filter(v => v.mentorId === uid && ids.has(v.farmerId)) };
+    visits: data.visits.filter(v => canReadFieldVisit(v,uid,manage,ids)) };
 }
 export function freshFieldWorkspace(): FieldWorkspace {
   const workspace: FieldWorkspace = { sample: true, canManage: true, selfId: 'sample-organisation', people: [
@@ -63,7 +106,16 @@ export function freshFieldWorkspace(): FieldWorkspace {
     {group:1,farmer:0,date:'2026-08-28',notes:'Reviewed the school garden activity log with the coordinator. Confirmed the next practical session and the materials needed for learners.'},
     {group:2,farmer:0,date:'2026-09-02',notes:'Checked the month-end harvest and expense records. The grower will attach missing slips before the next group review.'},
   ];
-  workspace.visits=examples.map((example,index)=>({id:`sample-field-visit-${index+1}`,mentorId:workspace.teams[example.group].mentorId,farmerId:workspace.teams[example.group].farmerIds[example.farmer],date:example.date,notes:example.notes}));
+  const followUps=[
+    {supportRequested:'Help linking the crop calendar to daily harvest records.',observations:'The planted beds are being used but their labels are missing.',agreedAction:'Label each planted bed and use that label on the next harvest entry.',responsiblePerson:'Nomvula Dlamini',followUpDate:'2026-08-29'},
+    {supportRequested:'Help checking whether the harvest and sale records match.',observations:'Soil cover is in place and the learner can record the harvest weight.',agreedAction:'Bring the next sales invoice and compare its kilograms with the harvest record.',responsiblePerson:'Sipho Nkosi',followUpDate:'2026-09-05'},
+    {supportRequested:'Help filing a paper invoice after the sale.',observations:'The sale is recorded digitally; its original invoice still needs attaching.',agreedAction:'Attach the paper invoice and confirm whether the buyer has paid.',responsiblePerson:'Thandi Mthembu',followUpDate:'2026-09-08'},
+    {supportRequested:'Repair support for the water-storage tap.',observations:'The tap at the storage connection is leaking.',agreedAction:'Arrange the tap repair and add a photograph of the repaired connection.',responsiblePerson:'Sibusiso Ndlovu',followUpDate:'2026-09-10'},
+    {supportRequested:'Help separating household food from produce sold.',observations:'Bed labels and the latest production entry are now complete.',agreedAction:'Record household use separately when entering the next harvest.',responsiblePerson:'Nomvula Dlamini',followUpDate:'2026-09-12'},
+    {supportRequested:'Materials for the next school garden practical.',observations:'The activity log is current and the coordinator has agreed a session date.',agreedAction:'Confirm materials with the coordinator before the practical session.',responsiblePerson:'Nosipho Khumalo',followUpDate:'2026-09-09'},
+    {supportRequested:'Help preparing the month-end records for review.',observations:'Harvest and expense entries are present; some slips are missing.',agreedAction:'Attach the missing expense slips before the group review.',responsiblePerson:'Bongani Zulu',followUpDate:'2026-09-11'},
+  ];
+  workspace.visits=examples.map((example,index)=>({id:`sample-field-visit-${index+1}`,mentorId:workspace.teams[example.group].mentorId,farmerId:workspace.teams[example.group].farmerIds[example.farmer],date:example.date,notes:example.notes,location:workspace.people.find(p=>p.id===workspace.teams[example.group].farmerIds[example.farmer])?.gardenName,...followUps[index],photos:[],photoCount:0}));
   return workspace;
 }
 
@@ -78,6 +130,10 @@ export function completeSampleFieldWorkspace(data: FieldWorkspace): FieldWorkspa
       location:team.location==='Ubhejane demonstration group'?'Ubhejane garden group':team.location,
       guidance:team.guidance.replace(/ (?:This is fictional demonstration guidance\.|Fictional demo guidance\.)$/,''),
     })),
-    visits:[...data.visits,...fresh.visits.filter(visit=>!visitIds.has(visit.id)&&data.teams.some(team=>team.mentorId===visit.mentorId&&team.farmerIds.includes(visit.farmerId)))],
+    visits:[...data.visits.map(visit=>{
+      const seed=fresh.visits.find(v=>v.id===visit.id);
+      // Only enrich untouched legacy examples; never rewrite a visitor's notes.
+      return seed && !visit.updatedAt && visit.notes===seed.notes && visit.observations===undefined ? {...seed,...visit} : visit;
+    }),...fresh.visits.filter(visit=>!visitIds.has(visit.id)&&data.teams.some(team=>team.mentorId===visit.mentorId&&team.farmerIds.includes(visit.farmerId)))],
   };
 }

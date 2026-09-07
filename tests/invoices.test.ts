@@ -4,6 +4,8 @@ import { registerHooks } from 'node:module';
 import { readFileSync } from 'node:fs';
 
 import type { SavedInvoice } from '../lib/invoices.ts';
+import type { SalesLog } from '../lib/db/types.ts';
+import { invoiceDateInput, invoiceDateFromInput, invoiceEntryError, recordedSaleInvoiceError } from '../lib/invoice-entry.ts';
 
 const accountHarness: { currentUid: string | null } = { currentUid: null };
 Object.assign(globalThis, { __imbewuInvoiceAccountHarness: accountHarness });
@@ -39,6 +41,7 @@ const {
   saveInvoice,
   saveNextInvoiceNumber,
   setInvoiceStatus,
+  stageInvoiceSaleLink, loadPendingInvoiceLinks, clearPendingInvoiceLink,
 } = await import('../lib/invoices.ts');
 const {
   CROP_ENTRY_OPTIONS,
@@ -50,6 +53,7 @@ const {
 } = await import('../lib/crop-entry.ts');
 const {
   cashLedgerSales,
+  cashIncomeTotal,
   invoiceSaleDocumentId,
   invoiceSalesForPaidInvoice,
 } = await import('../lib/invoice-sales.ts');
@@ -94,6 +98,122 @@ function invoice(overrides: Partial<SavedInvoice> = {}): SavedInvoice {
     ...overrides,
   };
 }
+
+const linkedSale = (): SalesLog => ({
+  id: 'picked-sale-17', profile_id: 'farmer-a', garden_id: 'garden-1',
+  crop: 'Cabbage', kg: 12.5, amount: 112.5, buyer: 'Spaza shop',
+  sold_at: '2026-06-24T08:37:00.000Z', created_at: '2026-06-24T08:39:00.000Z', enterprise: 'vegetables',
+});
+const linkedInvoice = (): SavedInvoice => invoice({
+  id: 'linked-invoice', sourceSaleId: 'picked-sale-17', no: 44,
+  entryKind: 'paper-copy', paperReference: 'P-091', reference: 'BUYER-5',
+  items: [{ desc: 'Cabbage', qty: 12.5, unit: 'kg', price: 9 }], total: 112.5,
+  status: 'paid', paidAt: '2026-06-24T08:37:00.000Z', enterprise: 'vegetables',
+});
+
+test('retrospective invoice dates preserve the actual payment timestamp and reject impossible calendar dates', () => {
+  const paid = linkedSale().sold_at;
+  assert.equal(invoiceDateFromInput(invoiceDateInput(paid), paid), paid);
+  assert.equal(invoiceDateFromInput('2026-02-30'), null);
+  assert.equal(invoiceDateFromInput(''), null);
+  assert.match(invoiceEntryError({ ...linkedInvoice(), paperReference: '' })!, /paper invoice/);
+  assert.match(invoiceEntryError({ ...linkedInvoice(), paidAt: '2099-01-01' })!, /payment/);
+  installBrowser();
+  saveInvoice(invoice());
+  const updated = setInvoiceStatus('invoice-1', 'paid', 'cash', paid)[0];
+  assert.equal(updated.paidAt, paid);
+});
+
+test('an invoice can only attach to the exact owned sale without moving its weight, cash, period or growing area', () => {
+  const sale = linkedSale();
+  const doc = linkedInvoice();
+  assert.equal(recordedSaleInvoiceError(doc, sale, 'farmer-a'), null);
+  assert.ok(recordedSaleInvoiceError(doc, sale, 'farmer-b'));
+  for (const change of [
+    { sourceSaleId: 'another-sale' }, { enterprise: 'staples' as const },
+    { paidAt: '2026-06-25T08:37:00.000Z' }, { status: 'unpaid' as const },
+    { items: [{ ...doc.items[0], qty: 13 }] }, { items: [{ ...doc.items[0], price: 10 }] },
+    { items: [{ ...doc.items[0], desc: 'Carrots' }] },
+  ]) assert.ok(recordedSaleInvoiceError({ ...doc, ...change }, sale, 'farmer-a'));
+  assert.ok(recordedSaleInvoiceError(doc, { ...sale, invoice_id: 'different-invoice' }, 'farmer-a'));
+  assert.equal(recordedSaleInvoiceError({ ...doc, enterprise: undefined }, { ...sale, enterprise: null }, 'farmer-a'), null);
+});
+
+test('stale edits cannot rewrite or unlink a sale after its invoice is saved', () => {
+  installBrowser();
+  const doc = linkedInvoice();
+  saveInvoice(doc);
+  const original = loadInvoices()[0];
+  for (const change of [
+    { sourceSaleId: undefined }, { status: 'unpaid' as const },
+    { paidAt: '2026-06-25T08:37:00.000Z' }, { enterprise: 'staples' as const },
+    { items: [{ ...doc.items[0], qty: 13 }] },
+    { items: [{ ...doc.items[0], desc: 'Carrots' }] },
+  ]) assert.deepEqual(saveInvoice({ ...doc, ...change })[0], original);
+  assert.deepEqual(deleteInvoice(doc.id), [original]);
+  assert.deepEqual(setInvoiceStatus(doc.id, 'unpaid'), [original]);
+  assert.equal(saveInvoice({ ...doc, id: 'another-invoice' }).length, 1);
+  const corrected = saveInvoice({ ...doc, paperReference: 'P-092', notes: 'Corrected reference' })[0];
+  assert.equal(corrected.paperReference, 'P-092');
+  assert.equal(corrected.reference, 'BUYER-5');
+});
+
+test('a failed final invoice save retains a private recoverable draft and counts the existing sale once', () => {
+  const { local } = installBrowser();
+  accountHarness.currentUid = 'farmer-a';
+  const doc = linkedInvoice();
+  assert.equal(stageInvoiceSaleLink(doc), true);
+  assert.equal(loadInvoices().length, 0, 'pending documents must never enter invoice cash totals');
+  assert.equal(loadNextInvoiceNumber(), 45, 'a pending document reserves its own number');
+  const sale = { ...linkedSale(), invoice_id: doc.id, invoice_source_sale: true };
+  local.failWrites = true;
+  assert.deepEqual(saveInvoice(doc), []);
+  assert.equal(cashIncomeTotal([sale], loadInvoices()), 112.5);
+  assert.equal(loadPendingInvoiceLinks()[0].id, doc.id, 'reloading storage must recover the exact document');
+  accountHarness.currentUid = 'farmer-b';
+  assert.deepEqual(loadPendingInvoiceLinks(), [], 'another account cannot recover a private invoice');
+  accountHarness.currentUid = 'farmer-a';
+  local.failWrites = false;
+  saveInvoice(loadPendingInvoiceLinks()[0]);
+  assert.equal(clearPendingInvoiceLink(doc.id), true);
+  assert.deepEqual(loadPendingInvoiceLinks(), []);
+  assert.equal(cashIncomeTotal([sale], loadInvoices()), 112.5);
+});
+
+test('a device that cannot stage the pending invoice cannot begin a sale-link workflow', () => {
+  const { local } = installBrowser();
+  local.failWrites = true;
+  assert.equal(stageInvoiceSaleLink(linkedInvoice()), false);
+  assert.deepEqual(loadPendingInvoiceLinks(), []);
+  assert.deepEqual(loadInvoices(), []);
+});
+
+test('repeated sample invoice linking retains one original sale and rejects stale record edits', async () => {
+  installBrowser();
+  const { enterSampleMode, exitSampleMode, addSandboxSale, getSandboxSales } = await import('../lib/sample-mode.ts');
+  const { syncInvoiceSales, updateSale, deleteSale } = await import('../lib/db/queries.ts');
+  assert.equal(enterSampleMode(), true);
+  try {
+    const source = { ...linkedSale(), profile_id: 'demo' };
+    addSandboxSale(source);
+    const doc = linkedInvoice();
+    await syncInvoiceSales(doc);
+    await syncInvoiceSales(doc);
+    const rows = getSandboxSales().filter(sale => sale.id === source.id || sale.invoice_id === doc.id);
+    assert.equal(rows.length, 1);
+    assert.equal(rows[0].id, source.id);
+    assert.equal(rows[0].kg, source.kg);
+    assert.equal(rows[0].amount, source.amount);
+    assert.equal(rows[0].sold_at, source.sold_at);
+    assert.equal(rows[0].garden_id, source.garden_id);
+    assert.equal(rows[0].enterprise, source.enterprise);
+    assert.equal(cashIncomeTotal(rows, [doc]), source.amount);
+    await assert.rejects(updateSale(source.id, { amount: 999 }), /linked invoice/);
+    await assert.rejects(deleteSale(source.id), /linked invoice/);
+    await assert.rejects(syncInvoiceSales({ ...doc, sourceSaleId: undefined }), /linked/);
+    assert.equal(getSandboxSales().find(sale => sale.id === source.id)?.amount, source.amount);
+  } finally { exitSampleMode(); }
+});
 
 test('customers are trimmed, deduplicated without case, and malformed storage is ignored', () => {
   const { local } = installBrowser();

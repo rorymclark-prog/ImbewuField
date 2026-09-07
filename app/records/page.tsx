@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { suspectedDuplicateIncomeIds, DUPLICATE_ROW_NOTE, DUPLICATE_LEDGER_FOOTER } from '@/lib/duplicate-income';
 import Link from 'next/link';
-import { TrendingUp, Scale, Receipt, Plus, Sprout, FileText, Download, Camera, Loader2, Pencil, Trash2, Sparkles, BarChart3, Eye } from 'lucide-react';
+import { TrendingUp, Scale, Receipt, Plus, Sprout, FileText, Download, Camera, Loader2, Pencil, Trash2, Sparkles, BarChart3, Eye, Upload, X } from 'lucide-react';
 import ReceiptPreview, { ReceiptPaper } from '@/components/records/ReceiptPreview';
 import CropIcon from '@/components/CropIcon';
 import styles from './Records.module.css';
@@ -46,6 +46,11 @@ import { countsWithScope, loadIncludePerennials, DEFAULT_INCLUDE_PERENNIALS } fr
 import { produceDisplayName } from '@/lib/perennial-produce';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { useLanguage } from '@/lib/i18n';
+import { activeAccountUid } from '@/lib/account-local-storage';
+import {
+  EXPENSE_RECEIPT_ACCEPT, expenseReceiptScope, receiptScopeIsCurrent,
+  validateExpenseReceipt, saveExpenseWithReceipt,
+} from '@/lib/expense-receipts';
 
 /* ── One book, three tabs, and the charts as a view inside it ────────────────
  *
@@ -250,10 +255,13 @@ interface PhoneRow {
   positive: boolean; // true = money in (green), false = money out (amber)
 }
 
-function RecordDocument({ kind, id, invoices, expenses }: { kind: string; id: string; invoices: SavedInvoice[]; expenses: ExpenseLog[] }) {
-  const invoice = kind === 'invoice' ? invoices.find((row) => row.id === id) : undefined;
-  const expense = kind === 'expense' && isSampleMode() ? expenses.find((row) => row.id === id) : undefined;
+function RecordDocument({ kind, id, invoices, expenses, sales }: { kind: string; id: string; invoices: SavedInvoice[]; expenses: ExpenseLog[]; sales: SalesLog[] }) {
+  const sale = kind === 'sale' ? sales.find(row => row.id === id) : undefined;
+  const invoice = kind === 'invoice' ? invoices.find((row) => row.id === id) : sale ? invoices.find(row => row.id === sale.invoice_id || row.sourceSaleId === sale.id) : undefined;
+  const expense = kind === 'expense' ? expenses.find((row) => row.id === id) : undefined;
   if (invoice) return <Link className={styles.documentLink} href={`/invoice?view=${encodeURIComponent(invoice.id)}`} aria-label={`View invoice ${invoice.no}`}><Eye size={16} /> Invoice #{String(invoice.no).padStart(4, '0')} · View</Link>;
+  if (sale?.invoice_source_sale) return <Link className={styles.documentLink} href={`/invoice?sale=${encodeURIComponent(sale.id)}`}><FileText size={16} /> Recover invoice</Link>;
+  if (sale && !sale.invoice_id && Number.isFinite(sale.kg) && sale.kg > 0 && Number.isFinite(sale.amount) && sale.amount > 0) return <Link className={styles.documentLink} href={`/invoice?sale=${encodeURIComponent(sale.id)}`}><FileText size={16} /> Create invoice</Link>;
   if (expense) return <ReceiptPreview expense={expense} />;
   return null;
 }
@@ -366,7 +374,7 @@ function SalesLedger({ sales, expenses, invoices, loading, onEditSale, onEditExp
                     {item.subtitle}
                   </p>
                 )}
-                <div className={styles.documents}><RecordDocument kind={item.kind} id={item.id} invoices={invoices} expenses={expenses} /></div>
+                <div className={styles.documents}><RecordDocument kind={item.kind} id={item.id} invoices={invoices} expenses={expenses} sales={sales} /></div>
               </div>
               <div className="flex-shrink-0 text-right">
                 <p
@@ -445,23 +453,56 @@ const emptyForm = (): SaleFormState => ({ enterprise: null, crop: '', expenseCro
 // answer overrides the first silently. Locking it does not remove a write path — both branches of
 // handleSubmit are still reachable, one from each tab. `addLabel` names the button for the same
 // reason: "New entry" on a tab called Spent tells her nothing she did not already say.
-function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDone, online, lockKind, addLabel = 'New entry' }: { onSaved: () => void; editing: EditTarget; onCancelEdit: () => void; alwaysOpen?: boolean; onDone?: () => void; online: boolean; lockKind?: 'in' | 'out'; addLabel?: string }) {
+function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDone, online, lockKind, addLabel = 'New entry', onSavingChange }: { onSaved: () => void; editing: EditTarget; onCancelEdit: () => void; alwaysOpen?: boolean; onDone?: () => void; online: boolean; lockKind?: 'in' | 'out'; addLabel?: string; onSavingChange?: (saving: boolean) => void }) {
   const [open, setOpen] = useState(false);
   const [kind, setKind] = useState<'in' | 'out'>(lockKind ?? 'in');
   const [form, setForm] = useState<SaleFormState>(emptyForm());
   const [scanning, setScanning] = useState(false);
   const [scanNote, setScanNote] = useState('');
   const [shownSlip, setShownSlip] = useState<ExpenseLog | null>(null);
+  const [receiptPhoto, setReceiptPhoto] = useState<File | null>(null);
+  const [receiptUrl, setReceiptUrl] = useState('');
+  const [readingPhoto, setReadingPhoto] = useState(false);
+  const [saveNote, setSaveNote] = useState('');
   const slipInputRef = useRef<HTMLInputElement>(null);
+  const slipUploadRef = useRef<HTMLInputElement>(null);
+  const receiptScopeRef = useRef(expenseReceiptScope());
+  const receiptOwner = useRef(activeAccountUid());
+  const draftExpenseId = useRef<string | null>(null);
+  const receiptRequest = useRef(0);
+  const scanAbort = useRef<AbortController | null>(null);
+  const mounted = useRef(true);
+
+  useEffect(() => { onSavingChange?.(form.loading); }, [form.loading, onSavingChange]);
 
   const isIn = kind === 'in';
-  const reset = () => { setForm(emptyForm()); setScanNote(''); };
+  const clearReceiptDraft = () => {
+    receiptRequest.current += 1;
+    scanAbort.current?.abort();
+    setScanning(false); setReadingPhoto(false); setReceiptPhoto(null); setShownSlip(null);
+    setScanNote(''); draftExpenseId.current = null;
+  };
+  const reset = () => { setForm(emptyForm()); clearReceiptDraft(); };
+  const receiptWorkIsCurrent = (request: number) => mounted.current && request === receiptRequest.current && receiptScopeIsCurrent(receiptScopeRef.current);
+
+  useEffect(() => {
+    mounted.current = true;
+    return () => { mounted.current = false; receiptRequest.current += 1; scanAbort.current?.abort(); };
+  }, []);
+  useEffect(() => {
+    if (!receiptPhoto) { setReceiptUrl(''); return; }
+    const url = URL.createObjectURL(receiptPhoto);
+    setReceiptUrl(url);
+    return () => URL.revokeObjectURL(url);
+  }, [receiptPhoto]);
 
   // Prefill the form when a row is handed in for editing (from the ledger's ✎
   // button). When the edit ends elsewhere (e.g. saved via the desktop modal
   // while this instance sits hidden in the phone branch), close and reset so
   // stale prefill can't be re-submitted as a NEW entry later.
   useEffect(() => {
+    clearReceiptDraft();
+    setSaveNote('');
     if (!editing) {
       setOpen(false);
       setForm(emptyForm());
@@ -482,11 +523,38 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
     }
   }, [editing, lockKind]);
 
-  // Lima reads a photographed till slip and pre-fills the cost fields.
-  async function handleScan(e: React.ChangeEvent<HTMLInputElement>) {
+  // Selecting a photo is free, offline and draft-only. AI reading is a separate
+  // explicit action; either way the original stays attached to the same draft.
+  async function handlePickReceipt(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
-    if (slipInputRef.current) slipInputRef.current.value = '';
+    e.target.value = '';
     if (!file) return;
+    const request = ++receiptRequest.current;
+    scanAbort.current?.abort();
+    setScanning(false); setReadingPhoto(true); setScanNote(''); setSaveNote('');
+    try {
+      await validateExpenseReceipt(file);
+      if (!receiptWorkIsCurrent(request)) return;
+      setReceiptPhoto(file); setShownSlip(null);
+      setForm(f => ({ ...f, error: '' }));
+    } catch (error) {
+      if (receiptWorkIsCurrent(request)) setForm(f => ({ ...f, error: error instanceof Error ? error.message : 'Could not read that photo.' }));
+    } finally { if (receiptWorkIsCurrent(request)) setReadingPhoto(false); }
+  }
+
+  async function handleScan() {
+    const file = receiptPhoto;
+    if (!file || scanning || !receiptScopeIsCurrent(receiptScopeRef.current)) return;
+    // The tour never submits an uploaded personal photo to a paid service.
+    if (isSampleMode()) { setScanNote('Photo attached. Enter the item, supplier and total below.'); return; }
+    if (!online) { setScanNote('Lima needs a connection. You can still enter the cost and save this photo offline.'); return; }
+    if (file.size > 4 * 1024 * 1024) { setScanNote('Lima reads photos up to 4 MB. You can still save this original photo and enter the cost yourself.'); return; }
+    const requestUser = getFirebase()?.auth.currentUser;
+    if (!requestUser || requestUser.uid !== receiptOwner.current) { setScanNote('Your account changed. Reopen this cost before asking Lima to read it.'); return; }
+    const request = receiptRequest.current;
+    scanAbort.current?.abort();
+    const controller = new AbortController();
+    scanAbort.current = controller;
     setScanning(true);
     setScanNote('');
     setForm((f) => ({ ...f, error: '' }));
@@ -499,12 +567,16 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
       });
       const data = dataUrl.split(',')[1] ?? '';
       const mediaType = dataUrl.slice(5, dataUrl.indexOf(';')) || 'image/jpeg';
+      const headers = { 'Content-Type': 'application/json', ...await paidApiHeaders(requestUser) };
+      if (!receiptWorkIsCurrent(request) || isSampleMode() || getFirebase()?.auth.currentUser?.uid !== requestUser.uid) return;
       const resp = await fetch('/api/read-slip', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', ...await paidApiHeaders() },
+        headers,
+        signal: controller.signal,
         body: JSON.stringify({ image: { data, mediaType } }),
       });
       const r = await resp.json();
+      if (!receiptWorkIsCurrent(request) || getFirebase()?.auth.currentUser?.uid !== requestUser.uid) return;
       if (r.ok) {
         setForm((f) => ({
           ...f,
@@ -518,14 +590,15 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
         setScanNote(r.error || 'Could not read the slip.');
       }
     } catch {
-      setScanNote('Could not read the slip — check your connection and try again.');
+      if (receiptWorkIsCurrent(request) && !controller.signal.aborted) setScanNote('Could not read the slip. The photo is still attached; enter the cost below.');
     } finally {
-      setScanning(false);
+      if (receiptWorkIsCurrent(request)) setScanning(false);
     }
   }
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    if (form.loading || readingPhoto || scanning) return;
     const what = form.crop.trim();
     const amount = parseFloat(form.price);
     const kg = parseFloat(form.kg);
@@ -545,20 +618,30 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
           if (sampling) addSandboxSale(row); else await addSale(row);
         }
       } else {
-        if (editing?.type === 'expense') {
-          const patch = { enterprise: form.enterprise, item: what, amount, supplier: form.buyer.trim() || null, category: form.category, crop: form.expenseCrop.trim() || null };
-          if (sampling) updateSandboxExpense(editing.row.id, patch); else await updateExpense(editing.row.id, patch);
-        } else {
-          const row = { enterprise: form.enterprise, item: what, amount, supplier: form.buyer.trim() || null, category: form.category, crop: form.expenseCrop.trim() || null, spent_at: new Date().toISOString() };
-          if (sampling) addSandboxExpense(row); else await addExpense(row);
-        }
+        const expenseId = editing?.type === 'expense' ? editing.row.id : (draftExpenseId.current ??= crypto.randomUUID());
+        await saveExpenseWithReceipt({
+          scope: receiptScopeRef.current, expenseId, photo: receiptPhoto,
+          isQueuedWrite: error => error instanceof WriteTimeoutError,
+          saveExpense: async () => {
+            const patch = { enterprise: form.enterprise, item: what, amount, supplier: form.buyer.trim() || null, category: form.category, crop: form.expenseCrop.trim() || null };
+            if (editing?.type === 'expense') {
+              if (sampling) updateSandboxExpense(expenseId, patch); else await updateExpense(expenseId, patch, receiptOwner.current);
+            } else {
+              const row = { ...patch, id: expenseId, spent_at: new Date().toISOString() };
+              if (sampling) addSandboxExpense(row); else await addExpense(row, receiptOwner.current);
+            }
+          },
+        });
       }
+      if (!mounted.current || (!isIn && !receiptScopeIsCurrent(receiptScopeRef.current))) return;
+      setSaveNote(!isIn && receiptPhoto ? 'Cost saved. Its original receipt photo is saved on this device only.' : 'Entry saved.');
       reset();
       setOpen(false);
       onCancelEdit();
       onSaved();
       onDone?.();
     } catch (err) {
+      if (!mounted.current || (!isIn && !receiptScopeIsCurrent(receiptScopeRef.current))) return;
       if (err instanceof WriteTimeoutError) {
         // lib/db/queries.ts gave up waiting for the server to confirm — but persistentLocalCache
         // (lib/firebase/init.ts) means the entry is already durably saved on this device and
@@ -566,21 +649,23 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
         // retyping. Clear the fields (not just the spinner) so a farmer re-reading this message and
         // tapping Save again can't accidentally log the same sale or cost twice — the ledger has
         // never forgiven that (see lib/duplicate-income.ts). Leave the form open so she can read it.
+        clearReceiptDraft();
         setForm(() => ({
           ...emptyForm(),
           error: online
-            ? 'Your connection dropped mid-save. Nothing is lost — this is saved on your phone and will finish sending on its own.'
-            : "You're offline. This is saved on your phone and will reach the cloud the moment you have signal again.",
+            ? 'The entry is saved on your phone, waiting for the server to confirm. Any attached receipt photo stays on this device only.'
+            : "You're offline. The entry is saved on your phone, waiting to send. Any attached receipt photo stays on this device only.",
         }));
         setScanNote('');
         onSaved();
         return;
       }
-      setForm((f) => ({ ...f, loading: false, error: 'Failed to save. Try again.' }));
+      setForm((f) => ({ ...f, loading: false, error: err instanceof Error ? err.message : 'Failed to save. Try again.' }));
     }
   }
 
   function closeForm() {
+    if (form.loading) return;
     setOpen(false);
     reset();
     onCancelEdit();
@@ -589,15 +674,18 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
 
   if (!open && !alwaysOpen) {
     return (
+      <div>
+      {saveNote && <p role="status" className="text-sm mb-2" style={{ color: 'var(--color-ink)' }}>{saveNote}</p>}
       <button
         type="button"
-        onClick={() => setOpen(true)}
+        onClick={() => { setSaveNote(''); setOpen(true); }}
         className="w-full flex items-center justify-center gap-2 py-3 rounded-2xl text-sm font-display font-semibold transition-all"
         style={{ background: 'var(--color-forest-800)', border: '1px solid rgba(31,77,43,0.22)', color: 'var(--color-canvas)' }}
       >
         <Plus size={16} />
         {addLabel}
       </button>
+      </div>
     );
   }
 
@@ -620,7 +708,7 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
           /* Money in / out toggle */
           <div className="flex rounded-xl p-0.5 gap-0.5" style={{ background: 'rgba(226,216,196,0.5)', border: '1px solid var(--color-border)' }}>
             {([['in', 'Money in'], ['out', 'Money out']] as const).map(([k, label]) => (
-              <button key={k} type="button" onClick={() => { setKind(k); setForm((f) => ({ ...f, error: '' })); }}
+              <button key={k} type="button" disabled={form.loading} onClick={() => { clearReceiptDraft(); setKind(k); setForm((f) => ({ ...f, error: '' })); }}
                 className="flex-1 py-1.5 rounded-lg font-sans font-semibold transition-all"
                 style={kind === k
                   ? { background: k === 'in' ? '#2E6B3A' : '#C07A1E', color: '#fff', fontSize: 13 }
@@ -632,29 +720,45 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
         )}
       </div>
       <form onSubmit={handleSubmit} className="p-4 pt-2 space-y-3">
+        <fieldset disabled={form.loading} className="contents">
         <label className="block text-sm">Growing area for this entry (optional)
           <select className="w-full rounded-lg border px-3 py-2 mt-1" value={form.enterprise ?? ''} onChange={e => setForm(f => ({ ...f, enterprise: e.target.value ? e.target.value as GrowingEnterprise : null }))}>
             <option value="">Unassigned</option><option value="vegetables">Vegetable beds</option><option value="staples">Staple plots</option>{!isIn && <option value="shared">Shared by beds and staple plots</option>}<option value="other">Orchard / other</option>
           </select>
           <span className="block text-xs mt-1">Choose only when this sale or cost belongs to that growing area.</span>
         </label>
-        {/* Scan a till slip — Lima reads it and fills the cost in (Money out only) */}
+        {/* The original belongs to the cost, regardless of whether Lima reads it. */}
         {!isIn && (
-          <div>
+          <div className="rounded-xl border p-3 space-y-2" style={{ borderColor: 'var(--color-border)' }}>
+            <p className="text-sm font-semibold" style={{ color: 'var(--color-ink)' }}>Receipt photo <span className="font-normal">(optional)</span></p>
+            <div className="flex flex-wrap gap-2">
+              <button type="button" onClick={() => slipInputRef.current?.click()} disabled={readingPhoto || scanning} className="inline-flex items-center gap-2 rounded-lg border px-3 text-sm" style={{ minHeight: 44 }}><Camera size={17} /> Take photo</button>
+              <button type="button" onClick={() => slipUploadRef.current?.click()} disabled={readingPhoto || scanning} className="inline-flex items-center gap-2 rounded-lg border px-3 text-sm" style={{ minHeight: 44 }}><Upload size={17} /> Choose photo</button>
+            </div>
+            <input ref={slipInputRef} type="file" accept={EXPENSE_RECEIPT_ACCEPT} capture="environment" className="hidden" onChange={handlePickReceipt} aria-label="Take a receipt photo" />
+            <input ref={slipUploadRef} type="file" accept={EXPENSE_RECEIPT_ACCEPT} className="hidden" onChange={handlePickReceipt} aria-label="Choose a receipt photo" />
+            <p className="text-xs" style={{ color: 'var(--color-muted-strong)' }}>Works offline. The original photo saves with this cost on this device only. JPG, PNG or WebP, up to 10 MB.</p>
+            {readingPhoto && <p role="status" className="text-sm">Checking photo…</p>}
+            {receiptPhoto && receiptUrl && <div className="rounded-lg p-2" style={{ background: 'var(--color-canvas)' }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={receiptUrl} alt="Receipt photo attached to this cost" style={{ maxHeight: 220, width: '100%', objectFit: 'contain' }} />
+              <div className="flex items-center justify-between gap-2 mt-2"><p className="text-xs break-all">{receiptPhoto.name} · {(receiptPhoto.size / (1024 * 1024)).toFixed(1)} MB · Ready to save</p><button type="button" onClick={clearReceiptDraft} className="inline-flex items-center gap-1 text-sm" style={{ minHeight: 44 }}><X size={16} /> Remove photo</button></div>
+            </div>}
+            {editing?.type === 'expense' && !receiptPhoto && <ReceiptPreview expense={editing.row} />}
             <button type="button" onClick={() => {
-              if (!isSampleMode()) { slipInputRef.current?.click(); return; }
+              if (!isSampleMode()) { void handleScan(); return; }
               const slip = getSandboxExpenses().find((row) => row.category === 'seed');
               if (!slip) return;
               setShownSlip(slip);
               setForm((f) => ({ ...f, crop: slip.item, price: String(slip.amount), buyer: slip.supplier ?? '', category: slip.category ?? null, enterprise: slip.enterprise ?? null }));
               setScanNote('The item, supplier and total are ready. Check them against the receipt before saving.');
-            }} disabled={scanning}
+            }} disabled={scanning || readingPhoto || (isSampleMode() ? !!receiptPhoto : !receiptPhoto || !online)}
               className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-display font-semibold transition-all"
-              style={{ background: 'rgba(192,122,30,0.1)', border: '1px solid rgba(192,122,30,0.3)', color: 'var(--record-negative)', cursor: scanning ? 'wait' : 'pointer' }}>
-              {scanning ? <Loader2 size={15} className="animate-spin" /> : <Camera size={15} />}
-              {scanning ? 'Lima is reading...' : isSampleMode() ? 'Read a receipt with Lima' : 'Scan a till slip'}
+              style={{ minHeight: 44, background: 'rgba(192,122,30,0.1)', border: '1px solid rgba(192,122,30,0.3)', color: 'var(--record-negative)', cursor: scanning ? 'wait' : 'pointer' }}>
+              {scanning ? <Loader2 size={15} className="animate-spin" /> : <Sparkles size={15} />}
+              {scanning ? 'Lima is reading...' : isSampleMode() ? 'Read a receipt with Lima' : 'Read this photo with Lima'}
             </button>
-            <input ref={slipInputRef} type="file" accept="image/*" capture="environment" className="hidden" onChange={handleScan} />
+            {!isSampleMode() && <p className="text-xs" style={{ color: 'var(--color-muted-strong)' }}>{online ? 'Optional AI reading uses your connection. You can also fill in the cost yourself.' : 'Lima needs a connection. Enter the cost yourself and keep the photo attached.'}</p>}
             {shownSlip && <details open><summary>Receipt</summary><ReceiptPaper expense={shownSlip} /></details>}
             {scanNote && (
               <p className="text-xs font-sans mt-2 flex items-start gap-1.5" style={{ color: 'var(--color-muted-strong)' }}>
@@ -739,7 +843,8 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
           </div>
         )}
 
-        {form.error && <p className="text-xs font-sans" style={{ color: '#D4922A' }}>{form.error}</p>}
+        {form.error && <p role="alert" className="text-sm font-sans" style={{ color: 'var(--record-negative)' }}>{form.error}</p>}
+        {saveNote && <p role="status" className="text-sm">{saveNote}</p>}
 
         <div className="flex gap-2 pt-1">
           <button type="button" onClick={closeForm}
@@ -747,7 +852,7 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
             style={{ background: 'transparent', border: '1px solid var(--color-border)', color: 'var(--color-muted-strong)' }}>
             Cancel
           </button>
-          <button type="submit" disabled={form.loading}
+          <button type="submit" disabled={form.loading || readingPhoto || scanning}
             className="flex-1 py-2.5 rounded-xl text-sm font-display font-semibold flex items-center justify-center gap-2 transition-all"
             style={{ background: form.loading ? 'rgba(31,77,43,0.06)' : accent, border: 'none', color: form.loading ? 'var(--color-muted-strong)' : '#fff', cursor: form.loading ? 'not-allowed' : 'pointer' }}>
             {form.loading ? (
@@ -758,6 +863,7 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
             ) : editing ? 'Save changes' : (isIn ? 'Log sale' : 'Log cost')}
           </button>
         </div>
+        </fieldset>
       </form>
     </div>
   );
@@ -987,7 +1093,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
                 <td className="px-5 py-3 font-sans" style={{ fontSize: 14, color: 'var(--color-muted-strong)', whiteSpace: 'nowrap' }}>{r.date}</td>
                 <td className="px-5 py-3 font-display font-medium" style={{ fontSize: 14, color: 'var(--color-ink)' }}>
                   {r.desc}
-                  <div className={styles.documents}><RecordDocument kind={r.kind} id={r.id} invoices={invoices} expenses={expenses} /></div>
+                  <div className={styles.documents}><RecordDocument kind={r.kind} id={r.id} invoices={invoices} expenses={expenses} sales={sales} /></div>
                   {r.duplicateSuspect && (
                     <span className="block font-sans" style={{ fontSize: 12, color: '#B07A1E', marginTop: 2 }}>
                       {DUPLICATE_ROW_NOTE}
@@ -1190,6 +1296,7 @@ export default function RecordsPage() {
   const [dataLoading, setDataLoading] = useState(false);
   const [editing, setEditing] = useState<EditTarget>(null);
   const [desktopEntryOpen, setDesktopEntryOpen] = useState(false);
+  const [desktopEntrySaving, setDesktopEntrySaving] = useState(false);
   /**
    * WHETHER THE DEVICE IS ONLINE. An empty ledger and an unreachable one rendered identically —
    * "R 0" and "No sales logged yet" — because an offline getDocs FULFILS with an empty snapshot
@@ -1537,11 +1644,18 @@ export default function RecordsPage() {
                     <div
                       className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto px-4 py-10"
                       style={{ background: 'rgba(32,25,15,0.45)' }}
-                      onClick={() => { setEditing(null); setDesktopEntryOpen(false); }}
+                      role="dialog" aria-modal="true" aria-label="Record an entry"
+                      onClick={() => { if (!desktopEntrySaving) { setEditing(null); setDesktopEntryOpen(false); } }}
+                      onKeyDown={e => {
+                        if (e.key !== 'Escape' || (e.target as Element).closest('dialog')) return;
+                        e.stopPropagation();
+                        if (!desktopEntrySaving) { setEditing(null); setDesktopEntryOpen(false); }
+                      }}
                     >
                       <div className="w-full max-w-md" style={{ boxShadow: '0 16px 48px rgba(32,25,15,0.25)', borderRadius: 16 }} onClick={(e) => e.stopPropagation()}>
                         <LogSaleForm
                           alwaysOpen
+                          onSavingChange={setDesktopEntrySaving}
                           onSaved={loadData}
                           editing={editing}
                           onCancelEdit={() => setEditing(null)}

@@ -33,6 +33,12 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '7 September 2026', sha: 'b37644a', changes: [
+    'Start a sale with an invoice, or record a past sale and keep its paper reference.',
+    'Create an invoice from an existing sale without counting the kilograms or income twice.',
+    'Keep a slip photo with an expense on this device and reopen it from your records.',
+    'Mentor visits can include support requests, issues, agreed actions and follow-up dates.',
+  ] },
   { when: '7 September 2026', sha: '6f46334', changes: [
     'Phone headers and field-team statistics take less space, with single-line tabs.',
     'My Studies has illustrated modules and lessons, with compact progress and offline tools.',

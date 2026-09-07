@@ -50,6 +50,11 @@ export interface SavedInvoice {
   dueDateISO?: string;
   /** The buyer's own order number, so they can match this against their books. */
   reference?: string;
+  /** A retrospective document keeps its source separate from the buyer's order reference. */
+  entryKind?: import('./invoice-entry').InvoiceEntryKind;
+  paperReference?: string;
+  /** Explicitly selected existing sale; its stable ID and financial fields stay intact. */
+  sourceSaleId?: string;
   /** Note printed under the total on this invoice. */
   notes?: string;
   status: InvoiceStatus;
@@ -69,6 +74,7 @@ const C_KEY = 'imbewu_invoice_customers';
 const P_KEY = 'imbewu_invoice_products';
 const I_KEY = 'imbewu_invoices';
 const SEQ_KEY = 'imbewu_invoice_seq';
+const PENDING_LINK_KEY = 'imbewu_invoice_pending_links';
 
 function read<T>(baseKey: string): T[] {
   if (typeof window === 'undefined') return [];
@@ -217,6 +223,8 @@ function cleanInvoice(row: unknown): SavedInvoice | null {
   // it while period rows fall back to invoice date. Treat unverifiable payment as unpaid.
   const status: InvoiceStatus = invoice.status === 'paid' && paidAt ? 'paid' : 'unpaid';
   const paymentMethod = cleanPaymentMethod(invoice.paymentMethod);
+  const sourceSaleId = optionalText(invoice.sourceSaleId);
+  if (sourceSaleId && (sourceSaleId.includes('/') || status !== 'paid')) return null;
   // A due date that lands before the issue date is not a term any buyer agreed to; it is a bad
   // record. Drop it rather than print "due 3 days ago" on a freshly issued invoice.
   const dueDateISO = typeof invoice.dueDateISO === 'string'
@@ -235,6 +243,9 @@ function cleanInvoice(row: unknown): SavedInvoice | null {
     dateISO: invoice.dateISO,
     dueDateISO,
     reference: optionalText(invoice.reference),
+    entryKind: invoice.entryKind === 'past-sale' || invoice.entryKind === 'paper-copy' ? invoice.entryKind : 'new',
+    paperReference: optionalText(invoice.paperReference),
+    sourceSaleId,
     notes: optionalText(invoice.notes),
     status,
     paidAt: status === 'paid' ? paidAt : undefined,
@@ -327,10 +338,27 @@ export function addProduct(p: Product) {
 // Old records predate `status`; cleanInvoice defaults them to unpaid while
 // validating the accounting fields at the persistence boundary.
 export function loadInvoices(): SavedInvoice[] { return readInvoicesRaw(); }
+
+/** A link must survive a reload even when the final ledger write runs out of device space.
+ * Pending documents live in the same owner's private storage, outside every cash total. */
+export function loadPendingInvoiceLinks(): SavedInvoice[] {
+  return cleanInvoices(read<unknown>(PENDING_LINK_KEY)).filter(invoice => Boolean(invoice.sourceSaleId));
+}
+export function stageInvoiceSaleLink(invoice: SavedInvoice): boolean {
+  const clean = cleanInvoice(invoice);
+  if (!clean?.sourceSaleId) return false;
+  const pending = loadPendingInvoiceLinks();
+  if (pending.some(row => row.sourceSaleId === clean.sourceSaleId && row.id !== clean.id)) return false;
+  return write(PENDING_LINK_KEY, [clean, ...pending.filter(row => row.id !== clean.id)]);
+}
+export function clearPendingInvoiceLink(id: string): boolean {
+  return write(PENDING_LINK_KEY, loadPendingInvoiceLinks().filter(row => row.id !== id));
+}
 export function saveInvoice(inv: SavedInvoice): SavedInvoice[] {
   const before = loadInvoices();
   const candidateId = typeof inv.id === 'string' ? inv.id.trim() : '';
   const previous = before.find((row) => row.id === candidateId);
+  if (previous?.sourceSaleId && (inv.sourceSaleId !== previous.sourceSaleId || inv.status !== 'paid')) return before;
   // Editing invoice lines is not a payment action. Forms that do not expose payment fields may
   // omit them, but must not erase evidence already attached to a paid invoice.
   const withPayment = previous?.status === 'paid' && inv.status === 'paid'
@@ -349,6 +377,14 @@ export function saveInvoice(inv: SavedInvoice): SavedInvoice[] {
     : withPayment;
   const clean = cleanInvoice(candidate);
   if (!clean) return before;
+  if (previous?.sourceSaleId && (
+    clean.sourceSaleId !== previous.sourceSaleId || clean.status !== previous.status
+    || clean.paidAt !== previous.paidAt || clean.total !== previous.total
+    || clean.enterprise !== previous.enterprise
+    || JSON.stringify(clean.items) !== JSON.stringify(previous.items)
+  )) return before;
+  // One logged sale can have only one document, including when two open forms save in turn.
+  if (clean.sourceSaleId && before.some(row => row.id !== clean.id && row.sourceSaleId === clean.sourceSaleId)) return before;
   const list = before.filter((x) => x.id !== clean.id);
   // Invoices are accounting history, not a recent-items convenience list. Never evict an older
   // invoice merely because another was saved; if device quota is exhausted, preserve the entire
@@ -362,24 +398,27 @@ export function deleteInvoice(id: string): SavedInvoice[] {
   const before = loadInvoices();
   const cleanId = typeof id === 'string' ? id.trim() : '';
   if (!cleanId) return before;
+  if (before.find(row => row.id === cleanId)?.sourceSaleId) return before;
   const updated = before.filter((x) => x.id !== cleanId);
   if (updated.length === before.length || !writeInvoices(updated)) return before;
   notify();
   return updated;
 }
-export function setInvoiceStatus(id: string, status: InvoiceStatus, paymentMethod?: PaymentMethod): SavedInvoice[] {
+export function setInvoiceStatus(id: string, status: InvoiceStatus, paymentMethod?: PaymentMethod, receivedAt?: string): SavedInvoice[] {
   const list = loadInvoices();
   if (status !== 'paid' && status !== 'unpaid') return list;
   const cleanId = typeof id === 'string' ? id.trim() : '';
   const target = list.find((row) => row.id === cleanId);
   if (!target) return list;
+  if (target.sourceSaleId && status !== 'paid') return list;
+  if (receivedAt && !Number.isFinite(Date.parse(receivedAt))) return list;
   const method = cleanPaymentMethod(paymentMethod);
   const replacement: SavedInvoice = status === 'paid'
     ? {
       ...target,
       status,
       // Changing how a payment was received must not change when it was received.
-      paidAt: target.status === 'paid' && target.paidAt ? target.paidAt : new Date().toISOString(),
+      paidAt: target.sourceSaleId ? target.paidAt : receivedAt ?? (target.status === 'paid' && target.paidAt ? target.paidAt : new Date().toISOString()),
       paymentMethod: method ?? (target.status === 'paid' ? target.paymentMethod : undefined),
     }
     : {
@@ -408,13 +447,14 @@ export function invoiceId(): string {
 export function loadNextInvoiceNumber(fallback = 44): number {
   const requestedFallback = Number.isSafeInteger(fallback) && fallback > 0 ? fallback : 44;
   // The walkthrough now links every sale to an invoice, so its sequence is longer than 43.
-  const safeFallback = isSampleMode() ? Math.max(requestedFallback, ...getSandboxInvoices().map(invoice => invoice.no + 1)) : requestedFallback;
+  const reserved = Math.max(1, ...loadInvoices().map(invoice => invoice.no + 1), ...loadPendingInvoiceLinks().map(invoice => invoice.no + 1));
+  const safeFallback = Math.max(requestedFallback, reserved);
   if (typeof window === 'undefined') return safeFallback;
   try {
     const raw = localStorage.getItem(activeAccountLocalStorageKey(SEQ_KEY));
     if (!raw) return safeFallback;
     const value = Number.parseInt(raw, 10);
-    return Number.isSafeInteger(value) && value > 0 ? (isSampleMode() ? Math.max(value, safeFallback) : value) : safeFallback;
+    return Number.isSafeInteger(value) && value > 0 ? Math.max(value, reserved) : safeFallback;
   } catch {
     return safeFallback;
   }

@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import test from 'node:test';
+import { registerHooks } from 'node:module';
 
 // A SALE, EXPENSE OR HARVEST COULD HANG FOREVER ON A DROPPING CONNECTION.
 //
@@ -114,7 +115,9 @@ test('the finances Log sale/cost form tells a timeout apart from a real failure'
   );
   const handlerStart = src.indexOf('async function handleSubmit');
   assert.ok(handlerStart > 0);
-  const handler = src.slice(handlerStart, handlerStart + 3600);
+  // Receipt persistence made this handler longer; a fixed character window cut
+  // off the timeout return. Bound the function instead, keeping the same rule.
+  const handler = src.slice(handlerStart, src.indexOf('\n  function closeForm', handlerStart));
   assert.match(handler, /err instanceof WriteTimeoutError/, 'handleSubmit must special-case a timeout');
 
   const branchStart = handler.indexOf('err instanceof WriteTimeoutError');
@@ -133,7 +136,7 @@ test('the finances Log sale/cost form tells a timeout apart from a real failure'
 test('a timed-out save clears the entered values so a re-tap cannot log the same entry twice', () => {
   const src = read('../app/records/page.tsx');
   const handlerStart = src.indexOf('async function handleSubmit');
-  const handler = src.slice(handlerStart, handlerStart + 3600);
+  const handler = src.slice(handlerStart, src.indexOf('\n  function closeForm', handlerStart));
   const branchStart = handler.indexOf('err instanceof WriteTimeoutError');
   const returnAt = handler.indexOf('return;', branchStart);
   const branch = handler.slice(branchStart, returnAt);
@@ -215,4 +218,70 @@ test('MyRecords reads navigator.onLine directly rather than inventing a second o
   assert.ok(helperStart > 0);
   const helper = src.slice(helperStart, helperStart + 200);
   assert.match(helper, /navigator\.onLine/, 'the queued-save wording must be driven by navigator.onLine, the same signal the finances page reads');
+});
+
+
+// Exercise the expense writer itself: the UI keeps the mounted owner's identity
+// while Firebase can already have switched auth.currentUser to the next account.
+const receiptQueryHarness = {
+  uid: 'farmer-a',
+  profileWait: Promise.resolve(),
+  writes: [] as { method: string; path: string; value: Record<string, unknown> }[],
+};
+Object.assign(globalThis, { __imbewuReceiptQueryHarness: receiptQueryHarness });
+const receiptQueryUrl = new URL('../lib/db/queries.ts?receipt-account-check', import.meta.url).href;
+const receiptModule = (source: string) => `data:text/javascript,${encodeURIComponent(source)}`;
+const receiptFirebase = receiptModule(`
+const harness = globalThis.__imbewuReceiptQueryHarness;
+export const getFirebase = () => ({db: {}, auth: {get currentUser() {return harness.uid ? {uid:harness.uid} : null}}});
+`);
+const receiptFirestore = receiptModule(`
+const harness = globalThis.__imbewuReceiptQueryHarness;
+export const collection = (_db, ...parts) => ({path: parts.join('/')});
+export const doc = (_db, ...parts) => ({path:parts.join('/')});
+export const getDoc = async ref => {await harness.profileWait; return {id:harness.uid, exists:()=>true, data:()=>({org_id:'org-a'})}};
+export const setDoc = async (ref,value) => {harness.writes.push({method:'setDoc', path:ref.path,value})};
+export const addDoc = async (ref,value) => {harness.writes.push({method:'addDoc', path:ref.path,value});return {id:'server-id'}};
+export const updateDoc = async (ref,value) => {harness.writes.push({method:'updateDoc', path:ref.path,value})};
+export const serverTimestamp = () => 'timestamp';
+export const getDocs=()=>{}, deleteDoc=()=>{}, query=()=>{}, where=()=>{}, orderBy=()=>{}, writeBatch=()=>{}, getCountFromServer=()=>{}, runTransaction=()=>{};
+`);
+const receiptQueryHooks = registerHooks({
+  resolve(specifier, context, nextResolve) {
+    if (context.parentURL === receiptQueryUrl) {
+      if (specifier === '@/lib/firebase/init') return { url: receiptFirebase, shortCircuit: true };
+      if (specifier === 'firebase/firestore') return { url: receiptFirestore, shortCircuit: true };
+    }
+    return nextResolve(specifier, context);
+  },
+});
+const receiptQueries = await import(receiptQueryUrl);
+receiptQueryHooks.deregister();
+
+test('new costs use the same stable ID as their receipt, including retries', async () => {
+  receiptQueryHarness.uid = 'farmer-a'; receiptQueryHarness.profileWait = Promise.resolve(); receiptQueryHarness.writes = [];
+  await receiptQueries.addExpense({ id: 'receipt-cost-123', item: 'Seeds', amount: 25 }, 'farmer-a');
+  await receiptQueries.addExpense({ id: 'receipt-cost-123', item: 'Seeds', amount: 25 }, 'farmer-a');
+  assert.deepEqual(receiptQueryHarness.writes.map(row => [row.method, row.path, row.value.profile_id]), [
+    ['setDoc', 'expense_logs/receipt-cost-123', 'farmer-a'], ['setDoc', 'expense_logs/receipt-cost-123', 'farmer-a'],
+  ]);
+});
+
+test('an old owner’s cost cannot be added or edited under a newly switched Firebase account', async () => {
+  receiptQueryHarness.uid = 'farmer-b'; receiptQueryHarness.writes = [];
+  await assert.rejects(receiptQueries.addExpense({ id: 'private-cost', item: 'Seeds', amount: 25 }, 'farmer-a'), /account changed/);
+  await assert.rejects(receiptQueries.updateExpense('private-cost', { item: 'Seeds' }, 'farmer-a'), /account changed/);
+  assert.equal(receiptQueryHarness.writes.length, 0);
+});
+
+test('an account switch during profile lookup stops a photographed cost before its database write', async () => {
+  receiptQueryHarness.uid = 'farmer-a'; receiptQueryHarness.writes = [];
+  let release!: () => void;
+  receiptQueryHarness.profileWait = new Promise<void>(resolve => { release = resolve; });
+  const pending = receiptQueries.addExpense({ id: 'private-cost', item: 'Seeds', amount: 25 }, 'farmer-a');
+  const refused = assert.rejects(pending, /account changed/);
+  receiptQueryHarness.uid = 'farmer-b'; release();
+  await refused;
+  assert.equal(receiptQueryHarness.writes.length, 0);
+  receiptQueryHarness.profileWait = Promise.resolve();
 });

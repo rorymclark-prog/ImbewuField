@@ -3,7 +3,7 @@
 import workspace from '@/components/layout/Workspace.module.css';
 
 import { useState, useEffect, useMemo, useRef } from 'react';
-import { Plus, Trash2, Printer, Share2, FilePlus2, Clock, X, ChevronDown, Building2, Landmark } from 'lucide-react';
+import { Plus, Trash2, Printer, Share2, FilePlus2, Clock, X, ChevronDown, Building2, Landmark, Save } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import BackButton from '@/components/BackButton';
 import BrandLogo from '@/components/BrandLogo';
@@ -13,7 +13,8 @@ import {
   loadCustomers, addCustomer, findCustomer, loadProducts, addProduct,
   loadInvoices, saveInvoice, deleteInvoice, setInvoiceStatus, invoiceId,
   loadNextInvoiceNumber, saveNextInvoiceNumber,
-  paymentMethodLabel, type SavedInvoice, type PaymentMethod, type Customer, type CustomerDetails,
+  loadPendingInvoiceLinks, stageInvoiceSaleLink, clearPendingInvoiceLink,
+  paymentMethodLabel, type SavedInvoice, type InvoiceStatus, type PaymentMethod, type Customer, type CustomerDetails,
 } from '@/lib/invoices';
 import {
   loadLetterhead, saveLetterhead, dueDateISO, EMPTY_LETTERHEAD, type SellerLetterhead,
@@ -27,10 +28,12 @@ import { cropEntryOption } from '@/lib/crop-entry';
 import { loadCropPriceOverrides, priceFor, type CropPrice } from '@/lib/crop-prices';
 import { priceDateLabel } from '@/components/prices/CropPriceGuide.format';
 import MenuButton from '@/components/MenuButton';
-import { syncInvoiceSales } from '@/lib/db/queries';
+import { mySales, syncInvoiceSales, withWriteTimeout } from '@/lib/db/queries';
+import { invoiceDateInput, invoiceDateFromInput, invoiceEntryError, recordedSaleInvoiceError, type InvoiceEntryKind } from '@/lib/invoice-entry';
+import { activeAccountLocalStorageKey } from '@/lib/account-local-storage';
 import { isSampleMode, getSandboxProfile } from '@/lib/sample-mode';
 import { updateMyProfile } from '@/lib/db/queries';
-import type { Profile } from '@/lib/db/types';
+import type { Profile, SalesLog } from '@/lib/db/types';
 
 interface LineItem {
   id: number; desc: string; qty: number; unit: string; price: number;
@@ -68,7 +71,7 @@ const FIELD = { background: '#fff', border: '1px solid #E2D8C4', color: '#20190F
 
 function FieldLabel({ children }: { children: React.ReactNode }) {
   return (
-    <div className="text-xs font-sans uppercase tracking-wider mb-1" style={{ color: '#8C7A62' }}>{children}</div>
+    <div className="text-xs font-sans uppercase tracking-wider mb-1" style={{ color: '#5C5040' }}>{children}</div>
   );
 }
 
@@ -127,6 +130,20 @@ export default function InvoicePage() {
   const [issuedISO, setIssuedISO] = useState(() => new Date().toISOString());
   const [termsDays, setTermsDays] = useState<number | null>(null);
   const [reference, setReference] = useState('');
+  const [entryKind, setEntryKind] = useState<InvoiceEntryKind>('new');
+  const [paperReference, setPaperReference] = useState('');
+  const [paymentStatus, setPaymentStatus] = useState<InvoiceStatus | ''>('');
+  const [paymentISO, setPaymentISO] = useState('');
+  const [paymentMethod, setPaymentMethod] = useState<PaymentMethod | ''>('');
+  const [sourceSaleId, setSourceSaleId] = useState('');
+  const [recordBasis, setRecordBasis] = useState<'new' | 'existing' | ''>('new');
+  const [recordedSales, setRecordedSales] = useState<SalesLog[]>([]);
+  const [salesReady, setSalesReady] = useState(false);
+  const [salesError, setSalesError] = useState('');
+  const [saving, setSaving] = useState(false);
+  const [saveMessage, setSaveMessage] = useState('');
+  const persistBusy = useRef(false);
+  const draftId = useRef<string | null>(null);
   const [notes, setNotes] = useState('');
   const [enterprise, setEnterprise] = useState<'vegetables' | 'staples' | 'other' | ''>('');
 
@@ -144,6 +161,7 @@ export default function InvoicePage() {
   const [syncingInvoiceId, setSyncingInvoiceId] = useState<string | null>(null);
 
   useEffect(() => {
+    let active = true;
     if (isSampleMode()) { setSampleProfile(getSandboxProfile()); setShowSaved(true); }
     const nextNumber = loadNextInvoiceNumber();
     setSeq(nextNumber);
@@ -155,8 +173,12 @@ export default function InvoicePage() {
     setTermsDays(stored.paymentTermsDays);
     setNotes(stored.notes);
     setPriceOverrides(loadCropPriceOverrides());
+    setSalesReady(false);
+    setSalesError('');
+    void mySales().then(rows => { if (active) { setRecordedSales(rows); setSalesReady(true); } })
+      .catch(() => { if (active) { setSalesReady(true); setSalesError('Connect to the internet to load a sale you have already recorded.'); } });
     window.addEventListener('imbewu-invoices-changed', refresh);
-    return () => window.removeEventListener('imbewu-invoices-changed', refresh);
+    return () => { active = false; window.removeEventListener('imbewu-invoices-changed', refresh); };
   }, [user?.uid]);
 
   const sellerName = profile?.full_name ?? user?.displayName ?? '';
@@ -220,8 +242,13 @@ export default function InvoicePage() {
     // render; its only real inputs are the two below.
   }, [wholesaleBuyer, priceOverrides]);
 
-  const total = items.reduce((s, it) => s + it.qty * it.price, 0);
-  const valid = billTo.trim() !== '' && items.some((it) => it.desc.trim() !== '' && it.qty > 0);
+  const total = items.filter(it => it.desc.trim()).reduce((s, it) => s + it.qty * it.price, 0);
+  const linkedSale = sourceSaleId ? recordedSales.find(sale => sale.id === sourceSaleId) : undefined;
+  const financialsLocked = Boolean(sourceSaleId);
+  const entryError = invoiceEntryError({ entryKind, paperReference, dateISO: issuedISO, status: paymentStatus || 'unpaid', paidAt: paymentISO });
+  const valid = !saving && paymentStatus !== '' && !entryError && recordBasis !== ''
+    && (recordBasis !== 'existing' || Boolean(sourceSaleId))
+    && billTo.trim() !== '' && items.some((it) => it.desc.trim() !== '' && it.qty > 0);
   const invoiceNo = `#${String(currentNo).padStart(4, '0')}`;
   const due = dueDateISO(issuedISO, termsDays);
 
@@ -238,6 +265,7 @@ export default function InvoicePage() {
     buyer: { name: billTo, ...buyerDetails },
     items,
     reference,
+    paperReference,
     notes,
     banking: {
       bankName: letterhead.bankName,
@@ -245,10 +273,10 @@ export default function InvoicePage() {
       accountNumber: letterhead.bankAccountNumber,
       branchCode: letterhead.bankBranchCode,
     },
-    status: saved.find((s) => s.id === currentId)?.status ?? 'unpaid',
-    paidAt: saved.find((s) => s.id === currentId)?.paidAt,
-    paymentMethod: saved.find((s) => s.id === currentId)?.paymentMethod,
-  }), [currentNo, issuedISO, due, sellerName, sellerFarm, sellerPhone, letterhead, billTo, buyerDetails, items, reference, notes, saved, currentId]);
+    status: paymentStatus || 'unpaid',
+    paidAt: paymentISO || undefined,
+    paymentMethod: paymentMethod || undefined,
+  }), [currentNo, issuedISO, due, sellerName, sellerFarm, sellerPhone, sellerLogo, letterhead, billTo, buyerDetails, items, reference, paperReference, notes, paymentStatus, paymentISO, paymentMethod]);
 
   /**
    * Save the business name back to the account, on blur rather than per keystroke.
@@ -275,10 +303,12 @@ export default function InvoicePage() {
   }
 
   function updateItem(id: number, patch: Partial<LineItem>) {
+    if (financialsLocked) return;
     setItems((prev) => prev.map((it) => (it.id === id ? { ...it, ...patch } : it)));
   }
 
   function chooseCrop(id: number, crop: string, cropKey: string | null) {
+    if (financialsLocked) return;
     setItems((prev) => prev.map((item) => {
       if (item.id !== id) return item;
       const remembered = products.find(
@@ -310,10 +340,12 @@ export default function InvoicePage() {
   }
 
   function addItem() {
+    if (financialsLocked) return;
     setItems((prev) => [...prev, { id: nextId, desc: '', qty: 1, unit: 'bags', price: 0 }]);
     setNextId((n) => n + 1);
   }
   function removeItem(id: number) {
+    if (financialsLocked) return;
     setItems((prev) => (prev.length > 1 ? prev.filter((it) => it.id !== id) : prev));
   }
 
@@ -328,50 +360,83 @@ export default function InvoicePage() {
    * and the counter moved to #0045 leaving a permanent hole in the numbering.
    */
   async function persist(): Promise<string | null> {
-    const id = currentId ?? invoiceId();
-    const existing = saved.find((s) => s.id === id);
-    addCustomer(billTo, buyerDetails);
-    items.forEach((it) => { if (it.desc.trim()) addProduct({ desc: it.desc.trim(), unit: it.unit, price: it.price }); });
-    const list = saveInvoice({
+    if (persistBusy.current || !valid) return null;
+    persistBusy.current = true;
+    setSaving(true);
+    setSaveError(null);
+    setSaveMessage('');
+    const scope = activeAccountLocalStorageKey('imbewu_invoices');
+    const sample = isSampleMode();
+    const sameAccount = () => isSampleMode() === sample && activeAccountLocalStorageKey('imbewu_invoices') === scope;
+    const id = currentId ?? draftId.current ?? invoiceId();
+    draftId.current = id;
+    const existing = loadInvoices().find((s) => s.id === id);
+    const candidate: SavedInvoice = {
       id, no: currentNo, billTo: billTo.trim(),
       billToDetails: buyerDetails,
-      items: items.filter((it) => it.desc.trim()).map(({ desc, qty, unit, price }) => ({ desc, qty, unit, price })),
+      items: items.filter((it) => it.desc.trim()).map(({ desc, qty, unit, price }) => ({ desc: desc.trim(), qty, unit: unit.trim(), price })),
       total,
-      // saveInvoice keeps the original date on an existing record, so this value is only ever
-      // used by the save that creates one.
       dateISO: existing?.dateISO ?? issuedISO,
       dueDateISO: due ?? undefined,
       reference: reference.trim() || undefined,
+      entryKind, paperReference: paperReference.trim() || undefined,
+      sourceSaleId: sourceSaleId || undefined,
       notes: notes.trim() || undefined,
       enterprise: enterprise || undefined,
-      status: existing?.status ?? 'unpaid',
-      paidAt: existing?.paidAt,
-    });
-    const stored = list.find((x) => x.id === id);
-    if (!stored) {
-      setSaveError('This invoice could not be saved on this device, so it has not been issued. Check your storage and try again.');
-      return null;
-    }
-    if (stored.status === 'paid') {
-      try {
-        await syncInvoiceSales(stored);
-      } catch {
-        if (existing) saveInvoice(existing);
-        setSaveError('This paid invoice could not update the sales book. Nothing was printed or shared; check your connection and try again.');
-        return null;
+      status: paymentStatus || 'unpaid',
+      paidAt: paymentStatus === 'paid' ? paymentISO : undefined,
+      paymentMethod: paymentStatus === 'paid' ? paymentMethod || undefined : undefined,
+    };
+    try {
+      const invalid = invoiceEntryError(candidate);
+      if (invalid) throw new Error(invalid);
+      if (sourceSaleId) {
+        if (!linkedSale) throw new Error('Load the recorded sale before saving this invoice.');
+        const mismatch = recordedSaleInvoiceError(candidate, linkedSale, sample ? 'demo' : user?.uid ?? '');
+        if (mismatch) throw new Error(mismatch);
+        if (!sample && !navigator.onLine) throw new Error('Connect to the internet to link this existing sale safely.');
+        if (!stageInvoiceSaleLink(candidate)) throw new Error('Free some device storage before linking this sale. Its existing record has not been changed.');
+        // Link first. Until this device has the invoice, cashLedgerSales retains the tagged
+        // original sale. A failed device write therefore cannot double or erase its cash.
+        try { await syncInvoiceSales(candidate); }
+        catch (error) { throw new Error(error instanceof Error ? `${error.message} Reconnect and try again.` : 'Connect to the internet to link this existing sale safely.'); }
       }
+      if (!sameAccount()) throw new Error('Your account changed. Open the invoice again in the correct workspace.');
+      const list = saveInvoice(candidate);
+      const stored = list.find((x) => x.id === id);
+      if (!stored || stored.status !== candidate.status || stored.paidAt !== candidate.paidAt
+        || stored.sourceSaleId !== candidate.sourceSaleId || stored.total !== candidate.total
+        || stored.paperReference !== candidate.paperReference
+        || JSON.stringify(stored.items) !== JSON.stringify(candidate.items)) {
+        throw new Error('This invoice could not be saved. Check your device storage and keep the original details of any linked sale, then try again.');
+      }
+      addCustomer(billTo, buyerDetails);
+      items.forEach((it) => { if (it.desc.trim()) addProduct({ desc: it.desc.trim(), unit: it.unit, price: it.price }); });
+      setSaved(list);
+      if (sourceSaleId) clearPendingInvoiceLink(id);
+      setCurrentId(id);
+      setIssuedISO(stored.dateISO);
+      if (currentId === null && saveNextInvoiceNumber(currentNo + 1)) setSeq(currentNo + 1);
+      if (!sourceSaleId && (stored.status === 'paid' || existing?.status === 'paid')) {
+        try {
+          // The invoice itself remains available offline. A later retry uses deterministic
+          // sale IDs, so it cannot create a second row for the same invoice line.
+          if (!sample && !navigator.onLine) throw new Error('offline');
+          await withWriteTimeout(syncInvoiceSales(stored));
+        } catch {
+          if (sameAccount()) setSaveMessage('Invoice saved on this device. Reconnect and save it again to update the crop sale book.');
+          return sameAccount() ? id : null;
+        }
+      }
+      if (sameAccount()) setSaveMessage(sourceSaleId ? 'Invoice saved and linked to the existing sale. Its kilograms and income are counted once.' : 'Invoice saved.');
+      return sameAccount() ? id : null;
+    } catch (error) {
+      if (sameAccount()) setSaveError(error instanceof Error ? error.message : 'The invoice could not be saved. Please try again.');
+      return null;
+    } finally {
+      persistBusy.current = false;
+      setSaving(false);
     }
-    if (currentId === null) {
-      const nextSeq = currentNo + 1;
-      // Only burn the number once the invoice it belongs to is genuinely on disk AND the new
-      // counter is too. If the counter write fails, loadNextInvoiceNumber falls back to the old
-      // value and a second, different invoice would be issued under the same number.
-      if (saveNextInvoiceNumber(nextSeq)) setSeq(nextSeq);
-    }
-    setSaveError(null);
-    setCurrentId(id);
-    setIssuedISO(stored.dateISO);
-    return id;
   }
 
   async function printInvoice() {
@@ -407,8 +472,9 @@ export default function InvoicePage() {
   }
 
   function newInvoice() {
+    draftId.current = null;
     setCurrentId(null);
-    setCurrentNo(seq);
+    setCurrentNo(loadNextInvoiceNumber(seq));
     setIssuedISO(new Date().toISOString());
     setBillTo('');
     setBuyerDetails({});
@@ -416,6 +482,8 @@ export default function InvoicePage() {
     setItems([{ id: 1, desc: '', qty: 1, unit: 'bags', price: 0 }]);
     setNextId(2);
     setReference('');
+    setEntryKind('new'); setPaperReference(''); setPaymentStatus(''); setPaymentISO(''); setPaymentMethod('');
+    setSourceSaleId(''); setRecordBasis('new'); setSaveError(null); setSaveMessage('');
     // Terms and the standing note come back from the letterhead, not from the invoice just closed.
     setTermsDays(letterhead.paymentTermsDays);
     setNotes(letterhead.notes);
@@ -424,6 +492,7 @@ export default function InvoicePage() {
   }
 
   function openSaved(inv: SavedInvoice) {
+    draftId.current = inv.id;
     setCurrentId(inv.id);
     setCurrentNo(inv.no);
     setIssuedISO(inv.dateISO);
@@ -436,6 +505,10 @@ export default function InvoicePage() {
     setItems(inv.items.map((it, i) => ({ id: i + 1, ...it })));
     setNextId(inv.items.length + 1);
     setReference(inv.reference ?? '');
+    setEntryKind(inv.entryKind ?? 'new'); setPaperReference(inv.paperReference ?? '');
+    setPaymentStatus(inv.status); setPaymentISO(inv.paidAt ?? ''); setPaymentMethod(inv.paymentMethod ?? '');
+    setSourceSaleId(inv.sourceSaleId ?? ''); setRecordBasis(inv.sourceSaleId ? 'existing' : 'new');
+    setSaveError(null); setSaveMessage('');
     setNotes(inv.notes ?? '');
     setEnterprise(inv.enterprise === 'shared' ? '' : inv.enterprise ?? '');
     // Reconstruct the term from the two stored dates rather than reusing the current default,
@@ -446,16 +519,64 @@ export default function InvoicePage() {
     setShowSaved(false);
   }
 
+  function selectRecordedSale(id: string) {
+    const sale = recordedSales.find(row => row.id === id);
+    const owner = isSampleMode() ? 'demo' : user?.uid;
+    if (!sale || sale.profile_id !== owner || !Number.isFinite(sale.kg) || sale.kg <= 0 || sale.amount < 0) {
+      setSaveError('Choose an available sale with recorded kilograms from your own records.'); return;
+    }
+    const known = saved.find(invoice => invoice.id === sale.invoice_id)
+      ?? loadPendingInvoiceLinks().find(invoice => invoice.sourceSaleId === sale.id);
+    if (known) {
+      const mismatch = recordedSaleInvoiceError(known, sale, owner);
+      if (mismatch) { setSaveError(mismatch); return; }
+      openSaved(known);
+      if (!saved.some(invoice => invoice.id === known.id)) setSaveMessage('Your pending invoice has been recovered. Review it and save to finish linking.');
+      return;
+    }
+    if (sale.invoice_id) {
+      setSaveError('This sale already has an invoice. Open it on the device where it was created; its private invoice copy is not available on this device.'); return;
+    }
+    draftId.current = null;
+    setCurrentId(null);
+    setCurrentNo(loadNextInvoiceNumber(seq));
+    setSourceSaleId(sale.id); setRecordBasis('existing');
+    setPaymentStatus('paid'); setPaymentISO(sale.sold_at); setPaymentMethod('');
+    setItems([{ id: 1, desc: sale.crop, qty: sale.kg, unit: 'kg', price: sale.amount / sale.kg }]);
+    setNextId(2);
+    setBillTo(sale.buyer ?? ''); setCustomBuyer(Boolean(sale.buyer));
+    setBuyerDetails({});
+    setEnterprise(sale.enterprise === 'shared' ? '' : sale.enterprise ?? '');
+    setSaveError(null); setSaveMessage(''); setShowSaved(false);
+  }
+
   const openedFromLink = useRef<string | null>(null);
   useEffect(() => {
-    const requested = new URLSearchParams(window.location.search).get('view');
-    if (!requested || openedFromLink.current === requested) return;
-    const invoice = saved.find((item) => item.id === requested);
-    if (invoice) { openSaved(invoice); openedFromLink.current = requested; }
-  }, [saved]);
+    const params = new URLSearchParams(window.location.search);
+    const requested = params.get('view');
+    const sale = params.get('sale');
+    const mode = params.get('mode');
+    const linkKey = `${user?.uid ?? 'guest'}:${params.toString()}`;
+    if (openedFromLink.current === linkKey) return;
+    if (requested) {
+      const invoice = saved.find((item) => item.id === requested);
+      if (invoice) { openSaved(invoice); openedFromLink.current = linkKey; }
+      return;
+    }
+    if (!salesReady) return;
+    if (sale || mode === 'sale' || mode === 'paper') {
+      setEntryKind(mode === 'paper' ? 'paper-copy' : 'past-sale');
+      setRecordBasis(''); setShowSaved(false);
+      if (sale) { setRecordBasis('existing'); selectRecordedSale(sale); }
+    }
+    openedFromLink.current = linkKey;
+  }, [saved, recordedSales, salesReady, user?.uid]);
 
   async function changeInvoiceStatus(invoice: SavedInvoice, status: 'paid' | 'unpaid', method?: PaymentMethod) {
     if (syncingInvoiceId) return;
+    const scope = activeAccountLocalStorageKey('imbewu_invoices');
+    const sample = isSampleMode();
+    const sameAccount = () => isSampleMode() === sample && activeAccountLocalStorageKey('imbewu_invoices') === scope;
     setSyncingInvoiceId(invoice.id);
     setSaveError(null);
     const changed = setInvoiceStatus(invoice.id, status, method);
@@ -468,10 +589,12 @@ export default function InvoicePage() {
     try {
       await syncInvoiceSales(updated);
     } catch {
-      setSaved(saveInvoice(invoice));
-      setSaveError('The invoice status was not changed because its crop sales could not be updated. Check your connection and try again.');
+      if (sameAccount()) {
+        setSaved(saveInvoice(invoice));
+        setSaveError('The invoice status was not changed because its crop sales could not be updated. Check your connection and try again.');
+      }
     } finally {
-      setSyncingInvoiceId(null);
+      if (sameAccount()) setSyncingInvoiceId(null);
     }
   }
 
@@ -537,6 +660,89 @@ export default function InvoicePage() {
               )}
             </div>
 
+            <section className="rounded-2xl p-4 space-y-3" style={CARD} aria-label="Invoice and payment details">
+              <div>
+                <h1 className="font-display text-xl font-semibold" style={{ color: '#1F4D2B' }}>Record the sale once</h1>
+                <p className="text-sm mt-1" style={{ color: '#5C5040' }}>Keep the invoice, payment and kilograms together.</p>
+              </div>
+              <label className="block">
+                <FieldLabel>What are you recording?</FieldLabel>
+                <select aria-label="Invoice type" value={entryKind} disabled={Boolean(currentId) || saving}
+                  onChange={event => { const kind = event.target.value as InvoiceEntryKind; newInvoice(); setEntryKind(kind); setRecordBasis(kind === 'new' ? 'new' : ''); }}
+                  className="w-full min-h-11 rounded-xl px-3 text-sm" style={FIELD}>
+                  <option value="new">A new invoice</option>
+                  <option value="past-sale">Produce already sold</option>
+                  <option value="paper-copy">An invoice already written on paper</option>
+                </select>
+              </label>
+              {entryKind !== 'new' && (
+                <label className="block">
+                  <FieldLabel>Is this sale already in My Records?</FieldLabel>
+                  <select aria-label="Existing sale record" value={recordBasis} disabled={Boolean(currentId) || saving}
+                    onChange={event => { const kind = entryKind; newInvoice(); setEntryKind(kind); setRecordBasis(event.target.value as typeof recordBasis); }}
+                    className="w-full min-h-11 rounded-xl px-3 text-sm" style={FIELD}>
+                    <option value="">Choose before saving</option>
+                    <option value="new">No — record it with this invoice</option>
+                    <option value="existing">Yes — link the existing sale</option>
+                  </select>
+                </label>
+              )}
+              {recordBasis === 'existing' && (
+                <div className="space-y-2">
+                  <label className="block">
+                    <FieldLabel>Recorded sale</FieldLabel>
+                    <select aria-label="Choose recorded sale" value={sourceSaleId} disabled={Boolean(currentId) || saving || !salesReady}
+                      onChange={event => selectRecordedSale(event.target.value)} className="w-full min-h-11 rounded-xl px-3 text-sm" style={FIELD}>
+                      <option value="">{salesReady ? 'Choose the exact sale' : 'Loading your sales…'}</option>
+                      {recordedSales.filter(sale => sale.id === sourceSaleId || ((!sale.invoice_id || sale.invoice_source_sale) && sale.kg > 0 && sale.amount >= 0)).map(sale => (
+                        <option key={sale.id} value={sale.id}>{invoiceDateInput(sale.sold_at)} · {sale.crop} · {sale.kg} kg · R{sale.amount.toFixed(2)}{sale.buyer ? ` · ${sale.buyer}` : ''}</option>
+                      ))}
+                    </select>
+                  </label>
+                  <p className="text-xs leading-relaxed" style={{ color: '#5C5040' }}>{financialsLocked ? 'The recorded crop, kilograms, total and payment date stay together. This invoice documents that sale without adding it again.' : 'Select a sale recorded in kilograms. An existing invoice should be reopened from Saved.'}</p>
+                  {salesError && <p role="alert" className="text-sm" style={{ color: '#A02B28' }}>{salesError}</p>}
+                </div>
+              )}
+              {entryKind === 'paper-copy' && (
+                <label className="block">
+                  <FieldLabel>Original paper invoice number or reference</FieldLabel>
+                  <input aria-label="Original paper invoice reference" value={paperReference} onChange={event => setPaperReference(event.target.value)} maxLength={120}
+                    placeholder="As written on the paper invoice" className="w-full min-h-11 rounded-xl px-3 text-sm" style={FIELD} />
+                </label>
+              )}
+              <label className="block">
+                <FieldLabel>{entryKind === 'paper-copy' ? 'Date on the original paper invoice' : 'Invoice issue date'}</FieldLabel>
+                <input type="date" aria-label="Invoice issue date" value={invoiceDateInput(issuedISO)} max={invoiceDateInput(new Date().toISOString())}
+                  readOnly={Boolean(currentId)} onChange={event => setIssuedISO(invoiceDateFromInput(event.target.value, issuedISO) ?? '')}
+                  className="w-full min-h-11 rounded-xl px-3 text-sm" style={FIELD} />
+              </label>
+              <label className="block">
+                <FieldLabel>Has the buyer paid?</FieldLabel>
+                <select aria-label="Payment status" value={paymentStatus} disabled={financialsLocked || saving}
+                  onChange={event => { const status = event.target.value as typeof paymentStatus; setPaymentStatus(status); if (status === 'paid' && !paymentISO) setPaymentISO(new Date().toISOString()); }}
+                  className="w-full min-h-11 rounded-xl px-3 text-sm" style={FIELD}>
+                  <option value="">Choose paid or unpaid</option><option value="paid">Yes — paid in full</option><option value="unpaid">Not yet — payment outstanding</option>
+                </select>
+              </label>
+              {paymentStatus === 'paid' && (
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <label className="block min-w-0">
+                    <FieldLabel>Payment received on</FieldLabel>
+                    <input type="date" aria-label="Payment received date" value={invoiceDateInput(paymentISO)} max={invoiceDateInput(new Date().toISOString())} readOnly={financialsLocked}
+                      onChange={event => setPaymentISO(invoiceDateFromInput(event.target.value, paymentISO) ?? '')}
+                      className="w-full min-h-11 rounded-xl px-3 text-sm" style={FIELD} />
+                  </label>
+                  <label className="block min-w-0">
+                    <FieldLabel>Payment method</FieldLabel>
+                    <select aria-label="Payment method" value={paymentMethod} onChange={event => setPaymentMethod(event.target.value as typeof paymentMethod)} className="w-full min-h-11 rounded-xl px-3 text-sm" style={FIELD}>
+                      <option value="">Optional</option>{PAYMENT_METHODS.map(method => <option key={method} value={method}>{paymentMethodLabel(method)}</option>)}
+                    </select>
+                  </label>
+                </div>
+              )}
+              <p className="text-xs leading-relaxed" style={{ color: '#5C5040' }}>Paid invoices add their income and kg lines to My Records. Other units keep their original quantities; unpaid invoices stay outstanding.</p>
+            </section>
+
             {/* Saved-invoices list — tap to reopen/reprint */}
             {showSaved && (
               <div className="rounded-xl overflow-hidden" style={CARD}>
@@ -546,7 +752,7 @@ export default function InvoicePage() {
                 </div>
                 {saved.length === 0 ? (
                   <div className="px-3 py-3 text-xs font-sans" style={{ color: '#8C7A62' }}>
-                    No saved invoices yet — Print or Share one and it&apos;s kept here.
+                    No saved invoices yet — save your first invoice here.
                   </div>
                 ) : saved.map((inv) => (
                   <div key={inv.id} className="px-3 py-2.5" style={{ borderBottom: '1px solid #E2D8C4' }}>
@@ -560,9 +766,9 @@ export default function InvoicePage() {
                         </div>
                       </button>
                       <button
-                        onClick={() => void changeInvoiceStatus(inv, inv.status === 'paid' ? 'unpaid' : 'paid')}
+                        onClick={() => openSaved(inv)}
                         disabled={syncingInvoiceId === inv.id}
-                        aria-label={inv.status === 'paid' ? 'Mark unpaid' : 'Mark paid'}
+                        aria-label={`Review payment for invoice ${inv.no}`}
                         className="flex-shrink-0 px-2 py-1 rounded-full text-xs font-display font-semibold"
                         style={inv.status === 'paid'
                           ? { background: 'rgba(46,107,58,0.12)', border: '1px solid rgba(46,107,58,0.3)', color: '#2E6B3A', cursor: 'pointer' }
@@ -570,7 +776,7 @@ export default function InvoicePage() {
                         {inv.status === 'paid' ? 'Paid' : 'Unpaid'}
                       </button>
                       {/* Two taps to destroy accounting history. The first tap used to be enough. */}
-                      {confirmDelete === inv.id ? (
+                      {!inv.sourceSaleId && (confirmDelete === inv.id ? (
                         <button onClick={() => { deleteInvoice(inv.id); setConfirmDelete(null); }}
                           className="flex-shrink-0 px-2 py-1 rounded-full text-xs font-display font-semibold"
                           style={{ background: '#B53A3A', color: '#fff', border: 'none', cursor: 'pointer' }}>
@@ -581,7 +787,7 @@ export default function InvoicePage() {
                           style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 4, color: '#5C5040', opacity: 0.5 }}>
                           <X size={15} />
                         </button>
-                      )}
+                      ))}
                     </div>
                     {inv.status === 'paid' && (
                       <div className="flex flex-wrap gap-1.5 mt-2 pl-0.5">
@@ -742,7 +948,7 @@ export default function InvoicePage() {
             </div>
 
             {/* ── Line items ──────────────────────────────────────────── */}
-            <div className="space-y-2.5">
+            <fieldset disabled={financialsLocked} className="space-y-2.5" style={{ minWidth: 0 }}>
               <FieldLabel>Line items</FieldLabel>
               {items.map((it) => (
                 <div key={it.id} className="rounded-xl p-3 space-y-2" style={CARD}>
@@ -816,7 +1022,7 @@ export default function InvoicePage() {
                 style={{ background: 'rgba(31,77,43,0.06)', border: '1px dashed rgba(31,77,43,0.3)', color: '#1F4D2B', cursor: 'pointer' }}>
                 <Plus size={14} />Add line item
               </button>
-            </div>
+            </fieldset>
 
             {/* ── Terms, reference, note ──────────────────────────────── */}
             <div className="rounded-xl p-3 space-y-2.5" style={CARD}>
@@ -843,7 +1049,7 @@ export default function InvoicePage() {
               </label>
               <label className="block">
                 <FieldLabel>Growing area for these sales</FieldLabel>
-                <select value={enterprise} onChange={e => setEnterprise(e.target.value as typeof enterprise)} className="w-full text-sm rounded-xl px-3 py-2.5" style={FIELD}>
+                <select disabled={financialsLocked} value={enterprise} onChange={e => setEnterprise(e.target.value as typeof enterprise)} className="w-full text-sm rounded-xl px-3 py-2.5" style={FIELD}>
                   <option value="">Unassigned / mixed invoice</option><option value="vegetables">Vegetable beds</option><option value="staples">Staple plots</option><option value="other">Orchard / other</option>
                 </select>
                 <span className="block text-xs mt-1">For your R/m² records. Choose only if every line belongs to this area.</span>
@@ -856,6 +1062,13 @@ export default function InvoicePage() {
                   className="w-full text-sm font-display outline-none rounded-xl px-3 py-2.5 resize-none" style={FIELD} />
               </label>
             </div>
+
+            <button onClick={() => void persist()} disabled={!valid}
+              className="w-full flex items-center justify-center gap-2 min-h-11 py-3 rounded-xl text-sm font-display font-semibold"
+              style={{ background: valid ? '#1F4D2B' : '#DDD5C5', color: valid ? '#fff' : '#5C5040', border: 'none' }}>
+              <Save size={16} />{saving ? 'Saving…' : 'Save invoice'}
+            </button>
+            {saveMessage && <p role="status" className="rounded-xl p-3 text-sm" style={{ background: '#EAF2EB', color: '#244E33' }}>{saveMessage}</p>}
 
             <div className="flex gap-2">
               <button onClick={shareInvoice} disabled={!valid}
@@ -871,14 +1084,14 @@ export default function InvoicePage() {
             </div>
 
             {saveError && (
-              <p className="text-center text-xs font-sans px-3 py-2 rounded-lg" style={{ color: '#B53A3A', background: '#FBEAEA', border: '1px solid #E8C4C4' }}>
+              <p role="alert" className="text-center text-sm font-sans px-3 py-2 rounded-lg" style={{ color: '#A02B28', background: '#FBEAEA', border: '1px solid #E8C4C4' }}>
                 {saveError}
               </p>
             )}
 
             {!valid && (
               <p className="text-center text-xs font-sans" style={{ color: '#8C7A62' }}>
-                Add a buyer and at least one item to print
+                {entryError || (!paymentStatus ? 'Choose paid or unpaid to continue.' : recordBasis === '' ? 'Confirm whether this sale is already recorded.' : recordBasis === 'existing' && !sourceSaleId ? 'Select the existing sale to continue.' : 'Add a buyer and at least one item to save, print or share.')}
               </p>
             )}
           </div>
