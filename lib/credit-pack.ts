@@ -455,10 +455,10 @@ export function creditPackHasAnyRecords(
  * collateral-based lending, so the paperwork itself must not overclaim on their behalf either.
  */
 export const CREDIT_PACK_ASSURANCE_ONE_LINE =
-  'A summary of records this farmer logged themselves in ImbewuField — not a credit score, '
+  'A summary of records in ImbewuField — not a credit score, '
   + 'not a loan approval, and not a guarantee of future income. Material for a conversation with a lender.';
 
 export const CREDIT_PACK_FRAMING_PARAGRAPHS: string[] = [
-  'This document summarises the harvests, sales and costs that this farmer has logged in ImbewuField, in their own words and their own numbers. Nothing on the following pages is invented, projected or scored — every figure is a direct total of records already entered.',
+  'This document summarises harvests, sales, paid invoices and costs recorded in ImbewuField. Figures are calculated from the available entries for the stated period. Crop weights use recorded kilograms; no weight is inferred from boxes, bags or bunches.',
   'It is meant to support a conversation with a lender, not to replace one. It is not a credit score, not a loan approval, and not a promise of future income. A lender should still ask their own questions and check these records against bank statements or other evidence.',
 ];

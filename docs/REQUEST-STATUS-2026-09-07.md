@@ -56,6 +56,7 @@ historical release claims; this document does not re-verify them.
 | L09 | Give learning a proper Studies identity and redesign the layout. | In branch | `app/student/page.tsx` / `Studies.module.css` add My Studies, Start/Continue, compact progress, module cards and expandable offline downloads. |
 | L10 | Give every lesson an appropriate graphic. | In branch | Module cards and lesson entries reuse approved `infographicUrl` artwork; all 33 existing lessons have an illustration source. Lesson bodies, quizzes, answers and prerequisites are preserved. |
 | L11 | Check every demo button opens useful content rather than a dead end. | Open verification; partial implementation | Invoice viewing, sample receipt viewing/reading, lender summary, lesson cards and tour features have implementations. The entire nine-stop tour and every secondary control have not been exhaustively browser-verified by this source audit. Known gaps are retained as individual rows. |
+| L12 | Make the whole tour card open its stop; consider a compact graphic. | In branch | All nine cards have native button targets, topic icons and Open stop cues. A first-entry click prepares the isolated workspace before jumping to the chosen stop and its guide. Active tours retain their checklist. Mounted-page regressions cover every destination, activation failure and account restrictions. |
 
 ## Design Studio and tour
 
@@ -124,9 +125,18 @@ checked when that work completes. A green test suite does not prove that a repor
 open gate or crop-plan thumbnail looks right. Keep genuine gaps above open until their own
 completion evidence is available.
 
-Integration checks on 7 September: typecheck passed, 3,437 tests passed, no failures and one
+Integration checks on 7 September: typecheck passed, 3,440 tests passed, no failures and one
 pre-existing TODO; whitespace check passed. The combined preview is reviewed in PR #425.
-Desktop checks already observed the illustrated studies/lesson view, gate move and Design Map
-preview, crop performance, invoice viewing, matching expense slips and receipt-to-expense draft.
+Desktop checks observed the illustrated studies/lesson view, gate move and Design Map preview,
+all 12 planned crop-performance rows, invoice viewing, matching expense slips and receipt-to-expense
+draft. The saved-site crop graphic opens that site's planner. Report save, reopen and delete work
+in the isolated tour. The lender PDF was downloaded: R15,241 income, R8,175 costs and R7,066
+net cash flow agree with the dashboard. Funder category filtering and the dated timeline work;
+15 August shows 10,000 litres of installed storage and 6,200 litres collected, rather than the
+later 20,000 / 14,500 readings. A full-colour site report PDF was downloaded and inspected.
+The updated report cover displays the original 3,783 px saved map rather than the 240 px gallery
+thumbnail, and the colour PDF includes that map. Whole-site plans are preferred for the cover
+when available. Soil-test modal text is visibly dark on cream. The mentor view shows 1 group,
+15 farmers and 5 visits, with the dated visit log populated.
 The browser environment did not expose viewport resizing or phone emulation; phone layout rules
 are implemented but not represented here as device-tested.

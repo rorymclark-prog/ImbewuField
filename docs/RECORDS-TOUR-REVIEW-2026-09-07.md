@@ -21,7 +21,7 @@ to presentation, the existing isolated sample data and the receipt reader's usag
 | Lima receipts | Prepared receipt fills the demo expense form without an API call. Existing real scanner now records provider token cost in server logs. |
 | Design Map | Replaces Exact Canvas in ordinary preview controls. Paid AI maps remain gated. |
 | Gates | Dedicated move handle, wider touch area, no pointer jump, length-only controls. Finished fence/property lines stop at the opening and the leaf is drawn open. |
-| Tour | Arrival opens a dimmed, dismissible feature dialogue, with short tips and Try it now. |
+| Tour | Arrival opens a dimmed, dismissible feature dialogue, with short tips and Try it now. Each landing card opens its own stop, including first entry; compact topic icons help scanning. |
 | Tour wording | Evidence and assessment pages use normal headings and actions such as Save edits and Download evidence report. The overall Sample badge and source captions remain. |
 
 This changes the rendered map picture. `PLAN_VERSION` is deliberately untouched; the repository's

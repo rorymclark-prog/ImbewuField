@@ -17,7 +17,7 @@ import { buildReportPdf, deliverPdf, reportPdfFilename, sheetPlate, stripInlineM
 import { resolveSiteEcology } from '@/lib/site-ecology';
 import { loadSheetMetas, loadSheetImage } from '@/lib/sheet-store';
 import { activeAccountLocalStorageKey } from '@/lib/account-local-storage';
-import { selectReportPlates, type ReportPlate } from '@/lib/report-plates';
+import { selectReportPlates, reportCoverPlate, type ReportPlate } from '@/lib/report-plates';
 import { prepareSiteAnalysisImages } from '@/lib/report-site-images';
 import { PLAN_VERSION } from '@/lib/plan-version';
 import { SHEET_RENDER_RECIPE } from '@/lib/sheet-render-recipe';
@@ -326,6 +326,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   const sheetScope = `${isSampleMode() ? 'sample' : 'live'}:${activeAccountLocalStorageKey(siteKey)}`;
   const [plateSet, setPlateSet] = useState<{ scope: string; items: Array<ReportPlate & { thumb?: string }> }>({ scope: '', items: [] });
   const plates = plateSet.scope === sheetScope ? plateSet.items : [];
+  const coverMap = reportCoverPlate(plates);
   const [openPlate, setOpenPlate] = useState<{ label: string; image: string } | null>(null);
   const [openingPlate, setOpeningPlate] = useState(false);
   const [coverPlate, setCoverPlate] = useState<{ scope: string; id: string; image: string } | null>(null);
@@ -354,7 +355,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   }, [siteKey, sheetScope]);
 
   const coverId = reading === 'full' && presentation !== 'print' && !openPlate && !openingPlate && pdfState !== 'working'
-    && !photoGallery.shown[0] && !(!activeSaved && mapCapture) ? plates[0]?.id : undefined;
+    && !photoGallery.shown[0] && !(!activeSaved && mapCapture) ? coverMap?.id : undefined;
   useEffect(() => {
     let cancelled = false;
     setCoverPlate(null);
@@ -363,8 +364,8 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     });
     return () => { cancelled = true; };
   }, [coverId, sheetScope]);
-  const savedCoverImage = coverPlate?.scope === sheetScope && coverPlate.id === plates[0]?.id
-    ? coverPlate.image : plates[0]?.thumb;
+  const savedCoverImage = coverPlate?.scope === sheetScope && coverPlate.id === coverMap?.id
+    ? coverPlate.image : coverMap?.thumb;
 
   const openSheet = useCallback(async (plate: ReportPlate) => {
     setOpeningPlate(true);
@@ -647,19 +648,20 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       // order. See lib/report-plates.ts.
       const sheetMetas = await loadSheetMetas(designSiteIdFromLocation(d)).catch(() => []);
       const plates = selectReportPlates(sheetMetas, PLAN_VERSION, SHEET_RENDER_RECIPE);
+      const coverMap = reportCoverPlate(plates);
       const coverImages: Array<{ image: string; caption: string }> = [];
       if (presentation !== 'print' && includeImages) {
         if (photoGallery.shown[0]) {
           coverImages.push({ image: photoGallery.shown[0].dataUrl, caption: `${photoGallery.shown[0].label} · Current site evidence; it may postdate saved report text.` });
         } else if (mapCapture && !activeSaved) {
           coverImages.push({ image: `data:image/jpeg;base64,${mapCapture}`, caption: 'Captured site satellite view' });
-        } else if (plates[0]) {
+        } else if (coverMap) {
           // Match the screen's saved-map cover, but keep only its print-sized copy while
           // the appendix loads originals sequentially on phones with limited memory.
-          let original = await loadSheetImage(plates[0].id).catch(() => null);
+          let original = await loadSheetImage(coverMap.id).catch(() => null);
           const cover = original ? await sheetPlate(original) : null;
           original = null;
-          if (cover) coverImages.push({ image: cover.dataUrl, caption: `Saved design: ${stripInlineMarkdown(plates[0].label)}` });
+          if (cover) coverImages.push({ image: cover.dataUrl, caption: `Saved design: ${stripInlineMarkdown(coverMap.label)}` });
         }
       }
       const blob = await buildReportPdf(report, {
@@ -1127,7 +1129,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
               )}
             </div>
 
-            {reading === 'full' && presentation !== 'print' && <ReportVisualOverview visuals={visuals} stamp={new Date(reportDate).toLocaleDateString('en-ZA', { day: 'numeric', month: 'short', year: 'numeric' })} image={photoGallery.shown[0]?.dataUrl ?? (!activeSaved && mapCapture ? `data:image/jpeg;base64,${mapCapture}` : savedCoverImage)} imageCaption={photoGallery.shown[0] ? `${photoGallery.shown[0].label} · Current site evidence; it may postdate saved report text.` : !activeSaved && mapCapture ? 'Captured site satellite view' : plates[0] ? `Saved design: ${plates[0].label}` : undefined} />}
+            {reading === 'full' && presentation !== 'print' && <ReportVisualOverview visuals={visuals} stamp={new Date(reportDate).toLocaleDateString('en-ZA', { day: 'numeric', month: 'short', year: 'numeric' })} image={photoGallery.shown[0]?.dataUrl ?? (!activeSaved && mapCapture ? `data:image/jpeg;base64,${mapCapture}` : savedCoverImage)} imageCaption={photoGallery.shown[0] ? `${photoGallery.shown[0].label} · Current site evidence; it may postdate saved report text.` : !activeSaved && mapCapture ? 'Captured site satellite view' : coverMap ? `Saved design: ${coverMap.label}` : undefined} />}
 
             {/* Saved places — GPS points for the farm (home, fields, water) */}
             {reading === 'full' && savedPlaces && savedPlaces.length > 0 && (
