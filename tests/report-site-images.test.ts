@@ -195,5 +195,6 @@ test('the report screen shows the maps and sends them to be read', () => {
   assert.match(view, /prepareSiteAnalysisImages\(plates, loadSheetImage, sheetPlate\)/);
   assert.match(view, /siteImages: siteImages\.length \? siteImages : undefined/);
   // 3. A site with no saved sheets says so rather than quietly producing a mapless report.
-  assert.match(view, /No design maps are saved for this site yet/);
+  // Sheets live in this browser's store. Absence here cannot erase maps saved on another device.
+  assert.match(view, /No saved design maps were found in this browser for this site/);
 });

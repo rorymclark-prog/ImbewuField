@@ -334,8 +334,14 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   // made the farmer's saved plan visibly pixelated despite its original still being available.
   const siteKey = designSiteIdFromLocation(d);
   const sheetScope = `${isSampleMode() ? 'sample' : 'live'}:${activeAccountLocalStorageKey(siteKey)}`;
-  const [plateSet, setPlateSet] = useState<{ scope: string; items: Array<ReportPlate & { thumb?: string }> }>({ scope: '', items: [] });
+  const [plateSet, setPlateSet] = useState<{ scope: string; items: Array<ReportPlate & { thumb?: string }>; latestAt?: string }>({ scope: '', items: [] });
   const plates = plateSet.scope === sheetScope ? plateSet.items : [];
+  const savedMapRecords = plateSet.scope === sheetScope ? { count: plates.length, latestAt: plateSet.latestAt } : null;
+  const mapsRef = useRef<HTMLDivElement>(null);
+  const [mapVisit, setMapVisit] = useState(0);
+  useEffect(() => {
+    if (mapVisit) mapsRef.current?.focus();
+  }, [mapVisit]);
   const coverMap = reportCoverPlate(plates);
   const [openPlate, setOpenPlate] = useState<{ label: string; image: string } | null>(null);
   const [openingPlate, setOpeningPlate] = useState(false);
@@ -353,16 +359,24 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
 
   useEffect(() => {
     let cancelled = false;
-    void loadSheetMetas(siteKey)
-      .catch(() => [])
-      .then((metas) => {
-        if (cancelled) return;
+    let request = 0;
+    const refresh = () => {
+      const current = ++request;
+      void loadSheetMetas(siteKey).catch(() => []).then((metas) => {
+        if (cancelled || current !== request) return;
         const chosen = selectReportPlates(metas, PLAN_VERSION, SHEET_RENDER_RECIPE);
-        const thumbById = new Map(metas.map((m) => [m.id, m.thumb]));
-        setPlateSet({ scope: sheetScope, items: chosen.map((p) => ({ ...p, thumb: thumbById.get(p.id) })) });
+        const metaById = new Map(metas.map((m) => [m.id, m]));
+        const dates = chosen.map(p => metaById.get(p.id)?.at).filter((at): at is string => !!at && Number.isFinite(Date.parse(at)));
+        const latestAt = dates.sort((a,b) => Date.parse(b) - Date.parse(a))[0];
+        setPlateSet({ scope: sheetScope, latestAt, items: chosen.map((p) => ({ ...p, thumb: metaById.get(p.id)?.thumb })) });
       });
-    return () => { cancelled = true; };
-  }, [siteKey, sheetScope]);
+    };
+    // A farmer may save a new map set in another tab, then return to this report.
+    // Read only metadata again; do not load the full gallery or regenerate any images.
+    refresh();
+    window.addEventListener('focus', refresh);
+    return () => { cancelled = true; window.removeEventListener('focus', refresh); };
+  }, [siteKey, sheetScope, evidenceRevision]);
 
   const coverPhoto = coverChoice === 'auto' || coverChoice === 'photo' ? photoGallery.shown[0] : undefined;
   const captureCover = (coverChoice === 'auto' || coverChoice === 'map') && !activeSaved && mapCapture;
@@ -1099,7 +1113,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
              ref={reportRef}
              style={{ display: showReportColumn ? 'block' : 'none' }}>
           {report && !loading && <ReportVersionDetails reference={activeSaved?.id} settings={settings} language={LANGUAGE_OPTIONS.find(l => l.code === contentLanguage)?.label ?? contentLanguage} savedAt={savedVersion ? activeSaved?.savedAt : undefined} sample={isSampleMode()} />}
-          <ReportPreparation location={d} place={reportPlace} onSavedPlace={setPreparedPlace} onChanged={()=>setEvidenceRevision(n=>n+1)} snapshot={!!activeSaved}/>
+          <ReportPreparation location={d} place={reportPlace} onSavedPlace={setPreparedPlace} onChanged={()=>setEvidenceRevision(n=>n+1)} snapshot={!!activeSaved} maps={savedMapRecords} onViewMaps={()=>{setReading('full');setPresentation('screen');setMapVisit(n=>n+1);}}/>
           {report && (
             <div
               style={{
@@ -1233,7 +1247,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                 farmer's own work and the strongest evidence in the document.
                 Thumbnails here, full sheet on tap — see the memory note above. */}
             {showVisuals && plates.length > 0 && (
-              <div className="mb-6 p-4 rounded-xl" style={{ background: 'var(--report-panel)', border: '1px solid var(--report-border)' }}>
+              <div ref={mapsRef} tabIndex={-1} aria-label="Your saved design maps" className="mb-6 p-4 rounded-xl" style={{ background: 'var(--report-panel)', border: '1px solid var(--report-border)' }}>
                 <div className="text-xs font-sans uppercase tracking-wider mb-3" style={{ color: 'var(--report-muted)' }}>
                   {tr('Your saved design maps', 'Amamephu omklamo wakho agciniwe')} · {plates.length}
                 </div>
@@ -1330,9 +1344,9 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
 
             {/* No sheets for this site: say so, rather than silently producing a report with no
                 maps and an appendix the farmer expected. */}
-            {reading === 'full' && plates.length === 0 && (
+            {reading === 'full' && savedMapRecords !== null && plates.length === 0 && (
               <div className="mb-6 p-4 rounded-xl font-sans" style={{ background: 'var(--report-panel)', border: '1px dashed var(--report-border)', fontSize: 12, color: 'var(--report-muted)' }}>
-                {tr('No design maps are saved for this site yet. Save your plan sheets in the Design Map to include them here.', 'Awakagcinwa amamephu omklamo wale ndawo. Gcina amakhasi omklamo ku-Design Map ukuze afakwe lapha.')}
+                {tr('No saved design maps were found in this browser for this site. If you saved them on another device, open the report there.', 'Awekho amamephu omklamo wale ndawo atholakele kulesi siphequluli. Uma uwagcine kwenye idivayisi, vula umbiko lapho.')}
               </div>
             )}
 
