@@ -306,7 +306,7 @@ test('a new plate page and a new photo page both stamp the footer of the page th
 
   // The optional working appendix now owns its own landscape footers. Stamp the
   // final site-report page before handing off; do not overprint it afterwards.
-  assert.match(src, /footer\(\);\s*if \(meta\.cropPlan\?\.snapshot\)/);
+  assert.match(src, /footer\(\);\s*if \(meta\.cropPlan\?\.snapshot && meta\.includeCropWorkingPlan\)/);
   const cropExport = readFileSync(new URL('../lib/crop-export-pdf.ts', import.meta.url), 'utf8');
   assert.match(cropExport, /s\.stampFooter\(\);\s*\n}/, 'the working plan stamps its final page');
 });

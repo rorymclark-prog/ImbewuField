@@ -1,53 +1,74 @@
 import type { jsPDF } from 'jspdf';
 import { pdfSafe } from './crop-export-pdf';
-import { cropByKey } from './crop-catalog';
-import { reportCropRows, reportCropMapLayout, reportCropMonths, reportCropCalendar } from './report-crop-plan';
+import { reportSowingCalendar } from './report-crop-plan';
 import type { FactCropPlan } from './report-site-facts';
 
-/** Compact text and vector drawing replace the six-pictures-per-page gallery. */
-export function drawReportCropSummary(doc: jsPDF, crop: FactCropPlan, offset = 0): void {
-  const w = doc.internal.pageSize.getWidth(), h = doc.internal.pageSize.getHeight(), margin = 44, width = w - 88;
+/** A single crop-by-month overview; bed allocations remain in the working report. */
+export function drawReportCropSummary(doc: jsPDF, crop: FactCropPlan, _offset = 0, language = 'en'): void {
+  const margin = 40, width = 515, nameWidth = 167, monthWidth = (width - nameWidth) / 12;
   let y = 0;
+  const tr = (en: string, zu: string) => language === 'zu' ? zu : en;
   const text = (value: string, x: number, top: number, max: number, size = 10, bold = false) => {
     doc.setFont('helvetica', bold ? 'bold' : 'normal'); doc.setFontSize(size); doc.setTextColor('#203d2d');
     const lines = doc.splitTextToSize(pdfSafe(value), max) as string[];
-    doc.text(lines, x, top); return lines.length * size * 1.4;
+    doc.text(lines, x, top); return lines.length * size * 1.3;
   };
-  const page = (title: string) => { doc.addPage('a4', 'portrait'); y = 45; y += text('SITE REPORT / CROP PLAN', margin, y, width, 9) + 18; y += text(title, margin, y, width, 21, true) + 16; };
-  const need = (height: number, title = 'Crop plan - continued') => { if (y + height > h - 62) page(title); };
-  page('Saved planting plan');
-  y += text(crop.snapshot ? `Plan recorded ${new Date(crop.snapshot.capturedAt).toLocaleDateString('en-ZA')}. Planting dates are saved intentions; check field conditions.` : 'Older saved summary: bed names and sowing months were grouped separately. Exact bed-by-month links and varieties were not recorded.', margin, y, width) + 15;
-  const col = [0, .31, .55, .72], widths = [.31, .24, .17, .28];
-  function header() { ['Crop / variety', 'Bed / plot', 'Sowing', 'Status'].forEach((s, i) => text(s, margin + width * col[i], y, width * widths[i] - 10, 10, true)); y += 22; }
-  header();
-  for (const row of reportCropRows(crop)) {
-    const values = [row.name + (row.variety !== 'Not recorded' ? ` - ${row.variety}` : ''), row.where, row.sow, row.status];
-    doc.setFont('helvetica', 'normal'); doc.setFontSize(10);
-    const rh = Math.max(...values.map((v, i) => doc.splitTextToSize(pdfSafe(v), width * widths[i] - 10).length * 14)) + 14;
-    if (y + rh > h - 62) { page('Saved planting plan - continued'); header(); }
-    values.forEach((v, i) => text(v, margin + width * col[i], y, width * widths[i] - 10));
-    y += rh; doc.setDrawColor('#d2dfd5'); doc.line(margin, y - 7, margin + width, y - 7);
-  }
-  const s = crop.snapshot;
-  if (!s) return;
-  const months = reportCropMonths(s), calendar = reportCropCalendar(s);
-  page(`Growing spaces - ${months[offset]}`);
-  const shapes = reportCropMapLayout(s, offset), scale = width / 800;
-  if (shapes.length) {
-    for (const shape of shapes) {
-      const points = shape.points.map(([x, py]) => [margin + x * scale, y + py * scale]);
-      doc.setFillColor(shape.active ? '#d4e7d9' : '#f2f1ec'); doc.setDrawColor('#315740'); doc.setLineWidth(.8);
-      doc.lines(points.slice(1).map((p, i) => [p[0] - points[i][0], p[1] - points[i][1]]), points[0][0], points[0][1], [1, 1], 'FD', true);
-      doc.setFillColor('#173f2d'); doc.circle(margin + shape.cx * scale, y + shape.cy * scale, 8, 'F');
-      doc.setTextColor('#ffffff'); doc.setFontSize(9); doc.text(String(shape.number), margin + shape.cx * scale, y + shape.cy * scale + 3, { align: 'center' });
+  const s = crop.snapshot, calendar = s ? reportSowingCalendar(s) : null;
+  function page(continued = false) {
+    doc.addPage('a4', 'portrait'); y = 42;
+    y += text(tr('SITE REPORT / PLANTING', 'UMBIKO WENDAWO / UKUTSHALA'), margin, y, width, 9) + 14;
+    y += text(tr('Seasonal sowing calendar', 'Ikhalenda lokuhlwanyela'), margin, y, width, 21, true) + 8;
+    if (s) y += text(`${tr('Saved plan', 'Uhlelo olugciniwe')}: ${new Date(s.capturedAt).toLocaleDateString('en-ZA')}${continued ? ' - continued' : ''}`, margin, y, width, 9) + 8;
+    y += text(tr('S = sow seed (in trays for transplant crops). T = check seedlings; transplant when ready. Check water and field conditions before planting.', 'S = hlwanyela imbewu. T = hlola izithombo; tshala uma sezilungile. Hlola amanzi nezimo zendawo.'), margin, y, width, 9) + 14;
+    if (calendar) {
+      doc.setFillColor('#edf3ee'); doc.rect(margin, y - 10, width, 30, 'F');
+      text(tr('Crop', 'Isitshalo'), margin + 5, y + 3, nameWidth - 10, 10, true);
+      calendar.months.forEach((label, i) => {
+        const [month, year] = label.split(' '), x = margin + nameWidth + i * monthWidth;
+        text(month, x + 2, y, monthWidth - 3, 8, true); text(year, x + 2, y + 12, monthWidth - 3, 7);
+      });
+      y += 28;
     }
-    y += 410 * scale + 18;
   }
-  y += text('Numbers match saved bed outlines. Listed crops include growing, harvest and reserved field space. Planned occupancy, not confirmation of planting or a construction plan.', margin, y, width, 10) + 14;
-  calendar.forEach((b, i) => {
-    const value = `${i + 1}. ${b.label}: ${b.cells[offset].length ? b.cells[offset].map(c => `${cropByKey(c.cropKey)?.name ?? c.cropKey} (${c.share})`).join('; ') : 'No scheduled crop'}`;
-    doc.setFontSize(10); const height = doc.splitTextToSize(pdfSafe(value), width).length * 14 + 8;
-    need(height, `Growing spaces - ${months[offset]} (key)`); y += text(value, margin, y, width) + 8;
-  });
-  // Landscape occupancy and its legend are the existing crop-export renderer's work.
+  page();
+  if (!calendar) {
+    y += text(tr('This older report has grouped sowing months without dated planting records.', 'Lo mbiko omdala awunawo amarekhodi okutshala anezinsuku.'), margin, y, width) + 12;
+    for (const c of crop.crops) {
+      if (y > 744) page(true);
+      y += text(`${c.name}: ${c.sowMonths.join(', ') || tr('Not recorded', 'Akubhalwanga')}`, margin, y, width) + 8;
+    }
+    return;
+  }
+  for (const row of calendar.rows) {
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(9);
+    const lines = doc.splitTextToSize(pdfSafe(row.name), nameWidth - 10) as string[];
+    const height = Math.max(26, lines.length * 12 + 10);
+    if (y + height > 748) page(true);
+    text(row.name, margin + 5, y + 7, nameWidth - 10, 9);
+    row.cells.forEach((cell, i) => {
+      const x = margin + nameWidth + i * monthWidth;
+      if (cell.sow || cell.transplant) {
+        doc.setFillColor(cell.sow ? '#d5e9d9' : '#f4e4c4'); doc.roundedRect(x + 2, y - 5, monthWidth - 4, height - 5, 3, 3, 'F');
+        text(cell.sow && cell.transplant ? 'S/T' : cell.sow ? 'S' : 'T', x + 5, y + 8, monthWidth - 8, 9, true);
+      }
+    });
+    y += height; doc.setDrawColor('#d2dfd5'); doc.line(margin, y - 7, margin + width, y - 7);
+  }
+  if (!calendar.rows.length) y += text(tr('No new sowing or transplant task is scheduled in this period.', 'Akukho ukuhlwanyela noma ukutshala okusha okuhleliwe kulesi sikhathi.'), margin, y + 8, width, 9) + 14;
+  if (calendar.unscheduled.length) {
+    const note = `${tr('No new start in this period', 'Akukho ukuqala okusha kulesi sikhathi')}: ${calendar.unscheduled.join(', ')}.`;
+    doc.setFontSize(9);
+    for (const line of doc.splitTextToSize(pdfSafe(note), width) as string[]) {
+      if (y + 24 > 748) page(true);
+      y += text(line, margin, y + 8, width, 9);
+    }
+    y += 10;
+  }
+  const note = tr('Bed allocations, varieties, seed buying and monthly jobs are in the separate crop-plan report. This calendar shows planned starts, not confirmation of planting.', 'Imininingwane yemibhede, izinhlobo zezitshalo nemisebenzi yenyanga isembikweni wohlelo lwezitshalo. Leli khalenda likhombisa okuhleliwe.');
+  if (y + 68 > 782) page(true);
+  y += 12; y += text(note, margin, y, width, 9) + 8;
+  if (s) {
+    doc.setFontSize(9); doc.setTextColor('#24583c');
+    doc.textWithLink(pdfSafe(tr('Open current crop planner', 'Vula uhlelo lwezitshalo lwamanje')), margin, y, { url: `https://imbewufield.vercel.app/facilitator/crops?canvasSite=${encodeURIComponent(s.siteId)}` });
+  }
 }

@@ -33,6 +33,12 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '7 September 2026', sha: '435f97f', changes: [
+    'Choose the saved map versions for each report and track which maps you have reviewed.',
+    'Report maps have sharper previews; the checklist opens the relevant design step.',
+    'Read one sowing calendar and open the full crop-plan report separately.',
+    'New reports group suitable crops, fruit, nuts and useful indigenous plants together.',
+  ] },
   { when: '7 September 2026', sha: '3b8a689', changes: [
     'Report checks now show saved boundary dimensions and available design maps.',
     'Open your saved maps from the checklist without generating another set.',

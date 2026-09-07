@@ -400,3 +400,56 @@ test('editing the next report settings cannot relabel the saved report; regenera
     componentHooks.deregister();
   }
 });
+
+
+const { defaultReportMapIds, selectedReportMaps, normaliseReportMapSelection, saveSiteMapReview, loadSiteMapReview, emptyMapReview, reportMapType } = await import('../lib/report-map-selection.ts');
+const { designSiteIdFromLocation } = await import('../lib/design-studio.ts');
+const mapRows = [
+  { id: 'old-water', label: '04 · Water map · Exact master', at: '2026-09-01T10:00:00Z', planVersion: 'old' },
+  { id: 'new-water', label: '04 · Water map · Design Map', at: '2026-09-07T10:00:00Z', planVersion: 'new' },
+  { id: 'structures', label: '07 · Structures & access · Design Map', at: '2026-09-07T10:00:00Z' },
+];
+test('report map choices retain reviewed versions and preserve an explicit empty or unavailable selection', () => {
+  const review = { ...emptyMapReview(), reviews: { 'old-water': 'reviewed' as const } };
+  assert.deepEqual(defaultReportMapIds(mapRows, review), ['old-water', 'structures']);
+  assert.deepEqual(selectedReportMaps(mapRows, { siteId: 'one', ids: [] }, 'one', review), []);
+  assert.deepEqual(selectedReportMaps(mapRows, { siteId: 'one', ids: ['unavailable'] }, 'one', review), []);
+  assert.deepEqual(selectedReportMaps(mapRows, { siteId: 'one', ids: ['new-water'] }, 'one', review).map(m => m.id), ['new-water']);
+  assert.equal(normaliseReportMapSelection({ siteId: 'two', ids: ['new-water'] }, 'one'), undefined);
+});
+test('map types use stable names across numbering changes and explicit metadata', () => {
+  assert.equal(reportMapType({ label: '06 — Planting · Exact master' }), 'planting');
+  assert.equal(reportMapType({ label: '05 · Planting · AI Polished' }), 'planting');
+  assert.equal(reportMapType({ label: '03 · Unknown map' }), undefined);
+  assert.equal(reportMapType({ label: 'Custom title', sheetType: 'structures' }), 'structures');
+});
+test('map choices round-trip with saved reports without altering their text, settings or image evidence', () => {
+  reset();
+  const original = report('selected');
+  const siteId = designSiteIdFromLocation(original.location);
+  const changed = { ...original, mapSelection: { siteId, ids: ['old-water'] }, analysedMapIds: ['old-water'] };
+  assert.equal(saveReport(changed).saved, true);
+  const restored = loadReports()[0];
+  assert.deepEqual(restored.mapSelection, changed.mapSelection);
+  assert.deepEqual(restored.analysedMapIds, ['old-water']);
+  assert.equal(restored.report, original.report);
+  assert.deepEqual(restored.settings, original.settings);
+  assert.equal(saveReport({ ...restored, mapSelection: { siteId, ids: [] } }).saved, true);
+  assert.deepEqual(loadReports()[0].mapSelection?.ids, []);
+  assert.deepEqual(loadReports()[0].analysedMapIds, ['old-water']);
+});
+test('map review records are separate by site, account and sample mode and report failed writes', () => {
+  reset(); accountHarness.currentUid = 'one';
+  const review = { ...emptyMapReview(), reviews: { 'old-water': 'reviewed' as const }, notNeeded: ['phasing'] };
+  assert.equal(saveSiteMapReview('ubhejane', review), true);
+  assert.deepEqual(loadSiteMapReview('ubhejane'), review);
+  assert.deepEqual(loadSiteMapReview('another-site'), emptyMapReview());
+  accountHarness.currentUid = 'two'; assert.deepEqual(loadSiteMapReview('ubhejane'), emptyMapReview());
+  accountHarness.currentUid = 'one'; enterSampleMode();
+  assert.deepEqual(loadSiteMapReview('ubhejane'), emptyMapReview());
+  assert.equal(saveSiteMapReview('ubhejane', emptyMapReview()), true);
+  exitSampleMode(); assert.deepEqual(loadSiteMapReview('ubhejane'), review);
+  local.throwOnWrite = true;
+  assert.equal(saveSiteMapReview('ubhejane', emptyMapReview()), false);
+  local.throwOnWrite = false; reset();
+});

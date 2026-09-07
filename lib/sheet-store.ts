@@ -21,6 +21,7 @@ import {
   accountLocalStorageKey,
   activeAccountLocalStorageKey,
 } from './account-local-storage';
+import { reportMapType, type ReportMapType } from './report-map-selection';
 import type { SheetUnderlay } from './sheet-underlay';
 
 const DB_NAME = 'imbewu-sheets';
@@ -36,6 +37,7 @@ export type SheetValidationStatus = 'needs-review' | 'unscored' | 'verified';
 export interface StoredSheet {
   id: string;
   siteId: string;
+  sheetType?: ReportMapType;
   label: string;
   /** PNG data URL, exactly as the renderer produced it. */
   image: string;
@@ -139,10 +141,12 @@ function normaliseStoredSheet(value: unknown): StoredSheet | null {
     || !UNDERLAYS.has(row.underlay as SheetUnderlay)
   )) return null;
 
+  const sheetType = reportMapType({ label: row.label, sheetType: typeof row.sheetType === 'string' ? row.sheetType : undefined });
   return {
     id: row.id,
     siteId: row.siteId,
     label: row.label,
+    ...(sheetType ? { sheetType } : {}),
     image: row.image,
     at: row.at,
     ...(row.thumb === undefined ? {} : { thumb: row.thumb }),

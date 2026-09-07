@@ -518,7 +518,7 @@ export async function buildReportPdf(rawMarkdown: string, meta: ReportPdfMeta): 
     footer();
     const first = doc.getNumberOfPages() + 1;
     const { drawReportCropSummary } = await import('./report-crop-pdf');
-    drawReportCropSummary(doc, meta.cropPlan, meta.cropMapMonth ?? 0);
+    drawReportCropSummary(doc, meta.cropPlan, meta.cropMapMonth ?? 0, meta.language);
     for (let p = first; p < doc.getNumberOfPages(); p++) { doc.setPage(p); footer(p); }
     doc.setPage(doc.getNumberOfPages());
   }
@@ -628,12 +628,12 @@ export async function buildReportPdf(rawMarkdown: string, meta: ReportPdfMeta): 
   }
 
   footer();
-  if (meta.cropPlan?.snapshot) {
+  if (meta.cropPlan?.snapshot && meta.includeCropWorkingPlan) {
     const { drawCropPlanPages } = await import('./crop-export-pdf');
     const { reportCropWorkingInput } = await import('./report-crop-plan');
     const input = reportCropWorkingInput(meta.cropPlan.snapshot, meta.siteName ?? 'Site crop plan');
-    // One seasonal calendar always; operational pages are an explicit optional appendix.
-    drawCropPlanPages(doc, { ...input, sections: meta.includeCropWorkingPlan ? input.sections : ['calendar'] }, true);
+    // The short sowing calendar is already in the report; the detailed plan is optional.
+    drawCropPlanPages(doc, input, true);
   }
   return doc.output('blob');
 }

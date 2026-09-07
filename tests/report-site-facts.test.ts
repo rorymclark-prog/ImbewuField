@@ -463,3 +463,26 @@ test('an older report keeps unknown crop links unknown', () => {
   assert.equal(clean.crop!.snapshot, undefined);
   assert.ok(reportCropRows(clean.crop!).every(r => r.variety === 'Not recorded'));
 });
+
+
+import { reportSowingCalendar, type ReportCropSnapshot } from '../lib/report-crop-plan';
+const calendarSnapshot = (): ReportCropSnapshot => ({ siteId: 'ubhejane', capturedAt: '2026-12-07T10:00:00Z', planUpdatedAt: 1, beds: [{ id: 'a', label: 'Bed A', areaM2: 9 }, { id: 'b', label: 'Bed B', areaM2: 9 }], plantings: [], outlines: [] });
+test('report sowing calendar groups repeated beds and keeps December-to-January task timing', () => {
+  const s = calendarSnapshot();
+  s.plantings = [{ id: 'a', bedId: 'a', cropKey: 'tomatoes', sowMonth: 12, areaFraction: 1 }, { id: 'b', bedId: 'b', cropKey: 'tomatoes', sowMonth: 12, areaFraction: 1 }];
+  const before = JSON.stringify(s), calendar = reportSowingCalendar(s);
+  assert.equal(calendar.rows.length, 1);
+  assert.match(calendar.months[0], /Dec 2026/); assert.match(calendar.months[1], /Jan 2027/);
+  assert.equal(calendar.rows[0].cells[0].sow, true);
+  assert.equal(calendar.rows[0].cells[1].transplant, true);
+  assert.equal(JSON.stringify(s), before);
+});
+test('report calendar does not roll past or beyond-window dated sowings into a different year', () => {
+  const s = calendarSnapshot();
+  s.plantings = [{ id: 'past', bedId: 'a', cropKey: 'carrots', sowMonth: 2, areaFraction: 1, once: '2026-02' }, { id: 'future', bedId: 'b', cropKey: 'tomatoes', sowMonth: 2, areaFraction: 1, once: '2028-02' }];
+  assert.equal(reportSowingCalendar(s).rows.length, 0);
+  assert.equal(reportSowingCalendar(s).unscheduled.length, 2);
+  s.plantings[1].once = '2027-02';
+  const row = reportSowingCalendar(s).rows[0];
+  assert.equal(row.cells[2].sow, true); assert.equal(row.cells[3].transplant, true);
+});

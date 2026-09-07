@@ -16,6 +16,7 @@ export const REPORT_ZU: Record<string, string> = {
   'Executive Summary': 'Isifinyezo', 'Site Conditions': 'Izimo zendawo', 'Natural Vegetation & Biome': 'Izitshalo zemvelo nohlobo lwemvelo',
   'Water Harvesting': 'Ukuqoqwa kwamanzi', 'Irrigation Plan': 'Uhlelo lokunisela', 'Soil Strategy': 'Uhlelo lomhlabathi',
   'Planting Calendar': 'Ikhalenda lokutshala', 'Year-Round Food Production': 'Ukukhiqiza ukudla unyaka wonke',
+  'Suitable Plants for This Site': 'Izitshalo ezifanele le ndawo',
   'Fruit, Nut & Berry Trees': 'Izihlahla zezithelo, amantongomane namajikijolo', 'Indigenous Trees': 'Izihlahla zendabuko',
   'Agroecosystem Planting Guide': 'Umhlahlandlela wokutshala ohambisana nemvelo', 'Crop Rotation': 'Ukushintshanisa izitshalo',
   'Animals & Livestock': 'Izilwane nemfuyo', 'Sun & Solar': 'Ilanga namandla elanga', 'Wind & Windbreaks': 'Umoya nezivimbamoya',

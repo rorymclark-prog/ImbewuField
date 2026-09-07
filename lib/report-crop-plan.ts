@@ -3,7 +3,7 @@ import { bedsFromDesignCanvas, canvasMetreExtent } from './design-beds-bridge';
 import { ELEMENTS_BY_ID } from './design-elements';
 import { cropByKey, MONTHS_SHORT } from './crop-catalog';
 import { buildOccupancyCalendar } from './crop-export-benchmark';
-import { tasksForPlan, type Planting, type PlanBed, type CropPlanState } from './crop-plan';
+import { tasksForPlan, taskMonthsFromNow, type Planting, type PlanBed, type CropPlanState } from './crop-plan';
 import type { PlanNote } from './crop-autosuggest';
 import type { CropPlanPdfInput } from './crop-export-pdf';
 import type { FactCropPlan } from './report-site-facts';
@@ -106,4 +106,34 @@ export function reportCropMapSvg(s: ReportCropSnapshot, offset: number): string 
 export function reportCropWorkingInput(s: ReportCropSnapshot, title: string): CropPlanPdfInput {
   const now = new Date(s.capturedAt);
   return { plantings: s.plantings, beds: s.beds, tasks: tasksForPlan(s.plantings, s.beds, now.getMonth() + 1), now, planNotes: s.planNotes, planNotesAt: s.planNotesAt, sections: ['calendar', 'plan', 'buying', 'fieldsheets', 'record'], meta: { planTitle: title, siteLine: 'Saved site report crop plan', locationLine: title, climateLine: '', bedsSummary: `${s.beds.length} beds / plots`, dateLabel: now.toLocaleDateString('en-ZA'), estimatedKgPerYear: null, lossPercent: 0, lossAllowanceConfirmed: false } };
+}
+
+export interface ReportSowingRow {
+  cropKey: string;
+  name: string;
+  cells: Array<{ sow: boolean; transplant: boolean }>;
+}
+/** The report explains when to start crops. Reuse the working plan's task dates,
+ * including nursery carry-over and absolute first-season stamps, without bed duplication. */
+export function reportSowingCalendar(s: ReportCropSnapshot): { months: string[]; rows: ReportSowingRow[]; unscheduled: string[] } {
+  const now = new Date(s.capturedAt), startIndex = now.getFullYear() * 12 + now.getMonth();
+  const plantings = new Map(s.plantings.map(p => [p.id, p]));
+  const grouped = new Map<string, ReportSowingRow>();
+  for (const task of tasksForPlan(s.plantings, s.beds, now.getMonth() + 1)) {
+    if (task.action !== 'sow' && task.action !== 'transplant') continue;
+    const p = plantings.get(task.plantingId);
+    if (!p) continue;
+    let offset = taskMonthsFromNow(task, now.getMonth() + 1);
+    const stamp = p.once ?? p.inNursery;
+    if (stamp && /^\d{4}-\d{2}$/.test(stamp)) {
+      const [year, month] = stamp.split('-').map(Number);
+      offset = year * 12 + month - 1 - startIndex + (task.cohortMonthOffset ?? 0);
+    }
+    if (offset < 0 || offset > 11) continue;
+    const row = grouped.get(task.cropKey) ?? { cropKey: task.cropKey, name: task.cropName, cells: Array.from({ length: 12 }, () => ({ sow: false, transplant: false })) };
+    row.cells[offset][task.action] = true;
+    grouped.set(task.cropKey, row);
+  }
+  const unscheduled = [...new Set(s.plantings.filter(p => !grouped.has(p.cropKey)).map(p => cropByKey(p.cropKey)?.name ?? p.cropKey))];
+  return { months: reportCropMonths(s), rows: [...grouped.values()], unscheduled };
 }
