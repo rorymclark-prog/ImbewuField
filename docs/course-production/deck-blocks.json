@@ -23,7 +23,7 @@
     "module": "food-forest",
     "slide": 3,
     "title": "Learning Outcomes",
-    "narration": "Name the seven layers of a food forest.\n\nChoose species that match your frost zone, rainfall, and humidity.\n\nPlan a planting sequence for a 500m\u00b2 plot.\n\nKnow why pioneers come first, and when lower layers and climbers should follow.",
+    "narration": "Name the seven layers of a food forest.\n\nChoose species that match your frost zone, rainfall, and humidity.\n\nPlan a planting sequence for a 500m² plot.\n\nKnow why pioneers come first, and when lower layers and climbers should follow.",
     "narration_seconds": 20.784,
     "slide_deck_owner": "Codex",
     "art_status": "illustrated front-frame production/review required",
@@ -54,7 +54,7 @@
     "module": "food-forest",
     "slide": 6,
     "title": "The Seven Layers",
-    "narration": "Tall canopy grows at 10m+.\n\nSub-canopy grows from 4\u20138m, while shrubs grow from 1\u20133m.\n\nHerbaceous plants stay under 1m.\n\nGround cover protects the soil, root crops grow below, and climbers use vertical space.",
+    "narration": "Tall canopy grows at 10m+.\n\nSub-canopy grows from 4–8m, while shrubs grow from 1–3m.\n\nHerbaceous plants stay under 1m.\n\nGround cover protects the soil, root crops grow below, and climbers use vertical space.",
     "narration_seconds": 21.192,
     "slide_deck_owner": "Codex",
     "art_status": "illustrated front-frame production/review required",
@@ -155,7 +155,7 @@
   {
     "module": "food-forest",
     "slide": 16,
-    "title": "Year One on a 500m\u00b2 Plot",
+    "title": "Year One on a 500m² Plot",
     "narration": "Sheet-mulch with cardboard and 20cm of wood chips.\n\nThe cardboard smothers existing grass while it decomposes and feeds soil organisms.\n\nPlant nitrogen-fixing pioneers at 2m spacing.\n\nStart a nursery so more plants are ready for the next stage.",
     "narration_seconds": 21.408,
     "slide_deck_owner": "Codex",
@@ -176,7 +176,7 @@
     "module": "food-forest",
     "slide": 18,
     "title": "Plant With the Rain",
-    "narration": "Plant at the start of the rainy season.\n\nLet the rain do the establishment watering.\n\nNever plant into dry soil.\n\nTransplant shock plus drought stress rarely allows a young plant to recover.\n\nBy year five, a 500m\u00b2 Highveld food forest can produce real harvests with minimal outside inputs.",
+    "narration": "Plant at the start of the rainy season.\n\nLet the rain do the establishment watering.\n\nNever plant into dry soil.\n\nTransplant shock plus drought stress rarely allows a young plant to recover.\n\nBy year five, a 500m² Highveld food forest can produce real harvests with minimal outside inputs.",
     "narration_seconds": 25.104,
     "slide_deck_owner": "Codex",
     "art_status": "illustrated front-frame production/review required",
@@ -219,7 +219,7 @@
     "narration": "A good design saves work before you pick up a spade.\n\nMost of the effort on a smallholding is not planting or harvesting. It is walking, carrying and fixing what was put in the wrong place.\n\nPermaculture is a way of deciding where things go, so the land works with you instead of against you.\n\n[pause]\n\nThink of one job on your farm that takes longer than it should. Where does the time actually go?",
     "narration_seconds": 29.928,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation review remains separate",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
   },
   {
@@ -229,7 +229,7 @@
     "narration": "By the end of this module you will be able to do three things.\n\nName the three ethics, and use them to settle a decision that has no obvious answer.\n\nName the design principles that matter most on your land, and say why.\n\nSketch your zones and your sectors on one sheet of paper.\n\n[pause]\n\nThat sketch is the skeleton of every plan you make after this.",
     "narration_seconds": 26.52,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation review remains separate",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
   },
   {
@@ -239,7 +239,7 @@
     "narration": "The first ethic is Earth Care.\n\nIt means treating soil, water, plants and animals as living systems to protect, not resources to use up.\n\nA system you use up stops paying you. A system you protect keeps paying you.\n\n[pause]\n\nLook at one patch of bare soil on your land. Is anything protecting it right now?",
     "narration_seconds": 26.448,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation review remains separate",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
   },
   {
@@ -249,17 +249,17 @@
     "narration": "The second ethic is People Care.\n\nYour family's needs come first, then your community's.\n\nA farmer who sells every egg and every vegetable, and keeps nothing back for the family table, is skipping People Care.\n\nThe farm is meant to feed the household that runs it.\n\n[pause]\n\nWhat comes off your land that your own family never eats?",
     "narration_seconds": 25.272,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation review remains separate",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
   },
   {
     "module": "intro-permaculture",
     "slide": 6,
     "title": "Fair Share",
-    "narration": "The third ethic is Fair Share.\n\nTake only what you need, and return the surplus to the system \u2014 seeds, food, water, knowledge.\n\nA farmer who sells all his surplus mielies and keeps nothing back for compost or for seed is breaking this one. Nothing goes back.\n\nA community that fences off a shared spring is breaking it too.\n\n[pause]\n\nWhat does your land get back from you each season?",
+    "narration": "The third ethic is Fair Share.\n\nTake only what you need, and return the surplus to the system — seeds, food, water, knowledge.\n\nA farmer who sells all his surplus mielies and keeps nothing back for compost or for seed is breaking this one. Nothing goes back.\n\nA community that fences off a shared spring is breaking it too.\n\n[pause]\n\nWhat does your land get back from you each season?",
     "narration_seconds": 29.952,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation review remains separate",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
   },
   {
@@ -269,7 +269,7 @@
     "narration": "A borehole is producing more water than your household needs.\n\nYou could keep it closed. You could open it to everyone and watch the level drop.\n\nSharing access with your neighbours while you monitor the water table serves all three at once. People Care and Fair Share in the sharing. Earth Care in the monitoring.\n\n[pause]\n\nThe other choices each serve one ethic and ignore the rest.",
     "narration_seconds": 29.592,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation review remains separate",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required",
     "animation_owner": "Rory"
   },
@@ -280,27 +280,29 @@
     "narration": "This is what the ethics are actually for.\n\nA neighbour asks to graze cattle after a drought. A flood damages your swales. Nobody has written down the answer.\n\nThe ethics let you decide without waiting for permission, and explain the decision afterwards.\n\n[pause]\n\nBuild these three into how you think before you build anything on the ground.",
     "narration_seconds": 26.424,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation review remains separate",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
   },
   {
     "module": "intro-permaculture",
     "slide": 9,
     "title": "Twelve Principles",
-    "narration": "Bill Mollison and David Holmgren distilled permaculture into twelve design principles.\n\nYou do not need all twelve to start. Three of them do most of the work on a South African smallholding.\n\nObserve and interact. Catch and store energy. Use edges and value the marginal.\n\n[pause]\n\nWe will take those three one at a time.",
-    "narration_seconds": 27.36,
+    "narration": "David Holmgren set out twelve design principles for permaculture.\n\nYou do not need all twelve to start. We will begin with three useful ways to look at your smallholding.\n\nObserve and interact. Catch and store energy. Use edges and value the marginal.\n\n[pause]\n\nWe will take those three one at a time.",
+    "narration_seconds": null,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
-    "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
+    "art_status": "Illustrated teaching front rendered and visually checked; animation review remains separate",
+    "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required",
+    "last_recorded_seconds": 27.36,
+    "recording_status": "Source corrected; replacement Leah take and listening review pending"
   },
   {
     "module": "intro-permaculture",
     "slide": 10,
     "title": "Observe and Interact",
-    "narration": "Watch your land through a full season before you commit to major earthworks.\n\nOne storm shows you one moment. A full wet season shows you the pattern \u2014 where water runs, where it pools, where it never reaches.\n\nThat pattern is what a swale has to match. Dig before you know it and you have moved a great deal of soil into the wrong place.\n\n[pause]\n\nWhere does water leave your land? Do you actually know, or are you guessing?",
+    "narration": "Watch your land through a full season before you commit to major earthworks.\n\nOne storm shows you one moment. A full wet season shows you the pattern — where water runs, where it pools, where it never reaches.\n\nThat pattern is what a swale has to match. Dig before you know it and you have moved a great deal of soil into the wrong place.\n\n[pause]\n\nWhere does water leave your land? Do you actually know, or are you guessing?",
     "narration_seconds": 32.688,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation review remains separate",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
   },
   {
@@ -310,100 +312,114 @@
     "narration": "Harvest rain, sun and biomass before they leave your property.\n\nEvery one of those arrives free and leaves free. Water runs off, leaves blow away, sun falls on bare ground.\n\nCatching them is almost always cheaper than buying the same thing later.\n\n[pause]\n\nName one thing that arrives on your land free and leaves again without being used.",
     "narration_seconds": 26.472,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation review remains separate",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
   },
   {
     "module": "intro-permaculture",
     "slide": 12,
     "title": "Use Edges and Value the Marginal",
-    "narration": "The edge is where two things meet \u2014 a fence line, a stream bank, the strip beside a path.\n\nEdges are often the most productive ground you have, and they are usually the ground nobody has planned.\n\nLook at what already grows well along yours. That is the land telling you something.\n\n[pause]\n\nWhich edge on your plot is doing nothing at the moment?",
+    "narration": "The edge is where two things meet — a fence line, a stream bank, the strip beside a path.\n\nEdges are often the most productive ground you have, and they are usually the ground nobody has planned.\n\nLook at what already grows well along yours. That is the land telling you something.\n\n[pause]\n\nWhich edge on your plot is doing nothing at the moment?",
     "narration_seconds": 26.28,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation review remains separate",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
   },
   {
     "module": "intro-permaculture",
     "slide": 13,
     "title": "Watch: Diversity Against One Bad Day",
-    "narration": "A monoculture maize field can be wiped out by one hailstorm. A mixed planting rarely is.\n\nThat is the principle \"use and value diversity\", and it is insurance you plant rather than buy.\n\nTwo others worth knowing: produce no waste, so scraps become compost and compost becomes soil. And use small and slow solutions \u2014 a bucket can irrigate a bed with no electricity at all.\n\n[pause]\n\nWhat would one bad day cost you right now?",
-    "narration_seconds": 34.104,
+    "narration": "A hailstorm can damage a whole maize field. Different crops may respond differently, but a mixed planting can also be badly damaged.\n\nThe principle \"use and value diversity\" means spreading risk across different crops. It does not guarantee a harvest.\n\nTwo others worth knowing: produce no waste, so scraps become compost and compost becomes soil. And use small and slow solutions — a bucket can irrigate a bed with no electricity at all.\n\n[pause]\n\nWhat would one bad day cost you right now?",
+    "narration_seconds": null,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation review remains separate",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required",
-    "animation_owner": "Rory"
+    "animation_owner": "Rory",
+    "last_recorded_seconds": 34.104,
+    "recording_status": "Source corrected; replacement Leah take and listening review pending"
   },
   {
     "module": "intro-permaculture",
     "slide": 14,
     "title": "Integrate Rather Than Segregate",
-    "narration": "Put each element where it works for its neighbours.\n\nA garden, fruit trees and a chicken run arranged so the chickens rotate through the beds after harvest is integration. The chickens clean up pests and add fertility instead of sitting idle in a fixed pen.\n\nThe same three things, fenced apart, do only their own job.\n\n[pause]\n\nPick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go.",
-    "narration_seconds": 33.624,
+    "narration": "Put each element where it works for its neighbours.\n\nA garden, fruit trees and a chicken run can work together. Chickens can scratch through crop residues on an already harvested bed while growing vegetables stay fenced off.\n\nFresh chicken manure can carry harmful germs. Keep it away from harvestable food and plan a safe interval before the next harvest with your extension officer.\n\n[pause]\n\nPick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go.",
+    "narration_seconds": null,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
-    "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
+    "art_status": "Illustrated teaching front rendered and visually checked; animation review remains separate",
+    "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required",
+    "last_recorded_seconds": 33.624,
+    "recording_status": "Source corrected; replacement Leah take and listening review pending"
   },
   {
     "module": "intro-permaculture",
     "slide": 15,
     "title": "Zones: Organising by How Often You Visit",
-    "narration": "Zones run from 0 to 5, and they are about your feet, not your fences.\n\nZone 0 is the house. Zone 1, right outside the kitchen door, holds what you pick daily \u2014 herbs and salad greens.\n\nZone 2 is the main garden and the chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly.\n\n[pause]\n\nZone 4 is semi-wild \u2014 fruit trees and fodder that need occasional attention. Zone 5 is left wild.",
-    "narration_seconds": 37.488,
+    "narration": "Zones run from 0 to 5, and they are about your feet, not your fences.\n\nZone 0 is the house. Zone 1 holds things you use or check most often, such as kitchen herbs and salad greens.\n\nZone 2 can hold regularly tended plantings and poultry. Zone 3 can hold main field crops. Visit as often as the crops and animals need; the zone number is not a care timetable.\n\n[pause]\n\nZone 4 can hold managed woodland and forage. Zone 5 is a wild area for observation and habitat. Place each activity by how often it needs you. A small plot may not have every zone.",
+    "narration_seconds": null,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
-    "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
+    "art_status": "Illustrated teaching front rendered and visually checked; animation review remains separate",
+    "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required",
+    "last_recorded_seconds": 37.488,
+    "recording_status": "Source corrected; replacement Leah take and listening review pending"
   },
   {
     "module": "intro-permaculture",
     "slide": 16,
-    "title": "Why Zone 1 Is Not Negotiable",
-    "narration": "Herbs need daily picking to stay productive.\n\nPlant them in Zone 3, out in the main field, and the walk is long enough that the daily visit stops happening. The herbs bolt, or they are simply neglected.\n\nNothing is wrong with the plant or the soil. The plant was put where your feet do not go.\n\n[pause]\n\nWhat is currently planted further from your door than it deserves?",
-    "narration_seconds": 28.44,
+    "title": "Keep Frequent Tasks Close",
+    "narration": "Keep herbs you use often near the kitchen door. Pick what you need when the plants have enough leaves; not every herb needs daily picking.\n\nPut them far out in the main field and the long walk can make harvesting and checking less convenient. Plants that are difficult to reach are easier to neglect.\n\nDistance is one thing to check when a useful planting is being neglected. Also check its water, soil and light.\n\n[pause]\n\nWhat is currently planted further from your door than it deserves?",
+    "narration_seconds": null,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
-    "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
+    "art_status": "Illustrated teaching front rendered and visually checked; animation review remains separate",
+    "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required",
+    "last_recorded_seconds": 28.44,
+    "recording_status": "Source corrected; replacement Leah take and listening review pending"
   },
   {
     "module": "intro-permaculture",
     "slide": 17,
     "title": "Zones Plan Your Labour",
-    "narration": "This is the point of the whole exercise.\n\nZones do not organise space. They organise effort \u2014 the walking, the carrying and the checking that fills a real day.\n\nThe more often something needs you, the closer it lives. That one rule cuts real hours over a season.\n\n[pause]\n\nStand at your kitchen door. What can you reach without thinking about it?",
+    "narration": "This is the point of the whole exercise.\n\nZones do not organise space. They organise effort — the walking, the carrying and the checking that fills a real day.\n\nThe more often something needs you, the closer it lives. That one rule cuts real hours over a season.\n\n[pause]\n\nStand at your kitchen door. What can you reach without thinking about it?",
     "narration_seconds": 28.896,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation review remains separate",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
   },
   {
     "module": "intro-permaculture",
     "slide": 18,
     "title": "Sectors: The Energies Arriving From Outside",
-    "narration": "Zones come from inside your land. Sectors come from outside it.\n\nSun, wind, rain, flood and fire all arrive across your boundary whether you plan for them or not.\n\nA Lowveld farm facing north-west gets hot dry berg winds in August. A KwaZulu-Natal farm has a summer rain sector from the north-east.\n\n[pause]\n\nWhich direction does the weather that damages you come from?",
-    "narration_seconds": 29.952,
+    "narration": "Zones come from inside your land. Sectors come from outside it.\n\nSun, wind, rain, flood and fire all arrive across your boundary whether you plan for them or not.\n\nThe directions differ from site to site. Observe your own weather, check local records and ask neighbours what they have seen. Do not copy another farm's arrows without checking.\n\n[pause]\n\nWhich direction does the weather that damages you come from?",
+    "narration_seconds": null,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
-    "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
+    "art_status": "Illustrated teaching front rendered and visually checked; animation review remains separate",
+    "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required",
+    "last_recorded_seconds": 29.952,
+    "recording_status": "Source corrected; replacement Leah take and listening review pending"
   },
   {
     "module": "intro-permaculture",
     "slide": 19,
     "title": "Watch: A Windbreak Belongs On The Wind Side",
-    "narration": "A Highveld farm gets hot, dry north-westerly winds in August.\n\nThe windbreak goes on the north-west boundary, standing between the wind and the crops.\n\nThat is all a windbreak does \u2014 it stands between the energy and the thing the energy would damage. Put it anywhere else and it is just a row of trees.\n\n[pause]\n\nThe same logic places a firebreak, and it places your tender crops out of a frost pocket.",
-    "narration_seconds": 30.6,
+    "narration": "In this example, damaging wind comes from the north-west. Check the wind direction on your own farm.\n\nThe windbreak goes on the north-west boundary, standing between the wind and the crops.\n\nThe windbreak stands between the incoming wind and the crops. Its position and design need to suit the site.\n\n[pause]\n\nA windbreak is not a firebreak. Fire and frost need their own site assessment.",
+    "narration_seconds": null,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation review remains separate",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required",
-    "animation_owner": "Codex"
+    "animation_owner": "Codex",
+    "last_recorded_seconds": 30.6,
+    "recording_status": "Source corrected; replacement Leah take and listening review pending"
   },
   {
     "module": "intro-permaculture",
     "slide": 20,
     "title": "Sketch It And You Have A Design",
-    "narration": "Draw your boundary. Mark the house. Draw the rings outward by how often you visit.\n\nThen draw arrows in from outside for sun, wind, fire and water.\n\nThat sheet of paper is the skeleton of your design. Everything else in this course hangs on it.\n\n[pause]\n\nIt does not need to be neat. It needs to be true.",
-    "narration_seconds": 27.144,
+    "narration": "Draw your boundary. Mark the house. Sketch areas by how often you visit them. Fit them to your actual paths and land; they do not need to be circles.\n\nThen draw arrows in from outside for sun, wind, fire and water.\n\nThat sheet of paper is the skeleton of your design. Everything else in this course hangs on it.\n\n[pause]\n\nIt does not need to be neat. It needs to be true.",
+    "narration_seconds": null,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
-    "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
+    "art_status": "Illustrated teaching front rendered and visually checked; animation review remains separate",
+    "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required",
+    "last_recorded_seconds": 27.144,
+    "recording_status": "Source corrected; replacement Leah take and listening review pending"
   },
   {
     "module": "intro-permaculture",
@@ -412,7 +428,7 @@
     "narration": "Sketch your own zones and sectors on one sheet of paper.\n\nMark Zone 0 and Zone 1 first, then work outward as far as your land goes.\n\nAdd an arrow for each energy that arrives from outside, and label where it comes from.\n\nPhotograph the sketch.",
     "narration_seconds": 20.976,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation review remains separate",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
   },
   {
@@ -422,7 +438,7 @@
     "narration": "Walk out and check your sketch against the ground.\n\nStand at the kitchen door and count what is really in Zone 1 today.\n\nFind one thing planted further away than how often you use it, and write down where it should move to.\n\nThen ask one older neighbour which direction the worst wind comes from, and compare their answer with your arrow.",
     "narration_seconds": 24.648,
     "slide_deck_owner": "Codex",
-    "art_status": "illustrated front-frame production/review required",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation review remains separate",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
   },
   {
@@ -521,7 +537,7 @@
     "module": "market-community",
     "slide": 10,
     "title": "Know Your Customer",
-    "narration": "Know your customer before you sell.\n\nA formal farmers\u2019 market may pay a premium price, but it demands registration and a consistent weekly supply.\n\nAn informal market or taxi-rank stall pays less, but asks nothing in return.\n\nA school or clinic may pay below retail and give a stable order.",
+    "narration": "Know your customer before you sell.\n\nA formal farmers’ market may pay a premium price, but it demands registration and a consistent weekly supply.\n\nAn informal market or taxi-rank stall pays less, but asks nothing in return.\n\nA school or clinic may pay below retail and give a stable order.",
     "narration_seconds": 22.872,
     "slide_deck_owner": "Codex",
     "art_status": "illustrated front-frame production/review required",
@@ -541,7 +557,7 @@
     "module": "market-community",
     "slide": 12,
     "title": "Plan Around Box Customers",
-    "narration": "A box scheme can suit a garden of 200 to 500m\u00b2.\n\nTen regular box customers can provide meaningful monthly income.\n\nThe important value is not only the price per kilogram.\n\nYou know in advance what customers expect, so you grow for real demand instead of growing speculatively.",
+    "narration": "A box scheme can suit a garden of 200 to 500m².\n\nTen regular box customers can provide meaningful monthly income.\n\nThe important value is not only the price per kilogram.\n\nYou know in advance what customers expect, so you grow for real demand instead of growing speculatively.",
     "narration_seconds": 23.76,
     "slide_deck_owner": "Codex",
     "art_status": "illustrated front-frame production/review required",
@@ -572,7 +588,7 @@
     "module": "market-community",
     "slide": 15,
     "title": "Save Seed Together",
-    "narration": "A seed swap between five neighbours can turn five households\u2019 seed diversity into twenty-five.\n\nIf five smallholders each save three tomato varieties alone, or each saves two varieties for the group, collective saving gives better seed.\n\nSpecialising means more attention to isolation, selection, and storage.\n\nThe whole group receives stronger seed without every farmer doing every task alone.",
+    "narration": "A seed swap between five neighbours can turn five households’ seed diversity into twenty-five.\n\nIf five smallholders each save three tomato varieties alone, or each saves two varieties for the group, collective saving gives better seed.\n\nSpecialising means more attention to isolation, selection, and storage.\n\nThe whole group receives stronger seed without every farmer doing every task alone.",
     "narration_seconds": 30.6,
     "slide_deck_owner": "Codex",
     "art_status": "illustrated front-frame production/review required",
@@ -582,7 +598,7 @@
     "module": "market-community",
     "slide": 16,
     "title": "Share Expensive Tools",
-    "narration": "Tool sharing puts expensive equipment within reach of the group.\n\nA water pump or grain mill may be beyond one household\u2019s budget.\n\nShared use spreads the value across the group and helps each farm do work it could not do alone.",
+    "narration": "Tool sharing puts expensive equipment within reach of the group.\n\nA water pump or grain mill may be beyond one household’s budget.\n\nShared use spreads the value across the group and helps each farm do work it could not do alone.",
     "narration_seconds": 17.184,
     "slide_deck_owner": "Codex",
     "art_status": "illustrated front-frame production/review required",
@@ -794,7 +810,7 @@
   {
     "module": "plant-guilds",
     "slide": 17,
-    "title": "Fill the Guild\u2019s Other Jobs",
+    "title": "Fill the Guild’s Other Jobs",
     "narration": "Place wild garlic in a ring at the outer edge for pest control.\n\nGrow African basil between the comfrey, drawing in wasps that control fruit flies.\n\nLet sweet potato carpet the ground.\n\nTogether, these plants give the mango guild pest control, beneficial insects, mulch, and food.",
     "narration_seconds": 23.808,
     "slide_deck_owner": "Codex",
@@ -916,7 +932,7 @@
     "module": "reading-landscape",
     "slide": 9,
     "title": "Watch: Follow the Sun Across the Site",
-    "narration": "Follow the sun, building, tree, and their shadows across the slope. Compare summer\u2019s high sun with winter\u2019s lower sun.",
+    "narration": "Follow the sun, building, tree, and their shadows across the slope. Compare summer’s high sun with winter’s lower sun.",
     "narration_seconds": 10.104,
     "slide_deck_owner": "Codex",
     "art_status": "illustrated front-frame production/review required",
@@ -1120,7 +1136,7 @@
     "module": "small-livestock",
     "slide": 8,
     "title": "Rotate the Tractor Across the Plot",
-    "narration": "A chicken tractor works best when it moves across the land in rotation.\n\nKeep the pen on one bed for a week or two, then move it so the land can rest between passes.\n\nFour to six chickens rotated through a 500m\u00b2 plot can maintain fertility all year with no bought fertiliser.",
+    "narration": "A chicken tractor works best when it moves across the land in rotation.\n\nKeep the pen on one bed for a week or two, then move it so the land can rest between passes.\n\nFour to six chickens rotated through a 500m² plot can maintain fertility all year with no bought fertiliser.",
     "narration_seconds": 21.936,
     "slide_deck_owner": "Codex",
     "art_status": "illustrated front-frame production/review required",
@@ -1150,7 +1166,7 @@
   {
     "module": "small-livestock",
     "slide": 11,
-    "title": "South Africa\u2019s Native Honeybees",
+    "title": "South Africa’s Native Honeybees",
     "narration": "South Africa has two native honeybee subspecies.\n\nThe Cape bee lives in the southern and south-western Cape.\n\nThe African honeybee occurs across the north and east.\n\nBoth are more defensive than European strains, but both are more resistant to varroa mite.",
     "narration_seconds": 20.568,
     "slide_deck_owner": "Codex",
@@ -1202,7 +1218,7 @@
     "module": "small-livestock",
     "slide": 16,
     "title": "Guinea Fowl Hunt Ticks and Grasshoppers",
-    "narration": "Guinea fowl are indigenous to southern Africa and are strong controllers of ticks and grasshoppers.\n\nIn KZN and Limpopo\u2019s humid, tick-heavy conditions, a small free-ranging flock can cut tick burdens sharply.\n\nThis makes guinea fowl useful system workers where chemical treatments are not wanted.",
+    "narration": "Guinea fowl are indigenous to southern Africa and are strong controllers of ticks and grasshoppers.\n\nIn KZN and Limpopo’s humid, tick-heavy conditions, a small free-ranging flock can cut tick burdens sharply.\n\nThis makes guinea fowl useful system workers where chemical treatments are not wanted.",
     "narration_seconds": 22.008,
     "slide_deck_owner": "Codex",
     "art_status": "illustrated front-frame production/review required",
@@ -1265,7 +1281,7 @@
     "narration": "Years of monoculture, overgrazing, or stubble-burning leave soil that depends on bought fertiliser to produce anything.\n\nWhen soil life is lost, the ground becomes pale, compacted, and difficult to farm.\n\nCompost, mulch, cover crops, and worm farms can rebuild living soil on smallholder farms across South Africa.",
     "narration_seconds": 26.304,
     "slide_deck_owner": "Codex",
-    "art_status": "English illustrated front rendered and visually checked; isiZulu illustrated front pending",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation review remains separate",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
   },
   {
@@ -1275,7 +1291,7 @@
     "narration": "You will learn how to recognise healthy and degraded soil.\n\nYou will use a jar test to see whether soil is mostly sand, silt, or clay.\n\nYou will make safer compost, correct a wet heap, protect bare ground, and use cover crops and understand worm-farm leachate risks.",
     "narration_seconds": null,
     "slide_deck_owner": "Codex",
-    "art_status": "English illustrated front rendered and visually checked; isiZulu illustrated front pending",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation review remains separate",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required",
     "narration_status": "Corrected text prepared; Microsoft endpoint transfer blocked by automatic approval review; explicit approval needed for these two takes",
     "last_recorded_seconds": 20.592
@@ -1287,7 +1303,7 @@
     "narration": "A teaspoon of good topsoil holds more organisms than there are people on Earth.\n\nBacteria and fungi process nutrients for plants.\n\nUnderground fungal threads move nutrients between plants. Worm channels are a visible sign of healthy topsoil.\n\nMonoculture, overgrazing, and stubble-burning can strip this life away.",
     "narration_seconds": 25.536,
     "slide_deck_owner": "Codex",
-    "art_status": "English illustrated front rendered and visually checked; isiZulu illustrated front pending",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation review remains separate",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
   },
   {
@@ -1297,7 +1313,7 @@
     "narration": "Compare the dark, living topsoil with the pale, compacted soil.\n\nLook for worm channels, and notice how smell changes from rain or mushrooms to sour or nothing.",
     "narration_seconds": 13.224,
     "slide_deck_owner": "Codex",
-    "art_status": "English illustrated front rendered and visually checked; isiZulu illustrated front pending",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation review remains separate",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required",
     "animation_owner": "Rory"
   },
@@ -1308,7 +1324,7 @@
     "narration": "Fill a jar one-third with soil, top it up with water, and add a drop of dish soap.\n\nShake the jar, then leave it to settle for a day.\n\nSand settles first, silt settles next, and clay stays suspended longest.\n\nThe layers show your soil texture without special equipment.",
     "narration_seconds": 23.28,
     "slide_deck_owner": "Codex",
-    "art_status": "English illustrated front rendered and visually checked; isiZulu illustrated front pending",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation review remains separate",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
   },
   {
@@ -1318,7 +1334,7 @@
     "narration": "Thick sand at the bottom and cloudy, clay-tinted water on top means the soil is sandy.\n\nSandy soil drains fast and holds little water for roots.\n\nMulch heavily and add organic matter often.\n\nThis slows water loss and helps the soil hold moisture around growing plants.",
     "narration_seconds": 22.272,
     "slide_deck_owner": "Codex",
-    "art_status": "English illustrated front rendered and visually checked; isiZulu illustrated front pending",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation review remains separate",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
   },
   {
@@ -1328,7 +1344,7 @@
     "narration": "Pale, compacted soil with no worms and a sour smell is not simply a fixed soil type.\n\nContinuous cropping, chemical use, or burning may have killed most of the soil life.\n\nThat is encouraging, because living soil can be rebuilt with compost, mulch, and gentler management.",
     "narration_seconds": 22.8,
     "slide_deck_owner": "Codex",
-    "art_status": "English illustrated front rendered and visually checked; isiZulu illustrated front pending",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation review remains separate",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
   },
   {
@@ -1338,7 +1354,7 @@
     "narration": "Compost is organic matter that has decomposed.\n\nIt rebuilds soil structure and feeds the organisms that help plants grow.\n\nA hot heap reaches usable compost in four to six weeks in warm, humid KZN.\n\nOn the cooler Highveld, it may take eight to twelve weeks.",
     "narration_seconds": 21.648,
     "slide_deck_owner": "Codex",
-    "art_status": "English illustrated front rendered and visually checked; isiZulu illustrated front pending",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation review remains separate",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
   },
   {
@@ -1348,7 +1364,7 @@
     "narration": "Build the heap with dry browns and fresh greens.\n\nKeep the layers moist, not wet, so air and decomposers can work.",
     "narration_seconds": 10.728,
     "slide_deck_owner": "Codex",
-    "art_status": "English illustrated front rendered and visually checked; isiZulu illustrated front pending",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation review remains separate",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required",
     "animation_owner": "Rory"
   },
@@ -1359,17 +1375,17 @@
     "narration": "Layer 20 to 30cm of browns for every 5 to 10cm of greens.\n\nToo much green material makes the heap wet, slimy, and ammonia-smelling.\n\nToo much brown material keeps the heap cold for months.\n\nThe right balance gives the heap food, air, and enough heat to break down.",
     "narration_seconds": 24.096,
     "slide_deck_owner": "Codex",
-    "art_status": "English illustrated front rendered and visually checked; isiZulu illustrated front pending",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation review remains separate",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
   },
   {
     "module": "soil-health",
     "slide": 12,
     "title": "Keep the Compost Safe",
-    "narration": "Aim for a core temperature of 55 to 65\u00b0C.\n\nThis speeds decomposition and kills most weed seeds and pathogens.\n\nDo not add meat, dairy, cooked scraps, diseased plants, or soil with persistent herbicide residue.\n\nThese materials can make the finished compost unsafe for the farm.",
+    "narration": "Aim for a core temperature of 55 to 65°C.\n\nThis speeds decomposition and kills most weed seeds and pathogens.\n\nDo not add meat, dairy, cooked scraps, diseased plants, or soil with persistent herbicide residue.\n\nThese materials can make the finished compost unsafe for the farm.",
     "narration_seconds": 25.536,
     "slide_deck_owner": "Codex",
-    "art_status": "English illustrated front rendered and visually checked; isiZulu illustrated front pending",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation review remains separate",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
   },
   {
@@ -1389,7 +1405,7 @@
     "narration": "Compare bare soil with mulched soil.\n\nWatch how the mulch protects topsoil when a South African summer storm brings intense rain.",
     "narration_seconds": 10.104,
     "slide_deck_owner": "Codex",
-    "art_status": "English illustrated front rendered and visually checked; isiZulu illustrated front pending",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation review remains separate",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required",
     "animation_owner": "Codex"
   },
@@ -1397,20 +1413,20 @@
     "module": "soil-health",
     "slide": 15,
     "title": "Mulch Protects the Ground",
-    "narration": "Spread a 5 to 10cm layer of straw, dry grass, or wood chips over bare soil.\n\nMulch cuts erosion sharply and keeps soil several degrees cooler in summer.\n\nOn hot Highveld days, it can reduce soil temperature by up to 10\u00b0C.\n\nIt also suppresses weeds and feeds soil life as it breaks down.",
+    "narration": "Spread a 5 to 10cm layer of straw, dry grass, or wood chips over bare soil.\n\nMulch cuts erosion sharply and keeps soil several degrees cooler in summer.\n\nOn hot Highveld days, it can reduce soil temperature by up to 10°C.\n\nIt also suppresses weeds and feeds soil life as it breaks down.",
     "narration_seconds": 26.112,
     "slide_deck_owner": "Codex",
-    "art_status": "English illustrated front rendered and visually checked; isiZulu illustrated front pending",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation review remains separate",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
   },
   {
     "module": "soil-health",
     "slide": 16,
     "title": "Cover Crops Between Seasons",
-    "narration": "Cover crops protect soil when the main crop is not growing.\n\nOn the Highveld, oats or lupins sown after the maize harvest cover soil through frost months.\n\nSlash them in before spring planting.\n\nIn KZN, sunn hemp grows fast in summer, while cowpea fixes nitrogen and tolerates the Lowveld\u2019s early-summer dry spell.",
+    "narration": "Cover crops protect soil when the main crop is not growing.\n\nOn the Highveld, oats or lupins sown after the maize harvest cover soil through frost months.\n\nSlash them in before spring planting.\n\nIn KZN, sunn hemp grows fast in summer, while cowpea fixes nitrogen and tolerates the Lowveld’s early-summer dry spell.",
     "narration_seconds": 25.296,
     "slide_deck_owner": "Codex",
-    "art_status": "English illustrated front rendered and visually checked; isiZulu illustrated front pending",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation review remains separate",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
   },
   {
@@ -1420,7 +1436,7 @@
     "narration": "Worm farms turn kitchen scraps into rich castings.\n\nThe liquid draining out is leachate. It can carry harmful germs from material that has not finished breaking down.\n\nDo not use it on vegetables or other food crops, even when diluted. Dilution does not disinfect it.\n\nKeep worm bedding moist rather than waterlogged.",
     "narration_seconds": null,
     "slide_deck_owner": "Codex",
-    "art_status": "English illustrated front rendered and visually checked; isiZulu illustrated front pending",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation review remains separate",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required",
     "narration_status": "Corrected text prepared; Microsoft endpoint transfer blocked by automatic approval review; explicit approval needed for these two takes",
     "last_recorded_seconds": 21.648
@@ -1432,7 +1448,7 @@
     "narration": "A Highveld field left bare after the maize harvest faces two main risks.\n\nWinter wind can carry away dry topsoil.\n\nThe first heavy spring storm can strike bare ground and damage soil structure.\n\nCover crops, mulch, and organic matter keep soil in place and help it stay alive.",
     "narration_seconds": 22.92,
     "slide_deck_owner": "Codex",
-    "art_status": "English illustrated front rendered and visually checked; isiZulu illustrated front pending",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation review remains separate",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
   },
   {
@@ -1442,7 +1458,7 @@
     "narration": "Choose a working area on your farm and inspect the soil.\n\nDig a 30cm hole and record its colour, smell, structure, and worm channels.\n\nDo the jar test with soil, water, and a drop of dish soap.\n\nWrite down whether sand, silt, or clay seems dominant, and what that means for watering.",
     "narration_seconds": 25.728,
     "slide_deck_owner": "Codex",
-    "art_status": "English illustrated front rendered and visually checked; isiZulu illustrated front pending",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation review remains separate",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
   },
   {
@@ -1452,7 +1468,7 @@
     "narration": "Start one soil-building action from this module.\n\nCover bare ground with mulch, begin a balanced compost heap, sow a suitable cover crop, or prepare a worm farm.\n\nIf your compost smells of ammonia and feels slimy, add dry carbon such as straw and turn it.\n\nBuild soil life step by step.",
     "narration_seconds": 23.664,
     "slide_deck_owner": "Codex",
-    "art_status": "English illustrated front rendered and visually checked; isiZulu illustrated front pending",
+    "art_status": "Illustrated teaching front rendered and visually checked; animation review remains separate",
     "isiZulu_status": "Draft reading deck rendered; first-language review and reconciliation required"
   },
   {
@@ -1479,7 +1495,7 @@
     "module": "vegetables-staples",
     "slide": 3,
     "title": "Learning Outcomes",
-    "narration": "By the end of this module, you'll be able to make four decisions in your own field.\n\nOne. Build the right bed \u2014 matching the width and the bed type to your soil and your rainfall.\n\nTwo. Keep harvests moving, using succession planting and intercropping.\n\nThree. Choose staples that protect you when one crop fails.\n\nFour. Read a pest problem before you treat it.\n\n[pause]\n\nThese four belong together. A well-shaped bed still fails if everything goes in on one day. A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
+    "narration": "By the end of this module, you'll be able to make four decisions in your own field.\n\nOne. Build the right bed — matching the width and the bed type to your soil and your rainfall.\n\nTwo. Keep harvests moving, using succession planting and intercropping.\n\nThree. Choose staples that protect you when one crop fails.\n\nFour. Read a pest problem before you treat it.\n\n[pause]\n\nThese four belong together. A well-shaped bed still fails if everything goes in on one day. A diverse planting still struggles if you treat every yellow leaf as an insect problem.",
     "narration_seconds": 45.672,
     "slide_deck_owner": "Codex",
     "art_status": "illustrated front-frame production/review required",
@@ -1499,7 +1515,7 @@
     "module": "vegetables-staples",
     "slide": 5,
     "title": "Choose the Bed for the Soil and Rainfall",
-    "narration": "There's no single bed shape that's right everywhere.\n\nStart with the least disturbance that solves your problem.\n\nNo-dig suits most garden soils. Leave the structure alone and build fertility on top.\n\nDouble-digging is hard work, and it should answer a real problem \u2014 compacted ground or heavy clay. Not habit.\n\nRaised beds suit wet ground, where water needs somewhere to drain away to.\n\nSunken beds suit dry ground, where you want to catch and hold what rain you get.\n\n[pause]\n\nLook at your own ground after heavy rain. Does water sit, or does it run off? That answer chooses your bed.",
+    "narration": "There's no single bed shape that's right everywhere.\n\nStart with the least disturbance that solves your problem.\n\nNo-dig suits most garden soils. Leave the structure alone and build fertility on top.\n\nDouble-digging is hard work, and it should answer a real problem — compacted ground or heavy clay. Not habit.\n\nRaised beds suit wet ground, where water needs somewhere to drain away to.\n\nSunken beds suit dry ground, where you want to catch and hold what rain you get.\n\n[pause]\n\nLook at your own ground after heavy rain. Does water sit, or does it run off? That answer chooses your bed.",
     "narration_seconds": 48.312,
     "slide_deck_owner": "Codex",
     "art_status": "illustrated front-frame production/review required",
@@ -1519,7 +1535,7 @@
     "module": "vegetables-staples",
     "slide": 7,
     "title": "Mark the Working Shape",
-    "narration": "Before you plant, mark the bed out.\n\nOne point two metres wide. Three metres long. One practice bed.\n\nUse pegs and string. Mark the rectangle, and mark both access paths.\n\nThen prepare for your own soil \u2014 no-dig first, and dig deeper only if your ground genuinely needs it.\n\n[pause]\n\nA string line turns an idea into a decision. Once the paths exist, keep them. Once the growing area exists, protect it.\n\nThat bed gets easier to improve every season, because you stopped walking on it.",
+    "narration": "Before you plant, mark the bed out.\n\nOne point two metres wide. Three metres long. One practice bed.\n\nUse pegs and string. Mark the rectangle, and mark both access paths.\n\nThen prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.\n\n[pause]\n\nA string line turns an idea into a decision. Once the paths exist, keep them. Once the growing area exists, protect it.\n\nThat bed gets easier to improve every season, because you stopped walking on it.",
     "narration_seconds": 45.072,
     "slide_deck_owner": "Codex",
     "art_status": "illustrated front-frame production/review required",
@@ -1569,7 +1585,7 @@
     "module": "vegetables-staples",
     "slide": 12,
     "title": "Staples Are Food Insurance",
-    "narration": "A staple earns its place because it feeds the household beyond the day of harvest.\n\nIt carries energy or protein. It stores, or it stays in the ground until you need it. And often it carries cultural memory too.\n\n[pause]\n\nOne staple leaves you vulnerable. Two or more give you options when weather or pests hit.\n\nGrow at least two. Not one.\n\nWhich staple does your household rely on most heavily right now? That's the one whose failure would hurt most \u2014 so that's the one that needs a companion.",
+    "narration": "A staple earns its place because it feeds the household beyond the day of harvest.\n\nIt carries energy or protein. It stores, or it stays in the ground until you need it. And often it carries cultural memory too.\n\n[pause]\n\nOne staple leaves you vulnerable. Two or more give you options when weather or pests hit.\n\nGrow at least two. Not one.\n\nWhich staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.",
     "narration_seconds": 40.368,
     "slide_deck_owner": "Codex",
     "art_status": "illustrated front-frame production/review required",
@@ -1609,7 +1625,7 @@
     "module": "vegetables-staples",
     "slide": 16,
     "title": "Treat the Cause Before the Insect",
-    "narration": "Work through four steps, in order.\n\nOne. Observe. Look at the damage pattern, the underside of the leaf, the stem, and the plants nearby.\n\nTwo. Check for stress. Soil moisture, roots, spacing, nutrition, drainage.\n\nThree. Protect what's helping you. Beneficial insects are doing work you'd otherwise do yourself.\n\nFour. Only then, act \u2014 and start with the lightest thing that works. Physical removal and better plant health solve most small outbreaks.\n\n[pause]\n\nIf you use a neem product, follow the label. Don't improvise a stronger mixture. Even lower-risk products harm the wrong insects when they're misused.\n\nBe honest with yourself about which step you usually skip.",
+    "narration": "Work through four steps, in order.\n\nOne. Observe. Look at the damage pattern, the underside of the leaf, the stem, and the plants nearby.\n\nTwo. Check for stress. Soil moisture, roots, spacing, nutrition, drainage.\n\nThree. Protect what's helping you. Beneficial insects are doing work you'd otherwise do yourself.\n\nFour. Only then, act — and start with the lightest thing that works. Physical removal and better plant health solve most small outbreaks.\n\n[pause]\n\nIf you use a neem product, follow the label. Don't improvise a stronger mixture. Even lower-risk products harm the wrong insects when they're misused.\n\nBe honest with yourself about which step you usually skip.",
     "narration_seconds": 61.92,
     "slide_deck_owner": "Codex",
     "art_status": "illustrated front-frame production/review required",
@@ -1629,7 +1645,7 @@
     "module": "vegetables-staples",
     "slide": 18,
     "title": "Field Action",
-    "narration": "This week, put one bed into production.\n\nOne. Mark the bed and the paths.\n\nTwo. Plant, with your spacing and your sowing rhythm.\n\nThree. Return after ten days, with a photo.\n\n[pause]\n\nThen observe. Adjust. And write it down.\n\nRecord the sowing date. The rain. What germinated. Pest pressure. What you harvested.\n\nSeason by season, your garden becomes less dependent on guesswork \u2014 and more on what you've actually seen happen on your own ground.\n\nThat record is worth more than any advice.",
+    "narration": "This week, put one bed into production.\n\nOne. Mark the bed and the paths.\n\nTwo. Plant, with your spacing and your sowing rhythm.\n\nThree. Return after ten days, with a photo.\n\n[pause]\n\nThen observe. Adjust. And write it down.\n\nRecord the sowing date. The rain. What germinated. Pest pressure. What you harvested.\n\nSeason by season, your garden becomes less dependent on guesswork — and more on what you've actually seen happen on your own ground.\n\nThat record is worth more than any advice.",
     "narration_seconds": 49.56,
     "slide_deck_owner": "Codex",
     "art_status": "illustrated front-frame production/review required",
@@ -1659,7 +1675,7 @@
     "module": "water-harvesting",
     "slide": 3,
     "title": "Swales Slow Water on the Slope",
-    "narration": "A swale is a level trench dug exactly on contour \u2014 not angled, perfectly level end to end \u2014 so water fills it evenly and soaks in rather than running off.\n\nThe excavated soil forms a berm on the downhill side.\n\nTrees planted there draw on stored water long after the rain has stopped.",
+    "narration": "A swale is a level trench dug exactly on contour — not angled, perfectly level end to end — so water fills it evenly and soaks in rather than running off.\n\nThe excavated soil forms a berm on the downhill side.\n\nTrees planted there draw on stored water long after the rain has stopped.",
     "narration_seconds": 22.2,
     "slide_deck_owner": "Codex",
     "art_status": "illustrated front-frame production/review required",
@@ -1669,7 +1685,7 @@
     "module": "water-harvesting",
     "slide": 4,
     "title": "Watch: A Swale Sinks Water",
-    "narration": "A swale is a level trench on contour \u2014 it sinks water, it doesn't direct it.\n\n[pause]\n\nWater fills it evenly and soaks in rather than running off.",
+    "narration": "A swale is a level trench on contour — it sinks water, it doesn't direct it.\n\n[pause]\n\nWater fills it evenly and soaks in rather than running off.",
     "narration_seconds": 11.424,
     "slide_deck_owner": "Codex",
     "art_status": "illustrated front-frame production/review required",
@@ -1875,7 +1891,7 @@
     "module": "water-harvesting",
     "slide": 24,
     "title": "Check Your Work",
-    "narration": "My A-frame is built and I have tested it.\n\nTurn it around \u2014 it should read the same.\n\nI have marked at least three points at the same height across my slope.\n\nMy marked line runs across the slope, not down it.\n\nRealistic minimum time for the real work: 5 days.",
+    "narration": "My A-frame is built and I have tested it.\n\nTurn it around — it should read the same.\n\nI have marked at least three points at the same height across my slope.\n\nMy marked line runs across the slope, not down it.\n\nRealistic minimum time for the real work: 5 days.",
     "narration_seconds": 22.2,
     "slide_deck_owner": "Codex",
     "art_status": "illustrated front-frame production/review required",

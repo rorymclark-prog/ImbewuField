@@ -102,12 +102,12 @@ export const COURSE_MODULES: CourseModule[] = [
         infographicUrl: "/course-images/intro-permaculture/intro-permaculture-l2.jpg",
         infographicAlt: "Twelve design principles arranged as segments around a central seedling, each shown as a simple picture — an eye for observing, a droplet for catching water, a sun for energy, a loop for returning waste.",
         title: "Twelve Principles: Designing with Nature",
-        body: "Bill Mollison and David Holmgren distilled permaculture into twelve design principles. Three matter most for South African smallholders: observe and interact — watch your land through a full season before major earthworks; catch and store energy — harvest rain, sun and biomass before they leave your property; and use edges and value the marginal — the fence line or stream bank is often your most productive spot.\n\nOthers worth knowing: produce no waste (scraps become compost, compost becomes soil), use small and slow solutions (a bucket can irrigate a bed without electricity), and use and value diversity — a monoculture maize field can be wiped out by one hailstorm; a mixed planting rarely is.\n\nPick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go.",
+        body: "David Holmgren set out twelve design principles for permaculture. We begin with three useful principles for smallholders: observe and interact — watch your land through a full season before major earthworks; catch and store energy — harvest rain, sun and biomass before they leave your property; and use edges and value the marginal — the fence line or stream bank is often your most productive spot.\n\nOthers worth knowing: produce no waste (scraps become compost, compost becomes soil), use small and slow solutions (a bucket can irrigate a bed without electricity), and use and value diversity — different crops may respond differently to a hazard, but a mixed planting can also suffer serious damage.\n\nPick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go.",
         keyPoints: [
           "Observe your land for a full season before major earthworks",
           "Catch and store rain, sun, and biomass before they leave your property",
           "Edges and margins are often your most productive zones",
-          "Diversity protects against a single event — hail, drought, or pest outbreak",
+          "Diversity spreads risk; it does not guarantee a harvest",
         ],
         quiz: [
           {
@@ -125,12 +125,12 @@ export const COURSE_MODULES: CourseModule[] = [
             q: "Which layout best applies 'integrate rather than segregate'?",
             options: [
               "Chickens penned far from the garden",
-              "Garden, fruit trees and chicken run arranged so chickens rotate through beds after harvest",
+              "Garden, trees and poultry arranged so hens use harvested beds while growing food stays fenced off",
               "Separate paddocks for each crop",
               "All animals kept off the cultivated zone",
             ],
             correct: 1,
-            rationale: "Integration puts each element to work for its neighbours — here, chickens clean up pests and add fertility instead of sitting idle in a fixed pen.",
+            rationale: "Integration connects useful activities while protecting food. Fresh poultry manure can carry harmful germs: keep hens off growing food and plan a safe interval before the next harvest with your extension officer.",
           },
         ],
       },
@@ -139,9 +139,9 @@ export const COURSE_MODULES: CourseModule[] = [
         infographicUrl: "/course-images/intro-permaculture/intro-permaculture-l3.jpg",
         infographicAlt: "Rings spreading outward from a house. The ring closest to the door is tended every day; each ring further out is visited less often and left wilder.",
         title: "Zones and Sectors: Organising Your Farm by Energy",
-        body: "Zones and sectors are permaculture's main tool for cutting wasted labour. Zones run 0 to 5 by how often you visit. Zone 0 is the house. Zone 1, right outside the kitchen door, holds what you pick daily — herbs, salad greens. Zone 2 is the main garden and chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly. Zone 4 is semi-wild — fruit trees and fodder needing occasional attention. Zone 5 is left wild.\n\nSectors are the energies arriving from outside — sun, wind, rain, flood, fire. A Lowveld farm facing north-west gets hot dry berg winds in August — that tells you where to plant a windbreak. A KZN farm has a summer rain sector from the north-east.\n\nSketch zones and sectors on paper and you have the skeleton of your design.",
+        body: "Zones and sectors help you plan work and understand your site. Zones run from 0 to 5 by how often activities need you. Zone 0 is the house. Zone 1 holds things you use or check most often, such as kitchen herbs and salad greens. Zone 2 can hold regularly tended plantings and poultry. Zone 3 can hold main field crops. Zone 4 can hold managed woodland and forage. Zone 5 is a wild area for observation and habitat. The numbers are not a care timetable: visit crops and animals as often as they need. A small plot may not have every zone.\n\nSectors show influences arriving from outside, such as sun, wind, rain, flood and fire. Directions differ between sites. Observe your own land, check local records and ask neighbours. In an example with damaging wind from the north-west, a windbreak belongs between that wind and the crops.\n\nSketch your boundary, house, frequently used areas and outside influences. Fit the zones to real paths and land; they do not need to be circles.",
         keyPoints: [
-          "Zone 1, nearest the house, holds daily-harvest crops like herbs",
+          "Zone 1 keeps frequently used plants and activities close to the house",
           "Zones organise labour by how often you need to visit",
           "Sectors map incoming energies: sun, wind, frost, flood, fire",
           "A simple sketch of zones and sectors is enough to start designing",
@@ -151,15 +151,15 @@ export const COURSE_MODULES: CourseModule[] = [
             q: "You plant herbs in Zone 3, the main field far from the house. What problem does this create?",
             options: [
               "Herbs grow too large",
-              "You harvest rarely because the walk is long, so herbs bolt or get neglected",
+              "The long walk makes frequent harvesting and checking less convenient",
               "Herbs cross-pollinate with main crops",
               "Zone 3 gets too much sun for herbs",
             ],
             correct: 1,
-            rationale: "Herbs need daily picking to stay productive. Placed far from the house, that daily visit stops happening — and the plants suffer for it.",
+            rationale: "Put plants you use often where you can reach them easily. Harvest according to the plant and your needs; not every herb needs daily picking.",
           },
           {
-            q: "A Highveld farm gets hot, dry north-westerly winds in August. Where should a windbreak go?",
+            q: "In this example, damaging wind comes from the north-west. Where should a windbreak go?",
             options: [
               "South-east boundary",
               "North-west boundary, between the wind and the crops",

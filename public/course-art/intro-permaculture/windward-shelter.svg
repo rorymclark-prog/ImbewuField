@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="810" viewBox="0 0 1440 810">
+  <title>Example: wind from the north-west meets the windbreak before the crops</title>
+  <desc>North is up. Three wind arrows travel diagonally from the upper left to a porous row of trees on the north-west side of a crop area. This is a directional teaching example, not a measured planting plan.</desc>
+  <defs>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="none" stroke="#4e7180" stroke-width="1.8"/></marker>
+    <g id="tree"><path d="M0 27V64" stroke="#704b30" stroke-width="10" stroke-linecap="round"/><path d="M-44 12Q-69-15-38-34Q-28-64 0-48Q35-61 46-29Q73-5 44 20Q20 46 0 26Q-30 43-44 12Z" fill="#667a44" stroke="#465536" stroke-width="4"/></g>
+    <g id="crop"><path d="M0 15V-16M0 0Q-31-4-26-26Q-3-23 0 0M0-8Q23-34 34-16Q27 4 0 8" fill="#86904a" stroke="#4f653a" stroke-width="4" stroke-linecap="round"/></g>
+  </defs>
+  <rect width="1440" height="810" fill="#f7f2e9"/>
+  <path d="M160 180L620 85L1300 400L1070 745L315 710Z" fill="#e8e0c6" stroke="#947959" stroke-width="3" stroke-dasharray="12 10"/>
+  <path d="M600 375L970 450L1160 615L790 650Z" fill="#c7b08a" stroke="#907650" stroke-width="4"/>
+  <g opacity=".65" stroke="#ae946b" stroke-width="14"><path d="M639 405L829 628M721 421L913 620M802 438L997 611M885 456L1080 606"/></g>
+  <g><use href="#crop" x="710" y="450"/><use href="#crop" x="792" y="467"/><use href="#crop" x="874" y="484"/><use href="#crop" x="954" y="500"/><use href="#crop" x="757" y="511"/><use href="#crop" x="839" y="528"/><use href="#crop" x="921" y="545"/><use href="#crop" x="1003" y="562"/><use href="#crop" x="805" y="571"/><use href="#crop" x="887" y="588"/><use href="#crop" x="969" y="605"/></g>
+  <path d="M330 532L687 175" stroke="#aeb18a" stroke-width="92" stroke-linecap="round"/>
+  <g><use href="#tree" x="350" y="479"/><use href="#tree" x="433" y="396"/><use href="#tree" x="516" y="313"/><use href="#tree" x="599" y="230"/><use href="#tree" x="682" y="147"/></g>
+  <g stroke="#4e7180" stroke-width="11" fill="none" marker-end="url(#arrow)" stroke-linecap="round"><path d="M112 204L316 408"/><path d="M231 120L433 322"/><path d="M391 74L548 231"/></g>
+  <g stroke="#6f8c95" stroke-width="5" fill="none" marker-end="url(#arrow)" opacity=".65"><path d="M578 447L620 489"/><path d="M661 364L703 406"/><path d="M746 281L788 323"/></g>
+  <g transform="translate(1280 120)" fill="#1f4d2b" stroke="#1f4d2b"><path d="M0 95V0M-12 18L0 0L12 18" fill="none" stroke-width="5"/><text x="0" y="-18" font-family="DejaVu Sans" font-size="34" text-anchor="middle" stroke="none">N</text></g>
+</svg>

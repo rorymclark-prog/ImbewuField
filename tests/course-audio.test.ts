@@ -49,6 +49,19 @@ test('a hold retracts one language while leaving a current take available', () =
   } finally { n.recordingHold = prior; }
 });
 
+test('corrected introduction cannot replay superseded care schedules through audio fallback', () => {
+  const id = 'intro-permaculture';
+  assert.ok(narrationHoldReason(id, 'en'));
+  for (const track of allTracks(id)) assert.equal(trackUrl(id, 'en', track.slide), null);
+  assert.equal(fullNarrationUrl(id, 'en'), null);
+  assert.equal(resolveNarrationLang(id, 'zu'), null);
+  assert.equal(allTracks(id).length, 22, 'visual expansion must preserve recording identities');
+  const module = COURSE_MODULES.find(m => m.id === id)!;
+  const herbs = module.lessons.flatMap(l => l.quiz).find(q => q.q.includes('plant herbs'))!;
+  assert.ok(herbs.options[herbs.correct].includes('less convenient'));
+  assert.ok(herbs.rationale.includes('not every herb needs daily picking'));
+});
+
 test('a module with no recording is a normal state, not an error', () => {
   // The example used to be 'intro-permaculture', which flipped this test the day that module WAS
   // recorded — and every real module is on the recording schedule, so any real id here is a time

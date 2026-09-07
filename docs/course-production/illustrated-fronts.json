@@ -106,5 +106,131 @@
     "slide": 20,
     "art": "course-art/soil-health/mulching.jpg",
     "caption": "Start one soil-building action from this module."
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 2,
+    "art": "course-art/intro-permaculture/kitchen-garden.jpg",
+    "caption": "A good design saves work before you pick up a spade."
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 3,
+    "art": "course-art/intro-permaculture/site-sketch.jpg",
+    "caption": "Sketch your zones and your sectors on one sheet of paper."
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 4,
+    "art": "course-art/soil-health/mulching.jpg",
+    "caption": "Look at one patch of bare soil on your land. Is anything protecting it right now?"
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 5,
+    "art": "course-art/intro-permaculture/household-harvest.jpg",
+    "caption": "The farm is meant to feed the household that runs it."
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 6,
+    "art": "course-art/soil-health/compost-building.jpg",
+    "caption": "What does your land get back from you each season?"
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 7,
+    "art": "course-art/intro-permaculture/sharing-water.jpg",
+    "caption": "People Care and Fair Share in the sharing. Earth Care in the monitoring."
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 8,
+    "art": "course-art/intro-permaculture/site-sketch.jpg",
+    "caption": "The ethics let you decide without waiting for permission"
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 9,
+    "art": "course-art/intro-permaculture/observe-rain.jpg",
+    "caption": "Observe and interact. Catch and store energy. Use edges and value the marginal."
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 10,
+    "art": "course-art/intro-permaculture/observe-rain.jpg",
+    "caption": "Where does water leave your land?"
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 11,
+    "art": "course-art/soil-health/compost-building.jpg",
+    "caption": "Harvest rain, sun and biomass before they leave your property."
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 12,
+    "art": "course-art/intro-permaculture/garden-edge.jpg",
+    "caption": "Look at what already grows well along yours."
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 13,
+    "art": "course-art/intro-permaculture/diversity-before-storm.jpg",
+    "caption": "It does not guarantee a harvest."
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 14,
+    "art": "course-art/intro-permaculture/chickens-after-harvest.jpg",
+    "caption": "growing vegetables stay fenced off."
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 15,
+    "art": "course-art/intro-permaculture/kitchen-garden.jpg",
+    "caption": "Place each activity by how often it needs you."
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 16,
+    "art": "course-art/intro-permaculture/kitchen-garden.jpg",
+    "caption": "Keep herbs you use often near the kitchen door."
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 17,
+    "art": "course-art/intro-permaculture/kitchen-garden.jpg",
+    "caption": "The more often something needs you, the closer it lives."
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 18,
+    "art": "course-art/intro-permaculture/site-sketch.jpg",
+    "caption": "The directions differ from site to site."
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 19,
+    "art": "course-art/intro-permaculture/windward-shelter.svg",
+    "caption": "In this example, damaging wind comes from the north-west."
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 20,
+    "art": "course-art/intro-permaculture/site-sketch.jpg",
+    "caption": "Fit them to your actual paths and land; they do not need to be circles."
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 21,
+    "art": "course-art/intro-permaculture/site-sketch.jpg",
+    "caption": "Sketch your own zones and sectors on one sheet of paper."
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 22,
+    "art": "course-art/intro-permaculture/site-sketch.jpg",
+    "caption": "Walk out and check your sketch against the ground."
   }
 ]

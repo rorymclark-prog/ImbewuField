@@ -1,3 +1,5 @@
+<!-- SOURCE CHANGED 2026-09-07: blocks 9, 13, 14, 15, 16, 18, 19, 20 reconciled as draft; first-language agricultural review required. -->
+
 **Ikhasi 1 — Isingeniso se-Permaculture (Slide 1 — Introduction to Permaculture)**
 
 Ngaphambi kokumba noma yini, kuyasiza ukwazi ukuthi izinqumo zenziwa kanjani.
@@ -110,9 +112,9 @@ Yakha la ma-ethics amathathu endleleni ocabanga ngayo ngaphambi kokwakha noma yi
 
 **Ikhasi 9 — Izimiso Eziyishumi Nambili (Slide 9 — Twelve Principles)**
 
-UBill Mollison noDavid Holmgren bahlanganisa i-permaculture yaba ama-design principles ayishumi nambili.
+UDavid Holmgren wabeka ama-design principles ayishumi nambili e-permaculture.
 
-Awudingi wonke ukuze uqale. Amathathu enza umsebenzi omningi epulazini elincane laseNingizimu Afrika.
+Awudingi wonke ukuze uqale. Sizoqala ngezindlela ezintathu eziwusizo zokubheka ipulazi lakho elincane.
 
 Observe and interact. Catch and store energy. Use edges and value the marginal.
 
@@ -166,7 +168,7 @@ Iyiphi i-edge epulazini lakho engasebenzi lutho okwamanje?
 
 **Ikhasi 13 — Bheka: I-Diversity Ivikela Osukwini Olubi (Slide 13 — Watch: Diversity Against One Bad Day)**
 
-Insimu eyodwa yama-mielies ingabhujiswa yisichotho esisodwa; ukutshala okuxubile akuvamile ukubhujiswa kanjalo.
+Isichotho singalimaza insimu yonke yama-mielies. Izitshalo ezahlukene zingalimala ngezindlela ezingafani, kodwa nokutshala okuxubile kungalimala kakhulu. I-diversity isabalalisa ubungozi; ayiqinisekisi isivuno.
 
 Sebenzisa i-diversity, ungakhiqizi i-waste, futhi sebenzisa izixazululo ezincane nezihamba kancane: ama-scraps abe yi-compost, ibhakede linisele ngaphandle kukagesi.
 
@@ -176,9 +178,9 @@ Sebenzisa i-diversity, ungakhiqizi i-waste, futhi sebenzisa izixazululo ezincane
 
 Beka into ngayinye lapho isebenzela khona izinto ezingomakhelwane bayo.
 
-Ingadi, izihlahla zezithelo ne-chicken run ehlelwe ngendlela yokuthi izinkukhu zijikeleze emibhedeni emva kokuvuna, lokho ukuhlanganisa.
+Ingadi, izihlahla zezithelo ne-chicken run kungasebenzisana. Izinkukhu zingacwaninga izinsalela zezitshalo embhedeni osekuvunwe kuwo, kanti imifino esakhula ihlukaniswe ngocingo.
 
-Izinkukhu ziqeda izinambuzane futhi zengeza ukuvunda, esikhundleni sokuhlala zodwa esibayeni esinganyakazi.
+Umquba omusha wezinkukhu ungathwala amagciwane ayingozi. Wugcine kude nokudla osekungalungela ukuvunwa. Hlela isikhathi esiphephile ngaphambi kwesivuno esilandelayo nosomeluleki wezolimo.
 
 [pause]
 
@@ -190,23 +192,23 @@ Khetha ama-principles amabili noma amathathu ahambisana nenkinga yakho enkulu, u
 
 Ama-zones asuka ku-0 aye ku-5, futhi akhuluma ngezinyawo zakho, hhayi ngezicingo zakho.
 
-I-Zone 0 yindlu. I-Zone 1, eseduze komnyango wasekhishini, iphethe lokho okukha nsuku zonke — ama-herbs namasaladi aluhlaza.
+I-Zone 0 yindlu. I-Zone 1 iphethe izinto ozisebenzisa noma ozihlola kaningi, njengama-herbs asekhishini nemifino yesaladi.
 
-I-Zone 2 yingadi enkulu ne-chicken run, evakashelwa kanye noma kabili ngosuku. I-Zone 3 yinsimu enkulu, evakashelwa masonto onke.
+I-Zone 2 ingaba nezitshalo ezinakekelwa njalo nezinkukhu. I-Zone 3 ingaba nezitshalo zensimu enkulu. Vakashela izitshalo nezilwane kaningi ngokwezidingo zazo; inombolo ye-zone ayilona uhlelo lwezikhathi zokunakekela.
 
 [pause]
 
-I-Zone 4 i-semi-wild — izihlahla zezithelo ne-fodder edinga ukunakekelwa ngezikhathi ezithile. I-Zone 5 ishiywa iyindle.
+I-Zone 4 ingaba nendawo yezihlahla ephethwe kanye ne-forage. I-Zone 5 yindawo eyindle yokubuka imvelo nokuvikela izilwane nezitshalo. Beka umsebenzi ngamunye ngokuthi ukudinga kangaki. Indawo encane ingase ingabi nawo wonke ama-zone.
 
 ---
 
-**Ikhasi 16 — Kungani I-Zone 1 Ingenakuxoxwa (Slide 16 — Why Zone 1 Is Not Negotiable)**
+**Ikhasi 16 — Gcina Imisebenzi Oyenza Kaningi Eduze (Slide 16 — Keep Frequent Tasks Close)**
 
-Ama-herbs adinga ukukhiwa nsuku zonke ukuze aqhubeke nokukhiqiza.
+Gcina ama-herbs owasebenzisa kaningi eduze komnyango wasekhishini. Kha okudingayo lapho izitshalo sezinamaqabunga anele; akuwona wonke ama-herbs adinga ukukhiwa nsuku zonke.
 
-Uma uwatshala ku-Zone 3, ensimini enkulu, ukuhamba kuba kude kangangokuthi ukuvakasha kwansuku zonke kuyayeka. Ama-herbs ayashesha ukuya embewini, noma avele anganakekelwa.
+Uma uwatshala kude ensimini enkulu, ibanga lingenza ukukha nokuhlola kube nzima. Izitshalo okunzima ukuzifinyelela kulula ukuzikhohlwa.
 
-Akukho okungalungile ngesitshalo noma ngomhlabathi. Isitshalo sibekwe lapho izinyawo zakho zingayi khona.
+Ibanga lingenye yezinto okufanele uzihlole lapho izitshalo eziwusizo zinganakekelwa. Hlola namanzi, umhlabathi nokukhanya.
 
 [pause]
 
@@ -234,7 +236,7 @@ Ama-zones avela ngaphakathi komhlaba wakho. Ama-sectors avela ngaphandle kwawo.
 
 Ilanga, umoya, imvula, isikhukhula nomlilo kufika kunqamule umngcele wakho, noma ungakuhlelelanga.
 
-Ipulazi lase-Lowveld elibheke enyakatho-ntshonalanga lithola imimoya eshisayo neyomile ye-berg ngo-August. Ipulazi laKwaZulu-Natal line-sector yemvula yasehlobo evela enyakatho-mpumalanga.
+Lezi ziqondiso ziyehluka endaweni ngayinye. Bheka isimo sezulu sakho, hlola amarekhodi endawo bese ubuza omakhelwane abakubonile. Ungakopishi imicibisholo yelinye ipulazi ngaphandle kokuhlola.
 
 [pause]
 
@@ -244,15 +246,15 @@ Isimo sezulu esikulimazayo sivela ngakuphi?
 
 **Ikhasi 19 — Bheka: I-Windbreak Iba Ohlangothini Lomoya (Slide 19 — Watch: A Windbreak Belongs On The Wind Side)**
 
-E-Highveld, umoya oshisayo nowomile ovela enyakatho-ntshonalanga ushaya ngo-August.
+Kulesi sibonelo, umoya olimazayo uvela enyakatho-ntshonalanga. Hlola ukuthi umoya uvelaphi epulazini lakho.
 
-I-windbreak iba emngceleni osenyakatho-ntshonalanga, phakathi komoya nezitshalo.
+Kulesi sibonelo, i-windbreak iba emngceleni osenyakatho-ntshonalanga, phakathi komoya nezitshalo. Indawo yayo ne-design yayo kufanele kuhambisane nendawo. I-windbreak ayiyona i-firebreak; umlilo nesithwathwa kudinga ukuhlolwa kwakho kwendawo.
 
 ---
 
 **Ikhasi 20 — Yidwebe, Usunayo I-Design (Slide 20 — Sketch It And You Have A Design)**
 
-Dweba umngcele womhlaba wakho. Maka indlu. Dweba ama-rings aphumele ngaphandle ngokuthi uvakashela kangaki.
+Dweba umngcele womhlaba wakho. Maka indlu. Dweba izindawo ngokuthi uzivakashela kangaki. Zivumelanise nezindlela nomhlaba wakho wangempela; akudingeki zibe yiziyingi.
 
 Bese udweba imicibisholo engena ivela ngaphandle, emele ilanga, umoya, umlilo namanzi.
 

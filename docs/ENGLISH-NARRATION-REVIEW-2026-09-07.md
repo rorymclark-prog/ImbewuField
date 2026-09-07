@@ -8,6 +8,13 @@ Those two takes and the Soil Health full listening track require replacement; th
 All replacement takes must retain Microsoft en-ZA-LeahNeural at -12%.
 See docs/SOIL-ILLUSTRATED-DECK-2026-09-07.md.
 
+Introduction to Permaculture blocks **9, 13, 14, 15, 16, 18, 19 and 20** were
+also corrected during illustration review. Their existing Leah review takes
+and the full Introduction listening track are superseded. The live Introduction
+module is held pending a complete reviewed replacement. The other fourteen
+Introduction scripts retain their recording identities. See
+`INTRO-ILLUSTRATED-DECK-2026-09-07.md` for source changes and references.
+
 ## Approval and completed recording
 
 Rory explicitly approved sending the nine English module narration scripts to

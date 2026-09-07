@@ -118,9 +118,9 @@ Build these three into how you think before you build anything on the ground.
 
 **Slide 9 — Twelve Principles**
 
-Bill Mollison and David Holmgren distilled permaculture into twelve design principles.
+David Holmgren set out twelve design principles for permaculture.
 
-You do not need all twelve to start. Three of them do most of the work on a South African smallholding.
+You do not need all twelve to start. We will begin with three useful ways to look at your smallholding.
 
 Observe and interact. Catch and store energy. Use edges and value the marginal.
 
@@ -174,9 +174,9 @@ Which edge on your plot is doing nothing at the moment?
 
 **Slide 13 — Watch: Diversity Against One Bad Day**
 
-A monoculture maize field can be wiped out by one hailstorm. A mixed planting rarely is.
+A hailstorm can damage a whole maize field. Different crops may respond differently, but a mixed planting can also be badly damaged.
 
-That is the principle "use and value diversity", and it is insurance you plant rather than buy.
+The principle "use and value diversity" means spreading risk across different crops. It does not guarantee a harvest.
 
 Two others worth knowing: produce no waste, so scraps become compost and compost becomes soil. And use small and slow solutions — a bucket can irrigate a bed with no electricity at all.
 
@@ -190,9 +190,9 @@ What would one bad day cost you right now?
 
 Put each element where it works for its neighbours.
 
-A garden, fruit trees and a chicken run arranged so the chickens rotate through the beds after harvest is integration. The chickens clean up pests and add fertility instead of sitting idle in a fixed pen.
+A garden, fruit trees and a chicken run can work together. Chickens can scratch through crop residues on an already harvested bed while growing vegetables stay fenced off.
 
-The same three things, fenced apart, do only their own job.
+Fresh chicken manure can carry harmful germs. Keep it away from harvestable food and plan a safe interval before the next harvest with your extension officer.
 
 [pause]
 
@@ -204,23 +204,23 @@ Pick two or three principles that speak to your biggest problem and apply them h
 
 Zones run from 0 to 5, and they are about your feet, not your fences.
 
-Zone 0 is the house. Zone 1, right outside the kitchen door, holds what you pick daily — herbs and salad greens.
+Zone 0 is the house. Zone 1 holds things you use or check most often, such as kitchen herbs and salad greens.
 
-Zone 2 is the main garden and the chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly.
+Zone 2 can hold regularly tended plantings and poultry. Zone 3 can hold main field crops. Visit as often as the crops and animals need; the zone number is not a care timetable.
 
 [pause]
 
-Zone 4 is semi-wild — fruit trees and fodder that need occasional attention. Zone 5 is left wild.
+Zone 4 can hold managed woodland and forage. Zone 5 is a wild area for observation and habitat. Place each activity by how often it needs you. A small plot may not have every zone.
 
 ---
 
-**Slide 16 — Why Zone 1 Is Not Negotiable**
+**Slide 16 — Keep Frequent Tasks Close**
 
-Herbs need daily picking to stay productive.
+Keep herbs you use often near the kitchen door. Pick what you need when the plants have enough leaves; not every herb needs daily picking.
 
-Plant them in Zone 3, out in the main field, and the walk is long enough that the daily visit stops happening. The herbs bolt, or they are simply neglected.
+Put them far out in the main field and the long walk can make harvesting and checking less convenient. Plants that are difficult to reach are easier to neglect.
 
-Nothing is wrong with the plant or the soil. The plant was put where your feet do not go.
+Distance is one thing to check when a useful planting is being neglected. Also check its water, soil and light.
 
 [pause]
 
@@ -248,7 +248,7 @@ Zones come from inside your land. Sectors come from outside it.
 
 Sun, wind, rain, flood and fire all arrive across your boundary whether you plan for them or not.
 
-A Lowveld farm facing north-west gets hot dry berg winds in August. A KwaZulu-Natal farm has a summer rain sector from the north-east.
+The directions differ from site to site. Observe your own weather, check local records and ask neighbours what they have seen. Do not copy another farm's arrows without checking.
 
 [pause]
 
@@ -258,21 +258,21 @@ Which direction does the weather that damages you come from?
 
 **Slide 19 — Watch: A Windbreak Belongs On The Wind Side**
 
-A Highveld farm gets hot, dry north-westerly winds in August.
+In this example, damaging wind comes from the north-west. Check the wind direction on your own farm.
 
 The windbreak goes on the north-west boundary, standing between the wind and the crops.
 
-That is all a windbreak does — it stands between the energy and the thing the energy would damage. Put it anywhere else and it is just a row of trees.
+The windbreak stands between the incoming wind and the crops. Its position and design need to suit the site.
 
 [pause]
 
-The same logic places a firebreak, and it places your tender crops out of a frost pocket.
+A windbreak is not a firebreak. Fire and frost need their own site assessment.
 
 ---
 
 **Slide 20 — Sketch It And You Have A Design**
 
-Draw your boundary. Mark the house. Draw the rings outward by how often you visit.
+Draw your boundary. Mark the house. Sketch areas by how often you visit them. Fit them to your actual paths and land; they do not need to be circles.
 
 Then draw arrows in from outside for sun, wind, fire and water.
 

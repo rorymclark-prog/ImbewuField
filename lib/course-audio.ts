@@ -99,6 +99,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
   },
   'intro-permaculture': {
     languages: ['en'],
+    recordingHold: { en: 'The design and food-safety guidance has changed. Read the corrected slides while replacement narration is prepared.' },
     recordedVoices: { en: 'en-ZA-LukeNeural' },
     // 22 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural (Antigravity's batch run) and
     // verified by import-course-audio: 22/22 clips matched their script blocks, median 3.22 w/s.
@@ -120,7 +121,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
       { slide: 13, lesson: 'intro-permaculture-l2', title: 'Watch: Diversity Against One Bad Day' },
       { slide: 14, lesson: 'intro-permaculture-l2', title: 'Integrate Rather Than Segregate' },
       { slide: 15, lesson: 'intro-permaculture-l3', title: 'Zones: Organising by How Often You Visit' },
-      { slide: 16, lesson: 'intro-permaculture-l3', title: 'Why Zone 1 Is Not Negotiable' },
+      { slide: 16, lesson: 'intro-permaculture-l3', title: 'Keep Frequent Tasks Close' },
       { slide: 17, lesson: 'intro-permaculture-l3', title: 'Zones Plan Your Labour' },
       { slide: 18, lesson: 'intro-permaculture-l3', title: 'Sectors: The Energies Arriving From Outside' },
       { slide: 19, lesson: 'intro-permaculture-l3', title: 'Watch: A Windbreak Belongs On The Wind Side' },

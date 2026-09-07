@@ -2,6 +2,11 @@
 
 ## Latest recording status — 7 September 2026
 
+Later source corrections supersede Soil Health takes **3, 17** and Introduction
+takes **9, 13, 14, 15, 16, 18, 19, 20**, plus their full listening tracks.
+Their replacements have not been recorded. The historical 185-clip pack below
+is not a current source match for those ten takes. Voice choice remains Leah.
+
 Rory has now explicitly approved the Microsoft transfer. All 185 English clips
 for the nine remaining modules are recorded and saved for review, with nine full
 listening tracks. No replacement is activated yet. See
