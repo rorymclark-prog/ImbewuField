@@ -7,7 +7,7 @@
 // repeated 33 lessons x 2 languages, and it re-syncs by hand every time content changes.
 //
 // Instead we take the SLIDE DECK (NotebookLM exports slides as images) and pair it with the
-// narration we already produce in Gemini. Each slide is held on screen for exactly the length of
+// narration recorded with the course's named Microsoft voices. Each slide is held on screen for exactly the length of
 // its own narration clip, so audio and picture are in sync BY CONSTRUCTION rather than by careful
 // scrubbing. Re-running the script after a content change costs one command.
 //
@@ -57,6 +57,7 @@ import { execFileSync } from 'node:child_process';
 import { existsSync, mkdtempSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir, homedir } from 'node:os';
 import { join, resolve } from 'node:path';
+import { narrationHoldReason } from '../lib/course-audio.ts';
 
 const IMAGE_EXTS = ['.png', '.jpg', '.jpeg', '.webp'];
 const VIDEO_EXTS = ['.mp4', '.mov'];
@@ -115,6 +116,12 @@ function findSlideAsset(dir, n) {
 }
 
 const [, , moduleId, lang, slidesDirRaw, outRaw] = process.argv;
+
+const held = narrationHoldReason(moduleId, lang);
+if (held) {
+  console.error(`Narration withheld for ${moduleId}/${lang}: ${held}`);
+  process.exit(1);
+}
 
 if (!moduleId || !lang || !slidesDirRaw) {
   console.error(`

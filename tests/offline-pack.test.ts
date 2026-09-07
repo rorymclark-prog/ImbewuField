@@ -6,7 +6,7 @@ import { join } from 'node:path';
 import { COURSE_ASSET_SIZES } from '@/lib/course-asset-sizes';
 import { offlinePack, downloadableModules, wholeCourseBytes, formatPackSize } from '@/lib/offline-pack';
 import { COURSE_DECKS, slideImageFor } from '@/lib/course-deck';
-import { COURSE_NARRATION } from '@/lib/course-audio';
+import { COURSE_NARRATION, availableNarrationLanguages } from '@/lib/course-audio';
 import { COURSE_MODULES } from '@/lib/course-modules';
 
 const PUBLIC = join(process.cwd(), 'public');
@@ -73,17 +73,18 @@ test('a pack names no file that does not exist', () => {
   }
 });
 
-test('every module a language claims narration for actually packs that narration', () => {
+test('every playable recording is packed; superseded recordings are withheld', () => {
   // The complement of the test above: `missing` only catches a file the manifest forgot.
   // It cannot catch a pack that never ASKED for the audio, which is the other half of how
   // the 2026-08-04 regression stayed invisible — a stale manifest and an unasked-for asset
-  // both look like "0 missing". COURSE_NARRATION is the promise; the pack must honour it.
+  // both look like "0 missing". A take explicitly held after a teaching correction must NOT
+  // be downloaded, even though its historical files remain claimed in COURSE_NARRATION.
   for (const [moduleId, narration] of Object.entries(COURSE_NARRATION)) {
     for (const lang of narration.languages) {
       const audio = offlinePack(moduleId, lang).entries.filter((e) => e.kind === 'audio');
       assert.equal(
         audio.length,
-        narration.tracks.length,
+        availableNarrationLanguages(moduleId).includes(lang) ? narration.tracks.length : 0,
         `${moduleId}/${lang}: narration promises ${narration.tracks.length} clips, pack carries ${audio.length}`,
       );
     }

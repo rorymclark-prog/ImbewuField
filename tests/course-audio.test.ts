@@ -6,11 +6,36 @@ import { join } from 'node:path';
 import {
   COURSE_NARRATION, allTracks, formatClock, fullNarrationUrl, hasNarration,
   moduleLevelTracks, narrationFor, resolveNarrationLang, trackTitle, tracksForLesson, trackUrl,
+  availableNarrationLanguages, narrationHoldReason,
 } from '../lib/course-audio.ts';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 
 const PUBLIC_AUDIO = join(process.cwd(), 'public', 'course-audio');
 const pad2 = (n: number) => String(n).padStart(2, '0');
+
+test('superseded water instructions cannot play as slide clips, full narration or fallback', () => {
+  const id = 'water-harvesting';
+  assert.ok(narrationHoldReason(id, 'en'));
+  assert.deepEqual(availableNarrationLanguages(id), []);
+  assert.equal(hasNarration(id), false);
+  for (const track of allTracks(id)) assert.equal(trackUrl(id, 'en', track.slide), null);
+  assert.equal(fullNarrationUrl(id, 'en'), null);
+  assert.equal(resolveNarrationLang(id, 'en'), null);
+  assert.equal(resolveNarrationLang(id, 'zu'), null);
+  assert.equal(allTracks(id).length, 24, 'replacement recordings retain all 24 slide numbers');
+});
+
+test('a hold retracts one language while leaving a current take available', () => {
+  const n = COURSE_NARRATION['seeds-sovereignty'];
+  const prior = n.recordingHold;
+  try {
+    n.recordingHold = { en: 'Test: source correction' };
+    assert.deepEqual(availableNarrationLanguages('seeds-sovereignty'), ['zu']);
+    assert.deepEqual(resolveNarrationLang('seeds-sovereignty', 'en'), { lang: 'zu', exact: false });
+    assert.equal(trackUrl('seeds-sovereignty', 'en', 1), null);
+    assert.ok(trackUrl('seeds-sovereignty', 'zu', 1));
+  } finally { n.recordingHold = prior; }
+});
 
 test('a module with no recording is a normal state, not an error', () => {
   // The example used to be 'intro-permaculture', which flipped this test the day that module WAS

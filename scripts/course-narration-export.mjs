@@ -87,7 +87,11 @@ function exportModule(moduleId) {
   const scriptPath = resolve(join(process.cwd(), 'docs', 'narration', `${moduleId}.${lang}.md`));
   if (!existsSync(scriptPath)) return null;
 
-  const slides = parse(readFileSync(scriptPath, 'utf8'));
+  const raw = readFileSync(scriptPath, 'utf8');
+  if (/DRAFT — SOURCE CHANGED/.test(raw)) {
+    throw new Error(`${moduleId}/${lang}: reconcile the translation with the corrected source before recording.`);
+  }
+  const slides = parse(raw);
   if (!slides.length) return null;
 
   const outDir = resolve(

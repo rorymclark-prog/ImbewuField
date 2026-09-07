@@ -6,6 +6,16 @@ import { completeModuleIds, moduleReadiness, moduleReadinessDetail, readinessLab
 import { COURSE_DECKS } from '@/lib/course-deck';
 import { COURSE_NARRATION } from '@/lib/course-audio';
 
+test('new Water demonstrations do not conceal the held recording or the isiZulu gap', () => {
+  const detail = moduleReadinessDetail('water-harvesting');
+  assert.equal(detail.missingDemonstrations, 0);
+  assert.equal(detail.readiness, 'in-progress');
+  assert.deepEqual(detail.narrationLanguages, []);
+  const label = readinessLabel('water-harvesting')!;
+  assert.match(label.detail, /English narration/);
+  assert.match(label.detail, /isiZulu narration/);
+});
+
 test('a narration manifest cannot certify a recording absent from the asset inventory', () => {
   const narration = COURSE_NARRATION['seeds-sovereignty'];
   const tracks = narration.tracks;

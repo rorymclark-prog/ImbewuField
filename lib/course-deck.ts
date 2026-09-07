@@ -30,6 +30,8 @@ export interface DeckAnimation {
   /** Bytes, shown on the play button so the choice is an informed one. */
   bytes: number;
   seconds: number;
+  /** Plain English explanation, visible with sound off; no text is baked into the shared clip. */
+  description?: string;
 }
 
 export interface DeckSlide {
@@ -94,6 +96,21 @@ const SEEDS_ANIMATIONS: Record<number, DeckAnimation> = {
   15: { src: 'imbewu_isiZulu_video_05', poster: 'imbewu_isiZulu_video_05', bytes: 1_377_407, seconds: 20 }, // tomato in a jar — the long one
   18: { src: 'new_seed-storage-jar-vs-bag', poster: 'new_seed-storage-jar-vs-bag', bytes: 474_949, seconds: 10 },
   21: { src: 'imbewu_isiZulu_video_06', poster: 'imbewu_isiZulu_video_06', bytes: 439_958,   seconds: 10 }, // germination test on cloth
+};
+
+const WATER_ANIMATIONS: Record<number, DeckAnimation> = {
+  4: { src: 'swale-infiltration', poster: 'swale-infiltration', bytes: 111102, seconds: 12,
+    description: 'The top strip looks along the contour: the water surface is level from end to end. Below, a cut through the slope shows water collecting above the downhill berm, then soaking into the soil. The drawing gives no construction dimensions.' },
+  7: { src: 'safe-overflow', poster: 'safe-overflow', bytes: 235338, seconds: 12,
+    description: 'Seen from above, the upper swale fills before excess water follows a protected overflow route. The receiving basin must also have enough capacity and a safe overflow. Check the whole route before digging.' },
+  9: { src: 'contour-vegetation', poster: 'contour-vegetation', bytes: 205708, seconds: 12,
+    description: 'A cut through the slope shows established grass barriers. Runoff passes through the vegetation and some sediment settles above it. This is a process diagram: suitable plants, spacing and any earthworks need a local site assessment.' },
+  12: { src: 'dam-spillway', poster: 'dam-spillway', bytes: 113831, seconds: 12,
+    description: 'This view from above shows excess water leaving by a side spillway, around the earthen wall. A competent dam designer must assess flood flows, the wall, spillway, outlet and downstream risks before construction.' },
+  16: { src: 'first-flush', poster: 'first-flush', bytes: 161692, seconds: 12,
+    description: 'Early runoff fills a separate chamber. Its float rises to close the chamber, then later runoff enters the covered tank. The cutaway lets you see inside. Later runoff is not necessarily safe to drink. Size, drain and reset the diverter according to a suitable design and its instructions.' },
+  21: { src: 'greywater-under-mulch', poster: 'greywater-under-mulch', bytes: 65622, seconds: 12,
+    description: 'Used basin water travels through a pipe into soil beneath mulch, away from the trunk and fruit. It soaks into the root zone without spraying or pooling. Mulch does not disinfect it. Use suitable greywater promptly and keep people and animals away.' },
 };
 
 /**
@@ -192,7 +209,7 @@ export const COURSE_DECKS: Record<string, ModuleDeck> = {
   'water-harvesting': {
     slideLanguages: ['en'],
     imageExt: 'svg',
-    slides: slidesFromNarration('water-harvesting', {}),
+    slides: slidesFromNarration('water-harvesting', WATER_ANIMATIONS),
   },
 
   'reading-landscape': {
@@ -270,7 +287,7 @@ export function slideImagesFor(moduleId: string, lang: string, slide: number): {
   return [...opening, first, ...extra.map((url) => ({ ...first, url }))];
 }
 
-export function animationUrls(moduleId: string, slide: number): { video: string; poster: string; bytes: number; seconds: number } | null {
+export function animationUrls(moduleId: string, slide: number): { video: string; poster: string; bytes: number; seconds: number; description?: string } | null {
   const a = COURSE_DECKS[moduleId]?.slides.find((s) => s.slide === slide)?.animation;
   if (!a) return null;
   return {
@@ -278,6 +295,7 @@ export function animationUrls(moduleId: string, slide: number): { video: string;
     poster: `/course-animations/${moduleId}/posters/${a.poster}.jpg`,
     bytes: a.bytes,
     seconds: a.seconds,
+    ...(a.description ? { description: a.description } : {}),
   };
 }
 

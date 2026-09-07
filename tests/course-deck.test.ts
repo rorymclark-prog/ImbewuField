@@ -199,6 +199,23 @@ test('every animation and its poster exist, and the poster is the cheap one', ()
   }
 });
 
+test('all Water Watch slides have small, explained demonstrations with honest download sizes', () => {
+  const slides = deckFor('water-harvesting')!.slides.filter(s => s.title.startsWith('Watch:'));
+  assert.equal(slides.length, 6, 'the six teaching sequences retain their narration boundaries');
+  for (const slide of slides) {
+    const a = animationUrls('water-harvesting', slide.slide)!;
+    assert.ok(a, `slide ${slide.slide} promises a demonstration`);
+    assert.ok(onDisk(a.video));
+    assert.ok(onDisk(a.poster));
+    const bytes = statSync(new URL(a.video.replace(/^\//, ''), PUBLIC)).size;
+    const posterBytes = statSync(new URL(a.poster.replace(/^\//, ''), PUBLIC)).size;
+    assert.equal(a.bytes, bytes, 'the farmer sees the actual download cost');
+    assert.ok(posterBytes < bytes, 'choosing not to play must save data');
+    assert.ok(a.description, 'a wordless diagram needs an accessible sound-off explanation');
+    assert.ok(slideImagesFor('water-harvesting', 'en', slide.slide).length, 'the full reading remains reachable');
+  }
+});
+
 test('a slide with no animation offers none — the still is the lesson', () => {
   assert.equal(animationUrls('seeds-sovereignty', 1), null);
   assert.equal(animationUrls('seeds-sovereignty', 2), null);

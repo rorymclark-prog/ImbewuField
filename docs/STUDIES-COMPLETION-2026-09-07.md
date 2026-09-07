@@ -9,7 +9,7 @@ Seeds module. A text card with a demonstration title does not meet that brief.
 The two commits from `codex/deck-continuation` (PR #153) were cherry-picked
 without conflicts. The recovery started with nine English decks and ten
 continuation cards. This continuation now preserves all narration paragraphs
-in 185 base frames plus 50 continuation frames. The old branches remain intact.
+in 185 base frames plus 48 continuation frames after the Water corrections. The old branches remain intact.
 
 **Draft recovery, not a release.** The inherited player registration makes these
 decks accessible on this branch, but the blockers below still prevent shipping.
@@ -39,7 +39,7 @@ phrase “wired into nothing” must not be read as describing the full PR diff.
 - Nine illustrated opening covers following the Seeds module’s cream-and-green
   visual language and local farming setting. They are narrative covers, not
   technical diagrams or substitutes for the demonstrations below.
-- 235 generated English text frames: 185 base frames and 50 continuations.
+- 233 generated English text frames: 185 base frames and 48 continuations.
   Every paragraph before and after every pause is retained, including cover
   introductions. The preserved Vegetables slide-16 sequence includes all four
   steps and the neem-product warning. Slide 11 includes its previously lost
@@ -47,7 +47,12 @@ phrase “wired into nothing” must not be read as describing the full PR diff.
 - The player displays every continuation under the same slide number and audio
   block. The illustrated cover opens the module; its full introduction remains
   accessible below. Offline downloads include covers and all continuation frames.
-- All existing narration files, lesson IDs and recording counts remain stable.
+- Lesson IDs, narration files and block numbers remain stable. Water’s old English
+  audio is withheld because its safety instructions were corrected; it needs a
+  complete replacement take in Leah’s voice.
+- Six Water Harvesting demonstrations are produced and connected, with readable
+  explanations, posters and offline downloads. Four Water lessons and affected
+  quizzes now match their corrected source. See `WATER-DEMONSTRATIONS-2026-09-07.md`.
 - Readiness now checks complete English and isiZulu slide and audio inventories,
   lesson pictures, and every promised Watch demonstration. It still identifies
   Seeds as the only fully produced module.
@@ -108,8 +113,8 @@ site-safety claims before publishing them.
 ## The 28 demonstration slots
 
 These are the actual English narration headings outside Seeds. Each needs a
-teaching asset, matched to its existing audio block. The format column is a
-production proposal, not an assertion that the asset has been made.
+teaching asset, matched to its existing audio block. Six Water assets below are now produced and inspected. The remaining 22 slots
+are production proposals, not assertions that assets have been made.
 
 | Module | Slide | Existing title after “Watch:” | Proposed visual |
 | --- | ---: | --- | --- |
@@ -120,12 +125,12 @@ production proposal, not an assertion that the asset has been made.
 | Reading the landscape | 9 | Follow the Sun Across the Site | The same site in successive sun-and-shadow views, with verified orientation. |
 | Reading the landscape | 13 | See Wind and Cold Air on the Map | Site map with separate, clearly distinguishable wind and cold-air paths. |
 | Reading the landscape | 17 | Draw the Land You Already Have | Existing field features progressively traced onto a simple map. |
-| Water harvesting | 4 | A Swale Sinks Water | Contour view and cross-section showing filling and infiltration. |
-| Water harvesting | 7 | The Overflow Point | A connected sequence showing where excess water leaves the system. |
-| Water harvesting | 9 | Vetiver Takes Over | Side-by-side slope treatments matching the reviewed narration. |
-| Water harvesting | 12 | Dam and Spillway | Conceptual catchment, storage and spillway relationship; no invented engineering dimensions. |
-| Water harvesting | 16 | First Flush to Tank | Cutaway sequence distinguishing initial diversion from later tank inflow. |
-| Water harvesting | 21 | Greywater Under Mulch | Mulch-basin cross-section showing the permitted destination and excluded uses. |
+| Water harvesting | 4 | A Swale Sinks Water | Produced: level contour view and infiltration cross-section. |
+| Water harvesting | 7 | The Overflow Point | Produced: protected overflow to a receiving basin. |
+| Water harvesting | 9 | Living Contour Barriers | Produced: established vegetation intercepting runoff; site-specific assessment replaces the universal slope rule. |
+| Water harvesting | 12 | Dam and Spillway | Produced: side spillway clear of the earthen wall. |
+| Water harvesting | 16 | First Flush to Tank | Produced: chamber fills, float closes, later runoff enters the tank. |
+| Water harvesting | 21 | Greywater Under Mulch | Produced: buried delivery away from trunk and edible parts; no disinfection claim. |
 | Soil health | 5 | Look at the Soil | Close views of the soil observations named in the narration. |
 | Soil health | 10 | Build the Compost Heap | Step sequence with the authored materials and actions visibly distinct. |
 | Soil health | 14 | Bare Soil and Mulch | Matched soil sections under the same conditions. |
@@ -148,13 +153,13 @@ need the same review.
 
 ## Remaining work before release
 
-1. Produce and review the 28 matched teaching demonstrations listed above,
+1. Produce and review the remaining 22 matched teaching demonstrations listed above,
    plus the remaining illustrated teaching compositions. Cover art and text
    cards alone do not meet the Seeds brief. Any change to spoken content needs
    corresponding narration review and, where necessary, re-recording.
 2. Complete first-language isiZulu review and recording for the nine remaining
-   modules, then produce translated slides. Eight source scripts explicitly
-   declare themselves drafts; Water’s missing draft flag is not review evidence.
+   modules, then produce translated slides. All nine now explicitly
+   require review; Water’s source corrections also require translation alignment.
    Lesson bodies, quizzes and the new practical companion also need an explicit
    language workflow. Stable IDs must remain intact.
 3. Review the new English activities with Rory and a facilitator against actual
@@ -169,15 +174,15 @@ need the same review.
    block. It does not yet assemble these SVG continuation frames. Do not use a
    base-frame-only export and silently lose the extra teaching in a compiled video.
 6. Review integration with the other active studies/design branch before any
-   merge. This branch has not been pushed, merged or deployed.
+   merge. The branch is published as draft PR #426; it has not been merged or deployed.
 
-## Suggested first completed module
+## Water production status
 
-Water Harvesting has four lessons, 24 English audio blocks, and six clear
-demonstration slots. It is the only remaining isiZulu script without a draft
-flag. Use it as the first complete production pass after fixing frame delivery:
-six teaching scenes, 24 reviewed slide compositions, language alignment,
-recording, then a phone and offline walkthrough of all four lessons.
+Water’s six demonstrations and four corrected English lessons are now produced.
+Its 24 source blocks render into 25 text frames with no dropped paragraphs.
+Replacement Leah narration, reviewed isiZulu teaching and Thando narration,
+translated slides, and a phone/offline walkthrough remain before completion.
+The changed source cannot be paired with its old Luke audio.
 
 The absent draft flag still needs review provenance checked. It does not permit
 claiming that a first-language speaker approved the script.

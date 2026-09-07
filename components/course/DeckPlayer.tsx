@@ -10,7 +10,7 @@ import {
   slideAudioUrl,
   slideImagesFor,
 } from '@/lib/course-deck';
-import { trackTitle } from '@/lib/course-audio';
+import { availableNarrationLanguages, narrationHoldReason, trackTitle } from '@/lib/course-audio';
 import { COURSE_NARRATION } from '@/lib/course-audio';
 import { COURSE_CACHE } from '@/lib/offline-cache';
 
@@ -68,7 +68,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   const [lang, setLang] = useState(appLang);
   useEffect(() => { setLang(appLang); }, [appLang]);
   const slideLang = resolveDeckLang(moduleId, lang);
-  const languages = narration?.languages ?? [];
+  const languages = availableNarrationLanguages(moduleId);
 
   const slides = useMemo(
     () => (deck?.slides ?? []).filter((s) => !lessonId || s.lesson === lessonId),
@@ -220,6 +220,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   const audio = audioForCurrent;
   const track = narration?.tracks.find((t) => t.slide === current.slide);
   const heading = track ? trackTitle(track, lang) : current.title;
+  const holdReason = narrationHoldReason(moduleId, lang) ?? narrationHoldReason(moduleId, slideLang.lang);
   const isPlaying = playing.has(current.slide);
 
   return (
@@ -296,10 +297,16 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
         )}
       </div>
 
-      {illustratedOpening ? (
+      {anim?.description && (
+        <p lang="en" style={{ margin: 0, color: INK, fontSize: 15, lineHeight: 1.6 }}>
+          {lang !== 'en' && <strong>English explanation: </strong>}{anim.description}
+        </p>
+      )}
+
+      {illustratedOpening || anim ? (
         <details style={{ color: INK }}>
-          <summary style={{ cursor: 'pointer', padding: '8px 0', fontSize: 14 }}>Read the introduction</summary>
-          {continuationImages.map((frame, part) => (
+          <summary style={{ cursor: 'pointer', padding: '8px 0', fontSize: 14 }}>{illustratedOpening ? 'Read the introduction' : 'Read this slide'}</summary>
+          {(illustratedOpening ? continuationImages : frameImages).map((frame, part) => (
             // eslint-disable-next-line @next/next/no-img-element
             <img key={frame.url} src={frame.url} alt={`${heading}, introduction part ${part + 1}`} loading="lazy"
               style={{ display: 'block', width: '100%', height: 'auto', marginTop: 8, borderRadius: 10 }} />
@@ -317,6 +324,10 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
             style={{ display: 'block', width: '100%', height: 'auto', borderRadius: 10 }} />
         </figure>
       ))}
+
+      {!audio && holdReason && (
+        <p role="status" style={{ margin: 0, color: MUTED, fontSize: 13, lineHeight: 1.5 }}>{holdReason}</p>
+      )}
 
       {audio && (
         <audio
@@ -375,7 +386,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
           }}
         >
           <span aria-hidden style={{ fontSize: 12 }}>{running ? '■' : '▶'}</span>
-          {running ? 'Stop' : 'Play lesson'}
+          {running ? 'Stop' : languages.length ? 'Play lesson' : 'Play slides'}
         </button>
         <button
           onClick={() => go(-1)}

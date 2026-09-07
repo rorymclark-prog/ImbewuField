@@ -20,7 +20,8 @@ only a South African voice. It now names the target voice explicitly.
 
 This decision is a target for production. It does not change or relabel the audio
 already on disk: Seeds still uses Leah; the other nine English modules still use
-Luke until replacement recordings are generated and verified. No replacement
+Luke until replacement recordings are generated and verified. Water’s old Luke
+take is retained for provenance but withheld from playback after source corrections. No replacement
 recording was made in this change. No earlier user preference between the two
 English voices was recovered from the personal-context search.
 
@@ -44,6 +45,7 @@ English voices was recovered from the personal-context search.
 
 English replacement backlog: all nine modules outside Seeds, 185 existing slide
 clips. IsiZulu backlog: review and record the nine remaining modules; eight source
-scripts explicitly label themselves drafts. Water has no draft flag, but still
-needs review provenance checked. New field activities require their own finalised
+scripts originally labelled themselves drafts. Water is now also explicitly marked
+as a draft because the English safety instructions changed; its translation must
+be reconciled before production. New field activities require their own finalised
 scripts before any recording. Generating a recording sheet is not review approval.

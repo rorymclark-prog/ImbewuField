@@ -29,6 +29,9 @@ export interface NarrationTrack {
 export interface ModuleNarration {
   /** Recorded languages, best first. Codes match lib/tts.ts LANG_TO_BCP47 keys. */
   languages: string[];
+  /** Existing recordings withheld because their instructions no longer match the lesson.
+   * Keep their provenance and files, but never offer them for playback or offline download. */
+  recordingHold?: Record<string, string>;
   tracks: NarrationTrack[];
   /**
    * Optional absolute origin for the files. Unset = served from this app's own /public.
@@ -90,9 +93,8 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
     languages: ['en'],
     // 22 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural (Antigravity's batch run) and
     // verified by import-course-audio: 22/22 clips matched their script blocks, median 3.22 w/s.
-    // NOTE the voice differs from seeds-sovereignty's en-ZA-LeahNeural — the eight modules
-    // recorded after this one share Luke, so seeds is the odd one out; Rory decides whether to
-    // re-record seeds EN for a single course voice.
+    // Replacement production follows Seeds: en-ZA-LeahNeural. The existing Luke take is
+    // retained until a verified replacement is available. See docs/COURSE-NARRATION-VOICE.md.
     tracks: [
       { slide: 1,  lesson: null,                    title: 'Introduction to Permaculture' },
       { slide: 2,  lesson: null,                    title: 'Why This Matters' },
@@ -150,6 +152,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
   },
   'water-harvesting': {
     languages: ['en'],
+    recordingHold: { en: 'The water-safety instructions have changed. Read the updated slides while replacement narration is prepared.' },
     // 24 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural and verified by
     // import-course-audio: every clip matched its script block.
     // No "Why This Matters" slide here: slide 2 is Learning Outcomes covering all four lessons, and
@@ -163,11 +166,11 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
       { slide: 6,  lesson: 'water-harvesting-l1', title: 'Storms Need a Safe Overflow' },
       { slide: 7,  lesson: 'water-harvesting-l1', title: 'Watch: The Overflow Point' },
       { slide: 8,  lesson: 'water-harvesting-l1', title: 'Know When Swales Fit the Slope' },
-      { slide: 9,  lesson: 'water-harvesting-l1', title: 'Watch: Vetiver Takes Over' },
+      { slide: 9,  lesson: 'water-harvesting-l1', title: 'Watch: Living Contour Barriers' },
       { slide: 10, lesson: 'water-harvesting-l2', title: 'Store Rain for the Dry Season' },
       { slide: 11, lesson: 'water-harvesting-l2', title: 'Design the Spillway Before the Wall' },
       { slide: 12, lesson: 'water-harvesting-l2', title: 'Watch: Dam and Spillway' },
-      { slide: 13, lesson: 'water-harvesting-l2', title: 'Turn a Dam into a Working Ecosystem' },
+      { slide: 13, lesson: 'water-harvesting-l2', title: 'Keep the Dam Wall Clear' },
       { slide: 14, lesson: 'water-harvesting-l3', title: 'Your Roof Is a Harvesting Surface' },
       { slide: 15, lesson: 'water-harvesting-l3', title: 'Divert the Dirty First Flush' },
       { slide: 16, lesson: 'water-harvesting-l3', title: 'Watch: First Flush to Tank' },
@@ -355,7 +358,17 @@ export function narrationFor(moduleId: string): ModuleNarration | null {
 
 export function hasNarration(moduleId: string): boolean {
   const n = COURSE_NARRATION[moduleId];
-  return Boolean(n && n.languages.length > 0 && n.tracks.length > 0);
+  return Boolean(n && availableNarrationLanguages(moduleId).length > 0 && n.tracks.length > 0);
+}
+
+/** Recorded languages whose take still matches the current teaching. */
+export function availableNarrationLanguages(moduleId: string): string[] {
+  const n = COURSE_NARRATION[moduleId];
+  return n?.languages.filter(lang => !n.recordingHold?.[lang]) ?? [];
+}
+
+export function narrationHoldReason(moduleId: string, lang: string): string | null {
+  return COURSE_NARRATION[moduleId]?.recordingHold?.[lang] ?? null;
 }
 
 export interface ResolvedLang {
@@ -368,11 +381,11 @@ export interface ResolvedLang {
 /** Pick the language to actually play: the app language if it was recorded, else English,
  *  else whatever exists. Null when the module has no recording at all. */
 export function resolveNarrationLang(moduleId: string, appLang: string): ResolvedLang | null {
-  const n = COURSE_NARRATION[moduleId];
-  if (!n || n.languages.length === 0) return null;
-  if (n.languages.includes(appLang)) return { lang: appLang, exact: true };
-  if (n.languages.includes('en')) return { lang: 'en', exact: false };
-  return { lang: n.languages[0], exact: false };
+  const languages = availableNarrationLanguages(moduleId);
+  if (languages.length === 0) return null;
+  if (languages.includes(appLang)) return { lang: appLang, exact: true };
+  if (languages.includes('en')) return { lang: 'en', exact: false };
+  return { lang: languages[0], exact: false };
 }
 
 const pad2 = (n: number) => String(n).padStart(2, '0');
@@ -385,7 +398,7 @@ function base(n: ModuleNarration, moduleId: string, lang: string): string {
 /** URL for one slide clip, or null if the module or slide isn't in the manifest. */
 export function trackUrl(moduleId: string, lang: string, slide: number): string | null {
   const n = COURSE_NARRATION[moduleId];
-  if (!n || !n.languages.includes(lang)) return null;
+  if (!n || !availableNarrationLanguages(moduleId).includes(lang)) return null;
   if (!n.tracks.some((t) => t.slide === slide)) return null;
   return `${base(n, moduleId, lang)}/slide-${pad2(slide)}.mp3`;
 }
@@ -393,7 +406,7 @@ export function trackUrl(moduleId: string, lang: string, slide: number): string 
 /** URL for the single continuous narration of the whole module. */
 export function fullNarrationUrl(moduleId: string, lang: string): string | null {
   const n = COURSE_NARRATION[moduleId];
-  if (!n || !n.languages.includes(lang)) return null;
+  if (!n || !availableNarrationLanguages(moduleId).includes(lang)) return null;
   return `${base(n, moduleId, lang)}/full.mp3`;
 }
 

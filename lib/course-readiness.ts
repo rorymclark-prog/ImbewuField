@@ -128,6 +128,7 @@ export function readinessLabel(moduleId: string): { text: string; detail: string
   if (d.hasDeck) has.push('the slide deck is built');
 
   const toCome: string[] = [];
+  if (!d.narrationLanguages.includes('en')) toCome.push('English narration');
   if (!d.hasDeck) toCome.push('slides');
   // isiZulu specifically, not "a second language". moduleReadinessDetail sets two languages as the
   // bar for the reason stated there — this audience is isiZulu-first — and English-only narration

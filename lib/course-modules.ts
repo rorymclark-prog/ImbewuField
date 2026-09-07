@@ -39,6 +39,8 @@ export interface Lesson {
    * silently rather than showing a dead button.
    */
   relatedLessonIds?: string[];
+  /** Primary references for a learner or facilitator who wants to check the instruction. */
+  sources?: { title: string; url: string }[];
 }
 
 export interface CourseModule {
@@ -331,22 +333,23 @@ export const COURSE_MODULES: CourseModule[] = [
   {
     id: "water-harvesting",
     title: "Water Harvesting",
-    description: "Swales, berms, dams, rainwater tanks and greywater — slow, spread and sink every drop.",
+    description: "Swales, berms, dams, tanks and greywater: plan where water can soak in and where excess can leave safely.",
     durationMins: 35,
     category: "water",
     lessons: [
       {
         id: "water-harvesting-l1",
+        sources: [{ title: 'Resource Conservation District: Slow it. Spread it. Sink it! (hosted by USDA NRCS)', url: 'https://www.nrcs.usda.gov/sites/default/files/2024-07/Home_Drainage_Guide.v25.pdf' }],
         infographicUrl: "/course-images/water-harvesting/water-harvesting-l1.jpg",
         infographicAlt: "A slope cut through the middle: a shallow ditch dug along the contour with a raised mound below it. Arrows show rain slowing, spreading sideways, and soaking into the soil instead of running away.",
         title: "Swales and Berms: Slowing Water on the Slope",
 
-        body: "A swale is a level trench dug exactly on contour — not angled, perfectly level end to end — so water fills it evenly and soaks in rather than running off. The excavated soil forms a berm on the downhill side. Trees planted there draw on stored water long after the rain has stopped.\n\nOn the Highveld, storms can drop 50 to 80mm an hour, so size your swale with a safe overflow point at one end, leading to the next swale or a dam. An overflow with nowhere to go can breach the berm and create the very gully you were trying to prevent.\n\nSwales work well on 1 to 15% slopes. Above 15 to 20%, use vetiver grass contour lines or terraces instead — test a 60cm pit with water first; if it drains within the hour, plan for drier conditions.",
+        body: "A swale is a level trench dug exactly on contour — not angled, perfectly level end to end — so water fills it evenly and soaks in rather than running off.\n\nThe excavated soil forms a berm on the downhill side.\n\nTrees planted there draw on stored water long after the rain has stopped.\n\nThe excavated soil forms a berm on the downhill side.\n\nThe berm, the downhill mound of excavated soil, is where you plant trees.\n\nTrees planted there draw on stored water long after the rain has stopped.\n\nA storm can bring more water than a swale can hold. Plan a stable overflow route before digging.\n\nTrace it to a place that can receive the excess without erosion or harm. Do not simply send it towards a neighbour, road or building.\n\nA second swale or dam is only an option if its capacity and overflow have also been checked.\n\nSlope alone does not tell you whether a swale is safe. Check soil depth, drainage, ground stability and what lies downhill.\n\nDo not dig into steep, unstable or waterlogged ground on the strength of this diagram. Get a competent local practitioner to assess the site.\n\nA small soil observation cannot prove that a large earthwork is safe.",
         keyPoints: [
           "A swale is a level trench on contour — it sinks water, it doesn't direct it",
           "The berm (downhill mound of excavated soil) is where you plant trees",
           "Include a safe overflow point so storms don't breach the berm",
-          "Above 15-20% slope, use vetiver grass lines or terraces instead",
+          "Assess soil, drainage, slope stability and downstream risks before digging",
         ],
         quiz: [
           {
@@ -361,29 +364,30 @@ export const COURSE_MODULES: CourseModule[] = [
             rationale: "A swale only works if every point sits at the same height. Even a slight angle sends water to the low end instead of spreading evenly.",
           },
           {
-            q: "A farmer on a steep 25% slope in the KZN Midlands wants to slow erosion. What's most appropriate?",
+            q: "A farmer wants to slow erosion on a steep slope. What should happen before digging?",
             options: [
               "Standard swales dug as deep as possible",
-              "Vetiver grass planted in contour lines",
+              "A competent local practitioner assesses the site and suitable options",
               "A large dam at the bottom to catch all runoff",
               "Compacting the soil surface with a roller",
             ],
             correct: 1,
-            rationale: "Above roughly 15-20%, swales become hard to maintain and risk slipping. Vetiver's dense root mat holds the slope instead.",
+            rationale: "A slope percentage alone cannot establish safety. The soil, drainage, ground stability and land below all matter.",
           },
         ],
       },
       {
         id: "water-harvesting-l2",
-        infographicUrl: "/course-images/water-harvesting/water-harvesting-l2.jpg",
-        infographicAlt: "A farm dam cut through the middle: water flowing in at one end, the stored body of water, a spillway at the top edge for overflow, and a planted bank holding the soil.",
+        sources: [{ title: 'FAO: Manual on Small Earth Dams — design, spillways and maintenance', url: 'https://www.fao.org/4/i1531e/i1531e.pdf' }],
+        infographicUrl: "/course-animations/water-harvesting/posters/dam-spillway.jpg",
+        infographicAlt: "View from above: water enters a reservoir and excess flows around the earthen wall through a separate side spillway. Protective grass covers the wall; no trees grow on it. A process diagram, not a construction plan.",
         title: "Farm Dams and Ponds: Storing Water for the Dry Season",
-        body: "A well-sited dam stores a season's rain to carry you through the dry months. In summer-rainfall South Africa, rain falls October to March, then largely stops — a dam makes you far less dependent on boreholes or municipal supply through winter.\n\nSite your dam by two rules: maximise the catchment draining toward it, and design the spillway before you build the wall. A 2-hectare catchment at 700mm annual rainfall can fill 200,000 to 400,000 litres in a good season. Skip the spillway and one exceptional storm can overtop and breach the wall — a disaster that costs more to fix than the dam itself.\n\nIn Limpopo and hot parts of KZN, evaporation can strip 2 metres of depth a year. Shade trees on the western and northern banks cut this significantly. Ducks aerate the water; indigenous bulrushes stabilise the banks.",
+        body: "Stored water can help through dry periods. How long it lasts depends on rainfall, losses and how much you use.\n\nRecord when rain actually arrives on your site. A yearly rainfall total does not tell you how much water will be available in the driest month.\n\nA dam wall holds water back. A spillway gives excess water a planned way around it.\n\nHave a competent dam designer assess the catchment, soil, flood flows and downstream consequences before any wall is built. Check the approvals needed locally.\n\nA bigger catchment also brings a bigger flood. Never build first and work out the spillway later.\n\nKeep trees and deep-rooted shrubs away from the dam wall, spillway and outlet. Their roots can damage these structures.\n\nMaintain the protective grass cover and keep the spillway clear. Report erosion, cracks or unexpected seepage to a competent dam practitioner.\n\nDo not dig out established roots from a dam wall yourself. Repairs need an assessed plan.",
         keyPoints: [
-          "Size the dam to the catchment area draining toward it",
+          "Have a competent dam designer assess catchment, flood flows, soil and downstream risks",
           "Design the spillway before the wall — an overtopped wall can breach catastrophically",
-          "Shade trees on the western and northern banks cut evaporation significantly in hot regions",
-          "Ducks and indigenous bulrushes turn a dam into a working ecosystem, not just storage",
+          "Keep trees and deep-rooted shrubs away from the dam wall and spillway",
+          "Maintain protective grass cover and report erosion, cracks or unexpected seepage",
         ],
         quiz: [
           {
@@ -398,33 +402,34 @@ export const COURSE_MODULES: CourseModule[] = [
             rationale: "Without a designed overflow route, excess water finds its own way over the wall — and that uncontrolled flow is what erodes and eventually breaches it.",
           },
           {
-            q: "In Limpopo, what combination best reduces evaporation from an open dam?",
+            q: "Which action helps protect an earthen dam wall?",
             options: [
-              "A deep, exposed dam with no bank vegetation",
-              "Shade trees on the western and northern banks, plus ducks for aeration",
-              "A full concrete lining and plastic cover",
-              "A larger surface area to spread evaporation evenly",
+              "Planting large trees directly on the wall",
+              "Maintaining protective grass cover and keeping the spillway clear",
+              "Blocking the spillway to store more water",
+              "Digging established roots out of the wall without an assessed repair plan",
             ],
             correct: 1,
-            rationale: "Shade cuts direct heat gain on the water surface — a practical, low-cost combination that measurably reduces loss in hot, high-evaporation regions.",
+            rationale: "Grass protects against surface erosion while allowing inspection. Trees and deep roots can damage the wall; a clear spillway lets the designed overflow route work.",
           },
         ],
       },
       {
         id: "water-harvesting-l3",
-        infographicUrl: "/course-images/water-harvesting/water-harvesting-l3.jpg",
-        infographicAlt: "Rain running off a roof into a gutter and down a pipe into a tank, with a small first-flush diverter branching off before the tank to throw away the dirty first water.",
-        title: "Rainwater Tanks and Roof Catchment: Harvesting Clean Water",
-        body: "Your roof is a harvesting surface. Each square metre collects roughly 0.9 litres per millimetre of rain, once you allow for splash and evaporation losses. A 100 square metre corrugated iron roof in Pietermaritzburg, at 800mm a year, yields close to 72,000 litres — enough for a family garden and most non-drinking needs.\n\nFit a first-flush diverter: the first 20 to 30 litres off any roof carries bird droppings, dust, and leaf litter, and should be diverted before clean water reaches the tank. For drinking water, add a filter downstream. For irrigation, untreated tank water is fine.\n\nMatch tank size to your dry season, not just one dry spell. In KZN, 5,000 litres may bridge a two-to-three-week gap. On the Highveld's longer dry season, 20,000 to 30,000 litres is more realistic.",
+        sources: [{ title: 'Water Research Commission: Resource Guidelines for Rainwater Harvesting', url: 'https://www.wrc.org.za/wp-content/uploads/mdocs/TT%20758%20web.pdf' }],
+        infographicUrl: "/course-animations/water-harvesting/posters/first-flush.jpg",
+        infographicAlt: "A cutaway of a roof-water system: the first-flush chamber is full and its float has closed it. Later runoff enters a covered tank. The visible stored water does not mean it is safe to drink.",
+        title: "Rainwater Tanks and Roof Catchment",
+        body: "Roof area, rainfall and collection losses determine potential harvest. Tank overflow and water use reduce what remains available.\n\nFor a calculation exercise, assume a 100 square metre roof, 800 millimetres of rain and a collection factor of 0.9. Multiply these to get 72,000 litres.\n\nThose are example inputs, not a rainfall forecast or a promise that a garden will have enough water.\n\nRoof runoff can carry droppings, dust and other contamination. Divert the first runoff before it enters the tank.\n\nThe amount to divert depends on roof area and local conditions. Follow a suitable design and the device instructions; there is no single volume for every roof.\n\nA first-flush diverter does not make water safe to drink.\n\nList the uses you want the tank to supply. Measure or estimate their daily demand.\n\nCompare that demand with local rainfall records, usable storage and the dry period you need to cover.\n\nA tank size on its own cannot tell you how many weeks it will last.\n\nKeep the tank covered and screen openings against insects. Maintain the roof, gutters and diverter.\n\nA filter alone does not guarantee safe drinking water. Drinking use needs suitable treatment, disinfection and water-quality checks with qualified advice.\n\nKeep untreated water away from edible plant parts. Keep any alternative supply separate from drinking-water plumbing.",
         keyPoints: [
-          "Roof catchment yield: about 0.9 litres per square metre per mm of rain",
+          "Estimate potential harvest from roof area, local rainfall and a stated collection factor",
           "A first-flush diverter removes the dirty first flush from every rain event",
           "Match tank size to your dry season length, not a single dry spell",
-          "Keep tanks sealed against light and mosquitoes; filter before drinking",
+          "Keep tanks covered; filtration alone does not guarantee safe drinking water",
         ],
         quiz: [
           {
-            q: "An 80m² iron roof gets 600mm of rain a year. Using the 0.9 litres per m² per mm figure, how much can she expect to harvest?",
+            q: "In an exercise, assume an 80m² roof, 600mm of rain and a collection factor of 0.9. What is the calculated potential harvest?",
             options: [
               "About 24,000 litres",
               "About 43,200 litres",
@@ -432,7 +437,7 @@ export const COURSE_MODULES: CourseModule[] = [
               "About 6,000 litres",
             ],
             correct: 1,
-            rationale: "80 times 600 times 0.9 equals 43,200 litres. The 0.9 factor already accounts for normal splash and evaporation losses.",
+            rationale: "80 times 600 times 0.9 equals 43,200 litres with these assumed inputs. Actual usable water also depends on rainfall timing, storage, overflow and demand.",
           },
           {
             q: "Why does a first-flush diverter matter even for irrigation-only tank water?",
@@ -443,33 +448,34 @@ export const COURSE_MODULES: CourseModule[] = [
               "It stops the tank overfilling in storms",
             ],
             correct: 1,
-            rationale: "Even irrigation water touches edible crops directly. Keeping the contaminated first flush out protects food safety, not just drinking quality.",
+            rationale: "Keeping dirty first runoff out reduces contamination. It does not make later runoff safe to drink; keep untreated irrigation water off edible plant parts.",
           },
         ],
       },
       {
         id: "water-harvesting-l4",
-        infographicUrl: "/course-images/water-harvesting/water-harvesting-l4.jpg",
-        infographicAlt: "Water from an indoor basin running through a buried pipe out to a mulched planting basin. The pipe stays underground the whole way — never an open channel.",
-        title: "Greywater Recycling: A Free Daily Water Source",
-        body: "Greywater is used washwater from your bath, basin, and laundry — not toilet water, which is blackwater and needs separate, careful handling. Kept clean of harsh chemicals, greywater is a free daily source of irrigation water that would otherwise be wasted.\n\nUse plain soap and avoid bleach, strong disinfectants, or water from washing nappies — these can damage soil life and plant roots. Direct greywater into a mulch-filled basin around fruit trees rather than onto bare ground, so it filters through organic matter before reaching roots.\n\nNever use greywater on leafy vegetables, root vegetables eaten raw, or seedlings — the risk of contact with bacteria is too high. Fruit trees, established shrubs, and non-edible landscaping are the right use. Check your municipality's rules before installing a permanent greywater system.",
+        sources: [{ title: 'City of Cape Town: Alternative Water Systems — greywater guidance; check your own municipality’s requirements', url: 'https://www.capetown.gov.za/_documents/resource.capetown.gov.za/documentcentre/Documents/Procedures,%20guidelines%20and%20regulations/Guidelines%20for%20Alternative%20Water%20Installations.pdf' }],
+        infographicUrl: "/course-animations/water-harvesting/posters/greywater-under-mulch.jpg",
+        infographicAlt: "A cutaway shows basin water flowing through a pipe into soil under mulch, away from the tree trunk. Water remains below the surface and does not touch the fruit. Mulch does not disinfect it.",
+        title: "Greywater Reuse: Keep People, Food and Soil Protected",
+        body: "Greywater is used water from washing. Toilet water is different and must never enter this garden system.\n\nWashwater can still carry germs, salts and cleaning products. Reuse depends on its source, quality and where it will go. Do not assume that clear-looking water is safe.\n\nAvoid water containing bleach, harsh cleaners or nappy waste. Do not reuse it when someone in the household is ill. Plain soap is not a guarantee of suitability.\n\nUse suitable greywater promptly, within 24 hours. Stop if it ponds, smells or runs off.\n\nKeep it below mulch, away from people and animals. Mulch does not disinfect water.\n\nDo not use greywater on leafy vegetables, root vegetables or seedlings.\n\nA suitable system may supply established trees or non-edible plants while keeping water off edible parts. Get advice on water quality and stop if plants or soil show damage.\n\nCheck municipal requirements before fitting a permanent system. This lesson does not approve an installation.",
         keyPoints: [
           "Greywater is washwater from bath, basin, and laundry — never toilet water",
-          "Use plain soap; avoid bleach, strong disinfectants, and nappy-wash water",
-          "Direct greywater to mulch basins around fruit trees, never onto raw-eaten vegetables",
+          "Avoid unsuitable washwater; use suitable greywater within 24 hours",
+          "Keep greywater below mulch and away from people and edible plant parts; mulch does not disinfect",
           "Check your municipality's greywater rules before installing a permanent system",
         ],
         quiz: [
           {
-            q: "Which use of greywater is safe?",
+            q: "With suitable water quality and local advice, which option reduces contact with greywater?",
             options: [
               "Watering lettuce that will be eaten raw",
-              "Irrigating an established fruit tree through a mulch basin",
+              "Supplying an established tree below mulch, keeping water away from people and fruit",
               "Watering seedlings in a nursery tray",
               "Filling a fishpond",
             ],
             correct: 1,
-            rationale: "Fruit trees with mulch filtration keep greywater away from food that's eaten unwashed or uncooked — that's the safe use case.",
+            rationale: "Below-mulch delivery can reduce contact, but it does not disinfect. Use suitable water promptly; stop if it ponds or runs off.",
           },
           {
             q: "Why avoid bleach or strong disinfectant in water destined for greywater reuse?",
@@ -480,7 +486,7 @@ export const COURSE_MODULES: CourseModule[] = [
               "They attract more mosquitoes",
             ],
             correct: 1,
-            rationale: "The whole value of greywater comes from feeding soil life and plant roots — harsh chemicals undermine exactly what you're trying to use the water for.",
+            rationale: "Cleaning products can harm soil organisms and roots. Reuse is a way to supply water when its quality is suitable, not a guarantee of fertiliser value.",
           },
         ],
       },

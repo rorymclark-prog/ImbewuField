@@ -1,3 +1,5 @@
+> DRAFT — SOURCE CHANGED 2026-09-07. Do not record or render this translation until a first-language reviewer has reconciled it with the corrected English source. See docs/WATER-DEMONSTRATIONS-2026-09-07.md.
+
 **Ikhasi 1 — Ukuvunwa Kwamanzi (Slide 1 — Water Harvesting)**
 
 Ama-swale, ama-berm, amadamu, amathangi amanzi emvula kanye ne-greywater — bambezela, sakaza futhi shonisa wonke amaconsi.
