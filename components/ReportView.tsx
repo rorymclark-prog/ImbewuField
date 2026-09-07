@@ -1362,8 +1362,8 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           style={{ position: 'fixed', inset: 0, zIndex: 70, background: 'rgba(32,25,15,0.94)', display: 'flex', flexDirection: 'column', padding: 16, gap: 10 }}>
           <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 12, color: '#fff' }}>
             <strong style={{ flex: 1 }}>{stripInlineMarkdown(openPlate.label)}</strong>
-            <button className="btn" onClick={() => setPlateZoom(v => !v)}>{plateZoom ? tr('Fit page', 'Linganisa ikhasi') : tr('Zoom to read', 'Khulisa ukuze ufunde')}</button>
-            <button className="btn" autoFocus onClick={() => setOpenPlate(null)}>{tr('Close', 'Vala')}</button>
+            <button className="px-4 py-3 rounded-lg border border-white/40 min-h-[44px]" onClick={() => setPlateZoom(v => !v)}>{plateZoom ? tr('Fit page', 'Linganisa ikhasi') : tr('Zoom to read', 'Khulisa ukuze ufunde')}</button>
+            <button className="px-4 py-3 rounded-lg border border-white/40 min-h-[44px]" autoFocus onClick={() => setOpenPlate(null)}>{tr('Close', 'Vala')}</button>
           </div>
           <div style={{ flex: 1, minHeight: 0, overflow: 'auto', textAlign: 'center' }}>
             {/* eslint-disable-next-line @next/next/no-img-element */}
