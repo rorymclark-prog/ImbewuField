@@ -1,0 +1,1474 @@
+[
+  {
+    "module": "soil-health",
+    "slide": 2,
+    "title": "Kungani Lokhu Kubalulekile",
+    "caption": "Ukutshala uhlobo olulodwa njalo, ukuklaba ngokweqile, noma ukushisa izinsalela zezitshalo kushiya umhlabathi uncike kumanyolo othengiwe ukuze ukhiqize noma yini.",
+    "art": "course-art/soil-health/mature-compost.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "soil-health",
+    "slide": 3,
+    "title": "Imiphumela Yokufunda",
+    "caption": "Uzofunda ukubona umhlabathi ophilayo nowonakele.",
+    "art": "course-art/soil-health/soil-observation.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "soil-health",
+    "slide": 4,
+    "title": "Umhlabathi Uyaphila",
+    "caption": "Ithisipuni elilodwa lomhlabathi ongaphezulu ophilayo linezidalwa eziningi ukudlula abantu abaseMhlabeni.",
+    "art": "course-art/soil-health/soil-life.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "soil-health",
+    "slide": 5,
+    "title": "Buka: Bheka Umhlabathi",
+    "caption": "Qhathanisa umhlabathi ongaphezulu omnyama nophilayo nomhlabathi ophaphathekile noqinile.",
+    "art": "course-art/soil-health/soil-observation.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "soil-health",
+    "slide": 6,
+    "title": "Hlola Umhlabathi Nge-Jar Test",
+    "caption": "Gcwalisa ibhodlela ingxenye eyodwa kwezintathu ngomhlabathi, uligcwalise ngamanzi, bese ufaka iconsi lensipho yokugeza izitsha.",
+    "art": "course-art/soil-health/jar-test.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "soil-health",
+    "slide": 7,
+    "title": "Funda Izingqimba ZaseJar",
+    "caption": "Isihlabathi esiningi phansi, namanzi afiphele anombala wobumba phezulu, kusho ukuthi umhlabathi unesihlabathi esiningi.",
+    "art": "course-art/soil-health/jar-layers.svg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "soil-health",
+    "slide": 8,
+    "title": "Umhlabathi Owonakele Uyabuyiseka",
+    "caption": "Umhlabathi ophaphathekile, oqinile, ongenazo izibungu nonuka ubumuncu awulona nje uhlobo lomhlabathi olungashintshi.",
+    "art": "course-art/soil-health/mature-compost.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "soil-health",
+    "slide": 9,
+    "title": "I-Compost Yondla Umhlabathi",
+    "caption": "I-compost yizinto zemvelo esezibolile.",
+    "art": "course-art/soil-health/mature-compost.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "soil-health",
+    "slide": 10,
+    "title": "Buka: Yakha Inqwaba Ye-Compost",
+    "caption": "Yakha inqwaba usebenzisa i-browns eyomile ne-greens entsha.",
+    "art": "course-art/soil-health/compost-building.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "soil-health",
+    "slide": 11,
+    "title": "Linganisa I-Browns Ne-Greens",
+    "caption": "Beka ama-browns angamasentimitha angama-20 kuya kwangama-30 kuzo zonke i-greens ezingamasentimitha ama-5 kuya kwayi-10.",
+    "art": "course-art/soil-health/compost-building.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "soil-health",
+    "slide": 12,
+    "title": "Gcina I-Compost Iphephile",
+    "caption": "Khomba izinga lokushisa eliphakathi kwenqwaba elingu-55 kuya ku-65°C.",
+    "art": "course-art/soil-health/compost-monitoring.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "soil-health",
+    "slide": 14,
+    "title": "Buka: Umhlabathi Ongenalutho Ne-Mulch",
+    "caption": "Qhathanisa umhlabathi ongenalutho nomhlabathi one-mulch.",
+    "art": "course-art/soil-health/mulching.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "soil-health",
+    "slide": 15,
+    "title": "I-Mulch Ivikela Umhlabathi",
+    "caption": "Sabalalisa ungqimba lwe-straw, utshani obomile, noma ama-wood chips olungamasentimitha ama-5 kuya kwayi-10 emhlabathini ongenalutho.",
+    "art": "course-art/soil-health/mulching.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "soil-health",
+    "slide": 16,
+    "title": "Ama-Cover Crops Phakathi Kwezinkathi",
+    "caption": "Ama-cover crops avikela umhlabathi lapho isivuno esikhulu singakhuli.",
+    "art": "course-art/soil-health/cover-crops.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "soil-health",
+    "slide": 17,
+    "title": "Ama-Worm Farms Ne-Leachate",
+    "caption": "Ama-worm farms aguqula izinsalela zasekhishini zibe ama-castings anomsoco.",
+    "art": "course-art/soil-health/worm-farm.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "soil-health",
+    "slide": 18,
+    "title": "Vikela Umhlabathi Unyaka Wonke",
+    "caption": "Insimu yase-Highveld eshiywe ingenalutho emva kokuvuna ummbila ibhekana nezingozi ezimbili ezinkulu.",
+    "art": "course-art/soil-health/cover-crops.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "soil-health",
+    "slide": 19,
+    "title": "Umsebenzi Wepulazini",
+    "caption": "Khetha indawo osebenza kuyo epulazini, bese uhlola umhlabathi.",
+    "art": "course-art/soil-health/soil-observation.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "soil-health",
+    "slide": 20,
+    "title": "Isenzo Sasepulazini",
+    "caption": "Qala isenzo esisodwa sokwakha umhlabathi esikule module.",
+    "art": "course-art/soil-health/mulching.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 2,
+    "title": "Kungani Lokhu Kubalulekile",
+    "caption": "I-design enhle yonga umsebenzi ngaphambi kokuba uphakamise ifosholo.",
+    "art": "course-art/intro-permaculture/kitchen-garden.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 3,
+    "title": "Imiphumela Yokufunda",
+    "caption": "Ekupheleni kwale module uzokwazi ukwenza izinto ezintathu.",
+    "art": "course-art/intro-permaculture/site-sketch.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 4,
+    "title": "Ukunakekela Umhlaba",
+    "caption": "I-ethic yokuqala yi-Earth Care.",
+    "art": "course-art/soil-health/mulching.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 5,
+    "title": "Ukunakekela Abantu",
+    "caption": "I-ethic yesibili yi-People Care.",
+    "art": "course-art/intro-permaculture/household-harvest.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 6,
+    "title": "Ukwabelana Ngokulinganayo",
+    "caption": "I-ethic yesithathu yi-Fair Share.",
+    "art": "course-art/soil-health/compost-building.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 7,
+    "title": "Bheka: Isinqumo Esisodwa, Ama-Ethics Amathathu",
+    "caption": "I-borehole ikhiqiza amanzi amaningi kunalawo adingwa umndeni wakho.",
+    "art": "course-art/intro-permaculture/sharing-water.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 8,
+    "title": "Lapho Kungekho Rulebook",
+    "caption": "Yilapho ama-ethics esebenza khona ngempela.",
+    "art": "course-art/intro-permaculture/site-sketch.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 9,
+    "title": "Izimiso Eziyishumi Nambili",
+    "caption": "UDavid Holmgren wabeka ama-design principles ayishumi nambili e-permaculture.",
+    "art": "course-art/intro-permaculture/observe-rain.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 10,
+    "title": "Bheka Bese Uxhumana Nomhlaba Wakho",
+    "caption": "Bheka umhlaba wakho isikhathi sonyaka esigcwele ngaphambi kokuzibophezela kuma-earthworks amakhulu.",
+    "art": "course-art/intro-permaculture/observe-rain.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 11,
+    "title": "Bamba Ugcine Amandla",
+    "caption": "Vuna imvula, ilanga ne-biomass ngaphambi kokuba kuphume emhlabeni wakho.",
+    "art": "course-art/soil-health/compost-building.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 12,
+    "title": "Sebenzisa Imiphetho Nezindawo Eziseceleni",
+    "caption": "I-edge yilapho kuhlangana khona izinto ezimbili — ulayini wocingo, unqenqema lomfula, noma umugqa oseduze kwendlela.",
+    "art": "course-art/intro-permaculture/garden-edge.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 13,
+    "title": "Bheka: I-Diversity Ivikela Osukwini Olubi",
+    "caption": "Isichotho singalimaza insimu yonke yama-mielies.",
+    "art": "course-art/intro-permaculture/diversity-before-storm.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 14,
+    "title": "Hlanganisa, Ungahlukanisi",
+    "caption": "Beka into ngayinye lapho isebenzela khona izinto ezingomakhelwane bayo.",
+    "art": "course-art/intro-permaculture/chickens-after-harvest.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 15,
+    "title": "Ama-Zones: Ukuhlela Ngokuvakasha",
+    "caption": "Ama-zones asuka ku-0 aye ku-5, futhi akhuluma ngezinyawo zakho, hhayi ngezicingo zakho.",
+    "art": "course-art/intro-permaculture/kitchen-garden.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 16,
+    "title": "Gcina Imisebenzi Oyenza Kaningi Eduze",
+    "caption": "Gcina ama-herbs owasebenzisa kaningi eduze komnyango wasekhishini.",
+    "art": "course-art/intro-permaculture/kitchen-garden.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 17,
+    "title": "Ama-Zones Ahlela Umsebenzi Wakho",
+    "caption": "Yilona iphuzu lalo msebenzi wonke.",
+    "art": "course-art/intro-permaculture/kitchen-garden.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 18,
+    "title": "Ama-Sectors: Amandla Afika Ngaphandle",
+    "caption": "Ama-zones avela ngaphakathi komhlaba wakho.",
+    "art": "course-art/intro-permaculture/site-sketch.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 19,
+    "title": "Bheka: I-Windbreak Iba Ohlangothini Lomoya",
+    "caption": "Kulesi sibonelo, umoya olimazayo uvela enyakatho-ntshonalanga.",
+    "art": "course-art/intro-permaculture/windward-shelter.svg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 20,
+    "title": "Yidwebe, Usunayo I-Design",
+    "caption": "Dweba umngcele womhlaba wakho.",
+    "art": "course-art/intro-permaculture/site-sketch.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 21,
+    "title": "Umsebenzi Wasepulazini",
+    "caption": "Dweba ama-zones nama-sectors akho ephepheni elilodwa.",
+    "art": "course-art/intro-permaculture/site-sketch.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 22,
+    "title": "Isenzo Sasepulazini",
+    "caption": "Phuma uyohlola ukuthi umdwebo wakho uyahambisana yini nomhlaba wangempela.",
+    "art": "course-art/intro-permaculture/site-sketch.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 2,
+    "title": "Kungani Lokhu Kubalulekile",
+    "caption": "Ipulazi ngalinye linezindlela zalo ezisebenzayo ngaphambi kokuba sengeze noma yini.",
+    "art": "course-art/intro-permaculture/observe-rain.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 3,
+    "title": "Imiphumela Yokufunda",
+    "caption": "Ekupheleni kwalesi sifundo, uzokwazi ukulandela amanzi endaweni yakho futhi uthole lapho ephuma khona.",
+    "art": "course-art/intro-permaculture/site-sketch.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 4,
+    "title": "Isifundo 1: Lapho Imvula Iya Khona",
+    "caption": "Ngaphambi kokuvuna amanzi, funda ukuthi asevele eya kuphi.",
+    "art": "course-art/intro-permaculture/observe-rain.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 5,
+    "title": "Buka: Amanzi Ayancipha, Angene, Aphume",
+    "caption": "Isithombe sibonisa imvula yehla emthambekeni.",
+    "art": "course-images/reading-landscape/reading-landscape-l1.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 6,
+    "title": "Landela Ama-Contour Lines Nge-A-Frame",
+    "caption": "Yakha i-A-frame eqinile ngemilenze emibili elinganayo, ugodo oluvundlile nentambo enesisindo elenga phezulu.",
+    "art": "course-art/reading-landscape/aframe-field.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 7,
+    "title": "Yehlisa Phezulu, Faka Phakathi, Lawula Ngezansi",
+    "caption": "Amanzi angathatha ijubane futhi agugule umhlabathi njengoba ehla emthambekeni.",
+    "art": "course-images/reading-landscape/reading-landscape-l1.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 8,
+    "title": "Isifundo 2: Funda Ilanga Nemithunzi",
+    "caption": "ENingizimu Afrika, ilanga lasemini ebusika lisenyakatho.",
+    "art": "course-art/reading-landscape/winter-shadow.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 9,
+    "title": "Buka: Landela Ilanga Endaweni",
+    "caption": "Landela ilanga, isakhiwo, isihlahla, kanye nemithunzi yakho emthambekeni.",
+    "art": "course-art/reading-landscape/seasonal-shadows.svg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 10,
+    "title": "Hlola Imithunzi Yasebusika Ngaphambi Kokwakha",
+    "caption": "Ilanga lasebusika liphansi kunelasehlobo, ngakho imithunzi iyashintsha ngezinkathi.",
+    "art": "course-art/reading-landscape/winter-shadow.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 11,
+    "title": "Vikela Izitshalo Ezizwela I-Frost",
+    "caption": "Udonga olubheke enyakatho olufudunyezwa yilanga lunganikeza indawo efudumele ezitshalweni ezizwela i-frost, njenge-pawpaw nezihlahla ze-citrus ezisencane.",
+    "art": "course-art/reading-landscape/winter-shadow.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 12,
+    "title": "Isifundo 3: Funda Umoya, I-Frost, Nomthambeka",
+    "caption": "Umoya ungonakalisa ipulazi elincane noma ungabonakali kalula.",
+    "art": "course-art/intro-permaculture/windward-shelter.svg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 13,
+    "title": "Buka: Bona Umoya Nomoya Obandayo Kumephu",
+    "caption": "Landela umoya phezu kwamagquma nasezikhaleni.",
+    "art": "course-images/reading-landscape/reading-landscape-l3.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 14,
+    "title": "Umoya Obandayo Uqoqana Ezindaweni Eziphansi",
+    "caption": "Ebusuku obubandayo, obungenamafu nomoya onamandla, umoya obandayo ungehla emthambekeni uqoqane ezindaweni eziphansi.",
+    "art": "course-art/reading-landscape/cold-hollow.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 15,
+    "title": "Khetha Ukuhamba Komoya Nokufudumala",
+    "caption": "Nge-nursery ezwela i-frost, bheka indawo evikelekile enothambeka oluncane, engaphezu kwezindawo lapho umoya obandayo uqoqana khona.",
+    "art": "course-art/reading-landscape/cold-hollow.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 16,
+    "title": "Isifundo 4: Qala I-Site Map Yakho",
+    "caption": "Qala ngephepha, i-tape measure, i-compass nesikhathi sokubuka indawo yakho.",
+    "art": "course-art/reading-landscape/measure-boundary.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 17,
+    "title": "Buka: Dweba Umhlaba Osuvele Unawo",
+    "caption": "Sebenzisa isithombe njengesiqondiso: umngcele, izakhiwo, imigwaqo, amanzi, imithambeka, nemicibisholo yezikhombisi-ndlela.",
+    "art": "course-images/reading-landscape/reading-landscape-l4.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 18,
+    "title": "Vumela Izitshalo Zikusize Ufunde Umhlabathi",
+    "caption": "Qaphela lapho i-frost ihlala khona isikhathi eside futhi uhlole lapho umhlabathi uhlala umanzi khona ezinyangeni ezomile.",
+    "art": "course-art/soil-health/soil-observation.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 19,
+    "title": "Faka Izinkathi, Ama-Zones, Nama-Sectors",
+    "caption": "Maka umoya wasehlobo nowasebusika ngokwehlukana.",
+    "art": "course-art/intro-permaculture/site-sketch.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 20,
+    "title": "Umsebenzi Wensimu",
+    "caption": "Hamba ngemva kwesiphepho lapho indawo isiphephile.",
+    "art": "course-art/intro-permaculture/observe-rain.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 21,
+    "title": "Isenzo SaseNsimini",
+    "caption": "Yakha i-A-frame uhlole i-level mark njengoba kukhonjisiwe kulesi sifundo.",
+    "art": "course-art/reading-landscape/aframe-field.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 2,
+    "title": "Imiphumela Yokufunda",
+    "caption": "I-swale ingumsele oyisicaba osemgqeni wekhontolo — ishonisa amanzi, ayiwahambisi eceleni.",
+    "art": "course-art/reading-landscape/aframe-field.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 3,
+    "title": "Ama-Swale Abambezela Amanzi Emthambekeni",
+    "caption": "Umhlabathi ombiwe wenza i-berm ohlangothini olungezansi komthambeka.",
+    "art": "course-animations/water-harvesting/posters/swale-infiltration.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 4,
+    "title": "Buka: I-Swale Ishonisa Amanzi",
+    "caption": "I-swale ingumsele oyisicaba osemgqeni wekhontolo — ishonisa amanzi, ayiwahambisi eceleni.",
+    "art": "course-animations/water-harvesting/posters/swale-infiltration.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 5,
+    "title": "Tshala E-Berm Engasezansi",
+    "caption": "Umhlabathi ombiwe wenza i-berm ohlangothini olungezansi komthambeka.",
+    "art": "course-animations/water-harvesting/posters/swale-infiltration.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 6,
+    "title": "Iziphepho Zidinga Indawo Ephephile Yokuchichima",
+    "caption": "E-Highveld, iziphepho zingaletha imvula engu-50 kuya ku-80mm ngehora, ngakho yakha i-swale yakho ibe nendawo ephephile yokuchichima ekugcineni, eholela ku-swale elandelayo noma edamini.",
+    "art": "course-animations/water-harvesting/posters/safe-overflow.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 7,
+    "title": "Buka: Indawo Yokuchichima",
+    "caption": "Faka indawo ephephile yokuchichima ukuze iziphepho zingabhodlozi i-berm.",
+    "art": "course-animations/water-harvesting/posters/safe-overflow.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 8,
+    "title": "Yazi Lapho Ama-Swale Efaneleka Khona",
+    "caption": "Ama-swale asebenza kahle emithambekeni engu-1 kuya ku-15%.",
+    "art": "course-art/soil-health/soil-observation.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 9,
+    "title": "Buka: I-Vetiver Iyangena Esikhundleni",
+    "caption": "Ngaphezu komthambeka ongu-15-20%, sebenzisa imigqa yotshani i-vetiver noma ama-terrace esikhundleni sama-swale.",
+    "art": "course-animations/water-harvesting/posters/contour-vegetation.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 10,
+    "title": "Gcina Imvula Yesikhathi Esomile",
+    "caption": "Idamu elibekwe kahle ligcina imvula yesizini ukuze likusekele ezinyangeni ezomile.",
+    "art": "course-art/water-harvesting/water-use-record.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 11,
+    "title": "Dweba I-Spillway Ngaphambi Kodonga",
+    "caption": "Beka idamu lakho ngemithetho emibili: khulisa indawo eqoqela amanzi ageleza eya kulo, futhi dweba i-spillway ngaphambi kokwakha udonga.",
+    "art": "course-animations/water-harvesting/posters/dam-spillway.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 12,
+    "title": "Buka: Idamu Ne-Spillway",
+    "caption": "Dweba i-spillway ngaphambi kodonga — udonga oluchichimelwe lungabhodloka ngendlela eyinhlekelele.",
+    "art": "course-animations/water-harvesting/posters/dam-spillway.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 13,
+    "title": "Yenza Idamu Libe Uhlelo Olusebenzayo",
+    "caption": "ELimpopo nasezingxenyeni ezishisayo zaseKZN, ukuhwamuka kungasusa ukujula okungamamitha angu-2 ngonyaka.",
+    "art": "course-art/water-harvesting/dam-inspection.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 14,
+    "title": "Uphahla Lwakho Luyindawo Yokuvuna",
+    "caption": "Uphahla lwakho luyindawo yokuvuna amanzi.",
+    "art": "course-art/water-harvesting/tank-care.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 15,
+    "title": "Phambukisa Amanzi Okuqala Angcolile",
+    "caption": "Faka isiphambukisi samanzi okuqala.",
+    "art": "course-animations/water-harvesting/posters/first-flush.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 16,
+    "title": "Buka: Amanzi Okuqala Aya Ethangini",
+    "caption": "Isiphambukisi samanzi okuqala sisusa amanzi okuqala angcolile njalo uma lina.",
+    "art": "course-animations/water-harvesting/posters/first-flush.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 17,
+    "title": "Fanisa Usayizi Wethangi Nesikhathi Esomile",
+    "caption": "Fanisa usayizi wethangi nesikhathi sakho esomile, hhayi isikhathi esisodwa esifushane sokoma.",
+    "art": "course-art/water-harvesting/water-use-record.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 18,
+    "title": "Vikela Amanzi Agciniwe",
+    "caption": "Gcina amathangi evalekile ukuze kungangeni ukukhanya nomiyane.",
+    "art": "course-art/water-harvesting/tank-care.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 19,
+    "title": "I-Greywater Ngamanzi Okugeza, Hhayi Amanzi Endlu Yangasese",
+    "caption": "I-greywater ngamanzi asetshenzisiwe okugeza aphuma kubhavu, kusinki naselondolo — hhayi amanzi endlu yangasese, okuyi-blackwater futhi adinga ukuphathwa ngokwehlukile nangokucophelela.",
+    "art": "course-animations/water-harvesting/posters/greywater-under-mulch.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 20,
+    "title": "Gcina I-Greywater Iphephile Emhlabathini",
+    "caption": "Sebenzisa insipho elula futhi ugweme i-bleach, izibulali-magciwane ezinamandla, noma amanzi okugeza amanabukeni — lokhu kungalimaza impilo yomhlabathi nezimpande zezitshalo.",
+    "art": "course-animations/water-harvesting/posters/greywater-under-mulch.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 21,
+    "title": "Buka: I-Greywater Ngaphansi Kwe-Mulch",
+    "caption": "Hambisa i-greywater emgodini ogcwele i-mulch ozungeze izihlahla zezithelo kunokuba uyithele emhlabathini ongenalutho.",
+    "art": "course-animations/water-harvesting/posters/greywater-under-mulch.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 22,
+    "title": "Sebenzisa I-Greywater Lapho Iphephile Khona Kuphela",
+    "caption": "Ungalokothi usebenzise i-greywater emifinweni enamahlamvu, emifinweni yezimpande edliwa iluhlaza, noma ezithombweni — ingozi yokuthintana namagciwane iphezulu kakhulu.",
+    "art": "course-animations/water-harvesting/posters/greywater-under-mulch.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 23,
+    "title": "Umsebenzi Wasensimini",
+    "caption": "Yakha ileveli ye-A-frame ngezigxobo ezintathu nentambo enesisindo.",
+    "art": "course-art/reading-landscape/aframe-field.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 24,
+    "title": "Hlola Umsebenzi Wakho",
+    "caption": "I-A-frame yami yakhiwe futhi ngihlole i-level mark.",
+    "art": "course-art/reading-landscape/aframe-field.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "market-community",
+    "slide": 2,
+    "title": "Kungani Lokhu Kubalulekile",
+    "caption": "Ngaphandle kwamarekhodi, kulula ukungaboni konke okukhiqizwa ipulazi nokuthi kubiza malini.",
+    "art": "course-art/market-community/harvest-record.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "market-community",
+    "slide": 3,
+    "title": "Imiphumela Yokufunda",
+    "caption": "Ekupheleni kwale module uzokwazi ukubhala isivuno nokuthi siyephi.",
+    "art": "course-art/market-community/harvest-record.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "market-community",
+    "slide": 4,
+    "title": "Buka: Okuboniswa Irekhodi Lepulazi",
+    "caption": "Irekhodi lilandela isivuno esiya emndenini, ekuthengisweni, ekunikezweni noma ku-compost.",
+    "art": "course-art/market-community/harvest-record.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "market-community",
+    "slide": 5,
+    "title": "Bhala Phansi Sonke Isivuno",
+    "caption": "Bhala phansi sonke isivuno ngesikhathi sivunwa.",
+    "art": "course-art/market-community/harvest-record.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "market-community",
+    "slide": 6,
+    "title": "Isizini Eyodwa Iphendula Imibuzo",
+    "caption": "Irekhodi lesizini eyodwa liphendula imibuzo ebalulekile.",
+    "art": "course-art/market-community/harvest-record.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "market-community",
+    "slide": 7,
+    "title": "Thola Izindleko Zangempela",
+    "caption": "Ngaphambi kokubeka inani lokuthengisa, hlanganisa izindleko zokukhiqiza nokuthengisa leso sivuno.",
+    "art": "course-art/market-community/cost-example.svg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "market-community",
+    "slide": 8,
+    "title": "Tshala Ukuvala Igebe Lokudla",
+    "caption": "Sebenzisa irekhodi lakho ukubiza izinyanga lapho ukudla komuzi kushoda khona.",
+    "art": "course-art/market-community/harvest-record.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "market-community",
+    "slide": 9,
+    "title": "Buka: Lapho Okusele Kungaya Khona",
+    "caption": "Okusele kungaya esitolo esiseceleni komgwaqo, ekulethweni kweqembu esitolo, noma ebhokisini elilethwa emzini.",
+    "art": "course-art/market-community/surplus-handover.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "market-community",
+    "slide": 10,
+    "title": "Yazi Umthengi Wakho",
+    "caption": "Yazi umthengi wakho ngaphambi kokutshala ngenhloso yokuthengisa.",
+    "art": "course-art/market-community/surplus-handover.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "market-community",
+    "slide": 11,
+    "title": "Gcina Okuningi Ngokuthengisa Ngqo",
+    "caption": "Ukuthengisa ngqo kususa umuntu ophakathi, kodwa ukupakisha, ukuhamba, umkhiqizo ongathengiswanga nesikhathi sokuthengisa kusabiza imali.",
+    "art": "course-art/market-community/surplus-handover.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "market-community",
+    "slide": 12,
+    "title": "Hlela Ngamakhasimende E-Box Scheme",
+    "caption": "Ngaphambi kokunikeza amabhokisi emifino, bhala ongakuhlinzeka ngesonto ngalinye ngemva kokugcina ukudla komuzi.",
+    "art": "course-art/market-community/surplus-handover.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "market-community",
+    "slide": 13,
+    "title": "Qondanisa Indlela Nokukhiqiza Kwakho",
+    "caption": "Uma ukukhiqiza kushintsha isonto nesonto, ungathembisi ibhokisi elinenani elingaguquki ongeke ulikwazi ukuligcwalisa.",
+    "art": "course-art/market-community/surplus-handover.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "market-community",
+    "slide": 14,
+    "title": "Buka: Omakhelwane Basqinisa Kanjani Isivuno",
+    "caption": "Ipulazi elilodwa lingakhiqiza ukudla.",
+    "art": "course-art/market-community/neighbours-sharing.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "market-community",
+    "slide": 15,
+    "title": "Gcinani Imbewu Ndawonye",
+    "caption": "Iqembu lokwabelana ngembewu lingandisa ukufinyelela ezinhlotsheni ezahlukene amalungu azigcina ngempela.",
+    "art": "course-art/market-community/neighbours-sharing.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "market-community",
+    "slide": 16,
+    "title": "Yabelanani Ngamathuluzi Abizayo",
+    "caption": "Ukwabelana ngamathuluzi kwenza imishini ebizayo ifinyeleleke eqenjini lonke.",
+    "art": "course-art/market-community/neighbours-sharing.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "market-community",
+    "slide": 17,
+    "title": "Thengisa Eduze Ukuze Unciphise Ukulahleka",
+    "caption": "Bhala ukuthi umkhiqizo ongakanani uyonakala, awuthengiswa noma ulahleka phakathi kokuvuna nokuthengisa, nokuthi ukulahleka kwenzeka kuphi.",
+    "art": "course-art/market-community/surplus-handover.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "market-community",
+    "slide": 18,
+    "title": "Yabelanani Ngamakhono Kanye Nezinto",
+    "caption": "Umlimi owazi kahle i-grafting noma olawule isifo se-fungal ehlobo elinomswakama eKZN angafundisa omakhelwane abayishumi.",
+    "art": "course-art/market-community/neighbours-sharing.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "market-community",
+    "slide": 19,
+    "title": "Umsebenzi Wasepulazini: Yenza Irekhodi Lepulazi",
+    "caption": "Sebenzisa izigaba ezibhalwe ukuthi isivuno, lapho siye khona, izindleko, nomsebenzi.",
+    "art": "course-art/market-community/harvest-record.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "market-community",
+    "slide": 20,
+    "title": "Isenzo Sasepulazini: Sebenzisa Irekhodi",
+    "caption": "Khetha isinqumo esisodwa sangempela sokuthengisa e-rekhodini lakho lepulazi.",
+    "art": "course-art/market-community/harvest-record.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "plant-guilds",
+    "slide": 2,
+    "title": "Kungani Ama-Plant Guild Ebalulekile",
+    "caption": "Uma umhlabathi usukhathele, thola okuvimbela ukukhula.",
+    "art": "course-art/soil-health/soil-observation.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "plant-guilds",
+    "slide": 3,
+    "title": "Imiphumela Yokufunda",
+    "caption": "Ekupheleni kwalesi sifundo, uzokwazi ukuchaza ukuthi ama-legumes abopha kanjani i-nitrogen esemoyeni esebenzisa ama-rhizobia kuma-nodule asezimpandeni.",
+    "art": "course-art/plant-guilds/mango-guild.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "plant-guilds",
+    "slide": 4,
+    "title": "Ama-Legumes Awondla Kanjani Umhlabathi",
+    "caption": "Ama-legumes asebenzisana namabhaktheriya omhlabathi abizwa ngama-rhizobia kuma-nodule asezimpandeni.",
+    "art": "course-art/plant-guilds/root-nodules.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "plant-guilds",
+    "slide": 5,
+    "title": "Buka: Izimpande Ezondla Umhlabathi",
+    "caption": "Bheka ama-nodule asempandeni ye-legume.",
+    "art": "course-art/plant-guilds/root-nodules.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "plant-guilds",
+    "slide": 6,
+    "title": "Izihlahla Ezibopha I-Nitrogen",
+    "caption": "Izihlahla ezisebenzayo ezibopha i-nitrogen zihlanganisa izinhlobo ze-Senegalia, eyayibizwa nge-Acacia, nezihlobo zayo ezifana ne-flat-crown, i-Albizia adianthifolia.",
+    "art": "course-art/plant-guilds/root-nodules.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "plant-guilds",
+    "slide": 7,
+    "title": "I-Sunn Hemp Nomhlabathi Olindayo",
+    "caption": "Ngemva kokusika, ukubola kuthatha isikhathi.",
+    "art": "course-animations/plant-guilds/posters/root-nodules.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "plant-guilds",
+    "slide": 8,
+    "title": "Lapho Kubekwa Khona Ama-Nitrogen Fixer",
+    "caption": "Beka izitshalo ezibopha i-nitrogen lapho ubukhulu bazo uma sezikhulile, umthunzi nezidingo zamanzi kuhambisana nezihlahla zezithelo nezindlela.",
+    "art": "course-art/plant-guilds/mango-guild.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "plant-guilds",
+    "slide": 9,
+    "title": "Izitshalo Ze-Mulch Ne-Chop and Drop",
+    "caption": "Ezinye izitshalo zinezimpande ezijulile nezisabalele kude.",
+    "art": "course-art/plant-guilds/chop-and-drop.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "plant-guilds",
+    "slide": 10,
+    "title": "Buka: I-Chop and Drop",
+    "caption": "Buka amaqabunga asikiwe alele phakathi kwezitshalo eziphilayo.",
+    "art": "course-art/plant-guilds/chop-and-drop.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "plant-guilds",
+    "slide": 11,
+    "title": "Khetha I-Comfrey Efanele",
+    "caption": "I-comfrey iyisitshalo esidumile se-mulch ngenxa yezimpande zayo ezijulile.",
+    "art": "course-art/plant-guilds/chop-and-drop.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "plant-guilds",
+    "slide": 12,
+    "title": "Sebenza Nezinambuzane Eziwusizo",
+    "caption": "Izitshalo eziqhakazayo njenge-African basil, i-borage ne-marigold zingasekela izinambuzane eziwusizo.",
+    "art": "course-images/plant-guilds/plant-guilds-l2.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "plant-guilds",
+    "slide": 13,
+    "title": "I-Wild Garlic Phakathi Kwezitshalo Ezahlukene",
+    "caption": "I-wild garlic, i-Tulbaghia violacea, yisitshalo esiqhakazayo esibekezelela isomiso ezindaweni ezifanele.",
+    "art": "course-art/plant-guilds/mango-guild.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "plant-guilds",
+    "slide": 14,
+    "title": "Yini Eyenza I-Plant Guild",
+    "caption": "I-plant guild yiqembu lezitshalo elikhethwe ukusekela umuthi ophakathi, imvamisa wezithelo noma wamantongomane.",
+    "art": "course-art/plant-guilds/mango-guild.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "plant-guilds",
+    "slide": 15,
+    "title": "Buka: I-Mango Guild",
+    "caption": "Bheka i-mango ephakathi nezitshalo eziyizungezile.",
+    "art": "course-art/plant-guilds/mango-guild.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "plant-guilds",
+    "slide": 16,
+    "title": "Beka Futhi Usike I-Sesbania",
+    "caption": "Esibonelweni se-mango, hlola ukukhanya nobukhulu be-Sesbania sesban uma isikhulile ngaphambi kokukhetha indawo yayo.",
+    "art": "course-art/plant-guilds/mango-guild.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "plant-guilds",
+    "slide": 17,
+    "title": "Gcwalisa Eminye Imisebenzi Ye-Guild",
+    "caption": "Sebenzisa i-wild garlic ne-African basil njengezitshalo eziqhakazayo lapho indawo izifanele.",
+    "art": "course-art/plant-guilds/mango-guild.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "plant-guilds",
+    "slide": 18,
+    "title": "Isitshalo Ngasinye Masenze Umsebenzi Waso",
+    "caption": "Nikeza isitshalo ngasinye se-guild umsebenzi ocacile nendawo eyanele yokuwenza.",
+    "art": "course-art/intro-permaculture/site-sketch.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "plant-guilds",
+    "slide": 19,
+    "title": "Umsebenzi Wensimu",
+    "caption": "Hamba endaweni ekhulayo emhlabeni wakho, ukhethe umuthi wezithelo ozoba maphakathi.",
+    "art": "course-art/intro-permaculture/site-sketch.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "plant-guilds",
+    "slide": 20,
+    "title": "Isenzo Sasepulazini",
+    "caption": "Tshala noma uhlele i-guild eyodwa ezungeze umuthi ophakathi.",
+    "art": "course-art/plant-guilds/mango-guild.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "food-forest",
+    "slide": 2,
+    "title": "Kungani Lokhu Kubalulekile",
+    "caption": "I-food forest ingakupha ukudla emazingeni amaningi endaweni eyodwa.",
+    "art": "course-art/plant-guilds/mango-guild.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "food-forest",
+    "slide": 3,
+    "title": "Imiphumela Yokufunda",
+    "caption": "Qamba ama-layer ayisikhombisa e-food forest.",
+    "art": "course-animations/food-forest/posters/seven-growing-layers.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "food-forest",
+    "slide": 4,
+    "title": "Ihlathi Lisebenzisa Wonke Ama-Layer",
+    "caption": "Ihlathi lomdabu ligcwalisa indawo kusukela emagatsheni aphezulu kakhulu kuze kufike ezimpandeni.",
+    "art": "course-animations/food-forest/posters/seven-growing-layers.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "food-forest",
+    "slide": 5,
+    "title": "Buka: Ama-Layer Ayisikhombisa Esebenza Ndawonye",
+    "caption": "Bheka ukutshala kwehle kusukela ku-canopy ende kuye ezimpandeni.",
+    "art": "course-animations/food-forest/posters/seven-growing-layers.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "food-forest",
+    "slide": 6,
+    "title": "Ama-Layer Ayisikhombisa",
+    "caption": "Izingqimba eziyisikhombisa zichaza imisebenzi yezitshalo, hhayi ukuphakama okufanayo kuzo zonke izinhlobo.",
+    "art": "course-animations/food-forest/posters/seven-growing-layers.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "food-forest",
+    "slide": 7,
+    "title": "Isibonelo Sase-Highveld",
+    "caption": "Sebenzisa lokhu njengesibonelo sokuhlela, hhayi uhlu lokutshala kuwo wonke amapulazi ase-Highveld.",
+    "art": "course-art/reading-landscape/winter-shadow.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "food-forest",
+    "slide": 8,
+    "title": "Ukusungula Nokunakekela Okuqhubekayo",
+    "caption": "Iminyaka yokuqala idinga umsebenzi oqhubekayo: ukunisela, i-mulch, ukulawula ukhula nokuvikela izitshalo.",
+    "art": "course-art/food-forest/sheet-mulch.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "food-forest",
+    "slide": 9,
+    "title": "Khetha Ngokwesifunda Sakho",
+    "caption": "Qhathanisa uhlobo ngalunye ne-cultivar nendawo yakho ngaphambi kokutshala.",
+    "art": "course-art/reading-landscape/winter-shadow.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "food-forest",
+    "slide": 10,
+    "title": "Buka: Qondanisa Izinhlobo Nesimo Sezulu",
+    "caption": "Isimo sezulu sinquma izinhlobo ezifanele.",
+    "art": "course-animations/food-forest/posters/climate-and-selection.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "food-forest",
+    "slide": 11,
+    "title": "Izinketho Ze-Food Forest E-Highveld",
+    "caption": "Lesi sifundo sibiza i-pecan, i-walnut, i-indigenous fig, i-apple, i-pear, i-plum, i-black mulberry, i-rosemary, i-Wild Medlar ne-Cape gooseberry njengezitshalo okufanele uzihlole.",
+    "art": "course-animations/food-forest/posters/climate-and-selection.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "food-forest",
+    "slide": 12,
+    "title": "Ugu Lwase-KZN, I-Lowveld ne-Limpopo",
+    "caption": "Izindawo ezifudumele zasogwini nase-Lowveld zingafanele i-mango, i-avocado, i-banana, i-pawpaw ne-litchi ezibizwe kulesi sifundo.",
+    "art": "course-art/plant-guilds/mango-guild.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "food-forest",
+    "slide": 13,
+    "title": "Izinhlobo Zomdabu Zakha I-Ecosystem",
+    "caption": "Faka izitshalo zendabuko ezifanele ezisekela izinyoni nezinambuzane zendawo kanye nezinhloso zomuzi wakho.",
+    "art": "course-art/intro-permaculture/site-sketch.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "food-forest",
+    "slide": 14,
+    "title": "Tshala Ngokulandelana",
+    "caption": "I-food forest itshalwa ngokulandelana, hhayi ngesikhathi esisodwa.",
+    "art": "course-art/food-forest/sheet-mulch.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "food-forest",
+    "slide": 15,
+    "title": "Buka: Kusuka Emhlabathini Ovulekile Kuya Ku-Food Forest",
+    "caption": "Qala nge-sheet-mulch.",
+    "art": "course-art/food-forest/sheet-mulch.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "food-forest",
+    "slide": 16,
+    "title": "Unyaka Wokuqala Epulazini Elingu-500m²",
+    "caption": "Endaweni yokuzivocavoca engu-500m², hlola ukhula, ukuphuma kwamanzi namanzi atholakalayo ngaphambi kokukhetha isigaba sokuqala.",
+    "art": "course-art/food-forest/sheet-mulch.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "food-forest",
+    "slide": 17,
+    "title": "Ukukhula Makuhole Isigaba Esilandelayo",
+    "caption": "Sebenzisa ukulandelana kokutshala njengomhlahlandlela, uvumele indawo ibonise ukuthi isilungile nini.",
+    "art": "course-art/plant-guilds/mango-guild.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "food-forest",
+    "slide": 18,
+    "title": "Tshala Nezimvula",
+    "caption": "Tshala lapho umhlabathi unomswakama futhi kukhona amanzi okunisela kamuva.",
+    "art": "course-art/soil-health/mulching.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "food-forest",
+    "slide": 19,
+    "title": "Umsebenzi Wasepulazini",
+    "caption": "Dweba i-food forest yakho ngama-layer.",
+    "art": "course-art/intro-permaculture/site-sketch.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "food-forest",
+    "slide": 20,
+    "title": "Isenzo Sasepulazini",
+    "caption": "Khetha indawo, bese uhlola umhlabathi ngaphambi kokutshala.",
+    "art": "course-art/food-forest/sheet-mulch.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "vegetables-staples",
+    "slide": 2,
+    "title": "Kungani Lokhu Kubalulekile",
+    "caption": "Ake siqale ngenkinga.",
+    "art": "course-art/vegetables-staples/sowing-record.svg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "vegetables-staples",
+    "slide": 3,
+    "title": "Imiphumela Yokufunda",
+    "caption": "Uma iphela le ngxenye, uzobe usukwazi ukwenza izinqumo ezine ensimini yakho ngokwakho.",
+    "art": "course-art/vegetables-staples/bed-reach.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "vegetables-staples",
+    "slide": 4,
+    "title": "Izimpande Zidinga Inhlabathi Etshelekile, Izindlela Zidinga Izinyawo Zakho",
+    "caption": "Inhlabathi ecindezelekile (compacted soil) ilahlekelwa yizikhala zomoya ezikuyo.",
+    "art": "course-art/vegetables-staples/bed-reach.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "vegetables-staples",
+    "slide": 5,
+    "title": "Khetha Ibhedi Ngokwenhlabathi Nemvula",
+    "caption": "Awukho umumo owodwa webhedi ofanele yonke indawo.",
+    "art": "course-art/soil-health/soil-observation.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "vegetables-staples",
+    "slide": 6,
+    "title": "Imbewu Noma Isithombo?",
+    "caption": "Ezinye izitshalo zenza kangcono uma zihlwanyelwa lapho zizokhula khona.",
+    "art": "course-art/vegetables-staples/bed-reach.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "vegetables-staples",
+    "slide": 7,
+    "title": "Hlobo Umumo Wokusebenza",
+    "caption": "Ngaphambi kokutshala, hlobo ibhedi ngaphambili.",
+    "art": "course-art/vegetables-staples/bed-reach.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "vegetables-staples",
+    "slide": 8,
+    "title": "Isigqi Sokutshala Sigcina Ukudla Kuqhubeka",
+    "caption": "Ukutshala ngokulandelana kuwumkhuba wekhalenda.",
+    "art": "course-art/vegetables-staples/sowing-record.svg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "vegetables-staples",
+    "slide": 9,
+    "title": "Tshala Kancane Futhi Njalo",
+    "caption": "Hlwanyela iqoqo elincane, ubhale usuku, bese uhlwanyela elilandelayo lapho isitshalo nesizini kudinga khona.",
+    "art": "course-art/vegetables-staples/sowing-record.svg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "vegetables-staples",
+    "slide": 10,
+    "title": "Isitshalo Ngasinye Sizuza Indawo Yaso",
+    "caption": "Ukuxubanisa izitshalo ezahlukene endaweni eyodwa (intercropping) akusikho nje\nukuminyanisa izitshalo ezahlukene ndawonye.",
+    "art": "course-art/intro-permaculture/kitchen-garden.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "vegetables-staples",
+    "slide": 11,
+    "title": "Hlela Usuka Emuva Kusukela Egebeni Lakho Lendlala",
+    "caption": "Yonke indawo inegebe lendlala (hungry gap).",
+    "art": "course-art/market-community/harvest-record.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "vegetables-staples",
+    "slide": 12,
+    "title": "Izitshalo Eziyisisekelo Ziwuvikelo Lokudla",
+    "caption": "Isitshalo esiyisisekelo (staple) sizuza indawo yaso ngoba sondla umuzi ngale kosuku\nlokuvuna.",
+    "art": "course-art/intro-permaculture/household-harvest.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "vegetables-staples",
+    "slide": 13,
+    "title": "Izitshalo Eziyisisekelo Ezahlukene Zivikela Kokuhlukene",
+    "caption": "Isitshalo ngasinye esiyisisekelo sikuvikela kokuthile okuhlukile.",
+    "art": "course-images/vegetables-staples/vegetables-staples-l3.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "vegetables-staples",
+    "slide": 14,
+    "title": "Ukwahlukahluka Kugcina Ukudla Kuqhubeka",
+    "caption": "Ukumelana nezinkinga (resilience) akusho ukuthi akukho okwehlulekayo.",
+    "art": "course-art/intro-permaculture/household-harvest.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "vegetables-staples",
+    "slide": 15,
+    "title": "Izinambuzane Ziyizithunywa Ngaphambi Kokuba Zibe Yizitha",
+    "caption": "Ukwanda kwezinambuzane ezicekelayo (pest pressure) ngokuvamile kuba khona ngesizathu.",
+    "art": "course-art/vegetables-staples/inspect-leaf.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "vegetables-staples",
+    "slide": 16,
+    "title": "Yelapha Imbangela Ngaphambi Kwesinambuzane",
+    "caption": "Sebenza ngezinyathelo ezine, ngokulandelana.",
+    "art": "course-art/vegetables-staples/inspect-leaf.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "vegetables-staples",
+    "slide": 17,
+    "title": "Umsebenzi Wasensimini",
+    "caption": "Manje isifundo siphela enhlabathini.",
+    "art": "course-art/vegetables-staples/bed-reach.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "vegetables-staples",
+    "slide": 18,
+    "title": "Isenzo Sasensimini",
+    "caption": "Kuleli sonto, faka ibhedi eyodwa ekusebenzeni.",
+    "art": "course-art/market-community/harvest-record.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "small-livestock",
+    "slide": 2,
+    "title": "Kungani Lokhu Kubalulekile",
+    "caption": "Imfuyo emincane inganika ukudla nomsebenzi owusizo, kodwa isilwane ngasinye sidinga ukunakekelwa nsuku zonke.",
+    "art": "course-art/small-livestock/chicken-tractor.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "small-livestock",
+    "slide": 3,
+    "title": "Imiphumela Yokufunda",
+    "caption": "Ekupheleni kwalesi sifundo, uzokwazi ukuthi izinkukhu, amadada, izinyosi, ne-guinea fowl zingena kanjani ohlelweni olusebenzayo.",
+    "art": "course-art/small-livestock/animal-care.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "small-livestock",
+    "slide": 4,
+    "title": "Buka: I-Chicken Tractor Ihamba Embhedeni",
+    "caption": "Buka i-chicken tractor ihamba embhedeni ongenazitshalo, ukudla, amanzi nendawo yokukhosela kuhlala nezinkukhu.",
+    "art": "course-art/small-livestock/chicken-tractor.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "small-livestock",
+    "slide": 5,
+    "title": "Izinkukhu Zenza Ukuklwebha Kube Umsebenzi",
+    "caption": "Izinkukhu zifuna ukudla zigubhe ezindaweni ezifanele, zidle ezinye izinambuzane nembewu yokhula.",
+    "art": "course-art/small-livestock/chicken-tractor.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "small-livestock",
+    "slide": 6,
+    "title": "Sebenzisa Izinkukhu Ngesikhathi Esifanele",
+    "caption": "Ungafaki izinkukhu eduze kwezithombo: ukugubha kungazisiphula.",
+    "art": "course-art/small-livestock/chicken-tractor.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "small-livestock",
+    "slide": 7,
+    "title": "Phatha Amadada Eduze Kwezindawo Zokutshala",
+    "caption": "Amadada adla ama-slug neminenke ngaphandle kokugubha kakhulu njengenkukhu.",
+    "art": "course-art/small-livestock/animal-care.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "small-livestock",
+    "slide": 8,
+    "title": "Zungezisa I-Tractor Kuyo Yonke Indawo",
+    "caption": "Hambisa i-chicken tractor ngokwenhlalakahle yezinkukhu, isimo somhlabathi, isimo sezulu nohlelo lomquba lwepulazi.",
+    "art": "course-art/small-livestock/chicken-tractor.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "small-livestock",
+    "slide": 9,
+    "title": "Buka: Izinyosi Zihamba Phakathi Kwe-Hive Nezitshalo",
+    "caption": "Buka izinyosi ziphuma ku-hive ziye ezitshalweni eziqhakazayo.",
+    "art": "course-art/small-livestock/bees-and-flowers.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "small-livestock",
+    "slide": 10,
+    "title": "Izinyosi Zenza Ihlathi Lokudla Likhiqize Kakhulu",
+    "caption": "Izinyosi nezinye izivakashi zezimbali zisiza ukuthutha impova ezitshalweni zokudla eziningi.",
+    "art": "course-art/small-livestock/bees-and-flowers.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "small-livestock",
+    "slide": 11,
+    "title": "Izinyosi Zomdabu ZaseNingizimu Afrika",
+    "caption": "INingizimu Afrika inezinhlobo zezinyosi ezibizwa nge-Cape ne-African honeybee.",
+    "art": "course-art/small-livestock/bees-and-flowers.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "small-livestock",
+    "slide": 12,
+    "title": "Beka I-Hive Ngokucophelela",
+    "caption": "Hlola indawo engaba yesidleke nomfuyi wezinyosi wendawo onolwazi ngaphambi kokuletha izinyosi emhlabeni.",
+    "art": "course-art/small-livestock/bees-and-flowers.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "small-livestock",
+    "slide": 13,
+    "title": "Imiphakathi Enamandla Idinga Indawo Nezimbali",
+    "caption": "Hlela izimbali ezifanele unyaka wonke, ubheke impilo ye-colony nomfuyi oqeqeshiwe.",
+    "art": "course-art/small-livestock/bees-and-flowers.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "small-livestock",
+    "slide": 14,
+    "title": "Buka: Izakhamzimba Zihamba Kumjikelezo Ovalekile Wemfuyo",
+    "caption": "Buka izakhamzimba zisuka ezitshalweni ziye ezilwaneni, bese zibuya ngomquba ne-compost ziye embhedeni okhulayo.",
+    "art": "course-animations/small-livestock/posters/livestock-nutrient-cycle.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "small-livestock",
+    "slide": 15,
+    "title": "Vala Umjikelezo Wezakhamzimba",
+    "caption": "Sebenzisa ukudla okufanele okukhiqizwe epulazini njengengxenye yokudla okunomsoco ophelele, namanzi ahlanzekile nokunakekelwa nsuku zonke.",
+    "art": "course-animations/small-livestock/posters/livestock-nutrient-cycle.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "small-livestock",
+    "slide": 16,
+    "title": "Bheka Imfuyo Uhlele Ukuphatha Izimuncagazi",
+    "caption": "Vikela imfuyo ngokuyibheka njalo nangohlelo lwezilwane lokuphatha izimuncagazi olufanele izilwane nendawo.",
+    "art": "course-art/small-livestock/animal-care.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "small-livestock",
+    "slide": 17,
+    "title": "Buza Imibuzo Emithathu Ngesilwane Ngasinye",
+    "caption": "Ngesilwane ngasinye, buza ukuthi sidlani osuvele unakho epulazini.",
+    "art": "course-art/small-livestock/animal-care.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "small-livestock",
+    "slide": 18,
+    "title": "Phatha Izimuncagazi Ngobufakazi",
+    "caption": "Ungathembeli ezinkukhwini ezilandela izimbuzi ukuvimbela izikelemu noma ukuthatha indawo yokwelashwa.",
+    "art": "course-art/small-livestock/animal-care.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "small-livestock",
+    "slide": 19,
+    "title": "Umsebenzi Wensimu: Dweba Umjikelezo Wepulazi Lakho",
+    "caption": "Hamba epulazini lakho, ukhethe indawo lapho imfuyo ingase isekele enye ingxenye yohlelo.",
+    "art": "course-art/small-livestock/animal-care.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "small-livestock",
+    "slide": 20,
+    "title": "Isenzo Samanzi: Yenza Isixhumanisi Esisodwa Sisebenze",
+    "caption": "Khetha isinyathelo esisodwa sokuhlela ngaphambi kokwengeza noma ukuhambisa izilwane.",
+    "art": "course-art/small-livestock/animal-care.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "soil-health",
+    "slide": 1,
+    "title": "Impilo Yomhlabathi Ne-Compost",
+    "caption": "Umhlabathi ungaphezu kokuba yindawo engaphansi kwezinyawo zakho.",
+    "art": "course-art/soil-health/mature-compost.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "intro-permaculture",
+    "slide": 1,
+    "title": "Isingeniso se-Permaculture",
+    "caption": "Ngaphambi kokumba noma yini, kuyasiza ukwazi ukuthi izinqumo zenziwa kanjani.",
+    "art": "course-art/intro-permaculture/kitchen-garden.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "reading-landscape",
+    "slide": 1,
+    "title": "Ukufunda Indawo",
+    "caption": "Lesi yisifundo se-permaculture sabalimi abancane baseNingizimu Afrika.",
+    "art": "course-art/intro-permaculture/observe-rain.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "water-harvesting",
+    "slide": 1,
+    "title": "Ukuvunwa Kwamanzi",
+    "caption": "Ama-swale, ama-berm, amadamu, amathangi amanzi emvula kanye ne-greywater — bambezela, sakaza futhi shonisa wonke amaconsi.",
+    "art": "course-art/reading-landscape/aframe-field.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "market-community",
+    "slide": 1,
+    "title": "Ingadi Yezimakethe Nomphakathi",
+    "caption": "Ingadi yakho inikeza umndeni ukudla, imali, nolwazi oluwusizo.",
+    "art": "course-art/market-community/harvest-record.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "plant-guilds",
+    "slide": 1,
+    "title": "Ukukhetha Izitshalo Nama-Plant Guilds",
+    "caption": "Amapulazi anempilo awanciki esitshalweni esisodwa ukuthi senze yonke imisebenzi.",
+    "art": "course-art/soil-health/soil-observation.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "food-forest",
+    "slide": 1,
+    "title": "Ukuklama I-Food Forest",
+    "caption": "Yakha i-food forest ephilayo, ehlela ukudla kusukela ku-canopy ende kuye ezitshalweni zezimpande.",
+    "art": "course-art/plant-guilds/mango-guild.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "vegetables-staples",
+    "slide": 1,
+    "title": "Imifino neZitshalo Eziyisisekelo",
+    "caption": "Le ngxenye ikhuluma ngeMifino nezinye iZitshalo Eziyisisekelo.",
+    "art": "course-art/vegetables-staples/sowing-record.svg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  },
+  {
+    "module": "small-livestock",
+    "slide": 1,
+    "title": "Ukuhlanganiswa Kwemfuyo Encane",
+    "caption": "Ukuhlanganisa imfuyo encane kwenza izinkukhu, amadada, nezinyosi kube izingxenye ezisebenzayo zepulazi.",
+    "art": "course-art/small-livestock/chicken-tractor.jpg",
+    "status": "Unreviewed isiZulu text; first-language farmer review required"
+  }
+]

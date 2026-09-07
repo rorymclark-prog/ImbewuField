@@ -58,49 +58,41 @@ One piece of ground, working at every level.
 
 **Slide 6 — The Seven Layers**
 
-Tall canopy grows at 10m+.
+The seven layers describe planting roles, not fixed heights for every species.
 
-Sub-canopy grows from 4–8m, while shrubs grow from 1–3m.
+Canopy and sub-canopy trees rise above shrubs and herbaceous plants. Ground covers spread over the surface, root crops grow below, and climbers use a suitable support.
 
-Herbaceous plants stay under 1m.
-
-Ground cover protects the soil, root crops grow below, and climbers use vertical space.
+Check mature size and light needs before fitting these layers together.
 
 ---
 
 **Slide 7 — A Highveld Example**
 
-The canopy might hold a large Wild Fig or pecan.
+Use this as a design example, not a planting list for every Highveld farm.
 
-The sub-canopy can carry lemon, naartjie, and black mulberry.
+A Wild Fig or pecan may occupy the canopy, with suitable smaller trees, shrubs and food crops below.
 
-Cape gooseberry and Wild Medlar fit the shrub layer.
-
-Vegetables, wild garlic, sweet potato, and granadilla fill the lower layers and vertical spaces.
+Check each species and cultivar against your frost, available water, mature size and light. Frost-sensitive plants such as granadilla need particular care in a cold site.
 
 ---
 
-**Slide 8 — From Establishment to Self-Care**
+**Slide 8 — From Establishment to Ongoing Care**
 
-The first two to three years need real establishment work.
+The first years need steady establishment work: watering, mulch, weed control and protection.
 
-Weeds compete strongly with herbaceous plants and ground cover on open, sunlit soil.
+As trees grow, shade and leaf litter can reduce evaporation from the soil surface. They also change how much light and water the lower plants receive.
 
-By year three to five, the canopy closes.
-
-Shade and deep leaf-fall mulch reduce evaporation, while mixed roots hold more soil moisture.
+There is no fixed year when every food forest looks after itself. Keep observing, pruning and adjusting the planting.
 
 ---
 
 **Slide 9 — Choose for Your Region**
 
-Match each species to your region before planting.
+Match each species and cultivar to your site before planting.
 
-Know your rainfall, minimum winter temperature, frost frequency, and summer humidity.
+Record rainfall, minimum winter temperature, frost frequency, summer humidity and available water.
 
-A mango that thrives on the KZN coast dies at the first Highveld frost.
-
-A quince needing winter chill won't fruit in a frost-free coastal belt.
+A young mango can be badly damaged by frost; shelter does not guarantee protection. A quince cultivar may need winter chilling your site cannot supply. Ask a local grower or nursery to check the match.
 
 ---
 
@@ -116,39 +108,31 @@ Match every plant to your site.
 
 **Slide 11 — Highveld Food Forest Choices**
 
-Highveld canopy choices include pecan, walnut, and indigenous fig.
+The lesson names pecan, walnut, indigenous fig, apple, pear, plum, black mulberry, rosemary, Wild Medlar and Cape gooseberry as candidates to assess.
 
-Apple, pear, plum, black mulberry, and loquat can form the sub-canopy.
+Confirm the cultivar, mature size and local frost and water needs before buying. Barbados cherry is not a default choice for a frosty Highveld site.
 
-Shrubs include rosemary, Wild Medlar, Cape gooseberry, and Barbados cherry.
-
-Do not plant from a list alone. Check the conditions on your own land first.
+Check current restrictions before planting loquat; do not plant it in the Western Cape or forest biome. Do not use a regional list as planting permission.
 
 ---
 
 **Slide 12 — KZN Coast, Lowveld, and Limpopo**
 
-KZN coast and Lowveld can suit mango, avocado, and Natal Mahogany.
+Warm coastal and Lowveld sites may suit the mango, avocado, banana, pawpaw and litchi already named in this lesson. Check local conditions and mature size for each.
 
-Banana, pawpaw, litchi, and Wild Fig belong in the sub-canopy.
+The lesson also names Natal Mahogany, Wild Fig, Barbados cherry, Wild Dagga, Marula, Mopane and baobab for different regional roles. These names are not a claim that every plant or every part is edible.
 
-Barbados cherry and Wild Dagga belong in the shrub layer.
-
-In Limpopo Lowveld, Marula, Mopane, and baobab may be appropriate.
-
-These trees are edible and culturally significant.
+Confirm the exact plant, its purpose and any food preparation with a reliable local source before using it.
 
 ---
 
 **Slide 13 — Indigenous Species Build the Ecosystem**
 
-Aim for at least 30% indigenous species throughout the food forest.
+Include suitable indigenous plants that support local birds and insects as well as your household goals.
 
-They support the birds and insects that make the system work.
+The earlier 30% figure is a course planning target, not a universal ecological threshold. The species, placement and conditions matter.
 
-These visitors provide pest control, pollination, and seed dispersal.
-
-That support makes the food forest more resilient than a collection of fruit trees alone.
+Observe flowering, visitors, crop damage and growth. Use that evidence to improve the mix.
 
 ---
 
@@ -178,39 +162,31 @@ As shelter grows, plant the lower layers, ground covers, and climbers.
 
 **Slide 16 — Year One on a 500m² Plot**
 
-Sheet-mulch with cardboard and 20cm of wood chips.
+For the 500m² practice plot, assess weeds, drainage and water before choosing the first stage.
 
-The cardboard smothers existing grass while it decomposes and feeds soil organisms.
+If sheet mulching suits the site, use clean, uncoated cardboard with tape and staples removed, and cover it with suitable mulch. Keep water able to reach the soil and leave tree trunks clear.
 
-Plant nitrogen-fixing pioneers at 2m spacing.
-
-Start a nursery so more plants are ready for the next stage.
+Choose pioneer spacing from mature size and access needs. Start a nursery for the next stage; one fixed spacing and mulch depth will not suit every plot.
 
 ---
 
-**Slide 17 — Years Two to Four**
+**Slide 17 — Let Growth Guide the Next Stage**
 
-In year two, plant the main fruit trees.
+Use the planting sequence as a guide, and let the site show when it is ready.
 
-Interplant comfrey and wild garlic beneath them.
+Establish suitable main fruit trees, then add lower plants where light, water and shelter allow.
 
-During years three to four, thin the pioneers because they would otherwise compete too strongly for light with the maturing fruit trees.
-
-Use the pioneer cuttings as mulch, so their soil-building work continues.
+Thin or prune pioneers before they crowd the fruit trees. Use suitable cuttings as mulch. The right moment depends on growth and competition, not a fixed year.
 
 ---
 
 **Slide 18 — Plant With the Rain**
 
-Plant at the start of the rainy season.
+Plant when the soil is moist and follow-up water is available. The start of a reliable rainy season can help, but rain may pause.
 
-Let the rain do the establishment watering.
+Check the root zone after planting and water when needed. Mulch helps protect surface moisture; it does not replace establishment care.
 
-Never plant into dry soil.
-
-Transplant shock plus drought stress rarely allows a young plant to recover.
-
-By year five, a 500m² Highveld food forest can produce real harvests with minimal outside inputs.
+Harvest timing and outside inputs depend on the species, planting material, weather and management. Do not promise a full harvest in a fixed year.
 
 ---
 

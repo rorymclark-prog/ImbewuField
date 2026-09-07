@@ -5,16 +5,13 @@ Seeds module. A text card with a demonstration title does not meet that brief.
 
 ## Latest illustrated review
 
-Introduction now has 21 teaching fronts, Soil Health 18, Reading the Landscape 20, and Water Harvesting 23,
-plus their existing covers. Their complete reading cards and original narration
-identities remain. Ordinary downloadable PDF editions provide an alternative to
-the HTML viewer Rory could not open. See the module-specific illustrated-deck notes
-for exact source corrections and inspection evidence. The historical counts below
-describe earlier recovery stages; the current asset and draft inventories are generated.
+All nine English non-Seeds decks now have their illustrated review editions: 175 teaching fronts plus nine covers, with all 185 narration identities preserved across 245 complete reading frames. Soil Health slide 13 still needs a verified botanical identification image. These are reused scene compositions, not 175 unique pictures.
 
-Reading, Introduction, Soil and Water narration changes supersede 25 Leah review takes
-and four full listening tracks. No replacement is activated, and the course remains
-a production draft. The remaining five modules still need their teaching fronts.
+The nine isiZulu review editions have 184 illustrated frames including covers and 326 complete reading frames. Every frame is marked as a draft; none of these nine language editions is registered as reviewed live coverage. First-language farmer review remains outstanding.
+
+There are 18 ordinary downloadable PDFs: nine English and nine isiZulu drafts. The animation pack supplies all 12 Rory starting frames and prompts, with 16 controlled process clips. The existing functional demonstrations remain available; illustrated finishing, listening and phone review still matter.
+
+Source corrections supersede 74 Leah review takes and all nine full listening tracks. No new speech transfer was made. Automatic approval review requires explicit approval before sending the final corrected scripts to Microsoft's speech service. The draft PR is not a release. See `FINAL-ILLUSTRATED-DECKS-2026-09-07.md` for evidence and remaining production.
 
 ## Working branch
 
@@ -22,7 +19,7 @@ a production draft. The remaining five modules still need their teaching fronts.
 The two commits from `codex/deck-continuation` (PR #153) were cherry-picked
 without conflicts. The recovery started with nine English decks and ten
 continuation cards. This continuation now preserves all narration paragraphs
-in 185 base frames plus 48 continuation frames after the Water corrections. The old branches remain intact.
+in 185 base frames plus 59 continuation frames after the final source corrections. The old branches remain intact.
 
 **Draft recovery, not a release.** The inherited player registration makes these
 decks accessible on this branch, but the blockers below still prevent shipping.

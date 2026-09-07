@@ -1,5 +1,29 @@
 # Course narration voice
 
+## Current review status — 7 September 2026
+
+The current source supersedes **74 numbered Leah takes and all nine full listening tracks** from the historical 185-clip review pack. No corrected recording has been generated or activated in this continuation. All nine non-Seeds English modules are held from playback; their current reading decks remain available. Seeds is unchanged.
+
+English target: Microsoft `en-ZA-LeahNeural`, review rate `-12%`; isiZulu target: `zu-ZA-ThandoNeural` after first-language farmer review. Audible matching against Seeds remains necessary.
+
+Automatic approval review rejected the later corrected-script transfer to `speech.platform.bing.com`. Do not retry or route around that rejection. The exact 185 current English scripts, including the 74 replacement takes, are supplied in the current narration review pack; explicit approval of that destination and final script transfer is needed before recording resumes.
+
+| Module | Replacement takes |
+| --- | --- |
+| food-forest | 6, 7, 8, 9, 11, 12, 13, 16, 17, 18 |
+| intro-permaculture | 9, 13, 14, 15, 16, 18, 19, 20 |
+| market-community | 2, 7, 8, 10, 11, 12, 13, 15, 17, 20 |
+| plant-guilds | 2, 4, 5, 7, 8, 12, 13, 14, 16, 17, 18 |
+| reading-landscape | 4, 6, 7, 8, 10, 11, 12, 14, 15, 16, 18, 20, 21 |
+| small-livestock | 2, 4, 5, 6, 7, 8, 10, 11, 12, 13, 15, 16, 18, 20 |
+| soil-health | 3, 17 |
+| vegetables-staples | 6, 8, 9, 10 |
+| water-harvesting | 23, 24 |
+
+See `course-production/current-recording-review.json` for script hashes and `FINAL-ILLUSTRATED-DECKS-2026-09-07.md` for the complete production status. The older sections below are historical checkpoints.
+
+## Historical checkpoints
+
 ## Latest recording status — 7 September 2026
 
 Later source corrections supersede Soil Health takes **3, 17** and Introduction

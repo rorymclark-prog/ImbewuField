@@ -10,13 +10,11 @@ Sebenzisa uhlelo osunalo: ukudla, umquba, izimbali, amadlelo, nokuhamba ngokucop
 
 **Ikhasi 2 — Kungani Lokhu Kubalulekile (Slide 2 — Why This Matters)**
 
-Imfuyo encane ingenza umsebenzi omkhulu ngaphezu kokukhiqiza inyama, amaqanda, noma uju.
+Imfuyo emincane inganika ukudla nomsebenzi owusizo, kodwa isilwane ngasinye sidinga ukunakekelwa nsuku zonke.
 
-Izinkukhu zisusa izinambuzane, iminenke, nembewu yokhula, ngesikhathi zengeza ukuvunda emhlabathini.
+Izinkukhu ziyagubha, amadada afuna ukudla, kanti izinyosi zivakashela izimbali. Lokhu kungasiza ipulazi, kodwa izilwane zingalimaza izitshalo zingcolise nezindawo zokudla.
 
-Amadada avikela imibhede esinezitshalo ezimile ngaphandle kokuklwebha kakhulu.
-
-Izinyosi zandisa ukukhiqizwa kokudla kuyo yonke indawo yepulazi.
+Hlela ukudla, amanzi ahlanzekile, indawo yokuhlala, ukunakekelwa kwempilo nokuhlukaniswa nokudla okuvuniwe ngaphambi kokuletha izilwane.
 
 ---
 
@@ -32,51 +30,49 @@ Uzoqonda ukuthuthwa kwempova, ukubekwa kwe-hive, nokubaluleka kokuvala imijikele
 
 **Ikhasi 4 — Buka: I-Chicken Tractor Ihamba Embhedeni (Slide 4 — Watch: A Chicken Tractor Moving Across a Bed)**
 
-Buka i-chicken tractor ihamba embhedeni ongenalutho.
+Buka i-chicken tractor ihamba embhedeni ongenazitshalo, ukudla, amanzi nendawo yokukhosela kuhlala nezinkukhu.
 
-Ikhuhla okudala nezinambuzane; umquba usala ngemuva, ulungise inhlabathi yokutshala.
+Ukugubha kuphazamisa izinsalela, umquba usale. Umbhede awulungeli ngokushesha izitshalo zokudla: hlela ukuphepha komquba nokutshala ngaphambi kwesitshalo esilandelayo.
 
 ---
 
 **Ikhasi 5 — Izinkukhu Zenza Ukuklwebha Kube Umsebenzi (Slide 5 — Chickens Turn Scratching Into Useful Work)**
 
-Izinkukhu zenza umsebenzi wazo uma ziyingxenye yohlelo, hhayi uma zondliwa kuphela ngokudla okuthengiwe esibayeni esimile.
+Izinkukhu zifuna ukudla zigubhe ezindaweni ezifanele, zidle ezinye izinambuzane nembewu yokhula. Lokhu akuthathi indawo yokudla okunomsoco ophelele noma ukunakekelwa kwempilo.
 
-Ngemva kokuvuna, zidla izibungu zezinambuzane, iminenke, nembewu yokhula ngaphandle kwesifutho.
+Umquba nezinto zokulala kungaba yizinto ze-compost uma kuphathwa kuboliswa ngendlela efanele. Umquba omusha ungathwala izidalwa ezibangela izifo.
 
-Umquba wazo, ohlanganiswe nokokulala, uba enye yezinto ezicebe kakhulu zokwenza i-compost epulazini.
+Gcina izinkukhu, umquba namathuluzi angcolile kude nomkhiqizo ovuniwe, amatafula okupakisha nezitshalo ezidliwa zingaphekiwe. Geza izandla ngemva kokuphatha izinkukhu noma umquba.
 
 ---
 
 **Ikhasi 6 — Sebenzisa Izinkukhu Ngesikhathi Esifanele (Slide 6 — Use Chickens at the Right Time)**
 
-Isikhathi esifanele sivikela izinyoni nombhede.
+Ungafaki izinkukhu eduze kwezithombo: ukugubha kungazisiphula.
 
-Faka izinkukhu embhedeni kuphela ngemva kokuvuna, lapho usungenalutho futhi ususuliwe, ngaphambi kokutshala okulandelayo.
+Umbhede ongenalutho ngemva kokuvuna ungaba yingxenye yokushintshanisa kuphela uma kuhleliwe ukuphepha kokudla nokunakekelwa kwezilwane. Ukususa izinkukhu akuwususi umquba omusha noma ubungozi bawo.
 
-Ukuklwebha kwazo kusiza ukulungisa umhlabathi, kodwa kuzokhipha izitshalo ezisencane.
-
-Ungalokothi ubeke izinkukhu eduze kwezithombo.
+Buza umeluleki wendawo oqeqeshiwe ngokuphatha umquba nesikhathi esidingekayo ngaphambi kwesivuno esilandelayo. Gcina izilwane ngaphandle kwezindawo lapho umquba ungathinta khona ukudla okuvuniwayo.
 
 ---
 
-**Ikhasi 7 — Amadada Afanele I-Understorey Esimile (Slide 7 — Ducks Suit Established Understorey)**
+**Ikhasi 7 — Phatha Amadada Eduze Kwezindawo Zokutshala (Slide 7 — Manage Ducks Around Growing Areas)**
 
-Amadada athambile kunezinkukhu, futhi afanele i-understorey yehlathi lokudla eselimiswe kahle.
+Amadada adla ama-slug neminenke ngaphandle kokugubha kakhulu njengenkukhu.
 
-Adla ama-slug neminenke ngaphandle kokuklwebha kakhulu, okuphazamisa izimpande ne-mulch.
+Asenganyathela izitshalo, angcolise amanzi futhi ashiye umquba. Indawo engaphansi kwezihlahla esisunguliwe ayiphephile ngokuzenzakalela emadadeni.
 
-Sebenzisa amadada lapho kudingeka ukulawulwa kwezinambuzane, kodwa umhlabathi usunezitshalo eziphilayo nezimpande esezimile.
+Hlela indawo efanele ephethwe kahle enamanzi okuphuza ahlanzekile, indawo yokukhosela nokudla okwanele. Wagcine kude nomkhiqizo namanzi asetshenziswa ekuphatheni ukudla.
 
 ---
 
 **Ikhasi 8 — Zungezisa I-Tractor Kuyo Yonke Indawo (Slide 8 — Rotate the Tractor Across the Plot)**
 
-I-chicken tractor isebenza kahle uma ihanjiswa ngokuzungezisa kuyo yonke indawo.
+Hambisa i-chicken tractor ngokwenhlalakahle yezinkukhu, isimo somhlabathi, isimo sezulu nohlelo lomquba lwepulazi. Yihlole nsuku zonke.
 
-Yishiye embhedeni isonto elilodwa noma amabili, bese uyihambisa ukuze umhlabathi uphumule phakathi kokudlula ngakunye.
+Ungagcini izinkukhu odakeni, ziminyene, ekushiseni noma emhlabathini osuphelile ulinde usuku lwekhalenda. Gcina ukudla, amanzi, umthunzi nokuvikelwa ezilwaneni ezizingelayo kutholakala.
 
-Izinkukhu ezine kuya kweziyisithupha ezizungeziswa ku-500m² zingagcina ukuvunda unyaka wonke ngaphandle komanyolo othengiwe.
+Inani elinqunyiwe lezinkukhu endaweni enqunyiwe aliqinisekisi zonke izidingo zomanyolo. Sebenzisa ubufakazi bomhlabathi nezitshalo ukuhlola ukuvunda.
 
 ---
 
@@ -90,45 +86,41 @@ Ukuhamba kwazo kuthwala impova phakathi kwezimbali kuyo yonke indawo.
 
 **Ikhasi 10 — Izinyosi Zenza Ihlathi Lokudla Likhiqize Kakhulu (Slide 10 — Bees Make Food Forests More Productive)**
 
-Izinyosi zoju zibalulekile ekuthuthweni kwempova ku-watermelon, squash, beans, litchi, avocado, macadamia, naku-citrus.
+Izinyosi nezinye izivakashi zezimbali zisiza ukuthutha impova ezitshalweni zokudla eziningi. Ukuncika ekuvakashelweni yizinambuzane kwehlukene ngokwezitshalo nama-cultivar.
 
-Ihlathi lokudla elingenazo izinyosi ezinempilo eduze likhiqiza ngaphansi kakhulu kwamandla alo.
+Ku-avocado, izimbali zinezigaba zesifazane nezesilisa. Ukuqhakaza okuhambisanayo nokuhamba kwempova kungasekela ukubamba kwezithelo, kodwa isimo sezulu nempilo yomuthi nakho kubalulekile.
 
-Izimbali zikakotapeya zivuleka njengezesilisa nezesifazane ngezikhathi ezihlukene kodwa ezihambisanayo phakathi kwezihlahla. Izinyosi zihambisa impova phakathi kwazo ngesikhathi esifanele.
+Bheka izimbali nezivakashi ngaphambi kokucabanga ukuthi isidleke sisodwa sizoxazulula ukubamba okuncane kwezithelo.
 
 ---
 
 **Ikhasi 11 — Izinyosi Zomdabu ZaseNingizimu Afrika (Slide 11 — South Africa’s Native Honeybees)**
 
-INingizimu Afrika inezinhlobo ezimbili ezingaphansi zezinyosi zoju zomdabu.
+INingizimu Afrika inezinhlobo zezinyosi ezibizwa nge-Cape ne-African honeybee. Izindawo zazo zemvelo nemikhawulo yokuzihambisa kubalulekile uma uthola ama-colony.
 
-I-Cape bee itholakala eKapa eseningizimu naseningizimu-ntshonalanga.
+Thola usizo kumfuyi wezinyosi wendawo onolwazi ngaphambi kokugcina noma ukuhambisa izinyosi. Ungahambisi ama-colony phakathi kwezifunda ngenxa yalesi sifundo kuphela.
 
-I-African honeybee itholakala enyakatho nasempumalanga.
-
-Zombili zivikela isidleke ngaphezu kwe-European strains, kodwa zombili zimelana kakhulu ne-varroa mite.
+Impilo yezinyosi nokuphathwa okuphephile kudinga ukuqashelwa; i-colony yendabuko ayinazo ngokuzenzakalela izinambuzane noma izifo.
 
 ---
 
 **Ikhasi 12 — Beka I-Hive Ngokucophelela (Slide 12 — Place the Hive With Care)**
 
-I-hive eyodwa iyisiqalo esifanele somlimi omncane.
+Hlola indawo engaba yesidleke nomfuyi wezinyosi wendawo onolwazi ngaphambi kokuletha izinyosi emhlabeni.
 
-Yibeke kude nalapho abantu behamba khona, futhi ibhekise enyakatho-mpumalanga ukuze ilanga lasekuseni lifudumeze indawo yokungena kusenesikhathi.
+Cabanga ngabantu, omakhelwane, imfuyo, izindlela, indlela yokundiza, amanzi, izimbali, ukuvikeleka nendawo yokungena ukuphatha ngokuphepha. Ilanga lasekuseni lingasiza, kodwa uhlangothi olulodwa lwekhampasi alwenzi indawo iphephe.
 
-Lokhu kwenza izinyosi ziqale umsebenzi wazo ngaphandle kokuphazamisa abantu abahamba epulazini.
+Hlela ukuqeqeshwa nezimpahla zokuzivikela kanye nendawo yesidleke.
 
 ---
 
 **Ikhasi 13 — Imiphakathi Enamandla Idinga Indawo Nezimbali (Slide 13 — Strong Colonies Need Space and Flowers)**
 
-Umphakathi wezinyosi onempilo, ofunza kahle, ukhombisa ukuthi ipulazi linezinhlobonhlobo zezinto eziphilayo futhi lihlanzekile kumakhemikhali.
+Hlela izimbali ezifanele unyaka wonke, ubheke impilo ye-colony nomfuyi oqeqeshiwe. I-colony ematasa ayifakazeli ukuthi indawo ayinawo amakhemikhali.
 
-Sebenzisa ikhalenda lezimbali eziqhakaza unyaka wonke ukuze ugcine imiphakathi yezinyosi iqinile.
+Abafuyi bezinyosi kufanele babhalise ku-Department of Agriculture yaseNingizimu Afrika. Hlola izidingo zayo zamanje zokubhalisa nokuhambisa ama-colony ngaphambi kokuqala, noma unesidleke esisodwa.
 
-Wonke umuntu ofuya izinyosi eNingizimu Afrika, noma ene-hive eyodwa kuphela, kufanele abhalise ne-DALRRD ngaphansi kwe-Agricultural Pests Act.
-
-Uma i-hive iswemela kaningi, igcwele kakhulu futhi idinga i-super noma i-split.
+Ukuphuma kwamaqembu ezinyosi ngokuphindaphindiwe kudinga ukuhlolwa onolwazi. Indawo ingaba yisici esisodwa, hhayi ukuxilongwa; ungazami ukuhlukanisa i-colony ngalesi sifundo kuphela.
 
 ---
 
@@ -140,21 +132,21 @@ Buka izakhamzimba zisuka ezitshalweni ziye ezilwaneni, bese zibuya ngomquba ne-c
 
 **Ikhasi 15 — Vala Umjikelezo Wezakhamzimba (Slide 15 — Close the Nutrient Loop)**
 
-Epulazini elijwayelekile, ukudla okuthengiwe kuyangena, inyama namaqanda kuyaphuma, bese umquba uba yinkinga yemfucuza.
+Sebenzisa ukudla okufanele okukhiqizwe epulazini njengengxenye yokudla okunomsoco ophelele, namanzi ahlanzekile nokunakekelwa nsuku zonke. Izinsalela zokudla nezinambuzane kuphela kungase kungazanelisi izidingo zezilwane.
 
-Epulazini elihlanganisiwe, izinkukhu zidla izinsalela, izinambuzane, nokukhiqiza okusele.
+Qoqa uphathe umquba ukuze ungangcolisi ukudla noma amanzi. Ukwenza i-compost ngendlela ephethwe kahle kuza ngaphambi kokusebenzisa lezi zinsalela ohlelweni lokutshala ukudla.
 
-Zibuyisela imfucuza yazo njengokuvunda. Izindleko ziyehla, inani liyakhuphuka, futhi lo mqondo usebenza nakumadada, i-guinea fowl, nezinyosi.
+Bhala ukudla okuthengiwe, umsebenzi nezindleko zempilo kanye nemikhiqizo ewusizo. Ukuhlanganisa kunganciphisa imfucuza; akuzisusi ngokuzenzakalela izinto ezivela ngaphandle.
 
 ---
 
-**Ikhasi 16 — I-Guinea Fowl Izingela Imikhaza Nezintethe (Slide 16 — Guinea Fowl Hunt Ticks and Grasshoppers)**
+**Ikhasi 16 — Bheka Imfuyo Uhlele Ukuphatha Izimuncagazi (Slide 16 — Observe Livestock and Plan Parasite Care)**
 
-I-guinea fowl ingeyomdabu waseNingizimu Afrika futhi isebenza kakhulu ekulawuleni imikhaza nezintethe.
+Izimpangele zifuna izinambuzane futhi zingadla imikhaza, kodwa ukuba khona kwazo akulona uhlelo lokulawula imikhaza oluthembekile.
 
-E-KZN naseLimpopo, lapho kunomswakama omkhulu nemikhaza eminingi, umhlambi omncane ozihambela ngokukhululeka wehlisa kakhulu inani lemikhaza.
+Vikela imfuyo ngokuyibheka njalo nangohlelo lwezilwane lokuphatha izimuncagazi olufanele izilwane nendawo. Ungayeki ukunakekelwa okunqunyiwe ngoba kunezinyoni.
 
-Lokhu kwenza i-guinea fowl ibe isisebenzi esiwusizo lapho kungafunwa ukwelashwa ngamakhemikhali.
+Hlela nokudla, amanzi, indawo yokukhosela, inhlalakahle nomthelela komakhelwane.
 
 ---
 
@@ -170,15 +162,13 @@ Le mibuzo ikhombisa ukuthi isilwane sivala umjikelezo yini, noma sidala okunye u
 
 ---
 
-**Ikhasi 18 — Izinkukhu Ezilandela Izimbuzi Ziphula Umjikelezo Wezinambuzane (Slide 18 — Chickens Following Goats Break the Parasite Cycle)**
+**Ikhasi 18 — Phatha Izimuncagazi Ngobufakazi (Slide 18 — Manage Parasites With Evidence)**
 
-Izinkukhu ezilandela izimbuzi ngokuzungezisa zinciphisa isidingo semithi yokubulala izikelemu.
+Ungathembeli ezinkukhwini ezilandela izimbuzi ukuvimbela izikelemu noma ukuthatha indawo yokwelashwa.
 
-Zidla izibungu zezikelemu eziyizimuncagazi emqubeni omusha ngaphambi kokuba zikhule.
+Sebenzisana nodokotela wezilwane noma umeluleki wemfuyo oqeqeshiwe ngokuklama amadlelo, ukubheka izilwane, ukuhlola lapho kufanele khona nokwelashwa okuqondiwe. Ukushintshanisa amadlelo kudinga ukufanela isimuncagazi, isizini nezimo zamadlelo.
 
-Lokhu kwephula umjikelezo walezi zinambuzane ngaphambi kokuba ziphinde zithelele izimbuzi.
-
-Izilwane ziba ngabalingani ekuphatheni uhlelo lokuklaba.
+Bheka isimo sezilwane, ugcine amarekhodi. Isilwane esiba buthaka noma esigulayo sidinga ukunakwa onolwazi ngokushesha.
 
 ---
 
@@ -196,13 +186,11 @@ Thola umjikelezo owodwa ongasebenza ngezinsiza osuvele unazo.
 
 **Ikhasi 20 — Isenzo Samanzi: Yenza Isixhumanisi Esisodwa Sisebenze (Slide 20 — Field Action: Put One Link to Work)**
 
-Khetha isenzo esisodwa esiphephile kulesi sifundo.
+Khetha isinyathelo esisodwa sokuhlela ngaphambi kokwengeza noma ukuhambisa izilwane.
 
-Lungisa umbhede ongenalutho ukuze wamukele izinkukhu ngemva kokuvuna, hlola indawo ye-hive ekude nalapho abantu behamba khona, noma thola lapho i-guinea fowl ingazingela khona imikhaza.
+Buyekeza ukushintshanisa embhedeni ongenalutho ngohlelo oluphephile lomquba nesivuno, hlola indawo yesidleke nomfuyi wezinyosi onolwazi, noma bhala isimo semfuyo ukuze uxoxe nodokotela wezilwane.
 
-Ungabeki izinkukhu eduze kwezithombo.
-
-Bhala ukuthi isilwane sidlani, sikhiqizani, nokuthi ipulazi lisinika ini ngokubuyisela.
+Bhala ukudla, amanzi, indawo yokuhlala, ukunakekelwa kwansuku zonke, imikhiqizo ewusizo nezindleko. Ukuxhumanisa okuwusizo epulazini kufanele kwanelise izidingo zesilwane futhi kuvikele ukuphepha kokudla.
 
 ## Notes for the Human Reviewer
 

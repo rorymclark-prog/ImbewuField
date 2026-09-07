@@ -33,6 +33,12 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '7 September 2026', sha: '8f6cd535', changes: [
+    'Study slides now pair illustrated teaching cards with the complete reading material.',
+    'Compost, water and planting demonstrations show each process step by step.',
+    'Updated lessons explain crop care, animal care and selling costs more clearly.',
+    'Lessons awaiting new narration stay available to read.',
+  ] },
   { when: '6 September 2026', sha: '9df6298', changes: [
     'Tour learning, invoices, mentor support and programme reporting in about 15 minutes.',
     'Use the Tour button beside the menu for instructions, previous and next stops.',

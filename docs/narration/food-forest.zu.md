@@ -64,55 +64,41 @@ Indawo eyodwa isebenza kuwo wonke amazinga.
 
 **Ikhasi 6 — Ama-Layer Ayisikhombisa (Slide 6 — The Seven Layers)**
 
-I-canopy ende ikhula ku-10m+.
+Izingqimba eziyisikhombisa zichaza imisebenzi yezitshalo, hhayi ukuphakama okufanayo kuzo zonke izinhlobo.
 
-I-sub-canopy ikhula ku-4–8m, kanti ama-shrub akhula ku-1–3m.
+Izihlahla ze-canopy ne-sub-canopy ziphakeme kunezihlahla ezincane nezitshalo ezithambile. Izitshalo ezimbozayo zisakazeka ebusweni, izilimo zezimpande zikhula ngaphansi, kanti ezikhwelayo zisebenzisa into efanele yokusekelwa.
 
-Izitshalo ze-herbaceous zihlala ngaphansi kuka-1m.
-
-I-ground cover ivikela umhlabathi, ama-root crops akhula ngaphansi, kanti ama-climbers asebenzisa i-vertical space.
-
-Ngayinye inendawo yayo ukuze ukukhanya nomswakama kusetshenziswe kahle.
+Hlola ubukhulu uma sezikhulile nezidingo zokukhanya ngaphambi kokuhlanganisa lezi zingqimba.
 
 ---
 
 **Ikhasi 7 — Isibonelo Sase-Highveld (Slide 7 — A Highveld Example)**
 
-Ku-Highveld, i-canopy ingaba ne-Wild Fig enkulu noma pecan.
+Sebenzisa lokhu njengesibonelo sokuhlela, hhayi uhlu lokutshala kuwo wonke amapulazi ase-Highveld.
 
-I-sub-canopy ingaphatha lemon, naartjie, ne-black mulberry.
+I-Wild Fig noma i-pecan ingaba ku-canopy, kube nezihlahla ezincane, izihlahlana nezitshalo zokudla ezifanele ngaphansi.
 
-I-shrub layer ingaba ne-Cape gooseberry ne-Wild Medlar.
-
-Ama-vegetables, wild garlic, sweet potato, ne-granadilla zigcwalisa ama-layer aphansi ne-vertical space.
-
-Le nhlanganisela yenza indawo eyodwa ikhiqize ukudla ezindaweni ezahlukene.
+Hlola uhlobo ngalunye ne-cultivar ngokwesithwathwa, amanzi atholakalayo, ubukhulu nokukhanya. Izitshalo ezizwela isithwathwa njenge-granadilla zidinga ukuqashelwa endaweni ebandayo.
 
 ---
 
-**Ikhasi 8 — Ukusungula Kuya Ekuzinakekeleni (Slide 8 — From Establishment to Self-Care)**
+**Ikhasi 8 — Ukusungula Nokunakekela Okuqhubekayo (Slide 8 — From Establishment to Ongoing Care)**
 
-Iminyaka emibili kuya kwemithathu yokuqala idinga umsebenzi wangempela wokusungula uhlelo.
+Iminyaka yokuqala idinga umsebenzi oqhubekayo: ukunisela, i-mulch, ukulawula ukhula nokuvikela izitshalo.
 
-Izitshalo ze-herbaceous ne-ground cover ancintisana kakhulu nama-weeds emhlabathini ovulekile onelanga.
+Njengoba izihlahla zikhula, umthunzi namaqabunga awile kunganciphisa ukuhwamuka kwamanzi ebusweni bomhlabathi. Kushintsha nokukhanya namanzi okutholwa izitshalo ezingezansi.
 
-Ngonyaka wesithathu kuya kowesihlanu, i-canopy iyavaleka.
-
-Umthunzi ne-deep leaf-fall mulch kunciphisa evaporation, kanti izimpande ezixubile zigcina umswakama omningi emhlabathini.
+Awukho unyaka omisiwe lapho lonke ihlathi lokudla lizizinakekela khona. Qhubeka ubheka, uthena futhi ulungisa okutshalwe khona.
 
 ---
 
 **Ikhasi 9 — Khetha Ngokwesifunda Sakho (Slide 9 — Choose for Your Region)**
 
-Qondanisa uhlobo ngalunye nesifunda salo ngaphambi kokutshala.
+Qhathanisa uhlobo ngalunye ne-cultivar nendawo yakho ngaphambi kokutshala.
 
-Yazi imvula yakho, i-minimum winter temperature, ukuthi isithwathwa sivela kangaki, ne-summer humidity.
+Bhala imvula, izinga lokushisa eliphansi ebusika, ukuthi isithwathwa sivela kangaki, umswakama wasehlobo namanzi atholakalayo.
 
-I-mango ekhula kahle ogwini lwase-KZN iyafa lapho kufika isithwathwa sokuqala sase-Highveld.
-
-I-quince edinga i-winter chill ayitheli izithelo endaweni yasogwini engenaso isithwathwa.
-
-Ngakho isimo sezulu siyanquma ukuthi yiziphi izinhlobo ezifanele.
+I-mango encane ingalimala kakhulu yisithwathwa; indawo evikelekile ayiqinisekisi ukuvikeleka. I-quince cultivar ingadinga amakhaza asebusika indawo yakho engenawo. Cela umlimi wendawo noma i-nursery ihlole ukufaneleka.
 
 ---
 
@@ -128,41 +114,31 @@ Qondanisa isitshalo ngasinye nendawo yakho.
 
 **Ikhasi 11 — Izinketho Ze-Food Forest E-Highveld (Slide 11 — Highveld Food Forest Choices)**
 
-Izinketho ze-canopy e-Highveld zifaka pecan, walnut, ne-indigenous fig.
+Lesi sifundo sibiza i-pecan, i-walnut, i-indigenous fig, i-apple, i-pear, i-plum, i-black mulberry, i-rosemary, i-Wild Medlar ne-Cape gooseberry njengezitshalo okufanele uzihlole.
 
-I-sub-canopy ingaba ne-apple, pear, plum, black mulberry, ne-loquat.
+Qinisekisa i-cultivar, ubukhulu nezidingo zesithwathwa namanzi ngaphambi kokuthenga. I-Barbados cherry ayiyona inketho ezenzakalelayo endaweni yase-Highveld enesithwathwa.
 
-I-shrub layer ingaba ne-rosemary, Wild Medlar, Cape gooseberry, ne-Barbados cherry.
-
-Ungatshali usususele ohlwini kuphela; qala uhlole izimo ezisemhlabeni wakho.
-
-Uhlobo olufanele esifundeni lusadinga ukuhambisana nendawo yangempela yepulazi.
+Hlola imikhawulo yamanje ngaphambi kokutshala i-loquat; ungayitshali e-Western Cape noma e-forest biome. Uhlu lwesifunda alusiyo imvume yokutshala.
 
 ---
 
 **Ikhasi 12 — Ugu Lwase-KZN, I-Lowveld ne-Limpopo (Slide 12 — KZN Coast, Lowveld, and Limpopo)**
 
-Ugu lwase-KZN ne-Lowveld lungafaneleka ku-mango, avocado, ne-Natal Mahogany.
+Izindawo ezifudumele zasogwini nase-Lowveld zingafanele i-mango, i-avocado, i-banana, i-pawpaw ne-litchi ezibizwe kulesi sifundo. Hlola izimo zendawo nobukhulu bohlobo ngalunye uma selukhulile.
 
-I-sub-canopy ingaba ne-banana, pawpaw, litchi, ne-Wild Fig.
+Isifundo sibiza ne-Natal Mahogany, i-Wild Fig, i-Barbados cherry, i-Wild Dagga, i-Marula, i-Mopane ne-baobab ngemisebenzi ehlukene yezifunda. La magama awasho ukuthi zonke izitshalo noma zonke izingxenye ziyadliwa.
 
-I-shrub layer ingaba ne-Barbados cherry ne-Wild Dagga.
-
-E-Limpopo Lowveld, i-Marula, Mopane, ne-baobab zingafaneleka.
-
-Lezi zihlahla zinezithelo ezidliwayo futhi zibalulekile ngokwesiko.
+Qinisekisa isitshalo esiqondile, umsebenzi waso nendlela yokulungisa ukudla ngomthombo wendawo othembekile ngaphambi kokusisebenzisa.
 
 ---
 
 **Ikhasi 13 — Izinhlobo Zomdabu Zakha I-Ecosystem (Slide 13 — Indigenous Species Build the Ecosystem)**
 
-Hlela okungenani u-30% wezinhlobo zomdabu kuyo yonke i-food forest.
+Faka izitshalo zendabuko ezifanele ezisekela izinyoni nezinambuzane zendawo kanye nezinhloso zomuzi wakho.
 
-Zisekela izinyoni nezinambuzane ezenza uhlelo lusebenze.
+Isibalo sangaphambili sika-30% siyinhloso yokuhlela yalesi sifundo, hhayi umkhawulo wemvelo osebenza yonke indawo. Izinhlobo, indawo yokuzibeka nezimo kubalulekile.
 
-Lezi zivakashi ziletha ukulawulwa kwezinambuzane, i-pollination, nokusabalalisa imbewu.
-
-Lokho kusekelwa kwenza i-food forest iqine kangcono kuneqoqo lezihlahla zezithelo lodwa.
+Bheka ukuqhakaza, izivakashi, umonakalo ezitshalweni nokukhula. Sebenzisa lobo bufakazi ukuthuthukisa inhlanganisela.
 
 ---
 
@@ -192,39 +168,31 @@ Lapho ukuvikeleka kukhula, tshala ama-layer aphansi, i-ground cover, nama-climbe
 
 **Ikhasi 16 — Unyaka Wokuqala Epulazini Elingu-500m² (Slide 16 — Year One on a 500m² Plot)**
 
-Ngonyaka wokuqala epulazini elingu-500m², yenza i-sheet-mulch nge-cardboard nongqimba lwama-wood chips olungu-20cm.
+Endaweni yokuzivocavoca engu-500m², hlola ukhula, ukuphuma kwamanzi namanzi atholakalayo ngaphambi kokukhetha isigaba sokuqala.
 
-I-cardboard imboza utshani obukhona ngenkathi ibola, futhi yondle izidalwa zomhlabathi.
+Uma i-sheet mulch ifanele indawo, sebenzisa amakhadibhodi ahlanzekile angafakwanga ungqimba olucwebezelayo, ususe i-tape nama-staple, uwamboze nge-mulch efanele. Vumela amanzi afike emhlabathini, ugcine iziqu zezihlahla zingamboziwe.
 
-Tshala ama-nitrogen-fixing pioneers ziqhelelene ngo-2m.
-
-Qala i-nursery ukuze ezinye izitshalo zilungele isigaba esilandelayo.
+Khetha izikhala zezihlahla zokuqala ngokobukhulu nezidingo zokungena. Qala i-nursery yesigaba esilandelayo; isikhala nokujula kwe-mulch okukodwa akufanele zonke izindawo.
 
 ---
 
-**Ikhasi 17 — Iminyaka Yesibili Kuya Kwesine (Slide 17 — Years Two to Four)**
+**Ikhasi 17 — Ukukhula Makuhole Isigaba Esilandelayo (Slide 17 — Let Growth Guide the Next Stage)**
 
-Ngonyaka wesibili, tshala izihlahla eziyinhloko zezithelo.
+Sebenzisa ukulandelana kokutshala njengomhlahlandlela, uvumele indawo ibonise ukuthi isilungile nini.
 
-Tshala i-comfrey ne-wild garlic phakathi kwazo, ngaphansi kwazo.
+Sungula izihlahla zezithelo ezifanele, bese ufaka izitshalo ezingezansi lapho ukukhanya, amanzi nokuvikeleka kuvuma.
 
-Eminyakeni yesithathu kuya kowesine, nciphisa ama-pioneers ngoba ngaphandle kwalokho azoqhudelana kakhulu ngokukhanya nezihlahla zezithelo esezikhulayo.
-
-Sebenzisa ama-cuttings ama-pioneers njenge-mulch, ukuze umsebenzi wawo wokwakha umhlabathi uqhubeke.
+Nciphisa noma uthene izihlahla zokuqala ngaphambi kokuminyanisa zezithelo. Sebenzisa izinsalela ezifanele njenge-mulch. Isikhathi esifanele sincike ekukhuleni nasekuncintisaneni, hhayi onyakeni omisiwe.
 
 ---
 
 **Ikhasi 18 — Tshala Nezimvula (Slide 18 — Plant With the Rain)**
 
-Tshala ekuqaleni kwesikhathi sezimvula.
+Tshala lapho umhlabathi unomswakama futhi kukhona amanzi okunisela kamuva. Ukuqala kwesizini yemvula ethembekile kungasiza, kodwa imvula ingama.
 
-Vumela imvula inisele izitshalo ngesikhathi zisunguleka.
+Hlola indawo yezimpande ngemva kokutshala, unisele lapho kudingeka. I-mulch isiza ukuvikela umswakama ongaphezulu; ayithathi indawo yokunakekelwa ngesikhathi sokusungula.
 
-Ungalokothi utshale emhlabathini owomile.
-
-I-transplant shock kanye ne-drought stress akuvamile ukuvumela isitshalo esincane silulame.
-
-Ngonyaka wesihlanu, i-food forest yase-Highveld engu-500m² ingakhiqiza isivuno sangempela ngezinto ezimbalwa ezivela ngaphandle.
+Isikhathi sesivuno nezinto ezithengwa ngaphandle kuncike ohlotsheni, ezitshalweni eziqalwayo, esimweni sezulu nasekunakekelweni. Ungathembisi isivuno esigcwele ngonyaka omisiwe.
 
 ---
 

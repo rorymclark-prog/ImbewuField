@@ -78,13 +78,11 @@ Look at your own ground after heavy rain. Does water sit, or does it run off? Th
 
 **Slide 6 — Seed or Seedling?**
 
-Some crops resent having their roots disturbed. They do better sown straight where they'll grow. Beans, carrots and maize belong in that group.
-
-Others do better with a protected start in a nursery, then transplanting. Tomatoes and brassicas belong there.
+Some crops do better sown straight where they will grow. Beans, carrots and maize belong in that group. Tomatoes and brassicas can start in a protected nursery before transplanting.
 
 [pause]
 
-Whichever you choose, spacing matters more than the packet suggests. Seed packets are printed for cooler, wetter places than most of South Africa. Give your plants more room than the smallest spacing on the packet.
+Use guidance for the actual crop and cultivar, then check spacing against local soil, water, season and mature size. Do not assume every seed packet was written for a cooler, wetter country. Keep paths and enough room to tend the plants.
 
 ---
 
@@ -108,35 +106,25 @@ That bed gets easier to improve every season, because you stopped walking on it.
 
 **Slide 8 — A Sowing Rhythm Keeps Food Moving**
 
-Succession planting is a calendar habit, not a special crop.
+Succession planting is a calendar habit. Choose a crop your household eats often, then sow small amounts at intervals.
 
-Choose something your household actually eats often. Then sow a small amount of it, again and again.
-
-Plant a short row every two to three weeks.
+Two to three weeks can be a starting rhythm for suitable crops, not a rule for every crop or season. Check days to harvest and record what actually happens.
 
 [pause]
 
-Less waste during a glut. Fresh food for longer. And the labour spreads out across the season instead of landing on you all at once.
-
-If heat or heavy rain ruins one sowing, the others still carry the season.
-
-Which fast crop could you sow in small batches? Decide on one, and start it this week.
+Staggering sowings can spread harvest and labour and reduce reliance on one planting. Heat, drought or pests may still affect several sowings. Adjust the plan from your observations.
 
 ---
 
 **Slide 9 — Sow Little and Often**
 
-Here's what it looks like in practice.
+Sow one small batch, record its date, then sow the next when your crop and season call for it.
 
-Sow one. Then two to three weeks later, sow two. Then sow three. Then sow four.
-
-By the time the fourth sowing is in the ground, the first is ready to harvest. The harvests begin to overlap.
+In a two-to-three-week example, four sowings will be at different stages. The first is not automatically ready when the fourth is planted.
 
 [pause]
 
-Two to three weeks is a starting rhythm, not a law. A cool-season leaf crop may hold longer. Heat may speed things up, or cause a failure.
-
-Watch what your own garden does, and adjust the interval. That observation is the skill.
+Check the crop and cultivar’s harvest time, then compare it with actual growth. Record the first and last harvest dates. Use those dates to adjust the next sowing interval and reduce gaps.
 
 ---
 
@@ -156,7 +144,7 @@ Pumpkin spreads across the ground, shading the soil and holding moisture.
 
 Timing matters. Establish the maize first, so it's strong enough to carry the beans when they start to climb.
 
-Three crops, one piece of ground, and none of them fighting the others.
+Three crops share one piece of ground, but they can still compete for light, water and nutrients. Watch their growth and adjust spacing and timing.
 
 ---
 

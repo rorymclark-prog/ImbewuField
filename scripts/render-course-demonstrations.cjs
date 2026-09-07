@@ -36,7 +36,12 @@ function basket(x,y,s=1) {
   return group(x,y,s,shape('M-43 -17 L-33 32 H33 L43 -17Z',C.soil)+line('M-38 -5H38 M-34 10H34',C.deep,3)+sprout(-20,-17,.4)+sprout(12,-17,.45,2));
 }
 function heap(x,y,s=1,green=false) {
-  return group(x,y,s,shape('M-110 0 Q-87 -50 -40 -75 Q-6 -126 40 -72 Q89 -62 110 0Z',green?C.grass:C.deep)+line('M-70 -25 l35 -10 M5 -45 l38 15 M-5 -83 l19 5',green?C.light:C.soil,5));
+  // Square footprint in isometric view, level top and two vertical sides.
+  const front=green?C.grass:C.deep, top=green?C.light:C.soil;
+  return group(x,y,s,shape('M-110 -35 L0 0 V-90 L-110 -125Z',front)+
+    shape('M0 0 L110 -35 V-125 L0 -90Z',front)+
+    shape('M-110 -125 L0 -160 L110 -125 L0 -90Z',top)+
+    line('M-75 -108 l36 -12 M-10 -124 l45 -11 M30 -102 l34 -11 M-80 -61 l35 11 M26 -47 l37 -12',green?C.grass:C.soil,4));
 }
 function chicken(x,y,s=1) {
   return group(x,y,s,shape('M-25 -25 Q-43 -53 -44 -56 L-15 -47 Q15 -65 27 -42 L35 -66 Q56 -70 52 -44 L42 -13 Q-3 16 -25 -25Z','#D6A957')+circle(47,-61,4,C.ink)+shape('M53 -56 L68 -52 L53 -47Z',red)+line('M2 -5 L-2 14 M22 -7 L26 12',C.deep,4));
@@ -88,6 +93,13 @@ add('plant-guilds',5,'root-nodules',"The close-up shows nodules on a legume root
   s+=line('M468 469 L730 362',gold,3)+circle(878,284,155,C.paper,`stroke="${gold}" stroke-width="5"`);
   s+=line('M796 209 Q903 255 944 355',C.soil,19)+circle(885,280,46,gold);
   for(let i=0;i<9;i++)s+=line(`M${854+i*11%63} ${260+i*17%42} l8 3`,C.ink,4,`opacity="${progress(t,3,5)}"`);
+  if(t>=6) {
+    // A separate later stage; no direct underground pipeline to a neighbouring tree.
+    s=soil(100,345,1080,280)+mulch(200,332,820,18)+
+      line('M360 357 Q300 435 322 552 M360 357 Q421 436 448 552',C.soil,7,'stroke-dasharray="18 12"');
+    const decay=progress(t,7,11);
+    for(let i=0;i<18;i++)s+=circle(220+i*43,383+(i%4)*47,5,gold,`opacity="${decay}"`);
+  }
   return s;
 });
 add('plant-guilds',10,'chop-and-drop',"Cut suitable leaves and spread them over exposed ground around living plants. Keep the crown and trunk clear. Soil life gradually breaks the leaves down.",t=>{

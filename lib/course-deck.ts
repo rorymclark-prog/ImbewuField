@@ -116,14 +116,14 @@ const WATER_ANIMATIONS: Record<number, DeckAnimation> = {
 const SOIL_HEALTH_ANIMATIONS: Record<number, DeckAnimation> = {
   5: { src: 'soil-observation', poster: 'soil-observation', bytes: 44815, seconds: 12,
     description: "Look for soil crumbs, roots and open channels. Compare these with the tightly packed sample. Feel and smell your own soil too: colour alone does not tell the whole story." },
-  10: { src: 'compost-building', poster: 'compost-building', bytes: 51727, seconds: 12,
+  10: { src: 'compost-building', poster: 'compost-building', bytes: 52511, seconds: 12,
     description: "Build with dry brown material and fresh green material. Add enough water to keep the heap moist, while leaving air spaces. Follow the lesson when choosing and mixing the materials." },
   14: { src: 'mulch-and-rain', poster: 'mulch-and-rain', bytes: 243862, seconds: 12,
     description: "Both soil sections receive the same rain. On the bare side, raindrops strike the surface and soil moves with runoff. Mulch cushions the soil and slows that movement." },
 };
 
 const PLANT_GUILDS_ANIMATIONS: Record<number, DeckAnimation> = {
-  5: { src: 'root-nodules', poster: 'root-nodules', bytes: 35003, seconds: 12,
+  5: { src: 'root-nodules', poster: 'root-nodules', bytes: 51371, seconds: 12,
     description: "The close-up shows nodules on a legume root. Rhizobia living there help the plant use nitrogen from the air. Plant material and roots feed the soil as they break down." },
   10: { src: 'chop-and-drop', poster: 'chop-and-drop', bytes: 46261, seconds: 12,
     description: "Cut suitable leaves and spread them over exposed ground around living plants. Keep the crown and trunk clear. Soil life gradually breaks the leaves down." },
@@ -165,7 +165,7 @@ const SMALL_LIVESTOCK_ANIMATIONS: Record<number, DeckAnimation> = {
     description: "Move the enclosure across an empty bed, keeping feed, water and shelter with the birds. Scratching disturbs old material and manure is left behind. Agree a safe manure and planting plan before growing food in the bed." },
   9: { src: 'bees-and-flowers', poster: 'bees-and-flowers', bytes: 61125, seconds: 12,
     description: "Follow the bee from the hive to one flower and then another. Pollen picked up at the first flower travels with it. The bee and pollen are enlarged so you can see the action." },
-  14: { src: 'livestock-nutrient-cycle', poster: 'livestock-nutrient-cycle', bytes: 61127, seconds: 12,
+  14: { src: 'livestock-nutrient-cycle', poster: 'livestock-nutrient-cycle', bytes: 62316, seconds: 12,
     description: "Follow suitable plant material to the animals, manure to composting, and finished compost back to the bed. Feed choices and manure handling need care. The composting stage comes before material returns to food-growing soil." },
 };
 

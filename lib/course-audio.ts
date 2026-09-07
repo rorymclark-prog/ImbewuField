@@ -228,6 +228,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
   },
   'vegetables-staples': {
     languages: ['en'],
+    recordingHold: { en: 'The teaching has been corrected. Read the updated slides while a complete matching narration is prepared.' },
     recordedVoices: { en: 'en-ZA-LukeNeural' },
     // 18 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural and verified by
     // import-course-audio: every clip matched its script block.
@@ -254,6 +255,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
   },
   'plant-guilds': {
     languages: ['en'],
+    recordingHold: { en: 'The teaching has been corrected. Read the updated slides while a complete matching narration is prepared.' },
     recordedVoices: { en: 'en-ZA-LukeNeural' },
     // 20 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural and verified by
     // import-course-audio: every clip matched its script block.
@@ -271,7 +273,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
       { slide: 10, lesson: 'plant-guilds-l2', title: 'Watch: Chop and Drop' },
       { slide: 11, lesson: 'plant-guilds-l2', title: 'Choose the Right Comfrey' },
       { slide: 12, lesson: 'plant-guilds-l2', title: 'Work With Helpful Insects' },
-      { slide: 13, lesson: 'plant-guilds-l2', title: 'Wild Garlic for Pest Control' },
+      { slide: 13, lesson: 'plant-guilds-l2', title: "Wild Garlic in a Diverse Planting" },
       { slide: 14, lesson: 'plant-guilds-l3', title: 'What Makes a Plant Guild' },
       { slide: 15, lesson: 'plant-guilds-l3', title: 'Watch: A Mango Guild' },
       { slide: 16, lesson: 'plant-guilds-l3', title: 'Place and Cut the Sesbania' },
@@ -283,6 +285,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
   },
   'food-forest': {
     languages: ['en'],
+    recordingHold: { en: 'The teaching has been corrected. Read the updated slides while a complete matching narration is prepared.' },
     recordedVoices: { en: 'en-ZA-LukeNeural' },
     // 20 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural and verified by
     // import-course-audio: every clip matched its script block.
@@ -296,7 +299,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
       { slide: 5,  lesson: 'food-forest-l1', title: 'Watch: The Seven Layers Working Together' },
       { slide: 6,  lesson: 'food-forest-l1', title: 'The Seven Layers' },
       { slide: 7,  lesson: 'food-forest-l1', title: 'A Highveld Example' },
-      { slide: 8,  lesson: 'food-forest-l1', title: 'From Establishment to Self-Care' },
+      { slide: 8,  lesson: 'food-forest-l1', title: "From Establishment to Ongoing Care" },
       { slide: 9,  lesson: 'food-forest-l2', title: 'Choose for Your Region' },
       { slide: 10, lesson: 'food-forest-l2', title: 'Watch: Match the Species to the Climate' },
       { slide: 11, lesson: 'food-forest-l2', title: 'Highveld Food Forest Choices' },
@@ -305,7 +308,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
       { slide: 14, lesson: 'food-forest-l3', title: 'Plant in Sequence' },
       { slide: 15, lesson: 'food-forest-l3', title: 'Watch: From Bare Ground to Food Forest' },
       { slide: 16, lesson: 'food-forest-l3', title: 'Year One on a 500m² Plot' },
-      { slide: 17, lesson: 'food-forest-l3', title: 'Years Two to Four' },
+      { slide: 17, lesson: 'food-forest-l3', title: "Let Growth Guide the Next Stage" },
       { slide: 18, lesson: 'food-forest-l3', title: 'Plant With the Rain' },
       { slide: 19, lesson: null,             title: 'Field Assignment' },
       { slide: 20, lesson: null,             title: 'Field Action' },
@@ -313,6 +316,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
   },
   'small-livestock': {
     languages: ['en'],
+    recordingHold: { en: 'The teaching has been corrected. Read the updated slides while a complete matching narration is prepared.' },
     recordedVoices: { en: 'en-ZA-LukeNeural' },
     // 20 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural and verified by
     // import-course-audio: every clip matched its script block.
@@ -325,7 +329,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
       { slide: 4,  lesson: 'small-livestock-l1', title: 'Watch: A Chicken Tractor Moving Across a Bed' },
       { slide: 5,  lesson: 'small-livestock-l1', title: 'Chickens Turn Scratching Into Useful Work' },
       { slide: 6,  lesson: 'small-livestock-l1', title: 'Use Chickens at the Right Time' },
-      { slide: 7,  lesson: 'small-livestock-l1', title: 'Ducks Suit Established Understorey' },
+      { slide: 7,  lesson: 'small-livestock-l1', title: "Manage Ducks Around Growing Areas" },
       { slide: 8,  lesson: 'small-livestock-l1', title: 'Rotate the Tractor Across the Plot' },
       { slide: 9,  lesson: 'small-livestock-l2', title: 'Watch: Bees Moving Between Hive and Crops' },
       { slide: 10, lesson: 'small-livestock-l2', title: 'Bees Make Food Forests More Productive' },
@@ -334,15 +338,16 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
       { slide: 13, lesson: 'small-livestock-l2', title: 'Strong Colonies Need Space and Flowers' },
       { slide: 14, lesson: 'small-livestock-l3', title: 'Watch: Nutrients Moving in a Closed Livestock Loop' },
       { slide: 15, lesson: 'small-livestock-l3', title: 'Close the Nutrient Loop' },
-      { slide: 16, lesson: 'small-livestock-l3', title: 'Guinea Fowl Hunt Ticks and Grasshoppers' },
+      { slide: 16, lesson: 'small-livestock-l3', title: "Observe Livestock and Plan Parasite Care" },
       { slide: 17, lesson: 'small-livestock-l3', title: 'Ask Three Questions for Every Animal' },
-      { slide: 18, lesson: 'small-livestock-l3', title: 'Chickens Following Goats Break the Parasite Cycle' },
+      { slide: 18, lesson: 'small-livestock-l3', title: "Manage Parasites With Evidence" },
       { slide: 19, lesson: null,                 title: 'Field Assignment: Draw Your Farm Loop' },
       { slide: 20, lesson: null,                 title: 'Field Action: Put One Link to Work' },
     ],
   },
   'market-community': {
     languages: ['en'],
+    recordingHold: { en: 'The pricing, market and seed-sharing examples have changed. Read the corrected slides while replacement narration is prepared.' },
     recordedVoices: { en: 'en-ZA-LukeNeural' },
     // 20 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural and verified by
     // import-course-audio: every clip matched its script block.

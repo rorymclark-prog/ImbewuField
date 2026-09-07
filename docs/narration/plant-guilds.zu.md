@@ -12,13 +12,11 @@ Inhloso ukwakha uhlelo oluqinile olufanele izimo zaseNingizimu Afrika.
 
 **Ikhasi 2 — Kungani Ama-Plant Guild Ebalulekile (Slide 2 — Why Plant Guilds Matter)**
 
-Lapho umhlabathi usukhathele, izitshalo ziba nzima ukukhula.
+Uma umhlabathi usukhathele, thola okuvimbela ukukhula. Amanzi, ukwakheka komhlabathi nezakhamzimba ezahlukene konke kungaba nomthelela.
 
-I-nitrogen iyona evame ukukhawulela kakhulu ukukhula emhlabathini waseNingizimu Afrika owonakele.
+Ama-legumes angabopha i-nitrogen ngokusebenzisana nama-rhizobia. I-mulch ibuyisela izinsalela zezitshalo emhlabathini, kanti izimbali zingasekela izinambuzane eziwusizo.
 
-Ezinye izitshalo zithatha i-nitrogen emoyeni, i-mulch ibuyisela amaminerali, kanti izimbali zibiza izinambuzane eziwusizo engadini.
-
-Zonke lezi zitshalo zisekelana nezitshalo eziseduze.
+Khetha isitshalo ngasinye ngokwezimo nomsebenzi odingwa yingadi yakho.
 
 ---
 
@@ -36,19 +34,17 @@ Uzokwazi ukwakha i-mango guild, unike isitshalo ngasinye umsebenzi ocacile.
 
 **Ikhasi 4 — Ama-Legumes Awondla Kanjani Umhlabathi (Slide 4 — How Legumes Feed the Soil)**
 
-Izitshalo eziningi zidinga i-nitrogen ukuze zikhule ziqine.
+Ama-legumes asebenzisana namabhaktheriya omhlabathi abizwa ngama-rhizobia kuma-nodule asezimpandeni. La mabhaktheriya aguqula i-nitrogen esemoyeni ibe yindlela i-legume engayisebenzisa.
 
-Ama-legumes asebenzisana namabhaktheriya omhlabathi abizwa ngokuthi ama-rhizobia.
-
-La mabhaktheriya athatha i-nitrogen emoyeni ayifake kuma-nodule asezimpandeni.
-
-Lapho izimpande zibuyela emuva noma isitshalo sisikwa, le nitrogen iyatholakala ezitshalweni eziseduze.
+I-nitrogen esemacembeni asikiwe nasezimpandeni ezifile ibuyela emhlabathini njengoba izidalwa zomhlabathi zibolisa lezo zinsalela. Ukusika akuyenzi yonke itholakale ngokushesha ezitshalweni eziseduze.
 
 ---
 
 **Ikhasi 5 — Buka: Izimpande Ezondla Umhlabathi (Slide 5 — Watch: Roots That Feed the Soil)**
 
-Bheka izimpande ezingaphansi komhlabathi. Ama-nodule amancane akhombisa lapho ama-rhizobia ebopha khona i-nitrogen, esiza i-legume ephilayo yondle umhlabathi.
+Bheka ama-nodule asempandeni ye-legume. Ama-rhizobia asiza i-legume isebenzise i-nitrogen esemoyeni.
+
+Landela isigaba esihlukile sokubola: izinsalela ezisikiwe nezimpande ezifile zikhipha izakhamzimba njengoba zibola.
 
 ---
 
@@ -66,25 +62,21 @@ I-Sesbania sesban ifanele izindawo ezifudumele nezinomswakama zasogwini lwase-KZ
 
 **Ikhasi 7 — I-Sunn Hemp Nomhlabathi Olindayo (Slide 7 — Sunn Hemp and the Waiting Soil)**
 
-I-sunn hemp iyindlela esheshayo yonyaka.
+I-sunn hemp yi-legume yonyaka ekhula ngokushesha ezimweni ezifudumele ezifanele.
 
-Ingafinyelela kumamitha angu-2 ngesizini eyodwa, yengeze cishe ku-100 kuya ku-165 kg ye-nitrogen ngehektha emzimbeni wayo ongaphezu komhlaba kuphela.
+Ukukhula kwayo nenani le-nitrogen elengezayo kuncike esitshalweni esikhona, kuma-nodule, emhlabathini nasesizini. Ungahleleli ukonga umanyolo ngenani elinqunyiwe ngenxa yegama lesitshalo kuphela.
 
-Ngemva kokuyisika nokuyihlanganisa nomhlabathi, isivuno esilandelayo asisebenzisi le nitrogen ngokushesha.
-
-Izidalwa ezincane zomhlabathi zidinga amasonto angu-2 kuya kwangu-6 ukuze zephule lesi sitshalo, zikhiphe i-nitrogen ngendlela engathathwa yizimpande.
+Ngemva kokusika, ukubola kuthatha isikhathi. Umswakama, izinga lokushisa nezinsalela uqobo kuthinta ukukhishwa kwezakhamzimba; hlola iseluleko sendawo ngaphambi kwesitshalo esilandelayo.
 
 ---
 
 **Ikhasi 8 — Lapho Kubekwa Khona Ama-Nitrogen Fixer (Slide 8 — Where to Place Nitrogen Fixers)**
 
-Beka ama-nitrogen fixer phezulu entabeni noma ohlangothini olufika umoya kuqala, ukuze ukuvunda kwehlele ezihlahleni zezithelo.
+Beka izitshalo ezibopha i-nitrogen lapho ubukhulu bazo uma sezikhulile, umthunzi nezidingo zamanzi kuhambisana nezihlahla zezithelo nezindlela. Shiya indawo yokungena ukusika nokuthwala i-mulch.
 
-Ehlathini lokudla, ekuqaleni tshala ama-nitrogen fixer ngobuningi obuphindwe kabili kobezihlahla zezithelo.
+Ungathembeli emoyeni noma ekugelezeni kokwehla ukuthi kulethe ukuvunda esihlahleni. Beka izinsalela ezifanele lapho kudingeka khona i-mulch.
 
-Lapho umqhele usuvala, nciphisa ama-nitrogen fixer.
-
-Ensimini ewohlokile yase-KZN ngesikhathi sasehlobo esifudumele nesinomswakama, i-Sesbania sesban iyona ndlela esheshayo esebenzayo yonyaka.
+I-Sesbania sesban yisihlahla esincane esiphila iminyaka embalwa, ayisona isitshalo sonyaka. Nciphisa noma usike izitshalo ezisekelayo uma ubona ukuncintisana kukhula.
 
 ---
 
@@ -120,37 +112,29 @@ I-comfrey evamile ikhiqiza imbewu esebenzayo, ingasabalala idlule lapho oyitshal
 
 **Ikhasi 12 — Sebenza Nezinambuzane Eziwusizo (Slide 12 — Work With Helpful Insects)**
 
-I-permaculture isebenza nebhayoloji kunokuthembela kuma-spray.
+Ama-ladybird amaningi adla ama-aphid, kanti amanye ama-parasitoid wasp ahlasela ama-caterpillar.
 
-Ama-ladybird adla ama-aphid, kanti ama-wasp ahlasela ama-caterpillar ngokuwafakela izimuncagazi.
+Izitshalo eziqhakazayo njenge-African basil, i-borage ne-marigold zingasekela izinambuzane eziwusizo. Bheka izinambuzane ezifika ngempela nokuthi umonakalo ezitshalweni uyashintsha yini.
 
-Izitshalo eziqhakazayo njenge-African basil, i-borage, ne-marigold ziheha lezi zinambuzane ezilawula izinambuzane.
-
-Zisiza ukwakha uhlelo oluphilayo lokulawula izinambuzane oluzungeze izitshalo, oluqina minyaka yonke.
+Izimbali zisekela ukuphathwa kwezinambuzane; aziqinisekisi ukuthi ukuhlasela kuzophela. Sebenzisa isifundo seMifino ukuhlola umonakalo nokukhetha isinyathelo esifanele.
 
 ---
 
-**Ikhasi 13 — I-Wild Garlic Yokulawula Izinambuzane (Slide 13 — Wild Garlic for Pest Control)**
+**Ikhasi 13 — I-Wild Garlic Phakathi Kwezitshalo Ezahlukene (Slide 13 — Wild Garlic in a Diverse Planting)**
 
-I-wild garlic, i-Tulbaghia violacea, iyisitshalo esiqinile se-guild sokulawula izinambuzane.
+I-wild garlic, i-Tulbaghia violacea, yisitshalo esiqhakazayo esibekezelela isomiso ezindaweni ezifanele. Amaqabunga nezimbali zayo kuyasetshenziswa ekudleni uma ihlonzwe kahle.
 
-Ama-sulphur compounds ayo axosha ama-aphid ne-whitefly.
-
-Iyakwazi ukubekezelela isomiso, futhi imelana nesithwathwa sase-Highveld uma isisunguliwe.
-
-Iyadliwa futhi iphindaphindeka kalula ukuze wabelane ngayo. Yitshale phakathi kwe-African basil ukuze izimbali zihehe ama-ladybird adla ama-aphid.
+Yisebenzise phakathi kwezitshalo ezahlukene, ubheke izinambuzane ezivakashelayo. Ungathembisi ukuthi indilinga ye-wild garlic izoxosha ama-aphid noma i-whitefly noma iqede ukuhlasela okukhona.
 
 ---
 
 **Ikhasi 14 — Yini Eyenza I-Plant Guild (Slide 14 — What Makes a Plant Guild)**
 
-I-plant guild yiqembu lezitshalo elikhethwe ukusekela umuthi owodwa ophakathi, imvamisa umuthi wezithelo noma wamantongomane.
+I-plant guild yiqembu lezitshalo elikhethwe ukusekela umuthi ophakathi, imvamisa wezithelo noma wamantongomane.
 
-Ilungu ngalinye linomsebenzi: ukubopha i-nitrogen, ukukhuphula amaminerali, ukuheha izinambuzane eziwusizo, ukuxosha izinambuzane, ukumboza umhlaba, noma ukukhiqiza ukudla.
+Amalungu angakhiqiza ukudla, abophe i-nitrogen, anike i-mulch, asekele izinambuzane eziwusizo noma amboze umhlabathi.
 
-Izitshalo zikhethwa njengeqembu, hhayi njengezitshalo ezihlukene.
-
-Uma isisimile, i-guild eyakhiwe kahle idinga okuncane kuwe.
+Izitshalo zisabelana ngokukhanya, amanzi nendawo. Bheka i-guild, uyinisele ngesikhathi isasungulwa, ulungise izitshalo eziminyanisa umuthi.
 
 ---
 
@@ -162,37 +146,31 @@ Bheka i-mango ephakathi nezitshalo eziyizungezile. Qaphela ukuthi i-guild iseben
 
 **Ikhasi 16 — Beka Futhi Usike I-Sesbania (Slide 16 — Place and Cut the Sesbania)**
 
-Ku-mango guild yase-Lowveld noma ogwini lwase-KZN, beka i-Sesbania sesban ohlangothini lwasenyakatho-mpumalanga nasenyakatho-ntshonalanga.
+Esibonelweni se-mango, hlola ukukhanya nobukhulu be-Sesbania sesban uma isikhulile ngaphambi kokukhetha indawo yayo. Shiya indawo yokufinyelela kuzo zombili izitshalo.
 
-Yisike njalo ngonyaka ukuze uthole i-nitrogen ne-mulch.
+Ukuthena kunika i-mulch futhi kunganciphisa umthunzi. Akuqedi ukuncintisana kwezimpande ngamanzi nezakhamzimba. Lungisa ukuthena noma izikhala njengoba izihlahla zikhula.
 
-Ukuyisika kuyayivimba ukuthi yenze umthunzi futhi incintisane ne-mango.
-
-Tshala i-Bocking 14 comfrey ebangeni lama-60 kuya kwangama-80 cm ukusuka esiqwini, ezindaweni ezine, bese uyisika uyishiye phansi njalo.
+Beka i-Bocking 14 comfrey lapho inendawo yokukhula nokusikwa, ugcine isiqu nendawo lapho isiqu sihlangana nezimpande ze-mango kungenayo i-mulch.
 
 ---
 
 **Ikhasi 17 — Gcwalisa Eminye Imisebenzi Ye-Guild (Slide 17 — Fill the Guild’s Other Jobs)**
 
-Beka i-wild garlic iyindilinga onqenqemeni lwangaphandle ukuze ilawule izinambuzane.
+Sebenzisa i-wild garlic ne-African basil njengezitshalo eziqhakazayo lapho indawo izifanele. Bheka izinambuzane eziwusizo ezivakashelayo.
 
-Khulisa i-African basil phakathi kwe-comfrey, ihehe ama-wasp alawula ama-fruit fly.
+I-sweet potato ingamboza umhlabathi inike ukudla, kodwa iziqu nezimpande zayo nazo zidinga indawo namanzi. Gcina indlela yokufinyelela ku-mango ivulekile.
 
-Vumela i-sweet potato imboze umhlabathi.
-
-Zonke lezi zitshalo zinika i-mango guild ukulawulwa kwezinambuzane, izinambuzane eziwusizo, i-mulch, nokudla.
+Hlulela isitshalo ngasinye ngalokho esikwenzayo engadini yakho; asikho isitshalo esihambisana nezinye esiqinisekisa ukulawula ama-fruit fly noma ezinye izinambuzane.
 
 ---
 
 **Ikhasi 18 — Isitshalo Ngasinye Masenze Umsebenzi Waso (Slide 18 — Let Every Plant Earn Its Place)**
 
-Nikeza isitshalo ngasinye se-guild umsebenzi ocacile okungenani owodwa.
+Nikeza isitshalo ngasinye se-guild umsebenzi ocacile nendawo eyanele yokuwenza.
 
-Singakhiqiza ukudla, sibophe i-nitrogen, sikhuphule amaminerali, sihehe izinambuzane eziwusizo, sixoshe izinambuzane, noma simboze umhlaba.
+Isitshalo esimboza umhlabathi singawuvikela sinike nokudla, kodwa singancintisana nomuthi omncane. Siqhathanise ne-mulch lapho amanzi enganele.
 
-I-sweet potato ingcono kune-mulch engenaso isitshalo ngoba inciphisa ukhula, igcina umswakama, futhi ikunikeza isivuno.
-
-Inhloso yi-guild esekela umuthi futhi edinga ukunakekelwa okuncane uma isisimile.
+Bhala ukukhula, umthunzi, umswakama womhlabathi nomonakalo ezitshalweni. Shintsha i-guild uma ubufakazi bubonisa ukuthi ilungu lidinga indawo eyengeziwe noma ukunakekelwa okuhlukile.
 
 ---
 

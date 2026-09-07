@@ -12,13 +12,11 @@ The aim is a strong system for South African conditions.
 
 **Slide 2 — Why Plant Guilds Matter**
 
-When soil is tired, crops struggle to grow.
+When soil is tired, find out what is limiting growth. Water, soil structure and different nutrients can all matter.
 
-Nitrogen is what most limits growth in degraded South African soils.
+Legumes can fix nitrogen through their partnership with rhizobia. Mulch returns plant material to the soil, and flowers can support helpful insects.
 
-Plants can take nitrogen from the air, return minerals through mulch, and call helpful insects into the garden.
-
-Together, they support the crops around them.
+Choose each plant for the conditions and the job your garden actually needs.
 
 ---
 
@@ -36,19 +34,17 @@ You can build a mango guild with each plant given a clear job.
 
 **Slide 4 — How Legumes Feed the Soil**
 
-Most plants need nitrogen for strong growth.
+Legumes partner with soil bacteria called rhizobia in root nodules. The bacteria convert nitrogen from the air into forms the legume can use.
 
-Legumes partner with soil bacteria called rhizobia.
-
-The bacteria pull nitrogen from the air and fix it in nodules on the roots.
-
-When roots die back, or the plant is cut, that nitrogen becomes available to neighbouring plants.
+Nitrogen in cut leaves and dead roots returns to the soil as organisms decompose that material. Cutting does not make all of it immediately available to neighbouring crops.
 
 ---
 
 **Slide 5 — Watch: Roots That Feed the Soil**
 
-Look at the roots below the soil. Small nodules show where rhizobia fix nitrogen, helping a living legume feed the soil around it.
+Look at the nodules on the legume root. Rhizobia help the legume use nitrogen from the air.
+
+Follow the separate decomposition stage: cut material and dead roots release nutrients as they break down.
 
 ---
 
@@ -66,25 +62,21 @@ Sesbania sesban suits warm, moist KZN coastal and Lowveld conditions. Do not con
 
 **Slide 7 — Sunn Hemp and the Waiting Soil**
 
-Sunn hemp is a fast annual option.
+Sunn hemp is a fast-growing annual legume for suitable warm conditions.
 
-It can reach 2 metres in one season and adds roughly 100 to 165kg of nitrogen per hectare from its above-ground biomass alone.
+Its growth and nitrogen contribution depend on the stand, nodulation, soil and season. Do not budget a fixed fertiliser saving from the crop name alone.
 
-After slashing and working it into the soil, do not expect the next crop to use that nitrogen at once.
-
-Soil organisms need 2-6 weeks to break down the plant material and release nitrogen in a form roots can take up.
+After cutting, decomposition takes time. Moisture, temperature and the material itself affect nutrient release; check local guidance before planting the next crop.
 
 ---
 
 **Slide 8 — Where to Place Nitrogen Fixers**
 
-Place nitrogen fixers uphill or upwind of fruit trees, so fertility moves downhill towards the fruit trees.
+Place nitrogen fixers where their mature size, shade and water needs fit the fruit trees and paths. Leave access for cutting and carrying mulch.
 
-In a food forest, plant nitrogen fixers at twice fruit-tree density early on.
+Do not rely on wind or downhill movement to deliver fertility to a tree. Return suitable cut material where mulch is needed.
 
-As the canopy closes, thin the nitrogen fixers.
-
-For a degraded field in a warm, moist KZN summer, Sesbania sesban is the practical fast annual choice.
+Sesbania sesban is a short-lived shrub or small tree, not an annual. Thin or prune support plants when observation shows increasing competition.
 
 ---
 
@@ -120,37 +112,29 @@ Ordinary comfrey can set viable seed and spread beyond where you planted it, so 
 
 **Slide 12 — Work With Helpful Insects**
 
-Permaculture works with biology rather than sprays.
+Many ladybirds eat aphids, and some parasitoid wasps attack caterpillars.
 
-Ladybirds eat aphids, while wasps parasitise caterpillars.
+Flowering plants such as African basil, borage and marigold can provide resources for useful insects. Observe which insects actually visit and whether crop damage changes.
 
-Flowering plants such as African basil, borage, and marigold attract these pest-controlling insects.
-
-They help build a living pest-control system around your crops that can strengthen every year.
+Flowers support pest management; they do not guarantee that an outbreak will stop. Use the Vegetables lesson to inspect damage and choose an appropriate response.
 
 ---
 
-**Slide 13 — Wild Garlic for Pest Control**
+**Slide 13 — Wild Garlic in a Diverse Planting**
 
-Wild garlic, Tulbaghia violacea, is a strong guild plant for pest management.
+Wild garlic, Tulbaghia violacea, is a drought-tolerant flowering plant for suitable sites. Its leaves and flowers have food uses when correctly identified.
 
-Its sulphur compounds repel aphids and whitefly.
-
-It is drought-tolerant, and Highveld frost-hardy once established.
-
-It is edible and multiplies easily to share. Interplant it with African basil so flowering plants attract aphid predators like ladybirds.
+Use it as part of a diverse planting, and observe insect visits. Do not promise that a ring of wild garlic will repel aphids or whitefly or cure an existing infestation.
 
 ---
 
 **Slide 14 — What Makes a Plant Guild**
 
-A plant guild is a group chosen to support one central tree, usually fruit or nut.
+A plant guild is a group chosen to support a central tree, usually fruit or nut.
 
-Each member has a job: fixing nitrogen, drawing up minerals, attracting beneficial insects, repelling pests, covering ground, or producing food.
+Members can produce food, fix nitrogen, supply mulch, support useful insects or cover the ground.
 
-The plants are selected as a community, not as separate crops.
-
-Once established, a well-built guild needs little from you.
+The plants still share light, water and space. Observe the guild, water during establishment and adjust plants that crowd the tree.
 
 ---
 
@@ -162,37 +146,31 @@ Look at the central mango and the plants around it. Notice how the guild works a
 
 **Slide 16 — Place and Cut the Sesbania**
 
-For a mango guild in KZN's Lowveld or coast, place Sesbania sesban on the north-east and north-west sides.
+For the mango example, assess sunlight and the mature size of Sesbania sesban before choosing its position. Keep room to reach both plants.
 
-Cut it back yearly for nitrogen and mulch.
+Pruning supplies mulch and can reduce shade. It does not end root competition for water and nutrients. Adjust pruning or spacing as the trees grow.
 
-Cutting stops it shading and competing with the mango.
-
-Plant Bocking 14 comfrey 60 to 80cm from the trunk in four spots, then chop and drop it regularly.
+Place Bocking 14 comfrey where it has room to grow and be cut, keeping the mango trunk and root collar clear of mulch.
 
 ---
 
 **Slide 17 — Fill the Guild’s Other Jobs**
 
-Place wild garlic in a ring at the outer edge for pest control.
+Use wild garlic and African basil as flowering members where the site suits them. Watch which useful insects visit.
 
-Grow African basil between the comfrey, drawing in wasps that control fruit flies.
+Sweet potato can cover ground and provide food, but its vines and roots also need space and water. Keep access to the mango clear.
 
-Let sweet potato carpet the ground.
-
-Together, these plants give the mango guild pest control, beneficial insects, mulch, and food.
+Judge each plant by what it does in your garden; no companion plant guarantees control of fruit flies or other pests.
 
 ---
 
 **Slide 18 — Let Every Plant Earn Its Place**
 
-Give every guild plant at least one clear function.
+Give every guild plant a clear job and enough room to do it.
 
-It may produce food, fix nitrogen, draw up minerals, attract helpful insects, repel pests, or cover the ground.
+A ground cover can protect soil and provide food, but it can also compete with a young tree. Compare it with mulch where water is limited.
 
-Sweet potato is better than bare mulch alone here because it suppresses weeds, holds moisture, and gives a harvest.
-
-The aim is a guild that supports the tree with little maintenance once established.
+Record growth, shade, soil moisture and crop damage. Change the guild when the evidence shows that a member needs more space or different care.
 
 ---
 

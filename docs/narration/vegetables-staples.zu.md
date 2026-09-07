@@ -129,19 +129,11 @@ ikhetha ibhedi yakho.
 
 **Ikhasi 6 — Imbewu Noma Isithombo? (Slide 6 — Seed or Seedling?)**
 
-Ezinye izitshalo azizithandi ukuphazanyiswa kwezimpande zazo. Zikhula kangcono uma
-zitshalwa ngqo lapho ezizokhulela khona. Izimbotyi, ukhathoni nommbila bakulelo qembu.
-
-Ezinye zikhula kangcono uma ziqala endaweni evikelekile — inaseli (nursery) — bese kamuva
-zisuselwa (transplanted). Amatamatisi nezitshalo zohlobo lwamakhabishi (brassicas —
-njengekhabishi, ubroccoli, ne-cauliflower) bakulelo qembu.
+Ezinye izitshalo zenza kangcono uma zihlwanyelwa lapho zizokhula khona. Ubhontshisi, izaqathi nommbila kulapho. Utamatisi nama-brassica kungaqala e-nursery evikelekile ngaphambi kokutshalwa kabusha.
 
 [pause]
 
-Noma yikuphi okhetha khona, ibanga phakathi kwezitshalo (spacing) libaluleke kakhulu
-kunalokho okuphakanyiswa yiphakethe lembewu. Amaphakethe embewu aphrintelwe izindawo
-ezipholile nezimanzi kakhulu kuneningi laseNingizimu Afrika. Nika izitshalo zakho indawo
-eningi kunebanga elincane kakhulu elikuphakethe.
+Sebenzisa iseluleko sesitshalo ne-cultivar oqobo, bese uhlola izikhala ngokomhlabathi, amanzi, isizini nobukhulu uma sesikhulile. Ungacabangi ukuthi zonke izikhwama zembewu zibhalelwe izwe elipholile nelinemvula eningi. Gcina izindlela nendawo eyanele yokunakekela izitshalo.
 
 ---
 
@@ -168,46 +160,25 @@ Leyo bhedi iba lula ukuyithuthukisa isizini ngasinye, ngoba uyekile ukuhamba phe
 
 **Ikhasi 8 — Isigqi Sokutshala Sigcina Ukudla Kuqhubeka (Slide 8 — A Sowing Rhythm Keeps Food Moving)**
 
-Ukutshala ngezigaba ezilandelanayo (succession planting) ngumkhuba wekhalenda, hhayi
-isitshalo esikhethekile.
+Ukutshala ngokulandelana kuwumkhuba wekhalenda. Khetha isitshalo esidliwa njalo ekhaya, bese uhlwanyela kancane ngezikhawu.
 
-Khetha into umuzi wakho oyidlayo ngempela njalo. Bese utshala isilinganiso esincane saso,
-futhi njalo.
-
-Tshala umugqa omfushane njalo emavikini amabili kuya kwamathathu.
+Amasonto amabili kuya kwamathathu angaba yisigqi sokuqala sezitshalo ezifanele, hhayi umthetho wesitshalo noma wesizini ngayinye. Hlola izinsuku kuze kuvunwe, ubhale okwenzeka ngempela.
 
 [pause]
 
-Ukumoshakala okuncane ngesikhathi sokugcwala okweqile. Ukudla okusha isikhathi eside.
-Kanti umsebenzi wenza wehlukaniswe kulo lonke isizini kunokuba uwele phezu kwakho
-ngasikhathi sinye.
-
-Uma ukushisa noma imvula enkulu icekela phansi ukutshala okukodwa, okunye kuyaqhubeka
-nokuthwala isizini.
-
-Yisiphi isitshalo esisheshayo ongasitshala ngamaqoqo amancane? Nquma ngasinye, bese uqala
-ngaso kuleli sonto.
+Ukuhlukanisa ukuhlwanyela kungasabalalisa isivuno nomsebenzi, kunciphise ukuncika ekutshaleni okukodwa. Ukushisa, isomiso noma izinambuzane kusengathinta ukuhlwanyela okuningi. Lungisa uhlelo ngalokho okubukile.
 
 ---
 
 **Ikhasi 9 — Tshala Kancane Futhi Njalo (Slide 9 — Sow Little and Often)**
 
-Nakhu ukubukeka kwakho ekwenzeni ngokoqobo.
+Hlwanyela iqoqo elincane, ubhale usuku, bese uhlwanyela elilandelayo lapho isitshalo nesizini kudinga khona.
 
-Tshala okokuqala. Bese emavikini amabili kuya kwamathathu kamuva, utshale okwesibili.
-Bese utshala okwesithathu. Bese utshala okwesine.
-
-Ngesikhathi ukutshala kwesine sekusenhlabathini, okokuqala sekulungele ukuvunwa. Isivuno
-siyaqala ukuhlangana.
+Esibonelweni sezikhawu zamasonto amabili kuya kwamathathu, ukuhlwanyela okune kuzoba sezigabeni ezahlukene. Okokuqala akulungeli ukuvunwa ngokuzenzakalela lapho kutshalwa okwesine.
 
 [pause]
 
-Emavikini amabili kuya kwamathathu kuyisigqi sokuqala, hhayi umthetho ongaguquki.
-Isitshalo samaqabunga senkathi epholile singahlala isikhathi eside. Ukushisa
-kungasheshisa izinto, noma kubangele ukwehluleka.
-
-Bheka lokho igadi yakho ngokwayo ekwenzayo, ubuye uguqule leso sikhathi esiphakathi.
-Lokho kubuka yikhono ngokwalo.
+Hlola isikhathi sesivuno sesitshalo ne-cultivar, usiqhathanise nokukhula kwangempela. Bhala usuku lwesivuno sokuqala nesokugcina. Sebenzisa lezo zinsuku ukulungisa isikhawu esilandelayo nokunciphisa izikhala zokudla.
 
 ---
 
@@ -231,7 +202,7 @@ Amaphuzi asakazeka phansi emhlabeni, enza umthunzi enhlabathini agcine ukuswakam
 Isikhathi siyabaluleka. Qala ngokutshala ummbila kuqala, ukuze ube namandla anele
 ukuthwala izimbotyi lapho ziqala ukukhwela.
 
-Izitshalo ezintathu, indawo eyodwa yomhlaba, kanti azikho ezilwa nezinye.
+Izitshalo ezintathu zabelana ngomhlaba owodwa, kodwa zisengancintisana ngokukhanya, amanzi nezakhamzimba. Bheka ukukhula kwazo, ulungise izikhala nesikhathi sokutshala.
 
 ---
 

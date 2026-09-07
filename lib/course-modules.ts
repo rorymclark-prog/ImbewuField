@@ -622,15 +622,15 @@ export const COURSE_MODULES: CourseModule[] = [
     lessons: [
       {
         id: "vegetables-staples-l1",
-        infographicUrl: "/course-images/vegetables-staples/vegetables-staples-l1.jpg",
-        infographicAlt: "A raised bed about 1.2 metres wide, with paths on both sides, so a person can reach the middle from either side without ever standing on the growing soil.",
+        infographicUrl: "/course-art/vegetables-staples/bed-reach.jpg",
+        infographicAlt: "A grower reaches the centre of a narrow pegged rectangular bed while kneeling on the path outside the growing soil.",
         title: "Preparing and Planting Your Beds",
-        body: "Good beds start before you plant a single seed. No-dig beds — layers of compost and mulch over the existing ground — suit most smallholder soils and save labour; double-digging, loosening two spade-depths down, suits compacted or heavy clay soil that needs deeper drainage.\n\nKeep beds 1 to 1.2m wide, so you can reach the centre from either side without ever standing on the growing area — compaction is the enemy of root growth. Raised beds help in high-rainfall areas with poor drainage; sunken beds hold moisture better in dry regions.\n\nTransplant seedlings for crops that need a head start — tomatoes, brassicas — and direct-seed fast growers like beans and carrots, which resent root disturbance. Crowded plants compete for light and water and underperform badly; space for your climate, not the seed packet's minimum. This weekend, mark out and prepare one 1.2m by 3m bed.",
+        body: "Compacted soil loses its air spaces. Roots slow down. Water soaks in differently. The bed gets harder to work every season.\n\nThe protection is simple. Permanent paths, and a bed narrow enough to reach into from both sides.\n\nOne metre to one point two metres wide. That's the working number. At that width you can reach the centre from either path, and your feet never touch the growing area.\n\nNow think about your own beds. Can you reach the middle without stepping inside? Go and try it before you plant anything else.\n\nThere's no single bed shape that's right everywhere.\n\nStart with the least disturbance that solves your problem.\n\nNo-dig suits most garden soils. Leave the structure alone and build fertility on top.\n\nDouble-digging is hard work, and it should answer a real problem — compacted ground or heavy clay. Not habit.\n\nRaised beds suit wet ground, where water needs somewhere to drain away to.\n\nSunken beds suit dry ground, where you want to catch and hold what rain you get.\n\nLook at your own ground after heavy rain. Does water sit, or does it run off? That answer chooses your bed.\n\nSome crops do better sown straight where they will grow. Beans, carrots and maize belong in that group. Tomatoes and brassicas can start in a protected nursery before transplanting.\n\nUse guidance for the actual crop and cultivar, then check spacing against local soil, water, season and mature size. Do not assume every seed packet was written for a cooler, wetter country. Keep paths and enough room to tend the plants.\n\nBefore you plant, mark the bed out.\n\nOne point two metres wide. Three metres long. One practice bed.\n\nUse pegs and string. Mark the rectangle, and mark both access paths.\n\nThen prepare for your own soil — no-dig first, and dig deeper only if your ground genuinely needs it.\n\nA string line turns an idea into a decision. Once the paths exist, keep them. Once the growing area exists, protect it.\n\nThat bed gets easier to improve every season, because you stopped walking on it.",
         keyPoints: [
           "Keep beds 1-1.2m wide so you never need to step on the growing area",
           "No-dig suits most soils; double-dig only compacted or heavy clay ground",
           "Transplant crops needing a head start; direct-seed crops that resent root disturbance",
-          "Crowded plants underperform — space generously for your local climate",
+          "Check spacing for the actual crop and cultivar against local soil, water and season",
         ],
         quiz: [
           {
@@ -659,14 +659,15 @@ export const COURSE_MODULES: CourseModule[] = [
       },
       {
         id: "vegetables-staples-l2",
-        infographicUrl: "/course-images/vegetables-staples/vegetables-staples-l2.jpg",
-        infographicAlt: "One bed over three seasons: a fast crop is harvested, then a new sowing goes in beside a slower crop that is still growing, so the bed is never empty.",
+        sources: [{"title": "West Virginia University: succession planting", "url": "https://extension.wvu.edu/lawn-gardening-pests/news/2019/01/15/basics-of-succession-planting"}],
+        infographicUrl: "/course-art/vegetables-staples/sowing-record.svg",
+        infographicAlt: "Four record-keeping steps: sow, observe, sow again according to crop and season, and record actual harvest dates. These are not guaranteed maturity stages.",
         title: "Succession Planting and Intercropping",
-        body: "Succession planting stops the feast-or-famine cycle. Instead of sowing all your spinach or lettuce at once, sow a short row every two to three weeks — you harvest steadily instead of drowning in one glut then running short for a month.\n\nIntercropping puts complementary plants together. The Three Sisters — maize, beans, and pumpkin — is the classic southern African example: maize gives beans a climbing frame, beans fix nitrogen for the maize, and pumpkin's broad leaves shade out weeds beneath both.\n\nEvery region has a hungry gap — weeks between one harvest ending and the next beginning, when stored food runs low before fresh food arrives. Know when yours falls, and plan a succession sowing specifically to fill it.",
+        body: "Succession planting is a calendar habit. Choose a crop your household eats often, then sow small amounts at intervals.\n\nTwo to three weeks can be a starting rhythm for suitable crops, not a rule for every crop or season. Check days to harvest and record what actually happens.\n\nStaggering sowings can spread harvest and labour and reduce reliance on one planting. Heat, drought or pests may still affect several sowings. Adjust the plan from your observations.\n\nSow one small batch, record its date, then sow the next when your crop and season call for it.\n\nIn a two-to-three-week example, four sowings will be at different stages. The first is not automatically ready when the fourth is planted.\n\nCheck the crop and cultivar’s harvest time, then compare it with actual growth. Record the first and last harvest dates. Use those dates to adjust the next sowing interval and reduce gaps.\n\nIntercropping is not just crowding different plants together. Each plant needs a job, and enough space to do it.\n\nThe three sisters is the clearest example.\n\nMaize gives height and structure.\n\nBeans climb the maize, and store as protein.\n\nPumpkin spreads across the ground, shading the soil and holding moisture.\n\nTiming matters. Establish the maize first, so it's strong enough to carry the beans when they start to climb.\n\nThree crops share one piece of ground, but they can still compete for light, water and nutrients. Watch their growth and adjust spacing and timing.\n\nEvery place has a hungry gap. The weeks when the last harvest has run low and the next one isn't ready.\n\nYours might come after stored maize runs out. It might come before winter greens are ready. It might come in a dry period when water limits the garden.\n\nDon't copy somebody else's calendar. Name your own months first.\n\nWrite them down. Then choose the crop and the sowing date that puts food into that gap.\n\nThat's planning backwards, and it's the difference between a garden that looks productive and a household that eats.",
         keyPoints: [
 
-          "Sow small successive batches every 2-3 weeks instead of one large planting",
-          "The Three Sisters — maize, beans, pumpkin — is southern Africa's classic intercrop",
+          "Use small batches and adjust the sowing interval to crop, cultivar, season and harvest records",
+          "The Three Sisters example combines maize, climbing beans and pumpkin; plan spacing and timing",
           "Each region has a hungry gap between harvests — plan a sowing specifically to fill it",
           "Intercropped plants should support each other, not just share space",
         ],
@@ -686,12 +687,12 @@ export const COURSE_MODULES: CourseModule[] = [
             q: "In the Three Sisters planting, what job does the bean plant do for the system?",
             options: [
               "It shades out weeds",
-              "It fixes nitrogen that feeds the maize and pumpkin",
+              "It provides a climbing bean crop that can be harvested and stored for protein",
               "It climbs the pumpkin vines",
               "It repels pests from the maize",
             ],
             correct: 1,
-            rationale: "Beans are the nitrogen-fixing partner in this trio — maize provides the climbing structure and pumpkin covers the ground, but nitrogen comes from the beans.",
+            rationale: "Maize provides structure, beans provide a protein crop and pumpkin covers ground. Nitrogen in legume residues returns through decomposition, not a guaranteed direct supply to neighbouring crops.",
           },
         ],
       },
@@ -700,7 +701,7 @@ export const COURSE_MODULES: CourseModule[] = [
         infographicUrl: "/course-images/vegetables-staples/vegetables-staples-l3.jpg",
         infographicAlt: "Three staple crops together: a tall grain stalk, a climbing vine on a pole, and a root crop shown half below the ground.",
         title: "Staple Crops: Maize, Beans, and Root Vegetables",
-        body: "A staple crop is calorie-dense, stores well, and often carries cultural weight. Maize is southern Africa's central staple — choose open-pollinated varieties over hybrids if you want to save seed, since hybrid seed won't breed true to the parent plant next season.\n\nBeans, both Phaseolus and Vigna species, are the most important protein crop for most smallholders — productive, storable dry, and nitrogen-fixing in the ground while they grow.\n\nSweet potatoes are drought-tolerant, productive even on poor soil, and give you both a root harvest and edible leaves. Amadumbe, or taro, is an underused traditional staple well suited to KZN and coastal conditions, tolerating wetter ground than maize.\n\nGrowing at least two staples together, not relying on one alone, protects your household against any single crop failing in a bad season.",
+        body: "A staple earns its place because it feeds the household beyond the day of harvest.\n\nIt carries energy or protein. It stores, or it stays in the ground until you need it. And often it carries cultural memory too.\n\nOne staple leaves you vulnerable. Two or more give you options when weather or pests hit.\n\nGrow at least two. Not one.\n\nWhich staple does your household rely on most heavily right now? That's the one whose failure would hurt most — so that's the one that needs a companion.\n\nEach staple protects you against something different.\n\nMaize gives calories, and stores dry. Open-pollinated maize also lets you save your own seed, if you manage isolation and selection.\n\nBeans and cowpeas give a storable protein harvest.\n\nSweet potato tolerates dry periods, and its leaves are edible too.\n\nAmadumbe handles wetter ground, where other staples struggle.\n\nNotice that they fail in different conditions. That's the whole point.\n\nResilience doesn't mean nothing fails.\n\nIt means one failure doesn't finish your household's food plan.\n\nOne crop is one point of failure.\n\nTwo or more staples give you more ways to keep eating.\n\nDifferent crops use water, soil and seasons differently. That difference is the protection.",
         keyPoints: [
           "Open-pollinated maize lets you save seed; hybrid seed won't breed true next season",
           "Beans are the key protein crop — productive, storable, and nitrogen-fixing",
@@ -734,10 +735,10 @@ export const COURSE_MODULES: CourseModule[] = [
       },
       {
         id: "vegetables-staples-l4",
-        infographicUrl: "/course-images/vegetables-staples/vegetables-staples-l4.jpg",
-        infographicAlt: "A pest on a leaf, and three ways to deal with it without chemicals: a beneficial insect, a physical barrier, and picking it off by hand.",
+        infographicUrl: "/course-art/vegetables-staples/inspect-leaf.jpg",
+        infographicAlt: "A grower inspects the underside of an attached leaf with a magnifying glass, with a blank notebook on the path. An illustrative observation scene, not a species-identification plate.",
         title: "Pest and Disease Management Without Chemicals",
-        body: "Pests usually signal a system out of balance — a stressed plant, a monoculture, or natural predators disrupted by chemical use. Address the imbalance and the pest pressure often eases on its own.\n\nThe basic neem spray — neem oil, a small amount of soft soap as an emulsifier, and water — is a non-negotiable tool for any smallholder facing soft-bodied pests like aphids.\n\nBiological controls do the rest: ladybirds hunt aphids, braconid wasps parasitise caterpillars, spiders take whitefly. Companion planting supports them — basil near tomatoes, nasturtium drawing pests from brassicas, marigold alongside legumes.\n\nBefore reaching for any treatment, check whether it's really a pest problem at all. Yellow leaves are just as often a soil or watering issue as a bug problem — treating the wrong cause wastes time and money.",
+        body: "Pest pressure usually rises for a reason.\n\nPlants under stress. One crop dominating the ground. Or broad chemical use that has already removed the predators that were helping you.\n\nSo before you treat anything, look at the whole system.\n\nIs the plant short of water? Is the soil compacted, or hungry? Are predators already working on the problem for you?\n\nA yellow leaf is not automatically an insect. It can be water, nutrition, or root damage. Find out which before you act.\n\nWork through four steps, in order.\n\nOne. Observe. Look at the damage pattern, the underside of the leaf, the stem, and the plants nearby.\n\nTwo. Check for stress. Soil moisture, roots, spacing, nutrition, drainage.\n\nThree. Protect what's helping you. Beneficial insects are doing work you'd otherwise do yourself.\n\nFour. Only then, act — and start with the lightest thing that works. Physical removal and better plant health solve most small outbreaks.\n\nIf you use a neem product, follow the label. Don't improvise a stronger mixture. Even lower-risk products harm the wrong insects when they're misused.\n\nBe honest with yourself about which step you usually skip.",
         keyPoints: [
           "Pests often signal an imbalance — plant stress, monoculture, or disrupted natural predators",
           "The neem, soft soap, and water spray is a core non-chemical tool for soft-bodied pests",
@@ -901,114 +902,115 @@ export const COURSE_MODULES: CourseModule[] = [
     lessons: [
       {
         id: "plant-guilds-l1",
-        infographicUrl: "/course-images/plant-guilds/plant-guilds-l1.jpg",
-        infographicAlt: "A hillside cut open to show what happens underground: leafy plants on the upper slope with round nodules along their roots, and fine trails of nutrients running downhill through the soil to reach a fruit tree standing lower down.",
+        sources: [{"title": "World Agroforestry: Sesbania sesban", "url": "https://apps.worldagroforestry.org/treedb/AFTPDFS/Sesbania_sesban.PDF"}, {"title": "University of Minnesota: nitrogen in soils", "url": "https://extension.umn.edu/agriculture/crop-production/nutrient-management-for-minnesota-crops/understanding-nitrogen-in-soils"}],
+        infographicUrl: "/course-art/plant-guilds/root-nodules.jpg",
+        infographicAlt: "A schematic legume root with nodules and a magnified rhizobia inset; nutrient release through decomposition is explained separately.",
         title: "Nitrogen Fixers: Plants That Feed the Soil",
-        body: "Nitrogen is what most limits growth in degraded South African soils, and it's free from the air if you grow the right plants. Legumes partner with soil bacteria called rhizobia, pulling nitrogen from the air and fixing it in root nodules. When roots die back or the plant is cut, that nitrogen becomes available to neighbours.\n\nUseful nitrogen-fixing trees for South African conditions: Senegalia, formerly Acacia, species and relatives like flat-crown (Albizia adianthifolia); tagasaste for the Western Cape and highland zones — it self-seeds readily, so plant with care near untransformed land; and Sesbania sesban, not Sesbania punicea, the red-flowered invasive relative, which grows fast in warm, moist KZN coastal and Lowveld conditions.\n\nFor a fast annual option, sunn hemp reaches 2 metres in one season and adds roughly 100 to 165kg of nitrogen per hectare from its above-ground biomass alone.",
+        body: "When soil is tired, find out what is limiting growth. Water, soil structure and different nutrients can all matter.\n\nLegumes can fix nitrogen through their partnership with rhizobia. Mulch returns plant material to the soil, and flowers can support helpful insects.\n\nChoose each plant for the conditions and the job your garden actually needs.\n\nLegumes partner with soil bacteria called rhizobia in root nodules. The bacteria convert nitrogen from the air into forms the legume can use.\n\nNitrogen in cut leaves and dead roots returns to the soil as organisms decompose that material. Cutting does not make all of it immediately available to neighbouring crops.\n\nUseful nitrogen-fixing trees include Senegalia, formerly Acacia, species and relatives like flat-crown, Albizia adianthifolia.\n\nTagasaste suits the Western Cape and highland zones.\n\nIt self-seeds readily, so plant it with care near untransformed land.\n\nSesbania sesban suits warm, moist KZN coastal and Lowveld conditions. Do not confuse it with Sesbania punicea, the red-flowered invasive relative.\n\nSunn hemp is a fast-growing annual legume for suitable warm conditions.\n\nIts growth and nitrogen contribution depend on the stand, nodulation, soil and season. Do not budget a fixed fertiliser saving from the crop name alone.\n\nAfter cutting, decomposition takes time. Moisture, temperature and the material itself affect nutrient release; check local guidance before planting the next crop.\n\nPlace nitrogen fixers where their mature size, shade and water needs fit the fruit trees and paths. Leave access for cutting and carrying mulch.\n\nDo not rely on wind or downhill movement to deliver fertility to a tree. Return suitable cut material where mulch is needed.\n\nSesbania sesban is a short-lived shrub or small tree, not an annual. Thin or prune support plants when observation shows increasing competition.",
         keyPoints: [
-          "Legumes fix atmospheric nitrogen through rhizobia bacteria in their root nodules",
-          "Sunn hemp adds roughly 100-165kg of nitrogen per hectare from above-ground biomass in one season",
-          "Plant nitrogen fixers uphill or upwind of fruit trees so fertility moves downhill to them",
-          "In food forests, plant nitrogen fixers at twice fruit-tree density early on, then thin as canopy closes",
+          "Rhizobia in legume root nodules fix nitrogen from the air",
+          "Residues return nutrients as they decompose; cutting is not instant fertiliser",
+          "Sunn hemp is annual; Sesbania sesban is a short-lived shrub or small tree",
+          "Choose placement from mature size, light, water and access; monitor competition"
         ],
         quiz: [
           {
-            q: "A farmer slashes her sunn hemp and works it into the soil. When does the nitrogen become available to her next crop?",
-            options: [
-              "Immediately on cutting",
-              "Over 2-6 weeks as soil organisms break down the plant material",
-              "Only after the next rain season",
-              "Never — green manure locks nitrogen away",
+            "q": "After a legume is cut, how do its residues contribute nitrogen to the soil?",
+            "options": [
+              "All nitrogen becomes available immediately",
+              "Organisms decompose the residues; conditions affect the timing",
+              "Wind carries nitrogen straight to fruit-tree roots",
+              "The cut crop can no longer affect the soil"
             ],
-            correct: 1,
-            rationale: "Soil organisms need time to decompose the plant material and convert its nitrogen into a form roots can take up — that's a matter of weeks, not days.",
+            "correct": 1,
+            "rationale": "Nitrogen in plant material returns through decomposition. Moisture, temperature and residue quality affect availability."
           },
           {
-            q: "Which is the most practical fast annual nitrogen fixer for a KZN smallholder improving a degraded field in summer?",
-            options: [
-              "Tagasaste",
-              "Sesbania sesban",
-              "Oats, a winter grass",
-              "Khakibos, via allelopathic root exudates",
+            "q": "Which description correctly distinguishes these two plants?",
+            "options": [
+              "Both are annual grasses",
+              "Sunn hemp is an annual legume; Sesbania sesban is a short-lived shrub or small tree",
+              "Sesbania sesban is an annual and sunn hemp is a fruit tree",
+              "Both supply a guaranteed quantity of fertiliser"
             ],
-            correct: 1,
-            rationale: "Sesbania sesban is fast-growing in exactly these warm, moist summer conditions and fixes nitrogen at high volume — the other options are either wrong season or don't fix nitrogen at all.",
-          },
+            "correct": 1,
+            "rationale": "Plant life cycle matters for placement and management. Neither plant name guarantees a fixed fertiliser saving."
+          }
         ],
       },
       {
         id: "plant-guilds-l2",
-        infographicUrl: "/course-images/plant-guilds/plant-guilds-l2.jpg",
-        infographicAlt: "Two jobs in one picture. On the left a hand cuts a large-leaved plant and drops the leaves onto the soil at the base of a tree, building a mulch layer. On the right, low flowering plants with bees, a hoverfly and a ladybird arriving at the flowers.",
+        sources: [{"title": "SANBI: Tulbaghia violacea", "url": "https://pza.sanbi.org/tulbaghia-violacea"}],
+        infographicUrl: "/course-art/plant-guilds/chop-and-drop.jpg",
+        infographicAlt: "A grower places cut leaves on the soil while leaving the tree trunk clear; a parked wheelbarrow holds more leaves. The illustration does not establish cultivar identity.",
         title: "Mulch Plants and Pest Management",
-        body: "Some plants have deep, wide-ranging roots that draw up minerals other crops can't reach — when cut and left as mulch, known as chop and drop, they return that material to the surface. Comfrey — use the sterile Bocking 14 cultivar, Symphytum times uplandicum, which won't spread by seed — is the classic example. How much this actually adds to soil fertility is debated among researchers, but the mulch value — moisture retention, weed suppression, steady organic matter — is well proven regardless.\n\nFor pests, permaculture works with biology rather than sprays. Ladybirds eat aphids, wasps parasitise caterpillars. Flowering plants like African basil, borage, and marigolds attract these predators and build a pest-control system that strengthens every year.\n\nIndigenous wild garlic, Tulbaghia violacea, is a standout — drought-tolerant, Highveld frost-hardy once established, and its sulphur compounds repel aphids and whitefly. It's edible too, and multiplies easily to share.",
+        body: "Some plants grow deep, wide-ranging roots.\n\nThose roots can draw up minerals that other crops cannot reach.\n\nWhen you cut the plant and leave it on the ground, chop and drop returns that material to the surface.\n\nThis helps hold moisture, suppress weeds, and build steady organic matter, even when the exact fertility gain is debated.\n\nWatch the cut leaves lying around living plants. They protect the soil surface, hold moisture, and slowly become organic matter as soil life breaks them down.\n\nComfrey is a classic mulch plant because of its deep roots.\n\nUse Bocking 14 comfrey, Symphytum times uplandicum.\n\nThis cultivar is sterile and will not spread by seed.\n\nOrdinary comfrey can set viable seed and spread beyond where you planted it, so the cultivar choice matters.\n\nMany ladybirds eat aphids, and some parasitoid wasps attack caterpillars.\n\nFlowering plants such as African basil, borage and marigold can provide resources for useful insects. Observe which insects actually visit and whether crop damage changes.\n\nFlowers support pest management; they do not guarantee that an outbreak will stop. Use the Vegetables lesson to inspect damage and choose an appropriate response.\n\nWild garlic, Tulbaghia violacea, is a drought-tolerant flowering plant for suitable sites. Its leaves and flowers have food uses when correctly identified.\n\nUse it as part of a diverse planting, and observe insect visits. Do not promise that a ring of wild garlic will repel aphids or whitefly or cure an existing infestation.",
         keyPoints: [
-          "Chop-and-drop mulch plants return nutrients to the surface where roots can reach them",
-          "Use Bocking 14 comfrey (Symphytum x uplandicum) — the sterile cultivar that won't spread by seed",
-          "Flowering plants like borage, African basil, and marigold attract pest-controlling insects",
-          "Wild garlic (Tulbaghia violacea) is drought-tolerant, edible, and repels aphids and whitefly",
+          "Chop and drop protects the surface and returns organic material",
+          "Use correctly sourced Bocking 14 comfrey when avoiding spread by seed",
+          "Flowering plants can support useful insects; observe actual visitors",
+          "Wild garlic is one member of a diverse planting, not a guaranteed pest remedy"
         ],
         quiz: [
           {
-            q: "A farmer has severe aphids on her brassicas and wants a long-term biological fix rather than spraying. Best approach?",
-            options: [
-              "Plant comfrey nearby to strengthen the plants",
-              "Interplant wild garlic and African basil so flowering plants attract aphid predators like ladybirds",
-              "Remove all flowering plants nearby",
-              "Apply compost tea weekly",
+            "q": "Aphids are damaging a crop. What is a useful approach?",
+            "options": [
+              "Assume every yellow leaf is an aphid problem",
+              "Inspect damage and predators, support useful insects and choose a response from the evidence",
+              "Remove all flowers",
+              "Assume wild garlic will cure the outbreak"
             ],
-            correct: 1,
-            rationale: "This builds a standing population of aphid predators around the vulnerable crop — a lasting fix rather than a one-time treatment.",
+            "correct": 1,
+            "rationale": "Flowers can support helpful insects, but an outbreak needs observation and an appropriate response. Companion plants do not guarantee control."
           },
           {
-            q: "Why use Bocking 14 comfrey specifically, rather than ordinary comfrey?",
-            options: [
-              "It grows faster",
-              "It's sterile and won't spread from seed, unlike ordinary comfrey",
-              "It tolerates more shade",
-              "It fixes nitrogen, unlike ordinary comfrey",
+            "q": "Why choose the Bocking 14 comfrey cultivar when avoiding seed spread?",
+            "options": [
+              "It never needs water",
+              "It is sterile and does not spread by seed",
+              "It fixes nitrogen in nodules",
+              "It has no roots"
             ],
-            correct: 1,
-            rationale: "Bocking 14 was bred specifically to be seedless. Ordinary comfrey sets viable seed and can spread beyond where you planted it.",
-          },
+            "correct": 1,
+            "rationale": "The sterile cultivar does not spread by seed. Confirm cultivar identity when sourcing plants; an illustration cannot prove it."
+          }
         ],
       },
       {
         id: "plant-guilds-l3",
-        infographicUrl: "/course-images/plant-guilds/plant-guilds-l3.jpg",
-        infographicAlt: "Looking straight down on a planted circle: one small tree at the centre, ringed by five clearly different companion plants — a spiky clump, a broad-leaved patch, a low mat, a grassy tuft and a spreading ground cover — each a different shape so each reads as a different job.",
+        infographicUrl: "/course-art/plant-guilds/mango-guild.jpg",
+        infographicAlt: "An illustrative mango guild with separate companion patches and access gaps. Plant identity and spacing must be checked on site.",
         title: "Building a Plant Guild: A Practical Example",
-        body: "A plant guild is a group of plants chosen to support one central tree, usually fruit or nut. Each guild member does at least one job: fixing nitrogen, drawing up minerals, attracting beneficial insects, repelling pests, covering ground, or producing food. A well-built guild needs little from you once established, because the plants support each other.\n\nExample — a mango guild for KZN's Lowveld or coast: Sesbania sesban on the north-east and north-west sides, cut back yearly for nitrogen and mulch. Comfrey planted 60 to 80cm from the trunk in four spots, chopped and dropped regularly. Wild garlic in a ring at the outer edge for pest control. African basil between the comfrey, drawing in wasps that control fruit flies. Sweet potato carpeting the ground — suppressing weeds, holding moisture, and giving you a second harvest.",
+        body: "A plant guild is a group chosen to support a central tree, usually fruit or nut.\n\nMembers can produce food, fix nitrogen, supply mulch, support useful insects or cover the ground.\n\nThe plants still share light, water and space. Observe the guild, water during establishment and adjust plants that crowd the tree.\n\nLook at the central mango and the plants around it. Notice how the guild works as one team, with each plant supporting the tree in a different way.\n\nFor the mango example, assess sunlight and the mature size of Sesbania sesban before choosing its position. Keep room to reach both plants.\n\nPruning supplies mulch and can reduce shade. It does not end root competition for water and nutrients. Adjust pruning or spacing as the trees grow.\n\nPlace Bocking 14 comfrey where it has room to grow and be cut, keeping the mango trunk and root collar clear of mulch.\n\nUse wild garlic and African basil as flowering members where the site suits them. Watch which useful insects visit.\n\nSweet potato can cover ground and provide food, but its vines and roots also need space and water. Keep access to the mango clear.\n\nJudge each plant by what it does in your garden; no companion plant guarantees control of fruit flies or other pests.\n\nGive every guild plant a clear job and enough room to do it.\n\nA ground cover can protect soil and provide food, but it can also compete with a young tree. Compare it with mulch where water is limited.\n\nRecord growth, shade, soil moisture and crop damage. Change the guild when the evidence shows that a member needs more space or different care.",
         keyPoints: [
-          "A guild supports one central tree through a community of plants, each with a job",
-          "Mango guild: Sesbania (nitrogen), comfrey (mulch), wild garlic (pest control), basil (beneficials), sweet potato (ground cover)",
-
-          "Guild plants should each serve at least one function — food, nitrogen, pest control, or ground cover",
-          "A well-designed guild needs little maintenance once established",
+          "Give each guild member a clear role and growing room",
+          "Pruning can reduce shade but does not remove root competition",
+          "Keep the central tree trunk clear and leave access for care",
+          "Monitor light, moisture, growth and pests, then adjust the guild"
         ],
         quiz: [
           {
-            q: "In a mango guild, why cut the Sesbania sesban back every year rather than let it grow tall?",
-            options: [
-              "It's allelopathic to the mango's roots",
-              "Cutting stops it shading and competing with the mango, while giving you mulch material",
-              "It only fixes nitrogen in year one",
-              "Tall Sesbania attracts fruit-eating birds",
+            "q": "Why prune or thin a support plant that is crowding a young mango?",
+            "options": [
+              "Tall plants stop fixing nitrogen",
+              "To reduce shade and obtain suitable mulch, while still monitoring root competition",
+              "Pruning removes every competing root",
+              "A fixed date guarantees the tree will be safe"
             ],
-            correct: 1,
-            rationale: "Left uncut, Sesbania would grow taller than the young mango and steal its light — annual cutting solves that and produces useful mulch at the same time.",
+            "correct": 1,
+            "rationale": "Pruning can reduce shade and provide mulch. The plants continue sharing water and nutrients, so spacing and growth still need checking."
           },
           {
-            q: "Why is sweet potato a better ground cover choice here than bare mulch alone?",
-            options: [
-              "It competes with the mango for water, reducing the mango's irrigation need",
-              "It's a legume fixing nitrogen at the mango's roots",
-              "It suppresses weeds, holds moisture, and produces a harvest, all at once",
-              "Its tubers aerate the soil for the mango's roots",
+            "q": "What should guide using sweet potato as ground cover near a young tree?",
+            "options": [
+              "It removes the tree’s need for water",
+              "Its roots never compete",
+              "Its food and soil-cover benefits, balanced against water, space and access",
+              "Any living cover is always better than mulch"
             ],
-            correct: 2,
-            rationale: "Sweet potato does everything bare mulch does for weed and moisture control, and adds a food harvest on top — that's the guild principle in action.",
-          },
+            "correct": 2,
+            "rationale": "Ground cover can have several useful roles, but the site must support both plants. Mulch may be more suitable where water or space is limited."
+          }
         ],
       },
     ],
@@ -1025,36 +1027,36 @@ export const COURSE_MODULES: CourseModule[] = [
         infographicUrl: "/course-images/food-forest/food-forest-l1.jpg",
         infographicAlt: "A food forest cut through from the side, showing seven layers stacked from tall canopy trees down through smaller trees, shrubs, herbs and ground cover, with root crops below the soil line and a climber on a trunk. Sunlight reaches down between the layers.",
         title: "The Seven Layers: How a Forest Feeds Itself",
-        body: "An indigenous forest fills every vertical layer with different plants, each using the light and moisture available at its level. A food forest copies this using productive species instead. The seven layers: tall canopy (10m+), sub-canopy (4-8m), shrub (1-3m), herbaceous (under 1m), ground cover, root crops, and climbers using vertical space.\n\nFor a Highveld example: canopy might be a large Wild Fig or pecan; sub-canopy carries lemon, naartjie, and black mulberry; shrub layer holds Cape gooseberry and indigenous Wild Medlar; herbaceous layer holds vegetables and wild garlic; ground cover is sweet potato; climbers include granadilla.\n\nOnce established, a food forest needs far less labour than a vegetable garden the same size — no annual ploughing, no repeated planting. The first two to three years need real establishment work. By year three to five, the canopy closes and the system starts largely caring for itself.",
+        body: "A food forest can give food from many levels of the same piece of land.\n\nIt can use light and moisture that a single crop would leave unused.\n\nThe first years need steady work.\n\nLater, shade, leaf-fall mulch, and mixed roots help the system care for itself.\n\nAn indigenous forest fills the space from the highest branches to the roots.\n\nDifferent plants use the light and moisture available at their level.\n\nA food forest copies this pattern with productive species.\n\nThe result is not one crop in one row, but many useful layers growing together.\n\nThe seven layers describe planting roles, not fixed heights for every species.\n\nCanopy and sub-canopy trees rise above shrubs and herbaceous plants. Ground covers spread over the surface, root crops grow below, and climbers use a suitable support.\n\nCheck mature size and light needs before fitting these layers together.\n\nUse this as a design example, not a planting list for every Highveld farm.\n\nA Wild Fig or pecan may occupy the canopy, with suitable smaller trees, shrubs and food crops below.\n\nCheck each species and cultivar against your frost, available water, mature size and light. Frost-sensitive plants such as granadilla need particular care in a cold site.\n\nThe first years need steady establishment work: watering, mulch, weed control and protection.\n\nAs trees grow, shade and leaf litter can reduce evaporation from the soil surface. They also change how much light and water the lower plants receive.\n\nThere is no fixed year when every food forest looks after itself. Keep observing, pruning and adjusting the planting.",
         keyPoints: [
-          "Seven layers: canopy, sub-canopy, shrub, herbaceous, ground cover, root crops, climbers",
-          "Each vertical layer uses different light and moisture, so layers don't compete with each other",
-          "The first 2-3 years need real establishment work; by year 3-5 the system largely runs itself",
-          "Pecan, black mulberry, Wild Plum, loquat, and quince are practical Highveld species",
+          "Seven roles: canopy, sub-canopy, shrub, herbaceous, ground cover, root crops and climbers",
+          "Mature size and light needs determine whether layers fit",
+          "Shade and leaf litter can reduce surface evaporation, while trees still use water",
+          "Establishment and ongoing care follow actual growth rather than a fixed year"
         ],
         quiz: [
           {
-            q: "A food forest has all seven layers planted. Which layer struggles most and needs the most attention in years 1-2?",
-            options: [
-              "Tall canopy trees, exposed to wind and frost",
-              "The climbing layer, which grows too fast",
-              "Herbaceous and ground cover layers, competing with weeds before canopy closes",
-              "The root layer, blocked by tree roots",
+            "q": "Low plants in a new food forest are being crowded by weeds. What should guide the work?",
+            "options": [
+              "Wait until year five",
+              "Ignore them because seven layers are planted",
+              "Observe competition and maintain appropriate weed control, water and mulch",
+              "Add more trees without checking light"
             ],
-            correct: 2,
-            rationale: "Before the canopy closes and shades out competition, the low layers are fighting weeds on open, sunlit ground — that's where the establishment labour goes.",
+            "correct": 2,
+            "rationale": "New plantings need care according to their condition. A design label or elapsed year does not remove competition."
           },
           {
-            q: "Why is an established food forest more water-efficient than an annual vegetable garden of the same size, over ten years?",
-            options: [
-              "Deeper roots reach groundwater unavailable to vegetables",
-              "Closed canopy and deep leaf-fall mulch cut evaporation, and the mixed root system holds more soil moisture",
-              "Perennials use less water per kilogram of food",
-              "Food forests need no irrigation at all",
+            "q": "Which feature can reduce evaporation from the soil surface?",
+            "options": [
+              "Assuming roots always reach groundwater",
+              "Suitable shade and a maintained mulch layer",
+              "Planting every layer as densely as possible",
+              "Stopping all establishment watering"
             ],
-            correct: 1,
-            rationale: "Shade and mulch both reduce moisture loss from the soil surface — a compounding effect that a bare annual bed doesn't get.",
-          },
+            "correct": 1,
+            "rationale": "Shade and mulch can reduce surface moisture loss. They do not prove that the whole planting uses less water or needs no irrigation."
+          }
         ],
       },
       {
@@ -1062,73 +1064,74 @@ export const COURSE_MODULES: CourseModule[] = [
         infographicUrl: "/course-images/food-forest/food-forest-l2.jpg",
         infographicAlt: "A simple shape of South Africa divided into three growing areas by ground colour and terrain alone: a pale high inland plateau with hills, a green humid coastal strip, and a hot red-brown low-lying area. Different tree shapes stand in each.",
         title: "Species Selection for South African Food Forests",
-        body: "Match species to your region before you plant — a mango that thrives on the KZN coast dies at the first Highveld frost, and a quince needing winter chill won't fruit in a frost-free coastal belt. Know your rainfall, minimum winter temperature, frost frequency, and summer humidity first.\n\nHighveld: canopy — pecan, walnut, indigenous fig; sub-canopy — apple, pear, plum, black mulberry, loquat, not in the Western Cape or forest biome; shrubs — rosemary, Wild Medlar, Cape gooseberry, Barbados cherry.\n\nKZN coast and Lowveld: canopy — mango, avocado, Natal Mahogany; sub-canopy — banana, pawpaw, litchi, Wild Fig; shrubs — Barbados cherry, Wild Dagga.\n\nLimpopo Lowveld: Marula, Mopane, baobab where appropriate — all edible and culturally significant.\n\nAim for at least 30% indigenous species throughout. They support the birds and insects that make a food forest function as an ecosystem, not just a fruit collection.",
+        body: "Match each species and cultivar to your site before planting.\n\nRecord rainfall, minimum winter temperature, frost frequency, summer humidity and available water.\n\nA young mango can be badly damaged by frost; shelter does not guarantee protection. A quince cultivar may need winter chilling your site cannot supply. Ask a local grower or nursery to check the match.\n\nClimate decides which species belong.\n\nOn the Highveld, choose cold-tolerant trees and shrubs; on the KZN coast and Lowveld, choose warm-climate species.\n\nMatch every plant to your site.\n\nThe lesson names pecan, walnut, indigenous fig, apple, pear, plum, black mulberry, rosemary, Wild Medlar and Cape gooseberry as candidates to assess.\n\nConfirm the cultivar, mature size and local frost and water needs before buying. Barbados cherry is not a default choice for a frosty Highveld site.\n\nCheck current restrictions before planting loquat; do not plant it in the Western Cape or forest biome. Do not use a regional list as planting permission.\n\nWarm coastal and Lowveld sites may suit the mango, avocado, banana, pawpaw and litchi already named in this lesson. Check local conditions and mature size for each.\n\nThe lesson also names Natal Mahogany, Wild Fig, Barbados cherry, Wild Dagga, Marula, Mopane and baobab for different regional roles. These names are not a claim that every plant or every part is edible.\n\nConfirm the exact plant, its purpose and any food preparation with a reliable local source before using it.\n\nInclude suitable indigenous plants that support local birds and insects as well as your household goals.\n\nThe earlier 30% figure is a course planning target, not a universal ecological threshold. The species, placement and conditions matter.\n\nObserve flowering, visitors, crop damage and growth. Use that evidence to improve the mix.",
         keyPoints: [
-          "Match species to your frost zone, rainfall, and humidity before planting",
-          "Highveld suits pecan, apple, black mulberry, Cape gooseberry, and indigenous figs",
-          "KZN coast and Lowveld suits mango, avocado, banana, litchi, and Natal Mahogany",
-          "Aim for at least 30% indigenous species to support birds, insects, and ecosystem function",
+          "Match species and cultivars to frost, water, rainfall and mature size",
+          "A regional list does not establish suitability or planting permission",
+          "Common names and native status do not prove that a plant part is edible",
+          "Include suitable indigenous plants and assess their actual roles"
         ],
         quiz: [
           {
-            q: "A Highveld farmer plants a young mango in a sheltered north-facing spot. What's the likely outcome after the first Highveld winter?",
-            options: [
-              "It thrives — the position offsets frost",
-              "It fruits early from the temperature swings",
-              "It's likely killed or badly damaged by frost, especially as a young tree",
-              "It survives with heavy mulch but needs annual replacement",
+            "q": "Before planting a young mango on a frosty site, what should a grower do?",
+            "options": [
+              "Assume a wall prevents every frost",
+              "Plant because a regional list includes mango",
+              "Assess local frost and cultivar suitability with reliable local advice",
+              "Use more mulch instead of checking climate"
             ],
-            correct: 2,
-            rationale: "No sheltered position on the Highveld reliably protects a young mango from a hard frost — it's simply the wrong species for that climate.",
+            "correct": 2,
+            "rationale": "Young mangoes can be damaged by frost. Shelter is a factor to assess, not a guarantee."
           },
           {
-            q: "Why does 30% indigenous species matter in a South African food forest?",
-            options: [
-              "Indigenous species produce more food per square metre",
-              "They attract the birds and insects providing pest control, pollination, and seed dispersal, making the system more resilient",
-              "Exotic species aren't legally permitted on smallholdings",
-              "Indigenous species need less irrigation",
+            "q": "How should the course’s 30% indigenous planting target be used?",
+            "options": [
+              "As proof that every plant is edible",
+              "As a planning exercise alongside suitable species, placement and observed ecological roles",
+              "As a rule that any non-native plant is illegal",
+              "As proof that irrigation is unnecessary"
             ],
-            correct: 1,
-            rationale: "Local birds and insects evolved alongside indigenous plants — bringing enough of them into the system is what makes the ecosystem services actually function.",
-          },
+            "correct": 1,
+            "rationale": "A percentage alone cannot guarantee ecological function. Choose suitable plants and observe the birds, insects and plant growth they support."
+          }
         ],
       },
       {
         id: "food-forest-l3",
-        infographicUrl: "/course-images/food-forest/food-forest-l3.jpg",
-        infographicAlt: "The same patch of ground at four stages, left to right: cardboard and mulch going down on bare soil, then fast low pioneer plants, then young canopy trees with lower layers filling in, and finally a settled layered planting.",
+        sources: [{"title": "Oregon State University: sheet mulching", "url": "https://extension.oregonstate.edu/catalog/em-9559-sheet-mulching-lasagna-composting-cardboard"}],
+        infographicUrl: "/course-art/food-forest/sheet-mulch.jpg",
+        infographicAlt: "A grower covers overlapping plain cardboard with wood chips on a prepared plot; nursery plants wait beside the path.",
         title: "Establishing a Food Forest: Planting Sequence and Timeline",
-        body: "A food forest is planted in sequence, not all at once, mimicking how nature rebuilds bare ground. First come nitrogen-fixing pioneers to improve soil and offer some shade. Then the main canopy and sub-canopy fruit trees. Then the lower layers, once the canopy gives some protection. Climbers and ground covers come last.\n\nFor a 500m² plot: year one, sheet-mulch with cardboard and 20cm of wood chips, plant pioneers at 2m spacing, and start a nursery. Year two, plant your main fruit trees and interplant comfrey and wild garlic beneath. Years three to four, thin the pioneers, the cuttings become mulch, as fruit trees take over. By year five, expect real harvests with minimal outside inputs.\n\nPlant at the start of the rainy season so rain does your establishment watering. Never plant into dry soil — transplant shock plus drought stress rarely allows recovery.",
+        body: "A food forest is planted in sequence, not all at once.\n\nFirst come nitrogen-fixing pioneers to improve soil and offer shade.\n\nThen come the main canopy and sub-canopy fruit trees.\n\nLower layers follow when the canopy gives some protection.\n\nClimbers and ground covers come last.\n\nSheet-mulch first.\n\nPioneers build soil while fruit trees establish.\n\nAs shelter grows, plant the lower layers, ground covers, and climbers.\n\nFor the 500m² practice plot, assess weeds, drainage and water before choosing the first stage.\n\nIf sheet mulching suits the site, use clean, uncoated cardboard with tape and staples removed, and cover it with suitable mulch. Keep water able to reach the soil and leave tree trunks clear.\n\nChoose pioneer spacing from mature size and access needs. Start a nursery for the next stage; one fixed spacing and mulch depth will not suit every plot.\n\nUse the planting sequence as a guide, and let the site show when it is ready.\n\nEstablish suitable main fruit trees, then add lower plants where light, water and shelter allow.\n\nThin or prune pioneers before they crowd the fruit trees. Use suitable cuttings as mulch. The right moment depends on growth and competition, not a fixed year.\n\nPlant when the soil is moist and follow-up water is available. The start of a reliable rainy season can help, but rain may pause.\n\nCheck the root zone after planting and water when needed. Mulch helps protect surface moisture; it does not replace establishment care.\n\nHarvest timing and outside inputs depend on the species, planting material, weather and management. Do not promise a full harvest in a fixed year.",
         keyPoints: [
-          "Plant in sequence: pioneers first, then canopy trees, then lower layers, then climbers",
-          "Sheet mulch with cardboard and wood chips at the start — smothers grass, feeds soil",
-          "Plant at the start of the rainy season so rain does the establishment watering",
-          "A 500m² Highveld food forest can produce real harvests by year 5",
+          "Prepare the site and plant in stages as conditions allow",
+          "Use suitable clean sheet-mulch materials while retaining water access to soil",
+          "Choose spacing from mature size, light and working access",
+          "Check soil moisture and provide follow-up water during establishment"
         ],
         quiz: [
           {
-            q: "A farmer sheet-mulches a 500m² plot with cardboard and wood chips in September, before the rains. What's the cardboard's main job?",
-            options: [
-              "Creating a moisture barrier that blocks water from the soil",
-              "Smothering existing grass while it decomposes and feeds soil organisms over following months",
-              "Providing a stable base so wood chips don't shift",
-              "Reflecting heat upward to warm the soil",
+            "q": "What is the main purpose of cardboard in suitable sheet mulching?",
+            "options": [
+              "Seal water away from roots",
+              "Block light from weeds while the material gradually decomposes",
+              "Replace every other soil assessment",
+              "Guarantee a harvest within five years"
             ],
-            correct: 1,
-            rationale: "Cardboard cuts off light to existing grass, killing it, and then breaks down itself — feeding the soil rather than blocking it long-term.",
+            "correct": 1,
+            "rationale": "The barrier reduces light reaching weeds. It still needs suitable mulch, water penetration and care around tree trunks."
           },
           {
-            q: "Why are pioneer nitrogen fixers planted first, then thinned in years 3-4?",
-            options: [
-              "They're the most expensive and need the longest growing period",
-              "They improve soil fertility and shelter the fruit trees, then get removed before competing too hard for light",
-              "They must be removed before setting seed or spreading",
-              "Their roots inhibit fruit tree growth after 3 years",
+            "q": "When should support trees be thinned or pruned?",
+            "options": [
+              "Only when a fixed year arrives",
+              "When their growth starts to crowd the main planting, using observed light and access needs",
+              "Immediately because all support trees are harmful",
+              "Never, because guild plants cannot compete"
             ],
-            correct: 1,
-            rationale: "Pioneers do their soil-building job early, then start competing with the maturing fruit trees for light — thinning at that point captures the benefit without the downside.",
-          },
+            "correct": 1,
+            "rationale": "Support plants need management as they grow. Suitable cuttings can become mulch, while the remaining planting retains space and light."
+          }
         ],
       },
     ],
@@ -1143,113 +1146,116 @@ export const COURSE_MODULES: CourseModule[] = [
     lessons: [
       {
         id: "small-livestock-l1",
-        infographicUrl: "/course-images/small-livestock/small-livestock-l1.jpg",
-        infographicAlt: "A moveable chicken pen shown in two positions along a strip of ground, with an arrow showing it being moved on. The ground it has left is scratched over and enriched.",
+        sources: [{"title": "Virginia Tech: using chicken manure safely", "url": "https://psdocs.spes.vt.edu/consumer/3_using_chicken_manure.pdf"}],
+        infographicUrl: "/course-art/small-livestock/chicken-tractor.jpg",
+        infographicAlt: "Two growers stand beside a stationary portable poultry enclosure on an empty strip; hens have feed, water and partial roof shade, with growing vegetables fenced separately.",
         title: "Chickens in the System: Pest Control, Fertility, and Food",
-        body: "Chickens earn their keep when they're part of the system, not just fed bought feed in a fixed pen. Scratching through a bed after harvest, they eat pest larvae, snails, and weed seeds — real pest control with no spray. Their manure, mixed with bedding, makes some of the richest compost material there is.\n\nA chicken tractor — a portable, floorless pen — is the ideal smallholder setup. Move it across the land in rotation, a week or two per bed, so manure concentrates without overloading any one spot while the land rests between passes. Four to six chickens rotated through a 500m² plot can maintain fertility all year with no bought fertiliser.\n\nTiming matters: only put chickens into a bed after harvest, when it's empty. Never around seedlings — they'll scratch them straight out. Ducks are gentler and better suited to established beds.",
+        body: "Small livestock can provide food and useful work, but every animal also needs daily care.\n\nChickens scratch, ducks forage, and bees visit flowers. These activities may help the farm, but animals can damage crops and contaminate food-growing areas.\n\nPlan feed, clean water, shelter, health care and safe separation from harvested food before adding animals.\n\nWatch the chicken tractor move across an empty bed, with feed, water and shelter kept with the birds.\n\nScratching disturbs old material and manure stays behind. The bed is not immediately ready for food crops: agree a safe manure and planting plan before the next crop.\n\nChickens forage and scratch through suitable areas, eating some insects and weed seeds. This does not replace balanced feed or health care.\n\nManure and bedding can become compost material when handled and composted properly. Fresh manure can carry disease-causing organisms.\n\nKeep birds, manure and dirty equipment away from harvested produce, packing surfaces and growing crops eaten raw. Wash hands after handling birds or manure.\n\nNever put chickens around seedlings: scratching can uproot them.\n\nAn empty bed after harvest may be part of a rotation only when food safety and animal care are planned. Removing the birds does not remove fresh manure or its risks.\n\nAsk a qualified local adviser about the manure-management and harvest interval required for the next crop. Keep animals out of areas where manure could contact edible produce.\n\nDucks eat slugs and snails without the heavy scratching typical of chickens.\n\nThey can still trample plants, foul water and leave manure. An established understorey is not automatically safe for ducks.\n\nPlan a suitable managed area with clean drinking water, shelter and adequate feed. Keep them away from produce and water used for food handling.\n\nMove a chicken tractor according to bird welfare, ground condition, weather and the farm’s manure plan. Inspect it daily.\n\nDo not keep birds in mud, overcrowding, heat or exhausted ground while waiting for a calendar date. Keep feed, water, shade and predator protection available.\n\nA fixed number of hens on a fixed plot cannot guarantee all its fertiliser needs. Use soil and crop evidence to judge fertility.",
         keyPoints: [
-          "Rotational chicken tractors give fertility, pest control, and weed-seed control without fixed pens",
-          "4-6 chickens rotated through a 500m² plot can maintain fertility with no bought fertiliser",
-          "Only put chickens in a bed after harvest — never around young seedlings",
-          "Ducks are gentler than chickens and suit established food forest understorey better",
+          "Plan balanced feed, clean water, shelter, protection and daily care",
+          "Keep poultry and manure away from harvested food and raw-eaten crops",
+          "An empty-bed rotation needs a safe manure and harvest plan",
+          "Move pens according to birds and ground condition; no flock size guarantees fertility"
         ],
         quiz: [
           {
-            q: "You want chickens to prepare an empty bed for replanting. When's the right time to put them in?",
-            options: [
-              "Right after planting seedlings, so they loosen soil around them",
-              "After harvest, once the bed is cleared, before the next planting",
-              "During the growing season once the canopy can withstand scratching",
-              "Only in winter to avoid heat stress",
+            "q": "What must happen before using chickens in an empty-bed rotation?",
+            "options": [
+              "Plant seedlings first",
+              "Plan bird care and safe manure management before the next food crop",
+              "Assume manure becomes safe when birds move",
+              "Keep birds in one place until all vegetation is gone"
             ],
-            correct: 1,
-            rationale: "This is the one window where chicken scratching helps rather than harms — clearing debris and adding fertility to ground that's about to be replanted.",
+            "correct": 1,
+            "rationale": "An empty bed avoids seedling damage, but manure and food safety still require a suitable plan."
           },
           {
-            q: "Why are ducks better suited than chickens to an established food forest understorey?",
-            options: [
-              "Ducks produce more manure per day",
-              "Ducks eat slugs and snails without the heavy scratching that disturbs roots and mulch",
-              "Ducks are immune to Newcastle disease",
-              "Ducks roost in trees, reducing ground compaction",
+            "q": "What is a fair comparison of ducks with chickens?",
+            "options": [
+              "Ducks cannot carry disease",
+              "Ducks scratch less, but still need management and separation from food",
+              "Ducks do not need drinking water",
+              "Established plants cannot be damaged by ducks"
             ],
-            correct: 1,
-            rationale: "Chickens' scratching is what makes them unsuitable near established roots — ducks get the same pest-control benefit without that damage.",
-          },
+            "correct": 1,
+            "rationale": "Less scratching does not eliminate trampling, manure or water-contamination risks."
+          }
         ],
       },
       {
         id: "small-livestock-l2",
-        infographicUrl: "/course-images/small-livestock/small-livestock-l2.jpg",
-        infographicAlt: "A beehive cut open showing the stacked frames inside, and a wide circle over a farm map showing how far the bees travel to forage.",
+        sources: [{"title": "Department of Agriculture: beekeeper registration form, 2026 copy", "url": "https://wcba.co.za/wp-content/uploads/2026/02/DOA-BEEKEEPING-REGISTRATION-FORM.pdf"}, {"title": "Research review: insect pollinators in avocado production", "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC8647928/"}],
+        infographicUrl: "/course-art/small-livestock/bees-and-flowers.jpg",
+        infographicAlt: "Bees visit open flowers in the foreground, with a closed hive in a distant managed corner.",
         title: "Bees: Pollination, Honey, and System Ecology",
-        body: "Honeybees are essential pollinators — watermelon, squash, beans, litchi, avocado, macadamia, and citrus all depend on bee visits. A food forest without healthy bees nearby is producing well below its potential. One or two well-placed hives can lift yields across an entire site.\n\nSouth Africa has two native honeybee subspecies: the Cape bee in the southern and south-western Cape, and the African honeybee across the north and east. Both are more defensive than European strains but more resistant to varroa mite. A single hive, positioned away from foot traffic and facing north-east so morning sun warms the entrance early, is a realistic start.\n\nHealthy, well-foraging colonies signal a biodiverse, chemically clean smallholding. Plant a year-round flowering calendar to keep colonies strong. Every beekeeper in South Africa, even with a single hive, must register with DALRRD.",
+        body: "Watch the bees leave the hive and move among flowering crops.\n\nTheir movement carries pollen between flowers across the site.\n\nBees and other flower visitors help pollinate many food crops. Dependence on insect visits differs between crops and cultivars.\n\nIn avocado, flowers have female and male phases. Suitable flowering overlap and pollen movement can support fruit set, but weather and tree condition matter too.\n\nObserve flowers and visitors before assuming a hive alone will solve poor fruit set.\n\nSouth Africa has Cape and African honeybee subspecies. Their natural ranges and movement restrictions matter when sourcing colonies.\n\nGet help from an experienced local beekeeper before keeping or moving bees. Do not move colonies between regions on the strength of this lesson.\n\nBoth bee health and safe management need attention; a native colony is not automatically free of pests or disease.\n\nAssess a possible hive site with an experienced local beekeeper before bringing bees onto the land.\n\nConsider people, neighbours, livestock, paths, the flight path, water, forage, shelter and access for safe management. Morning sun may help, but one compass direction does not make a site safe.\n\nPlan training and protective equipment as well as the hive position.\n\nPlan suitable flowering resources through the year and observe colony health with a trained beekeeper. A busy colony does not prove that the site is chemically clean.\n\nBeekeepers must register with South Africa’s Department of Agriculture. Check its current registration and colony-movement requirements before starting, even with one hive.\n\nRepeated swarming needs an experienced inspection. Space is one possible factor, not a diagnosis; do not attempt a split from this lesson alone.",
         keyPoints: [
-          "A hive nearby measurably increases fruit and vegetable yields across your whole site",
-          "South Africa's native bees are more defensive but more varroa-resistant than European strains",
-          "Position hives facing north-east, away from foot traffic",
-          "All beekeepers must register with DALRRD under the Agricultural Pests Act — even one hive",
+          "Pollination needs differ between crops and cultivars",
+          "A hive does not by itself prove or guarantee good fruit set",
+          "Assess sites and colony management with an experienced local beekeeper",
+          "Check current Department of Agriculture registration and movement requirements"
         ],
         quiz: [
           {
-            q: "A farmer's avocado trees flower well but set little fruit, and she has no bees on the property. What's the likely explanation?",
-            options: [
-              "Avocados self-pollinate — the problem is nutrient deficiency",
-              "Avocados need specific beetles, not bees",
-              "Without bees, the synchronised flower-timing mechanism between trees fails and fruit set suffers",
-              "Poor set is caused by frost damage, not pollination",
+            "q": "An avocado has poor fruit set. What is a useful next step?",
+            "options": [
+              "Assume all flowers self-pollinate",
+              "Assume only beetles can pollinate it",
+              "Observe flowering overlap, insect visits, weather and tree condition before choosing a response",
+              "Buy a hive and stop investigating"
             ],
-            correct: 2,
-            rationale: "Avocado flowers open as male and female at different, synchronised times across trees — bees are what actually move pollen between them at the right moment.",
+            "correct": 2,
+            "rationale": "Pollen movement can matter, but fruit set has several causes. Observation helps distinguish them."
           },
           {
-            q: "A beekeeper's hive has swarmed three times in two seasons. What's the most likely cause?",
-            options: [
-              "The hive is overcrowded and needs a super or a split — swarming is the colony's natural response to confined space",
-              "The queen is too old and being replaced",
-              "African bees swarm more and this can't be managed",
-              "The north-east orientation causes overheating",
+            "q": "A colony swarms repeatedly. What should a new beekeeper do?",
+            "options": [
+              "Get an experienced inspection before deciding how to manage it",
+              "Split it immediately from this lesson alone",
+              "Assume all native bees are disease-free",
+              "Move the hive into a public path"
             ],
-            correct: 0,
-            rationale: "Repeated swarming almost always points to a colony that's outgrown its space — giving it room removes the trigger.",
-          },
+            "correct": 0,
+            "rationale": "Space can be one factor in swarming. Management needs an informed assessment and safe handling."
+          }
         ],
       },
       {
         id: "small-livestock-l3",
-        infographicUrl: "/course-images/small-livestock/small-livestock-l3.jpg",
-        infographicAlt: "A closed loop of four steps: animals produce manure, manure becomes compost, compost feeds the growing area, and the growing area feeds the animals.",
+        sources: [{"title": "University of Minnesota: managing worms in sheep and goats", "url": "https://extension.umn.edu/agriculture/farm-operations-and-systems/small-farms/managing-barberpole-worms-in-sheep-and-goats"}],
+        infographicUrl: "/course-animations/small-livestock/posters/livestock-nutrient-cycle.jpg",
+        infographicAlt: "A diagram follows suitable feed to animals, manure to composting in a square heap, and finished compost to a growing bed.",
         title: "Integrating Livestock Cycles: Closing the Loop",
-        body: "The real power of small livestock is closing nutrient loops. On a conventional farm, bought feed comes in, meat and eggs leave, and manure is a waste problem. On an integrated smallholding, chickens eat scraps, pest insects, and surplus produce, and return their waste as fertility — costs drop and value rises. The same logic applies to ducks, guinea fowl, and bees.\n\nGuinea fowl, indigenous to southern Africa, are exceptional tick and grasshopper controllers — a small free-ranging flock can cut tick burdens sharply in KZN and Limpopo's humid, tick-heavy conditions.\n\nFor each animal, ask three questions: what does it eat that I already have? What does it produce that helps another part of the system? What does it need that I can supply from within the system?",
+        body: "Watch nutrients move from plants to animals, then through manure and compost back to the growing bed.\n\nUse suitable farm-grown feed as part of a balanced diet, with clean water and daily care. Scraps and insects alone may not meet the animals’ needs.\n\nCollect and manage manure so it does not contaminate food or water. Properly managed composting comes before using this material in the food-growing loop.\n\nRecord purchased feed, work and health costs as well as useful outputs. Integration can reduce waste; it does not automatically remove outside inputs.\n\nGuinea fowl forage for insects and may eat ticks, but their presence is not a dependable tick-control programme.\n\nProtect livestock through regular observation and a veterinary parasite-management plan suited to the animals and site. Do not stop prescribed care because birds are present.\n\nAlso plan the flock’s feed, water, shelter, welfare and effects on neighbours.\n\nFor each animal, ask what it eats that you already have.\n\nAsk what it produces that helps another part of the system.\n\nThen ask what it needs that you can supply from within the system.\n\nThese questions show whether the animal closes a loop or creates another bought input.\n\nDo not rely on chickens following goats to prevent worms or replace treatment.\n\nWork with a veterinarian or trained livestock adviser on grazing, monitoring, testing where appropriate and targeted treatment. Rotation needs to fit the parasite, season and grazing conditions.\n\nWatch animal condition and keep records. An animal becoming weak or unwell needs prompt qualified attention.",
         keyPoints: [
-          "Integrated livestock cut purchased inputs by eating what the farm already produces",
-          "Guinea fowl are strong indigenous tick and grasshopper controllers for KZN and Limpopo",
-          "For each animal ask: what does it eat, produce, and need — all from within the system",
-          "Chickens following goats in rotation break the parasite life cycle and cut deworming needs",
+          "Assess suitable feed and useful outputs alongside welfare and real costs",
+          "Manage manure and composting before returning material to food-growing areas",
+          "Guinea fowl do not replace a veterinary tick-management plan",
+          "Chickens following goats are not a reliable substitute for worm monitoring or treatment"
         ],
         quiz: [
           {
-            q: "A KZN farmer wants to cut tick burdens without chemical treatments. What's most effective?",
-            options: [
-              "A fixed flock of 30 chickens in a large pen",
-              "A free-ranging flock of guinea fowl actively hunting ticks",
-              "Ducks, whose foraging suppresses ticks",
-              "Pyrethrum daisies planted as a natural deterrent",
+            "q": "Ticks are affecting livestock. What should guide the response?",
+            "options": [
+              "Rely on birds alone",
+              "Regular observation and a veterinary parasite-management plan",
+              "Stop prescribed care when guinea fowl arrive",
+              "Choose treatment solely from the weather"
             ],
-            correct: 1,
-            rationale: "Guinea fowl are specifically effective tick hunters in exactly this kind of humid, tick-heavy environment — the other options don't target ticks directly.",
+            "correct": 1,
+            "rationale": "Birds may forage on ticks, but their presence does not establish effective control. Follow qualified animal-health advice."
           },
           {
-            q: "Why do chickens following grazing goats in rotation reduce the need for chemical dewormers?",
-            options: [
-              "Chickens eat parasitic worm larvae in fresh manure before they mature and reinfect the goats",
-              "Chickens stress goats into a stronger immune response",
-              "Chicken manure kills worm eggs in the soil",
-              "Rotation alone reduces worm burden, chickens are incidental",
+            "q": "What should a farmer do when planning grazing goats and chickens?",
+            "options": [
+              "Plan grazing, monitoring and treatment with qualified advice rather than assuming chickens prevent worms",
+              "Assume chicken manure kills worm eggs",
+              "Stop testing because the species differ",
+              "Wait until every goat looks ill"
             ],
-            correct: 0,
-            rationale: "This breaks the parasite's life cycle directly — the larvae get eaten before they can develop and reinfect the grazing goats.",
-          },
+            "correct": 0,
+            "rationale": "A rotation must fit the parasite and grazing conditions. Chickens do not justify abandoning needed monitoring or treatment."
+          }
         ],
       },
     ],
@@ -1263,10 +1269,11 @@ export const COURSE_MODULES: CourseModule[] = [
     lessons: [
       {
         id: "market-community-l1",
+        sources: [{"title": "FAO: marketing costs", "url": "https://www.fao.org/4/a1298e/a1298e02.pdf"}],
         infographicUrl: "/course-images/market-community/market-community-l1.jpg",
         infographicAlt: "A simple ruled record sheet with columns for what was harvested and where it went, beside a pile of harvested produce.",
         title: "Record-Keeping: Knowing What Your Farm Is Actually Producing",
-        body: "Most smallholders undersell what their farm produces because they've never recorded it. Write down every kilogram of tomatoes, every dozen eggs, every bundle of morogo, and where it went — family, sold, gifted, composted — and your farm starts looking like an economy, not just a garden.\n\nOne season of records answers the questions that matter: which crops yield best per bed? Which cost more in seeds, water and compost than they return? Which months leave you buying food?\n\nFor pricing, records reveal your true cost of production. Selling below that cost because a neighbour charges less isn't competition, it's a loss draining your household. A simple cost sheet, including an honest hourly rate for your own labour, shows your real minimum price.",
+        body: "Without records, it is easy to miss what your farm produces and what it costs.\n\nA tomato, an egg, or a bundle of morogo can go to the family, a customer, a neighbour, or compost.\n\nRecord where the harvest goes. This helps you protect household food and compare business choices using your own evidence.\n\nWrite down every harvest as it happens.\n\nRecord kilograms of tomatoes, dozens of eggs, and bundles of morogo, then note where each went.\n\nUse the same simple habit for food kept at home, produce sold, produce gifted, and produce composted.\n\nDo not rely on memory at the end of the season.\n\nOne season of records answers practical questions.\n\nWhich crops give the best yield per bed? Which return the most for each hour of work?\n\nWhich crops use more seeds, water, and compost than they return?\n\nThe record also shows which months leave the household buying food.\n\nBefore setting a selling price, add the costs of producing and selling that harvest.\n\nInclude seeds, water, compost, packaging, transport, selling fees and your own labour. Record unsold produce and losses too.\n\nIn this example, the full cost is R18/kg and the selling price is R15/kg. That price does not cover the cost.\n\nCheck whether customers will pay a price that covers costs, whether costs can be reduced without harm, or whether another crop is a better use of the work. The figures are an exercise, not current market prices.\n\nUse your own record to name the months when household food runs short.\n\nWork backwards from that gap. Choose a suitable crop, check its time to harvest, and plan a sowing date for your local season and available water.\n\nDo not copy another farm's planting months. Record what actually grows and adjust the next plan.",
         keyPoints: [
           "Record every harvest and where it went — family, sold, gifted, or composted",
           "One season of records shows which crops give the best return per bed and per hour",
@@ -1286,30 +1293,31 @@ export const COURSE_MODULES: CourseModule[] = [
             rationale: "Selling below cost is a loss whatever the volume — the record shows exactly where the gap is, and there are three real ways to close it.",
           },
           {
-            q: "A farmer's records show she's short of vegetables every June and July. What's the useful action here?",
+            q: "A farmer's records show a food gap. How should she plan to fill it?",
             options: [
               "Buy vegetables at market each June and July",
-              "Plant cold-tolerant winter crops in March-April so they're ready in June-July",
+              "Choose a suitable crop and work backwards from harvest using her local season and available water",
               "Accept her farm can't produce in winter",
               "The records show a soil fertility problem",
             ],
             correct: 1,
-            rationale: "The record identifies exactly when the gap happens, which means she can plant specifically to fill it, months in advance.",
+            rationale: "The record identifies the gap. The crop, harvest time, local season and water supply determine when to sow; another farm’s months may not fit.",
           },
         ],
       },
 
       {
         id: "market-community-l2",
+        sources: [{"title": "FAO: comparing market returns", "url": "https://www.fao.org/4/a1298e/a1298e06.pdf"}],
         infographicUrl: "/course-images/market-community/market-community-l2.jpg",
         infographicAlt: "Three ways to sell from one farm: a roadside stall, a group delivery to a shop, and a box going straight to a household.",
         title: "Selling Surplus: Where to Sell and How to Price",
-        body: "Know your customer before you sell. A formal farmers' market may pay premium prices but demands registration and a consistent weekly supply. An informal market or taxi rank stall pays less but asks nothing of you in return. A school or clinic buying direct may pay below retail but offers a stable, predictable order.\n\nDirect selling — door to door, a WhatsApp order group, weekly deliveries — usually pays best, since you keep the full price with no middleman. A box scheme, where customers subscribe to a regular vegetable box, gives predictable income and lets you plan production around real demand. Ten regular box customers can provide meaningful monthly income from a 200 to 500m² garden.\n\nTrust, built through farm visits and an honest reputation, matters more than expensive organic certification for most smallholders.",
+        body: "Know your customer before planting for a sale.\n\nMarkets, roadside stalls, shops, schools and clinics have different requirements. Ask about quantity, quality, packaging, delivery, payment and permission to trade.\n\nConfirm the actual price and costs. A channel's name alone does not tell you what it will pay or whether an order will be regular.\n\nDirect sales remove a middleman, but packaging, travel, unsold produce and selling time still cost money.\n\nCompare what remains after all costs, not just the price per kilogram.\n\nIn a box scheme, customers agree to regular deliveries. This can help you plan demand, but income still depends on supplying what was agreed and receiving payment.\n\nBefore offering vegetable boxes, list what you can supply each week after keeping food for the household.\n\nCompare that supply with the number and size of boxes customers want. Check labour, water, packing, delivery and payment arrangements.\n\nStart with a commitment you can meet. Garden area and customer count alone cannot promise an income. Agree how you will handle a short harvest or a cancelled order.\n\nIf production changes from week to week, do not promise a fixed box you cannot fill.\n\nLook for neighbours or markets willing to buy the surplus actually available. Confirm their requirements and include selling costs in your decision.\n\nBuild trust through reliable supply and honest descriptions. Do not claim certification you do not hold; ask buyers what assurance they require.",
         keyPoints: [
           "Match your selling channel to your customer — formal market, informal, direct, or box scheme",
-          "Direct and box scheme sales remove the middleman and keep more of the price for you",
-          "Ten regular box customers can provide meaningful income from a 200-500m² garden",
-          "Community trust from farm visits often matters more than costly certification",
+          "Compare income after packaging, travel, selling time, fees and losses for every channel",
+          "Offer only the number and size of boxes your actual supply can support",
+          "Describe production honestly and check the assurance each buyer requires",
         ],
         quiz: [
           {
@@ -1321,55 +1329,56 @@ export const COURSE_MODULES: CourseModule[] = [
               "A daily-delivery school contract",
             ],
             correct: 2,
-            rationale: "This is the one channel that doesn't require her to promise a fixed amount every week — she sells what she actually has.",
+            rationale: "Find buyers willing to take the surplus actually available. Confirm their requirements before promising supply; the market type alone does not guarantee flexibility.",
           },
           {
             q: "Why can a box scheme be worth more than a market stall, even at similar prices per kilogram?",
             options: [
               "Box customers always pay more per kilogram",
               "Box schemes let you charge extra for packaging",
-              "Committed subscription income lets you plan production around real demand instead of growing speculatively",
+              "Agreed orders can help you plan, provided you can fulfil them and account for costs and payment",
               "Box schemes avoid tax obligations",
             ],
             correct: 2,
-            rationale: "The value here isn't the price — it's knowing in advance what you need to grow, instead of guessing and hoping it sells.",
+            rationale: "Agreed demand can improve planning. It does not guarantee profit or payment; check supply, delivery, costs and cancellation terms.",
           },
         ],
       },
       {
         id: "market-community-l3",
+        sources: [{"title": "FAO: community seed banks", "url": "https://openknowledge.fao.org/handle/20.500.14283/i3987e"}],
         infographicUrl: "/course-images/market-community/market-community-l3.jpg",
         infographicAlt: "Five small farms linked to one shared central point, where their separate harvests combine into one much larger crate.",
         title: "Building Community Food Networks: Strength in Numbers",
-        body: "No smallholder farm stands alone. A seed swap between five neighbours turns five households' seed diversity into twenty-five, because each grower can focus on saving a few varieties well rather than many poorly. Tool sharing puts expensive items — a water pump, a grain mill — within reach of everyone.\n\nLocal food networks, whether a formal cooperative or an informal WhatsApp group, create demand close to home. Roughly a third of fresh fruit and vegetables grown by smallholders is lost between harvest and sale, from poor transport, packaging, and storage delays. Selling within walking distance removes most of that loss entirely.\n\nSkill sharing matters as much as material sharing. A farmer who's mastered grafting, or managing fungal disease in humid KZN summers, can transform ten neighbours' farms by teaching it. Document what you learn and pass it on.",
+        body: "One farm can produce food.\n\nA group can share seed, tools, skills, and transport.\n\nSeparate growers become a stronger local food network, with each household contributing what it can.\n\nA seed-sharing group can widen access to the different varieties its members actually maintain.\n\nAgree who saves which variety and how the group will check isolation, selection, drying, labelling, storage and germination.\n\nCount distinct varieties. Sharing copies of the same variety does not create extra varieties, and joining a group does not automatically improve seed quality.\n\nUse the Seeds lesson to keep each batch identifiable and share what its record shows.\n\nTool sharing puts expensive equipment within reach of the group.\n\nA water pump or grain mill may be beyond one household’s budget.\n\nShared use spreads the value across the group and helps each farm do work it could not do alone.\n\nRecord how much produce is damaged, unsold or lost between harvest and sale, and where the loss happens.\n\nNearby buyers can reduce travel and delay. They do not remove the need for careful handling, clean containers, suitable storage and timely delivery.\n\nCompare the income left after transport, packaging, fees, labour and losses for each route. Use actual local prices and costs; a shorter journey does not guarantee a higher return.\n\nA farmer who has mastered grafting or managed fungal disease in humid KZN summers can teach ten neighbours.\n\nThat lesson may change ten farms, not just one.\n\nMonthly skills swaps build knowledge more durably than a single expert consultation.\n\nDocument what you learn, then pass it on so the knowledge stays in the community.",
         keyPoints: [
-          "Seed swaps between neighbours multiply variety diversity with the same total effort",
+          "Seed sharing can widen access to distinct varieties when batches remain correctly identified",
           "Tool sharing puts expensive equipment within reach of an entire group",
-          "About a third of smallholder fruit and vegetables is lost between harvest and sale — local selling avoids most of this",
+          "Record actual losses and compare nearby routes using all handling and selling costs",
           "Monthly skills swaps build knowledge more durably than any single expert consultation",
         ],
         quiz: [
           {
-            q: "Five smallholders each save three tomato varieties alone, or agree that each saves two varieties for the whole group. Which produces better seed?",
+            q: "What helps a seed-sharing group maintain useful diversity and seed quality?",
             options: [
-              "Each saving alone, for full control",
-              "Collective saving — each farmer specialises and gives fuller attention to isolation, selection, and storage",
-              "Both approaches give the same result",
-              "Collective saving only works with a shared seed bank",
+              "Counting every packet as a different variety",
+              "Agreeing who saves each distinct variety and checking isolation, selection, labels, storage and germination",
+              "Assuming group seed is always better",
+              "Mixing all the seed into one container",
             ],
             correct: 1,
-            rationale: "Specialising in fewer varieties means more attention per variety — better isolation, better selection, better stored seed for everyone in the group.",
+            rationale: "Sharing can improve access, but variety identity and seed quality need deliberate work. Duplicate packets do not add new varieties, and a group does not guarantee better seed.",
           },
           {
-            q: "A smallholder's nearest formal market is 60km away, costing R150 in transport for 50kg of beans sold at R8/kg. What community network approach improves this?",
+            q: "A grower is comparing a distant market with nearby buyers. What should guide the decision?",
             options: [
-              "Grow 100kg instead to justify the transport cost",
-              "Process the beans to add value and justify the trip",
-              "Sell locally via a WhatsApp group or community market, cutting the R150 transport cost and possibly getting R10/kg",
-              "Join a cooperative for bulk transport rates",
+              "Grow twice as much before checking demand",
+              "Assume the highest price always leaves the most income",
+              "Compare confirmed prices and demand after transport, packaging, fees, labour and likely losses",
+              "Assume nearby sales have no costs",
             ],
             correct: 2,
-            rationale: "Selling close to home removes the transport cost entirely and can even fetch a better price — the two biggest levers, solved together.",
+            rationale: "A shorter trip may save costs, but the full comparison also includes price, demand, handling, selling time and losses. Use actual figures for both routes.",
           },
         ],
       },

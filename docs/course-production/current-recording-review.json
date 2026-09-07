@@ -1,0 +1,1396 @@
+{
+  "voice": "en-ZA-LeahNeural",
+  "replacement_count": 74,
+  "full_tracks_to_rebuild": 9,
+  "changed_takes": {
+    "food-forest": [
+      6,
+      7,
+      8,
+      9,
+      11,
+      12,
+      13,
+      16,
+      17,
+      18
+    ],
+    "intro-permaculture": [
+      9,
+      13,
+      14,
+      15,
+      16,
+      18,
+      19,
+      20
+    ],
+    "market-community": [
+      2,
+      7,
+      8,
+      10,
+      11,
+      12,
+      13,
+      15,
+      17,
+      20
+    ],
+    "plant-guilds": [
+      2,
+      4,
+      5,
+      7,
+      8,
+      12,
+      13,
+      14,
+      16,
+      17,
+      18
+    ],
+    "reading-landscape": [
+      4,
+      6,
+      7,
+      8,
+      10,
+      11,
+      12,
+      14,
+      15,
+      16,
+      18,
+      20,
+      21
+    ],
+    "small-livestock": [
+      2,
+      4,
+      5,
+      6,
+      7,
+      8,
+      10,
+      11,
+      12,
+      13,
+      15,
+      16,
+      18,
+      20
+    ],
+    "soil-health": [
+      3,
+      17
+    ],
+    "vegetables-staples": [
+      6,
+      8,
+      9,
+      10
+    ],
+    "water-harvesting": [
+      23,
+      24
+    ]
+  },
+  "source_manifest": [
+    {
+      "module": "food-forest",
+      "slide": 1,
+      "path": "food-forest/en/slide-01.txt",
+      "sha256": "dd802f08d9fa880fb0b1ab2f9a51fef3bf029da162c81d068d1cdb6fa7d18c2c",
+      "replacement_required": false
+    },
+    {
+      "module": "food-forest",
+      "slide": 2,
+      "path": "food-forest/en/slide-02.txt",
+      "sha256": "5b213a4f12153035a67e3e2e56fa59c9455b8b604abda509caedac0c77acec54",
+      "replacement_required": false
+    },
+    {
+      "module": "food-forest",
+      "slide": 3,
+      "path": "food-forest/en/slide-03.txt",
+      "sha256": "60043c481da70201ea7721d13a6901ec559ada13a6d33cab58ba4f852712ad47",
+      "replacement_required": false
+    },
+    {
+      "module": "food-forest",
+      "slide": 4,
+      "path": "food-forest/en/slide-04.txt",
+      "sha256": "d29492f3ca2c7a976700e5befbd7ccf1a0ce109aced4694c6a5f210b1ca6953c",
+      "replacement_required": false
+    },
+    {
+      "module": "food-forest",
+      "slide": 5,
+      "path": "food-forest/en/slide-05.txt",
+      "sha256": "b365547fdeba004d691aee3e48521fd24805056518652097ce30492b5c70bace",
+      "replacement_required": false
+    },
+    {
+      "module": "food-forest",
+      "slide": 6,
+      "path": "food-forest/en/slide-06.txt",
+      "sha256": "d304be070e8f62af516bee4b595c04ad772a5a01a8d4b7719cc2a5a7bed2f369",
+      "replacement_required": true
+    },
+    {
+      "module": "food-forest",
+      "slide": 7,
+      "path": "food-forest/en/slide-07.txt",
+      "sha256": "2ae8f1e2acd7d218d441ec18793e125aa1da358723a1dc12462f73b6f290c38f",
+      "replacement_required": true
+    },
+    {
+      "module": "food-forest",
+      "slide": 8,
+      "path": "food-forest/en/slide-08.txt",
+      "sha256": "2f5cd63fc1f66e355177d079d07ad2cebe684184ac41d9b6baa13f232aac3ca2",
+      "replacement_required": true
+    },
+    {
+      "module": "food-forest",
+      "slide": 9,
+      "path": "food-forest/en/slide-09.txt",
+      "sha256": "e425cf0877c7f7a81f5c6a1e1a092531f43159c41676a1dfdd73983b0ff7fa33",
+      "replacement_required": true
+    },
+    {
+      "module": "food-forest",
+      "slide": 10,
+      "path": "food-forest/en/slide-10.txt",
+      "sha256": "fea6ed28a13fe2a441da35b50312acb47e87a597646aa9515447dca1afe5d82a",
+      "replacement_required": false
+    },
+    {
+      "module": "food-forest",
+      "slide": 11,
+      "path": "food-forest/en/slide-11.txt",
+      "sha256": "d07289aca182dd9bc444cad19473ed73b773d817b570324eae879e7b1549a352",
+      "replacement_required": true
+    },
+    {
+      "module": "food-forest",
+      "slide": 12,
+      "path": "food-forest/en/slide-12.txt",
+      "sha256": "69ba3c88be3e57d791140359e83e6e7ca0debcd793acccf032d3da10e503d923",
+      "replacement_required": true
+    },
+    {
+      "module": "food-forest",
+      "slide": 13,
+      "path": "food-forest/en/slide-13.txt",
+      "sha256": "0bb1e3d161f9a7a749301c6bf71cc972982303ebfaf332205383c00041486d83",
+      "replacement_required": true
+    },
+    {
+      "module": "food-forest",
+      "slide": 14,
+      "path": "food-forest/en/slide-14.txt",
+      "sha256": "6847a1cbdc9b698e72666d0c4cd86005fc2adbe57e0d5fdc989391fe41a39d6b",
+      "replacement_required": false
+    },
+    {
+      "module": "food-forest",
+      "slide": 15,
+      "path": "food-forest/en/slide-15.txt",
+      "sha256": "64000f218ca79cf1faf0c0b11d66c31879229674524b690394d4068381c79a6d",
+      "replacement_required": false
+    },
+    {
+      "module": "food-forest",
+      "slide": 16,
+      "path": "food-forest/en/slide-16.txt",
+      "sha256": "78c4a99beb31939b3816a96c762edb968f8b046484f01443bfe89b15ba157060",
+      "replacement_required": true
+    },
+    {
+      "module": "food-forest",
+      "slide": 17,
+      "path": "food-forest/en/slide-17.txt",
+      "sha256": "1d924803137a61396932e5073a8dafae02b21ade68bd5b0fdf19ff279a55fa7e",
+      "replacement_required": true
+    },
+    {
+      "module": "food-forest",
+      "slide": 18,
+      "path": "food-forest/en/slide-18.txt",
+      "sha256": "38718637cb7e85b7416e07e4151fa74e4bd02a81e4440ed51c3057df9cb35005",
+      "replacement_required": true
+    },
+    {
+      "module": "food-forest",
+      "slide": 19,
+      "path": "food-forest/en/slide-19.txt",
+      "sha256": "5ef8c46839a57ec431874e61886dd2a1f6b69f5a215c31de754a3b174f004151",
+      "replacement_required": false
+    },
+    {
+      "module": "food-forest",
+      "slide": 20,
+      "path": "food-forest/en/slide-20.txt",
+      "sha256": "5ae7e420d93dbe9e497ae17357d7b92081e452ee9c28810e370e40deaf93e078",
+      "replacement_required": false
+    },
+    {
+      "module": "intro-permaculture",
+      "slide": 1,
+      "path": "intro-permaculture/en/slide-01.txt",
+      "sha256": "717a26823c0c91e419fd828b85f0226a67118b531344cb2ec52f27764fe30be8",
+      "replacement_required": false
+    },
+    {
+      "module": "intro-permaculture",
+      "slide": 2,
+      "path": "intro-permaculture/en/slide-02.txt",
+      "sha256": "6312fe1b14295af978d7d3ed9ddaa5fe877b59576b82c417ebf8021a7ff9501c",
+      "replacement_required": false
+    },
+    {
+      "module": "intro-permaculture",
+      "slide": 3,
+      "path": "intro-permaculture/en/slide-03.txt",
+      "sha256": "ba4145867bf4ce266b5d98bbcf9bc9301aa305903ac0c02d046ea52a230f03e7",
+      "replacement_required": false
+    },
+    {
+      "module": "intro-permaculture",
+      "slide": 4,
+      "path": "intro-permaculture/en/slide-04.txt",
+      "sha256": "ac239b8ef41051b1c75a48729f47b5d6c4c718f2a79382bb7bc4884ac122481d",
+      "replacement_required": false
+    },
+    {
+      "module": "intro-permaculture",
+      "slide": 5,
+      "path": "intro-permaculture/en/slide-05.txt",
+      "sha256": "7645b45e6324b588c6bf8433b47dc730f16f8bfd4e4ce73a04290c6c0a1d6b4d",
+      "replacement_required": false
+    },
+    {
+      "module": "intro-permaculture",
+      "slide": 6,
+      "path": "intro-permaculture/en/slide-06.txt",
+      "sha256": "073e25dacffb3d50adb122bfaeaca74e8bef83e0acd4246311598403d4b57182",
+      "replacement_required": false
+    },
+    {
+      "module": "intro-permaculture",
+      "slide": 7,
+      "path": "intro-permaculture/en/slide-07.txt",
+      "sha256": "7e54c863804ed0f514da53b409a3c6ee3a88e1dc956b736fa8a5d990989f6d5e",
+      "replacement_required": false
+    },
+    {
+      "module": "intro-permaculture",
+      "slide": 8,
+      "path": "intro-permaculture/en/slide-08.txt",
+      "sha256": "e3b3fe8854c47e0015ebc0e0aa7cceacfe94f844958cf4768a1e8dcdd36fe071",
+      "replacement_required": false
+    },
+    {
+      "module": "intro-permaculture",
+      "slide": 9,
+      "path": "intro-permaculture/en/slide-09.txt",
+      "sha256": "cfc547f23d255b8a5c17babb6c1ddc61aff314c1306a217bc85b5a3842e2d5f0",
+      "replacement_required": true
+    },
+    {
+      "module": "intro-permaculture",
+      "slide": 10,
+      "path": "intro-permaculture/en/slide-10.txt",
+      "sha256": "7e68de7bf40a1d5c6123273796a608e5d33a2d1230a3677a24bc0861bd553128",
+      "replacement_required": false
+    },
+    {
+      "module": "intro-permaculture",
+      "slide": 11,
+      "path": "intro-permaculture/en/slide-11.txt",
+      "sha256": "2f94d909c4326cdb5b4e817f326cc7f7dd551a5ec8dc1f342795ec4aacfdd147",
+      "replacement_required": false
+    },
+    {
+      "module": "intro-permaculture",
+      "slide": 12,
+      "path": "intro-permaculture/en/slide-12.txt",
+      "sha256": "44983f38cde781925c0d8097e8a1ef46862fea4ef52cdebf33515b1dc19ac774",
+      "replacement_required": false
+    },
+    {
+      "module": "intro-permaculture",
+      "slide": 13,
+      "path": "intro-permaculture/en/slide-13.txt",
+      "sha256": "91308b742df4b75a1df4656bbe24786c904a66805cad82a18f321975798d3d9f",
+      "replacement_required": true
+    },
+    {
+      "module": "intro-permaculture",
+      "slide": 14,
+      "path": "intro-permaculture/en/slide-14.txt",
+      "sha256": "6ccf0182763345ccc4d891d42fcce24a0d778772f57e49dfeb17a7b825e84ca6",
+      "replacement_required": true
+    },
+    {
+      "module": "intro-permaculture",
+      "slide": 15,
+      "path": "intro-permaculture/en/slide-15.txt",
+      "sha256": "8c7bca9d4a4cd74a1e5267a7e83a01e38df2be7633a369bc272e7c781d82ed69",
+      "replacement_required": true
+    },
+    {
+      "module": "intro-permaculture",
+      "slide": 16,
+      "path": "intro-permaculture/en/slide-16.txt",
+      "sha256": "cb59a9d0448dd99e24c8257d651de1b2ffe15b7a9d55e4cfc7a78f9df7d919fe",
+      "replacement_required": true
+    },
+    {
+      "module": "intro-permaculture",
+      "slide": 17,
+      "path": "intro-permaculture/en/slide-17.txt",
+      "sha256": "9e2529c46ba0a1fa36ee149ca0ef38f41d81eb7f1bee2669126300fa9da48f5a",
+      "replacement_required": false
+    },
+    {
+      "module": "intro-permaculture",
+      "slide": 18,
+      "path": "intro-permaculture/en/slide-18.txt",
+      "sha256": "f9df8c51d02e5e3f5ca9609949a45422d3af2ac235f99e3bf6da7c95f0d6331c",
+      "replacement_required": true
+    },
+    {
+      "module": "intro-permaculture",
+      "slide": 19,
+      "path": "intro-permaculture/en/slide-19.txt",
+      "sha256": "cd4cac443bc2d56cd870bae40cd9572fa0f4413878d0d1efe721805134b28244",
+      "replacement_required": true
+    },
+    {
+      "module": "intro-permaculture",
+      "slide": 20,
+      "path": "intro-permaculture/en/slide-20.txt",
+      "sha256": "f14d0e38cb2973e98a60d04ce94d0c0693b4f8e8543cecddae930c1ce2d72b7b",
+      "replacement_required": true
+    },
+    {
+      "module": "intro-permaculture",
+      "slide": 21,
+      "path": "intro-permaculture/en/slide-21.txt",
+      "sha256": "d9cb4a84b18f736e67254d9f6c6009a50dbb9516f23c0e89cb9d28992edf4527",
+      "replacement_required": false
+    },
+    {
+      "module": "intro-permaculture",
+      "slide": 22,
+      "path": "intro-permaculture/en/slide-22.txt",
+      "sha256": "4b31cb554f545d196d8ec0610f1c271e9b2a1f6bbb07ed30fd1b5060b3fbe51e",
+      "replacement_required": false
+    },
+    {
+      "module": "market-community",
+      "slide": 1,
+      "path": "market-community/en/slide-01.txt",
+      "sha256": "a339a64093b329468ec2ab1815a59146d9452a1f0d0000c1fe65d7db59d54e55",
+      "replacement_required": false
+    },
+    {
+      "module": "market-community",
+      "slide": 2,
+      "path": "market-community/en/slide-02.txt",
+      "sha256": "c94738fa0f612f20424b905993f4519459f2d49fe8718d6a666ce8ca477542a9",
+      "replacement_required": true
+    },
+    {
+      "module": "market-community",
+      "slide": 3,
+      "path": "market-community/en/slide-03.txt",
+      "sha256": "f7689fa32ca5588962752814325afe4f2d56fa5c866678a356cda01fc8dde4df",
+      "replacement_required": false
+    },
+    {
+      "module": "market-community",
+      "slide": 4,
+      "path": "market-community/en/slide-04.txt",
+      "sha256": "8b75adfbc0d02050a0f29f68b0666ec5747482ec859a130a27aabca7cbccee9e",
+      "replacement_required": false
+    },
+    {
+      "module": "market-community",
+      "slide": 5,
+      "path": "market-community/en/slide-05.txt",
+      "sha256": "aca7e520b0fcb07e1d105edd1e05dd5aa9d38cab3ba528f8fedae63455be64ac",
+      "replacement_required": false
+    },
+    {
+      "module": "market-community",
+      "slide": 6,
+      "path": "market-community/en/slide-06.txt",
+      "sha256": "4faab38c3bd6af73664b327669d34543aade6d8f81b7c6a407e675530a0a7cd6",
+      "replacement_required": false
+    },
+    {
+      "module": "market-community",
+      "slide": 7,
+      "path": "market-community/en/slide-07.txt",
+      "sha256": "5ddba44757ed47b18552053c6c551c4df42982a552537a4f28d33a1bada9ef5d",
+      "replacement_required": true
+    },
+    {
+      "module": "market-community",
+      "slide": 8,
+      "path": "market-community/en/slide-08.txt",
+      "sha256": "fd3f8173be05bf1d70996e405da973a9d23d7a7aa9cc3f0f4f06993dedbafbfe",
+      "replacement_required": true
+    },
+    {
+      "module": "market-community",
+      "slide": 9,
+      "path": "market-community/en/slide-09.txt",
+      "sha256": "02b02ba997dadcf5ebe83c645cddce5fdf8b77e1eafc9720df070046871f9799",
+      "replacement_required": false
+    },
+    {
+      "module": "market-community",
+      "slide": 10,
+      "path": "market-community/en/slide-10.txt",
+      "sha256": "c28b74a617f220e3c0472473602341ef8265329d7557a6c1165993910d4096b8",
+      "replacement_required": true
+    },
+    {
+      "module": "market-community",
+      "slide": 11,
+      "path": "market-community/en/slide-11.txt",
+      "sha256": "1b200916b96b1a1210f5e2da3524b2d5143d82c6efd6126e90b117829482b95b",
+      "replacement_required": true
+    },
+    {
+      "module": "market-community",
+      "slide": 12,
+      "path": "market-community/en/slide-12.txt",
+      "sha256": "043b6344246298c0ec8519e706ae43d3450be8cf359b60f7117a65b53bec5a8f",
+      "replacement_required": true
+    },
+    {
+      "module": "market-community",
+      "slide": 13,
+      "path": "market-community/en/slide-13.txt",
+      "sha256": "802a647efc1af9d101d1f3c73a90e327b20688cf3689fc28346f40e23843bfc0",
+      "replacement_required": true
+    },
+    {
+      "module": "market-community",
+      "slide": 14,
+      "path": "market-community/en/slide-14.txt",
+      "sha256": "de48cdadc45f8549a8e2e84d7f3c59e6289d981f10a2480e76c8a6a1cd20efcb",
+      "replacement_required": false
+    },
+    {
+      "module": "market-community",
+      "slide": 15,
+      "path": "market-community/en/slide-15.txt",
+      "sha256": "164737cf666bac2c065a91649ef491161fae6bfaeb5ae916a80edad7e6a501cf",
+      "replacement_required": true
+    },
+    {
+      "module": "market-community",
+      "slide": 16,
+      "path": "market-community/en/slide-16.txt",
+      "sha256": "e3fae8d1a03de59019c1995c8272ce821c20b2f0f14ba178ba60f0af5ae46983",
+      "replacement_required": false
+    },
+    {
+      "module": "market-community",
+      "slide": 17,
+      "path": "market-community/en/slide-17.txt",
+      "sha256": "eca1f8c5d2b6b1c2b3767c95ec8339a4d087135035ff3faca51b3dcc7246c3c4",
+      "replacement_required": true
+    },
+    {
+      "module": "market-community",
+      "slide": 18,
+      "path": "market-community/en/slide-18.txt",
+      "sha256": "dfe82f861c5dce39a50114a92496db6598eaa27554246d2cbde46364ade22ce8",
+      "replacement_required": false
+    },
+    {
+      "module": "market-community",
+      "slide": 19,
+      "path": "market-community/en/slide-19.txt",
+      "sha256": "f39c05302f26d63c011993585f612693052279dc42cd6742668b13586bbfe970",
+      "replacement_required": false
+    },
+    {
+      "module": "market-community",
+      "slide": 20,
+      "path": "market-community/en/slide-20.txt",
+      "sha256": "fed35235dab77b198170eeb8efc646511bf6a81499ce824ba1b16ae2a8a5cecb",
+      "replacement_required": true
+    },
+    {
+      "module": "plant-guilds",
+      "slide": 1,
+      "path": "plant-guilds/en/slide-01.txt",
+      "sha256": "1c546551666acadf30ce961266b63fa9c105a11c84cecb13f169662135960914",
+      "replacement_required": false
+    },
+    {
+      "module": "plant-guilds",
+      "slide": 2,
+      "path": "plant-guilds/en/slide-02.txt",
+      "sha256": "eab90c90e1c2f3623f75e6ea74ccb15e5e0f272cdc365daf485b41064b343ae9",
+      "replacement_required": true
+    },
+    {
+      "module": "plant-guilds",
+      "slide": 3,
+      "path": "plant-guilds/en/slide-03.txt",
+      "sha256": "7f6b40ea8e38f01aafd90f99d426519205f8fe0883bf9cdffe1735b5480c6533",
+      "replacement_required": false
+    },
+    {
+      "module": "plant-guilds",
+      "slide": 4,
+      "path": "plant-guilds/en/slide-04.txt",
+      "sha256": "597e7ccc4f070b20ba897e57f7841285827901eb5bdaace9437a3466ef45f685",
+      "replacement_required": true
+    },
+    {
+      "module": "plant-guilds",
+      "slide": 5,
+      "path": "plant-guilds/en/slide-05.txt",
+      "sha256": "c7fb641680d57573418d28a2053bed2a6d79c0de87609db3fc09108f41652fe0",
+      "replacement_required": true
+    },
+    {
+      "module": "plant-guilds",
+      "slide": 6,
+      "path": "plant-guilds/en/slide-06.txt",
+      "sha256": "96b22d1eb332ef8516ffe8b98fde5089427b5e20f2db75dfad9ed44e48f4454a",
+      "replacement_required": false
+    },
+    {
+      "module": "plant-guilds",
+      "slide": 7,
+      "path": "plant-guilds/en/slide-07.txt",
+      "sha256": "8ff6f87fd44b2006cd90333b22aef4a73c418b8aa4ca7bfe61e178272b9fc80b",
+      "replacement_required": true
+    },
+    {
+      "module": "plant-guilds",
+      "slide": 8,
+      "path": "plant-guilds/en/slide-08.txt",
+      "sha256": "90e77e1677efa7f27f44d4aa58c905c019bf84b84d6e0182c4cd9710f510a43a",
+      "replacement_required": true
+    },
+    {
+      "module": "plant-guilds",
+      "slide": 9,
+      "path": "plant-guilds/en/slide-09.txt",
+      "sha256": "8688ae1c3f4fe779a0572b6e9235e26446068641db96ec1e87a76097de34d67f",
+      "replacement_required": false
+    },
+    {
+      "module": "plant-guilds",
+      "slide": 10,
+      "path": "plant-guilds/en/slide-10.txt",
+      "sha256": "b9a3a8d254d8f70cd3ccc3b8734b512739042b27e4404941edb02b12721c9d61",
+      "replacement_required": false
+    },
+    {
+      "module": "plant-guilds",
+      "slide": 11,
+      "path": "plant-guilds/en/slide-11.txt",
+      "sha256": "c622a1e676862a83ea11f1e66ae06ca3ee077e85a8f94a84fcb880b28b214d94",
+      "replacement_required": false
+    },
+    {
+      "module": "plant-guilds",
+      "slide": 12,
+      "path": "plant-guilds/en/slide-12.txt",
+      "sha256": "7ab0ca3345dcc27ac6f180c530e0a76cd20c6992670044008c0c95ebbb295fc5",
+      "replacement_required": true
+    },
+    {
+      "module": "plant-guilds",
+      "slide": 13,
+      "path": "plant-guilds/en/slide-13.txt",
+      "sha256": "c9b842dc69e7e08f8f376231773fb4e9ea2a4239e6f0bd51c3de0f1a82728868",
+      "replacement_required": true
+    },
+    {
+      "module": "plant-guilds",
+      "slide": 14,
+      "path": "plant-guilds/en/slide-14.txt",
+      "sha256": "8ff46e57b54e245eedc01c7803a9581393a5bb8dc8eeab2e56fdcafc962a7a06",
+      "replacement_required": true
+    },
+    {
+      "module": "plant-guilds",
+      "slide": 15,
+      "path": "plant-guilds/en/slide-15.txt",
+      "sha256": "22e0ffe516e339daa04f6b5a6bdff63d2ef12d790aa41599ab8059803317906e",
+      "replacement_required": false
+    },
+    {
+      "module": "plant-guilds",
+      "slide": 16,
+      "path": "plant-guilds/en/slide-16.txt",
+      "sha256": "10e5906c598d7adf29c37444461d1aa453f9817741c1df6533ef176cd09af7f3",
+      "replacement_required": true
+    },
+    {
+      "module": "plant-guilds",
+      "slide": 17,
+      "path": "plant-guilds/en/slide-17.txt",
+      "sha256": "cee16d2679c537054bac4ab1b264754dec33eed03bc851c767a13214321fa5fd",
+      "replacement_required": true
+    },
+    {
+      "module": "plant-guilds",
+      "slide": 18,
+      "path": "plant-guilds/en/slide-18.txt",
+      "sha256": "63dba6dae349a90a0d00fc42848629cbf499347e7db8f4ff6c9d6da4dd771376",
+      "replacement_required": true
+    },
+    {
+      "module": "plant-guilds",
+      "slide": 19,
+      "path": "plant-guilds/en/slide-19.txt",
+      "sha256": "0e1694b996164aff62e7349518604fd2156c60ac679c0ceb69c7d8fa7fc55d2b",
+      "replacement_required": false
+    },
+    {
+      "module": "plant-guilds",
+      "slide": 20,
+      "path": "plant-guilds/en/slide-20.txt",
+      "sha256": "eeb8e057252d363d1ae9c43f62231f196078d2d14e4347693388d0d2eef18780",
+      "replacement_required": false
+    },
+    {
+      "module": "reading-landscape",
+      "slide": 1,
+      "path": "reading-landscape/en/slide-01.txt",
+      "sha256": "9f221ad18c607e6bf904e00ddc6b40c30c20a68c97222d960dd2405077b50642",
+      "replacement_required": false
+    },
+    {
+      "module": "reading-landscape",
+      "slide": 2,
+      "path": "reading-landscape/en/slide-02.txt",
+      "sha256": "d14127787ff8c643448113e61683bf34cd7d18466ee2739fc7c12921082b8e5e",
+      "replacement_required": false
+    },
+    {
+      "module": "reading-landscape",
+      "slide": 3,
+      "path": "reading-landscape/en/slide-03.txt",
+      "sha256": "a60104f2ac591e6df4a140b10d4cf6a3dfd6f8bff7cf43a2929d06f2f99b7c2a",
+      "replacement_required": false
+    },
+    {
+      "module": "reading-landscape",
+      "slide": 4,
+      "path": "reading-landscape/en/slide-04.txt",
+      "sha256": "418b2ac5e79bc1eaabb138372bb9df978430d41601015b9ae0eb0eb861931c8c",
+      "replacement_required": true
+    },
+    {
+      "module": "reading-landscape",
+      "slide": 5,
+      "path": "reading-landscape/en/slide-05.txt",
+      "sha256": "32684e3588ec0c589439c351ed63ddaf80b1ef2746e195b6c1fdd2e5902a4df0",
+      "replacement_required": false
+    },
+    {
+      "module": "reading-landscape",
+      "slide": 6,
+      "path": "reading-landscape/en/slide-06.txt",
+      "sha256": "3ff155439ec3d69148839cd8231abc965974d3aa2564e4b64e3230d220b06c1d",
+      "replacement_required": true
+    },
+    {
+      "module": "reading-landscape",
+      "slide": 7,
+      "path": "reading-landscape/en/slide-07.txt",
+      "sha256": "3cbcc1c201dd4706e742baa293b15cb998406718eb6dd0d61ba88f243b0f657a",
+      "replacement_required": true
+    },
+    {
+      "module": "reading-landscape",
+      "slide": 8,
+      "path": "reading-landscape/en/slide-08.txt",
+      "sha256": "e846ebc4d63fc134d0dce6c368196241d3c03eb637e04e3028f9da1f6b114295",
+      "replacement_required": true
+    },
+    {
+      "module": "reading-landscape",
+      "slide": 9,
+      "path": "reading-landscape/en/slide-09.txt",
+      "sha256": "090ada2f47bd1c5b6b6974a42381fb9ac2615c11130f9ec5fcd78acbcc3c1f3e",
+      "replacement_required": false
+    },
+    {
+      "module": "reading-landscape",
+      "slide": 10,
+      "path": "reading-landscape/en/slide-10.txt",
+      "sha256": "c7a8c741ff6820b85683388f2c007b42c7c6e919692921b008a810ba12a5dc17",
+      "replacement_required": true
+    },
+    {
+      "module": "reading-landscape",
+      "slide": 11,
+      "path": "reading-landscape/en/slide-11.txt",
+      "sha256": "d8319ebd352c3229b8fc55f3b2796cbb4db1840aa3744a76567575ba7bbee5bc",
+      "replacement_required": true
+    },
+    {
+      "module": "reading-landscape",
+      "slide": 12,
+      "path": "reading-landscape/en/slide-12.txt",
+      "sha256": "c42ce9808e76941e8802735d99677783fda41d0db4ee12a832185fea2171edb5",
+      "replacement_required": true
+    },
+    {
+      "module": "reading-landscape",
+      "slide": 13,
+      "path": "reading-landscape/en/slide-13.txt",
+      "sha256": "731a9dab61d0f560040ddf2b47f5d47610f361476f0d9d7ad8c74a98aee1a750",
+      "replacement_required": false
+    },
+    {
+      "module": "reading-landscape",
+      "slide": 14,
+      "path": "reading-landscape/en/slide-14.txt",
+      "sha256": "be9fb01cd61ec18fe583f8152d3737340bb66b936ded2f445ef232d698cbc035",
+      "replacement_required": true
+    },
+    {
+      "module": "reading-landscape",
+      "slide": 15,
+      "path": "reading-landscape/en/slide-15.txt",
+      "sha256": "271a63cb4e9b767d00ec323af5f7a48e0ef50b0bdb5e320c3b3a652a96c2f965",
+      "replacement_required": true
+    },
+    {
+      "module": "reading-landscape",
+      "slide": 16,
+      "path": "reading-landscape/en/slide-16.txt",
+      "sha256": "87be072e12ddb28df1b41516a78fa5d23b7105d1ed5cfa05513fe4f9f938e67d",
+      "replacement_required": true
+    },
+    {
+      "module": "reading-landscape",
+      "slide": 17,
+      "path": "reading-landscape/en/slide-17.txt",
+      "sha256": "9e1e33c7ba44f1ba5b8aaffa9ac396612b9d43395350188c8288acb1e699b3b2",
+      "replacement_required": false
+    },
+    {
+      "module": "reading-landscape",
+      "slide": 18,
+      "path": "reading-landscape/en/slide-18.txt",
+      "sha256": "ad7a1ee3836a3a0edefc5821a2a982f88e0c446c008ef223695bd71f166a1d82",
+      "replacement_required": true
+    },
+    {
+      "module": "reading-landscape",
+      "slide": 19,
+      "path": "reading-landscape/en/slide-19.txt",
+      "sha256": "83393004c33996c6d37f59e3890f7cae2bd7ab6d6f2e77d0b4739fca174b3713",
+      "replacement_required": false
+    },
+    {
+      "module": "reading-landscape",
+      "slide": 20,
+      "path": "reading-landscape/en/slide-20.txt",
+      "sha256": "db645008acfa85559c0ea7455342d34820de38f3101b654f49a3a15deb2334f6",
+      "replacement_required": true
+    },
+    {
+      "module": "reading-landscape",
+      "slide": 21,
+      "path": "reading-landscape/en/slide-21.txt",
+      "sha256": "a29aef6b3b47caae2d217c163cfe2f2b92500adb26a41f0816156d8763844692",
+      "replacement_required": true
+    },
+    {
+      "module": "small-livestock",
+      "slide": 1,
+      "path": "small-livestock/en/slide-01.txt",
+      "sha256": "02651c69ec15dad297ab24754a134c1f95b387cea05806a42c1e6e94734c8295",
+      "replacement_required": false
+    },
+    {
+      "module": "small-livestock",
+      "slide": 2,
+      "path": "small-livestock/en/slide-02.txt",
+      "sha256": "18c566c6835744b7d0a6850aa2c43cb902e1eda8d574d646bdbff09e54dc2762",
+      "replacement_required": true
+    },
+    {
+      "module": "small-livestock",
+      "slide": 3,
+      "path": "small-livestock/en/slide-03.txt",
+      "sha256": "e5f0fa0358ed416573fbeb94f95b828b84264a21ca6aa7bc538af6185f778e7f",
+      "replacement_required": false
+    },
+    {
+      "module": "small-livestock",
+      "slide": 4,
+      "path": "small-livestock/en/slide-04.txt",
+      "sha256": "3d134a260dcf779e5b5941a2a69d6ca3d77fb931dfc10e5ebb836304fcbb3baf",
+      "replacement_required": true
+    },
+    {
+      "module": "small-livestock",
+      "slide": 5,
+      "path": "small-livestock/en/slide-05.txt",
+      "sha256": "836033a832a529bd29cea67965290c8bbd9e3d7c1375f7a76246629e12aa4241",
+      "replacement_required": true
+    },
+    {
+      "module": "small-livestock",
+      "slide": 6,
+      "path": "small-livestock/en/slide-06.txt",
+      "sha256": "a561213122b651e7a7465edf00fcbb3a1f6f0d997b0e4fc75ce2f3d67900ea66",
+      "replacement_required": true
+    },
+    {
+      "module": "small-livestock",
+      "slide": 7,
+      "path": "small-livestock/en/slide-07.txt",
+      "sha256": "c00e7dd3b8e96b3f7ba3a46cdec6d1bd2050f02ddb9941858a1b7a09c8dcb649",
+      "replacement_required": true
+    },
+    {
+      "module": "small-livestock",
+      "slide": 8,
+      "path": "small-livestock/en/slide-08.txt",
+      "sha256": "0554cb4840c98c21ef759f8a8e49150486332f30c7ed57554490b9e619042a27",
+      "replacement_required": true
+    },
+    {
+      "module": "small-livestock",
+      "slide": 9,
+      "path": "small-livestock/en/slide-09.txt",
+      "sha256": "dae68d2a67b2d9e75cb9ec8a8559d5747ae4d57e149082aca0c118a05dbabf63",
+      "replacement_required": false
+    },
+    {
+      "module": "small-livestock",
+      "slide": 10,
+      "path": "small-livestock/en/slide-10.txt",
+      "sha256": "c90cb8b5e7d954d204751be1518b749749705664658474db169202a7a38b58dc",
+      "replacement_required": true
+    },
+    {
+      "module": "small-livestock",
+      "slide": 11,
+      "path": "small-livestock/en/slide-11.txt",
+      "sha256": "3ea7a8820243932f1fc43223c307f84e6c262fdcf1e402bf34e9d37d4ef6299d",
+      "replacement_required": true
+    },
+    {
+      "module": "small-livestock",
+      "slide": 12,
+      "path": "small-livestock/en/slide-12.txt",
+      "sha256": "c5cd9936dfc0e668069c9dbceac75be7ffa08761a1d8e99922fad35e972ddcb4",
+      "replacement_required": true
+    },
+    {
+      "module": "small-livestock",
+      "slide": 13,
+      "path": "small-livestock/en/slide-13.txt",
+      "sha256": "7e45c50078ec31d9be9f8f5eb0c59dec7f03ac54bbfd4593d4bd7f58a1a1757a",
+      "replacement_required": true
+    },
+    {
+      "module": "small-livestock",
+      "slide": 14,
+      "path": "small-livestock/en/slide-14.txt",
+      "sha256": "3803592f39830b91e299b2d0a0bbfd4efb64da16c8e50e6054e38614468d95ed",
+      "replacement_required": false
+    },
+    {
+      "module": "small-livestock",
+      "slide": 15,
+      "path": "small-livestock/en/slide-15.txt",
+      "sha256": "0e0e0b93f9620caf3d5dd197f46b41563f3cec7c92ae9210efdffe71493bcb4d",
+      "replacement_required": true
+    },
+    {
+      "module": "small-livestock",
+      "slide": 16,
+      "path": "small-livestock/en/slide-16.txt",
+      "sha256": "01b1a0b46e93cd99dadbaec9c6c1e39434b8710c4d7464d4f971c8e2028a95b0",
+      "replacement_required": true
+    },
+    {
+      "module": "small-livestock",
+      "slide": 17,
+      "path": "small-livestock/en/slide-17.txt",
+      "sha256": "0252d6d56ceb4ee2e7fee94ccea8aa699ec318ddde993f9a2a9b8680b958ceef",
+      "replacement_required": false
+    },
+    {
+      "module": "small-livestock",
+      "slide": 18,
+      "path": "small-livestock/en/slide-18.txt",
+      "sha256": "93479d3d1c034319f6c10e5bb6161531ddf358da02ad5ff5a4e6be308ba22218",
+      "replacement_required": true
+    },
+    {
+      "module": "small-livestock",
+      "slide": 19,
+      "path": "small-livestock/en/slide-19.txt",
+      "sha256": "e61da3094ec5f65d7ac9e32039eeff4c1542c7cce4d5638287b3b10ed536d523",
+      "replacement_required": false
+    },
+    {
+      "module": "small-livestock",
+      "slide": 20,
+      "path": "small-livestock/en/slide-20.txt",
+      "sha256": "97f3930a6eb834aa9e862c94c9707f6672a00f064ab7cd98aefafb7c68747238",
+      "replacement_required": true
+    },
+    {
+      "module": "soil-health",
+      "slide": 1,
+      "path": "soil-health/en/slide-01.txt",
+      "sha256": "53e115d17ac4f4251666497f968bfef948837fce2ced1cb0b53704da932546c8",
+      "replacement_required": false
+    },
+    {
+      "module": "soil-health",
+      "slide": 2,
+      "path": "soil-health/en/slide-02.txt",
+      "sha256": "488c037cc4e811131896f1fff1f9c66cbf25c800f7ab25be2b068ce521b2c6b4",
+      "replacement_required": false
+    },
+    {
+      "module": "soil-health",
+      "slide": 3,
+      "path": "soil-health/en/slide-03.txt",
+      "sha256": "5ef7bb677cb7deee45e27eb47732f1a6921c554d66d3920ba75007609a90cc16",
+      "replacement_required": true
+    },
+    {
+      "module": "soil-health",
+      "slide": 4,
+      "path": "soil-health/en/slide-04.txt",
+      "sha256": "0a9306797abd84ff21f281fc3af3971a571140e70adc051f8c8055ef6e25a2b8",
+      "replacement_required": false
+    },
+    {
+      "module": "soil-health",
+      "slide": 5,
+      "path": "soil-health/en/slide-05.txt",
+      "sha256": "057009a30fd09673b96d7b3e9c9b57d9ca04f9f2eb12f2d4cdc8c346d715cde9",
+      "replacement_required": false
+    },
+    {
+      "module": "soil-health",
+      "slide": 6,
+      "path": "soil-health/en/slide-06.txt",
+      "sha256": "5b7e54080076490a46be0f4974e6b18ac7bf0351f01042c239da9a5cbbb5604f",
+      "replacement_required": false
+    },
+    {
+      "module": "soil-health",
+      "slide": 7,
+      "path": "soil-health/en/slide-07.txt",
+      "sha256": "4aa429697cf336ce1da7b2e580f38dc439f75b3c05e879b105080bac5ed21f1b",
+      "replacement_required": false
+    },
+    {
+      "module": "soil-health",
+      "slide": 8,
+      "path": "soil-health/en/slide-08.txt",
+      "sha256": "5c03536c84ec6ace1ca2c9fce4fb01a2e674100cec1d40f416f21a01206c273c",
+      "replacement_required": false
+    },
+    {
+      "module": "soil-health",
+      "slide": 9,
+      "path": "soil-health/en/slide-09.txt",
+      "sha256": "a16eacf10b931195fd1e84590aa8736deb06283379e9a2cd8c47a4230dcbe696",
+      "replacement_required": false
+    },
+    {
+      "module": "soil-health",
+      "slide": 10,
+      "path": "soil-health/en/slide-10.txt",
+      "sha256": "316fa7b2e3274c9ea698a3f299065291c7a9ee2f0a2d2ba76a0a439d24eacd07",
+      "replacement_required": false
+    },
+    {
+      "module": "soil-health",
+      "slide": 11,
+      "path": "soil-health/en/slide-11.txt",
+      "sha256": "08e6ff1d02d242703274b7fa4f8bcc8086fe60c90748237fa77ae6587b8b0180",
+      "replacement_required": false
+    },
+    {
+      "module": "soil-health",
+      "slide": 12,
+      "path": "soil-health/en/slide-12.txt",
+      "sha256": "439bd42e0b00da00c37792d47d32f9599b8f7a66f539299db4d23ee256d63046",
+      "replacement_required": false
+    },
+    {
+      "module": "soil-health",
+      "slide": 13,
+      "path": "soil-health/en/slide-13.txt",
+      "sha256": "d82edffbf9d672ea4d4805141aa827246a4b1db92fd2b2bb6d2639654b1224ba",
+      "replacement_required": false
+    },
+    {
+      "module": "soil-health",
+      "slide": 14,
+      "path": "soil-health/en/slide-14.txt",
+      "sha256": "b67b14cfd45ade47dde91b4a71621b8955813d5dd5a2bdc516792a60928a51b3",
+      "replacement_required": false
+    },
+    {
+      "module": "soil-health",
+      "slide": 15,
+      "path": "soil-health/en/slide-15.txt",
+      "sha256": "04c5ca673cfb0cad50b758b1951b72e032647b4ee723608e2e5032026e493966",
+      "replacement_required": false
+    },
+    {
+      "module": "soil-health",
+      "slide": 16,
+      "path": "soil-health/en/slide-16.txt",
+      "sha256": "ac2f16d6f80e441a2f149add918758462211676023dde227516cc7463b0dbd89",
+      "replacement_required": false
+    },
+    {
+      "module": "soil-health",
+      "slide": 17,
+      "path": "soil-health/en/slide-17.txt",
+      "sha256": "9f80c60ce4db77afab7f467a1dbbbcf875ca759e945fa4cf58b364ef480ee06b",
+      "replacement_required": true
+    },
+    {
+      "module": "soil-health",
+      "slide": 18,
+      "path": "soil-health/en/slide-18.txt",
+      "sha256": "39c8cf9a81dc05f5353d003dda886c879badc27c2a9ebd0a5c90de463b5c43dd",
+      "replacement_required": false
+    },
+    {
+      "module": "soil-health",
+      "slide": 19,
+      "path": "soil-health/en/slide-19.txt",
+      "sha256": "421b4c81aefa7bb890c777866673681ca73cb1f899d577f60cc116dc3f6f0127",
+      "replacement_required": false
+    },
+    {
+      "module": "soil-health",
+      "slide": 20,
+      "path": "soil-health/en/slide-20.txt",
+      "sha256": "1858175ac19554cddff77f6dd7904d7ba0ede0ec5c99d386a238abefceaf7ab1",
+      "replacement_required": false
+    },
+    {
+      "module": "vegetables-staples",
+      "slide": 1,
+      "path": "vegetables-staples/en/slide-01.txt",
+      "sha256": "799332e441aa228a102f0003c595758286c1f020c8cf57fce5619368fe7c4baf",
+      "replacement_required": false
+    },
+    {
+      "module": "vegetables-staples",
+      "slide": 2,
+      "path": "vegetables-staples/en/slide-02.txt",
+      "sha256": "9ea6ac44bf9804a8694251f1946a75ed37c0c435bb53cafe6ee218ac8f704097",
+      "replacement_required": false
+    },
+    {
+      "module": "vegetables-staples",
+      "slide": 3,
+      "path": "vegetables-staples/en/slide-03.txt",
+      "sha256": "b7423eb787e9d59fa766b8df26ab978172922d50ebbd547040f67ee1efa80d5c",
+      "replacement_required": false
+    },
+    {
+      "module": "vegetables-staples",
+      "slide": 4,
+      "path": "vegetables-staples/en/slide-04.txt",
+      "sha256": "e2d182f57d53499bb60a7dafa2a1be7a49bd0d7247d6c0d5d38483ad23cb2a45",
+      "replacement_required": false
+    },
+    {
+      "module": "vegetables-staples",
+      "slide": 5,
+      "path": "vegetables-staples/en/slide-05.txt",
+      "sha256": "5a36ef4b8b96d1a8057677383e7bfb216dfda8b4d66bd3f392129b6a98f23c03",
+      "replacement_required": false
+    },
+    {
+      "module": "vegetables-staples",
+      "slide": 6,
+      "path": "vegetables-staples/en/slide-06.txt",
+      "sha256": "b7c5873acc4d3cad16e46b83dfbc5d76635f89f00174257cceee75529d131647",
+      "replacement_required": true
+    },
+    {
+      "module": "vegetables-staples",
+      "slide": 7,
+      "path": "vegetables-staples/en/slide-07.txt",
+      "sha256": "cfea18edddd2b2ed115c99d54aec55fc2e0b07ec5dcbf120688a898c29cb5c59",
+      "replacement_required": false
+    },
+    {
+      "module": "vegetables-staples",
+      "slide": 8,
+      "path": "vegetables-staples/en/slide-08.txt",
+      "sha256": "fe520e46fc60e5b02a756f656a7a7e7a346d9c45f7eb88de472e567ff06c6f90",
+      "replacement_required": true
+    },
+    {
+      "module": "vegetables-staples",
+      "slide": 9,
+      "path": "vegetables-staples/en/slide-09.txt",
+      "sha256": "954d2be4a6dd9a6e82aa05accfa1ee3a33787d9aaaddb2a117e7cbb569d54058",
+      "replacement_required": true
+    },
+    {
+      "module": "vegetables-staples",
+      "slide": 10,
+      "path": "vegetables-staples/en/slide-10.txt",
+      "sha256": "09c1df995401e46e5d12231aef80e63524d7c33913ca6c382b16945cfb82d52c",
+      "replacement_required": true
+    },
+    {
+      "module": "vegetables-staples",
+      "slide": 11,
+      "path": "vegetables-staples/en/slide-11.txt",
+      "sha256": "127a9a14e1f935f48907f4c21aeef5c754223d9ae023a115a91f0f2a6dcbd618",
+      "replacement_required": false
+    },
+    {
+      "module": "vegetables-staples",
+      "slide": 12,
+      "path": "vegetables-staples/en/slide-12.txt",
+      "sha256": "5d3c67d52d0c8a4bbb3dcf3ac98d816dc80e5ccafe488eb752846a7768c8e3b5",
+      "replacement_required": false
+    },
+    {
+      "module": "vegetables-staples",
+      "slide": 13,
+      "path": "vegetables-staples/en/slide-13.txt",
+      "sha256": "14df1ab1c1c1c8cac9836d3c8f1eef4443b83f3a04e2dd89331910481910d3df",
+      "replacement_required": false
+    },
+    {
+      "module": "vegetables-staples",
+      "slide": 14,
+      "path": "vegetables-staples/en/slide-14.txt",
+      "sha256": "e41efafae688cb2c8f50d3639a2909fdea30e9b47d9fd2e843f194adbac4b5bd",
+      "replacement_required": false
+    },
+    {
+      "module": "vegetables-staples",
+      "slide": 15,
+      "path": "vegetables-staples/en/slide-15.txt",
+      "sha256": "e1c8173e66dc70bcc758e9e5bf8b3dba0860024a2a00959c2d5343ddd123a82a",
+      "replacement_required": false
+    },
+    {
+      "module": "vegetables-staples",
+      "slide": 16,
+      "path": "vegetables-staples/en/slide-16.txt",
+      "sha256": "39d07addf0e6cbdb70da09a524399b85067a3057981569b03b445b4e3070b021",
+      "replacement_required": false
+    },
+    {
+      "module": "vegetables-staples",
+      "slide": 17,
+      "path": "vegetables-staples/en/slide-17.txt",
+      "sha256": "ee07d8e1a3428e9830f7451c3c252aae0a6b8782cde13da49224bbaf1730d401",
+      "replacement_required": false
+    },
+    {
+      "module": "vegetables-staples",
+      "slide": 18,
+      "path": "vegetables-staples/en/slide-18.txt",
+      "sha256": "4737b3800911ee4130ae07c5d3e9caaf3a6b2e12db39ddaba93b832b139068fb",
+      "replacement_required": false
+    },
+    {
+      "module": "water-harvesting",
+      "slide": 1,
+      "path": "water-harvesting/en/slide-01.txt",
+      "sha256": "dae0bc0da7a227d2e41badfaa1fc947b7d414aa12c4d34cd88350e4ccd8a0827",
+      "replacement_required": false
+    },
+    {
+      "module": "water-harvesting",
+      "slide": 2,
+      "path": "water-harvesting/en/slide-02.txt",
+      "sha256": "8356f99be6007c9e287bdfc8ab0b6befa26de1bcd3521fbdfde11a7e280257cf",
+      "replacement_required": false
+    },
+    {
+      "module": "water-harvesting",
+      "slide": 3,
+      "path": "water-harvesting/en/slide-03.txt",
+      "sha256": "f77d193d74c7e5252fa51ed521cdb5b97aaf1710c8ff395d276aa3213a111131",
+      "replacement_required": false
+    },
+    {
+      "module": "water-harvesting",
+      "slide": 4,
+      "path": "water-harvesting/en/slide-04.txt",
+      "sha256": "f702c91a48de0828a147a6b42f1d8a45223e6887d10904e7b0c2a8662400788a",
+      "replacement_required": false
+    },
+    {
+      "module": "water-harvesting",
+      "slide": 5,
+      "path": "water-harvesting/en/slide-05.txt",
+      "sha256": "9f12375933b0a5ba8d06e9130bd88db1ecb0face56895377bec1b1442239bc08",
+      "replacement_required": false
+    },
+    {
+      "module": "water-harvesting",
+      "slide": 6,
+      "path": "water-harvesting/en/slide-06.txt",
+      "sha256": "be29bcc2202d6a58ff6a152d7650d8db37723bfa5b531dafccc7e16cd696695b",
+      "replacement_required": false
+    },
+    {
+      "module": "water-harvesting",
+      "slide": 7,
+      "path": "water-harvesting/en/slide-07.txt",
+      "sha256": "ff24494de1797b59112ed016716cfb949f8a8555162460adbb6835c288da4a42",
+      "replacement_required": false
+    },
+    {
+      "module": "water-harvesting",
+      "slide": 8,
+      "path": "water-harvesting/en/slide-08.txt",
+      "sha256": "3d78ba9f1c969ce78c67624bd7fc23fbe72b82d7d70d7bc0df7e5dde9ba0bfbf",
+      "replacement_required": false
+    },
+    {
+      "module": "water-harvesting",
+      "slide": 9,
+      "path": "water-harvesting/en/slide-09.txt",
+      "sha256": "54124fc847549c91a40e44cf4255ba6b1796efac3695b44cb819025f507aba45",
+      "replacement_required": false
+    },
+    {
+      "module": "water-harvesting",
+      "slide": 10,
+      "path": "water-harvesting/en/slide-10.txt",
+      "sha256": "8320b9264736c401861b2855cad2e263227b653416844925e0cf0c7c548f928f",
+      "replacement_required": false
+    },
+    {
+      "module": "water-harvesting",
+      "slide": 11,
+      "path": "water-harvesting/en/slide-11.txt",
+      "sha256": "3524718605e3456354a807c30102cd896559a25094aaa184870cb1473ecf7687",
+      "replacement_required": false
+    },
+    {
+      "module": "water-harvesting",
+      "slide": 12,
+      "path": "water-harvesting/en/slide-12.txt",
+      "sha256": "ddb0c4acd393dff962ed7d6b19345352976a9d11d7a4ba82f7810b97aa1ac99f",
+      "replacement_required": false
+    },
+    {
+      "module": "water-harvesting",
+      "slide": 13,
+      "path": "water-harvesting/en/slide-13.txt",
+      "sha256": "542d0da04bf44219af67b8e03fe7dfaa935636f3bb064db2dc5bb7f404c34397",
+      "replacement_required": false
+    },
+    {
+      "module": "water-harvesting",
+      "slide": 14,
+      "path": "water-harvesting/en/slide-14.txt",
+      "sha256": "360e0796d3a7f35189dab642ce354dbbe2b9e3f2878ced720c2d85d54f7fa517",
+      "replacement_required": false
+    },
+    {
+      "module": "water-harvesting",
+      "slide": 15,
+      "path": "water-harvesting/en/slide-15.txt",
+      "sha256": "f2ff9b8b5fbf929e4d976bb85264764642fbc37d6576c92a5c122f4e847d02ef",
+      "replacement_required": false
+    },
+    {
+      "module": "water-harvesting",
+      "slide": 16,
+      "path": "water-harvesting/en/slide-16.txt",
+      "sha256": "d6888139dac4bcbbc592f28d06e9c4c7ba5ac2d7269a6e5c80bb12bebf5442fb",
+      "replacement_required": false
+    },
+    {
+      "module": "water-harvesting",
+      "slide": 17,
+      "path": "water-harvesting/en/slide-17.txt",
+      "sha256": "25b3c1509e9b65bed7e1c94fdfea88381a88daafaa678797360cda4738de2aa8",
+      "replacement_required": false
+    },
+    {
+      "module": "water-harvesting",
+      "slide": 18,
+      "path": "water-harvesting/en/slide-18.txt",
+      "sha256": "bae051629f2a34b5eae141115f380aad471aceb2d5b785a83da0002910e06196",
+      "replacement_required": false
+    },
+    {
+      "module": "water-harvesting",
+      "slide": 19,
+      "path": "water-harvesting/en/slide-19.txt",
+      "sha256": "07d8044bc9027c410dc9d449d5108cfcbfd64477be4493a9d63fe6086d1dd7b9",
+      "replacement_required": false
+    },
+    {
+      "module": "water-harvesting",
+      "slide": 20,
+      "path": "water-harvesting/en/slide-20.txt",
+      "sha256": "ee354b4d0a9a179c3427d07adb8afdee9e25892460f6fa2debe1a49fc54a9b0e",
+      "replacement_required": false
+    },
+    {
+      "module": "water-harvesting",
+      "slide": 21,
+      "path": "water-harvesting/en/slide-21.txt",
+      "sha256": "b71fabe3628fa2ea8e5dd5ce292ea5fc10111e17a0aa8957d4aa5639def8b896",
+      "replacement_required": false
+    },
+    {
+      "module": "water-harvesting",
+      "slide": 22,
+      "path": "water-harvesting/en/slide-22.txt",
+      "sha256": "63de7a0e094aa32a6ae83c290b0d4d2e5460140783eaa3d89aa9cc3916b22cfa",
+      "replacement_required": false
+    },
+    {
+      "module": "water-harvesting",
+      "slide": 23,
+      "path": "water-harvesting/en/slide-23.txt",
+      "sha256": "fab7c464c66848faa6db460275ce93073f74a8da6e32ccef1621bc4484654fca",
+      "replacement_required": true
+    },
+    {
+      "module": "water-harvesting",
+      "slide": 24,
+      "path": "water-harvesting/en/slide-24.txt",
+      "sha256": "f64eb5d2a0b45a17082fd0b5fc59ee088a7ad73f7f1b086610782099fec73bc4",
+      "replacement_required": true
+    }
+  ]
+}

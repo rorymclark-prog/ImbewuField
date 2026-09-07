@@ -490,5 +490,563 @@
     "slide": 24,
     "art": "course-art/reading-landscape/aframe-field.jpg",
     "caption": "My marked line runs across the slope, not down it."
+  },
+  {
+    "module": "market-community",
+    "slide": 2,
+    "art": "course-art/market-community/harvest-record.jpg",
+    "caption": "Record where the harvest goes."
+  },
+  {
+    "module": "market-community",
+    "slide": 3,
+    "art": "course-art/market-community/harvest-record.jpg",
+    "caption": "By the end, you can record harvests and where they go."
+  },
+  {
+    "module": "market-community",
+    "slide": 4,
+    "art": "course-art/market-community/harvest-record.jpg",
+    "caption": "The record follows each harvest to family food, sales, gifts, or compost."
+  },
+  {
+    "module": "market-community",
+    "slide": 5,
+    "art": "course-art/market-community/harvest-record.jpg",
+    "caption": "Write down every harvest as it happens."
+  },
+  {
+    "module": "market-community",
+    "slide": 6,
+    "art": "course-art/market-community/harvest-record.jpg",
+    "caption": "The record also shows which months leave the household buying food."
+  },
+  {
+    "module": "market-community",
+    "slide": 7,
+    "art": "course-art/market-community/cost-example.svg",
+    "caption": "The figures are an exercise, not current market prices."
+  },
+  {
+    "module": "market-community",
+    "slide": 8,
+    "art": "course-art/market-community/harvest-record.jpg",
+    "caption": "Use your own record to name the months when household food runs short."
+  },
+  {
+    "module": "market-community",
+    "slide": 9,
+    "art": "course-art/market-community/surplus-handover.jpg",
+    "caption": "Surplus can leave the farm through a roadside stall"
+  },
+  {
+    "module": "market-community",
+    "slide": 10,
+    "art": "course-art/market-community/surplus-handover.jpg",
+    "caption": "Know your customer before planting for a sale."
+  },
+  {
+    "module": "market-community",
+    "slide": 11,
+    "art": "course-art/market-community/surplus-handover.jpg",
+    "caption": "Compare what remains after all costs, not just the price per kilogram."
+  },
+  {
+    "module": "market-community",
+    "slide": 12,
+    "art": "course-art/market-community/surplus-handover.jpg",
+    "caption": "Start with a commitment you can meet."
+  },
+  {
+    "module": "market-community",
+    "slide": 13,
+    "art": "course-art/market-community/surplus-handover.jpg",
+    "caption": "Build trust through reliable supply and honest descriptions."
+  },
+  {
+    "module": "market-community",
+    "slide": 14,
+    "art": "course-art/market-community/neighbours-sharing.jpg",
+    "caption": "A group can share seed, tools, skills, and transport."
+  },
+  {
+    "module": "market-community",
+    "slide": 15,
+    "art": "course-art/market-community/neighbours-sharing.jpg",
+    "caption": "Count distinct varieties."
+  },
+  {
+    "module": "market-community",
+    "slide": 16,
+    "art": "course-art/market-community/neighbours-sharing.jpg",
+    "caption": "Shared use spreads the value across the group"
+  },
+  {
+    "module": "market-community",
+    "slide": 17,
+    "art": "course-art/market-community/surplus-handover.jpg",
+    "caption": "Nearby buyers can reduce travel and delay."
+  },
+  {
+    "module": "market-community",
+    "slide": 18,
+    "art": "course-art/market-community/neighbours-sharing.jpg",
+    "caption": "Document what you learn, then pass it on so the knowledge stays in the community."
+  },
+  {
+    "module": "market-community",
+    "slide": 19,
+    "art": "course-art/market-community/harvest-record.jpg",
+    "caption": "Use headings for harvest, where it went, costs, and labour."
+  },
+  {
+    "module": "market-community",
+    "slide": 20,
+    "art": "course-art/market-community/harvest-record.jpg",
+    "caption": "Choose one real selling decision from your farm record."
+  },
+  {
+    "module": "plant-guilds",
+    "slide": 2,
+    "art": "course-art/soil-health/soil-observation.jpg",
+    "caption": "When soil is tired, find out what is limiting growth."
+  },
+  {
+    "module": "plant-guilds",
+    "slide": 3,
+    "art": "course-art/plant-guilds/mango-guild.jpg",
+    "caption": "By the end, you can explain how legumes fix atmospheric nitrogen through rhizobia in root nodules."
+  },
+  {
+    "module": "plant-guilds",
+    "slide": 4,
+    "art": "course-art/plant-guilds/root-nodules.jpg",
+    "caption": "Legumes partner with soil bacteria called rhizobia in root nodules."
+  },
+  {
+    "module": "plant-guilds",
+    "slide": 5,
+    "art": "course-art/plant-guilds/root-nodules.jpg",
+    "caption": "Look at the nodules on the legume root."
+  },
+  {
+    "module": "plant-guilds",
+    "slide": 6,
+    "art": "course-art/plant-guilds/root-nodules.jpg",
+    "caption": "Useful nitrogen-fixing trees include Senegalia, formerly Acacia, species and relatives like flat-crown, Albizia adianthifolia."
+  },
+  {
+    "module": "plant-guilds",
+    "slide": 7,
+    "art": "course-animations/plant-guilds/posters/root-nodules.jpg",
+    "caption": "After cutting, decomposition takes time."
+  },
+  {
+    "module": "plant-guilds",
+    "slide": 8,
+    "art": "course-art/plant-guilds/mango-guild.jpg",
+    "caption": "Place nitrogen fixers where their mature size, shade and water needs fit the fruit trees and paths."
+  },
+  {
+    "module": "plant-guilds",
+    "slide": 9,
+    "art": "course-art/plant-guilds/chop-and-drop.jpg",
+    "caption": "Some plants grow deep, wide-ranging roots."
+  },
+  {
+    "module": "plant-guilds",
+    "slide": 10,
+    "art": "course-art/plant-guilds/chop-and-drop.jpg",
+    "caption": "Watch the cut leaves lying around living plants."
+  },
+  {
+    "module": "plant-guilds",
+    "slide": 11,
+    "art": "course-art/plant-guilds/chop-and-drop.jpg",
+    "caption": "Comfrey is a classic mulch plant because of its deep roots."
+  },
+  {
+    "module": "plant-guilds",
+    "slide": 12,
+    "art": "course-images/plant-guilds/plant-guilds-l2.jpg",
+    "caption": "Flowering plants such as African basil, borage and marigold can provide resources for useful insects."
+  },
+  {
+    "module": "plant-guilds",
+    "slide": 13,
+    "art": "course-art/plant-guilds/mango-guild.jpg",
+    "caption": "Use it as part of a diverse planting, and observe insect visits."
+  },
+  {
+    "module": "plant-guilds",
+    "slide": 14,
+    "art": "course-art/plant-guilds/mango-guild.jpg",
+    "caption": "A plant guild is a group chosen to support a central tree, usually fruit or nut."
+  },
+  {
+    "module": "plant-guilds",
+    "slide": 15,
+    "art": "course-art/plant-guilds/mango-guild.jpg",
+    "caption": "Look at the central mango and the plants around it."
+  },
+  {
+    "module": "plant-guilds",
+    "slide": 16,
+    "art": "course-art/plant-guilds/mango-guild.jpg",
+    "caption": "For the mango example, assess sunlight and the mature size of Sesbania sesban before choosing its position."
+  },
+  {
+    "module": "plant-guilds",
+    "slide": 17,
+    "art": "course-art/plant-guilds/mango-guild.jpg",
+    "caption": "Use wild garlic and African basil as flowering members where the site suits them."
+  },
+  {
+    "module": "plant-guilds",
+    "slide": 18,
+    "art": "course-art/intro-permaculture/site-sketch.jpg",
+    "caption": "Give every guild plant a clear job and enough room to do it."
+  },
+  {
+    "module": "plant-guilds",
+    "slide": 19,
+    "art": "course-art/intro-permaculture/site-sketch.jpg",
+    "caption": "Walk a growing area on your land and choose a central fruit tree."
+  },
+  {
+    "module": "plant-guilds",
+    "slide": 20,
+    "art": "course-art/plant-guilds/mango-guild.jpg",
+    "caption": "Plant or plan one guild around a central tree."
+  },
+  {
+    "module": "food-forest",
+    "slide": 2,
+    "art": "course-art/plant-guilds/mango-guild.jpg",
+    "caption": "A food forest can give food from many levels of the same piece of land."
+  },
+  {
+    "module": "food-forest",
+    "slide": 3,
+    "art": "course-animations/food-forest/posters/seven-growing-layers.jpg",
+    "caption": "Name the seven layers of a food forest."
+  },
+  {
+    "module": "food-forest",
+    "slide": 4,
+    "art": "course-animations/food-forest/posters/seven-growing-layers.jpg",
+    "caption": "An indigenous forest fills the space from the highest branches to the roots."
+  },
+  {
+    "module": "food-forest",
+    "slide": 5,
+    "art": "course-animations/food-forest/posters/seven-growing-layers.jpg",
+    "caption": "Read the planting downwards, from the tall canopy to the roots."
+  },
+  {
+    "module": "food-forest",
+    "slide": 6,
+    "art": "course-animations/food-forest/posters/seven-growing-layers.jpg",
+    "caption": "The seven layers describe planting roles, not fixed heights for every species."
+  },
+  {
+    "module": "food-forest",
+    "slide": 7,
+    "art": "course-art/reading-landscape/winter-shadow.jpg",
+    "caption": "Use this as a design example, not a planting list for every Highveld farm."
+  },
+  {
+    "module": "food-forest",
+    "slide": 8,
+    "art": "course-art/food-forest/sheet-mulch.jpg",
+    "caption": "The first years need steady establishment work: watering, mulch, weed control and protection."
+  },
+  {
+    "module": "food-forest",
+    "slide": 9,
+    "art": "course-art/reading-landscape/winter-shadow.jpg",
+    "caption": "Match each species and cultivar to your site before planting."
+  },
+  {
+    "module": "food-forest",
+    "slide": 10,
+    "art": "course-animations/food-forest/posters/climate-and-selection.jpg",
+    "caption": "Climate decides which species belong."
+  },
+  {
+    "module": "food-forest",
+    "slide": 11,
+    "art": "course-animations/food-forest/posters/climate-and-selection.jpg",
+    "caption": "The lesson names pecan, walnut, indigenous fig, apple, pear, plum, black mulberry, rosemary, Wild Medlar and Cape gooseberry as candidates to assess."
+  },
+  {
+    "module": "food-forest",
+    "slide": 12,
+    "art": "course-art/plant-guilds/mango-guild.jpg",
+    "caption": "Warm coastal and Lowveld sites may suit the mango, avocado, banana, pawpaw and litchi already named in this lesson."
+  },
+  {
+    "module": "food-forest",
+    "slide": 13,
+    "art": "course-art/intro-permaculture/site-sketch.jpg",
+    "caption": "Observe flowering, visitors, crop damage and growth."
+  },
+  {
+    "module": "food-forest",
+    "slide": 14,
+    "art": "course-art/food-forest/sheet-mulch.jpg",
+    "caption": "A food forest is planted in sequence, not all at once."
+  },
+  {
+    "module": "food-forest",
+    "slide": 15,
+    "art": "course-art/food-forest/sheet-mulch.jpg",
+    "caption": "Pioneers build soil while fruit trees establish."
+  },
+  {
+    "module": "food-forest",
+    "slide": 16,
+    "art": "course-art/food-forest/sheet-mulch.jpg",
+    "caption": "For the 500m² practice plot, assess weeds, drainage and water before choosing the first stage."
+  },
+  {
+    "module": "food-forest",
+    "slide": 17,
+    "art": "course-art/plant-guilds/mango-guild.jpg",
+    "caption": "Use the planting sequence as a guide, and let the site show when it is ready."
+  },
+  {
+    "module": "food-forest",
+    "slide": 18,
+    "art": "course-art/soil-health/mulching.jpg",
+    "caption": "Plant when the soil is moist and follow-up water is available."
+  },
+  {
+    "module": "food-forest",
+    "slide": 19,
+    "art": "course-art/intro-permaculture/site-sketch.jpg",
+    "caption": "Draw your own food forest in layers."
+  },
+  {
+    "module": "food-forest",
+    "slide": 20,
+    "art": "course-art/food-forest/sheet-mulch.jpg",
+    "caption": "Choose a plot and inspect the soil before planting."
+  },
+  {
+    "module": "vegetables-staples",
+    "slide": 2,
+    "art": "course-art/vegetables-staples/sowing-record.svg",
+    "caption": "Planting, tending and harvesting overlap."
+  },
+  {
+    "module": "vegetables-staples",
+    "slide": 3,
+    "art": "course-art/vegetables-staples/bed-reach.jpg",
+    "caption": "By the end of this module, you'll be able to make four decisions in your own field."
+  },
+  {
+    "module": "vegetables-staples",
+    "slide": 4,
+    "art": "course-art/vegetables-staples/bed-reach.jpg",
+    "caption": "Compacted soil loses its air spaces."
+  },
+  {
+    "module": "vegetables-staples",
+    "slide": 5,
+    "art": "course-art/soil-health/soil-observation.jpg",
+    "caption": "There's no single bed shape that's right everywhere."
+  },
+  {
+    "module": "vegetables-staples",
+    "slide": 6,
+    "art": "course-art/vegetables-staples/bed-reach.jpg",
+    "caption": "Some crops do better sown straight where they will grow."
+  },
+  {
+    "module": "vegetables-staples",
+    "slide": 7,
+    "art": "course-art/vegetables-staples/bed-reach.jpg",
+    "caption": "Before you plant, mark the bed out."
+  },
+  {
+    "module": "vegetables-staples",
+    "slide": 8,
+    "art": "course-art/vegetables-staples/sowing-record.svg",
+    "caption": "Succession planting is a calendar habit."
+  },
+  {
+    "module": "vegetables-staples",
+    "slide": 9,
+    "art": "course-art/vegetables-staples/sowing-record.svg",
+    "caption": "Sow one small batch, record its date, then sow the next when your crop and season call for it."
+  },
+  {
+    "module": "vegetables-staples",
+    "slide": 10,
+    "art": "course-art/intro-permaculture/kitchen-garden.jpg",
+    "caption": "Intercropping is not just crowding different plants together."
+  },
+  {
+    "module": "vegetables-staples",
+    "slide": 11,
+    "art": "course-art/market-community/harvest-record.jpg",
+    "caption": "Every place has a hungry gap."
+  },
+  {
+    "module": "vegetables-staples",
+    "slide": 12,
+    "art": "course-art/intro-permaculture/household-harvest.jpg",
+    "caption": "A staple earns its place because it feeds the household beyond the day of harvest."
+  },
+  {
+    "module": "vegetables-staples",
+    "slide": 13,
+    "art": "course-images/vegetables-staples/vegetables-staples-l3.jpg",
+    "caption": "Each staple protects you against something different."
+  },
+  {
+    "module": "vegetables-staples",
+    "slide": 14,
+    "art": "course-art/intro-permaculture/household-harvest.jpg",
+    "caption": "Resilience doesn't mean nothing fails."
+  },
+  {
+    "module": "vegetables-staples",
+    "slide": 15,
+    "art": "course-art/vegetables-staples/inspect-leaf.jpg",
+    "caption": "Pest pressure usually rises for a reason."
+  },
+  {
+    "module": "vegetables-staples",
+    "slide": 16,
+    "art": "course-art/vegetables-staples/inspect-leaf.jpg",
+    "caption": "Work through four steps, in order."
+  },
+  {
+    "module": "vegetables-staples",
+    "slide": 17,
+    "art": "course-art/vegetables-staples/bed-reach.jpg",
+    "caption": "Now the lesson finishes in the soil."
+  },
+  {
+    "module": "vegetables-staples",
+    "slide": 18,
+    "art": "course-art/market-community/harvest-record.jpg",
+    "caption": "This week, put one bed into production."
+  },
+  {
+    "module": "small-livestock",
+    "slide": 2,
+    "art": "course-art/small-livestock/chicken-tractor.jpg",
+    "caption": "Small livestock can provide food and useful work, but every animal also needs daily care."
+  },
+  {
+    "module": "small-livestock",
+    "slide": 3,
+    "art": "course-art/small-livestock/animal-care.jpg",
+    "caption": "By the end of this module, you will understand how chickens, ducks, bees, and guinea fowl fit into a working system."
+  },
+  {
+    "module": "small-livestock",
+    "slide": 4,
+    "art": "course-art/small-livestock/chicken-tractor.jpg",
+    "caption": "Watch the chicken tractor move across an empty bed, with feed, water and shelter kept with the birds."
+  },
+  {
+    "module": "small-livestock",
+    "slide": 5,
+    "art": "course-art/small-livestock/chicken-tractor.jpg",
+    "caption": "Chickens forage and scratch through suitable areas, eating some insects and weed seeds."
+  },
+  {
+    "module": "small-livestock",
+    "slide": 6,
+    "art": "course-art/small-livestock/chicken-tractor.jpg",
+    "caption": "Never put chickens around seedlings: scratching can uproot them."
+  },
+  {
+    "module": "small-livestock",
+    "slide": 7,
+    "art": "course-art/small-livestock/animal-care.jpg",
+    "caption": "Ducks eat slugs and snails without the heavy scratching typical of chickens."
+  },
+  {
+    "module": "small-livestock",
+    "slide": 8,
+    "art": "course-art/small-livestock/chicken-tractor.jpg",
+    "caption": "Move a chicken tractor according to bird welfare, ground condition, weather and the farm’s manure plan."
+  },
+  {
+    "module": "small-livestock",
+    "slide": 9,
+    "art": "course-art/small-livestock/bees-and-flowers.jpg",
+    "caption": "Watch the bees leave the hive and move among flowering crops."
+  },
+  {
+    "module": "small-livestock",
+    "slide": 10,
+    "art": "course-art/small-livestock/bees-and-flowers.jpg",
+    "caption": "Bees and other flower visitors help pollinate many food crops."
+  },
+  {
+    "module": "small-livestock",
+    "slide": 11,
+    "art": "course-art/small-livestock/bees-and-flowers.jpg",
+    "caption": "South Africa has Cape and African honeybee subspecies."
+  },
+  {
+    "module": "small-livestock",
+    "slide": 12,
+    "art": "course-art/small-livestock/bees-and-flowers.jpg",
+    "caption": "Assess a possible hive site with an experienced local beekeeper before bringing bees onto the land."
+  },
+  {
+    "module": "small-livestock",
+    "slide": 13,
+    "art": "course-art/small-livestock/bees-and-flowers.jpg",
+    "caption": "Plan suitable flowering resources through the year and observe colony health with a trained beekeeper."
+  },
+  {
+    "module": "small-livestock",
+    "slide": 14,
+    "art": "course-animations/small-livestock/posters/livestock-nutrient-cycle.jpg",
+    "caption": "Watch nutrients move from plants to animals, then through manure and compost back to the growing bed."
+  },
+  {
+    "module": "small-livestock",
+    "slide": 15,
+    "art": "course-animations/small-livestock/posters/livestock-nutrient-cycle.jpg",
+    "caption": "Use suitable farm-grown feed as part of a balanced diet, with clean water and daily care."
+  },
+  {
+    "module": "small-livestock",
+    "slide": 16,
+    "art": "course-art/small-livestock/animal-care.jpg",
+    "caption": "Protect livestock through regular observation and a veterinary parasite-management plan suited to the animals and site."
+  },
+  {
+    "module": "small-livestock",
+    "slide": 17,
+    "art": "course-art/small-livestock/animal-care.jpg",
+    "caption": "For each animal, ask what it eats that you already have."
+  },
+  {
+    "module": "small-livestock",
+    "slide": 18,
+    "art": "course-art/small-livestock/animal-care.jpg",
+    "caption": "Do not rely on chickens following goats to prevent worms or replace treatment."
+  },
+  {
+    "module": "small-livestock",
+    "slide": 19,
+    "art": "course-art/small-livestock/animal-care.jpg",
+    "caption": "Walk your smallholding and choose an area where livestock could support another part of the system."
+  },
+  {
+    "module": "small-livestock",
+    "slide": 20,
+    "art": "course-art/small-livestock/animal-care.jpg",
+    "caption": "Choose one planning action before adding or moving animals."
   }
 ]

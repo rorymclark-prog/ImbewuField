@@ -1,5 +1,8 @@
 import assert from 'node:assert/strict';
-import { existsSync, readFileSync, statSync } from 'node:fs';
+import { existsSync, readFileSync, statSync, mkdtempSync, writeFileSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { spawnSync } from 'node:child_process';
 import test from 'node:test';
 
 // The real generator, not a re-implementation of its rules. A test that reasoned about what the
@@ -365,4 +368,24 @@ test('only modules that really have a deck advertise one', () => {
     assert.ok(COURSE_DECKS[id].slides.length > 0, `${id} is registered with no slides`);
     assert.ok(COURSE_DECKS[id].slideLanguages.length > 0, `${id} has no rendered language`);
   }
+});
+
+
+test('deck check rejects obsolete reading cards and rebuild preserves the cover', (t) => {
+  const dir = mkdtempSync(join(tmpdir(), 'course-obsolete-'));
+  t.after(() => rmSync(dir, { recursive: true, force: true }));
+  const args = ['--import', './tests/register-alias.mjs', 'scripts/render-course-deck.mjs', 'reading-landscape', 'en', '--out', dir];
+  const run = (check = false) => spawnSync(process.execPath, [...args, ...(check ? ['--check'] : [])], { encoding: 'utf8' });
+  assert.equal(run().status, 0);
+  const cover = join(dir, 'cover.jpg');
+  writeFileSync(cover, 'existing-cover-marker');
+  const obsolete = join(dir, 'slide-01-continuation-99.svg');
+  writeFileSync(obsolete, '<svg>obsolete advice</svg>');
+  const rejected = run(true);
+  assert.notEqual(rejected.status, 0);
+  assert.match(rejected.stderr, /unexpected:/);
+  assert.equal(run().status, 0);
+  assert.equal(existsSync(obsolete), false);
+  assert.equal(readFileSync(cover, 'utf8'), 'existing-cover-marker');
+  assert.equal(run(true).status, 0);
 });

@@ -233,3 +233,17 @@ test('every clip on disk is claimed by the manifest', () => {
     }
   }
 });
+
+
+test('corrected guild, forest, vegetable, livestock and market scripts cannot fall back to stale recordings', () => {
+  for (const id of ['plant-guilds', 'food-forest', 'vegetables-staples', 'small-livestock', 'market-community']) {
+    assert.ok(narrationHoldReason(id, 'en'), id);
+    assert.equal(fullNarrationUrl(id, 'en'), null, id);
+    assert.equal(resolveNarrationLang(id, 'zu'), null, id);
+    for (const track of allTracks(id)) assert.equal(trackUrl(id, 'en', track.slide), null, `${id}/${track.slide}`);
+  }
+  const livestock = COURSE_MODULES.find(m => m.id === 'small-livestock')!.lessons[2];
+  assert.ok(livestock.body.includes('Do not rely on chickens following goats'));
+  const question = livestock.quiz.find(q => q.q.includes('goats and chickens'))!;
+  assert.ok(question.options[question.correct].includes('qualified advice'));
+});

@@ -467,6 +467,10 @@ function main() {
 
   if (check) {
     const wrong = [];
+    const expected = new Set(slides.map((slide) => slide.file));
+    if (existsSync(dir)) for (const name of readdirSync(dir)) {
+      if (name.endsWith('.svg') && !expected.has(name)) wrong.push(`unexpected: ${join(dir, name)}`);
+    }
     for (const s of slides) {
       const path = join(dir, s.file);
       if (!existsSync(path)) { wrong.push(`missing: ${path}`); continue; }

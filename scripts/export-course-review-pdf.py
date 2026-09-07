@@ -4,6 +4,8 @@ from pathlib import Path
 from io import BytesIO
 import re
 import sys
+import subprocess
+import json
 import cairosvg
 from pypdf import PdfReader, PdfWriter
 from reportlab.pdfgen import canvas
@@ -16,12 +18,24 @@ TITLES={'intro-permaculture':'Introduction to Permaculture','soil-health':'Soil 
         'vegetables-staples':'Vegetables and Staple Crops','small-livestock':'Small Livestock',
         'market-community':'Market and Community'}
 
-def export(module, destination):
-    folder=ROOT/'public/course-decks'/module/'en'
-    source=(ROOT/'docs/narration'/f'{module}.en.md').read_text()
-    tracks=re.findall(r'\*\*Slide (\d+) — (.*?)\*\*',source)
+def export(module, destination, lang="en"):
+    if lang not in ("en", "zu"): raise ValueError("Unsupported language")
+    folder=ROOT/'public/course-decks'/module/'en' if lang=='en' else ROOT/'docs/course-production/isiZulu-drafts'/module
+    source=(ROOT/'docs/narration'/f'{module}.{lang}.md').read_text()
+    tracks=re.findall(r'\*\*(?:Slide|Ikhasi) (\d+) — (.*?)\*\*',source)
+    tracks=[(n,re.sub(r'\s*\(Slide \d+ —.*\)$','',title)) for n,title in tracks]
+    rendered=json.loads(subprocess.check_output([
+        'node','--import','./tests/register-alias.mjs','--input-type=module','-e',
+        "import {renderDeck} from './scripts/render-course-deck.mjs'; console.log(JSON.stringify(renderDeck(process.argv[1],process.argv[2]).map(({slide,file})=>({slide,file}))));",
+        module,lang],cwd=ROOT,text=True))
+    expected={frame['file'] for frame in rendered}
+    actual={path.name for path in folder.glob('*.svg')}
+    if actual != expected:
+        raise ValueError(f'Rebuild {module}: missing={sorted(expected-actual)}, stale={sorted(actual-expected)}')
+    subprocess.run(['node','--import','./tests/register-alias.mjs',
+        'scripts/render-course-deck.mjs',module,lang,'--out',str(folder),'--check'],cwd=ROOT,check=True,capture_output=True,text=True)
     writer=PdfWriter()
-    writer.add_metadata({'/Title':f'Imbewu - {TITLES.get(module,module)} - Draft slide review',
+    writer.add_metadata({'/Title':f'Imbewu - {TITLES.get(module,module)} - {lang} - Draft slide review',
                          '/Author':'Imbewu Yoshintso',
                          '/Subject':'Illustrated slides and complete reading cards; animations and narration are separate.'})
     page_count=0
@@ -29,10 +43,7 @@ def export(module, destination):
         stem=f'slide-{int(n):02d}'
         front=folder/f'{stem}-front.jpg'
         if not front.exists() and int(n)==1:front=folder/'cover.jpg'
-        readings=[folder/f'{stem}.svg']
-        continuations=list(folder.glob(f'{stem}-continuation*.svg'))
-        continuations.sort(key=lambda p:1 if p.stem.endswith('continuation') else int(p.stem.rsplit('-',1)[1]))
-        readings+=continuations
+        readings=[folder/frame['file'] for frame in rendered if frame['slide']==int(n)]
         files=([front] if front.exists() else [])+readings
         bookmark=page_count
         for path in files:
@@ -56,4 +67,4 @@ def export(module, destination):
     print(f'{destination}: {len(tracks)} numbered slides, {page_count} total frames, {destination.stat().st_size:,} bytes')
 
 if __name__=='__main__':
-    export(sys.argv[1],sys.argv[2])
+    export(sys.argv[1],sys.argv[2],sys.argv[3] if len(sys.argv)>3 else "en")
