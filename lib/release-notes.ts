@@ -33,6 +33,10 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '7 September 2026', sha: 'eac00d5', changes: [
+    'Site reports now use compact crop rows, a monthly bed drawing and one seasonal calendar.',
+    'Add your seed variety and download or attach the saved crop working plan.',
+  ] },
   { when: '7 September 2026', sha: 'b37644a', changes: [
     'Site reports show the garden name, saved date and original settings when recorded.',
     'New reports save as separate versions. Choose a map, photo or no cover picture.',

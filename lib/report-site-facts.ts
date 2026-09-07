@@ -24,6 +24,7 @@
 // a plausible default. The hardcoded `100m² roof` this replaces is exactly that failure: a farm
 // with no traced roof was given someone else's roof and a rainwater yield computed from it.
 
+import { normaliseReportCropSnapshot, type ReportCropSnapshot } from './report-crop-plan';
 import { ASSURANCE_PARAGRAPHS, ASSURANCE_TITLE } from '@/lib/plan-assurance';
 import { WATER_SHEET_ROOF_RUNOFF_COEFFICIENT, roofHarvestLitres } from '@/lib/roof-runoff';
 
@@ -132,6 +133,7 @@ export interface FactMeasurements {
 }
 
 export interface FactCropPlan {
+  snapshot?: ReportCropSnapshot;
   plantingCount: number;
   bedsPlanted: number;
   /** One row per crop the farmer actually put in the plan. No yields — see the note below.
@@ -412,6 +414,7 @@ export function normaliseReportSiteFacts(value: unknown): ReportSiteFacts | null
         plantingCount: Math.round(plantingCount),
         bedsPlanted: Math.round(num(c.bedsPlanted, { min: 0, max: 10000 }) ?? 0),
         crops,
+        snapshot: normaliseReportCropSnapshot(c.snapshot),
       };
     }
   }

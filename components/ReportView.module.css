@@ -129,14 +129,7 @@
 .summaryPage { margin: 0 0 28px; padding: 24px; border: 1px solid var(--report-border); border-radius: 12px; background: var(--report-paper); }
 .summaryPage h2 { font-size: 24px; font-weight: 700; margin: 12px 0 20px; }
 .summaryPage p { padding-bottom: 8px; border-bottom: 1px solid var(--report-border); }
-.plantPanel { margin-bottom: 28px; }
-.plantPanel h2 { font-size: 22px; font-weight: 700; }
-.plantPanel > p { color: var(--report-muted); font: 13px/1.6 var(--font-sans), sans-serif; margin: 8px 0 16px; }
-.plantGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
-.plantGrid article { background: var(--report-panel); border: 1px solid var(--report-border); padding: 16px; border-radius: 12px; }
-.plantGrid img { width: 100%; height: 100px; object-fit: contain; }
-.plantGrid h3 { font-weight: 700; margin: 8px 0; }
-.plantGrid p { color: var(--report-muted); font: 12px/1.5 var(--font-sans), sans-serif; }
+
 .printPreview, :global(html.dark) .printPreview { --report-paper: white; --report-canvas: #e9edeb; --report-panel: white; --report-ink: #171717; --report-muted: #444; --report-border: #ccc; --report-green: #222; --report-blue: #222; --report-gold: #222; }
 .printPreview .coverTitle { background: white; border-bottom: 2px solid #222; border-radius: 0; padding: 0 0 20px; }
 .printPreview .brand, .printPreview .title, .printPreview .date { color: #171717; }

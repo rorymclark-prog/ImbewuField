@@ -3,6 +3,7 @@
 import { useState, useRef, useCallback, useEffect } from 'react';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import ReportVersionDetails from './report/ReportVersionDetails';
+import ReportCropPlan from './report/ReportCropPlan';
 import ReportVisualOverview from './report/ReportVisualOverview';
 import ReportPreparation from './report/ReportPreparation';
 import ReportChapterGraphics from './report/ReportChapterGraphics';
@@ -32,8 +33,6 @@ import { buildPhasePlan } from '@/lib/phasing';
 import { collectReportSiteFacts } from '@/lib/report-site-facts-collect';
 import type { ReportSiteFacts } from '@/lib/report-site-facts';
 import { reportSummaryPages, buildInkSummaryPdf, sampleFullSiteReport } from '@/lib/report-summary';
-import { CROPS } from '@/lib/crop-catalog';
-import { getCropArt } from '@/lib/crop-art';
 import { REPORT_ZU } from '@/lib/report-localisation';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { recordReportAttempt, reportAttemptSurvived, reportShouldGoLight } from '@/lib/report-attempts';
@@ -289,10 +288,15 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   const [reading, setReading] = useState<'full' | 'one' | 'five'>('full');
   const [presentation, setPresentation] = useState<'screen' | 'colour' | 'print'>('screen');
   const [includeImages, setIncludeImages] = useState(true);
+  const [cropMapMonth, setCropMapMonth] = useState(0);
+  const [includeCropWorkingPlan, setIncludeCropWorkingPlan] = useState(false);
+  useEffect(() => { setCropMapMonth(0); setIncludeCropWorkingPlan(false); }, [activeSaved?.id]);
   const tr = (en: string, zu: string) => language === 'zu' ? zu : en;
   const label = (en: string) => language === 'zu' ? REPORT_ZU[en] ?? en : en;
   const showVisuals = reading === 'full' && (presentation !== 'print' || includeImages);
   const visuals = { ...siteReportVisuals(facts, d, contentLanguage), title: siteName };
+  const overviewVisuals = { ...visuals, charts: visuals.charts.filter(c => c.kind !== 'calendar') };
+  const pdfVisuals = facts?.crop?.snapshot ? overviewVisuals : visuals;
   const chapterVisuals = reportChapterGraphics(report,visuals);
   const reportDate = settings?.generatedAt ?? activeSaved?.savedAt ?? new Date().toISOString();
   const summaryPages = reportSummaryPages(facts, d, reading === 'one' ? 1 : 5, language);
@@ -694,12 +698,12 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         }
       }
       const blob = await buildReportPdf(report, {
-        visuals: presentation !== 'print' ? visuals : undefined,
-        visualAssets: presentation !== 'print' ? await prepareVisualPdfAssets(visuals, coverImages, includeImages ? (facts?.crop?.crops ?? []).flatMap(c => {
-          const crop = CROPS.find(x => x.name === c.name);
-          const image = crop ? getCropArt(crop.key) : undefined;
-          return image ? [{ image, caption: `${c.name} · ${c.sowMonths.join(', ')}` }] : [];
-        }) : [], includeImages ? chapterVisuals : {}) : undefined,
+        visuals: presentation !== 'print' ? pdfVisuals : undefined,
+        visualAssets: presentation !== 'print' ? await prepareVisualPdfAssets(pdfVisuals, coverImages, [], includeImages ? chapterVisuals : {}) : undefined,
+        cropPlan: facts?.crop,
+        cropMapMonth,
+        includeCropWorkingPlan,
+        siteName,
         biome: ecology.placeName,
         lat: d.lat,
         lon: d.lon,
@@ -723,7 +727,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       setError(err instanceof Error ? `Could not build the PDF: ${err.message}` : 'Could not build the PDF.');
       setTimeout(() => setPdfState('idle'), 4000);
     }
-  }, [report, d, reading, language, facts, includeImages, activeSaved, ecology.placeName, photoGallery, reportDate, presentation, mapCapture, chapterVisuals, siteName, contentLanguage, coverPhoto, captureCover, useCoverMap]);
+  }, [report, d, reading, language, facts, includeImages, activeSaved, ecology.placeName, photoGallery, reportDate, presentation, mapCapture, chapterVisuals, siteName, contentLanguage, coverPhoto, captureCover, useCoverMap, cropMapMonth, includeCropWorkingPlan, pdfVisuals]);
 
   async function shareReport() {
     if (!d || !report) return;
@@ -1170,7 +1174,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
               )}
             </div>
 
-            {reading === 'full' && presentation !== 'print' && <ReportVisualOverview visuals={visuals} stamp={new Date(reportDate).toLocaleDateString('en-ZA', { day: 'numeric', month: 'short', year: 'numeric' })} image={coverPhoto?.dataUrl ?? (captureCover ? `data:image/jpeg;base64,${captureCover}` : useCoverMap ? savedCoverImage : undefined)} imageKind={coverPhoto ? 'photo' : 'map'} imageCaption={coverPhoto ? `${coverPhoto.label} · Current site evidence; it may postdate saved report text.` : captureCover ? 'Captured site satellite view' : useCoverMap && coverMap ? `Saved design: ${coverMap.label}` : undefined} />}
+            {reading === 'full' && presentation !== 'print' && <ReportVisualOverview visuals={overviewVisuals} stamp={new Date(reportDate).toLocaleDateString('en-ZA', { day: 'numeric', month: 'short', year: 'numeric' })} image={coverPhoto?.dataUrl ?? (captureCover ? `data:image/jpeg;base64,${captureCover}` : useCoverMap ? savedCoverImage : undefined)} imageKind={coverPhoto ? 'photo' : 'map'} imageCaption={coverPhoto ? `${coverPhoto.label} · Current site evidence; it may postdate saved report text.` : captureCover ? 'Captured site satellite view' : useCoverMap && coverMap ? `Saved design: ${coverMap.label}` : undefined} />}
 
             {/* Saved places — GPS points for the farm (home, fields, water) */}
             {reading === 'full' && savedPlaces && savedPlaces.length > 0 && (
@@ -1332,15 +1336,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
               </div>
             )}
 
-            {showVisuals && facts?.crop && <section className={styles.plantPanel}>
-              <h2>{tr('Your planned crops', 'Izitshalo zakho ezihleliwe')}</h2>
-              <p>{tr('Saved planting rows. Catalogue illustrations show the crop, not a photograph of this garden.', 'Imigqa yokutshala egciniwe. Imidwebo yekhathalogi ikhombisa isitshalo, ayisona isithombe sale nsimu.')}</p>
-              <div className={styles.plantGrid}>{facts.crop.crops.map(c => {
-                const crop = CROPS.find(x => x.name === c.name);
-                const art = crop ? getCropArt(crop.key) : undefined;
-                return <article key={c.name}>{art && <img src={art} alt="" loading="lazy" />}<h3>{c.name}</h3><p>{c.bedLabels.join(', ')}</p><p>{c.sowMonths.join(' · ')}</p></article>;
-              })}</div>
-            </section>}
+            {reading === 'full' && facts?.crop && <ReportCropPlan language={contentLanguage} crop={facts.crop} siteName={siteName} month={cropMapMonth} onMonth={setCropMapMonth} includeWorking={includeCropWorkingPlan} onIncludeWorking={setIncludeCropWorkingPlan} legacyCharts={visuals.charts.filter(c => c.kind === 'calendar')} />}
             {reading === 'full' && presentation === 'print' && <p className={styles.summaryLabel}>{tr('Ink-saving edition. Full-colour export includes the visual overview and charts.', 'Umbiko oyonga uyinki. Ukukhipha ngemibala egcwele kufaka amashadi.')}</p>}
 
             {/* Loading shimmer */}

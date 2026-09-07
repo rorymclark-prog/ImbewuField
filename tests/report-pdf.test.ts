@@ -304,10 +304,11 @@ test('a new plate page and a new photo page both stamp the footer of the page th
     'a new photo page must call footer() on the page being left before doc.addPage(), the same discipline newPage() uses for the body',
   );
 
-  // And the true last page — stamped once, after both loops — must still get exactly one call.
-  const afterPhotoLoop = src.slice(src.lastIndexOf('}', src.indexOf("return doc.output('blob')")));
-  assert.match(afterPhotoLoop, /footer\(\);\s*\n\s*return doc\.output\('blob'\);/,
-    'the final page must still be stamped once, after the last loop runs');
+  // The optional working appendix now owns its own landscape footers. Stamp the
+  // final site-report page before handing off; do not overprint it afterwards.
+  assert.match(src, /footer\(\);\s*if \(meta\.cropPlan\?\.snapshot\)/);
+  const cropExport = readFileSync(new URL('../lib/crop-export-pdf.ts', import.meta.url), 'utf8');
+  assert.match(cropExport, /s\.stampFooter\(\);\s*\n}/, 'the working plan stamps its final page');
 });
 
 // A table that runs past the bottom margin breaks to a new page (need() already did that), but

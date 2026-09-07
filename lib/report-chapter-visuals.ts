@@ -37,8 +37,8 @@ export function chapterGraphics(heading:string, body:string, visuals:ReportVisua
     const trees=reportTreeIllustrations(body);
     if(trees.length)result.push({id:'trees',title:'Trees mentioned in this section',note:'Catalogue illustrations, not site photographs or identification evidence. Read the advice and confirm local suitability before choosing plants.',trees});
   }
-  const chartIds=/planting calendar|year-round|crop rotation|crop plan|uhlelo lwezitshalo/i.test(title)?['calendar-']:waterSection?['rainfall','water']:/economic|budget|cost|bill of quantities/i.test(title)?['cost']:[];
-  for(const chart of visuals.charts.filter(chart=>chartIds.some(id=>chart.id.startsWith(id))))result.push({id:chart.id,title:chart.title,note:chart.note,chart});
+  // The overview owns site charts; the crop-plan section owns its calendar.
+  // Repeating them under matching chapter headings added pages without new information.
   return result;
 }
 export function reportChapterGraphics(report:string,visuals:ReportVisuals) {

@@ -763,7 +763,7 @@ export function buildPlanTableRows(plantings: Planting[], beds: PlanBed[]): Plan
       rows.push({
         area: bed.label,
         isFirstOfArea: i === 0,
-        crop: crop.name,
+        crop: p.variety ? `${crop.name} - ${p.variety}` : crop.name,
         share: shareCode(p.areaFraction ?? 1),
         establish: crop.transplant ? `Nursery ${monthShort(p.sowMonth)}` : `Direct sow ${monthShort(p.sowMonth)}`,
         intoField: crop.transplant
