@@ -172,10 +172,10 @@ function parseScript(path) {
   const blocks = [];
   let m;
   BILINGUAL.lastIndex = 0;
-  while ((m = BILINGUAL.exec(raw))) blocks.push({ n: Number(m[1]), head: m.index, start: m.index + m[0].length });
+  while ((m = BILINGUAL.exec(raw))) blocks.push({ n: Number(m[1]), title: m[2].trim(), head: m.index, start: m.index + m[0].length });
   if (blocks.length === 0) {
     MONOLINGUAL.lastIndex = 0;
-    while ((m = MONOLINGUAL.exec(raw))) blocks.push({ n: Number(m[1]), head: m.index, start: m.index + m[0].length });
+    while ((m = MONOLINGUAL.exec(raw))) blocks.push({ n: Number(m[1]), title: m[2].trim(), head: m.index, start: m.index + m[0].length });
   }
   blocks.sort((a, b) => a.n - b.n);
 
@@ -187,7 +187,7 @@ function parseScript(path) {
     const [before, ...afterParts] = body.split(/\[pause\]/i);
     const after = afterParts.join('\n\n');
     const paras = (s) => s.replace(/^---\s*$/gm, '').split(/\n\s*\n/).map((p) => p.replace(/\s+/g, ' ').trim()).filter(Boolean);
-    return { n: b.n, before: paras(before), after: paras(after) };
+    return { n: b.n, title: b.title, before: paras(before), after: paras(after) };
   });
 }
 
@@ -409,7 +409,7 @@ export function renderDeck(moduleId, lang) {
     // The title the app already shows for this slide. Taking it from the manifest rather than from
     // the markdown heading means the picture and the player can never caption the same slide two
     // different ways. titleByLang is used verbatim where it exists and never machine-translated.
-    const title = track.titleByLang?.[lang] ?? track.title;
+    const title = track.titleByLang?.[lang] ?? (lang === 'en' ? track.title : block.title);
 
     // Pauses are spoken beats, not an instruction to discard everything after the first line.
     // Keep every authored paragraph; visual frames may grow while the recording count stays fixed.
@@ -417,17 +417,19 @@ export function renderDeck(moduleId, lang) {
     const dark = track.lesson === null;
     const hero = track.slide === 1 && dark;
     const n = track.lesson ? lessonIndex.get(track.lesson) : null;
-    const eyebrow = hero
+    const eyebrow = lang === 'en' ? (hero
       ? 'IMBEWUFIELD · HOME-STUDY MODULE'
-      : (n ? `LESSON ${n}` : mod.title.toUpperCase());
+      : (n ? `LESSON ${n}` : mod.title.toUpperCase())) : 'IMBEWUFIELD · isiZulu · DRAFT';
     let pending = paragraphs.slice(1);
     let part = 0;
     let lead = paragraphs[0] ?? '';
     do {
-      const cover = hero && part === 0;
+      // The English hero assumes a short title. Long isiZulu headings need the adaptive fitter
+      // or they can grow upwards into the eyebrow. Draft text still retains every paragraph.
+      const cover = hero && part === 0 && lang === 'en';
       const frame = renderSlide({
         slide: track.slide, total, title,
-        eyebrow: part ? `${eyebrow} · CONTINUED` : eyebrow,
+        eyebrow: part ? `${eyebrow} · ${lang === 'en' ? 'CONTINUED' : '+'}` : eyebrow,
         lead, points: cover ? [] : pending, question: '', dark, hero: cover,
       });
       const consumed = cover ? 0 : frame.shown;

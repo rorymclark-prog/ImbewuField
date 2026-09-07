@@ -39,6 +39,19 @@ function watch(renderer:ReactTestRenderer){
 }
 const heading=(renderer:ReactTestRenderer)=>renderer.root.findByType('h3').props.children;
 
+test('an illustrated Watch slide shows its teaching front before playback and retains the reading',()=>{
+  const {renderer}=mount('soil-health');
+  try{
+    next(renderer,9);
+    const images=renderer.root.findAllByType('img');
+    assert.ok(images[0].props.src.endsWith('/slide-10-front.jpg'));
+    assert.ok(images.some(img=>img.props.src.endsWith('/slide-10.svg')));
+    watch(renderer);
+    assert.ok(renderer.root.findByType('video').props.src.endsWith('/compost-building.mp4'));
+    assert.ok(renderer.root.findAllByType('img').some(img=>img.props.src.endsWith('/slide-10.svg')));
+  }finally{act(()=>renderer.unmount());}
+});
+
 test('a short narration waits for the selected demonstration, and simultaneous endings advance only once',()=>{
   const {renderer,audio,video}=mount('seeds-sovereignty');
   try{

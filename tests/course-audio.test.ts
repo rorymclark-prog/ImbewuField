@@ -25,6 +25,18 @@ test('superseded water instructions cannot play as slide clips, full narration o
   assert.equal(allTracks(id).length, 24, 'replacement recordings retain all 24 slide numbers');
 });
 
+test('superseded leachate advice cannot play through the soil module or language fallback', () => {
+  assert.ok(narrationHoldReason('soil-health', 'en'));
+  assert.equal(trackUrl('soil-health', 'en', 17), null);
+  assert.equal(fullNarrationUrl('soil-health', 'en'), null);
+  assert.equal(resolveNarrationLang('soil-health', 'zu'), null);
+  assert.equal(allTracks('soil-health').length, 20);
+  const lesson = COURSE_MODULES.find(m=>m.id==='soil-health')!.lessons.find(l=>l.id==='soil-health-l3')!;
+  assert.ok(lesson.body.includes('Do not use leachate on vegetables or other food crops'));
+  const quiz=lesson.quiz.find(q=>q.q.includes('leachate'))!;
+  assert.ok(quiz.options[quiz.correct].includes('dilution does not disinfect'));
+});
+
 test('a hold retracts one language while leaving a current take available', () => {
   const n = COURSE_NARRATION['seeds-sovereignty'];
   const prior = n.recordingHold;

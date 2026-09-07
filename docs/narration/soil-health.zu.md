@@ -1,3 +1,5 @@
+> DRAFT — SOURCE CHANGED 2026-09-07. The leachate guidance in slides 3 and 17 has changed. Reconcile these draft words with the English source and obtain first-language review before recording or activation.
+
 **Ikhasi 1 — Impilo Yomhlabathi Ne-Compost (Slide 1 — Soil Health & Composting)**
 
 Umhlabathi ungaphezu kokuba yindawo engaphansi kwezinyawo zakho.
@@ -24,7 +26,7 @@ Uzofunda ukubona umhlabathi ophilayo nowonakele.
 
 Uzosebenzisa i-jar test ukuze ubone ukuthi umhlabathi wakho uningi ngesihlabathi, nge-silt, noma ngobumba.
 
-Uzokwenza i-compost ephephile, ulungise inqwaba emanzi, uvikele umhlabathi ongenalutho, futhi usebenzise ama-cover crops ne-leachate yama-worm farms ngokuhlakanipha.
+Uzokwenza i-compost ephephile, ulungise inqwaba emanzi, uvikele umhlabathi ongenalutho, futhi usebenzise ama-cover crops futhi uqonde izingozi ze-leachate yama-worm farms.
 
 ---
 
@@ -170,15 +172,15 @@ EKZN, i-sunn hemp ikhula ngokushesha ehlobo, kanti i-cowpea ibopha i-nitrogen fu
 
 ---
 
-**Ikhasi 17 — Ama-Worm Farms Enza Ukudla Kwezimpande (Slide 17 — Worm Farms Make Root Feed)**
+**Ikhasi 17 — Ama-Worm Farms Ne-Leachate (Slide 17 — Worm Farms and Leachate)**
 
-Ama-worm farms aguqula izinsalela zasekhishini zibe ama-castings anomsoco emasontweni amathathu kuya kwamane.
+Ama-worm farms aguqula izinsalela zasekhishini zibe ama-castings anomsoco.
 
-I-liquid leachate ingumanyolo onamandla.
+Uketshezi oluphuma ku-worm farm lubizwa nge-leachate. Lungathwala amagciwane ayingozi avela ezintweni ezingakaboli ngokuphelele.
 
-Yixube namanzi ngesilinganiso esingu-1:10 ngaphambi kokuyisebenzisa njengokudla kwezimpande.
+Ungalusebenzisi emifinweni noma kwezinye izitshalo zokudla, noma seluxutshwe namanzi. Ukuxuba namanzi akuwabulali amagciwane.
 
-I-leachate engaxutshiwe igxile ngokwanele ukushisa izimpande zezitshalo esikhundleni sokuzondla.
+Gcina izinto okuhlala kuzo izimpethu zimanzi kancane, zingagcwali amanzi.
 
 ---
 

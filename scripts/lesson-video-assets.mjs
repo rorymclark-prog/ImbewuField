@@ -6,10 +6,11 @@ const VIDEO = new Set(['mp4', 'mov']);
 export function collectSlideFrames(dir, expectedSlides) {
   const groups = new Map();
   for (const file of readdirSync(dir)) {
-    const match = /^slide-(\d+)(?:-continuation(?:-(\d+))?)?\.(\w+)$/i.exec(file);
+    const match = /^slide-(\d+)(?:-front|-continuation(?:-(\d+))?)?\.(\w+)$/i.exec(file);
     if (!match || (!STILL.has(match[3].toLowerCase()) && !VIDEO.has(match[3].toLowerCase()))) continue;
     const slide = Number(match[1]);
-    const part = /-continuation/i.test(file) ? Number(match[2] || 1) : 0;
+    const part = /-front\./i.test(file) ? -1 : /-continuation/i.test(file) ? Number(match[2] || 1) : 0;
+    if (part === -1 && !STILL.has(match[3].toLowerCase())) throw new Error('An illustrated front must be a still image.');
     if (!Number.isSafeInteger(slide) || !expectedSlides.includes(slide)) throw new Error(`${file} has no matching narration block; refusing to leave teaching out.`);
     const frames = groups.get(slide) || [];
     if (frames.some(frame => frame.part === part)) throw new Error(`Slide ${slide}, part ${part}: multiple images/videos; choose one explicitly.`);
@@ -18,8 +19,9 @@ export function collectSlideFrames(dir, expectedSlides) {
   }
   for (const slide of expectedSlides) {
     const frames = (groups.get(slide) || []).sort((a,b) => a.part-b.part);
-    if (!frames.length || frames[0].part !== 0) throw new Error(`Missing base frame for narration slide ${slide}.`);
-    frames.forEach((frame,i) => {
+    const readings = frames.filter(frame => frame.part >= 0);
+    if (!readings.length || readings[0].part !== 0) throw new Error(`Missing base frame for narration slide ${slide}.`);
+    readings.forEach((frame,i) => {
       if (frame.part !== i) throw new Error(`Missing continuation part ${i} for narration slide ${slide}.`);
       if (frame.part > 0 && frame.kind === 'video') throw new Error(`Slide ${slide}: a continuation must be a still reading card.`);
     });

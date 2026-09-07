@@ -1,5 +1,13 @@
 # English narration recording review — 7 September 2026
 
+## Later source correction
+
+Soil Health slides 3 and 17 were corrected after the initial 185-clip review pack.
+The old root-feed advice omitted the warning against applying worm-bin leachate to food crops.
+Those two takes and the Soil Health full listening track require replacement; the live module is held.
+All replacement takes must retain Microsoft en-ZA-LeahNeural at -12%.
+See docs/SOIL-ILLUSTRATED-DECK-2026-09-07.md.
+
 ## Approval and completed recording
 
 Rory explicitly approved sending the nine English module narration scripts to

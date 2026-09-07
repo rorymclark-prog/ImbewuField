@@ -167,7 +167,8 @@ test('all generated continuation frames are reachable with the original narratio
       const expected = renderDeck(moduleId, lang) as { slide: number; file: string }[];
       for (const slide of deck.slides) {
         const frames = slideImagesFor(moduleId, lang, slide.slide);
-        assert.deepEqual(frames.filter((f) => !f.url.endsWith('/cover.jpg')).map((f) => f.url), expected.filter((f) => f.slide === slide.slide)
+        // An illustrated front is additional teaching art; all original reading cards still follow.
+        assert.deepEqual(frames.filter((f) => !f.url.endsWith('/cover.jpg') && !f.url.endsWith('-front.jpg')).map((f) => f.url), expected.filter((f) => f.slide === slide.slide)
           .map((f) => `/course-decks/${moduleId}/${lang}/${f.file}`));
         assert.ok(frames.every((f) => onDisk(f.url)));
       }
@@ -178,6 +179,25 @@ test('all generated continuation frames are reachable with the original narratio
   assert.ok(fallback.every((f) => f.lang === 'en' && !f.exact));
   assert.equal(slideImagesFor('seeds-sovereignty', 'zu', 13).length, 1);
   assert.deepEqual(slideImagesFor('missing-module', 'en', 1), []);
+});
+
+test('illustrated teaching fronts preserve readings and an honest language fallback', () => {
+  const frames = slideImagesFor('soil-health', 'en', 10);
+  assert.ok(frames[0].url.endsWith('/slide-10-front.jpg'));
+  assert.ok(frames[1].url.endsWith('/slide-10.svg'));
+  const fallback = slideImagesFor('soil-health', 'zu', 10);
+  assert.deepEqual(fallback.map(f => f.url), frames.map(f => f.url));
+  assert.ok(fallback.every(f => f.lang === 'en' && !f.exact));
+});
+
+test('isiZulu draft titles come from the local script and long covers use the fitted layout', () => {
+  const frames = renderDeck('plant-guilds', 'zu');
+  const first = frames.find((f: {slide:number;continuation:boolean}) => f.slide === 1 && !f.continuation);
+  assert.ok(first);
+  assert.ok(normalizeText(first.svg).includes('Ukukhetha Izitshalo Nama-Plant Guilds'));
+  assert.ok(first.svg.includes('class="title"'), 'a fixed-size English hero can overlap the draft label');
+  assert.ok(first.svg.includes('isiZulu · DRAFT'));
+  assert.ok(frames.every((f: {dropped:number}) => f.dropped === 0));
 });
 
 test('a generated slide is small enough to be worth sending', () => {

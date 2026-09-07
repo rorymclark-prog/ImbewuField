@@ -239,6 +239,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   const img = frameImages[0];
   const continuationImages = frameImages.slice(1);
   const illustratedOpening = img?.url.endsWith('/cover.jpg');
+  const illustratedFront = illustratedOpening || img?.url.endsWith('-front.jpg');
   const anim = animationUrls(moduleId, current.slide);
   const audio = audioForCurrent;
   const track = narration?.tracks.find((t) => t.slide === current.slide);
@@ -303,7 +304,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
         ) : (
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            src={anim ? anim.poster : (img?.url ?? '')}
+            src={illustratedFront ? img.url : anim ? anim.poster : (img?.url ?? '')}
             alt={heading}
             loading="lazy"
             style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }}
@@ -329,10 +330,10 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
         </p>
       )}
 
-      {illustratedOpening || anim ? (
+      {illustratedFront || anim ? (
         <details style={{ color: INK }}>
           <summary style={{ cursor: 'pointer', padding: '8px 0', fontSize: 14 }}>{illustratedOpening ? 'Read the introduction' : 'Read this slide'}</summary>
-          {(illustratedOpening ? continuationImages : frameImages).map((frame, part) => (
+          {(illustratedFront ? continuationImages : frameImages).map((frame, part) => (
             // eslint-disable-next-line @next/next/no-img-element
             <img key={frame.url} src={frame.url} alt={`${heading}, reading part ${part + 1}`} loading="lazy"
               style={{ display: 'block', width: '100%', height: 'auto', marginTop: 8, borderRadius: 10 }} />

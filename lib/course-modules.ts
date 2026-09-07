@@ -579,12 +579,12 @@ export const COURSE_MODULES: CourseModule[] = [
         infographicUrl: "/course-images/soil-health/soil-health-l3.jpg",
         infographicAlt: "Two patches of soil under the same sun: bare ground cracked and dry, mulched ground still dark and moist.",
         title: "Mulching and Cover Crops: Protecting and Building Soil",
-        body: "Bare soil is exposed soil. A South African summer storm can drop 60mm in thirty minutes — enough to strip topsoil that took centuries to form. A 5 to 10cm mulch layer of straw, dry grass or wood chips cuts erosion sharply, keeps soil several degrees cooler in summer — sometimes up to 10°C on hot Highveld days — suppresses weeds, and feeds soil life as it breaks down.\n\nCover crops protect bare ground between main seasons. On the Highveld, oats or lupins sown after maize harvest cover the soil through frost months, then get slashed in before spring planting. In KZN, sunn hemp grows fast in summer and adds a large amount of nitrogen-rich biomass. Cowpea fixes nitrogen and tolerates the Lowveld's early-summer dry spell.\n\nWorm farms turn kitchen scraps into rich castings in three to four weeks. The liquid leachate, diluted 1:10 with water, makes a strong root feed.",
+        body: "Bare soil is exposed soil. A South African summer storm can drop 60mm in thirty minutes — enough to strip topsoil that took centuries to form. A 5 to 10cm mulch layer of straw, dry grass or wood chips cuts erosion sharply, keeps soil several degrees cooler in summer — sometimes up to 10°C on hot Highveld days — suppresses weeds, and feeds soil life as it breaks down.\n\nCover crops protect bare ground between main seasons. On the Highveld, oats or lupins sown after maize harvest cover the soil through frost months, then get slashed in before spring planting. In KZN, sunn hemp grows fast in summer and adds a large amount of nitrogen-rich biomass. Cowpea fixes nitrogen and tolerates the Lowveld's early-summer dry spell.\n\nWorm farms turn suitable raw kitchen scraps into rich castings. Keep the bedding moist rather than waterlogged. The liquid draining out is leachate; it can carry harmful germs from material that has not finished breaking down. Do not use leachate on vegetables or other food crops, even when diluted. Dilution does not disinfect it.",
         keyPoints: [
           "A 5-10cm mulch layer cuts soil temperature, suppresses weeds, and prevents erosion",
           "Cover crops like sunn hemp or lupins protect soil between seasons and add organic matter",
           "Legume cover crops fix nitrogen for free, cutting your fertiliser bill",
-          "Worm farm leachate, diluted 1:10, is a strong liquid root feed",
+          "Do not use worm-farm leachate on food crops, even when diluted",
         ],
         quiz: [
           {
@@ -599,15 +599,15 @@ export const COURSE_MODULES: CourseModule[] = [
             rationale: "Bare winter soil has nothing holding it against wind, and nothing to absorb the force of the first heavy spring rain — both strip topsoil directly.",
           },
           {
-            q: "Worm farm leachate is a strong fertiliser but must be diluted before use. Why?",
+            q: "Why should you keep worm-farm leachate off food crops, even after dilution?",
             options: [
-              "It's too cold for roots undiluted",
-              "Undiluted, it's concentrated enough to burn plant roots",
-              "It contains worm eggs that could hatch and damage roots",
-              "Only seedlings need dilution",
+              "It always contains too little water",
+              "It may carry harmful germs, and dilution does not disinfect it",
+              "It makes all soil permanently acidic",
+              "It contains no nutrients at all",
             ],
             correct: 1,
-            rationale: "Leachate is far more concentrated than any diluted feed — applied neat, it can scorch the very roots it's meant to nourish.",
+            rationale: "Leachate drains through material that may not have finished breaking down. It can carry harmful germs. Adding water does not make it safe for vegetables or other food crops.",
           },
         ],
       },

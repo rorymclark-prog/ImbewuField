@@ -348,7 +348,9 @@ export function slideImagesFor(moduleId: string, lang: string, slide: number): {
       return number(a) - number(b);
     });
   const cover = first.url.replace(/slide-01\.svg$/, 'cover.jpg');
-  const opening = slide === 1 && COURSE_ASSET_SIZES[cover] !== undefined ? [{ ...first, url: cover }] : [];
+  const front = first.url.replace(/\.svg$/, '-front.jpg');
+  const opening = COURSE_ASSET_SIZES[front] !== undefined ? [{ ...first, url: front }]
+    : slide === 1 && COURSE_ASSET_SIZES[cover] !== undefined ? [{ ...first, url: cover }] : [];
   return [...opening, first, ...extra.map((url) => ({ ...first, url }))];
 }
 

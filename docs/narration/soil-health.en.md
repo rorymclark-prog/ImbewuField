@@ -24,7 +24,7 @@ You will learn how to recognise healthy and degraded soil.
 
 You will use a jar test to see whether soil is mostly sand, silt, or clay.
 
-You will make safer compost, correct a wet heap, protect bare ground, and use cover crops and worm-farm leachate wisely.
+You will make safer compost, correct a wet heap, protect bare ground, and use cover crops and understand worm-farm leachate risks.
 
 ---
 
@@ -170,15 +170,15 @@ In KZN, sunn hemp grows fast in summer, while cowpea fixes nitrogen and tolerate
 
 ---
 
-**Slide 17 — Worm Farms Make Root Feed**
+**Slide 17 — Worm Farms and Leachate**
 
-Worm farms turn kitchen scraps into rich castings in three to four weeks.
+Worm farms turn kitchen scraps into rich castings.
 
-The liquid leachate is a strong fertiliser.
+The liquid draining out is leachate. It can carry harmful germs from material that has not finished breaking down.
 
-Dilute it 1:10 with water before using it as a root feed.
+Do not use it on vegetables or other food crops, even when diluted. Dilution does not disinfect it.
 
-Undiluted leachate is concentrated enough to burn plant roots instead of nourishing them.
+Keep worm bedding moist rather than waterlogged.
 
 ---
 

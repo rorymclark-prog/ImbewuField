@@ -1,0 +1,56 @@
+[
+  {
+    "module": "intro-permaculture",
+    "blocks": 22,
+    "readingFrames": 35,
+    "status": "Unreviewed isiZulu draft; not registered in the live deck manifest"
+  },
+  {
+    "module": "reading-landscape",
+    "blocks": 21,
+    "readingFrames": 35,
+    "status": "Unreviewed isiZulu draft; not registered in the live deck manifest"
+  },
+  {
+    "module": "water-harvesting",
+    "blocks": 24,
+    "readingFrames": 33,
+    "status": "Unreviewed isiZulu draft; not registered in the live deck manifest"
+  },
+  {
+    "module": "soil-health",
+    "blocks": 20,
+    "readingFrames": 27,
+    "status": "Unreviewed isiZulu draft; not registered in the live deck manifest"
+  },
+  {
+    "module": "plant-guilds",
+    "blocks": 20,
+    "readingFrames": 37,
+    "status": "Unreviewed isiZulu draft; not registered in the live deck manifest"
+  },
+  {
+    "module": "food-forest",
+    "blocks": 20,
+    "readingFrames": 31,
+    "status": "Unreviewed isiZulu draft; not registered in the live deck manifest"
+  },
+  {
+    "module": "vegetables-staples",
+    "blocks": 18,
+    "readingFrames": 46,
+    "status": "Unreviewed isiZulu draft; not registered in the live deck manifest"
+  },
+  {
+    "module": "small-livestock",
+    "blocks": 20,
+    "readingFrames": 32,
+    "status": "Unreviewed isiZulu draft; not registered in the live deck manifest"
+  },
+  {
+    "module": "market-community",
+    "blocks": 20,
+    "readingFrames": 30,
+    "status": "Unreviewed isiZulu draft; not registered in the live deck manifest"
+  }
+]

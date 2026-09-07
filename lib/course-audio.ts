@@ -198,6 +198,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
   'soil-health': {
     languages: ['en'],
     recordedVoices: { en: 'en-ZA-LukeNeural' },
+    recordingHold: { en: 'The worm-farm leachate advice has changed. Read the corrected slides while replacement narration is prepared.' },
     // 20 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural and verified by
     // import-course-audio: every clip matched its script block.
     tracks: [
@@ -217,7 +218,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
       { slide: 14, lesson: 'soil-health-l3', title: 'Watch: Bare Soil and Mulch' },
       { slide: 15, lesson: 'soil-health-l3', title: 'Mulch Protects the Ground' },
       { slide: 16, lesson: 'soil-health-l3', title: 'Cover Crops Between Seasons' },
-      { slide: 17, lesson: 'soil-health-l3', title: 'Worm Farms Make Root Feed' },
+      { slide: 17, lesson: 'soil-health-l3', title: 'Worm Farms and Leachate' },
       { slide: 18, lesson: 'soil-health-l3', title: 'Protect Soil All Year' },
       { slide: 19, lesson: null,             title: 'Field Assignment' },
       { slide: 20, lesson: null,             title: 'Field Action' },

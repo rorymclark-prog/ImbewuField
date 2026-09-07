@@ -28,6 +28,16 @@ test('an extra slide, an omitted middle card or competing image/video choices st
   fixture(['slide-01-continuation.svg'],dir=>assert.throws(()=>collectSlideFrames(dir,[1]),/Missing base/));
 });
 
+test('illustrated fronts precede the complete reading sequence under one narration number',()=>{
+  fixture(['slide-01.svg','slide-01-front.jpg','slide-01-continuation.svg'],dir=>{
+    const frames=collectSlideFrames(dir,[1]);
+    assert.deepEqual(frames.get(1).map((f:{part:number})=>f.part),[-1,0,1]);
+  });
+  fixture(['slide-01-front.jpg'],dir=>assert.throws(()=>collectSlideFrames(dir,[1]),/Missing base/));
+  fixture(['slide-01.svg','slide-01-front.mp4'],dir=>assert.throws(()=>collectSlideFrames(dir,[1]),/must be a still/));
+  fixture(['slide-01.svg','slide-01-front.jpg','slide-01-front.png'],dir=>assert.throws(()=>collectSlideFrames(dir,[1]),/multiple images/));
+});
+
 test('continuation timing conserves the complete recorded course duration to one video frame',()=>{
   const durations=Array.from({length:185},(_,i)=>2.017+(i%19)*.113);
   const counts=durations.map((_,i)=>i%3+1);
