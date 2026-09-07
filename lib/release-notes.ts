@@ -33,6 +33,14 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '7 September 2026', sha: '6f46334', changes: [
+    'Phone headers and field-team statistics take less space, with single-line tabs.',
+    'My Studies has illustrated modules and lessons, with compact progress and offline tools.',
+    'Tour crop rows show harvests and sales, with clearer headings and lighter record cards.',
+    'View invoices and receipts from the records, and open a complete lender summary.',
+    'Design Map replaces Exact Canvas. Gates have a move handle and length-only sizing.',
+    'Finished maps show an open gate and a gap in the fence. Tour stops open feature tips.',
+  ] },
   { when: '6 September 2026', sha: '9df6298', changes: [
     'Tour learning, invoices, mentor support and programme reporting in about 15 minutes.',
     'Use the Tour button beside the menu for instructions, previous and next stops.',

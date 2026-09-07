@@ -39,6 +39,7 @@ import { fetchSheetContours, type SheetContourResult } from '@/lib/sheet-contour
 import {
   gateBoundaryBreaks,
   boundarySegmentsWithBreaks,
+  fenceSegmentsWithGates,
   polygonAreaCentroid,
   type GateLike as GateLikeGeom,
   type FrameLike as BoundaryFrameGeom,
@@ -813,11 +814,9 @@ export function drawMarks(
   // Boundary ring
   if (refLayers.boundary.length >= 3) {
     ctx.beginPath();
-    refLayers.boundary.forEach(([x, y], i) => {
-      const fn = i === 0 ? ctx.moveTo : ctx.lineTo;
-      fn.call(ctx, px(x), py(y));
-    });
-    ctx.closePath();
+    for (const run of boundarySegmentsWithBreaks(refLayers.boundary, frame, gateBoundaryBreaks(refLayers.boundary, gatesNearBoundary(state), frame))) {
+      run.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, px(x), py(y)));
+    }
     // CHARTREUSE, not planting green. This was #8CEB6A — the same green family as the planting
     // element fills (mulch_bank #7D9A4A, vetiver_row #4E8B3B) and the windbreak line #2F7A4A — while
     // the prompt tells the model the boundary is "a bright chartreuse #B4E000 line". So the image
@@ -1038,10 +1037,8 @@ export function drawMarks(
   for (const line of drawDesign && showDesignLines ? state.lines : []) {
     if (line.points.length < 2 || !lineInFilter(line.kind, filter)) continue;
     ctx.beginPath();
-    line.points.forEach(([x, y], i) => {
-      const fn = i === 0 ? ctx.moveTo : ctx.lineTo;
-      fn.call(ctx, px(x), py(y));
-    });
+    const runs = line.kind === 'fence' ? fenceSegmentsWithGates(line.points, gatesNearBoundary(state), frame) : [line.points];
+    for (const run of runs) run.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, px(x), py(y)));
     ctx.strokeStyle = LINE_COLORS[line.kind] ?? '#8C8577';
     ctx.lineWidth = line.kind === 'fence' ? 3 : 4;
     if (line.kind === 'swale' || line.kind === 'path' || line.kind === 'bedpath') ctx.setLineDash([6, 4]);
@@ -1049,7 +1046,7 @@ export function drawMarks(
     ctx.stroke();
     ctx.setLineDash([]);
     // Post-and-wire fence: round posts along the line (violet), never the boundary's ticks.
-    if (line.kind === 'fence') drawFencePosts(ctx, line.points, px, py, SCALE);
+    if (line.kind === 'fence') for (const run of runs) drawFencePosts(ctx, run, px, py, SCALE);
   }
 
   // Items — footprint + emoji label. NB: this canvas may be SCALE× the logical frame
@@ -1122,6 +1119,10 @@ export function drawMarks(
 
   for (const item of ordered) {
     const def = ELEMENTS_BY_ID[item.defId]!;
+    if (def.id === 'gate') {
+      drawTrueFootprint(ctx, item, def, px, py, pxPerM, false);
+      continue;
+    }
     const wM = item.wM ?? def.wM;
     const hM = item.hM ?? def.hM;
     const wLogical = wM * pxPerM;
@@ -3925,7 +3926,7 @@ function drawCropGlyphPath(
 function gatesNearBoundary(state: DesignCanvasState): GateLikeGeom[] {
   return state.items
     .filter((it) => it.defId === 'gate')
-    .map((it) => ({ x: it.x, y: it.y, wM: it.wM ?? ELEMENTS_BY_ID[it.defId]?.wM }));
+    .map((it) => ({ x: it.x, y: it.y, wM: it.wM ?? ELEMENTS_BY_ID[it.defId]?.wM, rot: it.rot }));
 }
 
 function drawBlueprintBoundary(
@@ -5770,6 +5771,17 @@ function drawTrueFootprint(
   /** Ids of canopies with something smaller planted inside them — see overstoryCanopyIds. */
   overstory?: ReadonlySet<string>,
 ): void {
+  // A gate is a measured opening, not a point symbol or a stretched stock illustration.
+  // Draw it before artwork/minimum-size scaling so its posts meet the actual fence gap.
+  if (def.id === 'gate') {
+    ctx.save();
+    ctx.translate(px(it.x), py(it.y));
+    if (it.rot) ctx.rotate(it.rot * Math.PI / 180);
+    drawCartographicStructureSymbol(ctx, def, Math.max(1, (it.wM ?? def.wM) * pxPerM),
+      Math.max(1, pxPerM * 0.2), Math.max(1.2, ctx.canvas.width * 0.0009));
+    ctx.restore();
+    return;
+  }
   const waterArtwork = def.category === 'water' || [
     'banana_circle', 'tree_basin', 'greywater_basin', 'infiltration_basin',
     'half_moon', 'berm', 'terrace', 'mulch_bank', 'duck_pond',
@@ -6298,12 +6310,13 @@ function drawFilteredLines(
     const earthworksStyle = filter === 'earthworks' && l.kind === 'swale'
       ? EARTHWORKS_ROUTE_STYLE.swale
       : undefined;
+    const runs = l.kind === 'fence' ? fenceSegmentsWithGates(l.points, gatesNearBoundary(state), state.frame) : [l.points];
     const trace = () => {
-      const drawPoints = polishedRenderPoints(
-        l.points.map(([x, y]) => [px(x), py(y)] as RenderPoint),
-      );
       ctx.beginPath();
-      drawPoints.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, x, y));
+      for (const run of runs) {
+        const drawPoints = polishedRenderPoints(run.map(([x, y]) => [px(x), py(y)] as RenderPoint));
+        drawPoints.forEach(([x, y], i) => (i === 0 ? ctx.moveTo : ctx.lineTo).call(ctx, x, y));
+      }
     };
     // A bed path prints with planting-cartography's own tight-dash hairline wherever it is
     // admitted (planting + all) — the declared style, not the generic 3.5px route stroke.
@@ -6335,7 +6348,7 @@ function drawFilteredLines(
     ctx.lineWidth = routeVisual?.width ?? 3.5;
     ctx.stroke();
     // Post-and-wire: round posts along the run, matching the composite exactly.
-    if (l.kind === 'fence') drawFencePosts(ctx, l.points, px, py, 1);
+    if (l.kind === 'fence') for (const run of runs) drawFencePosts(ctx, run, px, py, 1);
   }
   ctx.restore();
 }
@@ -11509,7 +11522,7 @@ function relativeDate(iso: string): string {
 const PROVIDER_LABEL: Record<'gemini' | 'falgpt' | 'exact', string> = {
   gemini: 'Gemini Pro',
   falgpt: 'gpt-image-2',
-  exact: 'Exact map · no AI',
+  exact: 'Design Map',
 };
 
 interface GalleryItem {
@@ -11548,7 +11561,7 @@ interface GalleryItem {
 // the hybrid?" It was not; only this text was.
 function galleryResultBadge(item: GalleryItem): string {
   if (item.freshness !== 'current') return 'Older render · generate again for the current layout';
-  if (item.resultKind === 'exact') return 'Exact master · no AI';
+  if (item.resultKind === 'exact') return 'Design Map';
   if (item.resultKind === 'hybrid') {
     return `AI Polished · ${item.validationStatus === 'unscored' ? 'comparison unavailable' : 'check against exact map'} · ${item.provider === 'gemini' ? 'Gemini' : 'gpt-image-2'}`;
   }
@@ -11579,7 +11592,7 @@ function galleryResultBadge(item: GalleryItem): string {
  *  chip: an old map with no recorded provenance should look plain, not faulty. */
 function galleryTileChip(kind: SheetResultKind): { text: string; bg: string; fg: string } | null {
   switch (kind) {
-    case 'exact':          return { text: 'EXACT',  bg: 'rgba(56,52,44,0.88)',   fg: '#EFE7D6' };
+    case 'exact':          return { text: 'MAP',  bg: 'rgba(56,52,44,0.88)',   fg: '#EFE7D6' };
     case 'hybrid':         return { text: 'HYBRID', bg: 'rgba(43,86,112,0.90)',  fg: '#DCEEF8' };
     case 'ai-polished':    return { text: 'PAID',   bg: 'rgba(178,124,26,0.94)', fg: '#FFF6E2' };
     case 'ai-illustrated': return { text: 'AI',     bg: 'rgba(92,70,120,0.90)',  fg: '#EFE4F8' };
@@ -12857,7 +12870,7 @@ export default function DesignGlossy({
       const mapLabel = filter === 'all'
         ? 'Whole design'
         : `${GLOSSY_FILTERS.find((f) => f.key === filter)?.label ?? filter} map`;
-      pushGallery(`${mapLabel} · Exact master`, composite, {
+      pushGallery(`${mapLabel} · Design Map`, composite, {
         resultKind: 'exact',
         provider: 'exact',
         geometryLock: true,
@@ -12901,7 +12914,7 @@ export default function DesignGlossy({
       const record: SavedGlossy = { image: composite, provider: 'exact', at: new Date().toISOString() };
       saveGlossy(state.siteId, mapKey, record);
       setSaved(record);
-      pushGallery('Implementation & phasing · Exact master', composite, {
+      pushGallery('Implementation & phasing · Design Map', composite, {
         resultKind: 'exact',
         provider: 'exact',
         geometryLock: true,
@@ -12931,7 +12944,7 @@ export default function DesignGlossy({
       const record: SavedGlossy = { image: composite, provider: 'exact', at: new Date().toISOString() };
       saveGlossy(state.siteId, mapKey, record);
       setSaved(record);
-      pushGallery('Sector analysis · Exact master', composite, {
+      pushGallery('Sector analysis · Design Map', composite, {
         resultKind: 'exact',
         provider: 'exact',
         geometryLock: true,
@@ -12960,7 +12973,7 @@ export default function DesignGlossy({
       const record: SavedGlossy = { image: composite, provider: 'exact', at: new Date().toISOString() };
       saveGlossy(state.siteId, mapKey, record);
       setSaved(record);
-      pushGallery('Existing site & base · Exact master', composite, {
+      pushGallery('Existing site & base · Design Map', composite, {
         resultKind: 'exact',
         provider: 'exact',
         geometryLock: true,
@@ -12991,7 +13004,7 @@ export default function DesignGlossy({
     let made = 0;
     const step = (label: string, image: string, cacheKey: string) => {
       try { saveGlossy(state.siteId, cacheKey, { image, provider: 'exact', at: new Date().toISOString() }); } catch { /* cache full — gallery still holds it */ }
-      pushGallery(`${label} · Exact master`, image, {
+      pushGallery(`${label} · Design Map`, image, {
         resultKind: 'exact',
         provider: 'exact',
         geometryLock: true,
@@ -13528,7 +13541,7 @@ export default function DesignGlossy({
   // collects each finished sheet into the gallery as it lands.
   const generateAllViaQueue = useCallback(async () => {
     if (!aiRenderOn) {
-      setError('AI rendering is available only to approved testers. Exact Canvas is available to everyone.');
+      setError('AI rendering is available only to approved testers. Design Map is available to everyone.');
       return;
     }
     const styleKey = producerStyle ?? DEFAULT_PRODUCER_STYLE;
@@ -13705,7 +13718,7 @@ export default function DesignGlossy({
   // generateProducer), so `filter` is always a model layer.
   const generateOneViaQueue = useCallback(async () => {
     if (!aiRenderOn) {
-      setError('AI rendering is available only to approved testers. Exact Canvas is available to everyone.');
+      setError('AI rendering is available only to approved testers. Design Map is available to everyone.');
       return;
     }
     const styleKey = producerStyle ?? DEFAULT_PRODUCER_STYLE;
@@ -14029,7 +14042,7 @@ export default function DesignGlossy({
   // authority. Site 01 retains its ground-only restyle route.
   const generateSectorViaQueue = useCallback(async (kind: 'sector' | 'base' = 'sector') => {
     if (!aiRenderOn) {
-      setError('AI rendering is available only to approved testers. Exact Canvas is available to everyone.');
+      setError('AI rendering is available only to approved testers. Design Map is available to everyone.');
       return;
     }
     const styleKey = lockedPolishStyle(producerStyle, DEFAULT_PRODUCER_STYLE);
@@ -14182,7 +14195,7 @@ export default function DesignGlossy({
   // regardless of stage. The saved exact master is the authority in every case.
   const generatePhasingViaQueue = useCallback(async () => {
     if (!aiRenderOn) {
-      setError('AI rendering is available only to approved testers. Exact Canvas is available to everyone.');
+      setError('AI rendering is available only to approved testers. Design Map is available to everyone.');
       return;
     }
     const styleKey = lockedPolishStyle(producerStyle, DEFAULT_PRODUCER_STYLE);
@@ -15199,7 +15212,7 @@ export default function DesignGlossy({
   const lockedPolishStyleLabel =
     PRODUCER_STYLES.find((style) => style.key === polishStyleRef.current)?.label ?? 'selected style';
   const selectedStyleLabel = PRODUCER_STYLES.find((style) => style.key === producerStyle)?.label
-    ?? (isExactRender ? 'Exact Canvas' : 'AI Polished');
+    ?? (isExactRender ? 'Design Map' : 'AI Polished');
   // Selecting a saved row previews exactly ONE durable full image in the centre. The gallery
   // effect above already enforces that memory boundary; the rail never points its thumbnails at
   // full-size fallbacks, which is what previously killed iPhone Safari on this screen.
@@ -15211,7 +15224,7 @@ export default function DesignGlossy({
   const galleryViewChip = galleryViewItem ? galleryTileChip(galleryViewItem.resultKind) : null;
   const stageResultBadge = galleryViewItem
     ? `${galleryViewChip?.text ?? 'SAVED'}${galleryViewItem.freshness === 'current' ? '' : ' · OLDER'}`
-    : stageIsExact ? 'Exact master · no AI' : 'AI-polished';
+    : stageIsExact ? 'Design Map' : 'AI-polished';
   const stageStyleLabel = galleryViewItem
     ? (galleryViewItem.resultKind === 'exact'
       ? t('designGlossyExactCanvas')
@@ -15462,10 +15475,10 @@ export default function DesignGlossy({
           })}
           <span style={{ fontSize: 10.5, opacity: 0.6 }}>
             {deviceSheetScale(3) === 2
-              ? 'Standard keeps exact and AI layers reliable on this phone; use a computer for High print'
+              ? 'Standard is best for this phone; use a computer for High print'
               : SCALE === 3
-                ? 'Exact sheets redraw sharper; AI render cost is unchanged'
-                : 'High redraws exact sheets at 1.5× resolution for printing'}
+                ? 'Sharper sheets for detailed printing'
+                : 'High redraws your map at 1.5× resolution for printing'}
           </span>
         </div>
         {/* HOW THIS SHEET NAMES ITS PLANTS — one or the other, never both. Shown only where the
@@ -15652,11 +15665,11 @@ export default function DesignGlossy({
                         // eslint-disable-next-line @next/next/no-img-element
                         <img src={item.thumb} alt="" loading="lazy" />
                       ) : (
-                        <span>{item.label}</span>
+                        <span>{item.resultKind === 'exact' ? item.label.replace(/Exact master/gi, 'Design Map') : item.label}</span>
                       )}
                       {chip && <span className={styles.savedGalleryBadge} style={{ background: chip.bg, color: chip.fg }}>{chip.text}</span>}
                     </span>
-                    <span className={styles.savedGalleryLabel}>{item.label}</span>
+                    <span className={styles.savedGalleryLabel}>{item.resultKind === 'exact' ? item.label.replace(/Exact master/gi, 'Design Map') : item.label}</span>
                     <span className={styles.savedGalleryMeta}>{galleryResultBadge(item)}</span>
                   </button>
                 );
@@ -15708,22 +15721,22 @@ export default function DesignGlossy({
         <div className={compact ? undefined : styles.stageEmpty}>
         <p style={{ fontSize: 14, lineHeight: 1.5, opacity: 0.85 }}>
           {exactSheet === 'base'
-            ? 'Draw your Existing Site sheet (plan-set 01) — just your real satellite with the boundary marked and nothing designed yet. The honest "before" that the whole plan builds on. Exact, no AI.'
+            ? 'Create your Existing Site sheet with the site image and boundary, ready to compare with your finished design.'
             : exactSheet === 'sector'
-            ? "Draw your Sector Analysis sheet (plan-set 02) — sun geometry, slope, drainage, contours and traced access are computed for this property. Named winds and fire are sourced regional context, clearly identified as assumptions and checked against coarse climate-grid data for these coordinates. Confirm wind and fire on site before building. Deterministic and exact — no AI."
+            ? "Draw your Sector Analysis sheet (plan-set 02) — sun geometry, slope, drainage, contours and traced access are computed for this property. Named winds and fire are sourced regional context, clearly identified as assumptions and checked against coarse climate-grid data for these coordinates. Confirm wind and fire on site before building. Confirm regional assumptions against your own observations."
             : restyleAiKind === 'base'
             ? `Generate an AI-styled Existing Site sheet (plan-set 01) in the ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} style — the model repaints the ground only; your boundary, roof and access stay exactly where they are, and nothing is designed onto it. Renders in the background (~mins).`
             : sectorAiMode
             ? `Create a paid AI-polished Sector Analysis sheet (plan-set 02) in the ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} style. The exact computed sheet is saved first, then GPT Image polishes the complete page — aerial, arrows, labels and legend — as a separate visual copy. All visible Sector styles support this route; Satellite Overlay is intentionally unavailable here.`
             : exactSheet === 'implementation'
-            ? 'Draw your Implementation & Phasing sheet (plan-set 08) — the build order, week ranges, hold points, critical order and site rules, all worked out from your real design by the rules engine (permaculture Scale of Permanence + your rainfall). Deterministic and exact: no AI, no guessing. This is the reliable version of the illustrated Implementation analysis map.'
+            ? 'Draw your Implementation & Phasing sheet (plan-set 08) — the build order, week ranges, hold points, critical order and site rules, all worked out from your real design by the rules engine (permaculture Scale of Permanence + your rainfall). Review the schedule against your site survey and available resources.'
             : producerStyle
             ? `Generate your ${filter === 'all' ? 'whole design' : GLOSSY_FILTERS.find((f) => f.key === filter)?.label} map in the ${PRODUCER_STYLES.find((s) => s.key === producerStyle)?.label} style. ${engine === 'falgpt' ? (effectiveModelChrome ? 'gpt-image-2 paints the whole sheet with its own legend & labels. Renders in the background (~mins); it lands in your gallery.' : 'gpt-image-2 paints the map artwork in the background (~mins); source protections, labels, legend, north arrow and scale are applied afterwards. Compare AI-drawn features with your exact map before using the illustration.') : 'Gemini paints the map artwork in the background (~mins); source protections, labels, legend, north arrow and scale are applied afterwards. Compare AI-drawn features with your exact map before using the illustration. It lands in your gallery.'}`
             : analysisStyle
               ? `Generate the ${GLOSSY_STYLES.find((s) => s.key === analysisStyle)?.label} analysis map — an illustrated Gemini render (sun/wind, opportunities, phasing) over your real site. These are freer than the design maps: great to look at, less exact on geometry. Takes about a minute.`
               : filter === 'all'
-                ? `Draw your whole design map — your real satellite with every zone, element, line and label placed exactly where you put them. Drawn straight from your plan, so it’s always accurate. Instant, no AI.${aiLayerMode ? ' Want an artist’s impression? Pick a Style above.' : ''}`
-                : `Draw your ${GLOSSY_FILTERS.find((f) => f.key === filter)?.label.toLowerCase()} map — your real satellite with just that layer drawn exactly as you placed it. Instant and accurate, no AI guessing.${aiLayerMode ? ' For an illustrated version, pick a Style above.' : ''}`}
+                ? `Draw your whole design map — your real satellite with every zone, element, line and label placed exactly where you put them. Drawn from your saved design, ready to review and print.${aiLayerMode ? ' Want an artist’s impression? Pick a Style above.' : ''}`
+                : `Draw your ${GLOSSY_FILTERS.find((f) => f.key === filter)?.label.toLowerCase()} map — your real satellite with just that layer drawn exactly as you placed it. Ready to review and print.${aiLayerMode ? ' For an illustrated version, pick a Style above.' : ''}`}
         </p>
         </div>
       )}
@@ -15813,7 +15826,7 @@ export default function DesignGlossy({
             </div>
             <div style={{ padding: '10px 14px', background: DARK, color: PAPER, fontSize: 12, opacity: 0.75 }}>
               {stageIsExact
-                ? 'Exact sheet — drawn straight from your design + site data, no AI.'
+                ? 'Design Map — drawn from your saved design and site data.'
                 : 'AI artist’s impression of YOUR design — the canvas is the exact version.'}
               {galleryViewItem && ` ${savedSheetUnderlayNote(galleryViewItem.underlay, underlay)}`}
             </div>
@@ -16291,7 +16304,7 @@ export default function DesignGlossy({
                             {chip.text}
                           </span>
                         )}
-                        <span className={styles.savedLabel}>{item.label}</span>
+                        <span className={styles.savedLabel}>{item.resultKind === 'exact' ? item.label.replace(/Exact master/gi, 'Design Map') : item.label}</span>
                         <span className={styles.savedProvider}>{galleryResultBadge(item)}</span>
                       </span>
                     </button>

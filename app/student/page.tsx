@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
+import styles from './Studies.module.css';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { CheckCircle, Circle, Clock, Loader2, GraduationCap, Sprout, ChevronDown, ChevronUp, BookOpen, Home, Lightbulb, CalendarClock, AlertTriangle, ClipboardList, Headphones, Video, ExternalLink, Lock, Camera, Mic, Trophy, PlayCircle } from 'lucide-react';
@@ -156,12 +157,16 @@ function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }
     <div id={`lesson-${lesson.id}`} className="rounded-xl overflow-hidden" style={{ border: `1px solid ${color}22`, scrollMarginTop: 64 }}>
       <button
         onClick={() => setOpen((v) => !v)}
-        className="w-full flex items-center gap-3 px-4 py-3 text-left transition-colors"
+        className={styles.lessonHeader}
+        aria-expanded={open}
         style={{ background: open ? `${color}0F` : 'transparent' }}
       >
-        <BookOpen size={14} style={{ color, flexShrink: 0 }} />
-        <span className="flex-1 font-sans text-sm font-semibold leading-snug" style={{ color: '#20190F' }}>
-          {lesson.title}
+        {hasInfographic
+          ? <img src={lesson.infographicUrl} alt="" loading="lazy" width={112} height={75} className={styles.lessonArt} />
+          : <BookOpen size={24} style={{ color, flexShrink: 0 }} />}
+        <span className="flex-1 min-w-0">
+          <span className={`font-display ${styles.lessonTitle}`}>{lesson.title}</span>
+          <span className={`font-sans ${styles.lessonHint}`}>{open ? 'Close lesson' : 'Open lesson'}{hasAudio ? ' · Listen or read' : ' · Read and practise'}</span>
         </span>
         {open
           ? <ChevronUp size={14} style={{ color: '#8C7A62', flexShrink: 0 }} />
@@ -654,6 +659,7 @@ export default function StudentPage() {
   const doneCount = COURSE_MODULES.filter((m) => doneIds.has(m.id)).length;
   const pct = TOTAL_MODULES === 0 ? 0 : Math.round((doneCount / TOTAL_MODULES) * 100);
   const totalMins = COURSE_MODULES.reduce((s, m) => s + (doneIds.has(m.id) ? 0 : m.durationMins), 0);
+  const studyModule = COURSE_MODULES.find((m) => m.id === currentId) ?? COURSE_MODULES[0];
 
   // Arc SVG for progress ring
   const R = 44;
@@ -661,24 +667,35 @@ export default function StudentPage() {
   const dashOffset = C - (C * pct) / 100;
 
   return (
-    <div className="flex flex-col overflow-hidden" style={{ height: '100dvh', background: '#E4DCC6' }}>
+    <div className={`flex flex-col overflow-hidden ${styles.page}`} style={{ height: '100dvh', background: '#EEEBDD' }}>
       <header className="flex-shrink-0 flex items-center px-3 sm:px-4 gap-2 sm:gap-3" style={{ height: 52, background: '#FFFEFA', borderBottom: '1px solid #E2D8C4' }}>
         <MenuButton /><BackButton fallback="/home" />
         <BrandLogo />
         <div className="w-px h-5" style={{ background: '#E2D8C4' }} />
-        <span className="text-xs font-display truncate min-w-0" style={{ color: '#5C5040' }}>Learning Portal</span>
+        <span className="text-sm font-display truncate min-w-0" style={{ color: '#35503B' }}>My Studies</span>
         <div className="flex-1" />
         <LessonLink id="student:overview" label="Learn" />
         <SettingsButton />
       </header>
 
-      <main className="flex-1 overflow-y-auto px-4 py-4 space-y-4" style={{ paddingBottom: 80 }}>
+      <main className={`flex-1 overflow-y-auto space-y-4 ${styles.main}`}>
 
         {/* Progress hero */}
-        <div className="rounded-2xl p-5 flex items-center gap-5" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
+        <section className={styles.intro} aria-labelledby="studies-title">
+          <div>
+            <p className={`font-sans ${styles.eyebrow}`}><GraduationCap size={17} /> Learn · practise · grow</p>
+            <h1 id="studies-title" className="font-display">My Studies</h1>
+            <p className={`font-sans ${styles.description}`}>Your permaculture course, one practical lesson at a time.</p>
+            <button type="button" className={`font-sans ${styles.studyButton}`} onClick={() => {
+              setExpandedModuleId(studyModule.id);
+              requestAnimationFrame(() => document.getElementById(`module-${studyModule.id}`)?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+            }}><PlayCircle size={18} />{pct === 100 ? 'Revisit your studies' : doneCount === 0 ? 'Start studying' : 'Continue learning'}</button>
+            <span className={`font-sans ${styles.nextLesson}`}>{studyModule.title}</span>
+          </div>
+          <div className={styles.progress}>
           {/* Ring */}
-          <div className="flex-shrink-0 relative" style={{ width: 100, height: 100 }}>
-            <svg width="100" height="100" viewBox="0 0 100 100" style={{ transform: 'rotate(-90deg)' }}>
+          <div className="flex-shrink-0 relative" style={{ width: 64, height: 64 }}>
+            <svg width="64" height="64" viewBox="0 0 100 100" aria-hidden="true" style={{ transform: 'rotate(-90deg)' }}>
               <circle cx="50" cy="50" r={R} fill="none" stroke="rgba(32,25,15,0.10)" strokeWidth="8" />
               <circle cx="50" cy="50" r={R} fill="none"
                 stroke={pct === 100 ? '#1F4D2B' : '#C07A1E'}
@@ -695,7 +712,6 @@ export default function StudentPage() {
               ) : (
                 <>
                   <span className="font-display font-bold text-xl leading-none" style={{ color: '#20190F' }}>{pct}%</span>
-                  <span className="text-xs font-mono mt-0.5" style={{ color: '#8C7A62' }}>done</span>
                 </>
               )}
             </div>
@@ -731,7 +747,8 @@ export default function StudentPage() {
               </div>
             )}
           </div>
-        </div>
+          </div>
+        </section>
 
         {/* What the mentor has actually asked for — only shown when there is something */}
         {assignSummary && assignSummary.total > 0 && (
@@ -767,14 +784,18 @@ export default function StudentPage() {
             The learner is in town roughly once a fortnight; that is the only moment this is cheap.
             It sits above the module list rather than in a settings screen because it is a thing
             you do on purpose before you leave, not a preference you configure. */}
-        <OfflineDownload
-          moduleIds={orderedModules.map((m) => m.id)}
-          lang={lang}
-          label="Save the whole course to this phone"
-        />
+        <details className={styles.offline}>
+          <summary className="font-sans"><BookOpen size={18} /> Study offline <span className={styles.offlineHint}>Save lessons to this phone before you leave signal</span></summary>
+          <OfflineDownload moduleIds={orderedModules.map((m) => m.id)} lang={lang} label="Save the whole course to this phone" />
+        </details>
+
+        <div className={styles.courseHeading}>
+          <h2 className="font-display">Your course</h2>
+          <p className="font-sans">{TOTAL_MODULES} modules · {COURSE_MODULES.reduce((n, m) => n + (m.lessons?.length ?? 0), 0)} lessons</p>
+        </div>
 
         {/* Module list */}
-        <div className="space-y-2.5">
+        <div className={styles.modules}>
           {orderedModules.map((mod, idx) => {
             const done = doneIds.has(mod.id);
             const isToggling = toggling === mod.id;
@@ -806,25 +827,25 @@ export default function StudentPage() {
             if (!unlocked) {
               const reason = unlockReason(mod.id, gatingCtx);
               return (
-                <div key={mod.id} className="rounded-2xl overflow-hidden"
-                  style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', opacity: 0.7 }}>
-                  <div className="flex items-start gap-3 px-4 py-3.5">
-                    <div className="flex-shrink-0 flex items-center justify-center rounded-full mt-0.5"
-                      style={{ width: 32, height: 32, background: 'rgba(32,25,15,0.06)', border: '1.5px solid #E2D8C4' }}>
-                      <Lock size={14} style={{ color: '#8C7A62' }} />
+                <div key={mod.id} className={`rounded-2xl overflow-hidden ${styles.module} ${styles.locked}`}
+                  style={{ border: '1px solid #DEDCCE' }}>
+                  <div className={styles.moduleHeader}>
+                    <div className={styles.moduleArt}>
+                      {mod.lessons?.[0]?.infographicUrl && <img src={mod.lessons[0].infographicUrl} alt="" loading="lazy" width={128} height={85} />}
+                      <span className={`font-sans ${styles.moduleNumber}`}>Module {MODULE_NUMBER.get(mod.id) ?? idx + 1}</span>
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start gap-2 flex-wrap">
-                        <span className="font-display font-semibold text-sm leading-tight" style={{ color: '#8C7A62' }}>
+                        <span className={`font-display ${styles.moduleTitle}`}>
                           {mod.title}
                         </span>
                         <span className="text-xs font-sans px-2 py-0.5 rounded-full flex-shrink-0"
-                          style={{ background: `${color}10`, color: `${color}A0`, border: `1px solid ${color}20` }}>
+                          style={{ background: `${color}10`, color, border: `1px solid ${color}20` }}>
                           {CATEGORY_LABELS[mod.category]}
                         </span>
                       </div>
-                      <p className="flex items-center gap-1.5 font-sans text-xs mt-1.5 leading-relaxed" style={{ color: '#8C7A62' }}>
-                        <Lock size={10} style={{ flexShrink: 0 }} />
+                      <p className={`font-sans ${styles.lockedReason}`}>
+                        <Lock size={14} style={{ flexShrink: 0, marginTop: 2 }} />
                         {reason ?? 'Locked'}
                       </p>
                     </div>
@@ -838,22 +859,15 @@ export default function StudentPage() {
             const submissionOpen = submissionOpenId === mod.id;
 
             return (
-              <div key={mod.id} className="rounded-2xl overflow-hidden"
+              <div key={mod.id} id={`module-${mod.id}`} className={`rounded-2xl overflow-hidden ${styles.module}`} data-expanded={isExpanded}
                 style={{ background: '#FFFEFA', border: `1px solid ${isCurrent ? color : (done ? '#1F4D2B30' : '#E2D8C4')}` }}>
 
                 {/* Module header row */}
-                <div className="flex items-start gap-3 px-4 py-3.5">
+                <div className={styles.moduleHeader}>
                   {/* Number / check */}
-                  <div className="flex-shrink-0 flex items-center justify-center rounded-full mt-0.5"
-                    style={{
-                      width: 32, height: 32,
-                      background: done ? '#1F4D2B' : 'rgba(32,25,15,0.06)',
-                      border: `1.5px solid ${done ? '#1F4D2B' : '#E2D8C4'}`,
-                      transition: 'background 0.2s, border-color 0.2s',
-                    }}>
-                    {done
-                      ? <CheckCircle size={16} style={{ color: '#EAF3E2' }} />
-                      : <span className="font-mono text-xs font-bold" style={{ color: '#8C7A62' }}>{MODULE_NUMBER.get(mod.id) ?? idx + 1}</span>}
+                  <div className={styles.moduleArt}>
+                    {mod.lessons?.[0]?.infographicUrl && <img src={mod.lessons[0].infographicUrl} alt="" loading="lazy" width={128} height={85} />}
+                    <span className={`font-sans ${styles.moduleNumber}`}>{done ? '✓ Complete' : `Module ${MODULE_NUMBER.get(mod.id) ?? idx + 1}`}</span>
                   </div>
 
                   {/* Content — tap to expand lessons */}
@@ -862,11 +876,8 @@ export default function StudentPage() {
                     onClick={() => toggleExpand(mod.id)}
                     aria-expanded={isExpanded}
                   >
+                    <span className={`font-display ${styles.moduleTitle}`}>{mod.title}</span>
                     <div className="flex items-start gap-2 flex-wrap">
-                      <span className="font-display font-semibold text-sm leading-tight"
-                        style={{ color: done ? '#5C5040' : '#20190F', textDecoration: done ? 'line-through' : 'none' }}>
-                        {mod.title}
-                      </span>
                       <span className="text-xs font-sans px-2 py-0.5 rounded-full flex-shrink-0"
                         style={{ background: color + '18', color, border: `1px solid ${color}30` }}>
                         {CATEGORY_LABELS[mod.category]}
@@ -913,7 +924,7 @@ export default function StudentPage() {
                     <p className="font-sans text-xs mt-1 leading-relaxed" style={{ color: '#5C5040' }}>
                       {mod.description}
                     </p>
-                    <div className="flex items-center gap-3 mt-2">
+                    <div className={styles.moduleMeta}>
                       <div className="flex items-center gap-1.5">
                         <Clock size={11} style={{ color: '#8C7A62' }} />
                         <span className="font-mono text-xs" style={{ color: '#8C7A62' }}>{formatDuration(mod.durationMins)}</span>
@@ -942,7 +953,7 @@ export default function StudentPage() {
                     onClick={() => toggle(mod.id)}
                     disabled={isToggling}
                     aria-label={done ? 'Mark as not done' : 'Mark as complete'}
-                    className="flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-display font-semibold mt-0.5 transition-all"
+                    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-display font-semibold transition-all ${styles.markDone}`}
                     style={{
                       background: done ? 'rgba(31,77,43,0.08)' : '#1F4D2B',
                       border: done ? '1px solid rgba(31,77,43,0.2)' : 'none',

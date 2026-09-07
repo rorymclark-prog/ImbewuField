@@ -26,7 +26,7 @@ export default function RoleSwitcher({ current }: { current: string }) {
   const visible = visibleRoleTabs(navigationRole);
   const effectiveCurrent = ROLE_ALIASES[current] ?? current;
   return (
-    <div className="flex items-center gap-1 px-1.5 py-1 rounded-full"
+    <div data-header-secondary className="flex items-center gap-1 px-1.5 py-1 rounded-full"
       style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
       {ROLES.filter(r => visible.includes(r.key)).map((r) => {
         const active = r.key === effectiveCurrent;

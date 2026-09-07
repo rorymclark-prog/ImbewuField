@@ -11,9 +11,18 @@ import test from 'node:test';
 
 import type { ExpenseLog, ProductionLog, SalesLog } from '@/lib/db/types';
 import { isSampleMode } from '@/lib/sample-mode';
-import { buildCreditPackPdf } from '@/lib/credit-pack-pdf';
+import { buildCreditPackPdf, buildCreditPackPreviewPdf } from '@/lib/credit-pack-pdf';
 
 const NOW = new Date('2026-08-15T09:00:00.000Z');
+
+test('the tour exports a complete preview using an example identity', async () => {
+  const blob = await buildCreditPackPreviewPdf({ production: [harvest()], sales: [sale()], expenses: [expense()], now: NOW });
+  assert.equal(blob.type, 'application/pdf');
+  assert.ok(blob.size > 2000);
+  const raw = await blob.text();
+  assert.match(raw, /Example garden/);
+  assert.doesNotMatch(raw, /Thandi Mbeki|0821234567/);
+});
 
 function farmer() {
   return { name: 'Thandi Mbeki', farmName: 'Tugela Valley smallholding', phone: '0821234567' };

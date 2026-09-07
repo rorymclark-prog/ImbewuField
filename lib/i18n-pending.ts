@@ -349,12 +349,12 @@ export const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   designGlossyRenderingBackground: 'Rendering with gpt-image-2 in the background…',
   designGlossyBatchNote: 'Whole · Zones · Water · Planting · Structures. Site & Phasing stay exact; Sector and Earthworks each have an AI option on their own sheet — lands in your gallery in a few minutes.',
   designGlossyDrawing: 'Drawing…',
-  designGlossyAllExact: 'All sheets — exact, no AI →',
+  designGlossyAllExact: 'Create all design sheets →',
   designGlossyStyle: 'Style',
   designGlossyMoreStyles: 'More style packs →',
   designGlossyRecommended: 'Recommended',
   designGlossyChooseFinish: 'Choose your finish below.',
-  designGlossyHowFinishesWork: 'How finishes work',
+  designGlossyHowFinishesWork: 'About your map',
   // Two finishes are offered. Say what each one costs and who draws the words on the sheet — that
   // second point is the whole reason the paid finish is trustworthy: the model never touches type.
   designGlossyFinishHelp: 'Exact Canvas is free and instant, and draws every label, legend and line at full sheet resolution. AI Polished saves that exact master first, then spends one paid AI render painting the map artwork — your boundary, labels, legend, title block, north arrow and scale bar are drawn back on top by the app afterwards, never by the model. Neither choice ever changes your canvas design.',
@@ -402,9 +402,9 @@ export const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   designGlossyQualityLow: 'Low',
   designGlossyQualityLowSub: 'cheapest · for testing',
   designGlossyQualityNote: 'AI artwork can change or invent features. Source protections, labels and legend are applied afterwards, but compare positions and counts with your Exact Canvas map before using the illustration. Higher AI quality does not verify accuracy.',
-  designGlossyFinishHeading: 'Choose your finish',
-  designGlossyExactCanvas: 'Exact Canvas',
-  designGlossyExactCanvasHint: 'Straight canvas render · instant · no AI cost',
+  designGlossyFinishHeading: 'Map style',
+  designGlossyExactCanvas: 'Design Map',
+  designGlossyExactCanvasHint: 'Your saved layout · ready to print',
   // The KEY still says Hybrid because 'hybrid' is the internal stage name everywhere — in the render
   // queue, in stored provenance and in every gallery entry already saved. Only the words a farmer
   // reads changed: "AI Hybrid" described the plumbing, not the result. Renaming the key would
@@ -424,7 +424,7 @@ export const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   designGlossyRecommendedSuffix: ' (recommended)',
   designGlossySavedRender: 'Saved render · {date} · {provider}',
   designGlossyGeminiNote: 'Drawn by Gemini Pro — an illustrated analysis over your real site. About a minute.',
-  designGlossyExactFootnote: 'Drawn straight from your design — exact, no AI. Your satellite, boundary, zones, elements and labels, nothing invented.',
+  designGlossyExactFootnote: 'Drawn from your saved design, with your site image, boundary, planting, structures and labels.',
   designGlossyAnalysisFootnote: 'Gemini Pro · illustrated analysis — great to look at, less exact on geometry.',
   designGlossyEngineFootnote: '{engine} · if the result looks off, generate again or switch engine (More options).',
   designGlossyExactVersion: 'Your canvas design is always the exact version.',
@@ -455,7 +455,7 @@ export const DESIGN_STUDIO_ENGLISH_PENDING: Dict = {
   designGlossyPhasingPolish: 'Step 3 of 3 — GPT Image is polishing the complete Implementation & Phasing hybrid sheet. The exact master and the AI hybrid both remain saved separately.',
   designGlossyPhasingHybrid: 'AI is painting a decorative parchment background behind the phasing schedule; the complete schedule locks back on top afterwards. It’ll appear in your gallery when ready (a few minutes).',
   designGlossySavingExact: 'Step 1 of {total} — saving the exact geometry-locked map first (no AI cost)…',
-  designGlossyBuildingExact: 'Building the exact geometry-locked map — no AI render cost…',
+  designGlossyBuildingExact: 'Drawing your saved design…',
   designGlossyPaintingHybrid: 'Step 2 of {total} — painting the AI hybrid underlayer, then locking your exact elements back on top…',
   designGlossyPreparingHybrid: 'Preparing a geometry-locked AI hybrid from this exact sheet…',
   // Says what actually happened. This used to read "the AI hybrid finished but its image was not

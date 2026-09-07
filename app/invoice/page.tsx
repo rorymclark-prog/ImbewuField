@@ -2,7 +2,7 @@
 
 import workspace from '@/components/layout/Workspace.module.css';
 
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { Plus, Trash2, Printer, Share2, FilePlus2, Clock, X, ChevronDown, Building2, Landmark } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import BackButton from '@/components/BackButton';
@@ -445,6 +445,14 @@ export default function InvoicePage() {
       : null);
     setShowSaved(false);
   }
+
+  const openedFromLink = useRef<string | null>(null);
+  useEffect(() => {
+    const requested = new URLSearchParams(window.location.search).get('view');
+    if (!requested || openedFromLink.current === requested) return;
+    const invoice = saved.find((item) => item.id === requested);
+    if (invoice) { openSaved(invoice); openedFromLink.current = requested; }
+  }, [saved]);
 
   async function changeInvoiceStatus(invoice: SavedInvoice, status: 'paid' | 'unpaid', method?: PaymentMethod) {
     if (syncingInvoiceId) return;

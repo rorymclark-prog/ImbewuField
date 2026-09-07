@@ -260,6 +260,7 @@ export interface DesignPaletteProps {
     /** Common committed value across the selection, or null when members differ ('—' placeholder). */
     wM: number | null;
     hM: number | null;
+    lengthOnly?: boolean;
   } | null;
   /** The single selected swale's measured route length and optional stated disturbed-ground
    *  width. Blank stays blank: this is a farmer-entered construction note, not a place to infer
@@ -1276,9 +1277,9 @@ export default function DesignPalette({
                   common value, or a '—' placeholder when members differ; typing a number sets
                   that dimension on every selected item (a circle takes it as its diameter). */}
               {([
-                ['wM', sizeControl.wM, t('designPaletteSizeWidth'), t('designPaletteSizeWidthTitle')],
+                ['wM', sizeControl.wM, sizeControl.lengthOnly ? 'Length' : t('designPaletteSizeWidth'), sizeControl.lengthOnly ? 'Gate length in metres' : t('designPaletteSizeWidthTitle')],
                 ['hM', sizeControl.hM, t('designPaletteSizeHeight'), t('designPaletteSizeHeightTitle')],
-              ] as const).map(([dim, committed, label, title]) => (
+              ] as const).filter(([dim]) => !sizeControl.lengthOnly || dim === 'wM').map(([dim, committed, label, title]) => (
                 <span key={dim} style={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}>
                   <span style={{ fontSize: guided ? 12 : 10.5, opacity: 0.75 }}>{label}</span>
                   <input

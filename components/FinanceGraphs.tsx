@@ -49,7 +49,7 @@ const CARD: React.CSSProperties = { background: '#FFFEFA', border: '1px solid #E
 
 const INK = '#20190F';
 const MUTED = '#5C5040';
-const FAINT = '#8C7A62';
+const FAINT = '#5d5143';
 const HAIRLINE = '#E2D8C4';
 const SOLD = '#1F4D2B';    // the forest green used for money in, for the same reason
 const KEPT = '#C4A46A';    // gold — lighter by ~40 L*, so the split survives greyscale
@@ -112,7 +112,7 @@ export default function FinanceGraphs({
 
   const header = (
     <div className="px-4 py-3" style={{ borderBottom: `1px solid ${HAIRLINE}` }}>
-      <p className="text-xs font-mono uppercase tracking-wider flex items-center gap-1.5" style={{ color: MUTED }}>
+      <p className="text-xl font-display font-semibold flex items-center gap-2" style={{ color: INK }}>
         <BarChart3 size={13} /> Harvest graphs
       </p>
       <div className="flex flex-wrap items-center gap-1.5 mt-2">

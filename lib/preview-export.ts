@@ -58,7 +58,7 @@ export const STYLES: readonly { id: StyleId; label: string; hint: string; swatch
  * The farmer-facing name is "AI Polished". `hybrid` remains the internal stage name.
  */
 export const FINISHES: readonly { id: FinishId; label: string; hint: string }[] = [
-  { id: 'exact', label: 'Exact Canvas', hint: 'Exact geometry · instant · no AI cost' },
+  { id: 'exact', label: 'Design Map', hint: 'Your saved layout · ready to print' },
   { id: 'ai-polished', label: 'AI Polished', hint: 'One paid render · geometry stays locked' },
 ];
 

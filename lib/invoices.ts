@@ -406,13 +406,15 @@ export function invoiceId(): string {
 // themselves. Keeping it behind the same account-key boundary prevents farmer B
 // inheriting farmer A's numbering sequence on a shared device.
 export function loadNextInvoiceNumber(fallback = 44): number {
-  const safeFallback = Number.isSafeInteger(fallback) && fallback > 0 ? fallback : 44;
+  const requestedFallback = Number.isSafeInteger(fallback) && fallback > 0 ? fallback : 44;
+  // The walkthrough now links every sale to an invoice, so its sequence is longer than 43.
+  const safeFallback = isSampleMode() ? Math.max(requestedFallback, ...getSandboxInvoices().map(invoice => invoice.no + 1)) : requestedFallback;
   if (typeof window === 'undefined') return safeFallback;
   try {
     const raw = localStorage.getItem(activeAccountLocalStorageKey(SEQ_KEY));
     if (!raw) return safeFallback;
     const value = Number.parseInt(raw, 10);
-    return Number.isSafeInteger(value) && value > 0 ? value : safeFallback;
+    return Number.isSafeInteger(value) && value > 0 ? (isSampleMode() ? Math.max(value, safeFallback) : value) : safeFallback;
   } catch {
     return safeFallback;
   }

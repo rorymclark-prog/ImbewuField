@@ -7,6 +7,7 @@
 // asked for: "anything we do on the app must connect to a lesson."
 
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { BookOpen, X } from 'lucide-react';
 import { getLesson } from '@/lib/lesson-registry';
 import { useLanguage } from '@/lib/i18n';
@@ -34,7 +35,7 @@ export default function LessonLink({
           display: 'inline-flex',
           alignItems: 'center',
           gap: 4,
-          minHeight: 32,
+          minHeight: 44,
           padding: '4px 10px',
           borderRadius: 999,
           border: `1px solid ${GREEN}`,
@@ -49,6 +50,7 @@ export default function LessonLink({
           alignItems: 'center',
           gap: 4,
           border: 'none',
+          minHeight: 44,
           background: 'transparent',
           color: GREEN,
           fontSize: 12,
@@ -61,6 +63,7 @@ export default function LessonLink({
   return (
     <>
       <button
+        data-header-secondary
         type="button"
         onClick={(e) => {
           e.stopPropagation();
@@ -71,7 +74,7 @@ export default function LessonLink({
         <BookOpen size={13} /> {resolvedLabel}
       </button>
 
-      {open && (
+      {open && createPortal(
         <div
           role="dialog"
           aria-modal="true"
@@ -125,7 +128,7 @@ export default function LessonLink({
             </div>
             <LessonPanel lesson={getLesson(id)} />
           </div>
-        </div>
+        </div>, document.body
       )}
     </>
   );

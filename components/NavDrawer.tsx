@@ -15,6 +15,9 @@ import { canSeeNavLink } from '@/lib/role-access';
 import { useRoleNavigation } from '@/lib/use-role-navigation';
 import { canSeeWorkspaceLink } from '@/lib/role-navigation';
 import { communityEnabled } from '@/lib/community/flag';
+import SettingsButton from './SettingsButton';
+import LessonLink from './design/LessonLink';
+import RoleSwitcher from './RoleSwitcher';
 
 interface NavDrawerProps {
   open: boolean;
@@ -29,6 +32,10 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
   // what `role === null` deliberately does NOT do.
   const { role } = useAuth();
   const { navigationRole, sample } = useRoleNavigation();
+  const pageLesson = ({ '/home': 'home:overview', '/farmer': 'map:overview',
+    '/student': 'student:overview', '/mentor': 'mentor:overview', '/ngo': 'ngo:overview',
+    '/funder': 'funder:overview', '/records': 'finances:overview', '/invoice': 'finances:overview',
+    '/design': 'step:base' } as Record<string, string>)[pathname] ?? 'home:overview';
 
   const mainItems = [
     { href: '/home',    Icon: Home,          label: t('tabHome') },
@@ -190,6 +197,11 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
         </div>
 
         {sample && <section style={{margin:'8px 16px',padding:12,border:'1px solid var(--border)',borderRadius:12}} aria-label="Sample controls"><strong>Sample workspace</strong><p style={{fontSize:12,margin:'6px 0'}}>Practice data · changes stay in this demo.</p><div style={{display:'grid',gap:8}}><Link href="/samples" onClick={onClose} style={{minHeight:44,display:'flex',alignItems:'center'}}>Choose sample view</Link><Link href="/samples/gardens" onClick={onClose} style={{minHeight:44,display:'flex',alignItems:'center'}}>18 gardens &amp; completed reports</Link><Link href="/tour" onClick={onClose} style={{minHeight:44,display:'flex',alignItems:'center'}}>Start the tour</Link><button type="button" onClick={()=>{exitSampleMode();window.location.href='/home';}} style={{minHeight:44,textAlign:'left'}}>Exit sample</button></div></section>}
+        <section aria-label="Page controls" style={{ margin: '8px 16px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 12 }}>
+          <SettingsButton />
+          <LessonLink id={pageLesson} label="Page help" />
+          <RoleSwitcher current={navigationRole ?? 'farmer'} />
+        </section>
         {/* Nav sections */}
         <div style={{ flex: 1, overflowY: 'auto', paddingTop: 8, paddingBottom: 24 }}>
           {NAV_SECTIONS.map((section) => ({

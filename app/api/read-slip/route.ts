@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 import { guardPaidApiRequest } from '@/lib/api-auth';
+import { logAiUsage } from '@/lib/ai-cost';
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY! });
 
@@ -44,6 +45,7 @@ Rules: "amount" must be the grand total (look for TOTAL), as a number only (no '
       max_tokens: 400,
       messages: [{ role: 'user', content }],
     });
+    logAiUsage('/api/read-slip', 'claude-sonnet-4-6', msg.usage);
     const textBlock = msg.content.find((b) => b.type === 'text');
     const raw = textBlock && textBlock.type === 'text' ? textBlock.text : '';
     const cleaned = raw.replace(/```json/gi, '').replace(/```/g, '').trim();

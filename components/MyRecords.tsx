@@ -32,6 +32,7 @@ import {
   Landmark,
   Sparkles,
   Trees,
+  Eye,
 } from 'lucide-react';
 import type { ProductionLog, SalesLog, ExpenseLog, Design, Profile } from '@/lib/db/types';
 import CropSelect from '@/components/CropSelect';
@@ -42,7 +43,7 @@ import { loadCropPriceOverrides, priceFor, type CropPrice } from '@/lib/crop-pri
 import { parseDecimalInput } from '@/lib/decimal-input';
 import { loadInvoices, type SavedInvoice } from '@/lib/invoices';
 import { cashIncomeTotal } from '@/lib/invoice-sales';
-import { creditPackHasAnyRecords } from '@/lib/credit-pack';
+import { creditPackHasAnyRecords, buildMonthlyCashFlow } from '@/lib/credit-pack';
 import {
   countsWithScope,
   loadIncludePerennials,
@@ -52,6 +53,7 @@ import {
 import { produceDisplayName } from '@/lib/perennial-produce';
 import {
   buildCreditPackPdf,
+  buildCreditPackPreviewPdf,
   deliverCreditPackPdf,
   creditPackPdfFilename,
   CreditPackSampleModeError,
@@ -89,8 +91,8 @@ function Card({
       className={`rounded-xl p-4 transition-all duration-200 glass glass-hover ${className}`}
       style={
         accent
-          ? { borderLeftWidth: 2, borderLeftColor: accent, borderLeftStyle: 'solid' }
-          : {}
+          ? { background: 'var(--color-surface)', color: 'var(--color-ink)', borderLeftWidth: 2, borderLeftColor: accent, borderLeftStyle: 'solid' }
+          : { background: 'var(--color-surface)', color: 'var(--color-ink)' }
       }
     >
       {children}
@@ -102,7 +104,7 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
     <div
       className="text-xs font-sans font-semibold uppercase tracking-wide mb-2"
-      style={{ color: '#5C5040' }}
+      style={{ color: 'var(--color-muted-strong)' }}
     >
       {children}
     </div>
@@ -113,7 +115,7 @@ function FieldLabel({ children }: { children: React.ReactNode }) {
   return (
     <label
       className="block text-xs font-sans font-semibold uppercase tracking-wide mb-1"
-      style={{ color: '#5C5040' }}
+      style={{ color: 'var(--color-muted-strong)' }}
     >
       {children}
     </label>
@@ -153,7 +155,7 @@ function SubmitBtn({
           ? 'rgba(31,77,43,0.06)'
           : 'rgba(31,77,43,0.14)',
         border: '1px solid rgba(31,77,43,0.28)',
-        color: loading ? '#9A8268' : '#1F4D2B',
+        color: 'var(--color-ink)',
         cursor: loading ? 'not-allowed' : 'pointer',
       }}
     >
@@ -828,6 +830,7 @@ function SalesList({ items }: { items: SalesLog[] }) {
             <p className="text-xs font-mono mt-0.5" style={{ color: '#9A8268' }}>
               {item.kg} kg &nbsp;·&nbsp; {fmtDate(item.sold_at)}
             </p>
+            {item.invoice_id && loadInvoices().some((invoice) => invoice.id === item.invoice_id) && <Link href={`/invoice?view=${encodeURIComponent(item.invoice_id)}`} aria-label={`View invoice for ${item.crop}`} style={{ display: 'inline-flex', gap: 6, alignItems: 'center', minHeight: 44, fontSize: 12, color: '#315939' }}><Eye size={16} />Invoice #{loadInvoices().find((invoice) => invoice.id === item.invoice_id)?.no} · View</Link>}
           </div>
           <div
             className="text-sm font-display font-semibold flex-shrink-0"
@@ -920,6 +923,10 @@ function CreditPackCard({
   const [error, setError] = useState('');
   const sampling = isSampleMode();
   const ready = creditPackHasAnyRecords(production, sales, expenses);
+  const [previewOpen, setPreviewOpen] = useState(false);
+  const months = buildMonthlyCashFlow(sales, expenses, new Date());
+  const totals = months.reduce((sum, month) => ({ income: sum.income + month.incomeZar, spent: sum.spent + month.expensesZar }), { income: 0, spent: 0 });
+  const money = (value: number) => `R ${value.toLocaleString('en-ZA', { maximumFractionDigits: 0 })}`;
 
   async function handleExport() {
     setError('');
@@ -930,8 +937,10 @@ function CreditPackCard({
         farmName: profile?.farm_name?.trim() || null,
         phone: profile?.phone?.trim() || null,
       };
-      const blob = await buildCreditPackPdf({ farmer, production, sales, expenses });
-      await deliverCreditPackPdf(blob, creditPackPdfFilename(farmer.farmName ?? farmer.name));
+      const blob = sampling
+        ? await buildCreditPackPreviewPdf({ production, sales, expenses })
+        : await buildCreditPackPdf({ farmer, production, sales, expenses });
+      await deliverCreditPackPdf(blob, creditPackPdfFilename(sampling ? 'Sample-summary' : farmer.farmName ?? farmer.name));
     } catch (err) {
       setError(
         err instanceof CreditPackSampleModeError
@@ -953,10 +962,10 @@ function CreditPackCard({
           <Landmark size={18} style={{ color: '#2E6B3A' }} />
         </div>
         <div>
-          <p className="text-sm font-display font-semibold" style={{ color: '#20190F' }}>
+          <p className="text-xl font-display font-semibold" style={{ color: 'var(--color-ink)' }}>
             Records for a lender
           </p>
-          <p className="text-xs font-sans mt-0.5 leading-relaxed" style={{ color: '#8C7A62' }}>
+          <p className="text-xs font-sans mt-0.5 leading-relaxed" style={{ color: 'var(--color-muted-strong)' }}>
             A summary of your logged harvests, sales and costs — income consistency, cash flow and
             a track record, built only from what you have entered. Material for a conversation with
             a lender, not a credit score or a loan approval.
@@ -964,17 +973,27 @@ function CreditPackCard({
         </div>
       </div>
 
-      {sampling ? (
-        <p className="text-xs font-sans rounded-lg px-3 py-2" style={{ background: '#F7F2E9', color: '#9A8268', border: '1px solid #E2D8C4' }}>
-          Deliberately blocked while the sample farm is open: a document a lender may act on must
-          carry real records from a real farm, never demo numbers. Sign in and exit the sample to
-          export your own.
-        </p>
-      ) : !ready ? (
+      {!ready ? (
         <p className="text-xs font-sans rounded-lg px-3 py-2" style={{ background: '#F7F2E9', color: '#9A8268', border: '1px solid #E2D8C4' }}>
           Log at least one harvest, sale or cost first — there is nothing to summarise yet.
         </p>
       ) : (
+        <>
+        <div className="grid grid-cols-3 gap-2 my-3">
+          {[['Income', money(totals.income)], ['Costs', money(totals.spent)], ['Harvested', `${production.reduce((n, p) => n + (p.kg ?? 0), 0).toLocaleString('en-ZA')} kg`]].map(([label, value]) => (
+            <div key={label} className="rounded-xl p-3" style={{ background: '#F0F5EA', color: '#214D32' }}>
+              <span className="block font-sans text-xs">{label}</span><strong className="block font-display text-lg mt-1">{value}</strong>
+            </div>
+          ))}
+        </div>
+        <button type="button" onClick={() => setPreviewOpen(v => !v)} aria-expanded={previewOpen} className="w-full rounded-xl px-4 py-3 mb-2 font-sans text-sm font-semibold" style={{ background: '#1F4D2B', color: '#FFFEFA' }}>{previewOpen ? 'Close summary' : 'View summary'}</button>
+        {previewOpen && <div className="overflow-x-auto mb-3">
+          <table className="w-full text-sm font-sans" style={{ color: 'var(--color-ink)' }}>
+            <caption className="text-left py-2 font-semibold">Monthly income and costs</caption>
+            <thead><tr><th className="text-left p-2">Month</th><th className="text-right p-2">Income</th><th className="text-right p-2">Costs</th><th className="text-right p-2">Balance</th></tr></thead>
+            <tbody>{months.map(month => <tr key={month.monthKey} style={{ borderTop: '1px solid var(--color-border)' }}><td className="p-2">{month.label}</td><td className="p-2 text-right">{money(month.incomeZar)}</td><td className="p-2 text-right">{money(month.expensesZar)}</td><td className="p-2 text-right">{money(month.netZar)}</td></tr>)}</tbody>
+          </table>
+        </div>}
         <button
           type="button"
           onClick={() => { void handleExport(); }}
@@ -998,6 +1017,7 @@ function CreditPackCard({
             </>
           )}
         </button>
+        </>
       )}
 
       {error && (

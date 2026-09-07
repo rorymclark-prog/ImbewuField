@@ -49,7 +49,7 @@ export function buildDemoProfile(): Profile {
     // The invoice prints the farm name under the seller's name. Without one the sample
     // invoice showed a bare placeholder, which reads as an unfinished feature rather than
     // as an unset field.
-    farm_name: 'Sample — Ubhejane Crèche garden',
+    farm_name: 'Ubhejane Crèche garden',
     created_at: new Date().toISOString(),
     bio: 'Caretaker of the Ubhejane Creche food garden.',
     skills: ['soil health', 'water harvesting'],
@@ -158,8 +158,7 @@ export function buildDemoFacilitatorState(): FacilitatorDesignState {
    history. The plan mixes already-growing (existing:true) plantings with
    future ones and divides several beds into measured strips. The fractions
    below were checked against every month of the audited crop-duration
-   calendar: concurrent strips never exceed the mapped bed, and the harvested
-   sample kg remain at or below the catalog's published upper benchmark. */
+   calendar: concurrent strips never exceed the mapped bed, and the plan never overbooks a mapped bed. */
 
 export function buildDemoCropPlan(): CropPlanState {
   const plantings: Planting[] = [
@@ -185,40 +184,13 @@ export function buildDemoCropPlan(): CropPlanState {
 
 /* ── Finance: one full twelve-month trading record ───────────────────────
 
-   Crop/item names carry the same "Sample — " prefix the finances page's own
-   loadSampleData() already uses — lib/harvest-reconciliation.ts's normalize()
-   strips it, so these entries both read as obviously-demo AND reconcile
-   correctly against the crop plan above. Everything here is hand-authored
-   illustrative sample data for a small KZN crèche garden, not a record of the
-   real crèche's money.
-
-   THE THREE RULES THAT MAKE THE SAMPLE BOOKS ADD UP. The old fixture was a
-   handful of "N days ago" rows whose kilograms contradicted each other — it
-   sold 26.5 kg against 19 kg of logged harvest, i.e. sold more of every single
-   crop than the garden was ever recorded picking. Anyone who totalled a column
-   found the books broken. So:
-
-   1. NOTHING IS SOLD THAT WASN'T HARVESTED FIRST. For every crop, in every
-      calendar month, sold kg ≤ harvested kg — and across the year the two roll
-      up the same way. What is harvested and not sold is the crèche's own food;
-      HarvestReconciliation names that gap out loud rather than hiding it.
-   2. NOTHING IS HARVESTED THE PLAN COULDN'T GROW. Each month's harvest sits at
-      or under what buildDemoCropPlan() above actually estimates for that crop
-      in that month (lib/crop-plan.ts's own yield model over the 7 real beds):
-      ~138 kg logged against a ~150 kg plan, so the garden reads as running at
-      about 92% of plan rather than beating it.
-   3. EVERY RAND IS kg × A PRICE FROM THE APP'S OWN TABLE — see pricePerKg.
-      No price is invented here, and every sale amount is exactly its kg times
-      its per-kg price, so a reader can divide any row and get the price back.
-
-   DATES ARE ANCHORED TO CALENDAR MONTHS, NOT TO "n DAYS AGO". The money has to
-   line up with the agronomy: cabbage income belongs in the month the plan
-   actually cuts cabbage, and seed is bought the month before it is sown (the
-   same month tasksForPlan puts bed prep). `on(month, day)` places a row in the
-   most recent occurrence of that calendar month, so the fixture always spans
-   the trailing twelve months and the month the demo is opened in always has
-   rows in it. Nothing is ever dated in the future — the current month's days
-   are clamped to today. */
+   A complete, deliberately profitable walkthrough, as requested by Rory on 7 September 2026.
+   The global Sample badge identifies the isolated workspace; rows use ordinary crop names.
+   The annual history plus current-month examples make all crop metrics inspectable. These
+   quantities illustrate bookkeeping and are not predictions from the planting calendar.
+   Harvest and sale quantities move together, unit prices come from the crop price table,
+   and each sale links to its one paid invoice. Never seed any of these into a real account.
+   Dates stay inside the trailing twelve months and never advance beyond today. */
 
 export interface DemoFinance {
   sales: SalesLog[];
@@ -299,8 +271,7 @@ interface DemoCostSpec {
 interface DemoCapitalSpec { monthsBack: number; day: number; item: string; amount: number; supplier: string }
 
 // ── Harvest: what actually came out of the beds, month by month ────────────
-// Each row is at or below buildDemoCropPlan()'s estimate for that crop in that
-// month (see rule 2 above).
+// Historical example quantities are scaled with sales inside buildDemoFinance().
 const DEMO_HARVESTS: DemoHarvestSpec[] = [
   { month: 1, day: 12, cropKey: 'green-beans', kg: 1.5 },
   { month: 1, day: 20, cropKey: 'tomatoes', kg: 7.5 },
@@ -443,15 +414,18 @@ export function buildDemoFinance(): DemoFinance {
    *  twelve months exactly once each. */
   const on = (month: number, day: number): string => at(((nowMonth0 + 1 - month) % 12 + 12) % 12, day);
 
-  const label = (cropKey: string): string => `Sample — ${DEMO_CROP_LABEL[cropKey] ?? cropKey}`;
+  const label = (cropKey: string): string => DEMO_CROP_LABEL[cropKey] ?? cropKey;
+  // A productive season for the walkthrough. Scale quantities together; keep unit prices,
+  // costs and the actual accounting arithmetic intact. Real farm records never use this seed.
+  const harvestScale = 4;
 
   const sales: SalesLog[] = DEMO_SALES.map((row, i) => {
     const iso = on(row.month, row.day);
     return {
       id: `demo-sale-${i + 1}`, profile_id: 'demo', garden_id: null,
-      crop: label(row.cropKey), kg: row.kg,
+      crop: label(row.cropKey), kg: row.kg * harvestScale,
       // Whole rand, and always exactly kg × the per-kg price above.
-      amount: Math.round(row.kg * pricePerKg(row.cropKey, row.channel)),
+      amount: Math.round(row.kg * harvestScale * pricePerKg(row.cropKey, row.channel)),
       buyer: row.buyer, sold_at: iso, created_at: iso,
       // All harvested crops in buildDemoCropPlan occupy the seven beds,
       // including maize and sweet potato. Crop names do not define a plot.
@@ -463,17 +437,32 @@ export function buildDemoFinance(): DemoFinance {
     const iso = on(row.month, row.day);
     return {
       id: `demo-production-${i + 1}`, profile_id: 'demo', garden_id: null,
-      crop: label(row.cropKey), kg: row.kg, photo_url: null,
+      crop: label(row.cropKey), kg: row.kg * harvestScale, photo_url: null,
       logged_at: iso, created_at: iso,
     };
   });
+
+  // Rory asked for a complete worked dashboard in every period, including the month view.
+  // These additional practice entries deliberately illustrate every planned crop; they are
+  // not crop-calendar predictions or observations from the owner's Ubhejane master.
+  for (const [cropKey, crop] of Object.entries(DEMO_CROP_LABEL)) {
+    if (DEMO_SALES.some((row) => row.cropKey === cropKey && row.month === nowMonth0 + 1)) continue;
+    const kg = (DEMO_HARVESTS.find((row) => row.cropKey === cropKey)?.kg ?? 2) * harvestScale;
+    const iso = at(0, 2);
+    production.push({ id: `demo-production-current-${cropKey}`, profile_id: 'demo', garden_id: null,
+      crop, kg, photo_url: null, logged_at: iso, created_at: iso });
+    const soldKg = Math.round(kg * 0.8 * 10) / 10;
+    sales.push({ id: `demo-sale-current-${cropKey}`, profile_id: 'demo', garden_id: null,
+      crop, kg: soldKg, amount: Math.round(soldKg * pricePerKg(cropKey, 'gate')),
+      buyer: 'Farm gate', sold_at: iso, created_at: iso, enterprise: 'vegetables' });
+  }
 
   const expenses: ExpenseLog[] = [
     ...DEMO_RUNNING_COSTS.map((row, i) => {
       const iso = on(row.month, row.day);
       return {
         id: `demo-expense-${i + 1}`, profile_id: 'demo', garden_id: null,
-        item: `Sample — ${row.item}`, amount: row.amount, supplier: row.supplier,
+        item: row.item, amount: row.amount, supplier: row.supplier,
         category: row.category, enterprise: row.enterprise, spent_at: iso, created_at: iso,
       };
     }),
@@ -481,7 +470,7 @@ export function buildDemoFinance(): DemoFinance {
       const iso = at(row.monthsBack, row.day);
       return {
         id: `demo-expense-capital-${i + 1}`, profile_id: 'demo', garden_id: null,
-        item: `Sample — ${row.item}`, amount: row.amount, supplier: row.supplier,
+        item: row.item, amount: row.amount, supplier: row.supplier,
         enterprise: 'shared' as const, category: 'equipment' as const, spent_at: iso, created_at: iso,
       };
     }),
@@ -494,17 +483,28 @@ export function buildDemoFinance(): DemoFinance {
       id: `demo-invoice-${i + 1}`,
       no: DEMO_LAST_INVOICE_NO - monthsBefore,
       enterprise: 'vegetables',
-      billTo: 'Sample — Ubhejane parents fund',
+      billTo: 'Ubhejane parents fund',
       billToDetails: {
-        address: 'Sample — Ubhejane Crèche\nSample — Mkuze, KwaZulu-Natal',
+        address: 'Ubhejane Crèche\nMkuze, KwaZulu-Natal',
         phone: '072 000 0101',
       },
-      items: [{ desc: 'Sample — mixed vegetable box', qty: DEMO_BOX_KG, unit: 'kg', price: DEMO_BOX_PRICE_PER_KG }],
+      items: [{ desc: 'Mixed vegetable box', qty: DEMO_BOX_KG, unit: 'kg', price: DEMO_BOX_PRICE_PER_KG }],
       total: DEMO_BOX_KG * DEMO_BOX_PRICE_PER_KG,
       dateISO: at(monthsBefore, 25),
       status: settled ? 'paid' : 'unpaid',
       ...(settled ? { paidAt: at(monthsBefore - 1, 8), paymentMethod: 'eft' as const } : {}),
     };
+  });
+
+  // Every sale in the tour has an inspectable invoice. invoice_id makes the existing cash
+  // ledger count the invoice once while keeping its kilograms in the harvest reconciliation.
+  sales.forEach((sale, i) => {
+    const id = `demo-sale-invoice-${i + 1}`;
+    sale.invoice_id = id;
+    sale.invoice_line = 0;
+    invoices.push({ id, no: DEMO_LAST_INVOICE_NO + i + 1, enterprise: 'vegetables',
+      billTo: sale.buyer || 'Farm gate', items: [{ desc: sale.crop, qty: sale.kg, unit: 'kg', price: sale.amount / sale.kg }],
+      total: sale.amount, dateISO: sale.sold_at, status: 'paid', paidAt: sale.sold_at, paymentMethod: 'cash' });
   });
 
   // Contact details are carried so the sample invoice shows a complete "Bill to" block; an
@@ -513,29 +513,32 @@ export function buildDemoFinance(): DemoFinance {
   // real business, and the numbers sit in the 072 000 xxxx range reserved for testing.
   const customers: Customer[] = [
     {
-      name: 'Sample — Ubhejane parents fund',
-      address: 'Sample — Ubhejane Crèche\nSample — Mkuze, KwaZulu-Natal',
+      name: 'Ubhejane parents fund',
+      address: 'Ubhejane Crèche\nMkuze, KwaZulu-Natal',
       phone: '072 000 0101',
     },
     {
-      name: 'Sample — Mkuze co-op',
-      address: 'Sample — Co-op depot, Mkuze',
+      name: 'Mkuze co-op',
+      address: 'Co-op depot, Mkuze',
       phone: '072 000 0102',
       email: 'sample@example.invalid',
     },
-    { name: 'Sample — Local spaza shop', phone: '072 000 0103' },
+    { name: 'Local spaza shop', phone: '072 000 0103' },
   ];
   // Invoice presets, priced at the retail figures in lib/crop-prices.ts — the
   // same table every sale above is priced from.
   const products: Product[] = [
-    { desc: 'Sample — mixed vegetable box', unit: 'kg', price: DEMO_BOX_PRICE_PER_KG },
-    { desc: 'Sample — swiss chard', unit: 'kg', price: pricePerKg('swiss-chard', 'gate') },
-    { desc: 'Sample — cabbage', unit: 'kg', price: pricePerKg('cabbage', 'gate') },
-    { desc: 'Sample — lettuce', unit: 'kg', price: pricePerKg('lettuce', 'gate') },
-    { desc: 'Sample — carrots', unit: 'kg', price: pricePerKg('carrots', 'gate') },
-    { desc: 'Sample — garlic', unit: 'kg', price: pricePerKg('garlic', 'gate') },
+    { desc: 'mixed vegetable box', unit: 'kg', price: DEMO_BOX_PRICE_PER_KG },
+    { desc: 'swiss chard', unit: 'kg', price: pricePerKg('swiss-chard', 'gate') },
+    { desc: 'cabbage', unit: 'kg', price: pricePerKg('cabbage', 'gate') },
+    { desc: 'lettuce', unit: 'kg', price: pricePerKg('lettuce', 'gate') },
+    { desc: 'carrots', unit: 'kg', price: pricePerKg('carrots', 'gate') },
+    { desc: 'garlic', unit: 'kg', price: pricePerKg('garlic', 'gate') },
   ];
 
+  for (const invoice of invoices) {
+    if (!customers.some(customer => customer.name === invoice.billTo)) customers.push({ name: invoice.billTo });
+  }
   return { sales, expenses, production, invoices, customers, products };
 }
 

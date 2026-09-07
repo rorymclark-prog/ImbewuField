@@ -5,12 +5,37 @@ import {
   gateBoundaryBreak,
   gateBoundaryBreaks,
   boundarySegmentsWithBreaks,
+  fenceSegmentsWithGates,
 } from '../lib/boundary-geometry.ts';
 
 // A 100m x 100m square, normalized 0..1 coordinates, mPerPx=1 so meters = normalized * imgW/imgH.
 // Vertices sit at arc-length 0, 100, 200, 300 (perimeter 400m).
 const SQUARE: Array<[number, number]> = [[0, 0], [1, 0], [1, 1], [0, 1]];
 const FRAME = { imgW: 100, imgH: 100, mPerPx: 1 };
+
+test('an open fence stops at both gate posts without closing or mutating the saved fence', () => {
+  const fence: Array<[number, number]> = [[0, 0.5], [1, 0.5]];
+  const gates = [{ x: 0.5, y: 0.5, wM: 4, rot: 0 }];
+  const before = JSON.stringify({ fence, gates });
+  assert.deepEqual(fenceSegmentsWithGates(fence, gates, FRAME), [
+    [[0, 0.5], [0.48, 0.5]], [[0.52, 0.5], [1, 0.5]],
+  ]);
+  assert.equal(JSON.stringify({ fence, gates }), before);
+});
+
+test('a gate at the start of an open fence does not remove fencing at the far end', () => {
+  assert.deepEqual(fenceSegmentsWithGates([[0, 0], [1, 0]], [{ x: 0, y: 0, wM: 4, rot: 0 }], FRAME), [
+    [[0.02, 0], [1, 0]],
+  ]);
+});
+
+test('a rotated gate cuts its projected opening and a perpendicular gate cuts nothing', () => {
+  const oblique = gateBoundaryBreak(SQUARE, { x: 0.5, y: 0, wM: 4, rot: 60 }, FRAME)!;
+  assert.ok(Math.abs(oblique.endArc - oblique.startArc - 2) < 1e-9);
+  assert.equal(gateBoundaryBreak(SQUARE, { x: 0.5, y: 0, wM: 4, rot: 90 }, FRAME), null);
+  const narrow = gateBoundaryBreak(SQUARE, { x: 0.5, y: 0, wM: 0.6, rot: 0 }, FRAME)!;
+  assert.ok(Math.abs(narrow.endArc - narrow.startArc - 0.6) < 1e-9);
+});
 
 test('a gate on the boundary line gets a centred break at its real width', () => {
   const gate = { x: 0.5, y: 0, wM: 4 }; // midpoint of the bottom edge, 4m wide

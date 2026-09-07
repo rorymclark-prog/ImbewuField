@@ -721,3 +721,13 @@ body.is-sample-mode .pwa-update-notifier {
 
 /* Photo previews are keyboard controls as well as tap targets. */
 img[data-photo-preview]:focus-visible { outline: 3px solid var(--accent, #b87924); outline-offset: 3px; }
+
+/* Keep the same compact navigation on every phone; secondary tools live in the drawer. */
+@media (max-width: 650px) {
+  header:has(> [data-app-menu]) { height:52px !important; min-height:52px; padding:4px 8px !important; gap:6px !important; flex-wrap:nowrap; }
+  header:has(> [data-app-menu]) > [data-header-secondary] { display:none !important; }
+  header:has(> [data-app-menu]) > span:has(> [data-header-secondary]) { display:none !important; }
+  header:has(> [data-app-menu]) > a[aria-label="ImbewuField home"] { min-height:44px; }
+  .workspace-main { padding:12px !important; padding-bottom:calc(90px + env(safe-area-inset-bottom)) !important; }
+  .workspace-main > [class*="MelDashboard_root"] { padding:0; }
+}

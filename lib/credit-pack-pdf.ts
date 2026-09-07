@@ -10,7 +10,9 @@
  * handed to a real bank as if it were this farmer's own record, is a far worse failure than any
  * bug in this file's arithmetic — so `buildCreditPackPdf` REFUSES to run at all while sample mode
  * is on. It checks before touching jsPDF, so the refusal does not depend on anything about the PDF
- * pipeline working correctly; it is the first line of the function, full stop.
+ * pipeline working correctly; it is the first line of the function. The separate preview
+ * entry point uses an example identity and a single sample title, so the tour can demonstrate
+ * the complete document without putting the signed-in farmer's identity over practice records.
  */
 
 import { isSampleMode } from './sample-mode';
@@ -92,6 +94,15 @@ function dateLabel(iso: string | null): string {
  *  throws whatever jsPDF throws if it cannot load — same contract as buildReportPdf. */
 export async function buildCreditPackPdf(input: CreditPackDocumentInput): Promise<Blob> {
   if (isSampleMode()) throw new CreditPackSampleModeError();
+  return buildCreditPackDocument(input, false);
+}
+
+/** A self-contained tour document. It never borrows the signed-in farmer's identity. */
+export async function buildCreditPackPreviewPdf(input: Omit<CreditPackDocumentInput, 'farmer'>): Promise<Blob> {
+  return buildCreditPackDocument({ ...input, farmer: { name: null, farmName: 'Example garden', phone: null } }, true);
+}
+
+async function buildCreditPackDocument(input: CreditPackDocumentInput, preview: boolean): Promise<Blob> {
 
   const now = input.now ?? new Date();
   const months = buildMonthlyCashFlow(input.sales, input.expenses, now, CREDIT_PACK_TRAILING_MONTHS);
@@ -195,7 +206,7 @@ export async function buildCreditPackPdf(input: CreditPackDocumentInput): Promis
   y += 22;
 
   doc.setFont('helvetica', 'normal'); doc.setFontSize(13); setInk(INK.green);
-  doc.text('Farm records — for a lender', M, y);
+  doc.text(preview ? 'Sample farm records — for a lender' : 'Farm records — for a lender', M, y);
   y += 20;
 
   const farmerName = input.farmer.name?.trim();

@@ -65,7 +65,7 @@ export const PRODUCT_TOUR: readonly ProductTourStep[] = [
   },
   {
     id: 'mentor', minutes: 2, title: 'Support a group of growers', href: '/mentor', role: 'mentor',
-    task: 'Review My field team & reports for assignments, organisation guidance and visit records. Choose Trainees and open a learner to see their progress, then find Messages for follow-up.',
+    task: 'Review Field team for assignments, organisation guidance and visit records. Choose Trainees and open a learner to see their progress, then find Messages for follow-up.',
   },
   {
     id: 'organisation', minutes: 2, title: 'Follow the whole programme', href: '/ngo', role: 'ngo',
@@ -97,3 +97,48 @@ export function nextProductTourStep(progress: unknown): ProductTourStep | undefi
   const done = new Set(cleanProductTourProgress(progress));
   return PRODUCT_TOUR.find(step => !done.has(step.id));
 }
+
+export interface TourFeature { title: string; text: string; }
+
+/** Small, page-specific explanations shown over the page they describe. */
+export const PRODUCT_TOUR_FEATURES: Record<string, readonly TourFeature[]> = {
+  garden: [
+    { title: 'Choose a garden', text: 'Open a garden card to see its grower, photographs and growing areas. Use the map to explore where it is.' },
+    { title: 'Follow the same farm', text: 'The next stops connect a garden design with its studies, harvests, sales and programme reports.' },
+  ],
+  planning: [
+    { title: 'See the ground beneath your plan', text: 'The Base step holds the site image. In Glossy, use Underlay to switch between your photo, satellite and plain paper.' },
+    { title: 'Move something and try Undo', text: 'Select a tree or bed and drag it. Undo restores the previous position. The Layers panel controls which items you can select and move.' },
+    { title: 'Place an entrance', text: 'Choose a Gate in Structures. Drag its green move handle to position it; the gold end handle changes its length. The finished map shows the gate open and leaves an opening in the fence.' },
+    { title: 'Make a finished Design Map', text: 'Open Glossy, choose a sheet and its underlay, then create a Design Map. Inspect the result full screen and use Export & Share for your selected sheets.' },
+  ],
+  learning: [
+    { title: 'Your studies start here', text: 'Use Start studying or Continue learning to open your next module. Illustrated cards show the topics and your progress.' },
+    { title: 'Open an illustrated lesson', text: 'Open Seeds and Seed Sovereignty to try a finished module. Choose a lesson picture or title to read, listen, watch slides and answer a quiz.' },
+    { title: 'Take the course home', text: 'Open Study offline while you have signal. Choose the download quality and save the course or a single module to this phone.' },
+  ],
+  business: [
+    { title: 'Four pages in your farm book', text: 'Picked records harvests; Sold records sales; Spent holds costs; Charts brings the figures together. Switch tabs to follow the work from crop to cash.' },
+    { title: 'Keep the paperwork together', text: 'Open Invoice, then Saved, to inspect a document. In Spent, open a receipt to see the purchase details behind a cost.' },
+    { title: 'See a useful summary', text: 'In Picked, open Records for a lender to view harvest, income and cost history and export the summary.' },
+  ],
+  mentor: [
+    { title: 'Meet your field team', text: 'My field team & reports brings assigned growers and visit records together. Open a group to inspect the work.' },
+    { title: 'Follow learning and visits', text: 'Use Trainees for individual learning progress, Training & evidence for course records, and Messages for follow-up.' },
+  ],
+  organisation: [
+    { title: 'See the programme together', text: 'Compare groups, gardens and recorded activity. Open Assessments to review the survey stages and responses.' },
+    { title: 'Follow progress into reports', text: 'Training & progress shows learner activity. Reports brings the programme evidence together for review and sharing.' },
+  ],
+  funder: [
+    { title: 'Look beyond attendance', text: 'Explore cohort totals and charts, then Progress & milestones for the wider programme record.' },
+    { title: 'Inspect the evidence', text: 'Open shared assessments and reports to see the records supporting the totals and the work still to be completed.' },
+  ],
+  report: [
+    { title: 'Start with a saved site', text: 'Saved sites & reports connects each site to its reports. Choose a site to create a report from its current information.' },
+    { title: 'Make the next report stronger', text: 'Review the site checklist for photographs, soil and water tests, survey answers and design work. Download the evidence report to see the finished document.' },
+  ],
+  next: [
+    { title: 'Tell us what your programme needs', text: 'Request a feature lets you describe the change and add a screenshot. Sending this form contacts the developer, so submit only when you are ready.' },
+  ],
+};
