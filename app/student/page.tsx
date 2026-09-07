@@ -20,6 +20,7 @@ import LessonLink from '@/components/design/LessonLink';
 import CourseAudioPlayer from '@/components/course/CourseAudioPlayer';
 import LessonInfographic from '@/components/course/LessonInfographic';
 import DeckPlayer from '@/components/course/DeckPlayer';
+import FieldCourse, { LessonFieldwork } from '@/components/course/FieldCourse';
 import OfflineDownload from '@/components/course/OfflineDownload';
 import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
@@ -237,6 +238,8 @@ function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }
               ))}
             </ul>
           </div>
+
+          <LessonFieldwork lessonId={lesson.id} />
 
           {/* Facilitator video — a link, never an inline player: KZN connectivity cannot
               stream video per-visit, so a farmer must never land on this by accident. */}
@@ -772,6 +775,8 @@ export default function StudentPage() {
           lang={lang}
           label="Save the whole course to this phone"
         />
+
+        <FieldCourse />
 
         {/* Module list */}
         <div className="space-y-2.5">

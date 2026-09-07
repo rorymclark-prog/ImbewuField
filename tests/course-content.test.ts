@@ -9,6 +9,32 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import { COURSE_MODULES, LESSON_INDEX } from '../lib/course-modules.ts';
+import { ALL_FIELD_CYCLES, CORE_FIELD_CYCLES, ELECTIVE_FIELD_PATHWAYS, FIELDWORK_SOURCES, fieldworkForLesson } from '../lib/course-fieldwork.ts';
+
+test('the expanded field programme reaches every existing lesson without changing its identity', () => {
+  for (const id of LESSON_INDEX.keys()) {
+    assert.ok(fieldworkForLesson(id).length > 0, `${id} has no practical expansion`);
+  }
+  for (const cycle of ALL_FIELD_CYCLES) {
+    for (const id of cycle.lessonIds) assert.ok(LESSON_INDEX.has(id), `${cycle.id} points at missing reading ${id}`);
+    for (const id of cycle.sourceIds ?? []) assert.ok(id in FIELDWORK_SOURCES, `${cycle.id} has a missing source`);
+  }
+  assert.deepEqual(fieldworkForLesson('unknown-lesson'), []);
+});
+
+test('the recovered audit is a complete 36-cycle sequence plus four electives, with seasonal alternatives', () => {
+  assert.deepEqual(CORE_FIELD_CYCLES.map((cycle) => cycle.week), Array.from({ length: 36 }, (_, i) => i + 1));
+  assert.equal(ELECTIVE_FIELD_PATHWAYS.length, 4);
+  assert.equal(new Set(ALL_FIELD_CYCLES.map((cycle) => cycle.id)).size, ALL_FIELD_CYCLES.length);
+  for (const cycle of ALL_FIELD_CYCLES) {
+    for (const field of ['why', 'see', 'record', 'reflect', 'mentorCheck', 'whenBlocked'] as const) {
+      assert.ok(cycle[field].trim(), `${cycle.id} lacks ${field}`);
+    }
+    assert.ok(cycle.steps.length > 0, `${cycle.id} has no field task`);
+  }
+  assert.match(CORE_FIELD_CYCLES[24].whenBlocked, /defer|ready/);
+  assert.match(CORE_FIELD_CYCLES[27].whenBlocked, /mature/);
+});
 
 test('every module id is unique', () => {
   const ids = COURSE_MODULES.map((m) => m.id);

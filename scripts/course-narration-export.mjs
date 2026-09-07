@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Turn a narration script into a recording sheet — the exact text of each clip, one per slide.
 //
-// WHY: the recordings are made outside this repo (Rory narrates through Gemini in Antigravity,
+// WHY: the recordings are made outside this repo (Microsoft voices through edge-tts in Antigravity,
 // one clip per slide, per language) and scripts/import-course-audio.mjs is the seam that brings
 // them back. Nothing existed for the OTHER end of that trip. The markdown script is written for
 // a human — bold headings, [pause] marks, --- rules, a title line that is a structural marker
@@ -101,7 +101,9 @@ function exportModule(moduleId) {
 
   const mod = COURSE_MODULES.find((m) => m.id === moduleId);
   const langName = lang === 'zu' ? 'isiZulu' : 'English';
-  const voice = lang === 'zu' ? 'an isiZulu (zu-ZA) voice' : 'a South African English (en-ZA) voice';
+  // Seeds is Rory's production reference. "A South African voice" previously allowed a second
+  // batch to switch from Leah to Luke unnoticed. Name the actual voice on every recording sheet.
+  const voice = lang === 'zu' ? 'Microsoft zu-ZA-ThandoNeural' : 'Microsoft en-ZA-LeahNeural';
   const total = slides.reduce((a, s) => a + s.words, 0);
 
   const sheet = [
@@ -112,6 +114,11 @@ function exportModule(moduleId) {
     '## What to produce',
     '',
     `Read each slide-NN.txt aloud in ${voice} and save the clip as its own mp3.`,
+    'Match the existing Seeds reference: its recorded speed is documented as 0.88 of normal.',
+    'Confirm the equivalent speed setting in the recording tool and compare a short sample',
+    'with Seeds before recording the batch. Do not substitute another voice silently.',
+    'This recording sheet is not language approval: any draft isiZulu script still needs',
+    'first-language review before recording. See docs/COURSE-NARRATION-VOICE.md.',
     'Name the files exactly as below — scripts/import-course-audio.mjs reads these names, and a',
     'clip under the wrong number puts the voice against the wrong picture for the rest of the deck.',
     '',

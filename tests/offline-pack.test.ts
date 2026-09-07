@@ -11,6 +11,16 @@ import { COURSE_MODULES } from '@/lib/course-modules';
 
 const PUBLIC = join(process.cwd(), 'public');
 
+test('offline packs include every continuation, including English fallback for an isiZulu learner', () => {
+  for (const lang of ['en', 'zu']) {
+    const pack = offlinePack('vegetables-staples', lang);
+    const continuations = Object.keys(COURSE_ASSET_SIZES).filter((url) =>
+      url.startsWith('/course-decks/vegetables-staples/en/') && url.includes('-continuation'));
+    assert.ok(continuations.length > 0);
+    for (const url of continuations) assert.ok(pack.entries.some((e) => e.url === url), `offline pack omits ${url}`);
+  }
+});
+
 // The download button states a size and then spends somebody's data. Every number below is
 // therefore checked against the filesystem rather than against another number in the codebase.
 

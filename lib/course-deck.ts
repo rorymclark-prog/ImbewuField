@@ -12,6 +12,7 @@
 // player can be tested without a browser.
 
 import { COURSE_NARRATION, trackUrl, type NarrationTrack } from '@/lib/course-audio';
+import { COURSE_ASSET_SIZES } from '@/lib/course-asset-sizes';
 
 export interface DeckAnimation {
   /** Wordless clip, audio stripped — narration plays over it. */
@@ -50,6 +51,18 @@ export interface ModuleDeck {
    * away from the person it was made for.
    */
   missingSlides?: Record<string, number[]>;
+  /**
+   * File extension of this deck's slide images. Defaults to 'jpg' — what a painted deck is.
+   *
+   * A deck produced by scripts/render-course-deck.mjs is SVG instead, and that is a data decision
+   * rather than a technical preference: those slides are 2–3 KB where a painted one is 47–152 KB,
+   * for an audience buying data by the megabyte. It is PER DECK because the two production routes
+   * genuinely differ — Seeds is illustration, which has to be a photograph-grade raster, and a
+   * generated deck is type and rules, which is what vector is for. Both are just <img> to
+   * DeckPlayer, and every URL is built by slideImageUrl, so nothing downstream has to know which
+   * kind it is looking at.
+   */
+  imageExt?: string;
   slides: DeckSlide[];
 }
 
@@ -125,6 +138,68 @@ export const COURSE_DECKS: Record<string, ModuleDeck> = {
     // implement per-slide fallback, and the next module's deck will very likely need it.
     slides: slidesFromNarration('seeds-sovereignty', SEEDS_ANIMATIONS),
   },
+
+  // Recovered English decks, rebuilt with every authored paragraph preserved across frames.
+  // slideImagesFor serves the illustrated cover, base card and all continuation cards as one
+  // spoken slide. Existing recording numbers remain stable. The old per-module production
+  // observations are preserved in git; current status belongs in moduleReadinessDetail.
+  //
+  // These nine modules still need matched teaching demonstrations and reviewed isiZulu slides
+  // and recordings. A cover plus text cards does not meet the Seeds production standard.
+  // Eight isiZulu scripts label themselves drafts; the missing flag on Water is not review proof.
+  'intro-permaculture': {
+    slideLanguages: ['en'],
+    imageExt: 'svg',
+    slides: slidesFromNarration('intro-permaculture', {}),
+  },
+
+  'soil-health': {
+    slideLanguages: ['en'],
+    imageExt: 'svg',
+    slides: slidesFromNarration('soil-health', {}),
+  },
+
+  'vegetables-staples': {
+    slideLanguages: ['en'],
+    imageExt: 'svg',
+    slides: slidesFromNarration('vegetables-staples', {}),
+  },
+
+  'food-forest': {
+    slideLanguages: ['en'],
+    imageExt: 'svg',
+    slides: slidesFromNarration('food-forest', {}),
+  },
+
+  'market-community': {
+    slideLanguages: ['en'],
+    imageExt: 'svg',
+    slides: slidesFromNarration('market-community', {}),
+  },
+
+  'plant-guilds': {
+    slideLanguages: ['en'],
+    imageExt: 'svg',
+    slides: slidesFromNarration('plant-guilds', {}),
+  },
+
+  'small-livestock': {
+    slideLanguages: ['en'],
+    imageExt: 'svg',
+    slides: slidesFromNarration('small-livestock', {}),
+  },
+
+  'water-harvesting': {
+    slideLanguages: ['en'],
+    imageExt: 'svg',
+    slides: slidesFromNarration('water-harvesting', {}),
+  },
+
+  'reading-landscape': {
+    slideLanguages: ['en'],
+    imageExt: 'svg',
+    slides: slidesFromNarration('reading-landscape', {}),
+  },
 };
 
 export function deckFor(moduleId: string): ModuleDeck | null {
@@ -156,7 +231,7 @@ export function slideImageUrl(moduleId: string, lang: string, slide: number): st
   if (!deck || !deck.slideLanguages.includes(lang)) return null;
   if (!deck.slides.some((s) => s.slide === slide)) return null;
   if (deck.missingSlides?.[lang]?.includes(slide)) return null;
-  return `/course-decks/${moduleId}/${lang}/slide-${String(slide).padStart(2, '0')}.jpg`;
+  return `/course-decks/${moduleId}/${lang}/slide-${String(slide).padStart(2, '0')}.${deck.imageExt ?? 'jpg'}`;
 }
 
 /**
@@ -175,6 +250,24 @@ export function slideImageFor(
   if (own) return { url: own, lang, exact: true };
   const fallback = lang === 'en' ? null : slideImageUrl(moduleId, 'en', slide);
   return fallback ? { url: fallback, lang: 'en', exact: false } : null;
+}
+
+/** One recording may have several visual frames. Keep its continuation language together. */
+export function slideImagesFor(moduleId: string, lang: string, slide: number): { url: string; lang: string; exact: boolean }[] {
+  const first = slideImageFor(moduleId, lang, slide);
+  if (!first) return [];
+  if (COURSE_DECKS[moduleId]?.imageExt !== 'svg') return [first];
+  const prefix = first.url.replace(/\.svg$/, '-continuation');
+  // Use the asset inventory rather than another hand-maintained continuation count.
+  const extra = Object.keys(COURSE_ASSET_SIZES)
+    .filter((url) => url === `${prefix}.svg` || (url.startsWith(`${prefix}-`) && /-\d+\.svg$/.test(url)))
+    .sort((a, b) => {
+      const number = (url: string) => url === `${prefix}.svg` ? 1 : Number(url.match(/-(\d+)\.svg$/)?.[1]);
+      return number(a) - number(b);
+    });
+  const cover = first.url.replace(/slide-01\.svg$/, 'cover.jpg');
+  const opening = slide === 1 && COURSE_ASSET_SIZES[cover] !== undefined ? [{ ...first, url: cover }] : [];
+  return [...opening, first, ...extra.map((url) => ({ ...first, url }))];
 }
 
 export function animationUrls(moduleId: string, slide: number): { video: string; poster: string; bytes: number; seconds: number } | null {
