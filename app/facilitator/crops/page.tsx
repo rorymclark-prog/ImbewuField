@@ -668,6 +668,7 @@ function FacilitatorCropsPageInner() {
   const [pickerMonth, setPickerMonth] = useState(1);
   const [pickerFraction, setPickerFraction] = useState(1);
   const [pickerExisting, setPickerExisting] = useState(false);
+  const [pickerVariety, setPickerVariety] = useState('');
   // Set when the picker was opened via "Edit" on an existing planting rather
   // than "+ crop" on a bed — confirmAdd checks this to update in place.
   const [editingPlantingId, setEditingPlantingId] = useState<string | null>(null);
@@ -1127,7 +1128,7 @@ function FacilitatorCropsPageInner() {
   }, [plan, beds]);
   const bedAreaFor = (bedId: string) => beds.find((b) => b.id === bedId)?.areaM2 ?? 0;
 
-  function addPlanting(bedId: string, cropKey: string, sowMonth: number, areaFraction: number, existing: boolean) {
+  function addPlanting(bedId: string, cropKey: string, sowMonth: number, areaFraction: number, existing: boolean, variety: string) {
     pushPlanHistory();
     setPlan((prev) => {
       const base = prev ?? { version: 1 as const, plantings: [], updatedAt: Date.now() };
@@ -1135,11 +1136,12 @@ function FacilitatorCropsPageInner() {
         id: genId('pl'), bedId, cropKey, sowMonth,
         areaFraction: areaFraction < 1 ? areaFraction : undefined,
         existing: existing || undefined,
+        variety: variety.trim().slice(0, 120) || undefined,
       };
       return { ...base, version: 1, plantings: [...base.plantings, next], updatedAt: Date.now() };
     });
   }
-  function updatePlanting(id: string, cropKey: string, sowMonth: number, areaFraction: number, existing: boolean) {
+  function updatePlanting(id: string, cropKey: string, sowMonth: number, areaFraction: number, existing: boolean, variety: string) {
     pushPlanHistory();
     setPlan((prev) => {
       if (!prev) return prev;
@@ -1152,7 +1154,7 @@ function FacilitatorCropsPageInner() {
         // away from. See restampEditedOnce.
         plantings: prev.plantings.map((p) => p.id === id
           ? restampEditedOnce(
-            { ...p, cropKey, sowMonth, areaFraction: areaFraction < 1 ? areaFraction : undefined, existing: existing || undefined },
+            { ...p, cropKey, sowMonth, areaFraction: areaFraction < 1 ? areaFraction : undefined, existing: existing || undefined, variety: variety.trim().slice(0, 120) || undefined },
             new Date().getFullYear(),
             currentMonth,
           )
@@ -1340,6 +1342,7 @@ function FacilitatorCropsPageInner() {
     setPickerCrop(null);
     setPickerFraction(1);
     setPickerExisting(false);
+    setPickerVariety('');
   }
   // Reopens the same picker pre-filled with an existing planting's values —
   // the crop is already set so the modal opens straight on the detail view
@@ -1356,6 +1359,7 @@ function FacilitatorCropsPageInner() {
     setPickerMonth(p.sowMonth);
     setPickerFraction(p.areaFraction ?? 1);
     setPickerExisting(!!p.existing);
+    setPickerVariety(p.variety ?? '');
   }
   function closePicker() {
     setPickerBedId(null);
@@ -1364,6 +1368,7 @@ function FacilitatorCropsPageInner() {
   }
   function pickCrop(crop: CropDef) {
     setPickerCrop(crop);
+    setPickerVariety('');
     setPickerMonth(nextValidSowMonth(crop, pattern, currentMonth));
     // Space-hungry crops default to their own whole bed rather than a split —
     // the recommendation is enforced as a sane default, not a hard block.
@@ -1373,9 +1378,9 @@ function FacilitatorCropsPageInner() {
     if (!pickerBedId || !pickerCrop) return;
     if (pickerCrop.timingVerified === false) return;
     if (editingPlantingId) {
-      updatePlanting(editingPlantingId, pickerCrop.key, pickerMonth, pickerFraction, pickerExisting);
+      updatePlanting(editingPlantingId, pickerCrop.key, pickerMonth, pickerFraction, pickerExisting, pickerVariety);
     } else {
-      addPlanting(pickerBedId, pickerCrop.key, pickerMonth, pickerFraction, pickerExisting);
+      addPlanting(pickerBedId, pickerCrop.key, pickerMonth, pickerFraction, pickerExisting, pickerVariety);
     }
     closePicker();
   }
@@ -2237,6 +2242,8 @@ function FacilitatorCropsPageInner() {
           pattern={pattern}
           fraction={pickerFraction}
           onFraction={setPickerFraction}
+          variety={pickerVariety}
+          onVariety={setPickerVariety}
           existing={pickerExisting}
           onExisting={setPickerExisting}
           overlapWarning={pickerOverlapWarning}
@@ -3374,7 +3381,7 @@ function PlantingBar({ planting, currentMonth, onTap }: { planting: Planting; cu
 // ── Crop picker modal ────────────────────────────────────────────────────
 
 function CropPickerModal({
-  search, onSearch, crop, month, pattern, fraction, onFraction, existing, onExisting, overlapWarning, hasUnverifiedTiming,
+  search, onSearch, crop, month, pattern, fraction, onFraction, existing, onExisting, variety, onVariety, overlapWarning, hasUnverifiedTiming,
   isEditing, favouriteCropKeys, onToggleFavourite, allowBedSharing, onEnableBedSharing, onPick, onBack, onMonth, onConfirm, onClose,
   isPlot,
 }: {
@@ -3387,6 +3394,8 @@ function CropPickerModal({
   onFraction: (f: number) => void;
   existing: boolean;
   onExisting: (v: boolean) => void;
+  variety: string;
+  onVariety: (v: string) => void;
   /** Null when the bed can carry this planting alongside what is already there. */
   overlapWarning: BedOverlapWarning | null;
   hasUnverifiedTiming: boolean;
@@ -3524,9 +3533,14 @@ function CropPickerModal({
                 📏 {crop.name} wants room to spread — best in its own dedicated bed rather than shared or split with other crops.
               </div>
             )}
+            <label className="block my-4 font-sans text-sm" style={{ color: '#244b34' }}>
+              Variety / cultivar (optional)
+              <input value={variety} onChange={e => onVariety(e.target.value)} maxLength={120} placeholder="Name on your seed packet" className="block w-full mt-2 rounded-lg border p-3" style={{ background: 'white', color: '#244b34' }} />
+              <span className="block mt-1">Leave blank if you have not chosen one. Timing remains the crop’s general guidance.</span>
+            </label>
             {crop.varieties && crop.varieties.length > 0 && (
               <div className="mb-3">
-                <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.08em' }}>Which variety?</div>
+                <div className="font-sans uppercase tracking-widest mb-1.5" style={{ fontSize: 10, color: '#8C7A62', letterSpacing: '0.08em' }}>Variety guidance</div>
                 <div className="space-y-1.5">
                   {crop.varieties.map((v, i) => (
                     <div key={i} className="px-2.5 py-2 rounded-lg" style={{ background: '#F5F0E8', border: '1px solid #E2D8C4' }}>

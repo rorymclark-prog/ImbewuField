@@ -17,6 +17,7 @@
 // exported ringAreaOf + pointInRing at the same ground scale the sheets use, so it is the same
 // maths, not a second opinion.
 
+import { captureReportCropPlan } from './report-crop-plan';
 import turfArea from '@turf/area';
 import turfLength from '@turf/length';
 import type { Feature } from 'geojson';
@@ -350,6 +351,7 @@ export function collectReportSiteFacts(input: CollectFactsInput): ReportSiteFact
         bedsUsed.add(planting.bedId);
       }
       facts.crop = {
+        snapshot: canvas ? captureReportCropPlan(canvas, plan, input.siteId) : undefined,
         plantingCount: plantings.length,
         bedsPlanted: bedsUsed.size,
         crops: [...byCrop.values()].map((entry) => ({

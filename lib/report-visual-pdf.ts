@@ -140,14 +140,5 @@ export function drawVisualReportFront(doc: jsPDF, visuals: ReportVisuals, assets
     image(photo, 44, y, 512, 500);
     write(photo.caption, 44, y + 521, 512, 10, '#526258');
   }
-  for (let start = 0; start < (assets.plants?.length ?? 0); start += 6) {
-    page('Your planned crops');
-    write('Catalogue illustrations; the planting details come from your saved plan.', 44, y, 512, 10, '#526258');
-    y += 25;
-    assets.plants!.slice(start, start + 6).forEach((plant, i) => {
-      const x = 44 + i % 2 * 264, top = y + Math.floor(i / 2) * 195;
-      image(plant, x, top, 248, 130);
-      write(plant.caption, x, top + 146, 248, 9, '#245738');
-    });
-  }
+
 }
