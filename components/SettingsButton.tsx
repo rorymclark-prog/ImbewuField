@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { Settings } from 'lucide-react';
 import ThemePanel from './ThemePanel';
 
@@ -9,11 +10,12 @@ import ThemePanel from './ThemePanel';
  * panel. Drop into any page header — it manages its own open state and renders
  * the panel, so every page gets the settings section without extra wiring.
  */
-export default function SettingsButton() {
+export default function SettingsButton({ showLabel = false }: { showLabel?: boolean } = {}) {
   const [open, setOpen] = useState(false);
   return (
     <>
       <button
+        data-header-secondary
         onClick={() => setOpen(true)}
         aria-label="Settings"
         title="Settings"
@@ -26,12 +28,14 @@ export default function SettingsButton() {
           border: '1px solid var(--border)',
           color: 'var(--text-primary)',
           cursor: 'pointer',
+          minHeight: 44,
+          minWidth: 44,
         }}
       >
         <Settings size={13} strokeWidth={1.7} />
-        <span className="hidden sm:inline">Settings</span>
+        <span className={showLabel ? undefined : 'hidden sm:inline'}>Settings</span>
       </button>
-      <ThemePanel open={open} onClose={() => setOpen(false)} />
+      {open && createPortal(<div style={{ position: 'relative', zIndex: 90 }}><ThemePanel open={open} onClose={() => setOpen(false)} /></div>, document.body)}
     </>
   );
 }

@@ -2,13 +2,13 @@
 
 import { createContext, useContext, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { useAuth } from '@/lib/auth';
 import { enterSampleMode, isSampleMode } from '@/lib/sample-mode';
 import { startRolePreview, useSampleRole } from '@/lib/use-role-navigation';
 import { readSampleChooserAccountRole } from '@/lib/sample-choice-access';
 import { prepareSampleFarm } from '@/lib/sample-farm-session';
-import { PRODUCT_TOUR, cleanProductTourProgress, sampleChoicesForAccount } from '@/lib/sample-tour';
+import { PRODUCT_TOUR, PRODUCT_TOUR_FEATURES, cleanProductTourProgress, sampleChoicesForAccount } from '@/lib/sample-tour';
 import type { UserRole } from '@/lib/db/types';
 import { announceOverlay } from '@/lib/overlay-signal';
 import styles from './ProductTour.module.css';
@@ -25,12 +25,15 @@ export function useProductTour() { return useContext(Context); }
 
 export default function ProductTourProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
+  const pathname = usePathname();
   const sample = useSampleRole();
   const { user, role, loading } = useAuth();
   const [verified, setVerified] = useState<{ uid: string | null; role: UserRole | null } | null>(null);
   const [state, setState] = useState<TourState>(empty);
   const [error, setError] = useState('');
   const [expanded, setExpanded] = useState(false);
+  const [featureIndex, setFeatureIndex] = useState(0);
+  const shownArrival = useRef('');
   const dialog = useRef<HTMLDialogElement>(null);
   const ready = !loading && !!verified && verified.uid === (user?.uid ?? null);
   const roles = sampleChoicesForAccount(verified?.role ?? null, !!user, ready);
@@ -63,6 +66,17 @@ export default function ProductTourProvider({ children }: { children: React.Reac
   }, [sample]);
 
   useEffect(() => {
+    if (!state.active || !ready || !sample) { shownArrival.current = ''; return; }
+    const destination = PRODUCT_TOUR[state.current].href.split(/[?#]/)[0];
+    if (pathname !== destination) return;
+    const arrival = `${state.current}:${pathname}`;
+    if (shownArrival.current === arrival) return;
+    shownArrival.current = arrival;
+    setFeatureIndex(0);
+    setExpanded(true);
+  }, [pathname, state.active, state.current, ready, sample]);
+
+  useEffect(() => {
     const element = dialog.current;
     if (!element) return;
     if (expanded && !element.open) { element.showModal(); announceOverlay(true); }
@@ -83,7 +97,11 @@ export default function ProductTourProvider({ children }: { children: React.Reac
     // Farm stops remain available in the original sandbox. Reset its navigation too,
     // so leaving the funder view does not hide farm tools on the next screen.
     if (!startRolePreview(step.role ?? 'farmer')) { setError('The sample view could not open. Please try again.'); return; }
-    if (save({ ...state, active: true, current: index })) { setExpanded(false); router.push(step.href); }
+    if (save({ ...state, active: true, current: index })) {
+      setFeatureIndex(0);
+      setExpanded(pathname === step.href.split(/[?#]/)[0]);
+      router.push(step.href);
+    }
   }
   function start() {
     if (!ready) return;
@@ -105,23 +123,31 @@ export default function ProductTourProvider({ children }: { children: React.Reac
     if (save({ active: true, current: nextIndex, done })) { setExpanded(false); router.push(step.href); }
   }
   const step = PRODUCT_TOUR[state.current];
+  const features = PRODUCT_TOUR_FEATURES[step.id] ?? [];
+  const feature = features[Math.min(featureIndex, features.length - 1)];
+  const inView = pathname === step.href.split(/[?#]/)[0];
   const previous = PRODUCT_TOUR.map((_,i)=>i).filter(i=>i<state.current && allowed(i)).pop();
   return <Context.Provider value={{ ...state, ready, error, allowed, start, open:()=>{if(state.active && isSampleMode())setExpanded(true);}, go }}>
     {children}
     <dialog ref={dialog} className={styles.dialog} aria-labelledby="product-tour-title" onCancel={()=>setExpanded(false)} onClose={()=>setExpanded(false)}>
       <div className={styles.dialogHead}><span>TOUR · {state.current + 1} OF {PRODUCT_TOUR.length}</span><button type="button" onClick={()=>setExpanded(false)} aria-label="Close tour guide">×</button></div>
-      <h2 id="product-tour-title">{step.title}</h2>
-      <p className={styles.time}>About {step.minutes} {step.minutes === 1 ? 'minute' : 'minutes'} · explore at your own pace</p>
-      <p>{step.task}</p>
+      <h2 id="product-tour-title">{inView && feature ? feature.title : step.title}</h2>
+      <p className={styles.time}>{step.title}{inView && features.length > 1 ? ` · Tip ${featureIndex + 1} of ${features.length}` : ` · About ${step.minutes} min`}</p>
+      <p>{inView && feature ? feature.text : step.task}</p>
+      {inView && features.length > 1 && <div className={styles.featureProgress} aria-label={`Tip ${featureIndex + 1} of ${features.length}`}>
+        {features.map((tip, i) => <button key={tip.title} type="button" aria-label={`Tip ${i + 1}: ${tip.title}`} aria-current={i === featureIndex ? 'step' : undefined} onClick={() => setFeatureIndex(i)} />)}
+      </div>}
       {error && <p role="alert">{error}</p>}
-      <div className={styles.controls}><button type="button" className={styles.primary} onClick={()=>go(state.current)} disabled={!allowed(state.current)}>Open this view</button>
+      <div className={styles.controls}>
+      {inView && featureIndex < features.length - 1 && <button type="button" className={styles.primary} onClick={() => setFeatureIndex(i => i + 1)}>Next tip</button>}
+      <button type="button" className={inView && featureIndex < features.length - 1 ? undefined : styles.primary} onClick={()=>inView ? setExpanded(false) : go(state.current)} disabled={!allowed(state.current)}>{inView ? 'Try it now' : 'Open this view'}</button>
       {step.secondaryHref && <Link href={step.secondaryHref} onClick={event=>{
         if (!state.active || !allowed(state.current) || !isSampleMode()) { event.preventDefault(); return; }
         // The optional crop, invoice, Lima and site-report actions are farm tools.
         if (!startRolePreview('farmer')) { event.preventDefault(); setError('The sample view could not open. Please try again.'); return; }
         setExpanded(false);
       }}>{step.secondaryLabel}</Link>}</div>
-      <p className={styles.hint}>The small Tour button beside the menu brings these instructions back. Sample edits reset on reload; your tour checklist stays in this tab.</p>
+      <p className={styles.hint}>Tap Tour beside the menu whenever you want these tips back.</p>
       <div className={styles.controls}><button type="button" onClick={()=>next(true)} disabled={!ready}>I’ve explored this · Next</button><button type="button" onClick={()=>next(false)} disabled={!ready}>Skip this stop</button></div>
       <div className={styles.controls}>{previous !== undefined && <button type="button" onClick={()=>go(previous)}>Previous stop</button>}<Link href="/tour" onClick={()=>setExpanded(false)}>Tour overview</Link><button type="button" onClick={()=>{if(save({...state,active:false}))setExpanded(false);}}>End tour</button></div>
     </dialog>

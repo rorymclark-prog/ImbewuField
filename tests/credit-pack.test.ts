@@ -18,6 +18,7 @@ import {
   MIN_MONTHS_WITH_INCOME_FOR_TREND,
 } from '@/lib/credit-pack';
 import type { ExpenseLog, ProductionLog, SalesLog } from '@/lib/db/types';
+import type { SavedInvoice } from '@/lib/invoices';
 
 const NOW = new Date('2026-08-15T09:00:00.000Z');
 
@@ -33,6 +34,13 @@ const harvest = (kg: number, logged_at: string, crop = 'Spinach'): ProductionLog
   id: `prod-${Math.random()}`, profile_id: 'f', garden_id: null, crop, kg, photo_url: null,
   logged_at, created_at: logged_at,
 });
+
+function invoice(id: string, unit = 'kg', total = 100): SavedInvoice {
+  return {
+    id, no: 1, billTo: 'Market', items: [{ desc: 'Spinach', qty: 5, unit, price: total / 5 }],
+    total, dateISO: '2026-07-01T00:00:00.000Z', status: 'paid', paidAt: '2026-08-01T00:00:00.000Z',
+  };
+}
 
 /* ── buildMonthlyCashFlow ─────────────────────────────────────────────────── */
 
@@ -113,6 +121,39 @@ test('a row with an unparseable date is skipped entirely rather than crashing th
 
 test('no dated sales or expenses at all produces an empty window, not a crash', () => {
   assert.deepEqual(buildMonthlyCashFlow([], [], NOW), []);
+});
+
+test('lender income includes paid boxes once and uses payment month instead of issue month', () => {
+  const kgInvoice = invoice('kg');
+  const boxInvoice = invoice('boxes', 'box', 300);
+  const unpaid: SavedInvoice = { ...invoice('unpaid'), status: 'unpaid', paidAt: undefined };
+  const sales = [
+    sale(50, '2026-08-04T00:00:00.000Z'),
+    { ...sale(100, '2026-07-01T00:00:00.000Z'), invoice_id: kgInvoice.id },
+    { ...sale(100, '2026-08-01T00:00:00.000Z'), invoice_id: unpaid.id },
+  ];
+  const months = buildMonthlyCashFlow(sales, [], NOW, 12, [kgInvoice, boxInvoice, unpaid]);
+  assert.deepEqual(months.map(month => month.monthKey), ['2026-08']);
+  assert.equal(months[0].incomeZar, 450, 'manual sale plus both paid invoices, without mirrored or unpaid rows');
+  assert.equal(months[0].saleCount, 3);
+});
+
+test('invoice cash enables a lender summary without creating crop weights, while other-device sale evidence stays visible', () => {
+  const kgInvoice = invoice('kg');
+  const boxInvoice = invoice('boxes', 'box', 300);
+  const unpaid: SavedInvoice = { ...invoice('unpaid'), status: 'unpaid', paidAt: undefined };
+  const sales = [
+    { ...sale(100, kgInvoice.paidAt!, 'Spinach', 5), invoice_id: kgInvoice.id },
+    { ...sale(100, kgInvoice.paidAt!, 'Spinach', 5), invoice_id: unpaid.id },
+    { ...sale(40, kgInvoice.paidAt!, 'Spinach', 2), invoice_id: 'not-on-this-device' },
+  ];
+  const track = creditPackTrackRecord([], sales, [kgInvoice, boxInvoice, unpaid]);
+  assert.equal(track.totalSoldKg, 7, 'five weighed kg from the invoice and two kg from the remote sale');
+  assert.equal(track.totalRevenueZar, 140, 'crop track record excludes boxes with no recorded kg');
+  assert.equal(track.saleEntryCount, 2);
+  assert.equal(creditPackHasAnyRecords([], [], [], [boxInvoice]), true);
+  assert.equal(creditPackHasAnyRecords([], [], [], [unpaid]), false);
+  assert.equal(creditPackHasAnyRecords([], [sales[1]], [], [unpaid]), false);
 });
 
 /* ── creditPackIncomeConsistency ──────────────────────────────────────────── */

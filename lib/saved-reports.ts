@@ -1,6 +1,6 @@
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import { activeAccountLocalStorageKey } from './account-local-storage';
-import { isSampleMode } from './sample-mode';
+import './sample-mode';
 import { isValidLocationData, isValidSiteData, isValidWaterData } from './last-site';
 import type { SavedPlace } from './saved-places';
 import { designSiteIdFromLocation } from './design-studio';
@@ -23,6 +23,9 @@ export interface SavedReport {
 }
 
 const KEY = 'imbewu_saved_reports';
+// The root sample-mode shim redirects this same API into disposable memory. Keeping the
+// report workflow intact lets the tour save/reopen/delete snapshots without touching an
+// account's real history. Import the shim even when this store is used outside ReportView.
 /** The store cap. EXPORTED so the message a farmer reads names the real number: a hard-coded
  *  "50" in the UI silently becomes a lie the day this changes. */
 export const MAX_REPORTS = 50;
@@ -55,7 +58,6 @@ function normaliseReport(value: unknown): SavedReport | null {
 }
 
 export function loadReports(): SavedReport[] {
-  if (isSampleMode()) return []; // never surface the real signed-in user's own saved reports inside a demo
   if (typeof window === 'undefined') return [];
   try {
     const value = JSON.parse(
@@ -90,7 +92,6 @@ export interface SaveReportResult {
 }
 
 export function saveReport(r: SavedReport): SaveReportResult {
-  if (isSampleMode()) return { reports: [], saved: false }; // demo "save" no-ops — never writes real storage
   const current = loadReports();
   const safe = normaliseReport(r);
   if (!safe || typeof window === 'undefined') return { reports: current, saved: false };
@@ -110,7 +111,6 @@ export function saveReport(r: SavedReport): SaveReportResult {
 }
 
 export function deleteReport(id: string): SavedReport[] {
-  if (isSampleMode()) return []; // no-op — nothing real was ever saved to delete
   const current = loadReports();
   const updated = current.filter((x) => x.id !== id);
   if (typeof window === 'undefined' || updated.length === current.length) return current;

@@ -59,6 +59,12 @@ export function plateSheetOrdinal(label: string): number {
   return m ? Number(m[1]) : Number.POSITIVE_INFINITY;
 }
 
+/** Lead with the whole-site plan when available, while leaving appendix sheet order intact. */
+export function reportCoverPlate<T extends ReportPlate>(plates: readonly T[]): T | undefined {
+  return plates.find(plate => plateSheetOrdinal(plate.label) === 8
+    || /\b(?:whole design|integrated masterplan)\b/i.test(plateSheetKey(plate.label))) ?? plates[0];
+}
+
 function newerThan(a: ReportPlateCandidate, b: ReportPlateCandidate): boolean {
   const ta = Date.parse(a.at);
   const tb = Date.parse(b.at);

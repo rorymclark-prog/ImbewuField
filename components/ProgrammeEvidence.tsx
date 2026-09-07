@@ -5,10 +5,10 @@ import { paidApiHeaders } from '@/lib/api-client-auth';
 import { isSampleMode } from '@/lib/sample-mode';
 import { sampleRead, sampleWrite } from '@/lib/sample-operations';
 import { readSampleProgramme } from './SampleProgramme';
-import { freshFieldWorkspace, projectFieldWorkspace } from '@/lib/field-teams';
+import { completeSampleFieldWorkspace, freshFieldWorkspace, projectFieldWorkspace } from '@/lib/field-teams';
 import { sampleAssessments } from '@/lib/sample-programme';
 import { resizeLogoForStorage } from '@/lib/invoice-logo';
-import { freshEvidenceData, milestoneAt, publishedTraining, trainingTotals, validTrainingRecord, validProgrammeMilestone, type EvidenceData, type TrainingRecord, type ProgrammeMilestone } from '@/lib/programme-evidence';
+import { completeSampleEvidence, freshEvidenceData, milestoneAt, publishedTraining, trainingTotals, validTrainingRecord, validProgrammeMilestone, type EvidenceData, type TrainingRecord, type ProgrammeMilestone } from '@/lib/programme-evidence';
 import ReportComposer from './ReportComposer';
 import ProgrammeProgress from './ProgrammeProgress';
 import { loadProgrammeProgressRecords } from '@/lib/programme-progress-records';
@@ -39,10 +39,10 @@ export default function ProgrammeEvidence({ funder=false, mentor=false, initialT
     const version=++requestVersion.current; setError('');
     try {
       if(isSampleMode()) {
-        const d=sampleRead('programme-evidence',freshEvidenceData);
+        const d=completeSampleEvidence(sampleRead('programme-evidence',freshEvidenceData));
         if(mentor && !readSampleProgramme().people.find(p=>p.id==='sample-mentor')?.training) throw Error('Training access is off for the sample mentor. Enable it in Organisation → People & access.');
         if(funder && !readSampleProgramme().funderAccess) throw Error('The sample organisation has switched off funder access.');
-        const workspace=projectFieldWorkspace(sampleRead('field-teams',freshFieldWorkspace),'sample-mentor',!mentor);
+        const workspace=projectFieldWorkspace(completeSampleFieldWorkspace(sampleRead('field-teams',freshFieldWorkspace)),'sample-mentor',!mentor);
         setData({...d,assessments:funder?[]:sampleAssessments(readSampleProgramme()).map(a=>({id:a.assessment.id,title:a.assessment.title})),sessions:funder?d.sessions.filter(s=>s.published).map(publishedTraining):mentor?d.sessions.filter(s=>s.ownerId==='sample-mentor'):d.sessions,milestones:funder?d.milestones.filter(m=>m.published):d.milestones,people:funder?[]:workspace.people.filter(p=>['farmer','student'].includes(p.role)).map(p=>({id:p.id,name:p.name})),canManage:!funder&&!mentor,canRecord:!funder&&(!mentor||readSampleProgramme().people.find(p=>p.id==='sample-mentor')?.training===true),canBrand:!funder&&!mentor});
       } else {const result=await request();if(version===requestVersion.current)setData(result);}
     } catch(e){if(version===requestVersion.current){setData(null);setError((e as Error).message);}}
@@ -73,7 +73,7 @@ export default function ProgrammeEvidence({ funder=false, mentor=false, initialT
       if(action==='session'&&(!validTrainingRecord(s,today())||s?.published&&!reviewed))throw Error('Check the session and confirm the shared content before publishing.');
       if(action==='milestone'&&!validProgrammeMilestone(m,today()))throw Error('Check the target, dates, units and evidence notes.');
       if(isSampleMode()){
-        const all=sampleRead('programme-evidence',freshEvidenceData);
+        const all=completeSampleEvidence(sampleRead('programme-evidence',freshEvidenceData));
         if(action==='session' && (!data.canRecord || mentor && !readSampleProgramme().people.find(p=>p.id==='sample-mentor')?.training))throw Error('Training access is not enabled.');
         if(action==='milestone'&&!data.canManage)throw Error('Organisation management access is required.');
         if(action==='session' && s?.attendance.some(a=>!a.id.startsWith('guest-')&&!data.people.some(p=>p.id===a.id)))throw Error('Use members of your current assigned group.');
@@ -112,7 +112,6 @@ export default function ProgrammeEvidence({ funder=false, mentor=false, initialT
     {error&&<p role="alert" className={styles.error}>{error}</p>}{notice&&<p role="status" className={styles.notice}>{notice}</p>}
     {!data&&!error&&<p>Loading authorised programme evidence…</p>}
     {data&&<>
-      {data.sample&&<p className={styles.notice}>Fictional demonstration records. Changes stay in this sample session.</p>}
       {initialTab!=='branding'&&<div className={styles.row}>{((data.brandingOnly?['branding']:['progress','training',...(!funder?['targets']:[]),...(data.canBrand?['branding']:[])]) as Tab[]).map(t=><button key={t} aria-pressed={tab===t} disabled={busy||photosBusy} onClick={()=>setTab(t)}>{{progress:'Progress report',training:'Training register',targets:'Indicators & targets',branding:'Names & logos'}[t]}</button>)}</div>}
       {tab!=='branding'&&!data.brandingOnly&&<label>Project<select value={project} onChange={e=>setProject(e.target.value)}><option value="">All visible projects</option>{projects.map(p=><option key={p}>{p}</option>)}</select></label>}
       {!data.brandingOnly&&tab==='progress'&&<>

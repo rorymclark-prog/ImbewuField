@@ -561,8 +561,8 @@ export default function MentorPage() {
       {/* Tab strip */}
       <DashboardTabs>
         {([
-          { key: 'evidence', label: 'Training & evidence', icon: BookOpen, badge: 0 },
-          { key: 'field', label: 'My field team & reports', icon: Users, badge: 0 },
+          { key: 'evidence', label: 'Training', icon: BookOpen, badge: 0 },
+          { key: 'field', label: 'Field team', icon: Users, badge: 0 },
           { key: 'trainees', label: 'Trainees', icon: Users,  badge: 0 },
           { key: 'messages', label: 'Messages', icon: Inbox, badge: msgUnread },
         ] as const).map(({ key, label, icon: Icon, badge }) => (
@@ -574,7 +574,7 @@ export default function MentorPage() {
               background: 'transparent',
               border: 'none',
               cursor: 'pointer',
-              color: view === key ? '#1F4D2B' : '#8C7A62',
+              color: view === key ? '#1F4D2B' : '#5C5040',
               borderBottom: view === key ? '2px solid #1F4D2B' : '2px solid transparent',
               marginBottom: -1,
             }}
@@ -591,7 +591,7 @@ export default function MentorPage() {
         ))}
       </DashboardTabs>
 
-      <main className="flex-1 overflow-y-auto px-4 py-4 space-y-4" style={{ paddingBottom: 80 }}>
+      <main className="workspace-main flex-1 overflow-y-auto px-4 py-4 space-y-4" style={{ paddingBottom: 80 }}>
 
         {view === 'evidence' ? <ProgrammeEvidence mentor initialTab="training" /> : view === 'field' ? <FieldTeams /> : view === 'messages' ? (
           <ContactInbox recipient="mentor" onUnreadCount={setMsgUnread} />

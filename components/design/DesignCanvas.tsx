@@ -687,6 +687,7 @@ export default function DesignCanvas({
   const [draftPoints, setDraftPoints] = useState<Array<[number, number]>>([]);
   // Drag state for moving an existing item.
   const dragItemId = useRef<string | null>(null);
+  const dragItemOffset = useRef<[number, number]>([0, 0]);
   // Local preview position while dragging — committed to onChange once on release so a
   // drag emits a single undo entry instead of one per pointermove (see endDragItem).
   const [dragPos, setDragPos] = useState<[number, number] | null>(null);
@@ -1328,6 +1329,8 @@ export default function DesignCanvas({
     armDragIntent(e);
     (e.target as Element).setPointerCapture?.(e.pointerId);
     dragItemId.current = id;
+    const point = clientToNorm(e.clientX, e.clientY);
+    dragItemOffset.current = point ? [item.x - point[0], item.y - point[1]] : [0, 0];
   }
 
   function moveDragItem(e: React.PointerEvent) {
@@ -1336,7 +1339,7 @@ export default function DesignCanvas({
     if (!id) return;
     const pt = clientToNorm(e.clientX, e.clientY);
     if (!pt) return;
-    setDragPos(pt);
+    setDragPos([clamp(pt[0] + dragItemOffset.current[0], 0, 1), clamp(pt[1] + dragItemOffset.current[1], 0, 1)]);
   }
 
   function endDragItem() {
@@ -1736,7 +1739,7 @@ export default function DesignCanvas({
     e.stopPropagation();
     (e.target as Element).setPointerCapture?.(e.pointerId);
     dragResizeId.current = id;
-    dragResizeMode.current = mode;
+    dragResizeMode.current = item.defId === 'gate' ? 'w' : mode;
   }
 
   function moveDragResize(e: React.PointerEvent) {
@@ -3595,8 +3598,9 @@ export default function DesignCanvas({
           // that is what it now buys, invisibly, and nothing else. See hitW/hitH below.
           const wPx = wM / mPerPx;
           const hPx = hM / mPerPx;
-          const hitW = Math.max(wPx, chrome(MIN_ITEM_HIT_PX));
-          const hitH = Math.max(hPx, chrome(MIN_ITEM_HIT_PX));
+          const isGate = item.defId === 'gate';
+          const hitW = Math.max(wPx, chrome(isGate ? 44 : MIN_ITEM_HIT_PX));
+          const hitH = Math.max(hPx, chrome(isGate ? 44 : MIN_ITEM_HIT_PX));
           const [px, py] = effectiveItemPos(item);
           const cx = px * imgW;
           const cy = py * imgH;
@@ -3617,7 +3621,7 @@ export default function DesignCanvas({
           const rot = def.shape === 'rect' ? (isRotatingThis ? rotPreview! : item.rot ?? 0) : 0;
           const rotXf = rot ? `rotate(${rot})` : undefined;
           const canRotate = def.shape === 'rect';
-          const actionX = wPx / 2 + itemActionR + itemActionGap;
+          const actionX = Math.max(wPx / 2 + itemActionR + itemActionGap, isGate ? chrome(54) : 0);
           const footprintOpacity = earthworksOnly && def.category === 'earthworks'
             ? Math.max(areaFill.plantOpacity, 0.68)
             : areaFill.plantOpacity;
@@ -3722,6 +3726,15 @@ export default function DesignCanvas({
                   the rotated footprint so they read against the strip's real orientation. */}
               {isSelected && interactive && (
                 <g transform={rotXf}>
+                  {isGate && (
+                    <g transform={`translate(0, ${chrome(40)})`} onPointerDown={(e) => startDragItem(e, item.id)} style={{ cursor: 'move', touchAction: 'none' }}>
+                      <title>Drag to move gate</title>
+                      <circle r={chrome(22)} fill="transparent" />
+                      <circle r={chrome(16)} fill="#1F4D2B" stroke="#FFFFFF" strokeWidth={chrome(1.5)} pointerEvents="none" />
+                      <text textAnchor="middle" dominantBaseline="central" fontSize={chrome(19)} fill="#FFFFFF" pointerEvents="none">✥</text>
+                    </g>
+                  )}
+                  {!isGate && <>
                   {/* Fat invisible hit area so the handle is easy to grab on a phone. */}
                   <rect
                     x={wPx / 2 - itemGripHit}
@@ -3752,17 +3765,20 @@ export default function DesignCanvas({
                     strokeLinecap="round"
                     pointerEvents="none"
                   />
+                  </>}
                   {/* Edge handles for rectangles — breadth (side) and length (bottom) resize
                       ONE dimension each, so a bed's width and length are independent. Circles
                       only get the uniform corner handle above. */}
                   {def.shape === 'rect' && (
                     <>
                       {/* Breadth — mid-right edge */}
-                      <rect x={wPx / 2 - itemGripHit} y={-itemGripHit} width={itemGripHit * 2} height={itemGripHit * 2} fill="transparent" style={{ cursor: 'ew-resize', touchAction: 'none' }} onPointerDown={(e) => startDragResize(e, item.id, 'w')} />
+                      <rect x={wPx / 2 - itemGripHit} y={-itemGripHit} width={itemGripHit * 2} height={itemGripHit * 2} fill="transparent" style={{ cursor: 'ew-resize', touchAction: 'none' }} onPointerDown={(e) => startDragResize(e, item.id, 'w')}><title>{isGate ? 'Adjust gate length' : 'Adjust width'}</title></rect>
                       <rect x={wPx / 2 - itemGripSmall / 2} y={-itemGrip} width={itemGripSmall} height={itemGrip * 2} rx={itemGripSmall / 2} fill={GOLD} stroke="#0B120B" strokeWidth={itemActionStrokeW} style={{ cursor: 'ew-resize', touchAction: 'none' }} onPointerDown={(e) => startDragResize(e, item.id, 'w')} />
                       {/* Length — mid-bottom edge */}
+                      {!isGate && <>
                       <rect x={-itemGripHit} y={hPx / 2 - itemGripHit} width={itemGripHit * 2} height={itemGripHit * 2} fill="transparent" style={{ cursor: 'ns-resize', touchAction: 'none' }} onPointerDown={(e) => startDragResize(e, item.id, 'h')} />
                       <rect x={-itemGrip} y={hPx / 2 - itemGripSmall / 2} width={itemGrip * 2} height={itemGripSmall} rx={itemGripSmall / 2} fill={GOLD} stroke="#0B120B" strokeWidth={itemActionStrokeW} style={{ cursor: 'ns-resize', touchAction: 'none' }} onPointerDown={(e) => startDragResize(e, item.id, 'h')} />
+                      </>}
                     </>
                   )}
                   {canRotate && (
@@ -3790,6 +3806,7 @@ export default function DesignCanvas({
                   <text textAnchor="middle" dominantBaseline="central" fontSize={9.5} fontWeight={700} fill={GOLD}>
                     {isRotatingThis
                       ? `${Math.round(rot)}°`
+                      : isGate ? `${wM.toFixed(1)} m long`
                       : def.shape === 'circle'
                         ? `⌀ ${wM.toFixed(1)} m`
                         : `${wM.toFixed(1)} × ${hM.toFixed(1)} m`}

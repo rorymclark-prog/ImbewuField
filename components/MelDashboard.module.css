@@ -31,7 +31,21 @@
 .bar { height:8px; background:#e9efea; border-radius:6px; overflow:hidden; margin:6px 0 12px; }
 .bar span { display:block; height:100%; background:#34724d; }
 .compact { padding:12px 20px; background:white; border-bottom:1px solid #d7e3d9; font-size:14px; display:flex; gap:20px; flex-wrap:wrap; }
-@media(max-width:650px) { .root { padding:14px; padding-bottom:180px; } .hero { padding:20px; } .hero h1 { font-size:27px; } .card { padding:16px; } }
+.statsGrid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin:14px 0; }
+.about { font-size:14px; }
+.about summary { min-height:44px; display:flex; align-items:center; gap:6px; }
+@media(max-width:650px) {
+  .root { padding:12px; padding-bottom:calc(96px + env(safe-area-inset-bottom)); }
+  .hero { padding:0; margin-bottom:10px; border-radius:0; background:transparent; color:var(--mel-ink); }
+  .hero h1 { font-size:24px; line-height:1.15; margin:0; }
+  .hero p { margin:4px 0; }
+  .hero a { color:var(--mel-ink) !important; }
+  .card { padding:12px; }
+  .statsGrid { gap:8px; margin:10px 0 14px; }
+  .statsGrid .card { padding:10px; font-size:13px; }
+  .statsGrid .stat { font-size:25px; line-height:1.1; margin:6px 0 0; }
+  .notice { padding:10px; margin:10px 0; }
+}
 @media print { .root { background:white; padding:0; color:black; } .hero { background:white; color:black; padding:0; } .root button,.root select { display:none; } .card { break-inside:avoid; box-shadow:none; } }
 
 /* Match the programme cards while keeping chooser actions aligned across varying copy. */

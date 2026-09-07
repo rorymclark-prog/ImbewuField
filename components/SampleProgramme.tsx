@@ -24,16 +24,16 @@ export default function SampleProgramme({ funder = false, accessOnly = false, co
   useEffect(() => { setControls(readSampleProgramme()); }, []);
   function update(next: SampleProgrammeControls) {
     if (!isSampleMode()) return;
-    try { window.localStorage.setItem(KEY, JSON.stringify(next)); setControls(next); setNotice('Sample updated. Switch to the funder sample to see what is shared.'); }
-    catch { setNotice('Could not update the sample. Reset and try again.'); }
+    try { window.localStorage.setItem(KEY, JSON.stringify(next)); setControls(next); setNotice('Changes saved.'); }
+    catch { setNotice('Could not save the changes. Try again.'); }
   }
   const data = sampleAssessments(controls);
   const chosen = data.find(x => x.assessment.id === selected)!;
   const assigned = data.reduce((n, x) => n + x.assessment.participantIds.length, 0);
   const completed = data.reduce((n, x) => n + x.rows.length, 0);
-  if (compact) return <div className={styles.compact}><strong>Sample assessments</strong><span>{assigned} assignments · {completed} completed</span><span>{controls.published.length} summaries shared</span></div>;
+  if (compact) return <div className={styles.compact}><strong>Assessments</strong><span>{assigned} assignments · {completed} completed</span><span>{controls.published.length} summaries shared</span></div>;
   if (accessOnly) return <div className={styles.card}>
-    <h2>People & access · sample</h2><p className={styles.notice}>Practise with fictional members. These switches affect this sample only, never a real person.</p>
+    <h2>People &amp; access</h2>
     <label className={styles.option}><input type="checkbox" checked={controls.funderAccess} onChange={e => update({ ...controls, funderAccess: e.target.checked })} />Allow linked funders to view our dashboards</label>
     <p>Member roles choose the workspace. Assessment permissions let the organisation delegate specific work. Farmer consent and publication checks still apply.</p>
     {controls.people.map(p => <div key={p.id} className={styles.metric}><h3>{p.name}</h3><label>App role<select value={p.role} onChange={e => update({ ...controls, people: controls.people.map(x => x.id === p.id ? { ...x, role: e.target.value as typeof p.role, manage: false, analyse: false, people: false, training: false } : x) })}>{['farmer', 'student', 'mentor', 'ngo'].map(role => <option key={role} value={role}>{role === 'ngo' ? 'Organisation' : role[0].toUpperCase() + role.slice(1)}</option>)}</select></label>
@@ -41,9 +41,9 @@ export default function SampleProgramme({ funder = false, accessOnly = false, co
     </div>)}{notice && <p role="status">{notice}</p>}
   </div>;
   const published = samplePublishedAssessments(controls);
-  if (funder) return <><p className={styles.notice}>Fictional sample results · only summaries shared by the sample organisation appear here.</p>{!controls.funderAccess ? <p className={styles.card}>The sample organisation has switched off funder access.</p> : !published.length ? <p className={styles.card}>The sample organisation has not shared any summaries.</p> : published.map(a => <details key={a.id} className={styles.card} style={{ margin: '16px 0' }}><summary>{a.title} · {a.completed}/{a.assigned} completed</summary><MelMetrics metrics={a.metrics} /><p>Example responses, not measured project outcomes. Private feedback is excluded.</p></details>)}</>;
+  if (funder) return <><h2>Shared assessments</h2><p>Summaries shared by the organisation. Private feedback remains restricted.</p>{!controls.funderAccess ? <p className={styles.card}>The organisation has switched off funder access.</p> : !published.length ? <p className={styles.card}>The organisation has not shared any summaries.</p> : published.map(a => <details key={a.id} className={styles.card} style={{ margin: '16px 0' }}><summary>{a.title} · {a.completed}/{a.assigned} completed</summary><MelMetrics metrics={a.metrics} /></details>)}</>;
   return <>
-    <p className={styles.notice}>Fictional sample learning cohort · 16 example participants. Counts are assignments, not messages sent or unique farmers. Missing numerical answers remain unknown.</p>
+    <details><summary>About these counts</summary><p>Counts show assessment assignments and responses. A participant may appear in several assessments. Missing numerical answers remain unknown.</p></details>
     <div className={styles.grid}>{[['Assigned', assigned], ['Completed', completed], ['Awaiting responses', assigned - completed], ['Shared summaries', controls.published.length]].map(([label, value]) => <div key={label} className={styles.card}>{label}<strong className={styles.stat}>{value}</strong></div>)}</div>
     {language === undefined && <div className={styles.row}><button onClick={() => setZu(false)} aria-pressed={!zu}>English</button><button onClick={() => setZu(true)} aria-pressed={zu}>isiZulu</button></div>}
     <details className={styles.card}><summary>Create an assessment</summary>
@@ -55,15 +55,15 @@ export default function SampleProgramme({ funder = false, accessOnly = false, co
     </details>
     <div className={styles.grid}>{data.map(({ assessment: a, rows }) => <button key={a.id} onClick={() => { setSelected(a.id); setChosenPeople([]); setFunderPreview(false); }} aria-pressed={a.id === selected}>{zu ? MEL_TEMPLATES[a.stage].zu : a.title}<p>{a.state} · {rows.length}/{a.participantIds.length} completed</p></button>)}</div>
     <article className={styles.card}><h2>{zu ? MEL_TEMPLATES[chosen.assessment.stage].zu : chosen.assessment.title}</h2>
-      {chosen.assessment.state === 'draft' ? <div><p>Choose sample participants. Nothing is sent.</p>{Array.from({ length: 16 }, (_, i) => `sample-person-${i + 1}`).map((id, i) => <label key={id} className={styles.option}><input type="checkbox" checked={chosenPeople.includes(id)} onChange={e => setChosenPeople(e.target.checked ? [...chosenPeople, id] : chosenPeople.filter(x => x !== id))} />Sample participant {i + 1}</label>)}<button disabled={!chosenPeople.length} onClick={() => update(changeSampleAssessment(controls, selected, { state: 'open', participantIds: chosenPeople }))}>Open for {chosenPeople.length} participants</button></div> : <MelMetrics metrics={analyseAssessment(chosen.assessment, MEL_TEMPLATES[chosen.assessment.stage], chosen.rows, funderPreview).metrics} zu={zu} />}
+      {chosen.assessment.state === 'draft' ? <div><p>Choose participants for this assessment.</p>{Array.from({ length: 16 }, (_, i) => `sample-person-${i + 1}`).map((id, i) => <label key={id} className={styles.option}><input type="checkbox" checked={chosenPeople.includes(id)} onChange={e => setChosenPeople(e.target.checked ? [...chosenPeople, id] : chosenPeople.filter(x => x !== id))} />Participant {i + 1}</label>)}<button disabled={!chosenPeople.length} onClick={() => update(changeSampleAssessment(controls, selected, { state: 'open', participantIds: chosenPeople }))}>Open for {chosenPeople.length} participants</button></div> : <MelMetrics metrics={analyseAssessment(chosen.assessment, MEL_TEMPLATES[chosen.assessment.stage], chosen.rows, funderPreview).metrics} zu={zu} />}
       {chosen.assessment.state !== 'draft' && <div className={styles.row}><button aria-pressed={!funderPreview} onClick={() => setFunderPreview(false)}>Private organisation analysis</button><button aria-pressed={funderPreview} onClick={() => setFunderPreview(true)}>Preview funder summary</button>{chosen.assessment.state === 'open' && <button onClick={() => update(changeSampleAssessment(controls, selected, { state: 'closed' }))}>Close assessment</button>}</div>}
       <details style={{ marginTop: 20 }}><summary>Learning action · what will we change?</summary>
         <label>Action<textarea value={chosen.assessment.action ?? ''} onChange={e => update(changeSampleAssessment(controls, selected, { action: e.target.value }))} /></label>
         <label>Responsible person<input value={chosen.assessment.actionOwner ?? ''} onChange={e => update(changeSampleAssessment(controls, selected, { actionOwner: e.target.value }))} /></label>
         <label>Due<input type="date" value={chosen.assessment.actionDue ?? ''} onChange={e => update(changeSampleAssessment(controls, selected, { actionDue: e.target.value }))} /></label>
-        <label className={styles.option}><input type="checkbox" checked={chosen.assessment.actionDone ?? false} onChange={e => update(changeSampleAssessment(controls, selected, { actionDone: e.target.checked }))} />Completed</label><p className={styles.muted}>Changes save in the sample as you go.</p>
+        <label className={styles.option}><input type="checkbox" checked={chosen.assessment.actionDone ?? false} onChange={e => update(changeSampleAssessment(controls, selected, { actionDone: e.target.checked }))} />Completed</label><p className={styles.muted}>Changes save as you go.</p>
       </details>
-      {chosen.assessment.state === 'closed'  && <label className={styles.option}><input type="checkbox" checked={controls.published.includes(selected)} onChange={e => update({ ...controls, published: e.target.checked ? [...controls.published, selected] : controls.published.filter(id => id !== selected) })} />Share this sample summary with funders</label>}
+      {chosen.assessment.state === 'closed'  && <label className={styles.option}><input type="checkbox" checked={controls.published.includes(selected)} onChange={e => update({ ...controls, published: e.target.checked ? [...controls.published, selected] : controls.published.filter(id => id !== selected) })} />Share this summary with funders</label>}
       <details><summary>Review questions</summary>{MEL_TEMPLATES[chosen.assessment.stage].questions.map(q => <p key={q.id}>{zu ? q.zu : q.en}</p>)}</details>
       {notice && <p role="status">{notice}</p>}
     </article>
@@ -75,5 +75,5 @@ export function SampleFunderGate({ children }: { children: React.ReactNode }) {
   const [allowed, setAllowed] = useState<boolean | null>(null);
   useEffect(() => { setAllowed(!isSampleMode() || readSampleProgramme().funderAccess); }, []);
   if (allowed === null) return null;
-  return allowed ? children : <section className={styles.root}><h1>Sample funder access is off</h1><p>The sample organisation has hidden its dashboards. Switch to Organisation → Control centre → People & permissions to turn sharing back on, or reset the sample.</p></section>;
+  return allowed ? children : <section className={styles.root}><h1>Funder access is off</h1><p>The organisation has hidden its dashboards. Switch to Organisation → Control centre → People & permissions to turn sharing back on.</p></section>;
 }

@@ -35,7 +35,7 @@ const CARD: React.CSSProperties = { background: '#FFFEFA', border: '1px solid #E
 
 const INK = '#20190F';
 const MUTED = '#5C5040';
-const FAINT = '#8C7A62';
+const FAINT = '#5d5143';
 const HAIRLINE = '#E2D8C4';
 const IN = '#1F4D2B';      // money in — the app's forest green
 const OUT = '#C07A1E';     // money out — the ochre used for costs everywhere else
@@ -80,7 +80,7 @@ export default function CashflowChart({
   const header = (
     <div className="px-4 py-3" style={{ borderBottom: `1px solid ${HAIRLINE}` }}>
       <div className="flex items-center justify-between gap-3">
-        <p className="text-xs font-mono uppercase tracking-wider flex items-center gap-1.5" style={{ color: MUTED }}>
+        <p className="text-xl font-display font-semibold flex items-center gap-2" style={{ color: INK }}>
           <TrendingUp size={13} /> Cash flow
         </p>
         <div className="flex items-center gap-1 flex-shrink-0">

@@ -12,6 +12,8 @@ export interface GateLike {
   y: number;
   /** Real-world width in metres, if the farmer sized it. Falls back to a plausible walk-through gate. */
   wM?: number;
+  /** Clockwise direction of the closed gate leaf. Absent legacy gates follow the fence. */
+  rot?: number;
 }
 
 export interface FrameLike {
@@ -31,8 +33,8 @@ function toMetersPoints(boundary: NormPoint[], frame: FrameLike): Array<[number,
   return boundary.map(([x, y]) => [x * frame.imgW * frame.mPerPx, y * frame.imgH * frame.mPerPx]);
 }
 
-function segmentLengths(pointsM: Array<[number, number]>): number[] {
-  return pointsM.map((a, i) => {
+function segmentLengths(pointsM: Array<[number, number]>, closed = true): number[] {
+  return pointsM.slice(0, closed ? undefined : -1).map((a, i) => {
     const b = pointsM[(i + 1) % pointsM.length];
     return Math.hypot(b[0] - a[0], b[1] - a[1]);
   });
@@ -44,13 +46,15 @@ function segmentLengths(pointsM: Array<[number, number]>): number[] {
 function nearestArcPosition(
   boundaryM: Array<[number, number]>,
   pointM: [number, number],
-): { arc: number; distanceM: number; totalLength: number } {
-  const segLens = segmentLengths(boundaryM);
+  closed = true,
+): { arc: number; distanceM: number; totalLength: number; angle: number } {
+  const segLens = segmentLengths(boundaryM, closed);
   const totalLength = segLens.reduce((s, l) => s + l, 0);
   let bestArc = 0;
   let bestDist = Infinity;
   let cursor = 0;
-  for (let i = 0; i < boundaryM.length; i++) {
+  let angle = 0;
+  for (let i = 0; i < segLens.length; i++) {
     const a = boundaryM[i];
     const b = boundaryM[(i + 1) % boundaryM.length];
     const abx = b[0] - a[0];
@@ -65,10 +69,11 @@ function nearestArcPosition(
     if (dist < bestDist) {
       bestDist = dist;
       bestArc = cursor + segLens[i] * t;
+      angle = Math.atan2(aby, abx);
     }
     cursor += segLens[i];
   }
-  return { arc: bestArc, distanceM: bestDist, totalLength };
+  return { arc: bestArc, distanceM: bestDist, totalLength, angle };
 }
 
 /**
@@ -81,16 +86,19 @@ export function gateBoundaryBreak(
   gate: GateLike,
   frame: FrameLike,
   maxDistanceM = 3,
+  closed = true,
 ): BoundaryBreak | null {
-  if (boundary.length < 3) return null;
+  if (boundary.length < (closed ? 3 : 2)) return null;
   const boundaryM = toMetersPoints(boundary, frame);
   const gateM: [number, number] = [gate.x * frame.imgW * frame.mPerPx, gate.y * frame.imgH * frame.mPerPx];
-  const { arc, distanceM, totalLength } = nearestArcPosition(boundaryM, gateM);
+  const { arc, distanceM, totalLength, angle } = nearestArcPosition(boundaryM, gateM, closed);
   if (!(totalLength > 0) || distanceM > maxDistanceM) return null;
-  // A gate narrower than a walk-through gate is implausible; never let one gate eat more than 40%
-  // of a very short fence run (a tiny boundary with an oversized gate reading should not vanish).
-  const widthM = Math.max(0.9, gate.wM ?? 3);
-  const halfWidth = Math.min(widthM / 2, totalLength * 0.2);
+  // Preserve the saved length, including narrow gates. Cap oversized gates only on closed
+  // property boundaries; an open fence can legitimately end at a full-width opening.
+  const widthM = Number.isFinite(gate.wM) && gate.wM! > 0 ? gate.wM! : 3;
+  const projection = Number.isFinite(gate.rot) ? Math.abs(Math.cos(gate.rot! * Math.PI / 180 - angle)) : 1;
+  if (widthM * projection < 0.05) return null;
+  const halfWidth = Math.min(widthM * projection / 2, totalLength * (closed ? 0.2 : 0.5));
   return { startArc: arc - halfWidth, endArc: arc + halfWidth };
 }
 
@@ -153,17 +161,18 @@ export function boundarySegmentsWithBreaks(
   boundary: NormPoint[],
   frame: FrameLike,
   breaks: BoundaryBreak[],
+  closed = true,
 ): NormPoint[][] {
-  if (boundary.length < 3) return [];
-  if (breaks.length === 0) return [[...boundary, boundary[0]]];
+  if (boundary.length < (closed ? 3 : 2)) return [];
+  if (breaks.length === 0) return [closed ? [...boundary, boundary[0]] : [...boundary]];
 
   const boundaryM = toMetersPoints(boundary, frame);
-  const segLens = segmentLengths(boundaryM);
+  const segLens = segmentLengths(boundaryM, closed);
   const totalLength = segLens.reduce((s, l) => s + l, 0);
   if (!(totalLength > 0)) return [[...boundary, boundary[0]]];
 
   const pointAtArc = (arcRaw: number): NormPoint => {
-    let arc = ((arcRaw % totalLength) + totalLength) % totalLength;
+    let arc = closed ? ((arcRaw % totalLength) + totalLength) % totalLength : Math.max(0, Math.min(totalLength, arcRaw));
     let i = 0;
     while (i < segLens.length - 1 && arc > segLens[i]) {
       arc -= segLens[i];
@@ -175,7 +184,9 @@ export function boundarySegmentsWithBreaks(
     return [a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t];
   };
 
-  const cuts = breaks.flatMap((b) => normalizeBreak(b, totalLength));
+  const cuts = breaks.flatMap((b): Array<[number, number]> => closed
+    ? normalizeBreak(b, totalLength)
+    : [[Math.max(0, b.startArc), Math.min(totalLength, b.endArc)]]);
   const keepIntervals = subtractIntervals(totalLength, cuts);
 
   return keepIntervals
@@ -190,6 +201,13 @@ export function boundarySegmentsWithBreaks(
       pts.push(pointAtArc(e));
       return pts;
     });
+}
+
+/** An open fence has no closing edge and its gate openings must never wrap to the other end. */
+export function fenceSegmentsWithGates(points: NormPoint[], gates: GateLike[], frame: FrameLike): NormPoint[][] {
+  const breaks = gates.map((gate) => gateBoundaryBreak(points, gate, frame, 3, false))
+    .filter((cut): cut is BoundaryBreak => cut !== null);
+  return boundarySegmentsWithBreaks(points, frame, breaks, false);
 }
 
 /**

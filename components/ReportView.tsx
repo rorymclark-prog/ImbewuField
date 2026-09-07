@@ -16,7 +16,8 @@ import { Loader2, Check, Circle, ChevronRight, Share2, MapPin, SlidersHorizontal
 import { buildReportPdf, deliverPdf, reportPdfFilename, sheetPlate, stripInlineMarkdown } from '@/lib/report-pdf';
 import { resolveSiteEcology } from '@/lib/site-ecology';
 import { loadSheetMetas, loadSheetImage } from '@/lib/sheet-store';
-import { selectReportPlates, type ReportPlate } from '@/lib/report-plates';
+import { activeAccountLocalStorageKey } from '@/lib/account-local-storage';
+import { selectReportPlates, reportCoverPlate, type ReportPlate } from '@/lib/report-plates';
 import { prepareSiteAnalysisImages } from '@/lib/report-site-images';
 import { PLAN_VERSION } from '@/lib/plan-version';
 import { SHEET_RENDER_RECIPE } from '@/lib/sheet-render-recipe';
@@ -305,8 +306,8 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   const [justSaved, setJustSaved] = useState(false);
   // saveReport ALREADY returns whether the write succeeded, and this component ALREADY ignored it.
   // A farmer who reads "Saved" and closes the tab has lost the report — it is not recoverable and
-  // nothing warned them. The button has to be able to say so. Sample mode is a separate,
-  // deliberate no-op that returns saved:false on purpose; the label already tells that truth.
+  // nothing warned them. The button has to be able to say so. The same success check now also
+  // applies to the tour, whose saves go into the existing disposable sample store.
   const [saveFailed, setSaveFailed] = useState(false);
   const [saveFailedReason, setSaveFailedReason] = useState<SaveReportReason | null>(null);
   const [copied, setCopied] = useState(false);
@@ -318,11 +319,17 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   // report on screen still had none — which is what "i generated a report there is still no images"
   // is describing. A farmer who never presses Export never sees their plan in their report.
   //
-  // Thumbnails only, held in state; the print-resolution master (1–3 MB per sheet) is fetched on
-  // demand when a sheet is opened and dropped when it closes. That is lib/sheet-store's memory
-  // contract, and this screen runs on the same phone the gallery had to be rewritten for.
-  const [plates, setPlates] = useState<Array<ReportPlate & { thumb?: string }>>([]);
+  // The gallery keeps thumbnails. The large report cover may hold ONE original, which is
+  // released while another sheet or a PDF is being prepared; a stretched gallery thumbnail
+  // made the farmer's saved plan visibly pixelated despite its original still being available.
+  const siteKey = designSiteIdFromLocation(d);
+  const sheetScope = `${isSampleMode() ? 'sample' : 'live'}:${activeAccountLocalStorageKey(siteKey)}`;
+  const [plateSet, setPlateSet] = useState<{ scope: string; items: Array<ReportPlate & { thumb?: string }> }>({ scope: '', items: [] });
+  const plates = plateSet.scope === sheetScope ? plateSet.items : [];
+  const coverMap = reportCoverPlate(plates);
   const [openPlate, setOpenPlate] = useState<{ label: string; image: string } | null>(null);
+  const [openingPlate, setOpeningPlate] = useState(false);
+  const [coverPlate, setCoverPlate] = useState<{ scope: string; id: string; image: string } | null>(null);
 
   // The farmer's own photographs of the ground, and how many they have in total. Read on mount
   // rather than memoised on a value, because localStorage is where they live and nothing in this
@@ -334,7 +341,6 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     setPhotoGallery(groundPhotoGallery(activePlaceId?getSiteEvidence(evidenceSiteId(activePlaceId)):{}));
   }, [activePlaceId, evidenceRevision]);
 
-  const siteKey = designSiteIdFromLocation(d);
   useEffect(() => {
     let cancelled = false;
     void loadSheetMetas(siteKey)
@@ -343,15 +349,33 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         if (cancelled) return;
         const chosen = selectReportPlates(metas, PLAN_VERSION, SHEET_RENDER_RECIPE);
         const thumbById = new Map(metas.map((m) => [m.id, m.thumb]));
-        setPlates(chosen.map((p) => ({ ...p, thumb: thumbById.get(p.id) })));
+        setPlateSet({ scope: sheetScope, items: chosen.map((p) => ({ ...p, thumb: thumbById.get(p.id) })) });
       });
     return () => { cancelled = true; };
-  }, [siteKey]);
+  }, [siteKey, sheetScope]);
+
+  const coverId = reading === 'full' && presentation !== 'print' && !openPlate && !openingPlate && pdfState !== 'working'
+    && !photoGallery.shown[0] && !(!activeSaved && mapCapture) ? coverMap?.id : undefined;
+  useEffect(() => {
+    let cancelled = false;
+    setCoverPlate(null);
+    if (coverId) void loadSheetImage(coverId).catch(() => null).then(image => {
+      if (!cancelled && image) setCoverPlate({ scope: sheetScope, id: coverId, image });
+    });
+    return () => { cancelled = true; };
+  }, [coverId, sheetScope]);
+  const savedCoverImage = coverPlate?.scope === sheetScope && coverPlate.id === coverMap?.id
+    ? coverPlate.image : coverMap?.thumb;
 
   const openSheet = useCallback(async (plate: ReportPlate) => {
-    const image = await loadSheetImage(plate.id).catch(() => null);
-    if (image) setOpenPlate({ label: plate.label, image });
-  }, []);
+    setOpeningPlate(true);
+    const existing = coverPlate?.scope === sheetScope && coverPlate.id === plate.id ? coverPlate.image : null;
+    setCoverPlate(null);
+    try {
+      const image = existing ?? await loadSheetImage(plate.id).catch(() => null);
+      if (image) setOpenPlate({ label: plate.label, image });
+    } finally { setOpeningPlate(false); }
+  }, [coverPlate, sheetScope]);
   useEffect(() => {
     const refresh = () => setSavedList(loadReports());
     refresh();
@@ -406,7 +430,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     // A storage refusal (full disk, private mode) is the case that costs the farmer the report.
     // It STAYS on screen until the next attempt succeeds — a message that clears itself after two
     // seconds is the same lie more slowly, because the farmer may not be looking.
-    if (!saved && !isSampleMode()) {
+    if (!saved) {
       setSaveFailed(true);
       setSaveFailedReason(reason ?? 'storage-error');
       return;
@@ -624,11 +648,25 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       // order. See lib/report-plates.ts.
       const sheetMetas = await loadSheetMetas(designSiteIdFromLocation(d)).catch(() => []);
       const plates = selectReportPlates(sheetMetas, PLAN_VERSION, SHEET_RENDER_RECIPE);
+      const coverMap = reportCoverPlate(plates);
+      const coverImages: Array<{ image: string; caption: string }> = [];
+      if (presentation !== 'print' && includeImages) {
+        if (photoGallery.shown[0]) {
+          coverImages.push({ image: photoGallery.shown[0].dataUrl, caption: `${photoGallery.shown[0].label} · Current site evidence; it may postdate saved report text.` });
+        } else if (mapCapture && !activeSaved) {
+          coverImages.push({ image: `data:image/jpeg;base64,${mapCapture}`, caption: 'Captured site satellite view' });
+        } else if (coverMap) {
+          // Match the screen's saved-map cover, but keep only its print-sized copy while
+          // the appendix loads originals sequentially on phones with limited memory.
+          let original = await loadSheetImage(coverMap.id).catch(() => null);
+          const cover = original ? await sheetPlate(original) : null;
+          original = null;
+          if (cover) coverImages.push({ image: cover.dataUrl, caption: `Saved design: ${stripInlineMarkdown(coverMap.label)}` });
+        }
+      }
       const blob = await buildReportPdf(report, {
         visuals: presentation !== 'print' ? visuals : undefined,
-        visualAssets: presentation !== 'print' ? await prepareVisualPdfAssets(visuals, includeImages ? [
-          ...(photoGallery.shown[0] ? [{ image: photoGallery.shown[0].dataUrl, caption: `${photoGallery.shown[0].label} · Current site evidence; it may postdate saved report text.` }] : mapCapture && !activeSaved ? [{ image: `data:image/jpeg;base64,${mapCapture}`, caption: 'Captured site satellite view' }] : []),
-        ] : [], includeImages ? (facts?.crop?.crops ?? []).flatMap(c => {
+        visualAssets: presentation !== 'print' ? await prepareVisualPdfAssets(visuals, coverImages, includeImages ? (facts?.crop?.crops ?? []).flatMap(c => {
           const crop = CROPS.find(x => x.name === c.name);
           const image = crop ? getCropArt(crop.key) : undefined;
           return image ? [{ image, caption: `${c.name} · ${c.sowMonths.join(', ')}` }] : [];
@@ -730,7 +768,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                 ? (saveFailedReason === 'store-full'
                     ? `You have ${MAX_REPORTS} saved reports — delete one to save this`
                     : 'Not saved — no space')
-                : justSaved ? (isSampleMode() ? 'Demo — not saved' : 'Saved') : 'Save'}
+                : justSaved ? 'Saved' : 'Save'}
             </button>
           )}
 
@@ -791,7 +829,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         <div>{([['one', '1-page summary', 'Isifinyezo sekhasi elilodwa'], ['five', '5-page summary', 'Isifinyezo samakhasi amahlanu'], ['full', 'Full report', 'Umbiko ogcwele']] as const).map(([value, en, zu]) => <button key={value} aria-pressed={reading === value} onClick={() => { setReading(value); setPanelOpen(false); }}>{tr(en, zu)}</button>)}</div>
         {reading === 'full' && <label><input type="checkbox" checked={includeImages} onChange={e => setIncludeImages(e.target.checked)} /> {tr('Include photos and maps in PDF', 'Faka izithombe namamephu ku-PDF')}</label>}
       </div>
-      {isSampleMode() && <p className={`${styles.languageNote} no-print`}>Ready-to-read sample report. Generate new report refreshes the complete record from your practice design; no live AI request is made. Language and advice settings apply to live AI reports; sample wording is an English reference with translated summaries where available.</p>}
+      {isSampleMode() && <p className={`${styles.languageNote} no-print`}>Generate new report refreshes the advice from this design. Saved reports stay available while you explore; restarting the workspace clears them. Prepared full advice is in English; translated summaries are available.</p>}
       {language !== (activeSaved?.lang ?? appLang ?? 'en') && report && reading === 'full' && <p className={`${styles.languageNote} no-print`}>{tr('Language changes apply to new reports and summaries. Regenerate to translate the full advice.', 'Ushintsho lolimi lusebenza emibikweni emisha nasezifinyezweni. Khiqiza kabusha ukuhumusha zonke izeluleko.')}</p>}
       <div className="flex-1 flex overflow-hidden">
 
@@ -1091,7 +1129,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
               )}
             </div>
 
-            {reading === 'full' && presentation !== 'print' && <ReportVisualOverview visuals={visuals} stamp={new Date(reportDate).toLocaleDateString('en-ZA', { day: 'numeric', month: 'short', year: 'numeric' })} image={photoGallery.shown[0]?.dataUrl ?? (!activeSaved && mapCapture ? `data:image/jpeg;base64,${mapCapture}` : plates[0]?.thumb)} imageCaption={photoGallery.shown[0] ? `${photoGallery.shown[0].label} · Current site evidence; it may postdate saved report text.` : !activeSaved && mapCapture ? 'Captured site satellite view' : plates[0] ? `Saved design: ${plates[0].label}` : undefined} />}
+            {reading === 'full' && presentation !== 'print' && <ReportVisualOverview visuals={visuals} stamp={new Date(reportDate).toLocaleDateString('en-ZA', { day: 'numeric', month: 'short', year: 'numeric' })} image={photoGallery.shown[0]?.dataUrl ?? (!activeSaved && mapCapture ? `data:image/jpeg;base64,${mapCapture}` : savedCoverImage)} imageCaption={photoGallery.shown[0] ? `${photoGallery.shown[0].label} · Current site evidence; it may postdate saved report text.` : !activeSaved && mapCapture ? 'Captured site satellite view' : coverMap ? `Saved design: ${coverMap.label}` : undefined} />}
 
             {/* Saved places — GPS points for the farm (home, fields, water) */}
             {reading === 'full' && savedPlaces && savedPlaces.length > 0 && (

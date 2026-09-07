@@ -10,7 +10,9 @@
  * handed to a real bank as if it were this farmer's own record, is a far worse failure than any
  * bug in this file's arithmetic — so `buildCreditPackPdf` REFUSES to run at all while sample mode
  * is on. It checks before touching jsPDF, so the refusal does not depend on anything about the PDF
- * pipeline working correctly; it is the first line of the function, full stop.
+ * pipeline working correctly; it is the first line of the function. The separate preview
+ * entry point uses an example identity and a single sample title, so the tour can demonstrate
+ * the complete document without putting the signed-in farmer's identity over practice records.
  */
 
 import { isSampleMode } from './sample-mode';
@@ -18,6 +20,7 @@ import { deliverFile, type FileDelivery } from './file-delivery';
 import { layoutTableColumns } from './report-pdf';
 import { formatInvoiceZar, formatQuantity } from './invoice-document';
 import type { ExpenseCategory, ExpenseLog, ProductionLog, SalesLog } from './db/types';
+import type { SavedInvoice } from './invoices';
 import {
   buildMonthlyCashFlow,
   creditPackCashFlowSummary,
@@ -52,6 +55,7 @@ export interface CreditPackDocumentInput {
   production: ProductionLog[];
   sales: SalesLog[];
   expenses: ExpenseLog[];
+  invoices?: SavedInvoice[];
   /** Defaults to `new Date()`. Exposed for tests, and so the cover date and the trailing-months
    *  window are always computed from the same instant. */
   now?: Date;
@@ -92,12 +96,21 @@ function dateLabel(iso: string | null): string {
  *  throws whatever jsPDF throws if it cannot load — same contract as buildReportPdf. */
 export async function buildCreditPackPdf(input: CreditPackDocumentInput): Promise<Blob> {
   if (isSampleMode()) throw new CreditPackSampleModeError();
+  return buildCreditPackDocument(input, false);
+}
+
+/** A self-contained tour document. It never borrows the signed-in farmer's identity. */
+export async function buildCreditPackPreviewPdf(input: Omit<CreditPackDocumentInput, 'farmer'>): Promise<Blob> {
+  return buildCreditPackDocument({ ...input, farmer: { name: null, farmName: 'Example garden', phone: null } }, true);
+}
+
+async function buildCreditPackDocument(input: CreditPackDocumentInput, preview: boolean): Promise<Blob> {
 
   const now = input.now ?? new Date();
-  const months = buildMonthlyCashFlow(input.sales, input.expenses, now, CREDIT_PACK_TRAILING_MONTHS);
+  const months = buildMonthlyCashFlow(input.sales, input.expenses, now, CREDIT_PACK_TRAILING_MONTHS, input.invoices);
   const consistency = creditPackIncomeConsistency(months);
   const cashFlow = creditPackCashFlowSummary(months, input.expenses);
-  const track = creditPackTrackRecord(input.production, input.sales);
+  const track = creditPackTrackRecord(input.production, input.sales, input.invoices);
 
   const { jsPDF } = await import('jspdf');
   const doc = new jsPDF({ unit: 'pt', format: 'a4' });
@@ -195,7 +208,7 @@ export async function buildCreditPackPdf(input: CreditPackDocumentInput): Promis
   y += 22;
 
   doc.setFont('helvetica', 'normal'); doc.setFontSize(13); setInk(INK.green);
-  doc.text('Farm records — for a lender', M, y);
+  doc.text(preview ? 'Sample farm records — for a lender' : 'Farm records — for a lender', M, y);
   y += 20;
 
   const farmerName = input.farmer.name?.trim();
@@ -303,6 +316,9 @@ export async function buildCreditPackPdf(input: CreditPackDocumentInput): Promis
   /* ── Harvest & sales track record ─────────────────────────────────────── */
   newPage();
   heading('Harvest and sales track record');
+  if (input.invoices?.some(invoice => invoice.status === 'paid')) {
+    paragraph('Cash-flow totals include full paid invoices. Crop weights below use recorded kilograms only; no weight is inferred from boxes, bags or bunches.', 10, 14, INK.text);
+  }
   if (!hasHarvestHistory(track)) {
     emptyNote('No harvests have been logged yet.');
   } else {
@@ -313,7 +329,7 @@ export async function buildCreditPackPdf(input: CreditPackDocumentInput): Promis
     );
   }
   if (!hasSalesHistory(track)) {
-    emptyNote('No sales have been logged yet.');
+    emptyNote('No crop sales with recorded kilograms have been logged yet.');
   } else {
     paragraph(
       `${track.saleEntryCount} sale${track.saleEntryCount === 1 ? '' : 's'} logged, `
@@ -372,8 +388,7 @@ export async function deliverCreditPackPdf(blob: Blob, filename: string): Promis
   return deliverFile(blob, filename, 'ImbewuField Farm Records');
 }
 
-/** True when there is nothing to export — the UI should disable the button rather than let a
- *  farmer generate an empty document with their name on it. */
-export function creditPackReady(production: ProductionLog[], sales: SalesLog[], expenses: ExpenseLog[]): boolean {
-  return creditPackHasAnyRecords(production, sales, expenses);
+/** True when records exist, including paid invoices without recorded crop weights. */
+export function creditPackReady(production: ProductionLog[], sales: SalesLog[], expenses: ExpenseLog[], invoices: SavedInvoice[] = []): boolean {
+  return creditPackHasAnyRecords(production, sales, expenses, invoices);
 }

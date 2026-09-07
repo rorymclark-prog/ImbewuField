@@ -38,6 +38,10 @@ class MemoryStorage {
   clear(): void { this.rows.clear(); }
 }
 
+// Exercise the real sample interception boundary, rather than relying on the report store
+// to make its buttons no-ops. Tour report history must work without touching this backing map.
+Object.defineProperty(globalThis, 'Storage', { configurable: true, value: MemoryStorage });
+
 const local = new MemoryStorage();
 const session = new MemoryStorage();
 const browser = new EventTarget() as EventTarget & {
@@ -51,6 +55,7 @@ Object.defineProperty(globalThis, 'localStorage', { configurable: true, value: l
 Object.defineProperty(globalThis, 'sessionStorage', { configurable: true, value: session });
 
 const { deleteReport, loadReports, saveReport } = await import('../lib/saved-reports.ts');
+const { enterSampleMode, exitSampleMode } = await import('../lib/sample-mode.ts');
 const { accountLocalStorageKey } = await import('../lib/account-local-storage.ts');
 hooks.deregister();
 
@@ -69,6 +74,7 @@ function report(id: string, overrides: Partial<SavedReport> = {}): SavedReport {
 }
 
 function reset(): void {
+  exitSampleMode();
   local.rows.clear();
   session.rows.clear();
   local.throwOnWrite = false;
@@ -164,17 +170,57 @@ test('delete only announces a real change and missing ids are no-ops', () => {
   browser.removeEventListener('imbewu-reports-changed', listener);
 });
 
-test('sample mode cannot read, save or delete the real report store', () => {
+test('sample reports can be saved, reopened, updated and deleted without reading or writing real history', () => {
   reset();
   const real = report('real');
   local.setItem(KEY, JSON.stringify([real]));
-  session.setItem('imbewu_sample_mode', '1');
-  const before = local.getItem(KEY);
+  accountHarness.currentUid = 'farmer-a';
+  assert.equal(saveReport(report('account-report')).saved, true);
+  const before = [...local.rows];
+  assert.equal(enterSampleMode(), true);
 
   assert.deepEqual(loadReports(), []);
-  assert.deepEqual(saveReport(report('demo')), { reports: [], saved: false });
-  assert.deepEqual(deleteReport('real'), []);
-  assert.equal(local.getItem(KEY), before);
+  const first = report('demo');
+  assert.deepEqual(saveReport(first), { reports: [first], saved: true });
+  assert.deepEqual(loadReports(), [first], 'returning to Reports must reopen the saved snapshot');
+  const refreshed = report('demo', { report: '# Updated design', lang: 'zu' });
+  assert.equal(saveReport(refreshed).saved, true);
+  assert.deepEqual(loadReports(), [refreshed], 'saving the same ID refreshes only that snapshot');
+  assert.deepEqual(deleteReport('real'), [refreshed], 'a real ID cannot reach the real store');
+  assert.deepEqual(deleteReport('demo'), []);
+  assert.deepEqual([...local.rows], before, 'neither bare nor account-owned real history changed');
+
+  exitSampleMode();
+  assert.deepEqual(loadReports().map(row => row.id), ['account-report']);
+  assert.equal(local.getItem(KEY), JSON.stringify([real]));
+});
+
+test('report history stays disposable when the sample is restarted or exited', () => {
+  reset();
+  assert.equal(enterSampleMode(), true);
+  assert.equal(saveReport(report('practice')).saved, true);
+  assert.equal(loadReports().length, 1);
+  assert.equal(enterSampleMode(), true);
+  assert.deepEqual(loadReports(), [], 'starting a fresh tour discards the earlier practice history');
+  assert.equal(saveReport(report('another-practice')).saved, true);
+  exitSampleMode();
+  assert.deepEqual(loadReports(), [], 'practice reports never become signed-out real history');
+  accountHarness.currentUid = 'farmer-b';
+  assert.deepEqual(loadReports(), [], 'practice reports never become another account’s history');
+});
+
+test('sample report save and delete notify the chooser without a real storage write', () => {
+  reset();
+  assert.equal(enterSampleMode(), true);
+  let changes = 0;
+  const listener = () => { changes += 1; };
+  browser.addEventListener('imbewu-reports-changed', listener);
+  assert.equal(saveReport(report('practice')).saved, true);
+  assert.equal(changes, 1);
+  assert.deepEqual(deleteReport('practice'), []);
+  assert.equal(changes, 2);
+  assert.equal(local.rows.size, 0);
+  browser.removeEventListener('imbewu-reports-changed', listener);
 });
 
 test("one shared device never exposes farmer A's saved reports to farmer B", () => {

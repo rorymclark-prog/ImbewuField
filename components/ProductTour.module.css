@@ -21,7 +21,10 @@
 .badge{flex-shrink:0;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;width:44px;height:44px;line-height:1.05;font-size:12px;border-radius:50%;color:var(--text-primary);background:var(--bg-1);border:1px solid var(--color-harvest);cursor:pointer}
 .badge strong{font-size:12px;margin-top:2px}
 .dialog{padding:24px;max-width:520px;width:calc(100vw - 24px);max-height:calc(100dvh - 32px);overflow:auto;border:1px solid var(--border);border-radius:22px;background:var(--bg-1);color:var(--text-primary);font:16px/1.6 var(--font-sans),sans-serif}
-.dialog::backdrop{background:rgba(0,0,0,.48)}
+.dialog::backdrop{background:rgba(6,17,10,.68)}
+.featureProgress{display:flex;gap:8px;margin:14px 0 0}
+.featureProgress button{flex:1;min-height:44px;border:0;border-radius:8px;background:linear-gradient(transparent 18px,var(--border) 18px,var(--border) 24px,transparent 24px);cursor:pointer}
+.featureProgress button[aria-current='step']{background:linear-gradient(transparent 18px,#4a8156 18px,#4a8156 24px,transparent 24px)}
 .dialogHead{display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:700;color:var(--text-secondary)}
 .dialogHead button{width:44px;min-height:44px;border:1px solid var(--border);border-radius:50%;font-size:24px;background:var(--bg-1);color:var(--text-primary)}
 .dialog .controls{margin-top:16px}.dialog .controls button,.dialog .controls a{font-size:14px;padding:10px 14px}

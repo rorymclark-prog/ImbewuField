@@ -1,15 +1,39 @@
 'use client';
 
+import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { ArrowUpRight, Sprout, Map, BookOpen, ReceiptText, Users, Building2, BarChart3, FileText, MessageCircle, type LucideIcon } from 'lucide-react';
 import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
 import SettingsButton from '@/components/SettingsButton';
 import { useProductTour } from '@/components/ProductTourProvider';
 import { PRODUCT_TOUR } from '@/lib/sample-tour';
 import styles from '@/components/ProductTour.module.css';
+import cards from './Tour.module.css';
+
+const STOP_ICONS: Record<string, LucideIcon> = {
+  garden: Sprout, planning: Map, learning: BookOpen, business: ReceiptText,
+  mentor: Users, organisation: Building2, funder: BarChart3, report: FileText, next: MessageCircle,
+};
 
 export default function TourPage() {
   const tour = useProductTour();
+  const [pendingStop, setPendingStop] = useState<number | null>(null);
+  // Starting prepares the isolated workspace before go() is allowed to navigate. Wait for
+  // that success instead of sending a fresh visitor to a screen without its tour guidance.
+  useEffect(() => {
+    if (pendingStop === null || !tour) return;
+    if (tour.error) { setPendingStop(null); return; }
+    if (!tour.active) return;
+    setPendingStop(null);
+    tour.go(pendingStop);
+  }, [pendingStop, tour]);
+  function openStop(index: number) {
+    if (!tour?.ready || !tour.allowed(index)) return;
+    if (tour.active) { tour.go(index); return; }
+    setPendingStop(index);
+    tour.start();
+  }
   const minutes = PRODUCT_TOUR.reduce((sum, step) => sum + step.minutes, 0);
   const tried = tour?.done.length ?? 0;
   return <main className={styles.page}><div className={styles.wrap}>
@@ -28,13 +52,19 @@ export default function TourPage() {
     <p className={styles.notice}>This is a practice workspace. People and results are fictional; sample edits reset on reload. Your real project stays separate. Tour progress is kept in this tab. Signed-in accounts retain their existing role access.</p>
     {tried > 0 && !tour?.active && <section className={styles.complete}><h2>{tried === PRODUCT_TOUR.length ? 'You’ve explored the whole tour.' : 'Keep exploring at your own pace.'}</h2><p>{tried} of {PRODUCT_TOUR.length} stops marked as explored. These are your checklist choices, not a training certificate.</p><div className={styles.controls}><Link href="/samples">Explore another role</Link><Link href="/feedback">Request a feature or ask about customisation</Link></div></section>}
     <h2>Nine stops, one connected story.</h2>
-    <p className={styles.hint}>On each screen, use the <strong>Tour</strong> button beside the menu for instructions and the next stop. Mark a stop when you have explored it, or skip ahead.</p>
+    <p className={styles.hint}>Choose any stop below to open its screen and guide. Use the <strong>Tour</strong> button beside the menu to return to the tips or move to another stop.</p>
     {tour?.active && <><p aria-live="polite">{tried} of {PRODUCT_TOUR.length} stops explored</p><progress className={styles.progress} value={tried} max={PRODUCT_TOUR.length} aria-label="Tour progress"/></>}
-    <div className={styles.grid}>{PRODUCT_TOUR.map((step,index) => <article className={styles.card} key={step.id}>
-      <span className={styles.cardMeta}>{String(index+1).padStart(2,'0')} · about {step.minutes} {step.minutes === 1 ? 'minute' : 'minutes'}{tour?.done.includes(step.id) ? ' · Explored' : ''}</span>
-      <h2>{step.title}</h2><p>{step.task}</p>
-      {tour?.active && <button className={styles.primary} disabled={!tour.allowed(index)} onClick={()=>tour.go(index)}>{tour.allowed(index) ? 'Open this stop' : 'Unavailable for this account'}</button>}
-    </article>)}</div>
+    <div className={styles.grid}>{PRODUCT_TOUR.map((step,index) => {
+      const Icon = STOP_ICONS[step.id] ?? Sprout;
+      const allowed = !!tour?.ready && tour.allowed(index);
+      const current = !!tour?.active && tour.current === index;
+      return <article className={`${styles.card} ${cards.card}`} key={step.id} data-tone={index % 3} data-current={current}>
+        <div className={cards.top}><span className={cards.icon} aria-hidden="true"><Icon size={26} strokeWidth={1.75}/></span><span className={styles.cardMeta}>{String(index+1).padStart(2,'0')} · {step.minutes} min{tour?.done.includes(step.id) ? ' · Explored' : ''}</span></div>
+        <h2><button type="button" className={cards.open} data-tour-stop={step.id} aria-label={`Open stop ${index + 1}: ${step.title}`} aria-describedby={`tour-${step.id}-description`} aria-current={current ? 'step' : undefined} disabled={!allowed || pendingStop !== null} onClick={()=>openStop(index)}>{step.title}</button></h2>
+        <p id={`tour-${step.id}-description`} className={cards.description}>{step.task}</p>
+        <span className={cards.action} aria-hidden="true">{pendingStop === index ? 'Opening…' : !tour?.ready ? 'Getting ready…' : allowed ? 'Open stop' : 'Unavailable for this account'}{allowed && <ArrowUpRight size={18}/>}</span>
+      </article>;
+    })}</div>
     <div className={styles.controls}><Link href="/samples/farm">Full farm evidence pack</Link><Link href="/samples">All role workspaces</Link><Link href="/feedback">Feature requests &amp; programme customisation</Link></div>
   </div></main>;
 }

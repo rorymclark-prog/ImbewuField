@@ -3,7 +3,10 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { suspectedDuplicateIncomeIds, DUPLICATE_ROW_NOTE, DUPLICATE_LEDGER_FOOTER } from '@/lib/duplicate-income';
 import Link from 'next/link';
-import { TrendingUp, Scale, Receipt, Plus, Sprout, FileText, Download, Camera, Loader2, Pencil, Trash2, Sparkles, BarChart3 } from 'lucide-react';
+import { TrendingUp, Scale, Receipt, Plus, Sprout, FileText, Download, Camera, Loader2, Pencil, Trash2, Sparkles, BarChart3, Eye } from 'lucide-react';
+import ReceiptPreview, { ReceiptPaper } from '@/components/records/ReceiptPreview';
+import CropIcon from '@/components/CropIcon';
+import styles from './Records.module.css';
 import { onAuthStateChanged, type User } from 'firebase/auth';
 import { getFirebase } from '@/lib/firebase/init';
 import {
@@ -165,7 +168,7 @@ function SummaryCards({ sales, production, expenses, invoices, loading }: Summar
       icon: <TrendingUp size={16} />,
       label: 'Sold this month',
       value: fmtZAR(totalRevenue),
-      color: '#2E6B3A',
+      color: 'var(--record-positive)',
       bg: 'rgba(46,107,58,0.08)',
       border: 'rgba(46,107,58,0.18)',
     },
@@ -173,7 +176,7 @@ function SummaryCards({ sales, production, expenses, invoices, loading }: Summar
       icon: <Receipt size={16} />,
       label: 'Spent this month',
       value: totalSpent ? fmtZAR(totalSpent) : 'R 0',
-      color: '#C07A1E',
+      color: 'var(--record-negative)',
       bg: 'rgba(192,122,30,0.08)',
       border: 'rgba(192,122,30,0.18)',
     },
@@ -247,6 +250,14 @@ interface PhoneRow {
   positive: boolean; // true = money in (green), false = money out (amber)
 }
 
+function RecordDocument({ kind, id, invoices, expenses }: { kind: string; id: string; invoices: SavedInvoice[]; expenses: ExpenseLog[] }) {
+  const invoice = kind === 'invoice' ? invoices.find((row) => row.id === id) : undefined;
+  const expense = kind === 'expense' && isSampleMode() ? expenses.find((row) => row.id === id) : undefined;
+  if (invoice) return <Link className={styles.documentLink} href={`/invoice?view=${encodeURIComponent(invoice.id)}`} aria-label={`View invoice ${invoice.no}`}><Eye size={16} /> Invoice #{String(invoice.no).padStart(4, '0')} · View</Link>;
+  if (expense) return <ReceiptPreview expense={expense} />;
+  return null;
+}
+
 function toPhoneRows(sales: SalesLog[], expenses: ExpenseLog[], invoices: SavedInvoice[]): PhoneRow[] {
   const saleRows: PhoneRow[] = cashLedgerSales(sales, invoices.map((invoice) => invoice.id)).map((s) => ({
     kind: 'sale', id: s.id, iso: s.sold_at ?? '',
@@ -262,8 +273,8 @@ function toPhoneRows(sales: SalesLog[], expenses: ExpenseLog[], invoices: SavedI
     .filter((i) => i.status === 'paid')
     .map((i) => ({
       kind: 'invoice', id: i.id, iso: i.paidAt ?? i.dateISO,
-      title: `Invoice #${i.no} — ${i.billTo || 'No buyer'}`,
-      subtitle: i.paymentMethod ? `Paid · ${paymentMethodLabel(i.paymentMethod)}` : 'Paid invoice',
+      title: i.items.map((item) => item.desc).join(', '),
+      subtitle: `${i.billTo || 'Farm gate'} · ${i.items.map((item) => `${item.qty} ${item.unit}`).join(', ')} · Paid`,
       amount: i.total ?? 0, positive: true,
     }));
   return [...saleRows, ...expenseRows, ...paidInvoiceRows].sort((a, b) => (b.iso ?? '').localeCompare(a.iso ?? ''));
@@ -355,11 +366,12 @@ function SalesLedger({ sales, expenses, invoices, loading, onEditSale, onEditExp
                     {item.subtitle}
                   </p>
                 )}
+                <div className={styles.documents}><RecordDocument kind={item.kind} id={item.id} invoices={invoices} expenses={expenses} /></div>
               </div>
               <div className="flex-shrink-0 text-right">
                 <p
                   className="text-sm font-display font-semibold"
-                  style={{ color: item.positive ? '#2E6B3A' : '#C07A1E' }}
+                  style={{ color: item.positive ? 'var(--record-positive)' : 'var(--record-negative)' }}
                 >
                   {item.positive ? '+' : '-'}{fmtZAR(item.amount)}
                 </p>
@@ -439,6 +451,7 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
   const [form, setForm] = useState<SaleFormState>(emptyForm());
   const [scanning, setScanning] = useState(false);
   const [scanNote, setScanNote] = useState('');
+  const [shownSlip, setShownSlip] = useState<ExpenseLog | null>(null);
   const slipInputRef = useRef<HTMLInputElement>(null);
 
   const isIn = kind === 'in';
@@ -628,13 +641,21 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
         {/* Scan a till slip — Lima reads it and fills the cost in (Money out only) */}
         {!isIn && (
           <div>
-            <button type="button" onClick={() => slipInputRef.current?.click()} disabled={scanning}
+            <button type="button" onClick={() => {
+              if (!isSampleMode()) { slipInputRef.current?.click(); return; }
+              const slip = getSandboxExpenses().find((row) => row.category === 'seed');
+              if (!slip) return;
+              setShownSlip(slip);
+              setForm((f) => ({ ...f, crop: slip.item, price: String(slip.amount), buyer: slip.supplier ?? '', category: slip.category ?? null, enterprise: slip.enterprise ?? null }));
+              setScanNote('The item, supplier and total are ready. Check them against the receipt before saving.');
+            }} disabled={scanning}
               className="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl text-sm font-display font-semibold transition-all"
-              style={{ background: 'rgba(192,122,30,0.1)', border: '1px solid rgba(192,122,30,0.3)', color: '#C07A1E', cursor: scanning ? 'wait' : 'pointer' }}>
+              style={{ background: 'rgba(192,122,30,0.1)', border: '1px solid rgba(192,122,30,0.3)', color: 'var(--record-negative)', cursor: scanning ? 'wait' : 'pointer' }}>
               {scanning ? <Loader2 size={15} className="animate-spin" /> : <Camera size={15} />}
-              {scanning ? 'Lima is reading...' : 'Scan a till slip'}
+              {scanning ? 'Lima is reading...' : isSampleMode() ? 'Read a receipt with Lima' : 'Scan a till slip'}
             </button>
             <input ref={slipInputRef} type="file" accept="image/*" capture="environment" className="hidden" onChange={handleScan} />
+            {shownSlip && <details open><summary>Receipt</summary><ReceiptPaper expense={shownSlip} /></details>}
             {scanNote && (
               <p className="text-xs font-sans mt-2 flex items-start gap-1.5" style={{ color: 'var(--color-muted-strong)' }}>
                 <Sprout size={13} style={{ color: 'var(--color-forest-800)', flexShrink: 0, marginTop: 1 }} />
@@ -822,7 +843,7 @@ function buildLedgerRows(sales: SalesLog[], expenses: ExpenseLog[], production: 
     .map((p) => ({ kind: 'harvest' as const, id: p.id, iso: p.logged_at ?? '', date: fmtDate(p.logged_at), desc: `${p.crop} harvested`, qty: `${p.kg} kg`, inAmt: null, source: 'Yield log', outAmt: null }));
   const invoiceRows: LedgerRow[] = invoices
     .filter((i) => i.status === 'paid' && isInFinancePeriod(i.paidAt, period, now))
-    .map((i) => ({ kind: 'invoice' as const, id: i.id, iso: i.paidAt ?? i.dateISO, date: fmtDate(i.paidAt ?? i.dateISO), desc: `Invoice #${i.no} — ${i.billTo || 'No buyer'}`, qty: '—', inAmt: i.total ?? 0, source: i.paymentMethod ? `Invoice · ${paymentMethodLabel(i.paymentMethod)}` : 'Invoice', outAmt: null }));
+    .map((i) => ({ kind: 'invoice' as const, id: i.id, iso: i.paidAt ?? i.dateISO, date: fmtDate(i.paidAt ?? i.dateISO), desc: i.items.map(item => item.desc).join(', '), qty: i.items.map(item => `${item.qty} ${item.unit}`).join(', '), inAmt: i.total ?? 0, source: i.paymentMethod ? `Invoice · ${paymentMethodLabel(i.paymentMethod)}` : 'Invoice', outAmt: null }));
   // Invoice-generated crop rows carry invoice_id and are deliberately absent from saleRows above:
   // the invoice is the money entry while its linked sale rows supply crop/kg evidence to harvest
   // reconciliation. This remaining heuristic catches a farmer manually entering the same sale as
@@ -869,8 +890,8 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
   function exportCsv() { exportLedgerCsv(rows, period); }
 
   const stats = [
-    { label: 'Income', value: fmtZAR(income), color: '#2E6B3A' },
-    { label: 'Expenses', value: expenseTotal ? fmtZAR(expenseTotal) : '—', color: '#C07A1E' },
+    { label: 'Income', value: fmtZAR(income), color: 'var(--record-positive)' },
+    { label: 'Expenses', value: expenseTotal ? fmtZAR(expenseTotal) : '—', color: 'var(--record-negative)' },
     { label: 'Recorded cash margin', value: fmtZAR(net), color: 'var(--color-forest-800)' },
     { label: 'Yield logged', value: yieldLabel, color: 'var(--color-water)' },
   ];
@@ -890,7 +911,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
             <button onClick={onSeeSample}
               title="Open a fully-worked demo farm. Your own books are not touched."
               className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg font-sans font-semibold transition-all"
-              style={{ background: 'transparent', border: '1px dashed rgba(192,122,30,0.5)', color: '#C07A1E', fontSize: 14, cursor: 'pointer' }}>
+              style={{ background: 'transparent', border: '1px dashed rgba(192,122,30,0.5)', color: 'var(--record-negative)', fontSize: 14, cursor: 'pointer' }}>
               <Sparkles size={15} />See a sample
             </button>
           )}
@@ -908,7 +929,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
             style={{ background: 'var(--color-surface)', border: '1px solid var(--color-border)', color: rows.length ? 'var(--color-ink)' : 'var(--color-muted)', fontSize: 14, cursor: rows.length ? 'pointer' : 'not-allowed' }}>
             <Download size={15} />Export
           </button>
-          <Link href="/invoice" className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg font-sans font-semibold" style={{ background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.3)', color: '#C07A1E', fontSize: 14, textDecoration: 'none' }}>
+          <Link href="/invoice" className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg font-sans font-semibold" style={{ background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.3)', color: 'var(--record-negative)', fontSize: 14, textDecoration: 'none' }}>
             <FileText size={15} />New invoice
           </Link>
           {/* Was a Link to /records back when the harvest form lived behind a different door.
@@ -966,6 +987,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
                 <td className="px-5 py-3 font-sans" style={{ fontSize: 14, color: 'var(--color-muted-strong)', whiteSpace: 'nowrap' }}>{r.date}</td>
                 <td className="px-5 py-3 font-display font-medium" style={{ fontSize: 14, color: 'var(--color-ink)' }}>
                   {r.desc}
+                  <div className={styles.documents}><RecordDocument kind={r.kind} id={r.id} invoices={invoices} expenses={expenses} /></div>
                   {r.duplicateSuspect && (
                     <span className="block font-sans" style={{ fontSize: 12, color: '#B07A1E', marginTop: 2 }}>
                       {DUPLICATE_ROW_NOTE}
@@ -973,9 +995,9 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
                   )}
                 </td>
                 <td className="px-5 py-3 font-sans" style={{ fontSize: 14, color: 'var(--color-muted-strong)', whiteSpace: 'nowrap' }}>{r.qty}</td>
-                <td className="px-5 py-3 font-display font-semibold tabular-nums" style={{ fontSize: 14, color: '#2E6B3A', textAlign: 'right', whiteSpace: 'nowrap' }}>{r.inAmt != null ? fmtZAR(r.inAmt) : '—'}</td>
+                <td className="px-5 py-3 font-display font-semibold tabular-nums" style={{ fontSize: 14, color: 'var(--record-positive)', textAlign: 'right', whiteSpace: 'nowrap' }}>{r.inAmt != null ? fmtZAR(r.inAmt) : '—'}</td>
                 <td className="px-5 py-3 font-sans" style={{ fontSize: 14, color: 'var(--color-muted)' }}>{r.source}</td>
-                <td className="px-5 py-3 font-display font-semibold tabular-nums" style={{ fontSize: 14, color: '#C07A1E', textAlign: 'right', whiteSpace: 'nowrap' }}>{r.outAmt != null ? fmtZAR(r.outAmt) : '—'}</td>
+                <td className="px-5 py-3 font-display font-semibold tabular-nums" style={{ fontSize: 14, color: 'var(--record-negative)', textAlign: 'right', whiteSpace: 'nowrap' }}>{r.outAmt != null ? fmtZAR(r.outAmt) : '—'}</td>
                 <td className="pr-4 py-3">
                   {(r.kind === 'sale' || r.kind === 'expense') && (
                     <button type="button" aria-label="Edit"
@@ -1030,11 +1052,11 @@ function FarmMetrics({ sales, production, expenses, invoices, period, now, loadi
   return (
     <section className="rounded-2xl overflow-hidden" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
       <div className="px-4 py-3" style={{ borderBottom: '1px solid #E2D8C4' }}>
-        <p className="text-xs font-mono uppercase tracking-wider" style={{ color: '#5C5040' }}>Crop performance</p>
-        <p className="text-xs font-sans mt-1" style={{ color: '#8C7A62' }}>Yield leads: it compares growing work even when prices change.</p>
+        <h2 className="text-xl font-display font-semibold" style={{ color: '#203c2c' }}>Crop performance</h2>
+        <p className="text-xs font-sans mt-1" style={{ color: '#5d5143' }}>Yield leads: it compares growing work even when prices change.</p>
       </div>
       {waiting ? (
-        <p className="px-4 py-6 text-xs font-sans" style={{ color: '#8C7A62' }}>Loading crop areas…</p>
+        <p className="px-4 py-6 text-xs font-sans" style={{ color: '#5d5143' }}>Loading crop areas…</p>
       ) : metrics.crops.length === 0 ? (
         <p className="px-4 py-6 text-sm font-display" style={{ color: '#5C5040' }}>No crop activity or crop plan for this {period}.</p>
       ) : (
@@ -1042,15 +1064,15 @@ function FarmMetrics({ sales, production, expenses, invoices, period, now, loadi
           {metrics.crops.map((crop) => (
             <div key={crop.cropKey ?? crop.cropName} className="px-4 py-3">
               <div className="flex items-baseline justify-between gap-3 mb-2">
-                <p className="text-sm font-display font-semibold" style={{ color: '#20190F' }}>{crop.cropName}</p>
-                <p className="text-xs font-sans text-right" style={{ color: crop.areaM2 === null ? '#C07A1E' : '#8C7A62' }}>
+                <p className="text-base font-display font-semibold flex items-center gap-2" style={{ color: '#203c2c' }}><CropIcon cropKey={crop.cropKey ?? ''} icon="🌱" size={40} />{crop.cropName}</p>
+                <p className="text-xs font-sans text-right" style={{ color: crop.areaM2 === null ? '#9E5C08' : '#5d5143' }}>
                   {crop.areaM2 === null ? 'Planted area not recorded' : `${crop.areaM2.toFixed(1)} m² planned`}
                 </p>
               </div>
               <div className="grid grid-cols-3 gap-2">
-                <div><p className="text-xs font-mono uppercase" style={{ color: '#8C7A62' }}>Yield</p><p className="text-sm font-display font-semibold" style={{ color: '#1F4D2B' }}>{crop.hasHarvest ? metricNumber(crop.yieldKgPerM2, 'kg/m²') : 'No harvest logged'}</p></div>
-                <div><p className="text-xs font-mono uppercase" style={{ color: '#8C7A62' }}>Turnover</p><p className="text-sm font-display font-semibold" style={{ color: '#235E86' }}>{crop.hasSale ? metricNumber(crop.turnoverZarPerM2, 'R/m²') : 'No sales logged'}</p></div>
-                <div><p className="text-xs font-mono uppercase" style={{ color: '#8C7A62' }}>Price</p><p className="text-sm font-display font-semibold" style={{ color: '#9E5C08' }}>{crop.hasSale ? metricNumber(crop.priceZarPerKg, 'R/kg') : 'No sales logged'}</p></div>
+                <div><p className="text-xs font-mono uppercase" style={{ color: '#5d5143' }}>Yield</p><p className="text-sm font-display font-semibold" style={{ color: '#1F4D2B' }}>{crop.hasHarvest ? metricNumber(crop.yieldKgPerM2, 'kg/m²') : 'No harvest logged'}</p></div>
+                <div><p className="text-xs font-mono uppercase" style={{ color: '#5d5143' }}>Turnover</p><p className="text-sm font-display font-semibold" style={{ color: '#235E86' }}>{crop.hasSale ? metricNumber(crop.turnoverZarPerM2, 'R/m²') : 'No sales logged'}</p></div>
+                <div><p className="text-xs font-mono uppercase" style={{ color: '#5d5143' }}>Price</p><p className="text-sm font-display font-semibold" style={{ color: '#9E5C08' }}>{crop.hasSale ? metricNumber(crop.priceZarPerKg, 'R/kg') : 'No sales logged'}</p></div>
               </div>
               <p className="text-xs font-sans mt-2" style={{ color: '#5C5040' }}>
                 {crop.hasTaggedCost
@@ -1072,26 +1094,26 @@ function FarmMetrics({ sales, production, expenses, invoices, period, now, loadi
         <div className="px-4 py-3" style={{ borderTop: '1px solid #E2D8C4' }}>
           <div className="flex items-baseline justify-between gap-3">
             <p className="text-xs font-mono uppercase tracking-wider" style={{ color: '#5C5040' }}>Orchard &amp; food forest</p>
-            <p className="text-xs font-sans" style={{ color: '#8C7A62' }}>picked &amp; sold, not per m²</p>
+            <p className="text-xs font-sans" style={{ color: '#5d5143' }}>picked &amp; sold, not per m²</p>
           </div>
           {metrics.perennialCrops.map((row) => (
             <div key={row.cropName} className="mt-3">
               <p className="text-sm font-display font-semibold" style={{ color: '#20190F' }}>{row.cropName}</p>
               <div className="grid grid-cols-3 gap-2 mt-1">
                 <div>
-                  <p className="text-xs font-mono uppercase" style={{ color: '#8C7A62' }}>Picked</p>
+                  <p className="text-xs font-mono uppercase" style={{ color: '#5d5143' }}>Picked</p>
                   <p className="text-sm font-display font-semibold" style={{ color: '#1F4D2B' }}>
                     {row.hasHarvest ? metricNumber(row.harvestedKg, 'kg') : 'No harvest logged'}
                   </p>
                 </div>
                 <div>
-                  <p className="text-xs font-mono uppercase" style={{ color: '#8C7A62' }}>Sold for</p>
+                  <p className="text-xs font-mono uppercase" style={{ color: '#5d5143' }}>Sold for</p>
                   <p className="text-sm font-display font-semibold" style={{ color: '#235E86' }}>
                     {row.hasSale ? fmtZAR(row.turnoverZar) : 'No sales logged'}
                   </p>
                 </div>
                 <div>
-                  <p className="text-xs font-mono uppercase" style={{ color: '#8C7A62' }}>Price</p>
+                  <p className="text-xs font-mono uppercase" style={{ color: '#5d5143' }}>Price</p>
                   <p className="text-sm font-display font-semibold" style={{ color: '#9E5C08' }}>
                     {row.priceZarPerKg !== null ? metricNumber(row.priceZarPerKg, 'R/kg') : 'No sales logged'}
                   </p>
@@ -1107,7 +1129,7 @@ function FarmMetrics({ sales, production, expenses, invoices, period, now, loadi
               )}
             </div>
           ))}
-          <p className="text-xs font-sans mt-3" style={{ color: '#8C7A62' }}>
+          <p className="text-xs font-sans mt-3" style={{ color: '#5d5143' }}>
             These are not rows in the list above because every figure there is worked out per square
             metre of bed, and fruit off a tree does not come off a bed. The sales here are already
             counted in the money below.
@@ -1117,14 +1139,14 @@ function FarmMetrics({ sales, production, expenses, invoices, period, now, loadi
       <div className="px-4 py-3" style={{ background: '#F7F2E9', borderTop: '1px solid #E2D8C4' }}>
         <p className="text-xs font-mono uppercase tracking-wider" style={{ color: '#5C5040' }}>Garden gross margin</p>
         {metrics.gardenMargins.length === 0 ? (
-          <p className="text-xs font-sans mt-1" style={{ color: '#8C7A62' }}>No sales or costs logged for this {period}.</p>
+          <p className="text-xs font-sans mt-1" style={{ color: '#5d5143' }}>No sales or costs logged for this {period}.</p>
         ) : metrics.gardenMargins.map((margin) => (
           <div key={margin.gardenId ?? 'this-farm'} className="flex items-baseline justify-between gap-3 mt-2">
             <p className="text-sm font-display" style={{ color: '#20190F' }}>{margin.gardenId ? `Garden ${margin.gardenId}` : 'This farm'}</p>
             <p className="text-sm font-display font-semibold" style={{ color: '#1F4D2B' }}>{fmtZAR(margin.grossMarginZar)}</p>
           </div>
         ))}
-        <p className="text-xs font-sans mt-1" style={{ color: '#8C7A62' }}>Sales logged minus expenses logged. Shared costs are never guessed into crop profit.</p>
+        <p className="text-xs font-sans mt-1" style={{ color: '#5d5143' }}>Sales logged minus expenses logged. Shared costs are never guessed into crop profit.</p>
       </div>
     </section>
   );
@@ -1305,7 +1327,7 @@ export default function RecordsPage() {
 
   return (
     <div
-      className="flex flex-col overflow-hidden"
+      className={`${styles.page} flex flex-col overflow-hidden`}
       style={{ height: '100dvh', background: 'var(--color-canvas)' }}
     >
       {/* Header */}
@@ -1329,7 +1351,7 @@ export default function RecordsPage() {
         <LessonLink id="finances:overview" label="Learn" />
         <Link href="/invoice"
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-display font-semibold"
-          style={{ background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.3)', color: '#C07A1E', textDecoration: 'none' }}>
+          style={{ background: 'rgba(192,122,30,0.12)', border: '1px solid rgba(192,122,30,0.3)', color: 'var(--record-negative)', textDecoration: 'none' }}>
           <FileText size={13} />Invoice
         </Link>
         <SettingsButton />
@@ -1491,7 +1513,7 @@ export default function RecordsPage() {
                     production={production}
                     expenses={expenses}
                     invoices={invoices}
-                    name={sampling ? 'Ubhejane Creche (sample)' : (user ? (user.displayName ?? 'My farm') : 'My farm')}
+                    name={sampling ? 'Ubhejane Creche' : (user ? (user.displayName ?? 'My farm') : 'My farm')}
                     loading={dataLoading}
                     period={period}
                     setPeriod={setPeriod}
@@ -1557,7 +1579,7 @@ export default function RecordsPage() {
                       type="button"
                       onClick={handleSeeSample}
                       className="w-full flex flex-col items-center justify-center gap-1.5 py-6 px-4 rounded-2xl text-sm font-display font-semibold transition-all"
-                      style={{ background: 'transparent', border: '1px dashed rgba(192,122,30,0.5)', color: '#C07A1E', cursor: 'pointer' }}
+                      style={{ background: 'transparent', border: '1px dashed rgba(192,122,30,0.5)', color: 'var(--record-negative)', cursor: 'pointer' }}
                     >
                       <span className="flex items-center gap-2"><Sparkles size={18} />See a sample — how this book works</span>
                       <span className="font-sans font-normal" style={{ fontSize: 12, color: 'var(--color-muted-strong)', lineHeight: 1.4 }}>

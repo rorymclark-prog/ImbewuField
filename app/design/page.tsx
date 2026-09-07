@@ -2434,7 +2434,9 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
               const hM = it.hM ?? def?.hM;
               if (!Number.isFinite(wM) || !Number.isFinite(hM)) return it;
               const scaled = (v: number) => Math.min(40, Math.max(0.3, v * factor));
-              return { ...it, wM: scaled(wM as number), hM: scaled(hM as number) };
+              return it.defId === 'gate'
+                ? { ...it, wM: scaled(wM as number) }
+                : { ...it, wM: scaled(wM as number), hM: scaled(hM as number) };
             }),
             updatedAt: new Date().toISOString(),
           }));
@@ -2451,6 +2453,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
             items: prev.items.map((it) => {
               if (!selectedItemIdSet.has(it.id)) return it;
               const def = ELEMENTS_BY_ID[it.defId];
+              if (it.defId === 'gate' && dim === 'hM') return it;
               if (def?.shape === 'circle') return { ...it, wM: v, hM: v };
               return { ...it, [dim]: v };
             }),
@@ -2459,6 +2462,7 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
         },
         wM: commonDim('wM'),
         hM: commonDim('hM'),
+        lengthOnly: selectedItems.every((it) => it.defId === 'gate'),
       }
     : null;
 
@@ -4195,6 +4199,7 @@ function ItemEditSheet({
 }) {
   const def = ELEMENTS_BY_ID[item.defId];
   const isRect = def?.shape === 'rect';
+  const isGate = item.defId === 'gate';
   const [label, setLabel] = useState(item.label ?? '');
   const [note, setNote] = useState(item.note ?? '');
   const [status, setStatus] = useState<ElementStatus>(item.status === 'existing' ? 'existing' : 'proposed');
@@ -4212,7 +4217,7 @@ function ItemEditSheet({
     };
     if (Number.isFinite(parsedW) && parsedW > 0) {
       patch.wM = parsedW;
-      patch.hM = isRect ? (Number.isFinite(parsedH) && parsedH > 0 ? parsedH : parsedW) : parsedW;
+      if (!isGate) patch.hM = isRect ? (Number.isFinite(parsedH) && parsedH > 0 ? parsedH : parsedW) : parsedW;
     }
     if (isRect) {
       const parsedRot = parseFloat(rot);
@@ -4317,7 +4322,7 @@ function ItemEditSheet({
 
         <div style={{ display: 'flex', gap: 10 }}>
           <label style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 4, fontSize: 12.5, color: DARK }}>
-            {isRect ? 'Width (m)' : 'Size (m)'}
+            {isGate ? 'Gate length (m)' : isRect ? 'Width (m)' : 'Size (m)'}
             <input
               type="number"
               inputMode="decimal"
@@ -4336,7 +4341,7 @@ function ItemEditSheet({
               }}
             />
           </label>
-          {isRect && (
+          {isRect && !isGate && (
             <label style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 4, fontSize: 12.5, color: DARK }}>
               Height (m)
               <input

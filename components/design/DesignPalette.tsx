@@ -260,6 +260,7 @@ export interface DesignPaletteProps {
     /** Common committed value across the selection, or null when members differ ('—' placeholder). */
     wM: number | null;
     hM: number | null;
+    lengthOnly?: boolean;
   } | null;
   /** The single selected swale's measured route length and optional stated disturbed-ground
    *  width. Blank stays blank: this is a farmer-entered construction note, not a place to infer
@@ -1276,9 +1277,9 @@ export default function DesignPalette({
                   common value, or a '—' placeholder when members differ; typing a number sets
                   that dimension on every selected item (a circle takes it as its diameter). */}
               {([
-                ['wM', sizeControl.wM, t('designPaletteSizeWidth'), t('designPaletteSizeWidthTitle')],
+                ['wM', sizeControl.wM, sizeControl.lengthOnly ? 'Length' : t('designPaletteSizeWidth'), sizeControl.lengthOnly ? 'Gate length in metres' : t('designPaletteSizeWidthTitle')],
                 ['hM', sizeControl.hM, t('designPaletteSizeHeight'), t('designPaletteSizeHeightTitle')],
-              ] as const).map(([dim, committed, label, title]) => (
+              ] as const).filter(([dim]) => !sizeControl.lengthOnly || dim === 'wM').map(([dim, committed, label, title]) => (
                 <span key={dim} style={{ display: 'inline-flex', alignItems: 'center', gap: 3 }}>
                   <span style={{ fontSize: guided ? 12 : 10.5, opacity: 0.75 }}>{label}</span>
                   <input
@@ -2305,7 +2306,7 @@ export default function DesignPalette({
                   whiteSpace stays nowrap only in chip mode, where a wrap would grow the strip. */}
               <span style={{ fontSize: cardsUi ? 11.5 : guided ? 11.5 : 10, fontWeight: cardsUi ? 700 : 600, whiteSpace: cardsUi ? 'normal' : 'nowrap', lineHeight: 1.2 }}>{def.name}</span>
               <span style={{ fontSize: cardsUi ? 10 : guided ? 9.5 : 8.5, opacity: 0.6, whiteSpace: 'nowrap' }}>
-                {def.shape === 'circle' ? `Ø ${def.wM} m` : `${def.wM}×${def.hM} m`}
+                {def.id === 'gate' ? `${def.wM} m long` : def.shape === 'circle' ? `Ø ${def.wM} m` : `${def.wM}×${def.hM} m`}
               </span>
             </span>
           </button>

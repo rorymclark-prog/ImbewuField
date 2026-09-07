@@ -1,0 +1,24 @@
+.card {
+  --stop-ink: #27583b;
+  --stop-tint: #e8f1e8;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+.card[data-tone='1'] { --stop-ink: #285f74; --stop-tint: #e7f0f4; }
+.card[data-tone='2'] { --stop-ink: #865614; --stop-tint: #f8efdf; }
+.card[data-current='true'] { border-color: var(--stop-ink); }
+.card:has(.open:not(:disabled)):hover { border-color: var(--stop-ink); box-shadow: 0 4px 16px #18342112; }
+.top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.icon { width: 48px; height: 48px; display: grid; place-items: center; flex-shrink: 0; border-radius: 14px; background: var(--stop-tint); color: var(--stop-ink); }
+.card .open { display: block; width: 100%; min-height: 44px; padding: 0; border: 0; background: transparent; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+/* A single native button covers the card. Its heading and description stay semantic, with
+   no nested links or click-only article that keyboard users cannot reach. */
+.open::after { content: ''; position: absolute; inset: 0; border-radius: 18px; }
+.card .open:focus-visible { outline: none; }
+.open:focus-visible::after { outline: 3px solid var(--color-harvest); outline-offset: 3px; }
+.card .description { margin-top: 0; font-size: 14px; line-height: 1.5; }
+.action { display: flex; align-items: center; gap: 6px; min-height: 44px; padding-top: 6px; margin-top: auto; color: var(--text-primary); font-size: 14px; font-weight: 650; }
+.card:has(.open:disabled) .action { color: var(--text-secondary); }
+@media (prefers-reduced-motion: reduce) { .card { transition: none; } }

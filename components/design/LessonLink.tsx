@@ -7,6 +7,7 @@
 // asked for: "anything we do on the app must connect to a lesson."
 
 import { useState } from 'react';
+import { createPortal } from 'react-dom';
 import { BookOpen, X } from 'lucide-react';
 import { getLesson } from '@/lib/lesson-registry';
 import { useLanguage } from '@/lib/i18n';
@@ -21,25 +22,25 @@ export default function LessonLink({
 }: {
   id: string;
   label?: string;
-  /** 'link' = quiet inline text button; 'chip' = rounded outlined pill. */
-  tone?: 'link' | 'chip';
+  /** 'menu' keeps the control readable against either drawer theme. */
+  tone?: 'link' | 'chip' | 'menu';
 }) {
   const { t } = useLanguage();
   const resolvedLabel = label ?? t('designLearn');
   const [open, setOpen] = useState(false);
 
   const trigger =
-    tone === 'chip'
+    tone === 'chip' || tone === 'menu'
       ? {
           display: 'inline-flex',
           alignItems: 'center',
           gap: 4,
-          minHeight: 32,
+          minHeight: 44,
           padding: '4px 10px',
           borderRadius: 999,
-          border: `1px solid ${GREEN}`,
+          border: tone === 'menu' ? '1px solid var(--border)' : `1px solid ${GREEN}`,
           background: 'transparent',
-          color: GREEN,
+          color: tone === 'menu' ? 'var(--text-primary)' : GREEN,
           fontSize: 12,
           fontWeight: 700,
           cursor: 'pointer',
@@ -49,6 +50,7 @@ export default function LessonLink({
           alignItems: 'center',
           gap: 4,
           border: 'none',
+          minHeight: 44,
           background: 'transparent',
           color: GREEN,
           fontSize: 12,
@@ -61,6 +63,7 @@ export default function LessonLink({
   return (
     <>
       <button
+        data-header-secondary
         type="button"
         onClick={(e) => {
           e.stopPropagation();
@@ -71,7 +74,7 @@ export default function LessonLink({
         <BookOpen size={13} /> {resolvedLabel}
       </button>
 
-      {open && (
+      {open && createPortal(
         <div
           role="dialog"
           aria-modal="true"
@@ -114,8 +117,8 @@ export default function LessonLink({
                   background: 'transparent',
                   color: GREEN,
                   cursor: 'pointer',
-                  minHeight: 40,
-                  minWidth: 40,
+                  minHeight: 44,
+                  minWidth: 44,
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}
@@ -125,7 +128,7 @@ export default function LessonLink({
             </div>
             <LessonPanel lesson={getLesson(id)} />
           </div>
-        </div>
+        </div>, document.body
       )}
     </>
   );

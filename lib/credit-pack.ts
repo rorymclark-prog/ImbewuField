@@ -23,6 +23,8 @@
 
 import type { ExpenseCategory, ExpenseLog, ProductionLog, SalesLog } from './db/types';
 import { buildCropAliasIndex, cropIdentityMapKey, cropIdentityOf } from './crop-identity';
+import type { SavedInvoice } from './invoices';
+import { cashIncomeTotal, cashLedgerSales, invoiceSalesForPaidInvoice } from './invoice-sales';
 
 /* ── Shared parsing helpers ──────────────────────────────────────────────── */
 
@@ -30,6 +32,12 @@ function parsedDate(iso: string | null | undefined): Date | null {
   if (!iso) return null;
   const ms = Date.parse(iso);
   return Number.isFinite(ms) ? new Date(ms) : null;
+}
+
+type CreditPackInvoiceCash = Pick<SavedInvoice, 'id' | 'status' | 'total' | 'paidAt'>;
+
+function hasDatedPayment(invoice: CreditPackInvoiceCash): boolean {
+  return invoice.status === 'paid' && parsedDate(invoice.paidAt) !== null;
 }
 
 /** A logged amount or weight is never negative here — a bad entry is dropped to zero rather than
@@ -93,13 +101,18 @@ function monthLabelOf(year: number, month0: number): string {
  * income for a period ImbewuField was never in a position to record.
  */
 export function buildMonthlyCashFlow(
-  sales: readonly Pick<SalesLog, 'amount' | 'sold_at'>[],
+  sales: readonly Pick<SalesLog, 'amount' | 'sold_at' | 'invoice_id'>[],
   expenses: readonly Pick<ExpenseLog, 'amount' | 'spent_at'>[],
   now: Date,
   monthsBack: number = CREDIT_PACK_TRAILING_MONTHS,
+  invoices: readonly CreditPackInvoiceCash[] = [],
 ): CreditPackMonth[] {
   if (!Number.isFinite(now.getTime())) return [];
   const nowIdx = monthIndex(now.getFullYear(), now.getMonth());
+  // A bag or box invoice contributes cash even when its weight is unknown. Use the same
+  // ledger authority as My Records so mirrored kg sale rows are never counted twice.
+  const ledgerSales = cashLedgerSales(sales, invoices.map(invoice => invoice.id));
+  const paidInvoices = invoices.filter(hasDatedPayment);
 
   let earliestIdx: number | null = null;
   const noteEarliest = (iso: string | null | undefined) => {
@@ -108,7 +121,8 @@ export function buildMonthlyCashFlow(
     const idx = monthIndex(d.getFullYear(), d.getMonth());
     if (earliestIdx === null || idx < earliestIdx) earliestIdx = idx;
   };
-  for (const row of sales) noteEarliest(row.sold_at);
+  for (const row of ledgerSales) noteEarliest(row.sold_at);
+  for (const invoice of paidInvoices) noteEarliest(invoice.paidAt);
   for (const row of expenses) noteEarliest(row.spent_at);
   if (earliestIdx === null) return []; // nothing dated — no window to build
 
@@ -131,12 +145,24 @@ export function buildMonthlyCashFlow(
     });
   }
 
-  for (const row of sales) {
+  const salesByMonth = new Map<string, typeof ledgerSales>();
+  const invoicesByMonth = new Map<string, CreditPackInvoiceCash[]>();
+  for (const row of ledgerSales) {
     const d = parsedDate(row.sold_at);
     if (!d) continue;
     const bucket = months.get(monthKeyOf(d));
     if (!bucket) continue; // older than the window
-    bucket.incomeZar += nonNegative(row.amount);
+    const rows = salesByMonth.get(bucket.monthKey) ?? [];
+    rows.push({ ...row, amount: nonNegative(row.amount) });
+    salesByMonth.set(bucket.monthKey, rows);
+    bucket.saleCount += 1;
+  }
+  for (const invoice of paidInvoices) {
+    const bucket = months.get(monthKeyOf(parsedDate(invoice.paidAt)!));
+    if (!bucket) continue;
+    const rows = invoicesByMonth.get(bucket.monthKey) ?? [];
+    rows.push({ ...invoice, total: nonNegative(invoice.total) });
+    invoicesByMonth.set(bucket.monthKey, rows);
     bucket.saleCount += 1;
   }
   for (const row of expenses) {
@@ -149,7 +175,10 @@ export function buildMonthlyCashFlow(
   }
 
   const out = [...months.values()].sort((a, b) => a.monthKey.localeCompare(b.monthKey));
-  for (const m of out) m.netZar = m.incomeZar - m.expensesZar;
+  for (const m of out) {
+    m.incomeZar = cashIncomeTotal(salesByMonth.get(m.monthKey) ?? [], invoicesByMonth.get(m.monthKey) ?? []);
+    m.netZar = m.incomeZar - m.expensesZar;
+  }
   return out;
 }
 
@@ -301,6 +330,7 @@ const TOP_CROPS_LIMIT = 6;
 export function creditPackTrackRecord(
   production: readonly ProductionLog[],
   sales: readonly SalesLog[],
+  invoices: readonly SavedInvoice[] = [],
 ): CreditPackTrackRecord {
   const crops = new Map<string, CreditPackCropTotal>();
   const aliases = buildCropAliasIndex();
@@ -349,7 +379,11 @@ export function creditPackTrackRecord(
   let firstSaleIso: string | null = null;
   let lastSaleMs: number | null = null;
   let lastSaleIso: string | null = null;
-  for (const row of sales) {
+  const cropSales = [
+    ...cashLedgerSales(sales, invoices.map(invoice => invoice.id)),
+    ...invoices.flatMap(invoiceSalesForPaidInvoice),
+  ];
+  for (const row of cropSales) {
     const d = parsedDate(row.sold_at);
     if (!d) continue;
     saleEntryCount += 1;
@@ -405,8 +439,11 @@ export function creditPackHasAnyRecords(
   production: readonly ProductionLog[],
   sales: readonly SalesLog[],
   expenses: readonly ExpenseLog[],
+  invoices: readonly CreditPackInvoiceCash[] = [],
 ): boolean {
-  return production.length > 0 || sales.length > 0 || expenses.length > 0;
+  return production.length > 0 || expenses.length > 0
+    || cashLedgerSales(sales, invoices.map(invoice => invoice.id)).length > 0
+    || invoices.some(hasDatedPayment);
 }
 
 /* ── Framing text ────────────────────────────────────────────────────────── */
@@ -418,10 +455,10 @@ export function creditPackHasAnyRecords(
  * collateral-based lending, so the paperwork itself must not overclaim on their behalf either.
  */
 export const CREDIT_PACK_ASSURANCE_ONE_LINE =
-  'A summary of records this farmer logged themselves in ImbewuField — not a credit score, '
+  'A summary of records in ImbewuField — not a credit score, '
   + 'not a loan approval, and not a guarantee of future income. Material for a conversation with a lender.';
 
 export const CREDIT_PACK_FRAMING_PARAGRAPHS: string[] = [
-  'This document summarises the harvests, sales and costs that this farmer has logged in ImbewuField, in their own words and their own numbers. Nothing on the following pages is invented, projected or scored — every figure is a direct total of records already entered.',
+  'This document summarises harvests, sales, paid invoices and costs recorded in ImbewuField. Figures are calculated from the available entries for the stated period. Crop weights use recorded kilograms; no weight is inferred from boxes, bags or bunches.',
   'It is meant to support a conversation with a lender, not to replace one. It is not a credit score, not a loan approval, and not a promise of future income. A lender should still ask their own questions and check these records against bank statements or other evidence.',
 ];

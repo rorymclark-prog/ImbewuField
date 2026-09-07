@@ -1,0 +1,6 @@
+.scroller > button { flex-shrink: 0; white-space: nowrap; min-height: 44px; }
+.scroller > button svg { flex-shrink: 0; }
+.scroller > button:focus-visible { outline: 3px solid #b97518; outline-offset: -3px; }
+@media(max-width:650px) {
+  .scroller > button { padding: 8px 12px; font-size: 14px; line-height: 1.2; }
+}
