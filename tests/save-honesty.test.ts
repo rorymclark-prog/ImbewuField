@@ -25,11 +25,12 @@ test('the report Save button branches on whether the write actually succeeded', 
     /const \{ saved[^}]*\} = saveReport\(/.test(src),
     'ReportView ignores saveReport\'s result again — it returns { saved } for a reason',
   );
-  assert.ok(src.includes('if (!saved && !isSampleMode())'), 'the failure branch is gone');
+  assert.ok(src.includes('if (!saved)'), 'every rejected save must take the failure branch');
   assert.ok(src.includes('setSaveFailed(true)'), 'nothing records the failure');
-  // Sample mode is a DELIBERATE no-op that returns saved:false; it must keep its own honest
-  // label rather than being reported as a storage error.
-  assert.ok(src.includes("'Demo — not saved'"), 'the sample-mode label was lost in the fix');
+  // Rory asked for the complete tour workflow: sample saves now succeed in its isolated
+  // in-memory store. The old assertion required a dead Save button. The invariant is still
+  // that a success label is reached only after a successful write, in either workspace.
+  assert.ok(!src.includes("'Demo — not saved'"), 'the tour still advertises a non-functional save');
 });
 
 test('a failed report save cannot be reported as success', () => {

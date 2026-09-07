@@ -912,19 +912,21 @@ function CreditPackCard({
   production,
   sales,
   expenses,
+  invoices,
   profile,
 }: {
   production: ProductionLog[];
   sales: SalesLog[];
   expenses: ExpenseLog[];
+  invoices: SavedInvoice[];
   profile: Profile | null;
 }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const sampling = isSampleMode();
-  const ready = creditPackHasAnyRecords(production, sales, expenses);
+  const ready = creditPackHasAnyRecords(production, sales, expenses, invoices);
   const [previewOpen, setPreviewOpen] = useState(false);
-  const months = buildMonthlyCashFlow(sales, expenses, new Date());
+  const months = buildMonthlyCashFlow(sales, expenses, new Date(), undefined, invoices);
   const totals = months.reduce((sum, month) => ({ income: sum.income + month.incomeZar, spent: sum.spent + month.expensesZar }), { income: 0, spent: 0 });
   const money = (value: number) => `R ${value.toLocaleString('en-ZA', { maximumFractionDigits: 0 })}`;
 
@@ -938,8 +940,8 @@ function CreditPackCard({
         phone: profile?.phone?.trim() || null,
       };
       const blob = sampling
-        ? await buildCreditPackPreviewPdf({ production, sales, expenses })
-        : await buildCreditPackPdf({ farmer, production, sales, expenses });
+        ? await buildCreditPackPreviewPdf({ production, sales, expenses, invoices })
+        : await buildCreditPackPdf({ farmer, production, sales, expenses, invoices });
       await deliverCreditPackPdf(blob, creditPackPdfFilename(sampling ? 'Sample-summary' : farmer.farmName ?? farmer.name));
     } catch (err) {
       setError(
@@ -1417,7 +1419,7 @@ export default function MyRecords({
         <>
           <Divider />
 
-          <CreditPackCard production={production} sales={sales} expenses={expenses} profile={profile} />
+          <CreditPackCard production={production} sales={sales} expenses={expenses} invoices={invoices} profile={profile} />
 
           <Divider />
 

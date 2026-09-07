@@ -4,7 +4,7 @@ import { useAuth } from '@/lib/auth';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { isSampleMode } from '@/lib/sample-mode';
 import { sampleRead, sampleWrite } from '@/lib/sample-operations';
-import { freshFieldWorkspace, projectFieldWorkspace, validFieldTeam, type FieldTeam, type FieldWorkspace } from '@/lib/field-teams';
+import { completeSampleFieldWorkspace, freshFieldWorkspace, projectFieldWorkspace, validFieldTeam, type FieldTeam, type FieldWorkspace } from '@/lib/field-teams';
 import { samplePortrait } from '@/lib/sample-media';
 import ReportComposer from './ReportComposer';
 import styles from './MelDashboard.module.css';
@@ -22,15 +22,15 @@ export default function FieldTeams({ organisation = false }: { organisation?: bo
   };
   async function reload() {
     setError('');
-    try { if (isSampleMode()) { setData(projectFieldWorkspace(sampleRead('field-teams', freshFieldWorkspace), organisation ? 'sample-organisation' : 'sample-mentor', organisation)); } else { setData(await request()); } }
+    try { if (isSampleMode()) { setData(projectFieldWorkspace(completeSampleFieldWorkspace(sampleRead('field-teams', freshFieldWorkspace)), organisation ? 'sample-organisation' : 'sample-mentor', organisation)); } else { setData(await request()); } }
     catch (e) { setData(null); setError((e as Error).message); }
   }
-  useEffect(() => { let cancelled = false; setData(null); setError(''); if (isSampleMode()) { setData(projectFieldWorkspace(sampleRead('field-teams', freshFieldWorkspace), organisation ? 'sample-organisation' : 'sample-mentor', organisation)); return; } if (!user) return; void request().then(d => { if (!cancelled) setData(d); }).catch(e => { if (!cancelled) setError(e.message); }); return () => { cancelled = true; }; }, [user, org, organisation]); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => { let cancelled = false; setData(null); setError(''); if (isSampleMode()) { setData(projectFieldWorkspace(completeSampleFieldWorkspace(sampleRead('field-teams', freshFieldWorkspace)), organisation ? 'sample-organisation' : 'sample-mentor', organisation)); return; } if (!user) return; void request().then(d => { if (!cancelled) setData(d); }).catch(e => { if (!cancelled) setError(e.message); }); return () => { cancelled = true; }; }, [user, org, organisation]); // eslint-disable-line react-hooks/exhaustive-deps
   async function save(team: boolean) {
     setBusy(true); setError(''); setNotice('');
     try {
       if (isSampleMode()) {
-        const all = sampleRead('field-teams', freshFieldWorkspace);
+        const all = completeSampleFieldWorkspace(sampleRead('field-teams', freshFieldWorkspace));
         if (team) { if (!validFieldTeam(draft)) throw Error('Choose a mentor, location and unique farmer assignments.'); const next = { ...draft, updatedAt: new Date().toISOString() }; sampleWrite('field-teams', { ...all, teams: [...all.teams.filter(t => t.mentorId !== next.mentorId), next] }); }
         else { if (!data?.teams.some(t => t.farmerIds.includes(visit.farmerId))) throw Error('Choose an assigned farmer.'); sampleWrite('field-teams', { ...all, visits: [...all.visits.filter(v => v.id !== visit.id), { ...visit, mentorId: 'sample-mentor' }] }); }
       } else { if (data?.sample) throw Error('This sample has ended. Reopen the workspace.'); await request(team ? { action: 'team', team: draft } : { action: 'visit', ...visit }); }

@@ -4,6 +4,7 @@
 .page :global(input)::placeholder, .page :global(textarea)::placeholder { color: #72634f; opacity: 1; }
 .page :global(.record-paper) { --color-ink:#263b2d; --color-muted:#5d5143; --color-muted-strong:#443b30; --color-border:#d2c7b5; }
 .page :global(header) :global(a[aria-label="ImbewuField home"]) span { color:var(--color-ink) !important; }
+.page :global(header) :global(button[data-header-secondary]) { color:var(--color-muted-strong) !important; }
 .documentLink { display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 6px 10px; border: 1px solid var(--color-border); border-radius: 9px; color: var(--color-muted-strong); font: 12px var(--font-sans), sans-serif; text-decoration: none; }
 .documents { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 5px; }
 @media (max-width: 650px) { .documents { gap: 4px; } }

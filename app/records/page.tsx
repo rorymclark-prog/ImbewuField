@@ -1065,7 +1065,7 @@ function FarmMetrics({ sales, production, expenses, invoices, period, now, loadi
             <div key={crop.cropKey ?? crop.cropName} className="px-4 py-3">
               <div className="flex items-baseline justify-between gap-3 mb-2">
                 <p className="text-base font-display font-semibold flex items-center gap-2" style={{ color: '#203c2c' }}><CropIcon cropKey={crop.cropKey ?? ''} icon="🌱" size={40} />{crop.cropName}</p>
-                <p className="text-xs font-sans text-right" style={{ color: crop.areaM2 === null ? '#C07A1E' : '#8C7A62' }}>
+                <p className="text-xs font-sans text-right" style={{ color: crop.areaM2 === null ? '#9E5C08' : '#5d5143' }}>
                   {crop.areaM2 === null ? 'Planted area not recorded' : `${crop.areaM2.toFixed(1)} m² planned`}
                 </p>
               </div>

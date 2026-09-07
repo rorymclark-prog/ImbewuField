@@ -10,10 +10,13 @@ to presentation, the existing isolated sample data and the receipt reader's usag
 | --- | --- |
 | Phone navigation | Shared 52 px top bar. Settings, page help and role choices stay accessible in the menu. |
 | Mentor | Single-line Training / Field team / Trainees / Messages tabs; simple mobile heading; Groups, Farmers and Visits in one grid. |
+| Programme evidence | Seventeen progress indicators across all seven work areas, with dated observations and evidence notes. Seven visits populate the mentor teams. |
 | Studies | My Studies heading, illustrated module cards, artwork beside every lesson, compact progress and expandable offline downloads. Lesson content and prerequisites are preserved. |
 | Records | Lighter dark cards; readable cream panels and chart headings; crop illustrations; current-month harvest, turnover and price for all planned crops. |
+| Saved sites & reports | Each site card has a miniature of its own saved layout, bed/plot counts and crop illustrations. It opens that site's crop plan; an empty plan offers a starting point. |
+| Report history in the tour | Save, reopen, update and delete report snapshots in the existing disposable sample store. History remains available during exploration and clears when the workspace is restarted; the account's real reports are untouched. |
 | Example books | Profitable invented practice records, with sale and harvest quantities coordinated. Every sale has a paid invoice; the cash ledger counts it once. |
-| Documents | Invoice number and View action open the saved invoice. Expense receipts are drawn from their matching sample expense. The tour can preview/export a lender summary. |
+| Documents | Invoice number and View action open the saved invoice. Expense receipts are drawn from their matching sample expense. The tour can preview/export a lender summary; its cash totals now include all paid invoices once, while crop weights retain only recorded kilograms. |
 | Lima receipts | Prepared receipt fills the demo expense form without an API call. Existing real scanner now records provider token cost in server logs. |
 | Design Map | Replaces Exact Canvas in ordinary preview controls. Paid AI maps remain gated. |
 | Gates | Dedicated move handle, wider touch area, no pointer jump, length-only controls. Finished fence/property lines stop at the opening and the leaf is drawn open. |

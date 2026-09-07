@@ -12,6 +12,7 @@ import test from 'node:test';
 import type { ExpenseLog, ProductionLog, SalesLog } from '@/lib/db/types';
 import { isSampleMode } from '@/lib/sample-mode';
 import { buildCreditPackPdf, buildCreditPackPreviewPdf } from '@/lib/credit-pack-pdf';
+import { formatInvoiceZar } from '@/lib/invoice-document';
 
 const NOW = new Date('2026-08-15T09:00:00.000Z');
 
@@ -65,6 +66,21 @@ test('a real export builds an actual, non-empty PDF', async () => {
   // more sections' worth of headings, tables and paragraphs, so a suspiciously small file means a
   // section silently failed to draw rather than that the content is simply short.
   assert.ok(blob.size > 2000, `PDF looked too small to hold the real document (${blob.size} bytes)`);
+});
+
+test('the exported lender cash flow includes paid non-kg invoices', async () => {
+  const blob = await buildCreditPackPdf({
+    farmer: farmer(), production: [], sales: [], expenses: [], now: NOW,
+    invoices: [{
+      id: 'box-payment', no: 8, billTo: 'Market', dateISO: '2026-07-01T00:00:00.000Z',
+      paidAt: '2026-08-03T00:00:00.000Z', status: 'paid', total: 375,
+      items: [{ desc: 'Spinach', qty: 5, unit: 'box', price: 75 }],
+    }],
+  });
+  const raw = await blob.text();
+  assert.ok(raw.includes(formatInvoiceZar(375)), 'the PDF must contain the payment even without any kg sale rows');
+  // jsPDF may wrap the sentence across text operators; the weight qualification must survive.
+  assert.ok(/no weight is inferred[\s\S]*boxes, bags or bunches/.test(raw), 'the PDF explains why boxes have no inferred kg');
 });
 
 test('an empty farmer (no records at all) still builds — the caller, not this function, decides whether to offer the button', async () => {

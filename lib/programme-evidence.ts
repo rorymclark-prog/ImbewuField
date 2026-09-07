@@ -1,6 +1,6 @@
 import { SAMPLE_BRANDING } from './sample-branding';
 import { validFieldId } from './field-teams';
-import { validProgressArea, type ProgressArea } from './programme-progress';
+import { PROGRESS_TEMPLATES, validProgressArea, type ProgressArea } from './programme-progress';
 
 export type ProgrammeLogo = { label: string; image: string };
 export type ProgrammeBranding = { organisation: ProgrammeLogo; garden: ProgrammeLogo; funder: ProgrammeLogo };
@@ -50,6 +50,97 @@ export function trainingTotals(sessions: TrainingRecord[], asOf: string, dedupli
   return { sessions:records.length, attendances:records.reduce((n,s)=>n+s.presentCount,0), uniqueParticipants:deduplicated ? new Set(records.flatMap(s=>s.attendance.filter(a=>a.present).map(a=>a.id))).size : null };
 }
 export function freshEvidenceData(): EvidenceData {
-  const attendance=[{id:'s1',name:'Nomvula Dlamini (sample)',present:true},{id:'s2',name:'Sipho Nkosi (sample)',present:true}];
-  return { sessions:[{id:'sample-training-1',project:'Demonstration programme',title:'Practical garden planning',date:'2026-08-15',venue:'Example community training garden',latitude:null,longitude:null,facilitator:'Sample mentor',ownerId:'sample-mentor',attendance,presentCount:2,registeredCount:2,report:'Fictional session: participants practised reading a garden plan and recording a harvest.',nextSteps:'Review the next crop plan during the follow-up visit.',assessmentId:'',published:true,photos:[],photoCount:0,updatedAt:'2026-08-15T12:00:00Z'}], milestones:[{id:'sample-training-target',category:'learning',project:'Demonstration programme',title:'Practical training sessions delivered',unit:'sessions',baseline:0,target:4,due:'2026-11-30',owner:'Programme coordinator',method:'Count completed sessions with an attendance register and session report. Cumulative total; repeated attendees are not new people.',published:true,observations:[{date:'2026-08-15',actual:1,evidence:'Fictional demonstration record: sample-training-1.',recordedAt:'2026-08-15T12:00:00Z'}],updatedAt:'2026-08-15T12:00:00Z'}], branding: structuredClone(SAMPLE_BRANDING), people:attendance.map(({id,name})=>({id,name})),assessments:[],canManage:true,canRecord:true,canBrand:true,sample:true,revision:'' };
+  const attendance=[{id:'s1',name:'Nomvula Dlamini',present:true},{id:'s2',name:'Sipho Nkosi',present:true}];
+  const project='Garden delivery · August 2026';
+  // Rory asked the tour to demonstrate a whole programme, not an almost-empty
+  // training register. These invented observations belong only to the disposable
+  // six-garden delivery cohort; they are not added to the live portfolio totals.
+  const examples: { template: string; target: number | null; actual: [number,number]; evidence: [string,string]; baseline?: number }[] = [
+    { template:'gardens', target:6, actual:[2,4], evidence:[
+      'GP-01 and GP-02: dated bed checks show growing crops; the other four gardens are still being prepared.',
+      'GP-01 to GP-04 have planted beds and harvest entries. GP-05 and GP-06 remain in preparation; six distinct garden codes were checked.',
+    ] },
+    { template:'vegetable-area', target:900, actual:[320,640], evidence:[
+      'Bed measurements GP-01 and GP-02: 160 m² planted at each garden. Paths and storage areas excluded.',
+      'Checked bed schedules GP-01 to GP-04: 160 m² per garden, 640 m² combined. No overlap with paths, buildings or restoration strips.',
+    ] },
+    { template:'harvest', target:1800, actual:[540,1260], evidence:[
+      'Harvest register H-08, 1–15 August: 540 kg weighed after subtracting empty-container weight.',
+      'Harvest register H-08, 1–31 August: 1,260 kg from GP-01 to GP-04. Disposition check: 744 kg sold, 432 kg used for food and 84 kg in storage.',
+    ] },
+    { template:'food-distributed', target:600, actual:[180,432], evidence:[
+      'Food-use register F-08: 180 kg retained by participating households or delivered for community meals, with each transfer counted once.',
+      'Food-use register F-08: 432 kg reached 32 distinct households. This is part of the 1,260 kg harvest, not additional production.',
+    ] },
+    { template:'storage', target:30000, actual:[10000,20000], evidence:[
+      'Installation checks W-01 and W-02: two installed 5,000-litre tanks at GP-01 and GP-02.',
+      'Installation checks W-01 to W-04: four installed 5,000-litre tanks, one at each producing garden. The two tanks planned for GP-05 and GP-06 are excluded.',
+    ] },
+    { template:'water-collected', target:null, actual:[6200,14500], evidence:[
+      'Collection log W-08: inlet readings total 6,200 litres during 1–15 August. This measures water collected, not tank size.',
+      'Collection log W-08: inlet readings total 14,500 litres during August. Water drawn from storage is logged separately; the collection total is not water remaining.',
+    ] },
+    { template:'trees', target:90, actual:[72,72], evidence:[
+      'Planting register T-08: 72 individually coded trees established on 8 August across six gardens; no replacement trees included.',
+      'Register T-08 remains at 72 planted trees. The remaining 18 are planned and have not been counted as planted.',
+    ] },
+    { template:'surviving-trees', target:null, baseline:72, actual:[70,67], evidence:[
+      'First check of the fixed 72-tree cohort planted on 8 August: 70 alive and two lost. All original tree codes revisited.',
+      'Follow-up of the same 72 original tree codes: 67 alive and five lost. Replacements are recorded separately and do not increase survival.',
+    ] },
+    { template:'soil', target:6, actual:[2,4], evidence:[
+      'Soil-check sheets S-01 and S-02 have matched baseline and follow-up observations using the same sampling depth and method.',
+      'Sheets S-01 to S-04 contain paired checks for four gardens; GP-05 and GP-06 still need follow-up. Completion is recorded here, not a claim of improved soil.',
+    ] },
+    { template:'restored-area', target:600, actual:[225,450], evidence:[
+      'Restoration map R-08 marks 225 m² of mulched and protected ground outside the vegetable-bed footprints.',
+      'R-08 checks confirm 450 m² under mulch and planted cover across six gardens. Areas are measured once; later vegetation establishment needs another check.',
+    ] },
+    { template:'sales', target:20000, actual:[6200,14880], evidence:[
+      'Sales register INV-GP-08: paid produce invoices total R6,200 for 310 kg during 1–15 August.',
+      'August paid invoices in INV-GP-08 total R14,880 for 744 kg. Recorded input and transport costs are R5,200; turnover is shown here, with costs kept separate.',
+    ] },
+    { template:'paid-work', target:60, actual:[20,44], evidence:[
+      'Work register PW-08: five workers completed 20 paid person-days; one day is six recorded working hours.',
+      'PW-08 and payment records: eight distinct workers completed 44 paid person-days. Repeat days are counted as work days, not new workers.',
+    ] },
+    { template:'households', target:40, actual:[18,32], evidence:[
+      'Household register HH-08: 18 distinct household codes received produce or a recorded garden service; repeat visits deduplicated.',
+      'HH-08: 32 distinct households reached during August, including the households in F-08. Multiple household members and repeat deliveries count once.',
+    ] },
+    { template:'skills', target:12, actual:[2,2], evidence:[
+      'Practical checklist SK-08 for training record sample-training-1: two participants demonstrated reading the bed plan and recording a weighed harvest.',
+      'SK-08 follow-up: the same two participants passed the agreed practical checklist again. Repeat assessments did not add new participants.',
+    ] },
+    { template:'visits', target:12, actual:[3,8], evidence:[
+      'Visit register V-08: three completed garden visits have dated observations and agreed next actions.',
+      'V-08: eight completed visits across six gardens. Two repeat visits are included in the visit count; planned visits are excluded.',
+    ] },
+    { template:'actions', target:12, actual:[4,9], evidence:[
+      'Action register A-08: four of 12 agreed actions have a completion date and a checked result.',
+      'A-08: nine of 12 actions completed. Three remain open: finish GP-05 beds, finish GP-06 beds and collect their follow-up soil checks.',
+    ] },
+  ];
+  const milestones: ProgrammeMilestone[] = examples.map(example=>{
+    const template=PROGRESS_TEMPLATES.find(t=>t.id===example.template)!;
+    return { id:`sample-progress-${template.id}`,project,title:template.title,category:template.category,unit:template.unit,
+      baseline:example.baseline??0,target:example.target,due:'2026-11-30',owner:'Programme coordinator',published:true,
+      method:`${template.method} Scope: six gardens, GP-01 to GP-06; the August 2026 delivery period. Observations on 15 August cover activity to that date; the 1 September observation closes 31 August.`,
+      observations:example.actual.map((actual,index)=>({ date:index===0?'2026-08-15':'2026-09-01',actual,evidence:example.evidence[index],recordedAt:index===0?'2026-08-15T12:00:00Z':'2026-09-01T12:00:00Z' })),
+      updatedAt:'2026-09-01T12:00:00Z',
+    };
+  });
+  return { sessions:[{id:'sample-training-1',project,title:'Practical garden planning',date:'2026-08-15',venue:'Community training garden',latitude:null,longitude:null,facilitator:'Sibusiso Ndlovu',ownerId:'sample-mentor',attendance,presentCount:2,registeredCount:2,report:'Participants practised reading the bed plan, weighing a harvest and completing the production record. Both demonstrated the steps against the practical checklist.',nextSteps:'Review the next crop plan during the follow-up visit.',assessmentId:'',published:true,photos:[],photoCount:0,updatedAt:'2026-08-15T12:00:00Z'}], milestones:[{id:'sample-training-target',category:'learning',project,title:'Practical training sessions delivered',unit:'sessions',baseline:0,target:4,due:'2026-11-30',owner:'Programme coordinator',method:'Count completed sessions with an attendance register and session report. Cumulative total; repeated attendees are not new people.',published:true,observations:[{date:'2026-08-15',actual:1,evidence:'Training register, 15 August: Practical garden planning; two recorded attendances and a completed session report.',recordedAt:'2026-08-15T12:00:00Z'}],updatedAt:'2026-08-15T12:00:00Z'},...milestones], branding: structuredClone(SAMPLE_BRANDING), people:attendance.map(({id,name})=>({id,name})),assessments:[],canManage:true,canRecord:true,canBrand:true,sample:true,revision:'' };
+}
+
+/** Existing tours gain the new examples without replacing a visitor's edits. */
+export function completeSampleEvidence(data: EvidenceData): EvidenceData {
+  if (!data.sample) return data;
+  const fresh=freshEvidenceData();
+  const sessionIds=new Set(data.sessions.map(s=>s.id));
+  const milestoneIds=new Set(data.milestones.map(m=>m.id));
+  return { ...data,
+    sessions:[...data.sessions,...fresh.sessions.filter(s=>!sessionIds.has(s.id))],
+    milestones:[...data.milestones,...fresh.milestones.filter(m=>!milestoneIds.has(m.id))],
+  };
 }

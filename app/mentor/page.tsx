@@ -574,7 +574,7 @@ export default function MentorPage() {
               background: 'transparent',
               border: 'none',
               cursor: 'pointer',
-              color: view === key ? '#1F4D2B' : '#8C7A62',
+              color: view === key ? '#1F4D2B' : '#5C5040',
               borderBottom: view === key ? '2px solid #1F4D2B' : '2px solid transparent',
               marginBottom: -1,
             }}

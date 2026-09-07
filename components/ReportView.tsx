@@ -305,8 +305,8 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   const [justSaved, setJustSaved] = useState(false);
   // saveReport ALREADY returns whether the write succeeded, and this component ALREADY ignored it.
   // A farmer who reads "Saved" and closes the tab has lost the report — it is not recoverable and
-  // nothing warned them. The button has to be able to say so. Sample mode is a separate,
-  // deliberate no-op that returns saved:false on purpose; the label already tells that truth.
+  // nothing warned them. The button has to be able to say so. The same success check now also
+  // applies to the tour, whose saves go into the existing disposable sample store.
   const [saveFailed, setSaveFailed] = useState(false);
   const [saveFailedReason, setSaveFailedReason] = useState<SaveReportReason | null>(null);
   const [copied, setCopied] = useState(false);
@@ -406,7 +406,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     // A storage refusal (full disk, private mode) is the case that costs the farmer the report.
     // It STAYS on screen until the next attempt succeeds — a message that clears itself after two
     // seconds is the same lie more slowly, because the farmer may not be looking.
-    if (!saved && !isSampleMode()) {
+    if (!saved) {
       setSaveFailed(true);
       setSaveFailedReason(reason ?? 'storage-error');
       return;
@@ -730,7 +730,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
                 ? (saveFailedReason === 'store-full'
                     ? `You have ${MAX_REPORTS} saved reports — delete one to save this`
                     : 'Not saved — no space')
-                : justSaved ? (isSampleMode() ? 'Demo — not saved' : 'Saved') : 'Save'}
+                : justSaved ? 'Saved' : 'Save'}
             </button>
           )}
 
@@ -791,7 +791,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
         <div>{([['one', '1-page summary', 'Isifinyezo sekhasi elilodwa'], ['five', '5-page summary', 'Isifinyezo samakhasi amahlanu'], ['full', 'Full report', 'Umbiko ogcwele']] as const).map(([value, en, zu]) => <button key={value} aria-pressed={reading === value} onClick={() => { setReading(value); setPanelOpen(false); }}>{tr(en, zu)}</button>)}</div>
         {reading === 'full' && <label><input type="checkbox" checked={includeImages} onChange={e => setIncludeImages(e.target.checked)} /> {tr('Include photos and maps in PDF', 'Faka izithombe namamephu ku-PDF')}</label>}
       </div>
-      {isSampleMode() && <p className={`${styles.languageNote} no-print`}>Ready-to-read sample report. Generate new report refreshes the complete record from your practice design; no live AI request is made. Language and advice settings apply to live AI reports; sample wording is an English reference with translated summaries where available.</p>}
+      {isSampleMode() && <p className={`${styles.languageNote} no-print`}>Generate new report refreshes the advice from this design. Saved reports stay available while you explore; restarting the workspace clears them. Prepared full advice is in English; translated summaries are available.</p>}
       {language !== (activeSaved?.lang ?? appLang ?? 'en') && report && reading === 'full' && <p className={`${styles.languageNote} no-print`}>{tr('Language changes apply to new reports and summaries. Regenerate to translate the full advice.', 'Ushintsho lolimi lusebenza emibikweni emisha nasezifinyezweni. Khiqiza kabusha ukuhumusha zonke izeluleko.')}</p>}
       <div className="flex-1 flex overflow-hidden">
 

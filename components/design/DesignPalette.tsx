@@ -2306,7 +2306,7 @@ export default function DesignPalette({
                   whiteSpace stays nowrap only in chip mode, where a wrap would grow the strip. */}
               <span style={{ fontSize: cardsUi ? 11.5 : guided ? 11.5 : 10, fontWeight: cardsUi ? 700 : 600, whiteSpace: cardsUi ? 'normal' : 'nowrap', lineHeight: 1.2 }}>{def.name}</span>
               <span style={{ fontSize: cardsUi ? 10 : guided ? 9.5 : 8.5, opacity: 0.6, whiteSpace: 'nowrap' }}>
-                {def.shape === 'circle' ? `Ø ${def.wM} m` : `${def.wM}×${def.hM} m`}
+                {def.id === 'gate' ? `${def.wM} m long` : def.shape === 'circle' ? `Ø ${def.wM} m` : `${def.wM}×${def.hM} m`}
               </span>
             </span>
           </button>

@@ -67,6 +67,8 @@ const STAFF_ROUTES = [
 
 /** Files whose type she reads. Floor of 12px, no allowance. */
 const FARMER_SURFACES: Record<string, string> = {
+  'components/report/SiteCropPlanPreview.tsx': 'saved-site crop previews and their opening links on phones',
+  'components/MiniPlanPlate.tsx': 'shared geometry thumbnail on farmers’ saved-site cards; no visible type',
   'components/records/ReceiptPreview.tsx': 'receipt totals and viewing controls on farmers’ phones',
   'components/ProductTourProvider.tsx': 'tour instructions and navigation must remain readable on farmers’ phones',
   'app/reports/page.tsx': 'farmers choose their saved sites and reports',

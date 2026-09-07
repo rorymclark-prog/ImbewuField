@@ -22,15 +22,15 @@ export default function LessonLink({
 }: {
   id: string;
   label?: string;
-  /** 'link' = quiet inline text button; 'chip' = rounded outlined pill. */
-  tone?: 'link' | 'chip';
+  /** 'menu' keeps the control readable against either drawer theme. */
+  tone?: 'link' | 'chip' | 'menu';
 }) {
   const { t } = useLanguage();
   const resolvedLabel = label ?? t('designLearn');
   const [open, setOpen] = useState(false);
 
   const trigger =
-    tone === 'chip'
+    tone === 'chip' || tone === 'menu'
       ? {
           display: 'inline-flex',
           alignItems: 'center',
@@ -38,9 +38,9 @@ export default function LessonLink({
           minHeight: 44,
           padding: '4px 10px',
           borderRadius: 999,
-          border: `1px solid ${GREEN}`,
+          border: tone === 'menu' ? '1px solid var(--border)' : `1px solid ${GREEN}`,
           background: 'transparent',
-          color: GREEN,
+          color: tone === 'menu' ? 'var(--text-primary)' : GREEN,
           fontSize: 12,
           fontWeight: 700,
           cursor: 'pointer',
@@ -117,8 +117,8 @@ export default function LessonLink({
                   background: 'transparent',
                   color: GREEN,
                   cursor: 'pointer',
-                  minHeight: 40,
-                  minWidth: 40,
+                  minHeight: 44,
+                  minWidth: 44,
                   alignItems: 'center',
                   justifyContent: 'center',
                 }}

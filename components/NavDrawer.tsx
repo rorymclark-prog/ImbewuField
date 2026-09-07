@@ -189,7 +189,7 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
             style={{
               background: 'var(--bg-2)', border: '1px solid var(--border)',
               borderRadius: 8, padding: 7, cursor: 'pointer', color: 'var(--text-secondary)',
-              display: 'flex', alignItems: 'center',
+              display: 'flex', alignItems: 'center', justifyContent: 'center', minWidth: 44, minHeight: 44,
             }}
           >
             <X size={18} strokeWidth={1.8} />
@@ -198,9 +198,9 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
 
         {sample && <section style={{margin:'8px 16px',padding:12,border:'1px solid var(--border)',borderRadius:12}} aria-label="Sample controls"><strong>Sample workspace</strong><p style={{fontSize:12,margin:'6px 0'}}>Practice data · changes stay in this demo.</p><div style={{display:'grid',gap:8}}><Link href="/samples" onClick={onClose} style={{minHeight:44,display:'flex',alignItems:'center'}}>Choose sample view</Link><Link href="/samples/gardens" onClick={onClose} style={{minHeight:44,display:'flex',alignItems:'center'}}>18 gardens &amp; completed reports</Link><Link href="/tour" onClick={onClose} style={{minHeight:44,display:'flex',alignItems:'center'}}>Start the tour</Link><button type="button" onClick={()=>{exitSampleMode();window.location.href='/home';}} style={{minHeight:44,textAlign:'left'}}>Exit sample</button></div></section>}
         <section aria-label="Page controls" style={{ margin: '8px 16px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 12 }}>
-          <SettingsButton />
-          <LessonLink id={pageLesson} label="Page help" />
-          <RoleSwitcher current={navigationRole ?? 'farmer'} />
+          <SettingsButton showLabel />
+          <LessonLink id={pageLesson} label="Page help" tone="menu" />
+          <RoleSwitcher current={navigationRole ?? 'farmer'} inMenu onNavigate={onClose} />
         </section>
         {/* Nav sections */}
         <div style={{ flex: 1, overflowY: 'auto', paddingTop: 8, paddingBottom: 24 }}>
@@ -233,7 +233,7 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
                     onClick={onClose}
                     style={{
                       display: 'flex', alignItems: 'center', gap: 12,
-                      padding: '10px 20px',
+                      padding: '10px 20px', minHeight: 44,
                       textDecoration: 'none',
                       // '#1F4D2B'-derived hardcodes, not var(--badge-bg)/var(--emerald): the earth
                       // theme's --emerald (#3A7518, an "ok"-status olive-green, see globals.css)

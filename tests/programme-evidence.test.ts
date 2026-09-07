@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { freshEvidenceData, trainingTotals, milestoneAt, publishedTraining, validTrainingRecord, validProgrammeMilestone, validProgrammeBranding, validEvidenceImage } from '../lib/programme-evidence';
+import { completeSampleEvidence, freshEvidenceData, trainingTotals, milestoneAt, publishedTraining, validTrainingRecord, validProgrammeMilestone, validProgrammeBranding, validEvidenceImage } from '../lib/programme-evidence';
 import { melCan, memberAccessSummary, programmeCapabilities } from '../lib/mel';
 import { programmeRecordMetrics, PROGRESS_TEMPLATES, progressValue, progressRecordSections } from '../lib/programme-progress';
 import { DEMO_NETWORK } from '../lib/network-demo';
@@ -110,4 +110,50 @@ test('programme totals distinguish unavailable records from recorded zero and pr
 test('indicator suggestions cover the whole programme and do not pre-fill results or numeric targets', () => {
   assert.equal(new Set(PROGRESS_TEMPLATES.map(t=>t.category)).size,7);
   for(const template of PROGRESS_TEMPLATES){assert.ok(template.method);assert.ok(!('target' in template));assert.ok(!('baseline' in template));assert.ok(!('actual' in template));}
+});
+
+test('the funder tour has dated results and evidence in every area of programme work', () => {
+  const data=freshEvidenceData();
+  const categories=['growing','water-energy','land-nature','livelihoods','participation','learning','delivery'];
+  for(const category of categories){
+    const measures=data.milestones.filter(m=>m.category===category);
+    assert.ok(measures.length>0,`${category} must not open an empty category in the tour`);
+    for(const measure of measures){
+      assert.equal(validProgrammeMilestone(measure,'2026-09-07'),true,measure.title);
+      assert.equal(measure.published,true);
+      assert.equal(milestoneAt(measure,'2026-08-01').actual,null);
+      assert.ok(milestoneAt(measure,'2026-09-07').actual!>0,measure.title);
+      assert.ok(measure.observations.every(o=>o.evidence.length>40),measure.title);
+    }
+  }
+  for(const session of data.sessions)assert.equal(validTrainingRecord(session,'2026-09-07'),true);
+  assert.ok(data.milestones.some(m=>m.target===null),'a reading without an agreed target should also be demonstrated');
+});
+
+test('demo programme observations keep production, survival and participant counts coherent', () => {
+  const data=freshEvidenceData();
+  const value=(key:string,date:string)=>milestoneAt(data.milestones.find(m=>m.id===`sample-progress-${key}`)!,date).actual!;
+  for(const date of ['2026-08-15','2026-09-01']){
+    assert.ok(value('food-distributed',date)<=value('harvest',date),'food distribution is part of the recorded harvest');
+    assert.ok(value('surviving-trees',date)<=value('trees',date),'survival cannot exceed the planted cohort');
+    assert.ok(value('skills',date)<=trainingTotals(data.sessions,date).uniqueParticipants!,'repeated practical checks cannot invent new learners');
+  }
+  assert.ok(value('surviving-trees','2026-09-01')<value('surviving-trees','2026-08-15'),'the tour must also demonstrate a decline requiring follow-up');
+});
+
+test('older tours gain programme examples without overwriting edits or duplicating indicators', () => {
+  const fresh=freshEvidenceData();
+  const edited={...fresh.milestones.find(m=>m.category==='water-energy')!,title:'My edited tank check',target:45000,published:false};
+  const custom={...fresh.milestones[0],id:'visitor-indicator',title:'My own agreed indicator'};
+  const stored={...fresh,sessions:[{...fresh.sessions[0],report:'My own session notes'}],milestones:[fresh.milestones[0],edited,custom]};
+  const before=structuredClone(stored);
+  const completed=completeSampleEvidence(stored);
+  assert.deepEqual(stored,before,'hydration must not mutate stored visitor work');
+  assert.deepEqual(completed.milestones.find(m=>m.id===edited.id),edited);
+  assert.deepEqual(completed.milestones.find(m=>m.id===custom.id),custom);
+  assert.equal(completed.sessions[0].report,'My own session notes');
+  assert.equal(new Set(completed.milestones.map(m=>m.id)).size,completed.milestones.length);
+  assert.deepEqual(completeSampleEvidence(completed),completed,'reopening the page must not add duplicate examples');
+  const real={...stored,sample:false};
+  assert.equal(completeSampleEvidence(real),real,'a real organisation must never receive tour observations');
 });

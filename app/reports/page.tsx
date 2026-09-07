@@ -8,6 +8,7 @@ import { FileText, MapPin, Plus, ArrowRight } from 'lucide-react';
 import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
 import SettingsButton from '@/components/SettingsButton';
+import SiteCropPlanPreview from '@/components/report/SiteCropPlanPreview';
 import { useAuth } from '@/lib/auth';
 import { isBackendConfigured } from '@/lib/firebase/init';
 import { isSampleMode } from '@/lib/sample-mode';
@@ -66,11 +67,12 @@ function ReportSites({ loading, signedIn, allowed }: { loading: boolean; signedI
       {!choices.some(c=>c.place) && <div className={styles.card}><h3>No sites saved yet</h3><p>Select a site on the map to begin. Name and save it in the report workspace so you can return here.</p></div>}
       <div className={styles.grid}>{choices.filter(c => c.place).map(choice => { const place=choice.place!; const latest=choice.reports[0]; const href=`/farmer?site=${encodeURIComponent(place.id)}&openReport=1`; return <article className={styles.card} key={choice.siteId}>
         <MapPin size={28} aria-hidden="true"/><h2 style={{marginTop:14}}>{place.name || 'Saved site'}</h2><p>{Math.abs(place.lat).toFixed(5)}°{place.lat<0?'S':'N'} · {Math.abs(place.lon).toFixed(5)}°{place.lon<0?'W':'E'}</p>
+        <SiteCropPlanPreview siteId={choice.siteId} siteName={place.name || 'Saved site'} />
         <p>{latest ? `${choice.reports.length} saved report${choice.reports.length===1?'':'s'} · latest ${new Date(latest.savedAt).toLocaleDateString('en-ZA')}` : 'Ready for its first report'}</p>
         <Link href={href} aria-label={`Open report workspace for ${place.name}`} style={{display:'inline-flex',minHeight:44,alignItems:'center',gap:8,fontWeight:600}}><FileText size={18}/>Open site & generate report <ArrowRight size={16}/></Link>
         {latest&&<p><button disabled={opening} onClick={()=>void openSaved(latest)}>Read latest saved report</button></p>}
       </article>; })}</div></>}
-      {view==='reports'&&<><h2>Saved reports</h2><p>Open an earlier report without generating it again. Each report retains its saved text and site snapshot.</p>{!reports.length&&<p>{sample?'Sample reports can be viewed and exported. Saving report history is available in your own workspace.':'No saved reports yet. Open a saved site, generate its report and choose Save.'}</p>}{choices.filter(c=>c.reports.length).map(choice=><section className={styles.card} style={{marginBottom:16}} key={choice.siteId}><h3>{choice.place?.name??'Reports from places not saved as sites'}</h3>{!choice.place&&<p>These reports remain available even if their saved pin was removed.</p>}{choice.reports.map(report=><p key={report.id}><button disabled={opening} onClick={()=>void openSaved(report)}>{report.name} · {new Date(report.savedAt).toLocaleString('en-ZA')}</button></p>)}</section>)}</>}
+      {view==='reports'&&<><h2>Saved reports</h2><p>Open an earlier report without generating it again. Each report retains its saved text and site snapshot.</p>{!reports.length&&<p>No saved reports yet. Open a saved site, generate its report and choose Save.</p>}{choices.filter(c=>c.reports.length).map(choice=><section className={styles.card} style={{marginBottom:16}} key={choice.siteId}><h3>{choice.place?.name??'Reports from places not saved as sites'}</h3>{!choice.place&&<p>These reports remain available even if their saved pin was removed.</p>}{choice.reports.map(report=><p key={report.id}><button disabled={opening} onClick={()=>void openSaved(report)}>{report.name} · {new Date(report.savedAt).toLocaleString('en-ZA')}</button></p>)}</section>)}</>}
     </>}
   </div></main>;
 }

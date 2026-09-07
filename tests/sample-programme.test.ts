@@ -75,7 +75,7 @@ test('owner access editor remains scoped to the selected NGO and cannot demote i
 // Stateful demos must preserve the same publication and assignment rules as live work.
 import { changeSampleAssessment, sampleAssessments } from '../lib/sample-programme';
 import { freshSampleAreas, upsertSampleArea, sampleRead, sampleWrite } from '../lib/sample-operations';
-import { freshFieldWorkspace, projectFieldWorkspace, validFieldTeam } from '../lib/field-teams';
+import { completeSampleFieldWorkspace, freshFieldWorkspace, projectFieldWorkspace, validFieldTeam } from '../lib/field-teams';
 
 test('opening a sample assessment needs participants and never invents completed responses', () => {
   const fresh = freshSampleProgramme();
@@ -199,6 +199,36 @@ test('three demo mentors each receive fifteen distinct gardens without cross-tea
     assert.ok(gardeners.every(p => p.gardenName && p.gardenAreaM2 && p.gardenAreaM2 > 0));
     assert.equal(new Set(gardeners.map(p => p.gardenType)).size, 5);
   }
+});
+
+test('each mentor opens useful dated visit examples for their own assigned farmers', () => {
+  const data=freshFieldWorkspace();
+  assert.equal(new Set(data.visits.map(v=>v.id)).size,data.visits.length);
+  assert.ok(data.people.every(p=>!p.name.includes('(sample)')));
+  for(const team of data.teams){
+    const view=projectFieldWorkspace(data,team.mentorId,false);
+    assert.ok(view.visits.length>0,'the visit report should demonstrate completed work');
+    assert.ok(view.visits.every(v=>v.mentorId===team.mentorId&&team.farmerIds.includes(v.farmerId)));
+    assert.ok(view.visits.every(v=>v.date<='2026-09-07'&&v.notes.length>60));
+  }
+  const primary=projectFieldWorkspace(data,'sample-mentor',false);
+  assert.ok(new Set(primary.visits.map(v=>v.farmerId)).size>1,'show support across the group');
+});
+
+test('visit hydration preserves practice records and respects changed team assignments', () => {
+  const fresh=freshFieldWorkspace();
+  const first=fresh.visits[0];
+  const edited={...first,notes:'My edited field notes'};
+  const stored={...fresh,people:fresh.people.map(p=>({...p,name:`${p.name} (sample)`})),visits:[edited],teams:fresh.teams.filter(t=>t.mentorId==='sample-mentor')};
+  const before=structuredClone(stored);
+  const next=completeSampleFieldWorkspace(stored);
+  assert.deepEqual(stored,before);
+  assert.deepEqual(next.visits.find(v=>v.id===first.id),edited);
+  assert.ok(next.visits.every(v=>v.mentorId==='sample-mentor'),'removed teams must not regain visit records');
+  assert.ok(next.people.every(p=>!p.name.includes('(sample)')));
+  assert.deepEqual(completeSampleFieldWorkspace(next),next);
+  const real={...stored,sample:false};
+  assert.equal(completeSampleFieldWorkspace(real),real);
 });
 
 // Demo identities must not regress to blank initials or missing public files.
