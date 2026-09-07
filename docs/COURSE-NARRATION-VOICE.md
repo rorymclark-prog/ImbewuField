@@ -1,5 +1,13 @@
 # Course narration voice
 
+## Latest recording status — 7 September 2026
+
+Rory has now explicitly approved the Microsoft transfer. All 185 English clips
+for the nine remaining modules are recorded and saved for review, with nine full
+listening tracks. No replacement is activated yet. See
+`ENGLISH-NARRATION-REVIEW-2026-09-07.md` for counts, verification and remaining review.
+The eight-clip checkpoint below describes the earlier interrupted run.
+
 ## Production decision — 7 September 2026
 
 Rory asked for narration consistent with the completed Seeds module and authorised

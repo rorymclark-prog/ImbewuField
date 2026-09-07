@@ -89,6 +89,13 @@ Requires sharp and ffmpeg. New media metadata in `lib/course-deck.ts` must be up
 if a different encoder changes file sizes. QA files are temporary; the generator and
 final movies/posters are versioned.
 
+## Later approved recording run
+
+After this demonstration update, Rory explicitly approved the Microsoft transfer.
+All 185 English clips and nine full tracks are now saved for review. See
+`ENGLISH-NARRATION-REVIEW-2026-09-07.md`. The interrupted eight-clip checkpoint below
+is historical; the transfer-permission blocker for these scripts is resolved.
+
 ## Narration and remaining release work
 
 Leah remains the English target, Thando the isiZulu target. The actual on-disk voice
