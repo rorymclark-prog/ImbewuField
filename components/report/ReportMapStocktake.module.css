@@ -4,7 +4,7 @@
 .stocktake summary span { display: inline-block; margin-left: 14px; }
 .stocktake p { margin: 14px 0; }
 .row { display: grid; grid-template-columns: minmax(140px, .8fr) minmax(180px, 1.4fr) minmax(170px, 1fr); gap: 16px; align-items: center; padding: 16px 0; border-top: 1px solid var(--report-border); }
-.row small { display: block; color: var(--report-muted); margin-top: 4px; }
+.row small { display: block; font-size: 12px; color: var(--report-muted); margin-top: 4px; }
 .row select, .stocktake button { width: 100%; min-height: 44px; padding: 8px; border: 1px solid var(--report-border); border-radius: 8px; background: var(--report-paper); color: var(--report-ink); }
 .row select + select { margin-top: 8px; }
 .actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }

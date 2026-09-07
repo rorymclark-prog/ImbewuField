@@ -35,7 +35,7 @@ export default function ReportMapStocktake({ maps, selectedIds, siteId, scope, d
   const disabled = busy || readyScope !== scope;
   return <details className={styles.stocktake}>
     <summary><strong>{tr('Map checklist & report selection', 'Uhlu lwamamephu nokukhetha umbiko')}</strong><span>{covered}/9 {tr('map types saved', 'izinhlobo zamamephu ezigciniwe')} · {reviewed}/{required.length} {tr('reviewed', 'kubuyekeziwe')} · {selectedIds.length} {tr('included', 'kufakiwe')}</span></summary>
-    <p>{tr('Choose one version per map type. Saving a map records it here; mark it reviewed when you are happy with it. All other versions stay in your saved maps.', 'Khetha inguqulo eyodwa yohlobo ngalunye lwemephu. Maka ukuthi ibuyekeziwe uma wenelisekile ngayo. Ezinye izinguqulo zihlala zigciniwe.')}</p>
+    <p>{tr('Choose one version per map type. Saving a map records it here; mark it reviewed when you are happy with it. All other versions stay in your saved maps. Changing attachments does not rewrite saved advice.', 'Khetha inguqulo eyodwa yohlobo ngalunye lwemephu. Maka ukuthi ibuyekeziwe uma wenelisekile ngayo. Ezinye izinguqulo zihlala zigciniwe. Ukushintsha amamephu akushintshi iseluleko esigciniwe.')}</p>
     {error && <p role="alert">{error}</p>}
     {!!missingIds.length && <p role="status">{tr('Some selected maps are unavailable in this browser. They have not been replaced.', 'Amanye amamephu akhethiwe awatholakali kulesi siphequluli. Awakafakwa amanye esikhundleni sawo.')} <button disabled={disabled} onClick={() => onSelect(selectedIds.filter(id => !missingIds.includes(id)))}>{tr('Remove unavailable selections', 'Susa ukukhetha okungatholakali')}</button></p>}
     <div className={styles.list}>{types.map(type => {
