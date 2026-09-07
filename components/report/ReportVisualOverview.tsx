@@ -18,11 +18,11 @@ export function ReportChartCard({ chart, ink = false }: { chart: ReportChart; in
   </figure>;
 }
 
-export default function ReportVisualOverview({ visuals, image, imageCaption, ink = false, compact = false, stamp, children }: { visuals: ReportVisuals; image?: string; imageCaption?: string; ink?: boolean; compact?: boolean; stamp?: string; children?: React.ReactNode }) {
+export default function ReportVisualOverview({ visuals, image, imageCaption, imageKind = 'map', ink = false, compact = false, stamp, children }: { visuals: ReportVisuals; image?: string; imageCaption?: string; imageKind?: 'photo' | 'map'; ink?: boolean; compact?: boolean; stamp?: string; children?: React.ReactNode }) {
   return <div className={`${styles.visual} ${ink ? styles.ink : ''}`} data-report-visuals>
     <header className={styles.hero}>
       <div className={styles.heroCopy}><div className={styles.edition}><span>IMBEWUFIELD / SITE REPORT</span>{stamp && <time>{stamp}</time>}</div><h1>{visuals.title}</h1><p>{visuals.subtitle}</p></div>
-      {!ink && image && <figure className={styles.heroFigure}><img data-photo-preview src={image} alt={imageCaption ?? visuals.title} /><figcaption>{imageCaption}</figcaption></figure>}
+      {!ink && image && <figure className={`${styles.heroFigure} ${imageKind === 'photo' ? styles.heroPhoto : ''}`}><img data-photo-preview src={image} alt={imageCaption ?? visuals.title} /><figcaption>{imageCaption}</figcaption></figure>}
     </header>
     <div className={styles.metrics}>{visuals.metrics.map(metric => <div key={metric.label}><span>{metric.label}</span><strong>{metric.value}</strong><small>{metric.note}</small></div>)}</div>
     <p className={styles.basis}>{visuals.basis}</p>

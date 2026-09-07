@@ -44,12 +44,12 @@
   outline-offset: 3px;
 }
 
-.column { min-width: 0; padding: 24px; }
+.column { min-width: 0; padding: 16px; }
 .document {
   width: 100%;
   max-width: 1180px;
   margin: 0 auto;
-  padding: 36px;
+  padding: 24px;
   background: var(--report-paper);
   border: 1px solid var(--report-border);
   border-radius: 20px;
@@ -146,3 +146,18 @@
 
 /* Long translated choices must wrap rather than clip in the settings rail. */
 .workspace button { white-space: normal; overflow-wrap: anywhere; }
+
+.versionDetails { max-width:1180px; margin:0 auto 12px; padding:12px 16px; border:1px solid var(--report-border); border-radius:10px; background:var(--report-paper); font-size:13px; line-height:1.6; }
+.versionDetails summary { cursor:pointer; min-height:44px; }
+.versionDetails summary strong { margin-right:12px; }
+.versionDetails summary span { display:block; color:var(--report-muted); }
+.versionDetails dl { margin-top:12px; }
+.versionDetails dl > div { display:grid; grid-template-columns:150px minmax(0,1fr); gap:12px; padding:5px 0; }
+.versionDetails dt { color:var(--report-muted); }
+.versionDetails dd { margin:0; overflow-wrap:anywhere; }
+.settingsNote { font-size:13px; line-height:1.5; margin:12px 0; }
+.settingsNote p { margin:6px 0; color:var(--report-muted); }
+.readingControls select { min-height:44px; max-width:150px; background:var(--report-paper); color:var(--report-ink); border:1px solid var(--report-border); border-radius:8px; padding:6px; }
+.sidebar fieldset { border:0; padding:0; margin:0; min-width:0; }
+.sidebar button[aria-pressed='true'] { box-shadow:inset 3px 0 0 var(--report-green); font-weight:700; }
+@media (max-width:767px) { .versionDetails { margin:10px; } .versionDetails dl > div { grid-template-columns:1fr; gap:0; } }

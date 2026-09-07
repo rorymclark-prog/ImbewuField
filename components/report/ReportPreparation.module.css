@@ -1,6 +1,6 @@
-.preparation { margin:20px; padding:18px 22px; border:1px solid #b9cdbb; border-radius:14px; background:var(--report-panel,#f2f7f0); color:var(--report-ink,#213c2b); font-size:14px; line-height:1.6; }
+.preparation { margin:0 auto 12px; max-width:1180px; padding:10px 16px; border:1px solid #b9cdbb; border-radius:14px; background:var(--report-panel,#f2f7f0); color:var(--report-ink,#213c2b); font-size:14px; line-height:1.6; }
 .preparation summary { cursor:pointer; min-height:44px; }
-.preparation summary strong { font-size:18px; margin-right:16px; }
+.preparation summary strong { font-size:15px; margin-right:16px; }
 .preparation summary span { display:inline-block; font-size:13px; }
 .preparation p { margin:12px 0; }
 .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,255px),1fr)); gap:16px; margin:20px 0; }
