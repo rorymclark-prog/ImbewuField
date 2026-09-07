@@ -8,9 +8,9 @@ import {
   formatBytes,
   resolveDeckLang,
   slideAudioUrl,
-  slideImageFor,
+  slideImagesFor,
 } from '@/lib/course-deck';
-import { trackTitle } from '@/lib/course-audio';
+import { availableNarrationLanguages, narrationHoldReason, trackTitle } from '@/lib/course-audio';
 import { COURSE_NARRATION } from '@/lib/course-audio';
 import { COURSE_CACHE } from '@/lib/offline-cache';
 
@@ -68,7 +68,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   const [lang, setLang] = useState(appLang);
   useEffect(() => { setLang(appLang); }, [appLang]);
   const slideLang = resolveDeckLang(moduleId, lang);
-  const languages = narration?.languages ?? [];
+  const languages = availableNarrationLanguages(moduleId);
 
   const slides = useMemo(
     () => (deck?.slides ?? []).filter((s) => !lessonId || s.lesson === lessonId),
@@ -86,6 +86,10 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   // is a lesson.
   const [running, setRunning] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const advancedSlide = useRef<number | null>(null);
+  const silentReadingElapsed = useRef(false);
+  useEffect(() => { advancedSlide.current = null; }, [index, lang, running]);
 
   const current = slides[index];
   const total = slides.length;
@@ -124,6 +128,12 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   // Stop button that stops nothing.
   useEffect(() => {
     const el = audioRef.current;
+    const video = videoRef.current;
+    if (!running) video?.pause();
+    else if (video?.paused) {
+      if (video.ended) video.currentTime = 0;
+      video.play()?.catch(() => setRunning(false));
+    }
     if (!el) return;
     el.pause();
     el.currentTime = 0;
@@ -160,15 +170,23 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
 
   // When a clip ends, turn the page. On the last slide, stop rather than loop.
   const advance = useCallback(() => {
+    // Audio and video can emit ended in the same tick; that still means one page turn.
+    if (advancedSlide.current === index) return;
+    advancedSlide.current = index;
     setIndex((i) => {
       if (i >= total - 1) { setRunning(false); return i; }
       return i + 1;
     });
-  }, [total]);
+  }, [total, index]);
 
   const onNarrationEnded = useCallback(() => {
-    if (running) advance();
+    // A short spoken sentence must not hide the last action in a longer demonstration.
+    if (running && (!videoRef.current || videoRef.current.ended)) advance();
   }, [running, advance]);
+
+  const onDemonstrationEnded = useCallback(() => {
+    if (running && (audioForCurrent ? audioRef.current?.ended : silentReadingElapsed.current)) advance();
+  }, [running, audioForCurrent, advance]);
 
   // A SLIDE WITH NO NARRATION MUST NOT END THE LESSON.
   //
@@ -181,10 +199,15 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   // Long enough to actually read the slide, since that is all there is to do on it.
   const SILENT_SLIDE_MS = 7000;
   useEffect(() => {
+    silentReadingElapsed.current = false;
     if (!running || audioForCurrent) return;
-    const t = setTimeout(advance, SILENT_SLIDE_MS);
+    const readingFrames = current ? slideImagesFor(moduleId, lang, current.slide).length : 1;
+    const t = setTimeout(() => {
+      silentReadingElapsed.current = true;
+      if (!videoRef.current || videoRef.current.ended) advance();
+    }, SILENT_SLIDE_MS * Math.max(1, readingFrames));
     return () => clearTimeout(t);
-  }, [running, audioForCurrent, advance]);
+  }, [running, audioForCurrent, advance, index, current, moduleId, lang]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -212,11 +235,16 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
 
   if (!deck || !slideLang || !current) return null;
 
-  const img = slideImageFor(moduleId, lang, current.slide);
+  const frameImages = slideImagesFor(moduleId, lang, current.slide);
+  const img = frameImages[0];
+  const continuationImages = frameImages.slice(1);
+  const illustratedOpening = img?.url.endsWith('/cover.jpg');
+  const illustratedFront = illustratedOpening || img?.url.endsWith('-front.jpg');
   const anim = animationUrls(moduleId, current.slide);
   const audio = audioForCurrent;
   const track = narration?.tracks.find((t) => t.slide === current.slide);
   const heading = track ? trackTitle(track, lang) : current.title;
+  const holdReason = narrationHoldReason(moduleId, lang) ?? narrationHoldReason(moduleId, slideLang.lang);
   const isPlaying = playing.has(current.slide);
 
   return (
@@ -261,10 +289,13 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
       >
         {isPlaying && anim ? (
           <video
+            key={`${moduleId}-${current.slide}-${lang}`}
+            ref={videoRef}
             src={anim.video}
             poster={anim.poster}
             autoPlay
-            loop
+            onEnded={onDemonstrationEnded}
+            onError={() => setRunning(false)}
             muted
             playsInline
             controls
@@ -273,7 +304,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
         ) : (
           // eslint-disable-next-line @next/next/no-img-element
           <img
-            src={anim ? anim.poster : (img?.url ?? '')}
+            src={illustratedFront ? img.url : anim ? anim.poster : (img?.url ?? '')}
             alt={heading}
             loading="lazy"
             style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }}
@@ -293,6 +324,38 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
         )}
       </div>
 
+      {anim?.description && (
+        <p lang="en" style={{ margin: 0, color: INK, fontSize: 15, lineHeight: 1.6 }}>
+          {lang !== 'en' && <strong>English explanation: </strong>}{anim.description}
+        </p>
+      )}
+
+      {illustratedFront || anim ? (
+        <details style={{ color: INK }}>
+          <summary style={{ cursor: 'pointer', padding: '8px 0', fontSize: 14 }}>{illustratedOpening ? 'Read the introduction' : 'Read this slide'}</summary>
+          {(illustratedFront ? continuationImages : frameImages).map((frame, part) => (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img key={frame.url} src={frame.url} alt={`${heading}, reading part ${part + 1}`} loading="lazy"
+              style={{ display: 'block', width: '100%', height: 'auto', marginTop: 8, borderRadius: 10 }} />
+          ))}
+        </details>
+      ) : continuationImages.map((frame, part) => (
+        // These belong to the same spoken slide. Keeping them visible together avoids inventing
+        // a timing split or restarting the recording halfway through a teaching instruction.
+        <figure key={frame.url} style={{ margin: 0 }}>
+          <figcaption style={{ color: MUTED, fontSize: 12, fontWeight: 700, marginBottom: 5 }}>
+            {heading} · continued {part + 1}
+          </figcaption>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={frame.url} alt={`${heading}, continued ${part + 1}`} loading="lazy"
+            style={{ display: 'block', width: '100%', height: 'auto', borderRadius: 10 }} />
+        </figure>
+      ))}
+
+      {!audio && holdReason && (
+        <p role="status" style={{ margin: 0, color: MUTED, fontSize: 13, lineHeight: 1.5 }}>{holdReason}</p>
+      )}
+
       {audio && (
         <audio
           ref={audioRef}
@@ -308,12 +371,32 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
       )}
 
       {img && !img.exact && (
-        // Only on the slide it is actually true of. A localized deck can have one missing asset,
-        // so saying "these slides are in English" across the whole module would be false for the
-        // rest of the lesson and would make a finished lesson look unfinished.
-        <p style={{ margin: 0, fontSize: 11.5, lineHeight: 1.4, color: MUTED }}>
-          This one slide is only in English. The spoken lesson is in your language.
-        </p>
+        slideLang.exact ? (
+          // A GENUINE ONE-SLIDE GAP: this deck IS in the learner's language and a single asset is
+          // absent. Saying "these slides are in English" across the whole module would be false for
+          // the rest of the lesson and would make a finished lesson look unfinished.
+          <p style={{ margin: 0, fontSize: 11.5, lineHeight: 1.4, color: MUTED }}>
+            This one slide is only in English. The spoken lesson is in your language.
+          </p>
+        ) : index === 0 ? (
+          // THE WHOLE DECK IS ENGLISH, which is a different fact and needs different words.
+          //
+          // The sentence above was written when Seeds — isiZulu throughout, with one missing
+          // slide — was the only deck. The moment an English-only deck shipped (intro-permaculture,
+          // the first generated one), an isiZulu learner met "This one slide is only in English"
+          // on every slide in the module: the whole-module apology this file's own rule forbids,
+          // repeated 22 times, and its second sentence was a lie as well, because a module with no
+          // isiZulu slides has no isiZulu recording either.
+          //
+          // So it is said once, on the way in, and only claims what is true. Which of the two
+          // notes applies is read off slideLang.exact — module-level — rather than off the
+          // per-slide result, because that is the distinction being drawn.
+          <p style={{ margin: 0, fontSize: 11.5, lineHeight: 1.4, color: MUTED }}>
+            {narration?.languages.includes(lang)
+              ? 'These slides are in English. The spoken lesson is in your language.'
+              : 'This module is in English only, for now.'}
+          </p>
+        ) : null
       )}
 
       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -330,7 +413,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
           }}
         >
           <span aria-hidden style={{ fontSize: 12 }}>{running ? '■' : '▶'}</span>
-          {running ? 'Stop' : 'Play lesson'}
+          {running ? 'Stop' : languages.length ? 'Play lesson' : 'Play slides'}
         </button>
         <button
           onClick={() => go(-1)}

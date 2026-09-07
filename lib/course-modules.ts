@@ -39,6 +39,8 @@ export interface Lesson {
    * silently rather than showing a dead button.
    */
   relatedLessonIds?: string[];
+  /** Primary references for a learner or facilitator who wants to check the instruction. */
+  sources?: { title: string; url: string }[];
 }
 
 export interface CourseModule {
@@ -100,12 +102,12 @@ export const COURSE_MODULES: CourseModule[] = [
         infographicUrl: "/course-images/intro-permaculture/intro-permaculture-l2.jpg",
         infographicAlt: "Twelve design principles arranged as segments around a central seedling, each shown as a simple picture — an eye for observing, a droplet for catching water, a sun for energy, a loop for returning waste.",
         title: "Twelve Principles: Designing with Nature",
-        body: "Bill Mollison and David Holmgren distilled permaculture into twelve design principles. Three matter most for South African smallholders: observe and interact — watch your land through a full season before major earthworks; catch and store energy — harvest rain, sun and biomass before they leave your property; and use edges and value the marginal — the fence line or stream bank is often your most productive spot.\n\nOthers worth knowing: produce no waste (scraps become compost, compost becomes soil), use small and slow solutions (a bucket can irrigate a bed without electricity), and use and value diversity — a monoculture maize field can be wiped out by one hailstorm; a mixed planting rarely is.\n\nPick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go.",
+        body: "David Holmgren set out twelve design principles for permaculture. We begin with three useful principles for smallholders: observe and interact — watch your land through a full season before major earthworks; catch and store energy — harvest rain, sun and biomass before they leave your property; and use edges and value the marginal — the fence line or stream bank is often your most productive spot.\n\nOthers worth knowing: produce no waste (scraps become compost, compost becomes soil), use small and slow solutions (a bucket can irrigate a bed without electricity), and use and value diversity — different crops may respond differently to a hazard, but a mixed planting can also suffer serious damage.\n\nPick two or three principles that speak to your biggest problem and apply them hard. The rest become obvious as you go.",
         keyPoints: [
           "Observe your land for a full season before major earthworks",
           "Catch and store rain, sun, and biomass before they leave your property",
           "Edges and margins are often your most productive zones",
-          "Diversity protects against a single event — hail, drought, or pest outbreak",
+          "Diversity spreads risk; it does not guarantee a harvest",
         ],
         quiz: [
           {
@@ -123,12 +125,12 @@ export const COURSE_MODULES: CourseModule[] = [
             q: "Which layout best applies 'integrate rather than segregate'?",
             options: [
               "Chickens penned far from the garden",
-              "Garden, fruit trees and chicken run arranged so chickens rotate through beds after harvest",
+              "Garden, trees and poultry arranged so hens use harvested beds while growing food stays fenced off",
               "Separate paddocks for each crop",
               "All animals kept off the cultivated zone",
             ],
             correct: 1,
-            rationale: "Integration puts each element to work for its neighbours — here, chickens clean up pests and add fertility instead of sitting idle in a fixed pen.",
+            rationale: "Integration connects useful activities while protecting food. Fresh poultry manure can carry harmful germs: keep hens off growing food and plan a safe interval before the next harvest with your extension officer.",
           },
         ],
       },
@@ -137,9 +139,9 @@ export const COURSE_MODULES: CourseModule[] = [
         infographicUrl: "/course-images/intro-permaculture/intro-permaculture-l3.jpg",
         infographicAlt: "Rings spreading outward from a house. The ring closest to the door is tended every day; each ring further out is visited less often and left wilder.",
         title: "Zones and Sectors: Organising Your Farm by Energy",
-        body: "Zones and sectors are permaculture's main tool for cutting wasted labour. Zones run 0 to 5 by how often you visit. Zone 0 is the house. Zone 1, right outside the kitchen door, holds what you pick daily — herbs, salad greens. Zone 2 is the main garden and chicken run, visited once or twice a day. Zone 3 is the main field, visited weekly. Zone 4 is semi-wild — fruit trees and fodder needing occasional attention. Zone 5 is left wild.\n\nSectors are the energies arriving from outside — sun, wind, rain, flood, fire. A Lowveld farm facing north-west gets hot dry berg winds in August — that tells you where to plant a windbreak. A KZN farm has a summer rain sector from the north-east.\n\nSketch zones and sectors on paper and you have the skeleton of your design.",
+        body: "Zones and sectors help you plan work and understand your site. Zones run from 0 to 5 by how often activities need you. Zone 0 is the house. Zone 1 holds things you use or check most often, such as kitchen herbs and salad greens. Zone 2 can hold regularly tended plantings and poultry. Zone 3 can hold main field crops. Zone 4 can hold managed woodland and forage. Zone 5 is a wild area for observation and habitat. The numbers are not a care timetable: visit crops and animals as often as they need. A small plot may not have every zone.\n\nSectors show influences arriving from outside, such as sun, wind, rain, flood and fire. Directions differ between sites. Observe your own land, check local records and ask neighbours. In an example with damaging wind from the north-west, a windbreak belongs between that wind and the crops.\n\nSketch your boundary, house, frequently used areas and outside influences. Fit the zones to real paths and land; they do not need to be circles.",
         keyPoints: [
-          "Zone 1, nearest the house, holds daily-harvest crops like herbs",
+          "Zone 1 keeps frequently used plants and activities close to the house",
           "Zones organise labour by how often you need to visit",
           "Sectors map incoming energies: sun, wind, frost, flood, fire",
           "A simple sketch of zones and sectors is enough to start designing",
@@ -149,15 +151,15 @@ export const COURSE_MODULES: CourseModule[] = [
             q: "You plant herbs in Zone 3, the main field far from the house. What problem does this create?",
             options: [
               "Herbs grow too large",
-              "You harvest rarely because the walk is long, so herbs bolt or get neglected",
+              "The long walk makes frequent harvesting and checking less convenient",
               "Herbs cross-pollinate with main crops",
               "Zone 3 gets too much sun for herbs",
             ],
             correct: 1,
-            rationale: "Herbs need daily picking to stay productive. Placed far from the house, that daily visit stops happening — and the plants suffer for it.",
+            rationale: "Put plants you use often where you can reach them easily. Harvest according to the plant and your needs; not every herb needs daily picking.",
           },
           {
-            q: "A Highveld farm gets hot, dry north-westerly winds in August. Where should a windbreak go?",
+            q: "In this example, damaging wind comes from the north-west. Where should a windbreak go?",
             options: [
               "South-east boundary",
               "North-west boundary, between the wind and the crops",
@@ -183,35 +185,35 @@ export const COURSE_MODULES: CourseModule[] = [
         infographicUrl: "/course-images/reading-landscape/reading-landscape-l1.jpg",
         infographicAlt: "A hillside seen from the side, with arrows showing where rain runs down the slope, where it collects in a hollow, and where it soaks in as the ground flattens.",
         title: "Understanding Water Flow: Where Rain Goes on Your Land",
-        body: "Before you harvest water, learn where it already goes. Walk your land during and right after heavy rain — this is the single most useful observation you can make. Watch for rills, places where water fans out, where it ponds, and where it leaves your property. Every exit point is a resource lost.\n\nBuild an A-frame level from three poles and a weighted string. Two people can trace contour lines — points at the same height — across a two-hectare property in a morning. No surveyor needed. These lines guide where you place swales, dams, and tree rows.\n\nThe rule is: slow it high, sink it mid, control it low. The higher up the slope you slow water, the moister your land stays, and the less it erodes lower down.",
+        body: "Before you harvest water, learn where it already goes.\n\nWalk after the storm, when it is safe. Stay away from lightning, fast water and unstable banks. Look for rills, places where water spreads or ponds, and where it leaves your property.\n\nMark useful places to retain water and the routes excess water needs to leave safely. Keeping every drop is not safe on every site.\n\nBuild a rigid A-frame from two equal legs, a crossbar and a weighted string hanging from the top. The weight must hang freely below the crossbar.\n\nCalibrate before use. Mark both foot positions on firm ground and mark where the settled string crosses the bar. Swap the legs onto the same two foot positions and mark the string again. Halfway between the two marks is the level mark. If they coincide, use that mark.\n\nKeep one foot fixed. Move the other across the slope until the settled string meets the level mark. Peg that foot position, pivot onto it, and repeat to trace a contour.\n\nRecheck calibration if the frame shifts. This marks level points; it does not design a dam or prove an earthwork is safe. Get suitable technical advice before digging.\n\nWater can gain speed and erode soil as it runs downhill.\n\nLook for safe places to slow it high on the slope, let it soak in where the soil and site are suitable, and guide excess water safely away.\n\nDo not force water into unstable or already waterlogged ground. Plan a safe overflow before earthworks. The aim is useful moisture without creating a new erosion or flooding problem.",
         keyPoints: [
-          "Walk your land during and after heavy rain to see where water actually goes",
-          "An A-frame level traces contour lines with no expensive equipment",
-          "Slow water high on the slope, sink it mid-slope, control it at the bottom",
-          "Every point water exits your land is a resource you've lost",
+          "Walk after a storm when it is safe; keep away from lightning, fast water and unstable banks",
+          "Calibrate the A-frame before tracing level points across a slope",
+          "Slow and retain water only where the soil and site are suitable; plan safe overflow",
+          "Excess water needs a safe route out; retaining every drop is not safe on every site",
         ],
         quiz: [
           {
-            q: "You want to trace contours on a 1.5-hectare slope with no survey budget. What's most practical?",
+            q: "You want to mark level points for a first site sketch. Which low-cost tool can help?",
             options: [
               "Hire a civil engineer",
               "Estimate contours by eye",
-              "Build an A-frame level and walk it yourself",
+              "Build and calibrate an A-frame level",
               "Use a spirit level on a board every 5 metres",
             ],
             correct: 2,
-            rationale: "An A-frame level is nearly free to build and accurate enough for farm earthworks — you don't need survey-grade precision to place a swale correctly.",
+            rationale: "A calibrated A-frame can mark level points for a site sketch. It does not design a dam or show that an earthwork is safe; get suitable technical advice before digging.",
           },
           {
-            q: "On a sloped KZN site, where is the top priority to slow and sink water?",
+            q: "On a slope, where should you first look for a suitable place to slow runoff?",
             options: [
               "At the bottom where it collects",
               "In the middle in a large dam",
-              "As high up the slope as possible",
+              "Higher on the slope, after checking soil, stability and a safe overflow route",
               "At the boundary",
             ],
             correct: 2,
-            rationale: "Water picks up speed and erosive force as it runs downhill. Slowing it near the top prevents that damage before it starts.",
+            rationale: "Slowing runoff higher on a slope can reduce its erosive force. The site must be suitable; do not force infiltration into unstable or waterlogged ground.",
           },
         ],
       },
@@ -220,16 +222,16 @@ export const COURSE_MODULES: CourseModule[] = [
         infographicUrl: "/course-images/reading-landscape/reading-landscape-l2.jpg",
         infographicAlt: "A slope with the sun in the north. Shadows from the building and the tree fall south, down the slope.",
         title: "Sun Angles, Shade, and Aspect: Getting the Most from Sunlight",
-        body: "In South Africa the sun tracks across the northern sky, so north-facing slopes run warmer and drier, and south-facing slopes stay cooler and moister — frost can sit in south-facing hollows long after it clears elsewhere. This decides where you plant tender crops and site buildings.\n\nWinter sun sits lower and further north than summer sun. A wall that casts no shade in summer can shade a bed for hours in winter. Before placing anything permanent, stand in the spot at 8am, midday, and 4pm on a winter's day and watch where the shade falls.\n\nFor frost-sensitive plants — pawpaw, young citrus — a north-facing wall that radiates heat at night can be the difference between life and death.",
+        body: "In South Africa, winter midday sun is to the north.\n\nNorth-facing slopes tend to receive more winter sun and warmth than south-facing slopes. Actual moisture and frost also depend on shade, soil and where cold air settles.\n\nObserve your own site across the seasons before choosing positions for tender crops, trees and buildings.\n\nWinter sun sits lower than summer sun, so shadows change with the season.\n\nA wall or shade cloth north of a bed can block useful winter light. The effect depends on its height, distance from the bed and how much light passes through it.\n\nCheck the spot at 8am, midday, and 4pm on a winter's day. Mark the shadow edges on your sketch before placing anything permanent.\n\nA sun-warmed north-facing wall can offer a warmer position for frost-sensitive plants such as pawpaw and young citrus.\n\nA wall can store daytime warmth and release it at night. This can help, but it does not guarantee protection from a severe frost.\n\nCheck local frost conditions and the plant's needs. Avoid a hollow where cold air collects and plan any additional protection before planting.",
         keyPoints: [
-          "North-facing slopes are warmer and drier; south-facing slopes are cooler and moister",
-          "Winter sun sits lower and further north — shade patterns shift a lot between seasons",
-          "Frost pools in south-facing hollows on the Highveld",
+          "North-facing slopes tend to receive more winter sun; check conditions on your own site",
+          "Winter sun sits lower, so check how shadows change between seasons",
+          "Cold air can collect in hollows; shade and local weather also affect frost",
           "Check shadow patterns at 8am, midday, and 4pm in winter before placing permanent structures",
         ],
         quiz: [
           {
-            q: "Where's the best position for a frost-tender young pawpaw on a Highveld smallholding?",
+            q: "Which position may offer useful winter warmth for a frost-tender young pawpaw?",
             options: [
               "Lowest point where cold air drains to",
               "South-facing slope",
@@ -237,18 +239,18 @@ export const COURSE_MODULES: CourseModule[] = [
               "Under an existing large tree",
             ],
             correct: 2,
-            rationale: "A north-facing wall absorbs heat by day and releases it at night — exactly when frost damage happens.",
+            rationale: "A sun-warmed wall can release heat at night. This may help, but severe frost can still damage the plant; check local conditions and plan any extra protection.",
           },
           {
-            q: "A farmer builds 2m shade cloth on the north side of her garden in autumn. What happens in winter?",
+            q: "A farmer plans shade cloth on the north side of her garden. What should she check before building?",
             options: [
-              "It blocks low winter sun and shades the garden most of the day",
+              "How its height and distance could shade the bed from low winter sun",
               "It redirects frost away",
               "No effect, since the sun is overhead at noon",
               "It reduces evaporation and helps the crops",
             ],
             correct: 0,
-            rationale: "Winter sun sits much lower in the sky. A structure that only shaded briefly in summer can block the low winter sun for most of the day.",
+            rationale: "Winter shadows depend on the structure, distance and sun angle. Observe the actual bed; a height alone cannot tell you how long it will be shaded.",
           },
         ],
       },
@@ -257,12 +259,12 @@ export const COURSE_MODULES: CourseModule[] = [
         infographicUrl: "/course-images/reading-landscape/reading-landscape-l3.jpg",
         infographicAlt: "A farm from above with three sets of arrows: the direction the wind usually comes from, cold air draining downhill into a frost hollow, and the direction the land slopes.",
         title: "Wind, Frost, and Topography: Reading the Invisible Forces",
-        body: "Wind is one of the most damaging, most ignored forces on a smallholding. Highveld farms face hot, dry north-westerlies in August and September. KZN escarpment farms face cold south-westerly fronts in winter and humid easterlies that bring fungal disease in summer. Know your region's pattern before you plant.\n\nFrost behaves like water — it flows downhill at night and pools in low ground. A valley bottom frosts weeks before and after the slopes above it. A gap in a ridgeline can funnel cold air two or three hundred metres into a sheltered valley.\n\nWalk your land at dawn on a cold June morning. Frost shows as mist or frozen dew. Wherever it lingers longest is where your most vulnerable crops should never go.",
+        body: "Wind can damage a smallholding even when it is hard to see.\n\nObserve the directions damaging winds come from on your own site. Note the season, exposed ridges, gaps and sheltered places. Ask neighbours and check local weather records.\n\nWind patterns differ between sites. Use your observations when placing windbreaks and crops; do not copy a direction from another farm.\n\nOn clear, calm cold nights, cold air can drain downhill and collect in low ground.\n\nThese hollows can be colder than nearby slopes. The pattern depends on the land, barriers and weather.\n\nVisit safely at dawn in your local frost season. Look for ice crystals on surfaces and record where frost remains longest. Mist alone does not prove frost.\n\nFor a frost-sensitive nursery, look for a sheltered, gently sloping position above the places where cold air collects. A north-facing aspect can add winter warmth.\n\nFor tomatoes troubled by late blight, choose a site with good airflow and morning sun to help leaves dry.\n\nThis can reduce the time leaves stay wet. It does not cure late blight or replace disease identification and suitable management advice.",
         keyPoints: [
-          "Know your region's dominant wind — Highveld north-westerlies, KZN easterlies",
-          "Frost flows downhill and pools in low ground — valleys frost first and last",
-          "Ridgelines deflect wind; hills cast rain shadows on their leeward side",
-          "A cold winter dawn walk shows you exactly where frost pools",
+          "Observe wind directions and seasons on your own site and check local records",
+          "Cold air can drain downhill and collect in low ground on calm, cold nights",
+          "Mark exposed ridges, gaps and sheltered places rather than assuming one regional pattern",
+          "Look for ice crystals on a safe dawn visit; mist alone does not prove frost",
         ],
         quiz: [
           {
@@ -274,10 +276,10 @@ export const COURSE_MODULES: CourseModule[] = [
               "Under large shade trees",
             ],
             correct: 2,
-            rationale: "This position stays above where cold air settles at night, while the north-facing aspect adds daytime warmth.",
+            rationale: "This position may avoid the coldest hollow and receive winter sun. Check actual frost, wind and plant needs before placing the nursery.",
           },
           {
-            q: "A KZN farmer's tomatoes get late blight every summer. Fungal disease needs humidity and still air. Where should she move the bed?",
+            q: "A farmer is choosing a tomato bed. Which site can help leaves dry after wet weather?",
             options: [
               "A sealed, unventilated tunnel",
               "Somewhere with good airflow and morning sun that dries leaves quickly",
@@ -285,7 +287,7 @@ export const COURSE_MODULES: CourseModule[] = [
               "A shaded south wall",
             ],
             correct: 1,
-            rationale: "Airflow and morning sun dry the leaf surface fast, which is exactly what starves fungal disease of the damp conditions it needs.",
+            rationale: "Airflow and morning sun can shorten the time leaves stay wet. They do not cure late blight or replace identifying and managing the disease.",
           },
         ],
       },
@@ -294,24 +296,24 @@ export const COURSE_MODULES: CourseModule[] = [
         infographicUrl: "/course-images/reading-landscape/reading-landscape-l4.jpg",
         infographicAlt: "A hand-drawn site map on paper showing north, the buildings, the water, and the boundary — rough, as a farmer would draw it.",
         title: "Making a Simple Site Map: Your Design Starts on Paper",
-        body: "A site map needs paper, a tape measure, a compass, and a morning to walk your land. Pace the boundary and sketch it to scale. Mark north. Add the house, trees, water, roads, fences. Draw arrows for summer and winter wind, shade patterns, and where water flows in rain.\n\nNote where frost sits longest, where the ground smells damp in dry months, and where khakibos or blackjack grow thick — both are pioneer weeds that mean disturbed or compacted soil.\n\nOverlay your zones and sectors on the same sketch. Update it season by season. A pencil sketch you actually use is worth more than a perfect one drawn once.",
+        body: "Start with paper, a tape measure, a compass and time to observe your land.\n\nSketch the boundary and mark north. Record measured distances where you can. If you use pacing, label the distances as estimates. Add the house, trees, water, roads and fences.\n\nDraw the patterns you have observed. Check important distances before using the sketch to place anything permanent.\n\nNotice where frost remains longest and check where the soil stays damp in dry months.\n\nRecord existing vegetation, including patches of khakibos or blackjack. Their presence alone does not prove the soil is compacted or tell you its fertility.\n\nCompare the soil beneath different patches. Look at its structure, moisture and how water enters it. Mark observations and unanswered questions on your map.\n\nMark summer and winter wind separately. They can come from different directions, so a windbreak or crop position that works in one season may be wrong in the other.\n\nOverlay your zones and sectors on the same base map.\n\nUpdate the sketch season by season. A pencil map you actually use is worth more than a perfect map drawn once.",
         keyPoints: [
           "A site map needs only paper, a tape measure, a compass, and observation",
           "Mark water flow, wind direction, frost pockets, and existing vegetation",
-          "Thick khakibos or blackjack growth signals disturbed or compacted soil",
+          "Vegetation is an observation to investigate, not proof of compaction or fertility",
           "Overlay zones and sectors on your base map to complete the design skeleton",
         ],
         quiz: [
           {
-            q: "You notice thick blackjack growing in one corner every year. What does this most likely tell you?",
+            q: "You notice thick blackjack in one corner. What should you do next?",
             options: [
-              "The soil there is exceptionally fertile",
-              "That area has a higher water table",
-              "The soil has been disturbed or compacted and pioneers are colonising it",
-              "Blackjack only grows in shade, so there's a hidden seep",
+              "Assume the soil is exceptionally fertile",
+              "Assume it has a higher water table",
+              "Record the patch and compare its soil structure and moisture with nearby ground",
+              "Assume it proves there is a hidden seep",
             ],
             correct: 2,
-            rationale: "Blackjack and khakibos are classic pioneer species — they move into ground that's been disturbed or compacted, and their presence is a useful diagnostic.",
+            rationale: "A weed patch alone cannot diagnose compaction, fertility or a seep. Check the soil and record what you find before choosing an intervention.",
           },
           {
             q: "Why mark summer and winter wind separately on your site map?",
@@ -331,22 +333,23 @@ export const COURSE_MODULES: CourseModule[] = [
   {
     id: "water-harvesting",
     title: "Water Harvesting",
-    description: "Swales, berms, dams, rainwater tanks and greywater — slow, spread and sink every drop.",
+    description: "Swales, berms, dams, tanks and greywater: plan where water can soak in and where excess can leave safely.",
     durationMins: 35,
     category: "water",
     lessons: [
       {
         id: "water-harvesting-l1",
+        sources: [{ title: 'Resource Conservation District: Slow it. Spread it. Sink it! (hosted by USDA NRCS)', url: 'https://www.nrcs.usda.gov/sites/default/files/2024-07/Home_Drainage_Guide.v25.pdf' }],
         infographicUrl: "/course-images/water-harvesting/water-harvesting-l1.jpg",
         infographicAlt: "A slope cut through the middle: a shallow ditch dug along the contour with a raised mound below it. Arrows show rain slowing, spreading sideways, and soaking into the soil instead of running away.",
         title: "Swales and Berms: Slowing Water on the Slope",
 
-        body: "A swale is a level trench dug exactly on contour — not angled, perfectly level end to end — so water fills it evenly and soaks in rather than running off. The excavated soil forms a berm on the downhill side. Trees planted there draw on stored water long after the rain has stopped.\n\nOn the Highveld, storms can drop 50 to 80mm an hour, so size your swale with a safe overflow point at one end, leading to the next swale or a dam. An overflow with nowhere to go can breach the berm and create the very gully you were trying to prevent.\n\nSwales work well on 1 to 15% slopes. Above 15 to 20%, use vetiver grass contour lines or terraces instead — test a 60cm pit with water first; if it drains within the hour, plan for drier conditions.",
+        body: "A swale is a level trench dug exactly on contour — not angled, perfectly level end to end — so water fills it evenly and soaks in rather than running off.\n\nThe excavated soil forms a berm on the downhill side.\n\nTrees planted there draw on stored water long after the rain has stopped.\n\nThe excavated soil forms a berm on the downhill side.\n\nThe berm, the downhill mound of excavated soil, is where you plant trees.\n\nTrees planted there draw on stored water long after the rain has stopped.\n\nA storm can bring more water than a swale can hold. Plan a stable overflow route before digging.\n\nTrace it to a place that can receive the excess without erosion or harm. Do not simply send it towards a neighbour, road or building.\n\nA second swale or dam is only an option if its capacity and overflow have also been checked.\n\nSlope alone does not tell you whether a swale is safe. Check soil depth, drainage, ground stability and what lies downhill.\n\nDo not dig into steep, unstable or waterlogged ground on the strength of this diagram. Get a competent local practitioner to assess the site.\n\nA small soil observation cannot prove that a large earthwork is safe.",
         keyPoints: [
           "A swale is a level trench on contour — it sinks water, it doesn't direct it",
           "The berm (downhill mound of excavated soil) is where you plant trees",
           "Include a safe overflow point so storms don't breach the berm",
-          "Above 15-20% slope, use vetiver grass lines or terraces instead",
+          "Assess soil, drainage, slope stability and downstream risks before digging",
         ],
         quiz: [
           {
@@ -361,29 +364,30 @@ export const COURSE_MODULES: CourseModule[] = [
             rationale: "A swale only works if every point sits at the same height. Even a slight angle sends water to the low end instead of spreading evenly.",
           },
           {
-            q: "A farmer on a steep 25% slope in the KZN Midlands wants to slow erosion. What's most appropriate?",
+            q: "A farmer wants to slow erosion on a steep slope. What should happen before digging?",
             options: [
               "Standard swales dug as deep as possible",
-              "Vetiver grass planted in contour lines",
+              "A competent local practitioner assesses the site and suitable options",
               "A large dam at the bottom to catch all runoff",
               "Compacting the soil surface with a roller",
             ],
             correct: 1,
-            rationale: "Above roughly 15-20%, swales become hard to maintain and risk slipping. Vetiver's dense root mat holds the slope instead.",
+            rationale: "A slope percentage alone cannot establish safety. The soil, drainage, ground stability and land below all matter.",
           },
         ],
       },
       {
         id: "water-harvesting-l2",
-        infographicUrl: "/course-images/water-harvesting/water-harvesting-l2.jpg",
-        infographicAlt: "A farm dam cut through the middle: water flowing in at one end, the stored body of water, a spillway at the top edge for overflow, and a planted bank holding the soil.",
+        sources: [{ title: 'FAO: Manual on Small Earth Dams — design, spillways and maintenance', url: 'https://www.fao.org/4/i1531e/i1531e.pdf' }],
+        infographicUrl: "/course-animations/water-harvesting/posters/dam-spillway.jpg",
+        infographicAlt: "View from above: water enters a reservoir and excess flows around the earthen wall through a separate side spillway. Protective grass covers the wall; no trees grow on it. A process diagram, not a construction plan.",
         title: "Farm Dams and Ponds: Storing Water for the Dry Season",
-        body: "A well-sited dam stores a season's rain to carry you through the dry months. In summer-rainfall South Africa, rain falls October to March, then largely stops — a dam makes you far less dependent on boreholes or municipal supply through winter.\n\nSite your dam by two rules: maximise the catchment draining toward it, and design the spillway before you build the wall. A 2-hectare catchment at 700mm annual rainfall can fill 200,000 to 400,000 litres in a good season. Skip the spillway and one exceptional storm can overtop and breach the wall — a disaster that costs more to fix than the dam itself.\n\nIn Limpopo and hot parts of KZN, evaporation can strip 2 metres of depth a year. Shade trees on the western and northern banks cut this significantly. Ducks aerate the water; indigenous bulrushes stabilise the banks.",
+        body: "Stored water can help through dry periods. How long it lasts depends on rainfall, losses and how much you use.\n\nRecord when rain actually arrives on your site. A yearly rainfall total does not tell you how much water will be available in the driest month.\n\nA dam wall holds water back. A spillway gives excess water a planned way around it.\n\nHave a competent dam designer assess the catchment, soil, flood flows and downstream consequences before any wall is built. Check the approvals needed locally.\n\nA bigger catchment also brings a bigger flood. Never build first and work out the spillway later.\n\nKeep trees and deep-rooted shrubs away from the dam wall, spillway and outlet. Their roots can damage these structures.\n\nMaintain the protective grass cover and keep the spillway clear. Report erosion, cracks or unexpected seepage to a competent dam practitioner.\n\nDo not dig out established roots from a dam wall yourself. Repairs need an assessed plan.",
         keyPoints: [
-          "Size the dam to the catchment area draining toward it",
+          "Have a competent dam designer assess catchment, flood flows, soil and downstream risks",
           "Design the spillway before the wall — an overtopped wall can breach catastrophically",
-          "Shade trees on the western and northern banks cut evaporation significantly in hot regions",
-          "Ducks and indigenous bulrushes turn a dam into a working ecosystem, not just storage",
+          "Keep trees and deep-rooted shrubs away from the dam wall and spillway",
+          "Maintain protective grass cover and report erosion, cracks or unexpected seepage",
         ],
         quiz: [
           {
@@ -398,33 +402,34 @@ export const COURSE_MODULES: CourseModule[] = [
             rationale: "Without a designed overflow route, excess water finds its own way over the wall — and that uncontrolled flow is what erodes and eventually breaches it.",
           },
           {
-            q: "In Limpopo, what combination best reduces evaporation from an open dam?",
+            q: "Which action helps protect an earthen dam wall?",
             options: [
-              "A deep, exposed dam with no bank vegetation",
-              "Shade trees on the western and northern banks, plus ducks for aeration",
-              "A full concrete lining and plastic cover",
-              "A larger surface area to spread evaporation evenly",
+              "Planting large trees directly on the wall",
+              "Maintaining protective grass cover and keeping the spillway clear",
+              "Blocking the spillway to store more water",
+              "Digging established roots out of the wall without an assessed repair plan",
             ],
             correct: 1,
-            rationale: "Shade cuts direct heat gain on the water surface — a practical, low-cost combination that measurably reduces loss in hot, high-evaporation regions.",
+            rationale: "Grass protects against surface erosion while allowing inspection. Trees and deep roots can damage the wall; a clear spillway lets the designed overflow route work.",
           },
         ],
       },
       {
         id: "water-harvesting-l3",
-        infographicUrl: "/course-images/water-harvesting/water-harvesting-l3.jpg",
-        infographicAlt: "Rain running off a roof into a gutter and down a pipe into a tank, with a small first-flush diverter branching off before the tank to throw away the dirty first water.",
-        title: "Rainwater Tanks and Roof Catchment: Harvesting Clean Water",
-        body: "Your roof is a harvesting surface. Each square metre collects roughly 0.9 litres per millimetre of rain, once you allow for splash and evaporation losses. A 100 square metre corrugated iron roof in Pietermaritzburg, at 800mm a year, yields close to 72,000 litres — enough for a family garden and most non-drinking needs.\n\nFit a first-flush diverter: the first 20 to 30 litres off any roof carries bird droppings, dust, and leaf litter, and should be diverted before clean water reaches the tank. For drinking water, add a filter downstream. For irrigation, untreated tank water is fine.\n\nMatch tank size to your dry season, not just one dry spell. In KZN, 5,000 litres may bridge a two-to-three-week gap. On the Highveld's longer dry season, 20,000 to 30,000 litres is more realistic.",
+        sources: [{ title: 'Water Research Commission: Resource Guidelines for Rainwater Harvesting', url: 'https://www.wrc.org.za/wp-content/uploads/mdocs/TT%20758%20web.pdf' }],
+        infographicUrl: "/course-animations/water-harvesting/posters/first-flush.jpg",
+        infographicAlt: "A cutaway of a roof-water system: the first-flush chamber is full and its float has closed it. Later runoff enters a covered tank. The visible stored water does not mean it is safe to drink.",
+        title: "Rainwater Tanks and Roof Catchment",
+        body: "Roof area, rainfall and collection losses determine potential harvest. Tank overflow and water use reduce what remains available.\n\nFor a calculation exercise, assume a 100 square metre roof, 800 millimetres of rain and a collection factor of 0.9. Multiply these to get 72,000 litres.\n\nThose are example inputs, not a rainfall forecast or a promise that a garden will have enough water.\n\nRoof runoff can carry droppings, dust and other contamination. Divert the first runoff before it enters the tank.\n\nThe amount to divert depends on roof area and local conditions. Follow a suitable design and the device instructions; there is no single volume for every roof.\n\nA first-flush diverter does not make water safe to drink.\n\nList the uses you want the tank to supply. Measure or estimate their daily demand.\n\nCompare that demand with local rainfall records, usable storage and the dry period you need to cover.\n\nA tank size on its own cannot tell you how many weeks it will last.\n\nKeep the tank covered and screen openings against insects. Maintain the roof, gutters and diverter.\n\nA filter alone does not guarantee safe drinking water. Drinking use needs suitable treatment, disinfection and water-quality checks with qualified advice.\n\nKeep untreated water away from edible plant parts. Keep any alternative supply separate from drinking-water plumbing.",
         keyPoints: [
-          "Roof catchment yield: about 0.9 litres per square metre per mm of rain",
+          "Estimate potential harvest from roof area, local rainfall and a stated collection factor",
           "A first-flush diverter removes the dirty first flush from every rain event",
           "Match tank size to your dry season length, not a single dry spell",
-          "Keep tanks sealed against light and mosquitoes; filter before drinking",
+          "Keep tanks covered; filtration alone does not guarantee safe drinking water",
         ],
         quiz: [
           {
-            q: "An 80m² iron roof gets 600mm of rain a year. Using the 0.9 litres per m² per mm figure, how much can she expect to harvest?",
+            q: "In an exercise, assume an 80m² roof, 600mm of rain and a collection factor of 0.9. What is the calculated potential harvest?",
             options: [
               "About 24,000 litres",
               "About 43,200 litres",
@@ -432,7 +437,7 @@ export const COURSE_MODULES: CourseModule[] = [
               "About 6,000 litres",
             ],
             correct: 1,
-            rationale: "80 times 600 times 0.9 equals 43,200 litres. The 0.9 factor already accounts for normal splash and evaporation losses.",
+            rationale: "80 times 600 times 0.9 equals 43,200 litres with these assumed inputs. Actual usable water also depends on rainfall timing, storage, overflow and demand.",
           },
           {
             q: "Why does a first-flush diverter matter even for irrigation-only tank water?",
@@ -443,33 +448,34 @@ export const COURSE_MODULES: CourseModule[] = [
               "It stops the tank overfilling in storms",
             ],
             correct: 1,
-            rationale: "Even irrigation water touches edible crops directly. Keeping the contaminated first flush out protects food safety, not just drinking quality.",
+            rationale: "Keeping dirty first runoff out reduces contamination. It does not make later runoff safe to drink; keep untreated irrigation water off edible plant parts.",
           },
         ],
       },
       {
         id: "water-harvesting-l4",
-        infographicUrl: "/course-images/water-harvesting/water-harvesting-l4.jpg",
-        infographicAlt: "Water from an indoor basin running through a buried pipe out to a mulched planting basin. The pipe stays underground the whole way — never an open channel.",
-        title: "Greywater Recycling: A Free Daily Water Source",
-        body: "Greywater is used washwater from your bath, basin, and laundry — not toilet water, which is blackwater and needs separate, careful handling. Kept clean of harsh chemicals, greywater is a free daily source of irrigation water that would otherwise be wasted.\n\nUse plain soap and avoid bleach, strong disinfectants, or water from washing nappies — these can damage soil life and plant roots. Direct greywater into a mulch-filled basin around fruit trees rather than onto bare ground, so it filters through organic matter before reaching roots.\n\nNever use greywater on leafy vegetables, root vegetables eaten raw, or seedlings — the risk of contact with bacteria is too high. Fruit trees, established shrubs, and non-edible landscaping are the right use. Check your municipality's rules before installing a permanent greywater system.",
+        sources: [{ title: 'City of Cape Town: Alternative Water Systems — greywater guidance; check your own municipality’s requirements', url: 'https://www.capetown.gov.za/_documents/resource.capetown.gov.za/documentcentre/Documents/Procedures,%20guidelines%20and%20regulations/Guidelines%20for%20Alternative%20Water%20Installations.pdf' }],
+        infographicUrl: "/course-animations/water-harvesting/posters/greywater-under-mulch.jpg",
+        infographicAlt: "A cutaway shows basin water flowing through a pipe into soil under mulch, away from the tree trunk. Water remains below the surface and does not touch the fruit. Mulch does not disinfect it.",
+        title: "Greywater Reuse: Keep People, Food and Soil Protected",
+        body: "Greywater is used water from washing. Toilet water is different and must never enter this garden system.\n\nWashwater can still carry germs, salts and cleaning products. Reuse depends on its source, quality and where it will go. Do not assume that clear-looking water is safe.\n\nAvoid water containing bleach, harsh cleaners or nappy waste. Do not reuse it when someone in the household is ill. Plain soap is not a guarantee of suitability.\n\nUse suitable greywater promptly, within 24 hours. Stop if it ponds, smells or runs off.\n\nKeep it below mulch, away from people and animals. Mulch does not disinfect water.\n\nDo not use greywater on leafy vegetables, root vegetables or seedlings.\n\nA suitable system may supply established trees or non-edible plants while keeping water off edible parts. Get advice on water quality and stop if plants or soil show damage.\n\nCheck municipal requirements before fitting a permanent system. This lesson does not approve an installation.",
         keyPoints: [
           "Greywater is washwater from bath, basin, and laundry — never toilet water",
-          "Use plain soap; avoid bleach, strong disinfectants, and nappy-wash water",
-          "Direct greywater to mulch basins around fruit trees, never onto raw-eaten vegetables",
+          "Avoid unsuitable washwater; use suitable greywater within 24 hours",
+          "Keep greywater below mulch and away from people and edible plant parts; mulch does not disinfect",
           "Check your municipality's greywater rules before installing a permanent system",
         ],
         quiz: [
           {
-            q: "Which use of greywater is safe?",
+            q: "With suitable water quality and local advice, which option reduces contact with greywater?",
             options: [
               "Watering lettuce that will be eaten raw",
-              "Irrigating an established fruit tree through a mulch basin",
+              "Supplying an established tree below mulch, keeping water away from people and fruit",
               "Watering seedlings in a nursery tray",
               "Filling a fishpond",
             ],
             correct: 1,
-            rationale: "Fruit trees with mulch filtration keep greywater away from food that's eaten unwashed or uncooked — that's the safe use case.",
+            rationale: "Below-mulch delivery can reduce contact, but it does not disinfect. Use suitable water promptly; stop if it ponds or runs off.",
           },
           {
             q: "Why avoid bleach or strong disinfectant in water destined for greywater reuse?",
@@ -480,7 +486,7 @@ export const COURSE_MODULES: CourseModule[] = [
               "They attract more mosquitoes",
             ],
             correct: 1,
-            rationale: "The whole value of greywater comes from feeding soil life and plant roots — harsh chemicals undermine exactly what you're trying to use the water for.",
+            rationale: "Cleaning products can harm soil organisms and roots. Reuse is a way to supply water when its quality is suitable, not a guarantee of fertiliser value.",
           },
         ],
       },
@@ -573,12 +579,12 @@ export const COURSE_MODULES: CourseModule[] = [
         infographicUrl: "/course-images/soil-health/soil-health-l3.jpg",
         infographicAlt: "Two patches of soil under the same sun: bare ground cracked and dry, mulched ground still dark and moist.",
         title: "Mulching and Cover Crops: Protecting and Building Soil",
-        body: "Bare soil is exposed soil. A South African summer storm can drop 60mm in thirty minutes — enough to strip topsoil that took centuries to form. A 5 to 10cm mulch layer of straw, dry grass or wood chips cuts erosion sharply, keeps soil several degrees cooler in summer — sometimes up to 10°C on hot Highveld days — suppresses weeds, and feeds soil life as it breaks down.\n\nCover crops protect bare ground between main seasons. On the Highveld, oats or lupins sown after maize harvest cover the soil through frost months, then get slashed in before spring planting. In KZN, sunn hemp grows fast in summer and adds a large amount of nitrogen-rich biomass. Cowpea fixes nitrogen and tolerates the Lowveld's early-summer dry spell.\n\nWorm farms turn kitchen scraps into rich castings in three to four weeks. The liquid leachate, diluted 1:10 with water, makes a strong root feed.",
+        body: "Bare soil is exposed soil. A South African summer storm can drop 60mm in thirty minutes — enough to strip topsoil that took centuries to form. A 5 to 10cm mulch layer of straw, dry grass or wood chips cuts erosion sharply, keeps soil several degrees cooler in summer — sometimes up to 10°C on hot Highveld days — suppresses weeds, and feeds soil life as it breaks down.\n\nCover crops protect bare ground between main seasons. On the Highveld, oats or lupins sown after maize harvest cover the soil through frost months, then get slashed in before spring planting. In KZN, sunn hemp grows fast in summer and adds a large amount of nitrogen-rich biomass. Cowpea fixes nitrogen and tolerates the Lowveld's early-summer dry spell.\n\nWorm farms turn suitable raw kitchen scraps into rich castings. Keep the bedding moist rather than waterlogged. The liquid draining out is leachate; it can carry harmful germs from material that has not finished breaking down. Do not use leachate on vegetables or other food crops, even when diluted. Dilution does not disinfect it.",
         keyPoints: [
           "A 5-10cm mulch layer cuts soil temperature, suppresses weeds, and prevents erosion",
           "Cover crops like sunn hemp or lupins protect soil between seasons and add organic matter",
           "Legume cover crops fix nitrogen for free, cutting your fertiliser bill",
-          "Worm farm leachate, diluted 1:10, is a strong liquid root feed",
+          "Do not use worm-farm leachate on food crops, even when diluted",
         ],
         quiz: [
           {
@@ -593,15 +599,15 @@ export const COURSE_MODULES: CourseModule[] = [
             rationale: "Bare winter soil has nothing holding it against wind, and nothing to absorb the force of the first heavy spring rain — both strip topsoil directly.",
           },
           {
-            q: "Worm farm leachate is a strong fertiliser but must be diluted before use. Why?",
+            q: "Why should you keep worm-farm leachate off food crops, even after dilution?",
             options: [
-              "It's too cold for roots undiluted",
-              "Undiluted, it's concentrated enough to burn plant roots",
-              "It contains worm eggs that could hatch and damage roots",
-              "Only seedlings need dilution",
+              "It always contains too little water",
+              "It may carry harmful germs, and dilution does not disinfect it",
+              "It makes all soil permanently acidic",
+              "It contains no nutrients at all",
             ],
             correct: 1,
-            rationale: "Leachate is far more concentrated than any diluted feed — applied neat, it can scorch the very roots it's meant to nourish.",
+            rationale: "Leachate drains through material that may not have finished breaking down. It can carry harmful germs. Adding water does not make it safe for vegetables or other food crops.",
           },
         ],
       },

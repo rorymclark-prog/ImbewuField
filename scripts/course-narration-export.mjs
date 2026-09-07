@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Turn a narration script into a recording sheet — the exact text of each clip, one per slide.
 //
-// WHY: the recordings are made outside this repo (Rory narrates through Gemini in Antigravity,
+// WHY: the recordings are made outside this repo (Microsoft voices through edge-tts in Antigravity,
 // one clip per slide, per language) and scripts/import-course-audio.mjs is the seam that brings
 // them back. Nothing existed for the OTHER end of that trip. The markdown script is written for
 // a human — bold headings, [pause] marks, --- rules, a title line that is a structural marker
@@ -25,6 +25,8 @@ import { homedir } from 'node:os';
 import { join, resolve } from 'node:path';
 
 import { COURSE_MODULES } from '../lib/course-modules.ts';
+import { COURSE_VOICE_TARGETS } from '../lib/course-audio.ts';
+import { hasNarrationBlocker } from '../lib/narration-blockers.ts';
 
 const argv = process.argv.slice(2);
 const all = argv[0] === '--all';
@@ -87,7 +89,11 @@ function exportModule(moduleId) {
   const scriptPath = resolve(join(process.cwd(), 'docs', 'narration', `${moduleId}.${lang}.md`));
   if (!existsSync(scriptPath)) return null;
 
-  const slides = parse(readFileSync(scriptPath, 'utf8'));
+  const raw = readFileSync(scriptPath, 'utf8');
+  if (/DRAFT — SOURCE CHANGED/.test(raw)) {
+    throw new Error(`${moduleId}/${lang}: reconcile the translation with the corrected source before recording.`);
+  }
+  const slides = parse(raw);
   if (!slides.length) return null;
 
   const outDir = resolve(
@@ -101,7 +107,13 @@ function exportModule(moduleId) {
 
   const mod = COURSE_MODULES.find((m) => m.id === moduleId);
   const langName = lang === 'zu' ? 'isiZulu' : 'English';
-  const voice = lang === 'zu' ? 'an isiZulu (zu-ZA) voice' : 'a South African English (en-ZA) voice';
+  // Seeds is Rory's production reference. "A South African voice" previously allowed a second
+  // batch to switch from Leah to Luke unnoticed. Name the actual voice on every recording sheet.
+  const voice = `Microsoft ${COURSE_VOICE_TARGETS[lang]}`;
+  writeFileSync(join(outDir, 'voice-settings.json'), JSON.stringify({
+    voice: COURSE_VOICE_TARGETS[lang], rate: '-12%', pitch: '+0Hz', volume: '+0%',
+    module: moduleId, lang, reviewRequired: hasNarrationBlocker(raw),
+  }, null, 2) + '\n');
   const total = slides.reduce((a, s) => a + s.words, 0);
 
   const sheet = [
@@ -112,6 +124,11 @@ function exportModule(moduleId) {
     '## What to produce',
     '',
     `Read each slide-NN.txt aloud in ${voice} and save the clip as its own mp3.`,
+    'Match the existing Seeds reference: its recorded speed is documented as 0.88 of normal.',
+    'Confirm the equivalent speed setting in the recording tool and compare a short sample',
+    'with Seeds before recording the batch. Do not substitute another voice silently.',
+    'This recording sheet is not language approval: any draft isiZulu script still needs',
+    'first-language review before recording. See docs/COURSE-NARRATION-VOICE.md.',
     'Name the files exactly as below — scripts/import-course-audio.mjs reads these names, and a',
     'clip under the wrong number puts the voice against the wrong picture for the rest of the deck.',
     '',

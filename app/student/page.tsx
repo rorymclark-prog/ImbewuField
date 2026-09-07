@@ -21,6 +21,7 @@ import LessonLink from '@/components/design/LessonLink';
 import CourseAudioPlayer from '@/components/course/CourseAudioPlayer';
 import LessonInfographic from '@/components/course/LessonInfographic';
 import DeckPlayer from '@/components/course/DeckPlayer';
+import FieldCourse, { LessonFieldwork } from '@/components/course/FieldCourse';
 import OfflineDownload from '@/components/course/OfflineDownload';
 import MenuButton from '@/components/MenuButton';
 import BackButton from '@/components/BackButton';
@@ -142,7 +143,7 @@ function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }
   const [deckOpen, setDeckOpen] = useState(false);
   useEffect(() => { if (autoOpen) setOpen(true); }, [autoOpen]);
   const lessonTracks = tracksForLesson(moduleId, lesson.id);
-  const hasAudio = lessonTracks.length > 0;
+  const hasAudio = hasNarration(moduleId) && lessonTracks.length > 0;
   const hasInfographic = Boolean(lesson.infographicUrl && lesson.infographicAlt);
   const hasLeadIn = hasAudio || hasInfographic;
 
@@ -203,10 +204,10 @@ function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }
                   <PlayCircle size={18} style={{ color, flexShrink: 0 }} />
                   <span className="flex-1">
                     <span className="block font-sans text-sm font-semibold" style={{ color: '#20190F' }}>
-                      Watch and listen
+                      {hasAudio ? 'Watch and listen' : 'Explore the slides'}
                     </span>
                     <span className="block font-sans text-xs" style={{ color: '#5C5040' }}>
-                      {deckSlideCount(moduleId, lesson.id)} slides, narrated. Nothing downloads until you press play.
+                      {deckSlideCount(moduleId, lesson.id)} slides{hasAudio ? ', with narration' : ''}. Videos download only when you choose to watch.
                     </span>
                   </span>
                 </button>
@@ -242,6 +243,19 @@ function LessonPanel({ lesson, color, moduleId, lang, autoOpen, onJumpToLesson }
               ))}
             </ul>
           </div>
+
+          <LessonFieldwork lessonId={lesson.id} />
+
+          {lesson.sources?.length ? (
+            <details className="font-sans text-xs" style={{ color: '#5C5040' }}>
+              <summary className="cursor-pointer py-2">Sources and further reading</summary>
+              <ul className="space-y-2 pt-2">
+                {lesson.sources.map(source => (
+                  <li key={source.url}><a href={source.url} target="_blank" rel="noopener noreferrer" className="underline">{source.title} ↗</a></li>
+                ))}
+              </ul>
+            </details>
+          ) : null}
 
           {/* Facilitator video — a link, never an inline player: KZN connectivity cannot
               stream video per-visit, so a farmer must never land on this by accident. */}
@@ -793,6 +807,8 @@ export default function StudentPage() {
           <h2 className="font-display">Your course</h2>
           <p className="font-sans">{TOTAL_MODULES} modules · {COURSE_MODULES.reduce((n, m) => n + (m.lessons?.length ?? 0), 0)} lessons</p>
         </div>
+
+        <FieldCourse />
 
         {/* Module list */}
         <div className={styles.modules}>

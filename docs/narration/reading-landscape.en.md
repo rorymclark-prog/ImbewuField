@@ -34,9 +34,9 @@ You will draw a simple site map with water flow, seasonal winds, frost pockets, 
 
 Before you harvest water, learn where it already goes.
 
-Walk your land during and right after heavy rain. Watch for rills, places where water fans out, ponds, and every point where water leaves your property.
+Walk after the storm, when it is safe. Stay away from lightning, fast water and unstable banks. Look for rills, places where water spreads or ponds, and where it leaves your property.
 
-Water that leaves is a resource lost. Water that stays can support soil, trees, crops, and a healthier farm.
+Mark useful places to retain water and the routes excess water needs to leave safely. Keeping every drop is not safe on every site.
 
 ---
 
@@ -48,31 +48,33 @@ The picture shows rain moving downhill. Follow where it speeds up, spreads, sink
 
 **Slide 6 — Trace Contours with an A-Frame**
 
-Build an A-frame level from three poles and a weighted string.
+Build a rigid A-frame from two equal legs, a crossbar and a weighted string hanging from the top. The weight must hang freely below the crossbar.
 
-Walk it across the land to find points at the same height. Join these points to trace a contour line.
+Calibrate before use. Mark both foot positions on firm ground and mark where the settled string crosses the bar. Swap the legs onto the same two foot positions and mark the string again. Halfway between the two marks is the level mark. If they coincide, use that mark.
 
-Two people can trace contour lines across a two-hectare property in a morning. No surveyor is needed. This simple tool is practical for placing swales, dams, and tree rows.
+Keep one foot fixed. Move the other across the slope until the settled string meets the level mark. Peg that foot position, pivot onto it, and repeat to trace a contour.
+
+Recheck calibration if the frame shifts. This marks level points; it does not design a dam or prove an earthwork is safe. Get suitable technical advice before digging.
 
 ---
 
 **Slide 7 — Slow It High, Sink It Mid, Control It Low**
 
-Water picks up speed and erosive force as it runs downhill.
+Water can gain speed and erode soil as it runs downhill.
 
-Slow it as high on the slope as possible. Sink it in the middle of the slope. Control it at the bottom.
+Look for safe places to slow it high on the slope, let it soak in where the soil and site are suitable, and guide excess water safely away.
 
-This keeps more moisture in the land and prevents damage lower down. The higher you slow water, the earlier you stop erosion from growing.
+Do not force water into unstable or already waterlogged ground. Plan a safe overflow before earthworks. The aim is useful moisture without creating a new erosion or flooding problem.
 
 ---
 
 **Slide 8 — Lesson 2: Read Sun and Shade**
 
-In South Africa, the sun tracks across the northern sky.
+In South Africa, winter midday sun is to the north.
 
-North-facing slopes are warmer and drier. South-facing slopes are cooler and moister. On the Highveld, frost can sit in south-facing hollows long after it clears elsewhere.
+North-facing slopes tend to receive more winter sun and warmth than south-facing slopes. Actual moisture and frost also depend on shade, soil and where cold air settles.
 
-This helps you choose where to place tender crops, trees, buildings, and other parts of your farm.
+Observe your own site across the seasons before choosing positions for tender crops, trees and buildings.
 
 ---
 
@@ -84,21 +86,21 @@ Follow the sun, building, tree, and their shadows across the slope. Compare summ
 
 **Slide 10 — Check Winter Shadows Before Building**
 
-Winter sun sits lower and further north than summer sun.
+Winter sun sits lower than summer sun, so shadows change with the season.
 
-A wall that casts no shade in summer can shade a bed for hours in winter. A 2m shade cloth on the north side of a garden can block low winter sun for most of the day.
+A wall or shade cloth north of a bed can block useful winter light. The effect depends on its height, distance from the bed and how much light passes through it.
 
-Check the spot at 8am, midday, and 4pm on a winter's day.
+Check the spot at 8am, midday, and 4pm on a winter's day. Mark the shadow edges on your sketch before placing anything permanent.
 
 ---
 
 **Slide 11 — Protect Frost-Tender Plants**
 
-For frost-sensitive plants such as pawpaw and young citrus, use the warmth of a north-facing wall.
+A sun-warmed north-facing wall can offer a warmer position for frost-sensitive plants such as pawpaw and young citrus.
 
-The wall absorbs heat during the day and releases it at night. That night-time warmth can protect a tender plant when frost arrives.
+A wall can store daytime warmth and release it at night. This can help, but it does not guarantee protection from a severe frost.
 
-Do not place vulnerable crops in a cold, south-facing hollow. Choose a position that receives warmth and avoids trapped frost.
+Check local frost conditions and the plant's needs. Avoid a hollow where cold air collects and plan any additional protection before planting.
 
 ---
 
@@ -106,9 +108,9 @@ Do not place vulnerable crops in a cold, south-facing hollow. Choose a position 
 
 Wind can damage a smallholding even when it is hard to see.
 
-Highveld farms face hot, dry north-westerlies in August and September. KZN escarpment farms face cold south-westerly fronts in winter and humid easterlies in summer.
+Observe the directions damaging winds come from on your own site. Note the season, exposed ridges, gaps and sheltered places. Ask neighbours and check local weather records.
 
-Know your region's pattern before planting. Wind direction affects windbreaks, crop protection, drying, and disease.
+Wind patterns differ between sites. Use your observations when placing windbreaks and crops; do not copy a direction from another farm.
 
 ---
 
@@ -118,33 +120,33 @@ Follow wind across the ridges and gaps. Trace cold air downhill into low ground,
 
 ---
 
-**Slide 14 — Frost Flows Downhill**
+**Slide 14 — Cold Air Collects in Hollows**
 
-Frost behaves like water. At night, cold air flows downhill and pools in low ground.
+On clear, calm cold nights, cold air can drain downhill and collect in low ground.
 
-A valley bottom frosts weeks before and after the slopes above it. A gap in a ridgeline can funnel cold air two or three hundred metres into a sheltered valley.
+These hollows can be colder than nearby slopes. The pattern depends on the land, barriers and weather.
 
-Walk the land at dawn on a cold June morning. Mist and frozen dew show where frost lingers.
+Visit safely at dawn in your local frost season. Look for ice crystals on surfaces and record where frost remains longest. Mist alone does not prove frost.
 
 ---
 
 **Slide 15 — Choose Airflow and Warmth**
 
-Put your most frost-sensitive seedling nursery on a gently sloping, north-facing hillside above the frost-pool zone.
+For a frost-sensitive nursery, look for a sheltered, gently sloping position above the places where cold air collects. A north-facing aspect can add winter warmth.
 
-For tomatoes troubled by late blight, move the bed somewhere with good airflow and morning sun. Morning sun dries leaves quickly.
+For tomatoes troubled by late blight, choose a site with good airflow and morning sun to help leaves dry.
 
-Air movement and dry leaves make it harder for fungal disease to keep the damp conditions it needs.
+This can reduce the time leaves stay wet. It does not cure late blight or replace disease identification and suitable management advice.
 
 ---
 
 **Slide 16 — Lesson 4: Start Your Site Map**
 
-A site map needs paper, a tape measure, a compass, and a morning to walk your land.
+Start with paper, a tape measure, a compass and time to observe your land.
 
-Pace the boundary and sketch it to scale. Mark north. Add the house, trees, water, roads, and fences.
+Sketch the boundary and mark north. Record measured distances where you can. If you use pacing, label the distances as estimates. Add the house, trees, water, roads and fences.
 
-Then draw the patterns you have observed. Your map becomes the design skeleton for the whole smallholding.
+Draw the patterns you have observed. Check important distances before using the sketch to place anything permanent.
 
 ---
 
@@ -156,11 +158,11 @@ Use the picture as a guide: boundary, buildings, roads, water, slopes, and direc
 
 **Slide 18 — Let Plants Help You Read Soil**
 
-Look for places where frost sits longest and where the ground smells damp during dry months.
+Notice where frost remains longest and check where the soil stays damp in dry months.
 
-Notice existing vegetation. Thick khakibos or blackjack growing in one corner often signals disturbed or compacted soil.
+Record existing vegetation, including patches of khakibos or blackjack. Their presence alone does not prove the soil is compacted or tell you its fertility.
 
-These are pioneer weeds. They colonise ground that has been disturbed or compacted. Mark the area on your map so your future design responds to the soil condition.
+Compare the soil beneath different patches. Look at its structure, moisture and how water enters it. Mark observations and unanswered questions on your map.
 
 ---
 
@@ -176,18 +178,18 @@ Update the sketch season by season. A pencil map you actually use is worth more 
 
 **Slide 20 — Field Assignment**
 
-Walk your land during or right after heavy rain. Mark rills, spreading water, ponds, and every place water leaves your property.
+Walk after a storm when the site is safe. Mark rills, spreading water, ponds and routes where excess water leaves. Stay away from lightning, fast water and unstable banks.
 
-Return at dawn on a cold June morning. Mark mist, frozen dew, and the places frost lasts longest.
+Return safely at dawn in your local frost season. Look for ice crystals and note where frost remains longest. Do not use mist alone as proof.
 
-On paper, draw your boundary, mark north, and add the house, water, roads, fences, slopes, and existing vegetation.
+Draw your boundary, mark north, and add the house, water, roads, fences, slopes and existing vegetation. Label estimated distances.
 
 ---
 
 **Slide 21 — Field Action**
 
-Build an A-frame level from three poles and a weighted string.
+Build and calibrate an A-frame as shown in this lesson. Check that its weight hangs freely and its joints are firm.
 
-Use it to trace contour lines across your land. Mark where you would slow water high, sink it mid-slope, and control it at the bottom.
+Trace and peg a contour. Mark possible places to slow water and a safe overflow route on your map. Check soil and site suitability with a qualified adviser before digging earthworks.
 
 Add summer and winter wind arrows, shade observations from 8am, midday, and 4pm, and your zones and sectors. Keep the map and update it.

@@ -51,16 +51,16 @@ export const MODULE_ASSIGNMENTS: ModuleAssignment[] = [
       'North is marked on my map',
       'I have marked where water runs or collects when it rains',
       'I have marked which way my strongest wind comes from',
-      'I walked my land during or just after rain to see the water',
+      'I observed where rainwater went after the storm, when the site was safe',
     ],
     minGateDays: 10,
   },
   {
     moduleId: 'water-harvesting',
     prompt:
-      'Build an A-frame level from three poles and a weighted string. Use it to find one level line across your slope. Photograph the A-frame and the line you marked.',
+      'Build and calibrate an A-frame level as shown in the lesson. Use it to find one level line across your slope. Photograph the A-frame and the line you marked.',
     selfCheckItems: [
-      'My A-frame is built and I have tested it (turn it around — it should read the same)',
+      'I calibrated my A-frame by swapping its legs onto the same foot positions and marking the midpoint',
       'I have marked at least three points at the same height across my slope',
       'My marked line runs across the slope, not down it',
     ],

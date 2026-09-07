@@ -18,7 +18,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { Play, Pause, Volume2, AlertCircle } from 'lucide-react';
 import {
-  formatClock, narrationFor, resolveNarrationLang, trackTitle, trackUrl,
+  availableNarrationLanguages, formatClock, narrationFor, resolveNarrationLang, trackTitle, trackUrl,
   type NarrationTrack,
 } from '@/lib/course-audio';
 
@@ -49,6 +49,7 @@ interface CourseAudioPlayerProps {
 export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: CourseAudioPlayerProps) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const narration = narrationFor(moduleId);
+  const languages = availableNarrationLanguages(moduleId);
   const resolved = resolveNarrationLang(moduleId, appLang);
 
   // Chosen language is state so the learner can override the resolved default. Re-resolves if
@@ -132,9 +133,9 @@ export default function CourseAudioPlayer({ moduleId, appLang, tracks, label }: 
           {label ?? 'Listen'}
         </span>
         <div className="flex-1" />
-        {narration.languages.length > 1 && (
+        {languages.length > 1 && (
           <div className="flex items-center gap-1" role="group" aria-label="Narration language">
-            {narration.languages.map((code) => {
+            {languages.map((code) => {
               const on = code === lang;
               return (
                 <button

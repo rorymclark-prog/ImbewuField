@@ -1,3 +1,5 @@
+> DRAFT — SOURCE CHANGED 2026-09-07. Do not record or render this translation until a first-language reviewer has reconciled it with the corrected English source. See docs/WATER-DEMONSTRATIONS-2026-09-07.md.
+
 **Ikhasi 1 — Ukuvunwa Kwamanzi (Slide 1 — Water Harvesting)**
 
 Ama-swale, ama-berm, amadamu, amathangi amanzi emvula kanye ne-greywater — bambezela, sakaza futhi shonisa wonke amaconsi.
@@ -224,19 +226,19 @@ Hlola imithetho kamasipala wakho ngaphambi kokufaka uhlelo lwe-greywater oluhlal
 
 **Ikhasi 23 — Umsebenzi Wasensimini (Slide 23 — Field Assignment)**
 
-Yakha ileveli ye-A-frame ngezigxobo ezintathu nentambo enesisindo.
+Yakha ileveli ye-A-frame ngezigxobo ezintathu nentambo enesisindo. Hlola i-level mark ngaphambi kokulandela i-contour.
 
-Yisebenzise ukuthola umugqa owodwa oyisicaba onqamula umthambeka wakho.
+Maka lapho izinyawo zombili zimi khona nalapho intambo emile iwela khona ogodweni. Shintshanisa imilenze uyibeke kulezo zindawo ezifanayo, umake intambo futhi. Maphakathi kwamamaki yi-level mark.
 
-Thatha isithombe se-A-frame kanye nomugqa owumakile.
+Yisebenzise ukuthola umugqa owodwa oyisicaba onqamula umthambeka wakho. Thatha isithombe se-A-frame kanye nomugqa owumakile.
 
 ---
 
 **Ikhasi 24 — Hlola Umsebenzi Wakho (Slide 24 — Check Your Work)**
 
-I-A-frame yami yakhiwe futhi ngiyihlolile.
+I-A-frame yami yakhiwe futhi ngihlole i-level mark.
 
-Yiguqulele ngakolunye uhlangothi — kufanele ikhombise okufanayo.
+Ngimake izindawo ezimbili ezifanayo zezinyawo, ngashintshanisa imilenze ngase ngihlola iphuzu eliphakathi emgqeni wogodo.
 
 Ngimake okungenani amaphuzu amathathu aphakeme ngokufanayo anqamula umthambeka wami.
 

@@ -29,6 +29,11 @@ export interface NarrationTrack {
 export interface ModuleNarration {
   /** Recorded languages, best first. Codes match lib/tts.ts LANG_TO_BCP47 keys. */
   languages: string[];
+  /** Voice IDs of the actual stored take, not the voice planned for its replacement. */
+  recordedVoices?: Record<string, string>;
+  /** Existing recordings withheld because their instructions no longer match the lesson.
+   * Keep their provenance and files, but never offer them for playback or offline download. */
+  recordingHold?: Record<string, string>;
   tracks: NarrationTrack[];
   /**
    * Optional absolute origin for the files. Unset = served from this app's own /public.
@@ -41,9 +46,15 @@ export interface ModuleNarration {
 
 /** Keyed by module id from lib/course-modules.ts. A module absent here simply has no
  *  recording yet — that is the normal state, not an error. */
+export const COURSE_VOICE_TARGETS: Readonly<Record<string, string>> = Object.freeze({
+  en: 'en-ZA-LeahNeural',
+  zu: 'zu-ZA-ThandoNeural',
+});
+
 export const COURSE_NARRATION: Record<string, ModuleNarration> = {
   'seeds-sovereignty': {
     languages: ['zu', 'en'],
+    recordedVoices: { en: 'en-ZA-LeahNeural', zu: 'zu-ZA-ThandoNeural' },
     // 24 slides, re-recorded 2026-07-28 to match the rewritten home-study scripts in
     // docs/narration/. The earlier 10-clip take was cut from a 10-slide deck written in
     // FACILITATOR voice — it addressed "the participants" and told the listener to pause the
@@ -88,11 +99,12 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
   },
   'intro-permaculture': {
     languages: ['en'],
+    recordingHold: { en: 'The design and food-safety guidance has changed. Read the corrected slides while replacement narration is prepared.' },
+    recordedVoices: { en: 'en-ZA-LukeNeural' },
     // 22 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural (Antigravity's batch run) and
     // verified by import-course-audio: 22/22 clips matched their script blocks, median 3.22 w/s.
-    // NOTE the voice differs from seeds-sovereignty's en-ZA-LeahNeural — the eight modules
-    // recorded after this one share Luke, so seeds is the odd one out; Rory decides whether to
-    // re-record seeds EN for a single course voice.
+    // Replacement production follows Seeds: en-ZA-LeahNeural. The existing Luke take is
+    // retained until a verified replacement is available. See docs/COURSE-NARRATION-VOICE.md.
     tracks: [
       { slide: 1,  lesson: null,                    title: 'Introduction to Permaculture' },
       { slide: 2,  lesson: null,                    title: 'Why This Matters' },
@@ -109,7 +121,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
       { slide: 13, lesson: 'intro-permaculture-l2', title: 'Watch: Diversity Against One Bad Day' },
       { slide: 14, lesson: 'intro-permaculture-l2', title: 'Integrate Rather Than Segregate' },
       { slide: 15, lesson: 'intro-permaculture-l3', title: 'Zones: Organising by How Often You Visit' },
-      { slide: 16, lesson: 'intro-permaculture-l3', title: 'Why Zone 1 Is Not Negotiable' },
+      { slide: 16, lesson: 'intro-permaculture-l3', title: 'Keep Frequent Tasks Close' },
       { slide: 17, lesson: 'intro-permaculture-l3', title: 'Zones Plan Your Labour' },
       { slide: 18, lesson: 'intro-permaculture-l3', title: 'Sectors: The Energies Arriving From Outside' },
       { slide: 19, lesson: 'intro-permaculture-l3', title: 'Watch: A Windbreak Belongs On The Wind Side' },
@@ -120,6 +132,8 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
   },
   'reading-landscape': {
     languages: ['en'],
+    recordingHold: { en: 'The site-observation and A-frame instructions have changed. Read the corrected slides while replacement narration is prepared.' },
+    recordedVoices: { en: 'en-ZA-LukeNeural' },
     // 21 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural and verified by
     // import-course-audio: every clip matched its script block.
     // This deck labels its own boundaries — slides 4, 8, 12 and 16 open "Lesson 1" to "Lesson 4" —
@@ -138,7 +152,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
       { slide: 11, lesson: 'reading-landscape-l2', title: 'Protect Frost-Tender Plants' },
       { slide: 12, lesson: 'reading-landscape-l3', title: 'Lesson 3: Read Wind, Frost, and Slope' },
       { slide: 13, lesson: 'reading-landscape-l3', title: 'Watch: See Wind and Cold Air on the Map' },
-      { slide: 14, lesson: 'reading-landscape-l3', title: 'Frost Flows Downhill' },
+      { slide: 14, lesson: 'reading-landscape-l3', title: 'Cold Air Collects in Hollows' },
       { slide: 15, lesson: 'reading-landscape-l3', title: 'Choose Airflow and Warmth' },
       { slide: 16, lesson: 'reading-landscape-l4', title: 'Lesson 4: Start Your Site Map' },
       { slide: 17, lesson: 'reading-landscape-l4', title: 'Watch: Draw the Land You Already Have' },
@@ -150,6 +164,8 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
   },
   'water-harvesting': {
     languages: ['en'],
+    recordedVoices: { en: 'en-ZA-LukeNeural' },
+    recordingHold: { en: 'The water-safety instructions have changed. Read the updated slides while replacement narration is prepared.' },
     // 24 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural and verified by
     // import-course-audio: every clip matched its script block.
     // No "Why This Matters" slide here: slide 2 is Learning Outcomes covering all four lessons, and
@@ -163,11 +179,11 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
       { slide: 6,  lesson: 'water-harvesting-l1', title: 'Storms Need a Safe Overflow' },
       { slide: 7,  lesson: 'water-harvesting-l1', title: 'Watch: The Overflow Point' },
       { slide: 8,  lesson: 'water-harvesting-l1', title: 'Know When Swales Fit the Slope' },
-      { slide: 9,  lesson: 'water-harvesting-l1', title: 'Watch: Vetiver Takes Over' },
+      { slide: 9,  lesson: 'water-harvesting-l1', title: 'Watch: Living Contour Barriers' },
       { slide: 10, lesson: 'water-harvesting-l2', title: 'Store Rain for the Dry Season' },
       { slide: 11, lesson: 'water-harvesting-l2', title: 'Design the Spillway Before the Wall' },
       { slide: 12, lesson: 'water-harvesting-l2', title: 'Watch: Dam and Spillway' },
-      { slide: 13, lesson: 'water-harvesting-l2', title: 'Turn a Dam into a Working Ecosystem' },
+      { slide: 13, lesson: 'water-harvesting-l2', title: 'Keep the Dam Wall Clear' },
       { slide: 14, lesson: 'water-harvesting-l3', title: 'Your Roof Is a Harvesting Surface' },
       { slide: 15, lesson: 'water-harvesting-l3', title: 'Divert the Dirty First Flush' },
       { slide: 16, lesson: 'water-harvesting-l3', title: 'Watch: First Flush to Tank' },
@@ -183,6 +199,8 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
   },
   'soil-health': {
     languages: ['en'],
+    recordedVoices: { en: 'en-ZA-LukeNeural' },
+    recordingHold: { en: 'The worm-farm leachate advice has changed. Read the corrected slides while replacement narration is prepared.' },
     // 20 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural and verified by
     // import-course-audio: every clip matched its script block.
     tracks: [
@@ -202,7 +220,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
       { slide: 14, lesson: 'soil-health-l3', title: 'Watch: Bare Soil and Mulch' },
       { slide: 15, lesson: 'soil-health-l3', title: 'Mulch Protects the Ground' },
       { slide: 16, lesson: 'soil-health-l3', title: 'Cover Crops Between Seasons' },
-      { slide: 17, lesson: 'soil-health-l3', title: 'Worm Farms Make Root Feed' },
+      { slide: 17, lesson: 'soil-health-l3', title: 'Worm Farms and Leachate' },
       { slide: 18, lesson: 'soil-health-l3', title: 'Protect Soil All Year' },
       { slide: 19, lesson: null,             title: 'Field Assignment' },
       { slide: 20, lesson: null,             title: 'Field Action' },
@@ -210,6 +228,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
   },
   'vegetables-staples': {
     languages: ['en'],
+    recordedVoices: { en: 'en-ZA-LukeNeural' },
     // 18 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural and verified by
     // import-course-audio: every clip matched its script block.
     tracks: [
@@ -235,6 +254,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
   },
   'plant-guilds': {
     languages: ['en'],
+    recordedVoices: { en: 'en-ZA-LukeNeural' },
     // 20 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural and verified by
     // import-course-audio: every clip matched its script block.
     // Slide 2 is this deck's "Why This Matters", under a module-specific name.
@@ -263,6 +283,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
   },
   'food-forest': {
     languages: ['en'],
+    recordedVoices: { en: 'en-ZA-LukeNeural' },
     // 20 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural and verified by
     // import-course-audio: every clip matched its script block.
     // Slide 8 reads back l1's closing lines about the canopy closing by year three to five, so it
@@ -292,6 +313,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
   },
   'small-livestock': {
     languages: ['en'],
+    recordedVoices: { en: 'en-ZA-LukeNeural' },
     // 20 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural and verified by
     // import-course-audio: every clip matched its script block.
     // The "Watch" clip leads each lesson here rather than following its opening slide (4, 9, 14),
@@ -321,6 +343,7 @@ export const COURSE_NARRATION: Record<string, ModuleNarration> = {
   },
   'market-community': {
     languages: ['en'],
+    recordedVoices: { en: 'en-ZA-LukeNeural' },
     // 20 slides, recorded 2026-08-03 via edge-tts en-ZA-LukeNeural and verified by
     // import-course-audio: every clip matched its script block.
     // Same deck shape as small-livestock: each lesson opens on its "Watch" clip (4, 9, 14).
@@ -355,7 +378,17 @@ export function narrationFor(moduleId: string): ModuleNarration | null {
 
 export function hasNarration(moduleId: string): boolean {
   const n = COURSE_NARRATION[moduleId];
-  return Boolean(n && n.languages.length > 0 && n.tracks.length > 0);
+  return Boolean(n && availableNarrationLanguages(moduleId).length > 0 && n.tracks.length > 0);
+}
+
+/** Recorded languages whose take still matches the current teaching. */
+export function availableNarrationLanguages(moduleId: string): string[] {
+  const n = COURSE_NARRATION[moduleId];
+  return n?.languages.filter(lang => !n.recordingHold?.[lang]) ?? [];
+}
+
+export function narrationHoldReason(moduleId: string, lang: string): string | null {
+  return COURSE_NARRATION[moduleId]?.recordingHold?.[lang] ?? null;
 }
 
 export interface ResolvedLang {
@@ -368,11 +401,11 @@ export interface ResolvedLang {
 /** Pick the language to actually play: the app language if it was recorded, else English,
  *  else whatever exists. Null when the module has no recording at all. */
 export function resolveNarrationLang(moduleId: string, appLang: string): ResolvedLang | null {
-  const n = COURSE_NARRATION[moduleId];
-  if (!n || n.languages.length === 0) return null;
-  if (n.languages.includes(appLang)) return { lang: appLang, exact: true };
-  if (n.languages.includes('en')) return { lang: 'en', exact: false };
-  return { lang: n.languages[0], exact: false };
+  const languages = availableNarrationLanguages(moduleId);
+  if (languages.length === 0) return null;
+  if (languages.includes(appLang)) return { lang: appLang, exact: true };
+  if (languages.includes('en')) return { lang: 'en', exact: false };
+  return { lang: languages[0], exact: false };
 }
 
 const pad2 = (n: number) => String(n).padStart(2, '0');
@@ -385,7 +418,7 @@ function base(n: ModuleNarration, moduleId: string, lang: string): string {
 /** URL for one slide clip, or null if the module or slide isn't in the manifest. */
 export function trackUrl(moduleId: string, lang: string, slide: number): string | null {
   const n = COURSE_NARRATION[moduleId];
-  if (!n || !n.languages.includes(lang)) return null;
+  if (!n || !availableNarrationLanguages(moduleId).includes(lang)) return null;
   if (!n.tracks.some((t) => t.slide === slide)) return null;
   return `${base(n, moduleId, lang)}/slide-${pad2(slide)}.mp3`;
 }
@@ -393,7 +426,7 @@ export function trackUrl(moduleId: string, lang: string, slide: number): string 
 /** URL for the single continuous narration of the whole module. */
 export function fullNarrationUrl(moduleId: string, lang: string): string | null {
   const n = COURSE_NARRATION[moduleId];
-  if (!n || !n.languages.includes(lang)) return null;
+  if (!n || !availableNarrationLanguages(moduleId).includes(lang)) return null;
   return `${base(n, moduleId, lang)}/full.mp3`;
 }
 

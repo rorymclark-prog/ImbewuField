@@ -6,11 +6,61 @@ import { join } from 'node:path';
 import {
   COURSE_NARRATION, allTracks, formatClock, fullNarrationUrl, hasNarration,
   moduleLevelTracks, narrationFor, resolveNarrationLang, trackTitle, tracksForLesson, trackUrl,
+  availableNarrationLanguages, narrationHoldReason,
 } from '../lib/course-audio.ts';
 import { COURSE_MODULES } from '../lib/course-modules.ts';
 
 const PUBLIC_AUDIO = join(process.cwd(), 'public', 'course-audio');
 const pad2 = (n: number) => String(n).padStart(2, '0');
+
+test('superseded water instructions cannot play as slide clips, full narration or fallback', () => {
+  const id = 'water-harvesting';
+  assert.ok(narrationHoldReason(id, 'en'));
+  assert.deepEqual(availableNarrationLanguages(id), []);
+  assert.equal(hasNarration(id), false);
+  for (const track of allTracks(id)) assert.equal(trackUrl(id, 'en', track.slide), null);
+  assert.equal(fullNarrationUrl(id, 'en'), null);
+  assert.equal(resolveNarrationLang(id, 'en'), null);
+  assert.equal(resolveNarrationLang(id, 'zu'), null);
+  assert.equal(allTracks(id).length, 24, 'replacement recordings retain all 24 slide numbers');
+});
+
+test('superseded leachate advice cannot play through the soil module or language fallback', () => {
+  assert.ok(narrationHoldReason('soil-health', 'en'));
+  assert.equal(trackUrl('soil-health', 'en', 17), null);
+  assert.equal(fullNarrationUrl('soil-health', 'en'), null);
+  assert.equal(resolveNarrationLang('soil-health', 'zu'), null);
+  assert.equal(allTracks('soil-health').length, 20);
+  const lesson = COURSE_MODULES.find(m=>m.id==='soil-health')!.lessons.find(l=>l.id==='soil-health-l3')!;
+  assert.ok(lesson.body.includes('Do not use leachate on vegetables or other food crops'));
+  const quiz=lesson.quiz.find(q=>q.q.includes('leachate'))!;
+  assert.ok(quiz.options[quiz.correct].includes('dilution does not disinfect'));
+});
+
+test('a hold retracts one language while leaving a current take available', () => {
+  const n = COURSE_NARRATION['seeds-sovereignty'];
+  const prior = n.recordingHold;
+  try {
+    n.recordingHold = { en: 'Test: source correction' };
+    assert.deepEqual(availableNarrationLanguages('seeds-sovereignty'), ['zu']);
+    assert.deepEqual(resolveNarrationLang('seeds-sovereignty', 'en'), { lang: 'zu', exact: false });
+    assert.equal(trackUrl('seeds-sovereignty', 'en', 1), null);
+    assert.ok(trackUrl('seeds-sovereignty', 'zu', 1));
+  } finally { n.recordingHold = prior; }
+});
+
+test('corrected introduction cannot replay superseded care schedules through audio fallback', () => {
+  const id = 'intro-permaculture';
+  assert.ok(narrationHoldReason(id, 'en'));
+  for (const track of allTracks(id)) assert.equal(trackUrl(id, 'en', track.slide), null);
+  assert.equal(fullNarrationUrl(id, 'en'), null);
+  assert.equal(resolveNarrationLang(id, 'zu'), null);
+  assert.equal(allTracks(id).length, 22, 'visual expansion must preserve recording identities');
+  const module = COURSE_MODULES.find(m => m.id === id)!;
+  const herbs = module.lessons.flatMap(l => l.quiz).find(q => q.q.includes('plant herbs'))!;
+  assert.ok(herbs.options[herbs.correct].includes('less convenient'));
+  assert.ok(herbs.rationale.includes('not every herb needs daily picking'));
+});
 
 test('a module with no recording is a normal state, not an error', () => {
   // The example used to be 'intro-permaculture', which flipped this test the day that module WAS
@@ -25,6 +75,19 @@ test('a module with no recording is a normal state, not an error', () => {
   assert.deepEqual(tracksForLesson(unrecorded, 'intro-permaculture-l1'), []);
   assert.equal(trackUrl(unrecorded, 'zu', 1), null);
   assert.equal(resolveNarrationLang(unrecorded, 'zu'), null);
+});
+
+test('corrected contour and frost guidance cannot replay its old recording', () => {
+  const id = 'reading-landscape';
+  assert.ok(narrationHoldReason(id, 'en'));
+  assert.deepEqual(availableNarrationLanguages(id), []);
+  for (const track of allTracks(id)) assert.equal(trackUrl(id, 'en', track.slide), null);
+  assert.equal(fullNarrationUrl(id, 'en'), null);
+  assert.equal(resolveNarrationLang(id, 'zu'), null);
+  const lesson = COURSE_MODULES.find(m => m.id === id)!.lessons[0];
+  assert.ok(lesson.body.includes('Swap the legs onto the same two foot positions'));
+  assert.ok(lesson.body.includes('Halfway between the two marks'));
+  assert.ok(lesson.quiz[0].rationale.includes('does not design a dam'));
 });
 
 test('the seeds module is recorded in isiZulu and English', () => {

@@ -16,8 +16,9 @@
 // disappears by itself.
 
 import { COURSE_MODULES } from '@/lib/course-modules';
-import { hasNarration, narrationFor } from '@/lib/course-audio';
-import { hasDeck } from '@/lib/course-deck';
+import { narrationFor, COURSE_VOICE_TARGETS } from '@/lib/course-audio';
+import { hasDeck, deckFor, slideImageUrl, slideAudioUrl } from '@/lib/course-deck';
+import { COURSE_ASSET_SIZES } from '@/lib/course-asset-sizes';
 
 export type ModuleReadiness = 'complete' | 'in-progress';
 
@@ -28,6 +29,9 @@ export interface ReadinessDetail {
   narrationLanguages: string[];
   illustratedLessons: number;
   totalLessons: number;
+  slideLanguages: string[];
+  missingDemonstrations: number;
+  narrationVoicesMatch: boolean;
 }
 
 /**
@@ -41,14 +45,37 @@ export interface ReadinessDetail {
 export function moduleReadinessDetail(moduleId: string): ReadinessDetail {
   const mod = COURSE_MODULES.find((m) => m.id === moduleId);
   const totalLessons = mod?.lessons.length ?? 0;
-  const illustratedLessons = mod?.lessons.filter((l) => l.infographicUrl && l.infographicAlt).length ?? 0;
-  const narrationLanguages = hasNarration(moduleId) ? (narrationFor(moduleId)?.languages ?? []) : [];
+  const illustratedLessons = mod?.lessons.filter((l) => l.infographicUrl && l.infographicAlt
+    && COURSE_ASSET_SIZES[l.infographicUrl] !== undefined).length ?? 0;
+  const narration = narrationFor(moduleId);
+  const narrationLanguages = (narration?.languages ?? []).filter((lang) =>
+    Boolean(narration?.tracks.length) && narration!.tracks.every((track) => {
+      const url = slideAudioUrl(moduleId, lang, track.slide);
+      return url !== null && COURSE_ASSET_SIZES[url] !== undefined;
+    }));
   const deck = hasDeck(moduleId);
+  const moduleDeck = deckFor(moduleId);
+  const slideLanguages = (moduleDeck?.slideLanguages ?? []).filter((lang) =>
+    Boolean(moduleDeck?.slides.length) && moduleDeck!.slides.every((slide) => {
+      const url = slideImageUrl(moduleId, lang, slide.slide);
+      return url !== null && COURSE_ASSET_SIZES[url] !== undefined;
+    }));
+  const missingDemonstrations = (moduleDeck?.slides ?? []).filter((slide) => {
+    if (!/^Watch:/i.test(slide.title)) return false;
+    const animation = slide.animation;
+    return !animation || COURSE_ASSET_SIZES[`/course-animations/${moduleId}/${animation.src}.mp4`] === undefined
+      || COURSE_ASSET_SIZES[`/course-animations/${moduleId}/posters/${animation.poster}.jpg`] === undefined;
+  }).length;
 
+  const narrationVoicesMatch = ['en', 'zu'].every(lang =>
+    narration?.recordedVoices?.[lang] === COURSE_VOICE_TARGETS[lang]);
   const complete =
     totalLessons > 0 &&
     illustratedLessons === totalLessons &&
-    narrationLanguages.length >= 2 &&
+    narrationLanguages.includes('en') && narrationLanguages.includes('zu') &&
+    slideLanguages.includes('en') && slideLanguages.includes('zu') &&
+    missingDemonstrations === 0 &&
+    narrationVoicesMatch &&
     deck;
 
   return {
@@ -57,6 +84,9 @@ export function moduleReadinessDetail(moduleId: string): ReadinessDetail {
     narrationLanguages,
     illustratedLessons,
     totalLessons,
+    slideLanguages,
+    missingDemonstrations,
+    narrationVoicesMatch,
   };
 }
 
@@ -89,8 +119,40 @@ export function readinessLabel(moduleId: string): { text: string; detail: string
       detail: `All ${d.totalLessons} lessons illustrated, narrated in ${d.narrationLanguages.length} languages, with slides and animations.`,
     };
   }
+  // DERIVED, like everything else in this file. The constant that used to sit here went stale the
+  // moment a module gained anything.
+  //
+  // It read "Reading and pictures are ready. Narration and slides are still being made." That was
+  // true of all nine in-progress modules the day it was written. It stopped being true on
+  // 2026-08-03 when nine of them gained English narration, and it became flatly wrong for the first
+  // module to get a generated deck: the card announced that the slides were still being made while
+  // the learner was one tap away from watching them. A label attached to a module has to read the
+  // module.
+  const has = ['Reading and pictures are ready'];
+  if (d.narrationLanguages.length > 0) has.push(`narration is recorded in ${languageList(d.narrationLanguages)}`);
+  if (d.hasDeck) has.push('the slide deck is built');
+
+  const toCome: string[] = [];
+  if (!d.narrationLanguages.includes('en')) toCome.push('English narration');
+  if (!d.hasDeck) toCome.push('slides');
+  // isiZulu specifically, not "a second language". moduleReadinessDetail sets two languages as the
+  // bar for the reason stated there — this audience is isiZulu-first — and English-only narration
+  // is progress, not arrival.
+  if (!d.narrationLanguages.includes('zu')) toCome.push('isiZulu narration');
+  if (d.hasDeck && !d.slideLanguages.includes('zu')) toCome.push('isiZulu slides');
+  if (d.missingDemonstrations) toCome.push(`${d.missingDemonstrations} demonstrations`);
+  if (d.narrationLanguages.includes('en') && narrationFor(moduleId)?.recordedVoices?.en !== COURSE_VOICE_TARGETS.en) toCome.push('consistent English narration voice');
+  if (d.illustratedLessons < d.totalLessons) toCome.push('lesson pictures');
+
   return {
-    text: 'Lessons only',
-    detail: 'Reading and pictures are ready. Narration and slides are still being made.',
+    text: d.hasDeck ? 'Lessons and slides' : 'Lessons only',
+    detail: `${has.join(', ')}.${toCome.length ? ` Still to come: ${toCome.join(', ')}.` : ''}`,
   };
+}
+
+/** "English", or "English and isiZulu". Only the two languages the course is produced in are
+ *  named; anything else shows as its code rather than as a guess at what it is called. */
+function languageList(codes: string[]): string {
+  const names = codes.map((c) => ({ en: 'English', zu: 'isiZulu' }[c] ?? c));
+  return names.length > 1 ? `${names.slice(0, -1).join(', ')} and ${names[names.length - 1]}` : names[0];
 }

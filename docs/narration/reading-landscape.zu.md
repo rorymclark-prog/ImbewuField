@@ -36,9 +36,9 @@ Uzodweba i-site map elula ebonisa ukuhamba kwamanzi, imimoya yezinkathi, izindaw
 
 Ngaphambi kokuvuna amanzi, funda ukuthi asevele eya kuphi.
 
-Hamba endaweni yakho ngesikhathi semvula enkulu nangemva kwayo. Bheka imifudlana emincane, izindawo lapho amanzi esabalala khona, amachibi, nazo zonke izindawo lapho amanzi ephuma khona endaweni yakho.
+Hamba ngemva kwesiphepho, lapho sekuphephile. Gwema umbani, amanzi ageleza ngamandla namabhange angadilika. Bheka imifudlana emincane, lapho amanzi esabalala noma eqoqana khona, nalapho ephuma khona endaweni yakho.
 
-Amanzi aphumayo ayinsiza elahlekile. Amanzi ahlalayo angondla umhlabathi, izihlahla, izitshalo, kanye nepulazi elinempilo.
+Maka izindawo ezingasiza ukugcina amanzi nemizila lapho amanzi amaningi edinga ukuphuma khona ngokuphepha. Ukugcina wonke amanzi akuphephile kuzo zonke izindawo.
 
 ---
 
@@ -50,31 +50,33 @@ Isithombe sibonisa imvula yehla emthambekeni. Landela lapho ijubha khona, isabal
 
 **Ikhasi 6 — Landela Ama-Contour Lines Nge-A-Frame (Slide 6 — Trace Contours with an A-Frame)**
 
-Yakha i-A-frame level ngezigxobo ezintathu nentambo eboshelwe isisindo.
+Yakha i-A-frame eqinile ngemilenze emibili elinganayo, ugodo oluvundlile nentambo enesisindo elenga phezulu. Isisindo masilenge ngokukhululekile ngaphansi kogodo oluvundlile.
 
-Yihambise emhlabeni uthole amaphuzu asezingeni elifanayo. Xhuma la maphuzu ukuze ulandele i-contour line.
+Hlola i-level mark ngaphambi kokuyisebenzisa. Maka lapho izinyawo zombili zimi khona emhlabathini oqinile. Linda intambo ime, umake lapho iwela khona ogodweni. Shintshanisa imilenze uyibeke kulezo zindawo ezimbili ezifanayo, bese umaka intambo futhi. Maphakathi kwamamaki amabili yi-level mark. Uma amamaki ehlangana, sebenzisa lelo phawu.
 
-Abantu ababili bangalandela ama-contour lines endaweni engamahekthare amabili ekuseni. Akudingi surveyor noma imishini ebizayo. Leli thuluzi lisiza ukubeka ama-swales, ama-dams, nemigqa yezihlahla.
+Gcina unyawo olulodwa lunganyakazi. Hambisa olunye emthambekeni kuze intambo emile ihlangane ne-level mark. Faka isikhonkwane kuleyo ndawo, ujikeleze phezu kwalolo nyawo, bese uphinda ukulandela i-contour.
+
+Phinda uhlole uma i-frame inyakazile. Lokhu kumaka amaphuzu asezingeni elifanayo; akuklami i-dam futhi akuqinisekisi ukuthi ukumba kuphephile. Thola iseluleko esifanele ngaphambi kokumba.
 
 ---
 
 **Ikhasi 7 — Yehlisa Phezulu, Faka Phakathi, Lawula Ngezansi (Slide 7 — Slow It High, Sink It Mid, Control It Low)**
 
-Amanzi athatha ijubane namandla okuguguleka njengoba ehla emthambekeni.
+Amanzi angathatha ijubane futhi agugule umhlabathi njengoba ehla emthambekeni.
 
-Yehlisa amanzi phezulu emthambekeni ngangokunokwenzeka. Wafake emhlabathini maphakathi nomthambeka. Wawalawule ngezansi.
+Bheka izindawo eziphephile zokuwanciphisa phezulu, uwavumele angene lapho umhlabathi nendawo kufanele khona, bese uqondisa amanzi amaningi aphume ngokuphepha.
 
-Lokhu kugcina umswakama omningi emhlabeni futhi kuvimbela umonakalo ngezansi. Uma wehlisa amanzi phezulu, uvimba ukuguguleka ngaphambi kokuba kukhule.
+Ungaphoqi amanzi angene emhlabathini ongazinzile noma osugcwele amanzi. Hlela i-overflow ephephile ngaphambi kokumba. Inhloso ukugcina umswakama owusizo ngaphandle kokudala ukuguguleka noma izikhukhula.
 
 ---
 
 **Ikhasi 8 — Isifundo 2: Funda Ilanga Nemithunzi (Slide 8 — Lesson 2: Read Sun and Shade)**
 
-ENingizimu Afrika, ilanga lihamba esibhakabhakeni esisenyakatho.
+ENingizimu Afrika, ilanga lasemini ebusika lisenyakatho.
 
-Imithambeka ebheke enyakatho ifudumele futhi yomile. Imithambeka ebheke eningizimu ipholile futhi inomswakama. EHighveld, i-frost ingahlala emigodini ebheke eningizimu isikhathi eside ngemva kokuba isiphelile kwezinye izindawo.
+Imithambeka ebheke enyakatho ivamise ukuthola ilanga nokufudumala kwasebusika okuningi kunaleyo ebheke eningizimu. Umswakama ne-frost kuthintwa nayimithunzi, umhlabathi nalapho umoya obandayo uqoqana khona.
 
-Lokhu kukusiza ukhethe lapho ubeka khona izitshalo ezizwelayo, izihlahla, izakhiwo, nezinye izingxenye zepulazi.
+Buka indawo yakho ezinkathini ezahlukene ngaphambi kokukhetha izindawo zezitshalo ezizwelayo, izihlahla nezakhiwo.
 
 ---
 
@@ -86,21 +88,21 @@ Landela ilanga, isakhiwo, isihlahla, kanye nemithunzi yakho emthambekeni. Qhatha
 
 **Ikhasi 10 — Hlola Imithunzi Yasebusika Ngaphambi Kokwakha (Slide 10 — Check Winter Shadows Before Building)**
 
-Ilanga lasebusika lihlala phansi futhi liya enyakatho kakhulu kunelasehlobo.
+Ilanga lasebusika liphansi kunelasehlobo, ngakho imithunzi iyashintsha ngezinkathi.
 
-Udonga olungafaki thunzi ehlobo lungafaka umbhede emthunzini amahora ebusika. I-shade cloth engamamitha amabili ohlangothini olusenyakatho lwegadi ingavimba ilanga lasebusika eliphansi cishe usuku lonke.
+Udonga noma i-shade cloth enyakatho yombhede ingavimba ilanga eliwusizo ebusika. Umphumela uncike ekuphakameni kwayo, ebangeni ukusuka embhedeni nasekutheni kudlula ukukhanya okungakanani.
 
-Hlola le ndawo ngo-8 ekuseni, emini, nango-4 ntambama ngosuku lwasebusika.
+Hlola le ndawo ngo-8 ekuseni, emini, nango-4 ntambama ngosuku lwasebusika. Maka imiphetho yemithunzi emdwebeni ngaphambi kokubeka into ehlala njalo.
 
 ---
 
 **Ikhasi 11 — Vikela Izitshalo Ezizwela I-Frost (Slide 11 — Protect Frost-Tender Plants)**
 
-Ezitshalweni ezizwela i-frost, njenge-pawpaw nezihlahla ze-citrus ezisencane, sebenzisa ukufudumala kodonga olubheke enyakatho.
+Udonga olubheke enyakatho olufudunyezwa yilanga lunganikeza indawo efudumele ezitshalweni ezizwela i-frost, njenge-pawpaw nezihlahla ze-citrus ezisencane.
 
-Udonga lumunca ukushisa emini bese lukudedela ebusuku. Lokhu kufudumala kwasebusuku kuvikela isitshalo esizwelayo lapho kufika i-frost.
+Udonga lungagcina ukufudumala kwasemini lukukhiphe ebusuku. Lokhu kungasiza, kodwa akuqinisekisi ukuvikeleka ku-frost enamandla.
 
-Ungabeki izitshalo ezisengozini emgodini obandayo obheke eningizimu. Khetha indawo ethola ukufudumala futhi engagcini i-frost.
+Hlola i-frost yendawo nezidingo zesitshalo. Gwema indawo ephansi lapho umoya obandayo uqoqana khona futhi uhlele okunye ukuvikelwa ngaphambi kokutshala.
 
 ---
 
@@ -108,9 +110,9 @@ Ungabeki izitshalo ezisengozini emgodini obandayo obheke eningizimu. Khetha inda
 
 Umoya ungonakalisa ipulazi elincane noma ungabonakali kalula.
 
-Amapulazi aseHighveld abhekana nemimoya eshisayo neyomile evela enyakatho-ntshonalanga ngo-August no-September. Amapulazi asezintabeni zaseKZN abhekana nemimoya ebandayo evela eningizimu-ntshonalanga ebusika, kanye nemimoya enomswakama evela empumalanga ehlobo.
+Bheka ukuthi imimoya elimazayo ivela kuphi endaweni yakho. Bhala inkathi, amagquma avulekile, izikhala nezindawo ezivikelekile. Buza omakhelwane uhlole amarekhodi esimo sezulu sendawo.
 
-Yazi indlela yomoya yesifunda sakho ngaphambi kokutshala. Umoya uthinta ama-windbreaks, ukuvikelwa kwezitshalo, ukoma, nezifo.
+Izindlela zomoya ziyahluka ngezindawo. Sebenzisa okubonile lapho ubeka ama-windbreaks nezitshalo; ungakopishi indlela yomoya yelinye ipulazi.
 
 ---
 
@@ -120,33 +122,33 @@ Landela umoya phezu kwamagquma nasezikhaleni. Landela umoya obandayo wehla uye e
 
 ---
 
-**Ikhasi 14 — I-Frost Yehla Ngomthambeka (Slide 14 — Frost Flows Downhill)**
+**Ikhasi 14 — Umoya Obandayo Uqoqana Ezindaweni Eziphansi (Slide 14 — Cold Air Collects in Hollows)**
 
-I-frost iziphatha njengamanzi. Ebusuku, umoya obandayo wehla emthambekeni bese uqoqana ezindaweni eziphansi.
+Ebusuku obubandayo, obungenamafu nomoya onamandla, umoya obandayo ungehla emthambekeni uqoqane ezindaweni eziphansi.
 
-Iphansi lesigodi liba ne-frost emasontweni ambalwa ngaphambi nangemva kwemithambeka engenhla. Isikhala ku-ridgeline singangenisa umoya obandayo amamitha angamakhulu amabili noma amathathu uye esigodini esivikelekile.
+Lezi zindawo zingabanda kunemithambeka eseduze. Lokhu kuncike emhlabeni, ezivimbelweni nasesimweni sezulu.
 
-Hamba emhlabeni ekuntweleni kokusa ngosuku olubandayo luka-June. Inkungu namazolo afriziwe kukhombisa lapho i-frost ihlala khona.
+Vakashela ngokuphepha ekuntweleni kokusa ngesikhathi se-frost sendawo yakho. Bheka izinhlayiya zeqhwa phezu kwezinto bese ubhala lapho i-frost ihlala khona isikhathi eside. Inkungu yodwa ayiqinisekisi i-frost.
 
 ---
 
 **Ikhasi 15 — Khetha Ukuhamba Komoya Nokufudumala (Slide 15 — Choose Airflow and Warmth)**
 
-Beka i-seedling nursery yakho ezwela kakhulu i-frost egqumeni elinothambeka oluncane, elibheke enyakatho, ngaphezu kwendawo lapho i-frost iqoqana khona.
+Nge-nursery ezwela i-frost, bheka indawo evikelekile enothambeka oluncane, engaphezu kwezindawo lapho umoya obandayo uqoqana khona. Ukubheka enyakatho kungangeza ukufudumala kwasebusika.
 
-Uma ama-tomatoes ehlaselwa yi-late blight, hambisa umbhede endaweni enokuhamba kahle komoya nelanga lasekuseni. Ilanga lasekuseni lomisa amaqabunga ngokushesha.
+Uma ama-tomatoes ehlaselwa yi-late blight, khetha indawo enokuhamba kahle komoya nelanga lasekuseni ukuze amaqabunga ome.
 
-Ukuhamba komoya namaqabunga omile kwenza kube nzima ngesifo sokhunta ukugcina umswakama esiwudingayo.
+Lokhu kunganciphisa isikhathi amaqabunga ehlala emanzi ngaso. Akulaphi i-late blight futhi akuthathi indawo yokuhlonza isifo nokuthola iseluleko esifanele.
 
 ---
 
 **Ikhasi 16 — Isifundo 4: Qala I-Site Map Yakho (Slide 16 — Lesson 4: Start Your Site Map)**
 
-I-site map idinga iphepha, i-tape measure, i-compass, kanye nokusa okukodwa sokuhamba emhlabeni wakho.
+Qala ngephepha, i-tape measure, i-compass nesikhathi sokubuka indawo yakho.
 
-Linganisa umngcele ngezinyathelo bese uwudweba ngesikali. Maka inyakatho. Faka indlu, izihlahla, amanzi, imigwaqo, nezicingo.
+Dweba umngcele umake inyakatho. Bhala amabanga owalinganisile lapho ukwazi khona. Uma usebenzisa izinyathelo, bhala ukuthi amabanga ayizilinganiso eziqageliwe. Faka indlu, izihlahla, amanzi, imigwaqo nezicingo.
 
-Bese udweba izindlela ozibonile. Imephu yakho iba uhlaka lokuklama lonke ipulazi elincane.
+Dweba izindlela ozibonile. Hlola amabanga abalulekile ngaphambi kokusebenzisa umdwebo ukubeka into ehlala njalo.
 
 ---
 
@@ -158,11 +160,11 @@ Sebenzisa isithombe njengesiqondiso: umngcele, izakhiwo, imigwaqo, amanzi, imith
 
 **Ikhasi 18 — Vumela Izitshalo Zikusize Ufunde Umhlabathi (Slide 18 — Let Plants Help You Read Soil)**
 
-Bheka izindawo lapho i-frost ihlala khona isikhathi eside, nalapho umhlabathi unuka umanzi phakathi nezinyanga ezomile.
+Qaphela lapho i-frost ihlala khona isikhathi eside futhi uhlole lapho umhlabathi uhlala umanzi khona ezinyangeni ezomile.
 
-Qaphela izitshalo ezikhona. Ukukhula okuningi kwe-khakibos noma kwe-blackjack ekhoneni elilodwa kuvame ukukhombisa umhlabathi ophazanyisiwe noma ocindezelwe.
+Bhala izitshalo ezikhona, kuhlanganise nezindawo ze-khakibos noma ze-blackjack. Ukuba khona kwazo kuphela akuqinisekisi ukuthi umhlabathi ucindezelwe futhi akukutsheli ukuthi uvundile kangakanani.
 
-Lezi yi-pioneer weeds. Zikhula emhlabathini ophazanyisiwe noma ocindezelwe. Maka leyo ndawo kumephu ukuze uhlelo lwakho lwesikhathi esizayo luphendule esimweni somhlabathi.
+Qhathanisa umhlabathi ngaphansi kwezindawo ezahlukene. Bheka ukwakheka kwawo, umswakama nokuthi amanzi angena kanjani. Maka okubonile nemibuzo engakaphendulwa kumephu.
 
 ---
 
@@ -178,19 +180,19 @@ Buyekeza umdwebo wakho inkathi ngayinye. Imephu yepensela oyisebenzisayo ibalule
 
 **Ikhasi 20 — Umsebenzi Wensimu (Slide 20 — Field Assignment)**
 
-Hamba emhlabeni wakho ngesikhathi semvula enkulu noma ngemva kwayo. Maka imifudlana emincane, amanzi asabalalayo, amachibi, nazo zonke izindawo lapho amanzi ephuma khona endaweni yakho.
+Hamba ngemva kwesiphepho lapho indawo isiphephile. Maka imifudlana emincane, amanzi asabalalayo, amachibi nemizila lapho amanzi amaningi ephuma khona. Gwema umbani, amanzi ageleza ngamandla namabhange angadilika.
 
-Buyela ekuntweleni kokusa ngosuku olubandayo luka-June. Maka inkungu, amazolo afriziwe, nezindawo lapho i-frost ihlala khona isikhathi eside.
+Buyela ngokuphepha ekuntweleni kokusa ngesikhathi se-frost sendawo yakho. Bheka izinhlayiya zeqhwa ubhale lapho i-frost ihlala khona isikhathi eside. Ungasebenzisi inkungu yodwa njengobufakazi.
 
-Ephepheni, dweba umngcele, maka inyakatho, bese ufaka indlu, amanzi, imigwaqo, izicingo, imithambeka, nezitshalo ezikhona.
+Dweba umngcele, maka inyakatho, ufake indlu, amanzi, imigwaqo, izicingo, imithambeka nezitshalo ezikhona. Maka amabanga aqageliwe.
 
 ---
 
 **Ikhasi 21 — Isenzo SaseNsimini (Slide 21 — Field Action)**
 
-Yakha i-A-frame level ngezigxobo ezintathu nentambo eboshelwe isisindo.
+Yakha i-A-frame uhlole i-level mark njengoba kukhonjisiwe kulesi sifundo. Hlola ukuthi isisindo silenga ngokukhululekile nokuthi izihlanganisi ziqinile.
 
-Yisebenzise ukulandela ama-contour lines emhlabeni wakho. Maka lapho uzokwehlisa khona amanzi phezulu, uwafake emhlabathini maphakathi, bese uwalawula ngezansi.
+Landela i-contour uyimake ngezikhonkwane. Maka izindawo ezinganciphisa amanzi nomzila we-overflow ephephile kumephu. Hlola ukufaneleka komhlabathi nendawo nomeluleki oqeqeshiwe ngaphambi kokumba.
 
 Faka imicibisholo yomoya wasehlobo nowasebusika, okubonile ngemithunzi ngo-8 ekuseni, emini, nango-4 ntambama, kanye nama-zones nama-sectors. Gcina imephu futhi uyibuyekeze.
 

@@ -29,6 +29,7 @@ export const NARRATION_BLOCKER_MARKERS: readonly RegExp[] = [
   /Notes for the Human Reviewer/i,
   /before this script goes anywhere near a learner/i,
   /DRAFT FOR HUMAN REVIEW/i,
+  /DRAFT\s*[—–-]\s*SOURCE CHANGED/i,
   /NOT SHIPPABLE/i,
 ];
 

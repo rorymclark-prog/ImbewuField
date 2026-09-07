@@ -12,8 +12,8 @@
 // without a browser; lib/offline-cache.ts does the actual fetching.
 
 import { COURSE_MODULES } from '@/lib/course-modules';
-import { COURSE_NARRATION } from '@/lib/course-audio';
-import { COURSE_DECKS, slideImageUrl } from '@/lib/course-deck';
+import { COURSE_NARRATION, trackUrl } from '@/lib/course-audio';
+import { COURSE_DECKS, slideImagesFor } from '@/lib/course-deck';
 import { COURSE_ASSET_SIZES } from '@/lib/course-asset-sizes';
 
 export interface PackEntry {
@@ -97,9 +97,9 @@ export function offlinePack(moduleId: string, lang: string, quality: PackQuality
     for (const slide of deck.slides) {
       // Per slide, not per deck. The player falls back to English when a localized image is
       // absent, so the pack must include that fallback too or the module has a gap offline.
-      const own = slideImageUrl(moduleId, lang, slide.slide);
-      const url = own ?? slideImageUrl(moduleId, 'en', slide.slide);
-      if (url) push(at(url, 'slide'));
+      for (const frame of slideImagesFor(moduleId, lang, slide.slide)) {
+        push(at(frame.url, 'slide'));
+      }
 
       if (slide.animation) {
         push(at(`/course-animations/${moduleId}/${slide.animation.src}.mp4`, 'animation'));
@@ -111,7 +111,8 @@ export function offlinePack(moduleId: string, lang: string, quality: PackQuality
   const narration = COURSE_NARRATION[moduleId];
   if (narration?.languages.includes(lang)) {
     for (const track of narration.tracks) {
-      push(at(`/course-audio/${moduleId}/${lang}/slide-${String(track.slide).padStart(2, '0')}.mp3`, 'audio'));
+      const url = trackUrl(moduleId, lang, track.slide);
+      if (url) push(at(url, 'audio'));
     }
   }
 

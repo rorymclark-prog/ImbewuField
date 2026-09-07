@@ -1,15 +1,50 @@
 import assert from 'node:assert/strict';
-import { existsSync, statSync } from 'node:fs';
+import { existsSync, readFileSync, statSync } from 'node:fs';
 import test from 'node:test';
+
+// The real generator, not a re-implementation of its rules. A test that reasoned about what the
+// renderer OUGHT to emit would pass while the renderer did something else entirely.
+import { renderDeck } from '../scripts/render-course-deck.mjs';
 
 import {
   COURSE_DECKS, animationUrls, deckAnimationBytes, deckFor, deckSlideCount, formatBytes,
-  hasDeck, resolveDeckLang, slideAudioUrl, slideImageFor, slideImageUrl,
+  hasDeck, resolveDeckLang, slideAudioUrl, slideImageFor, slideImageUrl, slideImagesFor,
 } from '@/lib/course-deck';
 import { COURSE_NARRATION } from '@/lib/course-audio';
+import { COURSE_MODULES } from '@/lib/course-modules';
 
 const PUBLIC = new URL('../public/', import.meta.url);
 const onDisk = (url: string) => existsSync(new URL(url.replace(/^\//, ''), PUBLIC));
+
+test('every Watch promise now has a demonstration, and new wordless diagrams have readable explanations', () => {
+  for (const [moduleId, deck] of Object.entries(COURSE_DECKS)) {
+    for (const slide of deck.slides.filter(s => /^Watch:/.test(s.title))) {
+      const animation = animationUrls(moduleId, slide.slide);
+      assert.ok(animation, `${moduleId}/${slide.slide} promises a demonstration`);
+      assert.ok(onDisk(animation.video));
+      assert.ok(onDisk(animation.poster));
+      if (moduleId !== 'seeds-sovereignty') assert.ok(animation.description);
+    }
+  }
+});
+
+const normalizeText = (s: string) => s
+  .replace(/<[^>]*>/g, ' ')
+  .replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"')
+  .replace(/\s+/g, ' ').trim();
+
+function englishNarrationBlocks(moduleId: string) {
+  const source = readFileSync(new URL(`../docs/narration/${moduleId}.en.md`, import.meta.url), 'utf8');
+  const headings = [...source.matchAll(/^\*\*Slide\s+(\d+)\s+[—-][^\n]*\*\*\s*$/gm)];
+  return new Map(headings.map((heading, index) => {
+    const body = source.slice(heading.index! + heading[0].length, headings[index + 1]?.index).split(/^#{1,6}\s/m)[0];
+    const [before, ...afterParts] = body.split(/\[pause\]/i);
+    const after = afterParts.join('\n\n');
+    const paragraphs = (text: string) => text.replace(/^---\s*$/gm, '').split(/\n\s*\n/)
+      .map((p) => p.replace(/\s+/g, ' ').trim()).filter(Boolean);
+    return [Number(heading[1]), { before: paragraphs(before), after: paragraphs(after) }];
+  }));
+}
 
 test('the deck is derived from the narration manifest, never typed out twice', () => {
   // Two hand-maintained lists of the same 24 rows is this codebase's most repeated defect, and here
@@ -29,20 +64,26 @@ test('every promised slide image exists on disk', () => {
   // The other direction of the same rule tests/course-audio.test.ts enforces for narration: a
   // promised file that is missing is a broken image on a farmer's phone, and they have already
   // paid for the page load by the time they find out.
-  const deck = deckFor('seeds-sovereignty')!;
-  for (const lang of deck.slideLanguages) {
-    const known = deck.missingSlides?.[lang] ?? [];
-    for (const s of deck.slides) {
-      const url = slideImageUrl('seeds-sovereignty', lang, s.slide);
-      if (known.includes(s.slide)) {
-        // A slide DECLARED missing must return nothing, so slideImageFor falls back rather than
-        // emitting a url to a file that is not there. Declared-and-absent is a known state;
-        // undeclared-and-absent is the broken image this test exists to catch.
-        assert.equal(url, null, `${lang} slide ${s.slide} is declared missing but produced a url`);
-        continue;
+  //
+  // EVERY DECK, not just Seeds. This was pinned to deckFor('seeds-sovereignty') while Seeds was the
+  // only deck, which meant it would keep passing while covering nothing the day a second one landed
+  // — the same shape of hole that had to be dug out of tests/offline-pack.test.ts on 2026-08-04,
+  // where a loop over one key stayed green through a regression spanning nine modules.
+  for (const [moduleId, deck] of Object.entries(COURSE_DECKS)) {
+    for (const lang of deck.slideLanguages) {
+      const known = deck.missingSlides?.[lang] ?? [];
+      for (const s of deck.slides) {
+        const url = slideImageUrl(moduleId, lang, s.slide);
+        if (known.includes(s.slide)) {
+          // A slide DECLARED missing must return nothing, so slideImageFor falls back rather than
+          // emitting a url to a file that is not there. Declared-and-absent is a known state;
+          // undeclared-and-absent is the broken image this test exists to catch.
+          assert.equal(url, null, `${moduleId}/${lang} slide ${s.slide} is declared missing but produced a url`);
+          continue;
+        }
+        assert.ok(url, `no url for ${moduleId}/${lang} slide ${s.slide}`);
+        assert.ok(onDisk(url!), `missing file: ${url}`);
       }
-      assert.ok(url, `no url for ${lang} slide ${s.slide}`);
-      assert.ok(onDisk(url!), `missing file: ${url}`);
     }
   }
 });
@@ -51,17 +92,128 @@ test('a declared-missing slide is really absent, and nothing else is', () => {
   // Guards the manifest against drifting from the folder in either direction: a slide declared
   // missing that later gets exported would stay hidden behind an English fallback forever, and a
   // slide quietly deleted from the folder would 404 on a farmer's phone.
-  const deck = deckFor('seeds-sovereignty')!;
-  for (const lang of deck.slideLanguages) {
-    const declared = new Set(deck.missingSlides?.[lang] ?? []);
-    for (const s of deck.slides) {
-      const path = `/course-decks/seeds-sovereignty/${lang}/slide-${String(s.slide).padStart(2, '0')}.jpg`;
-      assert.equal(
-        onDisk(path), !declared.has(s.slide),
-        declared.has(s.slide)
-          ? `${lang} slide ${s.slide} is declared missing but the file now exists — remove it from missingSlides`
-          : `${lang} slide ${s.slide} is missing from disk and not declared`,
-      );
+  //
+  // The path is built from the deck's own imageExt rather than a literal '.jpg'. Hard-coding the
+  // extension would have made this test quietly vacuous for an SVG deck — every file it looked for
+  // would be absent, so it would have demanded that every slide be declared missing.
+  for (const [moduleId, deck] of Object.entries(COURSE_DECKS)) {
+    for (const lang of deck.slideLanguages) {
+      const declared = new Set(deck.missingSlides?.[lang] ?? []);
+      for (const s of deck.slides) {
+        const path = `/course-decks/${moduleId}/${lang}/slide-${String(s.slide).padStart(2, '0')}.${deck.imageExt ?? 'jpg'}`;
+        assert.equal(
+          onDisk(path), !declared.has(s.slide),
+          declared.has(s.slide)
+            ? `${moduleId}/${lang} slide ${s.slide} is declared missing but the file now exists — remove it from missingSlides`
+            : `${moduleId}/${lang} slide ${s.slide} is missing from disk and not declared`,
+        );
+      }
+    }
+  }
+});
+
+test('a generated deck still matches the content it was generated from', () => {
+  // These slides are DERIVED — from docs/narration/<module>.<lang>.md and the narration manifest —
+  // so editing a script without re-rendering leaves a farmer reading the old wording while the
+  // voice reads the new one. That is the same class of defect as an animation matched to the wrong
+  // narration, and it is invisible on disk: every file is present and every size agrees, the deck
+  // just says something the course no longer says.
+  //
+  // Re-rendering in-process and comparing bytes is also what proves the renderer is deterministic.
+  // If it were not — a clock, a hash seed, an unstable iteration order — this would fail at random,
+  // which is a far better outcome than a deck nobody can reproduce.
+  for (const [moduleId, deck] of Object.entries(COURSE_DECKS)) {
+    if (deck.imageExt !== 'svg') continue; // a painted deck has no generator to re-run
+    for (const lang of deck.slideLanguages) {
+      const rendered = renderDeck(moduleId, lang) as { slide: number; file: string; svg: string; dropped: number; continuation: boolean }[];
+      const cards = rendered.filter((r) => !r.continuation);
+      assert.equal(cards.length, deck.slides.length, `${moduleId}/${lang}: renderer and manifest disagree on narration-block count`);
+      assert.ok(rendered.every((r) => r.dropped === 0), `${moduleId}/${lang}: a supporting line was dropped instead of continuing the card`);
+      for (const r of rendered) {
+        const url = `/course-decks/${moduleId}/${lang}/${r.file}`;
+        assert.equal(
+          readFileSync(new URL(url.replace(/^\//, ''), PUBLIC), 'utf8'), r.svg,
+          `${moduleId}/${lang} ${r.file} is stale — re-run: npm run course:render-deck -- ${moduleId} ${lang}`,
+        );
+      }
+
+      // A continuation is not allowed to be a cosmetically correct empty card. Compare its SVG
+      // text to the independently parsed script: the point that did not fit and the reflection
+      // (when the first card gave points priority) must be in one of the two actual SVG files.
+      // This would have caught the old first-sentence fallback even if the renderer reported zero
+      // dropped lines, because its missing words were absent from both rendered byte strings.
+      if (lang === 'en') {
+        const blocks = englishNarrationBlocks(moduleId);
+        for (const card of cards) {
+          const block = blocks.get(card.slide);
+          assert.ok(block, `${moduleId}/${lang} slide ${card.slide} has no source block`);
+          const frameText = normalizeText(rendered.filter((r) => r.slide === card.slide).map((r) => r.svg).join(' '));
+          for (const paragraph of [...block!.before, ...block!.after]) {
+            assert.ok(
+              frameText.includes(normalizeText(paragraph)),
+              `${moduleId}/${lang} slide ${card.slide} lost authored text: ${paragraph}`,
+            );
+          }
+        }
+      }
+    }
+  }
+});
+
+test('all generated continuation frames are reachable with the original narration number', () => {
+  for (const [moduleId, deck] of Object.entries(COURSE_DECKS)) {
+    if (deck.imageExt !== 'svg') continue;
+    for (const lang of deck.slideLanguages) {
+      const expected = renderDeck(moduleId, lang) as { slide: number; file: string }[];
+      for (const slide of deck.slides) {
+        const frames = slideImagesFor(moduleId, lang, slide.slide);
+        // An illustrated front is additional teaching art; all original reading cards still follow.
+        assert.deepEqual(frames.filter((f) => !f.url.endsWith('/cover.jpg') && !f.url.endsWith('-front.jpg')).map((f) => f.url), expected.filter((f) => f.slide === slide.slide)
+          .map((f) => `/course-decks/${moduleId}/${lang}/${f.file}`));
+        assert.ok(frames.every((f) => onDisk(f.url)));
+      }
+    }
+  }
+  const fallback = slideImagesFor('vegetables-staples', 'zu', 16);
+  assert.ok(fallback.length > 1);
+  assert.ok(fallback.every((f) => f.lang === 'en' && !f.exact));
+  assert.equal(slideImagesFor('seeds-sovereignty', 'zu', 13).length, 1);
+  assert.deepEqual(slideImagesFor('missing-module', 'en', 1), []);
+});
+
+test('illustrated teaching fronts preserve readings and an honest language fallback', () => {
+  const frames = slideImagesFor('soil-health', 'en', 10);
+  assert.ok(frames[0].url.endsWith('/slide-10-front.jpg'));
+  assert.ok(frames[1].url.endsWith('/slide-10.svg'));
+  const fallback = slideImagesFor('soil-health', 'zu', 10);
+  assert.deepEqual(fallback.map(f => f.url), frames.map(f => f.url));
+  assert.ok(fallback.every(f => f.lang === 'en' && !f.exact));
+});
+
+test('isiZulu draft titles come from the local script and long covers use the fitted layout', () => {
+  const frames = renderDeck('plant-guilds', 'zu');
+  const first = frames.find((f: {slide:number;continuation:boolean}) => f.slide === 1 && !f.continuation);
+  assert.ok(first);
+  assert.ok(normalizeText(first.svg).includes('Ukukhetha Izitshalo Nama-Plant Guilds'));
+  assert.ok(first.svg.includes('class="title"'), 'a fixed-size English hero can overlap the draft label');
+  assert.ok(first.svg.includes('isiZulu · DRAFT'));
+  assert.ok(frames.every((f: {dropped:number}) => f.dropped === 0));
+});
+
+test('a generated slide is small enough to be worth sending', () => {
+  // The whole argument for rendering these as vector is the data bill. Seeds' painted stills are
+  // 47–152 KB each because they are artwork; a slide made of type and rules has no business being
+  // anywhere near that, and if one ever is, something has gone wrong in the renderer rather than in
+  // the design. 12 KB sits far above where these actually land (~2 KB) and far below where any
+  // raster would, so it catches a regression without objecting to a redesign.
+  for (const [moduleId, deck] of Object.entries(COURSE_DECKS)) {
+    if (deck.imageExt !== 'svg') continue;
+    for (const lang of deck.slideLanguages) {
+      for (const s of deck.slides) {
+        const url = slideImageUrl(moduleId, lang, s.slide)!;
+        const bytes = statSync(new URL(url.replace(/^\//, ''), PUBLIC)).size;
+        assert.ok(bytes < 12_000, `${url} is ${bytes} B — a generated slide should be a few KB`);
+      }
     }
   }
 });
@@ -76,6 +228,23 @@ test('every animation and its poster exist, and the poster is the cheap one', ()
     assert.ok(onDisk(a.video), `missing clip: ${a.video}`);
     assert.ok(onDisk(a.poster), `missing poster: ${a.poster}`);
     assert.ok(a.bytes > 0 && a.seconds > 0, 'the play button prints both, so both must be real');
+  }
+});
+
+test('all Water Watch slides have small, explained demonstrations with honest download sizes', () => {
+  const slides = deckFor('water-harvesting')!.slides.filter(s => s.title.startsWith('Watch:'));
+  assert.equal(slides.length, 6, 'the six teaching sequences retain their narration boundaries');
+  for (const slide of slides) {
+    const a = animationUrls('water-harvesting', slide.slide)!;
+    assert.ok(a, `slide ${slide.slide} promises a demonstration`);
+    assert.ok(onDisk(a.video));
+    assert.ok(onDisk(a.poster));
+    const bytes = statSync(new URL(a.video.replace(/^\//, ''), PUBLIC)).size;
+    const posterBytes = statSync(new URL(a.poster.replace(/^\//, ''), PUBLIC)).size;
+    assert.equal(a.bytes, bytes, 'the farmer sees the actual download cost');
+    assert.ok(posterBytes < bytes, 'choosing not to play must save data');
+    assert.ok(a.description, 'a wordless diagram needs an accessible sound-off explanation');
+    assert.ok(slideImagesFor('water-harvesting', 'en', slide.slide).length, 'the full reading remains reachable');
   }
 });
 
@@ -131,9 +300,29 @@ test('the isiZulu fallback is PER SLIDE, not per module', () => {
 });
 
 test('unknown modules and slides produce no url rather than a broken one', () => {
-  assert.equal(hasDeck('water-harvesting'), false);
+  // The unknown-module path, asserted on all three lookups rather than just deckFor. These do not
+  // depend on which modules happen to have decks, which is what keeps this test from going vacuous
+  // now that every curriculum module has one.
   assert.equal(deckFor('no-such-module'), null);
-  assert.equal(resolveDeckLang('water-harvesting', 'en'), null);
+  assert.equal(hasDeck('no-such-module'), false);
+  assert.equal(resolveDeckLang('no-such-module', 'en'), null);
+  assert.equal(slideImageUrl('no-such-module', 'en', 1), null);
+
+  // A MODULE WITHOUT A DECK MUST ADVERTISE NOTHING — derived, not named. This used to pin the rule
+  // to 'water-harvesting' as the stand-in for "the module that has no deck", which meant the day
+  // that module GAINED one the test failed on the improvement and the fix was to swap in another
+  // module id — a snapshot of a fact, maintained by hand, about a rule that was never about
+  // water-harvesting. Derived, it covered every deckless module at once and needed no edit as the
+  // remaining decks landed. It is empty today, because they all have decks; that is the goal
+  // arriving, not coverage quietly lost, and the unknown-module assertions above still hold the
+  // "no deck means no url" rule down.
+  for (const mod of COURSE_MODULES) {
+    if (hasDeck(mod.id)) continue;
+    assert.equal(deckFor(mod.id), null, `${mod.id} has no slides yet deckFor returned a deck`);
+    assert.equal(resolveDeckLang(mod.id, 'en'), null, `${mod.id} has no deck yet resolved a slide language`);
+    assert.equal(slideImageUrl(mod.id, 'en', 1), null, `${mod.id} has no deck yet produced a slide url`);
+  }
+
   assert.equal(slideImageUrl('seeds-sovereignty', 'en', 99), null);
   assert.equal(slideImageUrl('seeds-sovereignty', 'zu', 99), null);
   // Slide 13 used to be asserted null here — the gap the PowerPoint repair left. It has been
