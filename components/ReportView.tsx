@@ -4,6 +4,9 @@ import { useState, useRef, useCallback, useEffect } from 'react';
 import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import ReportVersionDetails from './report/ReportVersionDetails';
 import ReportCropPlan from './report/ReportCropPlan';
+import { reportSectionsForGeneration } from '@/lib/report-planting-guide';
+import ReportMapStocktake, { ReportMapPreview } from './report/ReportMapStocktake';
+import { defaultReportMapIds, emptyMapReview, loadSiteMapReview, selectedReportMaps, type ReportMapSelection } from '@/lib/report-map-selection';
 import ReportVisualOverview from './report/ReportVisualOverview';
 import ReportPreparation from './report/ReportPreparation';
 import ReportChapterGraphics from './report/ReportChapterGraphics';
@@ -13,16 +16,14 @@ import { prepareVisualPdfAssets } from '@/lib/report-visual-pdf';
 import styles from './ReportView.module.css';
 import { loadReports, saveReport, deleteReport, reportId, MAX_REPORTS, type SavedReport, type SaveReportReason, reportSiteName, type ReportGenerationSettings, type ReportCoverChoice } from '@/lib/saved-reports';
 import { isSampleMode } from '@/lib/sample-mode';
-import { PLACE_LABELS, placeColor, type SavedPlace } from '@/lib/saved-places';
-import { Loader2, Check, Circle, ChevronRight, Share2, MapPin, SlidersHorizontal, FileText } from 'lucide-react';
+import { type SavedPlace } from '@/lib/saved-places';
+import { Loader2, Check, Circle, ChevronRight, Share2, SlidersHorizontal, FileText } from 'lucide-react';
 import { buildReportPdf, deliverPdf, reportPdfFilename, sheetPlate, stripInlineMarkdown } from '@/lib/report-pdf';
 import { resolveSiteEcology } from '@/lib/site-ecology';
-import { loadSheetMetas, loadSheetImage } from '@/lib/sheet-store';
+import { loadSheetMetas, loadSheetImage, type StoredSheetMeta } from '@/lib/sheet-store';
 import { activeAccountLocalStorageKey } from '@/lib/account-local-storage';
-import { selectReportPlates, reportCoverPlate, type ReportPlate } from '@/lib/report-plates';
+import { reportCoverPlate, type ReportPlate } from '@/lib/report-plates';
 import { prepareSiteAnalysisImages } from '@/lib/report-site-images';
-import { PLAN_VERSION } from '@/lib/plan-version';
-import { SHEET_RENDER_RECIPE } from '@/lib/sheet-render-recipe';
 import { loadSurvey } from '@/lib/site-survey';
 import { evidenceSiteId, getSiteEvidence } from '@/lib/site-evidence';
 import { groundPhotoGallery, prepareGroundPhotos, type GroundPhotoView } from '@/lib/report-ground-photos';
@@ -46,9 +47,7 @@ const ALL_SECTIONS = [
   'Soil Strategy',
   'Planting Calendar',
   'Year-Round Food Production',
-  'Fruit, Nut & Berry Trees',
-  'Indigenous Trees',
-  'Agroecosystem Planting Guide',
+  'Suitable Plants for This Site',
   'Crop Rotation',
   'Animals & Livestock',
   'Sun & Solar',
@@ -71,9 +70,7 @@ const FARMER_ESSENTIALS = [
   'Soil Strategy',
   'Planting Calendar',
   'Year-Round Food Production',
-  'Fruit, Nut & Berry Trees',
-  'Indigenous Trees',
-  'Agroecosystem Planting Guide',
+  'Suitable Plants for This Site',
   'Crop Rotation',
   'Animals & Livestock',
   'Sun & Solar',
@@ -109,7 +106,7 @@ interface Props {
   photoAnalysis?: string;
   siteData?: SiteData;
   waterData?: WaterData;
-  savedPlaces?: SavedPlace[];  // saved pins → listed with their GPS points in the report
+  savedPlaces?: SavedPlace[];  // saved pins used only to resolve the selected site identity
   mapCapture?: string | null;
   appLang?: string;
   onClose: () => void;
@@ -273,7 +270,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   const siteData = activeSaved ? activeSaved.siteData : liveSite;
   const waterData = activeSaved ? activeSaved.waterData : liveWater;
 
-  const [selected, setSelected] = useState<Set<string>>(new Set(savedReport?.settings?.sections ?? FARMER_ESSENTIALS));
+  const [selected, setSelected] = useState<Set<string>>(new Set(reportSectionsForGeneration(savedReport?.settings?.sections ?? FARMER_ESSENTIALS)));
   const [report, setReport] = useState(savedReport?.report ?? '');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -294,7 +291,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   const tr = (en: string, zu: string) => language === 'zu' ? zu : en;
   const label = (en: string) => language === 'zu' ? REPORT_ZU[en] ?? en : en;
   const showVisuals = reading === 'full' && (presentation !== 'print' || includeImages);
-  const visuals = { ...siteReportVisuals(facts, d, contentLanguage), title: siteName };
+  const visuals = { ...siteReportVisuals(facts, d, contentLanguage), title: siteName, subtitle: '' };
   const overviewVisuals = { ...visuals, charts: visuals.charts.filter(c => c.kind !== 'calendar') };
   const pdfVisuals = facts?.crop?.snapshot ? overviewVisuals : visuals;
   const chapterVisuals = reportChapterGraphics(report,visuals);
@@ -334,9 +331,25 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   // made the farmer's saved plan visibly pixelated despite its original still being available.
   const siteKey = designSiteIdFromLocation(d);
   const sheetScope = `${isSampleMode() ? 'sample' : 'live'}:${activeAccountLocalStorageKey(siteKey)}`;
-  const [plateSet, setPlateSet] = useState<{ scope: string; items: Array<ReportPlate & { thumb?: string }>; latestAt?: string }>({ scope: '', items: [] });
-  const plates = plateSet.scope === sheetScope ? plateSet.items : [];
-  const savedMapRecords = plateSet.scope === sheetScope ? { count: plates.length, latestAt: plateSet.latestAt } : null;
+  const [plateSet, setPlateSet] = useState<{ scope: string; items: StoredSheetMeta[]; latestAt?: string }>({ scope: '', items: [] });
+  const reportMapScope = `${sheetScope}:${activeSaved?.id ?? 'draft'}`;
+  const [mapChoice, setMapChoice] = useState<{ scope: string; selection: ReportMapSelection }>({ scope: '', selection: { siteId: siteKey, ids: [] } });
+  const allMaps = plateSet.scope === sheetScope ? plateSet.items : [];
+  const mapSelection = mapChoice.scope === reportMapScope ? mapChoice.selection : activeSaved?.mapSelection;
+  const plates = selectedReportMaps(allMaps, mapSelection, siteKey, emptyMapReview());
+  const selectedMapIds = mapSelection?.ids ?? plates.map(p => p.id);
+  const savedMapRecords = plateSet.scope === sheetScope ? { count: allMaps.length, latestAt: plateSet.latestAt } : null;
+  const chooseMaps = (ids: string[]) => {
+    if (ids.length > 12) { setError(tr('Choose up to 12 maps for this report.', 'Khetha amamephu angafika ku-12 alo mbiko.')); return; }
+    const selection = { siteId: siteKey, ids };
+    if (activeSaved && savedVersion) {
+      const latest = loadReports().find(r => r.id === activeSaved.id) ?? activeSaved;
+      const updated = { ...latest, mapSelection: selection };
+      if (!saveReport(updated).saved) { setError(tr('Could not save the map selection. Please try again.', 'Ukukhethwa kwamamephu akugcinwanga. Zama futhi.')); return; }
+      setActiveSaved(updated);
+    }
+    setMapChoice({ scope: reportMapScope, selection });
+  };
   const mapsRef = useRef<HTMLDivElement>(null);
   const [mapVisit, setMapVisit] = useState(0);
   useEffect(() => {
@@ -345,6 +358,10 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   const coverMap = reportCoverPlate(plates);
   const [openPlate, setOpenPlate] = useState<{ label: string; image: string } | null>(null);
   const [openingPlate, setOpeningPlate] = useState(false);
+  const [plateZoom, setPlateZoom] = useState(false);
+  const plateRequest = useRef(0);
+  useEffect(() => { ++plateRequest.current; setOpenPlate(null); setOpeningPlate(false); }, [sheetScope]);
+  useEffect(() => { setPlateZoom(false); }, [openPlate]);
   const [coverPlate, setCoverPlate] = useState<{ scope: string; id: string; image: string } | null>(null);
 
   // The farmer's own photographs of the ground, and how many they have in total. Read on mount
@@ -364,11 +381,13 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       const current = ++request;
       void loadSheetMetas(siteKey).catch(() => []).then((metas) => {
         if (cancelled || current !== request) return;
-        const chosen = selectReportPlates(metas, PLAN_VERSION, SHEET_RENDER_RECIPE);
-        const metaById = new Map(metas.map((m) => [m.id, m]));
-        const dates = chosen.map(p => metaById.get(p.id)?.at).filter((at): at is string => !!at && Number.isFinite(Date.parse(at)));
+        const dates = metas.map(m => m.at).filter(at => Number.isFinite(Date.parse(at)));
         const latestAt = dates.sort((a,b) => Date.parse(b) - Date.parse(a))[0];
-        setPlateSet({ scope: sheetScope, latestAt, items: chosen.map((p) => ({ ...p, thumb: metaById.get(p.id)?.thumb })) });
+        setPlateSet({ scope: sheetScope, latestAt, items: metas });
+        setMapChoice(previous => previous.scope === reportMapScope ? previous : {
+          scope: reportMapScope,
+          selection: activeSaved?.mapSelection ?? { siteId: siteKey, ids: defaultReportMapIds(metas, loadSiteMapReview(siteKey)) },
+        });
       });
     };
     // A farmer may save a new map set in another tab, then return to this report.
@@ -376,10 +395,10 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     refresh();
     window.addEventListener('focus', refresh);
     return () => { cancelled = true; window.removeEventListener('focus', refresh); };
-  }, [siteKey, sheetScope, evidenceRevision]);
+  }, [siteKey, sheetScope, evidenceRevision, reportMapScope, activeSaved?.mapSelection]);
 
   const coverPhoto = coverChoice === 'auto' || coverChoice === 'photo' ? photoGallery.shown[0] : undefined;
-  const captureCover = (coverChoice === 'auto' || coverChoice === 'map') && !activeSaved && mapCapture;
+  const captureCover = (coverChoice === 'auto' || coverChoice === 'map') && !activeSaved && !mapSelection && mapCapture;
   const useCoverMap = (coverChoice === 'auto' || coverChoice === 'map') && !coverPhoto && !captureCover;
   const coverId = reading === 'full' && presentation !== 'print' && !openPlate && !openingPlate && pdfState !== 'working'
     && useCoverMap ? coverMap?.id : undefined;
@@ -395,13 +414,14 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     ? coverPlate.image : coverMap?.thumb;
 
   const openSheet = useCallback(async (plate: ReportPlate) => {
+    const request = ++plateRequest.current;
     setOpeningPlate(true);
     const existing = coverPlate?.scope === sheetScope && coverPlate.id === plate.id ? coverPlate.image : null;
     setCoverPlate(null);
     try {
       const image = existing ?? await loadSheetImage(plate.id).catch(() => null);
-      if (image) setOpenPlate({ label: plate.label, image });
-    } finally { setOpeningPlate(false); }
+      if (request === plateRequest.current && image) setOpenPlate({ label: plate.label, image });
+    } finally { if (request === plateRequest.current) setOpeningPlate(false); }
   }, [coverPlate, sheetScope]);
   useEffect(() => {
     const refresh = () => setSavedList(loadReports());
@@ -453,7 +473,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       siteData: siteData ?? undefined,
       waterData: waterData ?? undefined,
       facts: facts ?? undefined,
-      settings, coverChoice,
+      settings, coverChoice, mapSelection: { siteId: siteKey, ids: selectedMapIds }, analysedMapIds: activeSaved?.analysedMapIds,
     };
     const { saved, reason } = saveReport(version);
     // Keep storage failures visible so the farmer can retry without losing this version.
@@ -468,7 +488,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     setSavedVersion(true);
     setJustSaved(true);
     setTimeout(() => setJustSaved(false), 2500);
-  }, [report, activeSaved, d, siteData, waterData, language, facts, siteName, savedVersion, settings, coverChoice]);
+  }, [report, activeSaved, d, siteData, waterData, language, facts, siteName, savedVersion, settings, coverChoice, siteKey, selectedMapIds]);
 
   // Once there is a report to read, a phone should be showing the report — not
   // the settings that produced it. Read the media query at call time rather than
@@ -487,7 +507,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
     setTone(r.settings?.tone ?? 'simple');
     setLength(r.settings?.length ?? 'standard');
     setBilingual(r.settings?.bilingual ?? false);
-    setSelected(new Set(r.settings?.sections ?? FARMER_ESSENTIALS));
+    setSelected(new Set(reportSectionsForGeneration(r.settings?.sections ?? FARMER_ESSENTIALS)));
     setCoverChoice(r.coverChoice ?? 'auto');
     setSavedVersion(true);
     setFacts(r.facts ?? null);
@@ -517,14 +537,14 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
   const generate = useCallback(async () => {
     setJustSaved(false);
     setSaveFailed(false);
-    const requested: ReportGenerationSettings = { tone, length, language, bilingual: language !== 'en' && bilingual, sections: Array.from(selected), generatedAt: new Date().toISOString() };
+    const requested: ReportGenerationSettings = { tone, length, language, bilingual: language !== 'en' && bilingual, sections: reportSectionsForGeneration(Array.from(selected)), generatedAt: new Date().toISOString() };
     if (isSampleMode()) {
       const siteId = designSiteIdFromLocation(d);
       const currentFacts = collectReportSiteFacts({ siteId, lat: d.lat, lon: d.lon, canvas: loadCanvasState(siteId), farmName: savedPlaces?.find(place => place.id === activePlaceId)?.name });
       setFacts(currentFacts);
       const sampleText = sampleFullSiteReport(currentFacts, d, language);
       setReport(sampleText);
-      setActiveSaved({ id: reportId(), name: currentFacts.farmName || reportPlace?.name || 'Site report', savedAt: requested.generatedAt, lang: 'en', report: sampleText, location: d, siteData, waterData, facts: currentFacts, coverChoice });
+      setActiveSaved({ id: reportId(), name: currentFacts.farmName || reportPlace?.name || 'Site report', savedAt: requested.generatedAt, lang: 'en', report: sampleText, location: d, siteData, waterData, facts: currentFacts, coverChoice, mapSelection: { siteId: siteKey, ids: selectedMapIds }, analysedMapIds: [] });
       setSavedVersion(false);
       setGenerated(true);
       setReading('full');
@@ -623,7 +643,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
           phasePlan: phasePlan ?? undefined,
           surveyData: loadSurvey(designSiteIdFromLocation(d)) ?? undefined,
           evidenceData: Object.keys(evidenceData).length > 0 ? evidenceData : undefined,
-          sections: Array.from(selected),
+          sections: reportSectionsForGeneration(Array.from(selected)),
           language,
           bilingual,
           tone,
@@ -643,7 +663,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       }
       const provider = res.headers.get('X-Report-Provider') || undefined;
       const model = res.headers.get('X-Report-Model') || undefined;
-      setActiveSaved({ id: reportId(), name: siteFacts.farmName || reportPlace?.name || 'Site report', savedAt: requested.generatedAt, lang: requested.language, report: text, location: d, siteData, waterData, facts: siteFacts, settings: { ...requested, provider, model }, coverChoice });
+      setActiveSaved({ id: reportId(), name: siteFacts.farmName || reportPlace?.name || 'Site report', savedAt: requested.generatedAt, lang: requested.language, report: text, location: d, siteData, waterData, facts: siteFacts, settings: { ...requested, provider, model }, coverChoice, mapSelection: { siteId: siteKey, ids: selectedMapIds }, analysedMapIds: siteImages.length ? plates.filter(p => siteImages.some(image => image.label === p.label)).map(p => p.id) : [] });
       setSavedVersion(false);
       setReading('full');
       setGenerated(true);
@@ -666,7 +686,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       reportAttemptSurvived(window.localStorage);
       setLoading(false);
     }
-  }, [d, photoAnalysis, siteData, waterData, savedPlaces, activePlaceId, selected, language, bilingual, tone, length, plates, collapsePanelOnNarrow, reportPlace, facts, coverChoice]);
+  }, [d, photoAnalysis, siteData, waterData, savedPlaces, activePlaceId, selected, language, bilingual, tone, length, plates, collapsePanelOnNarrow, reportPlace, facts, coverChoice, siteKey, selectedMapIds]);
 
   // "Export PDF". This used to be window.print(), which is a silent no-op in an
   // installed iOS PWA (manifest display: standalone) — the button looked dead on
@@ -691,10 +711,10 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       // ONE PLATE PER SHEET, NOT THE WHOLE GALLERY. The gallery is a working record — every render
       // ever made, exact and paid, across every revision of the plan rules — and a farmer can hold
       // a hundred of them. As a report appendix that is a hundred near-duplicate pages. The
-      // selection takes the latest sheet of each kind from the current plan generation, in sheet
-      // order. See lib/report-plates.ts.
+      // selection keeps the versions chosen for this report, including an explicit empty set.
+      // Re-read metadata without substituting a newer or different map.
       const sheetMetas = await loadSheetMetas(designSiteIdFromLocation(d)).catch(() => []);
-      const plates = selectReportPlates(sheetMetas, PLAN_VERSION, SHEET_RENDER_RECIPE);
+      const plates = selectedReportMaps(sheetMetas, { siteId: siteKey, ids: selectedMapIds }, siteKey, emptyMapReview());
       const coverMap = reportCoverPlate(plates);
       const coverImages: Array<{ image: string; caption: string }> = [];
       if (presentation !== 'print' && includeImages) {
@@ -741,7 +761,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       setError(err instanceof Error ? `Could not build the PDF: ${err.message}` : 'Could not build the PDF.');
       setTimeout(() => setPdfState('idle'), 4000);
     }
-  }, [report, d, reading, language, facts, includeImages, activeSaved, ecology.placeName, photoGallery, reportDate, presentation, mapCapture, chapterVisuals, siteName, contentLanguage, coverPhoto, captureCover, useCoverMap, cropMapMonth, includeCropWorkingPlan, pdfVisuals]);
+  }, [report, d, reading, language, facts, includeImages, activeSaved, ecology.placeName, photoGallery, reportDate, presentation, mapCapture, chapterVisuals, siteName, contentLanguage, coverPhoto, captureCover, useCoverMap, cropMapMonth, includeCropWorkingPlan, pdfVisuals, siteKey, selectedMapIds]);
 
   async function shareReport() {
     if (!d || !report) return;
@@ -857,7 +877,7 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       <div className={`${styles.readingControls} no-print`}>
           <button
             onClick={generate}
-            disabled={loading || selected.size === 0}
+            disabled={loading || selected.size === 0 || plateSet.scope !== sheetScope}
             className="flex items-center gap-1.5 px-3 md:px-4 py-1.5 rounded-lg text-xs font-display font-semibold transition-all"
             style={
               loading || selected.size === 0
@@ -1190,29 +1210,6 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
 
             {reading === 'full' && presentation !== 'print' && <ReportVisualOverview visuals={overviewVisuals} stamp={new Date(reportDate).toLocaleDateString('en-ZA', { day: 'numeric', month: 'short', year: 'numeric' })} image={coverPhoto?.dataUrl ?? (captureCover ? `data:image/jpeg;base64,${captureCover}` : useCoverMap ? savedCoverImage : undefined)} imageKind={coverPhoto ? 'photo' : 'map'} imageCaption={coverPhoto ? `${coverPhoto.label} · Current site evidence; it may postdate saved report text.` : captureCover ? 'Captured site satellite view' : useCoverMap && coverMap ? `Saved design: ${coverMap.label}` : undefined} />}
 
-            {/* Saved places — GPS points for the farm (home, fields, water) */}
-            {reading === 'full' && savedPlaces && savedPlaces.length > 0 && (
-              <div className="mb-6 p-4 rounded-xl" style={{ background: 'var(--report-panel)', border: '1px solid var(--report-border)' }}>
-                <div className="text-xs font-mono uppercase tracking-wider mb-3" style={{ color: 'var(--report-muted)' }}>
-                  {label('Saved Places · GPS Points')}
-                </div>
-                <div className="space-y-1.5">
-                  {savedPlaces.map((p) => (
-                    <div key={p.id} className={`${styles.placeRow} text-sm`} style={{ color: 'var(--report-ink)' }}>
-                      <MapPin size={14} style={{ color: placeColor(p.label), flexShrink: 0 }} />
-                      <span className="font-display font-semibold flex-1 min-w-0 truncate">{p.name}</span>
-                      <span className="font-sans text-xs" style={{ color: 'var(--report-muted)' }}>
-                        {PLACE_LABELS.find((l) => l.v === p.label)?.name ?? 'Place'}
-                      </span>
-                      <span className="font-mono text-xs" style={{ color: 'var(--report-muted)' }}>
-                        {Math.abs(p.lat).toFixed(5)}°S, {p.lon.toFixed(5)}°E
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
             {/* Captured satellite view */}
             {showVisuals && mapCapture && !activeSaved && (
               <div className="mb-6 p-4 rounded-xl" style={{ background: 'var(--report-panel)', border: '1px solid var(--report-border)' }}>
@@ -1242,56 +1239,15 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
               </div>
             )}
 
-            {/* ── The farm's own design sheets ──────────────────────────────
-                Present whether or not a report has been generated: they are the
-                farmer's own work and the strongest evidence in the document.
-                Thumbnails here, full sheet on tap — see the memory note above. */}
-            {showVisuals && plates.length > 0 && (
-              <div ref={mapsRef} tabIndex={-1} aria-label="Your saved design maps" className="mb-6 p-4 rounded-xl" style={{ background: 'var(--report-panel)', border: '1px solid var(--report-border)' }}>
-                <div className="text-xs font-sans uppercase tracking-wider mb-3" style={{ color: 'var(--report-muted)' }}>
-                  {tr('Your saved design maps', 'Amamephu omklamo wakho agciniwe')} · {plates.length}
-                </div>
-                <div className={styles.mapGrid}>
-                  {plates.map((plate, i) => (
-                    <button
-                      key={plate.id}
-                      onClick={() => { void openSheet(plate); }}
-                      className="text-left"
-                      style={{
-                        background: 'var(--report-paper)', border: '1px solid var(--report-border)', borderRadius: 10,
-                        padding: 6, cursor: 'pointer', display: 'flex', flexDirection: 'column', gap: 6,
-                      }}
-                    >
-                      {plate.thumb ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          src={plate.thumb}
-                          alt={plate.label}
-                          style={{ width: '100%', borderRadius: 6, display: 'block' }}
-                        />
-                      ) : (
-                        <div
-                          className="font-sans"
-                          style={{
-                            display: 'flex', alignItems: 'center', justifyContent: 'center',
-                            aspectRatio: '4 / 3', borderRadius: 6, background: 'rgba(31,77,43,0.06)',
-                            color: 'var(--report-muted)', fontSize: 12,
-                          }}
-                        >
-                          Tap to open
-                        </div>
-                      )}
-                      <span className="font-sans" style={{ fontSize: 12, color: 'var(--report-ink)', lineHeight: 1.3 }}>
-                        Figure {i + 1} — {stripInlineMarkdown(plate.label)}
-                      </span>
-                    </button>
-                  ))}
-                </div>
-                <div className="font-sans mt-3" style={{ fontSize: 12, color: 'var(--report-muted)', opacity: 0.8 }}>
-                  {tr('Saved plan sheets. Open a sheet to inspect it. Include images in the full PDF when you need them.', 'Amakhasi omklamo agciniwe. Vula ikhasi ukuze ulihlole. Faka izithombe ku-PDF egcwele uma uzidinga.')}
-                </div>
-              </div>
-            )}
+            {reading === 'full' && savedMapRecords !== null && <div ref={mapsRef} tabIndex={-1} aria-label="Your saved design maps">
+              <ReportMapStocktake maps={allMaps} selectedIds={selectedMapIds} siteId={siteKey} scope={reportMapScope}
+                designUrl={`/design?lat=${d.lat}&lon=${d.lon}`} onSelect={chooseMaps} onOpen={map => { void openSheet(map); }} language={language} busy={loading || pdfState === 'working'} />
+              {showVisuals && plates.length > 0 && <div className="mb-6 p-4 rounded-xl" style={{ background: 'var(--report-panel)', border: '1px solid var(--report-border)' }}>
+                <h2 className="font-display text-xl mb-3">{tr('Maps selected for this report', 'Amamephu akhethelwe lo mbiko')} · {plates.length}</h2>
+                <div className={styles.mapGrid}>{plates.map(plate => <ReportMapPreview key={`${sheetScope}:${plate.id}`} map={plate} scope={sheetScope} loadImage={loadSheetImage} onOpen={() => { void openSheet(plate); }} />)}</div>
+                <p className="text-sm mt-3">{tr('Open a map to inspect the full-size original. Your selection is used for the cover and PDF.', 'Vula imephu ukuze uhlole eyangempela ngosayizi ogcwele. Okukhethile kusetshenziswa ekhasini langaphambili naku-PDF.')}</p>
+              </div>}
+            </div>}
 
             {/* ── The farmer's own photographs of the ground ────────────────
                 Shown BELOW the plan sheets, because that is the order the model reads them in and
@@ -1344,13 +1300,12 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
 
             {/* No sheets for this site: say so, rather than silently producing a report with no
                 maps and an appendix the farmer expected. */}
-            {reading === 'full' && savedMapRecords !== null && plates.length === 0 && (
+            {reading === 'full' && savedMapRecords !== null && allMaps.length === 0 && (
               <div className="mb-6 p-4 rounded-xl font-sans" style={{ background: 'var(--report-panel)', border: '1px dashed var(--report-border)', fontSize: 12, color: 'var(--report-muted)' }}>
                 {tr('No saved design maps were found in this browser for this site. If you saved them on another device, open the report there.', 'Awekho amamephu omklamo wale ndawo atholakele kulesi siphequluli. Uma uwagcine kwenye idivayisi, vula umbiko lapho.')}
               </div>
             )}
 
-            {reading === 'full' && facts?.crop && <ReportCropPlan language={contentLanguage} crop={facts.crop} siteName={siteName} month={cropMapMonth} onMonth={setCropMapMonth} includeWorking={includeCropWorkingPlan} onIncludeWorking={setIncludeCropWorkingPlan} legacyCharts={visuals.charts.filter(c => c.kind === 'calendar')} />}
             {reading === 'full' && presentation === 'print' && <p className={styles.summaryLabel}>{tr('Ink-saving edition. Full-colour export includes the visual overview and charts.', 'Umbiko oyonga uyinki. Ukukhipha ngemibala egcwele kufaka amashadi.')}</p>}
 
             {/* Loading shimmer */}
@@ -1380,6 +1335,8 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
               </div>
             )}
 
+            {reading === 'full' && facts?.crop && <ReportCropPlan language={contentLanguage} crop={facts.crop} siteName={siteName} month={cropMapMonth} onMonth={setCropMapMonth} includeWorking={includeCropWorkingPlan} onIncludeWorking={setIncludeCropWorkingPlan} legacyCharts={visuals.charts.filter(c => c.kind === 'calendar')} />}
+
             {/* Placeholder before generation */}
             {reading === 'full' && !report && !loading && !error && (
               <div className="text-center py-16">
@@ -1400,24 +1357,19 @@ export default function ReportView({ locationData, photoAnalysis, siteData: live
       {/* One sheet at full resolution, held only while it is open. Closing drops the reference —
           the print master is the largest single string this screen ever holds. */}
       {openPlate && (
-        <div
-          onClick={() => setOpenPlate(null)}
-          role="dialog"
-          aria-label={openPlate.label}
-          style={{
-            position: 'fixed', inset: 0, zIndex: 70, background: 'rgba(32,25,15,0.88)',
-            display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-            padding: 16, gap: 10, cursor: 'zoom-out',
-          }}
-        >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src={openPlate.image}
-            alt={openPlate.label}
-            style={{ maxWidth: '100%', maxHeight: '86%', objectFit: 'contain', borderRadius: 8 }}
-          />
-          <div className="font-sans" style={{ color: '#F7F2E9', fontSize: 12, textAlign: 'center' }}>
-            {stripInlineMarkdown(openPlate.label)} · tap anywhere to close
+        <div role="dialog" aria-modal="true" aria-label={openPlate.label}
+          onKeyDown={e => { if (e.key === 'Escape') setOpenPlate(null); }}
+          style={{ position: 'fixed', inset: 0, zIndex: 70, background: 'rgba(32,25,15,0.94)', display: 'flex', flexDirection: 'column', padding: 16, gap: 10 }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 12, color: '#fff' }}>
+            <strong style={{ flex: 1 }}>{stripInlineMarkdown(openPlate.label)}</strong>
+            <button className="btn" onClick={() => setPlateZoom(v => !v)}>{plateZoom ? tr('Fit page', 'Linganisa ikhasi') : tr('Zoom to read', 'Khulisa ukuze ufunde')}</button>
+            <button className="btn" autoFocus onClick={() => setOpenPlate(null)}>{tr('Close', 'Vala')}</button>
+          </div>
+          <div style={{ flex: 1, minHeight: 0, overflow: 'auto', textAlign: 'center' }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={openPlate.image} alt={openPlate.label} style={plateZoom
+              ? { width: 'max(1600px, 160%)', maxWidth: 'none', height: 'auto' }
+              : { width: '100%', height: '100%', objectFit: 'contain' }} />
           </div>
         </div>
       )}

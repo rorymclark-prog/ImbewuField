@@ -2,6 +2,7 @@ import type { LocationData, SiteData, WaterData } from '@/lib/types';
 import { activeAccountLocalStorageKey } from './account-local-storage';
 import './sample-mode';
 import { isValidLocationData, isValidSiteData, isValidWaterData } from './last-site';
+import { normaliseReportMapSelection, type ReportMapSelection } from './report-map-selection';
 import type { SavedPlace } from './saved-places';
 import { designSiteIdFromLocation } from './design-studio';
 import { normaliseReportSiteFacts, type ReportSiteFacts } from './report-site-facts';
@@ -36,6 +37,9 @@ export interface SavedReport {
   /** Absent on older reports: never infer historical settings from today's controls. */
   settings?: ReportGenerationSettings;
   coverChoice?: ReportCoverChoice;
+  mapSelection?: ReportMapSelection;
+  /** Maps actually offered to the model; changing attachments cannot rewrite this history. */
+  analysedMapIds?: string[];
 }
 
 export function reportSiteName(report: Pick<SavedReport, 'name' | 'facts' | 'location'>, places: SavedPlace[] = []): string {
@@ -97,6 +101,9 @@ function normaliseReport(value: unknown): SavedReport | null {
   const settings = normaliseReportSettings(row.settings);
   if (settings) report.settings = settings;
   if (['auto', 'map', 'photo', 'none'].includes(row.coverChoice as string)) report.coverChoice = row.coverChoice as ReportCoverChoice;
+  const maps = normaliseReportMapSelection(row.mapSelection, designSiteIdFromLocation(report.location));
+  if (maps) report.mapSelection = maps;
+  if (Array.isArray(row.analysedMapIds) && row.analysedMapIds.length <= 12 && row.analysedMapIds.every(id => typeof id === 'string' && id.length <= 256)) report.analysedMapIds = [...row.analysedMapIds];
   return report;
 }
 

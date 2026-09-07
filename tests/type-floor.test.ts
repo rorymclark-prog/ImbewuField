@@ -82,6 +82,7 @@ const FARMER_SURFACES: Record<string, string> = {
   'components/OrganisationControlCentre.tsx': 'organisation controls and role previews on phones',
   'components/FieldTeams.tsx': 'mentor field work on phones',
   'components/ReportComposer.tsx': 'shared readable report preview and export',
+  'components/report/ReportMapStocktake.tsx': 'map choices and review read by farmers',
   'components/report/ReportCropPlan.tsx': 'saved crop plan read by farmers',
   'components/report/ReportVersionDetails.tsx': 'saved report settings and dates read by farmers',
   'components/report/ReportVisualOverview.tsx': 'site charts, values and captions read by farmers on phones',

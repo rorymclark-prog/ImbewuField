@@ -19,3 +19,13 @@ test('report route, report selector, and prompt template advertise the same sect
   assert.deepEqual(new Set(known), new Set(all), 'API allow-list and report selector have drifted');
   assert.deepEqual(new Set(template), new Set(all), 'prompt template sections have drifted from the selector');
 });
+
+
+import { reportSectionsForGeneration, PLANTING_SUITABILITY_PROMPT } from '../lib/report-planting-guide.ts';
+test('legacy planting section selections become one suitability request without mutating saved choices', () => {
+  const saved = ['Natural Vegetation & Biome', 'Fruit, Nut & Berry Trees', 'Indigenous Trees', 'Agroecosystem Planting Guide', 'Planting Calendar'];
+  const before = [...saved];
+  assert.deepEqual(reportSectionsForGeneration(saved), ['Natural Vegetation & Biome', 'Suitable Plants for This Site', 'Planting Calendar']);
+  assert.deepEqual(saved, before);
+  for (const heading of ['Vegetables, staples and herbs', 'Fruit, nuts and berries', 'Useful indigenous plants']) assert.ok(PLANTING_SUITABILITY_PROMPT.includes(heading));
+});
