@@ -661,3 +661,65 @@ test('a rejected invoice is absent from the returned ledger, which is how the ca
   // The prior ledger is preserved, not clobbered — that is the contract persist() relies on.
   assert.ok(after.some((x) => x.id === 'inv-good'));
 });
+
+const { saveSaleInvoice } = await import('../lib/sale-invoice.ts');
+
+test('a quick sale saves one paid invoice before syncing its income', async () => {
+  installBrowser();
+  let calls = 0;
+  const saved = await saveSaleInvoice({ crop: 'Avocado', kg: 3, amount: 60 }, async row => {
+    calls++;
+    assert.equal(loadInvoices().find(i => i.id === row.id)?.total, 60);
+    assert.equal(row.status, 'paid');
+  });
+  assert.equal(calls, 1);
+  assert.equal(saved.salesSyncPending, undefined);
+  assert.equal(loadInvoices().length, 1);
+  assert.equal(saved.items[0].price, 20);
+});
+
+test('failed sales sync leaves the original invoice available for retry', async () => {
+  installBrowser();
+  const saved = await saveSaleInvoice({ crop: 'Lemon', kg: 2, amount: 20 }, async () => { throw Error('offline'); });
+  assert.equal(saved.salesSyncPending, true);
+  assert.equal(loadInvoices()[0].id, saved.id);
+});
+
+test('storage failure or invalid amounts cannot send an unrecorded sale', async () => {
+  const { local } = installBrowser();
+  let calls = 0;
+  const sync = async () => { calls++; };
+  await assert.rejects(saveSaleInvoice({ crop: 'Lemon', kg: 0, amount: 20 }, sync));
+  local.failWrites = true;
+  await assert.rejects(saveSaleInvoice({ crop: 'Lemon', kg: 2, amount: 20 }, sync));
+  assert.equal(calls, 0);
+});
+
+for (const syncFails of [false, true]) {
+  test(`a quick sale cannot finish into a different account when sync ${syncFails ? 'fails' : 'succeeds'}`, async () => {
+    installBrowser();
+    accountHarness.currentUid = 'farmer-a';
+    await assert.rejects(saveSaleInvoice({ crop: 'Lemon', kg: 2, amount: 20 }, async () => {
+      accountHarness.currentUid = 'farmer-b';
+      if (syncFails) throw Error('offline');
+    }), /account changed/);
+    assert.deepEqual(loadInvoices(), [], 'the next account must never receive the previous invoice');
+    accountHarness.currentUid = 'farmer-a';
+    assert.equal(loadInvoices().length, 1, 'the original account retains its recoverable invoice');
+    assert.equal(loadInvoices()[0].salesSyncPending, true);
+  });
+}
+
+test('a newly entered paper invoice retains distinct historical issue and payment dates after save and reopen', () => {
+  installBrowser();
+  const dateISO = invoiceDateFromInput('2026-09-01')!;
+  const paidAt = invoiceDateFromInput('2026-09-03')!;
+  saveInvoice(invoice({ entryKind: 'paper-copy', paperReference: 'PAPER-007', dateISO, paidAt, status: 'paid', items: [{ desc: 'Spinach', qty: 2, unit: 'kg', price: 15 }] }));
+  const reopened = loadInvoices()[0];
+  assert.equal(reopened.dateISO, dateISO);
+  assert.equal(reopened.paidAt, paidAt);
+  assert.equal(invoiceDateInput(reopened.dateISO), '2026-09-01');
+  assert.equal(invoiceDateInput(reopened.paidAt!), '2026-09-03');
+  assert.equal(reopened.paperReference, 'PAPER-007');
+  assert.equal(invoiceSalesForPaidInvoice(reopened)[0].sold_at, paidAt, 'cash belongs to the actual payment date');
+});

@@ -1,0 +1,26 @@
+.section { margin: 28px 0; color: var(--report-ink); font: 14px/1.5 var(--font-sans), sans-serif; }
+.section h2 { font: 700 26px/1.2 var(--font-display), serif; margin: 0 0 10px; }
+.section > p { margin: 12px 0; }
+.crop { display: flex; gap: 8px; align-items: center; }
+.crop img { width: 28px; height: 28px; flex: 0 0 28px; object-fit: contain; }
+.controls { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 16px 0; }
+.controls button, .controls a { border: 1px solid var(--report-border); border-radius: 8px; padding: 10px 12px; background: var(--report-panel); color: var(--report-ink); min-height: 44px; }
+.controls label { display: flex; align-items: center; gap: 8px; width: 100%; }
+.controls button:disabled { opacity: .6; }
+.notice { border-left: 4px solid #976021; padding: 12px; background: var(--report-panel); }
+.note { color: var(--report-muted); font-size: 13px; }
+.calendar { overflow-x: auto; border: 1px solid var(--report-border); border-radius: 10px; }
+.calendar table { border-collapse: collapse; min-width: 680px; width: 100%; font-size: 13px; }
+.calendar th, .calendar td { padding: 8px 4px; border: 1px solid var(--report-border); text-align: center; }
+.calendar tbody th { text-align: left; font-weight: 500; min-width: 170px; padding-left: 10px; }
+.calendar thead th { background: var(--report-panel); }
+.calendar small { display: block; font-size: 12px; font-weight: 400; }
+.sow, .transplant { display: inline-block; padding: 4px; border-radius: 4px; min-width: 24px; font-weight: 700; }
+.sow { background: #d5e9d9; color: #173f2d; }
+.transplant { background: #f4e4c4; color: #674b13; }
+.mobileMonths { display: none; }
+.notes { margin: 16px 0; }
+.notes summary { cursor: pointer; }
+.notes ul { list-style: disc; padding-left: 22px; }
+@media (max-width: 650px) { .calendar { display: none; } .mobileMonths { display: block; } .mobileMonths > div { padding: 12px 0; border-bottom: 1px solid var(--report-border); } .mobileMonths p { margin: 4px 0 0; } }
+@media print { .controls, .notes { display: none; } .calendar { display: block; overflow: visible; } .mobileMonths { display: none; } .calendar table { min-width: 0; font-size: 9px; } .calendar tbody th { min-width: 0; } .calendar tr { break-inside: avoid; } }

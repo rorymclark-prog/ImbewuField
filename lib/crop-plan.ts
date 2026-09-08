@@ -36,6 +36,8 @@ export interface Planting {
   bedId: string;
   cropKey: string;
   sowMonth: number;
+  /** Farmer-entered cultivar; catalogue advice never chooses this on their behalf. */
+  variety?: string;
   /** Fraction of the bed's area this planting occupies (0 < f <= 1). Absent =
    *  1 (the whole bed) — every planting saved before this field existed reads
    *  as a full bed, so old plans keep behaving exactly as before. Lets a bed

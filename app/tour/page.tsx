@@ -49,7 +49,7 @@ export default function TourPage() {
       <figure><img src="/demo/harvest.webp" alt="Illustrated example of a garden harvest"/><figcaption>AI-generated illustration. Explore fictional records in the app.</figcaption></figure>
     </section>
     {tour?.error && <p role="alert">{tour.error}</p>}
-    <p className={styles.notice}>This is a practice workspace. People and results are fictional; sample edits reset on reload. Your real project stays separate. Tour progress is kept in this tab. Signed-in accounts retain their existing role access.</p>
+    <p className={styles.notice}>This is a practice workspace. People and results are fictional; practice edits reset on reload. Your real project stays separate. Tour progress is kept in this tab. Signed-in accounts retain their existing role access.</p>
     {tried > 0 && !tour?.active && <section className={styles.complete}><h2>{tried === PRODUCT_TOUR.length ? 'You’ve explored the whole tour.' : 'Keep exploring at your own pace.'}</h2><p>{tried} of {PRODUCT_TOUR.length} stops marked as explored. These are your checklist choices, not a training certificate.</p><div className={styles.controls}><Link href="/samples">Explore another role</Link><Link href="/feedback">Request a feature or ask about customisation</Link></div></section>}
     <h2>Nine stops, one connected story.</h2>
     <p className={styles.hint}>Choose any stop below to open its screen and guide. Use the <strong>Tour</strong> button beside the menu to return to the tips or move to another stop.</p>

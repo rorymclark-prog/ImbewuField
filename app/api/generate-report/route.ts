@@ -1,3 +1,4 @@
+import { PLANTING_SUITABILITY_PROMPT, reportSectionsForGeneration } from '@/lib/report-planting-guide';
 import { NextRequest } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
 
@@ -56,9 +57,7 @@ const KNOWN_SECTIONS = new Set([
   'Water Harvesting',
   'Soil Strategy',
   'Planting Calendar',
-  'Fruit, Nut & Berry Trees',
-  'Indigenous Trees',
-  'Agroecosystem Planting Guide',
+  'Suitable Plants for This Site',
   'Crop Rotation',
   'Irrigation Plan',
   'Year-Round Food Production',
@@ -182,7 +181,7 @@ export async function POST(req: NextRequest) {
 
   // DoS hardening: drop any section name not in the canonical allow-list so an
   // attacker cannot drive unbounded parallel Anthropic calls via a crafted request.
-  const safeSections = (Array.isArray(sections) ? sections : []).filter(
+  const safeSections = reportSectionsForGeneration(Array.isArray(sections) ? sections.filter((s): s is string => typeof s === 'string') : []).filter(
     (s) => KNOWN_SECTIONS.has(s),
   );
   if (safeSections.length === 0) {
@@ -317,7 +316,7 @@ Treat this as an upper bound on the property, not a measured boundary — shapes
   const siteAreaForCalcM2 = boundaryFact?.areaM2 ?? siteData?.areaM2 ?? null;
   const siteAreaSourceNote = boundaryFact ? 'traced boundary' : 'sum of all drawn shapes — an upper bound';
 
-  const buildPrompt = (sections: string[], withTitle: boolean) => `You are an expert permaculture designer creating a permaculture site report for a small-scale farmer in South Africa. Name REAL species suited to the site, give practical actions, and use the actual site data. No generic permaculture theory.${languageInstruction}${toneInstruction}${lengthInstruction}
+  const buildPrompt = (sections: string[], withTitle: boolean) => `You are an expert permaculture designer creating a permaculture site report for a small-scale farmer in South Africa. Name REAL species suited to the site, give practical actions, and use the actual site data. No generic permaculture theory. Crop suitability belongs in Suitable Plants for This Site; other chapters refer to the saved crop plan and avoid repeating species lists or sowing calendars. Never assume indigenous plants are automatically low-water or appropriate to this site.${languageInstruction}${toneInstruction}${lengthInstruction}
 
 ---
 SITE DATA
@@ -464,125 +463,11 @@ When to build each earthwork relative to the ${d.rainfall.wetSeason} wet season.
 - pH target and amendment rate: only if a lab result with a supported crop-specific recommendation is available. Otherwise state that testing is required; do not invent a rate.
 - Organic carbon: describe monitoring and soil-cover actions; do not promise a target percentage or time to reach it without measured evidence.
 
-` : ''}${sections.includes('Planting Calendar') ? `## Year-Round Planting Calendar
+` : ''}${sections.includes('Planting Calendar') ? `## Seasonal Planting Guidance
 
-A month-by-month guide of WHAT TO PLANT at this site, based on ${d.rainfall.pattern} rainfall (wet: ${d.rainfall.wetSeason}, dry: ${d.rainfall.drySeason}), ${d.climate.minTemp}–${d.climate.maxTemp}°C temperatures, and ${d.rainfall.annual}mm/year. Focus on vegetables and food crops that feed a family all year and suit ${ecology.placeName}.${facts?.crop ? `\n\nThis farmer has ALREADY entered ${facts.crop.plantingCount} plantings (listed in the site data above). In the "Plant now" column, put THEIR crop in that month first and mark it (already planned), then add what is missing. Do not silently replace their plan with a different one.` : ''}
+The app supplies one visual sowing calendar from the saved crop plan. Do not create another month-by-month crop table or repeat bed allocations. Explain briefly how recorded water availability and seasonal conditions affect planned starts. Highlight conflicts or unknowns and refer to the separate crop-plan report for the detailed schedule. If no dated plan exists, say so; do not invent calendar dates or claim proposed work is completed.
 
-| Month | Plant now | Ready to harvest | Tip |
-|-------|-----------|------------------|-----|
-| January | [crops] | [crops] | [short tip] |
-| February | [crops] | [crops] | [tip] |
-| March | [crops] | [crops] | [tip] |
-| April | [crops] | [crops] | [tip] |
-| May | [crops] | [crops] | [tip] |
-| June | [crops] | [crops] | [tip] |
-| July | [crops] | [crops] | [tip] |
-| August | [crops] | [crops] | [tip] |
-| September | [crops] | [crops] | [tip] |
-| October | [crops] | [crops] | [tip] |
-| November | [crops] | [crops] | [tip] |
-| December | [crops] | [crops] | [tip] |
-
-Mark the frost-risk months (winter min ${d.climate.minTemp}°C) and the best months to plant for the rains.
-
-` : ''}${sections.includes('Fruit, Nut & Berry Trees') ? `## Fruit, Nut & Berry Trees
-
-Fruit, nut and berry crops that suit ${ecology.placeName}, ${d.rainfall.annual}mm rainfall, and ${d.climate.minTemp}–${d.climate.maxTemp}°C (note chill needs — winter low is ${d.climate.minTemp}°C). Mix quick wins with long-term trees.
-
-| Crop | Type | Plant when | First harvest | Why it suits this site |
-|------|------|-----------|---------------|------------------------|
-| [e.g. Pawpaw] | Fruit | [season] | [1–2 yrs] | [reason] |
-| [e.g. Pecan] | Nut | [season] | [4–7 yrs] | [reason] |
-| [berry] | Berry | [season] | [time] | [reason] |
-
-Include at least: 3 fruit trees, 1–2 nut trees, 1 berry. Prioritise hardy, low-water options where rainfall is low. Note water needs for each.
-
-` : ''}${sections.includes('Indigenous Trees') ? `## Indigenous Trees for This Site
-
-Indigenous South African trees suited to ${ecology.placeName} — these survive local conditions far better than exotics, need little water once established, and give food, shade, fodder, nitrogen or medicine.
-
-| Tree (common / botanical) | Main uses | Water need | Notes |
-|---------------------------|-----------|-----------|-------|
-| [e.g. Marula / Sclerocarya birrea] | Fruit, shade | Low | [tip] |
-| [indigenous species] | [uses] | [need] | [tip] |
-| [indigenous species] | [uses] | [need] | [tip] |
-
-Prioritise indigenous FRUIT and multi-purpose trees that grow naturally in or near the ${ecology.biomeName} biome. Name real species only.
-
-` : ''}${sections.includes('Agroecosystem Planting Guide') ? `## Agroecosystem Planting Guide
-
-A species reference and design framework for building a productive, biodiverse agroecosystem rooted in the natural plant communities of ${ecology.placeName}. All species must be genuinely suited to this location: ${Math.abs(d.lat).toFixed(1)}°S, ${d.elevation.elevation}m elevation, ${d.rainfall.annual}mm ${d.rainfall.pattern} rainfall, ${d.climate.minTemp}–${d.climate.maxTemp}°C.
-
-### Top 5 Indigenous Canopy Trees
-Trees that anchor the system: deep roots, long-lived, wildlife habitat, soil function. Indigenous only — no exotics.
-
-| Tree | Botanical name | Size | Key uses | Wildlife value |
-|------|---------------|------|----------|---------------|
-| [name] | [Genus species] | [Xm tall] | [food/timber/fodder/N-fix/medicine] | [birds/insects/mammals] |
-| [name] | [Genus species] | [Xm] | [uses] | [wildlife] |
-| [name] | [Genus species] | [Xm] | [uses] | [wildlife] |
-| [name] | [Genus species] | [Xm] | [uses] | [wildlife] |
-| [name] | [Genus species] | [Xm] | [uses] | [wildlife] |
-
-### Top 5 Indigenous Shrubs & Sub-canopy
-The structural mid-layer: edge habitat, windbreak understorey, food forest guild fill, insect corridors.
-
-| Shrub | Botanical name | Size | Key uses | Wildlife value |
-|-------|---------------|------|----------|---------------|
-| [name] | [Genus species] | [Xm] | [uses] | [wildlife] |
-| [name] | [Genus species] | [Xm] | [uses] | [wildlife] |
-| [name] | [Genus species] | [Xm] | [uses] | [wildlife] |
-| [name] | [Genus species] | [Xm] | [uses] | [wildlife] |
-| [name] | [Genus species] | [Xm] | [uses] | [wildlife] |
-
-### Top 10 Fruit & Nut Trees for This Site
-Productive food-forest canopy and sub-canopy. Include indigenous fruiting species AND well-adapted exotics. Flag chill-hour requirements honestly (winter min here is ${d.climate.minTemp}°C).
-
-| Crop | Type | Chill hrs | First harvest | Water needs | Why it fits |
-|------|------|-----------|---------------|-------------|------------|
-| [name] | Fruit/Nut | [hrs] | [1–3 yrs etc] | [low/med/high] | [why] |
-| (×10 rows) | | | | | |
-
-### Agroecosystem Design — Layering for Balance
-
-**Food forest structure for ${ecology.placeName}:**
-Describe the natural layering strategy for this specific vegetation unit — which canopy trees go where, how to set back the food forest from existing indigenous vegetation, and the succession sequence from pioneer to climax.
-
-**Windbreak & buffer composition:**
-Name 3–5 specific species for a multi-row windbreak on the ${d.climate.windFromSummer}/${d.climate.windFromWinter} side. Give the row order: tallest natives at back, fruiting sub-canopy in middle, dense shrubs at front. Include at least one nitrogen-fixer and one insect-attracting species.
-
-**Guild associations — what grows together naturally here:**
-Give 2 specific plant guilds based on what actually co-occurs in ${ecology.placeName}: a canopy tree, its natural understorey companions, a ground cover or geophyte that belongs. Explain the ecological relationship (shade tolerance, soil chemistry, mycorrhizal networks).
-
-**Habitat corridors for birds and beneficial insects:**
-Which plantings most effectively attract:
-- Pollinators (bees, flies, butterflies) — name 3–4 flowering plants with peak bloom timing
-- Insectivorous birds (pest control) — which species, what habitat features they need
-- Seed dispersers (frugivorous birds) — which fruiting plants bring them in
-Give practical placement: where to put nectar strips, nest boxes, dense shrub patches relative to food production zones.
-
----
-
-### Appendix — Extended Species Reference
-
-#### Nitrogen Fixers & Soil Builders
-List 6–8 indigenous or well-adapted nitrogen-fixing species for ${ecology.placeName}. Include legume trees, shrubs, and ground-cover legumes. Note whether they are indigenous to this vegetation unit or introduced. Give 1-line practical use for each.
-
-#### Nectar & Pollinator Plants (Indigenous)
-List 8–10 indigenous plants that reliably attract pollinators at this location. For each: common name, flowering month(s), main pollinator attracted. Prioritise species with different bloom windows to cover the whole year.
-
-#### Ground Covers & Living Mulch
-List 6–8 ground covers or low-growing plants that suppress weeds, retain moisture, and provide habitat. Include at least 2 that also produce food or medicine. Note sun/shade requirements.
-
-#### Indigenous Climbers & Scrambling Plants
-List 4–5 indigenous climbers for trellises, fences, and forest edges. Note fruit/flower/habitat value. Flag any that become invasive in disturbed ground.
-
-#### Medicinal & Ethnobotanical Plants for This Area
-List 6–8 plants with documented traditional use in this biome — common name, use, and whether indigenous. These are excellent zone 1–2 additions: useful, low-maintenance, and culturally relevant.
-
-All species in this appendix must be genuinely appropriate to ${Math.abs(d.lat).toFixed(1)}°S at ${d.elevation.elevation}m in the ${ecology.placeName}. Do not include species from different biomes or elevation bands.
-
-` : ''}${sections.includes('Crop Rotation') ? `## Crop Rotation Plan
+` : ''}${sections.includes('Suitable Plants for This Site') ? PLANTING_SUITABILITY_PROMPT : ''}${sections.includes('Crop Rotation') ? `## Crop Rotation Plan
 
 A simple rotation to keep soil healthy and cut pests and disease WITHOUT chemicals, matched to the planting calendar and ${d.rainfall.pattern} rainfall.
 
@@ -957,6 +842,6 @@ Be direct. Use actual numbers from the data above. Every recommendation must be 
   });
 
   return new Response(readable, {
-    headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-cache' },
+    headers: { 'Content-Type': 'text/plain; charset=utf-8', 'Cache-Control': 'no-cache', 'X-Report-Provider': 'Anthropic', 'X-Report-Model': 'claude-sonnet-4-6' },
   });
 }

@@ -180,7 +180,7 @@ function LoginPageInner() {
         {/* Backend not configured notice */}
         {!backendReady && (
           <div className="rounded-xl px-3 py-2.5 mb-4 font-sans" style={{ fontSize: 13, background: 'rgba(192,122,30,0.08)', border: '1px solid rgba(192,122,30,0.25)', color: 'var(--color-ochre)' }}>
-            Backend not connected yet — auth is unavailable. The app runs in sample mode.
+            Backend not connected yet — auth is unavailable. The app runs in tour mode.
           </div>
         )}
 

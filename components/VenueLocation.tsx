@@ -35,7 +35,7 @@ export default function VenueLocation({ latitude, longitude, sample, onChange }:
   const hasLocation = latitude !== null && longitude !== null;
   return <section style={{ padding: 16, marginBlock: 16, border: '1px solid #b4c6b6', borderRadius: 16, background: '#f3f7f1' }}>
     <h3>Place location</h3><p>At the venue? Add this device’s current location. No coordinates to type.</p>
-    <button type="button" disabled={busy} onClick={locate}>{busy ? 'Finding location…' : sample ? 'Add example location (sample)' : hasLocation ? 'Update from my current location' : 'Use my current location'}</button>
+    <button type="button" disabled={busy} onClick={locate}>{busy ? 'Finding location…' : sample ? 'Add a location' : hasLocation ? 'Update from my current location' : 'Use my current location'}</button>
     {hasLocation && <><p>✓ Location attached to this entry</p><button type="button" onClick={() => { request.current++; setBusy(false); setMessage(''); onChange({ latitude: null, longitude: null }); }}>Remove location</button></>}
     <p role="status" style={{ fontSize: 14 }}>{message}</p>
   </section>;

@@ -54,7 +54,7 @@ Object.defineProperty(globalThis, 'window', { configurable: true, value: browser
 Object.defineProperty(globalThis, 'localStorage', { configurable: true, value: local });
 Object.defineProperty(globalThis, 'sessionStorage', { configurable: true, value: session });
 
-const { deleteReport, loadReports, saveReport } = await import('../lib/saved-reports.ts');
+const { deleteReport, loadReports, saveReport, reportSiteName } = await import('../lib/saved-reports.ts');
 const { enterSampleMode, exitSampleMode } = await import('../lib/sample-mode.ts');
 const { accountLocalStorageKey } = await import('../lib/account-local-storage.ts');
 hooks.deregister();
@@ -297,4 +297,159 @@ test('returned reason distinguishes full-store from storage write failure', () =
   assert.equal(storageErrorResult.saved, false);
   assert.equal(storageErrorResult.reason, 'storage-error');
   local.throwOnWrite = false;
+});
+
+
+test('generation settings survive saving and reopening without inheriting edited controls', () => {
+  reset();
+  const settings = { tone: 'professional' as const, length: 'comprehensive' as const, language: 'zu', bilingual: true, sections: ['Executive Summary', 'Water Harvesting'], generatedAt: '2026-09-07T08:00:00Z', provider: 'Anthropic', model: 'claude-sonnet-4-6' };
+  saveReport(report('original', { lang: 'zu', settings, coverChoice: 'map' }));
+  settings.sections.push('Soil Strategy');
+  const restored = loadReports()[0];
+  assert.equal(restored.settings?.tone, 'professional');
+  assert.equal(restored.settings?.length, 'comprehensive');
+  assert.deepEqual(restored.settings?.sections, ['Executive Summary', 'Water Harvesting']);
+  assert.equal(restored.settings?.bilingual, true);
+  assert.equal(restored.coverChoice, 'map');
+  saveReport(report('new-version', { settings: { ...settings, tone: 'simple' } }));
+  assert.equal(loadReports().length, 2);
+  assert.equal(loadReports().find(r => r.id === 'original')?.settings?.tone, 'professional');
+});
+
+test('legacy or corrupt metadata never claims default generation settings', () => {
+  reset();
+  saveReport(report('legacy'));
+  saveReport(report('corrupt', { settings: { tone: 'simple', length: 'standard' } as SavedReport['settings'] }));
+  assert.ok(loadReports().every(r => r.settings === undefined));
+  assert.equal(loadReports().length, 2, 'unknown settings must not discard readable reports');
+});
+
+test('the saved farm name takes precedence over a biome or an unrelated place', () => {
+  const r = report('site', { name: 'Indian Ocean Coastal Belt', facts: { farmName: 'Ubhejane Creche' } });
+  assert.equal(reportSiteName(r), 'Ubhejane Creche');
+  assert.equal(reportSiteName(report('legacy')), 'Report legacy');
+});
+
+// Mount the actual report workspace: storage-only checks cannot catch a Save button
+// using changed controls or reusing the old ID after regeneration.
+test('editing the next report settings cannot relabel the saved report; regeneration creates another version', async () => {
+  reset();
+  const { createElement } = await import('react');
+  const { act, create } = await import('react-test-renderer');
+  const { readFileSync } = await import('node:fs');
+  const ts = (await import('typescript')).default;
+  const cssModule = `data:text/javascript,${encodeURIComponent('export default new Proxy({}, { get: (_, key) => key });')}`;
+  const emptyComponent = `data:text/javascript,${encodeURIComponent('export default function Component(){ return null; }')}`;
+  const componentHooks = registerHooks({
+    resolve(specifier, context, nextResolve) {
+      if (specifier.endsWith('.css')) return { url: cssModule, shortCircuit: true };
+      if (specifier.endsWith('/ReportPreparation')) return { url: emptyComponent, shortCircuit: true };
+      return nextResolve(specifier, context);
+    },
+    load(url, context, nextLoad) {
+      if (url.endsWith('.tsx')) return { format: 'module', shortCircuit: true, source: ts.transpileModule(readFileSync(new URL(url), 'utf8'), {
+        compilerOptions: { jsx: ts.JsxEmit.ReactJSX, module: ts.ModuleKind.ESNext, target: ts.ScriptTarget.ES2022 }, fileName: url,
+      }).outputText };
+      return nextLoad(url, context);
+    },
+  });
+  Object.assign(browser, { matchMedia: () => ({ matches: true, addEventListener() {}, removeEventListener() {} }) });
+  const ReportView = (await import('../components/ReportView.tsx')).default;
+  const initial = report('original', { facts: { farmName: 'Ubhejane Creche' }, settings: {
+    tone: 'professional', length: 'comprehensive', language: 'en', bilingual: false,
+    sections: ['Executive Summary'], generatedAt: '2026-09-07T08:00:00Z', provider: 'Anthropic', model: 'claude-sonnet-4-6',
+  } });
+  saveReport(initial);
+  let view: ReturnType<typeof create>;
+  const realFetch = globalThis.fetch;
+  let requestBody: Record<string, unknown> | undefined;
+  globalThis.fetch = async (_input, init) => {
+    requestBody = JSON.parse(String(init?.body));
+    return new Response('# New site advice\n\nUpdated report.', { headers: { 'X-Report-Provider': 'Anthropic', 'X-Report-Model': 'claude-sonnet-4-6' } });
+  };
+  try {
+    await act(async () => { view = create(createElement(ReportView, { locationData: DEMO_LOCATION, savedReport: initial, onClose() {} })); });
+    const textOf = (node: any): string => typeof node === 'string' ? node : node?.children?.map(textOf).join('') ?? '';
+    const button = (label: string) => view!.root.findAllByType('button').find(n => textOf(n) === label)!;
+    await act(async () => { saveReport({ ...initial, id: 'another-version' }); });
+    const rows = view!.root.findAllByType('button').filter(n => textOf(n).startsWith('Ubhejane Creche') && textOf(n).includes('2026'));
+    assert.equal(new Set(rows.map(textOf)).size, 2, 'versions saved at exactly the same time need distinct visible references');
+    await act(async () => { deleteReport('another-version'); });
+    await act(async () => button('Simple').props.onClick());
+    await act(async () => button('Save').props.onClick());
+    assert.equal(loadReports()[0].settings?.tone, 'professional', 'Save must capture generated wording, not next-report controls');
+    assert.equal(loadReports()[0].savedAt, initial.savedAt, 're-saving does not rewrite the original date');
+    assert.match(textOf(view!.toJSON()), /Wording: Detailed/);
+    await act(async () => button('Generate new report').props.onClick());
+    assert.equal(requestBody?.tone, 'simple');
+    assert.equal(loadReports().length, 1, 'generation leaves the original saved version alone');
+    assert.match(textOf(view!.toJSON()), /New report · not saved yet/);
+    await act(async () => {
+      const saveButton = view!.root.findAllByType('button').find(n => ['Save', 'Saved'].includes(textOf(n)))!;
+      saveButton.props.onClick();
+    });
+    assert.equal(loadReports().length, 2, 'saving regenerated text must create a separate report');
+    assert.equal(loadReports().find(r => r.id === 'original')?.report, initial.report);
+    assert.equal(loadReports()[0].settings?.tone, 'simple');
+    assert.equal(loadReports()[0].settings?.model, 'claude-sonnet-4-6');
+    await act(async () => button('Saved').props.onClick());
+    assert.equal(loadReports().length, 2, 'repeated Save must not duplicate the new version');
+  } finally {
+    if (view!) await act(async () => view.unmount());
+    globalThis.fetch = realFetch;
+    componentHooks.deregister();
+  }
+});
+
+
+const { defaultReportMapIds, selectedReportMaps, normaliseReportMapSelection, saveSiteMapReview, loadSiteMapReview, emptyMapReview, reportMapType } = await import('../lib/report-map-selection.ts');
+const { designSiteIdFromLocation } = await import('../lib/design-studio.ts');
+const mapRows = [
+  { id: 'old-water', label: '04 · Water map · Exact master', at: '2026-09-01T10:00:00Z', planVersion: 'old' },
+  { id: 'new-water', label: '04 · Water map · Design Map', at: '2026-09-07T10:00:00Z', planVersion: 'new' },
+  { id: 'structures', label: '07 · Structures & access · Design Map', at: '2026-09-07T10:00:00Z' },
+];
+test('report map choices retain reviewed versions and preserve an explicit empty or unavailable selection', () => {
+  const review = { ...emptyMapReview(), reviews: { 'old-water': 'reviewed' as const } };
+  assert.deepEqual(defaultReportMapIds(mapRows, review), ['old-water', 'structures']);
+  assert.deepEqual(selectedReportMaps(mapRows, { siteId: 'one', ids: [] }, 'one', review), []);
+  assert.deepEqual(selectedReportMaps(mapRows, { siteId: 'one', ids: ['unavailable'] }, 'one', review), []);
+  assert.deepEqual(selectedReportMaps(mapRows, { siteId: 'one', ids: ['new-water'] }, 'one', review).map(m => m.id), ['new-water']);
+  assert.equal(normaliseReportMapSelection({ siteId: 'two', ids: ['new-water'] }, 'one'), undefined);
+});
+test('map types use stable names across numbering changes and explicit metadata', () => {
+  assert.equal(reportMapType({ label: '06 — Planting · Exact master' }), 'planting');
+  assert.equal(reportMapType({ label: '05 · Planting · AI Polished' }), 'planting');
+  assert.equal(reportMapType({ label: '03 · Unknown map' }), undefined);
+  assert.equal(reportMapType({ label: 'Custom title', sheetType: 'structures' }), 'structures');
+});
+test('map choices round-trip with saved reports without altering their text, settings or image evidence', () => {
+  reset();
+  const original = report('selected');
+  const siteId = designSiteIdFromLocation(original.location);
+  const changed = { ...original, mapSelection: { siteId, ids: ['old-water'] }, analysedMapIds: ['old-water'] };
+  assert.equal(saveReport(changed).saved, true);
+  const restored = loadReports()[0];
+  assert.deepEqual(restored.mapSelection, changed.mapSelection);
+  assert.deepEqual(restored.analysedMapIds, ['old-water']);
+  assert.equal(restored.report, original.report);
+  assert.deepEqual(restored.settings, original.settings);
+  assert.equal(saveReport({ ...restored, mapSelection: { siteId, ids: [] } }).saved, true);
+  assert.deepEqual(loadReports()[0].mapSelection?.ids, []);
+  assert.deepEqual(loadReports()[0].analysedMapIds, ['old-water']);
+});
+test('map review records are separate by site, account and sample mode and report failed writes', () => {
+  reset(); accountHarness.currentUid = 'one';
+  const review = { ...emptyMapReview(), reviews: { 'old-water': 'reviewed' as const }, notNeeded: ['phasing'] };
+  assert.equal(saveSiteMapReview('ubhejane', review), true);
+  assert.deepEqual(loadSiteMapReview('ubhejane'), review);
+  assert.deepEqual(loadSiteMapReview('another-site'), emptyMapReview());
+  accountHarness.currentUid = 'two'; assert.deepEqual(loadSiteMapReview('ubhejane'), emptyMapReview());
+  accountHarness.currentUid = 'one'; enterSampleMode();
+  assert.deepEqual(loadSiteMapReview('ubhejane'), emptyMapReview());
+  assert.equal(saveSiteMapReview('ubhejane', emptyMapReview()), true);
+  exitSampleMode(); assert.deepEqual(loadSiteMapReview('ubhejane'), review);
+  local.throwOnWrite = true;
+  assert.equal(saveSiteMapReview('ubhejane', emptyMapReview()), false);
+  local.throwOnWrite = false; reset();
 });

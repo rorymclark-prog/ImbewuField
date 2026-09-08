@@ -126,6 +126,8 @@ test('team assignments reject malformed IDs and duplicate farmer membership', ()
 test('structured visits accept older notes and require coherent dates and follow-up actions', () => {
   const legacy={id:'visit-one',mentorId:'mentor-one',farmerId:'farmer-one',date:'2026-09-01',notes:'Discussed the next harvest.'};
   assert.equal(validFieldVisit(legacy,'2026-09-07'),true);
+  assert.equal(validFieldVisit({...legacy,originalNotes:'Original dictated notes'},'2026-09-07'),true);
+  assert.equal(validFieldVisit({...legacy,originalNotes:'x'.repeat(4001)},'2026-09-07'),false);
   const visit={...legacy,notes:'',supportRequested:'Help with a leaking tap.',observations:'The tank tap is leaking.',agreedAction:'Replace the tap.',responsiblePerson:'Garden coordinator',followUpDate:'2026-09-14',location:'Tank beside the garden entrance'};
   assert.equal(validFieldVisit(visit,'2026-09-07'),true);
   assert.equal(validFieldVisit({...visit,observations:''},'2026-09-07'),false,'an action plan alone does not describe a completed visit');
@@ -140,8 +142,12 @@ test('structured visits accept older notes and require coherent dates and follow
 test('visit photo attachments use bounded images and descriptive captions', () => {
   const visit=freshFieldWorkspace().visits[0];
   const photo={image:'data:image/jpeg;base64,/9j/AA==',caption:'The garden tap before repair'};
+  assert.equal(validFieldVisit(visit,'2026-09-07'),false,'the illustration cannot be submitted as a real visit photo');
+  assert.equal(validFieldVisit(visit,'2026-09-07',true),true,'the isolated example visit remains editable');
   assert.equal(validFieldVisit({...visit,photos:[photo]},'2026-09-07'),true);
-  assert.equal(validFieldVisit({...visit,photos:[photo,photo,photo]},'2026-09-07'),false);
+  // The shared capture now supports three photographs; a fourth must still be rejected.
+  assert.equal(validFieldVisit({...visit,photos:[photo,photo,photo]},'2026-09-07'),true);
+  assert.equal(validFieldVisit({...visit,photos:[photo,photo,photo,photo]},'2026-09-07'),false);
   assert.equal(validFieldVisit({...visit,photos:[{...photo,caption:' '}]},'2026-09-07'),false);
   assert.equal(validFieldVisit({...visit,photos:[{...photo,image:'https://example.com/private-photo.jpg'}]},'2026-09-07'),false);
   assert.equal(validFieldVisit({...visit,photos:[{...photo,image:'data:image/svg+xml;base64,PHN2Zz4='}]},'2026-09-07'),false);
@@ -224,12 +230,14 @@ test('detailed report photos fit the existing storage limit before the PDF is bu
 });
 
 import { pdfContentStreams } from './pdf-content-streams.ts';
-test('sample reports retain their sample warning on every page and summaries omit excess detail', async () => {
+test('demo reports identify their basis once without repetitive sample footers, and summaries omit excess detail', async () => {
   const sections = [{ title: 'Recorded visits', lines: Array.from({ length: 90 }, (_, i) => `Visit record ${i + 1}: fictional demonstration notes for the assigned farmer.`) }];
   const full = await buildProgrammePdf('Field report', true, sections, 'full');
   assert.ok(full.getNumberOfPages() > 1);
   const output = pdfContentStreams(full.output('arraybuffer'));
-  assert.equal(output.split('SAMPLE - NOT ACTUAL RESULTS').length - 1, full.getNumberOfPages());
+  assert.ok(output.includes('Fictional demonstration data'));
+  assert.ok(!output.includes('SAMPLE - NOT ACTUAL RESULTS'));
+  assert.equal(output.split('ImbewuField | ').length - 1, full.getNumberOfPages());
   assert.ok(output.includes('Visit record 90:'));
   const brief = await buildProgrammePdf('Field report', true, sections, 'summary');
   const briefOutput = pdfContentStreams(brief.output('arraybuffer'));
@@ -328,4 +336,14 @@ test('sample controls cannot recreate the fixed bottom strip', () => {
   assert.match(menu,/Sample controls/);
   assert.match(menu,/Exit sample/);
   assert.match(menu,/18 gardens &amp; completed reports/);
+});
+
+const { validVisitPhotos } = await import('../lib/field-teams');
+test('visit photos cannot overflow a record or point to untrusted external images', () => {
+  const p={image:'data:image/jpeg;base64,/9j/AA==',caption:'Tap repaired'};
+  assert.equal(validVisitPhotos([p,p,p]),true);
+  assert.equal(validVisitPhotos([p,p,p,p]),false);
+  assert.equal(validVisitPhotos([{...p,image:'https://example.com/tracker'}]),false);
+  assert.equal(validVisitPhotos([{...p,caption:'x'.repeat(201)}]),false);
+  assert.equal(validVisitPhotos([{...p,image:'data:image/jpeg;base64,'+'A'.repeat(150000)}]),false);
 });

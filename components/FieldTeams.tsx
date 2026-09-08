@@ -6,7 +6,8 @@ import { getFirebase } from '@/lib/firebase/init';
 import { isSampleMode } from '@/lib/sample-mode';
 import { sampleRead, sampleWrite } from '@/lib/sample-operations';
 import { completeSampleFieldWorkspace, fieldVisitReportLines, freshFieldWorkspace, projectFieldWorkspace, validFieldTeam, validFieldVisit, type FieldTeam, type FieldVisit, type FieldWorkspace } from '@/lib/field-teams';
-import { resizeLogoForStorage } from '@/lib/invoice-logo';
+import VisitCapture from './VisitCapture';
+import type { VisitPhoto } from '@/lib/field-teams';
 import { samplePortrait } from '@/lib/sample-media';
 import ReportComposer from './ReportComposer';
 import styles from './MelDashboard.module.css';
@@ -18,6 +19,8 @@ export default function FieldTeams({ organisation = false }: { organisation?: bo
   const [data, setData] = useState<FieldWorkspace | null>(null), [error, setError] = useState(''), [busy, setBusy] = useState(false);
   const [draft, setDraft] = useState<FieldTeam>({ mentorId: '', location: '', farmerIds: [], guidance: '', updatedAt: '' });
   const [visit, setVisit] = useState<FieldVisit>(emptyVisit), [notice, setNotice] = useState('');
+  const [visitPhotos,setVisitPhotos]=useState<Record<string,VisitPhoto[]>>({});
+  const [captureBusy,setCaptureBusy]=useState(false);
   const [visitReport,setVisitReport]=useState<FieldVisit|null>(null);
   const [visitOpen,setVisitOpen]=useState(false),[photosBusy,setPhotosBusy]=useState(false),[photosReady,setPhotosReady]=useState(true),[farmerFilter,setFarmerFilter]=useState('');
   const requestVersion=useRef(0),visitForm=useRef<HTMLElement>(null);
@@ -46,7 +49,7 @@ export default function FieldTeams({ organisation = false }: { organisation?: bo
     }
     catch (e) { if(version===requestVersion.current && expectedScope===currentScope()){setData(null); setError((e as Error).message);} }
   }
-  useEffect(() => { requestVersion.current++;setVisitOpen(false);setVisit(emptyVisit());setVisitReport(null);setFarmerFilter('');setData(null);setError('');setBusy(false);setPhotosBusy(false);if(isSampleMode()||user)void reload();return()=>{requestVersion.current++;}; }, [user,profile?.org_id,profile?.role,org,organisation]); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => { requestVersion.current++;setVisitOpen(false);setVisit(emptyVisit());setVisitReport(null);setVisitPhotos({});setCaptureBusy(false);setFarmerFilter('');setData(null);setError('');setBusy(false);setPhotosBusy(false);if(isSampleMode()||user)void reload();return()=>{requestVersion.current++;}; }, [user,profile?.org_id,profile?.role,org,organisation]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(()=>{if(visitOpen)visitForm.current?.scrollIntoView({block:'start',behavior:'smooth'});},[visitOpen]);
   const canRecordVisits=!!data && !organisation && data.teams.some(team=>team.mentorId===data.selfId);
   const readOnlyVisit=!canRecordVisits || !!visit.mentorId && visit.mentorId!==data?.selfId;
@@ -61,30 +64,17 @@ export default function FieldTeams({ organisation = false }: { organisation?: bo
     setError('');setVisit({...emptyVisit(),...record});setVisitReport(null);setVisitOpen(true);setPhotosReady(false);setPhotosBusy(true);
     try{
       const photos=sample ? record.photos??[] : (record.photoCount??0)>0 ? (await request(undefined,`&mode=photos&id=${encodeURIComponent(record.id)}`,scope)).photos : [];
-      if(version===requestVersion.current && scope===currentScope()){setVisit({...emptyVisit(),...record,photos});setVisitReport({...record,photos});setPhotosReady(true);}
-    }catch(e){if(version===requestVersion.current && scope===currentScope())setError((e as Error).message);}
-    finally{if(version===requestVersion.current && scope===currentScope())setPhotosBusy(false);}
-  }
-  async function addPhotos(files:FileList|null){
-    if(!files?.length || photosBusy || readOnlyVisit || !photosReady || !data)return;
-    const version=requestVersion.current,scope=currentScope(),remaining=2-(visit.photos?.length??0);
-    setPhotosBusy(true);setError('');
-    try{
-      const photos=await Promise.all(Array.from(files).slice(0,remaining).map(async file=>({image:await resizeLogoForStorage(file,640),caption:''})));
-      if(version===requestVersion.current && scope===currentScope()){
-        setVisit(current=>({...current,photos:[...(current.photos??[]),...photos].slice(0,2)}));
-        if(files.length>remaining)setNotice('Added the first available photos. Each visit supports two photos.');
-      }
+      if(version===requestVersion.current && scope===currentScope()){setVisit({...emptyVisit(),...record,photos});setVisitReport({...record,photos});setVisitPhotos(previous=>({...previous,[record.id]:photos}));setPhotosReady(true);}
     }catch(e){if(version===requestVersion.current && scope===currentScope())setError((e as Error).message);}
     finally{if(version===requestVersion.current && scope===currentScope())setPhotosBusy(false);}
   }
   async function save(team: boolean) {
-    if(busy||photosBusy||!data)return;
+    if(busy||photosBusy||captureBusy||!data)return;
     const scope=currentScope(),version=requestVersion.current;
     setBusy(true); setError(''); setNotice('');
     try {
       const nextVisit={...visit,mentorId:data.selfId,photoCount:visit.photos?.length??0};
-      if(!team && (!canRecordVisits || !photosReady || !validFieldVisit(nextVisit,new Date().toISOString().slice(0,10))))throw Error('Check the farmer, observations, follow-up date and photo captions. A named person or follow-up date needs an agreed action.');
+      if(!team && (!canRecordVisits || !photosReady || !validFieldVisit(nextVisit,new Date().toISOString().slice(0,10),data.sample)))throw Error('Check the farmer, observations, follow-up date and photo captions. A named person or follow-up date needs an agreed action.');
       if (isSampleMode()) {
         if(!data.sample)throw Error('The workspace changed. Reopen field teams.');
         const all = completeSampleFieldWorkspace(sampleRead('field-teams', freshFieldWorkspace));
@@ -93,11 +83,12 @@ export default function FieldTeams({ organisation = false }: { organisation?: bo
       } else { if (data.sample) throw Error('This sample has ended. Reopen the workspace.'); await request(team ? { action: 'team', team: draft } : { action: 'visit', ...nextVisit,expectedUpdatedAt:visit.updatedAt },'',scope); }
       if(scope!==currentScope() || version!==requestVersion.current)return;
       setNotice(team ? 'Team and guidance saved. The mentor will see this in their workspace.' : 'Visit recorded.');
-      if(!team)closeVisit();await reload(scope,requestVersion.current);
+      if(!team){setVisitPhotos(previous=>({...previous,[nextVisit.id]:nextVisit.photos??[]}));closeVisit();}await reload(scope,requestVersion.current);
     } catch (e) { if(scope===currentScope() && version===requestVersion.current)setError((e as Error).message); } finally { if(scope===currentScope())setBusy(false); }
   }
   const name = (id: string) => data?.people.find(p => p.id === id)?.name ?? 'Former team member';
   const assigned = [...new Set(data?.teams.flatMap(t => t.farmerIds) ?? [])];
+  const captureScope=currentScope(),captureVersion=requestVersion.current;
   const recordedVisits=(data?.visits??[]).filter(v=>!farmerFilter||v.farmerId===farmerFilter).slice().sort((a,b)=>b.date.localeCompare(a.date));
   return <section className={styles.root}><div className={styles.wrap}>
     <div className={styles.hero}><h1>{organisation ? 'Mentor teams & guidance' : 'My field team'}</h1><details className={styles.about}><summary>About this view</summary><p>{organisation ? 'Assign a mentor, service location and farmer group. Keep their current instructions in one place.' : 'Your assigned farmers, location, organisation guidance and visit records.'}</p></details></div>
@@ -106,13 +97,13 @@ export default function FieldTeams({ organisation = false }: { organisation?: bo
     {!data && !error && <p>Loading field team…</p>}
     {data && <>
       <div className={styles.statsGrid}>{[['Groups', data.teams.length], ['Farmers', assigned.length], ['Visits', data.visits.length]].map(([label, n]) => <div key={label} className={styles.card}>{label}<strong className={styles.stat}>{n}</strong></div>)}</div>
-      {canRecordVisits&&<button className={styles.primary} disabled={busy||photosBusy} onClick={newVisit}>Record a field visit</button>}
+      {canRecordVisits&&<button className={styles.primary} disabled={busy||photosBusy||captureBusy} onClick={newVisit}>Record a field visit</button>}
       {visitOpen&&<section ref={visitForm} className={styles.card} style={{margin:'16px 0'}} aria-label="Visit details">
-        <div className={styles.row}><h2>{readOnlyVisit?'Field visit details':visit.updatedAt?'Edit field visit':'Record a field visit'}</h2><button type="button" disabled={busy} onClick={closeVisit}>Close visit</button></div>
+        <div className={styles.row}><h2>{readOnlyVisit?'Field visit details':visit.updatedAt?'Edit field visit':'Record a field visit'}</h2><button type="button" disabled={busy||captureBusy} onClick={closeVisit}>Close visit</button></div>
         {photosBusy&&<p role="status">Preparing visit photos…</p>}
         {!photosReady&&!photosBusy&&<p role="alert">Visit photos could not be loaded. Close and reopen this visit before editing it.</p>}
         <form onSubmit={e=>{e.preventDefault();void save(false);}}>
-          <fieldset disabled={readOnlyVisit||busy||photosBusy||!photosReady} style={{border:0,padding:0,minWidth:0}}>
+          <fieldset disabled={readOnlyVisit||busy||photosBusy||captureBusy||!photosReady} style={{border:0,padding:0,minWidth:0}}>
             <div className={styles.grid}>
               <label>Farmer<select required value={visit.farmerId} onChange={e=>setVisit({...visit,farmerId:e.target.value})}><option value="">Choose a farmer</option>{[...new Set([...assigned,...(visit.farmerId?[visit.farmerId]:[])])].map(id=><option key={id} value={id}>{name(id)}</option>)}</select></label>
               <label>Visit date<input required type="date" max={new Date().toISOString().slice(0,10)} value={visit.date} onChange={e=>setVisit({...visit,date:e.target.value})}/></label>
@@ -125,12 +116,10 @@ export default function FieldTeams({ organisation = false }: { organisation?: bo
               <label>Responsible person<input maxLength={120} value={visit.responsiblePerson??''} placeholder="Who will carry out the action?" onChange={e=>setVisit({...visit,responsiblePerson:e.target.value})}/></label>
               <label>Follow-up date<input type="date" min={visit.date} value={visit.followUpDate??''} onChange={e=>setVisit({...visit,followUpDate:e.target.value})}/></label>
             </div>
-            <label>Additional visit notes<textarea maxLength={4000} value={visit.notes} onChange={e=>setVisit({...visit,notes:e.target.value})}/></label>
-            <h3>Visit photos</h3>
-            <div className={styles.grid}>{visit.photos?.map((photo,index)=><figure key={index} style={{margin:0}}><img data-photo-preview src={photo.image} alt={photo.caption||'Visit photo awaiting a caption'} style={{width:'100%',maxHeight:240,objectFit:'contain',borderRadius:12}}/>{readOnlyVisit?<figcaption>{photo.caption}</figcaption>:<><label>Photo {index+1} caption<input required maxLength={240} value={photo.caption} onChange={e=>setVisit({...visit,photos:visit.photos?.map((p,i)=>i===index?{...p,caption:e.target.value}:p)})}/></label><button type="button" onClick={()=>setVisit({...visit,photos:visit.photos?.filter((_,i)=>i!==index)})}>Remove photo {index+1}</button></>}</figure>)}</div>
-            {!readOnlyVisit&&(visit.photos?.length??0)<2&&<div className={styles.grid}><label>Take a visit photo<input type="file" accept="image/*" capture="environment" onChange={e=>{void addPhotos(e.target.files);e.target.value='';}}/></label><label>Choose photos (up to two)<input type="file" accept="image/png,image/jpeg,image/webp" multiple onChange={e=>{void addPhotos(e.target.files);e.target.value='';}}/></label></div>}
+            <VisitCapture key={`${captureScope}|${visit.id}|${captureVersion}`} value={visit} notesRequired={!visit.observations?.trim()} disabled={readOnlyVisit||busy||photosBusy||!photosReady} onBusyChange={setCaptureBusy} onChange={value=>{if(captureScope===currentScope()&&captureVersion===requestVersion.current)setVisit(current=>({...current,...value}));}}/>
+            {visit.originalNotes&&<details><summary>Original notes before AI cleanup</summary><p style={{whiteSpace:'pre-wrap'}}>{visit.originalNotes}</p></details>}
             {!readOnlyVisit&&<p className={styles.muted}>Visit notes and photos are visible to the assigned mentor and authorised organisation staff.</p>}
-            {!readOnlyVisit&&<button className={styles.primary} disabled={busy||photosBusy||!photosReady}>{busy?'Saving…':'Save visit'}</button>}
+            {!readOnlyVisit&&<button className={styles.primary} disabled={busy||photosBusy||captureBusy||!photosReady}>{busy?'Saving…':'Save visit'}</button>}
           </fieldset>
         </form>
         {visitReport&&<><p className={styles.muted}>This report uses the saved visit. Save any edits to update it.</p><ReportComposer title="Field visit report" sample={data.sample} orgId={org||undefined} photos={visitReport.photos??[]} photoHeading="Visit photographs" sections={[{title:'Visit details',lines:fieldVisitReportLines(visitReport,name(visitReport.farmerId),name(visitReport.mentorId))}]}/></>}
@@ -138,12 +127,12 @@ export default function FieldTeams({ organisation = false }: { organisation?: bo
       <section className={styles.card} style={{margin:'16px 0'}} aria-label="Recorded field visits">
         <h2>Recorded visits</h2><label>Filter by farmer<select value={farmerFilter} onChange={e=>setFarmerFilter(e.target.value)}><option value="">All visible farmers</option>{[...new Set(data.visits.map(v=>v.farmerId))].map(id=><option key={id} value={id}>{name(id)}</option>)}</select></label>
         {!recordedVisits.length&&<p>No visits recorded for this selection.</p>}
-        {recordedVisits.map(record=><article key={record.id} className={styles.metric}><div className={styles.row}><h3 style={{marginBottom:0}}>{name(record.farmerId)}</h3><span className={styles.tag}>{record.date}</span></div><p>{record.observations||record.notes}</p>{record.agreedAction&&<p><strong>Next action:</strong> {record.agreedAction}<br/><strong>Responsible:</strong> {record.responsiblePerson||'Not yet assigned'} · <strong>Follow-up:</strong> {record.followUpDate||'Not yet scheduled'}</p>}{(record.photoCount??record.photos?.length??0)>0&&<p>{record.photoCount??record.photos?.length} visit photos</p>}<button disabled={busy||photosBusy} onClick={()=>void openVisit(record)}>{canRecordVisits&&record.mentorId===data.selfId?'View / edit visit':'View visit'}</button></article>)}
+        {recordedVisits.map(record=><article key={record.id} className={styles.metric}><div className={styles.row}><h3 style={{marginBottom:0}}>{name(record.farmerId)}</h3><span className={styles.tag}>{record.date}</span></div><p>{record.observations||record.notes}</p>{record.agreedAction&&<p><strong>Next action:</strong> {record.agreedAction}<br/><strong>Responsible:</strong> {record.responsiblePerson||'Not yet assigned'} · <strong>Follow-up:</strong> {record.followUpDate||'Not yet scheduled'}</p>}{(record.photoCount??record.photos?.length??0)>0&&<p>{record.photoCount??record.photos?.length} visit photos</p>}<button disabled={busy||photosBusy||captureBusy} onClick={()=>void openVisit(record)}>{canRecordVisits&&record.mentorId===data.selfId?'View / edit visit':'View visit'}</button></article>)}
       </section>
       {!data.teams.length && <p className={styles.card}>No field team assigned yet. Your organisation can assign one in Control centre → Mentor teams.</p>}
       {data.teams.map(t => <article key={t.mentorId} className={styles.card} style={{ marginBottom: 16 }}><h2>{t.location}</h2><p style={{ display: 'flex', alignItems: 'center', gap: 12 }}>{data.sample && <img data-photo-preview src={samplePortrait(t.mentorId)} alt="Fictional mentor portrait" width={72} height={72} style={{ borderRadius: '50%', objectFit: 'cover' }} />}<span>Mentor: {name(t.mentorId)} · updated {t.updatedAt.slice(0, 10)}</span></p><h3>Organisation guidance</h3><p style={{ whiteSpace: 'pre-wrap' }}>{t.guidance || 'No guidance posted yet.'}</p><h3>Assigned farmers and learners</h3>{t.farmerIds.map(id => <p key={id} style={{ display: 'flex', alignItems: 'center', gap: 12 }}>{data.sample && <img data-photo-preview src={samplePortrait(id)} alt="Fictional profile portrait" width={52} height={52} style={{ borderRadius: '50%' }} />}<span>{name(id)}{data.people.find(p => p.id === id)?.gardenName && <small style={{ display: 'block', fontSize: 13, color: '#526454' }}>{data.people.find(p => p.id === id)?.gardenName} · {Math.round(data.people.find(p => p.id === id)?.gardenAreaM2 ?? 0).toLocaleString()} m²</small>}</span></p>)}{data.canManage && <button onClick={() => setDraft(t)}>Edit team & guidance</button>}</article>)}
       {data.canManage && <form className={styles.card} onSubmit={e => { e.preventDefault(); void save(true); }}><h2>Assign or update a team</h2><label>Mentor<select required value={draft.mentorId} onChange={e => setDraft(data.teams.find(t => t.mentorId === e.target.value) ?? { ...draft, mentorId: e.target.value, farmerIds: [], guidance: '', location: '' })}><option value="">Choose a mentor</option>{data.people.filter(p => p.role === 'mentor').map(p => <option key={p.id} value={p.id}>{p.name}</option>)}</select></label><label>Service location<input required maxLength={160} value={draft.location} onChange={e => setDraft({ ...draft, location: e.target.value })} /></label><h3>Farmer group</h3><div className={styles.scroll}>{data.people.filter(p => ['farmer', 'student'].includes(p.role)).map(p => <label key={p.id} className={styles.option}><input type="checkbox" checked={draft.farmerIds.includes(p.id)} onChange={e => setDraft({ ...draft, farmerIds: e.target.checked ? [...draft.farmerIds, p.id] : draft.farmerIds.filter(id => id !== p.id) })} />{p.name}</label>)}</div><label>Guidance for this mentor<textarea maxLength={4000} value={draft.guidance} onChange={e => setDraft({ ...draft, guidance: e.target.value })} /></label><button className={styles.primary} disabled={busy}>Save team & guidance</button></form>}
-      <ReportComposer title={organisation ? 'Field implementation report' : 'Mentor field report'} sample={data.sample} sections={[
+      <ReportComposer photos={data.visits.flatMap(v=>(visitPhotos[v.id]??v.photos??[]).map(p=>({image:p.image,caption:`${v.date} · ${name(v.farmerId)} · ${p.caption}`})))} photoHeading="Visit photographs opened for this report" title={organisation ? 'Field implementation report' : 'Mentor field report'} sample={data.sample} sections={[
         { title: 'Assignments', lines: data.teams.map(t => `${t.location}: ${name(t.mentorId)}; ${t.farmerIds.length} assigned farmers / learners.`) },
         { title: 'Organisation guidance', lines: data.teams.map(t => `${t.location}: ${t.guidance || 'No guidance recorded.'}`) },
         { title: 'Visit log', lines: data.visits.slice().sort((a,b)=>b.date.localeCompare(a.date)).map(v => fieldVisitReportLines(v,name(v.farmerId),organisation?name(v.mentorId):undefined).join(' · ')) },

@@ -189,11 +189,16 @@ test('the report screen shows the maps and sends them to be read', () => {
   const view = readFileSync(new URL('../components/ReportView.tsx', import.meta.url), 'utf8');
   // 1. The maps are IN the report on screen, not only in the exported PDF.
   assert.match(view, /Your saved design maps/, 'the report on screen has no figures again');
-  assert.match(view, /plate\.thumb/, 'the strip is holding print-resolution masters in state');
+  const previews = readFileSync(new URL('../components/report/ReportMapStocktake.tsx', import.meta.url), 'utf8');
+  assert.match(view, /ReportMapPreview/, 'the report must use the bounded preview gallery');
+  assert.match(previews, /1400 \/ Math\.max\(img\.naturalWidth, img\.naturalHeight\)/, 'preview originals must be downsized');
+  assert.match(previews, /previewQueue/, 'originals must decode serially');
+  assert.match(previews, /IntersectionObserver/, 'only visible previews should retain images');
   assert.match(view, /loadSheetImage\(plate\.id\)/, 'opening a sheet must fetch it on demand');
   // 2. And they are sent for analysis, prepared with the same downscaler the PDF plates use.
   assert.match(view, /prepareSiteAnalysisImages\(plates, loadSheetImage, sheetPlate\)/);
   assert.match(view, /siteImages: siteImages\.length \? siteImages : undefined/);
   // 3. A site with no saved sheets says so rather than quietly producing a mapless report.
-  assert.match(view, /No design maps are saved for this site yet/);
+  // Sheets live in this browser's store. Absence here cannot erase maps saved on another device.
+  assert.match(view, /No saved design maps were found in this browser for this site/);
 });

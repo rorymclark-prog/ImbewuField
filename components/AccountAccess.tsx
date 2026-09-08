@@ -10,14 +10,14 @@ export default function AccountAccess() {
   const router = useRouter();
   const sampleRole = useSampleRole();
   const [message, setMessage] = useState('');
-  if (sampleRole) return <section className={`${styles.root} ${styles.card}`}><h2>Sample workspace</h2><p>This is a practice profile. Your real account permissions have not changed.</p><a href="/samples">Choose a sample view →</a><p>The chooser checks your signed-in account role, not this fictional farmer profile.</p></section>;
+  if (sampleRole) return <section className={`${styles.root} ${styles.card}`}><h2>workspace</h2><p>This is a practice profile. Your real account permissions have not changed.</p><a href="/samples">Choose a view →</a><p>The chooser checks your signed-in account role, not this fictional farmer profile.</p></section>;
   const destinations = [['Farmer', '/farmer'], ['Student', '/student'], ['Mentor', '/mentor'], ['Organisation', '/ngo'], ['Funder', '/funder']] as const;
   return <section className={`${styles.root} ${styles.card}`}><h2>Your app access</h2><p><strong>{profile?.role === 'admin' ? 'Platform administrator' : profile?.role ?? 'Profile not loaded'}</strong>{profile?.org_id ? ' · linked to an organisation' : ' · no organisation linked'}</p>
     <p>{profile?.role === 'admin' ? 'Your account can open every role dashboard. Choose the relevant organisation inside the portfolio.' : 'Your normal login stays the same. A platform administrator must enable owner access on the correct account; choosing a dashboard does not change your permissions.'}</p>
     <button onClick={async () => { try { await refreshProfile(); setMessage('Access refreshed.'); } catch { setMessage('Could not refresh access. Try again.'); } }}>Refresh my access</button>
     <p className={styles.muted}>Signed in as {user?.email ?? 'your linked account'}</p>
     {profile?.role === 'admin' && <div className={styles.row}>{destinations.map(([name, href]) => <a key={href} href={href}>{name} dashboard</a>)}</div>}
-    {(profile?.role === 'ngo' || profile?.role === 'admin') && <><h3 style={{ marginTop: 24 }}>Explore with sample data</h3><a href="/samples">Open sample chooser →</a><p>Try each role using the sample farm. Your account role stays the same and sample changes do not affect real projects.</p>
-    <div className={styles.row}>{destinations.map(([name, href]) => <button key={href} onClick={() => { if (startRolePreview(name.toLowerCase())) router.push(href); else setMessage('Sample mode could not start.'); }}>{name}</button>)}</div></>}{message && <p role="status">{message}</p>}
+    {(profile?.role === 'ngo' || profile?.role === 'admin') && <><h3 style={{ marginTop: 24 }}>Explore with demonstration records</h3><a href="/samples">Choose a practice view →</a><p>Try each role using the Ubhejane farm. Your account role stays the same and practice changes do not affect real projects.</p>
+    <div className={styles.row}>{destinations.map(([name, href]) => <button key={href} onClick={() => { if (startRolePreview(name.toLowerCase())) router.push(href); else setMessage("tour mode could not start."); }}>{name}</button>)}</div></>}{message && <p role="status">{message}</p>}
   </section>;
 }

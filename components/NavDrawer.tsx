@@ -106,9 +106,8 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
       label: t('tabAccount'),
       items: [
         { href: '/account', Icon: User, label: t('navMyAccount') },
-        { href: '/samples', Icon: Sprout, label: 'Try a sample' },
-        { href: '/samples/gardens', Icon: Sprout, label: 'Browse sample gardens' },
-        { href: '/tour', Icon: Footprints, label: '15-minute tour' },
+        { href: '/samples', Icon: Sprout, label: 'Practice views' },
+        { href: '/samples/gardens', Icon: Sprout, label: "Browse gardens" },
         { href: '/feedback', Icon: MessageCircle, label: 'Report a bug / suggest a feature' },
         { href: '/updates', Icon: Sparkles, label: "What's new" },
       ],
@@ -196,7 +195,11 @@ export default function NavDrawer({ open, onClose }: NavDrawerProps) {
           </button>
         </div>
 
-        {sample && <section style={{margin:'8px 16px',padding:12,border:'1px solid var(--border)',borderRadius:12}} aria-label="Sample controls"><strong>Sample workspace</strong><p style={{fontSize:12,margin:'6px 0'}}>Practice data · changes stay in this demo.</p><div style={{display:'grid',gap:8}}><Link href="/samples" onClick={onClose} style={{minHeight:44,display:'flex',alignItems:'center'}}>Choose sample view</Link><Link href="/samples/gardens" onClick={onClose} style={{minHeight:44,display:'flex',alignItems:'center'}}>18 gardens &amp; completed reports</Link><Link href="/tour" onClick={onClose} style={{minHeight:44,display:'flex',alignItems:'center'}}>Start the tour</Link><button type="button" onClick={()=>{exitSampleMode();window.location.href='/home';}} style={{minHeight:44,textAlign:'left'}}>Exit sample</button></div></section>}
+        <nav aria-label="Getting started" style={{ margin: '12px 16px', display: 'grid', gap: 8 }}>
+          <Link href="/tour" onClick={onClose} style={{ display:'flex',alignItems:'center',gap:10,minHeight:48,padding:'10px 14px',borderRadius:12,background:'var(--color-harvest)',color:'#20190f',fontWeight:700 }}><Footprints size={20}/>Take a tour</Link>
+          <Link href="/tips" onClick={onClose} style={{ display:'flex',alignItems:'center',gap:10,minHeight:44,padding:'10px 14px',borderRadius:12,border:'1px solid var(--border)' }}><Sparkles size={20}/>Tips &amp; help</Link>
+        </nav>
+        {sample && <section style={{margin:'8px 16px',padding:12,border:'1px solid var(--border)',borderRadius:12}} aria-label="Sample controls"><strong>workspace</strong><p style={{fontSize:12,margin:'6px 0'}}>Practice data · changes stay in this demo.</p><div style={{display:'grid',gap:8}}><Link href="/samples" onClick={onClose} style={{minHeight:44,display:'flex',alignItems:'center'}}>Choose view</Link><Link href="/samples/gardens" onClick={onClose} style={{minHeight:44,display:'flex',alignItems:'center'}}>18 gardens &amp; completed reports</Link><Link href="/tour" onClick={onClose} style={{minHeight:44,display:'flex',alignItems:'center'}}>Take a tour</Link><button type="button" onClick={()=>{exitSampleMode();window.location.href='/home';}} style={{minHeight:44,textAlign:'left'}}>Exit sample</button></div></section>}
         <section aria-label="Page controls" style={{ margin: '8px 16px', display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 12 }}>
           <SettingsButton showLabel />
           <LessonLink id={pageLesson} label="Page help" tone="menu" />

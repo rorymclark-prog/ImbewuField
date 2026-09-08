@@ -68,7 +68,7 @@ function AccessBody() {
         let data: Preview;
         if (isSampleMode()) {
           const member = readSampleProgramme().people.find(p => p.id === id);
-          if (!member) throw Error('Choose a sample member.');
+          if (!member) throw Error("Choose a member.");
           const field = sampleRead('field-teams', freshFieldWorkspace);
           const team = member.role === 'mentor' ? field.teams.find(t => t.mentorId === id) : null;
           data = { id, name: member.name, role: member.role, capabilities: memberAccessSummary(member.role, member),
@@ -88,7 +88,7 @@ function AccessBody() {
     <div className={styles.row}><label>Member<select disabled={busy} value={id} onChange={e => { setPreview(null); setId(e.target.value); }}><option value="">Choose a member</option>{people.map(p => <option key={p.id} value={p.id}>{p.name} · {p.role === 'ngo' ? 'Organisation' : p.role}</option>)}</select></label><button type="button" disabled={busy} onClick={() => setRevision(n => n + 1)}>Refresh saved access</button></div>
     {busy && <p role="status">Checking saved access…</p>}
     {error && <p role="alert" className={styles.error}>{error}</p>}
-    {preview && <><h3>{preview.name} · {preview.role === 'ngo' ? 'Organisation' : preview.role}</h3><p className={styles.muted}>{preview.sample ? 'Fictional sample settings' : 'Current server settings'} · checked {new Date(preview.checkedAt).toLocaleTimeString()}</p>
+    {preview && <><h3>{preview.name} · {preview.role === 'ngo' ? 'Organisation' : preview.role}</h3><p className={styles.muted}>{preview.sample ? "Access settings" : 'Current server settings'} · checked {new Date(preview.checkedAt).toLocaleTimeString()}</p>
       <div className={styles.grid}>{preview.capabilities.map(c => <div className={styles.metric} key={c.id}><strong>{c.label}</strong><p>{c.allowed ? '✓ Allowed' : '— Not allowed'}</p></div>)}</div>
       {preview.role === 'mentor' && <><h3>Assigned field group</h3><p>{preview.location || 'No location assigned.'}</p>{preview.people.length ? <ul>{preview.people.map(p => <li key={p.id}>{p.name}</li>)}</ul> : <p>No current farmers or students assigned.</p>}<p>Training records are limited to this mentor’s own sessions. Private assessment analysis, when enabled above, covers the organisation’s assessments.</p></>}
     </>}

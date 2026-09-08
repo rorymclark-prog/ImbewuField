@@ -34,7 +34,7 @@ import { reportTreeIllustrations, reportChapterGraphics } from '../lib/report-ch
 import { siteReportVisuals } from '../lib/report-visuals';
 import { DEMO_LOCATION } from '../lib/demo-site';
 
-test('the report checklist does not mistake filenames, a started design or photos for verified tests',()=>{
+test('the report checklist acknowledges saved work without claiming it is verified',()=>{
   const inputs={hasSite:true,boundaryPointCount:3,surveyFilledFields:2,surveyTotalFields:10,zoneCount:1,elementCount:0,hasCropPlan:false};
   const items=reportPreparation(inputs,{
     soil_lab_result:[{id:'old',type:'pdf',name:'soil-results.pdf',takenAt:1}],
@@ -43,9 +43,46 @@ test('the report checklist does not mistake filenames, a started design or photo
   });
   assert.equal(items.find(i=>i.id==='soil')!.hasRecord,false);
   assert.match(items.find(i=>i.id==='water')!.status,/enter key results/);
-  assert.match(items.find(i=>i.id==='design')!.status,/started/);
+  // Saved records deserve recognition even when no approval or map export is recorded.
+  assert.equal(items.find(i=>i.id==='design')!.status,'Design records saved');
   assert.match(items.find(i=>i.id==='survey')!.status,/2 of 10/);
   assert.equal(items.find(i=>i.id==='crops')!.hasRecord,false);
+});
+
+test('report preparation uses the existing boundary measurements and saved map records',()=>{
+  const facts=demoFacts();
+  const inputs={hasSite:true,boundaryPointCount:10,surveyFilledFields:9,surveyTotalFields:10,zoneCount:3,elementCount:12,hasCropPlan:true};
+  const before=JSON.stringify(facts);
+  const items=reportPreparation(inputs,{}, {facts,maps:{count:9,latestAt:'2026-09-07T10:00:00Z'}});
+  const boundary=items.find(i=>i.id==='boundary')!;
+  assert.equal(boundary.status,'Boundary measurements available');
+  assert.ok(boundary.detail.includes(facts.boundary!.areaM2.toLocaleString('en-ZA',{maximumFractionDigits:1})));
+  assert.ok(boundary.detail.includes(facts.boundary!.perimeterM!.toLocaleString('en-ZA',{maximumFractionDigits:1})));
+  assert.equal(boundary.action,'View boundary and measurements');
+  const design=items.find(i=>i.id==='design')!;
+  assert.equal(design.status,'9 saved design maps available');
+  assert.match(design.detail,/7 Sept? 2026/);
+  assert.equal(design.action,'View saved design maps');
+  assert.equal(JSON.stringify(facts),before,'reading readiness must never change saved evidence');
+});
+
+test('fence lengths do not become a property perimeter and absent maps do not mean unfinished design',()=>{
+  const inputs={hasSite:true,boundaryPointCount:0,surveyFilledFields:0,surveyTotalFields:10,zoneCount:0,elementCount:0,hasCropPlan:false};
+  const facts=demoFacts();
+  delete facts.boundary;
+  facts.design!.routes=[{kind:'fence',label:'Fence',count:1,totalLengthM:12.5}];
+  const items=reportPreparation(inputs,{}, {facts,maps:{count:0}});
+  const boundary=items.find(i=>i.id==='boundary')!;
+  assert.equal(boundary.status,'Fence measurements available');
+  assert.match(boundary.detail,/12[.,]5 m/);
+  assert.doesNotMatch(boundary.detail,/perimeter/);
+  assert.match(items.find(i=>i.id==='design')!.detail,/in this browser/);
+  assert.doesNotMatch(items.find(i=>i.id==='design')!.status,/not started|complete|finished/i);
+  const mapsOnly=reportPreparation(inputs,{}, {maps:{count:1}}).find(i=>i.id==='design')!;
+  assert.equal(mapsOnly.hasRecord,true,'saved sheets remain evidence without a local editable canvas');
+  assert.equal(mapsOnly.status,'1 saved design map available');
+  const loading=reportPreparation(inputs,{}, {maps:null}).find(i=>i.id==='design')!;
+  assert.equal(loading.status,'Checking saved design maps…');
 });
 test('chapter graphics use named catalogue trees and typed chart values, never invented results',()=>{
   const names=reportTreeIllustrations('Marula, avocado and wild plum. No other tree is specified.').map(t=>t.name);
@@ -55,7 +92,9 @@ test('chapter graphics use named catalogue trees and typed chart values, never i
   const visuals=siteReportVisuals(null,DEMO_LOCATION);
   const chapters=reportChapterGraphics('## Natural Vegetation & Biome\nMarula.\n## Water Harvesting\nAn unmeasured catchment.\n## Soil Strategy\nTest results unavailable.',visuals);
   assert.ok(chapters['Natural Vegetation & Biome'].some(g=>g.trees?.some(t=>t.name==='Marula')));
-  assert.ok(chapters['Water Harvesting'].some(g=>g.chart?.id==='rainfall'));
+  // Charts now appear once in the overview/crop-plan section, not under every matching heading.
+  assert.ok(visuals.charts.some(c => c.id === 'rainfall'));
+  assert.ok(Object.values(chapters).flat().every(g => !g.chart));
   assert.ok(!chapters['Water Harvesting'].some(g=>g.chart?.id==='water'),'no tank capacity may be guessed from prose');
   assert.ok(chapters['Soil Strategy'].some(g=>g.svg&&g.note.includes('does not describe measured')));
 });
@@ -381,4 +420,69 @@ test('a site report excludes crop rows from another garden', () => {
   const facts = collectReportSiteFacts({ siteId: 'site:-27.72623,31.96304', lat: -27.726231, lon: 31.963044, canvas: buildDemoDesignCanvasState(), cropPlan });
   assert.equal(facts.crop?.plantingCount, cropPlan.plantings.length - 1);
   assert.ok(!facts.crop?.crops.some(c => c.name === 'not-a-site-crop'));
+});
+
+// Reports retain planting links; grouped legacy crop totals cannot reconstruct them.
+import { captureReportCropPlan, normaliseReportCropSnapshot, reportCropRows, reportCropSignature, reportCropCalendar, reportCropMapSvg } from '../lib/report-crop-plan';
+test('a saved crop plan keeps its site, bed-month links, variety and geometry after later edits', () => {
+  const canvas = buildDemoDesignCanvasState(), plan = buildDemoCropPlan();
+  const before = JSON.stringify(canvas);
+  plan.plantings[0].variety = 'Seed packet cultivar';
+  const snapshot = captureReportCropPlan(canvas, plan, 'ubhejane', new Date('2026-09-07T10:00:00Z'));
+  plan.plantings[0].variety = 'Later choice';
+  assert.equal(JSON.stringify(canvas), before);
+  assert.equal(snapshot.plantings[0].variety, 'Seed packet cultivar');
+  assert.ok(snapshot.outlines.length > 0);
+  const clean = normaliseReportCropSnapshot(JSON.parse(JSON.stringify(snapshot)))!;
+  assert.equal(reportCropSignature(clean), reportCropSignature(snapshot));
+  assert.equal(JSON.stringify(reportCropCalendar(clean)), JSON.stringify(reportCropCalendar(snapshot)));
+  assert.match(reportCropMapSvg(clean, 0)!, /Sept? 2026/);
+  const facts = demoFacts();
+  facts.crop!.snapshot = snapshot;
+  assert.equal(normaliseReportSiteFacts(facts)!.crop!.snapshot!.plantings[0].variety, 'Seed packet cultivar');
+});
+test('crop rows never imply that all months apply to all beds or all varieties', () => {
+  const snapshot = captureReportCropPlan(buildDemoDesignCanvasState(), buildDemoCropPlan(), 'ubhejane');
+  const first = snapshot.plantings[0];
+  snapshot.plantings = [
+    { ...first, id: 'one', bedId: snapshot.beds[0].id, sowMonth: 3, variety: 'A' },
+    { ...first, id: 'two', bedId: snapshot.beds[1].id, sowMonth: 9, variety: 'B' },
+  ];
+  const crop = { plantingCount: 2, bedsPlanted: 2, crops: [], snapshot };
+  const rows = reportCropRows(crop);
+  assert.equal(rows.length, 2);
+  assert.equal(rows[0].where, snapshot.beds[0].label);
+  assert.equal(rows[0].sow, first.once ?? 'Mar');
+  assert.equal(rows[1].where, snapshot.beds[1].label);
+  assert.equal(rows[1].variety, 'B');
+  assert.equal(normaliseReportCropSnapshot({ ...snapshot, plantings: [{ ...first, bedId: 'another-garden' }] }), undefined);
+});
+test('an older report keeps unknown crop links unknown', () => {
+  const facts = demoFacts(); delete facts.crop!.snapshot;
+  const clean = normaliseReportSiteFacts(facts)!;
+  assert.equal(clean.crop!.snapshot, undefined);
+  assert.ok(reportCropRows(clean.crop!).every(r => r.variety === 'Not recorded'));
+});
+
+
+import { reportSowingCalendar, type ReportCropSnapshot } from '../lib/report-crop-plan';
+const calendarSnapshot = (): ReportCropSnapshot => ({ siteId: 'ubhejane', capturedAt: '2026-12-07T10:00:00Z', planUpdatedAt: 1, beds: [{ id: 'a', label: 'Bed A', areaM2: 9 }, { id: 'b', label: 'Bed B', areaM2: 9 }], plantings: [], outlines: [] });
+test('report sowing calendar groups repeated beds and keeps December-to-January task timing', () => {
+  const s = calendarSnapshot();
+  s.plantings = [{ id: 'a', bedId: 'a', cropKey: 'tomatoes', sowMonth: 12, areaFraction: 1 }, { id: 'b', bedId: 'b', cropKey: 'tomatoes', sowMonth: 12, areaFraction: 1 }];
+  const before = JSON.stringify(s), calendar = reportSowingCalendar(s);
+  assert.equal(calendar.rows.length, 1);
+  assert.match(calendar.months[0], /Dec 2026/); assert.match(calendar.months[1], /Jan 2027/);
+  assert.equal(calendar.rows[0].cells[0].sow, true);
+  assert.equal(calendar.rows[0].cells[1].transplant, true);
+  assert.equal(JSON.stringify(s), before);
+});
+test('report calendar does not roll past or beyond-window dated sowings into a different year', () => {
+  const s = calendarSnapshot();
+  s.plantings = [{ id: 'past', bedId: 'a', cropKey: 'carrots', sowMonth: 2, areaFraction: 1, once: '2026-02' }, { id: 'future', bedId: 'b', cropKey: 'tomatoes', sowMonth: 2, areaFraction: 1, once: '2028-02' }];
+  assert.equal(reportSowingCalendar(s).rows.length, 0);
+  assert.equal(reportSowingCalendar(s).unscheduled.length, 2);
+  s.plantings[1].once = '2027-02';
+  const row = reportSowingCalendar(s).rows[0];
+  assert.equal(row.cells[2].sow, true); assert.equal(row.cells[3].transplant, true);
 });

@@ -287,8 +287,10 @@ class Sheet {
     // than assumed to always be short enough.
     const assuranceText = pdfSafe(ASSURANCE_ONE_LINE);
     const assuranceLeft = this.width / 2 - this.doc.getTextWidth(assuranceText) / 2;
-    const noteMaxW = Math.max(20, assuranceLeft - this.margin - 12);
-    const note = truncateToWidth(this.doc, pdfSafe(this.footerNote), noteMaxW);
+    const noteMaxW = Math.max(0, assuranceLeft - this.margin - 12);
+    // A portrait appendix can leave no room beside the assurance line. Its
+    // page heading already identifies the site; omit the footer name instead of overlapping.
+    const note = noteMaxW >= 24 ? truncateToWidth(this.doc, pdfSafe(this.footerNote), noteMaxW) : '';
     this.doc.text(note, this.margin, this.height - 26);
     this.doc.text(assuranceText, this.width / 2, this.height - 26, { align: 'center' });
     this.doc.text(String(this.doc.getNumberOfPages()), this.width - this.margin, this.height - 26, { align: 'right' });
@@ -781,7 +783,9 @@ function drawCalendar(s: Sheet, input: CropPlanPdfInput, nowMonth: number, rows:
   // No standfirst on this page: the whole value of the calendar is that all
   // thirteen growing areas land on ONE sheet, and a two-line introduction is
   // enough to push the last two plots onto a second page where they say nothing.
-  pageTitle(s, 'Land occupancy', 'Annual bed and plot calendar');
+  const start = input.now ?? new Date();
+  const end = new Date(start.getFullYear(), start.getMonth() + 11, 1);
+  pageTitle(s, 'Land occupancy', `Bed calendar: ${monthShort(nowMonth)} ${start.getFullYear()} - ${monthShort(end.getMonth() + 1)} ${end.getFullYear()}`);
 
   const months = rollingMonths(nowMonth);
   const labelW = 96;
@@ -1348,6 +1352,13 @@ export async function buildCropPlanPdf(input: CropPlanPdfInput): Promise<Blob> {
   const pageFormat: CropPlanPageFormat = input.pageFormat ?? 'a4';
   const doc = new jsPDF({ unit: 'pt', format: pageFormat });
 
+  drawCropPlanPages(doc, input);
+  return doc.output('blob');
+}
+
+/** The site report attaches the same working document, with continuous page numbers. */
+export function drawCropPlanPages(doc: Doc, input: CropPlanPdfInput, append = false): void {
+  const pageFormat = input.pageFormat ?? 'a4';
   const now = input.now ?? new Date();
   const nowMonth = now.getMonth() + 1;
   const want = new Set(input.sections ?? ALL_SECTIONS);
@@ -1363,6 +1374,7 @@ export async function buildCropPlanPdf(input: CropPlanPdfInput): Promise<Blob> {
   const startPage = (orientation: 'portrait' | 'landscape') => {
     if (started) { s.page(orientation); return; }
     started = true;
+    if (append) { doc.addPage(pageFormat, orientation); s.y = s.margin; return; }
     if (orientation === 'landscape') {
       doc.deletePage(1);
       doc.addPage(pageFormat, 'landscape');
@@ -1372,6 +1384,7 @@ export async function buildCropPlanPdf(input: CropPlanPdfInput): Promise<Blob> {
 
   if (want.has('dashboard')) { startPage('portrait'); drawDashboard(s, input, now, nowMonth); }
   if (want.has('numbers')) { startPage('portrait'); drawYearInNumbers(s, input, nowMonth, workload); }
+  if (!want.has('dashboard') && want.has('plan') && input.planNotes?.length) { startPage('portrait'); masthead(s, 'Plan notes'); drawPlanNotes(s, input); }
   if (want.has('calendar')) { startPage('landscape'); drawCalendar(s, input, nowMonth, calendar); }
   if (want.has('taskSummary')) { startPage('portrait'); drawTaskSummary(s, input, nowMonth); }
   if (want.has('plan')) { startPage('landscape'); drawFullPlan(s, input); }
@@ -1380,7 +1393,6 @@ export async function buildCropPlanPdf(input: CropPlanPdfInput): Promise<Blob> {
   if (want.has('record')) { startPage('portrait'); drawHarvestRecord(s, input); }
 
   s.stampFooter();
-  return doc.output('blob');
 }
 
 /**

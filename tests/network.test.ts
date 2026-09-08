@@ -1,3 +1,4 @@
+import { perennialKeyForName } from '../lib/perennial-produce';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
@@ -629,7 +630,7 @@ test('every demo farmer is internally coherent', () => {
     // Every logged crop name resolves to the real catalog.
     const catalogNames = new Set(CROPS.map((c) => c.name));
     for (const row of sources.production ?? []) {
-      assert.ok(catalogNames.has(row.crop), `${where}: unknown crop "${row.crop}"`);
+      assert.ok(catalogNames.has(row.crop) || !!perennialKeyForName(row.crop), `${where}: unknown crop "${row.crop}"`);
     }
   }
 });

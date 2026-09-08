@@ -1,19 +1,19 @@
 .visual, .report { --vr-green: #245738; --vr-ink: #1b3024; --vr-muted: #526258; --vr-line: #d6e1d8; color: var(--vr-ink); background: white; font-family: var(--font-sans), Arial, sans-serif; }
 .report { padding: 32px; border-radius: 20px; margin-top: 28px; border: 1px solid var(--vr-line); }
 .hero { overflow: hidden; border-radius: 12px; background: #173f2d; color: white; }
-.heroCopy { padding: clamp(24px, 4vw, 48px); }
+.heroCopy { padding: clamp(18px, 2.5vw, 28px); }
 .edition { display: flex; justify-content: space-between; gap: 20px; font-size: 12px; letter-spacing: .13em; line-height: 1.5; color: #d6e7d9; }
-.hero h1 { font-family: var(--font-display), Georgia, serif; font-size: clamp(32px, 4vw, 54px); line-height: 1.08; max-width: 18ch; margin: 26px 0 18px; font-weight: 500; color: white; }
+.hero h1 { font-family: var(--font-display), Georgia, serif; font-size: clamp(28px, 3vw, 42px); line-height: 1.08; max-width: 18ch; margin: 14px 0 10px; font-weight: 500; color: white; }
 .hero p { font-size: 16px; color: #d6e7d9; margin: 0; }
 .heroFigure { margin: 0; background: white; color: var(--vr-muted); }
 .heroFigure img { width: 100%; max-height: 460px; object-fit: contain; display: block; background: #edf2ee; }
 .heroFigure figcaption { padding: 10px 16px; font-size: 12px; line-height: 1.6; border: 1px solid var(--vr-line); }
-.metrics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-bottom: 1px solid var(--vr-line); padding: 28px 0; gap: 20px; }
+.metrics { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-bottom: 1px solid var(--vr-line); padding: 20px 0; gap: 16px; }
 .metrics > div { min-width: 0; padding-left: 18px; border-left: 3px solid #af6b24; }
 .metrics span, .metrics small { display: block; font-size: 13px; line-height: 1.5; color: var(--vr-muted); }
 .metrics strong { display: block; font-family: var(--font-display), Georgia, serif; font-weight: 500; font-size: clamp(24px, 2.8vw, 36px); line-height: 1.2; margin: 8px 0; overflow-wrap: anywhere; }
-.basis { font-size: 13px; line-height: 1.7; color: var(--vr-muted); margin: 14px 0 30px; }
-.sectionIntro { display: flex; align-items: baseline; gap: 18px; margin: 36px 0 22px; }
+.basis { font-size: 13px; line-height: 1.7; color: var(--vr-muted); margin: 12px 0 20px; }
+.sectionIntro { display: flex; align-items: baseline; gap: 18px; margin: 24px 0 16px; }
 .sectionIntro > span { font-family: var(--font-display), Georgia, serif; font-size: 36px; color: #af6b24; }
 .sectionIntro h2 { font-family: var(--font-display), Georgia, serif; font-size: 28px; line-height: 1.2; font-weight: 500; margin: 0; }
 .sectionIntro p { font-size: 14px; color: var(--vr-muted); margin: 8px 0 0; }
@@ -63,3 +63,6 @@
 @media (max-width: 1000px) { .charts { grid-template-columns: 1fr; gap: 0; } .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 600px) { .report { padding: 16px; border-radius: 12px; } .heroCopy { padding: 24px; } .edition { flex-direction: column; gap: 8px; } .hero h1 { font-size: 34px; } .chart { padding: 16px; } .chapter { grid-template-columns: 1fr; gap: 8px; padding: 24px 0; } .chapter::before { font-size: 22px; } .chapter h3 { font-size: 25px; } .metrics { gap: 22px 12px; } .metrics > div { padding-left: 12px; } .metrics strong { font-size: 28px; } }
 @media print { .visual, .report { print-color-adjust: exact; -webkit-print-color-adjust: exact; } .report { padding: 0; border: 0; } .controls, .option { display: none; } .hero { break-inside: avoid; } .heroCopy { padding: 24px; } .hero h1 { font-size: 34px; } .metrics { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; } .metrics strong { font-size: 24px; } .charts { display: block; } .chart { margin-bottom: 20px; } .chartScroll { overflow: visible; } .chartScroll .months, .chartScroll .calendar { min-width: 0; } .chapter { display: block; } .chapter::before { display: none; } .chapter h3 { break-after: avoid; } .chapter p { orphans: 3; widows: 3; font-size: 11pt; } .heroFigure img { max-height: 290px; } }
+
+/* Ground evidence is stored as thumbnails; keep it at a readable native scale. */
+.heroPhoto img { width: auto; max-width: 100%; max-height: 300px; margin: 0 auto; }

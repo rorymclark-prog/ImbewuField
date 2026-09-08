@@ -22,8 +22,8 @@ async function handle(req: NextRequest, write: boolean) {
     if (!validFieldId(orgId) || !['ngo', 'admin', 'mentor'].includes(role)) return json({ error: 'Your organisation must link your account to its field team.' }, 403);
     const manage = ['ngo', 'admin'].includes(role) && melCan(role, permission.data() as MelPermission ?? null, 'people');
     const teamCollection = db.collection('field_teams').doc(orgId).collection('mentors');
-    if (!write && req.nextUrl.searchParams.get('mode')==='photos') {
-      const id=req.nextUrl.searchParams.get('id');
+    if (!write && (req.nextUrl.searchParams.get('mode')==='photos' || req.nextUrl.searchParams.has('visit'))) {
+      const id=req.nextUrl.searchParams.get('id') ?? req.nextUrl.searchParams.get('visit');
       if (!validFieldId(id)) fail('Choose a visit record.');
       const visit=(await db.collection('field_team_visits').doc(id!).get()).data() as (FieldVisit & {orgId:string}) | undefined;
       if (!visit || visit.orgId!==orgId) return json({error:'Visit unavailable.'},403);
@@ -48,7 +48,7 @@ async function handle(req: NextRequest, write: boolean) {
       return json(projectFieldWorkspace({ people, teams: currentTeams, visits: visits.docs.map(d => ({ ...(d.data() as FieldVisit), photos:[], id: d.id })), canManage: manage, selfId: auth.uid, sample: false }, auth.uid, manage));
     }
     const raw = await req.text();
-    if (raw.length > 450000) fail('Use up to two smaller visit photos.', 413);
+    if (raw.length > 650000) fail('Use up to three smaller visit photos.', 413);
     const b = JSON.parse(raw), now = new Date().toISOString();
     if (b.action === 'team') {
       if (raw.length > 20000) fail('This team update is too large.', 413);
@@ -71,13 +71,13 @@ async function handle(req: NextRequest, write: boolean) {
         if (old.exists && (old.data()?.orgId!==orgId || old.data()?.mentorId!==auth.uid)) fail('You can edit your own visits within this organisation.',403);
         if (old.exists && old.data()?.updatedAt!==b.expectedUpdatedAt) fail('This visit changed in another window. Reopen it before saving.',409);
         const optionalFields=Object.fromEntries((['supportRequested','observations','agreedAction','responsiblePerson','followUpDate','location'] as const).map(key=>[key,(visit[key] ?? old.data()?.[key] ?? '').trim()]));
-        const next={orgId,mentorId:auth.uid,farmerId:visit.farmerId,date:visit.date,notes:visit.notes.trim(),...optionalFields,
+        const next={orgId,mentorId:auth.uid,farmerId:visit.farmerId,date:visit.date,notes:visit.notes.trim(),originalNotes:visit.originalNotes ?? old.data()?.originalNotes ?? '',...optionalFields,
           photoCount:visit.photos?.length ?? old.data()?.photoCount ?? 0,updatedAt:now};
         if(!validFieldVisit({...next,id:visit.id},now.slice(0,10)))fail('Check the saved action and follow-up date for this visit.');
         tx.set(ref,next);
         // Like training evidence, image bytes live outside the list document and
         // are returned only after the organisation and assignment checks above.
-        if (visit.photos!==undefined) tx.set(db.collection('field_team_visit_photos').doc(ref.id),{photos:visit.photos.map(photo=>({image:photo.image,caption:photo.caption.trim()}))});
+        if (visit.photos!==undefined) tx.set(db.collection('field_team_visit_photos').doc(ref.id),{orgId,mentorId:auth.uid,photos:visit.photos.map(photo=>({image:photo.image,caption:photo.caption.trim()}))});
       });
     } else fail('Unknown field team action.');
     return json({ saved: true });

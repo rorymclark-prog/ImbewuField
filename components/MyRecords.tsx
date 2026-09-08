@@ -4,6 +4,7 @@ import { sampleProducePhoto } from '@/lib/sample-media';
 
 import { useState, useEffect, useRef, useCallback } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { onAuthStateChanged, type User } from 'firebase/auth';
 import { getFirebase } from '@/lib/firebase/init';
 import { useLanguage } from '@/lib/i18n';
@@ -420,6 +421,7 @@ interface SaleFormState {
 }
 
 function LogSaleForm({ onSaved }: { onSaved: () => void }) {
+  const router = useRouter();
   const { t } = useLanguage();
   const [form, setForm] = useState<SaleFormState>({
     crop: '',
@@ -453,7 +455,7 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
     }
     setForm((f) => ({ ...f, loading: true, error: '' }));
     try {
-      await addSale({
+      const invoice = await addSale({
         enterprise: form.enterprise ?? null,
         crop,
         kg,
@@ -463,6 +465,7 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
       });
       setForm({ crop: '', cropKey: null, kg: '', amount: '', buyer: '', loading: false, error: '' });
       onSaved();
+      router.push(`/invoice?view=${encodeURIComponent(invoice.id)}`);
     } catch (err) {
       if (err instanceof WriteTimeoutError) {
         // addSale gave up waiting for the server to confirm, but persistentLocalCache
@@ -567,6 +570,7 @@ function LogSaleForm({ onSaved }: { onSaved: () => void }) {
           </p>
         )}
         <SubmitBtn loading={form.loading}><Star size={14} /> {t('myRecordsSaveSale')}</SubmitBtn>
+        <Link href="/invoice" className="block py-2 text-sm underline">Multiple products or payment later? Create an invoice</Link>
       </form>
     </Card>
   );

@@ -33,13 +33,38 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '7 September 2026', sha: 'b37644a', changes: [
-    'Start a sale with an invoice, or record a past sale and keep its paper reference.',
-    'Create an invoice from an existing sale without counting the kilograms or income twice.',
-    'Keep a slip photo with an expense on this device and reopen it from your records.',
-    'Mentor visits can include support requests, issues, agreed actions and follow-up dates.',
+  { when: '8 September 2026', sha: '650c7bf', changes: [
+    'Record past sales with the original paper invoice reference and payment date.',
+    'Link an existing sale to an invoice without counting kilograms or income twice.',
+    'Keep original expense slip photos on this device and reopen or download them.',
+    'Mentor visits now retain agreed actions, responsible people and follow-up dates.',
   ] },
-  { when: '7 September 2026', sha: '6f46334', changes: [
+  { when: '8 September 2026', sha: '27810ae', changes: [
+    'Tour and Tips stay at the top of the menu; Home invites you for your first 30 openings.',
+    'Saving a sale creates its invoice, ready to view, share or print.',
+    'Explore orchard harvests and sales alongside vegetables in the tour.',
+    'Garden invoices have a logo and complete fictional contact and banking details.',
+    'Dictate visit notes, review AI cleanup and attach photos to each mentor visit.',
+    'Switch paid AI tools on or off in Settings.',
+    'Money charts label the balance as cash surplus or cash shortfall.',
+  ] },
+  { when: '7 September 2026', sha: '435f97f', changes: [
+    'Choose the saved map versions for each report and track which maps you have reviewed.',
+    'Report maps have sharper previews; the checklist opens the relevant design step.',
+    'Read one sowing calendar and open the full crop-plan report separately.',
+    'New reports group suitable crops, fruit, nuts and useful indigenous plants together.',
+  ] },
+  { when: '7 September 2026', sha: '3b8a689', changes: [
+    'Report checks now show saved boundary dimensions and available design maps.',
+    'Open your saved maps from the checklist without generating another set.',
+  ] },
+  { when: '7 September 2026', sha: 'eac00d5', changes: [
+    'Site reports now use compact crop rows, a monthly bed drawing and one seasonal calendar.',
+    'Add your seed variety and download or attach the saved crop working plan.',
+  ] },
+  { when: '7 September 2026', sha: 'b37644a', changes: [
+    'Site reports show the garden name, saved date and original settings when recorded.',
+    'New reports save as separate versions. Choose a map, photo or no cover picture.',
     'Phone headers and field-team statistics take less space, with single-line tabs.',
     'My Studies has illustrated modules and lessons, with compact progress and offline tools.',
     'Tour crop rows show harvests and sales, with clearer headings and lighter record cards.',

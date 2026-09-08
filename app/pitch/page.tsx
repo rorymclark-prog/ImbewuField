@@ -81,7 +81,7 @@ function PhoneFrame({ src, mounted, scale }: { src: string; mounted: boolean; sc
           {mounted ? (
             <iframe
               src={src}
-              title="ImbewuField — live sample farm"
+              title="ImbewuField — live Ubhejane farm"
               width={w}
               height={h}
               style={{ border: 0, width: w, height: h, display: 'block' }}
@@ -376,7 +376,7 @@ export default function PitchPage() {
               <h2 className="display h2">This is not a mockup.</h2>
               <ul className="bullets">
                 <li>
-                  The sample farm — Ubhejane Crèche, KwaZulu-Natal — running live from
+                  The Ubhejane farm — Ubhejane Crèche, KwaZulu-Natal — running live from
                   imbewufield.vercel.app.
                 </li>
                 <li>Her beds, orchard and water on her real satellite image.</li>
@@ -391,7 +391,7 @@ export default function PitchPage() {
               )}
               <PrintCard
                 path="/farmer"
-                note="The sample farm, Ubhejane Crèche — live on any phone, no account needed."
+                note="The Ubhejane farm, Ubhejane Crèche — live on any phone, no account needed."
               />
             </div>
           </div>
@@ -444,7 +444,7 @@ export default function PitchPage() {
                 <li>Built from the farmers&rsquo; own timestamped records — not year-end surveys.</li>
               </ul>
               <p className="chip">
-                Showing sample data — your programme sees only its own farmers, and only what
+                Showing demonstration records — your programme sees only its own farmers, and only what
                 each farmer agreed to share.
               </p>
               {sampleOk === false ? <StorageNote /> : null}
@@ -455,7 +455,7 @@ export default function PitchPage() {
               )}
               <PrintCard
                 path="/funder"
-                note="The cohort and gardens dashboards, with sample data — live in any browser."
+                note="The cohort and gardens dashboards, with demonstration records — live in any browser."
               />
             </div>
           </div>
@@ -554,7 +554,7 @@ export default function PitchPage() {
             </div>
             <p className="url">imbewufield.vercel.app</p>
             <p className="lede" style={{ maxWidth: 720, margin: '10px auto 0' }}>
-              Open the link and take the sample-farm tour — Ubhejane Crèche, KwaZulu-Natal.
+              Open the link and take the tour-farm tour — Ubhejane Crèche, KwaZulu-Natal.
               Programme materials for field teams: imbewufield.vercel.app/partners
             </p>
           </div>

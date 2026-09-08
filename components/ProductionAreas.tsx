@@ -29,7 +29,7 @@ function ProductionAreaContent({ publishedOnly }: { publishedOnly: boolean }) {
   const version = useRef(0);
   useEffect(() => {
     let cancelled = false; setSample(isSampleMode());
-    if (isSampleMode()) { setOrgs([{ id: 'sample-ngo', name: 'Sample organisation' }]); setOrg('sample-ngo'); return; }
+    if (isSampleMode()) { setOrgs([{ id: 'sample-ngo', name: "Imbewu KZN" }]); setOrg('sample-ngo'); return; }
     if (!user) return;
     void request('/api/network/orgs').then(d => { if (!cancelled) { setOrgs(d.orgs); setOrg(d.orgs[0]?.id ?? ''); } }).catch(e => { if (!cancelled) setError(e.message); });
     return () => { cancelled = true; };
@@ -54,7 +54,7 @@ function ProductionAreaContent({ publishedOnly }: { publishedOnly: boolean }) {
       const numeric = (v: string) => v.trim() ? Number(v) : null;
       const site = { ...form, vegetableM2: numeric(form.vegetableM2), stapleM2: numeric(form.stapleM2), boundaryM2: numeric(form.boundaryM2) };
       if (isSampleMode()) { sampleWrite('areas', upsertSampleArea(completeSampleAreas(sampleRead('areas', freshSampleAreas)), { ...site, updatedAt: new Date().toISOString(), updatedBy: 'sample-organisation' } as ProductionSite, new Date().toISOString().slice(0, 10))); }
-      else { if (sample) throw Error('This sample has ended. Reopen production areas.'); await request(`/api/production-sites?org=${encodeURIComponent(org)}`, { confirmed, site }); }
+      else { if (sample) throw Error('This practice workspace has ended. Reopen production areas.'); await request(`/api/production-sites?org=${encodeURIComponent(org)}`, { confirmed, site }); }
       if (current !== version.current) return;
       setNotice(form.published ? 'Saved and included in the funder total.' : 'Saved privately for the organisation.'); setForm(blank()); setConfirmed(false); setEditing(false); await reload();
     } catch (e) { if (current === version.current) setError((e as Error).message); }
@@ -63,7 +63,7 @@ function ProductionAreaContent({ publishedOnly }: { publishedOnly: boolean }) {
   const field = (key: keyof ReturnType<typeof blank>, value: string | boolean) => setForm(f => ({ ...f, [key]: value }));
   return <section className={styles.root}><div className={styles.wrap}>
     <div className={styles.hero}><h1>Production area</h1><p>{publishedOnly ? 'Areas checked and shared by the organisation.' : 'Record the space actually in production. Keep one code for each physical garden.'}</p></div>
-    {sample ? <p className={styles.card}>Sample only · starting planted areas match the 18 fictional garden profiles. Buildings, paths, trees and unused ground are excluded. These are sample allocations, not surveyed measurements. {publishedOnly ? 'Only areas shared by the sample organisation appear here.' : 'Edit, save and change sharing here; no real project is changed.'}</p> : <label>Organisation<select disabled={saving} value={org} onChange={e => setOrg(e.target.value)}>{orgs.map(o => <option key={o.id} value={o.id}>{o.name}</option>)}</select></label>}
+    {sample ? <p className={styles.card}>Starting planted areas match the 18 fictional garden profiles. Buildings, paths, trees and unused ground are excluded. These are illustrative allocations, not surveyed measurements. {publishedOnly ? "Only areas shared by the organisation appear here." : 'Edit, save and change sharing here; no real project is changed.'}</p> : <label>Organisation<select disabled={saving} value={org} onChange={e => setOrg(e.target.value)}>{orgs.map(o => <option key={o.id} value={o.id}>{o.name}</option>)}</select></label>}
     {error && <p role="alert" className={styles.error}>{error}</p>}{notice && <p role="status">{notice}</p>}{loading && <p>Loading production areas…</p>}
     {summary && <><div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 210px), 1fr))', gap: 16, margin: '20px 0' }}>{[['Vegetable beds', summary.vegetableM2], ['Staple plots', summary.stapleM2], ['Total planted area', summary.combinedM2]].map(([label, area]) => <article key={label} className={styles.card}><h2>{label}</h2><strong style={{ fontSize: 28 }}>{summary.sites ? `${(area as number).toLocaleString('en-ZA')} m²` : 'Not recorded'}</strong><p>{summary.sites ? `${((area as number) / 10000).toLocaleString('en-ZA', { maximumFractionDigits: 4 })} hectares` : 'No published measurements yet'}</p></article>)}</div>
       <p>{summary.sites} distinct gardens · observations {summary.firstObserved ?? 'not recorded'} to {summary.lastObserved ?? 'not recorded'}. {publishedOnly ? 'Published records only.' : 'Includes private records; funders see published records only.'}</p>

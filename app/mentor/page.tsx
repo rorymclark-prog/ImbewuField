@@ -682,7 +682,7 @@ export default function MentorPage() {
 
         {!isLive && (
           <p className="text-center text-xs font-mono" style={{ color: '#8C7A62' }}>
-            Sample data — connect Firebase to see live learners
+            demonstration records — connect Firebase to see live learners
           </p>
         )}
         </>)}

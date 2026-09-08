@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { suspectedDuplicateIncomeIds, DUPLICATE_ROW_NOTE, DUPLICATE_LEDGER_FOOTER } from '@/lib/duplicate-income';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { TrendingUp, Scale, Receipt, Plus, Sprout, FileText, Download, Camera, Loader2, Pencil, Trash2, Sparkles, BarChart3, Eye, Upload, X } from 'lucide-react';
 import ReceiptPreview, { ReceiptPaper } from '@/components/records/ReceiptPreview';
 import CropIcon from '@/components/CropIcon';
@@ -454,6 +455,7 @@ const emptyForm = (): SaleFormState => ({ enterprise: null, crop: '', expenseCro
 // handleSubmit are still reachable, one from each tab. `addLabel` names the button for the same
 // reason: "New entry" on a tab called Spent tells her nothing she did not already say.
 function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDone, online, lockKind, addLabel = 'New entry', onSavingChange }: { onSaved: () => void; editing: EditTarget; onCancelEdit: () => void; alwaysOpen?: boolean; onDone?: () => void; online: boolean; lockKind?: 'in' | 'out'; addLabel?: string; onSavingChange?: (saving: boolean) => void }) {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [kind, setKind] = useState<'in' | 'out'>(lockKind ?? 'in');
   const [form, setForm] = useState<SaleFormState>(emptyForm());
@@ -615,7 +617,8 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
           if (sampling) updateSandboxSale(editing.row.id, patch); else await updateSale(editing.row.id, patch);
         } else {
           const row = { enterprise: form.enterprise, crop: what, kg, amount, buyer: form.buyer.trim() || null, sold_at: new Date().toISOString() };
-          if (sampling) addSandboxSale(row); else await addSale(row);
+          const invoice = await addSale(row);
+          router.push(`/invoice?view=${encodeURIComponent(invoice.id)}`);
         }
       } else {
         const expenseId = editing?.type === 'expense' ? editing.row.id : (draftExpenseId.current ??= crypto.randomUUID());
@@ -860,9 +863,10 @@ function LogSaleForm({ onSaved, editing, onCancelEdit, alwaysOpen = false, onDon
                 <span className="inline-block w-3 h-3 rounded-full border-2 animate-spin" style={{ borderColor: '#fff transparent transparent transparent' }} />
                 Saving...
               </>
-            ) : editing ? 'Save changes' : (isIn ? 'Log sale' : 'Log cost')}
+            ) : editing ? 'Save changes' : (isIn ? 'Save sale & invoice' : 'Log cost')}
           </button>
         </div>
+        {isIn && !editing && <Link href="/invoice" className="block py-2 text-sm underline">Multiple products or payment later? Create an invoice</Link>}
         </fieldset>
       </form>
     </div>
@@ -914,7 +918,7 @@ function SignInPrompt() {
         className="text-xs font-display font-medium underline underline-offset-2"
         style={{ color: 'var(--color-muted-strong)' }}
       >
-        Preview with sample data
+        Preview with demonstration records
       </button>
     </div>
   );
@@ -1018,7 +1022,7 @@ function FinancialSheet({ sales, production, expenses, invoices, name, loading, 
               title="Open a fully-worked demo farm. Your own books are not touched."
               className="flex items-center gap-1.5 px-3.5 py-2 rounded-lg font-sans font-semibold transition-all"
               style={{ background: 'transparent', border: '1px dashed rgba(192,122,30,0.5)', color: 'var(--record-negative)', fontSize: 14, cursor: 'pointer' }}>
-              <Sparkles size={15} />See a sample
+              <Sparkles size={15} />Try the money book
             </button>
           )}
           <div className="flex rounded-lg p-0.5 gap-0.5" style={{ background: 'rgba(226,216,196,0.5)', border: '1px solid var(--color-border)' }}>
@@ -1695,7 +1699,7 @@ export default function RecordsPage() {
                       className="w-full flex flex-col items-center justify-center gap-1.5 py-6 px-4 rounded-2xl text-sm font-display font-semibold transition-all"
                       style={{ background: 'transparent', border: '1px dashed rgba(192,122,30,0.5)', color: 'var(--record-negative)', cursor: 'pointer' }}
                     >
-                      <span className="flex items-center gap-2"><Sparkles size={18} />See a sample — how this book works</span>
+                      <span className="flex items-center gap-2"><Sparkles size={18} />Try the Ubhejane money book</span>
                       <span className="font-sans font-normal" style={{ fontSize: 12, color: 'var(--color-muted-strong)', lineHeight: 1.4 }}>
                         A worked year from the Ubhejane Crèche demo farm: sales, costs, harvests and
                         invoices. Your own books are not touched.

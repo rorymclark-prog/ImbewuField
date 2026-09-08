@@ -94,7 +94,7 @@ function LiveChatPanel({ locationData, siteData, waterData, appLang, initialQuer
   // Harvests AND sales: for a long time only production was loaded here, so a signed-in farmer's
   // real harvests reached the assistant while their real sales did not — and the `sales` field was
   // filled from the DEMO store alone. Ask "what did I earn from my cabbages" and the answer came
-  // back from sample data, or from nothing, while the rows sat in Firestore.
+  // back from practice view data, or from nothing, while the rows sat in Firestore.
   useEffect(() => {
     let alive = true;
     (async () => {
@@ -259,7 +259,7 @@ function LiveChatPanel({ locationData, siteData, waterData, appLang, initialQuer
               ? { background: 'rgba(192,122,30,0.1)', border: '1px solid rgba(192,122,30,0.3)', color: '#C07A1E' }
               : { background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.25)', color: '#1F4D2B' }}>
             <FlaskConical size={13} className="inline mr-1" />
-            {hasSample ? 'Sample farm data loaded — tap to clear' : 'Load sample farm data (to test finance questions)'}
+            {hasSample ? "Ubhejane farm data loaded — tap to clear" : "Load Ubhejane farm data (to test finance questions)"}
           </button>
 
           <div className="flex flex-col gap-1.5">

@@ -7,7 +7,7 @@ export function buildSampleAssessments() {
   return MEL_STAGES.map((stage, index) => {
     const draft = stage === 'closeout' || stage === 'app_closeout';
     const a: MelAssessment = {
-      id: `sample-${stage}`, orgId: 'sample-ngo', project: 'Sample learning cohort',
+      id: `sample-${stage}`, orgId: 'sample-ngo', project: 'Community garden learning cohort',
       title: MEL_TEMPLATES[stage].en, stage, version: 1,
       participantIds: draft ? [] : Array.from({ length: 16 }, (_, i) => `sample-person-${i + 1}`),
       due: draft ? '2026-12-01' : index < 3 ? '2026-08-01' : '2026-09-30',
@@ -31,9 +31,9 @@ export type SampleProgrammeControls = {
 };
 export function freshSampleProgramme(): SampleProgrammeControls {
   return { funderAccess: true, published: buildSampleAssessments().filter(x => x.assessment.published).map(x => x.assessment.id), people: [
-    { id: 'sample-mentor', name: 'Sample mentor', role: 'mentor', training: true, manage: true, analyse: false, people: false },
-    { id: 'sample-farmer', name: 'Sample farmer', role: 'farmer', manage: false, analyse: false, people: false },
-    { id: 'sample-student', name: 'Sample student', role: 'student', manage: false, analyse: false, people: false },
+    { id: 'sample-mentor', name: 'Nosipho Khumalo', role: 'mentor', training: true, manage: true, analyse: false, people: false },
+    { id: 'sample-farmer', name: 'Nomsa Mthembu', role: 'farmer', manage: false, analyse: false, people: false },
+    { id: 'sample-student', name: 'Zodwa Mthethwa', role: 'student', manage: false, analyse: false, people: false },
   ] };
 }
 export function samplePublishedAssessments(controls: SampleProgrammeControls) {

@@ -31,7 +31,7 @@ export default function ProgrammeEvidence({ funder=false, mentor=false, initialT
   const [category,setCategory]=useState<ProgressArea|''>('');
   const [records,setRecords]=useState<ProgrammeRecords|null>(null);
   async function request(body?:unknown,query='') {
-    if(isSampleMode()) throw Error('This action must remain in the sample.');
+    if(isSampleMode()) throw Error("This action must remain in the tour.");
     const res=await fetch(`/api/programme-evidence?org=${encodeURIComponent(org)}${query}`,{method:body?'POST':'GET',headers:{...(await paidApiHeaders()),'Content-Type':'application/json'},...(body?{body:JSON.stringify(body)}:{})});
     const d=await res.json();if(!res.ok)throw Error(d.error);return d;
   }
@@ -40,14 +40,14 @@ export default function ProgrammeEvidence({ funder=false, mentor=false, initialT
     try {
       if(isSampleMode()) {
         const d=completeSampleEvidence(sampleRead('programme-evidence',freshEvidenceData));
-        if(mentor && !readSampleProgramme().people.find(p=>p.id==='sample-mentor')?.training) throw Error('Training access is off for the sample mentor. Enable it in Organisation → People & access.');
-        if(funder && !readSampleProgramme().funderAccess) throw Error('The sample organisation has switched off funder access.');
+        if(mentor && !readSampleProgramme().people.find(p=>p.id==='sample-mentor')?.training) throw Error("Training access is off for the mentor. Enable it in Organisation → People & access.");
+        if(funder && !readSampleProgramme().funderAccess) throw Error("The organisation has switched off funder access.");
         const workspace=projectFieldWorkspace(completeSampleFieldWorkspace(sampleRead('field-teams',freshFieldWorkspace)),'sample-mentor',!mentor);
         setData({...d,assessments:funder?[]:sampleAssessments(readSampleProgramme()).map(a=>({id:a.assessment.id,title:a.assessment.title})),sessions:funder?d.sessions.filter(s=>s.published).map(publishedTraining):mentor?d.sessions.filter(s=>s.ownerId==='sample-mentor'):d.sessions,milestones:funder?d.milestones.filter(m=>m.published):d.milestones,people:funder?[]:workspace.people.filter(p=>['farmer','student'].includes(p.role)).map(p=>({id:p.id,name:p.name})),canManage:!funder&&!mentor,canRecord:!funder&&(!mentor||readSampleProgramme().people.find(p=>p.id==='sample-mentor')?.training===true),canBrand:!funder&&!mentor});
       } else {const result=await request();if(version===requestVersion.current)setData(result);}
     } catch(e){if(version===requestVersion.current){setData(null);setError((e as Error).message);}}
   }
-  useEffect(()=>{let cancelled=false;if(isSampleMode()){setOrgs([{id:'sample-ngo',name:'Sample organisation'}]);setOrg('sample-ngo');return;}if(!user)return;if(profile?.role==='mentor'&&profile.org_id){setOrg(profile.org_id);return;}void (async()=>{try{const res=await fetch('/api/network/orgs',{headers:await paidApiHeaders()});const d=await res.json();if(!res.ok)throw Error(d.error);if(!cancelled){setOrgs(d.orgs);setOrg(d.orgs[0]?.id??'');}}catch(e){if(!cancelled)setError((e as Error).message);}})();return()=>{cancelled=true;};},[user,profile]);
+  useEffect(()=>{let cancelled=false;if(isSampleMode()){setOrgs([{id:'sample-ngo',name:"Imbewu KZN"}]);setOrg('sample-ngo');return;}if(!user)return;if(profile?.role==='mentor'&&profile.org_id){setOrg(profile.org_id);return;}void (async()=>{try{const res=await fetch('/api/network/orgs',{headers:await paidApiHeaders()});const d=await res.json();if(!res.ok)throw Error(d.error);if(!cancelled){setOrgs(d.orgs);setOrg(d.orgs[0]?.id??'');}}catch(e){if(!cancelled)setError((e as Error).message);}})();return()=>{cancelled=true;};},[user,profile]);
   useEffect(()=>{setData(null);setSession(null);setTarget(null);if(org)void reload();return()=>{requestVersion.current++;};},[org,funder,mentor]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(()=>{
     let cancelled=false;setRecords(null);
@@ -78,7 +78,7 @@ export default function ProgrammeEvidence({ funder=false, mentor=false, initialT
         if(action==='milestone'&&!data.canManage)throw Error('Organisation management access is required.');
         if(action==='session' && s?.attendance.some(a=>!a.id.startsWith('guest-')&&!data.people.some(p=>p.id===a.id)))throw Error('Use members of your current assigned group.');
         sampleWrite('programme-evidence',action==='session'?{...all,sessions:[...all.sessions.filter(r=>r.id!==s!.id),{...s!,updatedAt:now}]}:action==='milestone'?{...all,milestones:[...all.milestones.filter(r=>r.id!==m!.id),{...m!,updatedAt:now}]}:{...all,branding:data.branding});
-      }else{if(data.sample)throw Error('This sample ended. Reopen the workspace.');await request({action,session:s,milestone:m,branding:data.branding,reviewed,expectedUpdatedAt:action==='session'?session?.updatedAt:target?.updatedAt});}
+      }else{if(data.sample)throw Error('This practice workspace has ended. Reopen the workspace.');await request({action,session:s,milestone:m,branding:data.branding,reviewed,expectedUpdatedAt:action==='session'?session?.updatedAt:target?.updatedAt});}
       if(version!==requestVersion.current)return;setNotice('Saved. Reports now include the updated record.');setSession(null);setTarget(null);await reload();
     }catch(e){if(version===requestVersion.current)setError((e as Error).message);}finally{setBusy(false);}
   }
@@ -131,7 +131,7 @@ export default function ProgrammeEvidence({ funder=false, mentor=false, initialT
         ]}/>
       </>}
       {!data.brandingOnly&&tab==='training'&&<>
-        {data.canRecord&&<button className={styles.primary} disabled={busy||photosBusy} onClick={()=>{setSession({...emptySession(),project,attendance:data.people.map(p=>({...p,present:false})),facilitator:profile?.full_name??(data.sample?'Sample mentor':'')});setReviewed(false);}}>Record a training session</button>}
+        {data.canRecord&&<button className={styles.primary} disabled={busy||photosBusy} onClick={()=>{setSession({...emptySession(),project,attendance:data.people.map(p=>({...p,present:false})),facilitator:profile?.full_name??(data.sample?"Nosipho Khumalo":'')});setReviewed(false);}}>Record a training session</button>}
         {photosBusy&&<p>Loading session photos…</p>}
         {sessions.map(s=><article key={s.id} className={styles.card} style={{marginTop:16}}><h2>{s.title}</h2><p>{s.date} · {s.project} · {s.venue}</p><p>{s.presentCount} present / {s.registeredCount} registered · {s.photoCount} venue photos · {s.published?'Shared with funders':'Internal'}</p><p>{s.report}</p><button disabled={busy||photosBusy} onClick={()=>void editSession(s)}>{data.canRecord?'Open register / edit':'Open session report'}</button></article>)}
         {session&&<form className={styles.card} style={{marginTop:20}} onSubmit={e=>{e.preventDefault();void save('session');}}>

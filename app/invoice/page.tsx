@@ -383,6 +383,7 @@ export default function InvoicePage() {
       sourceSaleId: sourceSaleId || undefined,
       notes: notes.trim() || undefined,
       enterprise: enterprise || undefined,
+      salesSyncPending: !sourceSaleId && (paymentStatus === 'paid' || existing?.status === 'paid' || existing?.salesSyncPending) ? true : undefined,
       status: paymentStatus || 'unpaid',
       paidAt: paymentStatus === 'paid' ? paymentISO : undefined,
       paymentMethod: paymentStatus === 'paid' ? paymentMethod || undefined : undefined,
@@ -417,12 +418,13 @@ export default function InvoicePage() {
       setCurrentId(id);
       setIssuedISO(stored.dateISO);
       if (currentId === null && saveNextInvoiceNumber(currentNo + 1)) setSeq(currentNo + 1);
-      if (!sourceSaleId && (stored.status === 'paid' || existing?.status === 'paid')) {
+      if (!sourceSaleId && (stored.status === 'paid' || existing?.status === 'paid' || stored.salesSyncPending)) {
         try {
           // The invoice itself remains available offline. A later retry uses deterministic
           // sale IDs, so it cannot create a second row for the same invoice line.
           if (!sample && !navigator.onLine) throw new Error('offline');
           await withWriteTimeout(syncInvoiceSales(stored));
+          if (sameAccount()) setSaved(saveInvoice({ ...stored, salesSyncPending: false }));
         } catch {
           if (sameAccount()) setSaveMessage('Invoice saved on this device. Reconnect and save it again to update the crop sale book.');
           return sameAccount() ? id : null;
@@ -1083,6 +1085,12 @@ export default function InvoicePage() {
               </button>
             </div>
 
+            {saved.find(invoice => invoice.id === currentId)?.salesSyncPending && (
+              <div role="status" className="rounded-xl p-3 text-sm" style={CARD}>
+                Invoice saved on this device. The shared sales records have not confirmed yet.
+                <button type="button" onClick={() => { void persist(); }} className="block underline py-2">Retry sales sync</button>
+              </div>
+            )}
             {saveError && (
               <p role="alert" className="text-center text-sm font-sans px-3 py-2 rounded-lg" style={{ color: '#A02B28', background: '#FBEAEA', border: '1px solid #E8C4C4' }}>
                 {saveError}

@@ -83,7 +83,7 @@ export function sampleFullSiteReport(facts: ReportSiteFacts | null, location: Lo
   const inventory = facts?.design?.elements.map(item => `- ${item.name} × ${item.count} · ${item.status}`) ?? [];
   const beds = facts?.design?.beds.map(bed => `- ${bed.label} · ${bed.areaM2.toLocaleString('en-ZA')} m² · ${bed.kind}`) ?? [];
   return [
-    '## Sample report basis\n\nThis ready-to-read sample is assembled from the saved site and design records. It is not a new AI analysis or an independently verified assessment. Sample finances, soil examples and household examples remain illustrative wherever labelled. Planned areas and infrastructure do not establish completed work.',
+    "## report basis\n\nThis ready-to-read sample is assembled from the saved site and design records. It is not a new AI analysis or an independently verified assessment. Sample finances, soil examples and household examples remain illustrative wherever labelled. Planned areas and infrastructure do not establish completed work.",
     ...sections,
     `## Full design inventory\n\n${inventory.length ? inventory.join('\n') : 'No placed elements recorded.'}`,
     `## Production spaces\n\n${beds.length ? beds.join('\n') : 'No production spaces recorded.'}`,

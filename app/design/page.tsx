@@ -2921,6 +2921,17 @@ const DUPLICATE_OFFSET = 0.03; // normalised; same nudge Cmd/Ctrl+V already uses
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [canvasState]);
 
+  // Report stocktake opens the requested editing step without changing any geometry.
+  const reportStepHandled = useRef('');
+  useEffect(() => {
+    if (!canvasState) return;
+    const requested = params.get('reportStep');
+    const visit = `${canvasState.siteId}:${requested}`;
+    if (!requested || reportStepHandled.current === visit || !['base', 'zones', 'water', 'planting', 'structures', 'glossy'].includes(requested)) return;
+    reportStepHandled.current = visit;
+    setStep(requested as WizardStep);
+  }, [canvasState, params, setStep]);
+
   // Arm a zone chip so the FARMER draws it — the tap-a-pin half of the guidance hybrid.
   // Never commits geometry.
   const armZoneFromAdvice = useCallback(

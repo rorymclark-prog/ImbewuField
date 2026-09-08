@@ -7,6 +7,7 @@ requests. Independent changes may proceed in parallel, followed by shared integr
 The first batch was deployed on 7 September in PR #425, production commit
 `b37644a620e3715caf8650de5874595ce6ff629e`. Rows marked “In branch” below describe that
 released batch unless an individual row explicitly names the follow-up branch.
+PRs #427 and #429–#432 subsequently added saved report versions, selected maps, concise planting calendars, orchard records, tour help and paid-feature switches. Their report and course changes are preserved.
 The follow-up work is on `codex/record-documents-followup`; implementation and checks are
 recorded separately. A deployed feature is not automatically verified on every device.
 No full historical chat transcript was recovered. The older feature register retains its own
@@ -98,7 +99,7 @@ historical release claims; this document does not re-verify them.
 | B17 | Lima should read photographed receipts and fill expenses. | Existing reader; demo addition in branch | The real `/api/read-slip` extracts total, description and supplier for user review before saving. The sample has a prepared receipt that fills the form without a model call. Capturing many slips as a batch is not implemented. |
 | B18 | Retain every photographed slip and view it later beside the expense. | Implemented locally in follow-up; cloud sync open | Manual capture/upload retains the original image under the account and expense ID in IndexedDB; sample files stay in memory. Capture works without AI. Expense save and attachment failure/retry are coordinated. Photos are device-only, not a promised cloud backup or cross-device sync. |
 | B19 | Estimate AI receipt compute cost and decide whether it is affordable. | Advice completed; usage logging in branch | Review documents explicit token assumptions, Sonnet/Haiku cost examples and sources; `/api/read-slip` now logs provider usage. These are planning estimates rather than a measured project bill. |
-| B20 | Organisation master settings should toggle paid features and support higher-priced tiers. | Recommended / not built | Existing API authentication and request rate limits are not organisation feature entitlements. Receipt-reading, report-generation and optional future-map allowances, billing tiers and hard spending caps are proposed; no complete settings/billing workflow was added. |
+| B20 | Organisation master settings should toggle paid features and support higher-priced tiers. | Partial; settings released in PR #432 | Paid feature-group switches and server kill switches are present. Organisation entitlements, billing tiers and hard spending caps still need a complete product workflow; a switch alone is not billing. |
 | B21 | Keep normal generated maps cheap; consider AI maps as an optional premium feature. | Existing local maps; premium model recommended | Ordinary Design Maps use local drawing. Restoring paid AI image generation as an organisation-configurable product is a separate proposal, not part of the label cleanup. |
 
 ## Offline capability and carried-forward work
@@ -113,7 +114,7 @@ historical release claims; this document does not re-verify them.
 | C02 | Give all 18 gardens fully editable connected workspaces. | Open | Their photo/layout/report directory exists, but the separate connected farm pack does not make every garden editable. |
 | C03 | Unify the national, mentor and connected-farm demo data. | Open | Registers are still separate examples. This branch fills the connected farm's records; it does not reconcile all portfolio totals. |
 | C04 | Expand mentor course/facilitation/mentorship resources with organisation publication and group assignment. | Open | Basic learning/mentor foundations exist. The three-resource structure, controlled publication and private answer guides remain in the earlier register. |
-| C05 | Expand mentor visit records with location/photos/support/issues/actions/follow-up and authorised summaries. | Implemented in follow-up; verification pending | Field-team visits now capture support, observations/issues, actions, responsible person, follow-up date, location and up to two captioned photographs. A dated log supports filtering, viewing and editing, with authorised organisation views and per-visit reports. Real edits keep the visit ID, check for concurrent changes and require a connection. This is not an offline visit queue. |
+| C05 | Expand mentor visit records with location/photos/support/issues/actions/follow-up and authorised summaries. | Implemented in follow-up; verification pending | Field-team visits now capture support, observations/issues, actions, responsible person, follow-up date, location and up to three captioned photographs. A dated log supports filtering, viewing and editing, with authorised organisation views and per-visit reports. Real edits keep the visit ID, check for concurrent changes and require a connection. This is not an offline visit queue. |
 | C06 | Add dated retail replacement values, results framework, data-quality review and learning decisions. | Recommended / partial foundations | Existing indicators, assessments and BOQ support part of this. See `MEL-FEATURE-AUDIT.md`; no unsupported portfolio valuation or completed formal MEL suite is claimed. |
 | C07 | Link funding gaps, BOQ revisions, procurement and verified delivered assets. | Recommended | `FUNDING-AND-DELIVERY.md` is a design, not a completed linked asset/funding system. |
 | C08 | Improve privacy/consent signing and guardian flows. | Open | Existing permissions remain; new versioned signing, downloadable receipts and guardian workflows from the carried-forward register are not completed here. Required specialist review belongs to that work. |
@@ -164,3 +165,11 @@ shape-sync TODO, and whitespace checks. The query-scale test double was updated 
 new transaction import; cohort reads still reject any unexpected transaction. Focused regression
 checks cover receipt rollback/account isolation, source-sale identity, enterprise attribution,
 original paper references and pending invoice recovery. Preview/browser evidence follows separately.
+
+## 8 September integration follow-up
+
+PR #428 is being reconciled with production commit `650c7bf` (PR #432). Both structured visit follow-ups and the newer three-photo/dictation/optional AI-cleanup capture are retained. Receipt originals stay on the device.
+
+Browser preview: a paper-reference invoice saved its reference, buyer, 2 kg quantity and R30 amount. Browser date filling changed DOM values without updating the React preview; actual date editing remains to be checked with native keyboard interaction. The cloud browser file chooser timed out, so actual receipt-upload interaction is not claimed verified. No paid AI request, real farmer record or original Ubhejane master was used in these checks.
+
+Combined integration gates: typecheck clean; 3,492 tests passed, zero failures, one existing TODO; whitespace check clean. Regression coverage includes historical issue/payment dates through save/reopen, existing-sale deduplication, attachment rollback and account-switch completion.

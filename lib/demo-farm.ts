@@ -1,3 +1,5 @@
+import { SAMPLE_INVOICE_LOGO } from './sample-invoice-logo';
+import { SAMPLE_ORCHARD, sampleOrchardRecords } from './sample-orchard';
 // The "See a sample farm" demo dataset — Ubhejane Creche, a real food garden
 // at a creche/pre-school in the Mkuze valley, northern-KZN Zululand lowveld
 // (~70 km inland, frost-free, summer rainfall). NASA POWER climatology for
@@ -44,12 +46,12 @@ export const DEMO_SITE = Object.freeze({ lat: -27.726231, lon: 31.963044, name: 
 // edits to it only ever touch the in-memory sandbox (lib/sample-mode.ts).
 export function buildDemoProfile(): Profile {
   return {
-    id: 'demo', full_name: 'Sample Farmer', role: 'farmer', org_id: 'demo-org-ubhejane',
+    id: 'demo', full_name: 'Nomsa Mthembu', role: 'farmer', org_id: 'demo-org-ubhejane',
     language: 'en', id_number: null, phone: '072 000 0100', photo_url: null,
     // The invoice prints the farm name under the seller's name. Without one the sample
     // invoice showed a bare placeholder, which reads as an unfinished feature rather than
     // as an unset field.
-    farm_name: 'Ubhejane Crèche garden',
+    farm_name: 'Ubhejane Crèche garden', farm_logo: SAMPLE_INVOICE_LOGO,
     created_at: new Date().toISOString(),
     bio: 'Caretaker of the Ubhejane Creche food garden.',
     skills: ['soil health', 'water harvesting'],
@@ -60,21 +62,21 @@ export function buildDemoProfile(): Profile {
 /**
  * The sample farm's invoice letterhead.
  *
- * Every value is inside the 'Sample —' namespace or an obvious placeholder, so nothing here can
+ * The bank and contact details are fictional demonstration data; nothing here should
  * be mistaken for a real bank account. It exists because the demo is how this app gets evaluated:
  * an invoice with no "How to pay" block reads as a missing feature rather than an empty field.
  */
 export function buildDemoLetterhead(): SellerLetterhead {
   return {
-    address: 'Sample — Ubhejane Crèche\nSample — Mkuze, KwaZulu-Natal',
-    email: 'sample@example.invalid',
+    address: 'Ubhejane Crèche\nMkuze, KwaZulu-Natal',
+    email: 'accounts@ubhejane.example.invalid',
     taxNumber: '',
-    bankName: 'Sample — Demo Bank',
-    bankAccountName: 'Sample — Ubhejane Crèche garden',
-    bankAccountNumber: '0000 0000 0000',
-    bankBranchCode: '000000',
+    bankName: 'Imbewu Community Bank',
+    bankAccountName: 'Ubhejane Crèche garden',
+    bankAccountNumber: '1234 5678 90',
+    bankBranchCode: '123456',
     paymentTermsDays: 14,
-    notes: 'Sample — crates returned with the next order.',
+    notes: 'crates returned with the next order.',
   };
 }
 
@@ -141,7 +143,7 @@ export function buildDemoFacilitatorState(): FacilitatorDesignState {
     // This state is editable in the sample UI. Never hand it the canonical module
     // object by reference or one in-place edit can move every later demo builder.
     bgSite: { ...DEMO_SITE },
-    title: 'Ubhejane Creche — sample garden',
+    title: 'Ubhejane Creche garden',
     savedAt: Date.now(),
   };
 }
@@ -457,6 +459,13 @@ export function buildDemoFinance(): DemoFinance {
       buyer: 'Farm gate', sold_at: iso, created_at: iso, enterprise: 'vegetables' });
   }
 
+  // Practice orchard entries cover every chart window, without claiming a seasonal forecast.
+  for (const monthsBack of [0, 3, 6, 9]) {
+    const orchard = sampleOrchardRecords('demo', at(monthsBack, 2), String(monthsBack));
+    production.push(...orchard.production);
+    sales.push(...orchard.sales);
+  }
+
   const expenses: ExpenseLog[] = [
     ...DEMO_RUNNING_COSTS.map((row, i) => {
       const iso = on(row.month, row.day);
@@ -502,7 +511,7 @@ export function buildDemoFinance(): DemoFinance {
     const id = `demo-sale-invoice-${i + 1}`;
     sale.invoice_id = id;
     sale.invoice_line = 0;
-    invoices.push({ id, no: DEMO_LAST_INVOICE_NO + i + 1, enterprise: 'vegetables',
+    invoices.push({ id, no: DEMO_LAST_INVOICE_NO + i + 1, enterprise: sale.enterprise,
       billTo: sale.buyer || 'Farm gate', items: [{ desc: sale.crop, qty: sale.kg, unit: 'kg', price: sale.amount / sale.kg }],
       total: sale.amount, dateISO: sale.sold_at, status: 'paid', paidAt: sale.sold_at, paymentMethod: 'cash' });
   });
@@ -521,13 +530,14 @@ export function buildDemoFinance(): DemoFinance {
       name: 'Mkuze co-op',
       address: 'Co-op depot, Mkuze',
       phone: '072 000 0102',
-      email: 'sample@example.invalid',
+      email: 'accounts@ubhejane.example.invalid',
     },
     { name: 'Local spaza shop', phone: '072 000 0103' },
   ];
   // Invoice presets, priced at the retail figures in lib/crop-prices.ts — the
   // same table every sale above is priced from.
   const products: Product[] = [
+    ...SAMPLE_ORCHARD.map(row => ({ desc: row.crop, unit: 'kg', price: row.price })),
     { desc: 'mixed vegetable box', unit: 'kg', price: DEMO_BOX_PRICE_PER_KG },
     { desc: 'swiss chard', unit: 'kg', price: pricePerKg('swiss-chard', 'gate') },
     { desc: 'cabbage', unit: 'kg', price: pricePerKg('cabbage', 'gate') },
@@ -561,7 +571,7 @@ export function buildDemoFinance(): DemoFinance {
    advice is a safety problem, not a copy problem. Photos are deliberately
    absent for the same reason the file header gives — inventing ground-level
    photos of a real crèche would misrepresent the real site.
-   Every title carries the "Sample — " prefix used throughout this file. */
+   Every title carries the "" prefix used throughout this file. */
 export function buildDemoJournal(): JournalEntry[] {
   const at = (n: number) => Date.now() - n * 86400000;
   const entry = (
@@ -575,7 +585,7 @@ export function buildDemoJournal(): JournalEntry[] {
   ): JournalEntry => ({
     id: `demo-journal-${n}`,
     date: daysAgoDate(daysBack),
-    title: `Sample — ${title}`,
+    title: `${title}`,
     notes,
     category,
     bedId: bed?.id ?? null,

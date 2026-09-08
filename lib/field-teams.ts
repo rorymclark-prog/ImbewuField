@@ -4,8 +4,15 @@ import { validEvidenceImage } from './invoice-logo';
 export type FieldMember = { id: string; name: string; role: UserRole; gardenName?: string; gardenType?: string; gardenAreaM2?: number };
 export type FieldTeam = { mentorId: string; location: string; farmerIds: string[]; guidance: string; updatedAt: string };
 export type FieldVisitPhoto = { image: string; caption: string };
+export type VisitPhoto = FieldVisitPhoto;
+const sampleVisitImage = (value: unknown) => value === '/demo/harvest.webp';
+export function validVisitPhotos(value: unknown): value is VisitPhoto[] {
+  return Array.isArray(value) && value.length <= 3 && value.every(p => p && typeof p.image === 'string'
+    && p.image.length <= 150000 && /^data:image\/jpeg;base64,[A-Za-z0-9+/]+={0,2}$/.test(p.image)
+    && typeof p.caption === 'string' && p.caption.length <= 200);
+}
 export type FieldVisit = {
-  id: string; mentorId: string; farmerId: string; date: string; notes: string;
+  id: string; mentorId: string; farmerId: string; date: string; notes: string; originalNotes?: string;
   // Optional fields keep existing visit notes readable without a migration.
   supportRequested?: string; observations?: string; agreedAction?: string;
   responsiblePerson?: string; followUpDate?: string; location?: string;
@@ -17,17 +24,17 @@ const validVisitDate = (value: unknown): value is string => typeof value === 'st
   && /^\d{4}-\d{2}-\d{2}$/.test(value) && Number.isFinite(Date.parse(value)) && new Date(value).toISOString().slice(0,10)===value;
 const optionalText = (value: unknown, max: number): value is string | undefined => value===undefined || typeof value==='string' && value.length<=max;
 
-export function validFieldVisit(value: unknown, today: string): value is FieldVisit {
+export function validFieldVisit(value: unknown, today: string, allowSampleImages = false): value is FieldVisit {
   if (!value || typeof value!=='object') return false;
   const visit=value as FieldVisit;
   return validFieldId(visit.id) && validFieldId(visit.mentorId) && validFieldId(visit.farmerId)
     && validVisitDate(visit.date) && visit.date<=today && typeof visit.notes==='string' && visit.notes.length<=4000
-    && optionalText(visit.supportRequested,2000) && optionalText(visit.observations,4000) && optionalText(visit.agreedAction,2000)
+    && optionalText(visit.originalNotes,4000) && optionalText(visit.supportRequested,2000) && optionalText(visit.observations,4000) && optionalText(visit.agreedAction,2000)
     && optionalText(visit.responsiblePerson,120) && optionalText(visit.location,240)
     && !!(visit.notes.trim() || visit.observations?.trim())
     && (!visit.responsiblePerson?.trim() && !visit.followUpDate || !!visit.agreedAction?.trim())
     && (visit.followUpDate===undefined || visit.followUpDate==='' || validVisitDate(visit.followUpDate) && visit.followUpDate>=visit.date)
-    && (visit.photos===undefined || Array.isArray(visit.photos) && visit.photos.length<=2 && visit.photos.every(photo=>!!photo && validEvidenceImage(photo.image) && typeof photo.caption==='string' && !!photo.caption.trim() && photo.caption.length<=240));
+    && (visit.photos===undefined || Array.isArray(visit.photos) && visit.photos.length<=3 && visit.photos.every(photo=>!!photo && (validEvidenceImage(photo.image) || allowSampleImages && sampleVisitImage(photo.image)) && typeof photo.caption==='string' && !!photo.caption.trim() && photo.caption.length<=240));
 }
 
 /** Accept the older API's prefixed IDs without prefixing them again on edit. */
@@ -44,6 +51,7 @@ export function fieldVisitReportLines(visit: FieldVisit, farmerName: string, men
     ...(visit.supportRequested ? [`Support requested: ${visit.supportRequested}`] : []),
     ...(visit.observations ? [`Observations / issues: ${visit.observations}`] : []),
     ...(visit.notes ? [`Visit notes: ${visit.notes}`] : []),
+    ...(visit.originalNotes ? [`Original notes before AI cleanup: ${visit.originalNotes}`] : []),
     ...(visit.agreedAction ? [`Agreed action: ${visit.agreedAction}`,`Responsible person: ${visit.responsiblePerson || 'Not yet assigned'}`,`Follow-up: ${visit.followUpDate || 'Not yet scheduled'}`] : []),
     ...(visit.photoCount || visit.photos?.length ? [`Visit photos: ${visit.photoCount ?? visit.photos?.length ?? 0}`] : []),
   ];
@@ -115,7 +123,7 @@ export function freshFieldWorkspace(): FieldWorkspace {
     {supportRequested:'Materials for the next school garden practical.',observations:'The activity log is current and the coordinator has agreed a session date.',agreedAction:'Confirm materials with the coordinator before the practical session.',responsiblePerson:'Nosipho Khumalo',followUpDate:'2026-09-09'},
     {supportRequested:'Help preparing the month-end records for review.',observations:'Harvest and expense entries are present; some slips are missing.',agreedAction:'Attach the missing expense slips before the group review.',responsiblePerson:'Bongani Zulu',followUpDate:'2026-09-11'},
   ];
-  workspace.visits=examples.map((example,index)=>({id:`sample-field-visit-${index+1}`,mentorId:workspace.teams[example.group].mentorId,farmerId:workspace.teams[example.group].farmerIds[example.farmer],date:example.date,notes:example.notes,location:workspace.people.find(p=>p.id===workspace.teams[example.group].farmerIds[example.farmer])?.gardenName,...followUps[index],photos:[],photoCount:0}));
+  workspace.visits=examples.map((example,index)=>({id:`sample-field-visit-${index+1}`,mentorId:workspace.teams[example.group].mentorId,farmerId:workspace.teams[example.group].farmerIds[example.farmer],date:example.date,notes:example.notes,location:workspace.people.find(p=>p.id===workspace.teams[example.group].farmerIds[example.farmer])?.gardenName,...followUps[index],photos:index===0?[{image:'/demo/harvest.webp',caption:'Garden harvest discussed during the visit — fictional illustration.'}]:[],photoCount:index===0?1:0}));
   return workspace;
 }
 

@@ -149,7 +149,8 @@ test('every catalogue garden has its own complete prepared PDF and layout', () =
     assert.ok(bytes.length > 10000, `${garden.id} has a populated report`);
     assert.ok(existsSync(new URL(`../public/demo/reports/${garden.id}-layout.png`, import.meta.url)));
     const sections = sampleGardenReportSections(garden);
-    assert.equal(sections.length, 8);
+    assert.equal(sections.length, 9);
+    assert.ok(sections.find(s => s.title === 'Orchard bookkeeping example')?.lines.some(l => l.includes('kg sold')));
     assert.ok(sections[0].lines.some(line => line.includes(garden.name)));
     assert.ok(sections[1].lines.some(line => line.includes(garden.production.vegetableM2.toLocaleString('en-ZA', { maximumFractionDigits: 1 }))));
     assert.ok(sections.every(s => s.lines.length >= 4));

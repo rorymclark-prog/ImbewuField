@@ -65,9 +65,9 @@ export default function RoleSwitcher({ current, inMenu = false, onNavigate }: { 
         );
       })}
       {(accountRole === 'ngo' || accountRole === 'admin') && <label className="font-sans text-sm" style={{ padding: '4px 8px', color: '#243d2d' }}>
-        <span className="sr-only">View as with sample data</span>
-        <select aria-label="View as with sample data" value="" onChange={e => { const target = ROLES.find(r => r.key === e.target.value); if (target && startRolePreview(target.key)) { onNavigate?.(); router.push(target.href); } }} style={{ minHeight: 44, maxWidth: 180, background: 'white', color: '#243d2d', borderRadius: 8, padding: 6 }}>
-          <option value="">{sample ? 'Sample · switch view…' : 'View as… (sample)'}</option>
+        <span className="sr-only">View as with demonstration records</span>
+        <select aria-label="View as with demonstration records" value="" onChange={e => { const target = ROLES.find(r => r.key === e.target.value); if (target && startRolePreview(target.key)) { onNavigate?.(); router.push(target.href); } }} style={{ minHeight: 44, maxWidth: 180, background: 'white', color: '#243d2d', borderRadius: 8, padding: 6 }}>
+          <option value="">{sample ? 'Switch view…' : 'Switch practice view…'}</option>
           {ROLES.map(r => <option key={r.key} value={r.key}>{t(r.labelKey)}</option>)}
         </select>
       </label>}

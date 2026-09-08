@@ -40,7 +40,7 @@ export async function buildProgrammePdf(title: string, sample: boolean, sections
     y += 3;
   };
   line(title, true);
-  line(`${sample ? 'SAMPLE - fictional demonstration data' : 'Recorded programme information'} | Generated ${new Date().toISOString().slice(0, 10)}`);
+  line(`${sample ? 'Fictional demonstration data' : 'Recorded programme information'} | Generated ${new Date().toISOString().slice(0, 10)}`);
   line(format === 'summary' ? 'Brief summary: up to five items per section. Use the full report for all items.' : 'Full report');
   for (const section of sections) {
     // Keep a heading with at least the start of its content.
@@ -67,7 +67,7 @@ export async function buildProgrammePdf(title: string, sample: boolean, sections
     doc.setFont('helvetica', 'normal');
     doc.setFontSize(9);
     doc.setTextColor(60);
-    doc.text(`${sample ? 'SAMPLE - NOT ACTUAL RESULTS | ' : ''}ImbewuField | ${page} / ${pages}`, 18, 287);
+    doc.text(`ImbewuField | ${page} / ${pages}`, 18, 287);
   }
   return doc;
 }

@@ -180,6 +180,10 @@ export interface ReportPdfSheet {
 }
 
 export interface ReportPdfMeta {
+  cropPlan?: import('./report-site-facts').FactCropPlan;
+  cropMapMonth?: number;
+  includeCropWorkingPlan?: boolean;
+  siteName?: string;
   visuals?: import('./report-visuals').ReportVisuals;
   visualAssets?: import('./report-visual-pdf').VisualPdfAssets;
   biome: string;
@@ -510,6 +514,15 @@ export async function buildReportPdf(rawMarkdown: string, meta: ReportPdfMeta): 
     }
   }
 
+  if (meta.cropPlan) {
+    footer();
+    const first = doc.getNumberOfPages() + 1;
+    const { drawReportCropSummary } = await import('./report-crop-pdf');
+    drawReportCropSummary(doc, meta.cropPlan, meta.cropMapMonth ?? 0, meta.language);
+    for (let p = first; p < doc.getNumberOfPages(); p++) { doc.setPage(p); footer(p); }
+    doc.setPage(doc.getNumberOfPages());
+  }
+
   // ── The design maps ──────────────────────────────────────────────────────────
   //
   // Appended as plates rather than woven between sections: they are drawn at a different scale to
@@ -615,6 +628,13 @@ export async function buildReportPdf(rawMarkdown: string, meta: ReportPdfMeta): 
   }
 
   footer();
+  if (meta.cropPlan?.snapshot && meta.includeCropWorkingPlan) {
+    const { drawCropPlanPages } = await import('./crop-export-pdf');
+    const { reportCropWorkingInput } = await import('./report-crop-plan');
+    const input = reportCropWorkingInput(meta.cropPlan.snapshot, meta.siteName ?? 'Site crop plan');
+    // The short sowing calendar is already in the report; the detailed plan is optional.
+    drawCropPlanPages(doc, input, true);
+  }
   return doc.output('blob');
 }
 

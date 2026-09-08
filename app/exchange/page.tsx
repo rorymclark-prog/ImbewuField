@@ -93,7 +93,7 @@ export default function ExchangePage() {
             whiteSpace: 'nowrap',
           }}
         >
-          preview · sample data
+          preview · demonstration records
         </span>
       </header>
 
@@ -106,7 +106,7 @@ export default function ExchangePage() {
         >
           <p className="font-sans" style={{ fontSize: 13.5, color: '#5C5040', lineHeight: 1.6, margin: 0 }}>
             Farmers trading with farmers — seed, seedlings, surplus produce, tools and work-share.
-            The sample board is carrying{' '}
+            The trading board is carrying{' '}
             <strong style={{ color: '#20190F', fontWeight: 600 }}>
               {SAMPLE_SUMMARY.total} open {SAMPLE_SUMMARY.total === 1 ? 'listing' : 'listings'}
             </strong>{' '}

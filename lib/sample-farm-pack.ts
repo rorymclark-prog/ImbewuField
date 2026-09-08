@@ -1,3 +1,4 @@
+import { SAMPLE_ORCHARD } from './sample-orchard';
 import { DEMO_SITE, buildDemoSavedPlace } from './demo-farm';
 import type { SiteSurvey } from './site-survey';
 import type { ReportSection } from './programme-report-pdf';
@@ -38,11 +39,11 @@ export function freshSampleFarmPack(): SampleFarmPack {
 
 export function sampleFarmSections(pack: SampleFarmPack, assessment: SiteSurvey): ReportSection[] {
   return [
-    { title: 'Provenance and saved site', lines: [`${DEMO_SITE.name} sample workspace. Real map location, fictional layout and records.`,
+    { title: 'Provenance and saved site', lines: [`${DEMO_SITE.name} workspace. Real map location, fictional layout and records.`,
       `Map reference: ${DEMO_SITE.lat}, ${DEMO_SITE.lon}. Generated photos do not depict this location.`,
       `Example coordinator: ${pack.coordinator}. Visit: ${pack.visitDate}.`,
       'This evidence pack accompanies the editable design, crop plan and records. It is not the full agronomic site report or a verified project return.'] },
-    { title: 'Site assessment — current sample answers', lines: [`Site type: ${assessment.siteType}; goals: ${assessment.goals.join(', ')}.`,
+    { title: "Site assessment — current answers", lines: [`Site type: ${assessment.siteType}; goals: ${assessment.goals.join(', ')}.`,
       `Water: ${assessment.waterSource.join(', ')}; delivery: ${assessment.waterDelivery.join(', ')}; storage: ${assessment.waterStorage.join(', ')}.`,
       `Roof areas: ${assessment.roofMainM2 ?? 'not recorded'} + ${assessment.roofSecondaryM2 ?? 'not recorded'} m2.`,
       `Soil condition: ${assessment.soilCondition}; amendments: ${assessment.soilAmendments.join(', ')}; fencing: ${assessment.hasFencing}.`,
@@ -51,6 +52,7 @@ export function sampleFarmSections(pack: SampleFarmPack, assessment: SiteSurvey)
     { title: 'Completed fictional household interview', lines: [`${pack.household.code}: ${pack.household.adults} adults, ${pack.household.children} children. No real household is represented.`,
       `Water access: ${pack.household.water}`, `Food access: ${pack.household.food}`, `Priority: ${pack.household.priority}`, `Follow-up: ${pack.household.followUp}`] },
     { title: 'Illustrative soil result — not a laboratory certificate', lines: [pack.soil.reference, `Example date: ${pack.soil.sampledOn}; pH: ${pack.soil.ph}; texture: ${pack.soil.texture}.`, pack.soil.note] },
+    { title: 'Orchard harvests and sales', lines: SAMPLE_ORCHARD.map(row => `${row.crop}: ${row.pickedKg} kg picked, ${row.soldKg} kg sold, R${row.soldKg * row.price} received in the current demonstration month.`) },
     { title: 'Mentor visit and agreed follow-up', lines: [pack.mentorNotes] },
   ];
 }

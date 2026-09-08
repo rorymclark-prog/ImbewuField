@@ -103,8 +103,12 @@ test('every section of the report now names the site from one resolver', () => {
 
 test('the download is named after the site, not the wrong biome', () => {
   const view = readFileSync(new URL('../components/ReportView.tsx', import.meta.url), 'utf8');
-  assert.ok(/reportPdfFilename\(ecology\.placeName\)/.test(view),
-    'the PDF filename is back on the coarse biome — the file would contradict its own contents');
+  // Rory's saved Ubhejane report must use the garden identity, even when the regional
+  // classification is correct. Pinning ecology.placeName preserved the naming defect.
+  assert.ok(/reportPdfFilename\(siteName, new Date\(reportDate\)\)/.test(view),
+    'the PDF must use the displayed garden name and the report version date');
+  assert.ok(/reportSiteName\(activeSaved, savedPlaces\)/.test(view),
+    'the displayed identity must resolve from the saved report, not a regional label');
   assert.ok(!/\bd\.biome\.name\b/.test(view),
     'the report screen still spends the coarse biome somewhere');
 });

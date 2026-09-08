@@ -94,7 +94,7 @@ export default function NgoPage() {
         {/* Scoped to the gardens view — the cohort view carries its own, more exact sample label
             (see the matching comment on app/funder/page.tsx). */}
         {(!isLive || sample) && view === 'gardens' && (
-          <span className="text-xs px-2 py-0.5 rounded-full font-mono hidden md:block" style={{ background: 'rgba(212,168,83,0.12)', border: '1px solid rgba(212,168,83,0.3)', color: 'var(--gold)' }}>sample data</span>
+          <span className="text-xs px-2 py-0.5 rounded-full font-mono hidden md:block" style={{ background: 'rgba(212,168,83,0.12)', border: '1px solid rgba(212,168,83,0.3)', color: 'var(--gold)' }}>demonstration records</span>
         )}
         <div className="flex-1" />
         <a
@@ -105,7 +105,7 @@ export default function NgoPage() {
           Portfolio map →
         </a>
         <LessonLink id="ngo:overview" label="Learn" />
-        <Link href="/samples" className="shrink-0 text-sm font-semibold">Try a sample</Link>
+        <Link href="/tour" className="shrink-0 text-sm font-semibold">Take a tour</Link>
         <SettingsButton />
         <RoleSwitcher current="ngo" />
       </header>

@@ -31,6 +31,8 @@ export interface Customer {
 export type CustomerDetails = Pick<Customer, 'address' | 'phone' | 'email'>;
 
 export interface SavedInvoice {
+  /** The invoice is saved locally; its shared sales rows still need confirmation. */
+  salesSyncPending?: boolean;
   enterprise?: import('./area-returns').GrowingEnterprise | null;
   id: string;
   no: number;
@@ -94,7 +96,7 @@ function write<T>(baseKey: string, v: T[]): boolean {
       activeAccountLocalStorageKey(baseKey),
       JSON.stringify(v),
     );
-    return true;
+    return localStorage.getItem(activeAccountLocalStorageKey(baseKey)) === JSON.stringify(v);
   } catch {
     return false;
   }
@@ -233,6 +235,7 @@ function cleanInvoice(row: unknown): SavedInvoice | null {
     ? invoice.dueDateISO
     : undefined;
   return {
+    ...(invoice.salesSyncPending === true ? { salesSyncPending: true } : {}),
     enterprise: ['vegetables', 'staples', 'other'].includes(String(invoice.enterprise)) ? invoice.enterprise : undefined,
     id: invoice.id.trim(),
     no: invoice.no!,

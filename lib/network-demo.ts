@@ -1,3 +1,4 @@
+import { SAMPLE_ORCHARD, sampleOrchardRecords } from './sample-orchard';
 import { samplePortrait } from './sample-media';
 /*
  * ═══ DEMO DATA — NOT REAL FARMERS, NOT REAL FINANCES ═════════════════════════
@@ -53,7 +54,7 @@ import {
 } from './network';
 
 export const DEMO_NETWORK_NOTICE =
-  'Sample portfolio — invented farmers and finances on real KwaZulu-Natal locations. No live farmer data is shown.';
+  'Portfolio — invented farmers and finances on real KwaZulu-Natal locations. No live farmer data is shown.';
 
 /** Real course length (lib/course-modules.ts COURSE_MODULES). */
 const COURSE_MODULE_IDS = [
@@ -138,14 +139,14 @@ function round(n: number, dp = 0): number {
 
 export const DEMO_FUNDER: NetworkOrg = {
   id: 'demo-funder-thembalethu',
-  name: 'Thembalethu Trust (sample funder)',
+  name: "Thembalethu Trust",
   kind: 'funder',
   region: 'KwaZulu-Natal',
 };
 
 export const DEMO_IMPLEMENTER: NetworkOrg = {
   id: 'demo-org-imbewu-kzn',
-  name: 'Imbewu KZN (sample implementing partner)',
+  name: "Imbewu KZN",
   kind: 'ngo',
   region: 'KwaZulu-Natal',
 };
@@ -734,6 +735,20 @@ function buildRecord(seed: DemoSiteSeed, now: Date): DemoFarmerRecord {
       keptGap: keptKg !== null && keptKg > harvestedKg * 0.5,
       soldExceedsHarvested,
     });
+  });
+
+  // Existing-tree bookkeeping examples, independent of the annual bed forecast.
+  const orchardStamp = new Date(Math.min(now.getTime(), Math.max(joinedMs,
+    now.getTime() - (30 + silence) * 86400000))).toISOString();
+  const orchardOffset = [...seed.id].reduce((sum, char) => sum + char.charCodeAt(0), 0) % SAMPLE_ORCHARD.length;
+  const orchardSelection = [SAMPLE_ORCHARD[orchardOffset], SAMPLE_ORCHARD[(orchardOffset + 1) % SAMPLE_ORCHARD.length]];
+  const orchard = sampleOrchardRecords(seed.id, orchardStamp, 'portfolio', orchardSelection);
+  production.push(...orchard.production.map(row => ({ ...row, garden_id: seed.id })));
+  sales.push(...orchard.sales.map(row => ({ ...row, garden_id: seed.id })));
+  for (const row of orchardSelection) cropRows.push({
+    cropKey: row.key, cropName: row.crop, icon: '🌳', intendedKg: null,
+    harvestedKg: row.pickedKg, soldKg: row.soldKg, keptKg: row.pickedKg - row.soldKg,
+    yieldGap: false, keptGap: false, soldExceedsHarvested: false,
   });
 
   const incomeZar = sales.reduce((t, s) => t + s.amount, 0);
