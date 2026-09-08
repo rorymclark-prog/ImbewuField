@@ -117,6 +117,7 @@ export interface InvoiceDocumentInput {
   items: readonly InvoiceItem[];
   /** The buyer's own order number / reference, so they can match it in their books. */
   reference?: string | null;
+  paperReference?: string | null;
   notes?: string | null;
   banking?: InvoiceBanking | null;
   status: InvoiceStatus;
@@ -148,6 +149,7 @@ export interface InvoiceDocument {
   buyerName: string;
   buyerLines: string[];
   referenceLabel: string | null;
+  paperReferenceLabel: string | null;
   rows: InvoiceDocumentRow[];
   totalLabel: string;
   /** "How to pay" block. Empty when the farmer has not entered banking details. */
@@ -219,6 +221,7 @@ export function buildInvoiceDocument(input: InvoiceDocumentInput): InvoiceDocume
       input.buyer.taxNumber ? `VAT/Tax no. ${input.buyer.taxNumber.trim()}` : null,
     ),
     referenceLabel: input.reference?.trim() ? input.reference.trim() : null,
+    paperReferenceLabel: input.paperReference?.trim() ? input.paperReference.trim() : null,
     rows,
     totalLabel: formatInvoiceZar(total),
     bankingLines,

@@ -57,6 +57,8 @@ export const orderBy = (field, dir) => ({ __t: 'orderBy', field, dir });
 export const query = (base, ...clauses) => ({ __t: 'query', collectionPath: base.path, clauses });
 export const serverTimestamp = () => 'SERVER_TIMESTAMP';
 export const writeBatch = () => ({ delete(){}, set(){}, commit: async () => {} });
+// Invoice linking imports transactions; these read-only cohort probes must never invoke one.
+export const runTransaction = async () => { throw new Error('Unexpected transaction in a cohort read'); };
 export const addDoc = async () => ({ id: 'fake-id' });
 export const setDoc = async () => {};
 export const updateDoc = async () => {};

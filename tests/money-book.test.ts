@@ -177,3 +177,259 @@ test('the tab label keys exist in English and were not coined in any other langu
     assert.ok(read(`../lib/locales/${locale}.ts`).includes('homeQuickMyRecords:'), `${locale} lost the door name`);
   }
 });
+
+
+// Receipts are durable device documents, not the short-lived FileReader URL that
+// the AI scanner used to discard after extracting three fields.
+const receipts = await import('../lib/expense-receipts.ts');
+const { bindMountedAccountLocalStorageUid } = await import('../lib/account-local-storage.ts');
+
+class ReceiptTestDb {
+  rows = new Map<string, unknown>();
+  failWrites = false;
+  openCalls = 0;
+  private transactionTail = Promise.resolve();
+  pauseNext: Promise<void> | null = null;
+  open() {
+    this.openCalls += 1;
+    const opening: { result: unknown; onsuccess?: () => void; onerror?: () => void; onupgradeneeded?: () => void } = {
+      result: { close() {}, transaction: (_name: string, mode: string) => this.transaction(mode) },
+    };
+    queueMicrotask(() => opening.onsuccess?.());
+    return opening;
+  }
+  transaction(mode: string) {
+    const previousTransaction = this.transactionTail;
+    let finish!: () => void;
+    this.transactionTail = new Promise<void>(resolve => { finish = resolve; });
+    let staged: Map<string, unknown>;
+    let pending = 0;
+    let failed = false;
+    const tx: { objectStore: () => unknown; oncomplete?: () => void; onabort?: () => void; onerror?: () => void } = { objectStore: () => store };
+    const perform = (operation: 'get' | 'put' | 'delete', key: string, value?: unknown) => {
+      const request: { result?: unknown; onsuccess?: () => void; onerror?: () => void } = {};
+      pending += 1;
+      const pause = this.pauseNext;
+      this.pauseNext = null;
+      queueMicrotask(async () => {
+        await previousTransaction;
+        staged ??= new Map(this.rows);
+        if (pause) await pause;
+        if (operation !== 'get' && this.failWrites) {
+          failed = true;
+          request.onerror?.(); tx.onabort?.(); finish();
+        } else {
+          if (operation === 'put') staged.set(key, structuredClone(value));
+          if (operation === 'delete') staged.delete(key);
+          if (operation === 'get') request.result = staged.get(key);
+          request.onsuccess?.();
+        }
+        pending -= 1;
+        if (!pending && !failed) {
+          if (mode === 'readwrite') this.rows = staged;
+          tx.oncomplete?.(); finish();
+        }
+      });
+      return request;
+    };
+    const store = {
+      get: (key: string) => perform('get', key),
+      put: (value: unknown, key: string) => perform('put', key, value),
+      delete: (key: string) => perform('delete', key),
+    };
+    return tx;
+  }
+}
+
+function receiptEnvironment(t: { after(fn: () => void): void }) {
+  const originalWindow = Object.getOwnPropertyDescriptor(globalThis, 'window');
+  const originalDb = Object.getOwnPropertyDescriptor(globalThis, 'indexedDB');
+  const session = new Map<string, string>();
+  const events = new EventTarget();
+  const windowStub = Object.assign(events, { sessionStorage: { getItem: (key: string) => session.get(key) ?? null } });
+  const db = new ReceiptTestDb();
+  Object.defineProperty(globalThis, 'window', { value: windowStub, configurable: true });
+  Object.defineProperty(globalThis, 'indexedDB', { value: db, configurable: true });
+  bindMountedAccountLocalStorageUid('farmer-a');
+  t.after(() => {
+    if (originalWindow) Object.defineProperty(globalThis, 'window', originalWindow); else Reflect.deleteProperty(globalThis, 'window');
+    if (originalDb) Object.defineProperty(globalThis, 'indexedDB', originalDb); else Reflect.deleteProperty(globalThis, 'indexedDB');
+    bindMountedAccountLocalStorageUid(null);
+  });
+  return { db, sample(active: boolean) { if (active) session.set('imbewu_sample_mode', '1'); else session.delete('imbewu_sample_mode'); events.dispatchEvent(new Event('imbewu-sample-mode-changed')); } };
+}
+
+const receiptPhoto = (name = 'till-slip.png') => new File([
+  Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jI5sAAAAASUVORK5CYII=', 'base64'),
+], name, { type: 'image/png' });
+const saveReceipt = (expenseId: string, photo = receiptPhoto(), saveExpense = async () => {}) => receipts.saveExpenseWithReceipt({
+  scope: receipts.expenseReceiptScope(), expenseId, photo, saveExpense, isQueuedWrite: () => false,
+});
+
+test('a cost keeps its original receipt bytes and filename under the owning account, without network or resizing', async t => {
+  const { db } = receiptEnvironment(t);
+  const file = receiptPhoto('shop-original.png');
+  let savedId = '';
+  await saveReceipt('cost-123', file, async () => { savedId = 'cost-123'; });
+  assert.equal(savedId, 'cost-123');
+  const receipt = await receipts.loadExpenseReceipt(receipts.expenseReceiptScope(), savedId);
+  assert.ok(receipt);
+  assert.equal(receipt.name, file.name);
+  assert.deepEqual(new Uint8Array(await receipt.original.arrayBuffer()), new Uint8Array(await file.arrayBuffer()));
+  assert.equal(db.rows.size, 1);
+
+  bindMountedAccountLocalStorageUid('farmer-b');
+  assert.equal(await receipts.loadExpenseReceipt(receipts.expenseReceiptScope(), savedId), null, 'B must not see A’s photograph, even for the same expense ID');
+  await saveReceipt(savedId, receiptPhoto('b-original.png'));
+  assert.equal(db.rows.size, 2);
+  bindMountedAccountLocalStorageUid(null);
+  assert.equal(receipts.expenseReceiptScope(), null, 'signed-out users cannot open an owner-unknown receipt');
+  bindMountedAccountLocalStorageUid('farmer-a');
+  assert.equal((await receipts.loadExpenseReceipt(receipts.expenseReceiptScope(), savedId))?.name, file.name);
+});
+
+test('sample receipt photos never enter IndexedDB and disappear on sample re-entry while real originals survive', async t => {
+  const env = receiptEnvironment(t);
+  await saveReceipt('same-id', receiptPhoto('real-original.png'));
+  const realRows = [...env.db.rows.keys()];
+  env.sample(true);
+  const opens = env.db.openCalls;
+  await saveReceipt('same-id', receiptPhoto('practice-photo.png'));
+  assert.equal((await receipts.loadExpenseReceipt(receipts.expenseReceiptScope(), 'same-id'))?.name, 'practice-photo.png');
+  assert.equal(env.db.openCalls, opens, 'sample photos must stay in memory');
+  env.sample(false); env.sample(true);
+  assert.equal(await receipts.loadExpenseReceipt(receipts.expenseReceiptScope(), 'same-id'), null);
+  assert.deepEqual([...env.db.rows.keys()], realRows);
+  env.sample(false);
+  assert.equal((await receipts.loadExpenseReceipt(receipts.expenseReceiptScope(), 'same-id'))?.name, 'real-original.png');
+});
+
+test('storage failure blocks the expense save, and a rejected expense edit restores its previous receipt', async t => {
+  const { db } = receiptEnvironment(t);
+  let saves = 0;
+  db.failWrites = true;
+  await assert.rejects(saveReceipt('cost-1', receiptPhoto(), async () => { saves += 1; }), /could not be saved on this device/);
+  assert.equal(saves, 0);
+  assert.equal(db.rows.size, 0);
+  db.failWrites = false;
+  await saveReceipt('cost-1', receiptPhoto('original.png'));
+  await assert.rejects(saveReceipt('cost-1', receiptPhoto('replacement.png'), async () => { throw Error('permission-denied'); }), /permission-denied/);
+  assert.equal((await receipts.loadExpenseReceipt(receipts.expenseReceiptScope(), 'cost-1'))?.name, 'original.png');
+  await assert.rejects(saveReceipt('new-cost', receiptPhoto(), async () => { throw Error('rejected'); }), /rejected/);
+  assert.equal(await receipts.loadExpenseReceipt(receipts.expenseReceiptScope(), 'new-cost'), null, 'failed new costs must not leave attached records');
+});
+
+test('a queued offline expense retains its receipt for later viewing', async t => {
+  receiptEnvironment(t);
+  const queued = Error('waiting for acknowledgement');
+  await assert.rejects(receipts.saveExpenseWithReceipt({
+    scope: receipts.expenseReceiptScope(), expenseId: 'offline-cost', photo: receiptPhoto(),
+    saveExpense: async () => { throw queued; }, isQueuedWrite: error => error === queued,
+  }), error => error === queued);
+  assert.ok(await receipts.loadExpenseReceipt(receipts.expenseReceiptScope(), 'offline-cost'));
+});
+
+test('an account change during photo storage cancels the expense mutation and does not expose or misassign the original', async t => {
+  const { db } = receiptEnvironment(t);
+  let release!: () => void;
+  db.pauseNext = new Promise<void>(resolve => { release = resolve; });
+  let saved = false;
+  const pending = saveReceipt('racing-cost', receiptPhoto(), async () => { saved = true; });
+  // Let the image header and opening request finish so the storage operation is waiting.
+  await new Promise<void>(resolve => setImmediate(resolve));
+  bindMountedAccountLocalStorageUid('farmer-b');
+  release();
+  await assert.rejects(pending, /account or workspace changed/);
+  assert.equal(saved, false);
+  assert.equal(db.rows.size, 0);
+  assert.equal(await receipts.loadExpenseReceipt(receipts.expenseReceiptScope(), 'racing-cost'), null);
+});
+
+test('a photo load started by A cannot display after the mounted account changes to B', async t => {
+  const { db } = receiptEnvironment(t);
+  await saveReceipt('private-cost');
+  let release!: () => void;
+  db.pauseNext = new Promise<void>(resolve => { release = resolve; });
+  const pending = receipts.loadExpenseReceipt(receipts.expenseReceiptScope(), 'private-cost');
+  await new Promise<void>(resolve => setImmediate(resolve));
+  bindMountedAccountLocalStorageUid('farmer-b');
+  release();
+  assert.equal(await pending, null);
+});
+
+test('receipt validation rejects oversized, disguised or unsupported files without saving an expense', async t => {
+  const { db } = receiptEnvironment(t);
+  await assert.rejects(saveReceipt('bad', new File(['<svg></svg>'], 'receipt.png', { type: 'image/png' })), /not a readable/);
+  await assert.rejects(saveReceipt('large', new File([new Uint8Array(receipts.EXPENSE_RECEIPT_MAX_BYTES + 1)], 'large.png', { type: 'image/png' })), /up to 10 MB/);
+  await assert.rejects(saveReceipt('pdf', new File(['%PDF-1.7'], 'receipt.pdf', { type: 'application/pdf' })), /JPG, PNG or WebP/);
+  assert.equal(db.rows.size, 0);
+});
+
+test('choosing or cancelling a photo cannot persist it or invoke paid AI; explicit reading preserves the original draft', () => {
+  const pickStart = recordsPage.indexOf('async function handlePickReceipt');
+  const scanStart = recordsPage.indexOf('async function handleScan()', pickStart);
+  const submitStart = recordsPage.indexOf('async function handleSubmit', scanStart);
+  assert.ok(pickStart > 0 && scanStart > pickStart && submitStart > scanStart);
+  const pick = recordsPage.slice(pickStart, scanStart);
+  const scan = recordsPage.slice(scanStart, submitStart);
+  assert.match(pick, /setReceiptPhoto\(file\)/);
+  assert.doesNotMatch(pick, /fetch\(|saveExpenseWithReceipt\(|addExpense\(/);
+  assert.doesNotMatch(scan, /setReceiptPhoto\(null\)/, 'AI must not discard the original after extracting the amount');
+  assert.ok(scan.indexOf('if (isSampleMode())') < scan.indexOf('fetch('), 'sample photos never go to paid AI');
+  assert.match(scan, /paidApiHeaders\(requestUser\)/, 'a pending file read must not take a different account’s token');
+  assert.match(scan, /currentUser\?\.uid !== requestUser.uid/);
+  assert.match(recordsPage, /disabled=\{form.loading \|\| readingPhoto \|\| scanning\}/, 'a save cannot race an unfinished photo selection');
+  const close = recordsPage.slice(recordsPage.indexOf('function closeForm()'), recordsPage.indexOf('if (!open && !alwaysOpen)'));
+  assert.doesNotMatch(close, /addExpense|saveExpenseWithReceipt/);
+  const viewer = read('../components/records/ReceiptPreview.tsx');
+  assert.match(viewer, /loadExpenseReceipt\(scope, expense.id\)/);
+  assert.match(viewer, /isSampleMode\(\) && getSandboxExpenses/);
+  assert.match(viewer, /No receipt photo is saved/);
+  assert.match(viewer, /Download original/);
+});
+
+
+test('two overlapping failed receipt edits restore the committed original, never the other failed image', async t => {
+  receiptEnvironment(t);
+  await saveReceipt('shared-cost', receiptPhoto('original.jpg'));
+  let rejectA!: (cause: Error) => void;
+  let rejectB!: (cause: Error) => void;
+  let startedA!: () => void;
+  let startedB!: () => void;
+  const aStarted = new Promise<void>(resolve => { startedA = resolve; });
+  const bStarted = new Promise<void>(resolve => { startedB = resolve; });
+  const a = saveReceipt('shared-cost', receiptPhoto('failed-A.jpg'), () => { startedA(); return new Promise<void>((_resolve, reject) => { rejectA = reject; }); });
+  const aFailed = assert.rejects(a, /A rejected/);
+  await aStarted;
+  const b = saveReceipt('shared-cost', receiptPhoto('failed-B.jpg'), () => { startedB(); return new Promise<void>((_resolve, reject) => { rejectB = reject; }); });
+  const bFailed = assert.rejects(b, /B rejected/);
+  await bStarted;
+  rejectA(Error('A rejected'));
+  await aFailed;
+  rejectB(Error('B rejected'));
+  await bFailed;
+  const restored = await receipts.loadExpenseReceipt(receipts.expenseReceiptScope(), 'shared-cost');
+  assert.equal(restored?.name, 'original.jpg');
+});
+
+test('a slower failed receipt edit cannot undo a newer successfully saved photo', async t => {
+  receiptEnvironment(t);
+  await saveReceipt('shared-cost', receiptPhoto('original.png'));
+  let rejectA!: (cause: Error) => void;
+  let startedA!: () => void;
+  const aStarted = new Promise<void>(resolve => { startedA = resolve; });
+  const a = saveReceipt('shared-cost', receiptPhoto('failed-A.png'), () => { startedA(); return new Promise<void>((_resolve, reject) => { rejectA = reject; }); });
+  const aFailed = assert.rejects(a, /A rejected/);
+  await aStarted;
+  await saveReceipt('shared-cost', receiptPhoto('saved-B.png'));
+  rejectA(Error('A rejected')); await aFailed;
+  assert.equal((await receipts.loadExpenseReceipt(receipts.expenseReceiptScope(), 'shared-cost'))?.name, 'saved-B.png');
+});
+
+test('desktop backdrop and Escape dismissal preserve a cost draft while its save is pending', () => {
+  assert.match(recordsPage, /onSavingChange=\{setDesktopEntrySaving\}/);
+  const modal = recordsPage.slice(recordsPage.indexOf('{desktopEntryOpen && ('), recordsPage.indexOf('Phone / tablet: the simple money view'));
+  assert.match(modal, /onClick=\{\(\) => \{ if \(!desktopEntrySaving\)/);
+  assert.match(modal, /e.key !== 'Escape'/);
+  assert.equal((modal.match(/if \(!desktopEntrySaving\)/g) ?? []).length, 2, 'both backdrop and Escape must respect the pending write');
+});

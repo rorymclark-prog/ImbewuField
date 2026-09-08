@@ -1,3 +1,4 @@
+import { activeAccountLocalStorageKey } from './account-local-storage';
 import type { SalesLog } from './db/types';
 import { invoiceId, loadNextInvoiceNumber, saveInvoice, saveNextInvoiceNumber, type SavedInvoice } from './invoices';
 
@@ -12,6 +13,10 @@ export async function saveSaleInvoice(
   const dateISO = row.sold_at ?? new Date().toISOString();
   if (!crop || !Number.isFinite(kg) || kg <= 0 || !Number.isFinite(amount) || amount < 0
     || !Number.isFinite(Date.parse(dateISO))) throw Error('Check the crop, kilograms, amount and date.');
+  const scope = activeAccountLocalStorageKey('imbewu_invoices');
+  const sample = typeof window !== 'undefined' && window.sessionStorage.getItem('imbewu_sample_mode') === '1';
+  const sameAccount = () => activeAccountLocalStorageKey('imbewu_invoices') === scope
+    && (typeof window !== 'undefined' && window.sessionStorage.getItem('imbewu_sample_mode') === '1') === sample;
   const invoice: SavedInvoice = {
     id: invoiceId(), no: loadNextInvoiceNumber(), billTo: row.buyer?.trim() || 'Walk-in customer',
     items: [{ desc: crop, qty: kg, unit: 'kg', price: amount / kg }],
@@ -24,10 +29,13 @@ export async function saveSaleInvoice(
   saveNextInvoiceNumber(stored.no + 1);
   try {
     await sync(stored);
-    return saveInvoice({ ...stored, salesSyncPending: false }).find(item => item.id === stored.id) ?? stored;
   } catch {
+    if (!sameAccount()) throw Error('Your account changed. Reopen the sale in its original workspace.');
     // A retry must use THIS invoice's deterministic sale IDs, never create a second cash sale.
     // The saved invoice remains visible in the money book while its cloud rows need attention.
     return stored;
   }
+  // Completion belongs to the workspace that began the sale, including sample sessions.
+  if (!sameAccount()) throw Error('Your account changed. Reopen the sale in its original workspace.');
+  return saveInvoice({ ...stored, salesSyncPending: false }).find(item => item.id === stored.id) ?? stored;
 }

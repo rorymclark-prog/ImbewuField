@@ -85,6 +85,13 @@ test('blank and whitespace-only fields are dropped, not printed as empty lines',
   assert.deepEqual(doc.sellerLines, ['Plot 14', 'Nquthu']);
 });
 
+test('a paper invoice keeps its original reference separate from the buyer order number', () => {
+  const doc = buildInvoiceDocument({ ...BASE, reference: 'BUYER-5', paperReference: ' P-091 ' });
+  assert.equal(doc.referenceLabel, 'BUYER-5');
+  assert.equal(doc.paperReferenceLabel, 'P-091');
+  assert.equal(buildInvoiceDocument(BASE).paperReferenceLabel, null);
+});
+
 test('the letterhead carries every detail the farmer entered', () => {
   const doc = buildInvoiceDocument({
     ...BASE,

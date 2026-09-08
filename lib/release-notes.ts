@@ -33,6 +33,12 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '8 September 2026', sha: '650c7bf', changes: [
+    'Record past sales with the original paper invoice reference and payment date.',
+    'Link an existing sale to an invoice without counting kilograms or income twice.',
+    'Keep original expense slip photos on this device and reopen or download them.',
+    'Mentor visits now retain agreed actions, responsible people and follow-up dates.',
+  ] },
   { when: '8 September 2026', sha: '27810ae', changes: [
     'Tour and Tips stay at the top of the menu; Home invites you for your first 30 openings.',
     'Saving a sale creates its invoice, ready to view, share or print.',

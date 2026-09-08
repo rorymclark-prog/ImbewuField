@@ -19,6 +19,10 @@ export const LOGO_MAX_PX = 320;
  *  limit even alongside the rest of the profile. */
 export const LOGO_MAX_BYTES = 200_000;
 
+/** Training and field-visit evidence share the encoder's bounded image format. */
+export const validEvidenceImage = (value: unknown): value is string => typeof value === 'string'
+  && value.length <= LOGO_MAX_BYTES && /^data:image\/(png|jpeg);base64,[A-Za-z0-9+/]+={0,2}$/.test(value);
+
 /** Whether any pixel is not fully opaque — the only thing that justifies keeping PNG. */
 function hasTransparency(ctx: CanvasRenderingContext2D, w: number, h: number): boolean {
   const { data } = ctx.getImageData(0, 0, w, h);

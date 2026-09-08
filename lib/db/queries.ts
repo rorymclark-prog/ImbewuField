@@ -6,7 +6,7 @@
 
 import {
   collection, doc, getDoc, getDocs, setDoc, updateDoc, deleteDoc,
-  addDoc, query, where, orderBy, serverTimestamp, writeBatch, getCountFromServer,
+  addDoc, query, where, orderBy, serverTimestamp, writeBatch, getCountFromServer, runTransaction,
 } from 'firebase/firestore';
 import { ref as storageRef, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { getFirebase } from '@/lib/firebase/init';
@@ -33,6 +33,7 @@ import { courseSubmissionDocId } from '@/lib/course-gating';
 import type { SavedInvoice } from '@/lib/invoices';
 import { saveSaleInvoice } from '@/lib/sale-invoice';
 import { invoiceSaleDocumentId, invoiceSalesForPaidInvoice } from '@/lib/invoice-sales';
+import { recordedSaleInvoiceError } from '@/lib/invoice-entry';
 
 // Every function below is a real Firestore/Storage writer or a reader that could
 // surface the real signed-in user's data. Each checks isSampleMode() FIRST and
@@ -211,8 +212,12 @@ export async function addSale(row: Partial<SalesLog>): Promise<SavedInvoice> {
 
 /** Keep the crop-sale book in lockstep with one invoice's paid state. */
 export async function syncInvoiceSales(invoice: SavedInvoice): Promise<void> {
+  if (invoice.sourceSaleId) return linkInvoiceToRecordedSale(invoice);
   const drafts = invoiceSalesForPaidInvoice(invoice);
   if (isSampleMode()) {
+    if (getSandboxSales().some(sale => sale.invoice_id === invoice.id && sale.invoice_source_sale)) {
+      throw new Error('Open the invoice linked to this recorded sale before changing it.');
+    }
     getSandboxSales()
       .filter((sale) => sale.invoice_id === invoice.id)
       .forEach((sale) => deleteSandboxSale(sale.id));
@@ -230,6 +235,8 @@ export async function syncInvoiceSales(invoice: SavedInvoice): Promise<void> {
     where('invoice_id', '==', invoice.id),
   ));
   const me = await getMyProfile();
+  if (isSampleMode() || uid() !== u) throw new Error('Your account changed before the invoice was saved.');
+  if (existing.docs.some(row => row.data().invoice_source_sale)) throw new Error('Open the invoice linked to this recorded sale before changing it.');
   const batch = writeBatch(f.db);
   const desiredIds = new Set(drafts.map((draft) => (
     invoiceSaleDocumentId(u, invoice.id, draft.invoice_line ?? 0)
@@ -249,10 +256,60 @@ export async function syncInvoiceSales(invoice: SavedInvoice): Promise<void> {
   });
   await batch.commit();
 }
+
+/** Attach a document to the exact sale the farmer selected. The transaction retains the original
+ * sale ID, weight, amount and date; retries cannot create another kg row or replace a changed sale. */
+export async function linkInvoiceToRecordedSale(invoice: SavedInvoice): Promise<void> {
+  const sourceId = invoice.sourceSaleId;
+  if (!sourceId || sourceId.includes('/')) throw new Error('Choose a sale from your records.');
+  if (isSampleMode()) {
+    const sale = getSandboxSales().find(row => row.id === sourceId);
+    const error = sale ? recordedSaleInvoiceError(invoice, sale, 'demo') : 'The recorded sale is no longer available.';
+    if (error) throw new Error(error);
+    const duplicateId = invoiceSaleDocumentId('demo', invoice.id, 0);
+    if (duplicateId !== sourceId) deleteSandboxSale(duplicateId);
+    updateSandboxSale(sourceId, { invoice_id: invoice.id, invoice_line: 0, invoice_source_sale: true });
+    return;
+  }
+  const f = fb(); const u = uid();
+  if (!f || !u) throw new Error('Sign in to link a recorded sale.');
+  const source = doc(f.db, 'sales_logs', sourceId);
+  // An absent sales document has no owner, so the rules deliberately deny direct reads of it.
+  // Discover any earlier generated copy through the same scoped query as normal invoice sync.
+  const copies = await getDocs(query(collection(f.db, 'sales_logs'), where('profile_id', '==', u), where('invoice_id', '==', invoice.id)));
+  const duplicate = copies.docs.find(row => row.id !== sourceId && row.id === invoiceSaleDocumentId(u, invoice.id, 0))?.ref;
+  await runTransaction(f.db, async transaction => {
+    const saleSnapshot = await transaction.get(source);
+    const duplicateSnapshot = duplicate ? await transaction.get(duplicate) : null;
+    if (isSampleMode() || uid() !== u) throw new Error('Your account changed before the sale was linked.');
+    if (!saleSnapshot.exists()) throw new Error('The recorded sale is no longer available.');
+    const sale = { ...saleSnapshot.data(), id: saleSnapshot.id } as SalesLog;
+    const error = recordedSaleInvoiceError(invoice, sale, u);
+    if (error) throw new Error(error);
+    if (duplicate && duplicateSnapshot?.exists()) {
+      const data = duplicateSnapshot.data();
+      if (data.profile_id !== u || data.invoice_id !== invoice.id) throw new Error('The invoice sale could not be reconciled.');
+      transaction.delete(duplicate);
+    }
+    transaction.update(source, { invoice_id: invoice.id, invoice_line: 0, invoice_source_sale: true });
+  });
+}
 export async function updateSale(id: string, patch: Partial<SalesLog>): Promise<void> {
-  if (isSampleMode()) { updateSandboxSale(id, patch); return; }
-  const f = fb(); if (!f) return;
-  await updateDoc(doc(f.db, 'sales_logs', id), { ...patch });
+  if (isSampleMode()) {
+    if (getSandboxSales().find(sale => sale.id === id)?.invoice_id) throw new Error('Open the linked invoice to change this sale.');
+    updateSandboxSale(id, patch); return;
+  }
+  const f = fb(); const u = uid(); if (!f || !u) throw new Error('Sign in before editing this sale.');
+  if (typeof navigator !== 'undefined' && !navigator.onLine) throw new Error('Connect to the internet to edit this sale safely.');
+  await runTransaction(f.db, async transaction => {
+    const target = doc(f.db, 'sales_logs', id);
+    const snapshot = await transaction.get(target);
+    if (isSampleMode() || uid() !== u || !snapshot.exists() || snapshot.data().profile_id !== u) throw new Error('This sale is not available in your records.');
+    if (snapshot.data().invoice_id) throw new Error('Open the linked invoice to change this sale.');
+    // Linking is only authorised by linkInvoiceToRecordedSale, never by a stale editor patch.
+    const { invoice_id: _invoiceId, invoice_line: _line, invoice_source_sale: _source, profile_id: _owner, id: _id, ...changes } = patch;
+    transaction.update(target, changes);
+  });
 }
 export async function myProduction(): Promise<ProductionLog[]> {
   if (isSampleMode()) return getSandboxProduction();
@@ -352,18 +409,25 @@ export async function mySales(): Promise<SalesLog[]> {
 }
 
 // ---- expenses (costs) ----
-export async function addExpense(row: Partial<ExpenseLog>): Promise<void> {
+export async function addExpense(row: Partial<ExpenseLog>, expectedProfileId?: string | null): Promise<void> {
   if (isSampleMode()) { addSandboxExpense(row); return; }
-  const f = fb(); const u = uid(); if (!f || !u) return;
-  await withWriteTimeout((async () => {
-    const me = await getMyProfile();
-    await addDoc(collection(f.db, 'expense_logs'), { ...row, profile_id: u, org_id: me?.org_id ?? null, created_at: serverTimestamp() });
-  })());
+  const f = fb(); const u = uid(); if (!f || !u) throw new Error('Sign in before saving this cost.');
+  if (expectedProfileId !== undefined && expectedProfileId !== u) throw new Error('Your account changed before this cost was saved.');
+  const me = await getMyProfile();
+  if (isSampleMode() || uid() !== u) throw new Error('Your account changed before this cost was saved.');
+  const expense = { ...row, profile_id: u, org_id: me?.org_id ?? null, created_at: serverTimestamp() };
+  // A photographed receipt already belongs to this ID on the device. Reusing it
+  // also makes retries safe when the first acknowledgement was lost offline.
+  // Start the timeout only once the write has actually entered Firestore's queue.
+  await withWriteTimeout(row.id
+    ? setDoc(doc(f.db, 'expense_logs', row.id), expense)
+    : addDoc(collection(f.db, 'expense_logs'), expense).then(() => {}));
 }
-export async function updateExpense(id: string, patch: Partial<ExpenseLog>): Promise<void> {
+export async function updateExpense(id: string, patch: Partial<ExpenseLog>, expectedProfileId?: string | null): Promise<void> {
   if (isSampleMode()) { updateSandboxExpense(id, patch); return; }
-  const f = fb(); if (!f) return;
-  await updateDoc(doc(f.db, 'expense_logs', id), { ...patch });
+  const f = fb(); const u = uid(); if (!f || !u) throw new Error('Sign in before saving this cost.');
+  if (expectedProfileId !== undefined && expectedProfileId !== u) throw new Error('Your account changed before this cost was saved.');
+  await withWriteTimeout(updateDoc(doc(f.db, 'expense_logs', id), { ...patch }));
 }
 export async function myExpenses(): Promise<ExpenseLog[]> {
   if (isSampleMode()) return getSandboxExpenses();
@@ -379,9 +443,19 @@ export async function deleteProduction(id: string): Promise<void> {
   await deleteDoc(doc(f.db, 'production_logs', id));
 }
 export async function deleteSale(id: string): Promise<void> {
-  if (isSampleMode()) { deleteSandboxSale(id); return; }
-  const f = fb(); if (!f) return;
-  await deleteDoc(doc(f.db, 'sales_logs', id));
+  if (isSampleMode()) {
+    if (getSandboxSales().find(sale => sale.id === id)?.invoice_id) throw new Error('Open the linked invoice to change this sale.');
+    deleteSandboxSale(id); return;
+  }
+  const f = fb(); const u = uid(); if (!f || !u) throw new Error('Sign in before deleting this sale.');
+  if (typeof navigator !== 'undefined' && !navigator.onLine) throw new Error('Connect to the internet to delete this sale safely.');
+  await runTransaction(f.db, async transaction => {
+    const target = doc(f.db, 'sales_logs', id);
+    const snapshot = await transaction.get(target);
+    if (isSampleMode() || uid() !== u || !snapshot.exists() || snapshot.data().profile_id !== u) throw new Error('This sale is not available in your records.');
+    if (snapshot.data().invoice_id) throw new Error('Open the linked invoice to change this sale.');
+    transaction.delete(target);
+  });
 }
 export async function deleteExpense(id: string): Promise<void> {
   if (isSampleMode()) { deleteSandboxExpense(id); return; }

@@ -132,6 +132,12 @@ export async function buildInvoicePdf(doc: InvoiceDocument, fileName: string): P
   if (doc.dueLabel) meta.push(`Due ${doc.dueLabel}`);
   if (doc.referenceLabel) meta.push(`Your ref ${doc.referenceLabel}`);
   pdf.text(meta.join('   ·   '), PAGE.width - M, y, { align: 'right' });
+  if (doc.paperReferenceLabel) {
+    y += 15;
+    const paperLines = pdf.splitTextToSize(`Original paper invoice: ${doc.paperReferenceLabel}`, CONTENT_W);
+    pdf.text(paperLines, M, y);
+    y += Math.max(0, paperLines.length - 1) * 12;
+  }
   y += 9;
   pdf.line(M, y, PAGE.width - M, y);
 

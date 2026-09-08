@@ -3,7 +3,7 @@ import { getApps, getApp, initializeApp } from 'firebase-admin/app';
 import { getFirestore } from 'firebase-admin/firestore';
 import { guardPaidApiRequest } from '@/lib/api-auth';
 import { melCan, type MelPermission } from '@/lib/mel';
-import { projectFieldWorkspace, validFieldId, validFieldTeam, validVisitPhotos, type FieldTeam, type FieldVisit, type FieldMember } from '@/lib/field-teams';
+import { canReadFieldVisit, fieldVisitDocumentId, projectFieldWorkspace, validFieldId, validFieldTeam, validFieldVisit, type FieldTeam, type FieldVisit, type FieldMember } from '@/lib/field-teams';
 import type { UserRole } from '@/lib/db/types';
 
 export const runtime = 'nodejs';
@@ -22,6 +22,16 @@ async function handle(req: NextRequest, write: boolean) {
     if (!validFieldId(orgId) || !['ngo', 'admin', 'mentor'].includes(role)) return json({ error: 'Your organisation must link your account to its field team.' }, 403);
     const manage = ['ngo', 'admin'].includes(role) && melCan(role, permission.data() as MelPermission ?? null, 'people');
     const teamCollection = db.collection('field_teams').doc(orgId).collection('mentors');
+    if (!write && (req.nextUrl.searchParams.get('mode')==='photos' || req.nextUrl.searchParams.has('visit'))) {
+      const id=req.nextUrl.searchParams.get('id') ?? req.nextUrl.searchParams.get('visit');
+      if (!validFieldId(id)) fail('Choose a visit record.');
+      const visit=(await db.collection('field_team_visits').doc(id!).get()).data() as (FieldVisit & {orgId:string}) | undefined;
+      if (!visit || visit.orgId!==orgId) return json({error:'Visit unavailable.'},403);
+      const [team,farmer]=await Promise.all([teamCollection.doc(auth.uid).get(),db.collection('profiles').doc(visit.farmerId).get()]);
+      const assigned=new Set<string>(farmer.data()?.org_id===orgId && ['farmer','student'].includes(farmer.data()?.role) ? team.data()?.farmerIds ?? [] : []);
+      if (!canReadFieldVisit(visit,auth.uid,manage,assigned)) fail('Visit unavailable.',403);
+      return json({photos:(await db.collection('field_team_visit_photos').doc(id!).get()).data()?.photos ?? []});
+    }
     if (!write) {
       const teamDocs = manage ? (await teamCollection.limit(251).get()).docs : [await teamCollection.doc(auth.uid).get()].filter(d => d.exists);
       if (teamDocs.length > 250) fail('Choose a smaller field programme.', 422);
@@ -32,24 +42,16 @@ async function handle(req: NextRequest, write: boolean) {
       const people = peopleDocs.filter(d => d.exists && d.data()?.org_id === orgId).map(d => ({ id: d.id, name: d.data()?.full_name ?? 'Unnamed member', role: d.data()?.role })) as FieldMember[];
       const allowed = new Set(people.filter(x => x.role === 'farmer' || x.role === 'student').map(x => x.id));
       const currentTeams = teams.map(t => ({ ...t, farmerIds: t.farmerIds.filter(id => allowed.has(id)) }));
-      const visitId = req.nextUrl.searchParams.get('visit');
-      if (visitId) {
-        if (!validFieldId(visitId)) fail('Choose a valid visit.');
-        const record = await db.collection('field_team_visits').doc(visitId).get();
-        const v = record.data();
-        if (!v || v.orgId !== orgId || (!manage && (v.mentorId !== auth.uid || !currentTeams.some(t => t.farmerIds.includes(v.farmerId))))) fail('This visit is not available to your team.',403);
-        const photos = await db.collection('field_team_visit_photos').doc(visitId).get();
-        return json({ photos: photos.data()?.photos ?? [] });
-      }
       const visitsQuery = db.collection('field_team_visits').where('orgId', '==', orgId);
       const visits = await (manage ? visitsQuery : visitsQuery.where('mentorId', '==', auth.uid)).limit(501).get();
       if (visits.size > 500) fail('This report needs a shorter visit period. Contact your administrator.', 422);
-      return json(projectFieldWorkspace({ people, teams: currentTeams, visits: visits.docs.map(d => ({ ...d.data(), id: d.id })) as FieldVisit[], canManage: manage, selfId: auth.uid, sample: false }, auth.uid, manage));
+      return json(projectFieldWorkspace({ people, teams: currentTeams, visits: visits.docs.map(d => ({ ...(d.data() as FieldVisit), photos:[], id: d.id })), canManage: manage, selfId: auth.uid, sample: false }, auth.uid, manage));
     }
     const raw = await req.text();
-    if (raw.length > 500000) fail('This update is too large.', 413);
+    if (raw.length > 650000) fail('Use up to three smaller visit photos.', 413);
     const b = JSON.parse(raw), now = new Date().toISOString();
     if (b.action === 'team') {
+      if (raw.length > 20000) fail('This team update is too large.', 413);
       if (!manage) fail('Only an organisation access manager can assign field teams.', 403);
       if (!validFieldTeam(b.team)) fail('Choose a mentor, location and unique farmer assignments.');
       const team: FieldTeam = { mentorId: b.team.mentorId, location: b.team.location.trim(), farmerIds: b.team.farmerIds, guidance: b.team.guidance.trim(), updatedAt: now };
@@ -60,15 +62,22 @@ async function handle(req: NextRequest, write: boolean) {
         tx.create(db.collection('org_access_audit').doc(), { orgId, actor: auth.uid, action: 'field_team', mentorId: team.mentorId, farmerIds: team.farmerIds, at: now });
       });
     } else if (b.action === 'visit') {
-      if ((b.photos !== undefined && !validVisitPhotos(b.photos)) || (b.originalNotes !== undefined && (typeof b.originalNotes !== 'string' || b.originalNotes.length > 4000))) fail('Choose up to three small visit photos and valid original notes.');
-      if (role !== 'mentor' || !validFieldId(b.farmerId) || !validFieldId(b.id) || typeof b.notes !== 'string' || !b.notes.trim() || b.notes.length > 4000 || typeof b.date !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(b.date) || !Number.isFinite(Date.parse(b.date)) || new Date(b.date).toISOString().slice(0, 10) !== b.date || b.date > now.slice(0, 10)) fail('Choose an assigned farmer, visit date and notes.');
+      const visit={...b,mentorId:auth.uid} as FieldVisit;
+      if (role !== 'mentor' || !validFieldVisit(visit,now.slice(0,10))) fail('Check the assigned farmer, date, observations, follow-up and photo captions.');
+      const ref=db.collection('field_team_visits').doc(fieldVisitDocumentId(auth.uid,visit.id));
       await db.runTransaction(async tx => {
-        const [team, farmer] = await tx.getAll(teamCollection.doc(auth.uid!), db.collection('profiles').doc(b.farmerId));
-        if (!team.data()?.farmerIds?.includes(b.farmerId) || farmer.data()?.org_id !== orgId || !['farmer', 'student'].includes(farmer.data()?.role)) fail('This farmer is not in your assigned team.', 403);
-        const id = `${auth.uid}_${b.id}`;
-        tx.set(db.collection('field_team_visits').doc(id), { orgId, mentorId: auth.uid, farmerId: b.farmerId, date: b.date, notes: b.notes.trim(), originalNotes: b.originalNotes ?? '', photoCount: b.photos?.length ?? 0, updatedAt: now });
-        // Fetch photos only when a person opens that visit, so a visit list does not download every image.
-        tx.set(db.collection('field_team_visit_photos').doc(id), { orgId, mentorId: auth.uid, photos: b.photos ?? [] });
+        const [team, farmer, old] = await tx.getAll(teamCollection.doc(auth.uid!), db.collection('profiles').doc(visit.farmerId),ref);
+        if (!team.data()?.farmerIds?.includes(visit.farmerId) || farmer.data()?.org_id !== orgId || !['farmer', 'student'].includes(farmer.data()?.role)) fail('This farmer is not in your assigned team.', 403);
+        if (old.exists && (old.data()?.orgId!==orgId || old.data()?.mentorId!==auth.uid)) fail('You can edit your own visits within this organisation.',403);
+        if (old.exists && old.data()?.updatedAt!==b.expectedUpdatedAt) fail('This visit changed in another window. Reopen it before saving.',409);
+        const optionalFields=Object.fromEntries((['supportRequested','observations','agreedAction','responsiblePerson','followUpDate','location'] as const).map(key=>[key,(visit[key] ?? old.data()?.[key] ?? '').trim()]));
+        const next={orgId,mentorId:auth.uid,farmerId:visit.farmerId,date:visit.date,notes:visit.notes.trim(),originalNotes:visit.originalNotes ?? old.data()?.originalNotes ?? '',...optionalFields,
+          photoCount:visit.photos?.length ?? old.data()?.photoCount ?? 0,updatedAt:now};
+        if(!validFieldVisit({...next,id:visit.id},now.slice(0,10)))fail('Check the saved action and follow-up date for this visit.');
+        tx.set(ref,next);
+        // Like training evidence, image bytes live outside the list document and
+        // are returned only after the organisation and assignment checks above.
+        if (visit.photos!==undefined) tx.set(db.collection('field_team_visit_photos').doc(ref.id),{orgId,mentorId:auth.uid,photos:visit.photos.map(photo=>({image:photo.image,caption:photo.caption.trim()}))});
       });
     } else fail('Unknown field team action.');
     return json({ saved: true });
