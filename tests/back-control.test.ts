@@ -48,5 +48,11 @@ test('an unknown path is treated as a normal page, not silently stranded', () =>
 test('the exclusion list stays small enough to justify each entry', () => {
   // A guard against the list quietly growing until "every page" is no longer true. Any addition
   // should be a deliberate decision with a reason in the comment above NO_FLOATING_BACK.
-  assert.ok(NO_FLOATING_BACK.size <= 10, `exclusions grew to ${NO_FLOATING_BACK.size}`);
+  //
+  // 10 → 11 for /welcome, the public front door, whose reason is written beside it: like
+  // /partners it is reached from outside the app entirely, so history.length is 1 and the
+  // fallback's goBack() would push a stranger who has never signed in into /home. Raising this
+  // number is the deliberate decision the comment above asks for — do not bump it to make a red
+  // build green without writing the entry's reason into back-routes.ts first.
+  assert.ok(NO_FLOATING_BACK.size <= 11, `exclusions grew to ${NO_FLOATING_BACK.size}`);
 });

@@ -32,6 +32,11 @@ export const NO_FLOATING_BACK: ReadonlySet<string> = new Set([
   // viewport, and has its own Back/Next controls — a floating back button over a slide
   // would be a second, wrong navigation system.
   '/pitch',
+  // /welcome is the public front door, reached from outside the app entirely (a search result,
+  // a link in a funder's email, a QR code on a flyer). Same reason /partners is on this list:
+  // history.length is 1, so the fallback's goBack() would push a stranger who has never signed
+  // in into /home. The page carries its own "Sign in / Get started" as its only forward action.
+  '/welcome',
 ]);
 
 /** Whether the floating fallback may render for this path. */

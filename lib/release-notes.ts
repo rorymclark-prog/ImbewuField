@@ -258,6 +258,7 @@ export const RELEASE_NOTES: ReleaseNote[] = [
       'Text on the funder and NGO programme views is now easier to read on a phone',
       'Trying the app without an account now also opens the Study and Mentor pages',
       'Mentors now see the course work they assigned a trainee, not a blank list',
+      'A public home page now says what ImbewuField is, and how to get it on your phone',
     ],
   },
   {

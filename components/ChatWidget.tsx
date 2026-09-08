@@ -96,11 +96,22 @@ export default function ChatWidget() {
   // why no repositioning fixes those two (a permanently-parked map legend, and a farmer list that
   // fills the whole scrollable area) — and the /pitch projector deck (a chat FAB floating over a
   // presentation slide, and over the live app already embedded inside it, helps nobody).
+  //
+  // /welcome joins them: Lima is the signed-in farmer's assistant, and a floating chat button on
+  // the public front door offers a stranger a conversation the app cannot yet have.
+  //
+  // KEEP THE CONDITION BELOW COMMENT-FREE AND COMPACT, AND QUOTE NONE OF IT UP HERE.
+  // tests/chat-widget-fab-overlap.test.ts proves /funder and /ngo really do reach the early
+  // return by matching source text in a 400-character slice that starts at the first prefix
+  // check. Two ways to silently disable it, both hit while adding /welcome: a comment between
+  // the checks pushes the closing line past the 400, and a comment that repeats the opening
+  // check verbatim is found ahead of the real one. Reasons go here, worded so they match neither.
   if (
     pathname.startsWith('/gate') || pathname.startsWith('/login') ||
     pathname.startsWith('/home') || pathname.startsWith('/design') ||
     pathname.startsWith('/partners') || pathname.startsWith('/funder') ||
-    pathname.startsWith('/ngo') || pathname.startsWith('/pitch')
+    pathname.startsWith('/ngo') || pathname.startsWith('/pitch') ||
+    pathname.startsWith('/welcome')
   ) return null;
 
   // WHERE THE FAB PARKS WHEN NOBODY HAS MOVED IT.

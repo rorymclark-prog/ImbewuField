@@ -211,7 +211,9 @@ export default function PWAUpdateNotifier({ initialBuildSha = null }: PWAUpdateN
   // Only the TOAST stays off the /pitch projector deck — the service-worker registration in
   // the effects above must keep running there like everywhere else. A deploy landing mid-meeting
   // should not put an "Update ready" pill on a projected slide; the presenter refreshes after.
-  const onPitchDeck = pathname.startsWith('/pitch');
+  // /welcome joins it for the same reason at a different audience: an "Update ready" pill on the
+  // public front door is app furniture shown to someone who has never installed the app.
+  const onPitchDeck = pathname.startsWith('/pitch') || pathname.startsWith('/welcome');
 
   if (!updateAvailable || dismissed || onPitchDeck) return null;
   // The NEW build's notes when the server could supply them; ours only as a fallback (a
