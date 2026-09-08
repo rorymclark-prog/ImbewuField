@@ -48,11 +48,30 @@ test('exactly the modules that are really finished say so', () => {
 test('the in-progress label says what IS there, not what is missing', () => {
   // Every one of these modules has real, reviewed lesson content a farmer can use today. "Coming
   // soon" would be false and would hide finished teaching behind an apology.
-  const inProgress = readinessLabel('water-harvesting');
-  assert.ok(inProgress);
-  assert.match(inProgress!.text, /Lessons only/);
-  assert.match(inProgress!.detail, /ready/i);
-  assert.doesNotMatch(inProgress!.detail, /coming soon|not available|unavailable/i);
+  // ASSERTED AS A RULE OVER EVERY IN-PROGRESS MODULE, not on one named example. This used to read
+  // readinessLabel('water-harvesting') and expect "Lessons only" — a snapshot of one module's state
+  // on one day. When water-harvesting gained a generated deck its label correctly changed to
+  // "Lessons and slides" and the test failed on the improvement, which is the exact staleness the
+  // hard-coded string inside readinessLabel had before it was derived. The rule is that the wording
+  // tracks what the module actually has, so that is what is checked, on both branches.
+  let sawWithDeck = false;
+  for (const mod of COURSE_MODULES) {
+    const d = moduleReadinessDetail(mod.id);
+    if (d.readiness === 'complete') continue;
+    const label = readinessLabel(mod.id);
+    assert.ok(label, `${mod.id} is in progress but has no label`);
+    assert.equal(
+      label!.text, d.hasDeck ? 'Lessons and slides' : 'Lessons only',
+      `${mod.id} has ${d.hasDeck ? 'a deck' : 'no deck'} — its label says "${label!.text}"`,
+    );
+    assert.match(label!.detail, /ready/i, `${mod.id}: the label must say what IS there`);
+    assert.doesNotMatch(label!.detail, /coming soon|not available|unavailable/i, `${mod.id}: reads as an apology`);
+    if (d.hasDeck) sawWithDeck = true;
+  }
+  // The deckless branch is allowed to be empty — every module having a deck is the goal, not a
+  // regression — but a module with slides and no isiZulu narration is the state most of the course
+  // is in today, and it must really be exercised rather than assumed.
+  assert.ok(sawWithDeck, 'no in-progress module has a deck, so the "Lessons and slides" wording went untested');
 
   const complete = readinessLabel('seeds-sovereignty');
   assert.match(complete!.text, /Fully built/);
