@@ -42,14 +42,14 @@ export default function TourPage() {
       <div><span className={styles.eyebrow}>FARMERS · MENTORS · ORGANISATIONS · FUNDERS</span>
         <h1>See what ImbewuField can do.</h1>
         <p>Explore the app in about {minutes} minutes: plan a garden, learn a skill, follow a sale, support growers and see the programme evidence.</p>
-        <p className={styles.hint}>A self-guided introduction, with real app screens to try. Stay longer wherever you like. No sign-in needed to start.</p>
+        <p className={styles.hint}>Explore at your own pace. No sign-in needed.</p>
         <div className={styles.controls}>{tour?.active ? <button className={styles.primary} onClick={tour.open}>Continue tour · stop {tour.current+1}</button> : <button className={styles.primary} onClick={tour?.start} disabled={!tour?.ready}>{!tour?.ready ? 'Getting the tour ready…' : tried ? 'Try the tour again' : 'Start the 15-minute tour'}</button>}
         <Link href="/samples/gardens">Browse the gardens</Link></div>
       </div>
-      <figure><img src="/demo/harvest.webp" alt="Illustrated example of a garden harvest"/><figcaption>AI-generated illustration. Explore fictional records in the app.</figcaption></figure>
+      <figure><img src="/demo/harvest.webp" alt="Illustrated example of a garden harvest"/><figcaption>Garden harvest · AI-generated illustration</figcaption></figure>
     </section>
     {tour?.error && <p role="alert">{tour.error}</p>}
-    <p className={styles.notice}>This is a practice workspace. People and results are fictional; practice edits reset on reload. Your real project stays separate. Tour progress is kept in this tab. Signed-in accounts retain their existing role access.</p>
+    <p className={styles.notice}>Try the app with prepared records. Your own project stays unchanged.</p>
     {tried > 0 && !tour?.active && <section className={styles.complete}><h2>{tried === PRODUCT_TOUR.length ? 'You’ve explored the whole tour.' : 'Keep exploring at your own pace.'}</h2><p>{tried} of {PRODUCT_TOUR.length} stops marked as explored. These are your checklist choices, not a training certificate.</p><div className={styles.controls}><Link href="/samples">Explore another role</Link><Link href="/feedback">Request a feature or ask about customisation</Link></div></section>}
     <h2>Nine stops, one connected story.</h2>
     <p className={styles.hint}>Choose any stop below to open its screen and guide. Use the <strong>Tour</strong> button beside the menu to return to the tips or move to another stop.</p>

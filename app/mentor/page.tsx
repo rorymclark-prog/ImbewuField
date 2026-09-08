@@ -73,11 +73,11 @@ const SAMPLE_ASSIGNMENTS: Record<string, CourseAssignment[]> = {
 };
 
 const STATUS_TONE: Record<EnrollmentStatus, { fg: string; bg: string }> = {
-  invited:   { fg: '#8C7A62', bg: 'rgba(140,122,98,0.12)' },
+  invited:   { fg: '#755942', bg: 'rgba(140,122,98,0.12)' },
   active:    { fg: '#C07A1E', bg: 'rgba(192,122,30,0.12)' },
   paused:    { fg: '#235E86', bg: 'rgba(35,94,134,0.12)' },
   completed: { fg: '#1F4D2B', bg: 'rgba(31,77,43,0.12)' },
-  withdrawn: { fg: '#8C7A62', bg: 'rgba(140,122,98,0.12)' },
+  withdrawn: { fg: '#755942', bg: 'rgba(140,122,98,0.12)' },
 };
 
 function initials(name: string | null) {
@@ -92,7 +92,7 @@ function ProgressBar({ value, max }: { value: number; max: number }) {
       <div className="flex-1 rounded-full overflow-hidden" style={{ height: 5, background: 'rgba(32,25,15,0.10)' }}>
         <div style={{ width: `${pct}%`, height: '100%', background: col, borderRadius: 999, transition: 'width 0.4s' }} />
       </div>
-      <span className="text-xs font-mono flex-shrink-0" style={{ color: '#8C7A62' }}>{value}/{max}</span>
+      <span className="text-xs font-mono flex-shrink-0" style={{ color: '#755942' }}>{value}/{max}</span>
     </div>
   );
 }
@@ -161,7 +161,7 @@ function TraineeCard({
         style={{ background: 'transparent', border: 'none', cursor: 'pointer' }}>
         <div className="flex-shrink-0 flex items-center justify-center rounded-full font-display font-bold"
           style={{ width: 40, height: 40, fontSize: 15, background: 'linear-gradient(135deg,#1F4D2B,#2D6B3C)', color: '#EAF3E2' }}>
-          {isSampleMode() ? <img data-photo-preview src={samplePortrait(trainee.id)} alt="Fictional profile portrait" className="w-full h-full rounded-full object-cover" /> : initials(trainee.full_name)}
+          {isSampleMode() ? <img data-photo-preview src={samplePortrait(trainee.id)} alt="Profile portrait illustration" className="w-full h-full rounded-full object-cover" /> : initials(trainee.full_name)}
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
@@ -175,7 +175,7 @@ function TraineeCard({
               </span>
             ) : (
               <span className="text-xs font-sans px-2 py-0.5 rounded-full flex-shrink-0"
-                style={{ background: 'rgba(32,25,15,0.06)', color: '#8C7A62' }}>
+                style={{ background: 'rgba(32,25,15,0.06)', color: '#755942' }}>
                 Not enrolled
               </span>
             )}
@@ -187,7 +187,7 @@ function TraineeCard({
               directly and skipping that guard. */}
           <ProgressBar value={COURSE_MODULES.filter((m) => doneIds.has(m.id)).length} max={TOTAL_MODULES} />
         </div>
-        {open ? <ChevronUp size={15} style={{ color: '#8C7A62' }} /> : <ChevronDown size={15} style={{ color: '#8C7A62' }} />}
+        {open ? <ChevronUp size={15} style={{ color: '#755942' }} /> : <ChevronDown size={15} style={{ color: '#755942' }} />}
       </button>
 
       {open && (
@@ -208,7 +208,7 @@ function TraineeCard({
             </div>
           ) : (
             <div className="flex items-center gap-2 pt-3 flex-wrap">
-              <span className="text-xs font-sans" style={{ color: '#8C7A62' }}>
+              <span className="text-xs font-sans" style={{ color: '#755942' }}>
                 {enrollment.cohort ? `${enrollment.cohort} · ` : ''}enrolled {new Date(enrollment.enrolled_at).toLocaleDateString()}
               </span>
               <div className="flex-1" />
@@ -223,7 +223,7 @@ function TraineeCard({
             </div>
           )}
 
-          <div className="text-xs font-sans uppercase tracking-wider pt-3 pb-1" style={{ color: '#8C7A62' }}>
+          <div className="text-xs font-sans uppercase tracking-wider pt-3 pb-1" style={{ color: '#755942' }}>
             {enrollment ? 'Modules — tick is theirs, due date is yours' : 'Module sign-off'}
           </div>
 
@@ -239,7 +239,7 @@ function TraineeCard({
                     style={{ width: 20, height: 20, background: done ? '#1F4D2B' : 'rgba(32,25,15,0.06)', border: `1px solid ${done ? '#1F4D2B' : '#E2D8C4'}` }}>
                     {done && <CheckCircle size={12} style={{ color: '#EAF3E2' }} />}
                   </div>
-                  <span className="flex-1 text-xs font-display truncate" style={{ color: done ? '#8C7A62' : '#20190F', textDecoration: done ? 'line-through' : 'none' }}>
+                  <span className="flex-1 text-xs font-display truncate" style={{ color: done ? '#755942' : '#20190F', textDecoration: done ? 'line-through' : 'none' }}>
                     {mod.title}
                   </span>
                   <span className="text-xs font-mono px-1.5 py-0.5 rounded flex-shrink-0"
@@ -250,7 +250,7 @@ function TraineeCard({
                     <button onClick={() => onUnassign(trainee.id, mod.id)} disabled={busy}
                       aria-label={`Remove the ${mod.title} assignment`}
                       className="flex-shrink-0 flex items-center justify-center rounded-lg"
-                      style={{ width: 26, height: 26, background: 'transparent', border: '1px solid #E2D8C4', color: '#8C7A62', cursor: busy ? 'wait' : 'pointer' }}>
+                      style={{ width: 26, height: 26, background: 'transparent', border: '1px solid #E2D8C4', color: '#755942', cursor: busy ? 'wait' : 'pointer' }}>
                       <X size={12} />
                     </button>
                   ) : (
@@ -264,7 +264,7 @@ function TraineeCard({
 
                 {enrollment && assignment && (
                   <div className="flex items-center gap-2 pl-7 pt-1.5 flex-wrap">
-                    <label className="text-xs font-sans" style={{ color: '#8C7A62' }} htmlFor={`due-${trainee.id}-${mod.id}`}>
+                    <label className="text-xs font-sans" style={{ color: '#755942' }} htmlFor={`due-${trainee.id}-${mod.id}`}>
                       Due
                     </label>
                     <input
@@ -277,7 +277,7 @@ function TraineeCard({
                     />
                     {state && state !== 'done' && dueText && (
                       <span className="flex items-center gap-1 text-xs font-sans"
-                        style={{ color: state === 'overdue' ? '#B03A2E' : state === 'due-soon' ? '#C07A1E' : '#8C7A62' }}>
+                        style={{ color: state === 'overdue' ? '#B03A2E' : state === 'due-soon' ? '#C07A1E' : '#755942' }}>
                         {state === 'overdue' ? <AlertTriangle size={10} /> : <CalendarClock size={10} />}
                         {dueText}
                       </span>
@@ -507,7 +507,7 @@ export default function MentorPage() {
               <Users size={22} style={{ color: '#1F4D2B' }} />
             </div>
             <p className="text-sm font-display font-semibold mb-1" style={{ color: '#20190F' }}>This is the Mentor area</p>
-            <p className="text-xs font-sans leading-relaxed mb-5" style={{ color: '#8C7A62' }}>
+            <p className="text-xs font-sans leading-relaxed mb-5" style={{ color: '#755942' }}>
               It&apos;s set up for mentors, NGOs and funders — not your role. Head back to your own home to keep going.
             </p>
             <button
@@ -606,7 +606,7 @@ export default function MentorPage() {
           ].map(({ label, value, color }) => (
             <div key={label} className="rounded-2xl p-3 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
               <div className="font-display font-bold text-2xl leading-tight" style={{ color }}>{value}</div>
-              <div className="text-xs font-mono mt-0.5" style={{ color: '#8C7A62' }}>{label}</div>
+              <div className="text-xs font-mono mt-0.5" style={{ color: '#755942' }}>{label}</div>
             </div>
           ))}
         </div>
@@ -615,7 +615,7 @@ export default function MentorPage() {
         <div className="rounded-2xl px-4 py-3.5" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
           <div className="flex items-center gap-2 mb-2.5">
             <GraduationCap size={14} style={{ color: '#1F4D2B' }} />
-            <span className="text-xs font-mono uppercase tracking-wider" style={{ color: '#8C7A62' }}>
+            <span className="text-xs font-mono uppercase tracking-wider" style={{ color: '#755942' }}>
               Curriculum · {TOTAL_MODULES} modules
             </span>
           </div>
@@ -640,7 +640,7 @@ export default function MentorPage() {
 
         {/* Search */}
         <div className="relative">
-          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: '#8C7A62' }} />
+          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: '#755942' }} />
           <input value={search} onChange={(e) => setSearch(e.target.value)}
             placeholder="Search learners..."
             className="w-full font-sans rounded-xl pl-9 pr-3 py-2.5 text-sm outline-none"
@@ -654,7 +654,7 @@ export default function MentorPage() {
           </div>
         ) : filtered.length === 0 ? (
           <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-            <Users size={28} style={{ color: '#8C7A62', margin: '0 auto 8px' }} />
+            <Users size={28} style={{ color: '#755942', margin: '0 auto 8px' }} />
             <p className="text-sm font-display" style={{ color: '#5C5040' }}>
               {search ? 'No learners match that search.' : 'Learners will appear here once they enrol.'}
             </p>
@@ -680,9 +680,9 @@ export default function MentorPage() {
           </div>
         )}
 
-        {!isLive && (
-          <p className="text-center text-xs font-mono" style={{ color: '#8C7A62' }}>
-            demonstration records — connect Firebase to see live learners
+        {!isLive && !sample && (
+          <p className="text-center text-xs font-mono" style={{ color: '#755942' }}>
+            Tour records · Sign in to open your own learners
           </p>
         )}
         </>)}

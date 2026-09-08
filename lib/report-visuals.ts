@@ -48,7 +48,7 @@ export function sampleReportVisuals(g: SampleGarden): ReportVisuals {
   const total = g.production.vegetableM2 + g.production.stapleM2;
   const rows = [{ label: 'Vegetable beds', value: g.production.vegetableM2 }, { label: 'Staple plots', value: g.production.stapleM2 }];
   if (g.areaM2 !== undefined && g.areaM2 >= total) rows.push({ label: 'Other site space', value: g.areaM2 - total });
-  return { title: g.name, subtitle: `${g.kind} · ${g.town}`, basis: 'Fictional demonstration data. The photograph is an AI reference and the layout is schematic, not to scale.', metrics: [
+  return { title: g.name, subtitle: `${g.kind} · ${g.town}`, basis: 'The photograph is AI-generated. The layout is schematic, not to scale.', metrics: [
     { label: 'Growing space', value: `${n(total)} m²`, note: 'Vegetables + staple crops' },
     { label: 'Harvest recorded', value: `${n(g.produceKg)} kg`, note: 'Illustrative total; period unspecified' },
     { label: 'Adult participants', value: `${g.farmers}`, note: "Participant register" },

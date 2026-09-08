@@ -32,7 +32,7 @@ function hasTransparency(ctx: CanvasRenderingContext2D, w: number, h: number): b
  * Rejects rather than returns a too-large payload: silently storing something that
  * Firestore will refuse would look like a successful upload and then lose the logo.
  */
-export function resizeLogoForStorage(file: File, maxPx = LOGO_MAX_PX): Promise<string> {
+export function resizeLogoForStorage(file: File, maxPx = LOGO_MAX_PX, maxBytes = LOGO_MAX_BYTES): Promise<string> {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.onerror = () => reject(new Error('Could not read that file.'));
@@ -54,7 +54,7 @@ export function resizeLogoForStorage(file: File, maxPx = LOGO_MAX_PX): Promise<s
 
         // A photographed signboard can still exceed the ceiling as PNG. Falling back to
         // JPEG on white loses the transparency, but a logo that saves beats one that does not.
-        if (out.length > LOGO_MAX_BYTES && transparent) {
+        if (out.length > maxBytes && transparent) {
           const flat = document.createElement('canvas');
           flat.width = canvas.width; flat.height = canvas.height;
           const flatCtx = flat.getContext('2d');
@@ -70,13 +70,13 @@ export function resizeLogoForStorage(file: File, maxPx = LOGO_MAX_PX): Promise<s
         // The evidence report also uses this bounded encoder for 640px photos. A
         // detailed garden exceeded 200k at quality .85 and blocked the whole PDF.
         // Keep its dimensions first; reduce them only if compression is not enough.
-        if (out.length > LOGO_MAX_BYTES) {
+        if (out.length > maxBytes) {
           for (const quality of [0.75, 0.65, 0.55]) {
             out = jpegCanvas.toDataURL('image/jpeg', quality);
-            if (out.length <= LOGO_MAX_BYTES) break;
+            if (out.length <= maxBytes) break;
           }
         }
-        while (out.length > LOGO_MAX_BYTES && Math.max(jpegCanvas.width, jpegCanvas.height) > 160) {
+        while (out.length > maxBytes && Math.max(jpegCanvas.width, jpegCanvas.height) > 160) {
           const smaller = document.createElement('canvas');
           smaller.width = Math.max(1, Math.round(jpegCanvas.width * 0.75));
           smaller.height = Math.max(1, Math.round(jpegCanvas.height * 0.75));
@@ -88,7 +88,7 @@ export function resizeLogoForStorage(file: File, maxPx = LOGO_MAX_PX): Promise<s
           jpegCanvas = smaller;
           out = jpegCanvas.toDataURL('image/jpeg', 0.75);
         }
-        if (out.length > LOGO_MAX_BYTES) {
+        if (out.length > maxBytes) {
           reject(new Error('That image is too big to store. Try a smaller or simpler picture.'));
           return;
         }

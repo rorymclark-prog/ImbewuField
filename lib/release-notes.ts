@@ -33,6 +33,12 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '8 September 2026', sha: '650c7bf', changes: [
+    'Add attendance IDs, signatures, certificates, photos and feedback to training records.',
+    'Save the training venue with GPS, view its map or open Google Maps directions.',
+    'Programme reports include key figures, charts and signed attendance tables.',
+    'Tour screens have fewer repeated notices and clearer text on cards and controls.',
+  ] },
   { when: '8 September 2026', sha: '27810ae', changes: [
     'Tour and Tips stay at the top of the menu; Home invites you for your first 30 openings.',
     'Saving a sale creates its invoice, ready to view, share or print.',

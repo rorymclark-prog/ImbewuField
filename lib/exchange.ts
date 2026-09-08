@@ -963,7 +963,7 @@ export function buildDemoExchange(now: Date = new Date()): {
   return {
     isDemo: true,
     notice:
-      'Sample trade board — invented listings from the sample farmer network. Nothing here is for real sale.',
+      'Tour trade board — explore listings from the farmer network. Listings here are not for sale.',
     listings: buildDemoListings(now),
   };
 }

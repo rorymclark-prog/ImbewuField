@@ -8,5 +8,5 @@ export function validFeedback(v:unknown): v is FeedbackInput {
     &&typeof x.path==='string'&&/^\/[a-zA-Z0-9/_-]*$/.test(x.path)&&x.path.length<=200&&typeof x.sample==='boolean';
 }
 export function feedbackText(input:FeedbackInput):string {
-  return `${input.kind==='bug'?'Bug report':'Feature request'}: ${input.title.trim()}\n\n${input.details.trim()}\n\nApp page: ${input.path}\nSample workspace: ${input.sample?'yes':'no'}\nReference: ${input.id}\n`;
+  return `${input.kind==='bug'?'Bug report':'Feature request'}: ${input.title.trim()}\n\n${input.details.trim()}\n\nApp page: ${input.path}\nTour workspace: ${input.sample?'yes':'no'}\nReference: ${input.id}\n`;
 }

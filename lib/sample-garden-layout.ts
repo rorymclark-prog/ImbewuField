@@ -20,7 +20,7 @@ export function sampleGardenSvg(kind: string, variant: string): string {
   else if(forest){building(75,75,125,70,'Store');beds(75,245+shift,2,2);for(let r=0;r<4;r++)for(let c=0;c<4;c++)tree(290+c*62+(r%2)*7,240+r*65);parts.push(label(390,523,'Food forest'));}
   else{building(75,75,130,65,'Store');beds(275+shift,220,3+seed%2,3+seed%2);staple(280,420,200,85);parts.push(`<circle cx="142" cy="295" r="60" fill="#ded1ae" stroke="#ac9874" stroke-width="2"/>`,label(142,289,'Meeting'),label(142,316,'space'));[[80,410],[170,430],[110,505]].forEach(([x,y])=>tree(x,y));}
   const waterX = commercial ? 260 : 480;
-  parts.push(`<circle cx="${waterX}" cy="110" r="20" fill="#6e9eb3" stroke="#fff" stroke-width="3"/>`,label(waterX,150,'Water',18),label(300,581,'Fictional layout · not measured',19));
+  parts.push(`<circle cx="${waterX}" cy="110" r="20" fill="#6e9eb3" stroke="#fff" stroke-width="3"/>`,label(waterX,150,'Water',18),label(300,581,'Schematic layout · not measured',19));
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="600" height="600">${parts.join('')}</svg>`;
 }
 export const sampleGardenImage = (kind:string,variant:string) => `data:image/svg+xml;charset=utf-8,${encodeURIComponent(sampleGardenSvg(kind,variant))}`;

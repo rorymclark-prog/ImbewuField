@@ -56,6 +56,7 @@ import {
   type NetworkSortKey,
 } from '@/lib/network';
 import { cohortCsv, cohortCsvFilename, cohortTraining } from '@/lib/cohort-report';
+import { isSampleMode } from '@/lib/sample-mode';
 import { DEMO_NETWORK_NOTICE, demoFarmerById } from '@/lib/network-demo';
 import { kgTotalLabel, randLabel } from '@/lib/format-figures';
 import FarmerPanel from '@/components/network/FarmerPanel';
@@ -286,9 +287,7 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
             Loading the cohort…
           </div>
         )}
-        {portfolio.isDemo && (
-          // Never hidden on a small screen. A funder photographs this strip on a phone, and a
-          // disclaimer that disappears at the size people actually photograph is worse than none.
+        {portfolio.isDemo && !isSampleMode() && (
           <div
             className="px-3 md:px-5 py-2 font-sans"
             style={{
@@ -554,7 +553,7 @@ export default function CohortDashboard({ mode = 'ngo' }: { mode?: 'funder' | 'n
                   }}
                 >
                   {portfolio.isDemo
-                    ? DEMO_NETWORK_NOTICE
+                    ? 'A dash means a missing figure. It never means zero.'
                     : portfolio.withheldForConsent > 0
                       ? `${portfolio.withheldForConsent} more ${portfolio.withheldForConsent === 1 ? 'farmer is' : 'farmers are'} enrolled here but have not agreed to share their figures, so they are not listed. A dash means a figure this account may not read — it never means zero.`
                       : 'A dash means a figure this account may not read. It never means zero.'}

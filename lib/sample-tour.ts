@@ -69,7 +69,7 @@ export const PRODUCT_TOUR: readonly ProductTourStep[] = [
   },
   {
     id: 'organisation', minutes: 2, title: 'Follow the whole programme', href: '/ngo', role: 'ngo',
-    task: 'Choose Assessments to review stages and response counts. Then look at Training & progress and Reports: these bring monitoring, evaluation and learning records together for the programme team.',
+    task: 'Open Training & progress, then Training register. Review the attendance signatures, certificates, venue map, photographs and short feedback survey. Open Reports to compare programme results.',
   },
   {
     id: 'funder', minutes: 2, title: 'See progress as a funder', href: '/funder', role: 'funder',

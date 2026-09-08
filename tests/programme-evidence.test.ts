@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { completeSampleEvidence, freshEvidenceData, trainingTotals, milestoneAt, publishedTraining, validTrainingRecord, validProgrammeMilestone, validProgrammeBranding, validEvidenceImage } from '../lib/programme-evidence';
+import { completeSampleEvidence, freshEvidenceData, trainingTotals, milestoneAt, publishedTraining, validTrainingRecord, validProgrammeMilestone, validProgrammeBranding, validEvidenceImage, trainingForStorage, trainingFromStorage, sharedTrainingPhotos, trainingFeedbackSummary } from '../lib/programme-evidence';
 import { melCan, memberAccessSummary, programmeCapabilities } from '../lib/mel';
 import { programmeRecordMetrics, PROGRESS_TEMPLATES, progressValue, progressRecordSections } from '../lib/programme-progress';
 import { DEMO_NETWORK } from '../lib/network-demo';
@@ -156,4 +156,46 @@ test('older tours gain programme examples without overwriting edits or duplicati
   assert.deepEqual(completeSampleEvidence(completed),completed,'reopening the page must not add duplicate examples');
   const real={...stored,sample:false};
   assert.equal(completeSampleEvidence(real),real,'a real organisation must never receive tour observations');
+});
+
+
+test('signed attendance survives the Firestore document encoding and read projection', async () => {
+  const { getFirestore }=await import('firebase-admin/firestore');
+  const { initializeApp, deleteApp }=await import('firebase-admin/app');
+  const app=initializeApp({projectId:'training-serializer-check'},'training-serializer-check');
+  try {
+    const db=getFirestore(app) as unknown as {_serializer:{encodeFields:(value:object)=>unknown}};
+    const source=freshEvidenceData().sessions[0],stored=trainingForStorage(source);
+    assert.doesNotThrow(()=>db._serializer.encodeFields(stored),'actual Firestore serializer must accept saved signatures');
+    const reopened=trainingFromStorage(JSON.parse(JSON.stringify(stored)));
+    assert.deepEqual(reopened.attendance,source.attendance);
+    assert.deepEqual(reopened.feedback,source.feedback);
+    assert.deepEqual(reopened.photos,source.photos);
+    assert.equal(validTrainingRecord(reopened,'2026-09-08'),true);
+    assert.equal(trainingFeedbackSummary(reopened).completed,2);
+    const view=publishedTraining(reopened),json=JSON.stringify(view);
+    for(const privateText of ['Nomvula','GP-01-001','ATT-2026-0815-001','strokes','Bring a second scale'])assert.ok(!json.includes(privateText));
+    assert.equal(view.presentCount,2);assert.equal(view.registeredCount,2);
+    assert.equal(view.feedbackSummary?.completed,2);
+    assert.ok(view.feedbackSummary?.metrics.every(m=>m.suppressed),'small feedback groups remain suppressed for funders');
+  } finally {await deleteApp(app);}
+});
+test('register images, unchecked photos and legacy images require explicit sharing',()=>{
+  const image=freshEvidenceData().sessions[0].photos[0].image;
+  const photos=[{image,caption:'Paper register',kind:'register' as const,shared:true},{image,caption:'Unreviewed',kind:'group' as const,shared:false},{image,caption:'Legacy'},{image,caption:'Reviewed activities',kind:'activity' as const,shared:true}];
+  assert.deepEqual(sharedTrainingPhotos(photos).map(p=>p.caption),['Reviewed activities']);
+  assert.deepEqual(publishedTraining({...freshEvidenceData().sessions[0],photos}).photos.map(p=>p.caption),['Reviewed activities']);
+});
+test('attendance signatures and feedback reject malformed, absent, duplicate and excessive records',()=>{
+  const s=freshEvidenceData().sessions[0],a=s.attendance[0];
+  assert.equal(validTrainingRecord({...s,attendance:[{...a,present:false}]},'2026-09-08'),false);
+  assert.equal(validTrainingRecord({...s,attendance:[{...a,signature:{signedAt:s.updatedAt,strokes:[[[0,0],[1001,10]]]}}]},'2026-09-08'),false);
+  assert.equal(validTrainingRecord({...s,feedback:[s.feedback![0],s.feedback![0]]},'2026-09-08'),false);
+  assert.equal(validTrainingRecord({...s,feedback:[{...s.feedback![0],consent:false}]},'2026-09-08'),false);
+  assert.equal(validTrainingRecord({...s,feedback:[{...s.feedback![0],answers:{course_clear:'99'}}]},'2026-09-08'),false);
+  assert.equal(validTrainingRecord({...s,photos:Array.from({length:9},()=>s.photos[0])},'2026-09-08'),false);
+  const legacy={...s,feedback:undefined,attendance:s.attendance.map(({id,name,present})=>({id,name,present}))};
+  assert.equal(validTrainingRecord(legacy,'2026-09-08'),true,'old unsigned records remain editable');
+  const edited={...s,title:'My saved title',updatedAt:'2026-09-08T10:00:00Z',photos:[],photoCount:0,feedback:undefined};
+  assert.equal(completeSampleEvidence({...freshEvidenceData(),sessions:[edited]}).sessions[0].title,'My saved title');
 });

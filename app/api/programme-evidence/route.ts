@@ -4,7 +4,7 @@ import { getFirestore } from 'firebase-admin/firestore';
 import { guardPaidApiRequest } from '@/lib/api-auth';
 import { melCan, programmeCapabilities, type MelPermission } from '@/lib/mel';
 import { validFieldId } from '@/lib/field-teams';
-import { blankBranding, publishedTraining, validProgrammeBranding, validProgrammeMilestone, validTrainingRecord, type TrainingRecord, type ProgrammeMilestone, type ProgrammeBranding } from '@/lib/programme-evidence';
+import { blankBranding, trainingForStorage, trainingFromStorage, publishedTraining, sharedTrainingPhotos, validProgrammeBranding, validProgrammeMilestone, validTrainingRecord, type TrainingRecord, type ProgrammeMilestone, type ProgrammeBranding } from '@/lib/programme-evidence';
 import type { UserRole } from '@/lib/db/types';
 
 export const runtime = 'nodejs';
@@ -43,7 +43,8 @@ async function handle(req: NextRequest, write: boolean) {
       const id=req.nextUrl.searchParams.get('id'); if (!validFieldId(id)) fail('Choose a training record.');
       const session=(await root.collection('sessions').doc(id!).get()).data() as TrainingRecord | undefined;
       if (!session || role==='funder' && !session.published || role==='mentor' && session.ownerId!==auth.uid) fail('Training record unavailable.',403);
-      return json({ photos:(await root.collection('photos').doc(id!).get()).data()?.photos ?? [] });
+      const photos=(await root.collection('photos').doc(id!).get()).data()?.photos ?? [];
+      return json({ photos:role==='funder' ? sharedTrainingPhotos(photos) : photos });
     }
     if (!write) {
       const q=root.collection('sessions');
@@ -54,13 +55,13 @@ async function handle(req: NextRequest, write: boolean) {
         role==='funder' ? null : db.collection('mel_assessments').where('orgId','==',org).limit(201).get(),
       ]);
       if (sessionDocs.size>500 || milestoneDocs.size>200 || (peopleDocs?.size ?? 0)>500 || (assessmentDocs?.size ?? 0)>200) fail('This programme needs paginated reporting. No partial total is shown; contact the administrator.',422);
-      const sessions=sessionDocs.docs.map(d=>d.data() as TrainingRecord);
+      const sessions=sessionDocs.docs.map(d=>trainingFromStorage(d.data()));
       return json({ sessions:role==='funder' ? sessions.map(publishedTraining) : sessions, milestones:milestoneDocs.docs.map(d=> { const m=d.data() as ProgrammeMilestone; return role==='funder' ? {...m,owner:''} : m; }), branding:branding.data()?.branding ?? blankBranding(),
         people:peopleDocs?.docs.filter(d=>['farmer','student'].includes(d.data().role) && (role!=='mentor' || allowed.has(d.id))).map(d=>({id:d.id,name:d.data().full_name ?? 'Unnamed member'})) ?? [],
-        assessments:assessmentDocs?.docs.map(d=>({id:d.id,title:d.data().title})) ?? [], canManage:manage,canRecord:record,canBrand:brand,sample:false,revision:'' });
+        assessments:assessmentDocs?.docs.map(d=>({id:d.id,title:d.data().title})) ?? [], canManage:manage,canRecord:record,canBrand:brand,canAssess:melCan(role,permissions,'manage'),canAnalyse:melCan(role,permissions,'analyse'),sample:false,revision:'' });
     }
     if (role==='funder') fail('Funders can read published reports.',403);
-    const raw=await req.text(); if (raw.length>800000) fail('Please use smaller images.',413);
+    const raw=await req.text(); if (new TextEncoder().encode(raw).length>1500000) fail('This record is too large. Use smaller photos or split a large register into sessions.',413);
     const b=JSON.parse(raw), now=new Date().toISOString(), today=now.slice(0,10);
     if (b.action==='branding') {
       if (!brand) fail('Manage people access is required to change organisation branding.',403);
@@ -85,9 +86,26 @@ async function handle(req: NextRequest, write: boolean) {
         const registeredIds=s.attendance.filter(a=>!a.id.startsWith('guest-')).map(a=>a.id);
         const members=registeredIds.length ? await tx.getAll(...registeredIds.map(id=>db.collection('profiles').doc(id))) : [];
         if (members.some(d=>!d.exists || d.data()?.org_id!==org || !['farmer','student'].includes(d.data()?.role) || role==='mentor' && !currentTeam?.data()?.farmerIds?.includes(d.id))) fail('Attendance must use members of this organisation and your assigned group.',403);
-        const next:TrainingRecord={id:s.id,project:s.project.trim(),title:s.title.trim(),date:s.date,venue:s.venue.trim(),latitude:s.latitude,longitude:s.longitude,facilitator:s.facilitator.trim(),ownerId:old.data()?.ownerId ?? auth.uid!,attendance:s.attendance.map(a=>({id:a.id,name:a.name.trim(),present:a.present})),presentCount:s.attendance.filter(a=>a.present).length,registeredCount:s.attendance.length,report:s.report.trim(),nextSteps:s.nextSteps.trim(),assessmentId:s.assessmentId,published:s.published,photos:[],photoCount:s.photos.length,updatedAt:now};
-        tx.set(ref,next); tx.set(root.collection('photos').doc(s.id),{photos:s.photos.map(p=>({image:p.image,caption:p.caption.trim()}))});
-        tx.create(root.collection('history').doc(),{kind:'session',id:s.id,previous:old.data() ?? null,next,actor:auth.uid,at:now});
+        const previous=old.exists?trainingFromStorage(old.data()):undefined;
+        const attendance=s.attendance.map(a=>{
+          const prior=previous?.attendance.find(p=>p.id===a.id);
+          const sameSignature=prior?.name===a.name.trim() && (prior.reference??'')===(a.reference?.trim()??'') && JSON.stringify(prior?.signature?.strokes)===JSON.stringify(a.signature?.strokes);
+          return {id:a.id,name:a.name.trim(),present:a.present,
+            ...(a.reference?{reference:a.reference.trim()}:{}),...(a.certificate?{certificate:a.certificate.trim()}:{}),
+            ...(a.signature?{signature:{strokes:a.signature.strokes,signedAt:sameSignature?prior?.signature?.signedAt??now:now}}:{})};
+        });
+        const feedback=(s.feedback??[]).map(f=>{
+          const answers=Object.fromEntries(Object.entries(f.answers).map(([k,v])=>[k,v.trim()]));
+          const prior=previous?.feedback?.find(p=>p.participantId===f.participantId && p.language===f.language && JSON.stringify(p.answers)===JSON.stringify(answers));
+          return {participantId:f.participantId,answers,language:f.language,consent:true as const,recordedAt:prior?.recordedAt??now};
+        });
+        const next:TrainingRecord={id:s.id,project:s.project.trim(),title:s.title.trim(),date:s.date,venue:s.venue.trim(),latitude:s.latitude,longitude:s.longitude,facilitator:s.facilitator.trim(),ownerId:previous?.ownerId??auth.uid!,attendance,presentCount:attendance.filter(a=>a.present).length,registeredCount:attendance.length,report:s.report.trim(),nextSteps:s.nextSteps.trim(),assessmentId:s.assessmentId,published:s.published,photos:[],photoCount:s.photos.length,updatedAt:now,feedback};
+        tx.set(ref,{...trainingForStorage(next),sharedPhotoCount:sharedTrainingPhotos(s.photos).length});
+        tx.set(root.collection('photos').doc(s.id),{photos:s.photos.map(p=>({image:p.image,caption:p.caption.trim(),...(p.kind?{kind:p.kind}:{}),...(p.shared!==undefined?{shared:p.shared}:{})}))});
+        // Keep the edit trail without doubling every handwritten signature into a
+        // single history document; the current signed register remains the authority.
+        const historyRecord=(r:TrainingRecord|undefined)=>r?{...r,feedback:(r.feedback??[]).map(f=>({participantId:f.participantId,recordedAt:f.recordedAt})),attendance:r.attendance.map(({signature,...a})=>({...a,...(signature?{signedAt:signature.signedAt}:{})}))}:null;
+        tx.create(root.collection('history').doc(),{kind:'session',id:s.id,previous:historyRecord(previous),next:historyRecord(next),actor:auth.uid,at:now});
       });
     } else if (b.action==='milestone') {
       if (!manage || !validProgrammeMilestone(b.milestone,today)) fail('Management access and a valid indicator, method and dated evidence are required.');

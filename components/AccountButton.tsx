@@ -14,7 +14,7 @@ export default function AccountButton() {
   if (user) {
     // Sample farm shows a neutral label — never the real signed-in user's name/email (the one
     // spot the demo would otherwise leak their identity; the rest reads "Sample Farmer").
-    const label = isSampleMode() ? 'Sample' : (user.displayName?.split(' ')[0] ?? user.email ?? 'Account');
+    const label = isSampleMode() ? 'Tour' : (user.displayName?.split(' ')[0] ?? user.email ?? 'Account');
     return (
       <div
         className="flex items-center gap-2 px-3.5 rounded-full flex-shrink-0"

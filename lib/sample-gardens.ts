@@ -66,5 +66,5 @@ export function sampleSitePhoto(id: string): string | undefined {
 }
 export function sampleSitePhotos(id: string) {
   const garden = SAMPLE_GARDENS.find(g => g.id === id);
-  return garden ? [{ image: sampleSitePhoto(id)!, caption: `${garden.name} — AI-generated fictional site reference. Not a measured layout or field evidence.` }] : [];
+  return garden ? [{ image: sampleSitePhoto(id)!, caption: `${garden.name} — AI-generated site illustration.` }] : [];
 }

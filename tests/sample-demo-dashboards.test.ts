@@ -101,7 +101,8 @@ test('changing garden produces distinct geometry instead of the same shared aeri
   for (const [i,svg] of pictures.entries()) {
     assert.doesNotMatch(svg, /NaN|undefined/);
     assert.equal(decodeURIComponent(sampleGardenImage(SAMPLE_GARDENS[i].kind!, SAMPLE_GARDENS[i].id).split(',')[1]), svg);
-    assert.match(svg, /Fictional layout/);
+    // Rory's 8 September wording decision keeps the measurement caveat at source.
+    assert.match(svg, /Schematic layout · not measured/);
   }
 });
 
@@ -117,13 +118,14 @@ test('farmers, mentors, funders and organisations can find the fictional garden 
 import { sampleSitePhoto, sampleSitePhotos } from '../lib/sample-gardens';
 import { freshSampleAreas, completeSampleAreas } from '../lib/sample-operations';
 import { validProductionSite, productionAreaSummary } from '../lib/production-sites';
+// 8 Sep: retain image provenance without Rory’s rejected repeated fictional label.
 test('garden photos and production totals cover the same complete sample catalog', () => {
   const rows = freshSampleAreas();
   assert.deepEqual(rows.map(s=>s.code), SAMPLE_GARDENS.map(g=>g.id));
   assert.equal(new Set(SAMPLE_GARDENS.map(g=>sampleSitePhoto(g.id))).size,SAMPLE_GARDENS.length);
   for (const g of SAMPLE_GARDENS) {
     assert.ok(existsSync(new URL(`../public${sampleSitePhoto(g.id)}`,import.meta.url)));
-    assert.match(sampleSitePhotos(g.id)[0].caption,/AI-generated fictional/);
+    assert.match(sampleSitePhotos(g.id)[0].caption,/AI-generated/);
     const site=rows.find(s=>s.code===g.id)!;
     assert.ok(validProductionSite(site,'2026-09-06'));
     assert.ok(site.vegetableM2+site.stapleM2 < g.areaM2!);

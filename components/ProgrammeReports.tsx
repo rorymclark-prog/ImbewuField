@@ -1,5 +1,4 @@
 'use client';
-import { Sprout, HandCoins, GraduationCap } from 'lucide-react';
 import { useState } from 'react';
 import { useAuth } from '@/lib/auth';
 import { useNetworkPortfolio } from '@/lib/use-network-portfolio';
@@ -22,11 +21,10 @@ export default function ProgrammeReports({ funder = false }: { funder?: boolean 
   return <section className={styles.root}><div className={styles.wrap}><div className={styles.hero}><h1>{funder ? 'Funder reports' : 'Organisation reports'}</h1><p>Choose a report, review its coverage and export a clear, economical PDF.</p></div>
     {portfolio.orgs.length > 0 && <label>Organisation<select value={portfolio.orgId ?? ''} onChange={e => portfolio.setOrgId(e.target.value)}>{portfolio.orgs.map(o => <option key={o.id} value={o.id}>{o.name}</option>)}</select></label>}
     <div className={styles.grid}>{([['overview', 'Programme overview', 'Coverage, production and learning.'], ['production', 'Production & sales', 'Recorded harvests and money with coverage notes.'], ['training', 'Training & participation', 'Learning progress and recorded activity.']] as const).map(([key, label, desc]) => <button key={key} className={styles.card} aria-pressed={key === kind} onClick={() => setKind(key)}><h2>{label}</h2><p>{desc}</p></button>)}</div>
-    {!portfolio.loading && !portfolio.error && <div className={styles.grid}>{[
-      { label: 'Harvest logged', value: number(totals.producedKg, ' kg'), Icon: Sprout },
-      { label: 'Recorded sales', value: totals.incomeZar === null ? 'Not available' : `R${number(totals.incomeZar)}`, Icon: HandCoins },
-      { label: 'Training completion', value: number(totals.averageTrainingPct, '%'), Icon: GraduationCap },
-    ].map(({ label, value, Icon }) => <article key={label} className={styles.card}><Icon size={32} color="#245739" /><p>{label}</p><strong className={styles.stat}>{value}</strong></article>)}</div>}
-    {portfolio.error ? <p role="alert" className={styles.error}>{portfolio.error}</p> : portfolio.loading ? <p>Loading authorised report data…</p> : <ReportComposer key={`${kind}:${portfolio.orgId}:${portfolio.isDemo}`} title={{ overview: 'Programme overview', production: 'Production and sales', training: 'Training and participation' }[kind]} sample={portfolio.isDemo} orgId={portfolio.orgId} sections={sections} />}
+    {portfolio.error ? <p role="alert" className={styles.error}>{portfolio.error}</p> : portfolio.loading ? <p>Loading authorised report data…</p> : <ReportComposer key={`${kind}:${portfolio.orgId}:${portfolio.isDemo}`} title={{ overview: 'Programme overview', production: 'Production and sales', training: 'Training and participation' }[kind]} sample={portfolio.isDemo} orgId={portfolio.orgId} sections={sections}
+      metrics={[{label:'Farmers',value:String(totals.farmerCount),detail:`${totals.reportingCount} with readable records`},
+        ...(kind==='training'?[{label:'Training completion',value:number(totals.averageTrainingPct,'%'),detail:'Recorded progress'},{label:'Active growers',value:String(totals.activeLast90Days),detail:'Activity in the last 90 days'}]:[{label:'Harvest logged',value:number(totals.producedKg,' kg'),detail:'Available cumulative records'},{label:'Recorded sales',value:totals.incomeZar===null?'Not available':`R${number(totals.incomeZar)}`,detail:'Available cumulative records'}]),
+        {label:'Cohorts',value:String(totals.cohortCount),detail:'Represented in this portfolio'}]}
+      chart={{title:kind==='training'?'Recorded learning progress by farmer':'Harvest logged by farmer',suffix:kind==='training'?'%':' kg',minimumScale:kind==='training'?100:undefined,rows:portfolio.rows.flatMap(r=>{const value=kind==='training'?r.metrics.trainingPct:r.metrics.producedKg;return value===null?[]:[{label:r.farmer.name,value}];})}} />}
   </div></section>;
 }

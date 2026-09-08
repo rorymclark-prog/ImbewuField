@@ -82,6 +82,8 @@ const FARMER_SURFACES: Record<string, string> = {
   'components/report/ReportChapterGraphics.tsx': 'illustrated report captions remain readable on phones',
   'components/MemberAccessPreview.tsx': 'readable member access checks on phones',
   'components/ProgrammeEvidence.tsx': 'readable training evidence and branding on phones',
+  'components/TrainingFeedback.tsx': 'five-question field feedback with readable labels',
+  'components/TrainingSignature.tsx': 'finger signing and confirmation on field devices',
   'components/VenueLocation.tsx': 'one-tap venue location on phones',
   'components/SampleGardenVisual.tsx': 'readable example location and design',
   'components/OrganisationControlCentre.tsx': 'organisation controls and role previews on phones',

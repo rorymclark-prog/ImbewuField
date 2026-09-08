@@ -1,23 +1,69 @@
+import { TOUR_TRAINING_PHOTOS } from './sample-training-media';
 import { SAMPLE_BRANDING } from './sample-branding';
 import { validFieldId } from './field-teams';
 import { PROGRESS_TEMPLATES, validProgressArea, type ProgressArea } from './programme-progress';
+import { analyseAssessment, validAnswers, type MelAssessment, type MelResponse } from './mel';
+import { MEL_TEMPLATES } from './mel-templates';
 
 export type ProgrammeLogo = { label: string; image: string };
 export type ProgrammeBranding = { organisation: ProgrammeLogo; garden: ProgrammeLogo; funder: ProgrammeLogo };
-export type VenuePhoto = { image: string; caption: string };
-export type Attendance = { id: string; name: string; present: boolean };
+export const TRAINING_PHOTO_KINDS = { activity: 'Training activities', group: 'Group photograph', certificates: 'Certificates of attendance', venue: 'Training venue', register: 'Signed paper register' } as const;
+export type TrainingPhotoKind = keyof typeof TRAINING_PHOTO_KINDS;
+export type VenuePhoto = { image: string; caption: string; kind?: TrainingPhotoKind; shared?: boolean };
+export type AttendanceSignature = { strokes: [number, number][][]; signedAt: string };
+export type Attendance = { id: string; name: string; present: boolean; reference?: string; signature?: AttendanceSignature; certificate?: string };
+export type TrainingFeedback = { participantId: string; answers: Record<string,string>; language: 'en'|'zu'; consent: true; recordedAt: string };
+export const TRAINING_FEEDBACK_TEMPLATE = { ...MEL_TEMPLATES.course_after, questions: MEL_TEMPLATES.course_after.questions.filter(q=>['course_clear','course_practice','course_language','course_change','course_apply'].includes(q.id)) };
 export type TrainingRecord = {
   id: string; project: string; title: string; date: string; venue: string; latitude: number | null; longitude: number | null;
   facilitator: string; ownerId: string; attendance: Attendance[]; presentCount: number; registeredCount: number;
   report: string; nextSteps: string; assessmentId: string; published: boolean; photos: VenuePhoto[]; photoCount: number; updatedAt: string;
+  feedback?: TrainingFeedback[]; feedbackSummary?: ReturnType<typeof analyseAssessment>;
 };
 export type MilestoneObservation = { date: string; actual: number; evidence: string; recordedAt: string };
 export type ProgrammeMilestone = { id: string; project: string; title: string; category?: ProgressArea; unit: string; baseline: number | null; target: number | null; due: string; owner: string; method: string; published: boolean; observations: MilestoneObservation[]; updatedAt: string };
-export type EvidenceData = { brandingOnly?: boolean; sessions: TrainingRecord[]; milestones: ProgrammeMilestone[]; branding: ProgrammeBranding; people: { id: string; name: string }[]; assessments: { id: string; title: string }[]; canManage: boolean; canRecord: boolean; canBrand: boolean; sample: boolean; revision: string };
+export type EvidenceData = { brandingOnly?: boolean; sessions: TrainingRecord[]; milestones: ProgrammeMilestone[]; branding: ProgrammeBranding; people: { id: string; name: string }[]; assessments: { id: string; title: string }[]; canManage: boolean; canRecord: boolean; canBrand: boolean; canAssess?: boolean; canAnalyse?: boolean; sample: boolean; revision: string };
 export const blankBranding = (): ProgrammeBranding => ({ organisation: { label: '', image: '' }, garden: { label: '', image: '' }, funder: { label: '', image: '' } });
 const text = (v: unknown, max: number, required = false): v is string => typeof v === 'string' && v.length <= max && (!required || v.trim().length > 0);
 export const validEvidenceDate = (s: unknown): s is string => typeof s === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(s) && Number.isFinite(Date.parse(s)) && new Date(s).toISOString().slice(0, 10) === s;
 export const validEvidenceImage = (s: unknown): s is string => typeof s === 'string' && s.length <= 200000 && /^data:image\/(png|jpeg);base64,[A-Za-z0-9+/]+={0,2}$/.test(s);
+export function validAttendanceSignature(value: unknown): value is AttendanceSignature {
+  if (!value || typeof value !== 'object') return false;
+  const s = value as AttendanceSignature;
+  return text(s.signedAt, 30, true) && Number.isFinite(Date.parse(s.signedAt)) && Array.isArray(s.strokes) && s.strokes.length > 0 && s.strokes.length <= 40
+    && s.strokes.every(stroke => Array.isArray(stroke) && stroke.length >= 2 && stroke.every(p => Array.isArray(p) && p.length === 2 && p.every(n => Number.isInteger(n) && n >= 0 && n <= 1000)))
+    && s.strokes.reduce((n, stroke) => n + stroke.length, 0) <= 800;
+}
+/** Paper registers and unreviewed photographs never enter a funder projection. */
+export function sharedTrainingPhotos(photos: VenuePhoto[]) {
+  return photos.filter(p => p.kind !== 'register' && p.shared === true);
+}
+/** Firestore forbids nested arrays. Store bounded drawing coordinates as JSON,
+ * and restore the public wire format before any projection or edit. */
+export function trainingForStorage(record: TrainingRecord) {
+  return {...record,attendance:record.attendance.map(({signature,...a})=>({...a,...(signature?{signature:{signedAt:signature.signedAt,strokesJson:JSON.stringify(signature.strokes)}}:{})}))};
+}
+export function trainingFromStorage(value: unknown): TrainingRecord {
+  const record=value as TrainingRecord;
+  return {...record,attendance:(record.attendance??[]).map(({signature,...a})=>{
+    if (!signature) return a;
+    const saved=signature as AttendanceSignature & {strokesJson?:string};
+    try {
+      const restored={signedAt:saved.signedAt,strokes:saved.strokesJson?JSON.parse(saved.strokesJson):saved.strokes};
+      return validAttendanceSignature(restored)?{...a,signature:restored}:a;
+    } catch { return a; }
+  })};
+}
+export function trainingEvidenceSummary(s: TrainingRecord) {
+  const present = s.attendance.filter(a => a.present);
+  return { signed: present.filter(a => a.signature).length, certificates: present.filter(a => a.certificate?.trim()).length, photos: s.photoCount, attendanceRate: s.registeredCount ? Math.round(s.presentCount / s.registeredCount * 100) : null };
+}
+export function trainingFeedbackSummary(s: TrainingRecord, funder = false) {
+  if (funder && s.feedbackSummary) return s.feedbackSummary;
+  const a: MelAssessment = { id:s.id,orgId:s.project,project:s.project,title:s.title,stage:'course_after',version:1,participantIds:s.attendance.filter(p=>p.present).map(p=>p.id),due:s.date,state:'closed',published:s.published,createdAt:s.updatedAt,updatedAt:s.updatedAt,action:'',actionOwner:'',actionDue:'',actionDone:false };
+  const rows: MelResponse[]=(s.feedback??[]).map(r=>({assessmentId:s.id,orgId:s.project,participantId:r.participantId,version:1,answers:r.answers,language:r.language,consent:r.consent,submittedAt:r.recordedAt}));
+  return analyseAssessment(a,TRAINING_FEEDBACK_TEMPLATE,rows,funder);
+}
 export function validProgrammeBranding(b: unknown): b is ProgrammeBranding { return !!b && typeof b === 'object' && ['organisation','garden','funder'].every(key => { const l = (b as Record<string, ProgrammeLogo>)[key]; return !!l && text(l.label, 120) && (l.image === '' || validEvidenceImage(l.image)); }); }
 export function validTrainingRecord(s: unknown, today: string): s is TrainingRecord {
   if (!s || typeof s !== 'object') return false; const r = s as TrainingRecord;
@@ -25,8 +71,15 @@ export function validTrainingRecord(s: unknown, today: string): s is TrainingRec
     && text(r.venue,160,true) && ((r.latitude === null && r.longitude === null) || typeof r.latitude === 'number' && Number.isFinite(r.latitude) && Math.abs(r.latitude)<=90 && typeof r.longitude === 'number' && Number.isFinite(r.longitude) && Math.abs(r.longitude)<=180)
     && text(r.facilitator,120,true) && text(r.report,4000,true) && text(r.nextSteps,2000) && text(r.assessmentId,128) && (!r.assessmentId || validFieldId(r.assessmentId))
     && typeof r.published === 'boolean' && Array.isArray(r.attendance) && r.attendance.length<=250 && new Set(r.attendance.map(a=>a?.id)).size === r.attendance.length
-    && r.attendance.every(a=>!!a && validFieldId(a.id) && text(a.name,120,true) && typeof a.present === 'boolean')
-    && Array.isArray(r.photos) && r.photos.length<=2 && r.photos.every(p=>!!p && validEvidenceImage(p.image) && text(p.caption,240,true));
+    && r.attendance.every(a=>!!a && validFieldId(a.id) && text(a.name,120,true) && typeof a.present === 'boolean'
+      && (a.reference === undefined || text(a.reference,80)) && (a.certificate === undefined || text(a.certificate,80))
+      && (a.signature === undefined || a.present && validAttendanceSignature(a.signature) && a.signature.signedAt.slice(0,10) <= today))
+    && (r.feedback === undefined || Array.isArray(r.feedback) && r.feedback.length <= 250 && new Set(r.feedback.map(f=>f?.participantId)).size===r.feedback.length
+      && r.feedback.every(f=>!!f && r.attendance.some(a=>a.id===f.participantId&&a.present) && f.consent===true && ['en','zu'].includes(f.language) && text(f.recordedAt,30,true) && Number.isFinite(Date.parse(f.recordedAt)) && f.recordedAt.slice(0,10)<=today && validAnswers(TRAINING_FEEDBACK_TEMPLATE,f.answers) && Object.values(f.answers).some(a=>a.trim())))
+    && new TextEncoder().encode(JSON.stringify({attendance:r.attendance,feedback:r.feedback})).length <= 650000
+    && Array.isArray(r.photos) && r.photos.length<=8 && r.photos.every(p=>!!p && validEvidenceImage(p.image) && text(p.caption,240,true)
+      && (p.kind === undefined || Object.hasOwn(TRAINING_PHOTO_KINDS,p.kind)) && (p.shared === undefined || typeof p.shared === 'boolean') && !(p.kind === 'register' && p.shared))
+    && r.photos.reduce((n,p)=>n+p.image.length,0) <= 600000;
 }
 export function validProgrammeMilestone(s: unknown, today: string): s is ProgrammeMilestone {
   if (!s || typeof s !== 'object') return false; const m=s as ProgrammeMilestone;
@@ -43,14 +96,18 @@ export function milestoneAt(m: ProgrammeMilestone, date: string) {
 }
 /** Never send attendee names, private next steps, staff IDs or precise venue coordinates to a funder. */
 export function publishedTraining(r: TrainingRecord): TrainingRecord {
-  return { id:r.id, project:r.project, title:r.title, date:r.date, venue:r.venue, latitude:null, longitude:null, facilitator:'', ownerId:'', attendance:[], presentCount:r.presentCount, registeredCount:r.registeredCount, report:r.report, nextSteps:'', assessmentId:'', published:true, photos:r.photos, photoCount:r.photoCount, updatedAt:r.updatedAt };
+  const photos=sharedTrainingPhotos(r.photos);
+  return { id:r.id, project:r.project, title:r.title, date:r.date, venue:r.venue, latitude:null, longitude:null, facilitator:'', ownerId:'', attendance:[], presentCount:r.presentCount, registeredCount:r.registeredCount, report:r.report, nextSteps:'', assessmentId:'', published:true, photos, photoCount:(r as TrainingRecord & {sharedPhotoCount?:number}).sharedPhotoCount ?? photos.length, updatedAt:r.updatedAt,feedbackSummary:trainingFeedbackSummary(r,true) };
 }
 export function trainingTotals(sessions: TrainingRecord[], asOf: string, deduplicated = true) {
   const records=sessions.filter(s=>s.date<=asOf);
   return { sessions:records.length, attendances:records.reduce((n,s)=>n+s.presentCount,0), uniqueParticipants:deduplicated ? new Set(records.flatMap(s=>s.attendance.filter(a=>a.present).map(a=>a.id))).size : null };
 }
 export function freshEvidenceData(): EvidenceData {
-  const attendance=[{id:'s1',name:'Nomvula Dlamini',present:true},{id:'s2',name:'Sipho Nkosi',present:true}];
+  const attendance:Attendance[]=[
+    {id:'s1',name:'Nomvula Dlamini',present:true,reference:'GP-01-001',certificate:'ATT-2026-0815-001',signature:{signedAt:'2026-08-15T12:00:00Z',strokes:[[[60,780],[110,200],[160,680],[210,250],[250,660],[300,500],[340,550],[390,400],[450,510],[530,440],[590,530],[650,420],[720,500],[880,380]],[[260,800],[600,700],[920,650]]]}},
+    {id:'s2',name:'Sipho Nkosi',present:true,reference:'GP-01-002',certificate:'ATT-2026-0815-002',signature:{signedAt:'2026-08-15T12:03:00Z',strokes:[[[230,240],[140,170],[60,290],[150,430],[240,540],[190,720],[60,680]],[[270,680],[330,250],[380,610],[450,360],[500,620],[570,450],[620,560],[700,400],[760,490],[920,420]]]}}
+  ];
   const project='Garden delivery · August 2026';
   // Rory asked the tour to demonstrate a whole programme, not an almost-empty
   // training register. These invented observations belong only to the disposable
@@ -130,7 +187,9 @@ export function freshEvidenceData(): EvidenceData {
       updatedAt:'2026-09-01T12:00:00Z',
     };
   });
-  return { sessions:[{id:'sample-training-1',project,title:'Practical garden planning',date:'2026-08-15',venue:'Community training garden',latitude:null,longitude:null,facilitator:'Sibusiso Ndlovu',ownerId:'sample-mentor',attendance,presentCount:2,registeredCount:2,report:'Participants practised reading the bed plan, weighing a harvest and completing the production record. Both demonstrated the steps against the practical checklist.',nextSteps:'Review the next crop plan during the follow-up visit.',assessmentId:'',published:true,photos:[],photoCount:0,updatedAt:'2026-08-15T12:00:00Z'}], milestones:[{id:'sample-training-target',category:'learning',project,title:'Practical training sessions delivered',unit:'sessions',baseline:0,target:4,due:'2026-11-30',owner:'Programme coordinator',method:'Count completed sessions with an attendance register and session report. Cumulative total; repeated attendees are not new people.',published:true,observations:[{date:'2026-08-15',actual:1,evidence:'Training register, 15 August: Practical garden planning; two recorded attendances and a completed session report.',recordedAt:'2026-08-15T12:00:00Z'}],updatedAt:'2026-08-15T12:00:00Z'},...milestones], branding: structuredClone(SAMPLE_BRANDING), people:attendance.map(({id,name})=>({id,name})),assessments:[],canManage:true,canRecord:true,canBrand:true,sample:true,revision:'' };
+  return { sessions:[{id:'sample-training-1',project,title:'Practical garden planning',date:'2026-08-15',venue:'Community training garden · Ubhejane',latitude:-27.726231,longitude:31.963044,facilitator:'Sibusiso Ndlovu',ownerId:'sample-mentor',attendance,presentCount:2,registeredCount:2,report:'Participants practised reading the bed plan, weighing a harvest and completing the production record. Both demonstrated the steps against the practical checklist.',nextSteps:'Review the next crop plan during the follow-up visit.',assessmentId:'sample-course_after',published:true,photos:structuredClone(TOUR_TRAINING_PHOTOS),photoCount:TOUR_TRAINING_PHOTOS.length,feedback:[
+      {participantId:'s1',answers:{course_clear:'5',course_practice:'5',course_language:'yes',course_change:'Allow more time to practise recording the harvest.',course_apply:'Weigh and record the next harvest before sharing it.'},language:'en',consent:true,recordedAt:'2026-08-15T12:20:00Z'},
+      {participantId:'s2',answers:{course_clear:'4',course_practice:'5',course_language:'yes',course_change:'Bring a second scale so both participants can practise together.',course_apply:'Check the bed labels against the planting plan.'},language:'en',consent:true,recordedAt:'2026-08-15T12:24:00Z'}],updatedAt:'2026-08-15T12:00:00Z'}], milestones:[{id:'sample-training-target',category:'learning',project,title:'Practical training sessions delivered',unit:'sessions',baseline:0,target:4,due:'2026-11-30',owner:'Programme coordinator',method:'Count completed sessions with an attendance register and session report. Cumulative total; repeated attendees are not new people.',published:true,observations:[{date:'2026-08-15',actual:1,evidence:'Training register, 15 August: Practical garden planning; two recorded attendances and a completed session report.',recordedAt:'2026-08-15T12:00:00Z'}],updatedAt:'2026-08-15T12:00:00Z'},...milestones], branding: structuredClone(SAMPLE_BRANDING), people:attendance.map(({id,name})=>({id,name})),assessments:[],canManage:true,canRecord:true,canBrand:true,sample:true,revision:'' };
 }
 
 /** Existing tours gain the new examples without replacing a visitor's edits. */
@@ -140,7 +199,7 @@ export function completeSampleEvidence(data: EvidenceData): EvidenceData {
   const sessionIds=new Set(data.sessions.map(s=>s.id));
   const milestoneIds=new Set(data.milestones.map(m=>m.id));
   return { ...data,
-    sessions:[...data.sessions,...fresh.sessions.filter(s=>!sessionIds.has(s.id))],
+    sessions:[...data.sessions.map(s=>s.id==='sample-training-1'&&s.updatedAt==='2026-08-15T12:00:00Z'&&s.photos.length===0&&s.feedback===undefined?fresh.sessions[0]:s),...fresh.sessions.filter(s=>!sessionIds.has(s.id))],
     milestones:[...data.milestones,...fresh.milestones.filter(m=>!milestoneIds.has(m.id))],
   };
 }

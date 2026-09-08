@@ -56,7 +56,7 @@ function MelDashboardBody({ compact = false, accessOnly = false }: { compact?: b
     let cancelled = false;
     if (role !== 'admin' || !user || isSampleMode()) return;
     void (async () => {
-      try { const r = await fetch('/api/network/orgs', { headers: await paidApiHeaders() }); const d = await r.json(); if (!r.ok) throw new Error(d.error); if (!cancelled) { setOrgs(d.orgs); setOrg(d.orgs[0]?.id ?? ''); } }
+      try { const r = await fetch('/api/network/orgs', { headers: await paidApiHeaders() }); const d = await r.json(); if (!r.ok) throw new Error(d.error); if (!cancelled) { setOrgs(d.orgs); const linkedOrg=new URLSearchParams(window.location.search).get('org'); setOrg(d.orgs.find((o:{id:string})=>o.id===linkedOrg)?.id??d.orgs[0]?.id??''); } }
       catch (e) { if (!cancelled) setError((e as Error).message); }
     })();
     return () => { cancelled = true; };
@@ -76,6 +76,7 @@ function MelDashboardBody({ compact = false, accessOnly = false }: { compact?: b
   const [zu, setZu] = useState(false);
   const t = (en: string, zulu: string) => zu ? zulu : en;
   const requestVersion = useRef(0);
+  const linkedOpened=useRef('');
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [consent, setConsent] = useState(false);
   const [people, setPeople] = useState<Person[]>([]);
@@ -112,6 +113,16 @@ function MelDashboardBody({ compact = false, accessOnly = false }: { compact?: b
     } catch (e) { setError((e as Error).message); }
     finally { setBusy(false); }
   }
+  useEffect(() => {
+    if (!ready || sample || accessOnly || !list.length) return;
+    const id=new URLSearchParams(window.location.search).get('assessment');
+    const key=`${org}:${id}`;
+    if(!id||linkedOpened.current===key)return;
+    linkedOpened.current=key;
+    const found=list.find(a=>a.id===id);
+    if(found)void open(found);
+    else setNotice('The linked assessment is not available in this account. Choose an assessment below.');
+  }, [ready,sample,accessOnly,list,org]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (!accessOnly || sample || !permissions.people) return;
     let cancelled = false;

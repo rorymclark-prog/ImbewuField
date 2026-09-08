@@ -18,10 +18,10 @@ test('sample tour spans 15 minutes and leads to real farm pages with bounded pro
   assert.deepEqual(sampleRolesFor('funder'),['funder']);
   assert.equal(sampleRolesFor('ngo').length,5);
 });
-test('farm evidence uses the saved place, reset-safe fixtures and explicit fictional provenance',()=>{
+test('farm evidence uses the saved place, reset-safe fixtures and explicit tour and measurement provenance',()=>{
   const a=freshSampleAssessment(),p=freshSampleFarmPack();
   assert.equal(a.placeId,buildDemoSavedPlace().id);assert.equal(a.siteId,SAMPLE_FARM_SITE_ID);
-  assert.match(a.notes,/FICTIONAL/);assert.match(p.soil.reference,/NOT A LAB CERTIFICATE/);
+  assert.match(a.notes,/Tour assessment.*no site survey/);assert.match(p.soil.reference,/NOT A LAB CERTIFICATE/);
   p.household.adults=99;a.goals.length=0;
   assert.equal(freshSampleFarmPack().household.adults,2);assert.ok(freshSampleAssessment().goals.length>0);
   const sections=sampleFarmSections(p,a);assert.ok(sections.some(s=>s.lines.some(l=>l.includes('99 adults'))));
@@ -29,7 +29,8 @@ test('farm evidence uses the saved place, reset-safe fixtures and explicit ficti
 });
 test('feedback is bounded and never includes query strings, external URLs or automatic farm attachments',()=>{
   const good={id:'demo-request-001',kind:'bug',title:'Map labels',details:'The label is cut off on my phone.',path:'/farmer',sample:true};
-  assert.ok(validFeedback(good));assert.match(feedbackText(good as import('../lib/product-feedback').FeedbackInput),/Sample workspace: yes/);
+  // The compact Tour label replaces Sample wording; the workspace context remains.
+  assert.ok(validFeedback(good));assert.match(feedbackText(good as import('../lib/product-feedback').FeedbackInput),/Tour workspace: yes/);
   for(const patch of [{id:'../bad'},{kind:'admin'},{details:'short'},{title:'x'.repeat(161)},{details:'x'.repeat(4001)},{path:'https://example.com'},{path:'/farmer?token=secret'},{sample:'yes'}])assert.equal(validFeedback({...good,...patch}),false);
   const route=readFileSync('app/api/product-feedback/route.ts','utf8');
   assert.match(route,/guardPaidApiRequest/);assert.match(route,/profile\.data\(\)\?\.role!=='admin'/);
@@ -178,9 +179,11 @@ test('demo reports identify their basis once without repetitive sample footers, 
   const full = await buildProgrammePdf('Field report', true, sections, 'full');
   assert.ok(full.getNumberOfPages() > 1);
   const output = pdfContentStreams(full.output('arraybuffer'));
-  assert.ok(output.includes('Fictional demonstration data'));
+  // Rory's 8 Sep instruction supersedes the old repeated fictional/sample phrasing.
+  assert.equal(output.split('Tour workspace').length-1,1);
+  assert.ok(!output.includes('Fictional demonstration data'));
   assert.ok(!output.includes('SAMPLE - NOT ACTUAL RESULTS'));
-  assert.equal(output.split('ImbewuField | ').length - 1, full.getNumberOfPages());
+  assert.equal(output.split('(ImbewuField)').length - 1, full.getNumberOfPages());
   assert.ok(output.includes('Visit record 90:'));
   const brief = await buildProgrammePdf('Field report', true, sections, 'summary');
   const briefOutput = pdfContentStreams(brief.output('arraybuffer'));
@@ -276,8 +279,9 @@ test('sample controls cannot recreate the fixed bottom strip', () => {
   const source=readFileSync(new URL('../components/SampleModeBanner.tsx',import.meta.url),'utf8');
   assert.doesNotMatch(source,/bottom:|bottom-\[|zIndex:\s*9999/);
   const menu=readFileSync(new URL('../components/NavDrawer.tsx',import.meta.url),'utf8');
-  assert.match(menu,/Sample controls/);
-  assert.match(menu,/Exit sample/);
+  // Rory's September wording decision uses Tour while retaining an explicit exit.
+  assert.match(menu,/Tour controls/);
+  assert.match(menu,/Exit tour/);
   assert.match(menu,/18 gardens &amp; completed reports/);
 });
 

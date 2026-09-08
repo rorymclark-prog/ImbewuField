@@ -67,7 +67,7 @@ export function freshFieldWorkspace(): FieldWorkspace {
     {group:1,farmer:0,date:'2026-08-28',notes:'Reviewed the school garden activity log with the coordinator. Confirmed the next practical session and the materials needed for learners.'},
     {group:2,farmer:0,date:'2026-09-02',notes:'Checked the month-end harvest and expense records. The grower will attach missing slips before the next group review.'},
   ];
-  workspace.visits=examples.map((example,index)=>({id:`sample-field-visit-${index+1}`,mentorId:workspace.teams[example.group].mentorId,farmerId:workspace.teams[example.group].farmerIds[example.farmer],date:example.date,notes:example.notes,...(index===0?{photos:[{image:'/demo/harvest.webp',caption:'Garden harvest discussed during the visit — fictional illustration.'}]}:{})}));
+  workspace.visits=examples.map((example,index)=>({id:`sample-field-visit-${index+1}`,mentorId:workspace.teams[example.group].mentorId,farmerId:workspace.teams[example.group].farmerIds[example.farmer],date:example.date,notes:example.notes,...(index===0?{photos:[{image:'/demo/harvest.webp',caption:'Garden harvest discussed during the visit · AI-generated illustration.'}]}:{})}));
   return workspace;
 }
 
