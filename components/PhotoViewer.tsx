@@ -29,7 +29,7 @@ export default function PhotoViewer() {
       const source = event.target.currentSrc || event.target.src;
       const sampleImage = new URL(source, window.location.href).pathname.startsWith('/demo/');
       const caption = event.target.alt || 'Photograph';
-      setPhoto({ src: source, caption: sampleImage ? `Fictional sample image · ${caption}` : caption });
+      setPhoto({ src: source, caption: sampleImage ? `Illustration · ${caption}` : caption });
       setZoom(false); setFailed(false);
       dialog.current?.showModal();
     }

@@ -434,13 +434,13 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
         {mode === 'funder' ? (
           <>
 
-            <Stat label="Gardens" value={dashboardTotals.gardens.toString()} sub={isDemo ? 'in this sample register' : 'in your organisation'} color="#1F4D2B" />
+            <Stat label="Gardens" value={dashboardTotals.gardens.toString()} sub={isDemo ? "in this tour register" : 'in your organisation'} color="#1F4D2B" />
             <Stat label="Farmers" value={dashboardTotals.farmers.toLocaleString()} sub="farmers supported" color="#20190F" />
             <Stat label="Food grown" value={`${dashboardTotals.produceT} t`} sub="this season" color="#2F6F9E" />
           </>
         ) : (
           <>
-            <Stat label="Active gardens" value={dashboardTotals.gardens.toString()} sub={isDemo ? 'in this sample register' : 'in your organisation'} color="#1F4D2B" />
+            <Stat label="Active gardens" value={dashboardTotals.gardens.toString()} sub={isDemo ? "in this tour register" : 'in your organisation'} color="#1F4D2B" />
             <Stat label="Farmers" value={dashboardTotals.farmers.toLocaleString()} sub="enrolled this cycle" color="#20190F" />
             <Stat label="Produce, season" value={`${dashboardTotals.produceT} t`} sub="logged by supervisors" color="#2F6F9E" />
             <Stat label="Training done" value={`${dashboardTotals.training}%`} sub="across active gardens" color="#9E5C08" />
@@ -525,7 +525,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
               {gardener
                 ? <><MapPin size={12} style={{ color: '#9A8268' }} /> {isDemo ? `${gardener.name} · fictional example` : `${gardener.name} · ${gardener.lat.toFixed(4)}, ${gardener.lon.toFixed(4)}`}</>
                 : isDemo
-                  ? `Showing ${gardens.length} fictional sample gardens`
+                  ? `Showing ${gardens.length} garden examples`
                   : gardensLoadError
                     ? 'Gardens unavailable'
                     : `Showing ${gardens.length} gardens`}
@@ -664,7 +664,7 @@ export default function NgoDashboard({ mode = 'ngo' }: { mode?: 'ngo' | 'funder'
                           )
                         ); })}
                       </div>
-                      {isDemo && <p className="text-xs mt-2" style={{ color: '#506158' }}>AI-generated sample produce photos; illustrations identify the other crops.</p>}
+                      {isDemo && <p className="text-xs mt-2" style={{ color: '#506158' }}>AI-generated produce photos; illustrations identify the other crops.</p>}
                     </div>
 
                     {/* Books — production */}

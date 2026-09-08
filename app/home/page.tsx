@@ -24,7 +24,7 @@ import {
 } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { enterSampleMode } from '@/lib/sample-mode';
+import { useTourInvitation } from '@/components/TourDiscovery';
 import ThemePanel from '@/components/ThemePanel';
 import LimaBar from '@/components/LimaBar';
 import TabBar from '@/components/TabBar';
@@ -289,6 +289,7 @@ function HomeLandingInner() {
   const { t, lang } = useLanguage();
   const router = useRouter();
   const { navigationRole, sample: roleSample } = useRoleNavigation();
+  const showTourInvitation = useTourInvitation();
   useEffect(() => { if (!roleSample && navigationRole === 'funder') router.replace('/funder'); }, [navigationRole, roleSample, router]);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [rolesOpen, setRolesOpen] = useState(false);
@@ -474,12 +475,12 @@ function HomeLandingInner() {
           ))}
         </div>
 
-        {/* ── See a sample farm — NGO/onboarding "show me how it works" entry point.
+        {/* ── Take a tour farm — NGO/onboarding "show me how it works" entry point.
             Sample mode is a session-only, in-memory overlay (lib/sample-mode.ts) —
             it never reads or writes any real farmer's saved data. ── */}
-        <button
+        {showTourInvitation && <button
           type="button"
-          onClick={() => { if (enterSampleMode()) router.push('/farmer?panel=Overview'); }}
+          onClick={() => router.push('/tour')}
           style={{
             display: 'grid',
             gridTemplateColumns: 'minmax(0, 1fr)',
@@ -512,14 +513,14 @@ function HomeLandingInner() {
           <div className="flex items-center gap-2 mb-1.5">
             <Sparkles size={16} style={{ color: 'var(--color-harvest)', flexShrink: 0 }} />
             <span className="font-display font-semibold" style={{ fontSize: 15, color: 'var(--color-ink)' }}>
-              Explore the sample farm — Ubhejane Crèche
+              Take a tour
             </span>
           </div>
           <p className="font-sans" style={{ fontSize: 12.5, color: 'var(--color-muted-strong)', lineHeight: 1.4 }}>
-            A real crèche food garden, fully set up: design maps, crop plan, sales &amp;
-            expenses, invoices. Look around, change anything — it never touches your own farm.
+            A guided look at your maps, crop plans, harvests, sales and invoices.
+            Practise with Ubhejane Crèche Garden, then return to your own work.
           </p>
-        </button>
+        </button>}
 
         {boardTasks.length > 0 && <TaskBoardCard tasks={boardTasks} onToggle={toggleTaskComplete} />}
 

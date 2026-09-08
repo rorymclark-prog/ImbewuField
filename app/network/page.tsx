@@ -243,7 +243,7 @@ export default function NetworkPage() {
               marginRight: 4,
             }}
           >
-            Sample portfolio
+            Programme portfolio
           </span>
         )}
         <SettingsButton />

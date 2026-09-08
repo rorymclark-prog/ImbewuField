@@ -289,7 +289,7 @@ function SurveyBuilder({ isLive, onCreated }: { isLive: boolean; onCreated: () =
 
           {sampleNote && (
             <p className="text-xs font-sans rounded-xl px-3 py-2" style={{ background: 'rgba(192,122,30,0.09)', color: '#C07A1E', border: '1px solid rgba(192,122,30,0.2)' }}>
-              Sample mode — connect Firebase to save surveys live.
+              tour mode — connect Firebase to save surveys live.
             </p>
           )}
 
@@ -631,7 +631,7 @@ export default function SurveysPage() {
 
         {!isLive && (
           <p className="text-center text-xs font-sans" style={{ color: '#8C7A62' }}>
-            Sample data — connect Firebase to go live
+            demonstration records — connect Firebase to go live
           </p>
         )}
       </main>

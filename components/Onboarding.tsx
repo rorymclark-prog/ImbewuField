@@ -86,7 +86,7 @@ export default function Onboarding() {
 
         <button type="button" onClick={() => { completeOnboarding(picked); router.push('/tour'); }}
           style={{display:'block',width:'100%',minHeight:44,fontSize:16,color:'#1F4D2B',marginBottom:16,textDecoration:'underline'}}>
-          {picked === 'zu' ? 'Zama isibonelo · imizuzu engu-15' : 'Show me the 15-minute sample tour'}
+          {picked === 'zu' ? 'Zama isibonelo · imizuzu engu-15' : 'Take the 15-minute tour'}
         </button>
         {/* Reassurance — language is always changeable */}
         <div className="text-xs font-display text-center" style={{ color: '#5C5040', opacity: 0.65 }}>

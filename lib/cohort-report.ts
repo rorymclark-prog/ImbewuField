@@ -131,7 +131,7 @@ export const COHORT_CSV_COLUMNS = [
   'Last activity',
   'Days since activity',
   'Needs attention',
-  'Sample data',
+  "demonstration records",
 ] as const;
 
 /**

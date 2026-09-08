@@ -59,7 +59,7 @@ function ReportSites({ loading, signedIn, allowed }: { loading: boolean; signedI
     <header className={styles.row}><MenuButton /><BackButton fallback="/home" /><SettingsButton /></header>
     <div className={styles.hero} style={{ marginTop: 20 }}><h1>Saved sites & reports</h1><p>Choose a site to prepare and generate its Site Analysis Report, or reopen a report you have already saved.</p></div>
     {!allowed ? <p>Your funder workspace contains the programme reports shared with you. <Link href="/funder">Open funder view</Link></p> : !ready ? <p>Loading your saved sites…</p> : <>
-      {sample && <p className={styles.notice}>Sample workspace · your real sites and saved reports are kept separate.</p>}
+      {sample && <p className={styles.notice}>workspace · your real sites and saved reports are kept separate.</p>}
       <div className={styles.row} aria-label="Choose sites or reports"><button aria-pressed={view==='sites'} onClick={()=>setView('sites')}>Saved sites · {choices.filter(c=>c.place).length}</button><button aria-pressed={view==='reports'} onClick={()=>setView('reports')}>Saved reports · {reports.length}</button></div>
       <Link href="/farmer?reportSite=new&guided=1" className={styles.card} style={{ display:'flex', gap:14, alignItems:'center', margin:'20px 0' }}><Plus size={28}/><div><h2>Select a new site on the map</h2><p style={{margin:0}}>Search for a place or tap its position, then continue to its report.</p></div><ArrowRight style={{marginLeft:'auto',flexShrink:0}}/></Link>
       {error && <p role="alert" className={styles.error}>{error}</p>}

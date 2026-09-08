@@ -108,7 +108,7 @@ export default function FunderPage() {
             a configured backend with no signed-in caller is still sample data. Two badges saying
             it at once, from two different tests, is how they end up disagreeing. */}
         {(!isLive || sample) && view === 'gardens' && (
-          <span className="text-xs px-2 py-0.5 rounded-full font-mono hidden md:block" style={{ background: 'rgba(47,111,158,0.12)', border: '1px solid rgba(47,111,158,0.3)', color: '#2F6F9E' }}>sample data</span>
+          <span className="text-xs px-2 py-0.5 rounded-full font-mono hidden md:block" style={{ background: 'rgba(47,111,158,0.12)', border: '1px solid rgba(47,111,158,0.3)', color: '#2F6F9E' }}>demonstration records</span>
         )}
         <div className="flex-1" />
         <a
@@ -119,7 +119,7 @@ export default function FunderPage() {
           Portfolio map →
         </a>
         <LessonLink id="funder:overview" label="Learn" />
-        <Link href="/samples" className="shrink-0 text-sm font-semibold">Try a sample</Link>
+        <Link href="/tour" className="shrink-0 text-sm font-semibold">Take a tour</Link>
         <SettingsButton />
         <RoleSwitcher current="funder" />
       </header>

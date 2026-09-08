@@ -138,8 +138,10 @@ test('entry dispatches one change event only after isolation is active', () => {
   sample.exitSampleMode();
 });
 
-test('the home entry point only navigates when sample isolation succeeds', () => {
+test('the home invitation opens the tour chooser before entering the isolated workspace', () => {
   const source = readFileSync(new URL('../app/home/page.tsx', import.meta.url), 'utf8');
-  assert.match(source, /if\s*\(\s*enterSampleMode\(\)\s*\)\s*router\.push\(/);
-  assert.doesNotMatch(source, /enterSampleMode\(\)\s*;\s*router\.push\(/);
+  assert.match(source, /showTourInvitation && <button/);
+  assert.ok(source.includes("router.push('/tour')"));
+  const provider = readFileSync(new URL('../components/ProductTourProvider.tsx', import.meta.url), 'utf8');
+  assert.ok(provider.includes('!isSampleMode() && !enterSampleMode()'), 'the tour must still verify isolation before preparing practice records');
 });

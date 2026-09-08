@@ -149,11 +149,13 @@ export default function CashflowChart({
         <Figure label={`In, ${series.windowMonths} months`} value={randLabel(series.totalInZar)} tone={IN} />
         <Figure label="Out" value={randLabel(series.totalOutZar)} tone={OUT} />
         <Figure
-          label={series.totalNetZar < 0 ? 'Behind, altogether' : 'Ahead, altogether'}
+          label={series.totalNetZar < 0 ? 'Cash shortfall' : 'Cash surplus'}
           value={randLabel(series.totalNetZar)}
           tone={series.totalNetZar < 0 ? '#B33A3A' : INK}
         />
       </div>
+
+      <p className="px-4 pb-3 font-sans" style={{ fontSize: 14, color: MUTED }}>Money received minus recorded spending for these months. Unrecorded costs are not included.</p>
 
       <Panels months={series.months} selectedKey={selected.key} onPick={setPicked} wide={wide} />
 

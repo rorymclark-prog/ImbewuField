@@ -31,6 +31,7 @@ import { assignmentDocId } from '@/lib/course-assignments';
 import type { CourseSubmission } from '@/lib/course-gating';
 import { courseSubmissionDocId } from '@/lib/course-gating';
 import type { SavedInvoice } from '@/lib/invoices';
+import { saveSaleInvoice } from '@/lib/sale-invoice';
 import { invoiceSaleDocumentId, invoiceSalesForPaidInvoice } from '@/lib/invoice-sales';
 
 // Every function below is a real Firestore/Storage writer or a reader that could
@@ -203,13 +204,9 @@ export async function addProduction(row: Partial<ProductionLog>): Promise<void> 
     await addDoc(collection(f.db, 'production_logs'), { ...row, profile_id: u, org_id: me?.org_id ?? null, created_at: serverTimestamp() });
   })());
 }
-export async function addSale(row: Partial<SalesLog>): Promise<void> {
-  if (isSampleMode()) { addSandboxSale(row); return; }
-  const f = fb(); const u = uid(); if (!f || !u) return;
-  await withWriteTimeout((async () => {
-    const me = await getMyProfile();
-    await addDoc(collection(f.db, 'sales_logs'), { ...row, profile_id: u, org_id: me?.org_id ?? null, created_at: serverTimestamp() });
-  })());
+export async function addSale(row: Partial<SalesLog>): Promise<SavedInvoice> {
+  if (!isSampleMode() && (!fb() || !uid())) throw Error('Sign in before saving a sale.');
+  return saveSaleInvoice(row, invoice => withWriteTimeout(syncInvoiceSales(invoice)));
 }
 
 /** Keep the crop-sale book in lockstep with one invoice's paid state. */

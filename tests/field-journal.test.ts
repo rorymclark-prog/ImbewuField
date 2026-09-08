@@ -245,8 +245,8 @@ test('the demo journal survives its own normaliser and spans several months', ()
   assert.ok(groupJournalByMonth(normalised).length >= 3, 'the demo shows month grouping working');
   assert.equal(new Set(demo.map((e) => e.id)).size, demo.length, 'demo ids are unique');
   assert.ok(
-    demo.every((e) => e.title.startsWith('Sample — ')),
-    'every demo title carries the file-wide "Sample — " marker',
+    demo.every((e) => !e.title.startsWith('Sample — ')),
+    'the workspace badge identifies demo records without repeating Sample in each title',
   );
   assert.ok(
     demo.every((e) => (e.photos?.length ?? 0) === 0),

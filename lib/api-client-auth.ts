@@ -1,5 +1,7 @@
 'use client';
 
+import { AI_DISABLED_HEADER } from './ai-features';
+import { disabledAiFeatures } from './ai-preferences';
 import { getFirebase } from '@/lib/firebase/init';
 import { isSampleMode } from '@/lib/sample-mode';
 import { SAMPLE_REQUEST_HEADER } from '@/lib/api-auth-shared';
@@ -26,7 +28,9 @@ export async function paidApiHeaders(
   // even if Firebase switches accounts while the request is awaiting authentication.
   forUser?: { getIdToken(): Promise<string> } | null,
 ): Promise<Record<string, string>> {
+  const disabled = disabledAiFeatures();
+  const preferences: Record<string,string> = disabled.length ? { [AI_DISABLED_HEADER]: disabled.join(',') } : {};
   const user = forUser === undefined ? getFirebase()?.auth.currentUser : forUser;
-  if (!user) return isSampleMode() ? { [SAMPLE_REQUEST_HEADER]: '1' } : {};
-  return { Authorization: `Bearer ${await user.getIdToken()}` };
+  if (!user) return isSampleMode() ? { ...preferences, [SAMPLE_REQUEST_HEADER]: '1' } : preferences;
+  return { ...preferences, Authorization: `Bearer ${await user.getIdToken()}` };
 }

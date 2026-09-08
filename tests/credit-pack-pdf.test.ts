@@ -68,7 +68,7 @@ test('the export refuses outright while sample mode is on', async () => {
       assert.ok(err instanceof CreditPackSampleModeError, `expected CreditPackSampleModeError, got ${err}`);
       // The class name alone is not proof anyone reads the message — the farmer-facing UI shows
       // err.message directly (components/MyRecords.tsx), so it must say something a farmer acts on.
-      assert.match((err as Error).message, /sample/i);
+      assert.match((err as Error).message, /tour/i);
       return true;
     },
   );

@@ -66,11 +66,11 @@ export default function EvidenceSheet({ siteId, group, item, onClose, onChanged 
         let saved: boolean;
         if (file.type.startsWith('image/')) {
           const dataUrl = await resizeForStorage(file);
-          if (scope !== evidenceDocumentScope(siteId)) throw Error('The account or sample changed. Reopen the upload.');
+          if (scope !== evidenceDocumentScope(siteId)) throw Error('The account or workspace changed. Reopen the upload.');
           saved = addEvidenceItem(siteId, itemKey, { type: 'photo', dataUrl, name: file.name, sizeBytes: file.size });
         } else if (isLab) {
           const documentId = await saveEvidenceDocument(scope, file);
-          if (scope !== evidenceDocumentScope(siteId)) { await removeEvidenceDocument(scope, documentId); throw Error('The account or sample changed. Reopen the upload.'); }
+          if (scope !== evidenceDocumentScope(siteId)) { await removeEvidenceDocument(scope, documentId); throw Error('The account or workspace changed. Reopen the upload.'); }
           saved = addEvidenceItem(siteId, itemKey, { type:'pdf', name:file.name, sizeBytes:file.size, documentId });
           if (!saved) await removeEvidenceDocument(scope, documentId);
         } else {

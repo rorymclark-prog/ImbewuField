@@ -303,7 +303,7 @@ function SurveyInner() {
               </div>
               {!known.hasSite && (
                 <p className="text-xs font-sans flex items-center gap-1.5" style={{ color: '#8C7A62' }}>
-                  <MapPin size={12} />Showing a sample plot — analyse a site on the map for your real numbers.
+                  <MapPin size={12} />Showing an example plot — analyse a site on the map for your real numbers.
                 </p>
               )}
             </div>

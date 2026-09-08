@@ -179,7 +179,7 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
 
   return (
     <div className="space-y-2">
-      {sample && <p className="rounded-xl p-3 text-sm" style={{ background: '#E5EFF8', color: '#244B6B' }}>Sample inbox · replies are kept in this demo session only. Nothing is sent.</p>}
+      {sample && <p className="rounded-xl p-3 text-sm" style={{ background: '#E5EFF8', color: '#244B6B' }}>Replies stay in this tour session. Nothing is sent.</p>}
       {actionError && (
         <div className="rounded-xl px-3 py-2 text-xs font-sans" style={{ background: '#FFF4EF', border: '1px solid #D8B7A8', color: '#8C4938' }}>
           That action could not be saved. Check your account access or connection and try again.
@@ -264,7 +264,7 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
                   {msg.body}
                 </p>
 
-                {sample && (msg as SampleMessage).reply && <p className="text-sm"><strong>Sample reply:</strong> {(msg as SampleMessage).reply}</p>}
+                {sample && (msg as SampleMessage).reply && <p className="text-sm"><strong>reply:</strong> {(msg as SampleMessage).reply}</p>}
                 {/* Reply box */}
                 <div className="mt-4 pt-3" style={{ borderTop: '1px solid #E2D8C4' }}>
                   <div className="flex items-center gap-1.5 mb-2">
@@ -290,7 +290,7 @@ export default function ContactInbox({ recipient, onUnreadCount }: Props) {
                     }}
                   >
                     {replySending === msg.id ? <Loader2 size={12} className="animate-spin" /> : <Send size={12} />}
-                    {replySent.has(msg.id) ? (sample ? 'Saved in sample' : 'Sent!') : replySending === msg.id ? 'Sending…' : sample ? 'Save sample reply' : 'Send reply'}
+                    {replySent.has(msg.id) ? (sample ? 'Saved in this workspace' : 'Sent!') : replySending === msg.id ? 'Sending…' : sample ? "Save reply" : 'Send reply'}
                   </button>
                 </div>
               </div>
