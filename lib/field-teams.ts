@@ -2,7 +2,11 @@ import type { UserRole } from './db/types';
 
 export type FieldMember = { id: string; name: string; role: UserRole; gardenName?: string; gardenType?: string; gardenAreaM2?: number };
 export type FieldTeam = { mentorId: string; location: string; farmerIds: string[]; guidance: string; updatedAt: string };
-export type FieldVisit = { id: string; mentorId: string; farmerId: string; date: string; notes: string };
+export type VisitPhoto = { image: string; caption: string };
+export function validVisitPhotos(value: unknown): value is VisitPhoto[] {
+  return Array.isArray(value) && value.length <= 3 && value.every(p => p && typeof p.image === 'string' && p.image.length <= 150000 && /^data:image\/jpeg;base64,[A-Za-z0-9+/]+={0,2}$/.test(p.image) && typeof p.caption === 'string' && p.caption.length <= 200);
+}
+export type FieldVisit = { id: string; mentorId: string; farmerId: string; date: string; notes: string; originalNotes?: string; photos?: VisitPhoto[]; photoCount?: number };
 export type FieldWorkspace = { people: FieldMember[]; teams: FieldTeam[]; visits: FieldVisit[]; canManage: boolean; selfId: string; sample: boolean };
 export const validFieldId = (value: unknown): value is string => typeof value === 'string' && /^[\w-]{1,128}$/.test(value);
 
@@ -63,7 +67,7 @@ export function freshFieldWorkspace(): FieldWorkspace {
     {group:1,farmer:0,date:'2026-08-28',notes:'Reviewed the school garden activity log with the coordinator. Confirmed the next practical session and the materials needed for learners.'},
     {group:2,farmer:0,date:'2026-09-02',notes:'Checked the month-end harvest and expense records. The grower will attach missing slips before the next group review.'},
   ];
-  workspace.visits=examples.map((example,index)=>({id:`sample-field-visit-${index+1}`,mentorId:workspace.teams[example.group].mentorId,farmerId:workspace.teams[example.group].farmerIds[example.farmer],date:example.date,notes:example.notes}));
+  workspace.visits=examples.map((example,index)=>({id:`sample-field-visit-${index+1}`,mentorId:workspace.teams[example.group].mentorId,farmerId:workspace.teams[example.group].farmerIds[example.farmer],date:example.date,notes:example.notes,...(index===0?{photos:[{image:'/demo/harvest.webp',caption:'Garden harvest discussed during the visit — fictional illustration.'}]}:{})}));
   return workspace;
 }
 

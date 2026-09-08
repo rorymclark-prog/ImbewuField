@@ -33,6 +33,15 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '8 September 2026', sha: '27810ae', changes: [
+    'Tour and Tips stay at the top of the menu; Home invites you for your first 30 openings.',
+    'Saving a sale creates its invoice, ready to view, share or print.',
+    'Explore orchard harvests and sales alongside vegetables in the tour.',
+    'Garden invoices have a logo and complete fictional contact and banking details.',
+    'Dictate visit notes, review AI cleanup and attach photos to each mentor visit.',
+    'Switch paid AI tools on or off in Settings.',
+    'Money charts label the balance as cash surplus or cash shortfall.',
+  ] },
   { when: '7 September 2026', sha: '435f97f', changes: [
     'Choose the saved map versions for each report and track which maps you have reviewed.',
     'Report maps have sharper previews; the checklist opens the relevant design step.',

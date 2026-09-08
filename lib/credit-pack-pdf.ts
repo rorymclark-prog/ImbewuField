@@ -39,7 +39,7 @@ import {
  *  callers must show the farmer why nothing was produced, not swallow it. */
 export class CreditPackSampleModeError extends Error {
   constructor() {
-    super('This export is disabled while you are viewing the sample farm. Sign in and turn off the sample to export your own records.');
+    super("This export is disabled while you are viewing the Ubhejane farm. Sign in and turn off the tour to export your own records.");
     this.name = 'CreditPackSampleModeError';
   }
 }
@@ -208,7 +208,7 @@ async function buildCreditPackDocument(input: CreditPackDocumentInput, preview: 
   y += 22;
 
   doc.setFont('helvetica', 'normal'); doc.setFontSize(13); setInk(INK.green);
-  doc.text(preview ? 'Sample farm records — for a lender' : 'Farm records — for a lender', M, y);
+  doc.text(preview ? "Ubhejane farm records — for a lender" : 'Farm records — for a lender', M, y);
   y += 20;
 
   const farmerName = input.farmer.name?.trim();

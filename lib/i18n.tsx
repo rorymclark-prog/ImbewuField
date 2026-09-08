@@ -845,7 +845,7 @@ const T_en: Dict = {
   myRecordsBuyerLabel: 'Buyer (optional)',
   myRecordsBuyerPlaceholder: 'e.g. Market',
   myRecordsSaleValidationError: 'Crop, kg, and amount (R) are required.',
-  myRecordsSaveSale: 'Save sale',
+  myRecordsSaveSale: 'Save sale & invoice',
   myRecordsLoadError: "Couldn't load your latest records. Check your connection and try again — what's shown below may be out of date or incomplete.",
   myRecordsRetry: 'Retry',
   myRecordsNoHarvests: 'No harvests logged yet.',

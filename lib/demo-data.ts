@@ -1,3 +1,4 @@
+import { SAMPLE_ORCHARD } from './sample-orchard';
 // Sample farm records so anyone can test the assistant's finance/crop answers
 // without signing in or capturing real data. Stored in localStorage; clearly
 // labelled as sample data in the UI.
@@ -19,6 +20,7 @@ const JKEY = 'imbewu_demo_project';
 const KEYS = [PKEY, SKEY, JKEY] as const;
 
 const SAMPLE_PRODUCTION: DemoProduction[] = [
+  ...SAMPLE_ORCHARD.map(row => ({ crop: row.crop, kg: row.pickedKg, loggedAt: '2026-06-01' })),
   { crop: 'Spinach', kg: 120, loggedAt: '2026-04-12' },
   { crop: 'Tomatoes', kg: 85, loggedAt: '2026-03-28' },
   { crop: 'Maize', kg: 240, loggedAt: '2026-05-02' },
@@ -29,6 +31,7 @@ const SAMPLE_PRODUCTION: DemoProduction[] = [
 ];
 
 const SAMPLE_SALES: DemoSale[] = [
+  ...SAMPLE_ORCHARD.map(row => ({ crop: row.crop, kg: row.soldKg, amount: row.soldKg * row.price, buyer: 'Mkuze produce stall', soldAt: '2026-06-01' })),
   { crop: 'Spinach', kg: 90, amount: 1800, buyer: 'Local market', soldAt: '2026-04-15' },
   { crop: 'Tomatoes', kg: 65, amount: 1950, buyer: 'Spaza shops', soldAt: '2026-04-02' },
   { crop: 'Maize', kg: 180, amount: 1620, buyer: 'Co-op', soldAt: '2026-05-08' },

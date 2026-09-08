@@ -19,6 +19,8 @@ import {
   buildDemoFacilitatorState,
   buildDemoFinance,
 } from '../lib/demo-farm.ts';
+import { perennialKeyForName } from '../lib/perennial-produce.ts';
+import { SAMPLE_ORCHARD } from '../lib/sample-orchard.ts';
 import { DEFAULT_CROP_PRICES } from '../lib/crop-prices.ts';
 import { buildFarmMetrics } from '../lib/farm-metrics.ts';
 import { cashLedgerSales, cashIncomeTotal } from '../lib/invoice-sales.ts';
@@ -32,7 +34,7 @@ import { suspectedDuplicateIncomeIds } from '../lib/duplicate-income.ts';
 
 const aliasIndex = buildCropAliasIndex();
 const cropKeyOf = (label: string): string => {
-  const key = matchCropKey(label, aliasIndex);
+  const key = matchCropKey(label, aliasIndex) ?? perennialKeyForName(label);
   assert.ok(key, `"${label}" must resolve to one catalog crop, or the reconciliation panel cannot match it`);
   return key;
 };
@@ -41,10 +43,16 @@ const monthKey = (iso: string): string => {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
 };
 
-test('every sample sale is whole rand at a price from the app\'s own price table', () => {
+test('sample sales use researched annual prices or explicitly fictional orchard bookkeeping prices', () => {
   const { sales } = buildDemoFinance();
   assert.ok(sales.length >= 24, 'a twelve-month trading record needs a sale in most months');
   for (const sale of sales) {
+    const orchard = SAMPLE_ORCHARD.find(row => row.key === cropKeyOf(sale.crop));
+    if (orchard) {
+      assert.equal(sale.amount, sale.kg * orchard.price);
+      assert.equal(sale.enterprise, 'other', 'orchard money must not inflate vegetable-bed returns');
+      continue;
+    }
     const price = DEFAULT_CROP_PRICES[cropKeyOf(sale.crop)];
     assert.ok(price, `${sale.crop} must be priced by lib/crop-prices.ts, never by a figure typed into the fixture`);
     const retail = price.retailPerKg;
@@ -209,8 +217,8 @@ test('sample returns use the mapped beds and plots without losing or duplicating
   const september = new Date(expenses.find(e => e.id === 'demo-expense-11')!.spent_at);
   const result = buildAreaReturns(beds, sales, expenses, invoices, 'month', september);
   assert.equal(result.unassignedEntries, 0);
-  assert.ok(sales.every(row => row.enterprise === 'vegetables'));
-  assert.ok(invoices.every(row => row.enterprise === 'vegetables'));
+  assert.ok(sales.every(row => row.enterprise === (perennialKeyForName(row.crop) ? 'other' : 'vegetables')));
+  assert.ok(invoices.every(row => row.enterprise === (perennialKeyForName(row.items[0].desc) ? 'other' : 'vegetables')));
   // The sample plan grows even its maize and sweet potato on beds. The separate
   // mapped staple plots have preparation costs, not an invented harvest.
   assert.ok(buildDemoCropPlan().plantings.every(p => beds.some(b => b.id === p.bedId && b.kind !== 'plot')));
@@ -220,6 +228,6 @@ test('sample returns use the mapped beds and plots without losing or duplicating
   assert.equal(result.cards[1].sales, 0);
   assert.ok(result.cards[1].costs > 0);
   const inPeriod = (iso: string) => new Date(iso).getFullYear() === september.getFullYear() && new Date(iso).getMonth() === 8;
-  assert.equal(result.cards[2].sales, cashIncomeTotal(sales.filter(s => inPeriod(s.sold_at)), invoices.filter(i => i.paidAt && inPeriod(i.paidAt))));
+  assert.equal(result.cards[2].sales + result.otherSales, cashIncomeTotal(sales.filter(s => inPeriod(s.sold_at)), invoices.filter(i => i.paidAt && inPeriod(i.paidAt))));
   assert.equal(result.cards[2].costs, expenses.filter(e => inPeriod(e.spent_at)).reduce((n, e) => n + e.amount, 0));
 });

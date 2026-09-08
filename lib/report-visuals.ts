@@ -51,10 +51,10 @@ export function sampleReportVisuals(g: SampleGarden): ReportVisuals {
   return { title: g.name, subtitle: `${g.kind} · ${g.town}`, basis: 'Fictional demonstration data. The photograph is an AI reference and the layout is schematic, not to scale.', metrics: [
     { label: 'Growing space', value: `${n(total)} m²`, note: 'Vegetables + staple crops' },
     { label: 'Harvest recorded', value: `${n(g.produceKg)} kg`, note: 'Illustrative total; period unspecified' },
-    { label: 'Adult participants', value: `${g.farmers}`, note: 'Sample participant register' },
+    { label: 'Adult participants', value: `${g.farmers}`, note: "Participant register" },
     { label: 'Training progress', value: `${g.training}%`, note: 'Illustrative programme progress' },
   ], charts: [
-    { id: 'area', title: 'How the site is used', note: 'Sample area allocations. Other space includes buildings, access and trees; it is not all available for planting.', unit: 'm²', kind: 'bars', rows },
+    { id: 'area', title: 'How the site is used', note: "area allocations. Other space includes buildings, access and trees; it is not all available for planting.", unit: 'm²', kind: 'bars', rows },
     { id: 'learning', title: 'Learning and participation', note: `${g.farmers} adult participants · Coordinator: ${g.facilitator}. Training progress is not a measure of livelihood improvement.`, unit: '%', kind: 'progress', rows: [{ label: 'Training progress', value: g.training }] },
   ] };
 }

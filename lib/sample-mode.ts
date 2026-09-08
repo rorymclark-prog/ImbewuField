@@ -125,7 +125,7 @@ export function isSampleMode(): boolean {
  * identical text no matter which render path they hit.
  */
 export const SAMPLE_MODE_RENDER_REFUSAL =
-  'AI sheets are switched off in the sample farm. Exit the sample and open your own farm to render AI sheets.';
+  "AI sheets are switched off in the Ubhejane farm. Exit the tour and open your own farm to render AI sheets.";
 
 export function enterSampleMode(): boolean {
   if (typeof window === 'undefined') return false;

@@ -541,3 +541,36 @@ test('a rejected invoice is absent from the returned ledger, which is how the ca
   // The prior ledger is preserved, not clobbered — that is the contract persist() relies on.
   assert.ok(after.some((x) => x.id === 'inv-good'));
 });
+
+const { saveSaleInvoice } = await import('../lib/sale-invoice.ts');
+
+test('a quick sale saves one paid invoice before syncing its income', async () => {
+  installBrowser();
+  let calls = 0;
+  const saved = await saveSaleInvoice({ crop: 'Avocado', kg: 3, amount: 60 }, async row => {
+    calls++;
+    assert.equal(loadInvoices().find(i => i.id === row.id)?.total, 60);
+    assert.equal(row.status, 'paid');
+  });
+  assert.equal(calls, 1);
+  assert.equal(saved.salesSyncPending, undefined);
+  assert.equal(loadInvoices().length, 1);
+  assert.equal(saved.items[0].price, 20);
+});
+
+test('failed sales sync leaves the original invoice available for retry', async () => {
+  installBrowser();
+  const saved = await saveSaleInvoice({ crop: 'Lemon', kg: 2, amount: 20 }, async () => { throw Error('offline'); });
+  assert.equal(saved.salesSyncPending, true);
+  assert.equal(loadInvoices()[0].id, saved.id);
+});
+
+test('storage failure or invalid amounts cannot send an unrecorded sale', async () => {
+  const { local } = installBrowser();
+  let calls = 0;
+  const sync = async () => { calls++; };
+  await assert.rejects(saveSaleInvoice({ crop: 'Lemon', kg: 0, amount: 20 }, sync));
+  local.failWrites = true;
+  await assert.rejects(saveSaleInvoice({ crop: 'Lemon', kg: 2, amount: 20 }, sync));
+  assert.equal(calls, 0);
+});

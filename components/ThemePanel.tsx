@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import AiFeatureSettings from './AiFeatureSettings';
 import { Satellite, Sprout, Mountain, Sparkles, Sun, Moon, Monitor, Check, X, Footprints, Volume2, type LucideIcon } from 'lucide-react';
 import { useTheme, type ThemeName, type ThemeMode } from '@/lib/theme';
 import { getGuidedState, setGuidedState, GUIDED_CHANGED_EVENT } from '@/lib/site-progress';
@@ -175,8 +176,8 @@ export default function ThemePanel({ open, onClose }: Props) {
         <div style={{ flex: 1, overflowY: 'auto', padding: '20px' }}>
           <section style={{ marginBottom:28, display:'grid', gap:12, fontSize:16 }} aria-label="Tour and support">
             <Link href="/tour" onClick={onClose}>Tour &amp; samples · 15 minutes</Link>
-            <Link href="/samples" onClick={onClose}>Choose a sample workspace</Link>
-            <Link href="/samples/gardens" onClick={onClose}>Browse 18 sample gardens</Link>
+            <Link href="/samples" onClick={onClose}>Choose a workspace</Link>
+            <Link href="/samples/gardens" onClick={onClose}>Browse 18 gardens</Link>
             <Link href="/feedback" onClick={onClose}>Report a bug / request a feature</Link>
           </section>
 
@@ -254,6 +255,7 @@ export default function ThemePanel({ open, onClose }: Props) {
             </div>
           </div>
 
+          <AiFeatureSettings />
           {/* Guidance (Lima) section */}
           <div style={{ marginBottom: 28 }}>
             <div style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-muted)', letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 12 }}>

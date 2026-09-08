@@ -173,12 +173,14 @@ test('detailed report photos fit the existing storage limit before the PDF is bu
 });
 
 import { pdfContentStreams } from './pdf-content-streams.ts';
-test('sample reports retain their sample warning on every page and summaries omit excess detail', async () => {
+test('demo reports identify their basis once without repetitive sample footers, and summaries omit excess detail', async () => {
   const sections = [{ title: 'Recorded visits', lines: Array.from({ length: 90 }, (_, i) => `Visit record ${i + 1}: fictional demonstration notes for the assigned farmer.`) }];
   const full = await buildProgrammePdf('Field report', true, sections, 'full');
   assert.ok(full.getNumberOfPages() > 1);
   const output = pdfContentStreams(full.output('arraybuffer'));
-  assert.equal(output.split('SAMPLE - NOT ACTUAL RESULTS').length - 1, full.getNumberOfPages());
+  assert.ok(output.includes('Fictional demonstration data'));
+  assert.ok(!output.includes('SAMPLE - NOT ACTUAL RESULTS'));
+  assert.equal(output.split('ImbewuField | ').length - 1, full.getNumberOfPages());
   assert.ok(output.includes('Visit record 90:'));
   const brief = await buildProgrammePdf('Field report', true, sections, 'summary');
   const briefOutput = pdfContentStreams(brief.output('arraybuffer'));
@@ -277,4 +279,14 @@ test('sample controls cannot recreate the fixed bottom strip', () => {
   assert.match(menu,/Sample controls/);
   assert.match(menu,/Exit sample/);
   assert.match(menu,/18 gardens &amp; completed reports/);
+});
+
+const { validVisitPhotos } = await import('../lib/field-teams');
+test('visit photos cannot overflow a record or point to untrusted external images', () => {
+  const p={image:'data:image/jpeg;base64,/9j/AA==',caption:'Tap repaired'};
+  assert.equal(validVisitPhotos([p,p,p]),true);
+  assert.equal(validVisitPhotos([p,p,p,p]),false);
+  assert.equal(validVisitPhotos([{...p,image:'https://example.com/tracker'}]),false);
+  assert.equal(validVisitPhotos([{...p,caption:'x'.repeat(201)}]),false);
+  assert.equal(validVisitPhotos([{...p,image:'data:image/jpeg;base64,'+'A'.repeat(150000)}]),false);
 });

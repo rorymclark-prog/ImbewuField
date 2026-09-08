@@ -111,3 +111,41 @@ test('logAiUsage emits one greppable [ai-cost] line and returns the cost', () =>
   assert.ok(payload.usd > 0);
   assert.equal(c.inputTokens, 1000);
 });
+
+const { aiFeatureDisabled, aiFeatureForRoute } = await import('../lib/ai-features');
+test('paid AI switches never block saving ordinary field records', () => {
+  assert.equal(aiFeatureDisabled('/api/read-slip','receipts',{}),true);
+  assert.equal(aiFeatureDisabled('/api/generate-report','receipts',{}),false);
+  assert.equal(aiFeatureDisabled('/api/visit-notes','all',{}),true);
+  assert.equal(aiFeatureDisabled('/api/chat','',{PAID_AI_ENABLED:'false'}),true);
+  assert.equal(aiFeatureDisabled('/api/read-slip','',{AI_RECEIPTS_ENABLED:'false'}),true);
+  assert.equal(aiFeatureDisabled('field-teams','all',{PAID_AI_ENABLED:'false'}),false);
+  assert.equal(aiFeatureForRoute('/api/ai-render/poll'),null,'reading an existing image does not spend on a new one');
+});
+
+test('receipt extraction can use Flash-Lite without falling back to a more expensive provider', async () => {
+  const { lowCostText } = await import('../lib/low-cost-ai');
+  const previousProvider=process.env.LOW_COST_AI_PROVIDER, previousKey=process.env.GEMINI_API_KEY, previousFetch=globalThis.fetch;
+  process.env.LOW_COST_AI_PROVIDER='gemini';process.env.GEMINI_API_KEY='test-placeholder';
+  let calls=0;
+  globalThis.fetch=async (url,options) => {
+    calls++;
+    assert.ok(String(url).includes('gemini-2.5-flash-lite:generateContent'));
+    const body=JSON.parse(String(options?.body));
+    assert.equal(body.generationConfig.maxOutputTokens,400);
+    assert.equal(body.contents[0].parts[0].inlineData.mimeType,'image/jpeg');
+    return Response.json({candidates:[{finishReason:'STOP',content:{parts:[{text:'{"amount":20}'}]}}],usageMetadata:{promptTokenCount:2000,candidatesTokenCount:200}});
+  };
+  try {
+    assert.equal(await lowCostText('/api/read-slip','Read total',400,{data:'AA==',mediaType:'image/jpeg'}),'{"amount":20}');
+    assert.equal(calls,1);
+    globalThis.fetch=async()=>{calls++;return new Response('Unavailable',{status:503});};
+    await assert.rejects(lowCostText('/api/read-slip','Read total',400));
+    assert.equal(calls,2,'one failed call must not trigger paid retries');
+    assert.ok(Math.abs(costOf('gemini-2.5-flash-lite',{input_tokens:2000,output_tokens:200}).usd*15-0.0042)<1e-9);
+  } finally {
+    globalThis.fetch=previousFetch;
+    if(previousProvider===undefined)delete process.env.LOW_COST_AI_PROVIDER;else process.env.LOW_COST_AI_PROVIDER=previousProvider;
+    if(previousKey===undefined)delete process.env.GEMINI_API_KEY;else process.env.GEMINI_API_KEY=previousKey;
+  }
+});

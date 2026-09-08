@@ -248,7 +248,7 @@ export default function InvoicePage() {
     status: saved.find((s) => s.id === currentId)?.status ?? 'unpaid',
     paidAt: saved.find((s) => s.id === currentId)?.paidAt,
     paymentMethod: saved.find((s) => s.id === currentId)?.paymentMethod,
-  }), [currentNo, issuedISO, due, sellerName, sellerFarm, sellerPhone, letterhead, billTo, buyerDetails, items, reference, notes, saved, currentId]);
+  }), [currentNo, issuedISO, due, sellerName, sellerFarm, sellerPhone, sellerLogo, letterhead, billTo, buyerDetails, items, reference, notes, saved, currentId]);
 
   /**
    * Save the business name back to the account, on blur rather than per keystroke.
@@ -344,6 +344,7 @@ export default function InvoicePage() {
       reference: reference.trim() || undefined,
       notes: notes.trim() || undefined,
       enterprise: enterprise || undefined,
+      salesSyncPending: existing?.salesSyncPending,
       status: existing?.status ?? 'unpaid',
       paidAt: existing?.paidAt,
     });
@@ -355,6 +356,7 @@ export default function InvoicePage() {
     if (stored.status === 'paid') {
       try {
         await syncInvoiceSales(stored);
+        saveInvoice({ ...stored, salesSyncPending: false });
       } catch {
         if (existing) saveInvoice(existing);
         setSaveError('This paid invoice could not update the sales book. Nothing was printed or shared; check your connection and try again.');
@@ -857,6 +859,8 @@ export default function InvoicePage() {
               </label>
             </div>
 
+            <button type="button" onClick={() => { void persist(); }} disabled={!valid}
+              className="w-full rounded-xl py-3 font-semibold" style={{ ...CARD, color: '#1F4D2B' }}>Save invoice</button>
             <div className="flex gap-2">
               <button onClick={shareInvoice} disabled={!valid}
                 className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl text-sm font-display font-semibold"
@@ -870,6 +874,12 @@ export default function InvoicePage() {
               </button>
             </div>
 
+            {saved.find(invoice => invoice.id === currentId)?.salesSyncPending && (
+              <div role="status" className="rounded-xl p-3 text-sm" style={CARD}>
+                Invoice saved on this device. The shared sales records have not confirmed yet.
+                <button type="button" onClick={() => { void persist(); }} className="block underline py-2">Retry sales sync</button>
+              </div>
+            )}
             {saveError && (
               <p className="text-center text-xs font-sans px-3 py-2 rounded-lg" style={{ color: '#B53A3A', background: '#FBEAEA', border: '1px solid #E8C4C4' }}>
                 {saveError}

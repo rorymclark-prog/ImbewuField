@@ -5,12 +5,12 @@ import { validProductionSite, type ProductionSite } from './production-sites';
 // The root sample storage shim makes these edits disposable. Every entry point
 // also refuses outside sample mode, including stale event handlers after exit.
 export function sampleRead<T>(key: string, fresh: () => T): T {
-  if (!isSampleMode()) throw Error('Open a sample workspace first.');
+  if (!isSampleMode()) throw Error("Open a workspace first.");
   const saved = window.localStorage.getItem(`imbewu-sample-${key}`);
   return saved ? JSON.parse(saved) as T : fresh();
 }
 export function sampleWrite<T>(key: string, value: T): void {
-  if (!isSampleMode()) throw Error('Open a sample workspace first.');
+  if (!isSampleMode()) throw Error("Open a workspace first.");
   window.localStorage.setItem(`imbewu-sample-${key}`, JSON.stringify(value));
 }
 export function freshSampleAreas(): ProductionSite[] {
@@ -33,7 +33,7 @@ export function upsertSampleArea(rows: ProductionSite[], site: ProductionSite, t
 export type SampleMessage = { id: string; from_name: string; from_uid: string; recipient: string; subject: string; body: string; status: 'unread' | 'read' | 'replied'; created_at: string; reply?: string };
 export function freshSampleMessages(recipient: string): SampleMessage[] {
   return [
-    { id: 'sample-visit', from_name: 'Sample farmer', from_uid: 'sample-farmer', recipient, subject: 'Help planning the next visit', body: 'Could we review the crop plan together during the next garden visit?', status: 'unread', created_at: '2026-09-01T09:00:00Z' },
-    { id: 'sample-course', from_name: 'Sample student', from_uid: 'sample-student', recipient, subject: 'Course follow-up', body: 'I have completed my course assessment. Where can I find the next activity?', status: 'read', created_at: '2026-09-01T08:00:00Z' },
+    { id: 'sample-visit', from_name: 'Nomsa Mthembu', from_uid: 'sample-farmer', recipient, subject: 'Help planning the next visit', body: 'Could we review the crop plan together during the next garden visit?', status: 'unread', created_at: '2026-09-01T09:00:00Z' },
+    { id: 'sample-course', from_name: 'Zodwa Mthethwa', from_uid: 'sample-student', recipient, subject: 'Course follow-up', body: 'I have completed my course assessment. Where can I find the next activity?', status: 'read', created_at: '2026-09-01T08:00:00Z' },
   ];
 }

@@ -18,7 +18,7 @@ export default function SampleProgramme({ funder = false, accessOnly = false, co
   const [localZu, setZu] = useState(false);
   const zu = language ?? localZu;
   const [notice, setNotice] = useState('');
-  const [draft, setDraft] = useState({ title: '', project: 'Sample learning cohort', stage: 'baseline' as MelStage, due: '' });
+  const [draft, setDraft] = useState({ title: '', project: "Community garden learning cohort", stage: 'baseline' as MelStage, due: '' });
   const [chosenPeople, setChosenPeople] = useState<string[]>([]);
   const [funderPreview, setFunderPreview] = useState(false);
   useEffect(() => { setControls(readSampleProgramme()); }, []);

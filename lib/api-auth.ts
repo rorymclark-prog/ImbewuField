@@ -1,3 +1,4 @@
+import { AI_DISABLED_HEADER, aiFeatureDisabled } from './ai-features';
 import { getApps, getApp, initializeApp } from 'firebase-admin/app';
 import { getAuth } from 'firebase-admin/auth';
 import {
@@ -229,6 +230,10 @@ export async function guardPaidApiRequest(
 ): Promise<ApiAuthResult> {
   const auth = await authenticateApiRequest(req, routeName, verifyToken);
   if (auth.response) return auth;
+
+  if (aiFeatureDisabled(routeName, req.headers.get(AI_DISABLED_HEADER) ?? '', process.env)) {
+    return { ...auth, response: Response.json({ error: 'This AI feature is switched off. You can change your AI settings or continue manually.' }, { status: 403 }) };
+  }
 
   const tooLarge = oversizedApiBodyResponse(req, routeName);
   if (tooLarge) return { ...auth, response: tooLarge };

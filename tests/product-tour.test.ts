@@ -185,3 +185,18 @@ test('tour cards preserve account restrictions and a failed start cannot later j
   assert.deepEqual(pageHarness.jumps, [], 'a failed card request must not reappear during a later successful start');
   act(() => { failed.unmount(); });
 });
+
+const { recordTourOpening, dismissTourMenuTip } = await import('../lib/tour-discovery');
+test('tour invitation counts app openings once and retires after opening 30', () => {
+  const rows = new Map<string,string>();
+  const storage = { getItem: (k:string) => rows.get(k) ?? null, setItem: (k:string,v:string) => { rows.set(k,v); } };
+  rows.set('opening-30', JSON.stringify({ openings:29 }));
+  const last = recordTourOpening(storage, 'opening-30');
+  assert.equal(last.openings, 30);
+  assert.equal(last.menuTipDismissed, false);
+  assert.equal(recordTourOpening(storage, 'opening-30').openings, 30, 'routing and repeated effects must not count as openings');
+  assert.equal(dismissTourMenuTip(storage,'opening-30',last).menuTipDismissed,true);
+  rows.set('opening-31', rows.get('opening-30')!);
+  assert.deepEqual(recordTourOpening(storage,'opening-31'), { openings:31, menuTipDismissed:true });
+  assert.equal(recordTourOpening(storage,'different-account').openings,1);
+});

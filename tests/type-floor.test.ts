@@ -41,6 +41,7 @@ const FLOOR = 12;
 // old tab, a bookmark, the Journal's link), so if anyone ever puts markup back on it, the floor
 // should apply from the first line rather than from whenever someone remembers this file.
 const ROUTES = [
+  'app/tips/page.tsx',
   'app/home/page.tsx',
   'app/records/page.tsx',
   'app/finances/page.tsx',
@@ -67,6 +68,10 @@ const STAFF_ROUTES = [
 
 /** Files whose type she reads. Floor of 12px, no allowance. */
 const FARMER_SURFACES: Record<string, string> = {
+  'components/TourDiscovery.tsx': 'tour menu reminder is read on phones',
+  'components/AiFeatureSettings.tsx': 'cost controls must be readable on phones',
+  'components/VisitCapture.tsx': 'mentors capture notes and photographs on phones',
+  'app/tips/page.tsx': 'short how-to guides are for every app user',
   'components/report/SiteCropPlanPreview.tsx': 'saved-site crop previews and their opening links on phones',
   'components/MiniPlanPlate.tsx': 'shared geometry thumbnail on farmers’ saved-site cards; no visible type',
   'components/records/ReceiptPreview.tsx': 'receipt totals and viewing controls on farmers’ phones',
