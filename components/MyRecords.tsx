@@ -34,6 +34,7 @@ import {
   Sparkles,
   Trees,
   Eye,
+  FileText,
 } from 'lucide-react';
 import type { ProductionLog, SalesLog, ExpenseLog, Design, Profile } from '@/lib/db/types';
 import CropSelect from '@/components/CropSelect';
@@ -835,6 +836,7 @@ function SalesList({ items }: { items: SalesLog[] }) {
               {item.kg} kg &nbsp;·&nbsp; {fmtDate(item.sold_at)}
             </p>
             {item.invoice_id && loadInvoices().some((invoice) => invoice.id === item.invoice_id) && <Link href={`/invoice?view=${encodeURIComponent(item.invoice_id)}`} aria-label={`View invoice for ${item.crop}`} style={{ display: 'inline-flex', gap: 6, alignItems: 'center', minHeight: 44, fontSize: 12, color: '#315939' }}><Eye size={16} />Invoice #{loadInvoices().find((invoice) => invoice.id === item.invoice_id)?.no} · View</Link>}
+            {(!item.invoice_id || (item.invoice_source_sale && !loadInvoices().some(invoice => invoice.id === item.invoice_id))) && item.kg > 0 && item.amount >= 0 && <Link href={`/invoice?sale=${encodeURIComponent(item.id)}`} aria-label={`${item.invoice_source_sale ? 'Recover' : 'Create'} invoice for ${item.crop}`} className="inline-flex items-center gap-1.5 text-xs font-semibold min-h-11" style={{ color: '#315939' }}><FileText size={16} />{item.invoice_source_sale ? 'Recover invoice' : 'Create invoice'}</Link>}
           </div>
           <div
             className="text-sm font-display font-semibold flex-shrink-0"
@@ -1346,9 +1348,19 @@ export default function MyRecords({
              Sold page of the book; the plain-text entry and the edit/delete ledger are on the
              same page, below this component. ── */}
       {showSold && (
-        <LogSaleForm
-          onSaved={handleSaved}
-        />
+        <Card accent="#315939">
+          <SectionLabel>Record a sale</SectionLabel>
+          <p className="text-sm mb-3" style={{ color: 'var(--color-ink)' }}>Create an invoice to keep the buyer, produce, quantity and payment together.</p>
+          <div className="flex flex-wrap gap-2">
+            <Link href="/invoice?mode=sale" className="inline-flex items-center justify-center gap-2 rounded-xl px-4 min-h-11 text-sm font-semibold" style={{ background: '#315939', color: '#fff' }}><FileText size={18} />New sale &amp; invoice</Link>
+            <Link href="/invoice?mode=paper" className="inline-flex items-center justify-center gap-2 rounded-xl px-4 min-h-11 text-sm font-semibold" style={{ border: '1px solid var(--color-border)', color: 'var(--color-ink)' }}>Past sale / paper invoice<ArrowRight size={16} /></Link>
+          </div>
+          <p className="text-xs mt-3" style={{ color: 'var(--color-muted-strong)' }}>Already logged this sale? Use Create invoice on its row below to keep one record.</p>
+          <details className="mt-3">
+            <summary className="min-h-11 flex items-center cursor-pointer text-sm font-semibold" style={{ color: 'var(--color-ink)' }}>Quick sale entry</summary>
+            <LogSaleForm onSaved={handleSaved} />
+          </details>
+        </Card>
       )}
 
       {/* ── Sales summary ────────────────────────────── */}

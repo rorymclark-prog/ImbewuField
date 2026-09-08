@@ -4,6 +4,8 @@ import { validFieldId } from './field-teams';
 import { PROGRESS_TEMPLATES, validProgressArea, type ProgressArea } from './programme-progress';
 import { analyseAssessment, validAnswers, type MelAssessment, type MelResponse } from './mel';
 import { MEL_TEMPLATES } from './mel-templates';
+import { validEvidenceImage } from './invoice-logo';
+export { validEvidenceImage } from './invoice-logo';
 
 export type ProgrammeLogo = { label: string; image: string };
 export type ProgrammeBranding = { organisation: ProgrammeLogo; garden: ProgrammeLogo; funder: ProgrammeLogo };
@@ -26,7 +28,6 @@ export type EvidenceData = { brandingOnly?: boolean; sessions: TrainingRecord[];
 export const blankBranding = (): ProgrammeBranding => ({ organisation: { label: '', image: '' }, garden: { label: '', image: '' }, funder: { label: '', image: '' } });
 const text = (v: unknown, max: number, required = false): v is string => typeof v === 'string' && v.length <= max && (!required || v.trim().length > 0);
 export const validEvidenceDate = (s: unknown): s is string => typeof s === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(s) && Number.isFinite(Date.parse(s)) && new Date(s).toISOString().slice(0, 10) === s;
-export const validEvidenceImage = (s: unknown): s is string => typeof s === 'string' && s.length <= 200000 && /^data:image\/(png|jpeg);base64,[A-Za-z0-9+/]+={0,2}$/.test(s);
 export function validAttendanceSignature(value: unknown): value is AttendanceSignature {
   if (!value || typeof value !== 'object') return false;
   const s = value as AttendanceSignature;

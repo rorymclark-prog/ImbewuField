@@ -76,7 +76,51 @@ test('owner access editor remains scoped to the selected NGO and cannot demote i
 // Stateful demos must preserve the same publication and assignment rules as live work.
 import { changeSampleAssessment, sampleAssessments } from '../lib/sample-programme';
 import { freshSampleAreas, upsertSampleArea, sampleRead, sampleWrite } from '../lib/sample-operations';
-import { completeSampleFieldWorkspace, freshFieldWorkspace, projectFieldWorkspace, validFieldTeam } from '../lib/field-teams';
+import { canReadFieldVisit, completeSampleFieldWorkspace, fieldVisitDocumentId, fieldVisitReportLines, freshFieldWorkspace, projectFieldWorkspace, validFieldTeam, validFieldVisit } from '../lib/field-teams';
+import { summariseFieldWork } from '../lib/field-teams';
+
+test('a completed garden action needs dated evidence and stops appearing in the due worklist', () => {
+  const data=projectFieldWorkspace(freshFieldWorkspace(),'sample-mentor',false);
+  const visit={...data.visits[1],actionCompletedOn:'2026-09-08',actionOutcome:'Invoice and harvest weights checked together.'};
+  assert.equal(validFieldVisit(visit,'2026-09-08',true),true);
+  assert.equal(validFieldVisit({...visit,actionOutcome:''},'2026-09-08',true),false);
+  assert.equal(validFieldVisit({...visit,actionCompletedOn:'2026-09-09'},'2026-09-08',true),false);
+  assert.equal(validFieldVisit({...visit,actionCompletedOn:'2026-08-01'},'2026-09-08',true),false);
+  data.visits=data.visits.map(v=>v.id===visit.id?visit:v);
+  const summary=summariseFieldWork(data,'','','','2026-09-08');
+  assert.ok(summary.completed.some(v=>v.id===visit.id));
+  assert.ok(!summary.due.some(v=>v.id===visit.id));
+  assert.ok(!summary.open.some(v=>v.id===data.visits[0].id),'the bed-label action was explicitly checked complete on 5 September');
+});
+
+test('report coverage, follow-ups and support charts use the same dates and participant', () => {
+  const data=projectFieldWorkspace(freshFieldWorkspace(),'sample-mentor',false);
+  const summary=summariseFieldWork(data,'2026-09-01','2026-09-06','s1','2026-09-08');
+  assert.deepEqual(summary.assigned,['s1']);
+  assert.equal(summary.visited,1);
+  assert.equal(summary.visits.length,1);
+  assert.equal(summary.visits[0].date,'2026-09-05');
+  assert.equal(summary.open.length,1);
+  assert.equal(summary.due.length,0);
+  assert.equal(summary.focus.length,2,'a visit can cover two areas; these must not become pie slices');
+  assert.equal(summary.focus.reduce((n,r)=>n+r.value,0),2);
+  assert.equal(summariseFieldWork(data,'2026-08-01','2026-09-08','s1').visited,1,'repeat visits do not create another participant');
+  assert.equal(summariseFieldWork(data,'2026-10-01','2026-10-31').visits.length,0);
+});
+
+test('practical skill claims, programme focus and GPS are validated before saving', () => {
+  const data=freshFieldWorkspace(),visit=data.visits[1];
+  assert.equal(validFieldVisit({...visit,practicalSkill:'',skillResult:'demonstrated'},'2026-09-08',true),false);
+  assert.equal(validFieldVisit({...visit,focus:['water','water']},'2026-09-08',true),false);
+  assert.equal(validFieldVisit({...visit,focus:['payroll-approved']},'2026-09-08',true),false);
+  assert.equal(validFieldVisit({...visit,latitude:-27.7,longitude:null},'2026-09-08',true),false);
+  assert.equal(validFieldVisit({...visit,latitude:-27.7,longitude:31.9},'2026-09-08',true),true);
+  assert.equal(validFieldTeam({...data.teams[0],programme:'act-sef-food-security'}),true);
+  assert.equal(validFieldTeam({...data.teams[0],programme:'government-certified'}),false);
+  const lines=fieldVisitReportLines(visit,'Participant').join('\n');
+  assert.match(lines,/Practical skill: Weigh and record a harvest/);
+  assert.match(lines,/Demonstrated during this visit/);
+});
 
 test('opening a sample assessment needs participants and never invents completed responses', () => {
   const fresh = freshSampleProgramme();
@@ -122,6 +166,63 @@ test('team assignments reject malformed IDs and duplicate farmer membership', ()
   assert.equal(validFieldTeam({ ...team, farmerIds: ['s1', 's1'] }), false);
   assert.equal(validFieldTeam({ ...team, mentorId: '../other' }), false);
   assert.equal(validFieldTeam({ ...team, location: ' ' }), false);
+});
+
+test('structured visits accept older notes and require coherent dates and follow-up actions', () => {
+  const legacy={id:'visit-one',mentorId:'mentor-one',farmerId:'farmer-one',date:'2026-09-01',notes:'Discussed the next harvest.'};
+  assert.equal(validFieldVisit(legacy,'2026-09-07'),true);
+  assert.equal(validFieldVisit({...legacy,originalNotes:'Original dictated notes'},'2026-09-07'),true);
+  assert.equal(validFieldVisit({...legacy,originalNotes:'x'.repeat(4001)},'2026-09-07'),false);
+  const visit={...legacy,notes:'',supportRequested:'Help with a leaking tap.',observations:'The tank tap is leaking.',agreedAction:'Replace the tap.',responsiblePerson:'Garden coordinator',followUpDate:'2026-09-14',location:'Tank beside the garden entrance'};
+  assert.equal(validFieldVisit(visit,'2026-09-07'),true);
+  assert.equal(validFieldVisit({...visit,observations:''},'2026-09-07'),false,'an action plan alone does not describe a completed visit');
+  assert.equal(validFieldVisit({...visit,date:'2026-09-08'},'2026-09-07'),false);
+  assert.equal(validFieldVisit({...visit,date:'2026-02-30'},'2026-09-07'),false);
+  assert.equal(validFieldVisit({...visit,followUpDate:'2026-08-31'},'2026-09-07'),false);
+  assert.equal(validFieldVisit({...visit,agreedAction:''},'2026-09-07'),false,'a person and date must relate to an agreed action');
+  assert.equal(validFieldVisit({...visit,supportRequested:'x'.repeat(2001)},'2026-09-07'),false);
+  assert.equal(validFieldVisit({...visit,location:42},'2026-09-07'),false);
+});
+
+test('visit photo attachments use bounded images and descriptive captions', () => {
+  const visit=freshFieldWorkspace().visits[0];
+  const photo={image:'data:image/jpeg;base64,/9j/AA==',caption:'The garden tap before repair'};
+  assert.equal(validFieldVisit(visit,'2026-09-07'),false,'the illustration cannot be submitted as a real visit photo');
+  assert.equal(validFieldVisit(visit,'2026-09-07',true),true,'the isolated example visit remains editable');
+  assert.equal(validFieldVisit({...visit,photos:[photo]},'2026-09-07'),true);
+  // The shared capture now supports three photographs; a fourth must still be rejected.
+  assert.equal(validFieldVisit({...visit,photos:[photo,photo,photo]},'2026-09-07'),true);
+  assert.equal(validFieldVisit({...visit,photos:[photo,photo,photo,photo]},'2026-09-07'),false);
+  assert.equal(validFieldVisit({...visit,photos:[{...photo,caption:' '}]},'2026-09-07'),false);
+  assert.equal(validFieldVisit({...visit,photos:[{...photo,image:'https://example.com/private-photo.jpg'}]},'2026-09-07'),false);
+  assert.equal(validFieldVisit({...visit,photos:[{...photo,image:'data:image/svg+xml;base64,PHN2Zz4='}]},'2026-09-07'),false);
+  assert.equal(validFieldVisit({...visit,photos:[{...photo,image:'data:image/jpeg;base64,'+'A'.repeat(200000)}]},'2026-09-07'),false);
+  assert.equal(validFieldVisit({...visit,photos:[null]},'2026-09-07'),false);
+});
+
+test('editing an API visit reuses its document ID and cannot address another mentor document', () => {
+  const first=fieldVisitDocumentId('mentor-one','visit-one');
+  assert.equal(fieldVisitDocumentId('mentor-one',first),first,'the prefixed ID returned by GET must not create a second visit');
+  assert.notEqual(fieldVisitDocumentId('mentor-two',first),first);
+  assert.throws(()=>fieldVisitDocumentId('mentor-one','../private'));
+});
+
+test('support notes, actions and photos follow the same assignment boundary as the visit', () => {
+  const data=freshFieldWorkspace();
+  const allowed=data.visits[0];
+  const privateVisit={...data.visits.find(v=>v.mentorId==='sample-mentor-coast')!,supportRequested:'Private support request',observations:'Private issue',agreedAction:'Private action',photos:[{image:'data:image/jpeg;base64,/9j/AA==',caption:'Private visit photo'}]};
+  data.visits=[allowed,privateVisit];
+  const assigned=new Set(data.teams[0].farmerIds);
+  assert.equal(canReadFieldVisit(privateVisit,'sample-mentor',false,assigned),false);
+  assert.equal(canReadFieldVisit({...privateVisit,mentorId:'sample-mentor'},'sample-mentor',false,assigned),false,'a former or unrelated farmer remains outside the current team');
+  const view=projectFieldWorkspace(data,'sample-mentor',false);
+  assert.deepEqual(view.visits,[allowed]);
+  assert.ok(!JSON.stringify(view).includes('Private'));
+  assert.equal(projectFieldWorkspace(data,'organisation',true).visits.length,2);
+  const report=fieldVisitReportLines(allowed,'Farmer name','Mentor name').join('\n');
+  for(const field of ['Support requested:','Observations / issues:','Agreed action:','Responsible person:','Follow-up:','Site location:'])assert.ok(report.includes(field),field);
+  const legacy={id:'old',mentorId:'mentor',farmerId:'farmer',date:'2026-09-01',notes:'Original visit notes'};
+  assert.ok(fieldVisitReportLines(legacy,'Farmer').includes('Visit notes: Original visit notes'));
 });
 
 import { buildProgrammePdf } from '../lib/programme-report-pdf';

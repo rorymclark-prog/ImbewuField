@@ -88,6 +88,9 @@ export default function InvoiceDocumentView({ doc }: { doc: InvoiceDocument }) {
         {doc.referenceLabel && (
           <span className="text-xs font-sans" style={{ color: '#8C7A62' }}>Your ref {doc.referenceLabel}</span>
         )}
+        {doc.paperReferenceLabel && (
+          <span className="w-full text-xs font-sans" style={{ color: '#5C5040' }}>Original paper invoice: {doc.paperReferenceLabel}</span>
+        )}
       </div>
 
       {/* Bill to */}

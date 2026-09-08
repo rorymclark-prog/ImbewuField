@@ -4,15 +4,15 @@ import { samplePortrait } from '@/lib/sample-media';
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { Search, Users, CheckCircle, ChevronDown, ChevronUp, BookOpen, Send, Loader2, GraduationCap, Inbox, Home, UserPlus, X, CalendarClock, AlertTriangle, PauseCircle, PlayCircle } from 'lucide-react';
+import { Search, Users, CheckCircle, ChevronDown, ChevronUp, BookOpen, Loader2, GraduationCap, Inbox, Home, UserPlus, X, CalendarClock, AlertTriangle, PauseCircle, PlayCircle } from 'lucide-react';
 import { paidApiHeaders } from '@/lib/api-client-auth';
 import { useAuth } from '@/lib/auth';
 import { useSampleRole } from '@/lib/use-role-navigation';
-import { isBackendConfigured } from '@/lib/firebase/init';
+import { getFirebase, isBackendConfigured } from '@/lib/firebase/init';
 import { isSampleMode } from '@/lib/sample-mode';
 import { canAccessRolePage } from '@/lib/role-access';
 import {
-  listTrainees, getCourseProgressForProfiles, logMentorVisit,
+  listTrainees, getCourseProgressForProfiles,
   listOrgEnrollments, enrolLearner, setEnrollmentStatus,
   getAssignmentsForProfiles, assignModule, unassignModule,
 } from '@/lib/db/queries';
@@ -74,7 +74,7 @@ const SAMPLE_ASSIGNMENTS: Record<string, CourseAssignment[]> = {
 
 const STATUS_TONE: Record<EnrollmentStatus, { fg: string; bg: string }> = {
   invited:   { fg: '#755942', bg: 'rgba(140,122,98,0.12)' },
-  active:    { fg: '#C07A1E', bg: 'rgba(192,122,30,0.12)' },
+  active:    { fg: '#805416', bg: 'rgba(192,122,30,0.12)' },
   paused:    { fg: '#235E86', bg: 'rgba(35,94,134,0.12)' },
   completed: { fg: '#1F4D2B', bg: 'rgba(31,77,43,0.12)' },
   withdrawn: { fg: '#755942', bg: 'rgba(140,122,98,0.12)' },
@@ -86,7 +86,7 @@ function initials(name: string | null) {
 
 function ProgressBar({ value, max }: { value: number; max: number }) {
   const pct = max === 0 ? 0 : (value / max) * 100;
-  const col = pct >= 100 ? '#1F4D2B' : pct >= 50 ? '#C07A1E' : '#235E86';
+  const col = pct >= 100 ? '#1F4D2B' : pct >= 50 ? '#805416' : '#235E86';
   return (
     <div className="flex items-center gap-2 mt-0.5">
       <div className="flex-1 rounded-full overflow-hidden" style={{ height: 5, background: 'rgba(32,25,15,0.10)' }}>
@@ -100,7 +100,7 @@ function ProgressBar({ value, max }: { value: number; max: number }) {
 interface TraineeCardProps {
   trainee: Profile;
   doneIds: Set<string>;
-  isLive: boolean;
+  onVisit?: (profileId:string)=>void;
   enrollment: CourseEnrollment | null;
   assignments: CourseAssignment[];
   /** 'YYYY-MM-DD', or null before the client has resolved today's date. */
@@ -113,19 +113,10 @@ interface TraineeCardProps {
 }
 
 function TraineeCard({
-  trainee, doneIds, isLive, enrollment, assignments, today, busy,
+  trainee, doneIds, onVisit, enrollment, assignments, today, busy,
   onEnrol, onSetStatus, onAssign, onUnassign,
 }: TraineeCardProps) {
   const [open, setOpen] = useState(false);
-  const [logging, setLogging] = useState(false);
-  const [notes, setNotes] = useState('');
-  const [saving, setSaving] = useState(false);
-  const [saved, setSaved] = useState(false);
-  const [saveError, setSaveError] = useState(false);
-  const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  useEffect(() => () => { if (saveTimer.current) clearTimeout(saveTimer.current); }, []);
-
   const assignmentByModule = new Map(assignments.map((a) => [a.module, a] as const));
   // Stored status is only ever 'paused'/'withdrawn' by hand; everything else is derived from
   // what the learner has actually ticked, so the badge can never drift from the progress bar.
@@ -136,23 +127,6 @@ function TraineeCard({
         COURSE_MODULES.map((m) => m.id),
       )
     : null;
-
-  async function handleLog() {
-    if (!notes.trim()) return;
-    setSaving(true);
-    setSaveError(false);
-    try {
-      if (isLive) await logMentorVisit({ trainee_id: trainee.id, notes: notes.trim(), visited_at: new Date().toISOString() });
-      setSaved(true);
-      setNotes('');
-      if (saveTimer.current) clearTimeout(saveTimer.current);
-      saveTimer.current = setTimeout(() => { setSaved(false); setLogging(false); }, 2000);
-    } catch {
-      setSaveError(true);
-    } finally {
-      setSaving(false);
-    }
-  }
 
   return (
     <div className="rounded-2xl overflow-hidden" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
@@ -277,7 +251,7 @@ function TraineeCard({
                     />
                     {state && state !== 'done' && dueText && (
                       <span className="flex items-center gap-1 text-xs font-sans"
-                        style={{ color: state === 'overdue' ? '#B03A2E' : state === 'due-soon' ? '#C07A1E' : '#755942' }}>
+                        style={{ color: state === 'overdue' ? '#B03A2E' : state === 'due-soon' ? '#805416' : '#755942' }}>
                         {state === 'overdue' ? <AlertTriangle size={10} /> : <CalendarClock size={10} />}
                         {dueText}
                       </span>
@@ -295,38 +269,7 @@ function TraineeCard({
             <div className="mt-3 text-xs font-sans" style={{ color: '#5C5040' }}>{trainee.phone}</div>
           )}
 
-          {!logging ? (
-            <button onClick={() => setLogging(true)}
-              className="mt-3 flex items-center gap-2 text-xs font-display font-semibold px-3 py-2 rounded-xl"
-              style={{ background: 'rgba(31,77,43,0.08)', border: '1px solid rgba(31,77,43,0.2)', color: '#1F4D2B', cursor: 'pointer' }}>
-              <BookOpen size={13} />Log field visit
-            </button>
-          ) : (
-            <div className="mt-3 space-y-2">
-              <textarea value={notes} onChange={(e) => setNotes(e.target.value)}
-                placeholder="What was covered on this visit?"
-                rows={3} className="w-full text-sm font-sans outline-none rounded-xl px-3 py-2.5 resize-none"
-                style={{ background: '#fff', border: '1px solid #D8CBB2', color: '#20190F' }} />
-              <div className="flex gap-2">
-                <button onClick={handleLog} disabled={saving || !notes.trim()}
-                  className="flex-1 flex items-center justify-center gap-1.5 py-2 rounded-xl text-xs font-display font-semibold"
-                  style={{ background: '#1F4D2B', color: '#F7F2E9', border: 'none', cursor: saving ? 'wait' : 'pointer', opacity: (!notes.trim() || saving) ? 0.6 : 1 }}>
-                  {saving ? <Loader2 size={12} className="animate-spin" /> : <Send size={12} />}
-                  {saved ? 'Saved!' : saving ? 'Saving...' : 'Save visit'}
-                </button>
-                <button onClick={() => { setLogging(false); setNotes(''); setSaveError(false); }}
-                  className="px-3 py-2 rounded-xl text-xs font-display"
-                  style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#5C5040', cursor: 'pointer' }}>
-                  Cancel
-                </button>
-              </div>
-              {saveError && (
-                <p className="text-xs font-sans mt-1" style={{ color: '#B03A2E' }}>
-                  Could not save — please check your connection and try again.
-                </p>
-              )}
-            </div>
-          )}
+          {onVisit&&<button onClick={()=>onVisit(trainee.id)} className="mt-3 flex items-center gap-2 text-sm font-display font-semibold px-3 py-3 rounded-xl" style={{background:'#e9f1e9',color:'#1F4D2B',minHeight:44}}><BookOpen size={15}/>Record field visit</button>}
         </div>
       )}
     </div>
@@ -335,10 +278,10 @@ function TraineeCard({
 
 // ─── Page ────────────────────────────────────────────────────────────────────
 
-const MENTOR_ALLOWED_ROLES = new Set<UserRole>(['mentor', 'ngo', 'funder', 'admin']);
+const MENTOR_ALLOWED_ROLES = new Set<UserRole>(['mentor', 'ngo', 'admin']);
 
 export default function MentorPage() {
-  const { user, role, loading } = useAuth();
+  const { user, profile, role, loading } = useAuth();
   const router = useRouter();
   const sampleRole = useSampleRole();
   const isLive = isBackendConfigured() && !sampleRole;
@@ -346,6 +289,11 @@ export default function MentorPage() {
   useEffect(() => { setSample(isSampleMode()); }, []);
 
   const [view, setView] = useState<'field' | 'trainees' | 'messages' | 'evidence'>('field');
+  const [visitPerson,setVisitPerson]=useState('');
+  const loadVersion=useRef(0);
+  const accountScope=useRef('');
+  accountScope.current=[user?.uid??'',profile?.org_id??'',role??'',isLive?'live':'tour'].join('|');
+  const [loadError,setLoadError]=useState(false);
   const [msgUnread, setMsgUnread] = useState(0);
   const [trainees, setTrainees] = useState<Profile[]>([]);
   const [progressMap, setProgressMap] = useState<Record<string, CourseProgress[]>>({});
@@ -366,12 +314,15 @@ export default function MentorPage() {
   }, [user, loading, router, isLive]);
 
   const load = useCallback(async () => {
-    setFetching(true);
+    const version=++loadVersion.current,actor=user?.uid,scope=accountScope.current;
+    const active=()=>scope===accountScope.current && version===loadVersion.current && (!isLive || !!actor && getFirebase()?.auth.currentUser?.uid===actor);
+    if(isLive && (!actor || !canAccessRolePage(role,MENTOR_ALLOWED_ROLES)))return;
+    setFetching(true);setLoadError(false);
     try {
       if (isLive) {
         const [list, enrollments] = await Promise.all([
           listTrainees(),
-          listOrgEnrollments().catch(() => [] as CourseEnrollment[]),
+          listOrgEnrollments(),
         ]);
         let assignedList = list;
         if (role === 'mentor') {
@@ -381,16 +332,16 @@ export default function MentorPage() {
           const ids = new Set<string>(workspace.teams.flatMap((t: { farmerIds: string[] }) => t.farmerIds));
           assignedList = list.filter(p => ids.has(p.id));
         }
-        setTrainees(assignedList);
-        setEnrollBy(Object.fromEntries(enrollments.map((e) => [e.profile_id, e])));
-        // Batched, not one getCourseProgress()/getAssignments() round trip per trainee — see
-        // getCourseProgressForProfiles's doc comment in lib/db/queries.ts. A trainee absent from
-        // either map has no rows, same as the old per-trainee `.catch(() => [])` default.
+
+        // Batch course reads. A failed query must stay unavailable, not become zero progress.
         const ids = assignedList.map((t) => t.id);
         const [progress, assigns] = await Promise.all([
-          getCourseProgressForProfiles(ids).catch(() => ({} as Record<string, CourseProgress[]>)),
-          getAssignmentsForProfiles(ids).catch(() => ({} as Record<string, CourseAssignment[]>)),
+          getCourseProgressForProfiles(ids),
+          getAssignmentsForProfiles(ids),
         ]);
+        if(!active())return;
+        setTrainees(assignedList);
+        setEnrollBy(Object.fromEntries(enrollments.map((e) => [e.profile_id, e])));
         setProgressMap(progress);
         setAssignBy(assigns);
       } else {
@@ -405,26 +356,28 @@ export default function MentorPage() {
       // A silent catch here is how a rules denial looked exactly like "this mentor has no
       // learners yet" — indistinguishable in the UI and invisible in the console.
       console.error('[mentor] could not load the cohort:', err);
-      setSyncError(true);
+      if(active()){setLoadError(true);setTrainees([]);setEnrollBy({});setAssignBy({});setProgressMap({});}
     } finally {
-      setFetching(false);
+      if(active())setFetching(false);
     }
-  }, [isLive, user, role]);
+  }, [isLive, user, profile?.org_id, role]);
 
   // Wait for auth to resolve before loading. Every query in load() is org-scoped, and the
   // org comes from the caller's own profile — run it while `currentUser` is still null and
   // each one returns an empty list with no error, which renders as "this mentor has no
   // learners" and never retries. Mirrors the guard the student page already had.
-  useEffect(() => { if (!loading) load(); }, [loading, load]);
+  useEffect(() => {setTrainees([]);setEnrollBy({});setAssignBy({});setProgressMap({});setSyncError(false);setBusyId(null);if (!loading) void load();return()=>{loadVersion.current++;};}, [loading, load]);
 
   // Every mutation below updates local state first so the control responds immediately on a
   // slow rural connection, then writes. On a failed write we re-read from the server rather
   // than leaving an optimistic value on screen that never actually saved.
   const afterWrite = useCallback(async (write: () => Promise<void>) => {
+    const scope=accountScope.current;
     setSyncError(false);
     try {
       await write();
     } catch {
+      if(scope!==accountScope.current)return;
       setSyncError(true);
       await load();
     }
@@ -433,6 +386,7 @@ export default function MentorPage() {
   useEffect(() => { if (isSampleMode() && trainees.length) { sampleWrite('mentor-enrollments', enrollBy); sampleWrite('mentor-assignments', assignBy); } }, [enrollBy, assignBy, trainees]);
 
   const handleEnrol = useCallback(async (profileId: string) => {
+    const scope=accountScope.current;
     setBusyId(profileId);
     const optimistic: CourseEnrollment = {
       id: enrollmentDocId(profileId),
@@ -446,20 +400,22 @@ export default function MentorPage() {
     };
     setEnrollBy((prev) => ({ ...prev, [profileId]: optimistic }));
     if (isLive) await afterWrite(() => enrolLearner(profileId));
-    setBusyId(null);
+    if(scope===accountScope.current)setBusyId(null);
   }, [isLive, user, afterWrite]);
 
   const handleSetStatus = useCallback(async (profileId: string, status: 'paused' | 'active') => {
+    const scope=accountScope.current;
     setBusyId(profileId);
     setEnrollBy((prev) => {
       const cur = prev[profileId];
       return cur ? { ...prev, [profileId]: { ...cur, status } } : prev;
     });
     if (isLive) await afterWrite(() => setEnrollmentStatus(profileId, status));
-    setBusyId(null);
+    if(scope===accountScope.current)setBusyId(null);
   }, [isLive, afterWrite]);
 
   const handleAssign = useCallback(async (profileId: string, module: string, due: string | null) => {
+    const scope=accountScope.current;
     setBusyId(profileId);
     setAssignBy((prev) => {
       const list = prev[profileId] ?? [];
@@ -479,14 +435,15 @@ export default function MentorPage() {
       return { ...prev, [profileId]: [...list.filter((a) => a.module !== module), next] };
     });
     if (isLive) await afterWrite(() => assignModule({ profile_id: profileId, module, due_at: due }));
-    setBusyId(null);
+    if(scope===accountScope.current)setBusyId(null);
   }, [isLive, user, afterWrite]);
 
   const handleUnassign = useCallback(async (profileId: string, module: string) => {
+    const scope=accountScope.current;
     setBusyId(profileId);
     setAssignBy((prev) => ({ ...prev, [profileId]: (prev[profileId] ?? []).filter((a) => a.module !== module) }));
     if (isLive) await afterWrite(() => unassignModule(profileId, module));
-    setBusyId(null);
+    if(scope===accountScope.current)setBusyId(null);
   }, [isLive, afterWrite]);
 
   if (!loading && user && isLive && !sample && !canAccessRolePage(role, MENTOR_ALLOWED_ROLES)) {
@@ -508,15 +465,15 @@ export default function MentorPage() {
             </div>
             <p className="text-sm font-display font-semibold mb-1" style={{ color: '#20190F' }}>This is the Mentor area</p>
             <p className="text-xs font-sans leading-relaxed mb-5" style={{ color: '#755942' }}>
-              It&apos;s set up for mentors, NGOs and funders — not your role. Head back to your own home to keep going.
+              {role==='funder'?'Open your funder workspace for the organisation’s published reports and evidence.':'Your organisation can link mentor access to your account.'}
             </p>
             <button
-              onClick={() => router.push('/home')}
+              onClick={() => router.push(role==='funder'?'/funder':'/home')}
               className="w-full flex items-center justify-center gap-1.5 py-2.5 rounded-xl font-sans font-semibold text-sm transition-all"
               style={{ background: '#1F4D2B', color: '#F7F2E9' }}
             >
               <Home size={15} />
-              Back to my home
+              {role==='funder'?'Open funder workspace':'Back to my home'}
             </button>
           </div>
         </main>
@@ -561,14 +518,14 @@ export default function MentorPage() {
       {/* Tab strip */}
       <DashboardTabs>
         {([
+          { key: 'field', label: 'Fieldwork', icon: Users, badge: 0 },
           { key: 'evidence', label: 'Training', icon: BookOpen, badge: 0 },
-          { key: 'field', label: 'Field team', icon: Users, badge: 0 },
-          { key: 'trainees', label: 'Trainees', icon: Users,  badge: 0 },
+          { key: 'trainees', label: 'Learning', icon: Users,  badge: 0 },
           { key: 'messages', label: 'Messages', icon: Inbox, badge: msgUnread },
         ] as const).map(({ key, label, icon: Icon, badge }) => (
           <button
             key={key}
-            onClick={() => { setView(key); if (key === 'trainees') void load(); }}
+            onClick={() => { setView(key); setVisitPerson(''); if (key === 'trainees') void load(); }}
             className="flex items-center gap-1.5 py-2.5 px-3 font-display text-xs font-semibold relative"
             style={{
               background: 'transparent',
@@ -593,15 +550,18 @@ export default function MentorPage() {
 
       <main className="workspace-main flex-1 overflow-y-auto px-4 py-4 space-y-4" style={{ paddingBottom: 80 }}>
 
-        {view === 'evidence' ? <ProgrammeEvidence mentor initialTab="training" /> : view === 'field' ? <FieldTeams /> : view === 'messages' ? (
+        {view === 'evidence' ? <ProgrammeEvidence mentor initialTab="training" /> : view === 'field' ? <FieldTeams organisation={isLive&&['ngo','admin'].includes(role??'')} initialFarmerId={visitPerson} onStartTraining={()=>setView('evidence')}/> : view === 'messages' ? (
           <ContactInbox recipient="mentor" onUnreadCount={setMsgUnread} />
         ) : (<>
 
+        <div><h1 className="text-2xl font-display font-semibold" style={{color:'#1F4D2B'}}>Participant learning</h1><p className="text-sm mt-2" style={{color:'#5C5040'}}>Assign the next useful module and follow up in the garden. Course progress, training attendance and observed practical skills are recorded separately.</p></div>
+        {loadError&&<div role="alert" className="rounded-xl p-4" style={{background:'#fff0ed',color:'#8c2e1f'}}><p>Learning records could not be loaded. Progress is unavailable until the connection succeeds.</p><button onClick={()=>void load()} className="mt-2 px-3 py-3 rounded-lg" style={{background:'white'}}>Retry learning records</button></div>}
+        {!loadError&&!fetching&&<>
         {/* Cohort at a glance */}
         <div className="grid grid-cols-3 gap-3">
           {[
             { label: 'Enrolled',    value: cohort.enrolled,   color: '#235E86' },
-            { label: 'In progress', value: cohort.inProgress, color: '#C07A1E' },
+            { label: 'In progress', value: cohort.inProgress, color: '#805416' },
             { label: 'Complete',    value: cohort.completed,  color: '#1F4D2B' },
           ].map(({ label, value, color }) => (
             <div key={label} className="rounded-2xl p-3 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
@@ -611,14 +571,14 @@ export default function MentorPage() {
           ))}
         </div>
 
-        {/* Curriculum chip cloud */}
-        <div className="rounded-2xl px-4 py-3.5" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
-          <div className="flex items-center gap-2 mb-2.5">
+        {/* Keep the large curriculum list available without burying participants. */}
+        <details className="rounded-2xl px-4 py-3.5" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
+          <summary className="flex items-center gap-2 mb-2.5 cursor-pointer" style={{minHeight:44}}>
             <GraduationCap size={14} style={{ color: '#1F4D2B' }} />
             <span className="text-xs font-mono uppercase tracking-wider" style={{ color: '#755942' }}>
-              Curriculum · {TOTAL_MODULES} modules
+              View curriculum · {TOTAL_MODULES} modules
             </span>
-          </div>
+          </summary>
           <div className="flex flex-wrap gap-1.5">
             {COURSE_MODULES.map((m) => (
               <span key={m.id} className="text-xs font-sans px-2 py-0.5 rounded-full"
@@ -627,22 +587,22 @@ export default function MentorPage() {
               </span>
             ))}
           </div>
-        </div>
+        </details>
 
         {syncError && (
           <div className="rounded-2xl px-4 py-3" style={{ background: 'rgba(176,58,46,0.08)', border: '1px solid rgba(176,58,46,0.28)' }}>
             <p className="text-xs font-sans leading-relaxed" style={{ color: '#B03A2E' }}>
-              That change did not save. The list has been reloaded from the server, so what you
-              see now is what is actually stored — please try again.
+              That change was not confirmed. Check the reloaded learning records before trying again.
             </p>
           </div>
         )}
 
+        </>}
         {/* Search */}
         <div className="relative">
           <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2" style={{ color: '#755942' }} />
           <input value={search} onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search learners..."
+            aria-label="Search participants" placeholder="Search participants..."
             className="w-full font-sans rounded-xl pl-9 pr-3 py-2.5 text-sm outline-none"
             style={{ background: '#FFFEFA', border: '1px solid #E2D8C4', color: '#20190F' }} />
         </div>
@@ -652,7 +612,7 @@ export default function MentorPage() {
           <div className="flex justify-center py-10">
             <Loader2 size={24} className="animate-spin" style={{ color: '#1F4D2B' }} />
           </div>
-        ) : filtered.length === 0 ? (
+        ) : loadError ? null : filtered.length === 0 ? (
           <div className="rounded-2xl px-4 py-10 text-center" style={{ background: '#FFFEFA', border: '1px solid #E2D8C4' }}>
             <Users size={28} style={{ color: '#755942', margin: '0 auto 8px' }} />
             <p className="text-sm font-display" style={{ color: '#5C5040' }}>
@@ -666,7 +626,7 @@ export default function MentorPage() {
                 key={t.id}
                 trainee={t}
                 doneIds={doneIdsFor(t.id)}
-                isLive={isLive}
+                onVisit={!isLive||role==='mentor'?id=>{setVisitPerson(id);setView('field');}:undefined}
                 enrollment={enrollBy[t.id] ?? null}
                 assignments={assignBy[t.id] ?? []}
                 today={today}

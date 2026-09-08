@@ -4,9 +4,12 @@ This register preserves the requests visible in the current conversation and the
 carried forward in `FEATURE-REGISTER.md`. A new message adds work; it does not cancel earlier
 requests. Independent changes may proceed in parallel, followed by shared integration checks.
 
-This is a **source-code audit**, against base `6f463346cfaa14631e8b069d3b2695bd465c0652` and
-the `codex/design-map-tour-gates-studies` worktree. “In branch” means code is present, including
-changes being integrated on 7 September; it does not mean deployed or browser-verified.
+The first batch was deployed on 7 September in PR #425, production commit
+`b37644a620e3715caf8650de5874595ce6ff629e`. Rows marked “In branch” below describe that
+released batch unless an individual row explicitly names the follow-up branch.
+PRs #427 and #429–#432 subsequently added saved report versions, selected maps, concise planting calendars, orchard records, tour help and paid-feature switches. Their report and course changes are preserved.
+The follow-up work is on `codex/record-documents-followup`; implementation and checks are
+recorded separately. A deployed feature is not automatically verified on every device.
 No full historical chat transcript was recovered. The older feature register retains its own
 historical release claims; this document does not re-verify them.
 
@@ -77,8 +80,8 @@ historical release claims; this document does not re-verify them.
 
 | ID | Request | Status | Evidence and remaining work |
 | --- | --- | --- | --- |
-| B01 | Guide every farmer sale through a digital invoice/receipt. | Partial; recommended flow not built | Invoices and direct Log sale are separate existing paths. Paid invoice kg lines already create linked sales through `invoiceSalesForPaidInvoice` / `syncInvoiceSales`. The direct sale form does not yet require or guide invoice creation. |
-| B02 | Capture past sales and paper invoices without counting a sale twice. | Partial | Invoice issue/payment dates, references and stable invoice/line links exist. A dedicated “already sold / paper invoice exists” wizard, source-photo attachment and reconciliation of an existing manually entered sale are not built. Preserve original dates/number when designing that flow. |
+| B01 | Guide every farmer sale through a digital invoice/receipt. | Implemented in follow-up; verification pending | Sold now puts New sale & invoice and Past sale / paper invoice first. Quick entry remains expandable. Existing eligible sale rows offer Create invoice, so a digital document can be attached without a second sale. |
+| B02 | Capture past sales and paper invoices without counting a sale twice. | Implemented in follow-up; verification pending | The invoice flow retains actual issue/payment dates and a separate original paper reference, including the printed/PDF document. An explicitly selected sale keeps its stable ID, crop, quantity, amount and payment timestamp. Real linking requires a connection. Paper invoice image attachment remains a separate gap; expense-slip retention does not silently fulfil it. |
 | B03 | Account for sale quantities and money once across screens. | Existing; enriched demo in branch | `invoice-sales` provides paid kg lines, stable document IDs, deduplication and cash-income totals. Non-kg lines contribute money without invented kg conversions. This does not reconcile separate national/mentor/farm demo registers. |
 | B04 | Picked should log production independently of sales. | Existing | Harvest records and Picked are separate from sales. A sale is not a second harvest. |
 | B05 | Record unweighed production so it is not lost; handle bags/crates/counts and estimates. | Recommended | The documented proposal retains original units and measured/estimated status. A complete unknown-weight harvest workflow and measured container conversion are not implemented in this batch. |
@@ -89,14 +92,14 @@ historical release claims; this document does not re-verify them.
 | B10 | Fill every planned crop row with yield, turnover and price examples. | In branch | `demo-farm` adds current-month harvest/sale coverage for all 12 planned crops. `FarmMetrics` shows crop art and the resulting metrics, rather than an almost-empty table. |
 | B11 | Remove “Sample — swiss chard sale” and similar repeated prefixes. | In branch | Seeded crop, sales, expenses and farm labels drop those prefixes. The overall sample workspace indicator remains. |
 | B12 | Add an invoice number and eye/View action to sales. | In branch | Record documents link to `/invoice?view=…`; the invoice page opens the matching saved invoice. This works for invoice-backed rows, not unrelated manual sales with no invoice. |
-| B13 | Add an expense eye/View action and demo slips. | In branch for demo; real attachments open | `ReceiptPreview` draws each receipt from its matching demonstration expense. Real expenses do not gain a fictitious slip; persistent uploaded real receipt images remain unimplemented. |
+| B13 | Add an expense eye/View action and demo slips. | Implemented in follow-up; verification pending | ReceiptPreview now supports the stored original real photo as well as prepared demo receipts. It opens a readable image, full-size view and download; missing device-local photos are stated explicitly. |
 | B14 | Enable the lender summary/export in the demo. | In branch | `CreditPackCard` and `credit-pack-pdf` provide summary preview and PDF. Both now include paid invoice cash through the shared ledger, remove mirrored sale duplicates and retain measured kilograms only. The source audit does not certify that this is an actual farm's lender evidence. |
 | B15 | Lighten brown cards and make pale brown text readable. | In branch | `Records.module.css`, `AreaReturnCards`, `MyRecords`, `CashflowChart` and `FinanceGraphs` use explicit light-on-dark or dark-on-cream pairs, stronger headings and less subdued labels. Visual contrast still requires checking the rendered surfaces. |
 | B16 | Strengthen Crop performance and similar headings. | In branch | Records chart/section headings use a clearer size, weight and dark green ink on cream panels. |
 | B17 | Lima should read photographed receipts and fill expenses. | Existing reader; demo addition in branch | The real `/api/read-slip` extracts total, description and supplier for user review before saving. The sample has a prepared receipt that fills the form without a model call. Capturing many slips as a batch is not implemented. |
-| B18 | Retain every photographed slip and view it later beside the expense. | Open | Existing scanning reads a temporary file into an AI request, then stores extracted fields. The original photo is not attached to the saved real expense. Needs scoped blob storage, attachment metadata, viewing and sync work. |
+| B18 | Retain every photographed slip and view it later beside the expense. | Implemented locally in follow-up; cloud sync open | Manual capture/upload retains the original image under the account and expense ID in IndexedDB; sample files stay in memory. Capture works without AI. Expense save and attachment failure/retry are coordinated. Photos are device-only, not a promised cloud backup or cross-device sync. |
 | B19 | Estimate AI receipt compute cost and decide whether it is affordable. | Advice completed; usage logging in branch | Review documents explicit token assumptions, Sonnet/Haiku cost examples and sources; `/api/read-slip` now logs provider usage. These are planning estimates rather than a measured project bill. |
-| B20 | Organisation master settings should toggle paid features and support higher-priced tiers. | Recommended / not built | Existing API authentication and request rate limits are not organisation feature entitlements. Receipt-reading, report-generation and optional future-map allowances, billing tiers and hard spending caps are proposed; no complete settings/billing workflow was added. |
+| B20 | Organisation master settings should toggle paid features and support higher-priced tiers. | Partial; settings released in PR #432 | Paid feature-group switches and server kill switches are present. Organisation entitlements, billing tiers and hard spending caps still need a complete product workflow; a switch alone is not billing. |
 | B21 | Keep normal generated maps cheap; consider AI maps as an optional premium feature. | Existing local maps; premium model recommended | Ordinary Design Maps use local drawing. Restoring paid AI image generation as an organisation-configurable product is a separate proposal, not part of the label cleanup. |
 
 ## Offline capability and carried-forward work
@@ -104,14 +107,14 @@ historical release claims; this document does not re-verify them.
 | ID | Request | Status | Evidence and remaining work |
 | --- | --- | --- | --- |
 | O01 | Explain how a web app can work offline. | Advice completed | Review explains downloaded app/media plus local records and later sync. A web app can use a service worker/cache and IndexedDB; cloud AI and uncached online services still need a connection. |
-| O02 | Make harvest, sales, invoices and receipts reliably usable offline. | Partial | `app/sw.js/route.ts` caches selected app routes/media and Firestore uses `persistentLocalCache`; invoices use device-local storage. `/records` and `/invoice` are not initial precache routes. Source receipt-photo persistence, a complete download-first workspace and consistent sync status are not built. |
+| O02 | Make harvest, sales, invoices and receipts reliably usable offline. | Partial | Selected app routes/media are cached and Firestore uses persistentLocalCache; invoices remain device-local. Receipt originals now have local persistence. Initial download of the full records/invoice workspace, consistent device-tested sync status and physical-device reconnect tests remain open. Linking a real existing sale and saving mentor visits require a connection. |
 | O03 | Test offline on iPhone, Android and iPad, including restart and reconnection. | Open verification | Need first-load vs downloaded use, airplane-mode reload/restart, queued writes/photos, account changes, duplicate/conflict handling and confirmed replay. This audit does not claim these tests were performed. |
 | O04 | Update the concept note with verified offline capabilities. | Open | The older feature register explicitly retains this requirement. Review documents current limits; it does not replace a device-tested concept-note update. |
 | C01 | Carry over the previous chat and ensure every request stays accounted for. | Partial | Current visible requests and known earlier open work are registered here. The complete previous transcript was not recovered, so this cannot certify requests absent from both current context and existing registers. |
 | C02 | Give all 18 gardens fully editable connected workspaces. | Open | Their photo/layout/report directory exists, but the separate connected farm pack does not make every garden editable. |
 | C03 | Unify the national, mentor and connected-farm demo data. | Open | Registers are still separate examples. This branch fills the connected farm's records; it does not reconcile all portfolio totals. |
 | C04 | Expand mentor course/facilitation/mentorship resources with organisation publication and group assignment. | Open | Basic learning/mentor foundations exist. The three-resource structure, controlled publication and private answer guides remain in the earlier register. |
-| C05 | Expand mentor visit records with location/photos/support/issues/actions/follow-up and authorised summaries. | Partial / open | Seven dated visits now populate the tour, including five for the main mentor's assigned group. Basic assigned groups and visit notes exist; the full structured location/photo/support/action/follow-up workflow remains open. |
+| C05 | Expand mentor visit records with location/photos/support/issues/actions/follow-up and authorised summaries. | Implemented in follow-up; verification pending | Field-team visits now capture support, observations/issues, actions, responsible person, follow-up date, location and up to three captioned photographs. A dated log supports filtering, viewing and editing, with authorised organisation views and per-visit reports. Real edits keep the visit ID, check for concurrent changes and require a connection. This is not an offline visit queue. |
 | C06 | Add dated retail replacement values, results framework, data-quality review and learning decisions. | Recommended / partial foundations | Existing indicators, assessments and BOQ support part of this. See `MEL-FEATURE-AUDIT.md`; no unsupported portfolio valuation or completed formal MEL suite is claimed. |
 | C07 | Link funding gaps, BOQ revisions, procurement and verified delivered assets. | Recommended | `FUNDING-AND-DELIVERY.md` is a design, not a completed linked asset/funding system. |
 | C08 | Improve privacy/consent signing and guardian flows. | Open | Existing permissions remain; new versioned signing, downloadable receipts and guardian workflows from the carried-forward register are not completed here. Required specialist review belongs to that work. |
@@ -140,3 +143,33 @@ when available. Soil-test modal text is visibly dark on cream. The mentor view s
 15 farmers and 5 visits, with the dated visit log populated.
 The browser environment did not expose viewport resizing or phone emulation; phone layout rules
 are implemented but not represented here as device-tested.
+
+## Production release — 7 September
+
+PR #425 was squash-merged at the owner's explicit deployment request. Production deployment
+[34106601767](https://github.com/rorymclark-prog/ImbewuField/actions/runs/34106601767) and
+[Tests 34106601729](https://github.com/rorymclark-prog/ImbewuField/actions/runs/34106601729)
+both completed successfully at commit `b37644a620e3715caf8650de5874595ce6ff629e`.
+The live tour landing page exposes all nine clickable destinations. Opening stop 5 on the
+live app displayed the Field team view, shortened tabs, 1 group / 15 farmers / 5 visits,
+and the matching dimmed feature guide. Earlier preview checks remain scoped as described above.
+
+The next batch addresses invoice-guided new and past sales, retained expense slip originals,
+and structured mentor follow-up records. Source-dependent Ubhejane import and physical-device
+offline verification remain open. The owner's master has not been changed.
+
+## Follow-up integration checks
+
+The records/visit follow-up passed typecheck, 3,465 tests with no failures and one existing
+shape-sync TODO, and whitespace checks. The query-scale test double was updated to expose the
+new transaction import; cohort reads still reject any unexpected transaction. Focused regression
+checks cover receipt rollback/account isolation, source-sale identity, enterprise attribution,
+original paper references and pending invoice recovery. Preview/browser evidence follows separately.
+
+## 8 September integration follow-up
+
+PR #428 is being reconciled with production commit `650c7bf` (PR #432). Both structured visit follow-ups and the newer three-photo/dictation/optional AI-cleanup capture are retained. Receipt originals stay on the device.
+
+Browser preview: a paper-reference invoice saved its reference, buyer, 2 kg quantity and R30 amount. Browser date filling changed DOM values without updating the React preview; actual date editing remains to be checked with native keyboard interaction. The cloud browser file chooser timed out, so actual receipt-upload interaction is not claimed verified. No paid AI request, real farmer record or original Ubhejane master was used in these checks.
+
+Combined integration gates: typecheck clean; 3,492 tests passed, zero failures, one existing TODO; whitespace check clean. Regression coverage includes historical issue/payment dates through save/reopen, existing-sale deduplication, attachment rollback and account-switch completion.

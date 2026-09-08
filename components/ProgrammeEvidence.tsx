@@ -139,7 +139,7 @@ export default function ProgrammeEvidence({ funder=false, mentor=false, initialT
         ]}/>
       </>}
       {!data.brandingOnly&&tab==='training'&&<>
-        {data.canRecord&&<button className={styles.primary} disabled={busy||photosBusy} onClick={()=>{setSession({...emptySession(),project,attendance:data.people.map(p=>({...p,present:false})),facilitator:profile?.full_name??(data.sample?"Nosipho Khumalo":'')});setReviewed(false);}}>Record a training session</button>}
+        {data.canRecord&&<button className={styles.primary} disabled={busy||photosBusy} onClick={()=>{setSession({...emptySession(),project,attendance:data.people.map(p=>({...p,present:false})),facilitator:data.sample?(mentor?"Sibusiso Ndlovu":"Nosipho Khumalo"):profile?.full_name??''});setReviewed(false);}}>Record a training session</button>}
         {photosBusy&&<p>Loading session photos…</p>}
         {sessions.map(s=><article key={s.id} className={styles.card} style={{marginTop:16}}><h2>{s.title}</h2><p>{s.date} · {s.project} · {s.venue}</p><p>{s.presentCount} present / {s.registeredCount} registered · {s.photoCount} photographs · {s.published?'Shared with funders':'Internal'}</p><p>{s.report}</p><button disabled={busy||photosBusy} onClick={()=>void editSession(s)}>{data.canRecord?'Open register / edit':'Open session report'}</button></article>)}
         {session&&<form className={styles.card} style={{marginTop:20}} onSubmit={e=>{e.preventDefault();void save('session');}}>
