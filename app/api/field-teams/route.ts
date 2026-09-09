@@ -39,7 +39,7 @@ async function handle(req: NextRequest, write: boolean) {
       const ids = [...new Set(teams.flatMap(t => [t.mentorId, ...t.farmerIds]))];
       const peopleDocs = manage ? (await db.collection('profiles').where('org_id', '==', orgId).limit(501).get()).docs : ids.length ? await db.getAll(...ids.map(id => db.collection('profiles').doc(id))) : [];
       if (peopleDocs.length > 500) fail('Choose a smaller member directory.', 422);
-      const people = peopleDocs.filter(d => d.exists && d.data()?.org_id === orgId).map(d => ({ id: d.id, name: d.data()?.full_name ?? 'Unnamed member', role: d.data()?.role })) as FieldMember[];
+      const people = peopleDocs.filter(d => d.exists && d.data()?.org_id === orgId).map(d => ({ id: d.id, name: d.data()?.full_name ?? 'Unnamed member', role: d.data()?.role, photoUrl: typeof d.data()?.photo_url === 'string' ? d.data()!.photo_url : null })) as FieldMember[];
       const allowed = new Set(people.filter(x => x.role === 'farmer' || x.role === 'student').map(x => x.id));
       const currentTeams = teams.map(t => ({ ...t, farmerIds: t.farmerIds.filter(id => allowed.has(id)) }));
       const visitsQuery = db.collection('field_team_visits').where('orgId', '==', orgId);

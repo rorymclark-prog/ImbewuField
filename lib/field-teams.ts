@@ -1,7 +1,7 @@
 import type { UserRole } from './db/types';
 import { validEvidenceImage } from './invoice-logo';
 
-export type FieldMember = { id: string; name: string; role: UserRole; gardenName?: string; gardenType?: string; gardenAreaM2?: number };
+export type FieldMember = { id: string; name: string; role: UserRole; photoUrl?: string | null; gardenName?: string; gardenType?: string; gardenAreaM2?: number };
 export const FIELD_PROGRAMMES = { general: 'General garden support', 'act-sef-food-security': 'ACT · SEF food security' } as const;
 export type FieldProgramme = keyof typeof FIELD_PROGRAMMES;
 export const FIELD_FOCUS = { garden: 'Garden establishment & upkeep', water: 'Water access & repairs', soil: 'Soil health & compost', seedlings: 'Seedlings & seed saving', crops: 'Crop care & protection', harvest: 'Harvest & food distribution', learning: 'Practical skills & coaching', records: 'Records & livelihood support' } as const;

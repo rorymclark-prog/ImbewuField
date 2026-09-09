@@ -68,6 +68,8 @@ const STAFF_ROUTES = [
 
 /** Files whose type she reads. Floor of 12px, no allowance. */
 const FARMER_SURFACES: Record<string, string> = {
+  'components/ProfileAvatar.tsx': 'names and profile fallbacks must remain readable on phones',
+  'components/FieldVisitGuide.tsx': 'visual visit prompts are used outdoors on phones',
   'components/TourDiscovery.tsx': 'tour menu reminder is read on phones',
   'components/AiFeatureSettings.tsx': 'cost controls must be readable on phones',
   'components/VisitCapture.tsx': 'mentors capture notes and photographs on phones',
