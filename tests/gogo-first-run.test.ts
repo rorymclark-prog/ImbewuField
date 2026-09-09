@@ -60,9 +60,13 @@ test('the /account language select is wired to something that reads it', () => {
 
 test('the home help strip is a labelled button, not an open composer', () => {
   const bar = code(read('components/LimaBar.tsx'));
-  assert.ok(!/<input/.test(bar),
+  // The rule excludes an open composer, not the hidden native file input needed to
+  // preserve the user's photo-picker gesture on iPhone (9 September regression).
+  const inputs = bar.match(/<input\b[^>]*>/g) ?? [];
+  assert.ok(inputs.every((input) => /type="file"/.test(input) && /className="hidden"/.test(input)) && !/<textarea\b/.test(bar),
     'a free-text box is the hardest control there is for someone who types slowly, and it sat in ' +
     'the most valuable strip of the home screen by default. Free text is a place she CHOOSES to go.');
+  assert.match(bar, /photoOpen && <ChatPanel/, 'the composer opens only after choosing a photo');
   assert.match(bar, /t\('limaAskButton'\)/, 'the ask control must be a translated label');
   assert.match(bar, /t\('limaWhoIs'\)/, '"Lima" is a proper noun with no referent until it is introduced');
   assert.match(bar, /t\('limaPhotoButton'\)/, 'the camera must say what it does — an unlabelled icon is a guess');
