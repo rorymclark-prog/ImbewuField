@@ -1,0 +1,54 @@
+{
+  "kew": [
+    "Kew: Sesbania sesban",
+    "https://powo.science.kew.org/taxon/urn:lsid:ipni.org:names:518533-1"
+  ],
+  "arc": [
+    "ARC: Red sesbania",
+    "https://www.arc.agric.za/arc-ppri/Pages/Red-sesbania.aspx"
+  ],
+  "sesban": [
+    "World Agroforestry: Sesbania sesban",
+    "https://apps.worldagroforestry.org/treedb2/AFTPDFS/Sesbania_sesban.PDF"
+  ],
+  "pigeon": [
+    "World Agroforestry: Cajanus cajan",
+    "https://apps.worldagroforestry.org/treedb2/AFTPDFS/Cajanus_cajan.PDF"
+  ],
+  "forages": [
+    "Tropical Forages: Cajanus cajan",
+    "https://tropicalforages.info/text/entities/cajanus_cajan.htm"
+  ],
+  "sesbanforage": [
+    "Tropical Forages: Sesbania sesban",
+    "https://tropicalforages.info/text/entities/sesbania_sesban.htm"
+  ],
+  "nair": [
+    "Nair: An Introduction to Agroforestry",
+    "https://apps.worldagroforestry.org/Units/Library/Books/PDFs/32_An_introduction_to_agroforestry.pdf?n=161"
+  ],
+  "comfrey": [
+    "Garden Organic: Comfrey propagation",
+    "https://www.gardenorganic.org.uk/expert-advice/all-about-comfrey/propagating-comfrey"
+  ],
+  "lawton": [
+    "Geoff Lawton: Food Forest Blueprint (2013), pp. 1–3; no land area stated",
+    "https://degeneeskrachtigetuin.files.wordpress.com/2017/09/foodforestblueprint.pdf"
+  ],
+  "cowpea": [
+    "SARE: Cowpeas",
+    "https://www.sare.org/publications/managing-cover-crops-profitably/legume-cover-crops/cowpeas/"
+  ],
+  "management": [
+    "World Agroforestry: Tree management",
+    "https://apps.worldagroforestry.org/Units/Library/Books/Book%2006/html/7.3_tree_mngment.htm?n=80"
+  ],
+  "thinning": [
+    "Warwickshire Wildlife Trust: Coppicing and thinning",
+    "https://www.warwickshirewildlifetrust.org.uk/coppicing-and-thinning"
+  ],
+  "wildgarlic": [
+    "SANBI: Tulbaghia violacea",
+    "https://pza.sanbi.org/tulbaghia-violacea"
+  ]
+}

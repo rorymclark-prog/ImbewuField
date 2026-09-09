@@ -177,3 +177,33 @@ test('only modules that really have a deck advertise one', () => {
     assert.ok(COURSE_DECKS[id].slideLanguages.length > 0, `${id} has no rendered language`);
   }
 });
+
+// The old guild recording had 20 tracks while the revised teaching deck had 51 frames.
+// Check the actual files and teaching slots so a partial import cannot reach learners.
+test('the guild deck has a real image and matching narration entry for every slide', () => {
+  const deck = deckFor('plant-guilds');
+  assert.ok(deck);
+  const tracks = COURSE_NARRATION['plant-guilds'].tracks;
+  assert.deepEqual(deck.slides.map(s => s.slide), tracks.map(t => t.slide));
+  for (const s of deck.slides) {
+    assert.ok(onDisk(slideImageUrl('plant-guilds', 'en', s.slide)!));
+    assert.ok(onDisk(slideAudioUrl('plant-guilds', 'en', s.slide)!));
+  }
+  const clips = deck.slides.flatMap(s => s.animation ? [s.animation.src] : []);
+  assert.equal(new Set(clips).size, clips.length, 'each illustration is used once');
+  for (const s of deck.slides.filter(s => s.animation)) {
+    const urls = animationUrls('plant-guilds', s.slide)!;
+    assert.ok(onDisk(urls.video));
+    assert.ok(onDisk(urls.poster));
+    assert.equal(statSync(new URL(urls.video.slice(1), PUBLIC)).size, urls.bytes);
+  }
+});
+
+test('the branch-pruning clip is not presented as whole-plant thinning', () => {
+  const deck = deckFor('plant-guilds')!;
+  const pruning = deck.slides.find(s => s.title === 'Chop-and-Drop for Light and Mulch' && s.animation);
+  assert.ok(pruning?.animation?.src.includes('Pruning-trimmed'));
+  const thinning = deck.slides.filter(s => s.title === 'Thin as the Fruit Tree Grows');
+  assert.equal(thinning.length, 1);
+  assert.equal(thinning[0].animation, undefined, 'do not reuse the branch cut to claim a whole plant was removed');
+});

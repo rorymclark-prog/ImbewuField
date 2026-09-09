@@ -33,7 +33,12 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
-  { when: '8 September 2026', sha: 'c72705a0', changes: [
+  { when: '9 September 2026', sha: '8af6a4b', changes: [
+    'Plant Guilds now has illustrated slides, English narration and eight short videos.',
+    'Learn how to choose support plants, prune for mulch and thin as fruit trees grow.',
+    'Download Plant Guilds again to update any saved offline narration.',
+  ] },
+  { when: '8 September 2026', sha: 'ee80c00', changes: [
     'Mentor priorities show due actions, participant coverage and practical visit guidance.',
     'Choose ACT SEF food security or general support as the field team’s programme focus.',
     'Record garden skills, GPS locations and dated evidence when completing visit actions.',
