@@ -63,3 +63,11 @@ test('an unknown module is in-progress rather than throwing', () => {
   assert.equal(moduleReadiness('no-such-module'), 'in-progress');
   assert.equal(moduleReadinessDetail('no-such-module').totalLessons, 0);
 });
+
+
+test('a released English guild deck is discoverable without claiming isiZulu is finished', () => {
+  assert.equal(moduleReadiness('plant-guilds'), 'in-progress');
+  assert.deepEqual(moduleReadinessDetail('plant-guilds').narrationLanguages, ['en']);
+  assert.equal(readinessLabel('plant-guilds')?.text, 'Narrated slides');
+  assert.match(readinessLabel('plant-guilds')!.detail, /translations are still in review/);
+});
