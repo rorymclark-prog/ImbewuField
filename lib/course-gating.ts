@@ -108,6 +108,8 @@ export interface GatingContext {
    *  display-only — passing its output here would silently change what "previous module"
    *  means). */
   moduleIds: string[];
+  /** Only farmers follow sequential access; an unresolved role retains that safe default. */
+  role?: string | null;
   /** From course_progress via myCourseProgress() — completedModuleIds() in
    *  lib/course-enrollment.ts builds this same shape from the same rows. */
   doneIds: Set<string>;
@@ -116,6 +118,11 @@ export interface GatingContext {
   /** The learner's own mentor assignments (myAssignments()). Presence of ANY row for a module,
    *  regardless of due date or state, is what makes that module mentor-overridden. */
   assignments: CourseAssignment[];
+}
+
+/** Rory, 9 Sep 2026: staff and student previews browse every lesson, without earning completion. */
+export function canBrowseAllLessons(role: string | null | undefined): boolean {
+  return ['ngo', 'mentor', 'funder', 'admin', 'student'].includes(role ?? '');
 }
 
 const MODULE_TITLE = new Map(COURSE_MODULES.map((m) => [m.id, m.title] as const));
@@ -156,6 +163,7 @@ export function isModuleComplete(moduleId: string, ctx: GatingContext): boolean 
  * something we can't place in the curriculum.
  */
 export function isModuleUnlocked(moduleId: string, ctx: GatingContext): boolean {
+  if (canBrowseAllLessons(ctx.role)) return true;
   const idx = ctx.moduleIds.indexOf(moduleId);
   if (idx <= 0) return true;
   if (mentorOverride(moduleId, ctx)) return true;
@@ -186,6 +194,7 @@ export function isCapstoneUnlocked(ctx: GatingContext): boolean {
  * already be unlocked).
  */
 export function unlockReason(moduleId: string, ctx: GatingContext): string | null {
+  if (canBrowseAllLessons(ctx.role)) return null;
   const idx = ctx.moduleIds.indexOf(moduleId);
   if (mentorOverride(moduleId, ctx)) return 'Opened by your mentor';
   if (idx <= 0) return null;

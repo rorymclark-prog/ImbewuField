@@ -29,6 +29,8 @@ export interface DeckAnimation {
   /** Bytes, shown on the play button so the choice is an informed one. */
   bytes: number;
   seconds: number;
+  /** Exact text-labelled variants; wordless clips share their base asset. */
+  byLang?: Record<string, Omit<DeckAnimation, 'byLang'>>;
 }
 
 export interface DeckSlide {
@@ -105,48 +107,56 @@ function slidesFromNarration(moduleId: string, animations: Record<number, DeckAn
 // Approved guild clips each occupy one teaching slot; whole-plant thinning is slide 43.
 const GUILD_ANIMATIONS: Record<number, DeckAnimation> = {
   "15": {
+    byLang: { zu: { src: "Imbewu-Guilds-03-Pigeon-pea-food", poster: "Imbewu-Guilds-03-Pigeon-pea-food-zu", bytes: 7277042, seconds: 8.0 } },
     "src": "Imbewu-Guilds-03-Pigeon-pea-food",
     "poster": "Imbewu-Guilds-03-Pigeon-pea-food",
     "bytes": 7277042,
     "seconds": 8.0
   },
   "23": {
+    byLang: { zu: { src: "Imbewu-Guilds-09-Labelled-zu", poster: "Imbewu-Guilds-09-Labelled-zu", bytes: 3639293, seconds: 8 } },
     "src": "Imbewu-Guilds-09-Labelled",
     "poster": "Imbewu-Guilds-09-Labelled",
     "bytes": 4174276,
     "seconds": 8.0
   },
   "27": {
+    byLang: { zu: { src: "Imbewu-Guilds-02-Pruning-trimmed", poster: "Imbewu-Guilds-02-Pruning-trimmed-zu", bytes: 3373640, seconds: 5.0 } },
     "src": "Imbewu-Guilds-02-Pruning-trimmed",
     "poster": "Imbewu-Guilds-02-Pruning-trimmed",
     "bytes": 3373640,
     "seconds": 5.0
   },
   "29": {
+    byLang: { zu: { src: "Imbewu-Guilds-01-Mulch-ring", poster: "Imbewu-Guilds-01-Mulch-ring-zu", bytes: 3173759, seconds: 8.0 } },
     "src": "Imbewu-Guilds-01-Mulch-ring",
     "poster": "Imbewu-Guilds-01-Mulch-ring",
     "bytes": 3173759,
     "seconds": 8.0
   },
   "33": {
+    byLang: { zu: { src: "Imbewu-Guilds-04-Helpful-insects", poster: "Imbewu-Guilds-04-Helpful-insects-zu", bytes: 3933234, seconds: 5.5 } },
     "src": "Imbewu-Guilds-04-Helpful-insects",
     "poster": "Imbewu-Guilds-04-Helpful-insects",
     "bytes": 3933234,
     "seconds": 5.5
   },
   "37": {
+    byLang: { zu: { src: "Imbewu-Guilds-05-Guild-overview", poster: "Imbewu-Guilds-05-Guild-overview-zu", bytes: 9200096, seconds: 8.0 } },
     "src": "Imbewu-Guilds-05-Guild-overview",
     "poster": "Imbewu-Guilds-05-Guild-overview",
     "bytes": 9200096,
     "seconds": 8.0
   },
   "41": {
+    byLang: { zu: { src: "Imbewu-Guilds-06-Succession-establish", poster: "Imbewu-Guilds-06-Succession-establish-zu", bytes: 3900208, seconds: 8.0 } },
     "src": "Imbewu-Guilds-06-Succession-establish",
     "poster": "Imbewu-Guilds-06-Succession-establish",
     "bytes": 3900208,
     "seconds": 8.0
   },
   "44": {
+    byLang: { zu: { src: "Imbewu-Guilds-08-Succession-carry-mulch", poster: "Imbewu-Guilds-08-Succession-carry-mulch-zu", bytes: 8354154, seconds: 8.0 } },
     "src": "Imbewu-Guilds-08-Succession-carry-mulch",
     "poster": "Imbewu-Guilds-08-Succession-carry-mulch",
     "bytes": 8354154,
@@ -156,7 +166,7 @@ const GUILD_ANIMATIONS: Record<number, DeckAnimation> = {
 
 export const COURSE_DECKS: Record<string, ModuleDeck> = {
   'plant-guilds': {
-    slideLanguages: ['en'],
+    slideLanguages: ['en', 'zu'],
     slides: slidesFromNarration('plant-guilds', GUILD_ANIMATIONS),
   },
   'seeds-sovereignty': {
@@ -233,9 +243,10 @@ export function slideImageFor(
   return fallback ? { url: fallback, lang: 'en', exact: false } : null;
 }
 
-export function animationUrls(moduleId: string, slide: number): { video: string; poster: string; bytes: number; seconds: number } | null {
-  const a = COURSE_DECKS[moduleId]?.slides.find((s) => s.slide === slide)?.animation;
-  if (!a) return null;
+export function animationUrls(moduleId: string, slide: number, lang = 'en'): { video: string; poster: string; bytes: number; seconds: number } | null {
+  const base = COURSE_DECKS[moduleId]?.slides.find((s) => s.slide === slide)?.animation;
+  if (!base) return null;
+  const a = base.byLang?.[lang] ?? base;
   return {
     video: `/course-animations/${moduleId}/${a.src}.mp4`,
     poster: `/course-animations/${moduleId}/posters/${a.poster}.jpg`,

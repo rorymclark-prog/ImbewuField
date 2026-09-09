@@ -146,7 +146,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
     if (playing.has(current.slide)) return;
     let cancelled = false;
     (async () => {
-      const urls = animationUrls(moduleId, current.slide);
+      const urls = animationUrls(moduleId, current.slide, lang);
       if (!urls || typeof caches === 'undefined') return;
       try {
         const hit = await (await caches.open(COURSE_CACHE)).match(urls.video, { ignoreSearch: true });
@@ -156,7 +156,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
       }
     })();
     return () => { cancelled = true; };
-  }, [running, current, moduleId, playing]);
+  }, [running, current, moduleId, playing, lang]);
 
   // When a clip ends, turn the page. On the last slide, stop rather than loop.
   const advance = useCallback(() => {
@@ -213,7 +213,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
   if (!deck || !slideLang || !current) return null;
 
   const img = slideImageFor(moduleId, lang, current.slide);
-  const anim = animationUrls(moduleId, current.slide);
+  const anim = animationUrls(moduleId, current.slide, lang);
   const audio = audioForCurrent;
   const track = narration?.tracks.find((t) => t.slide === current.slide);
   const heading = track ? trackTitle(track, lang) : current.title;
@@ -234,7 +234,7 @@ export default function DeckPlayer({ moduleId, lang: appLang, lessonId, onClose 
                 <button
                   key={code}
                   type="button"
-                  onClick={() => setLang(code)}
+                  onClick={() => { setPlaying(new Set()); setLang(code); }}
                   aria-pressed={on}
                   style={{
                     padding: '3px 9px', borderRadius: 999, fontSize: 11.5, cursor: 'pointer',

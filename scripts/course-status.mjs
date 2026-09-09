@@ -25,7 +25,7 @@ import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-import { hasNarrationBlocker } from '../lib/narration-blockers.ts';
+import { hasNarrationBlocker, narrationReviewPending } from '../lib/narration-blockers.ts';
 
 // fileURLToPath, not .pathname — .pathname keeps the percent-encoding, so on a
 // checkout path containing a space every existsSync below silently reported false
@@ -64,7 +64,7 @@ function scriptBlocks(moduleId, lang) {
     // Shared with tests/narration-scripts.test.ts. These used to be two different lists, and
     // the board printed "isiZulu script reviewed" for seven drafts the test was correctly
     // refusing to release.
-    draft: hasNarrationBlocker(text),
+    draft: hasNarrationBlocker(text) || narrationReviewPending(moduleId, lang),
   };
 }
 
@@ -142,6 +142,7 @@ for (const r of rows) {
   else if (!r.audio.en) todo.push(`${r.id}: English script written, not yet recorded — Antigravity, en-ZA voice`);
   else if (r.script.en.blocks > r.audio.en) todo.push(`${r.id}: English script rewritten to ${r.script.en.blocks} blocks, only ${r.audio.en} clips recorded — RE-RECORD`);
   if (!r.script.zu) todo.push(`${r.id}: no isiZulu script`);
+  else if (narrationReviewPending(r.id, 'zu')) todo.push(`${r.id}: isiZulu published by owner instruction; fluent review remains outstanding`);
   else if (r.script.zu.draft) todo.push(`${r.id}: isiZulu script is a DRAFT — needs a human isiZulu speaker before recording`);
   else if (!r.audio.zu) todo.push(`${r.id}: isiZulu script reviewed, not yet recorded`);
   else if (r.script.zu.blocks > r.audio.zu) todo.push(`${r.id}: isiZulu script rewritten to ${r.script.zu.blocks} blocks, only ${r.audio.zu} clips recorded — RE-RECORD`);

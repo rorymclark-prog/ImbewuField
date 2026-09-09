@@ -33,6 +33,11 @@ export interface ReleaseNote {
 
 /** Shown newest-first under the Refresh button. The banner renders at most MAX_SHOWN lines total. */
 export const RELEASE_NOTES: ReleaseNote[] = [
+  { when: '9 September 2026', sha: 'ed9a797', changes: [
+    'Organisations, mentors, funders and admins can open every lesson.',
+    'Farmers unlock lessons as they progress; student previews can browse the course.',
+    'Plant Guilds now includes isiZulu slides, narration and labelled video.',
+  ] },
   { when: '9 September 2026', sha: 'ed9a797b', changes: [
     'Prepare your device in Offline & sync before closing the app without internet.',
     'Save visits, attendance, signatures, photos and assessment answers without signal.',

@@ -257,3 +257,33 @@ test('a mentored learner with a real due assignment still keeps the sequential p
   // Module 1 is unaffected either way.
   assert.equal(isModuleUnlocked(moduleIds[0], mentored), true);
 });
+
+// Rory's 9 September access rule: only farmers progress in sequence. Browsing is never credit.
+test('organisations, mentors, funders, admins and student previews open every lesson without earning completion', () => {
+  for (const role of ['ngo', 'mentor', 'funder', 'admin', 'student']) {
+    const context = ctx({ role, moduleIds: COURSE_MODULES.map(m => m.id) });
+    for (const id of context.moduleIds) {
+      assert.equal(isModuleUnlocked(id, context), true, `${role}: ${id}`);
+      assert.equal(unlockReason(id, context), null);
+      assert.equal(isModuleComplete(id, context), false);
+    }
+    assert.equal(isCapstoneUnlocked(context), false);
+    assert.equal(currentModuleId(context), context.moduleIds[0]);
+    assert.equal(context.doneIds.size, 0);
+  }
+});
+
+test('farmers cannot skip ahead because a module has finished media; unresolved roles gain no browsing override', () => {
+  for (const role of ['farmer', null, undefined, 'unknown']) {
+    const context = ctx({ role, moduleIds: COURSE_MODULES.map(m => m.id) });
+    assert.equal(isModuleUnlocked(context.moduleIds[0], context), true);
+    for (const id of context.moduleIds.slice(1)) assert.equal(isModuleUnlocked(id, context), false);
+    const first = context.moduleIds[0];
+    context.doneIds.add(first);
+    assert.equal(isModuleUnlocked(context.moduleIds[1], context), false, 'authored evidence is still needed');
+    context.submittedIds.add(first);
+    assert.equal(isModuleUnlocked(context.moduleIds[1], context), true);
+    assert.equal(isModuleUnlocked('seeds-sovereignty', context), false);
+    assert.equal(isModuleUnlocked('plant-guilds', context), false);
+  }
+});
